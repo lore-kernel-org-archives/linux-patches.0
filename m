@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD4F182A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42539182A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xawF2CcB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA35C433C8;
-	Mon,  9 Oct 2023 13:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6s3VJz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE505C433C7;
+	Mon,  9 Oct 2023 13:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858962;
-	bh=B1RA73EE/86MdwV0Y8r1TjCADgs0zVR1ZQiN4y7ObQc=;
+	s=korg; t=1696858966;
+	bh=TH9GiUwhCwqienXnyFTn+0OIFcCe+23sC10nwjYIvz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xawF2CcBYCvVJNvvpcTwui5Spt84tzuFre6tZBxqnlqfXtWJkXRfCI+e6XYMKf+CG
-	 5cV1wq1LL83YgukgLiadfWwaYhJOp1qqZ8csqWafrpkMTzlpJQFvQBrc+xXG3CLh8O
-	 J6M0JHcVEhMYxjNsafxSAZtXA9lwwgP3lJV+P57M=
+	b=H6s3VJz4EWQjh04mmHISsNu+9F/LvXiNEktyQPB9+m56p+zQTqyqAm4Q46bC7oIB7
+	 TpAaSQg9GQwsDoL6HWrodWMfXof63LwzIq6Gs0ggx6o4CZQQ8ALc8kXp56SY+iQvoH
+	 w1VsfVrUIaxbZMNvVe2dBtD0zkxDxoLJzQ6nqRXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Rich <kevinrich1337@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 148/226] netfilter: nf_tables: disallow rule removal from chain binding
-Date: Mon,  9 Oct 2023 15:01:49 +0200
-Message-ID: <20231009130130.585387853@linuxfoundation.org>
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Marcus Seyfarth <m.seyfarth@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>
+Subject: [PATCH 5.10 157/226] bpf: Fix BTF_ID symbol generation collision in tools/
+Date: Mon,  9 Oct 2023 15:01:58 +0200
+Message-ID: <20231009130130.793985505@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,102 +45,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-[ Upstream commit f15f29fd4779be8a418b66e9d52979bb6d6c2325 ]
+commit c0bb9fb0e52a64601d38b3739b729d9138d4c8a1 upstream.
 
-Chain binding only requires the rule addition/insertion command within
-the same transaction. Removal of rules from chain bindings within the
-same transaction makes no sense, userspace does not utilize this
-feature. Replace nft_chain_is_bound() check to nft_chain_binding() in
-rule deletion commands. Replace command implies a rule deletion, reject
-this command too.
+Marcus and Satya reported an issue where BTF_ID macro generates same
+symbol in separate objects and that breaks final vmlinux link.
 
-Rule flush command can also safely rely on this nft_chain_binding()
-check because unbound chains are not allowed since 62e1e94b246e
-("netfilter: nf_tables: reject unbound chain set before commit phase").
+  ld.lld: error: ld-temp.o <inline asm>:14577:1: symbol
+  '__BTF_ID__struct__cgroup__624' is already defined
 
-Fixes: d0e2c7de92c7 ("netfilter: nf_tables: add NFT_CHAIN_BINDING")
-Reported-by: Kevin Rich <kevinrich1337@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This can be triggered under specific configs when __COUNTER__ happens to
+be the same for the same symbol in two different translation units,
+which is already quite unlikely to happen.
+
+Add __LINE__ number suffix to make BTF_ID symbol more unique, which is
+not a complete fix, but it would help for now and meanwhile we can work
+on better solution as suggested by Andrii.
+
+Cc: stable@vger.kernel.org
+Reported-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
+Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1913
+Debugged-by: Nathan Chancellor <nathan@kernel.org>
+Co-developed-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/CAEf4Bzb5KQ2_LmhN769ifMeSJaWfebccUasQOfQKaOd0nQ51tw@mail.gmail.com/
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20230915-bpf_collision-v3-2-263fc519c21f@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ tools/include/linux/btf_ids.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 16e2500e8590b..78b268bd7f012 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -1268,7 +1268,7 @@ static int nft_flush_table(struct nft_ctx *ctx)
- 		if (!nft_is_active_next(ctx->net, chain))
- 			continue;
+--- a/tools/include/linux/btf_ids.h
++++ b/tools/include/linux/btf_ids.h
+@@ -38,7 +38,7 @@ asm(							\
+ 	____BTF_ID(symbol)
  
--		if (nft_chain_is_bound(chain))
-+		if (nft_chain_binding(chain))
- 			continue;
+ #define __ID(prefix) \
+-	__PASTE(prefix, __COUNTER__)
++	__PASTE(__PASTE(prefix, __COUNTER__), __LINE__)
  
- 		ctx->chain = chain;
-@@ -1312,7 +1312,7 @@ static int nft_flush_table(struct nft_ctx *ctx)
- 		if (!nft_is_active_next(ctx->net, chain))
- 			continue;
- 
--		if (nft_chain_is_bound(chain))
-+		if (nft_chain_binding(chain))
- 			continue;
- 
- 		ctx->chain = chain;
-@@ -2599,6 +2599,9 @@ static int nf_tables_delchain(struct net *net, struct sock *nlsk,
- 		return PTR_ERR(chain);
- 	}
- 
-+	if (nft_chain_binding(chain))
-+		return -EOPNOTSUPP;
-+
- 	if (nlh->nlmsg_flags & NLM_F_NONREC &&
- 	    chain->use > 0)
- 		return -EBUSY;
-@@ -3498,6 +3501,11 @@ static int nf_tables_newrule(struct net *net, struct sock *nlsk,
- 	}
- 
- 	if (nlh->nlmsg_flags & NLM_F_REPLACE) {
-+		if (nft_chain_binding(chain)) {
-+			err = -EOPNOTSUPP;
-+			goto err_destroy_flow_rule;
-+		}
-+
- 		trans = nft_trans_rule_add(&ctx, NFT_MSG_NEWRULE, rule);
- 		if (trans == NULL) {
- 			err = -ENOMEM;
-@@ -3606,7 +3614,7 @@ static int nf_tables_delrule(struct net *net, struct sock *nlsk,
- 			NL_SET_BAD_ATTR(extack, nla[NFTA_RULE_CHAIN]);
- 			return PTR_ERR(chain);
- 		}
--		if (nft_chain_is_bound(chain))
-+		if (nft_chain_binding(chain))
- 			return -EOPNOTSUPP;
- 	}
- 
-@@ -3636,7 +3644,7 @@ static int nf_tables_delrule(struct net *net, struct sock *nlsk,
- 		list_for_each_entry(chain, &table->chains, list) {
- 			if (!nft_is_active_next(net, chain))
- 				continue;
--			if (nft_chain_is_bound(chain))
-+			if (nft_chain_binding(chain))
- 				continue;
- 
- 			ctx.chain = chain;
-@@ -9529,7 +9537,7 @@ static void __nft_release_table(struct net *net, struct nft_table *table)
- 	ctx.family = table->family;
- 	ctx.table = table;
- 	list_for_each_entry(chain, &table->chains, list) {
--		if (nft_chain_is_bound(chain))
-+		if (nft_chain_binding(chain))
- 			continue;
- 
- 		ctx.chain = chain;
--- 
-2.40.1
-
+ /*
+  * The BTF_ID defines unique symbol for each ID pointing
 
 
