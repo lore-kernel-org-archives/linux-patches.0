@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C99610A3C
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D6E10A3C
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2Fkc57W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1C3C433C7;
-	Mon,  9 Oct 2023 13:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8ff15Di"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD25DC433C7;
+	Mon,  9 Oct 2023 13:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858461;
-	bh=n/n0T+Cc93h4WkP76ooo35ULjeo44zIa8rhFoMgL41A=;
+	s=korg; t=1696858465;
+	bh=RtbrMGkIgsVOGsTrpPZ3QyoxvdDNF6ZeeGZ+M0QS5PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x2Fkc57W+m2lfJQcvjpe3mwYOytC/2/b8pNnuIGAk/+2Zz9KHEAhaM6jpcEE+afsq
-	 kgbjWO0FivvRlpIO8ZVTYNIRPKFS73AA+BhmnL8MCv5GxdFIINYXaP77jORZPyUhnT
-	 tcbn9Zjlz8umZy40s2GaR7rfnOUvPVh50+qLKmOU=
+	b=Y8ff15DiDAvQhiTVL66mOJHSD9VqfOB6ROMNl/GOnwpLrUasSIi1L/5gYKKlq1Tr/
+	 A3oUUKoFbU7xm+jlWDefUnrRJiR8YUnau1z+B1mblYM24z9B7hi8foNOhIJQWDlCOC
+	 M2TlLiF8G3Xonymt8cvGS/+Q+1QERJxtjlw6dKNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.4 129/131] parisc: Restore __ldcw_align for PA-RISC 2.0 processors
-Date: Mon,  9 Oct 2023 15:02:49 +0200
-Message-ID: <20231009130120.367458466@linuxfoundation.org>
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 104/131] scsi: target: core: Fix deadlock due to recursive locking
+Date: Mon,  9 Oct 2023 15:02:24 +0200
+Message-ID: <20231009130119.601393073@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -41,114 +43,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave@parisc-linux.org>
+From: Junxiao Bi <junxiao.bi@oracle.com>
 
-commit 914988e099fc658436fbd7b8f240160c352b6552 upstream.
+[ Upstream commit a154f5f643c6ecddd44847217a7a3845b4350003 ]
 
-Back in 2005, Kyle McMartin removed the 16-byte alignment for
-ldcw semaphores on PA 2.0 machines (CONFIG_PA20). This broke
-spinlocks on pre PA8800 processors. The main symptom was random
-faults in mmap'd memory (e.g., gcc compilations, etc).
+The following call trace shows a deadlock issue due to recursive locking of
+mutex "device_mutex". First lock acquire is in target_for_each_device() and
+second in target_free_device().
 
-Unfortunately, the errata for this ldcw change is lost.
+ PID: 148266   TASK: ffff8be21ffb5d00  CPU: 10   COMMAND: "iscsi_ttx"
+  #0 [ffffa2bfc9ec3b18] __schedule at ffffffffa8060e7f
+  #1 [ffffa2bfc9ec3ba0] schedule at ffffffffa8061224
+  #2 [ffffa2bfc9ec3bb8] schedule_preempt_disabled at ffffffffa80615ee
+  #3 [ffffa2bfc9ec3bc8] __mutex_lock at ffffffffa8062fd7
+  #4 [ffffa2bfc9ec3c40] __mutex_lock_slowpath at ffffffffa80631d3
+  #5 [ffffa2bfc9ec3c50] mutex_lock at ffffffffa806320c
+  #6 [ffffa2bfc9ec3c68] target_free_device at ffffffffc0935998 [target_core_mod]
+  #7 [ffffa2bfc9ec3c90] target_core_dev_release at ffffffffc092f975 [target_core_mod]
+  #8 [ffffa2bfc9ec3ca0] config_item_put at ffffffffa79d250f
+  #9 [ffffa2bfc9ec3cd0] config_item_put at ffffffffa79d2583
+ #10 [ffffa2bfc9ec3ce0] target_devices_idr_iter at ffffffffc0933f3a [target_core_mod]
+ #11 [ffffa2bfc9ec3d00] idr_for_each at ffffffffa803f6fc
+ #12 [ffffa2bfc9ec3d60] target_for_each_device at ffffffffc0935670 [target_core_mod]
+ #13 [ffffa2bfc9ec3d98] transport_deregister_session at ffffffffc0946408 [target_core_mod]
+ #14 [ffffa2bfc9ec3dc8] iscsit_close_session at ffffffffc09a44a6 [iscsi_target_mod]
+ #15 [ffffa2bfc9ec3df0] iscsit_close_connection at ffffffffc09a4a88 [iscsi_target_mod]
+ #16 [ffffa2bfc9ec3df8] finish_task_switch at ffffffffa76e5d07
+ #17 [ffffa2bfc9ec3e78] iscsit_take_action_for_connection_exit at ffffffffc0991c23 [iscsi_target_mod]
+ #18 [ffffa2bfc9ec3ea0] iscsi_target_tx_thread at ffffffffc09a403b [iscsi_target_mod]
+ #19 [ffffa2bfc9ec3f08] kthread at ffffffffa76d8080
+ #20 [ffffa2bfc9ec3f50] ret_from_fork at ffffffffa8200364
 
-The issue is the 16-byte alignment required for ldcw semaphore
-instructions can only be reduced to natural alignment when the
-ldcw operation can be handled coherently in cache. Only PA8800
-and PA8900 processors actually support doing the operation in
-cache.
-
-Aligning the spinlock dynamically adds two integer instructions
-to each spinlock.
-
-Tested on rp3440, c8000 and a500.
-
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Link: https://lore.kernel.org/linux-parisc/6b332788-2227-127f-ba6d-55e99ecf4ed8@bell.net/T/#t
-Link: https://lore.kernel.org/linux-parisc/20050609050702.GB4641@roadwarrior.mcmartin.ca/
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 36d4cb460bcb ("scsi: target: Avoid that EXTENDED COPY commands trigger lock inversion")
+Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
+Link: https://lore.kernel.org/r/20230918225848.66463-1-junxiao.bi@oracle.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/ldcw.h           |   36 +++++++++++++++++--------------
- arch/parisc/include/asm/spinlock_types.h |    5 ----
- 2 files changed, 20 insertions(+), 21 deletions(-)
+ drivers/target/target_core_device.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/arch/parisc/include/asm/ldcw.h
-+++ b/arch/parisc/include/asm/ldcw.h
-@@ -2,14 +2,28 @@
- #ifndef __PARISC_LDCW_H
- #define __PARISC_LDCW_H
+diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
+index 20fe287039857..8ba134ccd3b9c 100644
+--- a/drivers/target/target_core_device.c
++++ b/drivers/target/target_core_device.c
+@@ -856,7 +856,6 @@ sector_t target_to_linux_sector(struct se_device *dev, sector_t lb)
+ EXPORT_SYMBOL(target_to_linux_sector);
  
--#ifndef CONFIG_PA20
- /* Because kmalloc only guarantees 8-byte alignment for kmalloc'd data,
-    and GCC only guarantees 8-byte alignment for stack locals, we can't
-    be assured of 16-byte alignment for atomic lock data even if we
-    specify "__attribute ((aligned(16)))" in the type declaration.  So,
-    we use a struct containing an array of four ints for the atomic lock
-    type and dynamically select the 16-byte aligned int from the array
--   for the semaphore.  */
-+   for the semaphore. */
-+
-+/* From: "Jim Hull" <jim.hull of hp.com>
-+   I've attached a summary of the change, but basically, for PA 2.0, as
-+   long as the ",CO" (coherent operation) completer is implemented, then the
-+   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
-+   they only require "natural" alignment (4-byte for ldcw, 8-byte for
-+   ldcd).
-+
-+   Although the cache control hint is accepted by all PA 2.0 processors,
-+   it is only implemented on PA8800/PA8900 CPUs. Prior PA8X00 CPUs still
-+   require 16-byte alignment. If the address is unaligned, the operation
-+   of the instruction is undefined. The ldcw instruction does not generate
-+   unaligned data reference traps so misaligned accesses are not detected.
-+   This hid the problem for years. So, restore the 16-byte alignment dropped
-+   by Kyle McMartin in "Remove __ldcw_align for PA-RISC 2.0 processors". */
+ struct devices_idr_iter {
+-	struct config_item *prev_item;
+ 	int (*fn)(struct se_device *dev, void *data);
+ 	void *data;
+ };
+@@ -866,11 +865,9 @@ static int target_devices_idr_iter(int id, void *p, void *data)
+ {
+ 	struct devices_idr_iter *iter = data;
+ 	struct se_device *dev = p;
++	struct config_item *item;
+ 	int ret;
  
- #define __PA_LDCW_ALIGNMENT	16
- #define __PA_LDCW_ALIGN_ORDER	4
-@@ -19,22 +33,12 @@
- 		& ~(__PA_LDCW_ALIGNMENT - 1);			\
- 	(volatile unsigned int *) __ret;			\
- })
--#define __LDCW	"ldcw"
- 
--#else /*CONFIG_PA20*/
--/* From: "Jim Hull" <jim.hull of hp.com>
--   I've attached a summary of the change, but basically, for PA 2.0, as
--   long as the ",CO" (coherent operation) completer is specified, then the
--   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
--   they only require "natural" alignment (4-byte for ldcw, 8-byte for
--   ldcd). */
+-	config_item_put(iter->prev_item);
+-	iter->prev_item = NULL;
 -
--#define __PA_LDCW_ALIGNMENT	4
--#define __PA_LDCW_ALIGN_ORDER	2
--#define __ldcw_align(a) (&(a)->slock)
-+#ifdef CONFIG_PA20
- #define __LDCW	"ldcw,co"
--
--#endif /*!CONFIG_PA20*/
-+#else
-+#define __LDCW	"ldcw"
-+#endif
+ 	/*
+ 	 * We add the device early to the idr, so it can be used
+ 	 * by backend modules during configuration. We do not want
+@@ -880,12 +877,13 @@ static int target_devices_idr_iter(int id, void *p, void *data)
+ 	if (!target_dev_configured(dev))
+ 		return 0;
  
- /* LDCW, the only atomic read-write operation PA-RISC has. *sigh*.
-    We don't explicitly expose that "*a" may be written as reload
---- a/arch/parisc/include/asm/spinlock_types.h
-+++ b/arch/parisc/include/asm/spinlock_types.h
-@@ -3,13 +3,8 @@
- #define __ASM_SPINLOCK_TYPES_H
+-	iter->prev_item = config_item_get_unless_zero(&dev->dev_group.cg_item);
+-	if (!iter->prev_item)
++	item = config_item_get_unless_zero(&dev->dev_group.cg_item);
++	if (!item)
+ 		return 0;
+ 	mutex_unlock(&device_mutex);
  
- typedef struct {
--#ifdef CONFIG_PA20
--	volatile unsigned int slock;
--# define __ARCH_SPIN_LOCK_UNLOCKED { 1 }
--#else
- 	volatile unsigned int lock[4];
- # define __ARCH_SPIN_LOCK_UNLOCKED	{ { 1, 1, 1, 1 } }
--#endif
- } arch_spinlock_t;
+ 	ret = iter->fn(dev, iter->data);
++	config_item_put(item);
  
- typedef struct {
+ 	mutex_lock(&device_mutex);
+ 	return ret;
+@@ -908,7 +906,6 @@ int target_for_each_device(int (*fn)(struct se_device *dev, void *data),
+ 	mutex_lock(&device_mutex);
+ 	ret = idr_for_each(&devices_idr, target_devices_idr_iter, &iter);
+ 	mutex_unlock(&device_mutex);
+-	config_item_put(iter.prev_item);
+ 	return ret;
+ }
+ 
+-- 
+2.40.1
+
 
 
