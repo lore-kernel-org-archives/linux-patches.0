@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD615328DB
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD4F182A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3POc8So"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B67EC433C9;
-	Mon,  9 Oct 2023 13:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xawF2CcB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA35C433C8;
+	Mon,  9 Oct 2023 13:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858959;
-	bh=CWzsC9lJcB50J1KiKL0ARlBnnbfERfFD2MrwCj4GfVI=;
+	s=korg; t=1696858962;
+	bh=B1RA73EE/86MdwV0Y8r1TjCADgs0zVR1ZQiN4y7ObQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3POc8So91zvyXm8vlpuEdfBalXgAbfHRYs0I5YDk5Lf5iNZ1SsN/+OM2hgtWZw87
-	 smaWNEIDGZ9pKe7XjFb/4iQCqnb6WC3Y511ahl41rroOEu2JFO+FwCDWFOOheqMe45
-	 +MzrMWODSylj3lav953q9DkXcr9FpES63nT5DIQU=
+	b=xawF2CcBYCvVJNvvpcTwui5Spt84tzuFre6tZBxqnlqfXtWJkXRfCI+e6XYMKf+CG
+	 5cV1wq1LL83YgukgLiadfWwaYhJOp1qqZ8csqWafrpkMTzlpJQFvQBrc+xXG3CLh8O
+	 J6M0JHcVEhMYxjNsafxSAZtXA9lwwgP3lJV+P57M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ricardo B. Marliere" <rbmarliere@gmail.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Kevin Rich <kevinrich1337@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 116/226] selftests: fix dependency checker script
-Date: Mon,  9 Oct 2023 15:01:17 +0200
-Message-ID: <20231009130129.808510331@linuxfoundation.org>
+Subject: [PATCH 5.10 148/226] netfilter: nf_tables: disallow rule removal from chain binding
+Date: Mon,  9 Oct 2023 15:01:49 +0200
+Message-ID: <20231009130130.585387853@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,177 +42,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo B. Marliere <rbmarliere@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 5f9dd2e896a91bfca90f8463eb6808c03d535d8a ]
+[ Upstream commit f15f29fd4779be8a418b66e9d52979bb6d6c2325 ]
 
-This patch fixes inconsistencies in the parsing rules of the levels 1
-and 2 of the kselftest_deps.sh.  It was added the levels 4 and 5 to
-account for a few edge cases that are present in some tests, also some
-minor identation styling have been fixed (s/    /\t/g).
+Chain binding only requires the rule addition/insertion command within
+the same transaction. Removal of rules from chain bindings within the
+same transaction makes no sense, userspace does not utilize this
+feature. Replace nft_chain_is_bound() check to nft_chain_binding() in
+rule deletion commands. Replace command implies a rule deletion, reject
+this command too.
 
-Signed-off-by: Ricardo B. Marliere <rbmarliere@gmail.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Rule flush command can also safely rely on this nft_chain_binding()
+check because unbound chains are not allowed since 62e1e94b246e
+("netfilter: nf_tables: reject unbound chain set before commit phase").
+
+Fixes: d0e2c7de92c7 ("netfilter: nf_tables: add NFT_CHAIN_BINDING")
+Reported-by: Kevin Rich <kevinrich1337@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kselftest_deps.sh | 77 +++++++++++++++++++----
- 1 file changed, 65 insertions(+), 12 deletions(-)
+ net/netfilter/nf_tables_api.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/kselftest_deps.sh b/tools/testing/selftests/kselftest_deps.sh
-index bbc04646346b2..e6010de678200 100755
---- a/tools/testing/selftests/kselftest_deps.sh
-+++ b/tools/testing/selftests/kselftest_deps.sh
-@@ -46,11 +46,11 @@ fi
- print_targets=0
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 16e2500e8590b..78b268bd7f012 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1268,7 +1268,7 @@ static int nft_flush_table(struct nft_ctx *ctx)
+ 		if (!nft_is_active_next(ctx->net, chain))
+ 			continue;
  
- while getopts "p" arg; do
--    case $arg in
--        p)
-+	case $arg in
-+		p)
- 		print_targets=1
- 	shift;;
--    esac
-+	esac
- done
+-		if (nft_chain_is_bound(chain))
++		if (nft_chain_binding(chain))
+ 			continue;
  
- if [ $# -eq 0 ]
-@@ -92,6 +92,10 @@ pass_cnt=0
- # Get all TARGETS from selftests Makefile
- targets=$(egrep "^TARGETS +|^TARGETS =" Makefile | cut -d "=" -f2)
+ 		ctx->chain = chain;
+@@ -1312,7 +1312,7 @@ static int nft_flush_table(struct nft_ctx *ctx)
+ 		if (!nft_is_active_next(ctx->net, chain))
+ 			continue;
  
-+# Initially, in LDLIBS related lines, the dep checker needs
-+# to ignore lines containing the following strings:
-+filter="\$(VAR_LDLIBS)\|pkg-config\|PKG_CONFIG\|IOURING_EXTRA_LIBS"
+-		if (nft_chain_is_bound(chain))
++		if (nft_chain_binding(chain))
+ 			continue;
+ 
+ 		ctx->chain = chain;
+@@ -2599,6 +2599,9 @@ static int nf_tables_delchain(struct net *net, struct sock *nlsk,
+ 		return PTR_ERR(chain);
+ 	}
+ 
++	if (nft_chain_binding(chain))
++		return -EOPNOTSUPP;
 +
- # Single test case
- if [ $# -eq 2 ]
- then
-@@ -100,6 +104,8 @@ then
- 	l1_test $test
- 	l2_test $test
- 	l3_test $test
-+	l4_test $test
-+	l5_test $test
+ 	if (nlh->nlmsg_flags & NLM_F_NONREC &&
+ 	    chain->use > 0)
+ 		return -EBUSY;
+@@ -3498,6 +3501,11 @@ static int nf_tables_newrule(struct net *net, struct sock *nlsk,
+ 	}
  
- 	print_results $1 $2
- 	exit $?
-@@ -113,7 +119,7 @@ fi
- # Append space at the end of the list to append more tests.
- 
- l1_tests=$(grep -r --include=Makefile "^LDLIBS" | \
--		grep -v "VAR_LDLIBS" | awk -F: '{print $1}')
-+		grep -v "$filter" | awk -F: '{print $1}' | uniq)
- 
- # Level 2: LDLIBS set dynamically.
- #
-@@ -126,7 +132,7 @@ l1_tests=$(grep -r --include=Makefile "^LDLIBS" | \
- # Append space at the end of the list to append more tests.
- 
- l2_tests=$(grep -r --include=Makefile ": LDLIBS" | \
--		grep -v "VAR_LDLIBS" | awk -F: '{print $1}')
-+		grep -v "$filter" | awk -F: '{print $1}' | uniq)
- 
- # Level 3
- # gpio,  memfd and others use pkg-config to find mount and fuse libs
-@@ -140,11 +146,32 @@ l2_tests=$(grep -r --include=Makefile ": LDLIBS" | \
- #	VAR_LDLIBS := $(shell pkg-config fuse --libs 2>/dev/null)
- 
- l3_tests=$(grep -r --include=Makefile "^VAR_LDLIBS" | \
--		grep -v "pkg-config" | awk -F: '{print $1}')
-+		grep -v "pkg-config\|PKG_CONFIG" | awk -F: '{print $1}' | uniq)
- 
--#echo $l1_tests
--#echo $l2_1_tests
--#echo $l3_tests
-+# Level 4
-+# some tests may fall back to default using `|| echo -l<libname>`
-+# if pkg-config doesn't find the libs, instead of using VAR_LDLIBS
-+# as per level 3 checks.
-+# e.g:
-+# netfilter/Makefile
-+#	LDLIBS += $(shell $(HOSTPKG_CONFIG) --libs libmnl 2>/dev/null || echo -lmnl)
-+l4_tests=$(grep -r --include=Makefile "^LDLIBS" | \
-+		grep "pkg-config\|PKG_CONFIG" | awk -F: '{print $1}' | uniq)
+ 	if (nlh->nlmsg_flags & NLM_F_REPLACE) {
++		if (nft_chain_binding(chain)) {
++			err = -EOPNOTSUPP;
++			goto err_destroy_flow_rule;
++		}
 +
-+# Level 5
-+# some tests may use IOURING_EXTRA_LIBS to add extra libs to LDLIBS,
-+# which in turn may be defined in a sub-Makefile
-+# e.g.:
-+# mm/Makefile
-+#	$(OUTPUT)/gup_longterm: LDLIBS += $(IOURING_EXTRA_LIBS)
-+l5_tests=$(grep -r --include=Makefile "LDLIBS +=.*\$(IOURING_EXTRA_LIBS)" | \
-+	awk -F: '{print $1}' | uniq)
-+
-+#echo l1_tests $l1_tests
-+#echo l2_tests $l2_tests
-+#echo l3_tests $l3_tests
-+#echo l4_tests $l4_tests
-+#echo l5_tests $l5_tests
+ 		trans = nft_trans_rule_add(&ctx, NFT_MSG_NEWRULE, rule);
+ 		if (trans == NULL) {
+ 			err = -ENOMEM;
+@@ -3606,7 +3614,7 @@ static int nf_tables_delrule(struct net *net, struct sock *nlsk,
+ 			NL_SET_BAD_ATTR(extack, nla[NFTA_RULE_CHAIN]);
+ 			return PTR_ERR(chain);
+ 		}
+-		if (nft_chain_is_bound(chain))
++		if (nft_chain_binding(chain))
+ 			return -EOPNOTSUPP;
+ 	}
  
- all_tests
- print_results $1 $2
-@@ -166,24 +193,32 @@ all_tests()
- 	for test in $l3_tests; do
- 		l3_test $test
- 	done
-+
-+	for test in $l4_tests; do
-+		l4_test $test
-+	done
-+
-+	for test in $l5_tests; do
-+		l5_test $test
-+	done
- }
+@@ -3636,7 +3644,7 @@ static int nf_tables_delrule(struct net *net, struct sock *nlsk,
+ 		list_for_each_entry(chain, &table->chains, list) {
+ 			if (!nft_is_active_next(net, chain))
+ 				continue;
+-			if (nft_chain_is_bound(chain))
++			if (nft_chain_binding(chain))
+ 				continue;
  
- # Use same parsing used for l1_tests and pick libraries this time.
- l1_test()
- {
- 	test_libs=$(grep --include=Makefile "^LDLIBS" $test | \
--			grep -v "VAR_LDLIBS" | \
-+			grep -v "$filter" | \
- 			sed -e 's/\:/ /' | \
- 			sed -e 's/+/ /' | cut -d "=" -f 2)
+ 			ctx.chain = chain;
+@@ -9529,7 +9537,7 @@ static void __nft_release_table(struct net *net, struct nft_table *table)
+ 	ctx.family = table->family;
+ 	ctx.table = table;
+ 	list_for_each_entry(chain, &table->chains, list) {
+-		if (nft_chain_is_bound(chain))
++		if (nft_chain_binding(chain))
+ 			continue;
  
- 	check_libs $test $test_libs
- }
- 
--# Use same parsing used for l2__tests and pick libraries this time.
-+# Use same parsing used for l2_tests and pick libraries this time.
- l2_test()
- {
- 	test_libs=$(grep --include=Makefile ": LDLIBS" $test | \
--			grep -v "VAR_LDLIBS" | \
-+			grep -v "$filter" | \
- 			sed -e 's/\:/ /' | sed -e 's/+/ /' | \
- 			cut -d "=" -f 2)
- 
-@@ -199,6 +234,24 @@ l3_test()
- 	check_libs $test $test_libs
- }
- 
-+l4_test()
-+{
-+	test_libs=$(grep --include=Makefile "^VAR_LDLIBS\|^LDLIBS" $test | \
-+			grep "\(pkg-config\|PKG_CONFIG\).*|| echo " | \
-+			sed -e 's/.*|| echo //' | sed -e 's/)$//')
-+
-+	check_libs $test $test_libs
-+}
-+
-+l5_test()
-+{
-+	tests=$(find $(dirname "$test") -type f -name "*.mk")
-+	test_libs=$(grep "^IOURING_EXTRA_LIBS +\?=" $tests | \
-+			cut -d "=" -f 2)
-+
-+	check_libs $test $test_libs
-+}
-+
- check_libs()
- {
- 
+ 		ctx.chain = chain;
 -- 
 2.40.1
 
