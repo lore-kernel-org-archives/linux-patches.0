@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74592199B3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921B01A5B6
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H17JyauM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E93C433C8;
-	Mon,  9 Oct 2023 13:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9valaHK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1ADC433C7;
+	Mon,  9 Oct 2023 13:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857969;
-	bh=vqc/D1+rHR8bm2HLSzz5Agbch5y+uN4MyVCfLj72rMU=;
+	s=korg; t=1696857972;
+	bh=JnYqDURCnZyKxIdr7F3nquaZ6HDar0sG8lNexXASHvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H17JyauMY+rmAjrXNpyv1XpP/33zvUCfJRWgVV5vDvzPXJhghVxyXzmxnwxj8a/iF
-	 m1yHME3IUU/7121Lb9HJlkQgGoCMw7R9KXRdCu5BTnxyZ7NwnojMqxn7yVnzRwwUVW
-	 SV707Ddy38RpuPln/44Rzn3jd+kq6w+tJRA7lqGo=
+	b=c9valaHKsTPk2VQU70GTw5YSRE2UdGf09Y/+zFqgIEjxQrVKD2oBSUPZId6HxS5rQ
+	 XBg9OcLjzrZ2sdFsQWybcVaAQix/Lx1pu5ehmK+r3jRtA2wTHi+0sLOsuQcXIvMVh0
+	 lKjJsrTHpyUf/BDJUrKXikg50CQrDtUmNuYa2WmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Roger Quadros <rogerq@kernel.org>,
+	David Wilder <dwilder@us.ibm.com>,
+	Nick Child <nnac123@linux.ibm.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 50/75] net: ethernet: ti: am65-cpsw: Fix error code in am65_cpsw_nuss_init_tx_chns()
-Date: Mon,  9 Oct 2023 15:02:12 +0200
-Message-ID: <20231009130112.989348491@linuxfoundation.org>
+Subject: [PATCH 5.15 51/75] ibmveth: Remove condition to recompute TCP header checksum.
+Date: Mon,  9 Oct 2023 15:02:13 +0200
+Message-ID: <20231009130113.024501579@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -43,34 +44,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: David Wilder <dwilder@us.ibm.com>
 
-[ Upstream commit 37d4f55567982e445f86dc0ff4ecfa72921abfe8 ]
+[ Upstream commit 51e7a66666e0ca9642c59464ef8359f0ac604d41 ]
 
-This accidentally returns success, but it should return a negative error
-code.
+In some OVS environments the TCP pseudo header checksum may need to be
+recomputed. Currently this is only done when the interface instance is
+configured for "Trunk Mode". We found the issue also occurs in some
+Kubernetes environments, these environments do not use "Trunk Mode",
+therefor the condition is removed.
 
-Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Performance tests with this change show only a fractional decrease in
+throughput (< 0.2%).
+
+Fixes: 7525de2516fb ("ibmveth: Set CHECKSUM_PARTIAL if NULL TCP CSUM.")
+Signed-off-by: David Wilder <dwilder@us.ibm.com>
+Reviewed-by: Nick Child <nnac123@linux.ibm.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/ibm/ibmveth.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index daf0779261f3e..4aa9477ac5977 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -1619,6 +1619,7 @@ static int am65_cpsw_nuss_init_tx_chns(struct am65_cpsw_common *common)
- 		if (tx_chn->irq <= 0) {
- 			dev_err(dev, "Failed to get tx dma irq %d\n",
- 				tx_chn->irq);
-+			ret = tx_chn->irq ?: -ENXIO;
- 			goto err;
- 		}
- 
+diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
+index 05759f690e1fd..67ea2cb21e849 100644
+--- a/drivers/net/ethernet/ibm/ibmveth.c
++++ b/drivers/net/ethernet/ibm/ibmveth.c
+@@ -1297,24 +1297,23 @@ static void ibmveth_rx_csum_helper(struct sk_buff *skb,
+ 	 * the user space for finding a flow. During this process, OVS computes
+ 	 * checksum on the first packet when CHECKSUM_PARTIAL flag is set.
+ 	 *
+-	 * So, re-compute TCP pseudo header checksum when configured for
+-	 * trunk mode.
++	 * So, re-compute TCP pseudo header checksum.
+ 	 */
++
+ 	if (iph_proto == IPPROTO_TCP) {
+ 		struct tcphdr *tcph = (struct tcphdr *)(skb->data + iphlen);
++
+ 		if (tcph->check == 0x0000) {
+ 			/* Recompute TCP pseudo header checksum  */
+-			if (adapter->is_active_trunk) {
+-				tcphdrlen = skb->len - iphlen;
+-				if (skb_proto == ETH_P_IP)
+-					tcph->check =
+-					 ~csum_tcpudp_magic(iph->saddr,
+-					iph->daddr, tcphdrlen, iph_proto, 0);
+-				else if (skb_proto == ETH_P_IPV6)
+-					tcph->check =
+-					 ~csum_ipv6_magic(&iph6->saddr,
+-					&iph6->daddr, tcphdrlen, iph_proto, 0);
+-			}
++			tcphdrlen = skb->len - iphlen;
++			if (skb_proto == ETH_P_IP)
++				tcph->check =
++				 ~csum_tcpudp_magic(iph->saddr,
++				iph->daddr, tcphdrlen, iph_proto, 0);
++			else if (skb_proto == ETH_P_IPV6)
++				tcph->check =
++				 ~csum_ipv6_magic(&iph6->saddr,
++				&iph6->daddr, tcphdrlen, iph_proto, 0);
+ 			/* Setup SKB fields for checksum offload */
+ 			skb_partial_csum_set(skb, iphlen,
+ 					     offsetof(struct tcphdr, check));
 -- 
 2.40.1
 
