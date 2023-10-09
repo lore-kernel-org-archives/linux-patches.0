@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D6E10A3C
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685E310A3C
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8ff15Di"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD25DC433C7;
-	Mon,  9 Oct 2023 13:34:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7/x/U+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5DCC433C7;
+	Mon,  9 Oct 2023 13:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858465;
-	bh=RtbrMGkIgsVOGsTrpPZ3QyoxvdDNF6ZeeGZ+M0QS5PY=;
+	s=korg; t=1696858468;
+	bh=2EAG0nqZ3Dek+SaBxAn5+IQNciDtEb2eqcdGviyH/ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8ff15DiDAvQhiTVL66mOJHSD9VqfOB6ROMNl/GOnwpLrUasSIi1L/5gYKKlq1Tr/
-	 A3oUUKoFbU7xm+jlWDefUnrRJiR8YUnau1z+B1mblYM24z9B7hi8foNOhIJQWDlCOC
-	 M2TlLiF8G3Xonymt8cvGS/+Q+1QERJxtjlw6dKNY=
+	b=U7/x/U+tHqnJSVapVBB/JAxExpKaE559U96hwaOdnnwL1xVaxwfexK965dV9jC59o
+	 7icwgQF8NGoFEzDD941dNPrtdLn7yu/vJEd1AO+X3uZpCBVTaZDC5zcvCBYkLnqsJx
+	 9YfTgFm+kAi2DYeHWDsY0ENGhHehfjKWxoP7KiY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 104/131] scsi: target: core: Fix deadlock due to recursive locking
-Date: Mon,  9 Oct 2023 15:02:24 +0200
-Message-ID: <20231009130119.601393073@linuxfoundation.org>
+Subject: [PATCH 5.4 105/131] NFS4: Trace state recovery operation
+Date: Mon,  9 Oct 2023 15:02:25 +0200
+Message-ID: <20231009130119.630511529@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,96 +42,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Bi <junxiao.bi@oracle.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit a154f5f643c6ecddd44847217a7a3845b4350003 ]
+[ Upstream commit 511ba52e4c01fd1878140774e6215e0de6c2f36f ]
 
-The following call trace shows a deadlock issue due to recursive locking of
-mutex "device_mutex". First lock acquire is in target_for_each_device() and
-second in target_free_device().
+Add a trace point in the main state manager loop to observe state
+recovery operation. Help track down state recovery bugs.
 
- PID: 148266   TASK: ffff8be21ffb5d00  CPU: 10   COMMAND: "iscsi_ttx"
-  #0 [ffffa2bfc9ec3b18] __schedule at ffffffffa8060e7f
-  #1 [ffffa2bfc9ec3ba0] schedule at ffffffffa8061224
-  #2 [ffffa2bfc9ec3bb8] schedule_preempt_disabled at ffffffffa80615ee
-  #3 [ffffa2bfc9ec3bc8] __mutex_lock at ffffffffa8062fd7
-  #4 [ffffa2bfc9ec3c40] __mutex_lock_slowpath at ffffffffa80631d3
-  #5 [ffffa2bfc9ec3c50] mutex_lock at ffffffffa806320c
-  #6 [ffffa2bfc9ec3c68] target_free_device at ffffffffc0935998 [target_core_mod]
-  #7 [ffffa2bfc9ec3c90] target_core_dev_release at ffffffffc092f975 [target_core_mod]
-  #8 [ffffa2bfc9ec3ca0] config_item_put at ffffffffa79d250f
-  #9 [ffffa2bfc9ec3cd0] config_item_put at ffffffffa79d2583
- #10 [ffffa2bfc9ec3ce0] target_devices_idr_iter at ffffffffc0933f3a [target_core_mod]
- #11 [ffffa2bfc9ec3d00] idr_for_each at ffffffffa803f6fc
- #12 [ffffa2bfc9ec3d60] target_for_each_device at ffffffffc0935670 [target_core_mod]
- #13 [ffffa2bfc9ec3d98] transport_deregister_session at ffffffffc0946408 [target_core_mod]
- #14 [ffffa2bfc9ec3dc8] iscsit_close_session at ffffffffc09a44a6 [iscsi_target_mod]
- #15 [ffffa2bfc9ec3df0] iscsit_close_connection at ffffffffc09a4a88 [iscsi_target_mod]
- #16 [ffffa2bfc9ec3df8] finish_task_switch at ffffffffa76e5d07
- #17 [ffffa2bfc9ec3e78] iscsit_take_action_for_connection_exit at ffffffffc0991c23 [iscsi_target_mod]
- #18 [ffffa2bfc9ec3ea0] iscsi_target_tx_thread at ffffffffc09a403b [iscsi_target_mod]
- #19 [ffffa2bfc9ec3f08] kthread at ffffffffa76d8080
- #20 [ffffa2bfc9ec3f50] ret_from_fork at ffffffffa8200364
-
-Fixes: 36d4cb460bcb ("scsi: target: Avoid that EXTENDED COPY commands trigger lock inversion")
-Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
-Link: https://lore.kernel.org/r/20230918225848.66463-1-junxiao.bi@oracle.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Stable-dep-of: ed1cc05aa1f7 ("NFSv4: Fix a nfs4_state_manager() race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_device.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ fs/nfs/nfs4state.c |  3 ++
+ fs/nfs/nfs4trace.h | 93 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 96 insertions(+)
 
-diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
-index 20fe287039857..8ba134ccd3b9c 100644
---- a/drivers/target/target_core_device.c
-+++ b/drivers/target/target_core_device.c
-@@ -856,7 +856,6 @@ sector_t target_to_linux_sector(struct se_device *dev, sector_t lb)
- EXPORT_SYMBOL(target_to_linux_sector);
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index 01b1856705941..04aa8e34d1129 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -61,6 +61,7 @@
+ #include "nfs4session.h"
+ #include "pnfs.h"
+ #include "netns.h"
++#include "nfs4trace.h"
  
- struct devices_idr_iter {
--	struct config_item *prev_item;
- 	int (*fn)(struct se_device *dev, void *data);
- 	void *data;
- };
-@@ -866,11 +865,9 @@ static int target_devices_idr_iter(int id, void *p, void *data)
- {
- 	struct devices_idr_iter *iter = data;
- 	struct se_device *dev = p;
-+	struct config_item *item;
- 	int ret;
+ #define NFSDBG_FACILITY		NFSDBG_STATE
  
--	config_item_put(iter->prev_item);
--	iter->prev_item = NULL;
--
- 	/*
- 	 * We add the device early to the idr, so it can be used
- 	 * by backend modules during configuration. We do not want
-@@ -880,12 +877,13 @@ static int target_devices_idr_iter(int id, void *p, void *data)
- 	if (!target_dev_configured(dev))
- 		return 0;
+@@ -2525,6 +2526,7 @@ static void nfs4_state_manager(struct nfs_client *clp)
  
--	iter->prev_item = config_item_get_unless_zero(&dev->dev_group.cg_item);
--	if (!iter->prev_item)
-+	item = config_item_get_unless_zero(&dev->dev_group.cg_item);
-+	if (!item)
- 		return 0;
- 	mutex_unlock(&device_mutex);
+ 	/* Ensure exclusive access to NFSv4 state */
+ 	do {
++		trace_nfs4_state_mgr(clp);
+ 		clear_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state);
+ 		if (test_bit(NFS4CLNT_PURGE_STATE, &clp->cl_state)) {
+ 			section = "purge state";
+@@ -2641,6 +2643,7 @@ static void nfs4_state_manager(struct nfs_client *clp)
+ out_error:
+ 	if (strlen(section))
+ 		section_sep = ": ";
++	trace_nfs4_state_mgr_failed(clp, section, status);
+ 	pr_warn_ratelimited("NFS: state manager%s%s failed on NFSv4 server %s"
+ 			" with error %d\n", section_sep, section,
+ 			clp->cl_hostname, -status);
+diff --git a/fs/nfs/nfs4trace.h b/fs/nfs/nfs4trace.h
+index 2295a934a154e..010ee5e6fa326 100644
+--- a/fs/nfs/nfs4trace.h
++++ b/fs/nfs/nfs4trace.h
+@@ -563,6 +563,99 @@ TRACE_EVENT(nfs4_setup_sequence,
+ 		)
+ );
  
- 	ret = iter->fn(dev, iter->data);
-+	config_item_put(item);
- 
- 	mutex_lock(&device_mutex);
- 	return ret;
-@@ -908,7 +906,6 @@ int target_for_each_device(int (*fn)(struct se_device *dev, void *data),
- 	mutex_lock(&device_mutex);
- 	ret = idr_for_each(&devices_idr, target_devices_idr_iter, &iter);
- 	mutex_unlock(&device_mutex);
--	config_item_put(iter.prev_item);
- 	return ret;
- }
- 
++TRACE_DEFINE_ENUM(NFS4CLNT_MANAGER_RUNNING);
++TRACE_DEFINE_ENUM(NFS4CLNT_CHECK_LEASE);
++TRACE_DEFINE_ENUM(NFS4CLNT_LEASE_EXPIRED);
++TRACE_DEFINE_ENUM(NFS4CLNT_RECLAIM_REBOOT);
++TRACE_DEFINE_ENUM(NFS4CLNT_RECLAIM_NOGRACE);
++TRACE_DEFINE_ENUM(NFS4CLNT_DELEGRETURN);
++TRACE_DEFINE_ENUM(NFS4CLNT_SESSION_RESET);
++TRACE_DEFINE_ENUM(NFS4CLNT_LEASE_CONFIRM);
++TRACE_DEFINE_ENUM(NFS4CLNT_SERVER_SCOPE_MISMATCH);
++TRACE_DEFINE_ENUM(NFS4CLNT_PURGE_STATE);
++TRACE_DEFINE_ENUM(NFS4CLNT_BIND_CONN_TO_SESSION);
++TRACE_DEFINE_ENUM(NFS4CLNT_MOVED);
++TRACE_DEFINE_ENUM(NFS4CLNT_LEASE_MOVED);
++TRACE_DEFINE_ENUM(NFS4CLNT_DELEGATION_EXPIRED);
++TRACE_DEFINE_ENUM(NFS4CLNT_RUN_MANAGER);
++TRACE_DEFINE_ENUM(NFS4CLNT_DELEGRETURN_RUNNING);
++
++#define show_nfs4_clp_state(state) \
++	__print_flags(state, "|", \
++		{ NFS4CLNT_MANAGER_RUNNING,	"MANAGER_RUNNING" }, \
++		{ NFS4CLNT_CHECK_LEASE,		"CHECK_LEASE" }, \
++		{ NFS4CLNT_LEASE_EXPIRED,	"LEASE_EXPIRED" }, \
++		{ NFS4CLNT_RECLAIM_REBOOT,	"RECLAIM_REBOOT" }, \
++		{ NFS4CLNT_RECLAIM_NOGRACE,	"RECLAIM_NOGRACE" }, \
++		{ NFS4CLNT_DELEGRETURN,		"DELEGRETURN" }, \
++		{ NFS4CLNT_SESSION_RESET,	"SESSION_RESET" }, \
++		{ NFS4CLNT_LEASE_CONFIRM,	"LEASE_CONFIRM" }, \
++		{ NFS4CLNT_SERVER_SCOPE_MISMATCH, \
++						"SERVER_SCOPE_MISMATCH" }, \
++		{ NFS4CLNT_PURGE_STATE,		"PURGE_STATE" }, \
++		{ NFS4CLNT_BIND_CONN_TO_SESSION, \
++						"BIND_CONN_TO_SESSION" }, \
++		{ NFS4CLNT_MOVED,		"MOVED" }, \
++		{ NFS4CLNT_LEASE_MOVED,		"LEASE_MOVED" }, \
++		{ NFS4CLNT_DELEGATION_EXPIRED,	"DELEGATION_EXPIRED" }, \
++		{ NFS4CLNT_RUN_MANAGER,		"RUN_MANAGER" }, \
++		{ NFS4CLNT_DELEGRETURN_RUNNING,	"DELEGRETURN_RUNNING" })
++
++TRACE_EVENT(nfs4_state_mgr,
++		TP_PROTO(
++			const struct nfs_client *clp
++		),
++
++		TP_ARGS(clp),
++
++		TP_STRUCT__entry(
++			__field(unsigned long, state)
++			__string(hostname, clp->cl_hostname)
++		),
++
++		TP_fast_assign(
++			__entry->state = clp->cl_state;
++			__assign_str(hostname, clp->cl_hostname)
++		),
++
++		TP_printk(
++			"hostname=%s clp state=%s", __get_str(hostname),
++			show_nfs4_clp_state(__entry->state)
++		)
++)
++
++TRACE_EVENT(nfs4_state_mgr_failed,
++		TP_PROTO(
++			const struct nfs_client *clp,
++			const char *section,
++			int status
++		),
++
++		TP_ARGS(clp, section, status),
++
++		TP_STRUCT__entry(
++			__field(unsigned long, error)
++			__field(unsigned long, state)
++			__string(hostname, clp->cl_hostname)
++			__string(section, section)
++		),
++
++		TP_fast_assign(
++			__entry->error = status;
++			__entry->state = clp->cl_state;
++			__assign_str(hostname, clp->cl_hostname);
++			__assign_str(section, section);
++		),
++
++		TP_printk(
++			"hostname=%s clp state=%s error=%ld (%s) section=%s",
++			__get_str(hostname),
++			show_nfs4_clp_state(__entry->state), -__entry->error,
++			show_nfsv4_errors(__entry->error), __get_str(section)
++
++		)
++)
++
+ TRACE_EVENT(nfs4_xdr_status,
+ 		TP_PROTO(
+ 			const struct xdr_stream *xdr,
 -- 
 2.40.1
 
