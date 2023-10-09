@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1B71A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAD41A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7uobkFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CEEC433C7;
-	Mon,  9 Oct 2023 13:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmCFOtZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3C3C433C7;
+	Mon,  9 Oct 2023 13:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857884;
-	bh=YC8hxXED4JUQyIg7mFYCc1DZoW3rhurfBv25KStoWqw=;
+	s=korg; t=1696857887;
+	bh=dJHr/KYxy401iZgRUlmLKRaUzp5O5RlVKigEn2avK9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p7uobkFBx/zsLUsbV+JBw6k8DI4mvjWSd+m2Dl5dNa3oZoghbWBWRo/GUzPpUq3Dk
-	 27VfXWXBd8n79Fx5GE+YGUGt8Qnm8kRFELm3HMla6XfVk8fGsKtbPIu7rduGXBp/i0
-	 5lba3pQljd62o6j9Dg4qwQwZAIGOwrbLHm93ss0Y=
+	b=HmCFOtZIXtjHUbhfw3RAsSELcWIPoTxyF2Jx2tc6wMwLvgNMeVSgo6MlvAUnPsx34
+	 kkijq87Mj61fZvpkNFRruDoYhyR5zDqZ9NhOqgij+SumGZRgURjq12Se9UOWjhJCN3
+	 TssIKw99eFGrvcQitUMHh3Vm1EemHP1rTqNL9BlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Jordan Rife <jrife@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 23/75] net: replace calls to sock->ops->connect() with kernel_connect()
-Date: Mon,  9 Oct 2023 15:01:45 +0200
-Message-ID: <20231009130112.050456574@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 24/75] btrfs: reject unknown mount options early
+Date: Mon,  9 Oct 2023 15:01:46 +0200
+Message-ID: <20231009130112.084701927@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -43,52 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jrife@google.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 26297b4ce1ce4ea40bc9a48ec99f45da3f64d2e2 upstream.
+commit 5f521494cc73520ffac18ede0758883b9aedd018 upstream.
 
-commit 0bdf399342c5 ("net: Avoid address overwrite in kernel_connect")
-ensured that kernel_connect() will not overwrite the address parameter
-in cases where BPF connect hooks perform an address rewrite. This change
-replaces direct calls to sock->ops->connect() in net with kernel_connect()
-to make these call safe.
+[BUG]
+The following script would allow invalid mount options to be specified
+(although such invalid options would just be ignored):
 
-Link: https://lore.kernel.org/netdev/20230912013332.2048422-1-jrife@google.com/
-Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
-Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Jordan Rife <jrife@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  # mkfs.btrfs -f $dev
+  # mount $dev $mnt1		<<< Successful mount expected
+  # mount $dev $mnt2 -o junk	<<< Failed mount expected
+  # echo $?
+  0
+
+[CAUSE]
+For the 2nd mount, since the fs is already mounted, we won't go through
+open_ctree() thus no btrfs_parse_options(), but only through
+btrfs_parse_subvol_options().
+
+However we do not treat unrecognized options from valid but irrelevant
+options, thus those invalid options would just be ignored by
+btrfs_parse_subvol_options().
+
+[FIX]
+Add the handling for Opt_err to handle invalid options and error out,
+while still ignore other valid options inside btrfs_parse_subvol_options().
+
+Reported-by: Anand Jain <anand.jain@oracle.com>
+CC: stable@vger.kernel.org # 4.14+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_sync.c |    4 ++--
- net/rds/tcp_connect.c           |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/super.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/netfilter/ipvs/ip_vs_sync.c
-+++ b/net/netfilter/ipvs/ip_vs_sync.c
-@@ -1507,8 +1507,8 @@ static int make_send_sock(struct netns_i
- 	}
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1182,6 +1182,10 @@ static int btrfs_parse_subvol_options(co
  
- 	get_mcast_sockaddr(&mcast_addr, &salen, &ipvs->mcfg, id);
--	result = sock->ops->connect(sock, (struct sockaddr *) &mcast_addr,
--				    salen, 0);
-+	result = kernel_connect(sock, (struct sockaddr *)&mcast_addr,
-+				salen, 0);
- 	if (result < 0) {
- 		pr_err("Error connecting to the multicast addr\n");
- 		goto error;
---- a/net/rds/tcp_connect.c
-+++ b/net/rds/tcp_connect.c
-@@ -170,7 +170,7 @@ int rds_tcp_conn_path_connect(struct rds
- 	 * own the socket
- 	 */
- 	rds_tcp_set_callbacks(sock, cp);
--	ret = sock->ops->connect(sock, addr, addrlen, O_NONBLOCK);
-+	ret = kernel_connect(sock, addr, addrlen, O_NONBLOCK);
- 
- 	rdsdebug("connect to address %pI6c returned %d\n", &conn->c_faddr, ret);
- 	if (ret == -EINPROGRESS)
+ 			*subvol_objectid = subvolid;
+ 			break;
++		case Opt_err:
++			btrfs_err(NULL, "unrecognized mount option '%s'", p);
++			error = -EINVAL;
++			goto out;
+ 		default:
+ 			break;
+ 		}
 
 
