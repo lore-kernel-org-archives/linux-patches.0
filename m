@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD79341AC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC3F14013
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09b8+/uu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563C2C433C7;
-	Mon,  9 Oct 2023 13:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIm3nR9y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFD8C433C7;
+	Mon,  9 Oct 2023 13:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859324;
-	bh=V8rnOBwfeUqimfT+xKmOS4KHl5KjwyawWAc79BVPPPk=;
+	s=korg; t=1696859327;
+	bh=lcOj+EJPFNc2m+kqJH/22RJ5PKagVwQR7h8CI+h0TaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=09b8+/uumKK13yKUqrUce5U1F8mKlvxml9zAw5ZJhbga2ICM2hzHpHASMr/pha4XM
-	 5LfjrFkIQR5ckO7nPKyfiqizk1qhVFbO4iMo4gPH1SSa5zbhxxHeN6y9/T8qSDdUO/
-	 AYKpPlHk8qxAQMT//MDdlpS96dy4wPlG30gWlwmM=
+	b=OIm3nR9yGYYLDat+YLa+JxqCisywZSjrnOI1arwVaDNOLoDOM8w8j6jNJZeDQRUCj
+	 0EZFBEsROGmIyvarPfOEPKec+PaiayJ7i8nYmjWMNYXYKv35E/YGEv8MwsjQ0RTnKu
+	 4mgd29sv/c5sVKg1Fin0y7RmBI3WqMDMX1jCrZgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Diupina <adiupina@astralinux.ru>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"David S. Miller" <davem@davemloft.net>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 41/55] drivers/net: process the result of hdlc_open() and add call of hdlc_close() in uhdlc_close()
-Date: Mon,  9 Oct 2023 15:06:40 +0200
-Message-ID: <20231009130109.265036332@linuxfoundation.org>
+Subject: [PATCH 4.14 42/55] regmap: rbtree: Fix wrong register marked as in-cache when creating new node
+Date: Mon,  9 Oct 2023 15:06:41 +0200
+Message-ID: <20231009130109.302943726@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -43,75 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Diupina <adiupina@astralinux.ru>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit a59addacf899b1b21a7b7449a1c52c98704c2472 ]
+[ Upstream commit 7a795ac8d49e2433e1b97caf5e99129daf8e1b08 ]
 
-Process the result of hdlc_open() and call uhdlc_close()
-in case of an error. It is necessary to pass the error
-code up the control flow, similar to a possible
-error in request_irq().
-Also add a hdlc_close() call to the uhdlc_close()
-because the comment to hdlc_close() says it must be called
-by the hardware driver when the HDLC device is being closed
+When regcache_rbtree_write() creates a new rbtree_node it was passing the
+wrong bit number to regcache_rbtree_set_register(). The bit number is the
+offset __in number of registers__, but in the case of creating a new block
+regcache_rbtree_write() was not dividing by the address stride to get the
+number of registers.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fix this by dividing by map->reg_stride.
+Compare with regcache_rbtree_read() where the bit is checked.
 
-Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This bug meant that the wrong register was marked as present. The register
+that was written to the cache could not be read from the cache because it
+was not marked as cached. But a nearby register could be marked as having
+a cached value even if it was never written to the cache.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 3f4ff561bc88 ("regmap: rbtree: Make cache_present bitmap per node")
+Link: https://lore.kernel.org/r/20230922153711.28103-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wan/fsl_ucc_hdlc.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/base/regmap/regcache-rbtree.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wan/fsl_ucc_hdlc.c b/drivers/net/wan/fsl_ucc_hdlc.c
-index 978f642dacedd..00cc9b755a852 100644
---- a/drivers/net/wan/fsl_ucc_hdlc.c
-+++ b/drivers/net/wan/fsl_ucc_hdlc.c
-@@ -37,6 +37,8 @@
- 
- #define TDM_PPPOHT_SLIC_MAXIN
- 
-+static int uhdlc_close(struct net_device *dev);
-+
- static struct ucc_tdm_info utdm_primary_info = {
- 	.uf_info = {
- 		.tsa = 0,
-@@ -662,6 +664,7 @@ static int uhdlc_open(struct net_device *dev)
- 	hdlc_device *hdlc = dev_to_hdlc(dev);
- 	struct ucc_hdlc_private *priv = hdlc->priv;
- 	struct ucc_tdm *utdm = priv->utdm;
-+	int rc = 0;
- 
- 	if (priv->hdlc_busy != 1) {
- 		if (request_irq(priv->ut_info->uf_info.irq,
-@@ -684,10 +687,13 @@ static int uhdlc_open(struct net_device *dev)
- 		netif_device_attach(priv->ndev);
- 		napi_enable(&priv->napi);
- 		netif_start_queue(dev);
--		hdlc_open(dev);
-+
-+		rc = hdlc_open(dev);
-+		if (rc)
-+			uhdlc_close(dev);
+diff --git a/drivers/base/regmap/regcache-rbtree.c b/drivers/base/regmap/regcache-rbtree.c
+index 7353c55270874..b6f8f4059e255 100644
+--- a/drivers/base/regmap/regcache-rbtree.c
++++ b/drivers/base/regmap/regcache-rbtree.c
+@@ -467,7 +467,8 @@ static int regcache_rbtree_write(struct regmap *map, unsigned int reg,
+ 		if (!rbnode)
+ 			return -ENOMEM;
+ 		regcache_rbtree_set_register(map, rbnode,
+-					     reg - rbnode->base_reg, value);
++					     (reg - rbnode->base_reg) / map->reg_stride,
++					     value);
+ 		regcache_rbtree_insert(map, &rbtree_ctx->root, rbnode);
+ 		rbtree_ctx->cached_rbnode = rbnode;
  	}
- 
--	return 0;
-+	return rc;
- }
- 
- static void uhdlc_memclean(struct ucc_hdlc_private *priv)
-@@ -776,6 +782,8 @@ static int uhdlc_close(struct net_device *dev)
- 	netif_stop_queue(dev);
- 	priv->hdlc_busy = 0;
- 
-+	hdlc_close(dev);
-+
- 	return 0;
- }
- 
 -- 
 2.40.1
 
