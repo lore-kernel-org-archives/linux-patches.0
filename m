@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD314341AC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7F6347AD
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryQoybmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F5CC433C7;
-	Mon,  9 Oct 2023 13:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="etb/6JR8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37868C433CA;
+	Mon,  9 Oct 2023 13:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859404;
-	bh=Z2p0I/Z1yIvr0nAw6BAmU4+LrISHpkwXyYCJRNrRr0A=;
+	s=korg; t=1696859407;
+	bh=+unnAK5f2fw3Jbf9ueCXelZG34OwQWBFUzL90qx0D8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ryQoybmREErMI+sAK0O58zRrk1XkHxc9dkY1zch5o27FD2hTnN+Qn3HkKxjQ+Co1D
-	 G+5iUmmm0+cm2zBTR4Fe+wKydUnrDalEByWQ8xPLgk3p54e/coJl2LV5S3OWzTMyOt
-	 8TPuq1KiPoxUALaBYUleaYmlU4ZhUDm3PIGLlncU=
+	b=etb/6JR8AcrT9lojDJfY+oStsb8SFOxphISRndZ6bO8B4kHnAFSmPJwIGhFhFJYMj
+	 aNkPv0HyYw+6eEiGeYemA2cvo9MPEQ9Ee/AZrGgi6aXvzgSCuD27KrodEKcfyPwB+1
+	 6K/VYPoHaNqBCwjotelFz49O4V8lbvcM+wNXiclE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szuying Chen <Chloe_Chen@asmedia.com.tw>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 03/91] ata: libahci: clear pending interrupt status
-Date: Mon,  9 Oct 2023 15:05:35 +0200
-Message-ID: <20231009130111.652564497@linuxfoundation.org>
+Subject: [PATCH 4.19 04/91] netfilter: nf_tables: disallow element removal on anonymous sets
+Date: Mon,  9 Oct 2023 15:05:36 +0200
+Message-ID: <20231009130111.683800576@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -43,99 +41,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Szuying Chen <chensiying21@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 737dd811a3dbfd7edd4ad2ba5152e93d99074f83 ]
+[ Upstream commit 23a3bfd4ba7acd36abf52b78605f61b21bdac216 ]
 
-When a CRC error occurs, the HBA asserts an interrupt to indicate an
-interface fatal error (PxIS.IFS). The ISR clears PxIE and PxIS, then
-does error recovery. If the adapter receives another SDB FIS
-with an error (PxIS.TFES) from the device before the start of the EH
-recovery process, the interrupt signaling the new SDB cannot be
-serviced as PxIE was cleared already. This in turn results in the HBA
-inability to issue any command during the error recovery process after
-setting PxCMD.ST to 1 because PxIS.TFES is still set.
+Anonymous sets need to be populated once at creation and then they are
+bound to rule since 938154b93be8 ("netfilter: nf_tables: reject unbound
+anonymous set before commit phase"), otherwise transaction reports
+EINVAL.
 
-According to AHCI 1.3.1 specifications section 6.2.2, fatal errors
-notified by setting PxIS.HBFS, PxIS.HBDS, PxIS.IFS or PxIS.TFES will
-cause the HBA to enter the ERR:Fatal state. In this state, the HBA
-shall not issue any new commands.
+Userspace does not need to delete elements of anonymous sets that are
+not yet bound, reject this with EOPNOTSUPP.
 
-To avoid this situation, introduce the function
-ahci_port_clear_pending_irq() to clear pending interrupts before
-executing a COMRESET. This follows the AHCI 1.3.1 - section 6.2.2.2
-specification.
+>From flush command path, skip anonymous sets, they are expected to be
+bound already. Otherwise, EINVAL is hit at the end of this transaction
+for unbound sets.
 
-Signed-off-by: Szuying Chen <Chloe_Chen@asmedia.com.tw>
-Fixes: e0bfd149973d ("[PATCH] ahci: stop engine during hard reset")
-Cc: stable@vger.kernel.org
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 96518518cc41 ("netfilter: add nftables")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libahci.c | 35 +++++++++++++++++++++++------------
- 1 file changed, 23 insertions(+), 12 deletions(-)
+ net/netfilter/nf_tables_api.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
-index 00eef92e91e57..b93fad6939dac 100644
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -1210,6 +1210,26 @@ static ssize_t ahci_activity_show(struct ata_device *dev, char *buf)
- 	return sprintf(buf, "%d\n", emp->blink_policy);
- }
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 0ff8f1006c6b9..3e30441162896 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -993,8 +993,7 @@ static int nft_flush_table(struct nft_ctx *ctx)
+ 		if (!nft_is_active_next(ctx->net, set))
+ 			continue;
  
-+static void ahci_port_clear_pending_irq(struct ata_port *ap)
-+{
-+	struct ahci_host_priv *hpriv = ap->host->private_data;
-+	void __iomem *port_mmio = ahci_port_base(ap);
-+	u32 tmp;
-+
-+	/* clear SError */
-+	tmp = readl(port_mmio + PORT_SCR_ERR);
-+	dev_dbg(ap->host->dev, "PORT_SCR_ERR 0x%x\n", tmp);
-+	writel(tmp, port_mmio + PORT_SCR_ERR);
-+
-+	/* clear port IRQ */
-+	tmp = readl(port_mmio + PORT_IRQ_STAT);
-+	dev_dbg(ap->host->dev, "PORT_IRQ_STAT 0x%x\n", tmp);
-+	if (tmp)
-+		writel(tmp, port_mmio + PORT_IRQ_STAT);
-+
-+	writel(1 << ap->port_no, hpriv->mmio + HOST_IRQ_STAT);
-+}
-+
- static void ahci_port_init(struct device *dev, struct ata_port *ap,
- 			   int port_no, void __iomem *mmio,
- 			   void __iomem *port_mmio)
-@@ -1224,18 +1244,7 @@ static void ahci_port_init(struct device *dev, struct ata_port *ap,
- 	if (rc)
- 		dev_warn(dev, "%s (%d)\n", emsg, rc);
+-		if (nft_set_is_anonymous(set) &&
+-		    !list_empty(&set->bindings))
++		if (nft_set_is_anonymous(set))
+ 			continue;
  
--	/* clear SError */
--	tmp = readl(port_mmio + PORT_SCR_ERR);
--	dev_dbg(dev, "PORT_SCR_ERR 0x%x\n", tmp);
--	writel(tmp, port_mmio + PORT_SCR_ERR);
--
--	/* clear port IRQ */
--	tmp = readl(port_mmio + PORT_IRQ_STAT);
--	dev_dbg(dev, "PORT_IRQ_STAT 0x%x\n", tmp);
--	if (tmp)
--		writel(tmp, port_mmio + PORT_IRQ_STAT);
--
--	writel(1 << port_no, mmio + HOST_IRQ_STAT);
-+	ahci_port_clear_pending_irq(ap);
+ 		err = nft_delset(ctx, set);
+@@ -4902,8 +4901,10 @@ static int nf_tables_delsetelem(struct net *net, struct sock *nlsk,
+ 	if (IS_ERR(set))
+ 		return PTR_ERR(set);
  
- 	/* mark esata ports */
- 	tmp = readl(port_mmio + PORT_CMD);
-@@ -1565,6 +1574,8 @@ int ahci_do_hardreset(struct ata_link *link, unsigned int *class,
- 	tf.command = ATA_BUSY;
- 	ata_tf_to_fis(&tf, 0, 0, d2h_fis);
- 
-+	ahci_port_clear_pending_irq(ap);
+-	if (!list_empty(&set->bindings) &&
+-	    (set->flags & (NFT_SET_CONSTANT | NFT_SET_ANONYMOUS)))
++	if (nft_set_is_anonymous(set))
++		return -EOPNOTSUPP;
 +
- 	rc = sata_link_hardreset(link, timing, deadline, online,
- 				 ahci_check_ready);
++	if (!list_empty(&set->bindings) && (set->flags & NFT_SET_CONSTANT))
+ 		return -EBUSY;
  
+ 	if (nla[NFTA_SET_ELEM_LIST_ELEMENTS] == NULL) {
 -- 
 2.40.1
 
