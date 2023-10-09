@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B83F18B00
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EF118B00
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwdaW47y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F15C433C9;
-	Mon,  9 Oct 2023 13:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDmT6vOh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959A2C433C7;
+	Mon,  9 Oct 2023 13:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696856940;
-	bh=1rR7IWpq5wrNO1SoApJ0zJbyQ+FUa8PIiGaP6NS7O7c=;
+	s=korg; t=1696856943;
+	bh=3fGi+drUIRhm7xo+LC02nTz5ujWvHnOoVSrYOhtzdpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YwdaW47y9MZg9tEYqZpBNodhOQ7HFiK1/XljykBL/Q5O3dlNV156QVdFopOkdjVQl
-	 LVehJrie+Q7xEOeZz+VYME64u5B9lZcIIQ3k0cYr2Cn8b5ldBm8GFEOZv0Qq/c2cX3
-	 pFvpZ4qIipD/sKS5RCpPkEE5AHpwEKtaTh2F+1aM=
+	b=lDmT6vOh+sPsCApEX+Zg6cvvdr7tPQWt/WpxOTA2CZkLRAY+gApipj0VXaJbPWyCi
+	 Of0ZBzogGx0uyOBcIJJfvqrIRIkCcYgLYzix1OBpRauGOOEIs5APWCz11H6lmcMTSX
+	 M+2Z7NBpcEMEdxxvD0gR+aETtah4bgrw5jVLSpuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Blakeney <mark.blakeney@bullet-systems.net>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Robert Marko <robimarko@gmail.com>,
+	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>
-Subject: [PATCH 6.5 042/163] PCI/PM: Mark devices disconnected if upstream PCIe link is down on resume
-Date: Mon,  9 Oct 2023 15:00:06 +0200
-Message-ID: <20231009130125.179194885@linuxfoundation.org>
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 6.5 043/163] PCI: qcom: Fix IPQ8074 enumeration
+Date: Mon,  9 Oct 2023 15:00:07 +0200
+Message-ID: <20231009130125.206592779@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -43,82 +44,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-commit c82458101d5490230d735caecce14c9c27b1010c upstream.
+commit 6a878a54d0053ef21f3b829dc267487c2302b012 upstream.
 
-Mark Blakeney reported that when suspending system with a Thunderbolt
-dock connected and then unplugging the dock before resume (which is
-pretty normal flow with laptops), resuming takes long time.
+PARF_SLV_ADDR_SPACE_SIZE_2_3_3 is used by qcom_pcie_post_init_2_3_3().
+This PCIe slave address space size register offset is 0x358 but was
+incorrectly changed to 0x16c by 39171b33f652 ("PCI: qcom: Remove PCIE20_
+prefix from register definitions").
 
-What happens is that the PCIe link from the root port to the PCIe switch
-inside the Thunderbolt device does not train (as expected, the link is
-unplugged):
+This prevented access to slave address space registers like iATU, etc.,
+so the IPQ8074 PCIe controller was not enumerated.
 
-  pcieport 0000:00:07.2: restoring config space at offset 0x24 (was 0x3bf12001, writing 0x3bf12001)
-  pcieport 0000:00:07.0: waiting 100 ms for downstream link
-  pcieport 0000:01:00.0: not ready 1023ms after resume; giving up
+Revert back to the correct 0x358 offset and remove the unused
+PARF_SLV_ADDR_SPACE_SIZE_2_3_3.
 
-However, at this point we still try to resume the devices below that
-unplugged link:
-
-  pcieport 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
-  ...
-  pcieport 0000:01:00.0: restoring config space at offset 0x38 (was 0xffffffff, writing 0x0)
-  ...
-  pcieport 0000:02:02.0: waiting 100 ms for downstream link, after activation
-
-And this is the link from PCIe switch downstream port to the xHCI on the
-dock:
-
-  xhci_hcd 0000:03:00.0: not ready 65535ms after resume; giving up
-  xhci_hcd 0000:03:00.0: Unable to change power state from D3cold to D0, device inaccessible
-  xhci_hcd 0000:03:00.0: restoring config space at offset 0x3c (was 0xffffffff, writing 0x1ff)
-
-This ends up slowing down the resume time considerably. For this reason
-mark these devices as disconnected if the link above them did not train
-properly.
-
-Fixes: e8b908146d44 ("PCI/PM: Increase wait time after resume")
-Link: https://lore.kernel.org/r/20230918053041.1018876-1-mika.westerberg@linux.intel.com
-Reported-by: Mark Blakeney <mark.blakeney@bullet-systems.net>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217915
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: 39171b33f652 ("PCI: qcom: Remove PCIE20_ prefix from register definitions")
+Link: https://lore.kernel.org/r/20230919102948.1844909-1-quic_srichara@quicinc.com
+Tested-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+[bhelgaas: commit log]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc: stable@vger.kernel.org	# v6.4+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-driver.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-qcom.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index a79c110c7e51..51ec9e7e784f 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -572,7 +572,19 @@ static void pci_pm_default_resume_early(struct pci_dev *pci_dev)
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -43,7 +43,6 @@
+ #define PARF_PHY_REFCLK				0x4c
+ #define PARF_CONFIG_BITS			0x50
+ #define PARF_DBI_BASE_ADDR			0x168
+-#define PARF_SLV_ADDR_SPACE_SIZE_2_3_3		0x16c /* Register offset specific to IP ver 2.3.3 */
+ #define PARF_MHI_CLOCK_RESET_CTRL		0x174
+ #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
+ #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
+@@ -797,8 +796,7 @@ static int qcom_pcie_post_init_2_3_3(str
+ 	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+ 	u32 val;
  
- static void pci_pm_bridge_power_up_actions(struct pci_dev *pci_dev)
- {
--	pci_bridge_wait_for_secondary_bus(pci_dev, "resume");
-+	int ret;
-+
-+	ret = pci_bridge_wait_for_secondary_bus(pci_dev, "resume");
-+	if (ret) {
-+		/*
-+		 * The downstream link failed to come up, so mark the
-+		 * devices below as disconnected to make sure we don't
-+		 * attempt to resume them.
-+		 */
-+		pci_walk_bus(pci_dev->subordinate, pci_dev_set_disconnected,
-+			     NULL);
-+		return;
-+	}
+-	writel(SLV_ADDR_SPACE_SZ,
+-		pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_2_3_3);
++	writel(SLV_ADDR_SPACE_SZ, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
  
- 	/*
- 	 * When powering on a bridge from D3cold, the whole hierarchy may be
--- 
-2.42.0
-
+ 	val = readl(pcie->parf + PARF_PHY_CTRL);
+ 	val &= ~PHY_TEST_PWR_DOWN;
 
 
