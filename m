@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105E41A582
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0731A19463
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZhgZ6pG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFD3C433CB;
-	Mon,  9 Oct 2023 13:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6hRXDVQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A66C433C8;
+	Mon,  9 Oct 2023 13:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857142;
-	bh=jmi0tig+iXmdmPIBrxoiwz/GSVYsAHcQM8FWjlPhFeA=;
+	s=korg; t=1696857145;
+	bh=o5aMP1GZMBlUE1/5MHBmY6ysB1cmnze47eUg4X8jfso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YZhgZ6pGBSMHhgVdfd8XoKgoC4kBltxr9XbFyy6JO49rr98I1f4Mh8J3h4I8d9h+/
-	 Tu7dBilaE8SDsNDhljpt7ieGqJ90+Eiqqj0QfT6AJuJxbSy2O1TItbajMPGRTyAiDf
-	 W5bL3QjSLxxRe9cGEJlHJQvq6X0fAkKIvXNpJINk=
+	b=I6hRXDVQYx3RDOZ4JSMJrkVjZTweNOCUI9rY9wBqmy+AxY6ngkTYogCDyEEVj5zVw
+	 gRYA9JPJD1H0WTlMLBselgEwCFQZmNrxzjsOA30V7Nhe4FPnq0AbF/XmhFBDNue0C/
+	 0sVlpYKQ0y2vVXWlF468pzrE3dLGrkfAwQlpwr2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+6966546b78d050bb0b5d@syzkaller.appspotmail.com
-Subject: [PATCH 6.5 110/163] net: usb: smsc75xx: Fix uninit-value access in __smsc75xx_read_reg
-Date: Mon,  9 Oct 2023 15:01:14 +0200
-Message-ID: <20231009130127.061478768@linuxfoundation.org>
+	Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 111/163] ethtool: plca: fix plca enable data type while parsing the value
+Date: Mon,  9 Oct 2023 15:01:15 +0200
+Message-ID: <20231009130127.089096435@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -44,97 +43,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>
 
-[ Upstream commit e9c65989920f7c28775ec4e0c11b483910fb67b8 ]
+[ Upstream commit 8957261cd8149ed9d0738c01c0320bcbff989407 ]
 
-syzbot reported the following uninit-value access issue:
+The ETHTOOL_A_PLCA_ENABLED data type is u8. But while parsing the
+value from the attribute, nla_get_u32() is used in the plca_update_sint()
+function instead of nla_get_u8(). So plca_cfg.enabled variable is updated
+with some garbage value instead of 0 or 1 and always enables plca even
+though plca is disabled through ethtool application. This bug has been
+fixed by parsing the values based on the attributes type in the policy.
 
-=====================================================
-BUG: KMSAN: uninit-value in smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:975 [inline]
-BUG: KMSAN: uninit-value in smsc75xx_bind+0x5c9/0x11e0 drivers/net/usb/smsc75xx.c:1482
-CPU: 0 PID: 8696 Comm: kworker/0:3 Not tainted 5.8.0-rc5-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: usb_hub_wq hub_event
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x21c/0x280 lib/dump_stack.c:118
- kmsan_report+0xf7/0x1e0 mm/kmsan/kmsan_report.c:121
- __msan_warning+0x58/0xa0 mm/kmsan/kmsan_instr.c:215
- smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:975 [inline]
- smsc75xx_bind+0x5c9/0x11e0 drivers/net/usb/smsc75xx.c:1482
- usbnet_probe+0x1152/0x3f90 drivers/net/usb/usbnet.c:1737
- usb_probe_interface+0xece/0x1550 drivers/usb/core/driver.c:374
- really_probe+0xf20/0x20b0 drivers/base/dd.c:529
- driver_probe_device+0x293/0x390 drivers/base/dd.c:701
- __device_attach_driver+0x63f/0x830 drivers/base/dd.c:807
- bus_for_each_drv+0x2ca/0x3f0 drivers/base/bus.c:431
- __device_attach+0x4e2/0x7f0 drivers/base/dd.c:873
- device_initial_probe+0x4a/0x60 drivers/base/dd.c:920
- bus_probe_device+0x177/0x3d0 drivers/base/bus.c:491
- device_add+0x3b0e/0x40d0 drivers/base/core.c:2680
- usb_set_configuration+0x380f/0x3f10 drivers/usb/core/message.c:2032
- usb_generic_driver_probe+0x138/0x300 drivers/usb/core/generic.c:241
- usb_probe_device+0x311/0x490 drivers/usb/core/driver.c:272
- really_probe+0xf20/0x20b0 drivers/base/dd.c:529
- driver_probe_device+0x293/0x390 drivers/base/dd.c:701
- __device_attach_driver+0x63f/0x830 drivers/base/dd.c:807
- bus_for_each_drv+0x2ca/0x3f0 drivers/base/bus.c:431
- __device_attach+0x4e2/0x7f0 drivers/base/dd.c:873
- device_initial_probe+0x4a/0x60 drivers/base/dd.c:920
- bus_probe_device+0x177/0x3d0 drivers/base/bus.c:491
- device_add+0x3b0e/0x40d0 drivers/base/core.c:2680
- usb_new_device+0x1bd4/0x2a30 drivers/usb/core/hub.c:2554
- hub_port_connect drivers/usb/core/hub.c:5208 [inline]
- hub_port_connect_change drivers/usb/core/hub.c:5348 [inline]
- port_event drivers/usb/core/hub.c:5494 [inline]
- hub_event+0x5e7b/0x8a70 drivers/usb/core/hub.c:5576
- process_one_work+0x1688/0x2140 kernel/workqueue.c:2269
- worker_thread+0x10bc/0x2730 kernel/workqueue.c:2415
- kthread+0x551/0x590 kernel/kthread.c:292
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:293
-
-Local variable ----buf.i87@smsc75xx_bind created at:
- __smsc75xx_read_reg drivers/net/usb/smsc75xx.c:83 [inline]
- smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:968 [inline]
- smsc75xx_bind+0x485/0x11e0 drivers/net/usb/smsc75xx.c:1482
- __smsc75xx_read_reg drivers/net/usb/smsc75xx.c:83 [inline]
- smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:968 [inline]
- smsc75xx_bind+0x485/0x11e0 drivers/net/usb/smsc75xx.c:1482
-
-This issue is caused because usbnet_read_cmd() reads less bytes than requested
-(zero byte in the reproducer). In this case, 'buf' is not properly filled.
-
-This patch fixes the issue by returning -ENODATA if usbnet_read_cmd() reads
-less bytes than requested.
-
-Fixes: d0cad871703b ("smsc75xx: SMSC LAN75xx USB gigabit ethernet adapter driver")
-Reported-and-tested-by: syzbot+6966546b78d050bb0b5d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6966546b78d050bb0b5d
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230923173549.3284502-1-syoshida@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8580e16c28f3 ("net/ethtool: add netlink interface for the PLCA RS")
+Signed-off-by: Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230908044548.5878-1-Parthiban.Veerasooran@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc75xx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ethtool/plca.c | 45 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
-index 5d6454fedb3f1..78ad2da3ee29b 100644
---- a/drivers/net/usb/smsc75xx.c
-+++ b/drivers/net/usb/smsc75xx.c
-@@ -90,7 +90,9 @@ static int __must_check __smsc75xx_read_reg(struct usbnet *dev, u32 index,
- 	ret = fn(dev, USB_VENDOR_REQUEST_READ_REGISTER, USB_DIR_IN
- 		 | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
- 		 0, index, &buf, 4);
--	if (unlikely(ret < 0)) {
-+	if (unlikely(ret < 4)) {
-+		ret = ret < 0 ? ret : -ENODATA;
+diff --git a/net/ethtool/plca.c b/net/ethtool/plca.c
+index 5a8cab4df0c9c..a9334937ace26 100644
+--- a/net/ethtool/plca.c
++++ b/net/ethtool/plca.c
+@@ -21,16 +21,6 @@ struct plca_reply_data {
+ #define PLCA_REPDATA(__reply_base) \
+ 	container_of(__reply_base, struct plca_reply_data, base)
+ 
+-static void plca_update_sint(int *dst, const struct nlattr *attr,
+-			     bool *mod)
+-{
+-	if (!attr)
+-		return;
+-
+-	*dst = nla_get_u32(attr);
+-	*mod = true;
+-}
+-
+ // PLCA get configuration message ------------------------------------------- //
+ 
+ const struct nla_policy ethnl_plca_get_cfg_policy[] = {
+@@ -38,6 +28,29 @@ const struct nla_policy ethnl_plca_get_cfg_policy[] = {
+ 		NLA_POLICY_NESTED(ethnl_header_policy),
+ };
+ 
++static void plca_update_sint(int *dst, struct nlattr **tb, u32 attrid,
++			     bool *mod)
++{
++	const struct nlattr *attr = tb[attrid];
 +
- 		netdev_warn(dev->net, "Failed to read reg index 0x%08x: %d\n",
- 			    index, ret);
- 		return ret;
++	if (!attr ||
++	    WARN_ON_ONCE(attrid >= ARRAY_SIZE(ethnl_plca_set_cfg_policy)))
++		return;
++
++	switch (ethnl_plca_set_cfg_policy[attrid].type) {
++	case NLA_U8:
++		*dst = nla_get_u8(attr);
++		break;
++	case NLA_U32:
++		*dst = nla_get_u32(attr);
++		break;
++	default:
++		WARN_ON_ONCE(1);
++	}
++
++	*mod = true;
++}
++
+ static int plca_get_cfg_prepare_data(const struct ethnl_req_info *req_base,
+ 				     struct ethnl_reply_data *reply_base,
+ 				     struct genl_info *info)
+@@ -144,13 +157,13 @@ ethnl_set_plca(struct ethnl_req_info *req_info, struct genl_info *info)
+ 		return -EOPNOTSUPP;
+ 
+ 	memset(&plca_cfg, 0xff, sizeof(plca_cfg));
+-	plca_update_sint(&plca_cfg.enabled, tb[ETHTOOL_A_PLCA_ENABLED], &mod);
+-	plca_update_sint(&plca_cfg.node_id, tb[ETHTOOL_A_PLCA_NODE_ID], &mod);
+-	plca_update_sint(&plca_cfg.node_cnt, tb[ETHTOOL_A_PLCA_NODE_CNT], &mod);
+-	plca_update_sint(&plca_cfg.to_tmr, tb[ETHTOOL_A_PLCA_TO_TMR], &mod);
+-	plca_update_sint(&plca_cfg.burst_cnt, tb[ETHTOOL_A_PLCA_BURST_CNT],
++	plca_update_sint(&plca_cfg.enabled, tb, ETHTOOL_A_PLCA_ENABLED, &mod);
++	plca_update_sint(&plca_cfg.node_id, tb, ETHTOOL_A_PLCA_NODE_ID, &mod);
++	plca_update_sint(&plca_cfg.node_cnt, tb, ETHTOOL_A_PLCA_NODE_CNT, &mod);
++	plca_update_sint(&plca_cfg.to_tmr, tb, ETHTOOL_A_PLCA_TO_TMR, &mod);
++	plca_update_sint(&plca_cfg.burst_cnt, tb, ETHTOOL_A_PLCA_BURST_CNT,
+ 			 &mod);
+-	plca_update_sint(&plca_cfg.burst_tmr, tb[ETHTOOL_A_PLCA_BURST_TMR],
++	plca_update_sint(&plca_cfg.burst_tmr, tb, ETHTOOL_A_PLCA_BURST_TMR,
+ 			 &mod);
+ 	if (!mod)
+ 		return 0;
 -- 
 2.40.1
 
