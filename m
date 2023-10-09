@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA631A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B076E1A5A3
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgR3wJ88"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07981C433C9;
-	Mon,  9 Oct 2023 13:18:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="etNLBMI3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA57C433CC;
+	Mon,  9 Oct 2023 13:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857484;
-	bh=a6I3fxdkVhEGTRBvBYJSyc1ezwwOLsQNjVLSDl+auc4=;
+	s=korg; t=1696857487;
+	bh=Yx/4D6cbCN0jiD9AaJKgnRh0qrD5mTyVTFJox4bd/0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgR3wJ88BjBZc5iJ+XVu2a3rb+1kbofIT8bPjeldLqvaD9aQCRHlNEEXmF2ylhd9d
-	 DS0Nbr97bvo11E6xWtUufF8ZO39xvihxdTyaqT7o+zzVKXpw/0Xs0J407k0LAQHVMy
-	 L9p2JJjz+GkItQY0y+li7tFyxJSQz8/ofsVQIUKM=
+	b=etNLBMI3SjQNPpcRmw7qoRb5MzNMHnEqgC14PH+VZ7WdoJDG062xfMwpybCLkokdf
+	 oHiBEe2igFPMFgIZn421xWjZVJAY2+Z8mZJ4sGfX487BthZ6E8OmHZwa9dBCL1rAyV
+	 Fz0PPlaUo4A+d+8mMjv2Tzc6GuyioV5uLTA56c9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 061/162] Bluetooth: hci_sync: Fix handling of HCI_QUIRK_STRICT_DUPLICATE_FILTER
-Date: Mon,  9 Oct 2023 15:00:42 +0200
-Message-ID: <20231009130124.613660267@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.1 062/162] wifi: mwifiex: Fix tlv_buf_left calculation
+Date: Mon,  9 Oct 2023 15:00:43 +0200
+Message-ID: <20231009130124.639824575@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -40,59 +42,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit 941c998b42f5c90384f49da89a6e11233de567cf upstream.
+commit eec679e4ac5f47507774956fb3479c206e761af7 upstream.
 
-When HCI_QUIRK_STRICT_DUPLICATE_FILTER is set LE scanning requires
-periodic restarts of the scanning procedure as the controller would
-consider device previously found as duplicated despite of RSSI changes,
-but in order to set the scan timeout properly set le_scan_restart needs
-to be synchronous so it shall not use hci_cmd_sync_queue which defers
-the command processing to cmd_sync_work.
+In a TLV encoding scheme, the Length part represents the length after
+the header containing the values for type and length. In this case,
+`tlv_len` should be:
 
+tlv_len == (sizeof(*tlv_rxba) - 1) - sizeof(tlv_rxba->header) + tlv_bitmap_len
+
+Notice that the `- 1` accounts for the one-element array `bitmap`, which
+1-byte size is already included in `sizeof(*tlv_rxba)`.
+
+So, if the above is correct, there is a double-counting of some members
+in `struct mwifiex_ie_types_rxba_sync`, when `tlv_buf_left` and `tmp`
+are calculated:
+
+968                 tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
+969                 tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
+
+in specific, members:
+
+drivers/net/wireless/marvell/mwifiex/fw.h:777
+ 777         u8 mac[ETH_ALEN];
+ 778         u8 tid;
+ 779         u8 reserved;
+ 780         __le16 seq_num;
+ 781         __le16 bitmap_len;
+
+This is clearly wrong, and affects the subsequent decoding of data in
+`event_buf` through `tlv_rxba`:
+
+970                 tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
+
+Fix this by using `sizeof(tlv_rxba->header)` instead of `sizeof(*tlv_rxba)`
+in the calculation of `tlv_buf_left` and `tmp`.
+
+This results in the following binary differences before/after changes:
+
+| drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
+| @@ -4698,11 +4698,11 @@
+|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:968
+|                 tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
+| -    1da7:      lea    -0x11(%rbx),%edx
+| +    1da7:      lea    -0x4(%rbx),%edx
+|      1daa:      movzwl %bp,%eax
+|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:969
+|                 tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
+| -    1dad:      lea    0x11(%r15,%rbp,1),%r15
+| +    1dad:      lea    0x4(%r15,%rbp,1),%r15
+
+The above reflects the desired change: avoid counting 13 too many bytes;
+which is the total size of the double-counted members in
+`struct mwifiex_ie_types_rxba_sync`:
+
+$ pahole -C mwifiex_ie_types_rxba_sync drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
+struct mwifiex_ie_types_rxba_sync {
+	struct mwifiex_ie_types_header header;           /*     0     4 */
+
+     |-----------------------------------------------------------------------
+     |  u8                         mac[6];               /*     4     6 */  |
+     |	u8                         tid;                  /*    10     1 */  |
+     |  u8                         reserved;             /*    11     1 */  |
+     | 	__le16                     seq_num;              /*    12     2 */  |
+     | 	__le16                     bitmap_len;           /*    14     2 */  |
+     |  u8                         bitmap[1];            /*    16     1 */  |
+     |----------------------------------------------------------------------|
+								  | 13 bytes|
+								  -----------
+
+	/* size: 17, cachelines: 1, members: 7 */
+	/* last cacheline: 17 bytes */
+} __attribute__((__packed__));
+
+Fixes: 99ffe72cdae4 ("mwifiex: process rxba_sync event")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-bluetooth/578e6d7afd676129decafba846a933f5@agner.ch/#t
-Fixes: 27d54b778ad1 ("Bluetooth: Rework le_scan_restart for hci_sync")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/06668edd68e7a26bbfeebd1201ae077a2a7a8bce.1692931954.git.gustavoars@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |   13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -412,11 +412,6 @@ static int hci_le_scan_restart_sync(stru
- 					   LE_SCAN_FILTER_DUP_ENABLE);
- }
+--- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
+@@ -965,8 +965,8 @@ void mwifiex_11n_rxba_sync_event(struct
+ 			}
+ 		}
  
--static int le_scan_restart_sync(struct hci_dev *hdev, void *data)
--{
--	return hci_le_scan_restart_sync(hdev);
--}
--
- static void le_scan_restart(struct work_struct *work)
- {
- 	struct hci_dev *hdev = container_of(work, struct hci_dev,
-@@ -426,15 +421,15 @@ static void le_scan_restart(struct work_
- 
- 	bt_dev_dbg(hdev, "");
- 
--	hci_dev_lock(hdev);
--
--	status = hci_cmd_sync_queue(hdev, le_scan_restart_sync, NULL, NULL);
-+	status = hci_le_scan_restart_sync(hdev);
- 	if (status) {
- 		bt_dev_err(hdev, "failed to restart LE scan: status %d",
- 			   status);
--		goto unlock;
-+		return;
+-		tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
+-		tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
++		tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
++		tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
+ 		tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
  	}
- 
-+	hci_dev_lock(hdev);
-+
- 	if (!test_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks) ||
- 	    !hdev->discovery.scan_start)
- 		goto unlock;
+ }
 
 
