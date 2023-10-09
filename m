@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FC218B00
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B83F18B00
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fubnozmt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65BEC433C8;
-	Mon,  9 Oct 2023 13:08:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwdaW47y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F15C433C9;
+	Mon,  9 Oct 2023 13:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696856937;
-	bh=V8k+XCkyYALXfFZIleB3o2ktVfhef9/bBfb4UVUUu7U=;
+	s=korg; t=1696856940;
+	bh=1rR7IWpq5wrNO1SoApJ0zJbyQ+FUa8PIiGaP6NS7O7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fubnozmtu4Djz7Ig++hvwhXpazHOn8/wV6UMGVFAe96irQlvifMdbL9XhgadQOVUr
-	 jZCDTu3Tka7icv13eBnKgqCA5kTS18q43rUexoY2ManpnclMrBG1+QnAidu9QYvxt3
-	 W3pFEy5OKY91FxJT2vlK+Bk3oyV1u450I8/2rMco=
+	b=YwdaW47y9MZg9tEYqZpBNodhOQ7HFiK1/XljykBL/Q5O3dlNV156QVdFopOkdjVQl
+	 LVehJrie+Q7xEOeZz+VYME64u5B9lZcIIQ3k0cYr2Cn8b5ldBm8GFEOZv0Qq/c2cX3
+	 pFvpZ4qIipD/sKS5RCpPkEE5AHpwEKtaTh2F+1aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Geliang Tang <geliang.tang@suse.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.5 033/163] mptcp: userspace pm allow creating id 0 subflow
-Date: Mon,  9 Oct 2023 14:59:57 +0200
-Message-ID: <20231009130124.918008449@linuxfoundation.org>
+	Mark Blakeney <mark.blakeney@bullet-systems.net>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: [PATCH 6.5 042/163] PCI/PM: Mark devices disconnected if upstream PCIe link is down on resume
+Date: Mon,  9 Oct 2023 15:00:06 +0200
+Message-ID: <20231009130125.179194885@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -43,45 +43,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <geliang.tang@suse.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit e5ed101a602873d65d2d64edaba93e8c73ec1b0f upstream.
+commit c82458101d5490230d735caecce14c9c27b1010c upstream.
 
-This patch drops id 0 limitation in mptcp_nl_cmd_sf_create() to allow
-creating additional subflows with the local addr ID 0.
+Mark Blakeney reported that when suspending system with a Thunderbolt
+dock connected and then unplugging the dock before resume (which is
+pretty normal flow with laptops), resuming takes long time.
 
-There is no reason not to allow additional subflows from this local
-address: we should be able to create new subflows from the initial
-endpoint. This limitation was breaking fullmesh support from userspace.
+What happens is that the PCIe link from the root port to the PCIe switch
+inside the Thunderbolt device does not train (as expected, the link is
+unplugged):
 
-Fixes: 702c2f646d42 ("mptcp: netlink: allow userspace-driven subflow establishment")
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/391
-Cc: stable@vger.kernel.org
-Suggested-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Geliang Tang <geliang.tang@suse.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20231004-send-net-20231004-v1-2-28de4ac663ae@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  pcieport 0000:00:07.2: restoring config space at offset 0x24 (was 0x3bf12001, writing 0x3bf12001)
+  pcieport 0000:00:07.0: waiting 100 ms for downstream link
+  pcieport 0000:01:00.0: not ready 1023ms after resume; giving up
+
+However, at this point we still try to resume the devices below that
+unplugged link:
+
+  pcieport 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
+  ...
+  pcieport 0000:01:00.0: restoring config space at offset 0x38 (was 0xffffffff, writing 0x0)
+  ...
+  pcieport 0000:02:02.0: waiting 100 ms for downstream link, after activation
+
+And this is the link from PCIe switch downstream port to the xHCI on the
+dock:
+
+  xhci_hcd 0000:03:00.0: not ready 65535ms after resume; giving up
+  xhci_hcd 0000:03:00.0: Unable to change power state from D3cold to D0, device inaccessible
+  xhci_hcd 0000:03:00.0: restoring config space at offset 0x3c (was 0xffffffff, writing 0x1ff)
+
+This ends up slowing down the resume time considerably. For this reason
+mark these devices as disconnected if the link above them did not train
+properly.
+
+Fixes: e8b908146d44 ("PCI/PM: Increase wait time after resume")
+Link: https://lore.kernel.org/r/20230918053041.1018876-1-mika.westerberg@linux.intel.com
+Reported-by: Mark Blakeney <mark.blakeney@bullet-systems.net>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217915
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org	# v6.4+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/pci/pci-driver.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -307,12 +307,6 @@ int mptcp_nl_cmd_sf_create(struct sk_buf
- 		goto create_err;
- 	}
+diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
+index a79c110c7e51..51ec9e7e784f 100644
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -572,7 +572,19 @@ static void pci_pm_default_resume_early(struct pci_dev *pci_dev)
  
--	if (addr_l.id == 0) {
--		NL_SET_ERR_MSG_ATTR(info->extack, laddr, "missing local addr id");
--		err = -EINVAL;
--		goto create_err;
--	}
--
- 	err = mptcp_pm_parse_addr(raddr, info, &addr_r);
- 	if (err < 0) {
- 		NL_SET_ERR_MSG_ATTR(info->extack, raddr, "error parsing remote addr");
+ static void pci_pm_bridge_power_up_actions(struct pci_dev *pci_dev)
+ {
+-	pci_bridge_wait_for_secondary_bus(pci_dev, "resume");
++	int ret;
++
++	ret = pci_bridge_wait_for_secondary_bus(pci_dev, "resume");
++	if (ret) {
++		/*
++		 * The downstream link failed to come up, so mark the
++		 * devices below as disconnected to make sure we don't
++		 * attempt to resume them.
++		 */
++		pci_walk_bus(pci_dev->subordinate, pci_dev_set_disconnected,
++			     NULL);
++		return;
++	}
+ 
+ 	/*
+ 	 * When powering on a bridge from D3cold, the whole hierarchy may be
+-- 
+2.42.0
+
 
 
