@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5241A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7568C1A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1f6Pec+p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2635C433C7;
-	Mon,  9 Oct 2023 13:21:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnT6Lfm1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38CFC433C9;
+	Mon,  9 Oct 2023 13:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857710;
-	bh=cVMNvs7Fe2NX/9BpiGCjnXL09FvI3ptIEWRHM1IP0fo=;
+	s=korg; t=1696857713;
+	bh=z5m1/VFwkEiEkiSTCA3DXHd8aUFEpgE94e3csaWk1t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1f6Pec+pd8xqm/YFCgwQb8OKjqOeUT9MsfN5DU4Zio/FxT/eF8Nt75Q5aWdtro5uM
-	 gkwDl/A/uMAHovNwnVDgpwMLJ3KNiffUFpb/eMa0m+Zq9mTHkgdDMalNjysi+DMPlD
-	 lDBoMNi8VU8zg9SYFcgm0o6PpOlQG7Hd/HOylqlI=
+	b=TnT6Lfm1S8Be9JIJIOaTOAId784+ypbcixMneyQ0VdES7NbljsSiYO7TSldKSlkYt
+	 PISxasXadu4j3Rxx+b7U4wbEUj6OQLq8s0KdAgRGsMUfSbs/6BGuExZ9M5QULnAoEJ
+	 TNOE7C8ss+Xa6UJg2zPp8nUkgtQsE8b541dmKcQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauricio Faria de Oliveira <mfo@canonical.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/162] modpost: add missing else to the "of" check
-Date: Mon,  9 Oct 2023 15:01:26 +0200
-Message-ID: <20231009130125.820181115@linuxfoundation.org>
+Subject: [PATCH 6.1 106/162] net: fix possible store tearing in neigh_periodic_work()
+Date: Mon,  9 Oct 2023 15:01:27 +0200
+Message-ID: <20231009130125.847785531@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -42,52 +44,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauricio Faria de Oliveira <mfo@canonical.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cbc3d00cf88fda95dbcafee3b38655b7a8f2650a ]
+[ Upstream commit 25563b581ba3a1f263a00e8c9a97f5e7363be6fd ]
 
-Without this 'else' statement, an "usb" name goes into two handlers:
-the first/previous 'if' statement _AND_ the for-loop over 'devtable',
-but the latter is useless as it has no 'usb' device_id entry anyway.
+While looking at a related syzbot report involving neigh_periodic_work(),
+I found that I forgot to add an annotation when deleting an
+RCU protected item from a list.
 
-Tested with allmodconfig before/after patch; no changes to *.mod.c:
+Readers use rcu_deference(*np), we need to use either
+rcu_assign_pointer() or WRITE_ONCE() on writer side
+to prevent store tearing.
 
-    git checkout v6.6-rc3
-    make -j$(nproc) allmodconfig
-    make -j$(nproc) olddefconfig
+I use rcu_assign_pointer() to have lockdep support,
+this was the choice made in neigh_flush_dev().
 
-    make -j$(nproc)
-    find . -name '*.mod.c' | cpio -pd /tmp/before
-
-    # apply patch
-
-    make -j$(nproc)
-    find . -name '*.mod.c' | cpio -pd /tmp/after
-
-    diff -r /tmp/before/ /tmp/after/
-    # no difference
-
-Fixes: acbef7b76629 ("modpost: fix module autoloading for OF devices with generic compatible property")
-Signed-off-by: Mauricio Faria de Oliveira <mfo@canonical.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 767e97e1e0db ("neigh: RCU conversion of struct neighbour")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/file2alias.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/neighbour.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index 80d973144fded..111d5464c12df 100644
---- a/scripts/mod/file2alias.c
-+++ b/scripts/mod/file2alias.c
-@@ -1577,7 +1577,7 @@ void handle_moddevtable(struct module *mod, struct elf_info *info,
- 	/* First handle the "special" cases */
- 	if (sym_is(name, namelen, "usb"))
- 		do_usb_table(symval, sym->st_size, mod);
--	if (sym_is(name, namelen, "of"))
-+	else if (sym_is(name, namelen, "of"))
- 		do_of_table(symval, sym->st_size, mod);
- 	else if (sym_is(name, namelen, "pnp"))
- 		do_pnp_device_entry(symval, sym->st_size, mod);
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index 6c0f2149f2c72..8e726eb0548f6 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -988,7 +988,9 @@ static void neigh_periodic_work(struct work_struct *work)
+ 			    (state == NUD_FAILED ||
+ 			     !time_in_range_open(jiffies, n->used,
+ 						 n->used + NEIGH_VAR(n->parms, GC_STALETIME)))) {
+-				*np = n->next;
++				rcu_assign_pointer(*np,
++					rcu_dereference_protected(n->next,
++						lockdep_is_held(&tbl->lock)));
+ 				neigh_mark_dead(n);
+ 				write_unlock(&n->lock);
+ 				neigh_cleanup_and_release(n);
 -- 
 2.40.1
 
