@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E619A328DB
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDBC1A734
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AMS3uMkk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9A4C433C8;
-	Mon,  9 Oct 2023 13:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0RDH5vE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B0FC433C8;
+	Mon,  9 Oct 2023 13:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858096;
-	bh=4Cz+vTaK7K/GFT+WsOQZ8URSML/iWytNJw20OZSvxAY=;
+	s=korg; t=1696858100;
+	bh=xSfBmgZ7i/lAeGF7cMAphdmYzpQ/bOirs5AvE9E0kRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AMS3uMkkKc3MXuZMFvRV7uVnRFirlB+TinmD3WEAIj5KUEOXxBsbpJdO5b53E1PBK
-	 PPZAd5cy7waGE5w2XVbkXQ2JNc+uJ8mM5SPMBT013RV1dQl+alte0SRtTBIU0V8cGC
-	 HfO48SKmjeeQbJS6GEakGTzu7cZKs5AC5G8ty9Iw=
+	b=G0RDH5vEfDZi1kcESoVwjX3owpjSyTgWCXYP55nUuuRlwVDh6spbIPS9jBJSaJE1Z
+	 q9IWCnyBvah6AS/MUivSzQFW07POPq+j0b8viNfz1E943lnfralhBG22XvSnhaiFwT
+	 aTobEbsGTOLO0QLFKAUUIn4QIX62FEwX8DJSdBPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szuying Chen <Chloe_Chen@asmedia.com.tw>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Wang Jianchao <wangjianchao@kuaishou.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 004/131] ata: libahci: clear pending interrupt status
-Date: Mon,  9 Oct 2023 15:00:44 +0200
-Message-ID: <20231009130116.465060932@linuxfoundation.org>
+Subject: [PATCH 5.4 005/131] ext4: remove the group parameter of ext4_trim_extent
+Date: Mon,  9 Oct 2023 15:00:45 +0200
+Message-ID: <20231009130116.496156572@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,99 +44,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Szuying Chen <chensiying21@gmail.com>
+From: Wang Jianchao <wangjianchao@kuaishou.com>
 
-[ Upstream commit 737dd811a3dbfd7edd4ad2ba5152e93d99074f83 ]
+[ Upstream commit bd2eea8d0a6b6a9aca22f20bf74f73b71d8808af ]
 
-When a CRC error occurs, the HBA asserts an interrupt to indicate an
-interface fatal error (PxIS.IFS). The ISR clears PxIE and PxIS, then
-does error recovery. If the adapter receives another SDB FIS
-with an error (PxIS.TFES) from the device before the start of the EH
-recovery process, the interrupt signaling the new SDB cannot be
-serviced as PxIE was cleared already. This in turn results in the HBA
-inability to issue any command during the error recovery process after
-setting PxCMD.ST to 1 because PxIS.TFES is still set.
+Get rid of the 'group' parameter of ext4_trim_extent as we can get
+it from the 'e4b'.
 
-According to AHCI 1.3.1 specifications section 6.2.2, fatal errors
-notified by setting PxIS.HBFS, PxIS.HBDS, PxIS.IFS or PxIS.TFES will
-cause the HBA to enter the ERR:Fatal state. In this state, the HBA
-shall not issue any new commands.
-
-To avoid this situation, introduce the function
-ahci_port_clear_pending_irq() to clear pending interrupts before
-executing a COMRESET. This follows the AHCI 1.3.1 - section 6.2.2.2
-specification.
-
-Signed-off-by: Szuying Chen <Chloe_Chen@asmedia.com.tw>
-Fixes: e0bfd149973d ("[PATCH] ahci: stop engine during hard reset")
-Cc: stable@vger.kernel.org
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Signed-off-by: Wang Jianchao <wangjianchao@kuaishou.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20210724074124.25731-2-jianchao.wan9@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 45e4ab320c9b ("ext4: move setting of trimmed bit into ext4_try_to_trim_range()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libahci.c | 35 +++++++++++++++++++++++------------
- 1 file changed, 23 insertions(+), 12 deletions(-)
+ fs/ext4/mballoc.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
-index fec2e9754aed2..61b5ba8dc1d21 100644
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -1199,6 +1199,26 @@ static ssize_t ahci_activity_show(struct ata_device *dev, char *buf)
- 	return sprintf(buf, "%d\n", emp->blink_policy);
- }
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index be5c2e53b636e..9b4af51c99da4 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -5159,19 +5159,19 @@ int ext4_group_add_blocks(handle_t *handle, struct super_block *sb,
+  * @sb:		super block for the file system
+  * @start:	starting block of the free extent in the alloc. group
+  * @count:	number of blocks to TRIM
+- * @group:	alloc. group we are working with
+  * @e4b:	ext4 buddy for the group
+  *
+  * Trim "count" blocks starting at "start" in the "group". To assure that no
+  * one will allocate those blocks, mark it as used in buddy bitmap. This must
+  * be called with under the group lock.
+  */
+-static int ext4_trim_extent(struct super_block *sb, int start, int count,
+-			     ext4_group_t group, struct ext4_buddy *e4b)
++static int ext4_trim_extent(struct super_block *sb,
++		int start, int count, struct ext4_buddy *e4b)
+ __releases(bitlock)
+ __acquires(bitlock)
+ {
+ 	struct ext4_free_extent ex;
++	ext4_group_t group = e4b->bd_group;
+ 	int ret = 0;
  
-+static void ahci_port_clear_pending_irq(struct ata_port *ap)
-+{
-+	struct ahci_host_priv *hpriv = ap->host->private_data;
-+	void __iomem *port_mmio = ahci_port_base(ap);
-+	u32 tmp;
-+
-+	/* clear SError */
-+	tmp = readl(port_mmio + PORT_SCR_ERR);
-+	dev_dbg(ap->host->dev, "PORT_SCR_ERR 0x%x\n", tmp);
-+	writel(tmp, port_mmio + PORT_SCR_ERR);
-+
-+	/* clear port IRQ */
-+	tmp = readl(port_mmio + PORT_IRQ_STAT);
-+	dev_dbg(ap->host->dev, "PORT_IRQ_STAT 0x%x\n", tmp);
-+	if (tmp)
-+		writel(tmp, port_mmio + PORT_IRQ_STAT);
-+
-+	writel(1 << ap->port_no, hpriv->mmio + HOST_IRQ_STAT);
-+}
-+
- static void ahci_port_init(struct device *dev, struct ata_port *ap,
- 			   int port_no, void __iomem *mmio,
- 			   void __iomem *port_mmio)
-@@ -1213,18 +1233,7 @@ static void ahci_port_init(struct device *dev, struct ata_port *ap,
- 	if (rc)
- 		dev_warn(dev, "%s (%d)\n", emsg, rc);
+ 	trace_ext4_trim_extent(sb, group, start, count);
+@@ -5247,8 +5247,7 @@ ext4_trim_all_free(struct super_block *sb, ext4_group_t group,
+ 		next = mb_find_next_bit(bitmap, max + 1, start);
  
--	/* clear SError */
--	tmp = readl(port_mmio + PORT_SCR_ERR);
--	VPRINTK("PORT_SCR_ERR 0x%x\n", tmp);
--	writel(tmp, port_mmio + PORT_SCR_ERR);
--
--	/* clear port IRQ */
--	tmp = readl(port_mmio + PORT_IRQ_STAT);
--	VPRINTK("PORT_IRQ_STAT 0x%x\n", tmp);
--	if (tmp)
--		writel(tmp, port_mmio + PORT_IRQ_STAT);
--
--	writel(1 << port_no, mmio + HOST_IRQ_STAT);
-+	ahci_port_clear_pending_irq(ap);
- 
- 	/* mark esata ports */
- 	tmp = readl(port_mmio + PORT_CMD);
-@@ -1554,6 +1563,8 @@ int ahci_do_hardreset(struct ata_link *link, unsigned int *class,
- 	tf.command = ATA_BUSY;
- 	ata_tf_to_fis(&tf, 0, 0, d2h_fis);
- 
-+	ahci_port_clear_pending_irq(ap);
-+
- 	rc = sata_link_hardreset(link, timing, deadline, online,
- 				 ahci_check_ready);
- 
+ 		if ((next - start) >= minblocks) {
+-			ret = ext4_trim_extent(sb, start,
+-					       next - start, group, &e4b);
++			ret = ext4_trim_extent(sb, start, next - start, &e4b);
+ 			if (ret && ret != -EOPNOTSUPP)
+ 				break;
+ 			ret = 0;
 -- 
 2.40.1
 
