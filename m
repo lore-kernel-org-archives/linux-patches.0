@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8FD1A71F
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068181A735
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNB9+iF6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 470D5C433C9;
-	Mon,  9 Oct 2023 13:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdOtbUiE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7477DC433C7;
+	Mon,  9 Oct 2023 13:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858340;
-	bh=xTEMdIENcsn3t7MG2NvoLUMdLZqD+dsdAC5GyLtmL1k=;
+	s=korg; t=1696858343;
+	bh=b4kTax/GDPurPKk1Ie1ZqIVaKIFwhqFlx7JUK8J7iR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MNB9+iF6Vd1aPXLtqS31BlgUOSjheDhzM4Sm59mdcnMAxe/zdtLh0s0j8OA6HLEy6
-	 R7AHo8pMtblC6NNz/iT7V01ipqgqwasMz98wyKI9/vs+MLK+5zn957PTSC5UXTHc/z
-	 I0x/zrbfol9+GeQFoQxx5iKLogOE9kLdUG2xQ4JQ=
+	b=bdOtbUiEYs0DxAKMlZg60eumwtkzCQIIdhxeh3m32zntDyJlab6Cj6jvIhejzIhps
+	 7j8sLycEXJMhezf0Q9FG5CcwuWTz0hNVR/OjFjGDa4P8Nxrs8zqTZ03R2h26IEMvER
+	 yn5Wf4wh/V3glsSkkMU+Wiwsx+Lz9mYQz0VnPWoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pan Bian <bianpan2016@163.com>,
-	Ferry Meng <mengferry@linux.alibaba.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 074/131] nilfs2: fix potential use after free in nilfs_gccache_submit_read_data()
-Date: Mon,  9 Oct 2023 15:01:54 +0200
-Message-ID: <20231009130118.582853038@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.4 092/131] qed/red_ll2: Fix undefined behavior bug in struct qed_ll2_info
+Date: Mon,  9 Oct 2023 15:02:12 +0200
+Message-ID: <20231009130119.198288736@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,61 +43,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pan Bian <bianpan2016@163.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit 7ee29facd8a9c5a26079148e36bcf07141b3a6bc upstream.
+commit eea03d18af9c44235865a4bc9bec4d780ef6cf21 upstream.
 
-In nilfs_gccache_submit_read_data(), brelse(bh) is called to drop the
-reference count of bh when the call to nilfs_dat_translate() fails.  If
-the reference count hits 0 and its owner page gets unlocked, bh may be
-freed.  However, bh->b_page is dereferenced to put the page after that,
-which may result in a use-after-free bug.  This patch moves the release
-operation after unlocking and putting the page.
+The flexible structure (a structure that contains a flexible-array member
+at the end) `qed_ll2_tx_packet` is nested within the second layer of
+`struct qed_ll2_info`:
 
-NOTE: The function in question is only called in GC, and in combination
-with current userland tools, address translation using DAT does not occur
-in that function, so the code path that causes this issue will not be
-executed.  However, it is possible to run that code path by intentionally
-modifying the userland GC library or by calling the GC ioctl directly.
+struct qed_ll2_tx_packet {
+	...
+        /* Flexible Array of bds_set determined by max_bds_per_packet */
+        struct {
+                struct core_tx_bd *txq_bd;
+                dma_addr_t tx_frag;
+                u16 frag_len;
+        } bds_set[];
+};
 
-[konishi.ryusuke@gmail.com: NOTE added to the commit log]
-Link: https://lkml.kernel.org/r/1543201709-53191-1-git-send-email-bianpan2016@163.com
-Link: https://lkml.kernel.org/r/20230921141731.10073-1-konishi.ryusuke@gmail.com
-Fixes: a3d93f709e89 ("nilfs2: block cache for garbage collection")
-Signed-off-by: Pan Bian <bianpan2016@163.com>
-Reported-by: Ferry Meng <mengferry@linux.alibaba.com>
-Closes: https://lkml.kernel.org/r/20230818092022.111054-1-mengferry@linux.alibaba.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+struct qed_ll2_tx_queue {
+	...
+	struct qed_ll2_tx_packet cur_completing_packet;
+};
+
+struct qed_ll2_info {
+	...
+	struct qed_ll2_tx_queue tx_queue;
+        struct qed_ll2_cbs cbs;
+};
+
+The problem is that member `cbs` in `struct qed_ll2_info` is placed just
+after an object of type `struct qed_ll2_tx_queue`, which is in itself
+an implicit flexible structure, which by definition ends in a flexible
+array member, in this case `bds_set`. This causes an undefined behavior
+bug at run-time when dynamic memory is allocated for `bds_set`, which
+could lead to a serious issue if `cbs` in `struct qed_ll2_info` is
+overwritten by the contents of `bds_set`. Notice that the type of `cbs`
+is a structure full of function pointers (and a cookie :) ):
+
+include/linux/qed/qed_ll2_if.h:
+107 typedef
+108 void (*qed_ll2_complete_rx_packet_cb)(void *cxt,
+109                                       struct qed_ll2_comp_rx_data *data);
+110
+111 typedef
+112 void (*qed_ll2_release_rx_packet_cb)(void *cxt,
+113                                      u8 connection_handle,
+114                                      void *cookie,
+115                                      dma_addr_t rx_buf_addr,
+116                                      bool b_last_packet);
+117
+118 typedef
+119 void (*qed_ll2_complete_tx_packet_cb)(void *cxt,
+120                                       u8 connection_handle,
+121                                       void *cookie,
+122                                       dma_addr_t first_frag_addr,
+123                                       bool b_last_fragment,
+124                                       bool b_last_packet);
+125
+126 typedef
+127 void (*qed_ll2_release_tx_packet_cb)(void *cxt,
+128                                      u8 connection_handle,
+129                                      void *cookie,
+130                                      dma_addr_t first_frag_addr,
+131                                      bool b_last_fragment, bool b_last_packet);
+132
+133 typedef
+134 void (*qed_ll2_slowpath_cb)(void *cxt, u8 connection_handle,
+135                             u32 opaque_data_0, u32 opaque_data_1);
+136
+137 struct qed_ll2_cbs {
+138         qed_ll2_complete_rx_packet_cb rx_comp_cb;
+139         qed_ll2_release_rx_packet_cb rx_release_cb;
+140         qed_ll2_complete_tx_packet_cb tx_comp_cb;
+141         qed_ll2_release_tx_packet_cb tx_release_cb;
+142         qed_ll2_slowpath_cb slowpath_cb;
+143         void *cookie;
+144 };
+
+Fix this by moving the declaration of `cbs` to the  middle of its
+containing structure `qed_ll2_info`, preventing it from being
+overwritten by the contents of `bds_set` at run-time.
+
+This bug was introduced in 2017, when `bds_set` was converted to a
+one-element array, and started to be used as a Variable Length Object
+(VLO) at run-time.
+
+Fixes: f5823fe6897c ("qed: Add ll2 option to limit the number of bds per packet")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/ZQ+Nz8DfPg56pIzr@work
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/gcinode.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/qlogic/qed/qed_ll2.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nilfs2/gcinode.c
-+++ b/fs/nilfs2/gcinode.c
-@@ -73,10 +73,8 @@ int nilfs_gccache_submit_read_data(struc
- 		struct the_nilfs *nilfs = inode->i_sb->s_fs_info;
+--- a/drivers/net/ethernet/qlogic/qed/qed_ll2.h
++++ b/drivers/net/ethernet/qlogic/qed/qed_ll2.h
+@@ -123,9 +123,9 @@ struct qed_ll2_info {
+ 	enum core_tx_dest tx_dest;
+ 	u8 tx_stats_en;
+ 	bool main_func_queue;
++	struct qed_ll2_cbs cbs;
+ 	struct qed_ll2_rx_queue rx_queue;
+ 	struct qed_ll2_tx_queue tx_queue;
+-	struct qed_ll2_cbs cbs;
+ };
  
- 		err = nilfs_dat_translate(nilfs->ns_dat, vbn, &pbn);
--		if (unlikely(err)) { /* -EIO, -ENOMEM, -ENOENT */
--			brelse(bh);
-+		if (unlikely(err)) /* -EIO, -ENOMEM, -ENOENT */
- 			goto failed;
--		}
- 	}
- 
- 	lock_buffer(bh);
-@@ -102,6 +100,8 @@ int nilfs_gccache_submit_read_data(struc
-  failed:
- 	unlock_page(bh->b_page);
- 	put_page(bh->b_page);
-+	if (unlikely(err))
-+		brelse(bh);
- 	return err;
- }
- 
+ /**
 
 
