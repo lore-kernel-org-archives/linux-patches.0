@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7BC199BB
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A361A71F
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAlRrguE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95182C433C9;
-	Mon,  9 Oct 2023 13:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Px6hvJ30"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A3DC433C7;
+	Mon,  9 Oct 2023 13:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858271;
-	bh=9SXpDgbjuf1kBx7tGZeOhHDJs7zTnnf4mReOo+bCELI=;
+	s=korg; t=1696858274;
+	bh=F3RgM7v6xmZDEsTEQJwUT6FQPsDSfVu8LkF5owOo4dE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zAlRrguEC9RHaXNH6DAO95kQz72ux9kWyZOneg64GWq/2WViHarvAzdGe/5OiPj7H
-	 T2XTmIa5kiO2HB++1zvSNxo8N1yx0hdDv6r5aPtktfscEi7Zg5inYVh6y9/7NCQwX5
-	 cxwwd7g9OtGFbogioGgVhv20W0iX/Iz170Odztd0=
+	b=Px6hvJ30TNy/kY5yiyOlI4hFlFa7Yt9ZnSZC8uahFlHBhxKRIQBBmOoeIHepI9uLq
+	 3DLE0mddzhSfdZDGSv5fQfz9/5oh0ehydu2qKkchrcPgshsf9LvguKOA1oaNgPL43w
+	 K7V8ImTwy8goZR9UO+hA7VvO8I77mQl8WUg2XtXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Assmann <sassmann@kpanic.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Aaron Brown <aaron.f.brown@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 069/131] i40e: fix return of uninitialized aq_ret in i40e_set_vsi_promisc
-Date: Mon,  9 Oct 2023 15:01:49 +0200
-Message-ID: <20231009130118.410314174@linuxfoundation.org>
+Subject: [PATCH 5.4 070/131] smack: Record transmuting in smk_transmuted
+Date: Mon,  9 Oct 2023 15:01:50 +0200
+Message-ID: <20231009130118.442249106@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -38,81 +36,130 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Assmann <sassmann@kpanic.de>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit e1e1b5356eb48dce4307f5cae10e4d6d5bd3df74 ]
+[ Upstream commit 2c085f3a8f23c9b444e8b99d93c15d7ce870fc4e ]
 
-drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c: In function ‘i40e_set_vsi_promisc’:
-drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c:1176:14: error: ‘aq_ret’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
-  i40e_status aq_ret;
+smack_dentry_create_files_as() determines whether transmuting should occur
+based on the label of the parent directory the new inode will be added to,
+and not the label of the directory where it is created.
 
-In case the code inside the if statement and the for loop does not get
-executed aq_ret will be uninitialized when the variable gets returned at
-the end of the function.
+This helps for example to do transmuting on overlayfs, since the latter
+first creates the inode in the working directory, and then moves it to the
+correct destination.
 
-Avoid this by changing num_vlans from int to u16, so aq_ret always gets
-set. Making this change in additional places as num_vlans should never
-be negative.
+However, despite smack_dentry_create_files_as() provides the correct label,
+smack_inode_init_security() does not know from passed information whether
+or not transmuting occurred. Without this information,
+smack_inode_init_security() cannot set SMK_INODE_CHANGED in smk_flags,
+which will result in the SMACK64TRANSMUTE xattr not being set in
+smack_d_instantiate().
 
-Fixes: 37d318d7805f ("i40e: Remove scheduling while atomic possibility")
-Signed-off-by: Stefan Assmann <sassmann@kpanic.de>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Tested-by: Aaron Brown <aaron.f.brown@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Thus, add the smk_transmuted field to the task_smack structure, and set it
+in smack_dentry_create_files_as() to smk_task if transmuting occurred. If
+smk_task is equal to smk_transmuted in smack_inode_init_security(), act as
+if transmuting was successful but without taking the label from the parent
+directory (the inode label was already set correctly from the current
+credentials in smack_inode_alloc_security()).
+
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ security/smack/smack.h     |  1 +
+ security/smack/smack_lsm.c | 41 +++++++++++++++++++++++++++-----------
+ 2 files changed, 30 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 30abaf939a76f..37ce764ed3730 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -1125,7 +1125,7 @@ static int i40e_quiesce_vf_pci(struct i40e_vf *vf)
- static int __i40e_getnum_vf_vsi_vlan_filters(struct i40e_vsi *vsi)
+diff --git a/security/smack/smack.h b/security/smack/smack.h
+index 335d2411abe45..a567b3808184d 100644
+--- a/security/smack/smack.h
++++ b/security/smack/smack.h
+@@ -117,6 +117,7 @@ struct inode_smack {
+ struct task_smack {
+ 	struct smack_known	*smk_task;	/* label for access control */
+ 	struct smack_known	*smk_forked;	/* label when forked */
++	struct smack_known	*smk_transmuted;/* label when transmuted */
+ 	struct list_head	smk_rules;	/* per task access rules */
+ 	struct mutex		smk_rules_lock;	/* lock for the rules */
+ 	struct list_head	smk_relabel;	/* transit allowed labels */
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index 0253cd2e2358a..b8e040460ad28 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -982,8 +982,9 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 				     const struct qstr *qstr, const char **name,
+ 				     void **value, size_t *len)
  {
- 	struct i40e_mac_filter *f;
--	int num_vlans = 0, bkt;
-+	u16 num_vlans = 0, bkt;
++	struct task_smack *tsp = smack_cred(current_cred());
+ 	struct inode_smack *issp = smack_inode(inode);
+-	struct smack_known *skp = smk_of_current();
++	struct smack_known *skp = smk_of_task(tsp);
+ 	struct smack_known *isp = smk_of_inode(inode);
+ 	struct smack_known *dsp = smk_of_inode(dir);
+ 	int may;
+@@ -992,20 +993,34 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 		*name = XATTR_SMACK_SUFFIX;
  
- 	hash_for_each(vsi->mac_filter_hash, bkt, f, hlist) {
- 		if (f->vlan >= 0 && f->vlan <= I40E_MAX_VLANID)
-@@ -1161,8 +1161,8 @@ static int i40e_getnum_vf_vsi_vlan_filters(struct i40e_vsi *vsi)
-  *
-  * Called to get number of VLANs and VLAN list present in mac_filter_hash.
-  **/
--static void i40e_get_vlan_list_sync(struct i40e_vsi *vsi, int *num_vlans,
--					   s16 **vlan_list)
-+static void i40e_get_vlan_list_sync(struct i40e_vsi *vsi, u16 *num_vlans,
-+				    s16 **vlan_list)
- {
- 	struct i40e_mac_filter *f;
- 	int i = 0;
-@@ -1196,7 +1196,7 @@ static void i40e_get_vlan_list_sync(struct i40e_vsi *vsi, int *num_vlans,
-  **/
- static i40e_status
- i40e_set_vsi_promisc(struct i40e_vf *vf, u16 seid, bool multi_enable,
--		     bool unicast_enable, s16 *vl, int num_vlans)
-+		     bool unicast_enable, s16 *vl, u16 num_vlans)
- {
- 	i40e_status aq_ret, aq_tmp = 0;
- 	struct i40e_pf *pf = vf->pf;
-@@ -1295,7 +1295,7 @@ static i40e_status i40e_config_vf_promiscuous_mode(struct i40e_vf *vf,
- 	i40e_status aq_ret = I40E_SUCCESS;
- 	struct i40e_pf *pf = vf->pf;
- 	struct i40e_vsi *vsi;
--	int num_vlans;
-+	u16 num_vlans;
- 	s16 *vl;
+ 	if (value && len) {
+-		rcu_read_lock();
+-		may = smk_access_entry(skp->smk_known, dsp->smk_known,
+-				       &skp->smk_rules);
+-		rcu_read_unlock();
++		/*
++		 * If equal, transmuting already occurred in
++		 * smack_dentry_create_files_as(). No need to check again.
++		 */
++		if (tsp->smk_task != tsp->smk_transmuted) {
++			rcu_read_lock();
++			may = smk_access_entry(skp->smk_known, dsp->smk_known,
++					       &skp->smk_rules);
++			rcu_read_unlock();
++		}
  
- 	vsi = i40e_find_vsi_from_id(pf, vsi_id);
+ 		/*
+-		 * If the access rule allows transmutation and
+-		 * the directory requests transmutation then
+-		 * by all means transmute.
++		 * In addition to having smk_task equal to smk_transmuted,
++		 * if the access rule allows transmutation and the directory
++		 * requests transmutation then by all means transmute.
+ 		 * Mark the inode as changed.
+ 		 */
+-		if (may > 0 && ((may & MAY_TRANSMUTE) != 0) &&
+-		    smk_inode_transmutable(dir)) {
+-			isp = dsp;
++		if ((tsp->smk_task == tsp->smk_transmuted) ||
++		    (may > 0 && ((may & MAY_TRANSMUTE) != 0) &&
++		     smk_inode_transmutable(dir))) {
++			/*
++			 * The caller of smack_dentry_create_files_as()
++			 * should have overridden the current cred, so the
++			 * inode label was already set correctly in
++			 * smack_inode_alloc_security().
++			 */
++			if (tsp->smk_task != tsp->smk_transmuted)
++				isp = dsp;
+ 			issp->smk_flags |= SMK_INODE_CHANGED;
+ 		}
+ 
+@@ -4566,8 +4581,10 @@ static int smack_dentry_create_files_as(struct dentry *dentry, int mode,
+ 		 * providing access is transmuting use the containing
+ 		 * directory label instead of the process label.
+ 		 */
+-		if (may > 0 && (may & MAY_TRANSMUTE))
++		if (may > 0 && (may & MAY_TRANSMUTE)) {
+ 			ntsp->smk_task = isp->smk_inode;
++			ntsp->smk_transmuted = ntsp->smk_task;
++		}
+ 	}
+ 	return 0;
+ }
 -- 
 2.40.1
 
