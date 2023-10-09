@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAE01A592
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF081A5AB
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YW1ayFFL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3939AC433C7;
-	Mon,  9 Oct 2023 13:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ValC7jXf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD50C433C8;
+	Mon,  9 Oct 2023 13:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857658;
-	bh=IjjuDzuT9+fZOzRB62sFw2nV5rDKoVUI2E+6nOuJ/OQ=;
+	s=korg; t=1696857661;
+	bh=30UJkmWOIKF4Vz5+gAnuJpENO3mfinTRMjWBznKkkPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YW1ayFFLNP8onT5z/mI2E1FTbN6g649+FxeX+SWlitfKHLTp2CxtxkGfUZYJeRhG8
-	 HwaBuFNuuiwf+876RTLENVytOIPIFCazXsfybLs+QF1PvkcpExNAEXRUxX1SEKMYhF
-	 AuJbghqFzLPGfbGMrIsGgpOP0UQcpPzmoXF0oioA=
+	b=ValC7jXfXMF+AH9FXmySRrGMu9HQoc+IinxpIoJrAJXvBc5ICyD/U69UY4bOXtVG3
+	 5aowKdivOu/yFKbwCV9A7FdSJny7FQ0hEhD2PIxgoSqq/wNQd3DtA5/sZ19ARt794I
+	 HYFGdzbOyy7oofSO2g9bOXViUYLNz4FkzErgNB8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Cline <jeremy@jcline.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+c1d0a03d305972dbbe14@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 116/162] net: nfc: llcp: Add lock when modifying device list
-Date: Mon,  9 Oct 2023 15:01:37 +0200
-Message-ID: <20231009130126.135550161@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Roger Quadros <rogerq@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 117/162] net: ethernet: ti: am65-cpsw: Fix error code in am65_cpsw_nuss_init_tx_chns()
+Date: Mon,  9 Oct 2023 15:01:38 +0200
+Message-ID: <20231009130126.161372155@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -44,39 +43,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Cline <jeremy@jcline.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit dfc7f7a988dad34c3bf4c053124fb26aa6c5f916 ]
+[ Upstream commit 37d4f55567982e445f86dc0ff4ecfa72921abfe8 ]
 
-The device list needs its associated lock held when modifying it, or the
-list could become corrupted, as syzbot discovered.
+This accidentally returns success, but it should return a negative error
+code.
 
-Reported-and-tested-by: syzbot+c1d0a03d305972dbbe14@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c1d0a03d305972dbbe14
-Signed-off-by: Jeremy Cline <jeremy@jcline.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 6709d4b7bc2e ("net: nfc: Fix use-after-free caused by nfc_llcp_find_local")
-Link: https://lore.kernel.org/r/20230908235853.1319596-1-jeremy@jcline.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
-index f60e424e06076..6705bb895e239 100644
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1636,7 +1636,9 @@ int nfc_llcp_register_device(struct nfc_dev *ndev)
- 	timer_setup(&local->sdreq_timer, nfc_llcp_sdreq_timer, 0);
- 	INIT_WORK(&local->sdreq_timeout_work, nfc_llcp_sdreq_timeout_work);
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 25466cbdc16bd..9f2553799895d 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -1614,6 +1614,7 @@ static int am65_cpsw_nuss_init_tx_chns(struct am65_cpsw_common *common)
+ 		if (tx_chn->irq <= 0) {
+ 			dev_err(dev, "Failed to get tx dma irq %d\n",
+ 				tx_chn->irq);
++			ret = tx_chn->irq ?: -ENXIO;
+ 			goto err;
+ 		}
  
-+	spin_lock(&llcp_devices_lock);
- 	list_add(&local->list, &llcp_devices);
-+	spin_unlock(&llcp_devices_lock);
- 
- 	return 0;
- }
 -- 
 2.40.1
 
