@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67D32E63E
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038762E63E
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vx0s6zBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B526C433C7;
-	Mon,  9 Oct 2023 13:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uC6s+KTH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7548CC433C9;
+	Mon,  9 Oct 2023 13:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858201;
-	bh=oTfduTifHlBwFzZAkw2B/ZYIms1NhV0gqgyxRNAOzT0=;
+	s=korg; t=1696858204;
+	bh=Bo1uPFywplij641puhC70npzL8o8r+2tsUeKFmK2PGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vx0s6zBULzrxxvHG0RF+yQi4expui7PXtvQXtkSt7ruhItyxAK9nqZRwR0qyDNO72
-	 /gwNHRkSmdDA0rFd7CcEoL5PryLgZSrbKsy9QPcAsjgQpYisk+MC26bxuhm+fe/xaG
-	 6Ii4rHqQgT1UZa6UMIcZ7sv1RkJBny6A+2wyQ1oA=
+	b=uC6s+KTHNKVnS3arQjVLrYP/dLYEAI8PAn6ajbTGvepaHSDeHjFROsvI2fvsi3r63
+	 TkvmOEEJEzcPbhrGCc/Rlg1yVVHv+0HUdU7FtMtjvHjlMzKPx6cXzdFjRaGPeRikGs
+	 0ZvQ2QFlpqGqo3uBC9eG1VQ02eANp2HeNE71HQ3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grzegorz Szczurek <grzegorzx.szczurek@intel.com>,
-	Karen Sornek <karen.sornek@intel.com>,
-	Tony Brelinski <tony.brelinski@intel.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 021/131] i40e: Fix warning message and call stack during rmmod i40e driver
-Date: Mon,  9 Oct 2023 15:01:01 +0200
-Message-ID: <20231009130116.961176550@linuxfoundation.org>
+Subject: [PATCH 5.4 022/131] i40e: Fix VF VLAN offloading when port VLAN is configured
+Date: Mon,  9 Oct 2023 15:01:02 +0200
+Message-ID: <20231009130116.990560061@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -44,162 +44,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karen Sornek <karen.sornek@intel.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 3a3b311e3881172fc8e019b6508f04bc40c92d9d ]
+[ Upstream commit d0d362ffa33da4acdcf7aee2116ceef8c8fef658 ]
 
-Restore part of reset functionality used when reset is called
-from the VF to reset itself. Without this fix warning message
-is displayed when VF is being removed via sysfs.
+If port VLAN is configured on a VF then any other VLANs on top of this VF
+are broken.
 
-Fix the crash of the VF during reset by ensuring
-that the PF receives the reset message successfully.
-Refactor code to use one function instead of two.
+During i40e_ndo_set_vf_port_vlan() call the i40e driver reset the VF and
+iavf driver asks PF (using VIRTCHNL_OP_GET_VF_RESOURCES) for VF capabilities
+but this reset occurs too early, prior setting of vf->info.pvid field
+and because this field can be zero during i40e_vc_get_vf_resources_msg()
+then VIRTCHNL_VF_OFFLOAD_VLAN capability is reported to iavf driver.
 
-Fixes: 5c3c48ac6bf5 ("i40e: implement virtual device interface")
-Signed-off-by: Grzegorz Szczurek <grzegorzx.szczurek@intel.com>
-Signed-off-by: Karen Sornek <karen.sornek@intel.com>
-Tested-by: Tony Brelinski <tony.brelinski@intel.com>
+This is wrong because iavf driver should not report VLAN offloading
+capability when port VLAN is configured as i40e does not support QinQ
+offloading.
+
+Fix the issue by moving VF reset after setting of vf->port_vlan_id
+field.
+
+Without this patch:
+$ echo 1 > /sys/class/net/enp2s0f0/device/sriov_numvfs
+$ ip link set enp2s0f0 vf 0 vlan 3
+$ ip link set enp2s0f0v0 up
+$ ip link add link enp2s0f0v0 name vlan4 type vlan id 4
+$ ip link set vlan4 up
+...
+$ ethtool -k enp2s0f0v0 | grep vlan-offload
+rx-vlan-offload: on
+tx-vlan-offload: on
+$ dmesg -l err | grep iavf
+[1292500.742914] iavf 0000:02:02.0: Failed to add VLAN filter, error IAVF_ERR_INVALID_QP_ID
+
+With this patch:
+$ echo 1 > /sys/class/net/enp2s0f0/device/sriov_numvfs
+$ ip link set enp2s0f0 vf 0 vlan 3
+$ ip link set enp2s0f0v0 up
+$ ip link add link enp2s0f0v0 name vlan4 type vlan id 4
+$ ip link set vlan4 up
+...
+$ ethtool -k enp2s0f0v0 | grep vlan-offload
+rx-vlan-offload: off [requested on]
+tx-vlan-offload: off [requested on]
+$ dmesg -l err | grep iavf
+
+Fixes: f9b4b6278d51 ("i40e: Reset the VF upon conflicting VLAN configuration")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: d0d362ffa33d ("i40e: Fix VF VLAN offloading when port VLAN is configured")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/intel/i40e/i40e_virtchnl_pf.c    | 53 ++++++++-----------
- 1 file changed, 21 insertions(+), 32 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 590469c4a1b00..7a52be82d05a2 100644
+index 7a52be82d05a2..1a3017e5f44c1 100644
 --- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -130,17 +130,18 @@ void i40e_vc_notify_vf_reset(struct i40e_vf *vf)
- /***********************misc routines*****************************/
- 
- /**
-- * i40e_vc_disable_vf
-+ * i40e_vc_reset_vf
-  * @vf: pointer to the VF info
-- *
-- * Disable the VF through a SW reset.
-+ * @notify_vf: notify vf about reset or not
-+ * Reset VF handler.
-  **/
--static inline void i40e_vc_disable_vf(struct i40e_vf *vf)
-+static void i40e_vc_reset_vf(struct i40e_vf *vf, bool notify_vf)
- {
- 	struct i40e_pf *pf = vf->pf;
- 	int i;
- 
--	i40e_vc_notify_vf_reset(vf);
-+	if (notify_vf)
-+		i40e_vc_notify_vf_reset(vf);
- 
- 	/* We want to ensure that an actual reset occurs initiated after this
- 	 * function was called. However, we do not want to wait forever, so
-@@ -158,9 +159,14 @@ static inline void i40e_vc_disable_vf(struct i40e_vf *vf)
- 		usleep_range(10000, 20000);
- 	}
- 
--	dev_warn(&vf->pf->pdev->dev,
--		 "Failed to initiate reset for VF %d after 200 milliseconds\n",
--		 vf->vf_id);
-+	if (notify_vf)
-+		dev_warn(&vf->pf->pdev->dev,
-+			 "Failed to initiate reset for VF %d after 200 milliseconds\n",
-+			 vf->vf_id);
-+	else
-+		dev_dbg(&vf->pf->pdev->dev,
-+			"Failed to initiate reset for VF %d after 200 milliseconds\n",
-+			vf->vf_id);
- }
- 
- /**
-@@ -2097,20 +2103,6 @@ static int i40e_vc_get_vf_resources_msg(struct i40e_vf *vf, u8 *msg)
- 	return ret;
- }
- 
--/**
-- * i40e_vc_reset_vf_msg
-- * @vf: pointer to the VF info
-- *
-- * called from the VF to reset itself,
-- * unlike other virtchnl messages, PF driver
-- * doesn't send the response back to the VF
-- **/
--static void i40e_vc_reset_vf_msg(struct i40e_vf *vf)
--{
--	if (test_bit(I40E_VF_STATE_ACTIVE, &vf->vf_states))
--		i40e_reset_vf(vf, false);
--}
--
- /**
-  * i40e_vc_config_promiscuous_mode_msg
-  * @vf: pointer to the VF info
-@@ -2664,8 +2656,7 @@ static int i40e_vc_request_queues_msg(struct i40e_vf *vf, u8 *msg)
- 	} else {
- 		/* successful request */
- 		vf->num_req_queues = req_pairs;
--		i40e_vc_notify_vf_reset(vf);
--		i40e_reset_vf(vf, false);
-+		i40e_vc_reset_vf(vf, true);
- 		return 0;
- 	}
- 
-@@ -3857,8 +3848,7 @@ static int i40e_vc_add_qch_msg(struct i40e_vf *vf, u8 *msg)
- 	vf->adq_enabled = true;
- 
- 	/* reset the VF in order to allocate resources */
--	i40e_vc_notify_vf_reset(vf);
--	i40e_reset_vf(vf, false);
-+	i40e_vc_reset_vf(vf, true);
- 
- 	return I40E_SUCCESS;
- 
-@@ -3898,8 +3888,7 @@ static int i40e_vc_del_qch_msg(struct i40e_vf *vf, u8 *msg)
- 	}
- 
- 	/* reset the VF in order to allocate resources */
--	i40e_vc_notify_vf_reset(vf);
--	i40e_reset_vf(vf, false);
-+	i40e_vc_reset_vf(vf, true);
- 
- 	return I40E_SUCCESS;
- 
-@@ -3961,7 +3950,7 @@ int i40e_vc_process_vf_msg(struct i40e_pf *pf, s16 vf_id, u32 v_opcode,
- 		i40e_vc_notify_vf_link_state(vf);
- 		break;
- 	case VIRTCHNL_OP_RESET_VF:
--		i40e_vc_reset_vf_msg(vf);
-+		i40e_vc_reset_vf(vf, false);
- 		ret = 0;
- 		break;
- 	case VIRTCHNL_OP_CONFIG_PROMISCUOUS_MODE:
-@@ -4215,7 +4204,7 @@ int i40e_ndo_set_vf_mac(struct net_device *netdev, int vf_id, u8 *mac)
- 	/* Force the VF interface down so it has to bring up with new MAC
- 	 * address
- 	 */
--	i40e_vc_disable_vf(vf);
-+	i40e_vc_reset_vf(vf, true);
- 	dev_info(&pf->pdev->dev, "Bring down and up the VF interface to make this change effective.\n");
- 
- error_param:
-@@ -4279,7 +4268,7 @@ int i40e_ndo_set_vf_port_vlan(struct net_device *netdev, int vf_id,
+@@ -4268,9 +4268,6 @@ int i40e_ndo_set_vf_port_vlan(struct net_device *netdev, int vf_id,
  		/* duplicate request, so just return success */
  		goto error_pvid;
  
--	i40e_vc_disable_vf(vf);
-+	i40e_vc_reset_vf(vf, true);
- 	/* During reset the VF got a new VSI, so refresh a pointer. */
- 	vsi = pf->vsi[vf->lan_vsi_idx];
+-	i40e_vc_reset_vf(vf, true);
+-	/* During reset the VF got a new VSI, so refresh a pointer. */
+-	vsi = pf->vsi[vf->lan_vsi_idx];
  	/* Locked once because multiple functions below iterate list */
-@@ -4662,7 +4651,7 @@ int i40e_ndo_set_vf_trust(struct net_device *netdev, int vf_id, bool setting)
- 		goto out;
+ 	spin_lock_bh(&vsi->mac_filter_hash_lock);
  
- 	vf->trusted = setting;
--	i40e_vc_disable_vf(vf);
+@@ -4356,6 +4353,10 @@ int i40e_ndo_set_vf_port_vlan(struct net_device *netdev, int vf_id,
+ 	 */
+ 	vf->port_vlan_id = le16_to_cpu(vsi->info.pvid);
+ 
 +	i40e_vc_reset_vf(vf, true);
- 	dev_info(&pf->pdev->dev, "VF %u is now %strusted\n",
- 		 vf_id, setting ? "" : "un");
- 
++	/* During reset the VF got a new VSI, so refresh a pointer. */
++	vsi = pf->vsi[vf->lan_vsi_idx];
++
+ 	ret = i40e_config_vf_promiscuous_mode(vf, vsi->id, allmulti, alluni);
+ 	if (ret) {
+ 		dev_err(&pf->pdev->dev, "Unable to config vf promiscuous mode\n");
 -- 
 2.40.1
 
