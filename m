@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FA1199B3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C8B199B3
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqIE0jwO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6DFC433C9;
-	Mon,  9 Oct 2023 13:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4iYjqlE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3DBC433CA;
+	Mon,  9 Oct 2023 13:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857988;
-	bh=zaqQFzE7+Sz439WlrrrpLFUxWeGgSm2nWFd5Hn34sMQ=;
+	s=korg; t=1696857991;
+	bh=Mjks07ezbF9BP4BpwrLGTAYMv7n3sL2v+h6NyzFQcBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aqIE0jwOVLHGQSYTvhDsFnEU9g70WMUGIg/IheCPKaLFBXrF1QKKGSpFUZNnQJHWt
-	 IvJzwGuU62Buj07kZmSKn7Y6p+C1srDjllxoPR5gg2wKNq6Yi0h2Ek1d7+pWMI43bG
-	 exL1ssSuYV4F3pMJOz6rAOuVyExPivbwltBjvxgw=
+	b=e4iYjqlELfUGLH299/37LdapLwHfB1yLylCKt5YhN5n79S/7v22l0j/AJq03vMBwv
+	 WntNvGaGyuxSYroyXBx+Tj9LYZ+VZq4KyT7Fo0ER59eN+J6NZTnzXfM7w/1rLwFdlp
+	 MUTGd+twtxC3HZC96z/qJTREuZE8mfSki3uIwIJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jon Maloy <jmaloy@redhat.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 56/75] tipc: fix a potential deadlock on &tx->lock
-Date: Mon,  9 Oct 2023 15:02:18 +0200
-Message-ID: <20231009130113.212496135@linuxfoundation.org>
+Subject: [PATCH 5.15 57/75] tcp: fix quick-ack counting to count actual ACKs of new data
+Date: Mon,  9 Oct 2023 15:02:19 +0200
+Message-ID: <20231009130113.242223184@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -44,68 +44,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit 08e50cf071847323414df0835109b6f3560d44f5 ]
+[ Upstream commit 059217c18be6757b95bfd77ba53fb50b48b8a816 ]
 
-It seems that tipc_crypto_key_revoke() could be be invoked by
-wokequeue tipc_crypto_work_rx() under process context and
-timer/rx callback under softirq context, thus the lock acquisition
-on &tx->lock seems better use spin_lock_bh() to prevent possible
-deadlock.
+This commit fixes quick-ack counting so that it only considers that a
+quick-ack has been provided if we are sending an ACK that newly
+acknowledges data.
 
-This flaw was found by an experimental static analysis tool I am
-developing for irq-related deadlock.
+The code was erroneously using the number of data segments in outgoing
+skbs when deciding how many quick-ack credits to remove. This logic
+does not make sense, and could cause poor performance in
+request-response workloads, like RPC traffic, where requests or
+responses can be multi-segment skbs.
 
-tipc_crypto_work_rx() <workqueue>
---> tipc_crypto_key_distr()
---> tipc_bcast_xmit()
---> tipc_bcbase_xmit()
---> tipc_bearer_bc_xmit()
---> tipc_crypto_xmit()
---> tipc_ehdr_build()
---> tipc_crypto_key_revoke()
---> spin_lock(&tx->lock)
-<timer interrupt>
-   --> tipc_disc_timeout()
-   --> tipc_bearer_xmit_skb()
-   --> tipc_crypto_xmit()
-   --> tipc_ehdr_build()
-   --> tipc_crypto_key_revoke()
-   --> spin_lock(&tx->lock) <deadlock here>
+When a TCP connection decides to send N quick-acks, that is to
+accelerate the cwnd growth of the congestion control module
+controlling the remote endpoint of the TCP connection. That quick-ack
+decision is purely about the incoming data and outgoing ACKs. It has
+nothing to do with the outgoing data or the size of outgoing data.
 
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Acked-by: Jon Maloy <jmaloy@redhat.com>
-Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
-Link: https://lore.kernel.org/r/20230927181414.59928-1-dg573847474@gmail.com
+And in particular, an ACK only serves the intended purpose of allowing
+the remote congestion control to grow the congestion window quickly if
+the ACK is ACKing or SACKing new data.
+
+The fix is simple: only count packets as serving the goal of the
+quickack mechanism if they are ACKing/SACKing new data. We can tell
+whether this is the case by checking inet_csk_ack_scheduled(), since
+we schedule an ACK exactly when we are ACKing/SACKing new data.
+
+Fixes: fc6415bcb0f5 ("[TCP]: Fix quick-ack decrementing with TSO.")
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Yuchung Cheng <ycheng@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20231001151239.1866845-1-ncardwell.sw@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/crypto.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/tcp.h     | 6 ++++--
+ net/ipv4/tcp_output.c | 7 +++----
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index 32447e8d94ac9..86d1e782b8fca 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -1452,14 +1452,14 @@ static int tipc_crypto_key_revoke(struct net *net, u8 tx_key)
- 	struct tipc_crypto *tx = tipc_net(net)->crypto_tx;
- 	struct tipc_key key;
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 4aafda05a6466..4d8c915a7bfac 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -340,12 +340,14 @@ ssize_t tcp_splice_read(struct socket *sk, loff_t *ppos,
+ 			struct pipe_inode_info *pipe, size_t len,
+ 			unsigned int flags);
  
--	spin_lock(&tx->lock);
-+	spin_lock_bh(&tx->lock);
- 	key = tx->key;
- 	WARN_ON(!key.active || tx_key != key.active);
+-static inline void tcp_dec_quickack_mode(struct sock *sk,
+-					 const unsigned int pkts)
++static inline void tcp_dec_quickack_mode(struct sock *sk)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
  
- 	/* Free the active key */
- 	tipc_crypto_key_set_state(tx, key.passive, 0, key.pending);
- 	tipc_crypto_key_detach(tx->aead[key.active], &tx->lock);
--	spin_unlock(&tx->lock);
-+	spin_unlock_bh(&tx->lock);
+ 	if (icsk->icsk_ack.quick) {
++		/* How many ACKs S/ACKing new data have we sent? */
++		const unsigned int pkts = inet_csk_ack_scheduled(sk) ? 1 : 0;
++
+ 		if (pkts >= icsk->icsk_ack.quick) {
+ 			icsk->icsk_ack.quick = 0;
+ 			/* Leaving quickack mode we deflate ATO. */
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index d46fb6d7057bd..880b53bb6b64d 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -177,8 +177,7 @@ static void tcp_event_data_sent(struct tcp_sock *tp,
+ }
  
- 	pr_warn("%s: key is revoked\n", tx->name);
- 	return -EKEYREVOKED;
+ /* Account for an ACK we sent. */
+-static inline void tcp_event_ack_sent(struct sock *sk, unsigned int pkts,
+-				      u32 rcv_nxt)
++static inline void tcp_event_ack_sent(struct sock *sk, u32 rcv_nxt)
+ {
+ 	struct tcp_sock *tp = tcp_sk(sk);
+ 
+@@ -192,7 +191,7 @@ static inline void tcp_event_ack_sent(struct sock *sk, unsigned int pkts,
+ 
+ 	if (unlikely(rcv_nxt != tp->rcv_nxt))
+ 		return;  /* Special ACK sent by DCTCP to reflect ECN */
+-	tcp_dec_quickack_mode(sk, pkts);
++	tcp_dec_quickack_mode(sk);
+ 	inet_csk_clear_xmit_timer(sk, ICSK_TIME_DACK);
+ }
+ 
+@@ -1374,7 +1373,7 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
+ 			   sk, skb);
+ 
+ 	if (likely(tcb->tcp_flags & TCPHDR_ACK))
+-		tcp_event_ack_sent(sk, tcp_skb_pcount(skb), rcv_nxt);
++		tcp_event_ack_sent(sk, rcv_nxt);
+ 
+ 	if (skb->len != tcp_header_size) {
+ 		tcp_event_data_sent(tp, sk);
 -- 
 2.40.1
 
