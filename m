@@ -1,47 +1,47 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3494420
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 08:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD4A4692
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 08:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fg6bWJuX"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-504a7f9204eso5082811e87.3
-        for <patches@lists.linux.dev>; Mon, 09 Oct 2023 01:48:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZlasvkMq"
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-50325ce89e9so5460064e87.0
+        for <patches@lists.linux.dev>; Mon, 09 Oct 2023 01:49:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696841327; x=1697446127; darn=lists.linux.dev;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
+        d=gmail.com; s=20230601; t=1696841393; x=1697446193; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wgoMovMkZSAvfqa8PGZ/v+zEqtovHRzU+CUakuAURFw=;
-        b=Fg6bWJuXwLPDsYqOKm7QEuTtUvCKxyEerNypIn4qtg4tf2AwVTeWOpUKTVh2j/nb2B
-         Y9cmE8/gvvppvfj5Wr/DXcTqE5MQqeha3OInfKGBSiVl+Vj380UkCzqrzSK1iEW4vttF
-         lKOgu+6/L8EdYIqBlYoi/qSqcKPjt+5l4MwiTpFHFFoVcmYgeSm9spwosiK8JF9HiQHF
-         D93JE0KhT3j4Ic9nDBg/Ou83gPIs/p25od5YpOqdCVyq/DH1hGClQAD0h0rfCv2+YP8D
-         tjAxlvcl9bZWe35dF1C8Fz80LjkFOPewHWOvNnCjCMcIH/V1f/AFmo5PpIzve1557OJE
-         Uztw==
+        bh=jo6aI4gZvvCpMFiUGs+gs/M6BlZphmb01wWlOsiDfrc=;
+        b=ZlasvkMqYb04eJKqoZzsz4Pwq5f7JW+9maZnNt0r3mVy7lWHwBIrT+rrr3A1tCEbxh
+         CvgyvmF156i/KJSGMS9Li1ZvqKXs3d58H7VVBGQPO7BQ6xHI8M7vDgHC94dTD8gNI7lq
+         zluLYAX96s4lUkusmJ8lwCqgC/VxjAtB6VgX2lZhzFI6KhPyqAwESW6nTExC2Y4aTPFf
+         BBr4uQ5/oim5qE90ZZxWKwgsXY/0LOrd1Y8Ya82FLMEBOmjxRdUJKUDeG6oh8KXpI6/O
+         TThJ95Imq1Uhy89rJM+AQotGvOSj1RDqQJQu56hflTDaTzF6c2lZf8t0+CbrIL7dAKqM
+         Jkqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696841327; x=1697446127;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
+        d=1e100.net; s=20230601; t=1696841393; x=1697446193;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=wgoMovMkZSAvfqa8PGZ/v+zEqtovHRzU+CUakuAURFw=;
-        b=T/J/jqxgH2b4hqf00LFq/ZxNkFrGeijUnmli75TRwPhzsYCabEduB1fySVm6URkc3B
-         kXsruZU1NPeBEkH//AmbuVJ/crOkzlvw0P8ThSxzsrN9DjuP0KfxQCjd4s7gAstQAIBj
-         oOlG8eAESYeuXT66dbO2fWXuY3HHpJXvGy9PJYk91WzJeYolaq44df1TNiirLZVCeAqc
-         7pE+2bOqx3BRd9bLM+2PQQlZ9cprvRncrJ/2KaBIfrnH3DcvNCTvr+uiS9RJDuzMylVF
-         3dRK92WM1ZU7cbdzF9roBzSgH2h8mIlF5JTwT+RuiGgQxIdneV2bEf+pHVaEz/mkLgfC
-         hQIg==
-X-Gm-Message-State: AOJu0Yzbxy8UTkQgAF+DNqtDdgzRefuH0fqI8tKz82lg9wfx7gWBQEs7
-	RVeBxLGPiMytt9+X2luLCJh55zGF2yDc7RNq
-X-Google-Smtp-Source: AGHT+IHhcU61xBBMKUOeAY+GkinxHfngiCQlhzFkKDaovUc9VGDTf0uGVwn3pv1PsqFdx4nfWpAV0Q==
-X-Received: by 2002:a19:8c48:0:b0:504:3a7c:66ce with SMTP id i8-20020a198c48000000b005043a7c66cemr10896001lfj.68.1696841327347;
-        Mon, 09 Oct 2023 01:48:47 -0700 (PDT)
+        bh=jo6aI4gZvvCpMFiUGs+gs/M6BlZphmb01wWlOsiDfrc=;
+        b=HsdSL3meob25hY+O0Vf09yHFDIQWVVrDppNEl3f9cwr0yep4aB25Qv1+cyMnjqhMMB
+         0fwKH3yaD4VlWhTPsZcThiAYO5j2bsjeWXxz5AVTBw8se+5B0UIsOtK3bcABvv6fQeMw
+         AO0MuxFYVc6++ckLjbWdrVKAp4Nc2mXxfFacVlL/PLXJT3riHXPznAas5pwe/tjccZGK
+         PIse58hXKlExDjrdN9q777KTPh7i14As5BF4WUA9vl0uMsTMYREkdVnzOJ7DvYEBzfb7
+         eJhEuo/vRdH0EKKB5ItDw4wlQ9oOUwg+gp9rRkvSkS9xMe2SGjB6O0gIcjZ2Z325JGNP
+         oO2A==
+X-Gm-Message-State: AOJu0Yxa0Clkw7xr07SAvL6icigar0oa6unWE8XfHRPbGfazQIJZs9Wv
+	ezwGv3gdbjxs7Shp0Tls2eQ=
+X-Google-Smtp-Source: AGHT+IH1y1lLyCexGC0VNVkJhwZly2dg4RHXFhz+DgANrRNwfMwSA+OcjLwrQHPclRFcs+DB3BPN1g==
+X-Received: by 2002:a2e:97d2:0:b0:2bc:ed75:1ba with SMTP id m18-20020a2e97d2000000b002bced7501bamr12695953ljj.16.1696841393368;
+        Mon, 09 Oct 2023 01:49:53 -0700 (PDT)
 Received: from localhost ([146.70.182.19])
-        by smtp.gmail.com with ESMTPSA id y2-20020a197502000000b0050467be30ccsm1361737lfe.89.2023.10.09.01.48.46
+        by smtp.gmail.com with ESMTPSA id u4-20020a2e9f04000000b002bcd94f9714sm1947547ljk.126.2023.10.09.01.49.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Oct 2023 01:48:47 -0700 (PDT)
+        Mon, 09 Oct 2023 01:49:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,40 +50,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 09 Oct 2023 10:48:45 +0200
-Message-Id: <CW3S1RNMMQKE.3DP29TLAE53AD@gmail.com>
-To: "Miguel Ojeda" <ojeda@kernel.org>, "Wedson Almeida Filho"
- <wedsonaf@gmail.com>, "Alex Gaynor" <alex.gaynor@gmail.com>
+Date: Mon, 09 Oct 2023 10:49:51 +0200
+Message-Id: <CW3S2LWWUVG7.2STK9HS3VBQFR@gmail.com>
 Cc: "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
  =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
  <benno.lossin@proton.me>, "Andreas Hindborg" <a.hindborg@samsung.com>,
  "Alice Ryhl" <aliceryhl@google.com>, <rust-for-linux@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH 2/3] rust: print: use explicit link in documentation
+ <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>, "Jonathan
+ Corbet" <corbet@lwn.net>, <workflows@vger.kernel.org>,
+ <linux-doc@vger.kernel.org>
+Subject: Re: [PATCH 3/3] rust: upgrade to Rust 1.73.0
 From: "Vincenzo Palazzo" <vincenzopalazzodev@gmail.com>
+To: "Miguel Ojeda" <ojeda@kernel.org>, "Wedson Almeida Filho"
+ <wedsonaf@gmail.com>, "Alex Gaynor" <alex.gaynor@gmail.com>
 X-Mailer: aerc 0.15.2-211-g37d5fc691aff
 References: <20231005210556.466856-1-ojeda@kernel.org>
- <20231005210556.466856-3-ojeda@kernel.org>
-In-Reply-To: <20231005210556.466856-3-ojeda@kernel.org>
+ <20231005210556.466856-4-ojeda@kernel.org>
+In-Reply-To: <20231005210556.466856-4-ojeda@kernel.org>
 
-> The future `rustdoc` in the Rust 1.73.0 upgrade requires an explicit
-> link for `pr_info!`:
+> The vast majority of changes are due to our `alloc` fork being upgraded
+> at once.
+
+Ah this is annoying sometimes :/
+
 >
->     error: unresolved link to `pr_info`
->        --> rust/kernel/print.rs:395:63
->         |
->     395 | /// Use only when continuing a previous `pr_*!` macro (e.g. [`p=
-r_info!`]).
->         |                                                               ^=
-^^^^^^^ no item named `pr_info` in scope
->         |
->         =3D note: `macro_rules` named `pr_info` exists in this crate, but=
- it is not in scope at this link's location
->         =3D note: `-D rustdoc::broken-intra-doc-links` implied by `-D war=
-nings`
+> There are two kinds of changes to be aware of: the ones coming from
+> upstream, which we should follow as closely as possible, and the updates
+> needed in our added fallible APIs to keep them matching the newer
+> infallible APIs coming from upstream.
 >
-> Thus do so to avoid a broken link while upgrading.
+> Instead of taking a look at the diff of this patch, an alternative
+> approach is reviewing a diff of the changes between upstream `alloc` and
+> the kernel's. This allows to easily inspect the kernel additions only,
+> especially to check if the fallible methods we already have still match
+> the infallible ones in the new version coming from upstream.
 >
+> Another approach is reviewing the changes introduced in the additions in
+> the kernel fork between the two versions. This is useful to spot
+> potentially unintended changes to our additions.
+>
+> To apply these approaches, one may follow steps similar to the following
+> to generate a pair of patches that show the differences between upstream
+> Rust and the kernel (for the subset of `alloc` we use) before and after
+> applying this patch:
+>
+>     # Get the difference with respect to the old version.
+>     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
+>     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
+>         cut -d/ -f3- |
+>         grep -Fv README.md |
+>         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
+>     git -C linux diff --patch-with-stat --summary -R > old.patch
+>     git -C linux restore rust/alloc
+>
+>     # Apply this patch.
+>     git -C linux am rust-upgrade.patch
+>
+>     # Get the difference with respect to the new version.
+>     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
+>     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
+>         cut -d/ -f3- |
+>         grep -Fv README.md |
+>         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
+>     git -C linux diff --patch-with-stat --summary -R > new.patch
+>     git -C linux restore rust/alloc
+>
+> Now one may check the `new.patch` to take a look at the additions (first
+> approach) or at the difference between those two patches (second
+> approach). For the latter, a side-by-side tool is recommended.
+>
+> Link: https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1=
+730-2023-10-05 [1]
+> Link: https://rust-for-linux.com/rust-version-policy [2]
+> Link: https://github.com/Rust-for-Linux/linux/issues/2 [3]
+> Link: https://github.com/rust-lang/compiler-team/issues/596 [4]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
+>  Documentation/process/changes.rst |  2 +-
+>  rust/alloc/alloc.rs               | 22 --------------
+>  rust/alloc/boxed.rs               | 48 ++++++++++++++++++++-----------
+>  rust/alloc/lib.rs                 |  5 ++--
+>  rust/alloc/raw_vec.rs             | 30 ++++++++++++-------
+>  rust/alloc/vec/mod.rs             |  4 +--
+>  rust/alloc/vec/spec_extend.rs     |  8 +++---
+>  rust/compiler_builtins.rs         |  1 +
+>  scripts/min-tool-version.sh       |  2 +-
+>  9 files changed, 63 insertions(+), 59 deletions(-)
+>
+> diff --git a/Documentation/process/changes.rst b/Documentation/process/ch=
+anges.rst
+> index 731cc104c56f..bb96ca0f774b 100644
+> --- a/Documentation/process/changes.rst
+
 Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
