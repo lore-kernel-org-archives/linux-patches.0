@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7031A5BA
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2C41A5BA
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ti14Fwu1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A80DC433C8;
-	Mon,  9 Oct 2023 13:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaYO3C2B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5159DC433C9;
+	Mon,  9 Oct 2023 13:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858055;
-	bh=wZvVHr0Hd+5ugS0I+bydfyRfO1GSQ8XjAC24sqJEEl0=;
+	s=korg; t=1696858058;
+	bh=UexaXumbCpixOP4kNtkrPRLOAi0CcY8G5siVfpYdndM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ti14Fwu1f1f3pO/RPBNRHF+gzublBpi8iMBQSXqHzA7F4J9evnefmkIqXlllTTnq9
-	 /F/MxTrrDHJVbuh87/bD8Z0bPgXD0QHvDw63r8FcREKwZaKqCat5kSMFEd49MTRAMS
-	 B11EN06VME+yEvK1S9/Qx8SkKl9ef8Y85USNAox4=
+	b=BaYO3C2BtREo1RT/wVI6XtKyJBculOrKIORRrfPy2D7o92RVez1o0MkNEjwb0v6yG
+	 IgLBKyignNgLJqYp67zB+nzVVTJb/C3ivy4wvvNMppi+7OOrVTB+JDCty4NX5gos8S
+	 /OtRAD1+FO7aGVScykB6HDVc7VcR0nJkaoaOnEag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 62/75] HID: intel-ish-hid: ipc: Disable and reenable ACPI GPE bit
-Date: Mon,  9 Oct 2023 15:02:24 +0200
-Message-ID: <20231009130113.430231228@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.15 63/75] dm zoned: free dmz->ddev array in dmz_put_zoned_devices
+Date: Mon,  9 Oct 2023 15:02:25 +0200
+Message-ID: <20231009130113.469038808@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -43,55 +41,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 8f02139ad9a7e6e5c05712f8c1501eebed8eacfd ]
+commit 9850ccd5dd88075b2b7fd28d96299d5535f58cc5 upstream.
 
-The EHL (Elkhart Lake) based platforms provide a OOB (Out of band)
-service, which allows to wakup device when the system is in S5 (Soft-Off
-state). This OOB service can be enabled/disabled from BIOS settings. When
-enabled, the ISH device gets PME wake capability. To enable PME wakeup,
-driver also needs to enable ACPI GPE bit.
+Commit 4dba12881f88 ("dm zoned: support arbitrary number of devices")
+made the pointers to additional zoned devices to be stored in a
+dynamically allocated dmz->ddev array. However, this array is not freed.
 
-On resume, BIOS will clear the wakeup bit. So driver need to re-enable it
-in resume function to keep the next wakeup capability. But this BIOS
-clearing of wakeup bit doesn't decrement internal OS GPE reference count,
-so this reenabling on every resume will cause reference count to overflow.
+Rename dmz_put_zoned_device to dmz_put_zoned_devices and fix it to
+free the dmz->ddev array when cleaning up zoned device information.
+Remove NULL assignment for all dmz->ddev elements and just free the
+dmz->ddev array instead.
 
-So first disable and reenable ACPI GPE bit using acpi_disable_gpe().
+Found by Linux Verification Center (linuxtesting.org).
 
-Fixes: 2e23a70edabe ("HID: intel-ish-hid: ipc: finish power flow for EHL OOB")
-Reported-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Closes: https://lore.kernel.org/lkml/CAAd53p4=oLYiH2YbVSmrPNj1zpMcfp=Wxbasb5vhMXOWCArLCg@mail.gmail.com/T/
-Tested-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4dba12881f88 ("dm zoned: support arbitrary number of devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/intel-ish-hid/ipc/pci-ish.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/md/dm-zoned-target.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ipc/pci-ish.c b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-index 8e9d9450cb835..5916ef2933e27 100644
---- a/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-+++ b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-@@ -129,6 +129,14 @@ static int enable_gpe(struct device *dev)
- 	}
- 	wakeup = &adev->wakeup;
+--- a/drivers/md/dm-zoned-target.c
++++ b/drivers/md/dm-zoned-target.c
+@@ -750,17 +750,16 @@ err:
+ /*
+  * Cleanup zoned device information.
+  */
+-static void dmz_put_zoned_device(struct dm_target *ti)
++static void dmz_put_zoned_devices(struct dm_target *ti)
+ {
+ 	struct dmz_target *dmz = ti->private;
+ 	int i;
  
-+	/*
-+	 * Call acpi_disable_gpe(), so that reference count
-+	 * gpe_event_info->runtime_count doesn't overflow.
-+	 * When gpe_event_info->runtime_count = 0, the call
-+	 * to acpi_disable_gpe() simply return.
-+	 */
-+	acpi_disable_gpe(wakeup->gpe_device, wakeup->gpe_number);
+-	for (i = 0; i < dmz->nr_ddevs; i++) {
+-		if (dmz->ddev[i]) {
++	for (i = 0; i < dmz->nr_ddevs; i++)
++		if (dmz->ddev[i])
+ 			dm_put_device(ti, dmz->ddev[i]);
+-			dmz->ddev[i] = NULL;
+-		}
+-	}
 +
- 	acpi_sts = acpi_enable_gpe(wakeup->gpe_device, wakeup->gpe_number);
- 	if (ACPI_FAILURE(acpi_sts)) {
- 		dev_err(dev, "enable ose_gpe failed\n");
--- 
-2.40.1
-
++	kfree(dmz->ddev);
+ }
+ 
+ static int dmz_fixup_devices(struct dm_target *ti)
+@@ -951,7 +950,7 @@ err_bio:
+ err_meta:
+ 	dmz_dtr_metadata(dmz->metadata);
+ err_dev:
+-	dmz_put_zoned_device(ti);
++	dmz_put_zoned_devices(ti);
+ err:
+ 	kfree(dmz->dev);
+ 	kfree(dmz);
+@@ -982,7 +981,7 @@ static void dmz_dtr(struct dm_target *ti
+ 
+ 	bioset_exit(&dmz->bio_set);
+ 
+-	dmz_put_zoned_device(ti);
++	dmz_put_zoned_devices(ti);
+ 
+ 	mutex_destroy(&dmz->chunk_lock);
+ 
 
 
