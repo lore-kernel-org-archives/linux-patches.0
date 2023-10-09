@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226B62E649
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9534D30F85
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/nKy3m7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9289CC433CA;
-	Mon,  9 Oct 2023 13:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOT9rRTH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF2DC433CA;
+	Mon,  9 Oct 2023 13:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858665;
-	bh=DFGWLGhlp1gr2W8EIRrGtyoLymBpppgv1jEz6uBq8eM=;
+	s=korg; t=1696858668;
+	bh=FE7vC6EVsMKOrG6q7YkR61idSPqFvLWcuoRwoB1fkrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/nKy3m7dGIKauk1zmvhYIBOyyd9v/8zu9etmBGLwvf78oGnr1BCjGNBMf/2h9Yt7
-	 0DQDoDpWQ7fqs2i6NdEQiu21R/ZTV2oYKJxqFiSwsI3XxqEX6dwXk+hyJV08f+IKkU
-	 wOHmixRiGX+WpAQXHGEEmvVgXVwTypo57lKdrtw0=
+	b=bOT9rRTHu7+ki7QlgtWqyEl75vjdL5cph/xtZw57biwHq2FpMBkTdr5w8Pe37mqoB
+	 067VhfSiPCXGSOI8O+NOT1oq2Q3okoqYKivJHcF90WemOIGYHyzSRpQyQOWfYeUdM7
+	 EK49fa/ioS7fJYPeLpixNTLvvZPXLHOQLDWgpe5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 034/226] netfilter: nf_tables: disallow element removal on anonymous sets
-Date: Mon,  9 Oct 2023 14:59:55 +0200
-Message-ID: <20231009130127.669930322@linuxfoundation.org>
+Subject: [PATCH 5.10 025/226] netfilter: nf_tables: GC transaction race with abort path
+Date: Mon,  9 Oct 2023 14:59:46 +0200
+Message-ID: <20231009130127.410234967@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -43,54 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 23a3bfd4ba7acd36abf52b78605f61b21bdac216 ]
+commit 720344340fb9be2765bbaab7b292ece0a4570eae upstream.
 
-Anonymous sets need to be populated once at creation and then they are
-bound to rule since 938154b93be8 ("netfilter: nf_tables: reject unbound
-anonymous set before commit phase"), otherwise transaction reports
-EINVAL.
+Abort path is missing a synchronization point with GC transactions. Add
+GC sequence number hence any GC transaction losing race will be
+discarded.
 
-Userspace does not need to delete elements of anonymous sets that are
-not yet bound, reject this with EOPNOTSUPP.
-
->From flush command path, skip anonymous sets, they are expected to be
-bound already. Otherwise, EINVAL is hit at the end of this transaction
-for unbound sets.
-
-Fixes: 96518518cc41 ("netfilter: add nftables")
+Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/netfilter/nf_tables_api.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 32c97cc87ddc2..52c776b5967ef 100644
+index 78bf82f89ecd8..1f67931b86d8e 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -1267,8 +1267,7 @@ static int nft_flush_table(struct nft_ctx *ctx)
- 		if (!nft_is_active_next(ctx->net, set))
- 			continue;
- 
--		if (nft_set_is_anonymous(set) &&
--		    !list_empty(&set->bindings))
-+		if (nft_set_is_anonymous(set))
- 			continue;
- 
- 		err = nft_delset(ctx, set);
-@@ -5922,8 +5921,10 @@ static int nf_tables_delsetelem(struct net *net, struct sock *nlsk,
- 	if (IS_ERR(set))
- 		return PTR_ERR(set);
- 
--	if (!list_empty(&set->bindings) &&
--	    (set->flags & (NFT_SET_CONSTANT | NFT_SET_ANONYMOUS)))
-+	if (nft_set_is_anonymous(set))
-+		return -EOPNOTSUPP;
+@@ -8844,7 +8844,12 @@ static int nf_tables_abort(struct net *net, struct sk_buff *skb,
+ 			   enum nfnl_abort_action action)
+ {
+ 	struct nftables_pernet *nft_net = net_generic(net, nf_tables_net_id);
+-	int ret = __nf_tables_abort(net, action);
++	unsigned int gc_seq;
++	int ret;
 +
-+	if (!list_empty(&set->bindings) && (set->flags & NFT_SET_CONSTANT))
- 		return -EBUSY;
++	gc_seq = nft_gc_seq_begin(nft_net);
++	ret = __nf_tables_abort(net, action);
++	nft_gc_seq_end(nft_net, gc_seq);
  
- 	if (nla[NFTA_SET_ELEM_LIST_ELEMENTS] == NULL) {
+ 	mutex_unlock(&nft_net->commit_mutex);
+ 
 -- 
 2.40.1
 
