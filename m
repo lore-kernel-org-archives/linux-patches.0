@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15456341A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6D5341A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVkd/A37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82902C433C7;
-	Mon,  9 Oct 2023 13:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9rg+iDH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18B2C433C9;
+	Mon,  9 Oct 2023 13:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859308;
-	bh=s01Ksug+kNyFmQP2eowSUkXBQMHN7SoIRtCBaLWdABQ=;
+	s=korg; t=1696859312;
+	bh=0l62WHnfTDBd9YTKLwX5ZIB50XrJ+a707snm7VL3YVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVkd/A37Z+ptoBdgzDIclWK+jJ6qwMea4xNo+BkgoOS8sWG6iO1Fo7lYvkQHRT5TU
-	 TyM7c8eCE0nWO9MdMTPeM00A+QFrVC8GskfGW9QPPtQB/N00X8hm4ABk3sF+KPw2T5
-	 0q6uu6f+QQLW42+l2c6470KJxvk18Wqv2sNG3gG0=
+	b=d9rg+iDHxL0NnJLyhez5TMYyZwEML3APLxqmjP1GGkTC0IS7d0Qcb3W6zB0V0/bvE
+	 rzMp/MgyU0ydedrNPqVCxhsc/WkhEzcml1nOzJHvRvaOghvUJivjTzHMigaGj/N2Pi
+	 RPcov1Ap5gQKsZU/E+FKhXCBjqnUClBE3X5KJdUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Benjamin Block <bblock@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 4.14 36/55] scsi: zfcp: Fix a double put in zfcp_port_enqueue()
-Date: Mon,  9 Oct 2023 15:06:35 +0200
-Message-ID: <20231009130109.067760627@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 4.14 37/55] wifi: mwifiex: Fix tlv_buf_left calculation
+Date: Mon,  9 Oct 2023 15:06:36 +0200
+Message-ID: <20231009130109.106734395@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -42,64 +42,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit b481f644d9174670b385c3a699617052cd2a79d3 upstream.
+commit eec679e4ac5f47507774956fb3479c206e761af7 upstream.
 
-When device_register() fails, zfcp_port_release() will be called after
-put_device(). As a result, zfcp_ccw_adapter_put() will be called twice: one
-in zfcp_port_release() and one in the error path after device_register().
-So the reference on the adapter object is doubly put, which may lead to a
-premature free. Fix this by adjusting the error tag after
-device_register().
+In a TLV encoding scheme, the Length part represents the length after
+the header containing the values for type and length. In this case,
+`tlv_len` should be:
 
-Fixes: f3450c7b9172 ("[SCSI] zfcp: Replace local reference counting with common kref")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230923103723.10320-1-dinghao.liu@zju.edu.cn
-Acked-by: Benjamin Block <bblock@linux.ibm.com>
-Cc: stable@vger.kernel.org # v2.6.33+
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+tlv_len == (sizeof(*tlv_rxba) - 1) - sizeof(tlv_rxba->header) + tlv_bitmap_len
+
+Notice that the `- 1` accounts for the one-element array `bitmap`, which
+1-byte size is already included in `sizeof(*tlv_rxba)`.
+
+So, if the above is correct, there is a double-counting of some members
+in `struct mwifiex_ie_types_rxba_sync`, when `tlv_buf_left` and `tmp`
+are calculated:
+
+968                 tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
+969                 tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
+
+in specific, members:
+
+drivers/net/wireless/marvell/mwifiex/fw.h:777
+ 777         u8 mac[ETH_ALEN];
+ 778         u8 tid;
+ 779         u8 reserved;
+ 780         __le16 seq_num;
+ 781         __le16 bitmap_len;
+
+This is clearly wrong, and affects the subsequent decoding of data in
+`event_buf` through `tlv_rxba`:
+
+970                 tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
+
+Fix this by using `sizeof(tlv_rxba->header)` instead of `sizeof(*tlv_rxba)`
+in the calculation of `tlv_buf_left` and `tmp`.
+
+This results in the following binary differences before/after changes:
+
+| drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
+| @@ -4698,11 +4698,11 @@
+|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:968
+|                 tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
+| -    1da7:      lea    -0x11(%rbx),%edx
+| +    1da7:      lea    -0x4(%rbx),%edx
+|      1daa:      movzwl %bp,%eax
+|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:969
+|                 tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
+| -    1dad:      lea    0x11(%r15,%rbp,1),%r15
+| +    1dad:      lea    0x4(%r15,%rbp,1),%r15
+
+The above reflects the desired change: avoid counting 13 too many bytes;
+which is the total size of the double-counted members in
+`struct mwifiex_ie_types_rxba_sync`:
+
+$ pahole -C mwifiex_ie_types_rxba_sync drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
+struct mwifiex_ie_types_rxba_sync {
+	struct mwifiex_ie_types_header header;           /*     0     4 */
+
+     |-----------------------------------------------------------------------
+     |  u8                         mac[6];               /*     4     6 */  |
+     |	u8                         tid;                  /*    10     1 */  |
+     |  u8                         reserved;             /*    11     1 */  |
+     | 	__le16                     seq_num;              /*    12     2 */  |
+     | 	__le16                     bitmap_len;           /*    14     2 */  |
+     |  u8                         bitmap[1];            /*    16     1 */  |
+     |----------------------------------------------------------------------|
+								  | 13 bytes|
+								  -----------
+
+	/* size: 17, cachelines: 1, members: 7 */
+	/* last cacheline: 17 bytes */
+} __attribute__((__packed__));
+
+Fixes: 99ffe72cdae4 ("mwifiex: process rxba_sync event")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/06668edd68e7a26bbfeebd1201ae077a2a7a8bce.1692931954.git.gustavoars@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/scsi/zfcp_aux.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/scsi/zfcp_aux.c
-+++ b/drivers/s390/scsi/zfcp_aux.c
-@@ -492,12 +492,12 @@ struct zfcp_port *zfcp_port_enqueue(stru
- 	if (port) {
- 		put_device(&port->dev);
- 		retval = -EEXIST;
--		goto err_out;
-+		goto err_put;
+--- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
+@@ -992,8 +992,8 @@ void mwifiex_11n_rxba_sync_event(struct
+ 			}
+ 		}
+ 
+-		tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
+-		tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
++		tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
++		tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
+ 		tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
  	}
- 
- 	port = kzalloc(sizeof(struct zfcp_port), GFP_KERNEL);
- 	if (!port)
--		goto err_out;
-+		goto err_put;
- 
- 	rwlock_init(&port->unit_list_lock);
- 	INIT_LIST_HEAD(&port->unit_list);
-@@ -520,7 +520,7 @@ struct zfcp_port *zfcp_port_enqueue(stru
- 
- 	if (dev_set_name(&port->dev, "0x%016llx", (unsigned long long)wwpn)) {
- 		kfree(port);
--		goto err_out;
-+		goto err_put;
- 	}
- 	retval = -EINVAL;
- 
-@@ -537,8 +537,9 @@ struct zfcp_port *zfcp_port_enqueue(stru
- 
- 	return port;
- 
--err_out:
-+err_put:
- 	zfcp_ccw_adapter_put(adapter);
-+err_out:
- 	return ERR_PTR(retval);
  }
- 
 
 
