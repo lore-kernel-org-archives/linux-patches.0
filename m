@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39F91A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C198A1A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZOwLtNt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABCDC433C8;
-	Mon,  9 Oct 2023 13:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+0GKLul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB3BC433C9;
+	Mon,  9 Oct 2023 13:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857719;
-	bh=uEAMUQMOOFc4vhYeVY2vLGpxj8BxnnpBunhOzwu5QQM=;
+	s=korg; t=1696857722;
+	bh=RYerCG3xofqq3EGaPu8chQXRXXpYPR0cBb9lwZXewOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZOwLtNtJ8DXjJiMoIGXafkiD5uhthXEnAg7hiTEKZeDS5OHVq/Jk7lJ7G2K7FoTE
-	 JFOqJMhAChRXtoiyGrKXbYuEAy1zgPAOtTW4s7Z2ShMHSGQm19ItSbyYNoO08SmNqt
-	 LN6Tw/Jz4do3qhqqdjxcqU0uJT2PoYkibE3ZRb3s=
+	b=X+0GKLulGCM4p7QDxiI2pr+Ha9v4gByeCiyhoxsJzq38OdVVyMlfWGSGHsDYBr+DV
+	 t9RbfVxQnm9Mrxec9tLd1fq1QUJJOLQow1IGhJd4LBTbJCMxr9lxI7eJ09rJN3ZNwx
+	 vhHUsi76/U4Vah/qup52xp2hu1k2ojCI+38CbkC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/162] neighbour: annotate lockless accesses to n->nud_state
-Date: Mon,  9 Oct 2023 15:01:29 +0200
-Message-ID: <20231009130125.909034908@linuxfoundation.org>
+Subject: [PATCH 6.1 109/162] neighbour: switch to standard rcu, instead of rcu_bh
+Date: Mon,  9 Oct 2023 15:01:30 +0200
+Message-ID: <20231009130125.936303131@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -46,397 +44,686 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b071af523579df7341cabf0f16fc661125e9a13f ]
+[ Upstream commit 09eed1192cec1755967f2af8394207acdde579a1 ]
 
-We have many lockless accesses to n->nud_state.
+rcu_bh is no longer a win, especially for objects freed
+with standard call_rcu().
 
-Before adding another one in the following patch,
-add annotations to readers and writers.
+Switch neighbour code to no longer disable BH when not necessary.
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 5baa0433a15e ("neighbour: fix data-races around n->output")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c  |  4 ++--
- include/net/neighbour.h         |  2 +-
- net/bridge/br_arp_nd_proxy.c    |  4 ++--
- net/bridge/br_netfilter_hooks.c |  3 ++-
- net/core/filter.c               |  4 ++--
- net/core/neighbour.c            | 28 ++++++++++++++--------------
- net/ipv4/arp.c                  |  8 ++++----
- net/ipv4/fib_semantics.c        |  4 ++--
- net/ipv4/nexthop.c              |  4 ++--
- net/ipv4/route.c                |  2 +-
- net/ipv6/ip6_output.c           |  2 +-
- net/ipv6/ndisc.c                |  4 ++--
- net/ipv6/route.c                |  2 +-
- 13 files changed, 36 insertions(+), 35 deletions(-)
+ include/net/arp.h        |  8 ++---
+ include/net/ndisc.h      | 12 ++++----
+ include/net/neighbour.h  |  6 ++--
+ include/net/nexthop.h    |  6 ++--
+ net/core/filter.c        | 16 ++++++----
+ net/core/neighbour.c     | 64 ++++++++++++++++++++--------------------
+ net/ipv4/fib_semantics.c |  4 +--
+ net/ipv4/ip_output.c     |  6 ++--
+ net/ipv4/nexthop.c       |  8 ++---
+ net/ipv4/route.c         |  4 +--
+ net/ipv6/addrconf.c      | 14 ++++-----
+ net/ipv6/ip6_output.c    | 10 +++----
+ net/ipv6/route.c         | 12 ++++----
+ 13 files changed, 87 insertions(+), 83 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 0c3eb850fcb79..619dd71c9d75e 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1910,7 +1910,7 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
- 		struct vxlan_fdb *f;
- 		struct sk_buff	*reply;
+diff --git a/include/net/arp.h b/include/net/arp.h
+index d7ef4ec71dfeb..e8747e0713c79 100644
+--- a/include/net/arp.h
++++ b/include/net/arp.h
+@@ -38,11 +38,11 @@ static inline struct neighbour *__ipv4_neigh_lookup(struct net_device *dev, u32
+ {
+ 	struct neighbour *n;
  
--		if (!(n->nud_state & NUD_CONNECTED)) {
-+		if (!(READ_ONCE(n->nud_state) & NUD_CONNECTED)) {
- 			neigh_release(n);
- 			goto out;
- 		}
-@@ -2074,7 +2074,7 @@ static int neigh_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
- 		struct vxlan_fdb *f;
- 		struct sk_buff *reply;
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	n = __ipv4_neigh_lookup_noref(dev, key);
+ 	if (n && !refcount_inc_not_zero(&n->refcnt))
+ 		n = NULL;
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
  
--		if (!(n->nud_state & NUD_CONNECTED)) {
-+		if (!(READ_ONCE(n->nud_state) & NUD_CONNECTED)) {
- 			neigh_release(n);
- 			goto out;
- 		}
+ 	return n;
+ }
+@@ -51,10 +51,10 @@ static inline void __ipv4_confirm_neigh(struct net_device *dev, u32 key)
+ {
+ 	struct neighbour *n;
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	n = __ipv4_neigh_lookup_noref(dev, key);
+ 	neigh_confirm(n);
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ }
+ 
+ void arp_init(void);
+diff --git a/include/net/ndisc.h b/include/net/ndisc.h
+index da7eec8669ec4..325a6fb65c896 100644
+--- a/include/net/ndisc.h
++++ b/include/net/ndisc.h
+@@ -395,11 +395,11 @@ static inline struct neighbour *__ipv6_neigh_lookup(struct net_device *dev, cons
+ {
+ 	struct neighbour *n;
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	n = __ipv6_neigh_lookup_noref(dev, pkey);
+ 	if (n && !refcount_inc_not_zero(&n->refcnt))
+ 		n = NULL;
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 
+ 	return n;
+ }
+@@ -409,10 +409,10 @@ static inline void __ipv6_confirm_neigh(struct net_device *dev,
+ {
+ 	struct neighbour *n;
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	n = __ipv6_neigh_lookup_noref(dev, pkey);
+ 	neigh_confirm(n);
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ }
+ 
+ static inline void __ipv6_confirm_neigh_stub(struct net_device *dev,
+@@ -420,10 +420,10 @@ static inline void __ipv6_confirm_neigh_stub(struct net_device *dev,
+ {
+ 	struct neighbour *n;
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	n = __ipv6_neigh_lookup_noref_stub(dev, pkey);
+ 	neigh_confirm(n);
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ }
+ 
+ /* uses ipv6_stub and is meant for use outside of IPv6 core */
 diff --git a/include/net/neighbour.h b/include/net/neighbour.h
-index 794e45981891a..cd30aac9ec835 100644
+index cd30aac9ec835..f6a8ecc6b1fa7 100644
 --- a/include/net/neighbour.h
 +++ b/include/net/neighbour.h
-@@ -464,7 +464,7 @@ static __always_inline int neigh_event_send_probe(struct neighbour *neigh,
+@@ -299,14 +299,14 @@ static inline struct neighbour *___neigh_lookup_noref(
+ 	const void *pkey,
+ 	struct net_device *dev)
+ {
+-	struct neigh_hash_table *nht = rcu_dereference_bh(tbl->nht);
++	struct neigh_hash_table *nht = rcu_dereference(tbl->nht);
+ 	struct neighbour *n;
+ 	u32 hash_val;
  
- 	if (READ_ONCE(neigh->used) != now)
- 		WRITE_ONCE(neigh->used, now);
--	if (!(neigh->nud_state & (NUD_CONNECTED | NUD_DELAY | NUD_PROBE)))
-+	if (!(READ_ONCE(neigh->nud_state) & (NUD_CONNECTED | NUD_DELAY | NUD_PROBE)))
- 		return __neigh_event_send(neigh, skb, immediate_ok);
- 	return 0;
+ 	hash_val = hash(pkey, dev, nht->hash_rnd) >> (32 - nht->hash_shift);
+-	for (n = rcu_dereference_bh(nht->hash_buckets[hash_val]);
++	for (n = rcu_dereference(nht->hash_buckets[hash_val]);
+ 	     n != NULL;
+-	     n = rcu_dereference_bh(n->next)) {
++	     n = rcu_dereference(n->next)) {
+ 		if (n->dev == dev && key_eq(n, pkey))
+ 			return n;
+ 	}
+diff --git a/include/net/nexthop.h b/include/net/nexthop.h
+index 28085b995ddcf..9fa291a046211 100644
+--- a/include/net/nexthop.h
++++ b/include/net/nexthop.h
+@@ -498,7 +498,7 @@ static inline struct fib6_nh *nexthop_fib6_nh(struct nexthop *nh)
  }
-diff --git a/net/bridge/br_arp_nd_proxy.c b/net/bridge/br_arp_nd_proxy.c
-index e5e48c6e35d78..b45c00c01dea1 100644
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -192,7 +192,7 @@ void br_do_proxy_suppress_arp(struct sk_buff *skb, struct net_bridge *br,
- 	if (n) {
- 		struct net_bridge_fdb_entry *f;
  
--		if (!(n->nud_state & NUD_VALID)) {
-+		if (!(READ_ONCE(n->nud_state) & NUD_VALID)) {
- 			neigh_release(n);
- 			return;
- 		}
-@@ -452,7 +452,7 @@ void br_do_suppress_nd(struct sk_buff *skb, struct net_bridge *br,
- 	if (n) {
- 		struct net_bridge_fdb_entry *f;
+ /* Variant of nexthop_fib6_nh().
+- * Caller should either hold rcu_read_lock_bh(), or RTNL.
++ * Caller should either hold rcu_read_lock(), or RTNL.
+  */
+ static inline struct fib6_nh *nexthop_fib6_nh_bh(struct nexthop *nh)
+ {
+@@ -507,13 +507,13 @@ static inline struct fib6_nh *nexthop_fib6_nh_bh(struct nexthop *nh)
+ 	if (nh->is_group) {
+ 		struct nh_group *nh_grp;
  
--		if (!(n->nud_state & NUD_VALID)) {
-+		if (!(READ_ONCE(n->nud_state) & NUD_VALID)) {
- 			neigh_release(n);
- 			return;
- 		}
-diff --git a/net/bridge/br_netfilter_hooks.c b/net/bridge/br_netfilter_hooks.c
-index 812bd7e1750b6..442198cb83909 100644
---- a/net/bridge/br_netfilter_hooks.c
-+++ b/net/bridge/br_netfilter_hooks.c
-@@ -277,7 +277,8 @@ int br_nf_pre_routing_finish_bridge(struct net *net, struct sock *sk, struct sk_
- 		struct nf_bridge_info *nf_bridge = nf_bridge_info_get(skb);
- 		int ret;
+-		nh_grp = rcu_dereference_bh_rtnl(nh->nh_grp);
++		nh_grp = rcu_dereference_rtnl(nh->nh_grp);
+ 		nh = nexthop_mpath_select(nh_grp, 0);
+ 		if (!nh)
+ 			return NULL;
+ 	}
  
--		if ((neigh->nud_state & NUD_CONNECTED) && neigh->hh.hh_len) {
-+		if ((READ_ONCE(neigh->nud_state) & NUD_CONNECTED) &&
-+		    READ_ONCE(neigh->hh.hh_len)) {
- 			neigh_hh_bridge(&neigh->hh, skb);
- 			skb->dev = nf_bridge->physindev;
- 			ret = br_handle_frame_finish(net, sk, skb);
+-	nhi = rcu_dereference_bh_rtnl(nh->nh_info);
++	nhi = rcu_dereference_rtnl(nh->nh_info);
+ 	if (nhi->family == AF_INET6)
+ 		return &nhi->fib6_nh;
+ 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index 6ef62d84dcac5..d32c6bd4d579a 100644
+index d32c6bd4d579a..adc327f4af1e9 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -5802,7 +5802,7 @@ static int bpf_ipv4_fib_lookup(struct net *net, struct bpf_fib_lookup *params,
- 	else
- 		neigh = __ipv6_neigh_lookup_noref_stub(dev, params->ipv6_dst);
+@@ -2197,7 +2197,7 @@ static int bpf_out_neigh_v6(struct net *net, struct sk_buff *skb,
+ 			return -ENOMEM;
+ 	}
  
--	if (!neigh || !(neigh->nud_state & NUD_VALID))
-+	if (!neigh || !(READ_ONCE(neigh->nud_state) & NUD_VALID))
- 		return BPF_FIB_LKUP_RET_NO_NEIGH;
- 	memcpy(params->dmac, neigh->ha, ETH_ALEN);
- 	memcpy(params->smac, dev->dev_addr, ETH_ALEN);
-@@ -5923,7 +5923,7 @@ static int bpf_ipv6_fib_lookup(struct net *net, struct bpf_fib_lookup *params,
- 	 * not needed here.
- 	 */
- 	neigh = __ipv6_neigh_lookup_noref_stub(dev, dst);
--	if (!neigh || !(neigh->nud_state & NUD_VALID))
-+	if (!neigh || !(READ_ONCE(neigh->nud_state) & NUD_VALID))
- 		return BPF_FIB_LKUP_RET_NO_NEIGH;
- 	memcpy(params->dmac, neigh->ha, ETH_ALEN);
- 	memcpy(params->smac, dev->dev_addr, ETH_ALEN);
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	if (!nh) {
+ 		dst = skb_dst(skb);
+ 		nexthop = rt6_nexthop(container_of(dst, struct rt6_info, dst),
+@@ -2210,10 +2210,12 @@ static int bpf_out_neigh_v6(struct net *net, struct sk_buff *skb,
+ 		int ret;
+ 
+ 		sock_confirm_neigh(skb, neigh);
++		local_bh_disable();
+ 		dev_xmit_recursion_inc();
+ 		ret = neigh_output(neigh, skb, false);
+ 		dev_xmit_recursion_dec();
+-		rcu_read_unlock_bh();
++		local_bh_enable();
++		rcu_read_unlock();
+ 		return ret;
+ 	}
+ 	rcu_read_unlock_bh();
+@@ -2295,7 +2297,7 @@ static int bpf_out_neigh_v4(struct net *net, struct sk_buff *skb,
+ 			return -ENOMEM;
+ 	}
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	if (!nh) {
+ 		struct dst_entry *dst = skb_dst(skb);
+ 		struct rtable *rt = container_of(dst, struct rtable, dst);
+@@ -2307,7 +2309,7 @@ static int bpf_out_neigh_v4(struct net *net, struct sk_buff *skb,
+ 	} else if (nh->nh_family == AF_INET) {
+ 		neigh = ip_neigh_gw4(dev, nh->ipv4_nh);
+ 	} else {
+-		rcu_read_unlock_bh();
++		rcu_read_unlock();
+ 		goto out_drop;
+ 	}
+ 
+@@ -2315,13 +2317,15 @@ static int bpf_out_neigh_v4(struct net *net, struct sk_buff *skb,
+ 		int ret;
+ 
+ 		sock_confirm_neigh(skb, neigh);
++		local_bh_disable();
+ 		dev_xmit_recursion_inc();
+ 		ret = neigh_output(neigh, skb, is_v6gw);
+ 		dev_xmit_recursion_dec();
+-		rcu_read_unlock_bh();
++		local_bh_enable();
++		rcu_read_unlock();
+ 		return ret;
+ 	}
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ out_drop:
+ 	kfree_skb(skb);
+ 	return -ENETDOWN;
 diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 8e726eb0548f6..51393079487ae 100644
+index 51393079487ae..bafd72e5f5886 100644
 --- a/net/core/neighbour.c
 +++ b/net/core/neighbour.c
-@@ -1095,13 +1095,13 @@ static void neigh_timer_handler(struct timer_list *t)
- 					  neigh->used +
- 					  NEIGH_VAR(neigh->parms, DELAY_PROBE_TIME))) {
- 			neigh_dbg(2, "neigh %p is delayed\n", neigh);
--			neigh->nud_state = NUD_DELAY;
-+			WRITE_ONCE(neigh->nud_state, NUD_DELAY);
- 			neigh->updated = jiffies;
- 			neigh_suspect(neigh);
- 			next = now + NEIGH_VAR(neigh->parms, DELAY_PROBE_TIME);
- 		} else {
- 			neigh_dbg(2, "neigh %p is suspected\n", neigh);
--			neigh->nud_state = NUD_STALE;
-+			WRITE_ONCE(neigh->nud_state, NUD_STALE);
- 			neigh->updated = jiffies;
- 			neigh_suspect(neigh);
- 			notify = 1;
-@@ -1111,14 +1111,14 @@ static void neigh_timer_handler(struct timer_list *t)
- 				   neigh->confirmed +
- 				   NEIGH_VAR(neigh->parms, DELAY_PROBE_TIME))) {
- 			neigh_dbg(2, "neigh %p is now reachable\n", neigh);
--			neigh->nud_state = NUD_REACHABLE;
-+			WRITE_ONCE(neigh->nud_state, NUD_REACHABLE);
- 			neigh->updated = jiffies;
- 			neigh_connect(neigh);
- 			notify = 1;
- 			next = neigh->confirmed + neigh->parms->reachable_time;
- 		} else {
- 			neigh_dbg(2, "neigh %p is probed\n", neigh);
--			neigh->nud_state = NUD_PROBE;
-+			WRITE_ONCE(neigh->nud_state, NUD_PROBE);
- 			neigh->updated = jiffies;
- 			atomic_set(&neigh->probes, 0);
- 			notify = 1;
-@@ -1132,7 +1132,7 @@ static void neigh_timer_handler(struct timer_list *t)
+@@ -614,7 +614,7 @@ struct neighbour *neigh_lookup(struct neigh_table *tbl, const void *pkey,
  
- 	if ((neigh->nud_state & (NUD_INCOMPLETE | NUD_PROBE)) &&
- 	    atomic_read(&neigh->probes) >= neigh_max_probes(neigh)) {
--		neigh->nud_state = NUD_FAILED;
-+		WRITE_ONCE(neigh->nud_state, NUD_FAILED);
- 		notify = 1;
- 		neigh_invalidate(neigh);
- 		goto out;
-@@ -1181,7 +1181,7 @@ int __neigh_event_send(struct neighbour *neigh, struct sk_buff *skb,
- 			atomic_set(&neigh->probes,
- 				   NEIGH_VAR(neigh->parms, UCAST_PROBES));
- 			neigh_del_timer(neigh);
--			neigh->nud_state = NUD_INCOMPLETE;
-+			WRITE_ONCE(neigh->nud_state, NUD_INCOMPLETE);
- 			neigh->updated = now;
- 			if (!immediate_ok) {
- 				next = now + 1;
-@@ -1193,7 +1193,7 @@ int __neigh_event_send(struct neighbour *neigh, struct sk_buff *skb,
- 			}
- 			neigh_add_timer(neigh, next);
- 		} else {
--			neigh->nud_state = NUD_FAILED;
-+			WRITE_ONCE(neigh->nud_state, NUD_FAILED);
- 			neigh->updated = jiffies;
- 			write_unlock_bh(&neigh->lock);
+ 	NEIGH_CACHE_STAT_INC(tbl, lookups);
  
-@@ -1203,7 +1203,7 @@ int __neigh_event_send(struct neighbour *neigh, struct sk_buff *skb,
- 	} else if (neigh->nud_state & NUD_STALE) {
- 		neigh_dbg(2, "neigh %p is delayed\n", neigh);
- 		neigh_del_timer(neigh);
--		neigh->nud_state = NUD_DELAY;
-+		WRITE_ONCE(neigh->nud_state, NUD_DELAY);
- 		neigh->updated = jiffies;
- 		neigh_add_timer(neigh, jiffies +
- 				NEIGH_VAR(neigh->parms, DELAY_PROBE_TIME));
-@@ -1315,7 +1315,7 @@ static int __neigh_update(struct neighbour *neigh, const u8 *lladdr,
- 	neigh_update_flags(neigh, flags, &notify, &gc_update, &managed_update);
- 	if (flags & (NEIGH_UPDATE_F_USE | NEIGH_UPDATE_F_MANAGED)) {
- 		new = old & ~NUD_PERMANENT;
--		neigh->nud_state = new;
-+		WRITE_ONCE(neigh->nud_state, new);
- 		err = 0;
- 		goto out;
- 	}
-@@ -1324,7 +1324,7 @@ static int __neigh_update(struct neighbour *neigh, const u8 *lladdr,
- 		neigh_del_timer(neigh);
- 		if (old & NUD_CONNECTED)
- 			neigh_suspect(neigh);
--		neigh->nud_state = new;
-+		WRITE_ONCE(neigh->nud_state, new);
- 		err = 0;
- 		notify = old & NUD_VALID;
- 		if ((old & (NUD_INCOMPLETE | NUD_PROBE)) &&
-@@ -1403,7 +1403,7 @@ static int __neigh_update(struct neighbour *neigh, const u8 *lladdr,
- 						((new & NUD_REACHABLE) ?
- 						 neigh->parms->reachable_time :
- 						 0)));
--		neigh->nud_state = new;
-+		WRITE_ONCE(neigh->nud_state, new);
- 		notify = 1;
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	n = __neigh_lookup_noref(tbl, pkey, dev);
+ 	if (n) {
+ 		if (!refcount_inc_not_zero(&n->refcnt))
+@@ -622,7 +622,7 @@ struct neighbour *neigh_lookup(struct neigh_table *tbl, const void *pkey,
+ 		NEIGH_CACHE_STAT_INC(tbl, hits);
  	}
  
-@@ -1490,7 +1490,7 @@ void __neigh_set_probe_once(struct neighbour *neigh)
- 	neigh->updated = jiffies;
- 	if (!(neigh->nud_state & NUD_FAILED))
- 		return;
--	neigh->nud_state = NUD_INCOMPLETE;
-+	WRITE_ONCE(neigh->nud_state, NUD_INCOMPLETE);
- 	atomic_set(&neigh->probes, neigh_max_probes(neigh));
- 	neigh_add_timer(neigh,
- 			jiffies + max(NEIGH_VAR(neigh->parms, RETRANS_TIME),
-@@ -3190,7 +3190,7 @@ static struct neighbour *neigh_get_first(struct seq_file *seq)
- 			}
- 			if (!(state->flags & NEIGH_SEQ_SKIP_NOARP))
- 				break;
--			if (n->nud_state & ~NUD_NOARP)
-+			if (READ_ONCE(n->nud_state) & ~NUD_NOARP)
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 	return n;
+ }
+ EXPORT_SYMBOL(neigh_lookup);
+@@ -2176,11 +2176,11 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
+ 			.ndtc_proxy_qlen	= tbl->proxy_queue.qlen,
+ 		};
+ 
+-		rcu_read_lock_bh();
+-		nht = rcu_dereference_bh(tbl->nht);
++		rcu_read_lock();
++		nht = rcu_dereference(tbl->nht);
+ 		ndc.ndtc_hash_rnd = nht->hash_rnd[0];
+ 		ndc.ndtc_hash_mask = ((1 << nht->hash_shift) - 1);
+-		rcu_read_unlock_bh();
++		rcu_read_unlock();
+ 
+ 		if (nla_put(skb, NDTA_CONFIG, sizeof(ndc), &ndc))
+ 			goto nla_put_failure;
+@@ -2695,15 +2695,15 @@ static int neigh_dump_table(struct neigh_table *tbl, struct sk_buff *skb,
+ 	if (filter->dev_idx || filter->master_idx)
+ 		flags |= NLM_F_DUMP_FILTERED;
+ 
+-	rcu_read_lock_bh();
+-	nht = rcu_dereference_bh(tbl->nht);
++	rcu_read_lock();
++	nht = rcu_dereference(tbl->nht);
+ 
+ 	for (h = s_h; h < (1 << nht->hash_shift); h++) {
+ 		if (h > s_h)
+ 			s_idx = 0;
+-		for (n = rcu_dereference_bh(nht->hash_buckets[h]), idx = 0;
++		for (n = rcu_dereference(nht->hash_buckets[h]), idx = 0;
+ 		     n != NULL;
+-		     n = rcu_dereference_bh(n->next)) {
++		     n = rcu_dereference(n->next)) {
+ 			if (idx < s_idx || !net_eq(dev_net(n->dev), net))
+ 				goto next;
+ 			if (neigh_ifindex_filtered(n->dev, filter->dev_idx) ||
+@@ -2722,7 +2722,7 @@ static int neigh_dump_table(struct neigh_table *tbl, struct sk_buff *skb,
+ 	}
+ 	rc = skb->len;
+ out:
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 	cb->args[1] = h;
+ 	cb->args[2] = idx;
+ 	return rc;
+@@ -3067,20 +3067,20 @@ void neigh_for_each(struct neigh_table *tbl, void (*cb)(struct neighbour *, void
+ 	int chain;
+ 	struct neigh_hash_table *nht;
+ 
+-	rcu_read_lock_bh();
+-	nht = rcu_dereference_bh(tbl->nht);
++	rcu_read_lock();
++	nht = rcu_dereference(tbl->nht);
+ 
+-	read_lock(&tbl->lock); /* avoid resizes */
++	read_lock_bh(&tbl->lock); /* avoid resizes */
+ 	for (chain = 0; chain < (1 << nht->hash_shift); chain++) {
+ 		struct neighbour *n;
+ 
+-		for (n = rcu_dereference_bh(nht->hash_buckets[chain]);
++		for (n = rcu_dereference(nht->hash_buckets[chain]);
+ 		     n != NULL;
+-		     n = rcu_dereference_bh(n->next))
++		     n = rcu_dereference(n->next))
+ 			cb(n, cookie);
+ 	}
+-	read_unlock(&tbl->lock);
+-	rcu_read_unlock_bh();
++	read_unlock_bh(&tbl->lock);
++	rcu_read_unlock();
+ }
+ EXPORT_SYMBOL(neigh_for_each);
+ 
+@@ -3130,7 +3130,7 @@ int neigh_xmit(int index, struct net_device *dev,
+ 		tbl = neigh_tables[index];
+ 		if (!tbl)
+ 			goto out;
+-		rcu_read_lock_bh();
++		rcu_read_lock();
+ 		if (index == NEIGH_ARP_TABLE) {
+ 			u32 key = *((u32 *)addr);
+ 
+@@ -3142,11 +3142,11 @@ int neigh_xmit(int index, struct net_device *dev,
+ 			neigh = __neigh_create(tbl, addr, dev, false);
+ 		err = PTR_ERR(neigh);
+ 		if (IS_ERR(neigh)) {
+-			rcu_read_unlock_bh();
++			rcu_read_unlock();
+ 			goto out_kfree_skb;
+ 		}
+ 		err = neigh->output(neigh, skb);
+-		rcu_read_unlock_bh();
++		rcu_read_unlock();
+ 	}
+ 	else if (index == NEIGH_LINK_TABLE) {
+ 		err = dev_hard_header(skb, dev, ntohs(skb->protocol),
+@@ -3175,7 +3175,7 @@ static struct neighbour *neigh_get_first(struct seq_file *seq)
+ 
+ 	state->flags &= ~NEIGH_SEQ_IS_PNEIGH;
+ 	for (bucket = 0; bucket < (1 << nht->hash_shift); bucket++) {
+-		n = rcu_dereference_bh(nht->hash_buckets[bucket]);
++		n = rcu_dereference(nht->hash_buckets[bucket]);
+ 
+ 		while (n) {
+ 			if (!net_eq(dev_net(n->dev), net))
+@@ -3193,7 +3193,7 @@ static struct neighbour *neigh_get_first(struct seq_file *seq)
+ 			if (READ_ONCE(n->nud_state) & ~NUD_NOARP)
  				break;
  next:
- 			n = rcu_dereference_bh(n->next);
-@@ -3232,7 +3232,7 @@ static struct neighbour *neigh_get_next(struct seq_file *seq,
- 			if (!(state->flags & NEIGH_SEQ_SKIP_NOARP))
- 				break;
- 
--			if (n->nud_state & ~NUD_NOARP)
-+			if (READ_ONCE(n->nud_state) & ~NUD_NOARP)
- 				break;
- next:
- 			n = rcu_dereference_bh(n->next);
-diff --git a/net/ipv4/arp.c b/net/ipv4/arp.c
-index 4f7237661afb9..9456f5bb35e5d 100644
---- a/net/ipv4/arp.c
-+++ b/net/ipv4/arp.c
-@@ -375,7 +375,7 @@ static void arp_solicit(struct neighbour *neigh, struct sk_buff *skb)
- 
- 	probes -= NEIGH_VAR(neigh->parms, UCAST_PROBES);
- 	if (probes < 0) {
--		if (!(neigh->nud_state & NUD_VALID))
-+		if (!(READ_ONCE(neigh->nud_state) & NUD_VALID))
- 			pr_debug("trying to ucast probe in NUD_INVALID\n");
- 		neigh_ha_snapshot(dst_ha, neigh, dev);
- 		dst_hw = dst_ha;
-@@ -1123,7 +1123,7 @@ static int arp_req_get(struct arpreq *r, struct net_device *dev)
- 
- 	neigh = neigh_lookup(&arp_tbl, &ip, dev);
- 	if (neigh) {
--		if (!(neigh->nud_state & NUD_NOARP)) {
-+		if (!(READ_ONCE(neigh->nud_state) & NUD_NOARP)) {
- 			read_lock_bh(&neigh->lock);
- 			memcpy(r->arp_ha.sa_data, neigh->ha, dev->addr_len);
- 			r->arp_flags = arp_state_to_flags(neigh);
-@@ -1144,12 +1144,12 @@ int arp_invalidate(struct net_device *dev, __be32 ip, bool force)
- 	struct neigh_table *tbl = &arp_tbl;
- 
- 	if (neigh) {
--		if ((neigh->nud_state & NUD_VALID) && !force) {
-+		if ((READ_ONCE(neigh->nud_state) & NUD_VALID) && !force) {
- 			neigh_release(neigh);
- 			return 0;
+-			n = rcu_dereference_bh(n->next);
++			n = rcu_dereference(n->next);
  		}
  
--		if (neigh->nud_state & ~NUD_NOARP)
-+		if (READ_ONCE(neigh->nud_state) & ~NUD_NOARP)
- 			err = neigh_update(neigh, NULL, NUD_FAILED,
- 					   NEIGH_UPDATE_F_OVERRIDE|
- 					   NEIGH_UPDATE_F_ADMIN, 0);
+ 		if (n)
+@@ -3217,7 +3217,7 @@ static struct neighbour *neigh_get_next(struct seq_file *seq,
+ 		if (v)
+ 			return n;
+ 	}
+-	n = rcu_dereference_bh(n->next);
++	n = rcu_dereference(n->next);
+ 
+ 	while (1) {
+ 		while (n) {
+@@ -3235,7 +3235,7 @@ static struct neighbour *neigh_get_next(struct seq_file *seq,
+ 			if (READ_ONCE(n->nud_state) & ~NUD_NOARP)
+ 				break;
+ next:
+-			n = rcu_dereference_bh(n->next);
++			n = rcu_dereference(n->next);
+ 		}
+ 
+ 		if (n)
+@@ -3244,7 +3244,7 @@ static struct neighbour *neigh_get_next(struct seq_file *seq,
+ 		if (++state->bucket >= (1 << nht->hash_shift))
+ 			break;
+ 
+-		n = rcu_dereference_bh(nht->hash_buckets[state->bucket]);
++		n = rcu_dereference(nht->hash_buckets[state->bucket]);
+ 	}
+ 
+ 	if (n && pos)
+@@ -3346,7 +3346,7 @@ static void *neigh_get_idx_any(struct seq_file *seq, loff_t *pos)
+ 
+ void *neigh_seq_start(struct seq_file *seq, loff_t *pos, struct neigh_table *tbl, unsigned int neigh_seq_flags)
+ 	__acquires(tbl->lock)
+-	__acquires(rcu_bh)
++	__acquires(rcu)
+ {
+ 	struct neigh_seq_state *state = seq->private;
+ 
+@@ -3354,9 +3354,9 @@ void *neigh_seq_start(struct seq_file *seq, loff_t *pos, struct neigh_table *tbl
+ 	state->bucket = 0;
+ 	state->flags = (neigh_seq_flags & ~NEIGH_SEQ_IS_PNEIGH);
+ 
+-	rcu_read_lock_bh();
+-	state->nht = rcu_dereference_bh(tbl->nht);
+-	read_lock(&tbl->lock);
++	rcu_read_lock();
++	state->nht = rcu_dereference(tbl->nht);
++	read_lock_bh(&tbl->lock);
+ 
+ 	return *pos ? neigh_get_idx_any(seq, pos) : SEQ_START_TOKEN;
+ }
+@@ -3391,13 +3391,13 @@ EXPORT_SYMBOL(neigh_seq_next);
+ 
+ void neigh_seq_stop(struct seq_file *seq, void *v)
+ 	__releases(tbl->lock)
+-	__releases(rcu_bh)
++	__releases(rcu)
+ {
+ 	struct neigh_seq_state *state = seq->private;
+ 	struct neigh_table *tbl = state->tbl;
+ 
+-	read_unlock(&tbl->lock);
+-	rcu_read_unlock_bh();
++	read_unlock_bh(&tbl->lock);
++	rcu_read_unlock();
+ }
+ EXPORT_SYMBOL(neigh_seq_stop);
+ 
 diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
-index 3b6e6bc80dc1c..158ad3c2662f5 100644
+index 158ad3c2662f5..eafa4a0335157 100644
 --- a/net/ipv4/fib_semantics.c
 +++ b/net/ipv4/fib_semantics.c
-@@ -564,7 +564,7 @@ static int fib_detect_death(struct fib_info *fi, int order,
- 		n = NULL;
+@@ -2194,7 +2194,7 @@ static bool fib_good_nh(const struct fib_nh *nh)
+ 	if (nh->fib_nh_scope == RT_SCOPE_LINK) {
+ 		struct neighbour *n;
  
- 	if (n) {
--		state = n->nud_state;
-+		state = READ_ONCE(n->nud_state);
- 		neigh_release(n);
- 	} else {
- 		return 0;
-@@ -2205,7 +2205,7 @@ static bool fib_good_nh(const struct fib_nh *nh)
- 		else
- 			n = NULL;
+-		rcu_read_lock_bh();
++		rcu_read_lock();
+ 
+ 		if (likely(nh->fib_nh_gw_family == AF_INET))
+ 			n = __ipv4_neigh_lookup_noref(nh->fib_nh_dev,
+@@ -2207,7 +2207,7 @@ static bool fib_good_nh(const struct fib_nh *nh)
  		if (n)
--			state = n->nud_state;
-+			state = READ_ONCE(n->nud_state);
+ 			state = READ_ONCE(n->nud_state);
  
- 		rcu_read_unlock_bh();
+-		rcu_read_unlock_bh();
++		rcu_read_unlock();
  	}
+ 
+ 	return !!(state & NUD_VALID);
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index 66908ce2dd116..493c679ea54f3 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -218,7 +218,7 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
+ 			return res;
+ 	}
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	neigh = ip_neigh_for_gw(rt, skb, &is_v6gw);
+ 	if (!IS_ERR(neigh)) {
+ 		int res;
+@@ -226,10 +226,10 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
+ 		sock_confirm_neigh(skb, neigh);
+ 		/* if crossing protocols, can not use the cached header */
+ 		res = neigh_output(neigh, skb, is_v6gw);
+-		rcu_read_unlock_bh();
++		rcu_read_unlock();
+ 		return res;
+ 	}
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 
+ 	net_dbg_ratelimited("%s: No header cache and no neighbour!\n",
+ 			    __func__);
 diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 9cc2879024541..d699a41c9d955 100644
+index d699a41c9d955..be5498f5dd319 100644
 --- a/net/ipv4/nexthop.c
 +++ b/net/ipv4/nexthop.c
-@@ -1128,7 +1128,7 @@ static bool ipv6_good_nh(const struct fib6_nh *nh)
+@@ -1124,13 +1124,13 @@ static bool ipv6_good_nh(const struct fib6_nh *nh)
+ 	int state = NUD_REACHABLE;
+ 	struct neighbour *n;
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
  
  	n = __ipv6_neigh_lookup_noref_stub(nh->fib_nh_dev, &nh->fib_nh_gw6);
  	if (n)
--		state = n->nud_state;
-+		state = READ_ONCE(n->nud_state);
+ 		state = READ_ONCE(n->nud_state);
  
- 	rcu_read_unlock_bh();
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
  
-@@ -1145,7 +1145,7 @@ static bool ipv4_good_nh(const struct fib_nh *nh)
+ 	return !!(state & NUD_VALID);
+ }
+@@ -1140,14 +1140,14 @@ static bool ipv4_good_nh(const struct fib_nh *nh)
+ 	int state = NUD_REACHABLE;
+ 	struct neighbour *n;
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 
  	n = __ipv4_neigh_lookup_noref(nh->fib_nh_dev,
  				      (__force u32)nh->fib_nh_gw4);
  	if (n)
--		state = n->nud_state;
-+		state = READ_ONCE(n->nud_state);
+ 		state = READ_ONCE(n->nud_state);
  
- 	rcu_read_unlock_bh();
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
  
+ 	return !!(state & NUD_VALID);
+ }
 diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 84a0a71a6f4e7..8d838b0046900 100644
+index 8d838b0046900..608bd9f8dbc86 100644
 --- a/net/ipv4/route.c
 +++ b/net/ipv4/route.c
-@@ -784,7 +784,7 @@ static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flow
- 	if (!n)
- 		n = neigh_create(&arp_tbl, &new_gw, rt->dst.dev);
- 	if (!IS_ERR(n)) {
--		if (!(n->nud_state & NUD_VALID)) {
-+		if (!(READ_ONCE(n->nud_state) & NUD_VALID)) {
- 			neigh_event_send(n, NULL);
- 		} else {
- 			if (fib_lookup(net, fl4, &res, 0) == 0) {
+@@ -408,7 +408,7 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
+ 	struct net_device *dev = dst->dev;
+ 	struct neighbour *n;
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 
+ 	if (likely(rt->rt_gw_family == AF_INET)) {
+ 		n = ip_neigh_gw4(dev, rt->rt_gw4);
+@@ -424,7 +424,7 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
+ 	if (!IS_ERR(n) && !refcount_inc_not_zero(&n->refcnt))
+ 		n = NULL;
+ 
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 
+ 	return n;
+ }
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 96f4351b55a6f..c63ccd39fc552 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1035,7 +1035,7 @@ static int ipv6_add_addr_hash(struct net_device *dev, struct inet6_ifaddr *ifa)
+ 	unsigned int hash = inet6_addr_hash(net, &ifa->addr);
+ 	int err = 0;
+ 
+-	spin_lock(&net->ipv6.addrconf_hash_lock);
++	spin_lock_bh(&net->ipv6.addrconf_hash_lock);
+ 
+ 	/* Ignore adding duplicate addresses on an interface */
+ 	if (ipv6_chk_same_addr(net, &ifa->addr, dev, hash)) {
+@@ -1045,7 +1045,7 @@ static int ipv6_add_addr_hash(struct net_device *dev, struct inet6_ifaddr *ifa)
+ 		hlist_add_head_rcu(&ifa->addr_lst, &net->ipv6.inet6_addr_lst[hash]);
+ 	}
+ 
+-	spin_unlock(&net->ipv6.addrconf_hash_lock);
++	spin_unlock_bh(&net->ipv6.addrconf_hash_lock);
+ 
+ 	return err;
+ }
+@@ -1140,15 +1140,15 @@ ipv6_add_addr(struct inet6_dev *idev, struct ifa6_config *cfg,
+ 	/* For caller */
+ 	refcount_set(&ifa->refcnt, 1);
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 
+ 	err = ipv6_add_addr_hash(idev->dev, ifa);
+ 	if (err < 0) {
+-		rcu_read_unlock_bh();
++		rcu_read_unlock();
+ 		goto out;
+ 	}
+ 
+-	write_lock(&idev->lock);
++	write_lock_bh(&idev->lock);
+ 
+ 	/* Add to inet6_dev unicast addr list. */
+ 	ipv6_link_dev_addr(idev, ifa);
+@@ -1159,9 +1159,9 @@ ipv6_add_addr(struct inet6_dev *idev, struct ifa6_config *cfg,
+ 	}
+ 
+ 	in6_ifa_hold(ifa);
+-	write_unlock(&idev->lock);
++	write_unlock_bh(&idev->lock);
+ 
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 
+ 	inet6addr_notifier_call_chain(NETDEV_UP, ifa);
+ out:
 diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 34192f7a166fb..5bf15a530fe73 100644
+index 5bf15a530fe73..ce2c5e728745f 100644
 --- a/net/ipv6/ip6_output.c
 +++ b/net/ipv6/ip6_output.c
-@@ -1153,7 +1153,7 @@ static int ip6_dst_lookup_tail(struct net *net, const struct sock *sk,
- 	rcu_read_lock_bh();
+@@ -116,7 +116,7 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+ 			return res;
+ 	}
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	nexthop = rt6_nexthop((struct rt6_info *)dst, daddr);
+ 	neigh = __ipv6_neigh_lookup_noref(dev, nexthop);
+ 
+@@ -124,7 +124,7 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+ 		if (unlikely(!neigh))
+ 			neigh = __neigh_create(&nd_tbl, nexthop, dev, false);
+ 		if (IS_ERR(neigh)) {
+-			rcu_read_unlock_bh();
++			rcu_read_unlock();
+ 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTNOROUTES);
+ 			kfree_skb_reason(skb, SKB_DROP_REASON_NEIGH_CREATEFAIL);
+ 			return -EINVAL;
+@@ -132,7 +132,7 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+ 	}
+ 	sock_confirm_neigh(skb, neigh);
+ 	ret = neigh_output(neigh, skb, false);
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 	return ret;
+ }
+ 
+@@ -1150,11 +1150,11 @@ static int ip6_dst_lookup_tail(struct net *net, const struct sock *sk,
+ 	 * dst entry of the nexthop router
+ 	 */
+ 	rt = (struct rt6_info *) *dst;
+-	rcu_read_lock_bh();
++	rcu_read_lock();
  	n = __ipv6_neigh_lookup_noref(rt->dst.dev,
  				      rt6_nexthop(rt, &fl6->daddr));
--	err = n && !(n->nud_state & NUD_VALID) ? -EINVAL : 0;
-+	err = n && !(READ_ONCE(n->nud_state) & NUD_VALID) ? -EINVAL : 0;
- 	rcu_read_unlock_bh();
+ 	err = n && !(READ_ONCE(n->nud_state) & NUD_VALID) ? -EINVAL : 0;
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
  
  	if (err) {
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index 6cb2d6a536a84..8c5a99fe68030 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -746,7 +746,7 @@ static void ndisc_solicit(struct neighbour *neigh, struct sk_buff *skb)
- 		saddr = &ipv6_hdr(skb)->saddr;
- 	probes -= NEIGH_VAR(neigh->parms, UCAST_PROBES);
- 	if (probes < 0) {
--		if (!(neigh->nud_state & NUD_VALID)) {
-+		if (!(READ_ONCE(neigh->nud_state) & NUD_VALID)) {
- 			ND_PRINTK(1, dbg,
- 				  "%s: trying to ucast probe in NUD_INVALID: %pI6\n",
- 				  __func__, target);
-@@ -1092,7 +1092,7 @@ static void ndisc_recv_na(struct sk_buff *skb)
- 		u8 old_flags = neigh->flags;
- 		struct net *net = dev_net(dev);
- 
--		if (neigh->nud_state & NUD_FAILED)
-+		if (READ_ONCE(neigh->nud_state) & NUD_FAILED)
- 			goto out;
- 
- 		/*
+ 		struct inet6_ifaddr *ifp;
 diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 93957b20fccce..4f103e7c4ea25 100644
+index 4f103e7c4ea25..0a9f854bfa50c 100644
 --- a/net/ipv6/route.c
 +++ b/net/ipv6/route.c
-@@ -641,7 +641,7 @@ static void rt6_probe(struct fib6_nh *fib6_nh)
+@@ -636,7 +636,7 @@ static void rt6_probe(struct fib6_nh *fib6_nh)
+ 
+ 	nh_gw = &fib6_nh->fib_nh_gw6;
+ 	dev = fib6_nh->fib_nh_dev;
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	last_probe = READ_ONCE(fib6_nh->last_probe);
  	idev = __in6_dev_get(dev);
  	neigh = __ipv6_neigh_lookup_noref(dev, nh_gw);
- 	if (neigh) {
--		if (neigh->nud_state & NUD_VALID)
-+		if (READ_ONCE(neigh->nud_state) & NUD_VALID)
+@@ -644,7 +644,7 @@ static void rt6_probe(struct fib6_nh *fib6_nh)
+ 		if (READ_ONCE(neigh->nud_state) & NUD_VALID)
  			goto out;
  
- 		write_lock(&neigh->lock);
+-		write_lock(&neigh->lock);
++		write_lock_bh(&neigh->lock);
+ 		if (!(neigh->nud_state & NUD_VALID) &&
+ 		    time_after(jiffies,
+ 			       neigh->updated + idev->cnf.rtr_probe_interval)) {
+@@ -652,7 +652,7 @@ static void rt6_probe(struct fib6_nh *fib6_nh)
+ 			if (work)
+ 				__neigh_set_probe_once(neigh);
+ 		}
+-		write_unlock(&neigh->lock);
++		write_unlock_bh(&neigh->lock);
+ 	} else if (time_after(jiffies, last_probe +
+ 				       idev->cnf.rtr_probe_interval)) {
+ 		work = kmalloc(sizeof(*work), GFP_ATOMIC);
+@@ -670,7 +670,7 @@ static void rt6_probe(struct fib6_nh *fib6_nh)
+ 	}
+ 
+ out:
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ }
+ #else
+ static inline void rt6_probe(struct fib6_nh *fib6_nh)
+@@ -686,7 +686,7 @@ static enum rt6_nud_state rt6_check_neigh(const struct fib6_nh *fib6_nh)
+ 	enum rt6_nud_state ret = RT6_NUD_FAIL_HARD;
+ 	struct neighbour *neigh;
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	neigh = __ipv6_neigh_lookup_noref(fib6_nh->fib_nh_dev,
+ 					  &fib6_nh->fib_nh_gw6);
+ 	if (neigh) {
+@@ -704,7 +704,7 @@ static enum rt6_nud_state rt6_check_neigh(const struct fib6_nh *fib6_nh)
+ 		ret = IS_ENABLED(CONFIG_IPV6_ROUTER_PREF) ?
+ 		      RT6_NUD_SUCCEED : RT6_NUD_FAIL_DO_RR;
+ 	}
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 
+ 	return ret;
+ }
 -- 
 2.40.1
 
