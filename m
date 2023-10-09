@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D81341A5
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE08F3419D
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXcU9Xvr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AD4C433C9;
-	Mon,  9 Oct 2023 13:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHitsHty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1A9C433C9;
+	Mon,  9 Oct 2023 13:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859547;
-	bh=qlY7n0ya//e0rmg+KdDcwwsq66+xmDLeHjvg6vhNc8w=;
+	s=korg; t=1696859550;
+	bh=gObAoJ4Dn/5I+oUodCfedwjaxTsYp/tQNumyVH/g/fE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lXcU9XvrXP3sYLbrEY1ETV2kM/gOIJBEYfKUmJnCIZkEiIyzCmnbSvkceDN/DLXMA
-	 8MOg2v9NWFIKVCeSkpkPprJfNvHg0TWpQEFPLndLKHfsWqfw36/z+hQPchFuCpFdeF
-	 H080dhhjr3/Wux3AkNYhKc4uBFsP1274nEjPtgN4=
+	b=cHitsHtyMtWGSmCCqYbQp+vMlIAKIh7MHOGvoI7a+BBLtLIy9nZfX/b2JLltut/68
+	 4y7uEGZPGi6aLTEIVOdjKZYeltcVhrBnV1NhbacFMJFm17eNh3NhiWKDTpRnZblUZU
+	 utFZBQ31TI7+wQAqb3+Ds2RrVWOtNy6S0di1K55c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Balcanquall <alex@alexbal.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 55/91] net: thunderbolt: Fix TCPv6 GSO checksum calculation
-Date: Mon,  9 Oct 2023 15:06:27 +0200
-Message-ID: <20231009130113.422199258@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bart Van Assche <bvanassche@acm.org>
+Subject: [PATCH 4.19 56/91] ata: libata-core: Fix ata_port_request_pm() locking
+Date: Mon,  9 Oct 2023 15:06:28 +0200
+Message-ID: <20231009130113.460651109@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -44,44 +46,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit e0b65f9b81fef180cf5f103adecbe5505c961153 upstream.
+commit 3b8e0af4a7a331d1510e963b8fd77e2fca0a77f1 upstream.
 
-Alex reported that running ssh over IPv6 does not work with
-Thunderbolt/USB4 networking driver. The reason for that is that driver
-should call skb_is_gso() before calling skb_is_gso_v6(), and it should
-not return false after calculates the checksum successfully. This probably
-was a copy paste error from the original driver where it was done properly.
+The function ata_port_request_pm() checks the port flag
+ATA_PFLAG_PM_PENDING and calls ata_port_wait_eh() if this flag is set to
+ensure that power management operations for a port are not scheduled
+simultaneously. However, this flag check is done without holding the
+port lock.
 
-Reported-by: Alex Balcanquall <alex@alexbal.com>
-Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
+Fix this by taking the port lock on entry to the function and checking
+the flag under this lock. The lock is released and re-taken if
+ata_port_wait_eh() needs to be called. The two WARN_ON() macros checking
+that the ATA_PFLAG_PM_PENDING flag was cleared are removed as the first
+call is racy and the second one done without holding the port lock.
+
+Fixes: 5ef41082912b ("ata: add ata port system PM callbacks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/thunderbolt.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/ata/libata-core.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/net/thunderbolt.c
-+++ b/drivers/net/thunderbolt.c
-@@ -961,12 +961,11 @@ static bool tbnet_xmit_csum_and_map(stru
- 		*tucso = ~csum_tcpudp_magic(ip_hdr(skb)->saddr,
- 					    ip_hdr(skb)->daddr, 0,
- 					    ip_hdr(skb)->protocol, 0);
--	} else if (skb_is_gso_v6(skb)) {
-+	} else if (skb_is_gso(skb) && skb_is_gso_v6(skb)) {
- 		tucso = dest + ((void *)&(tcp_hdr(skb)->check) - data);
- 		*tucso = ~csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
- 					  &ipv6_hdr(skb)->daddr, 0,
- 					  IPPROTO_TCP, 0);
--		return false;
- 	} else if (protocol == htons(ETH_P_IPV6)) {
- 		tucso = dest + skb_checksum_start_offset(skb) + skb->csum_offset;
- 		*tucso = ~csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -5756,17 +5756,19 @@ static void ata_port_request_pm(struct a
+ 	struct ata_link *link;
+ 	unsigned long flags;
+ 
+-	/* Previous resume operation might still be in
+-	 * progress.  Wait for PM_PENDING to clear.
++	spin_lock_irqsave(ap->lock, flags);
++
++	/*
++	 * A previous PM operation might still be in progress. Wait for
++	 * ATA_PFLAG_PM_PENDING to clear.
+ 	 */
+ 	if (ap->pflags & ATA_PFLAG_PM_PENDING) {
++		spin_unlock_irqrestore(ap->lock, flags);
+ 		ata_port_wait_eh(ap);
+-		WARN_ON(ap->pflags & ATA_PFLAG_PM_PENDING);
++		spin_lock_irqsave(ap->lock, flags);
+ 	}
+ 
+-	/* request PM ops to EH */
+-	spin_lock_irqsave(ap->lock, flags);
+-
++	/* Request PM operation to EH */
+ 	ap->pm_mesg = mesg;
+ 	ap->pflags |= ATA_PFLAG_PM_PENDING;
+ 	ata_for_each_link(link, ap, HOST_FIRST) {
+@@ -5778,10 +5780,8 @@ static void ata_port_request_pm(struct a
+ 
+ 	spin_unlock_irqrestore(ap->lock, flags);
+ 
+-	if (!async) {
++	if (!async)
+ 		ata_port_wait_eh(ap);
+-		WARN_ON(ap->pflags & ATA_PFLAG_PM_PENDING);
+-	}
+ }
+ 
+ /*
 
 
