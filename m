@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2691A5BA
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A84199B1
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6z13L9R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03607C433C7;
-	Mon,  9 Oct 2023 13:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KK4oYtd8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC56C433C7;
+	Mon,  9 Oct 2023 13:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857928;
-	bh=oOnyU8llnZBlNbLzHUs58/br9RMiBUM2iHBTLjbPCfA=;
+	s=korg; t=1696857931;
+	bh=twZfIK/qZfcRn4eNiogHNJxrAg8on6Vzx1M0qRgKPg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6z13L9RHtj+nj5UOYt/4xFzQijzqi5uqMOcrIXxTB851y6cS/OICSg4RLkFXEjRr
-	 iEKqC7vm8ZDWOx3QbaoiUsMSB3cFs+kzbDD12RdrKFLTn88rjWiMViKtfgH9UuLfFg
-	 SgVxjKdZ4Q07hyiuLjOK2yy695VMFbzNLB7T/LOU=
+	b=KK4oYtd8XCGZIn/c8OIetEwkAjG6CcfjaAsDzle1HdHPujNPr50/c7diPiS+5+lyc
+	 sWmC+ZVFzlyqaSRZ5I7jpvfc8dfuERyo1fXorsAg9IZCDHbJdfbWTcIa4nssOg9ntP
+	 6WH6ahVCqeGSuFDoi30ma3CKQRmrbadntPLhaZ+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 30/75] wifi: iwlwifi: dbg_ini: fix structure packing
-Date: Mon,  9 Oct 2023 15:01:52 +0200
-Message-ID: <20231009130112.280343170@linuxfoundation.org>
+Subject: [PATCH 5.15 39/75] scsi: target: core: Fix deadlock due to recursive locking
+Date: Mon,  9 Oct 2023 15:02:01 +0200
+Message-ID: <20231009130112.600931608@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -43,48 +43,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Junxiao Bi <junxiao.bi@oracle.com>
 
-[ Upstream commit 424c82e8ad56756bb98b08268ffcf68d12d183eb ]
+[ Upstream commit a154f5f643c6ecddd44847217a7a3845b4350003 ]
 
-The iwl_fw_ini_error_dump_range structure has conflicting alignment
-requirements for the inner union and the outer struct:
+The following call trace shows a deadlock issue due to recursive locking of
+mutex "device_mutex". First lock acquire is in target_for_each_device() and
+second in target_free_device().
 
-In file included from drivers/net/wireless/intel/iwlwifi/fw/dbg.c:9:
-drivers/net/wireless/intel/iwlwifi/fw/error-dump.h:312:2: error: field  within 'struct iwl_fw_ini_error_dump_range' is less aligned than 'union iwl_fw_ini_error_dump_range::(anonymous at drivers/net/wireless/intel/iwlwifi/fw/error-dump.h:312:2)' and is usually due to 'struct iwl_fw_ini_error_dump_range' being packed, which can lead to unaligned accesses [-Werror,-Wunaligned-access]
-        union {
+ PID: 148266   TASK: ffff8be21ffb5d00  CPU: 10   COMMAND: "iscsi_ttx"
+  #0 [ffffa2bfc9ec3b18] __schedule at ffffffffa8060e7f
+  #1 [ffffa2bfc9ec3ba0] schedule at ffffffffa8061224
+  #2 [ffffa2bfc9ec3bb8] schedule_preempt_disabled at ffffffffa80615ee
+  #3 [ffffa2bfc9ec3bc8] __mutex_lock at ffffffffa8062fd7
+  #4 [ffffa2bfc9ec3c40] __mutex_lock_slowpath at ffffffffa80631d3
+  #5 [ffffa2bfc9ec3c50] mutex_lock at ffffffffa806320c
+  #6 [ffffa2bfc9ec3c68] target_free_device at ffffffffc0935998 [target_core_mod]
+  #7 [ffffa2bfc9ec3c90] target_core_dev_release at ffffffffc092f975 [target_core_mod]
+  #8 [ffffa2bfc9ec3ca0] config_item_put at ffffffffa79d250f
+  #9 [ffffa2bfc9ec3cd0] config_item_put at ffffffffa79d2583
+ #10 [ffffa2bfc9ec3ce0] target_devices_idr_iter at ffffffffc0933f3a [target_core_mod]
+ #11 [ffffa2bfc9ec3d00] idr_for_each at ffffffffa803f6fc
+ #12 [ffffa2bfc9ec3d60] target_for_each_device at ffffffffc0935670 [target_core_mod]
+ #13 [ffffa2bfc9ec3d98] transport_deregister_session at ffffffffc0946408 [target_core_mod]
+ #14 [ffffa2bfc9ec3dc8] iscsit_close_session at ffffffffc09a44a6 [iscsi_target_mod]
+ #15 [ffffa2bfc9ec3df0] iscsit_close_connection at ffffffffc09a4a88 [iscsi_target_mod]
+ #16 [ffffa2bfc9ec3df8] finish_task_switch at ffffffffa76e5d07
+ #17 [ffffa2bfc9ec3e78] iscsit_take_action_for_connection_exit at ffffffffc0991c23 [iscsi_target_mod]
+ #18 [ffffa2bfc9ec3ea0] iscsi_target_tx_thread at ffffffffc09a403b [iscsi_target_mod]
+ #19 [ffffa2bfc9ec3f08] kthread at ffffffffa76d8080
+ #20 [ffffa2bfc9ec3f50] ret_from_fork at ffffffffa8200364
 
-As the original intention was apparently to make the entire structure
-unaligned, mark the innermost members the same way so the union
-becomes packed as well.
-
-Fixes: 973193554cae6 ("iwlwifi: dbg_ini: dump headers cleanup")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230616090343.2454061-1-arnd@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 36d4cb460bcb ("scsi: target: Avoid that EXTENDED COPY commands trigger lock inversion")
+Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
+Link: https://lore.kernel.org/r/20230918225848.66463-1-junxiao.bi@oracle.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/error-dump.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/target/target_core_device.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/error-dump.h b/drivers/net/wireless/intel/iwlwifi/fw/error-dump.h
-index 521ca2bb0e928..2cdc3caf7740d 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/error-dump.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/error-dump.h
-@@ -277,9 +277,9 @@ struct iwl_fw_ini_fifo_hdr {
- struct iwl_fw_ini_error_dump_range {
- 	__le32 range_data_size;
- 	union {
--		__le32 internal_base_addr;
--		__le64 dram_base_addr;
--		__le32 page_num;
-+		__le32 internal_base_addr __packed;
-+		__le64 dram_base_addr __packed;
-+		__le32 page_num __packed;
- 		struct iwl_fw_ini_fifo_hdr fifo_hdr;
- 		struct iwl_cmd_header fw_pkt_hdr;
- 	};
+diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
+index e18617371a9b2..813de805f815a 100644
+--- a/drivers/target/target_core_device.c
++++ b/drivers/target/target_core_device.c
+@@ -875,7 +875,6 @@ sector_t target_to_linux_sector(struct se_device *dev, sector_t lb)
+ EXPORT_SYMBOL(target_to_linux_sector);
+ 
+ struct devices_idr_iter {
+-	struct config_item *prev_item;
+ 	int (*fn)(struct se_device *dev, void *data);
+ 	void *data;
+ };
+@@ -885,11 +884,9 @@ static int target_devices_idr_iter(int id, void *p, void *data)
+ {
+ 	struct devices_idr_iter *iter = data;
+ 	struct se_device *dev = p;
++	struct config_item *item;
+ 	int ret;
+ 
+-	config_item_put(iter->prev_item);
+-	iter->prev_item = NULL;
+-
+ 	/*
+ 	 * We add the device early to the idr, so it can be used
+ 	 * by backend modules during configuration. We do not want
+@@ -899,12 +896,13 @@ static int target_devices_idr_iter(int id, void *p, void *data)
+ 	if (!target_dev_configured(dev))
+ 		return 0;
+ 
+-	iter->prev_item = config_item_get_unless_zero(&dev->dev_group.cg_item);
+-	if (!iter->prev_item)
++	item = config_item_get_unless_zero(&dev->dev_group.cg_item);
++	if (!item)
+ 		return 0;
+ 	mutex_unlock(&device_mutex);
+ 
+ 	ret = iter->fn(dev, iter->data);
++	config_item_put(item);
+ 
+ 	mutex_lock(&device_mutex);
+ 	return ret;
+@@ -927,7 +925,6 @@ int target_for_each_device(int (*fn)(struct se_device *dev, void *data),
+ 	mutex_lock(&device_mutex);
+ 	ret = idr_for_each(&devices_idr, target_devices_idr_iter, &iter);
+ 	mutex_unlock(&device_mutex);
+-	config_item_put(iter.prev_item);
+ 	return ret;
+ }
+ 
 -- 
 2.40.1
 
