@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE411A5A3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC12341AC
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqtWjDep"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636D7C433C7;
-	Mon,  9 Oct 2023 13:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfD9+N35"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3617C433CA;
+	Mon,  9 Oct 2023 13:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859263;
-	bh=sbwbeoHwQnDZHh9oMYq2xi+LZksT42TLSVxizUNakbU=;
+	s=korg; t=1696859267;
+	bh=L4VSnQ1OsmwhDblt7VqrbLegJbShW2A1GFYG80i45qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kqtWjDeptYhThhtfyn+hKBksNMC6p8Tvqz2bSbR4LRPX7hSeILYPx3V9irHnkpE1/
-	 FN2Y3stt+2xFNhK0BAMhtrqtm66rqOyQT1rONrKUOhQrAOlgtg4AvrvnhBG/zL4MDU
-	 IcHl17vqO2sfI4c6xFJftLxumTrSZFxpMqbAm+Gk=
+	b=MfD9+N35md+OZC5dtTf6dBudWKuzk7OFDIT0IzHYoti1MQQbKQaD8lWBLIfOib4Jl
+	 /a1/f99jxBQW9jqSWzDyBoCgZMvncZtWeiKb2txjlLa25e826qPvqBMNZ1IbMqTS23
+	 wRFOE8cxwQsrzae+50sKd+mxdFVDRbpmF+X8+kTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 15/55] ring-buffer: Avoid softlockup in ring_buffer_resize()
-Date: Mon,  9 Oct 2023 15:06:14 +0200
-Message-ID: <20231009130108.296164989@linuxfoundation.org>
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 4.14 24/55] ata: libata-scsi: ignore reserved bits for REPORT SUPPORTED OPERATION CODES
+Date: Mon,  9 Oct 2023 15:06:23 +0200
+Message-ID: <20231009130108.625784305@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -43,45 +41,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Niklas Cassel <niklas.cassel@wdc.com>
 
-[ Upstream commit f6bd2c92488c30ef53b5bd80c52f0a7eee9d545a ]
+commit 3ef600923521616ebe192c893468ad0424de2afb upstream.
 
-When user resize all trace ring buffer through file 'buffer_size_kb',
-then in ring_buffer_resize(), kernel allocates buffer pages for each
-cpu in a loop.
+For REPORT SUPPORTED OPERATION CODES command, the service action field is
+defined as bits 0-4 in the second byte in the CDB. Bits 5-7 in the second
+byte are reserved.
 
-If the kernel preemption model is PREEMPT_NONE and there are many cpus
-and there are many buffer pages to be allocated, it may not give up cpu
-for a long time and finally cause a softlockup.
+Only look at the service action field in the second byte when determining
+if the MAINTENANCE IN opcode is a REPORT SUPPORTED OPERATION CODES command.
 
-To avoid it, call cond_resched() after each cpu buffer allocation.
+This matches how we only look at the service action field in the second
+byte when determining if the SERVICE ACTION IN(16) opcode is a READ
+CAPACITY(16) command (reserved bits 5-7 in the second byte are ignored).
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230906081930.3939106-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7b2030942859 ("libata: Add support for SCT Write Same")
+Cc: stable@vger.kernel.org
+Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ata/libata-scsi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 1949d7bbe145d..f0d4ff2db2ef0 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1686,6 +1686,8 @@ int ring_buffer_resize(struct ring_buffer *buffer, unsigned long size,
- 				err = -ENOMEM;
- 				goto out_err;
- 			}
-+
-+			cond_resched();
- 		}
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -4562,7 +4562,7 @@ void ata_scsi_simulate(struct ata_device
+ 		break;
  
- 		get_online_cpus();
--- 
-2.40.1
-
+ 	case MAINTENANCE_IN:
+-		if (scsicmd[1] == MI_REPORT_SUPPORTED_OPERATION_CODES)
++		if ((scsicmd[1] & 0x1f) == MI_REPORT_SUPPORTED_OPERATION_CODES)
+ 			ata_scsi_rbuf_fill(&args, ata_scsiop_maint_in);
+ 		else
+ 			ata_scsi_set_invalid_field(dev, cmd, 1, 0xff);
 
 
