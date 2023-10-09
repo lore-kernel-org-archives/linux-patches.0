@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A1519463
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0AB19463
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mb2Gzfqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312CDC433C7;
-	Mon,  9 Oct 2023 13:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRl5ti/r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AAAC433CA;
+	Mon,  9 Oct 2023 13:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857101;
-	bh=rEkXxamPqvkpTucq175ADuTguaCehTFvmmkHLgv04cI=;
+	s=korg; t=1696857104;
+	bh=7QApGY+JDX20LqJNBANXsKW8YSPFnoseVe9IM23s+Ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mb2GzfqsanGZf08CQN1eXZmUtdbsUEq19FZ3QfCYCUb0fCLZS9oGvR6QqeJNos6Cu
-	 jiguEmXOecM7E/aks/AYqKLIuV4EhIdP1c2m2S39crRcDA8O2CAUYK206S/Mg+S8Ed
-	 uOWs79QfUIrVYq5/0mF8ts/blFCNbkQW6hjQuhco=
+	b=YRl5ti/rrlkKh2tzMtqiYhhDhA7Kr//9dMnXgu0XAocxZ2JtnLWssmFKVx0eUpi1z
+	 VHSKA3jokWYiilP3rcyEGuIzY3BbPiodVBytyZxm7oqgYDNm57pcCZmA/seiMIJ0AY
+	 J3xv6970/g/GGVE7yjyBuHMjmWolW9rlCuvhtDWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	Brian Norris <briannorris@chromium.org>,
-	Matthew Wang <matthewmwang@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Sultan Alsawaf <sultan@kerneltoast.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 070/163] wifi: mwifiex: Fix oob check condition in mwifiex_process_rx_packet
-Date: Mon,  9 Oct 2023 15:00:34 +0200
-Message-ID: <20231009130125.983417905@linuxfoundation.org>
+Subject: [PATCH 6.5 061/163] iwlwifi: mvm: handle PS changes in vif_cfg_changed
+Date: Mon,  9 Oct 2023 15:00:25 +0200
+Message-ID: <20231009130125.723224609@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -44,59 +43,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pin-yen Lin <treapking@chromium.org>
+From: Gregory Greenman <gregory.greenman@intel.com>
 
-[ Upstream commit aef7a0300047e7b4707ea0411dc9597cba108fc8 ]
+[ Upstream commit 2d4caa1dbe915654d0e8845758d9c96e721377a8 ]
 
-Only skip the code path trying to access the rfc1042 headers when the
-buffer is too small, so the driver can still process packets without
-rfc1042 headers.
+Handling of BSS_CHANGED_PS was missing in vif_cfg_changed
+callback. Fix it.
 
-Fixes: 119585281617 ("wifi: mwifiex: Fix OOB and integer underflow when rx packets")
-Signed-off-by: Pin-yen Lin <treapking@chromium.org>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Matthew Wang <matthewmwang@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230908104308.1546501-1-treapking@chromium.org
+Fixes: 22c588343529 ("wifi: iwlwifi: mvm: replace bss_info_changed() with vif_cfg/link_info_changed()")
+Reported-by: Sultan Alsawaf <sultan@kerneltoast.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230905162939.5ef0c8230de6.Ieed265014988c50ec68fbff6d33821e4215f987f@changeid
+[note: patch looks bigger than it is due to reindentation]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sta_rx.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ .../wireless/intel/iwlwifi/mvm/mld-mac80211.c | 121 +++++++++---------
+ 1 file changed, 63 insertions(+), 58 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-index 65420ad674167..257737137cd70 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-@@ -86,7 +86,8 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
- 	rx_pkt_len = le16_to_cpu(local_rx_pd->rx_pkt_length);
- 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_off;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index 8b6c641772ee6..b719843e94576 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -731,73 +731,78 @@ static void iwl_mvm_mld_vif_cfg_changed_station(struct iwl_mvm *mvm,
  
--	if (sizeof(*rx_pkt_hdr) + rx_pkt_off > skb->len) {
-+	if (sizeof(rx_pkt_hdr->eth803_hdr) + sizeof(rfc1042_header) +
-+	    rx_pkt_off > skb->len) {
- 		mwifiex_dbg(priv->adapter, ERROR,
- 			    "wrong rx packet offset: len=%d, rx_pkt_off=%d\n",
- 			    skb->len, rx_pkt_off);
-@@ -95,12 +96,13 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
- 		return -1;
+ 	mvmvif->associated = vif->cfg.assoc;
+ 
+-	if (!(changes & BSS_CHANGED_ASSOC))
+-		return;
+-
+-	if (vif->cfg.assoc) {
+-		/* clear statistics to get clean beacon counter */
+-		iwl_mvm_request_statistics(mvm, true);
+-		iwl_mvm_sf_update(mvm, vif, false);
+-		iwl_mvm_power_vif_assoc(mvm, vif);
+-
+-		for_each_mvm_vif_valid_link(mvmvif, i) {
+-			memset(&mvmvif->link[i]->beacon_stats, 0,
+-			       sizeof(mvmvif->link[i]->beacon_stats));
++	if (changes & BSS_CHANGED_ASSOC) {
++		if (vif->cfg.assoc) {
++			/* clear statistics to get clean beacon counter */
++			iwl_mvm_request_statistics(mvm, true);
++			iwl_mvm_sf_update(mvm, vif, false);
++			iwl_mvm_power_vif_assoc(mvm, vif);
++
++			for_each_mvm_vif_valid_link(mvmvif, i) {
++				memset(&mvmvif->link[i]->beacon_stats, 0,
++				       sizeof(mvmvif->link[i]->beacon_stats));
++
++				if (vif->p2p) {
++					iwl_mvm_update_smps(mvm, vif,
++							    IWL_MVM_SMPS_REQ_PROT,
++							    IEEE80211_SMPS_DYNAMIC, i);
++				}
++
++				rcu_read_lock();
++				link_conf = rcu_dereference(vif->link_conf[i]);
++				if (link_conf && !link_conf->dtim_period)
++					protect = true;
++				rcu_read_unlock();
++			}
+ 
+-			if (vif->p2p) {
+-				iwl_mvm_update_smps(mvm, vif,
+-						    IWL_MVM_SMPS_REQ_PROT,
+-						    IEEE80211_SMPS_DYNAMIC, i);
++			if (!test_bit(IWL_MVM_STATUS_IN_HW_RESTART, &mvm->status) &&
++			    protect) {
++				/* If we're not restarting and still haven't
++				 * heard a beacon (dtim period unknown) then
++				 * make sure we still have enough minimum time
++				 * remaining in the time event, since the auth
++				 * might actually have taken quite a while
++				 * (especially for SAE) and so the remaining
++				 * time could be small without us having heard
++				 * a beacon yet.
++				 */
++				iwl_mvm_protect_assoc(mvm, vif, 0);
+ 			}
+ 
+-			rcu_read_lock();
+-			link_conf = rcu_dereference(vif->link_conf[i]);
+-			if (link_conf && !link_conf->dtim_period)
+-				protect = true;
+-			rcu_read_unlock();
+-		}
++			iwl_mvm_sf_update(mvm, vif, false);
++
++			/* FIXME: need to decide about misbehaving AP handling */
++			iwl_mvm_power_vif_assoc(mvm, vif);
++		} else if (iwl_mvm_mld_vif_have_valid_ap_sta(mvmvif)) {
++			iwl_mvm_mei_host_disassociated(mvm);
+ 
+-		if (!test_bit(IWL_MVM_STATUS_IN_HW_RESTART, &mvm->status) &&
+-		    protect) {
+-			/* If we're not restarting and still haven't
+-			 * heard a beacon (dtim period unknown) then
+-			 * make sure we still have enough minimum time
+-			 * remaining in the time event, since the auth
+-			 * might actually have taken quite a while
+-			 * (especially for SAE) and so the remaining
+-			 * time could be small without us having heard
+-			 * a beacon yet.
++			/* If update fails - SF might be running in associated
++			 * mode while disassociated - which is forbidden.
+ 			 */
+-			iwl_mvm_protect_assoc(mvm, vif, 0);
++			ret = iwl_mvm_sf_update(mvm, vif, false);
++			WARN_ONCE(ret &&
++				  !test_bit(IWL_MVM_STATUS_HW_RESTART_REQUESTED,
++					    &mvm->status),
++				  "Failed to update SF upon disassociation\n");
++
++			/* If we get an assert during the connection (after the
++			 * station has been added, but before the vif is set
++			 * to associated), mac80211 will re-add the station and
++			 * then configure the vif. Since the vif is not
++			 * associated, we would remove the station here and
++			 * this would fail the recovery.
++			 */
++			iwl_mvm_mld_vif_delete_all_stas(mvm, vif);
+ 		}
+ 
+-		iwl_mvm_sf_update(mvm, vif, false);
+-
+-		/* FIXME: need to decide about misbehaving AP handling */
+-		iwl_mvm_power_vif_assoc(mvm, vif);
+-	} else if (iwl_mvm_mld_vif_have_valid_ap_sta(mvmvif)) {
+-		iwl_mvm_mei_host_disassociated(mvm);
+-
+-		/* If update fails - SF might be running in associated
+-		 * mode while disassociated - which is forbidden.
+-		 */
+-		ret = iwl_mvm_sf_update(mvm, vif, false);
+-		WARN_ONCE(ret &&
+-			  !test_bit(IWL_MVM_STATUS_HW_RESTART_REQUESTED,
+-				    &mvm->status),
+-			  "Failed to update SF upon disassociation\n");
+-
+-		/* If we get an assert during the connection (after the
+-		 * station has been added, but before the vif is set
+-		 * to associated), mac80211 will re-add the station and
+-		 * then configure the vif. Since the vif is not
+-		 * associated, we would remove the station here and
+-		 * this would fail the recovery.
+-		 */
+-		iwl_mvm_mld_vif_delete_all_stas(mvm, vif);
++		iwl_mvm_bss_info_changed_station_assoc(mvm, vif, changes);
  	}
  
--	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
--		     sizeof(bridge_tunnel_header))) ||
--	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
--		     sizeof(rfc1042_header)) &&
--	     ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_AARP &&
--	     ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_IPX)) {
-+	if (sizeof(*rx_pkt_hdr) + rx_pkt_off <= skb->len &&
-+	    ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
-+		      sizeof(bridge_tunnel_header))) ||
-+	     (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
-+		      sizeof(rfc1042_header)) &&
-+	      ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_AARP &&
-+	      ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_IPX))) {
- 		/*
- 		 *  Replace the 803 header and rfc1042 header (llc/snap) with an
- 		 *    EthernetII header, keep the src/dst and snap_type
+-	iwl_mvm_bss_info_changed_station_assoc(mvm, vif, changes);
++	if (changes & BSS_CHANGED_PS) {
++		ret = iwl_mvm_power_update_mac(mvm);
++		if (ret)
++			IWL_ERR(mvm, "failed to update power mode\n");
++	}
+ }
+ 
+ static void
 -- 
 2.40.1
 
