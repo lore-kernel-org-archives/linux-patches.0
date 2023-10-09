@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2C01946D
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D731946D
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQOJvUJc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BA4C433C8;
-	Mon,  9 Oct 2023 13:15:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YuhvhUcH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60005C433C8;
+	Mon,  9 Oct 2023 13:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857322;
-	bh=XG10VfbpPAt7j2YAaBzccykJOMpkkNfsfkbnVwftzlQ=;
+	s=korg; t=1696857325;
+	bh=XhlJtom1cxwQhHLyJhlFE1H9uqAAneUxuy+SxlFyFPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lQOJvUJcyzVa1n4d5nmc41KJ7ZdsoV32NdBAvdlOSu6nmxS30DI2utXT92feC6dDa
-	 +bJwDvhtWrW2hyGyHMn9YqiQf+T6oJshKjqdYfz+Nq9Y5I1IxC7qEteGoXLxuuiR6A
-	 RJA2F5bdKiFHjLixpipRYVGHxGorCGWkDQaZVGr0=
+	b=YuhvhUcHKYTFst8WkC+NvN3pn0ToNn6eXsbiYFxNJlIq8NuDEr4FN/l5pWHiitPf/
+	 fr3esiU8VK3PIllwxKBOx03ukF+tc4a1lkF5k1NNYbtncGRWGaex1X/tlt57ZYk8Wf
+	 NY3nl5PTnNTNVOaVCYa7QUCfd98AdrVFnMdj9sOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>
-Subject: [PATCH 6.5 147/163] RDMA/cma: Fix truncation compilation warning in make_cma_ports
-Date: Mon,  9 Oct 2023 15:01:51 +0200
-Message-ID: <20231009130128.091354149@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 001/162] spi: zynqmp-gqspi: Convert to platform remove callback returning void
+Date: Mon,  9 Oct 2023 14:59:42 +0200
+Message-ID: <20231009130122.990256512@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
-References: <20231009130124.021290599@linuxfoundation.org>
+In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
+References: <20231009130122.946357448@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,45 +39,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 18126c767658ae8a831257c6cb7776c5ba5e7249 upstream.
+[ Upstream commit 3ffefa1d9c9eba60c7f8b4a9ce2df3e4c7f4a88e ]
 
-The following compilation error is false alarm as RDMA devices don't
-have such large amount of ports to actually cause to format truncation.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-drivers/infiniband/core/cma_configfs.c: In function ‘make_cma_ports’:
-drivers/infiniband/core/cma_configfs.c:223:57: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
-  223 |                 snprintf(port_str, sizeof(port_str), "%u", i + 1);
-      |                                                         ^
-drivers/infiniband/core/cma_configfs.c:223:17: note: ‘snprintf’ output between 2 and 11 bytes into a destination of size 10
-  223 |                 snprintf(port_str, sizeof(port_str), "%u", i + 1);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
-make[5]: *** [scripts/Makefile.build:243: drivers/infiniband/core/cma_configfs.o] Error 1
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Fixes: 045959db65c6 ("IB/cma: Add configfs for rdma_cm")
-Link: https://lore.kernel.org/r/a7e3b347ee134167fa6a3787c56ef231a04bc8c2.1694434639.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230303172041.2103336-88-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 1527b076ae2c ("spi: zynqmp-gqspi: fix clock imbalance on probe failure")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cma_configfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-zynqmp-gqspi.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/infiniband/core/cma_configfs.c
-+++ b/drivers/infiniband/core/cma_configfs.c
-@@ -217,7 +217,7 @@ static int make_cma_ports(struct cma_dev
- 		return -ENOMEM;
+diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
+index c760aac070e54..876a41c5d1664 100644
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@ -1240,7 +1240,7 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
+  *
+  * Return:	0 Always
+  */
+-static int zynqmp_qspi_remove(struct platform_device *pdev)
++static void zynqmp_qspi_remove(struct platform_device *pdev)
+ {
+ 	struct zynqmp_qspi *xqspi = platform_get_drvdata(pdev);
  
- 	for (i = 0; i < ports_num; i++) {
--		char port_str[10];
-+		char port_str[11];
+@@ -1249,8 +1249,6 @@ static int zynqmp_qspi_remove(struct platform_device *pdev)
+ 	clk_disable_unprepare(xqspi->pclk);
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+-
+-	return 0;
+ }
  
- 		ports[i].port_num = i + 1;
- 		snprintf(port_str, sizeof(port_str), "%u", i + 1);
+ static const struct of_device_id zynqmp_qspi_of_match[] = {
+@@ -1262,7 +1260,7 @@ MODULE_DEVICE_TABLE(of, zynqmp_qspi_of_match);
+ 
+ static struct platform_driver zynqmp_qspi_driver = {
+ 	.probe = zynqmp_qspi_probe,
+-	.remove = zynqmp_qspi_remove,
++	.remove_new = zynqmp_qspi_remove,
+ 	.driver = {
+ 		.name = "zynqmp-qspi",
+ 		.of_match_table = zynqmp_qspi_of_match,
+-- 
+2.40.1
+
 
 
