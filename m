@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C9D19464
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E922D19464
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkh1E4/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58DABC433C7;
-	Mon,  9 Oct 2023 13:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5RZ0T1T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578F1C433C8;
+	Mon,  9 Oct 2023 13:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857175;
-	bh=SHBJhDSM0iVsvHGrMocuMk8iVFW7Ponw726mzh7IwHI=;
+	s=korg; t=1696857178;
+	bh=rD37c8OTgOyEicguaV8zP5NpyN9wTxxpemuw3GuQ57E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vkh1E4/2n/Q7fDctJAr8zTJwfQSDI3FmqIjw8qyHq+g5eztIeGMLrAbvWrEg+P2TY
-	 CJisHqptguqbdS0MEYgnTE3nV44uosjwDbR2Fv9yZlQcdocT0qC0PZoKVopHba6gM3
-	 A2tXUaDNx078+mtTzkO6YPU6DMW1c1l6B1vr6ewA=
+	b=F5RZ0T1T0SSSwRiZAyigFFbNnhitlfPvroWMnfUw7ysygWJTAye8sYuiGet7DyQS7
+	 0YYKRC+MMTRhzJV0Q4OIkUO2HQzLPwmZBFAE5gMxc4MIa6iVf2ghqvbAGJpMT3y/xc
+	 QL8OVD6u08fdibV1IfGVXLsYwgpxolRZpEBIZrCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 096/163] ice: always add legacy 32byte RXDID in supported_rxdids
-Date: Mon,  9 Oct 2023 15:01:00 +0200
-Message-ID: <20231009130126.680856462@linuxfoundation.org>
+Subject: [PATCH 6.5 097/163] bpf: tcp_read_skb needs to pop skb regardless of seq
+Date: Mon,  9 Oct 2023 15:01:01 +0200
+Message-ID: <20231009130126.708524790@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -43,69 +43,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: John Fastabend <john.fastabend@gmail.com>
 
-[ Upstream commit c070e51db5e2a98d3aef7c324b15209ba47f3dca ]
+[ Upstream commit 9b7177b1df64b8d7f85700027c324aadd6aded00 ]
 
-When the PF and VF drivers both support flexible rx descriptors and have
-negotiated the VIRTCHNL_VF_OFFLOAD_RX_FLEX_DESC capability, the VF driver
-queries the PF for the list of supported descriptor formats
-(VIRTCHNL_OP_GET_SUPPORTED_RXDIDS). The PF driver is supposed to set the
-supported_rxdids bits that correspond to the descriptor formats the
-firmware implements. The legacy 32-byte rx desc format is always
-supported, even though it is not expressed in GLFLXP_RXDID_FLAGS.
+Before fix e5c6de5fa0258 tcp_read_skb() would increment the tp->copied-seq
+value. This (as described in the commit) would cause an error for apps
+because once that is incremented the application might believe there is no
+data to be read. Then some apps would stall or abort believing no data is
+available.
 
-The ice driver does not advertise the legacy 32-byte rx desc support,
-which leads to this failure to bring up the VF using the Intel
-out-of-tree iavf driver:
- iavf 0000:41:01.0: PF does not list support for default Rx descriptor format
- ...
- iavf 0000:41:01.0: PF returned error -5 (VIRTCHNL_STATUS_ERR_PARAM) to our request 6
+However, the fix is incomplete because it introduces another issue in
+the skb dequeue. The loop does tcp_recv_skb() in a while loop to consume
+as many skbs as possible. The problem is the call is ...
 
-The in-tree iavf driver does not expose this bug, because it does not
-yet implement VIRTCHNL_VF_OFFLOAD_RX_FLEX_DESC.
+  tcp_recv_skb(sk, seq, &offset)
 
-The ice driver must always set the ICE_RXDID_LEGACY_1 bit in
-supported_rxdids. The Intel out-of-tree ice driver and the ice driver in
-DPDK both do this.
+... where 'seq' is:
 
-I copied this piece of the code and the comment text from the Intel
-out-of-tree driver.
+  u32 seq = tp->copied_seq;
 
-Fixes: e753df8fbca5 ("ice: Add support Flex RXD")
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://lore.kernel.org/r/20230920115439.61172-1-mschmidt@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Now we can hit a case where we've yet incremented copied_seq from BPF side,
+but then tcp_recv_skb() fails this test ...
+
+ if (offset < skb->len || (TCP_SKB_CB(skb)->tcp_flags & TCPHDR_FIN))
+
+... so that instead of returning the skb we call tcp_eat_recv_skb() which
+frees the skb. This is because the routine believes the SKB has been collapsed
+per comment:
+
+ /* This looks weird, but this can happen if TCP collapsing
+  * splitted a fat GRO packet, while we released socket lock
+  * in skb_splice_bits()
+  */
+
+This can't happen here we've unlinked the full SKB and orphaned it. Anyways
+it would confuse any BPF programs if the data were suddenly moved underneath
+it.
+
+To fix this situation do simpler operation and just skb_peek() the data
+of the queue followed by the unlink. It shouldn't need to check this
+condition and tcp_read_skb() reads entire skbs so there is no need to
+handle the 'offset!=0' case as we would see in tcp_read_sock().
+
+Fixes: e5c6de5fa0258 ("bpf, sockmap: Incorrectly handling copied_seq")
+Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
+Signed-off-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/20230926035300.135096-2-john.fastabend@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_virtchnl.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/ipv4/tcp.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-index dcf628b1fccd9..33ac6c4a8928f 100644
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-@@ -2615,12 +2615,14 @@ static int ice_vc_query_rxdid(struct ice_vf *vf)
- 		goto err;
- 	}
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 75f24b931a185..9cfc07d1e4252 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1618,16 +1618,13 @@ EXPORT_SYMBOL(tcp_read_sock);
  
--	/* Read flexiflag registers to determine whether the
--	 * corresponding RXDID is configured and supported or not.
--	 * Since Legacy 16byte descriptor format is not supported,
--	 * start from Legacy 32byte descriptor.
-+	/* RXDIDs supported by DDP package can be read from the register
-+	 * to get the supported RXDID bitmap. But the legacy 32byte RXDID
-+	 * is not listed in DDP package, add it in the bitmap manually.
-+	 * Legacy 16byte descriptor is not supported.
- 	 */
--	for (i = ICE_RXDID_LEGACY_1; i < ICE_FLEX_DESC_RXDID_MAX_NUM; i++) {
-+	rxdid->supported_rxdids |= BIT(ICE_RXDID_LEGACY_1);
-+
-+	for (i = ICE_RXDID_FLEX_NIC; i < ICE_FLEX_DESC_RXDID_MAX_NUM; i++) {
- 		regval = rd32(hw, GLFLXP_RXDID_FLAGS(i, 0));
- 		if ((regval >> GLFLXP_RXDID_FLAGS_FLEXIFLAG_4N_S)
- 			& GLFLXP_RXDID_FLAGS_FLEXIFLAG_4N_M)
+ int tcp_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ {
+-	struct tcp_sock *tp = tcp_sk(sk);
+-	u32 seq = tp->copied_seq;
+ 	struct sk_buff *skb;
+ 	int copied = 0;
+-	u32 offset;
+ 
+ 	if (sk->sk_state == TCP_LISTEN)
+ 		return -ENOTCONN;
+ 
+-	while ((skb = tcp_recv_skb(sk, seq, &offset)) != NULL) {
++	while ((skb = skb_peek(&sk->sk_receive_queue)) != NULL) {
+ 		u8 tcp_flags;
+ 		int used;
+ 
+@@ -1640,13 +1637,10 @@ int tcp_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ 				copied = used;
+ 			break;
+ 		}
+-		seq += used;
+ 		copied += used;
+ 
+-		if (tcp_flags & TCPHDR_FIN) {
+-			++seq;
++		if (tcp_flags & TCPHDR_FIN)
+ 			break;
+-		}
+ 	}
+ 	return copied;
+ }
 -- 
 2.40.1
 
