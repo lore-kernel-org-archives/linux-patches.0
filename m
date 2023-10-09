@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1CA341A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18EFA341A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WofG+Cv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CF4C433C7;
-	Mon,  9 Oct 2023 13:47:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ld7y8+1E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B648C433C9;
+	Mon,  9 Oct 2023 13:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859222;
-	bh=l43bXtebmDb0hFgiAPv0N8yRYgZJb3wEZxmL6pL531M=;
+	s=korg; t=1696859225;
+	bh=wAmrMTwyXk0Bot05b3CqaEhguF52dssaKot8uwpvjs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1WofG+CvKMgkHadoW6VR8GfTL/DZUOr5yhLzvTNLJRYZNbTljDKd/F5B5WntXbV/u
-	 0dRmO9A87cVYL0GPxnm60QQqTKAoqWh9R3v1Y6Z33iUSzM2078LxO3X8m0+acn1XFL
-	 DXDj8gIh6aFWJvj2JnsWEKO49yOqDxZj8bDlGaxA=
+	b=ld7y8+1Etdrxi9b4kUOIov7KTfPmd8x0GJu2eGMtquGqblfSH+VgNZoRCORRdmaa9
+	 b2K0Lh+BPGDRHXL94a4BTeSkZdp0dazO/9zBT9pO4iMW67J/SRi2zl8yPTGNVEvsss
+	 j9/bEIBlDq684M0csYv/VL5Tqe3bS7k9A3OLzgRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Max Filippov <jcmvbkbc@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 10/55] xtensa: boot/lib: fix function prototypes
-Date: Mon,  9 Oct 2023 15:06:09 +0200
-Message-ID: <20231009130108.102818529@linuxfoundation.org>
+Subject: [PATCH 4.14 11/55] parisc: sba: Fix compile warning wrt list of SBA devices
+Date: Mon,  9 Oct 2023 15:06:10 +0200
+Message-ID: <20231009130108.142516962@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -42,50 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit f54d02c8f2cc4b46ba2a3bd8252a6750453b6f2b ]
+[ Upstream commit eb3255ee8f6f4691471a28fbf22db5e8901116cd ]
 
-Add function prototype for gunzip() to the boot library code and make
-exit() and zalloc() static.
+Fix this makecheck warning:
+drivers/parisc/sba_iommu.c:98:19: warning: symbol 'sba_list'
+	was not declared. Should it be static?
 
-arch/xtensa/boot/lib/zmem.c:8:6: warning: no previous prototype for 'exit' [-Wmissing-prototypes]
-    8 | void exit (void)
-arch/xtensa/boot/lib/zmem.c:13:7: warning: no previous prototype for 'zalloc' [-Wmissing-prototypes]
-   13 | void *zalloc(unsigned size)
-arch/xtensa/boot/lib/zmem.c:35:6: warning: no previous prototype for 'gunzip' [-Wmissing-prototypes]
-   35 | void gunzip (void *dst, int dstlen, unsigned char *src, int *lenp)
-
-Fixes: 4bedea945451 ("xtensa: Architecture support for Tensilica Xtensa Part 2")
-Fixes: e7d163f76665 ("xtensa: Removed local copy of zlib and fixed O= support")
-Suggested-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/xtensa/boot/lib/zmem.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/parisc/include/asm/ropes.h | 3 +++
+ drivers/char/agp/parisc-agp.c   | 2 --
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/xtensa/boot/lib/zmem.c b/arch/xtensa/boot/lib/zmem.c
-index e3ecd743c5153..b89189355122a 100644
---- a/arch/xtensa/boot/lib/zmem.c
-+++ b/arch/xtensa/boot/lib/zmem.c
-@@ -4,13 +4,14 @@
- /* bits taken from ppc */
+diff --git a/arch/parisc/include/asm/ropes.h b/arch/parisc/include/asm/ropes.h
+index 8e51c775c80a6..62399c7ea94a1 100644
+--- a/arch/parisc/include/asm/ropes.h
++++ b/arch/parisc/include/asm/ropes.h
+@@ -86,6 +86,9 @@ struct sba_device {
+ 	struct ioc		ioc[MAX_IOC];
+ };
  
- extern void *avail_ram, *end_avail;
-+void gunzip(void *dst, int dstlen, unsigned char *src, int *lenp);
- 
--void exit (void)
-+static void exit(void)
++/* list of SBA's in system, see drivers/parisc/sba_iommu.c */
++extern struct sba_device *sba_list;
++
+ #define ASTRO_RUNWAY_PORT	0x582
+ #define IKE_MERCED_PORT		0x803
+ #define REO_MERCED_PORT		0x804
+diff --git a/drivers/char/agp/parisc-agp.c b/drivers/char/agp/parisc-agp.c
+index 1d5510cb6db4e..1962ff624b7c5 100644
+--- a/drivers/char/agp/parisc-agp.c
++++ b/drivers/char/agp/parisc-agp.c
+@@ -385,8 +385,6 @@ find_quicksilver(struct device *dev, void *data)
+ static int __init
+ parisc_agp_init(void)
  {
-   for (;;);
- }
- 
--void *zalloc(unsigned size)
-+static void *zalloc(unsigned int size)
- {
-         void *p = avail_ram;
- 
+-	extern struct sba_device *sba_list;
+-
+ 	int err = -1;
+ 	struct parisc_device *sba = NULL, *lba = NULL;
+ 	struct lba_device *lbadev = NULL;
 -- 
 2.40.1
 
