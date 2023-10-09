@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD941A71F
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50EA18E05
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IervZeCo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FD5C433CA;
-	Mon,  9 Oct 2023 13:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HglZyerE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13B3C433B6;
+	Mon,  9 Oct 2023 13:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858347;
-	bh=uA4Ii6thaw1RKyKoG7hU5wA4BgxApKPt9F5KZtqsNJg=;
+	s=korg; t=1696858350;
+	bh=/kXvwMcK6PVP+l8c7yRciTPLAsJ4iqsMMaxhyuUQzQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IervZeCo4cwciXNgHKmdjFJfjuBTul0vYArh1LgbjKi/dhXksHNUIvZv0g+DYMzku
-	 NH5BJQX9yqMtvxhImSDzQZ0eebr9IlplBsRxAWY0HVqYpnDMJ1JCaQxQb01ze5g6wi
-	 hnF6gVT3gmj0i9M+PgQjzIHpv9wKTq4trcQanzhw=
+	b=HglZyerEuyk68pkeqQaL+sSTJ6aNYEJYBpeUzu5aQ8oYtTLXW7Qn1URvGcqGReUrw
+	 xE5YcoShX4o1RZCqLc8PTwbG7etvYjz8z5ZNdJcnhAUg4Q8I8gjlEft5tx69qVBfyD
+	 UgIlFUL1m9ejl5wUDFYAFDnnncBrqajxzIRT2LhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.4 093/131] wifi: mwifiex: Fix tlv_buf_left calculation
-Date: Mon,  9 Oct 2023 15:02:13 +0200
-Message-ID: <20231009130119.233415785@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Jordan Rife <jrife@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 094/131] net: replace calls to sock->ops->connect() with kernel_connect()
+Date: Mon,  9 Oct 2023 15:02:14 +0200
+Message-ID: <20231009130119.269556167@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,103 +43,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Jordan Rife <jrife@google.com>
 
-commit eec679e4ac5f47507774956fb3479c206e761af7 upstream.
+commit 26297b4ce1ce4ea40bc9a48ec99f45da3f64d2e2 upstream.
 
-In a TLV encoding scheme, the Length part represents the length after
-the header containing the values for type and length. In this case,
-`tlv_len` should be:
+commit 0bdf399342c5 ("net: Avoid address overwrite in kernel_connect")
+ensured that kernel_connect() will not overwrite the address parameter
+in cases where BPF connect hooks perform an address rewrite. This change
+replaces direct calls to sock->ops->connect() in net with kernel_connect()
+to make these call safe.
 
-tlv_len == (sizeof(*tlv_rxba) - 1) - sizeof(tlv_rxba->header) + tlv_bitmap_len
-
-Notice that the `- 1` accounts for the one-element array `bitmap`, which
-1-byte size is already included in `sizeof(*tlv_rxba)`.
-
-So, if the above is correct, there is a double-counting of some members
-in `struct mwifiex_ie_types_rxba_sync`, when `tlv_buf_left` and `tmp`
-are calculated:
-
-968                 tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
-969                 tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
-
-in specific, members:
-
-drivers/net/wireless/marvell/mwifiex/fw.h:777
- 777         u8 mac[ETH_ALEN];
- 778         u8 tid;
- 779         u8 reserved;
- 780         __le16 seq_num;
- 781         __le16 bitmap_len;
-
-This is clearly wrong, and affects the subsequent decoding of data in
-`event_buf` through `tlv_rxba`:
-
-970                 tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
-
-Fix this by using `sizeof(tlv_rxba->header)` instead of `sizeof(*tlv_rxba)`
-in the calculation of `tlv_buf_left` and `tmp`.
-
-This results in the following binary differences before/after changes:
-
-| drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
-| @@ -4698,11 +4698,11 @@
-|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:968
-|                 tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
-| -    1da7:      lea    -0x11(%rbx),%edx
-| +    1da7:      lea    -0x4(%rbx),%edx
-|      1daa:      movzwl %bp,%eax
-|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:969
-|                 tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
-| -    1dad:      lea    0x11(%r15,%rbp,1),%r15
-| +    1dad:      lea    0x4(%r15,%rbp,1),%r15
-
-The above reflects the desired change: avoid counting 13 too many bytes;
-which is the total size of the double-counted members in
-`struct mwifiex_ie_types_rxba_sync`:
-
-$ pahole -C mwifiex_ie_types_rxba_sync drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
-struct mwifiex_ie_types_rxba_sync {
-	struct mwifiex_ie_types_header header;           /*     0     4 */
-
-     |-----------------------------------------------------------------------
-     |  u8                         mac[6];               /*     4     6 */  |
-     |	u8                         tid;                  /*    10     1 */  |
-     |  u8                         reserved;             /*    11     1 */  |
-     | 	__le16                     seq_num;              /*    12     2 */  |
-     | 	__le16                     bitmap_len;           /*    14     2 */  |
-     |  u8                         bitmap[1];            /*    16     1 */  |
-     |----------------------------------------------------------------------|
-								  | 13 bytes|
-								  -----------
-
-	/* size: 17, cachelines: 1, members: 7 */
-	/* last cacheline: 17 bytes */
-} __attribute__((__packed__));
-
-Fixes: 99ffe72cdae4 ("mwifiex: process rxba_sync event")
+Link: https://lore.kernel.org/netdev/20230912013332.2048422-1-jrife@google.com/
+Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/06668edd68e7a26bbfeebd1201ae077a2a7a8bce.1692931954.git.gustavoars@kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Jordan Rife <jrife@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/ipvs/ip_vs_sync.c |    4 ++--
+ net/rds/tcp_connect.c           |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-+++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-@@ -977,8 +977,8 @@ void mwifiex_11n_rxba_sync_event(struct
- 			}
- 		}
- 
--		tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
--		tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
-+		tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
-+		tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
- 		tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
+--- a/net/netfilter/ipvs/ip_vs_sync.c
++++ b/net/netfilter/ipvs/ip_vs_sync.c
+@@ -1510,8 +1510,8 @@ static int make_send_sock(struct netns_i
  	}
- }
+ 
+ 	get_mcast_sockaddr(&mcast_addr, &salen, &ipvs->mcfg, id);
+-	result = sock->ops->connect(sock, (struct sockaddr *) &mcast_addr,
+-				    salen, 0);
++	result = kernel_connect(sock, (struct sockaddr *)&mcast_addr,
++				salen, 0);
+ 	if (result < 0) {
+ 		pr_err("Error connecting to the multicast addr\n");
+ 		goto error;
+--- a/net/rds/tcp_connect.c
++++ b/net/rds/tcp_connect.c
+@@ -169,7 +169,7 @@ int rds_tcp_conn_path_connect(struct rds
+ 	 * own the socket
+ 	 */
+ 	rds_tcp_set_callbacks(sock, cp);
+-	ret = sock->ops->connect(sock, addr, addrlen, O_NONBLOCK);
++	ret = kernel_connect(sock, addr, addrlen, O_NONBLOCK);
+ 
+ 	rdsdebug("connect to address %pI6c returned %d\n", &conn->c_faddr, ret);
+ 	if (ret == -EINPROGRESS)
 
 
