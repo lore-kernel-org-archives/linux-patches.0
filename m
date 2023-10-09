@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06A218E05
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEDB18E05
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cp0XA98d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C10C433C8;
-	Mon,  9 Oct 2023 13:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rE3OOzqy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2201FC433C8;
+	Mon,  9 Oct 2023 13:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858293;
-	bh=Ym8ySzhyt+ZoHrdZQNSbU4MfQHT4zCfodEpPPEVBPFM=;
+	s=korg; t=1696858296;
+	bh=ASYy5/Afb3lGEr/wW856HTVH4Snfr4UxTLS2ImTi1Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cp0XA98dZitdF8oIsjTV96cwzdpyg4L/7L4Vmy5t75edVc1OotI3ZU7dqRppRAixd
-	 G5rWGB1ZtwkN6IdjUncUnhqwIlLVIH+I7QyiBn0uymKHuHyS+vgVvYabJEkeO4R0Vh
-	 UKIEdbEkxXoYXUu3re3OklgM92hPCu/NduQOCm94=
+	b=rE3OOzqye9rfsJ7pBX1vnGyJNsSS0/ktxKjV+TND1ZPp2zLTB39dbXAkxoXozT1De
+	 700AbFnVl1d4Q/fi4vNdWXND4m14CiB1a1Qza0E4x3QoQdIhaUXxpgIUYWWJ3Zkf3y
+	 1ofm9SphH8oBtKrkLek6fzH+0XIt2Y3gKj3fWBuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Randy Dunlap <rdunlap@infradead.org>,
-	Chris Zankel <chris@zankel.net>,
 	Max Filippov <jcmvbkbc@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 049/131] xtensa: boot: dont add include-dirs
-Date: Mon,  9 Oct 2023 15:01:29 +0200
-Message-ID: <20231009130117.807528055@linuxfoundation.org>
+Subject: [PATCH 5.4 050/131] xtensa: boot/lib: fix function prototypes
+Date: Mon,  9 Oct 2023 15:01:30 +0200
+Message-ID: <20231009130117.835801488@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,40 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Max Filippov <jcmvbkbc@gmail.com>
 
-[ Upstream commit 54d3d7d363823782c3444ddc41bb8cf1edc80514 ]
+[ Upstream commit f54d02c8f2cc4b46ba2a3bd8252a6750453b6f2b ]
 
-Drop the -I<include-dir> options to prevent build warnings since there
-is not boot/include directory:
+Add function prototype for gunzip() to the boot library code and make
+exit() and zalloc() static.
 
-cc1: warning: arch/xtensa/boot/include: No such file or directory [-Wmissing-include-dirs]
+arch/xtensa/boot/lib/zmem.c:8:6: warning: no previous prototype for 'exit' [-Wmissing-prototypes]
+    8 | void exit (void)
+arch/xtensa/boot/lib/zmem.c:13:7: warning: no previous prototype for 'zalloc' [-Wmissing-prototypes]
+   13 | void *zalloc(unsigned size)
+arch/xtensa/boot/lib/zmem.c:35:6: warning: no previous prototype for 'gunzip' [-Wmissing-prototypes]
+   35 | void gunzip (void *dst, int dstlen, unsigned char *src, int *lenp)
 
-Fixes: 437374e9a950 ("restore arch/{ppc/xtensa}/boot cflags")
 Fixes: 4bedea945451 ("xtensa: Architecture support for Tensilica Xtensa Part 2")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Chris Zankel <chris@zankel.net>
-Cc: Max Filippov <jcmvbkbc@gmail.com>
-Message-Id: <20230920052139.10570-15-rdunlap@infradead.org>
+Fixes: e7d163f76665 ("xtensa: Removed local copy of zlib and fixed O= support")
+Suggested-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/xtensa/boot/Makefile | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/xtensa/boot/lib/zmem.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/xtensa/boot/Makefile b/arch/xtensa/boot/Makefile
-index 294846117fc2c..41ad60bb0fbc7 100644
---- a/arch/xtensa/boot/Makefile
-+++ b/arch/xtensa/boot/Makefile
-@@ -9,8 +9,7 @@
+diff --git a/arch/xtensa/boot/lib/zmem.c b/arch/xtensa/boot/lib/zmem.c
+index e3ecd743c5153..b89189355122a 100644
+--- a/arch/xtensa/boot/lib/zmem.c
++++ b/arch/xtensa/boot/lib/zmem.c
+@@ -4,13 +4,14 @@
+ /* bits taken from ppc */
  
+ extern void *avail_ram, *end_avail;
++void gunzip(void *dst, int dstlen, unsigned char *src, int *lenp);
  
- # KBUILD_CFLAGS used when building rest of boot (takes effect recursively)
--KBUILD_CFLAGS	+= -fno-builtin -Iarch/$(ARCH)/boot/include
--HOSTFLAGS	+= -Iarch/$(ARCH)/boot/include
-+KBUILD_CFLAGS	+= -fno-builtin
+-void exit (void)
++static void exit(void)
+ {
+   for (;;);
+ }
  
- BIG_ENDIAN	:= $(shell echo __XTENSA_EB__ | $(CC) -E - | grep -v "\#")
+-void *zalloc(unsigned size)
++static void *zalloc(unsigned int size)
+ {
+         void *p = avail_ram;
  
 -- 
 2.40.1
