@@ -1,86 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F87438DD4;
-	Mon,  9 Oct 2023 17:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD87C38BDF
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 17:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8NkldTq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F2AC433CA;
-	Mon,  9 Oct 2023 17:37:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696873023;
-	bh=BW2UXyZrvXyT/FZW+LrBqggagNr5D5MBdlmAiZdBZHQ=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mmlm+Ewp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12892C433C7;
+	Mon,  9 Oct 2023 17:39:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1696873168;
+	bh=0dEay+sldvn2MMQf3MJ+a6pHpjWE/yf7vOI+fennvhI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=j8NkldTqlYjXAwPgzwSb89ZPTQnyDof4SI3tlaYG99WZSrp5QrGoEhumwJzN5ZtZK
-	 Z7kQmdB1MEZO39b4QGLSseg2+P1TNcvf4++UwpMBg/D3Tys23SK2POEaI0NNPPiVnI
-	 3UQmZwZApjsaLVdRjXh2JiRtifgw9pyaa7El88b8=
-Date: Mon, 9 Oct 2023 19:37:00 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Matthew Maurer <mmaurer@google.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Peter Zijlstra <peterz@infradead.org>, rcvalle@google.com,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@google.com>,
-	David Gow <davidgow@google.com>, Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>, linux-doc@vger.kernel.org
-Subject: Re: [PATCH v10 25/27] x86: enable initial Rust support
-Message-ID: <2023100909-disperser-washable-4cbe@gregkh>
-References: <20220927131518.30000-1-ojeda@kernel.org>
- <20220927131518.30000-26-ojeda@kernel.org>
- <Y0BfN1BdVCWssvEu@hirez.programming.kicks-ass.net>
- <CABCJKuenkHXtbWOLZ0_isGewxd19qkM7OcLeE2NzM6dSkXS4mQ@mail.gmail.com>
- <CANiq72k6s4=0E_AHv7FPsCQhkyxf7c-b+wUtzfjf+Spehe9Fmg@mail.gmail.com>
- <CABCJKuca0fOAs=E6LeHJiT2LOXEoPvLVKztA=u+ARcw=tbT=tw@mail.gmail.com>
- <CANiq72khuwOrAGN=CrFUX85UmPdJiZ2yM7_9_su_Zp951BHMMA@mail.gmail.com>
- <CAGSQo00gJsE+mQObeK4NNGDYLpZDDAZsREr15JcjD8Fo0E4pkw@mail.gmail.com>
- <CANiq72kK6ppBE7j=z7uua1cJMKaLoR5U3NUAZXT5MrNEs9ZhfQ@mail.gmail.com>
+	b=Mmlm+EwpJvlVz45Nw4BljP1YmP5uV+A7b91duFWr7/7Uvg0rijruCNEWxiv3hFGwy
+	 lSCWfSwIB81fmupATlIMfvlGP5fpsAXgGivp9Jyh0EbQpLD0RttFIxlbizJEYcbA7l
+	 cqjbgUaih9RX2+mhKMl4R/B7GAnQn5cwadBMo5RqQbqXCZkHwb6MNtdNH/kvODJu4l
+	 wy5kFxeVp8fewrDEZze4BvRnBLsPeAHMBMcn/D+nR5MTnZQ0S/L5FPY6ylxLZmdXJv
+	 b4kTYxfqPtq1c2nihhHEdVaufPSpVVxMQTCzJDrgiffj4ybtDTxFa6fd6eYOHmx4eL
+	 G0c0QeutReCZA==
+Date: Mon, 9 Oct 2023 13:39:26 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Takashi Iwai <tiwai@suse.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Shenghao Ding <shenghao-ding@ti.com>
+Subject: Re: [PATCH 6.5 001/163] ALSA: hda/tas2781: Add tas2781 HDA driver
+Message-ID: <ZSQ6zq0BeYyc7MHF@sashalap>
+References: <20231009130124.021290599@linuxfoundation.org>
+ <20231009130124.064374662@linuxfoundation.org>
+ <875y3gsznc.wl-tiwai@suse.de>
+ <ZSQNSeJtY2WxedV3@sashalap>
+ <87pm1nswbx.wl-tiwai@suse.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANiq72kK6ppBE7j=z7uua1cJMKaLoR5U3NUAZXT5MrNEs9ZhfQ@mail.gmail.com>
+In-Reply-To: <87pm1nswbx.wl-tiwai@suse.de>
 
-On Mon, Oct 09, 2023 at 06:31:13PM +0200, Miguel Ojeda wrote:
-> On Mon, Oct 9, 2023 at 6:01 PM Matthew Maurer <mmaurer@google.com> wrote:
-> >
-> > If the IBT part would be helpful by itself immediately, I can split
-> > that out - it's only the KCFI portion that won't currently work.
-> 
-> Thanks Matthew. I don't think we are in a rush, but if it is not too
-> much work to split it, that would be great, instead of adding the
-> restriction.
-> 
-> For retthunk, by the way, I forgot to mention to Greg above that (in
-> the original discussion with PeterZ) that I did a quick test back then
-> to hack the equivalent of `-mfunction-return=thunk-extern` into
-> `rustc` to show that the compiler could use it via LLVM (by passing
-> the attribute in the IR). At least at a basic level it seemed to work:
-> I got a userspace program to count the times that it went through the
-> return thunk. I didn't try to do anything on the kernel side, but at
-> least for the compiler side, it seemed OK. So it may be way easier (on
-> the compiler side) than the CFI work?
+On Mon, Oct 09, 2023 at 04:29:38PM +0200, Takashi Iwai wrote:
+>On Mon, 09 Oct 2023 16:25:13 +0200,
+>Sasha Levin wrote:
+>>
+>> On Mon, Oct 09, 2023 at 03:17:59PM +0200, Takashi Iwai wrote:
+>> > On Mon, 09 Oct 2023 14:59:25 +0200,
+>> > Greg Kroah-Hartman wrote:
+>> >>
+>> >> 6.5-stable review patch.  If anyone has any objections, please let me know.
+>> >>
+>> >> ------------------
+>> >>
+>> >> From: Shenghao Ding <shenghao-ding@ti.com>
+>> >>
+>> >> [ Upstream commit 3babae915f4c15d76a5134e55806a1c1588e2865 ]
+>> >>
+>> >> Integrate tas2781 configs for Lenovo Laptops. All of the tas2781s in the
+>> >> laptop will be aggregated as one audio device. The code support realtek
+>> >> as the primary codec. Rename "struct cs35l41_dev_name" to
+>> >> "struct scodec_dev_name" for all other side codecs instead of the certain
+>> >> one.
+>> >>
+>> >> Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+>> >> Link: https://lore.kernel.org/r/20230818085836.1442-1-shenghao-ding@ti.com
+>> >> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+>> >> Stable-dep-of: 41b07476da38 ("ALSA: hda/realtek - ALC287 Realtek I2S speaker platform support")
+>> >> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> >
+>> > This makes little sense without the backport of commit
+>> > 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver").
+>> > Confusingly, the patch subject is very same as this commit...
+>>
+>> This is a tricky one: 3babae915f4 really doesn't add a new driver but
+>> rather just refactors some of the quirk handling which is needed for
+>> later patches to apply. It's the following 5be27f1e3ec9 which actually
+>> adds the driver (which we don't need here).
+>>
+>> We don't actually want to bring in a new driver, so 5be27f1e3ec9 is
+>> unnecessary.
+>
+>If we don't want the backport of 5be27f1e3ec9, this commit
+>(3babae915f4c) and other relevant ones must be dropped, too.
 
-It should hopefully be much easier than CFI, it was a much simpler
-change to gcc and clang when it landed.
+Sure, I've dropped:
 
-thanks,
+3babae915f4c ("ALSA: hda/tas2781: Add tas2781 HDA driver")
+93dc18e11b1a ("ALSA: hda/realtek: Add quirk for HP Victus 16-d1xxx to enable mute LED")
+c99c26b16c15 ("ALSA: hda/realtek: Add quirk for mute LEDs on HP ENVY x360 15-eu0xxx")
+e43252db7e20 ("ALSA: hda/realtek - ALC287 I2S speaker platform support")
+41b07476da38 ("ALSA: hda/realtek - ALC287 Realtek I2S speaker platform support")
 
-greg k-h
+-- 
+Thanks,
+Sasha
