@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654E822F00;
-	Mon,  9 Oct 2023 13:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8756B339BC
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVcaGUST"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7BF7C433CB;
-	Mon,  9 Oct 2023 13:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNaHQJ93"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016DDC433C8;
+	Mon,  9 Oct 2023 13:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858484;
-	bh=FD71MXNE4Wz/Pp50h5ejVr61xAzfvkGYkyvHePURUa8=;
+	s=korg; t=1696858487;
+	bh=kfXmAORfbMLIlpM163DOqiP3mtJYReik7WZWuJBDYLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tVcaGUSTkF0g5Wca1pvKfeVKPLivwLhoXqWPnQTCmwvHOnjX10PN68tl9FAjx6V3h
-	 kGTuV/zrk7m9aC6uKUedegybXzzLFLxqoHf+azmCii7v5JTdgPBqzXzSpgV2w1Y5Js
-	 44ipkhUTlXOLQb4u+0pQJiGQXj0QiDsZtjp+dkvU=
+	b=nNaHQJ93BhdN95ltR8CTiQWjkj+D//o8d5qEa9bmcUVCIb0EpuNdLDrDYDtUo9n8e
+	 F1qYXgw7AxVaneeszS3/pLSRdICSoaFT5Lr5Oo/I6csB3zLDJ/VA5MXNlEBitBPrXR
+	 pgBAIqbwqyIvYD8T4QTFuRc75w0BP7h3+6b6XhiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+62cbf263225ae13ff153@syzkaller.appspotmail.com,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	David Ahern <dsahern@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	netdev@vger.kernel.org,
-	bpf@vger.kernel.org,
-	syzkaller-bugs@googlegroups.com,
+	Shiji Yang <yangshiji66@outlook.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 110/131] ipv4, ipv6: Fix handling of transhdrlen in __ip{,6}_append_data()
-Date: Mon,  9 Oct 2023 15:02:30 +0200
-Message-ID: <20231009130119.801313012@linuxfoundation.org>
+Subject: [PATCH 5.4 101/131] wifi: mt76: mt76x02: fix MT76x0 external LNA gain handling
+Date: Mon,  9 Oct 2023 15:02:21 +0200
+Message-ID: <20231009130119.509757215@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -51,79 +43,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 9d4c75800f61e5d75c1659ba201b6c0c7ead3070 ]
+[ Upstream commit 684e45e120b82deccaf8b85633905304a3bbf56d ]
 
-Including the transhdrlen in length is a problem when the packet is
-partially filled (e.g. something like send(MSG_MORE) happened previously)
-when appending to an IPv4 or IPv6 packet as we don't want to repeat the
-transport header or account for it twice.  This can happen under some
-circumstances, such as splicing into an L2TP socket.
+On MT76x0, LNA gain should be applied for both external and internal LNA.
+On MT76x2, LNA gain should be treated as 0 for external LNA.
+Move the LNA type based logic to mt76x2 in order to fix mt76x0.
 
-The symptom observed is a warning in __ip6_append_data():
-
-    WARNING: CPU: 1 PID: 5042 at net/ipv6/ip6_output.c:1800 __ip6_append_data.isra.0+0x1be8/0x47f0 net/ipv6/ip6_output.c:1800
-
-that occurs when MSG_SPLICE_PAGES is used to append more data to an already
-partially occupied skbuff.  The warning occurs when 'copy' is larger than
-the amount of data in the message iterator.  This is because the requested
-length includes the transport header length when it shouldn't.  This can be
-triggered by, for example:
-
-        sfd = socket(AF_INET6, SOCK_DGRAM, IPPROTO_L2TP);
-        bind(sfd, ...); // ::1
-        connect(sfd, ...); // ::1 port 7
-        send(sfd, buffer, 4100, MSG_MORE);
-        sendfile(sfd, dfd, NULL, 1024);
-
-Fix this by only adding transhdrlen into the length if the write queue is
-empty in l2tp_ip6_sendmsg(), analogously to how UDP does things.
-
-l2tp_ip_sendmsg() looks like it won't suffer from this problem as it builds
-the UDP packet itself.
-
-Fixes: a32e0eec7042 ("l2tp: introduce L2TPv3 IP encapsulation support for IPv6")
-Reported-by: syzbot+62cbf263225ae13ff153@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/0000000000001c12b30605378ce8@google.com/
-Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: David Ahern <dsahern@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: netdev@vger.kernel.org
-cc: bpf@vger.kernel.org
-cc: syzkaller-bugs@googlegroups.com
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2daa67588f34 ("mt76x0: unify lna_gain parsing")
+Reported-by: Shiji Yang <yangshiji66@outlook.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230919194747.31647-1-nbd@nbd.name
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_ip6.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c |  7 -------
+ drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c  | 13 +++++++++++--
+ 2 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/net/l2tp/l2tp_ip6.c b/net/l2tp/l2tp_ip6.c
-index 307cf20b66491..f91542e2f6793 100644
---- a/net/l2tp/l2tp_ip6.c
-+++ b/net/l2tp/l2tp_ip6.c
-@@ -521,7 +521,6 @@ static int l2tp_ip6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	 */
- 	if (len > INT_MAX - transhdrlen)
- 		return -EMSGSIZE;
--	ulen = len + transhdrlen;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
+index c54c50fd639a9..c0227b20b6a31 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
+@@ -131,15 +131,8 @@ u8 mt76x02_get_lna_gain(struct mt76x02_dev *dev,
+ 			s8 *lna_2g, s8 *lna_5g,
+ 			struct ieee80211_channel *chan)
+ {
+-	u16 val;
+ 	u8 lna;
  
- 	/* Mirror BSD error message compatibility */
- 	if (msg->msg_flags & MSG_OOB)
-@@ -645,6 +644,7 @@ static int l2tp_ip6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+-	val = mt76x02_eeprom_get(dev, MT_EE_NIC_CONF_1);
+-	if (val & MT_EE_NIC_CONF_1_LNA_EXT_2G)
+-		*lna_2g = 0;
+-	if (val & MT_EE_NIC_CONF_1_LNA_EXT_5G)
+-		memset(lna_5g, 0, sizeof(s8) * 3);
+-
+ 	if (chan->band == NL80211_BAND_2GHZ)
+ 		lna = *lna_2g;
+ 	else if (chan->hw_value <= 64)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
+index 9f91556c7f38d..3ee945eafa4d4 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
+@@ -251,7 +251,8 @@ void mt76x2_read_rx_gain(struct mt76x02_dev *dev)
+ 	struct ieee80211_channel *chan = dev->mt76.chandef.chan;
+ 	int channel = chan->hw_value;
+ 	s8 lna_5g[3], lna_2g;
+-	u8 lna;
++	bool use_lna;
++	u8 lna = 0;
+ 	u16 val;
  
- back_from_confirm:
- 	lock_sock(sk);
-+	ulen = len + skb_queue_empty(&sk->sk_write_queue) ? transhdrlen : 0;
- 	err = ip6_append_data(sk, ip_generic_getfrag, msg,
- 			      ulen, transhdrlen, &ipc6,
- 			      &fl6, (struct rt6_info *)dst,
+ 	if (chan->band == NL80211_BAND_2GHZ)
+@@ -270,7 +271,15 @@ void mt76x2_read_rx_gain(struct mt76x02_dev *dev)
+ 	dev->cal.rx.mcu_gain |= (lna_5g[1] & 0xff) << 16;
+ 	dev->cal.rx.mcu_gain |= (lna_5g[2] & 0xff) << 24;
+ 
+-	lna = mt76x02_get_lna_gain(dev, &lna_2g, lna_5g, chan);
++	val = mt76x02_eeprom_get(dev, MT_EE_NIC_CONF_1);
++	if (chan->band == NL80211_BAND_2GHZ)
++		use_lna = !(val & MT_EE_NIC_CONF_1_LNA_EXT_2G);
++	else
++		use_lna = !(val & MT_EE_NIC_CONF_1_LNA_EXT_5G);
++
++	if (use_lna)
++		lna = mt76x02_get_lna_gain(dev, &lna_2g, lna_5g, chan);
++
+ 	dev->cal.rx.lna_gain = mt76x02_sign_extend(lna, 8);
+ }
+ EXPORT_SYMBOL_GPL(mt76x2_read_rx_gain);
 -- 
 2.40.1
 
