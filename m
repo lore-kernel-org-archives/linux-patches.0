@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F28328A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721EA328A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ItMdRS+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70148C433C8;
-	Mon,  9 Oct 2023 13:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaG37E4Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920B3C433C9;
+	Mon,  9 Oct 2023 13:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858674;
-	bh=hc+WrSLB8NRvNkkDaTI4a12OaIVlSVoDxEjWlECcAx0=;
+	s=korg; t=1696858678;
+	bh=iaaR9IBRS9kG31JpHzuC3LY1zGpMdYEpom/9jUajREc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ItMdRS+1pKG4L7lrHxMQtUTr10zS8ZFB4W5Fs1k+/VQBuE54EZfXSW8oY/J9njiIM
-	 B+B5gDOOYiMecseHPDsU3hri/UvYeUAPdf2As+CgcAtGocE8p/TnlYEbggCaEOfqeb
-	 g0SF7BYjejCVkpeX1kpsL3MkzuokIZdVZrbWoyA8=
+	b=SaG37E4YCTxVrk5KyPWPgs5f5nyv5IixojnmbxlOvaKyQeV9wihUGpyUIVXexRzSn
+	 lCj9Fxl8yDim2jWaeaEjKi76ZQTUBHrTuXXSqh8tGwx+SNxfF08uPfVtkIrIX+AJJM
+	 YuZgZcE1+BVKajpp2/oEM6KhSPP6CAk2pyRjgeik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 065/226] Input: i8042 - add quirk for TUXEDO Gemini 17 Gen1/Clevo PD70PN
-Date: Mon,  9 Oct 2023 15:00:26 +0200
-Message-ID: <20231009130128.483267421@linuxfoundation.org>
+Subject: [PATCH 5.10 066/226] mmc: renesas_sdhi: probe into TMIO after SCC parameters have been setup
+Date: Mon,  9 Oct 2023 15:00:27 +0200
+Message-ID: <20231009130128.509573506@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -36,54 +38,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit eb09074bdb05ffd6bfe77f8b4a41b76ef78c997b ]
+[ Upstream commit b161d87dfd3d9f3fb064a089a9e521d0e5d3e38f ]
 
-The touchpad of this device is both connected via PS/2 and i2c. This causes
-strange behavior when both driver fight for control. The easy fix is to
-prevent the PS/2 driver from accessing the mouse port as the full feature
-set of the touchpad is only supported in the i2c interface anyway.
+Setting up the SCC parameters does not need a probed TMIO device. But in
+the near future, probing the TMIO device needs the SCC parameters setup.
+So, fix the ordering.
 
-The strange behavior in this case is, that when an external screen is
-connected and the notebook is closed, the pointer on the external screen is
-moving to the lower right corner. When the notebook is opened again, this
-movement stops, but the touchpad clicks are unresponsive afterwards until
-reboot.
-
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230607173331.851192-1-wse@tuxedocomputers.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://lore.kernel.org/r/20201110142058.36393-3-wsa+renesas@sang-engineering.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 74f45de394d9 ("mmc: renesas_sdhi: register irqs before registering controller")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mmc/host/renesas_sdhi_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/input/serio/i8042-acpipnpio.h b/drivers/input/serio/i8042-acpipnpio.h
-index ced72b45aedc8..1bd5898abb97d 100644
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -1184,6 +1184,13 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
- 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
- 	},
-+	/* See comment on TUXEDO InfinityBook S17 Gen6 / Clevo NS70MU above */
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "PD5x_7xPNP_PNR_PNN_PNT"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
-+	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "X170SM"),
+diff --git a/drivers/mmc/host/renesas_sdhi_core.c b/drivers/mmc/host/renesas_sdhi_core.c
+index a49b8fe2a0982..2cf7360d6cade 100644
+--- a/drivers/mmc/host/renesas_sdhi_core.c
++++ b/drivers/mmc/host/renesas_sdhi_core.c
+@@ -1070,10 +1070,6 @@ int renesas_sdhi_probe(struct platform_device *pdev,
+ 			quirks->hs400_calib_table + 1);
+ 	}
+ 
+-	ret = tmio_mmc_host_probe(host);
+-	if (ret < 0)
+-		goto edisclk;
+-
+ 	/* Enable tuning iff we have an SCC and a supported mode */
+ 	if (of_data && of_data->scc_offset &&
+ 	    (host->mmc->caps & MMC_CAP_UHS_SDR104 ||
+@@ -1105,6 +1101,10 @@ int renesas_sdhi_probe(struct platform_device *pdev,
+ 		host->ops.hs400_complete = renesas_sdhi_hs400_complete;
+ 	}
+ 
++	ret = tmio_mmc_host_probe(host);
++	if (ret < 0)
++		goto edisclk;
++
+ 	num_irqs = platform_irq_count(pdev);
+ 	if (num_irqs < 0) {
+ 		ret = num_irqs;
 -- 
 2.40.1
 
