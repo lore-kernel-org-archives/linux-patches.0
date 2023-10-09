@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2731A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0C8199B3;
+	Mon,  9 Oct 2023 13:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLXFi/z5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0863C433C9;
-	Mon,  9 Oct 2023 13:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXEFgXwc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91CFC433C7;
+	Mon,  9 Oct 2023 13:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857456;
-	bh=fr4VLSJDu0vuL8u5qD0oIww2d9bD8wp2NEWtkNDiKyc=;
+	s=korg; t=1696857459;
+	bh=Q/U5fLrR6w9ER1LNqbdTr91noNQ83AyAgj6MM0UCiVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLXFi/z5KIXBZ5meg9orDx/t7ETftutoH6xiDWGpiOwH+Af7U0nmP+TVkzhITIV1M
-	 tTN7ifPDXDYTKyHncXkpmLA/fnoRRa9ZlgG+noA/csxZ9406Ts3Q9Zm3hK6peacDRx
-	 MQs/9baDiKbWJauxU+A7bSZ5bwm5dviACH7WGjrc=
+	b=NXEFgXwcwzMHwa/fJZzQFVhh47qPk6EjdnvnjbUho1Hazi0eLtgiPA/TGceMlAFnh
+	 32GzZgRlBznH9qItes4fJPOmavlWvkZYtN4iCqP//V3kyALkyj+CmlASqs8tNodz6Y
+	 geG/5B35A9FEUvGMZmFH7+1JIlsbElmnLB//gIZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/162] iommu/arm-smmu-v3: Set TTL invalidation hint better
-Date: Mon,  9 Oct 2023 15:00:25 +0200
-Message-ID: <20231009130124.156833014@linuxfoundation.org>
+	"netdev@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, Yajun Deng" <yajun.deng@linux.dev>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Yajun Deng <yajun.deng@linux.dev>
+Subject: [PATCH 6.1 053/162] i40e: fix the wrong PTP frequency calculation
+Date: Mon,  9 Oct 2023 15:00:34 +0200
+Message-ID: <20231009130124.398550576@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -42,51 +43,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Yajun Deng <yajun.deng@linux.dev>
 
-[ Upstream commit 6833b8f2e19945a41e4d5efd8c6d9f4cae9a5b7d ]
+The new adjustment should be based on the base frequency, not the
+I40E_PTP_40GB_INCVAL in i40e_ptp_adjfine().
 
-When io-pgtable unmaps a whole table, rather than waste time walking it
-to find the leaf entries to invalidate exactly, it simply expects
-.tlb_flush_walk with nominal last-level granularity to invalidate any
-leaf entries at higher intermediate levels as well. This works fine with
-page-based invalidation, but with range commands we need to be careful
-with the TTL hint - unconditionally setting it based on the given level
-3 granule means that an invalidation for a level 1 table would strictly
-not be required to affect level 2 block entries. It's easy to comply
-with the expected behaviour by simply not setting the TTL hint for
-non-leaf invalidations, so let's do that.
+This issue was introduced in commit 3626a690b717 ("i40e: use
+mul_u64_u64_div_u64 for PTP frequency calculation"), frequency is left
+just as base I40E_PTP_40GB_INCVAL before the commit. After the commit,
+frequency is the I40E_PTP_40GB_INCVAL times the ptp_adj_mult value.
+But then the diff is applied on the wrong value, and no multiplication
+is done afterwards.
 
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/b409d9a17c52dc0db51faee91d92737bb7975f5b.1685637456.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+It was accidentally fixed in commit 1060707e3809 ("ptp: introduce helpers
+to adjust by scaled parts per million"). It uses adjust_by_scaled_ppm
+correctly performs the calculation and uses the base adjustment, so
+there's no error here. But it is a new feature and doesn't need to
+backported to the stable releases.
+
+This issue affects both v6.0 and v6.1, and the v6.1 version is an LTS
+release. Therefore, the patch only needs to be applied to v6.1 stable.
+
+Fixes: 3626a690b717 ("i40e: use mul_u64_u64_div_u64 for PTP frequency calculation")
+Cc: <stable@vger.kernel.org> # 6.1
+Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_ptp.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index db33dc87f69ed..becf37c088772 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1889,8 +1889,13 @@ static void __arm_smmu_tlb_inv_range(struct arm_smmu_cmdq_ent *cmd,
- 		/* Convert page size of 12,14,16 (log2) to 1,2,3 */
- 		cmd->tlbi.tg = (tg - 10) / 2;
+--- a/drivers/net/ethernet/intel/i40e/i40e_ptp.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_ptp.c
+@@ -361,9 +361,9 @@ static int i40e_ptp_adjfine(struct ptp_c
+ 				   1000000ULL << 16);
  
--		/* Determine what level the granule is at */
--		cmd->tlbi.ttl = 4 - ((ilog2(granule) - 3) / (tg - 3));
-+		/*
-+		 * Determine what level the granule is at. For non-leaf, io-pgtable
-+		 * assumes .tlb_flush_walk can invalidate multiple levels at once,
-+		 * so ignore the nominal last-level granule and leave TTL=0.
-+		 */
-+		if (cmd->tlbi.leaf)
-+			cmd->tlbi.ttl = 4 - ((ilog2(granule) - 3) / (tg - 3));
+ 	if (neg_adj)
+-		adj = I40E_PTP_40GB_INCVAL - diff;
++		adj = freq - diff;
+ 	else
+-		adj = I40E_PTP_40GB_INCVAL + diff;
++		adj = freq + diff;
  
- 		num_pages = size >> tg;
- 	}
--- 
-2.40.1
-
+ 	wr32(hw, I40E_PRTTSYN_INC_L, adj & 0xFFFFFFFF);
+ 	wr32(hw, I40E_PRTTSYN_INC_H, adj >> 32);
 
 
