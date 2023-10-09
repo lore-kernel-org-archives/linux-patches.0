@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E58F341BC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F5F341AC
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="diehkOJi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFAFC433C8;
-	Mon,  9 Oct 2023 13:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RW0Zzo8h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA19AC433C7;
+	Mon,  9 Oct 2023 13:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859388;
-	bh=isuXNIKuVbiL91PCeghWrEpwJg6YAzjLFgKWuShAYng=;
+	s=korg; t=1696859391;
+	bh=VAM/Q+6ZdtUhU07tM3fgr+nXuQLTvHRgZXFAh9mRxWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=diehkOJiWz1iqDu769NO247ZA4kYi/X4cWsgDaLvLPUC6bW4c31FdA5j1L7QLpW9z
-	 XBT/sqR8hrEvAmpLvN8OQSaRHmyhWRiOjusH30OIMqdB6KtnP+VwBUsJ7QoezlQ9Rk
-	 AEdNV2ciQ/xs0h1Vu/hj+r6AYVTp7h4Kf932G8gI=
+	b=RW0Zzo8hywcItwV76hkokoiPt/I0kaC5Vwn4UnOWRq6kwuCgWv36FowI2iYeTgG+H
+	 sibugOgCBiBaY71KA06Df5qfHCoMq1Uob87rcmu9qoJlUGwnS/2sFLcDRLMxrSeSJw
+	 HaPlBVQ+Kr/TMZhC33nnM1pPHQBvi1huWJRuszns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 4.14 51/55] IB/mlx4: Fix the size of a buffer in add_port_entries()
-Date: Mon,  9 Oct 2023 15:06:50 +0200
-Message-ID: <20231009130109.644085767@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>
+Subject: [PATCH 4.14 52/55] gpio: aspeed: fix the GPIO number passed to pinctrl_gpio_set_config()
+Date: Mon,  9 Oct 2023 15:06:51 +0200
+Message-ID: <20231009130109.682799960@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -35,55 +36,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit d7f393430a17c2bfcdf805462a5aa80be4285b27 upstream.
+commit f9315f17bf778cb8079a29639419fcc8a41a3c84 upstream.
 
-In order to be sure that 'buff' is never truncated, its size should be
-12, not 11.
+pinctrl_gpio_set_config() expects the GPIO number from the global GPIO
+numberspace, not the controller-relative offset, which needs to be added
+to the chip base.
 
-When building with W=1, this fixes the following warnings:
-
-  drivers/infiniband/hw/mlx4/sysfs.c: In function ‘add_port_entries’:
-  drivers/infiniband/hw/mlx4/sysfs.c:268:34: error: ‘sprintf’ may write a terminating nul past the end of the destination [-Werror=format-overflow=]
-    268 |                 sprintf(buff, "%d", i);
-        |                                  ^
-  drivers/infiniband/hw/mlx4/sysfs.c:268:17: note: ‘sprintf’ output between 2 and 12 bytes into a destination of size 11
-    268 |                 sprintf(buff, "%d", i);
-        |                 ^~~~~~~~~~~~~~~~~~~~~~
-  drivers/infiniband/hw/mlx4/sysfs.c:286:34: error: ‘sprintf’ may write a terminating nul past the end of the destination [-Werror=format-overflow=]
-    286 |                 sprintf(buff, "%d", i);
-        |                                  ^
-  drivers/infiniband/hw/mlx4/sysfs.c:286:17: note: ‘sprintf’ output between 2 and 12 bytes into a destination of size 11
-    286 |                 sprintf(buff, "%d", i);
-        |                 ^~~~~~~~~~~~~~~~~~~~~~
-
-Fixes: c1e7e466120b ("IB/mlx4: Add iov directory in sysfs under the ib device")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/0bb1443eb47308bc9be30232cc23004c4d4cf43e.1695448530.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 5ae4cb94b313 ("gpio: aspeed: Add debounce support")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mlx4/sysfs.c |    2 +-
+ drivers/gpio/gpio-aspeed.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/mlx4/sysfs.c
-+++ b/drivers/infiniband/hw/mlx4/sysfs.c
-@@ -221,7 +221,7 @@ void del_sysfs_port_mcg_attr(struct mlx4
- static int add_port_entries(struct mlx4_ib_dev *device, int port_num)
- {
- 	int i;
--	char buff[11];
-+	char buff[12];
- 	struct mlx4_ib_iov_port *port = NULL;
- 	int ret = 0 ;
- 	struct ib_port_attr attr;
+--- a/drivers/gpio/gpio-aspeed.c
++++ b/drivers/gpio/gpio-aspeed.c
+@@ -763,7 +763,7 @@ static int aspeed_gpio_set_config(struct
+ 	else if (param == PIN_CONFIG_BIAS_DISABLE ||
+ 			param == PIN_CONFIG_BIAS_PULL_DOWN ||
+ 			param == PIN_CONFIG_DRIVE_STRENGTH)
+-		return pinctrl_gpio_set_config(offset, config);
++		return pinctrl_gpio_set_config(chip->base + offset, config);
+ 	else if (param == PIN_CONFIG_DRIVE_OPEN_DRAIN ||
+ 			param == PIN_CONFIG_DRIVE_OPEN_SOURCE)
+ 		/* Return -ENOTSUPP to trigger emulation, as per datasheet */
 
 
