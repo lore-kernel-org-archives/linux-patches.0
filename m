@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE634199CC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886B5199AA
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rR1eSPiD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2970AC433C7;
-	Mon,  9 Oct 2023 13:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyLhbn3r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D86C433CA;
+	Mon,  9 Oct 2023 13:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857334;
-	bh=jBxDDrlaBkf3CcDTJupWd28Qrm7SgIOyNj1RZqkKkgY=;
+	s=korg; t=1696857337;
+	bh=R2Me6Z53dBWYTWVQLz/mw4BQ4gthC++NgqVEM4jtBV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rR1eSPiDscR3WtrVjc7dWkzr7PTFZpVKyqIOAAHdMyayyUWReBDB4RFd/gnlt+8xH
-	 8gagUSv6SULv5YRzOT7CM5sMTK0cTsgs2i49slrrGpsLy66vOiD87aW9t17In5SJ27
-	 +vOMRkKeBXWgbFbbPsDws8H7Nh5aCPqRRIWKhwzo=
+	b=oyLhbn3rXqxBppWibPQcw1AonzfFx/9RKiYGRwMxLTHUixiumfGARjtOIL4iVjW7x
+	 EUr7VnLeBXDZluNeGnunQoIETste1nD9wkFBTbrtb0wFmP/IsPjBqSdYkRMLCb01Tv
+	 LHSFVGcsG/oYB0FC7REtgbpIYJ239bh6SvbDGxm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/162] mptcp: annotate lockless accesses to sk->sk_err
-Date: Mon,  9 Oct 2023 14:59:53 +0200
-Message-ID: <20231009130123.289550362@linuxfoundation.org>
+Subject: [PATCH 6.1 013/162] mptcp: move __mptcp_error_report in protocol.c
+Date: Mon,  9 Oct 2023 14:59:54 +0200
+Message-ID: <20231009130123.315839116@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -42,91 +44,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 9ae8e5ad99b8ebcd3d3dd46075f3825e6f08f063 ]
+[ Upstream commit d5fbeff1ab812b6c473b6924bee8748469462e2c ]
 
-mptcp_poll() reads sk->sk_err without socket lock held/owned.
+This will simplify the next patch ("mptcp: process pending subflow error
+on close").
 
-Add READ_ONCE() and WRITE_ONCE() to avoid load/store tearing.
+No functional change intended.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: stable@vger.kernel.org # v5.12+
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: d5fbeff1ab81 ("mptcp: move __mptcp_error_report in protocol.c")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 2 +-
- net/mptcp/protocol.c   | 8 ++++----
- net/mptcp/subflow.c    | 4 ++--
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ net/mptcp/protocol.c | 36 ++++++++++++++++++++++++++++++++++++
+ net/mptcp/subflow.c  | 36 ------------------------------------
+ 2 files changed, 36 insertions(+), 36 deletions(-)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index 9127a7fd5269c..5d845fcf3d09e 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -2047,7 +2047,7 @@ static int mptcp_event_put_token_and_ssk(struct sk_buff *skb,
- 	    nla_put_s32(skb, MPTCP_ATTR_IF_IDX, ssk->sk_bound_dev_if))
- 		return -EMSGSIZE;
- 
--	sk_err = ssk->sk_err;
-+	sk_err = READ_ONCE(ssk->sk_err);
- 	if (sk_err && sk->sk_state == TCP_ESTABLISHED &&
- 	    nla_put_u8(skb, MPTCP_ATTR_ERROR, sk_err))
- 		return -EMSGSIZE;
 diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 60e65f6325c3c..84f107854eac9 100644
+index 84f107854eac9..193f2bdc8fe1b 100644
 --- a/net/mptcp/protocol.c
 +++ b/net/mptcp/protocol.c
-@@ -2517,15 +2517,15 @@ static void mptcp_check_fastclose(struct mptcp_sock *msk)
- 	/* Mirror the tcp_reset() error propagation */
- 	switch (sk->sk_state) {
- 	case TCP_SYN_SENT:
--		sk->sk_err = ECONNREFUSED;
-+		WRITE_ONCE(sk->sk_err, ECONNREFUSED);
- 		break;
- 	case TCP_CLOSE_WAIT:
--		sk->sk_err = EPIPE;
-+		WRITE_ONCE(sk->sk_err, EPIPE);
- 		break;
- 	case TCP_CLOSE:
- 		return;
- 	default:
--		sk->sk_err = ECONNRESET;
-+		WRITE_ONCE(sk->sk_err, ECONNRESET);
- 	}
+@@ -765,6 +765,42 @@ static bool __mptcp_ofo_queue(struct mptcp_sock *msk)
+ 	return moved;
+ }
  
- 	inet_sk_state_store(sk, TCP_CLOSE);
-@@ -3893,7 +3893,7 @@ static __poll_t mptcp_poll(struct file *file, struct socket *sock,
- 
- 	/* This barrier is coupled with smp_wmb() in __mptcp_error_report() */
- 	smp_rmb();
--	if (sk->sk_err)
-+	if (READ_ONCE(sk->sk_err))
- 		mask |= EPOLLERR;
- 
- 	return mask;
++void __mptcp_error_report(struct sock *sk)
++{
++	struct mptcp_subflow_context *subflow;
++	struct mptcp_sock *msk = mptcp_sk(sk);
++
++	mptcp_for_each_subflow(msk, subflow) {
++		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
++		int err = sock_error(ssk);
++		int ssk_state;
++
++		if (!err)
++			continue;
++
++		/* only propagate errors on fallen-back sockets or
++		 * on MPC connect
++		 */
++		if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(msk))
++			continue;
++
++		/* We need to propagate only transition to CLOSE state.
++		 * Orphaned socket will see such state change via
++		 * subflow_sched_work_if_closed() and that path will properly
++		 * destroy the msk as needed.
++		 */
++		ssk_state = inet_sk_state_load(ssk);
++		if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
++			inet_sk_state_store(sk, ssk_state);
++		WRITE_ONCE(sk->sk_err, -err);
++
++		/* This barrier is coupled with smp_rmb() in mptcp_poll() */
++		smp_wmb();
++		sk_error_report(sk);
++		break;
++	}
++}
++
+ /* In most cases we will be able to lock the mptcp socket.  If its already
+  * owned, we need to defer to the work queue to avoid ABBA deadlock.
+  */
 diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index 168dced2434b3..032661c8273f2 100644
+index 032661c8273f2..b93b08a75017b 100644
 --- a/net/mptcp/subflow.c
 +++ b/net/mptcp/subflow.c
-@@ -1248,7 +1248,7 @@ static bool subflow_check_data_avail(struct sock *ssk)
- 			subflow->reset_reason = MPTCP_RST_EMPTCP;
+@@ -1305,42 +1305,6 @@ void mptcp_space(const struct sock *ssk, int *space, int *full_space)
+ 	*full_space = tcp_full_space(sk);
+ }
  
- reset:
--			ssk->sk_err = EBADMSG;
-+			WRITE_ONCE(ssk->sk_err, EBADMSG);
- 			tcp_set_state(ssk, TCP_CLOSE);
- 			while ((skb = skb_peek(&ssk->sk_receive_queue)))
- 				sk_eat_skb(ssk, skb);
-@@ -1332,7 +1332,7 @@ void __mptcp_error_report(struct sock *sk)
- 		ssk_state = inet_sk_state_load(ssk);
- 		if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
- 			inet_sk_state_store(sk, ssk_state);
--		sk->sk_err = -err;
-+		WRITE_ONCE(sk->sk_err, -err);
- 
- 		/* This barrier is coupled with smp_rmb() in mptcp_poll() */
- 		smp_wmb();
+-void __mptcp_error_report(struct sock *sk)
+-{
+-	struct mptcp_subflow_context *subflow;
+-	struct mptcp_sock *msk = mptcp_sk(sk);
+-
+-	mptcp_for_each_subflow(msk, subflow) {
+-		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+-		int err = sock_error(ssk);
+-		int ssk_state;
+-
+-		if (!err)
+-			continue;
+-
+-		/* only propagate errors on fallen-back sockets or
+-		 * on MPC connect
+-		 */
+-		if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(msk))
+-			continue;
+-
+-		/* We need to propagate only transition to CLOSE state.
+-		 * Orphaned socket will see such state change via
+-		 * subflow_sched_work_if_closed() and that path will properly
+-		 * destroy the msk as needed.
+-		 */
+-		ssk_state = inet_sk_state_load(ssk);
+-		if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
+-			inet_sk_state_store(sk, ssk_state);
+-		WRITE_ONCE(sk->sk_err, -err);
+-
+-		/* This barrier is coupled with smp_rmb() in mptcp_poll() */
+-		smp_wmb();
+-		sk_error_report(sk);
+-		break;
+-	}
+-}
+-
+ static void subflow_error_report(struct sock *ssk)
+ {
+ 	struct sock *sk = mptcp_subflow_ctx(ssk)->conn;
 -- 
 2.40.1
 
