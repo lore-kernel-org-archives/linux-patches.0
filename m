@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDB719448
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D7C1945A
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYwh+jl9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36983C433D9;
-	Mon,  9 Oct 2023 13:10:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kF9OoHLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DEAC433C9;
+	Mon,  9 Oct 2023 13:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857013;
-	bh=U9wp2ydfRlmd5RmcTVGSjXOFug/S45Qn+x6dxwpQcIo=;
+	s=korg; t=1696857016;
+	bh=fwD9C+Dfkr1azawmbQUMEBphlSjIMOxxxyDPV/yf5pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oYwh+jl9hMkz3e/66XzqBay/c45mqDlw1KM0h52nm36dNYQkY4r4vLimHUb1MGxhB
-	 khncGdNMTO4XsOd9Sjf8uD5xo2/qdT7HNwkHptV4pn7nUXdxqzoZ5JxxWfLEGqEcNh
-	 gOuXlsucTVrmjodE8kvc8hpeYtlRyClWro6H1aXw=
+	b=kF9OoHLeRi2vK7XjUA9Zzol0zErGuNXV8ulYC5ZgtrsAr7+h2q3/0s9lYO7aEjHnb
+	 hxWp9aTzN8PJm7RSCEwmcE09j8g7a52DadrINBoGQOT3OBVwVpxYR4cLMUlES0Adtt
+	 2Y5TGEyT18MB/JHkeDGLCtcVX9I6ACbVwhERGXK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.5 040/163] io_uring: dont allow IORING_SETUP_NO_MMAP rings on highmem pages
-Date: Mon,  9 Oct 2023 15:00:04 +0200
-Message-ID: <20231009130125.112943803@linuxfoundation.org>
+	David Jeffery <djeffery@redhat.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.5 041/163] md/raid5: release batch_last before waiting for another stripe_head
+Date: Mon,  9 Oct 2023 15:00:05 +0200
+Message-ID: <20231009130125.146931533@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -40,54 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: David Jeffery <djeffery@redhat.com>
 
-commit 223ef474316466e9f61f6e0064f3a6fe4923a2c5 upstream.
+commit 2fd7b0f6d5ad655b1d947d3acdd82f687c31465e upstream.
 
-On at least arm32, but presumably any arch with highmem, if the
-application passes in memory that resides in highmem for the rings,
-then we should fail that ring creation. We fail it with -EINVAL, which
-is what kernels that don't support IORING_SETUP_NO_MMAP will do as well.
+When raid5_get_active_stripe is called with a ctx containing a stripe_head in
+its batch_last pointer, it can cause a deadlock if the task sleeps waiting on
+another stripe_head to become available. The stripe_head held by batch_last
+can be blocking the advancement of other stripe_heads, leading to no
+stripe_heads being released so raid5_get_active_stripe waits forever.
 
-Cc: stable@vger.kernel.org
-Fixes: 03d89a2de25b ("io_uring: support for user allocated memory for rings/sqes")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Like with the quiesce state handling earlier in the function, batch_last
+needs to be released by raid5_get_active_stripe before it waits for another
+stripe_head.
+
+Fixes: 3312e6c887fe ("md/raid5: Keep a reference to last stripe_head for batch")
+Cc: stable@vger.kernel.org # v6.0+
+Signed-off-by: David Jeffery <djeffery@redhat.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20231002183422.13047-1-djeffery@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/md/raid5.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2678,7 +2678,7 @@ static void *__io_uaddr_map(struct page
- {
- 	struct page **page_array;
- 	unsigned int nr_pages;
--	int ret;
-+	int ret, i;
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -854,6 +854,13 @@ struct stripe_head *raid5_get_active_str
  
- 	*npages = 0;
- 
-@@ -2708,6 +2708,20 @@ err:
- 	 */
- 	if (page_array[0] != page_array[ret - 1])
- 		goto err;
+ 		set_bit(R5_INACTIVE_BLOCKED, &conf->cache_state);
+ 		r5l_wake_reclaim(conf->log, 0);
 +
-+	/*
-+	 * Can't support mapping user allocated ring memory on 32-bit archs
-+	 * where it could potentially reside in highmem. Just fail those with
-+	 * -EINVAL, just like we did on kernels that didn't support this
-+	 * feature.
-+	 */
-+	for (i = 0; i < nr_pages; i++) {
-+		if (PageHighMem(page_array[i])) {
-+			ret = -EINVAL;
-+			goto err;
++		/* release batch_last before wait to avoid risk of deadlock */
++		if (ctx && ctx->batch_last) {
++			raid5_release_stripe(ctx->batch_last);
++			ctx->batch_last = NULL;
 +		}
-+	}
 +
- 	*pages = page_array;
- 	*npages = nr_pages;
- 	return page_to_virt(page_array[0]);
+ 		wait_event_lock_irq(conf->wait_for_stripe,
+ 				    is_inactive_blocked(conf, hash),
+ 				    *(conf->hash_locks + hash));
 
 
