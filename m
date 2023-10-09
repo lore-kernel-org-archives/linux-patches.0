@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265E619464
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F279B19469
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJzZUBM6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1B9C433C8;
-	Mon,  9 Oct 2023 13:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7NCdOOk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B81C433C8;
+	Mon,  9 Oct 2023 13:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857216;
-	bh=ToFLRMZx2W0fHLEA+whMPb3PlANBZoo7SeySjyY/J/s=;
+	s=korg; t=1696857219;
+	bh=+RnOo12wrl1I0feDyrsJ1jQTrrpwpWverXEySU6V90A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SJzZUBM6lhI36GDMdHLiaCqBeTKLOP74YduLBY6Md1kUHuygSQfSW6CF6U4Ki7lth
-	 PWiT5fmbAJOOypY5EtsalEJZWeGUZ43LV8h8cZtW875hfrS4HyrthJusTy/MjsnDTs
-	 rdnZ3nUcXupqstzmmbXCf1PJWCAHi5JEOsBNVw3M=
+	b=E7NCdOOk1U7WVzR1wpGU8c4BnqcZ4SmAyeFrHQbXZzO2eFFS3lxwj53tMJTYisdLP
+	 FFkwZFf4MBQiopsjXZPqvyQLSr7BioW57E9J9vuy2k/mR97k2nM+wvj9LtLb0pgP03
+	 Bgk0qtzP66LYBzqP2F6r4/8yL5VC3hhg46oxeKRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	Bryan Whitehead <bryan.whitehead@microchip.com>,
-	UNGLinuxDriver@microchip.com,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 136/163] net: lan743x: also select PHYLIB
-Date: Mon,  9 Oct 2023 15:01:40 +0200
-Message-ID: <20231009130127.802185928@linuxfoundation.org>
+	John David Anglin <dave.anglin@bell.net>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.5 137/163] parisc: Restore __ldcw_align for PA-RISC 2.0 processors
+Date: Mon,  9 Oct 2023 15:01:41 +0200
+Message-ID: <20231009130127.830600934@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -46,47 +41,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: John David Anglin <dave@parisc-linux.org>
 
-[ Upstream commit 566aeed6871ac2189b5bfe03e1a5b3b7be5eca38 ]
+commit 914988e099fc658436fbd7b8f240160c352b6552 upstream.
 
-Since FIXED_PHY depends on PHYLIB, PHYLIB needs to be set to avoid
-a kconfig warning:
+Back in 2005, Kyle McMartin removed the 16-byte alignment for
+ldcw semaphores on PA 2.0 machines (CONFIG_PA20). This broke
+spinlocks on pre PA8800 processors. The main symptom was random
+faults in mmap'd memory (e.g., gcc compilations, etc).
 
-WARNING: unmet direct dependencies detected for FIXED_PHY
-  Depends on [n]: NETDEVICES [=y] && PHYLIB [=n]
-  Selected by [y]:
-  - LAN743X [=y] && NETDEVICES [=y] && ETHERNET [=y] && NET_VENDOR_MICROCHIP [=y] && PCI [=y] && PTP_1588_CLOCK_OPTIONAL [=y]
+Unfortunately, the errata for this ldcw change is lost.
 
-Fixes: 73c4d1b307ae ("net: lan743x: select FIXED_PHY")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: lore.kernel.org/r/202309261802.JPbRHwti-lkp@intel.com
-Cc: Bryan Whitehead <bryan.whitehead@microchip.com>
-Cc: UNGLinuxDriver@microchip.com
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Simon Horman <horms@kernel.org> # build-tested
-Link: https://lore.kernel.org/r/20231002193544.14529-1-rdunlap@infradead.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The issue is the 16-byte alignment required for ldcw semaphore
+instructions can only be reduced to natural alignment when the
+ldcw operation can be handled coherently in cache. Only PA8800
+and PA8900 processors actually support doing the operation in
+cache.
+
+Aligning the spinlock dynamically adds two integer instructions
+to each spinlock.
+
+Tested on rp3440, c8000 and a500.
+
+Signed-off-by: John David Anglin <dave.anglin@bell.net>
+Link: https://lore.kernel.org/linux-parisc/6b332788-2227-127f-ba6d-55e99ecf4ed8@bell.net/T/#t
+Link: https://lore.kernel.org/linux-parisc/20050609050702.GB4641@roadwarrior.mcmartin.ca/
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/parisc/include/asm/ldcw.h           |   37 ++++++++++++++++---------------
+ arch/parisc/include/asm/spinlock_types.h |    5 ----
+ 2 files changed, 20 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/Kconfig b/drivers/net/ethernet/microchip/Kconfig
-index 329e374b9539c..43ba71e82260c 100644
---- a/drivers/net/ethernet/microchip/Kconfig
-+++ b/drivers/net/ethernet/microchip/Kconfig
-@@ -46,6 +46,7 @@ config LAN743X
- 	tristate "LAN743x support"
- 	depends on PCI
- 	depends on PTP_1588_CLOCK_OPTIONAL
-+	select PHYLIB
- 	select FIXED_PHY
- 	select CRC16
- 	select CRC32
--- 
-2.40.1
-
+--- a/arch/parisc/include/asm/ldcw.h
++++ b/arch/parisc/include/asm/ldcw.h
+@@ -2,39 +2,42 @@
+ #ifndef __PARISC_LDCW_H
+ #define __PARISC_LDCW_H
+ 
+-#ifndef CONFIG_PA20
+ /* Because kmalloc only guarantees 8-byte alignment for kmalloc'd data,
+    and GCC only guarantees 8-byte alignment for stack locals, we can't
+    be assured of 16-byte alignment for atomic lock data even if we
+    specify "__attribute ((aligned(16)))" in the type declaration.  So,
+    we use a struct containing an array of four ints for the atomic lock
+    type and dynamically select the 16-byte aligned int from the array
+-   for the semaphore.  */
++   for the semaphore. */
++
++/* From: "Jim Hull" <jim.hull of hp.com>
++   I've attached a summary of the change, but basically, for PA 2.0, as
++   long as the ",CO" (coherent operation) completer is implemented, then the
++   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
++   they only require "natural" alignment (4-byte for ldcw, 8-byte for
++   ldcd).
++
++   Although the cache control hint is accepted by all PA 2.0 processors,
++   it is only implemented on PA8800/PA8900 CPUs. Prior PA8X00 CPUs still
++   require 16-byte alignment. If the address is unaligned, the operation
++   of the instruction is undefined. The ldcw instruction does not generate
++   unaligned data reference traps so misaligned accesses are not detected.
++   This hid the problem for years. So, restore the 16-byte alignment dropped
++   by Kyle McMartin in "Remove __ldcw_align for PA-RISC 2.0 processors". */
+ 
+ #define __PA_LDCW_ALIGNMENT	16
+-#define __PA_LDCW_ALIGN_ORDER	4
+ #define __ldcw_align(a) ({					\
+ 	unsigned long __ret = (unsigned long) &(a)->lock[0];	\
+ 	__ret = (__ret + __PA_LDCW_ALIGNMENT - 1)		\
+ 		& ~(__PA_LDCW_ALIGNMENT - 1);			\
+ 	(volatile unsigned int *) __ret;			\
+ })
+-#define __LDCW	"ldcw"
+ 
+-#else /*CONFIG_PA20*/
+-/* From: "Jim Hull" <jim.hull of hp.com>
+-   I've attached a summary of the change, but basically, for PA 2.0, as
+-   long as the ",CO" (coherent operation) completer is specified, then the
+-   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
+-   they only require "natural" alignment (4-byte for ldcw, 8-byte for
+-   ldcd). */
+-
+-#define __PA_LDCW_ALIGNMENT	4
+-#define __PA_LDCW_ALIGN_ORDER	2
+-#define __ldcw_align(a) (&(a)->slock)
++#ifdef CONFIG_PA20
+ #define __LDCW	"ldcw,co"
+-
+-#endif /*!CONFIG_PA20*/
++#else
++#define __LDCW	"ldcw"
++#endif
+ 
+ /* LDCW, the only atomic read-write operation PA-RISC has. *sigh*.
+    We don't explicitly expose that "*a" may be written as reload
+--- a/arch/parisc/include/asm/spinlock_types.h
++++ b/arch/parisc/include/asm/spinlock_types.h
+@@ -9,15 +9,10 @@
+ #ifndef __ASSEMBLY__
+ 
+ typedef struct {
+-#ifdef CONFIG_PA20
+-	volatile unsigned int slock;
+-# define __ARCH_SPIN_LOCK_UNLOCKED { __ARCH_SPIN_LOCK_UNLOCKED_VAL }
+-#else
+ 	volatile unsigned int lock[4];
+ # define __ARCH_SPIN_LOCK_UNLOCKED	\
+ 	{ { __ARCH_SPIN_LOCK_UNLOCKED_VAL, __ARCH_SPIN_LOCK_UNLOCKED_VAL, \
+ 	    __ARCH_SPIN_LOCK_UNLOCKED_VAL, __ARCH_SPIN_LOCK_UNLOCKED_VAL } }
+-#endif
+ } arch_spinlock_t;
+ 
+ 
 
 
