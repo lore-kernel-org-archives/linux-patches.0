@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4A51A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C411A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sYFPBwL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA246C433C7;
-	Mon,  9 Oct 2023 13:23:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhhbago1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A82C433C7;
+	Mon,  9 Oct 2023 13:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857795;
-	bh=5AuoBdCsQANOVM3sow6EfjXnhZV8yITNGDgRPi+laSs=;
+	s=korg; t=1696857798;
+	bh=KwZMJzdIOz+sopvzsBCRA62zDuyxYxXbUvt8Z/4Mkkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0sYFPBwLhQ2f/TeD58FySbUrxXGlmiD1yt0r4cZqlmhMtTHTJsFT+wp9mm+yxDwGW
-	 depyRpr5othclGegK/HvgGbjkjFNx0QaG+iLF6nES2q1HGaK4UtMxxr+86isbjvWpz
-	 m+a12Z1cGxg/4Bt+fGl/gZ7GWgbnUUChU+Vci3iY=
+	b=rhhbago1rYQG1DYc0ZwbFzNv7x8eY9IOWkenv3DpgIaZa+blDThMHhVuVJXzM8nn5
+	 ngfHSVioDOJCyl8O35qABUduVX/Q4O0guJAfwj9TpvIwsl+wplxEyUW2YI6zJvLT3R
+	 hXdRNO3J5Hva7YG/20RrYtf4H5S+YV+D4V2ZWlII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 158/162] ipv6: remove nexthop_fib6_nh_bh()
-Date: Mon,  9 Oct 2023 15:02:19 +0200
-Message-ID: <20231009130127.276853995@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 133/162] netlink: annotate data-races around sk->sk_err
+Date: Mon,  9 Oct 2023 15:01:54 +0200
+Message-ID: <20231009130126.585707577@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -45,159 +46,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-commit ef1148d4487438a3408d6face2a8360d91b4af70 upstream.
+[ Upstream commit d0f95894fda7d4f895b29c1097f92d7fee278cb2 ]
 
-After blamed commit, nexthop_fib6_nh_bh() and nexthop_fib6_nh()
-are the same.
+syzbot caught another data-race in netlink when
+setting sk->sk_err.
 
-Delete nexthop_fib6_nh_bh(), and convert /proc/net/ipv6_route
-to standard rcu to avoid this splat:
+Annotate all of them for good measure.
 
-[ 5723.180080] WARNING: suspicious RCU usage
-[ 5723.180083] -----------------------------
-[ 5723.180084] include/net/nexthop.h:516 suspicious rcu_dereference_check() usage!
-[ 5723.180086]
-other info that might help us debug this:
+BUG: KCSAN: data-race in netlink_recvmsg / netlink_recvmsg
 
-[ 5723.180087]
-rcu_scheduler_active = 2, debug_locks = 1
-[ 5723.180089] 2 locks held by cat/55856:
-[ 5723.180091] #0: ffff9440a582afa8 (&p->lock){+.+.}-{3:3}, at: seq_read_iter (fs/seq_file.c:188)
-[ 5723.180100] #1: ffffffffaac07040 (rcu_read_lock_bh){....}-{1:2}, at: rcu_lock_acquire (include/linux/rcupdate.h:326)
-[ 5723.180109]
-stack backtrace:
-[ 5723.180111] CPU: 14 PID: 55856 Comm: cat Tainted: G S        I        6.3.0-dbx-DEV #528
-[ 5723.180115] Call Trace:
-[ 5723.180117]  <TASK>
-[ 5723.180119] dump_stack_lvl (lib/dump_stack.c:107)
-[ 5723.180124] dump_stack (lib/dump_stack.c:114)
-[ 5723.180126] lockdep_rcu_suspicious (include/linux/context_tracking.h:122)
-[ 5723.180132] ipv6_route_seq_show (include/net/nexthop.h:?)
-[ 5723.180135] ? ipv6_route_seq_next (net/ipv6/ip6_fib.c:2605)
-[ 5723.180140] seq_read_iter (fs/seq_file.c:272)
-[ 5723.180145] seq_read (fs/seq_file.c:163)
-[ 5723.180151] proc_reg_read (fs/proc/inode.c:316 fs/proc/inode.c:328)
-[ 5723.180155] vfs_read (fs/read_write.c:468)
-[ 5723.180160] ? up_read (kernel/locking/rwsem.c:1617)
-[ 5723.180164] ksys_read (fs/read_write.c:613)
-[ 5723.180168] __x64_sys_read (fs/read_write.c:621)
-[ 5723.180170] do_syscall_64 (arch/x86/entry/common.c:?)
-[ 5723.180174] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
-[ 5723.180177] RIP: 0033:0x7fa455677d2a
+write to 0xffff8881613bb220 of 4 bytes by task 28147 on cpu 0:
+netlink_recvmsg+0x448/0x780 net/netlink/af_netlink.c:1994
+sock_recvmsg_nosec net/socket.c:1027 [inline]
+sock_recvmsg net/socket.c:1049 [inline]
+__sys_recvfrom+0x1f4/0x2e0 net/socket.c:2229
+__do_sys_recvfrom net/socket.c:2247 [inline]
+__se_sys_recvfrom net/socket.c:2243 [inline]
+__x64_sys_recvfrom+0x78/0x90 net/socket.c:2243
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: 09eed1192cec ("neighbour: switch to standard rcu, instead of rcu_bh")
-Reported-by: syzbot <syzkaller@googlegroups.com>
+write to 0xffff8881613bb220 of 4 bytes by task 28146 on cpu 1:
+netlink_recvmsg+0x448/0x780 net/netlink/af_netlink.c:1994
+sock_recvmsg_nosec net/socket.c:1027 [inline]
+sock_recvmsg net/socket.c:1049 [inline]
+__sys_recvfrom+0x1f4/0x2e0 net/socket.c:2229
+__do_sys_recvfrom net/socket.c:2247 [inline]
+__se_sys_recvfrom net/socket.c:2243 [inline]
+__x64_sys_recvfrom+0x78/0x90 net/socket.c:2243
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x00000000 -> 0x00000016
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 28146 Comm: syz-executor.0 Not tainted 6.6.0-rc3-syzkaller-00055-g9ed22ae6be81 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/06/2023
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230510154646.370659-1-edumazet@google.com
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20231003183455.3410550-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/nexthop.h |   23 -----------------------
- net/ipv6/ip6_fib.c    |   16 ++++++++--------
- 2 files changed, 8 insertions(+), 31 deletions(-)
+ net/netlink/af_netlink.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/include/net/nexthop.h
-+++ b/include/net/nexthop.h
-@@ -497,29 +497,6 @@ static inline struct fib6_nh *nexthop_fi
- 	return NULL;
- }
- 
--/* Variant of nexthop_fib6_nh().
-- * Caller should either hold rcu_read_lock(), or RTNL.
-- */
--static inline struct fib6_nh *nexthop_fib6_nh_bh(struct nexthop *nh)
--{
--	struct nh_info *nhi;
--
--	if (nh->is_group) {
--		struct nh_group *nh_grp;
--
--		nh_grp = rcu_dereference_rtnl(nh->nh_grp);
--		nh = nexthop_mpath_select(nh_grp, 0);
--		if (!nh)
--			return NULL;
--	}
--
--	nhi = rcu_dereference_rtnl(nh->nh_info);
--	if (nhi->family == AF_INET6)
--		return &nhi->fib6_nh;
--
--	return NULL;
--}
--
- static inline struct net_device *fib6_info_nh_dev(struct fib6_info *f6i)
- {
- 	struct fib6_nh *fib6_nh;
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -2492,7 +2492,7 @@ static int ipv6_route_native_seq_show(st
- 	const struct net_device *dev;
- 
- 	if (rt->nh)
--		fib6_nh = nexthop_fib6_nh_bh(rt->nh);
-+		fib6_nh = nexthop_fib6_nh(rt->nh);
- 
- 	seq_printf(seq, "%pi6 %02x ", &rt->fib6_dst.addr, rt->fib6_dst.plen);
- 
-@@ -2557,14 +2557,14 @@ static struct fib6_table *ipv6_route_seq
- 
- 	if (tbl) {
- 		h = (tbl->tb6_id & (FIB6_TABLE_HASHSZ - 1)) + 1;
--		node = rcu_dereference_bh(hlist_next_rcu(&tbl->tb6_hlist));
-+		node = rcu_dereference(hlist_next_rcu(&tbl->tb6_hlist));
- 	} else {
- 		h = 0;
- 		node = NULL;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 845ac56a3ac2e..a572a30dfd98d 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -352,7 +352,7 @@ static void netlink_overrun(struct sock *sk)
+ 	if (!nlk_test_bit(RECV_NO_ENOBUFS, sk)) {
+ 		if (!test_and_set_bit(NETLINK_S_CONGESTED,
+ 				      &nlk_sk(sk)->state)) {
+-			sk->sk_err = ENOBUFS;
++			WRITE_ONCE(sk->sk_err, ENOBUFS);
+ 			sk_error_report(sk);
+ 		}
+ 	}
+@@ -1566,7 +1566,7 @@ static int do_one_set_err(struct sock *sk, struct netlink_set_err_data *p)
+ 		goto out;
  	}
  
- 	while (!node && h < FIB6_TABLE_HASHSZ) {
--		node = rcu_dereference_bh(
-+		node = rcu_dereference(
- 			hlist_first_rcu(&net->ipv6.fib_table_hash[h++]));
+-	sk->sk_err = p->code;
++	WRITE_ONCE(sk->sk_err, p->code);
+ 	sk_error_report(sk);
+ out:
+ 	return ret;
+@@ -1955,7 +1955,7 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf / 2) {
+ 		ret = netlink_dump(sk);
+ 		if (ret) {
+-			sk->sk_err = -ret;
++			WRITE_ONCE(sk->sk_err, -ret);
+ 			sk_error_report(sk);
+ 		}
  	}
- 	return hlist_entry_safe(node, struct fib6_table, tb6_hlist);
-@@ -2594,7 +2594,7 @@ static void *ipv6_route_seq_next(struct
- 	if (!v)
- 		goto iter_table;
- 
--	n = rcu_dereference_bh(((struct fib6_info *)v)->fib6_next);
-+	n = rcu_dereference(((struct fib6_info *)v)->fib6_next);
- 	if (n)
- 		return n;
- 
-@@ -2620,12 +2620,12 @@ iter_table:
+@@ -2474,7 +2474,7 @@ void netlink_ack(struct sk_buff *in_skb, struct nlmsghdr *nlh, int err,
+ err_bad_put:
+ 	nlmsg_free(skb);
+ err_skb:
+-	NETLINK_CB(in_skb).sk->sk_err = ENOBUFS;
++	WRITE_ONCE(NETLINK_CB(in_skb).sk->sk_err, ENOBUFS);
+ 	sk_error_report(NETLINK_CB(in_skb).sk);
  }
- 
- static void *ipv6_route_seq_start(struct seq_file *seq, loff_t *pos)
--	__acquires(RCU_BH)
-+	__acquires(RCU)
- {
- 	struct net *net = seq_file_net(seq);
- 	struct ipv6_route_iter *iter = seq->private;
- 
--	rcu_read_lock_bh();
-+	rcu_read_lock();
- 	iter->tbl = ipv6_route_seq_next_table(NULL, net);
- 	iter->skip = *pos;
- 
-@@ -2646,7 +2646,7 @@ static bool ipv6_route_iter_active(struc
- }
- 
- static void ipv6_route_native_seq_stop(struct seq_file *seq, void *v)
--	__releases(RCU_BH)
-+	__releases(RCU)
- {
- 	struct net *net = seq_file_net(seq);
- 	struct ipv6_route_iter *iter = seq->private;
-@@ -2654,7 +2654,7 @@ static void ipv6_route_native_seq_stop(s
- 	if (ipv6_route_iter_active(iter))
- 		fib6_walker_unlink(net, &iter->w);
- 
--	rcu_read_unlock_bh();
-+	rcu_read_unlock();
- }
- 
- #if IS_BUILTIN(CONFIG_IPV6) && defined(CONFIG_BPF_SYSCALL)
+ EXPORT_SYMBOL(netlink_ack);
+-- 
+2.40.1
+
 
 
