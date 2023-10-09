@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251DE18E05
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0B118E05
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRScla58"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95355C433C7;
-	Mon,  9 Oct 2023 13:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUIIqhpO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD49BC433C8;
+	Mon,  9 Oct 2023 13:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858287;
-	bh=zC/bwarjffb1wH+FyFZTvIuumW3FjgkxT42dBH4VefI=;
+	s=korg; t=1696858290;
+	bh=zKGL3RVIboiZMfOo5Lirthiy1Ggr8qyrIOoy7NKU2u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KRScla58yr76M89RTWG+qLF0UE4efZmfkk3TgIvpOxWElronDxjymBm7704+VO093
-	 teTV5Dj4dtpTI/cBV97xh8w/o/jzbXDZ0/Ptw4JFPyCxNS4pTkxdXTA2Q0zi8pTgb8
-	 xSc644Te7QbdmAXltBk/OJEcPDf9wVyj3EcXH+10=
+	b=AUIIqhpOX97GLHAYh3LtTgZOxjwwj/iRxFOn2CWWnN3BHQcN6h31gE0eYp9cibzwQ
+	 Yyweq45JT3CmkumR1EKlR81UxcJHn0AqM+UXNmYW8Da1iZrGRxBUgVgwmObn45QGPE
+	 o3yd0ZwbTL4tPO47hH0j5TkbW+jKB3k84UjWvumE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Randy Dunlap <rdunlap@infradead.org>,
+	Chris Zankel <chris@zankel.net>,
 	Max Filippov <jcmvbkbc@gmail.com>,
-	kernel test robot <lkp@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 047/131] xtensa: add default definition for XCHAL_HAVE_DIV32
-Date: Mon,  9 Oct 2023 15:01:27 +0200
-Message-ID: <20231009130117.749513950@linuxfoundation.org>
+Subject: [PATCH 5.4 048/131] xtensa: iss/network: make functions static
+Date: Mon,  9 Oct 2023 15:01:28 +0200
+Message-ID: <20231009130117.778676629@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,43 +43,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 494e87ffa0159b3f879694a9231089707792a44d ]
+[ Upstream commit 1b59efeb59851277266318f4e0132aa61ce3455e ]
 
-When variant FSF is set, XCHAL_HAVE_DIV32 is not defined. Add default
-definition for that macro to prevent build warnings:
+Make 2 functions static to prevent build warnings:
 
-arch/xtensa/lib/divsi3.S:9:5: warning: "XCHAL_HAVE_DIV32" is not defined, evaluates to 0 [-Wundef]
-    9 | #if XCHAL_HAVE_DIV32
-arch/xtensa/lib/modsi3.S:9:5: warning: "XCHAL_HAVE_DIV32" is not defined, evaluates to 0 [-Wundef]
-    9 | #if XCHAL_HAVE_DIV32
+arch/xtensa/platforms/iss/network.c:204:16: warning: no previous prototype for 'tuntap_protocol' [-Wmissing-prototypes]
+  204 | unsigned short tuntap_protocol(struct sk_buff *skb)
+arch/xtensa/platforms/iss/network.c:444:6: warning: no previous prototype for 'iss_net_user_timer_expire' [-Wmissing-prototypes]
+  444 | void iss_net_user_timer_expire(struct timer_list *unused)
 
-Fixes: 173d6681380a ("xtensa: remove extra header files")
-Suggested-by: Randy Dunlap <rdunlap@infradead.org>
+Fixes: 7282bee78798 ("xtensa: Architecture support for Tensilica Xtensa Part 8")
+Fixes: d8479a21a98b ("xtensa: Convert timers to use timer_setup()")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Chris Zankel <chris@zankel.net>
+Cc: Max Filippov <jcmvbkbc@gmail.com>
+Message-Id: <20230920052139.10570-14-rdunlap@infradead.org>
 Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: lore.kernel.org/r/202309150556.t0yCdv3g-lkp@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/xtensa/include/asm/core.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/xtensa/platforms/iss/network.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/xtensa/include/asm/core.h b/arch/xtensa/include/asm/core.h
-index 5975b244b7b80..02c93e08d5925 100644
---- a/arch/xtensa/include/asm/core.h
-+++ b/arch/xtensa/include/asm/core.h
-@@ -6,6 +6,10 @@
+diff --git a/arch/xtensa/platforms/iss/network.c b/arch/xtensa/platforms/iss/network.c
+index cbca91bb5334a..d54bcaa194d46 100644
+--- a/arch/xtensa/platforms/iss/network.c
++++ b/arch/xtensa/platforms/iss/network.c
+@@ -204,7 +204,7 @@ static int tuntap_write(struct iss_net_private *lp, struct sk_buff **skb)
+ 	return simc_write(lp->tp.info.tuntap.fd, (*skb)->data, (*skb)->len);
+ }
  
- #include <variant/core.h>
+-unsigned short tuntap_protocol(struct sk_buff *skb)
++static unsigned short tuntap_protocol(struct sk_buff *skb)
+ {
+ 	return eth_type_trans(skb, skb->dev);
+ }
+@@ -477,7 +477,7 @@ static int iss_net_change_mtu(struct net_device *dev, int new_mtu)
+ 	return -EINVAL;
+ }
  
-+#ifndef XCHAL_HAVE_DIV32
-+#define XCHAL_HAVE_DIV32 0
-+#endif
-+
- #ifndef XCHAL_HAVE_EXCLUSIVE
- #define XCHAL_HAVE_EXCLUSIVE 0
- #endif
+-void iss_net_user_timer_expire(struct timer_list *unused)
++static void iss_net_user_timer_expire(struct timer_list *unused)
+ {
+ }
+ 
 -- 
 2.40.1
 
