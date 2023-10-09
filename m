@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCD928DD9
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C532E63E
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhiX8brn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61193C433C8;
-	Mon,  9 Oct 2023 13:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZpbUtAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15AEC433C7;
+	Mon,  9 Oct 2023 13:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858172;
-	bh=L9Gtc6qn+JHPoS6MRy8rSaRNfrKvurJB62X1w9LIFfo=;
+	s=korg; t=1696858176;
+	bh=fd/KWS/PvryHqOPaZoqv7n5Ns0Q5OCfkEfSiNzlqtEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RhiX8brn8lM9nGO/l/bg+WBiNL0juB5jv/6ouOjsEwDKcurslvJADbyRQI071hSx6
-	 nWGofM+sIcEblD833hZx373vT0V9wfJvTSInBzCf4DLytkDYxHKVYQCvpNSf3srgez
-	 xa6kAr46d9EQAwC9BQM9nua7gLig10AvY3QAFOI0=
+	b=XZpbUtALqCxn6K97G8VkD+IK4rEwQDoXXOCseQys9fz9KOyUI/A71IRUt2e/bVq1S
+	 Zqtzf2QHBRS7TFTv/EO+dI/0Bz08edtCQ5wghtATCfCB7UQAVDRCU6wwU9ynM3Lj4/
+	 VDyx20lv1V2IMcKmBmYYbZhqEZNnj8E2LqgJfvrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Amanda Liu <amanda.liu@amd.com>,
+	Aric Cyr <Aric.Cyr@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 038/131] clk: imx: pll14xx: dynamically configure PLL for 393216000/361267200Hz
-Date: Mon,  9 Oct 2023 15:01:18 +0200
-Message-ID: <20231009130117.474995235@linuxfoundation.org>
+Subject: [PATCH 5.4 039/131] drm/amd/display: Reinstate LFC optimization
+Date: Mon,  9 Oct 2023 15:01:19 +0200
+Message-ID: <20231009130117.508850693@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,75 +44,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Amanda Liu <amanda.liu@amd.com>
 
-[ Upstream commit 72d00e560d10665e6139c9431956a87ded6e9880 ]
+[ Upstream commit ded6119e825aaf0bfc7f2a578b549d610da852a7 ]
 
-Since commit b09c68dc57c9 ("clk: imx: pll14xx: Support dynamic rates"),
-the driver has the ability to dynamically compute PLL parameters to
-approximate the requested rates. This is not always used, because the
-logic is as follows:
+[why]
+We want to streamline the calculations made when entering LFC.
+Previously, the optimizations led to screen tearing and were backed out
+to unblock development.
 
-  - Check if the target rate is hardcoded in the frequency table
-  - Check if varying only kdiv is possible, so switch over is glitch free
-  - Compute rate dynamically by iterating over pdiv range
+[how]
+Integrate other calculations parameters, as well as screen tearing,
+fixes with the original LFC calculation optimizations.
 
-If we skip the frequency table for the 1443x PLL, we find that the
-computed values differ to the hardcoded ones. This can be valid if the
-hardcoded values guarantee for example an earlier lock-in or if the
-divisors are chosen, so that other important rates are more likely to
-be reached glitch-free.
-
-For rates (393216000 and 361267200, this doesn't seem to be the case:
-They are only approximated by existing parameters (393215995 and
-361267196 Hz, respectively) and they aren't reachable glitch-free from
-other hardcoded frequencies. Dropping them from the table allows us
-to lock-in to these frequencies exactly.
-
-This is immediately noticeable because they are the assigned-clock-rates
-for IMX8MN_AUDIO_PLL1 and IMX8MN_AUDIO_PLL2, respectively and a look
-into clk_summary so far showed that they were a few Hz short of the target:
-
-imx8mn-board:~# grep audio_pll[12]_out /sys/kernel/debug/clk/clk_summary
-audio_pll2_out           0        0        0   361267196 0     0  50000   N
-audio_pll1_out           1        1        0   393215995 0     0  50000   Y
-
-and afterwards:
-
-imx8mn-board:~# grep audio_pll[12]_out /sys/kernel/debug/clk/clk_summary
-audio_pll2_out           0        0        0   361267200 0     0  50000   N
-audio_pll1_out           1        1        0   393216000 0     0  50000   Y
-
-This change is equivalent to adding following hardcoded values:
-
-  /*               rate     mdiv  pdiv  sdiv   kdiv */
-  PLL_1443X_RATE(393216000, 655,    5,    3,  23593),
-  PLL_1443X_RATE(361267200, 497,   33,    0, -16882),
-
-Fixes: 053a4ffe2988 ("clk: imx: imx8mm: fix audio pll setting")
-Cc: stable@vger.kernel.org # v5.18+
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
-Link: https://lore.kernel.org/r/20230807084744.1184791-2-m.felsch@pengutronix.de
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Amanda Liu <amanda.liu@amd.com>
+Reviewed-by: Aric Cyr <Aric.Cyr@amd.com>
+Acked-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 07e388aab042 ("drm/amd/display: prevent potential division by zero errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-pll14xx.c | 2 --
- 1 file changed, 2 deletions(-)
+ .../amd/display/modules/freesync/freesync.c   | 32 +++++++++++--------
+ .../amd/display/modules/inc/mod_freesync.h    |  1 +
+ 2 files changed, 20 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-pll14xx.c b/drivers/clk/imx/clk-pll14xx.c
-index e7bf6babc28b4..0dbe8c05af478 100644
---- a/drivers/clk/imx/clk-pll14xx.c
-+++ b/drivers/clk/imx/clk-pll14xx.c
-@@ -57,8 +57,6 @@ static const struct imx_pll14xx_rate_table imx_pll1443x_tbl[] = {
- 	PLL_1443X_RATE(650000000U, 325, 3, 2, 0),
- 	PLL_1443X_RATE(594000000U, 198, 2, 2, 0),
- 	PLL_1443X_RATE(519750000U, 173, 2, 2, 16384),
--	PLL_1443X_RATE(393216000U, 262, 2, 3, 9437),
--	PLL_1443X_RATE(361267200U, 361, 3, 3, 17511),
+diff --git a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
+index 7d67cb2c61f04..dbbd7d2765ea5 100644
+--- a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
++++ b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
+@@ -37,8 +37,8 @@
+ #define STATIC_SCREEN_RAMP_DELTA_REFRESH_RATE_PER_FRAME ((1000 / 60) * 65)
+ /* Number of elements in the render times cache array */
+ #define RENDER_TIMES_MAX_COUNT 10
+-/* Threshold to exit BTR (to avoid frequent enter-exits at the lower limit) */
+-#define BTR_EXIT_MARGIN 2000
++/* Threshold to exit/exit BTR (to avoid frequent enter-exits at the lower limit) */
++#define BTR_MAX_MARGIN 2500
+ /* Threshold to change BTR multiplier (to avoid frequent changes) */
+ #define BTR_DRIFT_MARGIN 2000
+ /*Threshold to exit fixed refresh rate*/
+@@ -250,24 +250,22 @@ static void apply_below_the_range(struct core_freesync *core_freesync,
+ 	unsigned int delta_from_mid_point_in_us_1 = 0xFFFFFFFF;
+ 	unsigned int delta_from_mid_point_in_us_2 = 0xFFFFFFFF;
+ 	unsigned int frames_to_insert = 0;
+-	unsigned int min_frame_duration_in_ns = 0;
+-	unsigned int max_render_time_in_us = in_out_vrr->max_duration_in_us;
+ 	unsigned int delta_from_mid_point_delta_in_us;
+-
+-	min_frame_duration_in_ns = ((unsigned int) (div64_u64(
+-		(1000000000ULL * 1000000),
+-		in_out_vrr->max_refresh_in_uhz)));
++	unsigned int max_render_time_in_us =
++			in_out_vrr->max_duration_in_us - in_out_vrr->btr.margin_in_us;
+ 
+ 	/* Program BTR */
+-	if (last_render_time_in_us + BTR_EXIT_MARGIN < max_render_time_in_us) {
++	if ((last_render_time_in_us + in_out_vrr->btr.margin_in_us / 2) < max_render_time_in_us) {
+ 		/* Exit Below the Range */
+ 		if (in_out_vrr->btr.btr_active) {
+ 			in_out_vrr->btr.frame_counter = 0;
+ 			in_out_vrr->btr.btr_active = false;
+ 		}
+-	} else if (last_render_time_in_us > max_render_time_in_us) {
++	} else if (last_render_time_in_us > (max_render_time_in_us + in_out_vrr->btr.margin_in_us / 2)) {
+ 		/* Enter Below the Range */
+-		in_out_vrr->btr.btr_active = true;
++		if (!in_out_vrr->btr.btr_active) {
++			in_out_vrr->btr.btr_active = true;
++		}
+ 	}
+ 
+ 	/* BTR set to "not active" so disengage */
+@@ -323,7 +321,9 @@ static void apply_below_the_range(struct core_freesync *core_freesync,
+ 		/* Choose number of frames to insert based on how close it
+ 		 * can get to the mid point of the variable range.
+ 		 */
+-		if (delta_from_mid_point_in_us_1 < delta_from_mid_point_in_us_2) {
++		if ((frame_time_in_us / mid_point_frames_ceil) > in_out_vrr->min_duration_in_us &&
++				(delta_from_mid_point_in_us_1 < delta_from_mid_point_in_us_2 ||
++						mid_point_frames_floor < 2)) {
+ 			frames_to_insert = mid_point_frames_ceil;
+ 			delta_from_mid_point_delta_in_us = delta_from_mid_point_in_us_2 -
+ 					delta_from_mid_point_in_us_1;
+@@ -339,7 +339,7 @@ static void apply_below_the_range(struct core_freesync *core_freesync,
+ 		if (in_out_vrr->btr.frames_to_insert != 0 &&
+ 				delta_from_mid_point_delta_in_us < BTR_DRIFT_MARGIN) {
+ 			if (((last_render_time_in_us / in_out_vrr->btr.frames_to_insert) <
+-					in_out_vrr->max_duration_in_us) &&
++					max_render_time_in_us) &&
+ 				((last_render_time_in_us / in_out_vrr->btr.frames_to_insert) >
+ 					in_out_vrr->min_duration_in_us))
+ 				frames_to_insert = in_out_vrr->btr.frames_to_insert;
+@@ -792,6 +792,11 @@ void mod_freesync_build_vrr_params(struct mod_freesync *mod_freesync,
+ 		refresh_range = in_out_vrr->max_refresh_in_uhz -
+ 				in_out_vrr->min_refresh_in_uhz;
+ 
++		in_out_vrr->btr.margin_in_us = in_out_vrr->max_duration_in_us -
++				2 * in_out_vrr->min_duration_in_us;
++		if (in_out_vrr->btr.margin_in_us > BTR_MAX_MARGIN)
++			in_out_vrr->btr.margin_in_us = BTR_MAX_MARGIN;
++
+ 		in_out_vrr->supported = true;
+ 	}
+ 
+@@ -808,6 +813,7 @@ void mod_freesync_build_vrr_params(struct mod_freesync *mod_freesync,
+ 	in_out_vrr->btr.inserted_duration_in_us = 0;
+ 	in_out_vrr->btr.frames_to_insert = 0;
+ 	in_out_vrr->btr.frame_counter = 0;
++
+ 	in_out_vrr->btr.mid_point_in_us =
+ 				(in_out_vrr->min_duration_in_us +
+ 				 in_out_vrr->max_duration_in_us) / 2;
+diff --git a/drivers/gpu/drm/amd/display/modules/inc/mod_freesync.h b/drivers/gpu/drm/amd/display/modules/inc/mod_freesync.h
+index dc187844d10b1..dbe7835aabcf7 100644
+--- a/drivers/gpu/drm/amd/display/modules/inc/mod_freesync.h
++++ b/drivers/gpu/drm/amd/display/modules/inc/mod_freesync.h
+@@ -92,6 +92,7 @@ struct mod_vrr_params_btr {
+ 	uint32_t inserted_duration_in_us;
+ 	uint32_t frames_to_insert;
+ 	uint32_t frame_counter;
++	uint32_t margin_in_us;
  };
  
- struct imx_pll14xx_clk imx_1443x_pll = {
+ struct mod_vrr_params_fixed_refresh {
 -- 
 2.40.1
 
