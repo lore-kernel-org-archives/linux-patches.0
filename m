@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5061B1A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4A51A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0A26BdBy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95CAC433C8;
-	Mon,  9 Oct 2023 13:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sYFPBwL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA246C433C7;
+	Mon,  9 Oct 2023 13:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857792;
-	bh=BGAqInzhOF+X9K/KQaVKyDQ62Wgu68SQpdfL+dWpMPk=;
+	s=korg; t=1696857795;
+	bh=5AuoBdCsQANOVM3sow6EfjXnhZV8yITNGDgRPi+laSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0A26BdByBy5ZC7u99e64GQx78rNkPeCRt2wBeHWcOUvzt78/xTSDtDfv1Yh3Olbfc
-	 RJBm2C1furYXFFt8e0dQCqjKM0QE79HphpjXlDsGBxBsZaKokqzLs4wXIrMgs6XvVr
-	 Dn0JlUlTygZR55kDvPAC45/7xh2iLwGoVg65bhu8=
+	b=0sYFPBwLhQ2f/TeD58FySbUrxXGlmiD1yt0r4cZqlmhMtTHTJsFT+wp9mm+yxDwGW
+	 depyRpr5othclGegK/HvgGbjkjFNx0QaG+iLF6nES2q1HGaK4UtMxxr+86isbjvWpz
+	 m+a12Z1cGxg/4Bt+fGl/gZ7GWgbnUUChU+Vci3iY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 157/162] parisc: Restore __ldcw_align for PA-RISC 2.0 processors
-Date: Mon,  9 Oct 2023 15:02:18 +0200
-Message-ID: <20231009130127.250120619@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 158/162] ipv6: remove nexthop_fib6_nh_bh()
+Date: Mon,  9 Oct 2023 15:02:19 +0200
+Message-ID: <20231009130127.276853995@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -41,114 +43,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave@parisc-linux.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 914988e099fc658436fbd7b8f240160c352b6552 upstream.
+commit ef1148d4487438a3408d6face2a8360d91b4af70 upstream.
 
-Back in 2005, Kyle McMartin removed the 16-byte alignment for
-ldcw semaphores on PA 2.0 machines (CONFIG_PA20). This broke
-spinlocks on pre PA8800 processors. The main symptom was random
-faults in mmap'd memory (e.g., gcc compilations, etc).
+After blamed commit, nexthop_fib6_nh_bh() and nexthop_fib6_nh()
+are the same.
 
-Unfortunately, the errata for this ldcw change is lost.
+Delete nexthop_fib6_nh_bh(), and convert /proc/net/ipv6_route
+to standard rcu to avoid this splat:
 
-The issue is the 16-byte alignment required for ldcw semaphore
-instructions can only be reduced to natural alignment when the
-ldcw operation can be handled coherently in cache. Only PA8800
-and PA8900 processors actually support doing the operation in
-cache.
+[ 5723.180080] WARNING: suspicious RCU usage
+[ 5723.180083] -----------------------------
+[ 5723.180084] include/net/nexthop.h:516 suspicious rcu_dereference_check() usage!
+[ 5723.180086]
+other info that might help us debug this:
 
-Aligning the spinlock dynamically adds two integer instructions
-to each spinlock.
+[ 5723.180087]
+rcu_scheduler_active = 2, debug_locks = 1
+[ 5723.180089] 2 locks held by cat/55856:
+[ 5723.180091] #0: ffff9440a582afa8 (&p->lock){+.+.}-{3:3}, at: seq_read_iter (fs/seq_file.c:188)
+[ 5723.180100] #1: ffffffffaac07040 (rcu_read_lock_bh){....}-{1:2}, at: rcu_lock_acquire (include/linux/rcupdate.h:326)
+[ 5723.180109]
+stack backtrace:
+[ 5723.180111] CPU: 14 PID: 55856 Comm: cat Tainted: G S        I        6.3.0-dbx-DEV #528
+[ 5723.180115] Call Trace:
+[ 5723.180117]  <TASK>
+[ 5723.180119] dump_stack_lvl (lib/dump_stack.c:107)
+[ 5723.180124] dump_stack (lib/dump_stack.c:114)
+[ 5723.180126] lockdep_rcu_suspicious (include/linux/context_tracking.h:122)
+[ 5723.180132] ipv6_route_seq_show (include/net/nexthop.h:?)
+[ 5723.180135] ? ipv6_route_seq_next (net/ipv6/ip6_fib.c:2605)
+[ 5723.180140] seq_read_iter (fs/seq_file.c:272)
+[ 5723.180145] seq_read (fs/seq_file.c:163)
+[ 5723.180151] proc_reg_read (fs/proc/inode.c:316 fs/proc/inode.c:328)
+[ 5723.180155] vfs_read (fs/read_write.c:468)
+[ 5723.180160] ? up_read (kernel/locking/rwsem.c:1617)
+[ 5723.180164] ksys_read (fs/read_write.c:613)
+[ 5723.180168] __x64_sys_read (fs/read_write.c:621)
+[ 5723.180170] do_syscall_64 (arch/x86/entry/common.c:?)
+[ 5723.180174] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+[ 5723.180177] RIP: 0033:0x7fa455677d2a
 
-Tested on rp3440, c8000 and a500.
-
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Link: https://lore.kernel.org/linux-parisc/6b332788-2227-127f-ba6d-55e99ecf4ed8@bell.net/T/#t
-Link: https://lore.kernel.org/linux-parisc/20050609050702.GB4641@roadwarrior.mcmartin.ca/
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 09eed1192cec ("neighbour: switch to standard rcu, instead of rcu_bh")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230510154646.370659-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/ldcw.h           |   36 +++++++++++++++++--------------
- arch/parisc/include/asm/spinlock_types.h |    5 ----
- 2 files changed, 20 insertions(+), 21 deletions(-)
+ include/net/nexthop.h |   23 -----------------------
+ net/ipv6/ip6_fib.c    |   16 ++++++++--------
+ 2 files changed, 8 insertions(+), 31 deletions(-)
 
---- a/arch/parisc/include/asm/ldcw.h
-+++ b/arch/parisc/include/asm/ldcw.h
-@@ -2,14 +2,28 @@
- #ifndef __PARISC_LDCW_H
- #define __PARISC_LDCW_H
+--- a/include/net/nexthop.h
++++ b/include/net/nexthop.h
+@@ -497,29 +497,6 @@ static inline struct fib6_nh *nexthop_fi
+ 	return NULL;
+ }
  
--#ifndef CONFIG_PA20
- /* Because kmalloc only guarantees 8-byte alignment for kmalloc'd data,
-    and GCC only guarantees 8-byte alignment for stack locals, we can't
-    be assured of 16-byte alignment for atomic lock data even if we
-    specify "__attribute ((aligned(16)))" in the type declaration.  So,
-    we use a struct containing an array of four ints for the atomic lock
-    type and dynamically select the 16-byte aligned int from the array
--   for the semaphore.  */
-+   for the semaphore. */
-+
-+/* From: "Jim Hull" <jim.hull of hp.com>
-+   I've attached a summary of the change, but basically, for PA 2.0, as
-+   long as the ",CO" (coherent operation) completer is implemented, then the
-+   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
-+   they only require "natural" alignment (4-byte for ldcw, 8-byte for
-+   ldcd).
-+
-+   Although the cache control hint is accepted by all PA 2.0 processors,
-+   it is only implemented on PA8800/PA8900 CPUs. Prior PA8X00 CPUs still
-+   require 16-byte alignment. If the address is unaligned, the operation
-+   of the instruction is undefined. The ldcw instruction does not generate
-+   unaligned data reference traps so misaligned accesses are not detected.
-+   This hid the problem for years. So, restore the 16-byte alignment dropped
-+   by Kyle McMartin in "Remove __ldcw_align for PA-RISC 2.0 processors". */
- 
- #define __PA_LDCW_ALIGNMENT	16
- #define __PA_LDCW_ALIGN_ORDER	4
-@@ -19,22 +33,12 @@
- 		& ~(__PA_LDCW_ALIGNMENT - 1);			\
- 	(volatile unsigned int *) __ret;			\
- })
--#define __LDCW	"ldcw"
- 
--#else /*CONFIG_PA20*/
--/* From: "Jim Hull" <jim.hull of hp.com>
--   I've attached a summary of the change, but basically, for PA 2.0, as
--   long as the ",CO" (coherent operation) completer is specified, then the
--   16-byte alignment requirement for ldcw and ldcd is relaxed, and instead
--   they only require "natural" alignment (4-byte for ldcw, 8-byte for
--   ldcd). */
+-/* Variant of nexthop_fib6_nh().
+- * Caller should either hold rcu_read_lock(), or RTNL.
+- */
+-static inline struct fib6_nh *nexthop_fib6_nh_bh(struct nexthop *nh)
+-{
+-	struct nh_info *nhi;
 -
--#define __PA_LDCW_ALIGNMENT	4
--#define __PA_LDCW_ALIGN_ORDER	2
--#define __ldcw_align(a) (&(a)->slock)
-+#ifdef CONFIG_PA20
- #define __LDCW	"ldcw,co"
+-	if (nh->is_group) {
+-		struct nh_group *nh_grp;
 -
--#endif /*!CONFIG_PA20*/
-+#else
-+#define __LDCW	"ldcw"
-+#endif
+-		nh_grp = rcu_dereference_rtnl(nh->nh_grp);
+-		nh = nexthop_mpath_select(nh_grp, 0);
+-		if (!nh)
+-			return NULL;
+-	}
+-
+-	nhi = rcu_dereference_rtnl(nh->nh_info);
+-	if (nhi->family == AF_INET6)
+-		return &nhi->fib6_nh;
+-
+-	return NULL;
+-}
+-
+ static inline struct net_device *fib6_info_nh_dev(struct fib6_info *f6i)
+ {
+ 	struct fib6_nh *fib6_nh;
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -2492,7 +2492,7 @@ static int ipv6_route_native_seq_show(st
+ 	const struct net_device *dev;
  
- /* LDCW, the only atomic read-write operation PA-RISC has. *sigh*.
-    We don't explicitly expose that "*a" may be written as reload
---- a/arch/parisc/include/asm/spinlock_types.h
-+++ b/arch/parisc/include/asm/spinlock_types.h
-@@ -3,13 +3,8 @@
- #define __ASM_SPINLOCK_TYPES_H
+ 	if (rt->nh)
+-		fib6_nh = nexthop_fib6_nh_bh(rt->nh);
++		fib6_nh = nexthop_fib6_nh(rt->nh);
  
- typedef struct {
--#ifdef CONFIG_PA20
--	volatile unsigned int slock;
--# define __ARCH_SPIN_LOCK_UNLOCKED { 1 }
--#else
- 	volatile unsigned int lock[4];
- # define __ARCH_SPIN_LOCK_UNLOCKED	{ { 1, 1, 1, 1 } }
--#endif
- } arch_spinlock_t;
+ 	seq_printf(seq, "%pi6 %02x ", &rt->fib6_dst.addr, rt->fib6_dst.plen);
  
+@@ -2557,14 +2557,14 @@ static struct fib6_table *ipv6_route_seq
  
+ 	if (tbl) {
+ 		h = (tbl->tb6_id & (FIB6_TABLE_HASHSZ - 1)) + 1;
+-		node = rcu_dereference_bh(hlist_next_rcu(&tbl->tb6_hlist));
++		node = rcu_dereference(hlist_next_rcu(&tbl->tb6_hlist));
+ 	} else {
+ 		h = 0;
+ 		node = NULL;
+ 	}
+ 
+ 	while (!node && h < FIB6_TABLE_HASHSZ) {
+-		node = rcu_dereference_bh(
++		node = rcu_dereference(
+ 			hlist_first_rcu(&net->ipv6.fib_table_hash[h++]));
+ 	}
+ 	return hlist_entry_safe(node, struct fib6_table, tb6_hlist);
+@@ -2594,7 +2594,7 @@ static void *ipv6_route_seq_next(struct
+ 	if (!v)
+ 		goto iter_table;
+ 
+-	n = rcu_dereference_bh(((struct fib6_info *)v)->fib6_next);
++	n = rcu_dereference(((struct fib6_info *)v)->fib6_next);
+ 	if (n)
+ 		return n;
+ 
+@@ -2620,12 +2620,12 @@ iter_table:
+ }
+ 
+ static void *ipv6_route_seq_start(struct seq_file *seq, loff_t *pos)
+-	__acquires(RCU_BH)
++	__acquires(RCU)
+ {
+ 	struct net *net = seq_file_net(seq);
+ 	struct ipv6_route_iter *iter = seq->private;
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	iter->tbl = ipv6_route_seq_next_table(NULL, net);
+ 	iter->skip = *pos;
+ 
+@@ -2646,7 +2646,7 @@ static bool ipv6_route_iter_active(struc
+ }
+ 
+ static void ipv6_route_native_seq_stop(struct seq_file *seq, void *v)
+-	__releases(RCU_BH)
++	__releases(RCU)
+ {
+ 	struct net *net = seq_file_net(seq);
+ 	struct ipv6_route_iter *iter = seq->private;
+@@ -2654,7 +2654,7 @@ static void ipv6_route_native_seq_stop(s
+ 	if (ipv6_route_iter_active(iter))
+ 		fib6_walker_unlink(net, &iter->w);
+ 
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ }
+ 
+ #if IS_BUILTIN(CONFIG_IPV6) && defined(CONFIG_BPF_SYSCALL)
 
 
