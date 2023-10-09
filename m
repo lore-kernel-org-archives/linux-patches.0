@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F6B19464
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3810419464
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1P5FiIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D74C433CA;
-	Mon,  9 Oct 2023 13:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxQJ6NWB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB33C433CB;
+	Mon,  9 Oct 2023 13:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857211;
-	bh=Sw6ZD76MfliE/IvH2lf/lSraJQzEmotHVKeyY+2GslA=;
+	s=korg; t=1696857214;
+	bh=igpQa8sHKg7GRYCseLQBcVoEHz2h9T/iTre1qUm+Cmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U1P5FiImq3uS+BoR1yDNwi7vLheVyb7GlircQXAmstXM17d2gU4tqlT5Ozv1Hhz+g
-	 PgKsJ/+j01MsPKvGhX4aKIXGQR+Z2GAy3OZlHzoUjrzbigI4N3ncg17Rc3jY2uCEDr
-	 0IvHeolw+SFIw2VsWgrV5Rjqvx3ycDD3JAD44lVc=
+	b=GxQJ6NWBhwBgxF76zl27rk+H6CVlVWtNks1ZXB/afXsvuqMZWUMXqHik6WwSxj0f4
+	 jMCeub+9etXWY/WMq2K2cAuL1JpQ4Ettc2w3jFHXZA5zW8XheNHtFFaR/NxNbXn/iT
+	 /vgBhgwNh/My4j0JywljBctxmq/JOuA52WUr1vuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 134/163] HID: sony: remove duplicate NULL check before calling usb_free_urb()
-Date: Mon,  9 Oct 2023 15:01:38 +0200
-Message-ID: <20231009130127.747719624@linuxfoundation.org>
+Subject: [PATCH 6.5 135/163] HID: intel-ish-hid: ipc: Disable and reenable ACPI GPE bit
+Date: Mon,  9 Oct 2023 15:01:39 +0200
+Message-ID: <20231009130127.773943459@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -42,35 +43,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Kosina <jkosina@suse.cz>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit b328dd02e19cb9d3b35de4322f5363516a20ac8c ]
+[ Upstream commit 8f02139ad9a7e6e5c05712f8c1501eebed8eacfd ]
 
-usb_free_urb() does the NULL check itself, so there is no need to duplicate
-it prior to calling.
+The EHL (Elkhart Lake) based platforms provide a OOB (Out of band)
+service, which allows to wakup device when the system is in S5 (Soft-Off
+state). This OOB service can be enabled/disabled from BIOS settings. When
+enabled, the ISH device gets PME wake capability. To enable PME wakeup,
+driver also needs to enable ACPI GPE bit.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Fixes: e1cd4004cde7c9 ("HID: sony: Fix a potential memory leak in sony_probe()")
+On resume, BIOS will clear the wakeup bit. So driver need to re-enable it
+in resume function to keep the next wakeup capability. But this BIOS
+clearing of wakeup bit doesn't decrement internal OS GPE reference count,
+so this reenabling on every resume will cause reference count to overflow.
+
+So first disable and reenable ACPI GPE bit using acpi_disable_gpe().
+
+Fixes: 2e23a70edabe ("HID: intel-ish-hid: ipc: finish power flow for EHL OOB")
+Reported-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Closes: https://lore.kernel.org/lkml/CAAd53p4=oLYiH2YbVSmrPNj1zpMcfp=Wxbasb5vhMXOWCArLCg@mail.gmail.com/T/
+Tested-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-sony.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/hid/intel-ish-hid/ipc/pci-ish.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/hid/hid-sony.c b/drivers/hid/hid-sony.c
-index a02046a78b2da..ebc0aa4e4345f 100644
---- a/drivers/hid/hid-sony.c
-+++ b/drivers/hid/hid-sony.c
-@@ -2155,8 +2155,7 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	return ret;
+diff --git a/drivers/hid/intel-ish-hid/ipc/pci-ish.c b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
+index 55cb25038e632..710fda5f19e1c 100644
+--- a/drivers/hid/intel-ish-hid/ipc/pci-ish.c
++++ b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
+@@ -133,6 +133,14 @@ static int enable_gpe(struct device *dev)
+ 	}
+ 	wakeup = &adev->wakeup;
  
- err:
--	if (sc->ghl_urb)
--		usb_free_urb(sc->ghl_urb);
-+	usb_free_urb(sc->ghl_urb);
- 
- 	hid_hw_stop(hdev);
- 	return ret;
++	/*
++	 * Call acpi_disable_gpe(), so that reference count
++	 * gpe_event_info->runtime_count doesn't overflow.
++	 * When gpe_event_info->runtime_count = 0, the call
++	 * to acpi_disable_gpe() simply return.
++	 */
++	acpi_disable_gpe(wakeup->gpe_device, wakeup->gpe_number);
++
+ 	acpi_sts = acpi_enable_gpe(wakeup->gpe_device, wakeup->gpe_number);
+ 	if (ACPI_FAILURE(acpi_sts)) {
+ 		dev_err(dev, "enable ose_gpe failed\n");
 -- 
 2.40.1
 
