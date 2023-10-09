@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5689C1A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF471A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LM2IORgs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7517C433C9;
-	Mon,  9 Oct 2023 13:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pf/5JEO/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05669C433C9;
+	Mon,  9 Oct 2023 13:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857582;
-	bh=jqhQR80fRMfHEFDbKsLhCtxxM+mN5NWAFDKEBlpfWf4=;
+	s=korg; t=1696857585;
+	bh=ljqZpdBqiCD+VKxaqKJq3zF0Jh1r3ylawd4mNTXe1YY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LM2IORgsfW4nQ0Wq86clSD4sKsIfBEnIg9WZMqj+9lxvYnKujh2TOZTVP7yw1XX3c
-	 TMNTi11ibaVFLoc0qLcl/mDF2qgYhwu7UhFpNSzQXTMIPhC7k1wjZMzCbX5DzqvS8/
-	 xE9UxH2H5jzix7AChTIADyOOOepJ/zssguFoprA0=
+	b=pf/5JEO/fLrW6dW0ur+9wniH/ZsUgRZ2RSnOdM05yeCPzxRW51bLRxiTcnWLQf3xn
+	 8eIkEc6AKP1aeOYEKwA9mxJkVG7llbJSMeYsxX/aBBF5gkemaLz7kXywPm4iBuMv17
+	 sbr9fK1CfvV4SgPFrRrvS6GK1elIRvs5I1bXKqjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/162] erofs: fix memory leak of LZMA global compressed deduplication
-Date: Mon,  9 Oct 2023 15:00:55 +0200
-Message-ID: <20231009130124.962021277@linuxfoundation.org>
+Subject: [PATCH 6.1 092/162] perf/x86/amd/core: Fix overflow reset on hotplug
+Date: Mon,  9 Oct 2023 15:01:13 +0200
+Message-ID: <20231009130125.459317603@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -41,43 +42,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Sandipan Das <sandipan.das@amd.com>
 
-[ Upstream commit 75a5221630fe5aa3fedba7a06be618db0f79ba1e ]
+[ Upstream commit 23d2626b841c2adccdeb477665313c02dff02dc3 ]
 
-When stressing microLZMA EROFS images with the new global compressed
-deduplication feature enabled (`-Ededupe`), I found some short-lived
-temporary pages weren't properly released, which could slowly cause
-unexpected OOMs hours later.
+Kernels older than v5.19 do not support PerfMonV2 and the PMI handler
+does not clear the overflow bits of the PerfCntrGlobalStatus register.
+Because of this, loading a recent kernel using kexec from an older
+kernel can result in inconsistent register states on Zen 4 systems.
 
-Let's fix it now (LZ4 and DEFLATE don't have this issue.)
+The PMI handler of the new kernel gets confused and shows a warning when
+an overflow occurs because some of the overflow bits are set even if the
+corresponding counters are inactive. These are remnants from overflows
+that were handled by the older kernel.
 
-Fixes: 5c2a64252c5d ("erofs: introduce partial-referenced pclusters")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230907050542.97152-1-hsiangkao@linux.alibaba.com
+During CPU hotplug, the PerfCntrGlobalCtl and PerfCntrGlobalStatus
+registers should always be cleared for PerfMonV2-capable processors.
+However, a condition used for NB event constaints applicable only to
+older processors currently prevents this from happening. Move the reset
+sequence to an appropriate place and also clear the LBR Freeze bit.
+
+Fixes: 21d59e3e2c40 ("perf/x86/amd/core: Detect PerfMonV2 support")
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/882a87511af40792ba69bb0e9026f19a2e71e8a3.1694696888.git.sandipan.das@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/decompressor_lzma.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/events/amd/core.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/fs/erofs/decompressor_lzma.c b/fs/erofs/decompressor_lzma.c
-index 5cd612a8f8584..49addc345aebe 100644
---- a/fs/erofs/decompressor_lzma.c
-+++ b/fs/erofs/decompressor_lzma.c
-@@ -217,9 +217,12 @@ int z_erofs_lzma_decompress(struct z_erofs_decompress_req *rq,
- 			strm->buf.out_size = min_t(u32, outlen,
- 						   PAGE_SIZE - pageofs);
- 			outlen -= strm->buf.out_size;
--			if (!rq->out[no] && rq->fillgaps)	/* deduped */
-+			if (!rq->out[no] && rq->fillgaps) {	/* deduped */
- 				rq->out[no] = erofs_allocpage(pagepool,
- 						GFP_KERNEL | __GFP_NOFAIL);
-+				set_page_private(rq->out[no],
-+						 Z_EROFS_SHORTLIVED_PAGE);
-+			}
- 			if (rq->out[no])
- 				strm->buf.out = kmap(rq->out[no]) + pageofs;
- 			pageofs = 0;
+diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
+index 6672a3f05fc68..bb9d99b45a459 100644
+--- a/arch/x86/events/amd/core.c
++++ b/arch/x86/events/amd/core.c
+@@ -534,8 +534,12 @@ static void amd_pmu_cpu_reset(int cpu)
+ 	/* Clear enable bits i.e. PerfCntrGlobalCtl.PerfCntrEn */
+ 	wrmsrl(MSR_AMD64_PERF_CNTR_GLOBAL_CTL, 0);
+ 
+-	/* Clear overflow bits i.e. PerfCntrGLobalStatus.PerfCntrOvfl */
+-	wrmsrl(MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR, amd_pmu_global_cntr_mask);
++	/*
++	 * Clear freeze and overflow bits i.e. PerfCntrGLobalStatus.LbrFreeze
++	 * and PerfCntrGLobalStatus.PerfCntrOvfl
++	 */
++	wrmsrl(MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR,
++	       GLOBAL_STATUS_LBRS_FROZEN | amd_pmu_global_cntr_mask);
+ }
+ 
+ static int amd_pmu_cpu_prepare(int cpu)
+@@ -570,6 +574,7 @@ static void amd_pmu_cpu_starting(int cpu)
+ 	int i, nb_id;
+ 
+ 	cpuc->perf_ctr_virt_mask = AMD64_EVENTSEL_HOSTONLY;
++	amd_pmu_cpu_reset(cpu);
+ 
+ 	if (!x86_pmu.amd_nb_constraints)
+ 		return;
+@@ -591,8 +596,6 @@ static void amd_pmu_cpu_starting(int cpu)
+ 
+ 	cpuc->amd_nb->nb_id = nb_id;
+ 	cpuc->amd_nb->refcnt++;
+-
+-	amd_pmu_cpu_reset(cpu);
+ }
+ 
+ static void amd_pmu_cpu_dead(int cpu)
+@@ -601,6 +604,7 @@ static void amd_pmu_cpu_dead(int cpu)
+ 
+ 	kfree(cpuhw->lbr_sel);
+ 	cpuhw->lbr_sel = NULL;
++	amd_pmu_cpu_reset(cpu);
+ 
+ 	if (!x86_pmu.amd_nb_constraints)
+ 		return;
+@@ -613,8 +617,6 @@ static void amd_pmu_cpu_dead(int cpu)
+ 
+ 		cpuhw->amd_nb = NULL;
+ 	}
+-
+-	amd_pmu_cpu_reset(cpu);
+ }
+ 
+ static inline void amd_pmu_set_global_ctl(u64 ctl)
 -- 
 2.40.1
 
