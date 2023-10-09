@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F4E18C05
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1334EEA7
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awjl0iWb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751FDC433C7;
-	Mon,  9 Oct 2023 13:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5YR2EHB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B11C433C9;
+	Mon,  9 Oct 2023 13:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857004;
-	bh=7GRgdodDZqDn6YqUhws/BKt+MLOkTW56kt29RM8HrRY=;
+	s=korg; t=1696857007;
+	bh=p8vMcipGOWxcLKhygMo4l0Ga4J3wbXeb+jxFUbHxCSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=awjl0iWb04dq6YZvhcibLjh/5RDUsv+hajQJYH1W47cOx9FjqROxF0AvT4+03Za9c
-	 XBSUbymzscN1xBDNhc8C1DoKwnUdl0zEt+AkksLeSCcJf6l4IKFRVN+v00Ukr7bVWC
-	 Gz+3JcgO4XfMBgmhBQgM0ekgg0sxk2Wf9wI+pDWA=
+	b=t5YR2EHBZ5vqxKPpbjsZZZtWIeWu1Uc2b3jm6VNKMkkB3+7/Zcd+q4oc4uihZAVEx
+	 2qpDJF7BFHkOyTIH3a36PPnOf3oD01+OdNSJPsCKZdN7i5fhleSDIU5yqSm1fMTLFk
+	 S5xvg+GEVDbGcQmgeFISCpL6DWrEuVmG6Q86KQNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.5 037/163] Bluetooth: hci_sync: Fix handling of HCI_QUIRK_STRICT_DUPLICATE_FILTER
-Date: Mon,  9 Oct 2023 15:00:01 +0200
-Message-ID: <20231009130125.029041020@linuxfoundation.org>
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Yanik Fuchs <Yanik.fuchs@mbv.ch>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.5 038/163] wifi: rtw88: rtw8723d: Fix MAC address offset in EEPROM
+Date: Mon,  9 Oct 2023 15:00:02 +0200
+Message-ID: <20231009130125.056472844@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -40,59 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-commit 941c998b42f5c90384f49da89a6e11233de567cf upstream.
+commit 2e1b3ae3e1f2cf5a3c9c05d5f961d7d4257b489f upstream.
 
-When HCI_QUIRK_STRICT_DUPLICATE_FILTER is set LE scanning requires
-periodic restarts of the scanning procedure as the controller would
-consider device previously found as duplicated despite of RSSI changes,
-but in order to set the scan timeout properly set le_scan_restart needs
-to be synchronous so it shall not use hci_cmd_sync_queue which defers
-the command processing to cmd_sync_work.
+The MAC address is stored at offset 0x107 in the EEPROM, like correctly
+stated in the comment. Add a two bytes reserved field right before the
+MAC address to shift it from offset 0x105 to 0x107.
 
+With this the MAC address returned from my RTL8723du wifi stick can be
+correctly decoded as "Shenzhen Four Seas Global Link Network Technology
+Co., Ltd."
+
+Fixes: 87caeef032fc ("wifi: rtw88: Add rtw8723du chipset support")
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Reported-by: Yanik Fuchs <Yanik.fuchs@mbv.ch>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-bluetooth/578e6d7afd676129decafba846a933f5@agner.ch/#t
-Fixes: 27d54b778ad1 ("Bluetooth: Rework le_scan_restart for hci_sync")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230907071614.2032404-1-s.hauer@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |   13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ drivers/net/wireless/realtek/rtw88/rtw8723d.h |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -412,11 +412,6 @@ static int hci_le_scan_restart_sync(stru
- 					   LE_SCAN_FILTER_DUP_ENABLE);
- }
+--- a/drivers/net/wireless/realtek/rtw88/rtw8723d.h
++++ b/drivers/net/wireless/realtek/rtw88/rtw8723d.h
+@@ -46,6 +46,7 @@ struct rtw8723du_efuse {
+ 	u8 vender_id[2];                /* 0x100 */
+ 	u8 product_id[2];               /* 0x102 */
+ 	u8 usb_option;                  /* 0x104 */
++	u8 res5[2];			/* 0x105 */
+ 	u8 mac_addr[ETH_ALEN];          /* 0x107 */
+ };
  
--static int le_scan_restart_sync(struct hci_dev *hdev, void *data)
--{
--	return hci_le_scan_restart_sync(hdev);
--}
--
- static void le_scan_restart(struct work_struct *work)
- {
- 	struct hci_dev *hdev = container_of(work, struct hci_dev,
-@@ -426,15 +421,15 @@ static void le_scan_restart(struct work_
- 
- 	bt_dev_dbg(hdev, "");
- 
--	hci_dev_lock(hdev);
--
--	status = hci_cmd_sync_queue(hdev, le_scan_restart_sync, NULL, NULL);
-+	status = hci_le_scan_restart_sync(hdev);
- 	if (status) {
- 		bt_dev_err(hdev, "failed to restart LE scan: status %d",
- 			   status);
--		goto unlock;
-+		return;
- 	}
- 
-+	hci_dev_lock(hdev);
-+
- 	if (!test_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks) ||
- 	    !hdev->discovery.scan_start)
- 		goto unlock;
 
 
