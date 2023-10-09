@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB777182A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E465C182A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HasgPF19"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34DB0C433C7;
-	Mon,  9 Oct 2023 13:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/KUhtAb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F8FC433C8;
+	Mon,  9 Oct 2023 13:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858598;
-	bh=ctaIeMmejbUwuwUQnzpPskOwddckm7pDg6tUNz+tckQ=;
+	s=korg; t=1696858601;
+	bh=bbQ/wO90+Vl/snSRbrqRiJ31qxAmwIoceV5oCJsH2Qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HasgPF19HZV4+1hv/y7dbEpsapjNDV6kupKIszy8qWGF5gCfUD30ftjXHws28PSXT
-	 3k3JcpJtqu5bOtsjBtSY3eSpmLAMkJ9DuV2/WN/nYdmKGBFnuG9pbWAiB0OwFaWy25
-	 hI0+Z0BXyOGOMnoHdaMVLfav9Pn5uuMBVV+2VaBU=
+	b=b/KUhtAbwazGjkWTqRvezXmw/PPmddl8tQNwraPZkDH8pu7wPfZU5LZdivB5Qbzjp
+	 wUce01hQV5xGRpx/gB3KzCQ7IEtzDNyN+oyO3A36kLy64xzMzVAISgnWp5o/ro+UZ5
+	 p67chMZ1tG8UbaImcGOr0tMSeCG1QbqZ1l1mub7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jann Horn <jannh@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 041/226] powerpc/perf/hv-24x7: Update domain value check
-Date: Mon,  9 Oct 2023 15:00:02 +0200
-Message-ID: <20231009130127.871055230@linuxfoundation.org>
+Subject: [PATCH 5.10 042/226] dccp: fix dccp_v4_err()/dccp_v6_err() again
+Date: Mon,  9 Oct 2023 15:00:03 +0200
+Message-ID: <20231009130127.897780421@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -44,61 +44,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4ff3ba4db5943cac1045e3e4a3c0463ea10f6930 ]
+[ Upstream commit 6af289746a636f71f4c0535a9801774118486c7a ]
 
-Valid domain value is in range 1 to HV_PERF_DOMAIN_MAX. Current code has
-check for domain value greater than or equal to HV_PERF_DOMAIN_MAX. But
-the check for domain value 0 is missing.
+dh->dccph_x is the 9th byte (offset 8) in "struct dccp_hdr",
+not in the "byte 7" as Jann claimed.
 
-Fix this issue by adding check for domain value 0.
+We need to make sure the ICMP messages are big enough,
+using more standard ways (no more assumptions).
 
-Before:
-  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
-  Using CPUID 00800200
-  Control descriptor is not initialized
-  Error:
-  The sys_perf_event_open() syscall returned with 5 (Input/output error) for
-  event (hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/).
-  /bin/dmesg | grep -i perf may provide additional information.
+syzbot reported:
+BUG: KMSAN: uninit-value in pskb_may_pull_reason include/linux/skbuff.h:2667 [inline]
+BUG: KMSAN: uninit-value in pskb_may_pull include/linux/skbuff.h:2681 [inline]
+BUG: KMSAN: uninit-value in dccp_v6_err+0x426/0x1aa0 net/dccp/ipv6.c:94
+pskb_may_pull_reason include/linux/skbuff.h:2667 [inline]
+pskb_may_pull include/linux/skbuff.h:2681 [inline]
+dccp_v6_err+0x426/0x1aa0 net/dccp/ipv6.c:94
+icmpv6_notify+0x4c7/0x880 net/ipv6/icmp.c:867
+icmpv6_rcv+0x19d5/0x30d0
+ip6_protocol_deliver_rcu+0xda6/0x2a60 net/ipv6/ip6_input.c:438
+ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
+NF_HOOK include/linux/netfilter.h:304 [inline]
+ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
+ip6_mc_input+0xa7e/0xc80 net/ipv6/ip6_input.c:586
+dst_input include/net/dst.h:468 [inline]
+ip6_rcv_finish+0x5db/0x870 net/ipv6/ip6_input.c:79
+NF_HOOK include/linux/netfilter.h:304 [inline]
+ipv6_rcv+0xda/0x390 net/ipv6/ip6_input.c:310
+__netif_receive_skb_one_core net/core/dev.c:5523 [inline]
+__netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5637
+netif_receive_skb_internal net/core/dev.c:5723 [inline]
+netif_receive_skb+0x58/0x660 net/core/dev.c:5782
+tun_rx_batched+0x83b/0x920
+tun_get_user+0x564c/0x6940 drivers/net/tun.c:2002
+tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
+call_write_iter include/linux/fs.h:1985 [inline]
+new_sync_write fs/read_write.c:491 [inline]
+vfs_write+0x8ef/0x15c0 fs/read_write.c:584
+ksys_write+0x20f/0x4c0 fs/read_write.c:637
+__do_sys_write fs/read_write.c:649 [inline]
+__se_sys_write fs/read_write.c:646 [inline]
+__x64_sys_write+0x93/0xd0 fs/read_write.c:646
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-  Result from dmesg:
-  [   37.819387] hv-24x7: hcall failed: [0 0x60040000 0x100 0] => ret
-  0xfffffffffffffffc (-4) detail=0x2000000 failing ix=0
+Uninit was created at:
+slab_post_alloc_hook+0x12f/0xb70 mm/slab.h:767
+slab_alloc_node mm/slub.c:3478 [inline]
+kmem_cache_alloc_node+0x577/0xa80 mm/slub.c:3523
+kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:559
+__alloc_skb+0x318/0x740 net/core/skbuff.c:650
+alloc_skb include/linux/skbuff.h:1286 [inline]
+alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6313
+sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2795
+tun_alloc_skb drivers/net/tun.c:1531 [inline]
+tun_get_user+0x23cf/0x6940 drivers/net/tun.c:1846
+tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
+call_write_iter include/linux/fs.h:1985 [inline]
+new_sync_write fs/read_write.c:491 [inline]
+vfs_write+0x8ef/0x15c0 fs/read_write.c:584
+ksys_write+0x20f/0x4c0 fs/read_write.c:637
+__do_sys_write fs/read_write.c:649 [inline]
+__se_sys_write fs/read_write.c:646 [inline]
+__x64_sys_write+0x93/0xd0 fs/read_write.c:646
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-After:
-  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
-  Using CPUID 00800200
-  Control descriptor is not initialized
-  Warning:
-  hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ event is not supported by the kernel.
-  failed to read counter hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/
+CPU: 0 PID: 4995 Comm: syz-executor153 Not tainted 6.6.0-rc1-syzkaller-00014-ga747acc0b752 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
 
-Fixes: ebd4a5a3ebd9 ("powerpc/perf/hv-24x7: Minor improvements")
-Reported-by: Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230825055601.360083-1-kjain@linux.ibm.com
+Fixes: 977ad86c2a1b ("dccp: Fix out of bounds access in DCCP error handler")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Jann Horn <jannh@google.com>
+Reviewed-by: Jann Horn <jannh@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/hv-24x7.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/dccp/ipv4.c | 9 ++-------
+ net/dccp/ipv6.c | 9 ++-------
+ 2 files changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/arch/powerpc/perf/hv-24x7.c b/arch/powerpc/perf/hv-24x7.c
-index 1cd2351d241e8..61a08747b1641 100644
---- a/arch/powerpc/perf/hv-24x7.c
-+++ b/arch/powerpc/perf/hv-24x7.c
-@@ -1410,7 +1410,7 @@ static int h_24x7_event_init(struct perf_event *event)
- 	}
+diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
+index 398dc3e47d0c8..f2a0a4e6dd748 100644
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -243,13 +243,8 @@ static int dccp_v4_err(struct sk_buff *skb, u32 info)
+ 	int err;
+ 	struct net *net = dev_net(skb->dev);
  
- 	domain = event_get_domain(event);
--	if (domain >= HV_PERF_DOMAIN_MAX) {
-+	if (domain  == 0 || domain >= HV_PERF_DOMAIN_MAX) {
- 		pr_devel("invalid domain %d\n", domain);
+-	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
+-	 * which is in byte 7 of the dccp header.
+-	 * Our caller (icmp_socket_deliver()) already pulled 8 bytes for us.
+-	 *
+-	 * Later on, we want to access the sequence number fields, which are
+-	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
+-	 */
++	if (!pskb_may_pull(skb, offset + sizeof(*dh)))
++		return -EINVAL;
+ 	dh = (struct dccp_hdr *)(skb->data + offset);
+ 	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
  		return -EINVAL;
- 	}
+diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
+index bfe11e96af7c9..6d6bbd43a1419 100644
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -76,13 +76,8 @@ static int dccp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+ 	__u64 seq;
+ 	struct net *net = dev_net(skb->dev);
+ 
+-	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
+-	 * which is in byte 7 of the dccp header.
+-	 * Our caller (icmpv6_notify()) already pulled 8 bytes for us.
+-	 *
+-	 * Later on, we want to access the sequence number fields, which are
+-	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
+-	 */
++	if (!pskb_may_pull(skb, offset + sizeof(*dh)))
++		return -EINVAL;
+ 	dh = (struct dccp_hdr *)(skb->data + offset);
+ 	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
+ 		return -EINVAL;
 -- 
 2.40.1
 
