@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEDB18E05
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AB71A71F
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rE3OOzqy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2201FC433C8;
-	Mon,  9 Oct 2023 13:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBjUJKMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E472C433C8;
+	Mon,  9 Oct 2023 13:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858296;
-	bh=ASYy5/Afb3lGEr/wW856HTVH4Snfr4UxTLS2ImTi1Cw=;
+	s=korg; t=1696858299;
+	bh=BB2Da4QZqzBngBayVykfByLmOb4d7Y/ScwqYhOkqZzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rE3OOzqye9rfsJ7pBX1vnGyJNsSS0/ktxKjV+TND1ZPp2zLTB39dbXAkxoXozT1De
-	 700AbFnVl1d4Q/fi4vNdWXND4m14CiB1a1Qza0E4x3QoQdIhaUXxpgIUYWWJ3Zkf3y
-	 1ofm9SphH8oBtKrkLek6fzH+0XIt2Y3gKj3fWBuQ=
+	b=nBjUJKMzUhMfZiUrHjY402qT9O8rAcPsMxb+qDsZ9CO238bWxd0Uz/9Lo2TJsQXAS
+	 5vshd2T6+d2OQjLArHBbkK8uDNbm2mb+3dZtO7Pim6IXm45sX2VKqppZ3h4sU8xMzv
+	 HWMdR229nDWHbU/3lOffPBOSwKMQ7ut8x5yO322k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Max Filippov <jcmvbkbc@gmail.com>,
+	Wenhua Lin <Wenhua.Lin@unisoc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 050/131] xtensa: boot/lib: fix function prototypes
-Date: Mon,  9 Oct 2023 15:01:30 +0200
-Message-ID: <20231009130117.835801488@linuxfoundation.org>
+Subject: [PATCH 5.4 051/131] gpio: pmic-eic-sprd: Add can_sleep flag for PMIC EIC chip
+Date: Mon,  9 Oct 2023 15:01:31 +0200
+Message-ID: <20231009130117.864212811@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,50 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Wenhua Lin <Wenhua.Lin@unisoc.com>
 
-[ Upstream commit f54d02c8f2cc4b46ba2a3bd8252a6750453b6f2b ]
+[ Upstream commit 26d9e5640d2130ee16df7b1fb6a908f460ab004c ]
 
-Add function prototype for gunzip() to the boot library code and make
-exit() and zalloc() static.
+The drivers uses a mutex and I2C bus access in its PMIC EIC chip
+get implementation. This means these functions can sleep and the PMIC EIC
+chip should set the can_sleep property to true.
 
-arch/xtensa/boot/lib/zmem.c:8:6: warning: no previous prototype for 'exit' [-Wmissing-prototypes]
-    8 | void exit (void)
-arch/xtensa/boot/lib/zmem.c:13:7: warning: no previous prototype for 'zalloc' [-Wmissing-prototypes]
-   13 | void *zalloc(unsigned size)
-arch/xtensa/boot/lib/zmem.c:35:6: warning: no previous prototype for 'gunzip' [-Wmissing-prototypes]
-   35 | void gunzip (void *dst, int dstlen, unsigned char *src, int *lenp)
+This will ensure that a warning is printed when trying to get the
+value from a context that potentially can't sleep.
 
-Fixes: 4bedea945451 ("xtensa: Architecture support for Tensilica Xtensa Part 2")
-Fixes: e7d163f76665 ("xtensa: Removed local copy of zlib and fixed O= support")
-Suggested-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Fixes: 348f3cde84ab ("gpio: Add Spreadtrum PMIC EIC driver support")
+Signed-off-by: Wenhua Lin <Wenhua.Lin@unisoc.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/xtensa/boot/lib/zmem.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-pmic-eic-sprd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/xtensa/boot/lib/zmem.c b/arch/xtensa/boot/lib/zmem.c
-index e3ecd743c5153..b89189355122a 100644
---- a/arch/xtensa/boot/lib/zmem.c
-+++ b/arch/xtensa/boot/lib/zmem.c
-@@ -4,13 +4,14 @@
- /* bits taken from ppc */
+diff --git a/drivers/gpio/gpio-pmic-eic-sprd.c b/drivers/gpio/gpio-pmic-eic-sprd.c
+index 05000cace9b24..abe01518bf19f 100644
+--- a/drivers/gpio/gpio-pmic-eic-sprd.c
++++ b/drivers/gpio/gpio-pmic-eic-sprd.c
+@@ -338,6 +338,7 @@ static int sprd_pmic_eic_probe(struct platform_device *pdev)
+ 	pmic_eic->chip.set_config = sprd_pmic_eic_set_config;
+ 	pmic_eic->chip.set = sprd_pmic_eic_set;
+ 	pmic_eic->chip.get = sprd_pmic_eic_get;
++	pmic_eic->chip.can_sleep = true;
  
- extern void *avail_ram, *end_avail;
-+void gunzip(void *dst, int dstlen, unsigned char *src, int *lenp);
- 
--void exit (void)
-+static void exit(void)
- {
-   for (;;);
- }
- 
--void *zalloc(unsigned size)
-+static void *zalloc(unsigned int size)
- {
-         void *p = avail_ram;
- 
+ 	pmic_eic->intc.name = dev_name(&pdev->dev);
+ 	pmic_eic->intc.irq_mask = sprd_pmic_eic_irq_mask;
 -- 
 2.40.1
 
