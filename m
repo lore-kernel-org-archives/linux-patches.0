@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFD1341AC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC491A735
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBj2jn6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE67C116A8;
-	Mon,  9 Oct 2023 13:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBPs6nMM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAEACC433C7;
+	Mon,  9 Oct 2023 13:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859427;
-	bh=/qezE9P/an2log2tmm3zBiRYGBEE6/6MzvIWYPTlzjw=;
+	s=korg; t=1696859430;
+	bh=BZW0EIlpHrN4TwyvxYDtW8qZtrvBNTAbHl0vMB8xHoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBj2jn6rQkw/Q4a6IDnAKoNVzIDQPff0g2faGMy/AVim+7e2VwwTr1fCDNxBcCrrr
-	 U/FgpVhmt3OZebGan6JH4nb9BVaHu2h2Iw9sKxhomqgEhK3jCwduxFtTr+8ivPVA6D
-	 q9iopShqPI8ZzcB4pIMAASPO74l+I+Vqnw9oAsxw=
+	b=fBPs6nMMZAgrWLOfCIhkjXQ79kJ6CHfylREBXfhf5749IjAb9Wy6ElX17i1jOH8Pr
+	 slCWBbxCE4P7xzDQYFHbqjMCiseXsTiGp28popc5XFLCyh/ZyKUQ2rt+4h619a6IGP
+	 HFPDVKzDzaOQ6kd9XSwrNf26FFxZYF/bFV3tROVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Shivasharan S <shivasharan.srikanteshwara@broadcom.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mike Christie <michael.christie@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 18/91] scsi: megaraid_sas: Load balance completions across all MSI-X
-Date: Mon,  9 Oct 2023 15:05:50 +0200
-Message-ID: <20231009130112.163149933@linuxfoundation.org>
+Subject: [PATCH 4.19 19/91] scsi: megaraid_sas: Fix deadlock on firmware crashdump
+Date: Mon,  9 Oct 2023 15:05:51 +0200
+Message-ID: <20231009130112.193432364@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -43,179 +43,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
+From: Junxiao Bi <junxiao.bi@oracle.com>
 
-[ Upstream commit 1d15d9098ad12b0021ac5a6b851f26d1ab021e5a ]
+[ Upstream commit 0b0747d507bffb827e40fc0f9fb5883fffc23477 ]
 
-Driver will use "reply descriptor post queues" in round robin fashion when
-the combined MSI-X mode is not enabled. With this IO completions are
-distributed and load balanced across all the available reply descriptor
-post queues equally.
+The following processes run into a deadlock. CPU 41 was waiting for CPU 29
+to handle a CSD request while holding spinlock "crashdump_lock", but CPU 29
+was hung by that spinlock with IRQs disabled.
 
-This is enabled only if combined MSI-X mode is not enabled in firmware.
-This improves performance and also fixes soft lockups.
+  PID: 17360    TASK: ffff95c1090c5c40  CPU: 41  COMMAND: "mrdiagd"
+  !# 0 [ffffb80edbf37b58] __read_once_size at ffffffff9b871a40 include/linux/compiler.h:185:0
+  !# 1 [ffffb80edbf37b58] atomic_read at ffffffff9b871a40 arch/x86/include/asm/atomic.h:27:0
+  !# 2 [ffffb80edbf37b58] dump_stack at ffffffff9b871a40 lib/dump_stack.c:54:0
+   # 3 [ffffb80edbf37b78] csd_lock_wait_toolong at ffffffff9b131ad5 kernel/smp.c:364:0
+   # 4 [ffffb80edbf37b78] __csd_lock_wait at ffffffff9b131ad5 kernel/smp.c:384:0
+   # 5 [ffffb80edbf37bf8] csd_lock_wait at ffffffff9b13267a kernel/smp.c:394:0
+   # 6 [ffffb80edbf37bf8] smp_call_function_many at ffffffff9b13267a kernel/smp.c:843:0
+   # 7 [ffffb80edbf37c50] smp_call_function at ffffffff9b13279d kernel/smp.c:867:0
+   # 8 [ffffb80edbf37c50] on_each_cpu at ffffffff9b13279d kernel/smp.c:976:0
+   # 9 [ffffb80edbf37c78] flush_tlb_kernel_range at ffffffff9b085c4b arch/x86/mm/tlb.c:742:0
+   #10 [ffffb80edbf37cb8] __purge_vmap_area_lazy at ffffffff9b23a1e0 mm/vmalloc.c:701:0
+   #11 [ffffb80edbf37ce0] try_purge_vmap_area_lazy at ffffffff9b23a2cc mm/vmalloc.c:722:0
+   #12 [ffffb80edbf37ce0] free_vmap_area_noflush at ffffffff9b23a2cc mm/vmalloc.c:754:0
+   #13 [ffffb80edbf37cf8] free_unmap_vmap_area at ffffffff9b23bb3b mm/vmalloc.c:764:0
+   #14 [ffffb80edbf37cf8] remove_vm_area at ffffffff9b23bb3b mm/vmalloc.c:1509:0
+   #15 [ffffb80edbf37d18] __vunmap at ffffffff9b23bb8a mm/vmalloc.c:1537:0
+   #16 [ffffb80edbf37d40] vfree at ffffffff9b23bc85 mm/vmalloc.c:1612:0
+   #17 [ffffb80edbf37d58] megasas_free_host_crash_buffer [megaraid_sas] at ffffffffc020b7f2 drivers/scsi/megaraid/megaraid_sas_fusion.c:3932:0
+   #18 [ffffb80edbf37d80] fw_crash_state_store [megaraid_sas] at ffffffffc01f804d drivers/scsi/megaraid/megaraid_sas_base.c:3291:0
+   #19 [ffffb80edbf37dc0] dev_attr_store at ffffffff9b56dd7b drivers/base/core.c:758:0
+   #20 [ffffb80edbf37dd0] sysfs_kf_write at ffffffff9b326acf fs/sysfs/file.c:144:0
+   #21 [ffffb80edbf37de0] kernfs_fop_write at ffffffff9b325fd4 fs/kernfs/file.c:316:0
+   #22 [ffffb80edbf37e20] __vfs_write at ffffffff9b29418a fs/read_write.c:480:0
+   #23 [ffffb80edbf37ea8] vfs_write at ffffffff9b294462 fs/read_write.c:544:0
+   #24 [ffffb80edbf37ee8] SYSC_write at ffffffff9b2946ec fs/read_write.c:590:0
+   #25 [ffffb80edbf37ee8] SyS_write at ffffffff9b2946ec fs/read_write.c:582:0
+   #26 [ffffb80edbf37f30] do_syscall_64 at ffffffff9b003ca9 arch/x86/entry/common.c:298:0
+   #27 [ffffb80edbf37f58] entry_SYSCALL_64 at ffffffff9ba001b1 arch/x86/entry/entry_64.S:238:0
 
-When load balancing is enabled, IRQ affinity from driver needs to be
-disabled.
+  PID: 17355    TASK: ffff95c1090c3d80  CPU: 29  COMMAND: "mrdiagd"
+  !# 0 [ffffb80f2d3c7d30] __read_once_size at ffffffff9b0f2ab0 include/linux/compiler.h:185:0
+  !# 1 [ffffb80f2d3c7d30] native_queued_spin_lock_slowpath at ffffffff9b0f2ab0 kernel/locking/qspinlock.c:368:0
+   # 2 [ffffb80f2d3c7d58] pv_queued_spin_lock_slowpath at ffffffff9b0f244b arch/x86/include/asm/paravirt.h:674:0
+   # 3 [ffffb80f2d3c7d58] queued_spin_lock_slowpath at ffffffff9b0f244b arch/x86/include/asm/qspinlock.h:53:0
+   # 4 [ffffb80f2d3c7d68] queued_spin_lock at ffffffff9b8961a6 include/asm-generic/qspinlock.h:90:0
+   # 5 [ffffb80f2d3c7d68] do_raw_spin_lock_flags at ffffffff9b8961a6 include/linux/spinlock.h:173:0
+   # 6 [ffffb80f2d3c7d68] __raw_spin_lock_irqsave at ffffffff9b8961a6 include/linux/spinlock_api_smp.h:122:0
+   # 7 [ffffb80f2d3c7d68] _raw_spin_lock_irqsave at ffffffff9b8961a6 kernel/locking/spinlock.c:160:0
+   # 8 [ffffb80f2d3c7d88] fw_crash_buffer_store [megaraid_sas] at ffffffffc01f8129 drivers/scsi/megaraid/megaraid_sas_base.c:3205:0
+   # 9 [ffffb80f2d3c7dc0] dev_attr_store at ffffffff9b56dd7b drivers/base/core.c:758:0
+   #10 [ffffb80f2d3c7dd0] sysfs_kf_write at ffffffff9b326acf fs/sysfs/file.c:144:0
+   #11 [ffffb80f2d3c7de0] kernfs_fop_write at ffffffff9b325fd4 fs/kernfs/file.c:316:0
+   #12 [ffffb80f2d3c7e20] __vfs_write at ffffffff9b29418a fs/read_write.c:480:0
+   #13 [ffffb80f2d3c7ea8] vfs_write at ffffffff9b294462 fs/read_write.c:544:0
+   #14 [ffffb80f2d3c7ee8] SYSC_write at ffffffff9b2946ec fs/read_write.c:590:0
+   #15 [ffffb80f2d3c7ee8] SyS_write at ffffffff9b2946ec fs/read_write.c:582:0
+   #16 [ffffb80f2d3c7f30] do_syscall_64 at ffffffff9b003ca9 arch/x86/entry/common.c:298:0
+   #17 [ffffb80f2d3c7f58] entry_SYSCALL_64 at ffffffff9ba001b1 arch/x86/entry/entry_64.S:238:0
 
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
+The lock is used to synchronize different sysfs operations, it doesn't
+protect any resource that will be touched by an interrupt. Consequently
+it's not required to disable IRQs. Replace the spinlock with a mutex to fix
+the deadlock.
+
+Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
+Link: https://lore.kernel.org/r/20230828221018.19471-1-junxiao.bi@oracle.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 0b0747d507bf ("scsi: megaraid_sas: Fix deadlock on firmware crashdump")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid/megaraid_sas.h        |  3 +++
- drivers/scsi/megaraid/megaraid_sas_base.c   | 22 +++++++++++++++++----
- drivers/scsi/megaraid/megaraid_sas_fusion.c | 18 +++++++++++++----
- 3 files changed, 35 insertions(+), 8 deletions(-)
+ drivers/scsi/megaraid/megaraid_sas.h      |  2 +-
+ drivers/scsi/megaraid/megaraid_sas_base.c | 21 +++++++++------------
+ 2 files changed, 10 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/scsi/megaraid/megaraid_sas.h b/drivers/scsi/megaraid/megaraid_sas.h
-index 67d356d847176..80ae48b65b608 100644
+index 80ae48b65b608..0d7cca9365aac 100644
 --- a/drivers/scsi/megaraid/megaraid_sas.h
 +++ b/drivers/scsi/megaraid/megaraid_sas.h
-@@ -2193,6 +2193,7 @@ struct megasas_instance {
- 	u32 secure_jbod_support;
+@@ -2194,7 +2194,7 @@ struct megasas_instance {
  	u32 support_morethan256jbod; /* FW support for more than 256 PD/JBOD */
  	bool use_seqnum_jbod_fp;   /* Added for PD sequence */
-+	bool smp_affinity_enable;
- 	spinlock_t crashdump_lock;
+ 	bool smp_affinity_enable;
+-	spinlock_t crashdump_lock;
++	struct mutex crashdump_lock;
  
  	struct megasas_register_set __iomem *reg_set;
-@@ -2210,6 +2211,7 @@ struct megasas_instance {
- 	u16 ldio_threshold;
- 	u16 cur_can_queue;
- 	u32 max_sectors_per_req;
-+	bool msix_load_balance;
- 	struct megasas_aen_event *ev;
- 
- 	struct megasas_cmd **cmd_list;
-@@ -2246,6 +2248,7 @@ struct megasas_instance {
- 	atomic_t sge_holes_type1;
- 	atomic_t sge_holes_type2;
- 	atomic_t sge_holes_type3;
-+	atomic64_t total_io_count;
- 
- 	struct megasas_instance_template *instancet;
- 	struct tasklet_struct isr_tasklet;
+ 	u32 __iomem *reply_post_host_index_addr[MR_MAX_MSIX_REG_ARRAY];
 diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
-index 8d1df03386b4f..2b6b6d3deba86 100644
+index 2b6b6d3deba86..bdfa36712fcc4 100644
 --- a/drivers/scsi/megaraid/megaraid_sas_base.c
 +++ b/drivers/scsi/megaraid/megaraid_sas_base.c
-@@ -5101,6 +5101,7 @@ megasas_setup_irqs_msix(struct megasas_instance *instance, u8 is_probe)
- 					 &instance->irq_context[j]);
- 			/* Retry irq register for IO_APIC*/
- 			instance->msix_vectors = 0;
-+			instance->msix_load_balance = false;
- 			if (is_probe) {
- 				pci_free_irq_vectors(instance->pdev);
- 				return megasas_setup_irqs_ioapic(instance);
-@@ -5109,6 +5110,7 @@ megasas_setup_irqs_msix(struct megasas_instance *instance, u8 is_probe)
- 			}
- 		}
- 	}
-+
- 	return 0;
+@@ -3004,14 +3004,13 @@ megasas_fw_crash_buffer_store(struct device *cdev,
+ 	struct megasas_instance *instance =
+ 		(struct megasas_instance *) shost->hostdata;
+ 	int val = 0;
+-	unsigned long flags;
+ 
+ 	if (kstrtoint(buf, 0, &val) != 0)
+ 		return -EINVAL;
+ 
+-	spin_lock_irqsave(&instance->crashdump_lock, flags);
++	mutex_lock(&instance->crashdump_lock);
+ 	instance->fw_crash_buffer_offset = val;
+-	spin_unlock_irqrestore(&instance->crashdump_lock, flags);
++	mutex_unlock(&instance->crashdump_lock);
+ 	return strlen(buf);
  }
  
-@@ -5364,6 +5366,12 @@ static int megasas_init_fw(struct megasas_instance *instance)
- 				if (rdpq_enable)
- 					instance->is_rdpq = (scratch_pad_2 & MR_RDPQ_MODE_OFFSET) ?
- 								1 : 0;
-+
-+				if (!instance->msix_combined) {
-+					instance->msix_load_balance = true;
-+					instance->smp_affinity_enable = false;
-+				}
-+
- 				fw_msix_count = instance->msix_vectors;
- 				/* Save 1-15 reply post index address to local memory
- 				 * Index 0 is already saved from reg offset
-@@ -5382,17 +5390,20 @@ static int megasas_init_fw(struct megasas_instance *instance)
- 					instance->msix_vectors);
- 		} else /* MFI adapters */
- 			instance->msix_vectors = 1;
-+
- 		/* Don't bother allocating more MSI-X vectors than cpus */
- 		instance->msix_vectors = min(instance->msix_vectors,
- 					     (unsigned int)num_online_cpus());
--		if (smp_affinity_enable)
-+		if (instance->smp_affinity_enable)
- 			irq_flags |= PCI_IRQ_AFFINITY;
- 		i = pci_alloc_irq_vectors(instance->pdev, 1,
- 					  instance->msix_vectors, irq_flags);
--		if (i > 0)
-+		if (i > 0) {
- 			instance->msix_vectors = i;
--		else
-+		} else {
- 			instance->msix_vectors = 0;
-+			instance->msix_load_balance = false;
-+		}
+@@ -3027,17 +3026,16 @@ megasas_fw_crash_buffer_show(struct device *cdev,
+ 	unsigned long dmachunk = CRASH_DMA_BUF_SIZE;
+ 	unsigned long chunk_left_bytes;
+ 	unsigned long src_addr;
+-	unsigned long flags;
+ 	u32 buff_offset;
+ 
+-	spin_lock_irqsave(&instance->crashdump_lock, flags);
++	mutex_lock(&instance->crashdump_lock);
+ 	buff_offset = instance->fw_crash_buffer_offset;
+ 	if (!instance->crash_dump_buf ||
+ 		!((instance->fw_crash_state == AVAILABLE) ||
+ 		(instance->fw_crash_state == COPYING))) {
+ 		dev_err(&instance->pdev->dev,
+ 			"Firmware crash dump is not available\n");
+-		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
++		mutex_unlock(&instance->crashdump_lock);
+ 		return -EINVAL;
  	}
- 	/*
- 	 * MSI-X host index 0 is common for all adapter.
-@@ -6447,6 +6458,7 @@ static inline void megasas_init_ctrl_params(struct megasas_instance *instance)
- 	INIT_LIST_HEAD(&instance->internal_reset_pending_q);
  
- 	atomic_set(&instance->fw_outstanding, 0);
-+	atomic64_set(&instance->total_io_count, 0);
+@@ -3046,7 +3044,7 @@ megasas_fw_crash_buffer_show(struct device *cdev,
+ 	if (buff_offset > (instance->fw_crash_buffer_size * dmachunk)) {
+ 		dev_err(&instance->pdev->dev,
+ 			"Firmware crash dump offset is out of range\n");
+-		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
++		mutex_unlock(&instance->crashdump_lock);
+ 		return 0;
+ 	}
  
+@@ -3058,7 +3056,7 @@ megasas_fw_crash_buffer_show(struct device *cdev,
+ 	src_addr = (unsigned long)instance->crash_buf[buff_offset / dmachunk] +
+ 		(buff_offset % dmachunk);
+ 	memcpy(buf, (void *)src_addr, size);
+-	spin_unlock_irqrestore(&instance->crashdump_lock, flags);
++	mutex_unlock(&instance->crashdump_lock);
+ 
+ 	return size;
+ }
+@@ -3083,7 +3081,6 @@ megasas_fw_crash_state_store(struct device *cdev,
+ 	struct megasas_instance *instance =
+ 		(struct megasas_instance *) shost->hostdata;
+ 	int val = 0;
+-	unsigned long flags;
+ 
+ 	if (kstrtoint(buf, 0, &val) != 0)
+ 		return -EINVAL;
+@@ -3097,9 +3094,9 @@ megasas_fw_crash_state_store(struct device *cdev,
+ 	instance->fw_crash_state = val;
+ 
+ 	if ((val == COPIED) || (val == COPY_ERROR)) {
+-		spin_lock_irqsave(&instance->crashdump_lock, flags);
++		mutex_lock(&instance->crashdump_lock);
+ 		megasas_free_host_crash_buffer(instance);
+-		spin_unlock_irqrestore(&instance->crashdump_lock, flags);
++		mutex_unlock(&instance->crashdump_lock);
+ 		if (val == COPY_ERROR)
+ 			dev_info(&instance->pdev->dev, "application failed to "
+ 				"copy Firmware crash dump\n");
+@@ -6463,7 +6460,7 @@ static inline void megasas_init_ctrl_params(struct megasas_instance *instance)
  	init_waitqueue_head(&instance->int_cmd_wait_q);
  	init_waitqueue_head(&instance->abort_cmd_wait_q);
-@@ -6469,6 +6481,8 @@ static inline void megasas_init_ctrl_params(struct megasas_instance *instance)
- 	instance->last_time = 0;
- 	instance->disableOnlineCtrlReset = 1;
- 	instance->UnevenSpanSupport = 0;
-+	instance->smp_affinity_enable = smp_affinity_enable ? true : false;
-+	instance->msix_load_balance = false;
  
- 	if (instance->adapter_type != MFI_SERIES) {
- 		INIT_WORK(&instance->work_init, megasas_fusion_ocr_wq);
-@@ -6818,7 +6832,7 @@ megasas_resume(struct pci_dev *pdev)
- 	/* Now re-enable MSI-X */
- 	if (instance->msix_vectors) {
- 		irq_flags = PCI_IRQ_MSIX;
--		if (smp_affinity_enable)
-+		if (instance->smp_affinity_enable)
- 			irq_flags |= PCI_IRQ_AFFINITY;
- 	}
- 	rval = pci_alloc_irq_vectors(instance->pdev, 1,
-diff --git a/drivers/scsi/megaraid/megaraid_sas_fusion.c b/drivers/scsi/megaraid/megaraid_sas_fusion.c
-index b400167f9ad42..294e1a3a6adfa 100644
---- a/drivers/scsi/megaraid/megaraid_sas_fusion.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_fusion.c
-@@ -2641,8 +2641,13 @@ megasas_build_ldio_fusion(struct megasas_instance *instance,
- 			fp_possible = (io_info.fpOkForIo > 0) ? true : false;
- 	}
- 
--	cmd->request_desc->SCSIIO.MSIxIndex =
--		instance->reply_map[raw_smp_processor_id()];
-+	if (instance->msix_load_balance)
-+		cmd->request_desc->SCSIIO.MSIxIndex =
-+			(mega_mod64(atomic64_add_return(1, &instance->total_io_count),
-+				    instance->msix_vectors));
-+	else
-+		cmd->request_desc->SCSIIO.MSIxIndex =
-+			instance->reply_map[raw_smp_processor_id()];
- 
- 	praid_context = &io_request->RaidContext;
- 
-@@ -2969,8 +2974,13 @@ megasas_build_syspd_fusion(struct megasas_instance *instance,
- 
- 	cmd->request_desc->SCSIIO.DevHandle = io_request->DevHandle;
- 
--	cmd->request_desc->SCSIIO.MSIxIndex =
--		instance->reply_map[raw_smp_processor_id()];
-+	if (instance->msix_load_balance)
-+		cmd->request_desc->SCSIIO.MSIxIndex =
-+			(mega_mod64(atomic64_add_return(1, &instance->total_io_count),
-+				    instance->msix_vectors));
-+	else
-+		cmd->request_desc->SCSIIO.MSIxIndex =
-+			instance->reply_map[raw_smp_processor_id()];
- 
- 	if (!fp_possible) {
- 		/* system pd firmware path */
+-	spin_lock_init(&instance->crashdump_lock);
++	mutex_init(&instance->crashdump_lock);
+ 	spin_lock_init(&instance->mfi_pool_lock);
+ 	spin_lock_init(&instance->hba_lock);
+ 	spin_lock_init(&instance->stream_lock);
 -- 
 2.40.1
 
