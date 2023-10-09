@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A945C328DB
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B730B339B0
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPkHgaQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2388BC433C7;
-	Mon,  9 Oct 2023 13:39:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTy+XVBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3125AC433C7;
+	Mon,  9 Oct 2023 13:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858763;
-	bh=d7B/3xUBqfTAVUUFk5GCp6jPGTLZpztEpMSbPdawa70=;
+	s=korg; t=1696858766;
+	bh=GD9KCz9TdEGTH+WL3hEwnnLcuhIN77wl/2nDc7wwCYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WPkHgaQJZ6FJaBlTj+4bo56KAO4Fbnwh/8flmbg3w0H8n9UG0T7TdYSRLVPPCtKJ6
-	 Z2jeZoZ/TO4XJYt2p8oN/xIqbcLAFO2KFaxfbUPb6KMltz9Nsu57CwO42ukkEtCm7R
-	 YJtyJFAcdz5b5kwHx8YZRp82Q5AJrZRYSWM1xc9M=
+	b=VTy+XVBS+IYzXCbu0XJ9pIoMHsRdu/ucdAroQx5KNIwH3dL0RiYVYkg+bXnQyJMb7
+	 REIg7k3zwpbp0zjPCly+vUjU0Ok/lYoAYWvIj9P733wKNCaksJo0s40ykEiRUHtQLO
+	 MK/usAKhTHbLcPqLO2ZyFhJWWf4rTJMPYipilo8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Werner Fischer <devlists@wefi.net>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 055/226] seqlock: Rename __seqprop() users
-Date: Mon,  9 Oct 2023 15:00:16 +0200
-Message-ID: <20231009130128.228813727@linuxfoundation.org>
+Subject: [PATCH 5.10 086/226] ata: ahci: Add Elkhart Lake AHCI controller
+Date: Mon,  9 Oct 2023 15:00:47 +0200
+Message-ID: <20231009130129.028668514@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -35,178 +36,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Werner Fischer <devlists@wefi.net>
 
-[ Upstream commit ab440b2c604b60fe90885270fcfeb5c3dd5d6fae ]
+[ Upstream commit 2a2df98ec592667927b5c1351afa6493ea125c9f ]
 
-More consistent naming should make it easier to untangle the _Generic
-token pasting maze called __seqprop().
+Elkhart Lake is the successor of Apollo Lake and Gemini Lake. These
+CPUs and their PCHs are used in mobile and embedded environments.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20201110115358.GE2594@hirez.programming.kicks-ass.net
-Stable-dep-of: 41b43b6c6e30 ("locking/seqlock: Do the lockdep annotation before locking in do_write_seqcount_begin_nested()")
+With this patch I suggest that Elkhart Lake SATA controllers [1] should
+use the default LPM policy for mobile chipsets.
+The disadvantage of missing hot-plug support with this setting should
+not be an issue, as those CPUs are used in embedded environments and
+not in servers with hot-plug backplanes.
+
+We discovered that the Elkhart Lake SATA controllers have been missing
+in ahci.c after a customer reported the throttling of his SATA SSD
+after a short period of higher I/O. We determined the high temperature
+of the SSD controller in idle mode as the root cause for that.
+
+Depending on the used SSD, we have seen up to 1.8 Watt lower system
+idle power usage and up to 30°C lower SSD controller temperatures in
+our tests, when we set med_power_with_dipm manually. I have provided a
+table showing seven different SATA SSDs from ATP, Intel/Solidigm and
+Samsung [2].
+
+Intel lists a total of 3 SATA controller IDs (4B60, 4B62, 4B63) in [1]
+for those mobile PCHs.
+This commit just adds 0x4b63 as I do not have test systems with 0x4b60
+and 0x4b62 SATA controllers.
+I have tested this patch with a system which uses 0x4b63 as SATA
+controller.
+
+[1] https://sata-io.org/product/8803
+[2] https://www.thomas-krenn.com/en/wiki/SATA_Link_Power_Management#Example_LES_v4
+
+Signed-off-by: Werner Fischer <devlists@wefi.net>
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/seqlock.h | 46 ++++++++++++++++++++---------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ drivers/ata/ahci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/seqlock.h b/include/linux/seqlock.h
-index fb89b05066f43..66993e9ef90d9 100644
---- a/include/linux/seqlock.h
-+++ b/include/linux/seqlock.h
-@@ -307,10 +307,10 @@ SEQCOUNT_LOCKNAME(ww_mutex,     struct ww_mutex, true,     &s->lock->base, ww_mu
- 	__seqprop_case((s),	mutex,		prop),			\
- 	__seqprop_case((s),	ww_mutex,	prop))
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 547c0d8460e8b..4297a8d69dbf7 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -425,6 +425,8 @@ static const struct pci_device_id ahci_pci_tbl[] = {
+ 	{ PCI_VDEVICE(INTEL, 0x34d3), board_ahci_low_power }, /* Ice Lake LP AHCI */
+ 	{ PCI_VDEVICE(INTEL, 0x02d3), board_ahci_low_power }, /* Comet Lake PCH-U AHCI */
+ 	{ PCI_VDEVICE(INTEL, 0x02d7), board_ahci_low_power }, /* Comet Lake PCH RAID */
++	/* Elkhart Lake IDs 0x4b60 & 0x4b62 https://sata-io.org/product/8803 not tested yet */
++	{ PCI_VDEVICE(INTEL, 0x4b63), board_ahci_low_power }, /* Elkhart Lake AHCI */
  
--#define __seqcount_ptr(s)		__seqprop(s, ptr)
--#define __seqcount_sequence(s)		__seqprop(s, sequence)
--#define __seqcount_lock_preemptible(s)	__seqprop(s, preemptible)
--#define __seqcount_assert_lock_held(s)	__seqprop(s, assert)
-+#define seqprop_ptr(s)			__seqprop(s, ptr)
-+#define seqprop_sequence(s)		__seqprop(s, sequence)
-+#define seqprop_preemptible(s)		__seqprop(s, preemptible)
-+#define seqprop_assert(s)		__seqprop(s, assert)
- 
- /**
-  * __read_seqcount_begin() - begin a seqcount_t read section w/o barrier
-@@ -330,7 +330,7 @@ SEQCOUNT_LOCKNAME(ww_mutex,     struct ww_mutex, true,     &s->lock->base, ww_mu
- ({									\
- 	unsigned __seq;							\
- 									\
--	while ((__seq = __seqcount_sequence(s)) & 1)			\
-+	while ((__seq = seqprop_sequence(s)) & 1)			\
- 		cpu_relax();						\
- 									\
- 	kcsan_atomic_next(KCSAN_SEQLOCK_REGION_MAX);			\
-@@ -359,7 +359,7 @@ SEQCOUNT_LOCKNAME(ww_mutex,     struct ww_mutex, true,     &s->lock->base, ww_mu
-  */
- #define read_seqcount_begin(s)						\
- ({									\
--	seqcount_lockdep_reader_access(__seqcount_ptr(s));		\
-+	seqcount_lockdep_reader_access(seqprop_ptr(s));			\
- 	raw_read_seqcount_begin(s);					\
- })
- 
-@@ -376,7 +376,7 @@ SEQCOUNT_LOCKNAME(ww_mutex,     struct ww_mutex, true,     &s->lock->base, ww_mu
-  */
- #define raw_read_seqcount(s)						\
- ({									\
--	unsigned __seq = __seqcount_sequence(s);			\
-+	unsigned __seq = seqprop_sequence(s);				\
- 									\
- 	smp_rmb();							\
- 	kcsan_atomic_next(KCSAN_SEQLOCK_REGION_MAX);			\
-@@ -425,7 +425,7 @@ SEQCOUNT_LOCKNAME(ww_mutex,     struct ww_mutex, true,     &s->lock->base, ww_mu
-  * Return: true if a read section retry is required, else false
-  */
- #define __read_seqcount_retry(s, start)					\
--	__read_seqcount_t_retry(__seqcount_ptr(s), start)
-+	__read_seqcount_t_retry(seqprop_ptr(s), start)
- 
- static inline int __read_seqcount_t_retry(const seqcount_t *s, unsigned start)
- {
-@@ -445,7 +445,7 @@ static inline int __read_seqcount_t_retry(const seqcount_t *s, unsigned start)
-  * Return: true if a read section retry is required, else false
-  */
- #define read_seqcount_retry(s, start)					\
--	read_seqcount_t_retry(__seqcount_ptr(s), start)
-+	read_seqcount_t_retry(seqprop_ptr(s), start)
- 
- static inline int read_seqcount_t_retry(const seqcount_t *s, unsigned start)
- {
-@@ -459,10 +459,10 @@ static inline int read_seqcount_t_retry(const seqcount_t *s, unsigned start)
-  */
- #define raw_write_seqcount_begin(s)					\
- do {									\
--	if (__seqcount_lock_preemptible(s))				\
-+	if (seqprop_preemptible(s))					\
- 		preempt_disable();					\
- 									\
--	raw_write_seqcount_t_begin(__seqcount_ptr(s));			\
-+	raw_write_seqcount_t_begin(seqprop_ptr(s));			\
- } while (0)
- 
- static inline void raw_write_seqcount_t_begin(seqcount_t *s)
-@@ -478,9 +478,9 @@ static inline void raw_write_seqcount_t_begin(seqcount_t *s)
-  */
- #define raw_write_seqcount_end(s)					\
- do {									\
--	raw_write_seqcount_t_end(__seqcount_ptr(s));			\
-+	raw_write_seqcount_t_end(seqprop_ptr(s));			\
- 									\
--	if (__seqcount_lock_preemptible(s))				\
-+	if (seqprop_preemptible(s))					\
- 		preempt_enable();					\
- } while (0)
- 
-@@ -501,12 +501,12 @@ static inline void raw_write_seqcount_t_end(seqcount_t *s)
-  */
- #define write_seqcount_begin_nested(s, subclass)			\
- do {									\
--	__seqcount_assert_lock_held(s);					\
-+	seqprop_assert(s);						\
- 									\
--	if (__seqcount_lock_preemptible(s))				\
-+	if (seqprop_preemptible(s))					\
- 		preempt_disable();					\
- 									\
--	write_seqcount_t_begin_nested(__seqcount_ptr(s), subclass);	\
-+	write_seqcount_t_begin_nested(seqprop_ptr(s), subclass);	\
- } while (0)
- 
- static inline void write_seqcount_t_begin_nested(seqcount_t *s, int subclass)
-@@ -528,12 +528,12 @@ static inline void write_seqcount_t_begin_nested(seqcount_t *s, int subclass)
-  */
- #define write_seqcount_begin(s)						\
- do {									\
--	__seqcount_assert_lock_held(s);					\
-+	seqprop_assert(s);						\
- 									\
--	if (__seqcount_lock_preemptible(s))				\
-+	if (seqprop_preemptible(s))					\
- 		preempt_disable();					\
- 									\
--	write_seqcount_t_begin(__seqcount_ptr(s));			\
-+	write_seqcount_t_begin(seqprop_ptr(s));				\
- } while (0)
- 
- static inline void write_seqcount_t_begin(seqcount_t *s)
-@@ -549,9 +549,9 @@ static inline void write_seqcount_t_begin(seqcount_t *s)
-  */
- #define write_seqcount_end(s)						\
- do {									\
--	write_seqcount_t_end(__seqcount_ptr(s));			\
-+	write_seqcount_t_end(seqprop_ptr(s));				\
- 									\
--	if (__seqcount_lock_preemptible(s))				\
-+	if (seqprop_preemptible(s))					\
- 		preempt_enable();					\
- } while (0)
- 
-@@ -603,7 +603,7 @@ static inline void write_seqcount_t_end(seqcount_t *s)
-  *      }
-  */
- #define raw_write_seqcount_barrier(s)					\
--	raw_write_seqcount_t_barrier(__seqcount_ptr(s))
-+	raw_write_seqcount_t_barrier(seqprop_ptr(s))
- 
- static inline void raw_write_seqcount_t_barrier(seqcount_t *s)
- {
-@@ -623,7 +623,7 @@ static inline void raw_write_seqcount_t_barrier(seqcount_t *s)
-  * will complete successfully and see data older than this.
-  */
- #define write_seqcount_invalidate(s)					\
--	write_seqcount_t_invalidate(__seqcount_ptr(s))
-+	write_seqcount_t_invalidate(seqprop_ptr(s))
- 
- static inline void write_seqcount_t_invalidate(seqcount_t *s)
- {
+ 	/* JMicron 360/1/3/5/6, match class to avoid IDE function */
+ 	{ PCI_VENDOR_ID_JMICRON, PCI_ANY_ID, PCI_ANY_ID, PCI_ANY_ID,
 -- 
 2.40.1
 
