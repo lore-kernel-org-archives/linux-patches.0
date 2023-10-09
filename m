@@ -1,30 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F9828DD9
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6E02E649
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tBzNjCf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00789C433C7;
-	Mon,  9 Oct 2023 13:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtvB8ku3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24807C433C8;
+	Mon,  9 Oct 2023 13:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858883;
-	bh=0G0hg7UukneNEO0Z4Kf+o1IoQs0+bZyYOKOyfcuM37E=;
+	s=korg; t=1696858886;
+	bh=7kr1apUnOgof/nfGWbasV0ilaEMeFeYctRygXQ+ufAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0tBzNjCf+M7x/UqmQ2e3L7guiRrWlqPN+64wg/QBV6jXvEkx8aA5LaJOHlIWcNqwt
-	 CS/vwL/PAoA4UAS5aGtWleTeldWeYA4ci/7nyJCukTNpAWRkd83KECPG90ibcsOX7Z
-	 FHwtUURC+Ic18Kh7buUUwyl1iTNV0lzWns/peb78=
+	b=GtvB8ku34lrKOHqqPuQUOiFLpIe5gKfbIjF9PDZ1iQ3JmiZPNNUpNRwKc2cw/0yTP
+	 39C9Zh2FhLGc1pytSi9Efb4BFZblq4RewS7tpPFu7+2Rhg6tZ9BqH9mB/ISQndKLNd
+	 w1XbnZp296jHUjIQ4oclRVB6w/lrHZM/l9PNq+tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	syzbot+16e3f2c77e7c5a0113f9@syzkaller.appspotmail.com,
 	Chengming Zhou <zhouchengming@bytedance.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Tejun Heo <tj@kernel.org>,
+	Zhouyi Zhou <zhouzhouyi@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Ovidiu Panait <ovidiu.panait@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 131/226] sched/cpuacct: Optimize away RCU read lock
-Date: Mon,  9 Oct 2023 15:01:32 +0200
-Message-ID: <20231009130130.186737130@linuxfoundation.org>
+Subject: [PATCH 5.10 132/226] cgroup: Fix suspicious rcu_dereference_check() usage warning
+Date: Mon,  9 Oct 2023 15:01:33 +0200
+Message-ID: <20231009130130.210024505@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -45,62 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Chengming Zhou <zhouchengming@bytedance.com>
 
-commit dc6e0818bc9a0336d9accf3ea35d146d72aa7a18 upstream.
+commit f2aa197e4794bf4c2c0c9570684f86e6fa103e8b upstream.
 
-Since cpuacct_charge() is called from the scheduler update_curr(),
-we must already have rq lock held, then the RCU read lock can
-be optimized away.
+task_css_set_check() will use rcu_dereference_check() to check for
+rcu_read_lock_held() on the read-side, which is not true after commit
+dc6e0818bc9a ("sched/cpuacct: Optimize away RCU read lock"). This
+commit drop explicit rcu_read_lock(), change to RCU-sched read-side
+critical section. So fix the RCU warning by adding check for
+rcu_read_lock_sched_held().
 
-And do the same thing in it's wrapper cgroup_account_cputime(),
-but we can't use lockdep_assert_rq_held() there, which defined
-in kernel/sched/sched.h.
-
-Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: dc6e0818bc9a ("sched/cpuacct: Optimize away RCU read lock")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Reported-by: syzbot+16e3f2c77e7c5a0113f9@syzkaller.appspotmail.com
 Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220220051426.5274-2-zhouchengming@bytedance.com
-[OP: adjusted lockdep_assert_rq_held() -> lockdep_assert_held()]
+Acked-by: Tejun Heo <tj@kernel.org>
+Tested-by: Zhouyi Zhou <zhouzhouyi@gmail.com>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20220305034103.57123-1-zhouchengming@bytedance.com
 Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cgroup.h | 2 --
- kernel/sched/cpuacct.c | 4 +---
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ include/linux/cgroup.h | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
-index 959b370733f09..7653f54189502 100644
+index 7653f54189502..c9c430712d471 100644
 --- a/include/linux/cgroup.h
 +++ b/include/linux/cgroup.h
-@@ -779,11 +779,9 @@ static inline void cgroup_account_cputime(struct task_struct *task,
- 
- 	cpuacct_charge(task, delta_exec);
- 
--	rcu_read_lock();
- 	cgrp = task_dfl_cgroup(task);
- 	if (cgroup_parent(cgrp))
- 		__cgroup_account_cputime(cgrp, delta_exec);
--	rcu_read_unlock();
- }
- 
- static inline void cgroup_account_cputime_field(struct task_struct *task,
-diff --git a/kernel/sched/cpuacct.c b/kernel/sched/cpuacct.c
-index 3c59c541dd314..8ee298321d78b 100644
---- a/kernel/sched/cpuacct.c
-+++ b/kernel/sched/cpuacct.c
-@@ -331,12 +331,10 @@ void cpuacct_charge(struct task_struct *tsk, u64 cputime)
- 	unsigned int cpu = task_cpu(tsk);
- 	struct cpuacct *ca;
- 
--	rcu_read_lock();
-+	lockdep_assert_held(&cpu_rq(cpu)->lock);
- 
- 	for (ca = task_ca(tsk); ca; ca = parent_ca(ca))
- 		*per_cpu_ptr(ca->cpuusage, cpu) += cputime;
--
--	rcu_read_unlock();
- }
- 
- /*
+@@ -451,6 +451,7 @@ extern struct mutex cgroup_mutex;
+ extern spinlock_t css_set_lock;
+ #define task_css_set_check(task, __c)					\
+ 	rcu_dereference_check((task)->cgroups,				\
++		rcu_read_lock_sched_held() ||				\
+ 		lockdep_is_held(&cgroup_mutex) ||			\
+ 		lockdep_is_held(&css_set_lock) ||			\
+ 		((task)->flags & PF_EXITING) || (__c))
 -- 
 2.40.1
 
