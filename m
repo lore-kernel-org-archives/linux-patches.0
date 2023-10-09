@@ -1,32 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA63A22F00
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC3B22F00
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdASz6iC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4861CC433C7;
-	Mon,  9 Oct 2023 13:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DnZOybYg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E96C433C7;
+	Mon,  9 Oct 2023 13:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858512;
-	bh=PZYA5LOy7JpDMTisBDYwAn3208G+2StYsy+lS021z44=;
+	s=korg; t=1696858515;
+	bh=GGwzCtq2KgYSS8DGJ6WvQ2KEotca68LlBzYr2DVVDBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kdASz6iC9Z9oQIcfbZxHbvrGnINh9l7OnSmZAeUdb70ZIRz9XHagByMp4wlggd/VH
-	 6mFJxFTNexu7GvXv4ONiODxgNiQODNBWfCOwPlWnsFWkRN31N1ubhgM3l0mjk8kDme
-	 v+QOHO/N8ZOeKjmlyH7va3/4vW/2RFXU2JW+skx4=
+	b=DnZOybYgpUzWXUS36GYEDvwYLltz6WeCaFVrE2PT+bbtPsV8edWhB83iKHuMFdx4b
+	 Ghh9yz8d4XugW5N4wGbq17MhCoqYUlB8qHC0lW2RTykR8l+OxjXGbXHbOx4RDt3AY/
+	 47daVgMIhrhaEUWDmz+2OJeO4WicbM6tS7tgo7BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Len Brown <lenb@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 014/226] ext4: do not let fstrim block system suspend
-Date: Mon,  9 Oct 2023 14:59:35 +0200
-Message-ID: <20231009130127.101581734@linuxfoundation.org>
+Subject: [PATCH 5.10 015/226] tracing: Have event inject files inc the trace array ref count
+Date: Mon,  9 Oct 2023 14:59:36 +0200
+Message-ID: <20231009130127.128866282@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -45,74 +47,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 5229a658f6453362fbb9da6bf96872ef25a7097e ]
+[ Upstream commit e5c624f027ac74f97e97c8f36c69228ac9f1102d ]
 
-Len Brown has reported that system suspend sometimes fail due to
-inability to freeze a task working in ext4_trim_fs() for one minute.
-Trimming a large filesystem on a disk that slowly processes discard
-requests can indeed take a long time. Since discard is just an advisory
-call, it is perfectly fine to interrupt it at any time and the return
-number of discarded blocks until that moment. Do that when we detect the
-task is being frozen.
+The event inject files add events for a specific trace array. For an
+instance, if the file is opened and the instance is deleted, reading or
+writing to the file will cause a use after free.
 
-Cc: stable@kernel.org
-Reported-by: Len Brown <lenb@kernel.org>
-Suggested-by: Dave Chinner <david@fromorbit.com>
-References: https://bugzilla.kernel.org/show_bug.cgi?id=216322
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230913150504.9054-2-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Up the ref count of the trace_array when a event inject file is opened.
+
+Link: https://lkml.kernel.org/r/20230907024804.292337868@goodmis.org
+Link: https://lore.kernel.org/all/1cb3aee2-19af-c472-e265-05176fe9bd84@huawei.com/
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Fixes: 6c3edaf9fd6a ("tracing: Introduce trace event injection")
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events_inject.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 2907bf57744a8..b35d59d41c896 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -16,6 +16,7 @@
- #include <linux/slab.h>
- #include <linux/nospec.h>
- #include <linux/backing-dev.h>
-+#include <linux/freezer.h>
- #include <trace/events/ext4.h>
- 
- /*
-@@ -5904,6 +5905,11 @@ static ext4_grpblk_t ext4_last_grp_cluster(struct super_block *sb,
- 					EXT4_CLUSTER_BITS(sb);
+diff --git a/kernel/trace/trace_events_inject.c b/kernel/trace/trace_events_inject.c
+index 22bcf7c51d1ee..149c7dc6a4473 100644
+--- a/kernel/trace/trace_events_inject.c
++++ b/kernel/trace/trace_events_inject.c
+@@ -323,7 +323,8 @@ event_inject_read(struct file *file, char __user *buf, size_t size,
  }
  
-+static bool ext4_trim_interrupted(void)
-+{
-+	return fatal_signal_pending(current) || freezing(current);
-+}
-+
- static int ext4_try_to_trim_range(struct super_block *sb,
- 		struct ext4_buddy *e4b, ext4_grpblk_t start,
- 		ext4_grpblk_t max, ext4_grpblk_t minblocks)
-@@ -5935,8 +5941,8 @@ static int ext4_try_to_trim_range(struct super_block *sb,
- 		free_count += next - start;
- 		start = next + 1;
- 
--		if (fatal_signal_pending(current))
--			return -ERESTARTSYS;
-+		if (ext4_trim_interrupted())
-+			return count;
- 
- 		if (need_resched()) {
- 			ext4_unlock_group(sb, e4b->bd_group);
-@@ -6063,6 +6069,8 @@ int ext4_trim_fs(struct super_block *sb, struct fstrim_range *range)
- 	end = EXT4_CLUSTERS_PER_GROUP(sb) - 1;
- 
- 	for (group = first_group; group <= last_group; group++) {
-+		if (ext4_trim_interrupted())
-+			break;
- 		grp = ext4_get_group_info(sb, group);
- 		if (!grp)
- 			continue;
+ const struct file_operations event_inject_fops = {
+-	.open = tracing_open_generic,
++	.open = tracing_open_file_tr,
+ 	.read = event_inject_read,
+ 	.write = event_inject_write,
++	.release = tracing_release_file_tr,
+ };
 -- 
 2.40.1
 
