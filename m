@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4841A735
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5ED1A735
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phW/JCKN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F67C433C8;
-	Mon,  9 Oct 2023 13:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjfzOyML"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3D8C433C9;
+	Mon,  9 Oct 2023 13:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859490;
-	bh=WmZcyGVuMhtcvPCZ3d81wXTbu0w6t4cpMSSuzxbJnTI=;
+	s=korg; t=1696859493;
+	bh=APIMEqMiAeOIRiyQ/SQ00CplohIcuIfXHLjrPZIneWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phW/JCKNY86erMLYEcp7GfbsJ0X7bqx86/ZwqJUTplxgYNCtJVxDGSBdQcmp8XRE7
-	 +wgOge5Q5xqbsKI6/uk9zBj8eI/l2+DNAMeD5AZLuSLMh65ORU2SYrUXMr8wtRtGE4
-	 3NAUbvkpQtmJhKffOLc7c2nRXTPnPCkWLG36l904=
+	b=pjfzOyMLaJ6ljgQzu/kNLywteS2VWZ8Sc+SDppABBaOtnAADBYV8CtkP1XOlQapqM
+	 5fTv7f2QpGD8uZemZ2WvCYdyLdrMcXmPJ+SCzkRLsy+x7Lf5JTVx23RPLcEJ55nA/n
+	 RCzi8Rst9q7qA9cnmd4z5hjwrq69LpIw/p59OwYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Roopa Prabhu <roopa@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	bridge@lists.linux-foundation.org,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 10/91] net: add atomic_long_t to net_device_stats fields
-Date: Mon,  9 Oct 2023 15:05:42 +0200
-Message-ID: <20231009130111.890670188@linuxfoundation.org>
+Subject: [PATCH 4.19 11/91] net: bridge: use DEV_STATS_INC()
+Date: Mon,  9 Oct 2023 15:05:43 +0200
+Message-ID: <20231009130111.927090456@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -44,162 +48,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6c1c5097781f563b70a81683ea6fdac21637573b ]
+[ Upstream commit 44bdb313da57322c9b3c108eb66981c6ec6509f4 ]
 
-Long standing KCSAN issues are caused by data-race around
-some dev->stats changes.
+syzbot/KCSAN reported data-races in br_handle_frame_finish() [1]
+This function can run from multiple cpus without mutual exclusion.
 
-Most performance critical paths already use per-cpu
-variables, or per-queue ones.
+Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
 
-It is reasonable (and more correct) to use atomic operations
-for the slow paths.
+Handles updates to dev->stats.tx_dropped while we are at it.
 
-This patch adds an union for each field of net_device_stats,
-so that we can convert paths that are not yet protected
-by a spinlock or a mutex.
+[1]
+BUG: KCSAN: data-race in br_handle_frame_finish / br_handle_frame_finish
 
-netdev_stats_to_stats64() no longer has an #if BITS_PER_LONG==64
+read-write to 0xffff8881374b2178 of 8 bytes by interrupt on cpu 1:
+br_handle_frame_finish+0xd4f/0xef0 net/bridge/br_input.c:189
+br_nf_hook_thresh+0x1ed/0x220
+br_nf_pre_routing_finish_ipv6+0x50f/0x540
+NF_HOOK include/linux/netfilter.h:304 [inline]
+br_nf_pre_routing_ipv6+0x1e3/0x2a0 net/bridge/br_netfilter_ipv6.c:178
+br_nf_pre_routing+0x526/0xba0 net/bridge/br_netfilter_hooks.c:508
+nf_hook_entry_hookfn include/linux/netfilter.h:144 [inline]
+nf_hook_bridge_pre net/bridge/br_input.c:272 [inline]
+br_handle_frame+0x4c9/0x940 net/bridge/br_input.c:417
+__netif_receive_skb_core+0xa8a/0x21e0 net/core/dev.c:5417
+__netif_receive_skb_one_core net/core/dev.c:5521 [inline]
+__netif_receive_skb+0x57/0x1b0 net/core/dev.c:5637
+process_backlog+0x21f/0x380 net/core/dev.c:5965
+__napi_poll+0x60/0x3b0 net/core/dev.c:6527
+napi_poll net/core/dev.c:6594 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6727
+__do_softirq+0xc1/0x265 kernel/softirq.c:553
+run_ksoftirqd+0x17/0x20 kernel/softirq.c:921
+smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
+kthread+0x1d7/0x210 kernel/kthread.c:388
+ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
 
-Note that the memcpy() we were using on 64bit arches
-had no provision to avoid load-tearing,
-while atomic_long_read() is providing the needed protection
-at no cost.
+read-write to 0xffff8881374b2178 of 8 bytes by interrupt on cpu 0:
+br_handle_frame_finish+0xd4f/0xef0 net/bridge/br_input.c:189
+br_nf_hook_thresh+0x1ed/0x220
+br_nf_pre_routing_finish_ipv6+0x50f/0x540
+NF_HOOK include/linux/netfilter.h:304 [inline]
+br_nf_pre_routing_ipv6+0x1e3/0x2a0 net/bridge/br_netfilter_ipv6.c:178
+br_nf_pre_routing+0x526/0xba0 net/bridge/br_netfilter_hooks.c:508
+nf_hook_entry_hookfn include/linux/netfilter.h:144 [inline]
+nf_hook_bridge_pre net/bridge/br_input.c:272 [inline]
+br_handle_frame+0x4c9/0x940 net/bridge/br_input.c:417
+__netif_receive_skb_core+0xa8a/0x21e0 net/core/dev.c:5417
+__netif_receive_skb_one_core net/core/dev.c:5521 [inline]
+__netif_receive_skb+0x57/0x1b0 net/core/dev.c:5637
+process_backlog+0x21f/0x380 net/core/dev.c:5965
+__napi_poll+0x60/0x3b0 net/core/dev.c:6527
+napi_poll net/core/dev.c:6594 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6727
+__do_softirq+0xc1/0x265 kernel/softirq.c:553
+do_softirq+0x5e/0x90 kernel/softirq.c:454
+__local_bh_enable_ip+0x64/0x70 kernel/softirq.c:381
+__raw_spin_unlock_bh include/linux/spinlock_api_smp.h:167 [inline]
+_raw_spin_unlock_bh+0x36/0x40 kernel/locking/spinlock.c:210
+spin_unlock_bh include/linux/spinlock.h:396 [inline]
+batadv_tt_local_purge+0x1a8/0x1f0 net/batman-adv/translation-table.c:1356
+batadv_tt_purge+0x2b/0x630 net/batman-adv/translation-table.c:3560
+process_one_work kernel/workqueue.c:2630 [inline]
+process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2703
+worker_thread+0x525/0x730 kernel/workqueue.c:2784
+kthread+0x1d7/0x210 kernel/kthread.c:388
+ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
 
+value changed: 0x00000000000d7190 -> 0x00000000000d7191
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 14848 Comm: kworker/u4:11 Not tainted 6.6.0-rc1-syzkaller-00236-gad8a69f361b9 #0
+
+Fixes: 1c29fc4989bc ("[BRIDGE]: keep track of received multicast packets")
+Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 44bdb313da57 ("net: bridge: use DEV_STATS_INC()")
+Cc: Roopa Prabhu <roopa@nvidia.com>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: bridge@lists.linux-foundation.org
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20230918091351.1356153-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h | 58 +++++++++++++++++++++++----------------
- include/net/dst.h         |  5 ++--
- net/core/dev.c            | 14 ++--------
- 3 files changed, 40 insertions(+), 37 deletions(-)
+ net/bridge/br_forward.c | 4 ++--
+ net/bridge/br_input.c   | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 7e9df3854420a..e977118111f61 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -162,31 +162,38 @@ static inline bool dev_xmit_complete(int rc)
-  *	(unsigned long) so they can be read and written atomically.
-  */
+diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
+index 48ddc60b4fbde..c07a47d65c398 100644
+--- a/net/bridge/br_forward.c
++++ b/net/bridge/br_forward.c
+@@ -122,7 +122,7 @@ static int deliver_clone(const struct net_bridge_port *prev,
  
-+#define NET_DEV_STAT(FIELD)			\
-+	union {					\
-+		unsigned long FIELD;		\
-+		atomic_long_t __##FIELD;	\
-+	}
-+
- struct net_device_stats {
--	unsigned long	rx_packets;
--	unsigned long	tx_packets;
--	unsigned long	rx_bytes;
--	unsigned long	tx_bytes;
--	unsigned long	rx_errors;
--	unsigned long	tx_errors;
--	unsigned long	rx_dropped;
--	unsigned long	tx_dropped;
--	unsigned long	multicast;
--	unsigned long	collisions;
--	unsigned long	rx_length_errors;
--	unsigned long	rx_over_errors;
--	unsigned long	rx_crc_errors;
--	unsigned long	rx_frame_errors;
--	unsigned long	rx_fifo_errors;
--	unsigned long	rx_missed_errors;
--	unsigned long	tx_aborted_errors;
--	unsigned long	tx_carrier_errors;
--	unsigned long	tx_fifo_errors;
--	unsigned long	tx_heartbeat_errors;
--	unsigned long	tx_window_errors;
--	unsigned long	rx_compressed;
--	unsigned long	tx_compressed;
-+	NET_DEV_STAT(rx_packets);
-+	NET_DEV_STAT(tx_packets);
-+	NET_DEV_STAT(rx_bytes);
-+	NET_DEV_STAT(tx_bytes);
-+	NET_DEV_STAT(rx_errors);
-+	NET_DEV_STAT(tx_errors);
-+	NET_DEV_STAT(rx_dropped);
-+	NET_DEV_STAT(tx_dropped);
-+	NET_DEV_STAT(multicast);
-+	NET_DEV_STAT(collisions);
-+	NET_DEV_STAT(rx_length_errors);
-+	NET_DEV_STAT(rx_over_errors);
-+	NET_DEV_STAT(rx_crc_errors);
-+	NET_DEV_STAT(rx_frame_errors);
-+	NET_DEV_STAT(rx_fifo_errors);
-+	NET_DEV_STAT(rx_missed_errors);
-+	NET_DEV_STAT(tx_aborted_errors);
-+	NET_DEV_STAT(tx_carrier_errors);
-+	NET_DEV_STAT(tx_fifo_errors);
-+	NET_DEV_STAT(tx_heartbeat_errors);
-+	NET_DEV_STAT(tx_window_errors);
-+	NET_DEV_STAT(rx_compressed);
-+	NET_DEV_STAT(tx_compressed);
- };
-+#undef NET_DEV_STAT
+ 	skb = skb_clone(skb, GFP_ATOMIC);
+ 	if (!skb) {
+-		dev->stats.tx_dropped++;
++		DEV_STATS_INC(dev, tx_dropped);
+ 		return -ENOMEM;
+ 	}
  
+@@ -261,7 +261,7 @@ static void maybe_deliver_addr(struct net_bridge_port *p, struct sk_buff *skb,
  
- #include <linux/cache.h>
-@@ -4842,4 +4849,9 @@ do {								\
- #define PTYPE_HASH_SIZE	(16)
- #define PTYPE_HASH_MASK	(PTYPE_HASH_SIZE - 1)
+ 	skb = skb_copy(skb, GFP_ATOMIC);
+ 	if (!skb) {
+-		dev->stats.tx_dropped++;
++		DEV_STATS_INC(dev, tx_dropped);
+ 		return;
+ 	}
  
-+/* Note: Avoid these macros in fast path, prefer per-cpu or per-queue counters. */
-+#define DEV_STATS_INC(DEV, FIELD) atomic_long_inc(&(DEV)->stats.__##FIELD)
-+#define DEV_STATS_ADD(DEV, FIELD, VAL) 	\
-+		atomic_long_add((VAL), &(DEV)->stats.__##FIELD)
-+
- #endif	/* _LINUX_NETDEVICE_H */
-diff --git a/include/net/dst.h b/include/net/dst.h
-index 50258a8131377..97267997601f5 100644
---- a/include/net/dst.h
-+++ b/include/net/dst.h
-@@ -362,9 +362,8 @@ static inline void __skb_tunnel_rx(struct sk_buff *skb, struct net_device *dev,
- static inline void skb_tunnel_rx(struct sk_buff *skb, struct net_device *dev,
- 				 struct net *net)
- {
--	/* TODO : stats should be SMP safe */
--	dev->stats.rx_packets++;
--	dev->stats.rx_bytes += skb->len;
-+	DEV_STATS_INC(dev, rx_packets);
-+	DEV_STATS_ADD(dev, rx_bytes, skb->len);
- 	__skb_tunnel_rx(skb, dev, net);
- }
- 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index a9c8660a2570f..3bf40c288c032 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -9035,24 +9035,16 @@ void netdev_run_todo(void)
- void netdev_stats_to_stats64(struct rtnl_link_stats64 *stats64,
- 			     const struct net_device_stats *netdev_stats)
- {
--#if BITS_PER_LONG == 64
--	BUILD_BUG_ON(sizeof(*stats64) < sizeof(*netdev_stats));
--	memcpy(stats64, netdev_stats, sizeof(*netdev_stats));
--	/* zero out counters that only exist in rtnl_link_stats64 */
--	memset((char *)stats64 + sizeof(*netdev_stats), 0,
--	       sizeof(*stats64) - sizeof(*netdev_stats));
--#else
--	size_t i, n = sizeof(*netdev_stats) / sizeof(unsigned long);
--	const unsigned long *src = (const unsigned long *)netdev_stats;
-+	size_t i, n = sizeof(*netdev_stats) / sizeof(atomic_long_t);
-+	const atomic_long_t *src = (atomic_long_t *)netdev_stats;
- 	u64 *dst = (u64 *)stats64;
- 
- 	BUILD_BUG_ON(n > sizeof(*stats64) / sizeof(u64));
- 	for (i = 0; i < n; i++)
--		dst[i] = src[i];
-+		dst[i] = atomic_long_read(&src[i]);
- 	/* zero out counters that only exist in rtnl_link_stats64 */
- 	memset((char *)stats64 + n * sizeof(u64), 0,
- 	       sizeof(*stats64) - n * sizeof(u64));
--#endif
- }
- EXPORT_SYMBOL(netdev_stats_to_stats64);
- 
+diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
+index 14c2fdc268eac..f3938337ff874 100644
+--- a/net/bridge/br_input.c
++++ b/net/bridge/br_input.c
+@@ -146,12 +146,12 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
+ 			if ((mdst && mdst->host_joined) ||
+ 			    br_multicast_is_router(br)) {
+ 				local_rcv = true;
+-				br->dev->stats.multicast++;
++				DEV_STATS_INC(br->dev, multicast);
+ 			}
+ 			mcast_hit = true;
+ 		} else {
+ 			local_rcv = true;
+-			br->dev->stats.multicast++;
++			DEV_STATS_INC(br->dev, multicast);
+ 		}
+ 		break;
+ 	case BR_PKT_UNICAST:
 -- 
 2.40.1
 
