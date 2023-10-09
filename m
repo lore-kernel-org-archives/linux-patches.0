@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCB8339BC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABB334180
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K154YeEm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92E6C433CA;
-	Mon,  9 Oct 2023 13:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZsftgGZb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA0DC433C8;
+	Mon,  9 Oct 2023 13:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858586;
-	bh=1rzaYniJioSM6u5RB8kFWaFicwKFfmMFV/+ddYpVTms=;
+	s=korg; t=1696858589;
+	bh=QjfACmh1S75hqX+sjUWm7+CuuNwdvR/Un0oqaS3u7ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K154YeEmvFbCaHAtr/L6zjpPwTneJ/QQlXsh4I1KsdFHLoFPDLA2yfc72lWBcAocg
-	 mfW0pLTFpQ78hqYV4D1NNMkEhml/v1u2RiQpXdAIYpNM8qthiLgGZucg4I0pBIs36N
-	 1knPhq24I0WYvHx1bXo6qfVeYit93ptRiIL86pzY=
+	b=ZsftgGZbGQU51ZhirHzVtn2P6t2+8OXzjyxw8MCzJrKZGe39rV86G7qrSVSW1q45b
+	 3H+WVposPja3dEw6KEzWmkXBWOT4NhybQXekUBqbrIHa7MVuMdK93Shvy+YUSf/YFU
+	 4ThKOSFk7m68dR6bVT6tcySfH4FW7UozSmMpMzj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/226] selftests: tls: swap the TX and RX sockets in some tests
-Date: Mon,  9 Oct 2023 14:59:58 +0200
-Message-ID: <20231009130127.760590456@linuxfoundation.org>
+Subject: [PATCH 5.10 038/226] ASoC: imx-audmix: Fix return error with devm_clk_get()
+Date: Mon,  9 Oct 2023 14:59:59 +0200
+Message-ID: <20231009130127.787251461@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,53 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit c326ca98446e0ae4fee43a40acf79412b74cfedb ]
+[ Upstream commit b19a5733de255cabba5feecabf6e900638b582d1 ]
 
-tls.sendmsg_large and tls.sendmsg_multiple are trying to send through
-the self->cfd socket (only configured with TLS_RX) and to receive through
-the self->fd socket (only configured with TLS_TX), so they're not using
-kTLS at all. Swap the sockets.
+The devm_clk_get() can return -EPROBE_DEFER error,
+modify the error code to be -EINVAL is not correct, which
+cause the -EPROBE_DEFER error is not correctly handled.
 
-Fixes: 7f657d5bf507 ("selftests: tls: add selftests for TLS sockets")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This patch is to fix the return error code.
+
+Fixes: b86ef5367761 ("ASoC: fsl: Add Audio Mixer machine driver")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://lore.kernel.org/r/1694757731-18308-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tls.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/fsl/imx-audmix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/tls.c b/tools/testing/selftests/net/tls.c
-index 44984741bd41d..44a25a9f1f722 100644
---- a/tools/testing/selftests/net/tls.c
-+++ b/tools/testing/selftests/net/tls.c
-@@ -384,11 +384,11 @@ TEST_F(tls, sendmsg_large)
- 
- 		msg.msg_iov = &vec;
- 		msg.msg_iovlen = 1;
--		EXPECT_EQ(sendmsg(self->cfd, &msg, 0), send_len);
-+		EXPECT_EQ(sendmsg(self->fd, &msg, 0), send_len);
+diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
+index 77d8234c7ac49..bb2aab1d2389e 100644
+--- a/sound/soc/fsl/imx-audmix.c
++++ b/sound/soc/fsl/imx-audmix.c
+@@ -322,7 +322,7 @@ static int imx_audmix_probe(struct platform_device *pdev)
+ 	if (IS_ERR(priv->cpu_mclk)) {
+ 		ret = PTR_ERR(priv->cpu_mclk);
+ 		dev_err(&cpu_pdev->dev, "failed to get DAI mclk1: %d\n", ret);
+-		return -EINVAL;
++		return ret;
  	}
  
- 	while (recvs++ < sends) {
--		EXPECT_NE(recv(self->fd, mem, send_len, 0), -1);
-+		EXPECT_NE(recv(self->cfd, mem, send_len, 0), -1);
- 	}
- 
- 	free(mem);
-@@ -417,9 +417,9 @@ TEST_F(tls, sendmsg_multiple)
- 	msg.msg_iov = vec;
- 	msg.msg_iovlen = iov_len;
- 
--	EXPECT_EQ(sendmsg(self->cfd, &msg, 0), total_len);
-+	EXPECT_EQ(sendmsg(self->fd, &msg, 0), total_len);
- 	buf = malloc(total_len);
--	EXPECT_NE(recv(self->fd, buf, total_len, 0), -1);
-+	EXPECT_NE(recv(self->cfd, buf, total_len, 0), -1);
- 	for (i = 0; i < iov_len; i++) {
- 		EXPECT_EQ(memcmp(test_strs[i], buf + len_cmp,
- 				 strlen(test_strs[i])),
+ 	priv->audmix_pdev = audmix_pdev;
 -- 
 2.40.1
 
