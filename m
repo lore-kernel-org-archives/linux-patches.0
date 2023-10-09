@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068181A735
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD941A71F
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdOtbUiE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7477DC433C7;
-	Mon,  9 Oct 2023 13:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IervZeCo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FD5C433CA;
+	Mon,  9 Oct 2023 13:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858343;
-	bh=b4kTax/GDPurPKk1Ie1ZqIVaKIFwhqFlx7JUK8J7iR0=;
+	s=korg; t=1696858347;
+	bh=uA4Ii6thaw1RKyKoG7hU5wA4BgxApKPt9F5KZtqsNJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bdOtbUiEYs0DxAKMlZg60eumwtkzCQIIdhxeh3m32zntDyJlab6Cj6jvIhejzIhps
-	 7j8sLycEXJMhezf0Q9FG5CcwuWTz0hNVR/OjFjGDa4P8Nxrs8zqTZ03R2h26IEMvER
-	 yn5Wf4wh/V3glsSkkMU+Wiwsx+Lz9mYQz0VnPWoo=
+	b=IervZeCo4cwciXNgHKmdjFJfjuBTul0vYArh1LgbjKi/dhXksHNUIvZv0g+DYMzku
+	 NH5BJQX9yqMtvxhImSDzQZ0eebr9IlplBsRxAWY0HVqYpnDMJ1JCaQxQb01ze5g6wi
+	 hnF6gVT3gmj0i9M+PgQjzIHpv9wKTq4trcQanzhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Kees Cook <keescook@chromium.org>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.4 092/131] qed/red_ll2: Fix undefined behavior bug in struct qed_ll2_info
-Date: Mon,  9 Oct 2023 15:02:12 +0200
-Message-ID: <20231009130119.198288736@linuxfoundation.org>
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 5.4 093/131] wifi: mwifiex: Fix tlv_buf_left calculation
+Date: Mon,  9 Oct 2023 15:02:13 +0200
+Message-ID: <20231009130119.233415785@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -45,114 +44,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit eea03d18af9c44235865a4bc9bec4d780ef6cf21 upstream.
+commit eec679e4ac5f47507774956fb3479c206e761af7 upstream.
 
-The flexible structure (a structure that contains a flexible-array member
-at the end) `qed_ll2_tx_packet` is nested within the second layer of
-`struct qed_ll2_info`:
+In a TLV encoding scheme, the Length part represents the length after
+the header containing the values for type and length. In this case,
+`tlv_len` should be:
 
-struct qed_ll2_tx_packet {
-	...
-        /* Flexible Array of bds_set determined by max_bds_per_packet */
-        struct {
-                struct core_tx_bd *txq_bd;
-                dma_addr_t tx_frag;
-                u16 frag_len;
-        } bds_set[];
-};
+tlv_len == (sizeof(*tlv_rxba) - 1) - sizeof(tlv_rxba->header) + tlv_bitmap_len
 
-struct qed_ll2_tx_queue {
-	...
-	struct qed_ll2_tx_packet cur_completing_packet;
-};
+Notice that the `- 1` accounts for the one-element array `bitmap`, which
+1-byte size is already included in `sizeof(*tlv_rxba)`.
 
-struct qed_ll2_info {
-	...
-	struct qed_ll2_tx_queue tx_queue;
-        struct qed_ll2_cbs cbs;
-};
+So, if the above is correct, there is a double-counting of some members
+in `struct mwifiex_ie_types_rxba_sync`, when `tlv_buf_left` and `tmp`
+are calculated:
 
-The problem is that member `cbs` in `struct qed_ll2_info` is placed just
-after an object of type `struct qed_ll2_tx_queue`, which is in itself
-an implicit flexible structure, which by definition ends in a flexible
-array member, in this case `bds_set`. This causes an undefined behavior
-bug at run-time when dynamic memory is allocated for `bds_set`, which
-could lead to a serious issue if `cbs` in `struct qed_ll2_info` is
-overwritten by the contents of `bds_set`. Notice that the type of `cbs`
-is a structure full of function pointers (and a cookie :) ):
+968                 tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
+969                 tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
 
-include/linux/qed/qed_ll2_if.h:
-107 typedef
-108 void (*qed_ll2_complete_rx_packet_cb)(void *cxt,
-109                                       struct qed_ll2_comp_rx_data *data);
-110
-111 typedef
-112 void (*qed_ll2_release_rx_packet_cb)(void *cxt,
-113                                      u8 connection_handle,
-114                                      void *cookie,
-115                                      dma_addr_t rx_buf_addr,
-116                                      bool b_last_packet);
-117
-118 typedef
-119 void (*qed_ll2_complete_tx_packet_cb)(void *cxt,
-120                                       u8 connection_handle,
-121                                       void *cookie,
-122                                       dma_addr_t first_frag_addr,
-123                                       bool b_last_fragment,
-124                                       bool b_last_packet);
-125
-126 typedef
-127 void (*qed_ll2_release_tx_packet_cb)(void *cxt,
-128                                      u8 connection_handle,
-129                                      void *cookie,
-130                                      dma_addr_t first_frag_addr,
-131                                      bool b_last_fragment, bool b_last_packet);
-132
-133 typedef
-134 void (*qed_ll2_slowpath_cb)(void *cxt, u8 connection_handle,
-135                             u32 opaque_data_0, u32 opaque_data_1);
-136
-137 struct qed_ll2_cbs {
-138         qed_ll2_complete_rx_packet_cb rx_comp_cb;
-139         qed_ll2_release_rx_packet_cb rx_release_cb;
-140         qed_ll2_complete_tx_packet_cb tx_comp_cb;
-141         qed_ll2_release_tx_packet_cb tx_release_cb;
-142         qed_ll2_slowpath_cb slowpath_cb;
-143         void *cookie;
-144 };
+in specific, members:
 
-Fix this by moving the declaration of `cbs` to the  middle of its
-containing structure `qed_ll2_info`, preventing it from being
-overwritten by the contents of `bds_set` at run-time.
+drivers/net/wireless/marvell/mwifiex/fw.h:777
+ 777         u8 mac[ETH_ALEN];
+ 778         u8 tid;
+ 779         u8 reserved;
+ 780         __le16 seq_num;
+ 781         __le16 bitmap_len;
 
-This bug was introduced in 2017, when `bds_set` was converted to a
-one-element array, and started to be used as a Variable Length Object
-(VLO) at run-time.
+This is clearly wrong, and affects the subsequent decoding of data in
+`event_buf` through `tlv_rxba`:
 
-Fixes: f5823fe6897c ("qed: Add ll2 option to limit the number of bds per packet")
+970                 tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
+
+Fix this by using `sizeof(tlv_rxba->header)` instead of `sizeof(*tlv_rxba)`
+in the calculation of `tlv_buf_left` and `tmp`.
+
+This results in the following binary differences before/after changes:
+
+| drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
+| @@ -4698,11 +4698,11 @@
+|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:968
+|                 tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
+| -    1da7:      lea    -0x11(%rbx),%edx
+| +    1da7:      lea    -0x4(%rbx),%edx
+|      1daa:      movzwl %bp,%eax
+|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:969
+|                 tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
+| -    1dad:      lea    0x11(%r15,%rbp,1),%r15
+| +    1dad:      lea    0x4(%r15,%rbp,1),%r15
+
+The above reflects the desired change: avoid counting 13 too many bytes;
+which is the total size of the double-counted members in
+`struct mwifiex_ie_types_rxba_sync`:
+
+$ pahole -C mwifiex_ie_types_rxba_sync drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
+struct mwifiex_ie_types_rxba_sync {
+	struct mwifiex_ie_types_header header;           /*     0     4 */
+
+     |-----------------------------------------------------------------------
+     |  u8                         mac[6];               /*     4     6 */  |
+     |	u8                         tid;                  /*    10     1 */  |
+     |  u8                         reserved;             /*    11     1 */  |
+     | 	__le16                     seq_num;              /*    12     2 */  |
+     | 	__le16                     bitmap_len;           /*    14     2 */  |
+     |  u8                         bitmap[1];            /*    16     1 */  |
+     |----------------------------------------------------------------------|
+								  | 13 bytes|
+								  -----------
+
+	/* size: 17, cachelines: 1, members: 7 */
+	/* last cacheline: 17 bytes */
+} __attribute__((__packed__));
+
+Fixes: 99ffe72cdae4 ("mwifiex: process rxba_sync event")
 Cc: stable@vger.kernel.org
 Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/ZQ+Nz8DfPg56pIzr@work
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/06668edd68e7a26bbfeebd1201ae077a2a7a8bce.1692931954.git.gustavoars@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_ll2.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/qlogic/qed/qed_ll2.h
-+++ b/drivers/net/ethernet/qlogic/qed/qed_ll2.h
-@@ -123,9 +123,9 @@ struct qed_ll2_info {
- 	enum core_tx_dest tx_dest;
- 	u8 tx_stats_en;
- 	bool main_func_queue;
-+	struct qed_ll2_cbs cbs;
- 	struct qed_ll2_rx_queue rx_queue;
- 	struct qed_ll2_tx_queue tx_queue;
--	struct qed_ll2_cbs cbs;
- };
+--- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
+@@ -977,8 +977,8 @@ void mwifiex_11n_rxba_sync_event(struct
+ 			}
+ 		}
  
- /**
+-		tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
+-		tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
++		tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
++		tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
+ 		tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
+ 	}
+ }
 
 
