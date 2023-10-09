@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579C2199B1
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E587223D1
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNDVWTbn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC13C433C8;
-	Mon,  9 Oct 2023 13:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saswrmp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBC5C433C8;
+	Mon,  9 Oct 2023 13:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857354;
-	bh=saTOOWlO9B9bsibdYgd+gcqnde7bXbCmkif2oQuIc6o=;
+	s=korg; t=1696857357;
+	bh=N/MWjWmFzVJRWLgctxQbz2015EbTNB0orRAByQLZceA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNDVWTbnWLTJ7bDb7UEKloPNvhyzQyD2D11b3XkrF7LlrMLsHEIjETVlXNQsrx8PP
-	 ukBdWrR8mcY5cVnAm8kwKwZBIoP9XlzQNDSK5xCAIqQA0936xXmuXR7T5tytMrPSvv
-	 /7U4ci0zdAXS8gLJEhrNBpkPBYbFOZ2oO587Mgrw=
+	b=saswrmp+tceGF6cUiohXuu6Q9VUr7qMKmLFLlvvFhStn/vRF5RKjR2901BLqVINWe
+	 imyHcvdeFGwDgBJNQ2jNdh5C0NC9YqBsrzEUZ/SiHwnn6x6Iy/qTrLVH8nnyKBEwp+
+	 EbBs2IefBAIqietGh4NcktML9/DRtpME9JrUvX3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sameer Pujar <spujar@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/162] ALSA: hda/realtek - ALC287 Realtek I2S speaker platform support
-Date: Mon,  9 Oct 2023 14:59:48 +0200
-Message-ID: <20231009130123.153516539@linuxfoundation.org>
+Subject: [PATCH 6.1 008/162] ASoC: soc-utils: Export snd_soc_dai_is_dummy() symbol
+Date: Mon,  9 Oct 2023 14:59:49 +0200
+Message-ID: <20231009130123.179772993@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -42,41 +42,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Sameer Pujar <spujar@nvidia.com>
 
-[ Upstream commit 41b07476da38ac2878a14e5b8fe0312c41ea36e3 ]
+[ Upstream commit f101583fa9f8c3f372d4feb61d67da0ccbf4d9a5 ]
 
-New platform SSID:0x231f.
+Export symbol snd_soc_dai_is_dummy() for usage outside core driver
+modules. This is required by Tegra ASoC machine driver.
 
-0x17 was only speaker pin, DAC assigned will be 0x03. Headphone
-assigned to 0x02.
-Playback via headphone will get EQ filter processing.
-So, it needs to swap DAC.
-
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/8d63c6e360124e3ea2523753050e6f05@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sameer Pujar <spujar@nvidia.com>
+Link: https://lore.kernel.org/r/1694098945-32760-2-git-send-email-spujar@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/soc-utils.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 62476b6fd248c..3bea49e772a1f 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10544,6 +10544,10 @@ static const struct snd_hda_pin_quirk alc269_pin_fixup_tbl[] = {
- 		{0x17, 0x90170110},
- 		{0x19, 0x03a11030},
- 		{0x21, 0x03211020}),
-+	SND_HDA_PIN_QUIRK(0x10ec0287, 0x17aa, "Lenovo", ALC287_FIXUP_THINKPAD_I2S_SPK,
-+		{0x17, 0x90170110}, /* 0x231f with RTK I2S AMP */
-+		{0x19, 0x04a11040},
-+		{0x21, 0x04211020}),
- 	SND_HDA_PIN_QUIRK(0x10ec0286, 0x1025, "Acer", ALC286_FIXUP_ACER_AIO_MIC_NO_PRESENCE,
- 		{0x12, 0x90a60130},
- 		{0x17, 0x90170110},
+diff --git a/sound/soc/soc-utils.c b/sound/soc/soc-utils.c
+index a4dba0b751e76..1bbd1d077dfd9 100644
+--- a/sound/soc/soc-utils.c
++++ b/sound/soc/soc-utils.c
+@@ -217,6 +217,7 @@ int snd_soc_dai_is_dummy(struct snd_soc_dai *dai)
+ 		return 1;
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(snd_soc_dai_is_dummy);
+ 
+ int snd_soc_component_is_dummy(struct snd_soc_component *component)
+ {
 -- 
 2.40.1
 
