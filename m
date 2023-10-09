@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8756B339BC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AC93398C
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNaHQJ93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016DDC433C8;
-	Mon,  9 Oct 2023 13:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VALHYzvm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23510C433C9;
+	Mon,  9 Oct 2023 13:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858487;
-	bh=kfXmAORfbMLIlpM163DOqiP3mtJYReik7WZWuJBDYLw=;
+	s=korg; t=1696858490;
+	bh=ThS54CLWG+zL18PFo1o98wN9nKs43M8/IlHyVeNlRbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNaHQJ93BhdN95ltR8CTiQWjkj+D//o8d5qEa9bmcUVCIb0EpuNdLDrDYDtUo9n8e
-	 F1qYXgw7AxVaneeszS3/pLSRdICSoaFT5Lr5Oo/I6csB3zLDJ/VA5MXNlEBitBPrXR
-	 pgBAIqbwqyIvYD8T4QTFuRc75w0BP7h3+6b6XhiI=
+	b=VALHYzvmxZZSXTWe6EOVuvC+MR+bAHCSRvFBJpiSs3kH4QGZNeI/OKDaa6MJ21iMP
+	 PHqOF8IZsNyD+m1PiMiKAILT0vi05ric0yLWOQNVW8uE+TT2DF3d0O4RGA2YT3Iavc
+	 ivxeeW8r9rmWS8OoI5upJxHhDV7Qda9zjp3g3l28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiji Yang <yangshiji66@outlook.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 101/131] wifi: mt76: mt76x02: fix MT76x0 external LNA gain handling
-Date: Mon,  9 Oct 2023 15:02:21 +0200
-Message-ID: <20231009130119.509757215@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 5.4 131/131] ima: rework CONFIG_IMA dependency block
+Date: Mon,  9 Oct 2023 15:02:51 +0200
+Message-ID: <20231009130120.426634053@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,78 +41,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 684e45e120b82deccaf8b85633905304a3bbf56d ]
+commit 91e326563ee34509c35267808a4b1b3ea3db62a8 upstream.
 
-On MT76x0, LNA gain should be applied for both external and internal LNA.
-On MT76x2, LNA gain should be treated as 0 for external LNA.
-Move the LNA type based logic to mt76x2 in order to fix mt76x0.
+Changing the direct dependencies of IMA_BLACKLIST_KEYRING and
+IMA_LOAD_X509 caused them to no longer depend on IMA, but a
+a configuration without IMA results in link failures:
 
-Fixes: 2daa67588f34 ("mt76x0: unify lna_gain parsing")
-Reported-by: Shiji Yang <yangshiji66@outlook.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230919194747.31647-1-nbd@nbd.name
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+arm-linux-gnueabi-ld: security/integrity/iint.o: in function `integrity_load_keys':
+iint.c:(.init.text+0xd8): undefined reference to `ima_load_x509'
+
+aarch64-linux-ld: security/integrity/digsig_asymmetric.o: in function `asymmetric_verify':
+digsig_asymmetric.c:(.text+0x104): undefined reference to `ima_blacklist_keyring'
+
+Adding explicit dependencies on IMA would fix this, but a more reliable
+way to do this is to enclose the entire Kconfig file in an 'if IMA' block.
+This also allows removing the existing direct dependencies.
+
+Fixes: be210c6d3597f ("ima: Finish deprecation of IMA_TRUSTED_KEYRING Kconfig")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c |  7 -------
- drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c  | 13 +++++++++++--
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ security/integrity/ima/Kconfig |   16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-index c54c50fd639a9..c0227b20b6a31 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-@@ -131,15 +131,8 @@ u8 mt76x02_get_lna_gain(struct mt76x02_dev *dev,
- 			s8 *lna_2g, s8 *lna_5g,
- 			struct ieee80211_channel *chan)
- {
--	u16 val;
- 	u8 lna;
+--- a/security/integrity/ima/Kconfig
++++ b/security/integrity/ima/Kconfig
+@@ -29,9 +29,11 @@ config IMA
+ 	  to learn more about IMA.
+ 	  If unsure, say N.
  
--	val = mt76x02_eeprom_get(dev, MT_EE_NIC_CONF_1);
--	if (val & MT_EE_NIC_CONF_1_LNA_EXT_2G)
--		*lna_2g = 0;
--	if (val & MT_EE_NIC_CONF_1_LNA_EXT_5G)
--		memset(lna_5g, 0, sizeof(s8) * 3);
--
- 	if (chan->band == NL80211_BAND_2GHZ)
- 		lna = *lna_2g;
- 	else if (chan->hw_value <= 64)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
-index 9f91556c7f38d..3ee945eafa4d4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
-@@ -251,7 +251,8 @@ void mt76x2_read_rx_gain(struct mt76x02_dev *dev)
- 	struct ieee80211_channel *chan = dev->mt76.chandef.chan;
- 	int channel = chan->hw_value;
- 	s8 lna_5g[3], lna_2g;
--	u8 lna;
-+	bool use_lna;
-+	u8 lna = 0;
- 	u16 val;
- 
- 	if (chan->band == NL80211_BAND_2GHZ)
-@@ -270,7 +271,15 @@ void mt76x2_read_rx_gain(struct mt76x02_dev *dev)
- 	dev->cal.rx.mcu_gain |= (lna_5g[1] & 0xff) << 16;
- 	dev->cal.rx.mcu_gain |= (lna_5g[2] & 0xff) << 24;
- 
--	lna = mt76x02_get_lna_gain(dev, &lna_2g, lna_5g, chan);
-+	val = mt76x02_eeprom_get(dev, MT_EE_NIC_CONF_1);
-+	if (chan->band == NL80211_BAND_2GHZ)
-+		use_lna = !(val & MT_EE_NIC_CONF_1_LNA_EXT_2G);
-+	else
-+		use_lna = !(val & MT_EE_NIC_CONF_1_LNA_EXT_5G);
++if IMA
 +
-+	if (use_lna)
-+		lna = mt76x02_get_lna_gain(dev, &lna_2g, lna_5g, chan);
+ config IMA_KEXEC
+ 	bool "Enable carrying the IMA measurement list across a soft boot"
+-	depends on IMA && TCG_TPM && HAVE_IMA_KEXEC
++	depends on TCG_TPM && HAVE_IMA_KEXEC
+ 	default n
+ 	help
+ 	   TPM PCRs are only reset on a hard reboot.  In order to validate
+@@ -43,7 +45,6 @@ config IMA_KEXEC
+ 
+ config IMA_MEASURE_PCR_IDX
+ 	int
+-	depends on IMA
+ 	range 8 14
+ 	default 10
+ 	help
+@@ -53,7 +54,7 @@ config IMA_MEASURE_PCR_IDX
+ 
+ config IMA_LSM_RULES
+ 	bool
+-	depends on IMA && AUDIT && (SECURITY_SELINUX || SECURITY_SMACK)
++	depends on AUDIT && (SECURITY_SELINUX || SECURITY_SMACK)
+ 	default y
+ 	help
+ 	  Disabling this option will disregard LSM based policy rules.
+@@ -61,7 +62,6 @@ config IMA_LSM_RULES
+ choice
+ 	prompt "Default template"
+ 	default IMA_NG_TEMPLATE
+-	depends on IMA
+ 	help
+ 	  Select the default IMA measurement template.
+ 
+@@ -80,14 +80,12 @@ endchoice
+ 
+ config IMA_DEFAULT_TEMPLATE
+ 	string
+-	depends on IMA
+ 	default "ima-ng" if IMA_NG_TEMPLATE
+ 	default "ima-sig" if IMA_SIG_TEMPLATE
+ 
+ choice
+ 	prompt "Default integrity hash algorithm"
+ 	default IMA_DEFAULT_HASH_SHA1
+-	depends on IMA
+ 	help
+ 	   Select the default hash algorithm used for the measurement
+ 	   list, integrity appraisal and audit log.  The compiled default
+@@ -113,7 +111,6 @@ endchoice
+ 
+ config IMA_DEFAULT_HASH
+ 	string
+-	depends on IMA
+ 	default "sha1" if IMA_DEFAULT_HASH_SHA1
+ 	default "sha256" if IMA_DEFAULT_HASH_SHA256
+ 	default "sha512" if IMA_DEFAULT_HASH_SHA512
+@@ -121,7 +118,6 @@ config IMA_DEFAULT_HASH
+ 
+ config IMA_WRITE_POLICY
+ 	bool "Enable multiple writes to the IMA policy"
+-	depends on IMA
+ 	default n
+ 	help
+ 	  IMA policy can now be updated multiple times.  The new rules get
+@@ -132,7 +128,6 @@ config IMA_WRITE_POLICY
+ 
+ config IMA_READ_POLICY
+ 	bool "Enable reading back the current IMA policy"
+-	depends on IMA
+ 	default y if IMA_WRITE_POLICY
+ 	default n if !IMA_WRITE_POLICY
+ 	help
+@@ -142,7 +137,6 @@ config IMA_READ_POLICY
+ 
+ config IMA_APPRAISE
+ 	bool "Appraise integrity measurements"
+-	depends on IMA
+ 	default n
+ 	help
+ 	  This option enables local measurement integrity appraisal.
+@@ -295,3 +289,5 @@ config IMA_APPRAISE_SIGNED_INIT
+ 	default n
+ 	help
+ 	   This option requires user-space init to be signed.
 +
- 	dev->cal.rx.lna_gain = mt76x02_sign_extend(lna, 8);
- }
- EXPORT_SYMBOL_GPL(mt76x2_read_rx_gain);
--- 
-2.40.1
-
++endif
 
 
