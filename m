@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C133B199A1
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6B21946D
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pggvU5dO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DAEFC433C9;
-	Mon,  9 Oct 2023 13:14:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="brcLlctQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E4AC433C7;
+	Mon,  9 Oct 2023 13:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857284;
-	bh=fNaBhPmXptWKvwByQ9ap0+FjW8TaZyq5S0ArUatop0Y=;
+	s=korg; t=1696857287;
+	bh=O2p7EoJh3RHgelDbB6eO4GV6jFkOeQQK1vLjezNtaLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pggvU5dOl1oxYgH0dMwZVOYJFtgcj16URWUbU/dmNsCVFucTQtScf19HhTgCOLdhI
-	 GnsX1K8yF8OFnbSwNDEvhLdhlx7vdoo17ZghwRwP1Uczm3gpm22LW6Btwf0mYUdvIC
-	 Ai9Hyh+96csPkesv73Sy5mF0doSVT7zkUBJW5Rzg=
+	b=brcLlctQXHSbkquwVT84IqtjzhM9rWckFYBkA39t8qgOVePFtHo3EYE5QaIAMilKv
+	 LLgTgrysQM8R08759wbtLDxXTUXbwVqVFNyleNEyDjIpy7pFif3Njap0T78iXLXkTa
+	 NbUdrqRbJpIcvXFu2dXXEPO7/xt3X0YctCZDIKP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.5 159/163] x86/sev: Use the GHCB protocol when available for SNP CPUID requests
-Date: Mon,  9 Oct 2023 15:02:03 +0200
-Message-ID: <20231009130128.398593797@linuxfoundation.org>
+	luosili <rootlab@huawei.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.5 160/163] ksmbd: fix race condition between session lookup and expire
+Date: Mon,  9 Oct 2023 15:02:04 +0200
+Message-ID: <20231009130128.423921294@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -42,207 +42,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 6bc6f7d9d7ac3cdbe9e8b0495538b4a0cc11f032 upstream.
+commit 53ff5cf89142b978b1a5ca8dc4d4425e6a09745f upstream.
 
-SNP retrieves the majority of CPUID information from the SNP CPUID page.
-But there are times when that information needs to be supplemented by the
-hypervisor, for example, obtaining the initial APIC ID of the vCPU from
-leaf 1.
+ Thread A                        +  Thread B
+ ksmbd_session_lookup            |  smb2_sess_setup
+   sess = xa_load                |
+                                 |
+                                 |    xa_erase(&conn->sessions, sess->id);
+                                 |
+                                 |    ksmbd_session_destroy(sess) --> kfree(sess)
+                                 |
+   // UAF!                       |
+   sess->last_active = jiffies   |
+                                 +
 
-The current implementation uses the MSR protocol to retrieve the data from
-the hypervisor, even when a GHCB exists. The problem arises when an NMI
-arrives on return from the VMGEXIT. The NMI will be immediately serviced
-and may generate a #VC requiring communication with the hypervisor.
+This patch add rwsem to fix race condition between ksmbd_session_lookup
+and ksmbd_expire_session.
 
-Since a GHCB exists in this case, it will be used. As part of using the
-GHCB, the #VC handler will write the GHCB physical address into the GHCB
-MSR and the #VC will be handled.
-
-When the NMI completes, processing resumes at the site of the VMGEXIT
-which is expecting to read the GHCB MSR and find a CPUID MSR protocol
-response. Since the NMI handling overwrote the GHCB MSR response, the
-guest will see an invalid reply from the hypervisor and self-terminate.
-
-Fix this problem by using the GHCB when it is available. Any NMI
-received is properly handled because the GHCB contents are copied into
-a backup page and restored on NMI exit, thus preserving the active GHCB
-request or result.
-
-  [ bp: Touchups. ]
-
-Fixes: ee0bfa08a345 ("x86/compressed/64: Add support for SEV-SNP CPUID table in #VC handlers")
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/a5856fa1ebe3879de91a8f6298b6bbd901c61881.1690578565.git.thomas.lendacky@amd.com
+Reported-by: luosili <rootlab@huawei.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/sev-shared.c |   69 ++++++++++++++++++++++++++++++++++---------
- 1 file changed, 55 insertions(+), 14 deletions(-)
+ fs/smb/server/connection.c        |    2 ++
+ fs/smb/server/connection.h        |    1 +
+ fs/smb/server/mgmt/user_session.c |   10 +++++++---
+ 3 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/sev-shared.c
-+++ b/arch/x86/kernel/sev-shared.c
-@@ -256,7 +256,7 @@ static int __sev_cpuid_hv(u32 fn, int re
- 	return 0;
- }
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -84,6 +84,8 @@ struct ksmbd_conn *ksmbd_conn_alloc(void
+ 	spin_lock_init(&conn->llist_lock);
+ 	INIT_LIST_HEAD(&conn->lock_list);
  
--static int sev_cpuid_hv(struct cpuid_leaf *leaf)
-+static int __sev_cpuid_hv_msr(struct cpuid_leaf *leaf)
- {
- 	int ret;
++	init_rwsem(&conn->session_lock);
++
+ 	down_write(&conn_list_lock);
+ 	list_add(&conn->conns_list, &conn_list);
+ 	up_write(&conn_list_lock);
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -50,6 +50,7 @@ struct ksmbd_conn {
+ 	struct nls_table		*local_nls;
+ 	struct unicode_map		*um;
+ 	struct list_head		conns_list;
++	struct rw_semaphore		session_lock;
+ 	/* smb session 1 per user */
+ 	struct xarray			sessions;
+ 	unsigned long			last_active;
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -174,7 +174,7 @@ static void ksmbd_expire_session(struct
+ 	unsigned long id;
+ 	struct ksmbd_session *sess;
  
-@@ -279,6 +279,45 @@ static int sev_cpuid_hv(struct cpuid_lea
- 	return ret;
- }
- 
-+static int __sev_cpuid_hv_ghcb(struct ghcb *ghcb, struct es_em_ctxt *ctxt, struct cpuid_leaf *leaf)
-+{
-+	u32 cr4 = native_read_cr4();
-+	int ret;
-+
-+	ghcb_set_rax(ghcb, leaf->fn);
-+	ghcb_set_rcx(ghcb, leaf->subfn);
-+
-+	if (cr4 & X86_CR4_OSXSAVE)
-+		/* Safe to read xcr0 */
-+		ghcb_set_xcr0(ghcb, xgetbv(XCR_XFEATURE_ENABLED_MASK));
-+	else
-+		/* xgetbv will cause #UD - use reset value for xcr0 */
-+		ghcb_set_xcr0(ghcb, 1);
-+
-+	ret = sev_es_ghcb_hv_call(ghcb, ctxt, SVM_EXIT_CPUID, 0, 0);
-+	if (ret != ES_OK)
-+		return ret;
-+
-+	if (!(ghcb_rax_is_valid(ghcb) &&
-+	      ghcb_rbx_is_valid(ghcb) &&
-+	      ghcb_rcx_is_valid(ghcb) &&
-+	      ghcb_rdx_is_valid(ghcb)))
-+		return ES_VMM_ERROR;
-+
-+	leaf->eax = ghcb->save.rax;
-+	leaf->ebx = ghcb->save.rbx;
-+	leaf->ecx = ghcb->save.rcx;
-+	leaf->edx = ghcb->save.rdx;
-+
-+	return ES_OK;
-+}
-+
-+static int sev_cpuid_hv(struct ghcb *ghcb, struct es_em_ctxt *ctxt, struct cpuid_leaf *leaf)
-+{
-+	return ghcb ? __sev_cpuid_hv_ghcb(ghcb, ctxt, leaf)
-+		    : __sev_cpuid_hv_msr(leaf);
-+}
-+
- /*
-  * This may be called early while still running on the initial identity
-  * mapping. Use RIP-relative addressing to obtain the correct address
-@@ -388,19 +427,20 @@ snp_cpuid_get_validated_func(struct cpui
- 	return false;
- }
- 
--static void snp_cpuid_hv(struct cpuid_leaf *leaf)
-+static void snp_cpuid_hv(struct ghcb *ghcb, struct es_em_ctxt *ctxt, struct cpuid_leaf *leaf)
- {
--	if (sev_cpuid_hv(leaf))
-+	if (sev_cpuid_hv(ghcb, ctxt, leaf))
- 		sev_es_terminate(SEV_TERM_SET_LINUX, GHCB_TERM_CPUID_HV);
- }
- 
--static int snp_cpuid_postprocess(struct cpuid_leaf *leaf)
-+static int snp_cpuid_postprocess(struct ghcb *ghcb, struct es_em_ctxt *ctxt,
-+				 struct cpuid_leaf *leaf)
- {
- 	struct cpuid_leaf leaf_hv = *leaf;
- 
- 	switch (leaf->fn) {
- 	case 0x1:
--		snp_cpuid_hv(&leaf_hv);
-+		snp_cpuid_hv(ghcb, ctxt, &leaf_hv);
- 
- 		/* initial APIC ID */
- 		leaf->ebx = (leaf_hv.ebx & GENMASK(31, 24)) | (leaf->ebx & GENMASK(23, 0));
-@@ -419,7 +459,7 @@ static int snp_cpuid_postprocess(struct
- 		break;
- 	case 0xB:
- 		leaf_hv.subfn = 0;
--		snp_cpuid_hv(&leaf_hv);
-+		snp_cpuid_hv(ghcb, ctxt, &leaf_hv);
- 
- 		/* extended APIC ID */
- 		leaf->edx = leaf_hv.edx;
-@@ -467,7 +507,7 @@ static int snp_cpuid_postprocess(struct
+-	down_write(&sessions_table_lock);
++	down_write(&conn->session_lock);
+ 	xa_for_each(&conn->sessions, id, sess) {
+ 		if (sess->state != SMB2_SESSION_VALID ||
+ 		    time_after(jiffies,
+@@ -185,7 +185,7 @@ static void ksmbd_expire_session(struct
+ 			continue;
  		}
- 		break;
- 	case 0x8000001E:
--		snp_cpuid_hv(&leaf_hv);
-+		snp_cpuid_hv(ghcb, ctxt, &leaf_hv);
- 
- 		/* extended APIC ID */
- 		leaf->eax = leaf_hv.eax;
-@@ -488,7 +528,7 @@ static int snp_cpuid_postprocess(struct
-  * Returns -EOPNOTSUPP if feature not enabled. Any other non-zero return value
-  * should be treated as fatal by caller.
-  */
--static int snp_cpuid(struct cpuid_leaf *leaf)
-+static int snp_cpuid(struct ghcb *ghcb, struct es_em_ctxt *ctxt, struct cpuid_leaf *leaf)
- {
- 	const struct snp_cpuid_table *cpuid_table = snp_cpuid_get_table();
- 
-@@ -522,7 +562,7 @@ static int snp_cpuid(struct cpuid_leaf *
- 			return 0;
  	}
- 
--	return snp_cpuid_postprocess(leaf);
-+	return snp_cpuid_postprocess(ghcb, ctxt, leaf);
+-	up_write(&sessions_table_lock);
++	up_write(&conn->session_lock);
  }
  
- /*
-@@ -544,14 +584,14 @@ void __init do_vc_no_ghcb(struct pt_regs
- 	leaf.fn = fn;
- 	leaf.subfn = subfn;
+ int ksmbd_session_register(struct ksmbd_conn *conn,
+@@ -227,7 +227,9 @@ void ksmbd_sessions_deregister(struct ks
+ 			}
+ 		}
+ 	}
++	up_write(&sessions_table_lock);
  
--	ret = snp_cpuid(&leaf);
-+	ret = snp_cpuid(NULL, NULL, &leaf);
- 	if (!ret)
- 		goto cpuid_done;
- 
- 	if (ret != -EOPNOTSUPP)
- 		goto fail;
- 
--	if (sev_cpuid_hv(&leaf))
-+	if (__sev_cpuid_hv_msr(&leaf))
- 		goto fail;
- 
- cpuid_done:
-@@ -848,14 +888,15 @@ static enum es_result vc_handle_ioio(str
- 	return ret;
++	down_write(&conn->session_lock);
+ 	xa_for_each(&conn->sessions, id, sess) {
+ 		unsigned long chann_id;
+ 		struct channel *chann;
+@@ -244,7 +246,7 @@ void ksmbd_sessions_deregister(struct ks
+ 			ksmbd_session_destroy(sess);
+ 		}
+ 	}
+-	up_write(&sessions_table_lock);
++	up_write(&conn->session_lock);
  }
  
--static int vc_handle_cpuid_snp(struct pt_regs *regs)
-+static int vc_handle_cpuid_snp(struct ghcb *ghcb, struct es_em_ctxt *ctxt)
+ struct ksmbd_session *ksmbd_session_lookup(struct ksmbd_conn *conn,
+@@ -252,9 +254,11 @@ struct ksmbd_session *ksmbd_session_look
  {
-+	struct pt_regs *regs = ctxt->regs;
- 	struct cpuid_leaf leaf;
- 	int ret;
+ 	struct ksmbd_session *sess;
  
- 	leaf.fn = regs->ax;
- 	leaf.subfn = regs->cx;
--	ret = snp_cpuid(&leaf);
-+	ret = snp_cpuid(ghcb, ctxt, &leaf);
- 	if (!ret) {
- 		regs->ax = leaf.eax;
- 		regs->bx = leaf.ebx;
-@@ -874,7 +915,7 @@ static enum es_result vc_handle_cpuid(st
- 	enum es_result ret;
- 	int snp_cpuid_ret;
++	down_read(&conn->session_lock);
+ 	sess = xa_load(&conn->sessions, id);
+ 	if (sess)
+ 		sess->last_active = jiffies;
++	up_read(&conn->session_lock);
+ 	return sess;
+ }
  
--	snp_cpuid_ret = vc_handle_cpuid_snp(regs);
-+	snp_cpuid_ret = vc_handle_cpuid_snp(ghcb, ctxt);
- 	if (!snp_cpuid_ret)
- 		return ES_OK;
- 	if (snp_cpuid_ret != -EOPNOTSUPP)
 
 
