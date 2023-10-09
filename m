@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47D01A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAF11A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UC2+HoDY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B58C433CB;
-	Mon,  9 Oct 2023 13:19:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUbZHOh1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77825C433C9;
+	Mon,  9 Oct 2023 13:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857572;
-	bh=C9ELLYE1GK5pwg33kE3hXiDtzDDC/m5yf1yI6d5EYB0=;
+	s=korg; t=1696857575;
+	bh=QTJXqsLXqKWh9jbhBTAhfti6kc7bpHmLyQXBWzfEbmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UC2+HoDYGnM+gAsBn85PcFilhWp4BWqAkTSoy0zG23P/CZECw4WLdLABVXh1u2qFz
-	 pdF7A82V1IVhq3YvTjIQV4XC+MA/Ym0lQwGMKOWEXLT12nFUUJWQS7JSXJJBOYwxf3
-	 6WFruYSHTHRKnW7OAnjzW69WcjtpYAYe3q6OY5LI=
+	b=bUbZHOh1zKN0f11bJxJ5N5aeJ7F9DCcAk+z3ThNaRSzb0grv9pkFCBdQePd8g1kCy
+	 ypkCXMPq6G4W+xwrGM0/2ILMIofxkf5wa+kqdYh2J2nHig3lNdcJJA39ScUpB7Ac9I
+	 ub3SMuNVHRLrl/B77tAFIzoAj3jEarGi2XmqtqcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Alexandra Diupina <adiupina@astralinux.ru>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/162] Bluetooth: ISO: Fix handling of listen for unicast
-Date: Mon,  9 Oct 2023 15:01:10 +0200
-Message-ID: <20231009130125.379270128@linuxfoundation.org>
+Subject: [PATCH 6.1 090/162] drivers/net: process the result of hdlc_open() and add call of hdlc_close() in uhdlc_close()
+Date: Mon,  9 Oct 2023 15:01:11 +0200
+Message-ID: <20231009130125.405803528@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -41,55 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Alexandra Diupina <adiupina@astralinux.ru>
 
-[ Upstream commit e0275ea52169412b8faccb4e2f4fed8a057844c6 ]
+[ Upstream commit a59addacf899b1b21a7b7449a1c52c98704c2472 ]
 
-iso_listen_cis shall only return -EADDRINUSE if the listening socket has
-the destination set to BDADDR_ANY otherwise if the destination is set to
-a specific address it is for broadcast which shall be ignored.
+Process the result of hdlc_open() and call uhdlc_close()
+in case of an error. It is necessary to pass the error
+code up the control flow, similar to a possible
+error in request_irq().
+Also add a hdlc_close() call to the uhdlc_close()
+because the comment to hdlc_close() says it must be called
+by the hardware driver when the HDLC device is being closed
 
-Fixes: f764a6c2c1e4 ("Bluetooth: ISO: Add broadcast support")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/wan/fsl_ucc_hdlc.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 5cd2e775915be..91e990accbf20 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -458,7 +458,7 @@ static void iso_recv_frame(struct iso_conn *conn, struct sk_buff *skb)
- }
+diff --git a/drivers/net/wan/fsl_ucc_hdlc.c b/drivers/net/wan/fsl_ucc_hdlc.c
+index 1c53b55469270..5fec8abe8e1d3 100644
+--- a/drivers/net/wan/fsl_ucc_hdlc.c
++++ b/drivers/net/wan/fsl_ucc_hdlc.c
+@@ -34,6 +34,8 @@
+ #define TDM_PPPOHT_SLIC_MAXIN
+ #define RX_BD_ERRORS (R_CD_S | R_OV_S | R_CR_S | R_AB_S | R_NO_S | R_LG_S)
  
- /* -------- Socket interface ---------- */
--static struct sock *__iso_get_sock_listen_by_addr(bdaddr_t *ba)
-+static struct sock *__iso_get_sock_listen_by_addr(bdaddr_t *src, bdaddr_t *dst)
- {
- 	struct sock *sk;
- 
-@@ -466,7 +466,10 @@ static struct sock *__iso_get_sock_listen_by_addr(bdaddr_t *ba)
- 		if (sk->sk_state != BT_LISTEN)
- 			continue;
- 
--		if (!bacmp(&iso_pi(sk)->src, ba))
-+		if (bacmp(&iso_pi(sk)->dst, dst))
-+			continue;
++static int uhdlc_close(struct net_device *dev);
 +
-+		if (!bacmp(&iso_pi(sk)->src, src))
- 			return sk;
+ static struct ucc_tdm_info utdm_primary_info = {
+ 	.uf_info = {
+ 		.tsa = 0,
+@@ -708,6 +710,7 @@ static int uhdlc_open(struct net_device *dev)
+ 	hdlc_device *hdlc = dev_to_hdlc(dev);
+ 	struct ucc_hdlc_private *priv = hdlc->priv;
+ 	struct ucc_tdm *utdm = priv->utdm;
++	int rc = 0;
+ 
+ 	if (priv->hdlc_busy != 1) {
+ 		if (request_irq(priv->ut_info->uf_info.irq,
+@@ -731,10 +734,13 @@ static int uhdlc_open(struct net_device *dev)
+ 		napi_enable(&priv->napi);
+ 		netdev_reset_queue(dev);
+ 		netif_start_queue(dev);
+-		hdlc_open(dev);
++
++		rc = hdlc_open(dev);
++		if (rc)
++			uhdlc_close(dev);
  	}
  
-@@ -910,7 +913,7 @@ static int iso_listen_cis(struct sock *sk)
+-	return 0;
++	return rc;
+ }
  
- 	write_lock(&iso_sk_list.lock);
+ static void uhdlc_memclean(struct ucc_hdlc_private *priv)
+@@ -824,6 +830,8 @@ static int uhdlc_close(struct net_device *dev)
+ 	netdev_reset_queue(dev);
+ 	priv->hdlc_busy = 0;
  
--	if (__iso_get_sock_listen_by_addr(&iso_pi(sk)->src))
-+	if (__iso_get_sock_listen_by_addr(&iso_pi(sk)->src, &iso_pi(sk)->dst))
- 		err = -EADDRINUSE;
++	hdlc_close(dev);
++
+ 	return 0;
+ }
  
- 	write_unlock(&iso_sk_list.lock);
 -- 
 2.40.1
 
