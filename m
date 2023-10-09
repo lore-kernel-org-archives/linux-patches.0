@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0287F17990
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104DB17990
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vckjx7Rw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72086C433C9;
-	Mon,  9 Oct 2023 13:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYz638Zo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D907C433C8;
+	Mon,  9 Oct 2023 13:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857160;
-	bh=aGYWqowK+S5KjC6IlZ7zNqQTteh7kbweK+nYYh58mNE=;
+	s=korg; t=1696857163;
+	bh=ad4tpvR4n6aXF6N8V7O9O9yb7zQAdSfJ9Doxwve2i94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vckjx7RwhUI6YwvX8mjDWYpoKS2M+4oKqvfKEBXv0Fm4wB0EmuQsjkDo0UcM6h15L
-	 nisfBMywdm1OaqbC4N8qYYw7DFrubYBGZHPan00coSCFud/RcyGIGKC8+CRxNyXCRj
-	 i6CCKWpOVLWs7eyg+Rg/mSeBQWI178/3VzdEXTLY=
+	b=gYz638ZojS02eYk5oMKJbDZFKSR2UoINIPDk02LBT+k1oKOJkcQD3skDc7+wUST1n
+	 lYeX4TWSmKXYn6IZLJnCsVbrkGeIIRUvJcGIsRWiBRIPno3l8WAIrc+sCslmZrU7JW
+	 OVYV/Sdn6oDAhZbqC6cZcAOU8Zg4/7+Qq3bR4/d8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wilder <dwilder@us.ibm.com>,
-	Nick Child <nnac123@linux.ibm.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	David Ward <david.ward@ll.mit.edu>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 116/163] ibmveth: Remove condition to recompute TCP header checksum.
-Date: Mon,  9 Oct 2023 15:01:20 +0200
-Message-ID: <20231009130127.230109711@linuxfoundation.org>
+Subject: [PATCH 6.5 117/163] netfilter: nft_payload: rebuild vlan header on h_proto access
+Date: Mon,  9 Oct 2023 15:01:21 +0200
+Message-ID: <20231009130127.256521593@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -44,70 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Wilder <dwilder@us.ibm.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 51e7a66666e0ca9642c59464ef8359f0ac604d41 ]
+[ Upstream commit af84f9e447a65b4b9f79e7e5d69e19039b431c56 ]
 
-In some OVS environments the TCP pseudo header checksum may need to be
-recomputed. Currently this is only done when the interface instance is
-configured for "Trunk Mode". We found the issue also occurs in some
-Kubernetes environments, these environments do not use "Trunk Mode",
-therefor the condition is removed.
+nft can perform merging of adjacent payload requests.
+This means that:
 
-Performance tests with this change show only a fractional decrease in
-throughput (< 0.2%).
+ether saddr 00:11 ... ether type 8021ad ...
 
-Fixes: 7525de2516fb ("ibmveth: Set CHECKSUM_PARTIAL if NULL TCP CSUM.")
-Signed-off-by: David Wilder <dwilder@us.ibm.com>
-Reviewed-by: Nick Child <nnac123@linux.ibm.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+is a single payload expression, for 8 bytes, starting at the
+ethernet source offset.
+
+Check that offset+length is fully within the source/destination mac
+addersses.
+
+This bug prevents 'ether type' from matching the correct h_proto in case
+vlan tag got stripped.
+
+Fixes: de6843be3082 ("netfilter: nft_payload: rebuild vlan header when needed")
+Reported-by: David Ward <david.ward@ll.mit.edu>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ net/netfilter/nft_payload.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 832a2ae019509..a8d79ee350f8d 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -1303,24 +1303,23 @@ static void ibmveth_rx_csum_helper(struct sk_buff *skb,
- 	 * the user space for finding a flow. During this process, OVS computes
- 	 * checksum on the first packet when CHECKSUM_PARTIAL flag is set.
- 	 *
--	 * So, re-compute TCP pseudo header checksum when configured for
--	 * trunk mode.
-+	 * So, re-compute TCP pseudo header checksum.
- 	 */
+diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
+index 8cb8009899479..120f6d395b98b 100644
+--- a/net/netfilter/nft_payload.c
++++ b/net/netfilter/nft_payload.c
+@@ -154,6 +154,17 @@ int nft_payload_inner_offset(const struct nft_pktinfo *pkt)
+ 	return pkt->inneroff;
+ }
+ 
++static bool nft_payload_need_vlan_copy(const struct nft_payload *priv)
++{
++	unsigned int len = priv->offset + priv->len;
 +
- 	if (iph_proto == IPPROTO_TCP) {
- 		struct tcphdr *tcph = (struct tcphdr *)(skb->data + iphlen);
++	/* data past ether src/dst requested, copy needed */
++	if (len > offsetof(struct ethhdr, h_proto))
++		return true;
 +
- 		if (tcph->check == 0x0000) {
- 			/* Recompute TCP pseudo header checksum  */
--			if (adapter->is_active_trunk) {
--				tcphdrlen = skb->len - iphlen;
--				if (skb_proto == ETH_P_IP)
--					tcph->check =
--					 ~csum_tcpudp_magic(iph->saddr,
--					iph->daddr, tcphdrlen, iph_proto, 0);
--				else if (skb_proto == ETH_P_IPV6)
--					tcph->check =
--					 ~csum_ipv6_magic(&iph6->saddr,
--					&iph6->daddr, tcphdrlen, iph_proto, 0);
--			}
-+			tcphdrlen = skb->len - iphlen;
-+			if (skb_proto == ETH_P_IP)
-+				tcph->check =
-+				 ~csum_tcpudp_magic(iph->saddr,
-+				iph->daddr, tcphdrlen, iph_proto, 0);
-+			else if (skb_proto == ETH_P_IPV6)
-+				tcph->check =
-+				 ~csum_ipv6_magic(&iph6->saddr,
-+				&iph6->daddr, tcphdrlen, iph_proto, 0);
- 			/* Setup SKB fields for checksum offload */
- 			skb_partial_csum_set(skb, iphlen,
- 					     offsetof(struct tcphdr, check));
++	return false;
++}
++
+ void nft_payload_eval(const struct nft_expr *expr,
+ 		      struct nft_regs *regs,
+ 		      const struct nft_pktinfo *pkt)
+@@ -172,7 +183,7 @@ void nft_payload_eval(const struct nft_expr *expr,
+ 			goto err;
+ 
+ 		if (skb_vlan_tag_present(skb) &&
+-		    priv->offset >= offsetof(struct ethhdr, h_proto)) {
++		    nft_payload_need_vlan_copy(priv)) {
+ 			if (!nft_payload_copy_vlan(dest, skb,
+ 						   priv->offset, priv->len))
+ 				goto err;
 -- 
 2.40.1
 
