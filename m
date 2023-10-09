@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A5D339B0
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E654C339B0
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eu5ubwe6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE31C433C8;
-	Mon,  9 Oct 2023 13:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEITZSfG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A4AC433C9;
+	Mon,  9 Oct 2023 13:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859051;
-	bh=IZ6zEEekmX68d110TEJlgoWLgoIV+0c1DIZYGazZL74=;
+	s=korg; t=1696859054;
+	bh=MujvepGKGLYkLWF4alCDGEjORyrNkoXar7rghvoMVFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eu5ubwe6Qd7H2Z2AAAbiReWyaC8ntjD+vUjg5pTmxAU0zfflSIwsSBYuLkr+yYwQo
-	 3DCmEewioNcKHucYZ/Scsoz2xnG2LHwZX9I7O5Fti3tQHiEAOqsvhItD/QKsDqj0vp
-	 aUFLxGskgZ4Qzn1jvLdw5zGixyW0rHB7yXlxxtZc=
+	b=pEITZSfGCCyUQvCPkWbmWpon0vqm7ogjs2ekrm1B75lQHcE481KAH+ubU6vwUjmgl
+	 d/yfOE3L7jX4+AdVOD2RDkTLVFExG+GK/LNOaTq66EM8KAo1RkB5ln/bp4Bpk4Uf2h
+	 tXULXZ/cda8cc/4zJhgtBU7jDo3w/IOaCedZNQi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 155/226] btrfs: properly report 0 avail for very full file systems
-Date: Mon,  9 Oct 2023 15:01:56 +0200
-Message-ID: <20231009130130.746858616@linuxfoundation.org>
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Marcus Seyfarth <m.seyfarth@gmail.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 5.10 156/226] bpf: Fix BTF_ID symbol generation collision
+Date: Mon,  9 Oct 2023 15:01:57 +0200
+Message-ID: <20231009130130.770887107@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -41,43 +45,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 58bfe2ccec5f9f137b41dd38f335290dcc13cd5c upstream.
+commit 8f908db77782630c45ba29dac35c434b5ce0b730 upstream.
 
-A user reported some issues with smaller file systems that get very
-full.  While investigating this issue I noticed that df wasn't showing
-100% full, despite having 0 chunk space and having < 1MiB of available
-metadata space.
+Marcus and Satya reported an issue where BTF_ID macro generates same
+symbol in separate objects and that breaks final vmlinux link.
 
-This turns out to be an overflow issue, we're doing:
+ld.lld: error: ld-temp.o <inline asm>:14577:1: symbol
+'__BTF_ID__struct__cgroup__624' is already defined
 
-  total_available_metadata_space - SZ_4M < global_block_rsv_size
+This can be triggered under specific configs when __COUNTER__ happens to
+be the same for the same symbol in two different translation units,
+which is already quite unlikely to happen.
 
-to determine if there's not enough space to make metadata allocations,
-which overflows if total_available_metadata_space is < 4M.  Fix this by
-checking to see if our available space is greater than the 4M threshold.
-This makes df properly report 100% usage on the file system.
+Add __LINE__ number suffix to make BTF_ID symbol more unique, which is
+not a complete fix, but it would help for now and meanwhile we can work
+on better solution as suggested by Andrii.
 
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Reported-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
+Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1913
+Debugged-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/bpf/CAEf4Bzb5KQ2_LmhN769ifMeSJaWfebccUasQOfQKaOd0nQ51tw@mail.gmail.com/
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230915-bpf_collision-v3-1-263fc519c21f@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c |    2 +-
+ include/linux/btf_ids.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2267,7 +2267,7 @@ static int btrfs_statfs(struct dentry *d
- 	 * calculated f_bavail.
- 	 */
- 	if (!mixed && block_rsv->space_info->full &&
--	    total_free_meta - thresh < block_rsv->size)
-+	    (total_free_meta < thresh || total_free_meta - thresh < block_rsv->size))
- 		buf->f_bavail = 0;
+--- a/include/linux/btf_ids.h
++++ b/include/linux/btf_ids.h
+@@ -38,7 +38,7 @@ asm(							\
+ 	____BTF_ID(symbol)
  
- 	buf->f_type = BTRFS_SUPER_MAGIC;
+ #define __ID(prefix) \
+-	__PASTE(prefix, __COUNTER__)
++	__PASTE(__PASTE(prefix, __COUNTER__), __LINE__)
+ 
+ /*
+  * The BTF_ID defines unique symbol for each ID pointing
 
 
