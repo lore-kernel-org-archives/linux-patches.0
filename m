@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106291A708
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB661A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgiz6zPR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81EC2C433C9;
-	Mon,  9 Oct 2023 13:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XqenppH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB37C433CA;
+	Mon,  9 Oct 2023 13:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857449;
-	bh=rystTE9DupvfIPn/prsMxhEkGOs57OMQiWTe8fhlBqg=;
+	s=korg; t=1696857452;
+	bh=CFMN0qCTVYYvwKb0OvPOggHG2gJF3XysKJeHAztVfZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgiz6zPRP2fg71lBgEs/jMc3GWH5ySnZ22YpMcPryJC/upTmz0uM2aOx7YHIRU1Ks
-	 JPDTbtazjp3cwhrowD/bkoP99jYe+qUDVUgQWbBQuv0RsDhEyrUhktYTFV+TOgFX1M
-	 c+bfLUWJAiyHtZBSdswDa9BWDjP/j/3glY72DKyQ=
+	b=1XqenppHHOC8fAwisnm4opAeR+OK7MstHiDarBv2w7ZidxhW2Q8Sp1MxY61FqpHgt
+	 gpzSa8o3ZcP/7oKH3midPWuhvwaGW7aLrILySWLg+b3kWlqN1ko6iy2F2MygnnAVOx
+	 dZXmn1UbLK4aNlljgHXU9g9unaiqYsVtEjfvb2Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/162] NFSv4: Fix a state manager thread deadlock regression
-Date: Mon,  9 Oct 2023 15:00:04 +0200
-Message-ID: <20231009130123.588112921@linuxfoundation.org>
+Subject: [PATCH 6.1 014/162] mptcp: process pending subflow error on close
+Date: Mon,  9 Oct 2023 14:59:55 +0200
+Message-ID: <20231009130123.343177859@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -42,115 +44,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 956fd46f97d238032cb5fa4771cdaccc6e760f9a ]
+[ Upstream commit 9f1a98813b4b686482e5ef3c9d998581cace0ba6 ]
 
-Commit 4dc73c679114 reintroduces the deadlock that was fixed by commit
-aeabb3c96186 ("NFSv4: Fix a NFSv4 state manager deadlock") because it
-prevents the setup of new threads to handle reboot recovery, while the
-older recovery thread is stuck returning delegations.
+On incoming TCP reset, subflow closing could happen before error
+propagation. That in turn could cause the socket error being ignored,
+and a missing socket state transition, as reported by Daire-Byrne.
 
-Fixes: 4dc73c679114 ("NFSv4: keep state manager thread active if swap is enabled")
+Address the issues explicitly checking for subflow socket error at
+close time. To avoid code duplication, factor-out of __mptcp_error_report()
+a new helper implementing the relevant bits.
+
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/429
+Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
 Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c  |  4 +++-
- fs/nfs/nfs4state.c | 36 +++++++++++++++++++++++++-----------
- 2 files changed, 28 insertions(+), 12 deletions(-)
+ net/mptcp/protocol.c | 63 ++++++++++++++++++++++++--------------------
+ 1 file changed, 34 insertions(+), 29 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index be570c65ae154..b927a7d1b46d4 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -10629,7 +10629,9 @@ static void nfs4_disable_swap(struct inode *inode)
- 	 */
- 	struct nfs_client *clp = NFS_SERVER(inode)->nfs_client;
- 
--	nfs4_schedule_state_manager(clp);
-+	set_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state);
-+	clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
-+	wake_up_var(&clp->cl_state);
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 193f2bdc8fe1b..b6e0579e72644 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -765,40 +765,44 @@ static bool __mptcp_ofo_queue(struct mptcp_sock *msk)
+ 	return moved;
  }
  
- static const struct inode_operations nfs4_dir_inode_operations = {
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index 1b707573fbf8d..ed789e0cb9431 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -1209,13 +1209,23 @@ void nfs4_schedule_state_manager(struct nfs_client *clp)
+-void __mptcp_error_report(struct sock *sk)
++static bool __mptcp_subflow_error_report(struct sock *sk, struct sock *ssk)
  {
- 	struct task_struct *task;
- 	char buf[INET6_ADDRSTRLEN + sizeof("-manager") + 1];
-+	struct rpc_clnt *clnt = clp->cl_rpcclient;
-+	bool swapon = false;
+-	struct mptcp_subflow_context *subflow;
+-	struct mptcp_sock *msk = mptcp_sk(sk);
++	int err = sock_error(ssk);
++	int ssk_state;
  
- 	set_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state);
--	if (test_and_set_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state) != 0) {
--		wake_up_var(&clp->cl_state);
--		return;
+-	mptcp_for_each_subflow(msk, subflow) {
+-		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+-		int err = sock_error(ssk);
+-		int ssk_state;
++	if (!err)
++		return false;
+ 
+-		if (!err)
+-			continue;
++	/* only propagate errors on fallen-back sockets or
++	 * on MPC connect
++	 */
++	if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(mptcp_sk(sk)))
++		return false;
+ 
+-		/* only propagate errors on fallen-back sockets or
+-		 * on MPC connect
+-		 */
+-		if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(msk))
+-			continue;
++	/* We need to propagate only transition to CLOSE state.
++	 * Orphaned socket will see such state change via
++	 * subflow_sched_work_if_closed() and that path will properly
++	 * destroy the msk as needed.
++	 */
++	ssk_state = inet_sk_state_load(ssk);
++	if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
++		inet_sk_state_store(sk, ssk_state);
++	WRITE_ONCE(sk->sk_err, -err);
+ 
+-		/* We need to propagate only transition to CLOSE state.
+-		 * Orphaned socket will see such state change via
+-		 * subflow_sched_work_if_closed() and that path will properly
+-		 * destroy the msk as needed.
+-		 */
+-		ssk_state = inet_sk_state_load(ssk);
+-		if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
+-			inet_sk_state_store(sk, ssk_state);
+-		WRITE_ONCE(sk->sk_err, -err);
+-
+-		/* This barrier is coupled with smp_rmb() in mptcp_poll() */
+-		smp_wmb();
+-		sk_error_report(sk);
+-		break;
+-	}
++	/* This barrier is coupled with smp_rmb() in mptcp_poll() */
++	smp_wmb();
++	sk_error_report(sk);
++	return true;
++}
 +
-+	if (atomic_read(&clnt->cl_swapper)) {
-+		swapon = !test_and_set_bit(NFS4CLNT_MANAGER_AVAILABLE,
-+					   &clp->cl_state);
-+		if (!swapon) {
-+			wake_up_var(&clp->cl_state);
-+			return;
-+		}
++void __mptcp_error_report(struct sock *sk)
++{
++	struct mptcp_subflow_context *subflow;
++	struct mptcp_sock *msk = mptcp_sk(sk);
++
++	mptcp_for_each_subflow(msk, subflow)
++		if (__mptcp_subflow_error_report(sk, mptcp_subflow_tcp_sock(subflow)))
++			break;
+ }
+ 
+ /* In most cases we will be able to lock the mptcp socket.  If its already
+@@ -2446,6 +2450,7 @@ static void __mptcp_close_ssk(struct sock *sk, struct sock *ssk,
  	}
--	set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state);
-+
-+	if (test_and_set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state) != 0)
-+		return;
-+
- 	__module_get(THIS_MODULE);
- 	refcount_inc(&clp->cl_count);
  
-@@ -1232,8 +1242,9 @@ void nfs4_schedule_state_manager(struct nfs_client *clp)
- 			__func__, PTR_ERR(task));
- 		if (!nfs_client_init_is_complete(clp))
- 			nfs_mark_client_ready(clp, PTR_ERR(task));
-+		if (swapon)
-+			clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
- 		nfs4_clear_state_manager_bit(clp);
--		clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
- 		nfs_put_client(clp);
- 		module_put(THIS_MODULE);
- 	}
-@@ -2737,22 +2748,25 @@ static int nfs4_run_state_manager(void *ptr)
+ out_release:
++	__mptcp_subflow_error_report(sk, ssk);
+ 	release_sock(ssk);
  
- 	allow_signal(SIGKILL);
- again:
--	set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state);
- 	nfs4_state_manager(clp);
--	if (atomic_read(&cl->cl_swapper)) {
-+
-+	if (test_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state) &&
-+	    !test_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state)) {
- 		wait_var_event_interruptible(&clp->cl_state,
- 					     test_bit(NFS4CLNT_RUN_MANAGER,
- 						      &clp->cl_state));
--		if (atomic_read(&cl->cl_swapper) &&
--		    test_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state))
-+		if (!atomic_read(&cl->cl_swapper))
-+			clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
-+		if (refcount_read(&clp->cl_count) > 1 && !signalled() &&
-+		    !test_and_set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state))
- 			goto again;
- 		/* Either no longer a swapper, or were signalled */
-+		clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
- 	}
--	clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
- 
- 	if (refcount_read(&clp->cl_count) > 1 && !signalled() &&
- 	    test_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state) &&
--	    !test_and_set_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state))
-+	    !test_and_set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state))
- 		goto again;
- 
- 	nfs_put_client(clp);
+ 	sock_put(ssk);
 -- 
 2.40.1
 
