@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6F71A5A3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3565B1A5A3
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N14JFHDc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 918D3C433C8;
-	Mon,  9 Oct 2023 13:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJb+vjxY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4237C433CB;
+	Mon,  9 Oct 2023 13:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859290;
-	bh=9WzIXwGp5TwX8oZ9+eWiRyGuecpgT8y3AkS87is+ZUU=;
+	s=korg; t=1696859293;
+	bh=yadoFXXp0qSxTKLmwr7uBYB4hyh+gFl9mhYsHjj/lIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N14JFHDcfGnE7GjSKWFv1Ma31x21cTfWidj02BP8jCxJpr5NSY7WnXuaZbXNBrcrZ
-	 TgKHR9By+VnYDvJE4fkV9YI1mtY+hZuyXArPrlHuzYxNNStqBUp44DHujl0SVW/ecm
-	 2ZP31pLdV4VgFW1HfTE3JRA4SKenCr4j7KnVgb98=
+	b=sJb+vjxY6WT9iQCJdYqY8u6cvKOQjx0AgRHqUYLaXrNOdmza1tX08fX9mY9WtfHkT
+	 JKiek5INZa5ASGniRk5m6+ypuZSXNXiD9nR3KAMxVORG4blTLRxDI5y/9xWA/9h4tw
+	 BL3goIlrbN2zlWR59S7pYwGvv9wWm4TEYkRjPcGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	syzkaller <syzkaller@googlegroups.com>,
-	George Kennedy <george.kennedy@oracle.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Suraj Jitindar Singh <surajjs@amazon.com>
-Subject: [PATCH 4.14 31/55] vc_screen: reload load of struct vc_data pointer in vcs_write() to avoid UAF
-Date: Mon,  9 Oct 2023 15:06:30 +0200
-Message-ID: <20231009130108.897054428@linuxfoundation.org>
+	stable@kernel.org,
+	Andreas Dilger <adilger@dilger.ca>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Shida Zhang <zhangshida@kylinos.cn>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.14 32/55] ext4: fix rec_len verify error
+Date: Mon,  9 Oct 2023 15:06:31 +0200
+Message-ID: <20231009130108.933669173@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -38,121 +38,129 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: George Kennedy <george.kennedy@oracle.com>
+From: Shida Zhang <zhangshida@kylinos.cn>
 
-commit 8fb9ea65c9d1338b0d2bb0a9122dc942cdd32357 upstream.
+commit 7fda67e8c3ab6069f75888f67958a6d30454a9f6 upstream.
 
-After a call to console_unlock() in vcs_write() the vc_data struct can be
-freed by vc_port_destruct(). Because of that, the struct vc_data pointer
-must be reloaded in the while loop in vcs_write() after console_lock() to
-avoid a UAF when vcs_size() is called.
+With the configuration PAGE_SIZE 64k and filesystem blocksize 64k,
+a problem occurred when more than 13 million files were directly created
+under a directory:
 
-Syzkaller reported a UAF in vcs_size().
+EXT4-fs error (device xx): ext4_dx_csum_set:492: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
+EXT4-fs error (device xx): ext4_dx_csum_verify:463: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
+EXT4-fs error (device xx): dx_probe:856: inode #xxxx: block 8188: comm xxxxx: Directory index failed checksum
 
-BUG: KASAN: slab-use-after-free in vcs_size (drivers/tty/vt/vc_screen.c:215)
-Read of size 4 at addr ffff8880beab89a8 by task repro_vcs_size/4119
+When enough files are created, the fake_dirent->reclen will be 0xffff.
+it doesn't equal to the blocksize 65536, i.e. 0x10000.
 
-Call Trace:
- <TASK>
-__asan_report_load4_noabort (mm/kasan/report_generic.c:380)
-vcs_size (drivers/tty/vt/vc_screen.c:215)
-vcs_write (drivers/tty/vt/vc_screen.c:664)
-vfs_write (fs/read_write.c:582 fs/read_write.c:564)
-...
- <TASK>
+But it is not the same condition when blocksize equals to 4k.
+when enough files are created, the fake_dirent->reclen will be 0x1000.
+it equals to the blocksize 4k, i.e. 0x1000.
 
-Allocated by task 1213:
-kmalloc_trace (mm/slab_common.c:1064)
-vc_allocate (./include/linux/slab.h:559 ./include/linux/slab.h:680
-    drivers/tty/vt/vt.c:1078 drivers/tty/vt/vt.c:1058)
-con_install (drivers/tty/vt/vt.c:3334)
-tty_init_dev (drivers/tty/tty_io.c:1303 drivers/tty/tty_io.c:1415
-    drivers/tty/tty_io.c:1392)
-tty_open (drivers/tty/tty_io.c:2082 drivers/tty/tty_io.c:2128)
-chrdev_open (fs/char_dev.c:415)
-do_dentry_open (fs/open.c:921)
-vfs_open (fs/open.c:1052)
-...
+The problem seems to be related to the limitation of the 16-bit field
+when the blocksize is set to 64k.
+To address this, helpers like ext4_rec_len_{from,to}_disk has already
+been introduced to complete the conversion between the encoded and the
+plain form of rec_len.
 
-Freed by task 4116:
-kfree (mm/slab_common.c:1016)
-vc_port_destruct (drivers/tty/vt/vt.c:1044)
-tty_port_destructor (drivers/tty/tty_port.c:296)
-tty_port_put (drivers/tty/tty_port.c:312)
-vt_disallocate_all (drivers/tty/vt/vt_ioctl.c:662 (discriminator 2))
-vt_ioctl (drivers/tty/vt/vt_ioctl.c:903)
-tty_ioctl (drivers/tty/tty_io.c:2778)
-...
+So fix this one by using the helper, and all the other in this file too.
 
-The buggy address belongs to the object at ffff8880beab8800
- which belongs to the cache kmalloc-1k of size 1024
-The buggy address is located 424 bytes inside of
- freed 1024-byte region [ffff8880beab8800, ffff8880beab8c00)
-
-The buggy address belongs to the physical page:
-page:00000000afc77580 refcount:1 mapcount:0 mapping:0000000000000000
-    index:0x0 pfn:0xbeab8
-head:00000000afc77580 order:3 entire_mapcount:0 nr_pages_mapped:0
-    pincount:0
-flags: 0xfffffc0010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
-page_type: 0xffffffff()
-raw: 000fffffc0010200 ffff888100042dc0 ffffea000426de00 dead000000000002
-raw: 0000000000000000 0000000000100010 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff8880beab8880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff8880beab8900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff8880beab8980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                  ^
- ffff8880beab8a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff8880beab8a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-Disabling lock debugging due to kernel taint
-
-Fixes: ac751efa6a0d ("console: rename acquire/release_console_sem() to console_lock/unlock()")
-Cc: stable <stable@kernel.org>
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: George Kennedy <george.kennedy@oracle.com>
-Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/1683889728-10411-1-git-send-email-george.kennedy@oracle.com
-[ Adjust context due to missing commit
-  71d4abfab322 ("vc_screen: rewrite vcs_size to accept vc, not inode")
-  in 4.14.y stable ]
-Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+Cc: stable@kernel.org
+Fixes: dbe89444042a ("ext4: Calculate and verify checksums for htree nodes")
+Suggested-by: Andreas Dilger <adilger@dilger.ca>
+Suggested-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://lore.kernel.org/r/20230803060938.1929759-1-zhangshida@kylinos.cn
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vc_screen.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/ext4/namei.c |   26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -437,10 +437,17 @@ vcs_write(struct file *file, const char
- 			}
- 		}
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -321,17 +321,17 @@ static struct ext4_dir_entry_tail *get_d
+ 						   struct ext4_dir_entry *de)
+ {
+ 	struct ext4_dir_entry_tail *t;
++	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
  
--		/* The vcs_size might have changed while we slept to grab
--		 * the user buffer, so recheck.
-+		/* The vc might have been freed or vcs_size might have changed
-+		 * while we slept to grab the user buffer, so recheck.
- 		 * Return data written up to now on failure.
- 		 */
-+		vc = vcs_vc(inode, &viewed);
-+		if (!vc) {
-+			if (written)
-+				break;
-+			ret = -ENXIO;
-+			goto unlock_out;
-+		}
- 		size = vcs_size(inode);
- 		if (size < 0) {
- 			if (written)
+ #ifdef PARANOID
+ 	struct ext4_dir_entry *d, *top;
+ 
+ 	d = de;
+ 	top = (struct ext4_dir_entry *)(((void *)de) +
+-		(EXT4_BLOCK_SIZE(inode->i_sb) -
+-		sizeof(struct ext4_dir_entry_tail)));
+-	while (d < top && d->rec_len)
++		(blocksize - sizeof(struct ext4_dir_entry_tail)));
++	while (d < top && ext4_rec_len_from_disk(d->rec_len, blocksize))
+ 		d = (struct ext4_dir_entry *)(((void *)d) +
+-		    le16_to_cpu(d->rec_len));
++		    ext4_rec_len_from_disk(d->rec_len, blocksize));
+ 
+ 	if (d != top)
+ 		return NULL;
+@@ -342,7 +342,8 @@ static struct ext4_dir_entry_tail *get_d
+ #endif
+ 
+ 	if (t->det_reserved_zero1 ||
+-	    le16_to_cpu(t->det_rec_len) != sizeof(struct ext4_dir_entry_tail) ||
++	    (ext4_rec_len_from_disk(t->det_rec_len, blocksize) !=
++	     sizeof(struct ext4_dir_entry_tail)) ||
+ 	    t->det_reserved_zero2 ||
+ 	    t->det_reserved_ft != EXT4_FT_DIR_CSUM)
+ 		return NULL;
+@@ -424,13 +425,14 @@ static struct dx_countlimit *get_dx_coun
+ 	struct ext4_dir_entry *dp;
+ 	struct dx_root_info *root;
+ 	int count_offset;
++	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
++	unsigned int rlen = ext4_rec_len_from_disk(dirent->rec_len, blocksize);
+ 
+-	if (le16_to_cpu(dirent->rec_len) == EXT4_BLOCK_SIZE(inode->i_sb))
++	if (rlen == blocksize)
+ 		count_offset = 8;
+-	else if (le16_to_cpu(dirent->rec_len) == 12) {
++	else if (rlen == 12) {
+ 		dp = (struct ext4_dir_entry *)(((void *)dirent) + 12);
+-		if (le16_to_cpu(dp->rec_len) !=
+-		    EXT4_BLOCK_SIZE(inode->i_sb) - 12)
++		if (ext4_rec_len_from_disk(dp->rec_len, blocksize) != blocksize - 12)
+ 			return NULL;
+ 		root = (struct dx_root_info *)(((void *)dp + 12));
+ 		if (root->reserved_zero ||
+@@ -1243,6 +1245,7 @@ static int dx_make_map(struct inode *dir
+ 	unsigned int buflen = bh->b_size;
+ 	char *base = bh->b_data;
+ 	struct dx_hash_info h = *hinfo;
++	int blocksize = EXT4_BLOCK_SIZE(dir->i_sb);
+ 
+ 	if (ext4_has_metadata_csum(dir->i_sb))
+ 		buflen -= sizeof(struct ext4_dir_entry_tail);
+@@ -1256,11 +1259,12 @@ static int dx_make_map(struct inode *dir
+ 			map_tail--;
+ 			map_tail->hash = h.hash;
+ 			map_tail->offs = ((char *) de - base)>>2;
+-			map_tail->size = le16_to_cpu(de->rec_len);
++			map_tail->size = ext4_rec_len_from_disk(de->rec_len,
++								blocksize);
+ 			count++;
+ 			cond_resched();
+ 		}
+-		de = ext4_next_entry(de, dir->i_sb->s_blocksize);
++		de = ext4_next_entry(de, blocksize);
+ 	}
+ 	return count;
+ }
 
 
