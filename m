@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C37B1A5A3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCB8339BC
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inFdEdzp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DE9C433C8;
-	Mon,  9 Oct 2023 13:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K154YeEm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92E6C433CA;
+	Mon,  9 Oct 2023 13:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858582;
-	bh=B3uzr6nz3k4rrOiXcK8H3VnYeo46vleP4FP0xnfsE+I=;
+	s=korg; t=1696858586;
+	bh=1rzaYniJioSM6u5RB8kFWaFicwKFfmMFV/+ddYpVTms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inFdEdzpWzEVCL8qKAHITb23uzpNph6s6o8rq1nAAZY55VlNfhJpC875dLocmfxYb
-	 OFIXUkk3kSNa1Ydr8RK6V/hMW35lrge5zA1/D8EANE/4JxJLsMXNanULiBv3PxhcaI
-	 hxIO5ymrZcmtWWeXz64duX6wAVqmwzRkH3LSGhgI=
+	b=K154YeEmvFbCaHAtr/L6zjpPwTneJ/QQlXsh4I1KsdFHLoFPDLA2yfc72lWBcAocg
+	 mfW0pLTFpQ78hqYV4D1NNMkEhml/v1u2RiQpXdAIYpNM8qthiLgGZucg4I0pBIs36N
+	 1knPhq24I0WYvHx1bXo6qfVeYit93ptRiIL86pzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Kees Cook <keescook@chromium.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/226] selftests/tls: Add {} to avoid static checker warning
-Date: Mon,  9 Oct 2023 14:59:57 +0200
-Message-ID: <20231009130127.729142484@linuxfoundation.org>
+Subject: [PATCH 5.10 037/226] selftests: tls: swap the TX and RX sockets in some tests
+Date: Mon,  9 Oct 2023 14:59:58 +0200
+Message-ID: <20231009130127.760590456@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -43,39 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit f50688b47c5858d2ff315d020332bf4cb6710837 ]
+[ Upstream commit c326ca98446e0ae4fee43a40acf79412b74cfedb ]
 
-This silences a static checker warning due to the unusual macro
-construction of EXPECT_*() by adding explicit {}s around the enclosing
-while loop.
+tls.sendmsg_large and tls.sendmsg_multiple are trying to send through
+the self->cfd socket (only configured with TLS_RX) and to receive through
+the self->fd socket (only configured with TLS_TX), so they're not using
+kTLS at all. Swap the sockets.
 
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
 Fixes: 7f657d5bf507 ("selftests: tls: add selftests for TLS sockets")
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Stable-dep-of: c326ca98446e ("selftests: tls: swap the TX and RX sockets in some tests")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tls.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/tls.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/tools/testing/selftests/net/tls.c b/tools/testing/selftests/net/tls.c
-index b599f1fa99b55..44984741bd41d 100644
+index 44984741bd41d..44a25a9f1f722 100644
 --- a/tools/testing/selftests/net/tls.c
 +++ b/tools/testing/selftests/net/tls.c
-@@ -387,8 +387,9 @@ TEST_F(tls, sendmsg_large)
- 		EXPECT_EQ(sendmsg(self->cfd, &msg, 0), send_len);
+@@ -384,11 +384,11 @@ TEST_F(tls, sendmsg_large)
+ 
+ 		msg.msg_iov = &vec;
+ 		msg.msg_iovlen = 1;
+-		EXPECT_EQ(sendmsg(self->cfd, &msg, 0), send_len);
++		EXPECT_EQ(sendmsg(self->fd, &msg, 0), send_len);
  	}
  
--	while (recvs++ < sends)
-+	while (recvs++ < sends) {
- 		EXPECT_NE(recv(self->fd, mem, send_len, 0), -1);
-+	}
+ 	while (recvs++ < sends) {
+-		EXPECT_NE(recv(self->fd, mem, send_len, 0), -1);
++		EXPECT_NE(recv(self->cfd, mem, send_len, 0), -1);
+ 	}
  
  	free(mem);
- }
+@@ -417,9 +417,9 @@ TEST_F(tls, sendmsg_multiple)
+ 	msg.msg_iov = vec;
+ 	msg.msg_iovlen = iov_len;
+ 
+-	EXPECT_EQ(sendmsg(self->cfd, &msg, 0), total_len);
++	EXPECT_EQ(sendmsg(self->fd, &msg, 0), total_len);
+ 	buf = malloc(total_len);
+-	EXPECT_NE(recv(self->fd, buf, total_len, 0), -1);
++	EXPECT_NE(recv(self->cfd, buf, total_len, 0), -1);
+ 	for (i = 0; i < iov_len; i++) {
+ 		EXPECT_EQ(memcmp(test_strs[i], buf + len_cmp,
+ 				 strlen(test_strs[i])),
 -- 
 2.40.1
 
