@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB661A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2731A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XqenppH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB37C433CA;
-	Mon,  9 Oct 2023 13:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLXFi/z5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0863C433C9;
+	Mon,  9 Oct 2023 13:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857452;
-	bh=CFMN0qCTVYYvwKb0OvPOggHG2gJF3XysKJeHAztVfZU=;
+	s=korg; t=1696857456;
+	bh=fr4VLSJDu0vuL8u5qD0oIww2d9bD8wp2NEWtkNDiKyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XqenppHHOC8fAwisnm4opAeR+OK7MstHiDarBv2w7ZidxhW2Q8Sp1MxY61FqpHgt
-	 gpzSa8o3ZcP/7oKH3midPWuhvwaGW7aLrILySWLg+b3kWlqN1ko6iy2F2MygnnAVOx
-	 dZXmn1UbLK4aNlljgHXU9g9unaiqYsVtEjfvb2Aw=
+	b=YLXFi/z5KIXBZ5meg9orDx/t7ETftutoH6xiDWGpiOwH+Af7U0nmP+TVkzhITIV1M
+	 tTN7ifPDXDYTKyHncXkpmLA/fnoRRa9ZlgG+noA/csxZ9406Ts3Q9Zm3hK6peacDRx
+	 MQs/9baDiKbWJauxU+A7bSZ5bwm5dviACH7WGjrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/162] mptcp: process pending subflow error on close
-Date: Mon,  9 Oct 2023 14:59:55 +0200
-Message-ID: <20231009130123.343177859@linuxfoundation.org>
+Subject: [PATCH 6.1 044/162] iommu/arm-smmu-v3: Set TTL invalidation hint better
+Date: Mon,  9 Oct 2023 15:00:25 +0200
+Message-ID: <20231009130124.156833014@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -44,116 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit 9f1a98813b4b686482e5ef3c9d998581cace0ba6 ]
+[ Upstream commit 6833b8f2e19945a41e4d5efd8c6d9f4cae9a5b7d ]
 
-On incoming TCP reset, subflow closing could happen before error
-propagation. That in turn could cause the socket error being ignored,
-and a missing socket state transition, as reported by Daire-Byrne.
+When io-pgtable unmaps a whole table, rather than waste time walking it
+to find the leaf entries to invalidate exactly, it simply expects
+.tlb_flush_walk with nominal last-level granularity to invalidate any
+leaf entries at higher intermediate levels as well. This works fine with
+page-based invalidation, but with range commands we need to be careful
+with the TTL hint - unconditionally setting it based on the given level
+3 granule means that an invalidation for a level 1 table would strictly
+not be required to affect level 2 block entries. It's easy to comply
+with the expected behaviour by simply not setting the TTL hint for
+non-leaf invalidations, so let's do that.
 
-Address the issues explicitly checking for subflow socket error at
-close time. To avoid code duplication, factor-out of __mptcp_error_report()
-a new helper implementing the relevant bits.
-
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/429
-Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/b409d9a17c52dc0db51faee91d92737bb7975f5b.1685637456.git.robin.murphy@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 63 ++++++++++++++++++++++++--------------------
- 1 file changed, 34 insertions(+), 29 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 193f2bdc8fe1b..b6e0579e72644 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -765,40 +765,44 @@ static bool __mptcp_ofo_queue(struct mptcp_sock *msk)
- 	return moved;
- }
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index db33dc87f69ed..becf37c088772 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -1889,8 +1889,13 @@ static void __arm_smmu_tlb_inv_range(struct arm_smmu_cmdq_ent *cmd,
+ 		/* Convert page size of 12,14,16 (log2) to 1,2,3 */
+ 		cmd->tlbi.tg = (tg - 10) / 2;
  
--void __mptcp_error_report(struct sock *sk)
-+static bool __mptcp_subflow_error_report(struct sock *sk, struct sock *ssk)
- {
--	struct mptcp_subflow_context *subflow;
--	struct mptcp_sock *msk = mptcp_sk(sk);
-+	int err = sock_error(ssk);
-+	int ssk_state;
+-		/* Determine what level the granule is at */
+-		cmd->tlbi.ttl = 4 - ((ilog2(granule) - 3) / (tg - 3));
++		/*
++		 * Determine what level the granule is at. For non-leaf, io-pgtable
++		 * assumes .tlb_flush_walk can invalidate multiple levels at once,
++		 * so ignore the nominal last-level granule and leave TTL=0.
++		 */
++		if (cmd->tlbi.leaf)
++			cmd->tlbi.ttl = 4 - ((ilog2(granule) - 3) / (tg - 3));
  
--	mptcp_for_each_subflow(msk, subflow) {
--		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
--		int err = sock_error(ssk);
--		int ssk_state;
-+	if (!err)
-+		return false;
- 
--		if (!err)
--			continue;
-+	/* only propagate errors on fallen-back sockets or
-+	 * on MPC connect
-+	 */
-+	if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(mptcp_sk(sk)))
-+		return false;
- 
--		/* only propagate errors on fallen-back sockets or
--		 * on MPC connect
--		 */
--		if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(msk))
--			continue;
-+	/* We need to propagate only transition to CLOSE state.
-+	 * Orphaned socket will see such state change via
-+	 * subflow_sched_work_if_closed() and that path will properly
-+	 * destroy the msk as needed.
-+	 */
-+	ssk_state = inet_sk_state_load(ssk);
-+	if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
-+		inet_sk_state_store(sk, ssk_state);
-+	WRITE_ONCE(sk->sk_err, -err);
- 
--		/* We need to propagate only transition to CLOSE state.
--		 * Orphaned socket will see such state change via
--		 * subflow_sched_work_if_closed() and that path will properly
--		 * destroy the msk as needed.
--		 */
--		ssk_state = inet_sk_state_load(ssk);
--		if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
--			inet_sk_state_store(sk, ssk_state);
--		WRITE_ONCE(sk->sk_err, -err);
--
--		/* This barrier is coupled with smp_rmb() in mptcp_poll() */
--		smp_wmb();
--		sk_error_report(sk);
--		break;
--	}
-+	/* This barrier is coupled with smp_rmb() in mptcp_poll() */
-+	smp_wmb();
-+	sk_error_report(sk);
-+	return true;
-+}
-+
-+void __mptcp_error_report(struct sock *sk)
-+{
-+	struct mptcp_subflow_context *subflow;
-+	struct mptcp_sock *msk = mptcp_sk(sk);
-+
-+	mptcp_for_each_subflow(msk, subflow)
-+		if (__mptcp_subflow_error_report(sk, mptcp_subflow_tcp_sock(subflow)))
-+			break;
- }
- 
- /* In most cases we will be able to lock the mptcp socket.  If its already
-@@ -2446,6 +2450,7 @@ static void __mptcp_close_ssk(struct sock *sk, struct sock *ssk,
+ 		num_pages = size >> tg;
  	}
- 
- out_release:
-+	__mptcp_subflow_error_report(sk, ssk);
- 	release_sock(ssk);
- 
- 	sock_put(ssk);
 -- 
 2.40.1
 
