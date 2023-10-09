@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61A1E555
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB32D23D1
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sHHhRWI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EDEC433CA;
-	Mon,  9 Oct 2023 13:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbVR9hAY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BE4C433C8;
+	Mon,  9 Oct 2023 13:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857366;
-	bh=YsWxeSwCgJPN6geq7SY36Oi0xxm0GM6fH+QIBgzOQVY=;
+	s=korg; t=1696857369;
+	bh=Kl1/x780WCEcyjtI43YxPbR41sMRQ4EVsBsA4vnotao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1sHHhRWIexF+kr+s5AI16I/tWLbCkGxylUSQ9ImpcMqwazF+lnH+GdzSigZDp9aDO
-	 0I/vBas77RBaybpRhNZBEPkBaMLJ1DdDuXsBIx9FV3qfYt5fIMfz46vYjP/Qobdmn1
-	 9Va0HNs44TJwPdkqmlw7wfWyw8qqqRMLowVTIGcg=
+	b=DbVR9hAYuNwbe8Iz19I/0Sb3DPm0PJJ0xxdNVU55hUW8NWcEpetWfgRXrdqwDBvkM
+	 mAjc79LS0+SU92Rz7WjeQw7v2LwPj3iNn+DoIIXOwduRhbQBYkxEAfTwsOIul/ALYF
+	 kXqzrng6HPi4BsuccNVD2sOhH3tJklHAR0KQV8aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Ausbeck <paula@soe.ucsc.edu>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Tanner Watkins <dalzot@gmail.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Bart Van Assche <bvanassche@acm.org>,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/162] ata,scsi: do not issue START STOP UNIT on resume
-Date: Mon,  9 Oct 2023 14:59:56 +0200
-Message-ID: <20231009130123.369121104@linuxfoundation.org>
+Subject: [PATCH 6.1 024/162] mm/memory: add vm_normal_folio()
+Date: Mon,  9 Oct 2023 15:00:05 +0200
+Message-ID: <20231009130123.614056789@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -45,121 +44,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Vishal Moola (Oracle) <vishal.moola@gmail.com>
 
-[ Upstream commit 0a8589055936d8feb56477123a8373ac634018fa ]
+[ Upstream commit 318e9342fbbb6888d903d86e83865609901a1c65 ]
 
-During system resume, ata_port_pm_resume() triggers ata EH to
-1) Resume the controller
-2) Reset and rescan the ports
-3) Revalidate devices
-This EH execution is started asynchronously from ata_port_pm_resume(),
-which means that when sd_resume() is executed, none or only part of the
-above processing may have been executed. However, sd_resume() issues a
-START STOP UNIT to wake up the drive from sleep mode. This command is
-translated to ATA with ata_scsi_start_stop_xlat() and issued to the
-device. However, depending on the state of execution of the EH process
-and revalidation triggerred by ata_port_pm_resume(), two things may
-happen:
-1) The START STOP UNIT fails if it is received before the controller has
-   been reenabled at the beginning of the EH execution. This is visible
-   with error messages like:
+Patch series "Convert deactivate_page() to folio_deactivate()", v4.
 
-ata10.00: device reported invalid CHS sector 0
-sd 9:0:0:0: [sdc] Start/Stop Unit failed: Result: hostbyte=DID_OK driverbyte=DRIVER_OK
-sd 9:0:0:0: [sdc] Sense Key : Illegal Request [current]
-sd 9:0:0:0: [sdc] Add. Sense: Unaligned write command
-sd 9:0:0:0: PM: dpm_run_callback(): scsi_bus_resume+0x0/0x90 returns -5
-sd 9:0:0:0: PM: failed to resume async: error -5
+Deactivate_page() has already been converted to use folios.  This patch
+series modifies the callers of deactivate_page() to use folios.  It also
+introduces vm_normal_folio() to assist with folio conversions, and
+converts deactivate_page() to folio_deactivate() which takes in a folio.
 
-2) The START STOP UNIT command is received while the EH process is
-   on-going, which mean that it is stopped and must wait for its
-   completion, at which point the command is rather useless as the drive
-   is already fully spun up already. This case results also in a
-   significant delay in sd_resume() which is observable by users as
-   the entire system resume completion is delayed.
+This patch (of 4):
 
-Given that ATA devices will be woken up by libata activity on resume,
-sd_resume() has no need to issue a START STOP UNIT command, which solves
-the above mentioned problems. Do not issue this command by introducing
-the new scsi_device flag no_start_on_resume and setting this flag to 1
-in ata_scsi_dev_config(). sd_resume() is modified to issue a START STOP
-UNIT command only if this flag is not set.
+Introduce a wrapper function called vm_normal_folio().  This function
+calls vm_normal_page() and returns the folio of the page found, or null if
+no page is found.
 
-Reported-by: Paul Ausbeck <paula@soe.ucsc.edu>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=215880
-Fixes: a19a93e4c6a9 ("scsi: core: pm: Rely on the device driver core for async power management")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Tested-by: Tanner Watkins <dalzot@gmail.com>
-Tested-by: Paul Ausbeck <paula@soe.ucsc.edu>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Stable-dep-of: 99398d2070ab ("scsi: sd: Do not issue commands to suspended disks on shutdown")
+This function allows callers to get a folio from a pte, which will
+eventually allow them to completely replace their struct page variables
+with struct folio instead.
+
+Link: https://lkml.kernel.org/r/20221221180848.20774-1-vishal.moola@gmail.com
+Link: https://lkml.kernel.org/r/20221221180848.20774-2-vishal.moola@gmail.com
+Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 24526268f4e3 ("mm: mempolicy: keep VMA walk if both MPOL_MF_STRICT and MPOL_MF_MOVE are specified")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c  | 7 +++++++
- drivers/scsi/sd.c          | 9 ++++++---
- include/scsi/scsi_device.h | 1 +
- 3 files changed, 14 insertions(+), 3 deletions(-)
+ include/linux/mm.h |  2 ++
+ mm/memory.c        | 10 ++++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index d28628b964e29..9c8dd9f86cbb3 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1081,7 +1081,14 @@ int ata_scsi_dev_config(struct scsi_device *sdev, struct ata_device *dev)
- 		}
- 	} else {
- 		sdev->sector_size = ata_id_logical_sector_size(dev->id);
-+		/*
-+		 * Stop the drive on suspend but do not issue START STOP UNIT
-+		 * on resume as this is not necessary and may fail: the device
-+		 * will be woken up by ata_port_pm_resume() with a port reset
-+		 * and device revalidation.
-+		 */
- 		sdev->manage_start_stop = 1;
-+		sdev->no_start_on_resume = 1;
- 	}
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index 104ec00823da8..eefb0948110ae 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -1906,6 +1906,8 @@ static inline bool can_do_mlock(void) { return false; }
+ extern int user_shm_lock(size_t, struct ucounts *);
+ extern void user_shm_unlock(size_t, struct ucounts *);
  
- 	/*
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index e934779bf05c8..5bfca49415113 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -3718,7 +3718,7 @@ static int sd_suspend_runtime(struct device *dev)
- static int sd_resume(struct device *dev)
- {
- 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
--	int ret;
-+	int ret = 0;
++struct folio *vm_normal_folio(struct vm_area_struct *vma, unsigned long addr,
++			     pte_t pte);
+ struct page *vm_normal_page(struct vm_area_struct *vma, unsigned long addr,
+ 			     pte_t pte);
+ struct page *vm_normal_page_pmd(struct vm_area_struct *vma, unsigned long addr,
+diff --git a/mm/memory.c b/mm/memory.c
+index 2083078cd0615..0d1b3ee8fcd7a 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -672,6 +672,16 @@ struct page *vm_normal_page(struct vm_area_struct *vma, unsigned long addr,
+ 	return pfn_to_page(pfn);
+ }
  
- 	if (!sdkp)	/* E.g.: runtime resume at the start of sd_probe() */
- 		return 0;
-@@ -3726,8 +3726,11 @@ static int sd_resume(struct device *dev)
- 	if (!sdkp->device->manage_start_stop)
- 		return 0;
- 
--	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
--	ret = sd_start_stop_device(sdkp, 1);
-+	if (!sdkp->device->no_start_on_resume) {
-+		sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
-+		ret = sd_start_stop_device(sdkp, 1);
-+	}
++struct folio *vm_normal_folio(struct vm_area_struct *vma, unsigned long addr,
++			    pte_t pte)
++{
++	struct page *page = vm_normal_page(vma, addr, pte);
 +
- 	if (!ret)
- 		opal_unlock_from_suspend(sdkp->opal_dev);
- 	return ret;
-diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
-index 006858ed04e8c..9fdc77db3a2a8 100644
---- a/include/scsi/scsi_device.h
-+++ b/include/scsi/scsi_device.h
-@@ -193,6 +193,7 @@ struct scsi_device {
- 	unsigned no_start_on_add:1;	/* do not issue start on add */
- 	unsigned allow_restart:1; /* issue START_UNIT in error handler */
- 	unsigned manage_start_stop:1;	/* Let HLD (sd) manage start/stop */
-+	unsigned no_start_on_resume:1; /* Do not issue START_STOP_UNIT on resume */
- 	unsigned start_stop_pwr_cond:1;	/* Set power cond. in START_STOP_UNIT */
- 	unsigned no_uld_attach:1; /* disable connecting to upper level drivers */
- 	unsigned select_no_atn:1;
++	if (page)
++		return page_folio(page);
++	return NULL;
++}
++
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ struct page *vm_normal_page_pmd(struct vm_area_struct *vma, unsigned long addr,
+ 				pmd_t pmd)
 -- 
 2.40.1
 
