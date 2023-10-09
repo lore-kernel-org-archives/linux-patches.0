@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5B718B11
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8274518B11
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9XKTMPX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0946EC433C8;
-	Mon,  9 Oct 2023 13:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQK5VzQT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC5DC433C9;
+	Mon,  9 Oct 2023 13:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857060;
-	bh=uq6lWoexhtWqsiwc+344JxPIJcCbrnMWqrYWyQQN7pg=;
+	s=korg; t=1696857063;
+	bh=uOxJcdMeUeNOg3LmZF35HJWluaPMk4xEj1EPjazLqoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D9XKTMPXqtyR7cU2cR3IXalvvW4YkgeeFqYpRp9Wxehnu8WuzuQ2Mtl5gR0XT3F1Q
-	 iyDQEmjaaEqFVxQCWkWLNLRnSpJJwurnrjGZjVFKV103Q9Sd1V5vBCyYKio4BGspmp
-	 vXOhlR3FB7ieF7BvDjYnc3Vx9Vrfu38G2HOnh1uo=
+	b=mQK5VzQTVk+8QoaWoCaVfD3Jx/E5VzlyviofIdehGeqHvIUbG5g+D3+yUGZ/Q8jOD
+	 5e1uJe7bz0JiY6mO6JKM+ZdAGvHE7WRCI/HfDKwNys1rG310oMzgXJh3LlHPqtWK9b
+	 KsCXnl61pCbuo7jyvxWrQPFn0flYxcpXisXT2CgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiji Yang <yangshiji66@outlook.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Kalle Valo <kvalo@kernel.org>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 082/163] wifi: mt76: mt76x02: fix MT76x0 external LNA gain handling
-Date: Mon,  9 Oct 2023 15:00:46 +0200
-Message-ID: <20231009130126.312126296@linuxfoundation.org>
+Subject: [PATCH 6.5 083/163] perf/x86/amd/core: Fix overflow reset on hotplug
+Date: Mon,  9 Oct 2023 15:00:47 +0200
+Message-ID: <20231009130126.338340227@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -43,76 +42,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Sandipan Das <sandipan.das@amd.com>
 
-[ Upstream commit 684e45e120b82deccaf8b85633905304a3bbf56d ]
+[ Upstream commit 23d2626b841c2adccdeb477665313c02dff02dc3 ]
 
-On MT76x0, LNA gain should be applied for both external and internal LNA.
-On MT76x2, LNA gain should be treated as 0 for external LNA.
-Move the LNA type based logic to mt76x2 in order to fix mt76x0.
+Kernels older than v5.19 do not support PerfMonV2 and the PMI handler
+does not clear the overflow bits of the PerfCntrGlobalStatus register.
+Because of this, loading a recent kernel using kexec from an older
+kernel can result in inconsistent register states on Zen 4 systems.
 
-Fixes: 2daa67588f34 ("mt76x0: unify lna_gain parsing")
-Reported-by: Shiji Yang <yangshiji66@outlook.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230919194747.31647-1-nbd@nbd.name
+The PMI handler of the new kernel gets confused and shows a warning when
+an overflow occurs because some of the overflow bits are set even if the
+corresponding counters are inactive. These are remnants from overflows
+that were handled by the older kernel.
+
+During CPU hotplug, the PerfCntrGlobalCtl and PerfCntrGlobalStatus
+registers should always be cleared for PerfMonV2-capable processors.
+However, a condition used for NB event constaints applicable only to
+older processors currently prevents this from happening. Move the reset
+sequence to an appropriate place and also clear the LBR Freeze bit.
+
+Fixes: 21d59e3e2c40 ("perf/x86/amd/core: Detect PerfMonV2 support")
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/882a87511af40792ba69bb0e9026f19a2e71e8a3.1694696888.git.sandipan.das@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c |  7 -------
- drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c  | 13 +++++++++++--
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ arch/x86/events/amd/core.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-index 0acabba2d1a50..5d402cf2951cb 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-@@ -131,15 +131,8 @@ u8 mt76x02_get_lna_gain(struct mt76x02_dev *dev,
- 			s8 *lna_2g, s8 *lna_5g,
- 			struct ieee80211_channel *chan)
- {
--	u16 val;
- 	u8 lna;
+diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
+index abadd5f234254..ed626bfa1eedb 100644
+--- a/arch/x86/events/amd/core.c
++++ b/arch/x86/events/amd/core.c
+@@ -534,8 +534,12 @@ static void amd_pmu_cpu_reset(int cpu)
+ 	/* Clear enable bits i.e. PerfCntrGlobalCtl.PerfCntrEn */
+ 	wrmsrl(MSR_AMD64_PERF_CNTR_GLOBAL_CTL, 0);
  
--	val = mt76x02_eeprom_get(dev, MT_EE_NIC_CONF_1);
--	if (val & MT_EE_NIC_CONF_1_LNA_EXT_2G)
--		*lna_2g = 0;
--	if (val & MT_EE_NIC_CONF_1_LNA_EXT_5G)
--		memset(lna_5g, 0, sizeof(s8) * 3);
--
- 	if (chan->band == NL80211_BAND_2GHZ)
- 		lna = *lna_2g;
- 	else if (chan->hw_value <= 64)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
-index d5809408d1d37..8c01855885ce3 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
-@@ -256,7 +256,8 @@ void mt76x2_read_rx_gain(struct mt76x02_dev *dev)
- 	struct ieee80211_channel *chan = dev->mphy.chandef.chan;
- 	int channel = chan->hw_value;
- 	s8 lna_5g[3], lna_2g;
--	u8 lna;
-+	bool use_lna;
-+	u8 lna = 0;
- 	u16 val;
- 
- 	if (chan->band == NL80211_BAND_2GHZ)
-@@ -275,7 +276,15 @@ void mt76x2_read_rx_gain(struct mt76x02_dev *dev)
- 	dev->cal.rx.mcu_gain |= (lna_5g[1] & 0xff) << 16;
- 	dev->cal.rx.mcu_gain |= (lna_5g[2] & 0xff) << 24;
- 
--	lna = mt76x02_get_lna_gain(dev, &lna_2g, lna_5g, chan);
-+	val = mt76x02_eeprom_get(dev, MT_EE_NIC_CONF_1);
-+	if (chan->band == NL80211_BAND_2GHZ)
-+		use_lna = !(val & MT_EE_NIC_CONF_1_LNA_EXT_2G);
-+	else
-+		use_lna = !(val & MT_EE_NIC_CONF_1_LNA_EXT_5G);
-+
-+	if (use_lna)
-+		lna = mt76x02_get_lna_gain(dev, &lna_2g, lna_5g, chan);
-+
- 	dev->cal.rx.lna_gain = mt76x02_sign_extend(lna, 8);
+-	/* Clear overflow bits i.e. PerfCntrGLobalStatus.PerfCntrOvfl */
+-	wrmsrl(MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR, amd_pmu_global_cntr_mask);
++	/*
++	 * Clear freeze and overflow bits i.e. PerfCntrGLobalStatus.LbrFreeze
++	 * and PerfCntrGLobalStatus.PerfCntrOvfl
++	 */
++	wrmsrl(MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR,
++	       GLOBAL_STATUS_LBRS_FROZEN | amd_pmu_global_cntr_mask);
  }
- EXPORT_SYMBOL_GPL(mt76x2_read_rx_gain);
+ 
+ static int amd_pmu_cpu_prepare(int cpu)
+@@ -570,6 +574,7 @@ static void amd_pmu_cpu_starting(int cpu)
+ 	int i, nb_id;
+ 
+ 	cpuc->perf_ctr_virt_mask = AMD64_EVENTSEL_HOSTONLY;
++	amd_pmu_cpu_reset(cpu);
+ 
+ 	if (!x86_pmu.amd_nb_constraints)
+ 		return;
+@@ -591,8 +596,6 @@ static void amd_pmu_cpu_starting(int cpu)
+ 
+ 	cpuc->amd_nb->nb_id = nb_id;
+ 	cpuc->amd_nb->refcnt++;
+-
+-	amd_pmu_cpu_reset(cpu);
+ }
+ 
+ static void amd_pmu_cpu_dead(int cpu)
+@@ -601,6 +604,7 @@ static void amd_pmu_cpu_dead(int cpu)
+ 
+ 	kfree(cpuhw->lbr_sel);
+ 	cpuhw->lbr_sel = NULL;
++	amd_pmu_cpu_reset(cpu);
+ 
+ 	if (!x86_pmu.amd_nb_constraints)
+ 		return;
+@@ -613,8 +617,6 @@ static void amd_pmu_cpu_dead(int cpu)
+ 
+ 		cpuhw->amd_nb = NULL;
+ 	}
+-
+-	amd_pmu_cpu_reset(cpu);
+ }
+ 
+ static inline void amd_pmu_set_global_ctl(u64 ctl)
 -- 
 2.40.1
 
