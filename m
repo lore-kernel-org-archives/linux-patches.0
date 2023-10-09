@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA191A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5689C1A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wtey03XI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB598C433CC;
-	Mon,  9 Oct 2023 13:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LM2IORgs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7517C433C9;
+	Mon,  9 Oct 2023 13:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857579;
-	bh=HVZeRI2xd2PzJle0jUbC7kN4y+QqdY7sEMfS/hy2+LA=;
+	s=korg; t=1696857582;
+	bh=jqhQR80fRMfHEFDbKsLhCtxxM+mN5NWAFDKEBlpfWf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wtey03XI2pcG8E+iNWSueeXQEVeQO1mLCm8FP7QCgwn8tNNz+/kETOpH3KeQiDnol
-	 v2l5OeQ+F3bhsCgDB0PBWXdrxshsouXbfk21HFY7lH2GmOYAZadq0pmrbLTNmvUrb6
-	 dYGL7J2CUDbpjv/LLmj+yicVxb+f7RtjH8SaDbq0=
+	b=LM2IORgsfW4nQ0Wq86clSD4sKsIfBEnIg9WZMqj+9lxvYnKujh2TOZTVP7yw1XX3c
+	 TMNTi11ibaVFLoc0qLcl/mDF2qgYhwu7UhFpNSzQXTMIPhC7k1wjZMzCbX5DzqvS8/
+	 xE9UxH2H5jzix7AChTIADyOOOepJ/zssguFoprA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiji Yang <yangshiji66@outlook.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Kalle Valo <kvalo@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/162] wifi: mt76: mt76x02: fix MT76x0 external LNA gain handling
-Date: Mon,  9 Oct 2023 15:01:12 +0200
-Message-ID: <20231009130125.432756887@linuxfoundation.org>
+Subject: [PATCH 6.1 074/162] erofs: fix memory leak of LZMA global compressed deduplication
+Date: Mon,  9 Oct 2023 15:00:55 +0200
+Message-ID: <20231009130124.962021277@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -43,76 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 684e45e120b82deccaf8b85633905304a3bbf56d ]
+[ Upstream commit 75a5221630fe5aa3fedba7a06be618db0f79ba1e ]
 
-On MT76x0, LNA gain should be applied for both external and internal LNA.
-On MT76x2, LNA gain should be treated as 0 for external LNA.
-Move the LNA type based logic to mt76x2 in order to fix mt76x0.
+When stressing microLZMA EROFS images with the new global compressed
+deduplication feature enabled (`-Ededupe`), I found some short-lived
+temporary pages weren't properly released, which could slowly cause
+unexpected OOMs hours later.
 
-Fixes: 2daa67588f34 ("mt76x0: unify lna_gain parsing")
-Reported-by: Shiji Yang <yangshiji66@outlook.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230919194747.31647-1-nbd@nbd.name
+Let's fix it now (LZ4 and DEFLATE don't have this issue.)
+
+Fixes: 5c2a64252c5d ("erofs: introduce partial-referenced pclusters")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20230907050542.97152-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c |  7 -------
- drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c  | 13 +++++++++++--
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ fs/erofs/decompressor_lzma.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-index 0acabba2d1a50..5d402cf2951cb 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-@@ -131,15 +131,8 @@ u8 mt76x02_get_lna_gain(struct mt76x02_dev *dev,
- 			s8 *lna_2g, s8 *lna_5g,
- 			struct ieee80211_channel *chan)
- {
--	u16 val;
- 	u8 lna;
- 
--	val = mt76x02_eeprom_get(dev, MT_EE_NIC_CONF_1);
--	if (val & MT_EE_NIC_CONF_1_LNA_EXT_2G)
--		*lna_2g = 0;
--	if (val & MT_EE_NIC_CONF_1_LNA_EXT_5G)
--		memset(lna_5g, 0, sizeof(s8) * 3);
--
- 	if (chan->band == NL80211_BAND_2GHZ)
- 		lna = *lna_2g;
- 	else if (chan->hw_value <= 64)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
-index c57e05a5c65e4..91807bf662dde 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
-@@ -256,7 +256,8 @@ void mt76x2_read_rx_gain(struct mt76x02_dev *dev)
- 	struct ieee80211_channel *chan = dev->mphy.chandef.chan;
- 	int channel = chan->hw_value;
- 	s8 lna_5g[3], lna_2g;
--	u8 lna;
-+	bool use_lna;
-+	u8 lna = 0;
- 	u16 val;
- 
- 	if (chan->band == NL80211_BAND_2GHZ)
-@@ -275,7 +276,15 @@ void mt76x2_read_rx_gain(struct mt76x02_dev *dev)
- 	dev->cal.rx.mcu_gain |= (lna_5g[1] & 0xff) << 16;
- 	dev->cal.rx.mcu_gain |= (lna_5g[2] & 0xff) << 24;
- 
--	lna = mt76x02_get_lna_gain(dev, &lna_2g, lna_5g, chan);
-+	val = mt76x02_eeprom_get(dev, MT_EE_NIC_CONF_1);
-+	if (chan->band == NL80211_BAND_2GHZ)
-+		use_lna = !(val & MT_EE_NIC_CONF_1_LNA_EXT_2G);
-+	else
-+		use_lna = !(val & MT_EE_NIC_CONF_1_LNA_EXT_5G);
-+
-+	if (use_lna)
-+		lna = mt76x02_get_lna_gain(dev, &lna_2g, lna_5g, chan);
-+
- 	dev->cal.rx.lna_gain = mt76x02_sign_extend(lna, 8);
- }
- EXPORT_SYMBOL_GPL(mt76x2_read_rx_gain);
+diff --git a/fs/erofs/decompressor_lzma.c b/fs/erofs/decompressor_lzma.c
+index 5cd612a8f8584..49addc345aebe 100644
+--- a/fs/erofs/decompressor_lzma.c
++++ b/fs/erofs/decompressor_lzma.c
+@@ -217,9 +217,12 @@ int z_erofs_lzma_decompress(struct z_erofs_decompress_req *rq,
+ 			strm->buf.out_size = min_t(u32, outlen,
+ 						   PAGE_SIZE - pageofs);
+ 			outlen -= strm->buf.out_size;
+-			if (!rq->out[no] && rq->fillgaps)	/* deduped */
++			if (!rq->out[no] && rq->fillgaps) {	/* deduped */
+ 				rq->out[no] = erofs_allocpage(pagepool,
+ 						GFP_KERNEL | __GFP_NOFAIL);
++				set_page_private(rq->out[no],
++						 Z_EROFS_SHORTLIVED_PAGE);
++			}
+ 			if (rq->out[no])
+ 				strm->buf.out = kmap(rq->out[no]) + pageofs;
+ 			pageofs = 0;
 -- 
 2.40.1
 
