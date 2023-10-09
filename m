@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBE522F00
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7E922F00
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bKpdhX0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2A8C433C9;
-	Mon,  9 Oct 2023 13:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Spj3UZp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E223AC433C7;
+	Mon,  9 Oct 2023 13:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858236;
-	bh=Re4njsf6H6MGIDOOnApZu9XoOTx/o0CP5jBw8FZG7K8=;
+	s=korg; t=1696858239;
+	bh=HDWamliAc6wjq6HXOOhNCR/YMhE3AsnPz4uxSV7h2uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2bKpdhX0KDUXfmcDgwE5htgwenUE/MNeWGBNTqBbJPUXEHeZXhl2YqWkuN6urUT3H
-	 oxGhFZk08srsZ4mcisObplMohZ2N2+ivXg0r1ugiLw6JjM6rkj010T7+/Ihgs0ktTB
-	 iMMPDJmQKCk40gpwb9R4egFzywIBc/g4J0I0WkWo=
+	b=1Spj3UZpMACK2LpzHC8pk1pppBwmJLM2fBFenau24XOzoQYOh49O3EgrDQ8W3CoLy
+	 5y/fxHWc6NVXh3r5u7BdKEmeGlGAxul3/7RfkBJCwpASoQG5XUsKJke9H2pXfcStHQ
+	 ILjP9OdHo7SIYW5cgpcyit0CGYuZLLr5jSGRcP9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Xu <han.xu@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Stanislav Fomichev <sdf@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 059/131] spi: nxp-fspi: reset the FLSHxCR1 registers
-Date: Mon,  9 Oct 2023 15:01:39 +0200
-Message-ID: <20231009130118.103427274@linuxfoundation.org>
+Subject: [PATCH 5.4 060/131] bpf: Clarify error expectations from bpf_clone_redirect
+Date: Mon,  9 Oct 2023 15:01:40 +0200
+Message-ID: <20231009130118.130831356@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,39 +42,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Han Xu <han.xu@nxp.com>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit 18495676f7886e105133f1dc06c1d5e8d5436f32 ]
+[ Upstream commit 7cb779a6867fea00b4209bcf6de2f178a743247d ]
 
-Reset the FLSHxCR1 registers to default value. ROM may set the register
-value and it affects the SPI NAND normal functions.
+Commit 151e887d8ff9 ("veth: Fixing transmit return status for dropped
+packets") exposed the fact that bpf_clone_redirect is capable of
+returning raw NET_XMIT_XXX return codes.
 
-Signed-off-by: Han Xu <han.xu@nxp.com>
-Link: https://lore.kernel.org/r/20230906183254.235847-1-han.xu@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This is in the conflict with its UAPI doc which says the following:
+"0 on success, or a negative error in case of failure."
+
+Update the UAPI to reflect the fact that bpf_clone_redirect can
+return positive error numbers, but don't explicitly define
+their meaning.
+
+Reported-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230911194731.286342-1-sdf@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-nxp-fspi.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/uapi/linux/bpf.h       | 4 +++-
+ tools/include/uapi/linux/bpf.h | 4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
-index 36a44a837031d..ee1b488d7dedc 100644
---- a/drivers/spi/spi-nxp-fspi.c
-+++ b/drivers/spi/spi-nxp-fspi.c
-@@ -897,6 +897,13 @@ static int nxp_fspi_default_setup(struct nxp_fspi *f)
- 	fspi_writel(f, FSPI_AHBCR_PREF_EN | FSPI_AHBCR_RDADDROPT,
- 		 base + FSPI_AHBCR);
- 
-+	/* Reset the FLSHxCR1 registers. */
-+	reg = FSPI_FLSHXCR1_TCSH(0x3) | FSPI_FLSHXCR1_TCSS(0x3);
-+	fspi_writel(f, reg, base + FSPI_FLSHA1CR1);
-+	fspi_writel(f, reg, base + FSPI_FLSHA2CR1);
-+	fspi_writel(f, reg, base + FSPI_FLSHB1CR1);
-+	fspi_writel(f, reg, base + FSPI_FLSHB2CR1);
-+
- 	/* AHB Read - Set lut sequence ID for all CS. */
- 	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHA1CR2);
- 	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHA2CR2);
+diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
+index cb0631098f918..e5250a9b813d6 100644
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -780,7 +780,9 @@ union bpf_attr {
+  * 		performed again, if the helper is used in combination with
+  * 		direct packet access.
+  * 	Return
+- * 		0 on success, or a negative error in case of failure.
++ * 		0 on success, or a negative error in case of failure. Positive
++ * 		error indicates a potential drop or congestion in the target
++ * 		device. The particular positive error codes are not defined.
+  *
+  * u64 bpf_get_current_pid_tgid(void)
+  * 	Return
+diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
+index cb0631098f918..e5250a9b813d6 100644
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -780,7 +780,9 @@ union bpf_attr {
+  * 		performed again, if the helper is used in combination with
+  * 		direct packet access.
+  * 	Return
+- * 		0 on success, or a negative error in case of failure.
++ * 		0 on success, or a negative error in case of failure. Positive
++ * 		error indicates a potential drop or congestion in the target
++ * 		device. The particular positive error codes are not defined.
+  *
+  * u64 bpf_get_current_pid_tgid(void)
+  * 	Return
 -- 
 2.40.1
 
