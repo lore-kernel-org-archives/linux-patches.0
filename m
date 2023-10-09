@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3294B1A582
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0141A582
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2cLSF63"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A458EC433CA;
-	Mon,  9 Oct 2023 13:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxnVpALY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3C0C433C7;
+	Mon,  9 Oct 2023 13:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857137;
-	bh=ne1u9WoazvFeUrkisEgnYTJY0pcnwG1Y2qPqMySl4ZY=;
+	s=korg; t=1696857140;
+	bh=rX6i4tU+wOUHwQGHshYC+GKsORN5l+zLn8ZPIQjvDss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2cLSF63B3W59TPECWU3T9WrcYSKMIoSmuGBA9lktsUn6WtI2myJ4TV3ZwEbiHiCi
-	 j6Cy1SN9r1keh/f6Pjdq6TbDvVpwNgzoOxIozd42HOSS+Rx1awq1BXo0t2Gm+j+nye
-	 c2sAao6V8BswZPKLBlii8gwbhH0PV3ITtqXYDu+0=
+	b=BxnVpALY+nZhbbDljhl2CSJi7IzkHe5YL0/JjKB037Y2TthBJazt3zcTjExmw1LS8
+	 LzNsrOa8/wKIPdihGGosz5JyMXo5ntutWLNxMu9vdUCSp8pvHK6f0dmyjAqLNATHrh
+	 GmaVzTEWi6KvOGg1+8lLxiUUkoDwRYtFTEwh954o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Florian Westphal <fw@strlen.de>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 109/163] ipv6: tcp: add a missing nf_reset_ct() in 3WHS handling
-Date: Mon,  9 Oct 2023 15:01:13 +0200
-Message-ID: <20231009130127.033296399@linuxfoundation.org>
+Subject: [PATCH 6.5 092/163] wifi: iwlwifi: mvm: Fix incorrect usage of scan API
+Date: Mon,  9 Oct 2023 15:00:56 +0200
+Message-ID: <20231009130126.574320604@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -38,76 +38,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 9593c7cb6cf670ef724d17f7f9affd7a8d2ad0c5 ]
+[ Upstream commit 22061bfc57fe08c77141dc876b4af75603c4d61d ]
 
-Commit b0e214d21203 ("netfilter: keep conntrack reference until
-IPsecv6 policy checks are done") is a direct copy of the old
-commit b59c270104f0 ("[NETFILTER]: Keep conntrack reference until
-IPsec policy checks are done") but for IPv6.  However, it also
-copies a bug that this old commit had.  That is: when the third
-packet of 3WHS connection establishment contains payload, it is
-added into socket receive queue without the XFRM check and the
-drop of connection tracking context.
+The support for using link ID in the scan request API was only
+added in version 16. However, the code wrongly enabled this
+API usage also for older versions. Fix it.
 
-That leads to nf_conntrack module being impossible to unload as
-it waits for all the conntrack references to be dropped while
-the packet release is deferred in per-cpu cache indefinitely, if
-not consumed by the application.
-
-The issue for IPv4 was fixed in commit 6f0012e35160 ("tcp: add a
-missing nf_reset_ct() in 3WHS handling") by adding a missing XFRM
-check and correctly dropping the conntrack context.  However, the
-issue was introduced to IPv6 code afterwards.  Fixing it the
-same way for IPv6 now.
-
-Fixes: b0e214d21203 ("netfilter: keep conntrack reference until IPsecv6 policy checks are done")
-Link: https://lore.kernel.org/netdev/d589a999-d4dd-2768-b2d5-89dec64a4a42@ovn.org/
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230922210530.2045146-1-i.maximets@ovn.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Antoine Beaupré <anarcat@debian.org>
+Fixes: e98b23d0d7b8 ("wifi: iwlwifi: mvm: Add support for SCAN API version 16")
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230926165546.086e635fbbe6.Ia660f35ca0b1079f2c2ea92fd8d14d8101a89d03@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/tcp_ipv6.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 3a88545a265d6..44b6949d72b22 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1640,9 +1640,12 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
- 		struct sock *nsk;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+index c1d9ce7534688..3cbe2c0b8d6bc 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -2342,7 +2342,7 @@ iwl_mvm_scan_umac_fill_general_p_v12(struct iwl_mvm *mvm,
+ 	if (gen_flags & IWL_UMAC_SCAN_GEN_FLAGS_V2_FRAGMENTED_LMAC2)
+ 		gp->num_of_fragments[SCAN_HB_LMAC_IDX] = IWL_SCAN_NUM_OF_FRAGS;
  
- 		sk = req->rsk_listener;
--		drop_reason = tcp_inbound_md5_hash(sk, skb,
--						   &hdr->saddr, &hdr->daddr,
--						   AF_INET6, dif, sdif);
-+		if (!xfrm6_policy_check(sk, XFRM_POLICY_IN, skb))
-+			drop_reason = SKB_DROP_REASON_XFRM_POLICY;
-+		else
-+			drop_reason = tcp_inbound_md5_hash(sk, skb,
-+							   &hdr->saddr, &hdr->daddr,
-+							   AF_INET6, dif, sdif);
- 		if (drop_reason) {
- 			sk_drops_add(sk, skb);
- 			reqsk_put(req);
-@@ -1689,6 +1692,7 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
- 			}
- 			goto discard_and_relse;
- 		}
-+		nf_reset_ct(skb);
- 		if (nsk == sk) {
- 			reqsk_put(req);
- 			tcp_v6_restore_cb(skb);
+-	if (version < 12) {
++	if (version < 16) {
+ 		gp->scan_start_mac_or_link_id = scan_vif->id;
+ 	} else {
+ 		struct iwl_mvm_vif_link_info *link_info;
 -- 
 2.40.1
 
