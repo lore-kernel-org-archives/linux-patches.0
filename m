@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687581A5A3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8A01A5A3
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxErX0HB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83C3C433C7;
-	Mon,  9 Oct 2023 13:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlzKLuqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A958C433C7;
+	Mon,  9 Oct 2023 13:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859254;
-	bh=IMBAMm+yw8UB3P4sPk8q7ojXe3NURnKw2d5hXysDYz8=;
+	s=korg; t=1696859257;
+	bh=HfgcO50qTrea8J+7vIqYcZ2j1ol3jFk6HKcCzAOfWRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mxErX0HBssHabMdEptichQrg29jjqxt9PGCPhPMUANy+SOzyOspM+9TLalPZ+owBF
-	 /5fXpfmpzDFFvtu+WclyXtBg67tQZubaWrE45oN7Ruin2RXyoKPeYBDIhvpYnvuxMg
-	 SKgca4zNlsUDxhSkSKV8yEU8SmM95KASkwMt3c1Y=
+	b=hlzKLuqids5Mmu1OR/OvJxZggWxVRpfMoHpVxQbrQM8JHtj81NT5gXokUoSH2LQCp
+	 wpMUds5jaALtkNmktfEAyjBOntPu6qFPUjt/OIgzv94DuICkTejTvI3tros42/tSPC
+	 LEt7bqUNDVjkPoAmih2IOwgBcRckFZTakNHbmPZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timo Alho <talho@nvidia.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Chris Zankel <chris@zankel.net>,
+	Max Filippov <jcmvbkbc@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 08/55] clk: tegra: fix error return case for recalc_rate
-Date: Mon,  9 Oct 2023 15:06:07 +0200
-Message-ID: <20231009130108.033322841@linuxfoundation.org>
+Subject: [PATCH 4.14 09/55] xtensa: boot: dont add include-dirs
+Date: Mon,  9 Oct 2023 15:06:08 +0200
+Message-ID: <20231009130108.067643868@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -43,38 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timo Alho <talho@nvidia.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit a47b44fbb13f5e7a981b4515dcddc93a321ae89c ]
+[ Upstream commit 54d3d7d363823782c3444ddc41bb8cf1edc80514 ]
 
-tegra-bpmp clocks driver makes implicit conversion of signed error
-code to unsigned value in recalc_rate operation. The behavior for
-recalc_rate, according to it's specification, should be that "If the
-driver cannot figure out a rate for this clock, it must return 0."
+Drop the -I<include-dir> options to prevent build warnings since there
+is not boot/include directory:
 
-Fixes: ca6f2796eef7 ("clk: tegra: Add BPMP clock driver")
-Signed-off-by: Timo Alho <talho@nvidia.com>
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Link: https://lore.kernel.org/r/20230912112951.2330497-1-cyndis@kapsi.fi
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+cc1: warning: arch/xtensa/boot/include: No such file or directory [-Wmissing-include-dirs]
+
+Fixes: 437374e9a950 ("restore arch/{ppc/xtensa}/boot cflags")
+Fixes: 4bedea945451 ("xtensa: Architecture support for Tensilica Xtensa Part 2")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Chris Zankel <chris@zankel.net>
+Cc: Max Filippov <jcmvbkbc@gmail.com>
+Message-Id: <20230920052139.10570-15-rdunlap@infradead.org>
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/tegra/clk-bpmp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/xtensa/boot/Makefile | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/clk/tegra/clk-bpmp.c b/drivers/clk/tegra/clk-bpmp.c
-index 6c933b0e29a3b..fcb7c599583b3 100644
---- a/drivers/clk/tegra/clk-bpmp.c
-+++ b/drivers/clk/tegra/clk-bpmp.c
-@@ -154,7 +154,7 @@ static unsigned long tegra_bpmp_clk_recalc_rate(struct clk_hw *hw,
+diff --git a/arch/xtensa/boot/Makefile b/arch/xtensa/boot/Makefile
+index 8c20a7965bda0..7acb04aeb577a 100644
+--- a/arch/xtensa/boot/Makefile
++++ b/arch/xtensa/boot/Makefile
+@@ -9,8 +9,7 @@
  
- 	err = tegra_bpmp_clk_transfer(clk->bpmp, &msg);
- 	if (err < 0)
--		return err;
-+		return 0;
  
- 	return response.rate;
- }
+ # KBUILD_CFLAGS used when building rest of boot (takes effect recursively)
+-KBUILD_CFLAGS	+= -fno-builtin -Iarch/$(ARCH)/boot/include
+-HOSTFLAGS	+= -Iarch/$(ARCH)/boot/include
++KBUILD_CFLAGS	+= -fno-builtin
+ 
+ BIG_ENDIAN	:= $(shell echo __XTENSA_EB__ | $(CC) -E - | grep -v "\#")
+ 
 -- 
 2.40.1
 
