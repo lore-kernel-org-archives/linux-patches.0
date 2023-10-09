@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B6917990
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A2617990
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SM9kPehT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F87C433C8;
-	Mon,  9 Oct 2023 13:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkM/0hSx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EB1C433C9;
+	Mon,  9 Oct 2023 13:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696856871;
-	bh=Z8NUSYRi+WUxlLFr3tm1rXBoH8Y0KBF6HPG0U9rETcw=;
+	s=korg; t=1696856874;
+	bh=bEFI+kSnOaH+wFjMUVKyAbdfHD3fqGbJH7CdsFbuGSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SM9kPehTeOjadogBVR3gkCgn8w0390lRcNcVSadPxWmox3dlZWik5Ybvegwp7OHZb
-	 2Gp7Jp4JFBJ+DWl9ic7w0VjxoYDakst7b35Eu8oJHN9vuioNx++fGYu3kSk8Z8igEf
-	 SSOZftpPQbNOGa2o8UbfzDWWbW8n+rvVuczGx/N8=
+	b=mkM/0hSxyJh6iQczKfj/YijUJgSdhWcyeMOloaRAwHgdS2T4u5aSSpNVWcWYslW+b
+	 4Q+eAnOrgyiy1wulHQOtz/oBKj+obKi7v2BT8va/iFl+/sqMeCrJAracnaPx6BzLzm
+	 KoEMCGe1ncq7aWGr8zM0XO0RNwjOjcw859ZfnUqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kristina Martsenko <kristina.martsenko@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 019/163] arm64: cpufeature: Fix CLRBHB and BC detection
-Date: Mon,  9 Oct 2023 14:59:43 +0200
-Message-ID: <20231009130124.543506050@linuxfoundation.org>
+	Patrick Rohr <prohr@google.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.5 020/163] net: add sysctl accept_ra_min_rtr_lft
+Date: Mon,  9 Oct 2023 14:59:44 +0200
+Message-ID: <20231009130124.569973450@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -37,86 +37,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kristina Martsenko <kristina.martsenko@arm.com>
+From: Patrick Rohr <prohr@google.com>
 
-[ Upstream commit 479965a2b7ec481737df0cadf553331063b9c343 ]
+commit 1671bcfd76fdc0b9e65153cf759153083755fe4c upstream.
 
-ClearBHB support is indicated by the CLRBHB field in ID_AA64ISAR2_EL1.
-Following some refactoring the kernel incorrectly checks the BC field
-instead. Fix the detection to use the right field.
+This change adds a new sysctl accept_ra_min_rtr_lft to specify the
+minimum acceptable router lifetime in an RA. If the received RA router
+lifetime is less than the configured value (and not 0), the RA is
+ignored.
+This is useful for mobile devices, whose battery life can be impacted
+by networks that configure RAs with a short lifetime. On such networks,
+the device should never gain IPv6 provisioning and should attempt to
+drop RAs via hardware offload, if available.
 
-(Note: The original ClearBHB support had it as FTR_HIGHER_SAFE, but this
-patch uses FTR_LOWER_SAFE, which seems more correct.)
-
-Also fix the detection of BC (hinted conditional branches) to use
-FTR_LOWER_SAFE, so that it is not reported on mismatched systems.
-
-Fixes: 356137e68a9f ("arm64/sysreg: Make BHB clear feature defines match the architecture")
-Fixes: 8fcc8285c0e3 ("arm64/sysreg: Convert ID_AA64ISAR2_EL1 to automatic generation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kristina Martsenko <kristina.martsenko@arm.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20230912133429.2606875-1-kristina.martsenko@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Patrick Rohr <prohr@google.com>
+Cc: Maciej Żenczykowski <maze@google.com>
+Cc: Lorenzo Colitti <lorenzo@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/cpufeature.h | 2 +-
- arch/arm64/kernel/cpufeature.c      | 3 ++-
- arch/arm64/tools/sysreg             | 6 +++++-
- 3 files changed, 8 insertions(+), 3 deletions(-)
+ Documentation/networking/ip-sysctl.rst |    8 ++++++++
+ include/linux/ipv6.h                   |    1 +
+ include/uapi/linux/ipv6.h              |    1 +
+ net/ipv6/addrconf.c                    |   10 ++++++++++
+ net/ipv6/ndisc.c                       |   18 ++++++++++++++++--
+ 5 files changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
-index 96e50227f940e..5bba393760557 100644
---- a/arch/arm64/include/asm/cpufeature.h
-+++ b/arch/arm64/include/asm/cpufeature.h
-@@ -663,7 +663,7 @@ static inline bool supports_clearbhb(int scope)
- 		isar2 = read_sanitised_ftr_reg(SYS_ID_AA64ISAR2_EL1);
+--- a/Documentation/networking/ip-sysctl.rst
++++ b/Documentation/networking/ip-sysctl.rst
+@@ -2287,6 +2287,14 @@ accept_ra_min_hop_limit - INTEGER
  
- 	return cpuid_feature_extract_unsigned_field(isar2,
--						    ID_AA64ISAR2_EL1_BC_SHIFT);
-+						    ID_AA64ISAR2_EL1_CLRBHB_SHIFT);
+ 	Default: 1
+ 
++accept_ra_min_rtr_lft - INTEGER
++	Minimum acceptable router lifetime in Router Advertisement.
++
++	RAs with a router lifetime less than this value shall be
++	ignored. RAs with a router lifetime of 0 are unaffected.
++
++	Default: 0
++
+ accept_ra_pinfo - BOOLEAN
+ 	Learn Prefix Information in Router Advertisement.
+ 
+--- a/include/linux/ipv6.h
++++ b/include/linux/ipv6.h
+@@ -33,6 +33,7 @@ struct ipv6_devconf {
+ 	__s32		accept_ra_defrtr;
+ 	__u32		ra_defrtr_metric;
+ 	__s32		accept_ra_min_hop_limit;
++	__s32		accept_ra_min_rtr_lft;
+ 	__s32		accept_ra_pinfo;
+ 	__s32		ignore_routes_with_linkdown;
+ #ifdef CONFIG_IPV6_ROUTER_PREF
+--- a/include/uapi/linux/ipv6.h
++++ b/include/uapi/linux/ipv6.h
+@@ -198,6 +198,7 @@ enum {
+ 	DEVCONF_IOAM6_ID_WIDE,
+ 	DEVCONF_NDISC_EVICT_NOCARRIER,
+ 	DEVCONF_ACCEPT_UNTRACKED_NA,
++	DEVCONF_ACCEPT_RA_MIN_RTR_LFT,
+ 	DEVCONF_MAX
+ };
+ 
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -202,6 +202,7 @@ static struct ipv6_devconf ipv6_devconf
+ 	.ra_defrtr_metric	= IP6_RT_PRIO_USER,
+ 	.accept_ra_from_local	= 0,
+ 	.accept_ra_min_hop_limit= 1,
++	.accept_ra_min_rtr_lft	= 0,
+ 	.accept_ra_pinfo	= 1,
+ #ifdef CONFIG_IPV6_ROUTER_PREF
+ 	.accept_ra_rtr_pref	= 1,
+@@ -262,6 +263,7 @@ static struct ipv6_devconf ipv6_devconf_
+ 	.ra_defrtr_metric	= IP6_RT_PRIO_USER,
+ 	.accept_ra_from_local	= 0,
+ 	.accept_ra_min_hop_limit= 1,
++	.accept_ra_min_rtr_lft	= 0,
+ 	.accept_ra_pinfo	= 1,
+ #ifdef CONFIG_IPV6_ROUTER_PREF
+ 	.accept_ra_rtr_pref	= 1,
+@@ -5602,6 +5604,7 @@ static inline void ipv6_store_devconf(st
+ 	array[DEVCONF_IOAM6_ID_WIDE] = cnf->ioam6_id_wide;
+ 	array[DEVCONF_NDISC_EVICT_NOCARRIER] = cnf->ndisc_evict_nocarrier;
+ 	array[DEVCONF_ACCEPT_UNTRACKED_NA] = cnf->accept_untracked_na;
++	array[DEVCONF_ACCEPT_RA_MIN_RTR_LFT] = cnf->accept_ra_min_rtr_lft;
  }
  
- const struct cpumask *system_32bit_el0_cpumask(void);
-diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index ac764c1dac363..2c0b8444fea67 100644
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -222,7 +222,8 @@ static const struct arm64_ftr_bits ftr_id_aa64isar1[] = {
- static const struct arm64_ftr_bits ftr_id_aa64isar2[] = {
- 	ARM64_FTR_BITS(FTR_VISIBLE, FTR_NONSTRICT, FTR_LOWER_SAFE, ID_AA64ISAR2_EL1_CSSC_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_VISIBLE, FTR_NONSTRICT, FTR_LOWER_SAFE, ID_AA64ISAR2_EL1_RPRFM_SHIFT, 4, 0),
--	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_HIGHER_SAFE, ID_AA64ISAR2_EL1_BC_SHIFT, 4, 0),
-+	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_AA64ISAR2_EL1_CLRBHB_SHIFT, 4, 0),
-+	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, ID_AA64ISAR2_EL1_BC_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, ID_AA64ISAR2_EL1_MOPS_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_VISIBLE_IF_IS_ENABLED(CONFIG_ARM64_PTR_AUTH),
- 		       FTR_STRICT, FTR_EXACT, ID_AA64ISAR2_EL1_APA3_SHIFT, 4, 0),
-diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
-index 65866bf819c33..ffc81afa6caca 100644
---- a/arch/arm64/tools/sysreg
-+++ b/arch/arm64/tools/sysreg
-@@ -1347,7 +1347,11 @@ UnsignedEnum	51:48	RPRFM
- 	0b0000	NI
- 	0b0001	IMP
- EndEnum
--Res0	47:28
-+Res0	47:32
-+UnsignedEnum	31:28	CLRBHB
-+	0b0000	NI
-+	0b0001	IMP
-+EndEnum
- UnsignedEnum	27:24	PAC_frac
- 	0b0000	NI
- 	0b0001	IMP
--- 
-2.40.1
-
+ static inline size_t inet6_ifla6_size(void)
+@@ -6794,6 +6797,13 @@ static const struct ctl_table addrconf_s
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec,
++	},
++	{
++		.procname	= "accept_ra_min_rtr_lft",
++		.data		= &ipv6_devconf.accept_ra_min_rtr_lft,
++		.maxlen		= sizeof(int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec,
+ 	},
+ 	{
+ 		.procname	= "accept_ra_pinfo",
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -1281,6 +1281,8 @@ static enum skb_drop_reason ndisc_router
+ 	if (!ndisc_parse_options(skb->dev, opt, optlen, &ndopts))
+ 		return SKB_DROP_REASON_IPV6_NDISC_BAD_OPTIONS;
+ 
++	lifetime = ntohs(ra_msg->icmph.icmp6_rt_lifetime);
++
+ 	if (!ipv6_accept_ra(in6_dev)) {
+ 		ND_PRINTK(2, info,
+ 			  "RA: %s, did not accept ra for dev: %s\n",
+@@ -1288,6 +1290,13 @@ static enum skb_drop_reason ndisc_router
+ 		goto skip_linkparms;
+ 	}
+ 
++	if (lifetime != 0 && lifetime < in6_dev->cnf.accept_ra_min_rtr_lft) {
++		ND_PRINTK(2, info,
++			  "RA: router lifetime (%ds) is too short: %s\n",
++			  lifetime, skb->dev->name);
++		goto skip_linkparms;
++	}
++
+ #ifdef CONFIG_IPV6_NDISC_NODETYPE
+ 	/* skip link-specific parameters from interior routers */
+ 	if (skb->ndisc_nodetype == NDISC_NODETYPE_NODEFAULT) {
+@@ -1340,8 +1349,6 @@ static enum skb_drop_reason ndisc_router
+ 		goto skip_defrtr;
+ 	}
+ 
+-	lifetime = ntohs(ra_msg->icmph.icmp6_rt_lifetime);
+-
+ #ifdef CONFIG_IPV6_ROUTER_PREF
+ 	pref = ra_msg->icmph.icmp6_router_pref;
+ 	/* 10b is handled as if it were 00b (medium) */
+@@ -1493,6 +1500,13 @@ skip_linkparms:
+ 		goto out;
+ 	}
+ 
++	if (lifetime != 0 && lifetime < in6_dev->cnf.accept_ra_min_rtr_lft) {
++		ND_PRINTK(2, info,
++			  "RA: router lifetime (%ds) is too short: %s\n",
++			  lifetime, skb->dev->name);
++		goto out;
++	}
++
+ #ifdef CONFIG_IPV6_ROUTE_INFO
+ 	if (!in6_dev->cnf.accept_ra_from_local &&
+ 	    ipv6_chk_addr(dev_net(in6_dev->dev), &ipv6_hdr(skb)->saddr,
 
 
