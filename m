@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0EE1A5A3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687581A5A3
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgphnHXe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8A8C433C9;
-	Mon,  9 Oct 2023 13:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxErX0HB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83C3C433C7;
+	Mon,  9 Oct 2023 13:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859251;
-	bh=ZevweBLRoMFFI3Fo8w6WSL1xQyPYGt3A1/fDffetmdQ=;
+	s=korg; t=1696859254;
+	bh=IMBAMm+yw8UB3P4sPk8q7ojXe3NURnKw2d5hXysDYz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cgphnHXeqdplOSkDZi1Fgka9GFHq0eyR6t8ax26k2k6qe5nzw1MQGseMKdpGMZmDC
-	 /LTrvzLfz1+Zi6fi6KfiY/DKc9SaIwOiDmwSUJYX8iqF/A5JkKglk2nLAt94OP2lfP
-	 knPbgG3az6QLpxBmIptP8oUcv1l95RQDcLCV4jVU=
+	b=mxErX0HBssHabMdEptichQrg29jjqxt9PGCPhPMUANy+SOzyOspM+9TLalPZ+owBF
+	 /5fXpfmpzDFFvtu+WclyXtBg67tQZubaWrE45oN7Ruin2RXyoKPeYBDIhvpYnvuxMg
+	 SKgca4zNlsUDxhSkSKV8yEU8SmM95KASkwMt3c1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoke Wang <xkernel.wang@foxmail.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Timo Alho <talho@nvidia.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 07/55] i2c: mux: demux-pinctrl: check the return value of devm_kstrdup()
-Date: Mon,  9 Oct 2023 15:06:06 +0200
-Message-ID: <20231009130107.988339560@linuxfoundation.org>
+Subject: [PATCH 4.14 08/55] clk: tegra: fix error return case for recalc_rate
+Date: Mon,  9 Oct 2023 15:06:07 +0200
+Message-ID: <20231009130108.033322841@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -42,36 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoke Wang <xkernel.wang@foxmail.com>
+From: Timo Alho <talho@nvidia.com>
 
-[ Upstream commit 7c0195fa9a9e263df204963f88a22b21688ffb66 ]
+[ Upstream commit a47b44fbb13f5e7a981b4515dcddc93a321ae89c ]
 
-devm_kstrdup() returns pointer to allocated string on success,
-NULL on failure. So it is better to check the return value of it.
+tegra-bpmp clocks driver makes implicit conversion of signed error
+code to unsigned value in recalc_rate operation. The behavior for
+recalc_rate, according to it's specification, should be that "If the
+driver cannot figure out a rate for this clock, it must return 0."
 
-Fixes: e35478eac030 ("i2c: mux: demux-pinctrl: run properly with multiple instances")
-Signed-off-by: Xiaoke Wang <xkernel.wang@foxmail.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: ca6f2796eef7 ("clk: tegra: Add BPMP clock driver")
+Signed-off-by: Timo Alho <talho@nvidia.com>
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Link: https://lore.kernel.org/r/20230912112951.2330497-1-cyndis@kapsi.fi
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/muxes/i2c-demux-pinctrl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/tegra/clk-bpmp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/muxes/i2c-demux-pinctrl.c b/drivers/i2c/muxes/i2c-demux-pinctrl.c
-index c638b2fc7fa28..647b5ff69a9cc 100644
---- a/drivers/i2c/muxes/i2c-demux-pinctrl.c
-+++ b/drivers/i2c/muxes/i2c-demux-pinctrl.c
-@@ -243,6 +243,10 @@ static int i2c_demux_pinctrl_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/tegra/clk-bpmp.c b/drivers/clk/tegra/clk-bpmp.c
+index 6c933b0e29a3b..fcb7c599583b3 100644
+--- a/drivers/clk/tegra/clk-bpmp.c
++++ b/drivers/clk/tegra/clk-bpmp.c
+@@ -154,7 +154,7 @@ static unsigned long tegra_bpmp_clk_recalc_rate(struct clk_hw *hw,
  
- 		props[i].name = devm_kstrdup(&pdev->dev, "status", GFP_KERNEL);
- 		props[i].value = devm_kstrdup(&pdev->dev, "ok", GFP_KERNEL);
-+		if (!props[i].name || !props[i].value) {
-+			err = -ENOMEM;
-+			goto err_rollback;
-+		}
- 		props[i].length = 3;
+ 	err = tegra_bpmp_clk_transfer(clk->bpmp, &msg);
+ 	if (err < 0)
+-		return err;
++		return 0;
  
- 		of_changeset_init(&priv->chan[i].chgset);
+ 	return response.rate;
+ }
 -- 
 2.40.1
 
