@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E24E22F00
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A239618E05
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfhqTkdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E678BC433C8;
-	Mon,  9 Oct 2023 13:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wizKG5hZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBCCC433C9;
+	Mon,  9 Oct 2023 13:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858277;
-	bh=lj2F8gdQDq6WxABdohRoeOttWhbqau2NZ4LBe0Dat6c=;
+	s=korg; t=1696858280;
+	bh=yJoP80vMppbAKhKIe04VSibyq+PHUW14iRY/VoUnka8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XfhqTkdFF+pt7tLhBl/58vihYI/mEGnlmGFdRhY3GecEjb66sZa0FMwp7tdVhiwnm
-	 758oOSA5aLqvuE+1bg7qRj5Gjx3Y39f5G2M+w5r3fCiBGQjQS8TkYBM9RiuvleqVke
-	 0+ZUIStJhqGOSDJ0fJYQRjnyo66dfSzDocd3iKV8=
+	b=wizKG5hZds+/F2gFgknfeRcakv0H+BJcrbNU/hMcFw9x1u01TX46HwolZvlRHbkUL
+	 ZmwjLrBL9ZvBdWz1wtN55b2EW5g1G8HdnvkMM2DSw5FcAVlKxNtXCDR3DoQoB3bAYF
+	 W6g8MkXt4XGxX0wwTE+KbaTpnZSk05TvjtXVx6OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
+	Carl Philipp Klemm <philipp@uvos.xyz>,
+	Merlijn Wajer <merlijn@wizzup.org>,
+	Pavel Machek <pavel@ucw.cz>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 071/131] smack: Retrieve transmuting information in smack_inode_getsecurity()
-Date: Mon,  9 Oct 2023 15:01:51 +0200
-Message-ID: <20231009130118.476710763@linuxfoundation.org>
+Subject: [PATCH 5.4 045/131] ARM: dts: ti: omap: motorola-mapphone: Fix abe_clkctrl warning on boot
+Date: Mon,  9 Oct 2023 15:01:25 +0200
+Message-ID: <20231009130117.690945036@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,70 +46,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 3a3d8fce31a49363cc31880dce5e3b0617c9c38b ]
+[ Upstream commit ac08bda1569b06b7a62c7b4dd00d4c3b28ceaaec ]
 
-Enhance smack_inode_getsecurity() to retrieve the value for
-SMACK64TRANSMUTE from the inode security blob, similarly to SMACK64.
+Commit 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
+attempted to fix the PWM settings but ended up causin an additional clock
+reparenting error:
 
-This helps to display accurate values in the situation where the security
-labels come from mount options and not from xattrs.
+clk: failed to reparent abe-clkctrl:0060:24 to sys_clkin_ck: -22
 
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Only timer9 is in the PER domain and can use the sys_clkin_ck clock source.
+For timer8, the there is no sys_clkin_ck available as it's in the ABE
+domain, instead it should use syc_clk_div_ck. However, for power
+management, we want to use the always on sys_32k_ck instead.
+
+Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+Cc: Carl Philipp Klemm <philipp@uvos.xyz>
+Cc: Merlijn Wajer <merlijn@wizzup.org>
+Cc: Pavel Machek <pavel@ucw.cz>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
+Depends-on: 61978617e905 ("ARM: dts: Add minimal support for Droid Bionic xt875")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack_lsm.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/omap4-droid4-xt894.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index b8e040460ad28..bff67bedd838f 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -1454,10 +1454,19 @@ static int smack_inode_getsecurity(struct inode *inode,
- 	struct super_block *sbp;
- 	struct inode *ip = (struct inode *)inode;
- 	struct smack_known *isp;
-+	struct inode_smack *ispp;
-+	size_t label_len;
-+	char *label = NULL;
+diff --git a/arch/arm/boot/dts/omap4-droid4-xt894.dts b/arch/arm/boot/dts/omap4-droid4-xt894.dts
+index a40fe8d49da64..f5dbc241aaf78 100644
+--- a/arch/arm/boot/dts/omap4-droid4-xt894.dts
++++ b/arch/arm/boot/dts/omap4-droid4-xt894.dts
+@@ -656,12 +656,12 @@
+ /* Configure pwm clock source for timers 8 & 9 */
+ &timer8 {
+ 	assigned-clocks = <&abe_clkctrl OMAP4_TIMER8_CLKCTRL 24>;
+-	assigned-clock-parents = <&sys_clkin_ck>;
++	assigned-clock-parents = <&sys_32k_ck>;
+ };
  
--	if (strcmp(name, XATTR_SMACK_SUFFIX) == 0)
-+	if (strcmp(name, XATTR_SMACK_SUFFIX) == 0) {
- 		isp = smk_of_inode(inode);
--	else {
-+	} else if (strcmp(name, XATTR_SMACK_TRANSMUTE) == 0) {
-+		ispp = smack_inode(inode);
-+		if (ispp->smk_flags & SMK_INODE_TRANSMUTE)
-+			label = TRANS_TRUE;
-+		else
-+			label = "";
-+	} else {
- 		/*
- 		 * The rest of the Smack xattrs are only on sockets.
- 		 */
-@@ -1479,13 +1488,18 @@ static int smack_inode_getsecurity(struct inode *inode,
- 			return -EOPNOTSUPP;
- 	}
+ &timer9 {
+ 	assigned-clocks = <&l4_per_clkctrl OMAP4_TIMER9_CLKCTRL 24>;
+-	assigned-clock-parents = <&sys_clkin_ck>;
++	assigned-clock-parents = <&sys_32k_ck>;
+ };
  
-+	if (!label)
-+		label = isp->smk_known;
-+
-+	label_len = strlen(label);
-+
- 	if (alloc) {
--		*buffer = kstrdup(isp->smk_known, GFP_KERNEL);
-+		*buffer = kstrdup(label, GFP_KERNEL);
- 		if (*buffer == NULL)
- 			return -ENOMEM;
- 	}
- 
--	return strlen(isp->smk_known);
-+	return label_len;
- }
- 
- 
+ /*
 -- 
 2.40.1
 
