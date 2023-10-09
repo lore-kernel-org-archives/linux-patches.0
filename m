@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E92182A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E87182A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxTpau99"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4665AC433C8;
-	Mon,  9 Oct 2023 13:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdKV+TJx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0EAC433C9;
+	Mon,  9 Oct 2023 13:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858988;
-	bh=K+ffzTyNcnb+xea8TclQM5gI2ZkdJSnE1cgmrCYM9YU=;
+	s=korg; t=1696858991;
+	bh=m7R3ndbJ7hgMlk5u5F7a2HpxFy+MMILcSuRr3aN8cCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fxTpau99uJ4Z2z1eF99EUHq/MpQ8/qrcIsOC+M/gG8O4kTE1W7YusdHyTiNBSjfjT
-	 frBlTszeh53vik8vESYNm5kX2PPkIb1ThcwrLLBJxx4PLb4Yb6Oj7NU2UB8l4Xu7sV
-	 CbbBEZ3zP4mtjSW1Jlc3wB5Tmb++gLMZPvNjn1mE=
+	b=PdKV+TJxZVsARfNE7zB7Q1qX98MTrtfsmCPE3Ih6BMj3aravSG+udhqKN/gBhrO7P
+	 +V/KZGEr7sWHG52z0dpOC26vFSA7o+Xe9km8D/3fVd8ubg8DOlLaV823vpqXJjdsBl
+	 rwCsoy2KpeL6VDxX4AZLUFNJnyDPsFMdOpF4wR9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
+	Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 164/226] spi: spi-zynqmp-gqspi: Fix runtime PM imbalance in zynqmp_qspi_probe
-Date: Mon,  9 Oct 2023 15:02:05 +0200
-Message-ID: <20231009130130.959156677@linuxfoundation.org>
+Subject: [PATCH 5.10 165/226] spi: zynqmp-gqspi: fix clock imbalance on probe failure
+Date: Mon,  9 Oct 2023 15:02:06 +0200
+Message-ID: <20231009130130.982390382@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,68 +44,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit a21fbc42807b15b74b0891bd557063e6acf4fcae ]
+[ Upstream commit 1527b076ae2cb6a9c590a02725ed39399fcad1cf ]
 
-When platform_get_irq() fails, a pairing PM usage counter
-increment is needed to keep the counter balanced. It's the
-same for the following error paths.
+Make sure that the device is not runtime suspended before explicitly
+disabling the clocks on probe failure and on driver unbind to avoid a
+clock enable-count imbalance.
 
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Link: https://lore.kernel.org/r/20210408092559.3824-1-dinghao.liu@zju.edu.cn
+Fixes: 9e3a000362ae ("spi: zynqmp: Add pm runtime support")
+Cc: stable@vger.kernel.org	# 4.19
+Cc: Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>
+Cc: Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/Message-Id: <20230622082435.7873-1-johan+linaro@kernel.org>
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 1527b076ae2c ("spi: zynqmp-gqspi: fix clock imbalance on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/spi/spi-zynqmp-gqspi.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
-index 3d3ac48243ebd..ed68e237314fb 100644
+index ed68e237314fb..12d9c5d6b9e26 100644
 --- a/drivers/spi/spi-zynqmp-gqspi.c
 +++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -1147,11 +1147,16 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, SPI_AUTOSUSPEND_TIMEOUT);
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
-+
-+	ret = pm_runtime_get_sync(&pdev->dev);
-+	if (ret < 0) {
-+		dev_err(&pdev->dev, "Failed to pm_runtime_get_sync: %d\n", ret);
-+		goto clk_dis_all;
-+	}
-+
- 	/* QSPI controller initializations */
- 	zynqmp_qspi_init_hw(xqspi);
- 
--	pm_runtime_mark_last_busy(&pdev->dev);
--	pm_runtime_put_autosuspend(&pdev->dev);
- 	xqspi->irq = platform_get_irq(pdev, 0);
- 	if (xqspi->irq <= 0) {
- 		ret = -ENXIO;
-@@ -1178,6 +1183,7 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
- 	ctlr->mode_bits = SPI_CPOL | SPI_CPHA | SPI_RX_DUAL | SPI_RX_QUAD |
- 			    SPI_TX_DUAL | SPI_TX_QUAD;
- 	ctlr->dev.of_node = np;
-+	ctlr->auto_runtime_pm = true;
- 
- 	ret = devm_spi_register_controller(&pdev->dev, ctlr);
- 	if (ret) {
-@@ -1185,9 +1191,13 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
- 		goto clk_dis_all;
- 	}
- 
-+	pm_runtime_mark_last_busy(&pdev->dev);
-+	pm_runtime_put_autosuspend(&pdev->dev);
-+
+@@ -1197,9 +1197,9 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
  	return 0;
  
  clk_dis_all:
-+	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
+-	pm_runtime_put_sync(&pdev->dev);
+-	pm_runtime_set_suspended(&pdev->dev);
  	pm_runtime_disable(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
++	pm_runtime_set_suspended(&pdev->dev);
  	clk_disable_unprepare(xqspi->refclk);
+ clk_dis_pclk:
+ 	clk_disable_unprepare(xqspi->pclk);
+@@ -1223,11 +1223,15 @@ static int zynqmp_qspi_remove(struct platform_device *pdev)
+ {
+ 	struct zynqmp_qspi *xqspi = platform_get_drvdata(pdev);
+ 
++	pm_runtime_get_sync(&pdev->dev);
++
+ 	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
++
++	pm_runtime_disable(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
++	pm_runtime_set_suspended(&pdev->dev);
+ 	clk_disable_unprepare(xqspi->refclk);
+ 	clk_disable_unprepare(xqspi->pclk);
+-	pm_runtime_set_suspended(&pdev->dev);
+-	pm_runtime_disable(&pdev->dev);
+ 
+ 	return 0;
+ }
 -- 
 2.40.1
 
