@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5900214013
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86625341A5
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V17VM5u3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA494C433C8;
-	Mon,  9 Oct 2023 13:49:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMX4aJ6g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01FBFC433C7;
+	Mon,  9 Oct 2023 13:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859350;
-	bh=rQY0ybrSKoXT+KqRc8gSuKb/JUv5MLzK6DBTH8BnmVc=;
+	s=korg; t=1696859353;
+	bh=VAy926Wk/X3FZ02P9hME35vjnFDka+m2sosk413dGBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V17VM5u3xPZgUKRMPCebnV+CkcbzXIGtVJrYcAZPDeM0n8kRKDizfH8tTgq3/6pLJ
-	 WSKngGygm1373e3VsMHNr5zwcljzH0UAGlWVmMwRmZNnTDvF6QafpxoPzze6DeKtaM
-	 G6to8Ywb22/WBuX82dh0lJUSWOoJwh0Q+Hmc0NOw=
+	b=DMX4aJ6gB+BPfwg3kEu6/+OecnbqZaqTnn6vyR4A9p4hu/9/Pj3jXxPB/q04rHe4j
+	 9kK+lCCEIaBZa0pvWePUaUXgTNdnoRCIO/KNL1R57m7BRCObk+Fjbu/Rzce+yVzBIO
+	 QIJI1S7klPAC7iosnXrlKwIYBaVdX/V4m047K2Ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pan Bian <bianpan2016@163.com>,
-	Ferry Meng <mengferry@linux.alibaba.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 23/55] nilfs2: fix potential use after free in nilfs_gccache_submit_read_data()
-Date: Mon,  9 Oct 2023 15:06:22 +0200
-Message-ID: <20231009130108.595362827@linuxfoundation.org>
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 14/55] selftests/ftrace: Correctly enable event in instance-event.tc
+Date: Mon,  9 Oct 2023 15:06:13 +0200
+Message-ID: <20231009130108.260812201@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -43,61 +44,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pan Bian <bianpan2016@163.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 7ee29facd8a9c5a26079148e36bcf07141b3a6bc upstream.
+[ Upstream commit f4e4ada586995b17f828c6d147d1800eb1471450 ]
 
-In nilfs_gccache_submit_read_data(), brelse(bh) is called to drop the
-reference count of bh when the call to nilfs_dat_translate() fails.  If
-the reference count hits 0 and its owner page gets unlocked, bh may be
-freed.  However, bh->b_page is dereferenced to put the page after that,
-which may result in a use-after-free bug.  This patch moves the release
-operation after unlocking and putting the page.
+Function instance_set() expects to enable event 'sched_switch', so we
+should set 1 to its 'enable' file.
 
-NOTE: The function in question is only called in GC, and in combination
-with current userland tools, address translation using DAT does not occur
-in that function, so the code path that causes this issue will not be
-executed.  However, it is possible to run that code path by intentionally
-modifying the userland GC library or by calling the GC ioctl directly.
+Testcase passed after this patch:
+  # ./ftracetest test.d/instances/instance-event.tc
+  === Ftrace unit tests ===
+  [1] Test creation and deletion of trace instances while setting an event
+  [PASS]
 
-[konishi.ryusuke@gmail.com: NOTE added to the commit log]
-Link: https://lkml.kernel.org/r/1543201709-53191-1-git-send-email-bianpan2016@163.com
-Link: https://lkml.kernel.org/r/20230921141731.10073-1-konishi.ryusuke@gmail.com
-Fixes: a3d93f709e89 ("nilfs2: block cache for garbage collection")
-Signed-off-by: Pan Bian <bianpan2016@163.com>
-Reported-by: Ferry Meng <mengferry@linux.alibaba.com>
-Closes: https://lkml.kernel.org/r/20230818092022.111054-1-mengferry@linux.alibaba.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  # of passed:  1
+  # of failed:  0
+  # of unresolved:  0
+  # of untested:  0
+  # of unsupported:  0
+  # of xfailed:  0
+  # of undefined(test bug):  0
+
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/gcinode.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../testing/selftests/ftrace/test.d/instances/instance-event.tc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nilfs2/gcinode.c
-+++ b/fs/nilfs2/gcinode.c
-@@ -82,10 +82,8 @@ int nilfs_gccache_submit_read_data(struc
- 		struct the_nilfs *nilfs = inode->i_sb->s_fs_info;
+diff --git a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
+index d7f48b55df51c..ee11b42014c83 100644
+--- a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
++++ b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
+@@ -43,7 +43,7 @@ instance_read() {
  
- 		err = nilfs_dat_translate(nilfs->ns_dat, vbn, &pbn);
--		if (unlikely(err)) { /* -EIO, -ENOMEM, -ENOENT */
--			brelse(bh);
-+		if (unlikely(err)) /* -EIO, -ENOMEM, -ENOENT */
- 			goto failed;
--		}
- 	}
- 
- 	lock_buffer(bh);
-@@ -111,6 +109,8 @@ int nilfs_gccache_submit_read_data(struc
-  failed:
- 	unlock_page(bh->b_page);
- 	put_page(bh->b_page);
-+	if (unlikely(err))
-+		brelse(bh);
- 	return err;
+ instance_set() {
+         while :; do
+-                echo 1 > foo/events/sched/sched_switch
++                echo 1 > foo/events/sched/sched_switch/enable
+         done 2> /dev/null
  }
  
+-- 
+2.40.1
+
 
 
