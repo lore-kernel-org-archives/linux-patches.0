@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EF81A71F
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7D11A71F
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K74oVj7Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DFDC433C8;
-	Mon,  9 Oct 2023 13:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiJkVRYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DF2C433C8;
+	Mon,  9 Oct 2023 13:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858369;
-	bh=gk+CjuruHx2Q/S1vzvDgtZ2NOnWclXfikSwmFDRAIKc=;
+	s=korg; t=1696858372;
+	bh=D5I8x2Bvys/JX6BIh32HafwNtRLkSsGXjyVcxQwWkRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K74oVj7ZC0yvYx8VCFzYUM+v3AAHKhaHAml08CB4RNYqF6Yms0LeqWYqtHC91RbzM
-	 76U55opal5nEvaz+OOgY/a3CmX/eVWZ4+hk1D4oVWvoWYovoMKG6Q9LAupf8SjbvK6
-	 7bCU8nAZppoBYFeL349rybZRnFfqJjVClrWjHsdQ=
+	b=iiJkVRYhYMWQR8Ci1olOG9IHsyVnwjVUJjE5KDCPa7ZRDFdvn/kde2ca/b83hTXZ2
+	 dDP4ziaCEg6tHQpgWpv8DXKyc62Qszbh+bgJMYVd+dnKqu/yuFKT8mTANmInenGiyR
+	 gxiez3hspphplDGtg0+ezI+z2tKhQzNixqgGg3Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Diupina <adiupina@astralinux.ru>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 100/131] drivers/net: process the result of hdlc_open() and add call of hdlc_close() in uhdlc_close()
-Date: Mon,  9 Oct 2023 15:02:20 +0200
-Message-ID: <20231009130119.476956604@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 075/131] ALSA: hda: Disable power save for solving pop issue on Lenovo ThinkCentre M70q
+Date: Mon,  9 Oct 2023 15:01:55 +0200
+Message-ID: <20231009130118.615329970@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,77 +41,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Diupina <adiupina@astralinux.ru>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit a59addacf899b1b21a7b7449a1c52c98704c2472 ]
+commit 057a28ef93bdbe84326d34cdb5543afdaab49fe1 upstream.
 
-Process the result of hdlc_open() and call uhdlc_close()
-in case of an error. It is necessary to pass the error
-code up the control flow, similar to a possible
-error in request_irq().
-Also add a hdlc_close() call to the uhdlc_close()
-because the comment to hdlc_close() says it must be called
-by the hardware driver when the HDLC device is being closed
+Lenovo ThinkCentre M70q had boot up pop noise.
+Disable power save will solve pop issue.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/315900e2efef42fd9855eacfeb443abd@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wan/fsl_ucc_hdlc.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ sound/pci/hda/hda_intel.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wan/fsl_ucc_hdlc.c b/drivers/net/wan/fsl_ucc_hdlc.c
-index 46077cef855b2..8a0c2ea03ff9c 100644
---- a/drivers/net/wan/fsl_ucc_hdlc.c
-+++ b/drivers/net/wan/fsl_ucc_hdlc.c
-@@ -34,6 +34,8 @@
- #define TDM_PPPOHT_SLIC_MAXIN
- #define RX_BD_ERRORS (R_CD_S | R_OV_S | R_CR_S | R_AB_S | R_NO_S | R_LG_S)
- 
-+static int uhdlc_close(struct net_device *dev);
-+
- static struct ucc_tdm_info utdm_primary_info = {
- 	.uf_info = {
- 		.tsa = 0,
-@@ -710,6 +712,7 @@ static int uhdlc_open(struct net_device *dev)
- 	hdlc_device *hdlc = dev_to_hdlc(dev);
- 	struct ucc_hdlc_private *priv = hdlc->priv;
- 	struct ucc_tdm *utdm = priv->utdm;
-+	int rc = 0;
- 
- 	if (priv->hdlc_busy != 1) {
- 		if (request_irq(priv->ut_info->uf_info.irq,
-@@ -733,10 +736,13 @@ static int uhdlc_open(struct net_device *dev)
- 		napi_enable(&priv->napi);
- 		netdev_reset_queue(dev);
- 		netif_start_queue(dev);
--		hdlc_open(dev);
-+
-+		rc = hdlc_open(dev);
-+		if (rc)
-+			uhdlc_close(dev);
- 	}
- 
--	return 0;
-+	return rc;
- }
- 
- static void uhdlc_memclean(struct ucc_hdlc_private *priv)
-@@ -826,6 +832,8 @@ static int uhdlc_close(struct net_device *dev)
- 	netdev_reset_queue(dev);
- 	priv->hdlc_busy = 0;
- 
-+	hdlc_close(dev);
-+
- 	return 0;
- }
- 
--- 
-2.40.1
-
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2237,6 +2237,7 @@ static struct snd_pci_quirk power_save_b
+ 	SND_PCI_QUIRK(0x8086, 0x2068, "Intel NUC7i3BNB", 0),
+ 	/* https://bugzilla.kernel.org/show_bug.cgi?id=198611 */
+ 	SND_PCI_QUIRK(0x17aa, 0x2227, "Lenovo X1 Carbon 3rd Gen", 0),
++	SND_PCI_QUIRK(0x17aa, 0x316e, "Lenovo ThinkCentre M70q", 0),
+ 	/* https://bugzilla.redhat.com/show_bug.cgi?id=1689623 */
+ 	SND_PCI_QUIRK(0x17aa, 0x367b, "Lenovo IdeaCentre B550", 0),
+ 	/* https://bugzilla.redhat.com/show_bug.cgi?id=1572975 */
 
 
