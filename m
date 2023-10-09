@@ -1,214 +1,94 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0530210B
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 20:13:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 039091C006C; Mon,  9 Oct 2023 22:13:36 +0200 (CEST)
-Date: Mon, 9 Oct 2023 22:13:35 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Pavel Machek <pavel@denx.de>, wsa+renesas@sang-engineering.com,
-	niklas.soderlund+renesas@ragnatech.se,
-	yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be,
-	biju.das.jz@bp.renesas.com
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Chris.Paterson2@renesas.com, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: renesas_sdhi problems in 5.10-stable was Re: [PATCH 5.10 000/226]
- 5.10.198-rc1 review
-Message-ID: <ZSRe78MAQwbBdyFP@duo.ucw.cz>
-References: <20231009130126.697995596@linuxfoundation.org>
- <ZSRVgj5AqJbDXqZU@duo.ucw.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90AE37C8C
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 20:25:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jz+UWYh5"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-5859a7d6556so3627417a12.0
+        for <patches@lists.linux.dev>; Mon, 09 Oct 2023 13:25:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696883101; x=1697487901; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dHLtgNs/RgwJBT4RjvnNxunGnFoxHtAWIXgMjp/5w7c=;
+        b=jz+UWYh5lYYuej1rXOM89CJVzDmjLMCi8G5F3aKV6zYz/miAuuXUPW9nL6AA2PuYGC
+         9C5mvoS0BQGkTEokIn/VRmqSUADQUS2PMCyab4cIWqM24lJJjP1aMkcT8au+eORv4Mht
+         vIY9T6p6YCPrYaiS+yfd9atQb7HbS3Fzx3mI6j1k7fUxikfcTEQ7UYocjIXDP4JvDeKA
+         LbSRlkBAlbPkdu+PcrybhbfjcrkPhGHHu/l62NDgHmi5eJi94ftZFQ5RwX9Yl0Hm2t4L
+         2+XOUQhWkXdIt++fiGugt2UeMSB/j+AlkcNLWU4vG5r0furgldceTZRKQcrP6jvOBqmb
+         /GUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696883101; x=1697487901;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dHLtgNs/RgwJBT4RjvnNxunGnFoxHtAWIXgMjp/5w7c=;
+        b=woXKJTM9gPVmh9A2XZ1clAA9whtBJ4rD9745Mi3R8e/6b01uzvgLiUm1TFrbDHu5Tl
+         jjzd2e0MY77evWO6M/c1cXTapoNs8tdlLvglXRskFX3roYVyYCUsgn/mtbH4QXbMK9ol
+         4IGSLPmOOrbZuaDg8AeXM6CEkI07wEJnKm8kw8xVLwjwixEfrZlAtom/zbevZaojWvuG
+         8Z29CSOGYMwV3kJ7tyUWG6sXjgfCdyXKKgk1pRqa5GE4U6otmPLHB77Pa9uY0DSNeqiW
+         BbgR8WofG/Cj4VzZsWEJ66ba9nyGRJuRt8Wtz51CxqKC4JQ7SD38mLASQkxHVz1ANxIU
+         Mf+A==
+X-Gm-Message-State: AOJu0YzDeNZCILL4thP1u9mmtFVRXa0cD5gbTIpqMTUw5cNO21yaqQ2n
+	49jRwucup61Va05u6BRnS24=
+X-Google-Smtp-Source: AGHT+IGz/SLuOVtpJrZrOd5rtyqvsTpUymuLyu7aGUZba6bIlpEhLM4AHh5pFHuAWQvOmmyU6B3Ogw==
+X-Received: by 2002:a05:6a20:2583:b0:161:76a4:4f74 with SMTP id k3-20020a056a20258300b0016176a44f74mr18943479pzd.1.1696883100781;
+        Mon, 09 Oct 2023 13:25:00 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id z18-20020a170902ee1200b001c55e13bf2asm10060425plb.283.2023.10.09.13.24.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Oct 2023 13:24:59 -0700 (PDT)
+Message-ID: <c63be538-b479-4eb5-a1c1-5f3a44d416ff@gmail.com>
+Date: Mon, 9 Oct 2023 13:24:57 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="bqgKRRZNMaEHlqWY"
-Content-Disposition: inline
-In-Reply-To: <ZSRVgj5AqJbDXqZU@duo.ucw.cz>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 000/226] 5.10.198-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20231009130126.697995596@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 10/9/23 05:59, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.198 release.
+> There are 226 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.198-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
---bqgKRRZNMaEHlqWY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-On Mon 2023-10-09 21:33:22, Pavel Machek wrote:
-> Hi!
->=20
-> > This is the start of the stable review cycle for the 5.10.198 release.
-> > There are 226 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >=20
-> > Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
-> > Anything received after that time might be too late.
->=20
-> 4.14, 4.19 and 6.1 tests ok, 5.10 seems to have problems:
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
-Guessing from stack traces, these may be relevant:
-
- |e10d3d256 b161d8 o: 5.10| mmc: renesas_sdhi: probe into TMIO after SCC pa=
-rameters have been setu\
-p
- |493b70c48 d14ac6 o: 5.10| mmc: renesas_sdhi: populate SCC pointer at the =
-proper place
- |c508545f4 0d856c o: 5.10| mmc: tmio: support custom irq masks
- |8df1f0639 74f45d o: 5.10| mmc: renesas_sdhi: register irqs before registe=
-ring controller
-
-Leaving below for context...
-
-Best regards,
-								Pavel
-
-> https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines=
-/1030540843
->=20
-> Lets see arm64_defconfig:
->=20
-> https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/5254=
-610954
->=20
-> ...and this seems  to be real failure:
->=20
-> https://lava.ciplatform.org/scheduler/job/1018088
->=20
-> [   62.871632] renesas_sdhi_internal_dmac ee100000.mmc: Got CD GPIO
-> [   62.874253] rcar-dmac e6700000.dma-controller: deferred probe timeout,=
- ignoring dependency
-> [   62.889345] rcar-dmac e7300000.dma-controller: deferred probe timeout,=
- ignoring dependency
-> [   62.892139] Unable to handle kernel NULL pointer dereference at virtua=
-l address 0000000000000018
-> [   62.901256] rcar-dmac e7310000.dma-controller: deferred probe timeout,=
- ignoring dependency
-> [   62.906431] Mem abort info:
-> [   62.906438]   ESR =3D 0x96000004
-> [   62.917751] rcar-dmac ec700000.dma-controller: deferred probe timeout,=
- ignoring dependency
-> [   62.920548]   EC =3D 0x25: DABT (current EL), IL =3D 32 bits
-> [   62.920551]   SET =3D 0, FnV =3D 0
-> [   62.920554]   EA =3D 0, S1PTW =3D 0
-> [   62.920559] Data abort info:
-> [   62.927031] renesas_sdhi_internal_dmac ee100000.mmc: mmc1 base at 0x00=
-000000ee100000, max clock rate 200 MHz
-> [   62.931976] rcar-dmac ec720000.dma-controller: deferred probe timeout,=
- ignoring dependency
-> [   62.934138]   ISV =3D 0, ISS =3D 0x00000004
-> [   62.934145]   CM =3D 0, WnR =3D 0
-> [   62.940844] ravb e6800000.ethernet: deferred probe timeout, ignoring d=
-ependency
-> [   62.943210] [0000000000000018] user address but active_mm is swapper
-> [   62.943221] Internal error: Oops: 96000004 [#1] PREEMPT SMP
-> [   62.954866] ravb e6800000.ethernet eth0: Base address at 0xe6800000, f=
-c:28:99:92:7b:e0, IRQ 118.
-> [   62.961296] Modules linked in:
-> [   62.961313] CPU: 5 PID: 135 Comm: kworker/u12:2 Not tainted 5.10.198-r=
-c1-g18c65c1b4996 #1
-> [   63.007289] Hardware name: HopeRun HiHope RZ/G2M with sub board (DT)
-> [   63.013658] Workqueue: events_unbound async_run_entry_fn
-> [   63.018971] pstate: 20000005 (nzCv daif -PAN -UAO -TCO BTYPE=3D--)
-> [   63.024982] pc : renesas_sdhi_reset_scc+0x94/0xe0
-> [   63.029681] lr : renesas_sdhi_reset_scc+0x60/0xe0
-> [   63.034379] sp : ffff800012353ab0
-> [   63.037688] x29: ffff800012353ab0 x28: ffff80001110b2c0=20
-> [   63.042998] x27: 0000000000000000 x26: ffff0005c03f6e80=20
-> [   63.048308] x25: ffff0005c11c7a90 x24: ffff0005c0822010=20
-> [   63.053618] x23: ffff0005c0822000 x22: ffff0005c08221d0=20
-> [   63.058928] x21: ffff0005c11c7a80 x20: 0000000000000020
->=20
-> Let's see bbb_defconfig:
->=20
-> https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/5254=
-611119
->=20
-> Fails:
->=20
-> https://lava.ciplatform.org/scheduler/job/1018083
->=20
-> bootz 0x82000000 - 0x88000000
-> zimage: Bad magic!
-> bootloader-commands timed out after 281 seconds
-> end: 2.4.3 bootloader-commands (duration 00:04:41) [common]
->=20
-> Not sure about this one.
->=20
-> Lets see arm_shmobile_defconfig:
->=20
-> https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/5254=
-611233
->=20
-> That's:
->=20
-> https://lava.ciplatform.org/scheduler/job/1018084
->=20
-> Seems similar to previous failure:
->=20
-> 2.092944] usbcore: registered new interface driver usbhid
-> [    2.098710] sh_mobile_sdhi ee140000.mmc: Got CD GPIO
-> [    2.103206] usbhid: USB HID core driver
-> [    2.108224] sh_mobile_sdhi ee140000.mmc: Got WP GPIO
-> [    2.124168] 8<--- cut here ---
-> [    2.124476] sgtl5000 0-000a: sgtl5000 revision 0x11
-> [    2.127222] Unable to handle kernel NULL pointer dereference at virtua=
-l address 0000000c
-> [    2.127228] pgd =3D (ptrval)
-> [    2.140755] rcar_sound ec500000.sound: probed
-> [    2.142917] [0000000c] *pgd=3D00000000
-> [    2.147915] NET: Registered protocol family 10
-> [    2.150849] Internal error: Oops: 5 [#1] SMP ARM
-> [    2.155700] sh_mmcif ee200000.mmc: Chip version 0x0003, clock rate 12M=
-Hz
-> [    2.159894] CPU: 1 PID: 7 Comm: kworker/u4:0 Not tainted 5.10.198-rc1-=
-g18c65c1b4996 #1
-> [    2.174486] Hardware name: Generic RZ/G1 (Flattened Device Tree)
-> [    2.174540] Segment Routing with IPv6
-> [    2.180501] Workqueue: events_unbound async_run_entry_fn
-> [    2.184234] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
-> [    2.189455] PC is at renesas_sdhi_reset_scc+0x34/0x50
-> [    2.189462] LR is at sd_ctrl_write16+0x30/0x48
-> [    2.195810] NET: Registered protocol family 17
-> [    2.200409] pc : [<c05da960>]    lr : [<c05da754>]    psr: 60000013
-> [    2.200415] sp : c10a9e30  ip : 00000024  fp : c11b3cc0
-> [    2.204877] can: controller area network core
-> [    2.209282] r10: c11ae410  r9 : c11ae400  r8 : c18e9d48
-> [    2.209288] r7 : fffffe00  r6 : c18e9d48  r5 : c18e9d40  r4 : c1970b80
-> [    2.215590] NET: Registered protocol family 29
-> [    2.220759] r3 : 0000000c  r2 : 00000006  r1 : 00000001  r0 : 00000000
-> [    2.225117] can: raw protocol
-> [    2.230322] Flags: nZCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segme=
-nt none
-> [    2.236848] can: broadcast manager protocol
->=20
-> Best regards,
-> 								Pavel
-
-
-
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---bqgKRRZNMaEHlqWY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZSRe7wAKCRAw5/Bqldv6
-8lWvAJ4o+78CmzeqYTuoVeAMXewcUEcVjQCgxN3GtsUioMz6oMM6DgzZkbTBK5E=
-=NEGZ
------END PGP SIGNATURE-----
-
---bqgKRRZNMaEHlqWY--
