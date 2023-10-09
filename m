@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C235619BA9
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4451A28E
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaqGtHc/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7ADC433C7;
-	Mon,  9 Oct 2023 13:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjFCxhmx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D34C433C9;
+	Mon,  9 Oct 2023 13:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857228;
-	bh=+iTaA3lwLUsawlzI7j/d3mKGDl4FEHYR2e7X9kayjPQ=;
+	s=korg; t=1696857231;
+	bh=CyCch0Z7qxRekDi+Ho9q9smmS2i6KfrAXQIzYa+AfRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HaqGtHc/CQ6IJYcayWDYB1r10yn1UZGKHHWgm6enZa/1LjpjzZlUHn3d8+Fh6otbM
-	 leAMRjLsDBSinre4ZAD7nmnrVOY6GR8qgrmGe1M5LwqtJLfNDW+DPE649mmrQk679i
-	 g9qyzpOzKPT/P0N8CqcTmTgUayk1dvuVhujJ3nhs=
+	b=JjFCxhmxUgGuxsQFWTelVp+EEq8a/ld9GvZ8hS15wifBSKb0isOSs7lxICn0O7ruL
+	 6kCe9n9wIXmNBW2YGBLTN47LKxjRvDFAMtbJmyPdYLzQC/2aXXRBhnuwaCh69Adrn6
+	 SyqYs8B3sQS0r5O8PIdVKDxJiw+cq24oRvaVVwvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.5 139/163] parisc: Fix crash with nr_cpus=1 option
-Date: Mon,  9 Oct 2023 15:01:43 +0200
-Message-ID: <20231009130127.886119719@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.5 140/163] dm zoned: free dmz->ddev array in dmz_put_zoned_devices
+Date: Mon,  9 Oct 2023 15:01:44 +0200
+Message-ID: <20231009130127.911849066@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -41,33 +41,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit d3b3c637e4eb8d3bbe53e5692aee66add72f9851 upstream.
+commit 9850ccd5dd88075b2b7fd28d96299d5535f58cc5 upstream.
 
-John David Anglin reported that giving "nr_cpus=1" on the command
-line causes a crash, while "maxcpus=1" works.
+Commit 4dba12881f88 ("dm zoned: support arbitrary number of devices")
+made the pointers to additional zoned devices to be stored in a
+dynamically allocated dmz->ddev array. However, this array is not freed.
 
-Reported-by: John David Anglin <dave.anglin@bell.net>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v5.18+
+Rename dmz_put_zoned_device to dmz_put_zoned_devices and fix it to
+free the dmz->ddev array when cleaning up zoned device information.
+Remove NULL assignment for all dmz->ddev elements and just free the
+dmz->ddev array instead.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 4dba12881f88 ("dm zoned: support arbitrary number of devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/smp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/dm-zoned-target.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/arch/parisc/kernel/smp.c
-+++ b/arch/parisc/kernel/smp.c
-@@ -440,7 +440,9 @@ int __cpu_up(unsigned int cpu, struct ta
- 	if (cpu_online(cpu))
- 		return 0;
+--- a/drivers/md/dm-zoned-target.c
++++ b/drivers/md/dm-zoned-target.c
+@@ -748,17 +748,16 @@ err:
+ /*
+  * Cleanup zoned device information.
+  */
+-static void dmz_put_zoned_device(struct dm_target *ti)
++static void dmz_put_zoned_devices(struct dm_target *ti)
+ {
+ 	struct dmz_target *dmz = ti->private;
+ 	int i;
  
--	if (num_online_cpus() < setup_max_cpus && smp_boot_one_cpu(cpu, tidle))
-+	if (num_online_cpus() < nr_cpu_ids &&
-+		num_online_cpus() < setup_max_cpus &&
-+		smp_boot_one_cpu(cpu, tidle))
- 		return -EIO;
+-	for (i = 0; i < dmz->nr_ddevs; i++) {
+-		if (dmz->ddev[i]) {
++	for (i = 0; i < dmz->nr_ddevs; i++)
++		if (dmz->ddev[i])
+ 			dm_put_device(ti, dmz->ddev[i]);
+-			dmz->ddev[i] = NULL;
+-		}
+-	}
++
++	kfree(dmz->ddev);
+ }
  
- 	return cpu_online(cpu) ? 0 : -EIO;
+ static int dmz_fixup_devices(struct dm_target *ti)
+@@ -948,7 +947,7 @@ err_bio:
+ err_meta:
+ 	dmz_dtr_metadata(dmz->metadata);
+ err_dev:
+-	dmz_put_zoned_device(ti);
++	dmz_put_zoned_devices(ti);
+ err:
+ 	kfree(dmz->dev);
+ 	kfree(dmz);
+@@ -978,7 +977,7 @@ static void dmz_dtr(struct dm_target *ti
+ 
+ 	bioset_exit(&dmz->bio_set);
+ 
+-	dmz_put_zoned_device(ti);
++	dmz_put_zoned_devices(ti);
+ 
+ 	mutex_destroy(&dmz->chunk_lock);
+ 
 
 
