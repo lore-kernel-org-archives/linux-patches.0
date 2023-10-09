@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3BE341A5
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE9D3419D
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfRC8+f3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 240BFC433C7;
-	Mon,  9 Oct 2023 13:52:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e44zSooc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635CAC433CA;
+	Mon,  9 Oct 2023 13:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859563;
-	bh=Et1BOmMG+rczCAtOmBdwBghCzeRLxgaxkPjbwayInpQ=;
+	s=korg; t=1696859566;
+	bh=TZzh1Yeg7XpJIKfNBYxqsKvp4016rL4GBEH+43px7MM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BfRC8+f3lIMz2+4U9wFdTXEDN2TvAS1BKz2jx/KFJxIHycDiExtY4hM9vS1A+iKnx
-	 AuYD1SmLIAek+6rkMC5197OF/BFh/WUbRV2Kkr6YCblOc6ezUGBYyyLGdw5/zfG+s7
-	 a3MW2dU1yCKlkSMnA/6RKiXlBU46ojS24RzDPVts=
+	b=e44zSoocBB0baBiSo2rIQ3BQFVHgbCH5vbCOHJfNhDpmw1ImF16R7RsJ9esvef3I0
+	 dDgYO61m9XwBBM4ivutc/H1R57cUp89xnIkn4ejz9VImSz7vjkCyIKJHKikZuNKbom
+	 SK/pcMOuNIY/fxmYlfpab24FCEwyz7o3LvZtcVrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greg Ungerer <gerg@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Kees Cook <keescook@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 60/91] fs: binfmt_elf_efpic: fix personality for ELF-FDPIC
-Date: Mon,  9 Oct 2023 15:06:32 +0200
-Message-ID: <20231009130113.589732054@linuxfoundation.org>
+	stable@kernel.org,
+	Andreas Dilger <adilger@dilger.ca>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Shida Zhang <zhangshida@kylinos.cn>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.19 61/91] ext4: fix rec_len verify error
+Date: Mon,  9 Oct 2023 15:06:33 +0200
+Message-ID: <20231009130113.620133770@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -45,63 +44,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Ungerer <gerg@kernel.org>
+From: Shida Zhang <zhangshida@kylinos.cn>
 
-commit 7c3151585730b7095287be8162b846d31e6eee61 upstream.
+commit 7fda67e8c3ab6069f75888f67958a6d30454a9f6 upstream.
 
-The elf-fdpic loader hard sets the process personality to either
-PER_LINUX_FDPIC for true elf-fdpic binaries or to PER_LINUX for normal ELF
-binaries (in this case they would be constant displacement compiled with
--pie for example).  The problem with that is that it will lose any other
-bits that may be in the ELF header personality (such as the "bug
-emulation" bits).
+With the configuration PAGE_SIZE 64k and filesystem blocksize 64k,
+a problem occurred when more than 13 million files were directly created
+under a directory:
 
-On the ARM architecture the ADDR_LIMIT_32BIT flag is used to signify a
-normal 32bit binary - as opposed to a legacy 26bit address binary.  This
-matters since start_thread() will set the ARM CPSR register as required
-based on this flag.  If the elf-fdpic loader loses this bit the process
-will be mis-configured and crash out pretty quickly.
+EXT4-fs error (device xx): ext4_dx_csum_set:492: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
+EXT4-fs error (device xx): ext4_dx_csum_verify:463: inode #xxxx: comm xxxxx: dir seems corrupt?  Run e2fsck -D.
+EXT4-fs error (device xx): dx_probe:856: inode #xxxx: block 8188: comm xxxxx: Directory index failed checksum
 
-Modify elf-fdpic loader personality setting so that it preserves the upper
-three bytes by using the SET_PERSONALITY macro to set it.  This macro in
-the generic case sets PER_LINUX and preserves the upper bytes.
-Architectures can override this for their specific use case, and ARM does
-exactly this.
+When enough files are created, the fake_dirent->reclen will be 0xffff.
+it doesn't equal to the blocksize 65536, i.e. 0x10000.
 
-The problem shows up quite easily running under qemu using the ARM
-architecture, but not necessarily on all types of real ARM hardware.  If
-the underlying ARM processor does not support the legacy 26-bit addressing
-mode then everything will work as expected.
+But it is not the same condition when blocksize equals to 4k.
+when enough files are created, the fake_dirent->reclen will be 0x1000.
+it equals to the blocksize 4k, i.e. 0x1000.
 
-Link: https://lkml.kernel.org/r/20230907011808.2985083-1-gerg@kernel.org
-Fixes: 1bde925d23547 ("fs/binfmt_elf_fdpic.c: provide NOMMU loader for regular ELF binaries")
-Signed-off-by: Greg Ungerer <gerg@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: Greg Ungerer <gerg@kernel.org>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The problem seems to be related to the limitation of the 16-bit field
+when the blocksize is set to 64k.
+To address this, helpers like ext4_rec_len_{from,to}_disk has already
+been introduced to complete the conversion between the encoded and the
+plain form of rec_len.
+
+So fix this one by using the helper, and all the other in this file too.
+
+Cc: stable@kernel.org
+Fixes: dbe89444042a ("ext4: Calculate and verify checksums for htree nodes")
+Suggested-by: Andreas Dilger <adilger@dilger.ca>
+Suggested-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://lore.kernel.org/r/20230803060938.1929759-1-zhangshida@kylinos.cn
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_elf_fdpic.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/ext4/namei.c |   26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
---- a/fs/binfmt_elf_fdpic.c
-+++ b/fs/binfmt_elf_fdpic.c
-@@ -349,10 +349,9 @@ static int load_elf_fdpic_binary(struct
- 	/* there's now no turning back... the old userspace image is dead,
- 	 * defunct, deceased, etc.
- 	 */
-+	SET_PERSONALITY(exec_params.hdr);
- 	if (elf_check_fdpic(&exec_params.hdr))
--		set_personality(PER_LINUX_FDPIC);
--	else
--		set_personality(PER_LINUX);
-+		current->personality |= PER_LINUX_FDPIC;
- 	if (elf_read_implies_exec(&exec_params.hdr, executable_stack))
- 		current->personality |= READ_IMPLIES_EXEC;
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -322,17 +322,17 @@ static struct ext4_dir_entry_tail *get_d
+ 						   struct ext4_dir_entry *de)
+ {
+ 	struct ext4_dir_entry_tail *t;
++	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
  
+ #ifdef PARANOID
+ 	struct ext4_dir_entry *d, *top;
+ 
+ 	d = de;
+ 	top = (struct ext4_dir_entry *)(((void *)de) +
+-		(EXT4_BLOCK_SIZE(inode->i_sb) -
+-		sizeof(struct ext4_dir_entry_tail)));
+-	while (d < top && d->rec_len)
++		(blocksize - sizeof(struct ext4_dir_entry_tail)));
++	while (d < top && ext4_rec_len_from_disk(d->rec_len, blocksize))
+ 		d = (struct ext4_dir_entry *)(((void *)d) +
+-		    le16_to_cpu(d->rec_len));
++		    ext4_rec_len_from_disk(d->rec_len, blocksize));
+ 
+ 	if (d != top)
+ 		return NULL;
+@@ -343,7 +343,8 @@ static struct ext4_dir_entry_tail *get_d
+ #endif
+ 
+ 	if (t->det_reserved_zero1 ||
+-	    le16_to_cpu(t->det_rec_len) != sizeof(struct ext4_dir_entry_tail) ||
++	    (ext4_rec_len_from_disk(t->det_rec_len, blocksize) !=
++	     sizeof(struct ext4_dir_entry_tail)) ||
+ 	    t->det_reserved_zero2 ||
+ 	    t->det_reserved_ft != EXT4_FT_DIR_CSUM)
+ 		return NULL;
+@@ -425,13 +426,14 @@ static struct dx_countlimit *get_dx_coun
+ 	struct ext4_dir_entry *dp;
+ 	struct dx_root_info *root;
+ 	int count_offset;
++	int blocksize = EXT4_BLOCK_SIZE(inode->i_sb);
++	unsigned int rlen = ext4_rec_len_from_disk(dirent->rec_len, blocksize);
+ 
+-	if (le16_to_cpu(dirent->rec_len) == EXT4_BLOCK_SIZE(inode->i_sb))
++	if (rlen == blocksize)
+ 		count_offset = 8;
+-	else if (le16_to_cpu(dirent->rec_len) == 12) {
++	else if (rlen == 12) {
+ 		dp = (struct ext4_dir_entry *)(((void *)dirent) + 12);
+-		if (le16_to_cpu(dp->rec_len) !=
+-		    EXT4_BLOCK_SIZE(inode->i_sb) - 12)
++		if (ext4_rec_len_from_disk(dp->rec_len, blocksize) != blocksize - 12)
+ 			return NULL;
+ 		root = (struct dx_root_info *)(((void *)dp + 12));
+ 		if (root->reserved_zero ||
+@@ -1244,6 +1246,7 @@ static int dx_make_map(struct inode *dir
+ 	unsigned int buflen = bh->b_size;
+ 	char *base = bh->b_data;
+ 	struct dx_hash_info h = *hinfo;
++	int blocksize = EXT4_BLOCK_SIZE(dir->i_sb);
+ 
+ 	if (ext4_has_metadata_csum(dir->i_sb))
+ 		buflen -= sizeof(struct ext4_dir_entry_tail);
+@@ -1257,11 +1260,12 @@ static int dx_make_map(struct inode *dir
+ 			map_tail--;
+ 			map_tail->hash = h.hash;
+ 			map_tail->offs = ((char *) de - base)>>2;
+-			map_tail->size = le16_to_cpu(de->rec_len);
++			map_tail->size = ext4_rec_len_from_disk(de->rec_len,
++								blocksize);
+ 			count++;
+ 			cond_resched();
+ 		}
+-		de = ext4_next_entry(de, dir->i_sb->s_blocksize);
++		de = ext4_next_entry(de, blocksize);
+ 	}
+ 	return count;
+ }
 
 
