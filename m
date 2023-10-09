@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C403411CAD
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4C411CAD
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zq8ZlMTo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F87AC433C7;
-	Mon,  9 Oct 2023 13:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wooAowZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66104C433C8;
+	Mon,  9 Oct 2023 13:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857515;
-	bh=9TBw9s91LTQ6B3IykPkswt5H8NCUXhY/JrChBzc1GAM=;
+	s=korg; t=1696857518;
+	bh=sdSw9Cl2tEce3cntvCtRAoH76cX4DV1REmKRucgzlOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zq8ZlMTo9MY9rv5+OcIg17o1gvvlHiCXBAjbRe1PUW8tVdSQc9BWgOL+7X5IRAgKI
-	 WFPAA6jbosBdOCmK/SnLsFL7ZaxD98+MEMS5ExstKh62AEVKQPmi6oHXfZMdNMRYph
-	 KVcjLo8DqNFl4oRy4S2P8nhrlbFg6gYYtqbQyq4M=
+	b=wooAowZ8fhk4SkU1LNxZBcu/i6SHqRu5TTbWcd2aIMPLgZGW7Pi76LlZR5SWIDmMU
+	 jXYo2j9C00i+hWgFrnC7MaEYMjyjCvgfZO5Ih7pt5QbVm2SFvhuYST5dKJ9oBLuIkx
+	 WdbP+EHnBKRnTW/nZIt4rc3ZVa+A5uWb4FYsBMrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Rob Herring <robh@kernel.org>,
 	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 070/162] arm64: Add Cortex-A520 CPU part definition
-Date: Mon,  9 Oct 2023 15:00:51 +0200
-Message-ID: <20231009130124.857334025@linuxfoundation.org>
+Subject: [PATCH 6.1 071/162] arm64: errata: Add Cortex-A520 speculative unprivileged load workaround
+Date: Mon,  9 Oct 2023 15:00:52 +0200
+Message-ID: <20231009130124.883125091@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -43,36 +43,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Rob Herring <robh@kernel.org>
 
-commit a654a69b9f9c06b2e56387d0b99f0e3e6b0ff4ef upstream.
+commit 471470bc7052d28ce125901877dd10e4c048e513 upstream.
 
-Add the CPU Part number for the new Arm design.
+Implement the workaround for ARM Cortex-A520 erratum 2966298. On an
+affected Cortex-A520 core, a speculatively executed unprivileged load
+might leak data from a privileged load via a cache side channel. The
+issue only exists for loads within a translation regime with the same
+translation (e.g. same ASID and VMID). Therefore, the issue only affects
+the return to EL0.
+
+The workaround is to execute a TLBI before returning to EL0 after all
+loads of privileged data. A non-shareable TLBI to any address is
+sufficient.
+
+The workaround isn't necessary if page table isolation (KPTI) is
+enabled, but for simplicity it will be. Page table isolation should
+normally be disabled for Cortex-A520 as it supports the CSV3 feature
+and the E0PD feature (used when KASLR is enabled).
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20230921194156.1050055-1-robh@kernel.org
+Link: https://lore.kernel.org/r/20230921194156.1050055-2-robh@kernel.org
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/cputype.h |    2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/arm64/silicon-errata.rst |    2 ++
+ arch/arm64/Kconfig                     |   13 +++++++++++++
+ arch/arm64/kernel/cpu_errata.c         |    8 ++++++++
+ arch/arm64/kernel/entry.S              |    4 ++++
+ arch/arm64/tools/cpucaps               |    1 +
+ 5 files changed, 28 insertions(+)
 
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -79,6 +79,7 @@
- #define ARM_CPU_PART_CORTEX_A78AE	0xD42
- #define ARM_CPU_PART_CORTEX_X1		0xD44
- #define ARM_CPU_PART_CORTEX_A510	0xD46
-+#define ARM_CPU_PART_CORTEX_A520	0xD80
- #define ARM_CPU_PART_CORTEX_A710	0xD47
- #define ARM_CPU_PART_CORTEX_X2		0xD48
- #define ARM_CPU_PART_NEOVERSE_N2	0xD49
-@@ -141,6 +142,7 @@
- #define MIDR_CORTEX_A78AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78AE)
- #define MIDR_CORTEX_X1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1)
- #define MIDR_CORTEX_A510 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A510)
-+#define MIDR_CORTEX_A520 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A520)
- #define MIDR_CORTEX_A710 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A710)
- #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
- #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
+--- a/Documentation/arm64/silicon-errata.rst
++++ b/Documentation/arm64/silicon-errata.rst
+@@ -63,6 +63,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A510     | #1902691        | ARM64_ERRATUM_1902691       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Cortex-A520     | #2966298        | ARM64_ERRATUM_2966298       |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A53      | #826319         | ARM64_ERRATUM_826319        |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A53      | #827319         | ARM64_ERRATUM_827319        |
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -983,6 +983,19 @@ config ARM64_ERRATUM_2457168
+ 
+ 	  If unsure, say Y.
+ 
++config ARM64_ERRATUM_2966298
++	bool "Cortex-A520: 2966298: workaround for speculatively executed unprivileged load"
++	default y
++	help
++	  This option adds the workaround for ARM Cortex-A520 erratum 2966298.
++
++	  On an affected Cortex-A520 core, a speculatively executed unprivileged
++	  load might leak data from a privileged level via a cache side channel.
++
++	  Work around this problem by executing a TLBI before returning to EL0.
++
++	  If unsure, say Y.
++
+ config CAVIUM_ERRATUM_22375
+ 	bool "Cavium erratum 22375, 24313"
+ 	default y
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -723,6 +723,14 @@ const struct arm64_cpu_capabilities arm6
+ 		.cpu_enable = cpu_clear_bf16_from_user_emulation,
+ 	},
+ #endif
++#ifdef CONFIG_ARM64_ERRATUM_2966298
++	{
++		.desc = "ARM erratum 2966298",
++		.capability = ARM64_WORKAROUND_2966298,
++		/* Cortex-A520 r0p0 - r0p1 */
++		ERRATA_MIDR_REV_RANGE(MIDR_CORTEX_A520, 0, 0, 1),
++	},
++#endif
+ #ifdef CONFIG_AMPERE_ERRATUM_AC03_CPU_38
+ 	{
+ 		.desc = "AmpereOne erratum AC03_CPU_38",
+--- a/arch/arm64/kernel/entry.S
++++ b/arch/arm64/kernel/entry.S
+@@ -419,6 +419,10 @@ alternative_else_nop_endif
+ 	ldp	x28, x29, [sp, #16 * 14]
+ 
+ 	.if	\el == 0
++alternative_if ARM64_WORKAROUND_2966298
++	tlbi	vale1, xzr
++	dsb	nsh
++alternative_else_nop_endif
+ alternative_if_not ARM64_UNMAP_KERNEL_AT_EL0
+ 	ldr	lr, [sp, #S_LR]
+ 	add	sp, sp, #PT_REGS_SIZE		// restore sp
+--- a/arch/arm64/tools/cpucaps
++++ b/arch/arm64/tools/cpucaps
+@@ -71,6 +71,7 @@ WORKAROUND_2064142
+ WORKAROUND_2077057
+ WORKAROUND_2457168
+ WORKAROUND_2658417
++WORKAROUND_2966298
+ WORKAROUND_AMPERE_AC03_CPU_38
+ WORKAROUND_TRBE_OVERWRITE_FILL_MODE
+ WORKAROUND_TSB_FLUSH_FAILURE
 
 
