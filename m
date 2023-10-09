@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99928339B0
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF1D339B0
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIXo+w3T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1111BC433C8;
-	Mon,  9 Oct 2023 13:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GseSwGXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC71C433CD;
+	Mon,  9 Oct 2023 13:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859067;
-	bh=aVDexnKZYqR6LQ0YjYU0jP8Sm3byVMNvIlf4klZ8XkU=;
+	s=korg; t=1696859070;
+	bh=4HbL6txOK0eQjeDfYR7FEaQkvgUiMGVT012CzDkLHQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DIXo+w3TqS16C9Zk3ku89PNF+wVbdXtNiUIiuyCmGC8JpzHb2VyqyvVGafdOddCKm
-	 wWBkO59u2GnlCfiotfGUn962EyvETQ0EXgCuaqVvT+oKM47x9eaAIVAnzWqSIHi7E0
-	 HuICOWgd3XsDgGgJRLkGRyuWz/a7vs8vhnvrAEiA=
+	b=GseSwGXWJclSqj+U8CmSNQpwqSm7UjrWmGXHc8EozrfT0s9p9kxwmrMb/WexipfSA
+	 Y1QAbjQkUuFRa1HuJ/bdudBB9N4gzmyPBoaLa9Zlsup/J4lEbbLJ4BMDiBr0xNd9a3
+	 Qc/0LQ9r3/iBco8GdR/I9gBxN9rdLET1Wv86oWPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Leon Hwang <hffilwlqm@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Alexandra Diupina <adiupina@astralinux.ru>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 189/226] bpf: Fix tr dereferencing
-Date: Mon,  9 Oct 2023 15:02:30 +0200
-Message-ID: <20231009130131.553125311@linuxfoundation.org>
+Subject: [PATCH 5.10 190/226] drivers/net: process the result of hdlc_open() and add call of hdlc_close() in uhdlc_close()
+Date: Mon,  9 Oct 2023 15:02:31 +0200
+Message-ID: <20231009130131.576649267@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -44,40 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <hffilwlqm@gmail.com>
+From: Alexandra Diupina <adiupina@astralinux.ru>
 
-[ Upstream commit b724a6418f1f853bcb39c8923bf14a50c7bdbd07 ]
+[ Upstream commit a59addacf899b1b21a7b7449a1c52c98704c2472 ]
 
-Fix 'tr' dereferencing bug when CONFIG_BPF_JIT is turned off.
+Process the result of hdlc_open() and call uhdlc_close()
+in case of an error. It is necessary to pass the error
+code up the control flow, similar to a possible
+error in request_irq().
+Also add a hdlc_close() call to the uhdlc_close()
+because the comment to hdlc_close() says it must be called
+by the hardware driver when the HDLC device is being closed
 
-When CONFIG_BPF_JIT is turned off, 'bpf_trampoline_get()' returns NULL,
-which is same as the cases when CONFIG_BPF_JIT is turned on.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Closes: https://lore.kernel.org/r/202309131936.5Nc8eUD0-lkp@intel.com/
-Fixes: f7b12b6fea00 ("bpf: verifier: refactor check_attach_btf_id()")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Leon Hwang <hffilwlqm@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230917153846.88732-1-hffilwlqm@gmail.com
+Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wan/fsl_ucc_hdlc.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index b010d45a1ecd5..8f4379e93ad49 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -725,7 +725,7 @@ static inline int bpf_trampoline_unlink_prog(struct bpf_prog *prog,
- static inline struct bpf_trampoline *bpf_trampoline_get(u64 key,
- 							struct bpf_attach_target_info *tgt_info)
- {
--	return ERR_PTR(-EOPNOTSUPP);
-+	return NULL;
+diff --git a/drivers/net/wan/fsl_ucc_hdlc.c b/drivers/net/wan/fsl_ucc_hdlc.c
+index ae1ae65e7f90a..bc3650c70730a 100644
+--- a/drivers/net/wan/fsl_ucc_hdlc.c
++++ b/drivers/net/wan/fsl_ucc_hdlc.c
+@@ -34,6 +34,8 @@
+ #define TDM_PPPOHT_SLIC_MAXIN
+ #define RX_BD_ERRORS (R_CD_S | R_OV_S | R_CR_S | R_AB_S | R_NO_S | R_LG_S)
+ 
++static int uhdlc_close(struct net_device *dev);
++
+ static struct ucc_tdm_info utdm_primary_info = {
+ 	.uf_info = {
+ 		.tsa = 0,
+@@ -708,6 +710,7 @@ static int uhdlc_open(struct net_device *dev)
+ 	hdlc_device *hdlc = dev_to_hdlc(dev);
+ 	struct ucc_hdlc_private *priv = hdlc->priv;
+ 	struct ucc_tdm *utdm = priv->utdm;
++	int rc = 0;
+ 
+ 	if (priv->hdlc_busy != 1) {
+ 		if (request_irq(priv->ut_info->uf_info.irq,
+@@ -731,10 +734,13 @@ static int uhdlc_open(struct net_device *dev)
+ 		napi_enable(&priv->napi);
+ 		netdev_reset_queue(dev);
+ 		netif_start_queue(dev);
+-		hdlc_open(dev);
++
++		rc = hdlc_open(dev);
++		if (rc)
++			uhdlc_close(dev);
+ 	}
+ 
+-	return 0;
++	return rc;
  }
- static inline void bpf_trampoline_put(struct bpf_trampoline *tr) {}
- #define DEFINE_BPF_DISPATCHER(name)
+ 
+ static void uhdlc_memclean(struct ucc_hdlc_private *priv)
+@@ -824,6 +830,8 @@ static int uhdlc_close(struct net_device *dev)
+ 	netdev_reset_queue(dev);
+ 	priv->hdlc_busy = 0;
+ 
++	hdlc_close(dev);
++
+ 	return 0;
+ }
+ 
 -- 
 2.40.1
 
