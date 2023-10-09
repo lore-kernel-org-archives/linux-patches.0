@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7FB1A71F
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF0F1A71F
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svp7+lsx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78035C433C7;
-	Mon,  9 Oct 2023 13:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ogh2zxWm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CFFC433C7;
+	Mon,  9 Oct 2023 13:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858429;
-	bh=Pu+JITH6cba+/EFHyqtoFCfPajzifns90ZUUD+YY5SI=;
+	s=korg; t=1696858433;
+	bh=ZJ1YkOzQJEmc1JwRDOvKzd2QQ6dN5KsHFajMYvYzL7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=svp7+lsxyAS3+YrjqEgYG+wTSkCNMlSKczJzZiwS4zJvnEMsJ0fvdqH6Zv6VtSyUn
-	 3Svjy3+YyTnpn/x7vyeF7UX0DcnImoLnhYlBCMT9u6Xatz104DtRvLPtXtym9W79T+
-	 0BZfThDCdojrUFxe/M/AW/p7jqQFBNC+DUbtACtg=
+	b=Ogh2zxWmkgdp2M1KEY8Su/Ss438gFQrbnKvy0C/QkqRCoFzTpZK/qY3RIn9B1jhRV
+	 CsNahU1sDLBn3ahn3IPCNjpBACVLEsZlG6G+dMti7/2YU01YqgX8BZVECbn8yQPC6l
+	 y3yxpNeYyeQ7ZdkTiQMjIKZ40MkGNbSx5VyKiPq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Babrou <ivan@cloudflare.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Hauke Mehrtens <hauke@hauke-m.de>
-Subject: [PATCH 5.4 120/131] cpupower: add Makefile dependencies for install targets
-Date: Mon,  9 Oct 2023 15:02:40 +0200
-Message-ID: <20231009130120.100166252@linuxfoundation.org>
+	Oleksandr Tymoshenko <ovt@google.com>,
+	Nayna Jain <nayna@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 103/131] ima: Finish deprecation of IMA_TRUSTED_KEYRING Kconfig
+Date: Mon,  9 Oct 2023 15:02:23 +0200
+Message-ID: <20231009130119.568586587@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,67 +43,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Babrou <ivan@cloudflare.com>
+From: Oleksandr Tymoshenko <ovt@google.com>
 
-commit fb7791e213a64495ec2336869b868fcd8af14346 upstream.
+[ Upstream commit be210c6d3597faf330cb9af33b9f1591d7b2a983 ]
 
-This allows building cpupower in parallel rather than serially.
+The removal of IMA_TRUSTED_KEYRING made IMA_LOAD_X509
+and IMA_BLACKLIST_KEYRING unavailable because the latter
+two depend on the former. Since IMA_TRUSTED_KEYRING was
+deprecated in favor of INTEGRITY_TRUSTED_KEYRING use it
+as a dependency for the two Kconfigs affected by the
+deprecation.
 
-Signed-off-by: Ivan Babrou <ivan@cloudflare.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Cc: Hauke Mehrtens <hauke@hauke-m.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5087fd9e80e5 ("ima: Remove deprecated IMA_TRUSTED_KEYRING Kconfig")
+Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
+Reviewed-by: Nayna Jain <nayna@linux.ibm.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/cpupower/Makefile       |    8 ++++----
- tools/power/cpupower/bench/Makefile |    2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ security/integrity/ima/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/tools/power/cpupower/Makefile
-+++ b/tools/power/cpupower/Makefile
-@@ -270,14 +270,14 @@ clean:
- 	$(MAKE) -C bench O=$(OUTPUT) clean
+diff --git a/security/integrity/ima/Kconfig b/security/integrity/ima/Kconfig
+index c97ce6265fc6b..a7e38d72fb4ba 100644
+--- a/security/integrity/ima/Kconfig
++++ b/security/integrity/ima/Kconfig
+@@ -263,7 +263,7 @@ config IMA_KEYRINGS_PERMIT_SIGNED_BY_BUILTIN_OR_SECONDARY
+ config IMA_BLACKLIST_KEYRING
+ 	bool "Create IMA machine owner blacklist keyrings (EXPERIMENTAL)"
+ 	depends on SYSTEM_TRUSTED_KEYRING
+-	depends on IMA_TRUSTED_KEYRING
++	depends on INTEGRITY_TRUSTED_KEYRING
+ 	default n
+ 	help
+ 	   This option creates an IMA blacklist keyring, which contains all
+@@ -273,7 +273,7 @@ config IMA_BLACKLIST_KEYRING
  
- 
--install-lib:
-+install-lib: libcpupower
- 	$(INSTALL) -d $(DESTDIR)${libdir}
- 	$(CP) $(OUTPUT)libcpupower.so* $(DESTDIR)${libdir}/
- 	$(INSTALL) -d $(DESTDIR)${includedir}
- 	$(INSTALL_DATA) lib/cpufreq.h $(DESTDIR)${includedir}/cpufreq.h
- 	$(INSTALL_DATA) lib/cpuidle.h $(DESTDIR)${includedir}/cpuidle.h
- 
--install-tools:
-+install-tools: $(OUTPUT)cpupower
- 	$(INSTALL) -d $(DESTDIR)${bindir}
- 	$(INSTALL_PROGRAM) $(OUTPUT)cpupower $(DESTDIR)${bindir}
- 	$(INSTALL) -d $(DESTDIR)${bash_completion_dir}
-@@ -293,14 +293,14 @@ install-man:
- 	$(INSTALL_DATA) -D man/cpupower-info.1 $(DESTDIR)${mandir}/man1/cpupower-info.1
- 	$(INSTALL_DATA) -D man/cpupower-monitor.1 $(DESTDIR)${mandir}/man1/cpupower-monitor.1
- 
--install-gmo:
-+install-gmo: create-gmo
- 	$(INSTALL) -d $(DESTDIR)${localedir}
- 	for HLANG in $(LANGUAGES); do \
- 		echo '$(INSTALL_DATA) -D $(OUTPUT)po/$$HLANG.gmo $(DESTDIR)${localedir}/$$HLANG/LC_MESSAGES/cpupower.mo'; \
- 		$(INSTALL_DATA) -D $(OUTPUT)po/$$HLANG.gmo $(DESTDIR)${localedir}/$$HLANG/LC_MESSAGES/cpupower.mo; \
- 	done;
- 
--install-bench:
-+install-bench: compile-bench
- 	@#DESTDIR must be set from outside to survive
- 	@sbindir=$(sbindir) bindir=$(bindir) docdir=$(docdir) confdir=$(confdir) $(MAKE) -C bench O=$(OUTPUT) install
- 
---- a/tools/power/cpupower/bench/Makefile
-+++ b/tools/power/cpupower/bench/Makefile
-@@ -27,7 +27,7 @@ $(OUTPUT)cpufreq-bench: $(OBJS)
- 
- all: $(OUTPUT)cpufreq-bench
- 
--install:
-+install: $(OUTPUT)cpufreq-bench
- 	mkdir -p $(DESTDIR)/$(sbindir)
- 	mkdir -p $(DESTDIR)/$(bindir)
- 	mkdir -p $(DESTDIR)/$(docdir)
+ config IMA_LOAD_X509
+ 	bool "Load X509 certificate onto the '.ima' trusted keyring"
+-	depends on IMA_TRUSTED_KEYRING
++	depends on INTEGRITY_TRUSTED_KEYRING
+ 	default n
+ 	help
+ 	   File signature verification is based on the public keys
+-- 
+2.40.1
+
 
 
