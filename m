@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19341A5B6
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355F2199B1
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ua8M8Sof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A77AC433C8;
-	Mon,  9 Oct 2023 13:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cm8IygkZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C13BC433C7;
+	Mon,  9 Oct 2023 13:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857918;
-	bh=xsSG+IJfNctiGXWHB3p6BMIMMzNbcFJD7Qw0e2upHvM=;
+	s=korg; t=1696857922;
+	bh=Gufg5VoBhUW2ZM8+iLwr7vKQi2JBfHNAK5jkm2dILtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ua8M8Sof/epltwrGhZMJ/M8vRylpT96g3ZHT1C++RpIiUfmtFM3tgzmbNL5QGVqii
-	 uBkiuCLHPp2cvoioTp2hrFCpjh7EAtdkXqHgcVEfZP3u4baU2cXhyh8A+jKaPz+XBX
-	 +2M84fmldgpvEy2419cxdfqzOG/bL3SyVb8o4P5w=
+	b=cm8IygkZ9mXi2enCH/JgMGyPELciDtVRlC+SSZDVcZQrl6wHWGbMYcrwA0jnBPDd2
+	 NdCiEDkGLzs8YnHlbcqMH1tzn8k2qbjBo9cEzghdZIE0vYU78iwEW7XbkG7xELRuzP
+	 3L9E/9IMviUWxDBNC3SguL1cxGkyibth7xv7XZxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Ingo Molnar <mingo@elte.hu>,
-	Mike Rapoport <mike.rapoport@gmail.com>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 08/75] ring-buffer: remove obsolete comment for free_buffer_page()
-Date: Mon,  9 Oct 2023 15:01:30 +0200
-Message-ID: <20231009130111.505926156@linuxfoundation.org>
+Subject: [PATCH 5.15 09/75] ring-buffer: Fix bytes info in per_cpu buffer stats
+Date: Mon,  9 Oct 2023 15:01:31 +0200
+Message-ID: <20231009130111.541174327@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -46,48 +42,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit a98151ad53b53f010ee364ec2fd06445b328578b ]
+[ Upstream commit 45d99ea451d0c30bfd4864f0fe485d7dac014902 ]
 
-The comment refers to mm/slob.c which is being removed. It comes from
-commit ed56829cb319 ("ring_buffer: reset buffer page when freeing") and
-according to Steven the borrowed code was a page mapcount and mapping
-reset, which was later removed by commit e4c2ce82ca27 ("ring_buffer:
-allocate buffer page pointer"). Thus the comment is not accurate anyway,
-remove it.
+The 'bytes' info in file 'per_cpu/cpu<X>/stats' means the number of
+bytes in cpu buffer that have not been consumed. However, currently
+after consuming data by reading file 'trace_pipe', the 'bytes' info
+was not changed as expected.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230315142446.27040-1-vbabka@suse.cz
+  # cat per_cpu/cpu0/stats
+  entries: 0
+  overrun: 0
+  commit overrun: 0
+  bytes: 568             <--- 'bytes' is problematical !!!
+  oldest event ts:  8651.371479
+  now ts:  8653.912224
+  dropped events: 0
+  read events: 8
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Ingo Molnar <mingo@elte.hu>
-Reported-by: Mike Rapoport <mike.rapoport@gmail.com>
-Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Fixes: e4c2ce82ca27 ("ring_buffer: allocate buffer page pointer")
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+The root cause is incorrect stat on cpu_buffer->read_bytes. To fix it:
+  1. When stat 'read_bytes', account consumed event in rb_advance_reader();
+  2. When stat 'entries_bytes', exclude the discarded padding event which
+     is smaller than minimum size because it is invisible to reader. Then
+     use rb_page_commit() instead of BUF_PAGE_SIZE at where accounting for
+     page-based read/remove/overrun.
+
+Also correct the comments of ring_buffer_bytes_cpu() in this patch.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230921125425.1708423-1-zhengyejian1@huawei.com
+
+Cc: stable@vger.kernel.org
+Fixes: c64e148a3be3 ("trace: Add ring buffer stats to measure rate of events")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: 45d99ea451d0 ("ring-buffer: Fix bytes info in per_cpu buffer stats")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 4 ----
- 1 file changed, 4 deletions(-)
+ kernel/trace/ring_buffer.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
 diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 2e5f3de7bfb09..352a7de4fc458 100644
+index 352a7de4fc458..e5dc7b5a261c6 100644
 --- a/kernel/trace/ring_buffer.c
 +++ b/kernel/trace/ring_buffer.c
-@@ -346,10 +346,6 @@ static void rb_init_page(struct buffer_data_page *bpage)
+@@ -346,6 +346,11 @@ static void rb_init_page(struct buffer_data_page *bpage)
  	local_set(&bpage->commit, 0);
  }
  
--/*
-- * Also stolen from mm/slob.c. Thanks to Mathieu Desnoyers for pointing
-- * this issue out.
-- */
++static __always_inline unsigned int rb_page_commit(struct buffer_page *bpage)
++{
++	return local_read(&bpage->page->commit);
++}
++
  static void free_buffer_page(struct buffer_page *bpage)
  {
  	free_page((unsigned long)bpage->page);
+@@ -1984,7 +1989,7 @@ rb_remove_pages(struct ring_buffer_per_cpu *cpu_buffer, unsigned long nr_pages)
+ 			 * Increment overrun to account for the lost events.
+ 			 */
+ 			local_add(page_entries, &cpu_buffer->overrun);
+-			local_sub(BUF_PAGE_SIZE, &cpu_buffer->entries_bytes);
++			local_sub(rb_page_commit(to_remove_page), &cpu_buffer->entries_bytes);
+ 			local_inc(&cpu_buffer->pages_lost);
+ 		}
+ 
+@@ -2328,11 +2333,6 @@ rb_reader_event(struct ring_buffer_per_cpu *cpu_buffer)
+ 			       cpu_buffer->reader_page->read);
+ }
+ 
+-static __always_inline unsigned rb_page_commit(struct buffer_page *bpage)
+-{
+-	return local_read(&bpage->page->commit);
+-}
+-
+ static struct ring_buffer_event *
+ rb_iter_head_event(struct ring_buffer_iter *iter)
+ {
+@@ -2478,7 +2478,7 @@ rb_handle_head_page(struct ring_buffer_per_cpu *cpu_buffer,
+ 		 * the counters.
+ 		 */
+ 		local_add(entries, &cpu_buffer->overrun);
+-		local_sub(BUF_PAGE_SIZE, &cpu_buffer->entries_bytes);
++		local_sub(rb_page_commit(next_page), &cpu_buffer->entries_bytes);
+ 		local_inc(&cpu_buffer->pages_lost);
+ 
+ 		/*
+@@ -2621,9 +2621,6 @@ rb_reset_tail(struct ring_buffer_per_cpu *cpu_buffer,
+ 
+ 	event = __rb_page_index(tail_page, tail);
+ 
+-	/* account for padding bytes */
+-	local_add(BUF_PAGE_SIZE - tail, &cpu_buffer->entries_bytes);
+-
+ 	/*
+ 	 * Save the original length to the meta data.
+ 	 * This will be used by the reader to add lost event
+@@ -2637,7 +2634,8 @@ rb_reset_tail(struct ring_buffer_per_cpu *cpu_buffer,
+ 	 * write counter enough to allow another writer to slip
+ 	 * in on this page.
+ 	 * We put in a discarded commit instead, to make sure
+-	 * that this space is not used again.
++	 * that this space is not used again, and this space will
++	 * not be accounted into 'entries_bytes'.
+ 	 *
+ 	 * If we are less than the minimum size, we don't need to
+ 	 * worry about it.
+@@ -2662,6 +2660,9 @@ rb_reset_tail(struct ring_buffer_per_cpu *cpu_buffer,
+ 	/* time delta must be non zero */
+ 	event->time_delta = 1;
+ 
++	/* account for padding bytes */
++	local_add(BUF_PAGE_SIZE - tail, &cpu_buffer->entries_bytes);
++
+ 	/* Make sure the padding is visible before the tail_page->write update */
+ 	smp_wmb();
+ 
+@@ -4177,7 +4178,7 @@ u64 ring_buffer_oldest_event_ts(struct trace_buffer *buffer, int cpu)
+ EXPORT_SYMBOL_GPL(ring_buffer_oldest_event_ts);
+ 
+ /**
+- * ring_buffer_bytes_cpu - get the number of bytes consumed in a cpu buffer
++ * ring_buffer_bytes_cpu - get the number of bytes unconsumed in a cpu buffer
+  * @buffer: The ring buffer
+  * @cpu: The per CPU buffer to read from.
+  */
+@@ -4685,6 +4686,7 @@ static void rb_advance_reader(struct ring_buffer_per_cpu *cpu_buffer)
+ 
+ 	length = rb_event_length(event);
+ 	cpu_buffer->reader_page->read += length;
++	cpu_buffer->read_bytes += length;
+ }
+ 
+ static void rb_advance_iter(struct ring_buffer_iter *iter)
+@@ -5778,7 +5780,7 @@ int ring_buffer_read_page(struct trace_buffer *buffer,
+ 	} else {
+ 		/* update the entry counter */
+ 		cpu_buffer->read += rb_page_entries(reader);
+-		cpu_buffer->read_bytes += BUF_PAGE_SIZE;
++		cpu_buffer->read_bytes += rb_page_commit(reader);
+ 
+ 		/* swap the pages */
+ 		rb_init_page(bpage);
 -- 
 2.40.1
 
