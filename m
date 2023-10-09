@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC9918B11
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C109D11CAD
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yt0pP1hl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F34FC433C9;
-	Mon,  9 Oct 2023 13:10:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2yqASs9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDC2C433C7;
+	Mon,  9 Oct 2023 13:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857048;
-	bh=eXbWcF7YrMDmXFCmV4nYXlHdvB40sLCqWnJppGOPTJc=;
+	s=korg; t=1696857051;
+	bh=bhXhqjoBVwFDrHMkzvP5Rg9HWCpvbkMhUWs0pkRJXVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yt0pP1hlvBJjF+x4fiDg51Spx8KXfYg1K+W4esha53FcdofkU2/N2Yc5TpW7fclLD
-	 Hb2qj5Fj2bj8cbd4f4I8v5D5uraOgI2CH8Q1G92GrjhQBn75VuQ9qjznm8w7FzPJJu
-	 VpmsCctZQKKhcyVIzc1ErMU4yASLxgz0NXnDxPv8=
+	b=x2yqASs9mhjW3ebyrX2IYc/4V+oS7jyW5uWH105gQqsbwRuTRAJwB7JN/MOLZYqQn
+	 d2SyOKqG4Uii7/JkZ970j4rbOYmgs9CDICoRn8UjorRU9sihpbP57k5cRboViBXsJz
+	 Ztje3raEshQX2W1vjxxvAcdVjkE91qa56k+eJS5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ying Hsu <yinghsu@chromium.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 079/163] Bluetooth: Fix hci_link_tx_to RCU lock usage
-Date: Mon,  9 Oct 2023 15:00:43 +0200
-Message-ID: <20231009130126.234066349@linuxfoundation.org>
+Subject: [PATCH 6.5 080/163] Bluetooth: ISO: Fix handling of listen for unicast
+Date: Mon,  9 Oct 2023 15:00:44 +0200
+Message-ID: <20231009130126.260436977@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -42,59 +41,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ying Hsu <yinghsu@chromium.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit c7eaf80bfb0c8cef852cce9501b95dd5a6bddcb9 ]
+[ Upstream commit e0275ea52169412b8faccb4e2f4fed8a057844c6 ]
 
-Syzbot found a bug "BUG: sleeping function called from invalid context
-at kernel/locking/mutex.c:580". It is because hci_link_tx_to holds an
-RCU read lock and calls hci_disconnect which would hold a mutex lock
-since the commit a13f316e90fd ("Bluetooth: hci_conn: Consolidate code
-for aborting connections"). Here's an example call trace:
+iso_listen_cis shall only return -EADDRINUSE if the listening socket has
+the destination set to BDADDR_ANY otherwise if the destination is set to
+a specific address it is for broadcast which shall be ignored.
 
-   __dump_stack lib/dump_stack.c:88 [inline]
-   dump_stack_lvl+0xfc/0x174 lib/dump_stack.c:106
-   ___might_sleep+0x4a9/0x4d3 kernel/sched/core.c:9663
-   __mutex_lock_common kernel/locking/mutex.c:576 [inline]
-   __mutex_lock+0xc7/0x6e7 kernel/locking/mutex.c:732
-   hci_cmd_sync_queue+0x3a/0x287 net/bluetooth/hci_sync.c:388
-   hci_abort_conn+0x2cd/0x2e4 net/bluetooth/hci_conn.c:1812
-   hci_disconnect+0x207/0x237 net/bluetooth/hci_conn.c:244
-   hci_link_tx_to net/bluetooth/hci_core.c:3254 [inline]
-   __check_timeout net/bluetooth/hci_core.c:3419 [inline]
-   __check_timeout+0x310/0x361 net/bluetooth/hci_core.c:3399
-   hci_sched_le net/bluetooth/hci_core.c:3602 [inline]
-   hci_tx_work+0xe8f/0x12d0 net/bluetooth/hci_core.c:3652
-   process_one_work+0x75c/0xba1 kernel/workqueue.c:2310
-   worker_thread+0x5b2/0x73a kernel/workqueue.c:2457
-   kthread+0x2f7/0x30b kernel/kthread.c:319
-   ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:298
-
-This patch releases RCU read lock before calling hci_disconnect and
-reacquires it afterward to fix the bug.
-
-Fixes: a13f316e90fd ("Bluetooth: hci_conn: Consolidate code for aborting connections")
-Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Fixes: f764a6c2c1e4 ("Bluetooth: ISO: Add broadcast support")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/bluetooth/iso.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3419,7 +3419,12 @@ static void hci_link_tx_to(struct hci_de
- 		if (c->type == type && c->sent) {
- 			bt_dev_err(hdev, "killing stalled connection %pMR",
- 				   &c->dst);
-+			/* hci_disconnect might sleep, so, we have to release
-+			 * the RCU read lock before calling it.
-+			 */
-+			rcu_read_unlock();
- 			hci_disconnect(c, HCI_ERROR_REMOTE_USER_TERM);
-+			rcu_read_lock();
- 		}
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 9b6a7eb2015f0..42f7b257bdfbc 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -499,7 +499,7 @@ static void iso_recv_frame(struct iso_conn *conn, struct sk_buff *skb)
+ }
+ 
+ /* -------- Socket interface ---------- */
+-static struct sock *__iso_get_sock_listen_by_addr(bdaddr_t *ba)
++static struct sock *__iso_get_sock_listen_by_addr(bdaddr_t *src, bdaddr_t *dst)
+ {
+ 	struct sock *sk;
+ 
+@@ -507,7 +507,10 @@ static struct sock *__iso_get_sock_listen_by_addr(bdaddr_t *ba)
+ 		if (sk->sk_state != BT_LISTEN)
+ 			continue;
+ 
+-		if (!bacmp(&iso_pi(sk)->src, ba))
++		if (bacmp(&iso_pi(sk)->dst, dst))
++			continue;
++
++		if (!bacmp(&iso_pi(sk)->src, src))
+ 			return sk;
  	}
  
+@@ -965,7 +968,7 @@ static int iso_listen_cis(struct sock *sk)
+ 
+ 	write_lock(&iso_sk_list.lock);
+ 
+-	if (__iso_get_sock_listen_by_addr(&iso_pi(sk)->src))
++	if (__iso_get_sock_listen_by_addr(&iso_pi(sk)->src, &iso_pi(sk)->dst))
+ 		err = -EADDRINUSE;
+ 
+ 	write_unlock(&iso_sk_list.lock);
+-- 
+2.40.1
+
 
 
