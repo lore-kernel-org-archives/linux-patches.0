@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6746918B00
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7460018B00
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gW/PjTRY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFC7C433C8;
-	Mon,  9 Oct 2023 13:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlFlBXTP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF248C433C7;
+	Mon,  9 Oct 2023 13:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696856916;
-	bh=UCYcbKNKlZB0rxcWo7hGGfuxSK1Ockg5BHC98aeIy0M=;
+	s=korg; t=1696856919;
+	bh=ZE6AxiR2xm5MfJdzgwoysHo7uXBPpgVPx7MPz3tE0TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gW/PjTRYMeur1+LqqWnwQgq8eWfz9PDx1jOJHONbn58TnFNddLqMbQfJzwAgn2Ekh
-	 4Hj/ia4vTeFPQfHpMaqxR/XeWrq2uy9f49kOEaNeCFoHwLfqrV/WKq+GkHqVMuaWEo
-	 LYIqyE+SHU3yTKYkTuOdlKnr38oDG0wkgeg7ZpPc=
+	b=vlFlBXTPNst5LAs/p4ZP90zUsY90gnKSQ4pb0Ux8N94ErHdIW2XzCySeBAMuZNS1i
+	 lyg1PWqNrozO9yXqCvRPLen/xaxHOA+VBedbcXqB5R/BkVY6DEzC94YWupU/Sj3My3
+	 Ew0RZt3i4jVeh+hmf45FyqazsDjCBv243te5PbvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sameer Pujar <spujar@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Pedro Falcato <pedro.falcato@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 007/163] ASoC: tegra: Fix redundant PLLA and PLLA_OUT0 updates
-Date: Mon,  9 Oct 2023 14:59:31 +0200
-Message-ID: <20231009130124.224539595@linuxfoundation.org>
+Subject: [PATCH 6.5 008/163] maple_tree: add mas_is_active() to detect in-tree walks
+Date: Mon,  9 Oct 2023 14:59:32 +0200
+Message-ID: <20231009130124.250840174@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -42,88 +43,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sameer Pujar <spujar@nvidia.com>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-[ Upstream commit e765886249c533e1bb5cbc3cd741bad677417312 ]
+[ Upstream commit 5c590804b6b0ff933ed4e5cee5d76de3a5048d9f ]
 
-Tegra audio graph card has many DAI links which connects internal
-AHUB modules and external audio codecs. Since these are DPCM links,
-hw_params() call in the machine driver happens for each connected
-BE link and PLLA is updated every time. This is not really needed
-for all links as only I/O link DAIs derive respective clocks from
-PLLA_OUT0 and thus from PLLA. Hence add checks to limit the clock
-updates to DAIs over I/O links.
+Patch series "maple_tree: Fix mas_prev() state regression".
 
-This found to be fixing a DMIC clock discrepancy which is suspected
-to happen because of back to back quick PLLA and PLLA_OUT0 rate
-updates. This was observed on Jetson TX2 platform where DMIC clock
-ended up with unexpected value.
+Pedro Falcato retported an mprotect regression [1] which was bisected back
+to the iterator changes for maple tree.  Root cause analysis showed the
+mas_prev() running off the end of the VMA space (previous from 0) followed
+by mas_find(), would skip the first value.
 
-Fixes: 202e2f774543 ("ASoC: tegra: Add audio graph based card driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sameer Pujar <spujar@nvidia.com>
-Link: https://lore.kernel.org/r/1694098945-32760-3-git-send-email-spujar@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This patchset introduces maple state underflow/overflow so the sequence of
+calls on the maple state will return what the user expects.
+
+Users who encounter this bug may see mprotect(), userfaultfd_register(),
+and mlock() fail on VMAs mapped with address 0.
+
+This patch (of 2):
+
+Instead of constantly checking each possibility of the maple state,
+create a fast path that will skip over checking unlikely states.
+
+Link: https://lkml.kernel.org/r/20230921181236.509072-1-Liam.Howlett@oracle.com
+Link: https://lkml.kernel.org/r/20230921181236.509072-2-Liam.Howlett@oracle.com
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Pedro Falcato <pedro.falcato@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/tegra/tegra_audio_graph_card.c | 30 ++++++++++++++----------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ include/linux/maple_tree.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/sound/soc/tegra/tegra_audio_graph_card.c b/sound/soc/tegra/tegra_audio_graph_card.c
-index 1f2c5018bf5ac..4737e776d3837 100644
---- a/sound/soc/tegra/tegra_audio_graph_card.c
-+++ b/sound/soc/tegra/tegra_audio_graph_card.c
-@@ -10,6 +10,7 @@
- #include <linux/platform_device.h>
- #include <sound/graph_card.h>
- #include <sound/pcm_params.h>
-+#include <sound/soc-dai.h>
+diff --git a/include/linux/maple_tree.h b/include/linux/maple_tree.h
+index 295548cca8b36..e1e5f38384b20 100644
+--- a/include/linux/maple_tree.h
++++ b/include/linux/maple_tree.h
+@@ -503,6 +503,15 @@ static inline bool mas_is_paused(const struct ma_state *mas)
+ 	return mas->node == MAS_PAUSE;
+ }
  
- #define MAX_PLLA_OUT0_DIV 128
- 
-@@ -44,6 +45,21 @@ struct tegra_audio_cdata {
- 	unsigned int plla_out0_rates[NUM_RATE_TYPE];
- };
- 
-+static bool need_clk_update(struct snd_soc_dai *dai)
++/* Check if the mas is pointing to a node or not */
++static inline bool mas_is_active(struct ma_state *mas)
 +{
-+	if (snd_soc_dai_is_dummy(dai) ||
-+	    !dai->driver->ops ||
-+	    !dai->driver->name)
-+		return false;
-+
-+	if (strstr(dai->driver->name, "I2S") ||
-+	    strstr(dai->driver->name, "DMIC") ||
-+	    strstr(dai->driver->name, "DSPK"))
++	if ((unsigned long)mas->node >= MAPLE_RESERVED_RANGE)
 +		return true;
 +
 +	return false;
 +}
 +
- /* Setup PLL clock as per the given sample rate */
- static int tegra_audio_graph_update_pll(struct snd_pcm_substream *substream,
- 					struct snd_pcm_hw_params *params)
-@@ -140,19 +156,7 @@ static int tegra_audio_graph_hw_params(struct snd_pcm_substream *substream,
- 	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
- 	int err;
- 
--	/*
--	 * This gets called for each DAI link (FE or BE) when DPCM is used.
--	 * We may not want to update PLLA rate for each call. So PLLA update
--	 * must be restricted to external I/O links (I2S, DMIC or DSPK) since
--	 * they actually depend on it. I/O modules update their clocks in
--	 * hw_param() of their respective component driver and PLLA rate
--	 * update here helps them to derive appropriate rates.
--	 *
--	 * TODO: When more HW accelerators get added (like sample rate
--	 * converter, volume gain controller etc., which don't really
--	 * depend on PLLA) we need a better way to filter here.
--	 */
--	if (cpu_dai->driver->ops && rtd->dai_link->no_pcm) {
-+	if (need_clk_update(cpu_dai)) {
- 		err = tegra_audio_graph_update_pll(substream, params);
- 		if (err)
- 			return err;
+ /**
+  * mas_reset() - Reset a Maple Tree operation state.
+  * @mas: Maple Tree operation state.
 -- 
 2.40.1
 
