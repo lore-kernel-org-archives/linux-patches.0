@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447161A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDD21A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6gElAGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEABAC433C7;
-	Mon,  9 Oct 2023 13:23:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KubjsZEA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AE9C433C9;
+	Mon,  9 Oct 2023 13:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857811;
-	bh=SoMPrE/sujzynQqyrN4ugL5vfzIU06k6kuLbHsnDEFQ=;
+	s=korg; t=1696857814;
+	bh=bS1o+BiUUGetM/YN+sxFGQJ8DIbJZgqQM+lZyFdV1vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6gElAGCqsQ9edH4zGv6zVXCDXx/OikYAT67yjEQZKq5FZCgp87bfENVkklYdMRMB
-	 R7PHWc3hytmRrI4Lx0ZuwoK5tTPbPkQ6HILdtODP+06w8C021aX/jfyQleBGIB1uYY
-	 R69Gt0OKG/b4noP4ztSPThXc0M1ZL/LPAiiNwnAU=
+	b=KubjsZEA2bjNezEq6jMgCmOFQfXqI8bYER7sy2h9KIL22H/XO3nPc7QA38kuNvNbu
+	 b7RZfLpknWK77NktC1QpThEZGhgpnAQ1xQD4/6k5BjZ3TN6MVKDdBF2uMjSXiylrZg
+	 n38x1ZyXSnjaeN/PIAPdH4YmxKCXGLNCFXqgrnaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Rife <jrife@google.com>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 137/162] smb: use kernel_connect() and kernel_bind()
-Date: Mon,  9 Oct 2023 15:01:58 +0200
-Message-ID: <20231009130126.690857507@linuxfoundation.org>
+	John David Anglin <dave.anglin@bell.net>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 138/162] parisc: Fix crash with nr_cpus=1 option
+Date: Mon,  9 Oct 2023 15:01:59 +0200
+Message-ID: <20231009130126.718315265@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -42,51 +41,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jrife@google.com>
+From: Helge Deller <deller@gmx.de>
 
-commit cedc019b9f260facfadd20c6c490e403abf292e3 upstream.
+commit d3b3c637e4eb8d3bbe53e5692aee66add72f9851 upstream.
 
-Recent changes to kernel_connect() and kernel_bind() ensure that
-callers are insulated from changes to the address parameter made by BPF
-SOCK_ADDR hooks. This patch wraps direct calls to ops->connect() and
-ops->bind() with kernel_connect() and kernel_bind() to ensure that SMB
-mounts do not see their mount address overwritten in such cases.
+John David Anglin reported that giving "nr_cpus=1" on the command
+line causes a crash, while "maxcpus=1" works.
 
-Link: https://lore.kernel.org/netdev/9944248dba1bce861375fcce9de663934d933ba9.camel@redhat.com/
-Cc: <stable@vger.kernel.org> # 6.0+
-Signed-off-by: Jordan Rife <jrife@google.com>
-Acked-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: John David Anglin <dave.anglin@bell.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org # v5.18+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/parisc/kernel/smp.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -2901,9 +2901,9 @@ bind_socket(struct TCP_Server_Info *serv
- 	if (server->srcaddr.ss_family != AF_UNSPEC) {
- 		/* Bind to the specified local IP address */
- 		struct socket *socket = server->ssocket;
--		rc = socket->ops->bind(socket,
--				       (struct sockaddr *) &server->srcaddr,
--				       sizeof(server->srcaddr));
-+		rc = kernel_bind(socket,
-+				 (struct sockaddr *) &server->srcaddr,
-+				 sizeof(server->srcaddr));
- 		if (rc < 0) {
- 			struct sockaddr_in *saddr4;
- 			struct sockaddr_in6 *saddr6;
-@@ -3050,8 +3050,8 @@ generic_ip_connect(struct TCP_Server_Inf
- 		 socket->sk->sk_sndbuf,
- 		 socket->sk->sk_rcvbuf, socket->sk->sk_rcvtimeo);
+--- a/arch/parisc/kernel/smp.c
++++ b/arch/parisc/kernel/smp.c
+@@ -443,7 +443,9 @@ int __cpu_up(unsigned int cpu, struct ta
+ 	if (cpu_online(cpu))
+ 		return 0;
  
--	rc = socket->ops->connect(socket, saddr, slen,
--				  server->noblockcnt ? O_NONBLOCK : 0);
-+	rc = kernel_connect(socket, saddr, slen,
-+			    server->noblockcnt ? O_NONBLOCK : 0);
- 	/*
- 	 * When mounting SMB root file systems, we do not want to block in
- 	 * connect. Otherwise bail out and then let cifs_reconnect() perform
+-	if (num_online_cpus() < setup_max_cpus && smp_boot_one_cpu(cpu, tidle))
++	if (num_online_cpus() < nr_cpu_ids &&
++		num_online_cpus() < setup_max_cpus &&
++		smp_boot_one_cpu(cpu, tidle))
+ 		return -EIO;
+ 
+ 	return cpu_online(cpu) ? 0 : -EIO;
 
 
