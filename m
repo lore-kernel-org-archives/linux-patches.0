@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80AB1A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1809D1A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZNb1RXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33122C433CA;
-	Mon,  9 Oct 2023 13:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wg80ijAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E79EC433C8;
+	Mon,  9 Oct 2023 13:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857896;
-	bh=F/r0nX1kn/94J5TpZ0mkj5h6DDmyMszMa9wxMyALQHY=;
+	s=korg; t=1696857899;
+	bh=FNaUEuZyx/z/bqXG87F267eBDzQTHk11B6XOXdFYaUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vZNb1RXx8duVcggTejyHdcS4uAYBnZl6kH/MF0yKeqZaarRgcK61ad9KIMpGX/jc1
-	 4SKu29HX7VnlVpCqfteidlkTpaTQrmE3q/GhiMsZEfM69ZLNKwyHBJ5pP2Wr8kXHBu
-	 NqFni5nqA3Pa+DUSGPV0l9lb1spQKPAP3fCECv5E=
+	b=Wg80ijAuq3wlfll/GqsZSwp4IB6hC/AtN+ksdBgIpSAy7rJsBsRdaCfma+0yhYt1l
+	 l3RseXIxk94MqeJRWLU0Tr0DADFk4z0w0s1juvBT/PgYLjVTL+g5YSr3nvaMgwZMH9
+	 n+kQJhDBCqc2UPtAkvycZOI7PVV+fFL0IlB2kf3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.15 27/75] arm64: Add Cortex-A520 CPU part definition
-Date: Mon,  9 Oct 2023 15:01:49 +0200
-Message-ID: <20231009130112.180136649@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jiri Kosina <jkosina@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 28/75] HID: sony: Fix a potential memory leak in sony_probe()
+Date: Mon,  9 Oct 2023 15:01:50 +0200
+Message-ID: <20231009130112.216847429@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -41,38 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit a654a69b9f9c06b2e56387d0b99f0e3e6b0ff4ef upstream.
+[ Upstream commit e1cd4004cde7c9b694bbdd8def0e02288ee58c74 ]
 
-Add the CPU Part number for the new Arm design.
+If an error occurs after a successful usb_alloc_urb() call, usb_free_urb()
+should be called.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20230921194156.1050055-1-robh@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fb1a79a6b6e1 ("HID: sony: fix freeze when inserting ghlive ps3/wii dongles")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/cputype.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/hid-sony.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -79,6 +79,7 @@
- #define ARM_CPU_PART_CORTEX_A78AE	0xD42
- #define ARM_CPU_PART_CORTEX_X1		0xD44
- #define ARM_CPU_PART_CORTEX_A510	0xD46
-+#define ARM_CPU_PART_CORTEX_A520	0xD80
- #define ARM_CPU_PART_CORTEX_A710	0xD47
- #define ARM_CPU_PART_CORTEX_X2		0xD48
- #define ARM_CPU_PART_NEOVERSE_N2	0xD49
-@@ -130,6 +131,7 @@
- #define MIDR_CORTEX_A78AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78AE)
- #define MIDR_CORTEX_X1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1)
- #define MIDR_CORTEX_A510 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A510)
-+#define MIDR_CORTEX_A520 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A520)
- #define MIDR_CORTEX_A710 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A710)
- #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
- #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
+diff --git a/drivers/hid/hid-sony.c b/drivers/hid/hid-sony.c
+index 60ec2b29d54de..3ab18811b0090 100644
+--- a/drivers/hid/hid-sony.c
++++ b/drivers/hid/hid-sony.c
+@@ -3074,6 +3074,9 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	return ret;
+ 
+ err:
++	if (sc->ghl_urb)
++		usb_free_urb(sc->ghl_urb);
++
+ 	hid_hw_stop(hdev);
+ 	return ret;
+ }
+-- 
+2.40.1
+
 
 
