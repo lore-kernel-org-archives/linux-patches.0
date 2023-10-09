@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28DA28DD9
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FE328DD9
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXlspOJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD6FC433C7;
-	Mon,  9 Oct 2023 13:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhVoq0Bp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F014C433CC;
+	Mon,  9 Oct 2023 13:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858905;
-	bh=bGY6YxVN2w/PHeoRq1+mfugigxI9xVVhQRlGJQrzJBE=;
+	s=korg; t=1696858908;
+	bh=q6NSzMzX2NuLOSIVLEjAtXhpPLrEQdbdiP7B0hJy5Rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yXlspOJyFIkwuL4Pdc5dvi2yQS71amjbLyeK08KmnRHz6Y/W7t10svdYhe6L6vKfh
-	 ABTbtSH3ySZn1nohZlFPR8S8owZPiwtSzVjqMr3J/d8RlZ/w8J0j+kUVCsOKYohbuk
-	 L4uFx8rcBdAP7ddSm25Eb4CMzgT10TUB2gYydESc=
+	b=QhVoq0BpuFoMqEIpw4BlHhybuKSU5sg1UoT2hv4emOFSwOix7XESquWLsfxvvsM6p
+	 My7lrUMrniDge6B4ahI934bzaYodO1jRZd48vRxf99nBFB8Y13qr9rC1bAVXHbR8Lu
+	 F2Y5iPRzuuc34KgCRJ8lBv/TYfDnDxGg+uI0HIaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Malin Jonsson <malin.jonsson@ericsson.com>,
+	"=?UTF-8?q?Daniel=20P . =20Berrang=C3=A9?=" <berrange@redhat.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 137/226] watchdog: iTCO_wdt: No need to stop the timer in probe
-Date: Mon,  9 Oct 2023 15:01:38 +0200
-Message-ID: <20231009130130.326492115@linuxfoundation.org>
+Subject: [PATCH 5.10 138/226] watchdog: iTCO_wdt: Set NO_REBOOT if the watchdog is not already running
+Date: Mon,  9 Oct 2023 15:01:39 +0200
+Message-ID: <20231009130130.349875053@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -38,6 +38,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
@@ -46,51 +47,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit 1ae3e78c08209ac657c59f6f7ea21bbbd7f6a1d4 upstream.
+commit ef9b7bf52c2f47f0a9bf988543c577b92c92d15e upstream.
 
-The watchdog core can handle pinging of the watchdog before userspace
-opens the device. For this reason instead of stopping the timer, just
-mark it as running and let the watchdog core take care of it.
+Daniel reported that the commit 1ae3e78c0820 ("watchdog: iTCO_wdt: No
+need to stop the timer in probe") makes QEMU implementation of the iTCO
+watchdog not to trigger reboot anymore when NO_REBOOT flag is initially
+cleared using this option (in QEMU command line):
 
-Cc: Malin Jonsson <malin.jonsson@ericsson.com>
+  -global ICH9-LPC.noreboot=false
+
+The problem with the commit is that it left the unconditional setting of
+NO_REBOOT that is not cleared anymore when the kernel keeps pinging the
+watchdog (as opposed to the previous code that called iTCO_wdt_stop()
+that cleared it).
+
+Fix this so that we only set NO_REBOOT if the watchdog was not initially
+running.
+
+Fixes: 1ae3e78c0820 ("watchdog: iTCO_wdt: No need to stop the timer in probe")
+Reported-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Tested-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20210921102900.61586-1-mika.westerberg@linux.intel.com
+Link: https://lore.kernel.org/r/20221028062750.45451-1-mika.westerberg@linux.intel.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/iTCO_wdt.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/watchdog/iTCO_wdt.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/watchdog/iTCO_wdt.c b/drivers/watchdog/iTCO_wdt.c
-index a370a185a41c4..9048fa44897fc 100644
+index 9048fa44897fc..50c874d488607 100644
 --- a/drivers/watchdog/iTCO_wdt.c
 +++ b/drivers/watchdog/iTCO_wdt.c
-@@ -426,6 +426,16 @@ static unsigned int iTCO_wdt_get_timeleft(struct watchdog_device *wd_dev)
+@@ -426,14 +426,18 @@ static unsigned int iTCO_wdt_get_timeleft(struct watchdog_device *wd_dev)
  	return time_left;
  }
  
-+static void iTCO_wdt_set_running(struct iTCO_wdt_private *p)
-+{
-+	u16 val;
-+
-+	/* Bit 11: TCO Timer Halt -> 0 = The TCO timer is * enabled */
-+	val = inw(TCO1_CNT(p));
-+	if (!(val & BIT(11)))
-+		set_bit(WDOG_HW_RUNNING, &p->wddev.status);
-+}
-+
+-static void iTCO_wdt_set_running(struct iTCO_wdt_private *p)
++/* Returns true if the watchdog was running */
++static bool iTCO_wdt_set_running(struct iTCO_wdt_private *p)
+ {
+ 	u16 val;
+ 
+-	/* Bit 11: TCO Timer Halt -> 0 = The TCO timer is * enabled */
++	/* Bit 11: TCO Timer Halt -> 0 = The TCO timer is enabled */
+ 	val = inw(TCO1_CNT(p));
+-	if (!(val & BIT(11)))
++	if (!(val & BIT(11))) {
+ 		set_bit(WDOG_HW_RUNNING, &p->wddev.status);
++		return true;
++	}
++	return false;
+ }
+ 
  /*
-  *	Kernel Interfaces
-  */
-@@ -568,8 +578,7 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
+@@ -524,9 +528,6 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
+ 		return -ENODEV;	/* Cannot reset NO_REBOOT bit */
+ 	}
+ 
+-	/* Set the NO_REBOOT bit to prevent later reboots, just for sure */
+-	p->update_no_reboot_bit(p->no_reboot_priv, true);
+-
+ 	if (turn_SMI_watchdog_clear_off >= p->iTCO_version) {
+ 		/*
+ 		 * Bit 13: TCO_EN -> 0
+@@ -578,7 +579,13 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
  	watchdog_set_drvdata(&p->wddev, p);
  	platform_set_drvdata(pdev, p);
  
--	/* Make sure the watchdog is not running */
--	iTCO_wdt_stop(&p->wddev);
-+	iTCO_wdt_set_running(p);
+-	iTCO_wdt_set_running(p);
++	if (!iTCO_wdt_set_running(p)) {
++		/*
++		 * If the watchdog was not running set NO_REBOOT now to
++		 * prevent later reboots.
++		 */
++		p->update_no_reboot_bit(p->no_reboot_priv, true);
++	}
  
  	/* Check that the heartbeat value is within it's range;
  	   if not reset to the default */
