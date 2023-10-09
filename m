@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1ADC1A592
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2194E1A592
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1MPfBs/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A1FC433C8;
-	Mon,  9 Oct 2023 13:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptHgUJsR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3D3C433C7;
+	Mon,  9 Oct 2023 13:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858750;
-	bh=zYVDzKjrXpfCXlBDJvaoNInh+icfoGVy5vQ6aO4MXtc=;
+	s=korg; t=1696858754;
+	bh=5VQ+TATPIPxzeX7bOIyAV2tAoUfFPFdWDSxVDhv5Hic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p1MPfBs/bB8nxaHLBMLmujNmBpS2eJcR9sMc8L2FnV+m9nd2BvNPUyNnHkLesxpkL
-	 ynXq1c5K0ctvTbnEtSArF3P8SQYMbv1G/VTZ/Aim5swyXIYNYOZTeMGx0MGraSQwWX
-	 ylNJ8OyN4A6pI78VJVKGFgv8JelHEwP/5JK14mp4=
+	b=ptHgUJsRK1MxHLjwV/1TUv7Ivo3WrjM1dBb2qi9Wc6Rxr+z64EMUngU3r3w5hHNaH
+	 xK0WZiiqudx3BH8fXK8PfXWPthiG1aDYyMmPj8e0FDi5LYiplooaWK6inki5o4aKO+
+	 tit4vBQkbJT9nLWxoDU6mKiJStxnXX4ShrfTf3+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoke Wang <xkernel.wang@foxmail.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	syzbot+e918523f77e62790d6d9@syzkaller.appspotmail.com,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/226] i2c: mux: demux-pinctrl: check the return value of devm_kstrdup()
-Date: Mon,  9 Oct 2023 15:00:22 +0200
-Message-ID: <20231009130128.381425692@linuxfoundation.org>
+Subject: [PATCH 5.10 062/226] netfilter: nf_tables: unregister flowtable hooks on netns exit
+Date: Mon,  9 Oct 2023 15:00:23 +0200
+Message-ID: <20231009130128.407085347@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,36 +42,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoke Wang <xkernel.wang@foxmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 7c0195fa9a9e263df204963f88a22b21688ffb66 ]
+commit 6069da443bf65f513bb507bb21e2f87cfb1ad0b6 upstream.
 
-devm_kstrdup() returns pointer to allocated string on success,
-NULL on failure. So it is better to check the return value of it.
+Unregister flowtable hooks before they are releases via
+nf_tables_flowtable_destroy() otherwise hook core reports UAF.
 
-Fixes: e35478eac030 ("i2c: mux: demux-pinctrl: run properly with multiple instances")
-Signed-off-by: Xiaoke Wang <xkernel.wang@foxmail.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+BUG: KASAN: use-after-free in nf_hook_entries_grow+0x5a7/0x700 net/netfilter/core.c:142 net/netfilter/core.c:142
+Read of size 4 at addr ffff8880736f7438 by task syz-executor579/3666
+
+CPU: 0 PID: 3666 Comm: syz-executor579 Not tainted 5.16.0-rc5-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ __dump_stack lib/dump_stack.c:88 [inline] lib/dump_stack.c:106
+ dump_stack_lvl+0x1dc/0x2d8 lib/dump_stack.c:106 lib/dump_stack.c:106
+ print_address_description+0x65/0x380 mm/kasan/report.c:247 mm/kasan/report.c:247
+ __kasan_report mm/kasan/report.c:433 [inline]
+ __kasan_report mm/kasan/report.c:433 [inline] mm/kasan/report.c:450
+ kasan_report+0x19a/0x1f0 mm/kasan/report.c:450 mm/kasan/report.c:450
+ nf_hook_entries_grow+0x5a7/0x700 net/netfilter/core.c:142 net/netfilter/core.c:142
+ __nf_register_net_hook+0x27e/0x8d0 net/netfilter/core.c:429 net/netfilter/core.c:429
+ nf_register_net_hook+0xaa/0x180 net/netfilter/core.c:571 net/netfilter/core.c:571
+ nft_register_flowtable_net_hooks+0x3c5/0x730 net/netfilter/nf_tables_api.c:7232 net/netfilter/nf_tables_api.c:7232
+ nf_tables_newflowtable+0x2022/0x2cf0 net/netfilter/nf_tables_api.c:7430 net/netfilter/nf_tables_api.c:7430
+ nfnetlink_rcv_batch net/netfilter/nfnetlink.c:513 [inline]
+ nfnetlink_rcv_skb_batch net/netfilter/nfnetlink.c:634 [inline]
+ nfnetlink_rcv_batch net/netfilter/nfnetlink.c:513 [inline] net/netfilter/nfnetlink.c:652
+ nfnetlink_rcv_skb_batch net/netfilter/nfnetlink.c:634 [inline] net/netfilter/nfnetlink.c:652
+ nfnetlink_rcv+0x10e6/0x2550 net/netfilter/nfnetlink.c:652 net/netfilter/nfnetlink.c:652
+
+__nft_release_hook() calls nft_unregister_flowtable_net_hooks() which
+only unregisters the hooks, then after RCU grace period, it is
+guaranteed that no packets add new entries to the flowtable (no flow
+offload rules and flowtable hooks are reachable from packet path), so it
+is safe to call nf_flow_table_free() which cleans up the remaining
+entries from the flowtable (both software and hardware) and it unbinds
+the flow_block.
+
+Fixes: ff4bf2f42a40 ("netfilter: nf_tables: add nft_unregister_flowtable_hook()")
+Reported-by: syzbot+e918523f77e62790d6d9@syzkaller.appspotmail.com
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/muxes/i2c-demux-pinctrl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/nf_tables_api.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/i2c/muxes/i2c-demux-pinctrl.c b/drivers/i2c/muxes/i2c-demux-pinctrl.c
-index f7a7405d4350a..8e8688e8de0fb 100644
---- a/drivers/i2c/muxes/i2c-demux-pinctrl.c
-+++ b/drivers/i2c/muxes/i2c-demux-pinctrl.c
-@@ -243,6 +243,10 @@ static int i2c_demux_pinctrl_probe(struct platform_device *pdev)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 52c776b5967ef..efbcf85cd6b7a 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -9466,16 +9466,24 @@ int __nft_release_basechain(struct nft_ctx *ctx)
+ }
+ EXPORT_SYMBOL_GPL(__nft_release_basechain);
  
- 		props[i].name = devm_kstrdup(&pdev->dev, "status", GFP_KERNEL);
- 		props[i].value = devm_kstrdup(&pdev->dev, "ok", GFP_KERNEL);
-+		if (!props[i].name || !props[i].value) {
-+			err = -ENOMEM;
-+			goto err_rollback;
-+		}
- 		props[i].length = 3;
++static void __nft_release_hook(struct net *net, struct nft_table *table)
++{
++	struct nft_flowtable *flowtable;
++	struct nft_chain *chain;
++
++	list_for_each_entry(chain, &table->chains, list)
++		nf_tables_unregister_hook(net, table, chain);
++	list_for_each_entry(flowtable, &table->flowtables, list)
++		nft_unregister_flowtable_net_hooks(net, &flowtable->hook_list);
++}
++
+ static void __nft_release_hooks(struct net *net)
+ {
+ 	struct nftables_pernet *nft_net = net_generic(net, nf_tables_net_id);
+ 	struct nft_table *table;
+-	struct nft_chain *chain;
  
- 		of_changeset_init(&priv->chan[i].chgset);
+-	list_for_each_entry(table, &nft_net->tables, list) {
+-		list_for_each_entry(chain, &table->chains, list)
+-			nf_tables_unregister_hook(net, table, chain);
+-	}
++	list_for_each_entry(table, &nft_net->tables, list)
++		__nft_release_hook(net, table);
+ }
+ 
+ static void __nft_release_table(struct net *net, struct nft_table *table)
 -- 
 2.40.1
 
