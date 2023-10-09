@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D43182A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F52E182A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoaGRGEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984F2C433C8;
-	Mon,  9 Oct 2023 13:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N//4uPpR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C179FC433C8;
+	Mon,  9 Oct 2023 13:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858995;
-	bh=41uqaong4k6+E57StNdecvUQydfrUVATMX2m0S23Q8I=;
+	s=korg; t=1696858998;
+	bh=c+dahmp8exGcJfnODveivCw2DfIoW6ipyxfsSfecOXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BoaGRGEhN1faxr+9VZSLp2jD504AoD46lHq7U9b8g1SXxab3g5Gw/92QEW88X6RAo
-	 9MEjbkxB410kFtri/7a6vgpGNajcI2NypmUPi/Cjc3obgHg4ijtlbyfPreuqHuUy7o
-	 M5tTeUAV3NfsebeNsTVU8GfTcZXIRhqF8rTycFuo=
+	b=N//4uPpRCBWOLNqWhVIDoqGR2Dr1osJI+X6MLxoRZjnBjhGmQVfJO1k1znxSQN1Qx
+	 X9znkHKTJaQgjgitg5jrLRAEaQ+l6y4JlY5OlrAQnahOIMMRnm3Cv4Bw0V5ABPDucc
+	 ZMZWIN7SZQGev8xpOpz/+fYyRMr5rjQ2bcW0wSso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	NeilBrown <neilb@suse.de>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 166/226] NFS: Cleanup unused rpc_clnt variable
-Date: Mon,  9 Oct 2023 15:02:07 +0200
-Message-ID: <20231009130131.006341816@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 149/226] ALSA: hda: Disable power save for solving pop issue on Lenovo ThinkCentre M70q
+Date: Mon,  9 Oct 2023 15:01:50 +0200
+Message-ID: <20231009130130.608612058@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -43,39 +41,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit e025f0a73f6acb920d86549b2177a5883535421d ]
+commit 057a28ef93bdbe84326d34cdb5543afdaab49fe1 upstream.
 
-The root rpc_clnt is not used here, clean it up.
+Lenovo ThinkCentre M70q had boot up pop noise.
+Disable power save will solve pop issue.
 
-Fixes: 4dc73c679114 ("NFSv4: keep state manager thread active if swap is enabled")
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Stable-dep-of: 956fd46f97d2 ("NFSv4: Fix a state manager thread deadlock regression")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/315900e2efef42fd9855eacfeb443abd@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4state.c | 4 ----
- 1 file changed, 4 deletions(-)
+ sound/pci/hda/hda_intel.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index ff6ca05a9d441..3fcef19e91984 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -1212,10 +1212,6 @@ void nfs4_schedule_state_manager(struct nfs_client *clp)
- {
- 	struct task_struct *task;
- 	char buf[INET6_ADDRSTRLEN + sizeof("-manager") + 1];
--	struct rpc_clnt *cl = clp->cl_rpcclient;
--
--	while (cl != cl->cl_parent)
--		cl = cl->cl_parent;
- 
- 	set_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state);
- 	if (test_and_set_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state) != 0) {
--- 
-2.40.1
-
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2271,6 +2271,7 @@ static const struct snd_pci_quirk power_
+ 	SND_PCI_QUIRK(0x8086, 0x2068, "Intel NUC7i3BNB", 0),
+ 	/* https://bugzilla.kernel.org/show_bug.cgi?id=198611 */
+ 	SND_PCI_QUIRK(0x17aa, 0x2227, "Lenovo X1 Carbon 3rd Gen", 0),
++	SND_PCI_QUIRK(0x17aa, 0x316e, "Lenovo ThinkCentre M70q", 0),
+ 	/* https://bugzilla.redhat.com/show_bug.cgi?id=1689623 */
+ 	SND_PCI_QUIRK(0x17aa, 0x367b, "Lenovo IdeaCentre B550", 0),
+ 	/* https://bugzilla.redhat.com/show_bug.cgi?id=1572975 */
 
 
