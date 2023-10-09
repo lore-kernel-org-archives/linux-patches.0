@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44FE1A735
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC473419D
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6xeZzRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9A2C433C8;
-	Mon,  9 Oct 2023 13:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRUltmJ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4852EC433C8;
+	Mon,  9 Oct 2023 13:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859509;
-	bh=507lxvLVbvYcSRfkxwtZw7Yz47avZVp2R8HvZ+lsJg8=;
+	s=korg; t=1696859512;
+	bh=PRuwCQtxtZB6IZVPlkSCtnYFGC+L0rg7cNKVf//LS6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v6xeZzRQuhKW2HNcpXFRAJzVG4tM10p5f4s5LJEKtbyPAfMUfb0Hdm71GJWXEvwb6
-	 6cejFGbl4mJN8tO4ITzVO5dJG4kDRZT1Jjq0jkSsDQvZrtO3A3KaL7QPwm9aUMzfk7
-	 K6jfB1J4d6vyxcZu5OtLgyTw8hG102i8j7w3mvN8=
+	b=aRUltmJ1lTIyCW25CEUJ2FqhCUFqDQju7ItTWODNn5v1wZbDWmfR8qxISRexgM+eY
+	 iw98VtevdGbPXWtMDGVbu6HJNV9eAXyu09E0mVNYYQP/tWuj9wtI+Ft+i48H5uZcxr
+	 9y+sKwWbicpy5O3de8RFav+oNusVQ195PvBf+B+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Shivasharan S <shivasharan.srikanteshwara@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 36/91] selftests/ftrace: Correctly enable event in instance-event.tc
-Date: Mon,  9 Oct 2023 15:06:08 +0200
-Message-ID: <20231009130112.786118030@linuxfoundation.org>
+Subject: [PATCH 4.19 45/91] scsi: megaraid_sas: Enable msix_load_balance for Invader and later controllers
+Date: Mon,  9 Oct 2023 15:06:17 +0200
+Message-ID: <20231009130113.085347117@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -44,49 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
 
-[ Upstream commit f4e4ada586995b17f828c6d147d1800eb1471450 ]
+[ Upstream commit 1175b88452cad208894412b955ee698934968aed ]
 
-Function instance_set() expects to enable event 'sched_switch', so we
-should set 1 to its 'enable' file.
+Load balancing IO completions across all available MSI-X vectors should be
+enabled for Invader and later generation controllers only.  This needs to
+be disabled for older controllers.  Add an adapter type check before
+setting msix_load_balance flag.
 
-Testcase passed after this patch:
-  # ./ftracetest test.d/instances/instance-event.tc
-  === Ftrace unit tests ===
-  [1] Test creation and deletion of trace instances while setting an event
-  [PASS]
-
-  # of passed:  1
-  # of failed:  0
-  # of unresolved:  0
-  # of untested:  0
-  # of unsupported:  0
-  # of xfailed:  0
-  # of undefined(test bug):  0
-
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 1d15d9098ad1 ("scsi: megaraid_sas: Load balance completions across all MSI-X")
+Signed-off-by: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/ftrace/test.d/instances/instance-event.tc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/megaraid/megaraid_sas_base.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
-index 4fa0f79144f4a..9473934a573a1 100644
---- a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
-+++ b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
-@@ -43,7 +43,7 @@ instance_read() {
+diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
+index bdfa36712fcc4..ac4800fb1a7fb 100644
+--- a/drivers/scsi/megaraid/megaraid_sas_base.c
++++ b/drivers/scsi/megaraid/megaraid_sas_base.c
+@@ -5364,7 +5364,8 @@ static int megasas_init_fw(struct megasas_instance *instance)
+ 					instance->is_rdpq = (scratch_pad_2 & MR_RDPQ_MODE_OFFSET) ?
+ 								1 : 0;
  
- instance_set() {
-         while :; do
--                echo 1 > foo/events/sched/sched_switch
-+                echo 1 > foo/events/sched/sched_switch/enable
-         done 2> /dev/null
- }
- 
+-				if (!instance->msix_combined) {
++				if (instance->adapter_type >= INVADER_SERIES &&
++				    !instance->msix_combined) {
+ 					instance->msix_load_balance = true;
+ 					instance->smp_affinity_enable = false;
+ 				}
 -- 
 2.40.1
 
