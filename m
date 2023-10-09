@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D0A18035
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79C218035
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0q1JJ+9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043F6C433C9;
-	Mon,  9 Oct 2023 13:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXU6o30K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250B1C433C8;
+	Mon,  9 Oct 2023 13:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858106;
-	bh=txLNGn1BjSxuzd5LOL2C4TyQhzlpxPX0+xHTREhC/fU=;
+	s=korg; t=1696858109;
+	bh=NzqwHzh+m1t8hTOWLBdObDd5H1QAsaLzfGAK6E8sFPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0q1JJ+9LBfPUDalepcuYMepQbM8+Izy0HQybGruVugAPIFsbFdsKvl07hkBmNdkla
-	 PuZcmhunEHClR/l6cW/xnvRtUNHq4bVPe0tneX7hwFSRu0FWGNsCfmaigUL/aniE1w
-	 VyCQyoAs1vlOxZUsQHy9QL8q374nMbz8xY70QwME=
+	b=VXU6o30Ky7cd1qyQ2abEOIFzv45dgSUZVoVttTvHjvnApEw91ImVfPGwqszOOO5PX
+	 v7044t4PyFadBCClRuCwQYwg6EmCYQ+gG4GpCXWW6YwzAwqXNlU5Q4DqNvlrtPSynC
+	 E8klfAaT28soFW1NNBp/JSspKNSS94AA7PMFmofw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+	Lukas Czerner <lczerner@redhat.com>,
+	Andreas Dilger <adilger@dilger.ca>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 007/131] ext4: scope ret locally in ext4_try_to_trim_range()
-Date: Mon,  9 Oct 2023 15:00:47 +0200
-Message-ID: <20231009130116.553818958@linuxfoundation.org>
+Subject: [PATCH 5.4 008/131] ext4: change s_last_trim_minblks type to unsigned long
+Date: Mon,  9 Oct 2023 15:00:48 +0200
+Message-ID: <20231009130116.582212080@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,53 +43,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+From: Lukas Czerner <lczerner@redhat.com>
 
-[ Upstream commit afcc4e32f606dbfb47aa7309172c89174b86e74c ]
+[ Upstream commit 2327fb2e23416cfb2795ccca2f77d4d65925be99 ]
 
-As commit 6920b3913235 ("ext4: add new helper interface
-ext4_try_to_trim_range()") moves some code into the separate function
-ext4_try_to_trim_range(), the use of the variable ret within that
-function is more limited and can be adjusted as well.
+There is no good reason for the s_last_trim_minblks to be atomic. There is
+no data integrity needed and there is no real danger in setting and
+reading it in a racy manner. Change it to be unsigned long, the same type
+as s_clusters_per_group which is the maximum that's allowed.
 
-Scope the use of the variable ret locally and drop dead assignments.
-
-No functional change.
-
-Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Link: https://lore.kernel.org/r/20210820120853.23134-1-lukas.bulwahn@gmail.com
+Signed-off-by: Lukas Czerner <lczerner@redhat.com>
+Suggested-by: Andreas Dilger <adilger@dilger.ca>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Link: https://lore.kernel.org/r/20211103145122.17338-1-lczerner@redhat.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: 45e4ab320c9b ("ext4: move setting of trimmed bit into ext4_try_to_trim_range()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/ext4/ext4.h    | 2 +-
+ fs/ext4/mballoc.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index 604fef3b2ddf4..4d02116193de8 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -1529,7 +1529,7 @@ struct ext4_sb_info {
+ 	struct task_struct *s_mmp_tsk;
+ 
+ 	/* record the last minlen when FITRIM is called. */
+-	atomic_t s_last_trim_minblks;
++	unsigned long s_last_trim_minblks;
+ 
+ 	/* Reference to checksum algorithm driver via cryptoapi */
+ 	struct crypto_shash *s_chksum_driver;
 diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 5a7fe5aa0fc38..e1b487acb843b 100644
+index e1b487acb843b..db6bc24936479 100644
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -5200,7 +5200,6 @@ static int ext4_try_to_trim_range(struct super_block *sb,
- {
- 	ext4_grpblk_t next, count, free_count;
- 	void *bitmap;
--	int ret = 0;
+@@ -5279,7 +5279,7 @@ ext4_trim_all_free(struct super_block *sb, ext4_group_t group,
+ 	ext4_lock_group(sb, group);
  
- 	bitmap = e4b->bd_bitmap;
- 	start = (e4b->bd_info->bb_first_free > start) ?
-@@ -5215,10 +5214,10 @@ static int ext4_try_to_trim_range(struct super_block *sb,
- 		next = mb_find_next_bit(bitmap, max + 1, start);
+ 	if (!EXT4_MB_GRP_WAS_TRIMMED(e4b.bd_info) ||
+-	    minblocks < atomic_read(&EXT4_SB(sb)->s_last_trim_minblks)) {
++	    minblocks < EXT4_SB(sb)->s_last_trim_minblks) {
+ 		ret = ext4_try_to_trim_range(sb, &e4b, start, max, minblocks);
+ 		if (ret >= 0)
+ 			EXT4_MB_GRP_SET_TRIMMED(e4b.bd_info);
+@@ -5388,7 +5388,7 @@ int ext4_trim_fs(struct super_block *sb, struct fstrim_range *range)
+ 	}
  
- 		if ((next - start) >= minblocks) {
--			ret = ext4_trim_extent(sb, start, next - start, e4b);
-+			int ret = ext4_trim_extent(sb, start, next - start, e4b);
-+
- 			if (ret && ret != -EOPNOTSUPP)
- 				break;
--			ret = 0;
- 			count += next - start;
- 		}
- 		free_count += next - start;
+ 	if (!ret)
+-		atomic_set(&EXT4_SB(sb)->s_last_trim_minblks, minlen);
++		EXT4_SB(sb)->s_last_trim_minblks = minlen;
+ 
+ out:
+ 	range->len = EXT4_C2B(EXT4_SB(sb), trimmed) << sb->s_blocksize_bits;
 -- 
 2.40.1
 
