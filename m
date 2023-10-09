@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD5928DD9
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E7128DD9
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm20X4/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE68C433C8;
-	Mon,  9 Oct 2023 13:40:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glz5+ead"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3080C433C7;
+	Mon,  9 Oct 2023 13:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858826;
-	bh=lVCTU1sNEAD1R8kU+oqFH0zdItrl2bE4xmQ8Ts6Wy2Y=;
+	s=korg; t=1696858829;
+	bh=0OaPoWzsnU93MUoegrCru7AMxsNjZJvxoJKwoZDe7JY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zm20X4/jKc1ueaXdX5BmH/CctmBbW69HwK1tmnuGib2CoZlo8KcQYQ9QL4HJfX5qK
-	 W1Gj3BhdkK6wUa95egVvQupndQfDO4Hfs8YndIWNOiuPn8ZOrQ4pRp4kaNfxrFXMS+
-	 QUZjwnfjFjJ0gA/kpPuoCP5VPltWnHxYIeZNyIRk=
+	b=glz5+eadF+6BWtDuC6c+Y1DPCxjib6NvfsC7rjdGmS8SOeqmVwTuIk7BM/BVIhmzW
+	 AwQxURxH41PYzMLJ9jTiLU9d2QrJyHqUpGkQHqEX0nRfiFSEJsKzcM99vP52DyKu/r
+	 9QyWOzSw68/bFifiFF3XxiMJQy1Z89nEvrZlzhQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
+	Javed Hasan <jhasan@marvell.com>,
+	Saurav Kashyap <skashyap@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 112/226] parisc: irq: Make irq_stack_union static to avoid sparse warning
-Date: Mon,  9 Oct 2023 15:01:13 +0200
-Message-ID: <20231009130129.708077086@linuxfoundation.org>
+Subject: [PATCH 5.10 113/226] scsi: qedf: Add synchronization between I/O completions and abort
+Date: Mon,  9 Oct 2023 15:01:14 +0200
+Message-ID: <20231009130129.732594449@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -41,29 +43,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Javed Hasan <jhasan@marvell.com>
 
-[ Upstream commit b1bef1388c427cdad7331a9c8eb4ebbbe5b954b0 ]
+[ Upstream commit 7df0b2605489bef3f4223ad66f1f9bb8d50d4cd2 ]
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+Avoid race condition between I/O completion and abort processing by
+protecting the cmd_type with the rport lock.
+
+Signed-off-by: Javed Hasan <jhasan@marvell.com>
+Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
+Link: https://lore.kernel.org/r/20230901060646.27885-1-skashyap@marvell.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/irq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qedf/qedf_io.c   | 10 ++++++++--
+ drivers/scsi/qedf/qedf_main.c |  7 ++++++-
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/arch/parisc/kernel/irq.c b/arch/parisc/kernel/irq.c
-index 60f5829d476f5..2762e8540672e 100644
---- a/arch/parisc/kernel/irq.c
-+++ b/arch/parisc/kernel/irq.c
-@@ -388,7 +388,7 @@ union irq_stack_union {
- 	volatile unsigned int lock[1];
- };
+diff --git a/drivers/scsi/qedf/qedf_io.c b/drivers/scsi/qedf/qedf_io.c
+index 472374d83cede..1f8e81296beb7 100644
+--- a/drivers/scsi/qedf/qedf_io.c
++++ b/drivers/scsi/qedf/qedf_io.c
+@@ -1924,6 +1924,7 @@ int qedf_initiate_abts(struct qedf_ioreq *io_req, bool return_scsi_cmd_on_abts)
+ 		goto drop_rdata_kref;
+ 	}
  
--DEFINE_PER_CPU(union irq_stack_union, irq_stack_union) = {
-+static DEFINE_PER_CPU(union irq_stack_union, irq_stack_union) = {
- 		.slock = { 1,1,1,1 },
- 	};
- #endif
++	spin_lock_irqsave(&fcport->rport_lock, flags);
+ 	if (!test_bit(QEDF_CMD_OUTSTANDING, &io_req->flags) ||
+ 	    test_bit(QEDF_CMD_IN_CLEANUP, &io_req->flags) ||
+ 	    test_bit(QEDF_CMD_IN_ABORT, &io_req->flags)) {
+@@ -1931,17 +1932,20 @@ int qedf_initiate_abts(struct qedf_ioreq *io_req, bool return_scsi_cmd_on_abts)
+ 			 "io_req xid=0x%x sc_cmd=%p already in cleanup or abort processing or already completed.\n",
+ 			 io_req->xid, io_req->sc_cmd);
+ 		rc = 1;
++		spin_unlock_irqrestore(&fcport->rport_lock, flags);
+ 		goto drop_rdata_kref;
+ 	}
+ 
++	/* Set the command type to abort */
++	io_req->cmd_type = QEDF_ABTS;
++	spin_unlock_irqrestore(&fcport->rport_lock, flags);
++
+ 	kref_get(&io_req->refcount);
+ 
+ 	xid = io_req->xid;
+ 	qedf->control_requests++;
+ 	qedf->packet_aborts++;
+ 
+-	/* Set the command type to abort */
+-	io_req->cmd_type = QEDF_ABTS;
+ 	io_req->return_scsi_cmd_on_abts = return_scsi_cmd_on_abts;
+ 
+ 	set_bit(QEDF_CMD_IN_ABORT, &io_req->flags);
+@@ -2230,7 +2234,9 @@ int qedf_initiate_cleanup(struct qedf_ioreq *io_req,
+ 		  refcount, fcport, fcport->rdata->ids.port_id);
+ 
+ 	/* Cleanup cmds re-use the same TID as the original I/O */
++	spin_lock_irqsave(&fcport->rport_lock, flags);
+ 	io_req->cmd_type = QEDF_CLEANUP;
++	spin_unlock_irqrestore(&fcport->rport_lock, flags);
+ 	io_req->return_scsi_cmd_on_abts = return_scsi_cmd_on_abts;
+ 
+ 	init_completion(&io_req->cleanup_done);
+diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
+index 63c9368bafcf1..6923862be3fbc 100644
+--- a/drivers/scsi/qedf/qedf_main.c
++++ b/drivers/scsi/qedf/qedf_main.c
+@@ -2803,6 +2803,8 @@ void qedf_process_cqe(struct qedf_ctx *qedf, struct fcoe_cqe *cqe)
+ 	struct qedf_ioreq *io_req;
+ 	struct qedf_rport *fcport;
+ 	u32 comp_type;
++	u8 io_comp_type;
++	unsigned long flags;
+ 
+ 	comp_type = (cqe->cqe_data >> FCOE_CQE_CQE_TYPE_SHIFT) &
+ 	    FCOE_CQE_CQE_TYPE_MASK;
+@@ -2836,11 +2838,14 @@ void qedf_process_cqe(struct qedf_ctx *qedf, struct fcoe_cqe *cqe)
+ 		return;
+ 	}
+ 
++	spin_lock_irqsave(&fcport->rport_lock, flags);
++	io_comp_type = io_req->cmd_type;
++	spin_unlock_irqrestore(&fcport->rport_lock, flags);
+ 
+ 	switch (comp_type) {
+ 	case FCOE_GOOD_COMPLETION_CQE_TYPE:
+ 		atomic_inc(&fcport->free_sqes);
+-		switch (io_req->cmd_type) {
++		switch (io_comp_type) {
+ 		case QEDF_SCSI_CMD:
+ 			qedf_scsi_completion(qedf, cqe, io_req);
+ 			break;
 -- 
 2.40.1
 
