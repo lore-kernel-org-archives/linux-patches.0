@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B621A582
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3294B1A582
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="en9WWnTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C501AC433CC;
-	Mon,  9 Oct 2023 13:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2cLSF63"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A458EC433CA;
+	Mon,  9 Oct 2023 13:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857134;
-	bh=UsiV2q5H0s78jMY4EvZioJ6sWQPGQFuB9wyjOsmZ1fQ=;
+	s=korg; t=1696857137;
+	bh=ne1u9WoazvFeUrkisEgnYTJY0pcnwG1Y2qPqMySl4ZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=en9WWnTilxUw+VCncHMh9agyN4wwx6LbcBh8YvO19Zqy85zf7dPjblgN71lG7Wfi5
-	 3ErmmCrAWZIrUhtFCWrZVCB4dsKzLl6A7GOpJhqaFOve45/dhNwzU6S2r/gRjOzBd4
-	 tn+xc9WfnCqA18igIU8SbpJ4bQOzrGEH89udcs7o=
+	b=w2cLSF63B3W59TPECWU3T9WrcYSKMIoSmuGBA9lktsUn6WtI2myJ4TV3ZwEbiHiCi
+	 j6Cy1SN9r1keh/f6Pjdq6TbDvVpwNgzoOxIozd42HOSS+Rx1awq1BXo0t2Gm+j+nye
+	 c2sAao6V8BswZPKLBlii8gwbhH0PV3ITtqXYDu+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 108/163] ovl: fetch inode once in ovl_dentry_revalidate_common()
-Date: Mon,  9 Oct 2023 15:01:12 +0200
-Message-ID: <20231009130127.006738954@linuxfoundation.org>
+Subject: [PATCH 6.5 109/163] ipv6: tcp: add a missing nf_reset_ct() in 3WHS handling
+Date: Mon,  9 Oct 2023 15:01:13 +0200
+Message-ID: <20231009130127.033296399@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -42,45 +44,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit c54719c92aa3129f330cce81b88cf34f1627f756 ]
+[ Upstream commit 9593c7cb6cf670ef724d17f7f9affd7a8d2ad0c5 ]
 
-d_inode_rcu() is right - we might be in rcu pathwalk;
-however, OVL_E() hides plain d_inode() on the same dentry...
+Commit b0e214d21203 ("netfilter: keep conntrack reference until
+IPsecv6 policy checks are done") is a direct copy of the old
+commit b59c270104f0 ("[NETFILTER]: Keep conntrack reference until
+IPsec policy checks are done") but for IPv6.  However, it also
+copies a bug that this old commit had.  That is: when the third
+packet of 3WHS connection establishment contains payload, it is
+added into socket receive queue without the XFRM check and the
+drop of connection tracking context.
 
-Fixes: a6ff2bc0be17 ("ovl: use OVL_E() and OVL_E_FLAGS() accessors")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+That leads to nf_conntrack module being impossible to unload as
+it waits for all the conntrack references to be dropped while
+the packet release is deferred in per-cpu cache indefinitely, if
+not consumed by the application.
+
+The issue for IPv4 was fixed in commit 6f0012e35160 ("tcp: add a
+missing nf_reset_ct() in 3WHS handling") by adding a missing XFRM
+check and correctly dropping the conntrack context.  However, the
+issue was introduced to IPv6 code afterwards.  Fixing it the
+same way for IPv6 now.
+
+Fixes: b0e214d21203 ("netfilter: keep conntrack reference until IPsecv6 policy checks are done")
+Link: https://lore.kernel.org/netdev/d589a999-d4dd-2768-b2d5-89dec64a4a42@ovn.org/
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230922210530.2045146-1-i.maximets@ovn.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/super.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/ipv6/tcp_ipv6.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index 8e9c1cf83df24..1090c68e5b051 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -101,8 +101,8 @@ static int ovl_revalidate_real(struct dentry *d, unsigned int flags, bool weak)
- static int ovl_dentry_revalidate_common(struct dentry *dentry,
- 					unsigned int flags, bool weak)
- {
--	struct ovl_entry *oe = OVL_E(dentry);
--	struct ovl_path *lowerstack = ovl_lowerstack(oe);
-+	struct ovl_entry *oe;
-+	struct ovl_path *lowerstack;
- 	struct inode *inode = d_inode_rcu(dentry);
- 	struct dentry *upper;
- 	unsigned int i;
-@@ -112,6 +112,8 @@ static int ovl_dentry_revalidate_common(struct dentry *dentry,
- 	if (!inode)
- 		return -ECHILD;
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 3a88545a265d6..44b6949d72b22 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1640,9 +1640,12 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
+ 		struct sock *nsk;
  
-+	oe = OVL_I_E(inode);
-+	lowerstack = ovl_lowerstack(oe);
- 	upper = ovl_i_dentry_upper(inode);
- 	if (upper)
- 		ret = ovl_revalidate_real(upper, flags, weak);
+ 		sk = req->rsk_listener;
+-		drop_reason = tcp_inbound_md5_hash(sk, skb,
+-						   &hdr->saddr, &hdr->daddr,
+-						   AF_INET6, dif, sdif);
++		if (!xfrm6_policy_check(sk, XFRM_POLICY_IN, skb))
++			drop_reason = SKB_DROP_REASON_XFRM_POLICY;
++		else
++			drop_reason = tcp_inbound_md5_hash(sk, skb,
++							   &hdr->saddr, &hdr->daddr,
++							   AF_INET6, dif, sdif);
+ 		if (drop_reason) {
+ 			sk_drops_add(sk, skb);
+ 			reqsk_put(req);
+@@ -1689,6 +1692,7 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
+ 			}
+ 			goto discard_and_relse;
+ 		}
++		nf_reset_ct(skb);
+ 		if (nsk == sk) {
+ 			reqsk_put(req);
+ 			tcp_v6_restore_cb(skb);
 -- 
 2.40.1
 
