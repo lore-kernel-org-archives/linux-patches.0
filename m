@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6648F1A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9524A1A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBlU8eBc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DD0C433CB;
-	Mon,  9 Oct 2023 13:24:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2nr3X4W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035A0C433C7;
+	Mon,  9 Oct 2023 13:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857862;
-	bh=UWDlm2c3sxrfhBNwdv6J+jPDuXDlWyI555a8DnjkTLg=;
+	s=korg; t=1696857865;
+	bh=DEbUJJerDezDjOBdZH0mMfoI9eiOd4jV3m6u/Pl0ukU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBlU8eBc4mBQDtcuk1QrGY/c+YMNJLvvM5RWj6TFO1VGfVNvoI2QvY1lTC3046+KE
-	 cfClPl3wVCZR99iS23lAuUx8sJbCldQmQbMPNFGJMmBmDAaqrnlNVc9WEKhRgfnrvV
-	 oyAvTkabGn3vbOJD2CEshh+UPHEz65z0i5cDosf0=
+	b=b2nr3X4W0dSHjyW17sLuFxloa1U2SUJslwwUXOyOVehw3vKBhto/cBec+5d3KTZ5X
+	 oeM2iR05dH4oQADCDfVS0Yp63FoNTTp/EiIaf4CgQJNTxEgLPY/fMZOextsWZvKX04
+	 +jSRkza+mZMJHDFi49GtacUdnuCFyJbj9pCYI7dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Wensheng <zhangwensheng@huaweicloud.com>,
-	Zhong Jinghua <zhongjinghua@huawei.com>,
-	Hillf Danton <hdanton@sina.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Dennis Zhou <dennis@kernel.org>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Saranya Muruganandam <saranyamohan@google.com>
-Subject: [PATCH 5.15 17/75] block: fix use-after-free of q->q_usage_counter
-Date: Mon,  9 Oct 2023 15:01:39 +0200
-Message-ID: <20231009130111.837326975@linuxfoundation.org>
+	Marek Vasut <marex@denx.de>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 5.15 18/75] Revert "clk: imx: pll14xx: dynamically configure PLL for 393216000/361267200Hz"
+Date: Mon,  9 Oct 2023 15:01:40 +0200
+Message-ID: <20231009130111.872245192@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -47,58 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit d36a9ea5e7766961e753ee38d4c331bbe6ef659b upstream.
+This reverts commit a8474506c9127048c058fdfe466ccbadf7524048 which is
+commit 72d00e560d10665e6139c9431956a87ded6e9880 upstream.
 
-For blk-mq, queue release handler is usually called after
-blk_mq_freeze_queue_wait() returns. However, the
-q_usage_counter->release() handler may not be run yet at that time, so
-this can cause a use-after-free.
+Marek writes:
+	The commit message states 'Cc: stable@vger.kernel.org # v5.18+'
+	and the commit should only be applied to Linux 5.18.y and newer,
+	on anything older it breaks PLL configuration due to missing
+	prerequisite patches.
 
-Fix the issue by moving percpu_ref_exit() into blk_free_queue_rcu().
-Since ->release() is called with rcu read lock held, it is agreed that
-the race should be covered in caller per discussion from the two links.
-
-Reported-by: Zhang Wensheng <zhangwensheng@huaweicloud.com>
-Reported-by: Zhong Jinghua <zhongjinghua@huawei.com>
-Link: https://lore.kernel.org/linux-block/Y5prfOjyyjQKUrtH@T590/T/#u
-Link: https://lore.kernel.org/lkml/Y4%2FmzMd4evRg9yDi@fedora/
-Cc: Hillf Danton <hdanton@sina.com>
-Cc: Yu Kuai <yukuai3@huawei.com>
-Cc: Dennis Zhou <dennis@kernel.org>
-Fixes: 2b0d3d3e4fcf ("percpu_ref: reduce memory footprint of percpu_ref in fast path")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20221215021629.74870-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Saranya Muruganandam <saranyamohan@google.com>
+Reported-by: Marek Vasut <marex@denx.de>
+Cc: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Cc: Marco Felsch <m.felsch@pengutronix.de>
+Cc: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/4e5fa5b2-66b8-8f0b-ccb9-c2b774054e4e@denx.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-core.c  |    2 --
- block/blk-sysfs.c |    2 ++
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/imx/clk-pll14xx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -405,8 +405,6 @@ void blk_cleanup_queue(struct request_qu
- 		blk_mq_sched_free_requests(q);
- 	mutex_unlock(&q->sysfs_lock);
+--- a/drivers/clk/imx/clk-pll14xx.c
++++ b/drivers/clk/imx/clk-pll14xx.c
+@@ -60,6 +60,8 @@ static const struct imx_pll14xx_rate_tab
+ 	PLL_1443X_RATE(650000000U, 325, 3, 2, 0),
+ 	PLL_1443X_RATE(594000000U, 198, 2, 2, 0),
+ 	PLL_1443X_RATE(519750000U, 173, 2, 2, 16384),
++	PLL_1443X_RATE(393216000U, 262, 2, 3, 9437),
++	PLL_1443X_RATE(361267200U, 361, 3, 3, 17511),
+ };
  
--	percpu_ref_exit(&q->q_usage_counter);
--
- 	/* @q is and will stay empty, shutdown and put */
- 	blk_put_queue(q);
- }
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -748,6 +748,8 @@ static void blk_free_queue_rcu(struct rc
- {
- 	struct request_queue *q = container_of(rcu_head, struct request_queue,
- 					       rcu_head);
-+
-+	percpu_ref_exit(&q->q_usage_counter);
- 	kmem_cache_free(blk_requestq_cachep, q);
- }
- 
+ struct imx_pll14xx_clk imx_1443x_pll = {
 
 
