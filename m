@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CDB918E05
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826FF18E05
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/8clMtZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0F0C433C9;
-	Mon,  9 Oct 2023 13:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jb3czG0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40EBC433C8;
+	Mon,  9 Oct 2023 13:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858385;
-	bh=ILy9wAbrmlbc052by9LcMdqM80EGlHAsNhHeonA0tGY=;
+	s=korg; t=1696858388;
+	bh=SxrtH2GtL8T7Rk2abQvUe4LUUoi+OVe6btftPlYoVoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/8clMtZmlbthxcOgBXlMs8OWdddLlD0xuyjmdPFiGRBSluRk6GBLZzJMIq5uatng
-	 aSsjBACAZgoWbLwOFeHnKNtwkeiXsxHOxWBw4qY7XYVVO0XysRi4p2fsXd+RxOq4do
-	 RI0q6bLePNhs9X7G3OYjKu10aAgAD4lvVMGcrbJE=
+	b=jb3czG0Az2BMFQPLUdcy5/1cJ0p1FW4f/NZopYicAzGYFPXik5xoucIQ3SJKNWap9
+	 OEEn9glyksJUyONOs2cShZyxB5eUJom/z7WyrvglUm0EVzKyeokBZEHFMVwdphSxSs
+	 dIAHN5cczg7YrKJzQDN748nPf2rfoQ+6YofNclHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 079/131] btrfs: properly report 0 avail for very full file systems
-Date: Mon,  9 Oct 2023 15:01:59 +0200
-Message-ID: <20231009130118.754737400@linuxfoundation.org>
+	Alex Balcanquall <alex@alexbal.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 080/131] net: thunderbolt: Fix TCPv6 GSO checksum calculation
+Date: Mon,  9 Oct 2023 15:02:00 +0200
+Message-ID: <20231009130118.790279560@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -41,43 +44,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit 58bfe2ccec5f9f137b41dd38f335290dcc13cd5c upstream.
+commit e0b65f9b81fef180cf5f103adecbe5505c961153 upstream.
 
-A user reported some issues with smaller file systems that get very
-full.  While investigating this issue I noticed that df wasn't showing
-100% full, despite having 0 chunk space and having < 1MiB of available
-metadata space.
+Alex reported that running ssh over IPv6 does not work with
+Thunderbolt/USB4 networking driver. The reason for that is that driver
+should call skb_is_gso() before calling skb_is_gso_v6(), and it should
+not return false after calculates the checksum successfully. This probably
+was a copy paste error from the original driver where it was done properly.
 
-This turns out to be an overflow issue, we're doing:
-
-  total_available_metadata_space - SZ_4M < global_block_rsv_size
-
-to determine if there's not enough space to make metadata allocations,
-which overflows if total_available_metadata_space is < 4M.  Fix this by
-checking to see if our available space is greater than the 4M threshold.
-This makes df properly report 100% usage on the file system.
-
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Alex Balcanquall <alex@alexbal.com>
+Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/thunderbolt.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2135,7 +2135,7 @@ static int btrfs_statfs(struct dentry *d
- 	 * calculated f_bavail.
- 	 */
- 	if (!mixed && block_rsv->space_info->full &&
--	    total_free_meta - thresh < block_rsv->size)
-+	    (total_free_meta < thresh || total_free_meta - thresh < block_rsv->size))
- 		buf->f_bavail = 0;
- 
- 	buf->f_type = BTRFS_SUPER_MAGIC;
+--- a/drivers/net/thunderbolt.c
++++ b/drivers/net/thunderbolt.c
+@@ -958,12 +958,11 @@ static bool tbnet_xmit_csum_and_map(stru
+ 		*tucso = ~csum_tcpudp_magic(ip_hdr(skb)->saddr,
+ 					    ip_hdr(skb)->daddr, 0,
+ 					    ip_hdr(skb)->protocol, 0);
+-	} else if (skb_is_gso_v6(skb)) {
++	} else if (skb_is_gso(skb) && skb_is_gso_v6(skb)) {
+ 		tucso = dest + ((void *)&(tcp_hdr(skb)->check) - data);
+ 		*tucso = ~csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+ 					  &ipv6_hdr(skb)->daddr, 0,
+ 					  IPPROTO_TCP, 0);
+-		return false;
+ 	} else if (protocol == htons(ETH_P_IPV6)) {
+ 		tucso = dest + skb_checksum_start_offset(skb) + skb->csum_offset;
+ 		*tucso = ~csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
 
 
