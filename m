@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6025A18B11
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7A318B11
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAjcO8Um"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF372C433CC;
-	Mon,  9 Oct 2023 13:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nPOX4ub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F99C433CD;
+	Mon,  9 Oct 2023 13:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857066;
-	bh=KIUVSilA47RqfjFvLPfuKDnnNsX+gUtj9Nhnw77kYpc=;
+	s=korg; t=1696857069;
+	bh=QIfCnUsQtrz7dFkgu68478JUURRxJ2F34ESFKmSJ7Fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAjcO8UmBZciSL5H9pAeTuohcO20lt8YdaJMddvwdpnNy3tADA36kBQ5rcgKLP8cn
-	 UfTt8OIDn/DID8BEUtGR3qf8tnnKKVZ4V+gcG5sIMtT/iBnXqVmzDU7lfDOXA5squ0
-	 ZnC9oKDdGfhM/IrpgvNXz0XpJUQ9p6lDnmfDpD3s=
+	b=1nPOX4ubrerkgL3kazkCb7NpDQn94wK/Nx66iLt57SCgHCHktSUI1pHZ0uBLIML/3
+	 fd8waxxHXvavJ255ajQH6EEZ0nFuRzlJ87Bl8UhonjB/5vSHX7/wOOm+4sARGSzcwP
+	 FU9Sa18n5hXIXmevBwC8ONIwIb55NYl7tI0ft0OI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 084/163] rtla/timerlat: Do not stop user-space if a cpu is offline
-Date: Mon,  9 Oct 2023 15:00:48 +0200
-Message-ID: <20231009130126.365453664@linuxfoundation.org>
+Subject: [PATCH 6.5 085/163] regmap: rbtree: Fix wrong register marked as in-cache when creating new node
+Date: Mon,  9 Oct 2023 15:00:49 +0200
+Message-ID: <20231009130126.392409104@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -41,54 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Bristot de Oliveira <bristot@kernel.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit e8c44d3b713b96cda055a23b21e8c4f931dd159f ]
+[ Upstream commit 7a795ac8d49e2433e1b97caf5e99129daf8e1b08 ]
 
-If no CPU list is passed, timerlat in user-space will dispatch
-one thread per sysconf(_SC_NPROCESSORS_CONF). However, not all
-CPU might be available, for instance, if HT is disabled.
+When regcache_rbtree_write() creates a new rbtree_node it was passing the
+wrong bit number to regcache_rbtree_set_register(). The bit number is the
+offset __in number of registers__, but in the case of creating a new block
+regcache_rbtree_write() was not dividing by the address stride to get the
+number of registers.
 
-Currently, rtla timerlat is stopping the session if an user-space
-thread cannot set affinity to a CPU, or if a running user-space
-thread is killed. However, this is too restrictive.
+Fix this by dividing by map->reg_stride.
+Compare with regcache_rbtree_read() where the bit is checked.
 
-So, reduce the error to a debug message, and rtla timerlat run as
-long as there is at least one user-space thread alive.
+This bug meant that the wrong register was marked as present. The register
+that was written to the cache could not be read from the cache because it
+was not marked as cached. But a nearby register could be marked as having
+a cached value even if it was never written to the cache.
 
-Link: https://lore.kernel.org/lkml/59cf2c882900ab7de91c6ee33b382ac7fa6b4ed0.1694781909.git.bristot@kernel.org
-
-Fixes: cdca4f4e5e8e ("rtla/timerlat_top: Add timerlat user-space support")
-Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 3f4ff561bc88 ("regmap: rbtree: Make cache_present bitmap per node")
+Link: https://lore.kernel.org/r/20230922153711.28103-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/src/timerlat_u.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/base/regmap/regcache-rbtree.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/tracing/rtla/src/timerlat_u.c b/tools/tracing/rtla/src/timerlat_u.c
-index 05e310696dd5c..01dbf9a6b5a51 100644
---- a/tools/tracing/rtla/src/timerlat_u.c
-+++ b/tools/tracing/rtla/src/timerlat_u.c
-@@ -45,7 +45,7 @@ static int timerlat_u_main(int cpu, struct timerlat_u_params *params)
- 
- 	retval = sched_setaffinity(gettid(), sizeof(set), &set);
- 	if (retval == -1) {
--		err_msg("Error setting user thread affinity\n");
-+		debug_msg("Error setting user thread affinity %d, is the CPU online?\n", cpu);
- 		exit(1);
+diff --git a/drivers/base/regmap/regcache-rbtree.c b/drivers/base/regmap/regcache-rbtree.c
+index 06788965aa293..31d7bc682910c 100644
+--- a/drivers/base/regmap/regcache-rbtree.c
++++ b/drivers/base/regmap/regcache-rbtree.c
+@@ -453,7 +453,8 @@ static int regcache_rbtree_write(struct regmap *map, unsigned int reg,
+ 		if (!rbnode)
+ 			return -ENOMEM;
+ 		regcache_rbtree_set_register(map, rbnode,
+-					     reg - rbnode->base_reg, value);
++					     (reg - rbnode->base_reg) / map->reg_stride,
++					     value);
+ 		regcache_rbtree_insert(map, &rbtree_ctx->root, rbnode);
+ 		rbtree_ctx->cached_rbnode = rbnode;
  	}
- 
-@@ -193,7 +193,9 @@ void *timerlat_u_dispatcher(void *data)
- 					procs_count--;
- 				}
- 			}
--			break;
-+
-+			if (!procs_count)
-+				break;
- 		}
- 
- 		sleep(1);
 -- 
 2.40.1
 
