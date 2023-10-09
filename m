@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18EFA341A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F78341B9
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ld7y8+1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B648C433C9;
-	Mon,  9 Oct 2023 13:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvCxfJ6R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3505C433C8;
+	Mon,  9 Oct 2023 13:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859225;
-	bh=wAmrMTwyXk0Bot05b3CqaEhguF52dssaKot8uwpvjs8=;
+	s=korg; t=1696859229;
+	bh=lwfUT/BssXa+Fl8XW8t/khg0MAZ8iZcLSfoL2Epz/Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ld7y8+1Etdrxi9b4kUOIov7KTfPmd8x0GJu2eGMtquGqblfSH+VgNZoRCORRdmaa9
-	 b2K0Lh+BPGDRHXL94a4BTeSkZdp0dazO/9zBT9pO4iMW67J/SRi2zl8yPTGNVEvsss
-	 j9/bEIBlDq684M0csYv/VL5Tqe3bS7k9A3OLzgRM=
+	b=XvCxfJ6RBMl/hCzyQ9X50u3AlIpWpsXaSaR04rwcsDyaUwKI3nU0z8mLrostK0cLC
+	 R8A8gMTSI9UaMM+h0UG+MSbkrrP/6hbzHao0hRD4t5M5KtzP61VfATE8NY4EwjFGpe
+	 CmwjMX2/O5DBmbwFpNMPyC2ZLqy06DJCBIPQbpZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 11/55] parisc: sba: Fix compile warning wrt list of SBA devices
-Date: Mon,  9 Oct 2023 15:06:10 +0200
-Message-ID: <20231009130108.142516962@linuxfoundation.org>
+Subject: [PATCH 4.14 12/55] parisc: iosapic.c: Fix sparse warnings
+Date: Mon,  9 Oct 2023 15:06:11 +0200
+Message-ID: <20231009130108.181225428@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -43,46 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit eb3255ee8f6f4691471a28fbf22db5e8901116cd ]
-
-Fix this makecheck warning:
-drivers/parisc/sba_iommu.c:98:19: warning: symbol 'sba_list'
-	was not declared. Should it be static?
+[ Upstream commit 927c6c8aa27c284a799b8c18784e37d3373af908 ]
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/ropes.h | 3 +++
- drivers/char/agp/parisc-agp.c   | 2 --
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/parisc/iosapic.c         | 4 ++--
+ drivers/parisc/iosapic_private.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/parisc/include/asm/ropes.h b/arch/parisc/include/asm/ropes.h
-index 8e51c775c80a6..62399c7ea94a1 100644
---- a/arch/parisc/include/asm/ropes.h
-+++ b/arch/parisc/include/asm/ropes.h
-@@ -86,6 +86,9 @@ struct sba_device {
- 	struct ioc		ioc[MAX_IOC];
- };
+diff --git a/drivers/parisc/iosapic.c b/drivers/parisc/iosapic.c
+index eb9137faccf74..4cc08d13b82fa 100644
+--- a/drivers/parisc/iosapic.c
++++ b/drivers/parisc/iosapic.c
+@@ -216,9 +216,9 @@ static inline void iosapic_write(void __iomem *iosapic, unsigned int reg, u32 va
  
-+/* list of SBA's in system, see drivers/parisc/sba_iommu.c */
-+extern struct sba_device *sba_list;
-+
- #define ASTRO_RUNWAY_PORT	0x582
- #define IKE_MERCED_PORT		0x803
- #define REO_MERCED_PORT		0x804
-diff --git a/drivers/char/agp/parisc-agp.c b/drivers/char/agp/parisc-agp.c
-index 1d5510cb6db4e..1962ff624b7c5 100644
---- a/drivers/char/agp/parisc-agp.c
-+++ b/drivers/char/agp/parisc-agp.c
-@@ -385,8 +385,6 @@ find_quicksilver(struct device *dev, void *data)
- static int __init
- parisc_agp_init(void)
+ static DEFINE_SPINLOCK(iosapic_lock);
+ 
+-static inline void iosapic_eoi(void __iomem *addr, unsigned int data)
++static inline void iosapic_eoi(__le32 __iomem *addr, __le32 data)
  {
--	extern struct sba_device *sba_list;
--
- 	int err = -1;
- 	struct parisc_device *sba = NULL, *lba = NULL;
- 	struct lba_device *lbadev = NULL;
+-	__raw_writel(data, addr);
++	__raw_writel((__force u32)data, addr);
+ }
+ 
+ /*
+diff --git a/drivers/parisc/iosapic_private.h b/drivers/parisc/iosapic_private.h
+index 6e05e30a2450a..7a928c03d5201 100644
+--- a/drivers/parisc/iosapic_private.h
++++ b/drivers/parisc/iosapic_private.h
+@@ -132,8 +132,8 @@ struct iosapic_irt {
+ struct vector_info {
+ 	struct iosapic_info *iosapic;	/* I/O SAPIC this vector is on */
+ 	struct irt_entry *irte;		/* IRT entry */
+-	u32 __iomem *eoi_addr;		/* precalculate EOI reg address */
+-	u32	eoi_data;		/* IA64: ?       PA: swapped txn_data */
++	__le32 __iomem *eoi_addr;	/* precalculate EOI reg address */
++	__le32	eoi_data;		/* IA64: ?       PA: swapped txn_data */
+ 	int	txn_irq;		/* virtual IRQ number for processor */
+ 	ulong	txn_addr;		/* IA64: id_eid  PA: partial HPA */
+ 	u32	txn_data;		/* CPU interrupt bit */
 -- 
 2.40.1
 
