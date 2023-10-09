@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8141A735
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27E91A735
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6LcSddq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9309C433C8;
-	Mon,  9 Oct 2023 13:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZiTE6FC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0E7C433C7;
+	Mon,  9 Oct 2023 13:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859465;
-	bh=QygJcezbkjTas+NAybnzyQVp9qE6t9DEzdpU4z/To9U=;
+	s=korg; t=1696859468;
+	bh=Wd0S+7u5IxVsEIbsxw4BbrPj33sR3VNQJGrC6ojyBjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q6LcSddqppQVmxZzA/HyoekAJZHN4VQJHjklkmZKNAg8DSMRHjfon2vBnle//IZ4I
-	 mHGALjODxVS38TD9drULMllmK9dh+7aGToAvhLpTQ6zJtie6mCygyo6LLCm/Q02eMQ
-	 XBXQ+nJ57XbiaR7I+829u6A2FhdqEKgu5n16maXI=
+	b=oZiTE6FCIJwDJ130m1cFUcBSJI6Vq1mxoI9XzW+ty3iIsq0TE4IrzD3QCHPPaRW4Z
+	 YtqZHuvTL25+JH+Y9ytVGKf65/hYHD9cIK+/n4KP2bKbhJ3IjqJRpMt6XusE0O89fa
+	 2O39Y7RqCr5QW1eql46WqZ3cCrOrzmfuTSmu5eV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timo Alho <talho@nvidia.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
+	Carl Philipp Klemm <philipp@uvos.xyz>,
+	Merlijn Wajer <merlijn@wizzup.org>,
+	Pavel Machek <pavel@ucw.cz>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 29/91] clk: tegra: fix error return case for recalc_rate
-Date: Mon,  9 Oct 2023 15:06:01 +0200
-Message-ID: <20231009130112.534239702@linuxfoundation.org>
+Subject: [PATCH 4.19 30/91] ARM: dts: ti: omap: motorola-mapphone: Fix abe_clkctrl warning on boot
+Date: Mon,  9 Oct 2023 15:06:02 +0200
+Message-ID: <20231009130112.570522225@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -43,38 +46,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timo Alho <talho@nvidia.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit a47b44fbb13f5e7a981b4515dcddc93a321ae89c ]
+[ Upstream commit ac08bda1569b06b7a62c7b4dd00d4c3b28ceaaec ]
 
-tegra-bpmp clocks driver makes implicit conversion of signed error
-code to unsigned value in recalc_rate operation. The behavior for
-recalc_rate, according to it's specification, should be that "If the
-driver cannot figure out a rate for this clock, it must return 0."
+Commit 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
+attempted to fix the PWM settings but ended up causin an additional clock
+reparenting error:
 
-Fixes: ca6f2796eef7 ("clk: tegra: Add BPMP clock driver")
-Signed-off-by: Timo Alho <talho@nvidia.com>
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Link: https://lore.kernel.org/r/20230912112951.2330497-1-cyndis@kapsi.fi
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+clk: failed to reparent abe-clkctrl:0060:24 to sys_clkin_ck: -22
+
+Only timer9 is in the PER domain and can use the sys_clkin_ck clock source.
+For timer8, the there is no sys_clkin_ck available as it's in the ABE
+domain, instead it should use syc_clk_div_ck. However, for power
+management, we want to use the always on sys_32k_ck instead.
+
+Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+Cc: Carl Philipp Klemm <philipp@uvos.xyz>
+Cc: Merlijn Wajer <merlijn@wizzup.org>
+Cc: Pavel Machek <pavel@ucw.cz>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 0840242e8875 ("ARM: dts: Configure clock parent for pwm vibra")
+Depends-on: 61978617e905 ("ARM: dts: Add minimal support for Droid Bionic xt875")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/tegra/clk-bpmp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/omap4-droid4-xt894.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/tegra/clk-bpmp.c b/drivers/clk/tegra/clk-bpmp.c
-index 01dada561c10c..3bdd3334b0f94 100644
---- a/drivers/clk/tegra/clk-bpmp.c
-+++ b/drivers/clk/tegra/clk-bpmp.c
-@@ -162,7 +162,7 @@ static unsigned long tegra_bpmp_clk_recalc_rate(struct clk_hw *hw,
+diff --git a/arch/arm/boot/dts/omap4-droid4-xt894.dts b/arch/arm/boot/dts/omap4-droid4-xt894.dts
+index 67d77eee9433c..459720f5f5586 100644
+--- a/arch/arm/boot/dts/omap4-droid4-xt894.dts
++++ b/arch/arm/boot/dts/omap4-droid4-xt894.dts
+@@ -647,12 +647,12 @@
+ /* Configure pwm clock source for timers 8 & 9 */
+ &timer8 {
+ 	assigned-clocks = <&abe_clkctrl OMAP4_TIMER8_CLKCTRL 24>;
+-	assigned-clock-parents = <&sys_clkin_ck>;
++	assigned-clock-parents = <&sys_32k_ck>;
+ };
  
- 	err = tegra_bpmp_clk_transfer(clk->bpmp, &msg);
- 	if (err < 0)
--		return err;
-+		return 0;
+ &timer9 {
+ 	assigned-clocks = <&l4_per_clkctrl OMAP4_TIMER9_CLKCTRL 24>;
+-	assigned-clock-parents = <&sys_clkin_ck>;
++	assigned-clock-parents = <&sys_32k_ck>;
+ };
  
- 	return response.rate;
- }
+ /*
 -- 
 2.40.1
 
