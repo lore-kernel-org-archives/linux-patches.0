@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DD6339BC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1D434185
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OLuozTN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81097C433C9;
-	Mon,  9 Oct 2023 13:44:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSsC9N8I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68DBC433C7;
+	Mon,  9 Oct 2023 13:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859095;
-	bh=WYfYTr5wHeLqzIxJdcGieXFyV8Kv8neQD4t+duE3EI4=;
+	s=korg; t=1696859099;
+	bh=W+/W1bCvXY9lEGIno6eU5xiQQhk/8itLepnECbD62Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1OLuozTNjOb8IxHnLEHQrtz7cmekGbgMtx55dytQD1hBzlm+lmVy/Q8/gU3+8X8+P
-	 +/BZE6bKc0TOsDfQyC+hn9onAoOOCXuZqVlfF8IV3q7EIBLcK3d0iQpinsjWw9stJG
-	 ZQuav42/uv9kQTt42de35uqTxBakQQ5xa7aW9OIA=
+	b=rSsC9N8Id/LBD3HYMKE4P+64AdOYKh85XmBCvCHFOG95grvOA0X6lYsJ5HAb9RY2n
+	 +NckhRtNBK4Ct81wlxmMMRgxTsZkqSGJgaglMrUKgnS+Y9gSP5yoME7dZRJdJTgQQa
+	 2/OoXE2T9RVmiwRBrjPPrS3t2YP8Myns99odeW4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
 	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 180/226] qed/red_ll2: Fix undefined behavior bug in struct qed_ll2_info
-Date: Mon,  9 Oct 2023 15:02:21 +0200
-Message-ID: <20231009130131.341566069@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 198/226] net: fix possible store tearing in neigh_periodic_work()
+Date: Mon,  9 Oct 2023 15:02:39 +0200
+Message-ID: <20231009130131.762405444@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -43,116 +44,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit eea03d18af9c44235865a4bc9bec4d780ef6cf21 upstream.
+[ Upstream commit 25563b581ba3a1f263a00e8c9a97f5e7363be6fd ]
 
-The flexible structure (a structure that contains a flexible-array member
-at the end) `qed_ll2_tx_packet` is nested within the second layer of
-`struct qed_ll2_info`:
+While looking at a related syzbot report involving neigh_periodic_work(),
+I found that I forgot to add an annotation when deleting an
+RCU protected item from a list.
 
-struct qed_ll2_tx_packet {
-	...
-        /* Flexible Array of bds_set determined by max_bds_per_packet */
-        struct {
-                struct core_tx_bd *txq_bd;
-                dma_addr_t tx_frag;
-                u16 frag_len;
-        } bds_set[];
-};
+Readers use rcu_deference(*np), we need to use either
+rcu_assign_pointer() or WRITE_ONCE() on writer side
+to prevent store tearing.
 
-struct qed_ll2_tx_queue {
-	...
-	struct qed_ll2_tx_packet cur_completing_packet;
-};
+I use rcu_assign_pointer() to have lockdep support,
+this was the choice made in neigh_flush_dev().
 
-struct qed_ll2_info {
-	...
-	struct qed_ll2_tx_queue tx_queue;
-        struct qed_ll2_cbs cbs;
-};
-
-The problem is that member `cbs` in `struct qed_ll2_info` is placed just
-after an object of type `struct qed_ll2_tx_queue`, which is in itself
-an implicit flexible structure, which by definition ends in a flexible
-array member, in this case `bds_set`. This causes an undefined behavior
-bug at run-time when dynamic memory is allocated for `bds_set`, which
-could lead to a serious issue if `cbs` in `struct qed_ll2_info` is
-overwritten by the contents of `bds_set`. Notice that the type of `cbs`
-is a structure full of function pointers (and a cookie :) ):
-
-include/linux/qed/qed_ll2_if.h:
-107 typedef
-108 void (*qed_ll2_complete_rx_packet_cb)(void *cxt,
-109                                       struct qed_ll2_comp_rx_data *data);
-110
-111 typedef
-112 void (*qed_ll2_release_rx_packet_cb)(void *cxt,
-113                                      u8 connection_handle,
-114                                      void *cookie,
-115                                      dma_addr_t rx_buf_addr,
-116                                      bool b_last_packet);
-117
-118 typedef
-119 void (*qed_ll2_complete_tx_packet_cb)(void *cxt,
-120                                       u8 connection_handle,
-121                                       void *cookie,
-122                                       dma_addr_t first_frag_addr,
-123                                       bool b_last_fragment,
-124                                       bool b_last_packet);
-125
-126 typedef
-127 void (*qed_ll2_release_tx_packet_cb)(void *cxt,
-128                                      u8 connection_handle,
-129                                      void *cookie,
-130                                      dma_addr_t first_frag_addr,
-131                                      bool b_last_fragment, bool b_last_packet);
-132
-133 typedef
-134 void (*qed_ll2_slowpath_cb)(void *cxt, u8 connection_handle,
-135                             u32 opaque_data_0, u32 opaque_data_1);
-136
-137 struct qed_ll2_cbs {
-138         qed_ll2_complete_rx_packet_cb rx_comp_cb;
-139         qed_ll2_release_rx_packet_cb rx_release_cb;
-140         qed_ll2_complete_tx_packet_cb tx_comp_cb;
-141         qed_ll2_release_tx_packet_cb tx_release_cb;
-142         qed_ll2_slowpath_cb slowpath_cb;
-143         void *cookie;
-144 };
-
-Fix this by moving the declaration of `cbs` to the  middle of its
-containing structure `qed_ll2_info`, preventing it from being
-overwritten by the contents of `bds_set` at run-time.
-
-This bug was introduced in 2017, when `bds_set` was converted to a
-one-element array, and started to be used as a Variable Length Object
-(VLO) at run-time.
-
-Fixes: f5823fe6897c ("qed: Add ll2 option to limit the number of bds per packet")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
+Fixes: 767e97e1e0db ("neigh: RCU conversion of struct neighbour")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/ZQ+Nz8DfPg56pIzr@work
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_ll2.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/neighbour.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/qlogic/qed/qed_ll2.h
-+++ b/drivers/net/ethernet/qlogic/qed/qed_ll2.h
-@@ -111,9 +111,9 @@ struct qed_ll2_info {
- 	enum core_tx_dest tx_dest;
- 	u8 tx_stats_en;
- 	bool main_func_queue;
-+	struct qed_ll2_cbs cbs;
- 	struct qed_ll2_rx_queue rx_queue;
- 	struct qed_ll2_tx_queue tx_queue;
--	struct qed_ll2_cbs cbs;
- };
- 
- extern const struct qed_ll2_ops qed_ll2_ops_pass;
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index 3b642c412cf32..15267428c4f83 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -935,7 +935,9 @@ static void neigh_periodic_work(struct work_struct *work)
+ 			    (state == NUD_FAILED ||
+ 			     !time_in_range_open(jiffies, n->used,
+ 						 n->used + NEIGH_VAR(n->parms, GC_STALETIME)))) {
+-				*np = n->next;
++				rcu_assign_pointer(*np,
++					rcu_dereference_protected(n->next,
++						lockdep_is_held(&tbl->lock)));
+ 				neigh_mark_dead(n);
+ 				write_unlock(&n->lock);
+ 				neigh_cleanup_and_release(n);
+-- 
+2.40.1
+
 
 
