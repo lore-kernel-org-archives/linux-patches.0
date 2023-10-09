@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD36328DB
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A033D27700
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1Id5ilm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F52C433C8;
-	Mon,  9 Oct 2023 13:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6KAIdqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136CFC433C8;
+	Mon,  9 Oct 2023 13:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859140;
-	bh=SX4CdGb94+K5geChoz9WatwzEYbzgvpjsMlac9P252E=;
+	s=korg; t=1696859143;
+	bh=IR2j8pAZDdClcfCjn3ivUerS8UVy8jBF4jmCO2Gedi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l1Id5ilmc72i1y99usRgHd5tIUiMump7gE7KaQaExrLoPUpsCoEG+f6ZV0smFHNg/
-	 nvwE12SbuIorW8VEZOK3INuA1JRw4Vniwru89DJdbhEQ5L+F5W3lpouHGXgHDUT0xZ
-	 n2xsAjmc7lwj6JtO5SA05N8vhinH8bb4oigArars=
+	b=B6KAIdqTtNBK/3cBkU2dfXOcM2jE9+xhhzntg9IL9/FbIvXWhB4FOX/FlmN8/0dSQ
+	 mTILSsWhB/2pe1c4yHI/vDHIJL16Mdvpug0Lcqw5d73EgQcug44Izmh7VTHA/UYecl
+	 V1Ppd7n6iDVGqn5vRJdT9YentcAdMGj4bZBdWtgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Jordan Rife <jrife@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 184/226] net: prevent rewrite of msg_name in sock_sendmsg()
-Date: Mon,  9 Oct 2023 15:02:25 +0200
-Message-ID: <20231009130131.436564862@linuxfoundation.org>
+	Rob Herring <robh@kernel.org>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 5.10 185/226] arm64: Add Cortex-A520 CPU part definition
+Date: Mon,  9 Oct 2023 15:02:26 +0200
+Message-ID: <20231009130131.459816033@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -43,105 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jrife@google.com>
+From: Rob Herring <robh@kernel.org>
 
-commit 86a7e0b69bd5b812e48a20c66c2161744f3caa16 upstream.
+commit a654a69b9f9c06b2e56387d0b99f0e3e6b0ff4ef upstream.
 
-Callers of sock_sendmsg(), and similarly kernel_sendmsg(), in kernel
-space may observe their value of msg_name change in cases where BPF
-sendmsg hooks rewrite the send address. This has been confirmed to break
-NFS mounts running in UDP mode and has the potential to break other
-systems.
+Add the CPU Part number for the new Arm design.
 
-This patch:
-
-1) Creates a new function called __sock_sendmsg() with same logic as the
-   old sock_sendmsg() function.
-2) Replaces calls to sock_sendmsg() made by __sys_sendto() and
-   __sys_sendmsg() with __sock_sendmsg() to avoid an unnecessary copy,
-   as these system calls are already protected.
-3) Modifies sock_sendmsg() so that it makes a copy of msg_name if
-   present before passing it down the stack to insulate callers from
-   changes to the send address.
-
-Link: https://lore.kernel.org/netdev/20230912013332.2048422-1-jrife@google.com/
-Fixes: 1cedee13d25a ("bpf: Hooks for sys_sendmsg")
 Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Jordan Rife <jrife@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20230921194156.1050055-1-robh@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/socket.c |   29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ arch/arm64/include/asm/cputype.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -655,6 +655,14 @@ static inline int sock_sendmsg_nosec(str
- 	return ret;
- }
- 
-+static int __sock_sendmsg(struct socket *sock, struct msghdr *msg)
-+{
-+	int err = security_socket_sendmsg(sock, msg,
-+					  msg_data_left(msg));
-+
-+	return err ?: sock_sendmsg_nosec(sock, msg);
-+}
-+
- /**
-  *	sock_sendmsg - send a message through @sock
-  *	@sock: socket
-@@ -665,10 +673,19 @@ static inline int sock_sendmsg_nosec(str
-  */
- int sock_sendmsg(struct socket *sock, struct msghdr *msg)
- {
--	int err = security_socket_sendmsg(sock, msg,
--					  msg_data_left(msg));
-+	struct sockaddr_storage *save_addr = (struct sockaddr_storage *)msg->msg_name;
-+	struct sockaddr_storage address;
-+	int ret;
- 
--	return err ?: sock_sendmsg_nosec(sock, msg);
-+	if (msg->msg_name) {
-+		memcpy(&address, msg->msg_name, msg->msg_namelen);
-+		msg->msg_name = &address;
-+	}
-+
-+	ret = __sock_sendmsg(sock, msg);
-+	msg->msg_name = save_addr;
-+
-+	return ret;
- }
- EXPORT_SYMBOL(sock_sendmsg);
- 
-@@ -995,7 +1012,7 @@ static ssize_t sock_write_iter(struct ki
- 	if (sock->type == SOCK_SEQPACKET)
- 		msg.msg_flags |= MSG_EOR;
- 
--	res = sock_sendmsg(sock, &msg);
-+	res = __sock_sendmsg(sock, &msg);
- 	*from = msg.msg_iter;
- 	return res;
- }
-@@ -1983,7 +2000,7 @@ int __sys_sendto(int fd, void __user *bu
- 	if (sock->file->f_flags & O_NONBLOCK)
- 		flags |= MSG_DONTWAIT;
- 	msg.msg_flags = flags;
--	err = sock_sendmsg(sock, &msg);
-+	err = __sock_sendmsg(sock, &msg);
- 
- out_put:
- 	fput_light(sock->file, fput_needed);
-@@ -2356,7 +2373,7 @@ static int ____sys_sendmsg(struct socket
- 		err = sock_sendmsg_nosec(sock, msg_sys);
- 		goto out_freectl;
- 	}
--	err = sock_sendmsg(sock, msg_sys);
-+	err = __sock_sendmsg(sock, msg_sys);
- 	/*
- 	 * If this is sendmmsg() and sending to current destination address was
- 	 * successful, remember it.
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -79,6 +79,7 @@
+ #define ARM_CPU_PART_CORTEX_A78AE	0xD42
+ #define ARM_CPU_PART_CORTEX_X1		0xD44
+ #define ARM_CPU_PART_CORTEX_A510	0xD46
++#define ARM_CPU_PART_CORTEX_A520	0xD80
+ #define ARM_CPU_PART_CORTEX_A710	0xD47
+ #define ARM_CPU_PART_CORTEX_X2		0xD48
+ #define ARM_CPU_PART_NEOVERSE_N2	0xD49
+@@ -130,6 +131,7 @@
+ #define MIDR_CORTEX_A78AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78AE)
+ #define MIDR_CORTEX_X1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1)
+ #define MIDR_CORTEX_A510 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A510)
++#define MIDR_CORTEX_A520 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A520)
+ #define MIDR_CORTEX_A710 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A710)
+ #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
+ #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
 
 
