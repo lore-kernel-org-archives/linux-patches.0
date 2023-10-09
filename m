@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6011A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984E21A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkKGoODF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4FFC433C7;
-	Mon,  9 Oct 2023 13:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6QxGGQf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFBAC433C8;
+	Mon,  9 Oct 2023 13:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857547;
-	bh=b+WZpNu0aFMxXZl+zyIdz8dLHmf2RF1xxII0kygFxk0=;
+	s=korg; t=1696857550;
+	bh=uq8EKJ7aLDQOPTh8uA22ATr4LJyLBfd9xjf9P3vqXVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xkKGoODFdWrPSVXOefvR60XlqsypZjCrOcf3tselz8YFzbh08vB+cvJIfTEoomBPk
-	 uG3DkTvzHFzIDPT8gu+q2D/8AfJTl4/csh4jJ5fAkPFxWZ9fh4Of7OmHfW0X+o6nN9
-	 f7g430RSlAj6eDGP1EU5rTASs1oacXfp/ylfVuZY=
+	b=e6QxGGQft8ysnAOmZq5J+ajPgkv2Lw1DWaITSN7KzEWfye1EZ8e7cVl3tvGQdn5ET
+	 RnaWOBztpp+eo9tG8oqPgwur/jpiQyN3mB+cscJ+QTP9JehkL+UJmWFNoQv7DfivBC
+	 ZuMtqUCKDm4ulVYsBMJtbo43mssdp1bbWTNQsIRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Hao <yhao016@ucr.edu>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Brian Norris <briannorris@chromium.org>,
+	Matthew Wang <matthewmwang@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/162] ubi: Refuse attaching if mtds erasesize is 0
-Date: Mon,  9 Oct 2023 15:00:54 +0200
-Message-ID: <20231009130124.935864589@linuxfoundation.org>
+Subject: [PATCH 6.1 082/162] wifi: mwifiex: Fix oob check condition in mwifiex_process_rx_packet
+Date: Mon,  9 Oct 2023 15:01:03 +0200
+Message-ID: <20231009130125.182504753@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -44,43 +44,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 017c73a34a661a861712f7cc1393a123e5b2208c ]
+[ Upstream commit aef7a0300047e7b4707ea0411dc9597cba108fc8 ]
 
-There exists mtd devices with zero erasesize, which will trigger a
-divide-by-zero exception while attaching ubi device.
-Fix it by refusing attaching if mtd's erasesize is 0.
+Only skip the code path trying to access the rfc1042 headers when the
+buffer is too small, so the driver can still process packets without
+rfc1042 headers.
 
-Fixes: 801c135ce73d ("UBI: Unsorted Block Images")
-Reported-by: Yu Hao <yhao016@ucr.edu>
-Link: https://lore.kernel.org/lkml/977347543.226888.1682011999468.JavaMail.zimbra@nod.at/T/
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 119585281617 ("wifi: mwifiex: Fix OOB and integer underflow when rx packets")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Reviewed-by: Matthew Wang <matthewmwang@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230908104308.1546501-1-treapking@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/build.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/sta_rx.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
-index 1662c12e24ada..6fbd77dc1d18f 100644
---- a/drivers/mtd/ubi/build.c
-+++ b/drivers/mtd/ubi/build.c
-@@ -893,6 +893,13 @@ int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
- 		return -EINVAL;
+diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
+index 65420ad674167..257737137cd70 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
++++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
+@@ -86,7 +86,8 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
+ 	rx_pkt_len = le16_to_cpu(local_rx_pd->rx_pkt_length);
+ 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_off;
+ 
+-	if (sizeof(*rx_pkt_hdr) + rx_pkt_off > skb->len) {
++	if (sizeof(rx_pkt_hdr->eth803_hdr) + sizeof(rfc1042_header) +
++	    rx_pkt_off > skb->len) {
+ 		mwifiex_dbg(priv->adapter, ERROR,
+ 			    "wrong rx packet offset: len=%d, rx_pkt_off=%d\n",
+ 			    skb->len, rx_pkt_off);
+@@ -95,12 +96,13 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
+ 		return -1;
  	}
  
-+	/* UBI cannot work on flashes with zero erasesize. */
-+	if (!mtd->erasesize) {
-+		pr_err("ubi: refuse attaching mtd%d - zero erasesize flash is not supported\n",
-+			mtd->index);
-+		return -EINVAL;
-+	}
-+
- 	if (ubi_num == UBI_DEV_NUM_AUTO) {
- 		/* Search for an empty slot in the @ubi_devices array */
- 		for (ubi_num = 0; ubi_num < UBI_MAX_DEVICES; ubi_num++)
+-	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
+-		     sizeof(bridge_tunnel_header))) ||
+-	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
+-		     sizeof(rfc1042_header)) &&
+-	     ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_AARP &&
+-	     ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_IPX)) {
++	if (sizeof(*rx_pkt_hdr) + rx_pkt_off <= skb->len &&
++	    ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
++		      sizeof(bridge_tunnel_header))) ||
++	     (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
++		      sizeof(rfc1042_header)) &&
++	      ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_AARP &&
++	      ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_IPX))) {
+ 		/*
+ 		 *  Replace the 803 header and rfc1042 header (llc/snap) with an
+ 		 *    EthernetII header, keep the src/dst and snap_type
 -- 
 2.40.1
 
