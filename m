@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6E02E649
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1223B339B4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtvB8ku3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24807C433C8;
-	Mon,  9 Oct 2023 13:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cS7zkRHW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A489C433C7;
+	Mon,  9 Oct 2023 13:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858886;
-	bh=7kr1apUnOgof/nfGWbasV0ilaEMeFeYctRygXQ+ufAE=;
+	s=korg; t=1696858889;
+	bh=bO+nvJHTMAxeiIv3+7W69+N4co15SDvqMfHC8XkvcFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GtvB8ku34lrKOHqqPuQUOiFLpIe5gKfbIjF9PDZ1iQ3JmiZPNNUpNRwKc2cw/0yTP
-	 39C9Zh2FhLGc1pytSi9Efb4BFZblq4RewS7tpPFu7+2Rhg6tZ9BqH9mB/ISQndKLNd
-	 w1XbnZp296jHUjIQ4oclRVB6w/lrHZM/l9PNq+tc=
+	b=cS7zkRHWMPaUt20PGDafDV0Cs2RU5i6WUsR+36wHb/9Yu1gkbbnGNsSj3CqATf/8x
+	 99Pg2syoFQ18zQPFSBzvxWb1e84++SDCtR/GzhZ+6Pvnv4X6zjKe44VBXyThc/lOB1
+	 th22kLC+s8+fr0OaRcVONXDM6S80JExRlgYD7svU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	syzbot+16e3f2c77e7c5a0113f9@syzkaller.appspotmail.com,
-	Chengming Zhou <zhouchengming@bytedance.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Tejun Heo <tj@kernel.org>,
-	Zhouyi Zhou <zhouzhouyi@gmail.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Ovidiu Panait <ovidiu.panait@windriver.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Shyam-sundar S-k <Shyam-sundar.S-k@amd.com>,
+	Alexander Deucher <Alexander.Deucher@amd.com>,
+	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
+	Prike Liang <prike.liang@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 132/226] cgroup: Fix suspicious rcu_dereference_check() usage warning
-Date: Mon,  9 Oct 2023 15:01:33 +0200
-Message-ID: <20231009130130.210024505@linuxfoundation.org>
+Subject: [PATCH 5.10 133/226] ACPI: Check StorageD3Enable _DSD property in ACPI code
+Date: Mon,  9 Oct 2023 15:01:34 +0200
+Message-ID: <20231009130130.233069496@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -48,44 +48,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengming Zhou <zhouchengming@bytedance.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit f2aa197e4794bf4c2c0c9570684f86e6fa103e8b upstream.
+[ Upstream commit 2744d7a0733503931b71c00d156119ced002f22c ]
 
-task_css_set_check() will use rcu_dereference_check() to check for
-rcu_read_lock_held() on the read-side, which is not true after commit
-dc6e0818bc9a ("sched/cpuacct: Optimize away RCU read lock"). This
-commit drop explicit rcu_read_lock(), change to RCU-sched read-side
-critical section. So fix the RCU warning by adding check for
-rcu_read_lock_sched_held().
+Although first implemented for NVME, this check may be usable by
+other drivers as well. Microsoft's specification explicitly mentions
+that is may be usable by SATA and AHCI devices.  Google also indicates
+that they have used this with SDHCI in a downstream kernel tree that
+a user can plug a storage device into.
 
-Fixes: dc6e0818bc9a ("sched/cpuacct: Optimize away RCU read lock")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Reported-by: syzbot+16e3f2c77e7c5a0113f9@syzkaller.appspotmail.com
-Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Tejun Heo <tj@kernel.org>
-Tested-by: Zhouyi Zhou <zhouzhouyi@gmail.com>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20220305034103.57123-1-zhouchengming@bytedance.com
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Link: https://docs.microsoft.com/en-us/windows-hardware/design/component-guidelines/power-management-for-storage-hardware-devices-intro
+Suggested-by: Keith Busch <kbusch@kernel.org>
+CC: Shyam-sundar S-k <Shyam-sundar.S-k@amd.com>
+CC: Alexander Deucher <Alexander.Deucher@amd.com>
+CC: Rafael J. Wysocki <rjw@rjwysocki.net>
+CC: Prike Liang <prike.liang@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: dad651b2a44e ("nvme-pci: do not set the NUMA node of device if it has none")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cgroup.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/device_pm.c | 29 +++++++++++++++++++++++++++++
+ drivers/nvme/host/pci.c  | 28 +---------------------------
+ include/linux/acpi.h     |  5 +++++
+ 3 files changed, 35 insertions(+), 27 deletions(-)
 
-diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
-index 7653f54189502..c9c430712d471 100644
---- a/include/linux/cgroup.h
-+++ b/include/linux/cgroup.h
-@@ -451,6 +451,7 @@ extern struct mutex cgroup_mutex;
- extern spinlock_t css_set_lock;
- #define task_css_set_check(task, __c)					\
- 	rcu_dereference_check((task)->cgroups,				\
-+		rcu_read_lock_sched_held() ||				\
- 		lockdep_is_held(&cgroup_mutex) ||			\
- 		lockdep_is_held(&css_set_lock) ||			\
- 		((task)->flags & PF_EXITING) || (__c))
+diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
+index ecd2ddc2215f5..66e53df758655 100644
+--- a/drivers/acpi/device_pm.c
++++ b/drivers/acpi/device_pm.c
+@@ -1326,4 +1326,33 @@ int acpi_dev_pm_attach(struct device *dev, bool power_on)
+ 	return 1;
+ }
+ EXPORT_SYMBOL_GPL(acpi_dev_pm_attach);
++
++/**
++ * acpi_storage_d3 - Check if D3 should be used in the suspend path
++ * @dev: Device to check
++ *
++ * Return %true if the platform firmware wants @dev to be programmed
++ * into D3hot or D3cold (if supported) in the suspend path, or %false
++ * when there is no specific preference. On some platforms, if this
++ * hint is ignored, @dev may remain unresponsive after suspending the
++ * platform as a whole.
++ *
++ * Although the property has storage in the name it actually is
++ * applied to the PCIe slot and plugging in a non-storage device the
++ * same platform restrictions will likely apply.
++ */
++bool acpi_storage_d3(struct device *dev)
++{
++	struct acpi_device *adev = ACPI_COMPANION(dev);
++	u8 val;
++
++	if (!adev)
++		return false;
++	if (fwnode_property_read_u8(acpi_fwnode_handle(adev), "StorageD3Enable",
++			&val))
++		return false;
++	return val == 1;
++}
++EXPORT_SYMBOL_GPL(acpi_storage_d3);
++
+ #endif /* CONFIG_PM */
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 3aaead9b3a570..e384ade6c2cd2 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2840,32 +2840,6 @@ static unsigned long check_vendor_combination_bug(struct pci_dev *pdev)
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_ACPI
+-static bool nvme_acpi_storage_d3(struct pci_dev *dev)
+-{
+-	struct acpi_device *adev = ACPI_COMPANION(&dev->dev);
+-	u8 val;
+-
+-	/*
+-	 * Look for _DSD property specifying that the storage device on the port
+-	 * must use D3 to support deep platform power savings during
+-	 * suspend-to-idle.
+-	 */
+-
+-	if (!adev)
+-		return false;
+-	if (fwnode_property_read_u8(acpi_fwnode_handle(adev), "StorageD3Enable",
+-			&val))
+-		return false;
+-	return val == 1;
+-}
+-#else
+-static inline bool nvme_acpi_storage_d3(struct pci_dev *dev)
+-{
+-	return false;
+-}
+-#endif /* CONFIG_ACPI */
+-
+ static void nvme_async_probe(void *data, async_cookie_t cookie)
+ {
+ 	struct nvme_dev *dev = data;
+@@ -2915,7 +2889,7 @@ static int nvme_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 
+ 	quirks |= check_vendor_combination_bug(pdev);
+ 
+-	if (!noacpi && nvme_acpi_storage_d3(pdev)) {
++	if (!noacpi && acpi_storage_d3(&pdev->dev)) {
+ 		/*
+ 		 * Some systems use a bios work around to ask for D3 on
+ 		 * platforms that support kernel managed suspend.
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index 96d69404a54ff..9c184dbceba47 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -1001,6 +1001,7 @@ int acpi_dev_resume(struct device *dev);
+ int acpi_subsys_runtime_suspend(struct device *dev);
+ int acpi_subsys_runtime_resume(struct device *dev);
+ int acpi_dev_pm_attach(struct device *dev, bool power_on);
++bool acpi_storage_d3(struct device *dev);
+ #else
+ static inline int acpi_subsys_runtime_suspend(struct device *dev) { return 0; }
+ static inline int acpi_subsys_runtime_resume(struct device *dev) { return 0; }
+@@ -1008,6 +1009,10 @@ static inline int acpi_dev_pm_attach(struct device *dev, bool power_on)
+ {
+ 	return 0;
+ }
++static inline bool acpi_storage_d3(struct device *dev)
++{
++	return false;
++}
+ #endif
+ 
+ #if defined(CONFIG_ACPI) && defined(CONFIG_PM_SLEEP)
 -- 
 2.40.1
 
