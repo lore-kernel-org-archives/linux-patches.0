@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0615E199C4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192DA1803A
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENW8Q3n5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D59C433C8;
-	Mon,  9 Oct 2023 13:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jOBAa8i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 847B8C433C8;
+	Mon,  9 Oct 2023 13:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857396;
-	bh=SyFF2QwuNgRAaQh5cxawoQ9vwhDumtBD9mzBKTDN0bE=;
+	s=korg; t=1696857399;
+	bh=MDojoTT4IfKsRvxQ9hboOYF5Lx884qOW9rpYWIRnEMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENW8Q3n5XrMoLKW0hZQX0A66djHxPLDqzTW91FXf1Z3w7xHjYc8Cq30EtVSScAQY/
-	 DLCcP/iKuUhkUOUpjTWZucM+xi4ppn7mnhtrAjJaAieTJGpjnw/uzY7F4fE7CDSFNP
-	 Hwjw4B9vqWQ+sRF67mOVsfFf9qcrDl7Gz/4ysF+4=
+	b=1jOBAa8iAu0KhSyDb04N8q9Z02TA/alIbUJVvGUdplFxelFEP0SzW6/3q4mTfCZdx
+	 JPSooL/raYmmrk8SDX7C0xHG66NWee5p5BGv4GJyGjZwdXsCx+gRmN6rgniv3mG0Oj
+	 SU1EXKIBtM3TafwgGBW+IjI/VkWu71m+0YkdVlO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/162] ring-buffer: Fix bytes info in per_cpu buffer stats
-Date: Mon,  9 Oct 2023 15:00:14 +0200
-Message-ID: <20231009130123.860031453@linuxfoundation.org>
+Subject: [PATCH 6.1 016/162] scsi: sd: Differentiate system and runtime start/stop management
+Date: Mon,  9 Oct 2023 14:59:57 +0200
+Message-ID: <20231009130123.395662077@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -42,147 +44,299 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 45d99ea451d0c30bfd4864f0fe485d7dac014902 ]
+[ Upstream commit 3cc2ffe5c16dc65dfac354bc5b5bc98d3b397567 ]
 
-The 'bytes' info in file 'per_cpu/cpu<X>/stats' means the number of
-bytes in cpu buffer that have not been consumed. However, currently
-after consuming data by reading file 'trace_pipe', the 'bytes' info
-was not changed as expected.
+The underlying device and driver of a SCSI disk may have different
+system and runtime power mode control requirements. This is because
+runtime power management affects only the SCSI disk, while system level
+power management affects all devices, including the controller for the
+SCSI disk.
 
-  # cat per_cpu/cpu0/stats
-  entries: 0
-  overrun: 0
-  commit overrun: 0
-  bytes: 568             <--- 'bytes' is problematical !!!
-  oldest event ts:  8651.371479
-  now ts:  8653.912224
-  dropped events: 0
-  read events: 8
+For instance, issuing a START STOP UNIT command when a SCSI disk is
+runtime suspended and resumed is fine: the command is translated to a
+STANDBY IMMEDIATE command to spin down the ATA disk and to a VERIFY
+command to wake it up. The SCSI disk runtime operations have no effect
+on the ata port device used to connect the ATA disk. However, for
+system suspend/resume operations, the ATA port used to connect the
+device will also be suspended and resumed, with the resume operation
+requiring re-validating the device link and the device itself. In this
+case, issuing a VERIFY command to spinup the disk must be done before
+starting to revalidate the device, when the ata port is being resumed.
+In such case, we must not allow the SCSI disk driver to issue START STOP
+UNIT commands.
 
-The root cause is incorrect stat on cpu_buffer->read_bytes. To fix it:
-  1. When stat 'read_bytes', account consumed event in rb_advance_reader();
-  2. When stat 'entries_bytes', exclude the discarded padding event which
-     is smaller than minimum size because it is invisible to reader. Then
-     use rb_page_commit() instead of BUF_PAGE_SIZE at where accounting for
-     page-based read/remove/overrun.
+Allow a low level driver to refine the SCSI disk start/stop management
+by differentiating system and runtime cases with two new SCSI device
+flags: manage_system_start_stop and manage_runtime_start_stop. These new
+flags replace the current manage_start_stop flag. Drivers setting the
+manage_start_stop are modifed to set both new flags, thus preserving the
+existing start/stop management behavior. For backward compatibility, the
+old manage_start_stop sysfs device attribute is kept as a read-only
+attribute showing a value of 1 for devices enabling both new flags and 0
+otherwise.
 
-Also correct the comments of ring_buffer_bytes_cpu() in this patch.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230921125425.1708423-1-zhengyejian1@huawei.com
-
+Fixes: 0a8589055936 ("ata,scsi: do not issue START STOP UNIT on resume")
 Cc: stable@vger.kernel.org
-Fixes: c64e148a3be3 ("trace: Add ring buffer stats to measure rate of events")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 99398d2070ab ("scsi: sd: Do not issue commands to suspended disks on shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ drivers/ata/libata-scsi.c  |  3 +-
+ drivers/firewire/sbp2.c    |  9 ++--
+ drivers/scsi/sd.c          | 90 ++++++++++++++++++++++++++++++--------
+ include/scsi/scsi_device.h |  5 ++-
+ 4 files changed, 84 insertions(+), 23 deletions(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 51737b3d54b35..b7383358c4ea1 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -354,6 +354,11 @@ static void rb_init_page(struct buffer_data_page *bpage)
- 	local_set(&bpage->commit, 0);
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index 9c8dd9f86cbb3..8cc8268327f0c 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1087,7 +1087,8 @@ int ata_scsi_dev_config(struct scsi_device *sdev, struct ata_device *dev)
+ 		 * will be woken up by ata_port_pm_resume() with a port reset
+ 		 * and device revalidation.
+ 		 */
+-		sdev->manage_start_stop = 1;
++		sdev->manage_system_start_stop = true;
++		sdev->manage_runtime_start_stop = true;
+ 		sdev->no_start_on_resume = 1;
+ 	}
+ 
+diff --git a/drivers/firewire/sbp2.c b/drivers/firewire/sbp2.c
+index 60051c0cabeaa..e322a326546b5 100644
+--- a/drivers/firewire/sbp2.c
++++ b/drivers/firewire/sbp2.c
+@@ -81,7 +81,8 @@ MODULE_PARM_DESC(exclusive_login, "Exclusive login to sbp2 device "
+  *
+  * - power condition
+  *   Set the power condition field in the START STOP UNIT commands sent by
+- *   sd_mod on suspend, resume, and shutdown (if manage_start_stop is on).
++ *   sd_mod on suspend, resume, and shutdown (if manage_system_start_stop or
++ *   manage_runtime_start_stop is on).
+  *   Some disks need this to spin down or to resume properly.
+  *
+  * - override internal blacklist
+@@ -1517,8 +1518,10 @@ static int sbp2_scsi_slave_configure(struct scsi_device *sdev)
+ 
+ 	sdev->use_10_for_rw = 1;
+ 
+-	if (sbp2_param_exclusive_login)
+-		sdev->manage_start_stop = 1;
++	if (sbp2_param_exclusive_login) {
++		sdev->manage_system_start_stop = true;
++		sdev->manage_runtime_start_stop = true;
++	}
+ 
+ 	if (sdev->type == TYPE_ROM)
+ 		sdev->use_10_for_ms = 1;
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index 5bfca49415113..2ed57dfaf9ee0 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -213,18 +213,32 @@ cache_type_store(struct device *dev, struct device_attribute *attr,
  }
  
-+static __always_inline unsigned int rb_page_commit(struct buffer_page *bpage)
+ static ssize_t
+-manage_start_stop_show(struct device *dev, struct device_attribute *attr,
+-		       char *buf)
++manage_start_stop_show(struct device *dev,
++		       struct device_attribute *attr, char *buf)
+ {
+ 	struct scsi_disk *sdkp = to_scsi_disk(dev);
+ 	struct scsi_device *sdp = sdkp->device;
+ 
+-	return sprintf(buf, "%u\n", sdp->manage_start_stop);
++	return sysfs_emit(buf, "%u\n",
++			  sdp->manage_system_start_stop &&
++			  sdp->manage_runtime_start_stop);
+ }
++static DEVICE_ATTR_RO(manage_start_stop);
+ 
+ static ssize_t
+-manage_start_stop_store(struct device *dev, struct device_attribute *attr,
+-			const char *buf, size_t count)
++manage_system_start_stop_show(struct device *dev,
++			      struct device_attribute *attr, char *buf)
 +{
-+	return local_read(&bpage->page->commit);
++	struct scsi_disk *sdkp = to_scsi_disk(dev);
++	struct scsi_device *sdp = sdkp->device;
++
++	return sysfs_emit(buf, "%u\n", sdp->manage_system_start_stop);
 +}
 +
- static void free_buffer_page(struct buffer_page *bpage)
++static ssize_t
++manage_system_start_stop_store(struct device *dev,
++			       struct device_attribute *attr,
++			       const char *buf, size_t count)
  {
- 	free_page((unsigned long)bpage->page);
-@@ -2020,7 +2025,7 @@ rb_remove_pages(struct ring_buffer_per_cpu *cpu_buffer, unsigned long nr_pages)
- 			 * Increment overrun to account for the lost events.
- 			 */
- 			local_add(page_entries, &cpu_buffer->overrun);
--			local_sub(BUF_PAGE_SIZE, &cpu_buffer->entries_bytes);
-+			local_sub(rb_page_commit(to_remove_page), &cpu_buffer->entries_bytes);
- 			local_inc(&cpu_buffer->pages_lost);
- 		}
+ 	struct scsi_disk *sdkp = to_scsi_disk(dev);
+ 	struct scsi_device *sdp = sdkp->device;
+@@ -236,11 +250,42 @@ manage_start_stop_store(struct device *dev, struct device_attribute *attr,
+ 	if (kstrtobool(buf, &v))
+ 		return -EINVAL;
  
-@@ -2364,11 +2369,6 @@ rb_reader_event(struct ring_buffer_per_cpu *cpu_buffer)
- 			       cpu_buffer->reader_page->read);
+-	sdp->manage_start_stop = v;
++	sdp->manage_system_start_stop = v;
+ 
+ 	return count;
+ }
+-static DEVICE_ATTR_RW(manage_start_stop);
++static DEVICE_ATTR_RW(manage_system_start_stop);
++
++static ssize_t
++manage_runtime_start_stop_show(struct device *dev,
++			       struct device_attribute *attr, char *buf)
++{
++	struct scsi_disk *sdkp = to_scsi_disk(dev);
++	struct scsi_device *sdp = sdkp->device;
++
++	return sysfs_emit(buf, "%u\n", sdp->manage_runtime_start_stop);
++}
++
++static ssize_t
++manage_runtime_start_stop_store(struct device *dev,
++				struct device_attribute *attr,
++				const char *buf, size_t count)
++{
++	struct scsi_disk *sdkp = to_scsi_disk(dev);
++	struct scsi_device *sdp = sdkp->device;
++	bool v;
++
++	if (!capable(CAP_SYS_ADMIN))
++		return -EACCES;
++
++	if (kstrtobool(buf, &v))
++		return -EINVAL;
++
++	sdp->manage_runtime_start_stop = v;
++
++	return count;
++}
++static DEVICE_ATTR_RW(manage_runtime_start_stop);
+ 
+ static ssize_t
+ allow_restart_show(struct device *dev, struct device_attribute *attr, char *buf)
+@@ -572,6 +617,8 @@ static struct attribute *sd_disk_attrs[] = {
+ 	&dev_attr_FUA.attr,
+ 	&dev_attr_allow_restart.attr,
+ 	&dev_attr_manage_start_stop.attr,
++	&dev_attr_manage_system_start_stop.attr,
++	&dev_attr_manage_runtime_start_stop.attr,
+ 	&dev_attr_protection_type.attr,
+ 	&dev_attr_protection_mode.attr,
+ 	&dev_attr_app_tag_own.attr,
+@@ -3652,13 +3699,20 @@ static void sd_shutdown(struct device *dev)
+ 		sd_sync_cache(sdkp, NULL);
+ 	}
+ 
+-	if (system_state != SYSTEM_RESTART && sdkp->device->manage_start_stop) {
++	if (system_state != SYSTEM_RESTART &&
++	    sdkp->device->manage_system_start_stop) {
+ 		sd_printk(KERN_NOTICE, sdkp, "Stopping disk\n");
+ 		sd_start_stop_device(sdkp, 0);
+ 	}
  }
  
--static __always_inline unsigned rb_page_commit(struct buffer_page *bpage)
--{
--	return local_read(&bpage->page->commit);
--}
--
- static struct ring_buffer_event *
- rb_iter_head_event(struct ring_buffer_iter *iter)
- {
-@@ -2514,7 +2514,7 @@ rb_handle_head_page(struct ring_buffer_per_cpu *cpu_buffer,
- 		 * the counters.
- 		 */
- 		local_add(entries, &cpu_buffer->overrun);
--		local_sub(BUF_PAGE_SIZE, &cpu_buffer->entries_bytes);
-+		local_sub(rb_page_commit(next_page), &cpu_buffer->entries_bytes);
- 		local_inc(&cpu_buffer->pages_lost);
- 
- 		/*
-@@ -2657,9 +2657,6 @@ rb_reset_tail(struct ring_buffer_per_cpu *cpu_buffer,
- 
- 	event = __rb_page_index(tail_page, tail);
- 
--	/* account for padding bytes */
--	local_add(BUF_PAGE_SIZE - tail, &cpu_buffer->entries_bytes);
--
- 	/*
- 	 * Save the original length to the meta data.
- 	 * This will be used by the reader to add lost event
-@@ -2673,7 +2670,8 @@ rb_reset_tail(struct ring_buffer_per_cpu *cpu_buffer,
- 	 * write counter enough to allow another writer to slip
- 	 * in on this page.
- 	 * We put in a discarded commit instead, to make sure
--	 * that this space is not used again.
-+	 * that this space is not used again, and this space will
-+	 * not be accounted into 'entries_bytes'.
- 	 *
- 	 * If we are less than the minimum size, we don't need to
- 	 * worry about it.
-@@ -2698,6 +2696,9 @@ rb_reset_tail(struct ring_buffer_per_cpu *cpu_buffer,
- 	/* time delta must be non zero */
- 	event->time_delta = 1;
- 
-+	/* account for padding bytes */
-+	local_add(BUF_PAGE_SIZE - tail, &cpu_buffer->entries_bytes);
+-static int sd_suspend_common(struct device *dev, bool ignore_stop_errors)
++static inline bool sd_do_start_stop(struct scsi_device *sdev, bool runtime)
++{
++	return (sdev->manage_system_start_stop && !runtime) ||
++		(sdev->manage_runtime_start_stop && runtime);
++}
 +
- 	/* Make sure the padding is visible before the tail_page->write update */
- 	smp_wmb();
++static int sd_suspend_common(struct device *dev, bool runtime)
+ {
+ 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
+ 	struct scsi_sense_hdr sshdr;
+@@ -3690,12 +3744,12 @@ static int sd_suspend_common(struct device *dev, bool ignore_stop_errors)
+ 		}
+ 	}
  
-@@ -4215,7 +4216,7 @@ u64 ring_buffer_oldest_event_ts(struct trace_buffer *buffer, int cpu)
- EXPORT_SYMBOL_GPL(ring_buffer_oldest_event_ts);
+-	if (sdkp->device->manage_start_stop) {
++	if (sd_do_start_stop(sdkp->device, runtime)) {
+ 		if (!sdkp->device->silence_suspend)
+ 			sd_printk(KERN_NOTICE, sdkp, "Stopping disk\n");
+ 		/* an error is not worth aborting a system sleep */
+ 		ret = sd_start_stop_device(sdkp, 0);
+-		if (ignore_stop_errors)
++		if (!runtime)
+ 			ret = 0;
+ 	}
+ 
+@@ -3707,23 +3761,23 @@ static int sd_suspend_system(struct device *dev)
+ 	if (pm_runtime_suspended(dev))
+ 		return 0;
+ 
+-	return sd_suspend_common(dev, true);
++	return sd_suspend_common(dev, false);
+ }
+ 
+ static int sd_suspend_runtime(struct device *dev)
+ {
+-	return sd_suspend_common(dev, false);
++	return sd_suspend_common(dev, true);
+ }
+ 
+-static int sd_resume(struct device *dev)
++static int sd_resume(struct device *dev, bool runtime)
+ {
+ 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
+-	int ret = 0;
++	int ret;
+ 
+ 	if (!sdkp)	/* E.g.: runtime resume at the start of sd_probe() */
+ 		return 0;
+ 
+-	if (!sdkp->device->manage_start_stop)
++	if (!sd_do_start_stop(sdkp->device, runtime))
+ 		return 0;
+ 
+ 	if (!sdkp->device->no_start_on_resume) {
+@@ -3741,7 +3795,7 @@ static int sd_resume_system(struct device *dev)
+ 	if (pm_runtime_suspended(dev))
+ 		return 0;
+ 
+-	return sd_resume(dev);
++	return sd_resume(dev, false);
+ }
+ 
+ static int sd_resume_runtime(struct device *dev)
+@@ -3765,7 +3819,7 @@ static int sd_resume_runtime(struct device *dev)
+ 				  "Failed to clear sense data\n");
+ 	}
+ 
+-	return sd_resume(dev);
++	return sd_resume(dev, true);
+ }
  
  /**
-- * ring_buffer_bytes_cpu - get the number of bytes consumed in a cpu buffer
-+ * ring_buffer_bytes_cpu - get the number of bytes unconsumed in a cpu buffer
-  * @buffer: The ring buffer
-  * @cpu: The per CPU buffer to read from.
-  */
-@@ -4725,6 +4726,7 @@ static void rb_advance_reader(struct ring_buffer_per_cpu *cpu_buffer)
- 
- 	length = rb_event_length(event);
- 	cpu_buffer->reader_page->read += length;
-+	cpu_buffer->read_bytes += length;
- }
- 
- static void rb_advance_iter(struct ring_buffer_iter *iter)
-@@ -5820,7 +5822,7 @@ int ring_buffer_read_page(struct trace_buffer *buffer,
- 	} else {
- 		/* update the entry counter */
- 		cpu_buffer->read += rb_page_entries(reader);
--		cpu_buffer->read_bytes += BUF_PAGE_SIZE;
-+		cpu_buffer->read_bytes += rb_page_commit(reader);
- 
- 		/* swap the pages */
- 		rb_init_page(bpage);
+diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
+index 9fdc77db3a2a8..dc2cff18b68bd 100644
+--- a/include/scsi/scsi_device.h
++++ b/include/scsi/scsi_device.h
+@@ -161,6 +161,10 @@ struct scsi_device {
+ 				 * pass settings from slave_alloc to scsi
+ 				 * core. */
+ 	unsigned int eh_timeout; /* Error handling timeout */
++
++	bool manage_system_start_stop; /* Let HLD (sd) manage system start/stop */
++	bool manage_runtime_start_stop; /* Let HLD (sd) manage runtime start/stop */
++
+ 	unsigned removable:1;
+ 	unsigned changed:1;	/* Data invalid due to media change */
+ 	unsigned busy:1;	/* Used to prevent races */
+@@ -192,7 +196,6 @@ struct scsi_device {
+ 	unsigned use_192_bytes_for_3f:1; /* ask for 192 bytes from page 0x3f */
+ 	unsigned no_start_on_add:1;	/* do not issue start on add */
+ 	unsigned allow_restart:1; /* issue START_UNIT in error handler */
+-	unsigned manage_start_stop:1;	/* Let HLD (sd) manage start/stop */
+ 	unsigned no_start_on_resume:1; /* Do not issue START_STOP_UNIT on resume */
+ 	unsigned start_stop_pwr_cond:1;	/* Set power cond. in START_STOP_UNIT */
+ 	unsigned no_uld_attach:1; /* disable connecting to upper level drivers */
 -- 
 2.40.1
 
