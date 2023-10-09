@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645EF11CAD
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639E211CAD
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaJ+8DhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5118C433C7;
-	Mon,  9 Oct 2023 13:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLuoKcdt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F11C433C7;
+	Mon,  9 Oct 2023 13:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857506;
-	bh=Cke7oSTpq6XnqI9HEMiRn5zKyKns24vAPDore4gjvSc=;
+	s=korg; t=1696857509;
+	bh=TULCIF2Z2xeUy5buo17W8F+7yJ0LKrZHc8nwJugSly4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iaJ+8DhH6HC2GAIbkfE6IL5UIamHz1a1VF7Xh7S/e6gZS8mF+YL2ZWTWMkNsFJ/J4
-	 RULzNmA1uFvkK6BeiXvRx7UDhWJhu6aq7Tc7b4bGMTVLIVvmhE3/KtphxyYfKhouok
-	 DoNTjiyJ6lhSXzsPAbQrvUUcsmBi6vPSpUFDYskw=
+	b=QLuoKcdtbYL1lfsVvOUATL6YdnF6foAaq65uRKhnHNVyBBi/9j0SZevMIKyCpJg9j
+	 YloUgHh1VILAt6o1RzGYmCY6lxYezUKuMypWK8zNHAc7jXVbT0dAAVZFEGF4eZ8aDH
+	 sq2/pGjrKx5xOC3WMpN3mtDAfUsG8fZ1HBjR87k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Jordan Rife <jrife@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 067/162] net: prevent rewrite of msg_name in sock_sendmsg()
-Date: Mon,  9 Oct 2023 15:00:48 +0200
-Message-ID: <20231009130124.776987225@linuxfoundation.org>
+	Jun Ma <Jun.Ma2@amd.com>,
+	David Perry <David.Perry@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 068/162] drm/amd: Fix detection of _PR3 on the PCIe root port
+Date: Mon,  9 Oct 2023 15:00:49 +0200
+Message-ID: <20231009130124.803875331@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -43,105 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jrife@google.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 86a7e0b69bd5b812e48a20c66c2161744f3caa16 upstream.
+commit 134b8c5d8674e7cde380f82e9aedfd46dcdd16f7 upstream.
 
-Callers of sock_sendmsg(), and similarly kernel_sendmsg(), in kernel
-space may observe their value of msg_name change in cases where BPF
-sendmsg hooks rewrite the send address. This has been confirmed to break
-NFS mounts running in UDP mode and has the potential to break other
-systems.
+On some systems with Navi3x dGPU will attempt to use BACO for runtime
+PM but fails to resume properly.  This is because on these systems
+the root port goes into D3cold which is incompatible with BACO.
 
-This patch:
+This happens because in this case dGPU is connected to a bridge between
+root port which causes BOCO detection logic to fail.  Fix the intent of
+the logic by looking at root port, not the immediate upstream bridge for
+_PR3.
 
-1) Creates a new function called __sock_sendmsg() with same logic as the
-   old sock_sendmsg() function.
-2) Replaces calls to sock_sendmsg() made by __sys_sendto() and
-   __sys_sendmsg() with __sock_sendmsg() to avoid an unnecessary copy,
-   as these system calls are already protected.
-3) Modifies sock_sendmsg() so that it makes a copy of msg_name if
-   present before passing it down the stack to insulate callers from
-   changes to the send address.
-
-Link: https://lore.kernel.org/netdev/20230912013332.2048422-1-jrife@google.com/
-Fixes: 1cedee13d25a ("bpf: Hooks for sys_sendmsg")
 Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Jordan Rife <jrife@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Suggested-by: Jun Ma <Jun.Ma2@amd.com>
+Tested-by: David Perry <David.Perry@amd.com>
+Fixes: b10c1c5b3a4e ("drm/amdgpu: add check for ACPI power resources")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/socket.c |   29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -720,6 +720,14 @@ static inline int sock_sendmsg_nosec(str
- 	return ret;
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -2179,7 +2179,7 @@ static int amdgpu_device_ip_early_init(s
+ 		adev->flags |= AMD_IS_PX;
  
-+static int __sock_sendmsg(struct socket *sock, struct msghdr *msg)
-+{
-+	int err = security_socket_sendmsg(sock, msg,
-+					  msg_data_left(msg));
-+
-+	return err ?: sock_sendmsg_nosec(sock, msg);
-+}
-+
- /**
-  *	sock_sendmsg - send a message through @sock
-  *	@sock: socket
-@@ -730,10 +738,19 @@ static inline int sock_sendmsg_nosec(str
-  */
- int sock_sendmsg(struct socket *sock, struct msghdr *msg)
- {
--	int err = security_socket_sendmsg(sock, msg,
--					  msg_data_left(msg));
-+	struct sockaddr_storage *save_addr = (struct sockaddr_storage *)msg->msg_name;
-+	struct sockaddr_storage address;
-+	int ret;
- 
--	return err ?: sock_sendmsg_nosec(sock, msg);
-+	if (msg->msg_name) {
-+		memcpy(&address, msg->msg_name, msg->msg_namelen);
-+		msg->msg_name = &address;
-+	}
-+
-+	ret = __sock_sendmsg(sock, msg);
-+	msg->msg_name = save_addr;
-+
-+	return ret;
- }
- EXPORT_SYMBOL(sock_sendmsg);
- 
-@@ -1110,7 +1127,7 @@ static ssize_t sock_write_iter(struct ki
- 	if (sock->type == SOCK_SEQPACKET)
- 		msg.msg_flags |= MSG_EOR;
- 
--	res = sock_sendmsg(sock, &msg);
-+	res = __sock_sendmsg(sock, &msg);
- 	*from = msg.msg_iter;
- 	return res;
- }
-@@ -2114,7 +2131,7 @@ int __sys_sendto(int fd, void __user *bu
- 	if (sock->file->f_flags & O_NONBLOCK)
- 		flags |= MSG_DONTWAIT;
- 	msg.msg_flags = flags;
--	err = sock_sendmsg(sock, &msg);
-+	err = __sock_sendmsg(sock, &msg);
- 
- out_put:
- 	fput_light(sock->file, fput_needed);
-@@ -2479,7 +2496,7 @@ static int ____sys_sendmsg(struct socket
- 		err = sock_sendmsg_nosec(sock, msg_sys);
- 		goto out_freectl;
+ 	if (!(adev->flags & AMD_IS_APU)) {
+-		parent = pci_upstream_bridge(adev->pdev);
++		parent = pcie_find_root_port(adev->pdev);
+ 		adev->has_pr3 = parent ? pci_pr3_present(parent) : false;
  	}
--	err = sock_sendmsg(sock, msg_sys);
-+	err = __sock_sendmsg(sock, msg_sys);
- 	/*
- 	 * If this is sendmmsg() and sending to current destination address was
- 	 * successful, remember it.
+ 
 
 
