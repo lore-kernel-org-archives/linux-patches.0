@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB7418E05
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E25722F00
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tu4wIo/T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BED6C433C8;
-	Mon,  9 Oct 2023 13:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZEi8cAU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB44C433C7;
+	Mon,  9 Oct 2023 13:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858553;
-	bh=hMg9paN6mB8otZqfErrc0j2aacD0QEUhuRNchwP89Ic=;
+	s=korg; t=1696858557;
+	bh=ieH/DvJ/nOWgkksxEdzT0cJGQ9MM2C6Ht7DQSzP4exk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tu4wIo/T/wjk7x0FrldXhBUcfrTNcbezMTXNQH/oWbQApajC5HCyXl2fOTjtJLIXU
-	 aZKQ/W3b27yKZ4HKyqPZFNLhwo6dcRdM2vzhnQk4ktmi1oJO9ffjdpjcmYIVPpHF3C
-	 3cRTks5nTVGGOqsu2BgLaZ53ebijoyF3pk42uM0E=
+	b=nZEi8cAULExHvObYth/Br2LgPWYfB38tyWmccLMqylNknkxxvPkadXSTID4OKuDGV
+	 sulhVJnezF3K31X3pixjTsNDlv222//ZYmrv0RLNj6EiWzwKg9Nmazy4vd2gfEDW2T
+	 qzfLiDKVclYvZgTaS+Z7AsA2I3b0oVyDeFhlaMVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 004/226] tracing: Increase trace array ref count on enable and filter files
-Date: Mon,  9 Oct 2023 14:59:25 +0200
-Message-ID: <20231009130126.825473061@linuxfoundation.org>
+Subject: [PATCH 5.10 005/226] ata: ahci: Drop pointless VPRINTK() calls and convert the remaining ones
+Date: Mon,  9 Oct 2023 14:59:26 +0200
+Message-ID: <20231009130126.854433422@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -47,112 +42,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit f5ca233e2e66dc1c249bf07eefa37e34a6c9346a ]
+[ Upstream commit 93c7711494f47f9c829321e2a8711671b02f6e4c ]
 
-When the trace event enable and filter files are opened, increment the
-trace array ref counter, otherwise they can be accessed when the trace
-array is being deleted. The ref counter keeps the trace array from being
-deleted while those files are opened.
+Drop pointless VPRINTK() calls for entering and existing interrupt
+routines and convert the remaining calls to dev_dbg().
 
-Link: https://lkml.kernel.org/r/20230907024803.456187066@goodmis.org
-Link: https://lore.kernel.org/all/1cb3aee2-19af-c472-e265-05176fe9bd84@huawei.com/
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Fixes: 8530dec63e7b4 ("tracing: Add tracing_check_open_get_tr()")
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Reported-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Stable-dep-of: 737dd811a3db ("ata: libahci: clear pending interrupt status")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c        | 27 +++++++++++++++++++++++++++
- kernel/trace/trace.h        |  2 ++
- kernel/trace/trace_events.c |  6 ++++--
- 3 files changed, 33 insertions(+), 2 deletions(-)
+ drivers/ata/ahci.c       |  4 +---
+ drivers/ata/ahci_xgene.c |  4 ----
+ drivers/ata/libahci.c    | 18 ++++--------------
+ 3 files changed, 5 insertions(+), 21 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 7a64c0cd8819d..196eec0423ff2 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -4559,6 +4559,33 @@ int tracing_open_generic_tr(struct inode *inode, struct file *filp)
- 	return 0;
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index bf949f7da483f..d831a80c25f04 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -703,7 +703,7 @@ static void ahci_pci_init_controller(struct ata_host *host)
+ 
+ 		/* clear port IRQ */
+ 		tmp = readl(port_mmio + PORT_IRQ_STAT);
+-		VPRINTK("PORT_IRQ_STAT 0x%x\n", tmp);
++		dev_dbg(&pdev->dev, "PORT_IRQ_STAT 0x%x\n", tmp);
+ 		if (tmp)
+ 			writel(tmp, port_mmio + PORT_IRQ_STAT);
+ 	}
+@@ -1495,7 +1495,6 @@ static irqreturn_t ahci_thunderx_irq_handler(int irq, void *dev_instance)
+ 	u32 irq_stat, irq_masked;
+ 	unsigned int handled = 1;
+ 
+-	VPRINTK("ENTER\n");
+ 	hpriv = host->private_data;
+ 	mmio = hpriv->mmio;
+ 	irq_stat = readl(mmio + HOST_IRQ_STAT);
+@@ -1512,7 +1511,6 @@ static irqreturn_t ahci_thunderx_irq_handler(int irq, void *dev_instance)
+ 		irq_stat = readl(mmio + HOST_IRQ_STAT);
+ 		spin_unlock(&host->lock);
+ 	} while (irq_stat);
+-	VPRINTK("EXIT\n");
+ 
+ 	return IRQ_RETVAL(handled);
+ }
+diff --git a/drivers/ata/ahci_xgene.c b/drivers/ata/ahci_xgene.c
+index 16246c843365e..e0f0577ac191c 100644
+--- a/drivers/ata/ahci_xgene.c
++++ b/drivers/ata/ahci_xgene.c
+@@ -588,8 +588,6 @@ static irqreturn_t xgene_ahci_irq_intr(int irq, void *dev_instance)
+ 	void __iomem *mmio;
+ 	u32 irq_stat, irq_masked;
+ 
+-	VPRINTK("ENTER\n");
+-
+ 	hpriv = host->private_data;
+ 	mmio = hpriv->mmio;
+ 
+@@ -612,8 +610,6 @@ static irqreturn_t xgene_ahci_irq_intr(int irq, void *dev_instance)
+ 
+ 	spin_unlock(&host->lock);
+ 
+-	VPRINTK("EXIT\n");
+-
+ 	return IRQ_RETVAL(rc);
  }
  
-+/*
-+ * The private pointer of the inode is the trace_event_file.
-+ * Update the tr ref count associated to it.
-+ */
-+int tracing_open_file_tr(struct inode *inode, struct file *filp)
-+{
-+	struct trace_event_file *file = inode->i_private;
-+	int ret;
-+
-+	ret = tracing_check_open_get_tr(file->tr);
-+	if (ret)
-+		return ret;
-+
-+	filp->private_data = inode->i_private;
-+
-+	return 0;
-+}
-+
-+int tracing_release_file_tr(struct inode *inode, struct file *filp)
-+{
-+	struct trace_event_file *file = inode->i_private;
-+
-+	trace_array_put(file->tr);
-+
-+	return 0;
-+}
-+
- static int tracing_release(struct inode *inode, struct file *file)
- {
- 	struct trace_array *tr = inode->i_private;
-diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
-index dfde855dafda7..7fa00b83dfa4b 100644
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -730,6 +730,8 @@ void tracing_reset_all_online_cpus(void);
- void tracing_reset_all_online_cpus_unlocked(void);
- int tracing_open_generic(struct inode *inode, struct file *filp);
- int tracing_open_generic_tr(struct inode *inode, struct file *filp);
-+int tracing_open_file_tr(struct inode *inode, struct file *filp);
-+int tracing_release_file_tr(struct inode *inode, struct file *filp);
- bool tracing_is_disabled(void);
- bool tracer_tracing_is_on(struct trace_array *tr);
- void tracer_tracing_on(struct trace_array *tr);
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index a46d34d840f69..321cfda1b3338 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -1855,9 +1855,10 @@ static const struct file_operations ftrace_set_event_notrace_pid_fops = {
- };
+diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
+index fec2e9754aed2..08c4b641691b1 100644
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -1215,12 +1215,12 @@ static void ahci_port_init(struct device *dev, struct ata_port *ap,
  
- static const struct file_operations ftrace_enable_fops = {
--	.open = tracing_open_generic,
-+	.open = tracing_open_file_tr,
- 	.read = event_enable_read,
- 	.write = event_enable_write,
-+	.release = tracing_release_file_tr,
- 	.llseek = default_llseek,
- };
+ 	/* clear SError */
+ 	tmp = readl(port_mmio + PORT_SCR_ERR);
+-	VPRINTK("PORT_SCR_ERR 0x%x\n", tmp);
++	dev_dbg(dev, "PORT_SCR_ERR 0x%x\n", tmp);
+ 	writel(tmp, port_mmio + PORT_SCR_ERR);
  
-@@ -1874,9 +1875,10 @@ static const struct file_operations ftrace_event_id_fops = {
- };
+ 	/* clear port IRQ */
+ 	tmp = readl(port_mmio + PORT_IRQ_STAT);
+-	VPRINTK("PORT_IRQ_STAT 0x%x\n", tmp);
++	dev_dbg(dev, "PORT_IRQ_STAT 0x%x\n", tmp);
+ 	if (tmp)
+ 		writel(tmp, port_mmio + PORT_IRQ_STAT);
  
- static const struct file_operations ftrace_event_filter_fops = {
--	.open = tracing_open_generic,
-+	.open = tracing_open_file_tr,
- 	.read = event_filter_read,
- 	.write = event_filter_write,
-+	.release = tracing_release_file_tr,
- 	.llseek = default_llseek,
- };
+@@ -1251,10 +1251,10 @@ void ahci_init_controller(struct ata_host *host)
+ 	}
+ 
+ 	tmp = readl(mmio + HOST_CTL);
+-	VPRINTK("HOST_CTL 0x%x\n", tmp);
++	dev_dbg(host->dev, "HOST_CTL 0x%x\n", tmp);
+ 	writel(tmp | HOST_IRQ_EN, mmio + HOST_CTL);
+ 	tmp = readl(mmio + HOST_CTL);
+-	VPRINTK("HOST_CTL 0x%x\n", tmp);
++	dev_dbg(host->dev, "HOST_CTL 0x%x\n", tmp);
+ }
+ EXPORT_SYMBOL_GPL(ahci_init_controller);
+ 
+@@ -1905,8 +1905,6 @@ static irqreturn_t ahci_multi_irqs_intr_hard(int irq, void *dev_instance)
+ 	void __iomem *port_mmio = ahci_port_base(ap);
+ 	u32 status;
+ 
+-	VPRINTK("ENTER\n");
+-
+ 	status = readl(port_mmio + PORT_IRQ_STAT);
+ 	writel(status, port_mmio + PORT_IRQ_STAT);
+ 
+@@ -1914,8 +1912,6 @@ static irqreturn_t ahci_multi_irqs_intr_hard(int irq, void *dev_instance)
+ 	ahci_handle_port_interrupt(ap, port_mmio, status);
+ 	spin_unlock(ap->lock);
+ 
+-	VPRINTK("EXIT\n");
+-
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -1932,9 +1928,7 @@ u32 ahci_handle_port_intr(struct ata_host *host, u32 irq_masked)
+ 		ap = host->ports[i];
+ 		if (ap) {
+ 			ahci_port_intr(ap);
+-			VPRINTK("port %u\n", i);
+ 		} else {
+-			VPRINTK("port %u (no irq)\n", i);
+ 			if (ata_ratelimit())
+ 				dev_warn(host->dev,
+ 					 "interrupt on disabled port %u\n", i);
+@@ -1955,8 +1949,6 @@ static irqreturn_t ahci_single_level_irq_intr(int irq, void *dev_instance)
+ 	void __iomem *mmio;
+ 	u32 irq_stat, irq_masked;
+ 
+-	VPRINTK("ENTER\n");
+-
+ 	hpriv = host->private_data;
+ 	mmio = hpriv->mmio;
+ 
+@@ -1984,8 +1976,6 @@ static irqreturn_t ahci_single_level_irq_intr(int irq, void *dev_instance)
+ 
+ 	spin_unlock(&host->lock);
+ 
+-	VPRINTK("EXIT\n");
+-
+ 	return IRQ_RETVAL(rc);
+ }
  
 -- 
 2.40.1
