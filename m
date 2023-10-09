@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32452341AC
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67550341AC
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPzS8bym"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BC2C433CD;
-	Mon,  9 Oct 2023 13:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWRB6NmH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D608FC433C8;
+	Mon,  9 Oct 2023 13:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859662;
-	bh=4KFQTdTb3O/ww/t1IfSFoWPsvQIEliZOEcX5w11BncY=;
+	s=korg; t=1696859665;
+	bh=TgZ3ByWtGzLHE+fwsFtIz0koGx813u0iLkDMvEVYgQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CPzS8bymDH57uJ/5YsqR6KhXmnOwCfqmldmfQ6HnTBLjc2W0xkWUKraH+qw9OuKCn
-	 VFnVXybOmN0ruyGtEc8031iYoxS3C/bnr6plLitC2Z8zuRul827JeYgbApRx9vR3cb
-	 afL0IJ7+Uk0bF9UZSsPGsYPXt1L3EQn3tq+Ui9II=
+	b=jWRB6NmH/gfSik0Eh82Vx9v+wGj+tHkIIcW8JvY+0TMV4z0QwlIRrbj8hRk4d2XVP
+	 vx5FUVDDidPw0y9kpt7qBMbDJX1eSphyVtXNwkv6veUwxh3Oqztoa6hPrO9SBbq15g
+	 wpU/tvGCGES4wEaCZw69vYGNVPAjaEGBsPjZ/GCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jann Horn <jannh@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 91/91] dccp: fix dccp_v4_err()/dccp_v6_err() again
-Date: Mon,  9 Oct 2023 15:07:03 +0200
-Message-ID: <20231009130114.706367075@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 4.19 67/91] qed/red_ll2: Fix undefined behavior bug in struct qed_ll2_info
+Date: Mon,  9 Oct 2023 15:06:39 +0200
+Message-ID: <20231009130113.827414345@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -43,125 +43,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit 6af289746a636f71f4c0535a9801774118486c7a upstream.
+commit eea03d18af9c44235865a4bc9bec4d780ef6cf21 upstream.
 
-dh->dccph_x is the 9th byte (offset 8) in "struct dccp_hdr",
-not in the "byte 7" as Jann claimed.
+The flexible structure (a structure that contains a flexible-array member
+at the end) `qed_ll2_tx_packet` is nested within the second layer of
+`struct qed_ll2_info`:
 
-We need to make sure the ICMP messages are big enough,
-using more standard ways (no more assumptions).
+struct qed_ll2_tx_packet {
+	...
+        /* Flexible Array of bds_set determined by max_bds_per_packet */
+        struct {
+                struct core_tx_bd *txq_bd;
+                dma_addr_t tx_frag;
+                u16 frag_len;
+        } bds_set[];
+};
 
-syzbot reported:
-BUG: KMSAN: uninit-value in pskb_may_pull_reason include/linux/skbuff.h:2667 [inline]
-BUG: KMSAN: uninit-value in pskb_may_pull include/linux/skbuff.h:2681 [inline]
-BUG: KMSAN: uninit-value in dccp_v6_err+0x426/0x1aa0 net/dccp/ipv6.c:94
-pskb_may_pull_reason include/linux/skbuff.h:2667 [inline]
-pskb_may_pull include/linux/skbuff.h:2681 [inline]
-dccp_v6_err+0x426/0x1aa0 net/dccp/ipv6.c:94
-icmpv6_notify+0x4c7/0x880 net/ipv6/icmp.c:867
-icmpv6_rcv+0x19d5/0x30d0
-ip6_protocol_deliver_rcu+0xda6/0x2a60 net/ipv6/ip6_input.c:438
-ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
-NF_HOOK include/linux/netfilter.h:304 [inline]
-ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
-ip6_mc_input+0xa7e/0xc80 net/ipv6/ip6_input.c:586
-dst_input include/net/dst.h:468 [inline]
-ip6_rcv_finish+0x5db/0x870 net/ipv6/ip6_input.c:79
-NF_HOOK include/linux/netfilter.h:304 [inline]
-ipv6_rcv+0xda/0x390 net/ipv6/ip6_input.c:310
-__netif_receive_skb_one_core net/core/dev.c:5523 [inline]
-__netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5637
-netif_receive_skb_internal net/core/dev.c:5723 [inline]
-netif_receive_skb+0x58/0x660 net/core/dev.c:5782
-tun_rx_batched+0x83b/0x920
-tun_get_user+0x564c/0x6940 drivers/net/tun.c:2002
-tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-call_write_iter include/linux/fs.h:1985 [inline]
-new_sync_write fs/read_write.c:491 [inline]
-vfs_write+0x8ef/0x15c0 fs/read_write.c:584
-ksys_write+0x20f/0x4c0 fs/read_write.c:637
-__do_sys_write fs/read_write.c:649 [inline]
-__se_sys_write fs/read_write.c:646 [inline]
-__x64_sys_write+0x93/0xd0 fs/read_write.c:646
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+struct qed_ll2_tx_queue {
+	...
+	struct qed_ll2_tx_packet cur_completing_packet;
+};
 
-Uninit was created at:
-slab_post_alloc_hook+0x12f/0xb70 mm/slab.h:767
-slab_alloc_node mm/slub.c:3478 [inline]
-kmem_cache_alloc_node+0x577/0xa80 mm/slub.c:3523
-kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:559
-__alloc_skb+0x318/0x740 net/core/skbuff.c:650
-alloc_skb include/linux/skbuff.h:1286 [inline]
-alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6313
-sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2795
-tun_alloc_skb drivers/net/tun.c:1531 [inline]
-tun_get_user+0x23cf/0x6940 drivers/net/tun.c:1846
-tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-call_write_iter include/linux/fs.h:1985 [inline]
-new_sync_write fs/read_write.c:491 [inline]
-vfs_write+0x8ef/0x15c0 fs/read_write.c:584
-ksys_write+0x20f/0x4c0 fs/read_write.c:637
-__do_sys_write fs/read_write.c:649 [inline]
-__se_sys_write fs/read_write.c:646 [inline]
-__x64_sys_write+0x93/0xd0 fs/read_write.c:646
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+struct qed_ll2_info {
+	...
+	struct qed_ll2_tx_queue tx_queue;
+        struct qed_ll2_cbs cbs;
+};
 
-CPU: 0 PID: 4995 Comm: syz-executor153 Not tainted 6.6.0-rc1-syzkaller-00014-ga747acc0b752 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
+The problem is that member `cbs` in `struct qed_ll2_info` is placed just
+after an object of type `struct qed_ll2_tx_queue`, which is in itself
+an implicit flexible structure, which by definition ends in a flexible
+array member, in this case `bds_set`. This causes an undefined behavior
+bug at run-time when dynamic memory is allocated for `bds_set`, which
+could lead to a serious issue if `cbs` in `struct qed_ll2_info` is
+overwritten by the contents of `bds_set`. Notice that the type of `cbs`
+is a structure full of function pointers (and a cookie :) ):
 
-Fixes: 977ad86c2a1b ("dccp: Fix out of bounds access in DCCP error handler")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Jann Horn <jannh@google.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+include/linux/qed/qed_ll2_if.h:
+107 typedef
+108 void (*qed_ll2_complete_rx_packet_cb)(void *cxt,
+109                                       struct qed_ll2_comp_rx_data *data);
+110
+111 typedef
+112 void (*qed_ll2_release_rx_packet_cb)(void *cxt,
+113                                      u8 connection_handle,
+114                                      void *cookie,
+115                                      dma_addr_t rx_buf_addr,
+116                                      bool b_last_packet);
+117
+118 typedef
+119 void (*qed_ll2_complete_tx_packet_cb)(void *cxt,
+120                                       u8 connection_handle,
+121                                       void *cookie,
+122                                       dma_addr_t first_frag_addr,
+123                                       bool b_last_fragment,
+124                                       bool b_last_packet);
+125
+126 typedef
+127 void (*qed_ll2_release_tx_packet_cb)(void *cxt,
+128                                      u8 connection_handle,
+129                                      void *cookie,
+130                                      dma_addr_t first_frag_addr,
+131                                      bool b_last_fragment, bool b_last_packet);
+132
+133 typedef
+134 void (*qed_ll2_slowpath_cb)(void *cxt, u8 connection_handle,
+135                             u32 opaque_data_0, u32 opaque_data_1);
+136
+137 struct qed_ll2_cbs {
+138         qed_ll2_complete_rx_packet_cb rx_comp_cb;
+139         qed_ll2_release_rx_packet_cb rx_release_cb;
+140         qed_ll2_complete_tx_packet_cb tx_comp_cb;
+141         qed_ll2_release_tx_packet_cb tx_release_cb;
+142         qed_ll2_slowpath_cb slowpath_cb;
+143         void *cookie;
+144 };
+
+Fix this by moving the declaration of `cbs` to the  middle of its
+containing structure `qed_ll2_info`, preventing it from being
+overwritten by the contents of `bds_set` at run-time.
+
+This bug was introduced in 2017, when `bds_set` was converted to a
+one-element array, and started to be used as a Variable Length Object
+(VLO) at run-time.
+
+Fixes: f5823fe6897c ("qed: Add ll2 option to limit the number of bds per packet")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/ZQ+Nz8DfPg56pIzr@work
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dccp/ipv4.c |    9 ++-------
- net/dccp/ipv6.c |    9 ++-------
- 2 files changed, 4 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/qlogic/qed/qed_ll2.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/dccp/ipv4.c
-+++ b/net/dccp/ipv4.c
-@@ -247,13 +247,8 @@ static void dccp_v4_err(struct sk_buff *
- 	int err;
- 	struct net *net = dev_net(skb->dev);
+--- a/drivers/net/ethernet/qlogic/qed/qed_ll2.h
++++ b/drivers/net/ethernet/qlogic/qed/qed_ll2.h
+@@ -122,9 +122,9 @@ struct qed_ll2_info {
+ 	enum core_tx_dest tx_dest;
+ 	u8 tx_stats_en;
+ 	bool main_func_queue;
++	struct qed_ll2_cbs cbs;
+ 	struct qed_ll2_rx_queue rx_queue;
+ 	struct qed_ll2_tx_queue tx_queue;
+-	struct qed_ll2_cbs cbs;
+ };
  
--	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
--	 * which is in byte 7 of the dccp header.
--	 * Our caller (icmp_socket_deliver()) already pulled 8 bytes for us.
--	 *
--	 * Later on, we want to access the sequence number fields, which are
--	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
--	 */
-+	if (!pskb_may_pull(skb, offset + sizeof(*dh)))
-+		return;
- 	dh = (struct dccp_hdr *)(skb->data + offset);
- 	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
- 		return;
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -80,13 +80,8 @@ static void dccp_v6_err(struct sk_buff *
- 	__u64 seq;
- 	struct net *net = dev_net(skb->dev);
- 
--	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
--	 * which is in byte 7 of the dccp header.
--	 * Our caller (icmpv6_notify()) already pulled 8 bytes for us.
--	 *
--	 * Later on, we want to access the sequence number fields, which are
--	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
--	 */
-+	if (!pskb_may_pull(skb, offset + sizeof(*dh)))
-+		return;
- 	dh = (struct dccp_hdr *)(skb->data + offset);
- 	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
- 		return;
+ /**
 
 
