@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7D19CA7B
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A7917990
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HlkxxxI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC86C433CA;
-	Mon,  9 Oct 2023 13:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m9n1zbhe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D59C433C9;
+	Mon,  9 Oct 2023 13:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696856853;
-	bh=oB+zmbD9SGwbC/Nn18iEzkw8QgRn1b2QGStBCE/mKoA=;
+	s=korg; t=1696856856;
+	bh=v4G/Ea6XyNvJV5KlSeRteDCOECioiJI+nulTMjzDLHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HlkxxxI9FU5CGTLBTnWAR5SC6q1KaaYma/N5TrAxRNZM8UDVC5Uq8tTH69MVssQLL
-	 cgCTuyW2I+T4Lj0pNIbXie1XXfAtJ4pv17eO4V/2YN3sCp6ajRjV2LdDQyYp/LbNxd
-	 ZWO1tKDGYbonbMbXre8ADqb6WDDh7GX5Z10AVjrU=
+	b=m9n1zbhej6cC1Nn1dTLJGOxr6C1hmx1D8XYTgXVjZ0dOvD8jThwjLhvOXX8U9O+Ah
+	 a0jgJQD4ycuqzDHX/8HjREd5gwKlccA5s1PeScxPNzae7mcijswInTomfI0CYYQZ0r
+	 4PEjpDtT/M1BZmm11HhK49uXN6w7vABfkCYHYSMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,11 +23,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Niklas Cassel <niklas.cassel@wdc.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 013/163] scsi: Do not attempt to rescan suspended devices
-Date: Mon,  9 Oct 2023 14:59:37 +0200
-Message-ID: <20231009130124.383911418@linuxfoundation.org>
+Subject: [PATCH 6.5 014/163] ata: libata-scsi: Fix delayed scsi_rescan_device() execution
+Date: Mon,  9 Oct 2023 14:59:38 +0200
+Message-ID: <20231009130124.410214613@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -48,23 +47,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit ff48b37802e5c134e2dfc4d091f10b2eb5065a72 ]
+[ Upstream commit 8b4d9469d0b0e553208ee6f62f2807111fde18b9 ]
 
-scsi_rescan_device() takes a scsi device lock before executing a device
-handler and device driver rescan methods. Waiting for the completion of
-any command issued to the device by these methods will thus be done with
-the device lock held. As a result, there is a risk of deadlocking within
-the power management code if scsi_rescan_device() is called to handle a
-device resume with the associated scsi device not yet resumed.
+Commit 6aa0365a3c85 ("ata: libata-scsi: Avoid deadlock on rescan after
+device resume") modified ata_scsi_dev_rescan() to check the scsi device
+"is_suspended" power field to ensure that the scsi device associated
+with an ATA device is fully resumed when scsi_rescan_device() is
+executed. However, this fix is problematic as:
+1) It relies on a PM internal field that should not be used without PM
+   device locking protection.
+2) The check for is_suspended and the call to scsi_rescan_device() are
+   not atomic and a suspend PM event may be triggered between them,
+   casuing scsi_rescan_device() to be called on a suspended device and
+   in that function blocking while holding the scsi device lock. This
+   would deadlock a following resume operation.
+These problems can trigger PM deadlocks on resume, especially with
+resume operations triggered quickly after or during suspend operations.
+E.g., a simple bash script like:
 
-Avoid such situation by checking that the target scsi device is in the
-running state, that is, fully capable of executing commands, before
-proceeding with the rescan and bailout returning -EWOULDBLOCK otherwise.
-With this error return, the caller can retry rescaning the device after
-a delay.
+for (( i=0; i<10; i++ )); do
+	echo "+2 > /sys/class/rtc/rtc0/wakealarm
+	echo mem > /sys/power/state
+done
 
-The state check is done with the device lock held and is thus safe
-against incoming suspend power management operations.
+that triggers a resume 2 seconds after starting suspending a system can
+quickly lead to a PM deadlock preventing the system from correctly
+resuming.
+
+Fix this by replacing the check on is_suspended with a check on the
+return value given by scsi_rescan_device() as that function will fail if
+called against a suspended device. Also make sure rescan tasks already
+scheduled are first cancelled before suspending an ata port.
 
 Fixes: 6aa0365a3c85 ("ata: libata-scsi: Avoid deadlock on rescan after device resume")
 Cc: stable@vger.kernel.org
@@ -73,69 +86,109 @@ Reviewed-by: Hannes Reinecke <hare@suse.de>
 Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
 Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Stable-dep-of: 8b4d9469d0b0 ("ata: libata-scsi: Fix delayed scsi_rescan_device() execution")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_scan.c | 18 +++++++++++++++++-
- include/scsi/scsi_host.h |  2 +-
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ drivers/ata/libata-core.c | 16 ++++++++++++++++
+ drivers/ata/libata-scsi.c | 33 +++++++++++++++------------------
+ 2 files changed, 31 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index eaa972bee6c00..902655d759476 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -1619,12 +1619,24 @@ int scsi_add_device(struct Scsi_Host *host, uint channel,
- }
- EXPORT_SYMBOL(scsi_add_device);
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index 76bf185a73c65..6ae9cff6b50c5 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -5245,11 +5245,27 @@ static const unsigned int ata_port_suspend_ehi = ATA_EHI_QUIET
  
--void scsi_rescan_device(struct scsi_device *sdev)
-+int scsi_rescan_device(struct scsi_device *sdev)
+ static void ata_port_suspend(struct ata_port *ap, pm_message_t mesg)
  {
- 	struct device *dev = &sdev->sdev_gendev;
++	/*
++	 * We are about to suspend the port, so we do not care about
++	 * scsi_rescan_device() calls scheduled by previous resume operations.
++	 * The next resume will schedule the rescan again. So cancel any rescan
++	 * that is not done yet.
++	 */
++	cancel_delayed_work_sync(&ap->scsi_rescan_task);
++
+ 	ata_port_request_pm(ap, mesg, 0, ata_port_suspend_ehi, false);
+ }
+ 
+ static void ata_port_suspend_async(struct ata_port *ap, pm_message_t mesg)
+ {
++	/*
++	 * We are about to suspend the port, so we do not care about
++	 * scsi_rescan_device() calls scheduled by previous resume operations.
++	 * The next resume will schedule the rescan again. So cancel any rescan
++	 * that is not done yet.
++	 */
++	cancel_delayed_work_sync(&ap->scsi_rescan_task);
++
+ 	ata_port_request_pm(ap, mesg, 0, ata_port_suspend_ehi, true);
+ }
+ 
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index 22d7c26297889..ed3146c460910 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -4900,7 +4900,7 @@ void ata_scsi_dev_rescan(struct work_struct *work)
+ 	struct ata_link *link;
+ 	struct ata_device *dev;
+ 	unsigned long flags;
+-	bool delay_rescan = false;
 +	int ret = 0;
  
- 	device_lock(dev);
+ 	mutex_lock(&ap->scsi_scan_mutex);
+ 	spin_lock_irqsave(ap->lock, flags);
+@@ -4909,37 +4909,34 @@ void ata_scsi_dev_rescan(struct work_struct *work)
+ 		ata_for_each_dev(dev, link, ENABLED) {
+ 			struct scsi_device *sdev = dev->sdev;
  
-+	/*
-+	 * Bail out if the device is not running. Otherwise, the rescan may
-+	 * block waiting for commands to be executed, with us holding the
-+	 * device lock. This can result in a potential deadlock in the power
-+	 * management core code when system resume is on-going.
-+	 */
-+	if (sdev->sdev_state != SDEV_RUNNING) {
-+		ret = -EWOULDBLOCK;
-+		goto unlock;
-+	}
++			/*
++			 * If the port was suspended before this was scheduled,
++			 * bail out.
++			 */
++			if (ap->pflags & ATA_PFLAG_SUSPENDED)
++				goto unlock;
 +
- 	scsi_attach_vpd(sdev);
- 	scsi_cdl_check(sdev);
+ 			if (!sdev)
+ 				continue;
+ 			if (scsi_device_get(sdev))
+ 				continue;
  
-@@ -1638,7 +1650,11 @@ void scsi_rescan_device(struct scsi_device *sdev)
- 			drv->rescan(dev);
- 		module_put(dev->driver->owner);
+-			/*
+-			 * If the rescan work was scheduled because of a resume
+-			 * event, the port is already fully resumed, but the
+-			 * SCSI device may not yet be fully resumed. In such
+-			 * case, executing scsi_rescan_device() may cause a
+-			 * deadlock with the PM code on device_lock(). Prevent
+-			 * this by giving up and retrying rescan after a short
+-			 * delay.
+-			 */
+-			delay_rescan = sdev->sdev_gendev.power.is_suspended;
+-			if (delay_rescan) {
+-				scsi_device_put(sdev);
+-				break;
+-			}
+-
+ 			spin_unlock_irqrestore(ap->lock, flags);
+-			scsi_rescan_device(sdev);
++			ret = scsi_rescan_device(sdev);
+ 			scsi_device_put(sdev);
+ 			spin_lock_irqsave(ap->lock, flags);
++
++			if (ret)
++				goto unlock;
+ 		}
  	}
-+
-+unlock:
- 	device_unlock(dev);
-+
-+	return ret;
- }
- EXPORT_SYMBOL(scsi_rescan_device);
  
-diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
-index 49f768d0ff370..4c2dc8150c6d7 100644
---- a/include/scsi/scsi_host.h
-+++ b/include/scsi/scsi_host.h
-@@ -764,7 +764,7 @@ scsi_template_proc_dir(const struct scsi_host_template *sht);
- #define scsi_template_proc_dir(sht) NULL
- #endif
- extern void scsi_scan_host(struct Scsi_Host *);
--extern void scsi_rescan_device(struct scsi_device *);
-+extern int scsi_rescan_device(struct scsi_device *sdev);
- extern void scsi_remove_host(struct Scsi_Host *);
- extern struct Scsi_Host *scsi_host_get(struct Scsi_Host *);
- extern int scsi_host_busy(struct Scsi_Host *shost);
++unlock:
+ 	spin_unlock_irqrestore(ap->lock, flags);
+ 	mutex_unlock(&ap->scsi_scan_mutex);
+ 
+-	if (delay_rescan)
++	/* Reschedule with a delay if scsi_rescan_device() returned an error */
++	if (ret)
+ 		schedule_delayed_work(&ap->scsi_rescan_task,
+ 				      msecs_to_jiffies(5));
+ }
 -- 
 2.40.1
 
