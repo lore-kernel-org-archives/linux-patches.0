@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4988B1A592
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855B128DD9
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KeQDe074"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A88C433C8;
-	Mon,  9 Oct 2023 13:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FWdFrVHB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02991C433C7;
+	Mon,  9 Oct 2023 13:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858757;
-	bh=UH0OEMJuIIK2PLSg8Hd4lS6MsZlT+hlACZEiuSNyD5c=;
+	s=korg; t=1696858760;
+	bh=N5U8dpJ660GfjtMjZtzTexX+rzcQyUwrRC3fCDtF00Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KeQDe074XkcnzlDDHQA4eFVUkDHfVV7I5wdc8sATIiq4hKqaOOen1BLSQYVezG3Dy
-	 1OhF93lE/49Tjm9YB1/2AcZ6h9tWXjj6oJEpUK6urkLd1b0CzogV/8fW04gKKaGaZy
-	 spMeukzUFJ+mZiOY9dluxPflswrdjGlX4cWJ3QH0=
+	b=FWdFrVHBj15CL2NBJ3Aay77UD2BJfKLSL5DacjchvgJf1HksnzDveDv/7MHhPSMZh
+	 LlIezAB3EiU/tOr8pWbcwMssI43hVHa9rmKXwaVelDcwwAgvedcajGMDTe3Mv5wZwq
+	 MBu5LmieAuYJhOW+wSkO2NjrUL1VfPlGP0r4wX6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 063/226] netfilter: nf_tables: double hook unregistration in netns path
-Date: Mon,  9 Oct 2023 15:00:24 +0200
-Message-ID: <20231009130128.431993160@linuxfoundation.org>
+Subject: [PATCH 5.10 064/226] Input: i8042 - rename i8042-x86ia64io.h to i8042-acpipnpio.h
+Date: Mon,  9 Oct 2023 15:00:25 +0200
+Message-ID: <20231009130128.457172897@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -41,143 +43,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit f9a43007d3f7ba76d5e7f9421094f00f2ef202f8 upstream.
+[ Upstream commit 8761b9b580d53162cca7868385069c0d4354c9e0 ]
 
-[ This backport includes ab5e5c062f67 ("netfilter: nf_tables: use
-  kfree_rcu(ptr, rcu) to release hooks in clean_net path") ]
+Now i8042-x86ia64io.h is shared by X86 and IA64, but it can be shared
+by more platforms (such as LoongArch) with ACPI firmware on which PNP
+typed keyboard and mouse is configured in DSDT. So rename it to i8042-
+acpipnpio.h.
 
-__nft_release_hooks() is called from pre_netns exit path which
-unregisters the hooks, then the NETDEV_UNREGISTER event is triggered
-which unregisters the hooks again.
-
-[  565.221461] WARNING: CPU: 18 PID: 193 at net/netfilter/core.c:495 __nf_unregister_net_hook+0x247/0x270
-[...]
-[  565.246890] CPU: 18 PID: 193 Comm: kworker/u64:1 Tainted: G            E     5.18.0-rc7+ #27
-[  565.253682] Workqueue: netns cleanup_net
-[  565.257059] RIP: 0010:__nf_unregister_net_hook+0x247/0x270
-[...]
-[  565.297120] Call Trace:
-[  565.300900]  <TASK>
-[  565.304683]  nf_tables_flowtable_event+0x16a/0x220 [nf_tables]
-[  565.308518]  raw_notifier_call_chain+0x63/0x80
-[  565.312386]  unregister_netdevice_many+0x54f/0xb50
-
-Unregister and destroy netdev hook from netns pre_exit via kfree_rcu
-so the NETDEV_UNREGISTER path see unregistered hooks.
-
-Fixes: 767d1216bff8 ("netfilter: nftables: fix possible UAF over chains from packet path in netns")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+Link: https://lore.kernel.org/r/20220917064020.1639709-1-chenhuacai@loongson.cn
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Stable-dep-of: eb09074bdb05 ("Input: i8042 - add quirk for TUXEDO Gemini 17 Gen1/Clevo PD70PN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 54 ++++++++++++++++++++++++++---------
- 1 file changed, 41 insertions(+), 13 deletions(-)
+ .../input/serio/{i8042-x86ia64io.h => i8042-acpipnpio.h}    | 6 +++---
+ drivers/input/serio/i8042.h                                 | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+ rename drivers/input/serio/{i8042-x86ia64io.h => i8042-acpipnpio.h} (99%)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index efbcf85cd6b7a..16e2500e8590b 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -303,12 +303,18 @@ static int nft_netdev_register_hooks(struct net *net,
+diff --git a/drivers/input/serio/i8042-x86ia64io.h b/drivers/input/serio/i8042-acpipnpio.h
+similarity index 99%
+rename from drivers/input/serio/i8042-x86ia64io.h
+rename to drivers/input/serio/i8042-acpipnpio.h
+index 9dcdf21c50bdc..ced72b45aedc8 100644
+--- a/drivers/input/serio/i8042-x86ia64io.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+-#ifndef _I8042_X86IA64IO_H
+-#define _I8042_X86IA64IO_H
++#ifndef _I8042_ACPIPNPIO_H
++#define _I8042_ACPIPNPIO_H
+ 
+ 
+ #ifdef CONFIG_X86
+@@ -1587,4 +1587,4 @@ static inline void i8042_platform_exit(void)
+ 	i8042_pnp_exit();
  }
  
- static void nft_netdev_unregister_hooks(struct net *net,
--					struct list_head *hook_list)
-+					struct list_head *hook_list,
-+					bool release_netdev)
- {
--	struct nft_hook *hook;
-+	struct nft_hook *hook, *next;
- 
--	list_for_each_entry(hook, hook_list, list)
-+	list_for_each_entry_safe(hook, next, hook_list, list) {
- 		nf_unregister_net_hook(net, &hook->ops);
-+		if (release_netdev) {
-+			list_del(&hook->list);
-+			kfree_rcu(hook, rcu);
-+		}
-+	}
- }
- 
- static int nf_tables_register_hook(struct net *net,
-@@ -334,9 +340,10 @@ static int nf_tables_register_hook(struct net *net,
- 	return nf_register_net_hook(net, &basechain->ops);
- }
- 
--static void nf_tables_unregister_hook(struct net *net,
--				      const struct nft_table *table,
--				      struct nft_chain *chain)
-+static void __nf_tables_unregister_hook(struct net *net,
-+					const struct nft_table *table,
-+					struct nft_chain *chain,
-+					bool release_netdev)
- {
- 	struct nft_base_chain *basechain;
- 	const struct nf_hook_ops *ops;
-@@ -351,11 +358,19 @@ static void nf_tables_unregister_hook(struct net *net,
- 		return basechain->type->ops_unregister(net, ops);
- 
- 	if (nft_base_chain_netdev(table->family, basechain->ops.hooknum))
--		nft_netdev_unregister_hooks(net, &basechain->hook_list);
-+		nft_netdev_unregister_hooks(net, &basechain->hook_list,
-+					    release_netdev);
- 	else
- 		nf_unregister_net_hook(net, &basechain->ops);
- }
- 
-+static void nf_tables_unregister_hook(struct net *net,
-+				      const struct nft_table *table,
-+				      struct nft_chain *chain)
-+{
-+	return __nf_tables_unregister_hook(net, table, chain, false);
-+}
-+
- static void nft_trans_commit_list_add_tail(struct net *net, struct nft_trans *trans)
- {
- 	struct nftables_pernet *nft_net;
-@@ -6822,13 +6837,25 @@ static void nft_unregister_flowtable_hook(struct net *net,
- 				    FLOW_BLOCK_UNBIND);
- }
- 
--static void nft_unregister_flowtable_net_hooks(struct net *net,
--					       struct list_head *hook_list)
-+static void __nft_unregister_flowtable_net_hooks(struct net *net,
-+						 struct list_head *hook_list,
-+					         bool release_netdev)
- {
--	struct nft_hook *hook;
-+	struct nft_hook *hook, *next;
- 
--	list_for_each_entry(hook, hook_list, list)
-+	list_for_each_entry_safe(hook, next, hook_list, list) {
- 		nf_unregister_net_hook(net, &hook->ops);
-+		if (release_netdev) {
-+			list_del(&hook->list);
-+			kfree_rcu(hook, rcu);
-+		}
-+	}
-+}
-+
-+static void nft_unregister_flowtable_net_hooks(struct net *net,
-+					       struct list_head *hook_list)
-+{
-+	__nft_unregister_flowtable_net_hooks(net, hook_list, false);
- }
- 
- static int nft_register_flowtable_net_hooks(struct net *net,
-@@ -9472,9 +9499,10 @@ static void __nft_release_hook(struct net *net, struct nft_table *table)
- 	struct nft_chain *chain;
- 
- 	list_for_each_entry(chain, &table->chains, list)
--		nf_tables_unregister_hook(net, table, chain);
-+		__nf_tables_unregister_hook(net, table, chain, true);
- 	list_for_each_entry(flowtable, &table->flowtables, list)
--		nft_unregister_flowtable_net_hooks(net, &flowtable->hook_list);
-+		__nft_unregister_flowtable_net_hooks(net, &flowtable->hook_list,
-+						     true);
- }
- 
- static void __nft_release_hooks(struct net *net)
+-#endif /* _I8042_X86IA64IO_H */
++#endif /* _I8042_ACPIPNPIO_H */
+diff --git a/drivers/input/serio/i8042.h b/drivers/input/serio/i8042.h
+index 55381783dc82d..bf2592fa9a783 100644
+--- a/drivers/input/serio/i8042.h
++++ b/drivers/input/serio/i8042.h
+@@ -20,7 +20,7 @@
+ #elif defined(CONFIG_SPARC)
+ #include "i8042-sparcio.h"
+ #elif defined(CONFIG_X86) || defined(CONFIG_IA64)
+-#include "i8042-x86ia64io.h"
++#include "i8042-acpipnpio.h"
+ #else
+ #include "i8042-io.h"
+ #endif
 -- 
 2.40.1
 
