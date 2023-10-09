@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB01DF59
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245D1DF59
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfB/YzYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D79C433CA;
-	Mon,  9 Oct 2023 13:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGXJzL8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93506C433C7;
+	Mon,  9 Oct 2023 13:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859200;
-	bh=h5xpjg718yNJa0PpC+STGoIM7LISFSLbHCXT58R7o24=;
+	s=korg; t=1696859204;
+	bh=H592UntzO1GEE4Y8baJt7txTdYR5EHRSF8NSDTcaRSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfB/YzYxdAi47IelykHhRtfyHHzGHHBch/uAW3oMMCXGBad+VMjc+f8PT51R6kVxX
-	 5dj+8EncBUsoAUjB9BgXDMWJatEpyju8KOJsq3XiYjtEl4URZyYUJ4+rYVoL3a5dmd
-	 5x0oaJVioA4Cf+KfDO8FFKqGF03Q65zP2SLu071o=
+	b=kGXJzL8r1ku3FS9niSsdMaiMLEYlKACc2ao7ullMrUa6bbr3BiyfIZEafT/Mhn4i5
+	 BWw7cQNZb9FvziCME1i+MTcxDhLKib86fu8LI3hLVELipk6RRbTN+zUlNG4VqkR47h
+	 7To9+MQSFQLFp3SQpI7IaPFokJgDy/cS5rGAGaE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parav Pandit <parav@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>
-Subject: [PATCH 5.10 214/226] RDMA/core: Require admin capabilities to set system parameters
-Date: Mon,  9 Oct 2023 15:02:55 +0200
-Message-ID: <20231009130132.136549950@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 5.10 215/226] of: dynamic: Fix potential memory leak in of_changeset_action()
+Date: Mon,  9 Oct 2023 15:02:56 +0200
+Message-ID: <20231009130132.159628745@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -41,31 +43,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit c38d23a54445f9a8aa6831fafc9af0496ba02f9e upstream.
+commit 55e95bfccf6db8d26a66c46e1de50d53c59a6774 upstream.
 
-Like any other set command, require admin permissions to do it.
+Smatch complains that the error path where "action" is invalid leaks
+the "ce" allocation:
+    drivers/of/dynamic.c:935 of_changeset_action()
+    warn: possible memory leak of 'ce'
 
-Cc: stable@vger.kernel.org
-Fixes: 2b34c5580226 ("RDMA/core: Add command to set ib_core device net namspace sharing mode")
-Link: https://lore.kernel.org/r/75d329fdd7381b52cbdf87910bef16c9965abb1f.1696443438.git.leon@kernel.org
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fix this by doing the validation before the allocation.
+
+Note that there is not any actual problem with upstream kernels. All
+callers of of_changeset_action() are static inlines with fixed action
+values.
+
+Fixes: 914d9d831e61 ("of: dynamic: Refactor action prints to not use "%pOF" inside devtree_lock")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202309011059.EOdr4im9-lkp@intel.com/
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/7dfaf999-30ad-491c-9615-fb1138db121c@moroto.mountain
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/nldev.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/of/dynamic.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -2148,6 +2148,7 @@ static const struct rdma_nl_cbs nldev_cb
- 	},
- 	[RDMA_NLDEV_CMD_SYS_SET] = {
- 		.doit = nldev_set_sys_set_doit,
-+		.flags = RDMA_NL_ADMIN_PERM,
- 	},
- 	[RDMA_NLDEV_CMD_STAT_SET] = {
- 		.doit = nldev_stat_set_doit,
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -893,13 +893,13 @@ int of_changeset_action(struct of_change
+ {
+ 	struct of_changeset_entry *ce;
+ 
++	if (WARN_ON(action >= ARRAY_SIZE(action_names)))
++		return -EINVAL;
++
+ 	ce = kzalloc(sizeof(*ce), GFP_KERNEL);
+ 	if (!ce)
+ 		return -ENOMEM;
+ 
+-	if (WARN_ON(action >= ARRAY_SIZE(action_names)))
+-		return -EINVAL;
+-
+ 	/* get a reference to the node */
+ 	ce->action = action;
+ 	ce->np = of_node_get(np);
 
 
