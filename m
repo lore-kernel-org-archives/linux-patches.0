@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8274518B11
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6025A18B11
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQK5VzQT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC5DC433C9;
-	Mon,  9 Oct 2023 13:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAjcO8Um"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF372C433CC;
+	Mon,  9 Oct 2023 13:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857063;
-	bh=uOxJcdMeUeNOg3LmZF35HJWluaPMk4xEj1EPjazLqoI=;
+	s=korg; t=1696857066;
+	bh=KIUVSilA47RqfjFvLPfuKDnnNsX+gUtj9Nhnw77kYpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQK5VzQTVk+8QoaWoCaVfD3Jx/E5VzlyviofIdehGeqHvIUbG5g+D3+yUGZ/Q8jOD
-	 5e1uJe7bz0JiY6mO6JKM+ZdAGvHE7WRCI/HfDKwNys1rG310oMzgXJh3LlHPqtWK9b
-	 KsCXnl61pCbuo7jyvxWrQPFn0flYxcpXisXT2CgU=
+	b=ZAjcO8UmBZciSL5H9pAeTuohcO20lt8YdaJMddvwdpnNy3tADA36kBQ5rcgKLP8cn
+	 UfTt8OIDn/DID8BEUtGR3qf8tnnKKVZ4V+gcG5sIMtT/iBnXqVmzDU7lfDOXA5squ0
+	 ZnC9oKDdGfhM/IrpgvNXz0XpJUQ9p6lDnmfDpD3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Daniel Bristot de Oliveira <bristot@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 083/163] perf/x86/amd/core: Fix overflow reset on hotplug
-Date: Mon,  9 Oct 2023 15:00:47 +0200
-Message-ID: <20231009130126.338340227@linuxfoundation.org>
+Subject: [PATCH 6.5 084/163] rtla/timerlat: Do not stop user-space if a cpu is offline
+Date: Mon,  9 Oct 2023 15:00:48 +0200
+Message-ID: <20231009130126.365453664@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -42,88 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Daniel Bristot de Oliveira <bristot@kernel.org>
 
-[ Upstream commit 23d2626b841c2adccdeb477665313c02dff02dc3 ]
+[ Upstream commit e8c44d3b713b96cda055a23b21e8c4f931dd159f ]
 
-Kernels older than v5.19 do not support PerfMonV2 and the PMI handler
-does not clear the overflow bits of the PerfCntrGlobalStatus register.
-Because of this, loading a recent kernel using kexec from an older
-kernel can result in inconsistent register states on Zen 4 systems.
+If no CPU list is passed, timerlat in user-space will dispatch
+one thread per sysconf(_SC_NPROCESSORS_CONF). However, not all
+CPU might be available, for instance, if HT is disabled.
 
-The PMI handler of the new kernel gets confused and shows a warning when
-an overflow occurs because some of the overflow bits are set even if the
-corresponding counters are inactive. These are remnants from overflows
-that were handled by the older kernel.
+Currently, rtla timerlat is stopping the session if an user-space
+thread cannot set affinity to a CPU, or if a running user-space
+thread is killed. However, this is too restrictive.
 
-During CPU hotplug, the PerfCntrGlobalCtl and PerfCntrGlobalStatus
-registers should always be cleared for PerfMonV2-capable processors.
-However, a condition used for NB event constaints applicable only to
-older processors currently prevents this from happening. Move the reset
-sequence to an appropriate place and also clear the LBR Freeze bit.
+So, reduce the error to a debug message, and rtla timerlat run as
+long as there is at least one user-space thread alive.
 
-Fixes: 21d59e3e2c40 ("perf/x86/amd/core: Detect PerfMonV2 support")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/882a87511af40792ba69bb0e9026f19a2e71e8a3.1694696888.git.sandipan.das@amd.com
+Link: https://lore.kernel.org/lkml/59cf2c882900ab7de91c6ee33b382ac7fa6b4ed0.1694781909.git.bristot@kernel.org
+
+Fixes: cdca4f4e5e8e ("rtla/timerlat_top: Add timerlat user-space support")
+Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/core.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ tools/tracing/rtla/src/timerlat_u.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
-index abadd5f234254..ed626bfa1eedb 100644
---- a/arch/x86/events/amd/core.c
-+++ b/arch/x86/events/amd/core.c
-@@ -534,8 +534,12 @@ static void amd_pmu_cpu_reset(int cpu)
- 	/* Clear enable bits i.e. PerfCntrGlobalCtl.PerfCntrEn */
- 	wrmsrl(MSR_AMD64_PERF_CNTR_GLOBAL_CTL, 0);
+diff --git a/tools/tracing/rtla/src/timerlat_u.c b/tools/tracing/rtla/src/timerlat_u.c
+index 05e310696dd5c..01dbf9a6b5a51 100644
+--- a/tools/tracing/rtla/src/timerlat_u.c
++++ b/tools/tracing/rtla/src/timerlat_u.c
+@@ -45,7 +45,7 @@ static int timerlat_u_main(int cpu, struct timerlat_u_params *params)
  
--	/* Clear overflow bits i.e. PerfCntrGLobalStatus.PerfCntrOvfl */
--	wrmsrl(MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR, amd_pmu_global_cntr_mask);
-+	/*
-+	 * Clear freeze and overflow bits i.e. PerfCntrGLobalStatus.LbrFreeze
-+	 * and PerfCntrGLobalStatus.PerfCntrOvfl
-+	 */
-+	wrmsrl(MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR,
-+	       GLOBAL_STATUS_LBRS_FROZEN | amd_pmu_global_cntr_mask);
- }
- 
- static int amd_pmu_cpu_prepare(int cpu)
-@@ -570,6 +574,7 @@ static void amd_pmu_cpu_starting(int cpu)
- 	int i, nb_id;
- 
- 	cpuc->perf_ctr_virt_mask = AMD64_EVENTSEL_HOSTONLY;
-+	amd_pmu_cpu_reset(cpu);
- 
- 	if (!x86_pmu.amd_nb_constraints)
- 		return;
-@@ -591,8 +596,6 @@ static void amd_pmu_cpu_starting(int cpu)
- 
- 	cpuc->amd_nb->nb_id = nb_id;
- 	cpuc->amd_nb->refcnt++;
--
--	amd_pmu_cpu_reset(cpu);
- }
- 
- static void amd_pmu_cpu_dead(int cpu)
-@@ -601,6 +604,7 @@ static void amd_pmu_cpu_dead(int cpu)
- 
- 	kfree(cpuhw->lbr_sel);
- 	cpuhw->lbr_sel = NULL;
-+	amd_pmu_cpu_reset(cpu);
- 
- 	if (!x86_pmu.amd_nb_constraints)
- 		return;
-@@ -613,8 +617,6 @@ static void amd_pmu_cpu_dead(int cpu)
- 
- 		cpuhw->amd_nb = NULL;
+ 	retval = sched_setaffinity(gettid(), sizeof(set), &set);
+ 	if (retval == -1) {
+-		err_msg("Error setting user thread affinity\n");
++		debug_msg("Error setting user thread affinity %d, is the CPU online?\n", cpu);
+ 		exit(1);
  	}
--
--	amd_pmu_cpu_reset(cpu);
- }
  
- static inline void amd_pmu_set_global_ctl(u64 ctl)
+@@ -193,7 +193,9 @@ void *timerlat_u_dispatcher(void *data)
+ 					procs_count--;
+ 				}
+ 			}
+-			break;
++
++			if (!procs_count)
++				break;
+ 		}
+ 
+ 		sleep(1);
 -- 
 2.40.1
 
