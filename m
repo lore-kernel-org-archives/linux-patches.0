@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F90E1A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761951A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="My21zXzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06C1C433C8;
-	Mon,  9 Oct 2023 13:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnNKxhyI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8079C433C7;
+	Mon,  9 Oct 2023 13:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857773;
-	bh=iSDwWfbtmVncea2zFe5a6hzdS4UEWVNqZVphyhFPHWM=;
+	s=korg; t=1696857776;
+	bh=ELsHlCuYllAekTC+ZjCzLKTVtHETPCfrliw/KE0dW34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=My21zXzxiCpk35Vffbcm70VcfYCiU7jutPxIzpz4qWamcOEoS2xNf/x/IQo2lh6Od
-	 ii9DTKZvT5BFl7MOtXqYFMZiNfMd7bxmHop8lWeXhZbPwFqEgp/teUSXE/auoklcVU
-	 3BFSTo2Kd1YkFUym/RPm8wYPRLD8c8uRoH9vWXJ0=
+	b=wnNKxhyI0QAMNvRKfl0Clesf0sWOzhfA3TRIE84W215xQu2vWi+Cro2+HtMBEdxEL
+	 QaRqd53/DCQtDD/WuQKUMQZAiogjJdpKmuDHCIMZ6vbEvrv5Y5uhg1fip8vE+U/EMd
+	 gch83leie5CbRYJgA6eiBIdlXGtQsOklH8FJ7mKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.1 151/162] RDMA/mlx5: Fix NULL string error
-Date: Mon,  9 Oct 2023 15:02:12 +0200
-Message-ID: <20231009130127.084892857@linuxfoundation.org>
+	Colin Ian King <colin.i.king@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 152/162] ALSA: hda/realtek: Fix spelling mistake "powe" -> "power"
+Date: Mon,  9 Oct 2023 15:02:13 +0200
+Message-ID: <20231009130127.111071485@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -41,31 +41,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-commit dab994bcc609a172bfdab15a0d4cb7e50e8b5458 upstream.
+commit f286620b5dc974fe281d8feed6e228fd2f39d013 upstream.
 
-checkpath is complaining about NULL string, change it to 'Unknown'.
+There is a spelling mistake in a quirk entry. Fix it.
 
-Fixes: 37aa5c36aa70 ("IB/mlx5: Add UARs write-combining and non-cached mapping")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Link: https://lore.kernel.org/r/8638e5c14fadbde5fa9961874feae917073af920.1695203958.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Fixes: 3babae915f4c ("ALSA: hda/tas2781: Add tas2781 HDA driver")
+Link: https://lore.kernel.org/r/20230821080003.16678-1-colin.i.king@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mlx5/main.c |    2 +-
+ sound/pci/hda/patch_realtek.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -2074,7 +2074,7 @@ static inline char *mmap_cmd2str(enum ml
- 	case MLX5_IB_MMAP_DEVICE_MEM:
- 		return "Device Memory";
- 	default:
--		return NULL;
-+		return "Unknown";
- 	}
- }
- 
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9993,7 +9993,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x17aa, 0x3869, "Lenovo Yoga7 14IAL7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x387d, "Yoga S780-16 pro Quad AAC", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x387e, "Yoga S780-16 pro Quad YC", ALC287_FIXUP_TAS2781_I2C),
+-	SND_PCI_QUIRK(0x17aa, 0x3881, "YB9 dual powe mode2 YC", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x17aa, 0x3881, "YB9 dual power mode2 YC", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3884, "Y780 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3886, "Y780 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38a7, "Y780P AMD YG dual", ALC287_FIXUP_TAS2781_I2C),
 
 
