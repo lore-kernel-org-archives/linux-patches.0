@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984E21A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1DB1A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6QxGGQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFBAC433C8;
-	Mon,  9 Oct 2023 13:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTJacJWT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377A4C433C7;
+	Mon,  9 Oct 2023 13:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857550;
-	bh=uq8EKJ7aLDQOPTh8uA22ATr4LJyLBfd9xjf9P3vqXVs=;
+	s=korg; t=1696857553;
+	bh=T6H3Jvz0xIel/CMhLRkphXxfGzCGjKIaIWN+vC7YdmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6QxGGQft8ysnAOmZq5J+ajPgkv2Lw1DWaITSN7KzEWfye1EZ8e7cVl3tvGQdn5ET
-	 RnaWOBztpp+eo9tG8oqPgwur/jpiQyN3mB+cscJ+QTP9JehkL+UJmWFNoQv7DfivBC
-	 ZuMtqUCKDm4ulVYsBMJtbo43mssdp1bbWTNQsIRw=
+	b=CTJacJWT/aH75950rnn4Jk/m1371ZfBM291aSUJxSyWI/sCM1gCsJPPktxBiejeLT
+	 mZsN6WN7MRTTfFlLl1u0V2/8w5lWpqnN4EZ/4CK/nyWhdNVf8EaxQ0luU+SkFzbbVv
+	 HG7kd0MxPIUPZC+0U1yIr1KVPqhCnM7xIabh10Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	Brian Norris <briannorris@chromium.org>,
-	Matthew Wang <matthewmwang@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Da Xue <da@libre.computer>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 082/162] wifi: mwifiex: Fix oob check condition in mwifiex_process_rx_packet
-Date: Mon,  9 Oct 2023 15:01:03 +0200
-Message-ID: <20231009130125.182504753@linuxfoundation.org>
+Subject: [PATCH 6.1 083/162] leds: Drop BUG_ON check for LED_COLOR_ID_MULTI
+Date: Mon,  9 Oct 2023 15:01:04 +0200
+Message-ID: <20231009130125.209013374@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -38,65 +37,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pin-yen Lin <treapking@chromium.org>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit aef7a0300047e7b4707ea0411dc9597cba108fc8 ]
+[ Upstream commit 9dc1664fab2246bc2c3e9bf2cf21518a857f9b5b ]
 
-Only skip the code path trying to access the rfc1042 headers when the
-buffer is too small, so the driver can still process packets without
-rfc1042 headers.
+Commit c3f853184bed ("leds: Fix BUG_ON check for LED_COLOR_ID_MULTI that
+is always false") fixed a no-op BUG_ON. This turned out to cause a
+regression, since some in-tree device-tree files already use
+LED_COLOR_ID_MULTI.
 
-Fixes: 119585281617 ("wifi: mwifiex: Fix OOB and integer underflow when rx packets")
-Signed-off-by: Pin-yen Lin <treapking@chromium.org>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Matthew Wang <matthewmwang@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230908104308.1546501-1-treapking@chromium.org
+Drop the BUG_ON altogether.
+
+Fixes: c3f853184bed ("leds: Fix BUG_ON check for LED_COLOR_ID_MULTI that is always false")
+Reported-by: Da Xue <da@libre.computer>
+Closes: https://lore.kernel.org/linux-leds/ZQLelWcNjjp2xndY@duo.ucw.cz/T/
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Link: https://lore.kernel.org/r/20230918140724.18634-1-kabel@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sta_rx.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/leds/led-core.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-index 65420ad674167..257737137cd70 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-@@ -86,7 +86,8 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
- 	rx_pkt_len = le16_to_cpu(local_rx_pd->rx_pkt_length);
- 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_off;
+diff --git a/drivers/leds/led-core.c b/drivers/leds/led-core.c
+index aad8bc44459fe..d94d60b526461 100644
+--- a/drivers/leds/led-core.c
++++ b/drivers/leds/led-core.c
+@@ -424,10 +424,6 @@ int led_compose_name(struct device *dev, struct led_init_data *init_data,
  
--	if (sizeof(*rx_pkt_hdr) + rx_pkt_off > skb->len) {
-+	if (sizeof(rx_pkt_hdr->eth803_hdr) + sizeof(rfc1042_header) +
-+	    rx_pkt_off > skb->len) {
- 		mwifiex_dbg(priv->adapter, ERROR,
- 			    "wrong rx packet offset: len=%d, rx_pkt_off=%d\n",
- 			    skb->len, rx_pkt_off);
-@@ -95,12 +96,13 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
- 		return -1;
- 	}
+ 	led_parse_fwnode_props(dev, fwnode, &props);
  
--	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
--		     sizeof(bridge_tunnel_header))) ||
--	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
--		     sizeof(rfc1042_header)) &&
--	     ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_AARP &&
--	     ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_IPX)) {
-+	if (sizeof(*rx_pkt_hdr) + rx_pkt_off <= skb->len &&
-+	    ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
-+		      sizeof(bridge_tunnel_header))) ||
-+	     (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
-+		      sizeof(rfc1042_header)) &&
-+	      ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_AARP &&
-+	      ntohs(rx_pkt_hdr->rfc1042_hdr.snap_type) != ETH_P_IPX))) {
+-	/* We want to label LEDs that can produce full range of colors
+-	 * as RGB, not multicolor */
+-	BUG_ON(props.color == LED_COLOR_ID_MULTI);
+-
+ 	if (props.label) {
  		/*
- 		 *  Replace the 803 header and rfc1042 header (llc/snap) with an
- 		 *    EthernetII header, keep the src/dst and snap_type
+ 		 * If init_data.devicename is NULL, then it indicates that
 -- 
 2.40.1
 
