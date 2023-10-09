@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533EB1A592
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2E11A592
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iflsj3a3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EBBC433C7;
-	Mon,  9 Oct 2023 13:38:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXsDnj0L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFF0C433CB;
+	Mon,  9 Oct 2023 13:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858738;
-	bh=dxaBw4e0Kx5dF+W8hssmsAgL0Vnx6/7LHaGgQHQS94E=;
+	s=korg; t=1696858741;
+	bh=u9a0dRoMtLeclEAc/w5X2fR5zrCecOZQd4UfIvQK4rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iflsj3a3iVwCj2IoQk7f6YinB/1BkSOvBc4lsts2oymxtD6+2niyFYOyHl5s4JIwf
-	 FecA295ukhM0X9AizZs1FowCuMFycZcXzIoHZH0QU7jUnaP6u3kRj09BPMr5k4P8Bm
-	 3dbaX6KTy6x1xJ4/iMPHseoWUWU4iMST3EcVifvQ=
+	b=BXsDnj0LzSkWodtWIH+1tVWuiT3KZ0AQyi78mCt1lGDFOfM/KCrj502foWdRMllcp
+	 dAC3QBAH5jg1IYdpBPZGQkeunWNgH55+5kK6L12pC0Q+lHD6YNgA2gm8wcWPYvi/7z
+	 qDxN2tijTd/i0yBH0iiNE6bexDiRVWqLXQ0PxLIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tejun Heo <tj@kernel.org>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Andy Gospodarek <gospo@broadcom.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 084/226] ata: ahci: Add support for AMD A85 FCH (Hudson D4)
-Date: Mon,  9 Oct 2023 15:00:45 +0200
-Message-ID: <20231009130128.981450986@linuxfoundation.org>
+Subject: [PATCH 5.10 058/226] bnxt_en: Flush XDP for bnxt_poll_nitroa0()s NAPI
+Date: Mon,  9 Oct 2023 15:00:19 +0200
+Message-ID: <20231009130128.304063676@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -43,62 +45,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Menzel <pmenzel@molgen.mpg.de>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit a17ab7aba5df4135ef77d7f6d7105e1ea414936f ]
+[ Upstream commit edc0140cc3b7b91874ebe70eb7d2a851e8817ccc ]
 
-Add support for the AMD A85 FCH (Hudson D4) AHCI adapter.
+bnxt_poll_nitroa0() invokes bnxt_rx_pkt() which can run a XDP program
+which in turn can return XDP_REDIRECT. bnxt_rx_pkt() is also used by
+__bnxt_poll_work() which flushes (xdp_do_flush()) the packets after each
+round. bnxt_poll_nitroa0() lacks this feature.
+xdp_do_flush() should be invoked before leaving the NAPI callback.
 
-Since this adapter does not require the default 200 ms debounce delay
-in sata_link_resume(), create a new board board_ahci_no_debounce_delay
-with the link flag ATA_LFLAG_NO_DEBOUNCE_DELAY, and, for now, configure
-the AMD A85 FCH (Hudson D4) to use it. On the ASUS F2A85-M PRO it
-reduces the Linux kernel boot time by the expected 200 ms from 787 ms
-to 585 ms.
+Invoke xdp_do_flush() after a redirect in bnxt_poll_nitroa0() NAPI.
 
-Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Stable-dep-of: 2a2df98ec592 ("ata: ahci: Add Elkhart Lake AHCI controller")
+Cc: Michael Chan <michael.chan@broadcom.com>
+Fixes: f18c2b77b2e4e ("bnxt_en: optimized XDP_REDIRECT support")
+Reviewed-by: Andy Gospodarek <gospo@broadcom.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index d831a80c25f04..1a3608f4209ec 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -51,6 +51,7 @@ enum board_ids {
- 	board_ahci,
- 	board_ahci_ign_iferr,
- 	board_ahci_mobile,
-+	board_ahci_no_debounce_delay,
- 	board_ahci_nomsi,
- 	board_ahci_noncq,
- 	board_ahci_nosntf,
-@@ -142,6 +143,13 @@ static const struct ata_port_info ahci_port_info[] = {
- 		.udma_mask	= ATA_UDMA6,
- 		.port_ops	= &ahci_ops,
- 	},
-+	[board_ahci_no_debounce_delay] = {
-+		.flags		= AHCI_FLAG_COMMON,
-+		.link_flags	= ATA_LFLAG_NO_DEBOUNCE_DELAY,
-+		.pio_mask	= ATA_PIO4,
-+		.udma_mask	= ATA_UDMA6,
-+		.port_ops	= &ahci_ops,
-+	},
- 	[board_ahci_nomsi] = {
- 		AHCI_HFLAGS	(AHCI_HFLAG_NO_MSI),
- 		.flags		= AHCI_FLAG_COMMON,
-@@ -442,6 +450,7 @@ static const struct pci_device_id ahci_pci_tbl[] = {
- 		board_ahci_al },
- 	/* AMD */
- 	{ PCI_VDEVICE(AMD, 0x7800), board_ahci }, /* AMD Hudson-2 */
-+	{ PCI_VDEVICE(AMD, 0x7801), board_ahci_no_debounce_delay }, /* AMD Hudson-2 (AHCI mode) */
- 	{ PCI_VDEVICE(AMD, 0x7900), board_ahci }, /* AMD CZ */
- 	{ PCI_VDEVICE(AMD, 0x7901), board_ahci_mobile }, /* AMD Green Sardine */
- 	/* AMD is using RAID class only for ahci controllers */
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index d8366351cf14a..c67a108c2c07f 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -2404,6 +2404,7 @@ static int bnxt_poll_nitroa0(struct napi_struct *napi, int budget)
+ 	struct rx_cmp_ext *rxcmp1;
+ 	u32 cp_cons, tmp_raw_cons;
+ 	u32 raw_cons = cpr->cp_raw_cons;
++	bool flush_xdp = false;
+ 	u32 rx_pkts = 0;
+ 	u8 event = 0;
+ 
+@@ -2438,6 +2439,8 @@ static int bnxt_poll_nitroa0(struct napi_struct *napi, int budget)
+ 				rx_pkts++;
+ 			else if (rc == -EBUSY)	/* partial completion */
+ 				break;
++			if (event & BNXT_REDIRECT_EVENT)
++				flush_xdp = true;
+ 		} else if (unlikely(TX_CMP_TYPE(txcmp) ==
+ 				    CMPL_BASE_TYPE_HWRM_DONE)) {
+ 			bnxt_hwrm_handler(bp, txcmp);
+@@ -2457,6 +2460,8 @@ static int bnxt_poll_nitroa0(struct napi_struct *napi, int budget)
+ 
+ 	if (event & BNXT_AGG_EVENT)
+ 		bnxt_db_write(bp, &rxr->rx_agg_db, rxr->rx_agg_prod);
++	if (flush_xdp)
++		xdp_do_flush();
+ 
+ 	if (!bnxt_has_work(bp, cpr) && rx_pkts < budget) {
+ 		napi_complete_done(napi, rx_pkts);
 -- 
 2.40.1
 
