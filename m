@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCCA19464
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7609D19464
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z76EQkqY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09026C433C9;
-	Mon,  9 Oct 2023 13:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnrBWyon"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E140AC433C9;
+	Mon,  9 Oct 2023 13:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857196;
-	bh=m6QT3b0jNMN9L50PKf4bN4Hr2rXPKb1dDSm6OvBJKd0=;
+	s=korg; t=1696857199;
+	bh=iqyQ3fthpqtzIKss3Iqo5j2P/1Q9N0wAAFIB2fN18eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z76EQkqYIV0tIRMQgqfCQtXjAFi01syUeuYW9tk37p3uazb/0jYJN3e7fA6T0KnuM
-	 65aOUhK2HRvJT/UzATHhopTZGmN1RVJRaVAenNytwnIjebeiYrWNQ/LWMSikd0sbPO
-	 7pJp8KTWtHbmlmwYb8vyA1o4BpKx3KZQLcMVjja8=
+	b=dnrBWyonTC3gGHQxqDHqQ4FicmS1tve0R45b3ksAZ/WTdM9CNQ3bgbAzDzxOgAvS+
+	 xWTgtNv1QQxTtKeV03XnmBeAkeFwjPRcq2FvIYDS11gXTnD/sI9H4VRFQj7WkK1bme
+	 A3CCM67MVPdBKpObnIPa3+jV+S4BG1y8kDd2An+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 129/163] sctp: update hb timer immediately after users change hb_interval
-Date: Mon,  9 Oct 2023 15:01:33 +0200
-Message-ID: <20231009130127.606478600@linuxfoundation.org>
+Subject: [PATCH 6.5 130/163] netlink: annotate data-races around sk->sk_err
+Date: Mon,  9 Oct 2023 15:01:34 +0200
+Message-ID: <20231009130127.632807236@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 References: <20231009130124.021290599@linuxfoundation.org>
@@ -43,46 +44,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1f4e803cd9c9166eb8b6c8b0b8e4124f7499fc07 ]
+[ Upstream commit d0f95894fda7d4f895b29c1097f92d7fee278cb2 ]
 
-Currently, when hb_interval is changed by users, it won't take effect
-until the next expiry of hb timer. As the default value is 30s, users
-have to wait up to 30s to wait its hb_interval update to work.
+syzbot caught another data-race in netlink when
+setting sk->sk_err.
 
-This becomes pretty bad in containers where a much smaller value is
-usually set on hb_interval. This patch improves it by resetting the
-hb timer immediately once the value of hb_interval is updated by users.
+Annotate all of them for good measure.
 
-Note that we don't address the already existing 'problem' when sending
-a heartbeat 'on demand' if one hb has just been sent(from the timer)
-mentioned in:
+BUG: KCSAN: data-race in netlink_recvmsg / netlink_recvmsg
 
-  https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg590224.html
+write to 0xffff8881613bb220 of 4 bytes by task 28147 on cpu 0:
+netlink_recvmsg+0x448/0x780 net/netlink/af_netlink.c:1994
+sock_recvmsg_nosec net/socket.c:1027 [inline]
+sock_recvmsg net/socket.c:1049 [inline]
+__sys_recvfrom+0x1f4/0x2e0 net/socket.c:2229
+__do_sys_recvfrom net/socket.c:2247 [inline]
+__se_sys_recvfrom net/socket.c:2243 [inline]
+__x64_sys_recvfrom+0x78/0x90 net/socket.c:2243
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+write to 0xffff8881613bb220 of 4 bytes by task 28146 on cpu 1:
+netlink_recvmsg+0x448/0x780 net/netlink/af_netlink.c:1994
+sock_recvmsg_nosec net/socket.c:1027 [inline]
+sock_recvmsg net/socket.c:1049 [inline]
+__sys_recvfrom+0x1f4/0x2e0 net/socket.c:2229
+__do_sys_recvfrom net/socket.c:2247 [inline]
+__se_sys_recvfrom net/socket.c:2243 [inline]
+__x64_sys_recvfrom+0x78/0x90 net/socket.c:2243
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x00000000 -> 0x00000016
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 28146 Comm: syz-executor.0 Not tainted 6.6.0-rc3-syzkaller-00055-g9ed22ae6be81 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/06/2023
+
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/r/75465785f8ee5df2fb3acdca9b8fafdc18984098.1696172660.git.lucien.xin@gmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20231003183455.3410550-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netlink/af_netlink.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 7cf207706eb66..652af155966f1 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -2450,6 +2450,7 @@ static int sctp_apply_peer_addr_params(struct sctp_paddrparams *params,
- 			if (trans) {
- 				trans->hbinterval =
- 				    msecs_to_jiffies(params->spp_hbinterval);
-+				sctp_transport_reset_hb_timer(trans);
- 			} else if (asoc) {
- 				asoc->hbinterval =
- 				    msecs_to_jiffies(params->spp_hbinterval);
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 20082171f24a3..9c6bc47bc7f7b 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -352,7 +352,7 @@ static void netlink_overrun(struct sock *sk)
+ 	if (!nlk_test_bit(RECV_NO_ENOBUFS, sk)) {
+ 		if (!test_and_set_bit(NETLINK_S_CONGESTED,
+ 				      &nlk_sk(sk)->state)) {
+-			sk->sk_err = ENOBUFS;
++			WRITE_ONCE(sk->sk_err, ENOBUFS);
+ 			sk_error_report(sk);
+ 		}
+ 	}
+@@ -1577,7 +1577,7 @@ static int do_one_set_err(struct sock *sk, struct netlink_set_err_data *p)
+ 		goto out;
+ 	}
+ 
+-	sk->sk_err = p->code;
++	WRITE_ONCE(sk->sk_err, p->code);
+ 	sk_error_report(sk);
+ out:
+ 	return ret;
+@@ -1966,7 +1966,7 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf / 2) {
+ 		ret = netlink_dump(sk);
+ 		if (ret) {
+-			sk->sk_err = -ret;
++			WRITE_ONCE(sk->sk_err, -ret);
+ 			sk_error_report(sk);
+ 		}
+ 	}
+@@ -2485,7 +2485,7 @@ void netlink_ack(struct sk_buff *in_skb, struct nlmsghdr *nlh, int err,
+ err_bad_put:
+ 	nlmsg_free(skb);
+ err_skb:
+-	NETLINK_CB(in_skb).sk->sk_err = ENOBUFS;
++	WRITE_ONCE(NETLINK_CB(in_skb).sk->sk_err, ENOBUFS);
+ 	sk_error_report(NETLINK_CB(in_skb).sk);
+ }
+ EXPORT_SYMBOL(netlink_ack);
 -- 
 2.40.1
 
