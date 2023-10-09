@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F007347A9
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7D2E54D
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCTmhpv+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E38C433CA;
-	Mon,  9 Oct 2023 13:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cd+noYFf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B43C433C7;
+	Mon,  9 Oct 2023 13:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859481;
-	bh=vR0lZtXadgY4OZKfLdKajBcOdD0wsegeKHTgXJyWFLc=;
+	s=korg; t=1696859484;
+	bh=5QMiAQdFl0PxNtmwo1geuhXI3BgzV7YqbIr21TTtuvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VCTmhpv+ZX2MdhcSzKbzhXW6BH0tOgYlLefR/jop1eW5Tjdg44BT3V3Jjtmmu5g5o
-	 VyrSnyRQwOpDU4KpE+6qyHdsph68ajHzjqvkwxFnVLBIq7dGS5r2on+l5L13Y87DZz
-	 QsPUyyXEGCephJEJ8pqd9vl0gfJmA/pAHCYkv7zY=
+	b=cd+noYFfR2dypDWZh68hT7XwxCjSH8kYr5M6LAsFp1Qno98xYUwS47S5BA10bBv5T
+	 kROTaRN7fotTLfbj8zKiPvFiBr1ScHGVW79RXnZu3bexI0w6GEDqKvEYqzFeidhWx8
+	 mD78GdF2VFDI1+FqIQh4PtXsxaEUQDqL9e0YgUFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
+	Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 34/91] parisc: drivers: Fix sparse warning
-Date: Mon,  9 Oct 2023 15:06:06 +0200
-Message-ID: <20231009130112.715692566@linuxfoundation.org>
+Subject: [PATCH 4.19 08/91] powerpc/perf/hv-24x7: Update domain value check
+Date: Mon,  9 Oct 2023 15:05:40 +0200
+Message-ID: <20231009130111.826928091@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -41,33 +44,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Kajol Jain <kjain@linux.ibm.com>
 
-[ Upstream commit b137b9d60b8add5620a06c687a71ce18776730b0 ]
+[ Upstream commit 4ff3ba4db5943cac1045e3e4a3c0463ea10f6930 ]
 
-Fix "warning: directive in macro's argument list" warning.
+Valid domain value is in range 1 to HV_PERF_DOMAIN_MAX. Current code has
+check for domain value greater than or equal to HV_PERF_DOMAIN_MAX. But
+the check for domain value 0 is missing.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fix this issue by adding check for domain value 0.
+
+Before:
+  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
+  Using CPUID 00800200
+  Control descriptor is not initialized
+  Error:
+  The sys_perf_event_open() syscall returned with 5 (Input/output error) for
+  event (hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/).
+  /bin/dmesg | grep -i perf may provide additional information.
+
+  Result from dmesg:
+  [   37.819387] hv-24x7: hcall failed: [0 0x60040000 0x100 0] => ret
+  0xfffffffffffffffc (-4) detail=0x2000000 failing ix=0
+
+After:
+  # ./perf stat -v -e hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ sleep 1
+  Using CPUID 00800200
+  Control descriptor is not initialized
+  Warning:
+  hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/ event is not supported by the kernel.
+  failed to read counter hv_24x7/CPM_ADJUNCT_INST,domain=0,core=1/
+
+Fixes: ebd4a5a3ebd9 ("powerpc/perf/hv-24x7: Minor improvements")
+Reported-by: Krishan Gopal Sarawast <krishang@linux.vnet.ibm.com>
+Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Tested-by: Disha Goel <disgoel@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230825055601.360083-1-kjain@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/drivers.c | 2 +-
+ arch/powerpc/perf/hv-24x7.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/parisc/kernel/drivers.c b/arch/parisc/kernel/drivers.c
-index 01a2ed59d2f2a..94037c8512f78 100644
---- a/arch/parisc/kernel/drivers.c
-+++ b/arch/parisc/kernel/drivers.c
-@@ -903,9 +903,9 @@ static __init void qemu_header(void)
- 	pr_info("#define PARISC_MODEL \"%s\"\n\n",
- 			boot_cpu_data.pdc.sys_model_name);
+diff --git a/arch/powerpc/perf/hv-24x7.c b/arch/powerpc/perf/hv-24x7.c
+index 2bb798918483d..e6eb2b4cf97ea 100644
+--- a/arch/powerpc/perf/hv-24x7.c
++++ b/arch/powerpc/perf/hv-24x7.c
+@@ -1326,7 +1326,7 @@ static int h_24x7_event_init(struct perf_event *event)
+ 	}
  
-+	#define p ((unsigned long *)&boot_cpu_data.pdc.model)
- 	pr_info("#define PARISC_PDC_MODEL 0x%lx, 0x%lx, 0x%lx, "
- 		"0x%lx, 0x%lx, 0x%lx, 0x%lx, 0x%lx, 0x%lx\n\n",
--	#define p ((unsigned long *)&boot_cpu_data.pdc.model)
- 		p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8]);
- 	#undef p
- 
+ 	domain = event_get_domain(event);
+-	if (domain >= HV_PERF_DOMAIN_MAX) {
++	if (domain  == 0 || domain >= HV_PERF_DOMAIN_MAX) {
+ 		pr_devel("invalid domain %d\n", domain);
+ 		return -EINVAL;
+ 	}
 -- 
 2.40.1
 
