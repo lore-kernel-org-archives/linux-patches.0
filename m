@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108369CA51
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBE522F00
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qf49q3io"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82135C433C7;
-	Mon,  9 Oct 2023 13:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bKpdhX0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2A8C433C9;
+	Mon,  9 Oct 2023 13:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858232;
-	bh=7hczW4o3guMGoZ/4X59mucAO9TQc7wfL+2pXCHPIYHA=;
+	s=korg; t=1696858236;
+	bh=Re4njsf6H6MGIDOOnApZu9XoOTx/o0CP5jBw8FZG7K8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qf49q3ioEeLb1QskfK7eg2nywmz9M6VOiWkVcSmedUDJS30/2YaQ/CTigwJa7qJHx
-	 7RGc+MqGN61kVgF8cjXFApyy2w+XGrExi8Y9qR76mZTp96LwAin72R3mZBAsP+4vVf
-	 Xq1G16s5YyJH5jMi7Db1munNGmp5n5xYlysEJ8jE=
+	b=2bKpdhX0KDUXfmcDgwE5htgwenUE/MNeWGBNTqBbJPUXEHeZXhl2YqWkuN6urUT3H
+	 oxGhFZk08srsZ4mcisObplMohZ2N2+ivXg0r1ugiLw6JjM6rkj010T7+/Ihgs0ktTB
+	 iMMPDJmQKCk40gpwb9R4egFzywIBc/g4J0I0WkWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Han Xu <han.xu@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 058/131] ata: libata-eh: do not clear ATA_PFLAG_EH_PENDING in ata_eh_reset()
-Date: Mon,  9 Oct 2023 15:01:38 +0200
-Message-ID: <20231009130118.075337067@linuxfoundation.org>
+Subject: [PATCH 5.4 059/131] spi: nxp-fspi: reset the FLSHxCR1 registers
+Date: Mon,  9 Oct 2023 15:01:39 +0200
+Message-ID: <20231009130118.103427274@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -42,118 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <niklas.cassel@wdc.com>
+From: Han Xu <han.xu@nxp.com>
 
-[ Upstream commit 80cc944eca4f0baa9c381d0706f3160e491437f2 ]
+[ Upstream commit 18495676f7886e105133f1dc06c1d5e8d5436f32 ]
 
-ata_scsi_port_error_handler() starts off by clearing ATA_PFLAG_EH_PENDING,
-before calling ap->ops->error_handler() (without holding the ap->lock).
+Reset the FLSHxCR1 registers to default value. ROM may set the register
+value and it affects the SPI NAND normal functions.
 
-If an error IRQ is received while ap->ops->error_handler() is running,
-the irq handler will set ATA_PFLAG_EH_PENDING.
-
-Once ap->ops->error_handler() returns, ata_scsi_port_error_handler()
-checks if ATA_PFLAG_EH_PENDING is set, and if it is, another iteration
-of ATA EH is performed.
-
-The problem is that ATA_PFLAG_EH_PENDING is not only cleared by
-ata_scsi_port_error_handler(), it is also cleared by ata_eh_reset().
-
-ata_eh_reset() is called by ap->ops->error_handler(). This additional
-clearing done by ata_eh_reset() breaks the whole retry logic in
-ata_scsi_port_error_handler(). Thus, if an error IRQ is received while
-ap->ops->error_handler() is running, the port will currently remain
-frozen and will never get re-enabled.
-
-The additional clearing in ata_eh_reset() was introduced in commit
-1e641060c4b5 ("libata: clear eh_info on reset completion").
-
-Looking at the original error report:
-https://marc.info/?l=linux-ide&m=124765325828495&w=2
-
-We can see the following happening:
-[    1.074659] ata3: XXX port freeze
-[    1.074700] ata3: XXX hardresetting link, stopping engine
-[    1.074746] ata3: XXX flipping SControl
-
-[    1.411471] ata3: XXX irq_stat=400040 CONN|PHY
-[    1.411475] ata3: XXX port freeze
-
-[    1.420049] ata3: XXX starting engine
-[    1.420096] ata3: XXX rc=0, class=1
-[    1.420142] ata3: XXX clearing IRQs for thawing
-[    1.420188] ata3: XXX port thawed
-[    1.420234] ata3: SATA link up 3.0 Gbps (SStatus 123 SControl 300)
-
-We are not supposed to be able to receive an error IRQ while the port is
-frozen (PxIE is set to 0, i.e. all IRQs for the port are disabled).
-
-AHCI 1.3.1 section 10.7.1.1 First Tier (IS Register) states:
-"Each bit location can be thought of as reporting a '1' if the virtual
-"interrupt line" for that port is indicating it wishes to generate an
-interrupt. That is, if a port has one or more interrupt status bit set,
-and the enables for those status bits are set, then this bit shall be set."
-
-Additionally, AHCI state P:ComInit clearly shows that the state machine
-will only jump to P:ComInitSetIS (which sets IS.IPS(x) to '1'), if PxIE.PCE
-is set to '1'. In our case, PxIE is set to 0, so IS.IPS(x) won't get set.
-
-So IS.IPS(x) only gets set if PxIS and PxIE is set.
-
-AHCI 1.3.1 section 10.7.1.1 First Tier (IS Register) also states:
-"The bits in this register are read/write clear. It is set by the level of
-the virtual interrupt line being a set, and cleared by a write of '1' from
-the software."
-
-So if IS.IPS(x) is set, you need to explicitly clear it by writing a 1 to
-IS.IPS(x) for that port.
-
-Since PxIE is cleared, the only way to get an interrupt while the port is
-frozen, is if IS.IPS(x) is set, and the only way IS.IPS(x) can be set when
-the port is frozen, is if it was set before the port was frozen.
-
-However, since commit 737dd811a3db ("ata: libahci: clear pending interrupt
-status"), we clear both PxIS and IS.IPS(x) after freezing the port, but
-before the COMRESET, so the problem that commit 1e641060c4b5 ("libata:
-clear eh_info on reset completion") fixed can no longer happen.
-
-Thus, revert commit 1e641060c4b5 ("libata: clear eh_info on reset
-completion"), so that the retry logic in ata_scsi_port_error_handler()
-works once again. (The retry logic is still needed, since we can still
-get an error IRQ _after_ the port has been thawed, but before
-ata_scsi_port_error_handler() takes the ap->lock in order to check
-if ATA_PFLAG_EH_PENDING is set.)
-
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Han Xu <han.xu@nxp.com>
+Link: https://lore.kernel.org/r/20230906183254.235847-1-han.xu@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-eh.c |   13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ drivers/spi/spi-nxp-fspi.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -2901,18 +2901,11 @@ int ata_eh_reset(struct ata_link *link,
- 			postreset(slave, classes);
- 	}
+diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
+index 36a44a837031d..ee1b488d7dedc 100644
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -897,6 +897,13 @@ static int nxp_fspi_default_setup(struct nxp_fspi *f)
+ 	fspi_writel(f, FSPI_AHBCR_PREF_EN | FSPI_AHBCR_RDADDROPT,
+ 		 base + FSPI_AHBCR);
  
--	/*
--	 * Some controllers can't be frozen very well and may set spurious
--	 * error conditions during reset.  Clear accumulated error
--	 * information and re-thaw the port if frozen.  As reset is the
--	 * final recovery action and we cross check link onlineness against
--	 * device classification later, no hotplug event is lost by this.
--	 */
-+	/* clear cached SError */
- 	spin_lock_irqsave(link->ap->lock, flags);
--	memset(&link->eh_info, 0, sizeof(link->eh_info));
-+	link->eh_info.serror = 0;
- 	if (slave)
--		memset(&slave->eh_info, 0, sizeof(link->eh_info));
--	ap->pflags &= ~ATA_PFLAG_EH_PENDING;
-+		slave->eh_info.serror = 0;
- 	spin_unlock_irqrestore(link->ap->lock, flags);
- 
- 	if (ap->pflags & ATA_PFLAG_FROZEN)
++	/* Reset the FLSHxCR1 registers. */
++	reg = FSPI_FLSHXCR1_TCSH(0x3) | FSPI_FLSHXCR1_TCSS(0x3);
++	fspi_writel(f, reg, base + FSPI_FLSHA1CR1);
++	fspi_writel(f, reg, base + FSPI_FLSHA2CR1);
++	fspi_writel(f, reg, base + FSPI_FLSHB1CR1);
++	fspi_writel(f, reg, base + FSPI_FLSHB2CR1);
++
+ 	/* AHB Read - Set lut sequence ID for all CS. */
+ 	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHA1CR2);
+ 	fspi_writel(f, SEQID_LUT, base + FSPI_FLSHA2CR2);
+-- 
+2.40.1
+
 
 
