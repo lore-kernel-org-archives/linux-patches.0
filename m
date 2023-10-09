@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D023398C
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF06D3398F
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaWCSjFJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCC2C433C8;
-	Mon,  9 Oct 2023 13:34:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiL1pWz0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FF6C433C8;
+	Mon,  9 Oct 2023 13:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858493;
-	bh=L5fmVLqaKT9YPjq1vUzROWP4gFnrmQXKt7tiWIc9hTU=;
+	s=korg; t=1696858496;
+	bh=jZeaml/Tgwnw2Ng3344L77wT7HEF9QqmeD2/N/XFvIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaWCSjFJYIoNVMf+ywo+icVSPe9KhdLvxLonl8qhffnWJyYZtdrP6nXxgk5napDBM
-	 uyfLxRkk6zSEQ3aeNAvX78SvZKdKl6v65RPlnuKoVCY60C3Ia0HRStABBHcdnqE+rc
-	 OoERRwnrUekf/rxBNHiyPyP6BTGKUZobIvoGkf5Q=
+	b=iiL1pWz0Qb8Nf9RYY8KRYpx1anenJosVBh+sUG7TgpvTjkQ2OJNqbRSCv1Jh0U0cn
+	 pweC6+wMMZo/xtYXJvUQt9qqKy0rxghjCtQWN43wwJEFJnZNFtkszow3LRI994WwG4
+	 rjII3j40axLMkW8O3QpPaOI9haS5IIY3Lwyn+Ax8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 5.4 130/131] NFS: Fix a race in __nfs_list_for_each_server()
-Date: Mon,  9 Oct 2023 15:02:50 +0200
-Message-ID: <20231009130120.395908438@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 001/226] NFS: Use the correct commit info in nfs_join_page_group()
+Date: Mon,  9 Oct 2023 14:59:22 +0200
+Message-ID: <20231009130126.740753034@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
-References: <20231009130116.329529591@linuxfoundation.org>
+In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
+References: <20231009130126.697995596@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,36 +38,154 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 9c07b75b80eeff714420fb6a4c880b284e529d0f upstream.
+[ Upstream commit b193a78ddb5ee7dba074d3f28dc050069ba083c0 ]
 
-The struct nfs_server gets put on the cl_superblocks list before
-the server->super field has been initialised, in which case the
-call to nfs_sb_active() will Oops. Add a check to ensure that
-we skip such a list entry.
+Ensure that nfs_clear_request_commit() updates the correct counters when
+it removes them from the commit list.
 
-Fixes: 3c9e502b59fb ("NFS: Add a helper nfs_client_for_each_server()")
+Fixes: ed5d588fe47f ("NFS: Try to join page groups before an O_DIRECT retransmission")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/direct.c          |  8 +++++---
+ fs/nfs/write.c           | 23 ++++++++++++-----------
+ include/linux/nfs_page.h |  4 +++-
+ 3 files changed, 20 insertions(+), 15 deletions(-)
 
---- a/fs/nfs/super.c
-+++ b/fs/nfs/super.c
-@@ -445,7 +445,7 @@ static int __nfs_list_for_each_server(st
+diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
+index 018af6ec97b40..5d86ffa72ceab 100644
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -525,7 +525,9 @@ static void nfs_direct_add_page_head(struct list_head *list,
+ 	kref_get(&head->wb_kref);
+ }
  
- 	rcu_read_lock();
- 	list_for_each_entry_rcu(server, head, client_link) {
--		if (!nfs_sb_active(server->super))
-+		if (!(server->super && nfs_sb_active(server->super)))
- 			continue;
- 		rcu_read_unlock();
- 		if (last)
+-static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
++static void nfs_direct_join_group(struct list_head *list,
++				  struct nfs_commit_info *cinfo,
++				  struct inode *inode)
+ {
+ 	struct nfs_page *req, *subreq;
+ 
+@@ -547,7 +549,7 @@ static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
+ 				nfs_release_request(subreq);
+ 			}
+ 		} while ((subreq = subreq->wb_this_page) != req);
+-		nfs_join_page_group(req, inode);
++		nfs_join_page_group(req, cinfo, inode);
+ 	}
+ }
+ 
+@@ -573,7 +575,7 @@ static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
+ 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
+ 	nfs_direct_write_scan_commit_list(dreq->inode, &reqs, &cinfo);
+ 
+-	nfs_direct_join_group(&reqs, dreq->inode);
++	nfs_direct_join_group(&reqs, &cinfo, dreq->inode);
+ 
+ 	dreq->count = 0;
+ 	dreq->max_count = 0;
+diff --git a/fs/nfs/write.c b/fs/nfs/write.c
+index dc08a0c02f095..d3cd099ffb6e1 100644
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -58,7 +58,8 @@ static const struct nfs_pgio_completion_ops nfs_async_write_completion_ops;
+ static const struct nfs_commit_completion_ops nfs_commit_completion_ops;
+ static const struct nfs_rw_ops nfs_rw_write_ops;
+ static void nfs_inode_remove_request(struct nfs_page *req);
+-static void nfs_clear_request_commit(struct nfs_page *req);
++static void nfs_clear_request_commit(struct nfs_commit_info *cinfo,
++				     struct nfs_page *req);
+ static void nfs_init_cinfo_from_inode(struct nfs_commit_info *cinfo,
+ 				      struct inode *inode);
+ static struct nfs_page *
+@@ -500,8 +501,8 @@ nfs_destroy_unlinked_subrequests(struct nfs_page *destroy_list,
+  * the (former) group.  All subrequests are removed from any write or commit
+  * lists, unlinked from the group and destroyed.
+  */
+-void
+-nfs_join_page_group(struct nfs_page *head, struct inode *inode)
++void nfs_join_page_group(struct nfs_page *head, struct nfs_commit_info *cinfo,
++			 struct inode *inode)
+ {
+ 	struct nfs_page *subreq;
+ 	struct nfs_page *destroy_list = NULL;
+@@ -531,7 +532,7 @@ nfs_join_page_group(struct nfs_page *head, struct inode *inode)
+ 	 * Commit list removal accounting is done after locks are dropped */
+ 	subreq = head;
+ 	do {
+-		nfs_clear_request_commit(subreq);
++		nfs_clear_request_commit(cinfo, subreq);
+ 		subreq = subreq->wb_this_page;
+ 	} while (subreq != head);
+ 
+@@ -565,8 +566,10 @@ nfs_lock_and_join_requests(struct page *page)
+ {
+ 	struct inode *inode = page_file_mapping(page)->host;
+ 	struct nfs_page *head;
++	struct nfs_commit_info cinfo;
+ 	int ret;
+ 
++	nfs_init_cinfo_from_inode(&cinfo, inode);
+ 	/*
+ 	 * A reference is taken only on the head request which acts as a
+ 	 * reference to the whole page group - the group will not be destroyed
+@@ -583,7 +586,7 @@ nfs_lock_and_join_requests(struct page *page)
+ 		return ERR_PTR(ret);
+ 	}
+ 
+-	nfs_join_page_group(head, inode);
++	nfs_join_page_group(head, &cinfo, inode);
+ 
+ 	return head;
+ }
+@@ -944,18 +947,16 @@ nfs_clear_page_commit(struct page *page)
+ }
+ 
+ /* Called holding the request lock on @req */
+-static void
+-nfs_clear_request_commit(struct nfs_page *req)
++static void nfs_clear_request_commit(struct nfs_commit_info *cinfo,
++				     struct nfs_page *req)
+ {
+ 	if (test_bit(PG_CLEAN, &req->wb_flags)) {
+ 		struct nfs_open_context *ctx = nfs_req_openctx(req);
+ 		struct inode *inode = d_inode(ctx->dentry);
+-		struct nfs_commit_info cinfo;
+ 
+-		nfs_init_cinfo_from_inode(&cinfo, inode);
+ 		mutex_lock(&NFS_I(inode)->commit_mutex);
+-		if (!pnfs_clear_request_commit(req, &cinfo)) {
+-			nfs_request_remove_commit_list(req, &cinfo);
++		if (!pnfs_clear_request_commit(req, cinfo)) {
++			nfs_request_remove_commit_list(req, cinfo);
+ 		}
+ 		mutex_unlock(&NFS_I(inode)->commit_mutex);
+ 		nfs_clear_page_commit(req->wb_page);
+diff --git a/include/linux/nfs_page.h b/include/linux/nfs_page.h
+index f0373a6cb5fb6..40aa09a21f75d 100644
+--- a/include/linux/nfs_page.h
++++ b/include/linux/nfs_page.h
+@@ -145,7 +145,9 @@ extern	void nfs_unlock_request(struct nfs_page *req);
+ extern	void nfs_unlock_and_release_request(struct nfs_page *);
+ extern	struct nfs_page *nfs_page_group_lock_head(struct nfs_page *req);
+ extern	int nfs_page_group_lock_subrequests(struct nfs_page *head);
+-extern	void nfs_join_page_group(struct nfs_page *head, struct inode *inode);
++extern void nfs_join_page_group(struct nfs_page *head,
++				struct nfs_commit_info *cinfo,
++				struct inode *inode);
+ extern int nfs_page_group_lock(struct nfs_page *);
+ extern void nfs_page_group_unlock(struct nfs_page *);
+ extern bool nfs_page_group_sync_on_bit(struct nfs_page *, unsigned int);
+-- 
+2.40.1
+
 
 
