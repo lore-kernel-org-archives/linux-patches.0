@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1552F1A5BA
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2561A5BA
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5tMnE2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8050CC433C8;
-	Mon,  9 Oct 2023 13:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="In9VJLvs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8ECEC433C8;
+	Mon,  9 Oct 2023 13:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858048;
-	bh=T1HCmUKgadPmgBC3OLAaSZCc3Q+kV+pQrFPgs/bPpq0=;
+	s=korg; t=1696858052;
+	bh=+QHkD19/qvA/zkRbupONG2r3g67gkOvQZotRX8KjZ3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5tMnE2R6cjySfqFWolPAcPK1pn+MWf0O9hLqR1qdpTOtWOOCTx6pxPECMvMEXWXD
-	 d/wj7n11bxl1zOM9tHpJsW/vK9JhZMzW2bWa2QHdvR+sJmWZQGvLZDgObDKy930dSF
-	 wSID+tn+XlJsvQxQZxfPjavG8OcJiUUy3RPYJu/o=
+	b=In9VJLvswC37WAD/9ppHNtKmxodAyjqS7jkdALMsbdce7YCmE5YmQXPF3i7DcJ6qu
+	 4rqI0wCoL7ikNh7zzhs2j0/6kR8EpbHSaRgNETVyUwfk19Jh3hiNg+LxEFFIx0Yyby
+	 qNHSl4qIaRceUZRouoyIPhO9ImZs9rtb3YW8qULU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 60/75] sctp: update hb timer immediately after users change hb_interval
-Date: Mon,  9 Oct 2023 15:02:22 +0200
-Message-ID: <20231009130113.359749808@linuxfoundation.org>
+Subject: [PATCH 5.15 61/75] HID: sony: remove duplicate NULL check before calling usb_free_urb()
+Date: Mon,  9 Oct 2023 15:02:23 +0200
+Message-ID: <20231009130113.395538727@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -43,46 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Jiri Kosina <jkosina@suse.cz>
 
-[ Upstream commit 1f4e803cd9c9166eb8b6c8b0b8e4124f7499fc07 ]
+[ Upstream commit b328dd02e19cb9d3b35de4322f5363516a20ac8c ]
 
-Currently, when hb_interval is changed by users, it won't take effect
-until the next expiry of hb timer. As the default value is 30s, users
-have to wait up to 30s to wait its hb_interval update to work.
+usb_free_urb() does the NULL check itself, so there is no need to duplicate
+it prior to calling.
 
-This becomes pretty bad in containers where a much smaller value is
-usually set on hb_interval. This patch improves it by resetting the
-hb timer immediately once the value of hb_interval is updated by users.
-
-Note that we don't address the already existing 'problem' when sending
-a heartbeat 'on demand' if one hb has just been sent(from the timer)
-mentioned in:
-
-  https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg590224.html
-
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/r/75465785f8ee5df2fb3acdca9b8fafdc18984098.1696172660.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: e1cd4004cde7c9 ("HID: sony: Fix a potential memory leak in sony_probe()")
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-sony.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 36a37fef27719..57acf7ed80de3 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -2452,6 +2452,7 @@ static int sctp_apply_peer_addr_params(struct sctp_paddrparams *params,
- 			if (trans) {
- 				trans->hbinterval =
- 				    msecs_to_jiffies(params->spp_hbinterval);
-+				sctp_transport_reset_hb_timer(trans);
- 			} else if (asoc) {
- 				asoc->hbinterval =
- 				    msecs_to_jiffies(params->spp_hbinterval);
+diff --git a/drivers/hid/hid-sony.c b/drivers/hid/hid-sony.c
+index 3ab18811b0090..c330d5a20ca04 100644
+--- a/drivers/hid/hid-sony.c
++++ b/drivers/hid/hid-sony.c
+@@ -3074,8 +3074,7 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	return ret;
+ 
+ err:
+-	if (sc->ghl_urb)
+-		usb_free_urb(sc->ghl_urb);
++	usb_free_urb(sc->ghl_urb);
+ 
+ 	hid_hw_stop(hdev);
+ 	return ret;
 -- 
 2.40.1
 
