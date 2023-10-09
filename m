@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57351A712
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106291A708
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TC0iTxQB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C985C433C8;
-	Mon,  9 Oct 2023 13:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgiz6zPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81EC2C433C9;
+	Mon,  9 Oct 2023 13:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857446;
-	bh=tPLu6nM3piiVI7GEqDqVF/TURvS71zUm6lQalD0V8W4=;
+	s=korg; t=1696857449;
+	bh=rystTE9DupvfIPn/prsMxhEkGOs57OMQiWTe8fhlBqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TC0iTxQBztya8gVwlb3c+d4SqGg926+9amRO8cYyrMDJ0qaKc1JJziAoLoC2rEHtS
-	 YHqeNXf4J8tpxgyPata5r43LgsZi0D7o7uMRkEiIn6mJk4qQwYDTFinMsakN93SkN4
-	 hqHvy4oQ5AG76VlBWsG/yVqSTmGgigNqrz6rROLQ=
+	b=tgiz6zPRP2fg71lBgEs/jMc3GWH5ySnZ22YpMcPryJC/upTmz0uM2aOx7YHIRU1Ks
+	 JPDTbtazjp3cwhrowD/bkoP99jYe+qUDVUgQWbBQuv0RsDhEyrUhktYTFV+TOgFX1M
+	 c+bfLUWJAiyHtZBSdswDa9BWDjP/j/3glY72DKyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/162] NFS: rename nfs_client_kset to nfs_kset
-Date: Mon,  9 Oct 2023 15:00:03 +0200
-Message-ID: <20231009130123.561800030@linuxfoundation.org>
+Subject: [PATCH 6.1 023/162] NFSv4: Fix a state manager thread deadlock regression
+Date: Mon,  9 Oct 2023 15:00:04 +0200
+Message-ID: <20231009130123.588112921@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -42,71 +42,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 8b18a2edecc0741b0eecf8b18fdb356a0f8682de ]
+[ Upstream commit 956fd46f97d238032cb5fa4771cdaccc6e760f9a ]
 
-Be brief and match the subsystem name.  There's no need to distinguish this
-kset variable from the server.
+Commit 4dc73c679114 reintroduces the deadlock that was fixed by commit
+aeabb3c96186 ("NFSv4: Fix a NFSv4 state manager deadlock") because it
+prevents the setup of new threads to handle reboot recovery, while the
+older recovery thread is stuck returning delegations.
 
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Fixes: 4dc73c679114 ("NFSv4: keep state manager thread active if swap is enabled")
+Cc: stable@vger.kernel.org
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: 956fd46f97d2 ("NFSv4: Fix a state manager thread deadlock regression")
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/sysfs.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/nfs/nfs4proc.c  |  4 +++-
+ fs/nfs/nfs4state.c | 36 +++++++++++++++++++++++++-----------
+ 2 files changed, 28 insertions(+), 12 deletions(-)
 
-diff --git a/fs/nfs/sysfs.c b/fs/nfs/sysfs.c
-index a6f7403669631..edb535a0ff973 100644
---- a/fs/nfs/sysfs.c
-+++ b/fs/nfs/sysfs.c
-@@ -18,7 +18,7 @@
- #include "sysfs.h"
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index be570c65ae154..b927a7d1b46d4 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -10629,7 +10629,9 @@ static void nfs4_disable_swap(struct inode *inode)
+ 	 */
+ 	struct nfs_client *clp = NFS_SERVER(inode)->nfs_client;
  
- struct kobject *nfs_client_kobj;
--static struct kset *nfs_client_kset;
-+static struct kset *nfs_kset;
- 
- static void nfs_netns_object_release(struct kobject *kobj)
- {
-@@ -55,13 +55,13 @@ static struct kobject *nfs_netns_object_alloc(const char *name,
- 
- int nfs_sysfs_init(void)
- {
--	nfs_client_kset = kset_create_and_add("nfs", NULL, fs_kobj);
--	if (!nfs_client_kset)
-+	nfs_kset = kset_create_and_add("nfs", NULL, fs_kobj);
-+	if (!nfs_kset)
- 		return -ENOMEM;
--	nfs_client_kobj = nfs_netns_object_alloc("net", nfs_client_kset, NULL);
-+	nfs_client_kobj = nfs_netns_object_alloc("net", nfs_kset, NULL);
- 	if  (!nfs_client_kobj) {
--		kset_unregister(nfs_client_kset);
--		nfs_client_kset = NULL;
-+		kset_unregister(nfs_kset);
-+		nfs_kset = NULL;
- 		return -ENOMEM;
- 	}
- 	return 0;
-@@ -70,7 +70,7 @@ int nfs_sysfs_init(void)
- void nfs_sysfs_exit(void)
- {
- 	kobject_put(nfs_client_kobj);
--	kset_unregister(nfs_client_kset);
-+	kset_unregister(nfs_kset);
+-	nfs4_schedule_state_manager(clp);
++	set_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state);
++	clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
++	wake_up_var(&clp->cl_state);
  }
  
- static ssize_t nfs_netns_identifier_show(struct kobject *kobj,
-@@ -159,7 +159,7 @@ static struct nfs_netns_client *nfs_netns_client_alloc(struct kobject *parent,
- 	p = kzalloc(sizeof(*p), GFP_KERNEL);
- 	if (p) {
- 		p->net = net;
--		p->kobject.kset = nfs_client_kset;
-+		p->kobject.kset = nfs_kset;
- 		if (kobject_init_and_add(&p->kobject, &nfs_netns_client_type,
- 					parent, "nfs_client") == 0)
- 			return p;
+ static const struct inode_operations nfs4_dir_inode_operations = {
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index 1b707573fbf8d..ed789e0cb9431 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -1209,13 +1209,23 @@ void nfs4_schedule_state_manager(struct nfs_client *clp)
+ {
+ 	struct task_struct *task;
+ 	char buf[INET6_ADDRSTRLEN + sizeof("-manager") + 1];
++	struct rpc_clnt *clnt = clp->cl_rpcclient;
++	bool swapon = false;
+ 
+ 	set_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state);
+-	if (test_and_set_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state) != 0) {
+-		wake_up_var(&clp->cl_state);
+-		return;
++
++	if (atomic_read(&clnt->cl_swapper)) {
++		swapon = !test_and_set_bit(NFS4CLNT_MANAGER_AVAILABLE,
++					   &clp->cl_state);
++		if (!swapon) {
++			wake_up_var(&clp->cl_state);
++			return;
++		}
+ 	}
+-	set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state);
++
++	if (test_and_set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state) != 0)
++		return;
++
+ 	__module_get(THIS_MODULE);
+ 	refcount_inc(&clp->cl_count);
+ 
+@@ -1232,8 +1242,9 @@ void nfs4_schedule_state_manager(struct nfs_client *clp)
+ 			__func__, PTR_ERR(task));
+ 		if (!nfs_client_init_is_complete(clp))
+ 			nfs_mark_client_ready(clp, PTR_ERR(task));
++		if (swapon)
++			clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
+ 		nfs4_clear_state_manager_bit(clp);
+-		clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
+ 		nfs_put_client(clp);
+ 		module_put(THIS_MODULE);
+ 	}
+@@ -2737,22 +2748,25 @@ static int nfs4_run_state_manager(void *ptr)
+ 
+ 	allow_signal(SIGKILL);
+ again:
+-	set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state);
+ 	nfs4_state_manager(clp);
+-	if (atomic_read(&cl->cl_swapper)) {
++
++	if (test_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state) &&
++	    !test_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state)) {
+ 		wait_var_event_interruptible(&clp->cl_state,
+ 					     test_bit(NFS4CLNT_RUN_MANAGER,
+ 						      &clp->cl_state));
+-		if (atomic_read(&cl->cl_swapper) &&
+-		    test_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state))
++		if (!atomic_read(&cl->cl_swapper))
++			clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
++		if (refcount_read(&clp->cl_count) > 1 && !signalled() &&
++		    !test_and_set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state))
+ 			goto again;
+ 		/* Either no longer a swapper, or were signalled */
++		clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
+ 	}
+-	clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
+ 
+ 	if (refcount_read(&clp->cl_count) > 1 && !signalled() &&
+ 	    test_bit(NFS4CLNT_RUN_MANAGER, &clp->cl_state) &&
+-	    !test_and_set_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state))
++	    !test_and_set_bit(NFS4CLNT_MANAGER_RUNNING, &clp->cl_state))
+ 		goto again;
+ 
+ 	nfs_put_client(clp);
 -- 
 2.40.1
 
