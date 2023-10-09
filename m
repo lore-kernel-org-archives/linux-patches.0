@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DB6199B7
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49967199B3
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3gZJS/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9053DC433C7;
-	Mon,  9 Oct 2023 13:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YaAhB2vL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7726C433CA;
+	Mon,  9 Oct 2023 13:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857960;
-	bh=sj8wmKqVNhAarFrzCQQThhuFN2r7+cPg7crc8c1Bs28=;
+	s=korg; t=1696857963;
+	bh=AjNaHUvl3qdkNZcwABzf/BzsdtYZ1EXCJT8NqJ+9gNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3gZJS/Q/jdwyuaEmVZ/6oYDBWjKKDqf11wsqd/LdGNTNvnOcqFIE/XuwTYa3bTv8
-	 6MAVcF0KKNKFAK6Q2MaKhEu7pPPD3/tzqKSHhgN7l22fyEE0y6EDvuJQxcjAfEtMPT
-	 NK1JgD/Sha5M2Nv7wK0wVR3FOfk/2Z5n70BrHcBQ=
+	b=YaAhB2vLB1XTqtU2+csZ43eHOs7DkK1Wj+Hdh7Zyu82QV2/WSIy/o1kkwM4tFyGP8
+	 6RLdTv1kn5WV/AjFqTeM8UffI3FVrPkYnF/VeK+NvyOL7MDy5rpf8/fYtu4EkRGYHw
+	 b2KcUucqXQ/ll/7nF8oaPK5OYx/5yRO/f0uSpFQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+6966546b78d050bb0b5d@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 48/75] net: usb: smsc75xx: Fix uninit-value access in __smsc75xx_read_reg
-Date: Mon,  9 Oct 2023 15:02:10 +0200
-Message-ID: <20231009130112.915201323@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 31/75] iwlwifi: avoid void pointer arithmetic
+Date: Mon,  9 Oct 2023 15:01:53 +0200
+Message-ID: <20231009130112.317673532@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.200710898@linuxfoundation.org>
 References: <20231009130111.200710898@linuxfoundation.org>
@@ -44,97 +42,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit e9c65989920f7c28775ec4e0c11b483910fb67b8 ]
+[ Upstream commit 3827cb59b3b8ce4b1687385d35034dadcd90d7ce ]
 
-syzbot reported the following uninit-value access issue:
+Avoid void pointer arithmetic since it's technically
+undefined and causes warnings in some places that use
+our code.
 
-=====================================================
-BUG: KMSAN: uninit-value in smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:975 [inline]
-BUG: KMSAN: uninit-value in smsc75xx_bind+0x5c9/0x11e0 drivers/net/usb/smsc75xx.c:1482
-CPU: 0 PID: 8696 Comm: kworker/0:3 Not tainted 5.8.0-rc5-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: usb_hub_wq hub_event
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x21c/0x280 lib/dump_stack.c:118
- kmsan_report+0xf7/0x1e0 mm/kmsan/kmsan_report.c:121
- __msan_warning+0x58/0xa0 mm/kmsan/kmsan_instr.c:215
- smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:975 [inline]
- smsc75xx_bind+0x5c9/0x11e0 drivers/net/usb/smsc75xx.c:1482
- usbnet_probe+0x1152/0x3f90 drivers/net/usb/usbnet.c:1737
- usb_probe_interface+0xece/0x1550 drivers/usb/core/driver.c:374
- really_probe+0xf20/0x20b0 drivers/base/dd.c:529
- driver_probe_device+0x293/0x390 drivers/base/dd.c:701
- __device_attach_driver+0x63f/0x830 drivers/base/dd.c:807
- bus_for_each_drv+0x2ca/0x3f0 drivers/base/bus.c:431
- __device_attach+0x4e2/0x7f0 drivers/base/dd.c:873
- device_initial_probe+0x4a/0x60 drivers/base/dd.c:920
- bus_probe_device+0x177/0x3d0 drivers/base/bus.c:491
- device_add+0x3b0e/0x40d0 drivers/base/core.c:2680
- usb_set_configuration+0x380f/0x3f10 drivers/usb/core/message.c:2032
- usb_generic_driver_probe+0x138/0x300 drivers/usb/core/generic.c:241
- usb_probe_device+0x311/0x490 drivers/usb/core/driver.c:272
- really_probe+0xf20/0x20b0 drivers/base/dd.c:529
- driver_probe_device+0x293/0x390 drivers/base/dd.c:701
- __device_attach_driver+0x63f/0x830 drivers/base/dd.c:807
- bus_for_each_drv+0x2ca/0x3f0 drivers/base/bus.c:431
- __device_attach+0x4e2/0x7f0 drivers/base/dd.c:873
- device_initial_probe+0x4a/0x60 drivers/base/dd.c:920
- bus_probe_device+0x177/0x3d0 drivers/base/bus.c:491
- device_add+0x3b0e/0x40d0 drivers/base/core.c:2680
- usb_new_device+0x1bd4/0x2a30 drivers/usb/core/hub.c:2554
- hub_port_connect drivers/usb/core/hub.c:5208 [inline]
- hub_port_connect_change drivers/usb/core/hub.c:5348 [inline]
- port_event drivers/usb/core/hub.c:5494 [inline]
- hub_event+0x5e7b/0x8a70 drivers/usb/core/hub.c:5576
- process_one_work+0x1688/0x2140 kernel/workqueue.c:2269
- worker_thread+0x10bc/0x2730 kernel/workqueue.c:2415
- kthread+0x551/0x590 kernel/kthread.c:292
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:293
-
-Local variable ----buf.i87@smsc75xx_bind created at:
- __smsc75xx_read_reg drivers/net/usb/smsc75xx.c:83 [inline]
- smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:968 [inline]
- smsc75xx_bind+0x485/0x11e0 drivers/net/usb/smsc75xx.c:1482
- __smsc75xx_read_reg drivers/net/usb/smsc75xx.c:83 [inline]
- smsc75xx_wait_ready drivers/net/usb/smsc75xx.c:968 [inline]
- smsc75xx_bind+0x485/0x11e0 drivers/net/usb/smsc75xx.c:1482
-
-This issue is caused because usbnet_read_cmd() reads less bytes than requested
-(zero byte in the reproducer). In this case, 'buf' is not properly filled.
-
-This patch fixes the issue by returning -ENODATA if usbnet_read_cmd() reads
-less bytes than requested.
-
-Fixes: d0cad871703b ("smsc75xx: SMSC LAN75xx USB gigabit ethernet adapter driver")
-Reported-and-tested-by: syzbot+6966546b78d050bb0b5d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6966546b78d050bb0b5d
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230923173549.3284502-1-syoshida@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Link: https://lore.kernel.org/r/iwlwifi.20220128153014.e349104ecd94.Iadc937f475158b9437becdfefb361a97e7eaa934@changeid
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Stable-dep-of: 8ba438ef3cac ("wifi: iwlwifi: mvm: Fix a memory corruption issue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc75xx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c        | 2 +-
+ drivers/net/wireless/intel/iwlwifi/mvm/d3.c        | 2 +-
+ drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c   | 2 +-
+ drivers/net/wireless/intel/iwlwifi/mvm/fw.c        | 2 +-
+ drivers/net/wireless/intel/iwlwifi/mvm/rx.c        | 4 ++--
+ drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c      | 4 ++--
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c      | 2 +-
+ drivers/net/wireless/intel/iwlwifi/pcie/internal.h | 2 +-
+ drivers/net/wireless/intel/iwlwifi/pcie/rx.c       | 2 +-
+ drivers/net/wireless/intel/iwlwifi/pcie/trans.c    | 2 +-
+ drivers/net/wireless/intel/iwlwifi/pcie/tx.c       | 2 +-
+ drivers/net/wireless/intel/iwlwifi/queue/tx.c      | 6 +++---
+ drivers/net/wireless/intel/iwlwifi/queue/tx.h      | 2 +-
+ 13 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/usb/smsc75xx.c b/drivers/net/usb/smsc75xx.c
-index 7c3e866514199..301d979d0d08c 100644
---- a/drivers/net/usb/smsc75xx.c
-+++ b/drivers/net/usb/smsc75xx.c
-@@ -90,7 +90,9 @@ static int __must_check __smsc75xx_read_reg(struct usbnet *dev, u32 index,
- 	ret = fn(dev, USB_VENDOR_REQUEST_READ_REGISTER, USB_DIR_IN
- 		 | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
- 		 0, index, &buf, 4);
--	if (unlikely(ret < 0)) {
-+	if (unlikely(ret < 4)) {
-+		ret = ret < 0 ? ret : -ENODATA;
-+
- 		netdev_warn(dev->net, "Failed to read reg index 0x%08x: %d\n",
- 			    index, ret);
- 		return ret;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+index c69f3fb833327..f34a02b33ccd4 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -1960,7 +1960,7 @@ static u32 iwl_dump_ini_mem(struct iwl_fw_runtime *fwrt, struct list_head *list,
+ 	struct iwl_fw_ini_error_dump_header *header;
+ 	u32 type = le32_to_cpu(reg->type), id = le32_to_cpu(reg->id);
+ 	u32 num_of_ranges, i, size;
+-	void *range;
++	u8 *range;
+ 
+ 	/*
+ 	 * The higher part of the ID in version 2 is irrelevant for
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+index 6dde3bd8f4416..27756e47f7caf 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+@@ -1090,7 +1090,7 @@ static int iwl_mvm_wowlan_config_key_params(struct iwl_mvm *mvm,
+ 					sizeof(struct iwl_wowlan_kek_kck_material_cmd_v2);
+ 			/* skip the sta_id at the beginning */
+ 			_kek_kck_cmd = (void *)
+-				((u8 *)_kek_kck_cmd) + sizeof(kek_kck_cmd.sta_id);
++				((u8 *)_kek_kck_cmd + sizeof(kek_kck_cmd.sta_id));
+ 		}
+ 
+ 		IWL_DEBUG_WOWLAN(mvm, "setting akm %d\n",
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+index 0f5c4c2510ef1..3c8eeb565135a 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+@@ -1950,7 +1950,7 @@ static ssize_t iwl_dbgfs_mem_read(struct file *file, char __user *user_buf,
+ 		goto out;
+ 	}
+ 
+-	ret = len - copy_to_user(user_buf, (void *)rsp->data + delta, len);
++	ret = len - copy_to_user(user_buf, (u8 *)rsp->data + delta, len);
+ 	*ppos += ret;
+ 
+ out:
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+index 6d439ae7b50b1..f347723092eee 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+@@ -686,7 +686,7 @@ int iwl_run_init_mvm_ucode(struct iwl_mvm *mvm)
+ 		mvm->nvm_data->bands[0].n_channels = 1;
+ 		mvm->nvm_data->bands[0].n_bitrates = 1;
+ 		mvm->nvm_data->bands[0].bitrates =
+-			(void *)mvm->nvm_data->channels + 1;
++			(void *)((u8 *)mvm->nvm_data->channels + 1);
+ 		mvm->nvm_data->bands[0].bitrates->hw_value = 10;
+ 	}
+ 
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rx.c b/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
+index 8ef5399ad9be6..d779e5e19568b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
+@@ -83,8 +83,8 @@ static void iwl_mvm_pass_packet_to_mac80211(struct iwl_mvm *mvm,
+ 	fraglen = len - hdrlen;
+ 
+ 	if (fraglen) {
+-		int offset = (void *)hdr + hdrlen -
+-			     rxb_addr(rxb) + rxb_offset(rxb);
++		int offset = (u8 *)hdr + hdrlen -
++			     (u8 *)rxb_addr(rxb) + rxb_offset(rxb);
+ 
+ 		skb_add_rx_frag(skb, 0, rxb_steal_page(rxb), offset,
+ 				fraglen, rxb->truesize);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+index 411254e9e603f..2e3eb7402197f 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+@@ -220,8 +220,8 @@ static int iwl_mvm_create_skb(struct iwl_mvm *mvm, struct sk_buff *skb,
+ 	fraglen = len - headlen;
+ 
+ 	if (fraglen) {
+-		int offset = (void *)hdr + headlen + pad_len -
+-			     rxb_addr(rxb) + rxb_offset(rxb);
++		int offset = (u8 *)hdr + headlen + pad_len -
++			     (u8 *)rxb_addr(rxb) + rxb_offset(rxb);
+ 
+ 		skb_add_rx_frag(skb, 0, rxb_steal_page(rxb), offset,
+ 				fraglen, rxb->truesize);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+index 65e382756de68..e4fd58f043ce2 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -2150,7 +2150,7 @@ static int iwl_mvm_scan_umac(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
+ 	struct iwl_scan_req_umac *cmd = mvm->scan_cmd;
+ 	struct iwl_scan_umac_chan_param *chan_param;
+ 	void *cmd_data = iwl_mvm_get_scan_req_umac_data(mvm);
+-	void *sec_part = cmd_data + sizeof(struct iwl_scan_channel_cfg_umac) *
++	void *sec_part = (u8 *)cmd_data + sizeof(struct iwl_scan_channel_cfg_umac) *
+ 		mvm->fw->ucode_capa.n_scan_channels;
+ 	struct iwl_scan_req_umac_tail_v2 *tail_v2 =
+ 		(struct iwl_scan_req_umac_tail_v2 *)sec_part;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/internal.h b/drivers/net/wireless/intel/iwlwifi/pcie/internal.h
+index a43e56c7689f3..6dce36d326935 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/internal.h
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/internal.h
+@@ -363,7 +363,7 @@ struct iwl_trans_pcie {
+ 
+ 	/* PCI bus related data */
+ 	struct pci_dev *pci_dev;
+-	void __iomem *hw_base;
++	u8 __iomem *hw_base;
+ 
+ 	bool ucode_write_complete;
+ 	bool sx_complete;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+index 6c6512158813b..f82fb17450165 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+@@ -727,7 +727,7 @@ static int iwl_pcie_alloc_rxq_dma(struct iwl_trans *trans,
+ 			goto err;
+ 	}
+ 
+-	rxq->rb_stts = trans_pcie->base_rb_stts + rxq->id * rb_stts_size;
++	rxq->rb_stts = (u8 *)trans_pcie->base_rb_stts + rxq->id * rb_stts_size;
+ 	rxq->rb_stts_dma =
+ 		trans_pcie->base_rb_stts_dma + rxq->id * rb_stts_size;
+ 
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+index 04e1f3829e96b..4456aef930cf4 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+@@ -2798,7 +2798,7 @@ static ssize_t iwl_dbgfs_monitor_data_read(struct file *file,
+ {
+ 	struct iwl_trans *trans = file->private_data;
+ 	struct iwl_trans_pcie *trans_pcie = IWL_TRANS_GET_PCIE_TRANS(trans);
+-	void *cpu_addr = (void *)trans->dbg.fw_mon.block, *curr_buf;
++	u8 *cpu_addr = (void *)trans->dbg.fw_mon.block, *curr_buf;
+ 	struct cont_rec *data = &trans_pcie->fw_mon_data;
+ 	u32 write_ptr_addr, wrap_cnt_addr, write_ptr, wrap_cnt;
+ 	ssize_t size, bytes_copied = 0;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/tx.c b/drivers/net/wireless/intel/iwlwifi/pcie/tx.c
+index 4f6c187eed69c..76d25c62a28e2 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/tx.c
+@@ -154,7 +154,7 @@ static int iwl_pcie_txq_build_tfd(struct iwl_trans *trans, struct iwl_txq *txq,
+ 	void *tfd;
+ 	u32 num_tbs;
+ 
+-	tfd = txq->tfds + trans->txqs.tfd.size * txq->write_ptr;
++	tfd = (u8 *)txq->tfds + trans->txqs.tfd.size * txq->write_ptr;
+ 
+ 	if (reset)
+ 		memset(tfd, 0, trans->txqs.tfd.size);
+diff --git a/drivers/net/wireless/intel/iwlwifi/queue/tx.c b/drivers/net/wireless/intel/iwlwifi/queue/tx.c
+index 0f3526b0c5b00..8522cdfc9e5d3 100644
+--- a/drivers/net/wireless/intel/iwlwifi/queue/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/queue/tx.c
+@@ -189,7 +189,7 @@ static struct page *get_workaround_page(struct iwl_trans *trans,
+ 		return NULL;
+ 
+ 	/* set the chaining pointer to the previous page if there */
+-	*(void **)(page_address(ret) + PAGE_SIZE - sizeof(void *)) = *page_ptr;
++	*(void **)((u8 *)page_address(ret) + PAGE_SIZE - sizeof(void *)) = *page_ptr;
+ 	*page_ptr = ret;
+ 
+ 	return ret;
+@@ -314,7 +314,7 @@ struct iwl_tso_hdr_page *get_page_hdr(struct iwl_trans *trans, size_t len,
+ 		return NULL;
+ 	p->pos = page_address(p->page);
+ 	/* set the chaining pointer to NULL */
+-	*(void **)(page_address(p->page) + PAGE_SIZE - sizeof(void *)) = NULL;
++	*(void **)((u8 *)page_address(p->page) + PAGE_SIZE - sizeof(void *)) = NULL;
+ out:
+ 	*page_ptr = p->page;
+ 	get_page(p->page);
+@@ -963,7 +963,7 @@ void iwl_txq_free_tso_page(struct iwl_trans *trans, struct sk_buff *skb)
+ 	while (next) {
+ 		struct page *tmp = next;
+ 
+-		next = *(void **)(page_address(next) + PAGE_SIZE -
++		next = *(void **)((u8 *)page_address(next) + PAGE_SIZE -
+ 				  sizeof(void *));
+ 		__free_page(tmp);
+ 	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/queue/tx.h b/drivers/net/wireless/intel/iwlwifi/queue/tx.h
+index 20efc62acf133..19178c88bb229 100644
+--- a/drivers/net/wireless/intel/iwlwifi/queue/tx.h
++++ b/drivers/net/wireless/intel/iwlwifi/queue/tx.h
+@@ -41,7 +41,7 @@ static inline void *iwl_txq_get_tfd(struct iwl_trans *trans,
+ 	if (trans->trans_cfg->use_tfh)
+ 		idx = iwl_txq_get_cmd_index(txq, idx);
+ 
+-	return txq->tfds + trans->txqs.tfd.size * idx;
++	return (u8 *)txq->tfds + trans->txqs.tfd.size * idx;
+ }
+ 
+ int iwl_txq_alloc(struct iwl_trans *trans, struct iwl_txq *txq, int slots_num,
 -- 
 2.40.1
 
