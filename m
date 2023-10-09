@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5520199B1
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A3B199B1
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEpuVhdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0F6C433C8;
-	Mon,  9 Oct 2023 13:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efJCnzWU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F64DC433C7;
+	Mon,  9 Oct 2023 13:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857434;
-	bh=1nPAR3Gs4cS5edrA8NxvlQHOMMS7duUMdBlDkL0eY8k=;
+	s=korg; t=1696857437;
+	bh=dIRFpADJHM1wjf2xTb5+YmN9jbUXT+NuccySVu1uuNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CEpuVhdRyxbVXVlX96MMmruaPc1/iTvVcfrO/XypD7oZaYSjAlkln1IVFDJdK7Ldi
-	 p2w5GI+BwcufGXSx6cen1J9vIG5G2A4NPxTWb8lfRm5OHTga2XIwYR8H36Qmel2Q8D
-	 Nhf0amgrhHjLnyAX9neFN7IGyTeG2jYuAYwkGx4Q=
+	b=efJCnzWUTWyeNHo58gPtFCRgIfflv5ypjbfJ9K90UUeA0FqzMJfK250lg/ZV/3zyd
+	 x6mQ9vuBeIjzWOrM3usB/A81ElPD1AxbSE6Jt0CjuRRvV4mdpNQZ6YstIeCN+8TZmI
+	 7jJndctsWAD08Vn/ZHGMie7t4S49HWKpsNZC/Oaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/162] scsi: core: Improve type safety of scsi_rescan_device()
-Date: Mon,  9 Oct 2023 14:59:59 +0200
-Message-ID: <20231009130123.449902536@linuxfoundation.org>
+Subject: [PATCH 6.1 019/162] scsi: Do not attempt to rescan suspended devices
+Date: Mon,  9 Oct 2023 15:00:00 +0200
+Message-ID: <20231009130123.481577878@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -47,193 +46,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 79519528a180c64a90863db2ce70887de6c49d16 ]
+[ Upstream commit ff48b37802e5c134e2dfc4d091f10b2eb5065a72 ]
 
-Most callers of scsi_rescan_device() have the scsi_device pointer readily
-available. Pass a struct scsi_device pointer to scsi_rescan_device()
-instead of a struct device pointer. This change prevents that a pointer to
-another struct device would be passed accidentally to scsi_rescan_device().
+scsi_rescan_device() takes a scsi device lock before executing a device
+handler and device driver rescan methods. Waiting for the completion of
+any command issued to the device by these methods will thus be done with
+the device lock held. As a result, there is a risk of deadlocking within
+the power management code if scsi_rescan_device() is called to handle a
+device resume with the associated scsi device not yet resumed.
 
-Remove the scsi_rescan_device() declaration from the scsi_priv.h header
-file since it duplicates the declaration in <scsi/scsi_host.h>.
+Avoid such situation by checking that the target scsi device is in the
+running state, that is, fully capable of executing commands, before
+proceeding with the rescan and bailout returning -EWOULDBLOCK otherwise.
+With this error return, the caller can retry rescaning the device after
+a delay.
 
+The state check is done with the device lock held and is thus safe
+against incoming suspend power management operations.
+
+Fixes: 6aa0365a3c85 ("ata: libata-scsi: Avoid deadlock on rescan after device resume")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Cc: Mike Christie <michael.christie@oracle.com>
-Cc: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20230822153043.4046244-1-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Stable-dep-of: 8b4d9469d0b0 ("ata: libata-scsi: Fix delayed scsi_rescan_device() execution")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c             | 2 +-
- drivers/scsi/aacraid/commsup.c        | 2 +-
- drivers/scsi/mvumi.c                  | 2 +-
- drivers/scsi/scsi_lib.c               | 2 +-
- drivers/scsi/scsi_priv.h              | 1 -
- drivers/scsi/scsi_scan.c              | 4 ++--
- drivers/scsi/scsi_sysfs.c             | 4 ++--
- drivers/scsi/smartpqi/smartpqi_init.c | 2 +-
- drivers/scsi/storvsc_drv.c            | 2 +-
- drivers/scsi/virtio_scsi.c            | 2 +-
- include/scsi/scsi_host.h              | 2 +-
- 11 files changed, 12 insertions(+), 13 deletions(-)
+ drivers/scsi/scsi_scan.c | 18 +++++++++++++++++-
+ include/scsi/scsi_host.h |  2 +-
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 8cc8268327f0c..b348f77b91231 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -4678,7 +4678,7 @@ void ata_scsi_dev_rescan(struct work_struct *work)
- 			}
- 
- 			spin_unlock_irqrestore(ap->lock, flags);
--			scsi_rescan_device(&(sdev->sdev_gendev));
-+			scsi_rescan_device(sdev);
- 			scsi_device_put(sdev);
- 			spin_lock_irqsave(ap->lock, flags);
- 		}
-diff --git a/drivers/scsi/aacraid/commsup.c b/drivers/scsi/aacraid/commsup.c
-index 3f062e4013ab6..013a9a334972e 100644
---- a/drivers/scsi/aacraid/commsup.c
-+++ b/drivers/scsi/aacraid/commsup.c
-@@ -1451,7 +1451,7 @@ static void aac_handle_aif(struct aac_dev * dev, struct fib * fibptr)
- #endif
- 				break;
- 			}
--			scsi_rescan_device(&device->sdev_gendev);
-+			scsi_rescan_device(device);
- 			break;
- 
- 		default:
-diff --git a/drivers/scsi/mvumi.c b/drivers/scsi/mvumi.c
-index 05d3ce9b72dba..c4acf65379d20 100644
---- a/drivers/scsi/mvumi.c
-+++ b/drivers/scsi/mvumi.c
-@@ -1500,7 +1500,7 @@ static void mvumi_rescan_devices(struct mvumi_hba *mhba, int id)
- 
- 	sdev = scsi_device_lookup(mhba->shost, 0, id, 0);
- 	if (sdev) {
--		scsi_rescan_device(&sdev->sdev_gendev);
-+		scsi_rescan_device(sdev);
- 		scsi_device_put(sdev);
- 	}
- }
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index fb6e9a7a7f58b..d25e1c2472538 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -2445,7 +2445,7 @@ static void scsi_evt_emit(struct scsi_device *sdev, struct scsi_event *evt)
- 		envp[idx++] = "SDEV_MEDIA_CHANGE=1";
- 		break;
- 	case SDEV_EVT_INQUIRY_CHANGE_REPORTED:
--		scsi_rescan_device(&sdev->sdev_gendev);
-+		scsi_rescan_device(sdev);
- 		envp[idx++] = "SDEV_UA=INQUIRY_DATA_HAS_CHANGED";
- 		break;
- 	case SDEV_EVT_CAPACITY_CHANGE_REPORTED:
-diff --git a/drivers/scsi/scsi_priv.h b/drivers/scsi/scsi_priv.h
-index c52de9a973e46..b14545acb40f5 100644
---- a/drivers/scsi/scsi_priv.h
-+++ b/drivers/scsi/scsi_priv.h
-@@ -132,7 +132,6 @@ extern int scsi_complete_async_scans(void);
- extern int scsi_scan_host_selected(struct Scsi_Host *, unsigned int,
- 				   unsigned int, u64, enum scsi_scan_mode);
- extern void scsi_forget_host(struct Scsi_Host *);
--extern void scsi_rescan_device(struct device *);
- 
- /* scsi_sysctl.c */
- #ifdef CONFIG_SYSCTL
 diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index d12f2dcb4040a..445989f44d3f2 100644
+index 445989f44d3f2..ed26c52ed8474 100644
 --- a/drivers/scsi/scsi_scan.c
 +++ b/drivers/scsi/scsi_scan.c
-@@ -1611,9 +1611,9 @@ int scsi_add_device(struct Scsi_Host *host, uint channel,
+@@ -1611,12 +1611,24 @@ int scsi_add_device(struct Scsi_Host *host, uint channel,
  }
  EXPORT_SYMBOL(scsi_add_device);
  
--void scsi_rescan_device(struct device *dev)
-+void scsi_rescan_device(struct scsi_device *sdev)
+-void scsi_rescan_device(struct scsi_device *sdev)
++int scsi_rescan_device(struct scsi_device *sdev)
  {
--	struct scsi_device *sdev = to_scsi_device(dev);
-+	struct device *dev = &sdev->sdev_gendev;
+ 	struct device *dev = &sdev->sdev_gendev;
++	int ret = 0;
  
  	device_lock(dev);
  
-diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
-index cac7c902cf70a..1f531063d6331 100644
---- a/drivers/scsi/scsi_sysfs.c
-+++ b/drivers/scsi/scsi_sysfs.c
-@@ -762,7 +762,7 @@ static ssize_t
- store_rescan_field (struct device *dev, struct device_attribute *attr,
- 		    const char *buf, size_t count)
- {
--	scsi_rescan_device(dev);
-+	scsi_rescan_device(to_scsi_device(dev));
- 	return count;
- }
- static DEVICE_ATTR(rescan, S_IWUSR, NULL, store_rescan_field);
-@@ -855,7 +855,7 @@ store_state_field(struct device *dev, struct device_attribute *attr,
- 		 * waiting for pending I/O to finish.
- 		 */
- 		blk_mq_run_hw_queues(sdev->request_queue, true);
--		scsi_rescan_device(dev);
-+		scsi_rescan_device(sdev);
++	/*
++	 * Bail out if the device is not running. Otherwise, the rescan may
++	 * block waiting for commands to be executed, with us holding the
++	 * device lock. This can result in a potential deadlock in the power
++	 * management core code when system resume is on-going.
++	 */
++	if (sdev->sdev_state != SDEV_RUNNING) {
++		ret = -EWOULDBLOCK;
++		goto unlock;
++	}
++
+ 	scsi_attach_vpd(sdev);
+ 
+ 	if (sdev->handler && sdev->handler->rescan)
+@@ -1629,7 +1641,11 @@ void scsi_rescan_device(struct scsi_device *sdev)
+ 			drv->rescan(dev);
+ 		module_put(dev->driver->owner);
  	}
- 
- 	return ret == 0 ? count : -EINVAL;
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 9f0f69c1ed665..47d487729635c 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -2278,7 +2278,7 @@ static void pqi_update_device_list(struct pqi_ctrl_info *ctrl_info,
- 			device->advertised_queue_depth = device->queue_depth;
- 			scsi_change_queue_depth(device->sdev, device->advertised_queue_depth);
- 			if (device->rescan) {
--				scsi_rescan_device(&device->sdev->sdev_gendev);
-+				scsi_rescan_device(device->sdev);
- 				device->rescan = false;
- 			}
- 		}
-diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
-index 7a1dc5c7c49ee..c2d981d5a2dd5 100644
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -471,7 +471,7 @@ static void storvsc_device_scan(struct work_struct *work)
- 	sdev = scsi_device_lookup(wrk->host, 0, wrk->tgt_id, wrk->lun);
- 	if (!sdev)
- 		goto done;
--	scsi_rescan_device(&sdev->sdev_gendev);
-+	scsi_rescan_device(sdev);
- 	scsi_device_put(sdev);
- 
- done:
-diff --git a/drivers/scsi/virtio_scsi.c b/drivers/scsi/virtio_scsi.c
-index 2a79ab16134b1..3f8c553f3d91e 100644
---- a/drivers/scsi/virtio_scsi.c
-+++ b/drivers/scsi/virtio_scsi.c
-@@ -325,7 +325,7 @@ static void virtscsi_handle_param_change(struct virtio_scsi *vscsi,
- 	/* Handle "Parameters changed", "Mode parameters changed", and
- 	   "Capacity data has changed".  */
- 	if (asc == 0x2a && (ascq == 0x00 || ascq == 0x01 || ascq == 0x09))
--		scsi_rescan_device(&sdev->sdev_gendev);
-+		scsi_rescan_device(sdev);
- 
- 	scsi_device_put(sdev);
++
++unlock:
+ 	device_unlock(dev);
++
++	return ret;
  }
+ EXPORT_SYMBOL(scsi_rescan_device);
+ 
 diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
-index d27d9fb7174c8..16848def47a1d 100644
+index 16848def47a1d..71def41b1ad78 100644
 --- a/include/scsi/scsi_host.h
 +++ b/include/scsi/scsi_host.h
 @@ -752,7 +752,7 @@ extern int __must_check scsi_add_host_with_dma(struct Scsi_Host *,
  					       struct device *,
  					       struct device *);
  extern void scsi_scan_host(struct Scsi_Host *);
--extern void scsi_rescan_device(struct device *);
-+extern void scsi_rescan_device(struct scsi_device *);
+-extern void scsi_rescan_device(struct scsi_device *);
++extern int scsi_rescan_device(struct scsi_device *sdev);
  extern void scsi_remove_host(struct Scsi_Host *);
  extern struct Scsi_Host *scsi_host_get(struct Scsi_Host *);
  extern int scsi_host_busy(struct Scsi_Host *shost);
