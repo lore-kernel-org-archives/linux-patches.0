@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC90250E0
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C14027700
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t41t+qNl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5BBC433C7;
-	Mon,  9 Oct 2023 13:29:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IP/lrswe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5B9C433C9;
+	Mon,  9 Oct 2023 13:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858163;
-	bh=ibL43TwsuB3aQtr1bsMDR2tREucnso9PG+xfNSGL5qQ=;
+	s=korg; t=1696858166;
+	bh=2D3HpySPV3f5ePvFTYzszdjbec5iWkk4vogILZ5qNNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t41t+qNlSlFmhaiNhAyOd8/QNlhWCZWmWBLakVJQ8xymcZgOLhibVgtCrJZVZqvb6
-	 Df2LJOaWwRLwnK/NHB18PHpKWYm7d8mRfNBGkrpnHsKMpGbkqh7pCwoD9uA4ghLwPe
-	 5fuCxHYSTJMUTFrG6hLBePcfmd+B2eaXrheQTIaM=
+	b=IP/lrsweydnsQpKwzu3S/Sh+3ZMUzzD8tgdrXR2qwcplg8nxhyKw3HTRt3PKA1wpi
+	 HgmblKgsXHRWy94etEq8cMD3Na127GuEC3O6tIA/XTlTc+ht69BBRVgo6xm/Ir/taI
+	 oIAyAONoYGoX8Z0CwOMMqDBBjpFw39i5bcBw0v8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Hulk Robot <hulkci@huawei.com>,
+	YueHaibing <yuehaibing@huawei.com>,
+	Anson Huang <Anson.Huang@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 035/131] scsi: qla2xxx: Fix deletion race condition
-Date: Mon,  9 Oct 2023 15:01:15 +0200
-Message-ID: <20231009130117.382985539@linuxfoundation.org>
+Subject: [PATCH 5.4 036/131] clk: imx: clk-pll14xx: Make two variables static
+Date: Mon,  9 Oct 2023 15:01:16 +0200
+Message-ID: <20231009130117.412884882@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -44,141 +44,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit 6dfe4344c168c6ca20fe7640649aacfcefcccb26 ]
+[ Upstream commit 8f2d3c1759d19232edf1e9ef43d40a44e31493d6 ]
 
-System crash when using debug kernel due to link list corruption. The cause
-of the link list corruption is due to session deletion was allowed to queue
-up twice.  Here's the internal trace that show the same port was allowed to
-double queue for deletion on different cpu.
+Fix sparse warnings:
 
-20808683956 015 qla2xxx [0000:13:00.1]-e801:4: Scheduling sess ffff93ebf9306800 for deletion 50:06:0e:80:12:48:ff:50 fc4_type 1
-20808683957 027 qla2xxx [0000:13:00.1]-e801:4: Scheduling sess ffff93ebf9306800 for deletion 50:06:0e:80:12:48:ff:50 fc4_type 1
+drivers/clk/imx/clk-pll14xx.c:44:37:
+ warning: symbol 'imx_pll1416x_tbl' was not declared. Should it be static?
+drivers/clk/imx/clk-pll14xx.c:57:37:
+ warning: symbol 'imx_pll1443x_tbl' was not declared. Should it be static?
 
-Move the clearing/setting of deleted flag lock.
-
-Cc: stable@vger.kernel.org
-Fixes: 726b85487067 ("qla2xxx: Add framework for async fabric discovery")
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230714070104.40052-2-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Anson Huang <Anson.Huang@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: 72d00e560d10 ("clk: imx: pll14xx: dynamically configure PLL for 393216000/361267200Hz")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c   | 16 ++++++++++++++--
- drivers/scsi/qla2xxx/qla_target.c | 12 ++++++------
- 2 files changed, 20 insertions(+), 8 deletions(-)
+ drivers/clk/imx/clk-pll14xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
-index 28ba87cd227a2..8a0ac87f70a9d 100644
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -485,6 +485,7 @@ static
- void qla24xx_handle_adisc_event(scsi_qla_host_t *vha, struct event_arg *ea)
- {
- 	struct fc_port *fcport = ea->fcport;
-+	unsigned long flags;
+diff --git a/drivers/clk/imx/clk-pll14xx.c b/drivers/clk/imx/clk-pll14xx.c
+index c43e9653b4156..129a28c3366eb 100644
+--- a/drivers/clk/imx/clk-pll14xx.c
++++ b/drivers/clk/imx/clk-pll14xx.c
+@@ -41,7 +41,7 @@ struct clk_pll14xx {
  
- 	ql_dbg(ql_dbg_disc, vha, 0x20d2,
- 	    "%s %8phC DS %d LS %d rc %d login %d|%d rscn %d|%d lid %d\n",
-@@ -499,9 +500,15 @@ void qla24xx_handle_adisc_event(scsi_qla_host_t *vha, struct event_arg *ea)
- 		ql_dbg(ql_dbg_disc, vha, 0x2066,
- 		    "%s %8phC: adisc fail: post delete\n",
- 		    __func__, ea->fcport->port_name);
-+
-+		spin_lock_irqsave(&vha->work_lock, flags);
- 		/* deleted = 0 & logout_on_delete = force fw cleanup */
--		fcport->deleted = 0;
-+		if (fcport->deleted == QLA_SESS_DELETED)
-+			fcport->deleted = 0;
-+
- 		fcport->logout_on_delete = 1;
-+		spin_unlock_irqrestore(&vha->work_lock, flags);
-+
- 		qlt_schedule_sess_for_deletion(ea->fcport);
- 		return;
- 	}
-@@ -1402,7 +1409,6 @@ void __qla24xx_handle_gpdb_event(scsi_qla_host_t *vha, struct event_arg *ea)
+ #define to_clk_pll14xx(_hw) container_of(_hw, struct clk_pll14xx, hw)
  
- 	spin_lock_irqsave(&vha->hw->tgt.sess_lock, flags);
- 	ea->fcport->login_gen++;
--	ea->fcport->deleted = 0;
- 	ea->fcport->logout_on_delete = 1;
+-const struct imx_pll14xx_rate_table imx_pll1416x_tbl[] = {
++static const struct imx_pll14xx_rate_table imx_pll1416x_tbl[] = {
+ 	PLL_1416X_RATE(1800000000U, 225, 3, 0),
+ 	PLL_1416X_RATE(1600000000U, 200, 3, 0),
+ 	PLL_1416X_RATE(1200000000U, 300, 3, 1),
+@@ -52,7 +52,7 @@ const struct imx_pll14xx_rate_table imx_pll1416x_tbl[] = {
+ 	PLL_1416X_RATE(600000000U,  300, 3, 2),
+ };
  
- 	if (!ea->fcport->login_succ && !IS_SW_RESV_ADDR(ea->fcport->d_id)) {
-@@ -5475,6 +5481,8 @@ qla2x00_reg_remote_port(scsi_qla_host_t *vha, fc_port_t *fcport)
- void
- qla2x00_update_fcport(scsi_qla_host_t *vha, fc_port_t *fcport)
- {
-+	unsigned long flags;
-+
- 	if (IS_SW_RESV_ADDR(fcport->d_id))
- 		return;
- 
-@@ -5484,7 +5492,11 @@ qla2x00_update_fcport(scsi_qla_host_t *vha, fc_port_t *fcport)
- 	qla2x00_set_fcport_disc_state(fcport, DSC_UPD_FCPORT);
- 	fcport->login_retry = vha->hw->login_retry_count;
- 	fcport->flags &= ~(FCF_LOGIN_NEEDED | FCF_ASYNC_SENT);
-+
-+	spin_lock_irqsave(&vha->work_lock, flags);
- 	fcport->deleted = 0;
-+	spin_unlock_irqrestore(&vha->work_lock, flags);
-+
- 	if (vha->hw->current_topology == ISP_CFG_NL)
- 		fcport->logout_on_delete = 0;
- 	else
-diff --git a/drivers/scsi/qla2xxx/qla_target.c b/drivers/scsi/qla2xxx/qla_target.c
-index cb97565b6a333..a95ea2f70f97f 100644
---- a/drivers/scsi/qla2xxx/qla_target.c
-+++ b/drivers/scsi/qla2xxx/qla_target.c
-@@ -1046,10 +1046,6 @@ void qlt_free_session_done(struct work_struct *work)
- 			(struct imm_ntfy_from_isp *)sess->iocb, SRB_NACK_LOGO);
- 	}
- 
--	spin_lock_irqsave(&vha->work_lock, flags);
--	sess->flags &= ~FCF_ASYNC_SENT;
--	spin_unlock_irqrestore(&vha->work_lock, flags);
--
- 	spin_lock_irqsave(&ha->tgt.sess_lock, flags);
- 	if (sess->se_sess) {
- 		sess->se_sess = NULL;
-@@ -1059,7 +1055,6 @@ void qlt_free_session_done(struct work_struct *work)
- 
- 	qla2x00_set_fcport_disc_state(sess, DSC_DELETED);
- 	sess->fw_login_state = DSC_LS_PORT_UNAVAIL;
--	sess->deleted = QLA_SESS_DELETED;
- 
- 	if (sess->login_succ && !IS_SW_RESV_ADDR(sess->d_id)) {
- 		vha->fcport_count--;
-@@ -1111,7 +1106,12 @@ void qlt_free_session_done(struct work_struct *work)
- 
- 	sess->explicit_logout = 0;
- 	spin_unlock_irqrestore(&ha->tgt.sess_lock, flags);
-+
-+	spin_lock_irqsave(&vha->work_lock, flags);
-+	sess->flags &= ~FCF_ASYNC_SENT;
-+	sess->deleted = QLA_SESS_DELETED;
- 	sess->free_pending = 0;
-+	spin_unlock_irqrestore(&vha->work_lock, flags);
- 
- 	ql_dbg(ql_dbg_disc, vha, 0xf001,
- 	    "Unregistration of sess %p %8phC finished fcp_cnt %d\n",
-@@ -1161,12 +1161,12 @@ void qlt_unreg_sess(struct fc_port *sess)
- 	 * management from being sent.
- 	 */
- 	sess->flags |= FCF_ASYNC_SENT;
-+	sess->deleted = QLA_SESS_DELETION_IN_PROGRESS;
- 	spin_unlock_irqrestore(&sess->vha->work_lock, flags);
- 
- 	if (sess->se_sess)
- 		vha->hw->tgt.tgt_ops->clear_nacl_from_fcport_map(sess);
- 
--	sess->deleted = QLA_SESS_DELETION_IN_PROGRESS;
- 	qla2x00_set_fcport_disc_state(sess, DSC_DELETE_PEND);
- 	sess->last_rscn_gen = sess->rscn_gen;
- 	sess->last_login_gen = sess->login_gen;
+-const struct imx_pll14xx_rate_table imx_pll1443x_tbl[] = {
++static const struct imx_pll14xx_rate_table imx_pll1443x_tbl[] = {
+ 	PLL_1443X_RATE(650000000U, 325, 3, 2, 0),
+ 	PLL_1443X_RATE(594000000U, 198, 2, 2, 0),
+ 	PLL_1443X_RATE(393216000U, 262, 2, 3, 9437),
 -- 
 2.40.1
 
