@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAAE1A5A4
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B111A5A4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="beNnHWyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35142C433CA;
-	Mon,  9 Oct 2023 13:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oa51P5L5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509C6C433C7;
+	Mon,  9 Oct 2023 13:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857817;
-	bh=BMAOaAaPDcrzn251JEyzy0ikTpdiwfkZC9jJwdhiAHQ=;
+	s=korg; t=1696857820;
+	bh=WegpTihH3BhS88QABTC2mWfihMuEsGwhRqy1eo9kneM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=beNnHWyNmoBYP/TwJXnCI0IdnJxVXazqEms6MRU124PW8fjphIEKxDOjTHQ2Stxic
-	 ypEhlmVMzDwSLcKeJGDrABXMaTVx+Mq/bV520wMbApWn2+BkoE0ANTgWUjAFFdgW0K
-	 0GsLmTB5bYuQ/7r0Ghp2YELmTDzeogxKnA3EdRpo=
+	b=Oa51P5L5Hot/YkpIijs3uHc0aHI/uL2JjIz8Jrd+k4/BDJ6bLLr6MdHWI3j4u4W+O
+	 W/xNQyvlLhgmzI6X1U6+jYB66eCNPzvFiLkfmFcclnnJHSwyjxHrf0g+r2o+zVav5z
+	 OVGIur1Te09etqvAiHSQpqwv3PcXNcUVVeBY8Obc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 139/162] dm zoned: free dmz->ddev array in dmz_put_zoned_devices
-Date: Mon,  9 Oct 2023 15:02:00 +0200
-Message-ID: <20231009130126.744415628@linuxfoundation.org>
+	Xin Long <lucien.xin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 130/162] sctp: update hb timer immediately after users change hb_interval
+Date: Mon,  9 Oct 2023 15:01:51 +0200
+Message-ID: <20231009130126.506099253@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -41,72 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Xin Long <lucien.xin@gmail.com>
 
-commit 9850ccd5dd88075b2b7fd28d96299d5535f58cc5 upstream.
+[ Upstream commit 1f4e803cd9c9166eb8b6c8b0b8e4124f7499fc07 ]
 
-Commit 4dba12881f88 ("dm zoned: support arbitrary number of devices")
-made the pointers to additional zoned devices to be stored in a
-dynamically allocated dmz->ddev array. However, this array is not freed.
+Currently, when hb_interval is changed by users, it won't take effect
+until the next expiry of hb timer. As the default value is 30s, users
+have to wait up to 30s to wait its hb_interval update to work.
 
-Rename dmz_put_zoned_device to dmz_put_zoned_devices and fix it to
-free the dmz->ddev array when cleaning up zoned device information.
-Remove NULL assignment for all dmz->ddev elements and just free the
-dmz->ddev array instead.
+This becomes pretty bad in containers where a much smaller value is
+usually set on hb_interval. This patch improves it by resetting the
+hb timer immediately once the value of hb_interval is updated by users.
 
-Found by Linux Verification Center (linuxtesting.org).
+Note that we don't address the already existing 'problem' when sending
+a heartbeat 'on demand' if one hb has just been sent(from the timer)
+mentioned in:
 
-Fixes: 4dba12881f88 ("dm zoned: support arbitrary number of devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg590224.html
+
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/r/75465785f8ee5df2fb3acdca9b8fafdc18984098.1696172660.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-zoned-target.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ net/sctp/socket.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-zoned-target.c
-+++ b/drivers/md/dm-zoned-target.c
-@@ -748,17 +748,16 @@ err:
- /*
-  * Cleanup zoned device information.
-  */
--static void dmz_put_zoned_device(struct dm_target *ti)
-+static void dmz_put_zoned_devices(struct dm_target *ti)
- {
- 	struct dmz_target *dmz = ti->private;
- 	int i;
- 
--	for (i = 0; i < dmz->nr_ddevs; i++) {
--		if (dmz->ddev[i]) {
-+	for (i = 0; i < dmz->nr_ddevs; i++)
-+		if (dmz->ddev[i])
- 			dm_put_device(ti, dmz->ddev[i]);
--			dmz->ddev[i] = NULL;
--		}
--	}
-+
-+	kfree(dmz->ddev);
- }
- 
- static int dmz_fixup_devices(struct dm_target *ti)
-@@ -948,7 +947,7 @@ err_bio:
- err_meta:
- 	dmz_dtr_metadata(dmz->metadata);
- err_dev:
--	dmz_put_zoned_device(ti);
-+	dmz_put_zoned_devices(ti);
- err:
- 	kfree(dmz->dev);
- 	kfree(dmz);
-@@ -978,7 +977,7 @@ static void dmz_dtr(struct dm_target *ti
- 
- 	bioset_exit(&dmz->bio_set);
- 
--	dmz_put_zoned_device(ti);
-+	dmz_put_zoned_devices(ti);
- 
- 	mutex_destroy(&dmz->chunk_lock);
- 
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 32e3669adf146..e25dc17091311 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -2449,6 +2449,7 @@ static int sctp_apply_peer_addr_params(struct sctp_paddrparams *params,
+ 			if (trans) {
+ 				trans->hbinterval =
+ 				    msecs_to_jiffies(params->spp_hbinterval);
++				sctp_transport_reset_hb_timer(trans);
+ 			} else if (asoc) {
+ 				asoc->hbinterval =
+ 				    msecs_to_jiffies(params->spp_hbinterval);
+-- 
+2.40.1
+
 
 
