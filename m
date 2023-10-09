@@ -1,29 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A168A3419D
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAA23419D;
+	Mon,  9 Oct 2023 13:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0QDkb1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB03C433C9;
-	Mon,  9 Oct 2023 13:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLqdBgQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CD7C433C7;
+	Mon,  9 Oct 2023 13:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859611;
-	bh=9GsW5K2PD/0Xk0plOhzHJXY++YZT1b1nWbkcPYLa2NE=;
+	s=korg; t=1696859614;
+	bh=YPuwxMRAMtgEqqEgr8dEnI8uvjslGrtnKU3kGNNn0nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0QDkb1SFDNzhRoWunLeqzKghy88L1t3eVVDofWBNTR36sAhE997wWzObN9mdcvEB
-	 nZwjF5C7xd0vF7n+CS63N9XphKPBXWabGgMG9XQ8f/7074YR9tTAXGYt+KIteTD12E
-	 sETDTcs73hvrJorTH2WZHEaKqLXTMVXLMe9W76uM=
+	b=JLqdBgQxWwXlUDAaodC7DB1e69Dt7jBYYf5jIlorJpOsrMNuvQXGBAfGVxL+l0WrQ
+	 BiL7Bc+3JdUsomjXsfhlAbgRv1g8OGoYxU+sNh0kZAhr1CuFOwPGsR8+6dYOZsjRGU
+	 WcGor+eYgy6bGFDUz/mUiDz/ZKso6+CqjmQBAaXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauricio Faria de Oliveira <mfo@canonical.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	syzbot+62cbf263225ae13ff153@syzkaller.appspotmail.com,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	netdev@vger.kernel.org,
+	bpf@vger.kernel.org,
+	syzkaller-bugs@googlegroups.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 76/91] modpost: add missing else to the "of" check
-Date: Mon,  9 Oct 2023 15:06:48 +0200
-Message-ID: <20231009130114.181526240@linuxfoundation.org>
+Subject: [PATCH 4.19 77/91] ipv4, ipv6: Fix handling of transhdrlen in __ip{,6}_append_data()
+Date: Mon,  9 Oct 2023 15:06:49 +0200
+Message-ID: <20231009130114.219790966@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -42,52 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauricio Faria de Oliveira <mfo@canonical.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit cbc3d00cf88fda95dbcafee3b38655b7a8f2650a ]
+[ Upstream commit 9d4c75800f61e5d75c1659ba201b6c0c7ead3070 ]
 
-Without this 'else' statement, an "usb" name goes into two handlers:
-the first/previous 'if' statement _AND_ the for-loop over 'devtable',
-but the latter is useless as it has no 'usb' device_id entry anyway.
+Including the transhdrlen in length is a problem when the packet is
+partially filled (e.g. something like send(MSG_MORE) happened previously)
+when appending to an IPv4 or IPv6 packet as we don't want to repeat the
+transport header or account for it twice.  This can happen under some
+circumstances, such as splicing into an L2TP socket.
 
-Tested with allmodconfig before/after patch; no changes to *.mod.c:
+The symptom observed is a warning in __ip6_append_data():
 
-    git checkout v6.6-rc3
-    make -j$(nproc) allmodconfig
-    make -j$(nproc) olddefconfig
+    WARNING: CPU: 1 PID: 5042 at net/ipv6/ip6_output.c:1800 __ip6_append_data.isra.0+0x1be8/0x47f0 net/ipv6/ip6_output.c:1800
 
-    make -j$(nproc)
-    find . -name '*.mod.c' | cpio -pd /tmp/before
+that occurs when MSG_SPLICE_PAGES is used to append more data to an already
+partially occupied skbuff.  The warning occurs when 'copy' is larger than
+the amount of data in the message iterator.  This is because the requested
+length includes the transport header length when it shouldn't.  This can be
+triggered by, for example:
 
-    # apply patch
+        sfd = socket(AF_INET6, SOCK_DGRAM, IPPROTO_L2TP);
+        bind(sfd, ...); // ::1
+        connect(sfd, ...); // ::1 port 7
+        send(sfd, buffer, 4100, MSG_MORE);
+        sendfile(sfd, dfd, NULL, 1024);
 
-    make -j$(nproc)
-    find . -name '*.mod.c' | cpio -pd /tmp/after
+Fix this by only adding transhdrlen into the length if the write queue is
+empty in l2tp_ip6_sendmsg(), analogously to how UDP does things.
 
-    diff -r /tmp/before/ /tmp/after/
-    # no difference
+l2tp_ip_sendmsg() looks like it won't suffer from this problem as it builds
+the UDP packet itself.
 
-Fixes: acbef7b76629 ("modpost: fix module autoloading for OF devices with generic compatible property")
-Signed-off-by: Mauricio Faria de Oliveira <mfo@canonical.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: a32e0eec7042 ("l2tp: introduce L2TPv3 IP encapsulation support for IPv6")
+Reported-by: syzbot+62cbf263225ae13ff153@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/0000000000001c12b30605378ce8@google.com/
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Eric Dumazet <edumazet@google.com>
+cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+cc: "David S. Miller" <davem@davemloft.net>
+cc: David Ahern <dsahern@kernel.org>
+cc: Paolo Abeni <pabeni@redhat.com>
+cc: Jakub Kicinski <kuba@kernel.org>
+cc: netdev@vger.kernel.org
+cc: bpf@vger.kernel.org
+cc: syzkaller-bugs@googlegroups.com
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/file2alias.c | 2 +-
+ net/l2tp/l2tp_ip6.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index 7f40b6aab689b..90868df7865e3 100644
---- a/scripts/mod/file2alias.c
-+++ b/scripts/mod/file2alias.c
-@@ -1395,7 +1395,7 @@ void handle_moddevtable(struct module *mod, struct elf_info *info,
- 	/* First handle the "special" cases */
- 	if (sym_is(name, namelen, "usb"))
- 		do_usb_table(symval, sym->st_size, mod);
--	if (sym_is(name, namelen, "of"))
-+	else if (sym_is(name, namelen, "of"))
- 		do_of_table(symval, sym->st_size, mod);
- 	else if (sym_is(name, namelen, "pnp"))
- 		do_pnp_device_entry(symval, sym->st_size, mod);
+diff --git a/net/l2tp/l2tp_ip6.c b/net/l2tp/l2tp_ip6.c
+index f3f0b4b7c3863..7342344d99a97 100644
+--- a/net/l2tp/l2tp_ip6.c
++++ b/net/l2tp/l2tp_ip6.c
+@@ -525,7 +525,6 @@ static int l2tp_ip6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	 */
+ 	if (len > INT_MAX - transhdrlen)
+ 		return -EMSGSIZE;
+-	ulen = len + transhdrlen;
+ 
+ 	/* Mirror BSD error message compatibility */
+ 	if (msg->msg_flags & MSG_OOB)
+@@ -649,6 +648,7 @@ static int l2tp_ip6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 
+ back_from_confirm:
+ 	lock_sock(sk);
++	ulen = len + skb_queue_empty(&sk->sk_write_queue) ? transhdrlen : 0;
+ 	err = ip6_append_data(sk, ip_generic_getfrag, msg,
+ 			      ulen, transhdrlen, &ipc6,
+ 			      &fl6, (struct rt6_info *)dst,
 -- 
 2.40.1
 
