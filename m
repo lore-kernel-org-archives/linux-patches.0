@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAF11A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA191A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUbZHOh1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77825C433C9;
-	Mon,  9 Oct 2023 13:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wtey03XI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB598C433CC;
+	Mon,  9 Oct 2023 13:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857575;
-	bh=QTJXqsLXqKWh9jbhBTAhfti6kc7bpHmLyQXBWzfEbmg=;
+	s=korg; t=1696857579;
+	bh=HVZeRI2xd2PzJle0jUbC7kN4y+QqdY7sEMfS/hy2+LA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bUbZHOh1zKN0f11bJxJ5N5aeJ7F9DCcAk+z3ThNaRSzb0grv9pkFCBdQePd8g1kCy
-	 ypkCXMPq6G4W+xwrGM0/2ILMIofxkf5wa+kqdYh2J2nHig3lNdcJJA39ScUpB7Ac9I
-	 ub3SMuNVHRLrl/B77tAFIzoAj3jEarGi2XmqtqcA=
+	b=Wtey03XI2pcG8E+iNWSueeXQEVeQO1mLCm8FP7QCgwn8tNNz+/kETOpH3KeQiDnol
+	 v2l5OeQ+F3bhsCgDB0PBWXdrxshsouXbfk21HFY7lH2GmOYAZadq0pmrbLTNmvUrb6
+	 dYGL7J2CUDbpjv/LLmj+yicVxb+f7RtjH8SaDbq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Diupina <adiupina@astralinux.ru>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shiji Yang <yangshiji66@outlook.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/162] drivers/net: process the result of hdlc_open() and add call of hdlc_close() in uhdlc_close()
-Date: Mon,  9 Oct 2023 15:01:11 +0200
-Message-ID: <20231009130125.405803528@linuxfoundation.org>
+Subject: [PATCH 6.1 091/162] wifi: mt76: mt76x02: fix MT76x0 external LNA gain handling
+Date: Mon,  9 Oct 2023 15:01:12 +0200
+Message-ID: <20231009130125.432756887@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -43,75 +43,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Diupina <adiupina@astralinux.ru>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit a59addacf899b1b21a7b7449a1c52c98704c2472 ]
+[ Upstream commit 684e45e120b82deccaf8b85633905304a3bbf56d ]
 
-Process the result of hdlc_open() and call uhdlc_close()
-in case of an error. It is necessary to pass the error
-code up the control flow, similar to a possible
-error in request_irq().
-Also add a hdlc_close() call to the uhdlc_close()
-because the comment to hdlc_close() says it must be called
-by the hardware driver when the HDLC device is being closed
+On MT76x0, LNA gain should be applied for both external and internal LNA.
+On MT76x2, LNA gain should be treated as 0 for external LNA.
+Move the LNA type based logic to mt76x2 in order to fix mt76x0.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2daa67588f34 ("mt76x0: unify lna_gain parsing")
+Reported-by: Shiji Yang <yangshiji66@outlook.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230919194747.31647-1-nbd@nbd.name
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wan/fsl_ucc_hdlc.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c |  7 -------
+ drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c  | 13 +++++++++++--
+ 2 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wan/fsl_ucc_hdlc.c b/drivers/net/wan/fsl_ucc_hdlc.c
-index 1c53b55469270..5fec8abe8e1d3 100644
---- a/drivers/net/wan/fsl_ucc_hdlc.c
-+++ b/drivers/net/wan/fsl_ucc_hdlc.c
-@@ -34,6 +34,8 @@
- #define TDM_PPPOHT_SLIC_MAXIN
- #define RX_BD_ERRORS (R_CD_S | R_OV_S | R_CR_S | R_AB_S | R_NO_S | R_LG_S)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
+index 0acabba2d1a50..5d402cf2951cb 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
+@@ -131,15 +131,8 @@ u8 mt76x02_get_lna_gain(struct mt76x02_dev *dev,
+ 			s8 *lna_2g, s8 *lna_5g,
+ 			struct ieee80211_channel *chan)
+ {
+-	u16 val;
+ 	u8 lna;
  
-+static int uhdlc_close(struct net_device *dev);
+-	val = mt76x02_eeprom_get(dev, MT_EE_NIC_CONF_1);
+-	if (val & MT_EE_NIC_CONF_1_LNA_EXT_2G)
+-		*lna_2g = 0;
+-	if (val & MT_EE_NIC_CONF_1_LNA_EXT_5G)
+-		memset(lna_5g, 0, sizeof(s8) * 3);
+-
+ 	if (chan->band == NL80211_BAND_2GHZ)
+ 		lna = *lna_2g;
+ 	else if (chan->hw_value <= 64)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
+index c57e05a5c65e4..91807bf662dde 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/eeprom.c
+@@ -256,7 +256,8 @@ void mt76x2_read_rx_gain(struct mt76x02_dev *dev)
+ 	struct ieee80211_channel *chan = dev->mphy.chandef.chan;
+ 	int channel = chan->hw_value;
+ 	s8 lna_5g[3], lna_2g;
+-	u8 lna;
++	bool use_lna;
++	u8 lna = 0;
+ 	u16 val;
+ 
+ 	if (chan->band == NL80211_BAND_2GHZ)
+@@ -275,7 +276,15 @@ void mt76x2_read_rx_gain(struct mt76x02_dev *dev)
+ 	dev->cal.rx.mcu_gain |= (lna_5g[1] & 0xff) << 16;
+ 	dev->cal.rx.mcu_gain |= (lna_5g[2] & 0xff) << 24;
+ 
+-	lna = mt76x02_get_lna_gain(dev, &lna_2g, lna_5g, chan);
++	val = mt76x02_eeprom_get(dev, MT_EE_NIC_CONF_1);
++	if (chan->band == NL80211_BAND_2GHZ)
++		use_lna = !(val & MT_EE_NIC_CONF_1_LNA_EXT_2G);
++	else
++		use_lna = !(val & MT_EE_NIC_CONF_1_LNA_EXT_5G);
 +
- static struct ucc_tdm_info utdm_primary_info = {
- 	.uf_info = {
- 		.tsa = 0,
-@@ -708,6 +710,7 @@ static int uhdlc_open(struct net_device *dev)
- 	hdlc_device *hdlc = dev_to_hdlc(dev);
- 	struct ucc_hdlc_private *priv = hdlc->priv;
- 	struct ucc_tdm *utdm = priv->utdm;
-+	int rc = 0;
- 
- 	if (priv->hdlc_busy != 1) {
- 		if (request_irq(priv->ut_info->uf_info.irq,
-@@ -731,10 +734,13 @@ static int uhdlc_open(struct net_device *dev)
- 		napi_enable(&priv->napi);
- 		netdev_reset_queue(dev);
- 		netif_start_queue(dev);
--		hdlc_open(dev);
++	if (use_lna)
++		lna = mt76x02_get_lna_gain(dev, &lna_2g, lna_5g, chan);
 +
-+		rc = hdlc_open(dev);
-+		if (rc)
-+			uhdlc_close(dev);
- 	}
- 
--	return 0;
-+	return rc;
+ 	dev->cal.rx.lna_gain = mt76x02_sign_extend(lna, 8);
  }
- 
- static void uhdlc_memclean(struct ucc_hdlc_private *priv)
-@@ -824,6 +830,8 @@ static int uhdlc_close(struct net_device *dev)
- 	netdev_reset_queue(dev);
- 	priv->hdlc_busy = 0;
- 
-+	hdlc_close(dev);
-+
- 	return 0;
- }
- 
+ EXPORT_SYMBOL_GPL(mt76x2_read_rx_gain);
 -- 
 2.40.1
 
