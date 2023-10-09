@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91382328DB
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F228328DB
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V30M6YHu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8CCC433CA;
-	Mon,  9 Oct 2023 13:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5n4g635"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EF9C433C8;
+	Mon,  9 Oct 2023 13:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859121;
-	bh=7w0PTO5q3pw+dqfGhSJ9F7JyeK7WfmQUU7CCbBnRwTw=;
+	s=korg; t=1696859124;
+	bh=6o+U/MSsRNgDL7X0ZSpOHQgpAAHTwEZPEMoXzeIrV/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V30M6YHuALuZPOXoWfXWmNsrpzBaeDwIVurUS2xNbTrhkcOHfu5KUWsJtyrrXgWru
-	 gBunhknEe9sY5hrjennN2H2yU1kR/iwaRiP9F3hgHmrqyHakvvh5HfcIBSQd9DomUO
-	 rKLx5k3y3O++IC5NLQnpr8zbiGQptDW3iP3cQfBc=
+	b=u5n4g635BejzCPz4fj8VHpZwj21n9gkkNa8U7sDgOg8okBLjycf86d9ThNCGbe7vE
+	 ozKnghps97HW4/CCjqn2eMXmEF7StLgfrb/sPkFGzYZtuSpszhL3tUr/msuApBPlbw
+	 6RX0BLoQEP0h5PqcDTnZkuaIb+xUFHXiOeROamGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 205/226] netfilter: nf_tables: nft_set_rbtree: fix spurious insertion failure
-Date: Mon,  9 Oct 2023 15:02:46 +0200
-Message-ID: <20231009130131.926302115@linuxfoundation.org>
+Subject: [PATCH 5.10 206/226] net: stmmac: dwmac-stm32: fix resume on STM32 MCU
+Date: Mon,  9 Oct 2023 15:02:47 +0200
+Message-ID: <20231009130131.949612482@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -41,179 +43,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Ben Wolsieffer <ben.wolsieffer@hefring.com>
 
-[ Upstream commit 087388278e0f301f4c61ddffb1911d3a180f84b8 ]
+[ Upstream commit 6f195d6b0da3b689922ba9e302af2f49592fa9fc ]
 
-nft_rbtree_gc_elem() walks back and removes the end interval element that
-comes before the expired element.
+The STM32MP1 keeps clk_rx enabled during suspend, and therefore the
+driver does not enable the clock in stm32_dwmac_init() if the device was
+suspended. The problem is that this same code runs on STM32 MCUs, which
+do disable clk_rx during suspend, causing the clock to never be
+re-enabled on resume.
 
-There is a small chance that we've cached this element as 'rbe_ge'.
-If this happens, we hold and test a pointer that has been queued for
-freeing.
+This patch adds a variant flag to indicate that clk_rx remains enabled
+during suspend, and uses this to decide whether to enable the clock in
+stm32_dwmac_init() if the device was suspended.
 
-It also causes spurious insertion failures:
+This approach fixes this specific bug with limited opportunity for
+unintended side-effects, but I have a follow up patch that will refactor
+the clock configuration and hopefully make it less error prone.
 
-$ cat test-testcases-sets-0044interval_overlap_0.1/testout.log
-Error: Could not process rule: File exists
-add element t s {  0 -  2 }
-                   ^^^^^^
-Failed to insert  0 -  2 given:
-table ip t {
-        set s {
-                type inet_service
-                flags interval,timeout
-                timeout 2s
-                gc-interval 2s
-        }
-}
-
-The set (rbtree) is empty. The 'failure' doesn't happen on next attempt.
-
-Reason is that when we try to insert, the tree may hold an expired
-element that collides with the range we're adding.
-While we do evict/erase this element, we can trip over this check:
-
-if (rbe_ge && nft_rbtree_interval_end(rbe_ge) && nft_rbtree_interval_end(new))
-      return -ENOTEMPTY;
-
-rbe_ge was erased by the synchronous gc, we should not have done this
-check.  Next attempt won't find it, so retry results in successful
-insertion.
-
-Restart in-kernel to avoid such spurious errors.
-
-Such restart are rare, unless userspace intentionally adds very large
-numbers of elements with very short timeouts while setting a huge
-gc interval.
-
-Even in this case, this cannot loop forever, on each retry an existing
-element has been removed.
-
-As the caller is holding the transaction mutex, its impossible
-for a second entity to add more expiring elements to the tree.
-
-After this it also becomes feasible to remove the async gc worker
-and perform all garbage collection from the commit path.
-
-Fixes: c9e6978e2725 ("netfilter: nft_set_rbtree: Switch to node list walk for overlap detection")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 6528e02cc9ff ("net: ethernet: stmmac: add adaptation for stm32mp157c.")
+Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20230927175749.1419774-1-ben.wolsieffer@hefring.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 46 +++++++++++++++++++++-------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-stm32.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index cc32e19b4041a..17abf17b673e2 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -235,10 +235,9 @@ static void nft_rbtree_gc_remove(struct net *net, struct nft_set *set,
- 	rb_erase(&rbe->node, &priv->root);
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-stm32.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-stm32.c
+index 5d4df4c5254ed..6623f5a079275 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-stm32.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-stm32.c
+@@ -105,6 +105,7 @@ struct stm32_ops {
+ 	int (*parse_data)(struct stm32_dwmac *dwmac,
+ 			  struct device *dev);
+ 	u32 syscfg_eth_mask;
++	bool clk_rx_enable_in_suspend;
+ };
  
--static int nft_rbtree_gc_elem(const struct nft_set *__set,
--			      struct nft_rbtree *priv,
--			      struct nft_rbtree_elem *rbe,
--			      u8 genmask)
-+static const struct nft_rbtree_elem *
-+nft_rbtree_gc_elem(const struct nft_set *__set, struct nft_rbtree *priv,
-+		   struct nft_rbtree_elem *rbe, u8 genmask)
- {
- 	struct nft_set *set = (struct nft_set *)__set;
- 	struct rb_node *prev = rb_prev(&rbe->node);
-@@ -248,7 +247,7 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ static int stm32_dwmac_init(struct plat_stmmacenet_data *plat_dat)
+@@ -122,7 +123,8 @@ static int stm32_dwmac_init(struct plat_stmmacenet_data *plat_dat)
+ 	if (ret)
+ 		return ret;
  
- 	gc = nft_trans_gc_alloc(set, 0, GFP_ATOMIC);
- 	if (!gc)
--		return -ENOMEM;
-+		return ERR_PTR(-ENOMEM);
+-	if (!dwmac->dev->power.is_suspended) {
++	if (!dwmac->ops->clk_rx_enable_in_suspend ||
++	    !dwmac->dev->power.is_suspended) {
+ 		ret = clk_prepare_enable(dwmac->clk_rx);
+ 		if (ret) {
+ 			clk_disable_unprepare(dwmac->clk_tx);
+@@ -515,7 +517,8 @@ static struct stm32_ops stm32mp1_dwmac_data = {
+ 	.suspend = stm32mp1_suspend,
+ 	.resume = stm32mp1_resume,
+ 	.parse_data = stm32mp1_parse_data,
+-	.syscfg_eth_mask = SYSCFG_MP1_ETH_MASK
++	.syscfg_eth_mask = SYSCFG_MP1_ETH_MASK,
++	.clk_rx_enable_in_suspend = true
+ };
  
- 	/* search for end interval coming before this element.
- 	 * end intervals don't carry a timeout extension, they
-@@ -263,6 +262,7 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
- 		prev = rb_prev(prev);
- 	}
- 
-+	rbe_prev = NULL;
- 	if (prev) {
- 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
- 		nft_rbtree_gc_remove(net, set, priv, rbe_prev);
-@@ -274,7 +274,7 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
- 		 */
- 		gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
- 		if (WARN_ON_ONCE(!gc))
--			return -ENOMEM;
-+			return ERR_PTR(-ENOMEM);
- 
- 		nft_trans_gc_elem_add(gc, rbe_prev);
- 	}
-@@ -282,13 +282,13 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
- 	nft_rbtree_gc_remove(net, set, priv, rbe);
- 	gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
- 	if (WARN_ON_ONCE(!gc))
--		return -ENOMEM;
-+		return ERR_PTR(-ENOMEM);
- 
- 	nft_trans_gc_elem_add(gc, rbe);
- 
- 	nft_trans_gc_queue_sync_done(gc);
- 
--	return 0;
-+	return rbe_prev;
- }
- 
- static bool nft_rbtree_update_first(const struct nft_set *set,
-@@ -316,7 +316,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 	struct nft_rbtree *priv = nft_set_priv(set);
- 	u8 cur_genmask = nft_genmask_cur(net);
- 	u8 genmask = nft_genmask_next(net);
--	int d, err;
-+	int d;
- 
- 	/* Descend the tree to search for an existing element greater than the
- 	 * key value to insert that is greater than the new element. This is the
-@@ -365,9 +365,14 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 		 */
- 		if (nft_set_elem_expired(&rbe->ext) &&
- 		    nft_set_elem_active(&rbe->ext, cur_genmask)) {
--			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
--			if (err < 0)
--				return err;
-+			const struct nft_rbtree_elem *removed_end;
-+
-+			removed_end = nft_rbtree_gc_elem(set, priv, rbe, genmask);
-+			if (IS_ERR(removed_end))
-+				return PTR_ERR(removed_end);
-+
-+			if (removed_end == rbe_le || removed_end == rbe_ge)
-+				return -EAGAIN;
- 
- 			continue;
- 		}
-@@ -488,11 +493,18 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 	struct nft_rbtree_elem *rbe = elem->priv;
- 	int err;
- 
--	write_lock_bh(&priv->lock);
--	write_seqcount_begin(&priv->count);
--	err = __nft_rbtree_insert(net, set, rbe, ext);
--	write_seqcount_end(&priv->count);
--	write_unlock_bh(&priv->lock);
-+	do {
-+		if (fatal_signal_pending(current))
-+			return -EINTR;
-+
-+		cond_resched();
-+
-+		write_lock_bh(&priv->lock);
-+		write_seqcount_begin(&priv->count);
-+		err = __nft_rbtree_insert(net, set, rbe, ext);
-+		write_seqcount_end(&priv->count);
-+		write_unlock_bh(&priv->lock);
-+	} while (err == -EAGAIN);
- 
- 	return err;
- }
+ static const struct of_device_id stm32_dwmac_match[] = {
 -- 
 2.40.1
 
