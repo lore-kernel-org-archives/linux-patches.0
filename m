@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B799D34183
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E297F339B4
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlWp4CgR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33483C433C9;
-	Mon,  9 Oct 2023 13:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXIWKrOw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8ABC433C8;
+	Mon,  9 Oct 2023 13:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859127;
-	bh=p0nesgjnWD173mzZMElQNgETYcRaABcQV+2r0Uy0n/I=;
+	s=korg; t=1696859130;
+	bh=mu4Odup+feenunaCqgHgw/8oPjUdaSurpJkjoR4be5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WlWp4CgRFLrHVZcjIrGoislPJqk8cuB6RxEkUmtLMRN0iykCvv9aLA6bW7pyVPmdM
-	 Z7mm/C//VdQpgaNRGdfpVisrW08e+B0yuW3iCIlD33rWFOw+UgpcQXoXjv9wKkUUlw
-	 8A2vzVMaTbQcJeaUFrGa1nw1ESYE/Mu9qa87ZNhA=
+	b=rXIWKrOw622oL4afcGgK+p/JCN5OnZ0tSZMpPpn2U1CYFqg/+24PRZNgo1M3WNHqL
+	 bosmIpM9sqvvDeOBtkThFNUEbQgEUcanalMaC3KQwwQHoK1BBn8Vt2/fpTiFehMrzR
+	 ubukIC/S2G5Bn7kFzZ8nfoZIEcTMCLrh6ADyloHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jon Maloy <jmaloy@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 207/226] tipc: fix a potential deadlock on &tx->lock
-Date: Mon,  9 Oct 2023 15:02:48 +0200
-Message-ID: <20231009130131.973443889@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 5.10 181/226] wifi: mwifiex: Fix tlv_buf_left calculation
+Date: Mon,  9 Oct 2023 15:02:22 +0200
+Message-ID: <20231009130131.366885671@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -44,70 +42,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit 08e50cf071847323414df0835109b6f3560d44f5 ]
+commit eec679e4ac5f47507774956fb3479c206e761af7 upstream.
 
-It seems that tipc_crypto_key_revoke() could be be invoked by
-wokequeue tipc_crypto_work_rx() under process context and
-timer/rx callback under softirq context, thus the lock acquisition
-on &tx->lock seems better use spin_lock_bh() to prevent possible
-deadlock.
+In a TLV encoding scheme, the Length part represents the length after
+the header containing the values for type and length. In this case,
+`tlv_len` should be:
 
-This flaw was found by an experimental static analysis tool I am
-developing for irq-related deadlock.
+tlv_len == (sizeof(*tlv_rxba) - 1) - sizeof(tlv_rxba->header) + tlv_bitmap_len
 
-tipc_crypto_work_rx() <workqueue>
---> tipc_crypto_key_distr()
---> tipc_bcast_xmit()
---> tipc_bcbase_xmit()
---> tipc_bearer_bc_xmit()
---> tipc_crypto_xmit()
---> tipc_ehdr_build()
---> tipc_crypto_key_revoke()
---> spin_lock(&tx->lock)
-<timer interrupt>
-   --> tipc_disc_timeout()
-   --> tipc_bearer_xmit_skb()
-   --> tipc_crypto_xmit()
-   --> tipc_ehdr_build()
-   --> tipc_crypto_key_revoke()
-   --> spin_lock(&tx->lock) <deadlock here>
+Notice that the `- 1` accounts for the one-element array `bitmap`, which
+1-byte size is already included in `sizeof(*tlv_rxba)`.
 
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Acked-by: Jon Maloy <jmaloy@redhat.com>
-Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
-Link: https://lore.kernel.org/r/20230927181414.59928-1-dg573847474@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So, if the above is correct, there is a double-counting of some members
+in `struct mwifiex_ie_types_rxba_sync`, when `tlv_buf_left` and `tmp`
+are calculated:
+
+968                 tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
+969                 tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
+
+in specific, members:
+
+drivers/net/wireless/marvell/mwifiex/fw.h:777
+ 777         u8 mac[ETH_ALEN];
+ 778         u8 tid;
+ 779         u8 reserved;
+ 780         __le16 seq_num;
+ 781         __le16 bitmap_len;
+
+This is clearly wrong, and affects the subsequent decoding of data in
+`event_buf` through `tlv_rxba`:
+
+970                 tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
+
+Fix this by using `sizeof(tlv_rxba->header)` instead of `sizeof(*tlv_rxba)`
+in the calculation of `tlv_buf_left` and `tmp`.
+
+This results in the following binary differences before/after changes:
+
+| drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
+| @@ -4698,11 +4698,11 @@
+|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:968
+|                 tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
+| -    1da7:      lea    -0x11(%rbx),%edx
+| +    1da7:      lea    -0x4(%rbx),%edx
+|      1daa:      movzwl %bp,%eax
+|  drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c:969
+|                 tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
+| -    1dad:      lea    0x11(%r15,%rbp,1),%r15
+| +    1dad:      lea    0x4(%r15,%rbp,1),%r15
+
+The above reflects the desired change: avoid counting 13 too many bytes;
+which is the total size of the double-counted members in
+`struct mwifiex_ie_types_rxba_sync`:
+
+$ pahole -C mwifiex_ie_types_rxba_sync drivers/net/wireless/marvell/mwifiex/11n_rxreorder.o
+struct mwifiex_ie_types_rxba_sync {
+	struct mwifiex_ie_types_header header;           /*     0     4 */
+
+     |-----------------------------------------------------------------------
+     |  u8                         mac[6];               /*     4     6 */  |
+     |	u8                         tid;                  /*    10     1 */  |
+     |  u8                         reserved;             /*    11     1 */  |
+     | 	__le16                     seq_num;              /*    12     2 */  |
+     | 	__le16                     bitmap_len;           /*    14     2 */  |
+     |  u8                         bitmap[1];            /*    16     1 */  |
+     |----------------------------------------------------------------------|
+								  | 13 bytes|
+								  -----------
+
+	/* size: 17, cachelines: 1, members: 7 */
+	/* last cacheline: 17 bytes */
+} __attribute__((__packed__));
+
+Fixes: 99ffe72cdae4 ("mwifiex: process rxba_sync event")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/06668edd68e7a26bbfeebd1201ae077a2a7a8bce.1692931954.git.gustavoars@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/crypto.c | 4 ++--
+ drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index 2784d69892117..b5aa0a835bced 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -1445,14 +1445,14 @@ static int tipc_crypto_key_revoke(struct net *net, u8 tx_key)
- 	struct tipc_crypto *tx = tipc_net(net)->crypto_tx;
- 	struct tipc_key key;
+--- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
+@@ -977,8 +977,8 @@ void mwifiex_11n_rxba_sync_event(struct
+ 			}
+ 		}
  
--	spin_lock(&tx->lock);
-+	spin_lock_bh(&tx->lock);
- 	key = tx->key;
- 	WARN_ON(!key.active || tx_key != key.active);
- 
- 	/* Free the active key */
- 	tipc_crypto_key_set_state(tx, key.passive, 0, key.pending);
- 	tipc_crypto_key_detach(tx->aead[key.active], &tx->lock);
--	spin_unlock(&tx->lock);
-+	spin_unlock_bh(&tx->lock);
- 
- 	pr_warn("%s: key is revoked\n", tx->name);
- 	return -EKEYREVOKED;
--- 
-2.40.1
-
+-		tlv_buf_left -= (sizeof(*tlv_rxba) + tlv_len);
+-		tmp = (u8 *)tlv_rxba + tlv_len + sizeof(*tlv_rxba);
++		tlv_buf_left -= (sizeof(tlv_rxba->header) + tlv_len);
++		tmp = (u8 *)tlv_rxba  + sizeof(tlv_rxba->header) + tlv_len;
+ 		tlv_rxba = (struct mwifiex_ie_types_rxba_sync *)tmp;
+ 	}
+ }
 
 
