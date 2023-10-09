@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24A52E63E
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47082E63E
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKXdQQrM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D59C433CA;
-	Mon,  9 Oct 2023 13:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XofQ8+Z4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3010BC433C8;
+	Mon,  9 Oct 2023 13:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858195;
-	bh=Lp+XK8Ii4aRisPFZF/zMKaamk3DeMcRG+1goVKNmNLo=;
+	s=korg; t=1696858198;
+	bh=ZQnsHsyxGJnZnYgVbceaVA2NamMi6i5CwZM0hy0K0nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKXdQQrMxWBcLFZt9PINa+l0CIOD2eqPgz0eofoQ047gMGj0Z7ZsFTa/lY1YNmu9a
-	 d7IbOafZokRc5gaC5vel24pyLiqqBk8QpZBzB91LC1syN33HiZJJqwUSbNkQqcDPR6
-	 yMDzSC26C36eGZak8QKpYdIVAtMOBQagrV/k8BiE=
+	b=XofQ8+Z4EF30OxRm3aPa0JjEOpAJmxm7hLsZWKKfeg+FY3k9HxAP8jgY1mGnLSSLX
+	 8BxrLWnf8+dOq6xxBjIKvwnStZjXat6rboJQEEABUG/Md+dUXbz7dPi0uEbhnrlPWY
+	 4KahG0ZM2RoTOXvFPlfjB9SNrWqddpcePwUo0yyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sylwia Wnuczko <sylwia.wnuczko@intel.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Andrew Bowers <andrewx.bowers@intel.com>,
 	Jeff Kirsher <jeffrey.t.kirsher@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 019/131] i40e: Fix for persistent lldp support
-Date: Mon,  9 Oct 2023 15:00:59 +0200
-Message-ID: <20231009130116.903993602@linuxfoundation.org>
+Subject: [PATCH 5.4 020/131] i40e: Remove scheduling while atomic possibility
+Date: Mon,  9 Oct 2023 15:01:00 +0200
+Message-ID: <20231009130116.933375056@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
 References: <20231009130116.329529591@linuxfoundation.org>
@@ -43,169 +44,324 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sylwia Wnuczko <sylwia.wnuczko@intel.com>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit ff9246571a2e79944d6d4d22de4f717081beb5d3 ]
+[ Upstream commit 37d318d7805f25b672bfd74fc694f19a2ee9665d ]
 
-This patch fixes function to read NVM module data and uses it to
-read current LLDP agent configuration from NVM API version 1.8.
+In some occasions task held spinlock (mac_filter_hash_lock),
+while being rescheduled due to admin queue mutex_lock.  The struct
+i40e_spinlock asq_spinlock, which later expands to struct mutex
+spinlock.  Moved i40e_aq_set_vsi_multicast_promiscuous(),
+i40e_aq_set_vsi_unicast_promiscuous(),
+i40e_aq_set_vsi_mc_promisc_on_vlan(), and
+i40e_aq_set_vsi_uc_promisc_on_vlan() outside of atomic context.  Without
+this patch there is a race condition, which might result in scheduling
+while in atomic context.  The race condition is between the thread, which
+holds mac_filter_hash_lock, while trying to acquire an admin queue mutex
+and a thread, which already has said admin queue mutex. The thread, which
+holds spinlock, fails to acquire the mutex, which causes this thread to
+sleep.
 
-Signed-off-by: Sylwia Wnuczko <sylwia.wnuczko@intel.com>
+Signed-off-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Tested-by: Andrew Bowers <andrewx.bowers@intel.com>
 Signed-off-by: Jeff Kirsher <jeffrey.t.kirsher@intel.com>
 Stable-dep-of: d0d362ffa33d ("i40e: Fix VF VLAN offloading when port VLAN is configured")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_dcb.c    |  4 +-
- drivers/net/ethernet/intel/i40e/i40e_dcb.h    |  3 +
- drivers/net/ethernet/intel/i40e/i40e_nvm.c    | 61 ++++++++++---------
- .../net/ethernet/intel/i40e/i40e_prototype.h  | 10 +--
- 4 files changed, 44 insertions(+), 34 deletions(-)
+ .../ethernet/intel/i40e/i40e_virtchnl_pf.c    | 234 ++++++++++--------
+ 1 file changed, 137 insertions(+), 97 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_dcb.c b/drivers/net/ethernet/intel/i40e/i40e_dcb.c
-index 200a1cb3b5363..9de503c5f99b3 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_dcb.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_dcb.c
-@@ -889,7 +889,9 @@ i40e_status i40e_init_dcb(struct i40e_hw *hw, bool enable_mib_change)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index be07148a7b294..590469c4a1b00 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -1110,39 +1110,81 @@ static int i40e_quiesce_vf_pci(struct i40e_vf *vf)
+ 	return -EIO;
+ }
  
- 		ret = i40e_read_nvm_module_data(hw,
- 						I40E_SR_EMP_SR_SETTINGS_PTR,
--						offset, 1,
-+						offset,
-+						I40E_LLDP_CURRENT_STATUS_OFFSET,
-+						I40E_LLDP_CURRENT_STATUS_SIZE,
- 						&lldp_cfg.adminstatus);
- 	} else {
- 		ret = i40e_read_lldp_cfg(hw, &lldp_cfg);
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_dcb.h b/drivers/net/ethernet/intel/i40e/i40e_dcb.h
-index 2a80c5daa376e..ba86ad833bee8 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_dcb.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_dcb.h
-@@ -32,6 +32,9 @@
- #define I40E_CEE_MAX_FEAT_TYPE		3
- #define I40E_LLDP_CURRENT_STATUS_XL710_OFFSET	0x2B
- #define I40E_LLDP_CURRENT_STATUS_X722_OFFSET	0x31
-+#define I40E_LLDP_CURRENT_STATUS_OFFSET		1
-+#define I40E_LLDP_CURRENT_STATUS_SIZE		1
+-static inline int i40e_getnum_vf_vsi_vlan_filters(struct i40e_vsi *vsi);
++/**
++ * i40e_getnum_vf_vsi_vlan_filters
++ * @vsi: pointer to the vsi
++ *
++ * called to get the number of VLANs offloaded on this VF
++ **/
++static int i40e_getnum_vf_vsi_vlan_filters(struct i40e_vsi *vsi)
++{
++	struct i40e_mac_filter *f;
++	int num_vlans = 0, bkt;
 +
- /* Defines for LLDP TLV header */
- #define I40E_LLDP_TLV_LEN_SHIFT		0
- #define I40E_LLDP_TLV_LEN_MASK		(0x01FF << I40E_LLDP_TLV_LEN_SHIFT)
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_nvm.c b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
-index 37a29b5fc2afd..6b1996451a4bd 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_nvm.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
-@@ -323,20 +323,24 @@ i40e_status i40e_read_nvm_word(struct i40e_hw *hw, u16 offset,
++	hash_for_each(vsi->mac_filter_hash, bkt, f, hlist) {
++		if (f->vlan >= 0 && f->vlan <= I40E_MAX_VLANID)
++			num_vlans++;
++	}
++
++	return num_vlans;
++}
  
  /**
-  * i40e_read_nvm_module_data - Reads NVM Buffer to specified memory location
-- * @hw: pointer to the HW structure
-+ * @hw: Pointer to the HW structure
-  * @module_ptr: Pointer to module in words with respect to NVM beginning
-- * @offset: offset in words from module start
-+ * @module_offset: Offset in words from module start
-+ * @data_offset: Offset in words from reading data area start
-  * @words_data_size: Words to read from NVM
-  * @data_ptr: Pointer to memory location where resulting buffer will be stored
+- * i40e_config_vf_promiscuous_mode
+- * @vf: pointer to the VF info
+- * @vsi_id: VSI id
+- * @allmulti: set MAC L2 layer multicast promiscuous enable/disable
+- * @alluni: set MAC L2 layer unicast promiscuous enable/disable
++ * i40e_get_vlan_list_sync
++ * @vsi: pointer to the VSI
++ * @num_vlans: number of VLANs in mac_filter_hash, returned to caller
++ * @vlan_list: list of VLANs present in mac_filter_hash, returned to caller.
++ *             This array is allocated here, but has to be freed in caller.
+  *
+- * Called from the VF to configure the promiscuous mode of
+- * VF vsis and from the VF reset path to reset promiscuous mode.
++ * Called to get number of VLANs and VLAN list present in mac_filter_hash.
   **/
--i40e_status i40e_read_nvm_module_data(struct i40e_hw *hw,
--				      u8 module_ptr, u16 offset,
--				      u16 words_data_size,
--				      u16 *data_ptr)
-+enum i40e_status_code i40e_read_nvm_module_data(struct i40e_hw *hw,
-+						u8 module_ptr,
-+						u16 module_offset,
-+						u16 data_offset,
-+						u16 words_data_size,
-+						u16 *data_ptr)
+-static i40e_status i40e_config_vf_promiscuous_mode(struct i40e_vf *vf,
+-						   u16 vsi_id,
+-						   bool allmulti,
+-						   bool alluni)
++static void i40e_get_vlan_list_sync(struct i40e_vsi *vsi, int *num_vlans,
++					   s16 **vlan_list)
  {
- 	i40e_status status;
-+	u16 specific_ptr = 0;
- 	u16 ptr_value = 0;
--	u32 flat_offset;
-+	u32 offset = 0;
+-	struct i40e_pf *pf = vf->pf;
+-	struct i40e_hw *hw = &pf->hw;
+ 	struct i40e_mac_filter *f;
+-	i40e_status aq_ret = 0;
+-	struct i40e_vsi *vsi;
++	int i = 0;
+ 	int bkt;
  
- 	if (module_ptr != 0) {
- 		status = i40e_read_nvm_word(hw, module_ptr, &ptr_value);
-@@ -352,36 +356,35 @@ i40e_status i40e_read_nvm_module_data(struct i40e_hw *hw,
+-	vsi = i40e_find_vsi_from_id(pf, vsi_id);
+-	if (!i40e_vc_isvalid_vsi_id(vf, vsi_id) || !vsi)
+-		return I40E_ERR_PARAM;
++	spin_lock_bh(&vsi->mac_filter_hash_lock);
++	*num_vlans = i40e_getnum_vf_vsi_vlan_filters(vsi);
++	*vlan_list = kcalloc(*num_vlans, sizeof(**vlan_list), GFP_ATOMIC);
++	if (!(*vlan_list))
++		goto err;
  
- 	/* Pointer not initialized */
- 	if (ptr_value == I40E_NVM_INVALID_PTR_VAL ||
--	    ptr_value == I40E_NVM_INVALID_VAL)
-+	    ptr_value == I40E_NVM_INVALID_VAL) {
-+		i40e_debug(hw, I40E_DEBUG_ALL, "Pointer not initialized.\n");
- 		return I40E_ERR_BAD_PTR;
+-	if (vf->port_vlan_id) {
+-		aq_ret = i40e_aq_set_vsi_mc_promisc_on_vlan(hw, vsi->seid,
+-							    allmulti,
+-							    vf->port_vlan_id,
+-							    NULL);
++	hash_for_each(vsi->mac_filter_hash, bkt, f, hlist) {
++		if (f->vlan < 0 || f->vlan > I40E_MAX_VLANID)
++			continue;
++		(*vlan_list)[i++] = f->vlan;
++	}
++err:
++	spin_unlock_bh(&vsi->mac_filter_hash_lock);
++}
++
++/**
++ * i40e_set_vsi_promisc
++ * @vf: pointer to the VF struct
++ * @seid: VSI number
++ * @multi_enable: set MAC L2 layer multicast promiscuous enable/disable
++ *                for a given VLAN
++ * @unicast_enable: set MAC L2 layer unicast promiscuous enable/disable
++ *                  for a given VLAN
++ * @vl: List of VLANs - apply filter for given VLANs
++ * @num_vlans: Number of elements in @vl
++ **/
++static i40e_status
++i40e_set_vsi_promisc(struct i40e_vf *vf, u16 seid, bool multi_enable,
++		     bool unicast_enable, s16 *vl, int num_vlans)
++{
++	struct i40e_pf *pf = vf->pf;
++	struct i40e_hw *hw = &pf->hw;
++	i40e_status aq_ret;
++	int i;
++
++	/* No VLAN to set promisc on, set on VSI */
++	if (!num_vlans || !vl) {
++		aq_ret = i40e_aq_set_vsi_multicast_promiscuous(hw, seid,
++							       multi_enable,
++							       NULL);
+ 		if (aq_ret) {
+ 			int aq_err = pf->hw.aq.asq_last_status;
+ 
+@@ -1151,13 +1193,14 @@ static i40e_status i40e_config_vf_promiscuous_mode(struct i40e_vf *vf,
+ 				vf->vf_id,
+ 				i40e_stat_str(&pf->hw, aq_ret),
+ 				i40e_aq_str(&pf->hw, aq_err));
++
+ 			return aq_ret;
+ 		}
+ 
+-		aq_ret = i40e_aq_set_vsi_uc_promisc_on_vlan(hw, vsi->seid,
+-							    alluni,
+-							    vf->port_vlan_id,
+-							    NULL);
++		aq_ret = i40e_aq_set_vsi_unicast_promiscuous(hw, seid,
++							     unicast_enable,
++							     NULL, true);
++
+ 		if (aq_ret) {
+ 			int aq_err = pf->hw.aq.asq_last_status;
+ 
+@@ -1167,68 +1210,84 @@ static i40e_status i40e_config_vf_promiscuous_mode(struct i40e_vf *vf,
+ 				i40e_stat_str(&pf->hw, aq_ret),
+ 				i40e_aq_str(&pf->hw, aq_err));
+ 		}
++
+ 		return aq_ret;
+-	} else if (i40e_getnum_vf_vsi_vlan_filters(vsi)) {
+-		hash_for_each(vsi->mac_filter_hash, bkt, f, hlist) {
+-			if (f->vlan < 0 || f->vlan > I40E_MAX_VLANID)
+-				continue;
+-			aq_ret = i40e_aq_set_vsi_mc_promisc_on_vlan(hw,
+-								    vsi->seid,
+-								    allmulti,
+-								    f->vlan,
+-								    NULL);
+-			if (aq_ret) {
+-				int aq_err = pf->hw.aq.asq_last_status;
 +	}
  
- 	/* Check whether the module is in SR mapped area or outside */
- 	if (ptr_value & I40E_PTR_TYPE) {
- 		/* Pointer points outside of the Shared RAM mapped area */
--		ptr_value &= ~I40E_PTR_TYPE;
-+		i40e_debug(hw, I40E_DEBUG_ALL,
-+			   "Reading nvm data failed. Pointer points outside of the Shared RAM mapped area.\n");
- 
--		/* PtrValue in 4kB units, need to convert to words */
--		ptr_value /= 2;
--		flat_offset = ((u32)ptr_value * 0x1000) + (u32)offset;
--		status = i40e_acquire_nvm(hw, I40E_RESOURCE_READ);
--		if (!status) {
--			status = i40e_aq_read_nvm(hw, 0, 2 * flat_offset,
--						  2 * words_data_size,
--						  data_ptr, true, NULL);
--			i40e_release_nvm(hw);
--			if (status) {
--				i40e_debug(hw, I40E_DEBUG_ALL,
--					   "Reading nvm aq failed.Error code: %d.\n",
--					   status);
--				return I40E_ERR_NVM;
+-				dev_err(&pf->pdev->dev,
+-					"Could not add VLAN %d to multicast promiscuous domain err %s aq_err %s\n",
+-					f->vlan,
+-					i40e_stat_str(&pf->hw, aq_ret),
+-					i40e_aq_str(&pf->hw, aq_err));
 -			}
--		} else {
--			return I40E_ERR_NVM;
--		}
-+		return I40E_ERR_PARAM;
- 	} else {
- 		/* Read from the Shadow RAM */
--		status = i40e_read_nvm_buffer(hw, ptr_value + offset,
--					      &words_data_size, data_ptr);
++	for (i = 0; i < num_vlans; i++) {
++		aq_ret = i40e_aq_set_vsi_mc_promisc_on_vlan(hw, seid,
++							    multi_enable,
++							    vl[i], NULL);
++		if (aq_ret) {
++			int aq_err = pf->hw.aq.asq_last_status;
 +
-+		status = i40e_read_nvm_word(hw, ptr_value + module_offset,
-+					    &specific_ptr);
-+		if (status) {
-+			i40e_debug(hw, I40E_DEBUG_ALL,
-+				   "Reading nvm word failed.Error code: %d.\n",
-+				   status);
-+			return I40E_ERR_NVM;
++			dev_err(&pf->pdev->dev,
++				"VF %d failed to set multicast promiscuous mode err %s aq_err %s\n",
++				vf->vf_id,
++				i40e_stat_str(&pf->hw, aq_ret),
++				i40e_aq_str(&pf->hw, aq_err));
 +		}
+ 
+-			aq_ret = i40e_aq_set_vsi_uc_promisc_on_vlan(hw,
+-								    vsi->seid,
+-								    alluni,
+-								    f->vlan,
+-								    NULL);
+-			if (aq_ret) {
+-				int aq_err = pf->hw.aq.asq_last_status;
++		aq_ret = i40e_aq_set_vsi_uc_promisc_on_vlan(hw, seid,
++							    unicast_enable,
++							    vl[i], NULL);
++		if (aq_ret) {
++			int aq_err = pf->hw.aq.asq_last_status;
+ 
+-				dev_err(&pf->pdev->dev,
+-					"Could not add VLAN %d to Unicast promiscuous domain err %s aq_err %s\n",
+-					f->vlan,
+-					i40e_stat_str(&pf->hw, aq_ret),
+-					i40e_aq_str(&pf->hw, aq_err));
+-			}
++			dev_err(&pf->pdev->dev,
++				"VF %d failed to set unicast promiscuous mode err %s aq_err %s\n",
++				vf->vf_id,
++				i40e_stat_str(&pf->hw, aq_ret),
++				i40e_aq_str(&pf->hw, aq_err));
+ 		}
+-		return aq_ret;
+ 	}
+-	aq_ret = i40e_aq_set_vsi_multicast_promiscuous(hw, vsi->seid, allmulti,
+-						       NULL);
+-	if (aq_ret) {
+-		int aq_err = pf->hw.aq.asq_last_status;
++	return aq_ret;
++}
+ 
+-		dev_err(&pf->pdev->dev,
+-			"VF %d failed to set multicast promiscuous mode err %s aq_err %s\n",
+-			vf->vf_id,
+-			i40e_stat_str(&pf->hw, aq_ret),
+-			i40e_aq_str(&pf->hw, aq_err));
++/**
++ * i40e_config_vf_promiscuous_mode
++ * @vf: pointer to the VF info
++ * @vsi_id: VSI id
++ * @allmulti: set MAC L2 layer multicast promiscuous enable/disable
++ * @alluni: set MAC L2 layer unicast promiscuous enable/disable
++ *
++ * Called from the VF to configure the promiscuous mode of
++ * VF vsis and from the VF reset path to reset promiscuous mode.
++ **/
++static i40e_status i40e_config_vf_promiscuous_mode(struct i40e_vf *vf,
++						   u16 vsi_id,
++						   bool allmulti,
++						   bool alluni)
++{
++	i40e_status aq_ret = I40E_SUCCESS;
++	struct i40e_pf *pf = vf->pf;
++	struct i40e_vsi *vsi;
++	int num_vlans;
++	s16 *vl;
 +
-+		offset = ptr_value + module_offset + specific_ptr +
-+			data_offset;
++	vsi = i40e_find_vsi_from_id(pf, vsi_id);
++	if (!i40e_vc_isvalid_vsi_id(vf, vsi_id) || !vsi)
++		return I40E_ERR_PARAM;
 +
-+		status = i40e_read_nvm_buffer(hw, offset, &words_data_size,
-+					      data_ptr);
- 		if (status) {
- 			i40e_debug(hw, I40E_DEBUG_ALL,
- 				   "Reading nvm buffer failed.Error code: %d.\n",
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_prototype.h b/drivers/net/ethernet/intel/i40e/i40e_prototype.h
-index 5250441bf75b8..7effe5010e326 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_prototype.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_prototype.h
-@@ -315,10 +315,12 @@ i40e_status i40e_acquire_nvm(struct i40e_hw *hw,
- void i40e_release_nvm(struct i40e_hw *hw);
- i40e_status i40e_read_nvm_word(struct i40e_hw *hw, u16 offset,
- 					 u16 *data);
--i40e_status i40e_read_nvm_module_data(struct i40e_hw *hw,
--				      u8 module_ptr, u16 offset,
--				      u16 words_data_size,
--				      u16 *data_ptr);
-+enum i40e_status_code i40e_read_nvm_module_data(struct i40e_hw *hw,
-+						u8 module_ptr,
-+						u16 module_offset,
-+						u16 data_offset,
-+						u16 words_data_size,
-+						u16 *data_ptr);
- i40e_status i40e_read_nvm_buffer(struct i40e_hw *hw, u16 offset,
- 				 u16 *words, u16 *data);
- i40e_status i40e_update_nvm_checksum(struct i40e_hw *hw);
++	if (vf->port_vlan_id) {
++		aq_ret = i40e_set_vsi_promisc(vf, vsi->seid, allmulti,
++					      alluni, &vf->port_vlan_id, 1);
+ 		return aq_ret;
+-	}
++	} else if (i40e_getnum_vf_vsi_vlan_filters(vsi)) {
++		i40e_get_vlan_list_sync(vsi, &num_vlans, &vl);
+ 
+-	aq_ret = i40e_aq_set_vsi_unicast_promiscuous(hw, vsi->seid, alluni,
+-						     NULL, true);
+-	if (aq_ret) {
+-		int aq_err = pf->hw.aq.asq_last_status;
++		if (!vl)
++			return I40E_ERR_NO_MEMORY;
+ 
+-		dev_err(&pf->pdev->dev,
+-			"VF %d failed to set unicast promiscuous mode err %s aq_err %s\n",
+-			vf->vf_id,
+-			i40e_stat_str(&pf->hw, aq_ret),
+-			i40e_aq_str(&pf->hw, aq_err));
++		aq_ret = i40e_set_vsi_promisc(vf, vsi->seid, allmulti, alluni,
++					      vl, num_vlans);
++		kfree(vl);
++		return aq_ret;
+ 	}
+ 
++	/* no VLANs to set on, set on VSI */
++	aq_ret = i40e_set_vsi_promisc(vf, vsi->seid, allmulti, alluni,
++				      NULL, 0);
+ 	return aq_ret;
+ }
+ 
+@@ -2052,25 +2111,6 @@ static void i40e_vc_reset_vf_msg(struct i40e_vf *vf)
+ 		i40e_reset_vf(vf, false);
+ }
+ 
+-/**
+- * i40e_getnum_vf_vsi_vlan_filters
+- * @vsi: pointer to the vsi
+- *
+- * called to get the number of VLANs offloaded on this VF
+- **/
+-static inline int i40e_getnum_vf_vsi_vlan_filters(struct i40e_vsi *vsi)
+-{
+-	struct i40e_mac_filter *f;
+-	int num_vlans = 0, bkt;
+-
+-	hash_for_each(vsi->mac_filter_hash, bkt, f, hlist) {
+-		if (f->vlan >= 0 && f->vlan <= I40E_MAX_VLANID)
+-			num_vlans++;
+-	}
+-
+-	return num_vlans;
+-}
+-
+ /**
+  * i40e_vc_config_promiscuous_mode_msg
+  * @vf: pointer to the VF info
 -- 
 2.40.1
 
