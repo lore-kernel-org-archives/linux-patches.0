@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1DB1A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E791A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTJacJWT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377A4C433C7;
-	Mon,  9 Oct 2023 13:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjQO+/xq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F847C433C7;
+	Mon,  9 Oct 2023 13:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857553;
-	bh=T6H3Jvz0xIel/CMhLRkphXxfGzCGjKIaIWN+vC7YdmM=;
+	s=korg; t=1696857556;
+	bh=cmTthydeuR5Z+BEtfEjQpswvt661le9/5Cqn2ShugOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTJacJWT/aH75950rnn4Jk/m1371ZfBM291aSUJxSyWI/sCM1gCsJPPktxBiejeLT
-	 mZsN6WN7MRTTfFlLl1u0V2/8w5lWpqnN4EZ/4CK/nyWhdNVf8EaxQ0luU+SkFzbbVv
-	 HG7kd0MxPIUPZC+0U1yIr1KVPqhCnM7xIabh10Eo=
+	b=TjQO+/xqZsz1Ffq+Xn8DoWsnTeELXv6Of1EQa4Od+kTEH9rSDzN6OV8hF5Muhv+ss
+	 UBUuCbIwsa4JaonVbLCU7V58TgYZ0GC8JZVdhFK9aIWUroo9CMX6XDtzt/At/lXqP1
+	 dYSfqhQH9iTwTCqRRFglCASIbziJ3oa2YCnzTW8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Da Xue <da@libre.computer>,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Leon Hwang <hffilwlqm@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 083/162] leds: Drop BUG_ON check for LED_COLOR_ID_MULTI
-Date: Mon,  9 Oct 2023 15:01:04 +0200
-Message-ID: <20231009130125.209013374@linuxfoundation.org>
+Subject: [PATCH 6.1 084/162] bpf: Fix tr dereferencing
+Date: Mon,  9 Oct 2023 15:01:05 +0200
+Message-ID: <20231009130125.235637808@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -37,50 +38,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Leon Hwang <hffilwlqm@gmail.com>
 
-[ Upstream commit 9dc1664fab2246bc2c3e9bf2cf21518a857f9b5b ]
+[ Upstream commit b724a6418f1f853bcb39c8923bf14a50c7bdbd07 ]
 
-Commit c3f853184bed ("leds: Fix BUG_ON check for LED_COLOR_ID_MULTI that
-is always false") fixed a no-op BUG_ON. This turned out to cause a
-regression, since some in-tree device-tree files already use
-LED_COLOR_ID_MULTI.
+Fix 'tr' dereferencing bug when CONFIG_BPF_JIT is turned off.
 
-Drop the BUG_ON altogether.
+When CONFIG_BPF_JIT is turned off, 'bpf_trampoline_get()' returns NULL,
+which is same as the cases when CONFIG_BPF_JIT is turned on.
 
-Fixes: c3f853184bed ("leds: Fix BUG_ON check for LED_COLOR_ID_MULTI that is always false")
-Reported-by: Da Xue <da@libre.computer>
-Closes: https://lore.kernel.org/linux-leds/ZQLelWcNjjp2xndY@duo.ucw.cz/T/
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Link: https://lore.kernel.org/r/20230918140724.18634-1-kabel@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Closes: https://lore.kernel.org/r/202309131936.5Nc8eUD0-lkp@intel.com/
+Fixes: f7b12b6fea00 ("bpf: verifier: refactor check_attach_btf_id()")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Leon Hwang <hffilwlqm@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20230917153846.88732-1-hffilwlqm@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-core.c | 4 ----
- 1 file changed, 4 deletions(-)
+ include/linux/bpf.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/led-core.c b/drivers/leds/led-core.c
-index aad8bc44459fe..d94d60b526461 100644
---- a/drivers/leds/led-core.c
-+++ b/drivers/leds/led-core.c
-@@ -424,10 +424,6 @@ int led_compose_name(struct device *dev, struct led_init_data *init_data,
- 
- 	led_parse_fwnode_props(dev, fwnode, &props);
- 
--	/* We want to label LEDs that can produce full range of colors
--	 * as RGB, not multicolor */
--	BUG_ON(props.color == LED_COLOR_ID_MULTI);
--
- 	if (props.label) {
- 		/*
- 		 * If init_data.devicename is NULL, then it indicates that
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 1ed2ec035e779..1fba826f0acef 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1065,7 +1065,7 @@ static inline int bpf_trampoline_unlink_prog(struct bpf_tramp_link *link,
+ static inline struct bpf_trampoline *bpf_trampoline_get(u64 key,
+ 							struct bpf_attach_target_info *tgt_info)
+ {
+-	return ERR_PTR(-EOPNOTSUPP);
++	return NULL;
+ }
+ static inline void bpf_trampoline_put(struct bpf_trampoline *tr) {}
+ #define DEFINE_BPF_DISPATCHER(name)
 -- 
 2.40.1
 
