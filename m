@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A002C3419D
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D81341A5
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2rxO3OP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5EBC433C8;
-	Mon,  9 Oct 2023 13:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXcU9Xvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AD4C433C9;
+	Mon,  9 Oct 2023 13:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859544;
-	bh=xkBv8x1uVWv5XW3CGAbQT0MF/FyjjN+CBj/D54XZiFE=;
+	s=korg; t=1696859547;
+	bh=qlY7n0ya//e0rmg+KdDcwwsq66+xmDLeHjvg6vhNc8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b2rxO3OP57krjrFuarHc0UQnDnIjiJpA6m+ZenYCx6LkU5VHMY63VTW01nue/f33j
-	 qVmrXCoAPlLN6BdkJMVmG2wYQ6NdMAJlyD9rSMp8P8hIU+pRNkNPXY4wlOvSl8m6cC
-	 hmC3DbJdSgDmPfVGUZsJr8k9LeCOrhlhToWNl8bs=
+	b=lXcU9XvrXP3sYLbrEY1ETV2kM/gOIJBEYfKUmJnCIZkEiIyzCmnbSvkceDN/DLXMA
+	 8MOg2v9NWFIKVCeSkpkPprJfNvHg0TWpQEFPLndLKHfsWqfw36/z+hQPchFuCpFdeF
+	 H080dhhjr3/Wux3AkNYhKc4uBFsP1274nEjPtgN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 37/91] ring-buffer: Avoid softlockup in ring_buffer_resize()
-Date: Mon,  9 Oct 2023 15:06:09 +0200
-Message-ID: <20231009130112.816856260@linuxfoundation.org>
+	Alex Balcanquall <alex@alexbal.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.19 55/91] net: thunderbolt: Fix TCPv6 GSO checksum calculation
+Date: Mon,  9 Oct 2023 15:06:27 +0200
+Message-ID: <20231009130113.422199258@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -43,45 +44,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit f6bd2c92488c30ef53b5bd80c52f0a7eee9d545a ]
+commit e0b65f9b81fef180cf5f103adecbe5505c961153 upstream.
 
-When user resize all trace ring buffer through file 'buffer_size_kb',
-then in ring_buffer_resize(), kernel allocates buffer pages for each
-cpu in a loop.
+Alex reported that running ssh over IPv6 does not work with
+Thunderbolt/USB4 networking driver. The reason for that is that driver
+should call skb_is_gso() before calling skb_is_gso_v6(), and it should
+not return false after calculates the checksum successfully. This probably
+was a copy paste error from the original driver where it was done properly.
 
-If the kernel preemption model is PREEMPT_NONE and there are many cpus
-and there are many buffer pages to be allocated, it may not give up cpu
-for a long time and finally cause a softlockup.
-
-To avoid it, call cond_resched() after each cpu buffer allocation.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230906081930.3939106-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Alex Balcanquall <alex@alexbal.com>
+Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/thunderbolt.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index c8a7de7a1d635..320aa60664dc9 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1753,6 +1753,8 @@ int ring_buffer_resize(struct ring_buffer *buffer, unsigned long size,
- 				err = -ENOMEM;
- 				goto out_err;
- 			}
-+
-+			cond_resched();
- 		}
- 
- 		get_online_cpus();
--- 
-2.40.1
-
+--- a/drivers/net/thunderbolt.c
++++ b/drivers/net/thunderbolt.c
+@@ -961,12 +961,11 @@ static bool tbnet_xmit_csum_and_map(stru
+ 		*tucso = ~csum_tcpudp_magic(ip_hdr(skb)->saddr,
+ 					    ip_hdr(skb)->daddr, 0,
+ 					    ip_hdr(skb)->protocol, 0);
+-	} else if (skb_is_gso_v6(skb)) {
++	} else if (skb_is_gso(skb) && skb_is_gso_v6(skb)) {
+ 		tucso = dest + ((void *)&(tcp_hdr(skb)->check) - data);
+ 		*tucso = ~csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+ 					  &ipv6_hdr(skb)->daddr, 0,
+ 					  IPPROTO_TCP, 0);
+-		return false;
+ 	} else if (protocol == htons(ETH_P_IPV6)) {
+ 		tucso = dest + skb_checksum_start_offset(skb) + skb->csum_offset;
+ 		*tucso = ~csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
 
 
