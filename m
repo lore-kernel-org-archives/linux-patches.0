@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4881A596
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5B01A596
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkmqbuUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7CCC433C7;
-	Mon,  9 Oct 2023 13:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4S30YIu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE2DC433CA;
+	Mon,  9 Oct 2023 13:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696857626;
-	bh=ISsf59YGUw7OH9NnyPZv1Ae8m52esH1OU02efy8ktbU=;
+	s=korg; t=1696857629;
+	bh=rBZDUkriSEGzYM82SnJCW5YzIlpSVlX27LHnH55l+so=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QkmqbuUYJ/6x6A4PrMQwDzSPxvAm64fPmWWHHY+bQMl2fwvt1+Fh6PnnVUEsRCrnu
-	 FyA0KqKsTCGH4k+HMxdBIo1cmVInKe0M3WGY9xTQ53ayiaYVc6daV1kzeJLsQDfd58
-	 xnaKN/8PVXLSvn3kxW377lEKlWUzkVnoCj8Ao/7M=
+	b=v4S30YIuSjUXE1ZHL8KspvEd/5LKLYMeYYPfGGA9ECFj2LiCXv4v6Q9w3i/4iW8E0
+	 brfRB1iYzOAPzOH2uKu5R+vvy+7im3sJ/tNK5fP4ALrDieLS922Q3eH2Re5Wgp8+bB
+	 q/XgMpFKDxM61dtE6Yx2JJ1Ndn/i15oukeUGS+Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/162] wifi: cfg80211: add a work abstraction with special semantics
-Date: Mon,  9 Oct 2023 15:01:00 +0200
-Message-ID: <20231009130125.095867606@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Max Schulze <max.schulze@online.de>
+Subject: [PATCH 6.1 080/162] wifi: cfg80211: fix cqm_config access race
+Date: Mon,  9 Oct 2023 15:01:01 +0200
+Message-ID: <20231009130125.122379734@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
 References: <20231009130122.946357448@linuxfoundation.org>
@@ -43,373 +44,326 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit a3ee4dc84c4e9d14cb34dad095fd678127aca5b6 ]
+[ Upstream commit 37c20b2effe987b806c8de6d12978e4ffeff026f ]
 
-Add a work abstraction at the cfg80211 level that will always
-hold the wiphy_lock() for any work executed and therefore also
-can be canceled safely (without waiting) while holding that.
-This improves on what we do now as with the new wiphy works we
-don't have to worry about locking while cancelling them safely.
+Max Schulze reports crashes with brcmfmac. The reason seems
+to be a race between userspace removing the CQM config and
+the driver calling cfg80211_cqm_rssi_notify(), where if the
+data is freed while cfg80211_cqm_rssi_notify() runs it will
+crash since it assumes wdev->cqm_config is set. This can't
+be fixed with a simple non-NULL check since there's nothing
+we can do for locking easily, so use RCU instead to protect
+the pointer, but that requires pulling the updates out into
+an asynchronous worker so they can sleep and call back into
+the driver.
 
-Also, don't let such works run while the device is suspended,
-since they'll likely need to interact with the device. Flush
-them before suspend though.
+Since we need to change the free anyway, also change it to
+go back to the old settings if changing the settings fails.
 
+Reported-and-tested-by: Max Schulze <max.schulze@online.de>
+Closes: https://lore.kernel.org/r/ac96309a-8d8d-4435-36e6-6d152eb31876@online.de
+Fixes: 4a4b8169501b ("cfg80211: Accept multiple RSSI thresholds for CQM")
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 37c20b2effe9 ("wifi: cfg80211: fix cqm_config access race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h |  95 ++++++++++++++++++++++++++++++--
- net/wireless/core.c    | 122 +++++++++++++++++++++++++++++++++++++++++
- net/wireless/core.h    |   7 +++
- net/wireless/sysfs.c   |   8 ++-
- 4 files changed, 227 insertions(+), 5 deletions(-)
+ include/net/cfg80211.h |  3 +-
+ net/wireless/core.c    | 14 +++----
+ net/wireless/core.h    |  7 +++-
+ net/wireless/nl80211.c | 93 +++++++++++++++++++++++++++---------------
+ 4 files changed, 75 insertions(+), 42 deletions(-)
 
 diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 5976545aa26b9..f2144db89183c 100644
+index f2144db89183c..ab64bb94c92fd 100644
 --- a/include/net/cfg80211.h
 +++ b/include/net/cfg80211.h
-@@ -5621,12 +5621,17 @@ struct cfg80211_cqm_config;
-  * wiphy_lock - lock the wiphy
-  * @wiphy: the wiphy to lock
-  *
-- * This is mostly exposed so it can be done around registering and
-- * unregistering netdevs that aren't created through cfg80211 calls,
-- * since that requires locking in cfg80211 when the notifiers is
-- * called, but that cannot differentiate which way it's called.
-+ * This is needed around registering and unregistering netdevs that
-+ * aren't created through cfg80211 calls, since that requires locking
-+ * in cfg80211 when the notifiers is called, but that cannot
-+ * differentiate which way it's called.
-+ *
-+ * It can also be used by drivers for their own purposes.
-  *
-  * When cfg80211 ops are called, the wiphy is already locked.
-+ *
-+ * Note that this makes sure that no workers that have been queued
-+ * with wiphy_queue_work() are running.
-  */
- static inline void wiphy_lock(struct wiphy *wiphy)
- 	__acquires(&wiphy->mtx)
-@@ -5646,6 +5651,88 @@ static inline void wiphy_unlock(struct wiphy *wiphy)
- 	mutex_unlock(&wiphy->mtx);
- }
+@@ -5877,7 +5877,8 @@ struct wireless_dev {
+ 	} wext;
+ #endif
  
-+struct wiphy_work;
-+typedef void (*wiphy_work_func_t)(struct wiphy *, struct wiphy_work *);
-+
-+struct wiphy_work {
-+	struct list_head entry;
-+	wiphy_work_func_t func;
-+};
-+
-+static inline void wiphy_work_init(struct wiphy_work *work,
-+				   wiphy_work_func_t func)
-+{
-+	INIT_LIST_HEAD(&work->entry);
-+	work->func = func;
-+}
-+
-+/**
-+ * wiphy_work_queue - queue work for the wiphy
-+ * @wiphy: the wiphy to queue for
-+ * @work: the work item
-+ *
-+ * This is useful for work that must be done asynchronously, and work
-+ * queued here has the special property that the wiphy mutex will be
-+ * held as if wiphy_lock() was called, and that it cannot be running
-+ * after wiphy_lock() was called. Therefore, wiphy_cancel_work() can
-+ * use just cancel_work() instead of cancel_work_sync(), it requires
-+ * being in a section protected by wiphy_lock().
-+ */
-+void wiphy_work_queue(struct wiphy *wiphy, struct wiphy_work *work);
-+
-+/**
-+ * wiphy_work_cancel - cancel previously queued work
-+ * @wiphy: the wiphy, for debug purposes
-+ * @work: the work to cancel
-+ *
-+ * Cancel the work *without* waiting for it, this assumes being
-+ * called under the wiphy mutex acquired by wiphy_lock().
-+ */
-+void wiphy_work_cancel(struct wiphy *wiphy, struct wiphy_work *work);
-+
-+struct wiphy_delayed_work {
-+	struct wiphy_work work;
-+	struct wiphy *wiphy;
-+	struct timer_list timer;
-+};
-+
-+void wiphy_delayed_work_timer(struct timer_list *t);
-+
-+static inline void wiphy_delayed_work_init(struct wiphy_delayed_work *dwork,
-+					   wiphy_work_func_t func)
-+{
-+	timer_setup(&dwork->timer, wiphy_delayed_work_timer, 0);
-+	wiphy_work_init(&dwork->work, func);
-+}
-+
-+/**
-+ * wiphy_delayed_work_queue - queue delayed work for the wiphy
-+ * @wiphy: the wiphy to queue for
-+ * @dwork: the delayable worker
-+ * @delay: number of jiffies to wait before queueing
-+ *
-+ * This is useful for work that must be done asynchronously, and work
-+ * queued here has the special property that the wiphy mutex will be
-+ * held as if wiphy_lock() was called, and that it cannot be running
-+ * after wiphy_lock() was called. Therefore, wiphy_cancel_work() can
-+ * use just cancel_work() instead of cancel_work_sync(), it requires
-+ * being in a section protected by wiphy_lock().
-+ */
-+void wiphy_delayed_work_queue(struct wiphy *wiphy,
-+			      struct wiphy_delayed_work *dwork,
-+			      unsigned long delay);
-+
-+/**
-+ * wiphy_delayed_work_cancel - cancel previously queued delayed work
-+ * @wiphy: the wiphy, for debug purposes
-+ * @dwork: the delayed work to cancel
-+ *
-+ * Cancel the work *without* waiting for it, this assumes being
-+ * called under the wiphy mutex acquired by wiphy_lock().
-+ */
-+void wiphy_delayed_work_cancel(struct wiphy *wiphy,
-+			       struct wiphy_delayed_work *dwork);
-+
- /**
-  * struct wireless_dev - wireless device state
-  *
+-	struct cfg80211_cqm_config *cqm_config;
++	struct wiphy_work cqm_rssi_work;
++	struct cfg80211_cqm_config __rcu *cqm_config;
+ 
+ 	struct list_head pmsr_list;
+ 	spinlock_t pmsr_lock;
 diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 28ae86c62f805..8a1f34e95c4f0 100644
+index 8a1f34e95c4f0..2c79604672062 100644
 --- a/net/wireless/core.c
 +++ b/net/wireless/core.c
-@@ -408,6 +408,34 @@ static void cfg80211_propagate_cac_done_wk(struct work_struct *work)
- 	rtnl_unlock();
+@@ -1176,16 +1176,11 @@ void wiphy_rfkill_set_hw_state_reason(struct wiphy *wiphy, bool blocked,
  }
+ EXPORT_SYMBOL(wiphy_rfkill_set_hw_state_reason);
  
-+static void cfg80211_wiphy_work(struct work_struct *work)
-+{
-+	struct cfg80211_registered_device *rdev;
-+	struct wiphy_work *wk;
-+
-+	rdev = container_of(work, struct cfg80211_registered_device, wiphy_work);
-+
-+	wiphy_lock(&rdev->wiphy);
-+	if (rdev->suspended)
-+		goto out;
-+
-+	spin_lock_irq(&rdev->wiphy_work_lock);
-+	wk = list_first_entry_or_null(&rdev->wiphy_work_list,
-+				      struct wiphy_work, entry);
-+	if (wk) {
-+		list_del_init(&wk->entry);
-+		if (!list_empty(&rdev->wiphy_work_list))
-+			schedule_work(work);
-+		spin_unlock_irq(&rdev->wiphy_work_lock);
-+
-+		wk->func(&rdev->wiphy, wk);
-+	} else {
-+		spin_unlock_irq(&rdev->wiphy_work_lock);
-+	}
-+out:
-+	wiphy_unlock(&rdev->wiphy);
-+}
-+
- /* exported functions */
- 
- struct wiphy *wiphy_new_nm(const struct cfg80211_ops *ops, int sizeof_priv,
-@@ -533,6 +561,9 @@ struct wiphy *wiphy_new_nm(const struct cfg80211_ops *ops, int sizeof_priv,
- 		return NULL;
- 	}
- 
-+	INIT_WORK(&rdev->wiphy_work, cfg80211_wiphy_work);
-+	INIT_LIST_HEAD(&rdev->wiphy_work_list);
-+	spin_lock_init(&rdev->wiphy_work_lock);
- 	INIT_WORK(&rdev->rfkill_block, cfg80211_rfkill_block_work);
- 	INIT_WORK(&rdev->conn_work, cfg80211_conn_work);
- 	INIT_WORK(&rdev->event_work, cfg80211_event_work);
-@@ -1011,6 +1042,31 @@ void wiphy_rfkill_start_polling(struct wiphy *wiphy)
- }
- EXPORT_SYMBOL(wiphy_rfkill_start_polling);
- 
-+void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev)
-+{
-+	unsigned int runaway_limit = 100;
-+	unsigned long flags;
-+
-+	lockdep_assert_held(&rdev->wiphy.mtx);
-+
-+	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
-+	while (!list_empty(&rdev->wiphy_work_list)) {
-+		struct wiphy_work *wk;
-+
-+		wk = list_first_entry(&rdev->wiphy_work_list,
-+				      struct wiphy_work, entry);
-+		list_del_init(&wk->entry);
-+		spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
-+
-+		wk->func(&rdev->wiphy, wk);
-+
-+		spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
-+		if (WARN_ON(--runaway_limit == 0))
-+			INIT_LIST_HEAD(&rdev->wiphy_work_list);
-+	}
-+	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
-+}
-+
- void wiphy_unregister(struct wiphy *wiphy)
+-void cfg80211_cqm_config_free(struct wireless_dev *wdev)
+-{
+-	kfree(wdev->cqm_config);
+-	wdev->cqm_config = NULL;
+-}
+-
+ static void _cfg80211_unregister_wdev(struct wireless_dev *wdev,
+ 				      bool unregister_netdev)
  {
- 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
-@@ -1053,9 +1109,15 @@ void wiphy_unregister(struct wiphy *wiphy)
- 	if (rdev->wiphy.wowlan_config && rdev->ops->set_wakeup)
- 		rdev_set_wakeup(rdev, false);
+ 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wdev->wiphy);
++	struct cfg80211_cqm_config *cqm_config;
+ 	unsigned int link_id;
+ 
+ 	ASSERT_RTNL();
+@@ -1224,7 +1219,10 @@ static void _cfg80211_unregister_wdev(struct wireless_dev *wdev,
+ 	kfree_sensitive(wdev->wext.keys);
+ 	wdev->wext.keys = NULL;
  #endif
-+
-+	/* surely nothing is reachable now, clean up work */
-+	cfg80211_process_wiphy_works(rdev);
- 	wiphy_unlock(&rdev->wiphy);
- 	rtnl_unlock();
+-	cfg80211_cqm_config_free(wdev);
++	wiphy_work_cancel(wdev->wiphy, &wdev->cqm_rssi_work);
++	/* deleted from the list, so can't be found from nl80211 any more */
++	cqm_config = rcu_access_pointer(wdev->cqm_config);
++	kfree_rcu(cqm_config, rcu_head);
  
-+	/* this has nothing to do now but make sure it's gone */
-+	cancel_work_sync(&rdev->wiphy_work);
-+
- 	flush_work(&rdev->scan_done_wk);
- 	cancel_work_sync(&rdev->conn_work);
- 	flush_work(&rdev->event_work);
-@@ -1546,6 +1608,66 @@ static struct pernet_operations cfg80211_pernet_ops = {
- 	.exit = cfg80211_pernet_exit,
- };
+ 	/*
+ 	 * Ensure that all events have been processed and
+@@ -1376,6 +1374,8 @@ void cfg80211_init_wdev(struct wireless_dev *wdev)
+ 	wdev->wext.connect.auth_type = NL80211_AUTHTYPE_AUTOMATIC;
+ #endif
  
-+void wiphy_work_queue(struct wiphy *wiphy, struct wiphy_work *work)
-+{
-+	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
-+	unsigned long flags;
++	wiphy_work_init(&wdev->cqm_rssi_work, cfg80211_cqm_rssi_notify_work);
 +
-+	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
-+	if (list_empty(&work->entry))
-+		list_add_tail(&work->entry, &rdev->wiphy_work_list);
-+	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
-+
-+	schedule_work(&rdev->wiphy_work);
-+}
-+EXPORT_SYMBOL_GPL(wiphy_work_queue);
-+
-+void wiphy_work_cancel(struct wiphy *wiphy, struct wiphy_work *work)
-+{
-+	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
-+	unsigned long flags;
-+
-+	lockdep_assert_held(&wiphy->mtx);
-+
-+	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
-+	if (!list_empty(&work->entry))
-+		list_del_init(&work->entry);
-+	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
-+}
-+EXPORT_SYMBOL_GPL(wiphy_work_cancel);
-+
-+void wiphy_delayed_work_timer(struct timer_list *t)
-+{
-+	struct wiphy_delayed_work *dwork = from_timer(dwork, t, timer);
-+
-+	wiphy_work_queue(dwork->wiphy, &dwork->work);
-+}
-+EXPORT_SYMBOL(wiphy_delayed_work_timer);
-+
-+void wiphy_delayed_work_queue(struct wiphy *wiphy,
-+			      struct wiphy_delayed_work *dwork,
-+			      unsigned long delay)
-+{
-+	if (!delay) {
-+		wiphy_work_queue(wiphy, &dwork->work);
-+		return;
-+	}
-+
-+	dwork->wiphy = wiphy;
-+	mod_timer(&dwork->timer, jiffies + delay);
-+}
-+EXPORT_SYMBOL_GPL(wiphy_delayed_work_queue);
-+
-+void wiphy_delayed_work_cancel(struct wiphy *wiphy,
-+			       struct wiphy_delayed_work *dwork)
-+{
-+	lockdep_assert_held(&wiphy->mtx);
-+
-+	del_timer_sync(&dwork->timer);
-+	wiphy_work_cancel(wiphy, &dwork->work);
-+}
-+EXPORT_SYMBOL_GPL(wiphy_delayed_work_cancel);
-+
- static int __init cfg80211_init(void)
- {
- 	int err;
+ 	if (wdev->wiphy->flags & WIPHY_FLAG_PS_ON_BY_DEFAULT)
+ 		wdev->ps = true;
+ 	else
 diff --git a/net/wireless/core.h b/net/wireless/core.h
-index 775e16cb99eda..0481a8a539d5d 100644
+index 0481a8a539d5d..86fd79912254d 100644
 --- a/net/wireless/core.h
 +++ b/net/wireless/core.h
-@@ -108,6 +108,12 @@ struct cfg80211_registered_device {
- 	/* lock for all wdev lists */
- 	spinlock_t mgmt_registrations_lock;
+@@ -293,12 +293,17 @@ struct cfg80211_beacon_registration {
+ };
  
-+	struct work_struct wiphy_work;
-+	struct list_head wiphy_work_list;
-+	/* protects the list above */
-+	spinlock_t wiphy_work_lock;
-+	bool suspended;
+ struct cfg80211_cqm_config {
++	struct rcu_head rcu_head;
+ 	u32 rssi_hyst;
+ 	s32 last_rssi_event_value;
++	enum nl80211_cqm_rssi_threshold_event last_rssi_event_type;
+ 	int n_rssi_thresholds;
+ 	s32 rssi_thresholds[];
+ };
+ 
++void cfg80211_cqm_rssi_notify_work(struct wiphy *wiphy,
++				   struct wiphy_work *work);
 +
- 	/* must be last because of the way we do wiphy_priv(),
- 	 * and it should at least be aligned to NETDEV_ALIGN */
- 	struct wiphy wiphy __aligned(NETDEV_ALIGN);
-@@ -450,6 +456,7 @@ int cfg80211_change_iface(struct cfg80211_registered_device *rdev,
- 			  struct net_device *dev, enum nl80211_iftype ntype,
- 			  struct vif_params *params);
- void cfg80211_process_rdev_events(struct cfg80211_registered_device *rdev);
-+void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev);
- void cfg80211_process_wdev_events(struct wireless_dev *wdev);
+ void cfg80211_destroy_ifaces(struct cfg80211_registered_device *rdev);
  
- bool cfg80211_does_bw_fit_range(const struct ieee80211_freq_range *freq_range,
-diff --git a/net/wireless/sysfs.c b/net/wireless/sysfs.c
-index 0c3f05c9be27a..4d3b658030105 100644
---- a/net/wireless/sysfs.c
-+++ b/net/wireless/sysfs.c
-@@ -5,7 +5,7 @@
-  *
-  * Copyright 2005-2006	Jiri Benc <jbenc@suse.cz>
-  * Copyright 2006	Johannes Berg <johannes@sipsolutions.net>
-- * Copyright (C) 2020-2021 Intel Corporation
-+ * Copyright (C) 2020-2021, 2023 Intel Corporation
-  */
+ /* free object */
+@@ -563,8 +568,6 @@ cfg80211_bss_update(struct cfg80211_registered_device *rdev,
+ #define CFG80211_DEV_WARN_ON(cond)	({bool __r = (cond); __r; })
+ #endif
  
- #include <linux/device.h>
-@@ -105,14 +105,18 @@ static int wiphy_suspend(struct device *dev)
- 			cfg80211_leave_all(rdev);
- 			cfg80211_process_rdev_events(rdev);
- 		}
-+		cfg80211_process_wiphy_works(rdev);
- 		if (rdev->ops->suspend)
- 			ret = rdev_suspend(rdev, rdev->wiphy.wowlan_config);
- 		if (ret == 1) {
- 			/* Driver refuse to configure wowlan */
- 			cfg80211_leave_all(rdev);
- 			cfg80211_process_rdev_events(rdev);
-+			cfg80211_process_wiphy_works(rdev);
- 			ret = rdev_suspend(rdev, NULL);
- 		}
-+		if (ret == 0)
-+			rdev->suspended = true;
+-void cfg80211_cqm_config_free(struct wireless_dev *wdev);
+-
+ void cfg80211_release_pmsr(struct wireless_dev *wdev, u32 portid);
+ void cfg80211_pmsr_wdev_down(struct wireless_dev *wdev);
+ void cfg80211_pmsr_free_wk(struct work_struct *work);
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 12c7c89d5be1d..1d993a490ac4b 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -12565,7 +12565,8 @@ static int nl80211_set_cqm_txe(struct genl_info *info,
+ }
+ 
+ static int cfg80211_cqm_rssi_update(struct cfg80211_registered_device *rdev,
+-				    struct net_device *dev)
++				    struct net_device *dev,
++				    struct cfg80211_cqm_config *cqm_config)
+ {
+ 	struct wireless_dev *wdev = dev->ieee80211_ptr;
+ 	s32 last, low, high;
+@@ -12574,7 +12575,7 @@ static int cfg80211_cqm_rssi_update(struct cfg80211_registered_device *rdev,
+ 	int err;
+ 
+ 	/* RSSI reporting disabled? */
+-	if (!wdev->cqm_config)
++	if (!cqm_config)
+ 		return rdev_set_cqm_rssi_range_config(rdev, dev, 0, 0);
+ 
+ 	/*
+@@ -12583,7 +12584,7 @@ static int cfg80211_cqm_rssi_update(struct cfg80211_registered_device *rdev,
+ 	 * connection is established and enough beacons received to calculate
+ 	 * the average.
+ 	 */
+-	if (!wdev->cqm_config->last_rssi_event_value &&
++	if (!cqm_config->last_rssi_event_value &&
+ 	    wdev->links[0].client.current_bss &&
+ 	    rdev->ops->get_station) {
+ 		struct station_info sinfo = {};
+@@ -12597,30 +12598,30 @@ static int cfg80211_cqm_rssi_update(struct cfg80211_registered_device *rdev,
+ 
+ 		cfg80211_sinfo_release_content(&sinfo);
+ 		if (sinfo.filled & BIT_ULL(NL80211_STA_INFO_BEACON_SIGNAL_AVG))
+-			wdev->cqm_config->last_rssi_event_value =
++			cqm_config->last_rssi_event_value =
+ 				(s8) sinfo.rx_beacon_signal_avg;
  	}
- 	wiphy_unlock(&rdev->wiphy);
- 	rtnl_unlock();
-@@ -132,6 +136,8 @@ static int wiphy_resume(struct device *dev)
- 	wiphy_lock(&rdev->wiphy);
- 	if (rdev->wiphy.registered && rdev->ops->resume)
- 		ret = rdev_resume(rdev);
-+	rdev->suspended = false;
-+	schedule_work(&rdev->wiphy_work);
- 	wiphy_unlock(&rdev->wiphy);
  
- 	if (ret)
+-	last = wdev->cqm_config->last_rssi_event_value;
+-	hyst = wdev->cqm_config->rssi_hyst;
+-	n = wdev->cqm_config->n_rssi_thresholds;
++	last = cqm_config->last_rssi_event_value;
++	hyst = cqm_config->rssi_hyst;
++	n = cqm_config->n_rssi_thresholds;
+ 
+ 	for (i = 0; i < n; i++) {
+ 		i = array_index_nospec(i, n);
+-		if (last < wdev->cqm_config->rssi_thresholds[i])
++		if (last < cqm_config->rssi_thresholds[i])
+ 			break;
+ 	}
+ 
+ 	low_index = i - 1;
+ 	if (low_index >= 0) {
+ 		low_index = array_index_nospec(low_index, n);
+-		low = wdev->cqm_config->rssi_thresholds[low_index] - hyst;
++		low = cqm_config->rssi_thresholds[low_index] - hyst;
+ 	} else {
+ 		low = S32_MIN;
+ 	}
+ 	if (i < n) {
+ 		i = array_index_nospec(i, n);
+-		high = wdev->cqm_config->rssi_thresholds[i] + hyst - 1;
++		high = cqm_config->rssi_thresholds[i] + hyst - 1;
+ 	} else {
+ 		high = S32_MAX;
+ 	}
+@@ -12633,6 +12634,7 @@ static int nl80211_set_cqm_rssi(struct genl_info *info,
+ 				u32 hysteresis)
+ {
+ 	struct cfg80211_registered_device *rdev = info->user_ptr[0];
++	struct cfg80211_cqm_config *cqm_config = NULL, *old;
+ 	struct net_device *dev = info->user_ptr[1];
+ 	struct wireless_dev *wdev = dev->ieee80211_ptr;
+ 	int i, err;
+@@ -12650,10 +12652,6 @@ static int nl80211_set_cqm_rssi(struct genl_info *info,
+ 	    wdev->iftype != NL80211_IFTYPE_P2P_CLIENT)
+ 		return -EOPNOTSUPP;
+ 
+-	wdev_lock(wdev);
+-	cfg80211_cqm_config_free(wdev);
+-	wdev_unlock(wdev);
+-
+ 	if (n_thresholds <= 1 && rdev->ops->set_cqm_rssi_config) {
+ 		if (n_thresholds == 0 || thresholds[0] == 0) /* Disabling */
+ 			return rdev_set_cqm_rssi_config(rdev, dev, 0, 0);
+@@ -12670,9 +12668,10 @@ static int nl80211_set_cqm_rssi(struct genl_info *info,
+ 		n_thresholds = 0;
+ 
+ 	wdev_lock(wdev);
+-	if (n_thresholds) {
+-		struct cfg80211_cqm_config *cqm_config;
++	old = rcu_dereference_protected(wdev->cqm_config,
++					lockdep_is_held(&wdev->mtx));
+ 
++	if (n_thresholds) {
+ 		cqm_config = kzalloc(struct_size(cqm_config, rssi_thresholds,
+ 						 n_thresholds),
+ 				     GFP_KERNEL);
+@@ -12687,11 +12686,18 @@ static int nl80211_set_cqm_rssi(struct genl_info *info,
+ 		       flex_array_size(cqm_config, rssi_thresholds,
+ 				       n_thresholds));
+ 
+-		wdev->cqm_config = cqm_config;
++		rcu_assign_pointer(wdev->cqm_config, cqm_config);
++	} else {
++		RCU_INIT_POINTER(wdev->cqm_config, NULL);
+ 	}
+ 
+-	err = cfg80211_cqm_rssi_update(rdev, dev);
+-
++	err = cfg80211_cqm_rssi_update(rdev, dev, cqm_config);
++	if (err) {
++		rcu_assign_pointer(wdev->cqm_config, old);
++		kfree_rcu(cqm_config, rcu_head);
++	} else {
++		kfree_rcu(old, rcu_head);
++	}
+ unlock:
+ 	wdev_unlock(wdev);
+ 
+@@ -18719,9 +18725,8 @@ void cfg80211_cqm_rssi_notify(struct net_device *dev,
+ 			      enum nl80211_cqm_rssi_threshold_event rssi_event,
+ 			      s32 rssi_level, gfp_t gfp)
+ {
+-	struct sk_buff *msg;
+ 	struct wireless_dev *wdev = dev->ieee80211_ptr;
+-	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wdev->wiphy);
++	struct cfg80211_cqm_config *cqm_config;
+ 
+ 	trace_cfg80211_cqm_rssi_notify(dev, rssi_event, rssi_level);
+ 
+@@ -18729,18 +18734,41 @@ void cfg80211_cqm_rssi_notify(struct net_device *dev,
+ 		    rssi_event != NL80211_CQM_RSSI_THRESHOLD_EVENT_HIGH))
+ 		return;
+ 
+-	if (wdev->cqm_config) {
+-		wdev->cqm_config->last_rssi_event_value = rssi_level;
++	rcu_read_lock();
++	cqm_config = rcu_dereference(wdev->cqm_config);
++	if (cqm_config) {
++		cqm_config->last_rssi_event_value = rssi_level;
++		cqm_config->last_rssi_event_type = rssi_event;
++		wiphy_work_queue(wdev->wiphy, &wdev->cqm_rssi_work);
++	}
++	rcu_read_unlock();
++}
++EXPORT_SYMBOL(cfg80211_cqm_rssi_notify);
++
++void cfg80211_cqm_rssi_notify_work(struct wiphy *wiphy, struct wiphy_work *work)
++{
++	struct wireless_dev *wdev = container_of(work, struct wireless_dev,
++						 cqm_rssi_work);
++	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
++	enum nl80211_cqm_rssi_threshold_event rssi_event;
++	struct cfg80211_cqm_config *cqm_config;
++	struct sk_buff *msg;
++	s32 rssi_level;
+ 
+-		cfg80211_cqm_rssi_update(rdev, dev);
++	wdev_lock(wdev);
++	cqm_config = rcu_dereference_protected(wdev->cqm_config,
++					       lockdep_is_held(&wdev->mtx));
++	if (!wdev->cqm_config)
++		goto unlock;
+ 
+-		if (rssi_level == 0)
+-			rssi_level = wdev->cqm_config->last_rssi_event_value;
+-	}
++	cfg80211_cqm_rssi_update(rdev, wdev->netdev, cqm_config);
+ 
+-	msg = cfg80211_prepare_cqm(dev, NULL, gfp);
++	rssi_level = cqm_config->last_rssi_event_value;
++	rssi_event = cqm_config->last_rssi_event_type;
++
++	msg = cfg80211_prepare_cqm(wdev->netdev, NULL, GFP_KERNEL);
+ 	if (!msg)
+-		return;
++		goto unlock;
+ 
+ 	if (nla_put_u32(msg, NL80211_ATTR_CQM_RSSI_THRESHOLD_EVENT,
+ 			rssi_event))
+@@ -18750,14 +18778,15 @@ void cfg80211_cqm_rssi_notify(struct net_device *dev,
+ 				      rssi_level))
+ 		goto nla_put_failure;
+ 
+-	cfg80211_send_cqm(msg, gfp);
++	cfg80211_send_cqm(msg, GFP_KERNEL);
+ 
+-	return;
++	goto unlock;
+ 
+  nla_put_failure:
+ 	nlmsg_free(msg);
++ unlock:
++	wdev_unlock(wdev);
+ }
+-EXPORT_SYMBOL(cfg80211_cqm_rssi_notify);
+ 
+ void cfg80211_cqm_txe_notify(struct net_device *dev,
+ 			     const u8 *peer, u32 num_packets,
 -- 
 2.40.1
 
