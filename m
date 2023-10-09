@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793602E649
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF542E649
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzxiT1jg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E770CC433C8;
-	Mon,  9 Oct 2023 13:38:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hN3izNPD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0999CC433C9;
+	Mon,  9 Oct 2023 13:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858722;
-	bh=wqOB3EVXdtNyoMYgqql+niJiPFE6NrYEmuvMzHhaeak=;
+	s=korg; t=1696858725;
+	bh=RkWXlXPAr3ke2m9coUbELxT1sm7A/9JvjPgrHmOVbOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hzxiT1jgkzCgArnw9eNPGqwYdlWNh4YcnszVSU2iRRHimRsrprnMu1F1/MmhvLt6g
-	 QOsVjXwbVMjkyR1M03T8SiW2aFwAkWpR2kQlVh+w1RiTJMrBegEls6Fj2fB1klF718
-	 sMVpqBSnrP1IbaJhb2t5Y3kL7vSJFLIEmRfHPV6s=
+	b=hN3izNPDkWc1SrDPbp6HT9CJuuggqXb4OSv2XzeyLJnrqWYBgAK/YnF8BzZHSsG6T
+	 OEWDjyCt4BHZsAb/IsXFiPs9sTqDsgjCsaLRkJ5w93G6U0Hl1Es4a7n+zC2hpqnsqH
+	 sLP+0Tyyp3xXqoyPASZZAPL3IX4JDFTL/oav5H+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 079/226] netfilter: nf_tables: add and use nft_thoff helper
-Date: Mon,  9 Oct 2023 15:00:40 +0200
-Message-ID: <20231009130128.852502475@linuxfoundation.org>
+Subject: [PATCH 5.10 080/226] netfilter: nft_exthdr: break evaluation if setting TCP option fails
+Date: Mon,  9 Oct 2023 15:00:41 +0200
+Message-ID: <20231009130128.878102389@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -42,221 +41,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 2d7b4ace0754ebaaf71c6824880178d46aa0ab33 ]
+[ Upstream commit 962e5a40358787105f126ab1dc01604da3d169e9 ]
 
-This allows to change storage placement later on without changing readers.
+Break rule evaluation on malformed TCP options.
 
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 99d1712bc41c ("netfilter: exthdr: tcp option set support")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Stable-dep-of: 28427f368f0e ("netfilter: nft_exthdr: Fix non-linear header modification")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  5 +++++
- net/netfilter/nf_tables_core.c    |  2 +-
- net/netfilter/nf_tables_trace.c   |  6 +++---
- net/netfilter/nft_exthdr.c        |  8 ++++----
- net/netfilter/nft_flow_offload.c  |  2 +-
- net/netfilter/nft_payload.c       | 10 +++++-----
- net/netfilter/nft_synproxy.c      |  4 ++--
- net/netfilter/nft_tproxy.c        |  4 ++--
- 8 files changed, 23 insertions(+), 18 deletions(-)
+ net/netfilter/nft_exthdr.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 013f11c9de85a..152cd46915d6d 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -33,6 +33,11 @@ static inline struct sock *nft_sk(const struct nft_pktinfo *pkt)
- 	return pkt->xt.state->sk;
- }
- 
-+static inline unsigned int nft_thoff(const struct nft_pktinfo *pkt)
-+{
-+	return pkt->xt.thoff;
-+}
-+
- static inline struct net *nft_net(const struct nft_pktinfo *pkt)
- {
- 	return pkt->xt.state->net;
-diff --git a/net/netfilter/nf_tables_core.c b/net/netfilter/nf_tables_core.c
-index 9dc18429ed875..b0d711d498c66 100644
---- a/net/netfilter/nf_tables_core.c
-+++ b/net/netfilter/nf_tables_core.c
-@@ -125,7 +125,7 @@ static bool nft_payload_fast_eval(const struct nft_expr *expr,
- 	else {
- 		if (!pkt->tprot_set)
- 			return false;
--		ptr = skb_network_header(skb) + pkt->xt.thoff;
-+		ptr = skb_network_header(skb) + nft_thoff(pkt);
- 	}
- 
- 	ptr += priv->offset;
-diff --git a/net/netfilter/nf_tables_trace.c b/net/netfilter/nf_tables_trace.c
-index 0cf3278007ba5..e4fe2f0780eb6 100644
---- a/net/netfilter/nf_tables_trace.c
-+++ b/net/netfilter/nf_tables_trace.c
-@@ -113,17 +113,17 @@ static int nf_trace_fill_pkt_info(struct sk_buff *nlskb,
- 	int off = skb_network_offset(skb);
- 	unsigned int len, nh_end;
- 
--	nh_end = pkt->tprot_set ? pkt->xt.thoff : skb->len;
-+	nh_end = pkt->tprot_set ? nft_thoff(pkt) : skb->len;
- 	len = min_t(unsigned int, nh_end - skb_network_offset(skb),
- 		    NFT_TRACETYPE_NETWORK_HSIZE);
- 	if (trace_fill_header(nlskb, NFTA_TRACE_NETWORK_HEADER, skb, off, len))
- 		return -1;
- 
- 	if (pkt->tprot_set) {
--		len = min_t(unsigned int, skb->len - pkt->xt.thoff,
-+		len = min_t(unsigned int, skb->len - nft_thoff(pkt),
- 			    NFT_TRACETYPE_TRANSPORT_HSIZE);
- 		if (trace_fill_header(nlskb, NFTA_TRACE_TRANSPORT_HEADER, skb,
--				      pkt->xt.thoff, len))
-+				      nft_thoff(pkt), len))
- 			return -1;
- 	}
- 
 diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
-index 2f852ea67e5d5..73f82483f2429 100644
+index 73f82483f2429..10a510fef75c5 100644
 --- a/net/netfilter/nft_exthdr.c
 +++ b/net/netfilter/nft_exthdr.c
-@@ -170,7 +170,7 @@ nft_tcp_header_pointer(const struct nft_pktinfo *pkt,
- 	if (!pkt->tprot_set || pkt->tprot != IPPROTO_TCP)
- 		return NULL;
+@@ -236,7 +236,7 @@ static void nft_exthdr_tcp_set_eval(const struct nft_expr *expr,
  
--	tcph = skb_header_pointer(pkt->skb, pkt->xt.thoff, sizeof(*tcph), buffer);
-+	tcph = skb_header_pointer(pkt->skb, nft_thoff(pkt), sizeof(*tcph), buffer);
+ 	tcph = nft_tcp_header_pointer(pkt, sizeof(buff), buff, &tcphdr_len);
  	if (!tcph)
- 		return NULL;
+-		return;
++		goto err;
  
-@@ -178,7 +178,7 @@ nft_tcp_header_pointer(const struct nft_pktinfo *pkt,
- 	if (*tcphdr_len < sizeof(*tcph) || *tcphdr_len > len)
- 		return NULL;
+ 	opt = (u8 *)tcph;
+ 	for (i = sizeof(*tcph); i < tcphdr_len - 1; i += optl) {
+@@ -251,16 +251,16 @@ static void nft_exthdr_tcp_set_eval(const struct nft_expr *expr,
+ 			continue;
  
--	return skb_header_pointer(pkt->skb, pkt->xt.thoff, *tcphdr_len, buffer);
-+	return skb_header_pointer(pkt->skb, nft_thoff(pkt), *tcphdr_len, buffer);
- }
- 
- static void nft_exthdr_tcp_eval(const struct nft_expr *expr,
-@@ -254,7 +254,7 @@ static void nft_exthdr_tcp_set_eval(const struct nft_expr *expr,
- 			return;
+ 		if (i + optl > tcphdr_len || priv->len + priv->offset > optl)
+-			return;
++			goto err;
  
  		if (skb_ensure_writable(pkt->skb,
--					pkt->xt.thoff + i + priv->len))
-+					nft_thoff(pkt) + i + priv->len))
- 			return;
+ 					nft_thoff(pkt) + i + priv->len))
+-			return;
++			goto err;
  
  		tcph = nft_tcp_header_pointer(pkt, sizeof(buff), buff,
-@@ -309,7 +309,7 @@ static void nft_exthdr_sctp_eval(const struct nft_expr *expr,
- 				 struct nft_regs *regs,
- 				 const struct nft_pktinfo *pkt)
- {
--	unsigned int offset = pkt->xt.thoff + sizeof(struct sctphdr);
-+	unsigned int offset = nft_thoff(pkt) + sizeof(struct sctphdr);
- 	struct nft_exthdr *priv = nft_expr_priv(expr);
- 	u32 *dest = &regs->data[priv->dreg];
- 	const struct sctp_chunkhdr *sch;
-diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
-index d868eade60176..a44340dd3ce64 100644
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -90,7 +90,7 @@ static void nft_flow_offload_eval(const struct nft_expr *expr,
+ 					      &tcphdr_len);
+ 		if (!tcph)
+-			return;
++			goto err;
  
- 	switch (ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple.dst.protonum) {
- 	case IPPROTO_TCP:
--		tcph = skb_header_pointer(pkt->skb, pkt->xt.thoff,
-+		tcph = skb_header_pointer(pkt->skb, nft_thoff(pkt),
- 					  sizeof(_tcph), &_tcph);
- 		if (unlikely(!tcph || tcph->fin || tcph->rst))
- 			goto out;
-diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
-index 74c220eeec1a8..b2b63c3653d49 100644
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -110,7 +110,7 @@ void nft_payload_eval(const struct nft_expr *expr,
- 	case NFT_PAYLOAD_TRANSPORT_HEADER:
- 		if (!pkt->tprot_set)
- 			goto err;
--		offset = pkt->xt.thoff;
-+		offset = nft_thoff(pkt);
- 		break;
- 	default:
- 		BUG();
-@@ -510,7 +510,7 @@ static int nft_payload_l4csum_offset(const struct nft_pktinfo *pkt,
- 		*l4csum_offset = offsetof(struct tcphdr, check);
- 		break;
- 	case IPPROTO_UDP:
--		if (!nft_payload_udp_checksum(skb, pkt->xt.thoff))
-+		if (!nft_payload_udp_checksum(skb, nft_thoff(pkt)))
- 			return -1;
- 		fallthrough;
- 	case IPPROTO_UDPLITE:
-@@ -523,7 +523,7 @@ static int nft_payload_l4csum_offset(const struct nft_pktinfo *pkt,
- 		return -1;
- 	}
+ 		offset = i + priv->offset;
  
--	*l4csum_offset += pkt->xt.thoff;
-+	*l4csum_offset += nft_thoff(pkt);
- 	return 0;
- }
+@@ -303,6 +303,9 @@ static void nft_exthdr_tcp_set_eval(const struct nft_expr *expr,
  
-@@ -615,7 +615,7 @@ static void nft_payload_set_eval(const struct nft_expr *expr,
- 	case NFT_PAYLOAD_TRANSPORT_HEADER:
- 		if (!pkt->tprot_set)
- 			goto err;
--		offset = pkt->xt.thoff;
-+		offset = nft_thoff(pkt);
- 		break;
- 	default:
- 		BUG();
-@@ -646,7 +646,7 @@ static void nft_payload_set_eval(const struct nft_expr *expr,
- 	if (priv->csum_type == NFT_PAYLOAD_CSUM_SCTP &&
- 	    pkt->tprot == IPPROTO_SCTP &&
- 	    skb->ip_summed != CHECKSUM_PARTIAL) {
--		if (nft_payload_csum_sctp(skb, pkt->xt.thoff))
-+		if (nft_payload_csum_sctp(skb, nft_thoff(pkt)))
- 			goto err;
- 	}
- 
-diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
-index 59c4dfaf2ea1f..1133e06f3c40e 100644
---- a/net/netfilter/nft_synproxy.c
-+++ b/net/netfilter/nft_synproxy.c
-@@ -109,7 +109,7 @@ static void nft_synproxy_do_eval(const struct nft_synproxy *priv,
- {
- 	struct synproxy_options opts = {};
- 	struct sk_buff *skb = pkt->skb;
--	int thoff = pkt->xt.thoff;
-+	int thoff = nft_thoff(pkt);
- 	const struct tcphdr *tcp;
- 	struct tcphdr _tcph;
- 
-@@ -123,7 +123,7 @@ static void nft_synproxy_do_eval(const struct nft_synproxy *priv,
  		return;
  	}
++	return;
++err:
++	regs->verdict.code = NFT_BREAK;
+ }
  
--	tcp = skb_header_pointer(skb, pkt->xt.thoff,
-+	tcp = skb_header_pointer(skb, thoff,
- 				 sizeof(struct tcphdr),
- 				 &_tcph);
- 	if (!tcp) {
-diff --git a/net/netfilter/nft_tproxy.c b/net/netfilter/nft_tproxy.c
-index c49d318f8e6ed..f8d277e05ef4f 100644
---- a/net/netfilter/nft_tproxy.c
-+++ b/net/netfilter/nft_tproxy.c
-@@ -88,9 +88,9 @@ static void nft_tproxy_eval_v6(const struct nft_expr *expr,
- 	const struct nft_tproxy *priv = nft_expr_priv(expr);
- 	struct sk_buff *skb = pkt->skb;
- 	const struct ipv6hdr *iph = ipv6_hdr(skb);
--	struct in6_addr taddr;
--	int thoff = pkt->xt.thoff;
-+	int thoff = nft_thoff(pkt);
- 	struct udphdr _hdr, *hp;
-+	struct in6_addr taddr;
- 	__be16 tport = 0;
- 	struct sock *sk;
- 	int l4proto;
+ static void nft_exthdr_sctp_eval(const struct nft_expr *expr,
 -- 
 2.40.1
 
