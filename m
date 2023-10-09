@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754571A735
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44FE1A735
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQ30mSOy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A2EC433C8;
-	Mon,  9 Oct 2023 13:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6xeZzRQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9A2C433C8;
+	Mon,  9 Oct 2023 13:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859506;
-	bh=bmhmR4I9985iZ72ULk1TAobmNkaQAT/8AHpdG+JYbqc=;
+	s=korg; t=1696859509;
+	bh=507lxvLVbvYcSRfkxwtZw7Yz47avZVp2R8HvZ+lsJg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQ30mSOy3Rzb3XGE2oFP9ATKzG0bMv522jDx/JpgE+YH+KLnkVtqKLJhjmVUkQXsp
-	 LuuqlSerDzCLgldHGT2vAsiz8mBSO6f+dE1Mx7tuOFbJmh6zAoxIVpezHp5oiUxx0e
-	 EWxn2Bo1Bg1CJUyiWb3EagpxudsuvokWsb9yHjr0=
+	b=v6xeZzRQuhKW2HNcpXFRAJzVG4tM10p5f4s5LJEKtbyPAfMUfb0Hdm71GJWXEvwb6
+	 6cejFGbl4mJN8tO4ITzVO5dJG4kDRZT1Jjq0jkSsDQvZrtO3A3KaL7QPwm9aUMzfk7
+	 K6jfB1J4d6vyxcZu5OtLgyTw8hG102i8j7w3mvN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Kees Cook <keescook@chromium.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 05/91] selftests/tls: Add {} to avoid static checker warning
-Date: Mon,  9 Oct 2023 15:05:37 +0200
-Message-ID: <20231009130111.720629592@linuxfoundation.org>
+Subject: [PATCH 4.19 36/91] selftests/ftrace: Correctly enable event in instance-event.tc
+Date: Mon,  9 Oct 2023 15:06:08 +0200
+Message-ID: <20231009130112.786118030@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130111.518916887@linuxfoundation.org>
 References: <20231009130111.518916887@linuxfoundation.org>
@@ -43,39 +44,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit f50688b47c5858d2ff315d020332bf4cb6710837 ]
+[ Upstream commit f4e4ada586995b17f828c6d147d1800eb1471450 ]
 
-This silences a static checker warning due to the unusual macro
-construction of EXPECT_*() by adding explicit {}s around the enclosing
-while loop.
+Function instance_set() expects to enable event 'sched_switch', so we
+should set 1 to its 'enable' file.
 
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Fixes: 7f657d5bf507 ("selftests: tls: add selftests for TLS sockets")
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Testcase passed after this patch:
+  # ./ftracetest test.d/instances/instance-event.tc
+  === Ftrace unit tests ===
+  [1] Test creation and deletion of trace instances while setting an event
+  [PASS]
+
+  # of passed:  1
+  # of failed:  0
+  # of unresolved:  0
+  # of untested:  0
+  # of unsupported:  0
+  # of xfailed:  0
+  # of undefined(test bug):  0
+
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Stable-dep-of: c326ca98446e ("selftests: tls: swap the TX and RX sockets in some tests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tls.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../testing/selftests/ftrace/test.d/instances/instance-event.tc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/tls.c b/tools/testing/selftests/net/tls.c
-index 7549d39ccafff..43bb9eadf03e7 100644
---- a/tools/testing/selftests/net/tls.c
-+++ b/tools/testing/selftests/net/tls.c
-@@ -202,8 +202,9 @@ TEST_F(tls, sendmsg_large)
- 		EXPECT_EQ(sendmsg(self->cfd, &msg, 0), send_len);
- 	}
+diff --git a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
+index 4fa0f79144f4a..9473934a573a1 100644
+--- a/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
++++ b/tools/testing/selftests/ftrace/test.d/instances/instance-event.tc
+@@ -43,7 +43,7 @@ instance_read() {
  
--	while (recvs++ < sends)
-+	while (recvs++ < sends) {
- 		EXPECT_NE(recv(self->fd, mem, send_len, 0), -1);
-+	}
- 
- 	free(mem);
+ instance_set() {
+         while :; do
+-                echo 1 > foo/events/sched/sched_switch
++                echo 1 > foo/events/sched/sched_switch/enable
+         done 2> /dev/null
  }
+ 
 -- 
 2.40.1
 
