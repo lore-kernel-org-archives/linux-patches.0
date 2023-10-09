@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EC21A5A3
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0EE1A5A3
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzWVaVT7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B434C433C8;
-	Mon,  9 Oct 2023 13:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgphnHXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8A8C433C9;
+	Mon,  9 Oct 2023 13:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696859247;
-	bh=IMqin6+GR36mTrCnqcvdxffTEl2EhADjvi5rS+bOEck=;
+	s=korg; t=1696859251;
+	bh=ZevweBLRoMFFI3Fo8w6WSL1xQyPYGt3A1/fDffetmdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QzWVaVT7QutHyjA12EQhQlqttEBWOYTBMkmUI1toMnl0fIWAXNPl3HolEGvvABj66
-	 yJJRoGRgW/wJ1wrkV5JcOpF5mGFQmBOKY5lGXDZQAmXXGkhGlbSYeqxf9FABISosSW
-	 DfXuOzlizJtsYlBswgnFDgBHNVL24bL3EZUC27ik=
+	b=cgphnHXeqdplOSkDZi1Fgka9GFHq0eyR6t8ax26k2k6qe5nzw1MQGseMKdpGMZmDC
+	 /LTrvzLfz1+Zi6fi6KfiY/DKc9SaIwOiDmwSUJYX8iqF/A5JkKglk2nLAt94OP2lfP
+	 knPbgG3az6QLpxBmIptP8oUcv1l95RQDcLCV4jVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Xiaoke Wang <xkernel.wang@foxmail.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 06/55] gpio: tb10x: Fix an error handling path in tb10x_gpio_probe()
-Date: Mon,  9 Oct 2023 15:06:05 +0200
-Message-ID: <20231009130107.954238969@linuxfoundation.org>
+Subject: [PATCH 4.14 07/55] i2c: mux: demux-pinctrl: check the return value of devm_kstrdup()
+Date: Mon,  9 Oct 2023 15:06:06 +0200
+Message-ID: <20231009130107.988339560@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130107.717692466@linuxfoundation.org>
 References: <20231009130107.717692466@linuxfoundation.org>
@@ -42,46 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Xiaoke Wang <xkernel.wang@foxmail.com>
 
-[ Upstream commit b547b5e52a0587e6b25ea520bf2f9e03d00cbcb6 ]
+[ Upstream commit 7c0195fa9a9e263df204963f88a22b21688ffb66 ]
 
-If an error occurs after a successful irq_domain_add_linear() call, it
-should be undone by a corresponding irq_domain_remove(), as already done
-in the remove function.
+devm_kstrdup() returns pointer to allocated string on success,
+NULL on failure. So it is better to check the return value of it.
 
-Fixes: c6ce2b6bffe5 ("gpio: add TB10x GPIO driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: e35478eac030 ("i2c: mux: demux-pinctrl: run properly with multiple instances")
+Signed-off-by: Xiaoke Wang <xkernel.wang@foxmail.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tb10x.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/i2c/muxes/i2c-demux-pinctrl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpio/gpio-tb10x.c b/drivers/gpio/gpio-tb10x.c
-index 091ffaaec6354..97a9d9823475a 100644
---- a/drivers/gpio/gpio-tb10x.c
-+++ b/drivers/gpio/gpio-tb10x.c
-@@ -244,7 +244,7 @@ static int tb10x_gpio_probe(struct platform_device *pdev)
- 				handle_edge_irq, IRQ_NOREQUEST, IRQ_NOPROBE,
- 				IRQ_GC_INIT_MASK_CACHE);
- 		if (ret)
--			return ret;
-+			goto err_remove_domain;
+diff --git a/drivers/i2c/muxes/i2c-demux-pinctrl.c b/drivers/i2c/muxes/i2c-demux-pinctrl.c
+index c638b2fc7fa28..647b5ff69a9cc 100644
+--- a/drivers/i2c/muxes/i2c-demux-pinctrl.c
++++ b/drivers/i2c/muxes/i2c-demux-pinctrl.c
+@@ -243,6 +243,10 @@ static int i2c_demux_pinctrl_probe(struct platform_device *pdev)
  
- 		gc = tb10x_gpio->domain->gc->gc[0];
- 		gc->reg_base                         = tb10x_gpio->base;
-@@ -258,6 +258,10 @@ static int tb10x_gpio_probe(struct platform_device *pdev)
- 	}
+ 		props[i].name = devm_kstrdup(&pdev->dev, "status", GFP_KERNEL);
+ 		props[i].value = devm_kstrdup(&pdev->dev, "ok", GFP_KERNEL);
++		if (!props[i].name || !props[i].value) {
++			err = -ENOMEM;
++			goto err_rollback;
++		}
+ 		props[i].length = 3;
  
- 	return 0;
-+
-+err_remove_domain:
-+	irq_domain_remove(tb10x_gpio->domain);
-+	return ret;
- }
- 
- static int tb10x_gpio_remove(struct platform_device *pdev)
+ 		of_changeset_init(&priv->chan[i].chgset);
 -- 
 2.40.1
 
