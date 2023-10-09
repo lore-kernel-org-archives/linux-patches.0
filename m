@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DAB27EF5
-	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301A01A592
+	for <patches@lists.linux.dev>; Mon,  9 Oct 2023 13:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjNVJq3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820A6C433C7;
-	Mon,  9 Oct 2023 13:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16RNxZyz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A095CC433C8;
+	Mon,  9 Oct 2023 13:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696858626;
-	bh=uhoKFnioQEtFQ8XR7oRu9XEGXnq+MHuIErbqBRy7C3g=;
+	s=korg; t=1696858630;
+	bh=2B9DLv2Yw/5yPgL4kk7t1f184MH2owlXaeM1RgZDna4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JjNVJq3XxRtPPYVxyyU3acg+VBCre5P3vSFe9whAXidGpKKmz4agRFibGgcd7iCeD
-	 aZOoceIf8N8ROcMLlBVxgX62BjfLCmkipWvhQKKUQoU+SYVy5CnNxJS5YIyw2glDV3
-	 DoJ8R30CLxWhw2R7u2YjKIYmD4/NquG58rMTlaUw=
+	b=16RNxZyzTHb+v+0t96TzEgcbJTuYKTKKyB8q+Sf3tXSKbKGUbC2BcaudUQslaqTIs
+	 4T/24mraLqfmXvcSGkEX+zZTB5wG3U+BY+3cyQR+oCXlFgbjdrpDzdB1cK0zGaX1HK
+	 yBiR4ZOegHBoc6XnLnHrX13KfC/+99jd/1T52WJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
+	Jie Wang <wangjie125@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 049/226] net: hns3: only enable unicast promisc when mac table full
-Date: Mon,  9 Oct 2023 15:00:10 +0200
-Message-ID: <20231009130128.074177509@linuxfoundation.org>
+Subject: [PATCH 5.10 050/226] net: hns3: add 5ms delay before clear firmware reset irq source
+Date: Mon,  9 Oct 2023 15:00:11 +0200
+Message-ID: <20231009130128.099037297@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231009130126.697995596@linuxfoundation.org>
 References: <20231009130126.697995596@linuxfoundation.org>
@@ -43,37 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit f2ed304922a55690529bcca59678dd92d7466ce8 ]
+[ Upstream commit 0770063096d5da4a8e467b6e73c1646a75589628 ]
 
-Currently, the driver will enable unicast promisc for the function
-once configure mac address fail. It's unreasonable when the failure
-is caused by using same mac address with other functions. So only
-enable unicast promisc when mac table full.
+Currently the reset process in hns3 and firmware watchdog init process is
+asynchronous. we think firmware watchdog initialization is completed
+before hns3 clear the firmware interrupt source. However, firmware
+initialization may not complete early.
 
-Fixes: c631c696823c ("net: hns3: refactor the promisc mode setting")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
+so we add delay before hns3 clear firmware interrupt source and 5 ms delay
+is enough to avoid second firmware reset interrupt.
+
+Fixes: c1a81619d73a ("net: hns3: Add mailbox interrupt handling to PF driver")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 47f8f66cf7ecd..49eeeb0c9a1f8 100644
+index 49eeeb0c9a1f8..deba485ced1bd 100644
 --- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
 +++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -7850,7 +7850,7 @@ static void hclge_update_overflow_flags(struct hclge_vport *vport,
- 	if (mac_type == HCLGE_MAC_ADDR_UC) {
- 		if (is_all_added)
- 			vport->overflow_promisc_flags &= ~HNAE3_OVERFLOW_UPE;
--		else
-+		else if (hclge_is_umv_space_full(vport, true))
- 			vport->overflow_promisc_flags |= HNAE3_OVERFLOW_UPE;
- 	} else {
- 		if (is_all_added)
+@@ -3125,8 +3125,13 @@ static u32 hclge_check_event_cause(struct hclge_dev *hdev, u32 *clearval)
+ static void hclge_clear_event_cause(struct hclge_dev *hdev, u32 event_type,
+ 				    u32 regclr)
+ {
++#define HCLGE_IMP_RESET_DELAY		5
++
+ 	switch (event_type) {
+ 	case HCLGE_VECTOR0_EVENT_RST:
++		if (regclr == BIT(HCLGE_VECTOR0_IMPRESET_INT_B))
++			mdelay(HCLGE_IMP_RESET_DELAY);
++
+ 		hclge_write_dev(&hdev->hw, HCLGE_MISC_RESET_STS_REG, regclr);
+ 		break;
+ 	case HCLGE_VECTOR0_EVENT_MBX:
 -- 
 2.40.1
 
