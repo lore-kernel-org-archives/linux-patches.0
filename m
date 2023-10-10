@@ -1,114 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB093159F;
-	Tue, 10 Oct 2023 21:02:42 +0000 (UTC)
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5807531595
+	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 22:49:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D6nC8pqv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769CEC433C7;
-	Tue, 10 Oct 2023 21:02:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1696971762;
-	bh=Z7ej04uU0GR3MOipg+o+WcIRoRs95S+/l2+VMvWDCoY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=D6nC8pqvOlM/9XRukSpgRh43PP4yI3ATygMSOJfkqmN4KZxsCLRDSS04U+9/g0asx
-	 vO50wlxbdKx5IfrB0mJWx8awqb0DI1oIbcy0n6sbnGyYAWbpYTl3cVX/OrglUq1vyy
-	 MGdqSH5n8nsj+x5Pels4uL2PBLljgGfdd37Cv9tCGhyswXtbgg2n6dAZVtAIFZoOCB
-	 mm0UdVs+3YpHMkLku9MsMoqW8xTXFxtIRu/0hGZmgYnlLTLNL+lGtddPcubog4m1JS
-	 4BTSUO7CNslJGygvLxunmlJJpNRxdfxfXgQB5U2CiyMuIVC3OnA7CuIjpWbFlWBj1h
-	 1VArvghic6maA==
-Date: Tue, 10 Oct 2023 22:02:38 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, trix@redhat.com,
-	samitolvanen@google.com, twd2.me@gmail.com,
-	linux-riscv@lists.infradead.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v3] RISC-V: build: Allow LTO to be selected
-Message-ID: <20231010-ungloved-tropical-c731e05d86d6@spud>
-References: <20231003-riscv-lto-v3-1-8aca61a4ecb4@kernel.org>
- <CAKwvOdnMeM4YArw=hyVkev11cLfks5gaXWXNK+Wo0bcbeuMZHg@mail.gmail.com>
- <20231010195247.GA2233717@dev-arch.thelio-3990X>
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="CEl3o74J"
+Received: from [10.0.0.178] (c-76-135-56-23.hsd1.wa.comcast.net [76.135.56.23])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 3767820B74C0;
+	Tue, 10 Oct 2023 15:49:49 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3767820B74C0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1696978189;
+	bh=xNLCGvZHdU71qjHxRgA/1TNMVCHTexDMo8D59LMp6BY=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=CEl3o74J71QRcTdLqoPV7RImMOc17eR9UZgEQBih57CS6OUtzd9dL6Gs4mbxNvO4p
+	 UIGFgIlIptnNftQv2rfctEATzmbOcxvAV8WIaaWIZUVN/syakprhhgeazRrZAbou1J
+	 gyp8QkiN9EbrL3jsNwha+VZMO9D8arS1yiysou0c=
+Message-ID: <50f1721f-64fb-49ff-9740-0dac7cf832c8@linux.microsoft.com>
+Date: Tue, 10 Oct 2023 15:49:48 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="R1zu76Uiutz83xFt"
-Content-Disposition: inline
-In-Reply-To: <20231010195247.GA2233717@dev-arch.thelio-3990X>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 13/15] uapi: hyperv: Add mshv driver headers hvhdk.h,
+ hvhdk_mini.h, hvgdk.h, hvgdk_mini.h
+From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+To: Greg KH <gregkh@linuxfoundation.org>, Wei Liu <wei.liu@kernel.org>
+Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
+ x86@kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-arch@vger.kernel.org, patches@lists.linux.dev, mikelley@microsoft.com,
+ kys@microsoft.com, haiyangz@microsoft.com, decui@microsoft.com,
+ apais@linux.microsoft.com, Tianyu.Lan@microsoft.com,
+ ssengar@linux.microsoft.com, mukeshrathor@microsoft.com,
+ stanislav.kinsburskiy@gmail.com, jinankjain@linux.microsoft.com,
+ vkuznets@redhat.com, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+ dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
+ catalin.marinas@arm.com
+References: <1692309711-5573-1-git-send-email-nunodasneves@linux.microsoft.com>
+ <1692309711-5573-14-git-send-email-nunodasneves@linux.microsoft.com>
+ <ZN6m2gVmtVStuEfA@liuwe-devbox-debian-v2> <2023081923-crown-cake-79f7@gregkh>
+ <c4482a6a-aed0-4750-aa1b-421f0e541cfa@linux.microsoft.com>
+Content-Language: en-US
+In-Reply-To: <c4482a6a-aed0-4750-aa1b-421f0e541cfa@linux.microsoft.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 8/25/2023 11:24 AM, Nuno Das Neves wrote:
+> On 8/19/2023 3:26 AM, Greg KH wrote:
+>>
+>> My "strong" opinion is the one kernel development rule that we have,
+>> "you can not break userspace".  So, if you change these
+>> values/structures/whatever in the future, and userspace tools break,
+>> that's not ok and the changes have to be reverted.
+>>
+>> If you can control both sides of the API here (with open tools that you
+>> can guarantee everyone will always update to), then yes, you can change
+>> the api in the future.
+>>
+> 
+> This is true for us - we contribute and maintain support for this driver
+> in Cloud Hypervisor[1], an open source VMM.
+> 
 
---R1zu76Uiutz83xFt
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi Greg,
 
-On Tue, Oct 10, 2023 at 12:52:47PM -0700, Nathan Chancellor wrote:
-> On Tue, Oct 10, 2023 at 10:03:15AM -0700, Nick Desaulniers wrote:
-> > On Tue, Oct 3, 2023 at 12:17=E2=80=AFPM Nathan Chancellor <nathan@kerne=
-l.org> wrote:
-> > >
-> > > From: Wende Tan <twd2.me@gmail.com>
-> > >
-> > > Allow LTO to be selected for RISC-V, only when LLD >=3D 14, since the=
-re is an
-> > > issue [1] in prior LLD versions that prevents LLD to generate proper
-> > > machine code for RISC-V when writing `nop`s.
-> > >
-> > > I have tested enabling LTO for `defconfig`. The LLD took ~2m21s and ~=
-3GiB
-> > > on our Intel Xeon Gold 6140 server and produced an 18MiB Image. The i=
-mage
-> > > can boot to shell using an archriscv rootfs on QEMU.
-> > >
-> > > I have also tested it for `allyesconfig` without COMPILE_TEST, FTRACE,
-> > > KASAN, and GCOV. The LLD took ~7h03m and ~335GiB on the server,
-> > > successfully producing a 1.7GiB Image. Unfortunately, we cannot boot =
-this
-> > > image because the `create_kernel_page_table()` -> `alloc_pmd_early()`=
- ->
-> > > `BUG_ON()` logic limits the image to be < 1GiB. Maybe we can fix it i=
-n a
-> > > separate patch further.
-> > >
-> > > Disable LTO for arch/riscv/kernel/pi, as llvm-objcopy expects an ELF
-> > > object file when manipulating the files in that subfolder, rather than
-> > > LLVM bitcode.
-> > >
-> > > [1] https://github.com/llvm/llvm-project/issues/50505, resolved by LL=
-VM
-> > >     commit e63455d5e0e5 ("[MC] Use local MCSubtargetInfo in writeNops=
-")
-> > >
-> > > Tested-by: Wende Tan <twd2.me@gmail.com>
-> > > Signed-off-by: Wende Tan <twd2.me@gmail.com>
-> > > Co-developed-by: Nathan Chancellor <nathan@kernel.org>
-> > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> >=20
-> > Perhaps worth a v4 due to linker relaxation resulting in boot failures
-> > you observed:
-> > https://github.com/ClangBuiltLinux/linux/issues/1942 ?
->=20
-> Yes, agreed. RISC-V patchwork folks, consider marking this as "Changes
-> Requested" or whatever other status there is that indicates that I need
-> to send a v4 working around that issue, at least until we better
-> understand the issue.
+Bringing up this discussion again so we can clear up any confusion on the
+uapi headers in this patch set.
 
-Done.
+The headers consist of the ioctls in mshv.h, and the hypervisor ABIs in
+the *hdk.h files. The ioctls depend on the hypervisor ABIs.
 
---R1zu76Uiutz83xFt
-Content-Type: application/pgp-signature; name="signature.asc"
+We will add (to the next version), an ioctl like KVM_GET_API_VERSION [1].
+This will return a version number for the ioctl interface that increments
+any time there is a breaking change. Userspace would be required to check
+this before calling any other ioctl, and it can exit gracefully if there
+is a mismatch.
 
------BEGIN PGP SIGNATURE-----
+That's how KVM evolved its userspace ABI. We want to use the same approach.
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZSW77gAKCRB4tDGHoIJi
-0sxoAQDKAL6kBoEjgZZtq5CheMsG86H6TjIzBjzK4JtxTI1LqAEAmG8ct09mDd3B
-hLJi7x7mXPeC4/yBKNHTDjodzgrLDgY=
-=C53g
------END PGP SIGNATURE-----
+I also wanted to reiterate that we are the only maintainers and users of
+the userspace code for this driver via Cloud Hypervisor [2]. We generate
+rust bindings from these headers using bindgen [3].
 
---R1zu76Uiutz83xFt--
+Taking this into account, is the above a viable path for this patch set?
+
+Thanks,
+Nuno
+
+[1] https://docs.kernel.org/virt/kvm/api.html#kvm-get-api-version
+[2] https://github.com/cloud-hypervisor/cloud-hypervisor
+[3] https://github.com/rust-lang/rust-bindgen
+
