@@ -1,77 +1,111 @@
-Received: from out28-85.mail.aliyun.com (out28-85.mail.aliyun.com [115.124.28.85])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2E9D515
-	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 11:42:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=e16-tech.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693F018C2F
+	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 12:05:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-X-Alimail-AntiSpam:AC=CONTINUE;BC=0.1214311|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_enroll_verification|0.0259023-0.00112094-0.972977;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047194;MF=wangyugui@e16-tech.com;NM=1;PH=DS;RN=18;RT=18;SR=0;TI=SMTPD_---.UxYfX54_1696938141;
-Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.UxYfX54_1696938141)
-          by smtp.aliyun-inc.com;
-          Tue, 10 Oct 2023 19:42:22 +0800
-Date: Tue, 10 Oct 2023 19:42:22 +0800
-From: Wang Yugui <wangyugui@e16-tech.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 6.1 000/162] 6.1.57-rc1 review
-Cc: wqu@suse.com,
- stable@vger.kernel.org,
- patches@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org,
- akpm@linux-foundation.org,
- linux@roeck-us.net,
- shuah@kernel.org,
- patches@kernelci.org,
- lkft-triage@lists.linaro.org,
- pavel@denx.de,
- jonathanh@nvidia.com,
- f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net,
- rwarsow@gmx.de,
- conor@kernel.org
-In-Reply-To: <2023101008-argue-impart-a6ad@gregkh>
-References: <20231010161046.7861.409509F4@e16-tech.com> <2023101008-argue-impart-a6ad@gregkh>
-Message-Id: <20231010194221.C1C3.409509F4@e16-tech.com>
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 152EE1C006D; Tue, 10 Oct 2023 14:05:45 +0200 (CEST)
+Date: Tue, 10 Oct 2023 14:05:44 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Pavel Machek <pavel@denx.de>
+Cc: wsa+renesas@sang-engineering.com, niklas.soderlund+renesas@ragnatech.se,
+	yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be,
+	biju.das.jz@bp.renesas.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Chris.Paterson2@renesas.com, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: renesas_sdhi problems in 5.10-stable was Re: [PATCH 5.10
+ 000/226] 5.10.198-rc1 review
+Message-ID: <ZSU+GHl1q7T/TBp5@duo.ucw.cz>
+References: <20231009130126.697995596@linuxfoundation.org>
+ <ZSRVgj5AqJbDXqZU@duo.ucw.cz>
+ <ZSRe78MAQwbBdyFP@duo.ucw.cz>
+ <ZSUy+zA0+Chm6dFb@duo.ucw.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Becky! ver. 2.81.04 [en]
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="kmt4faAXz7TCbez6"
+Content-Disposition: inline
+In-Reply-To: <ZSUy+zA0+Chm6dFb@duo.ucw.cz>
 
-Hi,
 
-> On Tue, Oct 10, 2023 at 04:10:48PM +0800, Wang Yugui wrote:
-> > Hi,
-> > 
-> > > This is the start of the stable review cycle for the 6.1.57 release.
-> > > There are 162 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > > 
-> > > Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
-> > > Anything received after that time might be too late.
-> > 
-> > 
-> > drop this patch from 6.5/6.1/5.15/... please, 
-> >   Qu Wenruo <wqu@suse.com>
-> >      btrfs: reject unknown mount options early
-> > 
-> > becuase of this report.
-> > https://lore.kernel.org/linux-btrfs/f3ac7b74-c011-4d1f-a510-677679fc9743@gmx.com/T/#t
-> 
-> Is there a revert somewhere for this already?
+--kmt4faAXz7TCbez6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yet not.
+Hi!
+> > > > This is the start of the stable review cycle for the 5.10.198 relea=
+se.
+> > > > There are 226 patches in this series, all will be posted as a respo=
+nse
+> > > > to this one.  If anyone has any issues with these being applied, pl=
+ease
+> > > > let me know.
+> > > >=20
+> > > > Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
+> > > > Anything received after that time might be too late.
+> > >=20
+> > > 4.14, 4.19 and 6.1 tests ok, 5.10 seems to have problems:
+> >=20
+> > Guessing from stack traces, these may be relevant:
+>=20
+> So bisection reveals these are relevant:
+>=20
+>   |e10d3d256 b161d8 o: 5.10| mmc: renesas_sdhi: probe into TMIO after   S=
+CC parameters have been setup
+>=20
+> Ok
+>=20
+>  |493b70c48 d14ac6 o: 5.10| mmc: renesas_sdhi: populate SCC pointer at  t=
+he proper place
+>=20
+> Testing now: https://gitlab.com/cip-project/cip-kernel/linux-cip/-/pipeli=
+nes/1031822035
 
-but we can suspend to apply this patch(drop this patch) for stable.
+And testing failed. So
 
-Best Regards
-Wang Yugui (wangyugui@e16-tech.com)
-2023/10/10
+commit f5799b4e142884c2e7aa99f813113af4a3395ffb
+Author: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Date:   Tue Nov 10 15:20:57 2020 +0100
 
+    mmc: renesas_sdhi: populate SCC pointer at the proper place
+   =20
+    [ Upstream commit d14ac691bb6f6ebaa7eeec21ca04dd47300ff5b6 ]
+
+seems to be the buggy commit that breaks renesas boards in 5.10.
+
+>  |c508545f4 0d856c o: 5.10| mmc: tmio: support custom irq masks
+
+Testing too: https://gitlab.com/cip-project/cip-kernel/linux-cip/-/pipeline=
+s/1031834627
+
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--kmt4faAXz7TCbez6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZSU+GAAKCRAw5/Bqldv6
+8haIAJkBZWNo+fR9/jsfeG3zeswyYC7fOQCgogoTt5zPNc6+2mGK+jsCbp1Rf9w=
+=FWgd
+-----END PGP SIGNATURE-----
+
+--kmt4faAXz7TCbez6--
