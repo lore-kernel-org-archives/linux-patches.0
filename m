@@ -1,84 +1,107 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24E532192;
-	Tue, 10 Oct 2023 19:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277B4225D0;
+	Tue, 10 Oct 2023 20:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HQ9gb11R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F7EC433C8;
-	Tue, 10 Oct 2023 19:52:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u3BP37hg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A8AC433C7;
+	Tue, 10 Oct 2023 20:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1696967569;
-	bh=u6XkChwgLKXRpmaMTPiMR4qyFXezaXl3BACHiWQ3Xfo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HQ9gb11RxEYh8c8r4b+PxPv5ICATgjDdOAsQ9qOGP77ezjd0PX8ETklOYqrrpycRB
-	 lDok5EdQOFnpCdImOAqX6DzcGJFBNvgJBfku3c+Mqcd3JiWesL6NxNlUEfjhzVZ21s
-	 2m8c2fbdzpYVvRYOyRYuMpqGzXPOvBtsJ8LaOtz5uzYNigPIIczQ9A6IrovSnbLzZO
-	 7u6FzBKQx2a0VsGGQ0BrOkuhXuUTt0bA1O0sIVYaEQyVskXZTMvd0R6HYWnQL/Pz9s
-	 YZ/eQL96wTPljzXW76kv4bk5eb4/Jix2EXkl4KS5Oo5vWEBhir+9lJLR6fu147R40e
-	 dRZYK+xUVJ8Ow==
-Date: Tue, 10 Oct 2023 12:52:47 -0700
+	s=k20201202; t=1696969971;
+	bh=hq+lAC9aHGR9lwOmWbeBkHbds2JgCNJWhr+zVJ8l2Uw=;
+	h=From:Date:Subject:To:Cc:From;
+	b=u3BP37hgP/SnJDK5AnP14YulTGVK8usLMuN/mWe5jiJWNpA84BZVXG177VX/ArJD9
+	 BlC7MdeLI5Jm555PinRzZpItd3/M6XZ9LzNYOmoqGGV/Yh9DYX/V8nC+pzdn54u3pK
+	 25KGz7az//HjOr+An9sl5w/wBiKkz6y1E8EAjYcsUVg9cYE0musDBr5/dBPIlICfTQ
+	 b5M+TTOSgHy55npJT6IjtS+HGfBIS7GH0Wr1Y4hkDICi5/Fkt2idTMdQJj0YN8FCa3
+	 38aYYa8IDRbi0wnQTt4ezKCLaf4IlfZgqhu0oFbZ3rf0KBVwqzYTYmV+BnVvzUZH79
+	 57QBRha6dRr4g==
 From: Nathan Chancellor <nathan@kernel.org>
-To: Nick Desaulniers <ndesaulniers@google.com>
-Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	conor@kernel.org, trix@redhat.com, samitolvanen@google.com,
-	twd2.me@gmail.com, linux-riscv@lists.infradead.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH v3] RISC-V: build: Allow LTO to be selected
-Message-ID: <20231010195247.GA2233717@dev-arch.thelio-3990X>
-References: <20231003-riscv-lto-v3-1-8aca61a4ecb4@kernel.org>
- <CAKwvOdnMeM4YArw=hyVkev11cLfks5gaXWXNK+Wo0bcbeuMZHg@mail.gmail.com>
+Date: Tue, 10 Oct 2023 13:32:37 -0700
+Subject: [PATCH] scsi: ibmvfc: Use 'unsigned int' for single-bit bitfields
+ in 'struct ibmvfc_host'
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKwvOdnMeM4YArw=hyVkev11cLfks5gaXWXNK+Wo0bcbeuMZHg@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231010-ibmvfc-fix-bitfields-type-v1-1-37e95b5a60e5@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAOS0JWUC/x2MWwqAIBAArxL73YJWJHWV6ENtrYVeaEQh3j3pc
+ 2BmIgTyTAH6IoKnmwMfewZZFmAXvc+EPGWGSlS1FFIgm+12Fh0/aPhyTOsU8HpPwk5JLZRtG7I
+ t5P70lK3/PYwpfWHBbSRrAAAA
+To: tyreld@linux.ibm.com, martin.petersen@oracle.com
+Cc: jejb@linux.ibm.com, ndesaulniers@google.com, trix@redhat.com, 
+ brking@linux.vnet.ibm.com, linux-scsi@vger.kernel.org, 
+ linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2012; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=hq+lAC9aHGR9lwOmWbeBkHbds2JgCNJWhr+zVJ8l2Uw=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKmqWz6ZpPaX7+8KSv70iDvklOHB9wmO1lGmTe87p4THr
+ N+/aeK7jlIWBjEOBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRiwsYGc5crNG58fq0+xPF
+ AyynVrAvEnRYtCg6S0Hn1sdS4aqJ//4xMvzrFDP/b2ankzzhhaK0VY9cwtU7Cw3MY1aF6PJX7Oq
+ u4QAA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Tue, Oct 10, 2023 at 10:03:15AM -0700, Nick Desaulniers wrote:
-> On Tue, Oct 3, 2023 at 12:17 PM Nathan Chancellor <nathan@kernel.org> wrote:
-> >
-> > From: Wende Tan <twd2.me@gmail.com>
-> >
-> > Allow LTO to be selected for RISC-V, only when LLD >= 14, since there is an
-> > issue [1] in prior LLD versions that prevents LLD to generate proper
-> > machine code for RISC-V when writing `nop`s.
-> >
-> > I have tested enabling LTO for `defconfig`. The LLD took ~2m21s and ~3GiB
-> > on our Intel Xeon Gold 6140 server and produced an 18MiB Image. The image
-> > can boot to shell using an archriscv rootfs on QEMU.
-> >
-> > I have also tested it for `allyesconfig` without COMPILE_TEST, FTRACE,
-> > KASAN, and GCOV. The LLD took ~7h03m and ~335GiB on the server,
-> > successfully producing a 1.7GiB Image. Unfortunately, we cannot boot this
-> > image because the `create_kernel_page_table()` -> `alloc_pmd_early()` ->
-> > `BUG_ON()` logic limits the image to be < 1GiB. Maybe we can fix it in a
-> > separate patch further.
-> >
-> > Disable LTO for arch/riscv/kernel/pi, as llvm-objcopy expects an ELF
-> > object file when manipulating the files in that subfolder, rather than
-> > LLVM bitcode.
-> >
-> > [1] https://github.com/llvm/llvm-project/issues/50505, resolved by LLVM
-> >     commit e63455d5e0e5 ("[MC] Use local MCSubtargetInfo in writeNops")
-> >
-> > Tested-by: Wende Tan <twd2.me@gmail.com>
-> > Signed-off-by: Wende Tan <twd2.me@gmail.com>
-> > Co-developed-by: Nathan Chancellor <nathan@kernel.org>
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> 
-> Perhaps worth a v4 due to linker relaxation resulting in boot failures
-> you observed:
-> https://github.com/ClangBuiltLinux/linux/issues/1942 ?
+Clang warns (or errors with CONFIG_WERROR=y) several times along the
+lines of:
 
-Yes, agreed. RISC-V patchwork folks, consider marking this as "Changes
-Requested" or whatever other status there is that indicates that I need
-to send a v4 working around that issue, at least until we better
-understand the issue.
+  drivers/scsi/ibmvscsi/ibmvfc.c:650:17: warning: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Wsingle-bit-bitfield-constant-conversion]
+    650 |                 vhost->reinit = 1;
+        |                               ^ ~
 
-Cheers,
-Natha
+A single-bit signed integer bitfield only has possible values of -1 and
+0, not 0 and 1 like an unsigned one would. No context appears to check
+the actual value of these bitfields, just whether or not it is zero.
+However, it is easy enough to change the type of the fields to 'unsigned
+int', which keeps the same size in memory and resolves the warning.
+
+Fixes: 5144905884e2 ("scsi: ibmvfc: Use a bitfield for boolean flags")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/scsi/ibmvscsi/ibmvfc.h | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/scsi/ibmvscsi/ibmvfc.h b/drivers/scsi/ibmvscsi/ibmvfc.h
+index 331ecf8254be..745ad5ac7251 100644
+--- a/drivers/scsi/ibmvscsi/ibmvfc.h
++++ b/drivers/scsi/ibmvscsi/ibmvfc.h
+@@ -892,15 +892,15 @@ struct ibmvfc_host {
+ 	int init_retries;
+ 	int discovery_threads;
+ 	int abort_threads;
+-	int client_migrated:1;
+-	int reinit:1;
+-	int delay_init:1;
+-	int logged_in:1;
+-	int mq_enabled:1;
+-	int using_channels:1;
+-	int do_enquiry:1;
+-	int aborting_passthru:1;
+-	int scan_complete:1;
++	unsigned int client_migrated:1;
++	unsigned int reinit:1;
++	unsigned int delay_init:1;
++	unsigned int logged_in:1;
++	unsigned int mq_enabled:1;
++	unsigned int using_channels:1;
++	unsigned int do_enquiry:1;
++	unsigned int aborting_passthru:1;
++	unsigned int scan_complete:1;
+ 	int scan_timeout;
+ 	int events_to_log;
+ #define IBMVFC_AE_LINKUP	0x0001
+
+---
+base-commit: b6f2e063017b92491976a40c32a0e4b3c13e7d2f
+change-id: 20231010-ibmvfc-fix-bitfields-type-971a07c64ec6
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
