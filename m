@@ -1,123 +1,122 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.zeus03.de (www.zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404BB28F0;
-	Tue, 10 Oct 2023 18:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB098BFA
+	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 19:13:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecU4MnY9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC1FC433C7;
-	Tue, 10 Oct 2023 18:59:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1696964388;
-	bh=QjP+9QKzrymfN2C8lY1Hip1CW9eHoE7JMBdIbHB9Czk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ecU4MnY9/zXzPaOCdkPNhnTUuXhWI95KlqSPWzzLZmRpvFprf7Ugvz4/J9Arb1C3O
-	 Wh9q2HmUyWdFPy/Qm7NX1EVtWTNTSHV2ExW0G94RU7cBoXEwsFHa2gvWw8rjWN5MAr
-	 3X5DJHZo3tTaultpVLa2Gmy4WVDYcpQg4ZK0vQQM=
-Date: Tue, 10 Oct 2023 20:59:45 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Eric Dumazet <edumazet@google.com>
-Cc: Matthieu Baerts <matttbe@kernel.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="jW7vp6N1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=NAJQ
+	zgOcdNSX9MZb65UvbzZn3vNRAYofV4MzKCAyclE=; b=jW7vp6N1Pog84OHIKWZA
+	5cSmL4ps2IoEIg51B7E3o+OvQpa6smNR/oE5aErVoTN2CQiSKNiCrD97J1dhag8X
+	4CJWAUCVI4xjPXNjF1HTSXbcgzlNazSXUAug97ZIouyUJ+ayH3p8FTEAK+MCg8fV
+	YIUEJ6Y2c6iz0YnLzu7a0C6BD97P32ly8Ya+NpIPWwxF7HpsNyDGMoiBzl+7l2P5
+	lQGt68/EO+smGAVr3KgpRj3KOGnhFNPGskeHzwUqmvvTdrVV/4whamvk+SZEVNJQ
+	aFUNp6utkTsYH2kRCMC97dJt83BEods71A7iT72AcoMaO6xrNIA+NTTGcMIDXPM3
+	3g==
+Received: (qmail 3055336 invoked from network); 10 Oct 2023 21:07:01 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 10 Oct 2023 21:07:01 +0200
+X-UD-Smtp-Session: l3s3148p1@xaddaWEH2OIgAQnoAGlXAD2vdu1iMtuG
+Date: Tue, 10 Oct 2023 21:07:01 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: Pavel Machek <pavel@denx.de>
+Cc: niklas.soderlund+renesas@ragnatech.se, yoshihiro.shimoda.uh@renesas.com,
+	geert+renesas@glider.be, biju.das.jz@bp.renesas.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Chris.Paterson2@renesas.com, stable@vger.kernel.org,
 	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	torvalds@linux-foundation.org, akpm@linux-foundation.org,
 	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	"David S. Miller" <davem@davemloft.net>,
-	David Ahern <dsahern@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>, Netdev <netdev@vger.kernel.org>,
-	bpf <bpf@vger.kernel.org>, MPTCP Upstream <mptcp@lists.linux.dev>
-Subject: Re: [PATCH 6.1 000/162] 6.1.57-rc1 review
-Message-ID: <2023101036-relock-slogan-3b3c@gregkh>
-References: <20231009130122.946357448@linuxfoundation.org>
- <CA+G9fYvWCf4fYuQsVLu0NdN+=W73bW1hr1hiokajktNzPFyYtA@mail.gmail.com>
- <6447b32f-abb9-4459-aca5-3d510a66b685@kernel.org>
- <CANn89iJ_KMA=dQWPhU8WQBc0_CvUztUBodAf-cW-2F=HMX3HJg@mail.gmail.com>
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: renesas_sdhi problems in 5.10-stable was Re: [PATCH 5.10
+ 000/226] 5.10.198-rc1 review
+Message-ID: <ZSWg1fv3gOyV5t+h@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Pavel Machek <pavel@denx.de>, niklas.soderlund+renesas@ragnatech.se,
+	yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be,
+	biju.das.jz@bp.renesas.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Chris.Paterson2@renesas.com, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+References: <20231009130126.697995596@linuxfoundation.org>
+ <ZSRVgj5AqJbDXqZU@duo.ucw.cz>
+ <ZSRe78MAQwbBdyFP@duo.ucw.cz>
+ <ZSUy+zA0+Chm6dFb@duo.ucw.cz>
+ <ZSU+GHl1q7T/TBp5@duo.ucw.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/kp/j1jVUyZUkyH2"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANn89iJ_KMA=dQWPhU8WQBc0_CvUztUBodAf-cW-2F=HMX3HJg@mail.gmail.com>
+In-Reply-To: <ZSU+GHl1q7T/TBp5@duo.ucw.cz>
 
-On Tue, Oct 10, 2023 at 07:24:08PM +0200, Eric Dumazet wrote:
-> On Tue, Oct 10, 2023 at 6:51 PM Matthieu Baerts <matttbe@kernel.org> wrote:
-> >
-> > Hi Naresh,
-> >
-> > On 09/10/2023 22:43, Naresh Kamboju wrote:
-> > > On Mon, 9 Oct 2023 at 18:46, Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-> > >>
-> > >> This is the start of the stable review cycle for the 6.1.57 release.
-> > >> There are 162 patches in this series, all will be posted as a response
-> > >> to this one.  If anyone has any issues with these being applied, please
-> > >> let me know.
-> > >>
-> > >> Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
-> > >> Anything received after that time might be too late.
-> > >>
-> > >> The whole patch series can be found in one patch at:
-> > >>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.57-rc1.gz
-> > >> or in the git tree and branch at:
-> > >>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > >> and the diffstat can be found below.
-> > >>
-> > >> thanks,
-> > >>
-> > >> greg k-h
-> > >
-> > >
-> > > The following kernel warnings were noticed several times on arm x15 devices
-> > > running stable-rc 6.1.57-rc1 while running  selftests: net: mptcp_connect.sh
-> > > and netfilter: nft_fib.sh.
-> > >
-> > > The possible unsafe locking scenario detected.
-> > >
-> > > FYI,
-> > > Stable-rc/ linux.6.1.y kernel running stable/ linux.6.5.y selftest in this case.
-> > >
-> > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > >
-> > > kselftest: Running tests in net/mptcp
-> >
-> > Thank you for having reported the issue and having added MPTCP ML in Cc!
-> >
-> > Just to avoid confusions: the "WARNING" you shared when running
-> > 'mptcp_connect.sh' selftest appeared before creating the first MPTCP
-> > connection. It looks like there is no reference to MPTCP in the
-> > calltraces. Also, because you have the same issue with nft_fib.sh, I
-> > would say that this issue is not linked to MPTCP but rather to a recent
-> > modification in the IPv6 stack.
-> >
-> > By chance, did you start a "git bisect" to identify the commit causing
-> > this issue?
-> >
-> >
-> 
-> I think stable teams missed to backport
-> 
-> commit c486640aa710ddd06c13a7f7162126e1552e8842
-> Author: Eric Dumazet <edumazet@google.com>
-> Date:   Mon Mar 13 20:17:32 2023 +0000
-> 
->     ipv6: remove one read_lock()/read_unlock() pair in rt6_check_neigh()
-> 
->     rt6_check_neigh() uses read_lock() to protect n->nud_state reading.
-> 
->     This seems overkill and causes false sharing.
-> 
->     Signed-off-by: Eric Dumazet <edumazet@google.com>
->     Reviewed-by: David Ahern <dsahern@kernel.org>
->     Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
->     Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 
-Ah, didn't know we needed that, now queued up, thanks!
+--/kp/j1jVUyZUkyH2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-greg k-h
+Hi Pavel,
+
+> And testing failed. So
+>=20
+> commit f5799b4e142884c2e7aa99f813113af4a3395ffb
+> Author: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> Date:   Tue Nov 10 15:20:57 2020 +0100
+>=20
+>     mmc: renesas_sdhi: populate SCC pointer at the proper place
+>    =20
+>     [ Upstream commit d14ac691bb6f6ebaa7eeec21ca04dd47300ff5b6 ]
+>=20
+> seems to be the buggy commit that breaks renesas boards in 5.10.
+
+This patch was part of a series. Did the other two patches come with it?
+
+b161d87dfd3d ("mmc: renesas_sdhi: probe into TMIO after SCC parameters have=
+ been setup")
+45bffc371fef ("mmc: renesas_sdhi: only reset SCC when its pointer is popula=
+ted")
+
+If not, I could imagine that could lead to a crash. No idea why only
+with 5.10, though.
+
+Happy hacking,
+
+   Wolfram
+
+
+--/kp/j1jVUyZUkyH2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmUloNUACgkQFA3kzBSg
+KbalEw//W488KspqGDxtiGmkNKHxaz67vVIJ9W3yTETogIW67VdO7JV7yonILHvi
+7RzXc4MPO4FeinxKmr+bhXwB5ePbdB+hwJ2SJCGPo40MFshhc8GgdZdBFw8J19Dp
+cMhOGnbzBXw2RkleGDL92uryMT09zGM3QyVuIBlYppIxGxIiETSvsDEfpyD+88eg
+Zof37R7hYkiN+/4cvsOxxuD2lHhhrG9hcwshTpl7YyVtUP0zRXAWoWw+8pJvkeC5
+FlNXOWJUBwAm18ckIw5BxkBqx5rb1rvwfIsXOnrZEB7ZanZjC3hpRqD8hyRVaHFD
+ciW6KOgzWWDcCLQft9PWMos/iYgB8cFzBjZ0LdQArpyVULMZQRDn+s8PoUVynLLn
+EAZyJ6RRZCmEs6r/qGls6fdARBLfJkegfj9okxBsTgVrdckm2MkDCcryx2LUITva
+LwtPFgeyRXv3Hw8Pqr+/piIENBnqfW4QtfrL5lq1IdeTDN/Lzacd4FoUirYd5GjS
+FvCM+lgIFFzC1r3HgaNbHnT+th8pXklIClpYUFVUVIVMHZ5PYtNQymakvqcO3TV1
+sO3cgwjwtE9ztfNrKO28VItnbF8uPYQevrRGKZfPUsKzohcFiYTZV9Mf/LHq72Jk
+Dlf/yJFx3HBucsY4KZdLCTP6BWfteFAD/AKVx37V3sMZp8ECtnE=
+=lHJO
+-----END PGP SIGNATURE-----
+
+--/kp/j1jVUyZUkyH2--
