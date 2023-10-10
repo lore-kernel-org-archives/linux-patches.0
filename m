@@ -1,140 +1,101 @@
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2041.outbound.protection.outlook.com [40.107.236.41])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7ACCA65
-	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 09:59:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Qj5w0Myx"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BQd8WAJJbkqdyUR0e8Unrmn0DajMoGixGflk02YMsvhecHCeTyv11c6AbbTN6PMlhGWgjKo9iy507ZvMFzDKaBZfmpSmCaHaqzfXXuLJ47S36sFhEzKc4TS23VN3zgwCAaXqtzpfIkBMgdVGOJ5C+yOyG1j/3OlNiTATfZVTdNCifysCq2fiQdT5xLrgRlrYsVxhfGOt2uP19mGrnL+yn4Cz/JsbSXrhsEBI9yFlelYTzjsAVS9p/X9r6R6PNJeqc0Ceh0Wbh3Ow6mCAUSdCX4VjBFcwCaTlpYM5GYnhQqNvp2mkv2p9ZZNecfgC/6RxiqN4YwgqWUz7aT3oWJFckg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CByRsV9svRbDn0jxscZtlTcaXJOKxLVcVx4CaOXCRSU=;
- b=b89rbtlCoDxu3ndKEhIu5bjbdHHEMRBIuFItGVtk/oZhbyKBYFZvd6ok2b7uduBxjzWKzW9MHuWJkBELgE5f3TWZ8K4f+wexTNMh1IL2omA696esFI/oXYGM9fuKAoWLLKsJyfBSya+eCpaxc+jFdHjMkBXp2Sgn4EQf6S3RVBP7yXz4w1XQlsi7FrMoXK/sUASZB7kKw+el+72cjuRJa2nAxSZmuD1eSTv2GJ2aATadSoWY7lLC8fERH24tIHCnQQ6JHuHv2otK+DrN+rbOus4HOm4gEQUuTwtXiJm1NexWgx0mtoyFccc02iz78yrVSbqj4+D5rVmhO9bwqFg4vQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CByRsV9svRbDn0jxscZtlTcaXJOKxLVcVx4CaOXCRSU=;
- b=Qj5w0MyxCJtzTM2YNKekGHeEMyewyGeudUw9Cc5OInFyCXjbnEyOedIMEkXFDCQxpNRiYxMs8RSWpA5u0ui5xlZALy9OX7rcjLJ7s7Pk+fUebRtr1AU5TM84N6HPj961BY6H7rk1wWDFwhjNMAIE10lDsdsYbePdtYcFwIXSOCUpeC+bYB6DkdxMYmRC1AdjkQiEjSqzmMdbbKSJ7MpRdjZjqXCCEijoVTTuVoYiQ+7BbNHnY6Uvqe7p99SqEckji2VZ1lZwGTzCAgAjk35050ZRIO8kr55h8dya5lDEzcPdC9cRNwTjI7CqVb4L5W/wNZiTtn43jd0LaUHMdLqZhw==
-Received: from SN7PR04CA0074.namprd04.prod.outlook.com (2603:10b6:806:121::19)
- by PH0PR12MB7886.namprd12.prod.outlook.com (2603:10b6:510:26e::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6863.37; Tue, 10 Oct
- 2023 09:59:45 +0000
-Received: from SA2PEPF00001509.namprd04.prod.outlook.com
- (2603:10b6:806:121:cafe::d2) by SN7PR04CA0074.outlook.office365.com
- (2603:10b6:806:121::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6863.38 via Frontend
- Transport; Tue, 10 Oct 2023 09:59:45 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- SA2PEPF00001509.mail.protection.outlook.com (10.167.242.41) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6838.14 via Frontend Transport; Tue, 10 Oct 2023 09:59:45 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 10 Oct
- 2023 02:59:35 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 10 Oct
- 2023 02:59:35 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
- Transport; Tue, 10 Oct 2023 02:59:35 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
-	<stable@vger.kernel.org>
-Subject: Re: [PATCH 6.1 000/162] 6.1.57-rc1 review
-In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
-References: <20231009130122.946357448@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0F118AED
+	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 11:18:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 910C61C006D; Tue, 10 Oct 2023 13:18:19 +0200 (CEST)
+Date: Tue, 10 Oct 2023 13:18:19 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Pavel Machek <pavel@denx.de>
+Cc: wsa+renesas@sang-engineering.com, niklas.soderlund+renesas@ragnatech.se,
+	yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be,
+	biju.das.jz@bp.renesas.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Chris.Paterson2@renesas.com, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: renesas_sdhi problems in 5.10-stable was Re: [PATCH 5.10
+ 000/226] 5.10.198-rc1 review
+Message-ID: <ZSUy+zA0+Chm6dFb@duo.ucw.cz>
+References: <20231009130126.697995596@linuxfoundation.org>
+ <ZSRVgj5AqJbDXqZU@duo.ucw.cz>
+ <ZSRe78MAQwbBdyFP@duo.ucw.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <a1d4b53b-d68a-44dd-9de5-27bbcb909f3d@rnnvmail201.nvidia.com>
-Date: Tue, 10 Oct 2023 02:59:35 -0700
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF00001509:EE_|PH0PR12MB7886:EE_
-X-MS-Office365-Filtering-Correlation-Id: 66090c0e-e09b-4353-3ce1-08dbc977a1cf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	MBeXa/IN0FPIFUJymtzqqqkA6R3EKmCGO9ewrNqTbpa4S9LnxveMoHYFGjJKvAJr4rvqp/w6G+maEKji8ALVdcO2g2YdgPmF94GCfxlN40jK8iLjn0v4oAW6F5lC1RVl+vGs8VZzGVzTbq8rd5mbUPe0J3drbzoGwmRxOWRt/ky2cbTJl/gPh/SvWgPQQ0RuO7Zl+vL+QsurwVP4DzpFaXOra6iKw4eKCVC56Csl/PKIpvx+n6sMM8Hz7Vlvp++A6eEXWyXpZQkmmLGEf8mIRHyMTylL7EoAxgZzgHG0bmnqqwCc8aVZmlxVeJuFaXEQaKKS+M/L/wtPDYd7RmyHHV+NBcpHmlITgrF+f5a59x8aatKizqKwA2ypW6joo9qmE6MYsvzXPkAF2WQGblf0wBWCGnVDpGZa4XNuR/TTbzpdxOeGODBKRfaqawSFXeIzihxHLri4lbGG9EQnRdYISfFeQjoFHlkHVnmQxzlZvaiYi0gWbmY89Xt0e71ERpo0D0lI6h8mkrD8Chtl03zWa/fiRH4tIQoern2Pm8uzZ/Zh1G/l6ALrgYlj+T4YPN+RSBCV0mprAJ1PRTD0l4bx9uBiUUZJxbplOxF/oWnxFhC78B6wHUx2Dzh6BqM0ajGcfNhYuc71gsOMyzS3XhPEZxS9sp7Yl2mnPE4FyWAx/AyAWpJ7rbjHJaVrE/GGJhA39oZPfEK4egTL8wlkC+U46YVRldOHqg9pIU0NURZT141tFASfCzr8b9IN7SRKLB5TeyezKESYHHPbo6Xab7aYIujhHHnfFYAOWWxa4X+TvAU=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(396003)(346002)(136003)(39860400002)(376002)(230922051799003)(186009)(64100799003)(1800799009)(451199024)(82310400011)(36840700001)(40470700004)(46966006)(31686004)(82740400003)(31696002)(40460700003)(7636003)(86362001)(40480700001)(36860700001)(356005)(336012)(7416002)(2906002)(966005)(47076005)(426003)(41300700001)(316002)(478600001)(8676002)(8936002)(70206006)(26005)(4326008)(5660300002)(70586007)(6916009)(54906003);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Oct 2023 09:59:45.4655
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66090c0e-e09b-4353-3ce1-08dbc977a1cf
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SA2PEPF00001509.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7886
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="A9Lr04onjTJhAtpN"
+Content-Disposition: inline
+In-Reply-To: <ZSRe78MAQwbBdyFP@duo.ucw.cz>
 
-On Mon, 09 Oct 2023 14:59:41 +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.57 release.
-> There are 162 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.57-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-All tests passing for Tegra ...
+--A9Lr04onjTJhAtpN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Test results for stable-v6.1:
-    10 builds:	10 pass, 0 fail
-    26 boots:	26 pass, 0 fail
-    116 tests:	116 pass, 0 fail
+Hi!
 
-Linux version:	6.1.57-rc1-g32856ae49e9f
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+> > > This is the start of the stable review cycle for the 5.10.198 release.
+> > > There are 226 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, plea=
+se
+> > > let me know.
+> > >=20
+> > > Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
+> > > Anything received after that time might be too late.
+> >=20
+> > 4.14, 4.19 and 6.1 tests ok, 5.10 seems to have problems:
+>=20
+> Guessing from stack traces, these may be relevant:
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+So bisection reveals these are relevant:
 
-Jon
+  |e10d3d256 b161d8 o: 5.10| mmc: renesas_sdhi: probe into TMIO after   SCC=
+ parameters have been setup
+
+Ok
+
+ |493b70c48 d14ac6 o: 5.10| mmc: renesas_sdhi: populate SCC pointer at  the=
+ proper place
+
+Testing now: https://gitlab.com/cip-project/cip-kernel/linux-cip/-/pipeline=
+s/1031822035
+
+ |c508545f4 0d856c o: 5.10| mmc: tmio: support custom irq masks
+ |8df1f0639 74f45d o: 5.10| mmc: renesas_sdhi: register irqs before registe=
+ring controller
+
+Fail: https://gitlab.com/cip-project/cip-kernel/linux-cip/-/pipelines/10317=
+86077
+
+I should be able to point specific commit with two more tests.
+
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--A9Lr04onjTJhAtpN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZSUy+wAKCRAw5/Bqldv6
+8l+cAKC5myuJkrwEyf9tCv+eqSAzp44+BACgpL5hAh7OSoSbpIj6nYPrbvMxOZA=
+=ZKvd
+-----END PGP SIGNATURE-----
+
+--A9Lr04onjTJhAtpN--
