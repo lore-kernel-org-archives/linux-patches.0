@@ -1,84 +1,103 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA69154BB
-	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 13:06:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FF78BFA
+	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 13:21:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="T+jJg9Ym";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="cf6ZEpv1"
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id ADCC01F38A;
-	Tue, 10 Oct 2023 13:06:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1696943202;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3ziRaTCMQY9PPH36OpIu+2jE3RQyPlDAIyWRvT4Uv5Y=;
-	b=T+jJg9YmMLcywOz0Wvgu2xlIBemz6ssVvwf6vd7WowkbPqxbFKTlrY63kLbCwsyyZjS0sG
-	QqNAufdgF8erMk6LHF+vU8l71xmumhMftFq3BNC/go6+87vnd7BgHkIegigAxExdfhV4Ss
-	/nsZl9As3ko1Oa3oXhtIy8z4N448wDE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1696943202;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3ziRaTCMQY9PPH36OpIu+2jE3RQyPlDAIyWRvT4Uv5Y=;
-	b=cf6ZEpv19Q2EFY1TlIcF+KGTCe/UQ9WVSvRLA4iF4Pv2umB9gThYYTuS8yXXUPDqW6+fzl
-	KkYIxZ8XSWuCQGDA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 89CCA1348E;
-	Tue, 10 Oct 2023 13:06:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 1CbVIGJMJWVeXwAAMHmgww
-	(envelope-from <dsterba@suse.cz>); Tue, 10 Oct 2023 13:06:42 +0000
-Date: Tue, 10 Oct 2023 14:59:52 +0200
-From: David Sterba <dsterba@suse.cz>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Qu Wenruo <wqu@suse.com>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>
-Subject: Re: [PATCH 4.19 70/91] btrfs: reject unknown mount options early
-Message-ID: <20231010125952.GA2211@suse.cz>
-Reply-To: dsterba@suse.cz
-References: <20231009130111.518916887@linuxfoundation.org>
- <20231009130113.943075052@linuxfoundation.org>
- <c55ba96b-9058-42ac-817b-2d42b45ddf3a@suse.com>
- <2023101008-percolate-sterile-1391@gregkh>
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="jRtqKjd7"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-9ada2e6e75fso1028457166b.2
+        for <patches@lists.linux.dev>; Tue, 10 Oct 2023 06:21:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1696944117; x=1697548917; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aU3Xy//CzLR7h9ZqJQnq1g0juofjmbb1k71SCC4Re8g=;
+        b=jRtqKjd7rTNoUcGJuTW7NUscFsUSSapajYI2bQxsQJu6GoSH01dZrEoa5wd2Oo3a1d
+         9RoRRimxPnFw3Zhkgr0pNP80XfHBs5PWdjRcffdzP7mphZPnpDTlUtiIUb7CITv2BGVk
+         cxjHfbwz/fus7AnE7zH/IkQEfbBONAd7NcFKW6gGMuTMFb7KxsstVQig6GWjsHiIzdyt
+         mTO7kMCXmA77Pz/Zrn6AlncF2xd+/jjtAlImkO9EDSv3Liynt6naPQO3bDbdDGTAvf+e
+         dOuIuUEKNF8jklDumahaJ6N0p87+C4EOtPJJn97+5QaO0vA3N33IBacaYNVwezqLhC+L
+         9UxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696944117; x=1697548917;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aU3Xy//CzLR7h9ZqJQnq1g0juofjmbb1k71SCC4Re8g=;
+        b=l9fkDtZxZSamnAfGeTd+yzNxdhH+N6oXYLTd9vNDI4SEwT8E+qb4NSyOhe1XaiINZN
+         PTKMI2HyWa/ZCA2qSkMXGjmit4moayahS10Okh0hgeOHdpbjLmF520VPzys6mlNCZTIy
+         IsxprDVUqfVtJRNCf+iK0z2x62gBR1mkr+9f9vHL18iDsOcRPPt1jgQqbsgvdf75VApV
+         4Se4dpmtmqYYiQISo1WNET75R/orjG+2vQA+hQfKf5S2ccwPr8N+LNIhc0rlWX0yKoMr
+         GQkPUxzwQ/nbgBqJPFL513SKvXjzZNiJfgkzySy32kSO0d7iSEyUqNYTczyZP9R2gv1Y
+         CFYQ==
+X-Gm-Message-State: AOJu0YxuTUtOdYFquh8Up1k9b3WmQPcqf2icsQr54dyoOIJa3KZCDdxH
+	qNXuuo0DNh/SavrRT5v+BH0aKU6M8Oi0G4ssdNvIWQ==
+X-Google-Smtp-Source: AGHT+IEGxCodEgS+dG4Qmb/gPW4HE0qW8E/tpxQhRepvXhxikQlgiFrJMtbJ2Kx1NfOPrl6efMMFbwubxYJl8VIKgTE=
+X-Received: by 2002:a17:906:844a:b0:9ae:73ca:bbae with SMTP id
+ e10-20020a170906844a00b009ae73cabbaemr14081742ejy.62.1696944117138; Tue, 10
+ Oct 2023 06:21:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2023101008-percolate-sterile-1391@gregkh>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+References: <20231009130122.946357448@linuxfoundation.org>
+In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Tue, 10 Oct 2023 22:21:46 +0900
+Message-ID: <CAKL4bV5ZhhThGzTgo3keFKnnHBwfnhZ+7P6HMX2xAPjhZTFgug@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/162] 6.1.57-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 10, 2023 at 01:27:48PM +0200, Greg Kroah-Hartman wrote:
-> On Tue, Oct 10, 2023 at 07:23:15PM +1030, Qu Wenruo wrote:
-> > 
-> > 
-> > On 2023/10/9 23:36, Greg Kroah-Hartman wrote:
-> > > 4.19-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > Please reject the patch from all stable branches (if that's not yet too
-> > late).
-> > 
-> > The rejection is too strict, especially the check is before the security
-> > mount options, thus it would reject all security mount options.
-> 
-> This is queued up in all stable -rc releases right now, is there a fix
-> in Linus's tree for this as well or is it broken there too?
+Hi Greg
 
-Yes it's broken there too, I'll send a revert.
+On Mon, Oct 9, 2023 at 10:16=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.57 release.
+> There are 162 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.57-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+
+
+6.1.57-rc1 tested.
+
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
