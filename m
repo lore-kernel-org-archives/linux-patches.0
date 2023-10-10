@@ -1,111 +1,84 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693F018C2F
-	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 12:05:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 152EE1C006D; Tue, 10 Oct 2023 14:05:45 +0200 (CEST)
-Date: Tue, 10 Oct 2023 14:05:44 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Pavel Machek <pavel@denx.de>
-Cc: wsa+renesas@sang-engineering.com, niklas.soderlund+renesas@ragnatech.se,
-	yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be,
-	biju.das.jz@bp.renesas.com,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Chris.Paterson2@renesas.com, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: renesas_sdhi problems in 5.10-stable was Re: [PATCH 5.10
- 000/226] 5.10.198-rc1 review
-Message-ID: <ZSU+GHl1q7T/TBp5@duo.ucw.cz>
-References: <20231009130126.697995596@linuxfoundation.org>
- <ZSRVgj5AqJbDXqZU@duo.ucw.cz>
- <ZSRe78MAQwbBdyFP@duo.ucw.cz>
- <ZSUy+zA0+Chm6dFb@duo.ucw.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA69154BB
+	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 13:06:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="T+jJg9Ym";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="cf6ZEpv1"
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id ADCC01F38A;
+	Tue, 10 Oct 2023 13:06:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1696943202;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3ziRaTCMQY9PPH36OpIu+2jE3RQyPlDAIyWRvT4Uv5Y=;
+	b=T+jJg9YmMLcywOz0Wvgu2xlIBemz6ssVvwf6vd7WowkbPqxbFKTlrY63kLbCwsyyZjS0sG
+	QqNAufdgF8erMk6LHF+vU8l71xmumhMftFq3BNC/go6+87vnd7BgHkIegigAxExdfhV4Ss
+	/nsZl9As3ko1Oa3oXhtIy8z4N448wDE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1696943202;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3ziRaTCMQY9PPH36OpIu+2jE3RQyPlDAIyWRvT4Uv5Y=;
+	b=cf6ZEpv19Q2EFY1TlIcF+KGTCe/UQ9WVSvRLA4iF4Pv2umB9gThYYTuS8yXXUPDqW6+fzl
+	KkYIxZ8XSWuCQGDA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 89CCA1348E;
+	Tue, 10 Oct 2023 13:06:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id 1CbVIGJMJWVeXwAAMHmgww
+	(envelope-from <dsterba@suse.cz>); Tue, 10 Oct 2023 13:06:42 +0000
+Date: Tue, 10 Oct 2023 14:59:52 +0200
+From: David Sterba <dsterba@suse.cz>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Qu Wenruo <wqu@suse.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>
+Subject: Re: [PATCH 4.19 70/91] btrfs: reject unknown mount options early
+Message-ID: <20231010125952.GA2211@suse.cz>
+Reply-To: dsterba@suse.cz
+References: <20231009130111.518916887@linuxfoundation.org>
+ <20231009130113.943075052@linuxfoundation.org>
+ <c55ba96b-9058-42ac-817b-2d42b45ddf3a@suse.com>
+ <2023101008-percolate-sterile-1391@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="kmt4faAXz7TCbez6"
-Content-Disposition: inline
-In-Reply-To: <ZSUy+zA0+Chm6dFb@duo.ucw.cz>
-
-
---kmt4faAXz7TCbez6
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <2023101008-percolate-sterile-1391@gregkh>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 
-Hi!
-> > > > This is the start of the stable review cycle for the 5.10.198 relea=
-se.
-> > > > There are 226 patches in this series, all will be posted as a respo=
-nse
-> > > > to this one.  If anyone has any issues with these being applied, pl=
-ease
-> > > > let me know.
-> > > >=20
-> > > > Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
-> > > > Anything received after that time might be too late.
-> > >=20
-> > > 4.14, 4.19 and 6.1 tests ok, 5.10 seems to have problems:
-> >=20
-> > Guessing from stack traces, these may be relevant:
->=20
-> So bisection reveals these are relevant:
->=20
->   |e10d3d256 b161d8 o: 5.10| mmc: renesas_sdhi: probe into TMIO after   S=
-CC parameters have been setup
->=20
-> Ok
->=20
->  |493b70c48 d14ac6 o: 5.10| mmc: renesas_sdhi: populate SCC pointer at  t=
-he proper place
->=20
-> Testing now: https://gitlab.com/cip-project/cip-kernel/linux-cip/-/pipeli=
-nes/1031822035
+On Tue, Oct 10, 2023 at 01:27:48PM +0200, Greg Kroah-Hartman wrote:
+> On Tue, Oct 10, 2023 at 07:23:15PM +1030, Qu Wenruo wrote:
+> > 
+> > 
+> > On 2023/10/9 23:36, Greg Kroah-Hartman wrote:
+> > > 4.19-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > Please reject the patch from all stable branches (if that's not yet too
+> > late).
+> > 
+> > The rejection is too strict, especially the check is before the security
+> > mount options, thus it would reject all security mount options.
+> 
+> This is queued up in all stable -rc releases right now, is there a fix
+> in Linus's tree for this as well or is it broken there too?
 
-And testing failed. So
-
-commit f5799b4e142884c2e7aa99f813113af4a3395ffb
-Author: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Date:   Tue Nov 10 15:20:57 2020 +0100
-
-    mmc: renesas_sdhi: populate SCC pointer at the proper place
-   =20
-    [ Upstream commit d14ac691bb6f6ebaa7eeec21ca04dd47300ff5b6 ]
-
-seems to be the buggy commit that breaks renesas boards in 5.10.
-
->  |c508545f4 0d856c o: 5.10| mmc: tmio: support custom irq masks
-
-Testing too: https://gitlab.com/cip-project/cip-kernel/linux-cip/-/pipeline=
-s/1031834627
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---kmt4faAXz7TCbez6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZSU+GAAKCRAw5/Bqldv6
-8haIAJkBZWNo+fR9/jsfeG3zeswyYC7fOQCgogoTt5zPNc6+2mGK+jsCbp1Rf9w=
-=FWgd
------END PGP SIGNATURE-----
-
---kmt4faAXz7TCbez6--
+Yes it's broken there too, I'll send a revert.
