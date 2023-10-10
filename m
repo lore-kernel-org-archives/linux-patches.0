@@ -1,49 +1,49 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3662591
-	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 05:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B73A55
+	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 06:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fOy7B80D"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1c8a1541233so14148035ad.1
-        for <patches@lists.linux.dev>; Mon, 09 Oct 2023 22:53:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gJLNMpLV"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-694ed84c981so3931726b3a.3
+        for <patches@lists.linux.dev>; Mon, 09 Oct 2023 23:23:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696917213; x=1697522013; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1696919016; x=1697523816; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wfaCoodsVu7yZCYoYj9RudTaxQcfa8byTewGj6h2eNk=;
-        b=fOy7B80D7JPir5Iia1TzKSklM4urkN0lAZQ2HWvGmgS83uyQBDD13DG5X81uM8Bbv9
-         09qTD55LnT5P7qblgpYbpyvVG7dWX4ZiUBYmEJE5W63i27kvTvysMABmi/D/7RPMIJGF
-         w7LRguLsLixpgshEw2z/lVSCg9oxfP23J7vSunnZviaoFtctHyOKotHgyh77coFspshg
-         SWfLXjtgpHiN94tRdLdDAq1TYka8r3vuZ936xLdyoE86KonQXxn381aOghZd6iubibQ7
-         axw9oWkboJyezAOdE5v9XXPUEvu1UR+X+NBPFoF5+Z9h0/LpxdS4A5/EJ5k+pzw3pIhn
-         4Cng==
+        bh=QmKiVGXOMoFSb0jdRS7/I36LbjLoB/tR7BGYo9BXzVA=;
+        b=gJLNMpLVYyXYrj4vY5a2xWie0Yrapxf/JWf0ALf/divZnJltWC0jSKjNyOq9xQfMdp
+         asvzoXRK4yQuPc+PETabQO2AMbNkJisI+ZHreGPNEAH/fGJZqip5M+pBbv0BWP3gQ/hJ
+         P0vg0pfvtZTGbu8OWy74arefot0eu2zdBROzx55l7AEsCT9mCwdyGxIc6DusQRgStJw0
+         otttahVk5rtXqFa5HXJEkJSRdUvotRsbUp9TpEPKQP+tzBGFTAW3MOKQ0NC2l5bAD+MH
+         GesmLCiXzfoSeX5+dL9PGBwNYYlTdWT/tBAnrvXNZb/l5Ws62CXgoGv8fspwfGdhABX+
+         JvZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696917213; x=1697522013;
+        d=1e100.net; s=20230601; t=1696919016; x=1697523816;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wfaCoodsVu7yZCYoYj9RudTaxQcfa8byTewGj6h2eNk=;
-        b=nJp/rfuXjtHq1x+M+rSfVglxIjwFEQYO3Q4WWOZtlqzd+c2FRPHG5l/i2KpfiKLhug
-         m3L3XTuWVQ9AkN3GmhUSceunjEpEcp/HaJb2pq/3G18v1xJFYL9sBVgakBTHNYurTEgO
-         7rF0Q0UEhb72jA57k819NdfEQ3YnNmi7LwWLEdVLwWsepw6dBF71Zmn+hQ/awyJFOl6r
-         UhqNd4mEEcRPAL6JxlE+WybqYPD0gffXiD0Ib4DHAwC7LAceoZbhbsyouIXwAOLcM6wF
-         JyEjl+yxNaUtaIoWaDffhpgUFhcO0B+d4Uz3hna78N+0PW5fznGHDjraIklPOo6lgwub
-         lZ6w==
-X-Gm-Message-State: AOJu0Yw5yVBrwytKRm6I47em2InCnn8U4teHTPQiMgBfrptOTYjkm6bX
-	WrAXVfxl3vTsL9T69R1IuE8=
-X-Google-Smtp-Source: AGHT+IEigtFwOymrwH6Yg8ON3n5dI4KocGorIBqftErLJBr7G1D/uGzvKWtM/Yc9wNUmDdGbbss6gA==
-X-Received: by 2002:a17:902:c24c:b0:1c3:ea2a:9058 with SMTP id 12-20020a170902c24c00b001c3ea2a9058mr13388668plg.65.1696917212959;
-        Mon, 09 Oct 2023 22:53:32 -0700 (PDT)
+        bh=QmKiVGXOMoFSb0jdRS7/I36LbjLoB/tR7BGYo9BXzVA=;
+        b=cINtLTfNgoLdNcIenklpZ67j2wD5Pw1Yd+HSl6Iuo+5fAuAYrLY7NuZx3qZX7twAcE
+         f7h57E7zLh15zxHkaq9eiRjIvWqBtf/rxrfIWpsg35FwAOKSJ/xjkY5IIidXwrhx1eB5
+         v2mW5tUyMqLm9H0n+cwxYGwI03E/x5NYK3QPPcN/mx7otTiDgaP3x3bGRRD1Qz8ZbZLG
+         LSpaYlY6iUgXqu8ZgJ3z0vUcy0p4SAgG+TdseH4N//78xUcYRMQ0bW4d5rz4NQaaIqY+
+         aJ26k3SX9N8J91Qkf0VXNcm+BQ8fv4jAuYDXES4OmoRI+Bydapwa7GIrOkxBxIxk8r0w
+         BeQA==
+X-Gm-Message-State: AOJu0YwdQe226jpXNgh6EZCevzIKEu2JBL/EWBI3Zx7rTUTcCVBI+OCa
+	168X/vdoDBQwp4R4oz03hMU=
+X-Google-Smtp-Source: AGHT+IECxhjXjrQAv2tcqtN64pPrEu0AY9j+48dsFtrXG8ACl2uQZd14H8qDoT/6c3Qfm2xGYEa6Ew==
+X-Received: by 2002:a05:6a20:8f0e:b0:16b:f8ef:f31e with SMTP id b14-20020a056a208f0e00b0016bf8eff31emr10060052pzk.5.1696919015682;
+        Mon, 09 Oct 2023 23:23:35 -0700 (PDT)
 Received: from debian.me ([103.131.18.64])
-        by smtp.gmail.com with ESMTPSA id l3-20020a170903244300b001c73f3a9b88sm10686340pls.110.2023.10.09.22.53.31
+        by smtp.gmail.com with ESMTPSA id y4-20020aa78544000000b006878cc942f1sm7410333pfn.54.2023.10.09.23.23.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 22:53:32 -0700 (PDT)
+        Mon, 09 Oct 2023 23:23:34 -0700 (PDT)
 Received: by debian.me (Postfix, from userid 1000)
-	id E13DF8154D9A; Tue, 10 Oct 2023 12:53:28 +0700 (WIB)
-Date: Tue, 10 Oct 2023 12:53:28 +0700
+	id 0AFFE84B9020; Tue, 10 Oct 2023 13:23:30 +0700 (WIB)
+Date: Tue, 10 Oct 2023 13:23:30 +0700
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
@@ -52,9 +52,9 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 000/162] 6.1.57-rc1 review
-Message-ID: <ZSTm2EJ6RIQGJH3m@debian.me>
-References: <20231009130122.946357448@linuxfoundation.org>
+Subject: Re: [PATCH 6.5 000/163] 6.5.7-rc1 review
+Message-ID: <ZSTt4p9ezc4cvxNW@debian.me>
+References: <20231009130124.021290599@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,19 +62,19 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="B5/N2J/Pr/nfSCYq"
+	protocol="application/pgp-signature"; boundary="n50QiLsRPrBx+8ui"
 Content-Disposition: inline
-In-Reply-To: <20231009130122.946357448@linuxfoundation.org>
+In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
 
 
---B5/N2J/Pr/nfSCYq
+--n50QiLsRPrBx+8ui
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 09, 2023 at 02:59:41PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.57 release.
-> There are 162 patches in this series, all will be posted as a response
+On Mon, Oct 09, 2023 at 02:59:24PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.5.7 release.
+> There are 163 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >=20
@@ -87,15 +87,15 @@ Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 --=20
 An old man doll... just what I always wanted! - Clara
 
---B5/N2J/Pr/nfSCYq
+--n50QiLsRPrBx+8ui
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZSTm0QAKCRD2uYlJVVFO
-o6emAQDNApQG/SZmeJZarDbPBuGLFvJSpM3hlIMG6o7JNG7qUAD/cn91yQ+3PVeP
-HZlyWhX9OJx07zlXpXCMHpATkUzW6Q8=
-=OUoF
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZSTt3gAKCRD2uYlJVVFO
+oyj0AP4ggBKxdQt22d6oxanLTajhPHPJW+1RISWNnDHMNWqvJgEAyndXFQuvH2PI
+1tVI4HuXNSvspscewOFdHo3u6aUsIQc=
+=N3HI
 -----END PGP SIGNATURE-----
 
---B5/N2J/Pr/nfSCYq--
+--n50QiLsRPrBx+8ui--
