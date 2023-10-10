@@ -1,60 +1,34 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8DD225A6
-	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 18:20:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D795225B5
+	for <patches@lists.linux.dev>; Tue, 10 Oct 2023 18:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZahUX1XA"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-51b4ef5378bso4784229a12.1
-        for <patches@lists.linux.dev>; Tue, 10 Oct 2023 11:20:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696962008; x=1697566808; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=smsRCyRCvXDTTbB7Xek8Z5l9YJAauh0DpQh3KeeOdV8=;
-        b=ZahUX1XAEdHhWPIjOu4oRKSyw4XI9JghIL7LKEbXx4He8ktfWT5DAC57g+zZAULftX
-         FoJ3vUy6vNxGvfrqU9r5YgOdPilG9YOnnZQ/jsWe+jCulpnuGZOIz/l9wcByom6pzaTa
-         AQ2Rp3R4nPFqWSH+zmh+Rm9HO5TSosnvu6lzm22OUqr7Vi+7BhXS2PWQoRSNAx+9+SVY
-         XZRxK7wmGPiVhA9vNRFakdcE5KtwmqYhUcTQND4PPxRNSPvoHPuBaadxyiQkxxBVmqkT
-         Vk/YjtDAsy3xjxb8ZCmRGplfObPFiR8B6qwdx/NK89pbf4VCXYLoY8v8AJ+pOADUux90
-         EjqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696962008; x=1697566808;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=smsRCyRCvXDTTbB7Xek8Z5l9YJAauh0DpQh3KeeOdV8=;
-        b=WPRcTIWg8mczYS/nJaaa3n4PeNBCRXzwPlqT5XJVRJwdDnNpxnoZCPMojuYbD5YFWo
-         vh2BVexIMhSgY1G+Ecmldw5YtasfWPAN+GF1oYN31q5ouPpYZizYIKuJVqZ2/SxFsND9
-         QvgDW6kQcKw92EtGvl9vCn0+QteXPxTleSNtxuJAQFpxM9ojGSxvDouYU3/GCgchmoLE
-         7RBtnliy9w6IyPFFuhy6UfLxQDG0g7WmHvChujegh8tSkbjv5jvN5hsUCsH9ofr1ov06
-         FhdTmKBRUCclZ2b8UkriVtrsFtqb9k4kBAOTbgz7LnMhDPrPOdYwf7m4lOSuIeQwudzt
-         MU7A==
-X-Gm-Message-State: AOJu0Yw98CTGogDeRpGmOjL391hqBKYcQCRRKhQ2YW8BvuGVKeQ83x9b
-	FN+GjLqgKSfhdIVRG9R/l1Q=
-X-Google-Smtp-Source: AGHT+IGh1x2CPH7S/waClFkhgK9zDhkdiRYbjaGzdtO3+gGPXg36ynxjHksPjf2t9KZb+ppalXibMA==
-X-Received: by 2002:a17:90a:1196:b0:262:f449:4497 with SMTP id e22-20020a17090a119600b00262f4494497mr17124879pja.2.1696962008223;
-        Tue, 10 Oct 2023 11:20:08 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id s2-20020a170902ea0200b001c444f185b4sm12123162plg.237.2023.10.10.11.20.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Oct 2023 11:20:07 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Tue, 10 Oct 2023 11:20:07 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+CeRgYm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A2EC433C8;
+	Tue, 10 Oct 2023 18:43:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1696963381;
+	bh=xuJQBkZ40eoYwA9Ihdt5nQEAu4U80UA46rmFAeOlETI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=J+CeRgYmUqznuNK3A1KzeBLqZHQ6qj7M/VIMOvqj6S4LJDKZvHbAb0CjoVfWkmSVz
+	 DXuyk2QQe0sIYUDeqO6aboVmJA1mzWP3TBBtiwpfEjLT+ulusGDrdH3COfezqj9cov
+	 QwDVkw6uNkkCQ7+fBpVofXKsoJ42YtHLCOOQC58w=
+Date: Tue, 10 Oct 2023 20:42:59 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Wang Yugui <wangyugui@e16-tech.com>
+Cc: wqu@suse.com, stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.5 000/163] 6.5.7-rc1 review
-Message-ID: <f72be808-de46-44f5-aad2-866104a56f5d@roeck-us.net>
-References: <20231009130124.021290599@linuxfoundation.org>
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
+Subject: Re: [PATCH 6.1 000/162] 6.1.57-rc1 review
+Message-ID: <2023101053-heading-chase-e2c2@gregkh>
+References: <20231010161046.7861.409509F4@e16-tech.com>
+ <2023101008-argue-impart-a6ad@gregkh>
+ <20231010194221.C1C3.409509F4@e16-tech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,23 +37,36 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231009130124.021290599@linuxfoundation.org>
+In-Reply-To: <20231010194221.C1C3.409509F4@e16-tech.com>
 
-On Mon, Oct 09, 2023 at 02:59:24PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.7 release.
-> There are 163 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Oct 10, 2023 at 07:42:22PM +0800, Wang Yugui wrote:
+> Hi,
 > 
-> Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
-> Anything received after that time might be too late.
+> > On Tue, Oct 10, 2023 at 04:10:48PM +0800, Wang Yugui wrote:
+> > > Hi,
+> > > 
+> > > > This is the start of the stable review cycle for the 6.1.57 release.
+> > > > There are 162 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > > 
+> > > > Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
+> > > > Anything received after that time might be too late.
+> > > 
+> > > 
+> > > drop this patch from 6.5/6.1/5.15/... please, 
+> > >   Qu Wenruo <wqu@suse.com>
+> > >      btrfs: reject unknown mount options early
+> > > 
+> > > becuase of this report.
+> > > https://lore.kernel.org/linux-btrfs/f3ac7b74-c011-4d1f-a510-677679fc9743@gmx.com/T/#t
+> > 
+> > Is there a revert somewhere for this already?
 > 
+> Yet not.
+> 
+> but we can suspend to apply this patch(drop this patch) for stable.
 
-Build results:
-	total: 157 pass: 157 fail: 0
-Qemu test results:
-	total: 530 pass: 530 fail: 0
+Now dropped, thanks.
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-
-Guenter
+greg k-h
