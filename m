@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1202354F6
-	for <patches@lists.linux.dev>; Wed, 11 Oct 2023 10:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25401F920
+	for <patches@lists.linux.dev>; Wed, 11 Oct 2023 13:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KqLvHSip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F9ABC433C8;
-	Wed, 11 Oct 2023 10:25:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nldvgnAG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71568C433C7;
+	Wed, 11 Oct 2023 13:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1697019901;
-	bh=oT4bek1giU2pcDYjiPRXCUo2soNQg3dhKRIybePgP1E=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=KqLvHSipnPlMwzHGJdVAKj6HMQ5itgvrbriu3Kt0KYusl1WwnoCxEmexa4C66Shuk
-	 OAd2y4iuoUrtppWRFxsVbMxUN7A9qD5qG0qIrxtFlJaGEMVOAp0NwbvHdFtvKBZvqu
-	 1eVCHj0Y7XX/sFiYnQbWnTSW22A/n5kqDlA2quEh89NzNReAKos0HpLMgqBt052XmQ
-	 /G0P8o/aMapojyFGLHyKrGGLRyJ8YKhRbSNkIbin+IYFG95F2EcZwQHqKydm01TzJX
-	 m1lcvKQTmt91RpHA7Ctd82QOMwoD/8XLLWVhPW4vBRAkrVReOiDITtySe7FlpMq6Wk
-	 dN3PIvbhO1cQQ==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id B5D56CE041E; Wed, 11 Oct 2023 03:25:00 -0700 (PDT)
-Date: Wed, 11 Oct 2023 03:25:00 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Joel Fernandes <joel@joelfernandes.org>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	s=k20201202; t=1697032047;
+	bh=A5R1N4i5dYgS9Mh45qtMqLkrTE+4rVvgMDrLUY39uGY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nldvgnAGE1XBHU47MQmkFhIYbuKjLtxqWSDmAz9Db1SUruTak3jLR44Dt8b38UFFd
+	 DLzBZ0xQ5BH5ugmpLGKRBOtgaqw0/ecFVVeymMLJ1xXn9uOSsH6X3dgo2YNWdabfBj
+	 KGEc6FdLkjVFpG3AMgqoTiJviziNMx3uE6itxSy/nTcQGCHxgFMElf2KyRpDJLnPW0
+	 5KU3unsV3htIRbC9l04Ui4aw+QT/xUl9D+w/Fq4FADx0//cYciW8hcGx5Z/ROw217h
+	 etDpJHKXJMKctkVvDION9l+5uv69ubxQDyhaJ6iFtUpB0vjyjHgtyRQKSPVjFx3u4a
+	 L6rrUNWwik2Ag==
+Date: Wed, 11 Oct 2023 15:47:23 +0200
+From: Frederic Weisbecker <frederic@kernel.org>
+To: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Joel Fernandes <joel@joelfernandes.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Naresh Kamboju <naresh.kamboju@linaro.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org, patches@lists.linux.dev,
@@ -36,8 +35,7 @@ Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Ovidiu Panait <ovidiu.panait@windriver.com>,
 	Ingo Molnar <mingo@kernel.org>, rcu <rcu@vger.kernel.org>
 Subject: Re: [PATCH 5.15 000/183] 5.15.134-rc1 review
-Message-ID: <afe86f8d-e412-48e8-b2f6-a0879c832d4d@paulmck-laptop>
-Reply-To: paulmck@kernel.org
+Message-ID: <ZSana69n6RWgCnqi@localhost.localdomain>
 References: <20231004175203.943277832@linuxfoundation.org>
  <CA+G9fYunnEUT2evdabX1KOTiryP1heNHWDH4LWZCt2SVRmnKOA@mail.gmail.com>
  <20231006162038.d3q7sl34b4ouvjxf@revolver>
@@ -47,111 +45,102 @@ References: <20231004175203.943277832@linuxfoundation.org>
  <CAEXW_YS16NxPxg52T=3FcyZ2qocj36zKyhPnEQL3nBTbD-qJ-A@mail.gmail.com>
  <9470dab6-dee5-4505-95a2-f6782b648726@paulmck-laptop>
  <433f5823-059c-4b51-8d18-8b356a5a507f@paulmck-laptop>
- <20231011050504.GA201855@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20231011050504.GA201855@google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <433f5823-059c-4b51-8d18-8b356a5a507f@paulmck-laptop>
 
-On Wed, Oct 11, 2023 at 05:05:04AM +0000, Joel Fernandes wrote:
-> On Tue, Oct 10, 2023 at 06:34:35PM -0700, Paul E. McKenney wrote:
-> [...]
-> > > > > > > > It's also worth noting that the bug this fixes wasn't exposed until the
-> > > > > > > > maple tree (added in v6.1) was used for the IRQ descriptors (added in
-> > > > > > > > v6.5).
-> > > > > > >
-> > > > > > > Lots of latent bugs, to be sure, even with rcutorture.  :-/
-> > > > > >
-> > > > > > The Right Thing is to fix the bug all the way back to the introduction,
-> > > > > > but what fallout makes the backport less desirable than living with the
-> > > > > > unexposed bug?
-> > > > >
-> > > > > You are quite right that it is possible for the risk of a backport to
-> > > > > exceed the risk of the original bug.
-> > > > >
-> > > > > I defer to Joel (CCed) on how best to resolve this in -stable.
-> > > > 
-> > > > Maybe I am missing something but this issue should also be happening
-> > > > in mainline right?
-> > > > 
-> > > > Even though mainline has 897ba84dc5aa ("rcu-tasks: Handle idle tasks
-> > > > for recently offlined CPUs") , the warning should still be happening
-> > > > due to Liam's "kernel/sched: Modify initial boot task idle setup"
-> > > > because the warning is just rearranged a bit but essentially the same.
-> > > > 
-> > > > IMHO, the right thing to do then is to drop Liam's patch from 5.15 and
-> > > > fix it in mainline (using the ideas described in this thread), then
-> > > > backport both that new fix and Liam's patch to 5.15.
-> > > > 
-> > > > Or is there a reason this warning does not show up on the mainline?
-> > 
-> > There is not a whole lot of commonality between the v5.15.134 version of
-> > RCU Tasks Trace and that of mainline.  In theory, in mainline, CPU hotplug
-> > is supposed to be disabled across all calls to trc_inspect_reader(),
-> > which means that there would not be any CPU coming or going.
-> > 
-> > But there could potentially be some time between when a CPU was
-> > marked as online and its idle task was marked PF_IDLE.  And in
-> > fact x86 start_secondary() invokes set_cpu_online() before it calls
-> > cpu_startup_entry(), and it is the latter than sets PF_IDLE.
-> > 
-> > The same is true of alpha, arc, arm, arm64, csky, ia64, loongarch, mips,
-> > openrisc, parisc, powerpc, riscv, s390, sh, sparc32, sparc64, x86 xen,
-> > and xtensa, which is everybody.
-> > 
-> > One reason why my testing did not reproduce this is because I was running
-> > against v6.6-rc1, and cff9b2332ab7 ("kernel/sched: Modify initial boot
-> > task idle setup") went into v6.6-rc3.  An initial run merging in current
-> > mainline also failed to reproduce this, but I am running overnight.
-> > If that doesn't reproduce, I will try inserting delays between the
-> > set_cpu_online() and the cpu_startup_entry().
+Le Tue, Oct 10, 2023 at 06:34:35PM -0700, Paul E. McKenney a écrit :
+> If this problem is real, fixes include:
 > 
-> I thought the warning happens before set_cpu_online() is even called, because
-> under such situation, ofl == true and the task is not set to PF_IDLE yet:
-> 
->                   WARN_ON_ONCE(ofl && task_curr(t) && !is_idle_task(t));
+> o	Revert Liam's patch and make Tiny RCU's call_rcu() deal with
+> 	the problem.  This is overhead and non-tinyness, but to Joel's
+> 	point, it might be best.
 
-That case is supposed to be excluded by the cpus_read_lock() calls.
-Yes, key phrase "supposed to be".  ;-)
+But what is calling call_rcu() or start_poll_synchronize_rcu() so
+early that the CPU is not even online? (that's before boot_cpu_init() !)
 
-> > If this problem is real, fixes include:
-> > 
-> > o	Revert Liam's patch and make Tiny RCU's call_rcu() deal with
-> > 	the problem.  This is overhead and non-tinyness, but to Joel's
-> > 	point, it might be best.
-> > 
-> > o	Go back to something more like Liam's original patch, which
-> > 	cleared PF_IDLE only for the boot CPU.
-> > 
-> > o	Set PF_IDLE before calling set_cpu_online().  This would work,
-> > 	but it would also be rather ugly, reaching into each and every
-> > 	architecture.
-> > 
-> > o	Move the call to set_cpu_online() into cpu_startup_entry().
-> > 	This would require some serious inspection to prove that it is
-> > 	safe, assuming that it is in fact safe.
-> > 
-> > o	Drop the WARN_ON_ONCE() from trc_inspect_reader().  Not all
-> > 	that excited by losing this diagnostic, but then again it
-> > 	has been awhile since it has caught anything.
-> > 
-> > o	Make the WARN_ON_ONCE() condition in trc_inspect_reader() instead
-> > 	to a "return false" to retry later.  Ditto, also not liking the
-> > 	possibility of indefinite deferral with no warning.
-> 
-> Just for completeness, 
-> 
->  o      Since it just a warning, checking for task_struct::pid == 0 instead of is_idle_task()?
->         Though PF_IDLE is also set in play_idle_precise().
-> 
->  o	Change warning to:
->                   WARN_ON_ONCE(ofl && task_curr(t) && (!is_idle_task(t) && t->pid != 0));
+Deferring PF_IDLE setting might pave the way for more issues like this one,
+present or future. Though is_idle_task() returning true when the task is not
+in the idle loop but is playing the init/0 role is debatable.
 
-This change does look promising, thank you!
+An alternative for tiny RCU is to force waking up ksoftirqd when call_rcu()
+is in the idle task. Since rcu_qs() during the context switch raises a softirq
+anyway. It's more overhead for start_poll_synchronize_rcu() though but do we
+expect much RCU polling in idle?
 
-							Thanx, Paul
+diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
+index a92bce40b04b..6ab15233e2be 100644
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -604,6 +604,7 @@ extern void __raise_softirq_irqoff(unsigned int nr);
+ 
+ extern void raise_softirq_irqoff(unsigned int nr);
+ extern void raise_softirq(unsigned int nr);
++extern void raise_ksoftirqd_irqsoff(unsigned int nr);
+ 
+ DECLARE_PER_CPU(struct task_struct *, ksoftirqd);
+ 
+diff --git a/kernel/rcu/tiny.c b/kernel/rcu/tiny.c
+index 42f7589e51e0..872dab8b8b53 100644
+--- a/kernel/rcu/tiny.c
++++ b/kernel/rcu/tiny.c
+@@ -189,12 +189,12 @@ void call_rcu(struct rcu_head *head, rcu_callback_t func)
+ 	local_irq_save(flags);
+ 	*rcu_ctrlblk.curtail = head;
+ 	rcu_ctrlblk.curtail = &head->next;
+-	local_irq_restore(flags);
+ 
+ 	if (unlikely(is_idle_task(current))) {
+ 		/* force scheduling for rcu_qs() */
+-		resched_cpu(0);
++		raise_ksoftirqd_irqsoff(RCU_SOFTIRQ);
+ 	}
++	local_irq_restore(flags);
+ }
+ EXPORT_SYMBOL_GPL(call_rcu);
+ 
+@@ -225,10 +225,13 @@ EXPORT_SYMBOL_GPL(get_state_synchronize_rcu);
+ unsigned long start_poll_synchronize_rcu(void)
+ {
+ 	unsigned long gp_seq = get_state_synchronize_rcu();
++	unsigned long flags;
+ 
+ 	if (unlikely(is_idle_task(current))) {
++		local_irq_save(flags);
+ 		/* force scheduling for rcu_qs() */
+-		resched_cpu(0);
++		raise_ksoftirqd_irqsoff(RCU_SOFTIRQ);
++		local_irq_restore(flags);
+ 	}
+ 	return gp_seq;
+ }
+diff --git a/kernel/softirq.c b/kernel/softirq.c
+index 210cf5f8d92c..ef105cbdc705 100644
+--- a/kernel/softirq.c
++++ b/kernel/softirq.c
+@@ -695,6 +695,14 @@ void __raise_softirq_irqoff(unsigned int nr)
+ 	or_softirq_pending(1UL << nr);
+ }
+ 
++#ifdef CONFIG_RCU_TINY
++void raise_ksoftirqd(unsigned int nr)
++{
++	__raise_softirq_irqoff(nr);
++	wakeup_softirqd();
++}
++#endif
++
+ void open_softirq(int nr, void (*action)(struct softirq_action *))
+ {
+ 	softirq_vec[nr].action = action;
+
+
+
+
