@@ -1,222 +1,266 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118612106
-	for <patches@lists.linux.dev>; Wed, 11 Oct 2023 01:43:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B1C647
+	for <patches@lists.linux.dev>; Wed, 11 Oct 2023 02:42:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mA+8OGKO"
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-4577c1ae94fso1200397137.1
-        for <patches@lists.linux.dev>; Tue, 10 Oct 2023 18:43:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696988627; x=1697593427; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YSiDNY1At9S23ErLXYjIIHPvj55pOXoepaXSEOsk/yk=;
-        b=mA+8OGKO13lKjpmXJQlyRdMJ7KSsd+iyNGE562+UA1HWkB9IXvgPKc/1vcAxdFy562
-         FGUqf1tjqboertrxywNdLpcmqWz2jVnVsFMPYGVOFqm2Ycj2fZqrkUvFA+BNzRim+Mdc
-         6M2erVg3q14A14h+lAq0UnEGAKl4toWhEbTBth+zmKpCJC7WihmsVFQe51NeuUOmrr8S
-         l6FYALzo+o/YobtkW4MPMDYEU5vwohgaIgKVa77P1rfmlI7EiTzQECpaJNVPfVkigh+t
-         vVkQMgC8DOrXe3kHgDfMr2erg7DAFZehwKFO1pUvsWD+cC3qttIideFvHcTa8tFH3jha
-         pcqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696988627; x=1697593427;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YSiDNY1At9S23ErLXYjIIHPvj55pOXoepaXSEOsk/yk=;
-        b=n1o6mka2aM1PoF4gPjJHHTFQs1hRW3PeneZv7u+NFP2XU8mdfNsSntEZ7FthREMXSB
-         vD7W+rJW7cvO23Zx23ijHl8U9TzFvL4c9N/uu4zSpkjLfG9B9ou0Xf2WoZx0dHGvdrPV
-         cEX2aZshzrK4y74txSnSO7CSQquWATRj3ZNe8ZEHVdxgU6BfiyUo6vX7PzCHi18fawOH
-         +DyqbeFyP0qhKR3MQC1NF/7WpIGAWfbYxgvnVwCNZPfZLASeC2pya7b9o+MdeES3WG0O
-         FU8DxurcV0nR0UA7pnxnpArlvSv4npOzmmSOGYe1a0Nvf+TFSHMXuCCURVAvLyEbnczy
-         vLAQ==
-X-Gm-Message-State: AOJu0YwMZD3Ac0pJZmpbyydG+2TvRryFLXVY0FEZ17UIwtsyUPQTuyY9
-	la2ThOFYqsy8vCnRm5JNn13X2z5lHrgbjxgnWoatsqWtOlC5c/Cmkdj12Q==
-X-Google-Smtp-Source: AGHT+IGQuqX/VPx/KsIYHsiqXWsHllqMS9gkv4RcG0kqs5xw80WAtRklZow5+p7P/W71aIWwcCnXC7ibfgqfTnGCNNw=
-X-Received: by 2002:a05:6102:534:b0:452:b96c:313b with SMTP id
- m20-20020a056102053400b00452b96c313bmr17791514vsa.13.1696988626704; Tue, 10
- Oct 2023 18:43:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gPP0f7JM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1696992131; x=1728528131;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=WfNA5Kuwu4S/2eGDRk8gw5vwBYz0z11eqD5WDswzdWA=;
+  b=gPP0f7JMDT128B9GA9q1bSbPJFVCDU0tzlO6Qr3G4IFVQF2FRskTNgvO
+   b+MFe5AS40rYFDBs/ris04f9d+jibcN6zKVRwFt7cBZoiUGzgnFyf8iSP
+   YBeHJCEjPcd1sHkb4stDi0xIaTpJjeAwFYavq7hCUY4ezpe3mostIP9/3
+   sWkN5sStjXF5GMPy5dubePVLSlavAIWqXHDtG72JIuxkswgQ+12bWkPwR
+   G6MxpYM/aUhSjO8VcCWxqpyRZwvrdR3ymPjfQoLjuWuRP91ERRiKTC7nD
+   p1/R6x/6roxCyRPPXu+2B+N0881Y5/nM3uR69+MpOdZjwPkX9Qu7+v8IV
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="387405923"
+X-IronPort-AV: E=Sophos;i="6.03,214,1694761200"; 
+   d="scan'208";a="387405923"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2023 19:42:09 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="783084337"
+X-IronPort-AV: E=Sophos;i="6.03,214,1694761200"; 
+   d="scan'208";a="783084337"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+  by orsmga008.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 10 Oct 2023 19:42:09 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Tue, 10 Oct 2023 19:42:09 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Tue, 10 Oct 2023 19:42:08 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32 via Frontend Transport; Tue, 10 Oct 2023 19:42:03 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.100)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.32; Tue, 10 Oct 2023 19:42:03 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ZxbKY8rfpxb5z85Y/ms2UdqG0MV+2HbKjrFnJx6qqS8UlQ1xeCy6JWhwLF8qd1JphbD0QiG94foUIfuw/gOP8zr0f7gv+gt5lMqUvvB1Eg5M96Fcqps2y7ehhyXVZsCXz289A0KIoyfB2GS/3Nqiz6i8FW7Mq1TDORyxgfTSFiBwoJhvBS0qY+lSwBQUJXXfdDa0zIggytDqNTYhr47fhwF7ad8xePAPXNdYh01k0KDyzflkp0EX0jyj02qperbdFj95nDRQf6RJCVdOCvKKmcGyeQ+nzTDfJ27EAfgyVb+tURbMPxGgeZ3TBEGLPXHtfGWXMWF7nkWkxm9IrX2l6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=J1FLZxju0CQ3u1qII/3ZtQ5E7CgoVZYjpLAA5MFBq5o=;
+ b=lyWIpdX1fgivwepZJCR/JAeCucUsfzein4GPGhWZ0S/FQnhqRkf0v1Uc91hzLnyLEXRCm1kZnBy0jxtFJy4wAJ6XNzo+58H/vw3diRiMG1hwdD8bV6ckaIErbMgJs6Qyzc0FeAPq3QqRWiZNaLBmxosSRD1IalNXKFnCx+qBzMtBmsbNwy04kUMgS5vZ5bzcplz+xjpNa31cGnBa5UfrwTTY9PUFmL2aUKq0n57bQ5E4QV1z4KqgraGG41e57hOZKLTatC64t/zcmHA4nzuX2JaLAzOYtTHds+1mcPBobp4ysvX5a+00+z1AuLTvd2bUPCTkJsJN/X/gx9cAoPypnQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from MN2PR11MB3728.namprd11.prod.outlook.com (2603:10b6:208:f4::21)
+ by SN7PR11MB6994.namprd11.prod.outlook.com (2603:10b6:806:2ad::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6813.28; Wed, 11 Oct
+ 2023 02:42:00 +0000
+Received: from MN2PR11MB3728.namprd11.prod.outlook.com
+ ([fe80::e4db:e815:f217:9b6]) by MN2PR11MB3728.namprd11.prod.outlook.com
+ ([fe80::e4db:e815:f217:9b6%3]) with mapi id 15.20.6863.040; Wed, 11 Oct 2023
+ 02:42:00 +0000
+Message-ID: <3f9e9468-ec74-42ad-8d42-c3f6fb8b5f74@intel.com>
+Date: Wed, 11 Oct 2023 11:00:57 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND v2] x86/mce: Set PG_hwpoison page flag to avoid the
+ capture kernel panic
+Content-Language: en-US
+To: Borislav Petkov <bp@alien8.de>
+CC: <x86@kernel.org>, <linux-edac@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>,
+	<tony.luck@intel.com>, <naoya.horiguchi@nec.com>
+References: <20230914030539.1622477-1-zhiquan1.li@intel.com>
+ <20231010082836.GDZSULNGto0cPRPU26@fat_crate.local>
+From: Zhiquan Li <zhiquan1.li@intel.com>
+In-Reply-To: <20231010082836.GDZSULNGto0cPRPU26@fat_crate.local>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: KL1PR01CA0081.apcprd01.prod.exchangelabs.com
+ (2603:1096:820:2::21) To MN2PR11MB3728.namprd11.prod.outlook.com
+ (2603:10b6:208:f4::21)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231009130116.329529591@linuxfoundation.org>
-In-Reply-To: <20231009130116.329529591@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 11 Oct 2023 07:13:35 +0530
-Message-ID: <CA+G9fYu-h0kUGyQG4XTc6J7NZMvUeMSUuiY8KU0giNcPfzuU7A@mail.gmail.com>
-Subject: Re: [PATCH 5.4 000/131] 5.4.258-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR11MB3728:EE_|SN7PR11MB6994:EE_
+X-MS-Office365-Filtering-Correlation-Id: 36f32d8b-2243-4b9f-3f5f-08dbca03a3ea
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: QzEUlxRPcoJZqGRGlq/MU9SN58NHbBo613KGGvVeFkgUrbKe8AiT9/x+hhe7x1iV2SMxq1OLI9RyK3yYXiLcOP7Yupybkl40zDnvHj5Jh1zsLB9Q5rAxPDg77DL5z7nfm4it8vAEnY6GQQxYcV6H15uyPBneXgH5vSmdVH0mDBSP67QWGIbj1/05mhCA6s9q7cqSw9BKo+oC5wYl6lrNzGa6h72myU7VPt6tCjFmadUX8D8NrTMYIWv8LPjjJvhz+/etCJeGJnpbqz4qRD9qqQzG0sZlYLJm+Jq/VaaB5YCW+bWT/1C/wF0yx2q1uxHCv+jq640pIDlBMAzbc3KIssLPHoBHnNPOFR2nEnSc8w+b1q6JC+7bu6/B66AwIVvCoBpIlbDnpW68gMRdwhtJjPi93AGrIrjpbTYLMsS71Fds29HMrF1/kiZ4lStkU3Bmy2dr1MYevm5E8yj6f6056v/WwUIkcWqemz3ga9G/z+99Mk5xgDYlDHJCKVROFdFzXwaBZkjpfi4/qMxHroqijR/oztP7HHqUlalBoUU/uQ1/gcnfWRQZQxhd8AzEvosW9PC3ZXKMKpQdvXO3gaXHqlKD815RYHN3AFSnFkPNx450t3gH4ZIpLIIZfbHvgt6WjbblaFrpre94GuqbH0fQi/9iqNXAFcf4JdaRjwnMAnY=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR11MB3728.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(136003)(346002)(366004)(39860400002)(376002)(230922051799003)(451199024)(1800799009)(186009)(64100799003)(36756003)(6666004)(6506007)(6512007)(6486002)(53546011)(82960400001)(38100700002)(86362001)(31696002)(2616005)(26005)(66476007)(66946007)(66556008)(41300700001)(5660300002)(2906002)(8676002)(6916009)(4326008)(8936002)(83380400001)(316002)(31686004)(478600001)(966005)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z1VFbHFUTTV5ejgySkZKZGVzbXJESWJFMzhSR3QvSDZaaU5ZR0V4YXo2a0NB?=
+ =?utf-8?B?cXRwYWVRdHM5QTBESEcyQXdDeWhxZmNsYVhqN2lFVWt6TklhMUFwWVFlSjls?=
+ =?utf-8?B?Mi92Zm0zaDNxNGlLeE5KWEpWWW1hK3d2MVpjL1hsTFRsaTUzLzBoTkY1YzdB?=
+ =?utf-8?B?SXo5NnJ2M3hHWnhjTEZ3RTlQVytlSGo5bTlFZjRBOWhWL2tkLzBpencwM2wy?=
+ =?utf-8?B?ekdTelRMdWl4MGlTUWsyN1JCVG1Ib3JnOUxwajRKd2haMVd2WlV4dkw0R1dh?=
+ =?utf-8?B?Q3N3cXh1ZlQ1eExjMVVsWC9IcHFvNUd1aDU4WDQ2ZXlHWkxyYi8wTFRSYURu?=
+ =?utf-8?B?d3ExeFVpQmlaY0tIbEVNdlNoV0hzYkhkaFBIYi96VDBSbXhoTlArUkRqVVZZ?=
+ =?utf-8?B?c0NnTXVrY2JnR21Cc2Z5NC9GOWs4QkZuNlNybVZNYmJaVzRldk5XU1ZBY2Zm?=
+ =?utf-8?B?eTRHcng1NXFvVDNDakJHR2NRN3dWN1FJT0hxK0Y5cG1RMml5b09GZ3VMekE0?=
+ =?utf-8?B?Tk5NUnUrTStlT2NOVDBWOVBicE1RbnBWSDhaWDFBbkxGWDVZUnpSNlV0UWo1?=
+ =?utf-8?B?UzhnREgzT2x3bUNaTFVUM25lS1R0U3FwWWYzOGludDIyT3FuOXhqTnRWWHZp?=
+ =?utf-8?B?TzQ5NVhaT0pRTmVnNncvczNUM3AwdzEwZjJKR1RYeFBVaGx1c28wVlRJYSth?=
+ =?utf-8?B?TzQxcFR4eUVmQjF6dFJibStnQzZxSVhwY3BoNVFndy9zOHNhbDRvOSswR0lq?=
+ =?utf-8?B?cnAxZUliV3A0b1pHOHBIaDM3aU5iU3Vhb3gxVTdjVFl3RlVZRDlWektwOXlB?=
+ =?utf-8?B?QjV5cVRHZHlDS2R2M1c2QzZSWFA1aC9vNDd6em5WakwwU2IzZDZoTUNZckJo?=
+ =?utf-8?B?VEtLWDVIT3NzekZvZmIvMzZZempEZkFFSXVBZzRvSEI4WnlKNVhlQndPU21N?=
+ =?utf-8?B?bEZoZ0o1NFJOWGNLOE9KUWlwQTE5cldsQ1dkT0NCVit3ajZkSEFURFlha1BT?=
+ =?utf-8?B?dVZZZWZ1UkFleEFlVEdtczloWjdwem9nY1c2a1ByTnRqbzMyTklUUUJUalpn?=
+ =?utf-8?B?b0U3b1o3bnlwRml2aFNBYTVPaG12Wk1jaE9ibERlMWw5REJXbXZCVUJLYW00?=
+ =?utf-8?B?Nkx3MWRDRXFENndCMVJDTGFxcXZycWNJNGpIcVJwNnMzT3dJdkk3N1JxVkxF?=
+ =?utf-8?B?UCtvVnk1YThXSTBVb0pkYU9pVkMwL1MvNlB3L2k5SktFTEg0UDUyc3BJU0Jz?=
+ =?utf-8?B?OHlMZVJlRC8xcUt6S3JOYW5Zb1B5NWdzNnVMQnE3VklIZnVxR0s3UXBXOTVP?=
+ =?utf-8?B?Y0QxR0I0bkl3WXJqRjhibGprTHY3NDBUMElDOGVEamZyanJCcnF6ZE9tMTdk?=
+ =?utf-8?B?bEdvbFBscEQvNWJEWHV6TWdJeTF3OUxhZHpvYWQ3RUJxT25mUlc3bFRtSnQx?=
+ =?utf-8?B?eldJLzYvK3ArWTN3YzlDWnhIcEVZVlRUYmd2Qld0dlFPWGt5czdrU0o3Uytx?=
+ =?utf-8?B?YysrQThXOExaZ2hJWGxtQ0JQSVZmUkhLcDRoZEpGZVdvSzh1TDUzWThrVFVT?=
+ =?utf-8?B?c3NzSmJkZG1MUWVCYmhBOU40a0RIbjkxRGllenozcGZNZ0lnQ1JMM3NDN3RN?=
+ =?utf-8?B?TUhuK3dsd2pTblBpZXZESmI0Mlo2ZG1tT1Z2WVVzaWxYKysxaGErcjJjd2tt?=
+ =?utf-8?B?ZHZDNUMzQjRib3ZwLzdRUUF5Y1ZUODJreThJTEJwV1R6VXBKMFlTaDRSNnBS?=
+ =?utf-8?B?L3Joc2hjWXJTTHJxbHBrNHpTaExqdXMvN0U4TFdrdnowcGFPNXgrRFJodFFk?=
+ =?utf-8?B?NEg1YkZITHVjZlBnT0NxYlFBYVhuSTRhcUZ3VjJBSTIxRjZsZ3Z5djFNOHQr?=
+ =?utf-8?B?S3ZPNmczV2RCbUtLNzVlWHEzaGQ4T09NZUs5MS9Bblh0UGJRWmxXRE1kWjk0?=
+ =?utf-8?B?Z3MzeDcwT1NvSlNxNnJ1Yy9YUCtkZkhPVkFUMk04THdBekVvajZZL2cxNG1r?=
+ =?utf-8?B?WHRVNXFUbFhPQW5oTUMvT2xXblo3eDBLb1FBOXB1ZjdqTURqWnpxMXJaQzYz?=
+ =?utf-8?B?YzRqZ3pjc2g2YThPN3BrTUdSWWZUNEVQOWo3UXJObkNOVGRLYmtsR0IzeG4r?=
+ =?utf-8?Q?0iQE3HKybzEcKSXLHnqsB4672?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 36f32d8b-2243-4b9f-3f5f-08dbca03a3ea
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR11MB3728.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Oct 2023 02:41:59.7696
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /Cz1s6m7m78a4SSB3Rg8iiBM9M70ZT4X0QK4WKhNyM7krVPvVRwowToK1HaTQIdmRSXWf4A9NHoczI8LuL7usw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB6994
+X-OriginatorOrg: intel.com
 
-On Mon, 9 Oct 2023 at 18:58, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.4.258 release.
-> There are 131 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 11 Oct 2023 13:00:55 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.4.258-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.4.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+On 2023/10/10 16:28, Borislav Petkov wrote:
+> This commit message should explain the full scenario, like you did in
+> your other reply.
+> 
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Thanks for your review, Boris!
 
-## Build
-* kernel: 5.4.258-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.4.y
-* git commit: 9209af362e00e07217be717fc07b25118037adc6
-* git describe: v5.4.257-132-g9209af362e00
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.2=
-57-132-g9209af362e00
+I'll improve the commit message in V3 as you said.  Just adding the full
+scenario part, the paragraphs to introduce the considerations for the 3
+solutions and how to validate the patch are unnecessary, right?
 
-## Test Regressions (compared to v5.4.257)
+> Also explain how the poison flag is consumed by the kdump kernel and put
+> that in the comment below.
+> 
 
-## Metric Regressions (compared to v5.4.257)
+Aha, this is the neat thing about the patch.  The main task of kdump
+kernel is providing a "window" - /proc/vmcore, for the dump program to
+access old memory.  A dump program running in userspace determines the
+"policy".  Which pages need to be dumped is determined by the
+configuration of dump program, it reads out the pages that the
+sustaining engineer is interested in and excludes the rest.  The de
+facto dump program (makedumpfile) already supports to identify those
+poisoned pages and exclude them a decade ago:
 
-## Test Fixes (compared to v5.4.257)
+https://github.com/makedumpfile/makedumpfile/commit/030800d88d4baca5f60ade0acc1846a65608883c
 
-## Metric Fixes (compared to v5.4.257)
+That's why I said the solution 1 is remaking the wheels, scanning MCE
+banks, checking the poison flag, and excluding error pages are
+duplicated actions.  To set the HWPosion flag in the production kernel
+before panics is the only missing step to make everything work.
 
-## Test result summary
-total: 88941, pass: 70613, fail: 2365, skip: 15914, xfail: 49
 
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 148 total, 148 passed, 0 failed
-* arm64: 47 total, 45 passed, 2 failed
-* i386: 30 total, 24 passed, 6 failed
-* mips: 30 total, 29 passed, 1 failed
-* parisc: 4 total, 0 passed, 4 failed
-* powerpc: 32 total, 31 passed, 1 failed
-* riscv: 15 total, 15 passed, 0 failed
-* s390: 8 total, 8 passed, 0 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 39 total, 39 passed, 0 failed
+>> [Tony: Changed TestSetPageHWPoison() to SetPageHWPoison()]
+>>
+>> Co-developed-by: Youquan Song <youquan.song@intel.com>
+>> Signed-off-by: Youquan Song <youquan.song@intel.com>
+>> Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
+>> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> What does Tony's SOB mean here?
+> 
+> If I read it correctly, it is him sending this patch now. But you're
+> sending it so you folks need to read up on SOB chains.
+> 
 
-## Test suites summary
-* boot
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-vm
-* kselftest-watchdog
-* kselftest-x86
-* kselftest-zram
-* kunit
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
+When we were developing the patch internally, Tony contributed a lot of
+precious ideas and guidance, not only the code change he mentioned in
+commit message.
 
---
-Linaro LKFT
-https://lkft.linaro.org
+The previous V2 sent by Tony missed the merge window of v6.5, so I
+re-based it onto the latest v6.6 rc, re-validated and re-send the patch.
+ And I will follow up the feedback from community.
+
+
+>> Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+>>
+>> ---
+>> V2 RESEND notes:
+>> - No changes on this, just rebasing as v6.6-rc1 is out.
+>> - Added the tag from Naoya.
+>>   Link: https://lore.kernel.org/all/20230719211625.298785-1-tony.luck@intel.com/#t
+>>
+>> Changes since V1:
+>> - Revised the commit message as per Naoya's suggestion.
+>> - Replaced "TODO" comment in code with comments based on mailing list
+>>   discussion on the lack of value in covering other page types.
+>>   Link: https://lore.kernel.org/all/20230127015030.30074-1-tony.luck@intel.com/
+>> ---
+>>  arch/x86/kernel/cpu/mce/core.c | 18 ++++++++++++++++++
+>>  1 file changed, 18 insertions(+)
+>>
+>> diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+>> index 6f35f724cc14..2725698268f3 100644
+>> --- a/arch/x86/kernel/cpu/mce/core.c
+>> +++ b/arch/x86/kernel/cpu/mce/core.c
+>> @@ -156,6 +156,22 @@ void mce_unregister_decode_chain(struct notifier_block *nb)
+>>  }
+>>  EXPORT_SYMBOL_GPL(mce_unregister_decode_chain);
+>>  
+>> +/*
+>> + * Kdump can exclude the HWPosion page to avoid touch the error page again,
+>> + * the prerequisite is the PG_hwpoison page flag is set. However, for some
+>> + * MCE fatal error cases, there are no opportunity to queue a task
+>> + * for calling memory_failure(), as a result, the capture kernel panics.
+>> + * This function marks the page as HWPoison before kernel panic() for MCE.
+>> + */
+>> +static void mce_set_page_hwpoison_now(unsigned long pfn)
+>> +{
+>> +	struct page *p;
+>> +
+>> +	p = pfn_to_online_page(pfn);
+>> +	if (p)
+>> +		SetPageHWPoison(p);
+>> +}
+> there's no need for that function - just put everything...
+> 
+>> +
+>>  static void __print_mce(struct mce *m)
+>>  {
+>>  	pr_emerg(HW_ERR "CPU %d: Machine Check%s: %Lx Bank %d: %016Lx\n",
+>> @@ -286,6 +302,8 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
+>>  	if (!fake_panic) {
+>>  		if (panic_timeout == 0)
+>>  			panic_timeout = mca_cfg.panic_timeout;
+>> +		if (final && (final->status & MCI_STATUS_ADDRV))
+>> +			mce_set_page_hwpoison_now(final->addr >> PAGE_SHIFT);
+> ... here, along with the comment.
+> 
+
+Good idea. I'll send V3 as you said.
+
+
+Best Regards,
+Zhiquan
