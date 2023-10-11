@@ -1,197 +1,195 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09188211A
-	for <patches@lists.linux.dev>; Wed, 11 Oct 2023 14:44:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5030CC433C8;
-	Wed, 11 Oct 2023 14:44:07 +0000 (UTC)
-Date: Wed, 11 Oct 2023 10:45:29 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, Masami Hiramatsu
- <mhiramat@kernel.org>, stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, Mark Rutland <mark.rutland@arm.com>,
- "Paul E. McKenney" <paulmck@kernel.org>, Peter Zijlstra
- <peterz@infradead.org>
-Subject: Re: [PATCH 4.19 00/29] 4.19.282-rc1 review
-Message-ID: <20231011104529.75f53d4b@gandalf.local.home>
-In-Reply-To: <2023101125-subpanel-enviably-28cd@gregkh>
-References: <20230424131121.155649464@linuxfoundation.org>
-	<CA+G9fYstB_fROK9LHYuQ8dc2ArieGGAW_x69eEX-eAi5xMeE3Q@mail.gmail.com>
-	<20230426170945.0ec0f1ef@gandalf.local.home>
-	<20230426181415.17c893f5@gandalf.local.home>
-	<CA+G9fYtd=dJEM=+xOHA9Egs88r+gEfrnW_gFnTFm4of5uTQ7mA@mail.gmail.com>
-	<CA+G9fYt518bg10DVo=ag=iGB8dj_NQZEmEty1CdkU3Cj+gtW0w@mail.gmail.com>
-	<2023101132-playable-flagstick-1abf@gregkh>
-	<2023101125-subpanel-enviably-28cd@gregkh>
-X-Mailer: Claws Mail 3.19.1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D2333C0;
+	Wed, 11 Oct 2023 15:16:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GrCSbT7z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697037411; x=1728573411;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=gV4F1BuXbFi21nC1RnNLHQXO6eTmsyt4ty2MJwH+8/4=;
+  b=GrCSbT7zF//a4uObIJoRaR+X6Hn76U2GlxRAQJVtXMwddtok2KksCswj
+   PgUvxiJaXKCXz84W75Eqfyo/qwB5K9Ub7PY2CF1LuuXNiAIo7qMGQEwiY
+   Q1bZ4/RmW29e/b1VulKs9+ekaGDutTrmZbe9ngyXZDeXu2CdP/Dt7STst
+   8fVlVqggdq2mY4Do3p6Ctv4SFZgMSfZyLFseLnUs0LpDinnQR9+dKH1nw
+   DzYa2bMnraIfxG0CLtSotswb0TNKYtc65BigLtpCM+1E/xzKdsGwQal9y
+   fdRGs1LCJEnKSMcPb+3AuHSlXhJ0o70PHugyLhPiR8ltU7Z8jR5Te9fNR
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10860"; a="451183150"
+X-IronPort-AV: E=Sophos;i="6.03,216,1694761200"; 
+   d="scan'208";a="451183150"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2023 08:16:49 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10860"; a="730537609"
+X-IronPort-AV: E=Sophos;i="6.03,216,1694761200"; 
+   d="scan'208";a="730537609"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+  by orsmga006.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 11 Oct 2023 08:16:49 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Wed, 11 Oct 2023 08:16:49 -0700
+Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
+ ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Wed, 11 Oct 2023 08:16:49 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32 via Frontend Transport; Wed, 11 Oct 2023 08:16:49 -0700
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.168)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.32; Wed, 11 Oct 2023 08:16:48 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=aeLBiAo6e1VZZZ7G+HaBYPqQHOI5E5QS2C97C9p309X8skIjoZ7juA8zOaD3wn5lhDno8cbQ2Cw7gSxw83JASEBAP+7WBkFlKOGDJgFvuXt3vedJDdbro4t8rFPpwhyqrVEInBy7RcVQ8N/wHI6q9AO6I8LdA6OeYifH0YAju0O6fLRyP0B6U4SZXo53R1fRLoioeUYPZBvK1WyOBY+0lXOgEi8RzG8JoRt2YF0hAe+cIx5TLyUnJTvoy2BdHZt5F63rjGWCfQvkRsaR3dIY2pOFtn4yEeF72l6eY2qo36lnRNa4I6/ZVO4G/AoeY/RlWHXKavlst/NPo3A/WQDHZw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Y8D4n4zU9RMv1ITknYqtuR8D7ctKViV/VUxXQ2BTYr8=;
+ b=NMOv4TL9Kn2B9pDiH8MmBXxWf+nYryBa8mRdZVWP9+zBnr0etzsp9TQ9sWPdYf+ecUhDQNK4vo1vrkvn6vLevm1Guur792Tly4KnBcVl6caOx0pIvuwCkArgwaisI3Kwml5aIg06VQf3NFi1XRKaoAm8PziohGDHmJfyb8THfblyPJCuah58Tqb4Q0lHRocwz3oVJrAmV84tiD4032q3YVi8L2gj+9wult1UFhGEWzVzOcA4AY1FN3P/RJWML4Agx+2CXkcAmAZZncRTy9PxQ22//BHDzseVjF9sv8pA2zsC2Z+Ndy1V1QAtNeN55ZQ/J/4WJVFafkUb27Xy6JIgEQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
+ by SA2PR11MB4860.namprd11.prod.outlook.com (2603:10b6:806:11b::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6863.44; Wed, 11 Oct
+ 2023 15:16:47 +0000
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::7316:13b0:88bc:b3c8]) by SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::7316:13b0:88bc:b3c8%4]) with mapi id 15.20.6863.032; Wed, 11 Oct 2023
+ 15:16:46 +0000
+From: "Luck, Tony" <tony.luck@intel.com>
+To: "Sang, Oliver" <oliver.sang@intel.com>
+CC: "oe-lkp@lists.linux.dev" <oe-lkp@lists.linux.dev>, lkp <lkp@intel.com>,
+	"linux-edac@vger.kernel.org" <linux-edac@vger.kernel.org>, "Huang, Ying"
+	<ying.huang@intel.com>, "Tang, Feng" <feng.tang@intel.com>, "Yin, Fengwei"
+	<fengwei.yin@intel.com>, Borislav Petkov <bp@alien8.de>, Yazen Ghannam
+	<yazen.ghannam@amd.com>, "Smita.KoralahalliChannabasappa@amd.com"
+	<Smita.KoralahalliChannabasappa@amd.com>, "dave.hansen@linux.intel.com"
+	<dave.hansen@linux.intel.com>, "x86@kernel.org" <x86@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
+Thread-Topic: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
+Thread-Index: AQHZ9vG7TU6w8G+TdkO4n2sYy/mmYrBEV9iAgABlLAA=
+Date: Wed, 11 Oct 2023 15:16:46 +0000
+Message-ID: <SJ1PR11MB6083D191286779302821A7EAFCCCA@SJ1PR11MB6083.namprd11.prod.outlook.com>
+References: <20231004183623.17067-3-tony.luck@intel.com>
+ <202310111637.dee70328-oliver.sang@intel.com>
+In-Reply-To: <202310111637.dee70328-oliver.sang@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|SA2PR11MB4860:EE_
+x-ms-office365-filtering-correlation-id: eb84bbf1-881e-4b08-cfcb-08dbca6d15c8
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: od0eLQKsQk9f8py3a9Rtp9f1CVzKPn01zXRAel5VPIa7//h2DJ7DPKy7qX7bVd5MasPoSai3tlpQYx3+BNpz3q4icxvCVLIkPQutW3IO5LT8w9fb9ROeGnJajB6QfYB3XSTB8j7vZOuLjQ5xxDMZC1iHRQCGZZtE0+q9vTFx5mhRFd0AnNnjZheG/8rTkzS/p3byL+jdVlG/CGHQ1rOSyqX5kgDwybT0neQ4bmIIrL/VaUg7RimBtlR8UuYXqdIU2wc+/iNrz6S53+BZI3nEB1o4zaB3pkE1DrTHh304VC/WSc594/k+TQQOK5RPGaQxHgcAf/H7I/nU5DqJd5JsiJAB7fD3Yc/nIkWoddtj3F7Xw81uiUQDL8Pq1QpklbsggUOeGiir514DNHlkjzhi3lKQkREGOVry7LMXjFfVM27k7KsgBqiEw021rPsKOLMfAD0tUJFL6O/R57FWtv1/sCEwejDwLApOWm0wL1faNVlpMq33Aam+UORvPQTG3lQwE3jtFFrTyz4GWSdwUmuKL7Lt45dQYhBpkg3Y6Ac88r7Wsku2A2iiDQfARhQXTlQSGhYHYf9//9hAb5Yl1UIprwJfG6Ia1NHXzqJzroJ7bU2iyU6/y3JptQzHdbacYI9tr4ZnsPb5oUaq+LtcwZhRMg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(396003)(366004)(39860400002)(136003)(346002)(230922051799003)(64100799003)(451199024)(1800799009)(186009)(9686003)(26005)(7696005)(6506007)(83380400001)(71200400001)(55016003)(966005)(478600001)(8936002)(8676002)(6862004)(5660300002)(4326008)(41300700001)(38100700002)(82960400001)(38070700005)(122000001)(2906002)(52536014)(33656002)(86362001)(15650500001)(66556008)(66476007)(66446008)(64756008)(54906003)(66946007)(76116006)(6636002)(316002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?gSY+7jofN+nCplZBozQRBcd/pGSR/ZV5J74jccVfN+jKSVFfzftyXhf0Csst?=
+ =?us-ascii?Q?TT8qBKcxEpsz+in7/w7yMZBslGAo18lBRik0mw8jP2SOoGv+zhQzgAncKIJU?=
+ =?us-ascii?Q?uz0lFSrSFpWY62AXeBEZskkUx/csstfEOIivsyHkhctFckfNmm7vSMQTo1Sn?=
+ =?us-ascii?Q?Ur5iXeUnroOY4J/8zec7RMpiR83dyjASr8krXa2rQ2BdSH8Kkn7eVKa//OLt?=
+ =?us-ascii?Q?0uoeCervwZSGOXHUHbcWywoe7hE1Ho2EUWulyyVaqlTxqxYbA1f8TcPY3r18?=
+ =?us-ascii?Q?q8BOOxLPxrlUGamwNBqnKm97Xl9+JCj4QDNVn5cTv9msFWE04arAoWBnjjdQ?=
+ =?us-ascii?Q?JOozA+Zbm8uKvpH9J4Kivl6KgoqGI/lz+yzNtGUhzLLlAxph7ukkEseUaaQF?=
+ =?us-ascii?Q?0eAQrpaKeB+/vNQAfcNZVNC9H9md0MDL41ELwfAXIcDmPjujfwb0D6al3+j2?=
+ =?us-ascii?Q?QmkBhpTIsvq8Bhc40bi+oywJXOgJlHKVSuqESR6DQeDDvnyRQDtyCckk8rWJ?=
+ =?us-ascii?Q?GiohdfWIR1dDLeRIcWXlNY5irtDda7jVUMstez+FSosgnlCOrUH98ykL7TVr?=
+ =?us-ascii?Q?Gu2z8FSrktkisVenNUxacTXr5VRX3ncMHmw34BecGIdxc/NQ397wxku7cNFT?=
+ =?us-ascii?Q?IoeyvWtMrEdbh1kyX+bL0QG6mqBRaabUEvk2KVl2LW7IZ9iZ6ato31SUkDY4?=
+ =?us-ascii?Q?cYaJeTwjyGjxeAUXqXU47wbeWqAjEsmAqTW4eClWSiyIOlnyod7em5/TJzB8?=
+ =?us-ascii?Q?6TBWenW+iMJDLhiPXqij0rxSA74FbYR3fahDgB+vhGuheHD9bvAy392djX5O?=
+ =?us-ascii?Q?PZiFzOR2STbqbUshW5iuprBlRotzXJKQlD4cG/HpRwGKt08wU8dm3QNJfKVh?=
+ =?us-ascii?Q?5sIMuqSXE0yCNqE7XZmgpHsKh32ORvdFGUCHrGa7+QEPaNv1aQby9kbepZKB?=
+ =?us-ascii?Q?D1Rwf6dDCyb19RW3NFGcEZqB/GT6PMz/pY9r8r3VbYCUIKFW60Dr/hYn4bEi?=
+ =?us-ascii?Q?UK9sjVFou3Nr+sLwvV2pYeOuWlNCTE5zYOt5d0FTC5zxkQfXoqang4QTxFh6?=
+ =?us-ascii?Q?ZAnvTMsjGsuFy8lVC+GRvmdfIevmxQ7DWzjQNUSAKEgDS+kvd1xtzYpMIWrV?=
+ =?us-ascii?Q?iDAZd4XiV4xi9cgsAwVunnlar+WO5cmtTBYir2sdGw3s8XE1WHZG4XZyl7z5?=
+ =?us-ascii?Q?Y/xt7KIfLYjAANxH4XyfHw7w8+smx5GCcWyqCgobHmp1Lh83+DS/mbmG8mvC?=
+ =?us-ascii?Q?j0McIXQ9fjvZPXFX+2lwIyg675nPYxhW5XnuuHKsFySl4RM2AJf0AkzNU8+X?=
+ =?us-ascii?Q?QShaQoqkYDLvZKwKwjS0CbkqhkQPR+QFCxHrRxblI+P6U3kxihWPicR2nIdb?=
+ =?us-ascii?Q?hGKSLJgjv1Pu+jYzrHb3v864GWjZioMPKpS8aP5NF6hYWzDdDg0uG1paKoeb?=
+ =?us-ascii?Q?2hqFSS+cBDkXEEfb0eb5yxAjykOWE2UWyOpy6zoZEG+BV90AEwaNDWeNBmFN?=
+ =?us-ascii?Q?E5Hlm1FoRVK0SntggQy/9aX2Gl5E0Qb3YWHYSDWbl8Pl6fNlsHmPYNUxQGWt?=
+ =?us-ascii?Q?kmSJvj/OBRfBs1NtHCvy3HivDGFTfEw/8Zwbni2D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eb84bbf1-881e-4b08-cfcb-08dbca6d15c8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Oct 2023 15:16:46.8492
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 2ClaIeMZAXZordNALkxNyoRyXowHeYt5e/OF6hKphzjTCAi0ZT6FY8tN94kl6zpKUfKEiO+vjq+YejraFK4nmw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB4860
+X-OriginatorOrg: intel.com
 
-On Wed, 11 Oct 2023 11:05:48 +0200
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> kernel test robot noticed a -8.8% regression of stress-ng.clock.ops_per_s=
+ec on:
+>
+>
+> commit: 26bff7b04b829cccc6a97726d6398391a62e34ef ("[PATCH v9 2/3] x86/mce=
+: Add per-bank CMCI storm mitigation")
+> url: https://github.com/intel-lab-lkp/linux/commits/Tony-Luck/x86-mce-Rem=
+ove-old-CMCI-storm-mitigation-code/20231005-024047
+> patch link: https://lore.kernel.org/all/20231004183623.17067-3-tony.luck@=
+intel.com/
+> patch subject: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
+>
+> testcase: stress-ng
+> test machine: 64 threads 2 sockets Intel(R) Xeon(R) Gold 6346 CPU @ 3.10G=
+Hz (Ice Lake) with 256G memory
+> parameters:
+>
+>       nr_threads: 10%
+>       disk: 1HDD
+>       testtime: 60s
+>       fs: ext4
+>       class: os
+>       test: clock
+>       cpufreq_governor: performance
+>
+>
+>
+>
+> If you fix the issue in a separate patch/commit (i.e. not just a new vers=
+ion of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <oliver.sang@intel.com>
+> | Closes: https://lore.kernel.org/oe-lkp/202310111637.dee70328-oliver.san=
+g@intel.com
 
-> > Ok, I'll queue it up now, I didn't realize it needed to be there, sorry.  
-> 
-> Nope, I can't, it doesn't apply there, so I need a backported, and
-> TESTED version, for 5.4.y and 4.19.y if anyone wants to see it there.
+Is the test injecting massive numbers of corrected memory errors? The code =
+in this patch
+is only executed when handling CMCI interrupts, or polling machine check ba=
+nks (at most
+once per second).
 
-This is a quick backport for 4.19 as the conflict seemed to be due to added
-code that is unrelated to this change. I built and booted it, but it should
-have more testing.
+I'm guessing this report is just because alignment of some hot path code ch=
+anged.
 
-Naresh, if you want this in 4.19, please run it through your tests and give
-your tested by.
-
-Greg, please do not take it until Naresh has tested it.
-
-Thanks,
-
--- Steve
-
-diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
-index 2d182dc1b49e..01bde6dec13a 100644
---- a/drivers/cpuidle/cpuidle.c
-+++ b/drivers/cpuidle/cpuidle.c
-@@ -140,13 +140,14 @@ static void enter_s2idle_proper(struct cpuidle_driver *drv,
- 	 * executing it contains RCU usage regarded as invalid in the idle
- 	 * context, so tell RCU about that.
- 	 */
--	RCU_NONIDLE(tick_freeze());
-+	tick_freeze();
- 	/*
- 	 * The state used here cannot be a "coupled" one, because the "coupled"
- 	 * cpuidle mechanism enables interrupts and doing that with timekeeping
- 	 * suspended is generally unsafe.
- 	 */
- 	stop_critical_timings();
-+	rcu_idle_enter();
- 	drv->states[index].enter_s2idle(dev, drv, index);
- 	if (WARN_ON_ONCE(!irqs_disabled()))
- 		local_irq_disable();
-@@ -155,7 +156,8 @@ static void enter_s2idle_proper(struct cpuidle_driver *drv,
- 	 * first CPU executing it calls functions containing RCU read-side
- 	 * critical sections, so tell RCU about that.
- 	 */
--	RCU_NONIDLE(tick_unfreeze());
-+	rcu_idle_exit();
-+	tick_unfreeze();
- 	start_critical_timings();
- 
- 	time_end = ns_to_ktime(local_clock());
-@@ -224,16 +226,18 @@ int cpuidle_enter_state(struct cpuidle_device *dev, struct cpuidle_driver *drv,
- 	/* Take note of the planned idle state. */
- 	sched_idle_set_state(target_state);
- 
--	trace_cpu_idle_rcuidle(index, dev->cpu);
-+	trace_cpu_idle(index, dev->cpu);
- 	time_start = ns_to_ktime(local_clock());
- 
- 	stop_critical_timings();
-+	rcu_idle_enter();
- 	entered_state = target_state->enter(dev, drv, index);
-+	rcu_idle_exit();
- 	start_critical_timings();
- 
- 	sched_clock_idle_wakeup_event();
- 	time_end = ns_to_ktime(local_clock());
--	trace_cpu_idle_rcuidle(PWR_EVENT_EXIT, dev->cpu);
-+	trace_cpu_idle(PWR_EVENT_EXIT, dev->cpu);
- 
- 	/* The cpu is no longer idle or about to enter idle. */
- 	sched_idle_set_state(NULL);
-diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
-index 44a17366c8ec..4e3d149d64ad 100644
---- a/kernel/sched/idle.c
-+++ b/kernel/sched/idle.c
-@@ -53,17 +53,18 @@ __setup("hlt", cpu_idle_nopoll_setup);
- 
- static noinline int __cpuidle cpu_idle_poll(void)
- {
-+	trace_cpu_idle(0, smp_processor_id());
-+	stop_critical_timings();
- 	rcu_idle_enter();
--	trace_cpu_idle_rcuidle(0, smp_processor_id());
- 	local_irq_enable();
--	stop_critical_timings();
- 
- 	while (!tif_need_resched() &&
--		(cpu_idle_force_poll || tick_check_broadcast_expired()))
-+	       (cpu_idle_force_poll || tick_check_broadcast_expired()))
- 		cpu_relax();
--	start_critical_timings();
--	trace_cpu_idle_rcuidle(PWR_EVENT_EXIT, smp_processor_id());
-+
- 	rcu_idle_exit();
-+	start_critical_timings();
-+	trace_cpu_idle(PWR_EVENT_EXIT, smp_processor_id());
- 
- 	return 1;
- }
-@@ -90,7 +91,9 @@ void __cpuidle default_idle_call(void)
- 		local_irq_enable();
- 	} else {
- 		stop_critical_timings();
-+		rcu_idle_enter();
- 		arch_cpu_idle();
-+		rcu_idle_exit();
- 		start_critical_timings();
- 	}
- }
-@@ -148,7 +151,6 @@ static void cpuidle_idle_call(void)
- 
- 	if (cpuidle_not_available(drv, dev)) {
- 		tick_nohz_idle_stop_tick();
--		rcu_idle_enter();
- 
- 		default_idle_call();
- 		goto exit_idle;
-@@ -166,19 +168,15 @@ static void cpuidle_idle_call(void)
- 
- 	if (idle_should_enter_s2idle() || dev->use_deepest_state) {
- 		if (idle_should_enter_s2idle()) {
--			rcu_idle_enter();
- 
- 			entered_state = cpuidle_enter_s2idle(drv, dev);
- 			if (entered_state > 0) {
- 				local_irq_enable();
- 				goto exit_idle;
- 			}
--
--			rcu_idle_exit();
- 		}
- 
- 		tick_nohz_idle_stop_tick();
--		rcu_idle_enter();
- 
- 		next_state = cpuidle_find_deepest_state(drv, dev);
- 		call_cpuidle(drv, dev, next_state);
-@@ -195,8 +193,6 @@ static void cpuidle_idle_call(void)
- 		else
- 			tick_nohz_idle_retain_tick();
- 
--		rcu_idle_enter();
--
- 		entered_state = call_cpuidle(drv, dev, next_state);
- 		/*
- 		 * Give the governor an opportunity to reflect on the outcome
-@@ -212,8 +208,6 @@ static void cpuidle_idle_call(void)
- 	 */
- 	if (WARN_ON_ONCE(irqs_disabled()))
- 		local_irq_enable();
--
--	rcu_idle_exit();
- }
- 
- /*
+-Tony
