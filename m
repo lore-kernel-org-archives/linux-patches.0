@@ -1,98 +1,80 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0E03A26E;
-	Wed, 11 Oct 2023 20:22:09 +0000 (UTC)
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D53AA2B741
+	for <patches@lists.linux.dev>; Wed, 11 Oct 2023 23:32:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="peocWnSI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1E7C433C7;
-	Wed, 11 Oct 2023 20:22:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1697055729;
-	bh=oEPFEr69GOFnlvxRi+OQJiP0bTLBwUD6RP2Enyu8lR0=;
-	h=From:Date:Subject:To:Cc:From;
-	b=peocWnSImSksa62GSPAn85I3k+ZvLdOPgLVoQt5Vuy/sPj9YK66RvBb43iKxBOHw3
-	 cTYd37njxwYGCpuF/kg+f3j13Ac7nBoaxAPKxrwoxX3sjmEn6nNRqGEvJS7KinK40l
-	 /Jupky0h+QKMjw3UNe41uZ5qN/0C/xdymc0SIB+ijTje5xbC0zb9h8uwmOi6hy2Lyf
-	 m1QSEDD3/AMXmF5nRmsoTUoYtmF2e10dVbo/NkvAjZMH4Sx+ygoFrNajvGY1KVjYhB
-	 XW6GNOoURwhir5Ko3mFOsF3A2/IOixOk0bRvqiezLMVcyJ27s4npOofcwqAANBZz/g
-	 o8Wrxk/tqXgFA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 11 Oct 2023 13:21:51 -0700
-Subject: [PATCH] ASoC: tegra: Fix -Wuninitialized in
- tegra210_amx_platform_probe()
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="HbmZaTJo"
+Received: from [10.0.0.178] (c-76-135-56-23.hsd1.wa.comcast.net [76.135.56.23])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 80D9A20B74C0;
+	Wed, 11 Oct 2023 16:32:30 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 80D9A20B74C0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1697067151;
+	bh=4Hm83xIHy0uJKbXFIfT/CbbMnnFeszXXVJIu6LMsrrc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=HbmZaTJobUZ3XDNnfzWrOkOnKOlVq7XoAVl3UI/c580uOL9uoPFUxcnZuVT3fewhn
+	 MXLwG6epTJtrZimHm5s+iWvkP0Fg8yDx8+vNEv6oZP9kQtXGr8o1hUn8iNFBP/u0Zl
+	 BGEIS0wv5i1LokehZ8ktTWZ9RlZuxQuFcrCkNMh4=
+Message-ID: <0f2df9e8-8145-4749-893c-e256820bb90f@linux.microsoft.com>
+Date: Wed, 11 Oct 2023 16:32:34 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 14/15] asm-generic: hyperv: Use new Hyper-V headers
+ conditionally.
+To: Alex Ionescu <aionescu@gmail.com>
+Cc: linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
+ x86@kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-arch@vger.kernel.org, patches@lists.linux.dev, mikelley@microsoft.com,
+ kys@microsoft.com, wei.liu@kernel.org, gregkh@linuxfoundation.org,
+ haiyangz@microsoft.com, decui@microsoft.com, apais@linux.microsoft.com,
+ Tianyu.Lan@microsoft.com, ssengar@linux.microsoft.com,
+ mukeshrathor@microsoft.com, stanislav.kinsburskiy@gmail.com,
+ jinankjain@linux.microsoft.com, vkuznets@redhat.com, tglx@linutronix.de,
+ mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, hpa@zytor.com,
+ will@kernel.org, catalin.marinas@arm.com
+References: <1696010501-24584-1-git-send-email-nunodasneves@linux.microsoft.com>
+ <1696010501-24584-15-git-send-email-nunodasneves@linux.microsoft.com>
+ <CAJ-90NKJ=FViuuy2MyA-8S1j9Lsia8bR-ytZuAr=pOPuAiO0VQ@mail.gmail.com>
+ <749f477a-1e7a-495e-bea1-e3abe8da7fb9@linux.microsoft.com>
+ <CAJ-90NL8S5xnJbiwCHAGs4QeiJ3DHUL0Obi1snqsTDJEpQRnsg@mail.gmail.com>
+Content-Language: en-US
+From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+In-Reply-To: <CAJ-90NL8S5xnJbiwCHAGs4QeiJ3DHUL0Obi1snqsTDJEpQRnsg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231011-asoc-tegra-fix-uninit-soc_data-v1-1-0ef0ab44cf48@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAN4DJ2UC/x2NQQqAMAwEvyI5G2grIvgVEYlt1FyqtFUE8e8Gj
- zMssw9kTsIZ+uqBxJdk2aOCrSvwG8WVUYIyOOMaa6xFyrvHwmsiXOTGM0qUgiqnQEWdD2ZeWkN
- d40AjR2Kd/QfD+L4fw2s7k3AAAAA=
-To: broonie@kernel.org, robh@kernel.org
-Cc: lgirdwood@gmail.com, thierry.reding@gmail.com, jonathanh@nvidia.com, 
- ndesaulniers@google.com, trix@redhat.com, alsa-devel@alsa-project.org, 
- linux-tegra@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1815; i=nathan@kernel.org;
- h=from:subject:message-id; bh=oEPFEr69GOFnlvxRi+OQJiP0bTLBwUD6RP2Enyu8lR0=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDKnqzB88WXaLHs65y1J1srv9tdnW2KAIqa2lLzVmTw+t/
- aXNcU2go5SFQYyDQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEzkVQ0jw4/wh6eyfp06I+s8
- L1XEO+GPR/N+s5y60A0X2YoMwxjeizD893I9Hef6XIDJYtaaUOO7zObp1vWV/Esu6ua4v7UT91J
- jAAA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Clang warns (or errors with CONFIG_WERROR=y):
+On 10/5/2023 12:52 PM, Alex Ionescu wrote:
+>>> 3) Truly making hypertv-tlfs the "documented" header, and then > removing any duplication from HDK so that it remains the
+>>> "undocumented" header file. In this manner, one would include
+>>> hyperv-tlfs to use the stable ABI, and they would include HDK (which
+>>> would include hyperv-tlfs) to use the unstable+stable ABI.
+>>
+>> hyperv-tlfs.h is remaining the "documented" header.
+>>
+>> But, we can't make the HDK header depend on hyperv-tlfs.h, for 2 primary
+>> reasons:
+>> 1. We need to put the new HDK headers in uapi so that we can use them in
+>> our IOCTL interface. As a result, we can't include hyperv-tlfs.h (unless
+>> we put it in uapi as well).
+>> 2. The HDK headers not only duplicate, but also MODIFY some structures
+>> in hyperv-tlfs.h. e.g., The struct is in hyperv-tlfs.h, but a particular
+>> field or bitfield is not.
+> 
+> #2 was something I was worried about. Do you know if the
+> standards/docs team is planning on updating the TLFS at some point
+> with updates on their end? At which point I'd assume you'd be OK with
+> patches to add them to hyperv-tlfs.h
+> 
 
-  sound/soc/tegra/tegra210_amx.c:553:10: error: variable 'soc_data' is uninitialized when used here [-Werror,-Wuninitialized]
-    553 |                                             soc_data->regmap_conf);
-        |                                             ^~~~~~~~
+I don't know the current plans for updating the TLFS. But yes, assuming
+a new TLFS doc has something that is needed in the kernel, hyperv-tlfs.h
+would be updated to support that.
 
-A refactoring removed the initialization of this variable but its use
-was not updated. Use the soc_data value in the amx variable to resolve
-the warning and remove the soc_data variable, as it is now entirely
-unused.
-
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1943
-Fixes: 9958d85968ed ("ASoC: Use device_get_match_data()")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- sound/soc/tegra/tegra210_amx.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/sound/soc/tegra/tegra210_amx.c b/sound/soc/tegra/tegra210_amx.c
-index dd1a2c77c6ea..91e405909e0f 100644
---- a/sound/soc/tegra/tegra210_amx.c
-+++ b/sound/soc/tegra/tegra210_amx.c
-@@ -535,7 +535,6 @@ static int tegra210_amx_platform_probe(struct platform_device *pdev)
- 	struct tegra210_amx *amx;
- 	void __iomem *regs;
- 	int err;
--	struct tegra210_amx_soc_data *soc_data;
- 
- 	amx = devm_kzalloc(dev, sizeof(*amx), GFP_KERNEL);
- 	if (!amx)
-@@ -550,7 +549,7 @@ static int tegra210_amx_platform_probe(struct platform_device *pdev)
- 		return PTR_ERR(regs);
- 
- 	amx->regmap = devm_regmap_init_mmio(dev, regs,
--					    soc_data->regmap_conf);
-+					    amx->soc_data->regmap_conf);
- 	if (IS_ERR(amx->regmap)) {
- 		dev_err(dev, "regmap init failed\n");
- 		return PTR_ERR(amx->regmap);
-
----
-base-commit: 59825951707eccf92782e109c04772d34fc07eb6
-change-id: 20231011-asoc-tegra-fix-uninit-soc_data-fcd0bf50a732
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Thanks,
+Nuno
