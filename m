@@ -1,94 +1,74 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC72328C0
-	for <patches@lists.linux.dev>; Thu, 12 Oct 2023 18:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TX2IAzmE"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-775751c35d4so84724985a.0
-        for <patches@lists.linux.dev>; Thu, 12 Oct 2023 11:43:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697136195; x=1697740995; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=G5vgE2fYXgKlfq4nH2TUkTSW1zkdBwLIEnXGe5BmWog=;
-        b=TX2IAzmEnNL0P9NZN7yOi4SRgwIIsHEvsRSD+diWf3eY3nt/qWN3J16oRKjj4IGTMq
-         vRrBp4q9CmGWpgBIOgzT+2J2t+USCSauVW4kcj+USLbC7f2rMoBmXyRMGNxcGRBO7wM/
-         End910JXFvQYeQmSQUKF0tu+Q+9oCTiw+TuM/HuXyACguXFz94vj7EPOzf9IPJIxT0G8
-         mHCgw5yD65Tsa+/szpBPii21qQR27GL7UOL+r4uEEXe/ukmSMgj0zfYha44vvJMOexuI
-         WPt+fXRMehfQYEZdabmC60VAv0B5hCLtVjsONjB0+5OdOySu0geKIB5M/QwvJ5krlunP
-         r/8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697136195; x=1697740995;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=G5vgE2fYXgKlfq4nH2TUkTSW1zkdBwLIEnXGe5BmWog=;
-        b=Pf0pQo8ZxVNE0xmQxNxROx5lS0p4ClGiNkF2XpDBSCt6yQ1X2arEMK070mcVuepNb1
-         pjJjsKOHVEcEkDaTCLE9+AtpWR6diP//+d+pn4ChwdUPtxvpjZ4yYHw2q01SFvvSsAXJ
-         ZkOAHxcaZPmHJS6Q/22l1Bn1tfowlmtXsx2+1xpYnYeLe3/jd1ei2TifL4HN6v0olxaD
-         BPPdw1IDN6RcLJuWDTISte1BO5IYAiBjbjO29/JgtZF34DQP33lXVQbts3BC6MyuTOmZ
-         5Pc7g2K5EsesqOCXm5CN5mlUX0pB6QWPCPqmFkTZzaFKQsmJnfPoCqYEMzL9C5VUh/ae
-         VUhw==
-X-Gm-Message-State: AOJu0YwQPjX9f4FyAkS+hX5GEPAOboNtBl7e+Wkk0+a5tCAS3zQ7oA6j
-	Xi7Q8BQXmoYEYhP9Szr36TY=
-X-Google-Smtp-Source: AGHT+IGNXM1JbRwqsGrTfGInKbc4JVqtJUbsW3aoOcuBfbXiDeKITiAf0Ac6PH0/oHGa+6LYWwyvLQ==
-X-Received: by 2002:a05:620a:4106:b0:76f:1614:576b with SMTP id j6-20020a05620a410600b0076f1614576bmr29725754qko.1.1697136195052;
-        Thu, 12 Oct 2023 11:43:15 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id pa25-20020a05620a831900b00772662b7804sm6205838qkn.100.2023.10.12.11.43.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Oct 2023 11:43:14 -0700 (PDT)
-Message-ID: <1638385d-a5b3-40ab-ae0c-25b53d761336@gmail.com>
-Date: Thu, 12 Oct 2023 11:43:09 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AAC3CCFE
+	for <patches@lists.linux.dev>; Thu, 12 Oct 2023 20:12:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id F011A1C0050; Thu, 12 Oct 2023 22:12:00 +0200 (CEST)
+Date: Thu, 12 Oct 2023 22:12:00 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
+Subject: Re: [PATCH 6.1 0/6] 6.1.58-rc1 review
+Message-ID: <ZShTEAk+9j2qwG7y@duo.ucw.cz>
+References: <20231012180030.112560642@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 0/6] 6.1.58-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20231012180030.112560642@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="PwQuYT3IODh0ZqjZ"
+Content-Disposition: inline
 In-Reply-To: <20231012180030.112560642@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 10/12/23 11:00, Greg Kroah-Hartman wrote:
+
+--PwQuYT3IODh0ZqjZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi!
+
 > This is the start of the stable review cycle for the 6.1.58 release.
 > There are 6 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>=20
 > Responses should be made by Sat, 14 Oct 2023 18:00:23 +0000.
 > Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.58-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+CIP testing did not find any problems here:
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.1.y
 
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--PwQuYT3IODh0ZqjZ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZShTEAAKCRAw5/Bqldv6
+8kSKAJ95+jrUU3qcR4v+SQeKCzaS/aIwngCgtEtjopgaQeHPJQI9uzslldoiebw=
+=YlhO
+-----END PGP SIGNATURE-----
+
+--PwQuYT3IODh0ZqjZ--
