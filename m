@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A068937C98
-	for <patches@lists.linux.dev>; Thu, 12 Oct 2023 18:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D855347CD
+	for <patches@lists.linux.dev>; Thu, 12 Oct 2023 18:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvZl1b5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E00C433CA;
-	Thu, 12 Oct 2023 18:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4KhDyD9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8197C433C9;
+	Thu, 12 Oct 2023 18:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697133667;
-	bh=Jqpb1TRQBHc2DGj7U/u6DlszWV6VX1QhDv+tW/eoovE=;
+	s=korg; t=1697133670;
+	bh=PXRW/arEEH/uggsXObpOk86t1O/RFD3qShClYbAwxYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jvZl1b5uiMbvndGmgWgoqSQvk6ofMXV9U5t1ea6zangC9T/SvfpvvyzDjxyjiMotU
-	 iWNcO0OpVr1EwZKjXH0XhffmbTp+e1IuTpuaZk7tBSTbNCgcJFPh0vFipuP/UJMjvY
-	 1fp8PXddGok6SLTTimoBtQPek5MSBSQ7Vdkr7Pho=
+	b=b4KhDyD9kvJpCzIgLLX/Kv8ioL6IEg2zumF9NVp58pWxXD8AZ4OgfC930oNqbYjo+
+	 /0AU5xXsGqPEO4T74/XWJGFTSS08kgJYZzpSH6DdvvSw+jcuKxF+sPB4e+KLvF+OUk
+	 Qet+nfrrGH8sFj3hfcGcTwInOdHm+VGAu8lOjg8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 4/6] Revert "NFS: Fix O_DIRECT locking issues"
-Date: Thu, 12 Oct 2023 20:00:46 +0200
-Message-ID: <20231012180030.235840718@linuxfoundation.org>
+Subject: [PATCH 6.1 5/6] Revert "NFS: Fix error handling for O_DIRECT write scheduling"
+Date: Thu, 12 Oct 2023 20:00:47 +0200
+Message-ID: <20231012180030.258223662@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231012180030.112560642@linuxfoundation.org>
 References: <20231012180030.112560642@linuxfoundation.org>
@@ -47,8 +47,8 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-This reverts commit 4d98038e5bd939bd13cc4e602dfe60cd5110efa8 which is
-commit 7c6339322ce0c6128acbe36aacc1eeb986dd7bf1 upstream.
+This reverts commit f16fd0b11f0f4d41846b5102b1656ea1fc9ac7a0 which is
+commit 954998b60caa8f2a3bf3abe490de6f08d283687a upstream.
 
 There are reported NFS problems in the 6.1.56 release, so revert a set
 of NFS patches to hopefully resolve the issue.
@@ -62,40 +62,125 @@ Cc: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Cc: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/direct.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/nfs/direct.c |   62 ++++++++++++++------------------------------------------
+ 1 file changed, 16 insertions(+), 46 deletions(-)
 
 --- a/fs/nfs/direct.c
 +++ b/fs/nfs/direct.c
-@@ -555,7 +555,7 @@ static void nfs_direct_write_reschedule(
+@@ -530,9 +530,10 @@ nfs_direct_write_scan_commit_list(struct
+ static void nfs_direct_write_reschedule(struct nfs_direct_req *dreq)
+ {
+ 	struct nfs_pageio_descriptor desc;
+-	struct nfs_page *req;
++	struct nfs_page *req, *tmp;
+ 	LIST_HEAD(reqs);
+ 	struct nfs_commit_info cinfo;
++	LIST_HEAD(failed);
+ 
+ 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
+ 	nfs_direct_write_scan_commit_list(dreq->inode, &reqs, &cinfo);
+@@ -550,36 +551,27 @@ static void nfs_direct_write_reschedule(
+ 			      &nfs_direct_write_completion_ops);
+ 	desc.pg_dreq = dreq;
+ 
+-	while (!list_empty(&reqs)) {
+-		req = nfs_list_entry(reqs.next);
++	list_for_each_entry_safe(req, tmp, &reqs, wb_list) {
  		/* Bump the transmission count */
  		req->wb_nio++;
  		if (!nfs_pageio_add_request(&desc, req)) {
--			spin_lock(&dreq->lock);
-+			spin_lock(&cinfo.inode->i_lock);
- 			if (dreq->error < 0) {
- 				desc.pg_error = dreq->error;
- 			} else if (desc.pg_error != -EAGAIN) {
-@@ -565,7 +565,7 @@ static void nfs_direct_write_reschedule(
++			nfs_list_move_request(req, &failed);
+ 			spin_lock(&cinfo.inode->i_lock);
+-			if (dreq->error < 0) {
+-				desc.pg_error = dreq->error;
+-			} else if (desc.pg_error != -EAGAIN) {
+-				dreq->flags = 0;
+-				if (!desc.pg_error)
+-					desc.pg_error = -EIO;
++			dreq->flags = 0;
++			if (desc.pg_error < 0)
  				dreq->error = desc.pg_error;
- 			} else
- 				dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
--			spin_unlock(&dreq->lock);
-+			spin_unlock(&cinfo.inode->i_lock);
- 			break;
+-			} else
+-				dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
++			else
++				dreq->error = -EIO;
+ 			spin_unlock(&cinfo.inode->i_lock);
+-			break;
  		}
  		nfs_release_request(req);
-@@ -875,9 +875,9 @@ static ssize_t nfs_direct_write_schedule
+ 	}
+ 	nfs_pageio_complete(&desc);
  
- 			/* If the error is soft, defer remaining requests */
- 			nfs_init_cinfo_from_dreq(&cinfo, dreq);
--			spin_lock(&dreq->lock);
-+			spin_lock(&cinfo.inode->i_lock);
- 			dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
--			spin_unlock(&dreq->lock);
-+			spin_unlock(&cinfo.inode->i_lock);
- 			nfs_unlock_request(req);
- 			nfs_mark_request_commit(req, NULL, &cinfo, 0);
- 			desc.pg_error = 0;
+-	while (!list_empty(&reqs)) {
+-		req = nfs_list_entry(reqs.next);
++	while (!list_empty(&failed)) {
++		req = nfs_list_entry(failed.next);
+ 		nfs_list_remove_request(req);
+ 		nfs_unlock_and_release_request(req);
+-		if (desc.pg_error == -EAGAIN)
+-			nfs_mark_request_commit(req, NULL, &cinfo, 0);
+-		else
+-			nfs_release_request(req);
+ 	}
+ 
+ 	if (put_dreq(dreq))
+@@ -804,11 +796,9 @@ static ssize_t nfs_direct_write_schedule
+ {
+ 	struct nfs_pageio_descriptor desc;
+ 	struct inode *inode = dreq->inode;
+-	struct nfs_commit_info cinfo;
+ 	ssize_t result = 0;
+ 	size_t requested_bytes = 0;
+ 	size_t wsize = max_t(size_t, NFS_SERVER(inode)->wsize, PAGE_SIZE);
+-	bool defer = false;
+ 
+ 	trace_nfs_direct_write_schedule_iovec(dreq);
+ 
+@@ -849,39 +839,19 @@ static ssize_t nfs_direct_write_schedule
+ 				break;
+ 			}
+ 
+-			pgbase = 0;
+-			bytes -= req_len;
+-			requested_bytes += req_len;
+-			pos += req_len;
+-			dreq->bytes_left -= req_len;
+-
+-			if (defer) {
+-				nfs_mark_request_commit(req, NULL, &cinfo, 0);
+-				continue;
+-			}
+-
+ 			nfs_lock_request(req);
+ 			req->wb_index = pos >> PAGE_SHIFT;
+ 			req->wb_offset = pos & ~PAGE_MASK;
+-			if (nfs_pageio_add_request(&desc, req))
+-				continue;
+-
+-			/* Exit on hard errors */
+-			if (desc.pg_error < 0 && desc.pg_error != -EAGAIN) {
++			if (!nfs_pageio_add_request(&desc, req)) {
+ 				result = desc.pg_error;
+ 				nfs_unlock_and_release_request(req);
+ 				break;
+ 			}
+-
+-			/* If the error is soft, defer remaining requests */
+-			nfs_init_cinfo_from_dreq(&cinfo, dreq);
+-			spin_lock(&cinfo.inode->i_lock);
+-			dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
+-			spin_unlock(&cinfo.inode->i_lock);
+-			nfs_unlock_request(req);
+-			nfs_mark_request_commit(req, NULL, &cinfo, 0);
+-			desc.pg_error = 0;
+-			defer = true;
++			pgbase = 0;
++			bytes -= req_len;
++			requested_bytes += req_len;
++			pos += req_len;
++			dreq->bytes_left -= req_len;
+ 		}
+ 		nfs_direct_release_pages(pagevec, npages);
+ 		kvfree(pagevec);
 
 
