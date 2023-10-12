@@ -1,133 +1,105 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B21262B2
-	for <patches@lists.linux.dev>; Thu, 12 Oct 2023 16:44:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181A12AB57;
+	Thu, 12 Oct 2023 17:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="j4HOvHct"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-533c5d10dc7so2134553a12.3
-        for <patches@lists.linux.dev>; Thu, 12 Oct 2023 09:44:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1697129055; x=1697733855; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z24YZGqTCXcSjZw7pVvFeMUQZsyzVXoHF/bkKgAPfjE=;
-        b=j4HOvHct7R+phqTNy9xJ5a3WJ4DeCRdA5k/HweyKTRitnPkwvmoqVR4cEDsicOR8vZ
-         4MKukIjzil3ZgHcFkQA11qtzQLEzRBHZe4bM0/pvMSN3CwtjLsP6YAe1I0Oqi0HCuIfW
-         B56CboEWxoFzHngFq+xE3vyf8v4YqWzWlGYSQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697129055; x=1697733855;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z24YZGqTCXcSjZw7pVvFeMUQZsyzVXoHF/bkKgAPfjE=;
-        b=p2RtLGNMWJaXpLwxrxLassYPjFqMZLiYTNKPoAWZRkHrEo5Q+oYSeAWReUxxRKQCpi
-         NFMZErpVH0sxMQRBYBmRkBzDZo8TgAdc23BGT6J9ePNB3ggabDbtr25TQKkPKFkEnTFZ
-         WzN6PjwiPINADA84N8qayQntlqwdusnkGF3IbwAsSCD3ZoWlmffjUz0piJ5z5qb9zUDu
-         p3ieysXidYT3WRf9hyNoM76EUQo1BkJhg+j9tYKkegTrL//DSRfFZJrxPuQdNMa5N1cv
-         FlxdnYjjixqK3otixivqAEMzzLgNP4yDZk9asAKZWBMyqi5k9rxRfbx2KwURTWOt6DOZ
-         0mGA==
-X-Gm-Message-State: AOJu0Yxvxp8AnL3WC/jKgSsSlZiGiUngUqJ6SO1Ty8vn1RGvY/DOCuZc
-	DSier9s1rktWXKSE4doQe3hH3HScNPy7io8UTGUzVg==
-X-Google-Smtp-Source: AGHT+IEE1lQ2a4XFTa6fs02M6fPA/U7+RVUadlT8dW3OMrIMuWFjfHtwOyU8fHvVoOKlW/oN46LccQ==
-X-Received: by 2002:a17:907:2cd4:b0:9ba:3f18:8ae5 with SMTP id hg20-20020a1709072cd400b009ba3f188ae5mr6473068ejc.60.1697129054993;
-        Thu, 12 Oct 2023 09:44:14 -0700 (PDT)
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com. [209.85.128.50])
-        by smtp.gmail.com with ESMTPSA id u20-20020a17090657d400b009b97aa5a3aesm11277580ejr.34.2023.10.12.09.44.14
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Oct 2023 09:44:14 -0700 (PDT)
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4053f24c900so225e9.1
-        for <patches@lists.linux.dev>; Thu, 12 Oct 2023 09:44:14 -0700 (PDT)
-X-Received: by 2002:a05:600c:1d10:b0:404:7462:1f87 with SMTP id
- l16-20020a05600c1d1000b0040474621f87mr293864wms.6.1697129053819; Thu, 12 Oct
- 2023 09:44:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SRNW6j7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4223C433C7;
+	Thu, 12 Oct 2023 17:04:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1697130254;
+	bh=ZbdxYCJsXfSn4QkqlDcEI6V10CuHxqW03BUMi4lw3m0=;
+	h=From:Date:Subject:To:Cc:From;
+	b=SRNW6j7HGGAHmacPEdOqt+JeMG3zGuNbwTV382uqdBmFfS7ikqffSrG+Ydam7u4IY
+	 OBSt7vtJvGSuzIaeSJoINXkJsq+BNPyJEng4/kp+HQtvBot3UrflA1wc5CgllJXLEZ
+	 p0hUBKYC2NUNrWOiHzzKhfhCsy6CDGD8qksJQAmNS30QOCOK+l9fK1GC+ml9kDOzAd
+	 YxhdGP0mDtKnveSL/QkVm9url4IbMD6PuQUTWbzdptUvEpxVTEKMJOgxlv2GJyKPBd
+	 qW4K3LLlxAf0Q3w+THt4pc/pH66WI7U4KFU3IcNYNbLR50OimMkP23Hzzc57bnFAcr
+	 WdA6hj92AeoGQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 12 Oct 2023 10:04:01 -0700
+Subject: [PATCH] remoteproc: st: Fix sometimes uninitialized ret in
+ st_rproc_probe()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231002235407.769399-1-swboyd@chromium.org> <CAD=FV=U2dza-rxV=YtcfJwUY-gZw5FrCyn0NahOxvXJW2J2-vg@mail.gmail.com>
- <CAE-0n51LJDgop-Nh+Aq1CTiu7xJZOqOsdSvHMmXzshkRKM3dgg@mail.gmail.com>
-In-Reply-To: <CAE-0n51LJDgop-Nh+Aq1CTiu7xJZOqOsdSvHMmXzshkRKM3dgg@mail.gmail.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 12 Oct 2023 09:43:57 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UGP9L341iDd44rUPKf_jZ5Y6qodPKZ_BLgMq-HnkBmbQ@mail.gmail.com>
-Message-ID: <CAD=FV=UGP9L341iDd44rUPKf_jZ5Y6qodPKZ_BLgMq-HnkBmbQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: Associate DSI device lifetime
- with auxiliary device
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	dri-devel@lists.freedesktop.org, Maxime Ripard <maxime@cerno.tech>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231012-st_remoteproc-fix-sometimes-uninit-v1-1-f64d0f2d5b37@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAAnKGUC/x2NzQqDMBAGX0X23AUTBdFXKaX486XdQxLZTUtBf
+ PcGjwPDzEEGFRhNzUGKr5jkVMHdGlrfc3qBZatMvvWda51nK09FzAW75pWD/NhyRJEI40+SJIW
+ HOQS3bMvQ9SPV0K6o3jW5P87zDy5aRZh0AAAA
+To: patrice.chotard@foss.st.com, andersson@kernel.org, 
+ mathieu.poirier@linaro.org, robh@kernel.org
+Cc: ndesaulniers@google.com, trix@redhat.com, 
+ linux-arm-kernel@lists.infradead.org, linux-remoteproc@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2048; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=ZbdxYCJsXfSn4QkqlDcEI6V10CuHxqW03BUMi4lw3m0=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKka6rzCHx9MkA7/rbR2W+GjN4s5U7vemOWZzCr/ccpOq
+ EHsufbSjlIWBjEOBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCR6gMMf7hv2UY/THn/dv+K
+ L4u/PezbsI31QYY3w6z+S0derXlt7sPKyNCUcbwyLsUybPX6jb/LNPeWSNi+aFR7rPD3ja53+xo
+ xLw4A
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi,
+Clang warns (or errors with CONFIG_WERROR=y):
 
-On Thu, Oct 5, 2023 at 10:18=E2=80=AFAM Stephen Boyd <swboyd@chromium.org> =
-wrote:
->
-> Quoting Doug Anderson (2023-10-02 17:31:41)
-> > Hi,
-> >
-> > On Mon, Oct 2, 2023 at 4:54=E2=80=AFPM Stephen Boyd <swboyd@chromium.or=
-g> wrote:
-> > >
-> > > The kernel produces a warning splat and the DSI device fails to regis=
-ter
-> > > in this driver if the i2c driver probes, populates child auxiliary
-> > > devices, and then somewhere in ti_sn_bridge_probe() a function call
-> > > returns -EPROBE_DEFER. When the auxiliary driver probe defers, the ds=
-i
-> > > device created by devm_mipi_dsi_device_register_full() is left
-> > > registered because the devm managed device used to manage the lifetim=
-e
-> > > of the DSI device is the parent i2c device, not the auxiliary device
-> > > that is being probed.
-> > >
-> > > Associate the DSI device created and managed by this driver to the
-> > > lifetime of the auxiliary device, not the i2c device, so that the DSI
-> > > device is removed when the auxiliary driver unbinds. Similarly change
-> > > the device pointer used for dev_err_probe() so the deferred probe err=
-ors
-> > > are associated with the auxiliary device instead of the parent i2c
-> > > device so we can narrow down future problems faster.
-> > >
-> > > Cc: Douglas Anderson <dianders@chromium.org>
-> > > Cc: Maxime Ripard <maxime@cerno.tech>
-> > > Fixes: c3b75d4734cb ("drm/bridge: sn65dsi86: Register and attach our =
-DSI device at probe")
-> >
-> > Even before that commit I think it was using the main "dev" instead of
-> > the auxiliary device's "dev" for some "devm" stuff. I guess the
-> > difference is that it wouldn't mess with probe deferral? Searching
-> > back, I think the first instance of a case that was using "devm_" with
-> > the wrong device was commit 4e5763f03e10 ("drm/bridge: ti-sn65dsi86:
-> > Wrap panel with panel-bridge")? Would it make sense to use that as a
-> > Fixes, you think?
->
-> The problem for me is that the dsi device is registered twice. That
-> happens because probe for the auxiliary device happens twice. I was
-> cautious about the fixes tag here because it didn't look like probe
-> deferral was happening before commit c3b75d4734cb.
->
-> >
-> > In any case, this looks reasonable to me:
-> >
-> > Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> >
-> > I'll give it a week and then apply to "-fixes" if everything is quiet.
->
-> Thanks!
+  drivers/remoteproc/st_remoteproc.c:357:6: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+    357 |         if (!ddata->config)
+        |             ^~~~~~~~~~~~~~
+  drivers/remoteproc/st_remoteproc.c:442:9: note: uninitialized use occurs here
+    442 |         return ret;
+        |                ^~~
+  drivers/remoteproc/st_remoteproc.c:357:2: note: remove the 'if' if its condition is always false
+    357 |         if (!ddata->config)
+        |         ^~~~~~~~~~~~~~~~~~~
+    358 |                 goto free_rproc;
+        |                 ~~~~~~~~~~~~~~~
+  drivers/remoteproc/st_remoteproc.c:348:9: note: initialize the variable 'ret' to silence this warning
+    348 |         int ret, i;
+        |                ^
+        |                 = 0
+  1 error generated.
 
-Pushed to drm-misc-fixes leaving your existing "Fixes" line:
+Set ret to -ENODEV, which seems to be a standard return code when
+device_get_match_data() returns NULL.
 
-7b821db95140 drm/bridge: ti-sn65dsi86: Associate DSI device lifetime
-with auxiliary device
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1944
+Fixes: 5c77ebcd05ac ("remoteproc: st: Use device_get_match_data()")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/remoteproc/st_remoteproc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
--Doug
+diff --git a/drivers/remoteproc/st_remoteproc.c b/drivers/remoteproc/st_remoteproc.c
+index b0638f984842..cb163766c56d 100644
+--- a/drivers/remoteproc/st_remoteproc.c
++++ b/drivers/remoteproc/st_remoteproc.c
+@@ -354,8 +354,10 @@ static int st_rproc_probe(struct platform_device *pdev)
+ 	rproc->has_iommu = false;
+ 	ddata = rproc->priv;
+ 	ddata->config = (struct st_rproc_config *)device_get_match_data(dev);
+-	if (!ddata->config)
++	if (!ddata->config) {
++		ret = -ENODEV;
+ 		goto free_rproc;
++	}
+ 
+ 	platform_set_drvdata(pdev, rproc);
+ 
+
+---
+base-commit: 5c77ebcd05acf3789949c8a387df72381d949ca2
+change-id: 20231012-st_remoteproc-fix-sometimes-uninit-7aff1bdb7349
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
