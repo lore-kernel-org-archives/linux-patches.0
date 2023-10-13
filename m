@@ -1,101 +1,91 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FA853B8
-	for <patches@lists.linux.dev>; Fri, 13 Oct 2023 05:32:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA31D307
+	for <patches@lists.linux.dev>; Fri, 13 Oct 2023 07:50:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cN0Pkino"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-690bccb0d8aso1451266b3a.0
-        for <patches@lists.linux.dev>; Thu, 12 Oct 2023 22:32:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697175127; x=1697779927; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nIvaPS82lenFE9njzHfPB1IlZ8+QONjjy7qyu3wWos4=;
-        b=cN0Pkino0ZerXjt7Rv184mNed4fjIItlG7/gS1CqtkhnksY5YkS3936ma1/F97ElGf
-         AD8Im5O9BCfgbNdCq610EVlmYfMzAOGAAyHo3Ruaxw+tZB+NqNUNs3RDj9MuD1kL3zDA
-         hzFQvgbjBFVBQENkEscZMxc9vRrxScsbrKsyg1jUrwSUA3AHxvFrYTX9EUs0V1iyGpBl
-         hl+BennjSxhr9QhaP2Q1mduViz2u0NKYDO7a7zYTd7F2Iji8vSBKGFGDTandV5iOHBbL
-         RBilEBhOrhi1yY/3rcW6HKi+5TvnITdNTB1RdCrfnyN02mEcnozDhoxo2pGykzYMKda6
-         eK5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697175127; x=1697779927;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nIvaPS82lenFE9njzHfPB1IlZ8+QONjjy7qyu3wWos4=;
-        b=u6dT2o3wQW5y0jL9NKzPE0AkkF6dva+iiPQQr23OIIyQ2QuZlY2GZA6uTEvcX+vVEp
-         SSuwu5oMLJ3O2s8kp8jJUfSmIDUbL3a3FglghdW0hEfSYCTkY9jRv7cAB4FmHN1w5tDm
-         Fl+djhBt3akW3JxyMUTrO0myxTCFUSeA5nFSmvyBSJTktgD07oDoCRznqIiRlGrtI36S
-         mn1EsW/Q4oaYU5qXQuSU1jCXXmJCnrCWTODiAN/Ozsl1s2r3mOrImUnk3nHlmXk2oINC
-         DjSCHoG/81yENiVuSQcVvw6kj5pCT+hZmq4zlPqfHL3OfRavN5wmGe/o4uo0YtRVhTjc
-         46bg==
-X-Gm-Message-State: AOJu0YwQTUmJ0JTJ5RqIZhUtXndoKJ1yBqA1dBX/be7A9veOGcDMwKWS
-	IRzIvwer0NpPkKjzRDn2ZWs=
-X-Google-Smtp-Source: AGHT+IHF4II3VixwJFDR98pc7JU2m3Z7Qk8+kTLeK1ZUPjdx43t6VBQzk24AdOEBlcQKpZG63FOqsQ==
-X-Received: by 2002:a05:6a20:d417:b0:15d:4a4d:ecf7 with SMTP id il23-20020a056a20d41700b0015d4a4decf7mr20773277pzb.36.1697175127387;
-        Thu, 12 Oct 2023 22:32:07 -0700 (PDT)
-Received: from debian.me ([103.131.18.64])
-        by smtp.gmail.com with ESMTPSA id s4-20020a170902ea0400b001bbab888ba0sm2903283plg.138.2023.10.12.22.32.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Oct 2023 22:32:06 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-	id 35C2C83B4ED5; Fri, 13 Oct 2023 12:32:00 +0700 (WIB)
-Date: Fri, 13 Oct 2023 12:31:59 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 0/6] 6.1.58-rc1 review
-Message-ID: <ZSjWT2w3uzRkRca_@debian.me>
-References: <20231012180030.112560642@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="i0dkNR48"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=oiX2EcOICtWMCl8O283II31c/DVhUshikMhSt0dtcbs=; b=i0dkNR48dE8Mxm1KVD2599Pyx6
+	DmKGXdCjALh+8s6KMmM7qlfoEYO+LJHtza7ZMfvTDy4TmU8t+QbRwYz9JyWCoRoGdanlwF0/XA2Jz
+	iIn1cIw6DMhqxl5AyakiBAq0thCcllWjQeeeAr6EUYcedV52QwB1KdnYSqRdhPtbH8zCrwNtzWrTz
+	VQ88TKxaCd0Q0p45FIAXIMUfBmhy4S0VcG2VCUEfJP8oayX8gjBR12FoEnrLRL3gZA2eGCgBW9ldV
+	c7vy+sR/3J46YjZ07jSvoRLacZ/d6w334jFA6mhkcfD+CKBcnsEBHSwFImH+6n7rq0eOYpchM24Xg
+	S8ANZ/vg==;
+Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1qrCvu-004B18-3K; Fri, 13 Oct 2023 07:50:06 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id BEF04300365; Fri, 13 Oct 2023 09:50:05 +0200 (CEST)
+Date: Fri, 13 Oct 2023 09:50:05 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Ramon de C Valle <rcvalle@google.com>
+Cc: Kees Cook <keescook@chromium.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@google.com>,
+	David Gow <davidgow@google.com>, Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>, linux-doc@vger.kernel.org
+Subject: Re: [PATCH v10 25/27] x86: enable initial Rust support
+Message-ID: <20231013075005.GB12118@noisy.programming.kicks-ass.net>
+References: <20220927131518.30000-1-ojeda@kernel.org>
+ <20220927131518.30000-26-ojeda@kernel.org>
+ <Y0BfN1BdVCWssvEu@hirez.programming.kicks-ass.net>
+ <CABCJKuenkHXtbWOLZ0_isGewxd19qkM7OcLeE2NzM6dSkXS4mQ@mail.gmail.com>
+ <CANiq72k6s4=0E_AHv7FPsCQhkyxf7c-b+wUtzfjf+Spehe9Fmg@mail.gmail.com>
+ <CABCJKuca0fOAs=E6LeHJiT2LOXEoPvLVKztA=u+ARcw=tbT=tw@mail.gmail.com>
+ <20231012104741.GN6307@noisy.programming.kicks-ass.net>
+ <CABCJKufEagwJ=TQnmVSK07RDjsPUt=3JGtwnK9ASmFqb7Vx8JQ@mail.gmail.com>
+ <202310121130.256F581823@keescook>
+ <CAOcBZOTed1a1yOimdUN9yuuysZ1h6VXa57+5fLAE99SZxCwBMQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DtwhJ4fBDgUKVjIt"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231012180030.112560642@linuxfoundation.org>
+In-Reply-To: <CAOcBZOTed1a1yOimdUN9yuuysZ1h6VXa57+5fLAE99SZxCwBMQ@mail.gmail.com>
+
+On Thu, Oct 12, 2023 at 03:15:12PM -0700, Ramon de C Valle wrote:
+
+> [1]:
+> https://doc.rust-lang.org/nightly/unstable-book/language-features/cfi-encoding.html
+
+I'm sorry, but that looks like a comment from where I'm sitting :-(
+Worst part is it being on a line of it's own and thus unrelated to
+anything.
+
+This rust syntax is horrific..
 
 
---DtwhJ4fBDgUKVjIt
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> [2]:
+> https://doc.rust-lang.org/book/ch19-04-advanced-types.html#using-the-newtype-pattern-for-type-safety-and-abstraction
 
-On Thu, Oct 12, 2023 at 08:00:42PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.58 release.
-> There are 6 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
+I don't speak enough rust to even begin following this :/
 
-Successfully compiled and installed bindeb-pkgs on my computer (Acer
-Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
+> [3]: Wrapping a type in a struct should achieve something similar even
+> without using the cfi_encoding attribute since the encoding for structs in
+> both are <length><name>, where <name> is <unscoped-name>.
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+You're not talking about C, right?
 
---=20
-An old man doll... just what I always wanted! - Clara
-
---DtwhJ4fBDgUKVjIt
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZSjWSQAKCRD2uYlJVVFO
-owi7AP44/kvOHOX2rSJOHx3Y9NngBuPUkm+nr1XUfNc1uF+2AAD/Ybe4YrYRc0Ox
-2KFxSLfx8e8LFkJB0//IMkRdyjvqlw0=
-=VyG7
------END PGP SIGNATURE-----
-
---DtwhJ4fBDgUKVjIt--
