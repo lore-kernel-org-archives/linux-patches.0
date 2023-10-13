@@ -1,94 +1,135 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9F121A0A
-	for <patches@lists.linux.dev>; Fri, 13 Oct 2023 19:22:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720647489
+	for <patches@lists.linux.dev>; Fri, 13 Oct 2023 20:37:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="exC4QrRo"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-9ba1eb73c27so403550566b.3
-        for <patches@lists.linux.dev>; Fri, 13 Oct 2023 12:22:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UqhinNMS"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-406402933edso25914945e9.2
+        for <patches@lists.linux.dev>; Fri, 13 Oct 2023 13:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1697224940; x=1697829740; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yMlHIs+RXRwcCam9b7W7YcpdMJXw0XO1+U1rinkBh7Y=;
-        b=exC4QrRoeOAxLMoQ0KAJhgvEBqX4GZCIkOnOukctLun47TFnz8ZSkPBBpr5KlCWZcA
-         9gdYKBWungHHr8sAXN/GjUTH3RY3sgMvlgLUG67l6YagGkC1CGaqzBwetLM8YhUjRZnT
-         Zc6HYtXJKe+2f3+9oOwiQCSOZ4/G0//j1jjTI=
+        d=google.com; s=20230601; t=1697229431; x=1697834231; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eGqNMQJoTKDExVF5LTm0ABt03qpcjjaRQIb4oBXXpL8=;
+        b=UqhinNMSuFR+2EgeV6mcBuyS0lo6nZBK4g/ZdKOWzQiylwZasC+O3yhvQ/EnmVZXI6
+         NB1RAcbujPoj/gDY2h1RodL0FRdmB3Fza00/BUAzgp5mnEMgw8h7dWxzN0IH5ap4JCSX
+         nQ6xy+aFV/W4WMKyhtaKtgmtkHyEQwi3cPaQOgFakkZNnQ5YkSnaemQpK6NEvcI9bOc7
+         dZIBZsqY3NWX0Pw73CXO7/HiJUqbAfijPVPYO7b3fClVHFs3fn8cfsT2Q6g2+3SaDnvZ
+         f2adAyN+lhSxwU8dqz8cVKHkrKAoJBfyMppbKd02JlksTIp0qs9QtwSTev+OxqpIryzt
+         4PwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697224940; x=1697829740;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yMlHIs+RXRwcCam9b7W7YcpdMJXw0XO1+U1rinkBh7Y=;
-        b=tMWzAEd+MJFo7MgCmb5QrLEGGCU4nCCBdJMCybO0p0Rv76EDJaEYnnZwS01dooXxkd
-         j602THmkjyv8xLTCmHGlHnVPcqH5Xit8vBRzXfSoOvqo9BiXrGmHaFIL23WxSyslA6EX
-         rbfrTz6zLlux0aNMBSlHVdYnVFmsmtnB6j1Se/iHAe0e3mnnaDOefRmdkG1CJku+CAkH
-         4a7r+y2RP60W4Kl2SVzyF4MN2P6yEseKxAALWNpouKKztZ8RmMupA3bru1rvWA2Ku56J
-         EuhfVYChCD3g2IHmOBUrB6mzNT7c8H7WiTVQ8YFeE4lSW2syA9vL1vxg9h+vIg6j71bS
-         Lovw==
-X-Gm-Message-State: AOJu0YyanVM9DCMKCCNKZ4889sVcoqu2gIblxNoj4u6K30wA+aKIoiZi
-	7wyzrU1roo7p4r1j+Z6olDwS8MhXsC7bVwsHOfHtvJuX
-X-Google-Smtp-Source: AGHT+IHlinxZcZLi0SbE8fCODmnOtly5R35apnKV8ugShIZzDyayp/9xXCYXWtkNs77jIcJrBhRYzg==
-X-Received: by 2002:a17:907:1dd2:b0:9ae:406c:3425 with SMTP id og18-20020a1709071dd200b009ae406c3425mr25872408ejc.0.1697224940604;
-        Fri, 13 Oct 2023 12:22:20 -0700 (PDT)
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com. [209.85.218.43])
-        by smtp.gmail.com with ESMTPSA id lz11-20020a170906fb0b00b009b97521b58bsm12776397ejb.39.2023.10.13.12.22.19
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Oct 2023 12:22:19 -0700 (PDT)
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-9a6190af24aso407534166b.0
-        for <patches@lists.linux.dev>; Fri, 13 Oct 2023 12:22:19 -0700 (PDT)
-X-Received: by 2002:a17:907:7790:b0:9b9:facb:d950 with SMTP id
- ky16-20020a170907779000b009b9facbd950mr17575861ejc.72.1697224939431; Fri, 13
- Oct 2023 12:22:19 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697229431; x=1697834231;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eGqNMQJoTKDExVF5LTm0ABt03qpcjjaRQIb4oBXXpL8=;
+        b=NLrBj/JcwQvPwDOkpk/RD00XlX0Y9DdxLTtRvIw+7k+ec0ZsdJbCSc1Go4jqUn7L65
+         liTClnyrY9DzqUMhr7A6BQYGEVdfON420bHAlKD9nWU9FAKr/6JIniwq1QQ0h4oas1QH
+         vvIBlV6fl9NPlKqSdol6a+SruVwOAYPtMWRVwPKZBuzYH6fGuLiXQiaWOD9ph1GLMlhI
+         nCrUxrCxmuRbB3ThqsMVaHSNYNHGTfCg3SpgphfV4R5DhHRc/5xKDXSotT6GmDAPpOTP
+         HcGZ8+4T3ogYpZutNc1EaDSLw873ubfsIERwNN/u4rpynIYMHFHZsl1tRfU5/psH2lTe
+         gEww==
+X-Gm-Message-State: AOJu0YyIDN2hNqTDGJmDDlET36gywmT+mkDvXiFGMphZD45d5CtOxFNO
+	QkBuoFkRwGFT6FijVKiQI7vh1I2+B72HiRt+6onodw==
+X-Google-Smtp-Source: AGHT+IF+7IiJEEKizdMeYQJowMnFRLsMOiRhCWVvtDSSbLN5+4n2cIdYTg5MU1RI1Xr336Wc5nGpjJB2bTesb2OZQ6w=
+X-Received: by 2002:a05:6000:1e11:b0:32d:8357:42dd with SMTP id
+ bj17-20020a0560001e1100b0032d835742ddmr10781479wrb.68.1697229431471; Fri, 13
+ Oct 2023 13:37:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220927131518.30000-1-ojeda@kernel.org> <20220927131518.30000-26-ojeda@kernel.org>
- <Y0BfN1BdVCWssvEu@hirez.programming.kicks-ass.net> <CABCJKuenkHXtbWOLZ0_isGewxd19qkM7OcLeE2NzM6dSkXS4mQ@mail.gmail.com>
- <CANiq72k6s4=0E_AHv7FPsCQhkyxf7c-b+wUtzfjf+Spehe9Fmg@mail.gmail.com>
- <CABCJKuca0fOAs=E6LeHJiT2LOXEoPvLVKztA=u+ARcw=tbT=tw@mail.gmail.com>
- <20231012104741.GN6307@noisy.programming.kicks-ass.net> <CABCJKufEagwJ=TQnmVSK07RDjsPUt=3JGtwnK9ASmFqb7Vx8JQ@mail.gmail.com>
- <202310121130.256F581823@keescook> <CAOcBZOTed1a1yOimdUN9yuuysZ1h6VXa57+5fLAE99SZxCwBMQ@mail.gmail.com>
- <20231013075005.GB12118@noisy.programming.kicks-ass.net> <CAOcBZOTP_vQuFaqREqy-hkG69aBvJ+xrhEQi_EFKvtsNjne1dw@mail.gmail.com>
- <CAHk-=wjLUit_gae7anFNz4sV0o2Uc=TD_9P8sYeqMSeW_UG2Rg@mail.gmail.com> <5D8CA5EF-F5B0-4911-85B8-A363D9344FA7@zytor.com>
-In-Reply-To: <5D8CA5EF-F5B0-4911-85B8-A363D9344FA7@zytor.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Fri, 13 Oct 2023 12:22:02 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wiiBpw-0MKBbPkvo54=Cvyi0b3_1bDtqbgiD4ixd+OPow@mail.gmail.com>
-Message-ID: <CAHk-=wiiBpw-0MKBbPkvo54=Cvyi0b3_1bDtqbgiD4ixd+OPow@mail.gmail.com>
-Subject: Re: [PATCH v10 25/27] x86: enable initial Rust support
-To: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ramon de C Valle <rcvalle@google.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Kees Cook <keescook@chromium.org>, Sami Tolvanen <samitolvanen@google.com>, 
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>, Miguel Ojeda <ojeda@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@google.com>, 
-	David Gow <davidgow@google.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
-	Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
-	linux-doc@vger.kernel.org
+References: <20231012-st_remoteproc-fix-sometimes-uninit-v1-1-f64d0f2d5b37@kernel.org>
+In-Reply-To: <20231012-st_remoteproc-fix-sometimes-uninit-v1-1-f64d0f2d5b37@kernel.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Fri, 13 Oct 2023 13:36:59 -0700
+Message-ID: <CAKwvOdnGDXvbCgPFq+DZxaMo-ptdq7omXJyLVgwgFeKh5RwdTg@mail.gmail.com>
+Subject: Re: [PATCH] remoteproc: st: Fix sometimes uninitialized ret in st_rproc_probe()
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: patrice.chotard@foss.st.com, andersson@kernel.org, 
+	mathieu.poirier@linaro.org, robh@kernel.org, trix@redhat.com, 
+	linux-arm-kernel@lists.infradead.org, linux-remoteproc@vger.kernel.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 13 Oct 2023 at 12:01, H. Peter Anvin <hpa@zytor.com> wrote:
+On Thu, Oct 12, 2023 at 10:04=E2=80=AFAM Nathan Chancellor <nathan@kernel.o=
+rg> wrote:
 >
-> Transparent unions have been standard C since C99.
+> Clang warns (or errors with CONFIG_WERROR=3Dy):
+>
+>   drivers/remoteproc/st_remoteproc.c:357:6: error: variable 'ret' is used=
+ uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uniniti=
+alized]
+>     357 |         if (!ddata->config)
+>         |             ^~~~~~~~~~~~~~
+>   drivers/remoteproc/st_remoteproc.c:442:9: note: uninitialized use occur=
+s here
+>     442 |         return ret;
+>         |                ^~~
+>   drivers/remoteproc/st_remoteproc.c:357:2: note: remove the 'if' if its =
+condition is always false
+>     357 |         if (!ddata->config)
+>         |         ^~~~~~~~~~~~~~~~~~~
+>     358 |                 goto free_rproc;
+>         |                 ~~~~~~~~~~~~~~~
+>   drivers/remoteproc/st_remoteproc.c:348:9: note: initialize the variable=
+ 'ret' to silence this warning
+>     348 |         int ret, i;
+>         |                ^
+>         |                 =3D 0
+>   1 error generated.
+>
+> Set ret to -ENODEV, which seems to be a standard return code when
+> device_get_match_data() returns NULL.
+>
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/1944
+> Fixes: 5c77ebcd05ac ("remoteproc: st: Use device_get_match_data()")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Ahh, I didn't realize they made it into the standard.
+Thanks for the patch!
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 
-In gcc, they've been usable for a lot longer (ie --std=gnu89 certainly
-is happy with them), but the kernel never really picked up on them.
+> ---
+>  drivers/remoteproc/st_remoteproc.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/remoteproc/st_remoteproc.c b/drivers/remoteproc/st_r=
+emoteproc.c
+> index b0638f984842..cb163766c56d 100644
+> --- a/drivers/remoteproc/st_remoteproc.c
+> +++ b/drivers/remoteproc/st_remoteproc.c
+> @@ -354,8 +354,10 @@ static int st_rproc_probe(struct platform_device *pd=
+ev)
+>         rproc->has_iommu =3D false;
+>         ddata =3D rproc->priv;
+>         ddata->config =3D (struct st_rproc_config *)device_get_match_data=
+(dev);
+> -       if (!ddata->config)
+> +       if (!ddata->config) {
+> +               ret =3D -ENODEV;
+>                 goto free_rproc;
+> +       }
+>
+>         platform_set_drvdata(pdev, rproc);
+>
+>
+> ---
+> base-commit: 5c77ebcd05acf3789949c8a387df72381d949ca2
+> change-id: 20231012-st_remoteproc-fix-sometimes-uninit-7aff1bdb7349
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+>
 
-I think they've mainly been used by glibc for a couple of functions
-that can take a couple of different types without complaining.
 
-           Linus
+--=20
+Thanks,
+~Nick Desaulniers
