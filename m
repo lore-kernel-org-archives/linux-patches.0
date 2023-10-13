@@ -1,113 +1,107 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1A614281
-	for <patches@lists.linux.dev>; Fri, 13 Oct 2023 12:18:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC0FE554
+	for <patches@lists.linux.dev>; Fri, 13 Oct 2023 13:10:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bqsrch2v"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-991c786369cso327856466b.1
-        for <patches@lists.linux.dev>; Fri, 13 Oct 2023 05:18:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1697199483; x=1697804283; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kfMcaSPK1nNALi0ZL2/STHAwFBjikJyI73GljAs8CFY=;
-        b=bqsrch2vNEmYdIETJQyJ+lviXtTUlTMnt8LTfkCHWgNgffqq5FblRIfcUsvS6Q9u5M
-         LFeP7jUhx1le/HR4nDNp6HjJ8KQxKqWTDYaIXJOUlB3GKT8MuLi4apofohTSH1Ah5X5J
-         uqQxEqYbgWD4c/jMVCd+U4TuZabSosw74nHhnR8FSScS+N3ZXf8EWqc2UKBHQ6ga4WIt
-         9oZudraI93cJJO8UcPqRHkDgoR4EoE2MQxPJv96sgCBitz6qioi4G7k4t+fWg6yPfyh3
-         r+5GdLQycfvUqV1WuMZepY/RN/TLhtB6axtbWpYO6Rh56fdykmi5xCfs7YGbYMfZeeTs
-         4PCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697199483; x=1697804283;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kfMcaSPK1nNALi0ZL2/STHAwFBjikJyI73GljAs8CFY=;
-        b=rVDjd5cA+7JiEafP42XdN5neFfuCDc7nuRHk2J1QUd1EBRHw3+0RiLprVN+N8ltqhs
-         qmZP1rY86Ou+rOcWOa3SRtYVYVPWYa6OH6JkAawbJk2LWQxulnr2TrZ6iDyXRIvVhdxn
-         C33aFEo3I0s801Xjt9ab1bgkB9OXS6nfGVFNERlSBlu75bKpB49yGUDhSP5TQMHcYmv2
-         kxzhtDTbJ02Og17Hgk2nkQZmvwwOSABCd9tirqDAWz1XkvE7b8dEdCPHrWGuG+qcWKaf
-         mdYNijFleM6u/qh9JU6Q+vkP2yIBni6+tDL8kSzsWpT8SC8vRlYqcKOJfR9DmzSYMjDv
-         gf8w==
-X-Gm-Message-State: AOJu0YxQ5bhOWd2syPl3f4U7Q3jIW6HZt/oIA+INJ+2mvFebHXa6M9jB
-	74Qc/hp0T1hRMXDSfqC82O905bxKptyfLRoIylOGUg==
-X-Google-Smtp-Source: AGHT+IGQJ9SEIC8vE0aqfRJOcMNPn+seOjJOdw/SPreQJQAaFkIsSMzyhkSV+UwdtrZcN9HIBGcHUUvxmzb9X/Yth+w=
-X-Received: by 2002:a17:906:fe07:b0:9bd:e036:387d with SMTP id
- wy7-20020a170906fe0700b009bde036387dmr587057ejb.21.1697199483200; Fri, 13 Oct
- 2023 05:18:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="edCI2Yzb"
+Received: from eig-obgw-6004a.ext.cloudfilter.net ([10.0.30.197])
+	by cmsmtp with ESMTP
+	id r5b1qD6WaMZBkrHwLqp3Wd; Fri, 13 Oct 2023 13:10:53 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id rHwJqCLEm7154rHwKqaLtP; Fri, 13 Oct 2023 13:10:52 +0000
+X-Authority-Analysis: v=2.4 cv=KJtJsXJo c=1 sm=1 tr=0 ts=652941dc
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=bhdUkHdE2iEA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=L_lNUz4cS6dBDhu22GsA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=26qb5+16SeqCOLG+XYpxPGqDdJwEjhpXWD85WcaRcp8=; b=edCI2YzbzDFU8UYDykJeeTZam+
+	SJdNSNMp6UbYsYJVgp90AVtopxvMSK0jPJYvvdMNH8resIWEcNOb2yXwQA3MLz3btI1L/xhpFGfK0
+	n5/6LJwC/7xYNvFw1vUq5up6/qKI5wUsdtN31zrEMiCeCvLBqCq9PdeDtBh5K2K10tChBst6aVeXy
+	87KBOIIj/gfZDiExTQm8eyj0cd7+NkMFZgZ5o9OVLS7xINTIvsHyLNN/Nodo2IL99KGtpmKsqAm3V
+	nC2f3W/rSWK16MIUerfYF5A8ogjUhMUrWvCi4WFmR6Vw8vlB/9dUvklfWhhlPOMgl24Yz7OdXtXtg
+	M5p+4Suw==;
+Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:51188 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.1)
+	(envelope-from <re@w6rz.net>)
+	id 1qrHwH-003zqf-1m;
+	Fri, 13 Oct 2023 07:10:49 -0600
+Subject: Re: [PATCH 6.1 0/6] 6.1.58-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20231012180030.112560642@linuxfoundation.org>
+In-Reply-To: <20231012180030.112560642@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <861ad70b-dabd-3e52-bce3-6c09bc949f2e@w6rz.net>
+Date: Fri, 13 Oct 2023 06:10:47 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220927131518.30000-1-ojeda@kernel.org> <20220927131518.30000-26-ojeda@kernel.org>
- <Y0BfN1BdVCWssvEu@hirez.programming.kicks-ass.net> <CABCJKuenkHXtbWOLZ0_isGewxd19qkM7OcLeE2NzM6dSkXS4mQ@mail.gmail.com>
- <CANiq72k6s4=0E_AHv7FPsCQhkyxf7c-b+wUtzfjf+Spehe9Fmg@mail.gmail.com>
- <CABCJKuca0fOAs=E6LeHJiT2LOXEoPvLVKztA=u+ARcw=tbT=tw@mail.gmail.com>
- <20231012104741.GN6307@noisy.programming.kicks-ass.net> <CABCJKufEagwJ=TQnmVSK07RDjsPUt=3JGtwnK9ASmFqb7Vx8JQ@mail.gmail.com>
- <202310121130.256F581823@keescook> <CAOcBZOTed1a1yOimdUN9yuuysZ1h6VXa57+5fLAE99SZxCwBMQ@mail.gmail.com>
- <20231013075005.GB12118@noisy.programming.kicks-ass.net>
-In-Reply-To: <20231013075005.GB12118@noisy.programming.kicks-ass.net>
-From: Ramon de C Valle <rcvalle@google.com>
-Date: Fri, 13 Oct 2023 05:17:50 -0700
-Message-ID: <CAOcBZOTP_vQuFaqREqy-hkG69aBvJ+xrhEQi_EFKvtsNjne1dw@mail.gmail.com>
-Subject: Re: [PATCH v10 25/27] x86: enable initial Rust support
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: Kees Cook <keescook@chromium.org>, Sami Tolvanen <samitolvanen@google.com>, 
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>, Miguel Ojeda <ojeda@kernel.org>, 
-	Linus Torvalds <torvalds@linux-foundation.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@google.com>, 
-	David Gow <davidgow@google.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
-	Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
-	"H. Peter Anvin" <hpa@zytor.com>, linux-doc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 98.207.139.8
+X-Source-L: No
+X-Exim-ID: 1qrHwH-003zqf-1m
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:51188
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfHer13QZjI0bdQbV8dBgYoaaKRz/PXy8RI0+RG2mpQMyKGntHgbCh1N5UOGnmhCGBoDyfoXJ72Qn5NVgY3qwnSH83MVCJhEXSg/c4g38CH2XeUIn6YjL
+ VqfdEkFIpnA5NU5ffigd92fr1wTXoZ53VqsXWlGtYxyS5ShIV7MTiKzCuYIz7LfKca/a4kFfYQm7XA==
 
-On Fri, Oct 13, 2023 at 12:50=E2=80=AFAM Peter Zijlstra <peterz@infradead.o=
-rg> wrote:
+On 10/12/23 11:00 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.58 release.
+> There are 6 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> On Thu, Oct 12, 2023 at 03:15:12PM -0700, Ramon de C Valle wrote:
+> Responses should be made by Sat, 14 Oct 2023 18:00:23 +0000.
+> Anything received after that time might be too late.
 >
-> > [1]:
-> > https://doc.rust-lang.org/nightly/unstable-book/language-features/cfi-e=
-ncoding.html
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.58-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 >
-> I'm sorry, but that looks like a comment from where I'm sitting :-(
-> Worst part is it being on a line of it's own and thus unrelated to
-> anything.
+> thanks,
 >
-> This rust syntax is horrific..
+> greg k-h
 
-I understand where you're coming from. I'm still getting used to Rust synta=
-x.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
->
->
-> > [2]:
-> > https://doc.rust-lang.org/book/ch19-04-advanced-types.html#using-the-ne=
-wtype-pattern-for-type-safety-and-abstraction
->
-> I don't speak enough rust to even begin following this :/
->
-> > [3]: Wrapping a type in a struct should achieve something similar even
-> > without using the cfi_encoding attribute since the encoding for structs=
- in
-> > both are <length><name>, where <name> is <unscoped-name>.
->
-> You're not talking about C, right?
+Tested-by: Ron Economos <re@w6rz.net>
 
-Both C and repr(C) Rust structs have this encoding, but I understand
-the problems with doing this in C since it doesn't have
-repr(transparent) structs so there would be a lot of casting back and
-forth. Maybe there is an alternative or this could be done for less
-used function pairs?
