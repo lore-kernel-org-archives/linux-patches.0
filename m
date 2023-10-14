@@ -1,164 +1,274 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A1D7E
-	for <patches@lists.linux.dev>; Sat, 14 Oct 2023 05:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331162586
+	for <patches@lists.linux.dev>; Sat, 14 Oct 2023 09:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Z2ngHbsz"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GSD44n6J"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697260354; x=1728796354;
-  h=from:to:cc:subject:date:message-id:references:
+  t=1697274930; x=1728810930;
+  h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=BpdBZAiLTo61w9GVU1uEkejlDGbtSyv+bbMFj0Lomd4=;
-  b=Z2ngHbszuzCfsO82gAXuxXmG5WWGcjzNJw1gvrOl2UjY9cEGk4RjHKbi
-   vNBIvwI67jbDHTF2h6hq49AcsK9dbRAHGL2dBSc3AheL8VuPtyNn0K7RC
-   RYAMo5XnI4vSwSbcGMQvdikP+ZW1sVLAzL6Ma8I7E/pve3+dvTaU4yEZo
-   HWtY7fFewiJTRjqCzXYXeRlIIYy58WxwQUnZXp7XvW96Lj3wPlt8Gmifu
-   eigmUFqMmSmliqArd9Ub2b6gd3Fwtawkp9Wvw9drvD7NhSUnILS8pgsTu
-   rMc+Z1ky7RINf7P0DqTjKrWdJv0OB/7bdkuLaJyiGtuS4wGEOkvM/hyw6
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10862"; a="384174671"
+  bh=JYW86//yUL0QdpFHKCIQGEc6k1iMvbjB7mk9FRagBMs=;
+  b=GSD44n6JffRfX4pmotIao1/NsjOlajLtjDp5eWi41DjMWFyRCjPfNW6H
+   fN1MttDA1de22O7F9k7ChjxPWDPYtMoX47NN9OKd4va0VsRUpEpp7d8ur
+   +GERGcX6moLOcFrdiOL/njqJIOWgNxWKjohptHfiJRIQ5iALsg/KpJuOK
+   b06percekRtJcqvg9RXyRGS4UoDzib6D2K2lmeI7hC7hmlYBuSxj/TMns
+   wZ2GoRyKRRJzYNGZ8HcK8ayCWy0AFgjLKwkHn/tUOvA/fOtJmB3JPafs1
+   CCQ2ukhamnaexXe9TyVAOIMYmxQKOXWjZGALj3QgtXAa1hcUe32riyz7r
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10862"; a="385155280"
 X-IronPort-AV: E=Sophos;i="6.03,224,1694761200"; 
-   d="scan'208";a="384174671"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2023 22:12:33 -0700
+   d="scan'208";a="385155280"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2023 02:15:29 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10862"; a="1086397148"
+X-IronPort-AV: E=McAfee;i="6600,9927,10862"; a="748632803"
 X-IronPort-AV: E=Sophos;i="6.03,224,1694761200"; 
-   d="scan'208";a="1086397148"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by fmsmga005.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 13 Oct 2023 22:12:33 -0700
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+   d="scan'208";a="748632803"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by orsmga007.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 14 Oct 2023 02:15:28 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Fri, 13 Oct 2023 22:12:32 -0700
-Received: from fmsmsx601.amr.corp.intel.com (10.18.126.81) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ 15.1.2507.32; Sat, 14 Oct 2023 02:15:28 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Fri, 13 Oct 2023 22:12:32 -0700
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ 15.1.2507.32; Sat, 14 Oct 2023 02:15:27 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Fri, 13 Oct 2023 22:12:32 -0700
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.169)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ 15.1.2507.32 via Frontend Transport; Sat, 14 Oct 2023 02:15:27 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.169)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.32; Fri, 13 Oct 2023 22:12:32 -0700
+ 15.1.2507.32; Sat, 14 Oct 2023 02:15:27 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kT8LR/oSX9tZWij1R5//eDyql7ZLnI9SvEGMRnMQOrDWOePkeruxXmxycZZ/b6pu4MlQN2MseK5210YKGKTSh5mC70nUZ9iC47cigMid7pAzLXt7MJVaT35GJPklacRMu4vsnGLaHNoacuIXtmY6eV4+HgOA0eK7xozGXr+W7j2vLEXhUy9hpnFMn/Qj6k3rvOuuvXcRcr9BS2DPXDk0bCgaHPLPNkLyosBejeIST+CMQT3DLK4b3BvrA/H7wLO/h4+nw/g9soYZJCAgFDG18CJB95h0xOmhzComsRHK8NlN/rZMP7YFLX7z7xgHqzMzI6ex8X+pDdT3wxL184yetQ==
+ b=WHYP+yAIB0XZLjuIq/Q8cB2hCC6rXPlRujP9g/y200VQZb5IoJM1HpPuLYjORpe4KYsBE499+iQjIYxeBtzJqFgYV5Kn26Xv4feZMwzIqx/Z8o2vbrBMLzxsF1I7FoTzEFpqbRHTLvMwjWDc5kclSoFyXrKaH3oFzysfQ3MgOh3yoySn8Bme1vJG+5TSotuAYP2lD3/DYMOixeJif2jM2hh0oTCnAoW0mtSaa6z/mOifBZfKjKdbRYTbsiYFmy3RBg9fr1NJYMNv7UJ1uVG8KCTFO5NBKW0fLF8YVIWzePN005tgrgrPDWUH4Qh6QxtOJPVsmx5N/PktiyzRY7BS7g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=r213hn5dfAXUvOdXfArUhwspFPfozeX7Jzx3kuHPXPc=;
- b=RyhN3+UfEUbk29WKr9nw1GTweKwzliGIGfv/mDseV7GBjvkx/WJBiNp//MXGSZc4Jbbv5rp4L+JDuxjyVwMQSBoEF/8yd/4NWBn2NfH/WIGh+JPHwM2cVX6ZiA9yqoGsO5iDh56gQaTFACoCkBfWegtij6P2V2TuXPc6mMDfAliBr1p+FD+3I+I7wGCVkw0jjoJkf7nnsq/XCi70BxhmW/C8aQ/6SwTMdv+9/ZAFVMrkqag29jD4QXV6UqkCBU0JjFd08txdFFvr2dukdOCgCE3qS6GGmGheaE0lYwK/cBSCqBd6ciw5gg+6L+uEiH7q5cyeGrzmFK6vUiZbfUYqmg==
+ bh=3h5wCLsR2UjH3wRlYs97jr4Np6Jppm6jK/FRDUGrMV0=;
+ b=VKcfLlAA/5Inp2kDWtbRA9YeVOtty6bdgJ0966qFl2cX5d4qmGl+iXrRUsTCf2fSaqosgVSs/FbjnJ1GqtGd7a8ahMPyRrhxEP71AWpNgfrwS7gec0q/ejul+ukeQledzOzngPD4YG53kubbCjXZCbm9doC4NVDk+pJBO4FV5aXVM6Th+J70g+ZE8tc3mQbvcJuMRfYarfU3pPNmDYy6N7/aLzgvwXzeJ7g4a09fJG0zltq5v9MDUWSur1ctuBj7EabG5JgY9MLryqrybX6nQUkUKgiLpOsRuYXd4xLN2S4mLGNYgjLu9GMW4oi9AVhpm/X0hek2xbvG8CBWW1urHA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by SJ0PR11MB6696.namprd11.prod.outlook.com (2603:10b6:a03:44f::18) with
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from MN2PR11MB3728.namprd11.prod.outlook.com (2603:10b6:208:f4::21)
+ by BN9PR11MB5227.namprd11.prod.outlook.com (2603:10b6:408:134::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6863.45; Sat, 14 Oct
- 2023 05:12:30 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::7316:13b0:88bc:b3c8]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::7316:13b0:88bc:b3c8%4]) with mapi id 15.20.6863.047; Sat, 14 Oct 2023
- 05:12:30 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: "Li, Zhiquan1" <zhiquan1.li@intel.com>, "x86@kernel.org" <x86@kernel.org>,
+ 2023 09:15:24 +0000
+Received: from MN2PR11MB3728.namprd11.prod.outlook.com
+ ([fe80::e4db:e815:f217:9b6]) by MN2PR11MB3728.namprd11.prod.outlook.com
+ ([fe80::e4db:e815:f217:9b6%3]) with mapi id 15.20.6863.043; Sat, 14 Oct 2023
+ 09:15:24 +0000
+Message-ID: <233e17ac-0ae5-4392-a5e4-ab811a155805@intel.com>
+Date: Sat, 14 Oct 2023 17:34:12 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] x86/mce: Set PG_hwpoison page flag to avoid the
+ capture kernel panic
+Content-Language: en-US
+To: "Luck, Tony" <tony.luck@intel.com>, "x86@kernel.org" <x86@kernel.org>,
 	"linux-edac@vger.kernel.org" <linux-edac@vger.kernel.org>,
 	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
 	"patches@lists.linux.dev" <patches@lists.linux.dev>, "bp@alien8.de"
 	<bp@alien8.de>, "mingo@kernel.org" <mingo@kernel.org>,
 	"naoya.horiguchi@nec.com" <naoya.horiguchi@nec.com>
-CC: Youquan Song <youquan.song@intel.com>
-Subject: RE: [PATCH v3] x86/mce: Set PG_hwpoison page flag to avoid the
- capture kernel panic
-Thread-Topic: [PATCH v3] x86/mce: Set PG_hwpoison page flag to avoid the
- capture kernel panic
-Thread-Index: AQHZ/lso9WGwaznFOkSBbySsExRE6LBIvACg
-Date: Sat, 14 Oct 2023 05:12:29 +0000
-Message-ID: <SJ1PR11MB6083A23BB89F4EE0F44B2794FCD1A@SJ1PR11MB6083.namprd11.prod.outlook.com>
+CC: <zhiquan1.li@intel.com>
 References: <20231014051754.3759099-1-zhiquan1.li@intel.com>
-In-Reply-To: <20231014051754.3759099-1-zhiquan1.li@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|SJ0PR11MB6696:EE_
-x-ms-office365-filtering-correlation-id: a003e90f-8c8f-41d0-5900-08dbcc742a3d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: rXS1SFbMM9mgRvP87Mvocu+59JL7zZx2K5Zog30Ys5vt2rrjqRCzhwis98f+m8w4qCBwrk22LEZLMgGnJIaJWsqU/wnoEOoep/qskJa9eLCzONDl9J7xldJyu46WWt9UaBOLxdZTpmIZ9ODA9xb/Mj8uQzpEQKaSvFgAYZfOMXwlZi++SG6s/hMfbGd4lo+IVrfTUDGuQcIR2JQcJFELS0KKsU2N49hVToq3T/Unl/HriWAbQvbgYcCz2j8azITdYHd/XziDnF8sZdwCh3f7y+qozK9YkOY7mTuoTZrIGCrSWs5aUGrGjKZOYmJcXd1x4rIaMGN50M9sV+93ShPOZqTJbsul/CccAvqVRVTpT7rG7//wZKs8intYfEpljUZacLDeRPcL992r/Sf2dWVoQruMnAT6a8Y3vOGd/3jZBUMs5DaUarv6oT6bTKbQwgOj2nL4bI/fDP8FcyDGRV1YROxSio0SoirTsmvOv7jieoDwN3Nxl2Oyhh1+RGe+kGz76I2XGT0J1l+yBex+gJFqiBRTdxuFq6bQ4kQmF04LqBakBpZVs8q+5irtJCqthNQFV7PeDpJitJN3PAi8zpymBhUSnV0WewXTkiVjWUfxceY=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(366004)(376002)(346002)(136003)(39860400002)(230922051799003)(1800799009)(64100799003)(186009)(451199024)(107886003)(41300700001)(7696005)(71200400001)(6506007)(4744005)(2906002)(64756008)(66476007)(66556008)(66446008)(66946007)(4326008)(26005)(478600001)(5660300002)(9686003)(966005)(52536014)(316002)(38100700002)(110136005)(8676002)(122000001)(55016003)(8936002)(33656002)(82960400001)(86362001)(38070700005)(76116006);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?eCkNnYDOLMlk50X7oGSlAzWl6ZN8Oxrz/XO9Twzbe9elHinglBVyKP2ggxQE?=
- =?us-ascii?Q?kzTFXO+b0ZYUw7WDNnM5sQ0ovMYsBixyMUvK2l297QR7gIfqBkjUWw1cau0Z?=
- =?us-ascii?Q?zXwj0wkM2zpLgBGInnkBJQvt0Pgg1vQ6c0fIr8TeyB3CkhFK2G322pcm6qDZ?=
- =?us-ascii?Q?VDmwA9XrEd11i5S8IPLT7yXIlz0b2n5ch5GpPhn2uIi/iH5g5rwLKeyjjTXR?=
- =?us-ascii?Q?MjOfCG2FD5hwx2KSMez0BrrmQYEd1dawd81ZRwfrk5D0zPZZHXxgbAaJRuiq?=
- =?us-ascii?Q?NZ4pXF55Usa+hJFduYl7hj9Hd4LAYYgMvFAXU7se1R98KFawCbWhUzIiBM2t?=
- =?us-ascii?Q?a8bPWqw7KFyGSSwuU9bBo0PbYdpCiYVxRhjutbCwwFhL3WCOdBbvHjWb5ugR?=
- =?us-ascii?Q?AdvJhhEvYa74NNuqqICViqIXhoglbLZEWeCNGBksaALwM0qCXrH7qukA0Cz0?=
- =?us-ascii?Q?1qNXYIR83QSZWsQ0/Mo5u07wSCrBe4Y/v81PDVJ9A+tI0VYjM7CbatYKZzb8?=
- =?us-ascii?Q?VwVy9YAxpX3wFqpJFuDo+7ou+6AkJ5y772BDMTrROs5y+d+sXCrKu2MKESSO?=
- =?us-ascii?Q?lvHK+uuAeSmMLnRpPHSESHE84uLQd3ZkiIMSLLRo/APsU2NEgR+5F3JONa6V?=
- =?us-ascii?Q?G/E9bQaBpkFX2W72u9JRoDmcWImJs2V/gHvTzpQPabhHHZ/NMvsyZM/5o4PH?=
- =?us-ascii?Q?H8qYbkcSKj1V9K3Zm7crQOxOUu6b4AgYItn+wLgqI/6Q7m1xir1mcBk5hqH9?=
- =?us-ascii?Q?un8zRbH1DXvKkBsCb2K7k3Hlf4k0IFxQpkbyqxISIlphG6qQbsPhAB2gkcZA?=
- =?us-ascii?Q?+tMfHdVvWUvOChpkanrEGNYB29en5rkeKXubGGYi0XJdLjj4/+F+3Em3QsP+?=
- =?us-ascii?Q?52YoO4IwQn4+VG5V4D0iq5iSuvAOrOd3iF7qucbtZDx3sHv3f5BLOCa+3VFG?=
- =?us-ascii?Q?+lu5DOxiGAkjEVJDnoPWkqRrIf/vXzVoRQzS6qblKzaQewinSctak/6BQj4/?=
- =?us-ascii?Q?M4Exj7jt0QVA53cZhQeKXf+cO6ELfEKvzHj08VCi8ytwLBGemEOQwBePk32i?=
- =?us-ascii?Q?bjYt8Mo+FFwb9EYeFh9q5xP/xG/pu3izyoEU+ctniLv1FVEM7GCkYYciSPmR?=
- =?us-ascii?Q?navsepDQ3fIlCcRprYR3ZrCxrDviNhfdbY1cnb0r/AMpyZOWkJQjZkNOeyRS?=
- =?us-ascii?Q?+LArGBFYiMr9BE6wKpqaBPFuM7y6ORQ2eI81cUaV2gOFkULrqFfyB7+foCHR?=
- =?us-ascii?Q?nJXWwvx/yh97DVI3EaDwaNMWjqa7MNpPDesUcwJ4DDM/MBGvNaZ0DxlJTZpw?=
- =?us-ascii?Q?dqQt8fVXbXa1Jcy7gSaGmOxN+zF5B0EVhiJ4MYsvAmy5hu57u9jIyyVyrdJo?=
- =?us-ascii?Q?0ajW4wiQHdyWOrVaINU7xnCRdfNZfId3qldXx+ZxAmEXw9KHKUxeURKss7QP?=
- =?us-ascii?Q?Nmrr63EPttTqQI43eIuzo0sz0X5B3oyQFlkpp0x1rALlO2ZgBfYM0jSNWlcP?=
- =?us-ascii?Q?dENLJLQ8vPjMZ7E74aELE4Yks1htuNmrFAOzgj4VfkeS1RcULTagXJpSaVFR?=
- =?us-ascii?Q?hCoXx7mD8pGnbQoQAVwJWRCNYXpg1FSYlpFhBpeM?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ <SJ1PR11MB6083A23BB89F4EE0F44B2794FCD1A@SJ1PR11MB6083.namprd11.prod.outlook.com>
+From: Zhiquan Li <zhiquan1.li@intel.com>
+In-Reply-To: <SJ1PR11MB6083A23BB89F4EE0F44B2794FCD1A@SJ1PR11MB6083.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR03CA0119.apcprd03.prod.outlook.com
+ (2603:1096:4:91::23) To MN2PR11MB3728.namprd11.prod.outlook.com
+ (2603:10b6:208:f4::21)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR11MB3728:EE_|BN9PR11MB5227:EE_
+X-MS-Office365-Filtering-Correlation-Id: e593b7ae-bf85-45b6-4286-08dbcc9618f9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: l7ePWL3jHV6vgcbBOif0GTg63u0Wm9+8zhKeVGhUCsLp6BveDcixsNxJfHNglMwGJ4ITs8viwzdOsWOAAZwbaGxx36c5IPhy1IZ+ntucb3ClV7EilS+BMRm88AGuD9rVOOfBq8UB50YVTbgyoNiODgQcjxZ/27zHiMokQBdKLISXcEB1rRCAf0j8NkZt5Jp+7cYzmUFx1xh6ntnsptDiLxgFVTuxsVoiYm6+HAIz4+nXxfNMDSm/VPvpntsc1n6F9le5zD7sFCJGbWbdVUcqITjyrzC75/C+MsmXK9JiLtyZ6tdvfZJ90OMGkZCfxsg7Ugz1BDr/9adRmmc4BG7GxfSwn7t6eZHvV/ZaXn3xPFXD6Ql6GT9C+336kGDQT+3LwmkLopfy2lbNCsbnBFHGtqFfZKxi6+W6ZfihHTuk0cJzjxkVsEybtz7oafGc93YFk3lr9sifpDm5dzlQABwqRi+rvmhuOKx9dn6N94SKZ1p51/mQ2FQIhSLYsCgGKyl98MrOUt3Q2nt/XJtzDg9bRcKfFeG1AeFDyS0YuTdLiytEUPqMO15gv3JurW6iZSeeGrTMSN2eltr8aR+hzTr6gLBPPWAHnzr2ReewdP81dE1JP1FvMAh2bd4Df0ktxXVbTDch7FaLgQDi5ylSYNuzZVRSs/5lauzcTv6PDZrri2Q=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR11MB3728.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(366004)(376002)(346002)(136003)(39860400002)(230922051799003)(186009)(1800799009)(451199024)(64100799003)(2906002)(8676002)(8936002)(5660300002)(83380400001)(41300700001)(66476007)(316002)(110136005)(66946007)(66556008)(478600001)(4326008)(966005)(6486002)(31686004)(6666004)(6512007)(6506007)(107886003)(53546011)(2616005)(26005)(82960400001)(36756003)(86362001)(31696002)(38100700002)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ejNKTE5HdjdMOW0vN2RuV2N3dnBxZnRXVmVTYjQySVMzUUR0eXhBRWhRNGd2?=
+ =?utf-8?B?bkhNYkFXTklXM0Z3YWhDbkh5T0dtNVZrUmxyK3Q5M2JuT2dqNzBpRFIyT0ta?=
+ =?utf-8?B?ekwrK0ZHcm10ejJrT2JGNDNET2pDNnhTbWNjNmhWUGwrcExlWDBYaXo2Y1lz?=
+ =?utf-8?B?T0JlRENUQzBaS0lVQjUwSUJWVEFkcVBGYnl5MHZLWEVsVSs0aFVreGNFWGNL?=
+ =?utf-8?B?SmU1RFhFWWVUcURvWGZSTEVxWVRKRk4xZWlHQnRzZGlETGJ4SlJ5ajhMSVFI?=
+ =?utf-8?B?M3huYklRSUc2WlU1NWt2VGg5bHQ5NjM4bjJxcytWK3pLRXJqTXZzMHV1OGhY?=
+ =?utf-8?B?a09kQmFocjdKa0dhNHBlVUIwRlh2RGd4TUtMeHgxOGNicDBCMXVPdHgzamtT?=
+ =?utf-8?B?UHVEUm8vdVhnalplM0Y0NFcwczZWQzc0bkdrdWdkbm95SVhFU2xadlo4Uy9k?=
+ =?utf-8?B?cmFNcVBCaXVlaUhHaG1wRmRjdk01SmJWYThkTm1JQXpQZzlvUXNSaVNuK2Zz?=
+ =?utf-8?B?UWhKSlREUUNzL01rVXJyRXd4dGJUVUZrUnp1bEF0VFJRZWxBcXFRWDEwREs0?=
+ =?utf-8?B?dmNhK3ZIbC94WE1wRlFNK3dmZGhpWnVsZzZLS2hqbVEyUkYwb0I3eUIrTGZB?=
+ =?utf-8?B?VGJNTHM3Y21BdFFSM2ZRT0VremdUUk9DajNob0kzVXFQajVDbC83ZTlvK1Ro?=
+ =?utf-8?B?UVBEUis0QkpGYi9lODc5VFQvZWxtR3pHMUZsem4rdTdiRjNSMnRwN2gvZXhl?=
+ =?utf-8?B?UWs4ODRpSmNtL0pxRWYra1Z0US9oMkNUWG83cVpBTGpNNUd3SmJtZko3TWtN?=
+ =?utf-8?B?Y1JzTmE4L0U0SGlaZlhYSDZxOEtuaVZmYlFrZGRjTUZHMzNGdFdHRnJVS1Vj?=
+ =?utf-8?B?RitFMTJFeVphLzhmd3NVSGZNaTJHWWhSN1J4SDBpQTlVR1FxRi9udzNRY1Nw?=
+ =?utf-8?B?eC9jQzZDem1mcDBUZXovbnFYWFBleDVTMStPNk9ka3hybUVhR3hLdWdNV0lU?=
+ =?utf-8?B?RGpFczdjK3NWbnpnODBUZytNRHdMelNlLzhRNGxGL2dmQi9vbGR2SkV2Z1ZW?=
+ =?utf-8?B?OWdMby9RcUd6bGtWV2d5NnpQbWh1NmtzL0QvVk5KZk5kMjFiZkZLNUx0R2sy?=
+ =?utf-8?B?OHZDVU9wK0hHVzVwdWNISitBVEV1aTZodHBRUnVWdnkrQ1k1bm0yTVlZeW9m?=
+ =?utf-8?B?K3B0NVlnaWZwa3BIblU2UVluZVo3a2x1SWdZbVBucVFCVUxXTE9JTkhTdVc0?=
+ =?utf-8?B?WGVic2NEZXlnR21OWENVWHFLYTRQZHE3QUlsNVRXdXJzTTJoL05NVjhlbytT?=
+ =?utf-8?B?Q0w4THZ0OFdyYzZoQXNSV3FCeW4zUXF6VFZyOG9RVTRnd2RRcHFFMDdBazVC?=
+ =?utf-8?B?WEFUYjZNUkU2cGNhOVBJdVM2em14T1V4OUFLeitSbDBiWGtlYW5MczBHOHRU?=
+ =?utf-8?B?MmtVUzg0SVVXdUFoblBEOTd5QUxVZXp6elJZU2p5d1V5UnpQMzJSbXhQcGFO?=
+ =?utf-8?B?TDJvRGRZWWoyU090aTNrWDl4bFZodVZaMktDTTgyNU1EUEN5eG1rRXZRKzhi?=
+ =?utf-8?B?aUI1bldZYi9oQ1E0ZnVRWEhDOWM1RTJvNnkvSzhnamQ2KzhGbzZSMTQ0Zmtr?=
+ =?utf-8?B?ZkZGdmhSeFV5cnYxVGJMWHNxakJKT1JFSmRaa2xjaExsSEhTMG9KVmlENzRm?=
+ =?utf-8?B?K2gxQ29tNGowa3pKakxEUHc3aWcyVFZwNUVuTnBLaEppQVovNnZ3TGdReWl4?=
+ =?utf-8?B?RnNsTHBTVWZaRE5DUzcybnQrUDBhVGNyZUp5aTUrc0Vialp5VnZjS2NtcGhR?=
+ =?utf-8?B?VDdBVUliUHZldEttL1EyaHFBZGo4VVN3SjlteE4ydmx1eVFKZWlzUnhEUXFw?=
+ =?utf-8?B?OTBscTVqTjNWQjF0QmlNSHpzZlBjRytucHUzVGxIL0VPU2F2MzFXOE1CQjNZ?=
+ =?utf-8?B?aGVQYXU4eFBGY2J6cjErM3JDVkRwdnMzdjRlN1lSMVl1ckZmT29paU8rd2FS?=
+ =?utf-8?B?cHd3U1lPcXQrK1ZXUFdSS2l1SUl5Mk9kenhtTGVRQ3dIZ2Y3aFdrRjdsK1pn?=
+ =?utf-8?B?TThKK3o5UTBrMkdkdVNBZXc1K1d4Y3hrS01lcWp2aCtlVzM0bm1HQnNjUk5u?=
+ =?utf-8?Q?o4wTlwC/4DE8xdUHQvypz5CoU?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: e593b7ae-bf85-45b6-4286-08dbcc9618f9
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR11MB3728.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a003e90f-8c8f-41d0-5900-08dbcc742a3d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Oct 2023 05:12:29.9375
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2023 09:15:24.0225
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: C1ZnWR8ii6hViRpMTJAPOz7RVwEeoK8qm5jL307g+12igfc5grJIb4t+X/8WXVbt4eo55QN67ranMafSh8UdrQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB6696
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: u1lydsvbq2l8VhBet99FtYt5QJa5JdyxktI0N73SUF6IfN5N0wymCv42wETUQiiCXPiTuFXEmKJIk7zEZOm2qQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR11MB5227
 X-OriginatorOrg: intel.com
 
-> Co-developed-by: Youquan Song <youquan.song@intel.com>
-> Signed-off-by: Youquan Song <youquan.song@intel.com>
-> Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> Signed-off-by: Ingo Molnar <mingo@kernel.org>
-> Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-> Cc: Borislav Petkov <bp@alien8.de>
-> Link: https://lore.kernel.org/all/20230719211625.298785-1-tony.luck@intel=
-.com/#t
+On 2023/10/14 13:12, Luck, Tony wrote:
+>> Co-developed-by: Youquan Song <youquan.song@intel.com>
+>> Signed-off-by: Youquan Song <youquan.song@intel.com>
+>> Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
+>> Signed-off-by: Tony Luck <tony.luck@intel.com>
+>> Signed-off-by: Ingo Molnar <mingo@kernel.org>
+>> Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+>> Cc: Borislav Petkov <bp@alien8.de>
+>> Link: https://lore.kernel.org/all/20230719211625.298785-1-tony.luck@intel.com/#t
+> 
+> This still has problems.  You should have removed my Signed-off-by. You should NOT
+> have added Ingo's Signed-off-by (the only time to add someone else's Signed-off-by
+> is when paired with a Co-developed-by).
+> 
 
-This still has problems.  You should have removed my Signed-off-by. You sho=
-uld NOT
-have added Ingo's Signed-off-by (the only time to add someone else's Signed=
--off-by
-is when paired with a Co-developed-by).
+Oh, this is V3, not RESEND, I should reset the SoB chain.
+Thanks for your reminder, Tony.
 
--Tony
+If my understanding is correct, the version below fixes the tag list.
+
+Best Regards,
+Zhiquan
+
+========>
+From: Zhiquan Li <zhiquan1.li@intel.com>
+Date: Sat, 14 Oct 2023 13:03:17 -0600
+Subject: [PATCH v3] x86/mce: Set PG_hwpoison page flag to avoid the capture kernel panic
+
+Memory errors don't happen very often, especially the severity is fatal.
+However, in large-scale scenarios, such as data centers, it might still
+happen.  For some MCE fatal error cases, the kernel might call
+mce_panic() to terminate the production kernel directly, thus there is
+no opportunity to queue a task for calling memory_failure() which will
+try to make the kernel survive via memory failure handling.
+
+Unfortunately, the capture kernel will panic for the same reason if it
+touches the error memory again.  The consequence is that only an
+incomplete vmcore is left for sustaining engineers, it's a big headache
+for them to make clear what happened in the past.
+
+The main task of kdump kernel is providing a "window" - /proc/vmcore,
+for the dump program to access old memory.  A dump program running in
+userspace determines the "policy".  Which pages need to be dumped is
+determined by the configuration of dump program, it reads out the pages
+that the sustaining engineer is interested in and excludes the rest.
+
+Likewise, the dump program can exclude the poisoned page to avoid
+touching the error page again, the prerequisite is the PG_hwpoison page
+flag is set correctly by kernel.  The de facto dump program
+(makedumpfile) already supports this function in a decade ago.  To set
+the PG_hwpoison flag in the production kernel just before it panics is
+the only missing step to make everything work.
+
+And it would not introduce additional overhead in capture kernel or
+conflict with other hwpoision-related code in production kernel.  It
+leverages the already existing mechanisms to fix the issue as much as
+possible, so the code changes are lightweight.
+
+Co-developed-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
+Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: Borislav Petkov <bp@alien8.de>
+
+---
+
+V2: https://lore.kernel.org/all/20230914030539.1622477-1-zhiquan1.li@intel.com/
+
+Changes since V2:
+- Rebased to v6.6-rc5.
+- Explained full scenario in commit message per Boris's suggestion.
+- Included Ingo's fixes.
+  Link: https://lore.kernel.org/all/ZRsUpM%2FXtPAE50Rm@gmail.com/
+
+V1: https://lore.kernel.org/all/20230127015030.30074-1-tony.luck@intel.com/
+
+Changes since V1:
+- Revised the commit message as per Naoya's suggestion.
+- Replaced "TODO" comment in code with comments based on mailing list
+  discussion on the lack of value in covering other page types.
+- Added the tag from Naoya.
+  Link: https://lore.kernel.org/all/20230327083739.GA956278@hori.linux.bs1.fc.nec.co.jp/
+---
+ arch/x86/kernel/cpu/mce/core.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+index 6f35f724cc14..905e80c776b8 100644
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -233,6 +233,7 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
+ 	struct llist_node *pending;
+ 	struct mce_evt_llist *l;
+ 	int apei_err = 0;
++	struct page *p;
+ 
+ 	/*
+ 	 * Allow instrumentation around external facilities usage. Not that it
+@@ -286,6 +287,17 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
+ 	if (!fake_panic) {
+ 		if (panic_timeout == 0)
+ 			panic_timeout = mca_cfg.panic_timeout;
++		/*
++		 * Kdump can exclude the HWPoison page to avoid touching the error
++		 * page again, the prerequisite is that the PG_hwpoison page flag is
++		 * set.  However, for some MCE fatal error cases, there is no
++		 * opportunity to queue a task for calling memory_failure(), and as a
++		 * result, the capture kernel panics.  So mark the page as HWPoison
++		 * before kernel panic() for MCE.
++		 */
++		p = pfn_to_online_page(final->addr >> PAGE_SHIFT);
++		if (final && (final->status & MCI_STATUS_ADDRV) && p)
++			SetPageHWPoison(p);
+ 		panic(msg);
+ 	} else
+ 		pr_emerg(HW_ERR "Fake kernel panic: %s\n", msg);
+-- 
+2.25.1
+
