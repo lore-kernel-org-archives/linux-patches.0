@@ -1,133 +1,145 @@
-Received: from vps-vb.mhejs.net (vps-vb.mhejs.net [37.28.154.113])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26ADF15488
-	for <patches@lists.linux.dev>; Fri, 20 Oct 2023 09:57:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maciej.szmigiero.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=maciej.szmigiero.name
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from MUA
-	by vps-vb.mhejs.net with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.94.2)
-	(envelope-from <mail@maciej.szmigiero.name>)
-	id 1qtm0T-0006Dk-Cw; Fri, 20 Oct 2023 11:41:25 +0200
-Message-ID: <d0029d6b-2ddf-4723-ba93-3c7bb9580abc@maciej.szmigiero.name>
-Date: Fri, 20 Oct 2023 11:41:13 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22541804D
+	for <patches@lists.linux.dev>; Fri, 20 Oct 2023 11:00:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OR7DZNlk"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 1343040E0187
+	for <patches@lists.linux.dev>; Fri, 20 Oct 2023 11:00:54 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id qwsXAnCVw7vQ for <patches@lists.linux.dev>;
+	Fri, 20 Oct 2023 11:00:45 +0000 (UTC)
+Received: from zn.tnic (pd95304da.dip0.t-ipconnect.de [217.83.4.218])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 6EA6D40E0196
+	for <patches@lists.linux.dev>; Fri, 20 Oct 2023 11:00:45 +0000 (UTC)
+Resent-From: Borislav Petkov <bp@alien8.de>
+Resent-Date: Fri, 20 Oct 2023 13:00:39 +0200
+Resent-Message-ID: <20231020110039.GBZTJd13R9JyDm/zwt@fat_crate.local>
+Resent-To: patches@lists.linux.dev
+Received: from mail.alien8.de
+	by mad with LMTP
+	id WRl5N1y8KmVEOg4Ac81XFw
+	(envelope-from <adobriyan@gmail.com>)
+	for <bp@alien8.de>; Sat, 14 Oct 2023 16:05:48 +0000
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id D1D2340E01AF
+	for <bp@alien8.de>; Sat, 14 Oct 2023 16:05:48 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cq4CGJxLiheq for <bp@alien8.de>;
+	Sat, 14 Oct 2023 16:05:40 +0000 (UTC)
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPS id 2E28B40E01AA
+	for <bp@alien8.de>; Sat, 14 Oct 2023 16:05:32 +0000 (UTC)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9ba1eb73c27so504296966b.3
+        for <bp@alien8.de>; Sat, 14 Oct 2023 09:05:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697299531; x=1697904331; darn=alien8.de;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Z/uhBRsYnsZAgV/PYH2bfS1hGLi77nzjJTP1PTjxsEQ=;
+        b=OR7DZNlk+21TyApuyvg8yyAFit7zJtFfdjSV3tK54qzb7ZcRDpPWdIdopk/Nx/JldJ
+         74r8+Eb+WK3jczQ3TaS8RXuDC+VOmv2RxxFnmnU1BvKs5jAo+tdZx/IAFl4jxVfRO4sB
+         Zpn4MrUWtRiLrB3/1oHzIMslFIhJdl7kBCJOB5hIO/ZK+GIbEFsFK/HKZI2F6U47RvLv
+         IC6a54VwNKe/RCNN1CUpAGL7yT7gvsEiuedZsWRTS5yatjivYTODp82TB+jPtBOiK8pN
+         vkSYM84KXqLj5gKRH/aPdx3h47UtbN/e4hsfUEQuhsbEwgiBBvARyyvRHve8vVW7uXvC
+         TYNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697299531; x=1697904331;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z/uhBRsYnsZAgV/PYH2bfS1hGLi77nzjJTP1PTjxsEQ=;
+        b=MPXfliYq/8ByoWoK74siGnsTk7ILiTrXXWVTiVBUMy0B6ch2IsoU6qDyHhxTjOAM/m
+         mDCwEK6Xhj5tQt/4CT8Q3o8ZCuXEDO+9zH+WFiQX1mcbg1db2Lrq2rbB7QoJjd1F6aKy
+         D7G4JJ3uNjH+Z5wJb+tmtZUXXnBMlunpnh0bEtlW1B3kNiNF0tDZ4x6xR8OnhjRDFte9
+         hMMtnprQ/ZN1o5w0B/WRu+VlD0r0EHz3j1AVAhLvh7PWeGxlEQ/t+0qMeSeI49tgP7S1
+         iM5sGxr3lgpL8TrbKFUOOwVHKXpDF5f9Ge/iYy215sWKDTYspQ2yMwIv5QZV8DCCwkqQ
+         1HJA==
+X-Gm-Message-State: AOJu0YxSjbg9CQBO5Xt3Wsehg4OQxRAwJb3N7NzT8semG0uMHS25hJI+
+	9y6Lj/6oRbpKMBlsTVmMqQ==
+X-Google-Smtp-Source: AGHT+IHMGUOruNcUTBq23x1z+s/KD54UBIasslc2/F0Qe+EoIpbPQsJ2YCp7C0BkrrTqsBf20dBqpw==
+X-Received: by 2002:a17:906:4fc7:b0:9be:aebc:d480 with SMTP id i7-20020a1709064fc700b009beaebcd480mr1837575ejw.24.1697299530992;
+        Sat, 14 Oct 2023 09:05:30 -0700 (PDT)
+Received: from p183 ([46.53.253.206])
+        by smtp.gmail.com with ESMTPSA id 17-20020a170906029100b009786c8249d6sm1110537ejf.175.2023.10.14.09.05.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Oct 2023 09:05:30 -0700 (PDT)
+Date: Sat, 14 Oct 2023 19:05:28 +0300
+From: Alexey Dobriyan <adobriyan@gmail.com>
+To: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Cc: x86@kernel.org
+Subject: [PATCH] x86: delete unused "struct thunk_desc"
+Message-ID: <843bf596-db67-4b33-a865-2bae4a4418e5@p183>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 02/68] x86/CPU/AMD: Disable XSAVES on AMD family 0x17
-Content-Language: en-US, pl-PL
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Andrew Cooper <andrew.cooper3@citrix.com>,
- "Borislav Petkov (AMD)" <bp@alien8.de>
-Cc: patches@lists.linux.dev, Tavis Ormandy <taviso@gmail.com>,
- stable@kernel.org, stable@vger.kernel.org
-References: <20230315115726.103942885@linuxfoundation.org>
- <20230315115726.197012029@linuxfoundation.org>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <20230315115726.197012029@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-Rspamd-Queue-Id: 2E28B40E01AA
+X-Spamd-Result: default: False [-1.91 / 20.00];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 ARC_NA(0.00)[];
+	 RBL_SENDERSCORE_FAIL(0.00)[2a00:1450:4864:20::632:query timed out];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 FREEMAIL_FROM(0.00)[gmail.com];
+	 R_SPF_ALLOW(-0.20)[+ip6:2a00:1450:4000::/36];
+	 MIME_GOOD(-0.10)[text/plain];
+	 PREVIOUSLY_DELIVERED(0.00)[bp@alien8.de];
+	 BAYES_HAM(-1.61)[92.54%];
+	 RCPT_COUNT_FIVE(0.00)[5];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 TO_MATCH_ENVRCPT_SOME(0.00)[];
+	 RBL_SEM_IPV6_FAIL(0.00)[2a00:1450:4864:20::632:query timed out];
+	 MAILSPIKE_FAIL(0.00)[2a00:1450:4864:20::632:query timed out];
+	 DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	 BLOCKLISTDE_FAIL(0.00)[2a00:1450:4864:20::632:query timed out];
+	 NEURAL_HAM(-0.00)[-1.000];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 MID_RHS_NOT_FQDN(0.50)[];
+	 ASN(0.00)[asn:15169, ipnet:2a00:1450::/32, country:US];
+	 RCVD_TLS_ALL(0.00)[];
+	 FREEMAIL_ENVFROM(0.00)[gmail.com]
+X-Rspamd-Server: mad
 
-On 15.03.2023 13:11, Greg Kroah-Hartman wrote:
-> From: Andrew Cooper <andrew.cooper3@citrix.com>
-> 
-> commit b0563468eeac88ebc70559d52a0b66efc37e4e9d upstream.
-> 
-> AMD Erratum 1386 is summarised as:
-> 
->    XSAVES Instruction May Fail to Save XMM Registers to the Provided
->    State Save Area
-> 
-> This piece of accidental chronomancy causes the %xmm registers to
-> occasionally reset back to an older value.
-> 
-> Ignore the XSAVES feature on all AMD Zen1/2 hardware.  The XSAVEC
-> instruction (which works fine) is equivalent on affected parts.
-> 
->    [ bp: Typos, move it into the F17h-specific function. ]
-> 
-> Reported-by: Tavis Ormandy <taviso@gmail.com>
-> Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-> Cc: <stable@kernel.org>
-> Link: https://lore.kernel.org/r/20230307174643.1240184-1-andrew.cooper3@citrix.com
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->   arch/x86/kernel/cpu/amd.c |    9 +++++++++
->   1 file changed, 9 insertions(+)
-> 
-> --- a/arch/x86/kernel/cpu/amd.c
-> +++ b/arch/x86/kernel/cpu/amd.c
-> @@ -205,6 +205,15 @@ static void init_amd_k6(struct cpuinfo_x
->   		return;
->   	}
->   #endif
-> +	/*
-> +	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
-> +	 * certain circumstances on Zen1/2 uarch, and not all parts have had
-> +	 * updated microcode at the time of writing (March 2023).
-> +	 *
-> +	 * Affected parts all have no supervisor XSAVE states, meaning that
-> +	 * the XSAVEC instruction (which works fine) is equivalent.
-> +	 */
-> +	clear_cpu_cap(c, X86_FEATURE_XSAVES);
->   }
+It looks like it was never used.
 
-This is essentially a well-intended NOP since K6 well predates XSAVES,
-and init_amd_k6() is *not* called for Zen CPUs.
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+---
 
-This workaround should have been added to init_amd_zn() function
-instead.
+ arch/x86/kernel/callthunks.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
-4.19 and 4.14 backports of this patch have the same problem.
-
-Thanks,
-Maciej
-
+--- a/arch/x86/kernel/callthunks.c
++++ b/arch/x86/kernel/callthunks.c
+@@ -48,11 +48,6 @@ EXPORT_SYMBOL_GPL(__x86_call_count);
+ 
+ extern s32 __call_sites[], __call_sites_end[];
+ 
+-struct thunk_desc {
+-	void		*template;
+-	unsigned int	template_size;
+-};
+-
+ struct core_text {
+ 	unsigned long	base;
+ 	unsigned long	end;
