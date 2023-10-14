@@ -1,135 +1,153 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720647489
-	for <patches@lists.linux.dev>; Fri, 13 Oct 2023 20:37:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080747E
+	for <patches@lists.linux.dev>; Sat, 14 Oct 2023 04:59:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UqhinNMS"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-406402933edso25914945e9.2
-        for <patches@lists.linux.dev>; Fri, 13 Oct 2023 13:37:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1697229431; x=1697834231; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eGqNMQJoTKDExVF5LTm0ABt03qpcjjaRQIb4oBXXpL8=;
-        b=UqhinNMSuFR+2EgeV6mcBuyS0lo6nZBK4g/ZdKOWzQiylwZasC+O3yhvQ/EnmVZXI6
-         NB1RAcbujPoj/gDY2h1RodL0FRdmB3Fza00/BUAzgp5mnEMgw8h7dWxzN0IH5ap4JCSX
-         nQ6xy+aFV/W4WMKyhtaKtgmtkHyEQwi3cPaQOgFakkZNnQ5YkSnaemQpK6NEvcI9bOc7
-         dZIBZsqY3NWX0Pw73CXO7/HiJUqbAfijPVPYO7b3fClVHFs3fn8cfsT2Q6g2+3SaDnvZ
-         f2adAyN+lhSxwU8dqz8cVKHkrKAoJBfyMppbKd02JlksTIp0qs9QtwSTev+OxqpIryzt
-         4PwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697229431; x=1697834231;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eGqNMQJoTKDExVF5LTm0ABt03qpcjjaRQIb4oBXXpL8=;
-        b=NLrBj/JcwQvPwDOkpk/RD00XlX0Y9DdxLTtRvIw+7k+ec0ZsdJbCSc1Go4jqUn7L65
-         liTClnyrY9DzqUMhr7A6BQYGEVdfON420bHAlKD9nWU9FAKr/6JIniwq1QQ0h4oas1QH
-         vvIBlV6fl9NPlKqSdol6a+SruVwOAYPtMWRVwPKZBuzYH6fGuLiXQiaWOD9ph1GLMlhI
-         nCrUxrCxmuRbB3ThqsMVaHSNYNHGTfCg3SpgphfV4R5DhHRc/5xKDXSotT6GmDAPpOTP
-         HcGZ8+4T3ogYpZutNc1EaDSLw873ubfsIERwNN/u4rpynIYMHFHZsl1tRfU5/psH2lTe
-         gEww==
-X-Gm-Message-State: AOJu0YyIDN2hNqTDGJmDDlET36gywmT+mkDvXiFGMphZD45d5CtOxFNO
-	QkBuoFkRwGFT6FijVKiQI7vh1I2+B72HiRt+6onodw==
-X-Google-Smtp-Source: AGHT+IF+7IiJEEKizdMeYQJowMnFRLsMOiRhCWVvtDSSbLN5+4n2cIdYTg5MU1RI1Xr336Wc5nGpjJB2bTesb2OZQ6w=
-X-Received: by 2002:a05:6000:1e11:b0:32d:8357:42dd with SMTP id
- bj17-20020a0560001e1100b0032d835742ddmr10781479wrb.68.1697229431471; Fri, 13
- Oct 2023 13:37:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IdG/eDly"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697259560; x=1728795560;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=/mdnpue4Nciffio8GLONGA7omAPMeo1KzhFrOJHbT50=;
+  b=IdG/eDlyXiJdn5TnWybYDn5od4OulhefWGyHHV1KPCFQTDVni5u4HI5K
+   tZEXaqSS9SDkRTrQQOx6ARjhgOZzYShkt+N3r87D67+TCH0yyxDaLVbeD
+   oVlmk7bHnxtpvIwgAow6FOQPyR9+piBkF3HC/pmHEgxtG2ZjDdgzB3pDf
+   AQl3VLR6cI9lOK9oXcetx1qUkVlHih5TI1sqY63ec9/++OYylTLLynYsI
+   wvqXawSWThEQbilOpaVhNIF/g7xTzuFvoKP7fGv7h45UbTRZD31Ix9wG7
+   xXL8zOOp0QyZZg+blG1nSK16d86MYf630I6pfMW45WNwksIQO6yyz9EbC
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10862"; a="3912771"
+X-IronPort-AV: E=Sophos;i="6.03,224,1694761200"; 
+   d="scan'208";a="3912771"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2023 21:59:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10862"; a="871363248"
+X-IronPort-AV: E=Sophos;i="6.03,224,1694761200"; 
+   d="scan'208";a="871363248"
+Received: from zhiquan-linux-dev.bj.intel.com ([10.238.156.102])
+  by fmsmga002.fm.intel.com with ESMTP; 13 Oct 2023 21:58:57 -0700
+From: Zhiquan Li <zhiquan1.li@intel.com>
+To: x86@kernel.org,
+	linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	bp@alien8.de,
+	mingo@kernel.org,
+	tony.luck@intel.com,
+	naoya.horiguchi@nec.com
+Cc: zhiquan1.li@intel.com,
+	Youquan Song <youquan.song@intel.com>
+Subject: [PATCH v3] x86/mce: Set PG_hwpoison page flag to avoid the capture kernel panic
+Date: Sat, 14 Oct 2023 13:17:54 +0800
+Message-Id: <20231014051754.3759099-1-zhiquan1.li@intel.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231012-st_remoteproc-fix-sometimes-uninit-v1-1-f64d0f2d5b37@kernel.org>
-In-Reply-To: <20231012-st_remoteproc-fix-sometimes-uninit-v1-1-f64d0f2d5b37@kernel.org>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Fri, 13 Oct 2023 13:36:59 -0700
-Message-ID: <CAKwvOdnGDXvbCgPFq+DZxaMo-ptdq7omXJyLVgwgFeKh5RwdTg@mail.gmail.com>
-Subject: Re: [PATCH] remoteproc: st: Fix sometimes uninitialized ret in st_rproc_probe()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: patrice.chotard@foss.st.com, andersson@kernel.org, 
-	mathieu.poirier@linaro.org, robh@kernel.org, trix@redhat.com, 
-	linux-arm-kernel@lists.infradead.org, linux-remoteproc@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 12, 2023 at 10:04=E2=80=AFAM Nathan Chancellor <nathan@kernel.o=
-rg> wrote:
->
-> Clang warns (or errors with CONFIG_WERROR=3Dy):
->
->   drivers/remoteproc/st_remoteproc.c:357:6: error: variable 'ret' is used=
- uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uniniti=
-alized]
->     357 |         if (!ddata->config)
->         |             ^~~~~~~~~~~~~~
->   drivers/remoteproc/st_remoteproc.c:442:9: note: uninitialized use occur=
-s here
->     442 |         return ret;
->         |                ^~~
->   drivers/remoteproc/st_remoteproc.c:357:2: note: remove the 'if' if its =
-condition is always false
->     357 |         if (!ddata->config)
->         |         ^~~~~~~~~~~~~~~~~~~
->     358 |                 goto free_rproc;
->         |                 ~~~~~~~~~~~~~~~
->   drivers/remoteproc/st_remoteproc.c:348:9: note: initialize the variable=
- 'ret' to silence this warning
->     348 |         int ret, i;
->         |                ^
->         |                 =3D 0
->   1 error generated.
->
-> Set ret to -ENODEV, which seems to be a standard return code when
-> device_get_match_data() returns NULL.
->
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/1944
-> Fixes: 5c77ebcd05ac ("remoteproc: st: Use device_get_match_data()")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Memory errors don't happen very often, especially the severity is fatal.
+However, in large-scale scenarios, such as data centers, it might still
+happen.  For some MCE fatal error cases, the kernel might call
+mce_panic() to terminate the production kernel directly, thus there is
+no opportunity to queue a task for calling memory_failure() which will
+try to make the kernel survive via memory failure handling.
 
-Thanks for the patch!
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Unfortunately, the capture kernel will panic for the same reason if it
+touches the error memory again.  The consequence is that only an
+incomplete vmcore is left for sustaining engineers, it's a big headache
+for them to make clear what happened in the past.
 
-> ---
->  drivers/remoteproc/st_remoteproc.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/remoteproc/st_remoteproc.c b/drivers/remoteproc/st_r=
-emoteproc.c
-> index b0638f984842..cb163766c56d 100644
-> --- a/drivers/remoteproc/st_remoteproc.c
-> +++ b/drivers/remoteproc/st_remoteproc.c
-> @@ -354,8 +354,10 @@ static int st_rproc_probe(struct platform_device *pd=
-ev)
->         rproc->has_iommu =3D false;
->         ddata =3D rproc->priv;
->         ddata->config =3D (struct st_rproc_config *)device_get_match_data=
-(dev);
-> -       if (!ddata->config)
-> +       if (!ddata->config) {
-> +               ret =3D -ENODEV;
->                 goto free_rproc;
-> +       }
->
->         platform_set_drvdata(pdev, rproc);
->
->
-> ---
-> base-commit: 5c77ebcd05acf3789949c8a387df72381d949ca2
-> change-id: 20231012-st_remoteproc-fix-sometimes-uninit-7aff1bdb7349
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
+The main task of kdump kernel is providing a "window" - /proc/vmcore,
+for the dump program to access old memory.  A dump program running in
+userspace determines the "policy".  Which pages need to be dumped is
+determined by the configuration of dump program, it reads out the pages
+that the sustaining engineer is interested in and excludes the rest.
 
+Likewise, the dump program can exclude the poisoned page to avoid
+touching the error page again, the prerequisite is the PG_hwpoison page
+flag is set correctly by kernel.  The de facto dump program
+(makedumpfile) already supports this function in a decade ago.  To set
+the PG_hwpoison flag in the production kernel just before it panics is
+the only missing step to make everything work.
 
---=20
-Thanks,
-~Nick Desaulniers
+And it would not introduce additional overhead in capture kernel or
+conflict with other hwpoision-related code in production kernel.  It
+leverages the already existing mechanisms to fix the issue as much as
+possible, so the code changes are lightweight.
+
+[ Tony: Changed TestSetPageHWPoison() to SetPageHWPoison() ]
+[ mingo: Fixed the comments & changelog ]
+
+Co-developed-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Link: https://lore.kernel.org/all/20230719211625.298785-1-tony.luck@intel.com/#t
+
+---
+
+V2: https://lore.kernel.org/all/20230914030539.1622477-1-zhiquan1.li@intel.com/
+
+Changes since V2:
+- Rebased to v6.6-rc5.
+- Explained full scenario in commit message per Boris's suggestion.
+- Included Ingo's fixes.
+  Link: https://lore.kernel.org/all/ZRsUpM%2FXtPAE50Rm@gmail.com/
+
+V1: https://lore.kernel.org/all/20230127015030.30074-1-tony.luck@intel.com/
+
+Changes since V1:
+- Revised the commit message as per Naoya's suggestion.
+- Replaced "TODO" comment in code with comments based on mailing list
+  discussion on the lack of value in covering other page types.
+- Added the tag from Naoya.
+  Link: https://lore.kernel.org/all/20230327083739.GA956278@hori.linux.bs1.fc.nec.co.jp/
+---
+ arch/x86/kernel/cpu/mce/core.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+index 6f35f724cc14..905e80c776b8 100644
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -233,6 +233,7 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
+ 	struct llist_node *pending;
+ 	struct mce_evt_llist *l;
+ 	int apei_err = 0;
++	struct page *p;
+ 
+ 	/*
+ 	 * Allow instrumentation around external facilities usage. Not that it
+@@ -286,6 +287,17 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
+ 	if (!fake_panic) {
+ 		if (panic_timeout == 0)
+ 			panic_timeout = mca_cfg.panic_timeout;
++		/*
++		 * Kdump can exclude the HWPoison page to avoid touching the error
++		 * page again, the prerequisite is that the PG_hwpoison page flag is
++		 * set.  However, for some MCE fatal error cases, there is no
++		 * opportunity to queue a task for calling memory_failure(), and as a
++		 * result, the capture kernel panics.  So mark the page as HWPoison
++		 * before kernel panic() for MCE.
++		 */
++		p = pfn_to_online_page(final->addr >> PAGE_SHIFT);
++		if (final && (final->status & MCI_STATUS_ADDRV) && p)
++			SetPageHWPoison(p);
+ 		panic(msg);
+ 	} else
+ 		pr_emerg(HW_ERR "Fake kernel panic: %s\n", msg);
+-- 
+2.25.1
+
