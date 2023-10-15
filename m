@@ -1,29 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993DAC8EA
-	for <patches@lists.linux.dev>; Sun, 15 Oct 2023 17:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EB8C2DB
+	for <patches@lists.linux.dev>; Sun, 15 Oct 2023 17:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLGpzlXS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781ABC433C7;
-	Sun, 15 Oct 2023 17:48:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzU5oQDt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DECC433C7;
+	Sun, 15 Oct 2023 17:50:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697392120;
-	bh=e7pYUIwoY9i67vYNaeVnPKr11BmBB0CqKXeTA68t9zU=;
+	s=korg; t=1697392218;
+	bh=tbm6AVjOHuNb7ND7lRa0uYuFFgqBHlGwd9LHu/mKIDg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JLGpzlXS72JBStrwk+tH5fqYDTq1MX28BXyPbWtXmfCo0PqCFaKfNQ0ZGUFzs3ecs
-	 STco/qdrEoo3uNU7Wy9BfjhgoA8CFr2HxUAZu9up9Ng8fDFuPPxVMhuCnSjoVGDhce
-	 WRV0uhSDHtwGRgbwszsGZvWdH0FVzpW/FekrDqm8=
-Date: Sun, 15 Oct 2023 19:48:37 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Zheng Wang <zyytlz.wz@163.com>
-Cc: stable@vger.kernel.org, hackerzheng666@gmail.com, sashal@kernel.org,
-	patches@lists.linux.dev, amergnat@baylibre.com, wenst@chromium.org,
-	angelogioacchino.delregno@collabora.com, hverkuil-cisco@xs4all.nl
-Subject: Re: [PATCH] media: mtk-jpeg: Fix use after free bug due to
- uncanceled  work
-Message-ID: <2023101528-scuba-walmart-fe3f@gregkh>
-References: <20231015144747.729031-1-zyytlz.wz@163.com>
+	b=SzU5oQDtEtraGV3N1bF04WEnyv5AnydayWzjUJMpRojxZ5jo11p7vUvYUP5a2YSD8
+	 62RR6V0MpbtVE6Jj5orZhe19COCbbTFG/Lu9eMVBjr6jgCneOALU0QbHWgo6Iy4MJh
+	 8HRJctcRe9vl+Jr9X5gfdYESav4Fgp7gJOXIRdIA=
+Date: Sun, 15 Oct 2023 19:50:13 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: Re: [PATCH 4.19 00/29] 4.19.282-rc1 review
+Message-ID: <2023101506-scrawny-handlebar-0734@gregkh>
+References: <20230424131121.155649464@linuxfoundation.org>
+ <CA+G9fYstB_fROK9LHYuQ8dc2ArieGGAW_x69eEX-eAi5xMeE3Q@mail.gmail.com>
+ <20230426170945.0ec0f1ef@gandalf.local.home>
+ <20230426181415.17c893f5@gandalf.local.home>
+ <CA+G9fYtd=dJEM=+xOHA9Egs88r+gEfrnW_gFnTFm4of5uTQ7mA@mail.gmail.com>
+ <CA+G9fYt518bg10DVo=ag=iGB8dj_NQZEmEty1CdkU3Cj+gtW0w@mail.gmail.com>
+ <2023101132-playable-flagstick-1abf@gregkh>
+ <2023101125-subpanel-enviably-28cd@gregkh>
+ <20231011104529.75f53d4b@gandalf.local.home>
+ <CA+G9fYuvtzQxL=RQ=zQB_Bn+-dcGwvXVnfHPqMaQHA-L5ydj4w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -32,13 +48,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231015144747.729031-1-zyytlz.wz@163.com>
+In-Reply-To: <CA+G9fYuvtzQxL=RQ=zQB_Bn+-dcGwvXVnfHPqMaQHA-L5ydj4w@mail.gmail.com>
 
-On Sun, Oct 15, 2023 at 10:47:47PM +0800, Zheng Wang wrote:
-> This is a security bug that has been reported to google.
-> It affected all platforms on chrome-os. Please apply this
-> patch to 5.10.
+On Thu, Oct 12, 2023 at 05:23:23PM +0530, Naresh Kamboju wrote:
+> On Wed, 11 Oct 2023 at 20:14, Steven Rostedt <rostedt@goodmis.org> wrote:
+> >
+> > On Wed, 11 Oct 2023 11:05:48 +0200
+> > Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> >
+> > > > Ok, I'll queue it up now, I didn't realize it needed to be there, sorry.
+> > >
+> > > Nope, I can't, it doesn't apply there, so I need a backported, and
+> > > TESTED version, for 5.4.y and 4.19.y if anyone wants to see it there.
+> >
+> > This is a quick backport for 4.19 as the conflict seemed to be due to added
+> > code that is unrelated to this change. I built and booted it, but it should
+> > have more testing.
+> >
+> > Naresh, if you want this in 4.19, please run it through your tests and give
+> > your tested by.
+> >
+> > Greg, please do not take it until Naresh has tested it.
+> 
+> Below patch applied and tested on top of stable rc branches
+>  - v4.19.296
+>  - v5.4.258
+> 
+> Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
 
-Both now queued up, thanks.
+Thanks, now queued up.
 
 greg k-h
