@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E400B1A5A7
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A6A1A5A7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaN2LVJK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC5EC433C9;
-	Mon, 16 Oct 2023 09:02:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gam0k1RP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30FEC433C9;
+	Mon, 16 Oct 2023 09:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446938;
-	bh=u/twJOzuDdkjoh3v7rrhvMJkphHCSG3t1ZRJf958IPs=;
+	s=korg; t=1697446942;
+	bh=FOPVgJ0iDm/wxOVvpo87H/ff+aUwGBJ81yZ995h/KO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zaN2LVJKV9MKJ9KogK0kkXMc6jobi07uK2RsCd7x7Qu4dUyfNZW+CBlDf39b5N6Mm
-	 /L4sql9h/O3RA11WnDx3RTxvVtggyKGhyHDHS/EEqhoJm9KtF11O8Z7tGt7ONgDWdW
-	 GPszXgrjCFp0em0JXCGx+E875casxTl3ZngOy5io=
+	b=gam0k1RPqki/mxMhzj9w1gRbdnHplR7Uv8Xpmh8OQk8Cif9ln1I6ZFvcrq9tr542k
+	 ARUmsXl6OBT/xoN4oFJCY/+1bin0fIMDYa7kRpDE7LCMgfKQn2zsv+1p38xM1xHdvi
+	 4NwfPkoc68Jv9PlrXmzwvxEQEH+r0spGNMgvxrPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <charlene.liu@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Miess <daniel.miess@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.1 092/131] drm/amd/display: Dont set dpms_off for seamless boot
-Date: Mon, 16 Oct 2023 10:41:15 +0200
-Message-ID: <20231016084002.353509339@linuxfoundation.org>
+	Alex Balcanquall <alex@alexbal.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.1 101/131] thunderbolt: Restart XDomain discovery handshake after failure
+Date: Mon, 16 Oct 2023 10:41:24 +0200
+Message-ID: <20231016084002.573466487@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -45,41 +41,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Miess <daniel.miess@amd.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit 23645bca98304a2772f0de96f97370dd567d0ae6 upstream.
+commit 308092d080852f8997126e5b3507536162416f4a upstream.
 
-[Why]
-eDPs fail to light up with seamless boot enabled
+Alex reported that after rebooting the other host the peer-to-peer link
+does not come up anymore. The reason for this is that the host that was
+not rebooted tries to send the UUID request only 10 times according to
+the USB4 Inter-Domain spec and gives up if it does not get reply. Then
+when the other side is actually ready it cannot get the link established
+anymore. The USB4 Inter-Domain spec requires that the discovery protocol
+is restarted in that case so implement this now.
 
-[How]
-When seamless boot is enabled don't configure dpms_off
-in disable_vbios_mode_if_required.
-
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Alex Balcanquall <alex@alexbal.com>
+Fixes: 8e1de7042596 ("thunderbolt: Add support for XDomain lane bonding")
 Cc: stable@vger.kernel.org
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Daniel Miess <daniel.miess@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/thunderbolt/xdomain.c |   58 +++++++++++++++++++++++++++++-------------
+ 1 file changed, 41 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1183,6 +1183,9 @@ static void disable_vbios_mode_if_requir
- 		if (stream == NULL)
- 			continue;
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -704,6 +704,27 @@ out_unlock:
+ 	mutex_unlock(&xdomain_lock);
+ }
  
-+		if (stream->apply_seamless_boot_optimization)
-+			continue;
++static void start_handshake(struct tb_xdomain *xd)
++{
++	xd->state = XDOMAIN_STATE_INIT;
++	queue_delayed_work(xd->tb->wq, &xd->state_work,
++			   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++}
 +
- 		// only looking for first odm pipe
- 		if (pipe->prev_odm_pipe)
- 			continue;
++/* Can be called from state_work */
++static void __stop_handshake(struct tb_xdomain *xd)
++{
++	cancel_delayed_work_sync(&xd->properties_changed_work);
++	xd->properties_changed_retries = 0;
++	xd->state_retries = 0;
++}
++
++static void stop_handshake(struct tb_xdomain *xd)
++{
++	cancel_delayed_work_sync(&xd->state_work);
++	__stop_handshake(xd);
++}
++
+ static void tb_xdp_handle_request(struct work_struct *work)
+ {
+ 	struct xdomain_request_work *xw = container_of(work, typeof(*xw), work);
+@@ -766,6 +787,15 @@ static void tb_xdp_handle_request(struct
+ 	case UUID_REQUEST:
+ 		tb_dbg(tb, "%llx: received XDomain UUID request\n", route);
+ 		ret = tb_xdp_uuid_response(ctl, route, sequence, uuid);
++		/*
++		 * If we've stopped the discovery with an error such as
++		 * timing out, we will restart the handshake now that we
++		 * received UUID request from the remote host.
++		 */
++		if (!ret && xd && xd->state == XDOMAIN_STATE_ERROR) {
++			dev_dbg(&xd->dev, "restarting handshake\n");
++			start_handshake(xd);
++		}
+ 		break;
+ 
+ 	case LINK_STATE_STATUS_REQUEST:
+@@ -1522,6 +1552,13 @@ static void tb_xdomain_queue_properties_
+ 			   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
+ }
+ 
++static void tb_xdomain_failed(struct tb_xdomain *xd)
++{
++	xd->state = XDOMAIN_STATE_ERROR;
++	queue_delayed_work(xd->tb->wq, &xd->state_work,
++			   msecs_to_jiffies(XDOMAIN_DEFAULT_TIMEOUT));
++}
++
+ static void tb_xdomain_state_work(struct work_struct *work)
+ {
+ 	struct tb_xdomain *xd = container_of(work, typeof(*xd), state_work.work);
+@@ -1548,7 +1585,7 @@ static void tb_xdomain_state_work(struct
+ 		if (ret) {
+ 			if (ret == -EAGAIN)
+ 				goto retry_state;
+-			xd->state = XDOMAIN_STATE_ERROR;
++			tb_xdomain_failed(xd);
+ 		} else {
+ 			tb_xdomain_queue_properties_changed(xd);
+ 			if (xd->bonding_possible)
+@@ -1613,7 +1650,7 @@ static void tb_xdomain_state_work(struct
+ 		if (ret) {
+ 			if (ret == -EAGAIN)
+ 				goto retry_state;
+-			xd->state = XDOMAIN_STATE_ERROR;
++			tb_xdomain_failed(xd);
+ 		} else {
+ 			xd->state = XDOMAIN_STATE_ENUMERATED;
+ 		}
+@@ -1624,6 +1661,8 @@ static void tb_xdomain_state_work(struct
+ 		break;
+ 
+ 	case XDOMAIN_STATE_ERROR:
++		dev_dbg(&xd->dev, "discovery failed, stopping handshake\n");
++		__stop_handshake(xd);
+ 		break;
+ 
+ 	default:
+@@ -1793,21 +1832,6 @@ static void tb_xdomain_release(struct de
+ 	kfree(xd);
+ }
+ 
+-static void start_handshake(struct tb_xdomain *xd)
+-{
+-	xd->state = XDOMAIN_STATE_INIT;
+-	queue_delayed_work(xd->tb->wq, &xd->state_work,
+-			   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
+-}
+-
+-static void stop_handshake(struct tb_xdomain *xd)
+-{
+-	cancel_delayed_work_sync(&xd->properties_changed_work);
+-	cancel_delayed_work_sync(&xd->state_work);
+-	xd->properties_changed_retries = 0;
+-	xd->state_retries = 0;
+-}
+-
+ static int __maybe_unused tb_xdomain_suspend(struct device *dev)
+ {
+ 	stop_handshake(tb_to_xdomain(dev));
 
 
