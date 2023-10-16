@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4E019466
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADE0F9CC
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knjQSVCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CE6C433C8;
-	Mon, 16 Oct 2023 08:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNt513pf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C79CC433CD;
+	Mon, 16 Oct 2023 08:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446128;
-	bh=ltj4Bn4esdd/ob/xvoLMQJ52etyYY9LeeZbWRhK8fh8=;
+	s=korg; t=1697446136;
+	bh=DtwHixXwr7vUTutv/mnmV2YFruZSaxDlgXUQTAUvjSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knjQSVCk64mzc0f8J8BcSJ4qPd2P5p/8koF+B03dpigHqMcdiXfvAblRqpyGXn6S+
-	 4Bcnc9ZCiu2c/FiL6q/Xb/AOMEEEIjCy2rLufuJXK4c2TDZouo36vn5qxEqfNGRljg
-	 5eCCxVFPPSD1nMYR037NeoxevujE4rC0uJlM4u/8=
+	b=DNt513pforac7STwRhlkowSTadTRPf5tWiJwqR3YQWXHV+OsQPenyFc2zvahvKt5V
+	 36IlSDE9pcR7OinUeGdaXO6DtxicL3ER727daiOhCqZtERLfBg09BjnzLD5hpC2Khl
+	 /WBBq6UZqQ3uyDoBG8Wyw6zKxDlVQ8r0vE/GAfPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Firo Yang <firo.yang@suse.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 5.15 074/102] cgroup: Remove duplicates in cgroup v1 tasks file
-Date: Mon, 16 Oct 2023 10:41:13 +0200
-Message-ID: <20231016083955.670797927@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.15 075/102] pinctrl: avoid unsafe code pattern in find_pinctrl()
+Date: Mon, 16 Oct 2023 10:41:14 +0200
+Message-ID: <20231016083955.696905357@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -36,56 +35,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Koutný <mkoutny@suse.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 1ca0b605150501b7dc59f3016271da4eb3e96fce upstream.
+commit c153a4edff6ab01370fcac8e46f9c89cca1060c2 upstream.
 
-One PID may appear multiple times in a preloaded pidlist.
-(Possibly due to PID recycling but we have reports of the same
-task_struct appearing with different PIDs, thus possibly involving
-transfer of PID via de_thread().)
+The code in find_pinctrl() takes a mutex and traverses a list of pinctrl
+structures. Later the caller bumps up reference count on the found
+structure. Such pattern is not safe as pinctrl that was found may get
+deleted before the caller gets around to increasing the reference count.
 
-Because v1 seq_file iterator uses PIDs as position, it leads to
-a message:
-> seq_file: buggy .next function kernfs_seq_next did not update position index
+Fix this by taking the reference count in find_pinctrl(), while it still
+holds the mutex.
 
-Conservative and quick fix consists of removing duplicates from `tasks`
-file (as opposed to removing pidlists altogether). It doesn't affect
-correctness (it's sufficient to show a PID once), performance impact
-would be hidden by unconditional sorting of the pidlist already in place
-(asymptotically).
-
-Link: https://lore.kernel.org/r/20230823174804.23632-1-mkoutny@suse.com/
-Suggested-by: Firo Yang <firo.yang@suse.com>
-Signed-off-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
 Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/r/ZQs1RgTKg6VJqmPs@google.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cgroup-v1.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/pinctrl/core.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/kernel/cgroup/cgroup-v1.c
-+++ b/kernel/cgroup/cgroup-v1.c
-@@ -365,10 +365,9 @@ static int pidlist_array_load(struct cgr
- 	}
- 	css_task_iter_end(&it);
- 	length = n;
--	/* now sort & (if procs) strip out duplicates */
-+	/* now sort & strip out duplicates (tgids or recycled thread PIDs) */
- 	sort(array, length, sizeof(pid_t), cmppid, NULL);
--	if (type == CGROUP_FILE_PROCS)
--		length = pidlist_uniq(array, length);
-+	length = pidlist_uniq(array, length);
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -1007,17 +1007,20 @@ static int add_setting(struct pinctrl *p
  
- 	l = cgroup_pidlist_find_create(cgrp, type);
- 	if (!l) {
+ static struct pinctrl *find_pinctrl(struct device *dev)
+ {
+-	struct pinctrl *p;
++	struct pinctrl *entry, *p = NULL;
+ 
+ 	mutex_lock(&pinctrl_list_mutex);
+-	list_for_each_entry(p, &pinctrl_list, node)
+-		if (p->dev == dev) {
+-			mutex_unlock(&pinctrl_list_mutex);
+-			return p;
++
++	list_for_each_entry(entry, &pinctrl_list, node) {
++		if (entry->dev == dev) {
++			p = entry;
++			kref_get(&p->users);
++			break;
+ 		}
++	}
+ 
+ 	mutex_unlock(&pinctrl_list_mutex);
+-	return NULL;
++	return p;
+ }
+ 
+ static void pinctrl_free(struct pinctrl *p, bool inlist);
+@@ -1126,7 +1129,6 @@ struct pinctrl *pinctrl_get(struct devic
+ 	p = find_pinctrl(dev);
+ 	if (p) {
+ 		dev_dbg(dev, "obtain a copy of previously claimed pinctrl\n");
+-		kref_get(&p->users);
+ 		return p;
+ 	}
+ 
 
 
