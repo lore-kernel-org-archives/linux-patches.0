@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F401798F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB5B1798F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9f26amh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0A3C433C7;
-	Mon, 16 Oct 2023 08:55:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMbP1SCm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED17C433C8;
+	Mon, 16 Oct 2023 08:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446529;
-	bh=hQ3Hik0hClGfYzKvYtJolF4ZUB5bQYj9aBBumITfZRs=;
+	s=korg; t=1697446537;
+	bh=ISDQP0AbcmY4+c9La0QKEihFYF1x7qC/ekUZDhMUF6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9f26amho/Ri9Q7dTkRY4zo6jmbf2+Qjkgvi6guj/jdn/zOLIApCnfXqATNx74J+W
-	 +00K5Scmyyr6xSVkUJeluPqAp4nBdqBEwCWeMX9zXe6czJEKYoY0Kehv/7lSx0vzkd
-	 7bDK09vriPDE/hXKL4+y8x3am36lbyfNcGyN7qio=
+	b=oMbP1SCmsbPbPwxWxk/NJS2jXtiHigiY8uz77EWlMOU6sLc9Lc3Gmnw1V+qlna5NZ
+	 iy8WENOqhTlzwufzq6ejBgBmhG/spEzRRYjL1DGhDvsCkrgmzPQUc3QaOSQiHH++vy
+	 SsQ4RTPLo7Zj7a/sCwCJjJ5jR7ypbiksLhS4ncR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/131] arm64: dts: mediatek: mt8195: Set DSU PMU status to fail
-Date: Mon, 16 Oct 2023 10:40:28 +0200
-Message-ID: <20231016084001.193039571@linuxfoundation.org>
+Subject: [PATCH 6.1 046/131] ravb: Fix up dma_free_coherent() call in ravb_remove()
+Date: Mon, 16 Oct 2023 10:40:29 +0200
+Message-ID: <20231016084001.218544944@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -37,58 +37,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit d192615c307ec9f74cd0582880ece698533eb99b ]
+[ Upstream commit e6864af61493113558c502b5cd0d754c19b93277 ]
 
-The DSU PMU allows monitoring performance events in the DSU cluster,
-which is done by configuring and reading back values from the DSU PMU
-system registers. However, for write-access to be allowed by ELs lower
-than EL3, the EL3 firmware needs to update the setting on the ACTLR3_EL3
-register, as it is disallowed by default.
+In ravb_remove(), dma_free_coherent() should be call after
+unregister_netdev(). Otherwise, this controller is possible to use
+the freed buffer.
 
-That configuration is not done on the firmware used by the MT8195 SoC,
-as a consequence, booting a MT8195-based machine like
-mt8195-cherry-tomato-r2 with CONFIG_ARM_DSU_PMU enabled hangs the kernel
-just as it writes to the CLUSTERPMOVSCLR_EL1 register, since the
-instruction faults to EL3, and BL31 apparently just re-runs the
-instruction over and over.
-
-Mark the DSU PMU node in the Devicetree with status "fail", as the
-machine doesn't have a suitable firmware to make use of it from the
-kernel, and allowing its driver to probe would hang the kernel.
-
-Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230720200753.322133-1-nfraprado@collabora.com
-Link: https://lore.kernel.org/r/20231003-mediatek-fixes-v6-7-v1-5-dad7cd62a8ff@collabora.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20231005011201.14368-2-yoshihiro.shimoda.uh@renesas.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/renesas/ravb_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index 2c2b946b614bf..ef2764a595eda 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -229,6 +229,7 @@ dsu-pmu {
- 		interrupts = <GIC_SPI 18 IRQ_TYPE_LEVEL_HIGH 0>;
- 		cpus = <&cpu0>, <&cpu1>, <&cpu2>, <&cpu3>,
- 		       <&cpu4>, <&cpu5>, <&cpu6>, <&cpu7>;
-+		status = "fail";
- 	};
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index 894e2690c6437..4bf371f744a35 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -2907,8 +2907,6 @@ static int ravb_remove(struct platform_device *pdev)
+ 	clk_disable_unprepare(priv->gptp_clk);
+ 	clk_disable_unprepare(priv->refclk);
  
- 	dmic_codec: dmic-codec {
+-	dma_free_coherent(ndev->dev.parent, priv->desc_bat_size, priv->desc_bat,
+-			  priv->desc_bat_dma);
+ 	/* Set reset mode */
+ 	ravb_write(ndev, CCC_OPC_RESET, CCC);
+ 	unregister_netdev(ndev);
+@@ -2916,6 +2914,8 @@ static int ravb_remove(struct platform_device *pdev)
+ 		netif_napi_del(&priv->napi[RAVB_NC]);
+ 	netif_napi_del(&priv->napi[RAVB_BE]);
+ 	ravb_mdio_release(priv);
++	dma_free_coherent(ndev->dev.parent, priv->desc_bat_size, priv->desc_bat,
++			  priv->desc_bat_dma);
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	reset_control_assert(priv->rstc);
 -- 
 2.40.1
 
