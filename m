@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D401A599
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94E11A585
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YmcGNNGv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B16C433CB;
-	Mon, 16 Oct 2023 08:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4s83nZs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24DF3C433C8;
+	Mon, 16 Oct 2023 08:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445891;
-	bh=lfDWf1QgwA4e6rvs5r06fw0PTLvSwX6kcy1BrSeQ8O4=;
+	s=korg; t=1697445894;
+	bh=ncavapu+B+96TIPb0W7wa4g+w5DygAIUKvaj/Pgxvzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YmcGNNGvpzxPPwbG60iRScveQdSiEhQM0gRBoQQRteiyCFqfEoPCJcxCdHJkyJdAe
-	 j8rrBXPBmWejyubU2WWqNQoRrviCcBDGDEkbylfoxGO99p9TZYhLfuSHdCYdXDBfc5
-	 YWzSaGeaK3vL7vkJ4SiEb8ciFXfE3i1L+fWJ6/e4=
+	b=x4s83nZsA1VLLzKlokd3eRnHtEiU8bw2cqM7K4pvbrTqDz3mcg0qDIQzY5zqyxHIx
+	 hOjZGMtWZc6Ckt9E0091zo0QQ5boKXOYTFydcUs67S0CSpmQrmwvBVLSF1lCjC1w15
+	 94KGTNxbWAphE9jsOaRmz9qGerkYa5jdTcTG3yFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sabrina Dubroca <sd@queasysnail.net>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/102] net: macsec: indicate next pn update when offloading
-Date: Mon, 16 Oct 2023 10:40:31 +0200
-Message-ID: <20231016083954.556834789@linuxfoundation.org>
+Subject: [PATCH 5.15 033/102] net: phy: mscc: macsec: reject PN update requests
+Date: Mon, 16 Oct 2023 10:40:32 +0200
+Message-ID: <20231016083954.583685341@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -45,69 +45,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Radu Pirea (NXP OSS) <radu-nicolae.pirea@oss.nxp.com>
 
-[ Upstream commit 0412cc846a1ef38697c3f321f9b174da91ecd3b5 ]
+[ Upstream commit e0a8c918daa58700609ebd45e3fcd49965be8bbc ]
 
-Indicate next PN update using update_pn flag in macsec_context.
-Offloaded MACsec implementations does not know whether or not the
-MACSEC_SA_ATTR_PN attribute was passed for an SA update and assume
-that next PN should always updated, but this is not always true.
+Updating the PN is not supported.
+Return -EINVAL if update_pn is true.
 
-The PN can be reset to its initial value using the following command:
-$ ip macsec set macsec0 tx sa 0 off #octeontx2-pf case
+The following command succeeded, but it should fail because the driver
+does not update the PN:
+ip macsec set macsec0 tx sa 0 pn 232 on
 
-Or, the update PN command will succeed even if the driver does not support
-PN updates.
-$ ip macsec set macsec0 tx sa 0 pn 1 on #mscc phy driver case
-
-Comparing the initial PN with the new PN value is not a solution. When
-the user updates the PN using its initial value the command will
-succeed, even if the driver does not support it. Like this:
-$ ip macsec add macsec0 tx sa 0 pn 1 on key 00 \
-ead3664f508eb06c40ac7104cdae4ce5
-$ ip macsec set macsec0 tx sa 0 pn 1 on #mlx5 case
-
+Fixes: 28c5107aa904 ("net: phy: mscc: macsec support")
 Signed-off-by: Radu Pirea (NXP OSS) <radu-nicolae.pirea@oss.nxp.com>
 Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: e0a8c918daa5 ("net: phy: mscc: macsec: reject PN update requests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 2 ++
- include/net/macsec.h | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/net/phy/mscc/mscc_macsec.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 21f41f25a8abe..07c822c301185 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -2410,6 +2410,7 @@ static int macsec_upd_txsa(struct sk_buff *skb, struct genl_info *info)
+diff --git a/drivers/net/phy/mscc/mscc_macsec.c b/drivers/net/phy/mscc/mscc_macsec.c
+index c00eef457b850..bec270785c594 100644
+--- a/drivers/net/phy/mscc/mscc_macsec.c
++++ b/drivers/net/phy/mscc/mscc_macsec.c
+@@ -880,6 +880,9 @@ static int vsc8584_macsec_upd_rxsa(struct macsec_context *ctx)
+ {
+ 	struct macsec_flow *flow;
  
- 		ctx.sa.assoc_num = assoc_num;
- 		ctx.sa.tx_sa = tx_sa;
-+		ctx.sa.update_pn = !!prev_pn.full64;
- 		ctx.secy = secy;
++	if (ctx->sa.update_pn)
++		return -EINVAL;
++
+ 	flow = vsc8584_macsec_find_flow(ctx, MACSEC_INGR);
+ 	if (IS_ERR(flow))
+ 		return PTR_ERR(flow);
+@@ -929,6 +932,9 @@ static int vsc8584_macsec_upd_txsa(struct macsec_context *ctx)
+ {
+ 	struct macsec_flow *flow;
  
- 		ret = macsec_offload(ops->mdo_upd_txsa, &ctx);
-@@ -2503,6 +2504,7 @@ static int macsec_upd_rxsa(struct sk_buff *skb, struct genl_info *info)
- 
- 		ctx.sa.assoc_num = assoc_num;
- 		ctx.sa.rx_sa = rx_sa;
-+		ctx.sa.update_pn = !!prev_pn.full64;
- 		ctx.secy = secy;
- 
- 		ret = macsec_offload(ops->mdo_upd_rxsa, &ctx);
-diff --git a/include/net/macsec.h b/include/net/macsec.h
-index d6fa6b97f6efa..0dc4303329391 100644
---- a/include/net/macsec.h
-+++ b/include/net/macsec.h
-@@ -240,6 +240,7 @@ struct macsec_context {
- 	struct macsec_secy *secy;
- 	struct macsec_rx_sc *rx_sc;
- 	struct {
-+		bool update_pn;
- 		unsigned char assoc_num;
- 		u8 key[MACSEC_MAX_KEY_LEN];
- 		union {
++	if (ctx->sa.update_pn)
++		return -EINVAL;
++
+ 	flow = vsc8584_macsec_find_flow(ctx, MACSEC_EGR);
+ 	if (IS_ERR(flow))
+ 		return PTR_ERR(flow);
 -- 
 2.40.1
 
