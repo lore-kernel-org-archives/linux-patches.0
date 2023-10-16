@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239BB1A289
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1866E1A289
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jo6GyRhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726CEC433C8;
-	Mon, 16 Oct 2023 08:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+6Zzh6o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F01C433C7;
+	Mon, 16 Oct 2023 08:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446471;
-	bh=xVxo7/apI7zSE9sCTwuyeUawQ0I1vkwFINx/RM+CtrE=;
+	s=korg; t=1697446479;
+	bh=6Tr8dbq17rvMnwXBzqN+H6aEv1OqRRExrSfvLs4jR8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jo6GyRhHmf+kc1MsHYXld7Gy0xfHZMZ8XwyyIKm5xrC+n+J/+bf2hI7drwi4l9OCX
-	 zNHvB50PbwHJ8KGTc77nIYyaSTJ8r6Mg9deXjBJAHcQ5A2d9dFmui8ojLnEvFbkWrP
-	 z8s8RiaP+3hEUsFVvVeGLV/e1vvsFo/vnlIb+Y1Q=
+	b=g+6Zzh6oG6fPteCMNyONwfhWEEOjL/QLjzHNnQiA68rgGY0XyrHVsJ48/K8BNhSz7
+	 NdX5E+lNWd6cqzGamibc7pqDYbmS2Mwln44rxLUzduU7nItjGkm24hUCq7puc2gD21
+	 W/xSR6/GDpnB/8V97VykzctaIR2UfVXhsZsqh2I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Whitney <enwlinux@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 010/131] quota: Fix slow quotaoff
-Date: Mon, 16 Oct 2023 10:39:53 +0200
-Message-ID: <20231016084000.321794047@linuxfoundation.org>
+	Sven Frotscher <sven.frotscher@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 011/131] ASoC: amd: yc: Fix non-functional mic on Lenovo 82YM
+Date: Mon, 16 Oct 2023 10:39:54 +0200
+Message-ID: <20231016084000.346667974@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -41,208 +41,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Sven Frotscher <sven.frotscher@gmail.com>
 
-commit 869b6ea1609f655a43251bf41757aa44e5350a8f upstream.
+commit 1948fa64727685ac3f6584755212e2e738b6b051 upstream.
 
-Eric has reported that commit dabc8b207566 ("quota: fix dqput() to
-follow the guarantees dquot_srcu should provide") heavily increases
-runtime of generic/270 xfstest for ext4 in nojournal mode. The reason
-for this is that ext4 in nojournal mode leaves dquots dirty until the last
-dqput() and thus the cleanup done in quota_release_workfn() has to write
-them all. Due to the way quota_release_workfn() is written this results
-in synchronize_srcu() call for each dirty dquot which makes the dquot
-cleanup when turning quotas off extremely slow.
+Like the Lenovo 82TL, 82V2, 82QF and 82UG, the 82YM (Yoga 7 14ARP8)
+requires an entry in the quirk list to enable the internal microphone.
+The latter two received similar fixes in commit 1263cc0f414d
+("ASoC: amd: yc: Fix non-functional mic on Lenovo 82QF and 82UG").
 
-To be able to avoid synchronize_srcu() for each dirty dquot we need to
-rework how we track dquots to be cleaned up. Instead of keeping the last
-dquot reference while it is on releasing_dquots list, we drop it right
-away and mark the dquot with new DQ_RELEASING_B bit instead. This way we
-can we can remove dquot from releasing_dquots list when new reference to
-it is acquired and thus there's no need to call synchronize_srcu() each
-time we drop dq_list_lock.
-
-References: https://lore.kernel.org/all/ZRytn6CxFK2oECUt@debian-BULLSEYE-live-builder-AMD64
-Reported-by: Eric Whitney <enwlinux@gmail.com>
-Fixes: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: c008323fe361 ("ASoC: amd: yc: Fix a non-functional mic on Lenovo 82SJ")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sven Frotscher <sven.frotscher@gmail.com>
+Link: https://lore.kernel.org/r/20230927223758.18870-1-sven.frotscher@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/quota/dquot.c         |   66 +++++++++++++++++++++++++++--------------------
- include/linux/quota.h    |    4 ++
- include/linux/quotaops.h |    2 -
- 3 files changed, 43 insertions(+), 29 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -233,19 +233,18 @@ static void put_quota_format(struct quot
-  * All dquots are placed to the end of inuse_list when first created, and this
-  * list is used for invalidate operation, which must look at every dquot.
-  *
-- * When the last reference of a dquot will be dropped, the dquot will be
-- * added to releasing_dquots. We'd then queue work item which would call
-+ * When the last reference of a dquot is dropped, the dquot is added to
-+ * releasing_dquots. We'll then queue work item which will call
-  * synchronize_srcu() and after that perform the final cleanup of all the
-- * dquots on the list. Both releasing_dquots and free_dquots use the
-- * dq_free list_head in the dquot struct. When a dquot is removed from
-- * releasing_dquots, a reference count is always subtracted, and if
-- * dq_count == 0 at that point, the dquot will be added to the free_dquots.
-+ * dquots on the list. Each cleaned up dquot is moved to free_dquots list.
-+ * Both releasing_dquots and free_dquots use the dq_free list_head in the dquot
-+ * struct.
-  *
-- * Unused dquots (dq_count == 0) are added to the free_dquots list when freed,
-- * and this list is searched whenever we need an available dquot.  Dquots are
-- * removed from the list as soon as they are used again, and
-- * dqstats.free_dquots gives the number of dquots on the list. When
-- * dquot is invalidated it's completely released from memory.
-+ * Unused and cleaned up dquots are in the free_dquots list and this list is
-+ * searched whenever we need an available dquot. Dquots are removed from the
-+ * list as soon as they are used again and dqstats.free_dquots gives the number
-+ * of dquots on the list. When dquot is invalidated it's completely released
-+ * from memory.
-  *
-  * Dirty dquots are added to the dqi_dirty_list of quota_info when mark
-  * dirtied, and this list is searched when writing dirty dquots back to
-@@ -321,6 +320,7 @@ static inline void put_dquot_last(struct
- static inline void put_releasing_dquots(struct dquot *dquot)
- {
- 	list_add_tail(&dquot->dq_free, &releasing_dquots);
-+	set_bit(DQ_RELEASING_B, &dquot->dq_flags);
- }
- 
- static inline void remove_free_dquot(struct dquot *dquot)
-@@ -328,8 +328,10 @@ static inline void remove_free_dquot(str
- 	if (list_empty(&dquot->dq_free))
- 		return;
- 	list_del_init(&dquot->dq_free);
--	if (!atomic_read(&dquot->dq_count))
-+	if (!test_bit(DQ_RELEASING_B, &dquot->dq_flags))
- 		dqstats_dec(DQST_FREE_DQUOTS);
-+	else
-+		clear_bit(DQ_RELEASING_B, &dquot->dq_flags);
- }
- 
- static inline void put_inuse(struct dquot *dquot)
-@@ -581,12 +583,6 @@ restart:
- 			continue;
- 		/* Wait for dquot users */
- 		if (atomic_read(&dquot->dq_count)) {
--			/* dquot in releasing_dquots, flush and retry */
--			if (!list_empty(&dquot->dq_free)) {
--				spin_unlock(&dq_list_lock);
--				goto restart;
--			}
--
- 			atomic_inc(&dquot->dq_count);
- 			spin_unlock(&dq_list_lock);
- 			/*
-@@ -606,6 +602,15 @@ restart:
- 			goto restart;
- 		}
- 		/*
-+		 * The last user already dropped its reference but dquot didn't
-+		 * get fully cleaned up yet. Restart the scan which flushes the
-+		 * work cleaning up released dquots.
-+		 */
-+		if (test_bit(DQ_RELEASING_B, &dquot->dq_flags)) {
-+			spin_unlock(&dq_list_lock);
-+			goto restart;
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -238,6 +238,13 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "82YM"),
 +		}
-+		/*
- 		 * Quota now has no users and it has been written on last
- 		 * dqput()
- 		 */
-@@ -696,6 +701,13 @@ int dquot_writeback_dquots(struct super_
- 						 dq_dirty);
- 
- 			WARN_ON(!dquot_active(dquot));
-+			/* If the dquot is releasing we should not touch it */
-+			if (test_bit(DQ_RELEASING_B, &dquot->dq_flags)) {
-+				spin_unlock(&dq_list_lock);
-+				flush_delayed_work(&quota_release_work);
-+				spin_lock(&dq_list_lock);
-+				continue;
-+			}
- 
- 			/* Now we have active dquot from which someone is
-  			 * holding reference so we can safely just increase
-@@ -809,18 +821,18 @@ static void quota_release_workfn(struct
- 	/* Exchange the list head to avoid livelock. */
- 	list_replace_init(&releasing_dquots, &rls_head);
- 	spin_unlock(&dq_list_lock);
-+	synchronize_srcu(&dquot_srcu);
- 
- restart:
--	synchronize_srcu(&dquot_srcu);
- 	spin_lock(&dq_list_lock);
- 	while (!list_empty(&rls_head)) {
- 		dquot = list_first_entry(&rls_head, struct dquot, dq_free);
--		/* Dquot got used again? */
--		if (atomic_read(&dquot->dq_count) > 1) {
--			remove_free_dquot(dquot);
--			atomic_dec(&dquot->dq_count);
--			continue;
--		}
-+		WARN_ON_ONCE(atomic_read(&dquot->dq_count));
-+		/*
-+		 * Note that DQ_RELEASING_B protects us from racing with
-+		 * invalidate_dquots() calls so we are safe to work with the
-+		 * dquot even after we drop dq_list_lock.
-+		 */
- 		if (dquot_dirty(dquot)) {
- 			spin_unlock(&dq_list_lock);
- 			/* Commit dquot before releasing */
-@@ -834,7 +846,6 @@ restart:
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82UG"),
  		}
- 		/* Dquot is inactive and clean, now move it to free list */
- 		remove_free_dquot(dquot);
--		atomic_dec(&dquot->dq_count);
- 		put_dquot_last(dquot);
- 	}
- 	spin_unlock(&dq_list_lock);
-@@ -875,6 +886,7 @@ void dqput(struct dquot *dquot)
- 	BUG_ON(!list_empty(&dquot->dq_free));
- #endif
- 	put_releasing_dquots(dquot);
-+	atomic_dec(&dquot->dq_count);
- 	spin_unlock(&dq_list_lock);
- 	queue_delayed_work(system_unbound_wq, &quota_release_work, 1);
- }
-@@ -963,7 +975,7 @@ we_slept:
- 		dqstats_inc(DQST_LOOKUPS);
- 	}
- 	/* Wait for dq_lock - after this we know that either dquot_release() is
--	 * already finished or it will be canceled due to dq_count > 1 test */
-+	 * already finished or it will be canceled due to dq_count > 0 test */
- 	wait_on_dquot(dquot);
- 	/* Read the dquot / allocate space in quota file */
- 	if (!dquot_active(dquot)) {
---- a/include/linux/quota.h
-+++ b/include/linux/quota.h
-@@ -285,7 +285,9 @@ static inline void dqstats_dec(unsigned
- #define DQ_FAKE_B	3	/* no limits only usage */
- #define DQ_READ_B	4	/* dquot was read into memory */
- #define DQ_ACTIVE_B	5	/* dquot is active (dquot_release not called) */
--#define DQ_LASTSET_B	6	/* Following 6 bits (see QIF_) are reserved\
-+#define DQ_RELEASING_B	6	/* dquot is in releasing_dquots list waiting
-+				 * to be cleaned up */
-+#define DQ_LASTSET_B	7	/* Following 6 bits (see QIF_) are reserved\
- 				 * for the mask of entries set via SETQUOTA\
- 				 * quotactl. They are set under dq_data_lock\
- 				 * and the quota format handling dquot can\
---- a/include/linux/quotaops.h
-+++ b/include/linux/quotaops.h
-@@ -57,7 +57,7 @@ static inline bool dquot_is_busy(struct
- {
- 	if (test_bit(DQ_MOD_B, &dquot->dq_flags))
- 		return true;
--	if (atomic_read(&dquot->dq_count) > 1)
-+	if (atomic_read(&dquot->dq_count) > 0)
- 		return true;
- 	return false;
- }
+ 	},
 
 
