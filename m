@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9DD1A27D
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA12A1A27D
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ft/yq3P0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EC2C433C9;
-	Mon, 16 Oct 2023 08:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6/RFbtp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AD3C433C7;
+	Mon, 16 Oct 2023 08:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446239;
-	bh=JSrck4Jqxtt5CH5buV8+NW3BTHpcb3W+dpESBzwdVlw=;
+	s=korg; t=1697446242;
+	bh=AcJecz7edoeNPjFXNQaku93oXSM1EBLJaBL6uMBKmts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ft/yq3P0xzx44QrjmrVyhKlDRNCWPQQNcaVrkcDt9lPJkvJYUxrRTQQai3ZbGBt0K
-	 5seGOs5wl029B9CZ7Qj6QQNF7isUhnInfXOza29cuaTZiNpOqVCEmyPaEP68U3RMzA
-	 KUfp/UKZ/7B1WMLDswBF2u89Ozc1B8Zlte4vDOec=
+	b=r6/RFbtp4hEYlOPluu8jHbYqjRQFATYW37KKOETUWs5+wUAx84WZvHdU/De9GE3KS
+	 7GmY8/7Xe5alYuFpAr35teyW9sMG9gV079mz5XPCYjOG7evv0rbYf4SQM8P97ZKtpu
+	 BYqd+g+68Sz4JTOwzex6lko2ZKxh/50jf2GFFW+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie@huawei.com,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.15 096/102] arm64: armv8_deprecated move emulation functions
-Date: Mon, 16 Oct 2023 10:41:35 +0200
-Message-ID: <20231016083956.256593417@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 5.15 079/102] usb: cdnsp: Fixes issue with dequeuing not queued requests
+Date: Mon, 16 Oct 2023 10:41:18 +0200
+Message-ID: <20231016083955.802979810@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -46,442 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit 25eeac0cfe7c97ade1be07340e11e7143aab57a6 upstream.
+commit 34f08eb0ba6e4869bbfb682bf3d7d0494ffd2f87 upstream.
 
-Subsequent patches will rework the logic in armv8_deprecated.c.
+Gadget ACM while unloading module try to dequeue not queued usb
+request which causes the kernel to crash.
+Patch adds extra condition to check whether usb request is processed
+by CDNSP driver.
 
-In preparation for subsequent changes, this patch moves the emulation
-logic earlier in the file, and moves the infrastructure later in the
-file. This will make subsequent diffs simpler and easier to read.
-
-This is purely a move. There should be no functional change as a result
-of this patch.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Joey Gouly <joey.gouly@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20221019144123.612388-8-mark.rutland@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+cc: stable@vger.kernel.org
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20230713081429.326660-1-pawell@cadence.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/armv8_deprecated.c |  394 +++++++++++++++++------------------
- 1 file changed, 197 insertions(+), 197 deletions(-)
+ drivers/usb/cdns3/cdnsp-gadget.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm64/kernel/armv8_deprecated.c
-+++ b/arch/arm64/kernel/armv8_deprecated.c
-@@ -52,203 +52,6 @@ struct insn_emulation {
- 	int max;
- };
+--- a/drivers/usb/cdns3/cdnsp-gadget.c
++++ b/drivers/usb/cdns3/cdnsp-gadget.c
+@@ -1125,6 +1125,9 @@ static int cdnsp_gadget_ep_dequeue(struc
+ 	unsigned long flags;
+ 	int ret;
  
--static LIST_HEAD(insn_emulation);
--static int nr_insn_emulated __initdata;
--static DEFINE_RAW_SPINLOCK(insn_emulation_lock);
--static DEFINE_MUTEX(insn_emulation_mutex);
--
--static void register_emulation_hooks(struct insn_emulation *insn)
--{
--	struct undef_hook *hook;
--
--	BUG_ON(!insn->hooks);
--
--	for (hook = insn->hooks; hook->instr_mask; hook++)
--		register_undef_hook(hook);
--
--	pr_notice("Registered %s emulation handler\n", insn->name);
--}
--
--static void remove_emulation_hooks(struct insn_emulation *insn)
--{
--	struct undef_hook *hook;
--
--	BUG_ON(!insn->hooks);
--
--	for (hook = insn->hooks; hook->instr_mask; hook++)
--		unregister_undef_hook(hook);
--
--	pr_notice("Removed %s emulation handler\n", insn->name);
--}
--
--static void enable_insn_hw_mode(void *data)
--{
--	struct insn_emulation *insn = (struct insn_emulation *)data;
--	if (insn->set_hw_mode)
--		insn->set_hw_mode(true);
--}
--
--static void disable_insn_hw_mode(void *data)
--{
--	struct insn_emulation *insn = (struct insn_emulation *)data;
--	if (insn->set_hw_mode)
--		insn->set_hw_mode(false);
--}
--
--/* Run set_hw_mode(mode) on all active CPUs */
--static int run_all_cpu_set_hw_mode(struct insn_emulation *insn, bool enable)
--{
--	if (!insn->set_hw_mode)
--		return -EINVAL;
--	if (enable)
--		on_each_cpu(enable_insn_hw_mode, (void *)insn, true);
--	else
--		on_each_cpu(disable_insn_hw_mode, (void *)insn, true);
--	return 0;
--}
--
--/*
-- * Run set_hw_mode for all insns on a starting CPU.
-- * Returns:
-- *  0 		- If all the hooks ran successfully.
-- * -EINVAL	- At least one hook is not supported by the CPU.
-- */
--static int run_all_insn_set_hw_mode(unsigned int cpu)
--{
--	int rc = 0;
--	unsigned long flags;
--	struct insn_emulation *insn;
--
--	raw_spin_lock_irqsave(&insn_emulation_lock, flags);
--	list_for_each_entry(insn, &insn_emulation, node) {
--		bool enable = (insn->current_mode == INSN_HW);
--		if (insn->set_hw_mode && insn->set_hw_mode(enable)) {
--			pr_warn("CPU[%u] cannot support the emulation of %s",
--				cpu, insn->name);
--			rc = -EINVAL;
--		}
--	}
--	raw_spin_unlock_irqrestore(&insn_emulation_lock, flags);
--	return rc;
--}
--
--static int update_insn_emulation_mode(struct insn_emulation *insn,
--				       enum insn_emulation_mode prev)
--{
--	int ret = 0;
--
--	switch (prev) {
--	case INSN_UNDEF: /* Nothing to be done */
--		break;
--	case INSN_EMULATE:
--		remove_emulation_hooks(insn);
--		break;
--	case INSN_HW:
--		if (!run_all_cpu_set_hw_mode(insn, false))
--			pr_notice("Disabled %s support\n", insn->name);
--		break;
--	}
--
--	switch (insn->current_mode) {
--	case INSN_UNDEF:
--		break;
--	case INSN_EMULATE:
--		register_emulation_hooks(insn);
--		break;
--	case INSN_HW:
--		ret = run_all_cpu_set_hw_mode(insn, true);
--		if (!ret)
--			pr_notice("Enabled %s support\n", insn->name);
--		break;
--	}
--
--	return ret;
--}
--
--static void __init register_insn_emulation(struct insn_emulation *insn)
--{
--	unsigned long flags;
--
--	insn->min = INSN_UNDEF;
--
--	switch (insn->status) {
--	case INSN_DEPRECATED:
--		insn->current_mode = INSN_EMULATE;
--		/* Disable the HW mode if it was turned on at early boot time */
--		run_all_cpu_set_hw_mode(insn, false);
--		insn->max = INSN_HW;
--		break;
--	case INSN_OBSOLETE:
--		insn->current_mode = INSN_UNDEF;
--		insn->max = INSN_EMULATE;
--		break;
--	}
--
--	raw_spin_lock_irqsave(&insn_emulation_lock, flags);
--	list_add(&insn->node, &insn_emulation);
--	nr_insn_emulated++;
--	raw_spin_unlock_irqrestore(&insn_emulation_lock, flags);
--
--	/* Register any handlers if required */
--	update_insn_emulation_mode(insn, INSN_UNDEF);
--}
--
--static int emulation_proc_handler(struct ctl_table *table, int write,
--				  void *buffer, size_t *lenp,
--				  loff_t *ppos)
--{
--	int ret = 0;
--	struct insn_emulation *insn = container_of(table->data, struct insn_emulation, current_mode);
--	enum insn_emulation_mode prev_mode = insn->current_mode;
--
--	mutex_lock(&insn_emulation_mutex);
--	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
--
--	if (ret || !write || prev_mode == insn->current_mode)
--		goto ret;
--
--	ret = update_insn_emulation_mode(insn, prev_mode);
--	if (ret) {
--		/* Mode change failed, revert to previous mode. */
--		insn->current_mode = prev_mode;
--		update_insn_emulation_mode(insn, INSN_UNDEF);
--	}
--ret:
--	mutex_unlock(&insn_emulation_mutex);
--	return ret;
--}
--
--static void __init register_insn_emulation_sysctl(void)
--{
--	unsigned long flags;
--	int i = 0;
--	struct insn_emulation *insn;
--	struct ctl_table *insns_sysctl, *sysctl;
--
--	insns_sysctl = kcalloc(nr_insn_emulated + 1, sizeof(*sysctl),
--			       GFP_KERNEL);
--	if (!insns_sysctl)
--		return;
--
--	raw_spin_lock_irqsave(&insn_emulation_lock, flags);
--	list_for_each_entry(insn, &insn_emulation, node) {
--		sysctl = &insns_sysctl[i];
--
--		sysctl->mode = 0644;
--		sysctl->maxlen = sizeof(int);
--
--		sysctl->procname = insn->name;
--		sysctl->data = &insn->current_mode;
--		sysctl->extra1 = &insn->min;
--		sysctl->extra2 = &insn->max;
--		sysctl->proc_handler = emulation_proc_handler;
--		i++;
--	}
--	raw_spin_unlock_irqrestore(&insn_emulation_lock, flags);
--
--	register_sysctl("abi", insns_sysctl);
--}
--
- /*
-  *  Implement emulation of the SWP/SWPB instructions using load-exclusive and
-  *  store-exclusive.
-@@ -608,6 +411,203 @@ static struct insn_emulation insn_setend
- 	.set_hw_mode = setend_set_hw_mode,
- };
- 
-+static LIST_HEAD(insn_emulation);
-+static int nr_insn_emulated __initdata;
-+static DEFINE_RAW_SPINLOCK(insn_emulation_lock);
-+static DEFINE_MUTEX(insn_emulation_mutex);
++	if (request->status != -EINPROGRESS)
++		return 0;
 +
-+static void register_emulation_hooks(struct insn_emulation *insn)
-+{
-+	struct undef_hook *hook;
-+
-+	BUG_ON(!insn->hooks);
-+
-+	for (hook = insn->hooks; hook->instr_mask; hook++)
-+		register_undef_hook(hook);
-+
-+	pr_notice("Registered %s emulation handler\n", insn->name);
-+}
-+
-+static void remove_emulation_hooks(struct insn_emulation *insn)
-+{
-+	struct undef_hook *hook;
-+
-+	BUG_ON(!insn->hooks);
-+
-+	for (hook = insn->hooks; hook->instr_mask; hook++)
-+		unregister_undef_hook(hook);
-+
-+	pr_notice("Removed %s emulation handler\n", insn->name);
-+}
-+
-+static void enable_insn_hw_mode(void *data)
-+{
-+	struct insn_emulation *insn = (struct insn_emulation *)data;
-+	if (insn->set_hw_mode)
-+		insn->set_hw_mode(true);
-+}
-+
-+static void disable_insn_hw_mode(void *data)
-+{
-+	struct insn_emulation *insn = (struct insn_emulation *)data;
-+	if (insn->set_hw_mode)
-+		insn->set_hw_mode(false);
-+}
-+
-+/* Run set_hw_mode(mode) on all active CPUs */
-+static int run_all_cpu_set_hw_mode(struct insn_emulation *insn, bool enable)
-+{
-+	if (!insn->set_hw_mode)
-+		return -EINVAL;
-+	if (enable)
-+		on_each_cpu(enable_insn_hw_mode, (void *)insn, true);
-+	else
-+		on_each_cpu(disable_insn_hw_mode, (void *)insn, true);
-+	return 0;
-+}
-+
-+/*
-+ * Run set_hw_mode for all insns on a starting CPU.
-+ * Returns:
-+ *  0 		- If all the hooks ran successfully.
-+ * -EINVAL	- At least one hook is not supported by the CPU.
-+ */
-+static int run_all_insn_set_hw_mode(unsigned int cpu)
-+{
-+	int rc = 0;
-+	unsigned long flags;
-+	struct insn_emulation *insn;
-+
-+	raw_spin_lock_irqsave(&insn_emulation_lock, flags);
-+	list_for_each_entry(insn, &insn_emulation, node) {
-+		bool enable = (insn->current_mode == INSN_HW);
-+		if (insn->set_hw_mode && insn->set_hw_mode(enable)) {
-+			pr_warn("CPU[%u] cannot support the emulation of %s",
-+				cpu, insn->name);
-+			rc = -EINVAL;
-+		}
-+	}
-+	raw_spin_unlock_irqrestore(&insn_emulation_lock, flags);
-+	return rc;
-+}
-+
-+static int update_insn_emulation_mode(struct insn_emulation *insn,
-+				       enum insn_emulation_mode prev)
-+{
-+	int ret = 0;
-+
-+	switch (prev) {
-+	case INSN_UNDEF: /* Nothing to be done */
-+		break;
-+	case INSN_EMULATE:
-+		remove_emulation_hooks(insn);
-+		break;
-+	case INSN_HW:
-+		if (!run_all_cpu_set_hw_mode(insn, false))
-+			pr_notice("Disabled %s support\n", insn->name);
-+		break;
-+	}
-+
-+	switch (insn->current_mode) {
-+	case INSN_UNDEF:
-+		break;
-+	case INSN_EMULATE:
-+		register_emulation_hooks(insn);
-+		break;
-+	case INSN_HW:
-+		ret = run_all_cpu_set_hw_mode(insn, true);
-+		if (!ret)
-+			pr_notice("Enabled %s support\n", insn->name);
-+		break;
-+	}
-+
-+	return ret;
-+}
-+
-+static void __init register_insn_emulation(struct insn_emulation *insn)
-+{
-+	unsigned long flags;
-+
-+	insn->min = INSN_UNDEF;
-+
-+	switch (insn->status) {
-+	case INSN_DEPRECATED:
-+		insn->current_mode = INSN_EMULATE;
-+		/* Disable the HW mode if it was turned on at early boot time */
-+		run_all_cpu_set_hw_mode(insn, false);
-+		insn->max = INSN_HW;
-+		break;
-+	case INSN_OBSOLETE:
-+		insn->current_mode = INSN_UNDEF;
-+		insn->max = INSN_EMULATE;
-+		break;
-+	}
-+
-+	raw_spin_lock_irqsave(&insn_emulation_lock, flags);
-+	list_add(&insn->node, &insn_emulation);
-+	nr_insn_emulated++;
-+	raw_spin_unlock_irqrestore(&insn_emulation_lock, flags);
-+
-+	/* Register any handlers if required */
-+	update_insn_emulation_mode(insn, INSN_UNDEF);
-+}
-+
-+static int emulation_proc_handler(struct ctl_table *table, int write,
-+				  void *buffer, size_t *lenp,
-+				  loff_t *ppos)
-+{
-+	int ret = 0;
-+	struct insn_emulation *insn = container_of(table->data, struct insn_emulation, current_mode);
-+	enum insn_emulation_mode prev_mode = insn->current_mode;
-+
-+	mutex_lock(&insn_emulation_mutex);
-+	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
-+
-+	if (ret || !write || prev_mode == insn->current_mode)
-+		goto ret;
-+
-+	ret = update_insn_emulation_mode(insn, prev_mode);
-+	if (ret) {
-+		/* Mode change failed, revert to previous mode. */
-+		insn->current_mode = prev_mode;
-+		update_insn_emulation_mode(insn, INSN_UNDEF);
-+	}
-+ret:
-+	mutex_unlock(&insn_emulation_mutex);
-+	return ret;
-+}
-+
-+static void __init register_insn_emulation_sysctl(void)
-+{
-+	unsigned long flags;
-+	int i = 0;
-+	struct insn_emulation *insn;
-+	struct ctl_table *insns_sysctl, *sysctl;
-+
-+	insns_sysctl = kcalloc(nr_insn_emulated + 1, sizeof(*sysctl),
-+			       GFP_KERNEL);
-+	if (!insns_sysctl)
-+		return;
-+
-+	raw_spin_lock_irqsave(&insn_emulation_lock, flags);
-+	list_for_each_entry(insn, &insn_emulation, node) {
-+		sysctl = &insns_sysctl[i];
-+
-+		sysctl->mode = 0644;
-+		sysctl->maxlen = sizeof(int);
-+
-+		sysctl->procname = insn->name;
-+		sysctl->data = &insn->current_mode;
-+		sysctl->extra1 = &insn->min;
-+		sysctl->extra2 = &insn->max;
-+		sysctl->proc_handler = emulation_proc_handler;
-+		i++;
-+	}
-+	raw_spin_unlock_irqrestore(&insn_emulation_lock, flags);
-+
-+	register_sysctl("abi", insns_sysctl);
-+}
-+
- /*
-  * Invoked as core_initcall, which guarantees that the instruction
-  * emulation is ready for userspace.
+ 	if (!pep->endpoint.desc) {
+ 		dev_err(pdev->dev,
+ 			"%s: can't dequeue to disabled endpoint\n",
 
 
