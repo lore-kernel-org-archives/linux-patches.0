@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50551266B7
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346E1266B7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="La/ZiXrj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BB2C433C7;
-	Mon, 16 Oct 2023 14:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrLjhGDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CD4C433C9;
+	Mon, 16 Oct 2023 14:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468032;
-	bh=tbFYGV56W4+Di5xudh+KyVGmHN/Yhqjn2XyDENss5Gk=;
+	s=korg; t=1697468035;
+	bh=8AjoaC4pVfJ4y7qI6VJ0sLInbg7YTBdxHMbyLbTCFC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=La/ZiXrjrTx+6I1yyXSwB3lQHRkDq1+fk5xlu6/3KOoMLdvxeGFBakP1bm16AkXvu
-	 IZ+/onvjNZchPycZIvedBukBtcMjP9xcm9fwfRgpETylau3LJaQe1XN6tUP74Jy42Q
-	 bUh+xNJR1WSLJwLHwew2EUCjQCfuOTPXkfILsbuo=
+	b=MrLjhGDOIkTzY/iHS32oLeoalcmPyNSQxQurPT/o/xxy8XTQrQf4CdTx2fnm1Pfmc
+	 NWoBZzV9IWb4L5aBqQo97WncqAoRQsJ/ER0idECR/KO2ZTagVRuVoaKnMxa4tG2cGZ
+	 7TH3QwFfbN7WulCSAnnyt7jETXZe3wxlwgvzNNaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.5 137/191] x86/cpu: Fix AMD erratum #1485 on Zen4-based CPUs
-Date: Mon, 16 Oct 2023 10:42:02 +0200
-Message-ID: <20231016084018.586329665@linuxfoundation.org>
+	Fei Yang <fei.yang@intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.5 138/191] x86/alternatives: Disable KASAN in apply_alternatives()
+Date: Mon, 16 Oct 2023 10:42:03 +0200
+Message-ID: <20231016084018.608284662@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -36,76 +38,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-commit f454b18e07f518bcd0c05af17a2239138bff52de upstream.
+commit d35652a5fc9944784f6f50a5c979518ff8dacf61 upstream.
 
-Fix erratum #1485 on Zen4 parts where running with STIBP disabled can
-cause an #UD exception. The performance impact of the fix is negligible.
+Fei has reported that KASAN triggers during apply_alternatives() on
+a 5-level paging machine:
 
-Reported-by: René Rebe <rene@exactcode.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: René Rebe <rene@exactcode.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/D99589F4-BC5D-430B-87B2-72C20370CF57@exactcode.com
+	BUG: KASAN: out-of-bounds in rcu_is_watching()
+	Read of size 4 at addr ff110003ee6419a0 by task swapper/0/0
+	...
+	__asan_load4()
+	rcu_is_watching()
+	trace_hardirqs_on()
+	text_poke_early()
+	apply_alternatives()
+	...
+
+On machines with 5-level paging, cpu_feature_enabled(X86_FEATURE_LA57)
+gets patched. It includes KASAN code, where KASAN_SHADOW_START depends on
+__VIRTUAL_MASK_SHIFT, which is defined with cpu_feature_enabled().
+
+KASAN gets confused when apply_alternatives() patches the
+KASAN_SHADOW_START users. A test patch that makes KASAN_SHADOW_START
+static, by replacing __VIRTUAL_MASK_SHIFT with 56, works around the issue.
+
+Fix it for real by disabling KASAN while the kernel is patching alternatives.
+
+[ mingo: updated the changelog ]
+
+Fixes: 6657fca06e3f ("x86/mm: Allow to boot without LA57 if CONFIG_X86_5LEVEL=y")
+Reported-by: Fei Yang <fei.yang@intel.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231012100424.1456-1-kirill.shutemov@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/msr-index.h |    9 +++++++--
- arch/x86/kernel/cpu/amd.c        |    8 ++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ arch/x86/kernel/alternative.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -637,12 +637,17 @@
- /* AMD Last Branch Record MSRs */
- #define MSR_AMD64_LBR_SELECT			0xc000010e
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -403,6 +403,17 @@ void __init_or_module noinline apply_alt
+ 	u8 insn_buff[MAX_PATCH_LEN];
  
--/* Fam 17h MSRs */
--#define MSR_F17H_IRPERF			0xc00000e9
-+/* Zen4 */
-+#define MSR_ZEN4_BP_CFG			0xc001102e
-+#define MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT 5
- 
-+/* Zen 2 */
- #define MSR_ZEN2_SPECTRAL_CHICKEN	0xc00110e3
- #define MSR_ZEN2_SPECTRAL_CHICKEN_BIT	BIT_ULL(1)
- 
-+/* Fam 17h MSRs */
-+#define MSR_F17H_IRPERF			0xc00000e9
+ 	DPRINTK(ALT, "alt table %px, -> %px", start, end);
 +
- /* Fam 16h MSRs */
- #define MSR_F16H_L2I_PERF_CTL		0xc0010230
- #define MSR_F16H_L2I_PERF_CTR		0xc0010231
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -80,6 +80,10 @@ static const int amd_div0[] =
- 	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x17, 0x00, 0x0, 0x2f, 0xf),
- 			   AMD_MODEL_RANGE(0x17, 0x50, 0x0, 0x5f, 0xf));
- 
-+static const int amd_erratum_1485[] =
-+	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x19, 0x10, 0x0, 0x1f, 0xf),
-+			   AMD_MODEL_RANGE(0x19, 0x60, 0x0, 0xaf, 0xf));
++	/*
++	 * In the case CONFIG_X86_5LEVEL=y, KASAN_SHADOW_START is defined using
++	 * cpu_feature_enabled(X86_FEATURE_LA57) and is therefore patched here.
++	 * During the process, KASAN becomes confused seeing partial LA57
++	 * conversion and triggers a false-positive out-of-bound report.
++	 *
++	 * Disable KASAN until the patching is complete.
++	 */
++	kasan_disable_current();
 +
- static bool cpu_has_amd_erratum(struct cpuinfo_x86 *cpu, const int *erratum)
- {
- 	int osvw_id = *erratum++;
-@@ -1149,6 +1153,10 @@ static void init_amd(struct cpuinfo_x86
- 		pr_notice_once("AMD Zen1 DIV0 bug detected. Disable SMT for full protection.\n");
- 		setup_force_cpu_bug(X86_BUG_DIV0);
+ 	/*
+ 	 * The scan order should be from start to end. A later scanned
+ 	 * alternative code can overwrite previously scanned alternative code.
+@@ -452,6 +463,8 @@ void __init_or_module noinline apply_alt
+ 
+ 		text_poke_early(instr, insn_buff, insn_buff_sz);
  	}
 +
-+	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) &&
-+	     cpu_has_amd_erratum(c, amd_erratum_1485))
-+		msr_set_bit(MSR_ZEN4_BP_CFG, MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT);
++	kasan_enable_current();
  }
  
- #ifdef CONFIG_X86_32
+ static inline bool is_jcc32(struct insn *insn)
 
 
