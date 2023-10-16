@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C08B1A5A0
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51691A58C
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCR34Sr+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69ECC433C8;
-	Mon, 16 Oct 2023 08:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="am3SD5EQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C82C433C7;
+	Mon, 16 Oct 2023 08:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445914;
-	bh=LsiuxeHsIkfQ+NcHu69mZnDUWP0CQqceomoxlFL9Idk=;
+	s=korg; t=1697445917;
+	bh=6BtfgaXFzKikIq7aTaLEdFu3oXTHQMNHPrx+En19wio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCR34Sr+9cEdj/8Vrsad/FRdf7KvEUDOHDqi+pm4KpSM42utScm/SyALMawMWpTB9
-	 j+5w5RRRCTpC3JkwQMYxsyU8sg2QOV8OPRHhO557K2PLjj9sZDFgvCQ2sfIhC7eWYg
-	 5107n2WAypG20qR66txC5ZIa8AepAFaPUQ/Sabxw=
+	b=am3SD5EQ2fKwtkSVzVf5QEAHelN4F0UTycPWDh4WQ6tyN2msOiEiq1SE9ujKQdU5q
+	 X5xDcsba0cVLCW/1HTp64OzmdNl68OeVdVWx/STOJeOhIU38HPvKmPz7ovz3t8Y0Ip
+	 G6kYIM9nObHFms5bGle13n1ZX8j5xASiT8ELbQK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sili Luo <rootlab@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Willy Tarreau <w@1wt.eu>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/102] net: nfc: fix races in nfc_llcp_sock_get() and nfc_llcp_sock_get_sn()
-Date: Mon, 16 Oct 2023 10:40:35 +0200
-Message-ID: <20231016083954.664305918@linuxfoundation.org>
+Subject: [PATCH 5.15 037/102] ethtool: Fix mod state of verbose no_mask bitset
+Date: Mon, 16 Oct 2023 10:40:36 +0200
+Message-ID: <20231016083954.689738238@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -45,128 +43,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kory Maincent <kory.maincent@bootlin.com>
 
-[ Upstream commit 31c07dffafce914c1d1543c135382a11ff058d93 ]
+[ Upstream commit 108a36d07c01edbc5942d27c92494d1c6e4d45a0 ]
 
-Sili Luo reported a race in nfc_llcp_sock_get(), leading to UAF.
+A bitset without mask in a _SET request means we want exactly the bits in
+the bitset to be set. This works correctly for compact format but when
+verbose format is parsed, ethnl_update_bitset32_verbose() only sets the
+bits present in the request bitset but does not clear the rest. The commit
+6699170376ab fixes this issue by clearing the whole target bitmap before we
+start iterating. The solution proposed brought an issue with the behavior
+of the mod variable. As the bitset is always cleared the old val will
+always differ to the new val.
 
-Getting a reference on the socket found in a lookup while
-holding a lock should happen before releasing the lock.
+Fix it by adding a new temporary variable which save the state of the old
+bitmap.
 
-nfc_llcp_sock_get_sn() has a similar problem.
-
-Finally nfc_llcp_recv_snl() needs to make sure the socket
-found by nfc_llcp_sock_from_sn() does not disappear.
-
-Fixes: 8f50020ed9b8 ("NFC: LLCP late binding")
-Reported-by: Sili Luo <rootlab@huawei.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Willy Tarreau <w@1wt.eu>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20231009123110.3735515-1-edumazet@google.com
+Fixes: 6699170376ab ("ethtool: fix application of verbose no_mask bitset")
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20231009133645.44503-1-kory.maincent@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_core.c | 30 ++++++++++++------------------
- 1 file changed, 12 insertions(+), 18 deletions(-)
+ net/ethtool/bitset.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
-index b1107570eaee8..92f70686bee0a 100644
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -205,17 +205,13 @@ static struct nfc_llcp_sock *nfc_llcp_sock_get(struct nfc_llcp_local *local,
+diff --git a/net/ethtool/bitset.c b/net/ethtool/bitset.c
+index 0515d6604b3b9..883ed9be81f9f 100644
+--- a/net/ethtool/bitset.c
++++ b/net/ethtool/bitset.c
+@@ -431,8 +431,10 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
+ 			      ethnl_string_array_t names,
+ 			      struct netlink_ext_ack *extack, bool *mod)
+ {
++	u32 *orig_bitmap, *saved_bitmap = NULL;
+ 	struct nlattr *bit_attr;
+ 	bool no_mask;
++	bool dummy;
+ 	int rem;
+ 	int ret;
  
- 		if (tmp_sock->ssap == ssap && tmp_sock->dsap == dsap) {
- 			llcp_sock = tmp_sock;
-+			sock_hold(&llcp_sock->sk);
- 			break;
+@@ -448,8 +450,22 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
+ 	}
+ 
+ 	no_mask = tb[ETHTOOL_A_BITSET_NOMASK];
+-	if (no_mask)
+-		ethnl_bitmap32_clear(bitmap, 0, nbits, mod);
++	if (no_mask) {
++		unsigned int nwords = DIV_ROUND_UP(nbits, 32);
++		unsigned int nbytes = nwords * sizeof(u32);
++
++		/* The bitmap size is only the size of the map part without
++		 * its mask part.
++		 */
++		saved_bitmap = kcalloc(nwords, sizeof(u32), GFP_KERNEL);
++		if (!saved_bitmap)
++			return -ENOMEM;
++		memcpy(saved_bitmap, bitmap, nbytes);
++		ethnl_bitmap32_clear(bitmap, 0, nbits, &dummy);
++		orig_bitmap = saved_bitmap;
++	} else {
++		orig_bitmap = bitmap;
++	}
+ 
+ 	nla_for_each_nested(bit_attr, tb[ETHTOOL_A_BITSET_BITS], rem) {
+ 		bool old_val, new_val;
+@@ -458,13 +474,14 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
+ 		if (nla_type(bit_attr) != ETHTOOL_A_BITSET_BITS_BIT) {
+ 			NL_SET_ERR_MSG_ATTR(extack, bit_attr,
+ 					    "only ETHTOOL_A_BITSET_BITS_BIT allowed in ETHTOOL_A_BITSET_BITS");
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto out;
+ 		}
+ 		ret = ethnl_parse_bit(&idx, &new_val, nbits, bit_attr, no_mask,
+ 				      names, extack);
+ 		if (ret < 0)
+-			return ret;
+-		old_val = bitmap[idx / 32] & ((u32)1 << (idx % 32));
++			goto out;
++		old_val = orig_bitmap[idx / 32] & ((u32)1 << (idx % 32));
+ 		if (new_val != old_val) {
+ 			if (new_val)
+ 				bitmap[idx / 32] |= ((u32)1 << (idx % 32));
+@@ -474,7 +491,10 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
  		}
  	}
  
- 	read_unlock(&local->sockets.lock);
- 
--	if (llcp_sock == NULL)
--		return NULL;
--
--	sock_hold(&llcp_sock->sk);
--
- 	return llcp_sock;
+-	return 0;
++	ret = 0;
++out:
++	kfree(saved_bitmap);
++	return ret;
  }
  
-@@ -348,7 +344,8 @@ static int nfc_llcp_wks_sap(const char *service_name, size_t service_name_len)
- 
- static
- struct nfc_llcp_sock *nfc_llcp_sock_from_sn(struct nfc_llcp_local *local,
--					    const u8 *sn, size_t sn_len)
-+					    const u8 *sn, size_t sn_len,
-+					    bool needref)
- {
- 	struct sock *sk;
- 	struct nfc_llcp_sock *llcp_sock, *tmp_sock;
-@@ -384,6 +381,8 @@ struct nfc_llcp_sock *nfc_llcp_sock_from_sn(struct nfc_llcp_local *local,
- 
- 		if (memcmp(sn, tmp_sock->service_name, sn_len) == 0) {
- 			llcp_sock = tmp_sock;
-+			if (needref)
-+				sock_hold(&llcp_sock->sk);
- 			break;
- 		}
- 	}
-@@ -425,7 +424,8 @@ u8 nfc_llcp_get_sdp_ssap(struct nfc_llcp_local *local,
- 		 * to this service name.
- 		 */
- 		if (nfc_llcp_sock_from_sn(local, sock->service_name,
--					  sock->service_name_len) != NULL) {
-+					  sock->service_name_len,
-+					  false) != NULL) {
- 			mutex_unlock(&local->sdp_lock);
- 
- 			return LLCP_SAP_MAX;
-@@ -833,16 +833,7 @@ static struct nfc_llcp_sock *nfc_llcp_connecting_sock_get(struct nfc_llcp_local
- static struct nfc_llcp_sock *nfc_llcp_sock_get_sn(struct nfc_llcp_local *local,
- 						  const u8 *sn, size_t sn_len)
- {
--	struct nfc_llcp_sock *llcp_sock;
--
--	llcp_sock = nfc_llcp_sock_from_sn(local, sn, sn_len);
--
--	if (llcp_sock == NULL)
--		return NULL;
--
--	sock_hold(&llcp_sock->sk);
--
--	return llcp_sock;
-+	return nfc_llcp_sock_from_sn(local, sn, sn_len, true);
- }
- 
- static const u8 *nfc_llcp_connect_sn(const struct sk_buff *skb, size_t *sn_len)
-@@ -1307,7 +1298,8 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
- 			}
- 
- 			llcp_sock = nfc_llcp_sock_from_sn(local, service_name,
--							  service_name_len);
-+							  service_name_len,
-+							  true);
- 			if (!llcp_sock) {
- 				sap = 0;
- 				goto add_snl;
-@@ -1327,6 +1319,7 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
- 
- 				if (sap == LLCP_SAP_MAX) {
- 					sap = 0;
-+					nfc_llcp_sock_put(llcp_sock);
- 					goto add_snl;
- 				}
- 
-@@ -1344,6 +1337,7 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
- 
- 			pr_debug("%p %d\n", llcp_sock, sap);
- 
-+			nfc_llcp_sock_put(llcp_sock);
- add_snl:
- 			sdp = nfc_llcp_build_sdres_tlv(tid, sap);
- 			if (sdp == NULL)
+ static int ethnl_compact_sanity_checks(unsigned int nbits,
 -- 
 2.40.1
 
