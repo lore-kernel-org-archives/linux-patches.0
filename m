@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6270C14288
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC4B14288
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQfz+DSd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F59C433C7;
-	Mon, 16 Oct 2023 08:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVJBJ6sx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8754FC433CA;
+	Mon, 16 Oct 2023 08:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445804;
-	bh=l1KNhuBrb57bEkkLNIwhm+opMc1OiUkAEjrvrxePXLI=;
+	s=korg; t=1697445808;
+	bh=+Cq3CRyn5vqXJfhoib0iVFfhJL3Mi6vXQmbtefOXsTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQfz+DSddIRuYBG3/+qPEdy2y4WGUl32KyZw1m01oy0P0T2LKBjJBlziuYk1sdH5W
-	 MHCTiVIdsJRkSX6AXYgyYgfMxjwzzZbxeDrLg0Ulv2teUwiYIOVYiDKJ8i96hab7Ha
-	 QCt8IT3+IOE9m64L078IcLxHcAvhUc7gN/JsYdoI=
+	b=jVJBJ6sxfFoFmrVFBF0OPms76YDrWX1cO61DW+CfdQPyaMbnqiiFc7aOrpKKGumVX
+	 jGyE5KgwZ1gAfxNMnQ8Cn5AHOea39PwkBSBEDFDNmr8rGcUrn2GanTLCIGBgSk6h4o
+	 9MnR5z5bHf91+f4XbfFmlVq3AR/2Gavylx7uOw+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 5.15 012/102] HID: logitech-hidpp: Fix kernel crash on receiver USB disconnect
-Date: Mon, 16 Oct 2023 10:40:11 +0200
-Message-ID: <20231016083954.016172296@linuxfoundation.org>
+	Eric Whitney <enwlinux@gmail.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.15 013/102] quota: Fix slow quotaoff
+Date: Mon, 16 Oct 2023 10:40:12 +0200
+Message-ID: <20231016083954.042117759@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -41,177 +41,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Jan Kara <jack@suse.cz>
 
-commit dac501397b9d81e4782232c39f94f4307b137452 upstream.
+commit 869b6ea1609f655a43251bf41757aa44e5350a8f upstream.
 
-hidpp_connect_event() has *four* time-of-check vs time-of-use (TOCTOU)
-races when it races with itself.
+Eric has reported that commit dabc8b207566 ("quota: fix dqput() to
+follow the guarantees dquot_srcu should provide") heavily increases
+runtime of generic/270 xfstest for ext4 in nojournal mode. The reason
+for this is that ext4 in nojournal mode leaves dquots dirty until the last
+dqput() and thus the cleanup done in quota_release_workfn() has to write
+them all. Due to the way quota_release_workfn() is written this results
+in synchronize_srcu() call for each dirty dquot which makes the dquot
+cleanup when turning quotas off extremely slow.
 
-hidpp_connect_event() primarily runs from a workqueue but it also runs
-on probe() and if a "device-connected" packet is received by the hw
-when the thread running hidpp_connect_event() from probe() is waiting on
-the hw, then a second thread running hidpp_connect_event() will be
-started from the workqueue.
+To be able to avoid synchronize_srcu() for each dirty dquot we need to
+rework how we track dquots to be cleaned up. Instead of keeping the last
+dquot reference while it is on releasing_dquots list, we drop it right
+away and mark the dquot with new DQ_RELEASING_B bit instead. This way we
+can we can remove dquot from releasing_dquots list when new reference to
+it is acquired and thus there's no need to call synchronize_srcu() each
+time we drop dq_list_lock.
 
-This opens the following races (note the below code is simplified):
-
-1. Retrieving + printing the protocol (harmless race):
-
-	if (!hidpp->protocol_major) {
-		hidpp_root_get_protocol_version()
-		hidpp->protocol_major = response.rap.params[0];
-	}
-
-We can actually see this race hit in the dmesg in the abrt output
-attached to rhbz#2227968:
-
-[ 3064.624215] logitech-hidpp-device 0003:046D:4071.0049: HID++ 4.5 device connected.
-[ 3064.658184] logitech-hidpp-device 0003:046D:4071.0049: HID++ 4.5 device connected.
-
-Testing with extra logging added has shown that after this the 2 threads
-take turn grabbing the hw access mutex (send_mutex) so they ping-pong
-through all the other TOCTOU cases managing to hit all of them:
-
-2. Updating the name to the HIDPP name (harmless race):
-
-	if (hidpp->name == hdev->name) {
-		...
-		hidpp->name = new_name;
-	}
-
-3. Initializing the power_supply class for the battery (problematic!):
-
-hidpp_initialize_battery()
-{
-        if (hidpp->battery.ps)
-                return 0;
-
-	probe_battery(); /* Blocks, threads take turns executing this */
-
-	hidpp->battery.desc.properties =
-		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
-
-	hidpp->battery.ps =
-		devm_power_supply_register(&hidpp->hid_dev->dev,
-					   &hidpp->battery.desc, cfg);
-}
-
-4. Creating delayed input_device (potentially problematic):
-
-	if (hidpp->delayed_input)
-		return;
-
-	hidpp->delayed_input = hidpp_allocate_input(hdev);
-
-The really big problem here is 3. Hitting the race leads to the following
-sequence:
-
-	hidpp->battery.desc.properties =
-		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
-
-	hidpp->battery.ps =
-		devm_power_supply_register(&hidpp->hid_dev->dev,
-					   &hidpp->battery.desc, cfg);
-
-	...
-
-	hidpp->battery.desc.properties =
-		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
-
-	hidpp->battery.ps =
-		devm_power_supply_register(&hidpp->hid_dev->dev,
-					   &hidpp->battery.desc, cfg);
-
-So now we have registered 2 power supplies for the same battery,
-which looks a bit weird from userspace's pov but this is not even
-the really big problem.
-
-Notice how:
-
-1. This is all devm-maganaged
-2. The hidpp->battery.desc struct is shared between the 2 power supplies
-3. hidpp->battery.desc.properties points to the result from the second
-   devm_kmemdup()
-
-This causes a use after free scenario on USB disconnect of the receiver:
-1. The last registered power supply class device gets unregistered
-2. The memory from the last devm_kmemdup() call gets freed,
-   hidpp->battery.desc.properties now points to freed memory
-3. The first registered power supply class device gets unregistered,
-   this involves sending a remove uevent to userspace which invokes
-   power_supply_uevent() to fill the uevent data
-4. power_supply_uevent() uses hidpp->battery.desc.properties which
-   now points to freed memory leading to backtraces like this one:
-
-Sep 22 20:01:35 eric kernel: BUG: unable to handle page fault for address: ffffb2140e017f08
-...
-Sep 22 20:01:35 eric kernel: Workqueue: usb_hub_wq hub_event
-Sep 22 20:01:35 eric kernel: RIP: 0010:power_supply_uevent+0xee/0x1d0
-...
-Sep 22 20:01:35 eric kernel:  ? asm_exc_page_fault+0x26/0x30
-Sep 22 20:01:35 eric kernel:  ? power_supply_uevent+0xee/0x1d0
-Sep 22 20:01:35 eric kernel:  ? power_supply_uevent+0x10d/0x1d0
-Sep 22 20:01:35 eric kernel:  dev_uevent+0x10f/0x2d0
-Sep 22 20:01:35 eric kernel:  kobject_uevent_env+0x291/0x680
-Sep 22 20:01:35 eric kernel:  power_supply_unregister+0x8e/0xa0
-Sep 22 20:01:35 eric kernel:  release_nodes+0x3d/0xb0
-Sep 22 20:01:35 eric kernel:  devres_release_group+0xfc/0x130
-Sep 22 20:01:35 eric kernel:  hid_device_remove+0x56/0xa0
-Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
-Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
-Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
-Sep 22 20:01:35 eric kernel:  ? __queue_work+0x1df/0x440
-Sep 22 20:01:35 eric kernel:  hid_destroy_device+0x4b/0x60
-Sep 22 20:01:35 eric kernel:  logi_dj_remove+0x9a/0x100 [hid_logitech_dj 5c91534a0ead2b65e04dd799a0437e3b99b21bc4]
-Sep 22 20:01:35 eric kernel:  hid_device_remove+0x44/0xa0
-Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
-Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
-Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
-Sep 22 20:01:35 eric kernel:  ? __queue_work+0x1df/0x440
-Sep 22 20:01:35 eric kernel:  hid_destroy_device+0x4b/0x60
-Sep 22 20:01:35 eric kernel:  usbhid_disconnect+0x47/0x60 [usbhid 727dcc1c0b94e6b4418727a468398ac3bca492f3]
-Sep 22 20:01:35 eric kernel:  usb_unbind_interface+0x90/0x270
-Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
-Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
-Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
-Sep 22 20:01:35 eric kernel:  ? kobject_put+0xa0/0x1d0
-Sep 22 20:01:35 eric kernel:  usb_disable_device+0xcd/0x1e0
-Sep 22 20:01:35 eric kernel:  usb_disconnect+0xde/0x2c0
-Sep 22 20:01:35 eric kernel:  usb_disconnect+0xc3/0x2c0
-Sep 22 20:01:35 eric kernel:  hub_event+0xe80/0x1c10
-
-There have been quite a few bug reports (see Link tags) about this crash.
-
-Fix all the TOCTOU issues, including the really bad power-supply related
-system crash on USB disconnect, by making probe() use the workqueue for
-running hidpp_connect_event() too, so that it can never run more then once.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227221
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227968
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227968
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2242189
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217412#c58
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231005182638.3776-1-hdegoede@redhat.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+References: https://lore.kernel.org/all/ZRytn6CxFK2oECUt@debian-BULLSEYE-live-builder-AMD64
+Reported-by: Eric Whitney <enwlinux@gmail.com>
+Fixes: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-logitech-hidpp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/quota/dquot.c         |   66 +++++++++++++++++++++++++++--------------------
+ include/linux/quota.h    |    4 ++
+ include/linux/quotaops.h |    2 -
+ 3 files changed, 43 insertions(+), 29 deletions(-)
 
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4222,7 +4222,8 @@ static int hidpp_probe(struct hid_device
- 			goto hid_hw_init_fail;
+--- a/fs/quota/dquot.c
++++ b/fs/quota/dquot.c
+@@ -233,19 +233,18 @@ static void put_quota_format(struct quot
+  * All dquots are placed to the end of inuse_list when first created, and this
+  * list is used for invalidate operation, which must look at every dquot.
+  *
+- * When the last reference of a dquot will be dropped, the dquot will be
+- * added to releasing_dquots. We'd then queue work item which would call
++ * When the last reference of a dquot is dropped, the dquot is added to
++ * releasing_dquots. We'll then queue work item which will call
+  * synchronize_srcu() and after that perform the final cleanup of all the
+- * dquots on the list. Both releasing_dquots and free_dquots use the
+- * dq_free list_head in the dquot struct. When a dquot is removed from
+- * releasing_dquots, a reference count is always subtracted, and if
+- * dq_count == 0 at that point, the dquot will be added to the free_dquots.
++ * dquots on the list. Each cleaned up dquot is moved to free_dquots list.
++ * Both releasing_dquots and free_dquots use the dq_free list_head in the dquot
++ * struct.
+  *
+- * Unused dquots (dq_count == 0) are added to the free_dquots list when freed,
+- * and this list is searched whenever we need an available dquot.  Dquots are
+- * removed from the list as soon as they are used again, and
+- * dqstats.free_dquots gives the number of dquots on the list. When
+- * dquot is invalidated it's completely released from memory.
++ * Unused and cleaned up dquots are in the free_dquots list and this list is
++ * searched whenever we need an available dquot. Dquots are removed from the
++ * list as soon as they are used again and dqstats.free_dquots gives the number
++ * of dquots on the list. When dquot is invalidated it's completely released
++ * from memory.
+  *
+  * Dirty dquots are added to the dqi_dirty_list of quota_info when mark
+  * dirtied, and this list is searched when writing dirty dquots back to
+@@ -321,6 +320,7 @@ static inline void put_dquot_last(struct
+ static inline void put_releasing_dquots(struct dquot *dquot)
+ {
+ 	list_add_tail(&dquot->dq_free, &releasing_dquots);
++	set_bit(DQ_RELEASING_B, &dquot->dq_flags);
+ }
+ 
+ static inline void remove_free_dquot(struct dquot *dquot)
+@@ -328,8 +328,10 @@ static inline void remove_free_dquot(str
+ 	if (list_empty(&dquot->dq_free))
+ 		return;
+ 	list_del_init(&dquot->dq_free);
+-	if (!atomic_read(&dquot->dq_count))
++	if (!test_bit(DQ_RELEASING_B, &dquot->dq_flags))
+ 		dqstats_dec(DQST_FREE_DQUOTS);
++	else
++		clear_bit(DQ_RELEASING_B, &dquot->dq_flags);
+ }
+ 
+ static inline void put_inuse(struct dquot *dquot)
+@@ -581,12 +583,6 @@ restart:
+ 			continue;
+ 		/* Wait for dquot users */
+ 		if (atomic_read(&dquot->dq_count)) {
+-			/* dquot in releasing_dquots, flush and retry */
+-			if (!list_empty(&dquot->dq_free)) {
+-				spin_unlock(&dq_list_lock);
+-				goto restart;
+-			}
+-
+ 			atomic_inc(&dquot->dq_count);
+ 			spin_unlock(&dq_list_lock);
+ 			/*
+@@ -606,6 +602,15 @@ restart:
+ 			goto restart;
+ 		}
+ 		/*
++		 * The last user already dropped its reference but dquot didn't
++		 * get fully cleaned up yet. Restart the scan which flushes the
++		 * work cleaning up released dquots.
++		 */
++		if (test_bit(DQ_RELEASING_B, &dquot->dq_flags)) {
++			spin_unlock(&dq_list_lock);
++			goto restart;
++		}
++		/*
+ 		 * Quota now has no users and it has been written on last
+ 		 * dqput()
+ 		 */
+@@ -696,6 +701,13 @@ int dquot_writeback_dquots(struct super_
+ 						 dq_dirty);
+ 
+ 			WARN_ON(!dquot_active(dquot));
++			/* If the dquot is releasing we should not touch it */
++			if (test_bit(DQ_RELEASING_B, &dquot->dq_flags)) {
++				spin_unlock(&dq_list_lock);
++				flush_delayed_work(&quota_release_work);
++				spin_lock(&dq_list_lock);
++				continue;
++			}
+ 
+ 			/* Now we have active dquot from which someone is
+  			 * holding reference so we can safely just increase
+@@ -809,18 +821,18 @@ static void quota_release_workfn(struct
+ 	/* Exchange the list head to avoid livelock. */
+ 	list_replace_init(&releasing_dquots, &rls_head);
+ 	spin_unlock(&dq_list_lock);
++	synchronize_srcu(&dquot_srcu);
+ 
+ restart:
+-	synchronize_srcu(&dquot_srcu);
+ 	spin_lock(&dq_list_lock);
+ 	while (!list_empty(&rls_head)) {
+ 		dquot = list_first_entry(&rls_head, struct dquot, dq_free);
+-		/* Dquot got used again? */
+-		if (atomic_read(&dquot->dq_count) > 1) {
+-			remove_free_dquot(dquot);
+-			atomic_dec(&dquot->dq_count);
+-			continue;
+-		}
++		WARN_ON_ONCE(atomic_read(&dquot->dq_count));
++		/*
++		 * Note that DQ_RELEASING_B protects us from racing with
++		 * invalidate_dquots() calls so we are safe to work with the
++		 * dquot even after we drop dq_list_lock.
++		 */
+ 		if (dquot_dirty(dquot)) {
+ 			spin_unlock(&dq_list_lock);
+ 			/* Commit dquot before releasing */
+@@ -834,7 +846,6 @@ restart:
+ 		}
+ 		/* Dquot is inactive and clean, now move it to free list */
+ 		remove_free_dquot(dquot);
+-		atomic_dec(&dquot->dq_count);
+ 		put_dquot_last(dquot);
  	}
- 
--	hidpp_connect_event(hidpp);
-+	schedule_work(&hidpp->work);
-+	flush_work(&hidpp->work);
- 
- 	if (will_restart) {
- 		/* Reset the HID node state */
+ 	spin_unlock(&dq_list_lock);
+@@ -875,6 +886,7 @@ void dqput(struct dquot *dquot)
+ 	BUG_ON(!list_empty(&dquot->dq_free));
+ #endif
+ 	put_releasing_dquots(dquot);
++	atomic_dec(&dquot->dq_count);
+ 	spin_unlock(&dq_list_lock);
+ 	queue_delayed_work(system_unbound_wq, &quota_release_work, 1);
+ }
+@@ -963,7 +975,7 @@ we_slept:
+ 		dqstats_inc(DQST_LOOKUPS);
+ 	}
+ 	/* Wait for dq_lock - after this we know that either dquot_release() is
+-	 * already finished or it will be canceled due to dq_count > 1 test */
++	 * already finished or it will be canceled due to dq_count > 0 test */
+ 	wait_on_dquot(dquot);
+ 	/* Read the dquot / allocate space in quota file */
+ 	if (!dquot_active(dquot)) {
+--- a/include/linux/quota.h
++++ b/include/linux/quota.h
+@@ -285,7 +285,9 @@ static inline void dqstats_dec(unsigned
+ #define DQ_FAKE_B	3	/* no limits only usage */
+ #define DQ_READ_B	4	/* dquot was read into memory */
+ #define DQ_ACTIVE_B	5	/* dquot is active (dquot_release not called) */
+-#define DQ_LASTSET_B	6	/* Following 6 bits (see QIF_) are reserved\
++#define DQ_RELEASING_B	6	/* dquot is in releasing_dquots list waiting
++				 * to be cleaned up */
++#define DQ_LASTSET_B	7	/* Following 6 bits (see QIF_) are reserved\
+ 				 * for the mask of entries set via SETQUOTA\
+ 				 * quotactl. They are set under dq_data_lock\
+ 				 * and the quota format handling dquot can\
+--- a/include/linux/quotaops.h
++++ b/include/linux/quotaops.h
+@@ -56,7 +56,7 @@ static inline bool dquot_is_busy(struct
+ {
+ 	if (test_bit(DQ_MOD_B, &dquot->dq_flags))
+ 		return true;
+-	if (atomic_read(&dquot->dq_count) > 1)
++	if (atomic_read(&dquot->dq_count) > 0)
+ 		return true;
+ 	return false;
+ }
 
 
