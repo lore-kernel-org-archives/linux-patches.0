@@ -1,36 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C5D28E25
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 16:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031B630F94
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 17:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6Ft+uqN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42050C433C7;
-	Mon, 16 Oct 2023 16:58:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axYCOLvJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C92C433C7;
+	Mon, 16 Oct 2023 17:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697475515;
-	bh=3qHXcmJIKLhL1W+OzhIxa9DzVfCA8XVPdgV3E0lUH1Y=;
+	s=korg; t=1697475731;
+	bh=Cr/WKqaWjw62PAFlI5Q9yZuDtc3aus5qxX6u9XpKiI4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=p6Ft+uqNVHPf8a49PWFkg4hO3X8LT7hexKWo+emfUE+t/5pRB9wk2mJbVXZrG5P0h
-	 hGE3vw6Yx/7RJQ7G76vZPpy72s5VmB1T5PNi5wuA8/8Kiu9t3jSwhnFuNvVE6DYk6Y
-	 c8c7LBT8eng0YZHDSDkpGHRIn4adPh34MIUf82vI=
-Date: Mon, 16 Oct 2023 18:58:32 +0200
+	b=axYCOLvJ/ewXMtghMZFuyrskr4inxA4EYTCp9A0EvP/iLJSOwtYDT03uKhL7gEP/d
+	 fDfGl6TpYyGPFFXoDQJwExa79I8t+N4zNAbFjAI9sv8NPJP+h5kc9u2kaS8f7Bdc3D
+	 lg1sTXLb6uKe2hjGBs33umXLHesW7b5gDkAOIg3A=
+Date: Mon, 16 Oct 2023 19:02:08 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: stable@vger.kernel.org, Sasha Levin <sashal@kernel.org>,
-	Vegard Nossum <vegard.nossum@oracle.com>, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org
-Subject: Re: [PATCH 5.15 000/102] 5.15.136-rc1 review
-Message-ID: <2023101655-throng-rickety-ff79@gregkh>
-References: <20231016083953.689300946@linuxfoundation.org>
- <a01256b5-6082-4d17-bf4d-310e7b4f7a47@oracle.com>
- <2023101641-resource-scalding-3e1d@gregkh>
- <43ad9708-47d4-4113-ab05-6012cb7c4d6c@oracle.com>
+To: Haiyang Zhang <haiyangz@microsoft.com>
+Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	Simon Horman <horms@kernel.org>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Paolo Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 001/131] net: mana: Fix TX CQE error handling
+Message-ID: <2023101659-bronco-maybe-0dc7@gregkh>
+References: <20231016084000.050926073@linuxfoundation.org>
+ <20231016084000.092429858@linuxfoundation.org>
+ <PH7PR21MB31164DEC6C6E7FBBC7CAE008CAD7A@PH7PR21MB3116.namprd21.prod.outlook.com>
+ <2023101613-verbalize-runaround-f67f@gregkh>
+ <PH7PR21MB311624F90B8FC50D05200712CAD7A@PH7PR21MB3116.namprd21.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,72 +37,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <43ad9708-47d4-4113-ab05-6012cb7c4d6c@oracle.com>
+In-Reply-To: <PH7PR21MB311624F90B8FC50D05200712CAD7A@PH7PR21MB3116.namprd21.prod.outlook.com>
 
-On Mon, Oct 16, 2023 at 09:23:36PM +0530, Harshit Mogalapalli wrote:
-> Hi Greg,
+On Mon, Oct 16, 2023 at 03:35:27PM +0000, Haiyang Zhang wrote:
 > 
-> On 16/10/23 8:44 pm, Greg Kroah-Hartman wrote:
-> > On Mon, Oct 16, 2023 at 07:06:20PM +0530, Harshit Mogalapalli wrote:
-> > > Hi Greg,
-> > > 
-> > > On 16/10/23 2:09 pm, Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 5.15.136 release.
-> > > > There are 102 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > > 
-> > > > Responses should be made by Wed, 18 Oct 2023 08:39:38 +0000.
-> > > > Anything received after that time might be too late.
-> > > > 
-> > > 
-> > > I am seeing a build failure while compiling tools/perf/
-> > > 
-> > > In file included from tests/genelf.c:14:
-> > > tests/../util/genelf.h:5:10: fatal error: linux/math.h: No such file or
-> > > directory
-> > >   5 | #include <linux/math.h>
-> > >   | ^~~~~~~~~~~~~~
-> > > compilation terminated.
-> > > 
-> > > Patch 43 in this series is causing this.
+> 
+> > -----Original Message-----
+> > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Sent: Monday, October 16, 2023 10:47 AM
+> > To: Haiyang Zhang <haiyangz@microsoft.com>
+> > Cc: stable@vger.kernel.org; patches@lists.linux.dev; Simon Horman
+> > <horms@kernel.org>; Shradha Gupta <shradhagupta@linux.microsoft.com>;
+> > Paolo Abeni <pabeni@redhat.com>; Sasha Levin <sashal@kernel.org>
+> > Subject: Re: [PATCH 6.1 001/131] net: mana: Fix TX CQE error handling
 > > 
-> 
-> Sorry for the confusion.
-> 
-> > What is patch 43?
-> 
-> It is patch 42/102 in this series
-> 
-> https://lore.kernel.org/stable/2023101641-resource-scalding-3e1d@gregkh/T/#m70a2a03b6204085af187184af911570681e744f5
-> 
-> Commit: e2bf685d7e311 ("perf inject: Fix GEN_ELF_TEXT_OFFSET for jit")
-> 
-> 
+> > On Mon, Oct 16, 2023 at 02:35:15PM +0000, Haiyang Zhang wrote:
+> > >
+> > >
+> > > > -----Original Message-----
+> > > > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > > > Sent: Monday, October 16, 2023 4:40 AM
+> > > > To: stable@vger.kernel.org
+> > > > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>;
+> > > > patches@lists.linux.dev; Haiyang Zhang <haiyangz@microsoft.com>;
+> > Simon
+> > > > Horman <horms@kernel.org>; Shradha Gupta
+> > > > <shradhagupta@linux.microsoft.com>; Paolo Abeni
+> > <pabeni@redhat.com>;
+> > > > Sasha Levin <sashal@kernel.org>
+> > > > Subject: [PATCH 6.1 001/131] net: mana: Fix TX CQE error handling
+> > > >
+> > > > 6.1-stable review patch.  If anyone has any objections, please let me know.
+> > > >
+> > > > ------------------
+> > > >
+> > > > From: Haiyang Zhang <haiyangz@microsoft.com>
+> > > >
+> > > > [ Upstream commit b2b000069a4c307b09548dc2243f31f3ca0eac9c ]
+> > > >
+> > > > For an unknown TX CQE error type (probably from a newer hardware),
+> > > > still free the SKB, update the queue tail, etc., otherwise the
+> > > > accounting will be wrong.
+> > > >
+> > > > Also, TX errors can be triggered by injecting corrupted packets, so
+> > > > replace the WARN_ONCE to ratelimited error logging.
+> > > >
+> > > > Cc: stable@vger.kernel.org
+> > > > Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure
+> > Network
+> > > > Adapter (MANA)")
+> > > > Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+> > > > Reviewed-by: Simon Horman <horms@kernel.org>
+> > > > Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+> > > > Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > > > ---
+> > > >  drivers/net/ethernet/microsoft/mana/mana_en.c | 16 ++++++++++------
+> > > >  1 file changed, 10 insertions(+), 6 deletions(-)
+> > > >
+> > > > diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > > > b/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > > > index 4f4204432aaa3..23ce26b8295dc 100644
+> > > > --- a/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > > > +++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > > > @@ -1003,16 +1003,20 @@ static void mana_poll_tx_cq(struct mana_cq
+> > > > *cq)
+> > > >  		case CQE_TX_VPORT_IDX_OUT_OF_RANGE:
+> > > >  		case CQE_TX_VPORT_DISABLED:
+> > > >  		case CQE_TX_VLAN_TAGGING_VIOLATION:
+> > > > -			WARN_ONCE(1, "TX: CQE error %d: ignored.\n",
+> > > > -				  cqe_oob->cqe_hdr.cqe_type);
+> > > > +			if (net_ratelimit())
+> > > > +				netdev_err(ndev, "TX: CQE error %d\n",
+> > > > +					   cqe_oob->cqe_hdr.cqe_type);
+> > > > +
+> > > >  			break;
+> > > >
+> > > >  		default:
+> > > > -			/* If the CQE type is unexpected, log an error, assert,
+> > > > -			 * and go through the error path.
+> > > > +			/* If the CQE type is unknown, log an error,
+> > > > +			 * and still free the SKB, update tail, etc.
+> > > >  			 */
+> > > > -			WARN_ONCE(1, "TX: Unexpected CQE type %d: HW
+> > > > BUG?\n",
+> > > > -				  cqe_oob->cqe_hdr.cqe_type);
+> > > > +			if (net_ratelimit())
+> > > > +				netdev_err(ndev, "TX: unknown CQE
+> > > > type %d\n",
+> > > > +					   cqe_oob->cqe_hdr.cqe_type);
+> > > > +
+> > > >  			return;
+> > >
+> > > This should be changed to "break", because we should "still free the SKB,
+> > update
+> > > the queue tail, etc., otherwise the accounting will be wrong":
 > > 
-> > > Why is this not reproducible upstream ?
-> > > 
-> > > Vegard bisected the commit which makes it not reproducible upstream and this
-> > > commit is missing in 5.15.y:
-> > > Commit: d6e6a27d960f ("tools: Fix math.h breakage")
-> > > 
-> > > Backport request for this was made here:
-> > > https://lore.kernel.org/all/CAMVNhxS-6qNfxy8jHrY5EtZASTL9gAvZi=BdTkUA5_5CSQ2Cmg@mail.gmail.com/
-> > 
-> > And that commit is in this patch series, so are you sure that was
-> > correct?
-> > 
+> > Is that an issue in Linus's tree, or is this unique to the stable
+> > backport?
 > 
-> Cause for this build issue:
-> Commit: e2bf685d7e311 ("perf inject: Fix GEN_ELF_TEXT_OFFSET for jit")
+> It's just a stable backporting issue.
 > 
-> And this issue is not in upstream due to presence of commit d6e6a27d960f
-> ("tools: Fix math.h breakage") in upstream but not in 5.15.y
+> Linus's tree is fine:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b2b000069a4c307b09548dc2243f31f3ca0eac9c
 
-Ok, I'll go drop the patch entirely, I can't even get perf to build at
-all for me on 5.15, which is why I've given up on it even mattering
-anymore :(
-
-thanks,
+Thanks, I've fixed this up now.
 
 greg k-h
