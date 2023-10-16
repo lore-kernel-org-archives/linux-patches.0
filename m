@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA85915AE3
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8950915AE3
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdXnEFYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35A4C433C8;
-	Mon, 16 Oct 2023 08:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRlYlzx2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BECC433C9;
+	Mon, 16 Oct 2023 08:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446038;
-	bh=seH/Tsp/EbwnXbsp0suNg1alV1ao5VUSxZYZ2b0bND4=;
+	s=korg; t=1697446047;
+	bh=trcx7UD1TxpifE54Fo32xNdO0o8USq3+QhyG8dIIXh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdXnEFYC64ASFLDUSKQ1A0ZdSZsMbxrQfP++6fjzlLbD/aJFR6djUsery1J+pCAiN
-	 +rUKFbVKaCcuJGN9pO/I31mInFK7vRSjfs65wguKNiCd1FoxYLiBOTfOjYrjkwb7OQ
-	 o3TWIpAQXg8YexvP2LrSMoSYniQFFGpKefcp52Jw=
+	b=QRlYlzx2cn2XXtz769nJ+TLUylggyirkYT4GPlN/82X8f0ln8w3DhBS89Z0V4LjZ/
+	 tKrsPSslhtU4LqsUMvmrO1yXMNygVY4wzKbjBZgM/mmOTp6uPaFdqZ2Ovp6qQIezhZ
+	 Jmbn009m3uOP7iyYc+ghqNaUwRP0Wg0259gRW9mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Rife <jrife@google.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 065/102] libceph: use kernel_connect()
-Date: Mon, 16 Oct 2023 10:41:04 +0200
-Message-ID: <20231016083955.436150336@linuxfoundation.org>
+Subject: [PATCH 5.15 066/102] ceph: fix incorrect revoked caps assert in ceph_fill_file_size()
+Date: Mon, 16 Oct 2023 10:41:05 +0200
+Message-ID: <20231016083955.462315509@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -41,46 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jrife@google.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit 7563cf17dce0a875ba3d872acdc63a78ea344019 upstream.
+commit 15c0a870dc44ed14e01efbdd319d232234ee639f upstream.
 
-Direct calls to ops->connect() can overwrite the address parameter when
-used in conjunction with BPF SOCK_ADDR hooks. Recent changes to
-kernel_connect() ensure that callers are insulated from such side
-effects. This patch wraps the direct call to ops->connect() with
-kernel_connect() to prevent unexpected changes to the address passed to
-ceph_tcp_connect().
-
-This change was originally part of a larger patch targeting the net tree
-addressing all instances of unprotected calls to ops->connect()
-throughout the kernel, but this change was split up into several patches
-targeting various trees.
+When truncating the inode the MDS will acquire the xlock for the
+ifile Locker, which will revoke the 'Frwsxl' caps from the clients.
+But when the client just releases and flushes the 'Fw' caps to MDS,
+for exmaple, and once the MDS receives the caps flushing msg it
+just thought the revocation has finished. Then the MDS will continue
+truncating the inode and then issued the truncate notification to
+all the clients. While just before the clients receives the cap
+flushing ack they receive the truncation notification, the clients
+will detecte that the 'issued | dirty' is still holding the 'Fw'
+caps.
 
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/20230821100007.559638-1-jrife@google.com/
-Link: https://lore.kernel.org/netdev/9944248dba1bce861375fcce9de663934d933ba9.camel@redhat.com/
-Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
-Signed-off-by: Jordan Rife <jrife@google.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Link: https://tracker.ceph.com/issues/56693
+Fixes: b0d7c2231015 ("ceph: introduce i_truncate_mutex")
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Milind Changire <mchangir@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/messenger.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ceph/inode.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/net/ceph/messenger.c
-+++ b/net/ceph/messenger.c
-@@ -454,8 +454,8 @@ int ceph_tcp_connect(struct ceph_connect
- 	set_sock_callbacks(sock, con);
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -647,9 +647,7 @@ int ceph_fill_file_size(struct inode *in
+ 			ci->i_truncate_seq = truncate_seq;
  
- 	con_sock_state_connecting(con);
--	ret = sock->ops->connect(sock, (struct sockaddr *)&ss, sizeof(ss),
--				 O_NONBLOCK);
-+	ret = kernel_connect(sock, (struct sockaddr *)&ss, sizeof(ss),
-+			     O_NONBLOCK);
- 	if (ret == -EINPROGRESS) {
- 		dout("connect %s EINPROGRESS sk_state = %u\n",
- 		     ceph_pr_addr(&con->peer_addr),
+ 			/* the MDS should have revoked these caps */
+-			WARN_ON_ONCE(issued & (CEPH_CAP_FILE_EXCL |
+-					       CEPH_CAP_FILE_RD |
+-					       CEPH_CAP_FILE_WR |
++			WARN_ON_ONCE(issued & (CEPH_CAP_FILE_RD |
+ 					       CEPH_CAP_FILE_LAZYIO));
+ 			/*
+ 			 * If we hold relevant caps, or in the case where we're
 
 
