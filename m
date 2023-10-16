@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186E628DBA
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1699B28DBA
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaHuU/qR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDCBC433CA;
-	Mon, 16 Oct 2023 14:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2BbAyxm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82282C433C7;
+	Mon, 16 Oct 2023 14:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468044;
-	bh=keGMwBChcctvJKXNnHiG7p1O4BKbwInx2+3M/kfTSco=;
+	s=korg; t=1697468047;
+	bh=GYl4ajNhhX8wTzhy8Bdbh+dhaPIx5ieHn4Il4k2HD2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CaHuU/qR1SjTLwElM8QUr+Te47YopgK30T6E6ihs/WLXRQQiA6RYqx5ORsmKuouJV
-	 +jeZg+AV0PjtBY0XQxQQlqfhSkxcFJT7p8m2UnzRw9eZJQvMZN8w1mXwyhT0nmhOYX
-	 wfyqbGImh9CRT4hWhNuI5Q2W3m5mZaA0mc2xvPGw=
+	b=g2BbAyxm+F4Ix4jXw5APkb1enbmx6njr7oL246/N5VOedTrMRQ7kDPUDpan19Yf0W
+	 czgsEucP044nvvqUqWlBELlcgs4YYQGon05GIdRUL2ruxRIshMwxi0ClnIfTcUh8kK
+	 9Mp+VrlEpChKwKQYZSbvN2akVsONAwSx+7QZmnLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.5 114/191] iio: admv1013: add mixer_vgate corner cases
-Date: Mon, 16 Oct 2023 10:41:39 +0200
-Message-ID: <20231016084018.045249575@linuxfoundation.org>
+	=?UTF-8?q?Marek=20=C5=A0anta?= <teslan223@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.5 141/191] thunderbolt: Check that lane 1 is in CL0 before enabling lane bonding
+Date: Mon, 16 Oct 2023 10:42:06 +0200
+Message-ID: <20231016084018.676323532@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -37,47 +35,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit 287d998af24326b009ae0956820a3188501b34a0 upstream.
+commit a9fdf5f933a6f2b358fad0194b1287b67f6704b1 upstream.
 
-Include the corner cases in the computation of the MIXER_VGATE register
-value.
+Marek reported that when BlackMagic UltraStudio device is connected the
+kernel repeatedly tries to enable lane bonding without success making
+the device non-functional. It looks like the device does not have lane 1
+connected at all so even though it is enabled we should not try to bond
+the lanes. For this reason check that lane 1 is in fact CL0 (connected,
+active) before attempting to bond the lanes.
 
-According to the datasheet: The MIXER_VGATE values follows the VCM such
-as, that for a 0V to 1.8V VCM, MIXER_VGATE = 23.89 VCM + 81, and for a >
-1.8V to 2.6V VCM, MIXER_VGATE = 23.75 VCM + 1.25.
-
-Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20230807143806.6954-1-antoniu.miclaus@analog.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reported-by: Marek Šanta <teslan223@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217737
+Cc: stable@vger.kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/admv1013.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/thunderbolt/switch.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/iio/frequency/admv1013.c
-+++ b/drivers/iio/frequency/admv1013.c
-@@ -351,9 +351,9 @@ static int admv1013_update_mixer_vgate(s
- 	if (vcm < 0)
- 		return vcm;
+--- a/drivers/thunderbolt/switch.c
++++ b/drivers/thunderbolt/switch.c
+@@ -2724,6 +2724,13 @@ int tb_switch_lane_bonding_enable(struct
+ 	    !tb_port_is_width_supported(down, TB_LINK_WIDTH_DUAL))
+ 		return 0;
  
--	if (vcm < 1800000)
-+	if (vcm <= 1800000)
- 		mixer_vgate = (2389 * vcm / 1000000 + 8100) / 100;
--	else if (vcm > 1800000 && vcm < 2600000)
-+	else if (vcm > 1800000 && vcm <= 2600000)
- 		mixer_vgate = (2375 * vcm / 1000000 + 125) / 100;
- 	else
- 		return -EINVAL;
++	/*
++	 * Both lanes need to be in CL0. Here we assume lane 0 already be in
++	 * CL0 and check just for lane 1.
++	 */
++	if (tb_wait_for_port(down->dual_link_port, false) <= 0)
++		return -ENOTCONN;
++
+ 	ret = tb_port_lane_bonding_enable(up);
+ 	if (ret) {
+ 		tb_port_warn(up, "failed to enable lane bonding\n");
 
 
