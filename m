@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BE61A58C
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379111A58C
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17wqc3UJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A7CC433C7;
-	Mon, 16 Oct 2023 09:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dfeTIe7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62EF8C433C7;
+	Mon, 16 Oct 2023 09:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697447117;
-	bh=QCUCgefeMJx3uKUwiTXBTq3A1kCRs4uEBEVWqpYzR+M=;
+	s=korg; t=1697447129;
+	bh=VU/H3JBm9wBiWwSyIrFNF/jNku0wKoatv3vzkzUWzdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=17wqc3UJfE9A3Iu8n1FXiHUe+FqCeZW+U78GJxN2IOdxYiZwjLmlmXS2ZmRykTsVM
-	 3zQ9pLo+duJMq+gn73JE9QayEgQqKFGdBV4pn+HUmWA25liq1EBTYFHPLCLD79ID6L
-	 qjkiboVKbM0+yyn/NP8Yv1bsqE5M10mGqPtQjsws=
+	b=dfeTIe7owpZRp03wovd1xJ52OU4/nr2jataS//B6BiLY+quRpr+MAnXrhPdJKxy0o
+	 rpmGFzzIXCsl0y7aORJMg36ETgUIpe8axakgwpC6PSg8EfsZvBw+n6ekcJwyl3aycT
+	 UbT2VCZv9YX4Fr3wuW7vhYnBLmQz7pRjzU/+rmXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 131/131] ALSA: hda/realtek - Fixed two speaker platform
-Date: Mon, 16 Oct 2023 10:41:54 +0200
-Message-ID: <20231016084003.327357266@linuxfoundation.org>
+	RD Babiera <rdbabiera@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 121/131] usb: typec: altmodes/displayport: Signal hpd low when exiting mode
+Date: Mon, 16 Oct 2023 10:41:44 +0200
+Message-ID: <20231016084003.072906693@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -41,36 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: RD Babiera <rdbabiera@google.com>
 
-commit fb6254df09bba303db2a1002085f6c0b90a456ed upstream.
+commit 89434b069e460967624903b049e5cf5c9e6b99b9 upstream.
 
-If system has two speakers and one connect to 0x14 pin, use this
-function will disable it.
+Upon receiving an ACK for a sent EXIT_MODE message, the DisplayPort
+driver currently resets the status and configuration of the port partner.
+The hpd signal is not updated despite being part of the status, so the
+Display stack can still transmit video despite typec_altmode_exit placing
+the lanes in a Safe State.
 
-Fixes: e43252db7e20 ("ALSA: hda/realtek - ALC287 I2S speaker platform support")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/r/e3f2aac3fe6a47079d728a6443358cc2@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Set hpd to low when a sent EXIT_MODE message is ACK'ed.
+
+Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: RD Babiera <rdbabiera@google.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20231009210057.3773877-2-rdbabiera@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/typec/altmodes/displayport.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7001,8 +7001,10 @@ static void alc287_fixup_bind_dacs(struc
- 	snd_hda_override_conn_list(codec, 0x17, ARRAY_SIZE(conn), conn);
- 	spec->gen.preferred_dacs = preferred_pairs;
- 	spec->gen.auto_mute_via_amp = 1;
--	snd_hda_codec_write_cache(codec, 0x14, 0, AC_VERB_SET_PIN_WIDGET_CONTROL,
--			    0x0); /* Make sure 0x14 was disable */
-+	if (spec->gen.autocfg.speaker_pins[0] != 0x14) {
-+		snd_hda_codec_write_cache(codec, 0x14, 0, AC_VERB_SET_PIN_WIDGET_CONTROL,
-+					0x0); /* Make sure 0x14 was disable */
-+	}
- }
- 
- 
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -301,6 +301,11 @@ static int dp_altmode_vdm(struct typec_a
+ 		case CMD_EXIT_MODE:
+ 			dp->data.status = 0;
+ 			dp->data.conf = 0;
++			if (dp->hpd) {
++				drm_connector_oob_hotplug_event(dp->connector_fwnode);
++				dp->hpd = false;
++				sysfs_notify(&dp->alt->dev.kobj, "displayport", "hpd");
++			}
+ 			break;
+ 		case DP_CMD_STATUS_UPDATE:
+ 			dp->data.status = *vdo;
 
 
