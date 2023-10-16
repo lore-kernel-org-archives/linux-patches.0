@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0A7262A1
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F089262A1
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApmR8dLP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB79C433C8;
-	Mon, 16 Oct 2023 14:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FzBOwZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84253C433C8;
+	Mon, 16 Oct 2023 14:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468147;
-	bh=5PkzNac10/uJkE+iEJPwjLyBm5+nmwP8gkTUh43lUEk=;
+	s=korg; t=1697468150;
+	bh=yE/D6o0f9bQDmspG10nLw/xcdjwKwvAyQ40Sl1tdD18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ApmR8dLPSXAfYOFxYjVwnRXbTPEy9Hxu00hgl5ZeEVWY5fa31N7Ka/+25sUAu1B4V
-	 tUZP3jgIKZLjWw5kpSzv+nu1qYxdB5/k7JSPgXGf/n8XwpFc4TNhXHtCQMFy0DFdqr
-	 iYYsdC23WMRNYvqtQEL9W5PLBJZOG2Xa7dssV6RI=
+	b=2FzBOwZIFBgOtaHSe/sct/i0/4Adg+Svoj7HGF6S+g1dRE7cXSOpeUYAq5lgKqkCe
+	 y0iGrJKNNPi1GUCmjLQRjaVYnv+Bt1mqh69Tl7tERYFC2U92VPm6aCEFu9smk8YSyX
+	 4nqcg3pjSbhGmaqkXGUSE4Inquj/E4bBqTHevtKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Stanley Chu <stanley.chu@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.5 166/191] scsi: ufs: core: Correct clear TM error log
-Date: Mon, 16 Oct 2023 10:42:31 +0200
-Message-ID: <20231016084019.251681125@linuxfoundation.org>
+	Guo Ren <guoren@kernel.org>,
+	Nam Cao <namcaov@gmail.com>,
+	Puranjay Mohan <puranjay12@gmail.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.5 167/191] riscv: Only consider swbp/ss handlers for correct privileged mode
+Date: Mon, 16 Oct 2023 10:42:32 +0200
+Message-ID: <20231016084019.274700229@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -37,39 +38,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Björn Töpel <bjorn@rivosinc.com>
 
-commit a20c4350c6a12405b7f732b3ee6801ffe2cc45ce upstream.
+commit 9f564b92cf6d0ecb398f9348600a7d8a7f8ea804 upstream.
 
-The clear TM function error log status was inverted.
+RISC-V software breakpoint trap handlers are used for {k,u}probes.
 
-Fixes: 4693fad7d6d4 ("scsi: ufs: core: Log error handler activity")
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20231003022002.25578-1-peter.wang@mediatek.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Stanley Chu <stanley.chu@mediatek.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+When trapping from kernelmode, only the kernelmode handlers should be
+considered. Vice versa, only usermode handlers for usermode
+traps. This is not the case on RISC-V, which can trigger a bug if a
+userspace process uses uprobes, and a WARN() is triggered from
+kernelmode (which is implemented via {c.,}ebreak).
+
+The kernel will trap on the kernelmode {c.,}ebreak, look for uprobes
+handlers, realize incorrectly that uprobes need to be handled, and
+exit the trap handler early. The trap returns to re-executing the
+{c.,}ebreak, and enter an infinite trap-loop.
+
+The issue was found running the BPF selftest [1].
+
+Fix this issue by only considering the swbp/ss handlers for
+kernel/usermode respectively. Also, move CONFIG ifdeffery from traps.c
+to the asm/{k,u}probes.h headers.
+
+Note that linux/uprobes.h only include asm/uprobes.h if CONFIG_UPROBES
+is defined, which is why asm/uprobes.h needs to be unconditionally
+included in traps.c
+
+Link: https://lore.kernel.org/linux-riscv/87v8d19aun.fsf@all.your.base.are.belong.to.us/ # [1]
+Fixes: 74784081aac8 ("riscv: Add uprobes supported")
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Reviewed-by: Nam Cao <namcaov@gmail.com>
+Tested-by: Puranjay Mohan <puranjay12@gmail.com>
+Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
+Link: https://lore.kernel.org/r/20230912065619.62020-1-bjorn@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/include/asm/kprobes.h |    9 +++++++++
+ arch/riscv/include/asm/uprobes.h |   11 +++++++++++
+ arch/riscv/kernel/traps.c        |   28 ++++++++++++++++++----------
+ 3 files changed, 38 insertions(+), 10 deletions(-)
 
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -6955,7 +6955,7 @@ static int ufshcd_clear_tm_cmd(struct uf
- 			mask, 0, 1000, 1000);
+--- a/arch/riscv/include/asm/kprobes.h
++++ b/arch/riscv/include/asm/kprobes.h
+@@ -40,6 +40,15 @@ void arch_remove_kprobe(struct kprobe *p
+ int kprobe_fault_handler(struct pt_regs *regs, unsigned int trapnr);
+ bool kprobe_breakpoint_handler(struct pt_regs *regs);
+ bool kprobe_single_step_handler(struct pt_regs *regs);
++#else
++static inline bool kprobe_breakpoint_handler(struct pt_regs *regs)
++{
++	return false;
++}
  
- 	dev_err(hba->dev, "Clearing task management function with tag %d %s\n",
--		tag, err ? "succeeded" : "failed");
-+		tag, err < 0 ? "failed" : "succeeded");
++static inline bool kprobe_single_step_handler(struct pt_regs *regs)
++{
++	return false;
++}
+ #endif /* CONFIG_KPROBES */
+ #endif /* _ASM_RISCV_KPROBES_H */
+--- a/arch/riscv/include/asm/uprobes.h
++++ b/arch/riscv/include/asm/uprobes.h
+@@ -34,7 +34,18 @@ struct arch_uprobe {
+ 	bool simulate;
+ };
  
- out:
- 	return err;
++#ifdef CONFIG_UPROBES
+ bool uprobe_breakpoint_handler(struct pt_regs *regs);
+ bool uprobe_single_step_handler(struct pt_regs *regs);
++#else
++static inline bool uprobe_breakpoint_handler(struct pt_regs *regs)
++{
++	return false;
++}
+ 
++static inline bool uprobe_single_step_handler(struct pt_regs *regs)
++{
++	return false;
++}
++#endif /* CONFIG_UPROBES */
+ #endif /* _ASM_RISCV_UPROBES_H */
+--- a/arch/riscv/kernel/traps.c
++++ b/arch/riscv/kernel/traps.c
+@@ -13,6 +13,8 @@
+ #include <linux/kdebug.h>
+ #include <linux/uaccess.h>
+ #include <linux/kprobes.h>
++#include <linux/uprobes.h>
++#include <asm/uprobes.h>
+ #include <linux/mm.h>
+ #include <linux/module.h>
+ #include <linux/irq.h>
+@@ -246,22 +248,28 @@ static inline unsigned long get_break_in
+ 	return GET_INSN_LENGTH(insn);
+ }
+ 
++static bool probe_single_step_handler(struct pt_regs *regs)
++{
++	bool user = user_mode(regs);
++
++	return user ? uprobe_single_step_handler(regs) : kprobe_single_step_handler(regs);
++}
++
++static bool probe_breakpoint_handler(struct pt_regs *regs)
++{
++	bool user = user_mode(regs);
++
++	return user ? uprobe_breakpoint_handler(regs) : kprobe_breakpoint_handler(regs);
++}
++
+ void handle_break(struct pt_regs *regs)
+ {
+-#ifdef CONFIG_KPROBES
+-	if (kprobe_single_step_handler(regs))
++	if (probe_single_step_handler(regs))
+ 		return;
+ 
+-	if (kprobe_breakpoint_handler(regs))
+-		return;
+-#endif
+-#ifdef CONFIG_UPROBES
+-	if (uprobe_single_step_handler(regs))
++	if (probe_breakpoint_handler(regs))
+ 		return;
+ 
+-	if (uprobe_breakpoint_handler(regs))
+-		return;
+-#endif
+ 	current->thread.bad_cause = regs->cause;
+ 
+ 	if (user_mode(regs))
 
 
