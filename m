@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9F814288
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7FA14288
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IkZ/S4R9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9236C433C7;
-	Mon, 16 Oct 2023 14:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPT2eyET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD20C433C8;
+	Mon, 16 Oct 2023 14:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467883;
-	bh=qyQPnY06mvoyXRJbuKlmyQPH/UUEzlxTUKDp0k8F0Ks=;
+	s=korg; t=1697467893;
+	bh=koJMdPqJwytjhgUurmOgV2SJHSKa7PX4/C8Fe48hFiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IkZ/S4R9Xki5Lke+5yytQSom9k2hrA9Fr3/CVytN1rStpnZP49UU+/ebTebEAASrP
-	 AsjryS7+gsO5KbQ7+WQwdjgoTjPm7M7TnFXCBbHjP+N5SXu4I6fvLjglE7LFiv6XRF
-	 aTUr6iG4u1Cp+ZTLgEag0WFiWRzmds+mj/Yej0CE=
+	b=WPT2eyETK/lIrnLATPa+YVouKBBvVZjb8IlFkbqLQiaTzSGOnkep5gzVfdFfzcaX5
+	 wuai6qJyba1//EofjXiMQi+jwiqbzJ0Ulby3PXAn0zk3i3PZt3ZS/0htK2JeEUkB+z
+	 Nuw0EE0+mOv54/OvQB/XH9CM1qCDqL+z0r2xAsFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Andrea Merello <andrea.merello@iit.it>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.5 110/191] iio: imu: bno055: Fix missing Kconfig dependencies
-Date: Mon, 16 Oct 2023 10:41:35 +0200
-Message-ID: <20231016084017.954818593@linuxfoundation.org>
+	Jeremy Cline <jeremy@jcline.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+0839b78e119aae1fec78@syzkaller.appspotmail.com
+Subject: [PATCH 6.5 087/191] nfc: nci: assert requested protocol is valid
+Date: Mon, 16 Oct 2023 10:41:12 +0200
+Message-ID: <20231016084017.428141759@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -43,42 +44,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Jeremy Cline <jeremy@jcline.org>
 
-commit c9b9cfe7d342683f624a89c3b617be18aff879e8 upstream.
+[ Upstream commit 354a6e707e29cb0c007176ee5b8db8be7bd2dee0 ]
 
-This driver uses IIO triggered buffers so it needs to select them in
-Kconfig.
+The protocol is used in a bit mask to determine if the protocol is
+supported. Assert the provided protocol is less than the maximum
+defined so it doesn't potentially perform a shift-out-of-bounds and
+provide a clearer error for undefined protocols vs unsupported ones.
 
-on riscv-32bit:
-
-/opt/crosstool/gcc-13.2.0-nolibc/riscv32-linux/bin/riscv32-linux-ld: drivers/iio/imu/bno055/bno055.o: in function `.L367':
-bno055.c:(.text+0x2c96): undefined reference to `devm_iio_triggered_buffer_setup_ext'
-
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Closes: https://lore.kernel.org/linux-next/40566b4b-3950-81fe-ff14-871d8c447627@infradead.org/
-Fixes: 4aefe1c2bd0c ("iio: imu: add Bosch Sensortec BNO055 core driver")
-Cc: Andrea Merello <andrea.merello@iit.it>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20230903113052.846298-1-jic23@kernel.org
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Reported-and-tested-by: syzbot+0839b78e119aae1fec78@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0839b78e119aae1fec78
+Signed-off-by: Jeremy Cline <jeremy@jcline.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20231009200054.82557-1-jeremy@jcline.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/bno055/Kconfig |    2 ++
- 1 file changed, 2 insertions(+)
+ net/nfc/nci/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/iio/imu/bno055/Kconfig
-+++ b/drivers/iio/imu/bno055/Kconfig
-@@ -2,6 +2,8 @@
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index fff755dde30d6..6c9592d051206 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -909,6 +909,11 @@ static int nci_activate_target(struct nfc_dev *nfc_dev,
+ 		return -EINVAL;
+ 	}
  
- config BOSCH_BNO055
- 	tristate
-+	select IIO_BUFFER
-+	select IIO_TRIGGERED_BUFFER
- 
- config BOSCH_BNO055_SERIAL
- 	tristate "Bosch BNO055 attached via UART"
++	if (protocol >= NFC_PROTO_MAX) {
++		pr_err("the requested nfc protocol is invalid\n");
++		return -EINVAL;
++	}
++
+ 	if (!(nci_target->supported_protocols & (1 << protocol))) {
+ 		pr_err("target does not support the requested protocol 0x%x\n",
+ 		       protocol);
+-- 
+2.40.1
+
 
 
