@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D3E125DC
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476D6125DC
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6lxN7dP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F35C433C9;
-	Mon, 16 Oct 2023 09:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1NuiIus"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0094C433C8;
+	Mon, 16 Oct 2023 09:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446879;
-	bh=hwN6UfTEC+otDkZ/xQwUKFtLCUArO4zwMevrsevcR6U=;
+	s=korg; t=1697446882;
+	bh=Gy1KjtCEWGkbP3RT4DMnMUhTicYLSCU8AbF4nNO3r9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y6lxN7dPgBqnqUah1dqoKpDfBH/FaOhmx+04j0luAUlKr7CSdqTWSPiQBgabWhSSW
-	 lBzMbXT1SS7gJsPUsz6kCdAblvsUnqIRzKc/Ga2BYCsMj9wXfFg7psrloj9c1om8fj
-	 T/uOW+hlKcgQWr+wAl72zN1B10ZEB6+ffHKjfLLk=
+	b=D1NuiIusyV/zvB6Gj9PbO/UhVqAcV6mChaztnSNONxP/W5I2dascurwoJ5EK8fBLS
+	 HQ63qNnaWbtaNEjrMOIwedG5XZ1LiolDaufJYvNVpkXl4vqp9yosbdhhyeZnd46MmU
+	 KX/egv+VRaXSwU24kUlgQ85nQv+kGpjSrKJ5i5Ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lakshmi Yadlapati <lakshmiy@us.ibm.com>,
+	Alexander Zangerl <az@breathe-safe.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 085/131] iio: pressure: dps310: Adjust Timeout Settings
-Date: Mon, 16 Oct 2023 10:41:08 +0200
-Message-ID: <20231016084002.170767680@linuxfoundation.org>
+Subject: [PATCH 6.1 086/131] iio: pressure: ms5611: ms5611_prom_is_valid false negative bug
+Date: Mon, 16 Oct 2023 10:41:09 +0200
+Message-ID: <20231016084002.195592880@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -42,55 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lakshmi Yadlapati <lakshmiy@us.ibm.com>
+From: Alexander Zangerl <az@breathe-safe.com>
 
-commit 901a293fd96fb9bab843ba4cc7be3094a5aa7c94 upstream.
+commit fd39d9668f2ce9f4b05ad55e8c8d80c098073e0b upstream.
 
-The DPS310 sensor chip has been encountering intermittent errors while
-reading the sensor device across various system designs. This issue causes
-the chip to become "stuck," preventing the indication of "ready" status
-for pressure and temperature measurements in the MEAS_CFG register.
+The ms5611 driver falsely rejects lots of MS5607-02BA03-50 chips
+with "PROM integrity check failed" because it doesn't accept a prom crc
+value of zero as legitimate.
 
-To address this issue, this commit fixes the timeout settings to improve
-sensor stability:
-- After sending a reset command to the chip, the timeout has been extended
-  from 2.5 ms to 15 ms, aligning with the DPS310 specification.
-- The read timeout value of the MEAS_CFG register has been adjusted from
-  20ms to 30ms to match the specification.
+According to the datasheet for this chip (and the manufacturer's
+application note about the PROM CRC), none of the possible values for the
+CRC are excluded - but the current code in ms5611_prom_is_valid() ends with
 
-Signed-off-by: Lakshmi Yadlapati <lakshmiy@us.ibm.com>
-Fixes: 7b4ab4abcea4 ("iio: pressure: dps310: Reset chip after timeout")
-Link: https://lore.kernel.org/r/20230829180222.3431926-2-lakshmiy@us.ibm.com
+return crc_orig != 0x0000 && crc == crc_orig
+
+Discussed with the driver author (Tomasz Duszynski) and he indicated that
+at that time (2015) he was dealing with some faulty chip samples which
+returned blank data under some circumstances and/or followed example code
+which indicated CRC zero being bad.
+
+As far as I can tell this exception should not be applied anymore; We've
+got a few hundred custom boards here with this chip where large numbers
+of the prom have a legitimate CRC value 0, and do work fine, but which the
+current driver code wrongly rejects.
+
+Signed-off-by: Alexander Zangerl <az@breathe-safe.com>
+Fixes: c0644160a8b5 ("iio: pressure: add support for MS5611 pressure and temperature sensor")
+Link: https://lore.kernel.org/r/2535-1695168070.831792@Ze3y.dhYT.s3fx
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/dps310.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/pressure/ms5611_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/pressure/dps310.c
-+++ b/drivers/iio/pressure/dps310.c
-@@ -57,8 +57,8 @@
- #define  DPS310_RESET_MAGIC	0x09
- #define DPS310_COEF_BASE	0x10
+--- a/drivers/iio/pressure/ms5611_core.c
++++ b/drivers/iio/pressure/ms5611_core.c
+@@ -76,7 +76,7 @@ static bool ms5611_prom_is_valid(u16 *pr
  
--/* Make sure sleep time is <= 20ms for usleep_range */
--#define DPS310_POLL_SLEEP_US(t)		min(20000, (t) / 8)
-+/* Make sure sleep time is <= 30ms for usleep_range */
-+#define DPS310_POLL_SLEEP_US(t)		min(30000, (t) / 8)
- /* Silently handle error in rate value here */
- #define DPS310_POLL_TIMEOUT_US(rc)	((rc) <= 0 ? 1000000 : 1000000 / (rc))
+ 	crc = (crc >> 12) & 0x000F;
  
-@@ -402,8 +402,8 @@ static int dps310_reset_wait(struct dps3
- 	if (rc)
- 		return rc;
- 
--	/* Wait for device chip access: 2.5ms in specification */
--	usleep_range(2500, 12000);
-+	/* Wait for device chip access: 15ms in specification */
-+	usleep_range(15000, 55000);
- 	return 0;
+-	return crc_orig != 0x0000 && crc == crc_orig;
++	return crc == crc_orig;
  }
  
+ static int ms5611_read_prom(struct iio_dev *indio_dev)
 
 
