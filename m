@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF3514288
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9901266B7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ch2n1Su7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9577AC433C9;
-	Mon, 16 Oct 2023 14:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsM17lmQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3218BC433C9;
+	Mon, 16 Oct 2023 14:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467943;
-	bh=q72QzUHmL7bZIamL0Umi4sCnBFtrEnJZFOnVkbFkUQk=;
+	s=korg; t=1697467946;
+	bh=ORuumQl1TpS8ypfMcDVU+P0ZtLmzHiNhxlrWHnZGJtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ch2n1Su73ctXWYf+N+7t5f5RqoHAZBqR5+CbSGMO1rC6bBgC4hNW811xh5zp8EEqu
-	 HWjKSK7fUA+fwiU6ZtCxbwsjbvi6R0fgVgg8BlBMlnMluL0BVP63ntXLCDbs8VNCff
-	 7drUmzJlSF5mbYcn9td1mk8jYD8HIHj81tCWDQwE=
+	b=YsM17lmQsONNk4NtoC+udFNkVjl1e1LlII+TeegDD8KygmFLdaef7wID9UIos8bnx
+	 Yly3mxM19F2Y5sLMgWbkScEFVxV2MRjxVCVAsvn3lrY33ovuNLaa3i6lW1777w/oaX
+	 DATjBeH5NtHocnEi9qZjcfclSYMa0ZrnndiqpPXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Rossak <embed3d@gmail.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.5 112/191] iio: adc: imx8qxp: Fix address for command buffer registers
-Date: Mon, 16 Oct 2023 10:41:37 +0200
-Message-ID: <20231016084018.000410041@linuxfoundation.org>
+	Macpaul Lin <macpaul.lin@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.5 121/191] arm64: dts: mediatek: mt8195-demo: update and reorder reserved memory regions
+Date: Mon, 16 Oct 2023 10:41:46 +0200
+Message-ID: <20231016084018.203747323@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -43,56 +42,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Rossak <embed3d@gmail.com>
+From: Macpaul Lin <macpaul.lin@mediatek.com>
 
-commit 850101b3598277794f92a9e363a60a66e0d42890 upstream.
+commit 6cd2a30b96a4b2d270bc1ef1611429dc3fa63327 upstream.
 
-The ADC Command Buffer Register high and low are currently pointing to
-the wrong address and makes it impossible to perform correct
-ADC measurements over all channels.
+The dts file of the MediaTek MT8195 demo board has been updated to include
+new reserved memory regions.
+These reserved memory regions are:
+ - SCP
+ - VPU,
+ - Sound DMA
+ - APU.
 
-According to the datasheet of the imx8qxp the ADC_CMDL register starts
-at address 0x100 and the ADC_CMDH register starts at address 0x104.
+These regions are defined with the "shared-dma-pool" compatible property.
+In addition, the existing reserved memory regions have been reordered by
+their addresses to improve readability and maintainability of the DTS
+file.
 
-This bug seems to be in the kernel since the introduction of this
-driver.
-
-This can be observed by checking all raw voltages of the adc and they
-are all nearly identical:
-
-cat /sys/bus/iio/devices/iio\:device0/in_voltage*_raw
-3498
-3494
-3491
-3491
-3489
-3490
-3490
-3490
-
-Fixes: 1e23dcaa1a9fa ("iio: imx8qxp-adc: Add driver support for NXP IMX8QXP ADC")
-Signed-off-by: Philipp Rossak <embed3d@gmail.com>
-Acked-by: Haibo Chen <haibo.chen@nxp.com>
-Link: https://lore.kernel.org/r/20230904220204.23841-1-embed3d@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: stable@vger.kernel.org      # 6.1, 6.4, 6.5
+Fixes: e4a417520101 ("arm64: dts: mediatek: mt8195-demo: fix the memory size of node secmon")
+Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230905034511.11232-2-macpaul.lin@mediatek.com
+Link: https://lore.kernel.org/r/20231003-mediatek-fixes-v6-7-v1-3-dad7cd62a8ff@collabora.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/imx8qxp-adc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195-demo.dts |   37 +++++++++++++++++++++------
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
---- a/drivers/iio/adc/imx8qxp-adc.c
-+++ b/drivers/iio/adc/imx8qxp-adc.c
-@@ -38,8 +38,8 @@
- #define IMX8QXP_ADR_ADC_FCTRL		0x30
- #define IMX8QXP_ADR_ADC_SWTRIG		0x34
- #define IMX8QXP_ADR_ADC_TCTRL(tid)	(0xc0 + (tid) * 4)
--#define IMX8QXP_ADR_ADC_CMDH(cid)	(0x100 + (cid) * 8)
--#define IMX8QXP_ADR_ADC_CMDL(cid)	(0x104 + (cid) * 8)
-+#define IMX8QXP_ADR_ADC_CMDL(cid)	(0x100 + (cid) * 8)
-+#define IMX8QXP_ADR_ADC_CMDH(cid)	(0x104 + (cid) * 8)
- #define IMX8QXP_ADR_ADC_RESFIFO		0x300
- #define IMX8QXP_ADR_ADC_TST		0xffc
+--- a/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
+@@ -56,13 +56,8 @@
+ 		#size-cells = <2>;
+ 		ranges;
+ 
+-		/* 2 MiB reserved for ARM Trusted Firmware (BL31) */
+-		bl31_secmon_reserved: secmon@54600000 {
+-			no-map;
+-			reg = <0 0x54600000 0x0 0x200000>;
+-		};
+-
+-		/* 12 MiB reserved for OP-TEE (BL32)
++		/*
++		 * 12 MiB reserved for OP-TEE (BL32)
+ 		 * +-----------------------+ 0x43e0_0000
+ 		 * |      SHMEM 2MiB       |
+ 		 * +-----------------------+ 0x43c0_0000
+@@ -75,6 +70,34 @@
+ 			no-map;
+ 			reg = <0 0x43200000 0 0x00c00000>;
+ 		};
++
++		scp_mem: memory@50000000 {
++			compatible = "shared-dma-pool";
++			reg = <0 0x50000000 0 0x2900000>;
++			no-map;
++		};
++
++		vpu_mem: memory@53000000 {
++			compatible = "shared-dma-pool";
++			reg = <0 0x53000000 0 0x1400000>; /* 20 MB */
++		};
++
++		/* 2 MiB reserved for ARM Trusted Firmware (BL31) */
++		bl31_secmon_mem: memory@54600000 {
++			no-map;
++			reg = <0 0x54600000 0x0 0x200000>;
++		};
++
++		snd_dma_mem: memory@60000000 {
++			compatible = "shared-dma-pool";
++			reg = <0 0x60000000 0 0x1100000>;
++			no-map;
++		};
++
++		apu_mem: memory@62000000 {
++			compatible = "shared-dma-pool";
++			reg = <0 0x62000000 0 0x1400000>; /* 20 MB */
++		};
+ 	};
+ };
  
 
 
