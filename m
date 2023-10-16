@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B19A1A284
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542B01A27D
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfCNGFGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747A0C433C7;
-	Mon, 16 Oct 2023 08:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKc822TD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40986C433C7;
+	Mon, 16 Oct 2023 08:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445940;
-	bh=+GkA8iAzL4GLJtRwc+FHMDoIVmhBtZXtwxRpusSFUcQ=;
+	s=korg; t=1697445943;
+	bh=Pp3Y0FnLckvBzveMfajO0zi/VguKIBimVVHQwaLCwFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DfCNGFGuZtukxD8eqn4ZF7YMeOjpBHgUz/NHugq8ihUxDV1GUi14nsCw3szeXIDrg
-	 qmXaskpLF1AkW3K0U3tKQgf3EcMACd40HXUEy0/OhvLaeic3F+xk39FIP3CpYuEarm
-	 KDNT6lv6sew9csCdMMbo81jOwLf5wbISjbU4ZjjM=
+	b=TKc822TDgpva1dqexEfP+bhr2rlWEaQMbHxRGUaHM/peTGKrj7M6t6/ofyG43qrfa
+	 fmwnUeJ9cv0KFGoCSi0VrlzoMzyirtYtwscXBci90gI8lL1nppq0fd8nxAvROAyLD3
+	 j2vKyoWTTT0v0Tqp560E2Xm/8/Xn810gzxbX/+a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Lieven Hey <lieven.hey@kdab.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 041/102] workqueue: Override implicit ordered attribute in workqueue_apply_unbound_cpumask()
-Date: Mon, 16 Oct 2023 10:40:40 +0200
-Message-ID: <20231016083954.795505665@linuxfoundation.org>
+Subject: [PATCH 5.15 042/102] perf inject: Fix GEN_ELF_TEXT_OFFSET for jit
+Date: Mon, 16 Oct 2023 10:40:41 +0200
+Message-ID: <20231016083954.821877131@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -42,55 +46,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit ca10d851b9ad0338c19e8e3089e24d565ebfffd7 ]
+[ Upstream commit 89b15d00527b7825ff19130ed83478e80e3fae99 ]
 
-Commit 5c0338c68706 ("workqueue: restore WQ_UNBOUND/max_active==1
-to be ordered") enabled implicit ordered attribute to be added to
-WQ_UNBOUND workqueues with max_active of 1. This prevented the changing
-of attributes to these workqueues leading to fix commit 0a94efb5acbb
-("workqueue: implicit ordered attribute should be overridable").
+When a program header was added, it moved the text section but
+GEN_ELF_TEXT_OFFSET was not updated.
 
-However, workqueue_apply_unbound_cpumask() was not updated at that time.
-So sysfs changes to wq_unbound_cpumask has no effect on WQ_UNBOUND
-workqueues with implicit ordered attribute. Since not all WQ_UNBOUND
-workqueues are visible on sysfs, we are not able to make all the
-necessary cpumask changes even if we iterates all the workqueue cpumasks
-in sysfs and changing them one by one.
+Fix by adding the program header size and aligning.
 
-Fix this problem by applying the corresponding change made
-to apply_workqueue_attrs_locked() in the fix commit to
-workqueue_apply_unbound_cpumask().
-
-Fixes: 5c0338c68706 ("workqueue: restore WQ_UNBOUND/max_active==1 to be ordered")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Lieven Hey <lieven.hey@kdab.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20221014170905.64069-7-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/perf/util/genelf.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 8e108c040cc35..19868cf588779 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -5379,9 +5379,13 @@ static int workqueue_apply_unbound_cpumask(void)
- 	list_for_each_entry(wq, &workqueues, list) {
- 		if (!(wq->flags & WQ_UNBOUND))
- 			continue;
-+
- 		/* creating multiple pwqs breaks ordering guarantee */
--		if (wq->flags & __WQ_ORDERED)
--			continue;
-+		if (!list_empty(&wq->pwqs)) {
-+			if (wq->flags & __WQ_ORDERED_EXPLICIT)
-+				continue;
-+			wq->flags &= ~__WQ_ORDERED;
-+		}
+diff --git a/tools/perf/util/genelf.h b/tools/perf/util/genelf.h
+index ac638945b4cb0..159c69bcc33e6 100644
+--- a/tools/perf/util/genelf.h
++++ b/tools/perf/util/genelf.h
+@@ -2,6 +2,8 @@
+ #ifndef __GENELF_H__
+ #define __GENELF_H__
  
- 		ctx = apply_wqattrs_prepare(wq, wq->unbound_attrs);
- 		if (!ctx) {
++#include <linux/math.h>
++
+ /* genelf.c */
+ int jit_write_elf(int fd, uint64_t code_addr, const char *sym,
+ 		  const void *code, int csize, void *debug, int nr_debug_entries,
+@@ -73,6 +75,6 @@ int jit_add_debug_info(Elf *e, uint64_t code_addr, void *debug, int nr_debug_ent
+ #endif
+ 
+ /* The .text section is directly after the ELF header */
+-#define GEN_ELF_TEXT_OFFSET sizeof(Elf_Ehdr)
++#define GEN_ELF_TEXT_OFFSET round_up(sizeof(Elf_Ehdr) + sizeof(Elf_Phdr), 16)
+ 
+ #endif
 -- 
 2.40.1
 
