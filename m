@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A64200D5
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FAD200D5
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVSCiDBZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B425EC433C7;
-	Mon, 16 Oct 2023 14:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pe/YyGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C4CC433C7;
+	Mon, 16 Oct 2023 14:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467583;
-	bh=39gYdX/ocyZhQSSdcA51u6T5T9x0hCeCmmwPWa9Z9m0=;
+	s=korg; t=1697467587;
+	bh=U+Ck7N+tO0+AZO4QjHZVNMT3XpK8t2guZpXj+R4lpp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KVSCiDBZ5nRI3AfXFHVovc0UK8kbIjvW9QVKBRE3eGtwwbuNAVTzH3MhG7U2edsM0
-	 4NOAKHC7qZUeMBR8M883u/SoCOoRl1w0ldiPYE9+y52eeTKnRZRvL+ne84QsvkUjod
-	 9l3XP4bxS0dIT4NFxMG+9oc2/hy4UexouEzLx3bY=
+	b=0pe/YyGCf6hxC0DgpFtbkgQ8FbciamQ9SHIISNop2aWW6b5eT5yx0QU9wPgL3cZ2I
+	 jpDOV633K9Af29X2UNy8vzha7r+Z1NyJdiXmFyvOXjxk7qYaJ5ZYuDatnbdrS5cvtc
+	 y41JHM8/U9guuEOLmm3TgrgLnxRGCOVQQUbFK3OM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 049/191] drm/msm/dpu: fail dpu_plane_atomic_check() based on mdp clk limits
-Date: Mon, 16 Oct 2023 10:40:34 +0200
-Message-ID: <20231016084016.553529759@linuxfoundation.org>
+Subject: [PATCH 6.5 050/191] phy: lynx-28g: cancel the CDR check work item on the remove path
+Date: Mon, 16 Oct 2023 10:40:35 +0200
+Message-ID: <20231016084016.576432285@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -42,78 +43,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 10f20628c9b8e924b8046e63b36b2cea4d2c85e4 ]
+[ Upstream commit f200bab3756fe81493a1b280180dafa1d9ccdcf7 ]
 
-Currently, dpu_plane_atomic_check() does not check whether the
-plane can process the image without exceeding the per chipset
-limits for MDP clock. This leads to underflow issues because the
-SSPP is not able to complete the processing for the data rate of
-the display.
+The blamed commit added the CDR check work item but didn't cancel it on
+the remove path. Fix this by adding a remove function which takes care
+of it.
 
-Fail the dpu_plane_atomic_check() if the SSPP cannot process the
-image without exceeding the MDP clock limits.
-
-changes in v2:
-	- use crtc_state's adjusted_mode instead of mode
-
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/556819/
-Link: https://lore.kernel.org/r/20230911221627.9569-1-quic_abhinavk@quicinc.com
+Fixes: 8f73b37cf3fb ("phy: add support for the Layerscape SerDes 28G")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/phy/freescale/phy-fsl-lynx-28g.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 98c1b22e9bca0..0be195f9149c5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -733,9 +733,11 @@ static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
- static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
- 		struct dpu_sw_pipe *pipe,
- 		struct dpu_sw_pipe_cfg *pipe_cfg,
--		const struct dpu_format *fmt)
-+		const struct dpu_format *fmt,
-+		const struct drm_display_mode *mode)
- {
- 	uint32_t min_src_size;
-+	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
- 
- 	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
- 
-@@ -774,6 +776,12 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
- 		return -EINVAL;
- 	}
- 
-+	/* max clk check */
-+	if (_dpu_plane_calc_clk(mode, pipe_cfg) > kms->perf.max_core_clk_rate) {
-+		DPU_DEBUG_PLANE(pdpu, "plane exceeds max mdp core clk limits\n");
-+		return -E2BIG;
-+	}
-+
- 	return 0;
+diff --git a/drivers/phy/freescale/phy-fsl-lynx-28g.c b/drivers/phy/freescale/phy-fsl-lynx-28g.c
+index 569f12af2aafa..9d55dbee2e0a5 100644
+--- a/drivers/phy/freescale/phy-fsl-lynx-28g.c
++++ b/drivers/phy/freescale/phy-fsl-lynx-28g.c
+@@ -603,6 +603,14 @@ static int lynx_28g_probe(struct platform_device *pdev)
+ 	return PTR_ERR_OR_ZERO(provider);
  }
  
-@@ -899,12 +907,13 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
- 	}
++static void lynx_28g_remove(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct lynx_28g_priv *priv = dev_get_drvdata(dev);
++
++	cancel_delayed_work_sync(&priv->cdr_check);
++}
++
+ static const struct of_device_id lynx_28g_of_match_table[] = {
+ 	{ .compatible = "fsl,lynx-28g" },
+ 	{ },
+@@ -611,6 +619,7 @@ MODULE_DEVICE_TABLE(of, lynx_28g_of_match_table);
  
--	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt);
-+	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt, &crtc_state->adjusted_mode);
- 	if (ret)
- 		return ret;
- 
- 	if (r_pipe->sspp) {
--		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt);
-+		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
-+						  &crtc_state->adjusted_mode);
- 		if (ret)
- 			return ret;
- 	}
+ static struct platform_driver lynx_28g_driver = {
+ 	.probe	= lynx_28g_probe,
++	.remove_new = lynx_28g_remove,
+ 	.driver	= {
+ 		.name = "lynx-28g",
+ 		.of_match_table = lynx_28g_of_match_table,
 -- 
 2.40.1
 
