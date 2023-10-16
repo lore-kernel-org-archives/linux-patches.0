@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA16200D5
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80EB200D5
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOtivadU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B289C433C9;
-	Mon, 16 Oct 2023 14:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Brs7tpEE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C72C433CA;
+	Mon, 16 Oct 2023 14:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467564;
-	bh=5WZg74VBBpZ9VwR2VcQpRp0XwPKRTCs1rwdPEHPUkE0=;
+	s=korg; t=1697467570;
+	bh=x3lLDyrXWVOR89RdEFHs06IPEvDSmxE8N/S1eMOaX6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OOtivadUKKjwcX6nEaiZtGnPByWig68eWiCjefFlGSlJYnSVj4Mwu6UFth/Mf/wtS
-	 YggfUmgGhd0XvubX5OIMiPmKJ+VCFVMWqSJu/MfXNmXM/7NlS/xiLRNYQnmz/O8O0N
-	 GljcBOVmlH0fK37C4+E0icocu8GoENE19uaYFHWc=
+	b=Brs7tpEEqDbBPFJ3+kCenTPIjnQYffriU+oTtjBjtz9wUg65UjSHnhUS0Xs+dmQhr
+	 ga4W/B5rWntEmYXYi2rRNCHfl/IIi7eZ9ncVyNbwXTZZKYipq6wQmzefxua/PmLSyD
+	 tHNVsRBSFi3CM8ysf59if5KK0Mlmo4TMuFGrxKi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 044/191] drm/msm/dp: do not reinitialize phy unless retry during link training
-Date: Mon, 16 Oct 2023 10:40:29 +0200
-Message-ID: <20231016084016.438074928@linuxfoundation.org>
+Subject: [PATCH 6.5 045/191] drm/msm/dsi: skip the wait for video mode done if not applicable
+Date: Mon, 16 Oct 2023 10:40:30 +0200
+Message-ID: <20231016084016.461051004@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -44,72 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit 0c1a2e69bcb506f48ebf94bd199bab0b93f66da2 ]
+[ Upstream commit ab483e3adcc178254eb1ce0fbdfbea65f86f1006 ]
 
-DP PHY re-initialization done using dp_ctrl_reinitialize_mainlink() will
-cause PLL unlocked initially and then PLL gets locked at the end of
-initialization. PLL_UNLOCKED interrupt will fire during this time if the
-interrupt mask is enabled.
+dsi_wait4video_done() API waits for the DSI video mode engine to
+become idle so that we can transmit the DCS commands in the
+beginning of BLLP. However, with the current sequence, the MDP
+timing engine is turned on after the panel's pre_enable() callback
+which can send out the DCS commands needed to power up the panel.
 
-However currently DP driver link training implementation incorrectly
-re-initializes PHY unconditionally during link training as the PHY was
-already configured in dp_ctrl_enable_mainlink_clocks().
+During those cases, this API will always timeout and print out the
+error spam leading to long bootup times and log flooding.
 
-Fix this by re-initializing the PHY only if the previous link training
-failed.
+Fix this by checking if the DSI video engine was actually busy before
+waiting for it to become idle otherwise this is a redundant wait.
 
-[drm:dp_aux_isr] *ERROR* Unexpected DP AUX IRQ 0x01000000 when not busy
+changes in v2:
+	- move the reg read below the video mode check
+	- minor fixes in commit text
 
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/30
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/551847/
-Link: https://lore.kernel.org/r/1691533190-19335-1-git-send-email-quic_khsieh@quicinc.com
-[quic_abhinavk@quicinc.com: added line break in commit text]
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/34
+Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/557853/
+Link: https://lore.kernel.org/r/20230915204426.19011-1-quic_abhinavk@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index a7a5c7e0ab923..77a8d9366ed7b 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1774,13 +1774,6 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 		return rc;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 3f6dfb4f9d5a6..ee91bad0d5880 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1075,9 +1075,21 @@ static void dsi_wait4video_done(struct msm_dsi_host *msm_host)
  
- 	while (--link_train_max_retries) {
--		rc = dp_ctrl_reinitialize_mainlink(ctrl);
--		if (rc) {
--			DRM_ERROR("Failed to reinitialize mainlink. rc=%d\n",
--					rc);
--			break;
--		}
--
- 		training_step = DP_TRAINING_NONE;
- 		rc = dp_ctrl_setup_main_link(ctrl, &training_step);
- 		if (rc == 0) {
-@@ -1832,6 +1825,12 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 			/* stop link training before start re training  */
- 			dp_ctrl_clear_training_pattern(ctrl);
- 		}
+ static void dsi_wait4video_eng_busy(struct msm_dsi_host *msm_host)
+ {
++	u32 data;
 +
-+		rc = dp_ctrl_reinitialize_mainlink(ctrl);
-+		if (rc) {
-+			DRM_ERROR("Failed to reinitialize mainlink. rc=%d\n", rc);
-+			break;
-+		}
- 	}
+ 	if (!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO))
+ 		return;
  
- 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
++	data = dsi_read(msm_host, REG_DSI_STATUS0);
++
++	/* if video mode engine is not busy, its because
++	 * either timing engine was not turned on or the
++	 * DSI controller has finished transmitting the video
++	 * data already, so no need to wait in those cases
++	 */
++	if (!(data & DSI_STATUS0_VIDEO_MODE_ENGINE_BUSY))
++		return;
++
+ 	if (msm_host->power_on && msm_host->enabled) {
+ 		dsi_wait4video_done(msm_host);
+ 		/* delay 4 ms to skip BLLP */
 -- 
 2.40.1
 
