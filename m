@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872991A58C
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771FC1A58C
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6hJSMtt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0AFC433C9;
-	Mon, 16 Oct 2023 09:05:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9TTYFly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943DEC433C7;
+	Mon, 16 Oct 2023 09:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697447157;
-	bh=VrhvyE5sI/23x2bz0AWFAXzoc1lQjEpgCeo5/BfsKpg=;
+	s=korg; t=1697447161;
+	bh=5z/n5An2VhHKcKevhD0VjJftjH+MD6eR1M9/51F7cGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n6hJSMttk+/g5gMXgew3L7yOfyrFztZ2F7shKqaJJy4gycV5X5ZUWTn9gtVtqamBA
-	 JaxUPIFBmRKpYrVBcQEuYwkHFNcNV10p1ZeJLyJTNhDgmzGTUVZEfaYY8uM3rRQ+Ij
-	 PtXfyD8H2LA3zR1DVffghiKQHBHPeRWNitTn5kjQ=
+	b=g9TTYFlyjguoo5HvGrZ2HrvA1K3zPqzG8JvAm1hSKhcyqY0fY49r7gWEInQ9cUU6J
+	 ROhuzbHV9cGNK8dG0uBfoRiYwFu552k3/y5Xq8BfPfJpfup05HHadwrWP9FefNMrwn
+	 8iPfVieurOJNtSaeCVqz4QpkYbqmYKTmj8YNwvoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Eugen Hristev <eugen.hristev@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/131] dmaengine: mediatek: Fix deadlock caused by synchronize_irq()
-Date: Mon, 16 Oct 2023 10:41:51 +0200
-Message-ID: <20231016084003.250951332@linuxfoundation.org>
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	William Breathitt Gray <william.gray@linaro.org>
+Subject: [PATCH 6.1 119/131] counter: chrdev: fix getting array extensions
+Date: Mon, 16 Oct 2023 10:41:42 +0200
+Message-ID: <20231016084003.024645449@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -43,53 +41,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-[ Upstream commit 01f1ae2733e2bb4de92fefcea5fda847d92aede1 ]
+commit 3170256d7bc1ef81587caf4b83573eb1f5bb4fb6 upstream.
 
-The synchronize_irq(c->irq) will not return until the IRQ handler
-mtk_uart_apdma_irq_handler() is completed. If the synchronize_irq()
-holds a spin_lock and waits the IRQ handler to complete, but the
-IRQ handler also needs the same spin_lock. The deadlock will happen.
-The process is shown below:
+When trying to watch a component array extension, and the array isn't the
+first extended element, it fails as the type comparison is always done on
+the 1st element. Fix it by indexing the 'ext' array.
 
-          cpu0                        cpu1
-mtk_uart_apdma_device_pause() | mtk_uart_apdma_irq_handler()
-  spin_lock_irqsave()         |
-                              |   spin_lock_irqsave()
-  //hold the lock to wait     |
-  synchronize_irq()           |
+Example on a dummy struct counter_comp:
+static struct counter_comp dummy[] = {
+	COUNTER_COMP_DIRECTION(..),
+	...,
+	COUNTER_COMP_ARRAY_CAPTURE(...),
+};
+static struct counter_count dummy_cnt = {
+	...
+	.ext = dummy,
+	.num_ext = ARRAY_SIZE(dummy),
+}
 
-This patch reorders the synchronize_irq(c->irq) outside the spin_lock
-in order to mitigate the bug.
+Currently, counter_get_ext() returns -EINVAL when trying to add a watch
+event on one of the capture array element in such example.
 
-Fixes: 9135408c3ace ("dmaengine: mediatek: Add MediaTek UART APDMA support")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reviewed-by: Eugen Hristev <eugen.hristev@collabora.com>
-Link: https://lore.kernel.org/r/20230806032511.45263-1-duoming@zju.edu.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d2011be1e22f ("counter: Introduce the COUNTER_COMP_ARRAY component type")
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/r/20230829134029.2402868-2-fabrice.gasnier@foss.st.com
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/mediatek/mtk-uart-apdma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/counter/counter-chrdev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
-index a1517ef1f4a01..0acf6a92a4ad3 100644
---- a/drivers/dma/mediatek/mtk-uart-apdma.c
-+++ b/drivers/dma/mediatek/mtk-uart-apdma.c
-@@ -451,9 +451,8 @@ static int mtk_uart_apdma_device_pause(struct dma_chan *chan)
- 	mtk_uart_apdma_write(c, VFF_EN, VFF_EN_CLR_B);
- 	mtk_uart_apdma_write(c, VFF_INT_EN, VFF_INT_EN_CLR_B);
+diff --git a/drivers/counter/counter-chrdev.c b/drivers/counter/counter-chrdev.c
+index 80acdf62794a..afc94d0062b1 100644
+--- a/drivers/counter/counter-chrdev.c
++++ b/drivers/counter/counter-chrdev.c
+@@ -247,8 +247,8 @@ static int counter_get_ext(const struct counter_comp *const ext,
+ 		if (*id == component_id)
+ 			return 0;
  
--	synchronize_irq(c->irq);
--
- 	spin_unlock_irqrestore(&c->vc.lock, flags);
-+	synchronize_irq(c->irq);
+-		if (ext->type == COUNTER_COMP_ARRAY) {
+-			element = ext->priv;
++		if (ext[*ext_idx].type == COUNTER_COMP_ARRAY) {
++			element = ext[*ext_idx].priv;
  
- 	return 0;
- }
+ 			if (component_id - *id < element->length)
+ 				return 0;
 -- 
-2.40.1
+2.42.0
 
 
 
