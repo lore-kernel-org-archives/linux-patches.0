@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B50115ADD
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8156C15ADD
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hf89dokd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F78C433BB;
-	Mon, 16 Oct 2023 09:06:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJueGX+3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A43C433C9;
+	Mon, 16 Oct 2023 09:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697447201;
-	bh=nbIHYK8/C75qW4v+2T5Wend5VeTD3PTdLoMdrv+3iXs=;
+	s=korg; t=1697447204;
+	bh=b0sKZ//hVb4sraQabtwq6yQANOpp70yVg1M2WvyHX7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hf89dokdLYtO9yCEQsh79qABizlCqaeycq2C1jnw7iAy4fzeiCp2gjW4OuWVyJnwX
-	 vfWDz7FDMpf+OH5oWixCyu7768dFcK78A3u3nu9ppDm9VeKGR8gqHrnhcSlDh1VzIq
-	 xqCo5fGY0dn+PqPPGdeqfphUBzmHsqXDFXE2FjhI=
+	b=JJueGX+3rPwyjefKb7cBI8gzXSSOhWpmbrJwMnt3zH0HI0RjyyrqPS0KEWUYHu3H3
+	 4Y5gHZwdKzh+xrJ5ucK/VVgCsi3RJ7YSKF7Bu51fRQrh4IiYEJ6vbHjN2ghJ3ft/jY
+	 JvvjqLj6NYytaFoXdQifyM+2j8V7Lw7BFEa3alaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Samson Tam <samson.tam@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.5 012/191] drm/amd/display: apply edge-case DISPCLK WDIVIDER changes to master OTG pipes only
-Date: Mon, 16 Oct 2023 10:39:57 +0200
-Message-ID: <20231016084015.689108768@linuxfoundation.org>
+	Petr Tesarik <petr@tesarici.cz>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.5 013/191] scsi: Do not rescan devices with a suspended queue
+Date: Mon, 16 Oct 2023 10:39:58 +0200
+Message-ID: <20231016084015.711796356@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -45,72 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samson Tam <samson.tam@amd.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit b206011bf05069797df1f4c5ce639398728978e2 upstream.
+commit 626b13f015e080e434b1dee9a0c116ddbf4fb695 upstream.
 
-[Why]
-The edge-case DISPCLK WDIVIDER changes call stream_enc functions.
-But with MPC pipes, downstream pipes have null stream_enc and will
- cause crash.
+Commit ff48b37802e5 ("scsi: Do not attempt to rescan suspended devices")
+modified scsi_rescan_device() to avoid attempting rescanning a suspended
+device. However, the modification added a check to verify that a SCSI
+device is in the running state without checking if the device request
+queue (in the case of block device) is also running, thus allowing the
+exectuion of internal requests. Without checking the device request
+queue, commit ff48b37802e5 fix is incomplete and deadlocks on resume can
+still happen. Use blk_queue_pm_only() to check if the device request
+queue allows executing commands in addition to checking the SCSI device
+state.
 
-[How]
-Only call stream_enc functions for pipes that are OTG master.
-
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Petr Tesarik <petr@tesarici.cz>
+Fixes: ff48b37802e5 ("scsi: Do not attempt to rescan suspended devices")
 Cc: stable@vger.kernel.org
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Samson Tam <samson.tam@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Tested-by: Petr Tesarik <petr@tesarici.cz>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn20/dcn20_clk_mgr.c |    4 ++--
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/scsi/scsi_scan.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn20/dcn20_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn20/dcn20_clk_mgr.c
-@@ -157,7 +157,7 @@ void dcn20_update_clocks_update_dentist(
- 			int32_t N;
- 			int32_t j;
+--- a/drivers/scsi/scsi_scan.c
++++ b/drivers/scsi/scsi_scan.c
+@@ -1627,12 +1627,13 @@ int scsi_rescan_device(struct scsi_devic
+ 	device_lock(dev);
  
--			if (!pipe_ctx->stream)
-+			if (!resource_is_pipe_type(pipe_ctx, OTG_MASTER))
- 				continue;
- 			/* Virtual encoders don't have this function */
- 			if (!stream_enc->funcs->get_fifo_cal_average_level)
-@@ -188,7 +188,7 @@ void dcn20_update_clocks_update_dentist(
- 			int32_t N;
- 			int32_t j;
- 
--			if (!pipe_ctx->stream)
-+			if (!resource_is_pipe_type(pipe_ctx, OTG_MASTER))
- 				continue;
- 			/* Virtual encoders don't have this function */
- 			if (!stream_enc->funcs->get_fifo_cal_average_level)
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-@@ -355,7 +355,7 @@ static void dcn32_update_clocks_update_d
- 			int32_t N;
- 			int32_t j;
- 
--			if (!pipe_ctx->stream)
-+			if (!resource_is_pipe_type(pipe_ctx, OTG_MASTER))
- 				continue;
- 			/* Virtual encoders don't have this function */
- 			if (!stream_enc->funcs->get_fifo_cal_average_level)
-@@ -401,7 +401,7 @@ static void dcn32_update_clocks_update_d
- 			int32_t N;
- 			int32_t j;
- 
--			if (!pipe_ctx->stream)
-+			if (!resource_is_pipe_type(pipe_ctx, OTG_MASTER))
- 				continue;
- 			/* Virtual encoders don't have this function */
- 			if (!stream_enc->funcs->get_fifo_cal_average_level)
+ 	/*
+-	 * Bail out if the device is not running. Otherwise, the rescan may
+-	 * block waiting for commands to be executed, with us holding the
+-	 * device lock. This can result in a potential deadlock in the power
+-	 * management core code when system resume is on-going.
++	 * Bail out if the device or its queue are not running. Otherwise,
++	 * the rescan may block waiting for commands to be executed, with us
++	 * holding the device lock. This can result in a potential deadlock
++	 * in the power management core code when system resume is on-going.
+ 	 */
+-	if (sdev->sdev_state != SDEV_RUNNING) {
++	if (sdev->sdev_state != SDEV_RUNNING ||
++	    blk_queue_pm_only(sdev->request_queue)) {
+ 		ret = -EWOULDBLOCK;
+ 		goto unlock;
+ 	}
 
 
