@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CDB1A29F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E5F1A29F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BkcIlF1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3FBC433C7;
-	Mon, 16 Oct 2023 08:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQ5hDSMf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800FEC433C7;
+	Mon, 16 Oct 2023 08:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446762;
-	bh=ZKR1oKDze5kThOWCEPUc9BzKeekYKRQhZDJatRpNS5c=;
+	s=korg; t=1697446766;
+	bh=EzQAFu8Q/JeKCx+gBEyz8iRlDFIW2CnuUpIA8y2NGT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BkcIlF1h7F2P0kfM4c06S+rDbcI2umTvtuLtvmBDrts28I4Lf0/tlOQZh72nEP3bc
-	 u2PakNkKarq0NlD3h5SdMrI9V/82U8+VB3L4gArVDRtg1FVMquFJDkFLsUeE6Cu1x0
-	 Uz6nBThQgNr8bvz+KpY8GysoDIB0YbbCPVT52yFo=
+	b=dQ5hDSMfxEh3ETFjqDaBge2o1zy2HMNICvyTkzyj7mjM4dOrWjf7rGffEzoErQS3S
+	 Dkzhmtkx8vmqm4rYbhaTFmdMPc1/CDS4sqCRZK8zbuMJKo/spdLKCuViGbWdvHUcJP
+	 /LXLcw5G3qRdW8IQ/3hHU1yTnufDZiWuZuGbn1wI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/131] phy: lynx-28g: lock PHY while performing CDR lock workaround
-Date: Mon, 16 Oct 2023 10:40:23 +0200
-Message-ID: <20231016084001.069198605@linuxfoundation.org>
+Subject: [PATCH 6.1 041/131] phy: lynx-28g: serialize concurrent phy_set_mode_ext() calls to shared registers
+Date: Mon, 16 Oct 2023 10:40:24 +0200
+Message-ID: <20231016084001.092692077@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -44,51 +44,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 0ac87fe54a171d18c5fb5345e3ee8d14e1b06f4b ]
+[ Upstream commit 139ad1143151a07be93bf741d4ea7c89e59f89ce ]
 
-lynx_28g_cdr_lock_check() runs once per second in a workqueue to reset
-the lane receiver if the CDR has not locked onto bit transitions in the
-RX stream. But the PHY consumer may do stuff with the PHY simultaneously,
-and that isn't okay. Block concurrent generic PHY calls by holding the
-PHY mutex from this workqueue.
+The protocol converter configuration registers PCC8, PCCC, PCCD
+(implemented by the driver), as well as others, control protocol
+converters from multiple lanes (each represented as a different
+struct phy). So, if there are simultaneous calls to phy_set_mode_ext()
+to lanes sharing the same PCC register (either for the "old" or for the
+"new" protocol), corruption of the values programmed to hardware is
+possible, because lynx_28g_rmw() has no locking.
+
+Add a spinlock in the struct lynx_28g_priv shared by all lanes, and take
+the global spinlock from the phy_ops :: set_mode() implementation. There
+are no other callers which modify PCC registers.
 
 Fixes: 8f73b37cf3fb ("phy: add support for the Layerscape SerDes 28G")
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/freescale/phy-fsl-lynx-28g.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/phy/freescale/phy-fsl-lynx-28g.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/phy/freescale/phy-fsl-lynx-28g.c b/drivers/phy/freescale/phy-fsl-lynx-28g.c
-index 9d55dbee2e0a5..d49aa59c7d812 100644
+index d49aa59c7d812..0a8b40edc3f31 100644
 --- a/drivers/phy/freescale/phy-fsl-lynx-28g.c
 +++ b/drivers/phy/freescale/phy-fsl-lynx-28g.c
-@@ -507,11 +507,12 @@ static void lynx_28g_cdr_lock_check(struct work_struct *work)
- 	for (i = 0; i < LYNX_28G_NUM_LANE; i++) {
- 		lane = &priv->lane[i];
+@@ -126,6 +126,10 @@ struct lynx_28g_lane {
+ struct lynx_28g_priv {
+ 	void __iomem *base;
+ 	struct device *dev;
++	/* Serialize concurrent access to registers shared between lanes,
++	 * like PCCn
++	 */
++	spinlock_t pcc_lock;
+ 	struct lynx_28g_pll pll[LYNX_28G_NUM_PLL];
+ 	struct lynx_28g_lane lane[LYNX_28G_NUM_LANE];
  
--		if (!lane->init)
--			continue;
-+		mutex_lock(&lane->phy->mutex);
+@@ -396,6 +400,8 @@ static int lynx_28g_set_mode(struct phy *phy, enum phy_mode mode, int submode)
+ 	if (powered_up)
+ 		lynx_28g_power_off(phy);
  
--		if (!lane->powered_up)
-+		if (!lane->init || !lane->powered_up) {
-+			mutex_unlock(&lane->phy->mutex);
- 			continue;
-+		}
- 
- 		rrstctl = lynx_28g_lane_read(lane, LNaRRSTCTL);
- 		if (!(rrstctl & LYNX_28G_LNaRRSTCTL_CDR_LOCK)) {
-@@ -520,6 +521,8 @@ static void lynx_28g_cdr_lock_check(struct work_struct *work)
- 				rrstctl = lynx_28g_lane_read(lane, LNaRRSTCTL);
- 			} while (!(rrstctl & LYNX_28G_LNaRRSTCTL_RST_DONE));
- 		}
++	spin_lock(&priv->pcc_lock);
 +
-+		mutex_unlock(&lane->phy->mutex);
- 	}
+ 	switch (submode) {
+ 	case PHY_INTERFACE_MODE_SGMII:
+ 	case PHY_INTERFACE_MODE_1000BASEX:
+@@ -412,6 +418,8 @@ static int lynx_28g_set_mode(struct phy *phy, enum phy_mode mode, int submode)
+ 	lane->interface = submode;
+ 
+ out:
++	spin_unlock(&priv->pcc_lock);
++
+ 	/* Power up the lane if necessary */
+ 	if (powered_up)
+ 		lynx_28g_power_on(phy);
+@@ -595,6 +603,7 @@ static int lynx_28g_probe(struct platform_device *pdev)
+ 
+ 	dev_set_drvdata(dev, priv);
+ 
++	spin_lock_init(&priv->pcc_lock);
+ 	INIT_DELAYED_WORK(&priv->cdr_check, lynx_28g_cdr_lock_check);
+ 
  	queue_delayed_work(system_power_efficient_wq, &priv->cdr_check,
- 			   msecs_to_jiffies(1000));
 -- 
 2.40.1
 
