@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9861548F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98551A29F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+C6BHQI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7774BC433C8;
-	Mon, 16 Oct 2023 08:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaPB7eJc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BF9C433C9;
+	Mon, 16 Oct 2023 08:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446579;
-	bh=cOOInIcMJZRNywHlUMjJaFUj9CaUcD7Ia+nwQR6i1xY=;
+	s=korg; t=1697446587;
+	bh=DS2p/sC1CiCfUBsqjuxNX8wbKIvyk/Ac0kb6NFbuvAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0+C6BHQIJOxsoGNBjbGHMT+gkn1sRdwT7F/m74AIGCW3YLlUtPtvUwGCUYLGdA1DV
-	 0FA1FgtGUeBFc9PTiq2fHfOi0b1q70puB65hKnZwu3pdO5cmO8wg3/kgB5tz1FaxS9
-	 Zr0G+8Hk4DVWXkwx7CVrUsuYUoYJvacBDscRYzAE=
+	b=kaPB7eJcfNkKkWg8MusavxLr8iJTNbv0WitqS0XCoTEy4OUKL4d7AbikEqucahBiU
+	 tXs0kUXvIQy6Ups2HejTn3MGp+TiwyrTHp22R7U3vdGWaJxNN18us30k8gJInwbplW
+	 4QOvsR8GA5CZopcXF7+iGa0cxlJl48MQF6FSrEVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Vernet <void@manifault.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Nia Espera <nespera@igalia.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/131] bpf: Fix verifier log for async callback return values
-Date: Mon, 16 Oct 2023 10:40:37 +0200
-Message-ID: <20231016084001.415002078@linuxfoundation.org>
+Subject: [PATCH 6.1 037/131] drm/msm/dpu: change _dpu_plane_calc_bw() to use u64 to avoid overflow
+Date: Mon, 16 Oct 2023 10:40:20 +0200
+Message-ID: <20231016084000.989943447@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -42,58 +43,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Vernet <void@manifault.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit 829955981c557c7fc7416581c4cd68a8a0c28620 ]
+[ Upstream commit 95e681ca3b65e4ce3d2537b47672d787b7d30375 ]
 
-The verifier, as part of check_return_code(), verifies that async
-callbacks such as from e.g. timers, will return 0. It does this by
-correctly checking that R0->var_off is in tnum_const(0), which
-effectively checks that it's in a range of 0. If this condition fails,
-however, it prints an error message which says that the value should
-have been in (0x0; 0x1). This results in possibly confusing output such
-as the following in which an async callback returns 1:
+_dpu_plane_calc_bw() uses integer variables to calculate the bandwidth
+used during plane bandwidth calculations. However for high resolution
+displays this overflows easily and leads to below errors
 
-  At async callback the register R0 has value (0x1; 0x0) should have been in (0x0; 0x1)
+[dpu error]crtc83 failed performance check -7
 
-The fix is easy -- we should just pass the tnum_const(0) as the correct
-range to verbose_invalid_scalar(), which will then print the following:
+Promote the intermediate variables to u64 to avoid overflow.
 
-  At async callback the register R0 has value (0x1; 0x0) should have been in (0x0; 0x0)
+changes in v2:
+	- change to u64 where actually needed in the math
 
-Fixes: bfc6bb74e4f1 ("bpf: Implement verifier support for validation of async callbacks.")
-Signed-off-by: David Vernet <void@manifault.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20231009161414.235829-1-void@manifault.com
+Fixes: c33b7c0389e1 ("drm/msm/dpu: add support for clk and bw scaling for display")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reported-by: Nia Espera <nespera@igalia.com>
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/32
+Tested-by: Nia Espera <nespera@igalia.com>
+Patchwork: https://patchwork.freedesktop.org/patch/556288/
+Link: https://lore.kernel.org/r/20230908012616.20654-1-quic_abhinavk@quicinc.com
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 3052680201e57..eb3f52be115d6 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -10778,7 +10778,7 @@ static int check_return_code(struct bpf_verifier_env *env)
- 	struct tnum enforce_attach_type_range = tnum_unknown;
- 	const struct bpf_prog *prog = env->prog;
- 	struct bpf_reg_state *reg;
--	struct tnum range = tnum_range(0, 1);
-+	struct tnum range = tnum_range(0, 1), const_0 = tnum_const(0);
- 	enum bpf_prog_type prog_type = resolve_prog_type(env->prog);
- 	int err;
- 	struct bpf_func_state *frame = env->cur_state->frame[0];
-@@ -10826,8 +10826,8 @@ static int check_return_code(struct bpf_verifier_env *env)
- 			return -EINVAL;
- 		}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 3fbda2a1f77fc..62d48c0f905e4 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -142,6 +142,7 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+ 	const struct dpu_format *fmt = NULL;
+ 	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+ 	int src_width, src_height, dst_height, fps;
++	u64 plane_pixel_rate, plane_bit_rate;
+ 	u64 plane_prefill_bw;
+ 	u64 plane_bw;
+ 	u32 hw_latency_lines;
+@@ -164,13 +165,12 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+ 	scale_factor = src_height > dst_height ?
+ 		mult_frac(src_height, 1, dst_height) : 1;
  
--		if (!tnum_in(tnum_const(0), reg->var_off)) {
--			verbose_invalid_scalar(env, reg, &range, "async callback", "R0");
-+		if (!tnum_in(const_0, reg->var_off)) {
-+			verbose_invalid_scalar(env, reg, &const_0, "async callback", "R0");
- 			return -EINVAL;
- 		}
- 		return 0;
+-	plane_bw =
+-		src_width * mode->vtotal * fps * fmt->bpp *
+-		scale_factor;
++	plane_pixel_rate = src_width * mode->vtotal * fps;
++	plane_bit_rate = plane_pixel_rate * fmt->bpp;
+ 
+-	plane_prefill_bw =
+-		src_width * hw_latency_lines * fps * fmt->bpp *
+-		scale_factor * mode->vtotal;
++	plane_bw = plane_bit_rate * scale_factor;
++
++	plane_prefill_bw = plane_bw * hw_latency_lines;
+ 
+ 	if ((vbp+vpw) > hw_latency_lines)
+ 		do_div(plane_prefill_bw, (vbp+vpw));
 -- 
 2.40.1
 
