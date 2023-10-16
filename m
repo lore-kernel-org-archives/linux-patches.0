@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48F228DBA
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F1428DBA
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClBGYwGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41CCC433C7;
-	Mon, 16 Oct 2023 14:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zO5aAilT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA8DC433C8;
+	Mon, 16 Oct 2023 14:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468119;
-	bh=6B02Pn2IJViyGc81ef/UjWQwdkpbdrLfRs8QKQKDL2g=;
+	s=korg; t=1697468123;
+	bh=hu51YBjeALgU+NFEM2pFjZhhbcRywRk4BcdoHRfvPw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClBGYwGgUWleOW8kAmAxo1+2YSddqIw1gpccgYr5FcibxNqIpx+RiKrHAimA7/F31
-	 5uHnZvhC1tgBGVais3pJ8OqiEsEIVACjas9xcbyVc25EXbsyIkcLRm2VRx41OlFyZR
-	 1nENRFoIUczMCL7Ae3khdJKZ1XAO/EEk65ih52iY=
+	b=zO5aAilTYH/xw4BBJ8NxzroJ7uAo8C7CYr2mJZ59xUHc0abMVMZEmoVrwbY+iuY7E
+	 6AO86fBP/GNGgyXasE+NwkUjdfYIh4/9a8BWbsySwY0IFo9Okq0dO4FYjfJ2zLiZPD
+	 9vDAsiKuPPwlClyD5UvU77TmJ/3r3PR3gpXrCw1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen N Rao <naveen@kernel.org>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.5 144/191] powerpc/pseries: Fix STK_PARAM access in the hcall tracing code
-Date: Mon, 16 Oct 2023 10:42:09 +0200
-Message-ID: <20231016084018.744228426@linuxfoundation.org>
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.5 162/191] usb: typec: ucsi: Use GET_CAPABILITY attributes data to set power supply scope
+Date: Mon, 16 Oct 2023 10:42:27 +0200
+Message-ID: <20231016084019.158114239@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -42,131 +42,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 3b678768c0458e6d8d45fadf61423e44effed4cb upstream.
+commit c9ca8de2eb15f9da24113e652980c61f95a47530 upstream.
 
-In powerpc pseries system, below behaviour is observed while
-enabling tracing on hcall:
-  # cd /sys/kernel/debug/tracing/
-  # cat events/powerpc/hcall_exit/enable
-  0
-  # echo 1 > events/powerpc/hcall_exit/enable
+On some OEM systems, adding a W7900 dGPU triggers RAS errors and hangs
+at a black screen on startup.  This issue occurs only if `ucsi_acpi` has
+loaded before `amdgpu` has loaded.  The reason for this failure is that
+`amdgpu` uses power_supply_is_system_supplied() to determine if running
+on AC or DC power at startup. If this value is reported incorrectly the
+dGPU will also be programmed incorrectly and trigger errors.
 
-  # ls
-  -bash: fork: Bad address
+power_supply_is_system_supplied() reports the wrong value because UCSI
+power supplies provided as part of the system don't properly report the
+scope as "DEVICE" scope (not powering the system).
 
-Above is from power9 lpar with latest kernel. Past this, softlockup
-is observed. Initially while attempting via perf_event_open to
-use "PERF_TYPE_TRACEPOINT", kernel panic was observed.
+In order to fix this issue check the capabilities reported from the UCSI
+power supply to ensure that it supports charging a battery and that it can
+be powered by AC.  Mark the scope accordingly.
 
-perf config used:
-================
-  memset(&pe[1],0,sizeof(struct perf_event_attr));
-  pe[1].type=PERF_TYPE_TRACEPOINT;
-  pe[1].size=96;
-  pe[1].config=0x26ULL; /* 38 raw_syscalls/sys_exit */
-  pe[1].sample_type=0; /* 0 */
-  pe[1].read_format=PERF_FORMAT_TOTAL_TIME_ENABLED|PERF_FORMAT_TOTAL_TIME_RUNNING|PERF_FORMAT_ID|PERF_FORMAT_GROUP|0x10ULL; /* 1f */
-  pe[1].inherit=1;
-  pe[1].precise_ip=0; /* arbitrary skid */
-  pe[1].wakeup_events=0;
-  pe[1].bp_type=HW_BREAKPOINT_EMPTY;
-  pe[1].config1=0x1ULL;
-
-Kernel panic logs:
-==================
-
-  Kernel attempted to read user page (8) - exploit attempt? (uid: 0)
-  BUG: Kernel NULL pointer dereference on read at 0x00000008
-  Faulting instruction address: 0xc0000000004c2814
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  LE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in: nfnetlink bonding tls rfkill sunrpc dm_service_time dm_multipath pseries_rng xts vmx_crypto xfs libcrc32c sd_mod t10_pi crc64_rocksoft crc64 sg ibmvfc scsi_transport_fc ibmveth dm_mirror dm_region_hash dm_log dm_mod fuse
-  CPU: 0 PID: 1431 Comm: login Not tainted 6.4.0+ #1
-  Hardware name: IBM,8375-42A POWER9 (raw) 0x4e0202 0xf000005 of:IBM,FW950.30 (VL950_892) hv:phyp pSeries
-  NIP page_remove_rmap+0x44/0x320
-  LR  wp_page_copy+0x384/0xec0
-  Call Trace:
-    0xc00000001416e400 (unreliable)
-    wp_page_copy+0x384/0xec0
-    __handle_mm_fault+0x9d4/0xfb0
-    handle_mm_fault+0xf0/0x350
-    ___do_page_fault+0x48c/0xc90
-    hash__do_page_fault+0x30/0x70
-    do_hash_fault+0x1a4/0x330
-    data_access_common_virt+0x198/0x1f0
-   --- interrupt: 300 at 0x7fffae971abc
-
-git bisect tracked this down to below commit:
-'commit baa49d81a94b ("powerpc/pseries: hvcall stack frame overhead")'
-
-This commit changed STACK_FRAME_OVERHEAD (112 ) to
-STACK_FRAME_MIN_SIZE (32 ) since 32 bytes is the minimum size
-for ELFv2 stack. With the latest kernel, when running on ELFv2,
-STACK_FRAME_MIN_SIZE is used to allocate stack size.
-
-During plpar_hcall_trace, first call is made to HCALL_INST_PRECALL
-which saves the registers and allocates new stack frame. In the
-plpar_hcall_trace code, STK_PARAM is accessed at two places.
-  1. To save r4: std     r4,STK_PARAM(R4)(r1)
-  2. To access r4 back: ld      r12,STK_PARAM(R4)(r1)
-
-HCALL_INST_PRECALL precall allocates a new stack frame. So all
-the stack parameter access after the precall, needs to be accessed
-with +STACK_FRAME_MIN_SIZE. So the store instruction should be:
-  std     r4,STACK_FRAME_MIN_SIZE+STK_PARAM(R4)(r1)
-
-If the "std" is not updated with STACK_FRAME_MIN_SIZE, we will
-end up with overwriting stack contents and cause corruption.
-But instead of updating 'std', we can instead remove it since
-HCALL_INST_PRECALL already saves it to the correct location.
-
-similarly load instruction should be:
-  ld      r12,STACK_FRAME_MIN_SIZE+STK_PARAM(R4)(r1)
-
-Fix the load instruction to correctly access the stack parameter
-with +STACK_FRAME_MIN_SIZE and remove the store of r4 since the
-precall saves it correctly.
-
-Cc: stable@vger.kernel.org # v6.2+
-Fixes: baa49d81a94b ("powerpc/pseries: hvcall stack frame overhead")
-Co-developed-by: Naveen N Rao <naveen@kernel.org>
-Signed-off-by: Naveen N Rao <naveen@kernel.org>
-Signed-off-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230929172337.7906-1-atrajeev@linux.vnet.ibm.com
+Cc: stable@vger.kernel.org
+Fixes: a7fbfd44c020 ("usb: typec: ucsi: Mark dGPUs as DEVICE scope")
+Link: https://www.intel.com/content/www/us/en/products/docs/io/universal-serial-bus/usb-type-c-ucsi-spec.html p28
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20231009184643.129986-1-mario.limonciello@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/hvCall.S |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/psy.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/powerpc/platforms/pseries/hvCall.S
-+++ b/arch/powerpc/platforms/pseries/hvCall.S
-@@ -185,7 +185,6 @@ _GLOBAL_TOC(plpar_hcall)
- plpar_hcall_trace:
- 	HCALL_INST_PRECALL(R5)
+--- a/drivers/usb/typec/ucsi/psy.c
++++ b/drivers/usb/typec/ucsi/psy.c
+@@ -37,6 +37,15 @@ static int ucsi_psy_get_scope(struct ucs
+ 	struct device *dev = con->ucsi->dev;
  
--	std	r4,STK_PARAM(R4)(r1)
- 	mr	r0,r4
- 
- 	mr	r4,r5
-@@ -197,7 +196,7 @@ plpar_hcall_trace:
- 
- 	HVSC
- 
--	ld	r12,STK_PARAM(R4)(r1)
-+	ld	r12,STACK_FRAME_MIN_SIZE+STK_PARAM(R4)(r1)
- 	std	r4,0(r12)
- 	std	r5,8(r12)
- 	std	r6,16(r12)
-@@ -297,7 +296,6 @@ _GLOBAL_TOC(plpar_hcall9)
- plpar_hcall9_trace:
- 	HCALL_INST_PRECALL(R5)
- 
--	std	r4,STK_PARAM(R4)(r1)
- 	mr	r0,r4
- 
- 	mr	r4,r5
+ 	device_property_read_u8(dev, "scope", &scope);
++	if (scope == POWER_SUPPLY_SCOPE_UNKNOWN) {
++		u32 mask = UCSI_CAP_ATTR_POWER_AC_SUPPLY |
++			   UCSI_CAP_ATTR_BATTERY_CHARGING;
++
++		if (con->ucsi->cap.attributes & mask)
++			scope = POWER_SUPPLY_SCOPE_SYSTEM;
++		else
++			scope = POWER_SUPPLY_SCOPE_DEVICE;
++	}
+ 	val->intval = scope;
+ 	return 0;
+ }
 
 
