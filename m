@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EBA28E03
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F8328DDB
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2TcC9mO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A15AC433C7;
-	Mon, 16 Oct 2023 14:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gv2wFcxp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ECFDC433C8;
+	Mon, 16 Oct 2023 14:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468158;
-	bh=I9FXzntxaUcwkQl4Q2EEVTBdbmv0HCDiprEhLi/6VWk=;
+	s=korg; t=1697468161;
+	bh=OunGrd/6mPzJfsaqQLPImuoYP8kFD7O7gVliSpyMXgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2TcC9mO2Af8e3k/DpSiLohM3zOkj4wkhOpfzGQ9B3MIk3EYtuLTPmrZDHICexSjp
-	 4R4IfejmKPkY8fr0eBXCT5S7DkCkmUJKHKlcX2kp8Sq0Rk1T/pNaf7uMUpL6vCTcLR
-	 mFYGHkhRIF0Ey/9YDU1201AZVhQhGuhNrYBsMM3o=
+	b=gv2wFcxpQBXKOnVHwX0VjjIwINADG7mvSGAGD+0X8PIrgxGzEzK94lmvHwoOntfj7
+	 sxG+J3ke0ju/Cxo+BzWw/9T70uurFdfAeYhDOe/B0jxmABJ/zKyH+Mmve0y5gmUMAb
+	 ivaTGW1xr3crq+PQSZlmUwJR3/hNxf+72vYjGAGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linu Cherian <lcherian@marvell.com>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 6.5 170/191] coresight: Fix run time warnings while reusing ETR buffer
-Date: Mon, 16 Oct 2023 10:42:35 +0200
-Message-ID: <20231016084019.344130796@linuxfoundation.org>
+	Eddie James <eajames@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 6.5 145/191] powerpc/47x: Fix 47x syscall return crash
+Date: Mon, 16 Oct 2023 10:42:10 +0200
+Message-ID: <20231016084018.768009643@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -36,121 +36,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linu Cherian <lcherian@marvell.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit bd2767ec3df2775bc336f441f9068a989ccb919d upstream.
+commit f0eee815babed70a749d2496a7678be5b45b4c14 upstream.
 
-Fix the below warning by avoding calls to tmc_etr_enable_hw,
-if we are reusing the ETR buffer for multiple sources in sysfs mode.
+Eddie reported that newer kernels were crashing during boot on his 476
+FSP2 system:
 
-echo 1 > /sys/bus/coresight/devices/tmc_etr0/enable_sink
-echo 1 > /sys/bus/coresight/devices/ete1/enable_source
-echo 1 > /sys/bus/coresight/devices/ete2/enable_source
-[  166.918290] ------------[ cut here ]------------
-[  166.922905] WARNING: CPU: 4 PID: 2288 at
-drivers/hwtracing/coresight/coresight-tmc-etr.c:1037
-tmc_etr_enable_hw+0xb0/0xc8
-[  166.933862] Modules linked in:
-[  166.936911] CPU: 4 PID: 2288 Comm: bash Not tainted 6.5.0-rc7 #132
-[  166.943084] Hardware name: Marvell CN106XX board (DT)
-[  166.948127] pstate: 834000c9 (Nzcv daIF +PAN -UAO +TCO +DIT -SSBS
-BTYPE=--)
-[  166.955083] pc : tmc_etr_enable_hw+0xb0/0xc8
-[  166.959345] lr : tmc_enable_etr_sink+0x134/0x210
-snip..
-  167.038545] Call trace:
-[  167.040982]  tmc_etr_enable_hw+0xb0/0xc8
-[  167.044897]  tmc_enable_etr_sink+0x134/0x210
-[  167.049160]  coresight_enable_path+0x160/0x278
-[  167.053596]  coresight_enable+0xd4/0x298
-[  167.057510]  enable_source_store+0x54/0xa0
-[  167.061598]  dev_attr_store+0x20/0x40
-[  167.065254]  sysfs_kf_write+0x4c/0x68
-[  167.068909]  kernfs_fop_write_iter+0x128/0x200
-[  167.073345]  vfs_write+0x1ac/0x2f8
-[  167.076739]  ksys_write+0x74/0x110
-[  167.080132]  __arm64_sys_write+0x24/0x38
-[  167.084045]  invoke_syscall.constprop.0+0x58/0xf8
-[  167.088744]  do_el0_svc+0x60/0x160
-[  167.092137]  el0_svc+0x40/0x170
-[  167.095273]  el0t_64_sync_handler+0x100/0x130
-[  167.099621]  el0t_64_sync+0x190/0x198
-[  167.103277] ---[ end trace 0000000000000000 ]---
--bash: echo: write error: Device or resource busy
+  kernel tried to execute user page (b7ee2000) - exploit attempt? (uid: 0)
+  BUG: Unable to handle kernel instruction fetch
+  Faulting instruction address: 0xb7ee2000
+  Oops: Kernel access of bad area, sig: 11 [#1]
+  BE PAGE_SIZE=4K FSP-2
+  Modules linked in:
+  CPU: 0 PID: 61 Comm: mount Not tainted 6.1.55-d23900f.ppcnf-fsp2 #1
+  Hardware name: ibm,fsp2 476fpe 0x7ff520c0 FSP-2
+  NIP:  b7ee2000 LR: 8c008000 CTR: 00000000
+  REGS: bffebd83 TRAP: 0400   Not tainted (6.1.55-d23900f.ppcnf-fs p2)
+  MSR:  00000030 <IR,DR>  CR: 00001000  XER: 20000000
+  GPR00: c00110ac bffebe63 bffebe7e bffebe88 8c008000 00001000 00000d12 b7ee2000
+  GPR08: 00000033 00000000 00000000 c139df10 48224824 1016c314 10160000 00000000
+  GPR16: 10160000 10160000 00000008 00000000 10160000 00000000 10160000 1017f5b0
+  GPR24: 1017fa50 1017f4f0 1017fa50 1017f740 1017f630 00000000 00000000 1017f4f0
+  NIP [b7ee2000] 0xb7ee2000
+  LR [8c008000] 0x8c008000
+  Call Trace:
+  Instruction dump:
+  XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX
+  XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX
+  ---[ end trace 0000000000000000 ]---
 
-Fixes: 296b01fd106e ("coresight: Refactor out buffer allocation function for ETR")
-Signed-off-by: Linu Cherian <lcherian@marvell.com>
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230823042948.12879-1-lcherian@marvell.com
+The problem is in ret_from_syscall where the check for
+icache_44x_need_flush is done. When the flush is needed the code jumps
+out-of-line to do the flush, and then intends to jump back to continue
+the syscall return.
+
+However the branch back to label 1b doesn't return to the correct
+location, instead branching back just prior to the return to userspace,
+causing bogus register values to be used by the rfi.
+
+The breakage was introduced by commit 6f76a01173cc
+("powerpc/syscall: implement system call entry/exit logic in C for PPC32") which
+inadvertently removed the "1" label and reused it elsewhere.
+
+Fix it by adding named local labels in the correct locations. Note that
+the return label needs to be outside the ifdef so that CONFIG_PPC_47x=n
+compiles.
+
+Fixes: 6f76a01173cc ("powerpc/syscall: implement system call entry/exit logic in C for PPC32")
+Cc: stable@vger.kernel.org # v5.12+
+Reported-by: Eddie James <eajames@linux.ibm.com>
+Tested-by: Eddie James <eajames@linux.ibm.com>
+Link: https://lore.kernel.org/linuxppc-dev/fdaadc46-7476-9237-e104-1d2168526e72@linux.ibm.com/
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://msgid.link/20231010114750.847794-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../hwtracing/coresight/coresight-tmc-etr.c   | 24 ++++++++++---------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ arch/powerpc/kernel/entry_32.S |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-index 66dc5f97a009..6132c5b3db9c 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-@@ -1173,16 +1173,6 @@ static struct etr_buf *tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
- 		goto out;
- 	}
+--- a/arch/powerpc/kernel/entry_32.S
++++ b/arch/powerpc/kernel/entry_32.S
+@@ -138,8 +138,9 @@ ret_from_syscall:
+ 	lis	r4,icache_44x_need_flush@ha
+ 	lwz	r5,icache_44x_need_flush@l(r4)
+ 	cmplwi	cr0,r5,0
+-	bne-	2f
++	bne-	.L44x_icache_flush
+ #endif /* CONFIG_PPC_47x */
++.L44x_icache_flush_return:
+ 	kuep_unlock
+ 	lwz	r4,_LINK(r1)
+ 	lwz	r5,_CCR(r1)
+@@ -173,10 +174,11 @@ syscall_exit_finish:
+ 	b	1b
  
--	/*
--	 * In sysFS mode we can have multiple writers per sink.  Since this
--	 * sink is already enabled no memory is needed and the HW need not be
--	 * touched, even if the buffer size has changed.
--	 */
--	if (drvdata->mode == CS_MODE_SYSFS) {
--		atomic_inc(&csdev->refcnt);
--		goto out;
--	}
--
- 	/*
- 	 * If we don't have a buffer or it doesn't match the requested size,
- 	 * use the buffer allocated above. Otherwise reuse the existing buffer.
-@@ -1204,7 +1194,7 @@ static struct etr_buf *tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
+ #ifdef CONFIG_44x
+-2:	li	r7,0
++.L44x_icache_flush:
++	li	r7,0
+ 	iccci	r0,r0
+ 	stw	r7,icache_44x_need_flush@l(r4)
+-	b	1b
++	b	.L44x_icache_flush_return
+ #endif  /* CONFIG_44x */
  
- static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
- {
--	int ret;
-+	int ret = 0;
- 	unsigned long flags;
- 	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
- 	struct etr_buf *sysfs_buf = tmc_etr_get_sysfs_buffer(csdev);
-@@ -1213,12 +1203,24 @@ static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
- 		return PTR_ERR(sysfs_buf);
- 
- 	spin_lock_irqsave(&drvdata->spinlock, flags);
-+
-+	/*
-+	 * In sysFS mode we can have multiple writers per sink.  Since this
-+	 * sink is already enabled no memory is needed and the HW need not be
-+	 * touched, even if the buffer size has changed.
-+	 */
-+	if (drvdata->mode == CS_MODE_SYSFS) {
-+		atomic_inc(&csdev->refcnt);
-+		goto out;
-+	}
-+
- 	ret = tmc_etr_enable_hw(drvdata, sysfs_buf);
- 	if (!ret) {
- 		drvdata->mode = CS_MODE_SYSFS;
- 		atomic_inc(&csdev->refcnt);
- 	}
- 
-+out:
- 	spin_unlock_irqrestore(&drvdata->spinlock, flags);
- 
- 	if (!ret)
--- 
-2.42.0
-
+ 	.globl	ret_from_fork
 
 
