@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6E518C03
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBAE18C03
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2aSJpF8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF51C433C9;
-	Mon, 16 Oct 2023 08:53:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spQC65qp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB03EC433C7;
+	Mon, 16 Oct 2023 08:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446390;
-	bh=tJCUVv2eU7GHdyjx8CmJ9tFyNooK+dCDLs1CiWwf9DI=;
+	s=korg; t=1697446399;
+	bh=cy43WK78YdkxLq3+X1yihi1UY1fB3E7mDcB/Dx+H9lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A2aSJpF8+Gp1/xeeolxQIGaOvi/kMkohKrwHW12Q5srsg373Xr8AbmGPUduZ+JMjq
-	 G4JGkEb4IrKmwQNlTtvZhZp14Vcl5kONNAZ1MffMU2W19SthooTLPX6K/m1hrhnSQO
-	 G8uUP4kFTPk6mQHJcGOBcsazQrgdzzZ37IRTB3RA=
+	b=spQC65qpAXNYrRMYlh1aej0plqI8/P5H/cDGgMUBYK5jIZmwi4XFa1fEvB8FSUoRl
+	 PGY+UtXMpeeiXaDWVDfZknfNMkAgLKCdzZfT9qjcUjFn2uoShnXLiqP0f6rCRRZpc5
+	 dEzmRmqy1P1F+dTmUUiHFdLCdSCiRP71H/B8wR4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	coolstar <coolstarorganization@gmail.com>,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 021/131] ASoC: SOF: amd: fix for firmware reload failure after playback
-Date: Mon, 16 Oct 2023 10:40:04 +0200
-Message-ID: <20231016084000.593923833@linuxfoundation.org>
+Subject: [PATCH 6.1 022/131] ASoC: simple-card-utils: fixup simple_util_startup() error handling
+Date: Mon, 16 Oct 2023 10:40:05 +0200
+Message-ID: <20231016084000.618464025@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -42,51 +43,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-commit 7e1fe5d9e7eae67e218f878195d1d348d01f9af7 upstream.
+commit 69cf63b6560205a390a736b88d112374655adb28 upstream.
 
-Setting ACP ACLK as clock source when ACP enters D0 state causing
-firmware load failure as mentioned in below scenario.
+It should use "goto" instead of "return"
 
-- Load snd_sof_amd_rembrandt
-- Play or Record audio
-- Stop audio
-- Unload snd_sof_amd_rembrandt
-- Reload snd_sof_amd_rembrandt
-
-If acp_clkmux_sel register field is set, then clock source will be
-set to ACP ACLK when ACP enters D0 state.
-
-During stream stop, if there is no active stream is running then
-acp firmware will set the ACP ACLK value to zero.
-
-When driver is reloaded and clock source is selected as ACP ACLK,
-as ACP ACLK is programmed to zero, firmware loading will fail.
-
-For RMB platform, remove the clock mux selection field so that
-ACP will use internal clock source when ACP enters D0 state.
-
-Fixes: 41cb85bc4b52 ("ASoC: SOF: amd: Add support for Rembrandt plaform.")
-Reported-by: coolstar <coolstarorganization@gmail.com>
-Closes: https://github.com/thesofproject/sof/issues/8137
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://lore.kernel.org/r/20230927071412.2416250-1-Vijendar.Mukunda@amd.com
+Fixes: 5ca2ab459817 ("ASoC: simple-card-utils: Add new system-clock-fixed flag")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/202309141205.ITZeDJxV-lkp@intel.com/
+Closes: https://lore.kernel.org/all/202309151840.au9Aa2W4-lkp@intel.com/
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87v8c76jnz.wl-kuninori.morimoto.gx@renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/amd/pci-rmb.c |    1 -
- 1 file changed, 1 deletion(-)
+ sound/soc/generic/simple-card-utils.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/soc/sof/amd/pci-rmb.c
-+++ b/sound/soc/sof/amd/pci-rmb.c
-@@ -54,7 +54,6 @@ static const struct sof_amd_acp_desc rem
- 	.sram_pte_offset = ACP6X_SRAM_PTE_OFFSET,
- 	.i2s_pin_config_offset = ACP6X_I2S_PIN_CONFIG,
- 	.hw_semaphore_offset = ACP6X_AXI2DAGB_SEM_0,
--	.acp_clkmux_sel = ACP6X_CLKMUX_SEL,
- 	.fusion_dsp_offset = ACP6X_DSP_FUSION_RUNSTALL,
- };
- 
+--- a/sound/soc/generic/simple-card-utils.c
++++ b/sound/soc/generic/simple-card-utils.c
+@@ -331,7 +331,8 @@ int asoc_simple_startup(struct snd_pcm_s
+ 		if (fixed_sysclk % props->mclk_fs) {
+ 			dev_err(rtd->dev, "fixed sysclk %u not divisible by mclk_fs %u\n",
+ 				fixed_sysclk, props->mclk_fs);
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto codec_err;
+ 		}
+ 		ret = snd_pcm_hw_constraint_minmax(substream->runtime, SNDRV_PCM_HW_PARAM_RATE,
+ 			fixed_rate, fixed_rate);
 
 
