@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBAE18C03
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772AB18C03
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spQC65qp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB03EC433C7;
-	Mon, 16 Oct 2023 08:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kN0I3y2U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACE7C433C8;
+	Mon, 16 Oct 2023 08:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446399;
-	bh=cy43WK78YdkxLq3+X1yihi1UY1fB3E7mDcB/Dx+H9lw=;
+	s=korg; t=1697446409;
+	bh=dBGWWHHSiD6olOGhCFQaXs6cpTO0yq4WZw5qncAVuXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=spQC65qpAXNYrRMYlh1aej0plqI8/P5H/cDGgMUBYK5jIZmwi4XFa1fEvB8FSUoRl
-	 PGY+UtXMpeeiXaDWVDfZknfNMkAgLKCdzZfT9qjcUjFn2uoShnXLiqP0f6rCRRZpc5
-	 dEzmRmqy1P1F+dTmUUiHFdLCdSCiRP71H/B8wR4g=
+	b=kN0I3y2U2880fvAiMIq/BTab/jgx5TQr1A8Ok33tQcDiMfP9ihN4TRsycXKt59ZT5
+	 18b/u0GMYf1Zn1zaGk2L3t4k26hN2y839h6iJUuF0VWDUxLB4VaDvQRvzJwAOnr7PS
+	 d4NjPP5ndi0d0Vr1IaE4qdFvTbaEe3hrFhbaVXXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Balamurugan C <balamurugan.c@intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 022/131] ASoC: simple-card-utils: fixup simple_util_startup() error handling
-Date: Mon, 16 Oct 2023 10:40:05 +0200
-Message-ID: <20231016084000.618464025@linuxfoundation.org>
+Subject: [PATCH 6.1 023/131] ASoC: Intel: soc-acpi: Add entry for HDMI_In capture support in MTL match table
+Date: Mon, 16 Oct 2023 10:40:06 +0200
+Message-ID: <20231016084000.642268037@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -43,36 +43,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Balamurugan C <balamurugan.c@intel.com>
 
-commit 69cf63b6560205a390a736b88d112374655adb28 upstream.
+commit d1f67278d4b2de3bf544ea9bcd9f64d03584df87 upstream.
 
-It should use "goto" instead of "return"
+Adding HDMI-In capture via I2S feature support in MTL platform.
 
-Fixes: 5ca2ab459817 ("ASoC: simple-card-utils: Add new system-clock-fixed flag")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/202309141205.ITZeDJxV-lkp@intel.com/
-Closes: https://lore.kernel.org/all/202309151840.au9Aa2W4-lkp@intel.com/
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87v8c76jnz.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Balamurugan C <balamurugan.c@intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20230919091136.1922253-3-yung-chuan.liao@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/generic/simple-card-utils.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/intel/boards/sof_es8336.c               |   10 ++++++++++
+ sound/soc/intel/common/soc-acpi-intel-mtl-match.c |   12 ++++++++++++
+ 2 files changed, 22 insertions(+)
 
---- a/sound/soc/generic/simple-card-utils.c
-+++ b/sound/soc/generic/simple-card-utils.c
-@@ -331,7 +331,8 @@ int asoc_simple_startup(struct snd_pcm_s
- 		if (fixed_sysclk % props->mclk_fs) {
- 			dev_err(rtd->dev, "fixed sysclk %u not divisible by mclk_fs %u\n",
- 				fixed_sysclk, props->mclk_fs);
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto codec_err;
- 		}
- 		ret = snd_pcm_hw_constraint_minmax(substream->runtime, SNDRV_PCM_HW_PARAM_RATE,
- 			fixed_rate, fixed_rate);
+--- a/sound/soc/intel/boards/sof_es8336.c
++++ b/sound/soc/intel/boards/sof_es8336.c
+@@ -807,6 +807,16 @@ static const struct platform_device_id b
+ 					SOF_ES8336_SPEAKERS_EN_GPIO1_QUIRK |
+ 					SOF_ES8336_JD_INVERTED),
+ 	},
++	{
++		.name = "mtl_es83x6_c1_h02",
++		.driver_data = (kernel_ulong_t)(SOF_ES8336_SSP_CODEC(1) |
++					SOF_NO_OF_HDMI_CAPTURE_SSP(2) |
++					SOF_HDMI_CAPTURE_1_SSP(0) |
++					SOF_HDMI_CAPTURE_2_SSP(2) |
++					SOF_SSP_HDMI_CAPTURE_PRESENT |
++					SOF_ES8336_SPEAKERS_EN_GPIO1_QUIRK |
++					SOF_ES8336_JD_INVERTED),
++	},
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(platform, board_ids);
+--- a/sound/soc/intel/common/soc-acpi-intel-mtl-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-mtl-match.c
+@@ -20,6 +20,11 @@ static const struct snd_soc_acpi_codecs
+ 	.codecs = {"10EC5682", "RTL5682"},
+ };
+ 
++static const struct snd_soc_acpi_codecs mtl_lt6911_hdmi = {
++	.num_codecs = 1,
++	.codecs = {"INTC10B0"}
++};
++
+ struct snd_soc_acpi_mach snd_soc_acpi_intel_mtl_machines[] = {
+ 	{
+ 		.comp_ids = &mtl_rt5682_rt5682s_hp,
+@@ -67,6 +72,13 @@ struct snd_soc_acpi_mach snd_soc_acpi_in
+ 		.sof_tplg_filename = "sof-mtl-rt711-rt1308-rt715.tplg",
+ 	},
+ 	{
++		.comp_ids = &mtl_essx_83x6,
++		.drv_name = "mtl_es83x6_c1_h02",
++		.machine_quirk = snd_soc_acpi_codec_list,
++		.quirk_data = &mtl_lt6911_hdmi,
++		.sof_tplg_filename = "sof-mtl-es83x6-ssp1-hdmi-ssp02.tplg",
++	},
++	{
+ 		.link_mask = BIT(0) | BIT(1) | BIT(3),
+ 		.links = sdw_mockup_headset_1amp_mic,
+ 		.drv_name = "sof_sdw",
 
 
