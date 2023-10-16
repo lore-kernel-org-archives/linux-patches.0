@@ -1,87 +1,172 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DBF1802D
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CBF14288
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7N4Lfnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FABC433C8;
-	Mon, 16 Oct 2023 08:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/H91Fn1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA050C433C8;
+	Mon, 16 Oct 2023 08:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697443613;
-	bh=H2UJnjnsQ05QQo/guMGEnLx/+oDV2MPXthqNff1/rik=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=C7N4LfnlwZR1xK+R/oDA+fjTFeRR9oKuAmoCF6LLY8wI7H7jydIIL/UV7HZgxw7Wj
-	 T8cjOwI+FfAEL6g0Ld/Q5DXTGXcMr+sKR7Ai+EbfZ4XBlZsipy42iN5OxkX5ffbksL
-	 2WIDz4GcsR9sR8pNCjj/1ZqMU1zrgY+49YR/pI9c=
-Date: Mon, 16 Oct 2023 10:06:48 +0200
+	s=korg; t=1697445794;
+	bh=qLqogcf7WKN5z+6Zh2GnTgM9GabfPWDnhs4/cpDNIgw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Z/H91Fn139L/RuUWbNtIo67Amj+L2+94v8AosPtLVG+UhXXLWQ8GbiDqBZfH30TNB
+	 pitjq+P4GOpyd7QYoP53fPY+prmRe5opK4mZ9LUV5SqhImomSnUVIjVGMmB0GH1/KK
+	 DY+58jLn6zY5iol62PshOJY6NKLXwUzIb4CUCbP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Joel Fernandes <joel@joelfernandes.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org
-Subject: Re: [PATCH 5.15 000/183] 5.15.134-rc1 review
-Message-ID: <2023101641-judiciary-custody-d56e@gregkh>
-References: <20231004175203.943277832@linuxfoundation.org>
- <CAEXW_YT6bH70M1TF2TttB-_kP=RUv_1nsy_sHYi6_0oCrX3mVQ@mail.gmail.com>
- <2023101110-resurface-nuclear-bfee@gregkh>
- <CAEXW_YRf0e6V6PcGJ-LWiS=ERgy4yxHoSG4d+DHLjXZ8Ah7kJA@mail.gmail.com>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	stable@kernel.org,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Ooi, Chin Hao" <chin.hao.ooi@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Ooi
+Subject: [PATCH 5.15 001/102] iommu/vt-d: Avoid memory allocation in iommu_suspend()
+Date: Mon, 16 Oct 2023 10:40:00 +0200
+Message-ID: <20231016083953.729618812@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
+References: <20231016083953.689300946@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAEXW_YRf0e6V6PcGJ-LWiS=ERgy4yxHoSG4d+DHLjXZ8Ah7kJA@mail.gmail.com>
 
-On Sun, Oct 15, 2023 at 10:25:40PM -0400, Joel Fernandes wrote:
-> On Wed, Oct 11, 2023 at 1:44 PM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > On Wed, Oct 11, 2023 at 11:58:49AM -0400, Joel Fernandes wrote:
-> > > Hello Greg,
-> > >
-> > > On Sat, Oct 7, 2023 at 9:00 PM Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-> > > >
-> > > > This is the start of the stable review cycle for the 5.15.134 release.
-> > > > There are 183 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > >
-> > > > Responses should be made by Fri, 06 Oct 2023 17:51:12 +0000.
-> > > > Anything received after that time might be too late.
-> > > >
-> > > > The whole patch series can be found in one patch at:
-> > > >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.134-rc1.gz
-> > > > or in the git tree and branch at:
-> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > > > and the diffstat can be found below.
-> > > [...]
-> > > > Liam R. Howlett <Liam.Howlett@oracle.com>
-> > > >     kernel/sched: Modify initial boot task idle setup
-> > > >
-> > >
-> > > Let us drop this patch because it caused new tasks-RCU warnings (both
-> > > normal and rude tasks RCU) in my stable test rig. We are discussing
-> > > the "right fix" and at that time a backport can be done.
-> > >
-> > > Hope Liam is also Ok with that. I am happy to do that future backport if needed.
-> >
-> > This is already in a released kernel, a bunch of them:
-> >         5.15.134 6.1.56 6.5.6 6.6-rc3
-> > should it be reverted from all of the stable releases, or just for
-> > 5.15.y?
-> 
-> Just 5.15.y. The others don't have an issue with the patch per my tests.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
-Ok, now reverted, thanks.
+------------------
 
-greg k-h
+From: Zhang Rui <rui.zhang@intel.com>
+
+[ Upstream commit 59df44bfb0ca4c3ee1f1c3c5d0ee8e314844799e ]
+
+The iommu_suspend() syscore suspend callback is invoked with IRQ disabled.
+Allocating memory with the GFP_KERNEL flag may re-enable IRQs during
+the suspend callback, which can cause intermittent suspend/hibernation
+problems with the following kernel traces:
+
+Calling iommu_suspend+0x0/0x1d0
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 15 at kernel/time/timekeeping.c:868 ktime_get+0x9b/0xb0
+...
+CPU: 0 PID: 15 Comm: rcu_preempt Tainted: G     U      E      6.3-intel #r1
+RIP: 0010:ktime_get+0x9b/0xb0
+...
+Call Trace:
+ <IRQ>
+ tick_sched_timer+0x22/0x90
+ ? __pfx_tick_sched_timer+0x10/0x10
+ __hrtimer_run_queues+0x111/0x2b0
+ hrtimer_interrupt+0xfa/0x230
+ __sysvec_apic_timer_interrupt+0x63/0x140
+ sysvec_apic_timer_interrupt+0x7b/0xa0
+ </IRQ>
+ <TASK>
+ asm_sysvec_apic_timer_interrupt+0x1f/0x30
+...
+------------[ cut here ]------------
+Interrupts enabled after iommu_suspend+0x0/0x1d0
+WARNING: CPU: 0 PID: 27420 at drivers/base/syscore.c:68 syscore_suspend+0x147/0x270
+CPU: 0 PID: 27420 Comm: rtcwake Tainted: G     U  W   E      6.3-intel #r1
+RIP: 0010:syscore_suspend+0x147/0x270
+...
+Call Trace:
+ <TASK>
+ hibernation_snapshot+0x25b/0x670
+ hibernate+0xcd/0x390
+ state_store+0xcf/0xe0
+ kobj_attr_store+0x13/0x30
+ sysfs_kf_write+0x3f/0x50
+ kernfs_fop_write_iter+0x128/0x200
+ vfs_write+0x1fd/0x3c0
+ ksys_write+0x6f/0xf0
+ __x64_sys_write+0x1d/0x30
+ do_syscall_64+0x3b/0x90
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Given that only 4 words memory is needed, avoid the memory allocation in
+iommu_suspend().
+
+CC: stable@kernel.org
+Fixes: 33e07157105e ("iommu/vt-d: Avoid GFP_ATOMIC where it is not needed")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Tested-by: Ooi, Chin Hao <chin.hao.ooi@intel.com>
+Link: https://lore.kernel.org/r/20230921093956.234692-1-rui.zhang@intel.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/20230925120417.55977-2-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/iommu/intel/iommu.c | 16 ----------------
+ include/linux/intel-iommu.h |  2 +-
+ 2 files changed, 1 insertion(+), 17 deletions(-)
+
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index 29538471c528e..b3aa6ce9d3d7d 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -3564,13 +3564,6 @@ static int iommu_suspend(void)
+ 	struct intel_iommu *iommu = NULL;
+ 	unsigned long flag;
+ 
+-	for_each_active_iommu(iommu, drhd) {
+-		iommu->iommu_state = kcalloc(MAX_SR_DMAR_REGS, sizeof(u32),
+-					     GFP_KERNEL);
+-		if (!iommu->iommu_state)
+-			goto nomem;
+-	}
+-
+ 	iommu_flush_all();
+ 
+ 	for_each_active_iommu(iommu, drhd) {
+@@ -3590,12 +3583,6 @@ static int iommu_suspend(void)
+ 		raw_spin_unlock_irqrestore(&iommu->register_lock, flag);
+ 	}
+ 	return 0;
+-
+-nomem:
+-	for_each_active_iommu(iommu, drhd)
+-		kfree(iommu->iommu_state);
+-
+-	return -ENOMEM;
+ }
+ 
+ static void iommu_resume(void)
+@@ -3627,9 +3614,6 @@ static void iommu_resume(void)
+ 
+ 		raw_spin_unlock_irqrestore(&iommu->register_lock, flag);
+ 	}
+-
+-	for_each_active_iommu(iommu, drhd)
+-		kfree(iommu->iommu_state);
+ }
+ 
+ static struct syscore_ops iommu_syscore_ops = {
+diff --git a/include/linux/intel-iommu.h b/include/linux/intel-iommu.h
+index 0cf00786a164f..e00857c4efc28 100644
+--- a/include/linux/intel-iommu.h
++++ b/include/linux/intel-iommu.h
+@@ -604,7 +604,7 @@ struct intel_iommu {
+ 	struct iopf_queue *iopf_queue;
+ 	unsigned char iopfq_name[16];
+ 	struct q_inval  *qi;            /* Queued invalidation info */
+-	u32 *iommu_state; /* Store iommu states between suspend and resume.*/
++	u32 iommu_state[MAX_SR_DMAR_REGS]; /* Store iommu states between suspend and resume.*/
+ 
+ #ifdef CONFIG_IRQ_REMAP
+ 	struct ir_table *ir_table;	/* Interrupt remapping info */
+-- 
+2.40.1
+
+
+
