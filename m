@@ -1,110 +1,88 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E321A59B
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:12:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA95A1C2AD
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 11:40:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marliere.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="SggXxx+J"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 619DB40E01AE;
-	Mon, 16 Oct 2023 09:11:58 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id c1HIwxF4hm63; Mon, 16 Oct 2023 09:11:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1697447516; bh=B/5m2LDGcJTLYhvP21qZnYB0nurPkDZJJTeElvG5iiA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SggXxx+Js+dTFs2SJY+q5yeyjzTu6Henv1moBdNVvKPIa4BuQrncYJehG7C9kPCzG
-	 v4/lRnjulZQ4fjnYjGrFKXqSixtW4tqehsUq9mAyHt8FV2C6MPgORdD+m7YIAL93C9
-	 m5wAvybG07b0OeXNYgsbV4b+JJJtpgYn8cBth8H3MlRrK+d9WHUlGn41ShtgPvlNhR
-	 6/e4uqcCUkkU9qTn9kaXG4zYxOBByyWZ+6HLSBHHZ7ADnf9/K9R6xIua9oxXZcuOGt
-	 tC6vaqjTlqejpWmZ/rN+f84m1zmy16xwCsgnmeu/oOjfgpLFUKyF2dsgdPRZQlqiK5
-	 QnktOPWshxIkFj/YN8NLm57BGITI1NRqORasOGWdtdf1uKYSK5FQnq0OCY2IDSbI/H
-	 ga70CNt6w00dTlIF25PpHioYNqE1zZzkUAOzAREVyFH5wjdslcn+DaUjTfn30LWRi5
-	 UnCZmm6f5LA/2LMrnGo6dHn4oC53x85rtmtVKe57m9gqFyeFhIqfMxJRy4D13O7iii
-	 jYItTzxEUVKNKSy6GGgnIkIwbzdmfLudt/6RwMHiQ0FuhNlHEaG8lRCzIJ703lLDBX
-	 0rsArmihDTN9CSXkRumLiyKgTcM/qmRz0YmmSZk+oYhlSUp+S9/g1AgvuK3eqzzWbl
-	 1QpKB9ZHEqOHQJkjcji8jdSI=
-Received: from zn.tnic (pd953036a.dip0.t-ipconnect.de [217.83.3.106])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 802E740E014B;
-	Mon, 16 Oct 2023 09:11:48 +0000 (UTC)
-Date: Mon, 16 Oct 2023 11:11:43 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Zhiquan Li <zhiquan1.li@intel.com>
-Cc: "Luck, Tony" <tony.luck@intel.com>, "x86@kernel.org" <x86@kernel.org>,
-	"linux-edac@vger.kernel.org" <linux-edac@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"mingo@kernel.org" <mingo@kernel.org>,
-	"naoya.horiguchi@nec.com" <naoya.horiguchi@nec.com>
-Subject: Re: [PATCH v3] x86/mce: Set PG_hwpoison page flag to avoid the
- capture kernel panic
-Message-ID: <20231016091143.GCZSz+T1xFf5tCFi2w@fat_crate.local>
-References: <20231014051754.3759099-1-zhiquan1.li@intel.com>
- <SJ1PR11MB6083A23BB89F4EE0F44B2794FCD1A@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <233e17ac-0ae5-4392-a5e4-ab811a155805@intel.com>
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=marliere.net header.i=@marliere.net header.b="Tly0eZsW"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3b2b1ad7ee6so1777889b6e.2
+        for <patches@lists.linux.dev>; Mon, 16 Oct 2023 04:40:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697456408; x=1698061208;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:dkim-signature:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tE3/kt7VPkaFdquQYklg8hmYnVUnseOhnUoih4hEER0=;
+        b=MROwgsnADOEM7/Tq/Uu2eioBYbcLmZZv5eXRbxfZeF5PKqrVv+CdtQml0ekcDNJlQ0
+         dr1+kGZGL//9NBXUiRQaI+ilg6ic3bNkO0SpqAdsjDUfs8ymj7Rk2L4z9pnAV8o3j7K8
+         Pw9Cn7jaZtilQOjFJYkEa8VdqKeCNO0Kpz6MZUjuunZlcuI1ATHpv8tbfyF9ApU+wlCb
+         xELfW3/XA9cm6ZyCIGMZIy6ptrQRBVTtx0PgJrsqrH6Pb9LfPLCmf6jCKJqvsAubC2lu
+         jAmg1U17+YbKio+jAo/M5cLe9Svn8UkJPRkvt5/hHWgtp5pJpUC/9xWa8Voovx7JyDUk
+         s1Lw==
+X-Gm-Message-State: AOJu0Yw+5c/oGJejsL5ps1/NLEGjQKIcQCgwX9yXbMuQOfXpbhxkxaVX
+	8FTCJVpz3mNuY7DA50BdgA4=
+X-Google-Smtp-Source: AGHT+IHxDYPzvNS3lWU1QsDc586Js06uUe+5oigcPknJIMbnR2FqVnBRnij03C711FQbvHhcLy3Xug==
+X-Received: by 2002:a05:6808:1582:b0:3af:7db8:21ad with SMTP id t2-20020a056808158200b003af7db821admr43196719oiw.33.1697456408615;
+        Mon, 16 Oct 2023 04:40:08 -0700 (PDT)
+Received: from mail.marliere.net ([24.199.118.162])
+        by smtp.gmail.com with ESMTPSA id f18-20020aa79d92000000b006bc3e8f58besm3726935pfq.56.2023.10.16.04.40.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Oct 2023 04:40:08 -0700 (PDT)
+Date: Mon, 16 Oct 2023 08:40:00 -0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marliere.net;
+	s=2023; t=1697456403;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tE3/kt7VPkaFdquQYklg8hmYnVUnseOhnUoih4hEER0=;
+	b=Tly0eZsWl0PYDKWvqPHKOAbv1/wJr0yDXEHYhkZ22t59XEtf39mUTX2rsE3I8NMi/l8Imm
+	DxJB6uyPhef6JqSNZkl2HldM1Pc0VLw9mdmCFqUjI7PLcHw9RmuN6szKNdpLAlHzbK+SlR
+	k6fNy9Q1OOmMHt13hU4tozESfZFEfYt1SuaivIwbZ8IRu68vUvoDVxB3FaEqZVNy1vhEJk
+	OjWnBbKUsoyps9G66fCr+VsusMr4lBdsvuOSVBA4nZMjKzCrzd4jwosP9ZCYr8y/wFctcG
+	OWKN6CpEfRsmrYu6+0uzOpVfIEXeeTQmzVpYx5BEth+yddX/k7RiYRU+0Xe+Pw==
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=ricardo@marliere.net smtp.mailfrom=ricardo@marliere.net
+From: "Ricardo B. Marliere" <ricardo@marliere.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 000/131] 6.1.59-rc1 review
+Message-ID: <pocozopagkwaphxqyupnpuntzxsb47ws6s7nzmawhnqa5brzph@ku2y2aucxs3l>
+References: <20231016084000.050926073@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <233e17ac-0ae5-4392-a5e4-ab811a155805@intel.com>
+In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 
-On Sat, Oct 14, 2023 at 05:34:12PM +0800, Zhiquan Li wrote:
-> Memory errors don't happen very often, especially the severity is fatal.
-> However, in large-scale scenarios, such as data centers, it might still
-> happen.  For some MCE fatal error cases, the kernel might call
-> mce_panic() to terminate the production kernel directly, thus there is
-> no opportunity to queue a task for calling memory_failure() which will
-> try to make the kernel survive via memory failure handling.
+On 23/10/16 10:39AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.59 release.
+> There are 131 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 18 Oct 2023 08:39:40 +0000.
+> Anything received after that time might be too late.
 
-You can't "make the kernel survive" if the error has been deemed
-critical. That's mce_severity()'s job. If it grades the error's severity
-wrongly and memory_failure() should run after all, then this is
-a different story.
+No regressions on my system:
 
-> @@ -286,6 +287,17 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
->  	if (!fake_panic) {
->  		if (panic_timeout == 0)
->  			panic_timeout = mca_cfg.panic_timeout;
+08:35:39 rbmarliere@debian ~
+$ dmesg -lerr
+08:35:42 rbmarliere@debian ~
+$ uname -a
+Linux debian 6.1.59-rc1+ #1 SMP PREEMPT_DYNAMIC Mon Oct 16 07:46:20 -03 2023 x86_64 GNU/Linux
 
-This whole thing...
+1 build warning:
+vmlinux.o: warning: objtool: set_ftrace_ops_ro+0x23: relocation to !ENDBR: kexec_mark_crashkres+0xe7
 
-> +		/*
-> +		 * Kdump can exclude the HWPoison page to avoid touching the error
-> +		 * page again, the prerequisite is that the PG_hwpoison page flag is
-> +		 * set.  However, for some MCE fatal error cases, there is no
-> +		 * opportunity to queue a task for calling memory_failure(), and as a
-> +		 * result, the capture kernel panics.  So mark the page as HWPoison
-> +		 * before kernel panic() for MCE.
-> +		 */
-> +		p = pfn_to_online_page(final->addr >> PAGE_SHIFT);
-> +		if (final && (final->status & MCI_STATUS_ADDRV) && p)
-> +			SetPageHWPoison(p);
 
-... needs to be inside:
-
-	if (kexec_crash_loaded() {
-		...
-	}
-
-otherwise it'll be useless work on the panic path.
-
-Thx.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+Tested-by: Ricardo B. Marliere <ricardo@marliere.net>
