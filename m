@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1203E1944F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B322D1944F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufUL7/xi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D31C433C7;
-	Mon, 16 Oct 2023 08:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCPgr7FT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F259BC433CA;
+	Mon, 16 Oct 2023 08:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446266;
-	bh=fKu2ve04M7Fj5S3UWheCamY9z+JCuonuFplNMnFGywE=;
+	s=korg; t=1697446269;
+	bh=RdqryuMFO/YIUJtPVnwpHj0ygNQJOkdqBTLWaPRvEio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ufUL7/xisLbo08p7Xbd9ynPQRxQbe+03R9HsivDPSIs458rtu6rqe4MOO3j7JDnUe
-	 IPDoRX/Mub+LjbafJjwQsXxDnaQszoPPHsKlY+iePdUUDx41SziKwNaRtvdbc2jpO9
-	 tJjuUeSo4dmZoR3udGTEBb7GmPyF76qaziBzl7pw=
+	b=uCPgr7FT1aB00e4k+Vm2LSmmhBJAzjvjLZ9SYP+JVOudXdO+pBeIbX+7C+VC8l0vP
+	 ULlRN2BwhteX9LgfT58RDZmuZaRCqHOIZl2u31yGrE5y1KlH7GIKZtYT3y8+JiC8Hs
+	 jxlMoV9X3Zp/1sfTUNthvmP7ciaCpN++oSb0RMQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fei Yang <fei.yang@intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 080/102] x86/alternatives: Disable KASAN in apply_alternatives()
-Date: Mon, 16 Oct 2023 10:41:19 +0200
-Message-ID: <20231016083955.828521823@linuxfoundation.org>
+	Rex Zhang <rex.zhang@intel.com>,
+	Lijun Pan <lijun.pan@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 081/102] dmaengine: idxd: use spin_lock_irqsave before wait_event_lock_irq
+Date: Mon, 16 Oct 2023 10:41:20 +0200
+Message-ID: <20231016083955.855001526@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -44,77 +45,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Rex Zhang <rex.zhang@intel.com>
 
-commit d35652a5fc9944784f6f50a5c979518ff8dacf61 upstream.
+[ Upstream commit c0409dd3d151f661e7e57b901a81a02565df163c ]
 
-Fei has reported that KASAN triggers during apply_alternatives() on
-a 5-level paging machine:
+In idxd_cmd_exec(), wait_event_lock_irq() explicitly calls
+spin_unlock_irq()/spin_lock_irq(). If the interrupt is on before entering
+wait_event_lock_irq(), it will become off status after
+wait_event_lock_irq() is called. Later, wait_for_completion() may go to
+sleep but irq is disabled. The scenario is warned in might_sleep().
 
-	BUG: KASAN: out-of-bounds in rcu_is_watching()
-	Read of size 4 at addr ff110003ee6419a0 by task swapper/0/0
-	...
-	__asan_load4()
-	rcu_is_watching()
-	trace_hardirqs_on()
-	text_poke_early()
-	apply_alternatives()
-	...
+Fix it by using spin_lock_irqsave() instead of the primitive spin_lock()
+to save the irq status before entering wait_event_lock_irq() and using
+spin_unlock_irqrestore() instead of the primitive spin_unlock() to restore
+the irq status before entering wait_for_completion().
 
-On machines with 5-level paging, cpu_feature_enabled(X86_FEATURE_LA57)
-gets patched. It includes KASAN code, where KASAN_SHADOW_START depends on
-__VIRTUAL_MASK_SHIFT, which is defined with cpu_feature_enabled().
+Before the change:
+idxd_cmd_exec() {
+interrupt is on
+spin_lock()                        // interrupt is on
+	wait_event_lock_irq()
+		spin_unlock_irq()  // interrupt is enabled
+		...
+		spin_lock_irq()    // interrupt is disabled
+spin_unlock()                      // interrupt is still disabled
+wait_for_completion()              // report "BUG: sleeping function
+				   // called from invalid context...
+				   // in_atomic() irqs_disabled()"
+}
 
-KASAN gets confused when apply_alternatives() patches the
-KASAN_SHADOW_START users. A test patch that makes KASAN_SHADOW_START
-static, by replacing __VIRTUAL_MASK_SHIFT with 56, works around the issue.
+After applying spin_lock_irqsave():
+idxd_cmd_exec() {
+interrupt is on
+spin_lock_irqsave()                // save the on state
+				   // interrupt is disabled
+	wait_event_lock_irq()
+		spin_unlock_irq()  // interrupt is enabled
+		...
+		spin_lock_irq()    // interrupt is disabled
+spin_unlock_irqrestore()           // interrupt is restored to on
+wait_for_completion()              // No Call trace
+}
 
-Fix it for real by disabling KASAN while the kernel is patching alternatives.
-
-[ mingo: updated the changelog ]
-
-Fixes: 6657fca06e3f ("x86/mm: Allow to boot without LA57 if CONFIG_X86_5LEVEL=y")
-Reported-by: Fei Yang <fei.yang@intel.com>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231012100424.1456-1-kirill.shutemov@linux.intel.com
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f9f4082dbc56 ("dmaengine: idxd: remove interrupt disable for cmd_lock")
+Signed-off-by: Rex Zhang <rex.zhang@intel.com>
+Signed-off-by: Lijun Pan <lijun.pan@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
+Link: https://lore.kernel.org/r/20230916060619.3744220-1-rex.zhang@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/alternative.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/dma/idxd/device.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -269,6 +269,17 @@ void __init_or_module noinline apply_alt
- 	u8 insn_buff[MAX_PATCH_LEN];
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index 535f021911c55..f2cfefc505a8c 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -490,6 +490,7 @@ static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
+ 	union idxd_command_reg cmd;
+ 	DECLARE_COMPLETION_ONSTACK(done);
+ 	u32 stat;
++	unsigned long flags;
  
- 	DPRINTK("alt table %px, -> %px", start, end);
-+
-+	/*
-+	 * In the case CONFIG_X86_5LEVEL=y, KASAN_SHADOW_START is defined using
-+	 * cpu_feature_enabled(X86_FEATURE_LA57) and is therefore patched here.
-+	 * During the process, KASAN becomes confused seeing partial LA57
-+	 * conversion and triggers a false-positive out-of-bound report.
-+	 *
-+	 * Disable KASAN until the patching is complete.
-+	 */
-+	kasan_disable_current();
-+
- 	/*
- 	 * The scan order should be from start to end. A later scanned
- 	 * alternative code can overwrite previously scanned alternative code.
-@@ -336,6 +347,8 @@ void __init_or_module noinline apply_alt
- next:
- 		optimize_nops(instr, a->instrlen);
- 	}
-+
-+	kasan_enable_current();
- }
+ 	if (idxd_device_is_halted(idxd)) {
+ 		dev_warn(&idxd->pdev->dev, "Device is HALTED!\n");
+@@ -503,7 +504,7 @@ static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
+ 	cmd.operand = operand;
+ 	cmd.int_req = 1;
  
- #if defined(CONFIG_RETPOLINE) && defined(CONFIG_STACK_VALIDATION)
+-	spin_lock(&idxd->cmd_lock);
++	spin_lock_irqsave(&idxd->cmd_lock, flags);
+ 	wait_event_lock_irq(idxd->cmd_waitq,
+ 			    !test_bit(IDXD_FLAG_CMD_RUNNING, &idxd->flags),
+ 			    idxd->cmd_lock);
+@@ -520,7 +521,7 @@ static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
+ 	 * After command submitted, release lock and go to sleep until
+ 	 * the command completes via interrupt.
+ 	 */
+-	spin_unlock(&idxd->cmd_lock);
++	spin_unlock_irqrestore(&idxd->cmd_lock, flags);
+ 	wait_for_completion(&done);
+ 	stat = ioread32(idxd->reg_base + IDXD_CMDSTS_OFFSET);
+ 	spin_lock(&idxd->cmd_lock);
+-- 
+2.40.1
+
 
 
