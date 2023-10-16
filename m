@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4AB1A5A7
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E4E1A5A7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9BFd/t0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B08C433C7;
-	Mon, 16 Oct 2023 09:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wpd7O5iX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDBFC433C9;
+	Mon, 16 Oct 2023 09:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446995;
-	bh=kyHx+oxDdKnnTpXqZ6zvn0PEl1W+xJuMTHyN6XWOt9U=;
+	s=korg; t=1697447035;
+	bh=L9rtt5Fh1c15dr3cXWNSQJuTqPv4KJRxdRnKZlVAgvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9BFd/t0Kvwdbz0iQ8sMu2x5bmkTk/CR2kDxbBN3f78/ohbfzAZWvZFwc17f8s7TY
-	 4o97kH+8M+3dY6OxQUZBXWZXQTMXYC6eVgxg6j2GJvHpMEoH1u4M7Dq5DN+xZ6uZxD
-	 LELCXy+TS/7sox8jfP1DaDZnmzPp6EeMWq6Ci4i4=
+	b=Wpd7O5iXUN4kVQ/XbpBihAwIma7XSF+2pq3UJFmcC985d2khCIuFNupoij8qf3M1W
+	 74uE+FDlXJ9J4BSucNHbJ7D/3Bi+uxAikZdsc7/UJA0trwiwR72karoHmwTcV0KNSW
+	 0t7AwT+TR3DnGcfra103SsHzoP2McvsgeStIs4Cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rijo Thomas <Rijo-john.Thomas@amd.com>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Jens Wiklander <jens.wiklander@linaro.org>
-Subject: [PATCH 6.1 111/131] tee: amdtee: fix use-after-free vulnerability in amdtee_close_session
-Date: Mon, 16 Oct 2023 10:41:34 +0200
-Message-ID: <20231016084002.826209209@linuxfoundation.org>
+	Sili Luo <rootlab@huawei.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 112/131] mctp: perform route lookups under a RCU read-side lock
+Date: Mon, 16 Oct 2023 10:41:35 +0200
+Message-ID: <20231016084002.850409519@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -42,81 +43,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rijo Thomas <Rijo-john.Thomas@amd.com>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-commit f4384b3e54ea813868bb81a861bf5b2406e15d8f upstream.
+commit 5093bbfc10ab6636b32728e35813cbd79feb063c upstream.
 
-There is a potential race condition in amdtee_close_session that may
-cause use-after-free in amdtee_open_session. For instance, if a session
-has refcount == 1, and one thread tries to free this session via:
+Our current route lookups (mctp_route_lookup and mctp_route_lookup_null)
+traverse the net's route list without the RCU read lock held. This means
+the route lookup is subject to preemption, resulting in an potential
+grace period expiry, and so an eventual kfree() while we still have the
+route pointer.
 
-    kref_put(&sess->refcount, destroy_session);
+Add the proper read-side critical section locks around the route
+lookups, preventing premption and a possible parallel kfree.
 
-the reference count will get decremented, and the next step would be to
-call destroy_session(). However, if in another thread,
-amdtee_open_session() is called before destroy_session() has completed
-execution, alloc_session() may return 'sess' that will be freed up
-later in destroy_session() leading to use-after-free in
-amdtee_open_session.
+The remaining net->mctp.routes accesses are already under a
+rcu_read_lock, or protected by the RTNL for updates.
 
-To fix this issue, treat decrement of sess->refcount and removal of
-'sess' from session list in destroy_session() as a critical section, so
-that it is executed atomically.
+Based on an analysis from Sili Luo <rootlab@huawei.com>, where
+introducing a delay in the route lookup could cause a UAF on
+simultaneous sendmsg() and route deletion.
 
-Fixes: 757cc3e9ff1d ("tee: add AMD-TEE driver")
+Reported-by: Sili Luo <rootlab@huawei.com>
+Fixes: 889b7da23abf ("mctp: Add initial routing framework")
 Cc: stable@vger.kernel.org
-Signed-off-by: Rijo Thomas <Rijo-john.Thomas@amd.com>
-Reviewed-by: Sumit Garg <sumit.garg@linaro.org>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/29c4b0e67dc1bf3571df3982de87df90cae9b631.1696837310.git.jk@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/amdtee/core.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/mctp/route.c |   22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
---- a/drivers/tee/amdtee/core.c
-+++ b/drivers/tee/amdtee/core.c
-@@ -217,12 +217,12 @@ unlock:
- 	return rc;
- }
- 
-+/* mutex must be held by caller */
- static void destroy_session(struct kref *ref)
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -737,6 +737,8 @@ struct mctp_route *mctp_route_lookup(str
  {
- 	struct amdtee_session *sess = container_of(ref, struct amdtee_session,
- 						   refcount);
+ 	struct mctp_route *tmp, *rt = NULL;
  
--	mutex_lock(&session_list_mutex);
- 	list_del(&sess->list_node);
- 	mutex_unlock(&session_list_mutex);
- 	kfree(sess);
-@@ -272,7 +272,8 @@ int amdtee_open_session(struct tee_conte
- 	if (arg->ret != TEEC_SUCCESS) {
- 		pr_err("open_session failed %d\n", arg->ret);
- 		handle_unload_ta(ta_handle);
--		kref_put(&sess->refcount, destroy_session);
-+		kref_put_mutex(&sess->refcount, destroy_session,
-+			       &session_list_mutex);
- 		goto out;
++	rcu_read_lock();
++
+ 	list_for_each_entry_rcu(tmp, &net->mctp.routes, list) {
+ 		/* TODO: add metrics */
+ 		if (mctp_rt_match_eid(tmp, dnet, daddr)) {
+@@ -747,21 +749,29 @@ struct mctp_route *mctp_route_lookup(str
+ 		}
  	}
  
-@@ -290,7 +291,8 @@ int amdtee_open_session(struct tee_conte
- 		pr_err("reached maximum session count %d\n", TEE_NUM_SESSIONS);
- 		handle_close_session(ta_handle, session_info);
- 		handle_unload_ta(ta_handle);
--		kref_put(&sess->refcount, destroy_session);
-+		kref_put_mutex(&sess->refcount, destroy_session,
-+			       &session_list_mutex);
- 		rc = -ENOMEM;
- 		goto out;
- 	}
-@@ -331,7 +333,7 @@ int amdtee_close_session(struct tee_cont
- 	handle_close_session(ta_handle, session_info);
- 	handle_unload_ta(ta_handle);
- 
--	kref_put(&sess->refcount, destroy_session);
-+	kref_put_mutex(&sess->refcount, destroy_session, &session_list_mutex);
- 
- 	return 0;
++	rcu_read_unlock();
++
+ 	return rt;
  }
+ 
+ static struct mctp_route *mctp_route_lookup_null(struct net *net,
+ 						 struct net_device *dev)
+ {
+-	struct mctp_route *rt;
++	struct mctp_route *tmp, *rt = NULL;
++
++	rcu_read_lock();
+ 
+-	list_for_each_entry_rcu(rt, &net->mctp.routes, list) {
+-		if (rt->dev->dev == dev && rt->type == RTN_LOCAL &&
+-		    refcount_inc_not_zero(&rt->refs))
+-			return rt;
++	list_for_each_entry_rcu(tmp, &net->mctp.routes, list) {
++		if (tmp->dev->dev == dev && tmp->type == RTN_LOCAL &&
++		    refcount_inc_not_zero(&tmp->refs)) {
++			rt = tmp;
++			break;
++		}
+ 	}
+ 
+-	return NULL;
++	rcu_read_unlock();
++
++	return rt;
+ }
+ 
+ static int mctp_do_fragment_route(struct mctp_route *rt, struct sk_buff *skb,
 
 
