@@ -1,32 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C3827ECC
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8167B266B7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wj5IPWwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEA7C433C7;
-	Mon, 16 Oct 2023 14:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNKCQusb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DAE3C433C7;
+	Mon, 16 Oct 2023 14:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467727;
-	bh=ZnV8Z35GuuSoKKT5ZfTA37/1KmUZwjLtQxCtXU8ULUI=;
+	s=korg; t=1697467731;
+	bh=drPmrXrfaXFdu8ziIbycDxRZQm7JZTpRhqmDeScoqtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wj5IPWwJlYKla7w+YPu5UtphAjrJcXwC7PZcZFvfh9qeB/8PfkF9jRs6YH5ZqCt1S
-	 EXJUt36yUN2MT6I6sBpiRMsC27D+v3CAQJhrFZTiHbspvavLng2gd4rNrWSi4Y+U03
-	 SuPL7MBBLa9oGBSlguIQiIIdFeUuOybKZVgM/pko=
+	b=ZNKCQusbBvL8ctbutWkElp1ldFYa2uqTuaVUVrzKd54knlyHJC2e9qTjL3HL2zV2B
+	 OKA7gvuZ0P/a5LVaj2pl3CJAECkzVvU9YLqX6tJo3iojfrCwY+yDxrtzfjDtgDOOUl
+	 8ze0jkGqdXOGtWFqZ+4X31lbQTNsO3rwPIfpGT50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Simon Horman <horms@kernel.org>,
+	Charlotte Tan <charlotte@extrahop.com>,
+	Adham Faris <afaris@nvidia.com>,
+	Aya Levin <ayal@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Will Mortensen <will@extrahop.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 077/191] net/smc: Fix dependency of SMC on ISM
-Date: Mon, 16 Oct 2023 10:41:02 +0200
-Message-ID: <20231016084017.202679994@linuxfoundation.org>
+Subject: [PATCH 6.5 078/191] net/mlx5e: Again mutually exclude RX-FCS and RX-port-timestamp
+Date: Mon, 16 Oct 2023 10:41:03 +0200
+Message-ID: <20231016084017.225837513@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -45,66 +48,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerd Bayer <gbayer@linux.ibm.com>
+From: Will Mortensen <will@extrahop.com>
 
-[ Upstream commit a72178cfe855c283224f393d94a1332b90d1483e ]
+[ Upstream commit da6192ca72d5ad913d109d43dc896290ad05d98f ]
 
-When the SMC protocol is built into the kernel proper while ISM is
-configured to be built as module, linking the kernel fails due to
-unresolved dependencies out of net/smc/smc_ism.o to
-ism_get_smcd_ops, ism_register_client, and ism_unregister_client
-as reported via the linux-next test automation (see link).
-This however is a bug introduced a while ago.
+Commit 1e66220948df8 ("net/mlx5e: Update rx ring hw mtu upon each rx-fcs
+flag change") seems to have accidentally inverted the logic added in
+commit 0bc73ad46a76 ("net/mlx5e: Mutually exclude RX-FCS and
+RX-port-timestamp").
 
-Correct the dependency list in ISM's and SMC's Kconfig to reflect the
-dependencies that are actually inverted. With this you cannot build a
-kernel with CONFIG_SMC=y and CONFIG_ISM=m. Either ISM needs to be 'y',
-too - or a 'n'. That way, SMC can still be configured on non-s390
-architectures that do not have (nor need) an ISM driver.
+The impact of this is a little unclear since it seems the FCS scattered
+with RX-FCS is (usually?) correct regardless.
 
-Fixes: 89e7d2ba61b7 ("net/ism: Add new API for client registration")
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Closes: https://lore.kernel.org/linux-next/d53b5b50-d894-4df8-8969-fd39e63440ae@infradead.org/
-Co-developed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Signed-off-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Simon Horman <horms@kernel.org> # build-tested
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Link: https://lore.kernel.org/r/20231006125847.1517840-1-gbayer@linux.ibm.com
+Fixes: 1e66220948df8 ("net/mlx5e: Update rx ring hw mtu upon each rx-fcs flag change")
+Tested-by: Charlotte Tan <charlotte@extrahop.com>
+Reviewed-by: Charlotte Tan <charlotte@extrahop.com>
+Cc: Adham Faris <afaris@nvidia.com>
+Cc: Aya Levin <ayal@nvidia.com>
+Cc: Tariq Toukan <tariqt@nvidia.com>
+Cc: Moshe Shemesh <moshe@nvidia.com>
+Cc: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Will Mortensen <will@extrahop.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/r/20231006053706.514618-1-will@extrahop.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/Kconfig | 2 +-
- net/smc/Kconfig          | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/s390/net/Kconfig b/drivers/s390/net/Kconfig
-index 9c67b97faba2b..610ad8a801a57 100644
---- a/drivers/s390/net/Kconfig
-+++ b/drivers/s390/net/Kconfig
-@@ -103,7 +103,7 @@ config CCWGROUP
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index f7b494125eee8..0cbe822ab084f 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -3952,13 +3952,14 @@ static int set_feature_rx_fcs(struct net_device *netdev, bool enable)
+ 	struct mlx5e_channels *chs = &priv->channels;
+ 	struct mlx5e_params new_params;
+ 	int err;
++	bool rx_ts_over_crc = !enable;
  
- config ISM
- 	tristate "Support for ISM vPCI Adapter"
--	depends on PCI && SMC
-+	depends on PCI
- 	default n
- 	help
- 	  Select this option if you want to use the Internal Shared Memory
-diff --git a/net/smc/Kconfig b/net/smc/Kconfig
-index 1ab3c5a2c5ada..746be39967683 100644
---- a/net/smc/Kconfig
-+++ b/net/smc/Kconfig
-@@ -2,6 +2,7 @@
- config SMC
- 	tristate "SMC socket protocol family"
- 	depends on INET && INFINIBAND
-+	depends on m || ISM != m
- 	help
- 	  SMC-R provides a "sockets over RDMA" solution making use of
- 	  RDMA over Converged Ethernet (RoCE) technology to upgrade
+ 	mutex_lock(&priv->state_lock);
+ 
+ 	new_params = chs->params;
+ 	new_params.scatter_fcs_en = enable;
+ 	err = mlx5e_safe_switch_params(priv, &new_params, mlx5e_set_rx_port_ts_wrap,
+-				       &new_params.scatter_fcs_en, true);
++				       &rx_ts_over_crc, true);
+ 	mutex_unlock(&priv->state_lock);
+ 	return err;
+ }
 -- 
 2.40.1
 
