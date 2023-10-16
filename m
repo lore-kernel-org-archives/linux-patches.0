@@ -1,58 +1,59 @@
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767CA30CED
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 17:29:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C06F286B9
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 17:35:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marliere.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WmvOiLzm"
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3b2b1af964dso2471269b6e.1
-        for <patches@lists.linux.dev>; Mon, 16 Oct 2023 10:29:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697477342; x=1698082142; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LmGiWDU9PXt+YAggrEnC/Bk/hTqS6qfb5Emwx53MAJs=;
-        b=WmvOiLzmG30x+N8ma703W78lb2ABju5Mbfs7L9WiNpRft5eRPzoibjODqywfg/ze+V
-         vd4mowkmTzxUqNaRxhB7dVOFMZKG1HSbDWqf013LRNqwGr47cdBY9Nwr8BTzGfn3uB2Y
-         0GcYfJuX8sQN+f0hxs34/41CZKZlQi3fVLhCnAgtnoRemwK+xjhfr27McR3IkfsFUv0f
-         o6zv28sa35xEzJOQNiuhjPxSI8w0I8i2oYl9SVX2lD/19rXRHjNW/1nmH6JEmdJIQe1L
-         3GshiQSopEfNIYiy9z6BhuUkwaRZExZEQxk03Z3cfnei0kGn3CbLnHRxYRlvXCYo818I
-         b6kQ==
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=marliere.net header.i=@marliere.net header.b="BMGguLUb"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-565334377d0so3551862a12.2
+        for <patches@lists.linux.dev>; Mon, 16 Oct 2023 10:35:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697477342; x=1698082142;
+        d=1e100.net; s=20230601; t=1697477747; x=1698082547;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LmGiWDU9PXt+YAggrEnC/Bk/hTqS6qfb5Emwx53MAJs=;
-        b=i386EOBsinKg/nIy/afjeK0RukWYAsMwJAOMII2TByre17vOozg+XDBnoZ15LzkjTt
-         ZVHo2uY8xg5MO6NhwFJDGCprAKNalj7yk9q2pqt3VGobxV+i/cWRDpENPxRHQA5kSGKU
-         9fwmmpeHNCVVMdhOR4cp9NajD4OIG624QZZDhtC4q+TqBMypH4QjKiUP2/5yclEpafZ7
-         roRuTKqdAmaZB72GXxUylk72qM0kIHV51wIHicG17+xlsLP3Z8HuNglVUBBt/imhiE9p
-         2GrlCX/3b6Uq4Ox5ZvxcF/sk8GyMa0+iRL/MGufK3ERE82aeaeAU8yccYWhv7zFCgWJ9
-         aW6A==
-X-Gm-Message-State: AOJu0YzIqKlYGAycJaJLDxQgnC+WG4xRMQJseNE9KGBEywkdZ/O8vcUF
-	KRyG+yDd1WJWt3uMmo1o8YfT7Q==
-X-Google-Smtp-Source: AGHT+IEn6oj3+OG3g3K+JmO7h2NGo1Dur2TSSO882ulntrX3L84+CAKXG0csoUB1lRoMEXAUKwCvDw==
-X-Received: by 2002:a05:6808:91a:b0:3a7:4987:d44 with SMTP id w26-20020a056808091a00b003a749870d44mr36147099oih.20.1697477342559;
-        Mon, 16 Oct 2023 10:29:02 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:9add:9fdd:7517:f866])
-        by smtp.gmail.com with ESMTPSA id g11-20020a63b14b000000b005657495b03bsm8391754pgp.38.2023.10.16.10.29.01
+         :subject:cc:to:from:dkim-signature:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=UxbgDYhtDgITZXcaVMlQEJg0tyXIrJSXCkcrtC+pdlM=;
+        b=Gd/fGIMO5169METRiDNRosn/YGSRezplT+K2CPKzWSb/DCZbJ8QnWfNLJxacnMikvG
+         aYaDmQfAghvqZiKe/URO5StfrJRq6/GIdZiWcIo34WpxU0wBdgd/FFugbBSIXCITdtBd
+         jrvZlzeBK9gJzUlDY/9U7WUgla50TG6x9y0MKBB30s1tjk0gTXgKGEmmoMSLSp11FvNd
+         RheNXwwaLuW3yWwxL5nRS5IVlKVxLajNK7TB0mxPJ+Bpe4uF4fmxOR9AeYhxIu00tdzE
+         JsNu7VgjtY5xILcjhUaoW4IBFhh8T/FlRvmoi5nF5drKV/K0tJxMkiAmyF2Y2jgZJf6Y
+         5tTg==
+X-Gm-Message-State: AOJu0YwXUUHI/d74rSx1N6vevDdnfh+DNjKjv8YHvJId9jKqAhlgLOJM
+	1jGQE7o/NyIUDpAcs4N7Btw=
+X-Google-Smtp-Source: AGHT+IEKwkdlXXxhYgZUG8hGzqwkJmCj3u8lxRpl1+XwIhIGdC9RC10aO3ERdMN3SiHX5UrAtNGo3Q==
+X-Received: by 2002:a05:6a20:4292:b0:16b:c9f2:b632 with SMTP id o18-20020a056a20429200b0016bc9f2b632mr31634664pzj.62.1697477747394;
+        Mon, 16 Oct 2023 10:35:47 -0700 (PDT)
+Received: from mail.marliere.net ([24.199.118.162])
+        by smtp.gmail.com with ESMTPSA id u14-20020a170902e5ce00b001bd28b9c3ddsm8707518plf.299.2023.10.16.10.35.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Oct 2023 10:29:02 -0700 (PDT)
-Date: Mon, 16 Oct 2023 11:29:00 -0600
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: patrice.chotard@foss.st.com, andersson@kernel.org, robh@kernel.org,
-	ndesaulniers@google.com, trix@redhat.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-remoteproc@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] remoteproc: st: Fix sometimes uninitialized ret in
- st_rproc_probe()
-Message-ID: <ZS1ytespl//DoY3Q@p14s>
-References: <20231012-st_remoteproc-fix-sometimes-uninit-v1-1-f64d0f2d5b37@kernel.org>
+        Mon, 16 Oct 2023 10:35:46 -0700 (PDT)
+Date: Mon, 16 Oct 2023 14:35:36 -0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marliere.net;
+	s=2023; t=1697477741;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UxbgDYhtDgITZXcaVMlQEJg0tyXIrJSXCkcrtC+pdlM=;
+	b=BMGguLUbaFpQ+At5H1FJmkE4yn747MAR0ZlZyC+GcQeITFo1MFMTcKLZnhipyalZIXyvng
+	hNgp+Q7lubjP931Jj3atQZ2iEnm0HeRXgdiS2j9HdR+RmdbjIHCXlNYadCMFekOnuN4MA9
+	/Dv34nnmeV9PqNbrlq460QdUppMSdAZOKTzx2tJv+mIZxQeRldIJEhq9G0OV/PohHX8NFO
+	lWFe+Wq9Tm5eyC/BEN8+vOywY6E4yAV75XZ0cwb/DUjuytlkqHh8xiot1uJ7Yv6lVOk6q3
+	60Q7GvTJcxDoptchqmN2ak/QZJ7BfhIZEZ0R2jJrczXUYH80Z0bthvVmPh9ueQ==
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=ricardo@marliere.net smtp.mailfrom=ricardo@marliere.net
+From: "Ricardo B. Marliere" <ricardo@marliere.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.5 000/191] 6.5.8-rc1 review
+Message-ID: <77pfg3wnxbtww4sgxm3fcc27nuxjuwbxiptav5nshfjoqntwrq@7rkpslvwqupc>
+References: <20231016084015.400031271@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,65 +62,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231012-st_remoteproc-fix-sometimes-uninit-v1-1-f64d0f2d5b37@kernel.org>
+In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 
-On Thu, Oct 12, 2023 at 10:04:01AM -0700, Nathan Chancellor wrote:
-> Clang warns (or errors with CONFIG_WERROR=y):
+On 23/10/16 10:39AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.5.8 release.
+> There are 191 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
->   drivers/remoteproc/st_remoteproc.c:357:6: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
->     357 |         if (!ddata->config)
->         |             ^~~~~~~~~~~~~~
->   drivers/remoteproc/st_remoteproc.c:442:9: note: uninitialized use occurs here
->     442 |         return ret;
->         |                ^~~
->   drivers/remoteproc/st_remoteproc.c:357:2: note: remove the 'if' if its condition is always false
->     357 |         if (!ddata->config)
->         |         ^~~~~~~~~~~~~~~~~~~
->     358 |                 goto free_rproc;
->         |                 ~~~~~~~~~~~~~~~
->   drivers/remoteproc/st_remoteproc.c:348:9: note: initialize the variable 'ret' to silence this warning
->     348 |         int ret, i;
->         |                ^
->         |                 = 0
->   1 error generated.
-> 
-> Set ret to -ENODEV, which seems to be a standard return code when
-> device_get_match_data() returns NULL.
-> 
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/1944
-> Fixes: 5c77ebcd05ac ("remoteproc: st: Use device_get_match_data()")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/remoteproc/st_remoteproc.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/remoteproc/st_remoteproc.c b/drivers/remoteproc/st_remoteproc.c
-> index b0638f984842..cb163766c56d 100644
-> --- a/drivers/remoteproc/st_remoteproc.c
-> +++ b/drivers/remoteproc/st_remoteproc.c
-> @@ -354,8 +354,10 @@ static int st_rproc_probe(struct platform_device *pdev)
->  	rproc->has_iommu = false;
->  	ddata = rproc->priv;
->  	ddata->config = (struct st_rproc_config *)device_get_match_data(dev);
-> -	if (!ddata->config)
-> +	if (!ddata->config) {
-> +		ret = -ENODEV;
+> Responses should be made by Wed, 18 Oct 2023 08:39:48 +0000.
+> Anything received after that time might be too late.
 
-Applied and thanks for fixing this.
+No regressions or build warnings on my system.
 
-Mathieu
+[    0.000000] Linux version 6.5.8-rc1+ (rbmarliere@debian) (Debian clang version 16.0.6 (15), GNU ld (GNU Binutils for Debian) 2.41) #2 SMP PREEMPT_DYNAMIC Mon Oct 16 14:24:07 -03 2023
 
->  		goto free_rproc;
-> +	}
->  
->  	platform_set_drvdata(pdev, rproc);
->  
-> 
-> ---
-> base-commit: 5c77ebcd05acf3789949c8a387df72381d949ca2
-> change-id: 20231012-st_remoteproc-fix-sometimes-uninit-7aff1bdb7349
-> 
-> Best regards,
-> -- 
-> Nathan Chancellor <nathan@kernel.org>
-> 
+
+Tested-by: Ricardo B. Marliere <ricardo@marliere.net>
+
+Thanks!
