@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0851A28F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BA91A289
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCSK0SHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857B0C433C7;
-	Mon, 16 Oct 2023 08:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDu7NgU7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E96FC433C8;
+	Mon, 16 Oct 2023 08:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446459;
-	bh=Z736QbVHUDF3qrK6i9NKZkblZIedGQgY1btUASBvLOo=;
+	s=korg; t=1697446462;
+	bh=rEAhh1bQbWVuS+eTF0GgPzBEaPyJ8jvnh97+/6+tqvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCSK0SHWDSIpiMjNf833iiJS2GLxQCeBRKVT1tsto19ITyFD6vwxQ8fO/923kRT9O
-	 Kw/hHDtycjjzASPjJGpWhPLvRkf1XD+PgmLudSZmtQ2hxujr7JucFrcCcecp1Tp8OB
-	 EXEwtbExgoZLjYdBNn7zfKcg8Yl4qt87hoAMvNc8=
+	b=tDu7NgU70qQCMb7VXb0764VBA+/lMNJ1xwoUZhfcZuAwNKyFUOQODYrtWf5wlM5xr
+	 wOgec6qYwdYE5kfpOdIlP/hlNO72yddYYof4523EStSkuMMmA5lMISY2x/mNFWl1C1
+	 UZsQJvyiw57CRlYehYCTHuTszociGkhz5I2DIOlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kobuk <m.kobuk@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/131] pinctrl: nuvoton: wpcm450: fix out of bounds write
-Date: Mon, 16 Oct 2023 10:40:16 +0200
-Message-ID: <20231016084000.888367115@linuxfoundation.org>
+Subject: [PATCH 6.1 034/131] drm/msm/dp: do not reinitialize phy unless retry during link training
+Date: Mon, 16 Oct 2023 10:40:17 +0200
+Message-ID: <20231016084000.912072611@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -38,54 +38,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Kobuk <m.kobuk@ispras.ru>
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-[ Upstream commit 87d315a34133edcb29c4cadbf196ec6c30dfd47b ]
+[ Upstream commit 0c1a2e69bcb506f48ebf94bd199bab0b93f66da2 ]
 
-Write into 'pctrl->gpio_bank' happens before the check for GPIO index
-validity, so out of bounds write may happen.
+DP PHY re-initialization done using dp_ctrl_reinitialize_mainlink() will
+cause PLL unlocked initially and then PLL gets locked at the end of
+initialization. PLL_UNLOCKED interrupt will fire during this time if the
+interrupt mask is enabled.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+However currently DP driver link training implementation incorrectly
+re-initializes PHY unconditionally during link training as the PHY was
+already configured in dp_ctrl_enable_mainlink_clocks().
 
-Fixes: a1d1e0e3d80a ("pinctrl: nuvoton: Add driver for WPCM450")
-Signed-off-by: Mikhail Kobuk <m.kobuk@ispras.ru>
-Reviewed-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Reviewed-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Link: https://lore.kernel.org/r/20230825101532.6624-1-m.kobuk@ispras.ru
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fix this by re-initializing the PHY only if the previous link training
+failed.
+
+[drm:dp_aux_isr] *ERROR* Unexpected DP AUX IRQ 0x01000000 when not busy
+
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/30
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/551847/
+Link: https://lore.kernel.org/r/1691533190-19335-1-git-send-email-quic_khsieh@quicinc.com
+[quic_abhinavk@quicinc.com: added line break in commit text]
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-index 8193b92da4031..274e01d5212d5 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-@@ -1041,13 +1041,13 @@ static int wpcm450_gpio_register(struct platform_device *pdev,
- 		if (ret < 0)
- 			return ret;
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index dd26ca651a054..103eef9f059a0 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1711,13 +1711,6 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
+ 		return rc;
  
--		gpio = &pctrl->gpio_bank[reg];
--		gpio->pctrl = pctrl;
+ 	while (--link_train_max_retries) {
+-		rc = dp_ctrl_reinitialize_mainlink(ctrl);
+-		if (rc) {
+-			DRM_ERROR("Failed to reinitialize mainlink. rc=%d\n",
+-					rc);
+-			break;
+-		}
 -
- 		if (reg >= WPCM450_NUM_BANKS)
- 			return dev_err_probe(dev, -EINVAL,
- 					     "GPIO index %d out of range!\n", reg);
- 
-+		gpio = &pctrl->gpio_bank[reg];
-+		gpio->pctrl = pctrl;
+ 		training_step = DP_TRAINING_NONE;
+ 		rc = dp_ctrl_setup_main_link(ctrl, &training_step);
+ 		if (rc == 0) {
+@@ -1769,6 +1762,12 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
+ 			/* stop link training before start re training  */
+ 			dp_ctrl_clear_training_pattern(ctrl);
+ 		}
 +
- 		bank = &wpcm450_banks[reg];
- 		gpio->bank = bank;
++		rc = dp_ctrl_reinitialize_mainlink(ctrl);
++		if (rc) {
++			DRM_ERROR("Failed to reinitialize mainlink. rc=%d\n", rc);
++			break;
++		}
+ 	}
  
+ 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
 -- 
 2.40.1
 
