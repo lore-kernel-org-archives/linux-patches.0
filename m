@@ -1,91 +1,107 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CF12770A
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 21:33:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ek1TZK+5"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3574c225c14so7094295ab.0
-        for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:33:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1697491988; x=1698096788; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=v1cmLjYtXmkTukmFQ8B0vWtZyFMXkEqPE8NrYHJmnr0=;
-        b=ek1TZK+59ulp9VrOGmZ8cxukQN4k8JJqQzvXJ8dIk4ovCMC9KFNd9iJd+3dyQ4w+em
-         lYcUktCRVQfPHkJmv8EyiA+GQ4cdT0sLlx+vdak/U/WqIE9/4Gllok4h3Urkmo2Ebz8/
-         /8QPF4zla9DKORMcDU261UmR0grWH28xwzkb8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697491988; x=1698096788;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v1cmLjYtXmkTukmFQ8B0vWtZyFMXkEqPE8NrYHJmnr0=;
-        b=T+94kbQDlo0hG+MhZNMiJfkNMHqTu3Vjn14b9I+1f4EIItk32iWSmEfmRyKI8RXC5o
-         lbBZy47CFL+G1Dw8cSr5OYec3wNvY5e77PbDDUBhZtnnjIbcb+UjcRqkOPA2uqa+Izyn
-         AF3ECC3yoPJQvMyH2+rKwPNJmmBq5nkqlY8N1YZ/Oh+UZKk1e35Z086lhbiSnp09SlWk
-         dMtCbDD9JPT458i4EmzJYXF3BMBvRn100wkYQLmP3gjZwX8ukbSq5tKFq7w3Vw1eWuSi
-         HFxF2G7VRnWNtmz2sdB9NKx5qCmrSPlHlmKOtadkevTplrX4uzxbJkbVmdWfQBamj9Cl
-         pkgw==
-X-Gm-Message-State: AOJu0YyrsmxmLnMFoW+pImUAO41/ONgwmjoX5/qObbmcnRExCuBlF60X
-	qLmbFF5A6FjlNuTbXuVWvF8pMw==
-X-Google-Smtp-Source: AGHT+IFRgiYejT5HFoheHPppn0K20RqywRgI4lH2JKT5HNjMtQZgmHUAKp0ePrq/e+KvjLnVDxvycQ==
-X-Received: by 2002:a92:5213:0:b0:349:4e1f:e9a0 with SMTP id g19-20020a925213000000b003494e1fe9a0mr675550ilb.2.1697491987759;
-        Mon, 16 Oct 2023 14:33:07 -0700 (PDT)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id k8-20020a056638370800b0045c25ef9a56sm58767jav.21.2023.10.16.14.33.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Oct 2023 14:33:07 -0700 (PDT)
-Message-ID: <fabe5bf2-e870-44c5-b4dc-79fe44a2288a@linuxfoundation.org>
-Date: Mon, 16 Oct 2023 15:33:06 -0600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526372770A
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 21:36:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qsVFv-0003Gk-Bs; Mon, 16 Oct 2023 23:36:07 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qsVFu-002Ahm-JP; Mon, 16 Oct 2023 23:36:06 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qsVFu-00HXpm-AB; Mon, 16 Oct 2023 23:36:06 +0200
+Date: Mon, 16 Oct 2023 23:36:02 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 010/102] platform/x86: hp-wmi:: Mark driver struct
+ with __refdata to prevent section mismatch warning
+Message-ID: <20231016213602.b6l6g6iquil3ojes@pengutronix.de>
+References: <20231016083953.689300946@linuxfoundation.org>
+ <20231016083953.964212636@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/102] 5.15.136-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, Shuah Khan <skhan@linuxfoundation.org>
-References: <20231016083953.689300946@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bdldqitun2sd6lde"
+Content-Disposition: inline
+In-Reply-To: <20231016083953.964212636@linuxfoundation.org>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: patches@lists.linux.dev
 
-On 10/16/23 02:39, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.136 release.
-> There are 102 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 18 Oct 2023 08:39:38 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.136-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
 
-Compiled and booted on my test system. No dmesg regressions.
+--bdldqitun2sd6lde
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+On Mon, Oct 16, 2023 at 10:40:09AM +0200, Greg Kroah-Hartman wrote:
+> 5.15-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+>=20
+> [ Upstream commit 5b44abbc39ca15df80d0da4756078c98c831090f ]
+>=20
+> As described in the added code comment, a reference to .exit.text is ok
+> for drivers registered via module_platform_driver_probe(). Make this
+> explicit to prevent a section mismatch warning:
+>=20
+> 	WARNING: modpost: drivers/platform/x86/hp/hp-wmi: section mismatch in re=
+ference: hp_wmi_driver+0x8 (section: .data) -> hp_wmi_bios_remove (section:=
+ .exit.text)
+>=20
+> Fixes: c165b80cfecc ("hp-wmi: fix handling of platform device")
+> Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+> Link: https://lore.kernel.org/r/20231004111624.2667753-1-u.kleine-koenig@=
+pengutronix.de
+> Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+> Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-thanks,
--- Shuah
+while backporting this patch shouldn't hurt, the warning triggers only
+if you also backport commit f177cd0c15fc ("modpost: Don't let "driver"s
+reference .exit.*"). As I assume you don't, there is no need to apply
+this patch to 5.15.x (or other stable releases).
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--bdldqitun2sd6lde
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmUtrMEACgkQj4D7WH0S
+/k55JggAoFbWotEc+q8qjCWRL295cfmyUDfFtr9My3EDyI7tkDX90UNwP43+KnUY
+8OyphB0sHDvDKcWbkpj7N5aIWih/FANSDGkLmGbvZNV6tMj7pvMfrbHHN6rNl6e7
+nBoZVokpMpda/GELH7fJnz5qM/IPY0I4PXdxzaG98U494Q32mzQaEXEnumZoFYlI
+o39o/JQKxarpdJ40LX8O8sD1Abt2AYRpmLP+B5SGThqRR5NOgrCjzIJjHwpdtYF+
+x+gidYnm2NZ//Xm81HT2Z+Seeuz6pDpTsDCBW+ROl902fhQmYIQMD2sLqb6j9Udj
+4uE8psIAmZLxuvzyCKyy6KA1emLgsA==
+=YN7/
+-----END PGP SIGNATURE-----
+
+--bdldqitun2sd6lde--
