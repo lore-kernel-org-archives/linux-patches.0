@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CBF14288
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4D514288
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/H91Fn1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA050C433C8;
-	Mon, 16 Oct 2023 08:43:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpCr4apw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7ACC433C8;
+	Mon, 16 Oct 2023 08:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445794;
-	bh=qLqogcf7WKN5z+6Zh2GnTgM9GabfPWDnhs4/cpDNIgw=;
+	s=korg; t=1697445797;
+	bh=9gmUiNBQKKUa5ijAsxo4sTgcCIlfGpJ/FfCccIVy67w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/H91Fn139L/RuUWbNtIo67Amj+L2+94v8AosPtLVG+UhXXLWQ8GbiDqBZfH30TNB
-	 pitjq+P4GOpyd7QYoP53fPY+prmRe5opK4mZ9LUV5SqhImomSnUVIjVGMmB0GH1/KK
-	 DY+58jLn6zY5iol62PshOJY6NKLXwUzIb4CUCbP8=
+	b=gpCr4apw4hXVFroWgL6SdD/JiVE6OKOywwqAQ+WiuMQxLBW8Pr3wegsLZItK8xaBK
+	 S3hdWtlB5hkAf2WGVLwYAvKdBWqO1grlwzGvFT6iD/uOOWVU3RY99B4yqFqO/6CEgd
+	 bsLX0LIkQ/Mww1FH2cQenUvI3idgcqsihkPFLT1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Ooi, Chin Hao" <chin.hao.ooi@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Ooi
-Subject: [PATCH 5.15 001/102] iommu/vt-d: Avoid memory allocation in iommu_suspend()
-Date: Mon, 16 Oct 2023 10:40:00 +0200
-Message-ID: <20231016083953.729618812@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 010/102] platform/x86: hp-wmi:: Mark driver struct with __refdata to prevent section mismatch warning
+Date: Mon, 16 Oct 2023 10:40:09 +0200
+Message-ID: <20231016083953.964212636@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -40,131 +36,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 59df44bfb0ca4c3ee1f1c3c5d0ee8e314844799e ]
+[ Upstream commit 5b44abbc39ca15df80d0da4756078c98c831090f ]
 
-The iommu_suspend() syscore suspend callback is invoked with IRQ disabled.
-Allocating memory with the GFP_KERNEL flag may re-enable IRQs during
-the suspend callback, which can cause intermittent suspend/hibernation
-problems with the following kernel traces:
+As described in the added code comment, a reference to .exit.text is ok
+for drivers registered via module_platform_driver_probe(). Make this
+explicit to prevent a section mismatch warning:
 
-Calling iommu_suspend+0x0/0x1d0
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 15 at kernel/time/timekeeping.c:868 ktime_get+0x9b/0xb0
-...
-CPU: 0 PID: 15 Comm: rcu_preempt Tainted: G     U      E      6.3-intel #r1
-RIP: 0010:ktime_get+0x9b/0xb0
-...
-Call Trace:
- <IRQ>
- tick_sched_timer+0x22/0x90
- ? __pfx_tick_sched_timer+0x10/0x10
- __hrtimer_run_queues+0x111/0x2b0
- hrtimer_interrupt+0xfa/0x230
- __sysvec_apic_timer_interrupt+0x63/0x140
- sysvec_apic_timer_interrupt+0x7b/0xa0
- </IRQ>
- <TASK>
- asm_sysvec_apic_timer_interrupt+0x1f/0x30
-...
-------------[ cut here ]------------
-Interrupts enabled after iommu_suspend+0x0/0x1d0
-WARNING: CPU: 0 PID: 27420 at drivers/base/syscore.c:68 syscore_suspend+0x147/0x270
-CPU: 0 PID: 27420 Comm: rtcwake Tainted: G     U  W   E      6.3-intel #r1
-RIP: 0010:syscore_suspend+0x147/0x270
-...
-Call Trace:
- <TASK>
- hibernation_snapshot+0x25b/0x670
- hibernate+0xcd/0x390
- state_store+0xcf/0xe0
- kobj_attr_store+0x13/0x30
- sysfs_kf_write+0x3f/0x50
- kernfs_fop_write_iter+0x128/0x200
- vfs_write+0x1fd/0x3c0
- ksys_write+0x6f/0xf0
- __x64_sys_write+0x1d/0x30
- do_syscall_64+0x3b/0x90
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
+	WARNING: modpost: drivers/platform/x86/hp/hp-wmi: section mismatch in reference: hp_wmi_driver+0x8 (section: .data) -> hp_wmi_bios_remove (section: .exit.text)
 
-Given that only 4 words memory is needed, avoid the memory allocation in
-iommu_suspend().
-
-CC: stable@kernel.org
-Fixes: 33e07157105e ("iommu/vt-d: Avoid GFP_ATOMIC where it is not needed")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Tested-by: Ooi, Chin Hao <chin.hao.ooi@intel.com>
-Link: https://lore.kernel.org/r/20230921093956.234692-1-rui.zhang@intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20230925120417.55977-2-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: c165b80cfecc ("hp-wmi: fix handling of platform device")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231004111624.2667753-1-u.kleine-koenig@pengutronix.de
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 16 ----------------
- include/linux/intel-iommu.h |  2 +-
- 2 files changed, 1 insertion(+), 17 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 29538471c528e..b3aa6ce9d3d7d 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -3564,13 +3564,6 @@ static int iommu_suspend(void)
- 	struct intel_iommu *iommu = NULL;
- 	unsigned long flag;
+diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+index 8c845d263429f..be99a78e1bb8d 100644
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -1076,7 +1076,13 @@ static const struct dev_pm_ops hp_wmi_pm_ops = {
+ 	.restore  = hp_wmi_resume_handler,
+ };
  
--	for_each_active_iommu(iommu, drhd) {
--		iommu->iommu_state = kcalloc(MAX_SR_DMAR_REGS, sizeof(u32),
--					     GFP_KERNEL);
--		if (!iommu->iommu_state)
--			goto nomem;
--	}
--
- 	iommu_flush_all();
- 
- 	for_each_active_iommu(iommu, drhd) {
-@@ -3590,12 +3583,6 @@ static int iommu_suspend(void)
- 		raw_spin_unlock_irqrestore(&iommu->register_lock, flag);
- 	}
- 	return 0;
--
--nomem:
--	for_each_active_iommu(iommu, drhd)
--		kfree(iommu->iommu_state);
--
--	return -ENOMEM;
- }
- 
- static void iommu_resume(void)
-@@ -3627,9 +3614,6 @@ static void iommu_resume(void)
- 
- 		raw_spin_unlock_irqrestore(&iommu->register_lock, flag);
- 	}
--
--	for_each_active_iommu(iommu, drhd)
--		kfree(iommu->iommu_state);
- }
- 
- static struct syscore_ops iommu_syscore_ops = {
-diff --git a/include/linux/intel-iommu.h b/include/linux/intel-iommu.h
-index 0cf00786a164f..e00857c4efc28 100644
---- a/include/linux/intel-iommu.h
-+++ b/include/linux/intel-iommu.h
-@@ -604,7 +604,7 @@ struct intel_iommu {
- 	struct iopf_queue *iopf_queue;
- 	unsigned char iopfq_name[16];
- 	struct q_inval  *qi;            /* Queued invalidation info */
--	u32 *iommu_state; /* Store iommu states between suspend and resume.*/
-+	u32 iommu_state[MAX_SR_DMAR_REGS]; /* Store iommu states between suspend and resume.*/
- 
- #ifdef CONFIG_IRQ_REMAP
- 	struct ir_table *ir_table;	/* Interrupt remapping info */
+-static struct platform_driver hp_wmi_driver = {
++/*
++ * hp_wmi_bios_remove() lives in .exit.text. For drivers registered via
++ * module_platform_driver_probe() this is ok because they cannot get unbound at
++ * runtime. So mark the driver struct with __refdata to prevent modpost
++ * triggering a section mismatch warning.
++ */
++static struct platform_driver hp_wmi_driver __refdata = {
+ 	.driver = {
+ 		.name = "hp-wmi",
+ 		.pm = &hp_wmi_pm_ops,
 -- 
 2.40.1
 
