@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B2928DB6
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CD628DB6
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYAWAykH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BD8C433C8;
-	Mon, 16 Oct 2023 14:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6pkuOob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8873FC433C7;
+	Mon, 16 Oct 2023 14:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467804;
-	bh=vzPSnOqMhc6YMbplDSRQd2RCS1U7NN4b7o0SwldkvS8=;
+	s=korg; t=1697467829;
+	bh=1jaL4/e4QJL6AzHtR5V0/L1qeqwHKMfYlzb0rQnvJOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IYAWAykH41baP47tnJ+rNb28U+alK93h5ECJwGGLu9+Wbu/hGAw+pw0pCHk8mRgn/
-	 h8BBFm6emOCeQqP38x7KWrQmw4K7gekeC1qLxxAb6vp5IQxmdGmEhXpqImB/i84Rz+
-	 NAGCHDB9zTb2w6ODsFeWIO1XwseBlouRA9oAoSms=
+	b=n6pkuOobK+6DNLJ8IE5S4+8WoH77vzyLeOB0bxRvJBdgFNR00C+If516imzSW3j9W
+	 QvRfzjlVDobJh1qWmgPvRLJc5o0DOiGtp7L1ujzCzTKjNTWFzkuZ5/EgpUpPCL5PJE
+	 mLIYiN1WdMedHQJpGhCdk+JmDN2RM7AI4fQ60ma4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.5 098/191] dmaengine: stm32-mdma: set in_flight_bytes in case CRQA flag is set
-Date: Mon, 16 Oct 2023 10:41:23 +0200
-Message-ID: <20231016084017.678103893@linuxfoundation.org>
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.5 100/191] xhci: track port suspend state correctly in unsuccessful resume cases
+Date: Mon, 16 Oct 2023 10:41:25 +0200
+Message-ID: <20231016084017.724199548@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -41,68 +41,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 584970421725b7805db84714b857851fdf7203a9 upstream.
+commit d7cdfc319b2bcf6899ab0a05eec0958bc802a9a1 upstream.
 
-CRQA flag is set by hardware when the channel request become active and
-the channel is enabled. It is cleared by hardware, when the channel request
-is completed.
-So when it is set, it means MDMA is transferring bytes.
-This information is useful in case of STM32 DMA and MDMA chaining,
-especially when the user pauses DMA before stopping it, to trig one last
-MDMA transfer to get the latest bytes of the SRAM buffer to the
-destination buffer.
-STM32 DCMI driver can then use this to know if the last MDMA transfer in
-case of chaining is done.
+xhci-hub.c tracks suspended ports in a suspended_port bitfield.
+This is checked when responding to a Get_Status(PORT) request to see if a
+port in running U0 state was recently resumed, and adds the required
+USB_PORT_STAT_C_SUSPEND change bit in those cases.
 
-Fixes: 696874322771 ("dmaengine: stm32-mdma: add support to be triggered by STM32 DMA")
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+The suspended_port bit was left uncleared if a device is disconnected
+during suspend. The bit remained set even when a new device was connected
+and enumerated. The set bit resulted in a incorrect Get_Status(PORT)
+response with a bogus USB_PORT_STAT_C_SUSPEND change
+bit set once the new device reached U0 link state.
+
+USB_PORT_STAT_C_SUSPEND change bit is only used for USB2 ports, but
+xhci-hub keeps track of both USB2 and USB3 suspended ports.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231004163531.2864160-3-amelie.delaunay@foss.st.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reported-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Closes: https://lore.kernel.org/linux-usb/d68aa806-b26a-0e43-42fb-b8067325e967@quicinc.com/
+Fixes: 1d5810b6923c ("xhci: Rework port suspend structures for limited ports.")
+Tested-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230915143108.1532163-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/stm32-mdma.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/usb/host/xhci-hub.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/drivers/dma/stm32-mdma.c
-+++ b/drivers/dma/stm32-mdma.c
-@@ -1319,7 +1319,8 @@ static int stm32_mdma_slave_config(struc
+--- a/drivers/usb/host/xhci-hub.c
++++ b/drivers/usb/host/xhci-hub.c
+@@ -1062,19 +1062,19 @@ static void xhci_get_usb3_port_status(st
+ 		*status |= USB_PORT_STAT_C_CONFIG_ERROR << 16;
  
- static size_t stm32_mdma_desc_residue(struct stm32_mdma_chan *chan,
- 				      struct stm32_mdma_desc *desc,
--				      u32 curr_hwdesc)
-+				      u32 curr_hwdesc,
-+				      struct dma_tx_state *state)
- {
- 	struct stm32_mdma_device *dmadev = stm32_mdma_get_dev(chan);
- 	struct stm32_mdma_hwdesc *hwdesc;
-@@ -1343,6 +1344,10 @@ static size_t stm32_mdma_desc_residue(st
- 	cbndtr = stm32_mdma_read(dmadev, STM32_MDMA_CBNDTR(chan->id));
- 	residue += cbndtr & STM32_MDMA_CBNDTR_BNDT_MASK;
+ 	/* USB3 specific wPortStatus bits */
+-	if (portsc & PORT_POWER) {
++	if (portsc & PORT_POWER)
+ 		*status |= USB_SS_PORT_STAT_POWER;
+-		/* link state handling */
+-		if (link_state == XDEV_U0)
+-			bus_state->suspended_ports &= ~(1 << portnum);
+-	}
  
-+	state->in_flight_bytes = 0;
-+	if (chan->chan_config.m2m_hw && (cisr & STM32_MDMA_CISR_CRQA))
-+		state->in_flight_bytes = cbndtr & STM32_MDMA_CBNDTR_BNDT_MASK;
-+
- 	if (!chan->mem_burst)
- 		return residue;
+-	/* remote wake resume signaling complete */
+-	if (bus_state->port_remote_wakeup & (1 << portnum) &&
++	/* no longer suspended or resuming */
++	if (link_state != XDEV_U3 &&
+ 	    link_state != XDEV_RESUME &&
+ 	    link_state != XDEV_RECOVERY) {
+-		bus_state->port_remote_wakeup &= ~(1 << portnum);
+-		usb_hcd_end_port_resume(&hcd->self, portnum);
++		/* remote wake resume signaling complete */
++		if (bus_state->port_remote_wakeup & (1 << portnum)) {
++			bus_state->port_remote_wakeup &= ~(1 << portnum);
++			usb_hcd_end_port_resume(&hcd->self, portnum);
++		}
++		bus_state->suspended_ports &= ~(1 << portnum);
+ 	}
  
-@@ -1372,11 +1377,10 @@ static enum dma_status stm32_mdma_tx_sta
+ 	xhci_hub_report_usb3_link_state(xhci, status, portsc);
+@@ -1131,6 +1131,7 @@ static void xhci_get_usb2_port_status(st
+ 			usb_hcd_end_port_resume(&port->rhub->hcd->self, portnum);
+ 		}
+ 		port->rexit_active = 0;
++		bus_state->suspended_ports &= ~(1 << portnum);
+ 	}
+ }
  
- 	vdesc = vchan_find_desc(&chan->vchan, cookie);
- 	if (chan->desc && cookie == chan->desc->vdesc.tx.cookie)
--		residue = stm32_mdma_desc_residue(chan, chan->desc,
--						  chan->curr_hwdesc);
-+		residue = stm32_mdma_desc_residue(chan, chan->desc, chan->curr_hwdesc, state);
- 	else if (vdesc)
--		residue = stm32_mdma_desc_residue(chan,
--						  to_stm32_mdma_desc(vdesc), 0);
-+		residue = stm32_mdma_desc_residue(chan, to_stm32_mdma_desc(vdesc), 0, state);
-+
- 	dma_set_residue(state, residue);
- 
- 	spin_unlock_irqrestore(&chan->vchan.lock, flags);
 
 
