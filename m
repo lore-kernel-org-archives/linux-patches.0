@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BA128E01
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E70A262AC
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYm9ooVS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5749CC433C9;
-	Mon, 16 Oct 2023 14:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYmn63v3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09928C433C7;
+	Mon, 16 Oct 2023 14:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468187;
-	bh=X+NSZ6BDVkYsFYBh6oyNxQSAGdMYv8jaUj4VHriCXhs=;
+	s=korg; t=1697468192;
+	bh=UhQx8wkFMMiYM+dGxZ6I454AtmRVA3bFfGjTVREraF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYm9ooVSo4fCdaOGETeGpQNR6599Te/PYpInSXuItaAUJQiio/IPYUoa3UsMiMTxK
-	 pQ5PdUMApAbdr3L86ZAgSRl6i0xknpQvuZC8EzdEhYocXKzRl3CJP3BgusQhAqaTLj
-	 EZC0wCeNLIXgN1w95BsDRm6QrUs8qgpsMCJVOMQo=
+	b=CYmn63v39bl44qrkR/KHviIevtD4j4VXxsk0TlJT3v4lKX3241XacD+qM/nrBTM4r
+	 GHINrIHkgtDa2CyckofRsGdBBipAkd/LfoIgOrEvQ+WrKO4792stkQ46JWcJP7LaGD
+	 C1ekj5QBdO87q3UEZjbUWUH5RwaC+YQ2u8sLR+3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Jiexun Wang <wangjiexun@tinylab.org>,
-	Samuel Holland <samuel@sholland.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.5 172/191] RISC-V: Fix wrong use of CONFIG_HAVE_SOFTIRQ_ON_OWN_STACK
-Date: Mon, 16 Oct 2023 10:42:37 +0200
-Message-ID: <20231016084019.390188715@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ashok Raj <ashok.raj@intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.5 181/191] Revert "x86/smp: Put CPUs into INIT on shutdown if possible"
+Date: Mon, 16 Oct 2023 10:42:46 +0200
+Message-ID: <20231016084019.598367157@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -43,62 +42,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiexun Wang <wangjiexun@tinylab.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 07a27665754bf649b5de8e55c655e4d6837406be upstream.
+commit fbe1bf1e5ff1e3b298420d7a8434983ef8d72bd1 upstream.
 
-If configuration options SOFTIRQ_ON_OWN_STACK and PREEMPT_RT
-are enabled simultaneously under RISC-V architecture,
-it will result in a compilation failure:
+This reverts commit 45e34c8af58f23db4474e2bfe79183efec09a18b, and the
+two subsequent fixes to it:
 
-arch/riscv/kernel/irq.c:64:6: error: redefinition of 'do_softirq_own_stack'
-   64 | void do_softirq_own_stack(void)
-      |      ^~~~~~~~~~~~~~~~~~~~
-In file included from ./arch/riscv/include/generated/asm/softirq_stack.h:1,
-                 from arch/riscv/kernel/irq.c:15:
-./include/asm-generic/softirq_stack.h:8:20: note: previous definition of 'do_softirq_own_stack' was here
-    8 | static inline void do_softirq_own_stack(void)
-      |                    ^~~~~~~~~~~~~~~~~~~~
+  3f874c9b2aae ("x86/smp: Don't send INIT to non-present and non-booted CPUs")
+  b1472a60a584 ("x86/smp: Don't send INIT to boot CPU")
 
-After changing CONFIG_HAVE_SOFTIRQ_ON_OWN_STACK to CONFIG_SOFTIRQ_ON_OWN_STACK,
-compilation can be successful.
+because it seems to result in hung machines at shutdown.  Particularly
+some Dell machines, but Thomas says
 
-Fixes: dd69d07a5a6c ("riscv: stack: Support HAVE_SOFTIRQ_ON_OWN_STACK")
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Signed-off-by: Jiexun Wang <wangjiexun@tinylab.org>
-Reviewed-by: Samuel Holland <samuel@sholland.org>
-Link: https://lore.kernel.org/r/20230913052940.374686-1-wangjiexun@tinylab.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+ "The rest seems to be Lenovo and Sony with Alderlake/Raptorlake CPUs -
+  at least that's what I could figure out from the various bug reports.
+
+  I don't know which CPUs the DELL machines have, so I can't say it's a
+  pattern.
+
+  I agree with the revert for now"
+
+Ashok Raj chimes in:
+
+ "There was a report (probably this same one), and it turns out it was a
+  bug in the BIOS SMI handler.
+
+  The client BIOS's were waiting for the lowest APICID to be the SMI
+  rendevous master. If this is MeteorLake, the BSP wasn't the one with
+  the lowest APIC and it triped here.
+
+  The BIOS change is also being pushed to others for assimilation :)
+
+  Server BIOS's had this correctly for a while now"
+
+and it does look likely to be some bad interaction between SMI and the
+non-BSP cores having put into INIT (and thus unresponsive until reset).
+
+Link: https://bbs.archlinux.org/viewtopic.php?pid=2124429
+Link: https://www.reddit.com/r/openSUSE/comments/16qq99b/tumbleweed_shutdown_did_not_finish_completely/
+Link: https://forum.artixlinux.org/index.php/topic,5997.0.html
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2241279
+Acked-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/irq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/smp.h |    2 --
+ arch/x86/kernel/smp.c      |   39 +++++++--------------------------------
+ arch/x86/kernel/smpboot.c  |   27 ---------------------------
+ 3 files changed, 7 insertions(+), 61 deletions(-)
 
-diff --git a/arch/riscv/kernel/irq.c b/arch/riscv/kernel/irq.c
-index a8efa053c4a5..9cc0a7669271 100644
---- a/arch/riscv/kernel/irq.c
-+++ b/arch/riscv/kernel/irq.c
-@@ -60,7 +60,7 @@ static void init_irq_stacks(void)
- }
- #endif /* CONFIG_VMAP_STACK */
+--- a/arch/x86/include/asm/smp.h
++++ b/arch/x86/include/asm/smp.h
+@@ -134,8 +134,6 @@ void native_send_call_func_ipi(const str
+ void native_send_call_func_single_ipi(int cpu);
+ void x86_idle_thread_init(unsigned int cpu, struct task_struct *idle);
  
--#ifdef CONFIG_HAVE_SOFTIRQ_ON_OWN_STACK
-+#ifdef CONFIG_SOFTIRQ_ON_OWN_STACK
- void do_softirq_own_stack(void)
+-bool smp_park_other_cpus_in_init(void);
+-
+ void smp_store_boot_cpu_info(void);
+ void smp_store_cpu_info(int id);
+ 
+--- a/arch/x86/kernel/smp.c
++++ b/arch/x86/kernel/smp.c
+@@ -131,7 +131,7 @@ static int smp_stop_nmi_callback(unsigne
+ }
+ 
+ /*
+- * Disable virtualization, APIC etc. and park the CPU in a HLT loop
++ * this function calls the 'stop' function on all other CPUs in the system.
+  */
+ DEFINE_IDTENTRY_SYSVEC(sysvec_reboot)
  {
- #ifdef CONFIG_IRQ_STACKS
-@@ -92,7 +92,7 @@ void do_softirq_own_stack(void)
- #endif
- 		__do_softirq();
- }
--#endif /* CONFIG_HAVE_SOFTIRQ_ON_OWN_STACK */
-+#endif /* CONFIG_SOFTIRQ_ON_OWN_STACK */
+@@ -172,17 +172,13 @@ static void native_stop_other_cpus(int w
+ 	 * 2) Wait for all other CPUs to report that they reached the
+ 	 *    HLT loop in stop_this_cpu()
+ 	 *
+-	 * 3) If the system uses INIT/STARTUP for CPU bringup, then
+-	 *    send all present CPUs an INIT vector, which brings them
+-	 *    completely out of the way.
++	 * 3) If #2 timed out send an NMI to the CPUs which did not
++	 *    yet report
+ 	 *
+-	 * 4) If #3 is not possible and #2 timed out send an NMI to the
+-	 *    CPUs which did not yet report
+-	 *
+-	 * 5) Wait for all other CPUs to report that they reached the
++	 * 4) Wait for all other CPUs to report that they reached the
+ 	 *    HLT loop in stop_this_cpu()
+ 	 *
+-	 * #4 can obviously race against a CPU reaching the HLT loop late.
++	 * #3 can obviously race against a CPU reaching the HLT loop late.
+ 	 * That CPU will have reported already and the "have all CPUs
+ 	 * reached HLT" condition will be true despite the fact that the
+ 	 * other CPU is still handling the NMI. Again, there is no
+@@ -198,7 +194,7 @@ static void native_stop_other_cpus(int w
+ 		/*
+ 		 * Don't wait longer than a second for IPI completion. The
+ 		 * wait request is not checked here because that would
+-		 * prevent an NMI/INIT shutdown in case that not all
++		 * prevent an NMI shutdown attempt in case that not all
+ 		 * CPUs reach shutdown state.
+ 		 */
+ 		timeout = USEC_PER_SEC;
+@@ -206,27 +202,7 @@ static void native_stop_other_cpus(int w
+ 			udelay(1);
+ 	}
  
- #else
- static void init_irq_stacks(void) {}
--- 
-2.42.0
-
+-	/*
+-	 * Park all other CPUs in INIT including "offline" CPUs, if
+-	 * possible. That's a safe place where they can't resume execution
+-	 * of HLT and then execute the HLT loop from overwritten text or
+-	 * page tables.
+-	 *
+-	 * The only downside is a broadcast MCE, but up to the point where
+-	 * the kexec() kernel brought all APs online again an MCE will just
+-	 * make HLT resume and handle the MCE. The machine crashes and burns
+-	 * due to overwritten text, page tables and data. So there is a
+-	 * choice between fire and frying pan. The result is pretty much
+-	 * the same. Chose frying pan until x86 provides a sane mechanism
+-	 * to park a CPU.
+-	 */
+-	if (smp_park_other_cpus_in_init())
+-		goto done;
+-
+-	/*
+-	 * If park with INIT was not possible and the REBOOT_VECTOR didn't
+-	 * take all secondary CPUs offline, try with the NMI.
+-	 */
++	/* if the REBOOT_VECTOR didn't work, try with the NMI */
+ 	if (!cpumask_empty(&cpus_stop_mask)) {
+ 		/*
+ 		 * If NMI IPI is enabled, try to register the stop handler
+@@ -249,7 +225,6 @@ static void native_stop_other_cpus(int w
+ 			udelay(1);
+ 	}
+ 
+-done:
+ 	local_irq_save(flags);
+ 	disable_local_APIC();
+ 	mcheck_cpu_clear(this_cpu_ptr(&cpu_info));
+--- a/arch/x86/kernel/smpboot.c
++++ b/arch/x86/kernel/smpboot.c
+@@ -1346,33 +1346,6 @@ void arch_thaw_secondary_cpus_end(void)
+ 	cache_aps_init();
+ }
+ 
+-bool smp_park_other_cpus_in_init(void)
+-{
+-	unsigned int cpu, this_cpu = smp_processor_id();
+-	unsigned int apicid;
+-
+-	if (apic->wakeup_secondary_cpu_64 || apic->wakeup_secondary_cpu)
+-		return false;
+-
+-	/*
+-	 * If this is a crash stop which does not execute on the boot CPU,
+-	 * then this cannot use the INIT mechanism because INIT to the boot
+-	 * CPU will reset the machine.
+-	 */
+-	if (this_cpu)
+-		return false;
+-
+-	for_each_cpu_and(cpu, &cpus_booted_once_mask, cpu_present_mask) {
+-		if (cpu == this_cpu)
+-			continue;
+-		apicid = apic->cpu_present_to_apicid(cpu);
+-		if (apicid == BAD_APICID)
+-			continue;
+-		send_init_sequence(apicid);
+-	}
+-	return true;
+-}
+-
+ /*
+  * Early setup to make printk work.
+  */
 
 
