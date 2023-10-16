@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1385A1A585
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300891A585
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vm57N6Wr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73393C433C7;
-	Mon, 16 Oct 2023 09:00:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiUgIFTL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01F0C433BA;
+	Mon, 16 Oct 2023 09:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446802;
-	bh=ELMXLznA0CZOPQAn2q4lHMJAeR6NnlmQHRn+1Papu9I=;
+	s=korg; t=1697446807;
+	bh=NPzX27RL8S7/R5xGQVfFUhJ051WKT4Ht+3PGl6MEqW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vm57N6Wr5HJpnOyE1N4qTIOH7SkQfaR7Ey/3GB4z8LODowLri3KMpDtcQEO0qAcel
-	 0z46SyMcAM46dYTqTZZfXRw1wSQmy5jwfK8D64jBYNBn+cXx2CMI+jj7M3oJl/djxh
-	 HtWn2IxgB6NvNzv8aJegOEY1q9iauFeRw/2s2PZE=
+	b=fiUgIFTLLQAe1pi7KIm02bwkdjN7KqfwjzkgTPqdggxTEzANx+RdJqHDGfMwjVJbW
+	 sdQHql/dlGUngzqIXKaZHzY6oRGh14GjZyrl40892uJxsw4dbyanWtNlXrl8iI+TMn
+	 xdwVyjQRDFJIvZIfaJmrbe5j1fbLcl+0cGCZcRzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	syzbot+1f53a30781af65d2c955@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 074/131] net: usb: dm9601: fix uninitialized variable use in dm9601_mdio_read
-Date: Mon, 16 Oct 2023 10:40:57 +0200
-Message-ID: <20231016084001.898606450@linuxfoundation.org>
+	Kenta Sato <tosainu.maple@gmail.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 075/131] usb: dwc3: Soft reset phy on probe for host
+Date: Mon, 16 Oct 2023 10:40:58 +0200
+Message-ID: <20231016084001.922945828@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -43,54 +41,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 8f8abb863fa5a4cc18955c6a0e17af0ded3e4a76 upstream.
+commit 8bea147dfdf823eaa8d3baeccc7aeb041b41944b upstream.
 
-syzbot has found an uninit-value bug triggered by the dm9601 driver [1].
+When there's phy initialization, we need to initiate a soft-reset
+sequence. That's done through USBCMD.HCRST in the xHCI driver and its
+initialization, However, the dwc3 driver may modify core configs before
+the soft-reset. This may result in some connection instability. So,
+ensure the phy is ready before the controller updates the GCTL.PRTCAPDIR
+or other settings by issuing phy soft-reset.
 
-This error happens because the variable res is not updated if the call
-to dm_read_shared_word returns an error. In this particular case -EPROTO
-was returned and res stayed uninitialized.
-
-This can be avoided by checking the return value of dm_read_shared_word
-and propagating the error if the read operation failed.
-
-[1] https://syzkaller.appspot.com/bug?extid=1f53a30781af65d2c955
+Note that some host-mode configurations may not expose device registers
+to initiate the controller soft-reset (via DCTL.CoreSftRst). So we reset
+through GUSB3PIPECTL and GUSB2PHYCFG instead.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reported-and-tested-by: syzbot+1f53a30781af65d2c955@syzkaller.appspotmail.com
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Fixes: d0374f4f9c35cdfbee0 ("USB: Davicom DM9601 usbnet driver")
-Link: https://lore.kernel.org/r/20231009-topic-dm9601_uninit_mdio_read-v2-1-f2fe39739b6c@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e835c0a4e23c ("usb: dwc3: don't reset device side if dwc3 was configured as host-only")
+Reported-by: Kenta Sato <tosainu.maple@gmail.com>
+Closes: https://lore.kernel.org/linux-usb/ZPUciRLUcjDywMVS@debian.me/
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Tested-by: Kenta Sato <tosainu.maple@gmail.com>
+Link: https://lore.kernel.org/r/70aea513215d273669152696cc02b20ddcdb6f1a.1694564261.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/dm9601.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/core.c |   39 ++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 38 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/dm9601.c
-+++ b/drivers/net/usb/dm9601.c
-@@ -222,13 +222,18 @@ static int dm9601_mdio_read(struct net_d
- 	struct usbnet *dev = netdev_priv(netdev);
- 
- 	__le16 res;
-+	int err;
- 
- 	if (phy_id) {
- 		netdev_dbg(dev->net, "Only internal phy supported\n");
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -279,9 +279,46 @@ int dwc3_core_soft_reset(struct dwc3 *dw
+ 	 * XHCI driver will reset the host block. If dwc3 was configured for
+ 	 * host-only mode or current role is host, then we can return early.
+ 	 */
+-	if (dwc->dr_mode == USB_DR_MODE_HOST || dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
++	if (dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
  		return 0;
- 	}
  
--	dm_read_shared_word(dev, 1, loc, &res);
-+	err = dm_read_shared_word(dev, 1, loc, &res);
-+	if (err < 0) {
-+		netdev_err(dev->net, "MDIO read error: %d\n", err);
-+		return err;
++	/*
++	 * If the dr_mode is host and the dwc->current_dr_role is not the
++	 * corresponding DWC3_GCTL_PRTCAP_HOST, then the dwc3_core_init_mode
++	 * isn't executed yet. Ensure the phy is ready before the controller
++	 * updates the GCTL.PRTCAPDIR or other settings by soft-resetting
++	 * the phy.
++	 *
++	 * Note: GUSB3PIPECTL[n] and GUSB2PHYCFG[n] are port settings where n
++	 * is port index. If this is a multiport host, then we need to reset
++	 * all active ports.
++	 */
++	if (dwc->dr_mode == USB_DR_MODE_HOST) {
++		u32 usb3_port;
++		u32 usb2_port;
++
++		usb3_port = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
++		usb3_port |= DWC3_GUSB3PIPECTL_PHYSOFTRST;
++		dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), usb3_port);
++
++		usb2_port = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
++		usb2_port |= DWC3_GUSB2PHYCFG_PHYSOFTRST;
++		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), usb2_port);
++
++		/* Small delay for phy reset assertion */
++		usleep_range(1000, 2000);
++
++		usb3_port &= ~DWC3_GUSB3PIPECTL_PHYSOFTRST;
++		dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), usb3_port);
++
++		usb2_port &= ~DWC3_GUSB2PHYCFG_PHYSOFTRST;
++		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), usb2_port);
++
++		/* Wait for clock synchronization */
++		msleep(50);
++		return 0;
 +	}
- 
- 	netdev_dbg(dev->net,
- 		   "dm9601_mdio_read() phy_id=0x%02x, loc=0x%02x, returns=0x%04x\n",
++
+ 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
+ 	reg |= DWC3_DCTL_CSFTRST;
+ 	reg &= ~DWC3_DCTL_RUN_STOP;
 
 
