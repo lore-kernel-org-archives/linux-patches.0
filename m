@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518D91548F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D328E1548F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYJw9ICQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF1EC433C8;
-	Mon, 16 Oct 2023 08:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KN7kbF+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369D5C433C7;
+	Mon, 16 Oct 2023 08:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446560;
-	bh=4j6/dOw+GhtGLCLv5W9DTwaNwa42m05eK+U4JXyGBCM=;
+	s=korg; t=1697446566;
+	bh=Dv2rUziEcxPwLRNwXwFacAa6lXJB8twmJi8iSJKqyB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aYJw9ICQpemdg4FRvcvfrK12peVIpAw9UPoOgHaeBhlil6/dQB/496s0bJtm7nxEc
-	 sexkM7fXvdmlaJS+x3VFKHUvzROzQvGpNMJyp5aroDZ9j1yXfeQdSUkY0EikK+4hk3
-	 +TVpWsIKY8Bi65T3kV7GtFrMi6VfdJs0aXXUimmg=
+	b=KN7kbF+yKsEMxbFf9BN16jSmt40PPLAZ5C2WQh3SWRggPUb6sS82RreahPsQ5E58s
+	 +q7c6LudBJQHMGK3tscXKZmDdaGMqpQ8h7hxnhCDJYHGQdOjAM18sRteMAYDPYr4LS
+	 AX41g3TE0ddyqHLNS5MAtUb7e2Fp3FRvaRmVQ31A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
 	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/131] riscv, bpf: Factor out emit_call for kernel and bpf context
-Date: Mon, 16 Oct 2023 10:40:34 +0200
-Message-ID: <20231016084001.340606193@linuxfoundation.org>
+Subject: [PATCH 6.1 052/131] riscv, bpf: Sign-extend return values
+Date: Mon, 16 Oct 2023 10:40:35 +0200
+Message-ID: <20231016084001.365687034@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -44,115 +43,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Björn Töpel <bjorn@rivosinc.com>
 
-[ Upstream commit 0fd1fd0104954380477353aea29c347e85dff16d ]
+[ Upstream commit 2f1b0d3d733169eb11680bfa97c266ae5e757148 ]
 
-The current emit_call function is not suitable for kernel function call as
-it store return value to bpf R0 register. We can separate it out for common
-use. Meanwhile, simplify judgment logic, that is, fixed function address
-can use jal or auipc+jalr, while the unfixed can use only auipc+jalr.
+The RISC-V architecture does not expose sub-registers, and hold all
+32-bit values in a sign-extended format [1] [2]:
 
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
+  | The compiler and calling convention maintain an invariant that all
+  | 32-bit values are held in a sign-extended format in 64-bit
+  | registers. Even 32-bit unsigned integers extend bit 31 into bits
+  | 63 through 32. Consequently, conversion between unsigned and
+  | signed 32-bit integers is a no-op, as is conversion from a signed
+  | 32-bit integer to a signed 64-bit integer.
+
+While BPF, on the other hand, exposes sub-registers, and use
+zero-extension (similar to arm64/x86).
+
+This has led to some subtle bugs, where a BPF JITted program has not
+sign-extended the a0 register (return value in RISC-V land), passed
+the return value up the kernel, e.g.:
+
+  | int from_bpf(void);
+  |
+  | long foo(void)
+  | {
+  |    return from_bpf();
+  | }
+
+Here, a0 would be 0xffff_ffff, instead of the expected
+0xffff_ffff_ffff_ffff.
+
+Internally, the RISC-V JIT uses a5 as a dedicated register for BPF
+return values.
+
+Keep a5 zero-extended, but explicitly sign-extend a0 (which is used
+outside BPF land). Now that a0 (RISC-V ABI) and a5 (BPF ABI) differs,
+a0 is only moved to a5 for non-BPF native calls (BPF_PSEUDO_CALL).
+
+Fixes: 2353ecc6f91f ("bpf, riscv: add BPF JIT for RV64G")
+Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Björn Töpel <bjorn@rivosinc.com>
-Acked-by: Björn Töpel <bjorn@rivosinc.com>
-Link: https://lore.kernel.org/bpf/20230215135205.1411105-3-pulehui@huaweicloud.com
-Stable-dep-of: 2f1b0d3d7331 ("riscv, bpf: Sign-extend return values")
+Link: https://github.com/riscv/riscv-isa-manual/releases/download/riscv-isa-release-056b6ff-2023-10-02/unpriv-isa-asciidoc.pdf # [2]
+Link: https://github.com/riscv-non-isa/riscv-elf-psabi-doc/releases/download/draft-20230929-e5c800e661a53efe3c2678d71a306323b60eb13b/riscv-abi.pdf # [2]
+Link: https://lore.kernel.org/bpf/20231004120706.52848-2-bjorn@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp64.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ arch/riscv/net/bpf_jit_comp64.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
-index f2417ac54edd6..69ebab81d9352 100644
+index 69ebab81d9352..8f5d3c57d58ad 100644
 --- a/arch/riscv/net/bpf_jit_comp64.c
 +++ b/arch/riscv/net/bpf_jit_comp64.c
-@@ -428,12 +428,12 @@ static void emit_sext_32_rd(u8 *rd, struct rv_jit_context *ctx)
- 	*rd = RV_REG_T2;
- }
- 
--static int emit_jump_and_link(u8 rd, s64 rvoff, bool force_jalr,
-+static int emit_jump_and_link(u8 rd, s64 rvoff, bool fixed_addr,
- 			      struct rv_jit_context *ctx)
- {
- 	s64 upper, lower;
- 
--	if (rvoff && is_21b_int(rvoff) && !force_jalr) {
-+	if (rvoff && fixed_addr && is_21b_int(rvoff)) {
- 		emit(rv_jal(rd, rvoff >> 1), ctx);
- 		return 0;
- 	} else if (in_auipc_jalr_range(rvoff)) {
-@@ -454,24 +454,17 @@ static bool is_signed_bpf_cond(u8 cond)
- 		cond == BPF_JSGE || cond == BPF_JSLE;
- }
- 
--static int emit_call(bool fixed, u64 addr, struct rv_jit_context *ctx)
-+static int emit_call(u64 addr, bool fixed_addr, struct rv_jit_context *ctx)
- {
- 	s64 off = 0;
- 	u64 ip;
--	u8 rd;
--	int ret;
- 
- 	if (addr && ctx->insns) {
- 		ip = (u64)(long)(ctx->insns + ctx->ninsns);
- 		off = addr - ip;
- 	}
- 
--	ret = emit_jump_and_link(RV_REG_RA, off, !fixed, ctx);
--	if (ret)
--		return ret;
--	rd = bpf_to_rv_reg(BPF_REG_0, ctx);
--	emit_mv(rd, RV_REG_A0, ctx);
--	return 0;
-+	return emit_jump_and_link(RV_REG_RA, off, fixed_addr, ctx);
- }
- 
- static void emit_atomic(u8 rd, u8 rs, s16 off, s32 imm, bool is64,
-@@ -913,7 +906,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
- 	/* JUMP off */
- 	case BPF_JMP | BPF_JA:
- 		rvoff = rv_offset(i, off, ctx);
--		ret = emit_jump_and_link(RV_REG_ZERO, rvoff, false, ctx);
-+		ret = emit_jump_and_link(RV_REG_ZERO, rvoff, true, ctx);
+@@ -236,7 +236,7 @@ static void __build_epilogue(bool is_tail_call, struct rv_jit_context *ctx)
+ 	emit_addi(RV_REG_SP, RV_REG_SP, stack_adjust, ctx);
+ 	/* Set return value. */
+ 	if (!is_tail_call)
+-		emit_mv(RV_REG_A0, RV_REG_A5, ctx);
++		emit_addiw(RV_REG_A0, RV_REG_A5, 0, ctx);
+ 	emit_jalr(RV_REG_ZERO, is_tail_call ? RV_REG_T3 : RV_REG_RA,
+ 		  is_tail_call ? 4 : 0, /* skip TCC init */
+ 		  ctx);
+@@ -1038,7 +1038,8 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
  		if (ret)
  			return ret;
- 		break;
-@@ -1032,17 +1025,20 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
- 	/* function call */
- 	case BPF_JMP | BPF_CALL:
- 	{
--		bool fixed;
-+		bool fixed_addr;
- 		u64 addr;
  
- 		mark_call(ctx);
--		ret = bpf_jit_get_func_addr(ctx->prog, insn, extra_pass, &addr,
--					    &fixed);
-+		ret = bpf_jit_get_func_addr(ctx->prog, insn, extra_pass,
-+					    &addr, &fixed_addr);
- 		if (ret < 0)
- 			return ret;
--		ret = emit_call(fixed, addr, ctx);
-+
-+		ret = emit_call(addr, fixed_addr, ctx);
- 		if (ret)
- 			return ret;
-+
-+		emit_mv(bpf_to_rv_reg(BPF_REG_0, ctx), RV_REG_A0, ctx);
+-		emit_mv(bpf_to_rv_reg(BPF_REG_0, ctx), RV_REG_A0, ctx);
++		if (insn->src_reg != BPF_PSEUDO_CALL)
++			emit_mv(bpf_to_rv_reg(BPF_REG_0, ctx), RV_REG_A0, ctx);
  		break;
  	}
  	/* tail call */
-@@ -1057,7 +1053,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
- 			break;
- 
- 		rvoff = epilogue_offset(ctx);
--		ret = emit_jump_and_link(RV_REG_ZERO, rvoff, false, ctx);
-+		ret = emit_jump_and_link(RV_REG_ZERO, rvoff, true, ctx);
- 		if (ret)
- 			return ret;
- 		break;
 -- 
 2.40.1
 
