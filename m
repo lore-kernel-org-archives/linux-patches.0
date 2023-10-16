@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41A61A284
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53911A27D
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDVAHOob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA97DC433C7;
-	Mon, 16 Oct 2023 08:46:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RnQ5cjEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1537C433C7;
+	Mon, 16 Oct 2023 08:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445984;
-	bh=Tet5KZIb40NExQG5pefCnot3ww0UMiYcKFa1Ut7PGvk=;
+	s=korg; t=1697445987;
+	bh=UW4FsLEjWuETLjn7BK4+35A1ytSARoxip/BEv3PRW/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HDVAHOob2qJLsk5zNU7w6QkLEvie+0YxRpcOGsMgSfEO7TYOaD0ZN7rOaBMp/ilIP
-	 X2+HsWrTuBwyUR7TRm3RAZXttclFJxEFtlC6ctmGN/H98+0P2u/C2k1pBJMqIgy8TN
-	 7eNQq2y87sC4Se0YQ9gThGzwBSwBUwE2b10e0qC8=
+	b=RnQ5cjEUGA9OyX1A1Oj5+9Qd6Pj3du1orsmOZYsRn/cPtMXDRfSvtI5RVFW6EDrQg
+	 VvtM5FJC806cwfImLpdMk1FyAEt/RCIXyFUCXAnk7bKOrQbfUQqVHT2em/88h3hLVZ
+	 HPFCCvl7HtAj7qwNXDEVhHcQbCOSWHdVbq+mOesQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paul Durrant <paul@xen.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/102] mlxsw: fix mlxsw_sp2_nve_vxlan_learning_set() return type
-Date: Mon, 16 Oct 2023 10:40:24 +0200
-Message-ID: <20231016083954.376892046@linuxfoundation.org>
+Subject: [PATCH 5.15 026/102] eth: remove copies of the NAPI_POLL_WEIGHT define
+Date: Mon, 16 Oct 2023 10:40:25 +0200
+Message-ID: <20231016083954.403720671@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -43,37 +43,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 1e0b72a2a6432c0ef67ee5ce8d9172a7c20bba25 ]
+[ Upstream commit 5f012b40ef639343a976553bf3cc26dd0474756e ]
 
-The mlxsw_sp2_nve_vxlan_learning_set() function is supposed to return
-zero on success or negative error codes.  So it needs to be type int
-instead of bool.
+Defining local versions of NAPI_POLL_WEIGHT with the same
+values in the drivers just makes refactoring harder.
 
-Fixes: 4ee70efab68d ("mlxsw: spectrum_nve: Add support for VXLAN on Spectrum-2")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
+Drop the special defines in a bunch of drivers where the
+removal is relatively simple so grouping into one patch
+does not impact reviewability.
+
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Paul Durrant <paul@xen.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 66cf7435a269 ("xen-netback: use default TX queue size for vifs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_nve_vxlan.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c         | 4 +---
+ drivers/net/ethernet/marvell/skge.c           | 3 +--
+ drivers/net/ethernet/marvell/sky2.c           | 3 +--
+ drivers/net/ethernet/mediatek/mtk_star_emac.c | 3 +--
+ drivers/net/ethernet/ti/davinci_emac.c        | 3 +--
+ drivers/net/ethernet/ti/netcp_core.c          | 5 ++---
+ drivers/net/xen-netback/interface.c           | 3 +--
+ 7 files changed, 8 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_nve_vxlan.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_nve_vxlan.c
-index d018d2da59499..5e020d0addc67 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_nve_vxlan.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_nve_vxlan.c
-@@ -245,8 +245,8 @@ const struct mlxsw_sp_nve_ops mlxsw_sp1_nve_vxlan_ops = {
- 	.fdb_clear_offload = mlxsw_sp_nve_vxlan_clear_offload,
- };
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 8361faf03e429..d0ba5ca862cf5 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -68,7 +68,6 @@ MODULE_PARM_DESC(debug, "Debug level (0=none,...,16=all)");
+ #define DEFAULT_GMAC_RXQ_ORDER		9
+ #define DEFAULT_GMAC_TXQ_ORDER		8
+ #define DEFAULT_RX_BUF_ORDER		11
+-#define DEFAULT_NAPI_WEIGHT		64
+ #define TX_MAX_FRAGS			16
+ #define TX_QUEUE_NUM			1	/* max: 6 */
+ #define RX_MAX_ALLOC_ORDER		2
+@@ -2466,8 +2465,7 @@ static int gemini_ethernet_port_probe(struct platform_device *pdev)
+ 	netdev->max_mtu = 10236 - VLAN_ETH_HLEN;
  
--static bool mlxsw_sp2_nve_vxlan_learning_set(struct mlxsw_sp *mlxsw_sp,
--					     bool learning_en)
-+static int mlxsw_sp2_nve_vxlan_learning_set(struct mlxsw_sp *mlxsw_sp,
-+					    bool learning_en)
- {
- 	char tnpc_pl[MLXSW_REG_TNPC_LEN];
+ 	port->freeq_refill = 0;
+-	netif_napi_add(netdev, &port->napi, gmac_napi_poll,
+-		       DEFAULT_NAPI_WEIGHT);
++	netif_napi_add(netdev, &port->napi, gmac_napi_poll, NAPI_POLL_WEIGHT);
+ 
+ 	if (is_valid_ether_addr((void *)port->mac_addr)) {
+ 		memcpy(netdev->dev_addr, port->mac_addr, ETH_ALEN);
+diff --git a/drivers/net/ethernet/marvell/skge.c b/drivers/net/ethernet/marvell/skge.c
+index 051dd3fb5b038..791a209158cd1 100644
+--- a/drivers/net/ethernet/marvell/skge.c
++++ b/drivers/net/ethernet/marvell/skge.c
+@@ -50,7 +50,6 @@
+ #define PHY_RETRIES	        1000
+ #define ETH_JUMBO_MTU		9000
+ #define TX_WATCHDOG		(5 * HZ)
+-#define NAPI_WEIGHT		64
+ #define BLINK_MS		250
+ #define LINK_HZ			HZ
+ 
+@@ -3828,7 +3827,7 @@ static struct net_device *skge_devinit(struct skge_hw *hw, int port,
+ 		dev->features |= NETIF_F_HIGHDMA;
+ 
+ 	skge = netdev_priv(dev);
+-	netif_napi_add(dev, &skge->napi, skge_poll, NAPI_WEIGHT);
++	netif_napi_add(dev, &skge->napi, skge_poll, NAPI_POLL_WEIGHT);
+ 	skge->netdev = dev;
+ 	skge->hw = hw;
+ 	skge->msg_enable = netif_msg_init(debug, default_msg);
+diff --git a/drivers/net/ethernet/marvell/sky2.c b/drivers/net/ethernet/marvell/sky2.c
+index ac0dbf1b97437..a1a182bb47c77 100644
+--- a/drivers/net/ethernet/marvell/sky2.c
++++ b/drivers/net/ethernet/marvell/sky2.c
+@@ -63,7 +63,6 @@
+ #define TX_DEF_PENDING		63
+ 
+ #define TX_WATCHDOG		(5 * HZ)
+-#define NAPI_WEIGHT		64
+ #define PHY_RETRIES		1000
+ 
+ #define SKY2_EEPROM_MAGIC	0x9955aabb
+@@ -5073,7 +5072,7 @@ static int sky2_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 		}
+ 	}
+ 
+-	netif_napi_add(dev, &hw->napi, sky2_poll, NAPI_WEIGHT);
++	netif_napi_add(dev, &hw->napi, sky2_poll, NAPI_POLL_WEIGHT);
+ 
+ 	err = register_netdev(dev);
+ 	if (err) {
+diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+index 1d5dd2015453f..8f3493e146e50 100644
+--- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
++++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+@@ -30,7 +30,6 @@
+ #define MTK_STAR_WAIT_TIMEOUT			300
+ #define MTK_STAR_MAX_FRAME_SIZE			1514
+ #define MTK_STAR_SKB_ALIGNMENT			16
+-#define MTK_STAR_NAPI_WEIGHT			64
+ #define MTK_STAR_HASHTABLE_MC_LIMIT		256
+ #define MTK_STAR_HASHTABLE_SIZE_MAX		512
+ 
+@@ -1551,7 +1550,7 @@ static int mtk_star_probe(struct platform_device *pdev)
+ 	ndev->netdev_ops = &mtk_star_netdev_ops;
+ 	ndev->ethtool_ops = &mtk_star_ethtool_ops;
+ 
+-	netif_napi_add(ndev, &priv->napi, mtk_star_poll, MTK_STAR_NAPI_WEIGHT);
++	netif_napi_add(ndev, &priv->napi, mtk_star_poll, NAPI_POLL_WEIGHT);
+ 
+ 	return devm_register_netdev(dev, ndev);
+ }
+diff --git a/drivers/net/ethernet/ti/davinci_emac.c b/drivers/net/ethernet/ti/davinci_emac.c
+index fbd6bd80f51f4..305779f9685a7 100644
+--- a/drivers/net/ethernet/ti/davinci_emac.c
++++ b/drivers/net/ethernet/ti/davinci_emac.c
+@@ -113,7 +113,6 @@ static const char emac_version_string[] = "TI DaVinci EMAC Linux v6.1";
+ #define EMAC_DEF_RX_NUM_DESC		(128)
+ #define EMAC_DEF_MAX_TX_CH		(1) /* Max TX channels configured */
+ #define EMAC_DEF_MAX_RX_CH		(1) /* Max RX channels configured */
+-#define EMAC_POLL_WEIGHT		(64) /* Default NAPI poll weight */
+ 
+ /* Buffer descriptor parameters */
+ #define EMAC_DEF_TX_MAX_SERVICE		(32) /* TX max service BD's */
+@@ -1923,7 +1922,7 @@ static int davinci_emac_probe(struct platform_device *pdev)
+ 
+ 	ndev->netdev_ops = &emac_netdev_ops;
+ 	ndev->ethtool_ops = &ethtool_ops;
+-	netif_napi_add(ndev, &priv->napi, emac_poll, EMAC_POLL_WEIGHT);
++	netif_napi_add(ndev, &priv->napi, emac_poll, NAPI_POLL_WEIGHT);
+ 
+ 	pm_runtime_enable(&pdev->dev);
+ 	rc = pm_runtime_get_sync(&pdev->dev);
+diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
+index a6450055908db..2f00be789a8a9 100644
+--- a/drivers/net/ethernet/ti/netcp_core.c
++++ b/drivers/net/ethernet/ti/netcp_core.c
+@@ -24,7 +24,6 @@
+ #include "netcp.h"
+ 
+ #define NETCP_SOP_OFFSET	(NET_IP_ALIGN + NET_SKB_PAD)
+-#define NETCP_NAPI_WEIGHT	64
+ #define NETCP_TX_TIMEOUT	(5 * HZ)
+ #define NETCP_PACKET_SIZE	(ETH_FRAME_LEN + ETH_FCS_LEN)
+ #define NETCP_MIN_PACKET_SIZE	ETH_ZLEN
+@@ -2096,8 +2095,8 @@ static int netcp_create_interface(struct netcp_device *netcp_device,
+ 	}
+ 
+ 	/* NAPI register */
+-	netif_napi_add(ndev, &netcp->rx_napi, netcp_rx_poll, NETCP_NAPI_WEIGHT);
+-	netif_tx_napi_add(ndev, &netcp->tx_napi, netcp_tx_poll, NETCP_NAPI_WEIGHT);
++	netif_napi_add(ndev, &netcp->rx_napi, netcp_rx_poll, NAPI_POLL_WEIGHT);
++	netif_tx_napi_add(ndev, &netcp->tx_napi, netcp_tx_poll, NAPI_POLL_WEIGHT);
+ 
+ 	/* Register the network device */
+ 	ndev->dev_id		= 0;
+diff --git a/drivers/net/xen-netback/interface.c b/drivers/net/xen-netback/interface.c
+index e1a5610b1747e..e321669bc37af 100644
+--- a/drivers/net/xen-netback/interface.c
++++ b/drivers/net/xen-netback/interface.c
+@@ -42,7 +42,6 @@
+ #include <xen/balloon.h>
+ 
+ #define XENVIF_QUEUE_LENGTH 32
+-#define XENVIF_NAPI_WEIGHT  64
+ 
+ /* Number of bytes allowed on the internal guest Rx queue. */
+ #define XENVIF_RX_QUEUE_BYTES (XEN_NETIF_RX_RING_SIZE/2 * PAGE_SIZE)
+@@ -725,7 +724,7 @@ int xenvif_connect_data(struct xenvif_queue *queue,
+ 	atomic_set(&queue->inflight_packets, 0);
+ 
+ 	netif_napi_add(queue->vif->dev, &queue->napi, xenvif_poll,
+-			XENVIF_NAPI_WEIGHT);
++			NAPI_POLL_WEIGHT);
+ 
+ 	queue->stalled = true;
  
 -- 
 2.40.1
