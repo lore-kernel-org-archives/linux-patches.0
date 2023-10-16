@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD90414288
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AB714288
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utqg3tz3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09CCFC433C8;
-	Mon, 16 Oct 2023 14:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xy8Z7wxO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C79C433C7;
+	Mon, 16 Oct 2023 14:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467910;
-	bh=BGs4Idmz5a05ffSKhjj2AtiwX6Qh0+wa99pz8YmarJE=;
+	s=korg; t=1697467913;
+	bh=v1GrKwcTF0FEuAFxxhZ1mICGQRGvil6f3sWdDfatucE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utqg3tz3q+F4Ogt0WYX4d8oak2bIqmHLuBALG05O48kLkMByIrhRnKjcuV5XxmWcb
-	 fpLlGWZ5JzZ1uBMp1mBDUOizUGBi8fymTK4econ1P051p7lF6aEUKRgwp6H+SJ3Pm9
-	 HXUwBA5qVwukvjduoYo9ZMdu2RtJzuG8kuSL0MP8=
+	b=Xy8Z7wxOAsn9c13pMsUoB84BqdV0EEjyLRSnPwwzQ6urulyUh9EK34C3pPYwxjAcQ
+	 Gm9MvrmOh7UmC0zQHpKRjR+1yyo9ejBwRqGhfO5JmRiAl7Bhjd3B6WeLmD0uk5yhr5
+	 rvF+zRhOR4FAHp06hU5b8I61zieTYPq/5HLqXQqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 089/191] rswitch: Fix renesas_eth_sw_remove() implementation
-Date: Mon, 16 Oct 2023 10:41:14 +0200
-Message-ID: <20231016084017.473808697@linuxfoundation.org>
+Subject: [PATCH 6.5 090/191] rswitch: Fix imbalance phy_power_off() calling
+Date: Mon, 16 Oct 2023 10:41:15 +0200
+Message-ID: <20231016084017.496836797@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -44,46 +44,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 510b18cf23b9bd8a982ef7f1fb19f3968a2bf787 ]
+[ Upstream commit 053f13f67be6d02781730c9ac71abde6e9140610 ]
 
-Fix functions calling order and a condition in renesas_eth_sw_remove().
-Otherwise, kernel NULL pointer dereference happens from phy_stop() if
-a net device opens.
+The phy_power_off() should not be called if phy_power_on() failed.
+So, add a condition .power_count before calls phy_power_off().
 
-Fixes: 3590918b5d07 ("net: ethernet: renesas: Add support for "Ethernet Switch"")
+Fixes: 5cb630925b49 ("net: renesas: rswitch: Add phy_power_{on,off}() calling")
 Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/rswitch.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/renesas/rswitch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
-index 660cbfe344d2c..5024ce9587312 100644
+index 5024ce9587312..fb9a520f42078 100644
 --- a/drivers/net/ethernet/renesas/rswitch.c
 +++ b/drivers/net/ethernet/renesas/rswitch.c
-@@ -1942,15 +1942,17 @@ static void rswitch_deinit(struct rswitch_private *priv)
- 	rswitch_gwca_hw_deinit(priv);
- 	rcar_gen4_ptp_unregister(priv->ptp_priv);
+@@ -1255,7 +1255,7 @@ static void rswitch_adjust_link(struct net_device *ndev)
+ 		phy_print_status(phydev);
+ 		if (phydev->link)
+ 			phy_power_on(rdev->serdes);
+-		else
++		else if (rdev->serdes->power_count)
+ 			phy_power_off(rdev->serdes);
  
--	for (i = 0; i < RSWITCH_NUM_PORTS; i++) {
-+	rswitch_for_each_enabled_port(priv, i) {
- 		struct rswitch_device *rdev = priv->rdev[i];
- 
--		phy_exit(priv->rdev[i]->serdes);
--		rswitch_ether_port_deinit_one(rdev);
- 		unregister_netdev(rdev->ndev);
--		rswitch_device_free(priv, i);
-+		rswitch_ether_port_deinit_one(rdev);
-+		phy_exit(priv->rdev[i]->serdes);
- 	}
- 
-+	for (i = 0; i < RSWITCH_NUM_PORTS; i++)
-+		rswitch_device_free(priv, i);
-+
- 	rswitch_gwca_ts_queue_free(priv);
- 	rswitch_gwca_linkfix_free(priv);
- 
+ 		rdev->etha->link = phydev->link;
 -- 
 2.40.1
 
