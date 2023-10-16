@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701081A289
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6730B1A284
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmxcKMHw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CAFC433C9;
-	Mon, 16 Oct 2023 08:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6zeAWXA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A711DC433C9;
+	Mon, 16 Oct 2023 08:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446011;
-	bh=5w/WJjqmn4tDsS8Oj+yA0EKD0lnAgac0w3fX83zjgDE=;
+	s=korg; t=1697446016;
+	bh=tpBvzq18nGnPCfqlgPg1nR1iz45Ujn64m4+Yql6siBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xmxcKMHwpkj6KBEFqTluPB6kGIYkwYQwxCc2Atd3a4SEQKYAikC7nmHHjEEyZ6h+3
-	 qJU0Fi9onSSLfAuXWAnZRPf+EXsHYg7dRnGHLvJ5lZD1cBrLl3MsQsWHrB41yNIXqf
-	 WRUC40TulbB+vRpck9BpK/dokaXJ5jUGS9N5tfV4=
+	b=n6zeAWXAGp44sEC7dzcGY4l824Xrwjj2Ck2HxdZ3ULScFucXUJTbE8iIinJvPTPDw
+	 GtA/BZMbcPu120FLezm0sN2BB3ttvEepn/95/e1jfBHFqiDQZVozimMxas6L4/D5FO
+	 dGey3kjB8vtqaepnRxavqaILEzF32f7mTsNwr5S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	syzbot+1f53a30781af65d2c955@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 050/102] net: usb: dm9601: fix uninitialized variable use in dm9601_mdio_read
-Date: Mon, 16 Oct 2023 10:40:49 +0200
-Message-ID: <20231016083955.032954130@linuxfoundation.org>
+	Charlene Liu <charlene.liu@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Miess <daniel.miess@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 5.15 059/102] drm/amd/display: Dont set dpms_off for seamless boot
+Date: Mon, 16 Oct 2023 10:40:58 +0200
+Message-ID: <20231016083955.275113355@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -43,54 +45,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Daniel Miess <daniel.miess@amd.com>
 
-commit 8f8abb863fa5a4cc18955c6a0e17af0ded3e4a76 upstream.
+commit 23645bca98304a2772f0de96f97370dd567d0ae6 upstream.
 
-syzbot has found an uninit-value bug triggered by the dm9601 driver [1].
+[Why]
+eDPs fail to light up with seamless boot enabled
 
-This error happens because the variable res is not updated if the call
-to dm_read_shared_word returns an error. In this particular case -EPROTO
-was returned and res stayed uninitialized.
+[How]
+When seamless boot is enabled don't configure dpms_off
+in disable_vbios_mode_if_required.
 
-This can be avoided by checking the return value of dm_read_shared_word
-and propagating the error if the read operation failed.
-
-[1] https://syzkaller.appspot.com/bug?extid=1f53a30781af65d2c955
-
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reported-and-tested-by: syzbot+1f53a30781af65d2c955@syzkaller.appspotmail.com
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Fixes: d0374f4f9c35cdfbee0 ("USB: Davicom DM9601 usbnet driver")
-Link: https://lore.kernel.org/r/20231009-topic-dm9601_uninit_mdio_read-v2-1-f2fe39739b6c@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Daniel Miess <daniel.miess@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/dm9601.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/usb/dm9601.c
-+++ b/drivers/net/usb/dm9601.c
-@@ -221,13 +221,18 @@ static int dm9601_mdio_read(struct net_d
- 	struct usbnet *dev = netdev_priv(netdev);
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -1023,6 +1023,9 @@ static void disable_vbios_mode_if_requir
+ 		if (stream == NULL)
+ 			continue;
  
- 	__le16 res;
-+	int err;
- 
- 	if (phy_id) {
- 		netdev_dbg(dev->net, "Only internal phy supported\n");
- 		return 0;
- 	}
- 
--	dm_read_shared_word(dev, 1, loc, &res);
-+	err = dm_read_shared_word(dev, 1, loc, &res);
-+	if (err < 0) {
-+		netdev_err(dev->net, "MDIO read error: %d\n", err);
-+		return err;
-+	}
- 
- 	netdev_dbg(dev->net,
- 		   "dm9601_mdio_read() phy_id=0x%02x, loc=0x%02x, returns=0x%04x\n",
++		if (stream->apply_seamless_boot_optimization)
++			continue;
++
+ 		// only looking for first odm pipe
+ 		if (pipe->prev_odm_pipe)
+ 			continue;
 
 
