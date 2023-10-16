@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE201944F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A461944F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evV6p5sh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D11C433C7;
-	Mon, 16 Oct 2023 08:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqllfmTO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E71C433C7;
+	Mon, 16 Oct 2023 08:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446259;
-	bh=HYx6n0tgdhb7cQcXU6lZI/10zOc7k+Gz1nHzY4ptRlA=;
+	s=korg; t=1697446263;
+	bh=ZQHgGbNNkb1OrEoCXTDXOZ8UUxQP0LKrcsFnqe3WMSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=evV6p5shadUjlMOB/BgOKIRTvoQeXteADg14dkuZGIpaPuoskq4j9KvDvb9VA4yfS
-	 bgjBMo+e3iZjOPezeDdkNErlgmgsC8MyrqXG/rUXQU1ut8BDDtsF9AgGdNI2ved4XI
-	 4PJ3PyeycrCe5WpGfpCgUqjyx17szYSLE7XmRv54=
+	b=bqllfmTOLz2iO5oaRehr/BvFP+8fdRL0OA2XAq06YTwlH1hkAWrPfA2XJI6/AjrD4
+	 0CHEL3wygbHOgXkF+yaxcq4nL1oxnFhMm0NGAjnAxtPGlnlU2RIPphbLIqUBes0MSH
+	 Fb0Iv/kT7IdUJv1QPYf8qgr32/szs/IfeHlzejLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>
-Subject: [PATCH 5.15 101/102] usb: hub: Guard against accesses to uninitialized BOS descriptors
-Date: Mon, 16 Oct 2023 10:41:40 +0200
-Message-ID: <20231016083956.396560680@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 102/102] eth: remove remaining copies of the NAPI_POLL_WEIGHT define
+Date: Mon, 16 Oct 2023 10:41:41 +0200
+Message-ID: <20231016083956.422343545@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -34,134 +35,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit f74a7afc224acd5e922c7a2e52244d891bbe44ee upstream.
+commit 36ffca1afea9b429d3e49aa0b6a68ecd93f3be11 upstream.
 
-Many functions in drivers/usb/core/hub.c and drivers/usb/core/hub.h
-access fields inside udev->bos without checking if it was allocated and
-initialized. If usb_get_bos_descriptor() fails for whatever
-reason, udev->bos will be NULL and those accesses will result in a
-crash:
+Defining local versions of NAPI_POLL_WEIGHT with the same
+values in the drivers just makes refactoring harder.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000018
-PGD 0 P4D 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 5 PID: 17818 Comm: kworker/5:1 Tainted: G W 5.15.108-18910-gab0e1cb584e1 #1 <HASH:1f9e 1>
-Hardware name: Google Kindred/Kindred, BIOS Google_Kindred.12672.413.0 02/03/2021
-Workqueue: usb_hub_wq hub_event
-RIP: 0010:hub_port_reset+0x193/0x788
-Code: 89 f7 e8 20 f7 15 00 48 8b 43 08 80 b8 96 03 00 00 03 75 36 0f b7 88 92 03 00 00 81 f9 10 03 00 00 72 27 48 8b 80 a8 03 00 00 <48> 83 78 18 00 74 19 48 89 df 48 8b 75 b0 ba 02 00 00 00 4c 89 e9
-RSP: 0018:ffffab740c53fcf8 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffffa1bc5f678000 RCX: 0000000000000310
-RDX: fffffffffffffdff RSI: 0000000000000286 RDI: ffffa1be9655b840
-RBP: ffffab740c53fd70 R08: 00001b7d5edaa20c R09: ffffffffb005e060
-R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
-R13: ffffab740c53fd3e R14: 0000000000000032 R15: 0000000000000000
-FS: 0000000000000000(0000) GS:ffffa1be96540000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000018 CR3: 000000022e80c005 CR4: 00000000003706e0
-Call Trace:
-hub_event+0x73f/0x156e
-? hub_activate+0x5b7/0x68f
-process_one_work+0x1a2/0x487
-worker_thread+0x11a/0x288
-kthread+0x13a/0x152
-? process_one_work+0x487/0x487
-? kthread_associate_blkcg+0x70/0x70
-ret_from_fork+0x1f/0x30
+This patch covers three more drivers which I missed in
+commit 5f012b40ef63 ("eth: remove copies of the NAPI_POLL_WEIGHT define").
 
-Fall back to a default behavior if the BOS descriptor isn't accessible
-and skip all the functionalities that depend on it: LPM support checks,
-Super Speed capabilitiy checks, U1/U2 states setup.
-
-Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-Cc: stable <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230830100418.1952143-1-ricardo.canuelo@collabora.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |   25 ++++++++++++++++++++++---
- drivers/usb/core/hub.h |    2 +-
- 2 files changed, 23 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c |    4 +---
+ drivers/net/ethernet/brocade/bna/bnad.c      |    3 +--
+ drivers/net/ethernet/nvidia/forcedeth.c      |    6 +++---
+ 3 files changed, 5 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -150,6 +150,10 @@ int usb_device_supports_lpm(struct usb_d
- 	if (udev->quirks & USB_QUIRK_NO_LPM)
- 		return 0;
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -31,8 +31,6 @@ MODULE_LICENSE("GPL");
  
-+	/* Skip if the device BOS descriptor couldn't be read */
-+	if (!udev->bos)
-+		return 0;
-+
- 	/* USB 2.1 (and greater) devices indicate LPM support through
- 	 * their USB 2.0 Extended Capabilities BOS descriptor.
- 	 */
-@@ -326,6 +330,10 @@ static void usb_set_lpm_parameters(struc
- 	if (!udev->lpm_capable || udev->speed < USB_SPEED_SUPER)
- 		return;
+ #define ENA_MAX_RINGS min_t(unsigned int, ENA_MAX_NUM_IO_QUEUES, num_possible_cpus())
  
-+	/* Skip if the device BOS descriptor couldn't be read */
-+	if (!udev->bos)
-+		return;
-+
- 	hub = usb_hub_to_struct_hub(udev->parent);
- 	/* It doesn't take time to transition the roothub into U0, since it
- 	 * doesn't have an upstream link.
-@@ -2698,13 +2706,17 @@ out_authorized:
- static enum usb_ssp_rate get_port_ssp_rate(struct usb_device *hdev,
- 					   u32 ext_portstatus)
- {
--	struct usb_ssp_cap_descriptor *ssp_cap = hdev->bos->ssp_cap;
-+	struct usb_ssp_cap_descriptor *ssp_cap;
- 	u32 attr;
- 	u8 speed_id;
- 	u8 ssac;
- 	u8 lanes;
- 	int i;
+-#define ENA_NAPI_BUDGET 64
+-
+ #define DEFAULT_MSG_ENABLE (NETIF_MSG_DRV | NETIF_MSG_PROBE | NETIF_MSG_IFUP | \
+ 		NETIF_MSG_TX_DONE | NETIF_MSG_TX_ERR | NETIF_MSG_RX_ERR)
  
-+	if (!hdev->bos)
-+		goto out;
-+
-+	ssp_cap = hdev->bos->ssp_cap;
- 	if (!ssp_cap)
- 		goto out;
+@@ -2303,7 +2301,7 @@ static void ena_init_napi_in_range(struc
+ 		netif_napi_add(adapter->netdev,
+ 			       &napi->napi,
+ 			       ENA_IS_XDP_INDEX(adapter, i) ? ena_xdp_io_poll : ena_io_poll,
+-			       ENA_NAPI_BUDGET);
++			       NAPI_POLL_WEIGHT);
  
-@@ -4186,8 +4198,15 @@ static void usb_enable_link_state(struct
- 		enum usb3_link_state state)
- {
- 	int timeout, ret;
--	__u8 u1_mel = udev->bos->ss_cap->bU1devExitLat;
--	__le16 u2_mel = udev->bos->ss_cap->bU2DevExitLat;
-+	__u8 u1_mel;
-+	__le16 u2_mel;
-+
-+	/* Skip if the device BOS descriptor couldn't be read */
-+	if (!udev->bos)
-+		return;
-+
-+	u1_mel = udev->bos->ss_cap->bU1devExitLat;
-+	u2_mel = udev->bos->ss_cap->bU2DevExitLat;
- 
- 	/* If the device says it doesn't have *any* exit latency to come out of
- 	 * U1 or U2, it's probably lying.  Assume it doesn't implement that link
---- a/drivers/usb/core/hub.h
-+++ b/drivers/usb/core/hub.h
-@@ -141,7 +141,7 @@ static inline int hub_is_superspeedplus(
- {
- 	return (hdev->descriptor.bDeviceProtocol == USB_HUB_PR_SS &&
- 		le16_to_cpu(hdev->descriptor.bcdUSB) >= 0x0310 &&
--		hdev->bos->ssp_cap);
-+		hdev->bos && hdev->bos->ssp_cap);
+ 		if (!ENA_IS_XDP_INDEX(adapter, i)) {
+ 			napi->rx_ring = &adapter->rx_ring[i];
+--- a/drivers/net/ethernet/brocade/bna/bnad.c
++++ b/drivers/net/ethernet/brocade/bna/bnad.c
+@@ -1881,7 +1881,6 @@ poll_exit:
+ 	return rcvd;
  }
  
- static inline unsigned hub_power_on_good_delay(struct usb_hub *hub)
+-#define BNAD_NAPI_POLL_QUOTA		64
+ static void
+ bnad_napi_add(struct bnad *bnad, u32 rx_id)
+ {
+@@ -1892,7 +1891,7 @@ bnad_napi_add(struct bnad *bnad, u32 rx_
+ 	for (i = 0; i <	bnad->num_rxp_per_rx; i++) {
+ 		rx_ctrl = &bnad->rx_info[rx_id].rx_ctrl[i];
+ 		netif_napi_add(bnad->netdev, &rx_ctrl->napi,
+-			       bnad_napi_poll_rx, BNAD_NAPI_POLL_QUOTA);
++			       bnad_napi_poll_rx, NAPI_POLL_WEIGHT);
+ 	}
+ }
+ 
+--- a/drivers/net/ethernet/nvidia/forcedeth.c
++++ b/drivers/net/ethernet/nvidia/forcedeth.c
+@@ -56,8 +56,8 @@
+ 
+ #include <asm/irq.h>
+ 
+-#define TX_WORK_PER_LOOP  64
+-#define RX_WORK_PER_LOOP  64
++#define TX_WORK_PER_LOOP  NAPI_POLL_WEIGHT
++#define RX_WORK_PER_LOOP  NAPI_POLL_WEIGHT
+ 
+ /*
+  * Hardware access:
+@@ -5869,7 +5869,7 @@ static int nv_probe(struct pci_dev *pci_
+ 	else
+ 		dev->netdev_ops = &nv_netdev_ops_optimized;
+ 
+-	netif_napi_add(dev, &np->napi, nv_napi_poll, RX_WORK_PER_LOOP);
++	netif_napi_add(dev, &np->napi, nv_napi_poll, NAPI_POLL_WEIGHT);
+ 	dev->ethtool_ops = &ops;
+ 	dev->watchdog_timeo = NV_WATCHDOG_TIMEO;
+ 
 
 
