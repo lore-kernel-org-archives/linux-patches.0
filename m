@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC4E27ECC
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC9227ECC
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJvmkqzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C603C433C7;
-	Mon, 16 Oct 2023 14:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEtO40Q/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38478C433C9;
+	Mon, 16 Oct 2023 14:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467605;
-	bh=BQPYK3g3r+IpS/qxh1oXJc2zw46JoejCkKjGqM/mLkA=;
+	s=korg; t=1697467611;
+	bh=VcrCE87an9juUH/J1lTRAYK6Q+TdNcCbEIQHQGqXmvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GJvmkqzcrhe9++OlcCp30Z4k5FJDe5uR0REk+oPhsSgFYMo1DnReuOQWSHo/KNOHl
-	 wqArJBkX0vPVfXUnh5Z5L4N/Lebzj65ooPVBallyaff0QBBtEZKyYFK3FI+RXKdlhY
-	 mHruxl7/0OpY+gYINf1f4g4ffGWItOOJBnCbzU4w=
+	b=BEtO40Q/LRiiQ+wjHVGXUebMYCzkFgDj/S119xlsIVzgbffR6Ylx8NxlEtgzHL/Vf
+	 RkFGHFoxLbjJ/eN3FpLUZBPekOynCl2B9we+6p0Ct1fC1Tb1TCfd3qEJA62FLOvv9N
+	 WydrDgK0NCpenXayyok7hVpDpjZjXnOs2LxDQwBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WhaleChang <whalechang@google.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.5 027/191] ALSA: usb-audio: Fix microphone sound on Opencomm2 Headset
-Date: Mon, 16 Oct 2023 10:40:12 +0200
-Message-ID: <20231016084016.034757637@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 054/191] net: dsa: qca8k: fix potential MDIO bus conflict when accessing internal PHYs via management frames
+Date: Mon, 16 Oct 2023 10:40:39 +0200
+Message-ID: <20231016084016.666962132@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -35,49 +37,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WhaleChang <whalechang@google.com>
+From: Marek Behún <kabel@kernel.org>
 
-commit 6a83d6f3bb3c329a73e3483651fb77b78bac1878 upstream.
+[ Upstream commit 526c8ee04bdbd4d8d19a583b1f3b06700229a815 ]
 
-When a Opencomm2 Headset is connected to a Bluetooth USB dongle,
-the audio playback functions properly, but the microphone does not work.
+Besides the QCA8337 switch the Turris 1.x device has on it's MDIO bus
+also Micron ethernet PHY (dedicated to the WAN port).
 
-In the dmesg logs, there are messages indicating that the init_pitch
-function fails when the capture process begins.
+We've been experiencing a strange behavior of the WAN ethernet
+interface, wherein the WAN PHY started timing out the MDIO accesses, for
+example when the interface was brought down and then back up.
 
-The microphone only functions when the ep pitch control is not set.
+Bisecting led to commit 2cd548566384 ("net: dsa: qca8k: add support for
+phy read/write with mgmt Ethernet"), which added support to access the
+QCA8337 switch's internal PHYs via management ethernet frames.
 
-Toggling the pitch control off bypasses the init_piatch function
-and allows the microphone to work.
+Connecting the MDIO bus pins onto an oscilloscope, I was able to see
+that the MDIO bus was active whenever a request to read/write an
+internal PHY register was done via an management ethernet frame.
 
-Signed-off-by: WhaleChang <whalechang@google.com>
-Link: https://lore.kernel.org/r/20231006044852.4181022-1-whalechang@google.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+My theory is that when the switch core always communicates with the
+internal PHYs via the MDIO bus, even when externally we request the
+access via ethernet. This MDIO bus is the same one via which the switch
+and internal PHYs are accessible to the board, and the board may have
+other devices connected on this bus. An ASCII illustration may give more
+insight:
+
+           +---------+
+      +----|         |
+      |    | WAN PHY |
+      | +--|         |
+      | |  +---------+
+      | |
+      | |  +----------------------------------+
+      | |  | QCA8337                          |
+MDC   | |  |                        +-------+ |
+------o-+--|--------o------------o--|       | |
+MDIO    |  |        |            |  | PHY 1 |-|--to RJ45
+--------o--|---o----+---------o--+--|       | |
+           |   |    |         |  |  +-------+ |
+	   | +-------------+  |  o--|       | |
+	   | | MDIO MDC    |  |  |  | PHY 2 |-|--to RJ45
+eth1	   | |             |  o--+--|       | |
+-----------|-|port0        |  |  |  +-------+ |
+           | |             |  |  o--|       | |
+	   | | switch core |  |  |  | PHY 3 |-|--to RJ45
+           | +-------------+  o--+--|       | |
+	   |                  |  |  +-------+ |
+	   |                  |  o--|  ...  | |
+	   +----------------------------------+
+
+When we send a request to read an internal PHY register via an ethernet
+management frame via eth1, the switch core receives the ethernet frame
+on port 0 and then communicates with the internal PHY via MDIO. At this
+time, other potential devices, such as the WAN PHY on Turris 1.x, cannot
+use the MDIO bus, since it may cause a bus conflict.
+
+Fix this issue by locking the MDIO bus even when we are accessing the
+PHY registers via ethernet management frames.
+
+Fixes: 2cd548566384 ("net: dsa: qca8k: add support for phy read/write with mgmt Ethernet")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Reviewed-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/dsa/qca/qca8k-8xxx.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1994,7 +1994,11 @@ void snd_usb_audioformat_attributes_quir
- 		/* mic works only when ep packet size is set to wMaxPacketSize */
- 		fp->attributes |= UAC_EP_CS_ATTR_FILL_MAX;
- 		break;
--
-+	case USB_ID(0x3511, 0x2b1e): /* Opencomm2 UC USB Bluetooth dongle */
-+		/* mic works only when ep pitch control is not set */
-+		if (stream == SNDRV_PCM_STREAM_CAPTURE)
-+			fp->attributes &= ~UAC_EP_CS_ATTR_PITCH_CONTROL;
-+		break;
+diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
+index 8e1574c63954e..252089929eb92 100644
+--- a/drivers/net/dsa/qca/qca8k-8xxx.c
++++ b/drivers/net/dsa/qca/qca8k-8xxx.c
+@@ -666,6 +666,15 @@ qca8k_phy_eth_command(struct qca8k_priv *priv, bool read, int phy,
+ 		goto err_read_skb;
  	}
- }
  
++	/* It seems that accessing the switch's internal PHYs via management
++	 * packets still uses the MDIO bus within the switch internally, and
++	 * these accesses can conflict with external MDIO accesses to other
++	 * devices on the MDIO bus.
++	 * We therefore need to lock the MDIO bus onto which the switch is
++	 * connected.
++	 */
++	mutex_lock(&priv->bus->mdio_lock);
++
+ 	/* Actually start the request:
+ 	 * 1. Send mdio master packet
+ 	 * 2. Busy Wait for mdio master command
+@@ -678,6 +687,7 @@ qca8k_phy_eth_command(struct qca8k_priv *priv, bool read, int phy,
+ 	mgmt_master = priv->mgmt_master;
+ 	if (!mgmt_master) {
+ 		mutex_unlock(&mgmt_eth_data->mutex);
++		mutex_unlock(&priv->bus->mdio_lock);
+ 		ret = -EINVAL;
+ 		goto err_mgmt_master;
+ 	}
+@@ -765,6 +775,7 @@ qca8k_phy_eth_command(struct qca8k_priv *priv, bool read, int phy,
+ 				    QCA8K_ETHERNET_TIMEOUT);
+ 
+ 	mutex_unlock(&mgmt_eth_data->mutex);
++	mutex_unlock(&priv->bus->mdio_lock);
+ 
+ 	return ret;
+ 
+-- 
+2.40.1
+
 
 
