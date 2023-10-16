@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E196241F8
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2402241F8
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTCzcwgp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D287BC433C9;
-	Mon, 16 Oct 2023 14:25:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UqU0Guqw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20934C433C8;
+	Mon, 16 Oct 2023 14:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697466353;
-	bh=XrAwI/Bex/jiECJ4YHhe8sh0reOM0I4ljHuepVzvhKg=;
+	s=korg; t=1697466357;
+	bh=4DcPGfIwJf6ByVHakLGXfpYCF+x2wyPuPaz9qFG0q9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTCzcwgpC4wgTgu2wuE1rubzQWce0Y6LIAYy14JZNbsUdx/itoab4LUlJle0tS+iz
-	 BwDP5KWsN32GyEMru5YoiaYPw5S+4+STWzfBZDnv11jahqHP0odcNyzNXVCfSvHPCv
-	 dmaONbr8vI0GXXXWINNjJAgTBMBb6790L7DysoMA=
+	b=UqU0GuqwNGkUwwE7qtmqsWAVKiXZB0n9b8OwWPcf0kA4/lbxGu1MAnLaZpYzfaAdv
+	 4/Baj9+eRh8SJl6P772Mwh7PhhO71k0GjO5yb6Rj0htXIRcbluEUhn6gAJMaMd8Z1z
+	 O40z2ZosauL6JGB4jGDuCBhusycJYeS7DywSBZG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Chao Song <chao.song@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.5 035/191] ASoC: fsl_sai: Dont disable bitclock for i.MX8MP
-Date: Mon, 16 Oct 2023 10:40:20 +0200
-Message-ID: <20231016084016.217158764@linuxfoundation.org>
+Subject: [PATCH 6.5 036/191] ASoC: Intel: sof_sdw: add support for SKU 0B14
+Date: Mon, 16 Oct 2023 10:40:21 +0200
+Message-ID: <20231016084016.239660017@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -41,53 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-commit 197c53c8ecb34f2cd5922f4bdcffa8f701a134eb upstream.
+commit fb0b8d299781be8d46b3612aa96cef28da0d93f4 upstream.
 
-On i.MX8MP, the BCE and TERE bit are binding with mclk
-enablement, if BCE and TERE are cleared the MCLK also be
-disabled on output pin, that cause the external codec (wm8960)
-in wrong state.
+One more missing SKU in the list.
 
-Codec (wm8960) is using the mclk to generate PLL clock,
-if mclk is disabled before disabling PLL, the codec (wm8960)
-won't generate bclk and frameclk when sysclk switch to
-MCLK source in next test case.
-
-The test case:
-$aplay -r44100 test1.wav (PLL source)
-$aplay -r48000 test2.wav (MCLK source)
-aplay: pcm_write:2127: write error: Input/output error
-
-Fixes: 269f399dc19f ("ASoC: fsl_sai: Disable bit clock with transmitter")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://lore.kernel.org/r/1695116533-23287-1-git-send-email-shengjiu.wang@nxp.com
+Closes: https://github.com/thesofproject/linux/issues/4543
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Chao Song <chao.song@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20230919092125.1922468-1-yung-chuan.liao@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_sai.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/soc/intel/boards/sof_sdw.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -710,10 +710,15 @@ static void fsl_sai_config_disable(struc
- {
- 	unsigned int ofs = sai->soc_data->reg_offset;
- 	bool tx = dir == TX;
--	u32 xcsr, count = 100;
-+	u32 xcsr, count = 100, mask;
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -388,6 +388,16 @@ static const struct dmi_system_id sof_sd
+ 	{
+ 		.callback = sof_sdw_quirk_cb,
+ 		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0B14"),
++		},
++		/* No Jack */
++		.driver_data = (void *)SOF_SDW_TGL_HDMI,
++	},
 +
-+	if (sai->soc_data->mclk_with_tere && sai->mclk_direction_output)
-+		mask = FSL_SAI_CSR_TERE;
-+	else
-+		mask = FSL_SAI_CSR_TERE | FSL_SAI_CSR_BCE;
- 
- 	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs),
--			   FSL_SAI_CSR_TERE | FSL_SAI_CSR_BCE, 0);
-+			   mask, 0);
- 
- 	/* TERE will remain set till the end of current frame */
- 	do {
++	{
++		.callback = sof_sdw_quirk_cb,
++		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16-k0xxx"),
+ 		},
 
 
