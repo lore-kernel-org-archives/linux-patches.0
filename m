@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F7B1A27D
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128701A27D
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqWL0sSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BF4C433C8;
-	Mon, 16 Oct 2023 08:49:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZE1oygx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B52C433C8;
+	Mon, 16 Oct 2023 08:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446183;
-	bh=qd3jOytxBJZ6fszjgO2djwiKdp5bzrnZhQJskZff/jc=;
+	s=korg; t=1697446185;
+	bh=xkRy7H1IbvYHFLgXrVVNNCUpsw18I/L+toipTAiyM4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aqWL0sSnKqtJFfa1cgO30RPtt8LuZGoTGCnsBpBlmtN2JEi5kRz359MumRCSxiJcn
-	 qnwEUWqrioinNdOCASiG6uCFOgI241G3jlzkFWhnVi1y+mFGHOAsg6qplhX46qg0da
-	 crlIhWW9iP4Q7T+RzOWp4TVXr5iij8llPiINtG0Q=
+	b=UZE1oygxyAfRMnTmaOnGIcYBHf2HWH/tcOz+1wKTNE35qCis07ZRkLEKvzbceDhvA
+	 m38iK3fVNLNVkkc2Zhh4IMa2fI4GGHhl1h5Q9weKCxHufRVJafReLk45kBZs4deRtv
+	 lbRKBQhcU7TiT5XoXaAFOij7W5iOMz9TmsLWzpZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -27,9 +27,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	James Morse <james.morse@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 5.15 088/102] arm64: rework FPAC exception handling
-Date: Mon, 16 Oct 2023 10:41:27 +0200
-Message-ID: <20231016083956.040164316@linuxfoundation.org>
+Subject: [PATCH 5.15 089/102] arm64: rework BTI exception handling
+Date: Mon, 16 Oct 2023 10:41:28 +0200
+Message-ID: <20231016083956.066747378@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -50,90 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Rutland <mark.rutland@arm.com>
 
-commit a1fafa3b24a70461bbf3e5c0770893feb0a49292 upstream.
+commit 830a2a4d853f2c4a1e4606aa03341b7f273b0e9b upstream.
 
-If an FPAC exception is taken from EL1, the entry code will call
-do_ptrauth_fault(), where due to:
+If a BTI exception is taken from EL1, the entry code will treat this as
+an unhandled exception and will panic() the kernel. This is inconsistent
+with the way we handle FPAC exceptions, which have a dedicated handler
+and only necessarily kill the thread from which the exception was taken
+from, and we don't log all the information that could be relevant to
+debug the issue.
 
-	BUG_ON(!user_mode(regs))
+The code in do_bti() has:
 
-... the kernel will report a problem within do_ptrauth_fault() rather
-than reporting the original context the FPAC exception was taken from.
-The pt_regs and ESR value reported will be from within
-do_ptrauth_fault() and the code dump will be for the BRK in BUG_ON(),
-which isn't sufficient to debug the cause of the original exception.
+	BUG_ON(!user_mode(regs));
 
-This patch makes the reporting better by having separate EL0 and EL1
-FPAC exception handlers, with the latter calling die() directly to
-report the original context the FPAC exception was taken from.
+... and it seems like the intent was to call this for EL1 BTI
+exceptions, as with FPAC, but this was omitted due to an oversight.
 
-Note that we only need to prevent kprobes of the EL1 FPAC handler, since
-the EL0 FPAC handler cannot be called recursively.
+This patch adds separate EL0 and EL1 BTI exception handlers, with the
+latter calling die() directly to report the original context the BTI
+exception was taken from. This matches our handling of FPAC exceptions.
 
-For consistency with do_el0_svc*(), I've named the split functions
-do_el{0,1}_fpac() rather than do_el{0,1}_ptrauth_fault(). I've also
-clarified the comment to not imply there are casues other than FPAC
-exceptions.
+Prior to this patch, a BTI failure is reported as:
 
-Prior to this patch FPAC exceptions are reported as:
-
-| kernel BUG at arch/arm64/kernel/traps.c:517!
-| Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
-| Modules linked in:
-| CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.19.0-rc3-00130-g9c8a180a1cdf-dirty #12
-| Hardware name: FVP Base RevC (DT)
-| pstate: 00400009 (nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-| pc : do_ptrauth_fault+0x3c/0x40
-| lr : el1_fpac+0x34/0x54
-| sp : ffff80000a3bbc80
-| x29: ffff80000a3bbc80 x28: ffff0008001d8000 x27: 0000000000000000
+| Unhandled 64-bit el1h sync exception on CPU0, ESR 0x0000000034000002 -- BTI
+| CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.19.0-rc3-00131-g7d937ff0221d-dirty #9
+| Hardware name: linux,dummy-virt (DT)
+| pstate: 20400809 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=-c)
+| pc : test_bti_callee+0x4/0x10
+| lr : test_bti_caller+0x1c/0x28
+| sp : ffff80000800bdf0
+| x29: ffff80000800bdf0 x28: 0000000000000000 x27: 0000000000000000
 | x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-| x23: 0000000020400009 x22: ffff800008f70fa4 x21: ffff80000a3bbe00
-| x20: 0000000072000000 x19: ffff80000a3bbcb0 x18: fffffbfffda37000
-| x17: 3120676e696d7573 x16: 7361202c6e6f6974 x15: 0000000081a90000
+| x23: ffff80000a2b8000 x22: 0000000000000000 x21: 0000000000000000
+| x20: ffff8000099fa5b0 x19: ffff800009ff7000 x18: fffffbfffda37000
+| x17: 3120676e696d7573 x16: 7361202c6e6f6974 x15: 0000000041a90000
 | x14: 0040000000000041 x13: 0040000000000001 x12: ffff000001a90000
-| x11: fffffbfffda37480 x10: 0068000000000703 x9 : 0001000080000000
-| x8 : 0000000000090000 x7 : 0068000000000f03 x6 : 0060000000000783
-| x5 : ffff80000a3bbcb0 x4 : ffff0008001d8000 x3 : 0000000072000000
-| x2 : 0000000000000000 x1 : 0000000020400009 x0 : ffff80000a3bbcb0
+| x11: fffffbfffda37480 x10: 0068000000000703 x9 : 0001000040000000
+| x8 : 0000000000090000 x7 : 0068000000000f03 x6 : 0060000000000f83
+| x5 : ffff80000a2b6000 x4 : ffff0000028d0000 x3 : ffff800009f78378
+| x2 : 0000000000000000 x1 : 0000000040210000 x0 : ffff8000080257e4
+| Kernel panic - not syncing: Unhandled exception
+| CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.19.0-rc3-00131-g7d937ff0221d-dirty #9
+| Hardware name: linux,dummy-virt (DT)
 | Call trace:
-|  do_ptrauth_fault+0x3c/0x40
-|  el1h_64_sync_handler+0xc4/0xd0
+|  dump_backtrace.part.0+0xcc/0xe0
+|  show_stack+0x18/0x5c
+|  dump_stack_lvl+0x64/0x80
+|  dump_stack+0x18/0x34
+|  panic+0x170/0x360
+|  arm64_exit_nmi.isra.0+0x0/0x80
+|  el1h_64_sync_handler+0x64/0xd0
 |  el1h_64_sync+0x64/0x68
-|  test_pac+0x8/0x10
+|  test_bti_callee+0x4/0x10
+|  smp_cpus_done+0xb0/0xbc
 |  smp_init+0x7c/0x8c
 |  kernel_init_freeable+0x128/0x28c
 |  kernel_init+0x28/0x13c
 |  ret_from_fork+0x10/0x20
-| Code: 97fffe5e a8c17bfd d50323bf d65f03c0 (d4210000)
 
-With this patch applied FPAC exceptions are reported as:
+With this patch applied, a BTI failure is reported as:
 
-| Internal error: Oops - FPAC: 0000000072000000 [#1] PREEMPT SMP
+| Internal error: Oops - BTI: 0000000034000002 [#1] PREEMPT SMP
 | Modules linked in:
-| CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.19.0-rc3-00132-g78846e1c4757-dirty #11
-| Hardware name: FVP Base RevC (DT)
-| pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-| pc : test_pac+0x8/0x10
-| lr : 0x0
-| sp : ffff80000a3bbe00
-| x29: ffff80000a3bbe00 x28: 0000000000000000 x27: 0000000000000000
+| CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.19.0-rc3-00132-g0ad98265d582-dirty #8
+| Hardware name: linux,dummy-virt (DT)
+| pstate: 20400809 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=-c)
+| pc : test_bti_callee+0x4/0x10
+| lr : test_bti_caller+0x1c/0x28
+| sp : ffff80000800bdf0
+| x29: ffff80000800bdf0 x28: 0000000000000000 x27: 0000000000000000
 | x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-| x23: ffff80000a2c8000 x22: 0000000000000000 x21: 0000000000000000
-| x20: ffff8000099fa5b0 x19: ffff80000a007000 x18: fffffbfffda37000
-| x17: 3120676e696d7573 x16: 7361202c6e6f6974 x15: 0000000081a90000
+| x23: ffff80000a2b8000 x22: 0000000000000000 x21: 0000000000000000
+| x20: ffff8000099fa5b0 x19: ffff800009ff7000 x18: fffffbfffda37000
+| x17: 3120676e696d7573 x16: 7361202c6e6f6974 x15: 0000000041a90000
 | x14: 0040000000000041 x13: 0040000000000001 x12: ffff000001a90000
-| x11: fffffbfffda37480 x10: 0068000000000703 x9 : 0001000080000000
-| x8 : 0000000000090000 x7 : 0068000000000f03 x6 : 0060000000000783
-| x5 : ffff80000a2c6000 x4 : ffff0008001d8000 x3 : ffff800009f88378
-| x2 : 0000000000000000 x1 : 0000000080210000 x0 : ffff000001a90000
+| x11: fffffbfffda37480 x10: 0068000000000703 x9 : 0001000040000000
+| x8 : 0000000000090000 x7 : 0068000000000f03 x6 : 0060000000000f83
+| x5 : ffff80000a2b6000 x4 : ffff0000028d0000 x3 : ffff800009f78378
+| x2 : 0000000000000000 x1 : 0000000040210000 x0 : ffff800008025804
 | Call trace:
-|  test_pac+0x8/0x10
+|  test_bti_callee+0x4/0x10
+|  smp_cpus_done+0xb0/0xbc
 |  smp_init+0x7c/0x8c
 |  kernel_init_freeable+0x128/0x28c
 |  kernel_init+0x28/0x13c
 |  ret_from_fork+0x10/0x20
-| Code: d50323bf d65f03c0 d503233f aa1f03fe (d50323bf)
+| Code: d50323bf d53cd040 d65f03c0 d503233f (d50323bf)
 
 Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Reviewed-by: Mark Brown <broonie@kernel.org>
@@ -142,76 +144,86 @@ Cc: Alexandru Elisei <alexandru.elisei@arm.com>
 Cc: Amit Daniel Kachhap <amit.kachhap@arm.com>
 Cc: James Morse <james.morse@arm.com>
 Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20220913101732.3925290-5-mark.rutland@arm.com
+Link: https://lore.kernel.org/r/20220913101732.3925290-6-mark.rutland@arm.com
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  arch/arm64/include/asm/exception.h |    3 ++-
- arch/arm64/kernel/entry-common.c   |    4 ++--
- arch/arm64/kernel/traps.c          |   16 ++++++++++------
- 3 files changed, 14 insertions(+), 9 deletions(-)
+ arch/arm64/kernel/entry-common.c   |   14 +++++++++++++-
+ arch/arm64/kernel/traps.c          |   10 +++++++---
+ 3 files changed, 22 insertions(+), 5 deletions(-)
 
 --- a/arch/arm64/include/asm/exception.h
 +++ b/arch/arm64/include/asm/exception.h
-@@ -71,7 +71,8 @@ void bad_el0_sync(struct pt_regs *regs,
- void do_cp15instr(unsigned long esr, struct pt_regs *regs);
- void do_el0_svc(struct pt_regs *regs);
- void do_el0_svc_compat(struct pt_regs *regs);
--void do_ptrauth_fault(struct pt_regs *regs, unsigned long esr);
-+void do_el0_fpac(struct pt_regs *regs, unsigned long esr);
-+void do_el1_fpac(struct pt_regs *regs, unsigned long esr);
- void do_serror(struct pt_regs *regs, unsigned long esr);
- void do_notify_resume(struct pt_regs *regs, unsigned long thread_flags);
+@@ -59,7 +59,8 @@ asmlinkage void asm_exit_to_user_mode(st
  
+ void do_mem_abort(unsigned long far, unsigned long esr, struct pt_regs *regs);
+ void do_undefinstr(struct pt_regs *regs, unsigned long esr);
+-void do_bti(struct pt_regs *regs);
++void do_el0_bti(struct pt_regs *regs);
++void do_el1_bti(struct pt_regs *regs, unsigned long esr);
+ void do_debug_exception(unsigned long addr_if_watchpoint, unsigned long esr,
+ 			struct pt_regs *regs);
+ void do_fpsimd_acc(unsigned long esr, struct pt_regs *regs);
 --- a/arch/arm64/kernel/entry-common.c
 +++ b/arch/arm64/kernel/entry-common.c
-@@ -394,7 +394,7 @@ static void noinstr el1_fpac(struct pt_r
- {
- 	enter_from_kernel_mode(regs);
- 	local_daif_inherit(regs);
--	do_ptrauth_fault(regs, esr);
-+	do_el1_fpac(regs, esr);
- 	local_daif_mask();
+@@ -380,6 +380,15 @@ static void noinstr el1_undef(struct pt_
  	exit_to_kernel_mode(regs);
  }
-@@ -601,7 +601,7 @@ static void noinstr el0_fpac(struct pt_r
+ 
++static void noinstr el1_bti(struct pt_regs *regs, unsigned long esr)
++{
++	enter_from_kernel_mode(regs);
++	local_daif_inherit(regs);
++	do_el1_bti(regs, esr);
++	local_daif_mask();
++	exit_to_kernel_mode(regs);
++}
++
+ static void noinstr el1_dbg(struct pt_regs *regs, unsigned long esr)
+ {
+ 	unsigned long far = read_sysreg(far_el1);
+@@ -419,6 +428,9 @@ asmlinkage void noinstr el1h_64_sync_han
+ 	case ESR_ELx_EC_UNKNOWN:
+ 		el1_undef(regs, esr);
+ 		break;
++	case ESR_ELx_EC_BTI:
++		el1_bti(regs, esr);
++		break;
+ 	case ESR_ELx_EC_BREAKPT_CUR:
+ 	case ESR_ELx_EC_SOFTSTP_CUR:
+ 	case ESR_ELx_EC_WATCHPT_CUR:
+@@ -566,7 +578,7 @@ static void noinstr el0_bti(struct pt_re
  {
  	enter_from_user_mode(regs);
  	local_daif_restore(DAIF_PROCCTX);
--	do_ptrauth_fault(regs, esr);
-+	do_el0_fpac(regs, esr);
+-	do_bti(regs);
++	do_el0_bti(regs);
  	exit_to_user_mode(regs);
  }
  
 --- a/arch/arm64/kernel/traps.c
 +++ b/arch/arm64/kernel/traps.c
-@@ -509,16 +509,20 @@ void do_bti(struct pt_regs *regs)
+@@ -502,12 +502,16 @@ void do_undefinstr(struct pt_regs *regs,
  }
- NOKPROBE_SYMBOL(do_bti);
+ NOKPROBE_SYMBOL(do_undefinstr);
  
--void do_ptrauth_fault(struct pt_regs *regs, unsigned long esr)
-+void do_el0_fpac(struct pt_regs *regs, unsigned long esr)
-+{
-+	force_signal_inject(SIGILL, ILL_ILLOPN, regs->pc, esr);
-+}
-+
-+void do_el1_fpac(struct pt_regs *regs, unsigned long esr)
+-void do_bti(struct pt_regs *regs)
++void do_el0_bti(struct pt_regs *regs)
  {
- 	/*
--	 * Unexpected FPAC exception or pointer authentication failure in
--	 * the kernel: kill the task before it does any more harm.
-+	 * Unexpected FPAC exception in the kernel: kill the task before it
-+	 * does any more harm.
- 	 */
 -	BUG_ON(!user_mode(regs));
--	force_signal_inject(SIGILL, ILL_ILLOPN, regs->pc, esr);
-+	die("Oops - FPAC", regs, esr);
+ 	force_signal_inject(SIGILL, ILL_ILLOPC, regs->pc, 0);
  }
--NOKPROBE_SYMBOL(do_ptrauth_fault);
-+NOKPROBE_SYMBOL(do_el1_fpac);
+-NOKPROBE_SYMBOL(do_bti);
++
++void do_el1_bti(struct pt_regs *regs, unsigned long esr)
++{
++	die("Oops - BTI", regs, esr);
++}
++NOKPROBE_SYMBOL(do_el1_bti);
  
- #define __user_cache_maint(insn, address, res)			\
- 	if (address >= user_addr_max()) {			\
+ void do_el0_fpac(struct pt_regs *regs, unsigned long esr)
+ {
 
 
