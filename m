@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98551A29F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98CA1798F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaPB7eJc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BF9C433C9;
-	Mon, 16 Oct 2023 08:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhqpIcxx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89C5C433C8;
+	Mon, 16 Oct 2023 08:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446587;
-	bh=DS2p/sC1CiCfUBsqjuxNX8wbKIvyk/Ac0kb6NFbuvAQ=;
+	s=korg; t=1697446597;
+	bh=ahue3Cg2KDW4TU61ELAGNIHYcUJaxc+fJq8fogKzNkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kaPB7eJcfNkKkWg8MusavxLr8iJTNbv0WitqS0XCoTEy4OUKL4d7AbikEqucahBiU
-	 tXs0kUXvIQy6Ups2HejTn3MGp+TiwyrTHp22R7U3vdGWaJxNN18us30k8gJInwbplW
-	 4QOvsR8GA5CZopcXF7+iGa0cxlJl48MQF6FSrEVw=
+	b=DhqpIcxxD4rCin/H+5yzAoFaXYd+t/TQSWxc0ncEy4RkzlDUaTcsTEvu0kJRtFsi/
+	 O+GGxP0lhTly8qnwIbysTQ38evOsKm+9uATGp/ACb6epiS7oaHOqysJcYsfMQdxVIA
+	 rd4HfLq71MXrgqfi5BqIeAnBjyFODnQT81joEq54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Nia Espera <nespera@igalia.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/131] drm/msm/dpu: change _dpu_plane_calc_bw() to use u64 to avoid overflow
-Date: Mon, 16 Oct 2023 10:40:20 +0200
-Message-ID: <20231016084000.989943447@linuxfoundation.org>
+Subject: [PATCH 6.1 055/131] net: refine debug info in skb_checksum_help()
+Date: Mon, 16 Oct 2023 10:40:38 +0200
+Message-ID: <20231016084001.440100088@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -43,65 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 95e681ca3b65e4ce3d2537b47672d787b7d30375 ]
+[ Upstream commit 26c29961b142444cd99361644c30fa1e9b3da6be ]
 
-_dpu_plane_calc_bw() uses integer variables to calculate the bandwidth
-used during plane bandwidth calculations. However for high resolution
-displays this overflows easily and leads to below errors
+syzbot uses panic_on_warn.
 
-[dpu error]crtc83 failed performance check -7
+This means that the skb_dump() I added in the blamed commit are
+not even called.
 
-Promote the intermediate variables to u64 to avoid overflow.
+Rewrite this so that we get the needed skb dump before syzbot crashes.
 
-changes in v2:
-	- change to u64 where actually needed in the math
-
-Fixes: c33b7c0389e1 ("drm/msm/dpu: add support for clk and bw scaling for display")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reported-by: Nia Espera <nespera@igalia.com>
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/32
-Tested-by: Nia Espera <nespera@igalia.com>
-Patchwork: https://patchwork.freedesktop.org/patch/556288/
-Link: https://lore.kernel.org/r/20230908012616.20654-1-quic_abhinavk@quicinc.com
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: eeee4b77dc52 ("net: add more debug info in skb_checksum_help()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20231006173355.2254983-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/core/dev.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 3fbda2a1f77fc..62d48c0f905e4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -142,6 +142,7 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
- 	const struct dpu_format *fmt = NULL;
- 	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
- 	int src_width, src_height, dst_height, fps;
-+	u64 plane_pixel_rate, plane_bit_rate;
- 	u64 plane_prefill_bw;
- 	u64 plane_bw;
- 	u32 hw_latency_lines;
-@@ -164,13 +165,12 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
- 	scale_factor = src_height > dst_height ?
- 		mult_frac(src_height, 1, dst_height) : 1;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index a2e3c6470ab3f..5374761f5af2c 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3274,15 +3274,19 @@ int skb_checksum_help(struct sk_buff *skb)
  
--	plane_bw =
--		src_width * mode->vtotal * fps * fmt->bpp *
--		scale_factor;
-+	plane_pixel_rate = src_width * mode->vtotal * fps;
-+	plane_bit_rate = plane_pixel_rate * fmt->bpp;
+ 	offset = skb_checksum_start_offset(skb);
+ 	ret = -EINVAL;
+-	if (WARN_ON_ONCE(offset >= skb_headlen(skb))) {
++	if (unlikely(offset >= skb_headlen(skb))) {
+ 		DO_ONCE_LITE(skb_dump, KERN_ERR, skb, false);
++		WARN_ONCE(true, "offset (%d) >= skb_headlen() (%u)\n",
++			  offset, skb_headlen(skb));
+ 		goto out;
+ 	}
+ 	csum = skb_checksum(skb, offset, skb->len - offset, 0);
  
--	plane_prefill_bw =
--		src_width * hw_latency_lines * fps * fmt->bpp *
--		scale_factor * mode->vtotal;
-+	plane_bw = plane_bit_rate * scale_factor;
-+
-+	plane_prefill_bw = plane_bw * hw_latency_lines;
- 
- 	if ((vbp+vpw) > hw_latency_lines)
- 		do_div(plane_prefill_bw, (vbp+vpw));
+ 	offset += skb->csum_offset;
+-	if (WARN_ON_ONCE(offset + sizeof(__sum16) > skb_headlen(skb))) {
++	if (unlikely(offset + sizeof(__sum16) > skb_headlen(skb))) {
+ 		DO_ONCE_LITE(skb_dump, KERN_ERR, skb, false);
++		WARN_ONCE(true, "offset+2 (%zu) > skb_headlen() (%u)\n",
++			  offset + sizeof(__sum16), skb_headlen(skb));
+ 		goto out;
+ 	}
+ 	ret = skb_ensure_writable(skb, offset + sizeof(__sum16));
 -- 
 2.40.1
 
