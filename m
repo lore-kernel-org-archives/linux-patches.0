@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD671A585
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769FE1A585
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0q+TLek3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C381C433C7;
-	Mon, 16 Oct 2023 08:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="viTQAb1X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2979C433C9;
+	Mon, 16 Oct 2023 08:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446778;
-	bh=3kKt03rbLuEZRlvvLfdqeJoSA9R3ua4gQm+AOaPgMOQ=;
+	s=korg; t=1697446782;
+	bh=idk8rnhsMbOz9R/zRijc/C7whDG2Fj4dvapF1v4e5+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0q+TLek36kfA2AupJoD1gsImIu7jpfEq/szJwVyGddJ0dwWWCihF72HxDDX/QkmYJ
-	 VRPCKzpNl8ocvEZkVDqU5iYvJI/QSbrsTmbDxxdxCFMMYj8GuyczIkbDRJsKoeIS3S
-	 CUsBQtJS+PLzskOYCZL9UWuPP6qFXrQ4bKa/Yr/Q=
+	b=viTQAb1XF77ZkkVh1ir65AJl093lImY1WP/6iGHyvZjGJIP9dlGqYE5QKx8hcimMl
+	 P1Z/G44tucs6t5kN3m1ILX0gaWHmniivlK/6PdDY3tFRvW2QG3E57S1IH8boe/fyus
+	 DiW+4esz3EHplrY/0Ws/LZFGVIkJJHAe1LpQw67Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	John Watts <contact@jookia.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/131] can: sun4i_can: Only show Kconfig if ARCH_SUNXI is set
-Date: Mon, 16 Oct 2023 10:40:27 +0200
-Message-ID: <20231016084001.167746381@linuxfoundation.org>
+Subject: [PATCH 6.1 035/131] drm/msm/dsi: skip the wait for video mode done if not applicable
+Date: Mon, 16 Oct 2023 10:40:18 +0200
+Message-ID: <20231016084000.938522073@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -44,39 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Watts <contact@jookia.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit 1f223208ebdef84f21c15e9958c005a93c871aa2 ]
+[ Upstream commit ab483e3adcc178254eb1ce0fbdfbea65f86f1006 ]
 
-When adding the RISCV option I didn't gate it behind ARCH_SUNXI.
-As a result this option shows up with Allwinner support isn't enabled.
-Fix that by requiring ARCH_SUNXI to be set if RISCV is set.
+dsi_wait4video_done() API waits for the DSI video mode engine to
+become idle so that we can transmit the DCS commands in the
+beginning of BLLP. However, with the current sequence, the MDP
+timing engine is turned on after the panel's pre_enable() callback
+which can send out the DCS commands needed to power up the panel.
 
-Fixes: 8abb95250ae6 ("can: sun4i_can: Add support for the Allwinner D1")
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://lore.kernel.org/linux-sunxi/CAMuHMdV2m54UAH0X2dG7stEg=grFihrdsz4+o7=_DpBMhjTbkw@mail.gmail.com/
-Signed-off-by: John Watts <contact@jookia.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/all/20230905231342.2042759-2-contact@jookia.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+During those cases, this API will always timeout and print out the
+error spam leading to long bootup times and log flooding.
+
+Fix this by checking if the DSI video engine was actually busy before
+waiting for it to become idle otherwise this is a redundant wait.
+
+changes in v2:
+	- move the reg read below the video mode check
+	- minor fixes in commit text
+
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/34
+Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/557853/
+Link: https://lore.kernel.org/r/20230915204426.19011-1-quic_abhinavk@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/can/Kconfig b/drivers/net/can/Kconfig
-index 8236aabebb394..e45b95a13157b 100644
---- a/drivers/net/can/Kconfig
-+++ b/drivers/net/can/Kconfig
-@@ -174,7 +174,7 @@ config CAN_SLCAN
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index b433ccfe4d7da..6c1ebeb9023eb 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1098,9 +1098,21 @@ static void dsi_wait4video_done(struct msm_dsi_host *msm_host)
  
- config CAN_SUN4I
- 	tristate "Allwinner A10 CAN controller"
--	depends on MACH_SUN4I || MACH_SUN7I || RISCV || COMPILE_TEST
-+	depends on MACH_SUN4I || MACH_SUN7I || (RISCV && ARCH_SUNXI) || COMPILE_TEST
- 	help
- 	  Say Y here if you want to use CAN controller found on Allwinner
- 	  A10/A20/D1 SoCs.
+ static void dsi_wait4video_eng_busy(struct msm_dsi_host *msm_host)
+ {
++	u32 data;
++
+ 	if (!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO))
+ 		return;
+ 
++	data = dsi_read(msm_host, REG_DSI_STATUS0);
++
++	/* if video mode engine is not busy, its because
++	 * either timing engine was not turned on or the
++	 * DSI controller has finished transmitting the video
++	 * data already, so no need to wait in those cases
++	 */
++	if (!(data & DSI_STATUS0_VIDEO_MODE_ENGINE_BUSY))
++		return;
++
+ 	if (msm_host->power_on && msm_host->enabled) {
+ 		dsi_wait4video_done(msm_host);
+ 		/* delay 4 ms to skip BLLP */
 -- 
 2.40.1
 
