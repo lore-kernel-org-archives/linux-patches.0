@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A2628DBA
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3AA28DBA
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKJcTV2H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3C7C433C9;
-	Mon, 16 Oct 2023 14:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8d1TC30"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15C8C433C7;
+	Mon, 16 Oct 2023 14:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468007;
-	bh=AsgX9uviDWVHczM8NppvEPOpv9cpzQK5bMc5YqBAytg=;
+	s=korg; t=1697468010;
+	bh=yArO/kI3/HCPbXzsF/YO6m0L9y7S5YD9KMG3/r5pCKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKJcTV2HhS+cHYH0yKma0XfOq7CkrZ2JogyN5wJW56NcUOkKngItrJX4nzO7I6aN6
-	 z8AU61ubijCSiHBsVTcdEe7BG0JDFOhmAJgcbFVZ3rLgGQXC37lD92mixr7FpZJlz7
-	 8aPEQMf9/gqIHntVrB4AZM+8j3je9Kdp5aQVJHFk=
+	b=U8d1TC30JTj7vYBpllkLaF1Jybihj2hDdDWRCV7Z8FAni1ob4XIhC4lLewvQq1V8J
+	 3cdvIOSOzjjq2J3sMLRzcq7N7RAqXutdU6OpcLN3BkKlbCIrM1cl1LVLJXevkqdAnB
+	 U1wNvwwjSpf4jk87uNjDIMdP50NgNGHifSneW9QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	stable <stable@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.5 133/191] serial: core: Fix checks for tx runtime PM state
-Date: Mon, 16 Oct 2023 10:41:58 +0200
-Message-ID: <20231016084018.496334320@linuxfoundation.org>
+	syzbot+7f10c1653e35933c0f1e@syzkaller.appspotmail.com,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Todd Kjos <tkjos@google.com>
+Subject: [PATCH 6.5 134/191] binder: fix memory leaks of spam and pending work
+Date: Mon, 16 Oct 2023 10:41:59 +0200
+Message-ID: <20231016084018.518631112@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -43,56 +43,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 81a61051e0ce5fd7e09225c0d5985da08c7954a7 upstream.
+commit 1aa3aaf8953c84bad398adf6c3cabc9d6685bf7d upstream.
 
-Maximilian reported that surface_serial_hub serdev tx does not work during
-system suspend. During system suspend, runtime PM gets disabled in
-__device_suspend_late(), and tx is unable to wake-up the serial core port
-device that we use to check if tx is safe to start. Johan summarized the
-regression noting that serdev tx no longer always works as earlier when the
-serdev device is runtime PM active.
+A transaction complete work is allocated and queued for each
+transaction. Under certain conditions the work->type might be marked as
+BINDER_WORK_TRANSACTION_ONEWAY_SPAM_SUSPECT to notify userspace about
+potential spamming threads or as BINDER_WORK_TRANSACTION_PENDING when
+the target is currently frozen.
 
-The serdev device and the serial core controller devices are siblings of
-the serial port hardware device. The runtime PM usage count from serdev
-device does not propagate to the serial core device siblings, it only
-propagates to the parent.
+However, these work types are not being handled in binder_release_work()
+so they will leak during a cleanup. This was reported by syzkaller with
+the following kmemleak dump:
 
-In addition to the tx issue for suspend, testing for the serial core port
-device can cause an unnecessary delay in enabling tx while waiting for the
-serial core port device to wake-up. The serial core port device wake-up is
-only needed to flush pending tx when the serial port hardware device was
-in runtime PM suspended state.
+BUG: memory leak
+unreferenced object 0xffff88810e2d6de0 (size 32):
+  comm "syz-executor338", pid 5046, jiffies 4294968230 (age 13.590s)
+  hex dump (first 32 bytes):
+    e0 6d 2d 0e 81 88 ff ff e0 6d 2d 0e 81 88 ff ff  .m-......m-.....
+    04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff81573b75>] kmalloc_trace+0x25/0x90 mm/slab_common.c:1114
+    [<ffffffff83d41873>] kmalloc include/linux/slab.h:599 [inline]
+    [<ffffffff83d41873>] kzalloc include/linux/slab.h:720 [inline]
+    [<ffffffff83d41873>] binder_transaction+0x573/0x4050 drivers/android/binder.c:3152
+    [<ffffffff83d45a05>] binder_thread_write+0x6b5/0x1860 drivers/android/binder.c:4010
+    [<ffffffff83d486dc>] binder_ioctl_write_read drivers/android/binder.c:5066 [inline]
+    [<ffffffff83d486dc>] binder_ioctl+0x1b2c/0x3cf0 drivers/android/binder.c:5352
+    [<ffffffff816b25f2>] vfs_ioctl fs/ioctl.c:51 [inline]
+    [<ffffffff816b25f2>] __do_sys_ioctl fs/ioctl.c:871 [inline]
+    [<ffffffff816b25f2>] __se_sys_ioctl fs/ioctl.c:857 [inline]
+    [<ffffffff816b25f2>] __x64_sys_ioctl+0xf2/0x140 fs/ioctl.c:857
+    [<ffffffff84b30008>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84b30008>] do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84c0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-To fix the regression, we need to check the runtime PM state of the parent
-serial port hardware device for tx instead of the serial core port device.
+Fix the leaks by kfreeing these work types in binder_release_work() and
+handle them as a BINDER_WORK_TRANSACTION_COMPLETE cleanup.
 
-As the serial port device drivers may or may not implement runtime PM, we
-need to also add a check for pm_runtime_enabled().
-
-Reported-by: Maximilian Luz <luzmaximilian@gmail.com>
-Cc: stable <stable@kernel.org>
-Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Tested-by: Maximilian Luz <luzmaximilian@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231005075644.25936-1-tony@atomide.com
+Cc: stable@vger.kernel.org
+Fixes: 0567461a7a6e ("binder: return pending info for frozen async txns")
+Fixes: a7dc1e6f99df ("binder: tell userspace to dump current backtrace when detected oneway spamming")
+Reported-by: syzbot+7f10c1653e35933c0f1e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7f10c1653e35933c0f1e
+Suggested-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Acked-by: Todd Kjos <tkjos@google.com>
+Link: https://lore.kernel.org/r/20230922175138.230331-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/android/binder.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -157,7 +157,7 @@ static void __uart_start(struct tty_stru
- 	 * enabled, serial_port_runtime_resume() calls start_tx() again
- 	 * after enabling the device.
- 	 */
--	if (pm_runtime_active(&port_dev->dev))
-+	if (!pm_runtime_enabled(port->dev) || pm_runtime_active(port->dev))
- 		port->ops->start_tx(port);
- 	pm_runtime_mark_last_busy(&port_dev->dev);
- 	pm_runtime_put_autosuspend(&port_dev->dev);
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -4812,6 +4812,8 @@ static void binder_release_work(struct b
+ 				"undelivered TRANSACTION_ERROR: %u\n",
+ 				e->cmd);
+ 		} break;
++		case BINDER_WORK_TRANSACTION_PENDING:
++		case BINDER_WORK_TRANSACTION_ONEWAY_SPAM_SUSPECT:
+ 		case BINDER_WORK_TRANSACTION_COMPLETE: {
+ 			binder_debug(BINDER_DEBUG_DEAD_TRANSACTION,
+ 				"undelivered TRANSACTION_COMPLETE\n");
 
 
