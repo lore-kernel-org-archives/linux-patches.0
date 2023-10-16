@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F25E200D5
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD28200D5
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzeLn5Sh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BB0C433C8;
-	Mon, 16 Oct 2023 14:46:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EG6MyfKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D0E9C433C7;
+	Mon, 16 Oct 2023 14:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467576;
-	bh=Cvc3GvLpHy/bSSGpQ77CvKS8kDaTmfRl4IgVwQ/k+I8=;
+	s=korg; t=1697467579;
+	bh=wvu0XAyuXnqGNYHCxsFMDDH0wWWDDh0/27LY6xAu71Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xzeLn5ShVBDaeeneLrvL6kt0HZON4hxDWhqTvIKGT2e1TCR/tpRR9CinAqGnya0ZF
-	 eG74T5DyUMQ2hzS/+Yrm/8oktpS1zKCrycIPl2KUf+HzcI4ms3022mv32DoscWVGT6
-	 12hBCqwyzHyXBdy6TNySTwwuAu+oqsS/urfCW5Oc=
+	b=EG6MyfKjyCPGVlxPV5NdLsVxbHXfGuUkDZu3x5yS3Iti4nyTtR/glgMqFgNoBpzED
+	 /v7YsNnbk6JAl7j/xH5CIzAbnWiKtEDqxLEiVz/OydwG41yUCJY7YdHzduE5ZEbFmj
+	 +izyZsMelD+cl7SxqlEocUGSwOep6fTUxp5hdkOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Vinod Polimera <quic_vpolimer@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Nia Espera <nespera@igalia.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 047/191] drm/msm/dpu: change _dpu_plane_calc_bw() to use u64 to avoid overflow
-Date: Mon, 16 Oct 2023 10:40:32 +0200
-Message-ID: <20231016084016.507352868@linuxfoundation.org>
+Subject: [PATCH 6.5 048/191] drm/msm/dp: Add newlines to debug printks
+Date: Mon, 16 Oct 2023 10:40:33 +0200
+Message-ID: <20231016084016.530344255@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -43,65 +45,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit 95e681ca3b65e4ce3d2537b47672d787b7d30375 ]
+[ Upstream commit eba8c99a0fc45da1c8d5b5f5bd1dc2e79229a767 ]
 
-_dpu_plane_calc_bw() uses integer variables to calculate the bandwidth
-used during plane bandwidth calculations. However for high resolution
-displays this overflows easily and leads to below errors
+These debug printks are missing newlines, causing drm debug logs to be
+hard to read. Add newlines so that the messages are on their own line.
 
-[dpu error]crtc83 failed performance check -7
-
-Promote the intermediate variables to u64 to avoid overflow.
-
-changes in v2:
-	- change to u64 where actually needed in the math
-
-Fixes: c33b7c0389e1 ("drm/msm/dpu: add support for clk and bw scaling for display")
+Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Fixes: 601f0479c583 ("drm/msm/dp: add logs across DP driver for ease of debugging")
+Fixes: cd779808cccd ("drm/msm/dp: Add basic PSR support for eDP")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reported-by: Nia Espera <nespera@igalia.com>
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/32
-Tested-by: Nia Espera <nespera@igalia.com>
-Patchwork: https://patchwork.freedesktop.org/patch/556288/
-Link: https://lore.kernel.org/r/20230908012616.20654-1-quic_abhinavk@quicinc.com
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/554533/
+Link: https://lore.kernel.org/r/20230825230109.2264345-1-swboyd@chromium.org
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_link.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index c2aaaded07ed6..98c1b22e9bca0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -119,6 +119,7 @@ static u64 _dpu_plane_calc_bw(const struct dpu_mdss_cfg *catalog,
- 	struct dpu_sw_pipe_cfg *pipe_cfg)
- {
- 	int src_width, src_height, dst_height, fps;
-+	u64 plane_pixel_rate, plane_bit_rate;
- 	u64 plane_prefill_bw;
- 	u64 plane_bw;
- 	u32 hw_latency_lines;
-@@ -136,13 +137,12 @@ static u64 _dpu_plane_calc_bw(const struct dpu_mdss_cfg *catalog,
- 	scale_factor = src_height > dst_height ?
- 		mult_frac(src_height, 1, dst_height) : 1;
+diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+index 42427129acea8..6375daaeb98e1 100644
+--- a/drivers/gpu/drm/msm/dp/dp_link.c
++++ b/drivers/gpu/drm/msm/dp/dp_link.c
+@@ -1090,7 +1090,7 @@ int dp_link_process_request(struct dp_link *dp_link)
+ 	} else if (dp_link_read_psr_error_status(link)) {
+ 		DRM_ERROR("PSR IRQ_HPD received\n");
+ 	} else if (dp_link_psr_capability_changed(link)) {
+-		drm_dbg_dp(link->drm_dev, "PSR Capability changed");
++		drm_dbg_dp(link->drm_dev, "PSR Capability changed\n");
+ 	} else {
+ 		ret = dp_link_process_link_status_update(link);
+ 		if (!ret) {
+@@ -1107,7 +1107,7 @@ int dp_link_process_request(struct dp_link *dp_link)
+ 		}
+ 	}
  
--	plane_bw =
--		src_width * mode->vtotal * fps * fmt->bpp *
--		scale_factor;
-+	plane_pixel_rate = src_width * mode->vtotal * fps;
-+	plane_bit_rate = plane_pixel_rate * fmt->bpp;
- 
--	plane_prefill_bw =
--		src_width * hw_latency_lines * fps * fmt->bpp *
--		scale_factor * mode->vtotal;
-+	plane_bw = plane_bit_rate * scale_factor;
-+
-+	plane_prefill_bw = plane_bw * hw_latency_lines;
- 
- 	if ((vbp+vpw) > hw_latency_lines)
- 		do_div(plane_prefill_bw, (vbp+vpw));
+-	drm_dbg_dp(link->drm_dev, "sink request=%#x",
++	drm_dbg_dp(link->drm_dev, "sink request=%#x\n",
+ 				dp_link->sink_request);
+ 	return ret;
+ }
 -- 
 2.40.1
 
