@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B718315AE3
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8598415AE3
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzVrEwHF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04807C433C7;
-	Mon, 16 Oct 2023 08:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqTemZ3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1427C433C8;
+	Mon, 16 Oct 2023 08:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446022;
-	bh=WUjp1mS4BJCGgj+KcTAMeVatQ4jccsFW9x5mitfwQOo=;
+	s=korg; t=1697446027;
+	bh=D/DD6p8aJu2p43d1jK04WO5V7PJdcnirepauJJKRvV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YzVrEwHFWeCZi9acQVkHS667vhUbjqdIhBRpK71gCa6PI/KAPtDUK1N+iZ0SXVFHS
-	 /oWcQnwR2fDwT529Dfn+4K/bjoffY8T54Lm41+NSVgo2rxKjFHZffDm8PzXG6Z0vbV
-	 yiX9aJnWq7c5Ut5Lc15SOgd97WYssyBP/PuGqwoA=
+	b=dqTemZ3Xt4cfU5yHjP4UPqVh1oJD79bfQA+j0p6KslV3dv4XIBVEotj6mBPyis6ON
+	 NzgAVaCMnIbLSUNK29egR9P7x48NoLeWuDtXL8i8js8VHn2EVUMfEH6Fy00WaJIR8V
+	 +abaG4gZOEgiVt6oaGqKAmApLG0t9mfDCNo/RMes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 5.15 061/102] x86/cpu: Fix AMD erratum #1485 on Zen4-based CPUs
-Date: Mon, 16 Oct 2023 10:41:00 +0200
-Message-ID: <20231016083955.330071081@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
+	Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
+Subject: [PATCH 5.15 062/102] mcb: remove is_added flag from mcb_device struct
+Date: Mon, 16 Oct 2023 10:41:01 +0200
+Message-ID: <20231016083955.356970762@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -36,76 +36,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
 
-commit f454b18e07f518bcd0c05af17a2239138bff52de upstream.
+commit 0f28ada1fbf0054557cddcdb93ad17f767105208 upstream.
 
-Fix erratum #1485 on Zen4 parts where running with STIBP disabled can
-cause an #UD exception. The performance impact of the fix is negligible.
+When calling mcb_bus_add_devices(), both mcb devices and the mcb
+bus will attempt to attach a device to a driver because they share
+the same bus_type. This causes an issue when trying to cast the
+container of the device to mcb_device struct using to_mcb_device(),
+leading to a wrong cast when the mcb_bus is added. A crash occurs
+when freing the ida resources as the bus numbering of mcb_bus gets
+confused with the is_added flag on the mcb_device struct.
 
-Reported-by: René Rebe <rene@exactcode.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: René Rebe <rene@exactcode.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/D99589F4-BC5D-430B-87B2-72C20370CF57@exactcode.com
+The only reason for this cast was to keep an is_added flag on the
+mcb_device struct that does not seem necessary. The function
+device_attach() handles already bound devices and the mcb subsystem
+does nothing special with this is_added flag so remove it completely.
+
+Fixes: 18d288198099 ("mcb: Correctly initialize the bus's device")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Co-developed-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
+Signed-off-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
+Link: https://lore.kernel.org/r/20230906114901.63174-2-JoseJavier.Rodriguez@duagon.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/msr-index.h |    9 +++++++--
- arch/x86/kernel/cpu/amd.c        |    8 ++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/mcb/mcb-core.c  |   10 +++-------
+ drivers/mcb/mcb-parse.c |    2 --
+ include/linux/mcb.h     |    1 -
+ 3 files changed, 3 insertions(+), 10 deletions(-)
 
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -547,12 +547,17 @@
+--- a/drivers/mcb/mcb-core.c
++++ b/drivers/mcb/mcb-core.c
+@@ -387,17 +387,13 @@ EXPORT_SYMBOL_NS_GPL(mcb_free_dev, MCB);
  
- #define MSR_AMD64_VIRT_SPEC_CTRL	0xc001011f
- 
--/* Fam 17h MSRs */
--#define MSR_F17H_IRPERF			0xc00000e9
-+/* Zen4 */
-+#define MSR_ZEN4_BP_CFG			0xc001102e
-+#define MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT 5
- 
-+/* Zen 2 */
- #define MSR_ZEN2_SPECTRAL_CHICKEN	0xc00110e3
- #define MSR_ZEN2_SPECTRAL_CHICKEN_BIT	BIT_ULL(1)
- 
-+/* Fam 17h MSRs */
-+#define MSR_F17H_IRPERF			0xc00000e9
-+
- /* Fam 16h MSRs */
- #define MSR_F16H_L2I_PERF_CTL		0xc0010230
- #define MSR_F16H_L2I_PERF_CTR		0xc0010231
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -80,6 +80,10 @@ static const int amd_div0[] =
- 	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x17, 0x00, 0x0, 0x2f, 0xf),
- 			   AMD_MODEL_RANGE(0x17, 0x50, 0x0, 0x5f, 0xf));
- 
-+static const int amd_erratum_1485[] =
-+	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x19, 0x10, 0x0, 0x1f, 0xf),
-+			   AMD_MODEL_RANGE(0x19, 0x60, 0x0, 0xaf, 0xf));
-+
- static bool cpu_has_amd_erratum(struct cpuinfo_x86 *cpu, const int *erratum)
+ static int __mcb_bus_add_devices(struct device *dev, void *data)
  {
- 	int osvw_id = *erratum++;
-@@ -1150,6 +1154,10 @@ static void init_amd(struct cpuinfo_x86
- 		pr_notice_once("AMD Zen1 DIV0 bug detected. Disable SMT for full protection.\n");
- 		setup_force_cpu_bug(X86_BUG_DIV0);
- 	}
-+
-+	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) &&
-+	     cpu_has_amd_erratum(c, amd_erratum_1485))
-+		msr_set_bit(MSR_ZEN4_BP_CFG, MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT);
- }
+-	struct mcb_device *mdev = to_mcb_device(dev);
+ 	int retval;
  
- #ifdef CONFIG_X86_32
+-	if (mdev->is_added)
+-		return 0;
+-
+ 	retval = device_attach(dev);
+-	if (retval < 0)
++	if (retval < 0) {
+ 		dev_err(dev, "Error adding device (%d)\n", retval);
+-
+-	mdev->is_added = true;
++		return retval;
++	}
+ 
+ 	return 0;
+ }
+--- a/drivers/mcb/mcb-parse.c
++++ b/drivers/mcb/mcb-parse.c
+@@ -99,8 +99,6 @@ static int chameleon_parse_gdd(struct mc
+ 	mdev->mem.end = mdev->mem.start + size - 1;
+ 	mdev->mem.flags = IORESOURCE_MEM;
+ 
+-	mdev->is_added = false;
+-
+ 	ret = mcb_device_register(bus, mdev);
+ 	if (ret < 0)
+ 		goto err;
+--- a/include/linux/mcb.h
++++ b/include/linux/mcb.h
+@@ -63,7 +63,6 @@ static inline struct mcb_bus *to_mcb_bus
+ struct mcb_device {
+ 	struct device dev;
+ 	struct mcb_bus *bus;
+-	bool is_added;
+ 	struct mcb_driver *driver;
+ 	u16 id;
+ 	int inst;
 
 
