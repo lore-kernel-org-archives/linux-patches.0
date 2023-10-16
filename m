@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E0C28DD5
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0216928DD5
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qz/Oci+3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0F4C433C8;
-	Mon, 16 Oct 2023 14:25:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VD9GX2Rn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446D7C433C7;
+	Mon, 16 Oct 2023 14:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697466327;
-	bh=ha7SU1VylK03Yw/vG4rPaXdYwwY2t6dPfVze6BT3KTc=;
+	s=korg; t=1697466330;
+	bh=0DXoca8GYb+lgJOMB5Qdbk71DJaBaAeIPen+wRTfSMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qz/Oci+3zdtpv5/cVDAJ2/+VsJLjc/w5DuOsIh0I27gx9UhW1rabudkWrS44uJlE0
-	 KVJOvgOHPFl7kuo5xlYpfSFpxVLBPqBsmIL+c9h39RhTy4sZy9Q6BQYiaFk7GHl5/l
-	 wQrNFyQB5bmVHA3GsqrQ9tuKo9ltS1PfUYzKdBno=
+	b=VD9GX2RnyjvBeDpB9mS/4qB00Yt23hUpAZaq+gcWILaggJtKwuIH9ofnaeK8v/Igu
+	 eWCDQ6r4Q8OU07dNEdASEEMTnGtNdJfl9GbWWpQmj1G2MqAuNibaRQH6yONQ3jsjcy
+	 dfWrBa4ADaFNaUSQBXocLdVwy25oqYsZHZUfMkNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Oza Pawandeep <quic_poza@quicinc.com>,
-	Will Deacon <will@kernel.org>,
+	Alex Deucher <Alexander.Deucher@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Luben Tuikov <luben.tuikov@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 007/191] cpuidle, ACPI: Evaluate LPI arch_flags for broadcast timer
-Date: Mon, 16 Oct 2023 10:39:52 +0200
-Message-ID: <20231016084015.573224980@linuxfoundation.org>
+Subject: [PATCH 6.5 008/191] drm/amdgpu: Fix a memory leak
+Date: Mon, 16 Oct 2023 10:39:53 +0200
+Message-ID: <20231016084015.596605581@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -38,126 +38,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oza Pawandeep <quic_poza@quicinc.com>
+From: Luben Tuikov <luben.tuikov@amd.com>
 
-[ Upstream commit 4785aa8028536c2be656d22c74ec1995b97056f3 ]
+[ Upstream commit 5d061675b7538e25d060d13310880c01160207c4 ]
 
-Arm® Functional Fixed Hardware Specification defines LPI states,
-which provide an architectural context loss flags field that can
-be used to describe the context that might be lost when an LPI
-state is entered.
+Fix a memory leak in amdgpu_fru_get_product_info().
 
-- Core context Lost
-        - General purpose registers.
-        - Floating point and SIMD registers.
-        - System registers, include the System register based
-        - generic timer for the core.
-        - Debug register in the core power domain.
-        - PMU registers in the core power domain.
-        - Trace register in the core power domain.
-- Trace context loss
-- GICR
-- GICD
-
-Qualcomm's custom CPUs preserves the architectural state,
-including keeping the power domain for local timers active.
-when core is power gated, the local timers are sufficient to
-wake the core up without needing broadcast timer.
-
-The patch fixes the evaluation of cpuidle arch_flags, and moves only to
-broadcast timer if core context lost is defined in ACPI LPI.
-
-Fixes: a36a7fecfe60 ("ACPI / processor_idle: Add support for Low Power Idle(LPI) states")
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Oza Pawandeep <quic_poza@quicinc.com>
-Link: https://lore.kernel.org/r/20231003173333.2865323-1-quic_poza@quicinc.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Cc: Alex Deucher <Alexander.Deucher@amd.com>
+Reported-by: Yang Wang <kevinyang.wang@amd.com>
+Fixes: 0dbf2c562625 ("drm/amdgpu: Interpret IPMI data for product information (v2)")
+Signed-off-by: Luben Tuikov <luben.tuikov@amd.com>
+Reviewed-by: Alex Deucher <Alexander.Deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/acpi.h | 19 +++++++++++++++++++
- drivers/acpi/processor_idle.c |  3 +--
- include/linux/acpi.h          |  9 +++++++++
- 3 files changed, 29 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
-index 4d537d56eb847..6792a1f83f2ad 100644
---- a/arch/arm64/include/asm/acpi.h
-+++ b/arch/arm64/include/asm/acpi.h
-@@ -9,6 +9,7 @@
- #ifndef _ASM_ACPI_H
- #define _ASM_ACPI_H
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
+index 4620c4712ce32..1005edeea39e5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
+@@ -169,6 +169,7 @@ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
+ 		csum += pia[size - 1];
+ 	if (csum) {
+ 		DRM_ERROR("Bad Product Info Area checksum: 0x%02x", csum);
++		kfree(pia);
+ 		return -EIO;
+ 	}
  
-+#include <linux/cpuidle.h>
- #include <linux/efi.h>
- #include <linux/memblock.h>
- #include <linux/psci.h>
-@@ -44,6 +45,24 @@
- 
- #define ACPI_MADT_GICC_TRBE  (offsetof(struct acpi_madt_generic_interrupt, \
- 	trbe_interrupt) + sizeof(u16))
-+/*
-+ * Arm® Functional Fixed Hardware Specification Version 1.2.
-+ * Table 2: Arm Architecture context loss flags
-+ */
-+#define CPUIDLE_CORE_CTXT		BIT(0) /* Core context Lost */
-+
-+static inline unsigned int arch_get_idle_state_flags(u32 arch_flags)
-+{
-+	if (arch_flags & CPUIDLE_CORE_CTXT)
-+		return CPUIDLE_FLAG_TIMER_STOP;
-+
-+	return 0;
-+}
-+#define arch_get_idle_state_flags arch_get_idle_state_flags
-+
-+#define CPUIDLE_TRACE_CTXT		BIT(1) /* Trace context loss */
-+#define CPUIDLE_GICR_CTXT		BIT(2) /* GICR */
-+#define CPUIDLE_GICD_CTXT		BIT(3) /* GICD */
- 
- /* Basic configuration for ACPI */
- #ifdef	CONFIG_ACPI
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index dc615ef6550a1..3a34a8c425fe4 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -1217,8 +1217,7 @@ static int acpi_processor_setup_lpi_states(struct acpi_processor *pr)
- 		strscpy(state->desc, lpi->desc, CPUIDLE_DESC_LEN);
- 		state->exit_latency = lpi->wake_latency;
- 		state->target_residency = lpi->min_residency;
--		if (lpi->arch_flags)
--			state->flags |= CPUIDLE_FLAG_TIMER_STOP;
-+		state->flags |= arch_get_idle_state_flags(lpi->arch_flags);
- 		if (i != 0 && lpi->entry_method == ACPI_CSTATE_FFH)
- 			state->flags |= CPUIDLE_FLAG_RCU_IDLE;
- 		state->enter = acpi_idle_lpi_enter;
-diff --git a/include/linux/acpi.h b/include/linux/acpi.h
-index 641dc48439873..42c22a6ff48d0 100644
---- a/include/linux/acpi.h
-+++ b/include/linux/acpi.h
-@@ -1476,6 +1476,15 @@ static inline int lpit_read_residency_count_address(u64 *address)
- }
- #endif
- 
-+#ifdef CONFIG_ACPI_PROCESSOR_IDLE
-+#ifndef arch_get_idle_state_flags
-+static inline unsigned int arch_get_idle_state_flags(u32 arch_flags)
-+{
-+	return 0;
-+}
-+#endif
-+#endif /* CONFIG_ACPI_PROCESSOR_IDLE */
-+
- #ifdef CONFIG_ACPI_PPTT
- int acpi_pptt_cpu_is_thread(unsigned int cpu);
- int find_acpi_cpu_topology(unsigned int cpu, int level);
 -- 
 2.40.1
 
