@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC9227ECC
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F4527ECC
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEtO40Q/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38478C433C9;
-	Mon, 16 Oct 2023 14:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrykOiuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4489DC433C8;
+	Mon, 16 Oct 2023 14:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467611;
-	bh=VcrCE87an9juUH/J1lTRAYK6Q+TdNcCbEIQHQGqXmvg=;
+	s=korg; t=1697467614;
+	bh=T5fmm/ml1y17qGtZCUyrSK8C1eYASypBPd3NIZPEqW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEtO40Q/LRiiQ+wjHVGXUebMYCzkFgDj/S119xlsIVzgbffR6Ylx8NxlEtgzHL/Vf
-	 RkFGHFoxLbjJ/eN3FpLUZBPekOynCl2B9we+6p0Ct1fC1Tb1TCfd3qEJA62FLOvv9N
-	 WydrDgK0NCpenXayyok7hVpDpjZjXnOs2LxDQwBo=
+	b=FrykOiuhFTPk45ai7xhVVcx2Gb3roY1r0snfJXK2hl3+nomE/NvjZA8qi6jYkGbl3
+	 I7oOhvGwRMCUrUJ3Veq48kyJ0trixbkEPIN34Gh4k1YQz1F3GzDEOJ+w0nF8P0yeNX
+	 PRr2RPWLufOMVjlMVz88HMeDKhZxQaXKKAkEI1Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 054/191] net: dsa: qca8k: fix potential MDIO bus conflict when accessing internal PHYs via management frames
-Date: Mon, 16 Oct 2023 10:40:39 +0200
-Message-ID: <20231016084016.666962132@linuxfoundation.org>
+	Christos Skevis <xristos.thes@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.5 028/191] ALSA: usb-audio: Fix microphone sound on Nexigo webcam.
+Date: Mon, 16 Oct 2023 10:40:13 +0200
+Message-ID: <20231016084016.057459038@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -37,119 +35,141 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Christos Skevis <xristos.thes@gmail.com>
 
-[ Upstream commit 526c8ee04bdbd4d8d19a583b1f3b06700229a815 ]
+commit 4a63e68a295187ae3c1cb3fa0c583c96a959714f upstream.
 
-Besides the QCA8337 switch the Turris 1.x device has on it's MDIO bus
-also Micron ethernet PHY (dedicated to the WAN port).
+I own an external usb Webcam, model NexiGo N930AF, which had low mic volume and
+inconsistent sound quality. Video works as expected.
 
-We've been experiencing a strange behavior of the WAN ethernet
-interface, wherein the WAN PHY started timing out the MDIO accesses, for
-example when the interface was brought down and then back up.
+(snip)
+[  +0.047857] usb 5-1: new high-speed USB device number 2 using xhci_hcd
+[  +0.003406] usb 5-1: New USB device found, idVendor=1bcf, idProduct=2283, bcdDevice=12.17
+[  +0.000007] usb 5-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[  +0.000004] usb 5-1: Product: NexiGo N930AF FHD Webcam
+[  +0.000003] usb 5-1: Manufacturer: SHENZHEN AONI ELECTRONIC CO., LTD
+[  +0.000004] usb 5-1: SerialNumber: 20201217011
+[  +0.003900] usb 5-1: Found UVC 1.00 device NexiGo N930AF FHD Webcam (1bcf:2283)
+[  +0.025726] usb 5-1: 3:1: cannot get usb sound sample rate freq at ep 0x86
+[  +0.071482] usb 5-1: 3:2: cannot get usb sound sample rate freq at ep 0x86
+[  +0.004679] usb 5-1: 3:3: cannot get usb sound sample rate freq at ep 0x86
+[  +0.051607] usb 5-1: Warning! Unlikely big volume range (=4096), cval->res is probably wrong.
+[  +0.000005] usb 5-1: [7] FU [Mic Capture Volume] ch = 1, val = 0/4096/1
 
-Bisecting led to commit 2cd548566384 ("net: dsa: qca8k: add support for
-phy read/write with mgmt Ethernet"), which added support to access the
-QCA8337 switch's internal PHYs via management ethernet frames.
+Set up quirk cval->res to 16 for 256 levels,
+Set GET_SAMPLE_RATE quirk flag to stop trying to get the sample rate.
+Confirmed that happened anyway later due to the backoff mechanism, after 3 failures
 
-Connecting the MDIO bus pins onto an oscilloscope, I was able to see
-that the MDIO bus was active whenever a request to read/write an
-internal PHY register was done via an management ethernet frame.
+All audio stream on device interfaces share the same values,
+apart from wMaxPacketSize and tSamFreq :
 
-My theory is that when the switch core always communicates with the
-internal PHYs via the MDIO bus, even when externally we request the
-access via ethernet. This MDIO bus is the same one via which the switch
-and internal PHYs are accessible to the board, and the board may have
-other devices connected on this bus. An ASCII illustration may give more
-insight:
+(snip)
+Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        3
+      bAlternateSetting       3
+      bNumEndpoints           1
+      bInterfaceClass         1 Audio
+      bInterfaceSubClass      2 Streaming
+      bInterfaceProtocol      0
+      iInterface              0
+      AudioStreaming Interface Descriptor:
+        bLength                 7
+        bDescriptorType        36
+        bDescriptorSubtype      1 (AS_GENERAL)
+        bTerminalLink           8
+        bDelay                  1 frames
+        wFormatTag         0x0001 PCM
+      AudioStreaming Interface Descriptor:
+        bLength                11
+        bDescriptorType        36
+        bDescriptorSubtype      2 (FORMAT_TYPE)
+        bFormatType             1 (FORMAT_TYPE_I)
+        bNrChannels             1
+        bSubframeSize           2
+        bBitResolution         16
+        bSamFreqType            1 Discrete
+        tSamFreq[ 0]        44100
+      Endpoint Descriptor:
+        bLength                 9
+        bDescriptorType         5
+        bEndpointAddress     0x86  EP 6 IN
+        bmAttributes            5
+          Transfer Type            Isochronous
+          Synch Type               Asynchronous
+          Usage Type               Data
+        wMaxPacketSize     0x005c  1x 92 bytes
+        bInterval               4
+        bRefresh                0
+        bSynchAddress           0
+        AudioStreaming Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType        37
+          bDescriptorSubtype      1 (EP_GENERAL)
+          bmAttributes         0x01
+            Sampling Frequency
+          bLockDelayUnits         0 Undefined
+          wLockDelay         0x0000
+(snip)
 
-           +---------+
-      +----|         |
-      |    | WAN PHY |
-      | +--|         |
-      | |  +---------+
-      | |
-      | |  +----------------------------------+
-      | |  | QCA8337                          |
-MDC   | |  |                        +-------+ |
-------o-+--|--------o------------o--|       | |
-MDIO    |  |        |            |  | PHY 1 |-|--to RJ45
---------o--|---o----+---------o--+--|       | |
-           |   |    |         |  |  +-------+ |
-	   | +-------------+  |  o--|       | |
-	   | | MDIO MDC    |  |  |  | PHY 2 |-|--to RJ45
-eth1	   | |             |  o--+--|       | |
------------|-|port0        |  |  |  +-------+ |
-           | |             |  |  o--|       | |
-	   | | switch core |  |  |  | PHY 3 |-|--to RJ45
-           | +-------------+  o--+--|       | |
-	   |                  |  |  +-------+ |
-	   |                  |  o--|  ...  | |
-	   +----------------------------------+
+Based on the usb data about manufacturer, SPCA2281B3 is the most likely controller IC
+Manufacturer does not provide link for datasheet nor detailed specs.
+No way to confirm if the firmware supports any other way of getting the sample rate.
 
-When we send a request to read an internal PHY register via an ethernet
-management frame via eth1, the switch core receives the ethernet frame
-on port 0 and then communicates with the internal PHY via MDIO. At this
-time, other potential devices, such as the WAN PHY on Turris 1.x, cannot
-use the MDIO bus, since it may cause a bus conflict.
+Testing patch provides consistent good sound recording quality and volume range.
 
-Fix this issue by locking the MDIO bus even when we are accessing the
-PHY registers via ethernet management frames.
+(snip)
+[  +0.045764] usb 5-1: new high-speed USB device number 2 using xhci_hcd
+[  +0.106290] usb 5-1: New USB device found, idVendor=1bcf, idProduct=2283, bcdDevice=12.17
+[  +0.000006] usb 5-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[  +0.000004] usb 5-1: Product: NexiGo N930AF FHD Webcam
+[  +0.000003] usb 5-1: Manufacturer: SHENZHEN AONI ELECTRONIC CO., LTD
+[  +0.000004] usb 5-1: SerialNumber: 20201217011
+[  +0.043700] usb 5-1: set resolution quirk: cval->res = 16
+[  +0.002585] usb 5-1: Found UVC 1.00 device NexiGo N930AF FHD Webcam (1bcf:2283)
 
-Fixes: 2cd548566384 ("net: dsa: qca8k: add support for phy read/write with mgmt Ethernet")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Reviewed-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Christos Skevis <xristos.thes@gmail.com>
+Link: https://lore.kernel.org/r/20231006155330.399393-1-xristos.thes@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/qca/qca8k-8xxx.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/usb/mixer.c  |    7 +++++++
+ sound/usb/quirks.c |    2 ++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
-index 8e1574c63954e..252089929eb92 100644
---- a/drivers/net/dsa/qca/qca8k-8xxx.c
-+++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -666,6 +666,15 @@ qca8k_phy_eth_command(struct qca8k_priv *priv, bool read, int phy,
- 		goto err_read_skb;
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1204,6 +1204,13 @@ static void volume_control_quirks(struct
+ 			cval->res = 16;
+ 		}
+ 		break;
++	case USB_ID(0x1bcf, 0x2283): /* NexiGo N930AF FHD Webcam */
++		if (!strcmp(kctl->id.name, "Mic Capture Volume")) {
++			usb_audio_info(chip,
++				"set resolution quirk: cval->res = 16\n");
++			cval->res = 16;
++		}
++		break;
  	}
+ }
  
-+	/* It seems that accessing the switch's internal PHYs via management
-+	 * packets still uses the MDIO bus within the switch internally, and
-+	 * these accesses can conflict with external MDIO accesses to other
-+	 * devices on the MDIO bus.
-+	 * We therefore need to lock the MDIO bus onto which the switch is
-+	 * connected.
-+	 */
-+	mutex_lock(&priv->bus->mdio_lock);
-+
- 	/* Actually start the request:
- 	 * 1. Send mdio master packet
- 	 * 2. Busy Wait for mdio master command
-@@ -678,6 +687,7 @@ qca8k_phy_eth_command(struct qca8k_priv *priv, bool read, int phy,
- 	mgmt_master = priv->mgmt_master;
- 	if (!mgmt_master) {
- 		mutex_unlock(&mgmt_eth_data->mutex);
-+		mutex_unlock(&priv->bus->mdio_lock);
- 		ret = -EINVAL;
- 		goto err_mgmt_master;
- 	}
-@@ -765,6 +775,7 @@ qca8k_phy_eth_command(struct qca8k_priv *priv, bool read, int phy,
- 				    QCA8K_ETHERNET_TIMEOUT);
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2177,6 +2177,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
+ 		   QUIRK_FLAG_FIXED_RATE),
++	DEVICE_FLG(0x1bcf, 0x2283, /* NexiGo N930AF FHD Webcam */
++		   QUIRK_FLAG_GET_SAMPLE_RATE),
  
- 	mutex_unlock(&mgmt_eth_data->mutex);
-+	mutex_unlock(&priv->bus->mdio_lock);
- 
- 	return ret;
- 
--- 
-2.40.1
-
+ 	/* Vendor matches */
+ 	VENDOR_FLG(0x045e, /* MS Lifecam */
 
 
