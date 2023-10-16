@@ -1,248 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED99015ADD
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E321A59B
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:12:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uy90eop+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6746AC433C7;
-	Mon, 16 Oct 2023 09:07:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697447244;
-	bh=EIU8qrCiJUMIUMKWCA+EBwKyRaz1k9ANPTaClwP2HfY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uy90eop+R20w7sIzFJ0Ni7qSx2hpSeMaaH2YZnrl36Z988U39kxbiLTn7Zf+Aiwbj
-	 Jhz7mMsh1GyZMST6sEcYY+0kPEdKHWPjrS5veicc0A9yISrhSdZe2Wojml3Wi9748p
-	 uCvRFouSjN1OU+4tvaRK0T3ODW8I0clc1VQeZnFE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Eric Whitney <enwlinux@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.5 017/191] quota: Fix slow quotaoff
-Date: Mon, 16 Oct 2023 10:40:02 +0200
-Message-ID: <20231016084015.803996779@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
-References: <20231016084015.400031271@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="SggXxx+J"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 619DB40E01AE;
+	Mon, 16 Oct 2023 09:11:58 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id c1HIwxF4hm63; Mon, 16 Oct 2023 09:11:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1697447516; bh=B/5m2LDGcJTLYhvP21qZnYB0nurPkDZJJTeElvG5iiA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SggXxx+Js+dTFs2SJY+q5yeyjzTu6Henv1moBdNVvKPIa4BuQrncYJehG7C9kPCzG
+	 v4/lRnjulZQ4fjnYjGrFKXqSixtW4tqehsUq9mAyHt8FV2C6MPgORdD+m7YIAL93C9
+	 m5wAvybG07b0OeXNYgsbV4b+JJJtpgYn8cBth8H3MlRrK+d9WHUlGn41ShtgPvlNhR
+	 6/e4uqcCUkkU9qTn9kaXG4zYxOBByyWZ+6HLSBHHZ7ADnf9/K9R6xIua9oxXZcuOGt
+	 tC6vaqjTlqejpWmZ/rN+f84m1zmy16xwCsgnmeu/oOjfgpLFUKyF2dsgdPRZQlqiK5
+	 QnktOPWshxIkFj/YN8NLm57BGITI1NRqORasOGWdtdf1uKYSK5FQnq0OCY2IDSbI/H
+	 ga70CNt6w00dTlIF25PpHioYNqE1zZzkUAOzAREVyFH5wjdslcn+DaUjTfn30LWRi5
+	 UnCZmm6f5LA/2LMrnGo6dHn4oC53x85rtmtVKe57m9gqFyeFhIqfMxJRy4D13O7iii
+	 jYItTzxEUVKNKSy6GGgnIkIwbzdmfLudt/6RwMHiQ0FuhNlHEaG8lRCzIJ703lLDBX
+	 0rsArmihDTN9CSXkRumLiyKgTcM/qmRz0YmmSZk+oYhlSUp+S9/g1AgvuK3eqzzWbl
+	 1QpKB9ZHEqOHQJkjcji8jdSI=
+Received: from zn.tnic (pd953036a.dip0.t-ipconnect.de [217.83.3.106])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 802E740E014B;
+	Mon, 16 Oct 2023 09:11:48 +0000 (UTC)
+Date: Mon, 16 Oct 2023 11:11:43 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Zhiquan Li <zhiquan1.li@intel.com>
+Cc: "Luck, Tony" <tony.luck@intel.com>, "x86@kernel.org" <x86@kernel.org>,
+	"linux-edac@vger.kernel.org" <linux-edac@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"mingo@kernel.org" <mingo@kernel.org>,
+	"naoya.horiguchi@nec.com" <naoya.horiguchi@nec.com>
+Subject: Re: [PATCH v3] x86/mce: Set PG_hwpoison page flag to avoid the
+ capture kernel panic
+Message-ID: <20231016091143.GCZSz+T1xFf5tCFi2w@fat_crate.local>
+References: <20231014051754.3759099-1-zhiquan1.li@intel.com>
+ <SJ1PR11MB6083A23BB89F4EE0F44B2794FCD1A@SJ1PR11MB6083.namprd11.prod.outlook.com>
+ <233e17ac-0ae5-4392-a5e4-ab811a155805@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <233e17ac-0ae5-4392-a5e4-ab811a155805@intel.com>
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+On Sat, Oct 14, 2023 at 05:34:12PM +0800, Zhiquan Li wrote:
+> Memory errors don't happen very often, especially the severity is fatal.
+> However, in large-scale scenarios, such as data centers, it might still
+> happen.  For some MCE fatal error cases, the kernel might call
+> mce_panic() to terminate the production kernel directly, thus there is
+> no opportunity to queue a task for calling memory_failure() which will
+> try to make the kernel survive via memory failure handling.
 
-------------------
+You can't "make the kernel survive" if the error has been deemed
+critical. That's mce_severity()'s job. If it grades the error's severity
+wrongly and memory_failure() should run after all, then this is
+a different story.
 
-From: Jan Kara <jack@suse.cz>
+> @@ -286,6 +287,17 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
+>  	if (!fake_panic) {
+>  		if (panic_timeout == 0)
+>  			panic_timeout = mca_cfg.panic_timeout;
 
-commit 869b6ea1609f655a43251bf41757aa44e5350a8f upstream.
+This whole thing...
 
-Eric has reported that commit dabc8b207566 ("quota: fix dqput() to
-follow the guarantees dquot_srcu should provide") heavily increases
-runtime of generic/270 xfstest for ext4 in nojournal mode. The reason
-for this is that ext4 in nojournal mode leaves dquots dirty until the last
-dqput() and thus the cleanup done in quota_release_workfn() has to write
-them all. Due to the way quota_release_workfn() is written this results
-in synchronize_srcu() call for each dirty dquot which makes the dquot
-cleanup when turning quotas off extremely slow.
+> +		/*
+> +		 * Kdump can exclude the HWPoison page to avoid touching the error
+> +		 * page again, the prerequisite is that the PG_hwpoison page flag is
+> +		 * set.  However, for some MCE fatal error cases, there is no
+> +		 * opportunity to queue a task for calling memory_failure(), and as a
+> +		 * result, the capture kernel panics.  So mark the page as HWPoison
+> +		 * before kernel panic() for MCE.
+> +		 */
+> +		p = pfn_to_online_page(final->addr >> PAGE_SHIFT);
+> +		if (final && (final->status & MCI_STATUS_ADDRV) && p)
+> +			SetPageHWPoison(p);
 
-To be able to avoid synchronize_srcu() for each dirty dquot we need to
-rework how we track dquots to be cleaned up. Instead of keeping the last
-dquot reference while it is on releasing_dquots list, we drop it right
-away and mark the dquot with new DQ_RELEASING_B bit instead. This way we
-can we can remove dquot from releasing_dquots list when new reference to
-it is acquired and thus there's no need to call synchronize_srcu() each
-time we drop dq_list_lock.
+... needs to be inside:
 
-References: https://lore.kernel.org/all/ZRytn6CxFK2oECUt@debian-BULLSEYE-live-builder-AMD64
-Reported-by: Eric Whitney <enwlinux@gmail.com>
-Fixes: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/quota/dquot.c         |   66 +++++++++++++++++++++++++++--------------------
- include/linux/quota.h    |    4 ++
- include/linux/quotaops.h |    2 -
- 3 files changed, 43 insertions(+), 29 deletions(-)
+	if (kexec_crash_loaded() {
+		...
+	}
 
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -233,19 +233,18 @@ static void put_quota_format(struct quot
-  * All dquots are placed to the end of inuse_list when first created, and this
-  * list is used for invalidate operation, which must look at every dquot.
-  *
-- * When the last reference of a dquot will be dropped, the dquot will be
-- * added to releasing_dquots. We'd then queue work item which would call
-+ * When the last reference of a dquot is dropped, the dquot is added to
-+ * releasing_dquots. We'll then queue work item which will call
-  * synchronize_srcu() and after that perform the final cleanup of all the
-- * dquots on the list. Both releasing_dquots and free_dquots use the
-- * dq_free list_head in the dquot struct. When a dquot is removed from
-- * releasing_dquots, a reference count is always subtracted, and if
-- * dq_count == 0 at that point, the dquot will be added to the free_dquots.
-+ * dquots on the list. Each cleaned up dquot is moved to free_dquots list.
-+ * Both releasing_dquots and free_dquots use the dq_free list_head in the dquot
-+ * struct.
-  *
-- * Unused dquots (dq_count == 0) are added to the free_dquots list when freed,
-- * and this list is searched whenever we need an available dquot.  Dquots are
-- * removed from the list as soon as they are used again, and
-- * dqstats.free_dquots gives the number of dquots on the list. When
-- * dquot is invalidated it's completely released from memory.
-+ * Unused and cleaned up dquots are in the free_dquots list and this list is
-+ * searched whenever we need an available dquot. Dquots are removed from the
-+ * list as soon as they are used again and dqstats.free_dquots gives the number
-+ * of dquots on the list. When dquot is invalidated it's completely released
-+ * from memory.
-  *
-  * Dirty dquots are added to the dqi_dirty_list of quota_info when mark
-  * dirtied, and this list is searched when writing dirty dquots back to
-@@ -321,6 +320,7 @@ static inline void put_dquot_last(struct
- static inline void put_releasing_dquots(struct dquot *dquot)
- {
- 	list_add_tail(&dquot->dq_free, &releasing_dquots);
-+	set_bit(DQ_RELEASING_B, &dquot->dq_flags);
- }
- 
- static inline void remove_free_dquot(struct dquot *dquot)
-@@ -328,8 +328,10 @@ static inline void remove_free_dquot(str
- 	if (list_empty(&dquot->dq_free))
- 		return;
- 	list_del_init(&dquot->dq_free);
--	if (!atomic_read(&dquot->dq_count))
-+	if (!test_bit(DQ_RELEASING_B, &dquot->dq_flags))
- 		dqstats_dec(DQST_FREE_DQUOTS);
-+	else
-+		clear_bit(DQ_RELEASING_B, &dquot->dq_flags);
- }
- 
- static inline void put_inuse(struct dquot *dquot)
-@@ -581,12 +583,6 @@ restart:
- 			continue;
- 		/* Wait for dquot users */
- 		if (atomic_read(&dquot->dq_count)) {
--			/* dquot in releasing_dquots, flush and retry */
--			if (!list_empty(&dquot->dq_free)) {
--				spin_unlock(&dq_list_lock);
--				goto restart;
--			}
--
- 			atomic_inc(&dquot->dq_count);
- 			spin_unlock(&dq_list_lock);
- 			/*
-@@ -606,6 +602,15 @@ restart:
- 			goto restart;
- 		}
- 		/*
-+		 * The last user already dropped its reference but dquot didn't
-+		 * get fully cleaned up yet. Restart the scan which flushes the
-+		 * work cleaning up released dquots.
-+		 */
-+		if (test_bit(DQ_RELEASING_B, &dquot->dq_flags)) {
-+			spin_unlock(&dq_list_lock);
-+			goto restart;
-+		}
-+		/*
- 		 * Quota now has no users and it has been written on last
- 		 * dqput()
- 		 */
-@@ -696,6 +701,13 @@ int dquot_writeback_dquots(struct super_
- 						 dq_dirty);
- 
- 			WARN_ON(!dquot_active(dquot));
-+			/* If the dquot is releasing we should not touch it */
-+			if (test_bit(DQ_RELEASING_B, &dquot->dq_flags)) {
-+				spin_unlock(&dq_list_lock);
-+				flush_delayed_work(&quota_release_work);
-+				spin_lock(&dq_list_lock);
-+				continue;
-+			}
- 
- 			/* Now we have active dquot from which someone is
-  			 * holding reference so we can safely just increase
-@@ -809,18 +821,18 @@ static void quota_release_workfn(struct
- 	/* Exchange the list head to avoid livelock. */
- 	list_replace_init(&releasing_dquots, &rls_head);
- 	spin_unlock(&dq_list_lock);
-+	synchronize_srcu(&dquot_srcu);
- 
- restart:
--	synchronize_srcu(&dquot_srcu);
- 	spin_lock(&dq_list_lock);
- 	while (!list_empty(&rls_head)) {
- 		dquot = list_first_entry(&rls_head, struct dquot, dq_free);
--		/* Dquot got used again? */
--		if (atomic_read(&dquot->dq_count) > 1) {
--			remove_free_dquot(dquot);
--			atomic_dec(&dquot->dq_count);
--			continue;
--		}
-+		WARN_ON_ONCE(atomic_read(&dquot->dq_count));
-+		/*
-+		 * Note that DQ_RELEASING_B protects us from racing with
-+		 * invalidate_dquots() calls so we are safe to work with the
-+		 * dquot even after we drop dq_list_lock.
-+		 */
- 		if (dquot_dirty(dquot)) {
- 			spin_unlock(&dq_list_lock);
- 			/* Commit dquot before releasing */
-@@ -834,7 +846,6 @@ restart:
- 		}
- 		/* Dquot is inactive and clean, now move it to free list */
- 		remove_free_dquot(dquot);
--		atomic_dec(&dquot->dq_count);
- 		put_dquot_last(dquot);
- 	}
- 	spin_unlock(&dq_list_lock);
-@@ -875,6 +886,7 @@ void dqput(struct dquot *dquot)
- 	BUG_ON(!list_empty(&dquot->dq_free));
- #endif
- 	put_releasing_dquots(dquot);
-+	atomic_dec(&dquot->dq_count);
- 	spin_unlock(&dq_list_lock);
- 	queue_delayed_work(system_unbound_wq, &quota_release_work, 1);
- }
-@@ -963,7 +975,7 @@ we_slept:
- 		dqstats_inc(DQST_LOOKUPS);
- 	}
- 	/* Wait for dq_lock - after this we know that either dquot_release() is
--	 * already finished or it will be canceled due to dq_count > 1 test */
-+	 * already finished or it will be canceled due to dq_count > 0 test */
- 	wait_on_dquot(dquot);
- 	/* Read the dquot / allocate space in quota file */
- 	if (!dquot_active(dquot)) {
---- a/include/linux/quota.h
-+++ b/include/linux/quota.h
-@@ -285,7 +285,9 @@ static inline void dqstats_dec(unsigned
- #define DQ_FAKE_B	3	/* no limits only usage */
- #define DQ_READ_B	4	/* dquot was read into memory */
- #define DQ_ACTIVE_B	5	/* dquot is active (dquot_release not called) */
--#define DQ_LASTSET_B	6	/* Following 6 bits (see QIF_) are reserved\
-+#define DQ_RELEASING_B	6	/* dquot is in releasing_dquots list waiting
-+				 * to be cleaned up */
-+#define DQ_LASTSET_B	7	/* Following 6 bits (see QIF_) are reserved\
- 				 * for the mask of entries set via SETQUOTA\
- 				 * quotactl. They are set under dq_data_lock\
- 				 * and the quota format handling dquot can\
---- a/include/linux/quotaops.h
-+++ b/include/linux/quotaops.h
-@@ -57,7 +57,7 @@ static inline bool dquot_is_busy(struct
- {
- 	if (test_bit(DQ_MOD_B, &dquot->dq_flags))
- 		return true;
--	if (atomic_read(&dquot->dq_count) > 1)
-+	if (atomic_read(&dquot->dq_count) > 0)
- 		return true;
- 	return false;
- }
+otherwise it'll be useless work on the panic path.
 
+Thx.
 
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
