@@ -1,207 +1,262 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
+Received: from DM5PR00CU002.outbound.protection.outlook.com (mail-centralusazon11021027.outbound.protection.outlook.com [52.101.62.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C7D1F61D
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 17:49:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D7F328B0
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 17:55:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Uf0gmNMq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697478551; x=1729014551;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=mS65GUob0l/E7j8n0Xe5WtoDrOtCgzQmgg5Llv50NtM=;
-  b=Uf0gmNMq2GyhAxbzX5cMtc3sGCMR5rbMkV5Nl2RlJh3Nhzd3Him7z+AN
-   /mNX/w7Z72zevFV7+GEo+b7vwOJPhvPROq259jDwHi6U3iuIkuEVM24W8
-   1cRYz+F6ww26HyoIyj9fvuxqyF8mrDtS4jGQ6MFOhWHJk7poPMYgTeqxZ
-   nBzo/GagIyur+5Wufuq0d1hbNxib69WT5f5++9BFJmu4czskD5uqsfouC
-   4t71uNsPgSZOSI/0yNtEyYpMWuYKTL7FL2Oznz0520fnmw8fpgq/Pn7HV
-   tK8sMlpxhNCt1rwwOIHGkTzpyS2ZjARL4cCuqRxtFoM4e80oAoetTLQn+
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10865"; a="416668880"
-X-IronPort-AV: E=Sophos;i="6.03,229,1694761200"; 
-   d="scan'208";a="416668880"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Oct 2023 10:49:09 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.03,229,1694761200"; 
-   d="scan'208";a="3594300"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by orviesa001.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 16 Oct 2023 10:47:59 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Mon, 16 Oct 2023 10:49:03 -0700
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Mon, 16 Oct 2023 10:49:03 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.100)
- by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.32; Mon, 16 Oct 2023 10:49:02 -0700
+	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="gXmi6Ust"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=LujXrAvyNvAaGfClVkmVlTf5i/C+LHV3QfhADmUaqWA+3uCWcY41olb43CuUFdhohMm3urPijuM2N4vXY6hB0qesbfK4LMH59rR2W6nxa6aYly7DDFBGxw2+bQqDvEdAki1CLryMzGWwjRKldUuT9ZdhDYqMpr9ILpepfMHSnEont5JbduSgOOfNLtJaccdEUymKlqNAMHg3YtWIKV8VhcCJfxw5G8oGa6KaIvdh4tOLs+7DCtlZvMzUd5iLXIMK7v9Sk4Bfaym4+VqntC0+QTYW5APqsGpIkj5dyv7l1pDo/+zRyzO6dRCApef7n7fA5bdlieV/MVwgNwlfaa8RCg==
+ b=WxLCVI8EcvdvFziXWsEptV4ifMIHJ1xOAzfYjZ7uP3tGsPdJTuN+KmlT11aeI52n6frGbz9eImyexo010NKeaPcmU8pQEAKoyW65LCMFx9PiPB799BFMXPVfOIZkuAxUYKh4vJ6gh+kdCoHkU3nnfHp49NY2au2NYYk0gnPrX6u1djClsdypFd/mIJwCNHtA+D5LVYK6+ToMEM386Z/ll4aPTlLOLJk+fiSeiQr4t/tsOSdYIR+vHQ3GuFC0yow53rNrLCobwdC+ZhTuP2HzK1kIVVS8AolpAlE/sRvL8JOdX8/AIURJICtubuOCLVpwORNVsHCMjP5bQ+iOKpS1ug==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Btg55fipP+62GB3GUf1g4pi/6RAPzRkuqzDmCtMZFsY=;
- b=julMevqkt/D6N5YhrLeb+fBGhYwlHaNew0wowrO3+8rcTgWG0NWQVqgK8VItFqypbogquc1MsvJy2C2RWNcdXW4Q+inwuSZ2JxoSe9oyXBGY57bxwW9+V3keKqrIgcmaOB7c6+BDotuD9F6ytnOVzU1fbfiFKhNmJfzPjyNxTMkpvMsEwrbG8MnpGVqxqC8gu6O5LCeHwQOv4vQaxb+VoLozFsN1rHIhRAO75rHss5PPtmR8LsDOYex0skqdGCl48dT1OL1ABcPxLvmrI4BY7OTWZ74UX7j9PeBvh+jQ8pfsmRaWzq1ZJmLoYrb2DnP9ZOC3ETytp4m/MWX5v+tiMg==
+ bh=zfa0iWVpYMb4SVIkGwYoLk7/um68qt2x7W0kfbmGOCw=;
+ b=FlpNL7ruqMLFpzuB9kzufRCcdwQj/N2PqXazk/iCVZALxpA1xHGnwNfwF+7vx0sGFA4TuTi1gikBphcVIujv4nLO/zL5BAOXP5T8W0dWqtw9443TAeJ6wZd6zOcR6uGeuYlOf/XkG00fvJFlgYYlLUTvXIX/gPka2V5B+oAly832oNIPG31A6Ii4OjuXbD3OUmvgkZIDYuG0fEMAs4Hnw6EA3zJLSMn/X1GhnUwtpV0rrpcnmiZmiud1vpU/YC1fRTO2LY0H4Mz/jY+l0XOCWHo3kCyBElWwHULfK80wyCh+2cnyYNAixD2LnyzN9D0zt7Tnni3LKeEh07ZHmn0V2A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by SA1PR11MB5921.namprd11.prod.outlook.com (2603:10b6:806:22a::15) with
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zfa0iWVpYMb4SVIkGwYoLk7/um68qt2x7W0kfbmGOCw=;
+ b=gXmi6UstmVTWCtzCJDYWw8TmFuNhUNn6MY/iu1xBCbUJjqqLB75Ojl6qOqH+LL+fpchjqz+kC+HMhfgQ7mVV+4bLfcR1s39v0d5YMXBwgs0RPyav0pXZ0e1GEQvhKjBKz5i/WEJd3h2vLovP/m7GhG8vd/nxS4VboQRTDSM+xhw=
+Received: from PH7PR21MB3116.namprd21.prod.outlook.com (2603:10b6:510:1d0::10)
+ by LV2PR21MB3276.namprd21.prod.outlook.com (2603:10b6:408:172::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6886.35; Mon, 16 Oct
- 2023 17:49:01 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::bd70:f215:4a97:c84e]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::bd70:f215:4a97:c84e%6]) with mapi id 15.20.6886.034; Mon, 16 Oct 2023
- 17:49:00 +0000
-Message-ID: <4cc6e8ce-7e51-46c9-8587-0d37f0f39dfa@intel.com>
-Date: Mon, 16 Oct 2023 10:48:57 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH V2 14/18] vfio/pci: Add core IMS support
-To: "Tian, Kevin" <kevin.tian@intel.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
-	"yishaih@nvidia.com" <yishaih@nvidia.com>,
-	"shameerali.kolothum.thodi@huawei.com"
-	<shameerali.kolothum.thodi@huawei.com>, "alex.williamson@redhat.com"
-	<alex.williamson@redhat.com>
-CC: "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "Jiang, Dave"
-	<dave.jiang@intel.com>, "Liu, Jing2" <jing2.liu@intel.com>, "Raj, Ashok"
-	<ashok.raj@intel.com>, "Yu, Fenghua" <fenghua.yu@intel.com>,
-	"tom.zanussi@linux.intel.com" <tom.zanussi@linux.intel.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-References: <cover.1696609476.git.reinette.chatre@intel.com>
- <0f8fb7122814c5c5083799e935d5bd3d27d38aef.1696609476.git.reinette.chatre@intel.com>
- <BN9PR11MB5276891129DCF849D9E6375D8CD2A@BN9PR11MB5276.namprd11.prod.outlook.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6933.3; Mon, 16 Oct
+ 2023 17:55:04 +0000
+Received: from PH7PR21MB3116.namprd21.prod.outlook.com
+ ([fe80::36cd:bd05:8d58:e8f0]) by PH7PR21MB3116.namprd21.prod.outlook.com
+ ([fe80::36cd:bd05:8d58:e8f0%4]) with mapi id 15.20.6933.003; Mon, 16 Oct 2023
+ 17:55:04 +0000
+From: Haiyang Zhang <haiyangz@microsoft.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: "stable@vger.kernel.org" <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>, Simon Horman
+	<horms@kernel.org>, Shradha Gupta <shradhagupta@linux.microsoft.com>, Paolo
+ Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>
+Subject: RE: [PATCH 6.1 001/131] net: mana: Fix TX CQE error handling
+Thread-Topic: [PATCH 6.1 001/131] net: mana: Fix TX CQE error handling
+Thread-Index: AQHaAA4APWTc7iWb/EKRsUrvDwZfW7BMezBQgAAD0QCAAAz5sIAAGOgAgAAOo9A=
+Date: Mon, 16 Oct 2023 17:55:04 +0000
+Message-ID:
+ <PH7PR21MB3116D9350E9E2AF99CA0C4A8CAD7A@PH7PR21MB3116.namprd21.prod.outlook.com>
+References: <20231016084000.050926073@linuxfoundation.org>
+ <20231016084000.092429858@linuxfoundation.org>
+ <PH7PR21MB31164DEC6C6E7FBBC7CAE008CAD7A@PH7PR21MB3116.namprd21.prod.outlook.com>
+ <2023101613-verbalize-runaround-f67f@gregkh>
+ <PH7PR21MB311624F90B8FC50D05200712CAD7A@PH7PR21MB3116.namprd21.prod.outlook.com>
+ <2023101659-bronco-maybe-0dc7@gregkh>
+In-Reply-To: <2023101659-bronco-maybe-0dc7@gregkh>
+Accept-Language: en-US
 Content-Language: en-US
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <BN9PR11MB5276891129DCF849D9E6375D8CD2A@BN9PR11MB5276.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0372.namprd04.prod.outlook.com
- (2603:10b6:303:81::17) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=950d3532-8d92-4bfb-9eeb-1c17005b9891;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2023-10-16T17:54:31Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=microsoft.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH7PR21MB3116:EE_|LV2PR21MB3276:EE_
+x-ms-office365-filtering-correlation-id: 6f44dd1a-6bad-4a55-3d97-08dbce7106f2
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ oLbb44A6Du3n5Yjc9ghkTi6XJCK455aUNg7pKffnIzp52nNLEGPci7V+Lo/zWXjZIi8AohfqmNmuh240N3W5cBiKBf7JBT1nU7vTPdNBIFqvX8LRtpPkgWxr+QXgP00OTZo6uveJVjjgrC+TMJl517/sgSOm/ChDAmXoMhaS/VInxpr2S0Nypjnq8260jomUW8ohvmAWh+D/jr6AOIa5o0bMz7BcMuygDB0TRmtTcxIdNVen1ABLIV/wdwXK7cs9Ike/IVF4fCwF0GrYqEEhX8ZCETShtZoRQPadRfs5RcCiZIJndlU05M48Ig6KIUtY3WfKLXPqVWmEgQSXrkJ0wi9hnJNh9ZJkpQTqxKXOXHnzWQz9IaDdZv69s/QAyicKsaEROmiwWoPEl2hL1vlA/XAassW0CvOsB2taSIE2rg5213MQEyaWM6veCDIbHeft7L7ReGiX1fa0khkCS0+YwhSFNdWEKH2+BduJ/TapkOfdYT5LwcjC5WeWaG03oz+KOcBb4KdgWXM810wh8AkXbFRHDZeb1nHoHIcCi1rds4bkw6x4xl3awxPFpllcuAfZoGvidMQHGDeAMmhbFuyWwEtHn9aJdme/JfGU0wm+8l+oSL6kQK6ODKZ3ksixeDgvPUkhwHmf2oVZwii+V3RAIg==
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR21MB3116.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(396003)(346002)(136003)(39860400002)(376002)(230922051799003)(451199024)(64100799003)(1800799009)(186009)(55016003)(966005)(82950400001)(122000001)(38070700005)(38100700002)(83380400001)(82960400001)(6506007)(9686003)(71200400001)(26005)(7696005)(8990500004)(76116006)(66946007)(66556008)(66476007)(64756008)(66446008)(54906003)(316002)(478600001)(10290500003)(2906002)(6916009)(53546011)(41300700001)(33656002)(86362001)(8936002)(8676002)(5660300002)(52536014)(4326008);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?Xl2Jdx/DRowljEcfw2sz4yB/K9YNQVfl6YUJxkxbmc4r04eL5fU8ZyEUxEpQ?=
+ =?us-ascii?Q?nsg7n7E5jRX5uNqsaFSeIK2xKE3Iy4TFlc1zjrjb3XElLpTzYNGLvZ9iUn+7?=
+ =?us-ascii?Q?3q/nAHUbvoaiw7TckxqSWpyXPUSYDqEhWg5z+XNgF7Qxp9HpRd97NpS3cQ5R?=
+ =?us-ascii?Q?hqcebAwgVf73wWfUEXxnYGCOw23qg+BangQHwx4UNeEVgsFP5e0z4C5DQzOE?=
+ =?us-ascii?Q?/WI5c2AmK/H8xfrfINRnQGGLCPj4Jz73pNi7sC/Lek+Bs4XQ8GFj7ceV8Pf7?=
+ =?us-ascii?Q?bRD+O2BYOJimR3B9fXYd+h1LwisAnpqJNt1guPNyIIPQjggPmwGvp9m/LSkc?=
+ =?us-ascii?Q?iweRiWnyU6S7PhhWaCKYgXUjhP9/NijAA3ngejn/a6VNwb3y8bepI9I4saq/?=
+ =?us-ascii?Q?FOJ5/bCwVxutBU98xDd24u+xpY8Fvg2fVJ43obfL7f4NtbDHw68rq8Fsd2mZ?=
+ =?us-ascii?Q?CzvXyaGLnRfFbAAT5mhqzvG8shEba6rDwSjmverheytkTl5CGxNvvUn7epSh?=
+ =?us-ascii?Q?7atj3tldS/0SS+8t6+nZwm2USSaPPD9M1MAUT2O0W83c13sx9Vur+iRZ/23/?=
+ =?us-ascii?Q?75DvWaeiLWbNfHvlqxNO2dM08QAHPWA4JcM7gkF8KrxIXIIMZh+FTn5Mnwei?=
+ =?us-ascii?Q?ZTdPDaqO+vDsU4+HOEOuKpj39ZFY3SqidU++NjAaZwon6V4RgfEK37L7NaU4?=
+ =?us-ascii?Q?aBcJNYX5VmTE+mzQ03Nwq0ix81pHIDq/BFm98Tn5tyH5HufuTH539x1TtY+c?=
+ =?us-ascii?Q?zjJFIaoEJO5K5ddBQxxGc8unMkzsGuGO1y5+ZgzgNJqsGBdj64l/6zQnSIcY?=
+ =?us-ascii?Q?HEs0kmv6Qzq6+IqiYyAy1pXJU+dUvAiueZKzS8QiwfwEF8IhFFl+bIeYpr/L?=
+ =?us-ascii?Q?zHu1fVmXWERUPndY3wTXx9/YMS1XME0/Ln7wyDal3XboTlatK8CYtaKifkBV?=
+ =?us-ascii?Q?F5JmH5ukdz+eplzmuFE1IVFB2DL0HwzPJMwQIwFxSFHmVOB/7MFQSeHCRlVf?=
+ =?us-ascii?Q?jVGS/609/ckhRfR9Xexdw2XPtb7jVUltsuDXTMaqkp1/jjaUtc0wxUBwKfRC?=
+ =?us-ascii?Q?vjewZIESLclMpZvQQyBlh2etVTxBLF44yZHQXYdbgsa/DESjLlJMa3dPxS2d?=
+ =?us-ascii?Q?oYWLZhX0Zb+po6X4pRFZVJonyma/jUuGLC5ofbr8P8Eh8vozy4QpOU9tp4TC?=
+ =?us-ascii?Q?YBfTPhJerRAxD7k1vn0rYfiykguXeeqr0zXSgj82JdzgCuMjxqSnT5k+Ugy7?=
+ =?us-ascii?Q?vmO2DhZCFXywxjwmkDz/dIMjzywHdAPUHXL9w/1ki6rqdRTWu3DsM6JXsK8N?=
+ =?us-ascii?Q?NoGguIdYMguwIgfisdoZv1AglvDYPiimGD6JO07wZHy0wBpx5b3hvm0LRb7E?=
+ =?us-ascii?Q?dQfonnWLWDlaiklbibtcMWO445VI72bShEKM2RzOR4ptJWc3rNp5F6x88CYk?=
+ =?us-ascii?Q?Pe9d1BIFJJ5udumW3U8SlDHoZRzGVR+jIIMaBKfy07eh5Xc3xP7h2q/VZ+Rb?=
+ =?us-ascii?Q?ppS16hyCc70qwGkUgA639TIoPkU3pvYgvuedZ6xDuLPur0Mnx5LMuAKgRzdH?=
+ =?us-ascii?Q?llzJ8R3XGaThXB1PlV+GXh9pMg6kHJjU591y17FA?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|SA1PR11MB5921:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5b93cd70-ca5d-4fad-8405-08dbce702dcf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: JzhV9QDEMfqA0QqRZr81SWZq56Th3FFFYYqc1pkfHs06SLKU5r++5HU9h5+IsJnN7VjpzOH9Jgu7zNTynm7LMHVk4KJnV3leZyVtMcwl8ay8hUBit0OzuFYUqxy5SJti61+Pf9yvg2ihjBcDZHxYUGtP8Ku/u7EyG7iiU3s7ShiFnbHlFviX8H1wAHYQXUbzl4Qvyr95TF88iUAoSh+I67xO3F6ApqueozRvwMdaidPEyKie3jNF88xzv8wsolJo6T42mTiAT+SDteBuVp5ng8+mEZnV6HHi3zu68cNaxmvL5TTVyI4qdEynVEork+Jr6YaD/bYk2EfIRrF9ddTvn5lsvBIv9yhRxH474n8Np2GpAnDfo40q/Vs0A+uZkxIl//ND2wHoD8sH55HLHW8qzBH3kv1DjhIL/TfjqAahPPYukM34NoFfqLWph3XTOMFYhG7GfkaNK3aCZPfRrViDBgea/v71ZN0H2QWxYY5/gIVD4smQUGSh6DNPiVL1AWiI19FRP4GqJd8oFzBfusrqU3FAL97tLRDm1irHlzEkZW6m8tcbhQW717oSdSU6DyZ1MieVrFwhMh91agOn0znfFCknVlI0UeG0EIeG4vUx7gYaB5OJZcSeAHj2fFq3f27WiBeSEIsL9c+t5G+BN/Mbfg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(39860400002)(396003)(376002)(136003)(366004)(230922051799003)(186009)(1800799009)(64100799003)(451199024)(41300700001)(6486002)(110136005)(478600001)(54906003)(66476007)(66556008)(66946007)(6666004)(6506007)(26005)(53546011)(316002)(6512007)(2616005)(8936002)(4326008)(8676002)(2906002)(5660300002)(36756003)(44832011)(31696002)(83380400001)(38100700002)(86362001)(82960400001)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WlBQQnNUY3N5czZjWVpiZFZVS2dkT3BMd3piUHNtaVJmTzNUalhhRWlOdEFR?=
- =?utf-8?B?RFhYRDk0UGUyTVNzZHVDbzZhRTU2UXhNMjRqcEl1TUw0elR3NjlEQ3I2eEhI?=
- =?utf-8?B?YWVsK3ZEd0crSi9IOVZKTHFYZ1dUNENPVlBNNi92K1NwNlF5TTZrcUpmakVK?=
- =?utf-8?B?YkFLZnR0UzczaFlvY0laLzRBV1VlM2FCV2c3K0g0eE5NbjJHclJoWDNvamds?=
- =?utf-8?B?ZjYvOEJ1bzZUaUQ4cEtTc2I1RzUzQXFiSXByTWMxSm8xUVMyaDZXblU2dElV?=
- =?utf-8?B?b0JVY28yWUMyQU4wVHNLallMbFV6K2dKZ2p6RFJqOTlaWUpWR1JmSDZaMVRK?=
- =?utf-8?B?WCtSakhUSUVqL1pTbEt5VVBYbk85dEJYMUd0bklPUCtLZkJMOTNORk9IVUVk?=
- =?utf-8?B?aUZSWDF1eXdGOXQ1R0NBNzAyUjhPbVdVcTA0YUZGVmU0OW4wZktCZlhHbFZ4?=
- =?utf-8?B?elk0bUtJNUc1SUFxakRNSjE1T1ZNUnRQaWQ3eUN6b2dTL1Zza1NLOGxWTGJR?=
- =?utf-8?B?NnUzcDZRV2UwUW1PdE01by9ldmo3ZWh6M1hta1lLdWJtS25IR01MUG41TXo2?=
- =?utf-8?B?UnNIUi9LNitKbGdVUzBsRHdkSGFIZEU4c0tUWFdzK2ZYT285SnFnazRwTTZK?=
- =?utf-8?B?aWN1WmQrVzcwMzAxV2xDR1JSalBkeE5XN0YwMUF6YzFodUZ2WUVTYlhFZ2hl?=
- =?utf-8?B?azdaaWkyc2xSUG1CS0E5cGZlQU5rdmRKK3hQSklZWElhVFErdnh6eXZ5aEsv?=
- =?utf-8?B?QVFaZkFybTkvTGxXVVAyWExjaHdxbDFmMmxHb3ZUQkFmQXltMDg1WVRjdEVp?=
- =?utf-8?B?SEdiUFdNTmwya1RSSVQ0UzdYSmprWWFLM25Velk4TnhHQjltcVR5a0h0cEQv?=
- =?utf-8?B?UkQ0QlV6RWFldjIzTUxEVDR4OWRtbWh5MVNib3lxMVJWYllzWEswTjZ0Z2s4?=
- =?utf-8?B?NXlKVEEzOHZFaVphVEp5dkRuekZXQTlWMFMvTEdmWGQrTFJ3NnI3UkxyclBo?=
- =?utf-8?B?eExJai9WSGNlUnRlNWlENTZzRjJ0RWJkeFZwTFRNWXZtUEtEU3JoSlVRbFcw?=
- =?utf-8?B?emJDZ2xxMG1uamwxTVNrZkFEYzRlWVNWZmtxOUZqZC82TkxsT3Y5RUl1VitP?=
- =?utf-8?B?TnEyU3hvbDN3d2N2QTdwL0NYa0h5Y2VBbDZ0Sk5IWm96RjNXaE5ROVVwNHls?=
- =?utf-8?B?UG5BazRiN1d6bXROVVphTFM4aG9RZ2F5UWp0Uk0reTAwOUhWWlNyZ3ZNRkdH?=
- =?utf-8?B?M0JDalpPWWxrb1U3T2tpRE90dW9hcVdycUMzUG5NUEkzZHFSbTRYVGhHNWhY?=
- =?utf-8?B?ZUdDSFBTMGl5ZVlaN2NBZjZXdmFaay83ZEdIZnRnNEJSY21aclpBWmVKK1Jh?=
- =?utf-8?B?YXdyVG5rcHAzQUJsSmc2eU02bVB1a2JaQU1pdWVCdVMzQkR6S2JPVzFHM2FH?=
- =?utf-8?B?MG1TVDcyUkJNeXBValNJQnZMdzl1YVhnVTE5RWlEVmM5YzRpOHlKUFZlN0U1?=
- =?utf-8?B?ZWZXVS9WYUluNXlVQWpLUFlYOWpya0szOVFxdkNOMjRsMVpCV2cwRnU1TVpW?=
- =?utf-8?B?enJxZ3BMejVpelhaakF2VDZQRmR2bDB2TENTa3RxWm0zTitvbXltS3FKNXBv?=
- =?utf-8?B?MHhYRlFXeFdUY2V5ZUpHVC9Qenc4aHd6dHhEWEF1Vkt1YU5VcTJoM3QyR3NG?=
- =?utf-8?B?NnRNaU9oZDJGVUdvK2cvczgva2JBeEdSekNRZSsxRTFMS2pjODBsVW9aQ1E1?=
- =?utf-8?B?WUZCN2xldmRZN2dQdzcwSGhFcC85aUdHdjZrYlpwTFAyTmxxWko1bGI4V2VK?=
- =?utf-8?B?NVN1clhzaUFMNlp3a3N3VGxwRGNvclNKOGlWNFpLRUpGWmpZejNZN25zbTd0?=
- =?utf-8?B?eU9iSG1odkU0YkkzRkRWTEgxSmNwK1g3cVRSZ0RPbEFVVy9oYmJkSUwveTJ6?=
- =?utf-8?B?NDU0S0JYUjZPbkFybnV4b1lSalI5eXpqMVJIRnJjZTZBN1hkcm5xb245R3ps?=
- =?utf-8?B?TkRRa0g0amF5bzdaOW50WFhyOVhDR3NoamV5ODRkOXlnY1NrcmRGRHkwa1I1?=
- =?utf-8?B?aGN5aDlIemoyM3NIZWxNRnJnWHljdGJPOWNDVytJTU5oMnV2Qy94cHZoRFRZ?=
- =?utf-8?B?TUY0dTZ0TE9oMDV1RmdXU2tOa21pR1RRdW9EbmNER0lNTzlQVld2T0ZDVlFM?=
- =?utf-8?B?OXc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5b93cd70-ca5d-4fad-8405-08dbce702dcf
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
+X-OriginatorOrg: microsoft.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2023 17:49:00.8001
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR21MB3116.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6f44dd1a-6bad-4a55-3d97-08dbce7106f2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Oct 2023 17:55:04.5932
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3rtyIBPPN5pcjNjrl9i7L81m1JCTMLDyxbfetm3LfAzATDWYwInDEp55WFhvS6xfrqQZ8RaXk/2YatsgoYNXifVPtebwui/iKdC3RnKh9y8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB5921
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 5A0P0FwFpxXgY4NBlr0iUbqwFl6ZRGk3OKchkCZkC26mMFV5HDIkgCN45KBwCvOQeYa/4WLpv8Zy7OD0n4z/Ow==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR21MB3276
 
-Hi Kevin,
 
-On 10/13/2023 1:10 AM, Tian, Kevin wrote:
->> From: Chatre, Reinette <reinette.chatre@intel.com>
->> Sent: Saturday, October 7, 2023 12:41 AM
->>
->> A virtual device driver starts by initializing the backend
->> using new vfio_pci_ims_init_intr_ctx(), cleanup using new
->> vfio_pci_ims_release_intr_ctx(). Once initialized the virtual
->> device driver can call vfio_pci_set_irqs_ioctl() to handle the
->> VFIO_DEVICE_SET_IRQS ioctl() after it has validated the parameters
->> to be appropriate for the particular device.
-> 
-> I wonder whether the code sharing can go deeper from
-> vfio_pci_set_irqs_ioctl() all the way down to set_vector_signal()
-> with proper abstraction. 
 
-There is a foundational difference in the MSI and IMS interrupt
-management that is handled by the separate set_vector_signal()
-implementations.
+> -----Original Message-----
+> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Sent: Monday, October 16, 2023 1:02 PM
+> To: Haiyang Zhang <haiyangz@microsoft.com>
+> Cc: stable@vger.kernel.org; patches@lists.linux.dev; Simon Horman
+> <horms@kernel.org>; Shradha Gupta <shradhagupta@linux.microsoft.com>;
+> Paolo Abeni <pabeni@redhat.com>; Sasha Levin <sashal@kernel.org>
+> Subject: Re: [PATCH 6.1 001/131] net: mana: Fix TX CQE error handling
+>
+> On Mon, Oct 16, 2023 at 03:35:27PM +0000, Haiyang Zhang wrote:
+> >
+> >
+> > > -----Original Message-----
+> > > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > > Sent: Monday, October 16, 2023 10:47 AM
+> > > To: Haiyang Zhang <haiyangz@microsoft.com>
+> > > Cc: stable@vger.kernel.org; patches@lists.linux.dev; Simon Horman
+> > > <horms@kernel.org>; Shradha Gupta
+> <shradhagupta@linux.microsoft.com>;
+> > > Paolo Abeni <pabeni@redhat.com>; Sasha Levin <sashal@kernel.org>
+> > > Subject: Re: [PATCH 6.1 001/131] net: mana: Fix TX CQE error handling
+> > >
+> > > On Mon, Oct 16, 2023 at 02:35:15PM +0000, Haiyang Zhang wrote:
+> > > >
+> > > >
+> > > > > -----Original Message-----
+> > > > > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > > > > Sent: Monday, October 16, 2023 4:40 AM
+> > > > > To: stable@vger.kernel.org
+> > > > > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>;
+> > > > > patches@lists.linux.dev; Haiyang Zhang <haiyangz@microsoft.com>;
+> > > Simon
+> > > > > Horman <horms@kernel.org>; Shradha Gupta
+> > > > > <shradhagupta@linux.microsoft.com>; Paolo Abeni
+> > > <pabeni@redhat.com>;
+> > > > > Sasha Levin <sashal@kernel.org>
+> > > > > Subject: [PATCH 6.1 001/131] net: mana: Fix TX CQE error handling
+> > > > >
+> > > > > 6.1-stable review patch.  If anyone has any objections, please le=
+t me
+> know.
+> > > > >
+> > > > > ------------------
+> > > > >
+> > > > > From: Haiyang Zhang <haiyangz@microsoft.com>
+> > > > >
+> > > > > [ Upstream commit b2b000069a4c307b09548dc2243f31f3ca0eac9c ]
+> > > > >
+> > > > > For an unknown TX CQE error type (probably from a newer hardware)=
+,
+> > > > > still free the SKB, update the queue tail, etc., otherwise the
+> > > > > accounting will be wrong.
+> > > > >
+> > > > > Also, TX errors can be triggered by injecting corrupted packets, =
+so
+> > > > > replace the WARN_ONCE to ratelimited error logging.
+> > > > >
+> > > > > Cc: stable@vger.kernel.org
+> > > > > Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure
+> > > Network
+> > > > > Adapter (MANA)")
+> > > > > Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+> > > > > Reviewed-by: Simon Horman <horms@kernel.org>
+> > > > > Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+> > > > > Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> > > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > > > > ---
+> > > > >  drivers/net/ethernet/microsoft/mana/mana_en.c | 16 ++++++++++---
+> ---
+> > > > >  1 file changed, 10 insertions(+), 6 deletions(-)
+> > > > >
+> > > > > diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > > > > b/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > > > > index 4f4204432aaa3..23ce26b8295dc 100644
+> > > > > --- a/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > > > > +++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+> > > > > @@ -1003,16 +1003,20 @@ static void mana_poll_tx_cq(struct
+> mana_cq
+> > > > > *cq)
+> > > > >               case CQE_TX_VPORT_IDX_OUT_OF_RANGE:
+> > > > >               case CQE_TX_VPORT_DISABLED:
+> > > > >               case CQE_TX_VLAN_TAGGING_VIOLATION:
+> > > > > -                     WARN_ONCE(1, "TX: CQE error %d: ignored.\n"=
+,
+> > > > > -                               cqe_oob->cqe_hdr.cqe_type);
+> > > > > +                     if (net_ratelimit())
+> > > > > +                             netdev_err(ndev, "TX: CQE
+> error %d\n",
+> > > > > +                                        cqe_oob-
+> >cqe_hdr.cqe_type);
+> > > > > +
+> > > > >                       break;
+> > > > >
+> > > > >               default:
+> > > > > -                     /* If the CQE type is unexpected, log an er=
+ror, assert,
+> > > > > -                      * and go through the error path.
+> > > > > +                     /* If the CQE type is unknown, log an error=
+,
+> > > > > +                      * and still free the SKB, update tail, etc=
+.
+> > > > >                        */
+> > > > > -                     WARN_ONCE(1, "TX: Unexpected CQE type %d: H=
+W
+> > > > > BUG?\n",
+> > > > > -                               cqe_oob->cqe_hdr.cqe_type);
+> > > > > +                     if (net_ratelimit())
+> > > > > +                             netdev_err(ndev, "TX: unknown CQE
+> > > > > type %d\n",
+> > > > > +                                        cqe_oob-
+> >cqe_hdr.cqe_type);
+> > > > > +
+> > > > >                       return;
+> > > >
+> > > > This should be changed to "break", because we should "still free th=
+e SKB,
+> > > update
+> > > > the queue tail, etc., otherwise the accounting will be wrong":
+> > >
+> > > Is that an issue in Linus's tree, or is this unique to the stable
+> > > backport?
+> >
+> > It's just a stable backporting issue.
+> >
+> > Linus's tree is fine:
+> >
+> https://git.k/
+> ernel.org%2Fpub%2Fscm%2Flinux%2Fkernel%2Fgit%2Ftorvalds%2Flinux.git%
+> 2Fcommit%2F%3Fid%3Db2b000069a4c307b09548dc2243f31f3ca0eac9c&d
+> ata=3D05%7C01%7Chaiyangz%40microsoft.com%7Cea8eae85691b47b1674b0
+> 8dbce69a49a%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C63
+> 8330725380724334%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAw
+> MDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7
+> C%7C&sdata=3DrOwj5G7r%2BjkBUWImNrdcjqXneCjq4TG3EiLFYfKKGGE%3D&r
+> eserved=3D0
+>
+> Thanks, I've fixed this up now.
 
-For MSI interrupts the interrupts stay allocated but the individual
-interrupt context is always freed and re-allocated.
+Thank you, Greg!
 
-For IMS the interrupts are always freed and re-allocated (to ensure that
-any new cookie is taken into account) while the individual interrupt
-context stays allocated (to not lose the cookie value associated
-with the individual interrupt).
-
-It may indeed be possible to accommodate this difference with further
-abstraction. I will study the code more to explore how this
-can be done.
-
-> Then handle emulated interrupt in the
-> common code instead of ims specific path. intel gvt also uses
-> emulated interrupt, which could be converted to use this library
-> too.
-
-Thank you for pointing me to intel gvt. 
-
-> There is some subtle difference between pci/ims backends
-> regarding to how set_vector_signal() is coded in this series. But
-> it is not intuitive to me whether such a difference is conceptual
-> or simply from a coding preference.
-> 
-> Would you mind doing an exercise whether that is achievable?
-
-I do not mind at all. Will do.
-
-Thank you very much for taking a look and sharing your guidance.
-
-Reinette 
+- Haiyang
