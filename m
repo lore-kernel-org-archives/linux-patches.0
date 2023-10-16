@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44078241F8
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A1D241F8
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMwkXUZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86166C433C9;
-	Mon, 16 Oct 2023 14:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGo9kbIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02EC7C433C8;
+	Mon, 16 Oct 2023 14:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697466345;
-	bh=/YHAABS0PAs5Jr6LOHrO+3VZwalt8lWSv2NRXf+aMF8=;
+	s=korg; t=1697466348;
+	bh=oewounC5tn8kx7cbd9qrQMdcFhqqp2R4EBXCbShujB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MMwkXUZmD76MwTNxVhSYWqW6Vw1eR3Ns/a/n2A1Umo+njmU9vEueUon412vShW5W+
-	 ngh4qmjQ+V2gz9TbTiH3MpEIvzjtPZphTRh2mgkQLK38V/PgAi/DT6sqYTMxpA+Pc7
-	 2J8G72vtrFuTi6cxUTrcdAUr5xMlZoQPwq3WY/Lw=
+	b=nGo9kbIRxHdFMTpzLSocn9JsgbYhlb/i3xyefFip0D0iw1t6E06WiQj5H663d8adp
+	 kwmpO86wKyjQpQ5dHpWV9ZiJIRNKa5jXLb3YIwQWMXu7TqeQmRIA8j6U0MYDfQKeNc
+	 ka3/Cx/PnKTGe3cXjL+tdv4IMgzGPrPaS+zG6nJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.5 025/191] irqchip: renesas-rzg2l: Fix logic to clear TINT interrupt source
-Date: Mon, 16 Oct 2023 10:40:10 +0200
-Message-ID: <20231016084015.988826388@linuxfoundation.org>
+	Balamurugan C <balamurugan.c@intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.5 034/191] ASoC: Intel: soc-acpi: Add entry for HDMI_In capture support in MTL match table
+Date: Mon, 16 Oct 2023 10:40:19 +0200
+Message-ID: <20231016084016.194227867@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -43,38 +43,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Balamurugan C <balamurugan.c@intel.com>
 
-commit 9b8df572ba3f4e544366196820a719a40774433e upstream.
+commit d1f67278d4b2de3bf544ea9bcd9f64d03584df87 upstream.
 
-The logic to clear the TINT interrupt source in rzg2l_irqc_irq_disable()
-is wrong as the mask is correct only for LSB on the TSSR register.
-This issue is found when testing with two TINT interrupt sources. So fix
-the logic for all TINTs by using the macro TSSEL_SHIFT() to multiply
-tssr_offset with 8.
+Adding HDMI-In capture via I2S feature support in MTL platform.
 
-Fixes: 3fed09559cd8 ("irqchip: Add RZ/G2L IA55 Interrupt Controller driver")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230918122411.237635-2-biju.das.jz@bp.renesas.com
+Signed-off-by: Balamurugan C <balamurugan.c@intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20230919091136.1922253-3-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-renesas-rzg2l.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/boards/sof_es8336.c               |   10 ++++++++++
+ sound/soc/intel/common/soc-acpi-intel-mtl-match.c |   12 ++++++++++++
+ 2 files changed, 22 insertions(+)
 
---- a/drivers/irqchip/irq-renesas-rzg2l.c
-+++ b/drivers/irqchip/irq-renesas-rzg2l.c
-@@ -118,7 +118,7 @@ static void rzg2l_irqc_irq_disable(struc
+--- a/sound/soc/intel/boards/sof_es8336.c
++++ b/sound/soc/intel/boards/sof_es8336.c
+@@ -798,6 +798,16 @@ static const struct platform_device_id b
+ 					SOF_ES8336_SPEAKERS_EN_GPIO1_QUIRK |
+ 					SOF_ES8336_JD_INVERTED),
+ 	},
++	{
++		.name = "mtl_es83x6_c1_h02",
++		.driver_data = (kernel_ulong_t)(SOF_ES8336_SSP_CODEC(1) |
++					SOF_NO_OF_HDMI_CAPTURE_SSP(2) |
++					SOF_HDMI_CAPTURE_1_SSP(0) |
++					SOF_HDMI_CAPTURE_2_SSP(2) |
++					SOF_SSP_HDMI_CAPTURE_PRESENT |
++					SOF_ES8336_SPEAKERS_EN_GPIO1_QUIRK |
++					SOF_ES8336_JD_INVERTED),
++	},
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(platform, board_ids);
+--- a/sound/soc/intel/common/soc-acpi-intel-mtl-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-mtl-match.c
+@@ -30,6 +30,11 @@ static const struct snd_soc_acpi_codecs
+ 	.codecs = {"10EC5682", "RTL5682"},
+ };
  
- 		raw_spin_lock(&priv->lock);
- 		reg = readl_relaxed(priv->base + TSSR(tssr_index));
--		reg &= ~(TSSEL_MASK << tssr_offset);
-+		reg &= ~(TSSEL_MASK << TSSEL_SHIFT(tssr_offset));
- 		writel_relaxed(reg, priv->base + TSSR(tssr_index));
- 		raw_spin_unlock(&priv->lock);
- 	}
++static const struct snd_soc_acpi_codecs mtl_lt6911_hdmi = {
++	.num_codecs = 1,
++	.codecs = {"INTC10B0"}
++};
++
+ struct snd_soc_acpi_mach snd_soc_acpi_intel_mtl_machines[] = {
+ 	{
+ 		.comp_ids = &mtl_rt5682_rt5682s_hp,
+@@ -46,6 +51,13 @@ struct snd_soc_acpi_mach snd_soc_acpi_in
+ 		.sof_tplg_filename = "sof-mtl-max98360a-rt5682.tplg",
+ 	},
+ 	{
++		.comp_ids = &mtl_essx_83x6,
++		.drv_name = "mtl_es83x6_c1_h02",
++		.machine_quirk = snd_soc_acpi_codec_list,
++		.quirk_data = &mtl_lt6911_hdmi,
++		.sof_tplg_filename = "sof-mtl-es83x6-ssp1-hdmi-ssp02.tplg",
++	},
++	{
+ 		.comp_ids = &mtl_rt5682_rt5682s_hp,
+ 		.drv_name = "mtl_rt1019_rt5682",
+ 		.machine_quirk = snd_soc_acpi_codec_list,
 
 
