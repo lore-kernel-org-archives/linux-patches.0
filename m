@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3D628DBA
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186E628DBA
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5P19ul/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E447C433C8;
-	Mon, 16 Oct 2023 14:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaHuU/qR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDCBC433CA;
+	Mon, 16 Oct 2023 14:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468042;
-	bh=LVt2xTFG9NNjl5L+W1PcIXulP40ZCr+TOz0kWHcv8Q8=;
+	s=korg; t=1697468044;
+	bh=keGMwBChcctvJKXNnHiG7p1O4BKbwInx2+3M/kfTSco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m5P19ul//WMRz+5sZ4motjDeku2aLrMGcQACn1C0yplYnUnS5tOWesKKC5SbViUz/
-	 YxsjjIU0dpX/K9EszuAFH60FFm15dw1TUtgyDzKuOREQ5QvbOi07TIsaBGEUoMIeMo
-	 8gF8ry5PcfoxpAGsoJqmJcw1NNzerDbXrpXPRQmY=
+	b=CaHuU/qR1SjTLwElM8QUr+Te47YopgK30T6E6ihs/WLXRQQiA6RYqx5ORsmKuouJV
+	 +jeZg+AV0PjtBY0XQxQQlqfhSkxcFJT7p8m2UnzRw9eZJQvMZN8w1mXwyhT0nmhOYX
+	 wfyqbGImh9CRT4hWhNuI5Q2W3m5mZaA0mc2xvPGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Konrad J Hambrick <kjhambrick@gmail.com>,
-	Calvin Walton <calvin.walton@kepstin.ca>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.5 140/191] thunderbolt: Workaround an IOMMU fault on certain systems with Intel Maple Ridge
-Date: Mon, 16 Oct 2023 10:42:05 +0200
-Message-ID: <20231016084018.653817164@linuxfoundation.org>
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.5 114/191] iio: admv1013: add mixer_vgate corner cases
+Date: Mon, 16 Oct 2023 10:41:39 +0200
+Message-ID: <20231016084018.045249575@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -43,228 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit 582620d9f6b352552bc9a3316fe2b1c3acd8742d upstream.
+commit 287d998af24326b009ae0956820a3188501b34a0 upstream.
 
-On some systems the IOMMU blocks the first couple of driver ready
-messages to the connection manager firmware as can be seen in below
-excerpts:
+Include the corner cases in the computation of the MIXER_VGATE register
+value.
 
-  thunderbolt 0000:06:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0010 address=0xbb0e3400 flags=0x0020]
+According to the datasheet: The MIXER_VGATE values follows the VCM such
+as, that for a 0V to 1.8V VCM, MIXER_VGATE = 23.89 VCM + 81, and for a >
+1.8V to 2.6V VCM, MIXER_VGATE = 23.75 VCM + 1.25.
 
-or
-
-  DMAR: DRHD: handling fault status reg 2
-  DMAR: [DMA Write] Request device [04:00.0] PASID ffffffff fault addr 69974000 [fault reason 05] PTE Write access is not set
-
-The reason is unknown and hard to debug because we were not able to
-reproduce this locally. This only happens on certain systems with Intel
-Maple Ridge Thunderbolt controller. If there is a device connected when
-the driver is loaded the issue does not happen either. Only when there
-is nothing connected (so typically when the system is booted up).
-
-We can work this around by sending the driver ready several times. After
-a couple of retries the message goes through and the controller works
-just fine. For this reason make the number of retries a parameter for
-icm_request() and then for Maple Ridge (and Titan Ridge as they us the
-same function but this should not matter) increase number of retries
-while shortening the timeout accordingly.
-
-Reported-by: Werner Sembach <wse@tuxedocomputers.com>
-Reported-by: Konrad J Hambrick <kjhambrick@gmail.com>
-Reported-by: Calvin Walton <calvin.walton@kepstin.ca>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=214259
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20230807143806.6954-1-antoniu.miclaus@analog.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/icm.c |   40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ drivers/iio/frequency/admv1013.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/thunderbolt/icm.c
-+++ b/drivers/thunderbolt/icm.c
-@@ -41,6 +41,7 @@
- #define PHY_PORT_CS1_LINK_STATE_SHIFT	26
+--- a/drivers/iio/frequency/admv1013.c
++++ b/drivers/iio/frequency/admv1013.c
+@@ -351,9 +351,9 @@ static int admv1013_update_mixer_vgate(s
+ 	if (vcm < 0)
+ 		return vcm;
  
- #define ICM_TIMEOUT			5000	/* ms */
-+#define ICM_RETRIES			3
- #define ICM_APPROVE_TIMEOUT		10000	/* ms */
- #define ICM_MAX_LINK			4
- 
-@@ -296,10 +297,9 @@ static bool icm_copy(struct tb_cfg_reque
- 
- static int icm_request(struct tb *tb, const void *request, size_t request_size,
- 		       void *response, size_t response_size, size_t npackets,
--		       unsigned int timeout_msec)
-+		       int retries, unsigned int timeout_msec)
- {
- 	struct icm *icm = tb_priv(tb);
--	int retries = 3;
- 
- 	do {
- 		struct tb_cfg_request *req;
-@@ -410,7 +410,7 @@ static int icm_fr_get_route(struct tb *t
- 		return -ENOMEM;
- 
- 	ret = icm_request(tb, &request, sizeof(request), switches,
--			  sizeof(*switches), npackets, ICM_TIMEOUT);
-+			  sizeof(*switches), npackets, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		goto err_free;
- 
-@@ -463,7 +463,7 @@ icm_fr_driver_ready(struct tb *tb, enum
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -488,7 +488,7 @@ static int icm_fr_approve_switch(struct
- 	memset(&reply, 0, sizeof(reply));
- 	/* Use larger timeout as establishing tunnels can take some time */
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_APPROVE_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_APPROVE_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -515,7 +515,7 @@ static int icm_fr_add_switch_key(struct
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -543,7 +543,7 @@ static int icm_fr_challenge_switch_key(s
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -577,7 +577,7 @@ static int icm_fr_approve_xdomain_paths(
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1020,7 +1020,7 @@ icm_tr_driver_ready(struct tb *tb, enum
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, 20000);
-+			  1, 10, 2000);
- 	if (ret)
- 		return ret;
- 
-@@ -1053,7 +1053,7 @@ static int icm_tr_approve_switch(struct
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_APPROVE_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_APPROVE_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1081,7 +1081,7 @@ static int icm_tr_add_switch_key(struct
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1110,7 +1110,7 @@ static int icm_tr_challenge_switch_key(s
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1144,7 +1144,7 @@ static int icm_tr_approve_xdomain_paths(
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1170,7 +1170,7 @@ static int icm_tr_xdomain_tear_down(stru
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1496,7 +1496,7 @@ icm_ar_driver_ready(struct tb *tb, enum
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1522,7 +1522,7 @@ static int icm_ar_get_route(struct tb *t
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1543,7 +1543,7 @@ static int icm_ar_get_boot_acl(struct tb
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1604,7 +1604,7 @@ static int icm_ar_set_boot_acl(struct tb
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1626,7 +1626,7 @@ icm_icl_driver_ready(struct tb *tb, enum
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, 20000);
-+			  1, ICM_RETRIES, 20000);
- 	if (ret)
- 		return ret;
- 
-@@ -2298,7 +2298,7 @@ static int icm_usb4_switch_op(struct tb_
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
+-	if (vcm < 1800000)
++	if (vcm <= 1800000)
+ 		mixer_vgate = (2389 * vcm / 1000000 + 8100) / 100;
+-	else if (vcm > 1800000 && vcm < 2600000)
++	else if (vcm > 1800000 && vcm <= 2600000)
+ 		mixer_vgate = (2375 * vcm / 1000000 + 125) / 100;
+ 	else
+ 		return -EINVAL;
 
 
