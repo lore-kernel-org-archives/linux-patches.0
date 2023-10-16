@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A6B1A5A7
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97F81A5A7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqi7RneY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024C0C433C9;
-	Mon, 16 Oct 2023 09:02:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETEldEuu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E426DC433C9;
+	Mon, 16 Oct 2023 09:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446956;
-	bh=SF3ySj1cmJRvTPq7hXBfkmcNeqn2ATNVWiUT8P02C6c=;
+	s=korg; t=1697446959;
+	bh=xosqLfb0rhLrTTLZTYfiABlcwgfjt6pm0iZBfvsiJec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zqi7RneYudSgRrnHKeRm2wgTOH+C/jmNpd4v/OX2QpNu4JE1KqrE+0ldCE6aPO6Nh
-	 wG4EjUq3Yq/wJYiCmsaX2wskZYzTeCcU3EBe7mw5qf09y2onFootfvNViK7r3Zh5rg
-	 6YjH3inCVf9C6jaaAH+vyGkrrbdzmKZasMcUzWGE=
+	b=ETEldEuu8vndJGVoggv5vT2nt2KUbXcrvBqZVs1VA7UdVjiSNYF0SAAGVX7C35Nsi
+	 JjKGgtzaFpfXTbETFCfGhQHWkevlOkZAHsuB9YgsGq4ep3IE+dlTKvJ84kdLOP1uvZ
+	 OEU8Eg9ugfGYOcnDQ0UcipEHn049200Orj1bC9gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Xiubo Li <xiubli@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.1 105/131] ceph: fix type promotion bug on 32bit systems
-Date: Mon, 16 Oct 2023 10:41:28 +0200
-Message-ID: <20231016084002.673136320@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	syzbot+0434ac83f907a1dbdd1e@syzkaller.appspotmail.com,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 106/131] Input: powermate - fix use-after-free in powermate_config_complete
+Date: Mon, 16 Oct 2023 10:41:29 +0200
+Message-ID: <20231016084002.697264073@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -42,35 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 07bb00ef00ace88dd6f695fadbba76565756e55c upstream.
+commit 5c15c60e7be615f05a45cd905093a54b11f461bc upstream.
 
-In this code "ret" is type long and "src_objlen" is unsigned int.  The
-problem is that on 32bit systems, when we do the comparison signed longs
-are type promoted to unsigned int.  So negative error codes from
-do_splice_direct() are treated as success instead of failure.
+syzbot has found a use-after-free bug [1] in the powermate driver. This
+happens when the device is disconnected, which leads to a memory free from
+the powermate_device struct.  When an asynchronous control message
+completes after the kfree and its callback is invoked, the lock does not
+exist anymore and hence the bug.
 
-Cc: stable@vger.kernel.org
-Fixes: 1b0c3b9f91f0 ("ceph: re-org copy_file_range and fix some error paths")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Use usb_kill_urb() on pm->config to cancel any in-progress requests upon
+device disconnection.
+
+[1] https://syzkaller.appspot.com/bug?extid=0434ac83f907a1dbdd1e
+
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Reported-by: syzbot+0434ac83f907a1dbdd1e@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/20230916-topic-powermate_use_after_free-v3-1-64412b81a7a2@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/file.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/misc/powermate.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ceph/file.c
-+++ b/fs/ceph/file.c
-@@ -2498,7 +2498,7 @@ static ssize_t __ceph_copy_file_range(st
- 		ret = do_splice_direct(src_file, &src_off, dst_file,
- 				       &dst_off, src_objlen, flags);
- 		/* Abort on short copies or on error */
--		if (ret < src_objlen) {
-+		if (ret < (long)src_objlen) {
- 			dout("Failed partial copy (%zd)\n", ret);
- 			goto out;
- 		}
+--- a/drivers/input/misc/powermate.c
++++ b/drivers/input/misc/powermate.c
+@@ -425,6 +425,7 @@ static void powermate_disconnect(struct
+ 		pm->requires_update = 0;
+ 		usb_kill_urb(pm->irq);
+ 		input_unregister_device(pm->input);
++		usb_kill_urb(pm->config);
+ 		usb_free_urb(pm->irq);
+ 		usb_free_urb(pm->config);
+ 		powermate_free_buffers(interface_to_usbdev(intf), pm);
 
 
