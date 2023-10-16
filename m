@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36831548F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9861548F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACQ0QdmK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A50C433C7;
-	Mon, 16 Oct 2023 08:56:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+C6BHQI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7774BC433C8;
+	Mon, 16 Oct 2023 08:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446575;
-	bh=A5mls/8dRFPqXILX1eIbb3xsSID2SxyDwrcrQprmz00=;
+	s=korg; t=1697446579;
+	bh=cOOInIcMJZRNywHlUMjJaFUj9CaUcD7Ia+nwQR6i1xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ACQ0QdmKehEi+gQul3XyQ7QGHgs+pv4LvcxyImNMsF9oych9KvxaqPf/W+iCAPwtY
-	 dZiXYNYZSGzfZ//w4sDJjIOGxMv5TTehv0QrtZWtgdZcdx2XKp2OdmnJZ7YFRtFc0S
-	 rLqjp1ZxhPcdlNSrvU3h391KIdHxSyKKLi6ACGmg=
+	b=0+C6BHQIJOxsoGNBjbGHMT+gkn1sRdwT7F/m74AIGCW3YLlUtPtvUwGCUYLGdA1DV
+	 0FA1FgtGUeBFc9PTiq2fHfOi0b1q70puB65hKnZwu3pdO5cmO8wg3/kgB5tz1FaxS9
+	 Zr0G+8Hk4DVWXkwx7CVrUsuYUoYJvacBDscRYzAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Zack Rusin <zackr@vmware.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Subject: [PATCH 6.1 053/131] drm/vmwgfx: fix typo of sizeof argument
-Date: Mon, 16 Oct 2023 10:40:36 +0200
-Message-ID: <20231016084001.390712886@linuxfoundation.org>
+	David Vernet <void@manifault.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 054/131] bpf: Fix verifier log for async callback return values
+Date: Mon, 16 Oct 2023 10:40:37 +0200
+Message-ID: <20231016084001.415002078@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -43,38 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: David Vernet <void@manifault.com>
 
-[ Upstream commit 39465cac283702a7d4a507a558db81898029c6d3 ]
+[ Upstream commit 829955981c557c7fc7416581c4cd68a8a0c28620 ]
 
-Since size of 'header' pointer and '*header' structure is equal on 64-bit
-machines issue probably didn't cause any wrong behavior. But anyway,
-fixing typo is required.
+The verifier, as part of check_return_code(), verifies that async
+callbacks such as from e.g. timers, will return 0. It does this by
+correctly checking that R0->var_off is in tnum_const(0), which
+effectively checks that it's in a range of 0. If this condition fails,
+however, it prints an error message which says that the value should
+have been in (0x0; 0x1). This results in possibly confusing output such
+as the following in which an async callback returns 1:
 
-Fixes: 7a73ba7469cb ("drm/vmwgfx: Use TTM handles instead of SIDs as user-space surface handles.")
-Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Reviewed-by: Zack Rusin <zackr@vmware.com>
-Signed-off-by: Zack Rusin <zackr@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230905100203.1716731-1-konstantin.meskhidze@huawei.com
+  At async callback the register R0 has value (0x1; 0x0) should have been in (0x0; 0x1)
+
+The fix is easy -- we should just pass the tnum_const(0) as the correct
+range to verbose_invalid_scalar(), which will then print the following:
+
+  At async callback the register R0 has value (0x1; 0x0) should have been in (0x0; 0x0)
+
+Fixes: bfc6bb74e4f1 ("bpf: Implement verifier support for validation of async callbacks.")
+Signed-off-by: David Vernet <void@manifault.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20231009161414.235829-1-void@manifault.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index 58ca9adf09871..7e59469e1cb9f 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -1614,7 +1614,7 @@ static int vmw_cmd_tex_state(struct vmw_private *dev_priv,
- {
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdSetTextureState);
- 	SVGA3dTextureState *last_state = (SVGA3dTextureState *)
--	  ((unsigned long) header + header->size + sizeof(header));
-+	  ((unsigned long) header + header->size + sizeof(*header));
- 	SVGA3dTextureState *cur_state = (SVGA3dTextureState *)
- 		((unsigned long) header + sizeof(*cmd));
- 	struct vmw_resource *ctx;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 3052680201e57..eb3f52be115d6 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -10778,7 +10778,7 @@ static int check_return_code(struct bpf_verifier_env *env)
+ 	struct tnum enforce_attach_type_range = tnum_unknown;
+ 	const struct bpf_prog *prog = env->prog;
+ 	struct bpf_reg_state *reg;
+-	struct tnum range = tnum_range(0, 1);
++	struct tnum range = tnum_range(0, 1), const_0 = tnum_const(0);
+ 	enum bpf_prog_type prog_type = resolve_prog_type(env->prog);
+ 	int err;
+ 	struct bpf_func_state *frame = env->cur_state->frame[0];
+@@ -10826,8 +10826,8 @@ static int check_return_code(struct bpf_verifier_env *env)
+ 			return -EINVAL;
+ 		}
+ 
+-		if (!tnum_in(tnum_const(0), reg->var_off)) {
+-			verbose_invalid_scalar(env, reg, &range, "async callback", "R0");
++		if (!tnum_in(const_0, reg->var_off)) {
++			verbose_invalid_scalar(env, reg, &const_0, "async callback", "R0");
+ 			return -EINVAL;
+ 		}
+ 		return 0;
 -- 
 2.40.1
 
