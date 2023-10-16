@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A99F27732
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045DE28DD5
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvFhhrhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FB9C433C7;
-	Mon, 16 Oct 2023 14:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6hw93f/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EE3C433C8;
+	Mon, 16 Oct 2023 14:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697466306;
-	bh=PMkFyXg97p4fQuiOlbOiNrQ9TJt9IVlSBL6X5/8H4/E=;
+	s=korg; t=1697466318;
+	bh=otljVOzm/L4zXfNOVytjG9YmYl5uMN2gc1yqwJP5WSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZvFhhrhHNAmvM3krUREFuzlSO0elfuib4ZdH4y/IWnKMbl9crHFyyb8bI/CEdPqrW
-	 wiggzP31EzXFzDJU7BCMsXhYIblMku2KeDb4ZqOKR/KtBjdi5HAali52sUtsLDvxIa
-	 oy5Enzyf4+S/YLw/2TDx7Q4MpWPNlsBv+6Xa6Ses=
+	b=x6hw93f/pYTh95fuIn7HV4zBDS3ZOTeaNiDepEfBZ4nDaNKJ5LIj4ECsTJZKy+fPP
+	 /mfaJt3BjCnC6fBunazxrRaA2AfwFYhoq79tk6JcXN/QZ+Sm8XsqxsWuzOjo+NMWum
+	 e/eNuq46qhFq70skhINdjXJXF43V9PvB0nid5XN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Mathias Krause <minipli@grsecurity.net>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 004/191] platform/x86: think-lmi: Fix reference leak
-Date: Mon, 16 Oct 2023 10:39:49 +0200
-Message-ID: <20231016084015.504961461@linuxfoundation.org>
+Subject: [PATCH 6.5 005/191] drm/i915: Register engines early to avoid type confusion
+Date: Mon, 16 Oct 2023 10:39:50 +0200
+Message-ID: <20231016084015.527257951@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -38,82 +38,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Mathias Krause <minipli@grsecurity.net>
 
-[ Upstream commit 528ab3e605cabf2f9c9bd5944d3bfe15f6e94f81 ]
+[ Upstream commit 6007265ad70a87aa9b4eea79b5e5828da452cfd8 ]
 
-If a duplicate attribute is found using kset_find_obj(), a reference
-to that attribute is returned which needs to be disposed accordingly
-using kobject_put(). Move the setting name validation into a separate
-function to allow for this change without having to duplicate the
-cleanup code for this setting.
-As a side note, a very similar bug was fixed in
-commit 7295a996fdab ("platform/x86: dell-sysman: Fix reference leak"),
-so it seems that the bug was copied from that driver.
+Commit 1ec23ed7126e ("drm/i915: Use uabi engines for the default engine
+map") switched from using for_each_engine() to for_each_uabi_engine() to
+iterate over the user engines. While this seems to be a sensible change,
+it's only safe to do when the engines are actually chained using the
+rb-tree structure which is not the case during early driver
+initialization where it can be either a lock-less list or regular
+double-linked list.
 
-Compile-tested only.
+In fact, the modesetting initialization code may end up calling
+default_engines() through the fb helper code while the engines list
+is still llist_node-based:
 
-Fixes: 1bcad8e510b2 ("platform/x86: think-lmi: Fix issues with duplicate attributes")
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20230925142819.74525-2-W_Armin@gmx.de
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+  i915_driver_probe() ->
+    intel_display_driver_probe() ->
+      intel_fbdev_init() ->
+        drm_fb_helper_init() ->
+          drm_client_init() ->
+            drm_client_open() ->
+              drm_file_alloc() ->
+                i915_driver_open() ->
+                  i915_gem_open() ->
+                    i915_gem_context_open() ->
+                      i915_gem_create_context() ->
+                        default_engines()
+
+Using for_each_uabi_engine() in default_engines() is therefore wrong, as
+it would try to interpret the llist as rb-tree, making it find no engine
+at all, as the rb_left and rb_right members will still be NULL, as they
+haven't been initialized yet.
+
+To fix this type confusion register the engines earlier and at the same
+time reduce the amount of code that has to deal with the intermediate
+llist state.
+
+Reported-by: sanity checks in grsecurity
+Suggested-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Fixes: 1ec23ed7126e ("drm/i915: Use uabi engines for the default engine map")
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+Cc: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230928182019.10256-2-minipli@grsecurity.net
+[tursulin: fixed commit tag typo]
+(cherry picked from commit 2b562f032fc2594fb3fac22b7a2eb3c1969a7ba3)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/think-lmi.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/i915_gem.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
-index 79346881cadb1..aee869769843f 100644
---- a/drivers/platform/x86/think-lmi.c
-+++ b/drivers/platform/x86/think-lmi.c
-@@ -1248,6 +1248,24 @@ static void tlmi_release_attr(void)
- 	kset_unregister(tlmi_priv.authentication_kset);
+diff --git a/drivers/gpu/drm/i915/i915_gem.c b/drivers/gpu/drm/i915/i915_gem.c
+index 1f65bb33dd212..a8551ce322de2 100644
+--- a/drivers/gpu/drm/i915/i915_gem.c
++++ b/drivers/gpu/drm/i915/i915_gem.c
+@@ -1199,6 +1199,13 @@ int i915_gem_init(struct drm_i915_private *dev_priv)
+ 			goto err_unlock;
+ 	}
+ 
++	/*
++	 * Register engines early to ensure the engine list is in its final
++	 * rb-tree form, lowering the amount of code that has to deal with
++	 * the intermediate llist state.
++	 */
++	intel_engines_driver_register(dev_priv);
++
+ 	return 0;
+ 
+ 	/*
+@@ -1246,8 +1253,6 @@ int i915_gem_init(struct drm_i915_private *dev_priv)
+ void i915_gem_driver_register(struct drm_i915_private *i915)
+ {
+ 	i915_gem_driver_register__shrinker(i915);
+-
+-	intel_engines_driver_register(i915);
  }
  
-+static int tlmi_validate_setting_name(struct kset *attribute_kset, char *name)
-+{
-+	struct kobject *duplicate;
-+
-+	if (!strcmp(name, "Reserved"))
-+		return -EINVAL;
-+
-+	duplicate = kset_find_obj(attribute_kset, name);
-+	if (duplicate) {
-+		pr_debug("Duplicate attribute name found - %s\n", name);
-+		/* kset_find_obj() returns a reference */
-+		kobject_put(duplicate);
-+		return -EBUSY;
-+	}
-+
-+	return 0;
-+}
-+
- static int tlmi_sysfs_init(void)
- {
- 	int i, ret;
-@@ -1276,10 +1294,8 @@ static int tlmi_sysfs_init(void)
- 			continue;
- 
- 		/* check for duplicate or reserved values */
--		if (kset_find_obj(tlmi_priv.attribute_kset, tlmi_priv.setting[i]->display_name) ||
--		    !strcmp(tlmi_priv.setting[i]->display_name, "Reserved")) {
--			pr_debug("duplicate or reserved attribute name found - %s\n",
--				tlmi_priv.setting[i]->display_name);
-+		if (tlmi_validate_setting_name(tlmi_priv.attribute_kset,
-+					       tlmi_priv.setting[i]->display_name) < 0) {
- 			kfree(tlmi_priv.setting[i]->possible_values);
- 			kfree(tlmi_priv.setting[i]);
- 			tlmi_priv.setting[i] = NULL;
+ void i915_gem_driver_unregister(struct drm_i915_private *i915)
 -- 
 2.40.1
 
