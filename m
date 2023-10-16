@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8680F14288
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB18814288
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fuIfyiWg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4B7C433C8;
-	Mon, 16 Oct 2023 14:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmb4u4tT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46461C433C8;
+	Mon, 16 Oct 2023 14:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467780;
-	bh=Ddwvm8qrOySvYzRgJkAJ+fxdHtv/dBmB+zcPZZbygLQ=;
+	s=korg; t=1697467784;
+	bh=5TyEPIcUQ+iItZmLLsDe8SokU01PoIrFbr0UOQosYM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fuIfyiWgzhHTzSxZJbQ00HcmpH9aDpt+FErLL6FxQ9vNl6ZpxnB82my2wA8ZSyq2H
-	 kdYobzKljVha0nxKGIxkhzOqzWRGBjCCtSUW/qjxV3iLuDdAywnxHMoKHRy7+pLafQ
-	 i0OOSQBK09Ic0siXodWCwe7zVK3+/Srqw1H+b+5w=
+	b=rmb4u4tTk+h2Ps36tjWyOLk61ZgLB86wIu6Y2ykYC9k2kiSuSQJ5FrH0oL9zmvcWu
+	 5BiQjKqvMcmnKlZlM7THVUmkK2qyZ4tYkAK0hMz5HYsxEygEngNkWLuvzpzv3HV8EQ
+	 EjcKq973omNAwXwjwvdo8CYye9x2qxt+PEULTFB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Jayat <maxime.jayat@mobile-devices.fr>,
-	Lukas Magel <lukas.magel@posteo.net>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Ralph Siemsen <ralph.siemsen@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 055/191] can: isotp: isotp_sendmsg(): fix TX state detection and wait behavior
-Date: Mon, 16 Oct 2023 10:40:40 +0200
-Message-ID: <20231016084016.689774514@linuxfoundation.org>
+Subject: [PATCH 6.5 085/191] pinctrl: renesas: rzn1: Enable missing PINMUX
+Date: Mon, 16 Oct 2023 10:41:10 +0200
+Message-ID: <20231016084017.383499735@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -44,75 +44,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Magel <lukas.magel@posteo.net>
+From: Ralph Siemsen <ralph.siemsen@linaro.org>
 
-[ Upstream commit d9c2ba65e651467de739324d978b04ed8729f483 ]
+[ Upstream commit f055ff23c331f28aa4ace4b72dc56f63b9a726c8 ]
 
-With patch [1], isotp_poll was updated to also queue the poller in the
-so->wait queue, which is used for send state changes. Since the queue
-now also contains polling tasks that are not interested in sending, the
-queue fill state can no longer be used as an indication of send
-readiness. As a consequence, nonblocking writes can lead to a race and
-lock-up of the socket if there is a second task polling the socket in
-parallel.
+Enable pin muxing (eg. programmable function), so that the RZ/N1 GPIO
+pins will be configured as specified by the pinmux in the DTS.
 
-With this patch, isotp_sendmsg does not consult wq_has_sleepers but
-instead tries to atomically set so->tx.state and waits on so->wait if it
-is unable to do so. This behavior is in alignment with isotp_poll, which
-also checks so->tx.state to determine send readiness.
+This used to be enabled implicitly via CONFIG_GENERIC_PINMUX_FUNCTIONS,
+however that was removed, since the RZ/N1 driver does not call any of
+the generic pinmux functions.
 
-V2:
-- Revert direct exit to goto err_event_drop
-
-[1] https://lore.kernel.org/all/20230331125511.372783-1-michal.sojka@cvut.cz
-
-Reported-by: Maxime Jayat <maxime.jayat@mobile-devices.fr>
-Closes: https://lore.kernel.org/linux-can/11328958-453f-447f-9af8-3b5824dfb041@munic.io/
-Signed-off-by: Lukas Magel <lukas.magel@posteo.net>
-Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Fixes: 79e19fa79cb5 ("can: isotp: isotp_ops: fix poll() to not report false EPOLLOUT events")
-Link: https://github.com/pylessard/python-udsoncan/issues/178#issuecomment-1743786590
-Link: https://lore.kernel.org/all/20230827092205.7908-1-lukas.magel@posteo.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 1308fb4e4eae14e6 ("pinctrl: rzn1: Do not select GENERIC_PIN{CTRL_GROUPS,MUX_FUNCTIONS}")
+Signed-off-by: Ralph Siemsen <ralph.siemsen@linaro.org>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20231004200008.1306798-1-ralph.siemsen@linaro.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ drivers/pinctrl/renesas/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index f02b5d3e47335..d1c6f206f4295 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -948,21 +948,18 @@ static int isotp_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
- 	if (!so->bound || so->tx.state == ISOTP_SHUTDOWN)
- 		return -EADDRNOTAVAIL;
+diff --git a/drivers/pinctrl/renesas/Kconfig b/drivers/pinctrl/renesas/Kconfig
+index 77730dc548ed3..c8d519ca53eb7 100644
+--- a/drivers/pinctrl/renesas/Kconfig
++++ b/drivers/pinctrl/renesas/Kconfig
+@@ -235,6 +235,7 @@ config PINCTRL_RZN1
+ 	depends on OF
+ 	depends on ARCH_RZN1 || COMPILE_TEST
+ 	select GENERIC_PINCONF
++	select PINMUX
+ 	help
+ 	  This selects pinctrl driver for Renesas RZ/N1 devices.
  
--wait_free_buffer:
--	/* we do not support multiple buffers - for now */
--	if (wq_has_sleeper(&so->wait) && (msg->msg_flags & MSG_DONTWAIT))
--		return -EAGAIN;
-+	while (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
-+		/* we do not support multiple buffers - for now */
-+		if (msg->msg_flags & MSG_DONTWAIT)
-+			return -EAGAIN;
- 
--	/* wait for complete transmission of current pdu */
--	err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
--	if (err)
--		goto err_event_drop;
--
--	if (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
- 		if (so->tx.state == ISOTP_SHUTDOWN)
- 			return -EADDRNOTAVAIL;
- 
--		goto wait_free_buffer;
-+		/* wait for complete transmission of current pdu */
-+		err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
-+		if (err)
-+			goto err_event_drop;
- 	}
- 
- 	/* PDU size > default => try max_pdu_size */
 -- 
 2.40.1
 
