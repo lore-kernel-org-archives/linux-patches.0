@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7F51A5A7
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E521A5A7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdHNampL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAE1C433C7;
-	Mon, 16 Oct 2023 09:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdV40HUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6964C433C7;
+	Mon, 16 Oct 2023 09:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697447051;
-	bh=+vzelLSLi9gDgqD8a37EE8gVDMsgYg0qc3soDLcJzFc=;
+	s=korg; t=1697447054;
+	bh=pZK+6REqwJIGTPeVVlKK6BA0nkkJqnWmmk088iQGPbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RdHNampLcDx7Sq1sV08s2x9Nkx3TtSzZpHhttbMUHQobrQOH1TXXOrk61Ukjoa9C0
-	 /ItAmBFXTW2Cv5nnzMfObrhOJUFaC/Bmd46nRir1owsiY/gwicC7yo5ewCfkMGMeOJ
-	 6J1TsBP49SBosdXOkTP+vNEBpGTexUtynoVIKb9s=
+	b=gdV40HUZrVCMHlDGxC4Pt4PP3mr6QrJxCAmhFXLmBuJ3FwP634+LuOiOKq8zGQ830
+	 1XN77i1s3A7Jtg8yZQIc72VeiP5KTx6H2q167R51+eu6UW/4qtWw3aL5ASvrUBoW14
+	 XKmAP22Tn2kvUGc+8GEeExLvgjGWormuqh6sGLVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Firo Yang <firo.yang@suse.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.1 115/131] cgroup: Remove duplicates in cgroup v1 tasks file
-Date: Mon, 16 Oct 2023 10:41:38 +0200
-Message-ID: <20231016084002.925232964@linuxfoundation.org>
+	Yunxiang Li <Yunxiang.Li@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 116/131] dma-buf: add dma_fence_timestamp helper
+Date: Mon, 16 Oct 2023 10:41:39 +0200
+Message-ID: <20231016084002.950884888@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -43,49 +43,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Koutný <mkoutny@suse.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 1ca0b605150501b7dc59f3016271da4eb3e96fce upstream.
+commit b83ce9cb4a465b8f9a3fa45561b721a9551f60e3 upstream.
 
-One PID may appear multiple times in a preloaded pidlist.
-(Possibly due to PID recycling but we have reports of the same
-task_struct appearing with different PIDs, thus possibly involving
-transfer of PID via de_thread().)
+When a fence signals there is a very small race window where the timestamp
+isn't updated yet. sync_file solves this by busy waiting for the
+timestamp to appear, but on other ocassions didn't handled this
+correctly.
 
-Because v1 seq_file iterator uses PIDs as position, it leads to
-a message:
-> seq_file: buggy .next function kernfs_seq_next did not update position index
+Provide a dma_fence_timestamp() helper function for this and use it in
+all appropriate cases.
 
-Conservative and quick fix consists of removing duplicates from `tasks`
-file (as opposed to removing pidlists altogether). It doesn't affect
-correctness (it's sufficient to show a PID once), performance impact
-would be hidden by unconditional sorting of the pidlist already in place
-(asymptotically).
+Another alternative would be to grab the spinlock when that happens.
 
-Link: https://lore.kernel.org/r/20230823174804.23632-1-mkoutny@suse.com/
-Suggested-by: Firo Yang <firo.yang@suse.com>
-Signed-off-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Cc: stable@vger.kernel.org
+v2 by teddy: add a wait parameter to wait for the timestamp to show up, in case
+   the accurate timestamp is needed and/or the timestamp is not based on
+   ktime (e.g. hw timestamp)
+v3 chk: drop the parameter again for unified handling
+
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: 1774baa64f93 ("drm/scheduler: Change scheduled fence track v2")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+CC: stable@vger.kernel.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20230929104725.2358-1-christian.koenig@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cgroup-v1.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/dma-buf/dma-fence-unwrap.c     |   13 ++++---------
+ drivers/dma-buf/sync_file.c            |    9 +++------
+ drivers/gpu/drm/scheduler/sched_main.c |    2 +-
+ include/linux/dma-fence.h              |   19 +++++++++++++++++++
+ 4 files changed, 27 insertions(+), 16 deletions(-)
 
---- a/kernel/cgroup/cgroup-v1.c
-+++ b/kernel/cgroup/cgroup-v1.c
-@@ -360,10 +360,9 @@ static int pidlist_array_load(struct cgr
+--- a/drivers/dma-buf/dma-fence-unwrap.c
++++ b/drivers/dma-buf/dma-fence-unwrap.c
+@@ -76,16 +76,11 @@ struct dma_fence *__dma_fence_unwrap_mer
+ 		dma_fence_unwrap_for_each(tmp, &iter[i], fences[i]) {
+ 			if (!dma_fence_is_signaled(tmp)) {
+ 				++count;
+-			} else if (test_bit(DMA_FENCE_FLAG_TIMESTAMP_BIT,
+-					    &tmp->flags)) {
+-				if (ktime_after(tmp->timestamp, timestamp))
+-					timestamp = tmp->timestamp;
+ 			} else {
+-				/*
+-				 * Use the current time if the fence is
+-				 * currently signaling.
+-				 */
+-				timestamp = ktime_get();
++				ktime_t t = dma_fence_timestamp(tmp);
++
++				if (ktime_after(t, timestamp))
++					timestamp = t;
+ 			}
+ 		}
  	}
- 	css_task_iter_end(&it);
- 	length = n;
--	/* now sort & (if procs) strip out duplicates */
-+	/* now sort & strip out duplicates (tgids or recycled thread PIDs) */
- 	sort(array, length, sizeof(pid_t), cmppid, NULL);
--	if (type == CGROUP_FILE_PROCS)
--		length = pidlist_uniq(array, length);
-+	length = pidlist_uniq(array, length);
+--- a/drivers/dma-buf/sync_file.c
++++ b/drivers/dma-buf/sync_file.c
+@@ -268,13 +268,10 @@ static int sync_fill_fence_info(struct d
+ 		sizeof(info->driver_name));
  
- 	l = cgroup_pidlist_find_create(cgrp, type);
- 	if (!l) {
+ 	info->status = dma_fence_get_status(fence);
+-	while (test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags) &&
+-	       !test_bit(DMA_FENCE_FLAG_TIMESTAMP_BIT, &fence->flags))
+-		cpu_relax();
+ 	info->timestamp_ns =
+-		test_bit(DMA_FENCE_FLAG_TIMESTAMP_BIT, &fence->flags) ?
+-		ktime_to_ns(fence->timestamp) :
+-		ktime_set(0, 0);
++		dma_fence_is_signaled(fence) ?
++			ktime_to_ns(dma_fence_timestamp(fence)) :
++			ktime_set(0, 0);
+ 
+ 	return info->status;
+ }
+--- a/drivers/gpu/drm/scheduler/sched_main.c
++++ b/drivers/gpu/drm/scheduler/sched_main.c
+@@ -841,7 +841,7 @@ drm_sched_get_cleanup_job(struct drm_gpu
+ 
+ 		if (next) {
+ 			next->s_fence->scheduled.timestamp =
+-				job->s_fence->finished.timestamp;
++				dma_fence_timestamp(&job->s_fence->finished);
+ 			/* start TO timer for next job */
+ 			drm_sched_start_timeout(sched);
+ 		}
+--- a/include/linux/dma-fence.h
++++ b/include/linux/dma-fence.h
+@@ -548,6 +548,25 @@ static inline void dma_fence_set_error(s
+ 	fence->error = error;
+ }
+ 
++/**
++ * dma_fence_timestamp - helper to get the completion timestamp of a fence
++ * @fence: fence to get the timestamp from.
++ *
++ * After a fence is signaled the timestamp is updated with the signaling time,
++ * but setting the timestamp can race with tasks waiting for the signaling. This
++ * helper busy waits for the correct timestamp to appear.
++ */
++static inline ktime_t dma_fence_timestamp(struct dma_fence *fence)
++{
++	if (WARN_ON(!test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags)))
++		return ktime_get();
++
++	while (!test_bit(DMA_FENCE_FLAG_TIMESTAMP_BIT, &fence->flags))
++		cpu_relax();
++
++	return fence->timestamp;
++}
++
+ signed long dma_fence_wait_timeout(struct dma_fence *,
+ 				   bool intr, signed long timeout);
+ signed long dma_fence_wait_any_timeout(struct dma_fence **fences,
 
 
