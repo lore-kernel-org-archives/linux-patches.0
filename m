@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00ADC241F8
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92631241F8
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLKSwom7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25E7C433C9;
-	Mon, 16 Oct 2023 14:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mc3k78vK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0154DC433C8;
+	Mon, 16 Oct 2023 14:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697466279;
-	bh=Re3DIzwKLdwBWLjEeCJifh/8sdm6ZIKYcEM+4QpszNQ=;
+	s=korg; t=1697466282;
+	bh=fXg2AvPP9TtMPnyzyVSvkvccHVpVDmqDkRwM9ez17L0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLKSwom7Ih0bONs1HlnDI2q9TxiXo0KCmU2kB7xTnArJDVSx1toBsjpdlzWKFm70p
-	 kaVkN1XXxAABWRKtYbS8nN2XE+sze8VOHgRL4R3/zAk8Mm2VmPOqTvfrCdFR5Gbxuw
-	 iDBgT422UducFiBs6Qq8eVhnmwat7M7tVtfonO/c=
+	b=Mc3k78vKihQrs4iRnFy2SQjj1KRRbsLdF/KQOhKUSz4Bwqbmr7UP6N/6HYqWfwUWi
+	 24Mws7dTF8lOKfb1kmHI3q/lm5Ce9zmBXZUT1pLBmcQl4LhnjC/47hUCMbGVCgwN1l
+	 cTAlbYci01lo1UzjaTXpbcmj2COsbfd9fVBNMLuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 002/191] RDMA/cxgb4: Check skb value for failure to allocate
-Date: Mon, 16 Oct 2023 10:39:47 +0200
-Message-ID: <20231016084015.459717542@linuxfoundation.org>
+	Matthias Reichl <hias@horus.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.5 020/191] ASoC: hdmi-codec: Fix broken channel map reporting
+Date: Mon, 16 Oct 2023 10:40:05 +0200
+Message-ID: <20231016084015.873958228@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -42,39 +41,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Matthias Reichl <hias@horus.com>
 
-[ Upstream commit 8fb8a82086f5bda6893ea6557c5a458e4549c6d7 ]
+commit b84b53149476b22cc3b8677b771fb4cf06d1d455 upstream.
 
-get_skb() can fail to allocate skb, so check it.
+Commit 4e0871333661 ("ASoC: hdmi-codec: fix channel info for
+compressed formats") accidentally changed hcp->chmap_idx from
+ca_id, the CEA channel allocation ID, to idx, the index to
+the table of channel mappings ordered by preference.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This resulted in wrong channel maps being reported to userspace,
+eg for 5.1 "FL,FR,LFE,FC" was reported instead of the expected
+"FL,FR,LFE,FC,RL,RR":
 
-Fixes: 5be78ee924ae ("RDMA/cxgb4: Fix LE hash collision bug for active open connection")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Link: https://lore.kernel.org/r/20230905124048.284165-1-artem.chernyshev@red-soft.ru
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+~ # speaker-test -c 6 -t sine
+...
+ 0 - Front Left
+ 3 - Front Center
+ 1 - Front Right
+ 2 - LFE
+ 4 - Unknown
+ 5 - Unknown
+
+~ # amixer cget iface=PCM,name='Playback Channel Map' | grep ': values'
+  : values=3,4,8,7,0,0,0,0
+
+Switch this back to ca_id in case of PCM audio so the correct channel
+map is reported again and set it to HDMI_CODEC_CHMAP_IDX_UNKNOWN in
+case of non-PCM audio so the PCM channel map control returns "Unknown"
+channels (value 0).
+
+Fixes: 4e0871333661 ("ASoC: hdmi-codec: fix channel info for compressed formats")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthias Reichl <hias@horus.com>
+Link: https://lore.kernel.org/r/20230929195027.97136-1-hias@horus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/cxgb4/cm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/codecs/hdmi-codec.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
-index ced615b5ea096..040ba2224f9ff 100644
---- a/drivers/infiniband/hw/cxgb4/cm.c
-+++ b/drivers/infiniband/hw/cxgb4/cm.c
-@@ -1965,6 +1965,9 @@ static int send_fw_act_open_req(struct c4iw_ep *ep, unsigned int atid)
- 	int win;
+--- a/sound/soc/codecs/hdmi-codec.c
++++ b/sound/soc/codecs/hdmi-codec.c
+@@ -531,7 +531,10 @@ static int hdmi_codec_fill_codec_params(
+ 	hp->sample_rate = sample_rate;
+ 	hp->channels = channels;
  
- 	skb = get_skb(NULL, sizeof(*req), GFP_KERNEL);
-+	if (!skb)
-+		return -ENOMEM;
-+
- 	req = __skb_put_zero(skb, sizeof(*req));
- 	req->op_compl = htonl(WR_OP_V(FW_OFLD_CONNECTION_WR));
- 	req->len16_pkd = htonl(FW_WR_LEN16_V(DIV_ROUND_UP(sizeof(*req), 16)));
--- 
-2.40.1
-
+-	hcp->chmap_idx = idx;
++	if (pcm_audio)
++		hcp->chmap_idx = ca_id;
++	else
++		hcp->chmap_idx = HDMI_CODEC_CHMAP_IDX_UNKNOWN;
+ 
+ 	return 0;
+ }
 
 
