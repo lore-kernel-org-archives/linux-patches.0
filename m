@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78D327ECC
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D2A27ECC
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wceqew7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640D6C433C8;
-	Mon, 16 Oct 2023 14:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3T3VOds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEE9C433C8;
+	Mon, 16 Oct 2023 14:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467675;
-	bh=enXF8y3pkH4XLrGQo90yhnCLjxhDTUG9WadG/ovXy7o=;
+	s=korg; t=1697467678;
+	bh=oM/5y5gOJ54aAdnm5fcAkU28nZSp4AFA0LrolkueaKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2wceqew7N6BjN88kYzCpYibZEjbsilvqRaiQGtm3VpyX4BQgRXPJ/u6hHvIm7Ciae
-	 KDbP3WPwSo4kYwhh1lwxH5vq9JmDny5PM+sboKUQ5Z9HZgsXBLePNkBkcXD6JTG6Qr
-	 nAusty7ke7P6mzanTZD/4A/1Q0gakzqllMRX1aWw=
+	b=h3T3VOds46KSPOhPKcQktBNEUyrVi0i9DOOmY/PqLwUlUpz6dxCYhcVMn39ErjU8S
+	 U/15vA6V9Az9oG02szOXzzMWF74oozTvXX4F7frdvEVcATftXbP4UjTZXNOtaimMl6
+	 NlOAZ0OZTU0otA9QVOhrK8qyatnIBukEYnzoBhLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Vernet <void@manifault.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 069/191] bpf: Fix verifier log for async callback return values
-Date: Mon, 16 Oct 2023 10:40:54 +0200
-Message-ID: <20231016084017.017012816@linuxfoundation.org>
+Subject: [PATCH 6.5 070/191] net: refine debug info in skb_checksum_help()
+Date: Mon, 16 Oct 2023 10:40:55 +0200
+Message-ID: <20231016084017.042273697@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -42,58 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Vernet <void@manifault.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 829955981c557c7fc7416581c4cd68a8a0c28620 ]
+[ Upstream commit 26c29961b142444cd99361644c30fa1e9b3da6be ]
 
-The verifier, as part of check_return_code(), verifies that async
-callbacks such as from e.g. timers, will return 0. It does this by
-correctly checking that R0->var_off is in tnum_const(0), which
-effectively checks that it's in a range of 0. If this condition fails,
-however, it prints an error message which says that the value should
-have been in (0x0; 0x1). This results in possibly confusing output such
-as the following in which an async callback returns 1:
+syzbot uses panic_on_warn.
 
-  At async callback the register R0 has value (0x1; 0x0) should have been in (0x0; 0x1)
+This means that the skb_dump() I added in the blamed commit are
+not even called.
 
-The fix is easy -- we should just pass the tnum_const(0) as the correct
-range to verbose_invalid_scalar(), which will then print the following:
+Rewrite this so that we get the needed skb dump before syzbot crashes.
 
-  At async callback the register R0 has value (0x1; 0x0) should have been in (0x0; 0x0)
-
-Fixes: bfc6bb74e4f1 ("bpf: Implement verifier support for validation of async callbacks.")
-Signed-off-by: David Vernet <void@manifault.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20231009161414.235829-1-void@manifault.com
+Fixes: eeee4b77dc52 ("net: add more debug info in skb_checksum_help()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20231006173355.2254983-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/core/dev.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 93fd32f2957b7..104681258d24f 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -14255,7 +14255,7 @@ static int check_return_code(struct bpf_verifier_env *env)
- 	struct tnum enforce_attach_type_range = tnum_unknown;
- 	const struct bpf_prog *prog = env->prog;
- 	struct bpf_reg_state *reg;
--	struct tnum range = tnum_range(0, 1);
-+	struct tnum range = tnum_range(0, 1), const_0 = tnum_const(0);
- 	enum bpf_prog_type prog_type = resolve_prog_type(env->prog);
- 	int err;
- 	struct bpf_func_state *frame = env->cur_state->frame[0];
-@@ -14303,8 +14303,8 @@ static int check_return_code(struct bpf_verifier_env *env)
- 			return -EINVAL;
- 		}
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 69a3e544676c4..968be1c20ca1f 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3285,15 +3285,19 @@ int skb_checksum_help(struct sk_buff *skb)
  
--		if (!tnum_in(tnum_const(0), reg->var_off)) {
--			verbose_invalid_scalar(env, reg, &range, "async callback", "R0");
-+		if (!tnum_in(const_0, reg->var_off)) {
-+			verbose_invalid_scalar(env, reg, &const_0, "async callback", "R0");
- 			return -EINVAL;
- 		}
- 		return 0;
+ 	offset = skb_checksum_start_offset(skb);
+ 	ret = -EINVAL;
+-	if (WARN_ON_ONCE(offset >= skb_headlen(skb))) {
++	if (unlikely(offset >= skb_headlen(skb))) {
+ 		DO_ONCE_LITE(skb_dump, KERN_ERR, skb, false);
++		WARN_ONCE(true, "offset (%d) >= skb_headlen() (%u)\n",
++			  offset, skb_headlen(skb));
+ 		goto out;
+ 	}
+ 	csum = skb_checksum(skb, offset, skb->len - offset, 0);
+ 
+ 	offset += skb->csum_offset;
+-	if (WARN_ON_ONCE(offset + sizeof(__sum16) > skb_headlen(skb))) {
++	if (unlikely(offset + sizeof(__sum16) > skb_headlen(skb))) {
+ 		DO_ONCE_LITE(skb_dump, KERN_ERR, skb, false);
++		WARN_ONCE(true, "offset+2 (%zu) > skb_headlen() (%u)\n",
++			  offset + sizeof(__sum16), skb_headlen(skb));
+ 		goto out;
+ 	}
+ 	ret = skb_ensure_writable(skb, offset + sizeof(__sum16));
 -- 
 2.40.1
 
