@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF1812B6D
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0CA156E7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuSqswxY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7265C433C8;
-	Mon, 16 Oct 2023 08:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+V1fl2X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093F6C433C8;
+	Mon, 16 Oct 2023 08:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445922;
-	bh=fcEiLCK8wCu2jmyoKs3DdP4OnRLFN9SBZj4QoG+fdvg=;
+	s=korg; t=1697445927;
+	bh=ld/Bj85i6O8OPRXIPxDWNKczASZfh/4jfEhUqxFFIAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RuSqswxYUrhjx7Mu4NOANTLBwLmlvhkXWUYDatJJXzRGSz35fiBFIF01LE4YnIK1x
-	 ECJBVZ43cN238A6aezemYq2USNLr65MNeWkbyC2G2KjKmYNv818CYYtFixJ70AzD+C
-	 vsrCM+iWd47DAnjDTWwSk74Rj0jhE6sZV0rOuf3A=
+	b=K+V1fl2XvYREhRgaK8Cst9NM44E3sjom1bdorkhu9Vn4hNHN6/YmuCa7roq57/7+N
+	 W+1JcrrGeyCi22X9DkQMX15qt54GLShhU7OcI8LYDeUJ3ahOU1YlqsmolM3fU9lIvd
+	 A1hEWiuI3yi9XXIOHrcCPtuNik4rRJMjbUpFhapQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Nils Hoppmann <niho@linux.ibm.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ralph Siemsen <ralph.siemsen@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/102] net/smc: Fix pos miscalculation in statistics
-Date: Mon, 16 Oct 2023 10:40:37 +0200
-Message-ID: <20231016083954.716989104@linuxfoundation.org>
+Subject: [PATCH 5.15 039/102] pinctrl: renesas: rzn1: Enable missing PINMUX
+Date: Mon, 16 Oct 2023 10:40:38 +0200
+Message-ID: <20231016083954.743552596@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -45,89 +44,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nils Hoppmann <niho@linux.ibm.com>
+From: Ralph Siemsen <ralph.siemsen@linaro.org>
 
-[ Upstream commit a950a5921db450c74212327f69950ff03419483a ]
+[ Upstream commit f055ff23c331f28aa4ace4b72dc56f63b9a726c8 ]
 
-SMC_STAT_PAYLOAD_SUB(_smc_stats, _tech, key, _len, _rc) will calculate
-wrong bucket positions for payloads of exactly 4096 bytes and
-(1 << (m + 12)) bytes, with m == SMC_BUF_MAX - 1.
+Enable pin muxing (eg. programmable function), so that the RZ/N1 GPIO
+pins will be configured as specified by the pinmux in the DTS.
 
-Intended bucket distribution:
-Assume l == size of payload, m == SMC_BUF_MAX - 1.
+This used to be enabled implicitly via CONFIG_GENERIC_PINMUX_FUNCTIONS,
+however that was removed, since the RZ/N1 driver does not call any of
+the generic pinmux functions.
 
-Bucket 0                : 0 < l <= 2^13
-Bucket n, 1 <= n <= m-1 : 2^(n+12) < l <= 2^(n+13)
-Bucket m                : l > 2^(m+12)
-
-Current solution:
-_pos = fls64((l) >> 13)
-[...]
-_pos = (_pos < m) ? ((l == 1 << (_pos + 12)) ? _pos - 1 : _pos) : m
-
-For l == 4096, _pos == -1, but should be _pos == 0.
-For l == (1 << (m + 12)), _pos == m, but should be _pos == m - 1.
-
-In order to avoid special treatment of these corner cases, the
-calculation is adjusted. The new solution first subtracts the length by
-one, and then calculates the correct bucket by shifting accordingly,
-i.e. _pos = fls64((l - 1) >> 13), l > 0.
-This not only fixes the issues named above, but also makes the whole
-bucket assignment easier to follow.
-
-Same is done for SMC_STAT_RMB_SIZE_SUB(_smc_stats, _tech, k, _len),
-where the calculation of the bucket position is similar to the one
-named above.
-
-Fixes: e0e4b8fa5338 ("net/smc: Add SMC statistics support")
-Suggested-by: Halil Pasic <pasic@linux.ibm.com>
-Signed-off-by: Nils Hoppmann <niho@linux.ibm.com>
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1308fb4e4eae14e6 ("pinctrl: rzn1: Do not select GENERIC_PIN{CTRL_GROUPS,MUX_FUNCTIONS}")
+Signed-off-by: Ralph Siemsen <ralph.siemsen@linaro.org>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20231004200008.1306798-1-ralph.siemsen@linaro.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_stats.h | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/pinctrl/renesas/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/smc/smc_stats.h b/net/smc/smc_stats.h
-index 84b7ecd8c05ca..415131a975b11 100644
---- a/net/smc/smc_stats.h
-+++ b/net/smc/smc_stats.h
-@@ -93,13 +93,14 @@ do { \
- 	typeof(_smc_stats) stats = (_smc_stats); \
- 	typeof(_tech) t = (_tech); \
- 	typeof(_len) l = (_len); \
--	int _pos = fls64((l) >> 13); \
-+	int _pos; \
- 	typeof(_rc) r = (_rc); \
- 	int m = SMC_BUF_MAX - 1; \
- 	this_cpu_inc((*stats).smc[t].key ## _cnt); \
--	if (r <= 0) \
-+	if (r <= 0 || l <= 0) \
- 		break; \
--	_pos = (_pos < m) ? ((l == 1 << (_pos + 12)) ? _pos - 1 : _pos) : m; \
-+	_pos = fls64((l - 1) >> 13); \
-+	_pos = (_pos <= m) ? _pos : m; \
- 	this_cpu_inc((*stats).smc[t].key ## _pd.buf[_pos]); \
- 	this_cpu_add((*stats).smc[t].key ## _bytes, r); \
- } \
-@@ -139,9 +140,12 @@ while (0)
- do { \
- 	typeof(_len) _l = (_len); \
- 	typeof(_tech) t = (_tech); \
--	int _pos = fls((_l) >> 13); \
-+	int _pos; \
- 	int m = SMC_BUF_MAX - 1; \
--	_pos = (_pos < m) ? ((_l == 1 << (_pos + 12)) ? _pos - 1 : _pos) : m; \
-+	if (_l <= 0) \
-+		break; \
-+	_pos = fls((_l - 1) >> 13); \
-+	_pos = (_pos <= m) ? _pos : m; \
- 	this_cpu_inc((*(_smc_stats)).smc[t].k ## _rmbsize.buf[_pos]); \
- } \
- while (0)
+diff --git a/drivers/pinctrl/renesas/Kconfig b/drivers/pinctrl/renesas/Kconfig
+index 9a72999084b36..ba7224a4c352d 100644
+--- a/drivers/pinctrl/renesas/Kconfig
++++ b/drivers/pinctrl/renesas/Kconfig
+@@ -228,6 +228,7 @@ config PINCTRL_RZN1
+ 	depends on OF
+ 	depends on ARCH_RZN1 || COMPILE_TEST
+ 	select GENERIC_PINCONF
++	select PINMUX
+ 	help
+ 	  This selects pinctrl driver for Renesas RZ/N1 devices.
+ 
 -- 
 2.40.1
 
