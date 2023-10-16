@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2395B1798F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588D81798F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDVssqgG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1546FC433C8;
-	Mon, 16 Oct 2023 08:57:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnksSauq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385C3C433C8;
+	Mon, 16 Oct 2023 08:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446683;
-	bh=MnkTaBb/QNk2x7zaIxNlBYj3Tr/qX8zCz29Oyr25hRU=;
+	s=korg; t=1697446754;
+	bh=g6aRA6U3ucKWEJJ7agQ0eHILKxOjbQ+dUxvajoKduGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MDVssqgGHRUkl2VCMenhpNqx8CB0XIXx+FBDi83co5SbbPaDe8Ze0akHrMTMqP8aL
-	 NuGbKaVVHId66ZttVtEzqfEwSKLqnckkNCOiy30wJMXG833Ks6uTmpA816+BORrX/D
-	 I7N/yuavjvTUQxHa7avq6CVQPqiHbYX14CKimPBU=
+	b=JnksSauqp4OOjlc+l9YoiyXzWFz332wcwV5UfNI0UM53tifFBdrc15jo9Z5dvCQbR
+	 SyUApCEDqhAwHiezO5wmOW5lPCxdOCjr8MjNVbWcL2c7/U5OS2XLk4tAxEABIAZSP1
+	 7iGfKRIuJhvoun0d5VKd6Whp5pjAvmon8nXYU4eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Vinod Polimera <quic_vpolimer@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/131] drm/msm/dp: Add newlines to debug printks
-Date: Mon, 16 Oct 2023 10:40:21 +0200
-Message-ID: <20231016084001.017295443@linuxfoundation.org>
+Subject: [PATCH 6.1 039/131] phy: lynx-28g: cancel the CDR check work item on the remove path
+Date: Mon, 16 Oct 2023 10:40:22 +0200
+Message-ID: <20231016084001.044035662@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -45,41 +43,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit eba8c99a0fc45da1c8d5b5f5bd1dc2e79229a767 ]
+[ Upstream commit f200bab3756fe81493a1b280180dafa1d9ccdcf7 ]
 
-These debug printks are missing newlines, causing drm debug logs to be
-hard to read. Add newlines so that the messages are on their own line.
+The blamed commit added the CDR check work item but didn't cancel it on
+the remove path. Fix this by adding a remove function which takes care
+of it.
 
-Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Fixes: 601f0479c583 ("drm/msm/dp: add logs across DP driver for ease of debugging")
-Fixes: cd779808cccd ("drm/msm/dp: Add basic PSR support for eDP")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/554533/
-Link: https://lore.kernel.org/r/20230825230109.2264345-1-swboyd@chromium.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: 8f73b37cf3fb ("phy: add support for the Layerscape SerDes 28G")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_link.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/freescale/phy-fsl-lynx-28g.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index 36bb6191d2f03..cb66d1126ea96 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -1068,7 +1068,7 @@ int dp_link_process_request(struct dp_link *dp_link)
- 		}
- 	}
- 
--	drm_dbg_dp(link->drm_dev, "sink request=%#x",
-+	drm_dbg_dp(link->drm_dev, "sink request=%#x\n",
- 				dp_link->sink_request);
- 	return ret;
+diff --git a/drivers/phy/freescale/phy-fsl-lynx-28g.c b/drivers/phy/freescale/phy-fsl-lynx-28g.c
+index 569f12af2aafa..9d55dbee2e0a5 100644
+--- a/drivers/phy/freescale/phy-fsl-lynx-28g.c
++++ b/drivers/phy/freescale/phy-fsl-lynx-28g.c
+@@ -603,6 +603,14 @@ static int lynx_28g_probe(struct platform_device *pdev)
+ 	return PTR_ERR_OR_ZERO(provider);
  }
+ 
++static void lynx_28g_remove(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct lynx_28g_priv *priv = dev_get_drvdata(dev);
++
++	cancel_delayed_work_sync(&priv->cdr_check);
++}
++
+ static const struct of_device_id lynx_28g_of_match_table[] = {
+ 	{ .compatible = "fsl,lynx-28g" },
+ 	{ },
+@@ -611,6 +619,7 @@ MODULE_DEVICE_TABLE(of, lynx_28g_of_match_table);
+ 
+ static struct platform_driver lynx_28g_driver = {
+ 	.probe	= lynx_28g_probe,
++	.remove_new = lynx_28g_remove,
+ 	.driver	= {
+ 		.name = "lynx-28g",
+ 		.of_match_table = lynx_28g_of_match_table,
 -- 
 2.40.1
 
