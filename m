@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF5A262A1
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB98F262A1
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pp+TK/rq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC768C433C7;
-	Mon, 16 Oct 2023 14:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLUjg8yW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE22C433C7;
+	Mon, 16 Oct 2023 14:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468075;
-	bh=Bfts6BPuEzuocBFAlPre5UxCP6CKiqwqGjCZV6KjIRw=;
+	s=korg; t=1697468081;
+	bh=tIhiVpgPqomQPItLYdmYOYen5LYl+oOTfFM16SEOFcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pp+TK/rqeoi93Abq11zMqy4QJbMnELOXlsPLXqMY8YZjHz+M6ePn5AHfzUZ1uVFNt
-	 ysg35W4ZxZJ3vYGzocoJ8VcuN7LGWI1SdbM44JNW8ixIz6cHtY5Q/TNtCE4Ci4Ka3p
-	 sNNYUglGpVA5TK9x864k94nyx1V4xnaYrHEEo/cg=
+	b=LLUjg8yWol+IIUpBWkeVDN6DGGWpN2IbE87e+2jBd0lDrg+BZQyOaxLjFdwLQJv8f
+	 1kaHmu0vCT2xVQXGSWlJgJgrjc/nYWScKilZO6Lq26KCGX4c0tDzHCGmls2LPjNx7b
+	 iLRxt7IZYcKP9t6fewvW3uM+fLRLKCiINigzbO44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Balcanquall <alex@alexbal.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.5 143/191] thunderbolt: Restart XDomain discovery handshake after failure
-Date: Mon, 16 Oct 2023 10:42:08 +0200
-Message-ID: <20231016084018.722622103@linuxfoundation.org>
+	Szilard Fabian <szfabian@bluemarch.art>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.5 152/191] Input: i8042 - add Fujitsu Lifebook E5411 to i8042 quirk table
+Date: Mon, 16 Oct 2023 10:42:17 +0200
+Message-ID: <20231016084018.926935540@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -41,135 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Szilard Fabian <szfabian@bluemarch.art>
 
-commit 308092d080852f8997126e5b3507536162416f4a upstream.
+commit 80f39e1c27ba9e5a1ea7e68e21c569c9d8e46062 upstream.
 
-Alex reported that after rebooting the other host the peer-to-peer link
-does not come up anymore. The reason for this is that the host that was
-not rebooted tries to send the UUID request only 10 times according to
-the USB4 Inter-Domain spec and gives up if it does not get reply. Then
-when the other side is actually ready it cannot get the link established
-anymore. The USB4 Inter-Domain spec requires that the discovery protocol
-is restarted in that case so implement this now.
+In the initial boot stage the integrated keyboard of Fujitsu Lifebook E5411
+refuses to work and it's not possible to type for example a dm-crypt
+passphrase without the help of an external keyboard.
 
-Reported-by: Alex Balcanquall <alex@alexbal.com>
-Fixes: 8e1de7042596 ("thunderbolt: Add support for XDomain lane bonding")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+i8042.nomux kernel parameter resolves this issue but using that a PS/2
+mouse is detected. This input device is unused even when the i2c-hid-acpi
+kernel module is blacklisted making the integrated ELAN touchpad
+(04F3:308A) not working at all.
+
+Since the integrated touchpad is managed by the i2c_designware input
+driver in the Linux kernel and you can't find a PS/2 mouse port on the
+computer I think it's safe to not use the PS/2 mouse port at all.
+
+Signed-off-by: Szilard Fabian <szfabian@bluemarch.art>
+Link: https://lore.kernel.org/r/20231004011749.101789-1-szfabian@bluemarch.art
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/xdomain.c |   58 +++++++++++++++++++++++++++++-------------
- 1 file changed, 41 insertions(+), 17 deletions(-)
+ drivers/input/serio/i8042-acpipnpio.h |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -703,6 +703,27 @@ out_unlock:
- 	mutex_unlock(&xdomain_lock);
- }
- 
-+static void start_handshake(struct tb_xdomain *xd)
-+{
-+	xd->state = XDOMAIN_STATE_INIT;
-+	queue_delayed_work(xd->tb->wq, &xd->state_work,
-+			   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
-+}
-+
-+/* Can be called from state_work */
-+static void __stop_handshake(struct tb_xdomain *xd)
-+{
-+	cancel_delayed_work_sync(&xd->properties_changed_work);
-+	xd->properties_changed_retries = 0;
-+	xd->state_retries = 0;
-+}
-+
-+static void stop_handshake(struct tb_xdomain *xd)
-+{
-+	cancel_delayed_work_sync(&xd->state_work);
-+	__stop_handshake(xd);
-+}
-+
- static void tb_xdp_handle_request(struct work_struct *work)
- {
- 	struct xdomain_request_work *xw = container_of(work, typeof(*xw), work);
-@@ -765,6 +786,15 @@ static void tb_xdp_handle_request(struct
- 	case UUID_REQUEST:
- 		tb_dbg(tb, "%llx: received XDomain UUID request\n", route);
- 		ret = tb_xdp_uuid_response(ctl, route, sequence, uuid);
-+		/*
-+		 * If we've stopped the discovery with an error such as
-+		 * timing out, we will restart the handshake now that we
-+		 * received UUID request from the remote host.
-+		 */
-+		if (!ret && xd && xd->state == XDOMAIN_STATE_ERROR) {
-+			dev_dbg(&xd->dev, "restarting handshake\n");
-+			start_handshake(xd);
-+		}
- 		break;
- 
- 	case LINK_STATE_STATUS_REQUEST:
-@@ -1521,6 +1551,13 @@ static void tb_xdomain_queue_properties_
- 			   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
- }
- 
-+static void tb_xdomain_failed(struct tb_xdomain *xd)
-+{
-+	xd->state = XDOMAIN_STATE_ERROR;
-+	queue_delayed_work(xd->tb->wq, &xd->state_work,
-+			   msecs_to_jiffies(XDOMAIN_DEFAULT_TIMEOUT));
-+}
-+
- static void tb_xdomain_state_work(struct work_struct *work)
- {
- 	struct tb_xdomain *xd = container_of(work, typeof(*xd), state_work.work);
-@@ -1547,7 +1584,7 @@ static void tb_xdomain_state_work(struct
- 		if (ret) {
- 			if (ret == -EAGAIN)
- 				goto retry_state;
--			xd->state = XDOMAIN_STATE_ERROR;
-+			tb_xdomain_failed(xd);
- 		} else {
- 			tb_xdomain_queue_properties_changed(xd);
- 			if (xd->bonding_possible)
-@@ -1612,7 +1649,7 @@ static void tb_xdomain_state_work(struct
- 		if (ret) {
- 			if (ret == -EAGAIN)
- 				goto retry_state;
--			xd->state = XDOMAIN_STATE_ERROR;
-+			tb_xdomain_failed(xd);
- 		} else {
- 			xd->state = XDOMAIN_STATE_ENUMERATED;
- 		}
-@@ -1623,6 +1660,8 @@ static void tb_xdomain_state_work(struct
- 		break;
- 
- 	case XDOMAIN_STATE_ERROR:
-+		dev_dbg(&xd->dev, "discovery failed, stopping handshake\n");
-+		__stop_handshake(xd);
- 		break;
- 
- 	default:
-@@ -1833,21 +1872,6 @@ static void tb_xdomain_release(struct de
- 	kfree(xd);
- }
- 
--static void start_handshake(struct tb_xdomain *xd)
--{
--	xd->state = XDOMAIN_STATE_INIT;
--	queue_delayed_work(xd->tb->wq, &xd->state_work,
--			   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
--}
--
--static void stop_handshake(struct tb_xdomain *xd)
--{
--	cancel_delayed_work_sync(&xd->properties_changed_work);
--	cancel_delayed_work_sync(&xd->state_work);
--	xd->properties_changed_retries = 0;
--	xd->state_retries = 0;
--}
--
- static int __maybe_unused tb_xdomain_suspend(struct device *dev)
- {
- 	stop_handshake(tb_to_xdomain(dev));
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -619,6 +619,14 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
+ 	},
+ 	{
++		/* Fujitsu Lifebook E5411 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU CLIENT COMPUTING LIMITED"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK E5411"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
++	},
++	{
+ 		/* Gigabyte M912 */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "GIGABYTE"),
 
 
