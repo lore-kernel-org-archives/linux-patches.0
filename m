@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3445E1A289
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905641A289
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPHTExd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E92C433C7;
-	Mon, 16 Oct 2023 08:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6WLKiWk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A57FC433C8;
+	Mon, 16 Oct 2023 08:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446429;
-	bh=YRpAhBF2FvZ0cSTiB9E/extVul1ezAlTPoDsQGSxYBQ=;
+	s=korg; t=1697446438;
+	bh=b/gxaQRfBMxFxDA7ElTMFr6AmpDn4w7ZiZquNWPnipA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QPHTExd/cliwmGGs40lLuBir7hravpO5hx4BwQtWXgy3jbc45AifTP7om7tjQKb5r
-	 nicYFto2gka4/NTEc4jNzWjknCZa6YUaLl5e7Mkmf9njvYcbwUL296nXziMS98RZNF
-	 f8Le64S/lrbWg/rUqdzdQDbAcvJ4vPSbDuNJcQfs=
+	b=D6WLKiWkw03M73iUvqv54ADGlCi0OnI56YUr4xhq7iEH/+aBpX0HzWVdIh5YTPXd/
+	 8FejYzHHp91vkAuRezhBgrYIaFOYXj0740/Yzbfe2muShM0jehiTN46OwJW+ruc+oY
+	 RtudNRT+DX9VH86WiKMRtiq6KDoBwlUV58QcayZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/131] ASoC: fsl_sai: MCLK bind with TX/RX enable bit
-Date: Mon, 16 Oct 2023 10:40:10 +0200
-Message-ID: <20231016084000.740860323@linuxfoundation.org>
+Subject: [PATCH 6.1 028/131] ASoC: fsl_sai: Dont disable bitclock for i.MX8MP
+Date: Mon, 16 Oct 2023 10:40:11 +0200
+Message-ID: <20231016084000.765654896@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -42,123 +44,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 3e4a826129980fed0e3e746a7822f2f204dfc24a ]
+[ Upstream commit 197c53c8ecb34f2cd5922f4bdcffa8f701a134eb ]
 
-On i.MX8MP, the sai MCLK is bound with TX/RX enable bit,
-which means the TX/RE enable bit need to be enabled then
-MCLK can be output on PAD.
+On i.MX8MP, the BCE and TERE bit are binding with mclk
+enablement, if BCE and TERE are cleared the MCLK also be
+disabled on output pin, that cause the external codec (wm8960)
+in wrong state.
 
-Some codec (for example: WM8962) needs the MCLK output
-earlier, otherwise there will be issue for codec
-configuration.
+Codec (wm8960) is using the mclk to generate PLL clock,
+if mclk is disabled before disabling PLL, the codec (wm8960)
+won't generate bclk and frameclk when sysclk switch to
+MCLK source in next test case.
 
-Add new soc data "mclk_with_tere" for this platform and
-enable the MCLK output in startup stage.
+The test case:
+$aplay -r44100 test1.wav (PLL source)
+$aplay -r48000 test2.wav (MCLK source)
+aplay: pcm_write:2127: write error: Input/output error
 
-As "mclk_with_tere" only applied to i.MX8MP, currently
-The soc data is shared with i.MX8MN, so need to add
-an i.MX8MN own soc data with "mclk_with_tere" disabled.
-
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com
-Link: https://lore.kernel.org/r/1683273322-2525-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org
-Stable-dep-of: 197c53c8ecb3 ("ASoC: fsl_sai: Don't disable bitclock for i.MX8MP")
+Fixes: 269f399dc19f ("ASoC: fsl_sai: Disable bit clock with transmitter")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://lore.kernel.org/r/1695116533-23287-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c | 24 +++++++++++++++++++++---
- sound/soc/fsl/fsl_sai.h |  2 ++
- 2 files changed, 23 insertions(+), 3 deletions(-)
+ sound/soc/fsl/fsl_sai.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index 2c17d16f842ea..08a33832f6b3f 100644
+index 08a33832f6b3f..96fd9095e544b 100644
 --- a/sound/soc/fsl/fsl_sai.c
 +++ b/sound/soc/fsl/fsl_sai.c
-@@ -1401,7 +1401,9 @@ static int fsl_sai_probe(struct platform_device *pdev)
- 		sai->cpu_dai_drv.symmetric_sample_bits = 0;
- 	}
- 
--	if (of_property_read_bool(np, "fsl,sai-mclk-direction-output") &&
-+	sai->mclk_direction_output = of_property_read_bool(np, "fsl,sai-mclk-direction-output");
+@@ -710,10 +710,15 @@ static void fsl_sai_config_disable(struct fsl_sai *sai, int dir)
+ {
+ 	unsigned int ofs = sai->soc_data->reg_offset;
+ 	bool tx = dir == TX;
+-	u32 xcsr, count = 100;
++	u32 xcsr, count = 100, mask;
 +
-+	if (sai->mclk_direction_output &&
- 	    of_device_is_compatible(np, "fsl,imx6ul-sai")) {
- 		gpr = syscon_regmap_lookup_by_compatible("fsl,imx6ul-iomuxc-gpr");
- 		if (IS_ERR(gpr)) {
-@@ -1442,7 +1444,7 @@ static int fsl_sai_probe(struct platform_device *pdev)
- 		dev_warn(dev, "Error reading SAI version: %d\n", ret);
- 
- 	/* Select MCLK direction */
--	if (of_property_read_bool(np, "fsl,sai-mclk-direction-output") &&
-+	if (sai->mclk_direction_output &&
- 	    sai->soc_data->max_register >= FSL_SAI_MCTL) {
- 		regmap_update_bits(sai->regmap, FSL_SAI_MCTL,
- 				   FSL_SAI_MCTL_MCLK_EN, FSL_SAI_MCTL_MCLK_EN);
-@@ -1560,6 +1562,17 @@ static const struct fsl_sai_soc_data fsl_sai_imx8mm_data = {
- 	.max_register = FSL_SAI_MCTL,
- };
- 
-+static const struct fsl_sai_soc_data fsl_sai_imx8mn_data = {
-+	.use_imx_pcm = true,
-+	.use_edma = false,
-+	.fifo_depth = 128,
-+	.reg_offset = 8,
-+	.mclk0_is_mclk1 = false,
-+	.pins = 8,
-+	.flags = 0,
-+	.max_register = FSL_SAI_MDIV,
-+};
-+
- static const struct fsl_sai_soc_data fsl_sai_imx8mp_data = {
- 	.use_imx_pcm = true,
- 	.use_edma = false,
-@@ -1569,6 +1582,7 @@ static const struct fsl_sai_soc_data fsl_sai_imx8mp_data = {
- 	.pins = 8,
- 	.flags = 0,
- 	.max_register = FSL_SAI_MDIV,
-+	.mclk_with_tere = true,
- };
- 
- static const struct fsl_sai_soc_data fsl_sai_imx8ulp_data = {
-@@ -1592,7 +1606,7 @@ static const struct of_device_id fsl_sai_ids[] = {
- 	{ .compatible = "fsl,imx8mm-sai", .data = &fsl_sai_imx8mm_data },
- 	{ .compatible = "fsl,imx8mp-sai", .data = &fsl_sai_imx8mp_data },
- 	{ .compatible = "fsl,imx8ulp-sai", .data = &fsl_sai_imx8ulp_data },
--	{ .compatible = "fsl,imx8mn-sai", .data = &fsl_sai_imx8mp_data },
-+	{ .compatible = "fsl,imx8mn-sai", .data = &fsl_sai_imx8mn_data },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, fsl_sai_ids);
-@@ -1656,6 +1670,10 @@ static int fsl_sai_runtime_resume(struct device *dev)
- 	if (ret)
- 		goto disable_rx_clk;
- 
 +	if (sai->soc_data->mclk_with_tere && sai->mclk_direction_output)
-+		regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs),
-+				   FSL_SAI_CSR_TERE, FSL_SAI_CSR_TERE);
-+
- 	return 0;
++		mask = FSL_SAI_CSR_TERE;
++	else
++		mask = FSL_SAI_CSR_TERE | FSL_SAI_CSR_BCE;
  
- disable_rx_clk:
-diff --git a/sound/soc/fsl/fsl_sai.h b/sound/soc/fsl/fsl_sai.h
-index caad5b0ac4ff4..b4d616a44023c 100644
---- a/sound/soc/fsl/fsl_sai.h
-+++ b/sound/soc/fsl/fsl_sai.h
-@@ -232,6 +232,7 @@ struct fsl_sai_soc_data {
- 	bool use_imx_pcm;
- 	bool use_edma;
- 	bool mclk0_is_mclk1;
-+	bool mclk_with_tere;
- 	unsigned int fifo_depth;
- 	unsigned int pins;
- 	unsigned int reg_offset;
-@@ -288,6 +289,7 @@ struct fsl_sai {
- 	bool synchronous[2];
- 	struct fsl_sai_dl_cfg *dl_cfg;
- 	unsigned int dl_cfg_cnt;
-+	bool mclk_direction_output;
+ 	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs),
+-			   FSL_SAI_CSR_TERE | FSL_SAI_CSR_BCE, 0);
++			   mask, 0);
  
- 	unsigned int mclk_id[2];
- 	unsigned int mclk_streams;
+ 	/* TERE will remain set till the end of current frame */
+ 	do {
 -- 
 2.40.1
 
