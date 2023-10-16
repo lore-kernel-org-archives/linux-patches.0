@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0241A27D
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A542B1A27D
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6gVfndF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B97DC433C7;
-	Mon, 16 Oct 2023 08:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXlmx5Qz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A306C433C7;
+	Mon, 16 Oct 2023 08:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446345;
-	bh=Mrg3qGeOwmSkRhZZ28jRnfAEE+KOaFGyVvh7Z3BAfCY=;
+	s=korg; t=1697446349;
+	bh=tHDUa9RSIeD6Ov1XvI/1dQC7zXWndKFGiwGTCr15PC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6gVfndFCelAFVJBu48b0VFqQwOABeYre6xmZRI4CoeToaZhk01z01Ia8F8yiROK5
-	 5guiieWb8ApbhXLYPX8lUHQmQbR/MsXHu4K0O9ei/AL7tCIpXd7s1YHh86oGs8aGUB
-	 q5YzKvpCMVAlQ6+ccE8s542c7FUAal304/VKEvlc=
+	b=LXlmx5QzQQzDJ47WBFd4DUJeBvjPN7E923b6GLrGBHEPQW5BNTY9SBmhTZRZ4t9Jb
+	 Z06vDbIKeEYPVjC1oelK4i0KJm2cHJ3vcj1A4UdAntpyjP9ojnyd1xKDnx1t4rOYGW
+	 lYETZiVlkfxu/oD28M1p+vd9gevBK6E5TsfUgg+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Subject: [PATCH 6.1 017/131] KEYS: trusted: Remove redundant static calls usage
-Date: Mon, 16 Oct 2023 10:40:00 +0200
-Message-ID: <20231016084000.497525262@linuxfoundation.org>
+	WhaleChang <whalechang@google.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 018/131] ALSA: usb-audio: Fix microphone sound on Opencomm2 Headset
+Date: Mon, 16 Oct 2023 10:40:01 +0200
+Message-ID: <20231016084000.521297377@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -42,80 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Garg <sumit.garg@linaro.org>
+From: WhaleChang <whalechang@google.com>
 
-commit 01bbafc63b65689cb179ca537971286bc27f3b74 upstream.
+commit 6a83d6f3bb3c329a73e3483651fb77b78bac1878 upstream.
 
-Static calls invocations aren't well supported from module __init and
-__exit functions. Especially the static call from cleanup_trusted() led
-to a crash on x86 kernel with CONFIG_DEBUG_VIRTUAL=y.
+When a Opencomm2 Headset is connected to a Bluetooth USB dongle,
+the audio playback functions properly, but the microphone does not work.
 
-However, the usage of static call invocations for trusted_key_init()
-and trusted_key_exit() don't add any value from either a performance or
-security perspective. Hence switch to use indirect function calls instead.
+In the dmesg logs, there are messages indicating that the init_pitch
+function fails when the capture process begins.
 
-Note here that although it will fix the current crash report, ultimately
-the static call infrastructure should be fixed to either support its
-future usage from module __init and __exit functions or not.
+The microphone only functions when the ep pitch control is not set.
 
-Reported-and-tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Link: https://lore.kernel.org/lkml/ZRhKq6e5nF%2F4ZIV1@fedora/#t
-Fixes: 5d0682be3189 ("KEYS: trusted: Add generic trusted keys framework")
-Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Toggling the pitch control off bypasses the init_piatch function
+and allows the microphone to work.
+
+Signed-off-by: WhaleChang <whalechang@google.com>
+Link: https://lore.kernel.org/r/20231006044852.4181022-1-whalechang@google.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_core.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ sound/usb/quirks.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/security/keys/trusted-keys/trusted_core.c
-+++ b/security/keys/trusted-keys/trusted_core.c
-@@ -44,13 +44,12 @@ static const struct trusted_key_source t
- #endif
- };
- 
--DEFINE_STATIC_CALL_NULL(trusted_key_init, *trusted_key_sources[0].ops->init);
- DEFINE_STATIC_CALL_NULL(trusted_key_seal, *trusted_key_sources[0].ops->seal);
- DEFINE_STATIC_CALL_NULL(trusted_key_unseal,
- 			*trusted_key_sources[0].ops->unseal);
- DEFINE_STATIC_CALL_NULL(trusted_key_get_random,
- 			*trusted_key_sources[0].ops->get_random);
--DEFINE_STATIC_CALL_NULL(trusted_key_exit, *trusted_key_sources[0].ops->exit);
-+static void (*trusted_key_exit)(void);
- static unsigned char migratable;
- 
- enum {
-@@ -359,19 +358,16 @@ static int __init init_trusted(void)
- 		if (!get_random)
- 			get_random = kernel_get_random;
- 
--		static_call_update(trusted_key_init,
--				   trusted_key_sources[i].ops->init);
- 		static_call_update(trusted_key_seal,
- 				   trusted_key_sources[i].ops->seal);
- 		static_call_update(trusted_key_unseal,
- 				   trusted_key_sources[i].ops->unseal);
- 		static_call_update(trusted_key_get_random,
- 				   get_random);
--		static_call_update(trusted_key_exit,
--				   trusted_key_sources[i].ops->exit);
-+		trusted_key_exit = trusted_key_sources[i].ops->exit;
- 		migratable = trusted_key_sources[i].ops->migratable;
- 
--		ret = static_call(trusted_key_init)();
-+		ret = trusted_key_sources[i].ops->init();
- 		if (!ret)
- 			break;
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1992,7 +1992,11 @@ void snd_usb_audioformat_attributes_quir
+ 		/* mic works only when ep packet size is set to wMaxPacketSize */
+ 		fp->attributes |= UAC_EP_CS_ATTR_FILL_MAX;
+ 		break;
+-
++	case USB_ID(0x3511, 0x2b1e): /* Opencomm2 UC USB Bluetooth dongle */
++		/* mic works only when ep pitch control is not set */
++		if (stream == SNDRV_PCM_STREAM_CAPTURE)
++			fp->attributes &= ~UAC_EP_CS_ATTR_PITCH_CONTROL;
++		break;
  	}
-@@ -388,7 +384,8 @@ static int __init init_trusted(void)
- 
- static void __exit cleanup_trusted(void)
- {
--	static_call_cond(trusted_key_exit)();
-+	if (trusted_key_exit)
-+		(*trusted_key_exit)();
  }
  
- late_initcall(init_trusted);
 
 
