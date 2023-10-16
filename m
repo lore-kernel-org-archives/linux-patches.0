@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8EF262AC
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D17E262AC
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ub6fz68D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F480C433C7;
-	Mon, 16 Oct 2023 14:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5xDZe/i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0B1C433C8;
+	Mon, 16 Oct 2023 14:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468244;
-	bh=YMXf3pFZhiMsBtlqZ91xu5947x1ZZtujvpgNkOQ3/vc=;
+	s=korg; t=1697468248;
+	bh=EbxisrqAS1DQfaupAPxR2Q/2phS9bMCuWwOEeQE4dZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ub6fz68D89J6jj1P1koiTFNXWVeOg6t9Z3VdZ8bpYzHqrOKa4P2V2w3kdSxXhwJ6N
-	 Bp9+L8dgu8ChGc0eQnb6HEPxY44sCIocIM3sARKJtPusLA2Cc6Q3fco/fYcg73xbQ8
-	 I3MXQ4vVGYSmfSFnajGJ2JEIs2KMhUbDDk2aVmLo=
+	b=W5xDZe/i9eEaAeOuIv5YmlepRsvoEe6Pxc5eQrLgOgY8ssmGJPIiPQgcNZOonEPTz
+	 u2MBKIm6V0b+Cz7Zuxz26WqiUyAQftljJMUCehbfhzaPE3kQzO+1BWhlo5wsFI7Wka
+	 09sCi6jXEQZW6lKTlQFbOSrh7tLh6A/6qBHpYmkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Miklos Szeredi <mszeredi@redhat.com>,
 	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 189/191] ovl: make use of ->layers safe in rcu pathwalk
-Date: Mon, 16 Oct 2023 10:42:54 +0200
-Message-ID: <20231016084019.782186516@linuxfoundation.org>
+Subject: [PATCH 6.5 190/191] ovl: fix regression in showing lowerdir mount option
+Date: Mon, 16 Oct 2023 10:42:55 +0200
+Message-ID: <20231016084019.804530029@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -45,160 +43,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit a535116d80339dbfe50b9b81b2f808c69eefbbc3 ]
+[ Upstream commit 32db510708507f6133f496ff385cbd841d8f9098 ]
 
-ovl_permission() accesses ->layers[...].mnt; we can't have ->layers
-freed without an RCU delay on fs shutdown.
+Before commit b36a5780cb44 ("ovl: modify layer parameter parsing"),
+spaces and commas in lowerdir mount option value used to be escaped using
+seq_show_option().
 
-Fortunately, kern_unmount_array() that is used to drop those mounts
-does include an RCU delay, so freeing is delayed; unfortunately, the
-array passed to kern_unmount_array() is formed by mangling ->layers
-contents and that happens without any delays.
+In current upstream, when lowerdir value has a space, it is not escaped
+in /proc/mounts, e.g.:
 
-The ->layers[...].name string entries are used to store the strings to
-display in "lowerdir=..." by ovl_show_options().  Those entries are not
-accessed in RCU walk.
+  none /mnt overlay rw,relatime,lowerdir=l l,upperdir=u,workdir=w 0 0
 
-Move the name strings into a separate array ofs->config.lowerdirs and
-reuse the ofs->config.lowerdirs array as the temporary mount array to
-pass to kern_unmount_array().
+which results in broken output of the mount utility:
 
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Link: https://lore.kernel.org/r/20231002023711.GP3389589@ZenIV/
-Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+  none on /mnt type overlay (rw,relatime,lowerdir=l)
+
+Store the original lowerdir mount options before unescaping and show
+them using the same escaping used for seq_show_option() in addition to
+escaping the colon separator character.
+
+Fixes: b36a5780cb44 ("ovl: modify layer parameter parsing")
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Stable-dep-of: 32db51070850 ("ovl: fix regression in showing lowerdir mount option")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/ovl_entry.h | 10 +---------
- fs/overlayfs/params.c    | 17 +++++++++--------
- fs/overlayfs/super.c     | 18 +++++++++++-------
- 3 files changed, 21 insertions(+), 24 deletions(-)
+ Documentation/filesystems/overlayfs.rst | 12 ++++++++
+ fs/overlayfs/params.c                   | 38 +++++++++++++++----------
+ 2 files changed, 35 insertions(+), 15 deletions(-)
 
-diff --git a/fs/overlayfs/ovl_entry.h b/fs/overlayfs/ovl_entry.h
-index 306e1ecdc96d3..2b703521871ea 100644
---- a/fs/overlayfs/ovl_entry.h
-+++ b/fs/overlayfs/ovl_entry.h
-@@ -8,6 +8,7 @@
- struct ovl_config {
- 	char *upperdir;
- 	char *workdir;
-+	char **lowerdirs;
- 	bool default_permissions;
- 	int redirect_mode;
- 	bool index;
-@@ -38,17 +39,8 @@ struct ovl_layer {
- 	int idx;
- 	/* One fsid per unique underlying sb (upper fsid == 0) */
- 	int fsid;
--	char *name;
- };
+diff --git a/Documentation/filesystems/overlayfs.rst b/Documentation/filesystems/overlayfs.rst
+index eb7d2c88ddece..8e1b27288afd4 100644
+--- a/Documentation/filesystems/overlayfs.rst
++++ b/Documentation/filesystems/overlayfs.rst
+@@ -339,6 +339,18 @@ The specified lower directories will be stacked beginning from the
+ rightmost one and going left.  In the above example lower1 will be the
+ top, lower2 the middle and lower3 the bottom layer.
  
--/*
-- * ovl_free_fs() relies on @mnt being the first member when unmounting
-- * the private mounts created for each layer. Let's check both the
-- * offset and type.
-- */
--static_assert(offsetof(struct ovl_layer, mnt) == 0);
--static_assert(__same_type(typeof_member(struct ovl_layer, mnt), struct vfsmount *));
--
- struct ovl_path {
- 	const struct ovl_layer *layer;
- 	struct dentry *dentry;
++Note: directory names containing colons can be provided as lower layer by
++escaping the colons with a single backslash.  For example:
++
++  mount -t overlay overlay -olowerdir=/a\:lower\:\:dir /merged
++
++Since kernel version v6.5, directory names containing colons can also
++be provided as lower layer using the fsconfig syscall from new mount api:
++
++  fsconfig(fs_fd, FSCONFIG_SET_STRING, "lowerdir", "/a:lower::dir", 0);
++
++In the latter case, colons in lower layer directory names will be escaped
++as an octal characters (\072) when displayed in /proc/self/mountinfo.
+ 
+ Metadata only copy up
+ ---------------------
 diff --git a/fs/overlayfs/params.c b/fs/overlayfs/params.c
-index c0f70af422d6c..e6edad7542e88 100644
+index e6edad7542e88..644badb13fe01 100644
 --- a/fs/overlayfs/params.c
 +++ b/fs/overlayfs/params.c
-@@ -695,12 +695,12 @@ void ovl_free_fs(struct ovl_fs *ofs)
- 	if (ofs->upperdir_locked)
- 		ovl_inuse_unlock(ovl_upper_mnt(ofs)->mnt_root);
+@@ -155,7 +155,8 @@ static ssize_t ovl_parse_param_split_lowerdirs(char *str)
  
--	/* Hack!  Reuse ofs->layers as a vfsmount array before freeing it */
--	mounts = (struct vfsmount **) ofs->layers;
-+	/* Reuse ofs->config.lowerdirs as a vfsmount array before freeing it */
-+	mounts = (struct vfsmount **) ofs->config.lowerdirs;
- 	for (i = 0; i < ofs->numlayer; i++) {
- 		iput(ofs->layers[i].trap);
-+		kfree(ofs->config.lowerdirs[i]);
- 		mounts[i] = ofs->layers[i].mnt;
--		kfree(ofs->layers[i].name);
+ 	for (s = d = str;; s++, d++) {
+ 		if (*s == '\\') {
+-			s++;
++			/* keep esc chars in split lowerdir */
++			*d++ = *s++;
+ 		} else if (*s == ':') {
+ 			bool next_colon = (*(s + 1) == ':');
+ 
+@@ -230,7 +231,7 @@ static void ovl_unescape(char *s)
  	}
- 	kern_unmount_array(mounts, ofs->numlayer);
- 	kfree(ofs->layers);
-@@ -708,6 +708,7 @@ void ovl_free_fs(struct ovl_fs *ofs)
- 		free_anon_bdev(ofs->fs[i].pseudo_dev);
- 	kfree(ofs->fs);
+ }
  
-+	kfree(ofs->config.lowerdirs);
- 	kfree(ofs->config.upperdir);
- 	kfree(ofs->config.workdir);
- 	if (ofs->creator_cred)
-@@ -857,16 +858,16 @@ int ovl_show_options(struct seq_file *m, struct dentry *dentry)
+-static int ovl_mount_dir(const char *name, struct path *path)
++static int ovl_mount_dir(const char *name, struct path *path, bool upper)
+ {
+ 	int err = -ENOMEM;
+ 	char *tmp = kstrdup(name, GFP_KERNEL);
+@@ -239,7 +240,7 @@ static int ovl_mount_dir(const char *name, struct path *path)
+ 		ovl_unescape(tmp);
+ 		err = ovl_mount_dir_noesc(tmp, path);
+ 
+-		if (!err && path->dentry->d_flags & DCACHE_OP_REAL) {
++		if (!err && upper && path->dentry->d_flags & DCACHE_OP_REAL) {
+ 			pr_err("filesystem on '%s' not supported as upperdir\n",
+ 			       tmp);
+ 			path_put_init(path);
+@@ -260,7 +261,7 @@ static int ovl_parse_param_upperdir(const char *name, struct fs_context *fc,
+ 	struct path path;
+ 	char *dup;
+ 
+-	err = ovl_mount_dir(name, &path);
++	err = ovl_mount_dir(name, &path, true);
+ 	if (err)
+ 		return err;
+ 
+@@ -417,7 +418,7 @@ static int ovl_parse_param_lowerdir(const char *name, struct fs_context *fc)
+ 		l = &ctx->lower[nr];
+ 		memset(l, 0, sizeof(*l));
+ 
+-		err = ovl_mount_dir_noesc(dup_iter, &l->path);
++		err = ovl_mount_dir(dup_iter, &l->path, false);
+ 		if (err)
+ 			goto out_put;
+ 
+@@ -858,16 +859,23 @@ int ovl_show_options(struct seq_file *m, struct dentry *dentry)
  	struct super_block *sb = dentry->d_sb;
  	struct ovl_fs *ofs = sb->s_fs_info;
  	size_t nr, nr_merged_lower = ofs->numlayer - ofs->numdatalayer;
--	const struct ovl_layer *data_layers = &ofs->layers[nr_merged_lower];
-+	char **lowerdatadirs = &ofs->config.lowerdirs[nr_merged_lower];
- 
--	/* ofs->layers[0] is the upper layer */
--	seq_printf(m, ",lowerdir=%s", ofs->layers[1].name);
-+	/* lowerdirs[] starts from offset 1 */
-+	seq_printf(m, ",lowerdir=%s", ofs->config.lowerdirs[1]);
- 	/* dump regular lower layers */
- 	for (nr = 2; nr < nr_merged_lower; nr++)
--		seq_printf(m, ":%s", ofs->layers[nr].name);
-+		seq_printf(m, ":%s", ofs->config.lowerdirs[nr]);
- 	/* dump data lower layers */
- 	for (nr = 0; nr < ofs->numdatalayer; nr++)
--		seq_printf(m, "::%s", data_layers[nr].name);
-+		seq_printf(m, "::%s", lowerdatadirs[nr]);
+-	char **lowerdatadirs = &ofs->config.lowerdirs[nr_merged_lower];
+-
+-	/* lowerdirs[] starts from offset 1 */
+-	seq_printf(m, ",lowerdir=%s", ofs->config.lowerdirs[1]);
+-	/* dump regular lower layers */
+-	for (nr = 2; nr < nr_merged_lower; nr++)
+-		seq_printf(m, ":%s", ofs->config.lowerdirs[nr]);
+-	/* dump data lower layers */
+-	for (nr = 0; nr < ofs->numdatalayer; nr++)
+-		seq_printf(m, "::%s", lowerdatadirs[nr]);
++
++	/*
++	 * lowerdirs[] starts from offset 1, then
++	 * >= 0 regular lower layers prefixed with : and
++	 * >= 0 data-only lower layers prefixed with ::
++	 *
++	 * we need to escase comma and space like seq_show_option() does and
++	 * we also need to escape the colon separator from lowerdir paths.
++	 */
++	seq_puts(m, ",lowerdir=");
++	for (nr = 1; nr < ofs->numlayer; nr++) {
++		if (nr > 1)
++			seq_putc(m, ':');
++		if (nr >= nr_merged_lower)
++			seq_putc(m, ':');
++		seq_escape(m, ofs->config.lowerdirs[nr], ":, \t\n\\");
++	}
  	if (ofs->config.upperdir) {
  		seq_show_option(m, "upperdir", ofs->config.upperdir);
  		seq_show_option(m, "workdir", ofs->config.workdir);
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index 1090c68e5b051..80a70eaa30d90 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -565,11 +565,6 @@ static int ovl_get_upper(struct super_block *sb, struct ovl_fs *ofs,
- 	upper_layer->idx = 0;
- 	upper_layer->fsid = 0;
- 
--	err = -ENOMEM;
--	upper_layer->name = kstrdup(ofs->config.upperdir, GFP_KERNEL);
--	if (!upper_layer->name)
--		goto out;
--
- 	/*
- 	 * Inherit SB_NOSEC flag from upperdir.
- 	 *
-@@ -1113,7 +1108,8 @@ static int ovl_get_layers(struct super_block *sb, struct ovl_fs *ofs,
- 		layers[ofs->numlayer].idx = ofs->numlayer;
- 		layers[ofs->numlayer].fsid = fsid;
- 		layers[ofs->numlayer].fs = &ofs->fs[fsid];
--		layers[ofs->numlayer].name = l->name;
-+		/* Store for printing lowerdir=... in ovl_show_options() */
-+		ofs->config.lowerdirs[ofs->numlayer] = l->name;
- 		l->name = NULL;
- 		ofs->numlayer++;
- 		ofs->fs[fsid].is_lower = true;
-@@ -1358,8 +1354,16 @@ int ovl_fill_super(struct super_block *sb, struct fs_context *fc)
- 	if (!layers)
- 		goto out_err;
- 
-+	ofs->config.lowerdirs = kcalloc(ctx->nr + 1, sizeof(char *), GFP_KERNEL);
-+	if (!ofs->config.lowerdirs) {
-+		kfree(layers);
-+		goto out_err;
-+	}
- 	ofs->layers = layers;
--	/* Layer 0 is reserved for upper even if there's no upper */
-+	/*
-+	 * Layer 0 is reserved for upper even if there's no upper.
-+	 * For consistency, config.lowerdirs[0] is NULL.
-+	 */
- 	ofs->numlayer = 1;
- 
- 	sb->s_stack_depth = 0;
 -- 
 2.40.1
 
