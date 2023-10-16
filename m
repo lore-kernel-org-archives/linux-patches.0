@@ -1,31 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DCB1798F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F751798F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1svI/Hyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C70C433C8;
-	Mon, 16 Oct 2023 08:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jk9B6w/3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE99C433C7;
+	Mon, 16 Oct 2023 08:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446619;
-	bh=HdgmguzaGpHO3m6szDsDEI1r60XjFZuMXU86RLg771A=;
+	s=korg; t=1697446656;
+	bh=wZmF9/bE6ac9pu9qCkH+R4JVinUx6vHdn54QepN4QtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1svI/HypckIe5IADA2AwOoTxBxR1P6nWJHW27ng5KkTTVi5FBrDI7Dh5tTR0karP8
-	 68fCRgKXkUrNWDim1xyRR5R4mB/ftsmkOqWMSLpBdVxxZtzSu3toK69HCOFJxQDnHz
-	 GTTDHB4BHtNgm11l+Xc5yww5lvPYMV308NKH4vPI=
+	b=jk9B6w/3/YScIvQfep6se9yVoH2PdPSmxPbMSkLO09Plta5f4BAoeWGeYTeMMhPrY
+	 OkGml9fND95Q+IlSnIaD40Dwvt8aPijIqz5E2azaso/DNce/X0ZtHPv7iImsBKw/Yj
+	 +QHPWNrC9NIrV+3AK1O7bN0WywGEZ1Q81CFf0BFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Charlotte Tan <charlotte@extrahop.com>,
+	Adham Faris <afaris@nvidia.com>,
+	Aya Levin <ayal@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Will Mortensen <will@extrahop.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/131] ixgbe: fix crash with empty VF macvlan list
-Date: Mon, 16 Oct 2023 10:40:42 +0200
-Message-ID: <20231016084001.535577703@linuxfoundation.org>
+Subject: [PATCH 6.1 060/131] net/mlx5e: Again mutually exclude RX-FCS and RX-port-timestamp
+Date: Mon, 16 Oct 2023 10:40:43 +0200
+Message-ID: <20231016084001.560169385@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -44,47 +48,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Will Mortensen <will@extrahop.com>
 
-[ Upstream commit 7b5add9af567c44e12196107f0fe106e194034fd ]
+[ Upstream commit da6192ca72d5ad913d109d43dc896290ad05d98f ]
 
-The adapter->vf_mvs.l list needs to be initialized even if the list is
-empty.  Otherwise it will lead to crashes.
+Commit 1e66220948df8 ("net/mlx5e: Update rx ring hw mtu upon each rx-fcs
+flag change") seems to have accidentally inverted the logic added in
+commit 0bc73ad46a76 ("net/mlx5e: Mutually exclude RX-FCS and
+RX-port-timestamp").
 
-Fixes: a1cbb15c1397 ("ixgbe: Add macvlan support for VF")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Link: https://lore.kernel.org/r/ZSADNdIw8zFx1xw2@kadam
+The impact of this is a little unclear since it seems the FCS scattered
+with RX-FCS is (usually?) correct regardless.
+
+Fixes: 1e66220948df8 ("net/mlx5e: Update rx ring hw mtu upon each rx-fcs flag change")
+Tested-by: Charlotte Tan <charlotte@extrahop.com>
+Reviewed-by: Charlotte Tan <charlotte@extrahop.com>
+Cc: Adham Faris <afaris@nvidia.com>
+Cc: Aya Levin <ayal@nvidia.com>
+Cc: Tariq Toukan <tariqt@nvidia.com>
+Cc: Moshe Shemesh <moshe@nvidia.com>
+Cc: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Will Mortensen <will@extrahop.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/r/20231006053706.514618-1-will@extrahop.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
-index 29cc609880712..ea88ac04ab9ad 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
-@@ -28,6 +28,9 @@ static inline void ixgbe_alloc_vf_macvlans(struct ixgbe_adapter *adapter,
- 	struct vf_macvlans *mv_list;
- 	int num_vf_macvlans, i;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 4e7daa382bc05..42e6f2fcf5f59 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -3862,13 +3862,14 @@ static int set_feature_rx_fcs(struct net_device *netdev, bool enable)
+ 	struct mlx5e_channels *chs = &priv->channels;
+ 	struct mlx5e_params new_params;
+ 	int err;
++	bool rx_ts_over_crc = !enable;
  
-+	/* Initialize list of VF macvlans */
-+	INIT_LIST_HEAD(&adapter->vf_mvs.l);
-+
- 	num_vf_macvlans = hw->mac.num_rar_entries -
- 			  (IXGBE_MAX_PF_MACVLANS + 1 + num_vfs);
- 	if (!num_vf_macvlans)
-@@ -36,8 +39,6 @@ static inline void ixgbe_alloc_vf_macvlans(struct ixgbe_adapter *adapter,
- 	mv_list = kcalloc(num_vf_macvlans, sizeof(struct vf_macvlans),
- 			  GFP_KERNEL);
- 	if (mv_list) {
--		/* Initialize list of VF macvlans */
--		INIT_LIST_HEAD(&adapter->vf_mvs.l);
- 		for (i = 0; i < num_vf_macvlans; i++) {
- 			mv_list[i].vf = -1;
- 			mv_list[i].free = true;
+ 	mutex_lock(&priv->state_lock);
+ 
+ 	new_params = chs->params;
+ 	new_params.scatter_fcs_en = enable;
+ 	err = mlx5e_safe_switch_params(priv, &new_params, mlx5e_set_rx_port_ts_wrap,
+-				       &new_params.scatter_fcs_en, true);
++				       &rx_ts_over_crc, true);
+ 	mutex_unlock(&priv->state_lock);
+ 	return err;
+ }
 -- 
 2.40.1
 
