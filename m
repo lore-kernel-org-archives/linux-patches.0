@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41AA14288
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD90414288
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYqZir0F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E184C433C7;
-	Mon, 16 Oct 2023 14:51:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utqg3tz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09CCFC433C8;
+	Mon, 16 Oct 2023 14:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467898;
-	bh=lqKiGsdgX6pEbEBgsbkQqv7m7Na2Pfwud/4LZA1lHck=;
+	s=korg; t=1697467910;
+	bh=BGs4Idmz5a05ffSKhjj2AtiwX6Qh0+wa99pz8YmarJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zYqZir0F6rcRHuGH8HZBNKDo/mkOsqfm8LDhboVxa3JKmb4Fh1BS5XFhemix29mOA
-	 57BhgSGfjfa6a45aC/HO5nUybhwTp4rpb/6O0fwuzY2HnE7U94yQq0QgBE+685Fa91
-	 RokcHvhxYlzn1MCxlg5cSAtLAUjM+vfAU+ZD5N2E=
+	b=utqg3tz3q+F4Ogt0WYX4d8oak2bIqmHLuBALG05O48kLkMByIrhRnKjcuV5XxmWcb
+	 fpLlGWZ5JzZ1uBMp1mBDUOizUGBi8fymTK4econ1P051p7lF6aEUKRgwp6H+SJ3Pm9
+	 HXUwBA5qVwukvjduoYo9ZMdu2RtJzuG8kuSL0MP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Yunsheng Lin <linyunsheng@huawei.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 088/191] octeontx2-pf: Fix page pool frag allocation warning
-Date: Mon, 16 Oct 2023 10:41:13 +0200
-Message-ID: <20231016084017.450859680@linuxfoundation.org>
+Subject: [PATCH 6.5 089/191] rswitch: Fix renesas_eth_sw_remove() implementation
+Date: Mon, 16 Oct 2023 10:41:14 +0200
+Message-ID: <20231016084017.473808697@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -43,77 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 50e492143374c17ad89c865a1a44837b3f5c8226 ]
+[ Upstream commit 510b18cf23b9bd8a982ef7f1fb19f3968a2bf787 ]
 
-Since page pool param's "order" is set to 0, will result
-in below warn message if interface is configured with higher
-rx buffer size.
+Fix functions calling order and a condition in renesas_eth_sw_remove().
+Otherwise, kernel NULL pointer dereference happens from phy_stop() if
+a net device opens.
 
-Steps to reproduce the issue.
-1. devlink dev param set pci/0002:04:00.0 name receive_buffer_size \
-   value 8196 cmode runtime
-2. ifconfig eth0 up
-
-[   19.901356] ------------[ cut here ]------------
-[   19.901361] WARNING: CPU: 11 PID: 12331 at net/core/page_pool.c:567 page_pool_alloc_frag+0x3c/0x230
-[   19.901449] pstate: 82401009 (Nzcv daif +PAN -UAO +TCO -DIT +SSBS BTYPE=--)
-[   19.901451] pc : page_pool_alloc_frag+0x3c/0x230
-[   19.901453] lr : __otx2_alloc_rbuf+0x60/0xbc [rvu_nicpf]
-[   19.901460] sp : ffff80000f66b970
-[   19.901461] x29: ffff80000f66b970 x28: 0000000000000000 x27: 0000000000000000
-[   19.901464] x26: ffff800000d15b68 x25: ffff000195b5c080 x24: ffff0002a5a32dc0
-[   19.901467] x23: ffff0001063c0878 x22: 0000000000000100 x21: 0000000000000000
-[   19.901469] x20: 0000000000000000 x19: ffff00016f781000 x18: 0000000000000000
-[   19.901472] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-[   19.901474] x14: 0000000000000000 x13: ffff0005ffdc9c80 x12: 0000000000000000
-[   19.901477] x11: ffff800009119a38 x10: 4c6ef2e3ba300519 x9 : ffff800000d13844
-[   19.901479] x8 : ffff0002a5a33cc8 x7 : 0000000000000030 x6 : 0000000000000030
-[   19.901482] x5 : 0000000000000005 x4 : 0000000000000000 x3 : 0000000000000a20
-[   19.901484] x2 : 0000000000001080 x1 : ffff80000f66b9d4 x0 : 0000000000001000
-[   19.901487] Call trace:
-[   19.901488]  page_pool_alloc_frag+0x3c/0x230
-[   19.901490]  __otx2_alloc_rbuf+0x60/0xbc [rvu_nicpf]
-[   19.901494]  otx2_rq_aura_pool_init+0x1c4/0x240 [rvu_nicpf]
-[   19.901498]  otx2_open+0x228/0xa70 [rvu_nicpf]
-[   19.901501]  otx2vf_open+0x20/0xd0 [rvu_nicvf]
-[   19.901504]  __dev_open+0x114/0x1d0
-[   19.901507]  __dev_change_flags+0x194/0x210
-[   19.901510]  dev_change_flags+0x2c/0x70
-[   19.901512]  devinet_ioctl+0x3a4/0x6c4
-[   19.901515]  inet_ioctl+0x228/0x240
-[   19.901518]  sock_ioctl+0x2ac/0x480
-[   19.901522]  __arm64_sys_ioctl+0x564/0xe50
-[   19.901525]  invoke_syscall.constprop.0+0x58/0xf0
-[   19.901529]  do_el0_svc+0x58/0x150
-[   19.901531]  el0_svc+0x30/0x140
-[   19.901533]  el0t_64_sync_handler+0xe8/0x114
-[   19.901535]  el0t_64_sync+0x1a0/0x1a4
-[   19.901537] ---[ end trace 678c0bf660ad8116 ]---
-
-Fixes: b2e3406a38f0 ("octeontx2-pf: Add support for page pool")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Yunsheng Lin <linyunsheng@huawei.com>
-Link: https://lore.kernel.org/r/20231010034842.3807816-1-rkannoth@marvell.com
+Fixes: 3590918b5d07 ("net: ethernet: renesas: Add support for "Ethernet Switch"")
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/renesas/rswitch.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-index 20ecc90d203e0..379e1510b70c0 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-@@ -1401,6 +1401,7 @@ int otx2_pool_init(struct otx2_nic *pfvf, u16 pool_id,
- 		return 0;
+diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
+index 660cbfe344d2c..5024ce9587312 100644
+--- a/drivers/net/ethernet/renesas/rswitch.c
++++ b/drivers/net/ethernet/renesas/rswitch.c
+@@ -1942,15 +1942,17 @@ static void rswitch_deinit(struct rswitch_private *priv)
+ 	rswitch_gwca_hw_deinit(priv);
+ 	rcar_gen4_ptp_unregister(priv->ptp_priv);
+ 
+-	for (i = 0; i < RSWITCH_NUM_PORTS; i++) {
++	rswitch_for_each_enabled_port(priv, i) {
+ 		struct rswitch_device *rdev = priv->rdev[i];
+ 
+-		phy_exit(priv->rdev[i]->serdes);
+-		rswitch_ether_port_deinit_one(rdev);
+ 		unregister_netdev(rdev->ndev);
+-		rswitch_device_free(priv, i);
++		rswitch_ether_port_deinit_one(rdev);
++		phy_exit(priv->rdev[i]->serdes);
  	}
  
-+	pp_params.order = get_order(buf_size);
- 	pp_params.flags = PP_FLAG_PAGE_FRAG | PP_FLAG_DMA_MAP;
- 	pp_params.pool_size = min(OTX2_PAGE_POOL_SZ, numptrs);
- 	pp_params.nid = NUMA_NO_NODE;
++	for (i = 0; i < RSWITCH_NUM_PORTS; i++)
++		rswitch_device_free(priv, i);
++
+ 	rswitch_gwca_ts_queue_free(priv);
+ 	rswitch_gwca_linkfix_free(priv);
+ 
 -- 
 2.40.1
 
