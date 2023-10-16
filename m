@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023771A585
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEE11A70A
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXF3f8qc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA39C433C7;
-	Mon, 16 Oct 2023 09:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtNW1yQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52509C433C8;
+	Mon, 16 Oct 2023 09:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446819;
-	bh=cAXqurstSNEZ91zZfhhPe0uazvMDom3ZbtilpkjvhsQ=;
+	s=korg; t=1697446825;
+	bh=he7WCbd9Nz1X2aXkbp/iy3seowpJcnbXFOqHUOTLj8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXF3f8qcZ/LD9vHcZky6FR9SzVFWV84U125Ye+6ImfhTQrTBQFklYar+EzZJ1tq99
-	 x1Wpdzi7VEv7Ad8Nb5XMBCcZ1bNMM9cgMcj+LSC9aEEKh3HgyQHv3T3SNEM3qgsOU+
-	 bCKuy60ZX4VnVcjYYFMTx74JB9+O9Z3wIQWG2bqQ=
+	b=YtNW1yQK+kb01gA6YFPcCu5Py+uRPUYca6cVMzFgLlnS5ip8b4CWZM8amRX0QuKVu
+	 FYskLBi8rsV88ftx4t+lKByxu7fyw27MkJq8XVVQdv2GDNjs4h5OGzfGzpVzNUMT22
+	 QRCYjOP6ibvRWg3PaRgtlkgJc7KoZeVkl1iPYcls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xingxing Luo <xingxing.luo@unisoc.com>
-Subject: [PATCH 6.1 078/131] usb: musb: Get the musb_qh poniter after musb_giveback
-Date: Mon, 16 Oct 2023 10:41:01 +0200
-Message-ID: <20231016084001.997706991@linuxfoundation.org>
+Subject: [PATCH 6.1 079/131] usb: musb: Modify the "HWVers" register address
+Date: Mon, 16 Oct 2023 10:41:02 +0200
+Message-ID: <20231016084002.021772351@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -42,50 +42,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Xingxing Luo <xingxing.luo@unisoc.com>
 
-commit 33d7e37232155aadebe4145dcc592f00dabd7a2b upstream.
+commit 6658a62e1ddf726483cb2d8bf45ea3f9bd533074 upstream.
 
-When multiple threads are performing USB transmission, musb->lock will be
-unlocked when musb_giveback is executed. At this time, qh may be released
-in the dequeue process in other threads, resulting in a wild pointer, so
-it needs to be here get qh again, and judge whether qh is NULL, and when
-dequeue, you need to set qh to NULL.
+musb HWVers rgister address is not 0x69, if we operate the
+wrong address 0x69, it will cause a kernel crash, because
+there is no register corresponding to this address in the
+additional control register of musb. In fact, HWVers has
+been defined in musb_register.h, and the name is
+"MUSB_HWVERS", so We need to use this macro instead of 0x69.
 
-Fixes: dbac5d07d13e ("usb: musb: host: don't start next rx urb if current one failed")
+Fixes: c2365ce5d5a0 ("usb: musb: replace hard coded registers with defines")
 Cc: stable@vger.kernel.org
 Signed-off-by: Xingxing Luo <xingxing.luo@unisoc.com>
-Link: https://lore.kernel.org/r/20230919033055.14085-1-xingxing.luo@unisoc.com
+Link: https://lore.kernel.org/r/20230922075929.31074-1-xingxing.luo@unisoc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/musb_host.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/usb/musb/musb_debugfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/musb/musb_host.c
-+++ b/drivers/usb/musb/musb_host.c
-@@ -321,10 +321,16 @@ static void musb_advance_schedule(struct
- 	musb_giveback(musb, urb, status);
- 	qh->is_ready = ready;
- 
-+	/*
-+	 * musb->lock had been unlocked in musb_giveback, so qh may
-+	 * be freed, need to get it again
-+	 */
-+	qh = musb_ep_get_qh(hw_ep, is_in);
-+
- 	/* reclaim resources (and bandwidth) ASAP; deschedule it, and
- 	 * invalidate qh as soon as list_empty(&hep->urb_list)
- 	 */
--	if (list_empty(&qh->hep->urb_list)) {
-+	if (qh && list_empty(&qh->hep->urb_list)) {
- 		struct list_head	*head;
- 		struct dma_controller	*dma = musb->dma_controller;
- 
-@@ -2398,6 +2404,7 @@ static int musb_urb_dequeue(struct usb_h
- 		 * and its URB list has emptied, recycle this qh.
- 		 */
- 		if (ready && list_empty(&qh->hep->urb_list)) {
-+			musb_ep_set_qh(qh->hw_ep, is_in, NULL);
- 			qh->hep->hcpriv = NULL;
- 			list_del(&qh->ring);
- 			kfree(qh);
+--- a/drivers/usb/musb/musb_debugfs.c
++++ b/drivers/usb/musb/musb_debugfs.c
+@@ -39,7 +39,7 @@ static const struct musb_register_map mu
+ 	{ "IntrUsbE",	MUSB_INTRUSBE,	8 },
+ 	{ "DevCtl",	MUSB_DEVCTL,	8 },
+ 	{ "VControl",	0x68,		32 },
+-	{ "HWVers",	0x69,		16 },
++	{ "HWVers",	MUSB_HWVERS,	16 },
+ 	{ "LinkInfo",	MUSB_LINKINFO,	8 },
+ 	{ "VPLen",	MUSB_VPLEN,	8 },
+ 	{ "HS_EOF1",	MUSB_HS_EOF1,	8 },
 
 
