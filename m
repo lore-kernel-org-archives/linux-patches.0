@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB7A262A1
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFAC262A1
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXn1oRf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5EAC433C7;
-	Mon, 16 Oct 2023 14:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gK+euWgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3086C433C8;
+	Mon, 16 Oct 2023 14:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468061;
-	bh=ZE/BFfwUv9MbqidmNL4eH3ckCG+LB+i2k/jqS67wQBQ=;
+	s=korg; t=1697468066;
+	bh=gY6GKDxiT2vh/3SpIxeen0gnMRKoi0NRJDE249KNotM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QXn1oRf4qrq0h8TGxToP1BWiDz/HyBp/00rWqsJNAd6MjHViu4ExWPnXBCJdJY011
-	 K9mAkYZjbXrdD5pMjMofSvI4qwMgCRwr6KTzwyXxRNkujDJiCMB8DvjoaHvHiOPuBL
-	 HMvegoqDPLkqmykI+kMKhstzPjOpefSYg6tnB2TM=
+	b=gK+euWgif0nTpA/nG6oJgPYvOtoEtxSeMcbPB1WI4+2KyKLjW50JQnaT8C3+3Xoyl
+	 VJhisZAW0hIFqiVlEdDl+rsjIpM2D0LC9xR1BR/KM3NnoE30sycICyuVUWXHym4+bN
+	 TG0RB8gaTC3DBCzdEX/ykZrTnW6SAVvte51tDIEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.5 118/191] iio: addac: Kconfig: update ad74413r selections
-Date: Mon, 16 Oct 2023 10:41:43 +0200
-Message-ID: <20231016084018.135221917@linuxfoundation.org>
+	Dennis Bonke <admin@dennisbonke.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.5 119/191] media: subdev: Dont report V4L2_SUBDEV_CAP_STREAMS when the streams API is disabled
+Date: Mon, 16 Oct 2023 10:41:44 +0200
+Message-ID: <20231016084018.157397850@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -42,35 +45,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit b120dd3a15582fb7a959cecb05e4d9814fcba386 upstream.
+commit 4800021c630210ea0b19434a1fb56ab16385f2b3 upstream.
 
-Building ad74413r without selecting IIO_BUFFER and
-IIO_TRIGGERED_BUFFER generates error with respect to the iio trigger
-functions that are used within the driver.
-Update the Kconfig accordingly.
+Since the stream API is still experimental it is currently locked away
+behind the internal, default disabled, v4l2_subdev_enable_streams_api flag.
 
-Fixes: fea251b6a5db ("iio: addac: add AD74413R driver")
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Link: https://lore.kernel.org/r/20230912085421.51102-1-antoniu.miclaus@analog.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Advertising V4L2_SUBDEV_CAP_STREAMS when the streams API is disabled
+confuses userspace. E.g. it causes the following libcamera error:
+
+ERROR SimplePipeline simple.cpp:1497 Failed to reset routes for
+  /dev/v4l-subdev1: Inappropriate ioctl for device
+
+Don't report V4L2_SUBDEV_CAP_STREAMS when the streams API is disabled
+to avoid problems like this.
+
+Reported-by: Dennis Bonke <admin@dennisbonke.com>
+Fixes: 9a6b5bf4c1bb ("media: add V4L2_SUBDEV_CAP_STREAMS")
+Cc: stable@vger.kernel.org # for >= 6.3
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/addac/Kconfig |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/v4l2-core/v4l2-subdev.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/iio/addac/Kconfig
-+++ b/drivers/iio/addac/Kconfig
-@@ -24,6 +24,8 @@ config AD74413R
- 	depends on GPIOLIB && SPI
- 	select REGMAP_SPI
- 	select CRC8
-+	select IIO_BUFFER
-+	select IIO_TRIGGERED_BUFFER
- 	help
- 	  Say yes here to build support for Analog Devices AD74412R/AD74413R
- 	  quad-channel software configurable input/output solution.
+--- a/drivers/media/v4l2-core/v4l2-subdev.c
++++ b/drivers/media/v4l2-core/v4l2-subdev.c
+@@ -517,6 +517,13 @@ static long subdev_do_ioctl(struct file
+ 				       V4L2_SUBDEV_CLIENT_CAP_STREAMS;
+ 	int rval;
+ 
++	/*
++	 * If the streams API is not enabled, remove V4L2_SUBDEV_CAP_STREAMS.
++	 * Remove this when the API is no longer experimental.
++	 */
++	if (!v4l2_subdev_enable_streams_api)
++		streams_subdev = false;
++
+ 	switch (cmd) {
+ 	case VIDIOC_SUBDEV_QUERYCAP: {
+ 		struct v4l2_subdev_capability *cap = arg;
 
 
