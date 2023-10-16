@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8129028E03
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE56B28E03
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOj2sGS0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FA8C433C9;
-	Mon, 16 Oct 2023 14:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iItQI5If"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FBCCC433C7;
+	Mon, 16 Oct 2023 14:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468277;
-	bh=0xrdkpzPosQCjvBSBC2KZJP3wn9ljliASlZai0LP4D4=;
+	s=korg; t=1697468287;
+	bh=CJ0YD7BWlS7Du92oIv/5SV1t4+hN2zFZ4VDycHEx0WM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOj2sGS0CAPJ7JLvZGcfY0jaBLo6lbn4J+hX0jlxmwppjYafGfzLsC2O+PW6OfwTL
-	 2OQ7MTtkLuQ+qj0pLNruBz3RckZn7jWgcpbPexEePPaC7BgiYrqBdaJ5FlNWC7XnK8
-	 0Lna0iijk9N5DRYJRc5DGIZej8eO0oxLUz5bqW4g=
+	b=iItQI5If5w6kN0sPECN7NfeC/NkIfu3Y7BftqhI33Nbic5X4dEGM3jllKUrGXzY5Y
+	 XL5qguKU4IywGISvjhE6dUnwccOCBcBEKx0XSCBonzMCfrgc9qTAlOV/pTOAZb1iIw
+	 Wbw2Lk+kR+pl1yqtdWwYUV4Wsg6SH9o8lh5Z693Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Javier Carrasco <javier.carrasco@wolfvision.net>,
 	stable <stable@kernel.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Hui Liu <quic_huliu@quicinc.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.5 179/191] usb: typec: qcom: Update the logic of regulator enable and disable
-Date: Mon, 16 Oct 2023 10:42:44 +0200
-Message-ID: <20231016084019.551977492@linuxfoundation.org>
+	Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH 6.5 180/191] usb: misc: onboard_hub: add support for Microchip USB2412 USB 2.0 hub
+Date: Mon, 16 Oct 2023 10:42:45 +0200
+Message-ID: <20231016084019.575683212@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -43,69 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Liu <quic_huliu@quicinc.com>
+From: Javier Carrasco <javier.carrasco@wolfvision.net>
 
-commit 76750f1dcad3e1af2295cdf2f9434e06e3178ef3 upstream.
+commit e59e38158c61162f2e8beb4620df21a1585117df upstream.
 
-Removed the call logic of disable and enable regulator
-in reset function. Enable the regulator in qcom_pmic_typec_start
-function and disable it in qcom_pmic_typec_stop function to
-avoid unbalanced regulator disable warnings.
+The USB2412 is a 2-Port USB 2.0 hub controller that provides a reset pin
+and a single 3v3 powre source, which makes it suitable to be controlled
+by the onboard_hub driver.
 
-Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+This hub has the same reset timings as USB2514/2517 and the same
+onboard hub specific-data can be reused for USB2412.
+
+Signed-off-by: Javier Carrasco <javier.carrasco@wolfvision.net>
 Cc: stable <stable@kernel.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # rb5
-Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230831-qcom-tcpc-v5-1-5e2661dc6c1d@quicinc.com
+Acked-by: Matthias Kaehlcke <mka@chromium.org>
+Link: https://lore.kernel.org/r/20230911-topic-2412_onboard_hub-v1-1-7704181ddfff@wolfvision.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/usb/misc/onboard_usb_hub.c |    1 +
+ drivers/usb/misc/onboard_usb_hub.h |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-@@ -383,10 +383,6 @@ static int qcom_pmic_typec_pdphy_enable(
- 	struct device *dev = pmic_typec_pdphy->dev;
- 	int ret;
+--- a/drivers/usb/misc/onboard_usb_hub.c
++++ b/drivers/usb/misc/onboard_usb_hub.c
+@@ -409,6 +409,7 @@ static void onboard_hub_usbdev_disconnec
+ static const struct usb_device_id onboard_hub_id_table[] = {
+ 	{ USB_DEVICE(VENDOR_ID_GENESYS, 0x0608) }, /* Genesys Logic GL850G USB 2.0 */
+ 	{ USB_DEVICE(VENDOR_ID_GENESYS, 0x0610) }, /* Genesys Logic GL852G USB 2.0 */
++	{ USB_DEVICE(VENDOR_ID_MICROCHIP, 0x2412) }, /* USB2412 USB 2.0 */
+ 	{ USB_DEVICE(VENDOR_ID_MICROCHIP, 0x2514) }, /* USB2514B USB 2.0 */
+ 	{ USB_DEVICE(VENDOR_ID_MICROCHIP, 0x2517) }, /* USB2517 USB 2.0 */
+ 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0411) }, /* RTS5411 USB 3.1 */
+--- a/drivers/usb/misc/onboard_usb_hub.h
++++ b/drivers/usb/misc/onboard_usb_hub.h
+@@ -35,6 +35,7 @@ static const struct onboard_hub_pdata vi
+ };
  
--	ret = regulator_enable(pmic_typec_pdphy->vdd_pdphy);
--	if (ret)
--		return ret;
--
- 	/* PD 2.0, DR=TYPEC_DEVICE, PR=TYPEC_SINK */
- 	ret = regmap_update_bits(pmic_typec_pdphy->regmap,
- 				 pmic_typec_pdphy->base + USB_PDPHY_MSG_CONFIG_REG,
-@@ -424,8 +420,6 @@ static int qcom_pmic_typec_pdphy_disable
- 	ret = regmap_write(pmic_typec_pdphy->regmap,
- 			   pmic_typec_pdphy->base + USB_PDPHY_EN_CONTROL_REG, 0);
- 
--	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
--
- 	return ret;
- }
- 
-@@ -449,6 +443,10 @@ int qcom_pmic_typec_pdphy_start(struct p
- 	int i;
- 	int ret;
- 
-+	ret = regulator_enable(pmic_typec_pdphy->vdd_pdphy);
-+	if (ret)
-+		return ret;
-+
- 	pmic_typec_pdphy->tcpm_port = tcpm_port;
- 
- 	ret = pmic_typec_pdphy_reset(pmic_typec_pdphy);
-@@ -469,6 +467,8 @@ void qcom_pmic_typec_pdphy_stop(struct p
- 		disable_irq(pmic_typec_pdphy->irq_data[i].irq);
- 
- 	qcom_pmic_typec_pdphy_reset_on(pmic_typec_pdphy);
-+
-+	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
- }
- 
- struct pmic_typec_pdphy *qcom_pmic_typec_pdphy_alloc(struct device *dev)
+ static const struct of_device_id onboard_hub_match[] = {
++	{ .compatible = "usb424,2412", .data = &microchip_usb424_data, },
+ 	{ .compatible = "usb424,2514", .data = &microchip_usb424_data, },
+ 	{ .compatible = "usb424,2517", .data = &microchip_usb424_data, },
+ 	{ .compatible = "usb451,8140", .data = &ti_tusb8041_data, },
 
 
