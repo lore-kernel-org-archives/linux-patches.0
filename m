@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F86C1A5A7
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607F31A5A7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hz72ex4C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC0BC433C8;
-	Mon, 16 Oct 2023 09:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9B68+kk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFF3C433C7;
+	Mon, 16 Oct 2023 09:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446969;
-	bh=hHbAXxdny92E0gOObDaK4mOd16Lj9Dte1y9/2TC2WO8=;
+	s=korg; t=1697446973;
+	bh=I705HcuEOqdD6hAGeN6Z48CZinLxHp9XMfcPg6qmiCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hz72ex4C1cGwfmc/tFbG39aiGuy3SiCCA2skP/C7SB6UB8s4kLe/pSVOXlphRl/8f
-	 qot5UJ8KlOsIuIr7WvQGpjaXhMJ3xP/uOFVphVAxp712X3m6c8C+VDleNQs9JJtEEQ
-	 7in0VHq4u+oQkD/HTwpg8ATdUsQ/alvwYGcSQU3A=
+	b=s9B68+kkN+rBN9yAtd01DH8OiXy8veXM4yB55OE9O4h9VliYPznYfIGQGB29qlM1c
+	 wt7sa/1bS8TE9S4lBBkywzPK9EJyhwj0j1bhthEiFoHZPT7x/0CGEknQR0Ptex8S41
+	 WNa6YZNDtBqmPxDRK11IW7ASTdGDAmt9oYQS3YIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Berndt <matthias_berndt@gmx.de>,
+	Szilard Fabian <szfabian@bluemarch.art>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 108/131] Input: xpad - add PXN V900 support
-Date: Mon, 16 Oct 2023 10:41:31 +0200
-Message-ID: <20231016084002.748003570@linuxfoundation.org>
+Subject: [PATCH 6.1 109/131] Input: i8042 - add Fujitsu Lifebook E5411 to i8042 quirk table
+Date: Mon, 16 Oct 2023 10:41:32 +0200
+Message-ID: <20231016084002.773169269@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -41,38 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Berndt <matthias_berndt@gmx.de>
+From: Szilard Fabian <szfabian@bluemarch.art>
 
-commit a65cd7ef5a864bdbbe037267c327786b7759d4c6 upstream.
+commit 80f39e1c27ba9e5a1ea7e68e21c569c9d8e46062 upstream.
 
-Add VID and PID to the xpad_device table to allow driver to use the PXN
-V900 steering wheel, which is XTYPE_XBOX360 compatible in xinput mode.
+In the initial boot stage the integrated keyboard of Fujitsu Lifebook E5411
+refuses to work and it's not possible to type for example a dm-crypt
+passphrase without the help of an external keyboard.
 
-Signed-off-by: Matthias Berndt <matthias_berndt@gmx.de>
-Link: https://lore.kernel.org/r/4932699.31r3eYUQgx@fedora
+i8042.nomux kernel parameter resolves this issue but using that a PS/2
+mouse is detected. This input device is unused even when the i2c-hid-acpi
+kernel module is blacklisted making the integrated ELAN touchpad
+(04F3:308A) not working at all.
+
+Since the integrated touchpad is managed by the i2c_designware input
+driver in the Linux kernel and you can't find a PS/2 mouse port on the
+computer I think it's safe to not use the PS/2 mouse port at all.
+
+Signed-off-by: Szilard Fabian <szfabian@bluemarch.art>
+Link: https://lore.kernel.org/r/20231004011749.101789-1-szfabian@bluemarch.art
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/serio/i8042-acpipnpio.h |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -272,6 +272,7 @@ static const struct xpad_device {
- 	{ 0x1038, 0x1430, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
- 	{ 0x1038, 0x1431, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
- 	{ 0x11c9, 0x55f0, "Nacon GC-100XF", 0, XTYPE_XBOX360 },
-+	{ 0x11ff, 0x0511, "PXN V900", 0, XTYPE_XBOX360 },
- 	{ 0x1209, 0x2882, "Ardwiino Controller", 0, XTYPE_XBOX360 },
- 	{ 0x12ab, 0x0004, "Honey Bee Xbox360 dancepad", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
- 	{ 0x12ab, 0x0301, "PDP AFTERGLOW AX.1", 0, XTYPE_XBOX360 },
-@@ -474,6 +475,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOXONE_VENDOR(0x0f0d),		/* Hori Controllers */
- 	XPAD_XBOX360_VENDOR(0x1038),		/* SteelSeries Controllers */
- 	XPAD_XBOX360_VENDOR(0x11c9),		/* Nacon GC100XF */
-+	XPAD_XBOX360_VENDOR(0x11ff),		/* PXN V900 */
- 	XPAD_XBOX360_VENDOR(0x1209),		/* Ardwiino Controllers */
- 	XPAD_XBOX360_VENDOR(0x12ab),		/* X-Box 360 dance pads */
- 	XPAD_XBOX360_VENDOR(0x1430),		/* RedOctane X-Box 360 controllers */
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -619,6 +619,14 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
+ 	},
+ 	{
++		/* Fujitsu Lifebook E5411 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU CLIENT COMPUTING LIMITED"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK E5411"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
++	},
++	{
+ 		/* Gigabyte M912 */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "GIGABYTE"),
 
 
