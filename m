@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1423D19465
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361411A599
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1AVkeDp9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B686C433C9;
-	Mon, 16 Oct 2023 08:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnVP/Wxm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C619C433C7;
+	Mon, 16 Oct 2023 08:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445874;
-	bh=sIYxOth2Dg98zUHYXpL8BzT/jN19Sbn0YRrYXgXkkVE=;
+	s=korg; t=1697445879;
+	bh=dbk6ZXGqlyANqcwXI1Q26u8eZIvdyVI78DTRkfI0Ais=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1AVkeDp9hgyng5834tOX58+kjFL3Sj+kI6rRXe/mUY3H/WoR+n7xwFlcleM0NvMCB
-	 rg5C2EQbyi55jmWLG9r4CmBrGxg6dOOkFVZW37ST79ZCRqzbBJS1OzC404x+DkD2fl
-	 5EGrTRmiXOeAKRJ7Txj8xLDBIp7OIcDHLwIG10Mg=
+	b=fnVP/WxmP6T2sM9BMO9KeZJjgwu/fZS9tKEMG7qOR22XHr7PioAZNFlQAtvtQ/P3B
+	 PZtRGsSR22EMhiSUz1O4VsjdpBs2FsnH+wPxmsRQZ2Hzh7psnf9pM5pTlOT4EEe2Zq
+	 qBPIVl0VRzfN0oZgZRiuHcw6XDN7ubYP02dRoJzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Nia Espera <nespera@igalia.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/102] drm/msm/dpu: change _dpu_plane_calc_bw() to use u64 to avoid overflow
-Date: Mon, 16 Oct 2023 10:40:20 +0200
-Message-ID: <20231016083954.252327031@linuxfoundation.org>
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Zack Rusin <zackr@vmware.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Subject: [PATCH 5.15 030/102] drm/vmwgfx: fix typo of sizeof argument
+Date: Mon, 16 Oct 2023 10:40:29 +0200
+Message-ID: <20231016083954.504728182@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -43,65 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-[ Upstream commit 95e681ca3b65e4ce3d2537b47672d787b7d30375 ]
+[ Upstream commit 39465cac283702a7d4a507a558db81898029c6d3 ]
 
-_dpu_plane_calc_bw() uses integer variables to calculate the bandwidth
-used during plane bandwidth calculations. However for high resolution
-displays this overflows easily and leads to below errors
+Since size of 'header' pointer and '*header' structure is equal on 64-bit
+machines issue probably didn't cause any wrong behavior. But anyway,
+fixing typo is required.
 
-[dpu error]crtc83 failed performance check -7
-
-Promote the intermediate variables to u64 to avoid overflow.
-
-changes in v2:
-	- change to u64 where actually needed in the math
-
-Fixes: c33b7c0389e1 ("drm/msm/dpu: add support for clk and bw scaling for display")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reported-by: Nia Espera <nespera@igalia.com>
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/32
-Tested-by: Nia Espera <nespera@igalia.com>
-Patchwork: https://patchwork.freedesktop.org/patch/556288/
-Link: https://lore.kernel.org/r/20230908012616.20654-1-quic_abhinavk@quicinc.com
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: 7a73ba7469cb ("drm/vmwgfx: Use TTM handles instead of SIDs as user-space surface handles.")
+Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Reviewed-by: Zack Rusin <zackr@vmware.com>
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230905100203.1716731-1-konstantin.meskhidze@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 59390dc3d1b8c..9c30ab106b0a1 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -158,6 +158,7 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
- 	const struct dpu_format *fmt = NULL;
- 	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
- 	int src_width, src_height, dst_height, fps;
-+	u64 plane_pixel_rate, plane_bit_rate;
- 	u64 plane_prefill_bw;
- 	u64 plane_bw;
- 	u32 hw_latency_lines;
-@@ -180,13 +181,12 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
- 	scale_factor = src_height > dst_height ?
- 		mult_frac(src_height, 1, dst_height) : 1;
- 
--	plane_bw =
--		src_width * mode->vtotal * fps * fmt->bpp *
--		scale_factor;
-+	plane_pixel_rate = src_width * mode->vtotal * fps;
-+	plane_bit_rate = plane_pixel_rate * fmt->bpp;
- 
--	plane_prefill_bw =
--		src_width * hw_latency_lines * fps * fmt->bpp *
--		scale_factor * mode->vtotal;
-+	plane_bw = plane_bit_rate * scale_factor;
-+
-+	plane_prefill_bw = plane_bw * hw_latency_lines;
- 
- 	if ((vbp+vpw) > hw_latency_lines)
- 		do_div(plane_prefill_bw, (vbp+vpw));
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index ed75622bf7082..b91f8d17404d6 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -1632,7 +1632,7 @@ static int vmw_cmd_tex_state(struct vmw_private *dev_priv,
+ {
+ 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdSetTextureState);
+ 	SVGA3dTextureState *last_state = (SVGA3dTextureState *)
+-	  ((unsigned long) header + header->size + sizeof(header));
++	  ((unsigned long) header + header->size + sizeof(*header));
+ 	SVGA3dTextureState *cur_state = (SVGA3dTextureState *)
+ 		((unsigned long) header + sizeof(*cmd));
+ 	struct vmw_resource *ctx;
 -- 
 2.40.1
 
