@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFAC262A1
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DD9262A1
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gK+euWgi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3086C433C8;
-	Mon, 16 Oct 2023 14:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqWq1q76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A6CC433C9;
+	Mon, 16 Oct 2023 14:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468066;
-	bh=gY6GKDxiT2vh/3SpIxeen0gnMRKoi0NRJDE249KNotM=;
+	s=korg; t=1697468069;
+	bh=EkKje32AL6Jzh8jfUZArxJsBusLYW0R59L3Zzihxi6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gK+euWgif0nTpA/nG6oJgPYvOtoEtxSeMcbPB1WI4+2KyKLjW50JQnaT8C3+3Xoyl
-	 VJhisZAW0hIFqiVlEdDl+rsjIpM2D0LC9xR1BR/KM3NnoE30sycICyuVUWXHym4+bN
-	 TG0RB8gaTC3DBCzdEX/ykZrTnW6SAVvte51tDIEs=
+	b=TqWq1q763imXPP4/qS+9J8SLN5rl5I3pHJ+JuNUkhYw01RhIGL1d9Nj6xtnWuf4bj
+	 3vt/7o+4rRgoInk+qVdYb7YtJl6onHjRTRmerUTktHlKw2kqA9NlADJnRgP7d3nRzq
+	 cI1T2WSQTfHG+KH8Nx77LYsxI3gcxV4aXEDrkP1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Bonke <admin@dennisbonke.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.5 119/191] media: subdev: Dont report V4L2_SUBDEV_CAP_STREAMS when the streams API is disabled
-Date: Mon, 16 Oct 2023 10:41:44 +0200
-Message-ID: <20231016084018.157397850@linuxfoundation.org>
+	Macpaul Lin <macpaul.lin@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.5 120/191] arm64: dts: mediatek: mt8195-demo: fix the memory size to 8GB
+Date: Mon, 16 Oct 2023 10:41:45 +0200
+Message-ID: <20231016084018.180336764@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -45,50 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Macpaul Lin <macpaul.lin@mediatek.com>
 
-commit 4800021c630210ea0b19434a1fb56ab16385f2b3 upstream.
+commit 25389c03c21c9587dd21c768d1cbfa514a3ca211 upstream.
 
-Since the stream API is still experimental it is currently locked away
-behind the internal, default disabled, v4l2_subdev_enable_streams_api flag.
+The onboard dram of mt8195-demo board is 8GB.
 
-Advertising V4L2_SUBDEV_CAP_STREAMS when the streams API is disabled
-confuses userspace. E.g. it causes the following libcamera error:
-
-ERROR SimplePipeline simple.cpp:1497 Failed to reset routes for
-  /dev/v4l-subdev1: Inappropriate ioctl for device
-
-Don't report V4L2_SUBDEV_CAP_STREAMS when the streams API is disabled
-to avoid problems like this.
-
-Reported-by: Dennis Bonke <admin@dennisbonke.com>
-Fixes: 9a6b5bf4c1bb ("media: add V4L2_SUBDEV_CAP_STREAMS")
-Cc: stable@vger.kernel.org # for >= 6.3
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc: stable@vger.kernel.org      # 6.1, 6.4, 6.5
+Fixes: 6147314aeedc ("arm64: dts: mediatek: Add device-tree for MT8195 Demo board")
+Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230905034511.11232-1-macpaul.lin@mediatek.com
+Link: https://lore.kernel.org/r/20231003-mediatek-fixes-v6-7-v1-2-dad7cd62a8ff@collabora.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-subdev.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt8195-demo.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/v4l2-core/v4l2-subdev.c
-+++ b/drivers/media/v4l2-core/v4l2-subdev.c
-@@ -517,6 +517,13 @@ static long subdev_do_ioctl(struct file
- 				       V4L2_SUBDEV_CLIENT_CAP_STREAMS;
- 	int rval;
+--- a/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
+@@ -48,7 +48,7 @@
  
-+	/*
-+	 * If the streams API is not enabled, remove V4L2_SUBDEV_CAP_STREAMS.
-+	 * Remove this when the API is no longer experimental.
-+	 */
-+	if (!v4l2_subdev_enable_streams_api)
-+		streams_subdev = false;
-+
- 	switch (cmd) {
- 	case VIDIOC_SUBDEV_QUERYCAP: {
- 		struct v4l2_subdev_capability *cap = arg;
+ 	memory@40000000 {
+ 		device_type = "memory";
+-		reg = <0 0x40000000 0 0x80000000>;
++		reg = <0 0x40000000 0x2 0x00000000>;
+ 	};
+ 
+ 	reserved-memory {
 
 
