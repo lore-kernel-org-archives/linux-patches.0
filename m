@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587001A27D
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41A61A284
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDn7K4N4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0D3C433C7;
-	Mon, 16 Oct 2023 08:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDVAHOob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA97DC433C7;
+	Mon, 16 Oct 2023 08:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445981;
-	bh=aN6s04zwvSpjsGuZdbG94c0o1RjMTX0OmuEzfQ1jstM=;
+	s=korg; t=1697445984;
+	bh=Tet5KZIb40NExQG5pefCnot3ww0UMiYcKFa1Ut7PGvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lDn7K4N4q0/bCVLWcw8hsHohy+ngEH1gnBWOW6EIp1nI34bCgc55dowpy2o6WI1SC
-	 2KhtUtw08Tlyx4XaWyS762DdQXPSbDdZOXUXP61eacZwBhWHWIumgsQLAsYd7i6tG2
-	 YbBbPz8uRLxBY2NNQJ1HC05ODlSNCLUHhJQKd6/s=
+	b=HDVAHOob2qJLsk5zNU7w6QkLEvie+0YxRpcOGsMgSfEO7TYOaD0ZN7rOaBMp/ilIP
+	 X2+HsWrTuBwyUR7TRm3RAZXttclFJxEFtlC6ctmGN/H98+0P2u/C2k1pBJMqIgy8TN
+	 7eNQq2y87sC4Se0YQ9gThGzwBSwBUwE2b10e0qC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Petr Machata <petrm@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/102] ieee802154: ca8210: Fix a potential UAF in ca8210_probe
-Date: Mon, 16 Oct 2023 10:40:23 +0200
-Message-ID: <20231016083954.351020605@linuxfoundation.org>
+Subject: [PATCH 5.15 025/102] mlxsw: fix mlxsw_sp2_nve_vxlan_learning_set() return type
+Date: Mon, 16 Oct 2023 10:40:24 +0200
+Message-ID: <20231016083954.376892046@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -42,73 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit f990874b1c98fe8e57ee9385669f501822979258 ]
+[ Upstream commit 1e0b72a2a6432c0ef67ee5ce8d9172a7c20bba25 ]
 
-If of_clk_add_provider() fails in ca8210_register_ext_clock(),
-it calls clk_unregister() to release priv->clk and returns an
-error. However, the caller ca8210_probe() then calls ca8210_remove(),
-where priv->clk is freed again in ca8210_unregister_ext_clock(). In
-this case, a use-after-free may happen in the second time we call
-clk_unregister().
+The mlxsw_sp2_nve_vxlan_learning_set() function is supposed to return
+zero on success or negative error codes.  So it needs to be type int
+instead of bool.
 
-Fix this by removing the first clk_unregister(). Also, priv->clk could
-be an error code on failure of clk_register_fixed_rate(). Use
-IS_ERR_OR_NULL to catch this case in ca8210_unregister_ext_clock().
-
-Fixes: ded845a781a5 ("ieee802154: Add CA8210 IEEE 802.15.4 device driver")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Message-ID: <20231007033049.22353-1-dinghao.liu@zju.edu.cn>
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Fixes: 4ee70efab68d ("mlxsw: spectrum_nve: Add support for VXLAN on Spectrum-2")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/ca8210.c | 17 +++--------------
- 1 file changed, 3 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_nve_vxlan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
-index 5834d3ed6dcf5..dc786c3bbccf8 100644
---- a/drivers/net/ieee802154/ca8210.c
-+++ b/drivers/net/ieee802154/ca8210.c
-@@ -2783,7 +2783,6 @@ static int ca8210_register_ext_clock(struct spi_device *spi)
- 	struct device_node *np = spi->dev.of_node;
- 	struct ca8210_priv *priv = spi_get_drvdata(spi);
- 	struct ca8210_platform_data *pdata = spi->dev.platform_data;
--	int ret = 0;
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_nve_vxlan.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_nve_vxlan.c
+index d018d2da59499..5e020d0addc67 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_nve_vxlan.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_nve_vxlan.c
+@@ -245,8 +245,8 @@ const struct mlxsw_sp_nve_ops mlxsw_sp1_nve_vxlan_ops = {
+ 	.fdb_clear_offload = mlxsw_sp_nve_vxlan_clear_offload,
+ };
  
- 	if (!np)
- 		return -EFAULT;
-@@ -2800,18 +2799,8 @@ static int ca8210_register_ext_clock(struct spi_device *spi)
- 		dev_crit(&spi->dev, "Failed to register external clk\n");
- 		return PTR_ERR(priv->clk);
- 	}
--	ret = of_clk_add_provider(np, of_clk_src_simple_get, priv->clk);
--	if (ret) {
--		clk_unregister(priv->clk);
--		dev_crit(
--			&spi->dev,
--			"Failed to register external clock as clock provider\n"
--		);
--	} else {
--		dev_info(&spi->dev, "External clock set as clock provider\n");
--	}
- 
--	return ret;
-+	return of_clk_add_provider(np, of_clk_src_simple_get, priv->clk);
- }
- 
- /**
-@@ -2823,8 +2812,8 @@ static void ca8210_unregister_ext_clock(struct spi_device *spi)
+-static bool mlxsw_sp2_nve_vxlan_learning_set(struct mlxsw_sp *mlxsw_sp,
+-					     bool learning_en)
++static int mlxsw_sp2_nve_vxlan_learning_set(struct mlxsw_sp *mlxsw_sp,
++					    bool learning_en)
  {
- 	struct ca8210_priv *priv = spi_get_drvdata(spi);
+ 	char tnpc_pl[MLXSW_REG_TNPC_LEN];
  
--	if (!priv->clk)
--		return
-+	if (IS_ERR_OR_NULL(priv->clk))
-+		return;
- 
- 	of_clk_del_provider(spi->dev.of_node);
- 	clk_unregister(priv->clk);
 -- 
 2.40.1
 
