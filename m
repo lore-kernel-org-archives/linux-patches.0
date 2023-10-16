@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420B71A289
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3445E1A289
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ix6j/A2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2B2C433C7;
-	Mon, 16 Oct 2023 08:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPHTExd/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E92C433C7;
+	Mon, 16 Oct 2023 08:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446426;
-	bh=dZTE5gWukudq7XbVchNgfk8B5LjFAq+ft6jLsZ8NwN8=;
+	s=korg; t=1697446429;
+	bh=YRpAhBF2FvZ0cSTiB9E/extVul1ezAlTPoDsQGSxYBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ix6j/A2tj+/jkOdNAYCtJ8V0Q08PuaLL5LibhsJu8WkdsdXxbNnNO5rIapZN+RMp9
-	 CzYL+kZ64n6PA81Q/rHGLznThlwiwhyLydxBJByVMVOlQLjb2h4Wkyuv8XWhD62f44
-	 r/HqXx7lndhU8Xj19ZQI/8k/Uq1k8VpuKumLGkJA=
+	b=QPHTExd/cliwmGGs40lLuBir7hravpO5hx4BwQtWXgy3jbc45AifTP7om7tjQKb5r
+	 nicYFto2gka4/NTEc4jNzWjknCZa6YUaLl5e7Mkmf9njvYcbwUL296nXziMS98RZNF
+	 f8Le64S/lrbWg/rUqdzdQDbAcvJ4vPSbDuNJcQfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.1 009/131] HID: logitech-hidpp: Fix kernel crash on receiver USB disconnect
-Date: Mon, 16 Oct 2023 10:39:52 +0200
-Message-ID: <20231016084000.296335361@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 027/131] ASoC: fsl_sai: MCLK bind with TX/RX enable bit
+Date: Mon, 16 Oct 2023 10:40:10 +0200
+Message-ID: <20231016084000.740860323@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -41,177 +40,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-commit dac501397b9d81e4782232c39f94f4307b137452 upstream.
+[ Upstream commit 3e4a826129980fed0e3e746a7822f2f204dfc24a ]
 
-hidpp_connect_event() has *four* time-of-check vs time-of-use (TOCTOU)
-races when it races with itself.
+On i.MX8MP, the sai MCLK is bound with TX/RX enable bit,
+which means the TX/RE enable bit need to be enabled then
+MCLK can be output on PAD.
 
-hidpp_connect_event() primarily runs from a workqueue but it also runs
-on probe() and if a "device-connected" packet is received by the hw
-when the thread running hidpp_connect_event() from probe() is waiting on
-the hw, then a second thread running hidpp_connect_event() will be
-started from the workqueue.
+Some codec (for example: WM8962) needs the MCLK output
+earlier, otherwise there will be issue for codec
+configuration.
 
-This opens the following races (note the below code is simplified):
+Add new soc data "mclk_with_tere" for this platform and
+enable the MCLK output in startup stage.
 
-1. Retrieving + printing the protocol (harmless race):
+As "mclk_with_tere" only applied to i.MX8MP, currently
+The soc data is shared with i.MX8MN, so need to add
+an i.MX8MN own soc data with "mclk_with_tere" disabled.
 
-	if (!hidpp->protocol_major) {
-		hidpp_root_get_protocol_version()
-		hidpp->protocol_major = response.rap.params[0];
-	}
-
-We can actually see this race hit in the dmesg in the abrt output
-attached to rhbz#2227968:
-
-[ 3064.624215] logitech-hidpp-device 0003:046D:4071.0049: HID++ 4.5 device connected.
-[ 3064.658184] logitech-hidpp-device 0003:046D:4071.0049: HID++ 4.5 device connected.
-
-Testing with extra logging added has shown that after this the 2 threads
-take turn grabbing the hw access mutex (send_mutex) so they ping-pong
-through all the other TOCTOU cases managing to hit all of them:
-
-2. Updating the name to the HIDPP name (harmless race):
-
-	if (hidpp->name == hdev->name) {
-		...
-		hidpp->name = new_name;
-	}
-
-3. Initializing the power_supply class for the battery (problematic!):
-
-hidpp_initialize_battery()
-{
-        if (hidpp->battery.ps)
-                return 0;
-
-	probe_battery(); /* Blocks, threads take turns executing this */
-
-	hidpp->battery.desc.properties =
-		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
-
-	hidpp->battery.ps =
-		devm_power_supply_register(&hidpp->hid_dev->dev,
-					   &hidpp->battery.desc, cfg);
-}
-
-4. Creating delayed input_device (potentially problematic):
-
-	if (hidpp->delayed_input)
-		return;
-
-	hidpp->delayed_input = hidpp_allocate_input(hdev);
-
-The really big problem here is 3. Hitting the race leads to the following
-sequence:
-
-	hidpp->battery.desc.properties =
-		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
-
-	hidpp->battery.ps =
-		devm_power_supply_register(&hidpp->hid_dev->dev,
-					   &hidpp->battery.desc, cfg);
-
-	...
-
-	hidpp->battery.desc.properties =
-		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
-
-	hidpp->battery.ps =
-		devm_power_supply_register(&hidpp->hid_dev->dev,
-					   &hidpp->battery.desc, cfg);
-
-So now we have registered 2 power supplies for the same battery,
-which looks a bit weird from userspace's pov but this is not even
-the really big problem.
-
-Notice how:
-
-1. This is all devm-maganaged
-2. The hidpp->battery.desc struct is shared between the 2 power supplies
-3. hidpp->battery.desc.properties points to the result from the second
-   devm_kmemdup()
-
-This causes a use after free scenario on USB disconnect of the receiver:
-1. The last registered power supply class device gets unregistered
-2. The memory from the last devm_kmemdup() call gets freed,
-   hidpp->battery.desc.properties now points to freed memory
-3. The first registered power supply class device gets unregistered,
-   this involves sending a remove uevent to userspace which invokes
-   power_supply_uevent() to fill the uevent data
-4. power_supply_uevent() uses hidpp->battery.desc.properties which
-   now points to freed memory leading to backtraces like this one:
-
-Sep 22 20:01:35 eric kernel: BUG: unable to handle page fault for address: ffffb2140e017f08
-...
-Sep 22 20:01:35 eric kernel: Workqueue: usb_hub_wq hub_event
-Sep 22 20:01:35 eric kernel: RIP: 0010:power_supply_uevent+0xee/0x1d0
-...
-Sep 22 20:01:35 eric kernel:  ? asm_exc_page_fault+0x26/0x30
-Sep 22 20:01:35 eric kernel:  ? power_supply_uevent+0xee/0x1d0
-Sep 22 20:01:35 eric kernel:  ? power_supply_uevent+0x10d/0x1d0
-Sep 22 20:01:35 eric kernel:  dev_uevent+0x10f/0x2d0
-Sep 22 20:01:35 eric kernel:  kobject_uevent_env+0x291/0x680
-Sep 22 20:01:35 eric kernel:  power_supply_unregister+0x8e/0xa0
-Sep 22 20:01:35 eric kernel:  release_nodes+0x3d/0xb0
-Sep 22 20:01:35 eric kernel:  devres_release_group+0xfc/0x130
-Sep 22 20:01:35 eric kernel:  hid_device_remove+0x56/0xa0
-Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
-Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
-Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
-Sep 22 20:01:35 eric kernel:  ? __queue_work+0x1df/0x440
-Sep 22 20:01:35 eric kernel:  hid_destroy_device+0x4b/0x60
-Sep 22 20:01:35 eric kernel:  logi_dj_remove+0x9a/0x100 [hid_logitech_dj 5c91534a0ead2b65e04dd799a0437e3b99b21bc4]
-Sep 22 20:01:35 eric kernel:  hid_device_remove+0x44/0xa0
-Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
-Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
-Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
-Sep 22 20:01:35 eric kernel:  ? __queue_work+0x1df/0x440
-Sep 22 20:01:35 eric kernel:  hid_destroy_device+0x4b/0x60
-Sep 22 20:01:35 eric kernel:  usbhid_disconnect+0x47/0x60 [usbhid 727dcc1c0b94e6b4418727a468398ac3bca492f3]
-Sep 22 20:01:35 eric kernel:  usb_unbind_interface+0x90/0x270
-Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
-Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
-Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
-Sep 22 20:01:35 eric kernel:  ? kobject_put+0xa0/0x1d0
-Sep 22 20:01:35 eric kernel:  usb_disable_device+0xcd/0x1e0
-Sep 22 20:01:35 eric kernel:  usb_disconnect+0xde/0x2c0
-Sep 22 20:01:35 eric kernel:  usb_disconnect+0xc3/0x2c0
-Sep 22 20:01:35 eric kernel:  hub_event+0xe80/0x1c10
-
-There have been quite a few bug reports (see Link tags) about this crash.
-
-Fix all the TOCTOU issues, including the really bad power-supply related
-system crash on USB disconnect, by making probe() use the workqueue for
-running hidpp_connect_event() too, so that it can never run more then once.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227221
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227968
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227968
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2242189
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217412#c58
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231005182638.3776-1-hdegoede@redhat.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com
+Link: https://lore.kernel.org/r/1683273322-2525-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org
+Stable-dep-of: 197c53c8ecb3 ("ASoC: fsl_sai: Don't disable bitclock for i.MX8MP")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_sai.c | 24 +++++++++++++++++++++---
+ sound/soc/fsl/fsl_sai.h |  2 ++
+ 2 files changed, 23 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4275,7 +4275,8 @@ static int hidpp_probe(struct hid_device
- 			goto hid_hw_init_fail;
+diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
+index 2c17d16f842ea..08a33832f6b3f 100644
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -1401,7 +1401,9 @@ static int fsl_sai_probe(struct platform_device *pdev)
+ 		sai->cpu_dai_drv.symmetric_sample_bits = 0;
  	}
  
--	hidpp_connect_event(hidpp);
-+	schedule_work(&hidpp->work);
-+	flush_work(&hidpp->work);
+-	if (of_property_read_bool(np, "fsl,sai-mclk-direction-output") &&
++	sai->mclk_direction_output = of_property_read_bool(np, "fsl,sai-mclk-direction-output");
++
++	if (sai->mclk_direction_output &&
+ 	    of_device_is_compatible(np, "fsl,imx6ul-sai")) {
+ 		gpr = syscon_regmap_lookup_by_compatible("fsl,imx6ul-iomuxc-gpr");
+ 		if (IS_ERR(gpr)) {
+@@ -1442,7 +1444,7 @@ static int fsl_sai_probe(struct platform_device *pdev)
+ 		dev_warn(dev, "Error reading SAI version: %d\n", ret);
  
- 	if (will_restart) {
- 		/* Reset the HID node state */
+ 	/* Select MCLK direction */
+-	if (of_property_read_bool(np, "fsl,sai-mclk-direction-output") &&
++	if (sai->mclk_direction_output &&
+ 	    sai->soc_data->max_register >= FSL_SAI_MCTL) {
+ 		regmap_update_bits(sai->regmap, FSL_SAI_MCTL,
+ 				   FSL_SAI_MCTL_MCLK_EN, FSL_SAI_MCTL_MCLK_EN);
+@@ -1560,6 +1562,17 @@ static const struct fsl_sai_soc_data fsl_sai_imx8mm_data = {
+ 	.max_register = FSL_SAI_MCTL,
+ };
+ 
++static const struct fsl_sai_soc_data fsl_sai_imx8mn_data = {
++	.use_imx_pcm = true,
++	.use_edma = false,
++	.fifo_depth = 128,
++	.reg_offset = 8,
++	.mclk0_is_mclk1 = false,
++	.pins = 8,
++	.flags = 0,
++	.max_register = FSL_SAI_MDIV,
++};
++
+ static const struct fsl_sai_soc_data fsl_sai_imx8mp_data = {
+ 	.use_imx_pcm = true,
+ 	.use_edma = false,
+@@ -1569,6 +1582,7 @@ static const struct fsl_sai_soc_data fsl_sai_imx8mp_data = {
+ 	.pins = 8,
+ 	.flags = 0,
+ 	.max_register = FSL_SAI_MDIV,
++	.mclk_with_tere = true,
+ };
+ 
+ static const struct fsl_sai_soc_data fsl_sai_imx8ulp_data = {
+@@ -1592,7 +1606,7 @@ static const struct of_device_id fsl_sai_ids[] = {
+ 	{ .compatible = "fsl,imx8mm-sai", .data = &fsl_sai_imx8mm_data },
+ 	{ .compatible = "fsl,imx8mp-sai", .data = &fsl_sai_imx8mp_data },
+ 	{ .compatible = "fsl,imx8ulp-sai", .data = &fsl_sai_imx8ulp_data },
+-	{ .compatible = "fsl,imx8mn-sai", .data = &fsl_sai_imx8mp_data },
++	{ .compatible = "fsl,imx8mn-sai", .data = &fsl_sai_imx8mn_data },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, fsl_sai_ids);
+@@ -1656,6 +1670,10 @@ static int fsl_sai_runtime_resume(struct device *dev)
+ 	if (ret)
+ 		goto disable_rx_clk;
+ 
++	if (sai->soc_data->mclk_with_tere && sai->mclk_direction_output)
++		regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs),
++				   FSL_SAI_CSR_TERE, FSL_SAI_CSR_TERE);
++
+ 	return 0;
+ 
+ disable_rx_clk:
+diff --git a/sound/soc/fsl/fsl_sai.h b/sound/soc/fsl/fsl_sai.h
+index caad5b0ac4ff4..b4d616a44023c 100644
+--- a/sound/soc/fsl/fsl_sai.h
++++ b/sound/soc/fsl/fsl_sai.h
+@@ -232,6 +232,7 @@ struct fsl_sai_soc_data {
+ 	bool use_imx_pcm;
+ 	bool use_edma;
+ 	bool mclk0_is_mclk1;
++	bool mclk_with_tere;
+ 	unsigned int fifo_depth;
+ 	unsigned int pins;
+ 	unsigned int reg_offset;
+@@ -288,6 +289,7 @@ struct fsl_sai {
+ 	bool synchronous[2];
+ 	struct fsl_sai_dl_cfg *dl_cfg;
+ 	unsigned int dl_cfg_cnt;
++	bool mclk_direction_output;
+ 
+ 	unsigned int mclk_id[2];
+ 	unsigned int mclk_streams;
+-- 
+2.40.1
+
 
 
