@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB98F262A1
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7290F262A1
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLUjg8yW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE22C433C7;
-	Mon, 16 Oct 2023 14:54:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTbprgUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2AEDC433C8;
+	Mon, 16 Oct 2023 14:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468081;
-	bh=tIhiVpgPqomQPItLYdmYOYen5LYl+oOTfFM16SEOFcQ=;
+	s=korg; t=1697468084;
+	bh=f+8Brc/rYBOMKjKTIkI4l4gv/oF1fmvYpueSqcoWjHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLUjg8yWol+IIUpBWkeVDN6DGGWpN2IbE87e+2jBd0lDrg+BZQyOaxLjFdwLQJv8f
-	 1kaHmu0vCT2xVQXGSWlJgJgrjc/nYWScKilZO6Lq26KCGX4c0tDzHCGmls2LPjNx7b
-	 iLRxt7IZYcKP9t6fewvW3uM+fLRLKCiINigzbO44=
+	b=QTbprgUbxK9/Ms0Ca08HWP6zKkI/paPNizWURgNwl4AzVPS7N27ydZtbrz5ljjiLs
+	 fX0ZhiJDni+BHe3g1olQIwgcdueip8R0eNVAqzkYMhp3d+bTKPQWwWfGPoWVKhw0WD
+	 gSjfFrqHPW5BDtH97zsNVndvHZYwJhbpXksI9yGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szilard Fabian <szfabian@bluemarch.art>,
+	Chris Toledanes <chris.toledanes@hp.com>,
+	Carl Ng <carl.ng@hp.com>,
+	Max Nguyen <maxwell.nguyen@hp.com>,
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.5 152/191] Input: i8042 - add Fujitsu Lifebook E5411 to i8042 quirk table
-Date: Mon, 16 Oct 2023 10:42:17 +0200
-Message-ID: <20231016084018.926935540@linuxfoundation.org>
+Subject: [PATCH 6.5 153/191] Input: xpad - add HyperX Clutch Gladiate Support
+Date: Mon, 16 Oct 2023 10:42:18 +0200
+Message-ID: <20231016084018.949398466@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -41,47 +44,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Szilard Fabian <szfabian@bluemarch.art>
+From: Max Nguyen <maxwell.nguyen@hp.com>
 
-commit 80f39e1c27ba9e5a1ea7e68e21c569c9d8e46062 upstream.
+commit e28a0974d749e5105d77233c0a84d35c37da047e upstream.
 
-In the initial boot stage the integrated keyboard of Fujitsu Lifebook E5411
-refuses to work and it's not possible to type for example a dm-crypt
-passphrase without the help of an external keyboard.
+Add HyperX controller support to xpad_device and xpad_table.
 
-i8042.nomux kernel parameter resolves this issue but using that a PS/2
-mouse is detected. This input device is unused even when the i2c-hid-acpi
-kernel module is blacklisted making the integrated ELAN touchpad
-(04F3:308A) not working at all.
-
-Since the integrated touchpad is managed by the i2c_designware input
-driver in the Linux kernel and you can't find a PS/2 mouse port on the
-computer I think it's safe to not use the PS/2 mouse port at all.
-
-Signed-off-by: Szilard Fabian <szfabian@bluemarch.art>
-Link: https://lore.kernel.org/r/20231004011749.101789-1-szfabian@bluemarch.art
+Suggested-by: Chris Toledanes <chris.toledanes@hp.com>
+Reviewed-by: Carl Ng <carl.ng@hp.com>
+Signed-off-by: Max Nguyen <maxwell.nguyen@hp.com>
+Reviewed-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Link: https://lore.kernel.org/r/20230906231514.4291-1-hphyperxdev@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/input/joystick/xpad.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -619,6 +619,14 @@ static const struct dmi_system_id i8042_
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
- 	},
- 	{
-+		/* Fujitsu Lifebook E5411 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU CLIENT COMPUTING LIMITED"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK E5411"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
-+	},
-+	{
- 		/* Gigabyte M912 */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "GIGABYTE"),
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -130,6 +130,7 @@ static const struct xpad_device {
+ 	{ 0x0079, 0x18d4, "GPD Win 2 X-Box Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x03eb, 0xff01, "Wooting One (Legacy)", 0, XTYPE_XBOX360 },
+ 	{ 0x03eb, 0xff02, "Wooting Two (Legacy)", 0, XTYPE_XBOX360 },
++	{ 0x03f0, 0x0495, "HyperX Clutch Gladiate", 0, XTYPE_XBOXONE },
+ 	{ 0x044f, 0x0f00, "Thrustmaster Wheel", 0, XTYPE_XBOX },
+ 	{ 0x044f, 0x0f03, "Thrustmaster Wheel", 0, XTYPE_XBOX },
+ 	{ 0x044f, 0x0f07, "Thrustmaster, Inc. Controller", 0, XTYPE_XBOX },
+@@ -458,6 +459,7 @@ static const struct usb_device_id xpad_t
+ 	{ USB_INTERFACE_INFO('X', 'B', 0) },	/* Xbox USB-IF not-approved class */
+ 	XPAD_XBOX360_VENDOR(0x0079),		/* GPD Win 2 controller */
+ 	XPAD_XBOX360_VENDOR(0x03eb),		/* Wooting Keyboards (Legacy) */
++	XPAD_XBOXONE_VENDOR(0x03f0),		/* HP HyperX Xbox One controllers */
+ 	XPAD_XBOX360_VENDOR(0x044f),		/* Thrustmaster Xbox 360 controllers */
+ 	XPAD_XBOX360_VENDOR(0x045e),		/* Microsoft Xbox 360 controllers */
+ 	XPAD_XBOXONE_VENDOR(0x045e),		/* Microsoft Xbox One controllers */
 
 
