@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045DE28DD5
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0243828DD5
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6hw93f/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EE3C433C8;
-	Mon, 16 Oct 2023 14:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZOWjCnL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB961C433C7;
+	Mon, 16 Oct 2023 14:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697466318;
-	bh=otljVOzm/L4zXfNOVytjG9YmYl5uMN2gc1yqwJP5WSQ=;
+	s=korg; t=1697466321;
+	bh=sEAtPHGVqN9YumoNYv3VDPGXpoeUzGnAcM59GdaEyU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6hw93f/pYTh95fuIn7HV4zBDS3ZOTeaNiDepEfBZ4nDaNKJ5LIj4ECsTJZKy+fPP
-	 /mfaJt3BjCnC6fBunazxrRaA2AfwFYhoq79tk6JcXN/QZ+Sm8XsqxsWuzOjo+NMWum
-	 e/eNuq46qhFq70skhINdjXJXF43V9PvB0nid5XN4=
+	b=oZOWjCnLzCyB47rbsFe7ukqPm6Z4M9nB1KSajLdYz1IcEXED+AEteqm67EkOBmSKP
+	 SeR8PMCwuhwXnRmV16hDwc3UhGPd/i7zT8Cwsw3rIVvez/5w28m6ONP/HiPTIfexdt
+	 xK+Rfof/C6escm2Lcy3OXu1wHWe4YWNCs8Aju7Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Mathias Krause <minipli@grsecurity.net>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 005/191] drm/i915: Register engines early to avoid type confusion
-Date: Mon, 16 Oct 2023 10:39:50 +0200
-Message-ID: <20231016084015.527257951@linuxfoundation.org>
+Subject: [PATCH 6.5 006/191] arm_pmu: acpi: Add a representative platform device for TRBE
+Date: Mon, 16 Oct 2023 10:39:51 +0200
+Message-ID: <20231016084015.550509169@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -44,88 +46,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Krause <minipli@grsecurity.net>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-[ Upstream commit 6007265ad70a87aa9b4eea79b5e5828da452cfd8 ]
+[ Upstream commit 1aa3d0274a4aac338ee45a3dfc3b17c944bcc2bc ]
 
-Commit 1ec23ed7126e ("drm/i915: Use uabi engines for the default engine
-map") switched from using for_each_engine() to for_each_uabi_engine() to
-iterate over the user engines. While this seems to be a sensible change,
-it's only safe to do when the engines are actually chained using the
-rb-tree structure which is not the case during early driver
-initialization where it can be either a lock-less list or regular
-double-linked list.
+ACPI TRBE does not have a HID for identification which could create and add
+a platform device into the platform bus. Also without a platform device, it
+cannot be probed and bound to a platform driver.
 
-In fact, the modesetting initialization code may end up calling
-default_engines() through the fb helper code while the engines list
-is still llist_node-based:
+This creates a dummy platform device for TRBE after ascertaining that ACPI
+provides required interrupts uniformly across all cpus on the system. This
+device gets created inside drivers/perf/arm_pmu_acpi.c to accommodate TRBE
+being built as a module.
 
-  i915_driver_probe() ->
-    intel_display_driver_probe() ->
-      intel_fbdev_init() ->
-        drm_fb_helper_init() ->
-          drm_client_init() ->
-            drm_client_open() ->
-              drm_file_alloc() ->
-                i915_driver_open() ->
-                  i915_gem_open() ->
-                    i915_gem_context_open() ->
-                      i915_gem_create_context() ->
-                        default_engines()
-
-Using for_each_uabi_engine() in default_engines() is therefore wrong, as
-it would try to interpret the llist as rb-tree, making it find no engine
-at all, as the rb_left and rb_right members will still be NULL, as they
-haven't been initialized yet.
-
-To fix this type confusion register the engines earlier and at the same
-time reduce the amount of code that has to deal with the intermediate
-llist state.
-
-Reported-by: sanity checks in grsecurity
-Suggested-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Fixes: 1ec23ed7126e ("drm/i915: Use uabi engines for the default engine map")
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
-Cc: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230928182019.10256-2-minipli@grsecurity.net
-[tursulin: fixed commit tag typo]
-(cherry picked from commit 2b562f032fc2594fb3fac22b7a2eb3c1969a7ba3)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20230817055405.249630-3-anshuman.khandual@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Stable-dep-of: 4785aa802853 ("cpuidle, ACPI: Evaluate LPI arch_flags for broadcast timer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_gem.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/acpi.h |  3 +++
+ drivers/perf/arm_pmu_acpi.c   | 35 +++++++++++++++++++++++++++++++++++
+ include/linux/perf/arm_pmu.h  |  1 +
+ 3 files changed, 39 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/i915_gem.c b/drivers/gpu/drm/i915/i915_gem.c
-index 1f65bb33dd212..a8551ce322de2 100644
---- a/drivers/gpu/drm/i915/i915_gem.c
-+++ b/drivers/gpu/drm/i915/i915_gem.c
-@@ -1199,6 +1199,13 @@ int i915_gem_init(struct drm_i915_private *dev_priv)
- 			goto err_unlock;
- 	}
+diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
+index bd68e1b7f29f3..4d537d56eb847 100644
+--- a/arch/arm64/include/asm/acpi.h
++++ b/arch/arm64/include/asm/acpi.h
+@@ -42,6 +42,9 @@
+ #define ACPI_MADT_GICC_SPE  (offsetof(struct acpi_madt_generic_interrupt, \
+ 	spe_interrupt) + sizeof(u16))
  
-+	/*
-+	 * Register engines early to ensure the engine list is in its final
-+	 * rb-tree form, lowering the amount of code that has to deal with
-+	 * the intermediate llist state.
-+	 */
-+	intel_engines_driver_register(dev_priv);
++#define ACPI_MADT_GICC_TRBE  (offsetof(struct acpi_madt_generic_interrupt, \
++	trbe_interrupt) + sizeof(u16))
 +
- 	return 0;
- 
- 	/*
-@@ -1246,8 +1253,6 @@ int i915_gem_init(struct drm_i915_private *dev_priv)
- void i915_gem_driver_register(struct drm_i915_private *i915)
- {
- 	i915_gem_driver_register__shrinker(i915);
--
--	intel_engines_driver_register(i915);
+ /* Basic configuration for ACPI */
+ #ifdef	CONFIG_ACPI
+ pgprot_t __acpi_get_mem_attribute(phys_addr_t addr);
+diff --git a/drivers/perf/arm_pmu_acpi.c b/drivers/perf/arm_pmu_acpi.c
+index 90815ad762ebc..8baeeb369118e 100644
+--- a/drivers/perf/arm_pmu_acpi.c
++++ b/drivers/perf/arm_pmu_acpi.c
+@@ -139,6 +139,40 @@ static inline void arm_spe_acpi_register_device(void)
  }
+ #endif /* CONFIG_ARM_SPE_PMU */
  
- void i915_gem_driver_unregister(struct drm_i915_private *i915)
++#if IS_ENABLED(CONFIG_CORESIGHT_TRBE)
++static struct resource trbe_resources[] = {
++	{
++		/* irq */
++		.flags          = IORESOURCE_IRQ,
++	}
++};
++
++static struct platform_device trbe_dev = {
++	.name = ARMV8_TRBE_PDEV_NAME,
++	.id = -1,
++	.resource = trbe_resources,
++	.num_resources = ARRAY_SIZE(trbe_resources)
++};
++
++static u16 arm_trbe_parse_gsi(struct acpi_madt_generic_interrupt *gicc)
++{
++	return gicc->trbe_interrupt;
++}
++
++static void arm_trbe_acpi_register_device(void)
++{
++	int ret = arm_acpi_register_pmu_device(&trbe_dev, ACPI_MADT_GICC_TRBE,
++					       arm_trbe_parse_gsi);
++	if (ret)
++		pr_warn("ACPI: TRBE: Unable to register device\n");
++}
++#else
++static inline void arm_trbe_acpi_register_device(void)
++{
++
++}
++#endif /* CONFIG_CORESIGHT_TRBE */
++
+ static int arm_pmu_acpi_parse_irqs(void)
+ {
+ 	int irq, cpu, irq_cpu, err;
+@@ -374,6 +408,7 @@ static int arm_pmu_acpi_init(void)
+ 		return 0;
+ 
+ 	arm_spe_acpi_register_device();
++	arm_trbe_acpi_register_device();
+ 
+ 	return 0;
+ }
+diff --git a/include/linux/perf/arm_pmu.h b/include/linux/perf/arm_pmu.h
+index a0801f68762bf..143fbc10ecfe0 100644
+--- a/include/linux/perf/arm_pmu.h
++++ b/include/linux/perf/arm_pmu.h
+@@ -187,5 +187,6 @@ void armpmu_free_irq(int irq, int cpu);
+ #endif /* CONFIG_ARM_PMU */
+ 
+ #define ARMV8_SPE_PDEV_NAME "arm,spe-v1"
++#define ARMV8_TRBE_PDEV_NAME "arm,trbe"
+ 
+ #endif /* __ARM_PMU_H__ */
 -- 
 2.40.1
 
