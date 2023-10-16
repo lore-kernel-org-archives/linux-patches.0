@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E521A5A7
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC191A5A7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdV40HUZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6964C433C7;
-	Mon, 16 Oct 2023 09:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjcDv5u+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9E3C433C9;
+	Mon, 16 Oct 2023 09:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697447054;
-	bh=pZK+6REqwJIGTPeVVlKK6BA0nkkJqnWmmk088iQGPbA=;
+	s=korg; t=1697447057;
+	bh=J35BMIZV7Mw39lQfUSHXQ7qxPGE0T9hx7CGGKjOffE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdV40HUZrVCMHlDGxC4Pt4PP3mr6QrJxCAmhFXLmBuJ3FwP634+LuOiOKq8zGQ830
-	 1XN77i1s3A7Jtg8yZQIc72VeiP5KTx6H2q167R51+eu6UW/4qtWw3aL5ASvrUBoW14
-	 XKmAP22Tn2kvUGc+8GEeExLvgjGWormuqh6sGLVg=
+	b=RjcDv5u+Ajs4pXpdmwdABIP6zZBTbN/HsNwU0yfzmnyaXJ62c2Q3qVgu+mQFQ1+Zx
+	 Z1AT1QsBGmN7CKlTSHFySUiBS7CgdOGWXzyhQ/8BbjCvwU3C3QkTV5E3OqrBSX6VmP
+	 hrKJTNx8COGlwrfc1E7yC6aeRFcambAiOhOmPm5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 116/131] dma-buf: add dma_fence_timestamp helper
-Date: Mon, 16 Oct 2023 10:41:39 +0200
-Message-ID: <20231016084002.950884888@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 117/131] pinctrl: avoid unsafe code pattern in find_pinctrl()
+Date: Mon, 16 Oct 2023 10:41:40 +0200
+Message-ID: <20231016084002.974374011@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -36,126 +35,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit b83ce9cb4a465b8f9a3fa45561b721a9551f60e3 upstream.
+commit c153a4edff6ab01370fcac8e46f9c89cca1060c2 upstream.
 
-When a fence signals there is a very small race window where the timestamp
-isn't updated yet. sync_file solves this by busy waiting for the
-timestamp to appear, but on other ocassions didn't handled this
-correctly.
+The code in find_pinctrl() takes a mutex and traverses a list of pinctrl
+structures. Later the caller bumps up reference count on the found
+structure. Such pattern is not safe as pinctrl that was found may get
+deleted before the caller gets around to increasing the reference count.
 
-Provide a dma_fence_timestamp() helper function for this and use it in
-all appropriate cases.
+Fix this by taking the reference count in find_pinctrl(), while it still
+holds the mutex.
 
-Another alternative would be to grab the spinlock when that happens.
-
-v2 by teddy: add a wait parameter to wait for the timestamp to show up, in case
-   the accurate timestamp is needed and/or the timestamp is not based on
-   ktime (e.g. hw timestamp)
-v3 chk: drop the parameter again for unified handling
-
-Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Fixes: 1774baa64f93 ("drm/scheduler: Change scheduled fence track v2")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-CC: stable@vger.kernel.org
-Link: https://patchwork.freedesktop.org/patch/msgid/20230929104725.2358-1-christian.koenig@amd.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/r/ZQs1RgTKg6VJqmPs@google.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-fence-unwrap.c     |   13 ++++---------
- drivers/dma-buf/sync_file.c            |    9 +++------
- drivers/gpu/drm/scheduler/sched_main.c |    2 +-
- include/linux/dma-fence.h              |   19 +++++++++++++++++++
- 4 files changed, 27 insertions(+), 16 deletions(-)
+ drivers/pinctrl/core.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/dma-buf/dma-fence-unwrap.c
-+++ b/drivers/dma-buf/dma-fence-unwrap.c
-@@ -76,16 +76,11 @@ struct dma_fence *__dma_fence_unwrap_mer
- 		dma_fence_unwrap_for_each(tmp, &iter[i], fences[i]) {
- 			if (!dma_fence_is_signaled(tmp)) {
- 				++count;
--			} else if (test_bit(DMA_FENCE_FLAG_TIMESTAMP_BIT,
--					    &tmp->flags)) {
--				if (ktime_after(tmp->timestamp, timestamp))
--					timestamp = tmp->timestamp;
- 			} else {
--				/*
--				 * Use the current time if the fence is
--				 * currently signaling.
--				 */
--				timestamp = ktime_get();
-+				ktime_t t = dma_fence_timestamp(tmp);
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -1007,17 +1007,20 @@ static int add_setting(struct pinctrl *p
+ 
+ static struct pinctrl *find_pinctrl(struct device *dev)
+ {
+-	struct pinctrl *p;
++	struct pinctrl *entry, *p = NULL;
+ 
+ 	mutex_lock(&pinctrl_list_mutex);
+-	list_for_each_entry(p, &pinctrl_list, node)
+-		if (p->dev == dev) {
+-			mutex_unlock(&pinctrl_list_mutex);
+-			return p;
 +
-+				if (ktime_after(t, timestamp))
-+					timestamp = t;
- 			}
++	list_for_each_entry(entry, &pinctrl_list, node) {
++		if (entry->dev == dev) {
++			p = entry;
++			kref_get(&p->users);
++			break;
  		}
++	}
+ 
+ 	mutex_unlock(&pinctrl_list_mutex);
+-	return NULL;
++	return p;
+ }
+ 
+ static void pinctrl_free(struct pinctrl *p, bool inlist);
+@@ -1126,7 +1129,6 @@ struct pinctrl *pinctrl_get(struct devic
+ 	p = find_pinctrl(dev);
+ 	if (p) {
+ 		dev_dbg(dev, "obtain a copy of previously claimed pinctrl\n");
+-		kref_get(&p->users);
+ 		return p;
  	}
---- a/drivers/dma-buf/sync_file.c
-+++ b/drivers/dma-buf/sync_file.c
-@@ -268,13 +268,10 @@ static int sync_fill_fence_info(struct d
- 		sizeof(info->driver_name));
  
- 	info->status = dma_fence_get_status(fence);
--	while (test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags) &&
--	       !test_bit(DMA_FENCE_FLAG_TIMESTAMP_BIT, &fence->flags))
--		cpu_relax();
- 	info->timestamp_ns =
--		test_bit(DMA_FENCE_FLAG_TIMESTAMP_BIT, &fence->flags) ?
--		ktime_to_ns(fence->timestamp) :
--		ktime_set(0, 0);
-+		dma_fence_is_signaled(fence) ?
-+			ktime_to_ns(dma_fence_timestamp(fence)) :
-+			ktime_set(0, 0);
- 
- 	return info->status;
- }
---- a/drivers/gpu/drm/scheduler/sched_main.c
-+++ b/drivers/gpu/drm/scheduler/sched_main.c
-@@ -841,7 +841,7 @@ drm_sched_get_cleanup_job(struct drm_gpu
- 
- 		if (next) {
- 			next->s_fence->scheduled.timestamp =
--				job->s_fence->finished.timestamp;
-+				dma_fence_timestamp(&job->s_fence->finished);
- 			/* start TO timer for next job */
- 			drm_sched_start_timeout(sched);
- 		}
---- a/include/linux/dma-fence.h
-+++ b/include/linux/dma-fence.h
-@@ -548,6 +548,25 @@ static inline void dma_fence_set_error(s
- 	fence->error = error;
- }
- 
-+/**
-+ * dma_fence_timestamp - helper to get the completion timestamp of a fence
-+ * @fence: fence to get the timestamp from.
-+ *
-+ * After a fence is signaled the timestamp is updated with the signaling time,
-+ * but setting the timestamp can race with tasks waiting for the signaling. This
-+ * helper busy waits for the correct timestamp to appear.
-+ */
-+static inline ktime_t dma_fence_timestamp(struct dma_fence *fence)
-+{
-+	if (WARN_ON(!test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags)))
-+		return ktime_get();
-+
-+	while (!test_bit(DMA_FENCE_FLAG_TIMESTAMP_BIT, &fence->flags))
-+		cpu_relax();
-+
-+	return fence->timestamp;
-+}
-+
- signed long dma_fence_wait_timeout(struct dma_fence *,
- 				   bool intr, signed long timeout);
- signed long dma_fence_wait_any_timeout(struct dma_fence **fences,
 
 
