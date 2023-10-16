@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3422728DBA
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E809128DBA
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/eJys2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75DDFC433C8;
-	Mon, 16 Oct 2023 14:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1z5GGOuI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3439EC433C7;
+	Mon, 16 Oct 2023 14:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468095;
-	bh=Q54hp2hObsp8vY/3Cn8TWqc+1e1twjm1g2apDI9yxOo=;
+	s=korg; t=1697468098;
+	bh=a5jIfQZaTZ9AGsiV1AwiApkV2b7GQTZAPNRRGfa/k7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/eJys2RJdBnlyEv4x3/8C7Q0rQQgnRWa/6U+fR5I0dYaKvGumUESebb8ezwGVKnc
-	 lQVIghKc67PIXyOQcNShW/HceM7WV47Uufx6INhC74iU3cUS8LwcGLsxgIivsAKgDu
-	 /Ptve2RuTpupkkX3++JABOI6WO3UdOpVSk5EtvX0=
+	b=1z5GGOuIFUKKrCIsxKahW8Meb08OU3/2yeL+7f06eCBdcy5yQNXLJyFSWuwHlpXoT
+	 jj3+sxPwDRb06xnkv+5byZIqCOwoGfeCCl4rnlpcIiL7MspiwwG9CQzDPy7U39z9Vf
+	 GfbU69MM88/n3AdKW8ZCRjSqDELm+rYjb2QzOp1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sili Luo <rootlab@huawei.com>,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.5 156/191] mctp: perform route lookups under a RCU read-side lock
-Date: Mon, 16 Oct 2023 10:42:21 +0200
-Message-ID: <20231016084019.017021106@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Sarthak Kukreti <sarthakkukreti@chromium.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.5 157/191] block: Dont invalidate pagecache for invalid falloc modes
+Date: Mon, 16 Oct 2023 10:42:22 +0200
+Message-ID: <20231016084019.040034473@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -43,84 +44,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+From: Sarthak Kukreti <sarthakkukreti@chromium.org>
 
-commit 5093bbfc10ab6636b32728e35813cbd79feb063c upstream.
+commit 1364a3c391aedfeb32aa025303ead3d7c91cdf9d upstream.
 
-Our current route lookups (mctp_route_lookup and mctp_route_lookup_null)
-traverse the net's route list without the RCU read lock held. This means
-the route lookup is subject to preemption, resulting in an potential
-grace period expiry, and so an eventual kfree() while we still have the
-route pointer.
+Only call truncate_bdev_range() if the fallocate mode is supported. This
+fixes a bug where data in the pagecache could be invalidated if the
+fallocate() was called on the block device with an invalid mode.
 
-Add the proper read-side critical section locks around the route
-lookups, preventing premption and a possible parallel kfree.
-
-The remaining net->mctp.routes accesses are already under a
-rcu_read_lock, or protected by the RTNL for updates.
-
-Based on an analysis from Sili Luo <rootlab@huawei.com>, where
-introducing a delay in the route lookup could cause a UAF on
-simultaneous sendmsg() and route deletion.
-
-Reported-by: Sili Luo <rootlab@huawei.com>
-Fixes: 889b7da23abf ("mctp: Add initial routing framework")
+Fixes: 25f4c41415e5 ("block: implement (some of) fallocate for block devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/29c4b0e67dc1bf3571df3982de87df90cae9b631.1696837310.git.jk@codeconstruct.com.au
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Sarthak Kukreti <sarthakkukreti@chromium.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: line?  I've never seen those wrapped.
+Link: https://lore.kernel.org/r/20231011201230.750105-1-sarthakkukreti@chromium.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mctp/route.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ block/fops.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -737,6 +737,8 @@ struct mctp_route *mctp_route_lookup(str
- {
- 	struct mctp_route *tmp, *rt = NULL;
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -659,24 +659,35 @@ static long blkdev_fallocate(struct file
  
-+	rcu_read_lock();
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 
+-	/* Invalidate the page cache, including dirty pages. */
+-	error = truncate_bdev_range(bdev, file_to_blk_mode(file), start, end);
+-	if (error)
+-		goto fail;
+-
++	/*
++	 * Invalidate the page cache, including dirty pages, for valid
++	 * de-allocate mode calls to fallocate().
++	 */
+ 	switch (mode) {
+ 	case FALLOC_FL_ZERO_RANGE:
+ 	case FALLOC_FL_ZERO_RANGE | FALLOC_FL_KEEP_SIZE:
++		error = truncate_bdev_range(bdev, file_to_blk_mode(file), start, end);
++		if (error)
++			goto fail;
 +
- 	list_for_each_entry_rcu(tmp, &net->mctp.routes, list) {
- 		/* TODO: add metrics */
- 		if (mctp_rt_match_eid(tmp, dnet, daddr)) {
-@@ -747,21 +749,29 @@ struct mctp_route *mctp_route_lookup(str
- 		}
- 	}
- 
-+	rcu_read_unlock();
+ 		error = blkdev_issue_zeroout(bdev, start >> SECTOR_SHIFT,
+ 					     len >> SECTOR_SHIFT, GFP_KERNEL,
+ 					     BLKDEV_ZERO_NOUNMAP);
+ 		break;
+ 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE:
++		error = truncate_bdev_range(bdev, file_to_blk_mode(file), start, end);
++		if (error)
++			goto fail;
 +
- 	return rt;
- }
- 
- static struct mctp_route *mctp_route_lookup_null(struct net *net,
- 						 struct net_device *dev)
- {
--	struct mctp_route *rt;
-+	struct mctp_route *tmp, *rt = NULL;
+ 		error = blkdev_issue_zeroout(bdev, start >> SECTOR_SHIFT,
+ 					     len >> SECTOR_SHIFT, GFP_KERNEL,
+ 					     BLKDEV_ZERO_NOFALLBACK);
+ 		break;
+ 	case FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE | FALLOC_FL_NO_HIDE_STALE:
++		error = truncate_bdev_range(bdev, file_to_blk_mode(file), start, end);
++		if (error)
++			goto fail;
 +
-+	rcu_read_lock();
- 
--	list_for_each_entry_rcu(rt, &net->mctp.routes, list) {
--		if (rt->dev->dev == dev && rt->type == RTN_LOCAL &&
--		    refcount_inc_not_zero(&rt->refs))
--			return rt;
-+	list_for_each_entry_rcu(tmp, &net->mctp.routes, list) {
-+		if (tmp->dev->dev == dev && tmp->type == RTN_LOCAL &&
-+		    refcount_inc_not_zero(&tmp->refs)) {
-+			rt = tmp;
-+			break;
-+		}
- 	}
- 
--	return NULL;
-+	rcu_read_unlock();
-+
-+	return rt;
- }
- 
- static int mctp_do_fragment_route(struct mctp_route *rt, struct sk_buff *skb,
+ 		error = blkdev_issue_discard(bdev, start >> SECTOR_SHIFT,
+ 					     len >> SECTOR_SHIFT, GFP_KERNEL);
+ 		break;
 
 
