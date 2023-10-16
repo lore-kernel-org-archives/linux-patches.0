@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8950915AE3
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0114B15AE3
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRlYlzx2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BECC433C9;
-	Mon, 16 Oct 2023 08:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/ECLEcz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C87C433C7;
+	Mon, 16 Oct 2023 08:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446047;
-	bh=trcx7UD1TxpifE54Fo32xNdO0o8USq3+QhyG8dIIXh0=;
+	s=korg; t=1697446050;
+	bh=ylfjCr0YfR0pUW63ms83f37UZY3pNB0WVvsggqwsAUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QRlYlzx2cn2XXtz769nJ+TLUylggyirkYT4GPlN/82X8f0ln8w3DhBS89Z0V4LjZ/
-	 tKrsPSslhtU4LqsUMvmrO1yXMNygVY4wzKbjBZgM/mmOTp6uPaFdqZ2Ovp6qQIezhZ
-	 Jmbn009m3uOP7iyYc+ghqNaUwRP0Wg0259gRW9mc=
+	b=N/ECLEczu4GCPH9DaULMHtfpwOMHCzsqa215v522rbrJ5ZBXnQuMdVBW3V2WBjEVQ
+	 kwPoiKR9fkkjBkik9VIl4CR0u+jfXf/EqBasuo/TX5OQazbU81uhZms67nbp6T4fg/
+	 /fEncReeUUWw0aQ6sgGTwl8NRoVJroUg8A1ZAfqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Xiubo Li <xiubli@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 066/102] ceph: fix incorrect revoked caps assert in ceph_fill_file_size()
-Date: Mon, 16 Oct 2023 10:41:05 +0200
-Message-ID: <20231016083955.462315509@linuxfoundation.org>
+Subject: [PATCH 5.15 067/102] ceph: fix type promotion bug on 32bit systems
+Date: Mon, 16 Oct 2023 10:41:06 +0200
+Message-ID: <20231016083955.488097101@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -42,44 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 15c0a870dc44ed14e01efbdd319d232234ee639f upstream.
+commit 07bb00ef00ace88dd6f695fadbba76565756e55c upstream.
 
-When truncating the inode the MDS will acquire the xlock for the
-ifile Locker, which will revoke the 'Frwsxl' caps from the clients.
-But when the client just releases and flushes the 'Fw' caps to MDS,
-for exmaple, and once the MDS receives the caps flushing msg it
-just thought the revocation has finished. Then the MDS will continue
-truncating the inode and then issued the truncate notification to
-all the clients. While just before the clients receives the cap
-flushing ack they receive the truncation notification, the clients
-will detecte that the 'issued | dirty' is still holding the 'Fw'
-caps.
+In this code "ret" is type long and "src_objlen" is unsigned int.  The
+problem is that on 32bit systems, when we do the comparison signed longs
+are type promoted to unsigned int.  So negative error codes from
+do_splice_direct() are treated as success instead of failure.
 
 Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/56693
-Fixes: b0d7c2231015 ("ceph: introduce i_truncate_mutex")
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
+Fixes: 1b0c3b9f91f0 ("ceph: re-org copy_file_range and fix some error paths")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/inode.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/ceph/file.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ceph/inode.c
-+++ b/fs/ceph/inode.c
-@@ -647,9 +647,7 @@ int ceph_fill_file_size(struct inode *in
- 			ci->i_truncate_seq = truncate_seq;
- 
- 			/* the MDS should have revoked these caps */
--			WARN_ON_ONCE(issued & (CEPH_CAP_FILE_EXCL |
--					       CEPH_CAP_FILE_RD |
--					       CEPH_CAP_FILE_WR |
-+			WARN_ON_ONCE(issued & (CEPH_CAP_FILE_RD |
- 					       CEPH_CAP_FILE_LAZYIO));
- 			/*
- 			 * If we hold relevant caps, or in the case where we're
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -2436,7 +2436,7 @@ static ssize_t __ceph_copy_file_range(st
+ 		ret = do_splice_direct(src_file, &src_off, dst_file,
+ 				       &dst_off, src_objlen, flags);
+ 		/* Abort on short copies or on error */
+-		if (ret < src_objlen) {
++		if (ret < (long)src_objlen) {
+ 			dout("Failed partial copy (%zd)\n", ret);
+ 			goto out;
+ 		}
 
 
