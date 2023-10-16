@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A6A1A5A7
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C4A1A5A7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gam0k1RP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30FEC433C9;
-	Mon, 16 Oct 2023 09:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrEU7UV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2088DC433C7;
+	Mon, 16 Oct 2023 09:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446942;
-	bh=FOPVgJ0iDm/wxOVvpo87H/ff+aUwGBJ81yZ995h/KO4=;
+	s=korg; t=1697446945;
+	bh=BvQHC1WOOVmR5TDmBJx52GB9LG2QWAqc+bXH2S+v2z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gam0k1RPqki/mxMhzj9w1gRbdnHplR7Uv8Xpmh8OQk8Cif9ln1I6ZFvcrq9tr542k
-	 ARUmsXl6OBT/xoN4oFJCY/+1bin0fIMDYa7kRpDE7LCMgfKQn2zsv+1p38xM1xHdvi
-	 4NwfPkoc68Jv9PlrXmzwvxEQEH+r0spGNMgvxrPE=
+	b=qrEU7UV3GC61cVabUMlQRGv2e/T2Yw8JQVAhsWI0nUecKrlVgSI5tB9xLy46uvM6W
+	 +qPtDeWOGmreKUMJ35V9AIJwgzlq96268q7xkukxn0P2rcO9KVLyO9dmZhCokz9FUj
+	 /n5nIELislPLZwsCcg9BC+cDzCcdqswlmkug7A1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Balcanquall <alex@alexbal.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 101/131] thunderbolt: Restart XDomain discovery handshake after failure
-Date: Mon, 16 Oct 2023 10:41:24 +0200
-Message-ID: <20231016084002.573466487@linuxfoundation.org>
+	Eddie James <eajames@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 6.1 102/131] powerpc/47x: Fix 47x syscall return crash
+Date: Mon, 16 Oct 2023 10:41:25 +0200
+Message-ID: <20231016084002.597741280@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -35,141 +36,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 308092d080852f8997126e5b3507536162416f4a upstream.
+commit f0eee815babed70a749d2496a7678be5b45b4c14 upstream.
 
-Alex reported that after rebooting the other host the peer-to-peer link
-does not come up anymore. The reason for this is that the host that was
-not rebooted tries to send the UUID request only 10 times according to
-the USB4 Inter-Domain spec and gives up if it does not get reply. Then
-when the other side is actually ready it cannot get the link established
-anymore. The USB4 Inter-Domain spec requires that the discovery protocol
-is restarted in that case so implement this now.
+Eddie reported that newer kernels were crashing during boot on his 476
+FSP2 system:
 
-Reported-by: Alex Balcanquall <alex@alexbal.com>
-Fixes: 8e1de7042596 ("thunderbolt: Add support for XDomain lane bonding")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+  kernel tried to execute user page (b7ee2000) - exploit attempt? (uid: 0)
+  BUG: Unable to handle kernel instruction fetch
+  Faulting instruction address: 0xb7ee2000
+  Oops: Kernel access of bad area, sig: 11 [#1]
+  BE PAGE_SIZE=4K FSP-2
+  Modules linked in:
+  CPU: 0 PID: 61 Comm: mount Not tainted 6.1.55-d23900f.ppcnf-fsp2 #1
+  Hardware name: ibm,fsp2 476fpe 0x7ff520c0 FSP-2
+  NIP:  b7ee2000 LR: 8c008000 CTR: 00000000
+  REGS: bffebd83 TRAP: 0400   Not tainted (6.1.55-d23900f.ppcnf-fs p2)
+  MSR:  00000030 <IR,DR>  CR: 00001000  XER: 20000000
+  GPR00: c00110ac bffebe63 bffebe7e bffebe88 8c008000 00001000 00000d12 b7ee2000
+  GPR08: 00000033 00000000 00000000 c139df10 48224824 1016c314 10160000 00000000
+  GPR16: 10160000 10160000 00000008 00000000 10160000 00000000 10160000 1017f5b0
+  GPR24: 1017fa50 1017f4f0 1017fa50 1017f740 1017f630 00000000 00000000 1017f4f0
+  NIP [b7ee2000] 0xb7ee2000
+  LR [8c008000] 0x8c008000
+  Call Trace:
+  Instruction dump:
+  XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX
+  XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX
+  ---[ end trace 0000000000000000 ]---
+
+The problem is in ret_from_syscall where the check for
+icache_44x_need_flush is done. When the flush is needed the code jumps
+out-of-line to do the flush, and then intends to jump back to continue
+the syscall return.
+
+However the branch back to label 1b doesn't return to the correct
+location, instead branching back just prior to the return to userspace,
+causing bogus register values to be used by the rfi.
+
+The breakage was introduced by commit 6f76a01173cc
+("powerpc/syscall: implement system call entry/exit logic in C for PPC32") which
+inadvertently removed the "1" label and reused it elsewhere.
+
+Fix it by adding named local labels in the correct locations. Note that
+the return label needs to be outside the ifdef so that CONFIG_PPC_47x=n
+compiles.
+
+Fixes: 6f76a01173cc ("powerpc/syscall: implement system call entry/exit logic in C for PPC32")
+Cc: stable@vger.kernel.org # v5.12+
+Reported-by: Eddie James <eajames@linux.ibm.com>
+Tested-by: Eddie James <eajames@linux.ibm.com>
+Link: https://lore.kernel.org/linuxppc-dev/fdaadc46-7476-9237-e104-1d2168526e72@linux.ibm.com/
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://msgid.link/20231010114750.847794-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/xdomain.c |   58 +++++++++++++++++++++++++++++-------------
- 1 file changed, 41 insertions(+), 17 deletions(-)
+ arch/powerpc/kernel/entry_32.S |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -704,6 +704,27 @@ out_unlock:
- 	mutex_unlock(&xdomain_lock);
- }
+--- a/arch/powerpc/kernel/entry_32.S
++++ b/arch/powerpc/kernel/entry_32.S
+@@ -135,8 +135,9 @@ ret_from_syscall:
+ 	lis	r4,icache_44x_need_flush@ha
+ 	lwz	r5,icache_44x_need_flush@l(r4)
+ 	cmplwi	cr0,r5,0
+-	bne-	2f
++	bne-	.L44x_icache_flush
+ #endif /* CONFIG_PPC_47x */
++.L44x_icache_flush_return:
+ 	kuep_unlock
+ 	lwz	r4,_LINK(r1)
+ 	lwz	r5,_CCR(r1)
+@@ -170,10 +171,11 @@ syscall_exit_finish:
+ 	b	1b
  
-+static void start_handshake(struct tb_xdomain *xd)
-+{
-+	xd->state = XDOMAIN_STATE_INIT;
-+	queue_delayed_work(xd->tb->wq, &xd->state_work,
-+			   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
-+}
-+
-+/* Can be called from state_work */
-+static void __stop_handshake(struct tb_xdomain *xd)
-+{
-+	cancel_delayed_work_sync(&xd->properties_changed_work);
-+	xd->properties_changed_retries = 0;
-+	xd->state_retries = 0;
-+}
-+
-+static void stop_handshake(struct tb_xdomain *xd)
-+{
-+	cancel_delayed_work_sync(&xd->state_work);
-+	__stop_handshake(xd);
-+}
-+
- static void tb_xdp_handle_request(struct work_struct *work)
- {
- 	struct xdomain_request_work *xw = container_of(work, typeof(*xw), work);
-@@ -766,6 +787,15 @@ static void tb_xdp_handle_request(struct
- 	case UUID_REQUEST:
- 		tb_dbg(tb, "%llx: received XDomain UUID request\n", route);
- 		ret = tb_xdp_uuid_response(ctl, route, sequence, uuid);
-+		/*
-+		 * If we've stopped the discovery with an error such as
-+		 * timing out, we will restart the handshake now that we
-+		 * received UUID request from the remote host.
-+		 */
-+		if (!ret && xd && xd->state == XDOMAIN_STATE_ERROR) {
-+			dev_dbg(&xd->dev, "restarting handshake\n");
-+			start_handshake(xd);
-+		}
- 		break;
+ #ifdef CONFIG_44x
+-2:	li	r7,0
++.L44x_icache_flush:
++	li	r7,0
+ 	iccci	r0,r0
+ 	stw	r7,icache_44x_need_flush@l(r4)
+-	b	1b
++	b	.L44x_icache_flush_return
+ #endif  /* CONFIG_44x */
  
- 	case LINK_STATE_STATUS_REQUEST:
-@@ -1522,6 +1552,13 @@ static void tb_xdomain_queue_properties_
- 			   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
- }
- 
-+static void tb_xdomain_failed(struct tb_xdomain *xd)
-+{
-+	xd->state = XDOMAIN_STATE_ERROR;
-+	queue_delayed_work(xd->tb->wq, &xd->state_work,
-+			   msecs_to_jiffies(XDOMAIN_DEFAULT_TIMEOUT));
-+}
-+
- static void tb_xdomain_state_work(struct work_struct *work)
- {
- 	struct tb_xdomain *xd = container_of(work, typeof(*xd), state_work.work);
-@@ -1548,7 +1585,7 @@ static void tb_xdomain_state_work(struct
- 		if (ret) {
- 			if (ret == -EAGAIN)
- 				goto retry_state;
--			xd->state = XDOMAIN_STATE_ERROR;
-+			tb_xdomain_failed(xd);
- 		} else {
- 			tb_xdomain_queue_properties_changed(xd);
- 			if (xd->bonding_possible)
-@@ -1613,7 +1650,7 @@ static void tb_xdomain_state_work(struct
- 		if (ret) {
- 			if (ret == -EAGAIN)
- 				goto retry_state;
--			xd->state = XDOMAIN_STATE_ERROR;
-+			tb_xdomain_failed(xd);
- 		} else {
- 			xd->state = XDOMAIN_STATE_ENUMERATED;
- 		}
-@@ -1624,6 +1661,8 @@ static void tb_xdomain_state_work(struct
- 		break;
- 
- 	case XDOMAIN_STATE_ERROR:
-+		dev_dbg(&xd->dev, "discovery failed, stopping handshake\n");
-+		__stop_handshake(xd);
- 		break;
- 
- 	default:
-@@ -1793,21 +1832,6 @@ static void tb_xdomain_release(struct de
- 	kfree(xd);
- }
- 
--static void start_handshake(struct tb_xdomain *xd)
--{
--	xd->state = XDOMAIN_STATE_INIT;
--	queue_delayed_work(xd->tb->wq, &xd->state_work,
--			   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
--}
--
--static void stop_handshake(struct tb_xdomain *xd)
--{
--	cancel_delayed_work_sync(&xd->properties_changed_work);
--	cancel_delayed_work_sync(&xd->state_work);
--	xd->properties_changed_retries = 0;
--	xd->state_retries = 0;
--}
--
- static int __maybe_unused tb_xdomain_suspend(struct device *dev)
- {
- 	stop_handshake(tb_to_xdomain(dev));
+ 	.globl	ret_from_fork
 
 
