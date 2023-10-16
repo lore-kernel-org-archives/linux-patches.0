@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18271D55F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22D91D55F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRg4ziyS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA18C433CB;
-	Mon, 16 Oct 2023 14:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDpWZFZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D851C433C7;
+	Mon, 16 Oct 2023 14:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467661;
-	bh=KLctU4YTxInutD4bhtL5ai2lJZ5ZVIkcMvgjQ+BwVY0=;
+	s=korg; t=1697467664;
+	bh=34wtwRPGKzKN8HfO5lu25lbtyl48QQm4K8aenixk9PI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRg4ziySmGETy0yJhF6Fg3dUR4uOTHMfLqeoS0B8KcydLu5+rKjQe9xxH0rPIQ0rY
-	 q+ilxArpoSN9bAvv37ZGgr/+rPgzcF8LOmaCzfnTBIw+20nUaR4BHNgqWyUfNSzQUI
-	 597WomvqRj3zrzE1AAHcJUhLqxtssvRA5rphRPCg=
+	b=wDpWZFZCgi3J8tk4+SEbKn87tOavf5SOJJbLOBfPyMn8KCDJ/l2yvqqC6A6mqULcq
+	 674MupsCdzmXju9jWxDK9IN85kyAy75JJriyGl9W7K6PmVn8pfn5ddPAi00CYRtWol
+	 V2qrg+w6wdK10I9e8CI0pGF0/G5ZhlyrZoWtQMBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 065/191] riscv, bpf: Sign-extend return values
-Date: Mon, 16 Oct 2023 10:40:50 +0200
-Message-ID: <20231016084016.921036861@linuxfoundation.org>
+Subject: [PATCH 6.5 066/191] riscv, bpf: Track both a0 (RISC-V ABI) and a5 (BPF) return values
+Date: Mon, 16 Oct 2023 10:40:51 +0200
+Message-ID: <20231016084016.945165178@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -45,76 +45,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Björn Töpel <bjorn@rivosinc.com>
 
-[ Upstream commit 2f1b0d3d733169eb11680bfa97c266ae5e757148 ]
+[ Upstream commit 7112cd26e606c7ba51f9cc5c1905f06039f6f379 ]
 
-The RISC-V architecture does not expose sub-registers, and hold all
-32-bit values in a sign-extended format [1] [2]:
+The RISC-V BPF uses a5 for BPF return values, which are zero-extended,
+whereas the RISC-V ABI uses a0 which is sign-extended. In other words,
+a5 and a0 can differ, and are used in different context.
 
-  | The compiler and calling convention maintain an invariant that all
-  | 32-bit values are held in a sign-extended format in 64-bit
-  | registers. Even 32-bit unsigned integers extend bit 31 into bits
-  | 63 through 32. Consequently, conversion between unsigned and
-  | signed 32-bit integers is a no-op, as is conversion from a signed
-  | 32-bit integer to a signed 64-bit integer.
+The BPF trampoline are used for both BPF programs, and regular kernel
+functions.
 
-While BPF, on the other hand, exposes sub-registers, and use
-zero-extension (similar to arm64/x86).
+Make sure that the RISC-V BPF trampoline saves, and restores both a0
+and a5.
 
-This has led to some subtle bugs, where a BPF JITted program has not
-sign-extended the a0 register (return value in RISC-V land), passed
-the return value up the kernel, e.g.:
-
-  | int from_bpf(void);
-  |
-  | long foo(void)
-  | {
-  |    return from_bpf();
-  | }
-
-Here, a0 would be 0xffff_ffff, instead of the expected
-0xffff_ffff_ffff_ffff.
-
-Internally, the RISC-V JIT uses a5 as a dedicated register for BPF
-return values.
-
-Keep a5 zero-extended, but explicitly sign-extend a0 (which is used
-outside BPF land). Now that a0 (RISC-V ABI) and a5 (BPF ABI) differs,
-a0 is only moved to a5 for non-BPF native calls (BPF_PSEUDO_CALL).
-
-Fixes: 2353ecc6f91f ("bpf, riscv: add BPF JIT for RV64G")
+Fixes: 49b5e77ae3e2 ("riscv, bpf: Add bpf trampoline support for RV64")
 Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://github.com/riscv/riscv-isa-manual/releases/download/riscv-isa-release-056b6ff-2023-10-02/unpriv-isa-asciidoc.pdf # [2]
-Link: https://github.com/riscv-non-isa/riscv-elf-psabi-doc/releases/download/draft-20230929-e5c800e661a53efe3c2678d71a306323b60eb13b/riscv-abi.pdf # [2]
-Link: https://lore.kernel.org/bpf/20231004120706.52848-2-bjorn@kernel.org
+Link: https://lore.kernel.org/bpf/20231004120706.52848-3-bjorn@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp64.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/riscv/net/bpf_jit_comp64.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
-index c648864c8cd1a..3a3631bae05c1 100644
+index 3a3631bae05c1..3b4cb713e3684 100644
 --- a/arch/riscv/net/bpf_jit_comp64.c
 +++ b/arch/riscv/net/bpf_jit_comp64.c
-@@ -239,7 +239,7 @@ static void __build_epilogue(bool is_tail_call, struct rv_jit_context *ctx)
- 	emit_addi(RV_REG_SP, RV_REG_SP, stack_adjust, ctx);
- 	/* Set return value. */
- 	if (!is_tail_call)
--		emit_mv(RV_REG_A0, RV_REG_A5, ctx);
-+		emit_addiw(RV_REG_A0, RV_REG_A5, 0, ctx);
- 	emit_jalr(RV_REG_ZERO, is_tail_call ? RV_REG_T3 : RV_REG_RA,
- 		  is_tail_call ? 20 : 0, /* skip reserved nops and TCC init */
- 		  ctx);
-@@ -1436,7 +1436,8 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
- 		if (ret)
- 			return ret;
+@@ -757,8 +757,10 @@ static int invoke_bpf_prog(struct bpf_tramp_link *l, int args_off, int retval_of
+ 	if (ret)
+ 		return ret;
  
--		emit_mv(bpf_to_rv_reg(BPF_REG_0, ctx), RV_REG_A0, ctx);
-+		if (insn->src_reg != BPF_PSEUDO_CALL)
-+			emit_mv(bpf_to_rv_reg(BPF_REG_0, ctx), RV_REG_A0, ctx);
- 		break;
+-	if (save_ret)
+-		emit_sd(RV_REG_FP, -retval_off, regmap[BPF_REG_0], ctx);
++	if (save_ret) {
++		emit_sd(RV_REG_FP, -retval_off, RV_REG_A0, ctx);
++		emit_sd(RV_REG_FP, -(retval_off - 8), regmap[BPF_REG_0], ctx);
++	}
+ 
+ 	/* update branch with beqz */
+ 	if (ctx->insns) {
+@@ -844,7 +846,7 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
+ 
+ 	save_ret = flags & (BPF_TRAMP_F_CALL_ORIG | BPF_TRAMP_F_RET_FENTRY_RET);
+ 	if (save_ret) {
+-		stack_size += 8;
++		stack_size += 16; /* Save both A5 (BPF R0) and A0 */
+ 		retval_off = stack_size;
  	}
- 	/* tail call */
+ 
+@@ -931,6 +933,7 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
+ 		if (ret)
+ 			goto out;
+ 		emit_sd(RV_REG_FP, -retval_off, RV_REG_A0, ctx);
++		emit_sd(RV_REG_FP, -(retval_off - 8), regmap[BPF_REG_0], ctx);
+ 		im->ip_after_call = ctx->insns + ctx->ninsns;
+ 		/* 2 nops reserved for auipc+jalr pair */
+ 		emit(rv_nop(), ctx);
+@@ -962,8 +965,10 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
+ 	if (flags & BPF_TRAMP_F_RESTORE_REGS)
+ 		restore_args(nregs, args_off, ctx);
+ 
+-	if (save_ret)
++	if (save_ret) {
+ 		emit_ld(RV_REG_A0, -retval_off, RV_REG_FP, ctx);
++		emit_ld(regmap[BPF_REG_0], -(retval_off - 8), RV_REG_FP, ctx);
++	}
+ 
+ 	emit_ld(RV_REG_S1, -sreg_off, RV_REG_FP, ctx);
+ 
 -- 
 2.40.1
 
