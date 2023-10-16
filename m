@@ -1,35 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4741A58C
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C08B1A5A0
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBlWL3Vk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDE3C433CA;
-	Mon, 16 Oct 2023 08:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCR34Sr+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69ECC433C8;
+	Mon, 16 Oct 2023 08:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445907;
-	bh=SC/6PPLmqvq91BE50NcoYBuNoeAmo8QSe7wzMSvO6sw=;
+	s=korg; t=1697445914;
+	bh=LsiuxeHsIkfQ+NcHu69mZnDUWP0CQqceomoxlFL9Idk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lBlWL3VkGJQCcmt2SQ5pjbPA31idSG9RScEGQoNE71Nys4hUOJMfBPe0r/OgIhZbF
-	 p/IAgKsq9gtQRYiJgNgeY0cBZqEuko8/LdYjL2eGDd/HTc8q0C8Qi6q/YwXLD4Nkio
-	 53TzlB9sNbut3HImAbzSeFsjIn4CJkQx8sCGe4ks=
+	b=LCR34Sr+9cEdj/8Vrsad/FRdf7KvEUDOHDqi+pm4KpSM42utScm/SyALMawMWpTB9
+	 j+5w5RRRCTpC3JkwQMYxsyU8sg2QOV8OPRHhO557K2PLjj9sZDFgvCQ2sfIhC7eWYg
+	 5107n2WAypG20qR66txC5ZIa8AepAFaPUQ/Sabxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlotte Tan <charlotte@extrahop.com>,
-	Adham Faris <afaris@nvidia.com>,
-	Aya Levin <ayal@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Will Mortensen <will@extrahop.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sili Luo <rootlab@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/102] net/mlx5e: Again mutually exclude RX-FCS and RX-port-timestamp
-Date: Mon, 16 Oct 2023 10:40:34 +0200
-Message-ID: <20231016083954.638250986@linuxfoundation.org>
+Subject: [PATCH 5.15 036/102] net: nfc: fix races in nfc_llcp_sock_get() and nfc_llcp_sock_get_sn()
+Date: Mon, 16 Oct 2023 10:40:35 +0200
+Message-ID: <20231016083954.664305918@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -48,55 +45,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Mortensen <will@extrahop.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit da6192ca72d5ad913d109d43dc896290ad05d98f ]
+[ Upstream commit 31c07dffafce914c1d1543c135382a11ff058d93 ]
 
-Commit 1e66220948df8 ("net/mlx5e: Update rx ring hw mtu upon each rx-fcs
-flag change") seems to have accidentally inverted the logic added in
-commit 0bc73ad46a76 ("net/mlx5e: Mutually exclude RX-FCS and
-RX-port-timestamp").
+Sili Luo reported a race in nfc_llcp_sock_get(), leading to UAF.
 
-The impact of this is a little unclear since it seems the FCS scattered
-with RX-FCS is (usually?) correct regardless.
+Getting a reference on the socket found in a lookup while
+holding a lock should happen before releasing the lock.
 
-Fixes: 1e66220948df8 ("net/mlx5e: Update rx ring hw mtu upon each rx-fcs flag change")
-Tested-by: Charlotte Tan <charlotte@extrahop.com>
-Reviewed-by: Charlotte Tan <charlotte@extrahop.com>
-Cc: Adham Faris <afaris@nvidia.com>
-Cc: Aya Levin <ayal@nvidia.com>
-Cc: Tariq Toukan <tariqt@nvidia.com>
-Cc: Moshe Shemesh <moshe@nvidia.com>
-Cc: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Will Mortensen <will@extrahop.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20231006053706.514618-1-will@extrahop.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+nfc_llcp_sock_get_sn() has a similar problem.
+
+Finally nfc_llcp_recv_snl() needs to make sure the socket
+found by nfc_llcp_sock_from_sn() does not disappear.
+
+Fixes: 8f50020ed9b8 ("NFC: LLCP late binding")
+Reported-by: Sili Luo <rootlab@huawei.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Willy Tarreau <w@1wt.eu>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20231009123110.3735515-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/nfc/llcp_core.c | 30 ++++++++++++------------------
+ 1 file changed, 12 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index fdc4a5a80da41..923be5fb7d216 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -3373,13 +3373,14 @@ static int set_feature_rx_fcs(struct net_device *netdev, bool enable)
- 	struct mlx5e_channels *chs = &priv->channels;
- 	struct mlx5e_params new_params;
- 	int err;
-+	bool rx_ts_over_crc = !enable;
+diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
+index b1107570eaee8..92f70686bee0a 100644
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -205,17 +205,13 @@ static struct nfc_llcp_sock *nfc_llcp_sock_get(struct nfc_llcp_local *local,
  
- 	mutex_lock(&priv->state_lock);
+ 		if (tmp_sock->ssap == ssap && tmp_sock->dsap == dsap) {
+ 			llcp_sock = tmp_sock;
++			sock_hold(&llcp_sock->sk);
+ 			break;
+ 		}
+ 	}
  
- 	new_params = chs->params;
- 	new_params.scatter_fcs_en = enable;
- 	err = mlx5e_safe_switch_params(priv, &new_params, mlx5e_set_rx_port_ts_wrap,
--				       &new_params.scatter_fcs_en, true);
-+				       &rx_ts_over_crc, true);
- 	mutex_unlock(&priv->state_lock);
- 	return err;
+ 	read_unlock(&local->sockets.lock);
+ 
+-	if (llcp_sock == NULL)
+-		return NULL;
+-
+-	sock_hold(&llcp_sock->sk);
+-
+ 	return llcp_sock;
  }
+ 
+@@ -348,7 +344,8 @@ static int nfc_llcp_wks_sap(const char *service_name, size_t service_name_len)
+ 
+ static
+ struct nfc_llcp_sock *nfc_llcp_sock_from_sn(struct nfc_llcp_local *local,
+-					    const u8 *sn, size_t sn_len)
++					    const u8 *sn, size_t sn_len,
++					    bool needref)
+ {
+ 	struct sock *sk;
+ 	struct nfc_llcp_sock *llcp_sock, *tmp_sock;
+@@ -384,6 +381,8 @@ struct nfc_llcp_sock *nfc_llcp_sock_from_sn(struct nfc_llcp_local *local,
+ 
+ 		if (memcmp(sn, tmp_sock->service_name, sn_len) == 0) {
+ 			llcp_sock = tmp_sock;
++			if (needref)
++				sock_hold(&llcp_sock->sk);
+ 			break;
+ 		}
+ 	}
+@@ -425,7 +424,8 @@ u8 nfc_llcp_get_sdp_ssap(struct nfc_llcp_local *local,
+ 		 * to this service name.
+ 		 */
+ 		if (nfc_llcp_sock_from_sn(local, sock->service_name,
+-					  sock->service_name_len) != NULL) {
++					  sock->service_name_len,
++					  false) != NULL) {
+ 			mutex_unlock(&local->sdp_lock);
+ 
+ 			return LLCP_SAP_MAX;
+@@ -833,16 +833,7 @@ static struct nfc_llcp_sock *nfc_llcp_connecting_sock_get(struct nfc_llcp_local
+ static struct nfc_llcp_sock *nfc_llcp_sock_get_sn(struct nfc_llcp_local *local,
+ 						  const u8 *sn, size_t sn_len)
+ {
+-	struct nfc_llcp_sock *llcp_sock;
+-
+-	llcp_sock = nfc_llcp_sock_from_sn(local, sn, sn_len);
+-
+-	if (llcp_sock == NULL)
+-		return NULL;
+-
+-	sock_hold(&llcp_sock->sk);
+-
+-	return llcp_sock;
++	return nfc_llcp_sock_from_sn(local, sn, sn_len, true);
+ }
+ 
+ static const u8 *nfc_llcp_connect_sn(const struct sk_buff *skb, size_t *sn_len)
+@@ -1307,7 +1298,8 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+ 			}
+ 
+ 			llcp_sock = nfc_llcp_sock_from_sn(local, service_name,
+-							  service_name_len);
++							  service_name_len,
++							  true);
+ 			if (!llcp_sock) {
+ 				sap = 0;
+ 				goto add_snl;
+@@ -1327,6 +1319,7 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+ 
+ 				if (sap == LLCP_SAP_MAX) {
+ 					sap = 0;
++					nfc_llcp_sock_put(llcp_sock);
+ 					goto add_snl;
+ 				}
+ 
+@@ -1344,6 +1337,7 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+ 
+ 			pr_debug("%p %d\n", llcp_sock, sap);
+ 
++			nfc_llcp_sock_put(llcp_sock);
+ add_snl:
+ 			sdp = nfc_llcp_build_sdres_tlv(tid, sap);
+ 			if (sdp == NULL)
 -- 
 2.40.1
 
