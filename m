@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848D81A27D
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587001A27D
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ReWSoA3L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724E5C433C9;
-	Mon, 16 Oct 2023 08:46:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDn7K4N4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0D3C433C7;
+	Mon, 16 Oct 2023 08:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445976;
-	bh=f42wX+F1AAPTgCzXXcuM1h+KToPb066yjnKSy2ucFy8=;
+	s=korg; t=1697445981;
+	bh=aN6s04zwvSpjsGuZdbG94c0o1RjMTX0OmuEzfQ1jstM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ReWSoA3LHXuzguheffrGzdutpPvraLQVfFYQiP6nnyKaPHBEJusP/2tqrqm8cWgUm
-	 d03VBk5BJZwH81CHQBLHDCW5J94GRF6k7Qvx0olS9Ut9+iafkafOpoUzF6rdD54viw
-	 HaD4Z46K1JpnS2pVW/WH6E95A1EaRTtVs4stGSS4=
+	b=lDn7K4N4q0/bCVLWcw8hsHohy+ngEH1gnBWOW6EIp1nI34bCgc55dowpy2o6WI1SC
+	 2KhtUtw08Tlyx4XaWyS762DdQXPSbDdZOXUXP61eacZwBhWHWIumgsQLAsYd7i6tG2
+	 YbBbPz8uRLxBY2NNQJ1HC05ODlSNCLUHhJQKd6/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/102] ravb: Fix use-after-free issue in ravb_tx_timeout_work()
-Date: Mon, 16 Oct 2023 10:40:22 +0200
-Message-ID: <20231016083954.323722192@linuxfoundation.org>
+Subject: [PATCH 5.15 024/102] ieee802154: ca8210: Fix a potential UAF in ca8210_probe
+Date: Mon, 16 Oct 2023 10:40:23 +0200
+Message-ID: <20231016083954.351020605@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -44,53 +42,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 3971442870713de527684398416970cf025b4f89 ]
+[ Upstream commit f990874b1c98fe8e57ee9385669f501822979258 ]
 
-The ravb_stop() should call cancel_work_sync(). Otherwise,
-ravb_tx_timeout_work() is possible to use the freed priv after
-ravb_remove() was called like below:
+If of_clk_add_provider() fails in ca8210_register_ext_clock(),
+it calls clk_unregister() to release priv->clk and returns an
+error. However, the caller ca8210_probe() then calls ca8210_remove(),
+where priv->clk is freed again in ca8210_unregister_ext_clock(). In
+this case, a use-after-free may happen in the second time we call
+clk_unregister().
 
-CPU0			CPU1
-			ravb_tx_timeout()
-ravb_remove()
-unregister_netdev()
-free_netdev(ndev)
-// free priv
-			ravb_tx_timeout_work()
-			// use priv
+Fix this by removing the first clk_unregister(). Also, priv->clk could
+be an error code on failure of clk_register_fixed_rate(). Use
+IS_ERR_OR_NULL to catch this case in ca8210_unregister_ext_clock().
 
-unregister_netdev() will call .ndo_stop() so that ravb_stop() is
-called. And, after phy_stop() is called, netif_carrier_off()
-is also called. So that .ndo_tx_timeout() will not be called
-after phy_stop().
-
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Reported-by: Zheng Wang <zyytlz.wz@163.com>
-Closes: https://lore.kernel.org/netdev/20230725030026.1664873-1-zyytlz.wz@163.com/
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20231005011201.14368-3-yoshihiro.shimoda.uh@renesas.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ded845a781a5 ("ieee802154: Add CA8210 IEEE 802.15.4 device driver")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Message-ID: <20231007033049.22353-1-dinghao.liu@zju.edu.cn>
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ieee802154/ca8210.c | 17 +++--------------
+ 1 file changed, 3 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index a866a38ebea55..19733c9a7c25e 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1774,6 +1774,8 @@ static int ravb_close(struct net_device *ndev)
- 			of_phy_deregister_fixed_link(np);
- 	}
+diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
+index 5834d3ed6dcf5..dc786c3bbccf8 100644
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -2783,7 +2783,6 @@ static int ca8210_register_ext_clock(struct spi_device *spi)
+ 	struct device_node *np = spi->dev.of_node;
+ 	struct ca8210_priv *priv = spi_get_drvdata(spi);
+ 	struct ca8210_platform_data *pdata = spi->dev.platform_data;
+-	int ret = 0;
  
-+	cancel_work_sync(&priv->work);
-+
- 	if (info->multi_irqs) {
- 		free_irq(priv->tx_irqs[RAVB_NC], ndev);
- 		free_irq(priv->rx_irqs[RAVB_NC], ndev);
+ 	if (!np)
+ 		return -EFAULT;
+@@ -2800,18 +2799,8 @@ static int ca8210_register_ext_clock(struct spi_device *spi)
+ 		dev_crit(&spi->dev, "Failed to register external clk\n");
+ 		return PTR_ERR(priv->clk);
+ 	}
+-	ret = of_clk_add_provider(np, of_clk_src_simple_get, priv->clk);
+-	if (ret) {
+-		clk_unregister(priv->clk);
+-		dev_crit(
+-			&spi->dev,
+-			"Failed to register external clock as clock provider\n"
+-		);
+-	} else {
+-		dev_info(&spi->dev, "External clock set as clock provider\n");
+-	}
+ 
+-	return ret;
++	return of_clk_add_provider(np, of_clk_src_simple_get, priv->clk);
+ }
+ 
+ /**
+@@ -2823,8 +2812,8 @@ static void ca8210_unregister_ext_clock(struct spi_device *spi)
+ {
+ 	struct ca8210_priv *priv = spi_get_drvdata(spi);
+ 
+-	if (!priv->clk)
+-		return
++	if (IS_ERR_OR_NULL(priv->clk))
++		return;
+ 
+ 	of_clk_del_provider(spi->dev.of_node);
+ 	clk_unregister(priv->clk);
 -- 
 2.40.1
 
