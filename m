@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA04919461
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1971A27D
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8o1E4G3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22A9C433C8;
-	Mon, 16 Oct 2023 08:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lm2UhS3F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C0EC433CA;
+	Mon, 16 Oct 2023 08:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697445931;
-	bh=ir4/kmnla3wGq1wMcoqM3djdDkgXXmr37HAKpd9Un3M=;
+	s=korg; t=1697445937;
+	bh=W9FvXo8DAglxJAKQxi6Fk8Uf4CIRUZfaYGGvP4B+6U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E8o1E4G3fP53X64YbaSw1n8b8engHBejOx1T/ksnAkkEZQhqZ3IGQ/vmtNe0Oy+mC
-	 vItU/gYybpgjk76QvJd+OkqFh/ibLbJxtLS9h7OIkssx0lMuSchNYV31sltjoW9+m0
-	 tWn2aa/xP7E/TvpPSrYeSug9mGvSH0rHId2LVfng=
+	b=lm2UhS3F4hsSQIUS5kNKygfNq6Ph3oC99oXGPs7DrUIzB2c/7y9tSf63ghS8BXXug
+	 2l6IvpOpmVJzbboui5iezTgT1xapiAkemX8xUJmQGJpAf8YE9B+NGldpt/Wb0tZpu0
+	 cY4d+ij2nh9DIL/AAYiBZFI6CZgQQL21LmxOtUcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/102] ravb: Fix up dma_free_coherent() call in ravb_remove()
-Date: Mon, 16 Oct 2023 10:40:21 +0200
-Message-ID: <20231016083954.278614384@linuxfoundation.org>
+	Jeremy Cline <jeremy@jcline.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+0839b78e119aae1fec78@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 040/102] nfc: nci: assert requested protocol is valid
+Date: Mon, 16 Oct 2023 10:40:39 +0200
+Message-ID: <20231016083954.769951064@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -43,45 +44,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Jeremy Cline <jeremy@jcline.org>
 
-[ Upstream commit e6864af61493113558c502b5cd0d754c19b93277 ]
+[ Upstream commit 354a6e707e29cb0c007176ee5b8db8be7bd2dee0 ]
 
-In ravb_remove(), dma_free_coherent() should be call after
-unregister_netdev(). Otherwise, this controller is possible to use
-the freed buffer.
+The protocol is used in a bit mask to determine if the protocol is
+supported. Assert the provided protocol is less than the maximum
+defined so it doesn't potentially perform a shift-out-of-bounds and
+provide a clearer error for undefined protocols vs unsupported ones.
 
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20231005011201.14368-2-yoshihiro.shimoda.uh@renesas.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Reported-and-tested-by: syzbot+0839b78e119aae1fec78@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0839b78e119aae1fec78
+Signed-off-by: Jeremy Cline <jeremy@jcline.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20231009200054.82557-1-jeremy@jcline.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/nfc/nci/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 4ee72d33e9cb7..a866a38ebea55 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2382,14 +2382,14 @@ static int ravb_remove(struct platform_device *pdev)
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 7b6cf9a44aea7..643dfc90b0636 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -908,6 +908,11 @@ static int nci_activate_target(struct nfc_dev *nfc_dev,
+ 		return -EINVAL;
+ 	}
  
- 	clk_disable_unprepare(priv->refclk);
- 
--	dma_free_coherent(ndev->dev.parent, priv->desc_bat_size, priv->desc_bat,
--			  priv->desc_bat_dma);
- 	/* Set reset mode */
- 	ravb_write(ndev, CCC_OPC_RESET, CCC);
- 	unregister_netdev(ndev);
- 	netif_napi_del(&priv->napi[RAVB_NC]);
- 	netif_napi_del(&priv->napi[RAVB_BE]);
- 	ravb_mdio_release(priv);
-+	dma_free_coherent(ndev->dev.parent, priv->desc_bat_size, priv->desc_bat,
-+			  priv->desc_bat_dma);
- 	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	reset_control_assert(priv->rstc);
++	if (protocol >= NFC_PROTO_MAX) {
++		pr_err("the requested nfc protocol is invalid\n");
++		return -EINVAL;
++	}
++
+ 	if (!(nci_target->supported_protocols & (1 << protocol))) {
+ 		pr_err("target does not support the requested protocol 0x%x\n",
+ 		       protocol);
 -- 
 2.40.1
 
