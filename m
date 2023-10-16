@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717C618634
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125E31A59B
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvWVJ2/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D6AC433C9;
-	Mon, 16 Oct 2023 09:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMNV0hWT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B205C433C8;
+	Mon, 16 Oct 2023 09:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446857;
-	bh=3+tcf1VHEyV9h75f4EkPAI97MVylMXczmHbSdbW4ahk=;
+	s=korg; t=1697446862;
+	bh=3UHBD3mPkT+f79QwSLE2ulqtdj5quYKp75j2PrD0Es0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MvWVJ2/7SEXsURyVM+uYF5302/hefPzM/JV5Qr6t5nY3a3NBCqO8f744ZIwg29hKF
-	 oT040v6ezgvozbDXEKaBw2dTfsB/W8bwHanpySPBK0HiCm4dzPq1fN/Wce31BNIGSY
-	 CRB40Ko7B5k/hsf6jNYNxfa2qsNpJgwliX7URci8=
+	b=MMNV0hWT3zVIi21TTwMV2YTTmvRNAahavHBunSRUeCfVuuvXP8DGJRac6yADnim6r
+	 J77a88hARGrMorWXasO8yM/3KvDfzXFGy9Bla6E2a0hUJ4ruNQLki0nudNL0TQBx+u
+	 C19MP6zZloHtuVyOueVtT1aerATmLUJsciQXqx3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Cline <jeremy@jcline.org>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+0839b78e119aae1fec78@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 065/131] nfc: nci: assert requested protocol is valid
-Date: Mon, 16 Oct 2023 10:40:48 +0200
-Message-ID: <20231016084001.681074298@linuxfoundation.org>
+	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
+	Chandrakant Minajigi <Chandrakant.Minajigi@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 083/131] iio: dac: ad3552r: Correct device IDs
+Date: Mon, 16 Oct 2023 10:41:06 +0200
+Message-ID: <20231016084002.121922420@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -44,45 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Cline <jeremy@jcline.org>
+From: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
 
-[ Upstream commit 354a6e707e29cb0c007176ee5b8db8be7bd2dee0 ]
+commit 9a85653ed3b9a9b7b31d95a34b64b990c3d33ca1 upstream.
 
-The protocol is used in a bit mask to determine if the protocol is
-supported. Assert the provided protocol is less than the maximum
-defined so it doesn't potentially perform a shift-out-of-bounds and
-provide a clearer error for undefined protocols vs unsupported ones.
+Device IDs for AD3542R and AD3552R were swapped leading to unintended
+collection of DAC output ranges being used for each design.
+Change device ID values so they are correct for each DAC chip.
 
-Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
-Reported-and-tested-by: syzbot+0839b78e119aae1fec78@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0839b78e119aae1fec78
-Signed-off-by: Jeremy Cline <jeremy@jcline.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20231009200054.82557-1-jeremy@jcline.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8f2b54824b28 ("drivers:iio:dac: Add AD3552R driver support")
+Signed-off-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
+Reported-by: Chandrakant Minajigi <Chandrakant.Minajigi@analog.com>
+Link: https://lore.kernel.org/r/011f480220799fbfabdd53896f8a2f251ad995ad.1691091324.git.marcelo.schmitt1@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/nci/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iio/dac/ad3552r.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index 4ffdf2f45c444..7535afd1537e9 100644
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -908,6 +908,11 @@ static int nci_activate_target(struct nfc_dev *nfc_dev,
- 		return -EINVAL;
- 	}
+--- a/drivers/iio/dac/ad3552r.c
++++ b/drivers/iio/dac/ad3552r.c
+@@ -140,8 +140,8 @@ enum ad3552r_ch_vref_select {
+ };
  
-+	if (protocol >= NFC_PROTO_MAX) {
-+		pr_err("the requested nfc protocol is invalid\n");
-+		return -EINVAL;
-+	}
-+
- 	if (!(nci_target->supported_protocols & (1 << protocol))) {
- 		pr_err("target does not support the requested protocol 0x%x\n",
- 		       protocol);
--- 
-2.40.1
-
+ enum ad3542r_id {
+-	AD3542R_ID = 0x4008,
+-	AD3552R_ID = 0x4009,
++	AD3542R_ID = 0x4009,
++	AD3552R_ID = 0x4008,
+ };
+ 
+ enum ad3552r_ch_output_range {
 
 
