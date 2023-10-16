@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DD11A289
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420B71A289
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYdCi+nN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4EFDC433C8;
-	Mon, 16 Oct 2023 08:53:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ix6j/A2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2B2C433C7;
+	Mon, 16 Oct 2023 08:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446422;
-	bh=orytIJYUn33n3LDOuOIkdU7JEZMA/oTFmTT+48uVgYc=;
+	s=korg; t=1697446426;
+	bh=dZTE5gWukudq7XbVchNgfk8B5LjFAq+ft6jLsZ8NwN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYdCi+nNI6K0dY/x7/pizTzMNJdKdvk1xImjT+fM3o4WQ++oI2rPvYvEq0ZxQmVq5
-	 nFqE4/Rt1/0m9fLydVgigTajHcV8n0fGMDOagksRgPl1pLyuMvgREuLd7ROXZH3Lfu
-	 f7ToB5uKYZZEaHCG9yKeSUEqBInXtZkyBmbLUctg=
+	b=ix6j/A2tj+/jkOdNAYCtJ8V0Q08PuaLL5LibhsJu8WkdsdXxbNnNO5rIapZN+RMp9
+	 CzYL+kZ64n6PA81Q/rHGLznThlwiwhyLydxBJByVMVOlQLjb2h4Wkyuv8XWhD62f44
+	 r/HqXx7lndhU8Xj19ZQI/8k/Uq1k8VpuKumLGkJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/131] ASoC: Use of_property_read_bool() for boolean properties
-Date: Mon, 16 Oct 2023 10:40:09 +0200
-Message-ID: <20231016084000.716672842@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.1 009/131] HID: logitech-hidpp: Fix kernel crash on receiver USB disconnect
+Date: Mon, 16 Oct 2023 10:39:52 +0200
+Message-ID: <20231016084000.296335361@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -42,278 +41,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 2d2998b84330899bf88a0414f3356869be4a69eb ]
+commit dac501397b9d81e4782232c39f94f4307b137452 upstream.
 
-It is preferred to use typed property access functions (i.e.
-of_property_read_<type> functions) rather than low-level
-of_get_property/of_find_property functions for reading properties.
-Convert reading boolean properties to to of_property_read_bool().
+hidpp_connect_event() has *four* time-of-check vs time-of-use (TOCTOU)
+races when it races with itself.
 
-Signed-off-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20230310144733.1546413-1-robh@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 197c53c8ecb3 ("ASoC: fsl_sai: Don't disable bitclock for i.MX8MP")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+hidpp_connect_event() primarily runs from a workqueue but it also runs
+on probe() and if a "device-connected" packet is received by the hw
+when the thread running hidpp_connect_event() from probe() is waiting on
+the hw, then a second thread running hidpp_connect_event() will be
+started from the workqueue.
+
+This opens the following races (note the below code is simplified):
+
+1. Retrieving + printing the protocol (harmless race):
+
+	if (!hidpp->protocol_major) {
+		hidpp_root_get_protocol_version()
+		hidpp->protocol_major = response.rap.params[0];
+	}
+
+We can actually see this race hit in the dmesg in the abrt output
+attached to rhbz#2227968:
+
+[ 3064.624215] logitech-hidpp-device 0003:046D:4071.0049: HID++ 4.5 device connected.
+[ 3064.658184] logitech-hidpp-device 0003:046D:4071.0049: HID++ 4.5 device connected.
+
+Testing with extra logging added has shown that after this the 2 threads
+take turn grabbing the hw access mutex (send_mutex) so they ping-pong
+through all the other TOCTOU cases managing to hit all of them:
+
+2. Updating the name to the HIDPP name (harmless race):
+
+	if (hidpp->name == hdev->name) {
+		...
+		hidpp->name = new_name;
+	}
+
+3. Initializing the power_supply class for the battery (problematic!):
+
+hidpp_initialize_battery()
+{
+        if (hidpp->battery.ps)
+                return 0;
+
+	probe_battery(); /* Blocks, threads take turns executing this */
+
+	hidpp->battery.desc.properties =
+		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
+
+	hidpp->battery.ps =
+		devm_power_supply_register(&hidpp->hid_dev->dev,
+					   &hidpp->battery.desc, cfg);
+}
+
+4. Creating delayed input_device (potentially problematic):
+
+	if (hidpp->delayed_input)
+		return;
+
+	hidpp->delayed_input = hidpp_allocate_input(hdev);
+
+The really big problem here is 3. Hitting the race leads to the following
+sequence:
+
+	hidpp->battery.desc.properties =
+		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
+
+	hidpp->battery.ps =
+		devm_power_supply_register(&hidpp->hid_dev->dev,
+					   &hidpp->battery.desc, cfg);
+
+	...
+
+	hidpp->battery.desc.properties =
+		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
+
+	hidpp->battery.ps =
+		devm_power_supply_register(&hidpp->hid_dev->dev,
+					   &hidpp->battery.desc, cfg);
+
+So now we have registered 2 power supplies for the same battery,
+which looks a bit weird from userspace's pov but this is not even
+the really big problem.
+
+Notice how:
+
+1. This is all devm-maganaged
+2. The hidpp->battery.desc struct is shared between the 2 power supplies
+3. hidpp->battery.desc.properties points to the result from the second
+   devm_kmemdup()
+
+This causes a use after free scenario on USB disconnect of the receiver:
+1. The last registered power supply class device gets unregistered
+2. The memory from the last devm_kmemdup() call gets freed,
+   hidpp->battery.desc.properties now points to freed memory
+3. The first registered power supply class device gets unregistered,
+   this involves sending a remove uevent to userspace which invokes
+   power_supply_uevent() to fill the uevent data
+4. power_supply_uevent() uses hidpp->battery.desc.properties which
+   now points to freed memory leading to backtraces like this one:
+
+Sep 22 20:01:35 eric kernel: BUG: unable to handle page fault for address: ffffb2140e017f08
+...
+Sep 22 20:01:35 eric kernel: Workqueue: usb_hub_wq hub_event
+Sep 22 20:01:35 eric kernel: RIP: 0010:power_supply_uevent+0xee/0x1d0
+...
+Sep 22 20:01:35 eric kernel:  ? asm_exc_page_fault+0x26/0x30
+Sep 22 20:01:35 eric kernel:  ? power_supply_uevent+0xee/0x1d0
+Sep 22 20:01:35 eric kernel:  ? power_supply_uevent+0x10d/0x1d0
+Sep 22 20:01:35 eric kernel:  dev_uevent+0x10f/0x2d0
+Sep 22 20:01:35 eric kernel:  kobject_uevent_env+0x291/0x680
+Sep 22 20:01:35 eric kernel:  power_supply_unregister+0x8e/0xa0
+Sep 22 20:01:35 eric kernel:  release_nodes+0x3d/0xb0
+Sep 22 20:01:35 eric kernel:  devres_release_group+0xfc/0x130
+Sep 22 20:01:35 eric kernel:  hid_device_remove+0x56/0xa0
+Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
+Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
+Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
+Sep 22 20:01:35 eric kernel:  ? __queue_work+0x1df/0x440
+Sep 22 20:01:35 eric kernel:  hid_destroy_device+0x4b/0x60
+Sep 22 20:01:35 eric kernel:  logi_dj_remove+0x9a/0x100 [hid_logitech_dj 5c91534a0ead2b65e04dd799a0437e3b99b21bc4]
+Sep 22 20:01:35 eric kernel:  hid_device_remove+0x44/0xa0
+Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
+Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
+Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
+Sep 22 20:01:35 eric kernel:  ? __queue_work+0x1df/0x440
+Sep 22 20:01:35 eric kernel:  hid_destroy_device+0x4b/0x60
+Sep 22 20:01:35 eric kernel:  usbhid_disconnect+0x47/0x60 [usbhid 727dcc1c0b94e6b4418727a468398ac3bca492f3]
+Sep 22 20:01:35 eric kernel:  usb_unbind_interface+0x90/0x270
+Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
+Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
+Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
+Sep 22 20:01:35 eric kernel:  ? kobject_put+0xa0/0x1d0
+Sep 22 20:01:35 eric kernel:  usb_disable_device+0xcd/0x1e0
+Sep 22 20:01:35 eric kernel:  usb_disconnect+0xde/0x2c0
+Sep 22 20:01:35 eric kernel:  usb_disconnect+0xc3/0x2c0
+Sep 22 20:01:35 eric kernel:  hub_event+0xe80/0x1c10
+
+There have been quite a few bug reports (see Link tags) about this crash.
+
+Fix all the TOCTOU issues, including the really bad power-supply related
+system crash on USB disconnect, by making probe() use the workqueue for
+running hidpp_connect_event() too, so that it can never run more then once.
+
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227221
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227968
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227968
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2242189
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217412#c58
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20231005182638.3776-1-hdegoede@redhat.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/sta32x.c  | 39 +++++++++++------------
- sound/soc/codecs/sta350.c  | 63 +++++++++++++++++---------------------
- sound/soc/codecs/tas5086.c |  2 +-
- sound/soc/fsl/fsl_sai.c    | 12 ++++----
- sound/soc/fsl/fsl_ssi.c    |  2 +-
- sound/soc/fsl/imx-card.c   |  2 +-
- sound/soc/sh/rcar/ssi.c    |  4 +--
- 7 files changed, 57 insertions(+), 67 deletions(-)
+ drivers/hid/hid-logitech-hidpp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/sta32x.c b/sound/soc/codecs/sta32x.c
-index 8c86b578eba83..29af9595dac19 100644
---- a/sound/soc/codecs/sta32x.c
-+++ b/sound/soc/codecs/sta32x.c
-@@ -1054,35 +1054,32 @@ static int sta32x_probe_dt(struct device *dev, struct sta32x_priv *sta32x)
- 	of_property_read_u8(np, "st,ch3-output-mapping",
- 			    &pdata->ch3_output_mapping);
- 
--	if (of_get_property(np, "st,fault-detect-recovery", NULL))
--		pdata->fault_detect_recovery = 1;
--	if (of_get_property(np, "st,thermal-warning-recovery", NULL))
--		pdata->thermal_warning_recovery = 1;
--	if (of_get_property(np, "st,thermal-warning-adjustment", NULL))
--		pdata->thermal_warning_adjustment = 1;
--	if (of_get_property(np, "st,needs_esd_watchdog", NULL))
--		pdata->needs_esd_watchdog = 1;
-+	pdata->fault_detect_recovery =
-+		of_property_read_bool(np, "st,fault-detect-recovery");
-+	pdata->thermal_warning_recovery =
-+		of_property_read_bool(np, "st,thermal-warning-recovery");
-+	pdata->thermal_warning_adjustment =
-+		of_property_read_bool(np, "st,thermal-warning-adjustment");
-+	pdata->needs_esd_watchdog =
-+		of_property_read_bool(np, "st,needs_esd_watchdog");
- 
- 	tmp = 140;
- 	of_property_read_u16(np, "st,drop-compensation-ns", &tmp);
- 	pdata->drop_compensation_ns = clamp_t(u16, tmp, 0, 300) / 20;
- 
- 	/* CONFE */
--	if (of_get_property(np, "st,max-power-use-mpcc", NULL))
--		pdata->max_power_use_mpcc = 1;
--
--	if (of_get_property(np, "st,max-power-correction", NULL))
--		pdata->max_power_correction = 1;
--
--	if (of_get_property(np, "st,am-reduction-mode", NULL))
--		pdata->am_reduction_mode = 1;
--
--	if (of_get_property(np, "st,odd-pwm-speed-mode", NULL))
--		pdata->odd_pwm_speed_mode = 1;
-+	pdata->max_power_use_mpcc =
-+		of_property_read_bool(np, "st,max-power-use-mpcc");
-+	pdata->max_power_correction =
-+		of_property_read_bool(np, "st,max-power-correction");
-+	pdata->am_reduction_mode =
-+		of_property_read_bool(np, "st,am-reduction-mode");
-+	pdata->odd_pwm_speed_mode =
-+		of_property_read_bool(np, "st,odd-pwm-speed-mode");
- 
- 	/* CONFF */
--	if (of_get_property(np, "st,invalid-input-detect-mute", NULL))
--		pdata->invalid_input_detect_mute = 1;
-+	pdata->invalid_input_detect_mute =
-+		of_property_read_bool(np, "st,invalid-input-detect-mute");
- 
- 	sta32x->pdata = pdata;
- 
-diff --git a/sound/soc/codecs/sta350.c b/sound/soc/codecs/sta350.c
-index 9ed13aeb3cbdc..b033a5fcd6c04 100644
---- a/sound/soc/codecs/sta350.c
-+++ b/sound/soc/codecs/sta350.c
-@@ -1106,12 +1106,12 @@ static int sta350_probe_dt(struct device *dev, struct sta350_priv *sta350)
- 	of_property_read_u8(np, "st,ch3-output-mapping",
- 			    &pdata->ch3_output_mapping);
- 
--	if (of_get_property(np, "st,thermal-warning-recovery", NULL))
--		pdata->thermal_warning_recovery = 1;
--	if (of_get_property(np, "st,thermal-warning-adjustment", NULL))
--		pdata->thermal_warning_adjustment = 1;
--	if (of_get_property(np, "st,fault-detect-recovery", NULL))
--		pdata->fault_detect_recovery = 1;
-+	pdata->thermal_warning_recovery =
-+		of_property_read_bool(np, "st,thermal-warning-recovery");
-+	pdata->thermal_warning_adjustment =
-+		of_property_read_bool(np, "st,thermal-warning-adjustment");
-+	pdata->fault_detect_recovery =
-+		of_property_read_bool(np, "st,fault-detect-recovery");
- 
- 	pdata->ffx_power_output_mode = STA350_FFX_PM_VARIABLE_DROP_COMP;
- 	if (!of_property_read_string(np, "st,ffx-power-output-mode",
-@@ -1133,41 +1133,34 @@ static int sta350_probe_dt(struct device *dev, struct sta350_priv *sta350)
- 	of_property_read_u16(np, "st,drop-compensation-ns", &tmp);
- 	pdata->drop_compensation_ns = clamp_t(u16, tmp, 0, 300) / 20;
- 
--	if (of_get_property(np, "st,overcurrent-warning-adjustment", NULL))
--		pdata->oc_warning_adjustment = 1;
-+	pdata->oc_warning_adjustment =
-+		of_property_read_bool(np, "st,overcurrent-warning-adjustment");
- 
- 	/* CONFE */
--	if (of_get_property(np, "st,max-power-use-mpcc", NULL))
--		pdata->max_power_use_mpcc = 1;
--
--	if (of_get_property(np, "st,max-power-correction", NULL))
--		pdata->max_power_correction = 1;
--
--	if (of_get_property(np, "st,am-reduction-mode", NULL))
--		pdata->am_reduction_mode = 1;
--
--	if (of_get_property(np, "st,odd-pwm-speed-mode", NULL))
--		pdata->odd_pwm_speed_mode = 1;
--
--	if (of_get_property(np, "st,distortion-compensation", NULL))
--		pdata->distortion_compensation = 1;
-+	pdata->max_power_use_mpcc =
-+		of_property_read_bool(np, "st,max-power-use-mpcc");
-+	pdata->max_power_correction =
-+		of_property_read_bool(np, "st,max-power-correction");
-+	pdata->am_reduction_mode =
-+		of_property_read_bool(np, "st,am-reduction-mode");
-+	pdata->odd_pwm_speed_mode =
-+		of_property_read_bool(np, "st,odd-pwm-speed-mode");
-+	pdata->distortion_compensation =
-+		of_property_read_bool(np, "st,distortion-compensation");
- 
- 	/* CONFF */
--	if (of_get_property(np, "st,invalid-input-detect-mute", NULL))
--		pdata->invalid_input_detect_mute = 1;
-+	pdata->invalid_input_detect_mute =
-+		of_property_read_bool(np, "st,invalid-input-detect-mute");
- 
- 	/* MISC */
--	if (of_get_property(np, "st,activate-mute-output", NULL))
--		pdata->activate_mute_output = 1;
--
--	if (of_get_property(np, "st,bridge-immediate-off", NULL))
--		pdata->bridge_immediate_off = 1;
--
--	if (of_get_property(np, "st,noise-shape-dc-cut", NULL))
--		pdata->noise_shape_dc_cut = 1;
--
--	if (of_get_property(np, "st,powerdown-master-volume", NULL))
--		pdata->powerdown_master_vol = 1;
-+	pdata->activate_mute_output =
-+		of_property_read_bool(np, "st,activate-mute-output");
-+	pdata->bridge_immediate_off =
-+		of_property_read_bool(np, "st,bridge-immediate-off");
-+	pdata->noise_shape_dc_cut =
-+		of_property_read_bool(np, "st,noise-shape-dc-cut");
-+	pdata->powerdown_master_vol =
-+		of_property_read_bool(np, "st,powerdown-master-volume");
- 
- 	if (!of_property_read_u8(np, "st,powerdown-delay-divider", &tmp8)) {
- 		if (is_power_of_2(tmp8) && tmp8 >= 1 && tmp8 <= 128)
-diff --git a/sound/soc/codecs/tas5086.c b/sound/soc/codecs/tas5086.c
-index 22143cc5afa70..f9e7122894bd2 100644
---- a/sound/soc/codecs/tas5086.c
-+++ b/sound/soc/codecs/tas5086.c
-@@ -840,7 +840,7 @@ static int tas5086_probe(struct snd_soc_component *component)
- 			snprintf(name, sizeof(name),
- 				 "ti,mid-z-channel-%d", i + 1);
- 
--			if (of_get_property(of_node, name, NULL) != NULL)
-+			if (of_property_read_bool(of_node, name))
- 				priv->pwm_start_mid_z |= 1 << i;
- 		}
- 	}
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index b7552b0df7c3c..2c17d16f842ea 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -1381,18 +1381,18 @@ static int fsl_sai_probe(struct platform_device *pdev)
- 	sai->cpu_dai_drv.symmetric_channels = 1;
- 	sai->cpu_dai_drv.symmetric_sample_bits = 1;
- 
--	if (of_find_property(np, "fsl,sai-synchronous-rx", NULL) &&
--	    of_find_property(np, "fsl,sai-asynchronous", NULL)) {
-+	if (of_property_read_bool(np, "fsl,sai-synchronous-rx") &&
-+	    of_property_read_bool(np, "fsl,sai-asynchronous")) {
- 		/* error out if both synchronous and asynchronous are present */
- 		dev_err(dev, "invalid binding for synchronous mode\n");
- 		return -EINVAL;
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4275,7 +4275,8 @@ static int hidpp_probe(struct hid_device
+ 			goto hid_hw_init_fail;
  	}
  
--	if (of_find_property(np, "fsl,sai-synchronous-rx", NULL)) {
-+	if (of_property_read_bool(np, "fsl,sai-synchronous-rx")) {
- 		/* Sync Rx with Tx */
- 		sai->synchronous[RX] = false;
- 		sai->synchronous[TX] = true;
--	} else if (of_find_property(np, "fsl,sai-asynchronous", NULL)) {
-+	} else if (of_property_read_bool(np, "fsl,sai-asynchronous")) {
- 		/* Discard all settings for asynchronous mode */
- 		sai->synchronous[RX] = false;
- 		sai->synchronous[TX] = false;
-@@ -1401,7 +1401,7 @@ static int fsl_sai_probe(struct platform_device *pdev)
- 		sai->cpu_dai_drv.symmetric_sample_bits = 0;
- 	}
+-	hidpp_connect_event(hidpp);
++	schedule_work(&hidpp->work);
++	flush_work(&hidpp->work);
  
--	if (of_find_property(np, "fsl,sai-mclk-direction-output", NULL) &&
-+	if (of_property_read_bool(np, "fsl,sai-mclk-direction-output") &&
- 	    of_device_is_compatible(np, "fsl,imx6ul-sai")) {
- 		gpr = syscon_regmap_lookup_by_compatible("fsl,imx6ul-iomuxc-gpr");
- 		if (IS_ERR(gpr)) {
-@@ -1442,7 +1442,7 @@ static int fsl_sai_probe(struct platform_device *pdev)
- 		dev_warn(dev, "Error reading SAI version: %d\n", ret);
- 
- 	/* Select MCLK direction */
--	if (of_find_property(np, "fsl,sai-mclk-direction-output", NULL) &&
-+	if (of_property_read_bool(np, "fsl,sai-mclk-direction-output") &&
- 	    sai->soc_data->max_register >= FSL_SAI_MCTL) {
- 		regmap_update_bits(sai->regmap, FSL_SAI_MCTL,
- 				   FSL_SAI_MCTL_MCLK_EN, FSL_SAI_MCTL_MCLK_EN);
-diff --git a/sound/soc/fsl/fsl_ssi.c b/sound/soc/fsl/fsl_ssi.c
-index 46a53551b955c..6af00b62a60fa 100644
---- a/sound/soc/fsl/fsl_ssi.c
-+++ b/sound/soc/fsl/fsl_ssi.c
-@@ -1447,7 +1447,7 @@ static int fsl_ssi_probe_from_dt(struct fsl_ssi *ssi)
- 			return -EINVAL;
- 		}
- 		strcpy(ssi->card_name, "ac97-codec");
--	} else if (!of_find_property(np, "fsl,ssi-asynchronous", NULL)) {
-+	} else if (!of_property_read_bool(np, "fsl,ssi-asynchronous")) {
- 		/*
- 		 * In synchronous mode, STCK and STFS ports are used by RX
- 		 * as well. So the software should limit the sample rates,
-diff --git a/sound/soc/fsl/imx-card.c b/sound/soc/fsl/imx-card.c
-index 3f128ced41809..64a4d7e9db603 100644
---- a/sound/soc/fsl/imx-card.c
-+++ b/sound/soc/fsl/imx-card.c
-@@ -563,7 +563,7 @@ static int imx_card_parse_of(struct imx_card_data *data)
- 			link_data->cpu_sysclk_id = FSL_SAI_CLK_MAST1;
- 
- 			/* sai may support mclk/bclk = 1 */
--			if (of_find_property(np, "fsl,mclk-equal-bclk", NULL)) {
-+			if (of_property_read_bool(np, "fsl,mclk-equal-bclk")) {
- 				link_data->one2one_ratio = true;
- 			} else {
- 				int i;
-diff --git a/sound/soc/sh/rcar/ssi.c b/sound/soc/sh/rcar/ssi.c
-index 7ade6c5ed96ff..cb7fff48959a2 100644
---- a/sound/soc/sh/rcar/ssi.c
-+++ b/sound/soc/sh/rcar/ssi.c
-@@ -1208,10 +1208,10 @@ int rsnd_ssi_probe(struct rsnd_priv *priv)
- 			goto rsnd_ssi_probe_done;
- 		}
- 
--		if (of_get_property(np, "shared-pin", NULL))
-+		if (of_property_read_bool(np, "shared-pin"))
- 			rsnd_flags_set(ssi, RSND_SSI_CLK_PIN_SHARE);
- 
--		if (of_get_property(np, "no-busif", NULL))
-+		if (of_property_read_bool(np, "no-busif"))
- 			rsnd_flags_set(ssi, RSND_SSI_NO_BUSIF);
- 
- 		ssi->irq = irq_of_parse_and_map(np, 0);
--- 
-2.40.1
-
+ 	if (will_restart) {
+ 		/* Reset the HID node state */
 
 
