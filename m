@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C8715AE3
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA85915AE3
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrbdP/U5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5086CC433C7;
-	Mon, 16 Oct 2023 08:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdXnEFYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35A4C433C8;
+	Mon, 16 Oct 2023 08:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446034;
-	bh=Dqvw0ovAf1yXELfFlOU0MrezIeyWKw9ZueMRdN/iuN8=;
+	s=korg; t=1697446038;
+	bh=seH/Tsp/EbwnXbsp0suNg1alV1ao5VUSxZYZ2b0bND4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrbdP/U5WKXddlJO2eIDWl3zkHiqpXtxBhNwvtPR/d2aXnPZQs5UZgihpB0DJM26d
-	 aURicp3I20Q3l3VpLizAlkhydbgW13SfsSRLG0wAk2XA+/gmhOpcD7UAepS34Vr/zJ
-	 Jsii9RF3U4SyhjdplQxvkn1A8wGaMPbI9qeVvC8A=
+	b=EdXnEFYC64ASFLDUSKQ1A0ZdSZsMbxrQfP++6fjzlLbD/aJFR6djUsery1J+pCAiN
+	 +rUKFbVKaCcuJGN9pO/I31mInFK7vRSjfs65wguKNiCd1FoxYLiBOTfOjYrjkwb7OQ
+	 o3TWIpAQXg8YexvP2LrSMoSYniQFFGpKefcp52Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20=C5=A0anta?= <teslan223@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 5.15 064/102] thunderbolt: Check that lane 1 is in CL0 before enabling lane bonding
-Date: Mon, 16 Oct 2023 10:41:03 +0200
-Message-ID: <20231016083955.409551587@linuxfoundation.org>
+	Jordan Rife <jrife@google.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.15 065/102] libceph: use kernel_connect()
+Date: Mon, 16 Oct 2023 10:41:04 +0200
+Message-ID: <20231016083955.436150336@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -35,48 +35,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Jordan Rife <jrife@google.com>
 
-commit a9fdf5f933a6f2b358fad0194b1287b67f6704b1 upstream.
+commit 7563cf17dce0a875ba3d872acdc63a78ea344019 upstream.
 
-Marek reported that when BlackMagic UltraStudio device is connected the
-kernel repeatedly tries to enable lane bonding without success making
-the device non-functional. It looks like the device does not have lane 1
-connected at all so even though it is enabled we should not try to bond
-the lanes. For this reason check that lane 1 is in fact CL0 (connected,
-active) before attempting to bond the lanes.
+Direct calls to ops->connect() can overwrite the address parameter when
+used in conjunction with BPF SOCK_ADDR hooks. Recent changes to
+kernel_connect() ensure that callers are insulated from such side
+effects. This patch wraps the direct call to ops->connect() with
+kernel_connect() to prevent unexpected changes to the address passed to
+ceph_tcp_connect().
 
-Reported-by: Marek Šanta <teslan223@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217737
+This change was originally part of a larger patch targeting the net tree
+addressing all instances of unprotected calls to ops->connect()
+throughout the kernel, but this change was split up into several patches
+targeting various trees.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lore.kernel.org/netdev/20230821100007.559638-1-jrife@google.com/
+Link: https://lore.kernel.org/netdev/9944248dba1bce861375fcce9de663934d933ba9.camel@redhat.com/
+Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
+Signed-off-by: Jordan Rife <jrife@google.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/switch.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/ceph/messenger.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/thunderbolt/switch.c
-+++ b/drivers/thunderbolt/switch.c
-@@ -2552,6 +2552,13 @@ int tb_switch_lane_bonding_enable(struct
- 	    !tb_port_is_width_supported(down, 2))
- 		return 0;
+--- a/net/ceph/messenger.c
++++ b/net/ceph/messenger.c
+@@ -454,8 +454,8 @@ int ceph_tcp_connect(struct ceph_connect
+ 	set_sock_callbacks(sock, con);
  
-+	/*
-+	 * Both lanes need to be in CL0. Here we assume lane 0 already be in
-+	 * CL0 and check just for lane 1.
-+	 */
-+	if (tb_wait_for_port(down->dual_link_port, false) <= 0)
-+		return -ENOTCONN;
-+
- 	ret = tb_port_lane_bonding_enable(up);
- 	if (ret) {
- 		tb_port_warn(up, "failed to enable lane bonding\n");
+ 	con_sock_state_connecting(con);
+-	ret = sock->ops->connect(sock, (struct sockaddr *)&ss, sizeof(ss),
+-				 O_NONBLOCK);
++	ret = kernel_connect(sock, (struct sockaddr *)&ss, sizeof(ss),
++			     O_NONBLOCK);
+ 	if (ret == -EINPROGRESS) {
+ 		dout("connect %s EINPROGRESS sk_state = %u\n",
+ 		     ceph_pr_addr(&con->peer_addr),
 
 
