@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CC71944F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FC11944F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpHyRJU+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5B7C433C8;
-	Mon, 16 Oct 2023 08:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bL6VrYL3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8534BC433C8;
+	Mon, 16 Oct 2023 08:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446285;
-	bh=ppVkYyojaBkwMT7JMrl2dXMdn2aEAzaCHeyU9e9ZNBY=;
+	s=korg; t=1697446289;
+	bh=1cBf4OmucXBNM3SCZrS4/Xr0bJmu3lwIPRvL6qy8wTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TpHyRJU+BMH4MUIeXbVZ5y5kTGcMjSX6JaiBWb0puyNCfDCrW68oGoMgeO6n8v0IN
-	 imqt2NIuRYjXQswtgPNzcf3g7e5AKZAPuEEAa3xkJk+aUGBS9YtmdcCh6XR8pld0ja
-	 c/3ryaQaHc3UOwdo0eoh/Maa43xG5WaXTjweH8ak=
+	b=bL6VrYL3tbiJNBBYdgEnUFlGkXdgMPvradmlfGSLJsTDr+QbvG2AOIezCscyo0rOE
+	 rKW6shO7ovJtZ131tRhvx4oKGK44xkWLuBiRYvNyUHwJL49oZqf6BOgLIbw6rCcf6H
+	 5lnGch+M+j3ZVcWI78/rJvrTA/ECJ42bCp4IZ6KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 084/102] powerpc/64e: Fix wrong test in __ptep_test_and_clear_young()
-Date: Mon, 16 Oct 2023 10:41:23 +0200
-Message-ID: <20231016083955.933451534@linuxfoundation.org>
+	ruanjinjie@huawei.com,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Alexandru Elisei <alexandru.elisei@arm.com>,
+	Amit Daniel Kachhap <amit.kachhap@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.15 085/102] arm64: report EL1 UNDEFs better
+Date: Mon, 16 Oct 2023 10:41:24 +0200
+Message-ID: <20231016083955.960659978@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -42,52 +48,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 5ea0bbaa32e8f54e9a57cfee4a3b8769b80be0d2 ]
+commit b502c87d2a26c349acbc231ff2acd6f17147926b upstream.
 
-Commit 45201c879469 ("powerpc/nohash: Remove hash related code from
-nohash headers.") replaced:
+If an UNDEFINED exception is taken from EL1, and do_undefinstr() doesn't
+find any suitable undef_hook, it will call:
 
-  if ((pte_val(*ptep) & (_PAGE_ACCESSED | _PAGE_HASHPTE)) == 0)
-	return 0;
+	BUG_ON(!user_mode(regs))
 
-By:
+... and the kernel will report a failure witin do_undefinstr() rather
+than reporting the original context that the UNDEFINED exception was
+taken from. The pt_regs and ESR value reported within the BUG() handler
+will be from within do_undefinstr() and the code dump will be for the
+BRK in BUG_ON(), which isn't sufficient to debug the cause of the
+original exception.
 
-  if (pte_young(*ptep))
-	return 0;
+This patch makes the reporting better by having do_undefinstr() call
+die() directly in this case to report the original context from which
+the UNDEFINED exception was taken.
 
-But it should be:
+Prior to this patch, an undefined instruction is reported as:
 
-  if (!pte_young(*ptep))
-	return 0;
+| kernel BUG at arch/arm64/kernel/traps.c:497!
+| Internal error: Oops - BUG: 0 [#1] PREEMPT SMP
+| Modules linked in:
+| CPU: 0 PID: 0 Comm: swapper Not tainted 5.19.0-rc3-00127-geff044f1b04e-dirty #3
+| Hardware name: linux,dummy-virt (DT)
+| pstate: 000000c5 (nzcv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+| pc : do_undefinstr+0x28c/0x2ac
+| lr : do_undefinstr+0x298/0x2ac
+| sp : ffff800009f63bc0
+| x29: ffff800009f63bc0 x28: ffff800009f73c00 x27: ffff800009644a70
+| x26: ffff8000096778a8 x25: 0000000000000040 x24: 0000000000000000
+| x23: 00000000800000c5 x22: ffff800009894060 x21: ffff800009f63d90
+| x20: 0000000000000000 x19: ffff800009f63c40 x18: 0000000000000006
+| x17: 0000000000403000 x16: 00000000bfbfd000 x15: ffff800009f63830
+| x14: ffffffffffffffff x13: 0000000000000000 x12: 0000000000000019
+| x11: 0101010101010101 x10: 0000000000161b98 x9 : 0000000000000000
+| x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
+| x5 : ffff800009f761d0 x4 : 0000000000000000 x3 : ffff80000a2b80f8
+| x2 : 0000000000000000 x1 : ffff800009f73c00 x0 : 00000000800000c5
+| Call trace:
+|  do_undefinstr+0x28c/0x2ac
+|  el1_undef+0x2c/0x4c
+|  el1h_64_sync_handler+0x84/0xd0
+|  el1h_64_sync+0x64/0x68
+|  setup_arch+0x550/0x598
+|  start_kernel+0x88/0x6ac
+|  __primary_switched+0xb8/0xc0
+| Code: 17ffff95 a9425bf5 17ffffb8 a9025bf5 (d4210000)
 
-Fix it.
+With this patch applied, an undefined instruction is reported as:
 
-Fixes: 45201c879469 ("powerpc/nohash: Remove hash related code from nohash headers.")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/8bb7f06494e21adada724ede47a4c3d97e879d40.1695659959.git.christophe.leroy@csgroup.eu
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+| Internal error: Oops - Undefined instruction: 0 [#1] PREEMPT SMP
+| Modules linked in:
+| CPU: 0 PID: 0 Comm: swapper Not tainted 5.19.0-rc3-00128-gf27cfcc80e52-dirty #5
+| Hardware name: linux,dummy-virt (DT)
+| pstate: 800000c5 (Nzcv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+| pc : setup_arch+0x550/0x598
+| lr : setup_arch+0x50c/0x598
+| sp : ffff800009f63d90
+| x29: ffff800009f63d90 x28: 0000000081000200 x27: ffff800009644a70
+| x26: ffff8000096778c8 x25: 0000000000000040 x24: 0000000000000000
+| x23: 0000000000000100 x22: ffff800009f69a58 x21: ffff80000a2b80b8
+| x20: 0000000000000000 x19: 0000000000000000 x18: 0000000000000006
+| x17: 0000000000403000 x16: 00000000bfbfd000 x15: ffff800009f63830
+| x14: ffffffffffffffff x13: 0000000000000000 x12: 0000000000000019
+| x11: 0101010101010101 x10: 0000000000161b98 x9 : 0000000000000000
+| x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
+| x5 : 0000000000000008 x4 : 0000000000000010 x3 : 0000000000000000
+| x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+| Call trace:
+|  setup_arch+0x550/0x598
+|  start_kernel+0x88/0x6ac
+|  __primary_switched+0xb8/0xc0
+| Code: b4000080 90ffed80 912ac000 97db745f (00000000)
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Cc: Alexandru Elisei <alexandru.elisei@arm.com>
+Cc: Amit Daniel Kachhap <amit.kachhap@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20220913101732.3925290-2-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/include/asm/nohash/64/pgtable.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/traps.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/nohash/64/pgtable.h b/arch/powerpc/include/asm/nohash/64/pgtable.h
-index 2225991c69b55..6ad4714352c7a 100644
---- a/arch/powerpc/include/asm/nohash/64/pgtable.h
-+++ b/arch/powerpc/include/asm/nohash/64/pgtable.h
-@@ -209,7 +209,7 @@ static inline int __ptep_test_and_clear_young(struct mm_struct *mm,
- {
- 	unsigned long old;
+--- a/arch/arm64/kernel/traps.c
++++ b/arch/arm64/kernel/traps.c
+@@ -495,7 +495,9 @@ void do_undefinstr(struct pt_regs *regs)
+ 	if (call_undef_hook(regs) == 0)
+ 		return;
  
--	if (pte_young(*ptep))
-+	if (!pte_young(*ptep))
- 		return 0;
- 	old = pte_update(mm, addr, ptep, _PAGE_ACCESSED, 0, 0);
- 	return (old & _PAGE_ACCESSED) != 0;
--- 
-2.40.1
-
+-	BUG_ON(!user_mode(regs));
++	if (!user_mode(regs))
++		die("Oops - Undefined instruction", regs, 0);
++
+ 	force_signal_inject(SIGILL, ILL_ILLOPC, regs->pc, 0);
+ }
+ NOKPROBE_SYMBOL(do_undefinstr);
 
 
