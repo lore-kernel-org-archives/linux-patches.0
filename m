@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8167B266B7
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98825266B7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNKCQusb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DAE3C433C7;
-	Mon, 16 Oct 2023 14:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZ201ui5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC462C433C8;
+	Mon, 16 Oct 2023 14:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467731;
-	bh=drPmrXrfaXFdu8ziIbycDxRZQm7JZTpRhqmDeScoqtY=;
+	s=korg; t=1697467735;
+	bh=ZHpznt1a/KcI3e3DPqtxInV2iLubDsCnbb75+6wOa5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZNKCQusbBvL8ctbutWkElp1ldFYa2uqTuaVUVrzKd54knlyHJC2e9qTjL3HL2zV2B
-	 OKA7gvuZ0P/a5LVaj2pl3CJAECkzVvU9YLqX6tJo3iojfrCwY+yDxrtzfjDtgDOOUl
-	 8ze0jkGqdXOGtWFqZ+4X31lbQTNsO3rwPIfpGT50=
+	b=fZ201ui5yi+RPxWKKlmtq5touxp5YZr+BJbePt9ODl2y455Wl+I8H3nbvbhNknxRs
+	 ncAFE0WivPYAtxqnrG0rii543vnycOiPXgnV4vxCKodJqk7wzcAJUxII3vWhybqlZ9
+	 QkWtuOKhVGqbqY2B4nbYtfD0d//Dr8/fUNwoOxTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlotte Tan <charlotte@extrahop.com>,
-	Adham Faris <afaris@nvidia.com>,
-	Aya Levin <ayal@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Will Mortensen <will@extrahop.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Song Liu <song@kernel.org>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 078/191] net/mlx5e: Again mutually exclude RX-FCS and RX-port-timestamp
-Date: Mon, 16 Oct 2023 10:41:03 +0200
-Message-ID: <20231016084017.225837513@linuxfoundation.org>
+Subject: [PATCH 6.5 079/191] s390/bpf: Fix clobbering the callers backchain in the trampoline
+Date: Mon, 16 Oct 2023 10:41:04 +0200
+Message-ID: <20231016084017.247997292@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -48,55 +43,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Mortensen <will@extrahop.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit da6192ca72d5ad913d109d43dc896290ad05d98f ]
+[ Upstream commit ce10fc0604bc6a0d626ed8e5d69088057edc71ab ]
 
-Commit 1e66220948df8 ("net/mlx5e: Update rx ring hw mtu upon each rx-fcs
-flag change") seems to have accidentally inverted the logic added in
-commit 0bc73ad46a76 ("net/mlx5e: Mutually exclude RX-FCS and
-RX-port-timestamp").
+One of the first things that s390x kernel functions do is storing the
+the caller's frame address (backchain) on stack. This makes unwinding
+possible. The backchain is always stored at frame offset 152, which is
+inside the 160-byte stack area, that the functions allocate for their
+callees. The callees must preserve the backchain; the remaining 152
+bytes they may use as they please.
 
-The impact of this is a little unclear since it seems the FCS scattered
-with RX-FCS is (usually?) correct regardless.
+Currently the trampoline uses all 160 bytes, clobbering the backchain.
+This causes kernel panics when using __builtin_return_address() in
+functions called by the trampoline.
 
-Fixes: 1e66220948df8 ("net/mlx5e: Update rx ring hw mtu upon each rx-fcs flag change")
-Tested-by: Charlotte Tan <charlotte@extrahop.com>
-Reviewed-by: Charlotte Tan <charlotte@extrahop.com>
-Cc: Adham Faris <afaris@nvidia.com>
-Cc: Aya Levin <ayal@nvidia.com>
-Cc: Tariq Toukan <tariqt@nvidia.com>
-Cc: Moshe Shemesh <moshe@nvidia.com>
-Cc: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Will Mortensen <will@extrahop.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20231006053706.514618-1-will@extrahop.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix by reducing the usage of the caller-reserved stack area by 8 bytes
+in the trampoline.
+
+Fixes: 528eb2cb87bc ("s390/bpf: Implement arch_prepare_bpf_trampoline()")
+Reported-by: Song Liu <song@kernel.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20231010203512.385819-2-iii@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/net/bpf_jit_comp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index f7b494125eee8..0cbe822ab084f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -3952,13 +3952,14 @@ static int set_feature_rx_fcs(struct net_device *netdev, bool enable)
- 	struct mlx5e_channels *chs = &priv->channels;
- 	struct mlx5e_params new_params;
- 	int err;
-+	bool rx_ts_over_crc = !enable;
+diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
+index 2861e3360affc..9a9733e4bc801 100644
+--- a/arch/s390/net/bpf_jit_comp.c
++++ b/arch/s390/net/bpf_jit_comp.c
+@@ -2260,8 +2260,12 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
+ 	tjit->run_ctx_off = alloc_stack(tjit,
+ 					sizeof(struct bpf_tramp_run_ctx));
+ 	tjit->tccnt_off = alloc_stack(tjit, sizeof(u64));
+-	/* The caller has already reserved STACK_FRAME_OVERHEAD bytes. */
+-	tjit->stack_size -= STACK_FRAME_OVERHEAD;
++	/*
++	 * In accordance with the s390x ABI, the caller has allocated
++	 * STACK_FRAME_OVERHEAD bytes for us. 8 of them contain the caller's
++	 * backchain, and the rest we can use.
++	 */
++	tjit->stack_size -= STACK_FRAME_OVERHEAD - sizeof(u64);
+ 	tjit->orig_stack_args_off = tjit->stack_size + STACK_FRAME_OVERHEAD;
  
- 	mutex_lock(&priv->state_lock);
- 
- 	new_params = chs->params;
- 	new_params.scatter_fcs_en = enable;
- 	err = mlx5e_safe_switch_params(priv, &new_params, mlx5e_set_rx_port_ts_wrap,
--				       &new_params.scatter_fcs_en, true);
-+				       &rx_ts_over_crc, true);
- 	mutex_unlock(&priv->state_lock);
- 	return err;
- }
+ 	/* aghi %r15,-stack_size */
 -- 
 2.40.1
 
