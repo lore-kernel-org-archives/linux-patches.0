@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5852E1A585
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5201A585
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sXTTDy/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71EAC433C7;
-	Mon, 16 Oct 2023 08:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVSBj66t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AF9C433C8;
+	Mon, 16 Oct 2023 08:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446506;
-	bh=KLOQzwrsfXt0tCzdK7XnJj1eJjP2TtRV/TIkv3QZsSA=;
+	s=korg; t=1697446515;
+	bh=XyAbllP6/O4VNd8ukVd+SGwdH8iz9QMe+Rqk3Ga3nPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1sXTTDy/hAckYoSIpeBcH8Kw7vyTvW4wY31yscibKEDBCPXD3Bn4BtVZ58rIGPQqS
-	 vSyo7xT8ZzenPdAOsRuIrCW+C5K9uUl96IACwKN2HGKCEi7dfI92w/RX6a84YPdtG0
-	 DNxpdTX8KcJZYZpENkrrWqdrlT+RG2ZCa4t3W3UA=
+	b=mVSBj66tPAl3HIN9kCgX6fPOMVsCUdlVOphAvSGA9Onbxbiw12AL77NsmVx0iR1TM
+	 bILZCQLW0Cu+KTl3TuVv0lP2IthQ9rf9YTFyuSQM6UiQPcCBrTNYVu74dQwUz5RO0M
+	 q/+ktTrvN9c14v5djWikYwi67tgUzgY47ueXElM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/131] platform/x86: hp-wmi:: Mark driver struct with __refdata to prevent section mismatch warning
-Date: Mon, 16 Oct 2023 10:39:50 +0200
-Message-ID: <20231016084000.245724424@linuxfoundation.org>
+Subject: [PATCH 6.1 036/131] drm/msm/dsi: fix irq_of_parse_and_map() error checking
+Date: Mon, 16 Oct 2023 10:40:19 +0200
+Message-ID: <20231016084000.964717459@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -36,52 +37,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 5b44abbc39ca15df80d0da4756078c98c831090f ]
+[ Upstream commit 6a1d4c7976dd1ee7c9f80bc8e62801ec7b1f2f58 ]
 
-As described in the added code comment, a reference to .exit.text is ok
-for drivers registered via module_platform_driver_probe(). Make this
-explicit to prevent a section mismatch warning:
+The irq_of_parse_and_map() function returns zero on error.  It
+never returns negative error codes.  Fix the check.
 
-	WARNING: modpost: drivers/platform/x86/hp/hp-wmi: section mismatch in reference: hp_wmi_driver+0x8 (section: .data) -> hp_wmi_bios_remove (section: .exit.text)
-
-Fixes: c165b80cfecc ("hp-wmi: fix handling of platform device")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20231004111624.2667753-1-u.kleine-koenig@pengutronix.de
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/557715/
+Link: https://lore.kernel.org/r/4f3c5c98-04f7-43f7-900f-5d7482c83eef@moroto.mountain
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index 3bacee2b8d521..51f23ff1f2b05 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -1399,7 +1399,13 @@ static const struct dev_pm_ops hp_wmi_pm_ops = {
- 	.restore  = hp_wmi_resume_handler,
- };
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 6c1ebeb9023eb..e20cd3dd2c6cc 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1972,10 +1972,9 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+ 	}
  
--static struct platform_driver hp_wmi_driver = {
-+/*
-+ * hp_wmi_bios_remove() lives in .exit.text. For drivers registered via
-+ * module_platform_driver_probe() this is ok because they cannot get unbound at
-+ * runtime. So mark the driver struct with __refdata to prevent modpost
-+ * triggering a section mismatch warning.
-+ */
-+static struct platform_driver hp_wmi_driver __refdata = {
- 	.driver = {
- 		.name = "hp-wmi",
- 		.pm = &hp_wmi_pm_ops,
+ 	msm_host->irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
+-	if (msm_host->irq < 0) {
+-		ret = msm_host->irq;
+-		dev_err(&pdev->dev, "failed to get irq: %d\n", ret);
+-		return ret;
++	if (!msm_host->irq) {
++		dev_err(&pdev->dev, "failed to get irq\n");
++		return -EINVAL;
+ 	}
+ 
+ 	/* do not autoenable, will be enabled later */
 -- 
 2.40.1
 
