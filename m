@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47A428DB6
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7450266B7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPa/PnmK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E50B4C433C9;
-	Mon, 16 Oct 2023 14:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faoWUm7+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF19C433C9;
+	Mon, 16 Oct 2023 14:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467749;
-	bh=PepiDM5cOJNBLkaO0kQJFGNGItszCPsxAQWkD48xwcs=;
+	s=korg; t=1697467752;
+	bh=9IzBizbWT76iGzgZa479s0np2tCYNE1lSrd+Lu6EO/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HPa/PnmKBrIPXl/bZ4MkyyelKkf+Gn1nlgLXtOIRzkZX2mbQNvXiN49V43/7CqkG6
-	 fxBbwpjrfask9hZGzY8s9Rf/pjXHJA90Jqh3Zw/l87kUMctNpx0TkBWi3eWnGxfC7q
-	 UXB1YyOwXVh5yd/2T18hax+Y0jnlQunfiz95AoYk=
+	b=faoWUm7+L32Pdz6BsRf8BTq3JkGdN/np2L4eAXlGolXdaEuCqs2Njd/B2Mzpi0sRa
+	 YJwRCkoO+Bne5zFod9JYaiiKCHgYG+JBy8NbgDD8X7d8t0fkglJY2TxSztvfWWQke5
+	 0ixQ8lryaJdkpktXfDn+rGGhLxXeGbD6cm2C+SWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Nils Hoppmann <niho@linux.ibm.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 083/191] net/smc: Fix pos miscalculation in statistics
-Date: Mon, 16 Oct 2023 10:41:08 +0200
-Message-ID: <20231016084017.338219288@linuxfoundation.org>
+Subject: [PATCH 6.5 058/191] arm64: dts: mediatek: mt8195: Set DSU PMU status to fail
+Date: Mon, 16 Oct 2023 10:40:43 +0200
+Message-ID: <20231016084016.757243456@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -39,95 +37,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nils Hoppmann <niho@linux.ibm.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit a950a5921db450c74212327f69950ff03419483a ]
+[ Upstream commit d192615c307ec9f74cd0582880ece698533eb99b ]
 
-SMC_STAT_PAYLOAD_SUB(_smc_stats, _tech, key, _len, _rc) will calculate
-wrong bucket positions for payloads of exactly 4096 bytes and
-(1 << (m + 12)) bytes, with m == SMC_BUF_MAX - 1.
+The DSU PMU allows monitoring performance events in the DSU cluster,
+which is done by configuring and reading back values from the DSU PMU
+system registers. However, for write-access to be allowed by ELs lower
+than EL3, the EL3 firmware needs to update the setting on the ACTLR3_EL3
+register, as it is disallowed by default.
 
-Intended bucket distribution:
-Assume l == size of payload, m == SMC_BUF_MAX - 1.
+That configuration is not done on the firmware used by the MT8195 SoC,
+as a consequence, booting a MT8195-based machine like
+mt8195-cherry-tomato-r2 with CONFIG_ARM_DSU_PMU enabled hangs the kernel
+just as it writes to the CLUSTERPMOVSCLR_EL1 register, since the
+instruction faults to EL3, and BL31 apparently just re-runs the
+instruction over and over.
 
-Bucket 0                : 0 < l <= 2^13
-Bucket n, 1 <= n <= m-1 : 2^(n+12) < l <= 2^(n+13)
-Bucket m                : l > 2^(m+12)
+Mark the DSU PMU node in the Devicetree with status "fail", as the
+machine doesn't have a suitable firmware to make use of it from the
+kernel, and allowing its driver to probe would hang the kernel.
 
-Current solution:
-_pos = fls64((l) >> 13)
-[...]
-_pos = (_pos < m) ? ((l == 1 << (_pos + 12)) ? _pos - 1 : _pos) : m
-
-For l == 4096, _pos == -1, but should be _pos == 0.
-For l == (1 << (m + 12)), _pos == m, but should be _pos == m - 1.
-
-In order to avoid special treatment of these corner cases, the
-calculation is adjusted. The new solution first subtracts the length by
-one, and then calculates the correct bucket by shifting accordingly,
-i.e. _pos = fls64((l - 1) >> 13), l > 0.
-This not only fixes the issues named above, but also makes the whole
-bucket assignment easier to follow.
-
-Same is done for SMC_STAT_RMB_SIZE_SUB(_smc_stats, _tech, k, _len),
-where the calculation of the bucket position is similar to the one
-named above.
-
-Fixes: e0e4b8fa5338 ("net/smc: Add SMC statistics support")
-Suggested-by: Halil Pasic <pasic@linux.ibm.com>
-Signed-off-by: Nils Hoppmann <niho@linux.ibm.com>
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230720200753.322133-1-nfraprado@collabora.com
+Link: https://lore.kernel.org/r/20231003-mediatek-fixes-v6-7-v1-5-dad7cd62a8ff@collabora.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_stats.h | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/smc/smc_stats.h b/net/smc/smc_stats.h
-index aa8928975cc63..9d32058db2b5d 100644
---- a/net/smc/smc_stats.h
-+++ b/net/smc/smc_stats.h
-@@ -92,13 +92,14 @@ do { \
- 	typeof(_smc_stats) stats = (_smc_stats); \
- 	typeof(_tech) t = (_tech); \
- 	typeof(_len) l = (_len); \
--	int _pos = fls64((l) >> 13); \
-+	int _pos; \
- 	typeof(_rc) r = (_rc); \
- 	int m = SMC_BUF_MAX - 1; \
- 	this_cpu_inc((*stats).smc[t].key ## _cnt); \
--	if (r <= 0) \
-+	if (r <= 0 || l <= 0) \
- 		break; \
--	_pos = (_pos < m) ? ((l == 1 << (_pos + 12)) ? _pos - 1 : _pos) : m; \
-+	_pos = fls64((l - 1) >> 13); \
-+	_pos = (_pos <= m) ? _pos : m; \
- 	this_cpu_inc((*stats).smc[t].key ## _pd.buf[_pos]); \
- 	this_cpu_add((*stats).smc[t].key ## _bytes, r); \
- } \
-@@ -138,9 +139,12 @@ while (0)
- do { \
- 	typeof(_len) _l = (_len); \
- 	typeof(_tech) t = (_tech); \
--	int _pos = fls((_l) >> 13); \
-+	int _pos; \
- 	int m = SMC_BUF_MAX - 1; \
--	_pos = (_pos < m) ? ((_l == 1 << (_pos + 12)) ? _pos - 1 : _pos) : m; \
-+	if (_l <= 0) \
-+		break; \
-+	_pos = fls((_l - 1) >> 13); \
-+	_pos = (_pos <= m) ? _pos : m; \
- 	this_cpu_inc((*(_smc_stats)).smc[t].k ## _rmbsize.buf[_pos]); \
- } \
- while (0)
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index 4dbbf8fdab758..43011bc41da77 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -313,6 +313,7 @@ dsu-pmu {
+ 		interrupts = <GIC_SPI 18 IRQ_TYPE_LEVEL_HIGH 0>;
+ 		cpus = <&cpu0>, <&cpu1>, <&cpu2>, <&cpu3>,
+ 		       <&cpu4>, <&cpu5>, <&cpu6>, <&cpu7>;
++		status = "fail";
+ 	};
+ 
+ 	dmic_codec: dmic-codec {
 -- 
 2.40.1
 
