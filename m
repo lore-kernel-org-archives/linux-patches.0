@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D339FF9CC
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE352F9CC
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwziRdWv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467ECC433CB;
-	Mon, 16 Oct 2023 08:49:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3TAHfPf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416E1C433C7;
+	Mon, 16 Oct 2023 08:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446149;
-	bh=eo9lxUtvMdwO/nsicjZY6vkuYPh6fZdDRTDT0cNV+/U=;
+	s=korg; t=1697446152;
+	bh=MUQjktXIgTP/7qaU9n55pYHZ5JdRdQbT0B3XcSq8ZPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwziRdWvPOgksY8Q9/O5oPm5oGRvXbJgOttXFhpLe/RZOznH58+qFd7wv/wt5lw8V
-	 /WmEGdF6Y6vTwCnXO+t5JmW+gTsV8s6vGsiUomVIkznqerAobnohPJK5zHL2SiAUbb
-	 4UjEcgk+YWM8yPVXDWNpB9veqIQlHxWjQsZS3hPA=
+	b=Q3TAHfPfmjdooN/C1OO+pFCKl7MvyQQQPOPvZl9Lla7WSBS1jPd7Va6IHmj+zd14a
+	 dQV5eTXybY42/7nRMzaDJXxaJfMX2Fz/UIgNtidVPokH0bbpz1184k4f9xtt3GvU6j
+	 vBZqWCUv/K/rweUD1h4uR5eozzD4oQIHi5dLas34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingxing Luo <xingxing.luo@unisoc.com>
-Subject: [PATCH 5.15 054/102] usb: musb: Modify the "HWVers" register address
-Date: Mon, 16 Oct 2023 10:40:53 +0200
-Message-ID: <20231016083955.141675051@linuxfoundation.org>
+	Phil Elwell <phil@raspberrypi.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 055/102] iio: pressure: bmp280: Fix NULL pointer exception
+Date: Mon, 16 Oct 2023 10:40:54 +0200
+Message-ID: <20231016083955.167165448@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -40,36 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingxing Luo <xingxing.luo@unisoc.com>
+From: Phil Elwell <phil@raspberrypi.com>
 
-commit 6658a62e1ddf726483cb2d8bf45ea3f9bd533074 upstream.
+commit 85dfb43bf69281adb1f345dfd9a39faf2e5a718d upstream.
 
-musb HWVers rgister address is not 0x69, if we operate the
-wrong address 0x69, it will cause a kernel crash, because
-there is no register corresponding to this address in the
-additional control register of musb. In fact, HWVers has
-been defined in musb_register.h, and the name is
-"MUSB_HWVERS", so We need to use this macro instead of 0x69.
+The bmp085 EOC IRQ support is optional, but the driver's common probe
+function queries the IRQ properties whether or not it exists, which
+can trigger a NULL pointer exception. Avoid any exception by making
+the query conditional on the possession of a valid IRQ.
 
-Fixes: c2365ce5d5a0 ("usb: musb: replace hard coded registers with defines")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xingxing Luo <xingxing.luo@unisoc.com>
-Link: https://lore.kernel.org/r/20230922075929.31074-1-xingxing.luo@unisoc.com
+Fixes: aae953949651 ("iio: pressure: bmp280: add support for BMP085 EOC interrupt")
+Signed-off-by: Phil Elwell <phil@raspberrypi.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20230811155829.51208-1-phil@raspberrypi.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/musb_debugfs.c |    2 +-
+ drivers/iio/pressure/bmp280-core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/musb/musb_debugfs.c
-+++ b/drivers/usb/musb/musb_debugfs.c
-@@ -39,7 +39,7 @@ static const struct musb_register_map mu
- 	{ "IntrUsbE",	MUSB_INTRUSBE,	8 },
- 	{ "DevCtl",	MUSB_DEVCTL,	8 },
- 	{ "VControl",	0x68,		32 },
--	{ "HWVers",	0x69,		16 },
-+	{ "HWVers",	MUSB_HWVERS,	16 },
- 	{ "LinkInfo",	MUSB_LINKINFO,	8 },
- 	{ "VPLen",	MUSB_VPLEN,	8 },
- 	{ "HS_EOF1",	MUSB_HS_EOF1,	8 },
+--- a/drivers/iio/pressure/bmp280-core.c
++++ b/drivers/iio/pressure/bmp280-core.c
+@@ -1112,7 +1112,7 @@ int bmp280_common_probe(struct device *d
+ 	 * however as it happens, the BMP085 shares the chip ID of BMP180
+ 	 * so we look for an IRQ if we have that.
+ 	 */
+-	if (irq > 0 || (chip_id  == BMP180_CHIP_ID)) {
++	if (irq > 0 && (chip_id  == BMP180_CHIP_ID)) {
+ 		ret = bmp085_fetch_eoc_irq(dev, name, irq, data);
+ 		if (ret)
+ 			return ret;
 
 
