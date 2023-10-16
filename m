@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AAB28E08
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EBA28E03
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KqOFg11"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E96C433C7;
-	Mon, 16 Oct 2023 14:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2TcC9mO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A15AC433C7;
+	Mon, 16 Oct 2023 14:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468156;
-	bh=vEjXWzmeMAci4Bn/mFoUjhr413opj2A2y4KO1IatwL8=;
+	s=korg; t=1697468158;
+	bh=I9FXzntxaUcwkQl4Q2EEVTBdbmv0HCDiprEhLi/6VWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2KqOFg11CIQigUZGzgJtROyh02TuNg7fQde/6wcrKlmA17FQF9QmkRlul9q2pLgPX
-	 ZRBYaSdWnIt1HB77FFVYsN8a1Ml4HfN5xda67ws1otto7xm/S29r/vCm4a4cPfSKbE
-	 /B+KCllpe2heeBSmI8GElR1SsBqaEILhLuSOzQ00=
+	b=O2TcC9mO2Af8e3k/DpSiLohM3zOkj4wkhOpfzGQ9B3MIk3EYtuLTPmrZDHICexSjp
+	 4R4IfejmKPkY8fr0eBXCT5S7DkCkmUJKHKlcX2kp8Sq0Rk1T/pNaf7uMUpL6vCTcLR
+	 mFYGHkhRIF0Ey/9YDU1201AZVhQhGuhNrYBsMM3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dharma Balasubiramani <dharma.b@microchip.com>,
-	William Breathitt Gray <william.gray@linaro.org>
-Subject: [PATCH 6.5 169/191] counter: microchip-tcb-capture: Fix the use of internal GCLK logic
-Date: Mon, 16 Oct 2023 10:42:34 +0200
-Message-ID: <20231016084019.320760240@linuxfoundation.org>
+	Linu Cherian <lcherian@marvell.com>,
+	James Clark <james.clark@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: [PATCH 6.5 170/191] coresight: Fix run time warnings while reusing ETR buffer
+Date: Mon, 16 Oct 2023 10:42:35 +0200
+Message-ID: <20231016084019.344130796@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -35,39 +36,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dharma Balasubiramani <dharma.b@microchip.com>
+From: Linu Cherian <lcherian@marvell.com>
 
-commit df8fdd01c98b99d04915c04f3a5ce73f55456b7c upstream.
+commit bd2767ec3df2775bc336f441f9068a989ccb919d upstream.
 
-As per the datasheet, the clock selection Bits 2:0 – TCCLKS[2:0] should
-be set to 0 while using the internal GCLK (TIMER_CLOCK1).
+Fix the below warning by avoding calls to tmc_etr_enable_hw,
+if we are reusing the ETR buffer for multiple sources in sysfs mode.
 
-Fixes: 106b104137fd ("counter: Add microchip TCB capture counter")
-Signed-off-by: Dharma Balasubiramani <dharma.b@microchip.com>
-Link: https://lore.kernel.org/r/20230905100835.315024-1-dharma.b@microchip.com
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+echo 1 > /sys/bus/coresight/devices/tmc_etr0/enable_sink
+echo 1 > /sys/bus/coresight/devices/ete1/enable_source
+echo 1 > /sys/bus/coresight/devices/ete2/enable_source
+[  166.918290] ------------[ cut here ]------------
+[  166.922905] WARNING: CPU: 4 PID: 2288 at
+drivers/hwtracing/coresight/coresight-tmc-etr.c:1037
+tmc_etr_enable_hw+0xb0/0xc8
+[  166.933862] Modules linked in:
+[  166.936911] CPU: 4 PID: 2288 Comm: bash Not tainted 6.5.0-rc7 #132
+[  166.943084] Hardware name: Marvell CN106XX board (DT)
+[  166.948127] pstate: 834000c9 (Nzcv daIF +PAN -UAO +TCO +DIT -SSBS
+BTYPE=--)
+[  166.955083] pc : tmc_etr_enable_hw+0xb0/0xc8
+[  166.959345] lr : tmc_enable_etr_sink+0x134/0x210
+snip..
+  167.038545] Call trace:
+[  167.040982]  tmc_etr_enable_hw+0xb0/0xc8
+[  167.044897]  tmc_enable_etr_sink+0x134/0x210
+[  167.049160]  coresight_enable_path+0x160/0x278
+[  167.053596]  coresight_enable+0xd4/0x298
+[  167.057510]  enable_source_store+0x54/0xa0
+[  167.061598]  dev_attr_store+0x20/0x40
+[  167.065254]  sysfs_kf_write+0x4c/0x68
+[  167.068909]  kernfs_fop_write_iter+0x128/0x200
+[  167.073345]  vfs_write+0x1ac/0x2f8
+[  167.076739]  ksys_write+0x74/0x110
+[  167.080132]  __arm64_sys_write+0x24/0x38
+[  167.084045]  invoke_syscall.constprop.0+0x58/0xf8
+[  167.088744]  do_el0_svc+0x60/0x160
+[  167.092137]  el0_svc+0x40/0x170
+[  167.095273]  el0t_64_sync_handler+0x100/0x130
+[  167.099621]  el0t_64_sync+0x190/0x198
+[  167.103277] ---[ end trace 0000000000000000 ]---
+-bash: echo: write error: Device or resource busy
+
+Fixes: 296b01fd106e ("coresight: Refactor out buffer allocation function for ETR")
+Signed-off-by: Linu Cherian <lcherian@marvell.com>
+Reviewed-by: James Clark <james.clark@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20230823042948.12879-1-lcherian@marvell.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/microchip-tcb-capture.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../hwtracing/coresight/coresight-tmc-etr.c   | 24 ++++++++++---------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/drivers/counter/microchip-tcb-capture.c
-+++ b/drivers/counter/microchip-tcb-capture.c
-@@ -98,7 +98,7 @@ static int mchp_tc_count_function_write(
- 		priv->qdec_mode = 0;
- 		/* Set highest rate based on whether soc has gclk or not */
- 		bmr &= ~(ATMEL_TC_QDEN | ATMEL_TC_POSEN);
--		if (priv->tc_cfg->has_gclk)
-+		if (!priv->tc_cfg->has_gclk)
- 			cmr |= ATMEL_TC_TIMER_CLOCK2;
- 		else
- 			cmr |= ATMEL_TC_TIMER_CLOCK1;
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+index 66dc5f97a009..6132c5b3db9c 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+@@ -1173,16 +1173,6 @@ static struct etr_buf *tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
+ 		goto out;
+ 	}
+ 
+-	/*
+-	 * In sysFS mode we can have multiple writers per sink.  Since this
+-	 * sink is already enabled no memory is needed and the HW need not be
+-	 * touched, even if the buffer size has changed.
+-	 */
+-	if (drvdata->mode == CS_MODE_SYSFS) {
+-		atomic_inc(&csdev->refcnt);
+-		goto out;
+-	}
+-
+ 	/*
+ 	 * If we don't have a buffer or it doesn't match the requested size,
+ 	 * use the buffer allocated above. Otherwise reuse the existing buffer.
+@@ -1204,7 +1194,7 @@ static struct etr_buf *tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
+ 
+ static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
+ {
+-	int ret;
++	int ret = 0;
+ 	unsigned long flags;
+ 	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+ 	struct etr_buf *sysfs_buf = tmc_etr_get_sysfs_buffer(csdev);
+@@ -1213,12 +1203,24 @@ static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
+ 		return PTR_ERR(sysfs_buf);
+ 
+ 	spin_lock_irqsave(&drvdata->spinlock, flags);
++
++	/*
++	 * In sysFS mode we can have multiple writers per sink.  Since this
++	 * sink is already enabled no memory is needed and the HW need not be
++	 * touched, even if the buffer size has changed.
++	 */
++	if (drvdata->mode == CS_MODE_SYSFS) {
++		atomic_inc(&csdev->refcnt);
++		goto out;
++	}
++
+ 	ret = tmc_etr_enable_hw(drvdata, sysfs_buf);
+ 	if (!ret) {
+ 		drvdata->mode = CS_MODE_SYSFS;
+ 		atomic_inc(&csdev->refcnt);
+ 	}
+ 
++out:
+ 	spin_unlock_irqrestore(&drvdata->spinlock, flags);
+ 
+ 	if (!ret)
+-- 
+2.42.0
+
 
 
