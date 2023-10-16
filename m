@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5E61A58C
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD601A58C
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBUqS4Mv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943B0C433C7;
-	Mon, 16 Oct 2023 09:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1KDjJ0u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183DDC433C8;
+	Mon, 16 Oct 2023 09:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697447063;
-	bh=A7EIEdOqe8ky4IIBp5rKzi6JkBO5uI2JmBMDAUHFKZA=;
+	s=korg; t=1697447070;
+	bh=AGud115ijMb+4SnYR7O6Wa54YZDBAscWVvd/KCEH00k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBUqS4Mva3x56uIK0u3rMtpdW8kmlYcbj/4El+tdlo9bqtaAM7TvAT84JrLbm2L4k
-	 i4ji7D/ZEs4782terQL7OFdBvErMoWv+kiZZBH+ymuNNWP+LzNhTsy1jiCGb3W1WT6
-	 IewLG0k00q0whrPIKHZbXA1pgg+/KMoC0Rg6saWg=
+	b=E1KDjJ0upL3Zep2qaJ0IDb61cfqEOYxhKUmcqYicoD49lt6YWyxa91w2ifgMA7Wp5
+	 e7SYKfeMF9M/kgCQgBBDF8ieJ55S+BWTCFnhepZk9ozJl7MEPuJxiiuU6YiHCXuryQ
+	 WtAAxvaWjJyxPf8pTGjLtW4gQj863fnAsizQN9hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 094/131] ACPI: EC: Add quirk for the HP Pavilion Gaming 15-dk1xxx
-Date: Mon, 16 Oct 2023 10:41:17 +0200
-Message-ID: <20231016084002.401940240@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 095/131] ksmbd: not allow to open file if delelete on close bit is set
+Date: Mon, 16 Oct 2023 10:41:18 +0200
+Message-ID: <20231016084002.425138931@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -35,50 +35,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit cd4aece493f99f95d41edcce32927d70a5dde923 upstream.
+commit f43328357defc0dc9d28dbd06dc3361fd2b22e28 upstream.
 
-Added GPE quirk entry for the HP Pavilion Gaming 15-dk1xxx.
-There is a quirk entry for 2 15-c..... laptops, this is
-for a new version which has 15-dk1xxx as identifier.
+Cthon test fail with the following error.
 
-This fixes the LID switch and rfkill and brightness hotkeys
-not working.
+check for proper open/unlink operation
+nfsjunk files before unlink:
+  -rwxr-xr-x 1 root root 0  9월 25 11:03 ./nfs2y8Jm9
+./nfs2y8Jm9 open; unlink ret = 0
+nfsjunk files after unlink:
+  -rwxr-xr-x 1 root root 0  9월 25 11:03 ./nfs2y8Jm9
+data compare ok
+nfsjunk files after close:
+  ls: cannot access './nfs2y8Jm9': No such file or directory
+special tests failed
 
-Closes: https://github.com/systemd/systemd/issues/28942
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cthon expect to second unlink failure when file is already unlinked.
+ksmbd can not allow to open file if flags of ksmbd inode is set with
+S_DEL_ON_CLS flags.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/ec.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/smb/server/vfs_cache.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/ec.c
-+++ b/drivers/acpi/ec.c
-@@ -1888,6 +1888,17 @@ static const struct dmi_system_id ec_dmi
- 	},
- 	{
- 		/*
-+		 * HP Pavilion Gaming Laptop 15-dk1xxx
-+		 * https://github.com/systemd/systemd/issues/28942
-+		 */
-+		.callback = ec_honor_dsdt_gpe,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HP Pavilion Gaming Laptop 15-dk1xxx"),
-+		},
-+	},
-+	{
-+		/*
- 		 * Samsung hardware
- 		 * https://bugzilla.kernel.org/show_bug.cgi?id=44161
- 		 */
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -105,7 +105,7 @@ int ksmbd_query_inode_status(struct inod
+ 	ci = __ksmbd_inode_lookup(inode);
+ 	if (ci) {
+ 		ret = KSMBD_INODE_STATUS_OK;
+-		if (ci->m_flags & S_DEL_PENDING)
++		if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
+ 			ret = KSMBD_INODE_STATUS_PENDING_DELETE;
+ 		atomic_dec(&ci->m_count);
+ 	}
+@@ -115,7 +115,7 @@ int ksmbd_query_inode_status(struct inod
+ 
+ bool ksmbd_inode_pending_delete(struct ksmbd_file *fp)
+ {
+-	return (fp->f_ci->m_flags & S_DEL_PENDING);
++	return (fp->f_ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
+ }
+ 
+ void ksmbd_set_inode_pending_delete(struct ksmbd_file *fp)
 
 
