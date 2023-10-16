@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BEB14288
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABBF14288
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYYpp9tz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43538C433C9;
-	Mon, 16 Oct 2023 14:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzCZlWNb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE16C433C7;
+	Mon, 16 Oct 2023 14:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467856;
-	bh=87c4/rlvuFNfduQ1m3SpmCQe2dEgAh3dOGUunUN+ORc=;
+	s=korg; t=1697467860;
+	bh=Ph9FOGnwXWDzsNTSDdG2ZAqhGaZEeER02UGacmaewkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYYpp9tzcbLjUsQaVV8/aoPEuLCKxiqiTs8GQz/azAyjgJK7TESrneBmXP/QaSG6y
-	 2ZQMPrILE4+d6o9fZHUpUGIRSTMeORhkqA89BW5L1cL3MRKT6SPGO2MPG2yfz52Fes
-	 skOUt3O/ccyuc4a84qaj1CXlHY2zditj/W4gApBg=
+	b=uzCZlWNblW1OxlmunkVgS6zr/njExZ4c5XdZWbAX+r0Q8n3noLVHqwlUeQxshSv58
+	 W0zmTeTGc0va3av5GWyZZ6oezBW8hkBsN51+l7i0UXv70PBmtWaDxUlsRiSQyFdwBY
+	 KncQNUNUx27Jn/9Pt+jN2bHy8unMMJpaO5ndZfvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>
-Subject: [PATCH 6.5 106/191] usb: hub: Guard against accesses to uninitialized BOS descriptors
-Date: Mon, 16 Oct 2023 10:41:31 +0200
-Message-ID: <20231016084017.865279616@linuxfoundation.org>
+	Xingxing Luo <xingxing.luo@unisoc.com>
+Subject: [PATCH 6.5 107/191] usb: musb: Get the musb_qh poniter after musb_giveback
+Date: Mon, 16 Oct 2023 10:41:32 +0200
+Message-ID: <20231016084017.887984397@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -34,134 +34,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+From: Xingxing Luo <xingxing.luo@unisoc.com>
 
-commit f74a7afc224acd5e922c7a2e52244d891bbe44ee upstream.
+commit 33d7e37232155aadebe4145dcc592f00dabd7a2b upstream.
 
-Many functions in drivers/usb/core/hub.c and drivers/usb/core/hub.h
-access fields inside udev->bos without checking if it was allocated and
-initialized. If usb_get_bos_descriptor() fails for whatever
-reason, udev->bos will be NULL and those accesses will result in a
-crash:
+When multiple threads are performing USB transmission, musb->lock will be
+unlocked when musb_giveback is executed. At this time, qh may be released
+in the dequeue process in other threads, resulting in a wild pointer, so
+it needs to be here get qh again, and judge whether qh is NULL, and when
+dequeue, you need to set qh to NULL.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000018
-PGD 0 P4D 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 5 PID: 17818 Comm: kworker/5:1 Tainted: G W 5.15.108-18910-gab0e1cb584e1 #1 <HASH:1f9e 1>
-Hardware name: Google Kindred/Kindred, BIOS Google_Kindred.12672.413.0 02/03/2021
-Workqueue: usb_hub_wq hub_event
-RIP: 0010:hub_port_reset+0x193/0x788
-Code: 89 f7 e8 20 f7 15 00 48 8b 43 08 80 b8 96 03 00 00 03 75 36 0f b7 88 92 03 00 00 81 f9 10 03 00 00 72 27 48 8b 80 a8 03 00 00 <48> 83 78 18 00 74 19 48 89 df 48 8b 75 b0 ba 02 00 00 00 4c 89 e9
-RSP: 0018:ffffab740c53fcf8 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffffa1bc5f678000 RCX: 0000000000000310
-RDX: fffffffffffffdff RSI: 0000000000000286 RDI: ffffa1be9655b840
-RBP: ffffab740c53fd70 R08: 00001b7d5edaa20c R09: ffffffffb005e060
-R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
-R13: ffffab740c53fd3e R14: 0000000000000032 R15: 0000000000000000
-FS: 0000000000000000(0000) GS:ffffa1be96540000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000018 CR3: 000000022e80c005 CR4: 00000000003706e0
-Call Trace:
-hub_event+0x73f/0x156e
-? hub_activate+0x5b7/0x68f
-process_one_work+0x1a2/0x487
-worker_thread+0x11a/0x288
-kthread+0x13a/0x152
-? process_one_work+0x487/0x487
-? kthread_associate_blkcg+0x70/0x70
-ret_from_fork+0x1f/0x30
-
-Fall back to a default behavior if the BOS descriptor isn't accessible
-and skip all the functionalities that depend on it: LPM support checks,
-Super Speed capabilitiy checks, U1/U2 states setup.
-
-Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-Cc: stable <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230830100418.1952143-1-ricardo.canuelo@collabora.com
+Fixes: dbac5d07d13e ("usb: musb: host: don't start next rx urb if current one failed")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xingxing Luo <xingxing.luo@unisoc.com>
+Link: https://lore.kernel.org/r/20230919033055.14085-1-xingxing.luo@unisoc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |   25 ++++++++++++++++++++++---
- drivers/usb/core/hub.h |    2 +-
- 2 files changed, 23 insertions(+), 4 deletions(-)
+ drivers/usb/musb/musb_host.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -151,6 +151,10 @@ int usb_device_supports_lpm(struct usb_d
- 	if (udev->quirks & USB_QUIRK_NO_LPM)
- 		return 0;
+diff --git a/drivers/usb/musb/musb_host.c b/drivers/usb/musb/musb_host.c
+index a02c29216955..bc4507781167 100644
+--- a/drivers/usb/musb/musb_host.c
++++ b/drivers/usb/musb/musb_host.c
+@@ -321,10 +321,16 @@ static void musb_advance_schedule(struct musb *musb, struct urb *urb,
+ 	musb_giveback(musb, urb, status);
+ 	qh->is_ready = ready;
  
-+	/* Skip if the device BOS descriptor couldn't be read */
-+	if (!udev->bos)
-+		return 0;
++	/*
++	 * musb->lock had been unlocked in musb_giveback, so qh may
++	 * be freed, need to get it again
++	 */
++	qh = musb_ep_get_qh(hw_ep, is_in);
 +
- 	/* USB 2.1 (and greater) devices indicate LPM support through
- 	 * their USB 2.0 Extended Capabilities BOS descriptor.
+ 	/* reclaim resources (and bandwidth) ASAP; deschedule it, and
+ 	 * invalidate qh as soon as list_empty(&hep->urb_list)
  	 */
-@@ -327,6 +331,10 @@ static void usb_set_lpm_parameters(struc
- 	if (!udev->lpm_capable || udev->speed < USB_SPEED_SUPER)
- 		return;
+-	if (list_empty(&qh->hep->urb_list)) {
++	if (qh && list_empty(&qh->hep->urb_list)) {
+ 		struct list_head	*head;
+ 		struct dma_controller	*dma = musb->dma_controller;
  
-+	/* Skip if the device BOS descriptor couldn't be read */
-+	if (!udev->bos)
-+		return;
-+
- 	hub = usb_hub_to_struct_hub(udev->parent);
- 	/* It doesn't take time to transition the roothub into U0, since it
- 	 * doesn't have an upstream link.
-@@ -2720,13 +2728,17 @@ out_authorized:
- static enum usb_ssp_rate get_port_ssp_rate(struct usb_device *hdev,
- 					   u32 ext_portstatus)
- {
--	struct usb_ssp_cap_descriptor *ssp_cap = hdev->bos->ssp_cap;
-+	struct usb_ssp_cap_descriptor *ssp_cap;
- 	u32 attr;
- 	u8 speed_id;
- 	u8 ssac;
- 	u8 lanes;
- 	int i;
- 
-+	if (!hdev->bos)
-+		goto out;
-+
-+	ssp_cap = hdev->bos->ssp_cap;
- 	if (!ssp_cap)
- 		goto out;
- 
-@@ -4244,8 +4256,15 @@ static void usb_enable_link_state(struct
- 		enum usb3_link_state state)
- {
- 	int timeout;
--	__u8 u1_mel = udev->bos->ss_cap->bU1devExitLat;
--	__le16 u2_mel = udev->bos->ss_cap->bU2DevExitLat;
-+	__u8 u1_mel;
-+	__le16 u2_mel;
-+
-+	/* Skip if the device BOS descriptor couldn't be read */
-+	if (!udev->bos)
-+		return;
-+
-+	u1_mel = udev->bos->ss_cap->bU1devExitLat;
-+	u2_mel = udev->bos->ss_cap->bU2DevExitLat;
- 
- 	/* If the device says it doesn't have *any* exit latency to come out of
- 	 * U1 or U2, it's probably lying.  Assume it doesn't implement that link
---- a/drivers/usb/core/hub.h
-+++ b/drivers/usb/core/hub.h
-@@ -153,7 +153,7 @@ static inline int hub_is_superspeedplus(
- {
- 	return (hdev->descriptor.bDeviceProtocol == USB_HUB_PR_SS &&
- 		le16_to_cpu(hdev->descriptor.bcdUSB) >= 0x0310 &&
--		hdev->bos->ssp_cap);
-+		hdev->bos && hdev->bos->ssp_cap);
- }
- 
- static inline unsigned hub_power_on_good_delay(struct usb_hub *hub)
+@@ -2398,6 +2404,7 @@ static int musb_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
+ 		 * and its URB list has emptied, recycle this qh.
+ 		 */
+ 		if (ready && list_empty(&qh->hep->urb_list)) {
++			musb_ep_set_qh(qh->hw_ep, is_in, NULL);
+ 			qh->hep->hcpriv = NULL;
+ 			list_del(&qh->ring);
+ 			kfree(qh);
+-- 
+2.42.0
+
 
 
