@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEB5266B7
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3E4266B7
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7CuoZRb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DA1C433C8;
-	Mon, 16 Oct 2023 14:56:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7LumZXi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11B0C433CA;
+	Mon, 16 Oct 2023 14:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468174;
-	bh=ZUkSycl/4WerYeROsU3kA7Yk5ucrVpyG61opDMpsjsc=;
+	s=korg; t=1697468177;
+	bh=dfLR0TKucir5YIYIjPF4jNNoNhmtk5KWDuPbjdS8Mm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S7CuoZRb7HfJx8oiiuDsL2RwXoyZxgrjj75Z4dHauIVhyBAc9uWOhmxCEehhRjPkO
-	 mfxuRFB8lkLNBnthrGwnUVgFmUCSuKuRx6QG7KZIk5HiO2lA5mus8+UA0tBhfxVCOg
-	 4H7htFboJbWgjJUsgKc/CcZkp4jXa9uoH0eR3Jpk=
+	b=A7LumZXizygsP65kwaewk2i+Xk6yFmY2mK/+brE9K9fMRIRfQnomBdK3iSpx0JSw0
+	 La0QCJpNITWhS8v0rdgCEU7Xv3zW7NIf89v7MZdV+Ik9lMwWBQpB4FJgiBwv0eBY8Z
+	 en1jGY8bjD2ZrF0OPMuQKQUL81LhFuXuUcdQTpEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	syzbot+0434ac83f907a1dbdd1e@syzkaller.appspotmail.com,
+	Thorsten Leemhuis <linux@leemhuis.info>,
+	Jeffery Miller <jefferymiller@google.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.5 149/191] Input: powermate - fix use-after-free in powermate_config_complete
-Date: Mon, 16 Oct 2023 10:42:14 +0200
-Message-ID: <20231016084018.859538794@linuxfoundation.org>
+Subject: [PATCH 6.5 150/191] Input: psmouse - fix fast_reconnect function for PS/2 mode
+Date: Mon, 16 Oct 2023 10:42:15 +0200
+Message-ID: <20231016084018.881521750@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -42,39 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Jeffery Miller <jefferymiller@google.com>
 
-commit 5c15c60e7be615f05a45cd905093a54b11f461bc upstream.
+commit e2cb5cc822b6c9ee72c56ce1d81671b22c05406a upstream.
 
-syzbot has found a use-after-free bug [1] in the powermate driver. This
-happens when the device is disconnected, which leads to a memory free from
-the powermate_device struct.  When an asynchronous control message
-completes after the kfree and its callback is invoked, the lock does not
-exist anymore and hence the bug.
+When the SMBus connection is attempted psmouse_smbus_init() sets
+the fast_reconnect pointer to psmouse_smbus_reconnecti(). If SMBus
+initialization fails, elantech_setup_ps2() and synaptics_init_ps2() will
+fallback to PS/2 mode, replacing the psmouse private data. This can cause
+issues on resume, since psmouse_smbus_reconnect() expects to find an
+instance of struct psmouse_smbus_dev in psmouse->private.
 
-Use usb_kill_urb() on pm->config to cancel any in-progress requests upon
-device disconnection.
+The issue was uncovered when in 92e24e0e57f7 ("Input: psmouse - add
+delay when deactivating for SMBus mode") psmouse_smbus_reconnect()
+started attempting to use more of the data structure. The commit was
+since reverted, not because it was at fault, but because there was found
+a better way of doing what it was attempting to do.
 
-[1] https://syzkaller.appspot.com/bug?extid=0434ac83f907a1dbdd1e
+Fix the problem by resetting the fast_reconnect pointer in psmouse
+structure in elantech_setup_ps2() and synaptics_init_ps2() when the PS/2
+mode is used.
 
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reported-by: syzbot+0434ac83f907a1dbdd1e@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/20230916-topic-powermate_use_after_free-v3-1-64412b81a7a2@gmail.com
+Reported-by: Thorsten Leemhuis <linux@leemhuis.info>
+Tested-by: Thorsten Leemhuis <linux@leemhuis.info>
+Signed-off-by: Jeffery Miller <jefferymiller@google.com>
+Fixes: bf232e460a35 ("Input: psmouse-smbus - allow to control psmouse_deactivate")
+Link: https://lore.kernel.org/r/20231005002249.554877-1-jefferymiller@google.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/powermate.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/mouse/elantech.c  |    1 +
+ drivers/input/mouse/synaptics.c |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/input/misc/powermate.c
-+++ b/drivers/input/misc/powermate.c
-@@ -425,6 +425,7 @@ static void powermate_disconnect(struct
- 		pm->requires_update = 0;
- 		usb_kill_urb(pm->irq);
- 		input_unregister_device(pm->input);
-+		usb_kill_urb(pm->config);
- 		usb_free_urb(pm->irq);
- 		usb_free_urb(pm->config);
- 		powermate_free_buffers(interface_to_usbdev(intf), pm);
+--- a/drivers/input/mouse/elantech.c
++++ b/drivers/input/mouse/elantech.c
+@@ -2114,6 +2114,7 @@ static int elantech_setup_ps2(struct psm
+ 	psmouse->protocol_handler = elantech_process_byte;
+ 	psmouse->disconnect = elantech_disconnect;
+ 	psmouse->reconnect = elantech_reconnect;
++	psmouse->fast_reconnect = NULL;
+ 	psmouse->pktsize = info->hw_version > 1 ? 6 : 4;
+ 
+ 	return 0;
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -1623,6 +1623,7 @@ static int synaptics_init_ps2(struct psm
+ 	psmouse->set_rate = synaptics_set_rate;
+ 	psmouse->disconnect = synaptics_disconnect;
+ 	psmouse->reconnect = synaptics_reconnect;
++	psmouse->fast_reconnect = NULL;
+ 	psmouse->cleanup = synaptics_reset;
+ 	/* Synaptics can usually stay in sync without extra help */
+ 	psmouse->resync_time = 0;
 
 
