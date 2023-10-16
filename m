@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284B714288
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623F214288
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3pPDVWS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97430C433C8;
-	Mon, 16 Oct 2023 14:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k25zbEKJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13D8C433C8;
+	Mon, 16 Oct 2023 14:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467934;
-	bh=dc0Z7knpU2vGrhBpVbTCnV6LI1HHMcT/5GCZwZDFu7Y=;
+	s=korg; t=1697467940;
+	bh=q0VM/riT0s38dZGFBsSTNN6Xru6X+oiPOxiA2Nd7T3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J3pPDVWS/IJcj2wkMxYQfAG9qmO+0/edOQ733jgqlVHBozIy0g77Y8wV47LC3PFVw
-	 pJy/R1OTz51GXqCBJ+RYMMA/pFNgarNIUj8sLFB/Syao2FPx+V/0uqWl1Cbq8ZuBG+
-	 t4oMbuqKErTInaQl+r6A9/yjNb7XgiynDCcTL5xU=
+	b=k25zbEKJTQMJP9yzk0+02tw9HqtPp/WBM/kC40hdBCSkNpjBKi2q7xVH5c6fGOTUB
+	 u6c4gc6MiuO8KYwqlYaONZVj3Z2G/w8iJWF3w7Rq2xBI9B4OF0g2cxdBEhzow6lRo3
+	 ggXXiJCzwbFiApXcpUuMiy9Lu8UqmW0prkaXfoLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.5 093/191] ovl: temporarily disable appending lowedirs
-Date: Mon, 16 Oct 2023 10:41:18 +0200
-Message-ID: <20231016084017.565732209@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 084/191] net: tcp: fix crashes trying to free half-baked MTU probes
+Date: Mon, 16 Oct 2023 10:41:09 +0200
+Message-ID: <20231016084017.360802920@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -41,95 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit beae836e9c61ee039e367a94b14f7fea08f0ad4c upstream.
+[ Upstream commit 71c299c711d1f44f0bf04f1fea66baad565240f1 ]
 
-Kernel v6.5 converted overlayfs to new mount api.
-As an added bonus, it also added a feature to allow appending lowerdirs
-using lowerdir=:/lower2,lowerdir=::/data3 syntax.
+tcp_stream_alloc_skb() initializes the skb to use tcp_tsorted_anchor
+which is a union with the destructor. We need to clean that
+TCP-iness up before freeing.
 
-This new syntax has raised some concerns regarding escaping of colons.
-We decided to try and disable this syntax, which hasn't been in the wild
-for so long and introduce it again in 6.7 using explicit mount options
-lowerdir+=/lower2,datadir+=/data3.
-
-Suggested-by: Miklos Szeredi <miklos@szeredi.hu>
-Link: https://lore.kernel.org/r/CAJfpegsr3A4YgF2YBevWa6n3=AcP7hNndG6EPMu3ncvV-AM71A@mail.gmail.com/
-Fixes: b36a5780cb44 ("ovl: modify layer parameter parsing")
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 736013292e3c ("tcp: let tcp_mtu_probe() build headless packets")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20231010173651.3990234-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/params.c |   52 ++------------------------------------------------
- 1 file changed, 3 insertions(+), 49 deletions(-)
+ net/ipv4/tcp_output.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/overlayfs/params.c
-+++ b/fs/overlayfs/params.c
-@@ -284,12 +284,6 @@ static void ovl_parse_param_drop_lowerdi
-  *     Set "/lower1", "/lower2", and "/lower3" as lower layers and
-  *     "/data1" and "/data2" as data lower layers. Any existing lower
-  *     layers are replaced.
-- * (2) lowerdir=:/lower4
-- *     Append "/lower4" to current stack of lower layers. This requires
-- *     that there already is at least one lower layer configured.
-- * (3) lowerdir=::/lower5
-- *     Append data "/lower5" as data lower layer. This requires that
-- *     there's at least one regular lower layer present.
-  */
- static int ovl_parse_param_lowerdir(const char *name, struct fs_context *fc)
- {
-@@ -311,49 +305,9 @@ static int ovl_parse_param_lowerdir(cons
- 		return 0;
- 	}
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 37fd9537423f1..a8f58f5e99a77 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -2441,6 +2441,7 @@ static int tcp_mtu_probe(struct sock *sk)
  
--	if (strncmp(name, "::", 2) == 0) {
--		/*
--		 * This is a data layer.
--		 * There must be at least one regular lower layer
--		 * specified.
--		 */
--		if (ctx->nr == 0) {
--			pr_err("data lower layers without regular lower layers not allowed");
--			return -EINVAL;
--		}
--
--		/* Skip the leading "::". */
--		name += 2;
--		data_layer = true;
--		/*
--		 * A data layer is automatically an append as there
--		 * must've been at least one regular lower layer.
--		 */
--		append = true;
--	} else if (*name == ':') {
--		/*
--		 * This is a regular lower layer.
--		 * If users want to append a layer enforce that they
--		 * have already specified a first layer before. It's
--		 * better to be strict.
--		 */
--		if (ctx->nr == 0) {
--			pr_err("cannot append layer if no previous layer has been specified");
--			return -EINVAL;
--		}
--
--		/*
--		 * Once a sequence of data layers has started regular
--		 * lower layers are forbidden.
--		 */
--		if (ctx->nr_data > 0) {
--			pr_err("regular lower layers cannot follow data lower layers");
--			return -EINVAL;
--		}
--
--		/* Skip the leading ":". */
--		name++;
--		append = true;
-+	if (*name == ':') {
-+		pr_err("cannot append lower layer");
-+		return -EINVAL;
+ 	/* build the payload, and be prepared to abort if this fails. */
+ 	if (tcp_clone_payload(sk, nskb, probe_size)) {
++		tcp_skb_tsorted_anchor_cleanup(nskb);
+ 		consume_skb(nskb);
+ 		return -1;
  	}
- 
- 	dup = kstrdup(name, GFP_KERNEL);
+-- 
+2.40.1
+
 
 
