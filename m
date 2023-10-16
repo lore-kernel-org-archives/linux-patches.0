@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC1B1944F
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE201944F
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MavFkska"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374AFC433C9;
-	Mon, 16 Oct 2023 08:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evV6p5sh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D11C433C7;
+	Mon, 16 Oct 2023 08:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446256;
-	bh=A/8p6tcMQGJIoXO8r43NTI1S5R9Si3JGRNQy+H15JUc=;
+	s=korg; t=1697446259;
+	bh=HYx6n0tgdhb7cQcXU6lZI/10zOc7k+Gz1nHzY4ptRlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MavFkskaLdYDzz1w+a4jhmxtEi/CJx6DB7DKhsN/2MK0CI6RiXST74PajrkDn5n5p
-	 8A6eC68cT4dgdIdqmwwiAZkrE5mNC7+dxjkr4Oo9wEPHskSDPCKvJ0tO+aboFKY5qJ
-	 czt3U+fZfZD5ounjrX00lqp4/MyOYXJit6HuesGI=
+	b=evV6p5shadUjlMOB/BgOKIRTvoQeXteADg14dkuZGIpaPuoskq4j9KvDvb9VA4yfS
+	 bgjBMo+e3iZjOPezeDdkNErlgmgsC8MyrqXG/rUXQU1ut8BDDtsF9AgGdNI2ved4XI
+	 4PJ3PyeycrCe5WpGfpCgUqjyx17szYSLE7XmRv54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Fernandes <joel@joelfernandes.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.15 100/102] Revert "kernel/sched: Modify initial boot task idle setup"
-Date: Mon, 16 Oct 2023 10:41:39 +0200
-Message-ID: <20231016083956.370044054@linuxfoundation.org>
+	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>
+Subject: [PATCH 5.15 101/102] usb: hub: Guard against accesses to uninitialized BOS descriptors
+Date: Mon, 16 Oct 2023 10:41:40 +0200
+Message-ID: <20231016083956.396560680@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -36,52 +34,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
-This reverts commit 3569ad59664f9fa3ba1d02a78810773b7f49702b which is
-commit cff9b2332ab762b7e0586c793c431a8f2ea4db04 upstream.
+commit f74a7afc224acd5e922c7a2e52244d891bbe44ee upstream.
 
-Joel writes:
-	Let us drop this patch because it caused new tasks-RCU warnings (both
-	normal and rude tasks RCU) in my stable test rig. We are discussing
-	the "right fix" and at that time a backport can be done.
+Many functions in drivers/usb/core/hub.c and drivers/usb/core/hub.h
+access fields inside udev->bos without checking if it was allocated and
+initialized. If usb_get_bos_descriptor() fails for whatever
+reason, udev->bos will be NULL and those accesses will result in a
+crash:
 
-Reported-by: Joel Fernandes <joel@joelfernandes.org>
-Link: https://lore.kernel.org/r/CAEXW_YT6bH70M1TF2TttB-_kP=RUv_1nsy_sHYi6_0oCrX3mVQ@mail.gmail.com
-Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Peter Zijlstra (Intel) <peterz@infradead.org>
+BUG: kernel NULL pointer dereference, address: 0000000000000018
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP NOPTI
+CPU: 5 PID: 17818 Comm: kworker/5:1 Tainted: G W 5.15.108-18910-gab0e1cb584e1 #1 <HASH:1f9e 1>
+Hardware name: Google Kindred/Kindred, BIOS Google_Kindred.12672.413.0 02/03/2021
+Workqueue: usb_hub_wq hub_event
+RIP: 0010:hub_port_reset+0x193/0x788
+Code: 89 f7 e8 20 f7 15 00 48 8b 43 08 80 b8 96 03 00 00 03 75 36 0f b7 88 92 03 00 00 81 f9 10 03 00 00 72 27 48 8b 80 a8 03 00 00 <48> 83 78 18 00 74 19 48 89 df 48 8b 75 b0 ba 02 00 00 00 4c 89 e9
+RSP: 0018:ffffab740c53fcf8 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffffa1bc5f678000 RCX: 0000000000000310
+RDX: fffffffffffffdff RSI: 0000000000000286 RDI: ffffa1be9655b840
+RBP: ffffab740c53fd70 R08: 00001b7d5edaa20c R09: ffffffffb005e060
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
+R13: ffffab740c53fd3e R14: 0000000000000032 R15: 0000000000000000
+FS: 0000000000000000(0000) GS:ffffa1be96540000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000018 CR3: 000000022e80c005 CR4: 00000000003706e0
+Call Trace:
+hub_event+0x73f/0x156e
+? hub_activate+0x5b7/0x68f
+process_one_work+0x1a2/0x487
+worker_thread+0x11a/0x288
+kthread+0x13a/0x152
+? process_one_work+0x487/0x487
+? kthread_associate_blkcg+0x70/0x70
+ret_from_fork+0x1f/0x30
+
+Fall back to a default behavior if the BOS descriptor isn't accessible
+and skip all the functionalities that depend on it: LPM support checks,
+Super Speed capabilitiy checks, U1/U2 states setup.
+
+Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+Cc: stable <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230830100418.1952143-1-ricardo.canuelo@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |    2 +-
- kernel/sched/idle.c |    1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/core/hub.c |   25 ++++++++++++++++++++++---
+ drivers/usb/core/hub.h |    2 +-
+ 2 files changed, 23 insertions(+), 4 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8725,7 +8725,7 @@ void __init init_idle(struct task_struct
- 	 * PF_KTHREAD should already be set at this point; regardless, make it
- 	 * look like a proper per-CPU kthread.
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -150,6 +150,10 @@ int usb_device_supports_lpm(struct usb_d
+ 	if (udev->quirks & USB_QUIRK_NO_LPM)
+ 		return 0;
+ 
++	/* Skip if the device BOS descriptor couldn't be read */
++	if (!udev->bos)
++		return 0;
++
+ 	/* USB 2.1 (and greater) devices indicate LPM support through
+ 	 * their USB 2.0 Extended Capabilities BOS descriptor.
  	 */
--	idle->flags |= PF_KTHREAD | PF_NO_SETAFFINITY;
-+	idle->flags |= PF_IDLE | PF_KTHREAD | PF_NO_SETAFFINITY;
- 	kthread_set_per_cpu(idle, cpu);
+@@ -326,6 +330,10 @@ static void usb_set_lpm_parameters(struc
+ 	if (!udev->lpm_capable || udev->speed < USB_SPEED_SUPER)
+ 		return;
  
- #ifdef CONFIG_SMP
---- a/kernel/sched/idle.c
-+++ b/kernel/sched/idle.c
-@@ -397,7 +397,6 @@ EXPORT_SYMBOL_GPL(play_idle_precise);
- 
- void cpu_startup_entry(enum cpuhp_state state)
++	/* Skip if the device BOS descriptor couldn't be read */
++	if (!udev->bos)
++		return;
++
+ 	hub = usb_hub_to_struct_hub(udev->parent);
+ 	/* It doesn't take time to transition the roothub into U0, since it
+ 	 * doesn't have an upstream link.
+@@ -2698,13 +2706,17 @@ out_authorized:
+ static enum usb_ssp_rate get_port_ssp_rate(struct usb_device *hdev,
+ 					   u32 ext_portstatus)
  {
--	current->flags |= PF_IDLE;
- 	arch_cpu_idle_prepare();
- 	cpuhp_online_idle(state);
- 	while (1)
+-	struct usb_ssp_cap_descriptor *ssp_cap = hdev->bos->ssp_cap;
++	struct usb_ssp_cap_descriptor *ssp_cap;
+ 	u32 attr;
+ 	u8 speed_id;
+ 	u8 ssac;
+ 	u8 lanes;
+ 	int i;
+ 
++	if (!hdev->bos)
++		goto out;
++
++	ssp_cap = hdev->bos->ssp_cap;
+ 	if (!ssp_cap)
+ 		goto out;
+ 
+@@ -4186,8 +4198,15 @@ static void usb_enable_link_state(struct
+ 		enum usb3_link_state state)
+ {
+ 	int timeout, ret;
+-	__u8 u1_mel = udev->bos->ss_cap->bU1devExitLat;
+-	__le16 u2_mel = udev->bos->ss_cap->bU2DevExitLat;
++	__u8 u1_mel;
++	__le16 u2_mel;
++
++	/* Skip if the device BOS descriptor couldn't be read */
++	if (!udev->bos)
++		return;
++
++	u1_mel = udev->bos->ss_cap->bU1devExitLat;
++	u2_mel = udev->bos->ss_cap->bU2DevExitLat;
+ 
+ 	/* If the device says it doesn't have *any* exit latency to come out of
+ 	 * U1 or U2, it's probably lying.  Assume it doesn't implement that link
+--- a/drivers/usb/core/hub.h
++++ b/drivers/usb/core/hub.h
+@@ -141,7 +141,7 @@ static inline int hub_is_superspeedplus(
+ {
+ 	return (hdev->descriptor.bDeviceProtocol == USB_HUB_PR_SS &&
+ 		le16_to_cpu(hdev->descriptor.bcdUSB) >= 0x0310 &&
+-		hdev->bos->ssp_cap);
++		hdev->bos && hdev->bos->ssp_cap);
+ }
+ 
+ static inline unsigned hub_power_on_good_delay(struct usb_hub *hub)
 
 
