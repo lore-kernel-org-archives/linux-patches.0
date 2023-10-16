@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905641A289
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CBD1A289
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6WLKiWk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A57FC433C8;
-	Mon, 16 Oct 2023 08:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCcBm/I7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BDFC433C9;
+	Mon, 16 Oct 2023 08:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446438;
-	bh=b/gxaQRfBMxFxDA7ElTMFr6AmpDn4w7ZiZquNWPnipA=;
+	s=korg; t=1697446441;
+	bh=XDEdgnyL9Ph138AHLY3YtWNFbMbObYhTfF/gqAV9ap4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6WLKiWkw03M73iUvqv54ADGlCi0OnI56YUr4xhq7iEH/+aBpX0HzWVdIh5YTPXd/
-	 8FejYzHHp91vkAuRezhBgrYIaFOYXj0740/Yzbfe2muShM0jehiTN46OwJW+ruc+oY
-	 RtudNRT+DX9VH86WiKMRtiq6KDoBwlUV58QcayZk=
+	b=SCcBm/I70Q+oa9I10BalPNG8d2EfVHDyclnL64eIFD7NV9dCNTMnslYEhwoKuNGFB
+	 ze4ArArbQqz/hRF3bzJIX2k1DKZegqkLOTTaXWpTBlkEyyVcfL4A0DoTUXhg6IHIVa
+	 K3X6TBAuK9aTZG7HdSD4sxSeevKlTxL6UH1SsjfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	SungHwan Jung <onenowy@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/131] ASoC: fsl_sai: Dont disable bitclock for i.MX8MP
-Date: Mon, 16 Oct 2023 10:40:11 +0200
-Message-ID: <20231016084000.765654896@linuxfoundation.org>
+Subject: [PATCH 6.1 029/131] ALSA: hda/realtek: Add quirk for HP Victus 16-d1xxx to enable mute LED
+Date: Mon, 16 Oct 2023 10:40:12 +0200
+Message-ID: <20231016084000.790431110@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -42,56 +42,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: SungHwan Jung <onenowy@gmail.com>
 
-[ Upstream commit 197c53c8ecb34f2cd5922f4bdcffa8f701a134eb ]
+[ Upstream commit 93dc18e11b1ab2d485b69f91c973e6b83e47ebd0 ]
 
-On i.MX8MP, the BCE and TERE bit are binding with mclk
-enablement, if BCE and TERE are cleared the MCLK also be
-disabled on output pin, that cause the external codec (wm8960)
-in wrong state.
+This quirk enables mute LED on HP Victus 16-d1xxx (8A25) laptops, which
+use ALC245 codec.
 
-Codec (wm8960) is using the mclk to generate PLL clock,
-if mclk is disabled before disabling PLL, the codec (wm8960)
-won't generate bclk and frameclk when sysclk switch to
-MCLK source in next test case.
-
-The test case:
-$aplay -r44100 test1.wav (PLL source)
-$aplay -r48000 test2.wav (MCLK source)
-aplay: pcm_write:2127: write error: Input/output error
-
-Fixes: 269f399dc19f ("ASoC: fsl_sai: Disable bit clock with transmitter")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://lore.kernel.org/r/1695116533-23287-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: SungHwan Jung <onenowy@gmail.com>
+Link: https://lore.kernel.org/r/20230823114051.3921-1-onenowy@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: d93eeca627db ("ALSA: hda/realtek - ALC287 merge RTK codec with CS CS35L41 AMP")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index 08a33832f6b3f..96fd9095e544b 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -710,10 +710,15 @@ static void fsl_sai_config_disable(struct fsl_sai *sai, int dir)
- {
- 	unsigned int ofs = sai->soc_data->reg_offset;
- 	bool tx = dir == TX;
--	u32 xcsr, count = 100;
-+	u32 xcsr, count = 100, mask;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 33fbf42fe502b..39d2ac6ae99a8 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -4639,6 +4639,22 @@ static void alc236_fixup_hp_mute_led_coefbit2(struct hda_codec *codec,
+ 	}
+ }
+ 
++static void alc245_fixup_hp_mute_led_coefbit(struct hda_codec *codec,
++					  const struct hda_fixup *fix,
++					  int action)
++{
++	struct alc_spec *spec = codec->spec;
 +
-+	if (sai->soc_data->mclk_with_tere && sai->mclk_direction_output)
-+		mask = FSL_SAI_CSR_TERE;
-+	else
-+		mask = FSL_SAI_CSR_TERE | FSL_SAI_CSR_BCE;
++	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
++		spec->mute_led_polarity = 0;
++		spec->mute_led_coef.idx = 0x0b;
++		spec->mute_led_coef.mask = 3 << 2;
++		spec->mute_led_coef.on = 2 << 2;
++		spec->mute_led_coef.off = 1 << 2;
++		snd_hda_gen_add_mute_led_cdev(codec, coef_mute_led_set);
++	}
++}
++
+ /* turn on/off mic-mute LED per capture hook by coef bit */
+ static int coef_micmute_led_set(struct led_classdev *led_cdev,
+ 				enum led_brightness brightness)
+@@ -7227,6 +7243,7 @@ enum {
+ 	ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS,
+ 	ALC236_FIXUP_DELL_DUAL_CODECS,
+ 	ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
++	ALC245_FIXUP_HP_MUTE_LED_COEFBIT,
+ };
  
- 	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs),
--			   FSL_SAI_CSR_TERE | FSL_SAI_CSR_BCE, 0);
-+			   mask, 0);
+ /* A special fixup for Lenovo C940 and Yoga Duet 7;
+@@ -9296,6 +9313,10 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC269_FIXUP_THINKPAD_ACPI,
+ 	},
++	[ALC245_FIXUP_HP_MUTE_LED_COEFBIT] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc245_fixup_hp_mute_led_coefbit,
++	},
+ };
  
- 	/* TERE will remain set till the end of current frame */
- 	do {
+ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+@@ -9562,6 +9583,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x89c6, "Zbook Fury 17 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x89ca, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x89d3, "HP EliteBook 645 G9 (MB 89D2)", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++	SND_PCI_QUIRK(0x103c, 0x8a25, "HP Victus 16-d1xxx (MB 8A25)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8a78, "HP Dev One", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x103c, 0x8aa0, "HP ProBook 440 G9 (MB 8A9E)", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8aa3, "HP ProBook 450 G9 (MB 8AA1)", ALC236_FIXUP_HP_GPIO_LED),
 -- 
 2.40.1
 
