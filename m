@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F1428DBA
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497A228DBA
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zO5aAilT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA8DC433C8;
-	Mon, 16 Oct 2023 14:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="It/RGkgb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD26C433C7;
+	Mon, 16 Oct 2023 14:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468123;
-	bh=hu51YBjeALgU+NFEM2pFjZhhbcRywRk4BcdoHRfvPw0=;
+	s=korg; t=1697468128;
+	bh=WWqs11n06MpB61hsPsFfajurdWuywT2LR/HOghQ6az4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zO5aAilTYH/xw4BBJ8NxzroJ7uAo8C7CYr2mJZ59xUHc0abMVMZEmoVrwbY+iuY7E
-	 6AO86fBP/GNGgyXasE+NwkUjdfYIh4/9a8BWbsySwY0IFo9Okq0dO4FYjfJ2zLiZPD
-	 9vDAsiKuPPwlClyD5UvU77TmJ/3r3PR3gpXrCw1w=
+	b=It/RGkgbUJ5Wz7JsiMy+VmiL3XgxdTmPhLAd0Uu02GdqDWIDIJZHfM4FvL/UCbpjS
+	 44+7lliOrRa0tca6cbDz9+du9U40Csw7lKed8gwoD02aQ9Mk/SOQFgxXkKeIbVnqhe
+	 MIcsqy8jUa97SAjidCWbvu6aQQrSmFLgzR43YXJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.5 162/191] usb: typec: ucsi: Use GET_CAPABILITY attributes data to set power supply scope
-Date: Mon, 16 Oct 2023 10:42:27 +0200
-Message-ID: <20231016084019.158114239@linuxfoundation.org>
+	Firo Yang <firo.yang@suse.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.5 163/191] cgroup: Remove duplicates in cgroup v1 tasks file
+Date: Mon, 16 Oct 2023 10:42:28 +0200
+Message-ID: <20231016084019.181742345@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -36,60 +36,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Michal Koutný <mkoutny@suse.com>
 
-commit c9ca8de2eb15f9da24113e652980c61f95a47530 upstream.
+commit 1ca0b605150501b7dc59f3016271da4eb3e96fce upstream.
 
-On some OEM systems, adding a W7900 dGPU triggers RAS errors and hangs
-at a black screen on startup.  This issue occurs only if `ucsi_acpi` has
-loaded before `amdgpu` has loaded.  The reason for this failure is that
-`amdgpu` uses power_supply_is_system_supplied() to determine if running
-on AC or DC power at startup. If this value is reported incorrectly the
-dGPU will also be programmed incorrectly and trigger errors.
+One PID may appear multiple times in a preloaded pidlist.
+(Possibly due to PID recycling but we have reports of the same
+task_struct appearing with different PIDs, thus possibly involving
+transfer of PID via de_thread().)
 
-power_supply_is_system_supplied() reports the wrong value because UCSI
-power supplies provided as part of the system don't properly report the
-scope as "DEVICE" scope (not powering the system).
+Because v1 seq_file iterator uses PIDs as position, it leads to
+a message:
+> seq_file: buggy .next function kernfs_seq_next did not update position index
 
-In order to fix this issue check the capabilities reported from the UCSI
-power supply to ensure that it supports charging a battery and that it can
-be powered by AC.  Mark the scope accordingly.
+Conservative and quick fix consists of removing duplicates from `tasks`
+file (as opposed to removing pidlists altogether). It doesn't affect
+correctness (it's sufficient to show a PID once), performance impact
+would be hidden by unconditional sorting of the pidlist already in place
+(asymptotically).
 
+Link: https://lore.kernel.org/r/20230823174804.23632-1-mkoutny@suse.com/
+Suggested-by: Firo Yang <firo.yang@suse.com>
+Signed-off-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: a7fbfd44c020 ("usb: typec: ucsi: Mark dGPUs as DEVICE scope")
-Link: https://www.intel.com/content/www/us/en/products/docs/io/universal-serial-bus/usb-type-c-ucsi-spec.html p28
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20231009184643.129986-1-mario.limonciello@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/psy.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ kernel/cgroup/cgroup-v1.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/ucsi/psy.c
-+++ b/drivers/usb/typec/ucsi/psy.c
-@@ -37,6 +37,15 @@ static int ucsi_psy_get_scope(struct ucs
- 	struct device *dev = con->ucsi->dev;
+--- a/kernel/cgroup/cgroup-v1.c
++++ b/kernel/cgroup/cgroup-v1.c
+@@ -360,10 +360,9 @@ static int pidlist_array_load(struct cgr
+ 	}
+ 	css_task_iter_end(&it);
+ 	length = n;
+-	/* now sort & (if procs) strip out duplicates */
++	/* now sort & strip out duplicates (tgids or recycled thread PIDs) */
+ 	sort(array, length, sizeof(pid_t), cmppid, NULL);
+-	if (type == CGROUP_FILE_PROCS)
+-		length = pidlist_uniq(array, length);
++	length = pidlist_uniq(array, length);
  
- 	device_property_read_u8(dev, "scope", &scope);
-+	if (scope == POWER_SUPPLY_SCOPE_UNKNOWN) {
-+		u32 mask = UCSI_CAP_ATTR_POWER_AC_SUPPLY |
-+			   UCSI_CAP_ATTR_BATTERY_CHARGING;
-+
-+		if (con->ucsi->cap.attributes & mask)
-+			scope = POWER_SUPPLY_SCOPE_SYSTEM;
-+		else
-+			scope = POWER_SUPPLY_SCOPE_DEVICE;
-+	}
- 	val->intval = scope;
- 	return 0;
- }
+ 	l = cgroup_pidlist_find_create(cgrp, type);
+ 	if (!l) {
 
 
