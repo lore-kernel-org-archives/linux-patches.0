@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8721A58C
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BE61A58C
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 09:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGZp1cJP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CB5C433C7;
-	Mon, 16 Oct 2023 09:05:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17wqc3UJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A7CC433C7;
+	Mon, 16 Oct 2023 09:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697447110;
-	bh=bGWvTejfjMGnw4AdGUTpkVztJ92s3MkRdoSbbKYKHi0=;
+	s=korg; t=1697447117;
+	bh=QCUCgefeMJx3uKUwiTXBTq3A1kCRs4uEBEVWqpYzR+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BGZp1cJP+3ZBy6z2M0rXGQ7wtnKZ8cVbT4VQbFxwZWLjAMT3aW5Shr6Qzy5yDxpnF
-	 G8GuhdGzhoBhnebiOiKxf16SaIQfXo3t7umJo/zRRyeqrD3g/LKj1QqIW6hDbWNQNo
-	 M+7xZENvhejoBPEqSRvC0YVetd3yv241nsHzmpIo=
+	b=17wqc3UJfE9A3Iu8n1FXiHUe+FqCeZW+U78GJxN2IOdxYiZwjLmlmXS2ZmRykTsVM
+	 3zQ9pLo+duJMq+gn73JE9QayEgQqKFGdBV4pn+HUmWA25liq1EBTYFHPLCLD79ID6L
+	 qjkiboVKbM0+yyn/NP8Yv1bsqE5M10mGqPtQjsws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 130/131] powerpc/64e: Fix wrong test in __ptep_test_and_clear_young()
-Date: Mon, 16 Oct 2023 10:41:53 +0200
-Message-ID: <20231016084003.301865772@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 131/131] ALSA: hda/realtek - Fixed two speaker platform
+Date: Mon, 16 Oct 2023 10:41:54 +0200
+Message-ID: <20231016084003.327357266@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
 References: <20231016084000.050926073@linuxfoundation.org>
@@ -42,52 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 5ea0bbaa32e8f54e9a57cfee4a3b8769b80be0d2 ]
+commit fb6254df09bba303db2a1002085f6c0b90a456ed upstream.
 
-Commit 45201c879469 ("powerpc/nohash: Remove hash related code from
-nohash headers.") replaced:
+If system has two speakers and one connect to 0x14 pin, use this
+function will disable it.
 
-  if ((pte_val(*ptep) & (_PAGE_ACCESSED | _PAGE_HASHPTE)) == 0)
-	return 0;
-
-By:
-
-  if (pte_young(*ptep))
-	return 0;
-
-But it should be:
-
-  if (!pte_young(*ptep))
-	return 0;
-
-Fix it.
-
-Fixes: 45201c879469 ("powerpc/nohash: Remove hash related code from nohash headers.")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/8bb7f06494e21adada724ede47a4c3d97e879d40.1695659959.git.christophe.leroy@csgroup.eu
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e43252db7e20 ("ALSA: hda/realtek - ALC287 I2S speaker platform support")
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/r/e3f2aac3fe6a47079d728a6443358cc2@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/include/asm/nohash/64/pgtable.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/nohash/64/pgtable.h b/arch/powerpc/include/asm/nohash/64/pgtable.h
-index 879e9a6e5a870..00a003d367523 100644
---- a/arch/powerpc/include/asm/nohash/64/pgtable.h
-+++ b/arch/powerpc/include/asm/nohash/64/pgtable.h
-@@ -197,7 +197,7 @@ static inline int __ptep_test_and_clear_young(struct mm_struct *mm,
- {
- 	unsigned long old;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -7001,8 +7001,10 @@ static void alc287_fixup_bind_dacs(struc
+ 	snd_hda_override_conn_list(codec, 0x17, ARRAY_SIZE(conn), conn);
+ 	spec->gen.preferred_dacs = preferred_pairs;
+ 	spec->gen.auto_mute_via_amp = 1;
+-	snd_hda_codec_write_cache(codec, 0x14, 0, AC_VERB_SET_PIN_WIDGET_CONTROL,
+-			    0x0); /* Make sure 0x14 was disable */
++	if (spec->gen.autocfg.speaker_pins[0] != 0x14) {
++		snd_hda_codec_write_cache(codec, 0x14, 0, AC_VERB_SET_PIN_WIDGET_CONTROL,
++					0x0); /* Make sure 0x14 was disable */
++	}
+ }
  
--	if (pte_young(*ptep))
-+	if (!pte_young(*ptep))
- 		return 0;
- 	old = pte_update(mm, addr, ptep, _PAGE_ACCESSED, 0, 0);
- 	return (old & _PAGE_ACCESSED) != 0;
--- 
-2.40.1
-
+ 
 
 
