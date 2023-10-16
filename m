@@ -1,34 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B923E1F61D
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 16:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C5D28E25
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 16:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awRdYo7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9381EC433C9;
-	Mon, 16 Oct 2023 16:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6Ft+uqN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42050C433C7;
+	Mon, 16 Oct 2023 16:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697475143;
-	bh=hGThyAcF2BwvI1uYU3x2ubk5OZMx8epy/z86MTbOYwY=;
+	s=korg; t=1697475515;
+	bh=3qHXcmJIKLhL1W+OzhIxa9DzVfCA8XVPdgV3E0lUH1Y=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=awRdYo7KXl1x29SUJ7g51KHLgOtHWq+IFfPSzFHqVqOwOd8dDbuy8dUU/vLNofZvu
-	 WJHOF3iXf9fN19rk9N0yhKj8SSt9JzEd6RtKgL6woYpRQnJuiFJSs8zqq/3MQdzXXx
-	 KgzzunEEZdM0cBGahONurnUnVY13OrB6AZpMBxn0=
-Date: Mon, 16 Oct 2023 18:52:20 +0200
+	b=p6Ft+uqNVHPf8a49PWFkg4hO3X8LT7hexKWo+emfUE+t/5pRB9wk2mJbVXZrG5P0h
+	 hGE3vw6Yx/7RJQ7G76vZPpy72s5VmB1T5PNi5wuA8/8Kiu9t3jSwhnFuNvVE6DYk6Y
+	 c8c7LBT8eng0YZHDSDkpGHRIn4adPh34MIUf82vI=
+Date: Mon, 16 Oct 2023 18:58:32 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Thorsten Leemhuis <linux@leemhuis.info>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.5 006/191] arm_pmu: acpi: Add a representative platform
- device for TRBE
-Message-ID: <2023101603-bullpen-dedicate-0df5@gregkh>
-References: <20231016084015.400031271@linuxfoundation.org>
- <20231016084015.550509169@linuxfoundation.org>
- <a403f9b7-697e-4000-8a31-f54438718748@leemhuis.info>
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Cc: stable@vger.kernel.org, Sasha Levin <sashal@kernel.org>,
+	Vegard Nossum <vegard.nossum@oracle.com>, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
+Subject: Re: [PATCH 5.15 000/102] 5.15.136-rc1 review
+Message-ID: <2023101655-throng-rickety-ff79@gregkh>
+References: <20231016083953.689300946@linuxfoundation.org>
+ <a01256b5-6082-4d17-bf4d-310e7b4f7a47@oracle.com>
+ <2023101641-resource-scalding-3e1d@gregkh>
+ <43ad9708-47d4-4113-ab05-6012cb7c4d6c@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,78 +39,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a403f9b7-697e-4000-8a31-f54438718748@leemhuis.info>
+In-Reply-To: <43ad9708-47d4-4113-ab05-6012cb7c4d6c@oracle.com>
 
-On Mon, Oct 16, 2023 at 06:05:53PM +0200, Thorsten Leemhuis wrote:
-> On 16.10.23 10:39, Greg Kroah-Hartman wrote:
-> > 6.5-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Anshuman Khandual <anshuman.khandual@arm.com>
-> > 
-> > [ Upstream commit 1aa3d0274a4aac338ee45a3dfc3b17c944bcc2bc ]
-> > 
-> > ACPI TRBE does not have a HID for identification which could create and add
-> > a platform device into the platform bus. Also without a platform device, it
-> > cannot be probed and bound to a platform driver.
-> > 
-> > This creates a dummy platform device for TRBE after ascertaining that ACPI
-> > provides required interrupts uniformly across all cpus on the system. This
-> > device gets created inside drivers/perf/arm_pmu_acpi.c to accommodate TRBE
-> > being built as a module.
-> > 
-> > Cc: Catalin Marinas <catalin.marinas@arm.com>
-> > Cc: Will Deacon <will@kernel.org>
-> > Cc: Mark Rutland <mark.rutland@arm.com>
-> > Cc: linux-arm-kernel@lists.infradead.org
-> > Cc: linux-kernel@vger.kernel.org
-> > Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-> > Link: https://lore.kernel.org/r/20230817055405.249630-3-anshuman.khandual@arm.com
-> > Signed-off-by: Will Deacon <will@kernel.org>
-> > Stable-dep-of: 4785aa802853 ("cpuidle, ACPI: Evaluate LPI arch_flags for broadcast timer")
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+On Mon, Oct 16, 2023 at 09:23:36PM +0530, Harshit Mogalapalli wrote:
+> Hi Greg,
 > 
-> Got a compiler error when using Fedora's stable kernel config and
-> compiling 6.5.8-rc1 for ARM64; not totally sure, but from the error msg
-> I suspect it's caused by the change quoted above.
+> On 16/10/23 8:44 pm, Greg Kroah-Hartman wrote:
+> > On Mon, Oct 16, 2023 at 07:06:20PM +0530, Harshit Mogalapalli wrote:
+> > > Hi Greg,
+> > > 
+> > > On 16/10/23 2:09 pm, Greg Kroah-Hartman wrote:
+> > > > This is the start of the stable review cycle for the 5.15.136 release.
+> > > > There are 102 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > > 
+> > > > Responses should be made by Wed, 18 Oct 2023 08:39:38 +0000.
+> > > > Anything received after that time might be too late.
+> > > > 
+> > > 
+> > > I am seeing a build failure while compiling tools/perf/
+> > > 
+> > > In file included from tests/genelf.c:14:
+> > > tests/../util/genelf.h:5:10: fatal error: linux/math.h: No such file or
+> > > directory
+> > >   5 | #include <linux/math.h>
+> > >   | ^~~~~~~~~~~~~~
+> > > compilation terminated.
+> > > 
+> > > Patch 43 in this series is causing this.
+> > 
 > 
-> """
-> + /usr/bin/make -s 'HOSTCFLAGS=-O2  -fexceptions -g
-> -grecord-gcc-switches -pipe -Wall -Werror=format-security
-> -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
-> -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong
-> -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1
-> -mbranch-protection=standard -fasynchronous-unwind-tables
-> -fstack-clash-protection' 'HOSTLDFLAGS=-Wl,-z,relro -Wl,--as-needed
-> -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld
-> -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -Wl,--build-id=sha1
-> -specs=/usr/lib/rpm/redhat/redhat-package-notes' ARCH=arm64 'KCFLAGS= '
-> WITH_GCOV=0 -j4 vmlinuz.efi
-> drivers/perf/arm_pmu_acpi.c: In function 'arm_trbe_acpi_register_device':
-> drivers/perf/arm_pmu_acpi.c:164:19: error: implicit declaration of
-> function 'arm_acpi_register_pmu_device'; did you mean
-> 'arm_spe_acpi_register_device'? [-Werror=implicit-function-declaration]
->   164 |         int ret = arm_acpi_register_pmu_device(&trbe_dev,
-> ACPI_MADT_GICC_TRBE,
->       |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
->       |                   arm_spe_acpi_register_device
-> cc1: some warnings being treated as errors
-> make[4]: *** [scripts/Makefile.build:243: drivers/perf/arm_pmu_acpi.o]
-> Error 1
-> make[4]: *** Waiting for unfinished jobs....
-> make[3]: *** [scripts/Makefile.build:480: drivers/perf] Error 2
-> make[3]: *** Waiting for unfinished jobs....
-> make[2]: *** [scripts/Makefile.build:480: drivers] Error 2
-> make[1]: ***
-> [/builddir/build/BUILD/kernel-6.5.8-rc1/linux-6.5.8-0.rc1.150.vanilla.fc37.aarch64/Makefile:2036:
-> .] Error 2
-> make: *** [Makefile:236: __sub-make] Error 2
-> """
+> Sorry for the confusion.
 > 
-> Full build log:
-> https://copr-be.cloud.fedoraproject.org/results/@kernel-vanilla/stable-rc/fedora-37-aarch64/06529454-stablerc-stablerc-releases/builder-live.log.gz
+> > What is patch 43?
+> 
+> It is patch 42/102 in this series
+> 
+> https://lore.kernel.org/stable/2023101641-resource-scalding-3e1d@gregkh/T/#m70a2a03b6204085af187184af911570681e744f5
+> 
+> Commit: e2bf685d7e311 ("perf inject: Fix GEN_ELF_TEXT_OFFSET for jit")
+> 
+> 
+> > 
+> > > Why is this not reproducible upstream ?
+> > > 
+> > > Vegard bisected the commit which makes it not reproducible upstream and this
+> > > commit is missing in 5.15.y:
+> > > Commit: d6e6a27d960f ("tools: Fix math.h breakage")
+> > > 
+> > > Backport request for this was made here:
+> > > https://lore.kernel.org/all/CAMVNhxS-6qNfxy8jHrY5EtZASTL9gAvZi=BdTkUA5_5CSQ2Cmg@mail.gmail.com/
+> > 
+> > And that commit is in this patch series, so are you sure that was
+> > correct?
+> > 
+> 
+> Cause for this build issue:
+> Commit: e2bf685d7e311 ("perf inject: Fix GEN_ELF_TEXT_OFFSET for jit")
+> 
+> And this issue is not in upstream due to presence of commit d6e6a27d960f
+> ("tools: Fix math.h breakage") in upstream but not in 5.15.y
 
-Thanks, I'll drop the offending commit and push out a -rc2.
+Ok, I'll go drop the patch entirely, I can't even get perf to build at
+all for me on 5.15, which is why I've given up on it even mattering
+anymore :(
+
+thanks,
 
 greg k-h
