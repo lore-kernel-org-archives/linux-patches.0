@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1926B28DB6
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2284228DB6
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLAMO9YO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBE7C433C7;
-	Mon, 16 Oct 2023 14:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBN1+WbU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB662C433C8;
+	Mon, 16 Oct 2023 14:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467840;
-	bh=SxgwVoUQP7zJ1rotjfLVP/yXf+maeIA61L1A3iFvmsQ=;
+	s=korg; t=1697467846;
+	bh=k9SMxqJPvzKSpmzpXvVLrqDoAu+f+jYjoT9FPPeTzAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bLAMO9YOm2nY/CAAPmk/HVk+wZcQfhc4XLRP472re2qGTr3PX+Wugt9R5hdAB5LDW
-	 dnvWgiqgD/zDz6SNJ1U3+x/UMVmIIZkUQj/K3PLS22e3x+JHcO+O3vC8lAVQHgvTPO
-	 eqgKprSevUgCxXftktPLWwIF3uznSBRMfh2eEQaE=
+	b=KBN1+WbUBgQRVhe8LHCFbONsBRuqmxpC3UJ7IwO/kfvsOPYqpIfE416ExGZwXhpzg
+	 nGLVb9XBaliTNHh/Hf49+MorcRodU1Wq7pCCIYxhK436TXeD9GA8HeM+ZQoIq6ttv7
+	 +ady0YYO8+Iye+5vCFWucCHAkxwtZ2wIpx0My2IU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	syzbot+1f53a30781af65d2c955@syzkaller.appspotmail.com
-Subject: [PATCH 6.5 103/191] net: usb: dm9601: fix uninitialized variable use in dm9601_mdio_read
-Date: Mon, 16 Oct 2023 10:41:28 +0200
-Message-ID: <20231016084017.794389160@linuxfoundation.org>
+	Sergei Trofimovich <slyich@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 086/191] af_packet: Fix fortified memcpy() without flex array.
+Date: Mon, 16 Oct 2023 10:41:11 +0200
+Message-ID: <20231016084017.406411246@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -43,54 +43,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 8f8abb863fa5a4cc18955c6a0e17af0ded3e4a76 upstream.
+[ Upstream commit e2bca4870fdaf855651ee80b083d892599c5d982 ]
 
-syzbot has found an uninit-value bug triggered by the dm9601 driver [1].
+Sergei Trofimovich reported a regression [0] caused by commit a0ade8404c3b
+("af_packet: Fix warning of fortified memcpy() in packet_getname().").
 
-This error happens because the variable res is not updated if the call
-to dm_read_shared_word returns an error. In this particular case -EPROTO
-was returned and res stayed uninitialized.
+It introduced a flex array sll_addr_flex in struct sockaddr_ll as a
+union-ed member with sll_addr to work around the fortified memcpy() check.
 
-This can be avoided by checking the return value of dm_read_shared_word
-and propagating the error if the read operation failed.
+However, a userspace program uses a struct that has struct sockaddr_ll in
+the middle, where a flex array is illegal to exist.
 
-[1] https://syzkaller.appspot.com/bug?extid=1f53a30781af65d2c955
+  include/linux/if_packet.h:24:17: error: flexible array member 'sockaddr_ll::<unnamed union>::<unnamed struct>::sll_addr_flex' not at end of 'struct packet_info_t'
+     24 |                 __DECLARE_FLEX_ARRAY(unsigned char, sll_addr_flex);
+        |                 ^~~~~~~~~~~~~~~~~~~~
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reported-and-tested-by: syzbot+1f53a30781af65d2c955@syzkaller.appspotmail.com
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Fixes: d0374f4f9c35cdfbee0 ("USB: Davicom DM9601 usbnet driver")
-Link: https://lore.kernel.org/r/20231009-topic-dm9601_uninit_mdio_read-v2-1-f2fe39739b6c@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To fix the regression, let's go back to the first attempt [1] telling
+memcpy() the actual size of the array.
+
+Reported-by: Sergei Trofimovich <slyich@gmail.com>
+Closes: https://github.com/NixOS/nixpkgs/pull/252587#issuecomment-1741733002 [0]
+Link: https://lore.kernel.org/netdev/20230720004410.87588-3-kuniyu@amazon.com/ [1]
+Fixes: a0ade8404c3b ("af_packet: Fix warning of fortified memcpy() in packet_getname().")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20231009153151.75688-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/dm9601.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/uapi/linux/if_packet.h | 6 +-----
+ net/packet/af_packet.c         | 7 ++++++-
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/net/usb/dm9601.c
-+++ b/drivers/net/usb/dm9601.c
-@@ -222,13 +222,18 @@ static int dm9601_mdio_read(struct net_d
- 	struct usbnet *dev = netdev_priv(netdev);
+diff --git a/include/uapi/linux/if_packet.h b/include/uapi/linux/if_packet.h
+index 4d0ad22f83b56..9efc42382fdb9 100644
+--- a/include/uapi/linux/if_packet.h
++++ b/include/uapi/linux/if_packet.h
+@@ -18,11 +18,7 @@ struct sockaddr_ll {
+ 	unsigned short	sll_hatype;
+ 	unsigned char	sll_pkttype;
+ 	unsigned char	sll_halen;
+-	union {
+-		unsigned char	sll_addr[8];
+-		/* Actual length is in sll_halen. */
+-		__DECLARE_FLEX_ARRAY(unsigned char, sll_addr_flex);
+-	};
++	unsigned char	sll_addr[8];
+ };
  
- 	__le16 res;
-+	int err;
- 
- 	if (phy_id) {
- 		netdev_dbg(dev->net, "Only internal phy supported\n");
- 		return 0;
- 	}
- 
--	dm_read_shared_word(dev, 1, loc, &res);
-+	err = dm_read_shared_word(dev, 1, loc, &res);
-+	if (err < 0) {
-+		netdev_err(dev->net, "MDIO read error: %d\n", err);
-+		return err;
-+	}
- 
- 	netdev_dbg(dev->net,
- 		   "dm9601_mdio_read() phy_id=0x%02x, loc=0x%02x, returns=0x%04x\n",
+ /* Packet types */
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index a2935bd18ed98..a39b2a0dd5425 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3605,7 +3605,12 @@ static int packet_getname(struct socket *sock, struct sockaddr *uaddr,
+ 	if (dev) {
+ 		sll->sll_hatype = dev->type;
+ 		sll->sll_halen = dev->addr_len;
+-		memcpy(sll->sll_addr_flex, dev->dev_addr, dev->addr_len);
++
++		/* Let __fortify_memcpy_chk() know the actual buffer size. */
++		memcpy(((struct sockaddr_storage *)sll)->__data +
++		       offsetof(struct sockaddr_ll, sll_addr) -
++		       offsetofend(struct sockaddr_ll, sll_family),
++		       dev->dev_addr, dev->addr_len);
+ 	} else {
+ 		sll->sll_hatype = 0;	/* Bad: we have no ARPHRD_UNSPEC */
+ 		sll->sll_halen = 0;
+-- 
+2.40.1
+
 
 
