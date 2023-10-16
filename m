@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA12A1A27D
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D501A27D
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 08:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6/RFbtp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AD3C433C7;
-	Mon, 16 Oct 2023 08:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSNn7fbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28F3C433C8;
+	Mon, 16 Oct 2023 08:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697446242;
-	bh=AcJecz7edoeNPjFXNQaku93oXSM1EBLJaBL6uMBKmts=;
+	s=korg; t=1697446246;
+	bh=BheVWXfkIQULV4XL1wRKyjNV+reOSuYFRshnIYf5wdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r6/RFbtp4hEYlOPluu8jHbYqjRQFATYW37KKOETUWs5+wUAx84WZvHdU/De9GE3KS
-	 7GmY8/7Xe5alYuFpAr35teyW9sMG9gV079mz5XPCYjOG7evv0rbYf4SQM8P97ZKtpu
-	 BYqd+g+68Sz4JTOwzex6lko2ZKxh/50jf2GFFW+w=
+	b=jSNn7fbE0rcnsAZN0i017ToaRJDtrsal0nYBm6mY1ISE3FE2/47RbOmBhRdu6ZZFo
+	 g4Gw9Yja795QnQZvXwkhGt+zlQWAAFkt5DDatsz9BOughUqZe+Xg72s9wrD/of27Qe
+	 W5i6mOmKjJbGKOq71HKoOybjMGUfnwJ9OZyO82rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 5.15 079/102] usb: cdnsp: Fixes issue with dequeuing not queued requests
-Date: Mon, 16 Oct 2023 10:41:18 +0200
-Message-ID: <20231016083955.802979810@linuxfoundation.org>
+	ruanjinjie@huawei.com,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 5.15 097/102] arm64: armv8_deprecated: move aarch32 helper earlier
+Date: Mon, 16 Oct 2023 10:41:36 +0200
+Message-ID: <20231016083956.283536871@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016083953.689300946@linuxfoundation.org>
 References: <20231016083953.689300946@linuxfoundation.org>
@@ -41,36 +46,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 34f08eb0ba6e4869bbfb682bf3d7d0494ffd2f87 upstream.
+commit 0c5f416219da3795dc8b33e5bb7865a6b3c4e55c upstream.
 
-Gadget ACM while unloading module try to dequeue not queued usb
-request which causes the kernel to crash.
-Patch adds extra condition to check whether usb request is processed
-by CDNSP driver.
+Subsequent patches will rework the logic in armv8_deprecated.c.
 
-cc: stable@vger.kernel.org
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20230713081429.326660-1-pawell@cadence.com
+In preparation for subsequent changes, this patch moves some shared logic
+earlier in the file. This will make subsequent diffs simpler and easier to
+read.
+
+At the same time, drop the `__kprobes` annotation from
+aarch32_check_condition(), as this is only used for traps from compat
+userspace, and has no risk of recursion within kprobes. As this is the
+last kprobes annotation in armve8_deprecated.c, we no longer need to
+include <asm/kprobes.h>.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Joey Gouly <joey.gouly@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20221019144123.612388-9-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-gadget.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/kernel/armv8_deprecated.c |   39 +++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 20 deletions(-)
 
---- a/drivers/usb/cdns3/cdnsp-gadget.c
-+++ b/drivers/usb/cdns3/cdnsp-gadget.c
-@@ -1125,6 +1125,9 @@ static int cdnsp_gadget_ep_dequeue(struc
- 	unsigned long flags;
- 	int ret;
+--- a/arch/arm64/kernel/armv8_deprecated.c
++++ b/arch/arm64/kernel/armv8_deprecated.c
+@@ -17,7 +17,6 @@
+ #include <asm/sysreg.h>
+ #include <asm/system_misc.h>
+ #include <asm/traps.h>
+-#include <asm/kprobes.h>
  
-+	if (request->status != -EINPROGRESS)
-+		return 0;
+ #define CREATE_TRACE_POINTS
+ #include "trace-events-emulation.h"
+@@ -52,6 +51,25 @@ struct insn_emulation {
+ 	int max;
+ };
+ 
++#define ARM_OPCODE_CONDTEST_FAIL   0
++#define ARM_OPCODE_CONDTEST_PASS   1
++#define ARM_OPCODE_CONDTEST_UNCOND 2
 +
- 	if (!pep->endpoint.desc) {
- 		dev_err(pdev->dev,
- 			"%s: can't dequeue to disabled endpoint\n",
++#define	ARM_OPCODE_CONDITION_UNCOND	0xf
++
++static unsigned int aarch32_check_condition(u32 opcode, u32 psr)
++{
++	u32 cc_bits  = opcode >> 28;
++
++	if (cc_bits != ARM_OPCODE_CONDITION_UNCOND) {
++		if ((*aarch32_opcode_cond_checks[cc_bits])(psr))
++			return ARM_OPCODE_CONDTEST_PASS;
++		else
++			return ARM_OPCODE_CONDTEST_FAIL;
++	}
++	return ARM_OPCODE_CONDTEST_UNCOND;
++}
++
+ /*
+  *  Implement emulation of the SWP/SWPB instructions using load-exclusive and
+  *  store-exclusive.
+@@ -138,25 +156,6 @@ static int emulate_swpX(unsigned int add
+ 	return res;
+ }
+ 
+-#define ARM_OPCODE_CONDTEST_FAIL   0
+-#define ARM_OPCODE_CONDTEST_PASS   1
+-#define ARM_OPCODE_CONDTEST_UNCOND 2
+-
+-#define	ARM_OPCODE_CONDITION_UNCOND	0xf
+-
+-static unsigned int __kprobes aarch32_check_condition(u32 opcode, u32 psr)
+-{
+-	u32 cc_bits  = opcode >> 28;
+-
+-	if (cc_bits != ARM_OPCODE_CONDITION_UNCOND) {
+-		if ((*aarch32_opcode_cond_checks[cc_bits])(psr))
+-			return ARM_OPCODE_CONDTEST_PASS;
+-		else
+-			return ARM_OPCODE_CONDTEST_FAIL;
+-	}
+-	return ARM_OPCODE_CONDTEST_UNCOND;
+-}
+-
+ /*
+  * swp_handler logs the id of calling process, dissects the instruction, sanity
+  * checks the memory location, calls emulate_swpX for the actual operation and
 
 
