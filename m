@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13866262AC
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2159B262AC
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TI+03UxP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D946C433C9;
-	Mon, 16 Oct 2023 14:56:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOM45j5j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7A9C433C9;
+	Mon, 16 Oct 2023 14:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697468212;
-	bh=TX1jS2StMtfyeyBJAGoIm5VhQE1npgOggk6q7CmR77M=;
+	s=korg; t=1697468231;
+	bh=eleHQZsXKzyeM3bEHfu4GMWLp7uGgpg7ZPoi5f5Iac8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TI+03UxPKUC4PnynLe16DfOMOnOWnxOL8t2uKxJTt5hW1fs0RJjtUu2avE++HNlJt
-	 b55fiHH6E3sdkoRz+9i7l659aKOEBTldBh9V0qar7f7jq9zgY+LXftzobSf62oGa2H
-	 pA7zGdrWOwx0amb6uRyPrzSm1iH/Se2A2au4D56k=
+	b=lOM45j5jKjGta5dT+MQcGWi6p8XYsu60mfRdoGnzc+qbZh/weIJJuuvu7GZ0j+FTt
+	 KL61gHRMmNxsIRSicORxqsfTultwEwMMHgPrTUflhO5m1+HORQD4WHvaph06ZUEfkh
+	 NfxqmphYFHI6zo+Rco3WrkrWLB8pPPNCIANWhg78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 185/191] powerpc/64e: Fix wrong test in __ptep_test_and_clear_young()
-Date: Mon, 16 Oct 2023 10:42:50 +0200
-Message-ID: <20231016084019.689947326@linuxfoundation.org>
+Subject: [PATCH 6.5 186/191] fs: Fix kernel-doc warnings
+Date: Mon, 16 Oct 2023 10:42:51 +0200
+Message-ID: <20231016084019.713028474@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -42,50 +42,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 5ea0bbaa32e8f54e9a57cfee4a3b8769b80be0d2 ]
+[ Upstream commit 35931eb3945b8d38c31f8e956aee3cf31c52121b ]
 
-Commit 45201c879469 ("powerpc/nohash: Remove hash related code from
-nohash headers.") replaced:
+These have a variety of causes and a corresponding variety of solutions.
 
-  if ((pte_val(*ptep) & (_PAGE_ACCESSED | _PAGE_HASHPTE)) == 0)
-	return 0;
-
-By:
-
-  if (pte_young(*ptep))
-	return 0;
-
-But it should be:
-
-  if (!pte_young(*ptep))
-	return 0;
-
-Fix it.
-
-Fixes: 45201c879469 ("powerpc/nohash: Remove hash related code from nohash headers.")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/8bb7f06494e21adada724ede47a4c3d97e879d40.1695659959.git.christophe.leroy@csgroup.eu
+Signed-off-by: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+Message-Id: <20230818200824.2720007-1-willy@infradead.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: c34706acf40b ("ovl: fix regression in parsing of mount options with escaped comma")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/nohash/64/pgtable.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/file.c             |  3 ++-
+ fs/fs_context.c       | 12 +++++++++---
+ fs/ioctl.c            | 10 +++++++---
+ fs/kernel_read_file.c | 12 ++++++------
+ fs/namei.c            |  3 +++
+ fs/open.c             |  4 ++--
+ 6 files changed, 29 insertions(+), 15 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/nohash/64/pgtable.h b/arch/powerpc/include/asm/nohash/64/pgtable.h
-index 287e25864ffae..072048e723c9b 100644
---- a/arch/powerpc/include/asm/nohash/64/pgtable.h
-+++ b/arch/powerpc/include/asm/nohash/64/pgtable.h
-@@ -197,7 +197,7 @@ static inline int __ptep_test_and_clear_young(struct mm_struct *mm,
- {
- 	unsigned long old;
+diff --git a/fs/file.c b/fs/file.c
+index 3fd003a8604f8..568a98178007c 100644
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -668,7 +668,7 @@ EXPORT_SYMBOL(close_fd); /* for ksys_close() */
  
--	if (pte_young(*ptep))
-+	if (!pte_young(*ptep))
- 		return 0;
- 	old = pte_update(mm, addr, ptep, _PAGE_ACCESSED, 0, 0);
- 	return (old & _PAGE_ACCESSED) != 0;
+ /**
+  * last_fd - return last valid index into fd table
+- * @cur_fds: files struct
++ * @fdt: File descriptor table.
+  *
+  * Context: Either rcu read lock or files_lock must be held.
+  *
+@@ -723,6 +723,7 @@ static inline void __range_close(struct files_struct *cur_fds, unsigned int fd,
+  *
+  * @fd:     starting file descriptor to close
+  * @max_fd: last file descriptor to close
++ * @flags:  CLOSE_RANGE flags.
+  *
+  * This closes a range of file descriptors. All file descriptors
+  * from @fd up to and including @max_fd are closed.
+diff --git a/fs/fs_context.c b/fs/fs_context.c
+index 375023e40161d..a48a69caddce1 100644
+--- a/fs/fs_context.c
++++ b/fs/fs_context.c
+@@ -162,6 +162,10 @@ EXPORT_SYMBOL(vfs_parse_fs_param);
+ 
+ /**
+  * vfs_parse_fs_string - Convenience function to just parse a string.
++ * @fc: Filesystem context.
++ * @key: Parameter name.
++ * @value: Default value.
++ * @v_size: Maximum number of bytes in the value.
+  */
+ int vfs_parse_fs_string(struct fs_context *fc, const char *key,
+ 			const char *value, size_t v_size)
+@@ -189,7 +193,7 @@ EXPORT_SYMBOL(vfs_parse_fs_string);
+ 
+ /**
+  * generic_parse_monolithic - Parse key[=val][,key[=val]]* mount data
+- * @ctx: The superblock configuration to fill in.
++ * @fc: The superblock configuration to fill in.
+  * @data: The data to parse
+  *
+  * Parse a blob of data that's in key[=val][,key[=val]]* form.  This can be
+@@ -354,7 +358,7 @@ void fc_drop_locked(struct fs_context *fc)
+ static void legacy_fs_context_free(struct fs_context *fc);
+ 
+ /**
+- * vfs_dup_fc_config: Duplicate a filesystem context.
++ * vfs_dup_fs_context - Duplicate a filesystem context.
+  * @src_fc: The context to copy.
+  */
+ struct fs_context *vfs_dup_fs_context(struct fs_context *src_fc)
+@@ -400,7 +404,9 @@ EXPORT_SYMBOL(vfs_dup_fs_context);
+ 
+ /**
+  * logfc - Log a message to a filesystem context
+- * @fc: The filesystem context to log to.
++ * @log: The filesystem context to log to, or NULL to use printk.
++ * @prefix: A string to prefix the output with, or NULL.
++ * @level: 'w' for a warning, 'e' for an error.  Anything else is a notice.
+  * @fmt: The format of the buffer.
+  */
+ void logfc(struct fc_log *log, const char *prefix, char level, const char *fmt, ...)
+diff --git a/fs/ioctl.c b/fs/ioctl.c
+index 5b2481cd47501..d413e0b8f6c29 100644
+--- a/fs/ioctl.c
++++ b/fs/ioctl.c
+@@ -109,9 +109,6 @@ static int ioctl_fibmap(struct file *filp, int __user *p)
+  * Returns 0 on success, -errno on error, 1 if this was the last
+  * extent that will fit in user array.
+  */
+-#define SET_UNKNOWN_FLAGS	(FIEMAP_EXTENT_DELALLOC)
+-#define SET_NO_UNMOUNTED_IO_FLAGS	(FIEMAP_EXTENT_DATA_ENCRYPTED)
+-#define SET_NOT_ALIGNED_FLAGS	(FIEMAP_EXTENT_DATA_TAIL|FIEMAP_EXTENT_DATA_INLINE)
+ int fiemap_fill_next_extent(struct fiemap_extent_info *fieinfo, u64 logical,
+ 			    u64 phys, u64 len, u32 flags)
+ {
+@@ -127,6 +124,10 @@ int fiemap_fill_next_extent(struct fiemap_extent_info *fieinfo, u64 logical,
+ 	if (fieinfo->fi_extents_mapped >= fieinfo->fi_extents_max)
+ 		return 1;
+ 
++#define SET_UNKNOWN_FLAGS	(FIEMAP_EXTENT_DELALLOC)
++#define SET_NO_UNMOUNTED_IO_FLAGS	(FIEMAP_EXTENT_DATA_ENCRYPTED)
++#define SET_NOT_ALIGNED_FLAGS	(FIEMAP_EXTENT_DATA_TAIL|FIEMAP_EXTENT_DATA_INLINE)
++
+ 	if (flags & SET_UNKNOWN_FLAGS)
+ 		flags |= FIEMAP_EXTENT_UNKNOWN;
+ 	if (flags & SET_NO_UNMOUNTED_IO_FLAGS)
+@@ -877,6 +878,9 @@ SYSCALL_DEFINE3(ioctl, unsigned int, fd, unsigned int, cmd, unsigned long, arg)
+ #ifdef CONFIG_COMPAT
+ /**
+  * compat_ptr_ioctl - generic implementation of .compat_ioctl file operation
++ * @file: The file to operate on.
++ * @cmd: The ioctl command number.
++ * @arg: The argument to the ioctl.
+  *
+  * This is not normally called as a function, but instead set in struct
+  * file_operations as
+diff --git a/fs/kernel_read_file.c b/fs/kernel_read_file.c
+index 5d826274570ca..c429c42a68679 100644
+--- a/fs/kernel_read_file.c
++++ b/fs/kernel_read_file.c
+@@ -8,16 +8,16 @@
+ /**
+  * kernel_read_file() - read file contents into a kernel buffer
+  *
+- * @file	file to read from
+- * @offset	where to start reading from (see below).
+- * @buf		pointer to a "void *" buffer for reading into (if
++ * @file:	file to read from
++ * @offset:	where to start reading from (see below).
++ * @buf:	pointer to a "void *" buffer for reading into (if
+  *		*@buf is NULL, a buffer will be allocated, and
+  *		@buf_size will be ignored)
+- * @buf_size	size of buf, if already allocated. If @buf not
++ * @buf_size:	size of buf, if already allocated. If @buf not
+  *		allocated, this is the largest size to allocate.
+- * @file_size	if non-NULL, the full size of @file will be
++ * @file_size:	if non-NULL, the full size of @file will be
+  *		written here.
+- * @id		the kernel_read_file_id identifying the type of
++ * @id:		the kernel_read_file_id identifying the type of
+  *		file contents being read (for LSMs to examine)
+  *
+  * @offset must be 0 unless both @buf and @file_size are non-NULL
+diff --git a/fs/namei.c b/fs/namei.c
+index 2bae29ea52ffa..567ee547492bc 100644
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -643,6 +643,8 @@ static bool nd_alloc_stack(struct nameidata *nd)
+ 
+ /**
+  * path_connected - Verify that a dentry is below mnt.mnt_root
++ * @mnt: The mountpoint to check.
++ * @dentry: The dentry to check.
+  *
+  * Rename can sometimes move a file or directory outside of a bind
+  * mount, path_connected allows those cases to be detected.
+@@ -1083,6 +1085,7 @@ fs_initcall(init_fs_namei_sysctls);
+ /**
+  * may_follow_link - Check symlink following for unsafe situations
+  * @nd: nameidata pathwalk data
++ * @inode: Used for idmapping.
+  *
+  * In the case of the sysctl_protected_symlinks sysctl being enabled,
+  * CAP_DAC_OVERRIDE needs to be specifically ignored if the symlink is
+diff --git a/fs/open.c b/fs/open.c
+index e6ead0f199649..7c9647a8f219d 100644
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -1150,7 +1150,7 @@ EXPORT_SYMBOL_GPL(kernel_file_open);
+  * backing_file_open - open a backing file for kernel internal use
+  * @path:	path of the file to open
+  * @flags:	open flags
+- * @path:	path of the backing file
++ * @real_path:	path of the backing file
+  * @cred:	credentials for open
+  *
+  * Open a backing file for a stackable filesystem (e.g., overlayfs).
+@@ -1546,7 +1546,7 @@ SYSCALL_DEFINE1(close, unsigned int, fd)
+ }
+ 
+ /**
+- * close_range() - Close all file descriptors in a given range.
++ * sys_close_range() - Close all file descriptors in a given range.
+  *
+  * @fd:     starting file descriptor to close
+  * @max_fd: last file descriptor to close
 -- 
 2.40.1
 
