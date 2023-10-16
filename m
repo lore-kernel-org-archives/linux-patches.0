@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60AD27ECC
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E065027ECC
+	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 14:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RD23t7AH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06202C433C8;
-	Mon, 16 Oct 2023 14:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QANTpWLy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E142C433C9;
+	Mon, 16 Oct 2023 14:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697467667;
-	bh=X2UsUDHLdeRX2QZ8UjUvaXl7a8grjYMWxbEt9XpecmY=;
+	s=korg; t=1697467672;
+	bh=ViGoOMLl8pPOclMoDXXbKA2CvYZ2pR7rQxvPcUYc33w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RD23t7AHeNnDlUCt+veyphtzsVIGZFhZmG1tUXMl9mSRzM5UcUODwNJXySk2bqta1
-	 FrQh+LopaXfEsnZYfSSqLukoHYUAvpCBJGSF359xnzxBFDpMrtLfKG17PSZk86Ob5Z
-	 +F7YDjuWBcuOiZQyBgBXVLWgOQuaUuoVVVyRJ4uE=
+	b=QANTpWLyvXb+dwTjtmO0r8HystAV+wOnxcfeyQUpwF0y4ncDhKNx+ksKvTWHtRcOW
+	 dHJ3E7UCrrJ2vBWSvepHI+9lG4g5ai50Vtlvxen1SN17p7Sgk10Hq9Ehnn5j2wjPR2
+	 w1gTJ+WigvHSkxh5LBs66C53kKHMFvwfB+OpNGiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fae676d3cf469331fc89@syzkaller.appspotmail.com,
-	syzbot+b132693e925cbbd89e26@syzkaller.appspotmail.com,
-	Andrew Kanner <andrew.kanner@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 067/191] xdp: Fix zero-size allocation warning in xskq_create()
-Date: Mon, 16 Oct 2023 10:40:52 +0200
-Message-ID: <20231016084016.970413131@linuxfoundation.org>
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Zack Rusin <zackr@vmware.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Subject: [PATCH 6.5 068/191] drm/vmwgfx: fix typo of sizeof argument
+Date: Mon, 16 Oct 2023 10:40:53 +0200
+Message-ID: <20231016084016.994121813@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231016084015.400031271@linuxfoundation.org>
 References: <20231016084015.400031271@linuxfoundation.org>
@@ -45,75 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Kanner <andrew.kanner@gmail.com>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-[ Upstream commit a12bbb3cccf03b12847de0f7a6772127f90936ac ]
+[ Upstream commit 39465cac283702a7d4a507a558db81898029c6d3 ]
 
-Syzkaller reported the following issue:
+Since size of 'header' pointer and '*header' structure is equal on 64-bit
+machines issue probably didn't cause any wrong behavior. But anyway,
+fixing typo is required.
 
-  ------------[ cut here ]------------
-  WARNING: CPU: 0 PID: 2807 at mm/vmalloc.c:3247 __vmalloc_node_range (mm/vmalloc.c:3361)
-  Modules linked in:
-  CPU: 0 PID: 2807 Comm: repro Not tainted 6.6.0-rc2+ #12
-  Hardware name: Generic DT based system
-  unwind_backtrace from show_stack (arch/arm/kernel/traps.c:258)
-  show_stack from dump_stack_lvl (lib/dump_stack.c:107 (discriminator 1))
-  dump_stack_lvl from __warn (kernel/panic.c:633 kernel/panic.c:680)
-  __warn from warn_slowpath_fmt (./include/linux/context_tracking.h:153 kernel/panic.c:700)
-  warn_slowpath_fmt from __vmalloc_node_range (mm/vmalloc.c:3361 (discriminator 3))
-  __vmalloc_node_range from vmalloc_user (mm/vmalloc.c:3478)
-  vmalloc_user from xskq_create (net/xdp/xsk_queue.c:40)
-  xskq_create from xsk_setsockopt (net/xdp/xsk.c:953 net/xdp/xsk.c:1286)
-  xsk_setsockopt from __sys_setsockopt (net/socket.c:2308)
-  __sys_setsockopt from ret_fast_syscall (arch/arm/kernel/entry-common.S:68)
-
-xskq_get_ring_size() uses struct_size() macro to safely calculate the
-size of struct xsk_queue and q->nentries of desc members. But the
-syzkaller repro was able to set q->nentries with the value initially
-taken from copy_from_sockptr() high enough to return SIZE_MAX by
-struct_size(). The next PAGE_ALIGN(size) is such case will overflow
-the size_t value and set it to 0. This will trigger WARN_ON_ONCE in
-vmalloc_user() -> __vmalloc_node_range().
-
-The issue is reproducible on 32-bit arm kernel.
-
-Fixes: 9f78bf330a66 ("xsk: support use vaddr as ring")
-Reported-by: syzbot+fae676d3cf469331fc89@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000c84b4705fb31741e@google.com/T/
-Reported-by: syzbot+b132693e925cbbd89e26@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000e20df20606ebab4f@google.com/T/
-Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: syzbot+fae676d3cf469331fc89@syzkaller.appspotmail.com
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Link: https://syzkaller.appspot.com/bug?extid=fae676d3cf469331fc89
-Link: https://lore.kernel.org/bpf/20231007075148.1759-1-andrew.kanner@gmail.com
+Fixes: 7a73ba7469cb ("drm/vmwgfx: Use TTM handles instead of SIDs as user-space surface handles.")
+Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Reviewed-by: Zack Rusin <zackr@vmware.com>
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230905100203.1716731-1-konstantin.meskhidze@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk_queue.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xdp/xsk_queue.c b/net/xdp/xsk_queue.c
-index f8905400ee07a..d2c2640300171 100644
---- a/net/xdp/xsk_queue.c
-+++ b/net/xdp/xsk_queue.c
-@@ -34,6 +34,16 @@ struct xsk_queue *xskq_create(u32 nentries, bool umem_queue)
- 	q->ring_mask = nentries - 1;
- 
- 	size = xskq_get_ring_size(q, umem_queue);
-+
-+	/* size which is overflowing or close to SIZE_MAX will become 0 in
-+	 * PAGE_ALIGN(), checking SIZE_MAX is enough due to the previous
-+	 * is_power_of_2(), the rest will be handled by vmalloc_user()
-+	 */
-+	if (unlikely(size == SIZE_MAX)) {
-+		kfree(q);
-+		return NULL;
-+	}
-+
- 	size = PAGE_ALIGN(size);
- 
- 	q->ring = vmalloc_user(size);
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index 98e0723ca6f5e..cc3f301ca1639 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -1619,7 +1619,7 @@ static int vmw_cmd_tex_state(struct vmw_private *dev_priv,
+ {
+ 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdSetTextureState);
+ 	SVGA3dTextureState *last_state = (SVGA3dTextureState *)
+-	  ((unsigned long) header + header->size + sizeof(header));
++	  ((unsigned long) header + header->size + sizeof(*header));
+ 	SVGA3dTextureState *cur_state = (SVGA3dTextureState *)
+ 		((unsigned long) header + sizeof(*cmd));
+ 	struct vmw_resource *ctx;
 -- 
 2.40.1
 
