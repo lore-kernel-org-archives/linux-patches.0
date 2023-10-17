@@ -1,109 +1,186 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D509A2D7AB;
-	Tue, 17 Oct 2023 18:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFBC430E8;
+	Tue, 17 Oct 2023 22:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UyobkITy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DD4C433C7;
-	Tue, 17 Oct 2023 18:51:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OvBREbvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDADC433C8;
+	Tue, 17 Oct 2023 22:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1697568681;
-	bh=X7SS8Q1JzPNkllfotLzHoOYimaJPy4IFHtOQJPWKqNY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=UyobkITyE+GCzbfrnzFL0yQZ8SUgwZo/PjFx3/9zVMjHTkC/z/TldDy1wI0vgou9m
-	 gLKrQ3zFzL9bT1DN/feWZ1o0/5cnL0qc1JWZ5QQyx4t25oARbA+2aS04dA0NemVHSs
-	 gZK6CT3UsDwXv6vfXiZpi4SS5BCS7NcgKGnRd7MZoLM5MnI4/bn+F4vmW7R6mXzLwD
-	 6cEYoWFPcEfSWMUGUEzGR4A6vjmdTurf5yNJnWnVDueKplZGVS3f8aWdJ2nDtA8qw+
-	 i3X1UXYxZbeybmqiz6G9Q0xiYplWxFeyAUjY6ypCXKL950PosaLJysK1bfSgHs+NtD
-	 3lAqFCCGSEU6Q==
-Date: Tue, 17 Oct 2023 13:51:19 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Cc: marek.vasut+renesas@gmail.com, lpieralisi@kernel.org, kw@linux.com,
-	robh@kernel.org, bhelgaas@google.com, ndesaulniers@google.com,
-	trix@redhat.com, fancer.lancer@gmail.com, mani@kernel.org,
-	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH] PCI: rcar-gen4: Fix type of type parameter in
- rcar_gen4_pcie_ep_raise_irq()
-Message-ID: <20231017185119.GA1315341@bhelgaas>
+	s=k20201202; t=1697581272;
+	bh=+fbBrH01A4z4Q/htd056bjoXXyg9yXR/YaOstQWBWjo=;
+	h=From:Date:Subject:To:Cc:From;
+	b=OvBREbvqWTLv87kM888ykcgWoXc/bBm5U4bLkAjHRzzwu0HCu+yxsPwzccwmB/70p
+	 /Crbggvcqv2MNC11GNGP8LUcppIg/pWJ3+jUSFEQTQdeU7Fz6MZimO9a4C2LIDE9YY
+	 SPShs0mx1Ksi1I37QH+zjzQSK4bRWcYFch9Pn65O6xI+flH0JOTaV5MbboXA5HMXQ3
+	 QxfH1TrbHJzqygTwWF5/YvV/tHijlMW6cPJpHYkjWjKz9q3uveFDuU/R90xVElhOK9
+	 PRmBru7IlVMPd+RFv6W8eZMgoYSIVP+nVkOsBTDcJ/17jnCCaUupUnhiNzshWcbW2r
+	 3hsJqF+ywwmHA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 17 Oct 2023 15:21:04 -0700
+Subject: [PATCH v4] RISC-V: build: Allow LTO to be selected
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231017-pcie-rcar-wifpts-v1-1-ab1f42bf9386@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231017-riscv-lto-v4-1-e7810b24e805@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAM8IL2UC/22OywqDMBREf6Vk3YQ8TBu78j+KixivGqqm3ATbI
+ v57o9BdNwMHZg6zkgjoIZLbaSUIi48+zBmK84m4wc49UN9mJpJLJThXFH10Cx1ToB0XqgFojTZ
+ XkvtPhM6/D9e9ztxhmGgaEOzPILkWe+hCs7KU0hgqaHq1kk1Q9ZP1I3Nh2l2Djyng57i1qN347
+ 8Gi8t5YZy/CFuCaonoAzjCygD2pt237Ak0WjA7fAAAA
+To: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+ conor@kernel.org
+Cc: ndesaulniers@google.com, trix@redhat.com, samitolvanen@google.com, 
+ twd2.me@gmail.com, linux-riscv@lists.infradead.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5712; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=6DF5TQYgQXh8UF8vonZlb3mmg4CViQmZyu8y06LElhY=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKn6HNf37nkcbPZf507Cd7mjsxrsJKLl1Qt5zdyYHuRNK
+ XjP+XBNRykLgxgHg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZhIzwKG/3FG5ZyLM2L/e5Vf
+ ftY1XYNPi+nVI7W9dx8ubAzk7D5xdR8jw1PZVUuXfKrc4Hb0zZ2saONvEdzJ0xd5GoRb3py64ND
+ 63YwA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Tue, Oct 17, 2023 at 11:41:58AM -0700, Nathan Chancellor wrote:
-> With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-> indirect call targets are validated against the expected function
-> pointer prototype to make sure the call target is valid to help mitigate
-> ROP attacks. If they are not identical, there is a failure at run time,
-> which manifests as either a kernel panic or thread getting killed. A
-> warning in clang aims to catch these at compile time, which reveals:
-> 
->   drivers/pci/controller/dwc/pcie-rcar-gen4.c:403:15: error: incompatible function pointer types initializing 'int (*)(struct dw_pcie_ep *, u8, enum pci_epc_irq_type, u16)' (aka 'int (*)(struct dw_pcie_ep *, unsigned char, enum pci_epc_irq_type, unsigned sort)') with an expression of type 'int (struct dw_pcie_ep *, u8, unsigned int, u16)' (aka 'int (struct dw_pcie_ep *, unsigned char, unsigned int, unsigned short)') [-Werror,-Wincompatible-function-pointer-types-strict]
->     403 |         .raise_irq = rcar_gen4_pcie_ep_raise_irq,
->         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->   1 error generated.
-> 
-> '->raise_irq()' in 'struct dw_pcie_ep_ops' expects a type parameter of
-> type 'enum pci_epc_irq_type', not 'unsigned int'. Adjust the type to
-> match and use the proper enum values in the switch. The underlying value
-> of both the enum and the macro is the same, so there is no functional
-> change while clearing up the warning and avoiding a CFI failure at run
-> time.
-> 
-> Fixes: 32b83c68d634 ("PCI: rcar-gen4: Add endpoint mode support")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+From: Wende Tan <twd2.me@gmail.com>
 
-Thanks, Nathan.
+Allow LTO to be selected for RISC-V, only when LLD >= 14, since there is
+an issue [1] in prior LLD versions that prevents LLD to generate proper
+machine code for RISC-V when writing `nop`s.
 
-Yoshihiro, can you fold this in on the next rev of your rcar-gen4
-series?
+To avoid boot failures in QEMU [2], '-mattr=+c' and '-mattr=+relax'
+need to be passed via '-mllvm' to ld.lld, as there appears to be an
+issue with LLVM's target-features and LTO [3], which can result in
+incorrect relocations to branch targets [4]. Once this is fixed in LLVM,
+it can be made conditional on affected ld.lld versions.
 
-I dropped the rcar-gen4 branch for today since it broke Marek's system
-(Samsung Exynos5433-based TM2e board), so when we fix that we should
-be able to fold in this fix at the same time.
+Disable LTO for arch/riscv/kernel/pi, as llvm-objcopy expects an ELF
+object file when manipulating the files in that subfolder, rather than
+LLVM bitcode.
 
-> ---
->  drivers/pci/controller/dwc/pcie-rcar-gen4.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> index 619262d32f4e..0c0f5c257b14 100644
-> --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> @@ -353,14 +353,15 @@ static void rcar_gen4_pcie_ep_deinit(struct dw_pcie_ep *ep)
->  }
->  
->  static int rcar_gen4_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
-> -				       unsigned int type, u16 interrupt_num)
-> +				       enum pci_epc_irq_type type,
-> +				       u16 interrupt_num)
->  {
->  	struct dw_pcie *dw = to_dw_pcie_from_ep(ep);
->  
->  	switch (type) {
-> -	case PCI_IRQ_LEGACY:
-> +	case PCI_EPC_IRQ_LEGACY:
->  		return dw_pcie_ep_raise_legacy_irq(ep, func_no);
-> -	case PCI_IRQ_MSI:
-> +	case PCI_EPC_IRQ_MSI:
->  		return dw_pcie_ep_raise_msi_irq(ep, func_no, interrupt_num);
->  	default:
->  		dev_err(dw->dev, "Unknown IRQ type\n");
-> 
-> ---
-> base-commit: de45624e69e14ccd6b4b2886155578bb218925de
-> change-id: 20231017-pcie-rcar-wifpts-6c65df6f8c8b
-> 
-> Best regards,
-> -- 
-> Nathan Chancellor <nathan@kernel.org>
-> 
+[1] https://github.com/llvm/llvm-project/issues/50505, resolved by LLVM
+    commit e63455d5e0e5 ("[MC] Use local MCSubtargetInfo in writeNops")
+[2] https://github.com/ClangBuiltLinux/linux/issues/1942
+[3] https://github.com/llvm/llvm-project/issues/59350
+[4] https://github.com/llvm/llvm-project/issues/65090
+
+Tested-by: Wende Tan <twd2.me@gmail.com>
+Signed-off-by: Wende Tan <twd2.me@gmail.com>
+Co-developed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+Testing notes from Nathan:
+
+I tested LLVM 14 through 18 with defconfig + full/thin LTO and
+allmodconfig + thin LTO. allmodconfig + thin LTO with LLVM 15 and 16
+shows
+
+  ld.lld: error: section size decrease is too large
+
+when linking vmlinux. This appears to be resolved in LLVM 17 with
+https://github.com/llvm/llvm-project/commit/9d37ea95df1b84cca9b5e954d8964c976a5e303e
+(I did not bisect but the commit message lines up with the issue). I
+kept the existing version check because defconfig worked fine but we may
+want to bump it to 17.0.0 if randconfigs trip over this.
+
+v4 now boots in QEMU for me with both full and thin LTO.
+
+Testing notes from Wende:
+
+I have tested enabling LTO for `defconfig`. The LLD took ~2m21s and ~3GiB
+on our Intel Xeon Gold 6140 server and produced an 18MiB Image. The image
+can boot to shell using an archriscv rootfs on QEMU.
+
+I have also tested it for `allyesconfig` without COMPILE_TEST, FTRACE,
+KASAN, and GCOV. The LLD took ~7h03m and ~335GiB on the server,
+successfully producing a 1.7GiB Image. Unfortunately, we cannot boot this
+image because the `create_kernel_page_table()` -> `alloc_pmd_early()` ->
+`BUG_ON()` logic limits the image to be < 1GiB. Maybe we can fix it in a
+separate patch further.
+
+Changes in v4:
+- Pass '-mattr=+c' and '-mattr=+relax' to ld.lld via '-mllvm' flags when
+  doing LTO due to LLVM not appearing to honor target-features when
+  performing LTO, which can result in incorrect branch targets. This
+  fixes boot with CONFIG_LTO_CLANG=y with LLVM 15.0.0+.
+- Tidy up commit message and move testing notes to below the fold, as it
+  is not too relevant to the git history and it makes the rest of the
+  message more of an imperative mood.
+- Link to v3: https://lore.kernel.org/r/20231003-riscv-lto-v3-1-8aca61a4ecb4@kernel.org
+
+Changes in v3:
+- Disable LTO in arch/riscv/kernel/pi/Makefile, which was added to the
+  kernel after the submission of v2. This change matches arm64.
+- Link to v2: https://lore.kernel.org/r/20220512205545.992288-1-twd2.me@gmail.com/
+
+Changes in v2:
+- Some textual changes suggested by Nick.
+- Drop the changes to `arch/riscv/Makefile`, since the LLVM issue is
+  filed and resolved.
+- Drop the unnecessary changes to `arch/riscv/kernel/vdso/Makefile`.
+- Link to v1: https://lore.kernel.org/r/20210719205208.1023221-1-twd2.me@gmail.com/
+---
+ arch/riscv/Kconfig            | 3 +++
+ arch/riscv/Makefile           | 5 +++++
+ arch/riscv/kernel/pi/Makefile | 3 +++
+ 3 files changed, 11 insertions(+)
+
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index d607ab0f7c6d..523640f7441e 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -46,6 +46,9 @@ config RISCV
+ 	select ARCH_SUPPORTS_CFI_CLANG
+ 	select ARCH_SUPPORTS_DEBUG_PAGEALLOC if MMU
+ 	select ARCH_SUPPORTS_HUGETLBFS if MMU
++	# LLD >= 14: https://github.com/llvm/llvm-project/issues/50505
++	select ARCH_SUPPORTS_LTO_CLANG if LLD_VERSION >= 140000
++	select ARCH_SUPPORTS_LTO_CLANG_THIN if LLD_VERSION >= 140000
+ 	select ARCH_SUPPORTS_PAGE_TABLE_CHECK if MMU
+ 	select ARCH_SUPPORTS_PER_VMA_LOCK if MMU
+ 	select ARCH_USE_MEMTEST
+diff --git a/arch/riscv/Makefile b/arch/riscv/Makefile
+index 1329e060c548..709400ceac60 100644
+--- a/arch/riscv/Makefile
++++ b/arch/riscv/Makefile
+@@ -52,6 +52,11 @@ ifndef CONFIG_AS_IS_LLVM
+ 	KBUILD_CFLAGS += -Wa,-mno-relax
+ 	KBUILD_AFLAGS += -Wa,-mno-relax
+ endif
++# LLVM has an issue with target-features and LTO: https://github.com/llvm/llvm-project/issues/59350
++# Ensure it is aware of linker relaxation with LTO, otherwise relocations may
++# be incorrect: https://github.com/llvm/llvm-project/issues/65090
++else ifeq ($(CONFIG_LTO_CLANG),y)
++	KBUILD_LDFLAGS += -mllvm -mattr=+c -mllvm -mattr=+relax
+ endif
+ endif
+ 
+diff --git a/arch/riscv/kernel/pi/Makefile b/arch/riscv/kernel/pi/Makefile
+index 07915dc9279e..b75f150b923d 100644
+--- a/arch/riscv/kernel/pi/Makefile
++++ b/arch/riscv/kernel/pi/Makefile
+@@ -9,6 +9,9 @@ KBUILD_CFLAGS	:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) -fpie \
+ 		   -fno-asynchronous-unwind-tables -fno-unwind-tables \
+ 		   $(call cc-option,-fno-addrsig)
+ 
++# Disable LTO
++KBUILD_CFLAGS	:= $(filter-out $(CC_FLAGS_LTO), $(KBUILD_CFLAGS))
++
+ KBUILD_CFLAGS	+= -mcmodel=medany
+ 
+ CFLAGS_cmdline_early.o += -D__NO_FORTIFY
+
+---
+base-commit: 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
+change-id: 20231003-riscv-lto-f013beed8587
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
