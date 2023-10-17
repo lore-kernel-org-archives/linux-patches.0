@@ -1,107 +1,114 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526372770A
-	for <patches@lists.linux.dev>; Mon, 16 Oct 2023 21:36:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qsVFv-0003Gk-Bs; Mon, 16 Oct 2023 23:36:07 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qsVFu-002Ahm-JP; Mon, 16 Oct 2023 23:36:06 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qsVFu-00HXpm-AB; Mon, 16 Oct 2023 23:36:06 +0200
-Date: Mon, 16 Oct 2023 23:36:02 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515C0368;
+	Tue, 17 Oct 2023 00:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fd2R/T/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBEAC433C7;
+	Tue, 17 Oct 2023 00:14:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1697501677;
+	bh=FPyG5zRKci3ZPy3S8nE3sp47hjbmHMxIrWz6E1pi2GU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=fd2R/T/jhc1i9uHIG2PP5UqLAJUgudAYz1zKih++90a9Q781TpxHGfLS/1tvcQrw2
+	 AVdL8QR44Os7fK9mUYc9cG4f+E6Mr8amPCEkdaVYTI4mqdfefEnjpBfrDIypK0o+KR
+	 lSzYgKCCi855F5l893pe8dxwKzu6XpK03bfFLXgXqQRjgr/xBwKPLb2zW3UJwtEu57
+	 cK1ZxshSOpN123wcW5VhY1K8IU9JR5GcwtGdyk3PxWaYRFVokKrJqQXuNJiXboAEbY
+	 KHJI7voHnKsTmG5fpp76nWNIFLVvU86LWyAhLq9O6w999cjAT2/rbcIEpyHMcW9m8c
+	 Oi0jn0QLTDshA==
+From: SeongJae Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 010/102] platform/x86: hp-wmi:: Mark driver struct
- with __refdata to prevent section mismatch warning
-Message-ID: <20231016213602.b6l6g6iquil3ojes@pengutronix.de>
-References: <20231016083953.689300946@linuxfoundation.org>
- <20231016083953.964212636@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.5 000/190] 6.5.8-rc2 review
+Date: Tue, 17 Oct 2023 00:14:34 +0000
+Message-Id: <20231017001434.1524-1-sj@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231016185002.371937173@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bdldqitun2sd6lde"
-Content-Disposition: inline
-In-Reply-To: <20231016083953.964212636@linuxfoundation.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: patches@lists.linux.dev
+Content-Transfer-Encoding: 8bit
 
+Hello,
 
---bdldqitun2sd6lde
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 16 Oct 2023 21:48:57 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-On Mon, Oct 16, 2023 at 10:40:09AM +0200, Greg Kroah-Hartman wrote:
-> 5.15-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
->=20
-> [ Upstream commit 5b44abbc39ca15df80d0da4756078c98c831090f ]
->=20
-> As described in the added code comment, a reference to .exit.text is ok
-> for drivers registered via module_platform_driver_probe(). Make this
-> explicit to prevent a section mismatch warning:
->=20
-> 	WARNING: modpost: drivers/platform/x86/hp/hp-wmi: section mismatch in re=
-ference: hp_wmi_driver+0x8 (section: .data) -> hp_wmi_bios_remove (section:=
- .exit.text)
->=20
-> Fixes: c165b80cfecc ("hp-wmi: fix handling of platform device")
-> Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
-> Link: https://lore.kernel.org/r/20231004111624.2667753-1-u.kleine-koenig@=
-pengutronix.de
-> Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-> Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> This is the start of the stable review cycle for the 6.5.8 release.
+> There are 190 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 18 Oct 2023 18:48:18 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.8-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+> and the diffstat can be found below.
 
-while backporting this patch shouldn't hurt, the warning triggers only
-if you also backport commit f177cd0c15fc ("modpost: Don't let "driver"s
-reference .exit.*"). As I assume you don't, there is no need to apply
-this patch to 5.15.x (or other stable releases).
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-Best regards
-Uwe
+Tested-by: SeongJae Park <sj@kernel.org>
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] be4ec7370801 ("Linux 6.5.8-rc2")
 
---bdldqitun2sd6lde
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks,
+SJ
 
------BEGIN PGP SIGNATURE-----
+[...]
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmUtrMEACgkQj4D7WH0S
-/k55JggAoFbWotEc+q8qjCWRL295cfmyUDfFtr9My3EDyI7tkDX90UNwP43+KnUY
-8OyphB0sHDvDKcWbkpj7N5aIWih/FANSDGkLmGbvZNV6tMj7pvMfrbHHN6rNl6e7
-nBoZVokpMpda/GELH7fJnz5qM/IPY0I4PXdxzaG98U494Q32mzQaEXEnumZoFYlI
-o39o/JQKxarpdJ40LX8O8sD1Abt2AYRpmLP+B5SGThqRR5NOgrCjzIJjHwpdtYF+
-x+gidYnm2NZ//Xm81HT2Z+Seeuz6pDpTsDCBW+ROl902fhQmYIQMD2sLqb6j9Udj
-4uE8psIAmZLxuvzyCKyy6KA1emLgsA==
-=YN7/
------END PGP SIGNATURE-----
+---
 
---bdldqitun2sd6lde--
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_i386_idle_flag.sh
+ok 13 selftests: damon-tests: build_i386_highpte.sh
+ok 14 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
