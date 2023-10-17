@@ -1,198 +1,127 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3054F45F4A
-	for <patches@lists.linux.dev>; Tue, 17 Oct 2023 16:08:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAD65380
+	for <patches@lists.linux.dev>; Tue, 17 Oct 2023 16:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="cnGyVRZd"
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-35164833a21so17287485ab.0
-        for <patches@lists.linux.dev>; Tue, 17 Oct 2023 09:08:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1697558884; x=1698163684; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PQEspDyUETHOCENd/vbOw9TSdpQYPdKVwc0QMpgogEw=;
-        b=cnGyVRZde7FvW/MfrAPgaVLuDjDLEzCijdZ9FKj34jdn8+HvPqEC1+CxhUy9VTMpQu
-         AUx+5KWu9+hWd8i1r9GnYRJfVXcCOkuxIgQ/jkR/AKv79miF9gTzmPFkEGGxyyiajpJK
-         PIbVFqFyuzVeDHNiAYptO7InnmP03Qd0KQJhU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697558884; x=1698163684;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PQEspDyUETHOCENd/vbOw9TSdpQYPdKVwc0QMpgogEw=;
-        b=sNMeUoQgsEcijGRkybpO4Fzor3+YzUxzEz7wz9P5wNVG7knoihlBLgxeW/qZ/36Gqa
-         rpQg/7W7rrXzEA4c6OzpIqALXh5G/ifwNJ9PJ4kv0y/VAkZMG5cDAQSL9Fr3xlbYvtt4
-         gd5kVeP0cJw/CVd2nXSiNUg0i/jbTUDyHXGTDAjD79fQ+Kqu57AV5tkRI2haq/2mmV6B
-         cIMSjpz3Fu/5hAqKaiTZalDyw+zeahggHiJbstM+4fskp2sLgIAey/XR+9Zx1KyIuz0q
-         uumaNK4Uf5Fob3BdiSrEGXQ1RdUk32qYHw07qnwgtA1+sDUFouV6L2WBWv0Ax6xrH+Sf
-         e+Sw==
-X-Gm-Message-State: AOJu0Yxr9XNRSLM+oxFZ0nnTzEhK8lXbynI7knsQ6ET0cbXsBnicg9rc
-	KvTrE5/uEZodDOFOaYMkEDPOYQ==
-X-Google-Smtp-Source: AGHT+IGpNfeXMj6k+/Ml6Hira/lbpUM3mbbn1ZCv0G5NS6W0idxP6cjMqa4UEg10xKr9iVgu8C839Q==
-X-Received: by 2002:a92:c70d:0:b0:348:b086:2c4b with SMTP id a13-20020a92c70d000000b00348b0862c4bmr2329326ilp.9.1697558884209;
-        Tue, 17 Oct 2023 09:08:04 -0700 (PDT)
-Received: from google.com (h24-56-189-219.arvdco.broadband.dynamic.tds.net. [24.56.189.219])
-        by smtp.gmail.com with ESMTPSA id t5-20020a02cca5000000b004290985a1efsm599551jap.43.2023.10.17.09.08.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Oct 2023 09:08:03 -0700 (PDT)
-Date: Tue, 17 Oct 2023 10:08:01 -0600
-From: Raul E Rangel <rrangel@chromium.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Eric Snowberg <eric.snowberg@oracle.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>, Tim Bain <tbain@google.com>,
-	Shuhei Takahashi <nya@chromium.org>
-Subject: Re: [PATCH 6.4 041/737] ovl: Always reevaluate the file signature
- for IMA
-Message-ID: <ZS6xYa_kjRGvdCG6@google.com>
-References: <20230911134650.286315610@linuxfoundation.org>
- <20230911134651.582204417@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKrf+SOY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E9EC433C8;
+	Tue, 17 Oct 2023 16:29:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1697560151;
+	bh=WVjb3SJMVpnNaJ6HSreJDO0WWBfTxnfVqmUPvrW1iSI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=aKrf+SOYtP1evy93MpmK/2FW3GPbUwX11KZy7SxM41WD+mvJkCA+ouTf1HkfEyw/i
+	 BsDHYBomHSXMdEPWD0TNjecUwWNQ2AT5nNzI83xzM9yGUUKgkd2A0Q+iztv3VHjjr4
+	 V32iN47exf3NgNgjP3QIVhvTWy9uapZoNMbigVGs=
+Date: Tue, 17 Oct 2023 18:29:02 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Vegard Nossum <vegard.nossum@oracle.com>
+Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	stable@vger.kernel.org, Sasha Levin <sashal@kernel.org>,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 5.15 000/102] 5.15.136-rc1 review
+Message-ID: <2023101700-symphonic-stretch-b62b@gregkh>
+References: <20231016083953.689300946@linuxfoundation.org>
+ <a01256b5-6082-4d17-bf4d-310e7b4f7a47@oracle.com>
+ <2023101641-resource-scalding-3e1d@gregkh>
+ <43ad9708-47d4-4113-ab05-6012cb7c4d6c@oracle.com>
+ <2023101655-throng-rickety-ff79@gregkh>
+ <fb1ce733-d612-4fa3-a1e4-716545625822@oracle.com>
+ <2023101716-sporting-geology-2de2@gregkh>
+ <2023101719-anteater-deviant-bdf9@gregkh>
+ <8cd1f099-b16e-4db8-91d8-ae1ad974bf08@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230911134651.582204417@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8cd1f099-b16e-4db8-91d8-ae1ad974bf08@oracle.com>
 
-On Mon, Sep 11, 2023 at 03:38:20PM +0200, Greg Kroah-Hartman wrote:
-> 6.4-stable review patch.  If anyone has any objections, please let me know.
+On Tue, Oct 17, 2023 at 05:09:04PM +0200, Vegard Nossum wrote:
 > 
-> ------------------
+> On 17/10/2023 16:08, Greg Kroah-Hartman wrote:
+> > On Tue, Oct 17, 2023 at 03:57:06PM +0200, Greg Kroah-Hartman wrote:
+> > > Sure!  Here's the output, good luck!
+> > > 
+> > > $ make -C tools/perf
+> > > make: Entering directory '/home/gregkh/linux/stable/linux-5.15.y/tools/perf'
+> > >    BUILD:   Doing 'make -j20' parallel build
+> > > Warning: Kernel ABI header at 'tools/include/uapi/linux/const.h' differs from latest version at 'include/uapi/linux/const.h'
+> > > diff -u tools/include/uapi/linux/const.h include/uapi/linux/const.h
+> > > Warning: Kernel ABI header at 'tools/include/uapi/linux/in.h' differs from latest version at 'include/uapi/linux/in.h'
+> > > diff -u tools/include/uapi/linux/in.h include/uapi/linux/in.h
+> > > Warning: Kernel ABI header at 'tools/arch/x86/include/asm/disabled-features.h' differs from latest version at 'arch/x86/include/asm/disabled-features.h'
+> > > diff -u tools/arch/x86/include/asm/disabled-features.h arch/x86/include/asm/disabled-features.h
+> > > Warning: Kernel ABI header at 'tools/arch/x86/include/asm/required-features.h' differs from latest version at 'arch/x86/include/asm/required-features.h'
+> > > diff -u tools/arch/x86/include/asm/required-features.h arch/x86/include/asm/required-features.h
+> > > Warning: Kernel ABI header at 'tools/arch/x86/include/asm/cpufeatures.h' differs from latest version at 'arch/x86/include/asm/cpufeatures.h'
+> > > diff -u tools/arch/x86/include/asm/cpufeatures.h arch/x86/include/asm/cpufeatures.h
+> > > Warning: Kernel ABI header at 'tools/arch/x86/include/asm/msr-index.h' differs from latest version at 'arch/x86/include/asm/msr-index.h'
+> > > diff -u tools/arch/x86/include/asm/msr-index.h arch/x86/include/asm/msr-index.h
+> > > Warning: Kernel ABI header at 'tools/arch/arm64/include/uapi/asm/kvm.h' differs from latest version at 'arch/arm64/include/uapi/asm/kvm.h'
+> > > diff -u tools/arch/arm64/include/uapi/asm/kvm.h arch/arm64/include/uapi/asm/kvm.h
+> > > Makefile.config:1036: No libbabeltrace found, disables 'perf data' CTF format support, please install libbabeltrace-dev[el]/libbabeltrace-ctf-dev
+> > > Makefile.config:1062: No alternatives command found, you need to set JDIR= to point to the root of your Java directory
+> > > tests/bpf.c: In function ‘epoll_pwait_loop’:
+> > > tests/bpf.c:36:17: error: argument 2 null where non-null expected [-Werror=nonnull]
+> > >     36 |                 epoll_pwait(-(i + 1), NULL, 0, 0, NULL);
+> > >        |                 ^~~~~~~~~~~
+> > > In file included from tests/bpf.c:5:
+> > > /usr/include/sys/epoll.h:134:12: note: in a call to function ‘epoll_pwait’ declared ‘nonnull’
+> > >    134 | extern int epoll_pwait (int __epfd, struct epoll_event *__events,
+> > >        |            ^~~~~~~~~~~
+> > 
+> > <snip>
+> > 
+> > Also, in Linus's tree, this works just fine on my system, but I get this
+> > same error above (and only this error), when building perf on 6.1.y, and
+> > on 6.5.y.  The perl errors are not present there.
 > 
-> From: Eric Snowberg <eric.snowberg@oracle.com>
+> So lots of those are -Werror things -- I'm guessing it's a newer
+> compiler/toolchain/libraries on an older tree. There might be some
+> commits in mainline fixing those... in the meantime, what happens if you
+> just disable -Werror for now?
 > 
-> [ Upstream commit 18b44bc5a67275641fb26f2c54ba7eef80ac5950 ]
+>     make -C tools/perf/ WERROR=0
+
+That does, for the epoll_pwait() issue I see in 6.1.y and 6.5.y, odds
+are there's a fix here in Linus's tree.
+
+Yes, all of that code is now gone, in commit 3d6dfae88917 ("perf
+parse-events: Remove BPF event support"), which isn't relevant for
+stable.
+
+> If that doesn't work, maybe even:
 > 
-> Commit db1d1e8b9867 ("IMA: use vfs_getattr_nosec to get the i_version")
-> partially closed an IMA integrity issue when directly modifying a file
-> on the lower filesystem.  If the overlay file is first opened by a user
-> and later the lower backing file is modified by root, but the extended
-> attribute is NOT updated, the signature validation succeeds with the old
-> original signature.
-> 
-> Update the super_block s_iflags to SB_I_IMA_UNVERIFIABLE_SIGNATURE to
-> force signature reevaluation on every file access until a fine grained
-> solution can be found.
-> 
+>     make -C tools/perf/ WERROR=0 NO_LIBPERL=1
 
-Sorry for replying to the 6.4-stable patch, I couldn't find the original
-patch in the mailing list.
+What's wrong with libperl for older kernels?  :)
 
-We recently upgraded from 6.4.4 to 6.5.3. We have the integrity LSM
-enabled, and are using overlayfs. When we try and execute a binary from
-the overlayfs filesystem, the integrity LSM hashes the binary and all
-its shared objects every single invocation. This causes a serious
-performance regression when invoking clang thousands of times while
-building a package. We bisected the culprit down to this patch.
+> There are a bunch of other options to disable various things, they are
+> all documented in tools/perf/Makefile.perf.
 
-Here are some numbers:
+True, but again, my system has libperl, and perf doesn't build, and
+neither does the bpf test, so that's why I don't ever test any of this,
+because it just doesn't work for me.
 
-With this patch + overlayfs:
+And yes, I do run newer compilers and libraries, but the rest of the
+kernel builds fine with them (I make sure of that), but given that no
+one seems to care about perf breaking for so long, I just apply patches
+when they come up and don't have conflicts and see if anyone notices any
+difference.
 
-	$ time /usr/bin/clang-17 --version > /dev/null 
+Normally, no one does :)
 
-	real	0m0.628s
-	user	0m0.004s
-	sys	0m0.624s
-	$ time /usr/bin/clang-17 --version > /dev/null
+thanks,
 
-	real	0m0.597s
-	user	0m0.004s
-	sys	0m0.593s
-
-With this patch - overlayfs:
-
-	$ truncate -s 1G foo.bin
-	$ mkfs.ext4 foo.bin
-	$ mount foo.bin /foo
-	$ cp /usr/bin/clang-17 /foo
-	$ time /foo/clang-17 --version > /dev/null
-
-	real	0m0.040s
-	user	0m0.009s
-	sys	0m0.031s
-	$ time /foo/clang-17 --version > /dev/null
-
-	real	0m0.036s
-	user	0m0.000s
-	sys	0m0.037s
-
-Without this path + overlayfs:
-	$ time /usr/bin/clang-17 --version > /dev/null
-
-	real	0m0.017s
-	user	0m0.007s
-	sys	0m0.011s
-	$ time /usr/bin/clang-17 --version > /dev/null
-
-	real	0m0.018s
-	user	0m0.000s
-	sys	0m0.018s
-
-i.e., we go from ~30ms / invocation to 600ms / invocation. Building
-glibc used to take about 3 minutes, but now its taking about 20 minutes.
-
-Our clang binary is about 100 MiB in size.
-
-Using `perf` the following sticks out:
-	$ perf record -g time /usr/bin/clang-17 --version
-	--92.03%--elf_map
-	      vm_mmap_pgoff
-	      ima_file_mmap
-	      process_measurement
-	      ima_collect_measurement
-	      |
-	       --91.95%--ima_calc_file_hash
-	              ima_calc_file_hash_tfm
-	              |
-	              |--82.85%--_sha256_update
-	              |     |
-	              |      --82.47%--lib_sha256_base_do_update.isra.0
-	              |           |
-	              |            --82.39%--sha256_transform_rorx
-	              |
-	               --9.10%--integrity_kernel_read
-
-The audit.log is also logging every clang invocation as well.
-
-Was such a large performance regression expected? Can the commit be
-reverted until the more fine grained solution mentioned in the commit
-message be implemented?
-
-Thanks,
-Raul
-
-> Signed-off-by: Eric Snowberg <eric.snowberg@oracle.com>
-> Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  fs/overlayfs/super.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-> index ae1058fbfb5b2..8c60da7b4afd8 100644
-> --- a/fs/overlayfs/super.c
-> +++ b/fs/overlayfs/super.c
-> @@ -2052,7 +2052,7 @@ static int ovl_fill_super(struct super_block *sb, void *data, int silent)
->  		ovl_trusted_xattr_handlers;
->  	sb->s_fs_info = ofs;
->  	sb->s_flags |= SB_POSIXACL;
-> -	sb->s_iflags |= SB_I_SKIP_SYNC;
-> +	sb->s_iflags |= SB_I_SKIP_SYNC | SB_I_IMA_UNVERIFIABLE_SIGNATURE;
->  
->  	err = -ENOMEM;
->  	root_dentry = ovl_get_root(sb, upperpath.dentry, oe);
-> -- 
-> 2.40.1
-> 
-> 
-> 
+greg k-h
