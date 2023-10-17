@@ -1,186 +1,254 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFBC430E8;
-	Tue, 17 Oct 2023 22:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F233828DD2
+	for <patches@lists.linux.dev>; Tue, 17 Oct 2023 23:01:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OvBREbvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDADC433C8;
-	Tue, 17 Oct 2023 22:21:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1697581272;
-	bh=+fbBrH01A4z4Q/htd056bjoXXyg9yXR/YaOstQWBWjo=;
-	h=From:Date:Subject:To:Cc:From;
-	b=OvBREbvqWTLv87kM888ykcgWoXc/bBm5U4bLkAjHRzzwu0HCu+yxsPwzccwmB/70p
-	 /Crbggvcqv2MNC11GNGP8LUcppIg/pWJ3+jUSFEQTQdeU7Fz6MZimO9a4C2LIDE9YY
-	 SPShs0mx1Ksi1I37QH+zjzQSK4bRWcYFch9Pn65O6xI+flH0JOTaV5MbboXA5HMXQ3
-	 QxfH1TrbHJzqygTwWF5/YvV/tHijlMW6cPJpHYkjWjKz9q3uveFDuU/R90xVElhOK9
-	 PRmBru7IlVMPd+RFv6W8eZMgoYSIVP+nVkOsBTDcJ/17jnCCaUupUnhiNzshWcbW2r
-	 3hsJqF+ywwmHA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 17 Oct 2023 15:21:04 -0700
-Subject: [PATCH v4] RISC-V: build: Allow LTO to be selected
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="axNZ4XS+"
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-7b6d120ce7fso351202241.0
+        for <patches@lists.linux.dev>; Tue, 17 Oct 2023 16:01:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1697583668; x=1698188468; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yxvl1TlAYYqk8yQ5idpKi21TPpTBqDVkjCfJkiJoBRE=;
+        b=axNZ4XS+7KU8hSnF3RvUEez2e6jefHyQS4y5giN1X86OYY8PfVm5ZtCEbqij6aJQeA
+         4YId/19q09M5w58SfXDhTKEOiURXz1K1b5FClEWsLHnVQTyIyDVTYM4wNExUW+ULKFDs
+         X/LsZgIKucbw0kg99HwhMZBaYMDYHzUAPSWvY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697583668; x=1698188468;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yxvl1TlAYYqk8yQ5idpKi21TPpTBqDVkjCfJkiJoBRE=;
+        b=FRDaPwDmknWg7zQxgEmuzfu+jZr/xp/w/ksqD3U9HCvxBzSQrZOKznTDZzq3mSmGbh
+         jFP+p8aiMbUe/nPYl6bMK8THuQOefCuxL3S1jx9MNpk0R4s4sEU4bzqMNyeQovOVOQ0G
+         ShnfkOZmDtYOexIYaSkuTEAQ0WlOiQuWfQd/V7WQ497o/gpdtSY6zrTUNQTTg0uNwb++
+         XkxEKZbCGIXjOgLv8cNFYRgqVxWaG/+zOknJTOAdzqXEXFi+GZcOwkbIJ3A/KY5Kq7U3
+         HY841EryKTQ07vxpix/m1IZZ+6NccasgqrzyRw8bFPYtD3XHJtx6MkVggAVwcYBekQTh
+         eISQ==
+X-Gm-Message-State: AOJu0YywlTZ4XLnP9fUbgvmB3aj8r1zY3Mb/lIwucsKiNGAxKCctbvTF
+	p6rAzuxDg3AFV34IuDVkdM68SDdgAbTHJFkPxvs=
+X-Google-Smtp-Source: AGHT+IGtu2F/6UYRaofe9jA5MsrtbXFxMg+RU64NvPhCtJS6nc8jxQI132wjrADhdcVA46Bh0Zeo+w==
+X-Received: by 2002:a67:c317:0:b0:457:dbe3:ef45 with SMTP id r23-20020a67c317000000b00457dbe3ef45mr3769023vsj.19.1697583668508;
+        Tue, 17 Oct 2023 16:01:08 -0700 (PDT)
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com. [209.85.222.53])
+        by smtp.gmail.com with ESMTPSA id q5-20020a67f045000000b004525780e0e9sm250339vsm.34.2023.10.17.16.01.05
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Oct 2023 16:01:05 -0700 (PDT)
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-7b07c3eaf9bso2202478241.3
+        for <patches@lists.linux.dev>; Tue, 17 Oct 2023 16:01:05 -0700 (PDT)
+X-Received: by 2002:a67:c21e:0:b0:457:d6a2:7187 with SMTP id
+ i30-20020a67c21e000000b00457d6a27187mr4120495vsj.7.1697583664474; Tue, 17 Oct
+ 2023 16:01:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231017-riscv-lto-v4-1-e7810b24e805@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAM8IL2UC/22OywqDMBREf6Vk3YQ8TBu78j+KixivGqqm3ATbI
- v57o9BdNwMHZg6zkgjoIZLbaSUIi48+zBmK84m4wc49UN9mJpJLJThXFH10Cx1ToB0XqgFojTZ
- XkvtPhM6/D9e9ztxhmGgaEOzPILkWe+hCs7KU0hgqaHq1kk1Q9ZP1I3Nh2l2Djyng57i1qN347
- 8Gi8t5YZy/CFuCaonoAzjCygD2pt237Ak0WjA7fAAAA
-To: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
- conor@kernel.org
-Cc: ndesaulniers@google.com, trix@redhat.com, samitolvanen@google.com, 
- twd2.me@gmail.com, linux-riscv@lists.infradead.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5712; i=nathan@kernel.org;
- h=from:subject:message-id; bh=6DF5TQYgQXh8UF8vonZlb3mmg4CViQmZyu8y06LElhY=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDKn6HNf37nkcbPZf507Cd7mjsxrsJKLl1Qt5zdyYHuRNK
- XjP+XBNRykLgxgHg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZhIzwKG/3FG5ZyLM2L/e5Vf
- ftY1XYNPi+nVI7W9dx8ubAzk7D5xdR8jw1PZVUuXfKrc4Hb0zZ2saONvEdzJ0xd5GoRb3py64ND
- 63YwA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20230911134650.286315610@linuxfoundation.org> <20230911134651.582204417@linuxfoundation.org>
+ <ZS6xYa_kjRGvdCG6@google.com> <bd5d2f882e47b904802023d5d4d54d8d4755440e.camel@linux.ibm.com>
+In-Reply-To: <bd5d2f882e47b904802023d5d4d54d8d4755440e.camel@linux.ibm.com>
+From: Raul Rangel <rrangel@chromium.org>
+Date: Tue, 17 Oct 2023 17:00:53 -0600
+X-Gmail-Original-Message-ID: <CAHQZ30A8R+EDGbrngMOQrXabR=DTHL3Y-1Tv+3RF98VHQ5b68Q@mail.gmail.com>
+Message-ID: <CAHQZ30A8R+EDGbrngMOQrXabR=DTHL3Y-1Tv+3RF98VHQ5b68Q@mail.gmail.com>
+Subject: Re: [PATCH 6.4 041/737] ovl: Always reevaluate the file signature for IMA
+To: Mimi Zohar <zohar@linux.ibm.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, Eric Snowberg <eric.snowberg@oracle.com>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Sasha Levin <sashal@kernel.org>, 
+	Tim Bain <tbain@google.com>, Shuhei Takahashi <nya@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Wende Tan <twd2.me@gmail.com>
+On Tue, Oct 17, 2023 at 12:27=E2=80=AFPM Mimi Zohar <zohar@linux.ibm.com> w=
+rote:
+>
+> On Tue, 2023-10-17 at 10:08 -0600, Raul E Rangel wrote:
+> > On Mon, Sep 11, 2023 at 03:38:20PM +0200, Greg Kroah-Hartman wrote:
+> > > 6.4-stable review patch.  If anyone has any objections, please let me=
+ know.
+> > >
+> > > ------------------
+> > >
+> > > From: Eric Snowberg <eric.snowberg@oracle.com>
+> > >
+> > > [ Upstream commit 18b44bc5a67275641fb26f2c54ba7eef80ac5950 ]
+> > >
+> > > Commit db1d1e8b9867 ("IMA: use vfs_getattr_nosec to get the i_version=
+")
+> > > partially closed an IMA integrity issue when directly modifying a fil=
+e
+> > > on the lower filesystem.  If the overlay file is first opened by a us=
+er
+> > > and later the lower backing file is modified by root, but the extende=
+d
+> > > attribute is NOT updated, the signature validation succeeds with the =
+old
+> > > original signature.
+> > >
+> > > Update the super_block s_iflags to SB_I_IMA_UNVERIFIABLE_SIGNATURE to
+> > > force signature reevaluation on every file access until a fine graine=
+d
+> > > solution can be found.
+> > >
+> >
+> > Sorry for replying to the 6.4-stable patch, I couldn't find the origina=
+l
+> > patch in the mailing list.
+> >
+> > We recently upgraded from 6.4.4 to 6.5.3. We have the integrity LSM
+> > enabled, and are using overlayfs. When we try and execute a binary from
+> > the overlayfs filesystem, the integrity LSM hashes the binary and all
+> > its shared objects every single invocation. This causes a serious
+> > performance regression when invoking clang thousands of times while
+> > building a package. We bisected the culprit down to this patch.
+> >
+> > Here are some numbers:
+> >
+> > With this patch + overlayfs:
+> >
+> >       $ time /usr/bin/clang-17 --version > /dev/null
+> >
+> >       real    0m0.628s
+> >       user    0m0.004s
+> >       sys     0m0.624s
+> >       $ time /usr/bin/clang-17 --version > /dev/null
+> >
+> >       real    0m0.597s
+> >       user    0m0.004s
+> >       sys     0m0.593s
+> >
+> > With this patch - overlayfs:
+> >
+> >       $ truncate -s 1G foo.bin
+> >       $ mkfs.ext4 foo.bin
+> >       $ mount foo.bin /foo
+> >       $ cp /usr/bin/clang-17 /foo
+> >       $ time /foo/clang-17 --version > /dev/null
+> >
+> >       real    0m0.040s
+> >       user    0m0.009s
+> >       sys     0m0.031s
+> >       $ time /foo/clang-17 --version > /dev/null
+> >
+> >       real    0m0.036s
+> >       user    0m0.000s
+> >       sys     0m0.037s
+> >
+> > Without this path + overlayfs:
+> >       $ time /usr/bin/clang-17 --version > /dev/null
+> >
+> >       real    0m0.017s
+> >       user    0m0.007s
+> >       sys     0m0.011s
+> >       $ time /usr/bin/clang-17 --version > /dev/null
+> >
+> >       real    0m0.018s
+> >       user    0m0.000s
+> >       sys     0m0.018s
+> >
+> > i.e., we go from ~30ms / invocation to 600ms / invocation. Building
+> > glibc used to take about 3 minutes, but now its taking about 20 minutes=
+.
+> >
+> > Our clang binary is about 100 MiB in size.
+> >
+> > Using `perf` the following sticks out:
+> >       $ perf record -g time /usr/bin/clang-17 --version
+> >       --92.03%--elf_map
+> >             vm_mmap_pgoff
+> >             ima_file_mmap
+> >             process_measurement
+> >             ima_collect_measurement
+> >             |
+> >              --91.95%--ima_calc_file_hash
+> >                     ima_calc_file_hash_tfm
+> >                     |
+> >                     |--82.85%--_sha256_update
+> >                     |     |
+> >                     |      --82.47%--lib_sha256_base_do_update.isra.0
+> >                     |           |
+> >                     |            --82.39%--sha256_transform_rorx
+> >                     |
+> >                      --9.10%--integrity_kernel_read
+> >
+> > The audit.log is also logging every clang invocation as well.
+> >
+> > Was such a large performance regression expected? Can the commit be
+> > reverted until the more fine grained solution mentioned in the commit
+> > message be implemented?
+>
 
-Allow LTO to be selected for RISC-V, only when LLD >= 14, since there is
-an issue [1] in prior LLD versions that prevents LLD to generate proper
-machine code for RISC-V when writing `nop`s.
+First off, thanks for the quick reply. And I apologize in advance for
+any naive questions. I'm still learning how the IMA system works.
 
-To avoid boot failures in QEMU [2], '-mattr=+c' and '-mattr=+relax'
-need to be passed via '-mllvm' to ld.lld, as there appears to be an
-issue with LLVM's target-features and LTO [3], which can result in
-incorrect relocations to branch targets [4]. Once this is fixed in LLVM,
-it can be made conditional on affected ld.lld versions.
+> IMA is always based on policy.  Having the "integrity LSM enabled and
+> using overlayfs" will not cause any measurements or signature
+> verifications, unless the files are in policy.
 
-Disable LTO for arch/riscv/kernel/pi, as llvm-objcopy expects an ELF
-object file when manipulating the files in that subfolder, rather than
-LLVM bitcode.
+Good point. The policy we have loaded is very similar to the one we
+get from setting `ima_tcb`on the kernel command line. We just remove
+the uid=3D0 constraint. i.e.,
+```
+# SECURITYFS_MAGIC
+dont_measure fsmagic=3D0x73636673
+# SELINUXFS_MAGIC
+dont_measure fsmagic=3D0xf97cff8c
+...
+# audit files executed.
+audit func=3DBPRM_CHECK
+# audit executable libraries mmap'd.
+audit func=3DFILE_MMAP mask=3DMAY_EXEC
+# audit loaded kernel modules
+audit func=3DMODULE_CHECK
+```
 
-[1] https://github.com/llvm/llvm-project/issues/50505, resolved by LLVM
-    commit e63455d5e0e5 ("[MC] Use local MCSubtargetInfo in writeNops")
-[2] https://github.com/ClangBuiltLinux/linux/issues/1942
-[3] https://github.com/llvm/llvm-project/issues/59350
-[4] https://github.com/llvm/llvm-project/issues/65090
+We don't have any appraisal rules loaded.
 
-Tested-by: Wende Tan <twd2.me@gmail.com>
-Signed-off-by: Wende Tan <twd2.me@gmail.com>
-Co-developed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-Testing notes from Nathan:
+>
+> The problem is that unless the lower layer file is in policy, file
+> change will not be detected on the overlay filesystem.  Reverting this
+> change will allow access to a modified file without re-verifying its
+> integrity.
 
-I tested LLVM 14 through 18 with defconfig + full/thin LTO and
-allmodconfig + thin LTO. allmodconfig + thin LTO with LLVM 15 and 16
-shows
+Given our simple policy, I think the lower layer file is included in the
+policy. So if I understand correctly, you are saying that this patch
+was meant to address the case where the lower layer wasn't
+covered by the policy?
 
-  ld.lld: error: section size decrease is too large
+>
+> Instead of reverting the patch, perhaps allow users to take this risk
+> by defining a Kconfig, since they're aware of their policy rules.
+>
 
-when linking vmlinux. This appears to be resolved in LLVM 17 with
-https://github.com/llvm/llvm-project/commit/9d37ea95df1b84cca9b5e954d8964c976a5e303e
-(I did not bisect but the commit message lines up with the issue). I
-kept the existing version check because defconfig worked fine but we may
-want to bump it to 17.0.0 if randconfigs trip over this.
+That sounds good. Or would it make sense to add an option to the
+policy file? i.e., `verifiable fsmagic=3D0x794c7630`
 
-v4 now boots in QEMU for me with both full and thin LTO.
+FWIW, I also added the following to my policy file:
+```
+# OVERLAYFS_SUPER_MAGIC
+dont_appraise fsmagic=3D0x794c7630
+dont_measure fsmagic=3D0x794c7630
+dont_hash fsmagic=3D0x794c7630
+```
 
-Testing notes from Wende:
+I didn't get any entries in my audit.log, but the hashing was still
+performed. I figured since tmpfs and ramfs were already marked
+as dont_measure, adding overlayfs shouldn't really be any
+different.
 
-I have tested enabling LTO for `defconfig`. The LLD took ~2m21s and ~3GiB
-on our Intel Xeon Gold 6140 server and produced an 18MiB Image. The image
-can boot to shell using an archriscv rootfs on QEMU.
+Thanks again,
+Raul
 
-I have also tested it for `allyesconfig` without COMPILE_TEST, FTRACE,
-KASAN, and GCOV. The LLD took ~7h03m and ~335GiB on the server,
-successfully producing a 1.7GiB Image. Unfortunately, we cannot boot this
-image because the `create_kernel_page_table()` -> `alloc_pmd_early()` ->
-`BUG_ON()` logic limits the image to be < 1GiB. Maybe we can fix it in a
-separate patch further.
-
-Changes in v4:
-- Pass '-mattr=+c' and '-mattr=+relax' to ld.lld via '-mllvm' flags when
-  doing LTO due to LLVM not appearing to honor target-features when
-  performing LTO, which can result in incorrect branch targets. This
-  fixes boot with CONFIG_LTO_CLANG=y with LLVM 15.0.0+.
-- Tidy up commit message and move testing notes to below the fold, as it
-  is not too relevant to the git history and it makes the rest of the
-  message more of an imperative mood.
-- Link to v3: https://lore.kernel.org/r/20231003-riscv-lto-v3-1-8aca61a4ecb4@kernel.org
-
-Changes in v3:
-- Disable LTO in arch/riscv/kernel/pi/Makefile, which was added to the
-  kernel after the submission of v2. This change matches arm64.
-- Link to v2: https://lore.kernel.org/r/20220512205545.992288-1-twd2.me@gmail.com/
-
-Changes in v2:
-- Some textual changes suggested by Nick.
-- Drop the changes to `arch/riscv/Makefile`, since the LLVM issue is
-  filed and resolved.
-- Drop the unnecessary changes to `arch/riscv/kernel/vdso/Makefile`.
-- Link to v1: https://lore.kernel.org/r/20210719205208.1023221-1-twd2.me@gmail.com/
----
- arch/riscv/Kconfig            | 3 +++
- arch/riscv/Makefile           | 5 +++++
- arch/riscv/kernel/pi/Makefile | 3 +++
- 3 files changed, 11 insertions(+)
-
-diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-index d607ab0f7c6d..523640f7441e 100644
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -46,6 +46,9 @@ config RISCV
- 	select ARCH_SUPPORTS_CFI_CLANG
- 	select ARCH_SUPPORTS_DEBUG_PAGEALLOC if MMU
- 	select ARCH_SUPPORTS_HUGETLBFS if MMU
-+	# LLD >= 14: https://github.com/llvm/llvm-project/issues/50505
-+	select ARCH_SUPPORTS_LTO_CLANG if LLD_VERSION >= 140000
-+	select ARCH_SUPPORTS_LTO_CLANG_THIN if LLD_VERSION >= 140000
- 	select ARCH_SUPPORTS_PAGE_TABLE_CHECK if MMU
- 	select ARCH_SUPPORTS_PER_VMA_LOCK if MMU
- 	select ARCH_USE_MEMTEST
-diff --git a/arch/riscv/Makefile b/arch/riscv/Makefile
-index 1329e060c548..709400ceac60 100644
---- a/arch/riscv/Makefile
-+++ b/arch/riscv/Makefile
-@@ -52,6 +52,11 @@ ifndef CONFIG_AS_IS_LLVM
- 	KBUILD_CFLAGS += -Wa,-mno-relax
- 	KBUILD_AFLAGS += -Wa,-mno-relax
- endif
-+# LLVM has an issue with target-features and LTO: https://github.com/llvm/llvm-project/issues/59350
-+# Ensure it is aware of linker relaxation with LTO, otherwise relocations may
-+# be incorrect: https://github.com/llvm/llvm-project/issues/65090
-+else ifeq ($(CONFIG_LTO_CLANG),y)
-+	KBUILD_LDFLAGS += -mllvm -mattr=+c -mllvm -mattr=+relax
- endif
- endif
- 
-diff --git a/arch/riscv/kernel/pi/Makefile b/arch/riscv/kernel/pi/Makefile
-index 07915dc9279e..b75f150b923d 100644
---- a/arch/riscv/kernel/pi/Makefile
-+++ b/arch/riscv/kernel/pi/Makefile
-@@ -9,6 +9,9 @@ KBUILD_CFLAGS	:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) -fpie \
- 		   -fno-asynchronous-unwind-tables -fno-unwind-tables \
- 		   $(call cc-option,-fno-addrsig)
- 
-+# Disable LTO
-+KBUILD_CFLAGS	:= $(filter-out $(CC_FLAGS_LTO), $(KBUILD_CFLAGS))
-+
- KBUILD_CFLAGS	+= -mcmodel=medany
- 
- CFLAGS_cmdline_early.o += -D__NO_FORTIFY
-
----
-base-commit: 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
-change-id: 20231003-riscv-lto-f013beed8587
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+> --
+> thanks,
+>
+> Mimi
+>
