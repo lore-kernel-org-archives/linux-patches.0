@@ -1,178 +1,215 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1FB450FF
-	for <patches@lists.linux.dev>; Tue, 17 Oct 2023 17:35:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245A32D798
+	for <patches@lists.linux.dev>; Tue, 17 Oct 2023 18:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mPpXa8Y0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697564107; x=1729100107;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=/u6J8YuFnGgwmAVcYVAdiL7BSrsH2dF4a9eKTbCuswk=;
-  b=mPpXa8Y0NsrHusNLiz+d2q9lIa5/kEIXuc5PT9B3fyUyEmnRFz1iXFDk
-   olsbE117EoqWQxX5bTQvxc1AwWmPwa3ASwu1Tw0GbCIiTDt+2+UFL4rXK
-   kiS9ILQBzM4OOQcbK+Ba+XttsBBbrCpGpLPGLIolmXM/WMhcAQj0gLP/c
-   TQa1pP8BWoTCKjVKxiACZn5A5jOAZv3tss5hwebviMcWLzFcGBE02FXLv
-   DfMSgx4Qdi8DzwdrlGEdgtdOKoJNB26jzpUwAoU+975oGbTcV/3w0coQo
-   V1NE1g7VmCyRrh6gbvSsKcFqXLykZMloNb/5Vk8UVCwJZW8LZpynvavVG
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10866"; a="366101786"
-X-IronPort-AV: E=Sophos;i="6.03,232,1694761200"; 
-   d="scan'208";a="366101786"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Oct 2023 10:35:06 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10866"; a="791289341"
-X-IronPort-AV: E=Sophos;i="6.03,232,1694761200"; 
-   d="scan'208";a="791289341"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
-  by orsmga001.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 17 Oct 2023 10:35:06 -0700
-Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Tue, 17 Oct 2023 10:35:05 -0700
-Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
- ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Tue, 17 Oct 2023 10:35:05 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Tue, 17 Oct 2023 10:35:05 -0700
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (104.47.57.41) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.32; Tue, 17 Oct 2023 10:35:05 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GzqkV2KGoY7u0jcASUJs2JGtsXpxh0SlN6djR9mSyEL0cC4ywHoGoUqv9V6vCLzF0VpWcmm2rRteaZXClIeRxmgbG3wPOFy882UZg/HNOiD4gRnVyLY/jOeWO0GV1pxwVpiYVaK/QnpaxUEdVJWZaEqo91rJm6r6iOaWSnU/AU7nMnNjhhs5rhi6GEeeShCBHqoSF6LmqeZes2KAPD73mu9hsDZDIz54CUYMApOLcJGiCo73YechMCDyCGfbNTnVcns624EATOKXwEXn0xaLG7a8O636CIxch31h1RcWx5j8L6gy+DeVdsDlVp15JZxvWNYnNAZh/My7JFrPvNS6Rg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/u6J8YuFnGgwmAVcYVAdiL7BSrsH2dF4a9eKTbCuswk=;
- b=Dcw8HqzOmTZ98zFUTqwyGZrn3kRJlwc684YDqX/NwTBhT650AFUJB1JovRocxTLfKCeDUYaVkF0YTK/MKRBwkUdKS1qRh9aEDis61nBzog+fmbaNf9iw+6afL8V41b63TGZw77Na8q6iJhuGVydaq/H3DVVfnJ/oe3EyONUZaMZCN24MdKcjYTtn/azw+ffFAXBXu0KQFzQ2SpPbl9mGeuCqJTnjPYBGbR8XAJJOHZiNl0rU0FB3bAOzoXA8foC3l15YHJ9Ekf1NDe2veXvZr3KCUMVo0iVtI78Y9q//+CU0xlLIJu+F8qfF+GQTidWarkrHJ2kWF1VSfljKgMHF3w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by SA2PR11MB5148.namprd11.prod.outlook.com (2603:10b6:806:11e::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6886.37; Tue, 17 Oct
- 2023 17:35:03 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::7316:13b0:88bc:b3c8]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::7316:13b0:88bc:b3c8%4]) with mapi id 15.20.6886.034; Tue, 17 Oct 2023
- 17:35:03 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: "Li, Zhiquan1" <zhiquan1.li@intel.com>, Borislav Petkov <bp@alien8.de>
-CC: "x86@kernel.org" <x86@kernel.org>, "linux-edac@vger.kernel.org"
-	<linux-edac@vger.kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, "mingo@kernel.org" <mingo@kernel.org>,
-	"naoya.horiguchi@nec.com" <naoya.horiguchi@nec.com>
-Subject: RE: [PATCH v3] x86/mce: Set PG_hwpoison page flag to avoid the
- capture kernel panic
-Thread-Topic: [PATCH v3] x86/mce: Set PG_hwpoison page flag to avoid the
- capture kernel panic
-Thread-Index: AQHZ/lso9WGwaznFOkSBbySsExRE6LBIvACggABKdwCAAx5hgIABCoQAgAAEGNCAAKcWgIAAPfSAgAAqxjA=
-Date: Tue, 17 Oct 2023 17:35:02 +0000
-Message-ID: <SJ1PR11MB60830F499CB509A1262C745BFCD6A@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <20231014051754.3759099-1-zhiquan1.li@intel.com>
- <SJ1PR11MB6083A23BB89F4EE0F44B2794FCD1A@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <233e17ac-0ae5-4392-a5e4-ab811a155805@intel.com>
- <20231016091143.GCZSz+T1xFf5tCFi2w@fat_crate.local>
- <759ccb97-cf5a-4787-b699-27551d5d2865@intel.com>
- <SJ1PR11MB60834039F485FEBC8031398AFCD6A@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <20231017111817.GAZS5teT4rFkXVD2KA@fat_crate.local>
- <5398da4c-5286-4e1b-924c-6df91f932427@intel.com>
-In-Reply-To: <5398da4c-5286-4e1b-924c-6df91f932427@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|SA2PR11MB5148:EE_
-x-ms-office365-filtering-correlation-id: 05e8fe70-6c33-4ded-df5d-08dbcf376515
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: B5nq2qKrb+bpKuDnFVAu5dH6MdS6q1DuXvNDn8GFY/6HzqJgjR4JOlDy40yXvO4xA2DfzUExrrz6AZnWbVII/jS4XXDjG7irS8Re8TigQRwmukchxynimBLAIMTxr1+nv8jQxsLq7XQAYFglIGP3SZ31O6DI+/NYtUbwbAOHDdD10p7EePNXTZBb4JdQ7eRW72zCCS6zoP6DcoFgvX/+dSVFovEimBLc93M+LSXyDJ2OdBGUitV8YJ79sOpzF0v+kHUjK0qqFao9l09kWUOLXZ6KR8YWC5Zq5PBP2oCRdnaisqrXXGWaB4haBC/E/dFy2davet38p+A4x6OeC8FNhYML3YeFML9SKgk2hoOciu0b/K9ovRIxoJHGZY2gBDWpNG8vDLtfLOE0VxceJlgD++WZxWIFJxaa7GFsFbTPj5H/gbrg7dewHnJAuhsyS4Dzb7yUHZTTnVwHGbQpdLd11vJcZWrBxYOzuz4P4TNSGPoTSRcf0uBbqPshR7UUQuSM25YissSQ0xMkSmZ4oVpjS+3M/LSe5x9oAtBtoF7oFrLtSltQN3sIUZYq17D2zjj96EGivdGgQg4S8mLNk1rEgDSVgrpaI/BHCwXcWuvvgIe7qQO4fWYZtOkiF7PTFfk1
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(136003)(346002)(366004)(396003)(39860400002)(230922051799003)(64100799003)(186009)(1800799009)(451199024)(83380400001)(82960400001)(6506007)(71200400001)(7696005)(38070700005)(9686003)(38100700002)(26005)(122000001)(33656002)(478600001)(66556008)(66476007)(66446008)(316002)(64756008)(54906003)(110136005)(76116006)(8936002)(8676002)(4326008)(41300700001)(52536014)(55016003)(4744005)(2906002)(86362001)(66946007)(5660300002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cHBjb1hndWZXNWRmd2xzbVdPcUtuUXN4bUtNV3UySFhyNVo3ajBhbjdqZlB0?=
- =?utf-8?B?YUdZa2p6RUlXYkw0UE0zRWVsUFlySzRKcXkvZDRwVGRwb2RXZ3h0WlJaclVz?=
- =?utf-8?B?QjA4MDBzbGJwOWMrbGFNNEkxSWVvY2RScTVuZ3VhSzljYndJZWJkM25oN3dq?=
- =?utf-8?B?M1o5Y0UydlhsTTFWRlVHVUE0N3Y3c011WXMrR24zdkF0NU9aWUFoYnRsKzM3?=
- =?utf-8?B?K2QwUmtXWUpiTy85clpFcitGbmw1NWpTSjlQTHFNNUViczRlWThmcGZER3hK?=
- =?utf-8?B?d2JoWWpyL3hjMUZhY28ySXZOMGtCc3RUM290R3NwSDFHYmorVnZOeDFoQWJU?=
- =?utf-8?B?SFBlQW5xT0ZDd3BzRjdJKzl0aDVjL01hQitpK1JuNFRxSlhRcnhkUTBjUXp5?=
- =?utf-8?B?eDZEUEM2SWpyNDdwQ2JHa3NTcGFiQmJ6WUJsQ2N3SFlncUZvVlJDcWRnT3Zm?=
- =?utf-8?B?anlmZC81KzVuRmVUR2dZZXBDeFcvTVRGb2Q5eXVycnhQMjY2YUQxajZFL0FB?=
- =?utf-8?B?cmt3ZmZPanpVZWdwektmV0RqcHFycXhJaHg5RHZLRkpWTkRjNXduQkNqcTNC?=
- =?utf-8?B?UThHUm9Pb0dRc1ZHU2U1ZHV6VXdEcHkwMVoyTGNsamoyckNmWXFXRG1YUmhJ?=
- =?utf-8?B?THVjNmhsck82QTA4Z0ZXMmIvbjBWYXUwdlo4N2xXSFFDSTRrM3lCTGtQRWQ1?=
- =?utf-8?B?a3oxcUlRVFU3bmNzZWxCNWt1OHErSnZhM1VzNGhVWGpNVzJkcHl1UDZ1Mk0x?=
- =?utf-8?B?SDVRbERqYzg4ekhGTG1DaDYvU0N4QlVlZVpyZXdLSHRSUTF1dzRKSzhNU2NT?=
- =?utf-8?B?WExkVEpHRk1BcnlzVDJRZm5CQk1ZRitSTXpxR2I1SUZON2tiNDNtdUJyWm00?=
- =?utf-8?B?ZjB2T0plc1l3bW11MGRsOUVJVU93WEUrUFRjUlQrdzJBRU9zRm1sQW5RUXFs?=
- =?utf-8?B?TUlnTDhyNDUycHhVeWp3dlJPNWhzYmVaeVRlUTNDcTU1QURoQlU3ODlQSlB4?=
- =?utf-8?B?Wm1CZ1o4L2J3R3daU3hSdkpmN2VtMDc3b243YlcyZnlVTkYvL0IrRGorbWRY?=
- =?utf-8?B?cGZVWlFKREU3MDJlcGRDRjMrbE1YVFZDdDN5dEJpMGVHN0Z2RGxGa1MvSHNo?=
- =?utf-8?B?OHQxcE1UUUlpZUJUcjNTYk1pZ1RjUEYzOEZHSjZrYVZmZ2I1allqb2c4YWpl?=
- =?utf-8?B?Z2g2ZXkwd3FtdWtCaE92am9VeTZEOElDRFcyWXNJN25ndW1ITHJnY1FMWGkz?=
- =?utf-8?B?K0dqSllkSXhUV25YVExWa1RJYnhvOHFlTUx1NFZpcEl4MWh4VzEzRERjWWZJ?=
- =?utf-8?B?RDJ0ZHRrNXVreitWMHNJbzVlOU1DUCs3ZzVnekZXUjZILzBrN3o0YTY4YlNQ?=
- =?utf-8?B?Y0pCSzhZckxBUDFDb0JhWms3clA3dlV4cDhuOXJYbnM5ZFhlMncwT082L1dz?=
- =?utf-8?B?dVladnd6SXlQU2JITjZic3VUKzFGRmhLYTVWMXQ1dkJDenlUdnQ1Rjdob3Bi?=
- =?utf-8?B?TG1zVzNlM3NNQ2p5UU9DY25sSCtwNmNWeC8zZHZCYWRWdWc4SXprY1BMYkV1?=
- =?utf-8?B?aTlPNm9VSVE0WnVZZjVEcnIrbjFDc25Vc1BKZ0M1dWNubTlXMjI4eHBmaG9J?=
- =?utf-8?B?VGhYR1pKNFVRaklxbFBGaE9HczYwb2JzRDR4UzRQdUFObzdyRCtGTS83UTgx?=
- =?utf-8?B?TlZpTXJyRC9jYXJ4WFpNQUs0WjRWTlc4VTJlQTh0M0NGWTY4SFBmVDVSd3p4?=
- =?utf-8?B?M2psSmRBeWYwcW5LdGNLQXdqRWQ2K2c5ZSt1cG9wRFdTckpzSlhSVWlWL0Y1?=
- =?utf-8?B?dEh3eER5a0hpOUk1eno5MFlUZUM3dGhVeTludnNlbEpQSkk0ZG9OOXVySFdh?=
- =?utf-8?B?dGF1c1piejh6MnRQTTNvMUVlamxzbHpEMXlTdGYramZ2RHZFdVpBaEFmY0lU?=
- =?utf-8?B?WFBhbmF5TG8rODBkUHd0QXhKdmhpQnJxVi9TQzN4empWdDBNK2gxcFRkelVz?=
- =?utf-8?B?dTV4Mm5kMFJSdEhRUlFsNDlnblRyM0V1NzBYaHB3U1BUdmUrdjRKaUlDRkVx?=
- =?utf-8?B?eEpCcDZ3S3AvdGpSWkRtYlJMcjI4aGhqZEZOcENKVkVucVJrbXF1enBqT3Vz?=
- =?utf-8?Q?/DD9cYCi25VZ5GFKoFStYVOT+?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="UPx0slwy"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39HI9Zb7017555;
+	Tue, 17 Oct 2023 18:27:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ mime-version : content-transfer-encoding; s=pp1;
+ bh=ThQ7y/bkDC5CrP0Ooa7t06OEqktz1YwCfTETviDhH8c=;
+ b=UPx0slwy9K+XVQ2GlC1umuoEcPVmzFhis6eBVkYckdZSWcaTifiVKgrstb10PgVOqI/a
+ gssiyylQCJ1b5RxiN0XgQ/423tas+oNY/0gTl1pJUL/mb7nJG+CtXtd9RmcmfwKZlupw
+ oLDYV9VFNb4UyH6AAE/ceB0R4DYG2q1ujCvqjAW1wFcx800usFxIOnVbN69mxpxlatZ0
+ mk9eBnL9JWRZ4EcPVA/X4S3DQwqFO3oFWyf9pV5xXCx9JXIV1KIpqPQEoMXGVLCi6cJF
+ PIdPBtRoyeGAWshoMHyomfSDQ19/v09EolQMTOiSzMryweWIuGuK2so1D5/5pPICNbX3 Wg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tsya30r98-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Oct 2023 18:27:51 +0000
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39HIB4HN022819;
+	Tue, 17 Oct 2023 18:27:51 GMT
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tsya30r8x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Oct 2023 18:27:51 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 39HGSxsS012949;
+	Tue, 17 Oct 2023 18:27:50 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3tr5pyb27s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Oct 2023 18:27:50 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com [10.39.53.230])
+	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 39HIRneX4981328
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 17 Oct 2023 18:27:49 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4FAD258054;
+	Tue, 17 Oct 2023 18:27:49 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5BEE75805A;
+	Tue, 17 Oct 2023 18:27:48 +0000 (GMT)
+Received: from li-f45666cc-3089-11b2-a85c-c57d1a57929f.watson.ibm.com (unknown [9.31.99.90])
+	by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 17 Oct 2023 18:27:48 +0000 (GMT)
+Message-ID: <bd5d2f882e47b904802023d5d4d54d8d4755440e.camel@linux.ibm.com>
+Subject: Re: [PATCH 6.4 041/737] ovl: Always reevaluate the file signature
+ for IMA
+From: Mimi Zohar <zohar@linux.ibm.com>
+To: Raul E Rangel <rrangel@chromium.org>,
+        Greg Kroah-Hartman
+	 <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+        Eric Snowberg
+ <eric.snowberg@oracle.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Sasha Levin <sashal@kernel.org>, Tim Bain <tbain@google.com>,
+        Shuhei
+ Takahashi <nya@chromium.org>
+Date: Tue, 17 Oct 2023 14:27:47 -0400
+In-Reply-To: <ZS6xYa_kjRGvdCG6@google.com>
+References: <20230911134650.286315610@linuxfoundation.org>
+	 <20230911134651.582204417@linuxfoundation.org>
+	 <ZS6xYa_kjRGvdCG6@google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.28.5 (3.28.5-22.el8) 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 05e8fe70-6c33-4ded-df5d-08dbcf376515
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Oct 2023 17:35:02.9043
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: T2S/Q7Uo+g57+nkr81oV/B42hg+HHoGrqwsEy5zHCdlQlXKNmFEwL150KKoDfSAKYEXZ+c0lYzWWXnSLIJRozw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB5148
-X-OriginatorOrg: intel.com
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: ejrKfiRXY4HNOWvPe80IvpMHE_CaED7R
+X-Proofpoint-ORIG-GUID: OJGjl-coWaES9jMBFaC2VkkAvSO89ffj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-17_03,2023-10-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ malwarescore=0 priorityscore=1501 phishscore=0 spamscore=0 adultscore=0
+ lowpriorityscore=0 mlxlogscore=788 bulkscore=0 impostorscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310170155
 
-PiBUb255LCB5b3VyIGNvbW1pdCBtZXNzYWdlIG1hZGUgbWUgcmVhbGl6ZSBob3cgdmVyYm9zZSBt
-eSBjb21taXQgbWVzc2FnZQ0KPiBpcy4gTWF5IEkgc2ltcGxpZnkgdGhlIHdob2xlIGNvbW1pdCBt
-ZXNzYWdlIGFzIGZvbGxvd2luZyBmb3IgbmV4dCB2ZXJzaW9uPw0KPg0KPiAtLS1zdGFydC0tLQ0K
-PiBNZW1vcnkgZXJyb3JzIGRvbid0IGhhcHBlbiB2ZXJ5IG9mdGVuLCBlc3BlY2lhbGx5IHRoZSBz
-ZXZlcml0eSBpcyBmYXRhbC4NCj4gIEhvd2V2ZXIsIGluIGxhcmdlLXNjYWxlIHNjZW5hcmlvcywg
-c3VjaCBhcyBkYXRhIGNlbnRlcnMsIGl0IG1pZ2h0IHN0aWxsDQo+IGhhcHBlbi4gIFdoZW4gdGhl
-cmUgaXMgYSBmYXRhbCBtYWNoaW5lIGNoZWNrIExpbnV4IGNhbGxzIG1jZV9wYW5pYygpDQo+IHdp
-dGhvdXQgY2hlY2tpbmcgdG8gc2VlIGlmIGJhZCBkYXRhIGF0IHNvbWUgbWVtb3J5IGFkZHJlc3MN
-Cj4gd2FzIHJlcG9ydGVkIGluIHRoZSBtYWNoaW5lIGNoZWNrIGJhbmtzLg0KPg0KPiBJZiBrZXhl
-YyBpcyBlbmFibGVkLCBjaGVjayBmb3IgbWVtb3J5IGVycm9ycyBhbmQgbWFyayB0aGUgcGFnZSBh
-cw0KPiBwb2lzb25lZCBzbyB0aGF0IHRoZSBrZXhlYydlZCBrZXJuZWwgY2FuIGF2b2lkIGFjY2Vz
-c2luZyB0aGUgcGFnZS4NCj4gLS0tZW5kLS0tDQo+DQo+IEl0IGFscmVhZHkgY292ZXJzIHRoZSBz
-Y2VuYXJpbywgcm9vdCBjYXVzZSBhbmQgc29sdXRpb24sIGFuZCBmb2N1c2VzIG9uDQo+IGtlcm5l
-bC4gIE5vIG5lZWQgdG8gdGFsayBzb21ldGhpbmcgZWxzZS4NCg0KWWVzLCB5b3UgY2FuIHVzZSB0
-aGF0LiBCZWluZyBjb25jaXNlIChidXQga2VlcGluZyB0aGUgaW1wb3J0YW50IGRldGFpbHMpDQpp
-cyB0aGUgYXJ0IG9mIGEgZ29vZCBjb21taXQgbWVzc2FnZS4NCg0KLVRvbnkNCg==
+On Tue, 2023-10-17 at 10:08 -0600, Raul E Rangel wrote:
+> On Mon, Sep 11, 2023 at 03:38:20PM +0200, Greg Kroah-Hartman wrote:
+> > 6.4-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Eric Snowberg <eric.snowberg@oracle.com>
+> > 
+> > [ Upstream commit 18b44bc5a67275641fb26f2c54ba7eef80ac5950 ]
+> > 
+> > Commit db1d1e8b9867 ("IMA: use vfs_getattr_nosec to get the i_version")
+> > partially closed an IMA integrity issue when directly modifying a file
+> > on the lower filesystem.  If the overlay file is first opened by a user
+> > and later the lower backing file is modified by root, but the extended
+> > attribute is NOT updated, the signature validation succeeds with the old
+> > original signature.
+> > 
+> > Update the super_block s_iflags to SB_I_IMA_UNVERIFIABLE_SIGNATURE to
+> > force signature reevaluation on every file access until a fine grained
+> > solution can be found.
+> > 
+> 
+> Sorry for replying to the 6.4-stable patch, I couldn't find the original
+> patch in the mailing list.
+> 
+> We recently upgraded from 6.4.4 to 6.5.3. We have the integrity LSM
+> enabled, and are using overlayfs. When we try and execute a binary from
+> the overlayfs filesystem, the integrity LSM hashes the binary and all
+> its shared objects every single invocation. This causes a serious
+> performance regression when invoking clang thousands of times while
+> building a package. We bisected the culprit down to this patch.
+> 
+> Here are some numbers:
+> 
+> With this patch + overlayfs:
+> 
+> 	$ time /usr/bin/clang-17 --version > /dev/null 
+> 
+> 	real	0m0.628s
+> 	user	0m0.004s
+> 	sys	0m0.624s
+> 	$ time /usr/bin/clang-17 --version > /dev/null
+> 
+> 	real	0m0.597s
+> 	user	0m0.004s
+> 	sys	0m0.593s
+> 
+> With this patch - overlayfs:
+> 
+> 	$ truncate -s 1G foo.bin
+> 	$ mkfs.ext4 foo.bin
+> 	$ mount foo.bin /foo
+> 	$ cp /usr/bin/clang-17 /foo
+> 	$ time /foo/clang-17 --version > /dev/null
+> 
+> 	real	0m0.040s
+> 	user	0m0.009s
+> 	sys	0m0.031s
+> 	$ time /foo/clang-17 --version > /dev/null
+> 
+> 	real	0m0.036s
+> 	user	0m0.000s
+> 	sys	0m0.037s
+> 
+> Without this path + overlayfs:
+> 	$ time /usr/bin/clang-17 --version > /dev/null
+> 
+> 	real	0m0.017s
+> 	user	0m0.007s
+> 	sys	0m0.011s
+> 	$ time /usr/bin/clang-17 --version > /dev/null
+> 
+> 	real	0m0.018s
+> 	user	0m0.000s
+> 	sys	0m0.018s
+> 
+> i.e., we go from ~30ms / invocation to 600ms / invocation. Building
+> glibc used to take about 3 minutes, but now its taking about 20 minutes.
+> 
+> Our clang binary is about 100 MiB in size.
+> 
+> Using `perf` the following sticks out:
+> 	$ perf record -g time /usr/bin/clang-17 --version
+> 	--92.03%--elf_map
+> 	      vm_mmap_pgoff
+> 	      ima_file_mmap
+> 	      process_measurement
+> 	      ima_collect_measurement
+> 	      |
+> 	       --91.95%--ima_calc_file_hash
+> 	              ima_calc_file_hash_tfm
+> 	              |
+> 	              |--82.85%--_sha256_update
+> 	              |     |
+> 	              |      --82.47%--lib_sha256_base_do_update.isra.0
+> 	              |           |
+> 	              |            --82.39%--sha256_transform_rorx
+> 	              |
+> 	               --9.10%--integrity_kernel_read
+> 
+> The audit.log is also logging every clang invocation as well.
+> 
+> Was such a large performance regression expected? Can the commit be
+> reverted until the more fine grained solution mentioned in the commit
+> message be implemented?
+
+IMA is always based on policy.  Having the "integrity LSM enabled and
+using overlayfs" will not cause any measurements or signature
+verifications, unless the files are in policy.
+
+The problem is that unless the lower layer file is in policy, file
+change will not be detected on the overlay filesystem.  Reverting this
+change will allow access to a modified file without re-verifying its
+integrity.
+
+Instead of reverting the patch, perhaps allow users to take this risk
+by defining a Kconfig, since they're aware of their policy rules.
+
+-- 
+thanks,
+
+Mimi
+
