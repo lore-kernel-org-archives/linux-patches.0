@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B636436B2
-	for <patches@lists.linux.dev>; Tue, 17 Oct 2023 13:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5127643A93
+	for <patches@lists.linux.dev>; Tue, 17 Oct 2023 14:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wj8IJNlt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E98C433C8;
-	Tue, 17 Oct 2023 13:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQTnXIIp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81F4C433C7;
+	Tue, 17 Oct 2023 14:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1697551031;
-	bh=v3aKpN8UUgPyVtSsihJ/qo5Rto/3lpMGnPsA17qQyno=;
+	s=korg; t=1697551706;
+	bh=sB/IxENRml1bMLL2KETfFO8TryY9k1wPmlB1Bd0sJhE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=wj8IJNltf+fAmFI4JxrpvL19SI0EW/kNkUCglWmLvM5MtqsRgPvQQiEYerRxSIE7T
-	 u3mFeYVePzEEUNhqaBxt5AIM7zdY3rEf9uHzkJ/61QzHFa+VZ/fhy80TktkyWEkc6p
-	 8B0Fowb/aC3S/kCHEkKg1xjnWI1wBwO9FLTFPet8=
-Date: Tue, 17 Oct 2023 15:57:06 +0200
+	b=dQTnXIIpAo/WnurjNMTEEkJHkisaOG+kApNRBahR4znSOEZL8HqoAQd0cyCLjBPS1
+	 kRCm6GeFm5gyhr029OGaEt8SH9TA03M6+sZAw1AJG996lOt4LfRfrlREdIyKEx3SCg
+	 KwD7I9jdOL8KT8gAsbZss8eCnE3sHxttEHjoEFO8=
+Date: Tue, 17 Oct 2023 16:08:23 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Vegard Nossum <vegard.nossum@oracle.com>
 Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
@@ -26,13 +26,14 @@ Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
 Subject: Re: [PATCH 5.15 000/102] 5.15.136-rc1 review
-Message-ID: <2023101716-sporting-geology-2de2@gregkh>
+Message-ID: <2023101719-anteater-deviant-bdf9@gregkh>
 References: <20231016083953.689300946@linuxfoundation.org>
  <a01256b5-6082-4d17-bf4d-310e7b4f7a47@oracle.com>
  <2023101641-resource-scalding-3e1d@gregkh>
  <43ad9708-47d4-4113-ab05-6012cb7c4d6c@oracle.com>
  <2023101655-throng-rickety-ff79@gregkh>
  <fb1ce733-d612-4fa3-a1e4-716545625822@oracle.com>
+ <2023101716-sporting-geology-2de2@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,364 +43,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <fb1ce733-d612-4fa3-a1e4-716545625822@oracle.com>
+In-Reply-To: <2023101716-sporting-geology-2de2@gregkh>
 
-On Tue, Oct 17, 2023 at 10:58:22AM +0200, Vegard Nossum wrote:
+On Tue, Oct 17, 2023 at 03:57:06PM +0200, Greg Kroah-Hartman wrote:
+> Sure!  Here's the output, good luck!
 > 
-> On 16/10/2023 18:58, Greg Kroah-Hartman wrote:
-> > On Mon, Oct 16, 2023 at 09:23:36PM +0530, Harshit Mogalapalli wrote:
-> > > Cause for this build issue:
-> > > Commit: e2bf685d7e311 ("perf inject: Fix GEN_ELF_TEXT_OFFSET for jit")
-> > > 
-> > > And this issue is not in upstream due to presence of commit d6e6a27d960f
-> > > ("tools: Fix math.h breakage") in upstream but not in 5.15.y
-> > 
-> > Ok, I'll go drop the patch entirely, I can't even get perf to build at
-> > all for me on 5.15, which is why I've given up on it even mattering
-> > anymore :(
-> 
-> Just for maximal clarity, there are several commits involved here:
-> 
-> 1. babd04386b1d perf jit: Include program header in ELF files
-> 
-> This commit is already in 5.15.y but introduced a bug...
-> 
-> 2. 89b15d00527b perf inject: Fix GEN_ELF_TEXT_OFFSET for jit
-> 
-> This commit is in this -rc1 and fixes the bug above, but introduces a
-> new perf build failure on 5.15.y. [This is the one I think you've now
-> dropped.]
-> 
-> 3. d6e6a27d960f tools: Fix math.h breakage
-> 
-> This is a prerequisite for #2 and is not in 5.15.y. However, it has some
-> conflicts on 5.15.y, i.e. it probably has some prerequisites of its own
-> that I haven't looked into.
-> 
-> I guess the question is -- if we're dropping #2, should we drop #1 as
-> well? Or... instead of dropping either of them we could also apply a
-> minimal fix:
+> $ make -C tools/perf
+> make: Entering directory '/home/gregkh/linux/stable/linux-5.15.y/tools/perf'
+>   BUILD:   Doing 'make -j20' parallel build
+> Warning: Kernel ABI header at 'tools/include/uapi/linux/const.h' differs from latest version at 'include/uapi/linux/const.h'
+> diff -u tools/include/uapi/linux/const.h include/uapi/linux/const.h
+> Warning: Kernel ABI header at 'tools/include/uapi/linux/in.h' differs from latest version at 'include/uapi/linux/in.h'
+> diff -u tools/include/uapi/linux/in.h include/uapi/linux/in.h
+> Warning: Kernel ABI header at 'tools/arch/x86/include/asm/disabled-features.h' differs from latest version at 'arch/x86/include/asm/disabled-features.h'
+> diff -u tools/arch/x86/include/asm/disabled-features.h arch/x86/include/asm/disabled-features.h
+> Warning: Kernel ABI header at 'tools/arch/x86/include/asm/required-features.h' differs from latest version at 'arch/x86/include/asm/required-features.h'
+> diff -u tools/arch/x86/include/asm/required-features.h arch/x86/include/asm/required-features.h
+> Warning: Kernel ABI header at 'tools/arch/x86/include/asm/cpufeatures.h' differs from latest version at 'arch/x86/include/asm/cpufeatures.h'
+> diff -u tools/arch/x86/include/asm/cpufeatures.h arch/x86/include/asm/cpufeatures.h
+> Warning: Kernel ABI header at 'tools/arch/x86/include/asm/msr-index.h' differs from latest version at 'arch/x86/include/asm/msr-index.h'
+> diff -u tools/arch/x86/include/asm/msr-index.h arch/x86/include/asm/msr-index.h
+> Warning: Kernel ABI header at 'tools/arch/arm64/include/uapi/asm/kvm.h' differs from latest version at 'arch/arm64/include/uapi/asm/kvm.h'
+> diff -u tools/arch/arm64/include/uapi/asm/kvm.h arch/arm64/include/uapi/asm/kvm.h
+> Makefile.config:1036: No libbabeltrace found, disables 'perf data' CTF format support, please install libbabeltrace-dev[el]/libbabeltrace-ctf-dev
+> Makefile.config:1062: No alternatives command found, you need to set JDIR= to point to the root of your Java directory
+> tests/bpf.c: In function ‘epoll_pwait_loop’:
+> tests/bpf.c:36:17: error: argument 2 null where non-null expected [-Werror=nonnull]
+>    36 |                 epoll_pwait(-(i + 1), NULL, 0, 0, NULL);
+>       |                 ^~~~~~~~~~~
+> In file included from tests/bpf.c:5:
+> /usr/include/sys/epoll.h:134:12: note: in a call to function ‘epoll_pwait’ declared ‘nonnull’
+>   134 | extern int epoll_pwait (int __epfd, struct epoll_event *__events,
+>       |            ^~~~~~~~~~~
 
-I can't "drop" #1, as it's already merged.
+<snip>
 
-So how about sending a set of patches that you feel should be applied to
-get this building for you?  As again, it doesn't work at all for me.
+Also, in Linus's tree, this works just fine on my system, but I get this
+same error above (and only this error), when building perf on 6.1.y, and
+on 6.5.y.  The perl errors are not present there.
 
-> Out of curiosity, Greg: what is your build error with perf? Given that
-> it builds for us (and we actually package perf so we need it) it sounds
-> like maybe you're missing a package in your environment or something? If
-> you pass us your config + the output of
-> 
->   make -C tools/perf/
-> 
-> I'd be happy to look into it. Only if you want though :-)
+thanks,
 
-Sure!  Here's the output, good luck!
-
-$ make -C tools/perf
-make: Entering directory '/home/gregkh/linux/stable/linux-5.15.y/tools/perf'
-  BUILD:   Doing 'make -j20' parallel build
-Warning: Kernel ABI header at 'tools/include/uapi/linux/const.h' differs from latest version at 'include/uapi/linux/const.h'
-diff -u tools/include/uapi/linux/const.h include/uapi/linux/const.h
-Warning: Kernel ABI header at 'tools/include/uapi/linux/in.h' differs from latest version at 'include/uapi/linux/in.h'
-diff -u tools/include/uapi/linux/in.h include/uapi/linux/in.h
-Warning: Kernel ABI header at 'tools/arch/x86/include/asm/disabled-features.h' differs from latest version at 'arch/x86/include/asm/disabled-features.h'
-diff -u tools/arch/x86/include/asm/disabled-features.h arch/x86/include/asm/disabled-features.h
-Warning: Kernel ABI header at 'tools/arch/x86/include/asm/required-features.h' differs from latest version at 'arch/x86/include/asm/required-features.h'
-diff -u tools/arch/x86/include/asm/required-features.h arch/x86/include/asm/required-features.h
-Warning: Kernel ABI header at 'tools/arch/x86/include/asm/cpufeatures.h' differs from latest version at 'arch/x86/include/asm/cpufeatures.h'
-diff -u tools/arch/x86/include/asm/cpufeatures.h arch/x86/include/asm/cpufeatures.h
-Warning: Kernel ABI header at 'tools/arch/x86/include/asm/msr-index.h' differs from latest version at 'arch/x86/include/asm/msr-index.h'
-diff -u tools/arch/x86/include/asm/msr-index.h arch/x86/include/asm/msr-index.h
-Warning: Kernel ABI header at 'tools/arch/arm64/include/uapi/asm/kvm.h' differs from latest version at 'arch/arm64/include/uapi/asm/kvm.h'
-diff -u tools/arch/arm64/include/uapi/asm/kvm.h arch/arm64/include/uapi/asm/kvm.h
-Makefile.config:1036: No libbabeltrace found, disables 'perf data' CTF format support, please install libbabeltrace-dev[el]/libbabeltrace-ctf-dev
-Makefile.config:1062: No alternatives command found, you need to set JDIR= to point to the root of your Java directory
-tests/bpf.c: In function ‘epoll_pwait_loop’:
-tests/bpf.c:36:17: error: argument 2 null where non-null expected [-Werror=nonnull]
-   36 |                 epoll_pwait(-(i + 1), NULL, 0, 0, NULL);
-      |                 ^~~~~~~~~~~
-In file included from tests/bpf.c:5:
-/usr/include/sys/epoll.h:134:12: note: in a call to function ‘epoll_pwait’ declared ‘nonnull’
-  134 | extern int epoll_pwait (int __epfd, struct epoll_event *__events,
-      |            ^~~~~~~~~~~
-  CC      util/jitdump.o
-  CC      util/genelf.o
-  CC      util/genelf_debug.o
-cc1: all warnings being treated as errors
-make[4]: *** [/home/gregkh/linux/stable/linux-5.15.y/tools/build/Makefile.build:96: tests/bpf.o] Error 1
-make[3]: *** [/home/gregkh/linux/stable/linux-5.15.y/tools/build/Makefile.build:139: tests] Error 2
-make[3]: *** Waiting for unfinished jobs....
-In file included from /usr/lib/perl5/5.38/core_perl/CORE/perl.h:7811,
-                 from Context.xs:8:
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h: In function ‘S_PerlEnv_putenv’:
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h:295:5: error: ISO C90 forbids mixed declarations and code [-Werror=declaration-after-statement]
-  295 |     bool retval = putenv(str);
-      |     ^~~~
-In file included from /usr/lib/perl5/5.38/core_perl/CORE/perl.h:3327:
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h: In function ‘Perl_is_utf8_valid_partial_char_flags’:
-/usr/lib/perl5/5.38/core_perl/CORE/handy.h:155:23: error: cast from function call of type ‘STRLEN’ {aka ‘long unsigned int’} to non-matching type ‘_Bool’ [-Werror=bad-function-cast]
-  155 | #define cBOOL(cbool) ((bool) (cbool))
-      |                       ^
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h:2334:12: note: in expansion of macro ‘cBOOL’
- 2334 |     return cBOOL(is_utf8_char_helper_(s0, e, flags));
-      |            ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h: In function ‘Perl_newPADxVOP’:
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h:3135:5: error: ISO C90 forbids mixed declarations and code [-Werror=declaration-after-statement]
- 3135 |     OP *o = newOP(type, flags);
-      |     ^~
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h: In function ‘Perl_cop_file_avn’:
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h:3500:5: error: ISO C90 forbids mixed declarations and code [-Werror=declaration-after-statement]
- 3500 |     const char *file = CopFILE(cop);
-      |     ^~~~~
-In file included from /usr/lib/perl5/5.38/core_perl/CORE/perl.h:7812:
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h: In function ‘Perl_newSV_type’:
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_NULL’ not handled in switch [-Werror=switch-enum]
-  420 |         switch(type) {
-      |         ^~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_IV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_NV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_INVLIST’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVIV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVNV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVMG’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_REGEXP’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVGV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVLV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVCV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVFM’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVIO’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_LAST’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:383:5: error: enumeration value ‘SVt_LAST’ not handled in switch [-Werror=switch-enum]
-  383 |     switch (type) {
-      |     ^~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h: In function ‘Perl_sv_setpv_freshbuf’:
-/usr/lib/perl5/5.38/core_perl/CORE/handy.h:155:23: error: cast from function call of type ‘long int’ to non-matching type ‘_Bool’ [-Werror=bad-function-cast]
-  155 | #define cBOOL(cbool) ((bool) (cbool))
-      |                       ^
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4231:62: note: in definition of macro ‘EXPECT’
- 4231 | #  define EXPECT(expr,val)                  __builtin_expect(expr,val)
-      |                                                              ^~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4252:52: note: in expansion of macro ‘cBOOL’
- 4252 | #define UNLIKELY(cond)                      EXPECT(cBOOL(cond),FALSE)
-      |                                                    ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv.h:1724:13: note: in expansion of macro ‘UNLIKELY’
- 1724 |         if (UNLIKELY(TAINT_get))        \
-      |             ^~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:996:34: note: in expansion of macro ‘cBOOL’
-  996 | #   define TAINT_get            (cBOOL(UNLIKELY(PL_tainted)))    /* Is something tainted? */
-      |                                  ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv.h:1724:22: note: in expansion of macro ‘TAINT_get’
- 1724 |         if (UNLIKELY(TAINT_get))        \
-      |                      ^~~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:996:5: note: in expansion of macro ‘SvTAINT’
-  996 |     SvTAINT(sv);
-      |     ^~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/handy.h:155:23: error: cast from function call of type ‘long int’ to non-matching type ‘_Bool’ [-Werror=bad-function-cast]
-  155 | #define cBOOL(cbool) ((bool) (cbool))
-      |                       ^
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4231:62: note: in definition of macro ‘EXPECT’
- 4231 | #  define EXPECT(expr,val)                  __builtin_expect(expr,val)
-      |                                                              ^~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4252:52: note: in expansion of macro ‘cBOOL’
- 4252 | #define UNLIKELY(cond)                      EXPECT(cBOOL(cond),FALSE)
-      |                                                    ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv.h:1718:42: note: in expansion of macro ‘UNLIKELY’
- 1718 | #define SvTAINTED_on(sv)  STMT_START{ if(UNLIKELY(TAINTING_get)){sv_taint(sv);}   }STMT_END
-      |                                          ^~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:997:34: note: in expansion of macro ‘cBOOL’
-  997 | #   define TAINTING_get         (cBOOL(UNLIKELY(PL_tainting)))
-      |                                  ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv.h:1718:51: note: in expansion of macro ‘TAINTING_get’
- 1718 | #define SvTAINTED_on(sv)  STMT_START{ if(UNLIKELY(TAINTING_get)){sv_taint(sv);}   }STMT_END
-      |                                                   ^~~~~~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv.h:1725:13: note: in expansion of macro ‘SvTAINTED_on’
- 1725 |             SvTAINTED_on(sv);           \
-      |             ^~~~~~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:996:5: note: in expansion of macro ‘SvTAINT’
-  996 |     SvTAINT(sv);
-      |     ^~~~~~~
-Context.c: In function ‘XS_Perf__Trace__Context_common_pc’:
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:2494:33: error: cast from function call of type ‘IV’ {aka ‘long int’} to non-matching type ‘struct scripting_context *’ [-Werror=bad-function-cast]
- 2494 | #  define INT2PTR(any,d)        (any)(d)
-      |                                 ^
-Context.c:55:39: note: in expansion of macro ‘INT2PTR’
-/usr/lib/perl5/5.38/core_perl/CORE/handy.h:155:23: error: cast from function call of type ‘long int’ to non-matching type ‘_Bool’ [-Werror=bad-function-cast]
-  155 | #define cBOOL(cbool) ((bool) (cbool))
-      |                       ^
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4231:62: note: in definition of macro ‘EXPECT’
- 4231 | #  define EXPECT(expr,val)                  __builtin_expect(expr,val)
-      |                                                              ^~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4251:52: note: in expansion of macro ‘cBOOL’
- 4251 | #define LIKELY(cond)                        EXPECT(cBOOL(cond),TRUE)
-      |                                                    ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/pp.h:429:13: note: in expansion of macro ‘LIKELY’
-  429 |         if (LIKELY(                                                     \
-      |             ^~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:996:34: note: in expansion of macro ‘cBOOL’
-  996 | #   define TAINT_get            (cBOOL(UNLIKELY(PL_tainted)))    /* Is something tainted? */
-      |                                  ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/pp.h:431:28: note: in expansion of macro ‘TAINT_get’
-  431 |             & (do_taint ? !TAINT_get : 1)))                             \
-      |                            ^~~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/pp.h:495:38: note: in expansion of macro ‘TARGi’
-  495 | #define PUSHi(i)        STMT_START { TARGi(i,1); PUSHs(TARG); } STMT_END
-      |                                      ^~~~~
-Context.c:60:13: note: in expansion of macro ‘PUSHi’
-Context.c: In function ‘XS_Perf__Trace__Context_common_flags’:
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:2494:33: error: cast from function call of type ‘IV’ {aka ‘long int’} to non-matching type ‘struct scripting_context *’ [-Werror=bad-function-cast]
- 2494 | #  define INT2PTR(any,d)        (any)(d)
-      |                                 ^
-Context.c:78:39: note: in expansion of macro ‘INT2PTR’
-/usr/lib/perl5/5.38/core_perl/CORE/handy.h:155:23: error: cast from function call of type ‘long int’ to non-matching type ‘_Bool’ [-Werror=bad-function-cast]
-  155 | #define cBOOL(cbool) ((bool) (cbool))
-      |                       ^
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4231:62: note: in definition of macro ‘EXPECT’
- 4231 | #  define EXPECT(expr,val)                  __builtin_expect(expr,val)
-      |                                                              ^~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4251:52: note: in expansion of macro ‘cBOOL’
- 4251 | #define LIKELY(cond)                        EXPECT(cBOOL(cond),TRUE)
-      |                                                    ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/pp.h:429:13: note: in expansion of macro ‘LIKELY’
-  429 |         if (LIKELY(                                                     \
-      |             ^~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:996:34: note: in expansion of macro ‘cBOOL’
-  996 | #   define TAINT_get            (cBOOL(UNLIKELY(PL_tainted)))    /* Is something tainted? */
-      |                                  ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/pp.h:431:28: note: in expansion of macro ‘TAINT_get’
-  431 |             & (do_taint ? !TAINT_get : 1)))                             \
-      |                            ^~~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/pp.h:495:38: note: in expansion of macro ‘TARGi’
-  495 | #define PUSHi(i)        STMT_START { TARGi(i,1); PUSHs(TARG); } STMT_END
-      |                                      ^~~~~
-Context.c:83:13: note: in expansion of macro ‘PUSHi’
-Context.c: In function ‘XS_Perf__Trace__Context_common_lock_depth’:
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:2494:33: error: cast from function call of type ‘IV’ {aka ‘long int’} to non-matching type ‘struct scripting_context *’ [-Werror=bad-function-cast]
- 2494 | #  define INT2PTR(any,d)        (any)(d)
-      |                                 ^
-Context.c:101:39: note: in expansion of macro ‘INT2PTR’
-/usr/lib/perl5/5.38/core_perl/CORE/handy.h:155:23: error: cast from function call of type ‘long int’ to non-matching type ‘_Bool’ [-Werror=bad-function-cast]
-  155 | #define cBOOL(cbool) ((bool) (cbool))
-      |                       ^
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4231:62: note: in definition of macro ‘EXPECT’
- 4231 | #  define EXPECT(expr,val)                  __builtin_expect(expr,val)
-      |                                                              ^~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4251:52: note: in expansion of macro ‘cBOOL’
- 4251 | #define LIKELY(cond)                        EXPECT(cBOOL(cond),TRUE)
-      |                                                    ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/pp.h:429:13: note: in expansion of macro ‘LIKELY’
-  429 |         if (LIKELY(                                                     \
-      |             ^~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:996:34: note: in expansion of macro ‘cBOOL’
-  996 | #   define TAINT_get            (cBOOL(UNLIKELY(PL_tainted)))    /* Is something tainted? */
-      |                                  ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/pp.h:431:28: note: in expansion of macro ‘TAINT_get’
-  431 |             & (do_taint ? !TAINT_get : 1)))                             \
-      |                            ^~~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/pp.h:495:38: note: in expansion of macro ‘TARGi’
-  495 | #define PUSHi(i)        STMT_START { TARGi(i,1); PUSHs(TARG); } STMT_END
-      |                                      ^~~~~
-Context.c:106:13: note: in expansion of macro ‘PUSHi’
-In file included from /usr/lib/perl5/5.38/core_perl/CORE/perl.h:7811,
-                 from util/scripting-engines/trace-event-perl.c:35:
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h: In function ‘S_PerlEnv_putenv’:
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h:295:5: error: ISO C90 forbids mixed declarations and code [-Werror=declaration-after-statement]
-  295 |     bool retval = putenv(str);
-      |     ^~~~
-In file included from /usr/lib/perl5/5.38/core_perl/CORE/perl.h:3327:
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h: In function ‘Perl_is_utf8_valid_partial_char_flags’:
-/usr/lib/perl5/5.38/core_perl/CORE/handy.h:155:23: error: cast from function call of type ‘STRLEN’ {aka ‘long unsigned int’} to non-matching type ‘_Bool’ [-Werror=bad-function-cast]
-  155 | #define cBOOL(cbool) ((bool) (cbool))
-      |                       ^
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h:2334:12: note: in expansion of macro ‘cBOOL’
- 2334 |     return cBOOL(is_utf8_char_helper_(s0, e, flags));
-      |            ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h: In function ‘Perl_newPADxVOP’:
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h:3135:5: error: ISO C90 forbids mixed declarations and code [-Werror=declaration-after-statement]
- 3135 |     OP *o = newOP(type, flags);
-      |     ^~
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h: In function ‘Perl_cop_file_avn’:
-/usr/lib/perl5/5.38/core_perl/CORE/inline.h:3500:5: error: ISO C90 forbids mixed declarations and code [-Werror=declaration-after-statement]
- 3500 |     const char *file = CopFILE(cop);
-      |     ^~~~~
-cc1: all warnings being treated as errors
-In file included from /usr/lib/perl5/5.38/core_perl/CORE/perl.h:7812:
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h: In function ‘Perl_newSV_type’:
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_NULL’ not handled in switch [-Werror=switch-enum]
-  420 |         switch(type) {
-      |         ^~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_IV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_NV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_INVLIST’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVIV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVNV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVMG’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_REGEXP’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVGV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVLV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVCV’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVFM’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_PVIO’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:420:9: error: enumeration value ‘SVt_LAST’ not handled in switch [-Werror=switch-enum]
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:383:5: error: enumeration value ‘SVt_LAST’ not handled in switch [-Werror=switch-enum]
-  383 |     switch (type) {
-      |     ^~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h: In function ‘Perl_sv_setpv_freshbuf’:
-/usr/lib/perl5/5.38/core_perl/CORE/handy.h:155:23: error: cast from function call of type ‘long int’ to non-matching type ‘_Bool’ [-Werror=bad-function-cast]
-  155 | #define cBOOL(cbool) ((bool) (cbool))
-      |                       ^
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4231:62: note: in definition of macro ‘EXPECT’
- 4231 | #  define EXPECT(expr,val)                  __builtin_expect(expr,val)
-      |                                                              ^~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4252:52: note: in expansion of macro ‘cBOOL’
- 4252 | #define UNLIKELY(cond)                      EXPECT(cBOOL(cond),FALSE)
-      |                                                    ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv.h:1724:13: note: in expansion of macro ‘UNLIKELY’
- 1724 |         if (UNLIKELY(TAINT_get))        \
-      |             ^~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:996:34: note: in expansion of macro ‘cBOOL’
-  996 | #   define TAINT_get            (cBOOL(UNLIKELY(PL_tainted)))    /* Is something tainted? */
-      |                                  ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv.h:1724:22: note: in expansion of macro ‘TAINT_get’
- 1724 |         if (UNLIKELY(TAINT_get))        \
-      |                      ^~~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:996:5: note: in expansion of macro ‘SvTAINT’
-  996 |     SvTAINT(sv);
-      |     ^~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/handy.h:155:23: error: cast from function call of type ‘long int’ to non-matching type ‘_Bool’ [-Werror=bad-function-cast]
-  155 | #define cBOOL(cbool) ((bool) (cbool))
-      |                       ^
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4231:62: note: in definition of macro ‘EXPECT’
- 4231 | #  define EXPECT(expr,val)                  __builtin_expect(expr,val)
-      |                                                              ^~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:4252:52: note: in expansion of macro ‘cBOOL’
- 4252 | #define UNLIKELY(cond)                      EXPECT(cBOOL(cond),FALSE)
-      |                                                    ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv.h:1718:42: note: in expansion of macro ‘UNLIKELY’
- 1718 | #define SvTAINTED_on(sv)  STMT_START{ if(UNLIKELY(TAINTING_get)){sv_taint(sv);}   }STMT_END
-      |                                          ^~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/perl.h:997:34: note: in expansion of macro ‘cBOOL’
-  997 | #   define TAINTING_get         (cBOOL(UNLIKELY(PL_tainting)))
-      |                                  ^~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv.h:1718:51: note: in expansion of macro ‘TAINTING_get’
- 1718 | #define SvTAINTED_on(sv)  STMT_START{ if(UNLIKELY(TAINTING_get)){sv_taint(sv);}   }STMT_END
-      |                                                   ^~~~~~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv.h:1725:13: note: in expansion of macro ‘SvTAINTED_on’
- 1725 |             SvTAINTED_on(sv);           \
-      |             ^~~~~~~~~~~~
-/usr/lib/perl5/5.38/core_perl/CORE/sv_inline.h:996:5: note: in expansion of macro ‘SvTAINT’
-  996 |     SvTAINT(sv);
-      |     ^~~~~~~
-make[5]: *** [/home/gregkh/linux/stable/linux-5.15.y/tools/build/Makefile.build:97: scripts/perl/Perf-Trace-Util/Context.o] Error 1
-make[4]: *** [/home/gregkh/linux/stable/linux-5.15.y/tools/build/Makefile.build:139: perl/Perf-Trace-Util] Error 2
-make[3]: *** [/home/gregkh/linux/stable/linux-5.15.y/tools/build/Makefile.build:139: scripts] Error 2
-cc1: all warnings being treated as errors
-make[5]: *** [/home/gregkh/linux/stable/linux-5.15.y/tools/build/Makefile.build:96: util/scripting-engines/trace-event-perl.o] Error 1
-make[4]: *** [/home/gregkh/linux/stable/linux-5.15.y/tools/build/Makefile.build:139: scripting-engines] Error 2
-make[3]: *** [/home/gregkh/linux/stable/linux-5.15.y/tools/build/Makefile.build:139: util] Error 2
-make[2]: *** [Makefile.perf:658: perf-in.o] Error 2
-make[1]: *** [Makefile.perf:238: sub-make] Error 2
-make: *** [Makefile:70: all] Error 2
-make: Leaving directory '/home/gregkh/linux/stable/linux-5.15.y/tools/perf'
+greg k-h
