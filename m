@@ -1,254 +1,214 @@
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from JPN01-TYC-obe.outbound.protection.outlook.com (mail-tycjpn01on2095.outbound.protection.outlook.com [40.107.114.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F233828DD2
-	for <patches@lists.linux.dev>; Tue, 17 Oct 2023 23:01:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C223915A2;
+	Wed, 18 Oct 2023 00:16:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="axNZ4XS+"
-Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-7b6d120ce7fso351202241.0
-        for <patches@lists.linux.dev>; Tue, 17 Oct 2023 16:01:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1697583668; x=1698188468; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yxvl1TlAYYqk8yQ5idpKi21TPpTBqDVkjCfJkiJoBRE=;
-        b=axNZ4XS+7KU8hSnF3RvUEez2e6jefHyQS4y5giN1X86OYY8PfVm5ZtCEbqij6aJQeA
-         4YId/19q09M5w58SfXDhTKEOiURXz1K1b5FClEWsLHnVQTyIyDVTYM4wNExUW+ULKFDs
-         X/LsZgIKucbw0kg99HwhMZBaYMDYHzUAPSWvY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697583668; x=1698188468;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yxvl1TlAYYqk8yQ5idpKi21TPpTBqDVkjCfJkiJoBRE=;
-        b=FRDaPwDmknWg7zQxgEmuzfu+jZr/xp/w/ksqD3U9HCvxBzSQrZOKznTDZzq3mSmGbh
-         jFP+p8aiMbUe/nPYl6bMK8THuQOefCuxL3S1jx9MNpk0R4s4sEU4bzqMNyeQovOVOQ0G
-         ShnfkOZmDtYOexIYaSkuTEAQ0WlOiQuWfQd/V7WQ497o/gpdtSY6zrTUNQTTg0uNwb++
-         XkxEKZbCGIXjOgLv8cNFYRgqVxWaG/+zOknJTOAdzqXEXFi+GZcOwkbIJ3A/KY5Kq7U3
-         HY841EryKTQ07vxpix/m1IZZ+6NccasgqrzyRw8bFPYtD3XHJtx6MkVggAVwcYBekQTh
-         eISQ==
-X-Gm-Message-State: AOJu0YywlTZ4XLnP9fUbgvmB3aj8r1zY3Mb/lIwucsKiNGAxKCctbvTF
-	p6rAzuxDg3AFV34IuDVkdM68SDdgAbTHJFkPxvs=
-X-Google-Smtp-Source: AGHT+IGtu2F/6UYRaofe9jA5MsrtbXFxMg+RU64NvPhCtJS6nc8jxQI132wjrADhdcVA46Bh0Zeo+w==
-X-Received: by 2002:a67:c317:0:b0:457:dbe3:ef45 with SMTP id r23-20020a67c317000000b00457dbe3ef45mr3769023vsj.19.1697583668508;
-        Tue, 17 Oct 2023 16:01:08 -0700 (PDT)
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com. [209.85.222.53])
-        by smtp.gmail.com with ESMTPSA id q5-20020a67f045000000b004525780e0e9sm250339vsm.34.2023.10.17.16.01.05
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Oct 2023 16:01:05 -0700 (PDT)
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-7b07c3eaf9bso2202478241.3
-        for <patches@lists.linux.dev>; Tue, 17 Oct 2023 16:01:05 -0700 (PDT)
-X-Received: by 2002:a67:c21e:0:b0:457:d6a2:7187 with SMTP id
- i30-20020a67c21e000000b00457d6a27187mr4120495vsj.7.1697583664474; Tue, 17 Oct
- 2023 16:01:04 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="YXkYkjHx"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=nnYPuwqiIS4aoqppKGxEulD9Sxv7xfPHbbfLLbfObIaCCD7gc4p7UlyCY/JRMCxwimXloeUPiankve2e0W7Ys2/yAwb8BOgtb2BohBgZm0VdQFYHXEDpL0I43D7sLlzg1L3tyuiwJuTzfC3d8XmPjmH7w1n51mglcPt2hNWtXwr5DOOaLHZ9/icfLXfwtGs+rI8dMd39HIQPRL+rcqb1a//4O9noJbxJ+AKA8BHWfEyH65GSC7GK8WVVdRcj6fbdf7d+mGPP07ODwZRSOEr1rtQUNfQwTxYJ8YiFI5DhePvfoUt3YHp61w8f9pTNlYge3MsNPRPCsHNF+wlzTIP0UA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BTeoz2WdknRninISThb6HEdU1RKcA2fL5H139zE0icw=;
+ b=gojX6s0GlmEJSX2JtquaC0novHLVB4H8UMfDSqbhUgazaSOq3Xi0EW8itF+FefSOTz3vPY2PKKsO0066NzwnAUidh5DCjD04811znnebmzLPySznzHe2U4HPPxnPKIGFu+DQLE5cfpJt/Hm3P+HCo4006W0LLnJzguQ8SkNKoQGGhn3tFvOgS9F+rvIcdjdkfBEkYZk2FiQvqUpmd9fumJFYOwndoBGpOgWgvmwqFtQk0RaTFPytqX7Zp/mQYqFoRcRRn1weaVRXVO5pBPfUv9B0WyDAIpWunNcXtvIV3o3eKHjU5DWM4P+1JwXERjzyFjhPRBvTqt8mmKUBNdlItQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
+ dkim=pass header.d=renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BTeoz2WdknRninISThb6HEdU1RKcA2fL5H139zE0icw=;
+ b=YXkYkjHxw8Im7+NAFAfNKPPvQRHhDwr2IxJO9Q95rSc3h/8TA6mMkYEai5BzrJ3Q8x2cHg23lVfjBuXtyQ9x269b8zYFpvLk8+uFvHqEq+JhrnHuCqmo7SIvPJnwx9NopP/F3LV5korilJiETLFwzDPMHzwaP/XG+rz0a6qmnPk=
+Received: from TYBPR01MB5341.jpnprd01.prod.outlook.com
+ (2603:1096:404:8028::13) by TY3PR01MB11188.jpnprd01.prod.outlook.com
+ (2603:1096:400:3d7::5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6907.21; Wed, 18 Oct
+ 2023 00:16:24 +0000
+Received: from TYBPR01MB5341.jpnprd01.prod.outlook.com
+ ([fe80::a188:9424:be62:e5fb]) by TYBPR01MB5341.jpnprd01.prod.outlook.com
+ ([fe80::a188:9424:be62:e5fb%6]) with mapi id 15.20.6907.021; Wed, 18 Oct 2023
+ 00:16:24 +0000
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+To: Bjorn Helgaas <helgaas@kernel.org>, Nathan Chancellor <nathan@kernel.org>
+CC: "marek.vasut+renesas@gmail.com" <marek.vasut+renesas@gmail.com>,
+	"lpieralisi@kernel.org" <lpieralisi@kernel.org>, "kw@linux.com"
+	<kw@linux.com>, "robh@kernel.org" <robh@kernel.org>, "bhelgaas@google.com"
+	<bhelgaas@google.com>, "ndesaulniers@google.com" <ndesaulniers@google.com>,
+	"trix@redhat.com" <trix@redhat.com>, "fancer.lancer@gmail.com"
+	<fancer.lancer@gmail.com>, "mani@kernel.org" <mani@kernel.org>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+	"linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>,
+	"llvm@lists.linux.dev" <llvm@lists.linux.dev>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>
+Subject: RE: [PATCH] PCI: rcar-gen4: Fix type of type parameter in
+ rcar_gen4_pcie_ep_raise_irq()
+Thread-Topic: [PATCH] PCI: rcar-gen4: Fix type of type parameter in
+ rcar_gen4_pcie_ep_raise_irq()
+Thread-Index: AQHaASmkpnPNsAO5wEiJrokjJ6MdbrBOU4GAgABZlGA=
+Date: Wed, 18 Oct 2023 00:16:24 +0000
+Message-ID:
+ <TYBPR01MB53410A9FC80204414692264FD8D5A@TYBPR01MB5341.jpnprd01.prod.outlook.com>
+References: <20231017-pcie-rcar-wifpts-v1-1-ab1f42bf9386@kernel.org>
+ <20231017185119.GA1315341@bhelgaas>
+In-Reply-To: <20231017185119.GA1315341@bhelgaas>
+Accept-Language: ja-JP, en-US
+Content-Language: ja-JP
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=renesas.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYBPR01MB5341:EE_|TY3PR01MB11188:EE_
+x-ms-office365-filtering-correlation-id: 2b9fe5a7-c0e2-4624-f659-08dbcf6f76a7
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ HDF/mAYuTYRqFenShcSqv0DvO3FcES1W7+B2viy3UvIfiIcXyUK2VtJu4isUv5h2tvp2pycIOneXvSwzhUsYnV5PXK9P/yvoLoJowiD9eXZY23t+RE3kOkTp8Io5nlEKaM3Ep7o8qzyE/cX+Gm4Jy6T5WmPQJD5fppSd3bZoC7wVTC4Qn96iJnT5/hGgW8NxXUq9IF9LWz+4qkb5V1ILFrxJDHIW3dCHc9QtL7IH2Hmz1Hg+s4oZuWKQeYeUW70VX2Xjs4OxD9pW25pHDp3mt4yYAgiTiTRwpz/YwR6b8pPPDggcegWm1AmPr6WcrE5NJJf9mI4jyfeKxjxtzfwFQRJqQoIxb/zrUhCe1GyE2VOHbUAyUqRBKAsOJRgvVejXb0xXoG9GRqSHlxuGsrdC0lAL1VGIRaSDYmA/BiF20LPMtSY0dMNe/Oaw1ypMY6UGHHNvFAApHRtv7rg5x9cTD3flctW9OgzikyY4U0vHRsf1aVgRflR4lPmWwYUMM2u3rNJphV7enYM7rZhxprnigPBKoRhVX/8AOPRSBzE4PXmlztZIqvFxGAfsBJv3GmCc5FYmgnJf18bEjcGncGvYpt9EknnYtGdXhD4+lCsVL5+2cIZjLNgCNBBEkODCmF62
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYBPR01MB5341.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(376002)(346002)(396003)(366004)(39860400002)(230922051799003)(451199024)(64100799003)(186009)(1800799009)(478600001)(122000001)(38100700002)(7696005)(6506007)(33656002)(83380400001)(38070700005)(9686003)(71200400001)(52536014)(5660300002)(4326008)(55016003)(8936002)(8676002)(316002)(66476007)(66946007)(54906003)(76116006)(86362001)(2906002)(110136005)(66556008)(66446008)(7416002)(41300700001)(64756008);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?1pZ1xgu5vpwjD/33kt+iPoewqGboXoql1KJact3bc3k39nDzCcit/bBJ9a6T?=
+ =?us-ascii?Q?YLNXgQe6hGjPWtD545tJMILVGs0BVRvGqeUYGhdH8c95tF6D8qJSTSz1Ti2l?=
+ =?us-ascii?Q?qwdv3HuDMqwZx0BK17/v44QeOCRoWzUHdo93CWj3o2h+42zA15SmzCNN3xaN?=
+ =?us-ascii?Q?9roCZQC91WY4/od4DR2GluAmRVyOMu4PT35PiLeGbbbo5CgEJvDkEi6Os0Nt?=
+ =?us-ascii?Q?b33BoEACghToF2gyKrVVIyZad+VLGaPD6GYV5mh0eXAw7SJdOQREMT5WesUy?=
+ =?us-ascii?Q?CNBZThRiBi3e0RYesm1VjhyQwMmZjWC+tjN2oEhyzJ/w2+XZP74igsrR8GaX?=
+ =?us-ascii?Q?FdgOIUJ74CzX7+fYNjjlCxkukvysDgDpCK1W3UHX8Jpu80TMIqiAyTXuFywx?=
+ =?us-ascii?Q?SUgr08SHyhhjfXZHcd84PsQfCxBz1o1YC1t/p6xQtLqyPl2gJYYJvm62vhRH?=
+ =?us-ascii?Q?3fpESDEDl/K1NQo+/hkG8Md/mgplfQxrlOEVA5zxB00X2d0YQVAidwzP23Gk?=
+ =?us-ascii?Q?T3ktN0l+AknXdTxb7iobPhpDyd8wm0LGZwi0VCIkWibAujhPC/dFUXQ/EXvQ?=
+ =?us-ascii?Q?o2c09UXJUPEZJPcFpG25TSHlGzw+IvO8rnDustaGwJMIRkrPvvtCfUj3ZG8l?=
+ =?us-ascii?Q?E9q0tC28D/4GQ1ebv2xrh4S+p/t9Cbh/V2j3B7FOslogNoojJStLz2Ot39Sb?=
+ =?us-ascii?Q?J7ozGlwu3SypII14zWQMJb7okfXzHkDqXIYDpSpYwy8U6unM7rt0H5WD3Cdc?=
+ =?us-ascii?Q?bNQFPX6K3nJgTzdXuzTIM2BrgNgUKz/BsVsnvkf/bkmd/v/oyy3/wBtbLoxh?=
+ =?us-ascii?Q?bf45wACmEPaXRq4YwjoEhwIeV0LR4u87spAsC4tdSXf47tJ3cqZP5J3aQ54n?=
+ =?us-ascii?Q?bjwS86SZctZU1MA67OMyFU8YWx4EwdebEIpkJyjcVBVuDOiTFMv1vV/4ngFd?=
+ =?us-ascii?Q?Hsk/YpVs+ZhW/GUKj+58MlKj1uHm9Err25wNd6SY1WzKBcuPGJHHnWAdQYWS?=
+ =?us-ascii?Q?2eBtHF9X3u4HQ7sFOyTcmInhw5aqnbt2OrgyqQHf/LAnTsU3wBC4ueIPF5H6?=
+ =?us-ascii?Q?Tzq2pEPYsnScr9siCH38SqAW2g/2BiTZ+lhRA3YTB3Tui3etCn+wyPa4q5vj?=
+ =?us-ascii?Q?CmyrKNHhi7w7Z1F94Iuatw/vFioCpf5B5/7Zd3mAtaDSL7t49djC3IO8P8IS?=
+ =?us-ascii?Q?JMbrk0hCHgqvpKUhSwbHfeh4+jqQGdqUZM1tBe/atYGexhmQXpM7zww1FgRf?=
+ =?us-ascii?Q?JDO0nmsX/1G9z5v1wtwZN8n5J5A4ByHEwLy+byuOj9PRlm6o4pLJZIVBUlee?=
+ =?us-ascii?Q?U0WKEpRYxOAiOGcOeYHwrY4UDoTOvW25cbG+Oa0Wn8TrZ04LX1292LBSBBLN?=
+ =?us-ascii?Q?5PecdKX1Wipky52lISgaGum2fZc3LvvNrYeoaiV4UgLnobiXJjV+k7v1LJBi?=
+ =?us-ascii?Q?8Dk8CAQPRy4yg0ypmVV5UbhetYbUliF3wOV6phzbX47SCaM8YaAD1YveR/dw?=
+ =?us-ascii?Q?A97Vry3yQkzr+n9RhZjp+gGbrG5NL2POdXVj2O7a08P9p3MgTXVvRywKSDv6?=
+ =?us-ascii?Q?TS7mHeHviDJET5LNCdsopcAMA+IA8JIZonBWFpyZG3v9/gQ/chp125zLkKQZ?=
+ =?us-ascii?Q?0AaljDLOCmVZWCKAKlfy7OsT1KSO7eyoZaNG/LF0j/Ud2fwl5QY2gK9QpDCm?=
+ =?us-ascii?Q?IdCGwg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230911134650.286315610@linuxfoundation.org> <20230911134651.582204417@linuxfoundation.org>
- <ZS6xYa_kjRGvdCG6@google.com> <bd5d2f882e47b904802023d5d4d54d8d4755440e.camel@linux.ibm.com>
-In-Reply-To: <bd5d2f882e47b904802023d5d4d54d8d4755440e.camel@linux.ibm.com>
-From: Raul Rangel <rrangel@chromium.org>
-Date: Tue, 17 Oct 2023 17:00:53 -0600
-X-Gmail-Original-Message-ID: <CAHQZ30A8R+EDGbrngMOQrXabR=DTHL3Y-1Tv+3RF98VHQ5b68Q@mail.gmail.com>
-Message-ID: <CAHQZ30A8R+EDGbrngMOQrXabR=DTHL3Y-1Tv+3RF98VHQ5b68Q@mail.gmail.com>
-Subject: Re: [PATCH 6.4 041/737] ovl: Always reevaluate the file signature for IMA
-To: Mimi Zohar <zohar@linux.ibm.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, Eric Snowberg <eric.snowberg@oracle.com>, 
-	Linus Torvalds <torvalds@linux-foundation.org>, Sasha Levin <sashal@kernel.org>, 
-	Tim Bain <tbain@google.com>, Shuhei Takahashi <nya@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYBPR01MB5341.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2b9fe5a7-c0e2-4624-f659-08dbcf6f76a7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Oct 2023 00:16:24.1727
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: BZXaPK6xTDm72vfrv0HgB+ycvY2y1mB2GYrQ6tB20ZqXgqkXcwDop2Eu18VXJHjGjDCi6eMbRmUKZ8k6wV+AgmnrN8wx1rcqqp2753D6gfPcvZw7pCItvHfzCFXoxiBT
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY3PR01MB11188
 
-On Tue, Oct 17, 2023 at 12:27=E2=80=AFPM Mimi Zohar <zohar@linux.ibm.com> w=
-rote:
->
-> On Tue, 2023-10-17 at 10:08 -0600, Raul E Rangel wrote:
-> > On Mon, Sep 11, 2023 at 03:38:20PM +0200, Greg Kroah-Hartman wrote:
-> > > 6.4-stable review patch.  If anyone has any objections, please let me=
- know.
-> > >
-> > > ------------------
-> > >
-> > > From: Eric Snowberg <eric.snowberg@oracle.com>
-> > >
-> > > [ Upstream commit 18b44bc5a67275641fb26f2c54ba7eef80ac5950 ]
-> > >
-> > > Commit db1d1e8b9867 ("IMA: use vfs_getattr_nosec to get the i_version=
-")
-> > > partially closed an IMA integrity issue when directly modifying a fil=
+Hello Bjorn, Nathan,
+
+> From: Bjorn Helgaas, Sent: Wednesday, October 18, 2023 3:51 AM
+>=20
+> On Tue, Oct 17, 2023 at 11:41:58AM -0700, Nathan Chancellor wrote:
+> > With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+> > indirect call targets are validated against the expected function
+> > pointer prototype to make sure the call target is valid to help mitigat=
 e
-> > > on the lower filesystem.  If the overlay file is first opened by a us=
-er
-> > > and later the lower backing file is modified by root, but the extende=
-d
-> > > attribute is NOT updated, the signature validation succeeds with the =
-old
-> > > original signature.
-> > >
-> > > Update the super_block s_iflags to SB_I_IMA_UNVERIFIABLE_SIGNATURE to
-> > > force signature reevaluation on every file access until a fine graine=
-d
-> > > solution can be found.
-> > >
+> > ROP attacks. If they are not identical, there is a failure at run time,
+> > which manifests as either a kernel panic or thread getting killed. A
+> > warning in clang aims to catch these at compile time, which reveals:
 > >
-> > Sorry for replying to the 6.4-stable patch, I couldn't find the origina=
-l
-> > patch in the mailing list.
+> >   drivers/pci/controller/dwc/pcie-rcar-gen4.c:403:15: error: incompatib=
+le function pointer types initializing 'int
+> (*)(struct dw_pcie_ep *, u8, enum pci_epc_irq_type, u16)' (aka 'int (*)(s=
+truct dw_pcie_ep *, unsigned char, enum
+> pci_epc_irq_type, unsigned sort)') with an expression of type 'int (struc=
+t dw_pcie_ep *, u8, unsigned int, u16)' (aka
+> 'int (struct dw_pcie_ep *, unsigned char, unsigned int, unsigned short)')
+> [-Werror,-Wincompatible-function-pointer-types-strict]
+> >     403 |         .raise_irq =3D rcar_gen4_pcie_ep_raise_irq,
+> >         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >   1 error generated.
 > >
-> > We recently upgraded from 6.4.4 to 6.5.3. We have the integrity LSM
-> > enabled, and are using overlayfs. When we try and execute a binary from
-> > the overlayfs filesystem, the integrity LSM hashes the binary and all
-> > its shared objects every single invocation. This causes a serious
-> > performance regression when invoking clang thousands of times while
-> > building a package. We bisected the culprit down to this patch.
+> > '->raise_irq()' in 'struct dw_pcie_ep_ops' expects a type parameter of
+> > type 'enum pci_epc_irq_type', not 'unsigned int'. Adjust the type to
+> > match and use the proper enum values in the switch. The underlying valu=
+e
+> > of both the enum and the macro is the same, so there is no functional
+> > change while clearing up the warning and avoiding a CFI failure at run
+> > time.
 > >
-> > Here are some numbers:
-> >
-> > With this patch + overlayfs:
-> >
-> >       $ time /usr/bin/clang-17 --version > /dev/null
-> >
-> >       real    0m0.628s
-> >       user    0m0.004s
-> >       sys     0m0.624s
-> >       $ time /usr/bin/clang-17 --version > /dev/null
-> >
-> >       real    0m0.597s
-> >       user    0m0.004s
-> >       sys     0m0.593s
-> >
-> > With this patch - overlayfs:
-> >
-> >       $ truncate -s 1G foo.bin
-> >       $ mkfs.ext4 foo.bin
-> >       $ mount foo.bin /foo
-> >       $ cp /usr/bin/clang-17 /foo
-> >       $ time /foo/clang-17 --version > /dev/null
-> >
-> >       real    0m0.040s
-> >       user    0m0.009s
-> >       sys     0m0.031s
-> >       $ time /foo/clang-17 --version > /dev/null
-> >
-> >       real    0m0.036s
-> >       user    0m0.000s
-> >       sys     0m0.037s
-> >
-> > Without this path + overlayfs:
-> >       $ time /usr/bin/clang-17 --version > /dev/null
-> >
-> >       real    0m0.017s
-> >       user    0m0.007s
-> >       sys     0m0.011s
-> >       $ time /usr/bin/clang-17 --version > /dev/null
-> >
-> >       real    0m0.018s
-> >       user    0m0.000s
-> >       sys     0m0.018s
-> >
-> > i.e., we go from ~30ms / invocation to 600ms / invocation. Building
-> > glibc used to take about 3 minutes, but now its taking about 20 minutes=
-.
-> >
-> > Our clang binary is about 100 MiB in size.
-> >
-> > Using `perf` the following sticks out:
-> >       $ perf record -g time /usr/bin/clang-17 --version
-> >       --92.03%--elf_map
-> >             vm_mmap_pgoff
-> >             ima_file_mmap
-> >             process_measurement
-> >             ima_collect_measurement
-> >             |
-> >              --91.95%--ima_calc_file_hash
-> >                     ima_calc_file_hash_tfm
-> >                     |
-> >                     |--82.85%--_sha256_update
-> >                     |     |
-> >                     |      --82.47%--lib_sha256_base_do_update.isra.0
-> >                     |           |
-> >                     |            --82.39%--sha256_transform_rorx
-> >                     |
-> >                      --9.10%--integrity_kernel_read
-> >
-> > The audit.log is also logging every clang invocation as well.
-> >
-> > Was such a large performance regression expected? Can the commit be
-> > reverted until the more fine grained solution mentioned in the commit
-> > message be implemented?
->
+> > Fixes: 32b83c68d634 ("PCI: rcar-gen4: Add endpoint mode support")
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+>=20
+> Thanks, Nathan.
 
-First off, thanks for the quick reply. And I apologize in advance for
-any naive questions. I'm still learning how the IMA system works.
+Thank you for the patch!
 
-> IMA is always based on policy.  Having the "integrity LSM enabled and
-> using overlayfs" will not cause any measurements or signature
-> verifications, unless the files are in policy.
+> Yoshihiro, can you fold this in on the next rev of your rcar-gen4
+> series?
+>=20
+> I dropped the rcar-gen4 branch for today since it broke Marek's system
+> (Samsung Exynos5433-based TM2e board), so when we fix that we should
+> be able to fold in this fix at the same time.
 
-Good point. The policy we have loaded is very similar to the one we
-get from setting `ima_tcb`on the kernel command line. We just remove
-the uid=3D0 constraint. i.e.,
-```
-# SECURITYFS_MAGIC
-dont_measure fsmagic=3D0x73636673
-# SELINUXFS_MAGIC
-dont_measure fsmagic=3D0xf97cff8c
-...
-# audit files executed.
-audit func=3DBPRM_CHECK
-# audit executable libraries mmap'd.
-audit func=3DFILE_MMAP mask=3DMAY_EXEC
-# audit loaded kernel modules
-audit func=3DMODULE_CHECK
-```
+I got it. I'll fix this code and send patch-set as v25.
 
-We don't have any appraisal rules loaded.
+Best regards,
+Yoshihiro Shimoda
 
->
-> The problem is that unless the lower layer file is in policy, file
-> change will not be detected on the overlay filesystem.  Reverting this
-> change will allow access to a modified file without re-verifying its
-> integrity.
-
-Given our simple policy, I think the lower layer file is included in the
-policy. So if I understand correctly, you are saying that this patch
-was meant to address the case where the lower layer wasn't
-covered by the policy?
-
->
-> Instead of reverting the patch, perhaps allow users to take this risk
-> by defining a Kconfig, since they're aware of their policy rules.
->
-
-That sounds good. Or would it make sense to add an option to the
-policy file? i.e., `verifiable fsmagic=3D0x794c7630`
-
-FWIW, I also added the following to my policy file:
-```
-# OVERLAYFS_SUPER_MAGIC
-dont_appraise fsmagic=3D0x794c7630
-dont_measure fsmagic=3D0x794c7630
-dont_hash fsmagic=3D0x794c7630
-```
-
-I didn't get any entries in my audit.log, but the hashing was still
-performed. I figured since tmpfs and ramfs were already marked
-as dont_measure, adding overlayfs shouldn't really be any
-different.
-
-Thanks again,
-Raul
-
-> --
-> thanks,
->
-> Mimi
->
+> > ---
+> >  drivers/pci/controller/dwc/pcie-rcar-gen4.c | 7 ++++---
+> >  1 file changed, 4 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/=
+controller/dwc/pcie-rcar-gen4.c
+> > index 619262d32f4e..0c0f5c257b14 100644
+> > --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> > +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> > @@ -353,14 +353,15 @@ static void rcar_gen4_pcie_ep_deinit(struct dw_pc=
+ie_ep *ep)
+> >  }
+> >
+> >  static int rcar_gen4_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_=
+no,
+> > -				       unsigned int type, u16 interrupt_num)
+> > +				       enum pci_epc_irq_type type,
+> > +				       u16 interrupt_num)
+> >  {
+> >  	struct dw_pcie *dw =3D to_dw_pcie_from_ep(ep);
+> >
+> >  	switch (type) {
+> > -	case PCI_IRQ_LEGACY:
+> > +	case PCI_EPC_IRQ_LEGACY:
+> >  		return dw_pcie_ep_raise_legacy_irq(ep, func_no);
+> > -	case PCI_IRQ_MSI:
+> > +	case PCI_EPC_IRQ_MSI:
+> >  		return dw_pcie_ep_raise_msi_irq(ep, func_no, interrupt_num);
+> >  	default:
+> >  		dev_err(dw->dev, "Unknown IRQ type\n");
+> >
+> > ---
+> > base-commit: de45624e69e14ccd6b4b2886155578bb218925de
+> > change-id: 20231017-pcie-rcar-wifpts-6c65df6f8c8b
+> >
+> > Best regards,
+> > --
+> > Nathan Chancellor <nathan@kernel.org>
+> >
