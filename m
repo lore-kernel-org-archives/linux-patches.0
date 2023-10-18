@@ -1,93 +1,51 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E24C35899
-	for <patches@lists.linux.dev>; Wed, 18 Oct 2023 16:44:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685103FE22
+	for <patches@lists.linux.dev>; Wed, 18 Oct 2023 17:56:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="vDoL0d5R"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=7CcIfbyBlwtEIEjNNEeDSclhLBBZVgFLWIB2+oAlWik=; b=vDoL0d5RHghvBG0AVp5e/X9BAl
-	KycxsCwTWQbZbIvpMqth2y7w4u2yn2/t2wNtFOvPIXuEgSzZHvOId6/NWoox9ucJeFAG8vZyvsvAT
-	aBmJKlnS0IeDvFFDW2UtnJ/l99A1n2IXnRtMiH4pcGz/HYPTQLivKjh59nZYA9KJCXcY=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1qt9OL-002bMB-O5; Wed, 18 Oct 2023 18:27:29 +0200
-Date: Wed, 18 Oct 2023 18:27:29 +0200
-From: Andrew Lunn <andrew@lunn.ch>
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="LXdbYs+n"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=id5jhg4t6jh75dlqjp6pot5zcy.protonmail; t=1697651770; x=1697910970;
+	bh=+Do60tFHTgD/yzVC6yohA+Xb+DeuzbVb/pyouLR43hE=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=LXdbYs+nAy09u7e3TbPcQo2fVpqLTtG1rOME0Ve16ipPFbaG1XVeNxSqmsqek1QpU
+	 ErMTgCXBfV2e57cG3V0+htGeydsqb/fk135HE00P7rjfFyJwrN8kvFLsLiT2wxDG9b
+	 HM4sK8FUsKPR2SQpWoNG1m1Ynp0BgeO8Tf2O9p+EHY1zU37qIRPBeVvhA1kzvIjgpf
+	 Tmy1VMw8JggmdrPRLfkewxHrp8cWxnRIP6VI28yuyBgt1RYShb4Joc3HkoX7QlIVfG
+	 tBPP8Lr0PItp1Z3KVJDNmLyg2JErVyhC9fQTmcGbOmuhuEdMCHeFAnxYL/YrJ8ISLW
+	 ogx2NOXKEKIPA==
+Date: Wed, 18 Oct 2023 17:55:59 +0000
 To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>, linux-doc@vger.kernel.org,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] docs: rust: add "The Rust experiment" section
-Message-ID: <d47553f1-1832-4c69-8a8c-71c58048ff30@lunn.ch>
-References: <20231018160922.1018962-1-ojeda@kernel.org>
+From: Benno Lossin <benno.lossin@proton.me>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, Jonathan Corbet <corbet@lwn.net>, Carlos Bilbao <carlos.bilbao@amd.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, linux-kbuild@vger.kernel.org, linux-doc@vger.kernel.org, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Akira Yokosawa <akiyks@gmail.com>, Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Subject: Re: [PATCH 1/2] docs: rust: update Rust docs output path
+Message-ID: <9zPimFJ-VQdlvUz-8ChRRxxHCJviKOt0uoclPqJzpAL9t_1s7NoPnTzCcHC-0XAbWKoRK_VLIN_duiv09Zrb0EW2rixLUv0cbxBIy6GsG_w=@proton.me>
+In-Reply-To: <20231018160145.1017340-1-ojeda@kernel.org>
+References: <20231018160145.1017340-1-ojeda@kernel.org>
+Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231018160922.1018962-1-ojeda@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 18, 2023 at 06:09:22PM +0200, Miguel Ojeda wrote:
-> Clarify that the Rust experiment is still going on to avoid
-> confusion for both kernel maintainers and end users.
-> 
+On 18.10.23 18:01, Miguel Ojeda wrote:
+> The Rust code documentation output path moved from `rust/doc` to
+> `Documentation/output/rust/rustdoc`, thus update the old reference.
+>=20
+> Fixes: 48fadf440075 ("docs: Move rustdoc output, cross-reference it")
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> Andrew: I did not add a `Suggested-by` just in case, but please let me know
-> if you want it, of course.
-> 
->  Documentation/rust/index.rst | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/Documentation/rust/index.rst b/Documentation/rust/index.rst
-> index e599be2cec9b..aaed36af15ce 100644
-> --- a/Documentation/rust/index.rst
-> +++ b/Documentation/rust/index.rst
-> @@ -6,6 +6,23 @@ Rust
->  Documentation related to Rust within the kernel. To start using Rust
->  in the kernel, please read the quick-start.rst guide.
-> 
-> +
-> +The Rust experiment
-> +-------------------
-> +
-> +The Rust support was merged in v6.1 into mainline in order to help in
-> +determining whether Rust as a language was suitable for the kernel, i.e. worth
-> +the tradeoffs.
-> +
-> +Currently, the Rust support is primarily intended for kernel developers and
-> +maintainers interested in the Rust support, so that they can start working on
-> +abstractions and drivers, as well as helping the development of infrastructure
-> +and tools.
-> +
-> +In particular, if you are an end user, please note that there are no in-tree
-> +drivers/modules suitable or intended for production use yet.
 
-It very unlikely end users read this document. And that statement is
-not limited to end users, it is true for everybody.
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 
-What we should be saying is that Rust for the Linux kernel in general
-is not ready for production use. Developing drivers in Rust is
-currently for experimentation only. Given the experimental nature of
-the work, there is some risk Rust will never be ready for production
-use.
-
-   Andrew
-
+--=20
+Cheers,
+Benno
