@@ -1,32 +1,32 @@
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+Received: from mail-41103.protonmail.ch (mail-41103.protonmail.ch [185.70.41.103])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973A53C094
-	for <patches@lists.linux.dev>; Wed, 18 Oct 2023 17:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA98154AC
+	for <patches@lists.linux.dev>; Wed, 18 Oct 2023 17:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="dRboJLM1"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="jgsUpik+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1697651829; x=1697911029;
-	bh=qg1FOCAW/ZNkhfLQUnB0m1HTCb5NKmRZ0oWQUjY7kLg=;
+	s=bukk2el6ffc2jlr6cnysroyswa.protonmail; t=1697651532; x=1697910732;
+	bh=7YLZ6YBfW+uBf8TkCH/eJD44OCqiSuRU6iHamk93ONY=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=dRboJLM1CQ7qc7Ug/4scXZzoRb9hNkHsaj9XBRiea/xBLmykdWwbhiKlXU76Dejed
-	 VgYNU5sYzH4B9vsaN5hdD4+d+lAh80rnEv6cz39rsAKQmutnyzTZ4mtBY/lP3o2c/5
-	 vUHggxRe6+ySvwT4+bhYAsZK2PHJDNsi7kBzDrq8EfjyngIrpl9HeeMCt9lcIhJxev
-	 +hQvHB2F4xYhF5QNit1eV/3papqbnSyhxlERLL64JKpA/WMaAj8MPsg0+f3RXGEOJb
-	 TcHo76ycjFm4JWw85xzXPrnec1QDUpdtkZ937skpFLg6OgKAyFIknAuF8GfLopu0Ol
-	 ZrzHtuXnwUdqg==
-Date: Wed, 18 Oct 2023 17:56:52 +0000
-To: Miguel Ojeda <ojeda@kernel.org>
+	b=jgsUpik+1bG0rtK7LxUJo4oXvzPZDqpiKWw93hIvyK6zyVQ2zgu2uz0qPlMz/AYaY
+	 UmBHKWJ7oJ+EvoOfYOG9KeDoS9lqqAx3X7tOruBfPaT+JW3VKqCCY4gXfYn4MRNq45
+	 BuTkyhxGJOtxW2a+I0q0lvoFSTcy7TiupGGxZ88O/1dz3Kia6NuFG67Qr5vNMyVfvo
+	 cZ5tNFMG50E0ldFjpg1CYCl/8YiRi0Gx+CLQ8zayOLDwdRrf8Rv81TFkxX7aa94NVY
+	 sSr9n5pi3cUsFQO8l6nv5DyhVBMRQvhGPi0cDCbCh9UtAw0tNls3GmqscCDua4bijT
+	 66RxZa2+sjBxg==
+Date: Wed, 18 Oct 2023 17:51:55 +0000
+To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>
 From: Benno Lossin <benno.lossin@proton.me>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, Jonathan Corbet <corbet@lwn.net>, Carlos Bilbao <carlos.bilbao@amd.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, linux-kbuild@vger.kernel.org, linux-doc@vger.kernel.org, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, Nicolas Schier <nicolas@fjasle.eu>, Martin Rodriguez Reboredo <yakoyoku@gmail.com>, Akira Yokosawa <akiyks@gmail.com>
-Subject: Re: [PATCH 2/2] kbuild: remove old Rust docs output path
-Message-ID: <c-GFV2p1lETIN6czmE3f0YFrusVTJ6kuiZXx_UA3FC_f6ORK3uGdQ5z_mCxLVkg4xktI79_Df3f-bTwhHUfzocoKJ8Go5TR4GRlcKxxMrrA=@proton.me>
-In-Reply-To: <20231018160145.1017340-2-ojeda@kernel.org>
-References: <20231018160145.1017340-1-ojeda@kernel.org> <20231018160145.1017340-2-ojeda@kernel.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH] rust: docs: fix logo replacement
+Message-ID: <d1107a9c-87b1-4571-841c-04bc60083f85@proton.me>
+In-Reply-To: <20231018155527.1015059-1-ojeda@kernel.org>
+References: <20231018155527.1015059-1-ojeda@kernel.org>
 Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,19 +37,29 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On 18.10.23 18:01, Miguel Ojeda wrote:
-> The Rust code documentation output path moved from `rust/doc` to
-> `Documentation/output/rust/rustdoc`. The `make cleandocs` target
-> takes care of cleaning it now since it is integrated with the rest
-> of the documentation.
+On 18.10.23 17:55, Miguel Ojeda wrote:
+> The static files placement by `rustdoc` changed in Rust 1.67.0 [1],
+> but the custom code we have to replace the logo in the generated
+> HTML files did not get updated.
 >=20
-> Thus remove the old reference.
+> Thus update it to have the Linux logo again in the output.
 >=20
-> Fixes: 48fadf440075 ("docs: Move rustdoc output, cross-reference it")
+> Hopefully `rustdoc` will eventually support a custom logo from
+> a local file [2], so that we do not need to maintain this hack
+> on our side.
+>=20
+> Link: https://github.com/rust-lang/rust/pull/101702 [1]
+> Link: https://github.com/rust-lang/rfcs/pull/3226 [2]
+> Fixes: 3ed03f4da06e ("rust: upgrade to Rust 1.68.2")
+> Cc: stable@vger.kernel.org
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Works for me.
+
+Tested-by: Benno Lossin <benno.lossin@proton.me>
 
 --=20
 Cheers,
 Benno
+
+
