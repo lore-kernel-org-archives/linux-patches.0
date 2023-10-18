@@ -1,104 +1,80 @@
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA2A81A
-	for <patches@lists.linux.dev>; Wed, 18 Oct 2023 21:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ryhl.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ryhl.io
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDB739865
+	for <patches@lists.linux.dev>; Wed, 18 Oct 2023 22:57:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ryhl.io header.i=@ryhl.io header.b="MV/2ipkd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gRW0f4Uw"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id C225E3200A21;
-	Wed, 18 Oct 2023 17:51:12 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 18 Oct 2023 17:51:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-	1697665872; x=1697752272; bh=AlPk2h7qGZuNRoWEGnMtQ/VbGE5sTysrzAQ
-	3hMfPOm0=; b=MV/2ipkds3A0kM23N1L6SvL5v39JUSZ/7dCiIgqUscjSfuR28xP
-	+gHW717cx8Ou36WXe4hdkN2kn1v/thrNXX7/R6MnyQKyBLQl+kVSVzK4uvKJxDrR
-	Qo8ckMRoPzCNGXhoUC2VX1wiJZOBMdgiGRjbqKiGNZ30CGpZic9RyTmAhpXS/JHV
-	F4fHCFBwwnH2nvftiOscrz1cCsMsZQ6D2G6IIRXnUGFSDo9Nqp5XT3gAIS6FbE7t
-	xmgpNg2E4HsT3dbm5MKU3E09NYzsFM07KY6R7Kw2u1oZa9C5tUvkGOL3Yn8wmWLp
-	WUrhC3henRYpKXORIi4Y51iWGRKnbpdMnwA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1697665872; x=1697752272; bh=AlPk2h7qGZuNRoWEGnMtQ/VbGE5sTysrzAQ
-	3hMfPOm0=; b=gRW0f4Uw0B0uHLHG8GJg+TXyxwlgLiCedYCW3SP/qsX5PmafaTV
-	lyuaeRKxB417SgrYQwIWXC6H0mXlVgC8YBqoTbM3bbY6b+ky+VjKUVBLAUfUAFhJ
-	ug9Tbp3hqz4i5L3kqkdI736/uN4VlyPHmtLZVxSD7VLvNVfzbs1hsYeVnbtU8At0
-	rdfNT3bzruY8ituZLgdIIiFKZO7BV/IBaZ+UFfDNjnnUAKKvFofP6tM8DPWxzoIE
-	eWr2FbpY3eQn2TWrg3Vx3w3HGPITQnojl/lF0P9DdZp0E7uvE+oUxUM4KRelb4FD
-	LFcdmcobhmL6foiGX7CLKX+gDa4vrEKj4AQ==
-X-ME-Sender: <xms:T1MwZV4S4RSgsEWVy-U8rCiayMEnHitOoX_gY6b3gQu6lUIljzmI6A>
-    <xme:T1MwZS5i89RomhrvzBhhe3tqZLN1TsAHlaRLCKdnA283VPWZhvMGTNJhG7iIquGOE
-    T2SYZTSV6sQjQzbmg>
-X-ME-Received: <xmr:T1MwZcd5nrOjAZ1OvPd0Thczof9IrtgtVEdER-8e-rXAyFKo-oDCqWClW3ZNQBFK8U1kCjGRY0x-ipV99YrSFMTI0vXz1YnjR9UY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeehgddtvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefkffggfgfuvfevfhfhjggtgfesthejredttddvjeenucfhrhhomheptehlihgt
-    vgcutfihhhhluceorghlihgtvgesrhihhhhlrdhioheqnecuggftrfgrthhtvghrnhepfe
-    fguefgtdeghfeuieduffejhfevueehueehkedvteefgfehhedtffdutdfgudejnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlihgtvgesrh
-    ihhhhlrdhioh
-X-ME-Proxy: <xmx:T1MwZeIPOva27k4DFERVnumUg4IAsc4TZUBnX713HecdrQx-bq3qrg>
-    <xmx:T1MwZZKTmd1BTYAs69H33kGVmUdMPQJTEoz7Kwi8M7zZc2DOoh_mxg>
-    <xmx:T1MwZXydd3ylQRYNjbwr-oy78zzAIt1FfS4MlzKx4IH5F4y2NqqYIA>
-    <xmx:UFMwZRLp8_Av_Tie1gf-y-TLEAzRLamoZbf9p6mFdT5n68xY2IBioA>
-Feedback-ID: i56684263:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Oct 2023 17:51:07 -0400 (EDT)
-Message-ID: <9f262bcc-a551-43c1-8bf2-c5c6eb6f99ed@ryhl.io>
-Date: Wed, 18 Oct 2023 23:51:07 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FFWTF1hN"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-5a7a80a96dbso1866507b3.0
+        for <patches@lists.linux.dev>; Wed, 18 Oct 2023 15:57:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697669848; x=1698274648; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AE1SaR/BHQxenJ33mN0ItySiN6Ep+fGPSaWs9qSQa2Q=;
+        b=FFWTF1hNMMuuQ0opAdMgqW/VthtVt3an9rbNl8FuTlYpcp4NaBe6lKW6kBAT5QVuB1
+         76xb1homBLA7Zk2F9Avd0pqIZFq5acrBGSzUq8K8ubUZCL3L96BTDEbH8GXJonRKUSnX
+         Vb1AwxFDe1UAxxWW/x9HOTjP2ZGeidWYgDwAtd7BBltwr00QbpW8zO9YiFmq0gyWmUhL
+         azWVbe3eUCjh92qM321u/Q8Xr1peBFmABINIaInyWkNdzHiBdsm8xmtGyfruauPpFFbd
+         2oFV+Ea0NMH2KC3m1ijnWgg0XjQVOggnT7R2ObGv8G7B7l5nwUnPuu6AFcSwgNxhJ6ZP
+         RsCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697669848; x=1698274648;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AE1SaR/BHQxenJ33mN0ItySiN6Ep+fGPSaWs9qSQa2Q=;
+        b=ny7WrYOFwZ5049jm0kdiybFc1dWdQGE8Iimh4vlig1ugRVqPPVIgm+fb4NYelqo3D4
+         tI0QzQzV13mvsV79Z8KraJqsqHKKkl/RnAhZTkoyxqGntOi+RLu95XsbbjQOQ42TSHEP
+         uC1M1qnPoI64CnPig9YOiZD8dqX0wgCoaCh2ZsTMhrt1nxuKHjPLmdOewrlQLRw2Nnle
+         e3fpBwErv3XNI7gUOqfnLv1wH00019mcilV8RZL+kC1Ghy4izpTIWvZLMYafvWx25Mkc
+         4DoahAeyL3pyD8ijhUNov+7M4HtP3q4TQo8r4lzXDGfWSZ9Znz/i4UhX5d/pCJOdQYwN
+         KdOA==
+X-Gm-Message-State: AOJu0YwH/lS64jGuqeILL9jkjhZy4tv9Aek5TRDJKbEwLi5IF4Dy07lk
+	y/S/e4D0xq55V+/Db7rPKCPrRu+Mx0R0EAgF/nk=
+X-Google-Smtp-Source: AGHT+IEhExAjJ/kqU13bH/iu+1hTB73pJsYiyEBFRfajbn0eLIbp0DQbJge+BtAiBbYc9eQEJDm8R0y65x2ghEM15FE=
+X-Received: by 2002:a0d:eb4b:0:b0:5a7:c887:43bd with SMTP id
+ u72-20020a0deb4b000000b005a7c88743bdmr182981ywe.15.1697669847838; Wed, 18 Oct
+ 2023 15:57:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] kbuild: remove old Rust docs output path
-Content-Language: en-US-large
-To: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>,
- Jonathan Corbet <corbet@lwn.net>, Carlos Bilbao <carlos.bilbao@amd.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>,
- Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>,
- Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl
- <aliceryhl@google.com>, linux-kbuild@vger.kernel.org,
- linux-doc@vger.kernel.org, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Nathan Chancellor <nathan@kernel.org>,
- Nick Desaulniers <ndesaulniers@google.com>,
- Nicolas Schier <nicolas@fjasle.eu>,
- Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
- Akira Yokosawa <akiyks@gmail.com>
 References: <20231018160145.1017340-1-ojeda@kernel.org>
- <20231018160145.1017340-2-ojeda@kernel.org>
-From: Alice Ryhl <alice@ryhl.io>
-In-Reply-To: <20231018160145.1017340-2-ojeda@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20231018160145.1017340-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 19 Oct 2023 00:57:16 +0200
+Message-ID: <CANiq72=_jGC1YR+9jHxYn9w68iZoC9sHoXdXqGu6qGxzriEkwA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] docs: rust: update Rust docs output path
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Carlos Bilbao <carlos.bilbao@amd.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, linux-kbuild@vger.kernel.org, 
+	linux-doc@vger.kernel.org, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Akira Yokosawa <akiyks@gmail.com>, Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/18/23 18:01, Miguel Ojeda wrote:
+On Wed, Oct 18, 2023 at 6:02=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
 > The Rust code documentation output path moved from `rust/doc` to
-> `Documentation/output/rust/rustdoc`. The `make cleandocs` target
-> takes care of cleaning it now since it is integrated with the rest
-> of the documentation.
-> 
-> Thus remove the old reference.
-> 
+> `Documentation/output/rust/rustdoc`, thus update the old reference.
+>
 > Fixes: 48fadf440075 ("docs: Move rustdoc output, cross-reference it")
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Applied to `rust-fixes` early to start getting some time in
+`linux-next` -- please feel free to send more reviews, thanks!
+
+Cheers,
+Miguel
