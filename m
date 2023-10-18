@@ -1,82 +1,84 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9943FB33
-	for <patches@lists.linux.dev>; Wed, 18 Oct 2023 18:14:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E273D4735F
+	for <patches@lists.linux.dev>; Wed, 18 Oct 2023 18:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bVbIWj/i"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-5832ea25c7eso203590eaf.3
-        for <patches@lists.linux.dev>; Wed, 18 Oct 2023 11:14:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1697652863; x=1698257663; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=b5ifuSh3pAXhwmN6aI2xPo6Qr4r8ZyUW95PzWHa09WA=;
-        b=bVbIWj/iXruO5HRrMzZaXhY7JMJP+wLDeyMlMLwSfjtD/t+1dOvaRFmO/B12mFnQ6v
-         QVr93G3h8Pa6Qn10xbZGIWVNw5qBMQ0F+JxLIu/riFOf3I6c1i+s/OZDklN0vvx0t5nK
-         LUq5/A2/g9LoN9mhrjgBDMB3MLFlH8/cxSQJU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697652863; x=1698257663;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=b5ifuSh3pAXhwmN6aI2xPo6Qr4r8ZyUW95PzWHa09WA=;
-        b=XpS07ZLsRF/f46BABwezGOOLeQ4ufTU0se6P/BaoIohAMnEXQ5Dvvm0l7I2rRGqt07
-         AjItAxIEtsxGLEwt8N6YK5in8LFj8LpWxKVQiTD1UjFeNs2hZNGwcaxlncavgVM+jrv3
-         bbxPmxnqZ/e914ZgUUCsNlcZyedjBCdPvPOd8VGxqiyJOe8lRu74Yk3JJwCGJuBLL7t4
-         lrcY/z+t19l/sNYxXyzurplVEJeIzgvMkpIIAyazGHV3NaiCM/hlowpggmrjKKKQdWpk
-         S1ftzOIffOq7ZzbIMGI7eSOvjPY8tXV5VgvlIKO9ccYBYsfXyGEUNUp9sWk0sG14H3Ig
-         RPdA==
-X-Gm-Message-State: AOJu0YwhBpmZkzlhF0rW4skkkWEcfqqYVrdSKFfs7bE89JUe7FAPa3i5
-	KtMnA3a3dXvrX+9XYkOkkedvCA==
-X-Google-Smtp-Source: AGHT+IF8xi8GFiUQY06uOeWqByr5z7EFVgeVDoRSw3v4/DxmzcbtqXvuu1i8IZohOlGRjH61x3+iMg==
-X-Received: by 2002:a05:6358:3a0f:b0:166:f348:a8b3 with SMTP id g15-20020a0563583a0f00b00166f348a8b3mr2010476rwe.28.1697652863564;
-        Wed, 18 Oct 2023 11:14:23 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id h26-20020aa796da000000b006bae6eea9d0sm3657643pfq.49.2023.10.18.11.14.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Oct 2023 11:14:23 -0700 (PDT)
-Date: Wed, 18 Oct 2023 11:14:22 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: rostedt@goodmis.org, mhiramat@kernel.org, ndesaulniers@google.com,
-	trix@redhat.com, linux-kernel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] eventfs: Use ERR_CAST() in eventfs_create_events_dir()
-Message-ID: <202310181114.55457CFE@keescook>
-References: <20231018-ftrace-fix-clang-randstruct-v1-1-338cb214abfb@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lJ+8nHQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5380C433C8;
+	Wed, 18 Oct 2023 18:45:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1697654760;
+	bh=6q0NVgwgwUSFconmvxRIK81m+6tWetcDjiHlH6YuS6M=;
+	h=From:Date:Subject:To:Cc:From;
+	b=lJ+8nHQxdOL3WZ01wJHJt5KOpQdwQtLHvAsenLHa+M/TEBMxCjt+pluOqJQSOwEmu
+	 sTt/KxqA5uKL7uq9Fz1/hOlqkf47sxIHd4xYwqIiq35djCGKYW5hfRykm3uH5OZWAz
+	 ZUXaLTfdsCEQ+mpk8nhGmArX8nWyBeEB9qeIV2yL3tvCMPtVKPncxH1r7UKYGu5xra
+	 iL9wnbzHmYWueAFgXwWAtwrCOkWUanizsSaJI7sz9LI7KrLdFHyxFyqLDO5EIQtSNn
+	 bhwSPnuU96dcB07hbJvQj0m0xASsbujQS8JXsK0LcnZSZ4gDEYc1gYTuwCSRYTflbI
+	 1MgnYbkYjWs/g==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 18 Oct 2023 11:45:52 -0700
+Subject: [PATCH] drm/amd/display: Respect CONFIG_FRAME_WARN=0 in DML2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231018-ftrace-fix-clang-randstruct-v1-1-338cb214abfb@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231018-amdgpu-dml2-respect-frame_warn-v1-1-43ec8d153743@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAN8nMGUC/x3NQQrCMBBG4auUWTuQpFisVxGRmPytAyaGidpC6
+ d0NLr/NextVqKDSudtI8ZUqr9xgDx2Fh88zWGIzOeN6a+yJfYpz+XBMT8eKWhDePKlPuC1eMx/
+ 7AXa8D2OAoRYpiknW/+By3fcf0IbsZnAAAAA=
+To: harry.wentland@amd.com, sunpeng.li@amd.com, Rodrigo.Siqueira@amd.com, 
+ alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1527; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=6q0NVgwgwUSFconmvxRIK81m+6tWetcDjiHlH6YuS6M=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKkG6s+3eTU/Y01b7c5vu2jmz0Vu3/YKMeZlfetO45KYp
+ mM6/fDzjlIWBjEOBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjARBgeGPxyxD24oRE30zBM/
+ enlzy6raKMubt+ZnqK9YIbMu+hfXpDuMDAsOpeyzLGutPurmtuxA9L+vG/XuL1lrsHJlpniV3t/
+ DRpwA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Wed, Oct 18, 2023 at 11:10:31AM -0700, Nathan Chancellor wrote:
-> When building with clang and CONFIG_RANDSTRUCT_FULL=y, there is an error
-> due to a cast in eventfs_create_events_dir():
-> 
->   fs/tracefs/event_inode.c:734:10: error: casting from randomized structure pointer type 'struct dentry *' to 'struct eventfs_inode *'
->     734 |                 return (struct eventfs_inode *)dentry;
->         |                        ^
->   1 error generated.
-> 
-> Use the ERR_CAST() function to resolve the error, as it was designed for
-> this exact situation (casting an error pointer to another type).
-> 
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/1947
-> Fixes: 5790b1fb3d67 ("eventfs: Remove eventfs_file and just use eventfs_inode")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+display_mode_code.c is unconditionally built with
+-Wframe-larger-than=2048, which causes warnings even when
+CONFIG_FRAME_WARN has been set to 0, which should show no warnings.
 
-Yes, please. That's the correct method to do such casts. Thanks!
+Use the existing $(frame_warn_flag) variable, which handles this
+situation. This is basically commit 25f178bbd078 ("drm/amd/display:
+Respect CONFIG_FRAME_WARN=0 in dml Makefile") but for DML2.
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
+Fixes: 7966f319c66d ("drm/amd/display: Introduce DML2")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/amd/display/dc/dml2/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/Makefile b/drivers/gpu/drm/amd/display/dc/dml2/Makefile
+index f35ed8de260d..66431525f2a0 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dml2/Makefile
+@@ -61,7 +61,7 @@ ifneq ($(CONFIG_FRAME_WARN),0)
+ frame_warn_flag := -Wframe-larger-than=2048
+ endif
+ 
+-CFLAGS_$(AMDDALPATH)/dc/dml2/display_mode_core.o := $(dml2_ccflags) -Wframe-larger-than=2048
++CFLAGS_$(AMDDALPATH)/dc/dml2/display_mode_core.o := $(dml2_ccflags) $(frame_warn_flag)
+ CFLAGS_$(AMDDALPATH)/dc/dml2/display_mode_util.o := $(dml2_ccflags)
+ CFLAGS_$(AMDDALPATH)/dc/dml2/dml2_wrapper.o := $(dml2_ccflags)
+ CFLAGS_$(AMDDALPATH)/dc/dml2/dml2_utils.o := $(dml2_ccflags)
+
+---
+base-commit: cd90511557fdfb394bb4ac4c3b539b007383914c
+change-id: 20231018-amdgpu-dml2-respect-frame_warn-536e19b69ce0
+
+Best regards,
 -- 
-Kees Cook
+Nathan Chancellor <nathan@kernel.org>
+
