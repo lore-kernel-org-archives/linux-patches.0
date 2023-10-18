@@ -1,24 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01665347D0;
-	Wed, 18 Oct 2023 15:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9410036AFD;
+	Wed, 18 Oct 2023 16:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cOBM6IcD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DC7C433C7;
-	Wed, 18 Oct 2023 15:55:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IpcbsVRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C014AC433C8;
+	Wed, 18 Oct 2023 16:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1697644556;
-	bh=QOxEFIuVVtPbHt6SDOXDaVCFqda4cdEMS/w7hpcXpcY=;
+	s=k20201202; t=1697644921;
+	bh=S4u2uK3OTPufLjif5hMUcF3c2nnunc5rUfO81Cu7CWo=;
 	h=From:To:Cc:Subject:Date:From;
-	b=cOBM6IcDPq8PDGVpDXBEVv2ba4ZO3hdCRkDH99bm77Lm0p9dV07OIINqZGvUli5kW
-	 393SvZ2692e9Fm6JpK5M+pUYen/CfJ8cEkLgIPpHSnc8ZPsZUSzrEZKLTYOYIZXuws
-	 zctziMrDbUICAaZl8dzV9yyBm3Ij9I8MuBfYGe0x+ipPe2748ZDpdQebMcGCmuE8Ei
-	 RR2qjbaefdWlVhex7QO6OKYUhHCfKVR68q/klDBXpBimYRdUJA58dK2GK45ZJqLz+4
-	 5+4o702K+xpZPiVl6aK/cZgGZlX5jTGz3K0JHczF50iUsNM0qQ5+1pu7AYvcsO2PmN
-	 1kShxUpTolNRA==
+	b=IpcbsVRki8Xu/+UQY9COIpBUPxyOq9Z1B1YEJ4bk8F4OHy9o4mEscn5cYBEbrcjnq
+	 2ULnjIzKC6eJ9kPanKoKK5L2Mw8VoTTfPz6GS++BKJqf9MDkFmiMfs4IiXqVNTqtez
+	 mbjQDNlV8ajwyy23WpCPN8ahaMp92d1uOfLTvn30LSgmAs5w3gg3mn180TkgE9FdY2
+	 SqeHQX6dkPgTa3428Y/E/paUhNaNMz0GaWIoAiyn44H1eBTU3r/94vADWpQJFzprk7
+	 UuLrkXO9h2faxgLYYssw/GTwtni4jLG/yG9TyazKI5Vo1SbvPO+pmQlch1nyhRJW+N
+	 4VGP7S1ytGK4Q==
 From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
+To: Masahiro Yamada <masahiroy@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Carlos Bilbao <carlos.bilbao@amd.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
 	Alex Gaynor <alex.gaynor@gmail.com>
 Cc: Boqun Feng <boqun.feng@gmail.com>,
@@ -27,13 +30,16 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	Benno Lossin <benno.lossin@proton.me>,
 	Andreas Hindborg <a.hindborg@samsung.com>,
 	Alice Ryhl <aliceryhl@google.com>,
+	linux-kbuild@vger.kernel.org,
+	linux-doc@vger.kernel.org,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: [PATCH] rust: docs: fix logo replacement
-Date: Wed, 18 Oct 2023 17:55:27 +0200
-Message-ID: <20231018155527.1015059-1-ojeda@kernel.org>
+	Akira Yokosawa <akiyks@gmail.com>,
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Subject: [PATCH 1/2] docs: rust: update Rust docs output path
+Date: Wed, 18 Oct 2023 18:01:44 +0200
+Message-ID: <20231018160145.1017340-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,52 +48,30 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The static files placement by `rustdoc` changed in Rust 1.67.0 [1],
-but the custom code we have to replace the logo in the generated
-HTML files did not get updated.
+The Rust code documentation output path moved from `rust/doc` to
+`Documentation/output/rust/rustdoc`, thus update the old reference.
 
-Thus update it to have the Linux logo again in the output.
-
-Hopefully `rustdoc` will eventually support a custom logo from
-a local file [2], so that we do not need to maintain this hack
-on our side.
-
-Link: https://github.com/rust-lang/rust/pull/101702 [1]
-Link: https://github.com/rust-lang/rfcs/pull/3226 [2]
-Fixes: 3ed03f4da06e ("rust: upgrade to Rust 1.68.2")
-Cc: stable@vger.kernel.org
+Fixes: 48fadf440075 ("docs: Move rustdoc output, cross-reference it")
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/Makefile | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ Documentation/rust/general-information.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/Makefile b/rust/Makefile
-index 87958e864be0..08af1f869f0c 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -93,15 +93,14 @@ quiet_cmd_rustdoc = RUSTDOC $(if $(rustdoc_host),H, ) $<
- # and then retouch the generated files.
- rustdoc: rustdoc-core rustdoc-macros rustdoc-compiler_builtins \
-     rustdoc-alloc rustdoc-kernel
--	$(Q)cp $(srctree)/Documentation/images/logo.svg $(rustdoc_output)
--	$(Q)cp $(srctree)/Documentation/images/COPYING-logo $(rustdoc_output)
-+	$(Q)cp $(srctree)/Documentation/images/logo.svg $(rustdoc_output)/static.files/
-+	$(Q)cp $(srctree)/Documentation/images/COPYING-logo $(rustdoc_output)/static.files/
- 	$(Q)find $(rustdoc_output) -name '*.html' -type f -print0 | xargs -0 sed -Ei \
--		-e 's:rust-logo\.svg:logo.svg:g' \
--		-e 's:rust-logo\.png:logo.svg:g' \
--		-e 's:favicon\.svg:logo.svg:g' \
--		-e 's:<link rel="alternate icon" type="image/png" href="[./]*favicon-(16x16|32x32)\.png">::g'
--	$(Q)echo '.logo-container > img { object-fit: contain; }' \
--		>> $(rustdoc_output)/rustdoc.css
-+		-e 's:rust-logo-[0-9a-f]+\.svg:logo.svg:g' \
-+		-e 's:favicon-[0-9a-f]+\.svg:logo.svg:g' \
-+		-e 's:<link rel="alternate icon" type="image/png" href="[/.]+/static\.files/favicon-(16x16|32x32)-[0-9a-f]+\.png">::g'
-+	$(Q)for f in $(rustdoc_output)/static.files/rustdoc-*.css; do \
-+		echo ".logo-container > img { object-fit: contain; }" >> $$f; done
+diff --git a/Documentation/rust/general-information.rst b/Documentation/rust/general-information.rst
+index 49029ee82e55..081397827a7e 100644
+--- a/Documentation/rust/general-information.rst
++++ b/Documentation/rust/general-information.rst
+@@ -29,7 +29,7 @@ target with the same invocation used for compilation, e.g.::
  
- rustdoc-macros: private rustdoc_host = yes
- rustdoc-macros: private rustc_target_flags = --crate-type proc-macro \
+ To read the docs locally in your web browser, run e.g.::
+ 
+-	xdg-open rust/doc/kernel/index.html
++	xdg-open Documentation/output/rust/rustdoc/kernel/index.html
+ 
+ To learn about how to write the documentation, please see coding-guidelines.rst.
+ 
+
+base-commit: 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
 -- 
 2.42.0
 
