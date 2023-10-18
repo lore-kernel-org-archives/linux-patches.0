@@ -1,214 +1,284 @@
-Received: from JPN01-TYC-obe.outbound.protection.outlook.com (mail-tycjpn01on2095.outbound.protection.outlook.com [40.107.114.95])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C223915A2;
-	Wed, 18 Oct 2023 00:16:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729601A278
+	for <patches@lists.linux.dev>; Wed, 18 Oct 2023 15:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="YXkYkjHx"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nnYPuwqiIS4aoqppKGxEulD9Sxv7xfPHbbfLLbfObIaCCD7gc4p7UlyCY/JRMCxwimXloeUPiankve2e0W7Ys2/yAwb8BOgtb2BohBgZm0VdQFYHXEDpL0I43D7sLlzg1L3tyuiwJuTzfC3d8XmPjmH7w1n51mglcPt2hNWtXwr5DOOaLHZ9/icfLXfwtGs+rI8dMd39HIQPRL+rcqb1a//4O9noJbxJ+AKA8BHWfEyH65GSC7GK8WVVdRcj6fbdf7d+mGPP07ODwZRSOEr1rtQUNfQwTxYJ8YiFI5DhePvfoUt3YHp61w8f9pTNlYge3MsNPRPCsHNF+wlzTIP0UA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BTeoz2WdknRninISThb6HEdU1RKcA2fL5H139zE0icw=;
- b=gojX6s0GlmEJSX2JtquaC0novHLVB4H8UMfDSqbhUgazaSOq3Xi0EW8itF+FefSOTz3vPY2PKKsO0066NzwnAUidh5DCjD04811znnebmzLPySznzHe2U4HPPxnPKIGFu+DQLE5cfpJt/Hm3P+HCo4006W0LLnJzguQ8SkNKoQGGhn3tFvOgS9F+rvIcdjdkfBEkYZk2FiQvqUpmd9fumJFYOwndoBGpOgWgvmwqFtQk0RaTFPytqX7Zp/mQYqFoRcRRn1weaVRXVO5pBPfUv9B0WyDAIpWunNcXtvIV3o3eKHjU5DWM4P+1JwXERjzyFjhPRBvTqt8mmKUBNdlItQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BTeoz2WdknRninISThb6HEdU1RKcA2fL5H139zE0icw=;
- b=YXkYkjHxw8Im7+NAFAfNKPPvQRHhDwr2IxJO9Q95rSc3h/8TA6mMkYEai5BzrJ3Q8x2cHg23lVfjBuXtyQ9x269b8zYFpvLk8+uFvHqEq+JhrnHuCqmo7SIvPJnwx9NopP/F3LV5korilJiETLFwzDPMHzwaP/XG+rz0a6qmnPk=
-Received: from TYBPR01MB5341.jpnprd01.prod.outlook.com
- (2603:1096:404:8028::13) by TY3PR01MB11188.jpnprd01.prod.outlook.com
- (2603:1096:400:3d7::5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6907.21; Wed, 18 Oct
- 2023 00:16:24 +0000
-Received: from TYBPR01MB5341.jpnprd01.prod.outlook.com
- ([fe80::a188:9424:be62:e5fb]) by TYBPR01MB5341.jpnprd01.prod.outlook.com
- ([fe80::a188:9424:be62:e5fb%6]) with mapi id 15.20.6907.021; Wed, 18 Oct 2023
- 00:16:24 +0000
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-To: Bjorn Helgaas <helgaas@kernel.org>, Nathan Chancellor <nathan@kernel.org>
-CC: "marek.vasut+renesas@gmail.com" <marek.vasut+renesas@gmail.com>,
-	"lpieralisi@kernel.org" <lpieralisi@kernel.org>, "kw@linux.com"
-	<kw@linux.com>, "robh@kernel.org" <robh@kernel.org>, "bhelgaas@google.com"
-	<bhelgaas@google.com>, "ndesaulniers@google.com" <ndesaulniers@google.com>,
-	"trix@redhat.com" <trix@redhat.com>, "fancer.lancer@gmail.com"
-	<fancer.lancer@gmail.com>, "mani@kernel.org" <mani@kernel.org>,
-	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-	"linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>,
-	"llvm@lists.linux.dev" <llvm@lists.linux.dev>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-Subject: RE: [PATCH] PCI: rcar-gen4: Fix type of type parameter in
- rcar_gen4_pcie_ep_raise_irq()
-Thread-Topic: [PATCH] PCI: rcar-gen4: Fix type of type parameter in
- rcar_gen4_pcie_ep_raise_irq()
-Thread-Index: AQHaASmkpnPNsAO5wEiJrokjJ6MdbrBOU4GAgABZlGA=
-Date: Wed, 18 Oct 2023 00:16:24 +0000
-Message-ID:
- <TYBPR01MB53410A9FC80204414692264FD8D5A@TYBPR01MB5341.jpnprd01.prod.outlook.com>
-References: <20231017-pcie-rcar-wifpts-v1-1-ab1f42bf9386@kernel.org>
- <20231017185119.GA1315341@bhelgaas>
-In-Reply-To: <20231017185119.GA1315341@bhelgaas>
-Accept-Language: ja-JP, en-US
-Content-Language: ja-JP
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYBPR01MB5341:EE_|TY3PR01MB11188:EE_
-x-ms-office365-filtering-correlation-id: 2b9fe5a7-c0e2-4624-f659-08dbcf6f76a7
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- HDF/mAYuTYRqFenShcSqv0DvO3FcES1W7+B2viy3UvIfiIcXyUK2VtJu4isUv5h2tvp2pycIOneXvSwzhUsYnV5PXK9P/yvoLoJowiD9eXZY23t+RE3kOkTp8Io5nlEKaM3Ep7o8qzyE/cX+Gm4Jy6T5WmPQJD5fppSd3bZoC7wVTC4Qn96iJnT5/hGgW8NxXUq9IF9LWz+4qkb5V1ILFrxJDHIW3dCHc9QtL7IH2Hmz1Hg+s4oZuWKQeYeUW70VX2Xjs4OxD9pW25pHDp3mt4yYAgiTiTRwpz/YwR6b8pPPDggcegWm1AmPr6WcrE5NJJf9mI4jyfeKxjxtzfwFQRJqQoIxb/zrUhCe1GyE2VOHbUAyUqRBKAsOJRgvVejXb0xXoG9GRqSHlxuGsrdC0lAL1VGIRaSDYmA/BiF20LPMtSY0dMNe/Oaw1ypMY6UGHHNvFAApHRtv7rg5x9cTD3flctW9OgzikyY4U0vHRsf1aVgRflR4lPmWwYUMM2u3rNJphV7enYM7rZhxprnigPBKoRhVX/8AOPRSBzE4PXmlztZIqvFxGAfsBJv3GmCc5FYmgnJf18bEjcGncGvYpt9EknnYtGdXhD4+lCsVL5+2cIZjLNgCNBBEkODCmF62
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYBPR01MB5341.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(376002)(346002)(396003)(366004)(39860400002)(230922051799003)(451199024)(64100799003)(186009)(1800799009)(478600001)(122000001)(38100700002)(7696005)(6506007)(33656002)(83380400001)(38070700005)(9686003)(71200400001)(52536014)(5660300002)(4326008)(55016003)(8936002)(8676002)(316002)(66476007)(66946007)(54906003)(76116006)(86362001)(2906002)(110136005)(66556008)(66446008)(7416002)(41300700001)(64756008);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?1pZ1xgu5vpwjD/33kt+iPoewqGboXoql1KJact3bc3k39nDzCcit/bBJ9a6T?=
- =?us-ascii?Q?YLNXgQe6hGjPWtD545tJMILVGs0BVRvGqeUYGhdH8c95tF6D8qJSTSz1Ti2l?=
- =?us-ascii?Q?qwdv3HuDMqwZx0BK17/v44QeOCRoWzUHdo93CWj3o2h+42zA15SmzCNN3xaN?=
- =?us-ascii?Q?9roCZQC91WY4/od4DR2GluAmRVyOMu4PT35PiLeGbbbo5CgEJvDkEi6Os0Nt?=
- =?us-ascii?Q?b33BoEACghToF2gyKrVVIyZad+VLGaPD6GYV5mh0eXAw7SJdOQREMT5WesUy?=
- =?us-ascii?Q?CNBZThRiBi3e0RYesm1VjhyQwMmZjWC+tjN2oEhyzJ/w2+XZP74igsrR8GaX?=
- =?us-ascii?Q?FdgOIUJ74CzX7+fYNjjlCxkukvysDgDpCK1W3UHX8Jpu80TMIqiAyTXuFywx?=
- =?us-ascii?Q?SUgr08SHyhhjfXZHcd84PsQfCxBz1o1YC1t/p6xQtLqyPl2gJYYJvm62vhRH?=
- =?us-ascii?Q?3fpESDEDl/K1NQo+/hkG8Md/mgplfQxrlOEVA5zxB00X2d0YQVAidwzP23Gk?=
- =?us-ascii?Q?T3ktN0l+AknXdTxb7iobPhpDyd8wm0LGZwi0VCIkWibAujhPC/dFUXQ/EXvQ?=
- =?us-ascii?Q?o2c09UXJUPEZJPcFpG25TSHlGzw+IvO8rnDustaGwJMIRkrPvvtCfUj3ZG8l?=
- =?us-ascii?Q?E9q0tC28D/4GQ1ebv2xrh4S+p/t9Cbh/V2j3B7FOslogNoojJStLz2Ot39Sb?=
- =?us-ascii?Q?J7ozGlwu3SypII14zWQMJb7okfXzHkDqXIYDpSpYwy8U6unM7rt0H5WD3Cdc?=
- =?us-ascii?Q?bNQFPX6K3nJgTzdXuzTIM2BrgNgUKz/BsVsnvkf/bkmd/v/oyy3/wBtbLoxh?=
- =?us-ascii?Q?bf45wACmEPaXRq4YwjoEhwIeV0LR4u87spAsC4tdSXf47tJ3cqZP5J3aQ54n?=
- =?us-ascii?Q?bjwS86SZctZU1MA67OMyFU8YWx4EwdebEIpkJyjcVBVuDOiTFMv1vV/4ngFd?=
- =?us-ascii?Q?Hsk/YpVs+ZhW/GUKj+58MlKj1uHm9Err25wNd6SY1WzKBcuPGJHHnWAdQYWS?=
- =?us-ascii?Q?2eBtHF9X3u4HQ7sFOyTcmInhw5aqnbt2OrgyqQHf/LAnTsU3wBC4ueIPF5H6?=
- =?us-ascii?Q?Tzq2pEPYsnScr9siCH38SqAW2g/2BiTZ+lhRA3YTB3Tui3etCn+wyPa4q5vj?=
- =?us-ascii?Q?CmyrKNHhi7w7Z1F94Iuatw/vFioCpf5B5/7Zd3mAtaDSL7t49djC3IO8P8IS?=
- =?us-ascii?Q?JMbrk0hCHgqvpKUhSwbHfeh4+jqQGdqUZM1tBe/atYGexhmQXpM7zww1FgRf?=
- =?us-ascii?Q?JDO0nmsX/1G9z5v1wtwZN8n5J5A4ByHEwLy+byuOj9PRlm6o4pLJZIVBUlee?=
- =?us-ascii?Q?U0WKEpRYxOAiOGcOeYHwrY4UDoTOvW25cbG+Oa0Wn8TrZ04LX1292LBSBBLN?=
- =?us-ascii?Q?5PecdKX1Wipky52lISgaGum2fZc3LvvNrYeoaiV4UgLnobiXJjV+k7v1LJBi?=
- =?us-ascii?Q?8Dk8CAQPRy4yg0ypmVV5UbhetYbUliF3wOV6phzbX47SCaM8YaAD1YveR/dw?=
- =?us-ascii?Q?A97Vry3yQkzr+n9RhZjp+gGbrG5NL2POdXVj2O7a08P9p3MgTXVvRywKSDv6?=
- =?us-ascii?Q?TS7mHeHviDJET5LNCdsopcAMA+IA8JIZonBWFpyZG3v9/gQ/chp125zLkKQZ?=
- =?us-ascii?Q?0AaljDLOCmVZWCKAKlfy7OsT1KSO7eyoZaNG/LF0j/Ud2fwl5QY2gK9QpDCm?=
- =?us-ascii?Q?IdCGwg=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="D2euQsB5"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39IElxns008322;
+	Wed, 18 Oct 2023 15:03:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ mime-version : content-transfer-encoding; s=pp1;
+ bh=7oLSdPRgwcFlOwiy6F3NSotHHwJLWjG4kQx1b9hMzas=;
+ b=D2euQsB5c6wWeXP4s1INvrXQe6Sf0hwS7wOd1k05N2yQQ6mvq/4MGAp9OKCenSxVrGOw
+ 3XHy8bDuZ7RkGuK7yee6n4+bZOqfHaN/iM/QeOdZhu42hM5azSZeeuHnRb/UAVXbg/DZ
+ kWvAH1bTulZVyt94S3KkoCY9ecVqoNwDBFz4h/OE6ynRXqJ8BCWRw7oIGWXqltJoIxjC
+ lPoeUBBXrr9HDHzKQOLFjC5TZLWJ1PoihA+iFIbX2tQA8dyk0w2wKvUQ3JC/1aBT9DH1
+ hXyDzl+naSo1PSrxMqniMHybkEv1J17yUrkK6gCyA1t+RXY2hitO79LQxDucvmJUlZsr Lg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tthee8d8u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Oct 2023 15:03:33 +0000
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39IF0jSt010259;
+	Wed, 18 Oct 2023 15:03:33 GMT
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tthee8d81-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Oct 2023 15:03:33 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 39IDVXrR027149;
+	Wed, 18 Oct 2023 15:03:31 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3tr6tkh5k9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Oct 2023 15:03:31 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com [10.39.53.231])
+	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 39IF3VXv26280500
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 18 Oct 2023 15:03:31 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6E1985805E;
+	Wed, 18 Oct 2023 15:03:31 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 91A5A58050;
+	Wed, 18 Oct 2023 15:03:30 +0000 (GMT)
+Received: from li-f45666cc-3089-11b2-a85c-c57d1a57929f.ibm.com (unknown [9.61.77.189])
+	by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Wed, 18 Oct 2023 15:03:30 +0000 (GMT)
+Message-ID: <c9b7de507e26cb4e5111cdc76998f1dcd3c0957a.camel@linux.ibm.com>
+Subject: Re: [PATCH 6.4 041/737] ovl: Always reevaluate the file signature
+ for IMA
+From: Mimi Zohar <zohar@linux.ibm.com>
+To: Raul Rangel <rrangel@chromium.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+        patches@lists.linux.dev, Eric Snowberg <eric.snowberg@oracle.com>,
+        Linus
+ Torvalds <torvalds@linux-foundation.org>,
+        Sasha Levin <sashal@kernel.org>, Tim Bain <tbain@google.com>,
+        Shuhei Takahashi <nya@chromium.org>
+Date: Wed, 18 Oct 2023 11:03:30 -0400
+In-Reply-To: <CAHQZ30A8R+EDGbrngMOQrXabR=DTHL3Y-1Tv+3RF98VHQ5b68Q@mail.gmail.com>
+References: <20230911134650.286315610@linuxfoundation.org>
+	 <20230911134651.582204417@linuxfoundation.org>
+	 <ZS6xYa_kjRGvdCG6@google.com>
+	 <bd5d2f882e47b904802023d5d4d54d8d4755440e.camel@linux.ibm.com>
+	 <CAHQZ30A8R+EDGbrngMOQrXabR=DTHL3Y-1Tv+3RF98VHQ5b68Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-22.el8) 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYBPR01MB5341.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2b9fe5a7-c0e2-4624-f659-08dbcf6f76a7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Oct 2023 00:16:24.1727
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: BZXaPK6xTDm72vfrv0HgB+ycvY2y1mB2GYrQ6tB20ZqXgqkXcwDop2Eu18VXJHjGjDCi6eMbRmUKZ8k6wV+AgmnrN8wx1rcqqp2753D6gfPcvZw7pCItvHfzCFXoxiBT
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY3PR01MB11188
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 5zivTkIJmBl5ahoJXjIF1sxZsOuBXdB4
+X-Proofpoint-ORIG-GUID: li92ihY3RrwOVREHXXQlsbeJDxX1qs3f
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-18_13,2023-10-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=999 mlxscore=0
+ bulkscore=0 spamscore=0 malwarescore=0 adultscore=0 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310180122
 
-Hello Bjorn, Nathan,
+On Tue, 2023-10-17 at 17:00 -0600, Raul Rangel wrote:
+> On Tue, Oct 17, 2023 at 12:27 PM Mimi Zohar <zohar@linux.ibm.com> wrote:
+> >
+> > On Tue, 2023-10-17 at 10:08 -0600, Raul E Rangel wrote:
+> > > On Mon, Sep 11, 2023 at 03:38:20PM +0200, Greg Kroah-Hartman wrote:
+> > > > 6.4-stable review patch.  If anyone has any objections, please let me know.
+> > > >
+> > > > ------------------
+> > > >
+> > > > From: Eric Snowberg <eric.snowberg@oracle.com>
+> > > >
+> > > > [ Upstream commit 18b44bc5a67275641fb26f2c54ba7eef80ac5950 ]
+> > > >
+> > > > Commit db1d1e8b9867 ("IMA: use vfs_getattr_nosec to get the i_version")
+> > > > partially closed an IMA integrity issue when directly modifying a file
+> > > > on the lower filesystem.  If the overlay file is first opened by a user
+> > > > and later the lower backing file is modified by root, but the extended
+> > > > attribute is NOT updated, the signature validation succeeds with the old
+> > > > original signature.
+> > > >
+> > > > Update the super_block s_iflags to SB_I_IMA_UNVERIFIABLE_SIGNATURE to
+> > > > force signature reevaluation on every file access until a fine grained
+> > > > solution can be found.
+> > > >
+> > >
+> > > Sorry for replying to the 6.4-stable patch, I couldn't find the original
+> > > patch in the mailing list.
+> > >
+> > > We recently upgraded from 6.4.4 to 6.5.3. We have the integrity LSM
+> > > enabled, and are using overlayfs. When we try and execute a binary from
+> > > the overlayfs filesystem, the integrity LSM hashes the binary and all
+> > > its shared objects every single invocation. This causes a serious
+> > > performance regression when invoking clang thousands of times while
+> > > building a package. We bisected the culprit down to this patch.
+> > >
+> > > Here are some numbers:
+> > >
+> > > With this patch + overlayfs:
+> > >
+> > >       $ time /usr/bin/clang-17 --version > /dev/null
+> > >
+> > >       real    0m0.628s
+> > >       user    0m0.004s
+> > >       sys     0m0.624s
+> > >       $ time /usr/bin/clang-17 --version > /dev/null
+> > >
+> > >       real    0m0.597s
+> > >       user    0m0.004s
+> > >       sys     0m0.593s
+> > >
+> > > With this patch - overlayfs:
+> > >
+> > >       $ truncate -s 1G foo.bin
+> > >       $ mkfs.ext4 foo.bin
+> > >       $ mount foo.bin /foo
+> > >       $ cp /usr/bin/clang-17 /foo
+> > >       $ time /foo/clang-17 --version > /dev/null
+> > >
+> > >       real    0m0.040s
+> > >       user    0m0.009s
+> > >       sys     0m0.031s
+> > >       $ time /foo/clang-17 --version > /dev/null
+> > >
+> > >       real    0m0.036s
+> > >       user    0m0.000s
+> > >       sys     0m0.037s
+> > >
+> > > Without this path + overlayfs:
+> > >       $ time /usr/bin/clang-17 --version > /dev/null
+> > >
+> > >       real    0m0.017s
+> > >       user    0m0.007s
+> > >       sys     0m0.011s
+> > >       $ time /usr/bin/clang-17 --version > /dev/null
+> > >
+> > >       real    0m0.018s
+> > >       user    0m0.000s
+> > >       sys     0m0.018s
+> > >
+> > > i.e., we go from ~30ms / invocation to 600ms / invocation. Building
+> > > glibc used to take about 3 minutes, but now its taking about 20 minutes.
+> > >
+> > > Our clang binary is about 100 MiB in size.
+> > >
+> > > Using `perf` the following sticks out:
+> > >       $ perf record -g time /usr/bin/clang-17 --version
+> > >       --92.03%--elf_map
+> > >             vm_mmap_pgoff
+> > >             ima_file_mmap
+> > >             process_measurement
+> > >             ima_collect_measurement
+> > >             |
+> > >              --91.95%--ima_calc_file_hash
+> > >                     ima_calc_file_hash_tfm
+> > >                     |
+> > >                     |--82.85%--_sha256_update
+> > >                     |     |
+> > >                     |      --82.47%--lib_sha256_base_do_update.isra.0
+> > >                     |           |
+> > >                     |            --82.39%--sha256_transform_rorx
+> > >                     |
+> > >                      --9.10%--integrity_kernel_read
+> > >
+> > > The audit.log is also logging every clang invocation as well.
+> > >
+> > > Was such a large performance regression expected? Can the commit be
+> > > reverted until the more fine grained solution mentioned in the commit
+> > > message be implemented?
+> >
+> 
+> First off, thanks for the quick reply. And I apologize in advance for
+> any naive questions. I'm still learning how the IMA system works.
+> 
+> > IMA is always based on policy.  Having the "integrity LSM enabled and
+> > using overlayfs" will not cause any measurements or signature
+> > verifications, unless the files are in policy.
+> 
+> Good point. The policy we have loaded is very similar to the one we
+> get from setting `ima_tcb`on the kernel command line. We just remove
+> the uid=0 constraint. i.e.,
+> ```
+> # SECURITYFS_MAGIC
+> dont_measure fsmagic=0x73636673
+> # SELINUXFS_MAGIC
+> dont_measure fsmagic=0xf97cff8c
+> ...
 
-> From: Bjorn Helgaas, Sent: Wednesday, October 18, 2023 3:51 AM
->=20
-> On Tue, Oct 17, 2023 at 11:41:58AM -0700, Nathan Chancellor wrote:
-> > With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-> > indirect call targets are validated against the expected function
-> > pointer prototype to make sure the call target is valid to help mitigat=
-e
-> > ROP attacks. If they are not identical, there is a failure at run time,
-> > which manifests as either a kernel panic or thread getting killed. A
-> > warning in clang aims to catch these at compile time, which reveals:
-> >
-> >   drivers/pci/controller/dwc/pcie-rcar-gen4.c:403:15: error: incompatib=
-le function pointer types initializing 'int
-> (*)(struct dw_pcie_ep *, u8, enum pci_epc_irq_type, u16)' (aka 'int (*)(s=
-truct dw_pcie_ep *, unsigned char, enum
-> pci_epc_irq_type, unsigned sort)') with an expression of type 'int (struc=
-t dw_pcie_ep *, u8, unsigned int, u16)' (aka
-> 'int (struct dw_pcie_ep *, unsigned char, unsigned int, unsigned short)')
-> [-Werror,-Wincompatible-function-pointer-types-strict]
-> >     403 |         .raise_irq =3D rcar_gen4_pcie_ep_raise_irq,
-> >         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >   1 error generated.
-> >
-> > '->raise_irq()' in 'struct dw_pcie_ep_ops' expects a type parameter of
-> > type 'enum pci_epc_irq_type', not 'unsigned int'. Adjust the type to
-> > match and use the proper enum values in the switch. The underlying valu=
-e
-> > of both the enum and the macro is the same, so there is no functional
-> > change while clearing up the warning and avoiding a CFI failure at run
-> > time.
-> >
-> > Fixes: 32b83c68d634 ("PCI: rcar-gen4: Add endpoint mode support")
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
->=20
-> Thanks, Nathan.
+The following are new rules:
 
-Thank you for the patch!
+> # audit files executed.
+> audit func=BPRM_CHECK
+> # audit executable libraries mmap'd.
+> audit func=FILE_MMAP mask=MAY_EXEC
+> # audit loaded kernel modules
+> audit func=MODULE_CHECK
+> ```
+> 
+> We don't have any appraisal rules loaded.
 
-> Yoshihiro, can you fold this in on the next rev of your rcar-gen4
-> series?
->=20
-> I dropped the rcar-gen4 branch for today since it broke Marek's system
-> (Samsung Exynos5433-based TM2e board), so when we fix that we should
-> be able to fold in this fix at the same time.
+Okay.  The appraisal result of the overlay file is being cached and not
+cleared on file change of the lower file.
 
-I got it. I'll fix this code and send patch-set as v25.
+> >
+> > The problem is that unless the lower layer file is in policy, file
+> > change will not be detected on the overlay filesystem.  Reverting this
+> > change will allow access to a modified file without re-verifying its
+> > integrity.
+> 
+> Given our simple policy, I think the lower layer file is included in the
+> policy. So if I understand correctly, you are saying that this patch
+> was meant to address the case where the lower layer wasn't
+> covered by the policy?
 
-Best regards,
-Yoshihiro Shimoda
+Yes
 
-> > ---
-> >  drivers/pci/controller/dwc/pcie-rcar-gen4.c | 7 ++++---
-> >  1 file changed, 4 insertions(+), 3 deletions(-)
 > >
-> > diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/=
-controller/dwc/pcie-rcar-gen4.c
-> > index 619262d32f4e..0c0f5c257b14 100644
-> > --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > @@ -353,14 +353,15 @@ static void rcar_gen4_pcie_ep_deinit(struct dw_pc=
-ie_ep *ep)
-> >  }
+> > Instead of reverting the patch, perhaps allow users to take this risk
+> > by defining a Kconfig, since they're aware of their policy rules.
 > >
-> >  static int rcar_gen4_pcie_ep_raise_irq(struct dw_pcie_ep *ep, u8 func_=
-no,
-> > -				       unsigned int type, u16 interrupt_num)
-> > +				       enum pci_epc_irq_type type,
-> > +				       u16 interrupt_num)
-> >  {
-> >  	struct dw_pcie *dw =3D to_dw_pcie_from_ep(ep);
-> >
-> >  	switch (type) {
-> > -	case PCI_IRQ_LEGACY:
-> > +	case PCI_EPC_IRQ_LEGACY:
-> >  		return dw_pcie_ep_raise_legacy_irq(ep, func_no);
-> > -	case PCI_IRQ_MSI:
-> > +	case PCI_EPC_IRQ_MSI:
-> >  		return dw_pcie_ep_raise_msi_irq(ep, func_no, interrupt_num);
-> >  	default:
-> >  		dev_err(dw->dev, "Unknown IRQ type\n");
-> >
-> > ---
-> > base-commit: de45624e69e14ccd6b4b2886155578bb218925de
-> > change-id: 20231017-pcie-rcar-wifpts-6c65df6f8c8b
-> >
-> > Best regards,
-> > --
-> > Nathan Chancellor <nathan@kernel.org>
-> >
+> 
+> That sounds good. Or would it make sense to add an option to the
+> policy file? i.e., `verifiable fsmagic=0x794c7630
+
+Perhaps instead of introducing a new "action" (measure/dont_measure,
+appraise/dont_appraise, audit), it should be more granular at the
+policy rule level. 
+Something like ignore_cache/dont_ignore_cache, depending on the
+default.
+
+Eric, does that make sense?
+
+> FWIW, I also added the following to my policy file:
+> ```
+> # OVERLAYFS_SUPER_MAGIC
+> dont_appraise fsmagic=0x794c7630
+> dont_measure fsmagic=0x794c7630
+> dont_hash fsmagic=0x794c7630
+> ```
+> 
+> I didn't get any entries in my audit.log, but the hashing was still
+> performed. I figured since tmpfs and ramfs were already marked
+> as dont_measure, adding overlayfs shouldn't really be any
+> different.
+
+If you're using a modified "ima_tcb" there are "measure" action rules
+which would cause files to be re-measured.  Look at the IMA measurement
+list.
+
+If you're only accessing files via the overlayfs and not the lower
+layer, then there wouldn't be any audit records.
+
+Mimi
+
