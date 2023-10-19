@@ -1,245 +1,117 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EA18F49
-	for <patches@lists.linux.dev>; Thu, 19 Oct 2023 15:12:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAFF2FE1D
+	for <patches@lists.linux.dev>; Thu, 19 Oct 2023 15:20:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="JAppBAXN"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id DDCF440E01AA;
-	Thu, 19 Oct 2023 15:12:25 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id XMEjBrjQIxp8; Thu, 19 Oct 2023 15:12:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1697728344; bh=jxWvDYhu22xzXY4/jglAUcc8tHFvy0xIj8ki/7s994w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JAppBAXN6lwZkpxtfgd8rsdlFj5Lxzzj/RouJYHQMl6fngJnH782OjdcxZUDKJcyn
-	 /QO6WMpy8i77Qw71ARthIN6vNaXSwBCqyBfP428JPNLJNx73BhLj9T+WyInIv8lUK+
-	 Nbz0UjxyjLcCTgUkCPMSIN9xZZ8+61ADKCf5viYy8/e7/pyuW4NQr4uNVb7snak08H
-	 0gTKZJ/khlF8SIkM47KU+u7IEfyAuqm6iOU7fjMAVZd/DOU5u3++zVcjZCWjWONGeX
-	 mfWQ8wbq/bAB19yK35pOpffq61hOrdELMoulHndDvq/MMkCgwxj/lfV/TJ9zp4TMYy
-	 mTaA/c9VXa1IhA7Z5RSEX8tgoNmGxAukpCFxv9vd4Im7RpzX1dYyj+F8R8Ugpib1mY
-	 SloruW+8t3cI0KtPNpe62aclXnN7bfdeXeazgvsu8XGqzk5xqPVirHjg0j+kzPoeLJ
-	 7Lp/g4c4AndFlAes5dxkrbqCEjlvfPfX10W0Wzf4QYJ2WDXh7WmeSyL0CVBI2CyWwb
-	 PAOmRmsF4C34rNuqpE6Mjv6iQxFNISIZkZATohInJ/m5nkoHs6rXd8PD1wFWSCQpd7
-	 SwpW2Qr7QKAq9nTQehxgRzW18kfVbyXFEcr95mMqZzpFAEE9QwhM+13aR3O//dNU67
-	 ro6XtzLOAGHQcqROHb0f5TPM=
-Received: from zn.tnic (pd95304da.dip0.t-ipconnect.de [217.83.4.218])
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="h5QSSCr9";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="C+41ztZd"
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id EFB4640E0196;
-	Thu, 19 Oct 2023 15:12:15 +0000 (UTC)
-Date: Thu, 19 Oct 2023 17:12:11 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Tony Luck <tony.luck@intel.com>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
-	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
-	x86@kernel.org, linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
-Message-ID: <20231019151211.GHZTFHS3osBIL1IJbF@fat_crate.local>
-References: <20230929181626.210782-1-tony.luck@intel.com>
- <20231004183623.17067-1-tony.luck@intel.com>
- <20231004183623.17067-3-tony.luck@intel.com>
+	by smtp-out1.suse.de (Postfix) with ESMTPS id E6FC921A2E;
+	Thu, 19 Oct 2023 15:20:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1697728800; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=65/Bc7TuJYYcxrrKAWOW2AlaW26JNILOkKbFFPEwZfs=;
+	b=h5QSSCr9dnxMPgdsclqt3BnTz2QSzVgfhsepPC89GnWrvKmme+fNb6DM3/D4MsUxv+0OK/
+	521IkdE/G4EsRzFm0sF57PqDDH1un2jb5HJbWLx9/h8S7KBGhvZPeYFFLG0cANEggVGyXn
+	e8KrlQFVPVPKAwy1fUPZQZTFxzOLu0E=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1697728800;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=65/Bc7TuJYYcxrrKAWOW2AlaW26JNILOkKbFFPEwZfs=;
+	b=C+41ztZdjQtvRhIj+I2dEKZxbsNUWmB8GG5LplOZeYcqgMmaiuIjDF22EuYdCXDIhmRSMJ
+	ata/kE3INTvdusAw==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B19B11357F;
+	Thu, 19 Oct 2023 15:20:00 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id OAN8KiBJMWUVHwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Thu, 19 Oct 2023 15:20:00 +0000
+Message-ID: <06eb77e9-a058-6b0d-d0f6-2f4733e6ca00@suse.cz>
+Date: Thu, 19 Oct 2023 17:20:00 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20231004183623.17067-3-tony.luck@intel.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: [GIT PULL] slab fixes for 6.6-rc6
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
+ <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, "linux-mm@kvack.org"
+ <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>,
+ patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Catalin Marinas <Catalin.Marinas@arm.com>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Authentication-Results: smtp-out1.suse.de;
+	none
+X-Spam-Level: 
+X-Spam-Score: -4.10
+X-Spamd-Result: default: False [-4.10 / 50.00];
+	 ARC_NA(0.00)[];
+	 TO_DN_EQ_ADDR_SOME(0.00)[];
+	 FREEMAIL_CC(0.00)[google.com,lge.com,linux.com,kernel.org,kvack.org,vger.kernel.org,lists.linux.dev,linux.dev,gmail.com,arm.com];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	 TAGGED_RCPT(0.00)[];
+	 MIME_GOOD(-0.10)[text/plain];
+	 NEURAL_HAM_LONG(-3.00)[-1.000];
+	 BAYES_HAM(-1.50)[91.71%];
+	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	 NEURAL_HAM_SHORT(-1.00)[-1.000];
+	 RCPT_COUNT_SEVEN(0.00)[11];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 RCVD_COUNT_TWO(0.00)[2];
+	 RCVD_TLS_ALL(0.00)[];
+	 MID_RHS_MATCH_FROM(0.00)[];
+	 SUSPICIOUS_RECIPS(1.50)[]
+X-Spam-Flag: NO
 
-On Wed, Oct 04, 2023 at 11:36:22AM -0700, Tony Luck wrote:
-> +/*
-> + * history:	bitmask tracking whether errors were seen or not seen in
-> + *		the most recent polls of a bank.
+Linus,
 
-		each bit in that bitmask represents an error seen.
+please pull the latest slab fixes from:
 
-> + * timestamp:	last time (in jiffies) that the bank was polled
-> + * storm:	Is this bank in storm mode?
-> + */
-> +struct storm_bank {
-> +	u64 history;
-> +	u64 timestamp;
-> +	bool storm;
+  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-fixes-for-6.6-rc6
 
-I guess "in_storm_mode" is even more descriptive:
+There's a single stable fix sent last week [1] and due to swiotlb
+changes in 6.6 I based it on 6.6-rc5 to apply cleanly:
 
-	storm->banks[bank].in_storm_mode = false;
+- stable fix to prevent kernel warnings with KASAN_HW_TAGS on
+  arm64 due to improperly resolved kmalloc alignment restrictions
+  (Catalin Marinas)
 
-etc.
+Thanks,
+Vlastimil
 
-> +};
-> +
-> +/* How many errors within the history buffer mark the start of a storm. */
-> +#define STORM_BEGIN_THRESHOLD	5
-> +
-> +/*
-> + * How many polls of machine check bank without an error before declaring
-> + * the storm is over. Since it is tracked by the bitmaks in the history
-> + * field of struct storm_bank the mask is 30 bits [0 ... 29].
-> + */
-> +#define STORM_END_POLL_THRESHOLD	29
->  
->  #ifdef CONFIG_ACPI_APEI
->  int apei_write_mce(struct mce *m);
-> diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-> index f6e87443b37a..7c931f0c9251 100644
-> --- a/arch/x86/kernel/cpu/mce/core.c
-> +++ b/arch/x86/kernel/cpu/mce/core.c
-> @@ -680,6 +680,8 @@ bool machine_check_poll(enum mcp_flags flags, mce_banks_t *b)
->  		barrier();
->  		m.status = mce_rdmsrl(mca_msr_reg(i, MCA_STATUS));
->  
-> +		mce_track_storm(&m);
+[1] https://lore.kernel.org/all/20231006163934.3273940-1-catalin.marinas@arm.com/
 
-Lemme see if I understand the idea here:
+----------------------------------------------------------------
+Catalin Marinas (1):
+      mm: slab: Do not create kmalloc caches smaller than arch_slab_minalign()
 
-the default polling interval is 5 mins. So the storm tracking is called
-every 5 mins once to see how are banks "doing", so to speak and to get
-them in or out of storm mode. So far so good...
-
-> +
->  		/* If this entry is not valid, ignore it */
->  		if (!(m.status & MCI_STATUS_VAL))
->  			continue;
-
-Btw, you're tracking storm even if the error is not valid - conditional
-above here. Why?
-
-> @@ -1652,22 +1654,29 @@ static void mce_timer_fn(struct timer_list *t)
->  	else
->  		iv = min(iv * 2, round_jiffies_relative(check_interval * HZ));
->  
-> -	__this_cpu_write(mce_next_interval, iv);
-> -	__start_timer(t, iv);
-> +	if (mce_is_storm()) {
-> +		__start_timer(t, HZ);
-> +	} else {
-> +		__this_cpu_write(mce_next_interval, iv);
-> +		__start_timer(t, iv);
-> +	}
-
-... this is where it becomes, hm, interesting: the check interval will
-be halved if an error has been seen during this round but then if we're
-in storm mode, that check interval doesn't matter - you'll run the timer
-each second.
-
-Then you need to restructure this to check the storm condition and not
-do anything to iv if storm.
-
-Or, am I missing something?
-
-> diff --git a/arch/x86/kernel/cpu/mce/threshold.c b/arch/x86/kernel/cpu/mce/threshold.c
-> index ef4e7bb5fd88..ecdf13f1bb7d 100644
-> --- a/arch/x86/kernel/cpu/mce/threshold.c
-> +++ b/arch/x86/kernel/cpu/mce/threshold.c
-> @@ -29,3 +29,115 @@ DEFINE_IDTENTRY_SYSVEC(sysvec_threshold)
->  	trace_threshold_apic_exit(THRESHOLD_APIC_VECTOR);
->  	apic_eoi();
->  }
-> +
-> +/*
-> + * banks:		per-cpu, per-bank details
-> + * stormy_bank_count:	count of MC banks in storm state
-> + * poll_mode:		CPU is in poll mode
-> + */
-> +struct mca_storm_desc {
-> +	struct storm_bank	banks[MAX_NR_BANKS];
-> +	u8			stormy_bank_count;
-> +	bool			poll_mode;
-> +};
-
-Yeah, put the struct definition into internal.h pls.
-
-> +static DEFINE_PER_CPU(struct mca_storm_desc, storm_desc);
-> +
-> +void mce_inherit_storm(unsigned int bank)
-> +{
-> +	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
-> +
-> +	storm->banks[bank].history = ~0ull;
-
-So upon inheriting a bank, you set its history that it has seen errors
-each time?
-
-That's weird.
-
-> +	storm->banks[bank].timestamp = jiffies;
-> +}
-> +
-> +bool mce_is_storm(void)
-
-That's a weird name. mce_get_storm_mode() perhaps?
-
-> +{
-> +	return __this_cpu_read(storm_desc.poll_mode);
-> +}
-> +
-> +void mce_set_storm(bool storm)
-
-mce_set_storm_mode()
-
-> +{
-> +	__this_cpu_write(storm_desc.poll_mode, storm);
-> +}
-> +
-> +static void mce_handle_storm(unsigned int bank, bool on)
-> +{
-> +	switch (boot_cpu_data.x86_vendor) {
-> +	}
-> +}
-
-...
-
-> +void mce_track_storm(struct mce *mce)
-> +{
-> +	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
-> +	unsigned long now = jiffies, delta;
-> +	unsigned int shift = 1;
-> +	u64 history = 0;
-> +
-> +	/*
-> +	 * When a bank is in storm mode it is polled once per second and
-> +	 * the history mask will record about the last minute of poll results.
-> +	 * If it is not in storm mode, then the bank is only checked when
-> +	 * there is a CMCI interrupt. Check how long it has been since
-> +	 * this bank was last checked, and adjust the amount of "shift"
-> +	 * to apply to history.
-> +	 */
-> +	if (!storm->banks[mce->bank].storm) {
-
-Yeah, if this were
-
-	if (!storm->banks[mce->bank].in_storm_mode)
-
-it would've been perfectly clear what the condition tests.
-
-> +		delta = now - storm->banks[mce->bank].timestamp;
-> +		shift = (delta + HZ) / HZ;
-> +	}
-> +
-> +	/* If it has been a long time since the last poll, clear history. */
-> +	if (shift < 64)
-
-Use a properly named define instead of a naked number.
-
-...
-
-Thx.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+ mm/slab_common.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
