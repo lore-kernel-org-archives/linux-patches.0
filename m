@@ -1,162 +1,245 @@
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AB01EB4F
-	for <patches@lists.linux.dev>; Thu, 19 Oct 2023 12:11:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EA18F49
+	for <patches@lists.linux.dev>; Thu, 19 Oct 2023 15:12:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="hOdIO8gP"
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20231019120306euoutp0255a6213eabea4fec3c2cc9378626b9d4~PgJq2_hlB3187031870euoutp029
-	for <patches@lists.linux.dev>; Thu, 19 Oct 2023 12:03:06 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20231019120306euoutp0255a6213eabea4fec3c2cc9378626b9d4~PgJq2_hlB3187031870euoutp029
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1697716986;
-	bh=LpU5UTDD6kkn0qMxKSNmVh5Ejl9/sBb0jdJHEpZGTI4=;
-	h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-	b=hOdIO8gPSSn8Yo2Er60fQoLfUw/QfNbfYF/pG2Kauc9ZsGE6HKEIMLLd3u+9TGg6f
-	 qxTs8rrBdzkluUt1yxqOc7RsBfRub5CXTum5jM6HTUhy/XiGSg3/1WFgfZc55g03J/
-	 144xQ7om7DeR2zsE9dcXf7wxE9N5GscaSKidpKuE=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-	20231019120306eucas1p1fe7f7431c7f471bd2c741c29e603cd7c~PgJqYxCq80765407654eucas1p1i;
-	Thu, 19 Oct 2023 12:03:06 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-	eusmges3new.samsung.com (EUCPMTA) with SMTP id EA.19.37758.9FA11356; Thu, 19
-	Oct 2023 13:03:05 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-	20231019120305eucas1p13232bbcd5c6357f4d892ae1527e43447~PgJp-yO120789107891eucas1p1f;
-	Thu, 19 Oct 2023 12:03:05 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-	eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-	20231019120305eusmtrp18877a9a0e2989cf58e25c2bc8880cc82~PgJp7yGQn3232332323eusmtrp1V;
-	Thu, 19 Oct 2023 12:03:05 +0000 (GMT)
-X-AuditID: cbfec7f5-7ffff7000002937e-08-65311af9f569
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-	eusmgms1.samsung.com (EUCPMTA) with SMTP id 7C.C0.10549.9FA11356; Thu, 19
-	Oct 2023 13:03:05 +0100 (BST)
-Received: from CAMSVWEXC02.scsc.local (unknown [106.1.227.72]) by
-	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20231019120305eusmtip13c260a0fd0204d287c92715637e2c27c~PgJpsodoE2779827798eusmtip1G;
-	Thu, 19 Oct 2023 12:03:05 +0000 (GMT)
-Received: from CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) by
-	CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) with Microsoft SMTP
-	Server (TLS) id 15.0.1497.2; Thu, 19 Oct 2023 13:03:04 +0100
-Received: from CAMSVWEXC02.scsc.local ([::1]) by CAMSVWEXC02.scsc.local
-	([fe80::3c08:6c51:fa0a:6384%13]) with mapi id 15.00.1497.012; Thu, 19 Oct
-	2023 13:03:04 +0100
-From: Andreas Hindborg <a.hindborg@samsung.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-CC: Masahiro Yamada <masahiroy@kernel.org>, Jonathan Corbet
-	<corbet@lwn.net>, Carlos Bilbao <carlos.bilbao@amd.com>, Wedson Almeida
-	Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng
-	<boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Benno Lossin
-	<benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>,
-	"linux-kbuild@vger.kernel.org" <linux-kbuild@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"rust-for-linux@vger.kernel.org" <rust-for-linux@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, Akira Yokosawa
-	<akiyks@gmail.com>, Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Subject: Re: [PATCH 1/2] docs: rust: update Rust docs output path
-Thread-Topic: [PATCH 1/2] docs: rust: update Rust docs output path
-Thread-Index: AQHaAdxzF0ONNLvru0SJFatPcIFbDLBQ89sA
-Date: Thu, 19 Oct 2023 12:03:03 +0000
-Message-ID: <87wmviizv2.fsf@samsung.com>
-In-Reply-To: <20231018160145.1017340-1-ojeda@kernel.org>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [106.210.248.240]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="JAppBAXN"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id DDCF440E01AA;
+	Thu, 19 Oct 2023 15:12:25 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id XMEjBrjQIxp8; Thu, 19 Oct 2023 15:12:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1697728344; bh=jxWvDYhu22xzXY4/jglAUcc8tHFvy0xIj8ki/7s994w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JAppBAXN6lwZkpxtfgd8rsdlFj5Lxzzj/RouJYHQMl6fngJnH782OjdcxZUDKJcyn
+	 /QO6WMpy8i77Qw71ARthIN6vNaXSwBCqyBfP428JPNLJNx73BhLj9T+WyInIv8lUK+
+	 Nbz0UjxyjLcCTgUkCPMSIN9xZZ8+61ADKCf5viYy8/e7/pyuW4NQr4uNVb7snak08H
+	 0gTKZJ/khlF8SIkM47KU+u7IEfyAuqm6iOU7fjMAVZd/DOU5u3++zVcjZCWjWONGeX
+	 mfWQ8wbq/bAB19yK35pOpffq61hOrdELMoulHndDvq/MMkCgwxj/lfV/TJ9zp4TMYy
+	 mTaA/c9VXa1IhA7Z5RSEX8tgoNmGxAukpCFxv9vd4Im7RpzX1dYyj+F8R8Ugpib1mY
+	 SloruW+8t3cI0KtPNpe62aclXnN7bfdeXeazgvsu8XGqzk5xqPVirHjg0j+kzPoeLJ
+	 7Lp/g4c4AndFlAes5dxkrbqCEjlvfPfX10W0Wzf4QYJ2WDXh7WmeSyL0CVBI2CyWwb
+	 PAOmRmsF4C34rNuqpE6Mjv6iQxFNISIZkZATohInJ/m5nkoHs6rXd8PD1wFWSCQpd7
+	 SwpW2Qr7QKAq9nTQehxgRzW18kfVbyXFEcr95mMqZzpFAEE9QwhM+13aR3O//dNU67
+	 ro6XtzLOAGHQcqROHb0f5TPM=
+Received: from zn.tnic (pd95304da.dip0.t-ipconnect.de [217.83.4.218])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id EFB4640E0196;
+	Thu, 19 Oct 2023 15:12:15 +0000 (UTC)
+Date: Thu, 19 Oct 2023 17:12:11 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
+	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
+	x86@kernel.org, linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
+Message-ID: <20231019151211.GHZTFHS3osBIL1IJbF@fat_crate.local>
+References: <20230929181626.210782-1-tony.luck@intel.com>
+ <20231004183623.17067-1-tony.luck@intel.com>
+ <20231004183623.17067-3-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrLKsWRmVeSWpSXmKPExsWy7djPc7o/pQxTDT5etrTYcyzL4u/s7ewW
-	J643sVh8uNbEanHjwn5mizVbGpksJvfNYrJ4cqCd0eLimdeMFgvblrBY/Nm1g8ni8q45bBYP
-	H9xgtVg5fzmjxeUTlxgt1j87zGyxYdlaRosrLe2sDkIerZf+snks6fzF5LFz1l12jwWbSj02
-	repk83ixeSajx+K+yawe39v3sHn0tG1i8vi8SS6AK4rLJiU1J7MstUjfLoEro3dpakEvZ8Xm
-	6xwNjA/Zuxg5OSQETCS2ft7PBmILCaxglLj+JLaLkQvI/sIoseb1XnYI5zOjxJ71JxhhOpbd
-	uguVWM4osbj5OQtEO1DV9lNMEIkzjBJ/DpxhhHBWMkqcnfoYbCGbgL7EtTXXmEFsEQFliYYD
-	r9hAipgFlrBJrJv/kxUkISzgKLH1zltWiCInidP/vkDZRhKN+z+ArWMRUJW4u+0/mM0roCHR
-	trQFbCingIXEx47NYLcyCshKPFr5C2wxs4C4xK0n85kgfhCUWDR7DzOELSbxb9dDNghbR+Ls
-	9SdQfxpIbF26jwXCVpbY/XkOC8QcPYkbU6ewQdjaEssWvmaGuEFQ4uTMJywgz0gIbOSS6JzX
-	BjSIA8hxkZh90QtijrDEq+NboCEvI3F6cg/LBEbtWUjOm4VkxSwkK2YhWbGAkWUVo3hqaXFu
-	emqxcV5quV5xYm5xaV66XnJ+7iZGYIo8/e/41x2MK1591DvEyMTBeIhRgoNZSYRX1cMgVYg3
-	JbGyKrUoP76oNCe1+BCjNAeLkjivaop8qpBAemJJanZqakFqEUyWiYNTqoGpjmeWs+QMUQ2r
-	Vz5a+Vemv2x1T5+lJTCnQl77qsGNGy5unyvOmAQeuxfM4zdL9rQbT43QW5+FQieOSSyYoX91
-	Sa5BiUjTn/Mi2aI7ioSl93OIe53NsMw8dCzj5PmQk+0FbtZWn1llpxtLcMxOfvFgd2vMWvaE
-	Ii82wU+PhO/6TokTUiwRWvH1ibTJo62F15f/DVRQ+abC5uovHOF8LUshb+GxYoWkl8JlJx58
-	rzn1fHJ33/1DR00efdnJtOXhOlWTM3pTjG+KBxisP/pcfvEvo5f2TDrVohM2XlPkPJCrM9/z
-	8KrIE7svXd7yUfvN7pr6YP3S7ybbn55M1b3/XMw3XTtmvdqBJaf93i0zfD1JiaU4I9FQi7mo
-	OBEA96rQSwAEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrDKsWRmVeSWpSXmKPExsVy+t/xu7o/pQxTDXa0SljsOZZl8Xf2dnaL
-	E9ebWCw+XGtitbhxYT+zxZotjUwWk/tmMVk8OdDOaHHxzGtGi4VtS1gs/uzawWRxedccNouH
-	D26wWqycv5zR4vKJS4wW658dZrbYsGwto8WVlnZWByGP1kt/2TyWdP5i8tg56y67x4JNpR6b
-	VnWyebzYPJPRY3HfZFaP7+172Dx62jYxeXzeJBfAFaVnU5RfWpKqkJFfXGKrFG1oYaRnaGmh
-	Z2RiqWdobB5rZWSqpG9nk5Kak1mWWqRvl6CX0bs0taCXs2LzdY4GxofsXYycHBICJhLLbt0F
-	srk4hASWMkpsn9DDDJGQkdj45SorhC0s8edaFxtE0UdGiQttN6GcM4wSJydPh3JWMkq0Hr7P
-	AtLCJqAvcW3NNbBRIgLKEg0HXoEVMQssYZNYd/IwWJGwgKPE1jtvWSGKnCRO//sCZRtJNO7/
-	AFbDIqAqcXfbfzCbV0BDom1pCzPEtm5GiRP9K9hAEpwCFhIfOzYzgtiMArISj1b+AvuOWUBc
-	4taT+UwQTwhILNlzHuo5UYmXj/9BPacjcfb6E0YI20Bi69J9LBC2ssTuz3NYIOboSdyYOoUN
-	wtaWWLbwNTPEQYISJ2c+YZnAKD0LybpZSFpmIWmZhaRlASPLKkaR1NLi3PTcYkO94sTc4tK8
-	dL3k/NxNjMBkt+3Yz807GOe9+qh3iJGJg/EQowQHs5IIr6qHQaoQb0piZVVqUX58UWlOavEh
-	RlNgIE1klhJNzgem27ySeEMzA1NDEzNLA1NLM2MlcV7Pgo5EIYH0xJLU7NTUgtQimD4mDk6p
-	BibZ9T/k399jPdET72+tftg+XrBce0co44yDBs9+5aWxiry6XeEceia4Xbj8xM9r1zMOzV0S
-	Zd4jpSJ312R7Z9bLC2qPriTNLv9vZHRIznhJ9+aS3odPJ8aVZk/YtvB7ysfWN801USJSl/gc
-	bLW2zvutrn/pxM172uarym53p7572dlt+nSC83bmogLXnZubL39S+7CkQzbQ0lTY6ZU9W9Ny
-	ASFuNv/bNYxvl70WOucd+3p6yrlJJ6X2zgt7qPox4faKt1ErH75LnfrlqXeAnOyUk6vXVkw+
-	r5QjJ5qWYmzRmjsp84LTrU3Xrit9P87rn7TAaO/Rj0E/tdr/sviVWjr8P1zP0vX9kqhi+YaY
-	nYeUWIozEg21mIuKEwEcOIRS/wMAAA==
-X-CMS-MailID: 20231019120305eucas1p13232bbcd5c6357f4d892ae1527e43447
-X-Msg-Generator: CA
-X-RootMTR: 20231018160207eucas1p1db839e2eb9a2ad39013c08c0e6f4624e
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20231018160207eucas1p1db839e2eb9a2ad39013c08c0e6f4624e
-References: <CGME20231018160207eucas1p1db839e2eb9a2ad39013c08c0e6f4624e@eucas1p1.samsung.com>
-	<20231018160145.1017340-1-ojeda@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20231004183623.17067-3-tony.luck@intel.com>
 
+On Wed, Oct 04, 2023 at 11:36:22AM -0700, Tony Luck wrote:
+> +/*
+> + * history:	bitmask tracking whether errors were seen or not seen in
+> + *		the most recent polls of a bank.
 
-Miguel Ojeda <ojeda@kernel.org> writes:
+		each bit in that bitmask represents an error seen.
 
-> The Rust code documentation output path moved from `rust/doc` to
-> `Documentation/output/rust/rustdoc`, thus update the old reference.
->
-> Fixes: 48fadf440075 ("docs: Move rustdoc output, cross-reference it")
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> + * timestamp:	last time (in jiffies) that the bank was polled
+> + * storm:	Is this bank in storm mode?
+> + */
+> +struct storm_bank {
+> +	u64 history;
+> +	u64 timestamp;
+> +	bool storm;
 
-Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
+I guess "in_storm_mode" is even more descriptive:
 
-> ---
->  Documentation/rust/general-information.rst | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/rust/general-information.rst b/Documentation/r=
-ust/general-information.rst
-> index 49029ee82e55..081397827a7e 100644
-> --- a/Documentation/rust/general-information.rst
-> +++ b/Documentation/rust/general-information.rst
-> @@ -29,7 +29,7 @@ target with the same invocation used for compilation, e=
-.g.::
-> =20
->  To read the docs locally in your web browser, run e.g.::
-> =20
-> -	xdg-open rust/doc/kernel/index.html
-> +	xdg-open Documentation/output/rust/rustdoc/kernel/index.html
-> =20
->  To learn about how to write the documentation, please see coding-guideli=
-nes.rst.
-> =20
->
-> base-commit: 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
+	storm->banks[bank].in_storm_mode = false;
+
+etc.
+
+> +};
+> +
+> +/* How many errors within the history buffer mark the start of a storm. */
+> +#define STORM_BEGIN_THRESHOLD	5
+> +
+> +/*
+> + * How many polls of machine check bank without an error before declaring
+> + * the storm is over. Since it is tracked by the bitmaks in the history
+> + * field of struct storm_bank the mask is 30 bits [0 ... 29].
+> + */
+> +#define STORM_END_POLL_THRESHOLD	29
+>  
+>  #ifdef CONFIG_ACPI_APEI
+>  int apei_write_mce(struct mce *m);
+> diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+> index f6e87443b37a..7c931f0c9251 100644
+> --- a/arch/x86/kernel/cpu/mce/core.c
+> +++ b/arch/x86/kernel/cpu/mce/core.c
+> @@ -680,6 +680,8 @@ bool machine_check_poll(enum mcp_flags flags, mce_banks_t *b)
+>  		barrier();
+>  		m.status = mce_rdmsrl(mca_msr_reg(i, MCA_STATUS));
+>  
+> +		mce_track_storm(&m);
+
+Lemme see if I understand the idea here:
+
+the default polling interval is 5 mins. So the storm tracking is called
+every 5 mins once to see how are banks "doing", so to speak and to get
+them in or out of storm mode. So far so good...
+
+> +
+>  		/* If this entry is not valid, ignore it */
+>  		if (!(m.status & MCI_STATUS_VAL))
+>  			continue;
+
+Btw, you're tracking storm even if the error is not valid - conditional
+above here. Why?
+
+> @@ -1652,22 +1654,29 @@ static void mce_timer_fn(struct timer_list *t)
+>  	else
+>  		iv = min(iv * 2, round_jiffies_relative(check_interval * HZ));
+>  
+> -	__this_cpu_write(mce_next_interval, iv);
+> -	__start_timer(t, iv);
+> +	if (mce_is_storm()) {
+> +		__start_timer(t, HZ);
+> +	} else {
+> +		__this_cpu_write(mce_next_interval, iv);
+> +		__start_timer(t, iv);
+> +	}
+
+... this is where it becomes, hm, interesting: the check interval will
+be halved if an error has been seen during this round but then if we're
+in storm mode, that check interval doesn't matter - you'll run the timer
+each second.
+
+Then you need to restructure this to check the storm condition and not
+do anything to iv if storm.
+
+Or, am I missing something?
+
+> diff --git a/arch/x86/kernel/cpu/mce/threshold.c b/arch/x86/kernel/cpu/mce/threshold.c
+> index ef4e7bb5fd88..ecdf13f1bb7d 100644
+> --- a/arch/x86/kernel/cpu/mce/threshold.c
+> +++ b/arch/x86/kernel/cpu/mce/threshold.c
+> @@ -29,3 +29,115 @@ DEFINE_IDTENTRY_SYSVEC(sysvec_threshold)
+>  	trace_threshold_apic_exit(THRESHOLD_APIC_VECTOR);
+>  	apic_eoi();
+>  }
+> +
+> +/*
+> + * banks:		per-cpu, per-bank details
+> + * stormy_bank_count:	count of MC banks in storm state
+> + * poll_mode:		CPU is in poll mode
+> + */
+> +struct mca_storm_desc {
+> +	struct storm_bank	banks[MAX_NR_BANKS];
+> +	u8			stormy_bank_count;
+> +	bool			poll_mode;
+> +};
+
+Yeah, put the struct definition into internal.h pls.
+
+> +static DEFINE_PER_CPU(struct mca_storm_desc, storm_desc);
+> +
+> +void mce_inherit_storm(unsigned int bank)
+> +{
+> +	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
+> +
+> +	storm->banks[bank].history = ~0ull;
+
+So upon inheriting a bank, you set its history that it has seen errors
+each time?
+
+That's weird.
+
+> +	storm->banks[bank].timestamp = jiffies;
+> +}
+> +
+> +bool mce_is_storm(void)
+
+That's a weird name. mce_get_storm_mode() perhaps?
+
+> +{
+> +	return __this_cpu_read(storm_desc.poll_mode);
+> +}
+> +
+> +void mce_set_storm(bool storm)
+
+mce_set_storm_mode()
+
+> +{
+> +	__this_cpu_write(storm_desc.poll_mode, storm);
+> +}
+> +
+> +static void mce_handle_storm(unsigned int bank, bool on)
+> +{
+> +	switch (boot_cpu_data.x86_vendor) {
+> +	}
+> +}
+
+...
+
+> +void mce_track_storm(struct mce *mce)
+> +{
+> +	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
+> +	unsigned long now = jiffies, delta;
+> +	unsigned int shift = 1;
+> +	u64 history = 0;
+> +
+> +	/*
+> +	 * When a bank is in storm mode it is polled once per second and
+> +	 * the history mask will record about the last minute of poll results.
+> +	 * If it is not in storm mode, then the bank is only checked when
+> +	 * there is a CMCI interrupt. Check how long it has been since
+> +	 * this bank was last checked, and adjust the amount of "shift"
+> +	 * to apply to history.
+> +	 */
+> +	if (!storm->banks[mce->bank].storm) {
+
+Yeah, if this were
+
+	if (!storm->banks[mce->bank].in_storm_mode)
+
+it would've been perfectly clear what the condition tests.
+
+> +		delta = now - storm->banks[mce->bank].timestamp;
+> +		shift = (delta + HZ) / HZ;
+> +	}
+> +
+> +	/* If it has been a long time since the last poll, clear history. */
+> +	if (shift < 64)
+
+Use a properly named define instead of a naked number.
+
+...
+
+Thx.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
