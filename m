@@ -1,74 +1,68 @@
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69361DFDA
-	for <patches@lists.linux.dev>; Thu, 19 Oct 2023 12:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161F820309
+	for <patches@lists.linux.dev>; Thu, 19 Oct 2023 12:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="gTYYynkp"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="jsmBkI5i"
 Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20231019120353euoutp02245fe43ede7f1efbd055bdf35da45bb8~PgKXA8kSu0127301273euoutp02V
-	for <patches@lists.linux.dev>; Thu, 19 Oct 2023 12:03:53 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20231019120353euoutp02245fe43ede7f1efbd055bdf35da45bb8~PgKXA8kSu0127301273euoutp02V
+	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20231019120432euoutp01b8f4740d85aee6f720fe82ffc852026c~PgK7CCLUx0475804758euoutp01S
+	for <patches@lists.linux.dev>; Thu, 19 Oct 2023 12:04:32 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20231019120432euoutp01b8f4740d85aee6f720fe82ffc852026c~PgK7CCLUx0475804758euoutp01S
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1697717033;
-	bh=Pl2pglJ8vteCsuKaY+7utYmmg4JPu8Nl70f+8wtaZdQ=;
+	s=mail20170921; t=1697717072;
+	bh=UuT+43MuAJ7Xse3ZkxctwKmSJQDv0cIYRJ0g7MYPtEA=;
 	h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-	b=gTYYynkpn9mYsvXRB4aKjQB7P+RJwpcZWIuqgOGon12qu+lhkblxA7FwI6GQi8/YY
-	 iSkXk3n0IMwMd/uqAmOUNiw9ey9/ljzmJwudFNi3n2oqOST4wLiCeJe6oTPN0HuXeO
-	 q0XbeyUOzUCLzsm0gHMreSmFt/bNZFETHlbAraDA=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+	b=jsmBkI5iSobFkj/VRlsFyUuZqxgsw64j5SDaEd8wpU5u9+8cN8ZqlkHAimNdn3gSA
+	 TzL8rMltnfKkj2Q4tbI7LRZGLNfVa1Ds5SAS0XdOsXtOto2Z8zak8de4Gf+LF59RWs
+	 nvnRSlHLmDw5Fd/542Xq8UN1AP5/7aim8Vvmv6uA=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
 	eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-	20231019120353eucas1p2669f0cd91acbdf3258bb0db640d6fb92~PgKWqwaEx0934509345eucas1p23;
-	Thu, 19 Oct 2023 12:03:53 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-	eusmges2new.samsung.com (EUCPMTA) with SMTP id 96.81.11320.92B11356; Thu, 19
-	Oct 2023 13:03:53 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-	20231019120353eucas1p1b523f24f9e6b7b2266d7e3fcb7562b43~PgKWL-HNI0542005420eucas1p1m;
-	Thu, 19 Oct 2023 12:03:53 +0000 (GMT)
+	20231019120432eucas1p270299039be97a250c566e4dc96592c8f~PgK6saScF0294502945eucas1p2U;
+	Thu, 19 Oct 2023 12:04:32 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+	eusmges3new.samsung.com (EUCPMTA) with SMTP id AB.79.37758.05B11356; Thu, 19
+	Oct 2023 13:04:32 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+	20231019120431eucas1p2f7e355c1c628c4350188735acd9a0ed1~PgK6L2tt72673826738eucas1p2t;
+	Thu, 19 Oct 2023 12:04:31 +0000 (GMT)
 Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-	eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-	20231019120352eusmtrp1cbd462659d7b33ce018c20526cb28c3f~PgKWFWQe63276532765eusmtrp1q;
-	Thu, 19 Oct 2023 12:03:52 +0000 (GMT)
-X-AuditID: cbfec7f4-993ff70000022c38-99-65311b293796
+	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+	20231019120431eusmtrp29e8e54a76ee4175eae53d81d0881dfbf~PgK6LIQ591929519295eusmtrp2C;
+	Thu, 19 Oct 2023 12:04:31 +0000 (GMT)
+X-AuditID: cbfec7f5-815ff7000002937e-6d-65311b50912e
 Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-	eusmgms1.samsung.com (EUCPMTA) with SMTP id 4E.E0.10549.82B11356; Thu, 19
-	Oct 2023 13:03:52 +0100 (BST)
+	eusmgms1.samsung.com (EUCPMTA) with SMTP id 22.11.10549.F4B11356; Thu, 19
+	Oct 2023 13:04:31 +0100 (BST)
 Received: from CAMSVWEXC02.scsc.local (unknown [106.1.227.72]) by
 	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20231019120352eusmtip2a76008e7ee2d0830c48a6ffb97cac334~PgKV2iJxw0457004570eusmtip2w;
-	Thu, 19 Oct 2023 12:03:52 +0000 (GMT)
+	20231019120431eusmtip235d3a457cb6e89ca1d9b2c5258a2a618~PgK6BFGy10517305173eusmtip2n;
+	Thu, 19 Oct 2023 12:04:31 +0000 (GMT)
 Received: from CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) by
 	CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) with Microsoft SMTP
-	Server (TLS) id 15.0.1497.2; Thu, 19 Oct 2023 13:03:52 +0100
+	Server (TLS) id 15.0.1497.2; Thu, 19 Oct 2023 13:04:30 +0100
 Received: from CAMSVWEXC02.scsc.local ([::1]) by CAMSVWEXC02.scsc.local
 	([fe80::3c08:6c51:fa0a:6384%13]) with mapi id 15.00.1497.012; Thu, 19 Oct
-	2023 13:03:52 +0100
+	2023 13:04:30 +0100
 From: Andreas Hindborg <a.hindborg@samsung.com>
 To: Miguel Ojeda <ojeda@kernel.org>
-CC: Masahiro Yamada <masahiroy@kernel.org>, Jonathan Corbet
-	<corbet@lwn.net>, Carlos Bilbao <carlos.bilbao@amd.com>, Wedson Almeida
-	Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng
-	<boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Benno Lossin
-	<benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>,
-	"linux-kbuild@vger.kernel.org" <linux-kbuild@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"rust-for-linux@vger.kernel.org" <rust-for-linux@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, Nathan Chancellor
-	<nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, "Nicolas
- Schier" <nicolas@fjasle.eu>, Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Akira Yokosawa <akiyks@gmail.com>
-Subject: Re: [PATCH 2/2] kbuild: remove old Rust docs output path
-Thread-Topic: [PATCH 2/2] kbuild: remove old Rust docs output path
-Thread-Index: AQHaAdysR6IIS0NbkUKo+EtvDXfUhLBQ9AmA
-Date: Thu, 19 Oct 2023 12:03:51 +0000
-Message-ID: <87sf66iztq.fsf@samsung.com>
-In-Reply-To: <20231018160145.1017340-2-ojeda@kernel.org>
+CC: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor
+	<alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo
+	<gary@garyguo.net>, =?iso-8859-1?Q?Bj=F6rn_Roy_Baron?=
+	<bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Alice
+	Ryhl <aliceryhl@google.com>, "rust-for-linux@vger.kernel.org"
+	<rust-for-linux@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, "stable@vger.kernel.org" <stable@vger.kernel.org>
+Subject: Re: [PATCH] rust: docs: fix logo replacement
+Thread-Topic: [PATCH] rust: docs: fix logo replacement
+Thread-Index: AQHaAdvAuvbjg/ia0k6JWzKMfPbkfbBQ9EoA
+Date: Thu, 19 Oct 2023 12:04:30 +0000
+Message-ID: <87o7guizsn.fsf@samsung.com>
+In-Reply-To: <20231018155527.1015059-1-ojeda@kernel.org>
 Accept-Language: en-US, en-GB
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -84,82 +78,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA02SbUxTZxTHfW5vb29Lai61k2dFIYGQoGzlrZtPFsbUSbxmWaJbdNm+uDpu
-	kK1QbAV1MZMC0vAiY2NMbNlsUSwlMFwtE8qLDJOCAzKhrrCaOiBtU2HxBdStaOlsL0v49jvn
-	/M/5n+fkITkiDSEh8wuPM6pCuSKBEOC/2AO/v74tNp1JC9q2oH775yiov85Do9NlOHrkLOOi
-	mds3OKjDqsFQQ50OQ54hLUCT44sAGSsv4+iFrQdDDlszgeZmZ7hIa/YS6FF9CEO+gVEuMl80
-	AeQYnQKoy3eTg65e6QToToWWu/MV+uxUkKBtw9cI+nLVCkb36tw82mAppi3tVQTtv3YB0Jfq
-	Grj0P9p+gq6ttGD0siVuf9QngqxcRpFfwqhSsz8VHK0q/ZNbpOOfHLQaQSno5VUDPgkpGfT/
-	XcOtBgJSRLUBOLvUgbHBEwADMyZOWCWilgFsevZeNSAjHW0PMlmNCcBv6kI4G7zU/PXtBMEG
-	4wB2V5jW5poBdIw5IqMIKhU6O5wRFlOJsHRoIdLBoYw8+MPEHAgXNlG74G/LQR4r2g0nu6e5
-	YW8xlQFv1UeF0ziVBNt8nUSYhVQydK0+x8LMpxC8+sAVaQXUVjhvXokwh4qBLs9FjH10NGzR
-	93NY3gxXbXMEy6/BiWkPYDkNdrcO4iwnwr7lZpydI4Uzjd8RLKfAK8ZFDrtDNLx1wbOm/0MA
-	55eS2XPtgeWuM2x6E1wYsa7dfQsca6jF60GKbt12unUOunUOunUOBoC3gximWF2Qx6gzCpkT
-	UrW8QF1cmCf9TFlgAS9/6djqyJMeYFp4LB0GGAmGASQ5CWJhEp3GiIS58lNfMirlYVWxglEP
-	g1gST4gRJuXGMyIqT36c+YJhihjV/1WM5EtKsa2XpmqeKjwuc46at3JP1hQ4Fnpr53xRSby+
-	Y+K2uevw18mDS973CfuAf7V3495zA1kbmivifM1+03PaMew8gPWLsxPTgzllkta6SuU+b6bY
-	674eLQzpZUmGPe80Lu24++73eo2pNeUs7+033U994/6bksBiRpSsR5M/9CJE7Wg8T6YeqY2m
-	WyYT263P5oDnxwPMR6eMRq01PrvCe/qO/6dfq6La++4pNp5sGXn1oLA8074r66t/a+pveMZP
-	l3947IQwAN2zmdtk5MO+3DhFr1t65FyyafeG+/s3H7KPGrY/hvcl84f2LvzcWUJ/LGpSnlF2
-	xX7gPM/vvGvI0bzx8GACrj4qT9/OUanl/wGmOjkIFAQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0xTZxjH855zenqQNTlgCe/AyyzDMdHSlsLeOmFs++DBDwZjsmwgKZ2c
-	AAot66FOd8mqGyCwkU7nEqqUdnKxnQwoolw6ZJUIBRcuOsqYkl06xmABSTFmTNhajkv49nsu
-	/+eWh8LDjWQUVaAtYfVaTaGE3EQMrw1M74mLlrOyzkU5ct0+hlYv3hCiQe8ZAj2cOCNAk6M3
-	cXT12mkMna82Y8jXVw7Q2J15gGxl9QR60t2Jobvdl0j0y8+TAlRu/51ED03/Ymjm20EBstc1
-	AXR3cByglplbOGptbAbo3iflgrQIpnR8lWS63e0kU1+xgjFd5gdCxuo0ME5HBcnMttcA5nL1
-	eQHzuNxFMp+WOTHG79yWEZop3afXGUrY5/J1XEmKJEuOFFK5CkkVSpVUnvhS9l5FkiQhdV8u
-	W1hwgtUnpOZI8yuMPwqKzSEne6/ZgBF0CSsBRUFaCa8sJFaCTVQ43QCgyeQjKkFIwL8Fti3/
-	IOB5M3wyUUnySUsA3v/YI+SNOwDOjVhx3rADeMvTti4n6QQ4cXUCD7KYjoHGvrl1OU7bhNA8
-	3CIMBjbTr8Ih/6qQT3oNjnV4BcGZxLQCekyhQTdBx8IrM81kkEV0HJxa+wfjm3UB2OO8iQUD
-	ITSCrQtT63UAvRX+al9ZZ5yOhFO+OozfgYb1rhGc5wj4529rT3fbDb/3+gDPMtjR0Pt0/xjY
-	479E8HWkcPLCFyTP8bDRNo/zA4VBT42PMIFo84Z25g0S8waJeYPECggHELMGriiviJNLOU0R
-	Z9DmSY/qipwg8IrXb//d3gksc0tSN8Ao4AaQwiViUSwjY8NFuZpT77F6nVpvKGQ5N0gKHOlz
-	PCriqC7wy9oStTxZliRXJqtkSarkREmkKL34rCacztOUsMdZtpjV/6/DqJAoI/bMMTGHD1xU
-	niP+EN0vVWeIL/iz3ti/03G9EL719a7Tpob3QabhganU63XUDh20Hm/K2O05tTPXkjaiztac
-	uLe/7lGMhODMzPRoc1ZdlS9tmaM+3IotgvltVnXtgcX5dOZd+ZJRYDly2ZHyna6AOjD0utoy
-	Glf2QWjCCzYytlZzcMtaVWPZ3sX+N3ush3pnv+nHi+N3nK0+HHnyyz6Dq2qHVbKSs6fjUFO0
-	c3lh+2eWmrTpoggiMTznp/GwzrS/slJB8lcuo03r8ttfrHiU0b90rq0zZRjkvvI8puBuHPlo
-	MKz18Xa1aeAd7WwfE5Men61sdLtfVvWPpWQ+e/htY0tg+HyNfBeu5zT/AUxh2agTBAAA
-X-CMS-MailID: 20231019120353eucas1p1b523f24f9e6b7b2266d7e3fcb7562b43
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKKsWRmVeSWpSXmKPExsWy7djPc7oB0oapBpeXsFv8nb2d3eLE9SYW
+	iw/XmlgtblzYz2yxZksjk8XFM68ZLS7vmsNmsXL+ciDrxCVGi/XPDjNbLNj4iNFiw7K1jA48
+	Hks6fzF57Jx1l91jwaZSj02rOtk8XmyeyejxvX0Pm0dP2yYmj8+b5AI4orhsUlJzMstSi/Tt
+	Ergyrk3pYir4LVrxrVOlgfGTUBcjJ4eEgInEh+fTWEBsIYEVjBKrbotA2F8YJf71hUPYnxkl
+	ZvaIdTFygNU/+iDbxcgFFF7OKDHl5wE2CAeoZsG11UwQzhlGic2NX9ghnJWMEr/nvwBbwSag
+	L3FtzTVmEFtEQFmi4cArNhCbWWAyi8TLX2AnCQuYSsy53MMGUWMm8fLBVKh6I4k9Ez6zgtgs
+	AqoST2ZNBKvhFdCQaDsymwnE5hSwkNg4eTOYzSggK/Fo5S92iPniEreezGeCeFlQYtHsPcwQ
+	tpjEv10P2SBsHYmz158wQtgGEluX7mOBsJUldn+ewwIxR0/ixtQpUDdrSyxb+JoZ4gZBiZMz
+	n7CAPCwh8I9TYsfeB1CDXCRuPOqAWiYs8er4FnYIW0bi/875TBMYtWchuW8Wkh2zkOyYhWTH
+	AkaWVYziqaXFuempxcZ5qeV6xYm5xaV56XrJ+bmbGIEp7fS/4193MK549VHvECMTB+MhRgkO
+	ZiURXlUPg1Qh3pTEyqrUovz4otKc1OJDjNIcLErivKop8qlCAumJJanZqakFqUUwWSYOTqkG
+	ps4s6cUecjdr7RpXRLotNdmlWhV3dEZu+J4dnBq/FBs2HdXKEcsIFBXPvrSp7wND4fcDk2cs
+	mWTKVFk9dYuKwOYnh7s1L/+d+ZBbovPA2qVzwr5ERwWey1xbxDjNadH9mR+XBnPvvPD6R2ax
+	Wt/fIy3ZPkbaXPEF0w3+bGeb9Du459hefoWp7366rJrZLFT/1czu9n7RnkU15+f2R00R3FTe
+	Lc+5VedO8YXnGt6lCk4aojm2yaue3/n86dvyTXzXvthdnMTtM7n+3gV+4Vlxm1+wfz1T/sDP
+	UvDpRXZ28+NH/kX7dqtzy+euzZirxr/v5zr3AwFSVnfZ3N/YaIpN3JsdfvxjpeCFea/ZWuL2
+	SiqxFGckGmoxFxUnAgCdQHbM2AMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKKsWRmVeSWpSXmKPExsVy+t/xe7r+0oapBv9Pq1n8nb2d3eLE9SYW
+	iw/XmlgtblzYz2yxZksjk8XFM68ZLS7vmsNmsXL+ciDrxCVGi/XPDjNbLNj4iNFiw7K1jA48
+	Hks6fzF57Jx1l91jwaZSj02rOtk8XmyeyejxvX0Pm0dP2yYmj8+b5AI4ovRsivJLS1IVMvKL
+	S2yVog0tjPQMLS30jEws9QyNzWOtjEyV9O1sUlJzMstSi/TtEvQyrk3pYir4LVrxrVOlgfGT
+	UBcjB4eEgInEow+yXYxcHEICSxklHm7tYeli5ASKy0hs/HKVFcIWlvhzrYsNougjo8Tu3kWM
+	EM4ZRonFmw5DZVYySvS/vwbWziagL3FtzTVmEFtEQFmi4cArsCJmgcksEpe/HAObKyxgKjHn
+	cg8bRJGZxMsHU6EajCT2TPgMVsMioCrxZNZEsBpeAQ2JtiOzmSC2dTNKbL99GqyBU8BCYuPk
+	zUwgNqOArMSjlb/YQWxmAXGJW0/mM0E8ISCxZM95ZghbVOLl439Qz+lInL3+hBHCNpDYunQf
+	NACUJXZ/nsMCMUdP4sbUKWwQtrbEsoWvmSEOEpQ4OfMJywRG6VlI1s1C0jILScssJC0LGFlW
+	MYqklhbnpucWG+oVJ+YWl+al6yXn525iBKanbcd+bt7BOO/VR71DjEwcjIcYJTiYlUR4VT0M
+	UoV4UxIrq1KL8uOLSnNSiw8xmgIDaSKzlGhyPjBB5pXEG5oZmBqamFkamFqaGSuJ83oWdCQK
+	CaQnlqRmp6YWpBbB9DFxcEo1MIn3Vp/r3My4x4nt9asPj+r4P/jtuP521qTdzTeXihr3c53W
+	WZ+6j3WP/uOGbdt1F0iaJ2hLnZe55Pv4e/XZ5zs27dy5XrFg23mxvlka0yN2qPxO7TwTJLiu
+	7SRP4pU7/Mvut5337lGcLVL4zP3S9IT2pjyjcPGVh4x2b6y49+ty4q/APu6/xxmv7f/kcNAm
+	e1Lh59suX5SPf2510r/MqddfvuRKT+b7Ns5JchX1G08tXVNRmy5/ft5l5+bbFV9TLKfmRrWH
+	Z9emfbrDnqvIt3+W891jMzO+P14ZZpxk4vFx/zLNKwVBf1l1cn/2r5hzc6Of1PwHE/+l3npz
+	UDvGQXxK5hPdhxN0+C1qz+zq0BdSYinOSDTUYi4qTgQAksfPnNgDAAA=
+X-CMS-MailID: 20231019120431eucas1p2f7e355c1c628c4350188735acd9a0ed1
 X-Msg-Generator: CA
-X-RootMTR: 20231018160211eucas1p20859b897fc44428db3ead0809c6d299c
+X-RootMTR: 20231018155602eucas1p14b9439c5249a921e1d5eda1e2e23eebf
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20231018160211eucas1p20859b897fc44428db3ead0809c6d299c
-References: <20231018160145.1017340-1-ojeda@kernel.org>
-	<CGME20231018160211eucas1p20859b897fc44428db3ead0809c6d299c@eucas1p2.samsung.com>
-	<20231018160145.1017340-2-ojeda@kernel.org>
+X-CMS-RootMailID: 20231018155602eucas1p14b9439c5249a921e1d5eda1e2e23eebf
+References: <CGME20231018155602eucas1p14b9439c5249a921e1d5eda1e2e23eebf@eucas1p1.samsung.com>
+	<20231018155527.1015059-1-ojeda@kernel.org>
 
 
 Miguel Ojeda <ojeda@kernel.org> writes:
 
-> The Rust code documentation output path moved from `rust/doc` to
-> `Documentation/output/rust/rustdoc`. The `make cleandocs` target
-> takes care of cleaning it now since it is integrated with the rest
-> of the documentation.
+> The static files placement by `rustdoc` changed in Rust 1.67.0 [1],
+> but the custom code we have to replace the logo in the generated
+> HTML files did not get updated.
 >
-> Thus remove the old reference.
+> Thus update it to have the Linux logo again in the output.
 >
-> Fixes: 48fadf440075 ("docs: Move rustdoc output, cross-reference it")
+> Hopefully `rustdoc` will eventually support a custom logo from
+> a local file [2], so that we do not need to maintain this hack
+> on our side.
+>
+> Link: https://protect2.fireeye.com/v1/url?k=3D3606269f-578d33a5-3607add0-=
+74fe4860008a-47cdfdc2f1793629&q=3D1&e=3Dca2ce79b-669b-4a80-b032-30bab50cf45=
+5&u=3Dhttps%3A%2F%2Fgithub.com%2Frust-lang%2Frust%2Fpull%2F101702 [1]
+> Link: https://protect2.fireeye.com/v1/url?k=3Dfaa866e4-9b2373de-faa9edab-=
+74fe4860008a-e32c39efb11c5865&q=3D1&e=3Dca2ce79b-669b-4a80-b032-30bab50cf45=
+5&u=3Dhttps%3A%2F%2Fgithub.com%2Frust-lang%2Frfcs%2Fpull%2F3226 [2]
+> Fixes: 3ed03f4da06e ("rust: upgrade to Rust 1.68.2")
+> Cc: stable@vger.kernel.org
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
->
 
 Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
 
- ---
->  Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> ---
+>  rust/Makefile | 15 +++++++--------
+>  1 file changed, 7 insertions(+), 8 deletions(-)
 >
-> diff --git a/Makefile b/Makefile
-> index 373649c7374e..040018111f32 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1474,7 +1474,7 @@ endif # CONFIG_MODULES
->  # Directories & files removed with 'make clean'
->  CLEAN_FILES +=3D vmlinux.symvers modules-only.symvers \
->  	       modules.builtin modules.builtin.modinfo modules.nsdeps \
-> -	       compile_commands.json .thinlto-cache rust/test rust/doc \
-> +	       compile_commands.json .thinlto-cache rust/test \
->  	       rust-project.json .vmlinux.objs .vmlinux.export.c
+> diff --git a/rust/Makefile b/rust/Makefile
+> index 87958e864be0..08af1f869f0c 100644
+> --- a/rust/Makefile
+> +++ b/rust/Makefile
+> @@ -93,15 +93,14 @@ quiet_cmd_rustdoc =3D RUSTDOC $(if $(rustdoc_host),H,=
+ ) $<
+>  # and then retouch the generated files.
+>  rustdoc: rustdoc-core rustdoc-macros rustdoc-compiler_builtins \
+>      rustdoc-alloc rustdoc-kernel
+> -	$(Q)cp $(srctree)/Documentation/images/logo.svg $(rustdoc_output)
+> -	$(Q)cp $(srctree)/Documentation/images/COPYING-logo $(rustdoc_output)
+> +	$(Q)cp $(srctree)/Documentation/images/logo.svg $(rustdoc_output)/stati=
+c.files/
+> +	$(Q)cp $(srctree)/Documentation/images/COPYING-logo $(rustdoc_output)/s=
+tatic.files/
+>  	$(Q)find $(rustdoc_output) -name '*.html' -type f -print0 | xargs -0 se=
+d -Ei \
+> -		-e 's:rust-logo\.svg:logo.svg:g' \
+> -		-e 's:rust-logo\.png:logo.svg:g' \
+> -		-e 's:favicon\.svg:logo.svg:g' \
+> -		-e 's:<link rel=3D"alternate icon" type=3D"image/png" href=3D"[./]*fav=
+icon-(16x16|32x32)\.png">::g'
+> -	$(Q)echo '.logo-container > img { object-fit: contain; }' \
+> -		>> $(rustdoc_output)/rustdoc.css
+> +		-e 's:rust-logo-[0-9a-f]+\.svg:logo.svg:g' \
+> +		-e 's:favicon-[0-9a-f]+\.svg:logo.svg:g' \
+> +		-e 's:<link rel=3D"alternate icon" type=3D"image/png" href=3D"[/.]+/st=
+atic\.files/favicon-(16x16|32x32)-[0-9a-f]+\.png">::g'
+> +	$(Q)for f in $(rustdoc_output)/static.files/rustdoc-*.css; do \
+> +		echo ".logo-container > img { object-fit: contain; }" >> $$f; done
 > =20
->  # Directories & files removed with 'make mrproper'
+>  rustdoc-macros: private rustdoc_host =3D yes
+>  rustdoc-macros: private rustc_target_flags =3D --crate-type proc-macro \
