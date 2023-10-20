@@ -1,118 +1,145 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from vps-vb.mhejs.net (vps-vb.mhejs.net [37.28.154.113])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83CA1DDD6
-	for <patches@lists.linux.dev>; Fri, 20 Oct 2023 15:00:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="HGA+cwA5"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Transfer-Encoding:Content-Disposition:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:
-	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Content-Disposition:
-	In-Reply-To:References; bh=RYGYs5XXTeoNP2XkujGDwK18zSEZgl2Ltx2KXN09L/Y=; b=HG
-	A+cwA59FKS0ShhrY88XTfJ/LpcVSQzq8tIHV1WGxSA1v1l31BNcd1Xa/qUhf1xo1uVC/RLp9kEmAj
-	bO1geBIpBP9NE2N6dx/3GjhQhi+YYBy5D8He5hRACOj5OlNOhUyV1qtjVsm1Pe+2csq/wJsEME6Js
-	n+Iz8bEbaHfQVbQ=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1qtqyt-002nOE-GB; Fri, 20 Oct 2023 17:00:07 +0200
-Date: Fri, 20 Oct 2023 17:00:07 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>, linux-doc@vger.kernel.org,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] docs: rust: add "The Rust experiment" section
-Message-ID: <5c3f3ef8-e93c-49f1-881f-11c02afdaf7d@lunn.ch>
-References: <20231018160922.1018962-1-ojeda@kernel.org>
- <d47553f1-1832-4c69-8a8c-71c58048ff30@lunn.ch>
- <CANiq72=E7TPLcq-yiQF9E8a33ghbogPcbv-yMqFKBxMQ0oOxNQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACC32115
+	for <patches@lists.linux.dev>; Fri, 20 Oct 2023 16:50:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maciej.szmigiero.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=maciej.szmigiero.name
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from MUA
+	by vps-vb.mhejs.net with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.94.2)
+	(envelope-from <mail@maciej.szmigiero.name>)
+	id 1qtshC-0008I3-Ay; Fri, 20 Oct 2023 18:49:58 +0200
+Message-ID: <19934aff-0662-4130-8b60-93f7c1e407e2@maciej.szmigiero.name>
+Date: Fri, 20 Oct 2023 18:49:52 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANiq72=E7TPLcq-yiQF9E8a33ghbogPcbv-yMqFKBxMQ0oOxNQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.4 02/68] x86/CPU/AMD: Disable XSAVES on AMD family 0x17
+Content-Language: en-US, pl-PL
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Andrew Cooper <andrew.cooper3@citrix.com>,
+ "Borislav Petkov (AMD)" <bp@alien8.de>, patches@lists.linux.dev,
+ Tavis Ormandy <taviso@gmail.com>, stable@kernel.org, stable@vger.kernel.org
+References: <20230315115726.103942885@linuxfoundation.org>
+ <20230315115726.197012029@linuxfoundation.org>
+ <d0029d6b-2ddf-4723-ba93-3c7bb9580abc@maciej.szmigiero.name>
+ <2023102025-buffer-sneak-b784@gregkh>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <2023102025-buffer-sneak-b784@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 18, 2023 at 06:41:10PM +0200, Miguel Ojeda wrote:
-> On Wed, Oct 18, 2023 at 6:27 PM Andrew Lunn <andrew@lunn.ch> wrote:
-> >
-> > It very unlikely end users read this document.
+On 20.10.2023 15:17, Greg Kroah-Hartman wrote:
+> On Fri, Oct 20, 2023 at 11:41:13AM +0200, Maciej S. Szmigiero wrote:
+>> On 15.03.2023 13:11, Greg Kroah-Hartman wrote:
+>>> From: Andrew Cooper <andrew.cooper3@citrix.com>
+>>>
+>>> commit b0563468eeac88ebc70559d52a0b66efc37e4e9d upstream.
+>>>
+>>> AMD Erratum 1386 is summarised as:
+>>>
+>>>     XSAVES Instruction May Fail to Save XMM Registers to the Provided
+>>>     State Save Area
+>>>
+>>> This piece of accidental chronomancy causes the %xmm registers to
+>>> occasionally reset back to an older value.
+>>>
+>>> Ignore the XSAVES feature on all AMD Zen1/2 hardware.  The XSAVEC
+>>> instruction (which works fine) is equivalent on affected parts.
+>>>
+>>>     [ bp: Typos, move it into the F17h-specific function. ]
+>>>
+>>> Reported-by: Tavis Ormandy <taviso@gmail.com>
+>>> Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+>>> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+>>> Cc: <stable@kernel.org>
+>>> Link: https://lore.kernel.org/r/20230307174643.1240184-1-andrew.cooper3@citrix.com
+>>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>>> ---
+>>>    arch/x86/kernel/cpu/amd.c |    9 +++++++++
+>>>    1 file changed, 9 insertions(+)
+>>>
+>>> --- a/arch/x86/kernel/cpu/amd.c
+>>> +++ b/arch/x86/kernel/cpu/amd.c
+>>> @@ -205,6 +205,15 @@ static void init_amd_k6(struct cpuinfo_x
+>>>    		return;
+>>>    	}
+>>>    #endif
+>>> +	/*
+>>> +	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
+>>> +	 * certain circumstances on Zen1/2 uarch, and not all parts have had
+>>> +	 * updated microcode at the time of writing (March 2023).
+>>> +	 *
+>>> +	 * Affected parts all have no supervisor XSAVE states, meaning that
+>>> +	 * the XSAVEC instruction (which works fine) is equivalent.
+>>> +	 */
+>>> +	clear_cpu_cap(c, X86_FEATURE_XSAVES);
+>>>    }
+>>
+>> This is essentially a well-intended NOP since K6 well predates XSAVES,
+>> and init_amd_k6() is *not* called for Zen CPUs.
+>>
+>> This workaround should have been added to init_amd_zn() function
+>> instead.
+>>
+>> 4.19 and 4.14 backports of this patch have the same problem.
 > 
-> We can add a note to the Kconfig symbol too -- would that be OK with you?
+> Ick, good catch!  Can you send a set of patches to fix this up?
+
+I can add this to my TODO list, but unfortunately can't promise
+a short ETA at this point.
+
+> thanks,
 > 
-> > And that statement is
-> > not limited to end users, it is true for everybody.
-> 
-> Agreed, but that bit is meant to emphasize that end users do not have
-> a reason to use it at all (unlike kernel developers etc. from the
-> previous paragraph)
-> 
-> > What we should be saying is that Rust for the Linux kernel in general
-> > is not ready for production use. Developing drivers in Rust is
-> > currently for experimentation only. Given the experimental nature of
-> > the work, there is some risk Rust will never be ready for production
-> > use.
-> 
-> The risk is that Rust gets dropped from the kernel because it is not
-> used enough, not so much that there is a fundamental problem to solve
-> in order to reach production.
+> greg k-h
 
-I've talked to a small number of netdev developers, not many, but
-some. The general impression i get is that it is unclear what
-experimental actually means, and they have no idea what makes it not
-production ready. The two are also not necessarily mutually exclusive.
+Thanks,
+Maciej
 
-To me, it appears Rust is not production ready because:
-
-You need to disable module versioning.
-You need to disable structure layout randomisation
-
-On X86, you need to disable X86_KERNEL_IBT and RETHUNK, both of which
-are part of the mitigation for speculative execution vulnerabilities
-
-So no vendor is going to release a kernel with these disabled.
-
-Networking also tends to be architecture independent, so production
-features need to run on X86, ARM, ARM64, and to a lesser extent MIPS,
-RISC-V, etc. I know this is documented, but it does not appear to be
-that well known within the networking community.
-
-Networking people also tend to be interested in endianness, does the
-code work on big endian as well as little endian? Big endian is dying
-out, but its not gone yet. However, with only x86 supported in
-mainline today, it does not seem possible to test big endian. I assume
-the rust type system will actually deal with this to a large extent?
-But are developers writing abstractions which are sound with respect
-to endianness?
-
-I think it would be good to describe the experiment a bit. With a
-multi year experiment, you often have short term goals and long term
-goals.  What are these goals? What is the Rust for linux community
-trying to prove in the next few kernel cycles? What do you consider to
-be 4 or more cycles away? What do you consider not so important now
-because its not needed for your short term goals? That might also help
-developers understand when it will transition to production ready, but
-still be experimental.
-
-And you obviously need a disclaimer, Rust for Linux is a community,
-developers are free to scratch their own itch, so things might happen
-in a different order. And information like this might help get people
-involved, helping solve some of the limitations, spur research into
-different goals etc.
-
-	Andrew
