@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6CD815E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA1C15E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOsdgp8H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21173C433C8;
-	Mon, 23 Oct 2023 11:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjiu8/g9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164DDC433C8;
+	Mon, 23 Oct 2023 11:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061193;
-	bh=QVR9U5wfbVjhAEpA9KO45FKN0/k0RsNSncZjDq/eVVo=;
+	s=korg; t=1698061196;
+	bh=HsmlTkv0oL49chyMGjUSQQONQMZKpfvmHv003lOjhzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aOsdgp8HkPgeKk9JP2T2U9Zil2g9b+dxwd3/OG/2h4az+WXkoGXFy6CNo5X8PtgPo
-	 kevseGWw39bzIgN7kGZ2qmNrC3NYzvrSEdjJr/vieErYeaPMp8i33n2VMD6QkMRiBU
-	 /krOXXdRBLBnQB9nsPwdnieCu+H6aLUjBu/P/dPo=
+	b=yjiu8/g9z2jD0rEZ+ZgPTqQV3TQGOnswBsaAzBwG59GYFsF6mNcT49xRFq/zRl2Z4
+	 VoHUu24eN3ZzPxeitkQfWz5LltriLfIe+RfWazkq7nZSF+ZeD9c8MSLjIqWV776oUF
+	 0Lown9ZyLIBzy++YDSV8YAj6+7kGzXQegXdn39Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.15 103/137] mtd: rawnand: pl353: Ensure program page operations are successful
-Date: Mon, 23 Oct 2023 12:57:40 +0200
-Message-ID: <20231023104824.317582511@linuxfoundation.org>
+	Dan Williams <dcbw@redhat.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 078/137] wifi: mwifiex: Sanity check tlv_len and tlv_bitmap_len
+Date: Mon, 23 Oct 2023 12:57:15 +0200
+Message-ID: <20231023104823.549687999@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -41,65 +44,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit 9777cc13fd2c3212618904636354be60835e10bb upstream.
+[ Upstream commit d5a93b7d2877aae4ba7590ad6cb65f8d33079489 ]
 
-The NAND core complies with the ONFI specification, which itself
-mentions that after any program or erase operation, a status check
-should be performed to see whether the operation was finished *and*
-successful.
+Add sanity checks for both `tlv_len` and `tlv_bitmap_len` before
+decoding data from `event_buf`.
 
-The NAND core offers helpers to finish a page write (sending the
-"PAGE PROG" command, waiting for the NAND chip to be ready again, and
-checking the operation status). But in some cases, advanced controller
-drivers might want to optimize this and craft their own page write
-helper to leverage additional hardware capabilities, thus not always
-using the core facilities.
+This prevents any malicious or buggy firmware from overflowing
+`event_buf` through large values for `tlv_len` and `tlv_bitmap_len`.
 
-Some drivers, like this one, do not use the core helper to finish a page
-write because the final cycles are automatically managed by the
-hardware. In this case, the additional care must be taken to manually
-perform the final status check.
-
-Let's read the NAND chip status at the end of the page write helper and
-return -EIO upon error.
-
-Cc: Michal Simek <michal.simek@amd.com>
-Cc: stable@vger.kernel.org
-Fixes: 08d8c62164a3 ("mtd: rawnand: pl353: Add support for the ARM PL353 SMC NAND controller")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Tested-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/linux-mtd/20230717194221.229778-3-miquel.raynal@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Dan Williams <dcbw@redhat.com>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/d4f8780527d551552ee96f17a0229e02e1c200d1.1692931954.git.gustavoars@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/pl35x-nand-controller.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ .../net/wireless/marvell/mwifiex/11n_rxreorder.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
-+++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-@@ -513,6 +513,7 @@ static int pl35x_nand_write_page_hwecc(s
- 	u32 addr1 = 0, addr2 = 0, row;
- 	u32 cmd_addr;
- 	int i, ret;
-+	u8 status;
- 
- 	ret = pl35x_smc_set_ecc_mode(nfc, chip, PL35X_SMC_ECC_CFG_MODE_APB);
- 	if (ret)
-@@ -565,6 +566,14 @@ static int pl35x_nand_write_page_hwecc(s
- 	if (ret)
- 		goto disable_ecc_engine;
- 
-+	/* Check write status on the chip side */
-+	ret = nand_status_op(chip, &status);
-+	if (ret)
-+		goto disable_ecc_engine;
+diff --git a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
+index cbe4a200e4eaf..e5f34805c92cc 100644
+--- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
+@@ -933,6 +933,14 @@ void mwifiex_11n_rxba_sync_event(struct mwifiex_private *priv,
+ 	while (tlv_buf_left >= sizeof(*tlv_rxba)) {
+ 		tlv_type = le16_to_cpu(tlv_rxba->header.type);
+ 		tlv_len  = le16_to_cpu(tlv_rxba->header.len);
++		if (size_add(sizeof(tlv_rxba->header), tlv_len) > tlv_buf_left) {
++			mwifiex_dbg(priv->adapter, WARN,
++				    "TLV size (%zu) overflows event_buf buf_left=%d\n",
++				    size_add(sizeof(tlv_rxba->header), tlv_len),
++				    tlv_buf_left);
++			return;
++		}
 +
-+	if (status & NAND_STATUS_FAIL)
-+		ret = -EIO;
-+
- disable_ecc_engine:
- 	pl35x_smc_set_ecc_mode(nfc, chip, PL35X_SMC_ECC_CFG_MODE_BYPASS);
+ 		if (tlv_type != TLV_TYPE_RXBA_SYNC) {
+ 			mwifiex_dbg(priv->adapter, ERROR,
+ 				    "Wrong TLV id=0x%x\n", tlv_type);
+@@ -941,6 +949,14 @@ void mwifiex_11n_rxba_sync_event(struct mwifiex_private *priv,
  
+ 		tlv_seq_num = le16_to_cpu(tlv_rxba->seq_num);
+ 		tlv_bitmap_len = le16_to_cpu(tlv_rxba->bitmap_len);
++		if (size_add(sizeof(*tlv_rxba), tlv_bitmap_len) > tlv_buf_left) {
++			mwifiex_dbg(priv->adapter, WARN,
++				    "TLV size (%zu) overflows event_buf buf_left=%d\n",
++				    size_add(sizeof(*tlv_rxba), tlv_bitmap_len),
++				    tlv_buf_left);
++			return;
++		}
++
+ 		mwifiex_dbg(priv->adapter, INFO,
+ 			    "%pM tid=%d seq_num=%d bitmap_len=%d\n",
+ 			    tlv_rxba->mac, tlv_rxba->tid, tlv_seq_num,
+-- 
+2.40.1
+
 
 
