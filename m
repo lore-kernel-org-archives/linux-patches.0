@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1421714A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0418A14A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjqRMF2U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E65AC433C7;
-	Mon, 23 Oct 2023 11:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbwQNmF0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BE3C433C8;
+	Mon, 23 Oct 2023 11:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059577;
-	bh=nD6R9MTHvsw460mt64utci+jSpcN+357AA0Zee3xvHE=;
+	s=korg; t=1698059580;
+	bh=wW3HtY5Ec4W/ZiJJ5b8Q7wq0yL7xVQB2YfqNfyBppuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vjqRMF2UDVAxdNELrGfkWo9cMRNz6kxAGmE8PCPktVES3PIseDzF/dhLts5RTl5aL
-	 6rZw/pWBcqw9fv71CRO/R6EszZ+In7pOOszKg6l1BYFr43xXlm8EkYT1mZFCduyxTl
-	 u52QdwJRBpecvBUgojUGMR67RNaokRqz/yd2B2FA=
+	b=GbwQNmF0Apd3abkNeKEt36Pzy0pG8PTTx8M+EP+LBVwN93d5rpH8ZbENBfoIFjSxa
+	 nzxa3nS1fn8Zq8EKQ1YuYRceIcSZw76+vQOgVj/LpcFVoWaJZRUQ/cGgCAd7FjdQ1J
+	 B72KQNTWhqX1vLXRqvcHly8jWDcHHut+mHlA/HA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srikar Dronamraju <srikar@linux.vnet.ibm.com>,
-	Laurent Dufour <ldufour@linux.ibm.com>,
-	Shrikanth Hegde <sshegde@linux.vnet.ibm.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	"Nysal Jan K.A" <nysal@linux.ibm.com>
-Subject: [PATCH 6.5 223/241] powerpc/qspinlock: Fix stale propagated yield_cpu
-Date: Mon, 23 Oct 2023 12:56:49 +0200
-Message-ID: <20231023104839.299887627@linuxfoundation.org>
+	Akira Yokosawa <akiyks@gmail.com>,
+	Carlos Bilbao <carlos.bilbao@amd.com>,
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 224/241] docs: Move rustdoc output, cross-reference it
+Date: Mon, 23 Oct 2023 12:56:50 +0200
+Message-ID: <20231023104839.327386371@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -45,61 +44,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Carlos Bilbao <carlos.bilbao@amd.com>
 
-commit f9bc9bbe8afdf83412728f0b464979a72a3b9ec2 upstream.
+[ Upstream commit 48fadf44007568e75c7af92857083058d57be403 ]
 
-yield_cpu is a sample of a preempted lock holder that gets propagated
-back through the queue. Queued waiters use this to yield to the
-preempted lock holder without continually sampling the lock word (which
-would defeat the purpose of MCS queueing by bouncing the cache line).
+Generate rustdoc documentation with the rest of subsystem's documentation
+in Documentation/output. Add a cross reference to the generated rustdoc in
+Documentation/rust/index.rst if Sphinx target rustdoc is set.
 
-The problem is that yield_cpu can become stale. It can take some time to
-be passed down the chain, and if any queued waiter gets preempted then
-it will cease to propagate the yield_cpu to later waiters.
-
-This can result in yielding to a CPU that no longer holds the lock,
-which is bad, but particularly if it is currently in H_CEDE (idle),
-then it appears to be preempted and some hypervisors (PowerVM) can
-cause very long H_CONFER latencies waiting for H_CEDE wakeup. This
-results in latency spikes and hard lockups on oversubscribed
-partitions with lock contention.
-
-This is a minimal fix. Before yielding to yield_cpu, sample the lock
-word to confirm yield_cpu is still the owner, and bail out of it is not.
-
-Thanks to a bunch of people who reported this and tracked down the
-exact problem using tracepoints and dispatch trace logs.
-
-Fixes: 28db61e207ea ("powerpc/qspinlock: allow propagation of yield CPU down the queue")
-Cc: stable@vger.kernel.org # v6.2+
-Reported-by: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
-Reported-by: Laurent Dufour <ldufour@linux.ibm.com>
-Reported-by: Shrikanth Hegde <sshegde@linux.vnet.ibm.com>
-Debugged-by: "Nysal Jan K.A" <nysal@linux.ibm.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Shrikanth Hegde <sshegde@linux.vnet.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231016124305.139923-2-npiggin@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Akira Yokosawa <akiyks@gmail.com>
+Signed-off-by: Carlos Bilbao <carlos.bilbao@amd.com>
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/20230718151534.4067460-2-carlos.bilbao@amd.com
+Stable-dep-of: cfd96726e611 ("rust: docs: fix logo replacement")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/lib/qspinlock.c | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/rust/index.rst |  8 ++++++++
+ rust/Makefile                | 15 +++++++++------
+ 2 files changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/arch/powerpc/lib/qspinlock.c b/arch/powerpc/lib/qspinlock.c
-index 253620979d0c..6dd2f46bd3ef 100644
---- a/arch/powerpc/lib/qspinlock.c
-+++ b/arch/powerpc/lib/qspinlock.c
-@@ -406,6 +406,9 @@ static __always_inline bool yield_to_prev(struct qspinlock *lock, struct qnode *
- 	if ((yield_count & 1) == 0)
- 		goto yield_prev; /* owner vcpu is running */
+diff --git a/Documentation/rust/index.rst b/Documentation/rust/index.rst
+index 4ae8c66b94faf..e599be2cec9ba 100644
+--- a/Documentation/rust/index.rst
++++ b/Documentation/rust/index.rst
+@@ -6,6 +6,14 @@ Rust
+ Documentation related to Rust within the kernel. To start using Rust
+ in the kernel, please read the quick-start.rst guide.
  
-+	if (get_owner_cpu(READ_ONCE(lock->val)) != yield_cpu)
-+		goto yield_prev; /* re-sample lock owner */
++.. only:: rustdoc and html
 +
- 	spin_end();
++	You can also browse `rustdoc documentation <rustdoc/kernel/index.html>`_.
++
++.. only:: not rustdoc and html
++
++	This documentation does not include rustdoc generated information.
++
+ .. toctree::
+     :maxdepth: 1
  
- 	preempted = true;
+diff --git a/rust/Makefile b/rust/Makefile
+index 4124bfa01798d..b9acbe5a7a5d5 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -1,5 +1,8 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
++# Where to place rustdoc generated documentation
++rustdoc_output := $(objtree)/Documentation/output/rust/rustdoc
++
+ obj-$(CONFIG_RUST) += core.o compiler_builtins.o
+ always-$(CONFIG_RUST) += exports_core_generated.h
+ 
+@@ -65,7 +68,7 @@ quiet_cmd_rustdoc = RUSTDOC $(if $(rustdoc_host),H, ) $<
+ 	OBJTREE=$(abspath $(objtree)) \
+ 	$(RUSTDOC) $(if $(rustdoc_host),$(rust_common_flags),$(rust_flags)) \
+ 		$(rustc_target_flags) -L$(objtree)/$(obj) \
+-		--output $(objtree)/$(obj)/doc \
++		--output $(rustdoc_output) \
+ 		--crate-name $(subst rustdoc-,,$@) \
+ 		@$(objtree)/include/generated/rustc_cfg $<
+ 
+@@ -82,15 +85,15 @@ quiet_cmd_rustdoc = RUSTDOC $(if $(rustdoc_host),H, ) $<
+ # and then retouch the generated files.
+ rustdoc: rustdoc-core rustdoc-macros rustdoc-compiler_builtins \
+     rustdoc-alloc rustdoc-kernel
+-	$(Q)cp $(srctree)/Documentation/images/logo.svg $(objtree)/$(obj)/doc
+-	$(Q)cp $(srctree)/Documentation/images/COPYING-logo $(objtree)/$(obj)/doc
+-	$(Q)find $(objtree)/$(obj)/doc -name '*.html' -type f -print0 | xargs -0 sed -Ei \
++	$(Q)cp $(srctree)/Documentation/images/logo.svg $(rustdoc_output)
++	$(Q)cp $(srctree)/Documentation/images/COPYING-logo $(rustdoc_output)
++	$(Q)find $(rustdoc_output) -name '*.html' -type f -print0 | xargs -0 sed -Ei \
+ 		-e 's:rust-logo\.svg:logo.svg:g' \
+ 		-e 's:rust-logo\.png:logo.svg:g' \
+ 		-e 's:favicon\.svg:logo.svg:g' \
+ 		-e 's:<link rel="alternate icon" type="image/png" href="[./]*favicon-(16x16|32x32)\.png">::g'
+ 	$(Q)echo '.logo-container > img { object-fit: contain; }' \
+-		>> $(objtree)/$(obj)/doc/rustdoc.css
++		>> $(rustdoc_output)/rustdoc.css
+ 
+ rustdoc-macros: private rustdoc_host = yes
+ rustdoc-macros: private rustc_target_flags = --crate-type proc-macro \
+@@ -154,7 +157,7 @@ quiet_cmd_rustdoc_test = RUSTDOC T $<
+ 		@$(objtree)/include/generated/rustc_cfg \
+ 		$(rustc_target_flags) $(rustdoc_test_target_flags) \
+ 		--sysroot $(objtree)/$(obj)/test/sysroot $(rustdoc_test_quiet) \
+-		-L$(objtree)/$(obj)/test --output $(objtree)/$(obj)/doc \
++		-L$(objtree)/$(obj)/test --output $(rustdoc_output) \
+ 		--crate-name $(subst rusttest-,,$@) $<
+ 
+ # We cannot use `-Zpanic-abort-tests` because some tests are dynamic,
 -- 
 2.42.0
 
