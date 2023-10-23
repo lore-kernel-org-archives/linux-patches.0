@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38EFF4FE
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6051F4FE
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+BzKq1w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4E0C433C8;
-	Mon, 23 Oct 2023 11:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CHeGHSc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22311C433C7;
+	Mon, 23 Oct 2023 11:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059459;
-	bh=7ydRu4IwGxYmBrRap5DsszHknT7eWKpZdlJ3yBGRoSQ=;
+	s=korg; t=1698059462;
+	bh=wJ7pUbV84HiffUVhOn+ycNrRDqskNchTw9sMiOWTrWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+BzKq1wzPxinLgwhbNtygOEw81B6yL69Jyak8U0wBV9D8WKniRScnJ7vcMGpNrvj
-	 GNkVdIbpKTWKFUXBFXhcfHmuk4m7JriCBOh1OMq2yBixCR6kB2SpzWwdUHBAd/WsQA
-	 s7vYTGJ8VOysTQr91mPhxd6QKwuuBT9p3jOVYI4Q=
+	b=1CHeGHScdgXNC9lXgpxYkx1Nty+PPbrYE8zeRoVauzz79Fb/SqOd/8guBIvuX3PTa
+	 wp4lt3gIgxyiP0Krwt7K9//q/FvOOgnT061waPJTg8DF5DSlwfRd04kPKRdBeYylnA
+	 4SL9t1IMYNFXo3uRx3fSQLvoE5/5n1BU4/uiL0vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Wachowski <karol.wachowski@linux.intel.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Subject: [PATCH 6.5 185/241] Revert "accel/ivpu: Use cached buffers for FW loading"
-Date: Mon, 23 Oct 2023 12:56:11 +0200
-Message-ID: <20231023104838.392682259@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.5 186/241] fanotify: limit reporting of event with non-decodeable file handles
+Date: Mon, 23 Oct 2023 12:56:12 +0200
+Message-ID: <20231023104838.416246576@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,87 +41,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 610b5d219d1ccac8064556310cc0e62e3c202389 upstream.
+commit 97ac489775f26acfd46a8a60c2f84ce7cc79fa4b upstream.
 
-This reverts commit 645d694559cab36fe6a57c717efcfa27d9321396.
+Commit a95aef69a740 ("fanotify: support reporting non-decodeable file
+handles") merged in v6.5-rc1, added the ability to use an fanotify group
+with FAN_REPORT_FID mode to watch filesystems that do not support nfs
+export, but do know how to encode non-decodeable file handles, with the
+newly introduced AT_HANDLE_FID flag.
 
-The commit cause issues with memory access from the device side.
-Switch back to write-combined memory mappings until the issues
-will be properly addressed.
+At the time that this commit was merged, there were no filesystems
+in-tree with those traits.
 
-Add extra wmb() needed when boot_params->save_restore_ret_address() is
-modified.
+Commit 16aac5ad1fa9 ("ovl: support encoding non-decodable file handles"),
+merged in v6.6-rc1, added this trait to overlayfs, thus allowing fanotify
+watching of overlayfs with FAN_REPORT_FID mode.
 
-Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231017121353.532466-1-stanislaw.gruszka@linux.intel.com
+In retrospect, allowing an fanotify filesystem/mount mark on such
+filesystem in FAN_REPORT_FID mode will result in getting events with
+file handles, without the ability to resolve the filesystem objects from
+those file handles (i.e. no open_by_handle_at() support).
+
+For v6.6, the safer option would be to allow this mode for inode marks
+only, where the caller has the opportunity to use name_to_handle_at() at
+the time of setting the mark. In the future we can revise this decision.
+
+Fixes: a95aef69a740 ("fanotify: support reporting non-decodeable file handles")
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20231018100000.2453965-2-amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_fw.c  |    9 ++++-----
- drivers/accel/ivpu/ivpu_gem.h |    5 -----
- 2 files changed, 4 insertions(+), 10 deletions(-)
+ fs/notify/fanotify/fanotify_user.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
---- a/drivers/accel/ivpu/ivpu_fw.c
-+++ b/drivers/accel/ivpu/ivpu_fw.c
-@@ -195,8 +195,7 @@ static int ivpu_fw_mem_init(struct ivpu_
- 	if (ret)
- 		return ret;
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index f69c451018e3..62fe0b679e58 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -1585,16 +1585,25 @@ static int fanotify_test_fsid(struct dentry *dentry, __kernel_fsid_t *fsid)
+ }
  
--	fw->mem = ivpu_bo_alloc_internal(vdev, fw->runtime_addr, fw->runtime_size,
--					 DRM_IVPU_BO_CACHED | DRM_IVPU_BO_NOSNOOP);
-+	fw->mem = ivpu_bo_alloc_internal(vdev, fw->runtime_addr, fw->runtime_size, DRM_IVPU_BO_WC);
- 	if (!fw->mem) {
- 		ivpu_err(vdev, "Failed to allocate firmware runtime memory\n");
- 		return -ENOMEM;
-@@ -273,7 +272,7 @@ int ivpu_fw_load(struct ivpu_device *vde
- 		memset(start, 0, size);
- 	}
- 
--	clflush_cache_range(fw->mem->kvaddr, fw->mem->base.size);
-+	wmb(); /* Flush WC buffers after writing fw->mem */
+ /* Check if filesystem can encode a unique fid */
+-static int fanotify_test_fid(struct dentry *dentry)
++static int fanotify_test_fid(struct dentry *dentry, unsigned int flags)
+ {
++	unsigned int mark_type = flags & FANOTIFY_MARK_TYPE_BITS;
++	const struct export_operations *nop = dentry->d_sb->s_export_op;
++
++	/*
++	 * We need to make sure that the filesystem supports encoding of
++	 * file handles so user can use name_to_handle_at() to compare fids
++	 * reported with events to the file handle of watched objects.
++	 */
++	if (!nop)
++		return -EOPNOTSUPP;
++
+ 	/*
+-	 * We need to make sure that the file system supports at least
+-	 * encoding a file handle so user can use name_to_handle_at() to
+-	 * compare fid returned with event to the file handle of watched
+-	 * objects. However, even the relaxed AT_HANDLE_FID flag requires
+-	 * at least empty export_operations for ecoding unique file ids.
++	 * For sb/mount mark, we also need to make sure that the filesystem
++	 * supports decoding file handles, so user has a way to map back the
++	 * reported fids to filesystem objects.
+ 	 */
+-	if (!dentry->d_sb->s_export_op)
++	if (mark_type != FAN_MARK_INODE && !nop->fh_to_dentry)
+ 		return -EOPNOTSUPP;
  
  	return 0;
- }
-@@ -375,7 +374,7 @@ void ivpu_fw_boot_params_setup(struct iv
- 	if (!ivpu_fw_is_cold_boot(vdev)) {
- 		boot_params->save_restore_ret_address = 0;
- 		vdev->pm->is_warmboot = true;
--		clflush_cache_range(vdev->fw->mem->kvaddr, SZ_4K);
-+		wmb(); /* Flush WC buffers after writing save_restore_ret_address */
- 		return;
- 	}
+@@ -1812,7 +1821,7 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 		if (ret)
+ 			goto path_put_and_out;
  
-@@ -430,7 +429,7 @@ void ivpu_fw_boot_params_setup(struct iv
- 	boot_params->punit_telemetry_sram_size = ivpu_hw_reg_telemetry_size_get(vdev);
- 	boot_params->vpu_telemetry_enable = ivpu_hw_reg_telemetry_enable_get(vdev);
+-		ret = fanotify_test_fid(path.dentry);
++		ret = fanotify_test_fid(path.dentry, flags);
+ 		if (ret)
+ 			goto path_put_and_out;
  
--	clflush_cache_range(vdev->fw->mem->kvaddr, SZ_4K);
-+	wmb(); /* Flush WC buffers after writing bootparams */
- 
- 	ivpu_fw_boot_params_print(vdev, boot_params);
- }
---- a/drivers/accel/ivpu/ivpu_gem.h
-+++ b/drivers/accel/ivpu/ivpu_gem.h
-@@ -8,8 +8,6 @@
- #include <drm/drm_gem.h>
- #include <drm/drm_mm.h>
- 
--#define DRM_IVPU_BO_NOSNOOP       0x10000000
--
- struct dma_buf;
- struct ivpu_bo_ops;
- struct ivpu_file_priv;
-@@ -85,9 +83,6 @@ static inline u32 ivpu_bo_cache_mode(str
- 
- static inline bool ivpu_bo_is_snooped(struct ivpu_bo *bo)
- {
--	if (bo->flags & DRM_IVPU_BO_NOSNOOP)
--		return false;
--
- 	return ivpu_bo_cache_mode(bo) == DRM_IVPU_BO_CACHED;
- }
- 
+-- 
+2.42.0
+
 
 
