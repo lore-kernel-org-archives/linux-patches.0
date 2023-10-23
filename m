@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D350515E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC5315E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mcUntNgv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F37C433C9;
-	Mon, 23 Oct 2023 11:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0perBp5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1508AC433C8;
+	Mon, 23 Oct 2023 11:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060867;
-	bh=T3ZwfRb+HmnhgcGgS7gQ1Xy5gI3Pl6afjzymuGDll38=;
+	s=korg; t=1698060870;
+	bh=1hQpMdzFxLuzaU9K9R9zltkVngbDxpkCiVf7dRofLt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mcUntNgvRdLUJfuBao2kBPR3UmNDHDSlE0OKzSBYOhDkdXXPN//QioTIAmfz8Hq2l
-	 T3tojlMQFUi2FIhB94BTjFWcAQcueQcUpyY5+CIJpC62s7fNUT89MIlAx6di7rbh6h
-	 Bo6hooPQfNl1WX8rnUmv+kKCgGak7sUlOM6EZE4k=
+	b=q0perBp5GjLrn4/l88NuV4Ew9pffT+GF5ftbtlh/ppWrUdVZxvTqUM4tJ87MBNFTy
+	 NVJlKDqtZQtzhCew59Kv1H+qiZdYkstHGUgI4/zTXY02npfoD9R5Sv37EqNBIcJPeS
+	 T3ev1nQT22eXYPP5PudeuP6CshVCBKTpoSmziy90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -26,9 +26,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 119/123] phy: mapphone-mdm6600: Fix runtime PM for remove
-Date: Mon, 23 Oct 2023 12:57:57 +0200
-Message-ID: <20231023104821.780839388@linuxfoundation.org>
+Subject: [PATCH 5.4 120/123] phy: mapphone-mdm6600: Fix pinctrl_pm handling for sleep pins
+Date: Mon, 23 Oct 2023 12:57:58 +0200
+Message-ID: <20231023104821.822755049@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -49,36 +49,107 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit b99e0ba9633af51638e5ee1668da2e33620c134f ]
+[ Upstream commit 3b384cc74b00b5ac21d18e4c1efc3c1da5300971 ]
 
-Otherwise we will get an underflow on remove.
+Looks like the driver sleep pins configuration is unusable. Adding the
+sleep pins causes the usb phy to not respond. We need to use the default
+pins in probe, and only set sleep pins at phy_mdm6600_device_power_off().
+
+As the modem can also be booted to a serial port mode for firmware
+flashing, let's make the pin changes limited to probe and remove. For
+probe, we get the default pins automatically. We only need to set the
+sleep pins in phy_mdm6600_device_power_off() to prevent the modem from
+waking up because the gpio line glitches.
+
+If it turns out that we need a separate state for phy_mdm6600_power_on()
+and phy_mdm6600_power_off(), we can use the pinctrl idle state.
 
 Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
 Cc: Merlijn Wajer <merlijn@wizzup.org>
 Cc: Pavel Machek <pavel@ucw.cz>
 Cc: Sebastian Reichel <sre@kernel.org>
-Fixes: f7f50b2a7b05 ("phy: mapphone-mdm6600: Add runtime PM support for n_gsm on USB suspend")
+Fixes: 2ad2af081622 ("phy: mapphone-mdm6600: Improve phy related runtime PM calls")
 Signed-off-by: Tony Lindgren <tony@atomide.com>
 Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20230913060433.48373-2-tony@atomide.com
+Link: https://lore.kernel.org/r/20230913060433.48373-3-tony@atomide.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/motorola/phy-mapphone-mdm6600.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/phy/motorola/phy-mapphone-mdm6600.c | 29 +++++++++------------
+ 1 file changed, 12 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/phy/motorola/phy-mapphone-mdm6600.c b/drivers/phy/motorola/phy-mapphone-mdm6600.c
-index 042927f8ac4f3..50a7f2a1ea16a 100644
+index 50a7f2a1ea16a..a79d6cf202209 100644
 --- a/drivers/phy/motorola/phy-mapphone-mdm6600.c
 +++ b/drivers/phy/motorola/phy-mapphone-mdm6600.c
-@@ -640,6 +640,7 @@ static int phy_mdm6600_remove(struct platform_device *pdev)
- 	struct phy_mdm6600 *ddata = platform_get_drvdata(pdev);
- 	struct gpio_desc *reset_gpio = ddata->ctrl_gpios[PHY_MDM6600_RESET];
+@@ -122,16 +122,10 @@ static int phy_mdm6600_power_on(struct phy *x)
+ {
+ 	struct phy_mdm6600 *ddata = phy_get_drvdata(x);
+ 	struct gpio_desc *enable_gpio = ddata->ctrl_gpios[PHY_MDM6600_ENABLE];
+-	int error;
  
-+	pm_runtime_get_noresume(ddata->dev);
- 	pm_runtime_dont_use_autosuspend(ddata->dev);
- 	pm_runtime_put_sync(ddata->dev);
- 	pm_runtime_disable(ddata->dev);
+ 	if (!ddata->enabled)
+ 		return -ENODEV;
+ 
+-	error = pinctrl_pm_select_default_state(ddata->dev);
+-	if (error)
+-		dev_warn(ddata->dev, "%s: error with default_state: %i\n",
+-			 __func__, error);
+-
+ 	gpiod_set_value_cansleep(enable_gpio, 1);
+ 
+ 	/* Allow aggressive PM for USB, it's only needed for n_gsm port */
+@@ -160,11 +154,6 @@ static int phy_mdm6600_power_off(struct phy *x)
+ 
+ 	gpiod_set_value_cansleep(enable_gpio, 0);
+ 
+-	error = pinctrl_pm_select_sleep_state(ddata->dev);
+-	if (error)
+-		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
+-			 __func__, error);
+-
+ 	return 0;
+ }
+ 
+@@ -455,6 +444,7 @@ static void phy_mdm6600_device_power_off(struct phy_mdm6600 *ddata)
+ {
+ 	struct gpio_desc *reset_gpio =
+ 		ddata->ctrl_gpios[PHY_MDM6600_RESET];
++	int error;
+ 
+ 	ddata->enabled = false;
+ 	phy_mdm6600_cmd(ddata, PHY_MDM6600_CMD_BP_SHUTDOWN_REQ);
+@@ -470,6 +460,17 @@ static void phy_mdm6600_device_power_off(struct phy_mdm6600 *ddata)
+ 	} else {
+ 		dev_err(ddata->dev, "Timed out powering down\n");
+ 	}
++
++	/*
++	 * Keep reset gpio high with padconf internal pull-up resistor to
++	 * prevent modem from waking up during deeper SoC idle states. The
++	 * gpio bank lines can have glitches if not in the always-on wkup
++	 * domain.
++	 */
++	error = pinctrl_pm_select_sleep_state(ddata->dev);
++	if (error)
++		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
++			 __func__, error);
+ }
+ 
+ static void phy_mdm6600_deferred_power_on(struct work_struct *work)
+@@ -570,12 +571,6 @@ static int phy_mdm6600_probe(struct platform_device *pdev)
+ 	ddata->dev = &pdev->dev;
+ 	platform_set_drvdata(pdev, ddata);
+ 
+-	/* Active state selected in phy_mdm6600_power_on() */
+-	error = pinctrl_pm_select_sleep_state(ddata->dev);
+-	if (error)
+-		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
+-			 __func__, error);
+-
+ 	error = phy_mdm6600_init_lines(ddata);
+ 	if (error)
+ 		return error;
 -- 
 2.42.0
 
