@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0964A125DD
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5ACB13FF7
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/IjvQXM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1791DC433C7;
-	Mon, 23 Oct 2023 11:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ir6+LOyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6B7C433C8;
+	Mon, 23 Oct 2023 11:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058830;
-	bh=T96niVM1U8+n1iChHQ5jnZ6+kLxIGCeH4Y8p+TQtzEI=;
+	s=korg; t=1698058833;
+	bh=rqarr9+B6xp5oc1zIc3O+OmyiyKkUesRKE+DRfJumBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K/IjvQXMMKJ5oUKNbjRDo/70TjA++K9rwOmvQkfkBEBqhMO/NmrPVSMMYWPe6S8oo
-	 lgXXa1sQR5+l7PlwpwZuVQxMS2q8U+pSDn6M9ZcHTY6H4yPrjXZNvAw/zADahSEesD
-	 pmAktFDJz2ZwfjKxgnPuUIk7IyYYGxNUvHGxjzqw=
+	b=Ir6+LOyVMsgtBYxUoFdS1V718SbWSWbEdkaE5Su3nSrtpP6g7aCrvt65p2xncj5Pl
+	 P7Z5qARkPzIJrPN+osNSp7KyYiChHQcLPkBNl8wqzACFOu929JAQy2iY7pRt0FV5/O
+	 9NZzPLwKkR33lJID3EMkdEL7FyxK82GYjIGKtfrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 40/66] net: usb: smsc95xx: Fix an error code in smsc95xx_reset()
-Date: Mon, 23 Oct 2023 12:56:30 +0200
-Message-ID: <20231023104812.340050817@linuxfoundation.org>
+	Michal Schmidt <mschmidt@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 4.14 41/66] i40e: prevent crash on probe if hw registers have invalid values
+Date: Mon, 23 Oct 2023 12:56:31 +0200
+Message-ID: <20231023104812.374652820@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -42,32 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-commit c53647a5df9e66dd9fedf240198e1fe50d88c286 upstream.
+commit fc6f716a5069180c40a8c9b63631e97da34f64a3 upstream.
 
-Return a negative error code instead of success.
+The hardware provides the indexes of the first and the last available
+queue and VF. From the indexes, the driver calculates the numbers of
+queues and VFs. In theory, a faulty device might say the last index is
+smaller than the first index. In that case, the driver's calculation
+would underflow, it would attempt to write to non-existent registers
+outside of the ioremapped range and crash.
 
-Fixes: 2f7ca802bdae ("net: Add SMSC LAN9500 USB2.0 10/100 ethernet adapter driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/147927f0-9ada-45cc-81ff-75a19dd30b76@moroto.mountain
+I ran into this not by having a faulty device, but by an operator error.
+I accidentally ran a QE test meant for i40e devices on an ice device.
+The test used 'echo i40e > /sys/...ice PCI device.../driver_override',
+bound the driver to the device and crashed in one of the wr32 calls in
+i40e_clear_hw.
+
+Add checks to prevent underflows in the calculations of num_queues and
+num_vfs. With this fix, the wrong device probing reports errors and
+returns a failure without crashing.
+
+Fixes: 838d41d92a90 ("i40e: clear all queues and interrupts")
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Link: https://lore.kernel.org/r/20231011233334.336092-2-jacob.e.keller@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/smsc95xx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_common.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/usb/smsc95xx.c
-+++ b/drivers/net/usb/smsc95xx.c
-@@ -1054,7 +1054,7 @@ static int smsc95xx_reset(struct usbnet
- 
- 	if (timeout >= 100) {
- 		netdev_warn(dev->net, "timeout waiting for completion of Lite Reset\n");
--		return ret;
-+		return -ETIMEDOUT;
- 	}
- 
- 	ret = smsc95xx_write_reg(dev, PM_CTRL, PM_CTL_PHY_RST_);
+--- a/drivers/net/ethernet/intel/i40e/i40e_common.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_common.c
+@@ -1320,7 +1320,7 @@ void i40e_clear_hw(struct i40e_hw *hw)
+ 		     I40E_PFLAN_QALLOC_FIRSTQ_SHIFT;
+ 	j = (val & I40E_PFLAN_QALLOC_LASTQ_MASK) >>
+ 	    I40E_PFLAN_QALLOC_LASTQ_SHIFT;
+-	if (val & I40E_PFLAN_QALLOC_VALID_MASK)
++	if (val & I40E_PFLAN_QALLOC_VALID_MASK && j >= base_queue)
+ 		num_queues = (j - base_queue) + 1;
+ 	else
+ 		num_queues = 0;
+@@ -1330,7 +1330,7 @@ void i40e_clear_hw(struct i40e_hw *hw)
+ 	    I40E_PF_VT_PFALLOC_FIRSTVF_SHIFT;
+ 	j = (val & I40E_PF_VT_PFALLOC_LASTVF_MASK) >>
+ 	    I40E_PF_VT_PFALLOC_LASTVF_SHIFT;
+-	if (val & I40E_PF_VT_PFALLOC_VALID_MASK)
++	if (val & I40E_PF_VT_PFALLOC_VALID_MASK && j >= i)
+ 		num_vfs = (j - i) + 1;
+ 	else
+ 		num_vfs = 0;
 
 
