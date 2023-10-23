@@ -1,22 +1,22 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F521CA96;
-	Mon, 23 Oct 2023 16:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE6114F70;
+	Mon, 23 Oct 2023 16:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i9wc8Y4R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A59C433C8;
-	Mon, 23 Oct 2023 16:23:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uv8P4u2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DA7C433C7;
+	Mon, 23 Oct 2023 16:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698078183;
-	bh=hw1RXDOvJQbEcCc6aiMGkaMdzvxKkAGo1xlXgtElMxw=;
+	s=k20201202; t=1698078296;
+	bh=QafwhIyKRywPgzKy2niqWZ7a6petGIcryfRlf2IB1GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9wc8Y4R1kVemCS/QZfjYyTWUDmRl7qcQCpvf1SbcSBE5hudWJaTMM2gO69nAAo+9
-	 WWhDq1VsbpTwTQBwIGWMwva4KN70cCasRr3++3M1SFmu5jp4LptXVofrdS0tDID851
-	 zqSOfePJQwv5cw4/ZogStkc85gRJeugmXW/dLsu/fLcNLOLZAfTpWBOt3oqHKWKeuo
-	 LaUAo+mAf7/fxwOvLoH8EWaJCxMpjLw+EEeDmc2nqijSJ8ALrVXHccKPPQXSZ56VYz
-	 0HlzYiG5ax7GZ8VT427PLaoRXrK5UEgM10veBu9oxzpqHbweTINDWBEf1FsFVky6NW
-	 jAQzlgU96YVvA==
+	b=uv8P4u2sNzRrofvbSUkXlHEHg1CkEkrW+GHfHKgKffBQ9qQwRmXq5HKaJalEmh9j0
+	 zDrxDYwbxL1nRSZQa8jnY0pgGaDcwTeyO6TcCGDifHN0M/qYsqMfgUqqwia2td2xXr
+	 WFchUyEswZzcxBpbCaJpmvvMTYw0OArQtzJSa9UyI5xBdixnX6miU+Nj0ofjasL17b
+	 NMS4gGWbEdMDD7uOi55PXK5G3Eg/bHIW+5cy4pE4WSVQb1EdDaoGhWj0vkSWuPq71C
+	 t3TJzBLcczrOSheZWWZpMu+61ji//cctcF8hvTTAqydcwFcN3XOmle7gTcoJyl1GHJ
+	 cXwlWTAwPI8EQ==
 From: SeongJae Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org,
@@ -37,11 +37,11 @@ Cc: stable@vger.kernel.org,
 	conor@kernel.org,
 	damon@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 5.15 000/137] 5.15.137-rc1 review
-Date: Mon, 23 Oct 2023 16:23:00 +0000
-Message-Id: <20231023162300.188047-1-sj@kernel.org>
+Subject: Re: [PATCH 6.1 000/196] 6.1.60-rc1 review
+Date: Mon, 23 Oct 2023 16:24:53 +0000
+Message-Id: <20231023162453.188072-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
+In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -53,10 +53,10 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Mon, 23 Oct 2023 12:55:57 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Mon, 23 Oct 2023 12:54:25 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 5.15.137 release.
-> There are 137 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.60 release.
+> There are 196 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -75,7 +75,7 @@ passes the kunit test with the fix.
 Tested-by: SeongJae Park <sj@kernel.org>
 
 [1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] c7721f02ed5c ("Linux 5.15.137-rc1")
+[2] fa9447b759f6 ("Linux 6.1.60-rc1")
 [3] https://github.com/awslabs/damon-tests/commit/6182d52940e83623376ceceb6c0b90e661abba3b
 
 Thanks,
@@ -85,17 +85,13 @@ SJ
 
 ---
 
-# selftests: damon-tests: build_i386_highpte.sh
-# .config:1347:warning: override: reassigning to symbol DAMON
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-# selftests: damon-tests: build_nomemcg.sh
-# .config:1348:warning: override: reassigning to symbol DAMON
-# .config:1358:warning: override: reassigning to symbol CGROUPS
-ok 14 selftests: damon-tests: build_nomemcg.sh
-# kselftest dir '/home/sjpark/damon-tests-cont/linux/tools/testing/selftests/damon-tests' is in dirty state.
-# the log is at '/home/sjpark/log'.
- [32m
 ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
 ok 2 selftests: damon-tests: huge_count_read_write.sh
 ok 3 selftests: damon-tests: buffer_overflow.sh
 ok 4 selftests: damon-tests: rm_contexts.sh
@@ -109,9 +105,6 @@ ok 11 selftests: damon-tests: build_arm64.sh
 ok 12 selftests: damon-tests: build_i386_idle_flag.sh
 ok 13 selftests: damon-tests: build_i386_highpte.sh
 ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
 not ok 1 selftests: damon-tests: kunit.sh # exit=1
 
  [91mFAIL [39m
-_remote_run_corr.sh failed (5 times)
-Connection to localhost closed by remote host.
