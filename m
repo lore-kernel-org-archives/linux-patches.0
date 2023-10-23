@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F65B15E87
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0830115E87
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHNL8BMm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB9CC433C7;
-	Mon, 23 Oct 2023 11:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5Zp2P9s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780E0C433C8;
+	Mon, 23 Oct 2023 11:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060765;
-	bh=BW4n8N5QWHwQj/Byt3UNO/bHJjmPTzC7oSrh497O6Kc=;
+	s=korg; t=1698060768;
+	bh=4WzcPJQtWs6uMj71DKPMJoEhWMi4QWvcLkaSpIYtFhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHNL8BMmRVQ39gIhF0FfHETDogXciColJfXXcQgekqNYDF3rEbG+xA5vAumkjw7MX
-	 LY6nyJjobzuKo9TTDl8VPNPl7xDylmaA9D0vkHAKmk/ijemn6OLGngmFKqCWPjYU15
-	 xbREgZFbXyW6vApo/djsrsvJnSEINGJKrwfPDU58=
+	b=k5Zp2P9sZQV8mfM8/sCyxVoOHFmgYkBFvRBcSMXTl68svuiKuU8yZr3buz87KosWO
+	 Ld6Ig2kuVV+VJDtMzkilVjC9ytezyxjYdE5+8c+KmsygRLpzujP3nlv6A544ldrB1f
+	 WhAYYPxm77Ru7BYeFjQ/oRzJveCnGgbhmT+Aysb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Peter Rosin <peda@axentia.se>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 086/123] i2c: mux: Avoid potential false error message in i2c_mux_add_adapter
-Date: Mon, 23 Oct 2023 12:57:24 +0200
-Message-ID: <20231023104820.580618998@linuxfoundation.org>
+	Christian Theune <ct@flyingcircus.io>,
+	Budimir Markovic <markovicbudimir@gmail.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 069/123] net/sched: sch_hfsc: upgrade rt to sc when it becomes a inner curve
+Date: Mon, 23 Oct 2023 12:57:07 +0200
+Message-ID: <20231023104819.983502622@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -43,37 +44,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit b13e59e74ff71a1004e0508107e91e9a84fd7388 ]
+commit a13b67c9a015c4e21601ef9aa4ec9c5d972df1b4 upstream.
 
-I2C_CLASS_DEPRECATED is a flag and not an actual class.
-There's nothing speaking against both, parent and child, having
-I2C_CLASS_DEPRECATED set. Therefore exclude it from the check.
+Christian Theune says:
+   I upgraded from 6.1.38 to 6.1.55 this morning and it broke my traffic shaping script,
+   leaving me with a non-functional uplink on a remote router.
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Acked-by: Peter Rosin <peda@axentia.se>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A 'rt' curve cannot be used as a inner curve (parent class), but we were
+allowing such configurations since the qdisc was introduced. Such
+configurations would trigger a UAF as Budimir explains:
+   The parent will have vttree_insert() called on it in init_vf(),
+   but will not have vttree_remove() called on it in update_vf()
+   because it does not have the HFSC_FSC flag set.
+
+The qdisc always assumes that inner classes have the HFSC_FSC flag set.
+This is by design as it doesn't make sense 'qdisc wise' for an 'rt'
+curve to be an inner curve.
+
+Budimir's original patch disallows users to add classes with a 'rt'
+parent, but this is too strict as it breaks users that have been using
+'rt' as a inner class. Another approach, taken by this patch, is to
+upgrade the inner 'rt' into a 'sc', warning the user in the process.
+It avoids the UAF reported by Budimir while also being more permissive
+to bad scripts/users/code using 'rt' as a inner class.
+
+Users checking the `tc class ls [...]` or `tc class get [...]` dumps would
+observe the curve change and are potentially breaking with this change.
+
+v1->v2: https://lore.kernel.org/all/20231013151057.2611860-1-pctammela@mojatatu.com/
+- Correct 'Fixes' tag and merge with revert (Jakub)
+
+Cc: Christian Theune <ct@flyingcircus.io>
+Cc: Budimir Markovic <markovicbudimir@gmail.com>
+Fixes: b3d26c5702c7 ("net/sched: sch_hfsc: Ensure inner classes have fsc curve")
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20231017143602.3191556-1-pctammela@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-mux.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_hfsc.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i2c/i2c-mux.c b/drivers/i2c/i2c-mux.c
-index 774507b54b57b..c90cec8d9656d 100644
---- a/drivers/i2c/i2c-mux.c
-+++ b/drivers/i2c/i2c-mux.c
-@@ -340,7 +340,7 @@ int i2c_mux_add_adapter(struct i2c_mux_core *muxc,
- 		priv->adap.lock_ops = &i2c_parent_lock_ops;
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -903,6 +903,14 @@ hfsc_change_usc(struct hfsc_class *cl, s
+ 	cl->cl_flags |= HFSC_USC;
+ }
  
- 	/* Sanity check on class */
--	if (i2c_mux_parent_classes(parent) & class)
-+	if (i2c_mux_parent_classes(parent) & class & ~I2C_CLASS_DEPRECATED)
- 		dev_err(&parent->dev,
- 			"Segment %d behind mux can't share classes with ancestors\n",
- 			chan_id);
--- 
-2.40.1
-
++static void
++hfsc_upgrade_rt(struct hfsc_class *cl)
++{
++	cl->cl_fsc = cl->cl_rsc;
++	rtsc_init(&cl->cl_virtual, &cl->cl_fsc, cl->cl_vt, cl->cl_total);
++	cl->cl_flags |= HFSC_FSC;
++}
++
+ static const struct nla_policy hfsc_policy[TCA_HFSC_MAX + 1] = {
+ 	[TCA_HFSC_RSC]	= { .len = sizeof(struct tc_service_curve) },
+ 	[TCA_HFSC_FSC]	= { .len = sizeof(struct tc_service_curve) },
+@@ -1012,10 +1020,6 @@ hfsc_change_class(struct Qdisc *sch, u32
+ 		if (parent == NULL)
+ 			return -ENOENT;
+ 	}
+-	if (!(parent->cl_flags & HFSC_FSC) && parent != &q->root) {
+-		NL_SET_ERR_MSG(extack, "Invalid parent - parent class must have FSC");
+-		return -EINVAL;
+-	}
+ 
+ 	if (classid == 0 || TC_H_MAJ(classid ^ sch->handle) != 0)
+ 		return -EINVAL;
+@@ -1068,6 +1072,12 @@ hfsc_change_class(struct Qdisc *sch, u32
+ 	cl->cf_tree = RB_ROOT;
+ 
+ 	sch_tree_lock(sch);
++	/* Check if the inner class is a misconfigured 'rt' */
++	if (!(parent->cl_flags & HFSC_FSC) && parent != &q->root) {
++		NL_SET_ERR_MSG(extack,
++			       "Forced curve change on parent 'rt' to 'sc'");
++		hfsc_upgrade_rt(parent);
++	}
+ 	qdisc_class_hash_insert(&q->clhash, &cl->cl_common);
+ 	list_add_tail(&cl->siblings, &parent->children);
+ 	if (parent->level == 0)
 
 
