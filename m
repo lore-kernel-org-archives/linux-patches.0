@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D96B15E8D
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A43B15E8D
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgJ+0hlg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D82EC433C9;
-	Mon, 23 Oct 2023 11:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tAZvwZo9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C2FC433C7;
+	Mon, 23 Oct 2023 11:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060452;
-	bh=VsG1EGBEvH/02Te+pJ73/c85XJnu1elW9B/wVN8mKBI=;
+	s=korg; t=1698060455;
+	bh=sgX31NwhOoiSTPlSQ5IAMU8WXA2Z7o2PN8ODaCjo7P4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VgJ+0hlg7xWdH1lR8R1gZfn3a9G0NHqYWo57Iviyhd+fz8HxZq+Z55enCUc+LzF8h
-	 3+9BaOWg8OkInRWa5QnrYtYzyda+XGu3UW3XK0+dI+RsjctWzjcYJAqwlP3TnqdGLt
-	 5cd4EyuMYj6Nmd1UVETnLAsAl6c02I9oeHCmaTm0=
+	b=tAZvwZo9m6DxnER9Sk3PzbntYB3n7G2wWHyebyA2N3EukmiiI3gq9pSknH/Zp1TZT
+	 UZNAwCS2iCQO5XDNHI+mAVEJ4XhgRLBXqQudMgYlkSpdVgIS9xYaetgZwW+5lv5hLv
+	 VntZILFByuSttVeXLErI6wFiuhGa36NEYOMRR7aE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.1 177/196] gpio: vf610: set value before the direction to avoid a glitch
-Date: Mon, 23 Oct 2023 12:57:22 +0200
-Message-ID: <20231023104833.410669492@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 178/196] ASoC: pxa: fix a memory leak in probe()
+Date: Mon, 23 Oct 2023 12:57:23 +0200
+Message-ID: <20231023104833.436045066@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -41,41 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit fc363413ef8ea842ae7a99e3caf5465dafdd3a49 upstream.
+[ Upstream commit aa6464edbd51af4a2f8db43df866a7642b244b5f ]
 
-We found a glitch when configuring the pad as output high. To avoid this
-glitch, move the data value setting before direction config in the
-function vf610_gpio_direction_output().
+Free the "priv" pointer before returning the error code.
 
-Fixes: 659d8a62311f ("gpio: vf610: add imx7ulp support")
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-[Bartosz: tweak the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 90eb6b59d311 ("ASoC: pxa-ssp: add support for an external clock in devicetree")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/84ac2313-1420-471a-b2cb-3269a2e12a7c@moroto.mountain
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-vf610.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/pxa/pxa-ssp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-vf610.c
-+++ b/drivers/gpio/gpio-vf610.c
-@@ -128,14 +128,14 @@ static int vf610_gpio_direction_output(s
- 	unsigned long mask = BIT(gpio);
- 	u32 val;
+diff --git a/sound/soc/pxa/pxa-ssp.c b/sound/soc/pxa/pxa-ssp.c
+index 430dd446321e5..452f0caf415b9 100644
+--- a/sound/soc/pxa/pxa-ssp.c
++++ b/sound/soc/pxa/pxa-ssp.c
+@@ -779,7 +779,7 @@ static int pxa_ssp_probe(struct snd_soc_dai *dai)
+ 		if (IS_ERR(priv->extclk)) {
+ 			ret = PTR_ERR(priv->extclk);
+ 			if (ret == -EPROBE_DEFER)
+-				return ret;
++				goto err_priv;
  
-+	vf610_gpio_set(chip, gpio, value);
-+
- 	if (port->sdata && port->sdata->have_paddr) {
- 		val = vf610_gpio_readl(port->gpio_base + GPIO_PDDR);
- 		val |= mask;
- 		vf610_gpio_writel(val, port->gpio_base + GPIO_PDDR);
- 	}
- 
--	vf610_gpio_set(chip, gpio, value);
--
- 	return pinctrl_gpio_direction_output(chip->base + gpio);
- }
- 
+ 			priv->extclk = NULL;
+ 		}
+-- 
+2.42.0
+
 
 
