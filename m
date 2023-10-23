@@ -1,52 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B59C15E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5951615E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYf8Z5/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1270C433C7;
-	Mon, 23 Oct 2023 11:35:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFBGJ80J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9077C433C7;
+	Mon, 23 Oct 2023 11:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060907;
-	bh=D8t52LdpfQS9WbNpla/qgjU5Y8XdQ5S4fQDF0czsqx4=;
+	s=korg; t=1698060910;
+	bh=DmROKb6fPj1Cs6EBZAn3TpS0dzqJJfInm/J5eFvPBOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zYf8Z5/OlqycIXL0y6nXVUVJL2IunRFSFBCTzgM8edrgrkaHjalCLIVuv/qKdnvh6
-	 APt1yEOwcha0geDRfDGYs80PoBDTqMKStfCzx+U2Mcdt+teaUUyvAXgl6J5rPwmkPL
-	 VUpx//c2DL9q7/pBDIBggEB6p1CZSLZOzDr4d74o=
+	b=BFBGJ80JhStZIdLTPvdJ3OaMX/w8iF7CdxWqjJP3ZgZC5g3vIQB/MwUGvrQMXJtq7
+	 o9all6d3HMxqo3pezx7emWsKUCSparoLwuEUV+or6pX1clT1Q/sd0CFNRpMVdljxr3
+	 VnTHLcKFMasVLra076bBPTIIazRZiEKColCRIPR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Ben Segall <bsegall@google.com>,
-	Christoph Lameter <cl@linux.com>,
-	Daniel Bristot de Oliveira <bristot@redhat.com>,
-	David Rientjes <rientjes@google.com>,
-	Dennis Zhou <dennis@kernel.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Pekka Enberg <penberg@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Shakeel Butt <shakeelb@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Tejun Heo <tj@kernel.org>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Luiz Capitulino <luizcap@amazon.com>
-Subject: [PATCH 5.15 001/137] lib/Kconfig.debug: do not enable DEBUG_PREEMPT by default
-Date: Mon, 23 Oct 2023 12:55:58 +0200
-Message-ID: <20231023104820.904026390@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.15 010/137] ice: fix over-shifted variable
+Date: Mon, 23 Oct 2023 12:56:07 +0200
+Message-ID: <20231023104821.235756082@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -65,85 +45,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+From: Jesse Brandeburg <jesse.brandeburg@intel.com>
 
-commit cc6003916ed46d7a67d91ee32de0f9138047d55f upstream.
+commit 242e34500a32631f85c2b4eb6cb42a368a39e54f upstream.
 
-In workloads where this_cpu operations are frequently performed,
-enabling DEBUG_PREEMPT may result in significant increase in
-runtime overhead due to frequent invocation of
-__this_cpu_preempt_check() function.
+Since the introduction of the ice driver the code has been
+double-shifting the RSS enabling field, because the define already has
+shifts in it and can't have the regular pattern of "a << shiftval &
+mask" applied.
 
-This can be demonstrated through benchmarks such as hackbench where this
-configuration results in a 10% reduction in performance, primarily due to
-the added overhead within memcg charging path.
+Most places in the code got it right, but one line was still wrong. Fix
+this one location for easy backports to stable. An in-progress patch
+fixes the defines to "standard" and will be applied as part of the
+regular -next process sometime after this one.
 
-Therefore, do not to enable DEBUG_PREEMPT by default and make users aware
-of its potential impact on performance in some workloads.
-
-hackbench-process-sockets
-		      debug_preempt	 no_debug_preempt
-Amean     1       0.4743 (   0.00%)      0.4295 *   9.45%*
-Amean     4       1.4191 (   0.00%)      1.2650 *  10.86%*
-Amean     7       2.2677 (   0.00%)      2.0094 *  11.39%*
-Amean     12      3.6821 (   0.00%)      3.2115 *  12.78%*
-Amean     21      6.6752 (   0.00%)      5.7956 *  13.18%*
-Amean     30      9.6646 (   0.00%)      8.5197 *  11.85%*
-Amean     48     15.3363 (   0.00%)     13.5559 *  11.61%*
-Amean     79     24.8603 (   0.00%)     22.0597 *  11.27%*
-Amean     96     30.1240 (   0.00%)     26.8073 *  11.01%*
-
-Link: https://lkml.kernel.org/r/20230121033942.350387-1-42.hyeyoo@gmail.com
-Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Acked-by: Mel Gorman <mgorman@techsingularity.net>
-Acked-by: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Ben Segall <bsegall@google.com>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: Daniel Bristot de Oliveira <bristot@redhat.com>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Dennis Zhou <dennis@kernel.org>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Pekka Enberg <penberg@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Valentin Schneider <vschneid@redhat.com>
-Cc: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Luiz Capitulino <luizcap@amazon.com>
+Fixes: d76a60ba7afb ("ice: Add support for VLANs and offloads")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+CC: stable@vger.kernel.org
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20231010203101.406248-1-jacob.e.keller@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/Kconfig.debug |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_lib.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -1226,13 +1226,16 @@ config DEBUG_TIMEKEEPING
- config DEBUG_PREEMPT
- 	bool "Debug preemptible kernel"
- 	depends on DEBUG_KERNEL && PREEMPTION && TRACE_IRQFLAGS_SUPPORT
--	default y
- 	help
- 	  If you say Y here then the kernel will use a debug variant of the
- 	  commonly used smp_processor_id() function and will print warnings
- 	  if kernel code uses it in a preemption-unsafe way. Also, the kernel
- 	  will detect preemption count underflows.
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -954,8 +954,7 @@ static void ice_set_rss_vsi_ctx(struct i
  
-+	  This option has potential to introduce high runtime overhead,
-+	  depending on workload as it triggers debugging routines for each
-+	  this_cpu operation. It should only be used for debugging purposes.
-+
- menu "Lock Debugging (spinlocks, mutexes, etc...)"
+ 	ctxt->info.q_opt_rss = ((lut_type << ICE_AQ_VSI_Q_OPT_RSS_LUT_S) &
+ 				ICE_AQ_VSI_Q_OPT_RSS_LUT_M) |
+-				((hash_type << ICE_AQ_VSI_Q_OPT_RSS_HASH_S) &
+-				 ICE_AQ_VSI_Q_OPT_RSS_HASH_M);
++				(hash_type & ICE_AQ_VSI_Q_OPT_RSS_HASH_M);
+ }
  
- config LOCK_DEBUGGING_SUPPORT
+ /**
 
 
