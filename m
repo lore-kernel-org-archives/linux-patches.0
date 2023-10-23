@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119A613FEC
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA9213FEC
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyj10dIM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E19DC433C7;
-	Mon, 23 Oct 2023 11:07:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAb56dM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC51C433C8;
+	Mon, 23 Oct 2023 11:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059259;
-	bh=kSY42+fR68Adgo1EnYnYIec3S5fbAk3xpejJzPxmEpU=;
+	s=korg; t=1698059262;
+	bh=FkB+u9R1UTvArrdgmviYCAXTklgR8/whc3eu+W9qIzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jyj10dIMxf82K2Q6ntOUW+gb93UwTDrAms36Pm3l94LfrFv2CS1SG2R57LWJvx3sz
-	 oXQ4kzYgtmYY+40efyPBwutDIheE3bOPhjTgIqsHcASHFYxVZ7He8973b4wxkXKMaT
-	 PEVMPjXp+jI/5RVydvaoi5+xvTj/nAS9tfHZ12cw=
+	b=qAb56dM/WQln2SOqL8cWYe94hA4KLWtiRJJmY8VYiZbBkHrCNuOTFENUMz1ZOGn/x
+	 Qz2FrvuEorzO7FYF1pNL1IKcYXiG6nYg2y5+uV7APC/4MCeCNgjzJ5Azki8SbkUR79
+	 c378XjapqtvvFTqgPku3rMtd3r6J4Bc9f1WsidmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+01cdbc31e9c0ae9b33ac@syzkaller.appspotmail.com,
-	syzbot+c99d835ff081ca30f986@syzkaller.appspotmail.com,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.5 091/241] net: more strict VIRTIO_NET_HDR_GSO_UDP_L4 validation
-Date: Mon, 23 Oct 2023 12:54:37 +0200
-Message-ID: <20231023104836.111766102@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.5 092/241] net: mdio-mux: fix C45 access returning -EIO after API change
+Date: Mon, 23 Oct 2023 12:54:38 +0200
+Message-ID: <20231023104836.137484011@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -45,86 +44,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit fc8b2a619469378717e7270d2a4e1ef93c585f7a upstream.
+commit 1f9f2143f24e224a8582a5d54918c43b9121eccc upstream.
 
-Syzbot reported two new paths to hit an internal WARNING using the
-new virtio gso type VIRTIO_NET_HDR_GSO_UDP_L4.
+The mii_bus API conversion to read_c45() and write_c45() did not cover
+the mdio-mux driver before read() and write() were made C22-only.
 
-    RIP: 0010:skb_checksum_help+0x4a2/0x600 net/core/dev.c:3260
-    skb len=64521 gso_size=344
-and
+This broke arch/arm64/boot/dts/freescale/fsl-ls1028a-qds-13bb.dtso.
+The -EOPNOTSUPP from mdiobus_c45_read() is transformed by
+get_phy_c45_devs_in_pkg() into -EIO, is further propagated to
+of_mdiobus_register() and this makes the mdio-mux driver fail to probe
+the entire child buses, not just the PHYs that cause access errors.
 
-    RIP: 0010:skb_warn_bad_offload+0x118/0x240 net/core/dev.c:3262
+Fix the regression by introducing special c45 read and write accessors
+to mdio-mux which forward the operation to the parent MDIO bus.
 
-Older virtio types have historically had loose restrictions, leading
-to many entirely impractical fuzzer generated packets causing
-problems deep in the kernel stack. Ideally, we would have had strict
-validation for all types from the start.
-
-New virtio types can have tighter validation. Limit UDP GSO packets
-inserted via virtio to the same limits imposed by the UDP_SEGMENT
-socket interface:
-
-1. must use checksum offload
-2. checksum offload matches UDP header
-3. no more segments than UDP_MAX_SEGMENTS
-4. UDP GSO does not take modifier flags, notably SKB_GSO_TCP_ECN
-
-Fixes: 860b7f27b8f7 ("linux/virtio_net.h: Support USO offload in vnet header.")
-Reported-by: syzbot+01cdbc31e9c0ae9b33ac@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/0000000000005039270605eb0b7f@google.com/
-Reported-by: syzbot+c99d835ff081ca30f986@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/0000000000005426680605eb0b9f@google.com/
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: db1a63aed89c ("net: phy: Remove fallback to old C45 method")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://lore.kernel.org/r/20231017143144.3212657-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/virtio_net.h | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/net/mdio/mdio-mux.c | 47 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index 7b4dd69555e4..27cc1d464321 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -3,8 +3,8 @@
- #define _LINUX_VIRTIO_NET_H
+diff --git a/drivers/net/mdio/mdio-mux.c b/drivers/net/mdio/mdio-mux.c
+index a881e3523328..bef4cce71287 100644
+--- a/drivers/net/mdio/mdio-mux.c
++++ b/drivers/net/mdio/mdio-mux.c
+@@ -55,6 +55,27 @@ out:
+ 	return r;
+ }
  
- #include <linux/if_vlan.h>
-+#include <linux/udp.h>
- #include <uapi/linux/tcp.h>
--#include <uapi/linux/udp.h>
- #include <uapi/linux/virtio_net.h>
++static int mdio_mux_read_c45(struct mii_bus *bus, int phy_id, int dev_addr,
++			     int regnum)
++{
++	struct mdio_mux_child_bus *cb = bus->priv;
++	struct mdio_mux_parent_bus *pb = cb->parent;
++	int r;
++
++	mutex_lock_nested(&pb->mii_bus->mdio_lock, MDIO_MUTEX_MUX);
++	r = pb->switch_fn(pb->current_child, cb->bus_number, pb->switch_data);
++	if (r)
++		goto out;
++
++	pb->current_child = cb->bus_number;
++
++	r = pb->mii_bus->read_c45(pb->mii_bus, phy_id, dev_addr, regnum);
++out:
++	mutex_unlock(&pb->mii_bus->mdio_lock);
++
++	return r;
++}
++
+ /*
+  * The parent bus' lock is used to order access to the switch_fn.
+  */
+@@ -80,6 +101,28 @@ out:
+ 	return r;
+ }
  
- static inline bool virtio_net_hdr_match_proto(__be16 protocol, __u8 gso_type)
-@@ -151,9 +151,22 @@ retry:
- 		unsigned int nh_off = p_off;
- 		struct skb_shared_info *shinfo = skb_shinfo(skb);
++static int mdio_mux_write_c45(struct mii_bus *bus, int phy_id, int dev_addr,
++			      int regnum, u16 val)
++{
++	struct mdio_mux_child_bus *cb = bus->priv;
++	struct mdio_mux_parent_bus *pb = cb->parent;
++
++	int r;
++
++	mutex_lock_nested(&pb->mii_bus->mdio_lock, MDIO_MUTEX_MUX);
++	r = pb->switch_fn(pb->current_child, cb->bus_number, pb->switch_data);
++	if (r)
++		goto out;
++
++	pb->current_child = cb->bus_number;
++
++	r = pb->mii_bus->write_c45(pb->mii_bus, phy_id, dev_addr, regnum, val);
++out:
++	mutex_unlock(&pb->mii_bus->mdio_lock);
++
++	return r;
++}
++
+ static int parent_count;
  
--		/* UFO may not include transport header in gso_size. */
--		if (gso_type & SKB_GSO_UDP)
-+		switch (gso_type & ~SKB_GSO_TCP_ECN) {
-+		case SKB_GSO_UDP:
-+			/* UFO may not include transport header in gso_size. */
- 			nh_off -= thlen;
-+			break;
-+		case SKB_GSO_UDP_L4:
-+			if (!(hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM))
-+				return -EINVAL;
-+			if (skb->csum_offset != offsetof(struct udphdr, check))
-+				return -EINVAL;
-+			if (skb->len - p_off > gso_size * UDP_MAX_SEGMENTS)
-+				return -EINVAL;
-+			if (gso_type != SKB_GSO_UDP_L4)
-+				return -EINVAL;
-+			break;
-+		}
- 
- 		/* Kernel has a special handling for GSO_BY_FRAGS. */
- 		if (gso_size == GSO_BY_FRAGS)
+ static void mdio_mux_uninit_children(struct mdio_mux_parent_bus *pb)
+@@ -173,6 +216,10 @@ int mdio_mux_init(struct device *dev,
+ 		cb->mii_bus->parent = dev;
+ 		cb->mii_bus->read = mdio_mux_read;
+ 		cb->mii_bus->write = mdio_mux_write;
++		if (parent_bus->read_c45)
++			cb->mii_bus->read_c45 = mdio_mux_read_c45;
++		if (parent_bus->write_c45)
++			cb->mii_bus->write_c45 = mdio_mux_write_c45;
+ 		r = of_mdiobus_register(cb->mii_bus, child_bus_node);
+ 		if (r) {
+ 			mdiobus_free(cb->mii_bus);
 -- 
 2.42.0
 
