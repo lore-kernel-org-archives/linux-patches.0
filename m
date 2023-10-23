@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEA314AA9
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A9914AB9
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxtZIkLQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166E3C433CA;
-	Mon, 23 Oct 2023 11:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGLiVy4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F6FC433C8;
+	Mon, 23 Oct 2023 11:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059465;
-	bh=KNPtezlZ5hvGu2WTqWXxnVup4nSRBGNOdsJUYFIDgIg=;
+	s=korg; t=1698059468;
+	bh=JtafWY9rtPJM8nK/aLizM5L1ncpwW5eXUcU04Z3UMTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxtZIkLQaZ95xRy1+MDqZUBf1CiG/MIjiQjUljHK3V8QB1d72dztxNmmJh4lSF12W
-	 PAiN1npXgrhJy5ma60pGMQwUCbpHpSh0Fv9Tt6Jcao2bRUi6VQV1s4k/SasEzMCvwS
-	 yv41qls3Ft8SUcafCbOE82RkJhnSxsAah6LeGo3c=
+	b=eGLiVy4rUi7uXCTqJjdZvZZ8JCzaQv/CmaMmYOkfnAKdktnJ/iqOmXQNGCnGMt5Uc
+	 809VS3hY5iVAzhNm70j2fUewzlbrKOpqxNSlA6U0JgT9xetaVtffSGCjp4aAHzhnrG
+	 +cMF+wR+fIvsb+5THSxIzfOJil7je3zO7xt1lTgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Mayhew <smayhew@redhat.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 6.5 187/241] NFS: Fix potential oops in nfs_inode_remove_request()
-Date: Mon, 23 Oct 2023 12:56:13 +0200
-Message-ID: <20231023104838.440109672@linuxfoundation.org>
+Subject: [PATCH 6.5 188/241] nfs42: client needs to strip file modes suid/sgid bit after ALLOCATE op
+Date: Mon, 23 Oct 2023 12:56:14 +0200
+Message-ID: <20231023104838.463688633@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,50 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-commit 6a6d4644ce935ddec4f76223ac0ca68da56bd2d3 upstream.
+commit f588d72bd95f748849685412b1f0c7959ca228cf upstream.
 
-Once a folio's private data has been cleared, it's possible for another
-process to clear the folio->mapping (e.g. via invalidate_complete_folio2
-or evict_mapping_folio), so it wouldn't be safe to call
-nfs_page_to_inode() after that.
+The Linux NFS server strips the SUID and SGID from the file mode
+on ALLOCATE op.
 
-Fixes: 0c493b5cf16e ("NFS: Convert buffered writes to use folios")
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Tested-by: Benjamin Coddington <bcodding@redhat.com>
+Modify _nfs42_proc_fallocate to add NFS_INO_REVAL_FORCED to
+nfs_set_cache_invalid's argument to force update of the file
+mode suid/sgid bit.
+
+Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/write.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfs/nfs42proc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index 7720b5e43014..9d82d50ce0b1 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -788,6 +788,8 @@ static void nfs_inode_add_request(struct nfs_page *req)
-  */
- static void nfs_inode_remove_request(struct nfs_page *req)
- {
-+	struct nfs_inode *nfsi = NFS_I(nfs_page_to_inode(req));
-+
- 	if (nfs_page_group_sync_on_bit(req, PG_REMOVE)) {
- 		struct folio *folio = nfs_page_to_folio(req->wb_head);
- 		struct address_space *mapping = folio_file_mapping(folio);
-@@ -802,7 +804,7 @@ static void nfs_inode_remove_request(struct nfs_page *req)
- 	}
- 
- 	if (test_and_clear_bit(PG_INODE_REF, &req->wb_flags)) {
--		atomic_long_dec(&NFS_I(nfs_page_to_inode(req))->nrequests);
-+		atomic_long_dec(&nfsi->nrequests);
- 		nfs_release_request(req);
- 	}
- }
--- 
-2.42.0
-
+--- a/fs/nfs/nfs42proc.c
++++ b/fs/nfs/nfs42proc.c
+@@ -81,7 +81,8 @@ static int _nfs42_proc_fallocate(struct
+ 	if (status == 0) {
+ 		if (nfs_should_remove_suid(inode)) {
+ 			spin_lock(&inode->i_lock);
+-			nfs_set_cache_invalid(inode, NFS_INO_INVALID_MODE);
++			nfs_set_cache_invalid(inode,
++				NFS_INO_REVAL_FORCED | NFS_INO_INVALID_MODE);
+ 			spin_unlock(&inode->i_lock);
+ 		}
+ 		status = nfs_post_op_update_inode_force_wcc(inode,
 
 
