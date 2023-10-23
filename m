@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11CD15EA9
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17E815EA9
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WGBRdUNa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38266C433C9;
-	Mon, 23 Oct 2023 11:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swIYzata"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30608C433C7;
+	Mon, 23 Oct 2023 11:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061450;
-	bh=ZSCe7ZvjZLlW+IPvBSnUHXqDv5etGSp9qC6HcQbdBGc=;
+	s=korg; t=1698061453;
+	bh=1W44etMX859xgy//3HUlFmMo8bOnidwpBe0pv8EWemY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WGBRdUNavFmjDjupzvDApqmRIxmFRAYYAmglnFIWSoXl5amuuzyF3ThnY7avL6H6E
-	 Z5xAY+5SDmE/y9CaDtU6kVRiAwJeLkMx06xZ0I9yAtBhdvng9IvLN2jJ2344dy5eD4
-	 rOJPYLGt2LYoOkf4uWO7uNWMDEpRYMAWanvDxBAM=
+	b=swIYzata1QfPwAsQJW208CDuywjA/MvdgaGec095Y+QkuhibyLS/5EchaCJ1Wb508
+	 WfEC0hukewqlWCILAfvRFbZQMJmcnlw7gOSNR/7XbwxSsfUxL8dHUU2bPh+pRI9kYV
+	 MEEvc3JoSfB0pOO/4Pw8FlvMhK8hJ4WJ9Cg/pIVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Michael Smith <1973.mjsmith@gmail.com>
-Subject: [PATCH 5.10 052/202] Input: goodix - ensure int GPIO is in input for gpio_count == 1 && gpio_int_idx == 0 case
-Date: Mon, 23 Oct 2023 12:55:59 +0200
-Message-ID: <20231023104828.098148423@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+1f53a30781af65d2c955@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 035/202] net: usb: dm9601: fix uninitialized variable use in dm9601_mdio_read
+Date: Mon, 23 Oct 2023 12:55:42 +0200
+Message-ID: <20231023104827.619583315@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -42,87 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 423622a90abb243944d1517b9f57db53729e45c4 upstream.
+commit 8f8abb863fa5a4cc18955c6a0e17af0ded3e4a76 upstream.
 
-Add a special case for gpio_count == 1 && gpio_int_idx == 0 to
-goodix_add_acpi_gpio_mappings().
+syzbot has found an uninit-value bug triggered by the dm9601 driver [1].
 
-It seems that on newer x86/ACPI devices the reset and irq GPIOs are no
-longer listed as GPIO resources instead there is only 1 GpioInt resource
-and _PS0 does the whole reset sequence for us.
+This error happens because the variable res is not updated if the call
+to dm_read_shared_word returns an error. In this particular case -EPROTO
+was returned and res stayed uninitialized.
 
-This means that we must call acpi_device_fix_up_power() on these devices
-to ensure that the chip is reset before we try to use it.
+This can be avoided by checking the return value of dm_read_shared_word
+and propagating the error if the read operation failed.
 
-This part was already fixed in commit 3de93e6ed2df ("Input: goodix - call
-acpi_device_fix_up_power() in some cases") by adding a call to
-acpi_device_fix_up_power() to the generic "Unexpected ACPI resources"
-catch all.
+[1] https://syzkaller.appspot.com/bug?extid=1f53a30781af65d2c955
 
-But it turns out that this case on some hw needs some more special
-handling. Specifically the firmware may bootup with the IRQ pin in
-output mode. The reset sequence from ACPI _PS0 (executed by
-acpi_device_fix_up_power()) should put the pin in input mode,
-but the GPIO subsystem has cached the direction at bootup, causing
-request_irq() to fail due to gpiochip_lock_as_irq() failure:
-
-[    9.119864] Goodix-TS i2c-GDIX1002:00: Unexpected ACPI resources: gpio_count 1, gpio_int_idx 0
-[    9.317443] Goodix-TS i2c-GDIX1002:00: ID 911, version: 1060
-[    9.321902] input: Goodix Capacitive TouchScreen as /devices/pci0000:00/0000:00:17.0/i2c_designware.4/i2c-5/i2c-GDIX1002:00/input/input8
-[    9.327840] gpio gpiochip0: (INT3453:00): gpiochip_lock_as_irq: tried to flag a GPIO set as output for IRQ
-[    9.327856] gpio gpiochip0: (INT3453:00): unable to lock HW IRQ 26 for IRQ
-[    9.327861] genirq: Failed to request resources for GDIX1002:00 (irq 131) on irqchip intel-gpio
-[    9.327912] Goodix-TS i2c-GDIX1002:00: request IRQ failed: -5
-
-Fix this by adding a special case for gpio_count == 1 && gpio_int_idx == 0
-which adds an ACPI GPIO lookup table for the int GPIO even though we cannot
-use it for reset purposes (as there is no reset GPIO).
-
-Adding the lookup will make the gpiod_int = gpiod_get(..., GPIOD_IN) call
-succeed, which will explicitly set the direction to input fixing the issue.
-
-Note this re-uses the acpi_goodix_int_first_gpios[] lookup table, since
-there is only 1 GPIO in the ACPI resources the reset entry in that
-lookup table will amount to a no-op.
-
-Reported-and-tested-by: Michael Smith <1973.mjsmith@gmail.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231003215144.69527-1-hdegoede@redhat.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Reported-and-tested-by: syzbot+1f53a30781af65d2c955@syzkaller.appspotmail.com
+Acked-by: Peter Korsgaard <peter@korsgaard.com>
+Fixes: d0374f4f9c35cdfbee0 ("USB: Davicom DM9601 usbnet driver")
+Link: https://lore.kernel.org/r/20231009-topic-dm9601_uninit_mdio_read-v2-1-f2fe39739b6c@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/goodix.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/net/usb/dm9601.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/input/touchscreen/goodix.c
-+++ b/drivers/input/touchscreen/goodix.c
-@@ -820,6 +820,25 @@ static int goodix_add_acpi_gpio_mappings
- 		dev_info(dev, "No ACPI GpioInt resource, assuming that the GPIO order is reset, int\n");
- 		ts->irq_pin_access_method = IRQ_PIN_ACCESS_ACPI_GPIO;
- 		gpio_mapping = acpi_goodix_int_last_gpios;
-+	} else if (ts->gpio_count == 1 && ts->gpio_int_idx == 0) {
-+		/*
-+		 * On newer devices there is only 1 GpioInt resource and _PS0
-+		 * does the whole reset sequence for us.
-+		 */
-+		acpi_device_fix_up_power(ACPI_COMPANION(dev));
-+
-+		/*
-+		 * Before the _PS0 call the int GPIO may have been in output
-+		 * mode and the call should have put the int GPIO in input mode,
-+		 * but the GPIO subsys cached state may still think it is
-+		 * in output mode, causing gpiochip_lock_as_irq() failure.
-+		 *
-+		 * Add a mapping for the int GPIO to make the
-+		 * gpiod_int = gpiod_get(..., GPIOD_IN) call succeed,
-+		 * which will explicitly set the direction to input.
-+		 */
-+		ts->irq_pin_access_method = IRQ_PIN_ACCESS_NONE;
-+		gpio_mapping = acpi_goodix_int_first_gpios;
- 	} else {
- 		dev_warn(dev, "Unexpected ACPI resources: gpio_count %d, gpio_int_idx %d\n",
- 			 ts->gpio_count, ts->gpio_int_idx);
+--- a/drivers/net/usb/dm9601.c
++++ b/drivers/net/usb/dm9601.c
+@@ -221,13 +221,18 @@ static int dm9601_mdio_read(struct net_d
+ 	struct usbnet *dev = netdev_priv(netdev);
+ 
+ 	__le16 res;
++	int err;
+ 
+ 	if (phy_id) {
+ 		netdev_dbg(dev->net, "Only internal phy supported\n");
+ 		return 0;
+ 	}
+ 
+-	dm_read_shared_word(dev, 1, loc, &res);
++	err = dm_read_shared_word(dev, 1, loc, &res);
++	if (err < 0) {
++		netdev_err(dev->net, "MDIO read error: %d\n", err);
++		return err;
++	}
+ 
+ 	netdev_dbg(dev->net,
+ 		   "dm9601_mdio_read() phy_id=0x%02x, loc=0x%02x, returns=0x%04x\n",
 
 
