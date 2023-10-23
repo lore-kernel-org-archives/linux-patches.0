@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0659514A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7D114A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZKIFV9y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A95C433C8;
-	Mon, 23 Oct 2023 11:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Av9OHNSo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6047EC433C8;
+	Mon, 23 Oct 2023 11:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059545;
-	bh=As+EewmOuYHkg9hzkOx/m8VodXnIxSHKqmQzCjWru4s=;
+	s=korg; t=1698059549;
+	bh=1MN5W0z9MLKZkUeHXT4VAfj/3MxcCa0/mhf2HznJ9TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZKIFV9y4UKzFS47dQL5q+Whq+oQLuaAAnQVFZ8Fc/9vCQ528wsUAxuyu9hY/1gSZ
-	 jlrCdKAR7f2bDWgdkXLf6zCwclWlk83rg6wCfPN6bnzXngwtBkhpY1j3YD+qGJE1pt
-	 cysRyCjCl+ExUjkhJZ1U9WHNRRQBobyqWtkqurBY=
+	b=Av9OHNSoqzjLF2HZVx7qdUkltAb+YXuT9g/yFWFCAJdHYgVFJnxqPL91OCOuaQ+PR
+	 VVYQU7hMbUQVVv2GAyt0bS9QMHUepcp3jG6CYRJehRX5v5CGehzMr98BhPUaXUdjpq
+	 shKcVz1HlZT0enDnJ1AO5t2w7L9mYF4bGDbmfivI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.5 214/241] gpio: vf610: mask the gpio irq in system suspend and support wakeup
-Date: Mon, 23 Oct 2023 12:56:40 +0200
-Message-ID: <20231023104839.068142815@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 215/241] ASoC: cs35l56: Fix illegal use of init_completion()
+Date: Mon, 23 Oct 2023 12:56:41 +0200
+Message-ID: <20231023104839.092559189@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,37 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit 430232619791e7de95191f2cd8ebaa4c380d17d0 upstream.
+[ Upstream commit af5fd122d7bd739a2b66405f6e8ab92557279325 ]
 
-Add flag IRQCHIP_MASK_ON_SUSPEND to make sure gpio irq is masked on
-suspend, if lack this flag, current irq arctitecture will not mask
-the irq, and these unmasked gpio irq will wrongly wakeup the system
-even they are not config as wakeup source.
+Fix cs35l56_patch() to call reinit_completion() to reinitialize
+the completion object.
 
-Also add flag IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND to make sure the gpio
-irq which is configed as wakeup source can work as expect.
+It was incorrectly using init_completion().
 
-Fixes: 7f2691a19627 ("gpio: vf610: add gpiolib/IRQ chip driver for Vybrid")
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: e49611252900 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
+Link: https://lore.kernel.org/r/20231006164405.253796-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-vf610.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/cs35l56.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-vf610.c
-+++ b/drivers/gpio/gpio-vf610.c
-@@ -247,7 +247,8 @@ static const struct irq_chip vf610_irqch
- 	.irq_unmask = vf610_gpio_irq_unmask,
- 	.irq_set_type = vf610_gpio_irq_set_type,
- 	.irq_set_wake = vf610_gpio_irq_set_wake,
--	.flags = IRQCHIP_IMMUTABLE,
-+	.flags = IRQCHIP_IMMUTABLE | IRQCHIP_MASK_ON_SUSPEND
-+			| IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND,
- 	GPIOCHIP_IRQ_RESOURCE_HELPERS,
- };
+diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
+index 7e241908b5f16..4d7ccf682647e 100644
+--- a/sound/soc/codecs/cs35l56.c
++++ b/sound/soc/codecs/cs35l56.c
+@@ -879,7 +879,7 @@ static void cs35l56_patch(struct cs35l56_private *cs35l56)
  
+ 	mutex_lock(&cs35l56->irq_lock);
+ 
+-	init_completion(&cs35l56->init_completion);
++	reinit_completion(&cs35l56->init_completion);
+ 
+ 	cs35l56_system_reset(cs35l56);
+ 
+-- 
+2.42.0
+
 
 
