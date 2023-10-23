@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97CC168B0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD17F168B0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLhvGYW8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24594C433C8;
-	Mon, 23 Oct 2023 11:48:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3rjokFs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264C5C433C7;
+	Mon, 23 Oct 2023 11:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061734;
-	bh=yssk2AKsu2ELNdjaLnUoiIxrQke8YN5NBZXkfB4LzQw=;
+	s=korg; t=1698061737;
+	bh=VpfIcSAY9XWysyaaoXxxGD5DUduAT9zuR2dJjqTGivI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GLhvGYW8R4gFqOeBa5w/DQygtw+xkc3FHS3RGHKN6K9gYcAkq4Dah5XsqFQ9JE4JR
-	 AIgNAT83tZ/apIDYrupjOmjEKxtx5iTq/YZY94csuexZ3WtA0lC8w03djGVfojLCpI
-	 WTjGdLyt/8cvyZmkSxjnEHQJ2jqjfdc/qcVgdNKI=
+	b=x3rjokFsBlOljbaAewHgM3627OBn+lJ0Rfb0nnCAj1LIcIFcliWYcE83zrPOGz1Wc
+	 td78pB3uD5LNRmJ9wAbhWiR/nUzzxFek2fifZywrBFRucDu7Q8bKxHQ72dO4W7QirM
+	 j0ZmY5vgKkNifdiW9hJjg+e/VbeDZKg88DclyZsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 146/202] drm/connector: Add a fwnode pointer to drm_connector and register with ACPI (v2)
-Date: Mon, 23 Oct 2023 12:57:33 +0200
-Message-ID: <20231023104830.803647220@linuxfoundation.org>
+Subject: [PATCH 5.10 147/202] drm/connector: Add drm_connector_find_by_fwnode() function (v3)
+Date: Mon, 23 Oct 2023 12:57:34 +0200
+Message-ID: <20231023104830.830979106@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -45,140 +45,161 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 48c429c6d18db115c277b75000152d8fa4cd35d0 ]
+[ Upstream commit 3d3f7c1e68691574c1d87cd0f9f2348323bc0199 ]
 
-Add a fwnode pointer to struct drm_connector and register an acpi_bus_type
-for the connectors with the ACPI subsystem (when CONFIG_ACPI is enabled).
+Add a function to find a connector based on a fwnode.
 
-The adding of the fwnode pointer allows drivers to associate a fwnode
-that represents a connector with that connector.
-
-When the new fwnode pointer points to an ACPI-companion, then the new
-acpi_bus_type will cause the ACPI subsys to bind the device instantiated
-for the connector with the fwnode by calling acpi_bind_one(). This will
-result in a firmware_node symlink under /sys/class/card#-<connecter-name>/
-which helps to verify that the fwnode-s and connectors are properly
-matched.
+This will be used by the new drm_connector_oob_hotplug_event()
+function which is added by the next patch in this patch-set.
 
 Changes in v2:
-- Make drm_connector_cleanup() call fwnode_handle_put() on
-  connector->fwnode and document this
+- Complete rewrite to use a global connector list in drm_connector.c
+  rather then using a class-dev-iter in drm_sysfs.c
 
-Co-developed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Changes in v3:
+- Add forward declaration for struct fwnode_handle to drm_crtc_internal.h
+  (fixes warning reported by kernel test robot <lkp@intel.com>)
+
 Tested-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://lore.kernel.org/r/20210817215201.795062-3-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20210817215201.795062-4-hdegoede@redhat.com
 Stable-dep-of: 89434b069e46 ("usb: typec: altmodes/displayport: Signal hpd low when exiting mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_connector.c |  2 ++
- drivers/gpu/drm/drm_sysfs.c     | 37 +++++++++++++++++++++++++++++++++
- include/drm/drm_connector.h     |  8 +++++++
- 3 files changed, 47 insertions(+)
+ drivers/gpu/drm/drm_connector.c     | 50 +++++++++++++++++++++++++++++
+ drivers/gpu/drm/drm_crtc_internal.h |  2 ++
+ include/drm/drm_connector.h         |  8 +++++
+ 3 files changed, 60 insertions(+)
 
 diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
-index 9c3bbe2c3e6f9..c08501a5620d5 100644
+index c08501a5620d5..fc06f73acd3c9 100644
 --- a/drivers/gpu/drm/drm_connector.c
 +++ b/drivers/gpu/drm/drm_connector.c
-@@ -471,6 +471,8 @@ void drm_connector_cleanup(struct drm_connector *connector)
- 	drm_mode_object_unregister(dev, &connector->base);
- 	kfree(connector->name);
- 	connector->name = NULL;
-+	fwnode_handle_put(connector->fwnode);
-+	connector->fwnode = NULL;
- 	spin_lock_irq(&dev->mode_config.connector_list_lock);
- 	list_del(&connector->head);
- 	dev->mode_config.num_connector--;
-diff --git a/drivers/gpu/drm/drm_sysfs.c b/drivers/gpu/drm/drm_sysfs.c
-index a3b71478c5904..71a0d9596efee 100644
---- a/drivers/gpu/drm/drm_sysfs.c
-+++ b/drivers/gpu/drm/drm_sysfs.c
-@@ -10,6 +10,7 @@
-  * Copyright (c) 2003-2004 IBM Corp.
+@@ -64,6 +64,14 @@
+  * support can instead use e.g. drm_helper_hpd_irq_event().
   */
  
-+#include <linux/acpi.h>
- #include <linux/device.h>
- #include <linux/err.h>
- #include <linux/export.h>
-@@ -56,6 +57,39 @@ static struct device_type drm_sysfs_device_connector = {
- 
- struct class *drm_class;
- 
-+#ifdef CONFIG_ACPI
-+static bool drm_connector_acpi_bus_match(struct device *dev)
-+{
-+	return dev->type == &drm_sysfs_device_connector;
-+}
++/*
++ * Global connector list for drm_connector_find_by_fwnode().
++ * Note drm_connector_[un]register() first take connector->lock and then
++ * take the connector_list_lock.
++ */
++static DEFINE_MUTEX(connector_list_lock);
++static LIST_HEAD(connector_list);
 +
-+static struct acpi_device *drm_connector_acpi_find_companion(struct device *dev)
-+{
-+	struct drm_connector *connector = to_drm_connector(dev);
-+
-+	return to_acpi_device_node(connector->fwnode);
-+}
-+
-+static struct acpi_bus_type drm_connector_acpi_bus = {
-+	.name = "drm_connector",
-+	.match = drm_connector_acpi_bus_match,
-+	.find_companion = drm_connector_acpi_find_companion,
-+};
-+
-+static void drm_sysfs_acpi_register(void)
-+{
-+	register_acpi_bus_type(&drm_connector_acpi_bus);
-+}
-+
-+static void drm_sysfs_acpi_unregister(void)
-+{
-+	unregister_acpi_bus_type(&drm_connector_acpi_bus);
-+}
-+#else
-+static void drm_sysfs_acpi_register(void) { }
-+static void drm_sysfs_acpi_unregister(void) { }
-+#endif
-+
- static char *drm_devnode(struct device *dev, umode_t *mode)
- {
- 	return kasprintf(GFP_KERNEL, "dri/%s", dev_name(dev));
-@@ -89,6 +123,8 @@ int drm_sysfs_init(void)
+ struct drm_conn_prop_enum_list {
+ 	int type;
+ 	const char *name;
+@@ -265,6 +273,7 @@ int drm_connector_init(struct drm_device *dev,
+ 		goto out_put_type_id;
  	}
  
- 	drm_class->devnode = drm_devnode;
++	INIT_LIST_HEAD(&connector->global_connector_list_entry);
+ 	INIT_LIST_HEAD(&connector->probed_modes);
+ 	INIT_LIST_HEAD(&connector->modes);
+ 	mutex_init(&connector->mutex);
+@@ -534,6 +543,9 @@ int drm_connector_register(struct drm_connector *connector)
+ 	/* Let userspace know we have a new connector */
+ 	drm_sysfs_hotplug_event(connector->dev);
+ 
++	mutex_lock(&connector_list_lock);
++	list_add_tail(&connector->global_connector_list_entry, &connector_list);
++	mutex_unlock(&connector_list_lock);
+ 	goto unlock;
+ 
+ err_debugfs:
+@@ -562,6 +574,10 @@ void drm_connector_unregister(struct drm_connector *connector)
+ 		return;
+ 	}
+ 
++	mutex_lock(&connector_list_lock);
++	list_del_init(&connector->global_connector_list_entry);
++	mutex_unlock(&connector_list_lock);
 +
-+	drm_sysfs_acpi_register();
- 	return 0;
+ 	if (connector->funcs->early_unregister)
+ 		connector->funcs->early_unregister(connector);
+ 
+@@ -2464,6 +2480,40 @@ int drm_mode_getconnector(struct drm_device *dev, void *data,
+ 	return ret;
  }
  
-@@ -101,6 +137,7 @@ void drm_sysfs_destroy(void)
- {
- 	if (IS_ERR_OR_NULL(drm_class))
- 		return;
-+	drm_sysfs_acpi_unregister();
- 	class_remove_file(drm_class, &class_attr_version.attr);
- 	class_destroy(drm_class);
- 	drm_class = NULL;
++/**
++ * drm_connector_find_by_fwnode - Find a connector based on the associated fwnode
++ * @fwnode: fwnode for which to find the matching drm_connector
++ *
++ * This functions looks up a drm_connector based on its associated fwnode. When
++ * a connector is found a reference to the connector is returned. The caller must
++ * call drm_connector_put() to release this reference when it is done with the
++ * connector.
++ *
++ * Returns: A reference to the found connector or an ERR_PTR().
++ */
++struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
++{
++	struct drm_connector *connector, *found = ERR_PTR(-ENODEV);
++
++	if (!fwnode)
++		return ERR_PTR(-ENODEV);
++
++	mutex_lock(&connector_list_lock);
++
++	list_for_each_entry(connector, &connector_list, global_connector_list_entry) {
++		if (connector->fwnode == fwnode ||
++		    (connector->fwnode && connector->fwnode->secondary == fwnode)) {
++			drm_connector_get(connector);
++			found = connector;
++			break;
++		}
++	}
++
++	mutex_unlock(&connector_list_lock);
++
++	return found;
++}
++
+ 
+ /**
+  * DOC: Tile group
+diff --git a/drivers/gpu/drm/drm_crtc_internal.h b/drivers/gpu/drm/drm_crtc_internal.h
+index da96b2f64d7e4..c3577eaee4164 100644
+--- a/drivers/gpu/drm/drm_crtc_internal.h
++++ b/drivers/gpu/drm/drm_crtc_internal.h
+@@ -57,6 +57,7 @@ struct drm_property;
+ struct edid;
+ struct kref;
+ struct work_struct;
++struct fwnode_handle;
+ 
+ /* drm_crtc.c */
+ int drm_mode_crtc_set_obj_prop(struct drm_mode_object *obj,
+@@ -182,6 +183,7 @@ int drm_connector_set_obj_prop(struct drm_mode_object *obj,
+ int drm_connector_create_standard_properties(struct drm_device *dev);
+ const char *drm_get_connector_force_name(enum drm_connector_force force);
+ void drm_connector_free_work_fn(struct work_struct *work);
++struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode);
+ 
+ /* IOCTL */
+ int drm_connector_property_set_ioctl(struct drm_device *dev,
 diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
-index 928136556174c..ffad68f775cc6 100644
+index ffad68f775cc6..d6c7554f1d405 100644
 --- a/include/drm/drm_connector.h
 +++ b/include/drm/drm_connector.h
-@@ -1174,6 +1174,14 @@ struct drm_connector {
- 	struct device *kdev;
- 	/** @attr: sysfs attributes */
- 	struct device_attribute *attr;
-+	/**
-+	 * @fwnode: associated fwnode supplied by platform firmware
-+	 *
-+	 * Drivers can set this to associate a fwnode with a connector, drivers
-+	 * are expected to get a reference on the fwnode when setting this.
-+	 * drm_connector_cleanup() will call fwnode_handle_put() on this.
-+	 */
-+	struct fwnode_handle *fwnode;
+@@ -1193,6 +1193,14 @@ struct drm_connector {
+ 	 */
+ 	struct list_head head;
  
- 	/**
- 	 * @head:
++	/**
++	 * @global_connector_list_entry:
++	 *
++	 * Connector entry in the global connector-list, used by
++	 * drm_connector_find_by_fwnode().
++	 */
++	struct list_head global_connector_list_entry;
++
+ 	/** @base: base KMS object */
+ 	struct drm_mode_object base;
+ 
 -- 
 2.40.1
 
