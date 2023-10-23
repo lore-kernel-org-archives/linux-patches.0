@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772B315EA5
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D02815EA5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhiwOWtL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05EEC433C9;
-	Mon, 23 Oct 2023 11:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MP1ysXuf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEB3C433C8;
+	Mon, 23 Oct 2023 11:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061370;
-	bh=Lbu2wJ25cC7wY+0QDN2JXEFzJnjLxxZ/SAST+Vpg6ek=;
+	s=korg; t=1698061373;
+	bh=hjZF+6A59ezV4EVHYl8SITLagO4gBnT6Dzaq90KleMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhiwOWtLy0tYy5MlywsucvpjINIvQwG9o3qE88h4Fu7iguMi499R47JKHGr/Ciay7
-	 uOvaf1AjNOsNYuGphQaTxWHWKi1YUzb/Skx7MJHrH4ane6wJ/fSKJUOE/6OdR9NG1r
-	 1q5NAv51eRUCXShZnNLSRjjlRC3ISvVVV3XUf/qA=
+	b=MP1ysXufWMT8fdD3gH9viHozciZAXk4Nu0uEcmXzrAIuQt0eYCkLp8jY54fcDtcrR
+	 ujH6g+EwZAIATET5gj40hJrMpU93UNdgl2KVIlKHXQTo+NvurvawSQqYOtCNQ6uBAf
+	 gxhTW+gpdlVA7SvrdmMIkR8XVpnaOnsBhbWQOOzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralph Siemsen <ralph.siemsen@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 024/202] pinctrl: renesas: rzn1: Enable missing PINMUX
-Date: Mon, 23 Oct 2023 12:55:31 +0200
-Message-ID: <20231023104827.316217212@linuxfoundation.org>
+	Jeremy Cline <jeremy@jcline.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+0839b78e119aae1fec78@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 025/202] nfc: nci: assert requested protocol is valid
+Date: Mon, 23 Oct 2023 12:55:32 +0200
+Message-ID: <20231023104827.343736801@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -44,41 +44,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralph Siemsen <ralph.siemsen@linaro.org>
+From: Jeremy Cline <jeremy@jcline.org>
 
-[ Upstream commit f055ff23c331f28aa4ace4b72dc56f63b9a726c8 ]
+[ Upstream commit 354a6e707e29cb0c007176ee5b8db8be7bd2dee0 ]
 
-Enable pin muxing (eg. programmable function), so that the RZ/N1 GPIO
-pins will be configured as specified by the pinmux in the DTS.
+The protocol is used in a bit mask to determine if the protocol is
+supported. Assert the provided protocol is less than the maximum
+defined so it doesn't potentially perform a shift-out-of-bounds and
+provide a clearer error for undefined protocols vs unsupported ones.
 
-This used to be enabled implicitly via CONFIG_GENERIC_PINMUX_FUNCTIONS,
-however that was removed, since the RZ/N1 driver does not call any of
-the generic pinmux functions.
-
-Fixes: 1308fb4e4eae14e6 ("pinctrl: rzn1: Do not select GENERIC_PIN{CTRL_GROUPS,MUX_FUNCTIONS}")
-Signed-off-by: Ralph Siemsen <ralph.siemsen@linaro.org>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20231004200008.1306798-1-ralph.siemsen@linaro.org
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Reported-and-tested-by: syzbot+0839b78e119aae1fec78@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0839b78e119aae1fec78
+Signed-off-by: Jeremy Cline <jeremy@jcline.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20231009200054.82557-1-jeremy@jcline.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ net/nfc/nci/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pinctrl/renesas/Kconfig b/drivers/pinctrl/renesas/Kconfig
-index e941b8440dbc8..39559ce9d1ed9 100644
---- a/drivers/pinctrl/renesas/Kconfig
-+++ b/drivers/pinctrl/renesas/Kconfig
-@@ -212,6 +212,7 @@ config PINCTRL_RZN1
- 	depends on OF
- 	depends on ARCH_RZN1 || COMPILE_TEST
- 	select GENERIC_PINCONF
-+	select PINMUX
- 	help
- 	  This selects pinctrl driver for Renesas RZ/N1 devices.
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index ed9019d807c78..4c931bd1c1743 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -894,6 +894,11 @@ static int nci_activate_target(struct nfc_dev *nfc_dev,
+ 		return -EINVAL;
+ 	}
  
++	if (protocol >= NFC_PROTO_MAX) {
++		pr_err("the requested nfc protocol is invalid\n");
++		return -EINVAL;
++	}
++
+ 	if (!(nci_target->supported_protocols & (1 << protocol))) {
+ 		pr_err("target does not support the requested protocol 0x%x\n",
+ 		       protocol);
 -- 
 2.40.1
 
