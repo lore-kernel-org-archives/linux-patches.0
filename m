@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2CA14A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0497614A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IhySvIJ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA4DC433C9;
-	Mon, 23 Oct 2023 11:04:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aC8oEr4G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717D7C433C8;
+	Mon, 23 Oct 2023 11:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059074;
-	bh=oYF+6LoYrMZN7de1IynkkjsAoSRfRFYlknvh9viTn0Y=;
+	s=korg; t=1698059076;
+	bh=Y+MDnGZ5igbOUkocfkWVQoR9eSk2CTWUxQOFvDKNQwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IhySvIJ/XPZT0Va97qvB/2MRMwfgoQoNxeifI6kNnIxJQywi5tUUYx6iMasrOBT5K
-	 0Y4klmoUzNVdPJm9g5B4cMG9uO20yc81IwVhcTn0TRGFeHkM+BZ7u98PIOxhOYoev2
-	 miizo0TjCRszyHKr9GhaW/tb0SJI5MkxDmGcutKI=
+	b=aC8oEr4GexoqKj9kUiPtWfb0n1Z/gAodeNo1myW0GJxtU7PtHUD8j0Ibk2nS/rGa8
+	 dXsNEi1/uRfSp6Nn7tni+Uu8VA9A4aqVED2K8bYCSIVXa0BIr4YTDluTwUlGIkZ5Bg
+	 6IVmlkczsOUyXhO3Be65wQqVCP0mAryj9YetAe6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.5 054/241] xfrm: fix a data-race in xfrm_lookup_with_ifid()
-Date: Mon, 23 Oct 2023 12:54:00 +0200
-Message-ID: <20231023104835.223924384@linuxfoundation.org>
+Subject: [PATCH 6.5 055/241] xfrm6: fix inet6_dev refcount underflow problem
+Date: Mon, 23 Oct 2023 12:54:01 +0200
+Message-ID: <20231023104835.246216492@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,80 +42,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-commit de5724ca38fd5e442bae9c1fab31942b6544012d upstream.
+commit cc9b364bb1d58d3dae270c7a931a8cc717dc2b3b upstream.
 
-syzbot complains about a race in xfrm_lookup_with_ifid() [1]
+There are race conditions that may lead to inet6_dev refcount underflow
+in xfrm6_dst_destroy() and rt6_uncached_list_flush_dev().
 
-When preparing commit 0a9e5794b21e ("xfrm: annotate data-race
-around use_time") I thought xfrm_lookup_with_ifid() was modifying
-a still private structure.
+One of the refcount underflow bugs is shown below:
+	(cpu 1)                	|	(cpu 2)
+xfrm6_dst_destroy()             |
+  ...                           |
+  in6_dev_put()                 |
+				|  rt6_uncached_list_flush_dev()
+  ...				|    ...
+				|    in6_dev_put()
+  rt6_uncached_list_del()       |    ...
+  ...                           |
 
-[1]
-BUG: KCSAN: data-race in xfrm_lookup_with_ifid / xfrm_lookup_with_ifid
+xfrm6_dst_destroy() calls rt6_uncached_list_del() after in6_dev_put(),
+so rt6_uncached_list_flush_dev() has a chance to call in6_dev_put()
+again for the same inet6_dev.
 
-write to 0xffff88813ea41108 of 8 bytes by task 8150 on cpu 1:
-xfrm_lookup_with_ifid+0xce7/0x12d0 net/xfrm/xfrm_policy.c:3218
-xfrm_lookup net/xfrm/xfrm_policy.c:3270 [inline]
-xfrm_lookup_route+0x3b/0x100 net/xfrm/xfrm_policy.c:3281
-ip6_dst_lookup_flow+0x98/0xc0 net/ipv6/ip6_output.c:1246
-send6+0x241/0x3c0 drivers/net/wireguard/socket.c:139
-wg_socket_send_skb_to_peer+0xbd/0x130 drivers/net/wireguard/socket.c:178
-wg_socket_send_buffer_to_peer+0xd6/0x100 drivers/net/wireguard/socket.c:200
-wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
-wg_packet_handshake_send_worker+0x10c/0x150 drivers/net/wireguard/send.c:51
-process_one_work kernel/workqueue.c:2630 [inline]
-process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2703
-worker_thread+0x525/0x730 kernel/workqueue.c:2784
-kthread+0x1d7/0x210 kernel/kthread.c:388
-ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
-ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+Fix it by moving in6_dev_put() after rt6_uncached_list_del() in
+xfrm6_dst_destroy().
 
-write to 0xffff88813ea41108 of 8 bytes by task 15867 on cpu 0:
-xfrm_lookup_with_ifid+0xce7/0x12d0 net/xfrm/xfrm_policy.c:3218
-xfrm_lookup net/xfrm/xfrm_policy.c:3270 [inline]
-xfrm_lookup_route+0x3b/0x100 net/xfrm/xfrm_policy.c:3281
-ip6_dst_lookup_flow+0x98/0xc0 net/ipv6/ip6_output.c:1246
-send6+0x241/0x3c0 drivers/net/wireguard/socket.c:139
-wg_socket_send_skb_to_peer+0xbd/0x130 drivers/net/wireguard/socket.c:178
-wg_socket_send_buffer_to_peer+0xd6/0x100 drivers/net/wireguard/socket.c:200
-wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
-wg_packet_handshake_send_worker+0x10c/0x150 drivers/net/wireguard/send.c:51
-process_one_work kernel/workqueue.c:2630 [inline]
-process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2703
-worker_thread+0x525/0x730 kernel/workqueue.c:2784
-kthread+0x1d7/0x210 kernel/kthread.c:388
-ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
-ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
-
-value changed: 0x00000000651cd9d1 -> 0x00000000651cd9d2
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 15867 Comm: kworker/u4:58 Not tainted 6.6.0-rc4-syzkaller-00016-g5e62ed3b1c8a #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/06/2023
-Workqueue: wg-kex-wg2 wg_packet_handshake_send_worker
-
-Fixes: 0a9e5794b21e ("xfrm: annotate data-race around use_time")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 510c321b5571 ("xfrm: reuse uncached_list to track xdsts")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_policy.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/xfrm6_policy.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -3215,7 +3215,7 @@ no_transform:
- 	}
+--- a/net/ipv6/xfrm6_policy.c
++++ b/net/ipv6/xfrm6_policy.c
+@@ -117,10 +117,10 @@ static void xfrm6_dst_destroy(struct dst
+ {
+ 	struct xfrm_dst *xdst = (struct xfrm_dst *)dst;
  
- 	for (i = 0; i < num_pols; i++)
--		pols[i]->curlft.use_time = ktime_get_real_seconds();
-+		WRITE_ONCE(pols[i]->curlft.use_time, ktime_get_real_seconds());
+-	if (likely(xdst->u.rt6.rt6i_idev))
+-		in6_dev_put(xdst->u.rt6.rt6i_idev);
+ 	dst_destroy_metrics_generic(dst);
+ 	rt6_uncached_list_del(&xdst->u.rt6);
++	if (likely(xdst->u.rt6.rt6i_idev))
++		in6_dev_put(xdst->u.rt6.rt6i_idev);
+ 	xfrm_dst_destroy(xdst);
+ }
  
- 	if (num_xfrms < 0) {
- 		/* Prohibit the flow */
 
 
