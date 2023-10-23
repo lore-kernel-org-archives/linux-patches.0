@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA38D20F6
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A80134C3
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXTgPu4R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28371C433CA;
-	Mon, 23 Oct 2023 11:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2D+X+wSR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D2CC433C8;
+	Mon, 23 Oct 2023 11:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059775;
-	bh=J4SUCrBuu44GJCyGhK8xug/NRgGBi1/DTvUze0VGFtY=;
+	s=korg; t=1698059778;
+	bh=VoNI6hcMEJIR273zaIYM3O8F7cRrt050Zw0jkA6/ils=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CXTgPu4R84pLAOlmC+B1pqRW2b7lD629pHhtieL9Qqrw5dL1S3wOhG7PUSSULmSOV
-	 VXJUzo/F2T9q5H7oV9fJKr2R7e8QAMV5LI+U5z2tBxo3LZcPU2SgDUxwfFWEvth2EL
-	 qpEvfWYoXVVpEOK3PO2FP9q75PNwJZDgY3fdGcdk=
+	b=2D+X+wSRGngrALYnbxZ7/vPvXycT9ltRV5YBp7pHtXi1bsTwlL9DxaPny6vFvhTVs
+	 0OD/dniz19ebfwx4F3o+FruvX46EPYtDt3SUBXmsPi2hvN9s4fv6mvdP8MjLKdO5Fo
+	 b+sgTn19ugaEAycuqRPqb65qPs1uJzSv2wM1T1cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Leemhuis <linux@leemhuis.info>,
-	Jeffery Miller <jefferymiller@google.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 4.19 31/98] Input: psmouse - fix fast_reconnect function for PS/2 mode
-Date: Mon, 23 Oct 2023 12:56:20 +0200
-Message-ID: <20231023104814.687949445@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 4.19 49/98] regmap: fix NULL deref on lookup
+Date: Mon, 23 Oct 2023 12:56:38 +0200
+Message-ID: <20231023104815.342729007@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -42,58 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffery Miller <jefferymiller@google.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit e2cb5cc822b6c9ee72c56ce1d81671b22c05406a upstream.
+commit c6df843348d6b71ea986266c12831cb60c2cf325 upstream.
 
-When the SMBus connection is attempted psmouse_smbus_init() sets
-the fast_reconnect pointer to psmouse_smbus_reconnecti(). If SMBus
-initialization fails, elantech_setup_ps2() and synaptics_init_ps2() will
-fallback to PS/2 mode, replacing the psmouse private data. This can cause
-issues on resume, since psmouse_smbus_reconnect() expects to find an
-instance of struct psmouse_smbus_dev in psmouse->private.
+Not all regmaps have a name so make sure to check for that to avoid
+dereferencing a NULL pointer when dev_get_regmap() is used to lookup a
+named regmap.
 
-The issue was uncovered when in 92e24e0e57f7 ("Input: psmouse - add
-delay when deactivating for SMBus mode") psmouse_smbus_reconnect()
-started attempting to use more of the data structure. The commit was
-since reverted, not because it was at fault, but because there was found
-a better way of doing what it was attempting to do.
-
-Fix the problem by resetting the fast_reconnect pointer in psmouse
-structure in elantech_setup_ps2() and synaptics_init_ps2() when the PS/2
-mode is used.
-
-Reported-by: Thorsten Leemhuis <linux@leemhuis.info>
-Tested-by: Thorsten Leemhuis <linux@leemhuis.info>
-Signed-off-by: Jeffery Miller <jefferymiller@google.com>
-Fixes: bf232e460a35 ("Input: psmouse-smbus - allow to control psmouse_deactivate")
-Link: https://lore.kernel.org/r/20231005002249.554877-1-jefferymiller@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: e84861fec32d ("regmap: dev_get_regmap_match(): fix string comparison")
+Cc: stable@vger.kernel.org      # 5.8
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20231006082104.16707-1-johan+linaro@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/elantech.c  |    1 +
- drivers/input/mouse/synaptics.c |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/base/regmap/regmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/mouse/elantech.c
-+++ b/drivers/input/mouse/elantech.c
-@@ -1996,6 +1996,7 @@ static int elantech_setup_ps2(struct psm
- 	psmouse->protocol_handler = elantech_process_byte;
- 	psmouse->disconnect = elantech_disconnect;
- 	psmouse->reconnect = elantech_reconnect;
-+	psmouse->fast_reconnect = NULL;
- 	psmouse->pktsize = info->hw_version > 1 ? 6 : 4;
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -1343,7 +1343,7 @@ static int dev_get_regmap_match(struct d
  
- 	return 0;
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -1620,6 +1620,7 @@ static int synaptics_init_ps2(struct psm
- 	psmouse->set_rate = synaptics_set_rate;
- 	psmouse->disconnect = synaptics_disconnect;
- 	psmouse->reconnect = synaptics_reconnect;
-+	psmouse->fast_reconnect = NULL;
- 	psmouse->cleanup = synaptics_reset;
- 	/* Synaptics can usually stay in sync without extra help */
- 	psmouse->resync_time = 0;
+ 	/* If the user didn't specify a name match any */
+ 	if (data)
+-		return !strcmp((*r)->name, data);
++		return (*r)->name && !strcmp((*r)->name, data);
+ 	else
+ 		return 1;
+ }
 
 
