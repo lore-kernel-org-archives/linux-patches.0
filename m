@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78895168B0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1F9168B0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gazvga1z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E689EC433C7;
-	Mon, 23 Oct 2023 11:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaKyiQGp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C563FC433C7;
+	Mon, 23 Oct 2023 11:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061743;
-	bh=IjjfcJuMDyru9+CyHjpeMvxkkmCfNsS3Lnsi6XlywI8=;
+	s=korg; t=1698061746;
+	bh=1om9pX3vrdJyo9X2Jaax6fex1Qgc93VXU8bZXOWOIYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gazvga1zMUKLJB0bXq9JbbmiPBsHu8ofPdzPyd8sBOTkTo7ZNDRR78mTxQoOb1EkU
-	 /qOq22oLpcQfBByNX0LWL3j7iL2YmlSO8HsPQNKjZpB/pE/1OFPQHMP3if7/mDUtfO
-	 3wUwB1QjnyXNJfsKHNThkgCToHzqyy3rleQtR89s=
+	b=zaKyiQGphc5w7CY2ljsnwGxKDo3A0ReGURO49Z03A1rnwjNz3jgO2KxbC3yt5G6SR
+	 WPPc23pbzrN7dKdJeJQscggV9PD6A7JcX3SDlHAWvE5VIcWMj1MpYxlZ6DEiii0QUP
+	 tYfSQrzKA1CC9hNakZny3XBrfR7cbzCVMZitxJ88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Lyude Paul <lyude@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Manuel Krause <manuelkrause@netscape.net>,
+	Hui Wang <hui.wang@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 149/202] usb: typec: altmodes/displayport: Notify drm subsys of hotplug events
-Date: Mon, 23 Oct 2023 12:57:36 +0200
-Message-ID: <20231023104830.883973906@linuxfoundation.org>
+Subject: [PATCH 5.10 124/202] ACPI: resources: Add DMI-based legacy IRQ override quirk
+Date: Mon, 23 Oct 2023 12:57:11 +0200
+Message-ID: <20231023104830.155781962@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -43,120 +43,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit 7f811394878535ed9a6849717de8c2959ae38899 ]
+[ Upstream commit 892a012699fc0b91a2ed6309078936191447f480 ]
 
-Use the new drm_connector_oob_hotplug_event() functions to let drm/kms
-drivers know about DisplayPort over Type-C hotplug events.
+After the commit 0ec4e55e9f57 ("ACPI: resources: Add checks for ACPI
+IRQ override") is reverted, the keyboard on Medion laptops can't
+work again.
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Tested-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://lore.kernel.org/r/20210817215201.795062-9-hdegoede@redhat.com
-Stable-dep-of: 89434b069e46 ("usb: typec: altmodes/displayport: Signal hpd low when exiting mode")
+To fix the keyboard issue, add a DMI-based override check that will
+not affect other machines along the lines of prt_quirks[] in
+drivers/acpi/pci_irq.c.
+
+If similar issues are seen on other platforms, the quirk table could
+be expanded in the future.
+
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=213031
+BugLink: http://bugs.launchpad.net/bugs/1909814
+Suggested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Manuel Krause <manuelkrause@netscape.net>
+Tested-by: Manuel Krause <manuelkrause@netscape.net>
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: c1ed72171ed5 ("ACPI: resource: Skip IRQ override on ASUS ExpertBook B1402CBA")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/altmodes/Kconfig       |  1 +
- drivers/usb/typec/altmodes/displayport.c | 23 +++++++++++++++++++++++
- 2 files changed, 24 insertions(+)
+ drivers/acpi/resource.c | 49 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 47 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/typec/altmodes/Kconfig b/drivers/usb/typec/altmodes/Kconfig
-index 60d375e9c3c7c..1a6b5e872b0d9 100644
---- a/drivers/usb/typec/altmodes/Kconfig
-+++ b/drivers/usb/typec/altmodes/Kconfig
-@@ -4,6 +4,7 @@ menu "USB Type-C Alternate Mode drivers"
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index 20a7892c6d3fd..bf7c2deafb0a9 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -16,6 +16,7 @@
+ #include <linux/ioport.h>
+ #include <linux/slab.h>
+ #include <linux/irq.h>
++#include <linux/dmi.h>
  
- config TYPEC_DP_ALTMODE
- 	tristate "DisplayPort Alternate Mode driver"
-+	depends on DRM
- 	help
- 	  DisplayPort USB Type-C Alternate Mode allows DisplayPort
- 	  displays and adapters to be attached to the USB Type-C
-diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
-index 0d4b1c0eeefb3..8083d5faf0c98 100644
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -11,8 +11,10 @@
- #include <linux/delay.h>
- #include <linux/mutex.h>
- #include <linux/module.h>
-+#include <linux/property.h>
- #include <linux/usb/pd_vdo.h>
- #include <linux/usb/typec_dp.h>
-+#include <drm/drm_connector.h>
- #include "displayport.h"
- 
- #define DP_HEADER(_dp, cmd)		(VDO((_dp)->alt->svid, 1, cmd) | \
-@@ -57,11 +59,13 @@ struct dp_altmode {
- 	struct typec_displayport_data data;
- 
- 	enum dp_state state;
-+	bool hpd;
- 
- 	struct mutex lock; /* device lock */
- 	struct work_struct work;
- 	struct typec_altmode *alt;
- 	const struct typec_altmode *port;
-+	struct fwnode_handle *connector_fwnode;
- };
- 
- static int dp_altmode_notify(struct dp_altmode *dp)
-@@ -122,6 +126,7 @@ static int dp_altmode_configure(struct dp_altmode *dp, u8 con)
- static int dp_altmode_status_update(struct dp_altmode *dp)
- {
- 	bool configured = !!DP_CONF_GET_PIN_ASSIGN(dp->data.conf);
-+	bool hpd = !!(dp->data.status & DP_STATUS_HPD_STATE);
- 	u8 con = DP_STATUS_CONNECTION(dp->data.status);
- 	int ret = 0;
- 
-@@ -134,6 +139,11 @@ static int dp_altmode_status_update(struct dp_altmode *dp)
- 		ret = dp_altmode_configure(dp, con);
- 		if (!ret)
- 			dp->state = DP_STATE_CONFIGURE;
-+	} else {
-+		if (dp->hpd != hpd) {
-+			drm_connector_oob_hotplug_event(dp->connector_fwnode);
-+			dp->hpd = hpd;
-+		}
- 	}
- 
- 	return ret;
-@@ -526,6 +536,7 @@ static const struct attribute_group dp_altmode_group = {
- int dp_altmode_probe(struct typec_altmode *alt)
- {
- 	const struct typec_altmode *port = typec_altmode_get_partner(alt);
-+	struct fwnode_handle *fwnode;
- 	struct dp_altmode *dp;
- 	int ret;
- 
-@@ -554,6 +565,11 @@ int dp_altmode_probe(struct typec_altmode *alt)
- 	alt->desc = "DisplayPort";
- 	alt->ops = &dp_altmode_ops;
- 
-+	fwnode = dev_fwnode(alt->dev.parent->parent); /* typec_port fwnode */
-+	dp->connector_fwnode = fwnode_find_reference(fwnode, "displayport", 0);
-+	if (IS_ERR(dp->connector_fwnode))
-+		dp->connector_fwnode = NULL;
-+
- 	typec_altmode_set_drvdata(alt, dp);
- 
- 	dp->state = DP_STATE_ENTER;
-@@ -569,6 +585,13 @@ void dp_altmode_remove(struct typec_altmode *alt)
- 
- 	sysfs_remove_group(&alt->dev.kobj, &dp_altmode_group);
- 	cancel_work_sync(&dp->work);
-+
-+	if (dp->connector_fwnode) {
-+		if (dp->hpd)
-+			drm_connector_oob_hotplug_event(dp->connector_fwnode);
-+
-+		fwnode_handle_put(dp->connector_fwnode);
-+	}
+ #ifdef CONFIG_X86
+ #define valid_IRQ(i) (((i) != 0) && ((i) != 2))
+@@ -380,9 +381,51 @@ unsigned int acpi_dev_get_irq_type(int triggering, int polarity)
  }
- EXPORT_SYMBOL_GPL(dp_altmode_remove);
+ EXPORT_SYMBOL_GPL(acpi_dev_get_irq_type);
+ 
++static const struct dmi_system_id medion_laptop[] = {
++	{
++		.ident = "MEDION P15651",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "MEDION"),
++			DMI_MATCH(DMI_BOARD_NAME, "M15T"),
++		},
++	},
++	{ }
++};
++
++struct irq_override_cmp {
++	const struct dmi_system_id *system;
++	unsigned char irq;
++	unsigned char triggering;
++	unsigned char polarity;
++	unsigned char shareable;
++};
++
++static const struct irq_override_cmp skip_override_table[] = {
++	{ medion_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0 },
++};
++
++static bool acpi_dev_irq_override(u32 gsi, u8 triggering, u8 polarity,
++				  u8 shareable)
++{
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(skip_override_table); i++) {
++		const struct irq_override_cmp *entry = &skip_override_table[i];
++
++		if (dmi_check_system(entry->system) &&
++		    entry->irq == gsi &&
++		    entry->triggering == triggering &&
++		    entry->polarity == polarity &&
++		    entry->shareable == shareable)
++			return false;
++	}
++
++	return true;
++}
++
+ static void acpi_dev_get_irqresource(struct resource *res, u32 gsi,
+ 				     u8 triggering, u8 polarity, u8 shareable,
+-				     bool legacy)
++				     bool check_override)
+ {
+ 	int irq, p, t;
+ 
+@@ -401,7 +444,9 @@ static void acpi_dev_get_irqresource(struct resource *res, u32 gsi,
+ 	 * using extended IRQ descriptors we take the IRQ configuration
+ 	 * from _CRS directly.
+ 	 */
+-	if (legacy && !acpi_get_override_irq(gsi, &t, &p)) {
++	if (check_override &&
++	    acpi_dev_irq_override(gsi, triggering, polarity, shareable) &&
++	    !acpi_get_override_irq(gsi, &t, &p)) {
+ 		u8 trig = t ? ACPI_LEVEL_SENSITIVE : ACPI_EDGE_SENSITIVE;
+ 		u8 pol = p ? ACPI_ACTIVE_LOW : ACPI_ACTIVE_HIGH;
  
 -- 
 2.40.1
