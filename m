@@ -1,65 +1,143 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E6B362;
-	Sun, 22 Oct 2023 07:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D10EA4
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 04:03:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LFdy/Hb2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0EFEC433C7;
-	Sun, 22 Oct 2023 07:32:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1697959959;
-	bh=fHG4TaMUd7HGuQQYQrNguovNk6O76d5irTKRQs97D9c=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=LFdy/Hb2XmwN9zLKA+ALFGtWIzbshRB3gZkeBWgs9/Ja7kho1WVnyMUMHKIGXt5ui
-	 k02p/mIT0hcUgXDwXfi2+ZxNZdFm2pWgUDU1Zao6+04aJxz1DnFEOiSvfWSslJFBbo
-	 ZyvOLiaekukVGEqvWmwClqHR7pL6VtPOvzS/EQ6ic9or+vjQ7I1V3W2R7EWgEqhiFj
-	 ptXY2DjBxa72anz3uYYmrAP87A0gseXbaM5j3ika7IS+8fX3AdN2GepfGW2T7wz58N
-	 8gLN6xcutMHwpJaVOQqMeiLgwDw/1LYJ6cnBE/L5/xhHIOnjok4kUV24bODmcuJCF+
-	 fQ+BqNze7nUgg==
-From: Leon Romanovsky <leon@kernel.org>
-To: selvin.xavier@broadcom.com, jgg@ziepe.ca,
- Nathan Chancellor <nathan@kernel.org>
-Cc: ndesaulniers@google.com, trix@redhat.com, chandramohan.akula@broadcom.com,
- linux-rdma@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
-In-Reply-To:
- <20231020-bnxt_re-implicit-fallthrough-v1-1-b5c19534a6c9@kernel.org>
-References:
- <20231020-bnxt_re-implicit-fallthrough-v1-1-b5c19534a6c9@kernel.org>
-Subject: Re: [PATCH] RDMA/bnxt_re: Fix clang -Wimplicit-fallthrough in
- bnxt_re_handle_cq_async_error()
-Message-Id: <169795995500.45770.3213574948546186734.b4-ty@kernel.org>
-Date: Sun, 22 Oct 2023 10:32:35 +0300
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dDjOIOAY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1698033823; x=1729569823;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=/lm+N1ZG0HevUhMCF+FCwdTjUSlpsEdKmmGgQvx6BS8=;
+  b=dDjOIOAYvDl31ejkZRuXAdsPEk+crkRfAGZ3BTZ8r7oK8MoeQHsW3r/d
+   mCZSXtAg+hMp9U5kceDoLxAHH4EyK7/DU9XKbh2tHV1YLsyewC7nPrAE5
+   BjN/5RLjwovhbqM5bNPzluz6i+u5pxifzgPxtWAo5ec8LWnN/7bJMeCbd
+   31QSgjSN3zOyp8SEE5uPD9tEtWFjVNP+nrEUOAryolwCd8ZY7+iJNLTVB
+   LQzY8KgK2YRvOUSE9aCKnaj+mqzsqJojQgeOYWxdqvPdYmxShiMUjZCvW
+   Kmy9TVmO8KZvWttQKpi2mYNxpX1ZAvdWaKPiqaesIX6tiw+msnPsL+0UY
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10871"; a="377135239"
+X-IronPort-AV: E=Sophos;i="6.03,244,1694761200"; 
+   d="scan'208";a="377135239"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2023 21:03:42 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10871"; a="761617295"
+X-IronPort-AV: E=Sophos;i="6.03,244,1694761200"; 
+   d="scan'208";a="761617295"
+Received: from zhiquan-linux-dev.bj.intel.com ([10.238.156.102])
+  by fmsmga007.fm.intel.com with ESMTP; 22 Oct 2023 21:03:39 -0700
+From: Zhiquan Li <zhiquan1.li@intel.com>
+To: x86@kernel.org,
+	linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	bp@alien8.de,
+	mingo@kernel.org,
+	tony.luck@intel.com,
+	naoya.horiguchi@nec.com
+Cc: zhiquan1.li@intel.com,
+	Youquan Song <youquan.song@intel.com>
+Subject: [PATCH v4] x86/mce: Set PG_hwpoison page flag to avoid the capture kernel panic
+Date: Mon, 23 Oct 2023 12:22:37 +0800
+Message-Id: <20231023042237.173290-1-zhiquan1.li@intel.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12-dev-a055d
+Content-Transfer-Encoding: 8bit
 
+Memory errors don't happen very often, especially the severity is fatal.
+However, in large-scale scenarios, such as data centers, it might still
+happen.  When there is a fatal machine check Linux calls mce_panic()
+without checking to see if bad data at some memory address was reported
+in the machine check banks.
 
-On Fri, 20 Oct 2023 15:17:02 -0700, Nathan Chancellor wrote:
-> Clang warns (or errors with CONFIG_WERROR=y):
-> 
->   drivers/infiniband/hw/bnxt_re/main.c:1114:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
->    1114 |         default:
->         |         ^
->   drivers/infiniband/hw/bnxt_re/main.c:1114:2: note: insert 'break;' to avoid fall-through
->    1114 |         default:
->         |         ^
->         |         break;
->   1 error generated.
-> 
-> [...]
+If kexec is enabled, check for memory errors and mark the page as
+poisoned so that the kexec'ed kernel can avoid accessing the page.
 
-Applied, thanks!
+Co-developed-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
+Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: Borislav Petkov <bp@alien8.de>
 
-[1/1] RDMA/bnxt_re: Fix clang -Wimplicit-fallthrough in bnxt_re_handle_cq_async_error()
-      https://git.kernel.org/rdma/rdma/c/9040c0d96fd66e
+---
 
-Best regards,
+V3: https://lore.kernel.org/all/20231014051754.3759099-1-zhiquan1.li@intel.com/
+
+Changes since V3:
+- Rebased to v6.6-rc7.
+- Added the check if kexec is enabled highlighted by Boris.
+- Re-wrote the commit message suggested by Tony.
+
+V2: https://lore.kernel.org/all/20230914030539.1622477-1-zhiquan1.li@intel.com/
+
+Changes since V2:
+- Rebased to v6.6-rc5.
+- Explained full scenario in commit message per Boris's suggestion.
+- Included Ingo's fixes.
+  Link: https://lore.kernel.org/all/ZRsUpM%2FXtPAE50Rm@gmail.com/
+
+V1: https://lore.kernel.org/all/20230127015030.30074-1-tony.luck@intel.com/
+
+Changes since V1:
+- Revised the commit message as per Naoya's suggestion.
+- Replaced "TODO" comment in code with comments based on mailing list
+  discussion on the lack of value in covering other page types.
+- Added the tag from Naoya.
+  Link: https://lore.kernel.org/all/20230327083739.GA956278@hori.linux.bs1.fc.nec.co.jp/
+---
+ arch/x86/kernel/cpu/mce/core.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+index 6f35f724cc14..930b1120009b 100644
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -44,6 +44,7 @@
+ #include <linux/sync_core.h>
+ #include <linux/task_work.h>
+ #include <linux/hardirq.h>
++#include <linux/kexec.h>
+ 
+ #include <asm/intel-family.h>
+ #include <asm/processor.h>
+@@ -233,6 +234,7 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
+ 	struct llist_node *pending;
+ 	struct mce_evt_llist *l;
+ 	int apei_err = 0;
++	struct page *p;
+ 
+ 	/*
+ 	 * Allow instrumentation around external facilities usage. Not that it
+@@ -286,6 +288,19 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
+ 	if (!fake_panic) {
+ 		if (panic_timeout == 0)
+ 			panic_timeout = mca_cfg.panic_timeout;
++		if (kexec_crash_loaded()) {
++			/*
++			 * Kdump can exclude the poisoned page to avoid touching the error
++			 * page again, the prerequisite is that the PG_hwpoison page flag
++			 * is set.  However, for some MCE fatal error cases, there is no
++			 * opportunity to queue a task for calling memory_failure(), and as
++			 * a result, the capture kernel panics.  So mark the page as
++			 * poisoned before kernel panic() for MCE.
++			 */
++			p = pfn_to_online_page(final->addr >> PAGE_SHIFT);
++			if (final && (final->status & MCI_STATUS_ADDRV) && p)
++				SetPageHWPoison(p);
++		}
+ 		panic(msg);
+ 	} else
+ 		pr_emerg(HW_ERR "Fake kernel panic: %s\n", msg);
 -- 
-Leon Romanovsky <leon@kernel.org>
+2.25.1
+
