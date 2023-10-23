@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB6215E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511F415E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsX3nEKX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1F2C433C8;
-	Mon, 23 Oct 2023 11:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUo8rh1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23C5C433C7;
+	Mon, 23 Oct 2023 11:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061223;
-	bh=P+bDhzMDP25BfOePtiFTvhb83Ircn/C2W2ZzXIND3JI=;
+	s=korg; t=1698061226;
+	bh=ajLHc3W0rpHO8Cw8NppXdnUF2oRo8NK5wE/SjMSTK84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CsX3nEKXvr0CbsFVrGJDVaqEnxRkMrR/seGqP99dnbNXMehhWfYJzyhIvsymT7cxB
-	 IuCsRLGV1nt+NjAlZcjmMbqWiUHxcFouI4hyiLU62u7JWapsLhv1fE2MbXJqk/hE8V
-	 VDo7OuLkp68f8qoM1OJ2SdIzJxNnXZnfPIdQyG3g=
+	b=KUo8rh1F1qM0ng069N99g78qeKTriuv7hV/e98m/YPEsO68YE+HpV4Pfx/6bo3t1k
+	 nQhYwwpyMAOc2wfOiidLJCCfAUEqMMT0722mb+JMndNDxU6Qzib3cl/kB5humV7XDR
+	 MWH0Bwn8V9hXhAfCgVjB+ujdiN9LW+uaixPYLEV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil V L <sunilvl@ventanamicro.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 114/137] ACPI: irq: Fix incorrect return value in acpi_register_gsi()
-Date: Mon, 23 Oct 2023 12:57:51 +0200
-Message-ID: <20231023104824.630997302@linuxfoundation.org>
+	welsh@cassens.com,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.15 115/137] nvme-pci: add BOGUS_NID for Intel 0a54 device
+Date: Mon, 23 Oct 2023 12:57:52 +0200
+Message-ID: <20231023104824.663556649@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -41,48 +41,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Keith Busch <kbusch@kernel.org>
 
-commit 0c21a18d5d6c6a73d098fb9b4701572370942df9 upstream.
+commit 5c3f4066462a5f6cac04d3dd81c9f551fabbc6c7 upstream.
 
-acpi_register_gsi() should return a negative value in case of failure.
+These ones claim cmic and nmic capable, so need special consideration to ignore
+their duplicate identifiers.
 
-Currently, it returns the return value from irq_create_fwspec_mapping().
-However, irq_create_fwspec_mapping() returns 0 for failure. Fix the
-issue by returning -EINVAL if irq_create_fwspec_mapping() returns zero.
-
-Fixes: d44fa3d46079 ("ACPI: Add support for ResourceSource/IRQ domain mapping")
-Cc: 4.11+ <stable@vger.kernel.org> # 4.11+
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-[ rjw: Rename a new local variable ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217981
+Reported-by: welsh@cassens.com
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/irq.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/nvme/host/pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/irq.c
-+++ b/drivers/acpi/irq.c
-@@ -52,6 +52,7 @@ int acpi_register_gsi(struct device *dev
- 		      int polarity)
- {
- 	struct irq_fwspec fwspec;
-+	unsigned int irq;
- 
- 	if (WARN_ON(!acpi_gsi_domain_id)) {
- 		pr_warn("GSI: No registered irqchip, giving up\n");
-@@ -63,7 +64,11 @@ int acpi_register_gsi(struct device *dev
- 	fwspec.param[1] = acpi_dev_get_irq_type(trigger, polarity);
- 	fwspec.param_count = 2;
- 
--	return irq_create_fwspec_mapping(&fwspec);
-+	irq = irq_create_fwspec_mapping(&fwspec);
-+	if (!irq)
-+		return -EINVAL;
-+
-+	return irq;
- }
- EXPORT_SYMBOL_GPL(acpi_register_gsi);
- 
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3307,7 +3307,8 @@ static const struct pci_device_id nvme_i
+ 	{ PCI_VDEVICE(INTEL, 0x0a54),	/* Intel P4500/P4600 */
+ 		.driver_data = NVME_QUIRK_STRIPE_SIZE |
+ 				NVME_QUIRK_DEALLOCATE_ZEROES |
+-				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
++				NVME_QUIRK_IGNORE_DEV_SUBNQN |
++				NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_VDEVICE(INTEL, 0x0a55),	/* Dell Express Flash P4600 */
+ 		.driver_data = NVME_QUIRK_STRIPE_SIZE |
+ 				NVME_QUIRK_DEALLOCATE_ZEROES, },
 
 
