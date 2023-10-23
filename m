@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0830115E87
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E8915E87
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5Zp2P9s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780E0C433C8;
-	Mon, 23 Oct 2023 11:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AapKB8Sw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A25C433C9;
+	Mon, 23 Oct 2023 11:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060768;
-	bh=4WzcPJQtWs6uMj71DKPMJoEhWMi4QWvcLkaSpIYtFhU=;
+	s=korg; t=1698060771;
+	bh=E8FzWRtjBFLLgdj/GR33gHziGg71+JrSWO/y78sYnUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k5Zp2P9sZQV8mfM8/sCyxVoOHFmgYkBFvRBcSMXTl68svuiKuU8yZr3buz87KosWO
-	 Ld6Ig2kuVV+VJDtMzkilVjC9ytezyxjYdE5+8c+KmsygRLpzujP3nlv6A544ldrB1f
-	 WhAYYPxm77Ru7BYeFjQ/oRzJveCnGgbhmT+Aysb4=
+	b=AapKB8SwFMUligGl287cxp2XQwemAwACD5BpI+0+CF6nOfjE5R35WdkFdus7LngZq
+	 RBmhg4QL3rnHzYSnCsIUHQIHHJ6v2RJV2/dYVo/Z1KTnyff4Me7JTgloVJ8d/fU4zf
+	 BxigQKefMxPC/6sSN/TZABdXRLfRPR/MJKrQDuko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Theune <ct@flyingcircus.io>,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 069/123] net/sched: sch_hfsc: upgrade rt to sc when it becomes a inner curve
-Date: Mon, 23 Oct 2023 12:57:07 +0200
-Message-ID: <20231023104819.983502622@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 087/123] overlayfs: set ctime when setting mtime and atime
+Date: Mon, 23 Oct 2023 12:57:25 +0200
+Message-ID: <20231023104820.610920369@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -44,90 +44,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit a13b67c9a015c4e21601ef9aa4ec9c5d972df1b4 upstream.
+[ Upstream commit 03dbab3bba5f009d053635c729d1244f2c8bad38 ]
 
-Christian Theune says:
-   I upgraded from 6.1.38 to 6.1.55 this morning and it broke my traffic shaping script,
-   leaving me with a non-functional uplink on a remote router.
+Nathan reported that he was seeing the new warning in
+setattr_copy_mgtime pop when starting podman containers. Overlayfs is
+trying to set the atime and mtime via notify_change without also
+setting the ctime.
 
-A 'rt' curve cannot be used as a inner curve (parent class), but we were
-allowing such configurations since the qdisc was introduced. Such
-configurations would trigger a UAF as Budimir explains:
-   The parent will have vttree_insert() called on it in init_vf(),
-   but will not have vttree_remove() called on it in update_vf()
-   because it does not have the HFSC_FSC flag set.
+POSIX states that when the atime and mtime are updated via utimes() that
+we must also update the ctime to the current time. The situation with
+overlayfs copy-up is analogies, so add ATTR_CTIME to the bitmask.
+notify_change will fill in the value.
 
-The qdisc always assumes that inner classes have the HFSC_FSC flag set.
-This is by design as it doesn't make sense 'qdisc wise' for an 'rt'
-curve to be an inner curve.
-
-Budimir's original patch disallows users to add classes with a 'rt'
-parent, but this is too strict as it breaks users that have been using
-'rt' as a inner class. Another approach, taken by this patch, is to
-upgrade the inner 'rt' into a 'sc', warning the user in the process.
-It avoids the UAF reported by Budimir while also being more permissive
-to bad scripts/users/code using 'rt' as a inner class.
-
-Users checking the `tc class ls [...]` or `tc class get [...]` dumps would
-observe the curve change and are potentially breaking with this change.
-
-v1->v2: https://lore.kernel.org/all/20231013151057.2611860-1-pctammela@mojatatu.com/
-- Correct 'Fixes' tag and merge with revert (Jakub)
-
-Cc: Christian Theune <ct@flyingcircus.io>
-Cc: Budimir Markovic <markovicbudimir@gmail.com>
-Fixes: b3d26c5702c7 ("net/sched: sch_hfsc: Ensure inner classes have fsc curve")
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20231017143602.3191556-1-pctammela@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Christian Brauner <brauner@kernel.org>
+Acked-by: Amir Goldstein <amir73il@gmail.com>
+Message-Id: <20230913-ctime-v1-1-c6bc509cbc27@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ fs/overlayfs/copy_up.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -903,6 +903,14 @@ hfsc_change_usc(struct hfsc_class *cl, s
- 	cl->cl_flags |= HFSC_USC;
- }
- 
-+static void
-+hfsc_upgrade_rt(struct hfsc_class *cl)
-+{
-+	cl->cl_fsc = cl->cl_rsc;
-+	rtsc_init(&cl->cl_virtual, &cl->cl_fsc, cl->cl_vt, cl->cl_total);
-+	cl->cl_flags |= HFSC_FSC;
-+}
-+
- static const struct nla_policy hfsc_policy[TCA_HFSC_MAX + 1] = {
- 	[TCA_HFSC_RSC]	= { .len = sizeof(struct tc_service_curve) },
- 	[TCA_HFSC_FSC]	= { .len = sizeof(struct tc_service_curve) },
-@@ -1012,10 +1020,6 @@ hfsc_change_class(struct Qdisc *sch, u32
- 		if (parent == NULL)
- 			return -ENOENT;
- 	}
--	if (!(parent->cl_flags & HFSC_FSC) && parent != &q->root) {
--		NL_SET_ERR_MSG(extack, "Invalid parent - parent class must have FSC");
--		return -EINVAL;
--	}
- 
- 	if (classid == 0 || TC_H_MAJ(classid ^ sch->handle) != 0)
- 		return -EINVAL;
-@@ -1068,6 +1072,12 @@ hfsc_change_class(struct Qdisc *sch, u32
- 	cl->cf_tree = RB_ROOT;
- 
- 	sch_tree_lock(sch);
-+	/* Check if the inner class is a misconfigured 'rt' */
-+	if (!(parent->cl_flags & HFSC_FSC) && parent != &q->root) {
-+		NL_SET_ERR_MSG(extack,
-+			       "Forced curve change on parent 'rt' to 'sc'");
-+		hfsc_upgrade_rt(parent);
-+	}
- 	qdisc_class_hash_insert(&q->clhash, &cl->cl_common);
- 	list_add_tail(&cl->siblings, &parent->children);
- 	if (parent->level == 0)
+diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
+index 1bfd1660a66c0..9e5223108362d 100644
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -192,7 +192,7 @@ static int ovl_set_timestamps(struct dentry *upperdentry, struct kstat *stat)
+ {
+ 	struct iattr attr = {
+ 		.ia_valid =
+-		     ATTR_ATIME | ATTR_MTIME | ATTR_ATIME_SET | ATTR_MTIME_SET,
++		     ATTR_ATIME | ATTR_MTIME | ATTR_ATIME_SET | ATTR_MTIME_SET | ATTR_CTIME,
+ 		.ia_atime = stat->atime,
+ 		.ia_mtime = stat->mtime,
+ 	};
+-- 
+2.40.1
+
 
 
