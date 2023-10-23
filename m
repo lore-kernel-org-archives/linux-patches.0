@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A21C14012
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A5314012
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yocuudBJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CB9C433C9;
-	Mon, 23 Oct 2023 11:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixFe0yLz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33CCC433C9;
+	Mon, 23 Oct 2023 11:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059298;
-	bh=JicsdJR8aTsGtOi2vfwJSBK79euFN06bkv+VYWknJgA=;
+	s=korg; t=1698059301;
+	bh=66/pjuUVMXrWiTyuatPfOQnUhxKgtgHjQ9wE56kKY/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yocuudBJB2Vt0+7wyJXv9j4ASbVbzR+vWklrxfc5Znxt69s73ED6BFyDiBqFiSoeM
-	 IdeA27yxh7ZU4ZFbIEr/jEFVAnYjjQvzfBhGOzqQI4PlxEbDM+pEtcfK2+sT+jVuZn
-	 Igfm6h8zsvSjvEQ1HEiriZXTkiH/vPoFHZLYWAlA=
+	b=ixFe0yLzL5qkm2ur2mED1To4S5NfxnrDoxmcHTSG/vmubiVWHTx25Fy0VeggyN2pH
+	 +2dvUze8c25Kzq7HoanTjbVUDkESVwNmmLTDVfTvq1gT1BK62cnQK74jVnIaA3SheS
+	 4dve+LfgKkh7W3m+Xtd67NUwaApElqANvGkJNL6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Uwe Broulik <foss-linux@broulik.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 131/241] drm: panel-orientation-quirks: Add quirk for One Mix 2S
-Date: Mon, 23 Oct 2023 12:55:17 +0200
-Message-ID: <20231023104837.061950062@linuxfoundation.org>
+Subject: [PATCH 6.5 132/241] btrfs: fix some -Wmaybe-uninitialized warnings in ioctl.c
+Date: Mon, 23 Oct 2023 12:55:18 +0200
+Message-ID: <20231023104837.091564576@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -37,63 +37,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai Uwe Broulik <foss-linux@broulik.de>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit cbb7eb2dbd9472816e42a1b0fdb51af49abbf812 ]
+[ Upstream commit 9147b9ded499d9853bdf0e9804b7eaa99c4429ed ]
 
-The One Mix 2S is a mini laptop with a 1200x1920 portrait screen
-mounted in a landscape oriented clamshell case. Because of the too
-generic DMI strings this entry is also doing bios-date matching.
+Jens reported the following warnings from -Wmaybe-uninitialized recent
+Linus' branch.
 
-Signed-off-by: Kai Uwe Broulik <foss-linux@broulik.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231001114710.336172-1-foss-linux@broulik.de
+  In file included from ./include/asm-generic/rwonce.h:26,
+		   from ./arch/arm64/include/asm/rwonce.h:71,
+		   from ./include/linux/compiler.h:246,
+		   from ./include/linux/export.h:5,
+		   from ./include/linux/linkage.h:7,
+		   from ./include/linux/kernel.h:17,
+		   from fs/btrfs/ioctl.c:6:
+  In function ‘instrument_copy_from_user_before’,
+      inlined from ‘_copy_from_user’ at ./include/linux/uaccess.h:148:3,
+      inlined from ‘copy_from_user’ at ./include/linux/uaccess.h:183:7,
+      inlined from ‘btrfs_ioctl_space_info’ at fs/btrfs/ioctl.c:2999:6,
+      inlined from ‘btrfs_ioctl’ at fs/btrfs/ioctl.c:4616:10:
+  ./include/linux/kasan-checks.h:38:27: warning: ‘space_args’ may be used
+  uninitialized [-Wmaybe-uninitialized]
+     38 | #define kasan_check_write __kasan_check_write
+  ./include/linux/instrumented.h:129:9: note: in expansion of macro
+  ‘kasan_check_write’
+    129 |         kasan_check_write(to, n);
+	|         ^~~~~~~~~~~~~~~~~
+  ./include/linux/kasan-checks.h: In function ‘btrfs_ioctl’:
+  ./include/linux/kasan-checks.h:20:6: note: by argument 1 of type ‘const
+  volatile void *’ to ‘__kasan_check_write’ declared here
+     20 | bool __kasan_check_write(const volatile void *p, unsigned int
+	size);
+	|      ^~~~~~~~~~~~~~~~~~~
+  fs/btrfs/ioctl.c:2981:39: note: ‘space_args’ declared here
+   2981 |         struct btrfs_ioctl_space_args space_args;
+	|                                       ^~~~~~~~~~
+  In function ‘instrument_copy_from_user_before’,
+      inlined from ‘_copy_from_user’ at ./include/linux/uaccess.h:148:3,
+      inlined from ‘copy_from_user’ at ./include/linux/uaccess.h:183:7,
+      inlined from ‘_btrfs_ioctl_send’ at fs/btrfs/ioctl.c:4343:9,
+      inlined from ‘btrfs_ioctl’ at fs/btrfs/ioctl.c:4658:10:
+  ./include/linux/kasan-checks.h:38:27: warning: ‘args32’ may be used
+  uninitialized [-Wmaybe-uninitialized]
+     38 | #define kasan_check_write __kasan_check_write
+  ./include/linux/instrumented.h:129:9: note: in expansion of macro
+  ‘kasan_check_write’
+    129 |         kasan_check_write(to, n);
+	|         ^~~~~~~~~~~~~~~~~
+  ./include/linux/kasan-checks.h: In function ‘btrfs_ioctl’:
+  ./include/linux/kasan-checks.h:20:6: note: by argument 1 of type ‘const
+  volatile void *’ to ‘__kasan_check_write’ declared here
+     20 | bool __kasan_check_write(const volatile void *p, unsigned int
+	size);
+	|      ^~~~~~~~~~~~~~~~~~~
+  fs/btrfs/ioctl.c:4341:49: note: ‘args32’ declared here
+   4341 |                 struct btrfs_ioctl_send_args_32 args32;
+	|                                                 ^~~~~~
+
+This was due to his config options and having KASAN turned on,
+which adds some extra checks around copy_from_user(), which then
+triggered the -Wmaybe-uninitialized checker for these cases.
+
+Fix the warnings by initializing the different structs we're copying
+into.
+
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/btrfs/ioctl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 0cb646cb04ee1..d5c15292ae937 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -38,6 +38,14 @@ static const struct drm_dmi_panel_orientation_data gpd_micropc = {
- 	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
- };
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index d27b0d86b8e2c..bf35b6fce8f07 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -2978,7 +2978,7 @@ static void get_block_group_info(struct list_head *groups_list,
+ static long btrfs_ioctl_space_info(struct btrfs_fs_info *fs_info,
+ 				   void __user *arg)
+ {
+-	struct btrfs_ioctl_space_args space_args;
++	struct btrfs_ioctl_space_args space_args = { 0 };
+ 	struct btrfs_ioctl_space_info space;
+ 	struct btrfs_ioctl_space_info *dest;
+ 	struct btrfs_ioctl_space_info *dest_orig;
+@@ -4338,7 +4338,7 @@ static int _btrfs_ioctl_send(struct inode *inode, void __user *argp, bool compat
  
-+static const struct drm_dmi_panel_orientation_data gpd_onemix2s = {
-+	.width = 1200,
-+	.height = 1920,
-+	.bios_dates = (const char * const []){ "05/21/2018", "10/26/2018",
-+		"03/04/2019", NULL },
-+	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
-+};
-+
- static const struct drm_dmi_panel_orientation_data gpd_pocket = {
- 	.width = 1200,
- 	.height = 1920,
-@@ -401,6 +409,14 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "LTH17"),
- 		},
- 		.driver_data = (void *)&lcd800x1280_rightside_up,
-+	}, {	/* One Mix 2S (generic strings, also match on bios date) */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Default string"),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Default string"),
-+		  DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Default string"),
-+		  DMI_EXACT_MATCH(DMI_BOARD_NAME, "Default string"),
-+		},
-+		.driver_data = (void *)&gpd_onemix2s,
- 	},
- 	{}
- };
+ 	if (compat) {
+ #if defined(CONFIG_64BIT) && defined(CONFIG_COMPAT)
+-		struct btrfs_ioctl_send_args_32 args32;
++		struct btrfs_ioctl_send_args_32 args32 = { 0 };
+ 
+ 		ret = copy_from_user(&args32, argp, sizeof(args32));
+ 		if (ret)
 -- 
 2.40.1
 
