@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9DC1845
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8E21845
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbtKUVjI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD984C433C7;
-	Mon, 23 Oct 2023 11:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFsV7iMC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DA0C433CB;
+	Mon, 23 Oct 2023 11:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058881;
-	bh=I12qBV8MyzZNzl9N2ySD7sBynhOV0XEHKGSVk5d7H94=;
+	s=korg; t=1698058884;
+	bh=it2SWKvcYpEIOySHF5yTzSd9WGXfUHUXMydg4C5XmV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZbtKUVjIwHy639SH7hrYCnhGAlitvlZmp1Me4k5WeC+8s20micyTh6lRf7TH55Ioy
-	 /Kg2EzRpatAL0WyPwh1MLZlSBlt7dwYijI3EmsmB59AN0q+zq26Oog1+iZqfbk4XhZ
-	 0pCY0QDJrtNh5mWOvB5ai7R28Yyx3JrgchSjlTMk=
+	b=jFsV7iMC1b5QGCxvJQ3bvUrZnglQEVFlQTCT1GLEXxcyzOcYhhXI0wgxpZSk4n17/
+	 gIT7jvvGgE9xNFeG/XoV1tdinXVteSVqniZ/+/D4X8zpwBE/+aFbMvvlf4iIFoKgv3
+	 P43In0F/R5CQ4vK/2JTlHAnMzC5SG7Am/RUyCGsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Firo Yang <firo.yang@suse.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 4.14 20/66] cgroup: Remove duplicates in cgroup v1 tasks file
-Date: Mon, 23 Oct 2023 12:56:10 +0200
-Message-ID: <20231023104811.552233034@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 51/66] Bluetooth: hci_core: Fix build warnings
+Date: Mon, 23 Oct 2023 12:56:41 +0200
+Message-ID: <20231023104812.741873467@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -43,49 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Koutný <mkoutny@suse.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 1ca0b605150501b7dc59f3016271da4eb3e96fce upstream.
+[ Upstream commit dcda165706b9fbfd685898d46a6749d7d397e0c0 ]
 
-One PID may appear multiple times in a preloaded pidlist.
-(Possibly due to PID recycling but we have reports of the same
-task_struct appearing with different PIDs, thus possibly involving
-transfer of PID via de_thread().)
+This fixes the following warnings:
 
-Because v1 seq_file iterator uses PIDs as position, it leads to
-a message:
-> seq_file: buggy .next function kernfs_seq_next did not update position index
+net/bluetooth/hci_core.c: In function ‘hci_register_dev’:
+net/bluetooth/hci_core.c:2620:54: warning: ‘%d’ directive output may
+be truncated writing between 1 and 10 bytes into a region of size 5
+[-Wformat-truncation=]
+ 2620 |         snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
+      |                                                      ^~
+net/bluetooth/hci_core.c:2620:50: note: directive argument in the range
+[0, 2147483647]
+ 2620 |         snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
+      |                                                  ^~~~~~~
+net/bluetooth/hci_core.c:2620:9: note: ‘snprintf’ output between 5 and
+14 bytes into a destination of size 8
+ 2620 |         snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Conservative and quick fix consists of removing duplicates from `tasks`
-file (as opposed to removing pidlists altogether). It doesn't affect
-correctness (it's sufficient to show a PID once), performance impact
-would be hidden by unconditional sorting of the pidlist already in place
-(asymptotically).
-
-Link: https://lore.kernel.org/r/20230823174804.23632-1-mkoutny@suse.com/
-Suggested-by: Firo Yang <firo.yang@suse.com>
-Signed-off-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup-v1.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/net/bluetooth/hci_core.h | 2 +-
+ net/bluetooth/hci_core.c         | 8 +++++---
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
---- a/kernel/cgroup/cgroup-v1.c
-+++ b/kernel/cgroup/cgroup-v1.c
-@@ -392,10 +392,9 @@ static int pidlist_array_load(struct cgr
- 	}
- 	css_task_iter_end(&it);
- 	length = n;
--	/* now sort & (if procs) strip out duplicates */
-+	/* now sort & strip out duplicates (tgids or recycled thread PIDs) */
- 	sort(array, length, sizeof(pid_t), cmppid, NULL);
--	if (type == CGROUP_FILE_PROCS)
--		length = pidlist_uniq(array, length);
-+	length = pidlist_uniq(array, length);
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index d42288a06af61..8f899ad4a7546 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -205,7 +205,7 @@ struct hci_dev {
+ 	struct list_head list;
+ 	struct mutex	lock;
  
- 	l = cgroup_pidlist_find_create(cgrp, type);
- 	if (!l) {
+-	char		name[8];
++	const char	*name;
+ 	unsigned long	flags;
+ 	__u16		id;
+ 	__u8		bus;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 7052434c1061f..2bf0bdee7186d 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3113,7 +3113,11 @@ int hci_register_dev(struct hci_dev *hdev)
+ 	if (id < 0)
+ 		return id;
+ 
+-	snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
++	error = dev_set_name(&hdev->dev, "hci%u", id);
++	if (error)
++		return error;
++
++	hdev->name = dev_name(&hdev->dev);
+ 	hdev->id = id;
+ 
+ 	BT_DBG("%p name %s bus %d", hdev, hdev->name, hdev->bus);
+@@ -3135,8 +3139,6 @@ int hci_register_dev(struct hci_dev *hdev)
+ 	if (!IS_ERR_OR_NULL(bt_debugfs))
+ 		hdev->debugfs = debugfs_create_dir(hdev->name, bt_debugfs);
+ 
+-	dev_set_name(&hdev->dev, "%s", hdev->name);
+-
+ 	error = device_add(&hdev->dev);
+ 	if (error < 0)
+ 		goto err_wqueue;
+-- 
+2.40.1
+
 
 
