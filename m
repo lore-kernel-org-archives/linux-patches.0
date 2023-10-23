@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4182C15484
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A24C15492
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOTD3u28"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC98AC433C8;
-	Mon, 23 Oct 2023 11:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIUGCepl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A673AC433C7;
+	Mon, 23 Oct 2023 11:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060014;
-	bh=zdC5XrSZdQ90+zAON48RKXaWNvNKf+TjUZ1u5fYtEOs=;
+	s=korg; t=1698060017;
+	bh=Fr6+9CGjE9AveJKK+fpX/e1UKRPuwGG/Yc+ltycHdzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hOTD3u28ZDK4WB/6TZljsZ7K+rSIspXa9K38Rtv5UR0hS9iUiLtQzaQMTWtO5vaAW
-	 VNI7I7FxJcPHYKP6BuQJ+jJArCPGr21kWkqdw65jliN3NIkJrw9gpTWpk588pgbo8O
-	 BQARbTFpm5O2h90Pt5YlzMty7sgaKeFQwYWU9aww=
+	b=DIUGCeplkT4T3eAPJscEl1ZvF205Ygk3iGpcebvPuEDWZunl1DlIJTte8PvPKuve6
+	 MSKVmi1n9ZCAh1wmMhQ81OA4839rDDEsvR0yB/Sp2gYaixEskYKdKqvmNrdsljhMd8
+	 9BceiuA0ZBdqeobp0dnh3jwk1K5E8vvlZ6B7Elso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 030/196] mptcp: more conservative check for zero probes
-Date: Mon, 23 Oct 2023 12:54:55 +0200
-Message-ID: <20231023104829.339496282@linuxfoundation.org>
+	syzbot+60cf892fc31d1f4358fc@syzkaller.appspotmail.com,
+	Ziqi Zhao <astrajoan@yahoo.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.1 031/196] fs/ntfs3: Fix possible null-pointer dereference in hdr_find_e()
+Date: Mon, 23 Oct 2023 12:54:56 +0200
+Message-ID: <20231023104829.370213063@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -43,93 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Ziqi Zhao <astrajoan@yahoo.com>
 
-commit 72377ab2d671befd6390a1d5677f5cca61235b65 upstream.
+commit 1f9b94af923c88539426ed811ae7e9543834a5c5 upstream.
 
-Christoph reported that the MPTCP protocol can find the subflow-level
-write queue unexpectedly not empty while crafting a zero-window probe,
-hitting a warning:
+Upon investigation of the C reproducer provided by Syzbot, it seemed
+the reproducer was trying to mount a corrupted NTFS filesystem, then
+issue a rename syscall to some nodes in the filesystem. This can be
+shown by modifying the reproducer to only include the mount syscall,
+and investigating the filesystem by e.g. `ls` and `rm` commands. As a
+result, during the problematic call to `hdr_fine_e`, the `inode` being
+supplied did not go through `indx_init`, hence the `cmp` function
+pointer was never set.
 
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 188 at net/mptcp/protocol.c:1312 mptcp_sendmsg_frag+0xc06/0xe70
-Modules linked in:
-CPU: 0 PID: 188 Comm: kworker/0:2 Not tainted 6.6.0-rc2-g1176aa719d7a #47
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
-Workqueue: events mptcp_worker
-RIP: 0010:mptcp_sendmsg_frag+0xc06/0xe70 net/mptcp/protocol.c:1312
-RAX: 47d0530de347ff6a RBX: 47d0530de347ff6b RCX: ffff8881015d3c00
-RDX: ffff8881015d3c00 RSI: 47d0530de347ff6b RDI: 47d0530de347ff6b
-RBP: 47d0530de347ff6b R08: ffffffff8243c6a8 R09: ffffffff82042d9c
-R10: 0000000000000002 R11: ffffffff82056850 R12: ffff88812a13d580
-R13: 0000000000000001 R14: ffff88812b375e50 R15: ffff88812bbf3200
-FS:  0000000000000000(0000) GS:ffff88813bc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000695118 CR3: 0000000115dfc001 CR4: 0000000000170ef0
-Call Trace:
- <TASK>
- __subflow_push_pending+0xa4/0x420 net/mptcp/protocol.c:1545
- __mptcp_push_pending+0x128/0x3b0 net/mptcp/protocol.c:1614
- mptcp_release_cb+0x218/0x5b0 net/mptcp/protocol.c:3391
- release_sock+0xf6/0x100 net/core/sock.c:3521
- mptcp_worker+0x6e8/0x8f0 net/mptcp/protocol.c:2746
- process_scheduled_works+0x341/0x690 kernel/workqueue.c:2630
- worker_thread+0x3a7/0x610 kernel/workqueue.c:2784
- kthread+0x143/0x180 kernel/kthread.c:388
- ret_from_fork+0x4d/0x60 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:304
- </TASK>
+The fix is simply to check whether `cmp` is not set, and return NULL
+if that's the case, in order to be consistent with other error
+scenarios of the `hdr_find_e` method. The rationale behind this patch
+is that:
 
-The root cause of the issue is that expectations are wrong: e.g. due
-to MPTCP-level re-injection we can hit the critical condition.
+- We should prevent crashing the kernel even if the mounted filesystem
+  is corrupted. Any syscalls made on the filesystem could return
+  invalid, but the kernel should be able to sustain these calls.
 
-Explicitly avoid the zero-window probe when the subflow write queue
-is not empty and drop the related warnings.
+- Only very specific corruption would lead to this bug, so it would be
+  a pretty rare case in actual usage anyways. Therefore, introducing a
+  check to specifically protect against this bug seems appropriate.
+  Because of its rarity, an `unlikely` clause is used to wrap around
+  this nullity check.
 
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/444
-Fixes: f70cad1085d1 ("mptcp: stop relying on tcp_tx_skb_cache")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20231018-send-net-20231018-v1-3-17ecb002e41d@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+60cf892fc31d1f4358fc@syzkaller.appspotmail.com
+Signed-off-by: Ziqi Zhao <astrajoan@yahoo.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ fs/ntfs3/index.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1342,7 +1342,7 @@ alloc_skb:
- 	if (copy == 0) {
- 		u64 snd_una = READ_ONCE(msk->snd_una);
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -729,6 +729,9 @@ static struct NTFS_DE *hdr_find_e(const
+ 	u32 total = le32_to_cpu(hdr->total);
+ 	u16 offs[128];
  
--		if (snd_una != msk->snd_nxt) {
-+		if (snd_una != msk->snd_nxt || tcp_write_queue_tail(ssk)) {
- 			tcp_remove_empty_skb(ssk);
- 			return 0;
- 		}
-@@ -1350,11 +1350,6 @@ alloc_skb:
- 		zero_window_probe = true;
- 		data_seq = snd_una - 1;
- 		copy = 1;
--
--		/* all mptcp-level data is acked, no skbs should be present into the
--		 * ssk write queue
--		 */
--		WARN_ON_ONCE(reuse_skb);
- 	}
- 
- 	copy = min_t(size_t, copy, info->limit - info->sent);
-@@ -1383,7 +1378,6 @@ alloc_skb:
- 	if (reuse_skb) {
- 		TCP_SKB_CB(skb)->tcp_flags &= ~TCPHDR_PSH;
- 		mpext->data_len += copy;
--		WARN_ON_ONCE(zero_window_probe);
- 		goto out;
- 	}
- 
++	if (unlikely(!cmp))
++		return NULL;
++
+ fill_table:
+ 	if (end > total)
+ 		return NULL;
 
 
