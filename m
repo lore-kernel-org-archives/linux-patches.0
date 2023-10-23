@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8D015E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1EF15E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AL5rynpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD51C433C9;
-	Mon, 23 Oct 2023 11:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4CDKzs1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5745C433C8;
+	Mon, 23 Oct 2023 11:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060561;
-	bh=0DrDmamXYjc/gRiBrB8n019xDtOfxloEuWZ5G0MF/VE=;
+	s=korg; t=1698060564;
+	bh=uOk0m1aJXZrhrbJDENs819+twT0gNwFYw1RGvUcn/7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AL5rynpVcJNfXPI29sIE1sK1UtKaoihyjHDM84M6W2L6CmG49FVTL4bfVVms9Fiu2
-	 FdOZ64ahuCwz7R0bpAzCW5nPSTk7+jbtm7fMgxmD3PVzkup2dgL8dNDfgeH3Ja/NZD
-	 QEPEi7l6APMG2bH4Rudb8fL+opemZXsC+8LC0E4Y=
+	b=G4CDKzs1dv8Srw5tSuaZ0GogSVxa5qdPv0vfyCiSNi8VnPl794uchPbvY/6TtJLki
+	 ui9rQRb/+M7Kas/Se/VvSPxZkvyu2C8McNd9UhgqISoCZ9dII0KlnOSkOOZF7r/VQs
+	 W2lE120l+ov/3Ft/yi7OJ6fEwa9dOM0q+t7Gppc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 009/123] drm/msm/dsi: skip the wait for video mode done if not applicable
-Date: Mon, 23 Oct 2023 12:56:07 +0200
-Message-ID: <20231023104818.044606690@linuxfoundation.org>
+Subject: [PATCH 5.4 018/123] workqueue: Override implicit ordered attribute in workqueue_apply_unbound_cpumask()
+Date: Mon, 23 Oct 2023 12:56:16 +0200
+Message-ID: <20231023104818.354164031@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -42,63 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit ab483e3adcc178254eb1ce0fbdfbea65f86f1006 ]
+[ Upstream commit ca10d851b9ad0338c19e8e3089e24d565ebfffd7 ]
 
-dsi_wait4video_done() API waits for the DSI video mode engine to
-become idle so that we can transmit the DCS commands in the
-beginning of BLLP. However, with the current sequence, the MDP
-timing engine is turned on after the panel's pre_enable() callback
-which can send out the DCS commands needed to power up the panel.
+Commit 5c0338c68706 ("workqueue: restore WQ_UNBOUND/max_active==1
+to be ordered") enabled implicit ordered attribute to be added to
+WQ_UNBOUND workqueues with max_active of 1. This prevented the changing
+of attributes to these workqueues leading to fix commit 0a94efb5acbb
+("workqueue: implicit ordered attribute should be overridable").
 
-During those cases, this API will always timeout and print out the
-error spam leading to long bootup times and log flooding.
+However, workqueue_apply_unbound_cpumask() was not updated at that time.
+So sysfs changes to wq_unbound_cpumask has no effect on WQ_UNBOUND
+workqueues with implicit ordered attribute. Since not all WQ_UNBOUND
+workqueues are visible on sysfs, we are not able to make all the
+necessary cpumask changes even if we iterates all the workqueue cpumasks
+in sysfs and changing them one by one.
 
-Fix this by checking if the DSI video engine was actually busy before
-waiting for it to become idle otherwise this is a redundant wait.
+Fix this problem by applying the corresponding change made
+to apply_workqueue_attrs_locked() in the fix commit to
+workqueue_apply_unbound_cpumask().
 
-changes in v2:
-	- move the reg read below the video mode check
-	- minor fixes in commit text
-
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/34
-Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/557853/
-Link: https://lore.kernel.org/r/20230915204426.19011-1-quic_abhinavk@quicinc.com
+Fixes: 5c0338c68706 ("workqueue: restore WQ_UNBOUND/max_active==1 to be ordered")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ kernel/workqueue.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index c59764f156f94..419cad31830ea 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1051,9 +1051,21 @@ static void dsi_wait4video_done(struct msm_dsi_host *msm_host)
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 856188b0681af..a2c4de2a11327 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -5273,9 +5273,13 @@ static int workqueue_apply_unbound_cpumask(void)
+ 	list_for_each_entry(wq, &workqueues, list) {
+ 		if (!(wq->flags & WQ_UNBOUND))
+ 			continue;
++
+ 		/* creating multiple pwqs breaks ordering guarantee */
+-		if (wq->flags & __WQ_ORDERED)
+-			continue;
++		if (!list_empty(&wq->pwqs)) {
++			if (wq->flags & __WQ_ORDERED_EXPLICIT)
++				continue;
++			wq->flags &= ~__WQ_ORDERED;
++		}
  
- static void dsi_wait4video_eng_busy(struct msm_dsi_host *msm_host)
- {
-+	u32 data;
-+
- 	if (!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO))
- 		return;
- 
-+	data = dsi_read(msm_host, REG_DSI_STATUS0);
-+
-+	/* if video mode engine is not busy, its because
-+	 * either timing engine was not turned on or the
-+	 * DSI controller has finished transmitting the video
-+	 * data already, so no need to wait in those cases
-+	 */
-+	if (!(data & DSI_STATUS0_VIDEO_MODE_ENGINE_BUSY))
-+		return;
-+
- 	if (msm_host->power_on && msm_host->enabled) {
- 		dsi_wait4video_done(msm_host);
- 		/* delay 4 ms to skip BLLP */
+ 		ctx = apply_wqattrs_prepare(wq, wq->unbound_attrs);
+ 		if (!ctx) {
 -- 
 2.40.1
 
