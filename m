@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559FE14A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9F414A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqSAxD2V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54296C433C7;
-	Mon, 23 Oct 2023 11:04:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIZle4BH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53984C433C9;
+	Mon, 23 Oct 2023 11:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059088;
-	bh=pfUyvO4f5u5GFCr7OhKuviU/DCEhxXcWwPH5Z4Ma8ZU=;
+	s=korg; t=1698059091;
+	bh=3335+NKtU7MtJIyvyXf3/RcJESUsqEjRaBvLWsVrtuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TqSAxD2V0OkNulB3eu12PW8AIb5gTRy4K1EVOwvl/SFD2VGROfUMtezRgyGr4cKh3
-	 KWzvkFkqph4tu/w0kinojFxL20tjGpiBDRVcq8v8nUXfm55khIXGKZN9iTObr63qrl
-	 cIpsPG5hYPftgNMuVdhUryWpfsdhkvcVPqgPWmEQ=
+	b=RIZle4BH/KPfHoRIIntOzHXO6DMDGdxXdOZN2CJOuQM0AsbetJk6pzmlJaahWGONs
+	 VvCaN0mlm42RbUWMdgkDLM6Qmp+2A8XJ4mud0CxbMnAUW+xnES+Q0wP+7zD0D5neqJ
+	 8Qj5CDkU9c2NV2BP9x1Zjf+/lHd/JGllx4H0jrOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com,
-	Zeng Heng <zengheng4@huawei.com>,
+	syzbot+478c1bf0e6bf4a8f3a04@syzkaller.appspotmail.com,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.5 032/241] fs/ntfs3: fix panic about slab-out-of-bounds caused by ntfs_list_ea()
-Date: Mon, 23 Oct 2023 12:53:38 +0200
-Message-ID: <20231023104834.709648568@linuxfoundation.org>
+Subject: [PATCH 6.5 033/241] fs/ntfs3: Fix shift-out-of-bounds in ntfs_fill_super
+Date: Mon, 23 Oct 2023 12:53:39 +0200
+Message-ID: <20231023104834.733247360@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,64 +41,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 8e7e27b2ee1e19c4040d4987e345f678a74c0aed upstream.
+commit 91a4b1ee78cb100b19b70f077c247f211110348f upstream.
 
-Here is a BUG report about linux-6.1 from syzbot, but it still remains
-within upstream:
-
-BUG: KASAN: slab-out-of-bounds in ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
-BUG: KASAN: slab-out-of-bounds in ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
-Read of size 1 at addr ffff888021acaf3d by task syz-executor128/3632
-
-Call Trace:
- kasan_report+0x139/0x170 mm/kasan/report.c:495
- ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
- ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
- vfs_listxattr fs/xattr.c:457 [inline]
- listxattr+0x293/0x2d0 fs/xattr.c:804
- path_listxattr fs/xattr.c:828 [inline]
- __do_sys_llistxattr fs/xattr.c:846 [inline]
-
-Before derefering field members of `ea` in unpacked_ea_size(), we need to
-check whether the EA_FULL struct is located in access validate range.
-
-Similarly, when derefering `ea->name` field member, we need to check
-whethe the ea->name is located in access validate range, too.
-
-Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
-Reported-by: syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-[almaz.alexandrovich@paragon-software.com: took the ret variable out of the loop block]
+Reported-by: syzbot+478c1bf0e6bf4a8f3a04@syzkaller.appspotmail.com
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/xattr.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ntfs3/ntfs_fs.h |    2 ++
+ fs/ntfs3/super.c   |   26 ++++++++++++++++++++------
+ 2 files changed, 22 insertions(+), 6 deletions(-)
 
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -211,7 +211,8 @@ static ssize_t ntfs_list_ea(struct ntfs_
- 	size = le32_to_cpu(info->size);
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -42,9 +42,11 @@ enum utf16_endian;
+ #define MINUS_ONE_T			((size_t)(-1))
+ /* Biggest MFT / smallest cluster */
+ #define MAXIMUM_BYTES_PER_MFT		4096
++#define MAXIMUM_SHIFT_BYTES_PER_MFT	12
+ #define NTFS_BLOCKS_PER_MFT_RECORD	(MAXIMUM_BYTES_PER_MFT / 512)
  
- 	/* Enumerate all xattrs. */
--	for (ret = 0, off = 0; off < size; off += ea_size) {
-+	ret = 0;
-+	for (off = 0; off + sizeof(struct EA_FULL) < size; off += ea_size) {
- 		ea = Add2Ptr(ea_all, off);
- 		ea_size = unpacked_ea_size(ea);
+ #define MAXIMUM_BYTES_PER_INDEX		4096
++#define MAXIMUM_SHIFT_BYTES_PER_INDEX	12
+ #define NTFS_BLOCKS_PER_INODE		(MAXIMUM_BYTES_PER_INDEX / 512)
  
-@@ -219,6 +220,10 @@ static ssize_t ntfs_list_ea(struct ntfs_
- 			break;
+ /* NTFS specific error code when fixup failed. */
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -906,9 +906,17 @@ check_boot:
+ 		goto out;
+ 	}
  
- 		if (buffer) {
-+			/* Check if we can use field ea->name */
-+			if (off + ea_size > size)
-+				break;
+-	sbi->record_size = record_size =
+-		boot->record_size < 0 ? 1 << (-boot->record_size) :
+-					(u32)boot->record_size << cluster_bits;
++	if (boot->record_size >= 0) {
++		record_size = (u32)boot->record_size << cluster_bits;
++	} else if (-boot->record_size <= MAXIMUM_SHIFT_BYTES_PER_MFT) {
++		record_size = 1u << (-boot->record_size);
++	} else {
++		ntfs_err(sb, "%s: invalid record size %d.", hint,
++			 boot->record_size);
++		goto out;
++	}
 +
- 			if (ret + ea->name_len + 1 > bytes_per_buffer) {
- 				err = -ERANGE;
- 				goto out;
++	sbi->record_size = record_size;
+ 	sbi->record_bits = blksize_bits(record_size);
+ 	sbi->attr_size_tr = (5 * record_size >> 4); // ~320 bytes
+ 
+@@ -925,9 +933,15 @@ check_boot:
+ 		goto out;
+ 	}
+ 
+-	sbi->index_size = boot->index_size < 0 ?
+-				  1u << (-boot->index_size) :
+-				  (u32)boot->index_size << cluster_bits;
++	if (boot->index_size >= 0) {
++		sbi->index_size = (u32)boot->index_size << cluster_bits;
++	} else if (-boot->index_size <= MAXIMUM_SHIFT_BYTES_PER_INDEX) {
++		sbi->index_size = 1u << (-boot->index_size);
++	} else {
++		ntfs_err(sb, "%s: invalid index size %d.", hint,
++			 boot->index_size);
++		goto out;
++	}
+ 
+ 	/* Check index record size. */
+ 	if (sbi->index_size < SECTOR_SIZE || !is_power_of_2(sbi->index_size)) {
 
 
