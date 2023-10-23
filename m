@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7D515E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EA015E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfYFqYkw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE3CC433C7;
-	Mon, 23 Oct 2023 11:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzV41q6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE31EC433C8;
+	Mon, 23 Oct 2023 11:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061130;
-	bh=b7WwGh4NQo71ilbX8bni3P+E7hxj0EEhlruMerrF72A=;
+	s=korg; t=1698061133;
+	bh=3D48ZYBggmnVd/rnHhoWGCU0oGiYazjbAbLuBSQInB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfYFqYkw4ffF7Q+l/4uAFC7II0nc+/vmmU/1m3vKko28iMZa28pcqHSF78pDvwXCT
-	 v3Q5VRRzxGhlr5gnWhYHpIwL8cScXvJ8LiZnorxDqPPMfA3gA+OPKq58OqelVFY6jQ
-	 tkoYo6o6s3Y6ZDGO7+/R3JnI0+JLBlsZ6Y5ILx/s=
+	b=rzV41q6FQxoY8fv0u6gMVQQpgpiFSJnSeQbm5xogAL0+p8rfdy3iTy6+Z+EHkAbHT
+	 Fj+mkegvdE7SCXWAXxfzd6Oq3r6RwInOfo1IwiNEcXbwhvanbYooZErxJnHK4dmWyI
+	 U5jrDC2mh6nbTxwzzgyC6w7XIH8L4D8wj596Wvnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.15 045/137] netfilter: nft_set_rbtree: .deactivate fails if element has expired
-Date: Mon, 23 Oct 2023 12:56:42 +0200
-Message-ID: <20231023104822.546736921@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 076/137] ata: libata-eh: Fix compilation warning in ata_eh_link_report()
+Date: Mon, 23 Oct 2023 12:57:13 +0200
+Message-ID: <20231023104823.490996609@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -35,40 +38,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit d111692a59c1470ae530cbb39bcf0346c950ecc7 upstream.
+[ Upstream commit 49728bdc702391902a473b9393f1620eea32acb0 ]
 
-This allows to remove an expired element which is not possible in other
-existing set backends, this is more noticeable if gc-interval is high so
-expired elements remain in the tree. On-demand gc also does not help in
-this case, because this is delete element path. Return NULL if element
-has expired.
+The 6 bytes length of the tries_buf string in ata_eh_link_report() is
+too short and results in a gcc compilation warning with W-!:
 
-Fixes: 8d8540c4f5e0 ("netfilter: nft_set_rbtree: add timeout support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+drivers/ata/libata-eh.c: In function ‘ata_eh_link_report’:
+drivers/ata/libata-eh.c:2371:59: warning: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 4 [-Wformat-truncation=]
+ 2371 |                 snprintf(tries_buf, sizeof(tries_buf), " t%d",
+      |                                                           ^~
+drivers/ata/libata-eh.c:2371:56: note: directive argument in the range [-2147483648, 4]
+ 2371 |                 snprintf(tries_buf, sizeof(tries_buf), " t%d",
+      |                                                        ^~~~~~
+drivers/ata/libata-eh.c:2371:17: note: ‘snprintf’ output between 4 and 14 bytes into a destination of size 6
+ 2371 |                 snprintf(tries_buf, sizeof(tries_buf), " t%d",
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 2372 |                          ap->eh_tries);
+      |                          ~~~~~~~~~~~~~
+
+Avoid this warning by increasing the string size to 16B.
+
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ata/libata-eh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -568,6 +568,8 @@ static void *nft_rbtree_deactivate(const
- 				   nft_rbtree_interval_end(this)) {
- 				parent = parent->rb_right;
- 				continue;
-+			} else if (nft_set_elem_expired(&rbe->ext)) {
-+				break;
- 			} else if (!nft_set_elem_active(&rbe->ext, genmask)) {
- 				parent = parent->rb_left;
- 				continue;
+diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
+index 8444832008703..10742d72f44fb 100644
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -2223,7 +2223,7 @@ static void ata_eh_link_report(struct ata_link *link)
+ 	struct ata_eh_context *ehc = &link->eh_context;
+ 	struct ata_queued_cmd *qc;
+ 	const char *frozen, *desc;
+-	char tries_buf[6] = "";
++	char tries_buf[16] = "";
+ 	int tag, nr_failed = 0;
+ 
+ 	if (ehc->i.flags & ATA_EHI_QUIET)
+-- 
+2.40.1
+
 
 
