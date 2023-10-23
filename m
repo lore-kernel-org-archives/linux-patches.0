@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F66D168B0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B87B168B0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DH5+TsIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC365C433C8;
-	Mon, 23 Oct 2023 11:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdnibLVC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB27EC433C7;
+	Mon, 23 Oct 2023 11:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061598;
-	bh=WA+3kXakV8xruJSkF7efymoCYnZ6sHOVxCGsi4zaJ+0=;
+	s=korg; t=1698061601;
+	bh=hgTwnHeqc8QExdvsE7HPCv82fukpAG47Oqu+hfvWMoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DH5+TsImF4kxViAzITwcKPZyLnsByGj3RLRajrPNy4rWzSU1pjaImzEss9/vSPsm7
-	 sUBT2jWl049s+yeBCV4xTw6lFPFkEtTCrotnVS8GnL0O8LNTJDorck4FzpWoQ/OPCY
-	 JYYaoS1qZWtT8ldLNEo3vj9B3+JgA2HfPvqneeug=
+	b=MdnibLVCQR6Qk/ZAwCkSo8NGZ/RgM3kHyKIfSpnrWZzd5haBcKkeKWcMTvP9pCKbm
+	 POLuuNI8MjvryxN4NL1N3ld4a8emsy1HQsCUsSxtEjIdS3ZEO8EZVegA8BAr61DWvt
+	 gB2kJxzUWhxpNtOPSaVZ4HiP28EloSDjVucN0gN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishal Agrawal <vagrawal@redhat.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.10 093/202] ice: reset first in crash dump kernels
-Date: Mon, 23 Oct 2023 12:56:40 +0200
-Message-ID: <20231023104829.246360230@linuxfoundation.org>
+	Alon Zahavi <zahavi.alon@gmail.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.10 102/202] nvmet-tcp: Fix a possible UAF in queue intialization setup
+Date: Mon, 23 Oct 2023 12:56:49 +0200
+Message-ID: <20231023104829.515985935@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -45,71 +44,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Brandeburg <jesse.brandeburg@intel.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-commit 0288c3e709e5fabd51e84715c5c798a02f43061a upstream.
+commit d920abd1e7c4884f9ecd0749d1921b7ab19ddfbd upstream.
 
-When the system boots into the crash dump kernel after a panic, the ice
-networking device may still have pending transactions that can cause errors
-or machine checks when the device is re-enabled. This can prevent the crash
-dump kernel from loading the driver or collecting the crash data.
+>From Alon:
+"Due to a logical bug in the NVMe-oF/TCP subsystem in the Linux kernel,
+a malicious user can cause a UAF and a double free, which may lead to
+RCE (may also lead to an LPE in case the attacker already has local
+privileges)."
 
-To avoid this issue, perform a function level reset (FLR) on the ice device
-via PCIe config space before enabling it on the crash kernel. This will
-clear any outstanding transactions and stop all queues and interrupts.
-Restore the config space after the FLR, otherwise it was found in testing
-that the driver wouldn't load successfully.
+Hence, when a queue initialization fails after the ahash requests are
+allocated, it is guaranteed that the queue removal async work will be
+called, hence leave the deallocation to the queue removal.
 
-The following sequence causes the original issue:
-- Load the ice driver with modprobe ice
-- Enable SR-IOV with 2 VFs: echo 2 > /sys/class/net/eth0/device/sriov_num_vfs
-- Trigger a crash with echo c > /proc/sysrq-trigger
-- Load the ice driver again (or let it load automatically) with modprobe ice
-- The system crashes again during pcim_enable_device()
+Also, be extra careful not to continue processing the socket, so set
+queue rcv_state to NVMET_TCP_RECV_ERR upon a socket error.
 
-Fixes: 837f08fdecbe ("ice: Add basic driver framework for Intel(R) E800 Series")
-Reported-by: Vishal Agrawal <vagrawal@redhat.com>
-Reviewed-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Link: https://lore.kernel.org/r/20231011233334.336092-3-jacob.e.keller@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Alon Zahavi <zahavi.alon@gmail.com>
+Tested-by: Alon Zahavi <zahavi.alon@gmail.com>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/nvme/target/tcp.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -6,6 +6,7 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -336,6 +336,7 @@ static void nvmet_tcp_fatal_error(struct
  
- #include <generated/utsrelease.h>
-+#include <linux/crash_dump.h>
- #include "ice.h"
- #include "ice_base.h"
- #include "ice_lib.h"
-@@ -4025,6 +4026,20 @@ ice_probe(struct pci_dev *pdev, const st
- 		return -EINVAL;
- 	}
+ static void nvmet_tcp_socket_error(struct nvmet_tcp_queue *queue, int status)
+ {
++	queue->rcv_state = NVMET_TCP_RECV_ERR;
+ 	if (status == -EPIPE || status == -ECONNRESET)
+ 		kernel_sock_shutdown(queue->sock, SHUT_RDWR);
+ 	else
+@@ -882,15 +883,11 @@ static int nvmet_tcp_handle_icreq(struct
+ 	iov.iov_len = sizeof(*icresp);
+ 	ret = kernel_sendmsg(queue->sock, &msg, &iov, 1, iov.iov_len);
+ 	if (ret < 0)
+-		goto free_crypto;
++		return ret; /* queue removal will cleanup */
  
-+	/* when under a kdump kernel initiate a reset before enabling the
-+	 * device in order to clear out any pending DMA transactions. These
-+	 * transactions can cause some systems to machine check when doing
-+	 * the pcim_enable_device() below.
-+	 */
-+	if (is_kdump_kernel()) {
-+		pci_save_state(pdev);
-+		pci_clear_master(pdev);
-+		err = pcie_flr(pdev);
-+		if (err)
-+			return err;
-+		pci_restore_state(pdev);
-+	}
-+
- 	/* this driver uses devres, see
- 	 * Documentation/driver-api/driver-model/devres.rst
- 	 */
+ 	queue->state = NVMET_TCP_Q_LIVE;
+ 	nvmet_prepare_receive_pdu(queue);
+ 	return 0;
+-free_crypto:
+-	if (queue->hdr_digest || queue->data_digest)
+-		nvmet_tcp_free_crypto(queue);
+-	return ret;
+ }
+ 
+ static void nvmet_tcp_handle_req_failure(struct nvmet_tcp_queue *queue,
 
 
