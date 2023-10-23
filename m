@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2699125CA
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2B6125CA
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvyYfXq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE6FC433CB;
-	Mon, 23 Oct 2023 11:00:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnCnO/R7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEF3C433C7;
+	Mon, 23 Oct 2023 11:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058812;
-	bh=LmKPSnZuVEyBwHCPAsldbR4xoDn8LNwS8s92SHSZj/U=;
+	s=korg; t=1698058815;
+	bh=2x3apikCSf3Fisk0R5IgOqnVpaBMhIszNW0A9s43XO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TvyYfXq+sYkBehwjXkQqXaGzuWp+2hn2PytqjO+QSaVU7LK0TuKfVRmuBCJuahi3/
-	 EgCSmvDYLCNKXzs9AiTSGNu84BshXJcRW/yecS81JAmdqihzHxbNFT/Ce8WgllvRty
-	 OiVjpnhs4NTQA9sK/MV6XCbcaU/7+xnPzNuW/q+w=
+	b=ZnCnO/R7OBxGJEAgjHrUaBhXeIP5AmdZFy4YluYBcNzAjZFBkiy26eDyGb77aiXgz
+	 piL9obkU0OmR0FSxXswNwf1rVU55+3xMHbYWZSSACcxjozaf03qtTALvmork/ocBGh
+	 R693hiILYIdRfD3YjU8uRRo679RrXecsk3urn9gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bla=C5=BEej=20Kraj=C5=88=C3=A1k?= <krajnak@levonet.sk>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 4.14 35/66] netfilter: nft_payload: fix wrong mac header matching
-Date: Mon, 23 Oct 2023 12:56:25 +0200
-Message-ID: <20231023104812.147699999@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 4.14 36/66] xfrm: fix a data-race in xfrm_gen_index()
+Date: Mon, 23 Oct 2023 12:56:26 +0200
+Message-ID: <20231023104812.185492753@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -35,41 +37,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Eric Dumazet <edumazet@google.com>
 
-commit d351c1ea2de3e36e608fc355d8ae7d0cc80e6cd6 upstream.
+commit 3e4bc23926b83c3c67e5f61ae8571602754131a6 upstream.
 
-mcast packets get looped back to the local machine.
-Such packets have a 0-length mac header, we should treat
-this like "mac header not set" and abort rule evaluation.
+xfrm_gen_index() mutual exclusion uses net->xfrm.xfrm_policy_lock.
 
-As-is, we just copy data from the network header instead.
+This means we must use a per-netns idx_generator variable,
+instead of a static one.
+Alternative would be to use an atomic variable.
 
-Fixes: 96518518cc41 ("netfilter: add nftables")
-Reported-by: Blažej Krajňák <krajnak@levonet.sk>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+syzbot reported:
+
+BUG: KCSAN: data-race in xfrm_sk_policy_insert / xfrm_sk_policy_insert
+
+write to 0xffffffff87005938 of 4 bytes by task 29466 on cpu 0:
+xfrm_gen_index net/xfrm/xfrm_policy.c:1385 [inline]
+xfrm_sk_policy_insert+0x262/0x640 net/xfrm/xfrm_policy.c:2347
+xfrm_user_policy+0x413/0x540 net/xfrm/xfrm_state.c:2639
+do_ipv6_setsockopt+0x1317/0x2ce0 net/ipv6/ipv6_sockglue.c:943
+ipv6_setsockopt+0x57/0x130 net/ipv6/ipv6_sockglue.c:1012
+rawv6_setsockopt+0x21e/0x410 net/ipv6/raw.c:1054
+sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
+__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
+__do_sys_setsockopt net/socket.c:2274 [inline]
+__se_sys_setsockopt net/socket.c:2271 [inline]
+__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+read to 0xffffffff87005938 of 4 bytes by task 29460 on cpu 1:
+xfrm_sk_policy_insert+0x13e/0x640
+xfrm_user_policy+0x413/0x540 net/xfrm/xfrm_state.c:2639
+do_ipv6_setsockopt+0x1317/0x2ce0 net/ipv6/ipv6_sockglue.c:943
+ipv6_setsockopt+0x57/0x130 net/ipv6/ipv6_sockglue.c:1012
+rawv6_setsockopt+0x21e/0x410 net/ipv6/raw.c:1054
+sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
+__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
+__do_sys_setsockopt net/socket.c:2274 [inline]
+__se_sys_setsockopt net/socket.c:2271 [inline]
+__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x00006ad8 -> 0x00006b18
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 29460 Comm: syz-executor.1 Not tainted 6.5.0-rc5-syzkaller-00243-g9106536c1aa3 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+
+Fixes: 1121994c803f ("netns xfrm: policy insertion in netns")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_payload.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/netns/xfrm.h |    1 +
+ net/xfrm/xfrm_policy.c   |    6 ++----
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -84,7 +84,7 @@ static void nft_payload_eval(const struc
+--- a/include/net/netns/xfrm.h
++++ b/include/net/netns/xfrm.h
+@@ -48,6 +48,7 @@ struct netns_xfrm {
+ 	struct list_head	policy_all;
+ 	struct hlist_head	*policy_byidx;
+ 	unsigned int		policy_idx_hmask;
++	unsigned int		idx_generator;
+ 	struct hlist_head	policy_inexact[XFRM_POLICY_MAX];
+ 	struct xfrm_policy_hash	policy_bydst[XFRM_POLICY_MAX];
+ 	unsigned int		policy_count[XFRM_POLICY_MAX * 2];
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -646,8 +646,6 @@ EXPORT_SYMBOL(xfrm_policy_hash_rebuild);
+  * of an absolute inpredictability of ordering of rules. This will not pass. */
+ static u32 xfrm_gen_index(struct net *net, int dir, u32 index)
+ {
+-	static u32 idx_generator;
+-
+ 	for (;;) {
+ 		struct hlist_head *list;
+ 		struct xfrm_policy *p;
+@@ -655,8 +653,8 @@ static u32 xfrm_gen_index(struct net *ne
+ 		int found;
  
- 	switch (priv->base) {
- 	case NFT_PAYLOAD_LL_HEADER:
--		if (!skb_mac_header_was_set(skb))
-+		if (!skb_mac_header_was_set(skb) || skb_mac_header_len(skb) == 0)
- 			goto err;
- 
- 		if (skb_vlan_tag_present(skb)) {
+ 		if (!index) {
+-			idx = (idx_generator | dir);
+-			idx_generator += 8;
++			idx = (net->xfrm.idx_generator | dir);
++			net->xfrm.idx_generator += 8;
+ 		} else {
+ 			idx = index;
+ 			index = 0;
 
 
