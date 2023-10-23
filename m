@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9D014A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920C414A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZ2wPhr9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B540C433C9;
-	Mon, 23 Oct 2023 11:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pO3t+L3Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF3FC433C7;
+	Mon, 23 Oct 2023 11:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059020;
-	bh=aw50T25sjhcD3kMamFaVrLOuiE9YrZtsYs++IG9OzE0=;
+	s=korg; t=1698059023;
+	bh=5/0mFXJE8CReIk6SGxvCdFmejHVjqZtXiPpx9TvcclU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZ2wPhr9nD86uVsL2A5hfGnQXUf+kuo/xSckTJdqBcOcVqdnXYkMh+T0rsbkTZucZ
-	 pcjLPWXJSoyG0ok12c1vOFVjoitvq95Eh06RkrFBRAKmzPr6lx++7OjkbHSDF3G7KM
-	 uhaXrDX0fqi71uEO283EPT8Jcq3Qb6J8A5gZKB4c=
+	b=pO3t+L3YnX7p+2ns2sH7kVvF0sx21Q/68oCwTDclK81mScUkL8f9LregpNlfEYgka
+	 1PRXHV3gFU9IGItwE6P50+ezOqCWhRHHhP8w0IGk01IeCiylEKCY/nqyBiy+avveHw
+	 Kty4M7j46bM68UMbmKnYP3/XmvjQO0AH6GWjhYVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	rtm@csail.mit.edu,
-	Jeff Moyer <jmoyer@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.5 037/241] io_uring: fix crash with IORING_SETUP_NO_MMAP and invalid SQ ring address
-Date: Mon, 23 Oct 2023 12:53:43 +0200
-Message-ID: <20231023104834.826933454@linuxfoundation.org>
+	Alon Zahavi <zahavi.alon@gmail.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.5 038/241] nvmet-tcp: Fix a possible UAF in queue intialization setup
+Date: Mon, 23 Oct 2023 12:53:44 +0200
+Message-ID: <20231023104834.850434303@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,71 +44,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-commit 8b51a3956d44ea6ade962874ade14de9a7d16556 upstream.
+commit d920abd1e7c4884f9ecd0749d1921b7ab19ddfbd upstream.
 
-If we specify a valid CQ ring address but an invalid SQ ring address,
-we'll correctly spot this and free the allocated pages and clear them
-to NULL. However, we don't clear the ring page count, and hence will
-attempt to free the pages again. We've already cleared the address of
-the page array when freeing them, but we don't check for that. This
-causes the following crash:
+>From Alon:
+"Due to a logical bug in the NVMe-oF/TCP subsystem in the Linux kernel,
+a malicious user can cause a UAF and a double free, which may lead to
+RCE (may also lead to an LPE in case the attacker already has local
+privileges)."
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-Oops [#1]
-Modules linked in:
-CPU: 0 PID: 20 Comm: kworker/u2:1 Not tainted 6.6.0-rc5-dirty #56
-Hardware name: ucbbar,riscvemu-bare (DT)
-Workqueue: events_unbound io_ring_exit_work
-epc : io_pages_free+0x2a/0x58
- ra : io_rings_free+0x3a/0x50
- epc : ffffffff808811a2 ra : ffffffff80881406 sp : ffff8f80000c3cd0
- status: 0000000200000121 badaddr: 0000000000000000 cause: 000000000000000d
- [<ffffffff808811a2>] io_pages_free+0x2a/0x58
- [<ffffffff80881406>] io_rings_free+0x3a/0x50
- [<ffffffff80882176>] io_ring_exit_work+0x37e/0x424
- [<ffffffff80027234>] process_one_work+0x10c/0x1f4
- [<ffffffff8002756e>] worker_thread+0x252/0x31c
- [<ffffffff8002f5e4>] kthread+0xc4/0xe0
- [<ffffffff8000332a>] ret_from_fork+0xa/0x1c
+Hence, when a queue initialization fails after the ahash requests are
+allocated, it is guaranteed that the queue removal async work will be
+called, hence leave the deallocation to the queue removal.
 
-Check for a NULL array in io_pages_free(), but also clear the page counts
-when we free them to be on the safer side.
+Also, be extra careful not to continue processing the socket, so set
+queue rcv_state to NVMET_TCP_RECV_ERR upon a socket error.
 
-Reported-by: rtm@csail.mit.edu
-Fixes: 03d89a2de25b ("io_uring: support for user allocated memory for rings/sqes")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Moyer <jmoyer@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Alon Zahavi <zahavi.alon@gmail.com>
+Tested-by: Alon Zahavi <zahavi.alon@gmail.com>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/target/tcp.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2666,7 +2666,11 @@ static void io_pages_free(struct page **
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -372,6 +372,7 @@ static void nvmet_tcp_fatal_error(struct
  
- 	if (!pages)
- 		return;
-+
- 	page_array = *pages;
-+	if (!page_array)
-+		return;
-+
- 	for (i = 0; i < npages; i++)
- 		unpin_user_page(page_array[i]);
- 	kvfree(page_array);
-@@ -2750,7 +2754,9 @@ static void io_rings_free(struct io_ring
- 		ctx->sq_sqes = NULL;
- 	} else {
- 		io_pages_free(&ctx->ring_pages, ctx->n_ring_pages);
-+		ctx->n_ring_pages = 0;
- 		io_pages_free(&ctx->sqe_pages, ctx->n_sqe_pages);
-+		ctx->n_sqe_pages = 0;
- 	}
+ static void nvmet_tcp_socket_error(struct nvmet_tcp_queue *queue, int status)
+ {
++	queue->rcv_state = NVMET_TCP_RECV_ERR;
+ 	if (status == -EPIPE || status == -ECONNRESET)
+ 		kernel_sock_shutdown(queue->sock, SHUT_RDWR);
+ 	else
+@@ -910,15 +911,11 @@ static int nvmet_tcp_handle_icreq(struct
+ 	iov.iov_len = sizeof(*icresp);
+ 	ret = kernel_sendmsg(queue->sock, &msg, &iov, 1, iov.iov_len);
+ 	if (ret < 0)
+-		goto free_crypto;
++		return ret; /* queue removal will cleanup */
+ 
+ 	queue->state = NVMET_TCP_Q_LIVE;
+ 	nvmet_prepare_receive_pdu(queue);
+ 	return 0;
+-free_crypto:
+-	if (queue->hdr_digest || queue->data_digest)
+-		nvmet_tcp_free_crypto(queue);
+-	return ret;
  }
  
+ static void nvmet_tcp_handle_req_failure(struct nvmet_tcp_queue *queue,
 
 
