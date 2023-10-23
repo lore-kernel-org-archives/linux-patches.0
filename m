@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8384723C5
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A4C23C5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aXvemiA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94CDCC433C7;
-	Mon, 23 Oct 2023 11:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BhFLvD2I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846C7C433C7;
+	Mon, 23 Oct 2023 11:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061164;
-	bh=HsHU/hxIx6OGgHyNYdylrWbEX6I6fNxyiLps4g40wZg=;
+	s=korg; t=1698061166;
+	bh=xd04MTT/egN5uzL896BKfaj4UApF7PbuIfDsIm2N34U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2aXvemiAwNVdH6rzRyeMEm0jR6+u02HDjzxCjc8G84ANhyykTPcsRpfD0Ch17/+07
-	 vFIkFgbRFswS80ZACPXv29wXzhzgfvJzP0xGXxnL24Bp6nsanrXmqnTbB0CkeO9psi
-	 FAjw0FsqQk8t/EqWSQHUQUxAXFR+VZnpGPQUKWyA=
+	b=BhFLvD2IefKMPythHIWp98gVtB16Nc8rBFQDHfenV41HctfQSRHxYvwgYr/qxDETm
+	 //PypHMI2NY8PhSk0zNGkIca05YMFPSsIh2EHJ6HXYLEa9LnNVAjUFUop8EbfzZOR5
+	 vcXNHNKDr/awyjOuqQsafsgy97eV7ImEm7KEWQ7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/137] btrfs: error out when reallocating block for defrag using a stale transaction
-Date: Mon, 23 Oct 2023 12:57:31 +0200
-Message-ID: <20231023104824.061862411@linuxfoundation.org>
+Subject: [PATCH 5.15 077/137] tracing: relax trace_event_eval_update() execution with cond_resched()
+Date: Mon, 23 Oct 2023 12:57:14 +0200
+Message-ID: <20231023104823.522108624@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -36,81 +38,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Clément Léger <cleger@rivosinc.com>
 
-[ Upstream commit e36f94914021e58ee88a8856c7fdf35adf9c7ee1 ]
+[ Upstream commit 23cce5f25491968b23fb9c399bbfb25f13870cd9 ]
 
-At btrfs_realloc_node() we have these checks to verify we are not using a
-stale transaction (a past transaction with an unblocked state or higher),
-and the only thing we do is to trigger two WARN_ON(). This however is a
-critical problem, highly unexpected and if it happens it's most likely due
-to a bug, so we should error out and turn the fs into error state so that
-such issue is much more easily noticed if it's triggered.
+When kernel is compiled without preemption, the eval_map_work_func()
+(which calls trace_event_eval_update()) will not be preempted up to its
+complete execution. This can actually cause a problem since if another
+CPU call stop_machine(), the call will have to wait for the
+eval_map_work_func() function to finish executing in the workqueue
+before being able to be scheduled. This problem was observe on a SMP
+system at boot time, when the CPU calling the initcalls executed
+clocksource_done_booting() which in the end calls stop_machine(). We
+observed a 1 second delay because one CPU was executing
+eval_map_work_func() and was not preempted by the stop_machine() task.
 
-The problem is critical because in btrfs_realloc_node() we COW tree blocks,
-and using such stale transaction will lead to not persisting the extent
-buffers used for the COW operations, as allocating tree block adds the
-range of the respective extent buffers to the ->dirty_pages iotree of the
-transaction, and a stale transaction, in the unlocked state or higher,
-will not flush dirty extent buffers anymore, therefore resulting in not
-persisting the tree block and resource leaks (not cleaning the dirty_pages
-iotree for example).
+Adding a call to cond_resched() in trace_event_eval_update() allows
+other tasks to be executed and thus continue working asynchronously
+like before without blocking any pending task at boot time.
 
-So do the following changes:
+Link: https://lore.kernel.org/linux-trace-kernel/20230929191637.416931-1-cleger@rivosinc.com
 
-1) Return -EUCLEAN if we find a stale transaction;
-
-2) Turn the fs into error state, with error -EUCLEAN, so that no
-   transaction can be committed, and generate a stack trace;
-
-3) Combine both conditions into a single if statement, as both are related
-   and have the same error message;
-
-4) Mark the check as unlikely, since this is not expected to ever happen.
-
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Tested-by: Atish Patra <atishp@rivosinc.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index 8fe6aaa7b11fd..8b53313bf3b2c 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -680,8 +680,22 @@ int btrfs_realloc_node(struct btrfs_trans_handle *trans,
- 	int progress_passed = 0;
- 	struct btrfs_disk_key disk_key;
- 
--	WARN_ON(trans->transaction != fs_info->running_transaction);
--	WARN_ON(trans->transid != fs_info->generation);
-+	/*
-+	 * COWing must happen through a running transaction, which always
-+	 * matches the current fs generation (it's a transaction with a state
-+	 * less than TRANS_STATE_UNBLOCKED). If it doesn't, then turn the fs
-+	 * into error state to prevent the commit of any transaction.
-+	 */
-+	if (unlikely(trans->transaction != fs_info->running_transaction ||
-+		     trans->transid != fs_info->generation)) {
-+		btrfs_abort_transaction(trans, -EUCLEAN);
-+		btrfs_crit(fs_info,
-+"unexpected transaction when attempting to reallocate parent %llu for root %llu, transaction %llu running transaction %llu fs generation %llu",
-+			   parent->start, btrfs_root_id(root), trans->transid,
-+			   fs_info->running_transaction->transid,
-+			   fs_info->generation);
-+		return -EUCLEAN;
-+	}
- 
- 	parent_nritems = btrfs_header_nritems(parent);
- 	blocksize = fs_info->nodesize;
+diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
+index c626d02776a54..f8af4a15c3a88 100644
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -2753,6 +2753,7 @@ void trace_event_eval_update(struct trace_eval_map **map, int len)
+ 				update_event_fields(call, map[i]);
+ 			}
+ 		}
++		cond_resched();
+ 	}
+ 	up_write(&trace_event_sem);
+ }
 -- 
 2.40.1
 
