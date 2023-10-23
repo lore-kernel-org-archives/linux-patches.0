@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95315168B0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAF2168B0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OsdrM2/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33CAC433C7;
-	Mon, 23 Oct 2023 11:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqi4h+mz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D81C433C8;
+	Mon, 23 Oct 2023 11:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061749;
-	bh=jt5COwqqeWDBGr6gmgpmJIQYS3FBO727LoN82F46iNg=;
+	s=korg; t=1698061752;
+	bh=K3MnpYb8J72vsKTodMsDiwWlxutj71IE7z2+q5Y7tfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OsdrM2/d3zK+Q29K9iWdtynrc4MEoOb8oIHNgXeF6mTAX8ZLEZ27lHbIhNK6cn//B
-	 xpTImxZiWS5eDMfitn+Qgrye4iRNdago+suaOih+mSUnQNg8/HHxAFc7QrZl0RbgW5
-	 +V+z7z0K4D9wLRdG+qxQS8dpQfzT8RUaouywiWEk=
+	b=qqi4h+mzQ1IE67zrrcUsTiBoS72LtE++yDSKPH2GJTT8/NSs7tqjgZctlY2fX8d41
+	 WPfqal+sNQSxCdL34JHtFbb1QbJbSh/16Hb2rvt3EKZ0UKOhpAYjSQrEDG3WOPVRgg
+	 wZ93/YhQsAAUv8OFxNS9mWi2bv9c7lA9m4KJ/54E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Wang <hui.wang@canonical.com>,
-	Tamim Khan <tamim@fusetak.com>,
-	Sunand <sunandchakradhar@gmail.com>,
+	Kellen Renshaw <kellen.renshaw@canonical.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 125/202] ACPI: resource: Skip IRQ override on Asus Vivobook K3402ZA/K3502ZA
-Date: Mon, 23 Oct 2023 12:57:12 +0200
-Message-ID: <20231023104830.187350352@linuxfoundation.org>
+Subject: [PATCH 5.10 126/202] ACPI: resource: Add ASUS model S5402ZA to quirks
+Date: Mon, 23 Oct 2023 12:57:13 +0200
+Message-ID: <20231023104830.216990050@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -44,66 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamim Khan <tamim@fusetak.com>
+From: Kellen Renshaw <kellen.renshaw@canonical.com>
 
-[ Upstream commit e12dee3736731e24b1e7367f87d66ac0fcd73ce7 ]
+[ Upstream commit 6e5cbe7c4b41824e500acbb42411da692d1435f1 ]
 
-In the ACPI DSDT table for Asus VivoBook K3402ZA/K3502ZA
-IRQ 1 is described as ActiveLow; however, the kernel overrides
-it to Edge_High. This prevents the internal keyboard from working
-on these laptops. In order to fix this add these laptops to the
-skip_override_table so that the kernel does not override IRQ 1 to
-Edge_High.
+The Asus Vivobook S5402ZA has the same keyboard issue as Asus Vivobook
+K3402ZA/K3502ZA. The kernel overrides IRQ 1 to Edge_High when it
+should be Active_Low.
+
+This patch adds the S5402ZA model to the quirk list.
 
 Link: https://bugzilla.kernel.org/show_bug.cgi?id=216158
-Reviewed-by: Hui Wang <hui.wang@canonical.com>
-Tested-by: Tamim Khan <tamim@fusetak.com>
-Tested-by: Sunand <sunandchakradhar@gmail.com>
-Signed-off-by: Tamim Khan <tamim@fusetak.com>
+Tested-by: Kellen Renshaw <kellen.renshaw@canonical.com>
+Signed-off-by: Kellen Renshaw <kellen.renshaw@canonical.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Stable-dep-of: c1ed72171ed5 ("ACPI: resource: Skip IRQ override on ASUS ExpertBook B1402CBA")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/acpi/resource.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index bf7c2deafb0a9..602c44821fb45 100644
+index 602c44821fb45..50ab81a333cdd 100644
 --- a/drivers/acpi/resource.c
 +++ b/drivers/acpi/resource.c
-@@ -392,6 +392,24 @@ static const struct dmi_system_id medion_laptop[] = {
+@@ -407,6 +407,13 @@ static const struct dmi_system_id asus_laptop[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "K3502ZA"),
+ 		},
+ 	},
++	{
++		.ident = "Asus Vivobook S5402ZA",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "S5402ZA"),
++		},
++	},
  	{ }
  };
  
-+static const struct dmi_system_id asus_laptop[] = {
-+	{
-+		.ident = "Asus Vivobook K3402ZA",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "K3402ZA"),
-+		},
-+	},
-+	{
-+		.ident = "Asus Vivobook K3502ZA",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "K3502ZA"),
-+		},
-+	},
-+	{ }
-+};
-+
- struct irq_override_cmp {
- 	const struct dmi_system_id *system;
- 	unsigned char irq;
-@@ -402,6 +420,7 @@ struct irq_override_cmp {
- 
- static const struct irq_override_cmp skip_override_table[] = {
- 	{ medion_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0 },
-+	{ asus_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0 },
- };
- 
- static bool acpi_dev_irq_override(u32 gsi, u8 triggering, u8 polarity,
 -- 
 2.40.1
 
