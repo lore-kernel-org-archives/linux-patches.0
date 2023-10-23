@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E41433E7
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B82711CA6
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9FNxba1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0723DC433C7;
-	Mon, 23 Oct 2023 11:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojEsEGe1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29752C433C7;
+	Mon, 23 Oct 2023 11:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061253;
-	bh=RpaJpKIBwxLXn+/YGg6vXjDjNfNMtWLw3OSakt497+Y=;
+	s=korg; t=1698061256;
+	bh=ncB5gmYNRzDRjbC9mmGZbwQJ8t23w1stmJhi0VTgc5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9FNxba1bmci3Wdob2DJZS0tuSDGbZSeiGr1TSzrNmxMJqpPVUz2/jMcJXoLlbj69
-	 ggbvLUjKHfAm419S/wHxhT7QKA1X7rub3pq+ll0pNDYuYuNgaCkSJymzb+NodjJbgp
-	 KZ2Clctj2fgppx9XcJbc7H5jX/hLo7UQHlAlP//A=
+	b=ojEsEGe1Pvj8VDg3FDTkxGWUzaFVwfhOd4hVKTBfqhAP4o/hupSppoM+5+Nlz+ioN
+	 BNcTfCgOIVQpGEwJ1oKbmMDcx/4//0CvOkHo2gHeGkhtYy1lK8/mWr2pX0wsFXZF2U
+	 tRDCDBllxvOEjoPH5o2utXgbDisAaG0sweEBlNJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kurbanov <mmkurbanov@sberdevices.ru>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.15 106/137] mtd: spinand: micron: correct bitmask for ecc status
-Date: Mon, 23 Oct 2023 12:57:43 +0200
-Message-ID: <20231023104824.403161800@linuxfoundation.org>
+	Armin Wolf <W_Armin@gmx.de>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 5.15 124/137] platform/surface: platform_profile: Propagate error if profile registration fails
+Date: Mon, 23 Oct 2023 12:58:01 +0200
+Message-ID: <20231023104824.915448917@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -42,32 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kurbanov <mmkurbanov@sberdevices.ru>
+From: Armin Wolf <W_Armin@gmx.de>
 
-commit 9836a987860e33943945d4b257729a4f94eae576 upstream.
+commit fe0e04cf66a12ffe6d1b43725ddaabd5599d024f upstream.
 
-Valid bitmask is 0x70 in the status register.
+If platform_profile_register() fails, the driver does not propagate
+the error, but instead probes successfully. This means when the driver
+unbinds, the a warning might be issued by platform_profile_remove().
 
-Fixes: a508e8875e13 ("mtd: spinand: Add initial support for Micron MT29F2G01ABAGD")
-Signed-off-by: Martin Kurbanov <mmkurbanov@sberdevices.ru>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230905145637.139068-1-mmkurbanov@sberdevices.ru
+Fix this by propagating the error back to the caller of
+surface_platform_profile_probe().
+
+Compile-tested only.
+
+Fixes: b78b4982d763 ("platform/surface: Add platform profile driver")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
+Tested-by: Maximilian Luz <luzmaximilian@gmail.com>
+Link: https://lore.kernel.org/r/20231014235449.288702-1-W_Armin@gmx.de
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/micron.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/surface/surface_platform_profile.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/mtd/nand/spi/micron.c
-+++ b/drivers/mtd/nand/spi/micron.c
-@@ -12,7 +12,7 @@
+--- a/drivers/platform/surface/surface_platform_profile.c
++++ b/drivers/platform/surface/surface_platform_profile.c
+@@ -159,8 +159,7 @@ static int surface_platform_profile_prob
+ 	set_bit(PLATFORM_PROFILE_BALANCED_PERFORMANCE, tpd->handler.choices);
+ 	set_bit(PLATFORM_PROFILE_PERFORMANCE, tpd->handler.choices);
  
- #define SPINAND_MFR_MICRON		0x2c
+-	platform_profile_register(&tpd->handler);
+-	return 0;
++	return platform_profile_register(&tpd->handler);
+ }
  
--#define MICRON_STATUS_ECC_MASK		GENMASK(7, 4)
-+#define MICRON_STATUS_ECC_MASK		GENMASK(6, 4)
- #define MICRON_STATUS_ECC_NO_BITFLIPS	(0 << 4)
- #define MICRON_STATUS_ECC_1TO3_BITFLIPS	(1 << 4)
- #define MICRON_STATUS_ECC_4TO6_BITFLIPS	(3 << 4)
+ static void surface_platform_profile_remove(struct ssam_device *sdev)
 
 
