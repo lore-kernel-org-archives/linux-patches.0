@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5370A3FFB
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D363FFB
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1S7zwqV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1939C433C7;
-	Mon, 23 Oct 2023 11:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gk/bGnqR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D31C433C8;
+	Mon, 23 Oct 2023 11:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058857;
-	bh=J8Cy3bgd90JSHGMnTHsNOT7TfeO1mCRGZo8F1nf4oTQ=;
+	s=korg; t=1698058860;
+	bh=uXnCFGSLYOTzL+p31Jwjc1rzNZFQ9YShHTdFZjusy9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1S7zwqVxmaFH/+TW26DP4zjf3o+QUocIJNxZLgWnPCSYcUxjGPYJNxM581+0whsu
-	 wDElFyo/7INqyX8CG31NV6pTWwuZ2sP7xUq/UEdIqBD2/i0QsA36M+sXbWR+IQrj0/
-	 Z7ukdVt+wW75TGYUOkTI06OFgcEI8jyo02ehSnwM=
+	b=Gk/bGnqRGve7312LkY2MxD8dCR1EsyKG3tnFrWPsFvK/eEw21ZhWZxD2LFu7HXWyZ
+	 NZXfU5dNi5nofJa5ios4Ckyzo/ERDx/saYSyynD/Aaf0/uxxpKLr2NSPedd2ITdT4a
+	 n2uYUINY0v3ZmkCrXZScOTAXiEv+b/33ZXMxqP8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Jiri Kosina <jkosina@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 49/66] HID: holtek: fix slab-out-of-bounds Write in holtek_kbd_input_event
-Date: Mon, 23 Oct 2023 12:56:39 +0200
-Message-ID: <20231023104812.665793535@linuxfoundation.org>
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>
+Subject: [PATCH 4.14 23/66] usb: gadget: ncm: Handle decoding of multiple NTBs in unwrap call
+Date: Mon, 23 Oct 2023 12:56:13 +0200
+Message-ID: <20231023104811.678057443@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -36,46 +35,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-[ Upstream commit ffe3b7837a2bb421df84d0177481db9f52c93a71 ]
+commit 427694cfaafa565a3db5c5ea71df6bc095dca92f upstream.
 
-There is a slab-out-of-bounds Write bug in hid-holtek-kbd driver.
-The problem is the driver assumes the device must have an input
-but some malicious devices violate this assumption.
+When NCM is used with hosts like Windows PC, it is observed that there are
+multiple NTB's contained in one usb request giveback. Since the driver
+unwraps the obtained request data assuming only one NTB is present, we
+loose the subsequent NTB's present resulting in data loss.
 
-Fix this by checking hid_device's input is non-empty before its usage.
+Fix this by checking the parsed block length with the obtained data
+length in usb request and continue parsing after the last byte of current
+NTB.
 
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 9f6ce4240a2b ("usb: gadget: f_ncm.c added")
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Reviewed-by: Maciej Żenczykowski <maze@google.com>
+Link: https://lore.kernel.org/r/20230927105858.12950-1-quic_kriskura@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-holtek-kbd.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/gadget/function/f_ncm.c |   26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/hid-holtek-kbd.c b/drivers/hid/hid-holtek-kbd.c
-index 2f8eb66397444..72788ca260e08 100644
---- a/drivers/hid/hid-holtek-kbd.c
-+++ b/drivers/hid/hid-holtek-kbd.c
-@@ -133,6 +133,10 @@ static int holtek_kbd_input_event(struct input_dev *dev, unsigned int type,
- 		return -ENODEV;
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1201,7 +1201,8 @@ static int ncm_unwrap_ntb(struct gether
+ 			  struct sk_buff_head *list)
+ {
+ 	struct f_ncm	*ncm = func_to_ncm(&port->func);
+-	__le16		*tmp = (void *) skb->data;
++	unsigned char	*ntb_ptr = skb->data;
++	__le16		*tmp;
+ 	unsigned	index, index2;
+ 	int		ndp_index;
+ 	unsigned	dg_len, dg_len2;
+@@ -1214,6 +1215,10 @@ static int ncm_unwrap_ntb(struct gether
+ 	const struct ndp_parser_opts *opts = ncm->parser_opts;
+ 	unsigned	crc_len = ncm->is_crc ? sizeof(uint32_t) : 0;
+ 	int		dgram_counter;
++	int		to_process = skb->len;
++
++parse_ntb:
++	tmp = (__le16 *)ntb_ptr;
  
- 	boot_hid = usb_get_intfdata(boot_interface);
-+	if (list_empty(&boot_hid->inputs)) {
-+		hid_err(hid, "no inputs found\n");
-+		return -ENODEV;
+ 	/* dwSignature */
+ 	if (get_unaligned_le32(tmp) != opts->nth_sign) {
+@@ -1260,7 +1265,7 @@ static int ncm_unwrap_ntb(struct gether
+ 		 * walk through NDP
+ 		 * dwSignature
+ 		 */
+-		tmp = (void *)(skb->data + ndp_index);
++		tmp = (__le16 *)(ntb_ptr + ndp_index);
+ 		if (get_unaligned_le32(tmp) != ncm->ndp_sign) {
+ 			INFO(port->func.config->cdev, "Wrong NDP SIGN\n");
+ 			goto err;
+@@ -1317,11 +1322,11 @@ static int ncm_unwrap_ntb(struct gether
+ 			if (ncm->is_crc) {
+ 				uint32_t crc, crc2;
+ 
+-				crc = get_unaligned_le32(skb->data +
++				crc = get_unaligned_le32(ntb_ptr +
+ 							 index + dg_len -
+ 							 crc_len);
+ 				crc2 = ~crc32_le(~0,
+-						 skb->data + index,
++						 ntb_ptr + index,
+ 						 dg_len - crc_len);
+ 				if (crc != crc2) {
+ 					INFO(port->func.config->cdev,
+@@ -1348,7 +1353,7 @@ static int ncm_unwrap_ntb(struct gether
+ 							 dg_len - crc_len);
+ 			if (skb2 == NULL)
+ 				goto err;
+-			skb_put_data(skb2, skb->data + index,
++			skb_put_data(skb2, ntb_ptr + index,
+ 				     dg_len - crc_len);
+ 
+ 			skb_queue_tail(list, skb2);
+@@ -1361,10 +1366,17 @@ static int ncm_unwrap_ntb(struct gether
+ 		} while (ndp_len > 2 * (opts->dgram_item_len * 2));
+ 	} while (ndp_index);
+ 
+-	dev_consume_skb_any(skb);
+-
+ 	VDBG(port->func.config->cdev,
+ 	     "Parsed NTB with %d frames\n", dgram_counter);
++
++	to_process -= block_len;
++	if (to_process != 0) {
++		ntb_ptr = (unsigned char *)(ntb_ptr + block_len);
++		goto parse_ntb;
 +	}
- 	boot_hid_input = list_first_entry(&boot_hid->inputs,
- 		struct hid_input, list);
- 
--- 
-2.40.1
-
++
++	dev_consume_skb_any(skb);
++
+ 	return 0;
+ err:
+ 	skb_queue_purge(list);
 
 
