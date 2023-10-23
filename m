@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBE814F6A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE96514F6A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3fS+Nj5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A42EC433C8;
-	Mon, 23 Oct 2023 11:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNFD8K6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0D3C433CB;
+	Mon, 23 Oct 2023 11:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060118;
-	bh=p8sanCPpVIfFT/xF9+PSf5xZWqPrkcOdEm46tIhIzzE=;
+	s=korg; t=1698060121;
+	bh=v1CRF/xVtNAtTis9zYStt8We4FUuq7pM/gg2hXw/Fmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L3fS+Nj5VqVtW0q4dqBAYdSArpi8Xzdillw9DnFQ87+mB8kuKxPM7cbBnYSc9QbT6
-	 PCe3J/TTHHUeDDhKdLblavQZXlapXFg6qJoh0MumQD1Qz70o7A+ah5QuzytEIR2nBx
-	 QciwHbP0AOTCB8qmfyJiLXECzE1k+gkLyYWVtla4=
+	b=oNFD8K6HLyNPMGBdVzqZQc4/u6q5SrJBCN5JSM+Y7CvARQHGj0oZOG1YtVsnZPrZD
+	 QdQ4riIKI0+TE5njC/RwPkIGt7zKpwltIYw6DlhxlwvhIDo0dCz6qzT7Ef/EvlmMIH
+	 yW7r814dGgDlmfOZMGJrqJx3DwG/SzcfUfhapq4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Simon Horman <horms@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
+	Aaron Conole <aconole@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 065/196] neighbor: tracing: Move pin6 inside CONFIG_IPV6=y section
-Date: Mon, 23 Oct 2023 12:55:30 +0200
-Message-ID: <20231023104830.380385456@linuxfoundation.org>
+Subject: [PATCH 6.1 066/196] selftests: openvswitch: Catch cases where the tests are killed
+Date: Mon, 23 Oct 2023 12:55:31 +0200
+Message-ID: <20231023104830.409090896@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -37,103 +35,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Aaron Conole <aconole@redhat.com>
 
-commit 2915240eddba96b37de4c7e9a3d0ac6f9548454b upstream.
+commit af846afad5ca1c1a24d320adf9e48255e97db84e upstream.
 
-When CONFIG_IPV6=n, and building with W=1:
+In case of fatal signal, or early abort at least cleanup the current
+test case.
 
-    In file included from include/trace/define_trace.h:102,
-		     from include/trace/events/neigh.h:255,
-		     from net/core/net-traces.c:51:
-    include/trace/events/neigh.h: In function ‘trace_event_raw_event_neigh_create’:
-    include/trace/events/neigh.h:42:34: error: variable ‘pin6’ set but not used [-Werror=unused-but-set-variable]
-       42 |                 struct in6_addr *pin6;
-	  |                                  ^~~~
-    include/trace/trace_events.h:402:11: note: in definition of macro ‘DECLARE_EVENT_CLASS’
-      402 |         { assign; }                                                     \
-	  |           ^~~~~~
-    include/trace/trace_events.h:44:30: note: in expansion of macro ‘PARAMS’
-       44 |                              PARAMS(assign),                   \
-	  |                              ^~~~~~
-    include/trace/events/neigh.h:23:1: note: in expansion of macro ‘TRACE_EVENT’
-       23 | TRACE_EVENT(neigh_create,
-	  | ^~~~~~~~~~~
-    include/trace/events/neigh.h:41:9: note: in expansion of macro ‘TP_fast_assign’
-       41 |         TP_fast_assign(
-	  |         ^~~~~~~~~~~~~~
-    In file included from include/trace/define_trace.h:103,
-		     from include/trace/events/neigh.h:255,
-		     from net/core/net-traces.c:51:
-    include/trace/events/neigh.h: In function ‘perf_trace_neigh_create’:
-    include/trace/events/neigh.h:42:34: error: variable ‘pin6’ set but not used [-Werror=unused-but-set-variable]
-       42 |                 struct in6_addr *pin6;
-	  |                                  ^~~~
-    include/trace/perf.h:51:11: note: in definition of macro ‘DECLARE_EVENT_CLASS’
-       51 |         { assign; }                                                     \
-	  |           ^~~~~~
-    include/trace/trace_events.h:44:30: note: in expansion of macro ‘PARAMS’
-       44 |                              PARAMS(assign),                   \
-	  |                              ^~~~~~
-    include/trace/events/neigh.h:23:1: note: in expansion of macro ‘TRACE_EVENT’
-       23 | TRACE_EVENT(neigh_create,
-	  | ^~~~~~~~~~~
-    include/trace/events/neigh.h:41:9: note: in expansion of macro ‘TP_fast_assign’
-       41 |         TP_fast_assign(
-	  |         ^~~~~~~~~~~~~~
-
-Indeed, the variable pin6 is declared and initialized unconditionally,
-while it is only used and needlessly re-initialized when support for
-IPv6 is enabled.
-
-Fix this by dropping the unused variable initialization, and moving the
-variable declaration inside the existing section protected by a check
-for CONFIG_IPV6.
-
-Fixes: fc651001d2c5ca4f ("neighbor: Add tracepoint to __neigh_create")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Simon Horman <horms@kernel.org> # build-tested
-Reviewed-by: David Ahern <dsahern@kernel.org>
+Fixes: 25f16c873fb1 ("selftests: add openvswitch selftest suite")
+Signed-off-by: Aaron Conole <aconole@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/neigh.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/openvswitch/openvswitch.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/trace/events/neigh.h
-+++ b/include/trace/events/neigh.h
-@@ -39,7 +39,6 @@ TRACE_EVENT(neigh_create,
- 	),
+diff --git a/tools/testing/selftests/net/openvswitch/openvswitch.sh b/tools/testing/selftests/net/openvswitch/openvswitch.sh
+index 220c3356901e..2a0112be7ead 100755
+--- a/tools/testing/selftests/net/openvswitch/openvswitch.sh
++++ b/tools/testing/selftests/net/openvswitch/openvswitch.sh
+@@ -3,6 +3,8 @@
+ #
+ # OVS kernel module self tests
  
- 	TP_fast_assign(
--		struct in6_addr *pin6;
- 		__be32 *p32;
- 
- 		__entry->family = tbl->family;
-@@ -47,7 +46,6 @@ TRACE_EVENT(neigh_create,
- 		__entry->entries = atomic_read(&tbl->gc_entries);
- 		__entry->created = n != NULL;
- 		__entry->gc_exempt = exempt_from_gc;
--		pin6 = (struct in6_addr *)__entry->primary_key6;
- 		p32 = (__be32 *)__entry->primary_key4;
- 
- 		if (tbl->family == AF_INET)
-@@ -57,6 +55,8 @@ TRACE_EVENT(neigh_create,
- 
- #if IS_ENABLED(CONFIG_IPV6)
- 		if (tbl->family == AF_INET6) {
-+			struct in6_addr *pin6;
++trap ovs_exit_sig EXIT TERM INT ERR
 +
- 			pin6 = (struct in6_addr *)__entry->primary_key6;
- 			*pin6 = *(struct in6_addr *)pkey;
- 		}
+ # Kselftest framework requirement - SKIP code is 4.
+ ksft_skip=4
+ 
+-- 
+2.42.0
+
 
 
