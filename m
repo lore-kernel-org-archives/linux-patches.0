@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D5813FEC
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC20813FEC
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nd//YKV9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465C0C433C9;
-	Mon, 23 Oct 2023 11:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2p+rqgN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C175C433C7;
+	Mon, 23 Oct 2023 11:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059212;
-	bh=2V1vIfMHMZkzg2GRbd8glDoK7mF8Z54ncQEAvjpI17g=;
+	s=korg; t=1698059215;
+	bh=qyXya55pk/4oArsGj5PMAXYAiuYBH+HVqJ1eG+cAo8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nd//YKV98qSIaMAob2xSnkw7unDfAA7yaOn9RvejShM50tOXdoYuWS3VyLCHlff8B
-	 d3TU+h2XQfRzeoPy9cZDcvlEoV91FdN3h7A+CH/dc+hGFcK/sTqfoMYVdFUCpom+kL
-	 GliD5HIFyE3LSYPy/R7gWa7LdBW12vKvz3UpiV3I=
+	b=b2p+rqgNHov7hj5+00Mbt1zuxSmCbZPy1zIKAMyOa4hee5Ve85giRTRg+cmYoHc/Q
+	 doRqN5BMAVksHR+SChQ/2aq8cSqdULvLqaKatUNrX5dSD+QJ2OsNz/pKPSL7ElzgE8
+	 caKQjjozdH5hWOJQcBaDyZTPzipo4FfgNLCG1QC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 102/241] btrfs: prevent transaction block reserve underflow when starting transaction
-Date: Mon, 23 Oct 2023 12:54:48 +0200
-Message-ID: <20231023104836.389942761@linuxfoundation.org>
+Subject: [PATCH 6.5 103/241] btrfs: return -EUCLEAN for delayed tree ref with a ref count not equals to 1
+Date: Mon, 23 Oct 2023 12:54:49 +0200
+Message-ID: <20231023104836.413616812@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -45,107 +45,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit a7ddeeb079505961355cf0106154da0110f1fdff ]
+[ Upstream commit 1bf76df3fee56d6637718e267f7c34ed70d0c7dc ]
 
-When starting a transaction, with a non-zero number of items, we reserve
-metadata space for that number of items and for delayed refs by doing a
-call to btrfs_block_rsv_add(), with the transaction block reserve passed
-as the block reserve argument. This reserves metadata space and adds it
-to the transaction block reserve. Later we migrate the space we reserved
-for delayed references from the transaction block reserve into the delayed
-refs block reserve, by calling btrfs_migrate_to_delayed_refs_rsv().
-
-btrfs_migrate_to_delayed_refs_rsv() decrements the number of bytes to
-migrate from the source block reserve, and this however may result in an
-underflow in case the space added to the transaction block reserve ended
-up being used by another task that has not reserved enough space for its
-own use - examples are tasks doing reflinks or hole punching because they
-end up calling btrfs_replace_file_extents() -> btrfs_drop_extents() and
-may need to modify/COW a variable number of leaves/paths, so they keep
-trying to use space from the transaction block reserve when they need to
-COW an extent buffer, and may end up trying to use more space then they
-have reserved (1 unit/path only for removing file extent items).
-
-This can be avoided by simply reserving space first without adding it to
-the transaction block reserve, then add the space for delayed refs to the
-delayed refs block reserve and finally add the remaining reserved space
-to the transaction block reserve. This also makes the code a bit shorter
-and simpler. So just do that.
+When running a delayed tree reference, if we find a ref count different
+from 1, we return -EIO. This isn't an IO error, as it indicates either a
+bug in the delayed refs code or a memory corruption, so change the error
+code from -EIO to -EUCLEAN. Also tag the branch as 'unlikely' as this is
+not expected to ever happen, and change the error message to print the
+tree block's bytenr without the parenthesis (and there was a missing space
+between the 'block' word and the opening parenthesis), for consistency as
+that's the style we used everywhere else.
 
 Reviewed-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/delayed-ref.c | 9 +--------
- fs/btrfs/delayed-ref.h | 1 -
- fs/btrfs/transaction.c | 6 +++---
- 3 files changed, 4 insertions(+), 12 deletions(-)
+ fs/btrfs/extent-tree.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/delayed-ref.c b/fs/btrfs/delayed-ref.c
-index 1043f66cc130d..9fe4ccca50a06 100644
---- a/fs/btrfs/delayed-ref.c
-+++ b/fs/btrfs/delayed-ref.c
-@@ -103,24 +103,17 @@ void btrfs_update_delayed_refs_rsv(struct btrfs_trans_handle *trans)
-  * Transfer bytes to our delayed refs rsv.
-  *
-  * @fs_info:   the filesystem
-- * @src:       source block rsv to transfer from
-  * @num_bytes: number of bytes to transfer
-  *
-- * This transfers up to the num_bytes amount from the src rsv to the
-+ * This transfers up to the num_bytes amount, previously reserved, to the
-  * delayed_refs_rsv.  Any extra bytes are returned to the space info.
-  */
- void btrfs_migrate_to_delayed_refs_rsv(struct btrfs_fs_info *fs_info,
--				       struct btrfs_block_rsv *src,
- 				       u64 num_bytes)
- {
- 	struct btrfs_block_rsv *delayed_refs_rsv = &fs_info->delayed_refs_rsv;
- 	u64 to_free = 0;
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 0917c5f39e3d0..2cf8d646085c2 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -1715,12 +1715,12 @@ static int run_delayed_tree_ref(struct btrfs_trans_handle *trans,
+ 		parent = ref->parent;
+ 	ref_root = ref->root;
  
--	spin_lock(&src->lock);
--	src->reserved -= num_bytes;
--	src->size -= num_bytes;
--	spin_unlock(&src->lock);
--
- 	spin_lock(&delayed_refs_rsv->lock);
- 	if (delayed_refs_rsv->size > delayed_refs_rsv->reserved) {
- 		u64 delta = delayed_refs_rsv->size -
-diff --git a/fs/btrfs/delayed-ref.h b/fs/btrfs/delayed-ref.h
-index b8e14b0ba5f16..fd9bf2b709c0e 100644
---- a/fs/btrfs/delayed-ref.h
-+++ b/fs/btrfs/delayed-ref.h
-@@ -407,7 +407,6 @@ void btrfs_update_delayed_refs_rsv(struct btrfs_trans_handle *trans);
- int btrfs_delayed_refs_rsv_refill(struct btrfs_fs_info *fs_info,
- 				  enum btrfs_reserve_flush_enum flush);
- void btrfs_migrate_to_delayed_refs_rsv(struct btrfs_fs_info *fs_info,
--				       struct btrfs_block_rsv *src,
- 				       u64 num_bytes);
- bool btrfs_check_space_for_delayed_refs(struct btrfs_fs_info *fs_info);
- 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 5bbd288b9cb54..0554ca2a8e3ba 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -625,14 +625,14 @@ start_transaction(struct btrfs_root *root, unsigned int num_items,
- 			reloc_reserved = true;
- 		}
- 
--		ret = btrfs_block_rsv_add(fs_info, rsv, num_bytes, flush);
-+		ret = btrfs_reserve_metadata_bytes(fs_info, rsv, num_bytes, flush);
- 		if (ret)
- 			goto reserve_fail;
- 		if (delayed_refs_bytes) {
--			btrfs_migrate_to_delayed_refs_rsv(fs_info, rsv,
--							  delayed_refs_bytes);
-+			btrfs_migrate_to_delayed_refs_rsv(fs_info, delayed_refs_bytes);
- 			num_bytes -= delayed_refs_bytes;
- 		}
-+		btrfs_block_rsv_add_bytes(rsv, num_bytes, true);
- 
- 		if (rsv->space_info->force_alloc)
- 			do_chunk_alloc = true;
+-	if (node->ref_mod != 1) {
++	if (unlikely(node->ref_mod != 1)) {
+ 		btrfs_err(trans->fs_info,
+-	"btree block(%llu) has %d references rather than 1: action %d ref_root %llu parent %llu",
++	"btree block %llu has %d references rather than 1: action %d ref_root %llu parent %llu",
+ 			  node->bytenr, node->ref_mod, node->action, ref_root,
+ 			  parent);
+-		return -EIO;
++		return -EUCLEAN;
+ 	}
+ 	if (node->action == BTRFS_ADD_DELAYED_REF && insert_reserved) {
+ 		BUG_ON(!extent_op || !extent_op->update_flags);
 -- 
 2.40.1
 
