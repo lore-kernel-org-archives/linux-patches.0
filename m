@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD6B11CA6
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB3818025
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sudaIHfk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2936CC433C7;
-	Mon, 23 Oct 2023 11:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MivDZe1h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176CDC433CA;
+	Mon, 23 Oct 2023 11:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061864;
-	bh=TxpaWZNDlnLoqhFkVkL9QwMsjMK4QciVi6lwYDdesYI=;
+	s=korg; t=1698061867;
+	bh=JO52m2rJ9iTsY1pAhpzV7d1H+58xajPK23XcueIe25o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sudaIHfk029/qRwYJRCu1sLafXaDlNbt+QkLviXgnEnPjgBRDKwjjp515j7Ubt8me
-	 TFY1TrFrpRgUE3op3BJrRc0Q94cXhSfa0nugjZpRx0ChKniVmM5IVyhT/RptTOkOyB
-	 6pAsgoQY0ngRhRJm4qhJdMCb25OLT6x/EtDkNDLQ=
+	b=MivDZe1hsBEBYZqMXG092GRUBUiKUCglRUN+EBvNPyTgvFlsko++HlV2+He+CCAqS
+	 kE/yBWQOjHT2fVg2pzNFIUCu0mARW19wHDhl6bMaeyepaYB7NBDXlpOsgxr8pORtp8
+	 Ft20+s8D5/WbLWd+ft+kRZNZ7twLx/JI5ys9ivtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	James John <me@donjajo.com>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 5.10 191/202] platform/x86: asus-wmi: Change ASUS_WMI_BRN_DOWN code from 0x20 to 0x2e
-Date: Mon, 23 Oct 2023 12:58:18 +0200
-Message-ID: <20231023104832.020467379@linuxfoundation.org>
+Subject: [PATCH 5.10 192/202] platform/x86: asus-wmi: Map 0x2a code, Ignore 0x2b and 0x2c events
+Date: Mon, 23 Oct 2023 12:58:19 +0200
+Message-ID: <20231023104832.046279004@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -43,64 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-commit f37cc2fc277b371fc491890afb7d8a26e36bb3a1 upstream.
+commit 235985d1763f7aba92c1c64e5f5aaec26c2c9b18 upstream.
 
-Older Asus laptops change the backlight level themselves and then send
-WMI events with different codes for different backlight levels.
+Newer Asus laptops send the following new WMI event codes when some
+of the F1 - F12 "media" hotkeys are pressed:
 
-The asus-wmi.c code maps the entire range of codes reported on
-brightness down keypresses to an internal ASUS_WMI_BRN_DOWN code:
+0x2a Screen Capture
+0x2b PrintScreen
+0x2c CapsLock
 
-define NOTIFY_BRNUP_MIN                0x11
-define NOTIFY_BRNUP_MAX                0x1f
-define NOTIFY_BRNDOWN_MIN              0x20
-define NOTIFY_BRNDOWN_MAX              0x2e
+Map 0x2a to KEY_SELECTIVE_SCREENSHOT mirroring how similar hotkeys
+are mapped on other laptops.
 
-        if (code >= NOTIFY_BRNUP_MIN && code <= NOTIFY_BRNUP_MAX)
-                code = ASUS_WMI_BRN_UP;
-        else if (code >= NOTIFY_BRNDOWN_MIN && code <= NOTIFY_BRNDOWN_MAX)
-                code = ASUS_WMI_BRN_DOWN;
-
-Before this commit all the NOTIFY_BRNDOWN_MIN - NOTIFY_BRNDOWN_MAX
-aka 0x20 - 0x2e events were mapped to 0x20.
-
-This mapping is causing issues on new laptop models which actually
-send 0x2b events for printscreen presses and 0x2c events for
-capslock presses, which get translated into spurious brightness-down
-presses.
-
-The plan is disable the 0x11-0x2e special mapping on laptops
-where asus-wmi does not register a backlight-device to avoid
-the spurious brightness-down keypresses. New laptops always send
-0x2e for brightness-down presses, change the special internal
-ASUS_WMI_BRN_DOWN value from 0x20 to 0x2e to match this in
-preparation for fixing the spurious brightness-down presses.
-
-This change does not have any functional impact since all
-of 0x20 - 0x2e is mapped to ASUS_WMI_BRN_DOWN first and only
-then checked against the keymap code and the new 0x2e
-value is still in the 0x20 - 0x2e range.
+PrintScreem and CapsLock are also reported as normal PS/2 keyboard events,
+map these event codes to KE_IGNORE to avoid "Unknown key code 0x%x\n" log
+messages.
 
 Reported-by: James John <me@donjajo.com>
 Closes: https://lore.kernel.org/platform-driver-x86/a2c441fe-457e-44cf-a146-0ecd86b037cf@donjajo.com/
 Closes: https://bbs.archlinux.org/viewtopic.php?pid=2123716
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231017090725.38163-2-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20231017090725.38163-4-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/asus-wmi.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/asus-nb-wmi.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/platform/x86/asus-wmi.h
-+++ b/drivers/platform/x86/asus-wmi.h
-@@ -18,7 +18,7 @@
- #include <linux/i8042.h>
- 
- #define ASUS_WMI_KEY_IGNORE (-1)
--#define ASUS_WMI_BRN_DOWN	0x20
-+#define ASUS_WMI_BRN_DOWN	0x2e
- #define ASUS_WMI_BRN_UP		0x2f
- 
- struct module;
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -475,6 +475,9 @@ static void asus_nb_wmi_quirks(struct as
+ static const struct key_entry asus_nb_wmi_keymap[] = {
+ 	{ KE_KEY, ASUS_WMI_BRN_DOWN, { KEY_BRIGHTNESSDOWN } },
+ 	{ KE_KEY, ASUS_WMI_BRN_UP, { KEY_BRIGHTNESSUP } },
++	{ KE_KEY, 0x2a, { KEY_SELECTIVE_SCREENSHOT } },
++	{ KE_IGNORE, 0x2b, }, /* PrintScreen (also send via PS/2) on newer models */
++	{ KE_IGNORE, 0x2c, }, /* CapsLock (also send via PS/2) on newer models */
+ 	{ KE_KEY, 0x30, { KEY_VOLUMEUP } },
+ 	{ KE_KEY, 0x31, { KEY_VOLUMEDOWN } },
+ 	{ KE_KEY, 0x32, { KEY_MUTE } },
 
 
