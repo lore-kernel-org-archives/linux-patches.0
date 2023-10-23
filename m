@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628F914282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BAE14282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wyJY/fpP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D282DC433C8;
-	Mon, 23 Oct 2023 11:17:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OeqJmTKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86D2C433CA;
+	Mon, 23 Oct 2023 11:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059849;
-	bh=/IypVgfUYl6H8DxtUdJkXDMAoH3Yj9ys0vBTgLeswPY=;
+	s=korg; t=1698059853;
+	bh=SAQ4R6bf3kNBN/cuwBblShJEtw1fRBZ7BysokwevPXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wyJY/fpPpUaFkspztRGHVWMDvbtJO4k4aDEeQeQWUSeaufPMBh+SU1/2N2fYAvP6A
-	 tEVDXSiST7a7cSb1U45/Lnon6QbyNDktfeJEIYcpwYtw7T25jKi0K7z1KHgYiXyox3
-	 HkjUfLU9ZVrsFX/Ywor6nPKi7pTiON6gCXyyDz/o=
+	b=OeqJmTKO2kyzt7nN8luI4gM8zK0R71MoncNhgBcK7tiGhuZB8VLngL/6BOmbn6a/J
+	 udDRdqvJSAxQ7Grr5me/qSb242sJK6jqe+ndYlNXCdDntcCYbuACiCyNgd0pOqP6QH
+	 /NH2BTDreDUgsQNAR/++ZpulvTwBiq+sJCvOaACM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Ying Hsu <yinghsu@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 74/98] HID: holtek: fix slab-out-of-bounds Write in holtek_kbd_input_event
-Date: Mon, 23 Oct 2023 12:57:03 +0200
-Message-ID: <20231023104816.183858731@linuxfoundation.org>
+Subject: [PATCH 4.19 75/98] Bluetooth: Avoid redundant authentication
+Date: Mon, 23 Oct 2023 12:57:04 +0200
+Message-ID: <20231023104816.212380051@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -42,38 +42,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Ying Hsu <yinghsu@chromium.org>
 
-[ Upstream commit ffe3b7837a2bb421df84d0177481db9f52c93a71 ]
+[ Upstream commit 1d8e801422d66e4b8c7b187c52196bef94eed887 ]
 
-There is a slab-out-of-bounds Write bug in hid-holtek-kbd driver.
-The problem is the driver assumes the device must have an input
-but some malicious devices violate this assumption.
+While executing the Android 13 CTS Verifier Secure Server test on a
+ChromeOS device, it was observed that the Bluetooth host initiates
+authentication for an RFCOMM connection after SSP completes.
+When this happens, some Intel Bluetooth controllers, like AC9560, would
+disconnect with "Connection Rejected due to Security Reasons (0x0e)".
 
-Fix this by checking hid_device's input is non-empty before its usage.
+Historically, BlueZ did not mandate this authentication while an
+authenticated combination key was already in use for the connection.
+This behavior was changed since commit 7b5a9241b780
+("Bluetooth: Introduce requirements for security level 4").
+So, this patch addresses the aforementioned disconnection issue by
+restoring the previous behavior.
 
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-holtek-kbd.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/hci_conn.c | 63 ++++++++++++++++++++++------------------
+ 1 file changed, 35 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/hid/hid-holtek-kbd.c b/drivers/hid/hid-holtek-kbd.c
-index 2f8eb66397444..72788ca260e08 100644
---- a/drivers/hid/hid-holtek-kbd.c
-+++ b/drivers/hid/hid-holtek-kbd.c
-@@ -133,6 +133,10 @@ static int holtek_kbd_input_event(struct input_dev *dev, unsigned int type,
- 		return -ENODEV;
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 9d01cccc84ade..b876e97b61c92 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1388,34 +1388,41 @@ int hci_conn_security(struct hci_conn *conn, __u8 sec_level, __u8 auth_type,
+ 	if (!test_bit(HCI_CONN_AUTH, &conn->flags))
+ 		goto auth;
  
- 	boot_hid = usb_get_intfdata(boot_interface);
-+	if (list_empty(&boot_hid->inputs)) {
-+		hid_err(hid, "no inputs found\n");
-+		return -ENODEV;
+-	/* An authenticated FIPS approved combination key has sufficient
+-	 * security for security level 4. */
+-	if (conn->key_type == HCI_LK_AUTH_COMBINATION_P256 &&
+-	    sec_level == BT_SECURITY_FIPS)
+-		goto encrypt;
+-
+-	/* An authenticated combination key has sufficient security for
+-	   security level 3. */
+-	if ((conn->key_type == HCI_LK_AUTH_COMBINATION_P192 ||
+-	     conn->key_type == HCI_LK_AUTH_COMBINATION_P256) &&
+-	    sec_level == BT_SECURITY_HIGH)
+-		goto encrypt;
+-
+-	/* An unauthenticated combination key has sufficient security for
+-	   security level 1 and 2. */
+-	if ((conn->key_type == HCI_LK_UNAUTH_COMBINATION_P192 ||
+-	     conn->key_type == HCI_LK_UNAUTH_COMBINATION_P256) &&
+-	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW))
+-		goto encrypt;
+-
+-	/* A combination key has always sufficient security for the security
+-	   levels 1 or 2. High security level requires the combination key
+-	   is generated using maximum PIN code length (16).
+-	   For pre 2.1 units. */
+-	if (conn->key_type == HCI_LK_COMBINATION &&
+-	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW ||
+-	     conn->pin_length == 16))
+-		goto encrypt;
++	switch (conn->key_type) {
++	case HCI_LK_AUTH_COMBINATION_P256:
++		/* An authenticated FIPS approved combination key has
++		 * sufficient security for security level 4 or lower.
++		 */
++		if (sec_level <= BT_SECURITY_FIPS)
++			goto encrypt;
++		break;
++	case HCI_LK_AUTH_COMBINATION_P192:
++		/* An authenticated combination key has sufficient security for
++		 * security level 3 or lower.
++		 */
++		if (sec_level <= BT_SECURITY_HIGH)
++			goto encrypt;
++		break;
++	case HCI_LK_UNAUTH_COMBINATION_P192:
++	case HCI_LK_UNAUTH_COMBINATION_P256:
++		/* An unauthenticated combination key has sufficient security
++		 * for security level 2 or lower.
++		 */
++		if (sec_level <= BT_SECURITY_MEDIUM)
++			goto encrypt;
++		break;
++	case HCI_LK_COMBINATION:
++		/* A combination key has always sufficient security for the
++		 * security levels 2 or lower. High security level requires the
++		 * combination key is generated using maximum PIN code length
++		 * (16). For pre 2.1 units.
++		 */
++		if (sec_level <= BT_SECURITY_MEDIUM || conn->pin_length == 16)
++			goto encrypt;
++		break;
++	default:
++		break;
 +	}
- 	boot_hid_input = list_first_entry(&boot_hid->inputs,
- 		struct hid_input, list);
  
+ auth:
+ 	if (test_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags))
 -- 
 2.40.1
 
