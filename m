@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743C063A8
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AE711CA6
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiySv9M7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA40C433C7;
-	Mon, 23 Oct 2023 11:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16x+dwv2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B89C433C9;
+	Mon, 23 Oct 2023 11:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061888;
-	bh=fj+AG1sRXXvQisFgC717HHQpMTMvJOMSEd/Ihz1PpEc=;
+	s=korg; t=1698061891;
+	bh=1arOhbXKhuJmGETMZs/9yMRcysWOnhvrxtO9PwyPulU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiySv9M7SX/9kwlZA93KoIxiZ9PLv6tXimHoNWJtoUsHkmgPU5tMwoxTNIS6zgjQ7
-	 T9qKv9xDdRkc7s4gKDebchfVcXMqOnseVHRhwDuQrcgXiSBxFQ4hJ6DvmSAU5KFeAk
-	 18xAXhjW9onyto/Fz9vBbsH8tJBpKFKSIPeZXPgM=
+	b=16x+dwv2TuQHBg4ltGrNwLK7gY4e5SYNhLLGScyvKgp85qWg1wYvjuBtpx6cw9R+l
+	 CcixMHWltOE1hS8VKNZZ/ur2wTNFHJdf4q+p9l3X5KWcKutDM/hsvl0JrtDnx0c+gY
+	 wgY50olc3+lDmR01YP5k3ZHA1suAoBN7xKH22Uio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
-	Merlijn Wajer <merlijn@wizzup.org>,
-	Pavel Machek <pavel@ucw.cz>,
-	Sebastian Reichel <sre@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 199/202] phy: mapphone-mdm6600: Fix pinctrl_pm handling for sleep pins
-Date: Mon, 23 Oct 2023 12:58:26 +0200
-Message-ID: <20231023104832.233823566@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 5.10 182/202] pNFS: Fix a hang in nfs4_evict_inode()
+Date: Mon, 23 Oct 2023 12:58:09 +0200
+Message-ID: <20231023104831.776195603@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -47,111 +41,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 3b384cc74b00b5ac21d18e4c1efc3c1da5300971 ]
+commit f63955721a8020e979b99cc417dcb6da3106aa24 upstream.
 
-Looks like the driver sleep pins configuration is unusable. Adding the
-sleep pins causes the usb phy to not respond. We need to use the default
-pins in probe, and only set sleep pins at phy_mdm6600_device_power_off().
+We are not allowed to call pnfs_mark_matching_lsegs_return() without
+also holding a reference to the layout header, since doing so could lead
+to the reference count going to zero when we call
+pnfs_layout_remove_lseg(). This again can lead to a hang when we get to
+nfs4_evict_inode() and are unable to clear the layout pointer.
 
-As the modem can also be booted to a serial port mode for firmware
-flashing, let's make the pin changes limited to probe and remove. For
-probe, we get the default pins automatically. We only need to set the
-sleep pins in phy_mdm6600_device_power_off() to prevent the modem from
-waking up because the gpio line glitches.
+pnfs_layout_return_unused_byserver() is guilty of this behaviour, and
+has been seen to trigger the refcount warning prior to a hang.
 
-If it turns out that we need a separate state for phy_mdm6600_power_on()
-and phy_mdm6600_power_off(), we can use the pinctrl idle state.
-
-Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
-Cc: Merlijn Wajer <merlijn@wizzup.org>
-Cc: Pavel Machek <pavel@ucw.cz>
-Cc: Sebastian Reichel <sre@kernel.org>
-Fixes: 2ad2af081622 ("phy: mapphone-mdm6600: Improve phy related runtime PM calls")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20230913060433.48373-3-tony@atomide.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b6d49ecd1081 ("NFSv4: Fix a pNFS layout related use-after-free race when freeing the inode")
+Cc: stable@vger.kernel.org
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/motorola/phy-mapphone-mdm6600.c | 29 +++++++++------------
- 1 file changed, 12 insertions(+), 17 deletions(-)
+ fs/nfs/pnfs.c |   33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/phy/motorola/phy-mapphone-mdm6600.c b/drivers/phy/motorola/phy-mapphone-mdm6600.c
-index c3e2ab6a2a717..67802f9e40ba0 100644
---- a/drivers/phy/motorola/phy-mapphone-mdm6600.c
-+++ b/drivers/phy/motorola/phy-mapphone-mdm6600.c
-@@ -122,16 +122,10 @@ static int phy_mdm6600_power_on(struct phy *x)
- {
- 	struct phy_mdm6600 *ddata = phy_get_drvdata(x);
- 	struct gpio_desc *enable_gpio = ddata->ctrl_gpios[PHY_MDM6600_ENABLE];
--	int error;
- 
- 	if (!ddata->enabled)
- 		return -ENODEV;
- 
--	error = pinctrl_pm_select_default_state(ddata->dev);
--	if (error)
--		dev_warn(ddata->dev, "%s: error with default_state: %i\n",
--			 __func__, error);
--
- 	gpiod_set_value_cansleep(enable_gpio, 1);
- 
- 	/* Allow aggressive PM for USB, it's only needed for n_gsm port */
-@@ -160,11 +154,6 @@ static int phy_mdm6600_power_off(struct phy *x)
- 
- 	gpiod_set_value_cansleep(enable_gpio, 0);
- 
--	error = pinctrl_pm_select_sleep_state(ddata->dev);
--	if (error)
--		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
--			 __func__, error);
--
- 	return 0;
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -2633,31 +2633,44 @@ pnfs_should_return_unused_layout(struct
+ 	return mode == 0;
  }
  
-@@ -456,6 +445,7 @@ static void phy_mdm6600_device_power_off(struct phy_mdm6600 *ddata)
+-static int
+-pnfs_layout_return_unused_byserver(struct nfs_server *server, void *data)
++static int pnfs_layout_return_unused_byserver(struct nfs_server *server,
++					      void *data)
  {
- 	struct gpio_desc *reset_gpio =
- 		ddata->ctrl_gpios[PHY_MDM6600_RESET];
-+	int error;
- 
- 	ddata->enabled = false;
- 	phy_mdm6600_cmd(ddata, PHY_MDM6600_CMD_BP_SHUTDOWN_REQ);
-@@ -471,6 +461,17 @@ static void phy_mdm6600_device_power_off(struct phy_mdm6600 *ddata)
- 	} else {
- 		dev_err(ddata->dev, "Timed out powering down\n");
- 	}
+ 	const struct pnfs_layout_range *range = data;
++	const struct cred *cred;
+ 	struct pnfs_layout_hdr *lo;
+ 	struct inode *inode;
++	nfs4_stateid stateid;
++	enum pnfs_iomode iomode;
 +
-+	/*
-+	 * Keep reset gpio high with padconf internal pull-up resistor to
-+	 * prevent modem from waking up during deeper SoC idle states. The
-+	 * gpio bank lines can have glitches if not in the always-on wkup
-+	 * domain.
-+	 */
-+	error = pinctrl_pm_select_sleep_state(ddata->dev);
-+	if (error)
-+		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
-+			 __func__, error);
- }
- 
- static void phy_mdm6600_deferred_power_on(struct work_struct *work)
-@@ -571,12 +572,6 @@ static int phy_mdm6600_probe(struct platform_device *pdev)
- 	ddata->dev = &pdev->dev;
- 	platform_set_drvdata(pdev, ddata);
- 
--	/* Active state selected in phy_mdm6600_power_on() */
--	error = pinctrl_pm_select_sleep_state(ddata->dev);
--	if (error)
--		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
--			 __func__, error);
--
- 	error = phy_mdm6600_init_lines(ddata);
- 	if (error)
- 		return error;
--- 
-2.42.0
-
+ restart:
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(lo, &server->layouts, plh_layouts) {
+-		if (!pnfs_layout_can_be_returned(lo) ||
++		inode = lo->plh_inode;
++		if (!inode || !pnfs_layout_can_be_returned(lo) ||
+ 		    test_bit(NFS_LAYOUT_RETURN_REQUESTED, &lo->plh_flags))
+ 			continue;
+-		inode = lo->plh_inode;
+ 		spin_lock(&inode->i_lock);
+-		if (!pnfs_should_return_unused_layout(lo, range)) {
++		if (!lo->plh_inode ||
++		    !pnfs_should_return_unused_layout(lo, range)) {
+ 			spin_unlock(&inode->i_lock);
+ 			continue;
+ 		}
++		pnfs_get_layout_hdr(lo);
++		pnfs_set_plh_return_info(lo, range->iomode, 0);
++		if (pnfs_mark_matching_lsegs_return(lo, &lo->plh_return_segs,
++						    range, 0) != 0 ||
++		    !pnfs_prepare_layoutreturn(lo, &stateid, &cred, &iomode)) {
++			spin_unlock(&inode->i_lock);
++			rcu_read_unlock();
++			pnfs_put_layout_hdr(lo);
++			cond_resched();
++			goto restart;
++		}
+ 		spin_unlock(&inode->i_lock);
+-		inode = pnfs_grab_inode_layout_hdr(lo);
+-		if (!inode)
+-			continue;
+ 		rcu_read_unlock();
+-		pnfs_mark_layout_for_return(inode, range);
+-		iput(inode);
++		pnfs_send_layoutreturn(lo, &stateid, &cred, iomode, false);
++		pnfs_put_layout_hdr(lo);
+ 		cond_resched();
+ 		goto restart;
+ 	}
 
 
