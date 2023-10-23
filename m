@@ -1,52 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3603C18025
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3154C18021
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mI0PBukm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7A6C433C8;
-	Mon, 23 Oct 2023 11:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8554xd+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3815C433C7;
+	Mon, 23 Oct 2023 11:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061540;
-	bh=4/bd8zIyusHzJSfyySzgWSnjsv+KAc3LXedFKl1y3Pg=;
+	s=korg; t=1698061543;
+	bh=lMeJFyXNYwRSmEKYYbmX7on8598YOzw6FYLFeOHspXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mI0PBukmjFpErUhgcURRxKT0GDKm41cBvA8deiqsx74amcfJwqdd53MGJI6kLvwIN
-	 C3Iw00TdYxcVjL0MguLPGuGMo8bgMDSI/t8HXIfWKs4NMO6idCbE10nVHcSsvFfecS
-	 sEIfqQ8pBoJkWPmVUgYG9JJjqWRCArUdpL7EdMhQ=
+	b=K8554xd+XhTojGiZAKF3pHKHzKG2URcWaBypA8ba0JjbtxqnpYm5gFICrP0iTDG+z
+	 pqbbqeEsDSlluiVpcFvjygPL1iJ2BRLn963DWaXAINigFw8gJpFgxeyQIkNeif0BWD
+	 4JYEnzEhR6SPCUvyAL+CFRiz7A596u0OdaQeGz8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Ben Segall <bsegall@google.com>,
-	Christoph Lameter <cl@linux.com>,
-	Daniel Bristot de Oliveira <bristot@redhat.com>,
-	David Rientjes <rientjes@google.com>,
-	Dennis Zhou <dennis@kernel.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Pekka Enberg <penberg@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Shakeel Butt <shakeelb@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Tejun Heo <tj@kernel.org>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Luiz Capitulino <luizcap@amazon.com>
-Subject: [PATCH 5.10 082/202] lib/Kconfig.debug: do not enable DEBUG_PREEMPT by default
-Date: Mon, 23 Oct 2023 12:56:29 +0200
-Message-ID: <20231023104828.939961475@linuxfoundation.org>
+	ruanjinjie@huawei.com,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Alexandru Elisei <alexandru.elisei@arm.com>,
+	Amit Daniel Kachhap <amit.kachhap@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.10 065/202] arm64: consistently pass ESR_ELx to die()
+Date: Mon, 23 Oct 2023 12:56:12 +0200
+Message-ID: <20231023104828.453724297@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -65,85 +48,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit cc6003916ed46d7a67d91ee32de0f9138047d55f upstream.
+commit 0f2cb928a1547ae8f89e80a4b8df2c6c02ae5f96 upstream.
 
-In workloads where this_cpu operations are frequently performed,
-enabling DEBUG_PREEMPT may result in significant increase in
-runtime overhead due to frequent invocation of
-__this_cpu_preempt_check() function.
+Currently, bug_handler() and kasan_handler() call die() with '0' as the
+'err' value, whereas die_kernel_fault() passes the ESR_ELx value.
 
-This can be demonstrated through benchmarks such as hackbench where this
-configuration results in a 10% reduction in performance, primarily due to
-the added overhead within memcg charging path.
+For consistency, this patch ensures we always pass the ESR_ELx value to
+die(). As this is only called for exceptions taken from kernel mode,
+there should be no user-visible change as a result of this patch.
 
-Therefore, do not to enable DEBUG_PREEMPT by default and make users aware
-of its potential impact on performance in some workloads.
+For UNDEFINED exceptions, I've had to modify do_undefinstr() and its
+callers to pass the ESR_ELx value. In all cases the ESR_ELx value had
+already been read and was available.
 
-hackbench-process-sockets
-		      debug_preempt	 no_debug_preempt
-Amean     1       0.4743 (   0.00%)      0.4295 *   9.45%*
-Amean     4       1.4191 (   0.00%)      1.2650 *  10.86%*
-Amean     7       2.2677 (   0.00%)      2.0094 *  11.39%*
-Amean     12      3.6821 (   0.00%)      3.2115 *  12.78%*
-Amean     21      6.6752 (   0.00%)      5.7956 *  13.18%*
-Amean     30      9.6646 (   0.00%)      8.5197 *  11.85%*
-Amean     48     15.3363 (   0.00%)     13.5559 *  11.61%*
-Amean     79     24.8603 (   0.00%)     22.0597 *  11.27%*
-Amean     96     30.1240 (   0.00%)     26.8073 *  11.01%*
-
-Link: https://lkml.kernel.org/r/20230121033942.350387-1-42.hyeyoo@gmail.com
-Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Acked-by: Mel Gorman <mgorman@techsingularity.net>
-Acked-by: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Ben Segall <bsegall@google.com>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: Daniel Bristot de Oliveira <bristot@redhat.com>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Dennis Zhou <dennis@kernel.org>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Pekka Enberg <penberg@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Valentin Schneider <vschneid@redhat.com>
-Cc: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Luiz Capitulino <luizcap@amazon.com>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Alexandru Elisei <alexandru.elisei@arm.com>
+Cc: Amit Daniel Kachhap <amit.kachhap@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20220913101732.3925290-4-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/Kconfig.debug |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/exception.h |    2 +-
+ arch/arm64/kernel/entry-common.c   |   14 +++++++-------
+ arch/arm64/kernel/traps.c          |   14 +++++++-------
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -1136,13 +1136,16 @@ config DEBUG_TIMEKEEPING
- config DEBUG_PREEMPT
- 	bool "Debug preemptible kernel"
- 	depends on DEBUG_KERNEL && PREEMPTION && TRACE_IRQFLAGS_SUPPORT
--	default y
- 	help
- 	  If you say Y here then the kernel will use a debug variant of the
- 	  commonly used smp_processor_id() function and will print warnings
- 	  if kernel code uses it in a preemption-unsafe way. Also, the kernel
- 	  will detect preemption count underflows.
+--- a/arch/arm64/include/asm/exception.h
++++ b/arch/arm64/include/asm/exception.h
+@@ -33,7 +33,7 @@ asmlinkage void exit_to_user_mode(void);
+ void arm64_enter_nmi(struct pt_regs *regs);
+ void arm64_exit_nmi(struct pt_regs *regs);
+ void do_mem_abort(unsigned long addr, unsigned int esr, struct pt_regs *regs);
+-void do_undefinstr(struct pt_regs *regs);
++void do_undefinstr(struct pt_regs *regs, unsigned long esr);
+ void do_bti(struct pt_regs *regs);
+ asmlinkage void bad_mode(struct pt_regs *regs, int reason, unsigned int esr);
+ void do_debug_exception(unsigned long addr_if_watchpoint, unsigned int esr,
+--- a/arch/arm64/kernel/entry-common.c
++++ b/arch/arm64/kernel/entry-common.c
+@@ -132,11 +132,11 @@ static void noinstr el1_pc(struct pt_reg
+ 	exit_to_kernel_mode(regs);
+ }
  
-+	  This option has potential to introduce high runtime overhead,
-+	  depending on workload as it triggers debugging routines for each
-+	  this_cpu operation. It should only be used for debugging purposes.
-+
- menu "Lock Debugging (spinlocks, mutexes, etc...)"
+-static void noinstr el1_undef(struct pt_regs *regs)
++static void noinstr el1_undef(struct pt_regs *regs, unsigned long esr)
+ {
+ 	enter_from_kernel_mode(regs);
+ 	local_daif_inherit(regs);
+-	do_undefinstr(regs);
++	do_undefinstr(regs, esr);
+ 	local_daif_mask();
+ 	exit_to_kernel_mode(regs);
+ }
+@@ -210,7 +210,7 @@ asmlinkage void noinstr el1_sync_handler
+ 		break;
+ 	case ESR_ELx_EC_SYS64:
+ 	case ESR_ELx_EC_UNKNOWN:
+-		el1_undef(regs);
++		el1_undef(regs, esr);
+ 		break;
+ 	case ESR_ELx_EC_BREAKPT_CUR:
+ 	case ESR_ELx_EC_SOFTSTP_CUR:
+@@ -316,11 +316,11 @@ static void noinstr el0_sp(struct pt_reg
+ 	do_sp_pc_abort(regs->sp, esr, regs);
+ }
  
- config LOCK_DEBUGGING_SUPPORT
+-static void noinstr el0_undef(struct pt_regs *regs)
++static void noinstr el0_undef(struct pt_regs *regs, unsigned long esr)
+ {
+ 	enter_from_user_mode();
+ 	local_daif_restore(DAIF_PROCCTX);
+-	do_undefinstr(regs);
++	do_undefinstr(regs, esr);
+ }
+ 
+ static void noinstr el0_bti(struct pt_regs *regs)
+@@ -394,7 +394,7 @@ asmlinkage void noinstr el0_sync_handler
+ 		el0_pc(regs, esr);
+ 		break;
+ 	case ESR_ELx_EC_UNKNOWN:
+-		el0_undef(regs);
++		el0_undef(regs, esr);
+ 		break;
+ 	case ESR_ELx_EC_BTI:
+ 		el0_bti(regs);
+@@ -454,7 +454,7 @@ asmlinkage void noinstr el0_sync_compat_
+ 	case ESR_ELx_EC_CP14_MR:
+ 	case ESR_ELx_EC_CP14_LS:
+ 	case ESR_ELx_EC_CP14_64:
+-		el0_undef(regs);
++		el0_undef(regs, esr);
+ 		break;
+ 	case ESR_ELx_EC_CP15_32:
+ 	case ESR_ELx_EC_CP15_64:
+--- a/arch/arm64/kernel/traps.c
++++ b/arch/arm64/kernel/traps.c
+@@ -395,7 +395,7 @@ void arm64_notify_segfault(unsigned long
+ 	force_signal_inject(SIGSEGV, code, addr, 0);
+ }
+ 
+-void do_undefinstr(struct pt_regs *regs)
++void do_undefinstr(struct pt_regs *regs, unsigned long esr)
+ {
+ 	/* check for AArch32 breakpoint instructions */
+ 	if (!aarch32_break_handler(regs))
+@@ -405,7 +405,7 @@ void do_undefinstr(struct pt_regs *regs)
+ 		return;
+ 
+ 	if (!user_mode(regs))
+-		die("Oops - Undefined instruction", regs, 0);
++		die("Oops - Undefined instruction", regs, esr);
+ 
+ 	force_signal_inject(SIGILL, ILL_ILLOPC, regs->pc, 0);
+ }
+@@ -663,7 +663,7 @@ void do_cp15instr(unsigned int esr, stru
+ 		hook_base = cp15_64_hooks;
+ 		break;
+ 	default:
+-		do_undefinstr(regs);
++		do_undefinstr(regs, esr);
+ 		return;
+ 	}
+ 
+@@ -678,7 +678,7 @@ void do_cp15instr(unsigned int esr, stru
+ 	 * EL0. Fall back to our usual undefined instruction handler
+ 	 * so that we handle these consistently.
+ 	 */
+-	do_undefinstr(regs);
++	do_undefinstr(regs, esr);
+ }
+ NOKPROBE_SYMBOL(do_cp15instr);
+ #endif
+@@ -698,7 +698,7 @@ void do_sysinstr(unsigned int esr, struc
+ 	 * back to our usual undefined instruction handler so that we handle
+ 	 * these consistently.
+ 	 */
+-	do_undefinstr(regs);
++	do_undefinstr(regs, esr);
+ }
+ NOKPROBE_SYMBOL(do_sysinstr);
+ 
+@@ -901,7 +901,7 @@ static int bug_handler(struct pt_regs *r
+ {
+ 	switch (report_bug(regs->pc, regs)) {
+ 	case BUG_TRAP_TYPE_BUG:
+-		die("Oops - BUG", regs, 0);
++		die("Oops - BUG", regs, esr);
+ 		break;
+ 
+ 	case BUG_TRAP_TYPE_WARN:
+@@ -969,7 +969,7 @@ static int kasan_handler(struct pt_regs
+ 	 * This is something that might be fixed at some point in the future.
+ 	 */
+ 	if (!recover)
+-		die("Oops - KASAN", regs, 0);
++		die("Oops - KASAN", regs, esr);
+ 
+ 	/* If thread survives, skip over the brk instruction and continue: */
+ 	arm64_skip_faulting_instruction(regs, AARCH64_INSN_SIZE);
 
 
