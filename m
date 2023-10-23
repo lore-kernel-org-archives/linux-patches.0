@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846E715AED
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1681515AD9
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7irHK2K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9421DC433B9;
-	Mon, 23 Oct 2023 11:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NN6DMKZf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F7AC433C8;
+	Mon, 23 Oct 2023 11:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060176;
-	bh=z7Vzz8RVbcYte+9KQrODmLWcUjS9YblDTUPhQPENEWk=;
+	s=korg; t=1698060178;
+	bh=/LucthUuZTKVi/tG5t1sfAhkTeqEp8AgC2nTZ8QOJ4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N7irHK2K1k23No1bpYeHNaDvXJfQjaLEM9GTzu55O6d6k7ICCnCq4WWs77b5sZ1Mm
-	 TUnFSZsa7H6dC5o0A2Tpp5RKdPj76biTcFvG/MutXuz+Gu3w+eLduT3/AqCcIUeU1L
-	 h7089G9JwC3cih/BY7rY9Vjn07se23ZQ2tmc8g6k=
+	b=NN6DMKZftdw8S2C7cg52osQxkLelHMdwqnLIiYjPxhtt1sD1T/TVAdncEPt+NMngS
+	 X5F9r4yLLTGPEGV17DaFXXIyEW7iat5ceK02UR25+G5l+35qxsHXlVhp8b3I4I5vEF
+	 npWBL5Ezv8AgoQUs+cN2QnswuWm9w+CI9b59I/aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+71e724675ba3958edb31@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 056/196] tcp: Fix listen() warning with v4-mapped-v6 address.
-Date: Mon, 23 Oct 2023 12:55:21 +0200
-Message-ID: <20231023104830.123100148@linuxfoundation.org>
+Subject: [PATCH 6.1 057/196] tun: prevent negative ifindex
+Date: Mon, 23 Oct 2023 12:55:22 +0200
+Message-ID: <20231023104830.150577380@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -43,149 +44,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 8702cf12e6ba91616a72d684e90357977972991b upstream.
+commit cbfbfe3aee718dc4c3c837f5d2463170ee59d78c upstream.
 
-syzbot reported a warning [0] introduced by commit c48ef9c4aed3 ("tcp: Fix
-bind() regression for v4-mapped-v6 non-wildcard address.").
+After commit 956db0a13b47 ("net: warn about attempts to register
+negative ifindex") syzbot is able to trigger the following splat.
 
-After the cited commit, a v4 socket's address matches the corresponding
-v4-mapped-v6 tb2 in inet_bind2_bucket_match_addr(), not vice versa.
+Negative ifindex are not supported.
 
-During X.X.X.X -> ::ffff:X.X.X.X order bind()s, the second bind() uses
-bhash and conflicts properly without checking bhash2 so that we need not
-check if a v4-mapped-v6 sk matches the corresponding v4 address tb2 in
-inet_bind2_bucket_match_addr().  However, the repro shows that we need
-to check that in a no-conflict case.
-
-The repro bind()s two sockets to the 2-tuples using SO_REUSEPORT and calls
-listen() for the first socket:
-
-  from socket import *
-
-  s1 = socket()
-  s1.setsockopt(SOL_SOCKET, SO_REUSEPORT, 1)
-  s1.bind(('127.0.0.1', 0))
-
-  s2 = socket(AF_INET6)
-  s2.setsockopt(SOL_SOCKET, SO_REUSEPORT, 1)
-  s2.bind(('::ffff:127.0.0.1', s1.getsockname()[1]))
-
-  s1.listen()
-
-The second socket should belong to the first socket's tb2, but the second
-bind() creates another tb2 bucket because inet_bind2_bucket_find() returns
-NULL in inet_csk_get_port() as the v4-mapped-v6 sk does not match the
-corresponding v4 address tb2.
-
-  bhash2[] -> tb2(::ffff:X.X.X.X) -> tb2(X.X.X.X)
-
-Then, listen() for the first socket calls inet_csk_get_port(), where the
-v4 address matches the v4-mapped-v6 tb2 and WARN_ON() is triggered.
-
-To avoid that, we need to check if v4-mapped-v6 sk address matches with
-the corresponding v4 address tb2 in inet_bind2_bucket_match().
-
-The same checks are needed in inet_bind2_bucket_addr_match() too, so we
-can move all checks there and call it from inet_bind2_bucket_match().
-
-Note that now tb->family is just an address family of tb->(v6_)?rcv_saddr
-and not of sockets in the bucket.  This could be refactored later by
-defining tb->rcv_saddr as tb->v6_rcv_saddr.s6_addr32[3] and prepending
-::ffff: when creating v4 tb2.
-
-[0]:
-WARNING: CPU: 0 PID: 5049 at net/ipv4/inet_connection_sock.c:587 inet_csk_get_port+0xf96/0x2350 net/ipv4/inet_connection_sock.c:587
+WARNING: CPU: 1 PID: 6003 at net/core/dev.c:9596 dev_index_reserve+0x104/0x210
 Modules linked in:
-CPU: 0 PID: 5049 Comm: syz-executor288 Not tainted 6.6.0-rc2-syzkaller-00018-g2cf0f7156238 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
-RIP: 0010:inet_csk_get_port+0xf96/0x2350 net/ipv4/inet_connection_sock.c:587
-Code: 7c 24 08 e8 4c b6 8a 01 31 d2 be 88 01 00 00 48 c7 c7 e0 94 ae 8b e8 59 2e a3 f8 2e 2e 2e 31 c0 e9 04 fe ff ff e8 ca 88 d0 f8 <0f> 0b e9 0f f9 ff ff e8 be 88 d0 f8 49 8d 7e 48 e8 65 ca 5a 00 31
-RSP: 0018:ffffc90003abfbf0 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffff888026429100 RCX: 0000000000000000
-RDX: ffff88807edcbb80 RSI: ffffffff88b73d66 RDI: ffff888026c49f38
-RBP: ffff888026c49f30 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000000 R12: ffffffff9260f200
-R13: ffff888026c49880 R14: 0000000000000000 R15: ffff888026429100
-FS:  00005555557d5380(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000000045ad50 CR3: 0000000025754000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- inet_csk_listen_start+0x155/0x360 net/ipv4/inet_connection_sock.c:1256
- __inet_listen_sk+0x1b8/0x5c0 net/ipv4/af_inet.c:217
- inet_listen+0x93/0xd0 net/ipv4/af_inet.c:239
- __sys_listen+0x194/0x270 net/socket.c:1866
- __do_sys_listen net/socket.c:1875 [inline]
- __se_sys_listen net/socket.c:1873 [inline]
- __x64_sys_listen+0x53/0x80 net/socket.c:1873
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f3a5bce3af9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 c1 17 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffc1a1c79e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000032
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f3a5bce3af9
-RDX: 00007f3a5bce3af9 RSI: 0000000000000000 RDI: 0000000000000003
-RBP: 00007f3a5bd565f0 R08: 0000000000000006 R09: 0000000000000006
-R10: 0000000000000006 R11: 0000000000000246 R12: 0000000000000001
-R13: 431bde82d7b634db R14: 0000000000000001 R15: 0000000000000001
- </TASK>
+CPU: 1 PID: 6003 Comm: syz-executor926 Not tainted 6.6.0-rc4-syzkaller-g19af4a4ed414 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/06/2023
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : dev_index_reserve+0x104/0x210
+lr : dev_index_reserve+0x100/0x210
+sp : ffff800096a878e0
+x29: ffff800096a87930 x28: ffff0000d04380d0 x27: ffff0000d04380f8
+x26: ffff0000d04380f0 x25: 1ffff00012d50f20 x24: 1ffff00012d50f1c
+x23: dfff800000000000 x22: ffff8000929c21c0 x21: 00000000ffffffea
+x20: ffff0000d04380e0 x19: ffff800096a87900 x18: ffff800096a874c0
+x17: ffff800084df5008 x16: ffff80008051f9c4 x15: 0000000000000001
+x14: 1fffe0001a087198 x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+x8 : ffff0000d41c9bc0 x7 : 0000000000000000 x6 : 0000000000000000
+x5 : ffff800091763d88 x4 : 0000000000000000 x3 : ffff800084e04748
+x2 : 0000000000000001 x1 : 00000000fead71c7 x0 : 0000000000000000
+Call trace:
+dev_index_reserve+0x104/0x210
+register_netdevice+0x598/0x1074 net/core/dev.c:10084
+tun_set_iff+0x630/0xb0c drivers/net/tun.c:2850
+__tun_chr_ioctl+0x788/0x2af8 drivers/net/tun.c:3118
+tun_chr_ioctl+0x38/0x4c drivers/net/tun.c:3403
+vfs_ioctl fs/ioctl.c:51 [inline]
+__do_sys_ioctl fs/ioctl.c:871 [inline]
+__se_sys_ioctl fs/ioctl.c:857 [inline]
+__arm64_sys_ioctl+0x14c/0x1c8 fs/ioctl.c:857
+__invoke_syscall arch/arm64/kernel/syscall.c:37 [inline]
+invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:51
+el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:136
+do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:155
+el0_svc+0x58/0x16c arch/arm64/kernel/entry-common.c:678
+el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:696
+el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:595
+irq event stamp: 11348
+hardirqs last enabled at (11347): [<ffff80008a716574>] __raw_spin_unlock_irqrestore include/linux/spinlock_api_smp.h:151 [inline]
+hardirqs last enabled at (11347): [<ffff80008a716574>] _raw_spin_unlock_irqrestore+0x38/0x98 kernel/locking/spinlock.c:194
+hardirqs last disabled at (11348): [<ffff80008a627820>] el1_dbg+0x24/0x80 arch/arm64/kernel/entry-common.c:436
+softirqs last enabled at (11138): [<ffff8000887ca53c>] spin_unlock_bh include/linux/spinlock.h:396 [inline]
+softirqs last enabled at (11138): [<ffff8000887ca53c>] release_sock+0x15c/0x1b0 net/core/sock.c:3531
+softirqs last disabled at (11136): [<ffff8000887ca41c>] spin_lock_bh include/linux/spinlock.h:356 [inline]
+softirqs last disabled at (11136): [<ffff8000887ca41c>] release_sock+0x3c/0x1b0 net/core/sock.c:3518
 
-Fixes: c48ef9c4aed3 ("tcp: Fix bind() regression for v4-mapped-v6 non-wildcard address.")
-Reported-by: syzbot+71e724675ba3958edb31@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=71e724675ba3958edb31
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20231010013814.70571-1-kuniyu@amazon.com
+Fixes: fb7589a16216 ("tun: Add ability to create tun device with given index")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://lore.kernel.org/r/20231016180851.3560092-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_hashtables.c |   24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ drivers/net/tun.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -148,8 +148,14 @@ static bool inet_bind2_bucket_addr_match
- 					 const struct sock *sk)
- {
- #if IS_ENABLED(CONFIG_IPV6)
--	if (sk->sk_family != tb2->family)
--		return false;
-+	if (sk->sk_family != tb2->family) {
-+		if (sk->sk_family == AF_INET)
-+			return ipv6_addr_v4mapped(&tb2->v6_rcv_saddr) &&
-+				tb2->v6_rcv_saddr.s6_addr32[3] == sk->sk_rcv_saddr;
-+
-+		return ipv6_addr_v4mapped(&sk->sk_v6_rcv_saddr) &&
-+			sk->sk_v6_rcv_saddr.s6_addr32[3] == tb2->rcv_saddr;
-+	}
- 
- 	if (sk->sk_family == AF_INET6)
- 		return ipv6_addr_equal(&tb2->v6_rcv_saddr,
-@@ -799,19 +805,7 @@ static bool inet_bind2_bucket_match(cons
- 	    tb->l3mdev != l3mdev)
- 		return false;
- 
--#if IS_ENABLED(CONFIG_IPV6)
--	if (sk->sk_family != tb->family) {
--		if (sk->sk_family == AF_INET)
--			return ipv6_addr_v4mapped(&tb->v6_rcv_saddr) &&
--				tb->v6_rcv_saddr.s6_addr32[3] == sk->sk_rcv_saddr;
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -3056,10 +3056,11 @@ static long __tun_chr_ioctl(struct file
+ 	struct net *net = sock_net(&tfile->sk);
+ 	struct tun_struct *tun;
+ 	void __user* argp = (void __user*)arg;
+-	unsigned int ifindex, carrier;
++	unsigned int carrier;
+ 	struct ifreq ifr;
+ 	kuid_t owner;
+ 	kgid_t group;
++	int ifindex;
+ 	int sndbuf;
+ 	int vnet_hdr_sz;
+ 	int le;
+@@ -3115,7 +3116,9 @@ static long __tun_chr_ioctl(struct file
+ 		ret = -EFAULT;
+ 		if (copy_from_user(&ifindex, argp, sizeof(ifindex)))
+ 			goto unlock;
 -
--		return false;
--	}
--
--	if (sk->sk_family == AF_INET6)
--		return ipv6_addr_equal(&tb->v6_rcv_saddr, &sk->sk_v6_rcv_saddr);
--#endif
--	return tb->rcv_saddr == sk->sk_rcv_saddr;
-+	return inet_bind2_bucket_addr_match(tb, sk);
- }
- 
- bool inet_bind2_bucket_match_addr_any(const struct inet_bind2_bucket *tb, const struct net *net,
++		ret = -EINVAL;
++		if (ifindex < 0)
++			goto unlock;
+ 		ret = 0;
+ 		tfile->ifindex = ifindex;
+ 		goto unlock;
 
 
