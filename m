@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6391715EB8
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6625915EB8
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nd5kMo6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3837C433C9;
-	Mon, 23 Oct 2023 11:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j12MwN/4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57EAC433C9;
+	Mon, 23 Oct 2023 11:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061805;
-	bh=1dwWgPxRyijTVEBOs+48TZeIElb7x4cuJnELGUANJKA=;
+	s=korg; t=1698061808;
+	bh=MGCbT8p7rdQFxEWmWDonXpf2hcA/gPamjWGqvu7ZpUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nd5kMo6F32gISDUsyNQFX0OJ/bVw7Y8qZOG3x7l2mOqE3Wwtgwjn6g/YIctqQajPt
-	 mf6a9QL6RvWLN0V3TqbcHA12W7UOlRJl6Fq+C6/MePAYPMc0npGo4VwFguIdlbsJOu
-	 ZZZAX359/hQxcfb+12UbXZBI3YFztfTzTFhMbPiQ=
+	b=j12MwN/4R9njoDK4tQUbMabblR+gB49M4TUurTekum9VhVF9znbKV9r0OikWcJ3eF
+	 ceZd+DUcxZ27wXtz+lg1krAIRVWVmGkAYF+glZvi5fqMw0joOoYzENHw2G+ANqeItK
+	 HwAi8Yi9HV8ve92w60zw3pKMK+ANHZeqp/lJoQxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rain <rain@sunshowers.io>,
-	Rahul Rameshbabu <sergeantsagara@protonmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Renan Guilherme Lebre Ramos <japareaggae@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 170/202] HID: multitouch: Add required quirk for Synaptics 0xcd7e device
-Date: Mon, 23 Oct 2023 12:57:57 +0200
-Message-ID: <20231023104831.453230038@linuxfoundation.org>
+Subject: [PATCH 5.10 171/202] platform/x86: touchscreen_dmi: Add info for the Positivo C4128B
+Date: Mon, 23 Oct 2023 12:57:58 +0200
+Message-ID: <20231023104831.480387993@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -43,37 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <sergeantsagara@protonmail.com>
+From: Renan Guilherme Lebre Ramos <japareaggae@gmail.com>
 
-[ Upstream commit 1437e4547edf41689d7135faaca4222ef0081bc1 ]
+[ Upstream commit aa7dcba3bae6869122828b144a3cfd231718089d ]
 
-Register the Synaptics device as a special multitouch device with certain
-quirks that may improve usability of the touchpad device.
+Add information for the Positivo C4128B, a notebook/tablet convertible.
 
-Reported-by: Rain <rain@sunshowers.io>
-Closes: https://lore.kernel.org/linux-input/2bbb8e1d-1793-4df1-810f-cb0137341ff4@app.fastmail.com/
-Signed-off-by: Rahul Rameshbabu <sergeantsagara@protonmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Link: https://github.com/onitake/gsl-firmware/pull/217
+Signed-off-by: Renan Guilherme Lebre Ramos <japareaggae@gmail.com>
+Link: https://lore.kernel.org/r/20231004235900.426240-1-japareaggae@gmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/platform/x86/touchscreen_dmi.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index dc7c33f6b2c4e..84b12599eaf69 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -2058,6 +2058,10 @@ static const struct hid_device_id mt_devices[] = {
- 			USB_DEVICE_ID_MTP_STM)},
+diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
+index 55a18cd0c298f..eedff2ae28511 100644
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -726,6 +726,21 @@ static const struct ts_dmi_data pipo_w11_data = {
+ 	.properties	= pipo_w11_props,
+ };
  
- 	/* Synaptics devices */
-+	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
-+		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
-+			USB_VENDOR_ID_SYNAPTICS, 0xcd7e) },
++static const struct property_entry positivo_c4128b_props[] = {
++	PROPERTY_ENTRY_U32("touchscreen-min-x", 4),
++	PROPERTY_ENTRY_U32("touchscreen-min-y", 13),
++	PROPERTY_ENTRY_U32("touchscreen-size-x", 1915),
++	PROPERTY_ENTRY_U32("touchscreen-size-y", 1269),
++	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-positivo-c4128b.fw"),
++	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
++	{ }
++};
 +
- 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
- 		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
- 			USB_VENDOR_ID_SYNAPTICS, 0xce08) },
++static const struct ts_dmi_data positivo_c4128b_data = {
++	.acpi_name	= "MSSL1680:00",
++	.properties	= positivo_c4128b_props,
++};
++
+ static const struct property_entry pov_mobii_wintab_p800w_v20_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-min-x", 32),
+ 	PROPERTY_ENTRY_U32("touchscreen-min-y", 16),
+@@ -1389,6 +1404,14 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
+ 			DMI_MATCH(DMI_BIOS_VERSION, "MOMO.G.WI71C.MABMRBA02"),
+ 		},
+ 	},
++	{
++		/* Positivo C4128B */
++		.driver_data = (void *)&positivo_c4128b_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "C4128B-1"),
++		},
++	},
+ 	{
+ 		/* Point of View mobii wintab p800w (v2.0) */
+ 		.driver_data = (void *)&pov_mobii_wintab_p800w_v20_data,
 -- 
 2.40.1
 
