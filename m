@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F149154A0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262DE154A0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15+z367r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DBC6C433C7;
-	Mon, 23 Oct 2023 11:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoQAgdQM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E93C433C7;
+	Mon, 23 Oct 2023 11:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060318;
-	bh=h4PtGrjgdJq0jHCEo4/RFDKXVmGsuKtkyU2wgQVfOhI=;
+	s=korg; t=1698060321;
+	bh=B5/betQe2hIp2hYxYZeYiAhLjWgS4hEhkSfILdEM43o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=15+z367rOryML9M4Z+69bD0ntOC4Z8rdcUGg5F7luCPNp1CO0UxgCW4Gp7e/MGN0U
-	 F0nTlKuvThOxLgnUuUqT3CYx3HQt9uJIcSUwZC5Z7k3a2/3s0KLoHq3ay2qUna3JYE
-	 heK7tvP9O1Tjq/rFcp4Ob1WCfvfwtFRGf1VXbPr0=
+	b=DoQAgdQMndrWRtGoF9jzMwiwwY7FUZNoX6e1WuC4hWuXW1SKRDPGUSVbbBern5SII
+	 H5u0MIHRuLflJA0vj6znttj7o6DXV9DNMtuwk1xPu3jDeslaUJSGkqbiwfQBfvOnIl
+	 VNSaVs+Q5SlMK4rOGnndK/0TaHusKpxqN/q2eGcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 131/196] xfrm6: fix inet6_dev refcount underflow problem
-Date: Mon, 23 Oct 2023 12:56:36 +0200
-Message-ID: <20231023104832.198041665@linuxfoundation.org>
+Subject: [PATCH 6.1 132/196] net/mlx5: E-switch, register event handler before arming the event
+Date: Mon, 23 Oct 2023 12:56:37 +0200
+Message-ID: <20231023104832.224137955@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -43,56 +43,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit cc9b364bb1d58d3dae270c7a931a8cc717dc2b3b ]
+[ Upstream commit 7624e58a8b3a251e3e5108b32f2183b34453db32 ]
 
-There are race conditions that may lead to inet6_dev refcount underflow
-in xfrm6_dst_destroy() and rt6_uncached_list_flush_dev().
+Currently, mlx5 is registering event handler for vport context change
+event some time after arming the event. this can lead to missing an
+event, which will result in wrong rules in the FDB.
+Hence, register the event handler before arming the event.
 
-One of the refcount underflow bugs is shown below:
-	(cpu 1)                	|	(cpu 2)
-xfrm6_dst_destroy()             |
-  ...                           |
-  in6_dev_put()                 |
-				|  rt6_uncached_list_flush_dev()
-  ...				|    ...
-				|    in6_dev_put()
-  rt6_uncached_list_del()       |    ...
-  ...                           |
+This solution is valid since FW is sending vport context change event
+only on vports which SW armed, and SW arming the vport when enabling
+it, which is done after the FDB has been created.
 
-xfrm6_dst_destroy() calls rt6_uncached_list_del() after in6_dev_put(),
-so rt6_uncached_list_flush_dev() has a chance to call in6_dev_put()
-again for the same inet6_dev.
-
-Fix it by moving in6_dev_put() after rt6_uncached_list_del() in
-xfrm6_dst_destroy().
-
-Fixes: 510c321b5571 ("xfrm: reuse uncached_list to track xdsts")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 6933a9379559 ("net/mlx5: E-Switch, Use async events chain")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/xfrm6_policy.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/eswitch.c   | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/net/ipv6/xfrm6_policy.c
-+++ b/net/ipv6/xfrm6_policy.c
-@@ -118,11 +118,11 @@ static void xfrm6_dst_destroy(struct dst
- {
- 	struct xfrm_dst *xdst = (struct xfrm_dst *)dst;
- 
--	if (likely(xdst->u.rt6.rt6i_idev))
--		in6_dev_put(xdst->u.rt6.rt6i_idev);
- 	dst_destroy_metrics_generic(dst);
- 	if (xdst->u.rt6.rt6i_uncached_list)
- 		rt6_uncached_list_del(&xdst->u.rt6);
-+	if (likely(xdst->u.rt6.rt6i_idev))
-+		in6_dev_put(xdst->u.rt6.rt6i_idev);
- 	xfrm_dst_destroy(xdst);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index 4b9d567c8f473..48939c72b5925 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -969,11 +969,8 @@ const u32 *mlx5_esw_query_functions(struct mlx5_core_dev *dev)
+ 	return ERR_PTR(err);
  }
  
+-static void mlx5_eswitch_event_handlers_register(struct mlx5_eswitch *esw)
++static void mlx5_eswitch_event_handler_register(struct mlx5_eswitch *esw)
+ {
+-	MLX5_NB_INIT(&esw->nb, eswitch_vport_event, NIC_VPORT_CHANGE);
+-	mlx5_eq_notifier_register(esw->dev, &esw->nb);
+-
+ 	if (esw->mode == MLX5_ESWITCH_OFFLOADS && mlx5_eswitch_is_funcs_handler(esw->dev)) {
+ 		MLX5_NB_INIT(&esw->esw_funcs.nb, mlx5_esw_funcs_changed_handler,
+ 			     ESW_FUNCTIONS_CHANGED);
+@@ -981,13 +978,11 @@ static void mlx5_eswitch_event_handlers_register(struct mlx5_eswitch *esw)
+ 	}
+ }
+ 
+-static void mlx5_eswitch_event_handlers_unregister(struct mlx5_eswitch *esw)
++static void mlx5_eswitch_event_handler_unregister(struct mlx5_eswitch *esw)
+ {
+ 	if (esw->mode == MLX5_ESWITCH_OFFLOADS && mlx5_eswitch_is_funcs_handler(esw->dev))
+ 		mlx5_eq_notifier_unregister(esw->dev, &esw->esw_funcs.nb);
+ 
+-	mlx5_eq_notifier_unregister(esw->dev, &esw->nb);
+-
+ 	flush_workqueue(esw->work_queue);
+ }
+ 
+@@ -1273,6 +1268,9 @@ int mlx5_eswitch_enable_locked(struct mlx5_eswitch *esw, int num_vfs)
+ 
+ 	mlx5_eswitch_update_num_of_vfs(esw, num_vfs);
+ 
++	MLX5_NB_INIT(&esw->nb, eswitch_vport_event, NIC_VPORT_CHANGE);
++	mlx5_eq_notifier_register(esw->dev, &esw->nb);
++
+ 	if (esw->mode == MLX5_ESWITCH_LEGACY) {
+ 		err = esw_legacy_enable(esw);
+ 	} else {
+@@ -1285,7 +1283,7 @@ int mlx5_eswitch_enable_locked(struct mlx5_eswitch *esw, int num_vfs)
+ 
+ 	esw->fdb_table.flags |= MLX5_ESW_FDB_CREATED;
+ 
+-	mlx5_eswitch_event_handlers_register(esw);
++	mlx5_eswitch_event_handler_register(esw);
+ 
+ 	esw_info(esw->dev, "Enable: mode(%s), nvfs(%d), active vports(%d)\n",
+ 		 esw->mode == MLX5_ESWITCH_LEGACY ? "LEGACY" : "OFFLOADS",
+@@ -1394,7 +1392,8 @@ void mlx5_eswitch_disable_locked(struct mlx5_eswitch *esw)
+ 	 */
+ 	mlx5_esw_mode_change_notify(esw, MLX5_ESWITCH_LEGACY);
+ 
+-	mlx5_eswitch_event_handlers_unregister(esw);
++	mlx5_eq_notifier_unregister(esw->dev, &esw->nb);
++	mlx5_eswitch_event_handler_unregister(esw);
+ 
+ 	esw_info(esw->dev, "Disable: mode(%s), nvfs(%d), active vports(%d)\n",
+ 		 esw->mode == MLX5_ESWITCH_LEGACY ? "LEGACY" : "OFFLOADS",
+-- 
+2.40.1
+
 
 
