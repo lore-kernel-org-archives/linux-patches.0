@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C8C111B0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF9D111B0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7yzrvs1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4B4C433C7;
-	Mon, 23 Oct 2023 11:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGym+Tqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08ED5C433C7;
+	Mon, 23 Oct 2023 11:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059369;
-	bh=okdxfI3kEEIJ6J+OzEc9tLfONuc6jEpUgdaCVYzDJ/o=;
+	s=korg; t=1698059372;
+	bh=Z/pKTflNtGeXr2t8UWZdBjF7NhHlzpzvAMri5hezy/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7yzrvs1teceCBr5aFibXoYGLhl0GS2eAUbOpWtuNti9miXge7grwE1/wsjaslbra
-	 uopDPoqemeq/+2z+kU84CtlvceDRFD/u9lhqC9pl03tYTXytV6ncbEkDQkF2kNl5Bg
-	 Qv/YNNarzv7Inkp0mHBFFQxRuSppwTT9wvzM5hok=
+	b=TGym+TqpGmMefFeGGUT99kOeWBKhWSNaG9zQWSrWuXTXT5IHdH3Ya15LSVHkZo0cn
+	 4t5H84jOdDbFNqPIi/UFFwaUxzaMg1e9hCr3yXIFrw+V5OHklia4xhFt08xQJXFyFP
+	 +4WD69/IFpALZYd7nkGbRqdYwdvIRBv0Q3vNm08o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Ariel Levkovich <lariel@nvidia.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Amir Tzin <amirtz@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 155/241] net/mlx5e: Dont offload internal port if filter device is out device
-Date: Mon, 23 Oct 2023 12:55:41 +0200
-Message-ID: <20231023104837.650911621@linuxfoundation.org>
+Subject: [PATCH 6.5 156/241] net/mlx5e: Fix VF representors reporting zero counters to "ip -s" command
+Date: Mon, 23 Oct 2023 12:55:42 +0200
+Message-ID: <20231023104837.675945130@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,44 +43,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Amir Tzin <amirtz@nvidia.com>
 
-[ Upstream commit 06b4eac9c4beda520b8a4dbbb8e33dba9d1c8fba ]
+[ Upstream commit 80f1241484dd1b1d4eab1a0211d52ec2bd83e2f1 ]
 
-In the cited commit, if the routing device is ovs internal port, the
-out device is set to uplink, and packets go out after encapsulation.
+Although vf_vport entry of struct mlx5e_stats is never updated, its
+values are mistakenly copied to the caller structure in the VF
+representor .ndo_get_stat_64 callback mlx5e_rep_get_stats(). Remove
+redundant entry and use the updated one, rep_stats, instead.
 
-If filter device is uplink, it can trigger the following syndrome:
-mlx5_core 0000:08:00.0: mlx5_cmd_out_err:803:(pid 3966): SET_FLOW_TABLE_ENTRY(0x936) op_mod(0x0) failed, status bad parameter(0x3), syndrome (0xcdb051), err(-22)
-
-Fix this issue by not offloading internal port if filter device is out
-device. In this case, packets are not forwarded to the root table to
-be processed, the termination table is used instead to forward them
-from uplink to uplink.
-
-Fixes: 100ad4e2d758 ("net/mlx5e: Offload internal port as encap route device")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Ariel Levkovich <lariel@nvidia.com>
+Fixes: 64b68e369649 ("net/mlx5: Refactor and expand rep vport stat group")
+Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
+Signed-off-by: Amir Tzin <amirtz@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rep.c   |  2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/en_stats.h | 11 ++++++++++-
+ drivers/net/ethernet/mellanox/mlx5/core/en_tc.c    |  5 +++--
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-index 1730f6a716eea..b10e40e1a9c14 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-@@ -24,7 +24,8 @@ static int mlx5e_set_int_port_tunnel(struct mlx5e_priv *priv,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index 5bdd2d09a8d5c..0cd44ef190058 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -704,7 +704,7 @@ mlx5e_rep_get_stats(struct net_device *dev, struct rtnl_link_stats64 *stats)
  
- 	route_dev = dev_get_by_index(dev_net(e->out_dev), e->route_dev_ifindex);
+ 	/* update HW stats in background for next time */
+ 	mlx5e_queue_update_stats(priv);
+-	memcpy(stats, &priv->stats.vf_vport, sizeof(*stats));
++	mlx5e_stats_copy_rep_stats(stats, &priv->stats.rep_stats);
+ }
  
--	if (!route_dev || !netif_is_ovs_master(route_dev))
-+	if (!route_dev || !netif_is_ovs_master(route_dev) ||
-+	    attr->parse_attr->filter_dev == e->out_dev)
- 		goto out;
+ static int mlx5e_rep_change_mtu(struct net_device *netdev, int new_mtu)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
+index 1ff8a06027dcf..67938b4ea1b90 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
+@@ -475,11 +475,20 @@ struct mlx5e_stats {
+ 	struct mlx5e_vnic_env_stats vnic;
+ 	struct mlx5e_vport_stats vport;
+ 	struct mlx5e_pport_stats pport;
+-	struct rtnl_link_stats64 vf_vport;
+ 	struct mlx5e_pcie_stats pcie;
+ 	struct mlx5e_rep_stats rep_stats;
+ };
  
- 	err = mlx5e_set_fwd_to_int_port_actions(priv, attr, e->route_dev_ifindex,
++static inline void mlx5e_stats_copy_rep_stats(struct rtnl_link_stats64 *vf_vport,
++					      struct mlx5e_rep_stats *rep_stats)
++{
++	memset(vf_vport, 0, sizeof(*vf_vport));
++	vf_vport->rx_packets = rep_stats->vport_rx_packets;
++	vf_vport->tx_packets = rep_stats->vport_tx_packets;
++	vf_vport->rx_bytes = rep_stats->vport_rx_bytes;
++	vf_vport->tx_bytes = rep_stats->vport_tx_bytes;
++}
++
+ extern mlx5e_stats_grp_t mlx5e_nic_stats_grps[];
+ unsigned int mlx5e_nic_stats_grps_num(struct mlx5e_priv *priv);
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index 4b22a91482cec..5797d8607633e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -4931,7 +4931,8 @@ static int scan_tc_matchall_fdb_actions(struct mlx5e_priv *priv,
+ 			if (err)
+ 				return err;
+ 
+-			rpriv->prev_vf_vport_stats = priv->stats.vf_vport;
++			mlx5e_stats_copy_rep_stats(&rpriv->prev_vf_vport_stats,
++						   &priv->stats.rep_stats);
+ 			break;
+ 		default:
+ 			NL_SET_ERR_MSG_MOD(extack, "mlx5 supports only police action for matchall");
+@@ -4971,7 +4972,7 @@ void mlx5e_tc_stats_matchall(struct mlx5e_priv *priv,
+ 	u64 dbytes;
+ 	u64 dpkts;
+ 
+-	cur_stats = priv->stats.vf_vport;
++	mlx5e_stats_copy_rep_stats(&cur_stats, &priv->stats.rep_stats);
+ 	dpkts = cur_stats.rx_packets - rpriv->prev_vf_vport_stats.rx_packets;
+ 	dbytes = cur_stats.rx_bytes - rpriv->prev_vf_vport_stats.rx_bytes;
+ 	rpriv->prev_vf_vport_stats = cur_stats;
 -- 
 2.40.1
 
