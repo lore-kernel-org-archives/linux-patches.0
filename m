@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D718A125CA
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757B1125CA
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0r7bfYZ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8199C433C8;
-	Mon, 23 Oct 2023 10:59:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8PPe5oL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7A7C433C8;
+	Mon, 23 Oct 2023 10:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058756;
-	bh=Rf4wCGPnWk48Z7zY3TFsKpNzxxN82aLHRgEvo6dXH9Q=;
+	s=korg; t=1698058759;
+	bh=fL5ns77IheIJFHiKQGIh4RdFSRrtlYavQ/lx2kLl7Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0r7bfYZ+qQdaDa8xs/5y5rykO3tM2PrxbONo6LibF77SQ1BRv+hB5ic5ONweA05aY
-	 GTDxt50ceyMGSwdkxsG2LPF+M3dDXEigWjANDtrAFsRN0Tdr1nWW9+CbGiy7pgrNah
-	 5P7uGKQDXaLkTFbDuOawQj44OBdJ5ZUbPlK/GJ54=
+	b=p8PPe5oL3G/KiQx8DDftZQy4WhsPNWbyivV6UREw+5cVU8B3cW3r0+Lu1ozm9JYCX
+	 ItAIGuQY5MniVuJtI9Nnn0Rhw3DgEuQns0xKy17rlUjB6hWD5vJcZ9qTSNq8aixqjK
+	 CXZ5QqdBHTco6GJiaReT1ZIm9IT+Fgow5jw2UQY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
-	Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
-Subject: [PATCH 4.14 16/66] mcb: remove is_added flag from mcb_device struct
-Date: Mon, 23 Oct 2023 12:56:06 +0200
-Message-ID: <20231023104811.398382830@linuxfoundation.org>
+	Xiubo Li <xiubli@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 4.14 17/66] ceph: fix incorrect revoked caps assert in ceph_fill_file_size()
+Date: Mon, 23 Oct 2023 12:56:07 +0200
+Message-ID: <20231023104811.433841736@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -42,79 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit 0f28ada1fbf0054557cddcdb93ad17f767105208 upstream.
+commit 15c0a870dc44ed14e01efbdd319d232234ee639f upstream.
 
-When calling mcb_bus_add_devices(), both mcb devices and the mcb
-bus will attempt to attach a device to a driver because they share
-the same bus_type. This causes an issue when trying to cast the
-container of the device to mcb_device struct using to_mcb_device(),
-leading to a wrong cast when the mcb_bus is added. A crash occurs
-when freing the ida resources as the bus numbering of mcb_bus gets
-confused with the is_added flag on the mcb_device struct.
+When truncating the inode the MDS will acquire the xlock for the
+ifile Locker, which will revoke the 'Frwsxl' caps from the clients.
+But when the client just releases and flushes the 'Fw' caps to MDS,
+for exmaple, and once the MDS receives the caps flushing msg it
+just thought the revocation has finished. Then the MDS will continue
+truncating the inode and then issued the truncate notification to
+all the clients. While just before the clients receives the cap
+flushing ack they receive the truncation notification, the clients
+will detecte that the 'issued | dirty' is still holding the 'Fw'
+caps.
 
-The only reason for this cast was to keep an is_added flag on the
-mcb_device struct that does not seem necessary. The function
-device_attach() handles already bound devices and the mcb subsystem
-does nothing special with this is_added flag so remove it completely.
-
-Fixes: 18d288198099 ("mcb: Correctly initialize the bus's device")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Co-developed-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
-Signed-off-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
-Link: https://lore.kernel.org/r/20230906114901.63174-2-JoseJavier.Rodriguez@duagon.com
+Cc: stable@vger.kernel.org
+Link: https://tracker.ceph.com/issues/56693
+Fixes: b0d7c2231015 ("ceph: introduce i_truncate_mutex")
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Milind Changire <mchangir@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mcb/mcb-core.c  |   10 +++-------
- drivers/mcb/mcb-parse.c |    2 --
- include/linux/mcb.h     |    1 -
- 3 files changed, 3 insertions(+), 10 deletions(-)
+ fs/ceph/inode.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/mcb/mcb-core.c
-+++ b/drivers/mcb/mcb-core.c
-@@ -392,17 +392,13 @@ EXPORT_SYMBOL_GPL(mcb_free_dev);
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -615,9 +615,7 @@ int ceph_fill_file_size(struct inode *in
+ 			ci->i_truncate_seq = truncate_seq;
  
- static int __mcb_bus_add_devices(struct device *dev, void *data)
- {
--	struct mcb_device *mdev = to_mcb_device(dev);
- 	int retval;
- 
--	if (mdev->is_added)
--		return 0;
--
- 	retval = device_attach(dev);
--	if (retval < 0)
-+	if (retval < 0) {
- 		dev_err(dev, "Error adding device (%d)\n", retval);
--
--	mdev->is_added = true;
-+		return retval;
-+	}
- 
- 	return 0;
- }
---- a/drivers/mcb/mcb-parse.c
-+++ b/drivers/mcb/mcb-parse.c
-@@ -98,8 +98,6 @@ static int chameleon_parse_gdd(struct mc
- 	mdev->mem.end = mdev->mem.start + size - 1;
- 	mdev->mem.flags = IORESOURCE_MEM;
- 
--	mdev->is_added = false;
--
- 	ret = mcb_device_register(bus, mdev);
- 	if (ret < 0)
- 		goto err;
---- a/include/linux/mcb.h
-+++ b/include/linux/mcb.h
-@@ -66,7 +66,6 @@ static inline struct mcb_bus *to_mcb_bus
- struct mcb_device {
- 	struct device dev;
- 	struct mcb_bus *bus;
--	bool is_added;
- 	struct mcb_driver *driver;
- 	u16 id;
- 	int inst;
+ 			/* the MDS should have revoked these caps */
+-			WARN_ON_ONCE(issued & (CEPH_CAP_FILE_EXCL |
+-					       CEPH_CAP_FILE_RD |
+-					       CEPH_CAP_FILE_WR |
++			WARN_ON_ONCE(issued & (CEPH_CAP_FILE_RD |
+ 					       CEPH_CAP_FILE_LAZYIO));
+ 			/*
+ 			 * If we hold relevant caps, or in the case where we're
 
 
