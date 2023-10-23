@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E2F13FEC
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4954614012
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccNKy5LS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F41C433C8;
-	Mon, 23 Oct 2023 11:07:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6iR5EG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7ABC433C9;
+	Mon, 23 Oct 2023 11:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059230;
-	bh=UmzkAKHVsg7J4tx8xLJjnwoBMvuiUeXPvCLKzj5xSN8=;
+	s=korg; t=1698059233;
+	bh=rM5dkQUcTRJJ53MK30kfZnZMKcFFYVtNyoNjeRz3a7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ccNKy5LSp486jJkM1O+h8ngZnJHXMvsLFK4jpISMP0fV2wq6LD/nSAqrFT463DDLi
-	 Vbv+VahXtuAKDoVdW2w8Gq7CpFHNZJb6Se3w1Aqsf+Ld988RSFodNOPaMrGT2/q7rI
-	 w9H+oGgHCbiQ6HwawjNcnCZqKcaulrAwFjv29r70=
+	b=N6iR5EG3ADwkUvqaUpDFcFNNcU2wdsIUZPQr3cyj7iWLifHc3/ewbqwtYY0oJpXNc
+	 ttN3Md1/xZzR5adeUW3HcBSeGWK6EehhRhknQLXENJBr6k9eYCIwAQ38c8/8/Juwzu
+	 oISZpnYRlL32bui32+JCI6k91nX9YxX5WRsB4KTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 107/241] accel/ivpu: Dont flood dmesg with VPU ready message
-Date: Mon, 23 Oct 2023 12:54:53 +0200
-Message-ID: <20231023104836.506164052@linuxfoundation.org>
+Subject: [PATCH 6.5 108/241] gpio: timberdale: Fix potential deadlock on &tgpio->lock
+Date: Mon, 23 Oct 2023 12:54:54 +0200
+Message-ID: <20231023104836.529464876@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,36 +43,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 002652555022728c42b5517c6c11265b8c3ab827 ]
+[ Upstream commit 9e8bc2dda5a7a8e2babc9975f4b11c9a6196e490 ]
 
-Use ivpu_dbg() to print the VPU ready message so it doesn't pollute
-the dmesg.
+As timbgpio_irq_enable()/timbgpio_irq_disable() callback could be
+executed under irq context, it could introduce double locks on
+&tgpio->lock if it preempts other execution units requiring
+the same locks.
 
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230925121137.872158-3-stanislaw.gruszka@linux.intel.com
+timbgpio_gpio_set()
+--> timbgpio_update_bit()
+--> spin_lock(&tgpio->lock)
+<interrupt>
+   --> timbgpio_irq_disable()
+   --> spin_lock_irqsave(&tgpio->lock)
+
+This flaw was found by an experimental static analysis tool I am
+developing for irq-related deadlock.
+
+To prevent the potential deadlock, the patch uses spin_lock_irqsave()
+on &tgpio->lock inside timbgpio_gpio_set() to prevent the possible
+deadlock scenario.
+
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-timberdale.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_drv.c b/drivers/accel/ivpu/ivpu_drv.c
-index 8396db2b52030..09dee5be20700 100644
---- a/drivers/accel/ivpu/ivpu_drv.c
-+++ b/drivers/accel/ivpu/ivpu_drv.c
-@@ -303,7 +303,7 @@ static int ivpu_wait_for_ready(struct ivpu_device *vdev)
- 	}
+diff --git a/drivers/gpio/gpio-timberdale.c b/drivers/gpio/gpio-timberdale.c
+index de14949a3fe5a..92c1f2baa4bff 100644
+--- a/drivers/gpio/gpio-timberdale.c
++++ b/drivers/gpio/gpio-timberdale.c
+@@ -43,9 +43,10 @@ static int timbgpio_update_bit(struct gpio_chip *gpio, unsigned index,
+ 	unsigned offset, bool enabled)
+ {
+ 	struct timbgpio *tgpio = gpiochip_get_data(gpio);
++	unsigned long flags;
+ 	u32 reg;
  
- 	if (!ret)
--		ivpu_info(vdev, "VPU ready message received successfully\n");
-+		ivpu_dbg(vdev, PM, "VPU ready message received successfully\n");
- 	else
- 		ivpu_hw_diagnose_failure(vdev);
+-	spin_lock(&tgpio->lock);
++	spin_lock_irqsave(&tgpio->lock, flags);
+ 	reg = ioread32(tgpio->membase + offset);
  
+ 	if (enabled)
+@@ -54,7 +55,7 @@ static int timbgpio_update_bit(struct gpio_chip *gpio, unsigned index,
+ 		reg &= ~(1 << index);
+ 
+ 	iowrite32(reg, tgpio->membase + offset);
+-	spin_unlock(&tgpio->lock);
++	spin_unlock_irqrestore(&tgpio->lock, flags);
+ 
+ 	return 0;
+ }
 -- 
 2.40.1
 
