@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2635229AF
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296A71845
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZY2txrHL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99216C433C7;
-	Mon, 23 Oct 2023 11:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H858ZOTF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93184C433C8;
+	Mon, 23 Oct 2023 11:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058896;
-	bh=kdLSCUubBi0w19SyB0R30BfFZFwNiy3FpieWkkqr1Xo=;
+	s=korg; t=1698058899;
+	bh=Ng03jGX9Y5yxyCbQsIIfxpE/atkKtI6GiOwcphL6x04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZY2txrHLZSrq2n4WjfD8RwI57kMvsC/ycxhb/yNaPTBnOY/ZdrLZ42iqhIK8NYpKA
-	 gideBnc+XgMavGOsWcbgxoYmWVxHIpvFfvBzXLYM/hgTgEeabzMAVAm5W+WOcIJALg
-	 kVBX+DeHWIKQHIvDbITSu5+M+fUzdfo2mcU+WW2k=
+	b=H858ZOTF9FGwWXnsOKH86qUXGdPgYmnuWEKD5zZb0goq0TeTnzsjvNoLMbYTRJxn7
+	 6eTbMPjfNgEBMdP3kPkboaBxicX9d6qy8R53joVn6vBROk+pnFTzuV9AreLKibiUf0
+	 kSm0v38RXADEdn1rIm3slJOEARhUMe8JVtWjNn7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 4.14 63/66] gpio: vf610: set value before the direction to avoid a glitch
-Date: Mon, 23 Oct 2023 12:56:53 +0200
-Message-ID: <20231023104813.160207048@linuxfoundation.org>
+	syzbot+c90849c50ed209d77689@syzkaller.appspotmail.com,
+	Edward AD <twuufnxlz@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 4.14 64/66] Bluetooth: hci_sock: fix slab oob read in create_monitor_event
+Date: Mon, 23 Oct 2023 12:56:54 +0200
+Message-ID: <20231023104813.197549920@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -41,41 +42,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Edward AD <twuufnxlz@gmail.com>
 
-commit fc363413ef8ea842ae7a99e3caf5465dafdd3a49 upstream.
+commit 18f547f3fc074500ab5d419cf482240324e73a7e upstream.
 
-We found a glitch when configuring the pad as output high. To avoid this
-glitch, move the data value setting before direction config in the
-function vf610_gpio_direction_output().
+When accessing hdev->name, the actual string length should prevail
 
-Fixes: 659d8a62311f ("gpio: vf610: add imx7ulp support")
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-[Bartosz: tweak the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reported-by: syzbot+c90849c50ed209d77689@syzkaller.appspotmail.com
+Fixes: dcda165706b9 ("Bluetooth: hci_core: Fix build warnings")
+Signed-off-by: Edward AD <twuufnxlz@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-vf610.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sock.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-vf610.c
-+++ b/drivers/gpio/gpio-vf610.c
-@@ -137,14 +137,14 @@ static int vf610_gpio_direction_output(s
- 	unsigned long mask = BIT(gpio);
- 	u32 val;
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -425,7 +425,7 @@ static struct sk_buff *create_monitor_ev
+ 		ni->type = hdev->dev_type;
+ 		ni->bus = hdev->bus;
+ 		bacpy(&ni->bdaddr, &hdev->bdaddr);
+-		memcpy(ni->name, hdev->name, 8);
++		memcpy(ni->name, hdev->name, strlen(hdev->name));
  
-+	vf610_gpio_set(chip, gpio, value);
-+
- 	if (port->sdata && port->sdata->have_paddr) {
- 		val = vf610_gpio_readl(port->gpio_base + GPIO_PDDR);
- 		val |= mask;
- 		vf610_gpio_writel(val, port->gpio_base + GPIO_PDDR);
- 	}
- 
--	vf610_gpio_set(chip, gpio, value);
--
- 	return pinctrl_gpio_direction_output(chip->base + gpio);
- }
- 
+ 		opcode = cpu_to_le16(HCI_MON_NEW_INDEX);
+ 		break;
 
 
