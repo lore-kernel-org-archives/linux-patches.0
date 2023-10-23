@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1246C13FEC
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C50613FEC
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnagY33S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BA7C433C8;
-	Mon, 23 Oct 2023 11:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOwER6lm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AABAC433C7;
+	Mon, 23 Oct 2023 11:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059244;
-	bh=EuD4Su401B1FhKhkpBDj8hB8gVfZyugpLhInvUPbaug=;
+	s=korg; t=1698059247;
+	bh=ESw/XkAAX5wyRKq2cv2DvrqRN7RdDW20Tx/nbAEuU+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CnagY33SZvAXvkufPjDUbZFHryDelR+gT1KZz2ZtZDj5j3xSNrEp2j6U9gOwgoa5G
-	 v3ht0WoF0pXpvNXymvV06Q3MvT9mFWt37rTbHsT8qvawyMGW1hK2J9NzvQNj6RqVlt
-	 jW1b+7bcFa1+bBI67LZAPyd73qTayvxEvpBPNn4w=
+	b=YOwER6lmlneB7XWGOaJxKihBlLkOKxn844+t4wcbglpjQEKiw2EDS+v7JG2GlQm9d
+	 AXMbnXR9FnWQozO8WgA+armtAb4v39PpfPIhoJldFJdSqoBsqm+0mcOV53aRtJdgLe
+	 8P/nfcP/JS3ISlMUxbww55znsCeDlqpSd+c01jbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <dcbw@redhat.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Aditya Kumar Singh <quic_adisi@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 112/241] wifi: mwifiex: Sanity check tlv_len and tlv_bitmap_len
-Date: Mon, 23 Oct 2023 12:54:58 +0200
-Message-ID: <20231023104836.620344556@linuxfoundation.org>
+Subject: [PATCH 6.5 113/241] wifi: cfg80211: validate AP phy operation before starting it
+Date: Mon, 23 Oct 2023 12:54:59 +0200
+Message-ID: <20231023104836.643884757@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -44,60 +43,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Aditya Kumar Singh <quic_adisi@quicinc.com>
 
-[ Upstream commit d5a93b7d2877aae4ba7590ad6cb65f8d33079489 ]
+[ Upstream commit 5112fa502708aaaf80acb78273fc8625f221eb11 ]
 
-Add sanity checks for both `tlv_len` and `tlv_bitmap_len` before
-decoding data from `event_buf`.
+Many regulatories can have HE/EHT Operation as not permitted. In such
+cases, AP should not be allowed to start if it is using a channel
+having the no operation flag set. However, currently there is no such
+check in place.
 
-This prevents any malicious or buggy firmware from overflowing
-`event_buf` through large values for `tlv_len` and `tlv_bitmap_len`.
+Fix this issue by validating such IEs sent during start AP against the
+channel flags.
 
-Suggested-by: Dan Williams <dcbw@redhat.com>
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/d4f8780527d551552ee96f17a0229e02e1c200d1.1692931954.git.gustavoars@kernel.org
+Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Link: https://lore.kernel.org/r/20230905064857.1503-1-quic_adisi@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/marvell/mwifiex/11n_rxreorder.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/wireless/nl80211.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-index d1d3632a3ed7b..4ab3a14567b65 100644
---- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-+++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-@@ -921,6 +921,14 @@ void mwifiex_11n_rxba_sync_event(struct mwifiex_private *priv,
- 	while (tlv_buf_left >= sizeof(*tlv_rxba)) {
- 		tlv_type = le16_to_cpu(tlv_rxba->header.type);
- 		tlv_len  = le16_to_cpu(tlv_rxba->header.len);
-+		if (size_add(sizeof(tlv_rxba->header), tlv_len) > tlv_buf_left) {
-+			mwifiex_dbg(priv->adapter, WARN,
-+				    "TLV size (%zu) overflows event_buf buf_left=%d\n",
-+				    size_add(sizeof(tlv_rxba->header), tlv_len),
-+				    tlv_buf_left);
-+			return;
-+		}
-+
- 		if (tlv_type != TLV_TYPE_RXBA_SYNC) {
- 			mwifiex_dbg(priv->adapter, ERROR,
- 				    "Wrong TLV id=0x%x\n", tlv_type);
-@@ -929,6 +937,14 @@ void mwifiex_11n_rxba_sync_event(struct mwifiex_private *priv,
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 705d1cf048309..3d286f3a60e60 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -5910,6 +5910,21 @@ static void nl80211_send_ap_started(struct wireless_dev *wdev,
+ 	nlmsg_free(msg);
+ }
  
- 		tlv_seq_num = le16_to_cpu(tlv_rxba->seq_num);
- 		tlv_bitmap_len = le16_to_cpu(tlv_rxba->bitmap_len);
-+		if (size_add(sizeof(*tlv_rxba), tlv_bitmap_len) > tlv_buf_left) {
-+			mwifiex_dbg(priv->adapter, WARN,
-+				    "TLV size (%zu) overflows event_buf buf_left=%d\n",
-+				    size_add(sizeof(*tlv_rxba), tlv_bitmap_len),
-+				    tlv_buf_left);
-+			return;
-+		}
++static int nl80211_validate_ap_phy_operation(struct cfg80211_ap_settings *params)
++{
++	struct ieee80211_channel *channel = params->chandef.chan;
 +
- 		mwifiex_dbg(priv->adapter, INFO,
- 			    "%pM tid=%d seq_num=%d bitmap_len=%d\n",
- 			    tlv_rxba->mac, tlv_rxba->tid, tlv_seq_num,
++	if ((params->he_cap ||  params->he_oper) &&
++	    (channel->flags & IEEE80211_CHAN_NO_HE))
++		return -EOPNOTSUPP;
++
++	if ((params->eht_cap || params->eht_oper) &&
++	    (channel->flags & IEEE80211_CHAN_NO_EHT))
++		return -EOPNOTSUPP;
++
++	return 0;
++}
++
+ static int nl80211_start_ap(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	struct cfg80211_registered_device *rdev = info->user_ptr[0];
+@@ -6179,6 +6194,10 @@ static int nl80211_start_ap(struct sk_buff *skb, struct genl_info *info)
+ 	if (err)
+ 		goto out_unlock;
+ 
++	err = nl80211_validate_ap_phy_operation(params);
++	if (err)
++		goto out_unlock;
++
+ 	if (info->attrs[NL80211_ATTR_AP_SETTINGS_FLAGS])
+ 		params->flags = nla_get_u32(
+ 			info->attrs[NL80211_ATTR_AP_SETTINGS_FLAGS]);
 -- 
 2.40.1
 
