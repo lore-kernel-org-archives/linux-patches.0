@@ -1,108 +1,80 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1342021340;
-	Mon, 23 Oct 2023 17:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D432110D
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 18:00:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marliere.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NBorsQHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D5AC433C9;
-	Mon, 23 Oct 2023 17:45:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698083130;
-	bh=OTtEvmCKMm7ojlLCYfNOXX7WV2Av9drz4oNtw+8PMlU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NBorsQHMmnAu6kmE5ZXnl/NeCJl1/ssPb1p3rjG7224RgRmP4RRgELONe6e9SKZ3y
-	 aEg8OPmzcybUoSAXG5o0vw80EQ0ebbRjPyZpqQw9CzDZib222bjnXMvXNf7j48uY/e
-	 6YmKBSJscijZqMPNdjeDAnR9TFLxbdGYFZOM2XsY4eUNwbdZhB9UHr+K33sDiePSYe
-	 IWM/f80LtwdlHNLMMpz9Wnn0QxeVS+78vi64HdOdEvKEgifB7PNOz/n1LGpjgalS5m
-	 B0Wxb5Xvb9NNAFf7N7P6izCO4JbGedwTX3467RVNYqwyBOtEWJtAqN13b0s7o9X/HZ
-	 QtY8nfCBWF+lA==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	x86@kernel.org,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	"H. Peter Anvin" <hpa@zytor.com>
-Subject: [RFC PATCH 4/4] x86/rust: support RETHUNK
-Date: Mon, 23 Oct 2023 19:44:48 +0200
-Message-ID: <20231023174449.251550-4-ojeda@kernel.org>
-In-Reply-To: <20231023174449.251550-1-ojeda@kernel.org>
-References: <20231023174449.251550-1-ojeda@kernel.org>
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=marliere.net header.i=@marliere.net header.b="gTtBmBYK"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1c9e95aa02dso25839995ad.0
+        for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:00:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698084001; x=1698688801;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:dkim-signature:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=if1LMXlv0NhauuH28lMDtOeb3mWnKzXBZm74izG4Zeg=;
+        b=bfq5EfojYBiXqp76/1h1UX9NG33SjlcA+KyA2NimXZQJgv9WciNatjqOvTm8UGVBpj
+         C03CCvJQH7/vtkm7AW4Ky+kGhoyMuPtB2tq+hwwd+7zKilIjcrjmnnKZCFEIXA8K5Lu9
+         CXtNiZ7nG9WYME81NH1JLcqSZqRGHV9qmBF7LBakR6T1F4F65eewvLkpvFdmSmCU17hY
+         eOd7GDwBpqii4INL/zkLV+03V8V3aXmxRmGA4SKKLGeN4DzIOlEA6rwlowPcMTxPv/Rz
+         AwKZSSYp9R1G+7/HpDa0Z+fssn0jftlEcbw0VKsbPxFsTIYywMxDZb9R561KC8yKwj18
+         BbEQ==
+X-Gm-Message-State: AOJu0YxGSH3aQ9pFuIevUImhX8p29hl5K2RzePJKGZJoejCNLoaeb3Zg
+	iSwyGVhoOonTW7dMgT2pVXk=
+X-Google-Smtp-Source: AGHT+IFPsJVzfo/OsLom/DGay5ElN50D6Mg9r1ORsvr+E5Vaiqj5Mg4VAHv4nQ81x5tqmsYnXxHHvQ==
+X-Received: by 2002:a17:903:6cc:b0:1c3:868f:5958 with SMTP id kj12-20020a17090306cc00b001c3868f5958mr13544298plb.20.1698084000520;
+        Mon, 23 Oct 2023 11:00:00 -0700 (PDT)
+Received: from mail.marliere.net ([24.199.118.162])
+        by smtp.gmail.com with ESMTPSA id w12-20020a170902d3cc00b001b8b45b177esm6155629plb.274.2023.10.23.10.59.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Oct 2023 10:59:59 -0700 (PDT)
+Date: Mon, 23 Oct 2023 14:59:50 -0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marliere.net;
+	s=2023; t=1698083995;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=if1LMXlv0NhauuH28lMDtOeb3mWnKzXBZm74izG4Zeg=;
+	b=gTtBmBYKRR0gMuSKRaMDRVG8fsRnt3LpbRHsD9gI/89/og95qXEOq0fm0TStsg2vgEaiaV
+	gTo8yAfMW7yPDIJ1uo5jGHSSkyk0S1uOW1BtTiiempUVIKgmcQx4DrNxYba2Cyt4XbvGbk
+	HwX2dUvlcsKWWNQsLg2kiSc1t9AJQGEfPQKa74628fcIIZusdFJSlCwwPrFBNWHdFcyfYc
+	hhz+DzfKxkLej9C+i8aP+4Yz5i2T6fT9Oe4fhIGtrBkpyJW2d86ScWYkr6Miv16WLvkKCG
+	WfpYAoxgIyK2q8sS2CDQh4nI6Jm8R2InkOUr3Km2YV1kpF/QxeGi0L9VcRsO0g==
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=ricardo@marliere.net smtp.mailfrom=ricardo@marliere.net
+From: "Ricardo B. Marliere" <ricardo@marliere.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.5 000/241] 6.5.9-rc1 review
+Message-ID: <oeyc3waqchvvqlc5adqr73gqcz3tbvygq7lwtthccrvo6glhpp@bribwsnfv4rm>
+References: <20231023104833.832874523@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 
-When support for `-Zfunction-return` lands in Rust [1], this patch may
-be used to enable RETHUNK support on top of the previous patch.
+On 23/10/23 12:53PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.5.9 release.
+> There are 241 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 25 Oct 2023 10:47:57 +0000.
+> Anything received after that time might be too late.
 
-Link: https://github.com/rust-lang/rust/pull/116892 [1]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
-Note that this patch is not meant to be applied now, it is only here to
-show what will be needed to drop the depends on from the previous patch.
+No build and dmesg warnings, my system runs fine:
 
- arch/x86/Makefile | 5 +++++
- init/Kconfig      | 1 -
- 2 files changed, 5 insertions(+), 1 deletion(-)
+[    0.000000] Linux version 6.5.9-rc1+ (rbmarliere@debian) (gcc (Debian 13.2.0-4) 13.2.0, GNU ld (GNU Binutils for Debian) 2.41) #9 SMP PREEMPT_DYNAMIC Mon Oct 23 11:50:20 -03 2023
 
-diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 3df7c7c81918..818fdb1a92c5 100644
---- a/arch/x86/Makefile
-+++ b/arch/x86/Makefile
-@@ -24,11 +24,15 @@ RETPOLINE_CFLAGS	+= $(call cc-option,-mindirect-branch-cs-prefix)
-
- ifdef CONFIG_RETHUNK
- RETHUNK_CFLAGS		:= -mfunction-return=thunk-extern
-+RETHUNK_RUSTFLAGS	:= -Zfunction-return=thunk-extern
- RETPOLINE_CFLAGS	+= $(RETHUNK_CFLAGS)
-+RETPOLINE_RUSTFLAGS	+= $(RETHUNK_RUSTFLAGS)
- endif
-
- export RETHUNK_CFLAGS
-+export RETHUNK_RUSTFLAGS
- export RETPOLINE_CFLAGS
-+export RETPOLINE_RUSTFLAGS
- export RETPOLINE_VDSO_CFLAGS
-
- # For gcc stack alignment is specified with -mpreferred-stack-boundary,
-@@ -193,6 +197,7 @@ KBUILD_CFLAGS += -fno-asynchronous-unwind-tables
- # Avoid indirect branches in kernel to deal with Spectre
- ifdef CONFIG_RETPOLINE
-   KBUILD_CFLAGS += $(RETPOLINE_CFLAGS)
-+  KBUILD_RUSTFLAGS += $(RETPOLINE_RUSTFLAGS)
-   # Additionally, avoid generating expensive indirect jumps which
-   # are subject to retpolines for small number of switch cases.
-   # LLVM turns off jump table generation by default when under
-diff --git a/init/Kconfig b/init/Kconfig
-index 9452b4102b99..6d35728b94b2 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -1889,7 +1889,6 @@ config RUST
- 	depends on !GCC_PLUGINS
- 	depends on !RANDSTRUCT
- 	depends on !DEBUG_INFO_BTF || PAHOLE_HAS_LANG_EXCLUDE
--	depends on !RETHUNK
- 	select CONSTRUCTORS
- 	help
- 	  Enables Rust support in the kernel.
---
-2.42.0
+Tested-by: Ricardo B. Marliere <ricardo@marliere.net>
