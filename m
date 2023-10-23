@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0545F14282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18D214282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PxJn/7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F0BC433C8;
-	Mon, 23 Oct 2023 11:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbaHXRc6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C81DC433C8;
+	Mon, 23 Oct 2023 11:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059426;
-	bh=XxiFUZWroY6+KyMuiG+hxsVcI8JBDlkyuVgt3TkxPa0=;
+	s=korg; t=1698059429;
+	bh=8YHNhdAj3J2SBXU9Tg3+reXFMHeTklAwxiVHiybWZl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2PxJn/7bQha05kxmkNhOE3uM8Je5urahFfg7LZ6pTc7DasqUSmfCHi3XIePq9YRJa
-	 LO1oaU7Ffkffuy3TgbM2vI6I74UPKpMHi5C//JKTTJzPREyGEjRWzcCkY34PYyHAAV
-	 gPlC8s1znpI439XI4mpbKW0gFd65dyJbQ7uDuIE0=
+	b=gbaHXRc67mvuNmNBxOk6ctRHroZMbcNr5deDT/JSunA6e/fgdwq2oKZ6YL/Ojg+V7
+	 uWKwEEM1QKT19GW3B4jFRH8NptH9gAz+FiIQ9dEud6Xq9qFCvTeX0nXe6oO+Y5vIzn
+	 zrYsAthXEz4mrot1vhqvjdhgDFAN6ad+iuq7qIhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 147/241] Bluetooth: hci_sync: delete CIS in BT_OPEN/CONNECT/BOUND when aborting
-Date: Mon, 23 Oct 2023 12:55:33 +0200
-Message-ID: <20231023104837.453264085@linuxfoundation.org>
+Subject: [PATCH 6.5 148/241] Bluetooth: hci_sync: always check if connection is alive before deleting
+Date: Mon, 23 Oct 2023 12:55:34 +0200
+Message-ID: <20231023104837.477017728@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -44,62 +44,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 2889bdd0a9a195533c2103e7b39ab0de844d72f6 ]
+[ Upstream commit a239110ee8e0b0aafa265f0d54f7a16744855e70 ]
 
-Dropped CIS that are in state BT_OPEN/BT_BOUND, and in state BT_CONNECT
-with HCI_CONN_CREATE_CIS unset, should be cleaned up immediately.
-Closing CIS ISO sockets should result to the hci_conn be deleted, so
-that potentially pending CIG removal can run.
+In hci_abort_conn_sync it is possible that conn is deleted concurrently
+by something else, also e.g. when waiting for hdev->lock.  This causes
+double deletion of the conn, so UAF or conn_hash.list corruption.
 
-hci_abort_conn cannot refer to them by handle, since their handle is
-still unset if Set CIG Parameters has not yet completed.
+Fix by having all code paths check that the connection is still in
+conn_hash before deleting it, while holding hdev->lock which prevents
+any races.
 
-This fixes CIS not being terminated if the socket is shut down
-immediately after connection, so that the hci_abort_conn runs before Set
-CIG Parameters completes. See new BlueZ test "ISO Connect Close - Success"
+Log (when powering off while BAP streaming, occurs rarely):
+=======================================================================
+kernel BUG at lib/list_debug.c:56!
+...
+ ? __list_del_entry_valid (lib/list_debug.c:56)
+ hci_conn_del (net/bluetooth/hci_conn.c:154) bluetooth
+ hci_abort_conn_sync (net/bluetooth/hci_sync.c:5415) bluetooth
+ ? __pfx_hci_abort_conn_sync+0x10/0x10 [bluetooth]
+ ? lock_release+0x1d5/0x3c0
+ ? hci_disconnect_all_sync.constprop.0+0xb2/0x230 [bluetooth]
+ ? __pfx_lock_release+0x10/0x10
+ ? __kmem_cache_free+0x14d/0x2e0
+ hci_disconnect_all_sync.constprop.0+0xda/0x230 [bluetooth]
+ ? __pfx_hci_disconnect_all_sync.constprop.0+0x10/0x10 [bluetooth]
+ ? hci_clear_adv_sync+0x14f/0x170 [bluetooth]
+ ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
+ hci_set_powered_sync+0x293/0x450 [bluetooth]
+=======================================================================
 
+Fixes: 94d9ba9f9888 ("Bluetooth: hci_sync: Fix UAF in hci_disconnect_all_sync")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: a239110ee8e0 ("Bluetooth: hci_sync: always check if connection is alive before deleting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ net/bluetooth/hci_sync.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
 diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 73cdd051dd464..d21127e992c0f 100644
+index d21127e992c0f..360813ab0c4db 100644
 --- a/net/bluetooth/hci_sync.c
 +++ b/net/bluetooth/hci_sync.c
-@@ -5302,6 +5302,10 @@ static int hci_connect_cancel_sync(struct hci_dev *hdev, struct hci_conn *conn,
- 		if (test_bit(HCI_CONN_CREATE_CIS, &conn->flags))
- 			return hci_disconnect_sync(hdev, conn, reason);
+@@ -5374,6 +5374,7 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
+ {
+ 	int err = 0;
+ 	u16 handle = conn->handle;
++	bool disconnect = false;
+ 	struct hci_conn *c;
  
-+		/* CIS with no Create CIS sent have nothing to cancel */
-+		if (bacmp(&conn->dst, BDADDR_ANY))
-+			return HCI_ERROR_LOCAL_HOST_TERM;
-+
- 		/* There is no way to cancel a BIS without terminating the BIG
- 		 * which is done later on connection cleanup.
- 		 */
-@@ -5384,13 +5388,11 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
- 		err = hci_reject_conn_sync(hdev, conn, reason);
+ 	switch (conn->state) {
+@@ -5389,24 +5390,15 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
  		break;
  	case BT_OPEN:
--		/* Cleanup bises that failed to be established */
--		if (test_and_clear_bit(HCI_CONN_BIG_SYNC_FAILED, &conn->flags)) {
--			hci_dev_lock(hdev);
--			hci_conn_failed(conn, reason);
--			hci_dev_unlock(hdev);
--		}
--		break;
-+	case BT_BOUND:
-+		hci_dev_lock(hdev);
-+		hci_conn_failed(conn, reason);
-+		hci_dev_unlock(hdev);
-+		return 0;
+ 	case BT_BOUND:
+-		hci_dev_lock(hdev);
+-		hci_conn_failed(conn, reason);
+-		hci_dev_unlock(hdev);
+-		return 0;
++		break;
  	default:
- 		hci_dev_lock(hdev);
- 		conn->state = BT_CLOSED;
+-		hci_dev_lock(hdev);
+-		conn->state = BT_CLOSED;
+-		hci_disconn_cfm(conn, reason);
+-		hci_conn_del(conn);
+-		hci_dev_unlock(hdev);
+-		return 0;
++		disconnect = true;
++		break;
+ 	}
+ 
+ 	hci_dev_lock(hdev);
+ 
+-	/* Check if the connection hasn't been cleanup while waiting
+-	 * commands to complete.
+-	 */
++	/* Check if the connection has been cleaned up concurrently */
+ 	c = hci_conn_hash_lookup_handle(hdev, handle);
+ 	if (!c || c != conn) {
+ 		err = 0;
+@@ -5418,7 +5410,13 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
+ 	 * or in case of LE it was still scanning so it can be cleanup
+ 	 * safely.
+ 	 */
+-	hci_conn_failed(conn, reason);
++	if (disconnect) {
++		conn->state = BT_CLOSED;
++		hci_disconn_cfm(conn, reason);
++		hci_conn_del(conn);
++	} else {
++		hci_conn_failed(conn, reason);
++	}
+ 
+ unlock:
+ 	hci_dev_unlock(hdev);
 -- 
 2.40.1
 
