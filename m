@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918B813FEC
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7032513FEC
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7GBFZb0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09260C433C9;
-	Mon, 23 Oct 2023 11:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAFPw/R/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F59C433C8;
+	Mon, 23 Oct 2023 11:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059283;
-	bh=ChRsNnw4nRmKiC+OQTgmj+QOshAn0xWy1ma8RLloWhQ=;
+	s=korg; t=1698059286;
+	bh=76C/8/vIbCsMcOp6LBk/nkmDv3YDpPxq1qA3UmfYU3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7GBFZb0Hv+D9xB1sWYSyu0p8eOZMmOwWQI7pfl/THw7CfAR67Zel+9TuIp8zASWl
-	 V7K2f+9//9eyniQaKJJu3IScPwQ+vHPEO6M0z4HpTQRpmBepk5cXPF79rvX9MRAjkO
-	 ryeFwwo9/W24M4iOns0Au0yxOrAzdcmHcahk+YQM=
+	b=CAFPw/R/zWdePsIkal55zR3+SkNNEfsIlfAESK1n88MpXV2ea4HrCH4r0MIVswi+4
+	 y3is/2o53MGZBNli+8cWLZDeo8FDGFaQ6imzKfgOxW5q4kJjG87W1kBk8EQUsQUb3n
+	 3S3mJeMmk9h7Qo8yKXyUQmC3f+hcG9ZL2P+Z1HiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trondmy@hammerspace.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 126/241] SUNRPC: Fail quickly when server does not recognize TLS
-Date: Mon, 23 Oct 2023 12:55:12 +0200
-Message-ID: <20231023104836.943506045@linuxfoundation.org>
+Subject: [PATCH 6.5 127/241] SUNRPC/TLS: Lock the lower_xprt during the tls handshake
+Date: Mon, 23 Oct 2023 12:55:13 +0200
+Message-ID: <20231023104836.966801988@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,85 +42,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Anna Schumaker <Anna.Schumaker@Netapp.com>
 
-[ Upstream commit 5623ecfcbec165f040a23248d39680f0cc5c0854 ]
+[ Upstream commit 26e8bfa30dac2ccd29dd25f391dfc73475c33329 ]
 
-rpcauth_checkverf() should return a distinct error code when a
-server recognizes the AUTH_TLS probe but does not support TLS so
-that the client's header decoder can respond appropriately and
-quickly. No retries are necessary is in this case, since the server
-has already affirmatively answered "TLS is unsupported".
+Otherwise we run the risk of having the lower_xprt freed from underneath
+us, causing an oops that looks like this:
 
-Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[  224.150698] BUG: kernel NULL pointer dereference, address: 0000000000000018
+[  224.150951] #PF: supervisor read access in kernel mode
+[  224.151117] #PF: error_code(0x0000) - not-present page
+[  224.151278] PGD 0 P4D 0
+[  224.151361] Oops: 0000 [#1] PREEMPT SMP NOPTI
+[  224.151499] CPU: 2 PID: 99 Comm: kworker/u10:6 Not tainted 6.6.0-rc3-g6465e260f487 #41264 a00b0960990fb7bc6d6a330ee03588b67f08a47b
+[  224.151977] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 2/2/2022
+[  224.152216] Workqueue: xprtiod xs_tcp_tls_setup_socket [sunrpc]
+[  224.152434] RIP: 0010:xs_tcp_tls_setup_socket+0x3cc/0x7e0 [sunrpc]
+[  224.152643] Code: 00 00 48 8b 7c 24 08 e9 f3 01 00 00 48 83 7b c0 00 0f 85 d2 01 00 00 49 8d 84 24 f8 05 00 00 48 89 44 24 10 48 8b 00 48 89 c5 <4c> 8b 68 18 66 41 83 3f 0a 75 71 45 31 ff 4c 89 ef 31 f6 e8 5c 76
+[  224.153246] RSP: 0018:ffffb00ec060fd18 EFLAGS: 00010246
+[  224.153427] RAX: 0000000000000000 RBX: ffff8c06c2e53e40 RCX: 0000000000000001
+[  224.153652] RDX: ffff8c073bca2408 RSI: 0000000000000282 RDI: ffff8c06c259ee00
+[  224.153868] RBP: 0000000000000000 R08: ffffffff9da55aa0 R09: 0000000000000001
+[  224.154084] R10: 00000034306c30f1 R11: 0000000000000002 R12: ffff8c06c2e51800
+[  224.154300] R13: ffff8c06c355d400 R14: 0000000004208160 R15: ffff8c06c2e53820
+[  224.154521] FS:  0000000000000000(0000) GS:ffff8c073bd00000(0000) knlGS:0000000000000000
+[  224.154763] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  224.154940] CR2: 0000000000000018 CR3: 0000000062c1e000 CR4: 0000000000750ee0
+[  224.155157] PKRU: 55555554
+[  224.155244] Call Trace:
+[  224.155325]  <TASK>
+[  224.155395]  ? __die_body+0x68/0xb0
+[  224.155507]  ? page_fault_oops+0x34c/0x3a0
+[  224.155635]  ? _raw_spin_unlock_irqrestore+0xe/0x40
+[  224.155793]  ? exc_page_fault+0x7a/0x1b0
+[  224.155916]  ? asm_exc_page_fault+0x26/0x30
+[  224.156047]  ? xs_tcp_tls_setup_socket+0x3cc/0x7e0 [sunrpc ae3a15912ae37fd51dafbdbc2dbd069117f8f5c8]
+[  224.156367]  ? xs_tcp_tls_setup_socket+0x2fe/0x7e0 [sunrpc ae3a15912ae37fd51dafbdbc2dbd069117f8f5c8]
+[  224.156697]  ? __pfx_xs_tls_handshake_done+0x10/0x10 [sunrpc ae3a15912ae37fd51dafbdbc2dbd069117f8f5c8]
+[  224.157013]  process_scheduled_works+0x24e/0x450
+[  224.157158]  worker_thread+0x21c/0x2d0
+[  224.157275]  ? __pfx_worker_thread+0x10/0x10
+[  224.157409]  kthread+0xe8/0x110
+[  224.157510]  ? __pfx_kthread+0x10/0x10
+[  224.157628]  ret_from_fork+0x37/0x50
+[  224.157741]  ? __pfx_kthread+0x10/0x10
+[  224.157859]  ret_from_fork_asm+0x1b/0x30
+[  224.157983]  </TASK>
+
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth.c     | 11 ++++++++---
- net/sunrpc/auth_tls.c |  4 ++--
- net/sunrpc/clnt.c     | 10 +++++++++-
- 3 files changed, 19 insertions(+), 6 deletions(-)
+ net/sunrpc/xprtsock.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sunrpc/auth.c b/net/sunrpc/auth.c
-index 2f16f9d179662..814b0169f9723 100644
---- a/net/sunrpc/auth.c
-+++ b/net/sunrpc/auth.c
-@@ -769,9 +769,14 @@ int rpcauth_wrap_req(struct rpc_task *task, struct xdr_stream *xdr)
-  * @task: controlling RPC task
-  * @xdr: xdr_stream containing RPC Reply header
-  *
-- * On success, @xdr is updated to point past the verifier and
-- * zero is returned. Otherwise, @xdr is in an undefined state
-- * and a negative errno is returned.
-+ * Return values:
-+ *   %0: Verifier is valid. @xdr now points past the verifier.
-+ *   %-EIO: Verifier is corrupted or message ended early.
-+ *   %-EACCES: Verifier is intact but not valid.
-+ *   %-EPROTONOSUPPORT: Server does not support the requested auth type.
-+ *
-+ * When a negative errno is returned, @xdr is left in an undefined
-+ * state.
-  */
- int
- rpcauth_checkverf(struct rpc_task *task, struct xdr_stream *xdr)
-diff --git a/net/sunrpc/auth_tls.c b/net/sunrpc/auth_tls.c
-index de7678f8a23d2..87f570fd3b00e 100644
---- a/net/sunrpc/auth_tls.c
-+++ b/net/sunrpc/auth_tls.c
-@@ -129,9 +129,9 @@ static int tls_validate(struct rpc_task *task, struct xdr_stream *xdr)
- 	if (*p != rpc_auth_null)
- 		return -EIO;
- 	if (xdr_stream_decode_opaque_inline(xdr, &str, starttls_len) != starttls_len)
--		return -EIO;
-+		return -EPROTONOSUPPORT;
- 	if (memcmp(str, starttls_token, starttls_len))
--		return -EIO;
-+		return -EPROTONOSUPPORT;
- 	return 0;
- }
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index 9f010369100a2..f392718951b1e 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -2645,6 +2645,10 @@ static void xs_tcp_tls_setup_socket(struct work_struct *work)
+ 	rcu_read_lock();
+ 	lower_xprt = rcu_dereference(lower_clnt->cl_xprt);
+ 	rcu_read_unlock();
++
++	if (wait_on_bit_lock(&lower_xprt->state, XPRT_LOCKED, TASK_KILLABLE))
++		goto out_unlock;
++
+ 	status = xs_tls_handshake_sync(lower_xprt, &upper_xprt->xprtsec);
+ 	if (status) {
+ 		trace_rpc_tls_not_started(upper_clnt, upper_xprt);
+@@ -2654,6 +2658,7 @@ static void xs_tcp_tls_setup_socket(struct work_struct *work)
+ 	status = xs_tcp_tls_finish_connecting(lower_xprt, upper_transport);
+ 	if (status)
+ 		goto out_close;
++	xprt_release_write(lower_xprt, NULL);
  
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index be6be7d785315..9fb0ccabc1a26 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2721,7 +2721,15 @@ rpc_decode_header(struct rpc_task *task, struct xdr_stream *xdr)
+ 	trace_rpc_socket_connect(upper_xprt, upper_transport->sock, 0);
+ 	if (!xprt_test_and_set_connected(upper_xprt)) {
+@@ -2675,6 +2680,7 @@ static void xs_tcp_tls_setup_socket(struct work_struct *work)
+ 	return;
  
- out_verifier:
- 	trace_rpc_bad_verifier(task);
--	goto out_garbage;
-+	switch (error) {
-+	case -EPROTONOSUPPORT:
-+		goto out_err;
-+	case -EACCES:
-+		/* Re-encode with a fresh cred */
-+		fallthrough;
-+	default:
-+		goto out_garbage;
-+	}
+ out_close:
++	xprt_release_write(lower_xprt, NULL);
+ 	rpc_shutdown_client(lower_clnt);
  
- out_msg_denied:
- 	error = -EACCES;
+ 	/* xprt_force_disconnect() wakes tasks with a fixed tk_status code.
 -- 
 2.40.1
 
