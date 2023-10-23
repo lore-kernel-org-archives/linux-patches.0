@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A9B15ACB
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA5E15ACB
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNkWgV/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8CAC433CA;
-	Mon, 23 Oct 2023 11:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LyYCnMVJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0C2C433C8;
+	Mon, 23 Oct 2023 11:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060335;
-	bh=bYj9fRVFkj9WjCM/wwqVppLvRzJGI11Bar5q2KjuVL8=;
+	s=korg; t=1698060338;
+	bh=axR6dHPaP1OYJitm6jD8qB0sPQW/Bb0yfdakyljpcdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rNkWgV/Ul0ueSChc2XQj/GYY3hwGcyZgG5CvwN7ZCPQ2fbVx4XTdAQqe/hcT4/wAf
-	 pmoMxWWqUb3YPeqw7Ovzv5CJPBYWZ91rsWzVeloowATleIVgfSZIgQ2Puz+Ok/5bs+
-	 1MAq7U4bTSWGCFQs4bOS+VmKhCCA6VGGeNps0XF8=
+	b=LyYCnMVJQrUaD43GKoN3qVrBViYpsK60uWZYviqy6J3dymSLEwPHQXU1oGqH93BLl
+	 E1GzISau2rr0AnbeLLM6X3VxkiScfCAjhWxCEqTPDx/d1fZYss0CQKV33peOOGuatk
+	 DIxlH6fUrIqw63rcYz5e+B0XNIwD5lRdOnEHWA3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wen Gong <quic_wgong@quicinc.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/196] wifi: mac80211: work around Cisco AP 9115 VHT MPDU length
-Date: Mon, 23 Oct 2023 12:56:16 +0200
-Message-ID: <20231023104831.662581089@linuxfoundation.org>
+Subject: [PATCH 6.1 112/196] wifi: mac80211: allow transmitting EAPOL frames with tainted key
+Date: Mon, 23 Oct 2023 12:56:17 +0200
+Message-ID: <20231023104831.688898996@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,175 +42,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Wen Gong <quic_wgong@quicinc.com>
 
-[ Upstream commit 084cf2aeca97566db4fa15d55653c1cba2db83ed ]
+[ Upstream commit 61304336c67358d49a989e5e0060d8c99bad6ca8 ]
 
-Cisco AP module 9115 with FW 17.3 has a bug and sends a too
-large maximum MPDU length in the association response
-(indicating 12k) that it cannot actually process.
+Lower layer device driver stop/wake TX by calling ieee80211_stop_queue()/
+ieee80211_wake_queue() while hw scan. Sometimes hw scan and PTK rekey are
+running in parallel, when M4 sent from wpa_supplicant arrive while the TX
+queue is stopped, then the M4 will pending send, and then new key install
+from wpa_supplicant. After TX queue wake up by lower layer device driver,
+the M4 will be dropped by below call stack.
 
-Work around that by taking the minimum between what's in the
-association response and the BSS elements (from beacon or
-probe response).
+When key install started, the current key flag is set KEY_FLAG_TAINTED in
+ieee80211_pairwise_rekey(), and then mac80211 wait key install complete by
+lower layer device driver. Meanwhile ieee80211_tx_h_select_key() will return
+TX_DROP for the M4 in step 12 below, and then ieee80211_free_txskb() called
+by ieee80211_tx_dequeue(), so the M4 will not send and free, then the rekey
+process failed becaue AP not receive M4. Please see details in steps below.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230918140607.d1966a9a532e.I090225babb7cd4d1081ee9acd40e7de7e41c15ae@changeid
+There are a interval between KEY_FLAG_TAINTED set for current key flag and
+install key complete by lower layer device driver, the KEY_FLAG_TAINTED is
+set in this interval, all packet including M4 will be dropped in this
+interval, the interval is step 8~13 as below.
+
+issue steps:
+      TX thread                 install key thread
+1.   stop_queue                      -idle-
+2.   sending M4                      -idle-
+3.   M4 pending                      -idle-
+4.     -idle-                  starting install key from wpa_supplicant
+5.     -idle-                  =>ieee80211_key_replace()
+6.     -idle-                  =>ieee80211_pairwise_rekey() and set
+                                 currently key->flags |= KEY_FLAG_TAINTED
+7.     -idle-                  =>ieee80211_key_enable_hw_accel()
+8.     -idle-                  =>drv_set_key() and waiting key install
+                                 complete from lower layer device driver
+9.   wake_queue                     -waiting state-
+10.  re-sending M4                  -waiting state-
+11.  =>ieee80211_tx_h_select_key()  -waiting state-
+12.  drop M4 by KEY_FLAG_TAINTED    -waiting state-
+13.    -idle-                   install key complete with success/fail
+                                  success: clear flag KEY_FLAG_TAINTED
+                                  fail: start disconnect
+
+Hence add check in step 11 above to allow the EAPOL send out in the
+interval. If lower layer device driver use the old key/cipher to encrypt
+the M4, then AP received/decrypt M4 correctly, after M4 send out, lower
+layer device driver install the new key/cipher to hardware and return
+success.
+
+If lower layer device driver use new key/cipher to send the M4, then AP
+will/should drop the M4, then it is same result with this issue, AP will/
+should kick out station as well as this issue.
+
+issue log:
+kworker/u16:4-5238  [000]  6456.108926: stop_queue:           phy1 queue:0, reason:0
+wpa_supplicant-961  [003]  6456.119737: rdev_tx_control_port: wiphy_name=phy1 name=wlan0 ifindex=6 dest=ARRAY[9e, 05, 31, 20, 9b, d0] proto=36488 unencrypted=0
+wpa_supplicant-961  [003]  6456.119839: rdev_return_int_cookie: phy1, returned 0, cookie: 504
+wpa_supplicant-961  [003]  6456.120287: rdev_add_key:         phy1, netdev:wlan0(6), key_index: 0, mode: 0, pairwise: true, mac addr: 9e:05:31:20:9b:d0
+wpa_supplicant-961  [003]  6456.120453: drv_set_key:          phy1 vif:wlan0(2) sta:9e:05:31:20:9b:d0 cipher:0xfac04, flags=0x9, keyidx=0, hw_key_idx=0
+kworker/u16:9-3829  [001]  6456.168240: wake_queue:           phy1 queue:0, reason:0
+kworker/u16:9-3829  [001]  6456.168255: drv_wake_tx_queue:    phy1 vif:wlan0(2) sta:9e:05:31:20:9b:d0 ac:0 tid:7
+kworker/u16:9-3829  [001]  6456.168305: cfg80211_control_port_tx_status: wdev(1), cookie: 504, ack: false
+wpa_supplicant-961  [003]  6459.167982: drv_return_int:       phy1 - -110
+
+issue call stack:
+nl80211_frame_tx_status+0x230/0x340 [cfg80211]
+cfg80211_control_port_tx_status+0x1c/0x28 [cfg80211]
+ieee80211_report_used_skb+0x374/0x3e8 [mac80211]
+ieee80211_free_txskb+0x24/0x40 [mac80211]
+ieee80211_tx_dequeue+0x644/0x954 [mac80211]
+ath10k_mac_tx_push_txq+0xac/0x238 [ath10k_core]
+ath10k_mac_op_wake_tx_queue+0xac/0xe0 [ath10k_core]
+drv_wake_tx_queue+0x80/0x168 [mac80211]
+__ieee80211_wake_txqs+0xe8/0x1c8 [mac80211]
+_ieee80211_wake_txqs+0xb4/0x120 [mac80211]
+ieee80211_wake_txqs+0x48/0x80 [mac80211]
+tasklet_action_common+0xa8/0x254
+tasklet_action+0x2c/0x38
+__do_softirq+0xdc/0x384
+
+Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
+Link: https://lore.kernel.org/r/20230801064751.25803-1-quic_wgong@quicinc.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c         |  3 ++-
- net/mac80211/ibss.c        |  2 +-
- net/mac80211/ieee80211_i.h |  1 +
- net/mac80211/mesh_plink.c  |  2 +-
- net/mac80211/mlme.c        | 27 +++++++++++++++++++++++++--
- net/mac80211/vht.c         | 16 ++++++++++++++--
- 6 files changed, 44 insertions(+), 7 deletions(-)
+ net/mac80211/tx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 0167413d56972..ee9f455bb2d18 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1748,7 +1748,8 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
- 	/* VHT can override some HT caps such as the A-MSDU max length */
- 	if (params->vht_capa)
- 		ieee80211_vht_cap_ie_to_sta_vht_cap(sdata, sband,
--						    params->vht_capa, link_sta);
-+						    params->vht_capa, NULL,
-+						    link_sta);
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 2f9e1abdf375d..2db103a56a28f 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -680,7 +680,8 @@ ieee80211_tx_h_select_key(struct ieee80211_tx_data *tx)
+ 		}
  
- 	if (params->he_capa)
- 		ieee80211_he_cap_ie_to_sta_he_cap(sdata, sband,
-diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
-index 9dffc30795887..79d2c55052897 100644
---- a/net/mac80211/ibss.c
-+++ b/net/mac80211/ibss.c
-@@ -1068,7 +1068,7 @@ static void ieee80211_update_sta_info(struct ieee80211_sub_if_data *sdata,
- 						   &chandef);
- 			memcpy(&cap_ie, elems->vht_cap_elem, sizeof(cap_ie));
- 			ieee80211_vht_cap_ie_to_sta_vht_cap(sdata, sband,
--							    &cap_ie,
-+							    &cap_ie, NULL,
- 							    &sta->deflink);
- 			if (memcmp(&cap, &sta->sta.deflink.vht_cap, sizeof(cap)))
- 				rates_updated |= true;
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 27479bbb093ac..99a976ea17498 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -2062,6 +2062,7 @@ void
- ieee80211_vht_cap_ie_to_sta_vht_cap(struct ieee80211_sub_if_data *sdata,
- 				    struct ieee80211_supported_band *sband,
- 				    const struct ieee80211_vht_cap *vht_cap_ie,
-+				    const struct ieee80211_vht_cap *vht_cap_ie2,
- 				    struct link_sta_info *link_sta);
- enum ieee80211_sta_rx_bandwidth
- ieee80211_sta_cap_rx_bw(struct link_sta_info *link_sta);
-diff --git a/net/mac80211/mesh_plink.c b/net/mac80211/mesh_plink.c
-index ddfe5102b9a43..bd0b7c189adfa 100644
---- a/net/mac80211/mesh_plink.c
-+++ b/net/mac80211/mesh_plink.c
-@@ -443,7 +443,7 @@ static void mesh_sta_info_init(struct ieee80211_sub_if_data *sdata,
- 		changed |= IEEE80211_RC_BW_CHANGED;
+ 		if (unlikely(tx->key && tx->key->flags & KEY_FLAG_TAINTED &&
+-			     !ieee80211_is_deauth(hdr->frame_control)))
++			     !ieee80211_is_deauth(hdr->frame_control)) &&
++			     tx->skb->protocol != tx->sdata->control_port_protocol)
+ 			return TX_DROP;
  
- 	ieee80211_vht_cap_ie_to_sta_vht_cap(sdata, sband,
--					    elems->vht_cap_elem,
-+					    elems->vht_cap_elem, NULL,
- 					    &sta->deflink);
- 
- 	ieee80211_he_cap_ie_to_sta_he_cap(sdata, sband, elems->he_cap,
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index dc9e7eb7dd857..c07645c999f9a 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -4083,10 +4083,33 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
- 						  elems->ht_cap_elem,
- 						  link_sta);
- 
--	if (elems->vht_cap_elem && !(link->u.mgd.conn_flags & IEEE80211_CONN_DISABLE_VHT))
-+	if (elems->vht_cap_elem &&
-+	    !(link->u.mgd.conn_flags & IEEE80211_CONN_DISABLE_VHT)) {
-+		const struct ieee80211_vht_cap *bss_vht_cap = NULL;
-+		const struct cfg80211_bss_ies *ies;
-+
-+		/*
-+		 * Cisco AP module 9115 with FW 17.3 has a bug and sends a
-+		 * too large maximum MPDU length in the association response
-+		 * (indicating 12k) that it cannot actually process ...
-+		 * Work around that.
-+		 */
-+		rcu_read_lock();
-+		ies = rcu_dereference(cbss->ies);
-+		if (ies) {
-+			const struct element *elem;
-+
-+			elem = cfg80211_find_elem(WLAN_EID_VHT_CAPABILITY,
-+						  ies->data, ies->len);
-+			if (elem && elem->datalen >= sizeof(*bss_vht_cap))
-+				bss_vht_cap = (const void *)elem->data;
-+		}
-+
- 		ieee80211_vht_cap_ie_to_sta_vht_cap(sdata, sband,
- 						    elems->vht_cap_elem,
--						    link_sta);
-+						    bss_vht_cap, link_sta);
-+		rcu_read_unlock();
-+	}
- 
- 	if (elems->he_operation && !(link->u.mgd.conn_flags & IEEE80211_CONN_DISABLE_HE) &&
- 	    elems->he_cap) {
-diff --git a/net/mac80211/vht.c b/net/mac80211/vht.c
-index 803de58814852..f7526be8a1c7e 100644
---- a/net/mac80211/vht.c
-+++ b/net/mac80211/vht.c
-@@ -4,7 +4,7 @@
-  *
-  * Portions of this file
-  * Copyright(c) 2015 - 2016 Intel Deutschland GmbH
-- * Copyright (C) 2018 - 2022 Intel Corporation
-+ * Copyright (C) 2018 - 2023 Intel Corporation
-  */
- 
- #include <linux/ieee80211.h>
-@@ -116,12 +116,14 @@ void
- ieee80211_vht_cap_ie_to_sta_vht_cap(struct ieee80211_sub_if_data *sdata,
- 				    struct ieee80211_supported_band *sband,
- 				    const struct ieee80211_vht_cap *vht_cap_ie,
-+				    const struct ieee80211_vht_cap *vht_cap_ie2,
- 				    struct link_sta_info *link_sta)
- {
- 	struct ieee80211_sta_vht_cap *vht_cap = &link_sta->pub->vht_cap;
- 	struct ieee80211_sta_vht_cap own_cap;
- 	u32 cap_info, i;
- 	bool have_80mhz;
-+	u32 mpdu_len;
- 
- 	memset(vht_cap, 0, sizeof(*vht_cap));
- 
-@@ -317,11 +319,21 @@ ieee80211_vht_cap_ie_to_sta_vht_cap(struct ieee80211_sub_if_data *sdata,
- 
- 	link_sta->pub->bandwidth = ieee80211_sta_cur_vht_bw(link_sta);
- 
-+	/*
-+	 * Work around the Cisco 9115 FW 17.3 bug by taking the min of
-+	 * both reported MPDU lengths.
-+	 */
-+	mpdu_len = vht_cap->cap & IEEE80211_VHT_CAP_MAX_MPDU_MASK;
-+	if (vht_cap_ie2)
-+		mpdu_len = min_t(u32, mpdu_len,
-+				 le32_get_bits(vht_cap_ie2->vht_cap_info,
-+					       IEEE80211_VHT_CAP_MAX_MPDU_MASK));
-+
- 	/*
- 	 * FIXME - should the amsdu len be per link? store per link
- 	 * and maintain a minimum?
- 	 */
--	switch (vht_cap->cap & IEEE80211_VHT_CAP_MAX_MPDU_MASK) {
-+	switch (mpdu_len) {
- 	case IEEE80211_VHT_CAP_MAX_MPDU_LENGTH_11454:
- 		link_sta->pub->agg.max_amsdu_len = IEEE80211_MAX_MPDU_LEN_VHT_11454;
- 		break;
+ 		if (!skip_hw && tx->key &&
 -- 
 2.40.1
 
