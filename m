@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFD015E85
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222D215E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYRhbcgM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C78C433C7;
-	Mon, 23 Oct 2023 11:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewPFH/vG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F077C433C8;
+	Mon, 23 Oct 2023 11:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060406;
-	bh=thjgeJWthgqRx/M5+1a5F1fjeYXqkglHLxTT57GK1Uo=;
+	s=korg; t=1698060410;
+	bh=dGNl86Z+aNyDiVYYnKAJ3C50Yj+XWtySm8tnsOHvQO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QYRhbcgMwk6ppA16s6Yw81M4uyRBMTrjxpBeKLTyk7/LR7lYmMpSOC14mzMtK1CHn
-	 R1/cVMvlKuzap96sh0EYWs1SgkuWLBYYjFQwKyXb2IdJ99b7eSsGSppDq9Bc36ANod
-	 th8BEJ9J35NuaiKy3dtjk6QiSsvWAs1/YxZE3WeA=
+	b=ewPFH/vGp0LCxbET2UCSxq8IhV4T+WSJIoThQZmx/jnP25N7TN1h988AR1zffUVIL
+	 rtm7x4neP48hMN6c+Sr/T6WR5NNToEIRybKASljI9IhsuQTLwmGqhnC6cwCVX3EhQN
+	 pgYicDfLQZ1mEYUsdY6feme8C2fGBMyjP4UNu73U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Maurizio Lombardi <mlombard@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Yi Zhang <yi.zhang@redhat.com>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 161/196] nvmet-auth: complete a request only after freeing the dhchap pointers
-Date: Mon, 23 Oct 2023 12:57:06 +0200
-Message-ID: <20231023104832.998999339@linuxfoundation.org>
+Subject: [PATCH 6.1 162/196] nvme-rdma: do not try to stop unallocated queues
+Date: Mon, 23 Oct 2023 12:57:07 +0200
+Message-ID: <20231023104833.024654314@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -44,98 +45,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit f965b281fd872b2e18bd82dd97730db9834d0750 upstream.
+commit 3820c4fdc247b6f0a4162733bdb8ddf8f2e8a1e4 upstream.
 
-It may happen that the work to destroy a queue
-(for example nvmet_tcp_release_queue_work()) is started while
-an auth-send or auth-receive command is still completing.
+Trying to stop a queue which hasn't been allocated will result
+in a warning due to calling mutex_lock() against an uninitialized mutex.
 
-nvmet_sq_destroy() will block, waiting for all the references
-to the sq to be dropped, the last reference is then
-dropped when nvmet_req_complete() is called.
+ DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+ WARNING: CPU: 4 PID: 104150 at kernel/locking/mutex.c:579
 
-When this happens, both nvmet_sq_destroy() and
-nvmet_execute_auth_send()/_receive() will free the dhchap pointers by
-calling nvmet_auth_sq_free().
-Since there isn't any lock, the two threads may race against each other,
-causing double frees and memory corruptions, as reported by KASAN.
+ Call trace:
+  RIP: 0010:__mutex_lock+0x1173/0x14a0
+  nvme_rdma_stop_queue+0x1b/0xa0 [nvme_rdma]
+  nvme_rdma_teardown_io_queues.part.0+0xb0/0x1d0 [nvme_rdma]
+  nvme_rdma_delete_ctrl+0x50/0x100 [nvme_rdma]
+  nvme_do_delete_ctrl+0x149/0x158 [nvme_core]
 
-Reproduced by stress blktests nvme/041 nvme/042 nvme/043
-
- nvme nvme2: qid 0: authenticated with hash hmac(sha512) dhgroup ffdhe4096
- ==================================================================
- BUG: KASAN: double-free in kfree+0xec/0x4b0
-
- Call Trace:
-  <TASK>
-  kfree+0xec/0x4b0
-  nvmet_auth_sq_free+0xe1/0x160 [nvmet]
-  nvmet_execute_auth_send+0x482/0x16d0 [nvmet]
-  process_one_work+0x8e5/0x1510
-
- Allocated by task 191846:
-  __kasan_kmalloc+0x81/0xa0
-  nvmet_auth_ctrl_sesskey+0xf6/0x380 [nvmet]
-  nvmet_auth_reply+0x119/0x990 [nvmet]
-
- Freed by task 143270:
-  kfree+0xec/0x4b0
-  nvmet_auth_sq_free+0xe1/0x160 [nvmet]
-  process_one_work+0x8e5/0x1510
-
-Fix this bug by calling nvmet_req_complete() only after freeing the
-pointers, so we will prevent the race by holding the sq reference.
-
-V2: remove redundant code
-
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
 Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Tested-by: Yi Zhang <yi.zhang@redhat.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/nvme/host/rdma.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -337,19 +337,21 @@ done:
- 			 __func__, ctrl->cntlid, req->sq->qid,
- 			 status, req->error_loc);
- 	req->cqe->result.u64 = 0;
--	nvmet_req_complete(req, status);
- 	if (req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2 &&
- 	    req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
- 		unsigned long auth_expire_secs = ctrl->kato ? ctrl->kato : 120;
+--- a/drivers/nvme/host/rdma.c
++++ b/drivers/nvme/host/rdma.c
+@@ -643,6 +643,9 @@ static void __nvme_rdma_stop_queue(struc
  
- 		mod_delayed_work(system_wq, &req->sq->auth_expired_work,
- 				 auth_expire_secs * HZ);
--		return;
-+		goto complete;
- 	}
- 	/* Final states, clear up variables */
- 	nvmet_auth_sq_free(req->sq);
- 	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE2)
- 		nvmet_ctrl_fatal_error(ctrl);
+ static void nvme_rdma_stop_queue(struct nvme_rdma_queue *queue)
+ {
++	if (!test_bit(NVME_RDMA_Q_ALLOCATED, &queue->flags))
++		return;
 +
-+complete:
-+	nvmet_req_complete(req, status);
- }
- 
- static int nvmet_auth_challenge(struct nvmet_req *req, void *d, int al)
-@@ -527,11 +529,12 @@ void nvmet_execute_auth_receive(struct n
- 	kfree(d);
- done:
- 	req->cqe->result.u64 = 0;
--	nvmet_req_complete(req, status);
-+
- 	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2)
- 		nvmet_auth_sq_free(req->sq);
- 	else if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE1) {
- 		nvmet_auth_sq_free(req->sq);
- 		nvmet_ctrl_fatal_error(ctrl);
- 	}
-+	nvmet_req_complete(req, status);
- }
+ 	mutex_lock(&queue->queue_lock);
+ 	if (test_and_clear_bit(NVME_RDMA_Q_LIVE, &queue->flags))
+ 		__nvme_rdma_stop_queue(queue);
 
 
