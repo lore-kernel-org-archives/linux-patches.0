@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7653A15E87
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671C715E87
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btbu2KBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8178C433C8;
-	Mon, 23 Oct 2023 11:34:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yedebhuT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D916FC433CA;
+	Mon, 23 Oct 2023 11:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060843;
-	bh=MejTkWNhPg6F+kFWKR+w1JT9s79kHAIrLDkJFMfE67s=;
+	s=korg; t=1698060846;
+	bh=O7Grx6i+X/C+lpPfBmsjfoNhSWy9gN9aSLK5rPs2kQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btbu2KBW+nSndPxbOvcO4i8WMLZVv5X7hqH7HLfKOyXPneCSF7cQKzgVyI7S9qbrQ
-	 tVEHHjSSA9roWPVBLmKcbibkVIUa8XGBehnZh1h1iMBhJQThaaTz6CRdnKgQADRMkE
-	 NA4z1I8ucWzq6MvnM0KFhBQOVh8XP6xExJt+lQMY=
+	b=yedebhuTN4riLJwXfhWqO2NeYpVvUf/c9wWRz82w60bnseKOh1N1HqwuFxzlj50yk
+	 r73+T+XjjWojzCdWi+LhWFmbQPdnKARr0reLCVFE7+HnZAjvLlmkJgKPHWTQWcYfBn
+	 6isi9yOvcgUzAVjyhnimeai40h2IxiyGbnDrU2n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.4 112/123] perf: Disallow mis-matched inherited group reads
-Date: Mon, 23 Oct 2023 12:57:50 +0200
-Message-ID: <20231023104821.487473165@linuxfoundation.org>
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 5.4 113/123] s390/pci: fix iommu bitmap allocation
+Date: Mon, 23 Oct 2023 12:57:51 +0200
+Message-ID: <20231023104821.525143064@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -41,142 +42,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit 32671e3799ca2e4590773fd0e63aaa4229e50c06 upstream.
+commit c1ae1c59c8c6e0b66a718308c623e0cb394dab6b upstream.
 
-Because group consistency is non-atomic between parent (filedesc) and children
-(inherited) events, it is possible for PERF_FORMAT_GROUP read() to try and sum
-non-matching counter groups -- with non-sensical results.
+Since the fixed commits both zdev->iommu_bitmap and zdev->lazy_bitmap
+are allocated as vzalloc(zdev->iommu_pages / 8). The problem is that
+zdev->iommu_bitmap is a pointer to unsigned long but the above only
+yields an allocation that is a multiple of sizeof(unsigned long) which
+is 8 on s390x if the number of IOMMU pages is a multiple of 64.
+This in turn is the case only if the effective IOMMU aperture is
+a multiple of 64 * 4K = 256K. This is usually the case and so didn't
+cause visible issues since both the virt_to_phys(high_memory) reduced
+limit and hardware limits use nice numbers.
 
-Add group_generation to distinguish the case where a parent group removes and
-adds an event and thus has the same number, but a different configuration of
-events as inherited groups.
+Under KVM, and in particular with QEMU limiting the IOMMU aperture to
+the vfio DMA limit (default 65535), it is possible for the reported
+aperture not to be a multiple of 256K however. In this case we end up
+with an iommu_bitmap whose allocation is not a multiple of
+8 causing bitmap operations to access it out of bounds.
 
-This became a problem when commit fa8c269353d5 ("perf/core: Invert
-perf_read_group() loops") flipped the order of child_list and sibling_list.
-Previously it would iterate the group (sibling_list) first, and for each
-sibling traverse the child_list. In this order, only the group composition of
-the parent is relevant. By flipping the order the group composition of the
-child (inherited) events becomes an issue and the mis-match in group
-composition becomes evident.
+Sadly we can't just fix this in the obvious way and use bitmap_zalloc()
+because for large RAM systems (tested on 8 TiB) the zdev->iommu_bitmap
+grows too large for kmalloc(). So add our own bitmap_vzalloc() wrapper.
+This might be a candidate for common code, but this area of code will
+be replaced by the upcoming conversion to use the common code DMA API on
+s390 so just add a local routine.
 
-That said; even prior to this commit, while reading of a group that is not
-equally inherited was not broken, it still made no sense.
-
-(Ab)use ECHILD as error return to indicate issues with child process group
-composition.
-
-Fixes: fa8c269353d5 ("perf/core: Invert perf_read_group() loops")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20231018115654.GK33217@noisy.programming.kicks-ass.net
+Fixes: 224593215525 ("s390/pci: use virtual memory for iommu bitmap")
+Fixes: 13954fd6913a ("s390/pci_dma: improve lazy flush for unmap")
+Cc: stable@vger.kernel.org
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/perf_event.h |    1 +
- kernel/events/core.c       |   39 +++++++++++++++++++++++++++++++++------
- 2 files changed, 34 insertions(+), 6 deletions(-)
+ arch/s390/pci/pci_dma.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/include/linux/perf_event.h
-+++ b/include/linux/perf_event.h
-@@ -607,6 +607,7 @@ struct perf_event {
- 	/* The cumulative AND of all event_caps for events in this group. */
- 	int				group_caps;
- 
-+	unsigned int			group_generation;
- 	struct perf_event		*group_leader;
- 	struct pmu			*pmu;
- 	void				*pmu_private;
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -1849,6 +1849,7 @@ static void perf_group_attach(struct per
- 
- 	list_add_tail(&event->sibling_list, &group_leader->sibling_list);
- 	group_leader->nr_siblings++;
-+	group_leader->group_generation++;
- 
- 	perf_event__header_size(group_leader);
- 
-@@ -2004,6 +2005,7 @@ static void perf_group_detach(struct per
- 	if (event->group_leader != event) {
- 		list_del_init(&event->sibling_list);
- 		event->group_leader->nr_siblings--;
-+		event->group_leader->group_generation++;
- 		goto out;
+--- a/arch/s390/pci/pci_dma.c
++++ b/arch/s390/pci/pci_dma.c
+@@ -543,6 +543,17 @@ static void s390_dma_unmap_sg(struct dev
+ 		s->dma_length = 0;
  	}
- 
-@@ -4854,7 +4856,7 @@ static int __perf_read_group_add(struct
- 					u64 read_format, u64 *values)
+ }
++
++static unsigned long *bitmap_vzalloc(size_t bits, gfp_t flags)
++{
++	size_t n = BITS_TO_LONGS(bits);
++	size_t bytes;
++
++	if (unlikely(check_mul_overflow(n, sizeof(unsigned long), &bytes)))
++		return NULL;
++
++	return vzalloc(bytes);
++}
+ 	
+ int zpci_dma_init_device(struct zpci_dev *zdev)
  {
- 	struct perf_event_context *ctx = leader->ctx;
--	struct perf_event *sub;
-+	struct perf_event *sub, *parent;
- 	unsigned long flags;
- 	int n = 1; /* skip @nr */
- 	int ret;
-@@ -4864,6 +4866,33 @@ static int __perf_read_group_add(struct
- 		return ret;
- 
- 	raw_spin_lock_irqsave(&ctx->lock, flags);
-+	/*
-+	 * Verify the grouping between the parent and child (inherited)
-+	 * events is still in tact.
-+	 *
-+	 * Specifically:
-+	 *  - leader->ctx->lock pins leader->sibling_list
-+	 *  - parent->child_mutex pins parent->child_list
-+	 *  - parent->ctx->mutex pins parent->sibling_list
-+	 *
-+	 * Because parent->ctx != leader->ctx (and child_list nests inside
-+	 * ctx->mutex), group destruction is not atomic between children, also
-+	 * see perf_event_release_kernel(). Additionally, parent can grow the
-+	 * group.
-+	 *
-+	 * Therefore it is possible to have parent and child groups in a
-+	 * different configuration and summing over such a beast makes no sense
-+	 * what so ever.
-+	 *
-+	 * Reject this.
-+	 */
-+	parent = leader->parent;
-+	if (parent &&
-+	    (parent->group_generation != leader->group_generation ||
-+	     parent->nr_siblings != leader->nr_siblings)) {
-+		ret = -ECHILD;
-+		goto unlock;
-+	}
- 
- 	/*
- 	 * Since we co-schedule groups, {enabled,running} times of siblings
-@@ -4893,8 +4922,9 @@ static int __perf_read_group_add(struct
- 			values[n++] = primary_event_id(sub);
+@@ -579,13 +590,13 @@ int zpci_dma_init_device(struct zpci_dev
+ 				zdev->end_dma - zdev->start_dma + 1);
+ 	zdev->end_dma = zdev->start_dma + zdev->iommu_size - 1;
+ 	zdev->iommu_pages = zdev->iommu_size >> PAGE_SHIFT;
+-	zdev->iommu_bitmap = vzalloc(zdev->iommu_pages / 8);
++	zdev->iommu_bitmap = bitmap_vzalloc(zdev->iommu_pages, GFP_KERNEL);
+ 	if (!zdev->iommu_bitmap) {
+ 		rc = -ENOMEM;
+ 		goto free_dma_table;
  	}
- 
-+unlock:
- 	raw_spin_unlock_irqrestore(&ctx->lock, flags);
--	return 0;
-+	return ret;
- }
- 
- static int perf_read_group(struct perf_event *event,
-@@ -4913,10 +4943,6 @@ static int perf_read_group(struct perf_e
- 
- 	values[0] = 1 + leader->nr_siblings;
- 
--	/*
--	 * By locking the child_mutex of the leader we effectively
--	 * lock the child list of all siblings.. XXX explain how.
--	 */
- 	mutex_lock(&leader->child_mutex);
- 
- 	ret = __perf_read_group_add(leader, read_format, values);
-@@ -11989,6 +12015,7 @@ static int inherit_group(struct perf_eve
- 		    !perf_get_aux_event(child_ctr, leader))
- 			return -EINVAL;
- 	}
-+	leader->group_generation = parent_event->group_generation;
- 	return 0;
- }
- 
+ 	if (!s390_iommu_strict) {
+-		zdev->lazy_bitmap = vzalloc(zdev->iommu_pages / 8);
++		zdev->lazy_bitmap = bitmap_vzalloc(zdev->iommu_pages, GFP_KERNEL);
+ 		if (!zdev->lazy_bitmap) {
+ 			rc = -ENOMEM;
+ 			goto free_bitmap;
 
 
