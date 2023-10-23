@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3B615E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE2515E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiO9/nT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC46DC433C9;
-	Mon, 23 Oct 2023 11:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DA6SXqG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB60AC433C7;
+	Mon, 23 Oct 2023 11:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060644;
-	bh=uBrvGhiM5jKZjHQbGACgmHpFheAQLh7DmswHbHkF/zg=;
+	s=korg; t=1698060647;
+	bh=tt8kn+p7dPolhVRgn3LN2gxLlBtqHsrGlNkuY/f42H4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hiO9/nT5zPShiH8VQPtkwTI3zGjyyYjM6W3+erZWJI3maEN7UhukX4zkBbNibEztU
-	 S24XuqLk1O9qHJrwUkkrfp+TXZg3vDflPTRKKB+yFv7kebBXS3p9MCTLOnYHS1cUHD
-	 4hSLFq9unAMPpx0iS94qph0v0V8b/B309xkTAqxE=
+	b=DA6SXqG3bY1asiNU7PAOddUXKVFScDG4yVRuSktzl8CO3jHNn6aSlwkESnKUruwzt
+	 F4Vtpt5+Cw9tO1um1HnwP4Zo5l4OpytlAeYiOQIT7W2L/uzrCEUh2pMsLol3gZKdoV
+	 h5Q0qu0OG0sUxKG1pq9xfwKsJzVzh4F3T03qpb6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Fuzzey <martin.fuzzey@flowbird.group>,
-	Lucas Stach <l.stach@pengutronix.de>
-Subject: [PATCH 5.4 008/123] drm: etvnaviv: fix bad backport leading to warning
-Date: Mon, 23 Oct 2023 12:56:06 +0200
-Message-ID: <20231023104818.009487342@linuxfoundation.org>
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 5.4 038/123] x86/cpu: Fix AMD erratum #1485 on Zen4-based CPUs
+Date: Mon, 23 Oct 2023 12:56:36 +0200
+Message-ID: <20231023104819.005303582@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -35,89 +36,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Fuzzey <martin.fuzzey@flowbird.group>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-When updating from 5.4.219 -> 5.4.256 I started getting a runtime warning:
+commit f454b18e07f518bcd0c05af17a2239138bff52de upstream.
 
-[   58.229857] ------------[ cut here ]------------
-[   58.234599] WARNING: CPU: 1 PID: 565 at drivers/gpu/drm/drm_gem.c:1020 drm_gem_object_put+0x90/0x98
-[   58.249935] Modules linked in: qmi_wwan cdc_wdm option usb_wwan smsc95xx rsi_usb rsi_91x btrsi ci_hdrc_imx ci_hdrc
-[   58.260499] ueventd: modprobe usb:v2F8Fp7FFFd0200dc00dsc00dp00icFEisc01ip02in00 done
-[   58.288877] CPU: 1 PID: 565 Comm: android.display Not tainted 5.4.256pkn-5.4-bsp-snapshot-svn-7423 #2195
-[   58.288883] Hardware name: Freescale i.MX6 Quad/DualLite (Device Tree)
-[   58.288888] Backtrace:
-[   58.288912] [<c010e784>] (dump_backtrace) from [<c010eaa4>] (show_stack+0x20/0x24)
-[   58.288920]  r7:00000000 r6:60010013 r5:00000000 r4:c14cd224
-[   58.328337] [<c010ea84>] (show_stack) from [<c0cf9ca4>] (dump_stack+0xe8/0x120)
-[   58.335661] [<c0cf9bbc>] (dump_stack) from [<c012efd0>] (__warn+0xd4/0xe8)
-[   58.342542]  r10:eda54000 r9:c06ca53c r8:000003fc r7:00000009 r6:c111ed54 r5:00000000
-[   58.350374]  r4:00000000 r3:76cf564a
-[   58.353957] [<c012eefc>] (__warn) from [<c012f094>] (warn_slowpath_fmt+0xb0/0xc0)
-[   58.361445]  r9:00000009 r8:c06ca53c r7:000003fc r6:c111ed54 r5:c1406048 r4:00000000
-[   58.369198] [<c012efe8>] (warn_slowpath_fmt) from [<c06ca53c>] (drm_gem_object_put+0x90/0x98)
-[   58.377728]  r9:edda7e40 r8:edd39360 r7:ad16e000 r6:edda7eb0 r5:00000000 r4:edaa3200
-[   58.385524] [<c06ca4ac>] (drm_gem_object_put) from [<bf0125a8>] (etnaviv_gem_prime_mmap_obj+0x34/0x3c [etnaviv])
-[   58.395704]  r5:00000000 r4:edaa3200
-[   58.399334] [<bf012574>] (etnaviv_gem_prime_mmap_obj [etnaviv]) from [<bf0143a0>] (etnaviv_gem_mmap+0x3c/0x60 [etnaviv])
-[   58.410205]  r5:edd39360 r4:00000000
-[   58.413816] [<bf014364>] (etnaviv_gem_mmap [etnaviv]) from [<c02c5e08>] (mmap_region+0x37c/0x67c)
-[   58.422689]  r5:ad16d000 r4:edda7eb8
-[   58.426272] [<c02c5a8c>] (mmap_region) from [<c02c6528>] (do_mmap+0x420/0x544)
-[   58.433500]  r10:000000fb r9:000fffff r8:ffffffff r7:00000001 r6:00000003 r5:00000001
-[   58.441330]  r4:00001000
-[   58.443876] [<c02c6108>] (do_mmap) from [<c02a5b2c>] (vm_mmap_pgoff+0xd0/0x100)
-[   58.451190]  r10:eda54040 r9:00001000 r8:00000000 r7:00000000 r6:00000003 r5:c1406048
-[   58.459020]  r4:edb8ff24
-[   58.461561] [<c02a5a5c>] (vm_mmap_pgoff) from [<c02c3ac8>] (ksys_mmap_pgoff+0xdc/0x10c)
-[   58.469570]  r10:000000c0 r9:edb8e000 r8:ed650b40 r7:00000003 r6:00001000 r5:00000000
-[   58.477400]  r4:00000001
-[   58.479941] [<c02c39ec>] (ksys_mmap_pgoff) from [<c02c3b24>] (sys_mmap_pgoff+0x2c/0x34)
-[   58.487949]  r8:c0101224 r7:000000c0 r6:951ece38 r5:00010001 r4:00000065
-[   58.494658] [<c02c3af8>] (sys_mmap_pgoff) from [<c0101000>] (ret_fast_syscall+0x0/0x28)
+Fix erratum #1485 on Zen4 parts where running with STIBP disabled can
+cause an #UD exception. The performance impact of the fix is negligible.
 
-It looks like this was a backporting error for the upstream patch
-963b2e8c428f "drm/etnaviv: fix reference leak when mmaping imported buffer"
-
-In the 5.4 kernel there are 2 variants of the object put function:
-	drm_gem_object_put() [which requires lock to be held]
-	drm_gem_object_put_unlocked() [which requires lock to be NOT held]
-
-In later kernels [5.14+] this has gone and there just drm_gem_object_put()
-which requires lock to be NOT held.
-
-So the memory leak pach, which added a call to drm_gem_object_put() was correct
-on newer kernels but wrong on 5.4 and earlier ones.
-
-So switch back to using the _unlocked variant for old kernels.
-This should only be applied to the 5.4, 4.19 and 4.14 longterm branches;
-mainline and more recent longterms already have the correct fix.
-
-Signed-off-by: Martin Fuzzey <martin.fuzzey@flowbird.group>
-Fixes: 0c6df5364798 "drm/etnaviv: fix reference leak when mmaping imported buffer" [5.4.y]
-Fixes: 0838cb217a52 "drm/etnaviv: fix reference leak when mmaping imported buffer" [4.19.y]
-Fixes: 1c9544fbc979 "drm/etnaviv: fix reference leak when mmaping imported buffer" [4.14.y]
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Reported-by: René Rebe <rene@exactcode.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: René Rebe <rene@exactcode.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/D99589F4-BC5D-430B-87B2-72C20370CF57@exactcode.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/msr-index.h |    4 ++++
+ arch/x86/kernel/cpu/amd.c        |    8 ++++++++
+ 2 files changed, 12 insertions(+)
 
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
-@@ -98,7 +98,7 @@ static int etnaviv_gem_prime_mmap_obj(st
- 	ret = dma_buf_mmap(etnaviv_obj->base.dma_buf, vma, 0);
- 	if (!ret) {
- 		/* Drop the reference acquired by drm_gem_mmap_obj(). */
--		drm_gem_object_put(&etnaviv_obj->base);
-+		drm_gem_object_put_unlocked(&etnaviv_obj->base);
- 	}
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -502,6 +502,10 @@
  
- 	return ret;
+ #define MSR_AMD64_VIRT_SPEC_CTRL	0xc001011f
+ 
++/* Zen4 */
++#define MSR_ZEN4_BP_CFG			0xc001102e
++#define MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT 5
++
+ /* Fam 17h MSRs */
+ #define MSR_F17H_IRPERF			0xc00000e9
+ 
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -75,6 +75,10 @@ static const int amd_zenbleed[] =
+ 			   AMD_MODEL_RANGE(0x17, 0x90, 0x0, 0x91, 0xf),
+ 			   AMD_MODEL_RANGE(0x17, 0xa0, 0x0, 0xaf, 0xf));
+ 
++static const int amd_erratum_1485[] =
++	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x19, 0x10, 0x0, 0x1f, 0xf),
++			   AMD_MODEL_RANGE(0x19, 0x60, 0x0, 0xaf, 0xf));
++
+ static bool cpu_has_amd_erratum(struct cpuinfo_x86 *cpu, const int *erratum)
+ {
+ 	int osvw_id = *erratum++;
+@@ -1117,6 +1121,10 @@ static void init_amd(struct cpuinfo_x86
+ 	check_null_seg_clears_base(c);
+ 
+ 	zenbleed_check(c);
++
++	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) &&
++	     cpu_has_amd_erratum(c, amd_erratum_1485))
++		msr_set_bit(MSR_ZEN4_BP_CFG, MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT);
+ }
+ 
+ #ifdef CONFIG_X86_32
 
 
