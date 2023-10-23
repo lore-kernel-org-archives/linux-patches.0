@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A73611CB5
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6482E11CB5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+CNx3X5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7963C433C9;
-	Mon, 23 Oct 2023 11:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqSB1N83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CDBC433C8;
+	Mon, 23 Oct 2023 11:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061672;
-	bh=VP5EPKpSrUN08MRmC8nKc7bgqZih1V7yYLbjbCenRts=;
+	s=korg; t=1698061675;
+	bh=tg52EG5PJZIHntpGBoLGDbZ1NTG9V0EClQnP3vQpLy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G+CNx3X5Osz1OJb+OuqLQmkthPCn1fw0czGYPcqcLpBNUKMB6MdE+bERsCCu3pLY4
-	 uS0BfbvLwn5RF7XjZr/rWULOWR9b6ud0j7jYIGEFVkX4qbFuJ2cbhXx4sxOf/U8UKD
-	 9ADw+XWGT0un+g3y8RpmvRzR9uv74ijLl/1qHt5A=
+	b=TqSB1N83icuexOPBR09gfeUGDJuA8zDZVUaF4dkKTk5nED22/lcZZPGV2yR9TENss
+	 es72oMON9gt8hYGjBQxFsW7dCnO5pcG59lwpo33V9su+bz2BcR77JgG+0yJgS0TOj4
+	 8D43do4DVMC+E4HnkfAByPwv9Nf+9IRAPMT+xqwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Dohrmann <erbse.13@gmx.de>,
-	Joerg Roedel <jroedel@suse.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 5.10 099/202] x86/sev: Check for user-space IOIO pointing to kernel space
-Date: Mon, 23 Oct 2023 12:56:46 +0200
-Message-ID: <20231023104829.434234077@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 100/202] tcp: check mptcp-level constraints for backlog coalescing
+Date: Mon, 23 Oct 2023 12:56:47 +0200
+Message-ID: <20231023104829.460239324@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -43,95 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joerg Roedel <jroedel@suse.de>
+From: Paolo Abeni <pabeni@redhat.com>
 
-Upstream commit: 63e44bc52047f182601e7817da969a105aa1f721
+commit 6db8a37dfc541e059851652cfd4f0bb13b8ff6af upstream.
 
-Check the memory operand of INS/OUTS before emulating the instruction.
-The #VC exception can get raised from user-space, but the memory operand
-can be manipulated to access kernel memory before the emulation actually
-begins and after the exception handler has run.
+The MPTCP protocol can acquire the subflow-level socket lock and
+cause the tcp backlog usage. When inserting new skbs into the
+backlog, the stack will try to coalesce them.
 
-  [ bp: Massage commit message. ]
+Currently, we have no check in place to ensure that such coalescing
+will respect the MPTCP-level DSS, and that may cause data stream
+corruption, as reported by Christoph.
 
-Fixes: 597cfe48212a ("x86/boot/compressed/64: Setup a GHCB-based VC Exception handler")
-Reported-by: Tom Dohrmann <erbse.13@gmx.de>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
+Address the issue by adding the relevant admission check for coalescing
+in tcp_add_backlog().
+
+Note the issue is not easy to reproduce, as the MPTCP protocol tries
+hard to avoid acquiring the subflow-level socket lock.
+
+Fixes: 648ef4b88673 ("mptcp: Implement MPTCP receive path")
+Cc: stable@vger.kernel.org
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/420
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20231018-send-net-20231018-v1-2-17ecb002e41d@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/sev-es.c |    5 +++++
- arch/x86/kernel/sev-es-shared.c   |   31 +++++++++++++++++++++++++++++--
- 2 files changed, 34 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_ipv4.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/boot/compressed/sev-es.c
-+++ b/arch/x86/boot/compressed/sev-es.c
-@@ -111,6 +111,11 @@ static enum es_result vc_ioio_check(stru
- 	return ES_OK;
- }
- 
-+static bool fault_in_kernel_space(unsigned long address)
-+{
-+	return false;
-+}
-+
- #undef __init
- #undef __pa
- #define __init
---- a/arch/x86/kernel/sev-es-shared.c
-+++ b/arch/x86/kernel/sev-es-shared.c
-@@ -217,6 +217,23 @@ fail:
- 		asm volatile("hlt\n");
- }
- 
-+static enum es_result vc_insn_string_check(struct es_em_ctxt *ctxt,
-+					   unsigned long address,
-+					   bool write)
-+{
-+	if (user_mode(ctxt->regs) && fault_in_kernel_space(address)) {
-+		ctxt->fi.vector     = X86_TRAP_PF;
-+		ctxt->fi.error_code = X86_PF_USER;
-+		ctxt->fi.cr2        = address;
-+		if (write)
-+			ctxt->fi.error_code |= X86_PF_WRITE;
-+
-+		return ES_EXCEPTION;
-+	}
-+
-+	return ES_OK;
-+}
-+
- static enum es_result vc_insn_string_read(struct es_em_ctxt *ctxt,
- 					  void *src, char *buf,
- 					  unsigned int data_size,
-@@ -224,7 +241,12 @@ static enum es_result vc_insn_string_rea
- 					  bool backwards)
- {
- 	int i, b = backwards ? -1 : 1;
--	enum es_result ret = ES_OK;
-+	unsigned long address = (unsigned long)src;
-+	enum es_result ret;
-+
-+	ret = vc_insn_string_check(ctxt, address, false);
-+	if (ret != ES_OK)
-+		return ret;
- 
- 	for (i = 0; i < count; i++) {
- 		void *s = src + (i * data_size * b);
-@@ -245,7 +267,12 @@ static enum es_result vc_insn_string_wri
- 					   bool backwards)
- {
- 	int i, s = backwards ? -1 : 1;
--	enum es_result ret = ES_OK;
-+	unsigned long address = (unsigned long)dst;
-+	enum es_result ret;
-+
-+	ret = vc_insn_string_check(ctxt, address, true);
-+	if (ret != ES_OK)
-+		return ret;
- 
- 	for (i = 0; i < count; i++) {
- 		void *d = dst + (i * data_size * s);
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -1832,6 +1832,7 @@ bool tcp_add_backlog(struct sock *sk, st
+ #ifdef CONFIG_TLS_DEVICE
+ 	    tail->decrypted != skb->decrypted ||
+ #endif
++	    !mptcp_skb_can_collapse(tail, skb) ||
+ 	    thtail->doff != th->doff ||
+ 	    memcmp(thtail + 1, th + 1, hdrlen - sizeof(*th)))
+ 		goto no_coalesce;
 
 
