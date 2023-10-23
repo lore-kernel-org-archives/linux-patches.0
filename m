@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F2B14A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BAB14A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNoYS4RR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98172C433C7;
-	Mon, 23 Oct 2023 11:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4ADupvR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85ED9C433C9;
+	Mon, 23 Oct 2023 11:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059540;
-	bh=l/LTKqXM5KpJOgldDjaTsAGs1y4wzZQdzHYXL47kXPs=;
+	s=korg; t=1698059542;
+	bh=yWbaISuqJ+EEUdPZeds142I5UBO9j9MH5gyn2lTKQS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CNoYS4RRkqfY1q+CE3W8McdFxsXGFe2OG/FW/E7DrIgGbsIgA+JiPnXLgo57kcXAh
-	 aZiPSrpr+eVjJB59EXO9YzRJdIRuR9RBwk5lS4/QPWqehxEi0ScscGsvnlTR4gNobc
-	 IIOElWa2vzUG9803Mff++kCicsk7YggCmV4B/gY4=
+	b=y4ADupvR1u4zqXReWCaMEsU3tJv2r0ZNAOj8SYklRf7mR5Uzwu0CVi034vsFkCrPb
+	 pnTXNabxrDvbUX+4GbLxgf1xLkj29DgPv6BqIbTBdoAF4fomo4tQx+8btfPLi9Ih8+
+	 I6npQFhCfooYt9x8jBcChLEZ9RrhlscdWslT70lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.5 204/241] s390/cio: fix a memleak in css_alloc_subchannel
-Date: Mon, 23 Oct 2023 12:56:30 +0200
-Message-ID: <20231023104838.832260134@linuxfoundation.org>
+	Haibo Chen <haibo.chen@nxp.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.5 213/241] gpio: vf610: set value before the direction to avoid a glitch
+Date: Mon, 23 Oct 2023 12:56:39 +0200
+Message-ID: <20231023104839.042639133@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,49 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit 63e8b94ad1840f02462633abdb363397f56bc642 upstream.
+commit fc363413ef8ea842ae7a99e3caf5465dafdd3a49 upstream.
 
-When dma_set_coherent_mask() fails, sch->lock has not been
-freed, which is allocated in css_sch_create_locks(), leading
-to a memleak.
+We found a glitch when configuring the pad as output high. To avoid this
+glitch, move the data value setting before direction config in the
+function vf610_gpio_direction_output().
 
-Fixes: 4520a91a976e ("s390/cio: use dma helpers for setting masks")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Message-Id: <20230921071412.13806-1-dinghao.liu@zju.edu.cn>
-Link: https://lore.kernel.org/linux-s390/bd38baa8-7b9d-4d89-9422-7e943d626d6e@linux.ibm.com/
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: 659d8a62311f ("gpio: vf610: add imx7ulp support")
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+[Bartosz: tweak the commit message]
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/css.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-vf610.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/cio/css.c
-+++ b/drivers/s390/cio/css.c
-@@ -233,17 +233,19 @@ struct subchannel *css_alloc_subchannel(
- 	 */
- 	ret = dma_set_coherent_mask(&sch->dev, DMA_BIT_MASK(31));
- 	if (ret)
--		goto err;
-+		goto err_lock;
- 	/*
- 	 * But we don't have such restrictions imposed on the stuff that
- 	 * is handled by the streaming API.
- 	 */
- 	ret = dma_set_mask(&sch->dev, DMA_BIT_MASK(64));
- 	if (ret)
--		goto err;
-+		goto err_lock;
+--- a/drivers/gpio/gpio-vf610.c
++++ b/drivers/gpio/gpio-vf610.c
+@@ -127,14 +127,14 @@ static int vf610_gpio_direction_output(s
+ 	unsigned long mask = BIT(gpio);
+ 	u32 val;
  
- 	return sch;
++	vf610_gpio_set(chip, gpio, value);
++
+ 	if (port->sdata && port->sdata->have_paddr) {
+ 		val = vf610_gpio_readl(port->gpio_base + GPIO_PDDR);
+ 		val |= mask;
+ 		vf610_gpio_writel(val, port->gpio_base + GPIO_PDDR);
+ 	}
  
-+err_lock:
-+	kfree(sch->lock);
- err:
- 	kfree(sch);
- 	return ERR_PTR(ret);
+-	vf610_gpio_set(chip, gpio, value);
+-
+ 	return pinctrl_gpio_direction_output(chip->base + gpio);
+ }
+ 
 
 
