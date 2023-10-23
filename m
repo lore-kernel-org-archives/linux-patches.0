@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F2D15E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB4023C5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2H72+zCw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA722C433C7;
-	Mon, 23 Oct 2023 11:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ri6ZqQyl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC949C433C8;
+	Mon, 23 Oct 2023 11:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060665;
-	bh=FdyVyhTizuOCPZ0Mcaija7HaxN96VpcWdf6eZqCDCkA=;
+	s=korg; t=1698060668;
+	bh=FEPf54/WqUWHFhhl4WqKO9CvxEKOgjvf7hYTLT2Mzv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2H72+zCwNEml0IVZY9+2Kf88iztugzh5UT047WsmKcYqyN00nK1/GZWfZ9AAzZrw0
-	 w9BnArDQCSaxdRmKEphCrZzdLhPam87Ga15pKpfrU0opR6epPiR/0mhcXXKlRZkpGr
-	 ZLX6NYrXw+TwQi6ORr3HvgvfJPBq8BdlsMQZvAuA=
+	b=Ri6ZqQylN4gviJwC9LxZ66mTYAO/qUB+zsfWps2Y/9QIt/bFjkPJmyum9tXD+UD9x
+	 BLNNikdnroyMzhsuAJn+p2K8hRBT0uGettmgrRHbH4eZT1oQ0pKAgIbReJu7Z4fu9c
+	 KtBidqLYlB6OS3t0NY+vxhQJCi2xn8H+4MSuAIj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	=?UTF-8?q?=E9=BB=84=E6=80=9D=E8=81=AA?= <huangsicong@iie.ac.cn>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.4 052/123] ice: fix over-shifted variable
-Date: Mon, 23 Oct 2023 12:56:50 +0200
-Message-ID: <20231023104819.446949242@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 053/123] nfc: nci: fix possible NULL pointer dereference in send_acknowledge()
+Date: Mon, 23 Oct 2023 12:56:51 +0200
+Message-ID: <20231023104819.475918848@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -39,51 +37,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Brandeburg <jesse.brandeburg@intel.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 242e34500a32631f85c2b4eb6cb42a368a39e54f upstream.
+commit 7937609cd387246aed994e81aa4fa951358fba41 upstream.
 
-Since the introduction of the ice driver the code has been
-double-shifting the RSS enabling field, because the define already has
-shifts in it and can't have the regular pattern of "a << shiftval &
-mask" applied.
+Handle memory allocation failure from nci_skb_alloc() (calling
+alloc_skb()) to avoid possible NULL pointer dereference.
 
-Most places in the code got it right, but one line was still wrong. Fix
-this one location for easy backports to stable. An in-progress patch
-fixes the defines to "standard" and will be applied as part of the
-regular -next process sometime after this one.
-
-Fixes: d76a60ba7afb ("ice: Add support for VLANs and offloads")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-CC: stable@vger.kernel.org
-Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Reported-by: 黄思聪 <huangsicong@iie.ac.cn>
+Fixes: 391d8a2da787 ("NFC: Add NCI over SPI receive")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20231010203101.406248-1-jacob.e.keller@intel.com
+Link: https://lore.kernel.org/r/20231013184129.18738-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lib.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/nfc/nci/spi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -1015,8 +1015,7 @@ static void ice_set_rss_vsi_ctx(struct i
+--- a/net/nfc/nci/spi.c
++++ b/net/nfc/nci/spi.c
+@@ -150,6 +150,8 @@ static int send_acknowledge(struct nci_s
+ 	int ret;
  
- 	ctxt->info.q_opt_rss = ((lut_type << ICE_AQ_VSI_Q_OPT_RSS_LUT_S) &
- 				ICE_AQ_VSI_Q_OPT_RSS_LUT_M) |
--				((hash_type << ICE_AQ_VSI_Q_OPT_RSS_HASH_S) &
--				 ICE_AQ_VSI_Q_OPT_RSS_HASH_M);
-+				(hash_type & ICE_AQ_VSI_Q_OPT_RSS_HASH_M);
- }
+ 	skb = nci_skb_alloc(nspi->ndev, 0, GFP_KERNEL);
++	if (!skb)
++		return -ENOMEM;
  
- /**
+ 	/* add the NCI SPI header to the start of the buffer */
+ 	hdr = skb_push(skb, NCI_SPI_HDR_LEN);
 
 
