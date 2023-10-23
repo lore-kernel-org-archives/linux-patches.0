@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F6415E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC7E15E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:38:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LONvvsoy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C43C433C9;
-	Mon, 23 Oct 2023 11:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xst3v2Vt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79A6C433C8;
+	Mon, 23 Oct 2023 11:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061097;
-	bh=NntS6HapOrj3iSxJB/zWqUAoT808x8xhNyQmtDaJo8c=;
+	s=korg; t=1698061100;
+	bh=hM/2MgJ9VqHlOfLpttnykLkkxOKM7eBrnzpdwg3BZsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LONvvsoyEjSzkdEW9fsGxlzLLdITlchHqVh+nHEc7+BSgfSbIBMVVIRJA2j4FjDFw
-	 zFzbK3ACcxvkGZliGa8NnVKjr3hCJChts5d3sWfWab8D6aIVi/7aHMlX7KT2G26K05
-	 fy7joLZjEmHHmgWCRqrPPFf7Krmo+I/rCAgZ4VvE=
+	b=xst3v2VtLmpGj90V4Bu4yQcJuCu/vR3QtUjTfM9NUYVZVl069g6h06cRNtUCvDJXA
+	 5+9ZKxRhIkJ4kXvDog6Fc9mpO8TCMv4NEjlAonlyOzzSq2w1t5tq5QsbpCgNmjWgz5
+	 NOcNBSLVLgv4Bd+HQDgs/9Bf7HJ8xijF1zqykAhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Peter Rosin <peda@axentia.se>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/137] btrfs: initialize start_slot in btrfs_log_prealloc_extents
-Date: Mon, 23 Oct 2023 12:57:08 +0200
-Message-ID: <20231023104823.338380237@linuxfoundation.org>
+Subject: [PATCH 5.15 072/137] i2c: mux: Avoid potential false error message in i2c_mux_add_adapter
+Date: Mon, 23 Oct 2023 12:57:09 +0200
+Message-ID: <20231023104823.369577153@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -37,59 +37,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit b4c639f699349880b7918b861e1bd360442ec450 ]
+[ Upstream commit b13e59e74ff71a1004e0508107e91e9a84fd7388 ]
 
-Jens reported a compiler warning when using
-CONFIG_CC_OPTIMIZE_FOR_SIZE=y that looks like this
+I2C_CLASS_DEPRECATED is a flag and not an actual class.
+There's nothing speaking against both, parent and child, having
+I2C_CLASS_DEPRECATED set. Therefore exclude it from the check.
 
-  fs/btrfs/tree-log.c: In function ‘btrfs_log_prealloc_extents’:
-  fs/btrfs/tree-log.c:4828:23: warning: ‘start_slot’ may be used
-  uninitialized [-Wmaybe-uninitialized]
-   4828 |                 ret = copy_items(trans, inode, dst_path, path,
-	|                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   4829 |                                  start_slot, ins_nr, 1, 0);
-	|                                  ~~~~~~~~~~~~~~~~~~~~~~~~~
-  fs/btrfs/tree-log.c:4725:13: note: ‘start_slot’ was declared here
-   4725 |         int start_slot;
-	|             ^~~~~~~~~~
-
-The compiler is incorrect, as we only use this code when ins_len > 0,
-and when ins_len > 0 we have start_slot properly initialized.  However
-we generally find the -Wmaybe-uninitialized warnings valuable, so
-initialize start_slot to get rid of the warning.
-
-Reported-by: Jens Axboe <axboe@kernel.dk>
-Tested-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Acked-by: Peter Rosin <peda@axentia.se>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-log.c | 2 +-
+ drivers/i2c/i2c-mux.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 7c0c6fc0c536b..dcf0dd2093f58 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -4446,7 +4446,7 @@ static int btrfs_log_prealloc_extents(struct btrfs_trans_handle *trans,
- 	struct extent_buffer *leaf;
- 	int slot;
- 	int ins_nr = 0;
--	int start_slot;
-+	int start_slot = 0;
- 	int ret;
+diff --git a/drivers/i2c/i2c-mux.c b/drivers/i2c/i2c-mux.c
+index 774507b54b57b..c90cec8d9656d 100644
+--- a/drivers/i2c/i2c-mux.c
++++ b/drivers/i2c/i2c-mux.c
+@@ -340,7 +340,7 @@ int i2c_mux_add_adapter(struct i2c_mux_core *muxc,
+ 		priv->adap.lock_ops = &i2c_parent_lock_ops;
  
- 	if (!(inode->flags & BTRFS_INODE_PREALLOC))
+ 	/* Sanity check on class */
+-	if (i2c_mux_parent_classes(parent) & class)
++	if (i2c_mux_parent_classes(parent) & class & ~I2C_CLASS_DEPRECATED)
+ 		dev_err(&parent->dev,
+ 			"Segment %d behind mux can't share classes with ancestors\n",
+ 			chan_id);
 -- 
 2.40.1
 
