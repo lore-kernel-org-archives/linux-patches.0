@@ -1,29 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D598D14A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05E114A81;
+	Mon, 23 Oct 2023 11:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K50L0eBg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539CAC433C7;
-	Mon, 23 Oct 2023 11:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/BmK7bB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA2DC433C8;
+	Mon, 23 Oct 2023 11:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058910;
-	bh=EqURKzDl9kxdfhSpjb+UfknWLgGpFG6fIUjiOT61yos=;
+	s=korg; t=1698058913;
+	bh=qpP845eCyzrqoE/OM+FE8W8KrCHAfMZemLyCDX9QzOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K50L0eBg9H9GrMPK2YoyIyjjxYFkLONyWQwFp0r8DZ+Qa20ZCA9H2P8XHEfSuCRGq
-	 /KKy4QQRC1m0DKtKLWaJgbSS1dtl5vbEE1MrIE23Vo6mxmB+8Q3VN4gX4HfX/GDSoL
-	 vn+rBBY27+8xGFlpvEQq7EIRGZV4PsoAg6oIxypk=
+	b=p/BmK7bBTHUBuDaAdLg9do5IdoounryNkKdMKoHUd9CYrZxwsC/FTuMhLB+GSYc5y
+	 nblmhhFlyyNwOsivJVuWOIQlcWzdmloZDv2PrJL/ZHyOBR6zujJzg7WM47G2DexCr1
+	 Gn3VJ/CLS4VkD9dniq5Ny8xpA+9YsmfD52wmnMow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Mirko Lindner <mlindner@marvell.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	netdev@vger.kernel.org,
+	kernel test robot <lkp@intel.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Kees Cook <keescook@chromium.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 53/66] wifi: cfg80211: avoid leaking stack data into trace
-Date: Mon, 23 Oct 2023 12:56:43 +0200
-Message-ID: <20231023104812.814267701@linuxfoundation.org>
+Subject: [PATCH 4.14 54/66] sky2: Make sure there is at least one frag_addr available
+Date: Mon, 23 Oct 2023 12:56:44 +0200
+Message-ID: <20231023104812.845061083@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -42,38 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 334bf33eec5701a1e4e967bcb7cc8611a998334b ]
+[ Upstream commit 6a70e5cbedaf8ad10528ac9ac114f3ec20f422df ]
 
-If the structure is not initialized then boolean types might be copied
-into the tracing data without being initialised. This causes data from
-the stack to leak into the trace and also triggers a UBSAN failure which
-can easily be avoided here.
+In the pathological case of building sky2 with 16k PAGE_SIZE, the
+frag_addr[] array would never be used, so the original code was correct
+that size should be 0. But the compiler now gets upset with 0 size arrays
+in places where it hasn't eliminated the code that might access such an
+array (it can't figure out that in this case an rx skb with fragments
+would never be created). To keep the compiler happy, make sure there is
+at least 1 frag_addr in struct rx_ring_info:
 
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Link: https://lore.kernel.org/r/20230925171855.a9271ef53b05.I8180bae663984c91a3e036b87f36a640ba409817@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+   In file included from include/linux/skbuff.h:28,
+                    from include/net/net_namespace.h:43,
+                    from include/linux/netdevice.h:38,
+                    from drivers/net/ethernet/marvell/sky2.c:18:
+   drivers/net/ethernet/marvell/sky2.c: In function 'sky2_rx_unmap_skb':
+   include/linux/dma-mapping.h:416:36: warning: array subscript i is outside array bounds of 'dma_addr_t[0]' {aka 'long long unsigned int[]'} [-Warray-bounds=]
+     416 | #define dma_unmap_page(d, a, s, r) dma_unmap_page_attrs(d, a, s, r, 0)
+         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/net/ethernet/marvell/sky2.c:1257:17: note: in expansion of macro 'dma_unmap_page'
+    1257 |                 dma_unmap_page(&pdev->dev, re->frag_addr[i],
+         |                 ^~~~~~~~~~~~~~
+   In file included from drivers/net/ethernet/marvell/sky2.c:41:
+   drivers/net/ethernet/marvell/sky2.h:2198:25: note: while referencing 'frag_addr'
+    2198 |         dma_addr_t      frag_addr[ETH_JUMBO_MTU >> PAGE_SHIFT];
+         |                         ^~~~~~~~~
+
+With CONFIG_PAGE_SIZE_16KB=y, PAGE_SHIFT == 14, so:
+
+  #define ETH_JUMBO_MTU   9000
+
+causes "ETH_JUMBO_MTU >> PAGE_SHIFT" to be 0. Use "?: 1" to solve this build warning.
+
+Cc: Mirko Lindner <mlindner@marvell.com>
+Cc: Stephen Hemminger <stephen@networkplumber.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: netdev@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202309191958.UBw1cjXk-lkp@intel.com/
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 2 +-
+ drivers/net/ethernet/marvell/sky2.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 7085c54e6e508..b4b564182db01 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -6159,7 +6159,7 @@ static int nl80211_update_mesh_config(struct sk_buff *skb,
- 	struct cfg80211_registered_device *rdev = info->user_ptr[0];
- 	struct net_device *dev = info->user_ptr[1];
- 	struct wireless_dev *wdev = dev->ieee80211_ptr;
--	struct mesh_config cfg;
-+	struct mesh_config cfg = {};
- 	u32 mask;
- 	int err;
+--- a/drivers/net/ethernet/marvell/sky2.h
++++ b/drivers/net/ethernet/marvell/sky2.h
+@@ -2201,7 +2201,7 @@ struct rx_ring_info {
+ 	struct sk_buff	*skb;
+ 	dma_addr_t	data_addr;
+ 	DEFINE_DMA_UNMAP_LEN(data_size);
+-	dma_addr_t	frag_addr[ETH_JUMBO_MTU >> PAGE_SHIFT];
++	dma_addr_t	frag_addr[ETH_JUMBO_MTU >> PAGE_SHIFT ?: 1];
+ };
  
--- 
-2.40.1
-
+ enum flow_control {
 
 
