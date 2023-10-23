@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A07D15E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D6015E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKJ7LeRn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8355C433CB;
-	Mon, 23 Oct 2023 11:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3NlDgQ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C189FC433C9;
+	Mon, 23 Oct 2023 11:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061070;
-	bh=zVRJAtK7ceQZvphqagsqvl0ff8slhK0Xi1WUFeIFybc=;
+	s=korg; t=1698061073;
+	bh=oh2vqTPSyTeEZgng8UniDsAeTmcNOQHTEjekvCgmt4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xKJ7LeRnpPvvZsu0qHv7KyNu6sC5tLBWGo30Ujgf7nY+6dZm8jUXwiYXudPFoXgSX
-	 m+e1I8DhyHZVcMEyJc5SB4gdxWciRC4vvBrxsQOdWszn1ZhSjJWQ6FSY1rI3T5HUz4
-	 gpyoeY+4pzvl+3SxvCyTZrf4Bx1TRN2/PdiLv1GQ=
+	b=x3NlDgQ0ZwLT8NdcWrKpPQWzp3O6bGam2L+0h1ogKKewmYuoBRjtF2/5iMj55C7RS
+	 3ihxRY53SAsna34CE3sFfPEyEoMAy1RunTqkfkRB61HdYiQpz7ZfaviPAzUso5oKzq
+	 R7FvZnYNTKUzrfUBhiYPIW1e3Mx2yQ8VayHBiNt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie James <eajames@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 063/137] powerpc/47x: Fix 47x syscall return crash
-Date: Mon, 23 Oct 2023 12:57:00 +0200
-Message-ID: <20231023104823.094578060@linuxfoundation.org>
+Subject: [PATCH 5.15 064/137] mctp: Allow local delivery to the null EID
+Date: Mon, 23 Oct 2023 12:57:01 +0200
+Message-ID: <20231023104823.125179465@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -37,102 +36,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit f0eee815babed70a749d2496a7678be5b45b4c14 ]
+[ Upstream commit 1f6c77ac9e6ecef152fd5df94c4b3c346adb197a ]
 
-Eddie reported that newer kernels were crashing during boot on his 476
-FSP2 system:
+We may need to receive packets addressed to the null EID (==0), but
+addressed to us at the physical layer.
 
-  kernel tried to execute user page (b7ee2000) - exploit attempt? (uid: 0)
-  BUG: Unable to handle kernel instruction fetch
-  Faulting instruction address: 0xb7ee2000
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  BE PAGE_SIZE=4K FSP-2
-  Modules linked in:
-  CPU: 0 PID: 61 Comm: mount Not tainted 6.1.55-d23900f.ppcnf-fsp2 #1
-  Hardware name: ibm,fsp2 476fpe 0x7ff520c0 FSP-2
-  NIP:  b7ee2000 LR: 8c008000 CTR: 00000000
-  REGS: bffebd83 TRAP: 0400   Not tainted (6.1.55-d23900f.ppcnf-fs p2)
-  MSR:  00000030 <IR,DR>  CR: 00001000  XER: 20000000
-  GPR00: c00110ac bffebe63 bffebe7e bffebe88 8c008000 00001000 00000d12 b7ee2000
-  GPR08: 00000033 00000000 00000000 c139df10 48224824 1016c314 10160000 00000000
-  GPR16: 10160000 10160000 00000008 00000000 10160000 00000000 10160000 1017f5b0
-  GPR24: 1017fa50 1017f4f0 1017fa50 1017f740 1017f630 00000000 00000000 1017f4f0
-  NIP [b7ee2000] 0xb7ee2000
-  LR [8c008000] 0x8c008000
-  Call Trace:
-  Instruction dump:
-  XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX
-  XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX
-  ---[ end trace 0000000000000000 ]---
+This change adds a lookup for local routes when we see a packet
+addressed to EID 0, and a local phys address.
 
-The problem is in ret_from_syscall where the check for
-icache_44x_need_flush is done. When the flush is needed the code jumps
-out-of-line to do the flush, and then intends to jump back to continue
-the syscall return.
-
-However the branch back to label 1b doesn't return to the correct
-location, instead branching back just prior to the return to userspace,
-causing bogus register values to be used by the rfi.
-
-The breakage was introduced by commit 6f76a01173cc
-("powerpc/syscall: implement system call entry/exit logic in C for PPC32") which
-inadvertently removed the "1" label and reused it elsewhere.
-
-Fix it by adding named local labels in the correct locations. Note that
-the return label needs to be outside the ifdef so that CONFIG_PPC_47x=n
-compiles.
-
-Fixes: 6f76a01173cc ("powerpc/syscall: implement system call entry/exit logic in C for PPC32")
-Cc: stable@vger.kernel.org # v5.12+
-Reported-by: Eddie James <eajames@linux.ibm.com>
-Tested-by: Eddie James <eajames@linux.ibm.com>
-Link: https://lore.kernel.org/linuxppc-dev/fdaadc46-7476-9237-e104-1d2168526e72@linux.ibm.com/
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://msgid.link/20231010114750.847794-1-mpe@ellerman.id.au
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 5093bbfc10ab ("mctp: perform route lookups under a RCU read-side lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/entry_32.S | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/mctp/route.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/arch/powerpc/kernel/entry_32.S b/arch/powerpc/kernel/entry_32.S
-index 0756829b2f7fa..3eb3c74e402b5 100644
---- a/arch/powerpc/kernel/entry_32.S
-+++ b/arch/powerpc/kernel/entry_32.S
-@@ -136,8 +136,9 @@ ret_from_syscall:
- 	lis	r4,icache_44x_need_flush@ha
- 	lwz	r5,icache_44x_need_flush@l(r4)
- 	cmplwi	cr0,r5,0
--	bne-	2f
-+	bne-	.L44x_icache_flush
- #endif /* CONFIG_PPC_47x */
-+.L44x_icache_flush_return:
- 	kuep_unlock
- 	lwz	r4,_LINK(r1)
- 	lwz	r5,_CCR(r1)
-@@ -173,10 +174,11 @@ syscall_exit_finish:
- 	b	1b
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index 89e67399249b4..859f57fd3871f 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -480,6 +480,10 @@ static int mctp_alloc_local_tag(struct mctp_sock *msk,
+ 	int rc = -EAGAIN;
+ 	u8 tagbits;
  
- #ifdef CONFIG_44x
--2:	li	r7,0
-+.L44x_icache_flush:
-+	li	r7,0
- 	iccci	r0,r0
- 	stw	r7,icache_44x_need_flush@l(r4)
--	b	1b
-+	b	.L44x_icache_flush_return
- #endif  /* CONFIG_44x */
++	/* for NULL destination EIDs, we may get a response from any peer */
++	if (daddr == MCTP_ADDR_NULL)
++		daddr = MCTP_ADDR_ANY;
++
+ 	/* be optimistic, alloc now */
+ 	key = mctp_key_alloc(msk, saddr, daddr, 0, GFP_KERNEL);
+ 	if (!key)
+@@ -558,6 +562,20 @@ struct mctp_route *mctp_route_lookup(struct net *net, unsigned int dnet,
+ 	return rt;
+ }
  
- 	.globl	ret_from_fork
++static struct mctp_route *mctp_route_lookup_null(struct net *net,
++						 struct net_device *dev)
++{
++	struct mctp_route *rt;
++
++	list_for_each_entry_rcu(rt, &net->mctp.routes, list) {
++		if (rt->dev->dev == dev && rt->type == RTN_LOCAL &&
++		    refcount_inc_not_zero(&rt->refs))
++			return rt;
++	}
++
++	return NULL;
++}
++
+ /* sends a skb to rt and releases the route. */
+ int mctp_do_route(struct mctp_route *rt, struct sk_buff *skb)
+ {
+@@ -853,6 +871,11 @@ static int mctp_pkttype_receive(struct sk_buff *skb, struct net_device *dev,
+ 	rcu_read_unlock();
+ 
+ 	rt = mctp_route_lookup(net, cb->net, mh->dest);
++
++	/* NULL EID, but addressed to our physical address */
++	if (!rt && mh->dest == MCTP_ADDR_NULL && skb->pkt_type == PACKET_HOST)
++		rt = mctp_route_lookup_null(net, dev);
++
+ 	if (!rt)
+ 		goto err_drop;
+ 
 -- 
 2.40.1
 
