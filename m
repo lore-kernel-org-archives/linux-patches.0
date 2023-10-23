@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD5915E87
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D42215E87
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hY8h/t2w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F38DC433C7;
-	Mon, 23 Oct 2023 11:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALv72F8N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E8DC433C7;
+	Mon, 23 Oct 2023 11:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060748;
-	bh=Tpz3SKTPX3kcm5i3f0l6P02SlRFsNfvNOzbILTF48JA=;
+	s=korg; t=1698060751;
+	bh=PFGmIoEgoQcRsFiT+v/DrAoi12tAUEdm/3qy+jsonDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hY8h/t2w/YiEzRAZhk8H8LonCNwM24TkNyN66ng6s9dt0lOBAzhFoHu5r77rgOifT
-	 xlP3yDsqZVO0+kRLkbjZJMKEe24cCfIaKU611L01KreHInaUK8C+n8vDsHKA9H3zd5
-	 jq4yXpVz7SWNq4bWAs33Os94IZIPA2eWO+WdenJQ=
+	b=ALv72F8NlPxjYj8T/mUisdnF0z13culDDFMQpnkbEIicq//9qfRN4f6pexunhCgRK
+	 eDWjnXeRH9qbnKLlW1x6YgoVHZX7MIlZQ1AJCuGHGINMFdKQGjQD756l9k8WuPfMQ1
+	 quDS5F0t63gIbsDaNcD6h4anSJ4GqH0Zk1PUXP5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zelenat <zelenat@gmail.com>,
-	Tamim Khan <tamim@fusetak.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 080/123] ACPI: resource: Skip IRQ override on Asus Expertbook B2402CBA
-Date: Mon, 23 Oct 2023 12:57:18 +0200
-Message-ID: <20231023104820.385290445@linuxfoundation.org>
+Subject: [PATCH 5.4 081/123] ACPI: resource: Skip IRQ override on ASUS ExpertBook B1502CBA
+Date: Mon, 23 Oct 2023 12:57:19 +0200
+Message-ID: <20231023104820.415130694@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -43,19 +42,25 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamim Khan <tamim@fusetak.com>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 
-[ Upstream commit 77c7248882385397cd7dffe9e1437f59f32ce2de ]
+[ Upstream commit 05cda427126f30ce3fc8ffd82fd6f5196398d502 ]
 
-Like the Asus Expertbook B2502CBA and various Asus Vivobook laptops,
-the Asus Expertbook B2402CBA has an ACPI DSDT table that describes IRQ 1
-as ActiveLow while the kernel overrides it to Edge_High. This prevents the
-keyboard from working. To fix this issue, add this laptop to the
-skip_override_table so that the kernel does not override IRQ 1.
+Like the ASUS ExpertBook B2502CBA and various ASUS Vivobook laptops, the
+ASUS ExpertBook B1502CBA has an ACPI DSDT table that describes IRQ 1 as
+ActiveLow while the kernel overrides it to Edge_High.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216864
-Tested-by: zelenat <zelenat@gmail.com>
-Signed-off-by: Tamim Khan <tamim@fusetak.com>
+    $ sudo dmesg | grep DMI
+    DMI: ASUSTeK COMPUTER INC. ASUS EXPERTBOOK B1502CBA_B1502CBA/B1502CBA, BIOS B1502CBA.300 01/18/2023
+    $ grep -A 40 PS2K dsdt.dsl | grep IRQ -A 1
+                    IRQ (Level, ActiveLow, Exclusive, )
+                        {1}
+
+This prevents the keyboard from working. To fix this issue, add this laptop
+to the skip_override_table so that the kernel does not override IRQ 1.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217323
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Stable-dep-of: c1ed72171ed5 ("ACPI: resource: Skip IRQ override on ASUS ExpertBook B1402CBA")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -64,7 +69,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 7 insertions(+)
 
 diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index b68cac8157109..2375a16126077 100644
+index 2375a16126077..cbd9cb82dd928 100644
 --- a/drivers/acpi/resource.c
 +++ b/drivers/acpi/resource.c
 @@ -421,6 +421,13 @@ static const struct dmi_system_id asus_laptop[] = {
@@ -72,14 +77,14 @@ index b68cac8157109..2375a16126077 100644
  		},
  	},
 +	{
-+		.ident = "Asus ExpertBook B2402CBA",
++		.ident = "Asus ExpertBook B1502CBA",
 +		.matches = {
 +			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "B2402CBA"),
++			DMI_MATCH(DMI_BOARD_NAME, "B1502CBA"),
 +		},
 +	},
  	{
- 		.ident = "Asus ExpertBook B2502",
+ 		.ident = "Asus ExpertBook B2402CBA",
  		.matches = {
 -- 
 2.40.1
