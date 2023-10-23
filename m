@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3C314282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293A714282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wD5Gx1Ao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A708DC433C8;
-	Mon, 23 Oct 2023 11:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFpZpMQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B57C433C7;
+	Mon, 23 Oct 2023 11:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059436;
-	bh=fKBFiW7uDzxRIjuMuxxRu97eVjK25QNY0W/WiErMIVs=;
+	s=korg; t=1698059439;
+	bh=UiCM2xUJr/+xFkaZlcWM0w/5sj+6jR8eay4tx/6MnQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wD5Gx1AoLdhdrEWC7Mbvk42GfN9RLUvfmGXFdN3afYaAUwAFia54+ZiTvHNbC7IMo
-	 ShlAvC6mqNbRo6dh+m/Os/Yfimpf4AqG763QID+3KteIzsmpO6XrGg7mAQgJ7pMdms
-	 w6/n2eZHH/Dkgp9QkfMzuPp9504FC17/VRjqNhU4=
+	b=MFpZpMQ/DHXbxqJd1/AJFI6YVpKHuhhpLboO/KkX/Jp6EN9Fb6amdvyTrVUDf+PTw
+	 CeGpFyr9GpWKmo54R0etXrfuabLfdZvW5yrsNk8z7qYboDws4KG45E4Gf+ZWMaJaRo
+	 0997Q1EM1ddejbJtGBr4b5Dy9KY4aLsg07tV1UXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Shay Drory <shayd@nvidia.com>,
+	Chris Mason <clm@fb.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 150/241] net/mlx5: Handle fw tracer change ownership event based on MTRC
-Date: Mon, 23 Oct 2023 12:55:36 +0200
-Message-ID: <20231023104837.525941548@linuxfoundation.org>
+Subject: [PATCH 6.5 151/241] net/mlx5e: RX, Fix page_pool allocation failure recovery for striding rq
+Date: Mon, 23 Oct 2023 12:55:37 +0200
+Message-ID: <20231023104837.550759581@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,47 +44,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 92fd39634541eb0a11bf1bafbc8ba92d6ddb8dba ]
+[ Upstream commit be43b7489a3c4702799e50179da69c3df7d6899b ]
 
-Currently, whenever fw issues a change ownership event, the PF that owns
-the fw tracer drops its ownership directly and the other PFs try to pick
-up the ownership via what MTRC register suggests.
+When a page allocation fails during refill in mlx5e_post_rx_mpwqes, the
+page will be released again on the next refill call. This triggers the
+page_pool negative page fragment count warning below:
 
-In some cases, driver releases the ownership of the tracer and reacquires
-it later on. Whenever the driver releases ownership of the tracer, fw
-issues a change ownership event. This event can be delayed and come after
-driver has reacquired ownership of the tracer. Thus the late event will
-trigger the tracer owner PF to release the ownership again and lead to a
-scenario where no PF is owning the tracer.
+ [ 2436.447717] WARNING: CPU: 1 PID: 2419 at include/net/page_pool/helpers.h:130 mlx5e_page_release_fragmented.isra.0+0x42/0x50 [mlx5_core]
+ ...
+ [ 2436.447895] RIP: 0010:mlx5e_page_release_fragmented.isra.0+0x42/0x50 [mlx5_core]
+ [ 2436.447991] Call Trace:
+ [ 2436.447975]  mlx5e_post_rx_mpwqes+0x1d5/0xcf0 [mlx5_core]
+ [ 2436.447994]  <IRQ>
+ [ 2436.447996]  ? __warn+0x7d/0x120
+ [ 2436.448009]  ? mlx5e_handle_rx_cqe_mpwrq+0x109/0x1d0 [mlx5_core]
+ [ 2436.448002]  ? mlx5e_page_release_fragmented.isra.0+0x42/0x50 [mlx5_core]
+ [ 2436.448044]  ? mlx5e_poll_rx_cq+0x87/0x6e0 [mlx5_core]
+ [ 2436.448061]  ? report_bug+0x155/0x180
+ [ 2436.448065]  ? handle_bug+0x36/0x70
+ [ 2436.448067]  ? exc_invalid_op+0x13/0x60
+ [ 2436.448070]  ? asm_exc_invalid_op+0x16/0x20
+ [ 2436.448079]  mlx5e_napi_poll+0x122/0x6b0 [mlx5_core]
+ [ 2436.448077]  ? mlx5e_page_release_fragmented.isra.0+0x42/0x50 [mlx5_core]
+ [ 2436.448113]  ? generic_exec_single+0x35/0x100
+ [ 2436.448117]  __napi_poll+0x25/0x1a0
+ [ 2436.448120]  net_rx_action+0x28a/0x300
+ [ 2436.448122]  __do_softirq+0xcd/0x279
+ [ 2436.448126]  irq_exit_rcu+0x6a/0x90
+ [ 2436.448128]  sysvec_apic_timer_interrupt+0x6e/0x90
+ [ 2436.448130]  </IRQ>
 
-To prevent the scenario described above, when handling a change
-ownership event, do not drop ownership of the tracer directly, instead
-read the fw MTRC register to retrieve the up-to-date owner of the tracer
-and set it accordingly in driver level.
+This patch fixes the striding rq case by setting the skip flag on all
+the wqe pages that were expected to have new pages allocated.
 
-Fixes: f53aaa31cce7 ("net/mlx5: FW tracer, implement tracer logic")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Reviewed-by: Shay Drory <shayd@nvidia.com>
+Fixes: 4c2a13236807 ("net/mlx5e: RX, Defer page release in striding rq for better recycling")
+Tested-by: Chris Mason <clm@fb.com>
+Reported-by: Chris Mason <clm@fb.com>
+Closes: https://lore.kernel.org/netdev/117FF31A-7BE0-4050-B2BB-E41F224FF72F@meta.com
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index 7c0f2adbea000..ad789349c06e6 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -848,7 +848,7 @@ static void mlx5_fw_tracer_ownership_change(struct work_struct *work)
- 
- 	mlx5_core_dbg(tracer->dev, "FWTracer: ownership changed, current=(%d)\n", tracer->owner);
- 	if (tracer->owner) {
--		tracer->owner = false;
-+		mlx5_fw_tracer_ownership_acquire(tracer);
- 		return;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+index 41d37159e027b..0b558db1a9455 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -816,6 +816,8 @@ static int mlx5e_alloc_rx_mpwqe(struct mlx5e_rq *rq, u16 ix)
+ 		mlx5e_page_release_fragmented(rq, frag_page);
  	}
+ 
++	bitmap_fill(wi->skip_release_bitmap, rq->mpwqe.pages_per_wqe);
++
+ err:
+ 	rq->stats->buff_alloc_err++;
  
 -- 
 2.40.1
