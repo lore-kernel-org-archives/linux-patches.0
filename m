@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51D814F6A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE8214F6A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iT+gKEv0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F7AC433C7;
-	Mon, 23 Oct 2023 11:22:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6OdZ6Kb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264BBC433C9;
+	Mon, 23 Oct 2023 11:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060130;
-	bh=ZOF1oI9Wo/oWFbbn68IfF2FGxg3Stt6+mhY0tSbcpEQ=;
+	s=korg; t=1698060133;
+	bh=jjpZ8uQqPhd86TOA7h+//AQOsSg204j8D01BQue6rPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iT+gKEv0e3klAdo2L8hO2YkhbzsFvZiipPYA9vg0E/X2ajqL8EfC5/ZrXlaBSSYrv
-	 +8V1NrFfVtGaRQFO7u+vTRqSQbM2ajibOOZP3PDopLAnkEtzibxWqa7Nq6yg9QyUvo
-	 zHE7XFLTryNmnP9XxYzVbnJWETgsQIDTrNTCmh+8=
+	b=c6OdZ6KbW1s1h/TRZg109kPfPI7sh4qkB81Dp/Btk8THwHaf1+Tda6BtcKzW+SA1f
+	 sq4v9I+5gZ42P6bqh8Vr2yG1Ghlu3IBBWxo0gxzyjNfvwYP1cmrnwdnItbhzyAT4aG
+	 78+axJA67zEhJiWsTAGDbw3V7JRA7kfOK+Z6+C58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.1 068/196] netfilter: nft_set_rbtree: .deactivate fails if element has expired
-Date: Mon, 23 Oct 2023 12:55:33 +0200
-Message-ID: <20231023104830.466689853@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 069/196] netlink: Correct offload_xstats size
+Date: Mon, 23 Oct 2023 12:55:34 +0200
+Message-ID: <20231023104830.495665583@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -41,34 +42,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Christoph Paasch <cpaasch@apple.com>
 
-commit d111692a59c1470ae530cbb39bcf0346c950ecc7 upstream.
+commit 503930f8e113edc86f92b767efb4ea57bdffffb2 upstream.
 
-This allows to remove an expired element which is not possible in other
-existing set backends, this is more noticeable if gc-interval is high so
-expired elements remain in the tree. On-demand gc also does not help in
-this case, because this is delete element path. Return NULL if element
-has expired.
+rtnl_offload_xstats_get_size_hw_s_info_one() conditionalizes the
+size-computation for IFLA_OFFLOAD_XSTATS_HW_S_INFO_USED based on whether
+or not the device has offload_xstats enabled.
 
-Fixes: 8d8540c4f5e0 ("netfilter: nft_set_rbtree: add timeout support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+However, rtnl_offload_xstats_fill_hw_s_info_one() is adding the u8 for
+that field uncondtionally.
+
+syzkaller triggered a WARNING in rtnl_stats_get due to this:
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 754 at net/core/rtnetlink.c:5982 rtnl_stats_get+0x2f4/0x300
+Modules linked in:
+CPU: 0 PID: 754 Comm: syz-executor148 Not tainted 6.6.0-rc2-g331b78eb12af #45
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+RIP: 0010:rtnl_stats_get+0x2f4/0x300 net/core/rtnetlink.c:5982
+Code: ff ff 89 ee e8 7d 72 50 ff 83 fd a6 74 17 e8 33 6e 50 ff 4c 89 ef be 02 00 00 00 e8 86 00 fa ff e9 7b fe ff ff e8 1c 6e 50 ff <0f> 0b eb e5 e8 73 79 7b 00 0f 1f 00 90 90 90 90 90 90 90 90 90 90
+RSP: 0018:ffffc900006837c0 EFLAGS: 00010293
+RAX: ffffffff81cf7f24 RBX: ffff8881015d9000 RCX: ffff888101815a00
+RDX: 0000000000000000 RSI: 00000000ffffffa6 RDI: 00000000ffffffa6
+RBP: 00000000ffffffa6 R08: ffffffff81cf7f03 R09: 0000000000000001
+R10: ffff888101ba47b9 R11: ffff888101815a00 R12: ffff8881017dae00
+R13: ffff8881017dad00 R14: ffffc90000683ab8 R15: ffffffff83c1f740
+FS:  00007fbc22dbc740(0000) GS:ffff88813bc00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020000046 CR3: 000000010264e003 CR4: 0000000000170ef0
+Call Trace:
+ <TASK>
+ rtnetlink_rcv_msg+0x677/0x710 net/core/rtnetlink.c:6480
+ netlink_rcv_skb+0xea/0x1c0 net/netlink/af_netlink.c:2545
+ netlink_unicast+0x430/0x500 net/netlink/af_netlink.c:1342
+ netlink_sendmsg+0x4fc/0x620 net/netlink/af_netlink.c:1910
+ sock_sendmsg+0xa8/0xd0 net/socket.c:730
+ ____sys_sendmsg+0x22a/0x320 net/socket.c:2541
+ ___sys_sendmsg+0x143/0x190 net/socket.c:2595
+ __x64_sys_sendmsg+0xd8/0x150 net/socket.c:2624
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x47/0xa0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+RIP: 0033:0x7fbc22e8d6a9
+Code: 5c c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 4f 37 0d 00 f7 d8 64 89 01 48
+RSP: 002b:00007ffc4320e778 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00000000004007d0 RCX: 00007fbc22e8d6a9
+RDX: 0000000000000000 RSI: 0000000020000000 RDI: 0000000000000003
+RBP: 0000000000000001 R08: 0000000000000000 R09: 00000000004007d0
+R10: 0000000000000008 R11: 0000000000000246 R12: 00007ffc4320e898
+R13: 00007ffc4320e8a8 R14: 00000000004004a0 R15: 00007fbc22fa5a80
+ </TASK>
+---[ end trace 0000000000000000 ]---
+
+Which didn't happen prior to commit bf9f1baa279f ("net: add dedicated
+kmem_cache for typical/small skb->head") as the skb always was large
+enough.
+
+Fixes: 0e7788fd7622 ("net: rtnetlink: Add UAPI for obtaining L3 offload xstats")
+Signed-off-by: Christoph Paasch <cpaasch@apple.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Link: https://lore.kernel.org/r/20231013041448.8229-1-cpaasch@apple.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_rbtree.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/core/rtnetlink.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -568,6 +568,8 @@ static void *nft_rbtree_deactivate(const
- 				   nft_rbtree_interval_end(this)) {
- 				parent = parent->rb_right;
- 				continue;
-+			} else if (nft_set_elem_expired(&rbe->ext)) {
-+				break;
- 			} else if (!nft_set_elem_active(&rbe->ext, genmask)) {
- 				parent = parent->rb_left;
- 				continue;
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -5394,13 +5394,11 @@ static unsigned int
+ rtnl_offload_xstats_get_size_hw_s_info_one(const struct net_device *dev,
+ 					   enum netdev_offload_xstats_type type)
+ {
+-	bool enabled = netdev_offload_xstats_enabled(dev, type);
+-
+ 	return nla_total_size(0) +
+ 		/* IFLA_OFFLOAD_XSTATS_HW_S_INFO_REQUEST */
+ 		nla_total_size(sizeof(u8)) +
+ 		/* IFLA_OFFLOAD_XSTATS_HW_S_INFO_USED */
+-		(enabled ? nla_total_size(sizeof(u8)) : 0) +
++		nla_total_size(sizeof(u8)) +
+ 		0;
+ }
+ 
 
 
