@@ -1,32 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1127154A0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F74154A0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujlpJyyi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4624AC433C8;
-	Mon, 23 Oct 2023 11:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUea84aQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D9FC433C8;
+	Mon, 23 Oct 2023 11:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059948;
-	bh=dyecFSiw6v7LOELoKYNgLz7nKgkrsdyu4f56khH1MJs=;
+	s=korg; t=1698059951;
+	bh=ZUtodJewW5wO3r4yHFwQ1YgPM14JIU5cImn28r0D7xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ujlpJyyiiRdbZPf925hHSErJyfo4J1J2HgnqGWLFiR88OZ3zs3+3YSUDBXLDw8gSo
-	 wiUh5TRegvRzaVTeNfObn6zXq2M16zRbgRCGNv3o/2AfDS3YdH4A7YV/8M2aSuVTmb
-	 rSyhQ/fEfXpDWhGBPi0KK56oypVQkAXLkCPRKb9k=
+	b=JUea84aQ9spkwUFwoLWl7KMZLex0lPb9xEPaY7X0vb7givLwQMwq4F2g8LO9CtuPP
+	 sk5oFlCKKvMNqoX0TnGWihbrLANRHadD0hBSUf0gBT1xRJgNiQojmDpYhlVSEmU/4m
+	 jKmb/XiGgPcF5ZAfDlgnup2PKJ3C4vWT1MUiz4ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 88/98] USB: serial: option: add Telit LE910C4-WWX 0x1035 composition
-Date: Mon, 23 Oct 2023 12:57:17 +0200
-Message-ID: <20231023104816.646867609@linuxfoundation.org>
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Ben Segall <bsegall@google.com>,
+	Christoph Lameter <cl@linux.com>,
+	Daniel Bristot de Oliveira <bristot@redhat.com>,
+	David Rientjes <rientjes@google.com>,
+	Dennis Zhou <dennis@kernel.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Pekka Enberg <penberg@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Shakeel Butt <shakeelb@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Tejun Heo <tj@kernel.org>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Luiz Capitulino <luizcap@amazon.com>
+Subject: [PATCH 6.1 001/196] lib/Kconfig.debug: do not enable DEBUG_PREEMPT by default
+Date: Mon, 23 Oct 2023 12:54:26 +0200
+Message-ID: <20231023104828.533286108@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
-References: <20231023104813.580375891@linuxfoundation.org>
+In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
+References: <20231023104828.488041585@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,57 +61,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 
-commit 6a7be48e9bd18d309ba25c223a27790ad1bf0fa3 upstream.
+commit cc6003916ed46d7a67d91ee32de0f9138047d55f upstream.
 
-Add support for the following Telit LE910C4-WWX composition:
+In workloads where this_cpu operations are frequently performed,
+enabling DEBUG_PREEMPT may result in significant increase in
+runtime overhead due to frequent invocation of
+__this_cpu_preempt_check() function.
 
-0x1035: TTY, TTY, ECM
+This can be demonstrated through benchmarks such as hackbench where this
+configuration results in a 10% reduction in performance, primarily due to
+the added overhead within memcg charging path.
 
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  5 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1035 Rev=00.00
-S:  Manufacturer=Telit
-S:  Product=LE910C4-WWX
-S:  SerialNumber=e1b117c7
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-I:  If#= 3 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Therefore, do not to enable DEBUG_PREEMPT by default and make users aware
+of its potential impact on performance in some workloads.
 
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Daniele Palmas <dnlplm@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+hackbench-process-sockets
+		      debug_preempt	 no_debug_preempt
+Amean     1       0.4743 (   0.00%)      0.4295 *   9.45%*
+Amean     4       1.4191 (   0.00%)      1.2650 *  10.86%*
+Amean     7       2.2677 (   0.00%)      2.0094 *  11.39%*
+Amean     12      3.6821 (   0.00%)      3.2115 *  12.78%*
+Amean     21      6.6752 (   0.00%)      5.7956 *  13.18%*
+Amean     30      9.6646 (   0.00%)      8.5197 *  11.85%*
+Amean     48     15.3363 (   0.00%)     13.5559 *  11.61%*
+Amean     79     24.8603 (   0.00%)     22.0597 *  11.27%*
+Amean     96     30.1240 (   0.00%)     26.8073 *  11.01%*
+
+Link: https://lkml.kernel.org/r/20230121033942.350387-1-42.hyeyoo@gmail.com
+Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Mel Gorman <mgorman@techsingularity.net>
+Acked-by: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Ben Segall <bsegall@google.com>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: Daniel Bristot de Oliveira <bristot@redhat.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Juri Lelli <juri.lelli@redhat.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Pekka Enberg <penberg@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Shakeel Butt <shakeelb@google.com>
+Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Valentin Schneider <vschneid@redhat.com>
+Cc: Vincent Guittot <vincent.guittot@linaro.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Luiz Capitulino <luizcap@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ lib/Kconfig.debug |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1290,6 +1290,7 @@ static const struct usb_device_id option
- 	 .driver_info = NCTRL(0) | RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1033, 0xff),	/* Telit LE910C1-EUX (ECM) */
- 	 .driver_info = NCTRL(0) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1035, 0xff) }, /* Telit LE910C4-WWX (ECM) */
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_LE922_USBCFG0),
- 	  .driver_info = RSVD(0) | RSVD(1) | NCTRL(2) | RSVD(3) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_LE922_USBCFG1),
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -1219,13 +1219,16 @@ config DEBUG_TIMEKEEPING
+ config DEBUG_PREEMPT
+ 	bool "Debug preemptible kernel"
+ 	depends on DEBUG_KERNEL && PREEMPTION && TRACE_IRQFLAGS_SUPPORT
+-	default y
+ 	help
+ 	  If you say Y here then the kernel will use a debug variant of the
+ 	  commonly used smp_processor_id() function and will print warnings
+ 	  if kernel code uses it in a preemption-unsafe way. Also, the kernel
+ 	  will detect preemption count underflows.
+ 
++	  This option has potential to introduce high runtime overhead,
++	  depending on workload as it triggers debugging routines for each
++	  this_cpu operation. It should only be used for debugging purposes.
++
+ menu "Lock Debugging (spinlocks, mutexes, etc...)"
+ 
+ config LOCK_DEBUGGING_SUPPORT
 
 
