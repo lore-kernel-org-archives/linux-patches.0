@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA5D154A0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3723C154A0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWvB6i2f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783E3C433C8;
-	Mon, 23 Oct 2023 11:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omdeTZqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C7CC433C9;
+	Mon, 23 Oct 2023 11:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060309;
-	bh=MtHUpp8hbYe1uo51F+NEV7bX6qoWzIPG1dTIh8glGcY=;
+	s=korg; t=1698060312;
+	bh=M7uZeptOAL/RJP6kUneZNcT3YujED2wKrVIE+NZs/hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWvB6i2f84CZ063KIrkSBXXBGh5sTJtXSWBQkKtm8cIPKmBgcF2IdW769o3BW0qHQ
-	 EjrjiYggwsH50CcN0zlI5R6z3gyFsGVbly3BmO9iUMzrmOxWv00J/v1PiMGr2iiYMX
-	 4xUXf0vc5Ik97DpKH99FP03jn6xwjWVksuITfxnE=
+	b=omdeTZqTj07KdjfCSN145sdzqJDeNujYfMcQbNrwHOub0LLhL0gXMMqfAYnuAbPQm
+	 CpQHjHyfqLG1SOiYnZmtYOYDVwemUNMaiavqzt7ocC6RlpJOjyUgsvfG+JT7hxX3HF
+	 CtYzIgchIMPOKCfZd63i86OlVha6phRwBKnqpusQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent Revest <revest@chromium.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
+	"wuqiang.matt" <wuqiang.matt@bytedance.com>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/196] fprobe: Add nr_maxactive to specify rethook_node pool size
-Date: Mon, 23 Oct 2023 12:56:33 +0200
-Message-ID: <20231023104832.118749894@linuxfoundation.org>
+Subject: [PATCH 6.1 129/196] fprobe: Fix to ensure the number of active retprobes is not zero
+Date: Mon, 23 Oct 2023 12:56:34 +0200
+Message-ID: <20231023104832.145915650@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -47,63 +44,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 59a7a298565aa0ce44ce8e4fbcbb89a19730013a ]
+[ Upstream commit 700b2b439766e8aab8a7174991198497345bd411 ]
 
-Add nr_maxactive to specify rethook_node pool size. This means
-the maximum number of actively running target functions concurrently
-for probing by exit_handler. Note that if the running function is
-preempted or sleep, it is still counted as 'active'.
+The number of active retprobes can be zero but it is not acceptable,
+so return EINVAL error if detected.
 
-Link: https://lkml.kernel.org/r/167526697917.433354.17779774988245113106.stgit@mhiramat.roam.corp.google.com
+Link: https://lore.kernel.org/all/169750018550.186853.11198884812017796410.stgit@devnote2/
 
-Cc: Florent Revest <revest@chromium.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Will Deacon <will@kernel.org>
+Reported-by: wuqiang.matt <wuqiang.matt@bytedance.com>
+Closes: https://lore.kernel.org/all/20231016222103.cb9f426edc60220eabd8aa6a@kernel.org/
+Fixes: 5b0ab78998e3 ("fprobe: Add exit_handler support")
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: 700b2b439766 ("fprobe: Fix to ensure the number of active retprobes is not zero")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/fprobe.h | 2 ++
- kernel/trace/fprobe.c  | 5 ++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ kernel/trace/fprobe.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/fprobe.h b/include/linux/fprobe.h
-index e0d4e61362491..678f741a7b330 100644
---- a/include/linux/fprobe.h
-+++ b/include/linux/fprobe.h
-@@ -14,6 +14,7 @@
-  * @flags: The status flag.
-  * @rethook: The rethook data structure. (internal data)
-  * @entry_data_size: The private data storage size.
-+ * @nr_maxactive: The max number of active functions.
-  * @entry_handler: The callback function for function entry.
-  * @exit_handler: The callback function for function exit.
-  */
-@@ -31,6 +32,7 @@ struct fprobe {
- 	unsigned int		flags;
- 	struct rethook		*rethook;
- 	size_t			entry_data_size;
-+	int			nr_maxactive;
- 
- 	void (*entry_handler)(struct fprobe *fp, unsigned long entry_ip,
- 			      struct pt_regs *regs, void *entry_data);
 diff --git a/kernel/trace/fprobe.c b/kernel/trace/fprobe.c
-index be28d1bc84e80..441a373079213 100644
+index 441a373079213..f386d6bd8e0e3 100644
 --- a/kernel/trace/fprobe.c
 +++ b/kernel/trace/fprobe.c
-@@ -143,7 +143,10 @@ static int fprobe_init_rethook(struct fprobe *fp, int num)
- 	}
+@@ -134,7 +134,7 @@ static int fprobe_init_rethook(struct fprobe *fp, int num)
+ {
+ 	int i, size;
  
- 	/* Initialize rethook if needed */
--	size = num * num_possible_cpus() * 2;
-+	if (fp->nr_maxactive)
-+		size = fp->nr_maxactive;
-+	else
-+		size = num * num_possible_cpus() * 2;
- 	if (size < 0)
- 		return -E2BIG;
+-	if (num < 0)
++	if (num <= 0)
+ 		return -EINVAL;
  
+ 	if (!fp->exit_handler) {
+@@ -147,8 +147,8 @@ static int fprobe_init_rethook(struct fprobe *fp, int num)
+ 		size = fp->nr_maxactive;
+ 	else
+ 		size = num * num_possible_cpus() * 2;
+-	if (size < 0)
+-		return -E2BIG;
++	if (size <= 0)
++		return -EINVAL;
+ 
+ 	fp->rethook = rethook_alloc((void *)fp, fprobe_exit_handler);
+ 	if (!fp->rethook)
 -- 
 2.40.1
 
