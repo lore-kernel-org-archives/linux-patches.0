@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C2D12B7A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FD012B7A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLjxx+Tm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1016DC433C8;
-	Mon, 23 Oct 2023 11:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFy3P/mM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E493FC433C7;
+	Mon, 23 Oct 2023 11:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059477;
-	bh=DJvWFvMBXmJRI0MMUDef3j+7pPZaUZL7xVLJe0SBIak=;
+	s=korg; t=1698059480;
+	bh=LsU1XAqc1e/0jVO/ypT0aq/VyDM4YaHxX6lbcvgq3Gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lLjxx+TmPGJePcN8xI9ONR/bSr4xrtGNKwKs+kj3XN5kN4sdWNU7ir+yN+4iSjAbh
-	 tofkE8X3wPhkJpTWQOWOo+kBTH3UEDICinZ9SwuiTDtgi67kwNHdmD1q/II5Xe37kC
-	 d300YzLX16I9tntBazd/7xvO/3DCR/K2BSadQc6k=
+	b=QFy3P/mMCXbAkPb8fe5wWP+HKhJz6dk4x8j5cR6M/kvQQVt1z9FTM/KmgB380XTCS
+	 XPkirNKr1KyCbVtUylbN/F23yqKNAm2AIdpi1oWWLcTZtF2F1dTgTp2UhXfw3G+I4X
+	 L9JzVJhmN6aZiChE8c3Q+X8yeOo0ubaTyXqtu9zY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <mwilck@suse.com>,
-	Daniel Wagner <dwagner@suse.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Hannes Reinecke <hare@suse.de>,
+	Maurizio Lombardi <mlombard@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.5 191/241] nvme-auth: use chap->s2 to indicate bidirectional authentication
-Date: Mon, 23 Oct 2023 12:56:17 +0200
-Message-ID: <20231023104838.533497316@linuxfoundation.org>
+Subject: [PATCH 6.5 192/241] nvmet-auth: complete a request only after freeing the dhchap pointers
+Date: Mon, 23 Oct 2023 12:56:18 +0200
+Message-ID: <20231023104838.556596997@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -45,59 +42,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <mwilck@suse.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit 4ae55a7dce04989f289d5c5c8c8e5c37adc36c71 upstream.
+commit f965b281fd872b2e18bd82dd97730db9834d0750 upstream.
 
-Commit 546dea18c999 ("nvme-auth: check chap ctrl_key once constructed")
-replaced the condition "if (ctrl->ctrl_key)" (indicating bidirectional
-auth) by "if (chap->ctrl_key)", because ctrl->ctrl_key is a resource shared
-with sysfs. But chap->ctrl_key is set in
-nvme_auth_process_dhchap_challenge() depending on the DHVLEN in the
-DH-HMAC-CHAP Challenge message received from the controller, and will thus
-be non-NULL for every DH-HMAC-CHAP exchange, even if unidirectional auth
-was requested. This will lead to a protocol violation by sending a Success2
-message in the unidirectional case (per NVMe base spec 2.0, the
-authentication transaction ends after the Success1 message for
-unidirectional auth). Use chap->s2 instead, which is non-zero if and only
-if the host requested bi-directional authentication from the controller.
+It may happen that the work to destroy a queue
+(for example nvmet_tcp_release_queue_work()) is started while
+an auth-send or auth-receive command is still completing.
 
-Fixes: 546dea18c999 ("nvme-auth: check chap ctrl_key once constructed")
-Signed-off-by: Martin Wilck <mwilck@suse.com>
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
+nvmet_sq_destroy() will block, waiting for all the references
+to the sq to be dropped, the last reference is then
+dropped when nvmet_req_complete() is called.
+
+When this happens, both nvmet_sq_destroy() and
+nvmet_execute_auth_send()/_receive() will free the dhchap pointers by
+calling nvmet_auth_sq_free().
+Since there isn't any lock, the two threads may race against each other,
+causing double frees and memory corruptions, as reported by KASAN.
+
+Reproduced by stress blktests nvme/041 nvme/042 nvme/043
+
+ nvme nvme2: qid 0: authenticated with hash hmac(sha512) dhgroup ffdhe4096
+ ==================================================================
+ BUG: KASAN: double-free in kfree+0xec/0x4b0
+
+ Call Trace:
+  <TASK>
+  kfree+0xec/0x4b0
+  nvmet_auth_sq_free+0xe1/0x160 [nvmet]
+  nvmet_execute_auth_send+0x482/0x16d0 [nvmet]
+  process_one_work+0x8e5/0x1510
+
+ Allocated by task 191846:
+  __kasan_kmalloc+0x81/0xa0
+  nvmet_auth_ctrl_sesskey+0xf6/0x380 [nvmet]
+  nvmet_auth_reply+0x119/0x990 [nvmet]
+
+ Freed by task 143270:
+  kfree+0xec/0x4b0
+  nvmet_auth_sq_free+0xe1/0x160 [nvmet]
+  process_one_work+0x8e5/0x1510
+
+Fix this bug by calling nvmet_req_complete() only after freeing the
+pointers, so we will prevent the race by holding the sq reference.
+
+V2: remove redundant code
+
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/auth.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/target/fabrics-cmd-auth.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
-index daf5d144a8ea..064592a5d546 100644
---- a/drivers/nvme/host/auth.c
-+++ b/drivers/nvme/host/auth.c
-@@ -341,7 +341,7 @@ static int nvme_auth_process_dhchap_success1(struct nvme_ctrl *ctrl,
- 	struct nvmf_auth_dhchap_success1_data *data = chap->buf;
- 	size_t size = sizeof(*data);
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -333,19 +333,21 @@ done:
+ 			 __func__, ctrl->cntlid, req->sq->qid,
+ 			 status, req->error_loc);
+ 	req->cqe->result.u64 = 0;
+-	nvmet_req_complete(req, status);
+ 	if (req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2 &&
+ 	    req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
+ 		unsigned long auth_expire_secs = ctrl->kato ? ctrl->kato : 120;
  
--	if (chap->ctrl_key)
-+	if (chap->s2)
- 		size += chap->hash_len;
- 
- 	if (size > CHAP_BUF_SIZE) {
-@@ -825,7 +825,7 @@ static void nvme_queue_auth_work(struct work_struct *work)
- 		goto fail2;
+ 		mod_delayed_work(system_wq, &req->sq->auth_expired_work,
+ 				 auth_expire_secs * HZ);
+-		return;
++		goto complete;
  	}
+ 	/* Final states, clear up variables */
+ 	nvmet_auth_sq_free(req->sq);
+ 	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE2)
+ 		nvmet_ctrl_fatal_error(ctrl);
++
++complete:
++	nvmet_req_complete(req, status);
+ }
  
--	if (chap->ctrl_key) {
-+	if (chap->s2) {
- 		/* DH-HMAC-CHAP Step 5: send success2 */
- 		dev_dbg(ctrl->device, "%s: qid %d send success2\n",
- 			__func__, chap->qid);
--- 
-2.42.0
-
+ static int nvmet_auth_challenge(struct nvmet_req *req, void *d, int al)
+@@ -514,11 +516,12 @@ void nvmet_execute_auth_receive(struct n
+ 	kfree(d);
+ done:
+ 	req->cqe->result.u64 = 0;
+-	nvmet_req_complete(req, status);
++
+ 	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2)
+ 		nvmet_auth_sq_free(req->sq);
+ 	else if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE1) {
+ 		nvmet_auth_sq_free(req->sq);
+ 		nvmet_ctrl_fatal_error(ctrl);
+ 	}
++	nvmet_req_complete(req, status);
+ }
 
 
