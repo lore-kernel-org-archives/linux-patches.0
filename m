@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218F114A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D5614A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1TReF08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B14C433C7;
-	Mon, 23 Oct 2023 11:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sB0pNnCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CA2C433C8;
+	Mon, 23 Oct 2023 11:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059572;
-	bh=xwsonGJ71ZJkCxDecOw23S0G10ebWeBfjhVJghD35SM=;
+	s=korg; t=1698059574;
+	bh=eJd7klf4TBhAykFGgRMFhg42v1wp6RjHf6mKc9Jk0e0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1TReF08B+ya/qXjpvoXrhNQhzjkPfQEO5XH8lYtzIiAFTQuX8Jmlcclq5xCTCBYc
-	 Gnw1hEN7RXdUBlS6qTGmzBDXsYeC2rypaDwg5OQtI1FSipTFIkLNQe3bP10bYwV/k1
-	 WcBUvpf8pYAFmaxkddRD6utTbu5gSCcJwupA30Lg=
+	b=sB0pNnCNMgu8iw4wElURI4s72o6W9GhpWSgIGC2wN0ymBHuYvn4fnwMZh8HLQKucG
+	 9LzGSR9X2iKnHd0Pid/4B+bGlG4qf8LfzRD4ok+5km+xRmTT1YflAsBH0ugq50t+AP
+	 GQnkAz+TvP3QPNvIqt4i6CMBTi5yHykAOE95N14I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 222/241] powerpc/mm: Allow ARCH_FORCE_MAX_ORDER up to 12
-Date: Mon, 23 Oct 2023 12:56:48 +0200
-Message-ID: <20231023104839.265815990@linuxfoundation.org>
+	Armin Wolf <W_Armin@gmx.de>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.5 205/241] platform/surface: platform_profile: Propagate error if profile registration fails
+Date: Mon, 23 Oct 2023 12:56:31 +0200
+Message-ID: <20231023104838.855556594@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,56 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit ff9e8f41513669e290f6e1904e1bc75950584491 ]
+commit fe0e04cf66a12ffe6d1b43725ddaabd5599d024f upstream.
 
-Christophe reported that the change to ARCH_FORCE_MAX_ORDER to limit the
-range to 10 had broken his ability to configure hugepages:
+If platform_profile_register() fails, the driver does not propagate
+the error, but instead probes successfully. This means when the driver
+unbinds, the a warning might be issued by platform_profile_remove().
 
-  # echo 1 > /sys/kernel/mm/hugepages/hugepages-8192kB/nr_hugepages
-  sh: write error: Invalid argument
+Fix this by propagating the error back to the caller of
+surface_platform_profile_probe().
 
-Several of the powerpc defconfigs previously set the
-ARCH_FORCE_MAX_ORDER value to 12, via the definition in
-arch/powerpc/configs/fsl-emb-nonhw.config, used by:
+Compile-tested only.
 
-  mpc85xx_defconfig
-  mpc85xx_smp_defconfig
-  corenet32_smp_defconfig
-  corenet64_smp_defconfig
-  mpc86xx_defconfig
-  mpc86xx_smp_defconfig
-
-Fix it by increasing the allowed range to 12 to restore the previous
-behaviour.
-
-Fixes: 358e526a1648 ("powerpc/mm: Reinstate ARCH_FORCE_MAX_ORDER ranges")
-Reported-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Closes: https://lore.kernel.org/all/8011d806-5b30-bf26-2bfe-a08c39d57e20@csgroup.eu/
-Tested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230824122849.942072-1-mpe@ellerman.id.au
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b78b4982d763 ("platform/surface: Add platform profile driver")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
+Tested-by: Maximilian Luz <luzmaximilian@gmail.com>
+Link: https://lore.kernel.org/r/20231014235449.288702-1-W_Armin@gmx.de
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/surface/surface_platform_profile.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
-index 0b1172cbeccb3..b3fdb3d268367 100644
---- a/arch/powerpc/Kconfig
-+++ b/arch/powerpc/Kconfig
-@@ -917,7 +917,7 @@ config ARCH_FORCE_MAX_ORDER
- 	default "6" if PPC32 && PPC_64K_PAGES
- 	range 4 10 if PPC32 && PPC_256K_PAGES
- 	default "4" if PPC32 && PPC_256K_PAGES
--	range 10 10
-+	range 10 12
- 	default "10"
- 	help
- 	  The kernel page allocator limits the size of maximal physically
--- 
-2.42.0
-
+--- a/drivers/platform/surface/surface_platform_profile.c
++++ b/drivers/platform/surface/surface_platform_profile.c
+@@ -159,8 +159,7 @@ static int surface_platform_profile_prob
+ 	set_bit(PLATFORM_PROFILE_BALANCED_PERFORMANCE, tpd->handler.choices);
+ 	set_bit(PLATFORM_PROFILE_PERFORMANCE, tpd->handler.choices);
+ 
+-	platform_profile_register(&tpd->handler);
+-	return 0;
++	return platform_profile_register(&tpd->handler);
+ }
+ 
+ static void surface_platform_profile_remove(struct ssam_device *sdev)
 
 
