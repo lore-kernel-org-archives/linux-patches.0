@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AA814282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6959F14282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZL8AR7F2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2017C433C7;
-	Mon, 23 Oct 2023 11:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcOhcI07"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D700BC433C9;
+	Mon, 23 Oct 2023 11:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059834;
-	bh=WOgdDDQu5wGs/cLRwqkIipk3Oyy5FDiu86r5G0it66s=;
+	s=korg; t=1698059837;
+	bh=u4pd1UXlu3GrL9fmG6FDCk2wA5e5a/h2gsh4S5PEnG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZL8AR7F27DbHOs6hv8luCAabreSS+mP5tGj04HTjMGFm/afU7XL4YROoZc7p5VIQj
-	 1S5mfiwY5v7W9t08DNjUYyO/4Cfp5ZgVy51qRxNBCJs2ysnbWYAiXVysaH5yWmyMAY
-	 sbKJFFFzfDwYhnMm7RGTuQ04CqQgxpBcCKBlTkFo=
+	b=FcOhcI07HJUPHQo8+92XQI4RxdxpyUP36gYuuIpozp5B1BXh50f3W/1QGurB2LLc1
+	 GIzwqrnNtQ+lUhxOq4gp1IZ+VT1htQ+wqevY8L/lxw8fxh1BiZTpLmyE9HKLwDVRYj
+	 NWqadC2AEUA/LF1eof8LFfaAGteS7wlwFwxe2pAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Peter Rosin <peda@axentia.se>,
-	Wolfram Sang <wsa@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 69/98] i2c: mux: Avoid potential false error message in i2c_mux_add_adapter
-Date: Mon, 23 Oct 2023 12:56:58 +0200
-Message-ID: <20231023104816.014412071@linuxfoundation.org>
+Subject: [PATCH 4.19 70/98] overlayfs: set ctime when setting mtime and atime
+Date: Mon, 23 Oct 2023 12:56:59 +0200
+Message-ID: <20231023104816.047780555@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -43,35 +44,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit b13e59e74ff71a1004e0508107e91e9a84fd7388 ]
+[ Upstream commit 03dbab3bba5f009d053635c729d1244f2c8bad38 ]
 
-I2C_CLASS_DEPRECATED is a flag and not an actual class.
-There's nothing speaking against both, parent and child, having
-I2C_CLASS_DEPRECATED set. Therefore exclude it from the check.
+Nathan reported that he was seeing the new warning in
+setattr_copy_mgtime pop when starting podman containers. Overlayfs is
+trying to set the atime and mtime via notify_change without also
+setting the ctime.
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Acked-by: Peter Rosin <peda@axentia.se>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+POSIX states that when the atime and mtime are updated via utimes() that
+we must also update the ctime to the current time. The situation with
+overlayfs copy-up is analogies, so add ATTR_CTIME to the bitmask.
+notify_change will fill in the value.
+
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Christian Brauner <brauner@kernel.org>
+Acked-by: Amir Goldstein <amir73il@gmail.com>
+Message-Id: <20230913-ctime-v1-1-c6bc509cbc27@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-mux.c | 2 +-
+ fs/overlayfs/copy_up.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/i2c-mux.c b/drivers/i2c/i2c-mux.c
-index f330690b41253..83a79bcb71ea5 100644
---- a/drivers/i2c/i2c-mux.c
-+++ b/drivers/i2c/i2c-mux.c
-@@ -334,7 +334,7 @@ int i2c_mux_add_adapter(struct i2c_mux_core *muxc,
- 		priv->adap.lock_ops = &i2c_parent_lock_ops;
- 
- 	/* Sanity check on class */
--	if (i2c_mux_parent_classes(parent) & class)
-+	if (i2c_mux_parent_classes(parent) & class & ~I2C_CLASS_DEPRECATED)
- 		dev_err(&parent->dev,
- 			"Segment %d behind mux can't share classes with ancestors\n",
- 			chan_id);
+diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
+index 3d7a700350c1d..debcac35a51dc 100644
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -195,7 +195,7 @@ static int ovl_set_timestamps(struct dentry *upperdentry, struct kstat *stat)
+ {
+ 	struct iattr attr = {
+ 		.ia_valid =
+-		     ATTR_ATIME | ATTR_MTIME | ATTR_ATIME_SET | ATTR_MTIME_SET,
++		     ATTR_ATIME | ATTR_MTIME | ATTR_ATIME_SET | ATTR_MTIME_SET | ATTR_CTIME,
+ 		.ia_atime = stat->atime,
+ 		.ia_mtime = stat->mtime,
+ 	};
 -- 
 2.40.1
 
