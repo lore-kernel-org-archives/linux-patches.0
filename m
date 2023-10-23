@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645D115E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578EB15E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5TkL96C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61FAC433C9;
-	Mon, 23 Oct 2023 11:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzKwozFE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFF1C433C7;
+	Mon, 23 Oct 2023 11:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060632;
-	bh=QjRSRJVeWVOl14a3ontjSXdm9geEKvFYXsAOXLfyKL4=;
+	s=korg; t=1698060635;
+	bh=8al8DVcCkR0DSPD6IV5QoHM6wA1lpF4myrOQIo6ehXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5TkL96Cyo4qA1pwKagYeNzpTD8ssMmzJI+/pS7DuWoODUhx1KUkpg2H2daSL5YVe
-	 JJ9S6ELR7RusuChPJdNkk0U9kxS+7pAGMH3FIgzRe0vkHGVVPIk/9t6i69sWM+KY91
-	 uL2emV7IHZhTzJaUPGIQsUhhdayi3p9RpJgfz3Do=
+	b=RzKwozFEeRCozNgmaYRk7A6o+JoMNT822+EMxkt2G6vMymglmMhxOXVMsNabms2tf
+	 W+I7rNIplPfQRNZdB6mlsU2gYzEOc1fW3QQloHrhhRRqnoBHeEQr74o4NmriUfvxgr
+	 kkEhi7ZHvjmdWTK0udg/KRXM8CLlSzmFPvIRSqCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Zack Rusin <zackr@vmware.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Subject: [PATCH 5.4 014/123] drm/vmwgfx: fix typo of sizeof argument
-Date: Mon, 23 Oct 2023 12:56:12 +0200
-Message-ID: <20231023104818.221470294@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 015/123] ixgbe: fix crash with empty VF macvlan list
+Date: Mon, 23 Oct 2023 12:56:13 +0200
+Message-ID: <20231023104818.256801580@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -43,38 +44,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 39465cac283702a7d4a507a558db81898029c6d3 ]
+[ Upstream commit 7b5add9af567c44e12196107f0fe106e194034fd ]
 
-Since size of 'header' pointer and '*header' structure is equal on 64-bit
-machines issue probably didn't cause any wrong behavior. But anyway,
-fixing typo is required.
+The adapter->vf_mvs.l list needs to be initialized even if the list is
+empty.  Otherwise it will lead to crashes.
 
-Fixes: 7a73ba7469cb ("drm/vmwgfx: Use TTM handles instead of SIDs as user-space surface handles.")
-Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Reviewed-by: Zack Rusin <zackr@vmware.com>
-Signed-off-by: Zack Rusin <zackr@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230905100203.1716731-1-konstantin.meskhidze@huawei.com
+Fixes: a1cbb15c1397 ("ixgbe: Add macvlan support for VF")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Link: https://lore.kernel.org/r/ZSADNdIw8zFx1xw2@kadam
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index e3d20048075bf..8db3b3ddbb644 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -1623,7 +1623,7 @@ static int vmw_cmd_tex_state(struct vmw_private *dev_priv,
- {
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdSetTextureState);
- 	SVGA3dTextureState *last_state = (SVGA3dTextureState *)
--	  ((unsigned long) header + header->size + sizeof(header));
-+	  ((unsigned long) header + header->size + sizeof(*header));
- 	SVGA3dTextureState *cur_state = (SVGA3dTextureState *)
- 		((unsigned long) header + sizeof(*cmd));
- 	struct vmw_resource *ctx;
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
+index 0e73e3b1af19a..a3b1295415665 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
+@@ -28,6 +28,9 @@ static inline void ixgbe_alloc_vf_macvlans(struct ixgbe_adapter *adapter,
+ 	struct vf_macvlans *mv_list;
+ 	int num_vf_macvlans, i;
+ 
++	/* Initialize list of VF macvlans */
++	INIT_LIST_HEAD(&adapter->vf_mvs.l);
++
+ 	num_vf_macvlans = hw->mac.num_rar_entries -
+ 			  (IXGBE_MAX_PF_MACVLANS + 1 + num_vfs);
+ 	if (!num_vf_macvlans)
+@@ -36,8 +39,6 @@ static inline void ixgbe_alloc_vf_macvlans(struct ixgbe_adapter *adapter,
+ 	mv_list = kcalloc(num_vf_macvlans, sizeof(struct vf_macvlans),
+ 			  GFP_KERNEL);
+ 	if (mv_list) {
+-		/* Initialize list of VF macvlans */
+-		INIT_LIST_HEAD(&adapter->vf_mvs.l);
+ 		for (i = 0; i < num_vf_macvlans; i++) {
+ 			mv_list[i].vf = -1;
+ 			mv_list[i].free = true;
 -- 
 2.40.1
 
