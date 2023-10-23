@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A20215E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86D115E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMi2aMTl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B0EC433C7;
-	Mon, 23 Oct 2023 11:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ao8xrUo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4080C433C8;
+	Mon, 23 Oct 2023 11:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061115;
-	bh=5h/ksMh9++jcUPCalk6y19rkzFSzZja3hO/V92rvLk8=;
+	s=korg; t=1698061118;
+	bh=pYUAVqIOKEfW5WLcB33txakhRbYyUVQRPCVYDmcORJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IMi2aMTlddDmyuPjREU4EN7pvcbxnpsFy0x8VVIvXxAGOj06+4s69EUYUiRxDbNG+
-	 jafwWAbR3NMxJPmiYSDS/hukMvyKU3Pgimc1CaWhNRZd0FOlgEUblrjpPPCjbazLFV
-	 Z+4ZWBSa3gUeU3F8zKadW6y9AMQok3sw0G8VOQbw=
+	b=1ao8xrUoirSANb0Rfxqvg50EegHucxtNGqWz1ZSR0vH49/4OHenlfbyUYW9NQpLZg
+	 epY8c6mogk2VBJzyIxFbXhqjGyDMsrf8ToEu4E9kk3P9304t3rcvUyJAQAxx/o6YHa
+	 vQWDw5lol8aP7c/ZOhcR7Efwftv9nyosSYipXrMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Thomas Richard <thomas.richard@bootlin.com>,
 	Tony Lindgren <tony@atomide.com>,
+	Dhruva Gole <d-gole@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 050/137] serial: 8250: omap: Fix imprecise external abort for omap_8250_pm()
-Date: Mon, 23 Oct 2023 12:56:47 +0200
-Message-ID: <20231023104822.697487544@linuxfoundation.org>
+Subject: [PATCH 5.15 051/137] serial: 8250_omap: Fix errors with no_console_suspend
+Date: Mon, 23 Oct 2023 12:56:48 +0200
+Message-ID: <20231023104822.730416001@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -43,256 +47,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 398cecc24846e867b9f90a0bd22730e3df6b05be ]
+[ Upstream commit 560706eff7c8e5621b0d63afe0866e0e1906e87e ]
 
-We must idle the uart only after serial8250_unregister_port(). Otherwise
-unbinding the uart via sysfs while doing cat on the port produces an
-imprecise external abort:
+We now get errors on system suspend if no_console_suspend is set as
+reported by Thomas. The errors started with commit 20a41a62618d ("serial:
+8250_omap: Use force_suspend and resume for system suspend").
 
-mem_serial_in from omap_8250_pm+0x44/0xf4
-omap_8250_pm from uart_hangup+0xe0/0x194
-uart_hangup from __tty_hangup.part.0+0x37c/0x3a8
-__tty_hangup.part.0 from uart_remove_one_port+0x9c/0x22c
-uart_remove_one_port from serial8250_unregister_port+0x60/0xe8
-serial8250_unregister_port from omap8250_remove+0x6c/0xd0
-omap8250_remove from platform_remove+0x28/0x54
+Let's fix the issue by checking for console_suspend_enabled in the system
+suspend and resume path.
 
-Turns out the driver needs to have runtime PM functional before the
-driver probe calls serial8250_register_8250_port(). And it needs
-runtime PM after driver remove calls serial8250_unregister_port().
+Note that with this fix the checks for console_suspend_enabled in
+omap8250_runtime_suspend() become useless. We now keep runtime PM usage
+count for an attached kernel console starting with commit bedb404e91bb
+("serial: 8250_port: Don't use power management for kernel console").
 
-On probe, we need to read registers before registering the port in
-omap_serial_fill_features_erratas(). We do that with custom uart_read()
-already.
-
-On remove, after serial8250_unregister_port(), we need to write to the
-uart registers to idle the device. Let's add a custom uart_write() for
-that.
-
-Currently the uart register access depends on port->membase to be
-initialized, which won't work after serial8250_unregister_port().
-Let's use priv->membase instead, and use it for runtime PM related
-functions to remove the dependency to port->membase for early and
-late register access.
-
-Note that during use, we need to check for a valid port in the runtime PM
-related functions. This is needed for the optional wakeup configuration.
-We now need to set the drvdata a bit earlier so it's available for the
-runtime PM functions.
-
-With the port checks in runtime PM functions, the old checks for priv in
-omap8250_runtime_suspend() and omap8250_runtime_resume() functions are no
-longer needed and are removed.
-
+Fixes: 20a41a62618d ("serial: 8250_omap: Use force_suspend and resume for system suspend")
+Cc: stable <stable@kernel.org>
+Cc: Udit Kumar <u-kumar1@ti.com>
+Reported-by: Thomas Richard <thomas.richard@bootlin.com>
 Signed-off-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20230508082014.23083-3-tony@atomide.com
+Tested-by: Thomas Richard <thomas.richard@bootlin.com>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/r/20230926061319.15140-1-tony@atomide.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 560706eff7c8 ("serial: 8250_omap: Fix errors with no_console_suspend")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 70 ++++++++++++++++-------------
- 1 file changed, 38 insertions(+), 32 deletions(-)
+ drivers/tty/serial/8250/8250_omap.c | 25 ++++++++++---------------
+ 1 file changed, 10 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index a6b374c026a87..2454c903c97d5 100644
+index 2454c903c97d5..94629d2c84893 100644
 --- a/drivers/tty/serial/8250/8250_omap.c
 +++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -32,6 +32,7 @@
- #include "8250.h"
- 
- #define DEFAULT_CLK_SPEED	48000000
-+#define OMAP_UART_REGSHIFT	2
- 
- #define UART_ERRATA_i202_MDR1_ACCESS	(1 << 0)
- #define OMAP_UART_WER_HAS_TX_WAKEUP	(1 << 1)
-@@ -109,6 +110,7 @@
- #define UART_OMAP_RX_LVL		0x19
- 
- struct omap8250_priv {
-+	void __iomem *membase;
- 	int line;
- 	u8 habit;
- 	u8 mdr1;
-@@ -152,9 +154,14 @@ static void omap_8250_rx_dma_flush(struct uart_8250_port *p);
- static inline void omap_8250_rx_dma_flush(struct uart_8250_port *p) { }
- #endif
- 
--static u32 uart_read(struct uart_8250_port *up, u32 reg)
-+static u32 uart_read(struct omap8250_priv *priv, u32 reg)
+@@ -1532,7 +1532,7 @@ static int omap8250_suspend(struct device *dev)
  {
--	return readl(up->port.membase + (reg << up->port.regshift));
-+	return readl(priv->membase + (reg << OMAP_UART_REGSHIFT));
-+}
-+
-+static void uart_write(struct omap8250_priv *priv, u32 reg, u32 val)
-+{
-+	writel(val, priv->membase + (reg << OMAP_UART_REGSHIFT));
- }
+ 	struct omap8250_priv *priv = dev_get_drvdata(dev);
+ 	struct uart_8250_port *up = serial8250_get_port(priv->line);
+-	int err;
++	int err = 0;
  
- /*
-@@ -552,7 +559,7 @@ static void omap_serial_fill_features_erratas(struct uart_8250_port *up,
- 	u32 mvr, scheme;
- 	u16 revision, major, minor;
+ 	serial8250_suspend_port(priv->line);
  
--	mvr = uart_read(up, UART_OMAP_MVER);
-+	mvr = uart_read(priv, UART_OMAP_MVER);
- 
- 	/* Check revision register scheme */
- 	scheme = mvr >> OMAP_UART_MVR_SCHEME_SHIFT;
-@@ -1336,7 +1343,7 @@ static int omap8250_probe(struct platform_device *pdev)
- 		UPF_HARD_FLOW;
- 	up.port.private_data = priv;
- 
--	up.port.regshift = 2;
-+	up.port.regshift = OMAP_UART_REGSHIFT;
- 	up.port.fifosize = 64;
- 	up.tx_loadsz = 64;
- 	up.capabilities = UART_CAP_FIFO;
-@@ -1397,6 +1404,8 @@ static int omap8250_probe(struct platform_device *pdev)
- 			 DEFAULT_CLK_SPEED);
- 	}
- 
-+	priv->membase = membase;
-+	priv->line = -ENODEV;
- 	priv->latency = PM_QOS_CPU_LATENCY_DEFAULT_VALUE;
- 	priv->calc_latency = PM_QOS_CPU_LATENCY_DEFAULT_VALUE;
- 	cpu_latency_qos_add_request(&priv->pm_qos_request, priv->latency);
-@@ -1404,6 +1413,8 @@ static int omap8250_probe(struct platform_device *pdev)
- 
- 	spin_lock_init(&priv->rx_dma_lock);
- 
-+	platform_set_drvdata(pdev, priv);
-+
- 	device_init_wakeup(&pdev->dev, true);
- 	pm_runtime_enable(&pdev->dev);
- 	pm_runtime_use_autosuspend(&pdev->dev);
-@@ -1465,7 +1476,6 @@ static int omap8250_probe(struct platform_device *pdev)
- 		goto err;
- 	}
- 	priv->line = ret;
--	platform_set_drvdata(pdev, priv);
- 	pm_runtime_mark_last_busy(&pdev->dev);
- 	pm_runtime_put_autosuspend(&pdev->dev);
- 	return 0;
-@@ -1487,11 +1497,12 @@ static int omap8250_remove(struct platform_device *pdev)
- 	if (err)
- 		return err;
- 
-+	serial8250_unregister_port(priv->line);
-+	priv->line = -ENODEV;
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_put_sync(&pdev->dev);
+@@ -1542,7 +1542,8 @@ static int omap8250_suspend(struct device *dev)
+ 	if (!device_may_wakeup(dev))
+ 		priv->wer = 0;
+ 	serial_out(up, UART_OMAP_WER, priv->wer);
+-	err = pm_runtime_force_suspend(dev);
++	if (uart_console(&up->port) && console_suspend_enabled)
++		err = pm_runtime_force_suspend(dev);
  	flush_work(&priv->qos_work);
- 	pm_runtime_disable(&pdev->dev);
--	serial8250_unregister_port(priv->line);
- 	cpu_latency_qos_remove_request(&priv->pm_qos_request);
- 	device_init_wakeup(&pdev->dev, false);
- 	return 0;
-@@ -1577,7 +1588,6 @@ static int omap8250_lost_context(struct uart_8250_port *up)
- static int omap8250_soft_reset(struct device *dev)
+ 
+ 	return err;
+@@ -1551,11 +1552,15 @@ static int omap8250_suspend(struct device *dev)
+ static int omap8250_resume(struct device *dev)
  {
  	struct omap8250_priv *priv = dev_get_drvdata(dev);
--	struct uart_8250_port *up = serial8250_get_port(priv->line);
- 	int timeout = 100;
- 	int sysc;
- 	int syss;
-@@ -1591,20 +1601,20 @@ static int omap8250_soft_reset(struct device *dev)
- 	 * needing omap8250_soft_reset() quirk. Do it in two writes as
- 	 * recommended in the comment for omap8250_update_scr().
- 	 */
--	serial_out(up, UART_OMAP_SCR, OMAP_UART_SCR_DMAMODE_1);
--	serial_out(up, UART_OMAP_SCR,
-+	uart_write(priv, UART_OMAP_SCR, OMAP_UART_SCR_DMAMODE_1);
-+	uart_write(priv, UART_OMAP_SCR,
- 		   OMAP_UART_SCR_DMAMODE_1 | OMAP_UART_SCR_DMAMODE_CTL);
++	struct uart_8250_port *up = serial8250_get_port(priv->line);
+ 	int err;
  
--	sysc = serial_in(up, UART_OMAP_SYSC);
-+	sysc = uart_read(priv, UART_OMAP_SYSC);
+-	err = pm_runtime_force_resume(dev);
+-	if (err)
+-		return err;
++	if (uart_console(&up->port) && console_suspend_enabled) {
++		err = pm_runtime_force_resume(dev);
++		if (err)
++			return err;
++	}
++
+ 	serial8250_resume_port(priv->line);
+ 	/* Paired with pm_runtime_resume_and_get() in omap8250_suspend() */
+ 	pm_runtime_mark_last_busy(dev);
+@@ -1632,16 +1637,6 @@ static int omap8250_runtime_suspend(struct device *dev)
  
- 	/* softreset the UART */
- 	sysc |= OMAP_UART_SYSC_SOFTRESET;
--	serial_out(up, UART_OMAP_SYSC, sysc);
-+	uart_write(priv, UART_OMAP_SYSC, sysc);
+ 	if (priv->line >= 0)
+ 		up = serial8250_get_port(priv->line);
+-	/*
+-	 * When using 'no_console_suspend', the console UART must not be
+-	 * suspended. Since driver suspend is managed by runtime suspend,
+-	 * preventing runtime suspend (by returning error) will keep device
+-	 * active during suspend.
+-	 */
+-	if (priv->is_suspending && !console_suspend_enabled) {
+-		if (up && uart_console(&up->port))
+-			return -EBUSY;
+-	}
  
- 	/* By experiments, 1us enough for reset complete on AM335x */
- 	do {
- 		udelay(1);
--		syss = serial_in(up, UART_OMAP_SYSS);
-+		syss = uart_read(priv, UART_OMAP_SYSS);
- 	} while (--timeout && !(syss & OMAP_UART_SYSS_RESETDONE));
- 
- 	if (!timeout) {
-@@ -1618,13 +1628,10 @@ static int omap8250_soft_reset(struct device *dev)
- static int omap8250_runtime_suspend(struct device *dev)
- {
- 	struct omap8250_priv *priv = dev_get_drvdata(dev);
--	struct uart_8250_port *up;
--
--	/* In case runtime-pm tries this before we are setup */
--	if (!priv)
--		return 0;
-+	struct uart_8250_port *up = NULL;
- 
--	up = serial8250_get_port(priv->line);
-+	if (priv->line >= 0)
-+		up = serial8250_get_port(priv->line);
- 	/*
- 	 * When using 'no_console_suspend', the console UART must not be
- 	 * suspended. Since driver suspend is managed by runtime suspend,
-@@ -1632,7 +1639,7 @@ static int omap8250_runtime_suspend(struct device *dev)
- 	 * active during suspend.
- 	 */
- 	if (priv->is_suspending && !console_suspend_enabled) {
--		if (uart_console(&up->port))
-+		if (up && uart_console(&up->port))
- 			return -EBUSY;
- 	}
- 
-@@ -1643,13 +1650,15 @@ static int omap8250_runtime_suspend(struct device *dev)
- 		if (ret)
- 			return ret;
- 
--		/* Restore to UART mode after reset (for wakeup) */
--		omap8250_update_mdr1(up, priv);
--		/* Restore wakeup enable register */
--		serial_out(up, UART_OMAP_WER, priv->wer);
-+		if (up) {
-+			/* Restore to UART mode after reset (for wakeup) */
-+			omap8250_update_mdr1(up, priv);
-+			/* Restore wakeup enable register */
-+			serial_out(up, UART_OMAP_WER, priv->wer);
-+		}
- 	}
- 
--	if (up->dma && up->dma->rxchan)
-+	if (up && up->dma && up->dma->rxchan)
- 		omap_8250_rx_dma_flush(up);
- 
- 	priv->latency = PM_QOS_CPU_LATENCY_DEFAULT_VALUE;
-@@ -1661,18 +1670,15 @@ static int omap8250_runtime_suspend(struct device *dev)
- static int omap8250_runtime_resume(struct device *dev)
- {
- 	struct omap8250_priv *priv = dev_get_drvdata(dev);
--	struct uart_8250_port *up;
--
--	/* In case runtime-pm tries this before we are setup */
--	if (!priv)
--		return 0;
-+	struct uart_8250_port *up = NULL;
- 
--	up = serial8250_get_port(priv->line);
-+	if (priv->line >= 0)
-+		up = serial8250_get_port(priv->line);
- 
--	if (omap8250_lost_context(up))
-+	if (up && omap8250_lost_context(up))
- 		omap8250_restore_regs(up);
- 
--	if (up->dma && up->dma->rxchan && !(priv->habit & UART_HAS_EFR2))
-+	if (up && up->dma && up->dma->rxchan && !(priv->habit & UART_HAS_EFR2))
- 		omap_8250_rx_dma(up);
- 
- 	priv->latency = priv->calc_latency;
+ 	if (priv->habit & UART_ERRATA_CLOCK_DISABLE) {
+ 		int ret;
 -- 
 2.40.1
 
