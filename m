@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C6314A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF3814A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJ8RyH0t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A218FC433C7;
-	Mon, 23 Oct 2023 11:12:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fYhfX7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9DBC433C9;
+	Mon, 23 Oct 2023 11:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059558;
-	bh=YCAJHvv+322iXrFacMiU9ZyJXyBnXfIBrlZb7+KgYDQ=;
+	s=korg; t=1698059563;
+	bh=qHvHZVCcSm1p31bbyJECAf+gvg36IvnGJkAGPbJQPm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJ8RyH0tJeXanlqMJE+0gSQuXQNg3HzaEs7qMNPXOZJJsNczORs3bPLRNk8tBI8jy
-	 gpzbJuGcpDqJ7uI547neW8hivShTudYwt2Yo+eGupPuggRgOowJ2dwTXGz32sONpHe
-	 eoWqtAf1wbQzlQK2oriz/A9q0psZJiRrysJ1/Ar8=
+	b=0fYhfX7noiniYbrXuiD/woxSHiOuvdmNqAQmetOpHS56tfZWmlIl/L1VfNdkvKyBM
+	 9JkXsMEUh0qEtiqSMqiwQh+FvpEWYn2PCoBhWRx3YoV7zGl8C4XXVgaXassOYzOnE4
+	 xAi+DEhWEclQASpFV4UOWAqrTkpBWLWB9RH7nDxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Anton Bambura <jenneron@postmarketos.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
 	Douglas Anderson <dianders@chromium.org>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 218/241] drm/bridge: ti-sn65dsi86: Associate DSI device lifetime with auxiliary device
-Date: Mon, 23 Oct 2023 12:56:44 +0200
-Message-ID: <20231023104839.166867358@linuxfoundation.org>
+Subject: [PATCH 6.5 219/241] drm/panel: Move AUX B116XW03 out of panel-edp back to panel-simple
+Date: Mon, 23 Oct 2023 12:56:45 +0200
+Message-ID: <20231023104839.191685463@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -44,94 +43,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 7b821db95140e2c118567aee22a78bf85f3617e0 ]
+[ Upstream commit ad3e33fe071dffea07279f96dab4f3773c430fe2 ]
 
-The kernel produces a warning splat and the DSI device fails to register
-in this driver if the i2c driver probes, populates child auxiliary
-devices, and then somewhere in ti_sn_bridge_probe() a function call
-returns -EPROBE_DEFER. When the auxiliary driver probe defers, the dsi
-device created by devm_mipi_dsi_device_register_full() is left
-registered because the devm managed device used to manage the lifetime
-of the DSI device is the parent i2c device, not the auxiliary device
-that is being probed.
+In commit 5f04e7ce392d ("drm/panel-edp: Split eDP panels out of
+panel-simple") I moved a pile of panels out of panel-simple driver
+into the newly created panel-edp driver. One of those panels, however,
+shouldn't have been moved.
 
-Associate the DSI device created and managed by this driver to the
-lifetime of the auxiliary device, not the i2c device, so that the DSI
-device is removed when the auxiliary driver unbinds. Similarly change
-the device pointer used for dev_err_probe() so the deferred probe errors
-are associated with the auxiliary device instead of the parent i2c
-device so we can narrow down future problems faster.
+As is clear from commit e35e305eff0f ("drm/panel: simple: Add AUO
+B116XW03 panel support"), AUX B116XW03 is an LVDS panel. It's used in
+exynos5250-snow and exynos5420-peach-pit where it's clear that the
+panel is hooked up with LVDS. Furthermore, searching for datasheets I
+found one that makes it clear that this panel is LVDS.
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Maxime Ripard <maxime@cerno.tech>
-Fixes: c3b75d4734cb ("drm/bridge: sn65dsi86: Register and attach our DSI device at probe")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+As far as I can tell, I got confused because in commit 88d3457ceb82
+("drm/panel: auo,b116xw03: fix flash backlight when power on") Jitao
+Shi added "DRM_MODE_CONNECTOR_eDP". That seems wrong. Looking at the
+downstream ChromeOS trees, it seems like some Mediatek boards are
+using a panel that they call "auo,b116xw03" that's an eDP panel. The
+best I can guess is that they actually have a different panel that has
+similar timing. If so then the proper panel should be used or they
+should switch to the generic "edp-panel" compatible.
+
+When moving this back to panel-edp, I wasn't sure what to use for
+.bus_flags and .bus_format and whether to add the extra "enable" delay
+from commit 88d3457ceb82 ("drm/panel: auo,b116xw03: fix flash
+backlight when power on"). I've added formats/flags/delays based on my
+(inexpert) analysis of the datasheet. These are untested.
+
+NOTE: if/when this is backported to stable, we might run into some
+trouble. Specifically, before 474c162878ba ("arm64: dts: mt8183:
+jacuzzi: Move panel under aux-bus") this panel was used by
+"mt8183-kukui-jacuzzi", which assumed it was an eDP panel. I don't
+know what to suggest for that other than someone making up a bogus
+panel for jacuzzi that's just for the stable channel.
+
+Fixes: 88d3457ceb82 ("drm/panel: auo,b116xw03: fix flash backlight when power on")
+Fixes: 5f04e7ce392d ("drm/panel-edp: Split eDP panels out of panel-simple")
+Tested-by: Anton Bambura <jenneron@postmarketos.org>
+Acked-by: Hsin-Yi Wang <hsinyi@chromium.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231002235407.769399-1-swboyd@chromium.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20230925150010.1.Iff672233861bcc4cf25a7ad0a81308adc3bda8a4@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/panel/panel-edp.c    | 29 -----------------------
+ drivers/gpu/drm/panel/panel-simple.c | 35 ++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index f448b903e1907..84148a79414b7 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -692,7 +692,7 @@ static struct ti_sn65dsi86 *bridge_to_ti_sn65dsi86(struct drm_bridge *bridge)
- 	return container_of(bridge, struct ti_sn65dsi86, bridge);
- }
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index fbd114b4f0be0..856f73a46ee61 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -976,32 +976,6 @@ static const struct panel_desc auo_b116xak01 = {
+ 	},
+ };
  
--static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
-+static int ti_sn_attach_host(struct auxiliary_device *adev, struct ti_sn65dsi86 *pdata)
- {
- 	int val;
- 	struct mipi_dsi_host *host;
-@@ -707,7 +707,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
- 	if (!host)
- 		return -EPROBE_DEFER;
+-static const struct drm_display_mode auo_b116xw03_mode = {
+-	.clock = 70589,
+-	.hdisplay = 1366,
+-	.hsync_start = 1366 + 40,
+-	.hsync_end = 1366 + 40 + 40,
+-	.htotal = 1366 + 40 + 40 + 32,
+-	.vdisplay = 768,
+-	.vsync_start = 768 + 10,
+-	.vsync_end = 768 + 10 + 12,
+-	.vtotal = 768 + 10 + 12 + 6,
+-	.flags = DRM_MODE_FLAG_NVSYNC | DRM_MODE_FLAG_NHSYNC,
+-};
+-
+-static const struct panel_desc auo_b116xw03 = {
+-	.modes = &auo_b116xw03_mode,
+-	.num_modes = 1,
+-	.bpc = 6,
+-	.size = {
+-		.width = 256,
+-		.height = 144,
+-	},
+-	.delay = {
+-		.enable = 400,
+-	},
+-};
+-
+ static const struct drm_display_mode auo_b133han05_mode = {
+ 	.clock = 142600,
+ 	.hdisplay = 1920,
+@@ -1725,9 +1699,6 @@ static const struct of_device_id platform_of_match[] = {
+ 	}, {
+ 		.compatible = "auo,b116xa01",
+ 		.data = &auo_b116xak01,
+-	}, {
+-		.compatible = "auo,b116xw03",
+-		.data = &auo_b116xw03,
+ 	}, {
+ 		.compatible = "auo,b133han05",
+ 		.data = &auo_b133han05,
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 03196fbfa4d79..e26af5e1299a8 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -923,6 +923,38 @@ static const struct panel_desc auo_b101xtn01 = {
+ 	},
+ };
  
--	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
-+	dsi = devm_mipi_dsi_device_register_full(&adev->dev, host, &info);
- 	if (IS_ERR(dsi))
- 		return PTR_ERR(dsi);
- 
-@@ -725,7 +725,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
- 
- 	pdata->dsi = dsi;
- 
--	return devm_mipi_dsi_attach(dev, dsi);
-+	return devm_mipi_dsi_attach(&adev->dev, dsi);
- }
- 
- static int ti_sn_bridge_attach(struct drm_bridge *bridge,
-@@ -1298,9 +1298,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
- 	struct device_node *np = pdata->dev->of_node;
- 	int ret;
- 
--	pdata->next_bridge = devm_drm_of_get_bridge(pdata->dev, np, 1, 0);
-+	pdata->next_bridge = devm_drm_of_get_bridge(&adev->dev, np, 1, 0);
- 	if (IS_ERR(pdata->next_bridge))
--		return dev_err_probe(pdata->dev, PTR_ERR(pdata->next_bridge),
-+		return dev_err_probe(&adev->dev, PTR_ERR(pdata->next_bridge),
- 				     "failed to create panel bridge\n");
- 
- 	ti_sn_bridge_parse_lanes(pdata, np);
-@@ -1319,9 +1319,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
- 
- 	drm_bridge_add(&pdata->bridge);
- 
--	ret = ti_sn_attach_host(pdata);
-+	ret = ti_sn_attach_host(adev, pdata);
- 	if (ret) {
--		dev_err_probe(pdata->dev, ret, "failed to attach dsi host\n");
-+		dev_err_probe(&adev->dev, ret, "failed to attach dsi host\n");
- 		goto err_remove_bridge;
- 	}
- 
++static const struct drm_display_mode auo_b116xw03_mode = {
++	.clock = 70589,
++	.hdisplay = 1366,
++	.hsync_start = 1366 + 40,
++	.hsync_end = 1366 + 40 + 40,
++	.htotal = 1366 + 40 + 40 + 32,
++	.vdisplay = 768,
++	.vsync_start = 768 + 10,
++	.vsync_end = 768 + 10 + 12,
++	.vtotal = 768 + 10 + 12 + 6,
++	.flags = DRM_MODE_FLAG_NVSYNC | DRM_MODE_FLAG_NHSYNC,
++};
++
++static const struct panel_desc auo_b116xw03 = {
++	.modes = &auo_b116xw03_mode,
++	.num_modes = 1,
++	.bpc = 6,
++	.size = {
++		.width = 256,
++		.height = 144,
++	},
++	.delay = {
++		.prepare = 1,
++		.enable = 200,
++		.disable = 200,
++		.unprepare = 500,
++	},
++	.bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
++	.connector_type = DRM_MODE_CONNECTOR_LVDS,
++};
++
+ static const struct display_timing auo_g070vvn01_timings = {
+ 	.pixelclock = { 33300000, 34209000, 45000000 },
+ 	.hactive = { 800, 800, 800 },
+@@ -4074,6 +4106,9 @@ static const struct of_device_id platform_of_match[] = {
+ 	}, {
+ 		.compatible = "auo,b101xtn01",
+ 		.data = &auo_b101xtn01,
++	}, {
++		.compatible = "auo,b116xw03",
++		.data = &auo_b116xw03,
+ 	}, {
+ 		.compatible = "auo,g070vvn01",
+ 		.data = &auo_g070vvn01,
 -- 
 2.42.0
 
