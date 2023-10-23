@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BE115E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404FB15E85
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:28:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="baPAIeCl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965A3C433C8;
-	Mon, 23 Oct 2023 11:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kz4TOsW4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFD9C433C9;
+	Mon, 23 Oct 2023 11:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060485;
-	bh=g9Alb47zBr1JvNFFiXXlzeOHwEDZlYS03mMHfBrNMvA=;
+	s=korg; t=1698060488;
+	bh=/QWifo5v/pcML2/8ISTcLLm/qjxeTAeEd3Cdr4n/V/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=baPAIeClgB9QSxDbBk2jPACMeU/mD9Ze7GZIpag2nq990l0HGxrC5fbDZJ2P8oKt6
-	 WmrCptNvT8QgyhmbJKk2E/GQfPRXHRAXFZ8cYqcH9sLySE36sq3cxKxUgAiUrknVx/
-	 6hoHDMQkKp2vnrfkMcr3N8Vxi23wlJnqRc3mGMuE=
+	b=Kz4TOsW4WD89GkkaPl0aFuQV0hJLaxhTGUVd4CnyXIwhICARsnWyW16j6v7dFKQ5b
+	 B0Cnl5FGPWnSwdavrxcykaQazTrrowy69EGfJsuU2sB4rpTFt58H2fFe5wcCNox7O5
+	 ttLQp5oMzH3WIy8s2Xd3mweGdzqKWSlr/pjJglmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
+	Merlijn Wajer <merlijn@wizzup.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 187/196] gpio: vf610: mask the gpio irq in system suspend and support wakeup
-Date: Mon, 23 Oct 2023 12:57:32 +0200
-Message-ID: <20231023104833.664598890@linuxfoundation.org>
+Subject: [PATCH 6.1 188/196] phy: mapphone-mdm6600: Fix runtime disable on probe
+Date: Mon, 23 Oct 2023 12:57:33 +0200
+Message-ID: <20231023104833.691235362@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,39 +47,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 430232619791e7de95191f2cd8ebaa4c380d17d0 ]
+[ Upstream commit 719606154c7033c068a5d4c1dc5f9163b814b3c8 ]
 
-Add flag IRQCHIP_MASK_ON_SUSPEND to make sure gpio irq is masked on
-suspend, if lack this flag, current irq arctitecture will not mask
-the irq, and these unmasked gpio irq will wrongly wakeup the system
-even they are not config as wakeup source.
+Commit d644e0d79829 ("phy: mapphone-mdm6600: Fix PM error handling in
+phy_mdm6600_probe") caused a regression where we now unconditionally
+disable runtime PM at the end of the probe while it is only needed on
+errors.
 
-Also add flag IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND to make sure the gpio
-irq which is configed as wakeup source can work as expect.
-
-Fixes: 7f2691a19627 ("gpio: vf610: add gpiolib/IRQ chip driver for Vybrid")
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+Cc: Merlijn Wajer <merlijn@wizzup.org>
+Cc: Miaoqian Lin <linmq006@gmail.com>
+Cc: Pavel Machek <pavel@ucw.cz>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: d644e0d79829 ("phy: mapphone-mdm6600: Fix PM error handling in phy_mdm6600_probe")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20230913060433.48373-1-tony@atomide.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-vf610.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/phy/motorola/phy-mapphone-mdm6600.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-vf610.c b/drivers/gpio/gpio-vf610.c
-index e8e34d648eb2a..314dfaa633857 100644
---- a/drivers/gpio/gpio-vf610.c
-+++ b/drivers/gpio/gpio-vf610.c
-@@ -247,7 +247,8 @@ static const struct irq_chip vf610_irqchip = {
- 	.irq_unmask = vf610_gpio_irq_unmask,
- 	.irq_set_type = vf610_gpio_irq_set_type,
- 	.irq_set_wake = vf610_gpio_irq_set_wake,
--	.flags = IRQCHIP_IMMUTABLE,
-+	.flags = IRQCHIP_IMMUTABLE | IRQCHIP_MASK_ON_SUSPEND
-+			| IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND,
- 	GPIOCHIP_IRQ_RESOURCE_HELPERS,
- };
+diff --git a/drivers/phy/motorola/phy-mapphone-mdm6600.c b/drivers/phy/motorola/phy-mapphone-mdm6600.c
+index 3cd4d51c247c3..436b5ab6dc6d5 100644
+--- a/drivers/phy/motorola/phy-mapphone-mdm6600.c
++++ b/drivers/phy/motorola/phy-mapphone-mdm6600.c
+@@ -627,10 +627,12 @@ static int phy_mdm6600_probe(struct platform_device *pdev)
+ 	pm_runtime_put_autosuspend(ddata->dev);
+ 
+ cleanup:
+-	if (error < 0)
++	if (error < 0) {
+ 		phy_mdm6600_device_power_off(ddata);
+-	pm_runtime_disable(ddata->dev);
+-	pm_runtime_dont_use_autosuspend(ddata->dev);
++		pm_runtime_disable(ddata->dev);
++		pm_runtime_dont_use_autosuspend(ddata->dev);
++	}
++
+ 	return error;
+ }
  
 -- 
 2.42.0
