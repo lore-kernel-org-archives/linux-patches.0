@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4518F171DA
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EBD171C3
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IelAY9Q+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCEBC433C8;
-	Mon, 23 Oct 2023 11:50:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AhxBBhj2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965ADC433C9;
+	Mon, 23 Oct 2023 11:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061826;
-	bh=bhS1fa7fIhYM4MaWGEBo/w4BKfSwDoI7G1zinIKVTD4=;
+	s=korg; t=1698061829;
+	bh=wfe9WR7jMv7rzs0Ev+2SsTA91DtZxS2s6ZlkVHvdVqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IelAY9Q+zhcmMYgDt6VO4h5O1/8pwmcigXqWE7D0SaqItfDmrlzLZ+a4nGMWXkl3z
-	 Exm+IfPxWfOHDZVuFAvthT3okSZcg0AjL4BF2qPmaKvuwiDE5wlOoMR5Paon+x8n2L
-	 81cjmX27UeghejuQ4u4W6eoZ1E6fpzTVMC/g5gMo=
+	b=AhxBBhj2QVXvS8Qx46VXirgph0ORvGDwqEIYB+fBSDx2DNLr0HtXsl8UAKXqATJOr
+	 Qlf9vsd3Jpz2lbzqDAJawREqXB0LUgLNqIabLHjiNmuD+TOqkUgVDrkF11J8Uihh8t
+	 WY6zS9/sM2oxmMBSrpEMToO527Aspb+DKoe4dGbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kurbanov <mmkurbanov@sberdevices.ru>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.10 177/202] mtd: spinand: micron: correct bitmask for ecc status
-Date: Mon, 23 Oct 2023 12:58:04 +0200
-Message-ID: <20231023104831.642704025@linuxfoundation.org>
+Subject: [PATCH 5.10 178/202] mtd: physmap-core: Restore map_rom fallback
+Date: Mon, 23 Oct 2023 12:58:05 +0200
+Message-ID: <20231023104831.671376588@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -42,32 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kurbanov <mmkurbanov@sberdevices.ru>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 9836a987860e33943945d4b257729a4f94eae576 upstream.
+commit 6792b7fce610bcd1cf3e07af3607fe7e2c38c1d8 upstream.
 
-Valid bitmask is 0x70 in the status register.
+When the exact mapping type driver was not available, the old
+physmap_of_core driver fell back to mapping the region as ROM.
+Unfortunately this feature was lost when the DT and pdata cases were
+merged.  Revive this useful feature.
 
-Fixes: a508e8875e13 ("mtd: spinand: Add initial support for Micron MT29F2G01ABAGD")
-Signed-off-by: Martin Kurbanov <mmkurbanov@sberdevices.ru>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Fixes: 642b1e8dbed7bbbf ("mtd: maps: Merge physmap_of.c into physmap-core.c")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230905145637.139068-1-mmkurbanov@sberdevices.ru
+Link: https://lore.kernel.org/linux-mtd/550e8c8c1da4c4baeb3d71ff79b14a18d4194f9e.1693407371.git.geert+renesas@glider.be
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/micron.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/maps/physmap-core.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/mtd/nand/spi/micron.c
-+++ b/drivers/mtd/nand/spi/micron.c
-@@ -12,7 +12,7 @@
+--- a/drivers/mtd/maps/physmap-core.c
++++ b/drivers/mtd/maps/physmap-core.c
+@@ -556,6 +556,17 @@ static int physmap_flash_probe(struct pl
+ 		if (info->probe_type) {
+ 			info->mtds[i] = do_map_probe(info->probe_type,
+ 						     &info->maps[i]);
++
++			/* Fall back to mapping region as ROM */
++			if (!info->mtds[i] && IS_ENABLED(CONFIG_MTD_ROM) &&
++			    strcmp(info->probe_type, "map_rom")) {
++				dev_warn(&dev->dev,
++					 "map_probe() failed for type %s\n",
++					 info->probe_type);
++
++				info->mtds[i] = do_map_probe("map_rom",
++							     &info->maps[i]);
++			}
+ 		} else {
+ 			int j;
  
- #define SPINAND_MFR_MICRON		0x2c
- 
--#define MICRON_STATUS_ECC_MASK		GENMASK(7, 4)
-+#define MICRON_STATUS_ECC_MASK		GENMASK(6, 4)
- #define MICRON_STATUS_ECC_NO_BITFLIPS	(0 << 4)
- #define MICRON_STATUS_ECC_1TO3_BITFLIPS	(1 << 4)
- #define MICRON_STATUS_ECC_4TO6_BITFLIPS	(3 << 4)
 
 
