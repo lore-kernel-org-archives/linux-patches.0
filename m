@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56F314F6A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FD714F6A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dPhznao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204E6C433C7;
-	Mon, 23 Oct 2023 11:21:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6PEsE4E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDBDC433C9;
+	Mon, 23 Oct 2023 11:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060071;
-	bh=gc8nbAlCrkUOhHZ3mNAPTpLN6w4QOWfviZ8DJHev2B8=;
+	s=korg; t=1698060074;
+	bh=hGWOSTisAnz8j4qni8enfO4/84hXI9YoKv4/985TxW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dPhznaoQvesGIuIKk4fZmq+HRaxvRnhnqzJ1jLksqXoC1+31DjBH5kw5VXom6OiB
-	 +48hHGi+vXtJ5JpnHSOiyQXkmhwqEALm8PfEny7BDzzGwdc8ZRlsIOfUDe5h5f7Fwi
-	 mkw0FVOScKEx2kqWuQTl6m1UhprqUrMytJhwSFdk=
+	b=f6PEsE4ETk5CluVf/S4ebJQ4TuW3I/1DfZbScZ3Qsf32yDUwxx6w73+0+mnVFDyuB
+	 Km8oON6M66sRblsWqjERPbsHwnlFPma6g33cl3wj29a8y5z/14Gu25Z9H3HaX24dEB
+	 xtp5ISKQwdcgaipjb0IVo024I5QvRPSSYzsEGRx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Joerg Roedel <jroedel@suse.de>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	stable@kernel.org
-Subject: [PATCH 6.1 022/196] x86/sev: Check IOBM for IOIO exceptions from user-space
-Date: Mon, 23 Oct 2023 12:54:47 +0200
-Message-ID: <20231023104829.112186748@linuxfoundation.org>
+Subject: [PATCH 6.1 023/196] x86/sev: Check for user-space IOIO pointing to kernel space
+Date: Mon, 23 Oct 2023 12:54:48 +0200
+Message-ID: <20231023104829.140101144@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -45,35 +45,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Joerg Roedel <jroedel@suse.de>
 
-Upstream commit: b9cb9c45583b911e0db71d09caa6b56469eb2bdf
+Upstream commit: 63e44bc52047f182601e7817da969a105aa1f721
 
-Check the IO permission bitmap (if present) before emulating IOIO #VC
-exceptions for user-space. These permissions are checked by hardware
-already before the #VC is raised, but due to the VC-handler decoding
-race it needs to be checked again in software.
+Check the memory operand of INS/OUTS before emulating the instruction.
+The #VC exception can get raised from user-space, but the memory operand
+can be manipulated to access kernel memory before the emulation actually
+begins and after the exception handler has run.
 
-Fixes: 25189d08e516 ("x86/sev-es: Add support for handling IOIO exceptions")
+  [ bp: Massage commit message. ]
+
+Fixes: 597cfe48212a ("x86/boot/compressed/64: Setup a GHCB-based VC Exception handler")
 Reported-by: Tom Dohrmann <erbse.13@gmx.de>
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Tom Dohrmann <erbse.13@gmx.de>
 Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  arch/x86/boot/compressed/sev.c |    5 +++++
- arch/x86/kernel/sev-shared.c   |   22 +++++++++++++++-------
- arch/x86/kernel/sev.c          |   27 +++++++++++++++++++++++++++
- 3 files changed, 47 insertions(+), 7 deletions(-)
+ arch/x86/kernel/sev-shared.c   |   31 +++++++++++++++++++++++++++++--
+ 2 files changed, 34 insertions(+), 2 deletions(-)
 
 --- a/arch/x86/boot/compressed/sev.c
 +++ b/arch/x86/boot/compressed/sev.c
-@@ -103,6 +103,11 @@ static enum es_result vc_read_mem(struct
+@@ -108,6 +108,11 @@ static enum es_result vc_ioio_check(stru
  	return ES_OK;
  }
  
-+static enum es_result vc_ioio_check(struct es_em_ctxt *ctxt, u16 port, size_t size)
++static bool fault_in_kernel_space(unsigned long address)
 +{
-+	return ES_OK;
++	return false;
 +}
 +
  #undef __init
@@ -81,134 +81,57 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  #define __init
 --- a/arch/x86/kernel/sev-shared.c
 +++ b/arch/x86/kernel/sev-shared.c
-@@ -693,6 +693,9 @@ static enum es_result vc_insn_string_wri
- static enum es_result vc_ioio_exitinfo(struct es_em_ctxt *ctxt, u64 *exitinfo)
- {
- 	struct insn *insn = &ctxt->insn;
-+	size_t size;
-+	u64 port;
-+
- 	*exitinfo = 0;
- 
- 	switch (insn->opcode.bytes[0]) {
-@@ -701,7 +704,7 @@ static enum es_result vc_ioio_exitinfo(s
- 	case 0x6d:
- 		*exitinfo |= IOIO_TYPE_INS;
- 		*exitinfo |= IOIO_SEG_ES;
--		*exitinfo |= (ctxt->regs->dx & 0xffff) << 16;
-+		port	   = ctxt->regs->dx & 0xffff;
- 		break;
- 
- 	/* OUTS opcodes */
-@@ -709,41 +712,43 @@ static enum es_result vc_ioio_exitinfo(s
- 	case 0x6f:
- 		*exitinfo |= IOIO_TYPE_OUTS;
- 		*exitinfo |= IOIO_SEG_DS;
--		*exitinfo |= (ctxt->regs->dx & 0xffff) << 16;
-+		port	   = ctxt->regs->dx & 0xffff;
- 		break;
- 
- 	/* IN immediate opcodes */
- 	case 0xe4:
- 	case 0xe5:
- 		*exitinfo |= IOIO_TYPE_IN;
--		*exitinfo |= (u8)insn->immediate.value << 16;
-+		port	   = (u8)insn->immediate.value & 0xffff;
- 		break;
- 
- 	/* OUT immediate opcodes */
- 	case 0xe6:
- 	case 0xe7:
- 		*exitinfo |= IOIO_TYPE_OUT;
--		*exitinfo |= (u8)insn->immediate.value << 16;
-+		port	   = (u8)insn->immediate.value & 0xffff;
- 		break;
- 
- 	/* IN register opcodes */
- 	case 0xec:
- 	case 0xed:
- 		*exitinfo |= IOIO_TYPE_IN;
--		*exitinfo |= (ctxt->regs->dx & 0xffff) << 16;
-+		port	   = ctxt->regs->dx & 0xffff;
- 		break;
- 
- 	/* OUT register opcodes */
- 	case 0xee:
- 	case 0xef:
- 		*exitinfo |= IOIO_TYPE_OUT;
--		*exitinfo |= (ctxt->regs->dx & 0xffff) << 16;
-+		port	   = ctxt->regs->dx & 0xffff;
- 		break;
- 
- 	default:
- 		return ES_DECODE_FAILED;
- 	}
- 
-+	*exitinfo |= port << 16;
-+
- 	switch (insn->opcode.bytes[0]) {
- 	case 0x6c:
- 	case 0x6e:
-@@ -753,12 +758,15 @@ static enum es_result vc_ioio_exitinfo(s
- 	case 0xee:
- 		/* Single byte opcodes */
- 		*exitinfo |= IOIO_DATA_8;
-+		size       = 1;
- 		break;
- 	default:
- 		/* Length determined by instruction parsing */
- 		*exitinfo |= (insn->opnd_bytes == 2) ? IOIO_DATA_16
- 						     : IOIO_DATA_32;
-+		size       = (insn->opnd_bytes == 2) ? 2 : 4;
- 	}
-+
- 	switch (insn->addr_bytes) {
- 	case 2:
- 		*exitinfo |= IOIO_ADDR_16;
-@@ -774,7 +782,7 @@ static enum es_result vc_ioio_exitinfo(s
- 	if (insn_has_rep_prefix(insn))
- 		*exitinfo |= IOIO_REP;
- 
--	return ES_OK;
-+	return vc_ioio_check(ctxt, (u16)port, size);
+@@ -629,6 +629,23 @@ fail:
+ 	sev_es_terminate(SEV_TERM_SET_GEN, GHCB_SEV_ES_GEN_REQ);
  }
  
- static enum es_result vc_handle_ioio(struct ghcb *ghcb, struct es_em_ctxt *ctxt)
---- a/arch/x86/kernel/sev.c
-+++ b/arch/x86/kernel/sev.c
-@@ -512,6 +512,33 @@ static enum es_result vc_slow_virt_to_ph
- 	return ES_OK;
- }
- 
-+static enum es_result vc_ioio_check(struct es_em_ctxt *ctxt, u16 port, size_t size)
++static enum es_result vc_insn_string_check(struct es_em_ctxt *ctxt,
++					   unsigned long address,
++					   bool write)
 +{
-+	BUG_ON(size > 4);
++	if (user_mode(ctxt->regs) && fault_in_kernel_space(address)) {
++		ctxt->fi.vector     = X86_TRAP_PF;
++		ctxt->fi.error_code = X86_PF_USER;
++		ctxt->fi.cr2        = address;
++		if (write)
++			ctxt->fi.error_code |= X86_PF_WRITE;
 +
-+	if (user_mode(ctxt->regs)) {
-+		struct thread_struct *t = &current->thread;
-+		struct io_bitmap *iobm = t->io_bitmap;
-+		size_t idx;
-+
-+		if (!iobm)
-+			goto fault;
-+
-+		for (idx = port; idx < port + size; ++idx) {
-+			if (test_bit(idx, iobm->bitmap))
-+				goto fault;
-+		}
++		return ES_EXCEPTION;
 +	}
 +
 +	return ES_OK;
-+
-+fault:
-+	ctxt->fi.vector = X86_TRAP_GP;
-+	ctxt->fi.error_code = 0;
-+
-+	return ES_EXCEPTION;
 +}
 +
- /* Include code shared with pre-decompression boot stage */
- #include "sev-shared.c"
+ static enum es_result vc_insn_string_read(struct es_em_ctxt *ctxt,
+ 					  void *src, char *buf,
+ 					  unsigned int data_size,
+@@ -636,7 +653,12 @@ static enum es_result vc_insn_string_rea
+ 					  bool backwards)
+ {
+ 	int i, b = backwards ? -1 : 1;
+-	enum es_result ret = ES_OK;
++	unsigned long address = (unsigned long)src;
++	enum es_result ret;
++
++	ret = vc_insn_string_check(ctxt, address, false);
++	if (ret != ES_OK)
++		return ret;
  
+ 	for (i = 0; i < count; i++) {
+ 		void *s = src + (i * data_size * b);
+@@ -657,7 +679,12 @@ static enum es_result vc_insn_string_wri
+ 					   bool backwards)
+ {
+ 	int i, s = backwards ? -1 : 1;
+-	enum es_result ret = ES_OK;
++	unsigned long address = (unsigned long)dst;
++	enum es_result ret;
++
++	ret = vc_insn_string_check(ctxt, address, true);
++	if (ret != ES_OK)
++		return ret;
+ 
+ 	for (i = 0; i < count; i++) {
+ 		void *d = dst + (i * data_size * s);
 
 
