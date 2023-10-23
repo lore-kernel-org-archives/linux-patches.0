@@ -1,37 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50151640B
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD9416405
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbdEo9kY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31541C433CB;
-	Mon, 23 Oct 2023 11:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1fLe513"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2792DC433CA;
+	Mon, 23 Oct 2023 11:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061319;
-	bh=J6pZFj0E1SuAspwO1zaT6S9RA0aiVfZv6Dpp2aaEmTE=;
+	s=korg; t=1698061322;
+	bh=9z03cF4JLoECgM0+ZAWFiQK/FMMZbi+57J69KT80A7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbdEo9kYttxa2F8/IfBYWVtO3loNMwe/jpvgvcrtsXzGZ07v5Dd4zmD6MDumzT+yO
-	 HyYxHdUWZH9og9nBG+xG08oKY5UzK1etFZj45hppoZu/t1Qx5AOhrFyLrygwtzMNBI
-	 mbabYoEEo+cI4keRlUgbatheD9K12p28hO6x5bGo=
+	b=g1fLe513BKo8rExRYzOYXt0pF/e4h66Jg4dfOp+a5vegdb0ArLePMezmwdG76uVwu
+	 zfiYAMyECI8tE7+RsEYP+HjgSazJZOm19CcpyR9YGHxCxyJFDR+L4ER+G9UvEPAoPO
+	 haZJJdKfABU5y6uAOrg18W9qD68IPWO3OQILhgX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
-	Merlijn Wajer <merlijn@wizzup.org>,
-	Pavel Machek <pavel@ucw.cz>,
-	Sebastian Reichel <sre@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 134/137] phy: mapphone-mdm6600: Fix pinctrl_pm handling for sleep pins
-Date: Mon, 23 Oct 2023 12:58:11 +0200
-Message-ID: <20231023104825.200976543@linuxfoundation.org>
+Subject: [PATCH 5.10 001/202] RDMA/srp: Make struct scsi_cmnd and struct srp_request adjacent
+Date: Mon, 23 Oct 2023 12:55:08 +0200
+Message-ID: <20231023104826.612173305@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
-References: <20231023104820.849461819@linuxfoundation.org>
+In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
+References: <20231023104826.569169691@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -43,115 +38,353 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 3b384cc74b00b5ac21d18e4c1efc3c1da5300971 ]
+[ Upstream commit ad215aaea4f9d637f441566cdbbc610e9849e1fa ]
 
-Looks like the driver sleep pins configuration is unusable. Adding the
-sleep pins causes the usb phy to not respond. We need to use the default
-pins in probe, and only set sleep pins at phy_mdm6600_device_power_off().
+Define .init_cmd_priv and .exit_cmd_priv callback functions in struct
+scsi_host_template. Set .cmd_size such that the SCSI core allocates
+per-command private data. Use scsi_cmd_priv() to access that private
+data. Remove the req_ring pointer from struct srp_rdma_ch since it is no
+longer necessary. Convert srp_alloc_req_data() and srp_free_req_data()
+into functions that initialize one instance of the SRP-private command
+data. This is a micro-optimization since this patch removes several
+pointer dereferences from the hot path.
 
-As the modem can also be booted to a serial port mode for firmware
-flashing, let's make the pin changes limited to probe and remove. For
-probe, we get the default pins automatically. We only need to set the
-sleep pins in phy_mdm6600_device_power_off() to prevent the modem from
-waking up because the gpio line glitches.
+Note: due to commit e73a5e8e8003 ("scsi: core: Only return started
+requests from scsi_host_find_tag()"), it is no longer necessary to protect
+the completion path against duplicate responses.
 
-If it turns out that we need a separate state for phy_mdm6600_power_on()
-and phy_mdm6600_power_off(), we can use the pinctrl idle state.
-
-Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
-Cc: Merlijn Wajer <merlijn@wizzup.org>
-Cc: Pavel Machek <pavel@ucw.cz>
-Cc: Sebastian Reichel <sre@kernel.org>
-Fixes: 2ad2af081622 ("phy: mapphone-mdm6600: Improve phy related runtime PM calls")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20230913060433.48373-3-tony@atomide.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20210524041211.9480-6-bvanassche@acm.org
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: e193b7955dfa ("RDMA/srp: Do not call scsi_done() from srp_abort()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/motorola/phy-mapphone-mdm6600.c | 29 +++++++++------------
- 1 file changed, 12 insertions(+), 17 deletions(-)
+ drivers/infiniband/ulp/srp/ib_srp.c | 153 ++++++++++++----------------
+ drivers/infiniband/ulp/srp/ib_srp.h |   2 -
+ 2 files changed, 63 insertions(+), 92 deletions(-)
 
-diff --git a/drivers/phy/motorola/phy-mapphone-mdm6600.c b/drivers/phy/motorola/phy-mapphone-mdm6600.c
-index c3e2ab6a2a717..67802f9e40ba0 100644
---- a/drivers/phy/motorola/phy-mapphone-mdm6600.c
-+++ b/drivers/phy/motorola/phy-mapphone-mdm6600.c
-@@ -122,16 +122,10 @@ static int phy_mdm6600_power_on(struct phy *x)
- {
- 	struct phy_mdm6600 *ddata = phy_get_drvdata(x);
- 	struct gpio_desc *enable_gpio = ddata->ctrl_gpios[PHY_MDM6600_ENABLE];
--	int error;
- 
- 	if (!ddata->enabled)
- 		return -ENODEV;
- 
--	error = pinctrl_pm_select_default_state(ddata->dev);
--	if (error)
--		dev_warn(ddata->dev, "%s: error with default_state: %i\n",
--			 __func__, error);
--
- 	gpiod_set_value_cansleep(enable_gpio, 1);
- 
- 	/* Allow aggressive PM for USB, it's only needed for n_gsm port */
-@@ -160,11 +154,6 @@ static int phy_mdm6600_power_off(struct phy *x)
- 
- 	gpiod_set_value_cansleep(enable_gpio, 0);
- 
--	error = pinctrl_pm_select_sleep_state(ddata->dev);
--	if (error)
--		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
--			 __func__, error);
--
- 	return 0;
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
+index 9b9b9557ae746..f47d104e6c9d7 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.c
++++ b/drivers/infiniband/ulp/srp/ib_srp.c
+@@ -965,67 +965,52 @@ static void srp_disconnect_target(struct srp_target_port *target)
+ 	}
  }
  
-@@ -456,6 +445,7 @@ static void phy_mdm6600_device_power_off(struct phy_mdm6600 *ddata)
+-static void srp_free_req_data(struct srp_target_port *target,
+-			      struct srp_rdma_ch *ch)
++static int srp_exit_cmd_priv(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
  {
- 	struct gpio_desc *reset_gpio =
- 		ddata->ctrl_gpios[PHY_MDM6600_RESET];
-+	int error;
++	struct srp_target_port *target = host_to_target(shost);
+ 	struct srp_device *dev = target->srp_host->srp_dev;
+ 	struct ib_device *ibdev = dev->dev;
+-	struct srp_request *req;
+-	int i;
++	struct srp_request *req = scsi_cmd_priv(cmd);
  
- 	ddata->enabled = false;
- 	phy_mdm6600_cmd(ddata, PHY_MDM6600_CMD_BP_SHUTDOWN_REQ);
-@@ -471,6 +461,17 @@ static void phy_mdm6600_device_power_off(struct phy_mdm6600 *ddata)
- 	} else {
- 		dev_err(ddata->dev, "Timed out powering down\n");
+-	if (!ch->req_ring)
+-		return;
+-
+-	for (i = 0; i < target->req_ring_size; ++i) {
+-		req = &ch->req_ring[i];
+-		if (dev->use_fast_reg)
+-			kfree(req->fr_list);
+-		if (req->indirect_dma_addr) {
+-			ib_dma_unmap_single(ibdev, req->indirect_dma_addr,
+-					    target->indirect_size,
+-					    DMA_TO_DEVICE);
+-		}
+-		kfree(req->indirect_desc);
++	kfree(req->fr_list);
++	if (req->indirect_dma_addr) {
++		ib_dma_unmap_single(ibdev, req->indirect_dma_addr,
++				    target->indirect_size,
++				    DMA_TO_DEVICE);
+ 	}
++	kfree(req->indirect_desc);
+ 
+-	kfree(ch->req_ring);
+-	ch->req_ring = NULL;
++	return 0;
+ }
+ 
+-static int srp_alloc_req_data(struct srp_rdma_ch *ch)
++static int srp_init_cmd_priv(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
+ {
+-	struct srp_target_port *target = ch->target;
++	struct srp_target_port *target = host_to_target(shost);
+ 	struct srp_device *srp_dev = target->srp_host->srp_dev;
+ 	struct ib_device *ibdev = srp_dev->dev;
+-	struct srp_request *req;
++	struct srp_request *req = scsi_cmd_priv(cmd);
+ 	dma_addr_t dma_addr;
+-	int i, ret = -ENOMEM;
++	int ret = -ENOMEM;
+ 
+-	ch->req_ring = kcalloc(target->req_ring_size, sizeof(*ch->req_ring),
+-			       GFP_KERNEL);
+-	if (!ch->req_ring)
+-		goto out;
+-
+-	for (i = 0; i < target->req_ring_size; ++i) {
+-		req = &ch->req_ring[i];
+-		if (srp_dev->use_fast_reg) {
+-			req->fr_list = kmalloc_array(target->mr_per_cmd,
+-						sizeof(void *), GFP_KERNEL);
+-			if (!req->fr_list)
+-				goto out;
+-		}
+-		req->indirect_desc = kmalloc(target->indirect_size, GFP_KERNEL);
+-		if (!req->indirect_desc)
+-			goto out;
+-
+-		dma_addr = ib_dma_map_single(ibdev, req->indirect_desc,
+-					     target->indirect_size,
+-					     DMA_TO_DEVICE);
+-		if (ib_dma_mapping_error(ibdev, dma_addr))
++	if (srp_dev->use_fast_reg) {
++		req->fr_list = kmalloc_array(target->mr_per_cmd, sizeof(void *),
++					GFP_KERNEL);
++		if (!req->fr_list)
+ 			goto out;
++	}
++	req->indirect_desc = kmalloc(target->indirect_size, GFP_KERNEL);
++	if (!req->indirect_desc)
++		goto out;
+ 
+-		req->indirect_dma_addr = dma_addr;
++	dma_addr = ib_dma_map_single(ibdev, req->indirect_desc,
++				     target->indirect_size,
++				     DMA_TO_DEVICE);
++	if (ib_dma_mapping_error(ibdev, dma_addr)) {
++		srp_exit_cmd_priv(shost, cmd);
++		goto out;
  	}
 +
-+	/*
-+	 * Keep reset gpio high with padconf internal pull-up resistor to
-+	 * prevent modem from waking up during deeper SoC idle states. The
-+	 * gpio bank lines can have glitches if not in the always-on wkup
-+	 * domain.
-+	 */
-+	error = pinctrl_pm_select_sleep_state(ddata->dev);
-+	if (error)
-+		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
-+			 __func__, error);
++	req->indirect_dma_addr = dma_addr;
+ 	ret = 0;
+ 
+ out:
+@@ -1067,10 +1052,6 @@ static void srp_remove_target(struct srp_target_port *target)
+ 	}
+ 	cancel_work_sync(&target->tl_err_work);
+ 	srp_rport_put(target->rport);
+-	for (i = 0; i < target->ch_count; i++) {
+-		ch = &target->ch[i];
+-		srp_free_req_data(target, ch);
+-	}
+ 	kfree(target->ch);
+ 	target->ch = NULL;
+ 
+@@ -1289,22 +1270,32 @@ static void srp_finish_req(struct srp_rdma_ch *ch, struct srp_request *req,
+ 	}
  }
  
- static void phy_mdm6600_deferred_power_on(struct work_struct *work)
-@@ -571,12 +572,6 @@ static int phy_mdm6600_probe(struct platform_device *pdev)
- 	ddata->dev = &pdev->dev;
- 	platform_set_drvdata(pdev, ddata);
+-static void srp_terminate_io(struct srp_rport *rport)
++struct srp_terminate_context {
++	struct srp_target_port *srp_target;
++	int scsi_result;
++};
++
++static bool srp_terminate_cmd(struct scsi_cmnd *scmnd, void *context_ptr,
++			      bool reserved)
+ {
+-	struct srp_target_port *target = rport->lld_data;
+-	struct srp_rdma_ch *ch;
+-	int i, j;
++	struct srp_terminate_context *context = context_ptr;
++	struct srp_target_port *target = context->srp_target;
++	u32 tag = blk_mq_unique_tag(scmnd->request);
++	struct srp_rdma_ch *ch = &target->ch[blk_mq_unique_tag_to_hwq(tag)];
++	struct srp_request *req = scsi_cmd_priv(scmnd);
  
--	/* Active state selected in phy_mdm6600_power_on() */
--	error = pinctrl_pm_select_sleep_state(ddata->dev);
--	if (error)
--		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
--			 __func__, error);
+-	for (i = 0; i < target->ch_count; i++) {
+-		ch = &target->ch[i];
++	srp_finish_req(ch, req, NULL, context->scsi_result);
+ 
+-		for (j = 0; j < target->req_ring_size; ++j) {
+-			struct srp_request *req = &ch->req_ring[j];
++	return true;
++}
+ 
+-			srp_finish_req(ch, req, NULL,
+-				       DID_TRANSPORT_FAILFAST << 16);
+-		}
+-	}
++static void srp_terminate_io(struct srp_rport *rport)
++{
++	struct srp_target_port *target = rport->lld_data;
++	struct srp_terminate_context context = { .srp_target = target,
++		.scsi_result = DID_TRANSPORT_FAILFAST << 16 };
++
++	scsi_host_busy_iter(target->scsi_host, srp_terminate_cmd, &context);
+ }
+ 
+ /* Calculate maximum initiator to target information unit length. */
+@@ -1360,13 +1351,12 @@ static int srp_rport_reconnect(struct srp_rport *rport)
+ 		ch = &target->ch[i];
+ 		ret += srp_new_cm_id(ch);
+ 	}
+-	for (i = 0; i < target->ch_count; i++) {
+-		ch = &target->ch[i];
+-		for (j = 0; j < target->req_ring_size; ++j) {
+-			struct srp_request *req = &ch->req_ring[j];
++	{
++		struct srp_terminate_context context = {
++			.srp_target = target, .scsi_result = DID_RESET << 16};
+ 
+-			srp_finish_req(ch, req, NULL, DID_RESET << 16);
+-		}
++		scsi_host_busy_iter(target->scsi_host, srp_terminate_cmd,
++				    &context);
+ 	}
+ 	for (i = 0; i < target->ch_count; i++) {
+ 		ch = &target->ch[i];
+@@ -1962,13 +1952,10 @@ static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp)
+ 		spin_unlock_irqrestore(&ch->lock, flags);
+ 	} else {
+ 		scmnd = scsi_host_find_tag(target->scsi_host, rsp->tag);
+-		if (scmnd && scmnd->host_scribble) {
+-			req = (void *)scmnd->host_scribble;
++		if (scmnd) {
++			req = scsi_cmd_priv(scmnd);
+ 			scmnd = srp_claim_req(ch, req, NULL, scmnd);
+ 		} else {
+-			scmnd = NULL;
+-		}
+-		if (!scmnd) {
+ 			shost_printk(KERN_ERR, target->scsi_host,
+ 				     "Null scmnd for RSP w/tag %#016llx received on ch %td / QP %#x\n",
+ 				     rsp->tag, ch - target->ch, ch->qp->qp_num);
+@@ -1996,7 +1983,6 @@ static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp)
+ 		srp_free_req(ch, req, scmnd,
+ 			     be32_to_cpu(rsp->req_lim_delta));
+ 
+-		scmnd->host_scribble = NULL;
+ 		scmnd->scsi_done(scmnd);
+ 	}
+ }
+@@ -2164,13 +2150,12 @@ static int srp_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *scmnd)
+ {
+ 	struct srp_target_port *target = host_to_target(shost);
+ 	struct srp_rdma_ch *ch;
+-	struct srp_request *req;
++	struct srp_request *req = scsi_cmd_priv(scmnd);
+ 	struct srp_iu *iu;
+ 	struct srp_cmd *cmd;
+ 	struct ib_device *dev;
+ 	unsigned long flags;
+ 	u32 tag;
+-	u16 idx;
+ 	int len, ret;
+ 
+ 	scmnd->result = srp_chkready(target->rport);
+@@ -2180,10 +2165,6 @@ static int srp_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *scmnd)
+ 	WARN_ON_ONCE(scmnd->request->tag < 0);
+ 	tag = blk_mq_unique_tag(scmnd->request);
+ 	ch = &target->ch[blk_mq_unique_tag_to_hwq(tag)];
+-	idx = blk_mq_unique_tag_to_tag(tag);
+-	WARN_ONCE(idx >= target->req_ring_size, "%s: tag %#x: idx %d >= %d\n",
+-		  dev_name(&shost->shost_gendev), tag, idx,
+-		  target->req_ring_size);
+ 
+ 	spin_lock_irqsave(&ch->lock, flags);
+ 	iu = __srp_get_tx_iu(ch, SRP_IU_CMD);
+@@ -2192,13 +2173,10 @@ static int srp_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *scmnd)
+ 	if (!iu)
+ 		goto err;
+ 
+-	req = &ch->req_ring[idx];
+ 	dev = target->srp_host->srp_dev->dev;
+ 	ib_dma_sync_single_for_cpu(dev, iu->dma, ch->max_it_iu_len,
+ 				   DMA_TO_DEVICE);
+ 
+-	scmnd->host_scribble = (void *) req;
 -
- 	error = phy_mdm6600_init_lines(ddata);
- 	if (error)
- 		return error;
+ 	cmd = iu->buf;
+ 	memset(cmd, 0, sizeof *cmd);
+ 
+@@ -3075,6 +3053,8 @@ static struct scsi_host_template srp_template = {
+ 	.target_alloc			= srp_target_alloc,
+ 	.slave_configure		= srp_slave_configure,
+ 	.info				= srp_target_info,
++	.init_cmd_priv			= srp_init_cmd_priv,
++	.exit_cmd_priv			= srp_exit_cmd_priv,
+ 	.queuecommand			= srp_queuecommand,
+ 	.change_queue_depth             = srp_change_queue_depth,
+ 	.eh_timed_out			= srp_timed_out,
+@@ -3088,6 +3068,7 @@ static struct scsi_host_template srp_template = {
+ 	.cmd_per_lun			= SRP_DEFAULT_CMD_SQ_SIZE,
+ 	.shost_attrs			= srp_host_attrs,
+ 	.track_queue_depth		= 1,
++	.cmd_size			= sizeof(struct srp_request),
+ };
+ 
+ static int srp_sdev_count(struct Scsi_Host *host)
+@@ -3735,8 +3716,6 @@ static ssize_t srp_create_target(struct device *dev,
+ 	if (ret)
+ 		goto out;
+ 
+-	target->req_ring_size = target->queue_size - SRP_TSK_MGMT_SQ_SIZE;
+-
+ 	if (!srp_conn_unique(target->srp_host, target)) {
+ 		if (target->using_rdma_cm) {
+ 			shost_printk(KERN_INFO, target->scsi_host,
+@@ -3839,10 +3818,6 @@ static ssize_t srp_create_target(struct device *dev,
+ 		if (ret)
+ 			goto err_disconnect;
+ 
+-		ret = srp_alloc_req_data(ch);
+-		if (ret)
+-			goto err_disconnect;
+-
+ 		ret = srp_connect_ch(ch, max_iu_len, multich);
+ 		if (ret) {
+ 			char dst[64];
+@@ -3861,7 +3836,6 @@ static ssize_t srp_create_target(struct device *dev,
+ 				goto free_ch;
+ 			} else {
+ 				srp_free_ch_ib(target, ch);
+-				srp_free_req_data(target, ch);
+ 				target->ch_count = ch - target->ch;
+ 				goto connected;
+ 			}
+@@ -3922,7 +3896,6 @@ static ssize_t srp_create_target(struct device *dev,
+ 	for (i = 0; i < target->ch_count; i++) {
+ 		ch = &target->ch[i];
+ 		srp_free_ch_ib(target, ch);
+-		srp_free_req_data(target, ch);
+ 	}
+ 
+ 	kfree(target->ch);
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.h b/drivers/infiniband/ulp/srp/ib_srp.h
+index 85bac20d9007d..152242e8f733d 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.h
++++ b/drivers/infiniband/ulp/srp/ib_srp.h
+@@ -176,7 +176,6 @@ struct srp_rdma_ch {
+ 
+ 	struct srp_iu	      **tx_ring;
+ 	struct srp_iu	      **rx_ring;
+-	struct srp_request     *req_ring;
+ 	int			comp_vector;
+ 
+ 	u64			tsk_mgmt_tag;
+@@ -222,7 +221,6 @@ struct srp_target_port {
+ 	int			mr_pool_size;
+ 	int			mr_per_cmd;
+ 	int			queue_size;
+-	int			req_ring_size;
+ 	int			comp_vector;
+ 	int			tl_retry_count;
+ 
 -- 
-2.42.0
+2.40.1
 
 
 
