@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE2515E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7681D15E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DA6SXqG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB60AC433C7;
-	Mon, 23 Oct 2023 11:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuZ5MpW1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF24C433C7;
+	Mon, 23 Oct 2023 11:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060647;
-	bh=tt8kn+p7dPolhVRgn3LN2gxLlBtqHsrGlNkuY/f42H4=;
+	s=korg; t=1698060650;
+	bh=rZX0yFrN73evKz135jlVCArDnF63DXTf1rk8KBryulg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DA6SXqG3bY1asiNU7PAOddUXKVFScDG4yVRuSktzl8CO3jHNn6aSlwkESnKUruwzt
-	 F4Vtpt5+Cw9tO1um1HnwP4Zo5l4OpytlAeYiOQIT7W2L/uzrCEUh2pMsLol3gZKdoV
-	 h5Q0qu0OG0sUxKG1pq9xfwKsJzVzh4F3T03qpb6w=
+	b=uuZ5MpW1RgPJNbueoKQQbpi23TeWREBvPKJjzUsHWD2n/oZ7kVFDumnQwQvuPI56z
+	 nzmH539tVJgdqAb2MG0J4x+JFiN9uXeKbl63/QrmeeMmpBaM+3g3B3Lj/hqYZ/DW8T
+	 ZRw/fI1TFME0kaWDSXFsChtu1YywoPHffGenI8vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 5.4 038/123] x86/cpu: Fix AMD erratum #1485 on Zen4-based CPUs
-Date: Mon, 23 Oct 2023 12:56:36 +0200
-Message-ID: <20231023104819.005303582@linuxfoundation.org>
+	"Lee, Chun-Yi" <jlee@suse.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Lee
+Subject: [PATCH 5.4 047/123] Bluetooth: Reject connection with the device which has same BD_ADDR
+Date: Mon, 23 Oct 2023 12:56:45 +0200
+Message-ID: <20231023104819.294859794@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -36,67 +36,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Lee, Chun-Yi <jlee@suse.com>
 
-commit f454b18e07f518bcd0c05af17a2239138bff52de upstream.
+commit 1ffc6f8cc33268731fcf9629fc4438f6db1191fc upstream.
 
-Fix erratum #1485 on Zen4 parts where running with STIBP disabled can
-cause an #UD exception. The performance impact of the fix is negligible.
+This change is used to relieve CVE-2020-26555. The description of
+the CVE:
 
-Reported-by: René Rebe <rene@exactcode.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: René Rebe <rene@exactcode.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/D99589F4-BC5D-430B-87B2-72C20370CF57@exactcode.com
+Bluetooth legacy BR/EDR PIN code pairing in Bluetooth Core Specification
+1.0B through 5.2 may permit an unauthenticated nearby device to spoof
+the BD_ADDR of the peer device to complete pairing without knowledge
+of the PIN. [1]
+
+The detail of this attack is in IEEE paper:
+BlueMirror: Reflections on Bluetooth Pairing and Provisioning Protocols
+[2]
+
+It's a reflection attack. The paper mentioned that attacker can induce
+the attacked target to generate null link key (zero key) without PIN
+code. In BR/EDR, the key generation is actually handled in the controller
+which is below HCI.
+
+A condition of this attack is that attacker should change the
+BR_ADDR of his hacking device (Host B) to equal to the BR_ADDR with
+the target device being attacked (Host A).
+
+Thus, we reject the connection with device which has same BD_ADDR
+both on HCI_Create_Connection and HCI_Connection_Request to prevent
+the attack. A similar implementation also shows in btstack project.
+[3][4]
+
+Cc: stable@vger.kernel.org
+Link: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-26555 [1]
+Link: https://ieeexplore.ieee.org/abstract/document/9474325/authors#authors [2]
+Link: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L3523 [3]
+Link: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L7297 [4]
+Signed-off-by: Lee, Chun-Yi <jlee@suse.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/msr-index.h |    4 ++++
- arch/x86/kernel/cpu/amd.c        |    8 ++++++++
- 2 files changed, 12 insertions(+)
+ net/bluetooth/hci_conn.c  |    9 +++++++++
+ net/bluetooth/hci_event.c |   11 +++++++++++
+ 2 files changed, 20 insertions(+)
 
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -502,6 +502,10 @@
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1207,6 +1207,15 @@ struct hci_conn *hci_connect_acl(struct
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 	}
  
- #define MSR_AMD64_VIRT_SPEC_CTRL	0xc001011f
- 
-+/* Zen4 */
-+#define MSR_ZEN4_BP_CFG			0xc001102e
-+#define MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT 5
++	/* Reject outgoing connection to device with same BD ADDR against
++	 * CVE-2020-26555
++	 */
++	if (!bacmp(&hdev->bdaddr, dst)) {
++		bt_dev_dbg(hdev, "Reject connection with same BD_ADDR %pMR\n",
++			   dst);
++		return ERR_PTR(-ECONNREFUSED);
++	}
 +
- /* Fam 17h MSRs */
- #define MSR_F17H_IRPERF			0xc00000e9
+ 	acl = hci_conn_hash_lookup_ba(hdev, ACL_LINK, dst);
+ 	if (!acl) {
+ 		acl = hci_conn_add(hdev, ACL_LINK, dst, HCI_ROLE_MASTER);
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -2594,6 +2594,17 @@ static void hci_conn_request_evt(struct
+ 	BT_DBG("%s bdaddr %pMR type 0x%x", hdev->name, &ev->bdaddr,
+ 	       ev->link_type);
  
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -75,6 +75,10 @@ static const int amd_zenbleed[] =
- 			   AMD_MODEL_RANGE(0x17, 0x90, 0x0, 0x91, 0xf),
- 			   AMD_MODEL_RANGE(0x17, 0xa0, 0x0, 0xaf, 0xf));
- 
-+static const int amd_erratum_1485[] =
-+	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x19, 0x10, 0x0, 0x1f, 0xf),
-+			   AMD_MODEL_RANGE(0x19, 0x60, 0x0, 0xaf, 0xf));
++	/* Reject incoming connection from device with same BD ADDR against
++	 * CVE-2020-26555
++	 */
++	if (!bacmp(&hdev->bdaddr, &ev->bdaddr))
++	{
++		bt_dev_dbg(hdev, "Reject connection with same BD_ADDR %pMR\n",
++			   &ev->bdaddr);
++		hci_reject_conn(hdev, &ev->bdaddr);
++		return;
++	}
 +
- static bool cpu_has_amd_erratum(struct cpuinfo_x86 *cpu, const int *erratum)
- {
- 	int osvw_id = *erratum++;
-@@ -1117,6 +1121,10 @@ static void init_amd(struct cpuinfo_x86
- 	check_null_seg_clears_base(c);
+ 	mask |= hci_proto_connect_ind(hdev, &ev->bdaddr, ev->link_type,
+ 				      &flags);
  
- 	zenbleed_check(c);
-+
-+	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) &&
-+	     cpu_has_amd_erratum(c, amd_erratum_1485))
-+		msr_set_bit(MSR_ZEN4_BP_CFG, MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT);
- }
- 
- #ifdef CONFIG_X86_32
 
 
