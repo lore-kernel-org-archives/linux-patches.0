@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BBC14263
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DE714263
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRM5tdxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87930C433C9;
-	Mon, 23 Oct 2023 11:08:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APErTqgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D31C433C7;
+	Mon, 23 Oct 2023 11:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059330;
-	bh=6bowPTYvC6wSX+PXqF/Mnuj/jqczWk3cQf4+/gnDVrQ=;
+	s=korg; t=1698059334;
+	bh=hlH78os2GzEILz1qeMzkjIvchJ+yGRbTWQMCvSZdVFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pRM5tdxmwMWmODfaX65qoD98fudpKv7FgXBoXio5+0/IeosiJKGRUT9UchguLKnlo
-	 XhNOwW1i0TlO4OzeHCdX0eojvi/P1I2ywTukDuYJYtO9hCI+PD9zZ7q5GJrMJQVYTW
-	 ooBCsBI9BbluX1uWl25y5g5IgmbuXQqNfjUiTvJ4=
+	b=APErTqgwKTz+yD27hcx3x57CNoAr91M0jiaG5UZiMFakmuGcTC6s4zB6ASRM3YPQf
+	 eb+Tv4O3FukJ+/NcIjW3rI1W7f198/EczagHjqw4FQMFKe9HDAEPgdvTxmeYyHjFPm
+	 Hb95Vn2i+Kak/OSkHqAYnEHQraCUxBCJcXFY17t4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Renan Guilherme Lebre Ramos <japareaggae@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Xuewen Yan <xuewen.yan@unisoc.com>,
+	Guohua Yan <guohua.yan@unisoc.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 141/241] platform/x86: touchscreen_dmi: Add info for the Positivo C4128B
-Date: Mon, 23 Oct 2023 12:55:27 +0200
-Message-ID: <20231023104837.313367077@linuxfoundation.org>
+Subject: [PATCH 6.5 142/241] cpufreq: schedutil: Update next_freq when cpufreq_limits change
+Date: Mon, 23 Oct 2023 12:55:28 +0200
+Message-ID: <20231023104837.336150612@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,63 +44,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Renan Guilherme Lebre Ramos <japareaggae@gmail.com>
+From: Xuewen Yan <xuewen.yan@unisoc.com>
 
-[ Upstream commit aa7dcba3bae6869122828b144a3cfd231718089d ]
+[ Upstream commit 9e0bc36ab07c550d791bf17feeb479f1dfc42d89 ]
 
-Add information for the Positivo C4128B, a notebook/tablet convertible.
+When cpufreq's policy is 'single', there is a scenario that will
+cause sg_policy's next_freq to be unable to update.
 
-Link: https://github.com/onitake/gsl-firmware/pull/217
-Signed-off-by: Renan Guilherme Lebre Ramos <japareaggae@gmail.com>
-Link: https://lore.kernel.org/r/20231004235900.426240-1-japareaggae@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+When the CPU's util is always max, the cpufreq will be max,
+and then if we change the policy's scaling_max_freq to be a
+lower freq, indeed, the sg_policy's next_freq need change to
+be the lower freq, however, because the cpu_is_busy, the next_freq
+would keep the max_freq.
+
+For example:
+
+The cpu7 is a single CPU:
+
+  unisoc:/sys/devices/system/cpu/cpufreq/policy7 # while true;do done& [1] 4737
+  unisoc:/sys/devices/system/cpu/cpufreq/policy7 # taskset -p 80 4737
+  pid 4737's current affinity mask: ff
+  pid 4737's new affinity mask: 80
+  unisoc:/sys/devices/system/cpu/cpufreq/policy7 # cat scaling_max_freq
+  2301000
+  unisoc:/sys/devices/system/cpu/cpufreq/policy7 # cat scaling_cur_freq
+  2301000
+  unisoc:/sys/devices/system/cpu/cpufreq/policy7 # echo 2171000 > scaling_max_freq
+  unisoc:/sys/devices/system/cpu/cpufreq/policy7 # cat scaling_max_freq
+  2171000
+
+At this time, the sg_policy's next_freq would stay at 2301000, which
+is wrong.
+
+To fix this, add a check for the ->need_freq_update flag.
+
+[ mingo: Clarified the changelog. ]
+
+Co-developed-by: Guohua Yan <guohua.yan@unisoc.com>
+Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
+Signed-off-by: Guohua Yan <guohua.yan@unisoc.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
+Link: https://lore.kernel.org/r/20230719130527.8074-1-xuewen.yan@unisoc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ kernel/sched/cpufreq_schedutil.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index 363a9848e2b88..0c67337726984 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -771,6 +771,21 @@ static const struct ts_dmi_data pipo_w11_data = {
- 	.properties	= pipo_w11_props,
- };
+diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
+index 4492608b7d7f1..458d359f5991c 100644
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -350,7 +350,8 @@ static void sugov_update_single_freq(struct update_util_data *hook, u64 time,
+ 	 * Except when the rq is capped by uclamp_max.
+ 	 */
+ 	if (!uclamp_rq_is_capped(cpu_rq(sg_cpu->cpu)) &&
+-	    sugov_cpu_is_busy(sg_cpu) && next_f < sg_policy->next_freq) {
++	    sugov_cpu_is_busy(sg_cpu) && next_f < sg_policy->next_freq &&
++	    !sg_policy->need_freq_update) {
+ 		next_f = sg_policy->next_freq;
  
-+static const struct property_entry positivo_c4128b_props[] = {
-+	PROPERTY_ENTRY_U32("touchscreen-min-x", 4),
-+	PROPERTY_ENTRY_U32("touchscreen-min-y", 13),
-+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1915),
-+	PROPERTY_ENTRY_U32("touchscreen-size-y", 1269),
-+	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-positivo-c4128b.fw"),
-+	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
-+	{ }
-+};
-+
-+static const struct ts_dmi_data positivo_c4128b_data = {
-+	.acpi_name	= "MSSL1680:00",
-+	.properties	= positivo_c4128b_props,
-+};
-+
- static const struct property_entry pov_mobii_wintab_p800w_v20_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-min-x", 32),
- 	PROPERTY_ENTRY_U32("touchscreen-min-y", 16),
-@@ -1502,6 +1517,14 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_BIOS_VERSION, "MOMO.G.WI71C.MABMRBA02"),
- 		},
- 	},
-+	{
-+		/* Positivo C4128B */
-+		.driver_data = (void *)&positivo_c4128b_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "C4128B-1"),
-+		},
-+	},
- 	{
- 		/* Point of View mobii wintab p800w (v2.0) */
- 		.driver_data = (void *)&pov_mobii_wintab_p800w_v20_data,
+ 		/* Restore cached freq as next_freq has changed */
 -- 
 2.40.1
 
