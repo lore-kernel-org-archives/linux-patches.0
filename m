@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2620314A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1535214A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4kIBMdL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94951C433C8;
-	Mon, 23 Oct 2023 11:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5Cocz95"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83AA5C433C8;
+	Mon, 23 Oct 2023 11:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058966;
-	bh=LQw+RHH/Gnbd2NVlFvIPDwZ8PTYQIMQr1ldgy+KGrn0=;
+	s=korg; t=1698058968;
+	bh=aEojCat8KpQ+l/jmlbm8MDc1sXzifGFCOkg2zxFRn34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4kIBMdLWDLJN6P2PbFT92TcVABgnYkFpLeIMFo2muq1P8/oHw6ncFuJYwHivMFj1
-	 ghu039QpU3yZzACXOW87/BnHvlzY+F3A1i/B7EVkkSSZPYjH/NO+9mEAn7PlsuwO2l
-	 aLqF/XR/U0la0jag34rz/RwuG76gQnRFDj/QpBk0=
+	b=q5Cocz951qwWijfcEO481m/hkb5z+wlGWmLQI7tdSsRz7sP82uLHALmUi127/lA7P
+	 FoF3WYmD6AEX2MONarqWMtFyeTsIXix8U/wJE/MLNQq2xI0eJeIxtZ+toCcpasjxgP
+	 YOG4fnfTPrkWMaQufB680ncMeod6w84BXrWx+QxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.5 019/241] x86/fpu: Allow caller to constrain xfeatures when copying to uabi buffer
-Date: Mon, 23 Oct 2023 12:53:25 +0200
-Message-ID: <20231023104834.396293937@linuxfoundation.org>
+	"Lee, Chun-Yi" <jlee@suse.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Lee
+Subject: [PATCH 6.5 002/241] Bluetooth: Reject connection with the device which has same BD_ADDR
+Date: Mon, 23 Oct 2023 12:53:08 +0200
+Message-ID: <20231023104833.899551700@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,156 +42,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Lee, Chun-Yi <jlee@suse.com>
 
-commit 18164f66e6c59fda15c198b371fa008431efdb22 upstream.
+commit 1ffc6f8cc33268731fcf9629fc4438f6db1191fc upstream.
 
-Plumb an xfeatures mask into __copy_xstate_to_uabi_buf() so that KVM can
-constrain which xfeatures are saved into the userspace buffer without
-having to modify the user_xfeatures field in KVM's guest_fpu state.
+This change is used to relieve CVE-2020-26555. The description of
+the CVE:
 
-KVM's ABI for KVM_GET_XSAVE{2} is that features that are not exposed to
-guest must not show up in the effective xstate_bv field of the buffer.
-Saving only the guest-supported xfeatures allows userspace to load the
-saved state on a different host with a fewer xfeatures, so long as the
-target host supports the xfeatures that are exposed to the guest.
+Bluetooth legacy BR/EDR PIN code pairing in Bluetooth Core Specification
+1.0B through 5.2 may permit an unauthenticated nearby device to spoof
+the BD_ADDR of the peer device to complete pairing without knowledge
+of the PIN. [1]
 
-KVM currently sets user_xfeatures directly to restrict KVM_GET_XSAVE{2} to
-the set of guest-supported xfeatures, but doing so broke KVM's historical
-ABI for KVM_SET_XSAVE, which allows userspace to load any xfeatures that
-are supported by the *host*.
+The detail of this attack is in IEEE paper:
+BlueMirror: Reflections on Bluetooth Pairing and Provisioning Protocols
+[2]
+
+It's a reflection attack. The paper mentioned that attacker can induce
+the attacked target to generate null link key (zero key) without PIN
+code. In BR/EDR, the key generation is actually handled in the controller
+which is below HCI.
+
+A condition of this attack is that attacker should change the
+BR_ADDR of his hacking device (Host B) to equal to the BR_ADDR with
+the target device being attacked (Host A).
+
+Thus, we reject the connection with device which has same BD_ADDR
+both on HCI_Create_Connection and HCI_Connection_Request to prevent
+the attack. A similar implementation also shows in btstack project.
+[3][4]
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230928001956.924301-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-26555 [1]
+Link: https://ieeexplore.ieee.org/abstract/document/9474325/authors#authors [2]
+Link: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L3523 [3]
+Link: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L7297 [4]
+Signed-off-by: Lee, Chun-Yi <jlee@suse.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/fpu/api.h |    3 ++-
- arch/x86/kernel/fpu/core.c     |    5 +++--
- arch/x86/kernel/fpu/xstate.c   |    7 +++++--
- arch/x86/kernel/fpu/xstate.h   |    3 ++-
- arch/x86/kvm/x86.c             |   21 +++++++++------------
- 5 files changed, 21 insertions(+), 18 deletions(-)
+ net/bluetooth/hci_conn.c  |    9 +++++++++
+ net/bluetooth/hci_event.c |   11 +++++++++++
+ 2 files changed, 20 insertions(+)
 
---- a/arch/x86/include/asm/fpu/api.h
-+++ b/arch/x86/include/asm/fpu/api.h
-@@ -148,7 +148,8 @@ static inline void fpu_update_guest_xfd(
- static inline void fpu_sync_guest_vmexit_xfd_state(void) { }
- #endif
- 
--extern void fpu_copy_guest_fpstate_to_uabi(struct fpu_guest *gfpu, void *buf, unsigned int size, u32 pkru);
-+extern void fpu_copy_guest_fpstate_to_uabi(struct fpu_guest *gfpu, void *buf,
-+					   unsigned int size, u64 xfeatures, u32 pkru);
- extern int fpu_copy_uabi_to_guest_fpstate(struct fpu_guest *gfpu, const void *buf, u64 xcr0, u32 *vpkru);
- 
- static inline void fpstate_set_confidential(struct fpu_guest *gfpu)
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -369,14 +369,15 @@ int fpu_swap_kvm_fpstate(struct fpu_gues
- EXPORT_SYMBOL_GPL(fpu_swap_kvm_fpstate);
- 
- void fpu_copy_guest_fpstate_to_uabi(struct fpu_guest *gfpu, void *buf,
--				    unsigned int size, u32 pkru)
-+				    unsigned int size, u64 xfeatures, u32 pkru)
- {
- 	struct fpstate *kstate = gfpu->fpstate;
- 	union fpregs_state *ustate = buf;
- 	struct membuf mb = { .p = buf, .left = size };
- 
- 	if (cpu_feature_enabled(X86_FEATURE_XSAVE)) {
--		__copy_xstate_to_uabi_buf(mb, kstate, pkru, XSTATE_COPY_XSAVE);
-+		__copy_xstate_to_uabi_buf(mb, kstate, xfeatures, pkru,
-+					  XSTATE_COPY_XSAVE);
- 	} else {
- 		memcpy(&ustate->fxsave, &kstate->regs.fxsave,
- 		       sizeof(ustate->fxsave));
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -1053,6 +1053,7 @@ static void copy_feature(bool from_xstat
-  * __copy_xstate_to_uabi_buf - Copy kernel saved xstate to a UABI buffer
-  * @to:		membuf descriptor
-  * @fpstate:	The fpstate buffer from which to copy
-+ * @xfeatures:	The mask of xfeatures to save (XSAVE mode only)
-  * @pkru_val:	The PKRU value to store in the PKRU component
-  * @copy_mode:	The requested copy mode
-  *
-@@ -1063,7 +1064,8 @@ static void copy_feature(bool from_xstat
-  * It supports partial copy but @to.pos always starts from zero.
-  */
- void __copy_xstate_to_uabi_buf(struct membuf to, struct fpstate *fpstate,
--			       u32 pkru_val, enum xstate_copy_mode copy_mode)
-+			       u64 xfeatures, u32 pkru_val,
-+			       enum xstate_copy_mode copy_mode)
- {
- 	const unsigned int off_mxcsr = offsetof(struct fxregs_state, mxcsr);
- 	struct xregs_state *xinit = &init_fpstate.regs.xsave;
-@@ -1087,7 +1089,7 @@ void __copy_xstate_to_uabi_buf(struct me
- 		break;
- 
- 	case XSTATE_COPY_XSAVE:
--		header.xfeatures &= fpstate->user_xfeatures;
-+		header.xfeatures &= fpstate->user_xfeatures & xfeatures;
- 		break;
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1589,6 +1589,15 @@ struct hci_conn *hci_connect_acl(struct
+ 		return ERR_PTR(-EOPNOTSUPP);
  	}
  
-@@ -1189,6 +1191,7 @@ void copy_xstate_to_uabi_buf(struct memb
- 			     enum xstate_copy_mode copy_mode)
- {
- 	__copy_xstate_to_uabi_buf(to, tsk->thread.fpu.fpstate,
-+				  tsk->thread.fpu.fpstate->user_xfeatures,
- 				  tsk->thread.pkru, copy_mode);
- }
- 
---- a/arch/x86/kernel/fpu/xstate.h
-+++ b/arch/x86/kernel/fpu/xstate.h
-@@ -43,7 +43,8 @@ enum xstate_copy_mode {
- 
- struct membuf;
- extern void __copy_xstate_to_uabi_buf(struct membuf to, struct fpstate *fpstate,
--				      u32 pkru_val, enum xstate_copy_mode copy_mode);
-+				      u64 xfeatures, u32 pkru_val,
-+				      enum xstate_copy_mode copy_mode);
- extern void copy_xstate_to_uabi_buf(struct membuf to, struct task_struct *tsk,
- 				    enum xstate_copy_mode mode);
- extern int copy_uabi_from_kernel_to_xstate(struct fpstate *fpstate, const void *kbuf, u32 *pkru);
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -5385,26 +5385,23 @@ static int kvm_vcpu_ioctl_x86_set_debugr
- 	return 0;
- }
- 
--static void kvm_vcpu_ioctl_x86_get_xsave(struct kvm_vcpu *vcpu,
--					 struct kvm_xsave *guest_xsave)
++	/* Reject outgoing connection to device with same BD ADDR against
++	 * CVE-2020-26555
++	 */
++	if (!bacmp(&hdev->bdaddr, dst)) {
++		bt_dev_dbg(hdev, "Reject connection with same BD_ADDR %pMR\n",
++			   dst);
++		return ERR_PTR(-ECONNREFUSED);
++	}
 +
-+static void kvm_vcpu_ioctl_x86_get_xsave2(struct kvm_vcpu *vcpu,
-+					  u8 *state, unsigned int size)
- {
- 	if (fpstate_is_confidential(&vcpu->arch.guest_fpu))
- 		return;
+ 	acl = hci_conn_hash_lookup_ba(hdev, ACL_LINK, dst);
+ 	if (!acl) {
+ 		acl = hci_conn_add(hdev, ACL_LINK, dst, HCI_ROLE_MASTER);
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3272,6 +3272,17 @@ static void hci_conn_request_evt(struct
  
--	fpu_copy_guest_fpstate_to_uabi(&vcpu->arch.guest_fpu,
--				       guest_xsave->region,
--				       sizeof(guest_xsave->region),
-+	fpu_copy_guest_fpstate_to_uabi(&vcpu->arch.guest_fpu, state, size,
-+				       vcpu->arch.guest_fpu.fpstate->user_xfeatures,
- 				       vcpu->arch.pkru);
- }
+ 	bt_dev_dbg(hdev, "bdaddr %pMR type 0x%x", &ev->bdaddr, ev->link_type);
  
--static void kvm_vcpu_ioctl_x86_get_xsave2(struct kvm_vcpu *vcpu,
--					  u8 *state, unsigned int size)
-+static void kvm_vcpu_ioctl_x86_get_xsave(struct kvm_vcpu *vcpu,
-+					 struct kvm_xsave *guest_xsave)
- {
--	if (fpstate_is_confidential(&vcpu->arch.guest_fpu))
--		return;
--
--	fpu_copy_guest_fpstate_to_uabi(&vcpu->arch.guest_fpu,
--				       state, size, vcpu->arch.pkru);
-+	return kvm_vcpu_ioctl_x86_get_xsave2(vcpu, (void *)guest_xsave->region,
-+					     sizeof(guest_xsave->region));
- }
++	/* Reject incoming connection from device with same BD ADDR against
++	 * CVE-2020-26555
++	 */
++	if (!bacmp(&hdev->bdaddr, &ev->bdaddr))
++	{
++		bt_dev_dbg(hdev, "Reject connection with same BD_ADDR %pMR\n",
++			   &ev->bdaddr);
++		hci_reject_conn(hdev, &ev->bdaddr);
++		return;
++	}
++
+ 	mask |= hci_proto_connect_ind(hdev, &ev->bdaddr, ev->link_type,
+ 				      &flags);
  
- static int kvm_vcpu_ioctl_x86_set_xsave(struct kvm_vcpu *vcpu,
 
 
