@@ -1,31 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F7B101D9
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7675F11CB5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4/mo4B1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F73CC433C7;
-	Mon, 23 Oct 2023 11:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vt99uyp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823BDC433C9;
+	Mon, 23 Oct 2023 11:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061570;
-	bh=+zNiI8FkiETCHe8Z98bqHEXGpLL70K/rvsFNnmP4+BI=;
+	s=korg; t=1698061572;
+	bh=4dJVnfALTF1dAzNedwmPuzV8ZV5naxzL1NmOKRCRLSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4/mo4B1pcdlSlAcUBt18s+DwNUmw8MteO8z5A55ieCtnf1aE83wsiPMCtpalOfxf
-	 Hwb+6Zdo5A8IIVMEXSVWt5xBuO0UxRSRZSKzbQ8W24vvjbY3Kqj5wjvThOF7NYrTsd
-	 yVdcuwnmrdrsDg1RpM/ADBwRCcqSX1H+pF1Ri1vk=
+	b=vt99uyp2NXtNgUQPHZA817FhCDDPmU9WSQeonq8QaHSgKsQbNuDMZQk8loaspEmoo
+	 XyqGPn4J53tl0BOAYofUp1yOqLquXrr2A5rSXB/zuHLyCWBnZ5pR3xtnYOL6IWREeM
+	 CoRW118w5REmEbDr8yWubj9vAp1w61sDwkoAKyho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	"Lee, Chun-Yi" <jlee@suse.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.10 091/202] Bluetooth: avoid memcmp() out of bounds warning
-Date: Mon, 23 Oct 2023 12:56:38 +0200
-Message-ID: <20231023104829.189274911@linuxfoundation.org>
+	ruanjinjie@huawei.com,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Alexandru Elisei <alexandru.elisei@arm.com>,
+	Amit Daniel Kachhap <amit.kachhap@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.10 066/202] arm64: rework FPAC exception handling
+Date: Mon, 23 Oct 2023 12:56:13 +0200
+Message-ID: <20231023104828.481875551@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -44,52 +48,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 9d1a3c74746428102d55371fbf74b484733937d9 upstream.
+commit a1fafa3b24a70461bbf3e5c0770893feb0a49292 upstream.
 
-bacmp() is a wrapper around memcpy(), which contain compile-time
-checks for buffer overflow. Since the hci_conn_request_evt() also calls
-bt_dev_dbg() with an implicit NULL pointer check, the compiler is now
-aware of a case where 'hdev' is NULL and treats this as meaning that
-zero bytes are available:
+If an FPAC exception is taken from EL1, the entry code will call
+do_ptrauth_fault(), where due to:
 
-In file included from net/bluetooth/hci_event.c:32:
-In function 'bacmp',
-    inlined from 'hci_conn_request_evt' at net/bluetooth/hci_event.c:3276:7:
-include/net/bluetooth/bluetooth.h:364:16: error: 'memcmp' specified bound 6 exceeds source size 0 [-Werror=stringop-overread]
-  364 |         return memcmp(ba1, ba2, sizeof(bdaddr_t));
-      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	BUG_ON(!user_mode(regs))
 
-Add another NULL pointer check before the bacmp() to ensure the compiler
-understands the code flow enough to not warn about it.  Since the patch
-that introduced the warning is marked for stable backports, this one
-should also go that way to avoid introducing build regressions.
+... the kernel will report a problem within do_ptrauth_fault() rather
+than reporting the original context the FPAC exception was taken from.
+The pt_regs and ESR value reported will be from within
+do_ptrauth_fault() and the code dump will be for the BRK in BUG_ON(),
+which isn't sufficient to debug the cause of the original exception.
 
-Fixes: 1ffc6f8cc332 ("Bluetooth: Reject connection with the device which has same BD_ADDR")
-Cc: Kees Cook <keescook@chromium.org>
-Cc: "Lee, Chun-Yi" <jlee@suse.com>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This patch makes the reporting better by having separate EL0 and EL1
+FPAC exception handlers, with the latter calling die() directly to
+report the original context the FPAC exception was taken from.
+
+Note that we only need to prevent kprobes of the EL1 FPAC handler, since
+the EL0 FPAC handler cannot be called recursively.
+
+For consistency with do_el0_svc*(), I've named the split functions
+do_el{0,1}_fpac() rather than do_el{0,1}_ptrauth_fault(). I've also
+clarified the comment to not imply there are casues other than FPAC
+exceptions.
+
+Prior to this patch FPAC exceptions are reported as:
+
+| kernel BUG at arch/arm64/kernel/traps.c:517!
+| Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+| Modules linked in:
+| CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.19.0-rc3-00130-g9c8a180a1cdf-dirty #12
+| Hardware name: FVP Base RevC (DT)
+| pstate: 00400009 (nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+| pc : do_ptrauth_fault+0x3c/0x40
+| lr : el1_fpac+0x34/0x54
+| sp : ffff80000a3bbc80
+| x29: ffff80000a3bbc80 x28: ffff0008001d8000 x27: 0000000000000000
+| x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
+| x23: 0000000020400009 x22: ffff800008f70fa4 x21: ffff80000a3bbe00
+| x20: 0000000072000000 x19: ffff80000a3bbcb0 x18: fffffbfffda37000
+| x17: 3120676e696d7573 x16: 7361202c6e6f6974 x15: 0000000081a90000
+| x14: 0040000000000041 x13: 0040000000000001 x12: ffff000001a90000
+| x11: fffffbfffda37480 x10: 0068000000000703 x9 : 0001000080000000
+| x8 : 0000000000090000 x7 : 0068000000000f03 x6 : 0060000000000783
+| x5 : ffff80000a3bbcb0 x4 : ffff0008001d8000 x3 : 0000000072000000
+| x2 : 0000000000000000 x1 : 0000000020400009 x0 : ffff80000a3bbcb0
+| Call trace:
+|  do_ptrauth_fault+0x3c/0x40
+|  el1h_64_sync_handler+0xc4/0xd0
+|  el1h_64_sync+0x64/0x68
+|  test_pac+0x8/0x10
+|  smp_init+0x7c/0x8c
+|  kernel_init_freeable+0x128/0x28c
+|  kernel_init+0x28/0x13c
+|  ret_from_fork+0x10/0x20
+| Code: 97fffe5e a8c17bfd d50323bf d65f03c0 (d4210000)
+
+With this patch applied FPAC exceptions are reported as:
+
+| Internal error: Oops - FPAC: 0000000072000000 [#1] PREEMPT SMP
+| Modules linked in:
+| CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.19.0-rc3-00132-g78846e1c4757-dirty #11
+| Hardware name: FVP Base RevC (DT)
+| pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+| pc : test_pac+0x8/0x10
+| lr : 0x0
+| sp : ffff80000a3bbe00
+| x29: ffff80000a3bbe00 x28: 0000000000000000 x27: 0000000000000000
+| x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
+| x23: ffff80000a2c8000 x22: 0000000000000000 x21: 0000000000000000
+| x20: ffff8000099fa5b0 x19: ffff80000a007000 x18: fffffbfffda37000
+| x17: 3120676e696d7573 x16: 7361202c6e6f6974 x15: 0000000081a90000
+| x14: 0040000000000041 x13: 0040000000000001 x12: ffff000001a90000
+| x11: fffffbfffda37480 x10: 0068000000000703 x9 : 0001000080000000
+| x8 : 0000000000090000 x7 : 0068000000000f03 x6 : 0060000000000783
+| x5 : ffff80000a2c6000 x4 : ffff0008001d8000 x3 : ffff800009f88378
+| x2 : 0000000000000000 x1 : 0000000080210000 x0 : ffff000001a90000
+| Call trace:
+|  test_pac+0x8/0x10
+|  smp_init+0x7c/0x8c
+|  kernel_init_freeable+0x128/0x28c
+|  kernel_init+0x28/0x13c
+|  ret_from_fork+0x10/0x20
+| Code: d50323bf d65f03c0 d503233f aa1f03fe (d50323bf)
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Alexandru Elisei <alexandru.elisei@arm.com>
+Cc: Amit Daniel Kachhap <amit.kachhap@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20220913101732.3925290-5-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/exception.h |    3 ++-
+ arch/arm64/kernel/entry-common.c   |    4 ++--
+ arch/arm64/kernel/traps.c          |   16 ++++++++++------
+ 3 files changed, 14 insertions(+), 9 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2704,7 +2704,7 @@ static void hci_conn_request_evt(struct
- 	/* Reject incoming connection from device with same BD ADDR against
- 	 * CVE-2020-26555
+--- a/arch/arm64/include/asm/exception.h
++++ b/arch/arm64/include/asm/exception.h
+@@ -47,5 +47,6 @@ void bad_el0_sync(struct pt_regs *regs,
+ void do_cp15instr(unsigned int esr, struct pt_regs *regs);
+ void do_el0_svc(struct pt_regs *regs);
+ void do_el0_svc_compat(struct pt_regs *regs);
+-void do_ptrauth_fault(struct pt_regs *regs, unsigned int esr);
++void do_el0_fpac(struct pt_regs *regs, unsigned long esr);
++void do_el1_fpac(struct pt_regs *regs, unsigned long esr);
+ #endif	/* __ASM_EXCEPTION_H */
+--- a/arch/arm64/kernel/entry-common.c
++++ b/arch/arm64/kernel/entry-common.c
+@@ -187,7 +187,7 @@ static void noinstr el1_fpac(struct pt_r
+ {
+ 	enter_from_kernel_mode(regs);
+ 	local_daif_inherit(regs);
+-	do_ptrauth_fault(regs, esr);
++	do_el1_fpac(regs, esr);
+ 	local_daif_mask();
+ 	exit_to_kernel_mode(regs);
+ }
+@@ -357,7 +357,7 @@ static void noinstr el0_fpac(struct pt_r
+ {
+ 	enter_from_user_mode();
+ 	local_daif_restore(DAIF_PROCCTX);
+-	do_ptrauth_fault(regs, esr);
++	do_el0_fpac(regs, esr);
+ }
+ 
+ asmlinkage void noinstr el0_sync_handler(struct pt_regs *regs)
+--- a/arch/arm64/kernel/traps.c
++++ b/arch/arm64/kernel/traps.c
+@@ -418,16 +418,20 @@ void do_bti(struct pt_regs *regs)
+ }
+ NOKPROBE_SYMBOL(do_bti);
+ 
+-void do_ptrauth_fault(struct pt_regs *regs, unsigned int esr)
++void do_el0_fpac(struct pt_regs *regs, unsigned long esr)
++{
++	force_signal_inject(SIGILL, ILL_ILLOPN, regs->pc, esr);
++}
++
++void do_el1_fpac(struct pt_regs *regs, unsigned long esr)
+ {
+ 	/*
+-	 * Unexpected FPAC exception or pointer authentication failure in
+-	 * the kernel: kill the task before it does any more harm.
++	 * Unexpected FPAC exception in the kernel: kill the task before it
++	 * does any more harm.
  	 */
--	if (!bacmp(&hdev->bdaddr, &ev->bdaddr)) {
-+	if (hdev && !bacmp(&hdev->bdaddr, &ev->bdaddr)) {
- 		bt_dev_dbg(hdev, "Reject connection with same BD_ADDR %pMR\n",
- 			   &ev->bdaddr);
- 		hci_reject_conn(hdev, &ev->bdaddr);
+-	BUG_ON(!user_mode(regs));
+-	force_signal_inject(SIGILL, ILL_ILLOPN, regs->pc, esr);
++	die("Oops - FPAC", regs, esr);
+ }
+-NOKPROBE_SYMBOL(do_ptrauth_fault);
++NOKPROBE_SYMBOL(do_el1_fpac);
+ 
+ #define __user_cache_maint(insn, address, res)			\
+ 	if (address >= user_addr_max()) {			\
 
 
