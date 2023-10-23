@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F5514263
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B24114263
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zN4WQabs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27DEC433C9;
-	Mon, 23 Oct 2023 11:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqFzmeAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1785EC433C8;
+	Mon, 23 Oct 2023 11:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059378;
-	bh=RiXRKFssKYIPvpCxInBrVer4Gv46PQl1wGDVwXq0qU8=;
+	s=korg; t=1698059381;
+	bh=tqO+aSqvK0jmImLIxoEPomDUCbi0Wdu/RjV64NwiQw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zN4WQabs8CwIW/8r2al30MUEcHvlmYXMVXfxRAj5s1qzyB08vXGYLuDm6Hf5xUQlY
-	 eVORoNNfmSwxQqB9SSjQYno6MP+oLXii6bwwRi+1yKtMMnTOr/tVPOKPtTJugy+LzH
-	 HUiGlS171E8+eEz5CYy23ZOhTKeZikRMY+AT52nU=
+	b=tqFzmeALxacpi6LtjledGuvpmIAmEbxIEw7RYGEU2Omd0xZ4IQydTVxmkuxLbr3Cu
+	 w0anXgQZv2Ihuixv0H8ADw36dofwozq6VyS02pS/76Wt1XaImcDfDNytfFyN9cSb5T
+	 VkQ/zoFKGpU7PVfB5ARvuRGNlOSzE66H80DGKdwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Deseyn <tdeseyn@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Jan Karcher <jaka@linux.ibm.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 158/241] tcp: allow again tcp_disconnect() when threads are waiting
-Date: Mon, 23 Oct 2023 12:55:44 +0200
-Message-ID: <20231023104837.726033209@linuxfoundation.org>
+Subject: [PATCH 6.5 159/241] net/smc: support smc release version negotiation in clc handshake
+Date: Mon, 23 Oct 2023 12:55:45 +0200
+Message-ID: <20231023104837.750719920@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -44,482 +44,241 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit 419ce133ab928ab5efd7b50b2ef36ddfd4eadbd2 ]
+[ Upstream commit 1e700948c9db0d09f691f715e8f4b947e51e35b5 ]
 
-As reported by Tom, .NET and applications build on top of it rely
-on connect(AF_UNSPEC) to async cancel pending I/O operations on TCP
-socket.
+Support smc release version negotiation in clc handshake based on
+SMC v2, where no negotiation process for different releases, but
+for different versions. The latest smc release version was updated
+to v2.1. And currently there are two release versions of SMCv2, v2.0
+and v2.1. In the release version negotiation, client sends the preferred
+release version by CLC Proposal Message, server makes decision for which
+release version to use based on the client preferred release version and
+self-supported release version (here choose the minimum release version
+of the client preferred and server latest supported), then the decision
+returns to client by CLC Accept Message. Client confirms the decision by
+CLC Confirm Message.
 
-The blamed commit below caused a regression, as such cancellation
-can now fail.
+Client                                    Server
+      Proposal(preferred release version)
+     ------------------------------------>
 
-As suggested by Eric, this change addresses the problem explicitly
-causing blocking I/O operation to terminate immediately (with an error)
-when a concurrent disconnect() is executed.
+      Accept(accpeted release version)
+ min(client preferred, server latest supported)
+     <------------------------------------
 
-Instead of tracking the number of threads blocked on a given socket,
-track the number of disconnect() issued on such socket. If such counter
-changes after a blocking operation releasing and re-acquiring the socket
-lock, error out the current operation.
+      Confirm(accpeted release version)
+     ------------------------------------>
 
-Fixes: 4faeee0cf8a5 ("tcp: deny tcp_disconnect() when threads are waiting")
-Reported-by: Tom Deseyn <tdeseyn@redhat.com>
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=1886305
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/f3b95e47e3dbed840960548aebaa8d954372db41.1697008693.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Reviewed-by: Jan Karcher <jaka@linux.ibm.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: c68681ae46ea ("net/smc: fix smc clc failed issue when netdevice not in init_net")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../chelsio/inline_crypto/chtls/chtls_io.c    | 36 +++++++++++++++----
- include/net/sock.h                            | 10 +++---
- net/core/stream.c                             | 12 ++++---
- net/ipv4/af_inet.c                            | 10 ++++--
- net/ipv4/inet_connection_sock.c               |  1 -
- net/ipv4/tcp.c                                | 16 ++++-----
- net/ipv4/tcp_bpf.c                            |  4 +++
- net/mptcp/protocol.c                          |  7 ----
- net/tls/tls_main.c                            | 10 ++++--
- net/tls/tls_sw.c                              | 19 ++++++----
- 10 files changed, 80 insertions(+), 45 deletions(-)
+ net/smc/af_smc.c   | 21 +++++++++++++++++----
+ net/smc/smc.h      |  5 ++++-
+ net/smc/smc_clc.c  | 14 +++++++-------
+ net/smc/smc_clc.h  | 23 ++++++++++++++++++++++-
+ net/smc/smc_core.h |  1 +
+ 5 files changed, 51 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_io.c b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_io.c
-index 5fc64e47568a9..d567e42e17601 100644
---- a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_io.c
-+++ b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_io.c
-@@ -911,7 +911,7 @@ static int csk_wait_memory(struct chtls_dev *cdev,
- 			   struct sock *sk, long *timeo_p)
- {
- 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
--	int err = 0;
-+	int ret, err = 0;
- 	long current_timeo;
- 	long vm_wait = 0;
- 	bool noblock;
-@@ -942,10 +942,13 @@ static int csk_wait_memory(struct chtls_dev *cdev,
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index c0e4e587b4994..077e5864fc441 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -1198,8 +1198,7 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
+ 	struct smc_clc_msg_accept_confirm_v2 *clc_v2 =
+ 		(struct smc_clc_msg_accept_confirm_v2 *)aclc;
+ 	struct smc_clc_first_contact_ext *fce =
+-		(struct smc_clc_first_contact_ext *)
+-			(((u8 *)clc_v2) + sizeof(*clc_v2));
++		smc_get_clc_first_contact_ext(clc_v2, false);
  
- 		set_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
- 		sk->sk_write_pending++;
--		sk_wait_event(sk, &current_timeo, sk->sk_err ||
--			      (sk->sk_shutdown & SEND_SHUTDOWN) ||
--			      (csk_mem_free(cdev, sk) && !vm_wait), &wait);
-+		ret = sk_wait_event(sk, &current_timeo, sk->sk_err ||
-+				    (sk->sk_shutdown & SEND_SHUTDOWN) ||
-+				    (csk_mem_free(cdev, sk) && !vm_wait),
-+				    &wait);
- 		sk->sk_write_pending--;
-+		if (ret < 0)
-+			goto do_error;
- 
- 		if (vm_wait) {
- 			vm_wait -= current_timeo;
-@@ -1348,6 +1351,7 @@ static int chtls_pt_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	int copied = 0;
- 	int target;
- 	long timeo;
-+	int ret;
- 
- 	buffers_freed = 0;
- 
-@@ -1423,7 +1427,11 @@ static int chtls_pt_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		if (copied >= target)
- 			break;
- 		chtls_cleanup_rbuf(sk, copied);
--		sk_wait_data(sk, &timeo, NULL);
-+		ret = sk_wait_data(sk, &timeo, NULL);
-+		if (ret < 0) {
-+			copied = copied ? : ret;
-+			goto unlock;
-+		}
- 		continue;
- found_ok_skb:
- 		if (!skb->len) {
-@@ -1518,6 +1526,8 @@ static int chtls_pt_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 
- 	if (buffers_freed)
- 		chtls_cleanup_rbuf(sk, copied);
+ 	if (!ini->first_contact_peer || aclc->hdr.version == SMC_V1)
+ 		return 0;
+@@ -1218,6 +1217,9 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
+ 			return SMC_CLC_DECL_NOINDIRECT;
+ 		}
+ 	}
 +
-+unlock:
- 	release_sock(sk);
- 	return copied;
- }
-@@ -1534,6 +1544,7 @@ static int peekmsg(struct sock *sk, struct msghdr *msg,
- 	int copied = 0;
- 	size_t avail;          /* amount of available data in current skb */
- 	long timeo;
-+	int ret;
- 
- 	lock_sock(sk);
- 	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
-@@ -1585,7 +1596,12 @@ static int peekmsg(struct sock *sk, struct msghdr *msg,
- 			release_sock(sk);
- 			lock_sock(sk);
- 		} else {
--			sk_wait_data(sk, &timeo, NULL);
-+			ret = sk_wait_data(sk, &timeo, NULL);
-+			if (ret < 0) {
-+				/* here 'copied' is 0 due to previous checks */
-+				copied = ret;
-+				break;
-+			}
- 		}
- 
- 		if (unlikely(peek_seq != tp->copied_seq)) {
-@@ -1656,6 +1672,7 @@ int chtls_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	int copied = 0;
- 	long timeo;
- 	int target;             /* Read at least this many bytes */
-+	int ret;
- 
- 	buffers_freed = 0;
- 
-@@ -1747,7 +1764,11 @@ int chtls_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		if (copied >= target)
- 			break;
- 		chtls_cleanup_rbuf(sk, copied);
--		sk_wait_data(sk, &timeo, NULL);
-+		ret = sk_wait_data(sk, &timeo, NULL);
-+		if (ret < 0) {
-+			copied = copied ? : ret;
-+			goto unlock;
-+		}
- 		continue;
- 
- found_ok_skb:
-@@ -1816,6 +1837,7 @@ int chtls_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	if (buffers_freed)
- 		chtls_cleanup_rbuf(sk, copied);
- 
-+unlock:
- 	release_sock(sk);
- 	return copied;
- }
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 4e787285fc66b..fc189910e63fc 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -336,7 +336,7 @@ struct sk_filter;
-   *	@sk_cgrp_data: cgroup data for this cgroup
-   *	@sk_memcg: this socket's memory cgroup association
-   *	@sk_write_pending: a write to stream socket waits to start
--  *	@sk_wait_pending: number of threads blocked on this socket
-+  *	@sk_disconnects: number of disconnect operations performed on this sock
-   *	@sk_state_change: callback to indicate change in the state of the sock
-   *	@sk_data_ready: callback to indicate there is data to be processed
-   *	@sk_write_space: callback to indicate there is bf sending space available
-@@ -429,7 +429,7 @@ struct sock {
- 	unsigned int		sk_napi_id;
- #endif
- 	int			sk_rcvbuf;
--	int			sk_wait_pending;
-+	int			sk_disconnects;
- 
- 	struct sk_filter __rcu	*sk_filter;
- 	union {
-@@ -1189,8 +1189,7 @@ static inline void sock_rps_reset_rxhash(struct sock *sk)
- }
- 
- #define sk_wait_event(__sk, __timeo, __condition, __wait)		\
--	({	int __rc;						\
--		__sk->sk_wait_pending++;				\
-+	({	int __rc, __dis = __sk->sk_disconnects;			\
- 		release_sock(__sk);					\
- 		__rc = __condition;					\
- 		if (!__rc) {						\
-@@ -1200,8 +1199,7 @@ static inline void sock_rps_reset_rxhash(struct sock *sk)
- 		}							\
- 		sched_annotate_sleep();					\
- 		lock_sock(__sk);					\
--		__sk->sk_wait_pending--;				\
--		__rc = __condition;					\
-+		__rc = __dis == __sk->sk_disconnects ? __condition : -EPIPE; \
- 		__rc;							\
- 	})
- 
-diff --git a/net/core/stream.c b/net/core/stream.c
-index f5c4e47df1650..96fbcb9bbb30a 100644
---- a/net/core/stream.c
-+++ b/net/core/stream.c
-@@ -117,7 +117,7 @@ EXPORT_SYMBOL(sk_stream_wait_close);
-  */
- int sk_stream_wait_memory(struct sock *sk, long *timeo_p)
- {
--	int err = 0;
-+	int ret, err = 0;
- 	long vm_wait = 0;
- 	long current_timeo = *timeo_p;
- 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
-@@ -142,11 +142,13 @@ int sk_stream_wait_memory(struct sock *sk, long *timeo_p)
- 
- 		set_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
- 		sk->sk_write_pending++;
--		sk_wait_event(sk, &current_timeo, READ_ONCE(sk->sk_err) ||
--						  (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN) ||
--						  (sk_stream_memory_free(sk) &&
--						  !vm_wait), &wait);
-+		ret = sk_wait_event(sk, &current_timeo, READ_ONCE(sk->sk_err) ||
-+				    (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN) ||
-+				    (sk_stream_memory_free(sk) && !vm_wait),
-+				    &wait);
- 		sk->sk_write_pending--;
-+		if (ret < 0)
-+			goto do_error;
- 
- 		if (vm_wait) {
- 			vm_wait -= current_timeo;
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index 02736b83c3032..0c0ae021b7ff5 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -587,7 +587,6 @@ static long inet_wait_for_connect(struct sock *sk, long timeo, int writebias)
- 
- 	add_wait_queue(sk_sleep(sk), &wait);
- 	sk->sk_write_pending += writebias;
--	sk->sk_wait_pending++;
- 
- 	/* Basic assumption: if someone sets sk->sk_err, he _must_
- 	 * change state of the socket from TCP_SYN_*.
-@@ -603,7 +602,6 @@ static long inet_wait_for_connect(struct sock *sk, long timeo, int writebias)
- 	}
- 	remove_wait_queue(sk_sleep(sk), &wait);
- 	sk->sk_write_pending -= writebias;
--	sk->sk_wait_pending--;
- 	return timeo;
- }
- 
-@@ -632,6 +630,7 @@ int __inet_stream_connect(struct socket *sock, struct sockaddr *uaddr,
- 			return -EINVAL;
- 
- 		if (uaddr->sa_family == AF_UNSPEC) {
-+			sk->sk_disconnects++;
- 			err = sk->sk_prot->disconnect(sk, flags);
- 			sock->state = err ? SS_DISCONNECTING : SS_UNCONNECTED;
- 			goto out;
-@@ -686,6 +685,7 @@ int __inet_stream_connect(struct socket *sock, struct sockaddr *uaddr,
- 		int writebias = (sk->sk_protocol == IPPROTO_TCP) &&
- 				tcp_sk(sk)->fastopen_req &&
- 				tcp_sk(sk)->fastopen_req->data ? 1 : 0;
-+		int dis = sk->sk_disconnects;
- 
- 		/* Error code is set above */
- 		if (!timeo || !inet_wait_for_connect(sk, timeo, writebias))
-@@ -694,6 +694,11 @@ int __inet_stream_connect(struct socket *sock, struct sockaddr *uaddr,
- 		err = sock_intr_errno(timeo);
- 		if (signal_pending(current))
- 			goto out;
++	ini->release_nr = fce->release;
 +
-+		if (dis != sk->sk_disconnects) {
-+			err = -EPIPE;
-+			goto out;
-+		}
- 	}
+ 	return 0;
+ }
  
- 	/* Connection was closed by RST, timeout, ICMP error
-@@ -715,6 +720,7 @@ int __inet_stream_connect(struct socket *sock, struct sockaddr *uaddr,
- sock_error:
- 	err = sock_error(sk) ? : -ECONNABORTED;
- 	sock->state = SS_UNCONNECTED;
-+	sk->sk_disconnects++;
- 	if (sk->sk_prot->disconnect(sk, flags))
- 		sock->state = SS_DISCONNECTING;
- 	goto out;
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index aeebe88166899..394a498c28232 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1145,7 +1145,6 @@ struct sock *inet_csk_clone_lock(const struct sock *sk,
- 	if (newsk) {
- 		struct inet_connection_sock *newicsk = inet_csk(newsk);
+@@ -1386,6 +1388,13 @@ static int smc_connect_ism(struct smc_sock *smc,
+ 		struct smc_clc_msg_accept_confirm_v2 *aclc_v2 =
+ 			(struct smc_clc_msg_accept_confirm_v2 *)aclc;
  
--		newsk->sk_wait_pending = 0;
- 		inet_sk_set_state(newsk, TCP_SYN_RECV);
- 		newicsk->icsk_bind_hash = NULL;
- 		newicsk->icsk_bind2_hash = NULL;
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 9cfc07d1e4252..9bdc1b2eaf734 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -829,7 +829,9 @@ ssize_t tcp_splice_read(struct socket *sock, loff_t *ppos,
- 			 */
- 			if (!skb_queue_empty(&sk->sk_receive_queue))
- 				break;
--			sk_wait_data(sk, &timeo, NULL);
-+			ret = sk_wait_data(sk, &timeo, NULL);
-+			if (ret < 0)
-+				break;
- 			if (signal_pending(current)) {
- 				ret = sock_intr_errno(timeo);
- 				break;
-@@ -2442,7 +2444,11 @@ static int tcp_recvmsg_locked(struct sock *sk, struct msghdr *msg, size_t len,
- 			__sk_flush_backlog(sk);
- 		} else {
- 			tcp_cleanup_rbuf(sk, copied);
--			sk_wait_data(sk, &timeo, last);
-+			err = sk_wait_data(sk, &timeo, last);
-+			if (err < 0) {
-+				err = copied ? : err;
-+				goto out;
-+			}
- 		}
- 
- 		if ((flags & MSG_PEEK) &&
-@@ -2966,12 +2972,6 @@ int tcp_disconnect(struct sock *sk, int flags)
- 	int old_state = sk->sk_state;
- 	u32 seq;
- 
--	/* Deny disconnect if other threads are blocked in sk_wait_event()
--	 * or inet_wait_for_connect().
--	 */
--	if (sk->sk_wait_pending)
--		return -EBUSY;
--
- 	if (old_state != TCP_CLOSE)
- 		tcp_set_state(sk, TCP_CLOSE);
- 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 3272682030015..ba2e921881248 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -307,6 +307,8 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
- 		}
- 
- 		data = tcp_msg_wait_data(sk, psock, timeo);
-+		if (data < 0)
-+			return data;
- 		if (data && !sk_psock_queue_empty(psock))
- 			goto msg_bytes_ready;
- 		copied = -EAGAIN;
-@@ -351,6 +353,8 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 
- 		timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
- 		data = tcp_msg_wait_data(sk, psock, timeo);
-+		if (data < 0)
-+			return data;
- 		if (data) {
- 			if (!sk_psock_queue_empty(psock))
- 				goto msg_bytes_ready;
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index d2a47c6f9655b..0850d6a43049c 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3063,12 +3063,6 @@ static int mptcp_disconnect(struct sock *sk, int flags)
- {
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 
--	/* Deny disconnect if other threads are blocked in sk_wait_event()
--	 * or inet_wait_for_connect().
--	 */
--	if (sk->sk_wait_pending)
--		return -EBUSY;
--
- 	/* We are on the fastopen error path. We can't call straight into the
- 	 * subflows cleanup code due to lock nesting (we are already under
- 	 * msk->firstsocket lock).
-@@ -3139,7 +3133,6 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 		inet_sk(nsk)->pinet6 = mptcp_inet6_sk(nsk);
- #endif
- 
--	nsk->sk_wait_pending = 0;
- 	__mptcp_init_sock(nsk);
- 
- 	msk = mptcp_sk(nsk);
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index 4a8ee2f6badb9..f3d3fc1c32676 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -96,8 +96,8 @@ void update_sk_prot(struct sock *sk, struct tls_context *ctx)
- 
- int wait_on_pending_writer(struct sock *sk, long *timeo)
- {
--	int rc = 0;
- 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
-+	int ret, rc = 0;
- 
- 	add_wait_queue(sk_sleep(sk), &wait);
- 	while (1) {
-@@ -111,9 +111,13 @@ int wait_on_pending_writer(struct sock *sk, long *timeo)
- 			break;
- 		}
- 
--		if (sk_wait_event(sk, timeo,
--				  !READ_ONCE(sk->sk_write_pending), &wait))
-+		ret = sk_wait_event(sk, timeo,
-+				    !READ_ONCE(sk->sk_write_pending), &wait);
-+		if (ret) {
-+			if (ret < 0)
-+				rc = ret;
- 			break;
-+		}
- 	}
- 	remove_wait_queue(sk_sleep(sk), &wait);
- 	return rc;
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index a83f474933033..ce925f3a52492 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1288,6 +1288,7 @@ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
- 	struct tls_context *tls_ctx = tls_get_ctx(sk);
- 	struct tls_sw_context_rx *ctx = tls_sw_ctx_rx(tls_ctx);
- 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
-+	int ret = 0;
- 	long timeo;
- 
- 	timeo = sock_rcvtimeo(sk, nonblock);
-@@ -1299,6 +1300,9 @@ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
- 		if (sk->sk_err)
- 			return sock_error(sk);
- 
-+		if (ret < 0)
-+			return ret;
++		if (ini->first_contact_peer) {
++			struct smc_clc_first_contact_ext *fce =
++				smc_get_clc_first_contact_ext(aclc_v2, true);
 +
- 		if (!skb_queue_empty(&sk->sk_receive_queue)) {
- 			tls_strp_check_rcv(&ctx->strp);
- 			if (tls_strp_msg_ready(ctx))
-@@ -1317,10 +1321,10 @@ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
- 		released = true;
- 		add_wait_queue(sk_sleep(sk), &wait);
- 		sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
--		sk_wait_event(sk, &timeo,
--			      tls_strp_msg_ready(ctx) ||
--			      !sk_psock_queue_empty(psock),
--			      &wait);
-+		ret = sk_wait_event(sk, &timeo,
-+				    tls_strp_msg_ready(ctx) ||
-+				    !sk_psock_queue_empty(psock),
-+				    &wait);
- 		sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
- 		remove_wait_queue(sk_sleep(sk), &wait);
- 
-@@ -1849,6 +1853,7 @@ static int tls_rx_reader_acquire(struct sock *sk, struct tls_sw_context_rx *ctx,
- 				 bool nonblock)
- {
- 	long timeo;
-+	int ret;
- 
- 	timeo = sock_rcvtimeo(sk, nonblock);
- 
-@@ -1858,14 +1863,16 @@ static int tls_rx_reader_acquire(struct sock *sk, struct tls_sw_context_rx *ctx,
- 		ctx->reader_contended = 1;
- 
- 		add_wait_queue(&ctx->wq, &wait);
--		sk_wait_event(sk, &timeo,
--			      !READ_ONCE(ctx->reader_present), &wait);
-+		ret = sk_wait_event(sk, &timeo,
-+				    !READ_ONCE(ctx->reader_present), &wait);
- 		remove_wait_queue(&ctx->wq, &wait);
- 
- 		if (timeo <= 0)
- 			return -EAGAIN;
- 		if (signal_pending(current))
- 			return sock_intr_errno(timeo);
-+		if (ret < 0)
-+			return ret;
++			ini->release_nr = fce->release;
++		}
++
+ 		rc = smc_v2_determine_accepted_chid(aclc_v2, ini);
+ 		if (rc)
+ 			return rc;
+@@ -1420,7 +1429,7 @@ static int smc_connect_ism(struct smc_sock *smc,
  	}
  
- 	WRITE_ONCE(ctx->reader_present, 1);
+ 	rc = smc_clc_send_confirm(smc, ini->first_contact_local,
+-				  aclc->hdr.version, eid, NULL);
++				  aclc->hdr.version, eid, ini);
+ 	if (rc)
+ 		goto connect_abort;
+ 	mutex_unlock(&smc_server_lgr_pending);
+@@ -1996,6 +2005,10 @@ static int smc_listen_v2_check(struct smc_sock *new_smc,
+ 		}
+ 	}
+ 
++	ini->release_nr = pclc_v2_ext->hdr.flag.release;
++	if (pclc_v2_ext->hdr.flag.release > SMC_RELEASE)
++		ini->release_nr = SMC_RELEASE;
++
+ out:
+ 	if (!ini->smcd_version && !ini->smcr_version)
+ 		return rc;
+@@ -2443,7 +2456,7 @@ static void smc_listen_work(struct work_struct *work)
+ 	/* send SMC Accept CLC message */
+ 	accept_version = ini->is_smcd ? ini->smcd_version : ini->smcr_version;
+ 	rc = smc_clc_send_accept(new_smc, ini->first_contact_local,
+-				 accept_version, ini->negotiated_eid);
++				 accept_version, ini->negotiated_eid, ini);
+ 	if (rc)
+ 		goto out_unlock;
+ 
+diff --git a/net/smc/smc.h b/net/smc/smc.h
+index 1f2b912c43d10..24745fde4ac26 100644
+--- a/net/smc/smc.h
++++ b/net/smc/smc.h
+@@ -21,7 +21,10 @@
+ 
+ #define SMC_V1		1		/* SMC version V1 */
+ #define SMC_V2		2		/* SMC version V2 */
+-#define SMC_RELEASE	0
++
++#define SMC_RELEASE_0 0
++#define SMC_RELEASE_1 1
++#define SMC_RELEASE	SMC_RELEASE_1 /* the latest release version */
+ 
+ #define SMCPROTO_SMC		0	/* SMC protocol, IPv4 */
+ #define SMCPROTO_SMC6		1	/* SMC protocol, IPv6 */
+diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
+index c90d9e5dda540..fb0be0817e8a5 100644
+--- a/net/smc/smc_clc.c
++++ b/net/smc/smc_clc.c
+@@ -420,11 +420,11 @@ smc_clc_msg_decl_valid(struct smc_clc_msg_decline *dclc)
+ 	return true;
+ }
+ 
+-static void smc_clc_fill_fce(struct smc_clc_first_contact_ext *fce, int *len)
++static void smc_clc_fill_fce(struct smc_clc_first_contact_ext *fce, int *len, int release_nr)
+ {
+ 	memset(fce, 0, sizeof(*fce));
+ 	fce->os_type = SMC_CLC_OS_LINUX;
+-	fce->release = SMC_RELEASE;
++	fce->release = release_nr;
+ 	memcpy(fce->hostname, smc_hostname, sizeof(smc_hostname));
+ 	(*len) += sizeof(*fce);
+ }
+@@ -1019,7 +1019,7 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
+ 				memcpy(clc_v2->d1.eid, eid, SMC_MAX_EID_LEN);
+ 			len = SMCD_CLC_ACCEPT_CONFIRM_LEN_V2;
+ 			if (first_contact)
+-				smc_clc_fill_fce(&fce, &len);
++				smc_clc_fill_fce(&fce, &len, ini->release_nr);
+ 			clc_v2->hdr.length = htons(len);
+ 		}
+ 		memcpy(trl.eyecatcher, SMCD_EYECATCHER,
+@@ -1063,10 +1063,10 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
+ 				memcpy(clc_v2->r1.eid, eid, SMC_MAX_EID_LEN);
+ 			len = SMCR_CLC_ACCEPT_CONFIRM_LEN_V2;
+ 			if (first_contact) {
+-				smc_clc_fill_fce(&fce, &len);
++				smc_clc_fill_fce(&fce, &len, ini->release_nr);
+ 				fce.v2_direct = !link->lgr->uses_gateway;
+ 				memset(&gle, 0, sizeof(gle));
+-				if (ini && clc->hdr.type == SMC_CLC_CONFIRM) {
++				if (clc->hdr.type == SMC_CLC_CONFIRM) {
+ 					gle.gid_cnt = ini->smcrv2.gidlist.len;
+ 					len += sizeof(gle);
+ 					len += gle.gid_cnt * sizeof(gle.gid[0]);
+@@ -1141,7 +1141,7 @@ int smc_clc_send_confirm(struct smc_sock *smc, bool clnt_first_contact,
+ 
+ /* send CLC ACCEPT message across internal TCP socket */
+ int smc_clc_send_accept(struct smc_sock *new_smc, bool srv_first_contact,
+-			u8 version, u8 *negotiated_eid)
++			u8 version, u8 *negotiated_eid, struct smc_init_info *ini)
+ {
+ 	struct smc_clc_msg_accept_confirm_v2 aclc_v2;
+ 	int len;
+@@ -1149,7 +1149,7 @@ int smc_clc_send_accept(struct smc_sock *new_smc, bool srv_first_contact,
+ 	memset(&aclc_v2, 0, sizeof(aclc_v2));
+ 	aclc_v2.hdr.type = SMC_CLC_ACCEPT;
+ 	len = smc_clc_send_confirm_accept(new_smc, &aclc_v2, srv_first_contact,
+-					  version, negotiated_eid, NULL);
++					  version, negotiated_eid, ini);
+ 	if (len < ntohs(aclc_v2.hdr.length))
+ 		len = len >= 0 ? -EPROTO : -new_smc->clcsock->sk->sk_err;
+ 
+diff --git a/net/smc/smc_clc.h b/net/smc/smc_clc.h
+index 5fee545c9a109..b923e89acafb0 100644
+--- a/net/smc/smc_clc.h
++++ b/net/smc/smc_clc.h
+@@ -370,6 +370,27 @@ smc_get_clc_smcd_v2_ext(struct smc_clc_v2_extension *prop_v2ext)
+ 		 ntohs(prop_v2ext->hdr.smcd_v2_ext_offset));
+ }
+ 
++static inline struct smc_clc_first_contact_ext *
++smc_get_clc_first_contact_ext(struct smc_clc_msg_accept_confirm_v2 *clc_v2,
++			      bool is_smcd)
++{
++	int clc_v2_len;
++
++	if (clc_v2->hdr.version == SMC_V1 ||
++	    !(clc_v2->hdr.typev2 & SMC_FIRST_CONTACT_MASK))
++		return NULL;
++
++	if (is_smcd)
++		clc_v2_len =
++			offsetofend(struct smc_clc_msg_accept_confirm_v2, d1);
++	else
++		clc_v2_len =
++			offsetofend(struct smc_clc_msg_accept_confirm_v2, r1);
++
++	return (struct smc_clc_first_contact_ext *)(((u8 *)clc_v2) +
++						    clc_v2_len);
++}
++
+ struct smcd_dev;
+ struct smc_init_info;
+ 
+@@ -382,7 +403,7 @@ int smc_clc_send_proposal(struct smc_sock *smc, struct smc_init_info *ini);
+ int smc_clc_send_confirm(struct smc_sock *smc, bool clnt_first_contact,
+ 			 u8 version, u8 *eid, struct smc_init_info *ini);
+ int smc_clc_send_accept(struct smc_sock *smc, bool srv_first_contact,
+-			u8 version, u8 *negotiated_eid);
++			u8 version, u8 *negotiated_eid, struct smc_init_info *ini);
+ void smc_clc_init(void) __init;
+ void smc_clc_exit(void);
+ void smc_clc_get_hostname(u8 **host);
+diff --git a/net/smc/smc_core.h b/net/smc/smc_core.h
+index 1645fba0d2d38..5bbc16f851e05 100644
+--- a/net/smc/smc_core.h
++++ b/net/smc/smc_core.h
+@@ -374,6 +374,7 @@ struct smc_init_info {
+ 	u8			is_smcd;
+ 	u8			smc_type_v1;
+ 	u8			smc_type_v2;
++	u8			release_nr;
+ 	u8			first_contact_peer;
+ 	u8			first_contact_local;
+ 	unsigned short		vlan_id;
 -- 
 2.40.1
 
