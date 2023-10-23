@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A24C15492
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E23815484
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIUGCepl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A673AC433C7;
-	Mon, 23 Oct 2023 11:20:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7lLBtx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F446C433C8;
+	Mon, 23 Oct 2023 11:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060017;
-	bh=Fr6+9CGjE9AveJKK+fpX/e1UKRPuwGG/Yc+ltycHdzY=;
+	s=korg; t=1698060020;
+	bh=bXLx30Ayi2IInuncAsQ24PirWEL+2b26r/Poq4/O/uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DIUGCeplkT4T3eAPJscEl1ZvF205Ygk3iGpcebvPuEDWZunl1DlIJTte8PvPKuve6
-	 MSKVmi1n9ZCAh1wmMhQ81OA4839rDDEsvR0yB/Sp2gYaixEskYKdKqvmNrdsljhMd8
-	 9BceiuA0ZBdqeobp0dnh3jwk1K5E8vvlZ6B7Elso=
+	b=M7lLBtx/me/hnRsUKgjQfWDbgU49KNrxDNmPJjmX3qRDhWhRY+KmcHEvi2mfvBrR+
+	 X4t1Wi9a7IAN2szCnZJ+vlJUALUxXWba9PX9h3u5FAV6lH1Z5X4ApLzmv1P7RprWPA
+	 Jw2pyoOcXFaEgOsXARUlM6rWQmpHNUH5vgSpP/fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+60cf892fc31d1f4358fc@syzkaller.appspotmail.com,
-	Ziqi Zhao <astrajoan@yahoo.com>,
+	syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com,
+	Zeng Heng <zengheng4@huawei.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.1 031/196] fs/ntfs3: Fix possible null-pointer dereference in hdr_find_e()
-Date: Mon, 23 Oct 2023 12:54:56 +0200
-Message-ID: <20231023104829.370213063@linuxfoundation.org>
+Subject: [PATCH 6.1 032/196] fs/ntfs3: fix panic about slab-out-of-bounds caused by ntfs_list_ea()
+Date: Mon, 23 Oct 2023 12:54:57 +0200
+Message-ID: <20231023104829.396647260@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,53 +42,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziqi Zhao <astrajoan@yahoo.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-commit 1f9b94af923c88539426ed811ae7e9543834a5c5 upstream.
+commit 8e7e27b2ee1e19c4040d4987e345f678a74c0aed upstream.
 
-Upon investigation of the C reproducer provided by Syzbot, it seemed
-the reproducer was trying to mount a corrupted NTFS filesystem, then
-issue a rename syscall to some nodes in the filesystem. This can be
-shown by modifying the reproducer to only include the mount syscall,
-and investigating the filesystem by e.g. `ls` and `rm` commands. As a
-result, during the problematic call to `hdr_fine_e`, the `inode` being
-supplied did not go through `indx_init`, hence the `cmp` function
-pointer was never set.
+Here is a BUG report about linux-6.1 from syzbot, but it still remains
+within upstream:
 
-The fix is simply to check whether `cmp` is not set, and return NULL
-if that's the case, in order to be consistent with other error
-scenarios of the `hdr_find_e` method. The rationale behind this patch
-is that:
+BUG: KASAN: slab-out-of-bounds in ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
+BUG: KASAN: slab-out-of-bounds in ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
+Read of size 1 at addr ffff888021acaf3d by task syz-executor128/3632
 
-- We should prevent crashing the kernel even if the mounted filesystem
-  is corrupted. Any syscalls made on the filesystem could return
-  invalid, but the kernel should be able to sustain these calls.
+Call Trace:
+ kasan_report+0x139/0x170 mm/kasan/report.c:495
+ ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
+ ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
+ vfs_listxattr fs/xattr.c:457 [inline]
+ listxattr+0x293/0x2d0 fs/xattr.c:804
+ path_listxattr fs/xattr.c:828 [inline]
+ __do_sys_llistxattr fs/xattr.c:846 [inline]
 
-- Only very specific corruption would lead to this bug, so it would be
-  a pretty rare case in actual usage anyways. Therefore, introducing a
-  check to specifically protect against this bug seems appropriate.
-  Because of its rarity, an `unlikely` clause is used to wrap around
-  this nullity check.
+Before derefering field members of `ea` in unpacked_ea_size(), we need to
+check whether the EA_FULL struct is located in access validate range.
 
-Reported-by: syzbot+60cf892fc31d1f4358fc@syzkaller.appspotmail.com
-Signed-off-by: Ziqi Zhao <astrajoan@yahoo.com>
+Similarly, when derefering `ea->name` field member, we need to check
+whethe the ea->name is located in access validate range, too.
+
+Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
+Reported-by: syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+[almaz.alexandrovich@paragon-software.com: took the ret variable out of the loop block]
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ntfs3/xattr.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -729,6 +729,9 @@ static struct NTFS_DE *hdr_find_e(const
- 	u32 total = le32_to_cpu(hdr->total);
- 	u16 offs[128];
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -209,7 +209,8 @@ static ssize_t ntfs_list_ea(struct ntfs_
+ 	size = le32_to_cpu(info->size);
  
-+	if (unlikely(!cmp))
-+		return NULL;
+ 	/* Enumerate all xattrs. */
+-	for (ret = 0, off = 0; off < size; off += ea_size) {
++	ret = 0;
++	for (off = 0; off + sizeof(struct EA_FULL) < size; off += ea_size) {
+ 		ea = Add2Ptr(ea_all, off);
+ 		ea_size = unpacked_ea_size(ea);
+ 
+@@ -217,6 +218,10 @@ static ssize_t ntfs_list_ea(struct ntfs_
+ 			break;
+ 
+ 		if (buffer) {
++			/* Check if we can use field ea->name */
++			if (off + ea_size > size)
++				break;
 +
- fill_table:
- 	if (end > total)
- 		return NULL;
+ 			if (ret + ea->name_len + 1 > bytes_per_buffer) {
+ 				err = -ERANGE;
+ 				goto out;
 
 
