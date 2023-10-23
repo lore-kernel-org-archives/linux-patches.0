@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A43B15E8D
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC2615E8D
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tAZvwZo9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C2FC433C7;
-	Mon, 23 Oct 2023 11:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPp0EdxW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8D3C433C8;
+	Mon, 23 Oct 2023 11:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060455;
-	bh=sgX31NwhOoiSTPlSQ5IAMU8WXA2Z7o2PN8ODaCjo7P4=;
+	s=korg; t=1698060458;
+	bh=he3VA6xkl3SKfTuEy46OU6eoEmwFIGZC8+aoO58I3KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tAZvwZo9m6DxnER9Sk3PzbntYB3n7G2wWHyebyA2N3EukmiiI3gq9pSknH/Zp1TZT
-	 UZNAwCS2iCQO5XDNHI+mAVEJ4XhgRLBXqQudMgYlkSpdVgIS9xYaetgZwW+5lv5hLv
-	 VntZILFByuSttVeXLErI6wFiuhGa36NEYOMRR7aE=
+	b=gPp0EdxW+HEpX1P+u0IrMHqjwly8xMFiPSm/mA+cIuNI6d49SMZb1cnICpQuTLcno
+	 nf6/MZR1WDlNntFnHgFL0cXNHHbCq6tbLk+URaaPROx2PwAizmHmbHDu6LePSt2KOk
+	 TLAI5OiIESoXy6CngFQLmigGI5oFEkqDqdzo1sP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Maxime Ripard <maxime@cerno.tech>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 178/196] ASoC: pxa: fix a memory leak in probe()
-Date: Mon, 23 Oct 2023 12:57:23 +0200
-Message-ID: <20231023104833.436045066@linuxfoundation.org>
+Subject: [PATCH 6.1 179/196] drm/bridge: ti-sn65dsi86: Associate DSI device lifetime with auxiliary device
+Date: Mon, 23 Oct 2023 12:57:24 +0200
+Message-ID: <20231023104833.461216190@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,34 +44,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit aa6464edbd51af4a2f8db43df866a7642b244b5f ]
+[ Upstream commit 7b821db95140e2c118567aee22a78bf85f3617e0 ]
 
-Free the "priv" pointer before returning the error code.
+The kernel produces a warning splat and the DSI device fails to register
+in this driver if the i2c driver probes, populates child auxiliary
+devices, and then somewhere in ti_sn_bridge_probe() a function call
+returns -EPROBE_DEFER. When the auxiliary driver probe defers, the dsi
+device created by devm_mipi_dsi_device_register_full() is left
+registered because the devm managed device used to manage the lifetime
+of the DSI device is the parent i2c device, not the auxiliary device
+that is being probed.
 
-Fixes: 90eb6b59d311 ("ASoC: pxa-ssp: add support for an external clock in devicetree")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/84ac2313-1420-471a-b2cb-3269a2e12a7c@moroto.mountain
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Associate the DSI device created and managed by this driver to the
+lifetime of the auxiliary device, not the i2c device, so that the DSI
+device is removed when the auxiliary driver unbinds. Similarly change
+the device pointer used for dev_err_probe() so the deferred probe errors
+are associated with the auxiliary device instead of the parent i2c
+device so we can narrow down future problems faster.
+
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Maxime Ripard <maxime@cerno.tech>
+Fixes: c3b75d4734cb ("drm/bridge: sn65dsi86: Register and attach our DSI device at probe")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231002235407.769399-1-swboyd@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/pxa/pxa-ssp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/pxa/pxa-ssp.c b/sound/soc/pxa/pxa-ssp.c
-index 430dd446321e5..452f0caf415b9 100644
---- a/sound/soc/pxa/pxa-ssp.c
-+++ b/sound/soc/pxa/pxa-ssp.c
-@@ -779,7 +779,7 @@ static int pxa_ssp_probe(struct snd_soc_dai *dai)
- 		if (IS_ERR(priv->extclk)) {
- 			ret = PTR_ERR(priv->extclk);
- 			if (ret == -EPROBE_DEFER)
--				return ret;
-+				goto err_priv;
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index b89f7f7ca1885..1b5c27ed27370 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -673,7 +673,7 @@ static struct ti_sn65dsi86 *bridge_to_ti_sn65dsi86(struct drm_bridge *bridge)
+ 	return container_of(bridge, struct ti_sn65dsi86, bridge);
+ }
  
- 			priv->extclk = NULL;
- 		}
+-static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
++static int ti_sn_attach_host(struct auxiliary_device *adev, struct ti_sn65dsi86 *pdata)
+ {
+ 	int val;
+ 	struct mipi_dsi_host *host;
+@@ -688,7 +688,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
+ 	if (!host)
+ 		return -EPROBE_DEFER;
+ 
+-	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
++	dsi = devm_mipi_dsi_device_register_full(&adev->dev, host, &info);
+ 	if (IS_ERR(dsi))
+ 		return PTR_ERR(dsi);
+ 
+@@ -706,7 +706,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
+ 
+ 	pdata->dsi = dsi;
+ 
+-	return devm_mipi_dsi_attach(dev, dsi);
++	return devm_mipi_dsi_attach(&adev->dev, dsi);
+ }
+ 
+ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
+@@ -1279,9 +1279,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
+ 	struct device_node *np = pdata->dev->of_node;
+ 	int ret;
+ 
+-	pdata->next_bridge = devm_drm_of_get_bridge(pdata->dev, np, 1, 0);
++	pdata->next_bridge = devm_drm_of_get_bridge(&adev->dev, np, 1, 0);
+ 	if (IS_ERR(pdata->next_bridge))
+-		return dev_err_probe(pdata->dev, PTR_ERR(pdata->next_bridge),
++		return dev_err_probe(&adev->dev, PTR_ERR(pdata->next_bridge),
+ 				     "failed to create panel bridge\n");
+ 
+ 	ti_sn_bridge_parse_lanes(pdata, np);
+@@ -1300,9 +1300,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
+ 
+ 	drm_bridge_add(&pdata->bridge);
+ 
+-	ret = ti_sn_attach_host(pdata);
++	ret = ti_sn_attach_host(adev, pdata);
+ 	if (ret) {
+-		dev_err_probe(pdata->dev, ret, "failed to attach dsi host\n");
++		dev_err_probe(&adev->dev, ret, "failed to attach dsi host\n");
+ 		goto err_remove_bridge;
+ 	}
+ 
 -- 
 2.42.0
 
