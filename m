@@ -1,22 +1,22 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E606921340;
-	Mon, 23 Oct 2023 17:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1342021340;
+	Mon, 23 Oct 2023 17:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q5sZlBXB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754EBC433C8;
-	Mon, 23 Oct 2023 17:45:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NBorsQHM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D5AC433C9;
+	Mon, 23 Oct 2023 17:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698083125;
-	bh=X2EiXljEqLgjkMvgVksP7BUN5cbAO2JI6oZUqCn5eWA=;
+	s=k20201202; t=1698083130;
+	bh=OTtEvmCKMm7ojlLCYfNOXX7WV2Av9drz4oNtw+8PMlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5sZlBXBs5Iog9qQoDZ2/bLkWFr3eeiiWVLVSZ+sI7fj7xIIRbHUoWbq2iHyPy76w
-	 wc88r56+X9avGXu+OMTWHjzXYfpfBL610QgzkF899uZdDPH7s7n1846Siq42LNgHNH
-	 vJ+SgFDeIwPuHFNF4crhAnR5vLxKHOehoGgUTLp6Ja1E7VJiFSt9/iLj5WBEFWolsw
-	 OUnXCYwblWnSwgnFRinkG5ce/hAaLYppdnsCtd+OQDe06609TMIIaLOC7MhP13nMhH
-	 dQFc2UqAd5c8HVXPZNRrL2nzk4IS30mWZuAOICUKr9QnFaCkWw4YU+IQ30qXUph4r9
-	 t5Sa6AK8jlnMQ==
+	b=NBorsQHMmnAu6kmE5ZXnl/NeCJl1/ssPb1p3rjG7224RgRmP4RRgELONe6e9SKZ3y
+	 aEg8OPmzcybUoSAXG5o0vw80EQ0ebbRjPyZpqQw9CzDZib222bjnXMvXNf7j48uY/e
+	 6YmKBSJscijZqMPNdjeDAnR9TFLxbdGYFZOM2XsY4eUNwbdZhB9UHr+K33sDiePSYe
+	 IWM/f80LtwdlHNLMMpz9Wnn0QxeVS+78vi64HdOdEvKEgifB7PNOz/n1LGpjgalS5m
+	 B0Wxb5Xvb9NNAFf7N7P6izCO4JbGedwTX3467RVNYqwyBOtEWJtAqN13b0s7o9X/HZ
+	 QtY8nfCBWF+lA==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Thomas Gleixner <tglx@linutronix.de>,
 	Ingo Molnar <mingo@redhat.com>,
@@ -36,10 +36,11 @@ Cc: Miguel Ojeda <ojeda@kernel.org>,
 	x86@kernel.org,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH 3/4] x86/rust: depend on !RETHUNK
-Date: Mon, 23 Oct 2023 19:44:47 +0200
-Message-ID: <20231023174449.251550-3-ojeda@kernel.org>
+	patches@lists.linux.dev,
+	"H. Peter Anvin" <hpa@zytor.com>
+Subject: [RFC PATCH 4/4] x86/rust: support RETHUNK
+Date: Mon, 23 Oct 2023 19:44:48 +0200
+Message-ID: <20231023174449.251550-4-ojeda@kernel.org>
 In-Reply-To: <20231023174449.251550-1-ojeda@kernel.org>
 References: <20231023174449.251550-1-ojeda@kernel.org>
 Precedence: bulk
@@ -50,49 +51,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Rust compiler does not support the equivalent of
-`-mfunction-return=thunk-extern` yet [1]. Thus, currently, `objtool`
-warns about it, e.g.:
+When support for `-Zfunction-return` lands in Rust [1], this patch may
+be used to enable RETHUNK support on top of the previous patch.
 
-    samples/rust/rust_print.o: warning: objtool: _R...init+0xa5c:
-    'naked' return found in RETHUNK build
-
-The support in `rustc` for `-Zfunction-return` has been submitted and
-is being reviewed [2]. It adds the needed LLVM function attributes and,
-with it, I got a RETHUNK kernel build with Rust enabled that does not
-print the `objtool` related warnings, boots in QEMU and can load a kernel
-loadable module.
-
-In any case, until proper/complete support is added to `rustc`, make it
-a hard restriction until the mitigation is in place.
-
-This may have an impact for developers that may not need/care about the
-mitigation in the Rust side (e.g. Ubuntu offers Rust as a "technology
-preview" [3]), but given we are getting closer to having the first actual
-in-tree Rust kernel users, it seems like the right time to disallow
-it. This should also avoid confusion [4].
-
-Link: https://github.com/rust-lang/rust/issues/116853 [1]
-Link: https://github.com/rust-lang/rust/pull/116892 [2]
-Link: https://lore.kernel.org/rust-for-linux/ZSQXqX2%2Flhf5ICZP@gpd/ [3]
-Link: https://lore.kernel.org/rust-for-linux/CANiq72n6DMeXQrgOzS_+3VdgNYAmpcnneAHJnZERUQhMExg+0A@mail.gmail.com/ [4]
+Link: https://github.com/rust-lang/rust/pull/116892 [1]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- init/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+Note that this patch is not meant to be applied now, it is only here to
+show what will be needed to drop the depends on from the previous patch.
 
+ arch/x86/Makefile | 5 +++++
+ init/Kconfig      | 1 -
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/Makefile b/arch/x86/Makefile
+index 3df7c7c81918..818fdb1a92c5 100644
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -24,11 +24,15 @@ RETPOLINE_CFLAGS	+= $(call cc-option,-mindirect-branch-cs-prefix)
+
+ ifdef CONFIG_RETHUNK
+ RETHUNK_CFLAGS		:= -mfunction-return=thunk-extern
++RETHUNK_RUSTFLAGS	:= -Zfunction-return=thunk-extern
+ RETPOLINE_CFLAGS	+= $(RETHUNK_CFLAGS)
++RETPOLINE_RUSTFLAGS	+= $(RETHUNK_RUSTFLAGS)
+ endif
+
+ export RETHUNK_CFLAGS
++export RETHUNK_RUSTFLAGS
+ export RETPOLINE_CFLAGS
++export RETPOLINE_RUSTFLAGS
+ export RETPOLINE_VDSO_CFLAGS
+
+ # For gcc stack alignment is specified with -mpreferred-stack-boundary,
+@@ -193,6 +197,7 @@ KBUILD_CFLAGS += -fno-asynchronous-unwind-tables
+ # Avoid indirect branches in kernel to deal with Spectre
+ ifdef CONFIG_RETPOLINE
+   KBUILD_CFLAGS += $(RETPOLINE_CFLAGS)
++  KBUILD_RUSTFLAGS += $(RETPOLINE_RUSTFLAGS)
+   # Additionally, avoid generating expensive indirect jumps which
+   # are subject to retpolines for small number of switch cases.
+   # LLVM turns off jump table generation by default when under
 diff --git a/init/Kconfig b/init/Kconfig
-index 6d35728b94b2..9452b4102b99 100644
+index 9452b4102b99..6d35728b94b2 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -1889,6 +1889,7 @@ config RUST
+@@ -1889,7 +1889,6 @@ config RUST
  	depends on !GCC_PLUGINS
  	depends on !RANDSTRUCT
  	depends on !DEBUG_INFO_BTF || PAHOLE_HAS_LANG_EXCLUDE
-+	depends on !RETHUNK
+-	depends on !RETHUNK
  	select CONSTRUCTORS
  	help
  	  Enables Rust support in the kernel.
--- 
+--
 2.42.0
-
