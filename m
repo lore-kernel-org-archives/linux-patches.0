@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2B6125CA
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B740125CA
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnCnO/R7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEF3C433C7;
-	Mon, 23 Oct 2023 11:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEbPUUr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17134C433CA;
+	Mon, 23 Oct 2023 11:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058815;
-	bh=2x3apikCSf3Fisk0R5IgOqnVpaBMhIszNW0A9s43XO4=;
+	s=korg; t=1698058818;
+	bh=cIjASlBtvLd+gcONiCfNOrup40dPj9TTatlJIA5eiE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZnCnO/R7OBxGJEAgjHrUaBhXeIP5AmdZFy4YluYBcNzAjZFBkiy26eDyGb77aiXgz
-	 piL9obkU0OmR0FSxXswNwf1rVU55+3xMHbYWZSSACcxjozaf03qtTALvmork/ocBGh
-	 R693hiILYIdRfD3YjU8uRRo679RrXecsk3urn9gA=
+	b=fEbPUUr/Il1L8Y5egWR5wC92m1UZlbxU3XB929sVpHkJHg+X13lzma3Uijxp/POiC
+	 ij7ns5ON8UAVR/srWgb5P+CFt5G77sCTcpFDT9gUSslN8OhG3xFY4pjy13FBj1ZUMn
+	 f1M8pxO04V0/pms5ljNl/wgPbH3Gpl71EK3H45vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 4.14 36/66] xfrm: fix a data-race in xfrm_gen_index()
-Date: Mon, 23 Oct 2023 12:56:26 +0200
-Message-ID: <20231023104812.185492753@linuxfoundation.org>
+	Ma Ke <make_ruc2021@163.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 4.14 37/66] net: ipv4: fix return value check in esp_remove_trailer
+Date: Mon, 23 Oct 2023 12:56:27 +0200
+Message-ID: <20231023104812.223571863@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -43,101 +41,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-commit 3e4bc23926b83c3c67e5f61ae8571602754131a6 upstream.
+commit 513f61e2193350c7a345da98559b80f61aec4fa6 upstream.
 
-xfrm_gen_index() mutual exclusion uses net->xfrm.xfrm_policy_lock.
+In esp_remove_trailer(), to avoid an unexpected result returned by
+pskb_trim, we should check the return value of pskb_trim().
 
-This means we must use a per-netns idx_generator variable,
-instead of a static one.
-Alternative would be to use an atomic variable.
-
-syzbot reported:
-
-BUG: KCSAN: data-race in xfrm_sk_policy_insert / xfrm_sk_policy_insert
-
-write to 0xffffffff87005938 of 4 bytes by task 29466 on cpu 0:
-xfrm_gen_index net/xfrm/xfrm_policy.c:1385 [inline]
-xfrm_sk_policy_insert+0x262/0x640 net/xfrm/xfrm_policy.c:2347
-xfrm_user_policy+0x413/0x540 net/xfrm/xfrm_state.c:2639
-do_ipv6_setsockopt+0x1317/0x2ce0 net/ipv6/ipv6_sockglue.c:943
-ipv6_setsockopt+0x57/0x130 net/ipv6/ipv6_sockglue.c:1012
-rawv6_setsockopt+0x21e/0x410 net/ipv6/raw.c:1054
-sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
-__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
-__do_sys_setsockopt net/socket.c:2274 [inline]
-__se_sys_setsockopt net/socket.c:2271 [inline]
-__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-read to 0xffffffff87005938 of 4 bytes by task 29460 on cpu 1:
-xfrm_sk_policy_insert+0x13e/0x640
-xfrm_user_policy+0x413/0x540 net/xfrm/xfrm_state.c:2639
-do_ipv6_setsockopt+0x1317/0x2ce0 net/ipv6/ipv6_sockglue.c:943
-ipv6_setsockopt+0x57/0x130 net/ipv6/ipv6_sockglue.c:1012
-rawv6_setsockopt+0x21e/0x410 net/ipv6/raw.c:1054
-sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
-__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
-__do_sys_setsockopt net/socket.c:2274 [inline]
-__se_sys_setsockopt net/socket.c:2271 [inline]
-__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x00006ad8 -> 0x00006b18
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 29460 Comm: syz-executor.1 Not tainted 6.5.0-rc5-syzkaller-00243-g9106536c1aa3 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-
-Fixes: 1121994c803f ("netns xfrm: policy insertion in netns")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netns/xfrm.h |    1 +
- net/xfrm/xfrm_policy.c   |    6 ++----
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ net/ipv4/esp4.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/include/net/netns/xfrm.h
-+++ b/include/net/netns/xfrm.h
-@@ -48,6 +48,7 @@ struct netns_xfrm {
- 	struct list_head	policy_all;
- 	struct hlist_head	*policy_byidx;
- 	unsigned int		policy_idx_hmask;
-+	unsigned int		idx_generator;
- 	struct hlist_head	policy_inexact[XFRM_POLICY_MAX];
- 	struct xfrm_policy_hash	policy_bydst[XFRM_POLICY_MAX];
- 	unsigned int		policy_count[XFRM_POLICY_MAX * 2];
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -646,8 +646,6 @@ EXPORT_SYMBOL(xfrm_policy_hash_rebuild);
-  * of an absolute inpredictability of ordering of rules. This will not pass. */
- static u32 xfrm_gen_index(struct net *net, int dir, u32 index)
- {
--	static u32 idx_generator;
--
- 	for (;;) {
- 		struct hlist_head *list;
- 		struct xfrm_policy *p;
-@@ -655,8 +653,8 @@ static u32 xfrm_gen_index(struct net *ne
- 		int found;
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -547,7 +547,9 @@ static inline int esp_remove_trailer(str
+ 		skb->csum = csum_block_sub(skb->csum, csumdiff,
+ 					   skb->len - trimlen);
+ 	}
+-	pskb_trim(skb, skb->len - trimlen);
++	ret = pskb_trim(skb, skb->len - trimlen);
++	if (unlikely(ret))
++		return ret;
  
- 		if (!index) {
--			idx = (idx_generator | dir);
--			idx_generator += 8;
-+			idx = (net->xfrm.idx_generator | dir);
-+			net->xfrm.idx_generator += 8;
- 		} else {
- 			idx = index;
- 			index = 0;
+ 	ret = nexthdr[1];
+ 
 
 
