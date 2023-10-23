@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E9D13FEC
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673D013FEC
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSsiK4qM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA42AC433C7;
-	Mon, 23 Oct 2023 11:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rc5RQ0Xx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DD7C433C7;
+	Mon, 23 Oct 2023 11:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059186;
-	bh=AIDhhDnb4lk77JkIUY3qK4XCcI46H9qlioIvSx+Sbd4=;
+	s=korg; t=1698059189;
+	bh=1wFSS/stafrgObfmM1wI3whF2Qc5VbpJ/MxOSjNbrzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vSsiK4qMuxOSdubtbRJR90YxlyFVR2y83QbBcLijxq64xhmYptFEzKku63l73hB67
-	 TlBgSc2VWionb/gHuKpa+MC/YlDBjA7I+GNcw31hSeVXTYWmjLYBLqQc2NfSwcxdTM
-	 B3nL0TSTUjCDv3Fo1y1xJsQDOsDaJrOkFOxmk71A=
+	b=Rc5RQ0XxcP9stMbA8NdS3NHGeTI3v/2jWdAVptLxgVddrERWLjX13OPUruLf97juF
+	 a4u13YRt8DWEIklEpVzwzRP9rI73NFEMhg1hjB+v3lCTehBUOGjkYsZ77Zwc17s43N
+	 3h593QDfjC+vbIZVw3sji2YiEX6BMLZiQ03Au+3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+71e724675ba3958edb31@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.5 066/241] tcp: Fix listen() warning with v4-mapped-v6 address.
-Date: Mon, 23 Oct 2023 12:54:12 +0200
-Message-ID: <20231023104835.512862017@linuxfoundation.org>
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.5 057/241] xfrm: interface: use DEV_STATS_INC()
+Date: Mon, 23 Oct 2023 12:54:03 +0200
+Message-ID: <20231023104835.303811648@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,149 +42,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 8702cf12e6ba91616a72d684e90357977972991b upstream.
+commit f7c4e3e5d4f6609b4725a97451948ca2e425379a upstream.
 
-syzbot reported a warning [0] introduced by commit c48ef9c4aed3 ("tcp: Fix
-bind() regression for v4-mapped-v6 non-wildcard address.").
+syzbot/KCSAN reported data-races in xfrm whenever dev->stats fields
+are updated.
 
-After the cited commit, a v4 socket's address matches the corresponding
-v4-mapped-v6 tb2 in inet_bind2_bucket_match_addr(), not vice versa.
+It appears all of these updates can happen from multiple cpus.
 
-During X.X.X.X -> ::ffff:X.X.X.X order bind()s, the second bind() uses
-bhash and conflicts properly without checking bhash2 so that we need not
-check if a v4-mapped-v6 sk matches the corresponding v4 address tb2 in
-inet_bind2_bucket_match_addr().  However, the repro shows that we need
-to check that in a no-conflict case.
+Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
 
-The repro bind()s two sockets to the 2-tuples using SO_REUSEPORT and calls
-listen() for the first socket:
+BUG: KCSAN: data-race in xfrmi_xmit / xfrmi_xmit
 
-  from socket import *
+read-write to 0xffff88813726b160 of 8 bytes by task 23986 on cpu 1:
+xfrmi_xmit+0x74e/0xb20 net/xfrm/xfrm_interface_core.c:583
+__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
+netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+xmit_one net/core/dev.c:3544 [inline]
+dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
+__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
+dev_queue_xmit include/linux/netdevice.h:3082 [inline]
+neigh_connected_output+0x231/0x2a0 net/core/neighbour.c:1581
+neigh_output include/net/neighbour.h:542 [inline]
+ip_finish_output2+0x74a/0x850 net/ipv4/ip_output.c:230
+ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:318
+NF_HOOK_COND include/linux/netfilter.h:293 [inline]
+ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:432
+dst_output include/net/dst.h:458 [inline]
+ip_local_out net/ipv4/ip_output.c:127 [inline]
+ip_send_skb+0x72/0xe0 net/ipv4/ip_output.c:1487
+udp_send_skb+0x6a4/0x990 net/ipv4/udp.c:963
+udp_sendmsg+0x1249/0x12d0 net/ipv4/udp.c:1246
+inet_sendmsg+0x63/0x80 net/ipv4/af_inet.c:840
+sock_sendmsg_nosec net/socket.c:730 [inline]
+sock_sendmsg net/socket.c:753 [inline]
+____sys_sendmsg+0x37c/0x4d0 net/socket.c:2540
+___sys_sendmsg net/socket.c:2594 [inline]
+__sys_sendmmsg+0x269/0x500 net/socket.c:2680
+__do_sys_sendmmsg net/socket.c:2709 [inline]
+__se_sys_sendmmsg net/socket.c:2706 [inline]
+__x64_sys_sendmmsg+0x57/0x60 net/socket.c:2706
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-  s1 = socket()
-  s1.setsockopt(SOL_SOCKET, SO_REUSEPORT, 1)
-  s1.bind(('127.0.0.1', 0))
+read-write to 0xffff88813726b160 of 8 bytes by task 23987 on cpu 0:
+xfrmi_xmit+0x74e/0xb20 net/xfrm/xfrm_interface_core.c:583
+__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
+netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+xmit_one net/core/dev.c:3544 [inline]
+dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
+__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
+dev_queue_xmit include/linux/netdevice.h:3082 [inline]
+neigh_connected_output+0x231/0x2a0 net/core/neighbour.c:1581
+neigh_output include/net/neighbour.h:542 [inline]
+ip_finish_output2+0x74a/0x850 net/ipv4/ip_output.c:230
+ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:318
+NF_HOOK_COND include/linux/netfilter.h:293 [inline]
+ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:432
+dst_output include/net/dst.h:458 [inline]
+ip_local_out net/ipv4/ip_output.c:127 [inline]
+ip_send_skb+0x72/0xe0 net/ipv4/ip_output.c:1487
+udp_send_skb+0x6a4/0x990 net/ipv4/udp.c:963
+udp_sendmsg+0x1249/0x12d0 net/ipv4/udp.c:1246
+inet_sendmsg+0x63/0x80 net/ipv4/af_inet.c:840
+sock_sendmsg_nosec net/socket.c:730 [inline]
+sock_sendmsg net/socket.c:753 [inline]
+____sys_sendmsg+0x37c/0x4d0 net/socket.c:2540
+___sys_sendmsg net/socket.c:2594 [inline]
+__sys_sendmmsg+0x269/0x500 net/socket.c:2680
+__do_sys_sendmmsg net/socket.c:2709 [inline]
+__se_sys_sendmmsg net/socket.c:2706 [inline]
+__x64_sys_sendmmsg+0x57/0x60 net/socket.c:2706
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-  s2 = socket(AF_INET6)
-  s2.setsockopt(SOL_SOCKET, SO_REUSEPORT, 1)
-  s2.bind(('::ffff:127.0.0.1', s1.getsockname()[1]))
+value changed: 0x00000000000010d7 -> 0x00000000000010d8
 
-  s1.listen()
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 23987 Comm: syz-executor.5 Not tainted 6.5.0-syzkaller-10885-g0468be89b3fa #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
 
-The second socket should belong to the first socket's tb2, but the second
-bind() creates another tb2 bucket because inet_bind2_bucket_find() returns
-NULL in inet_csk_get_port() as the v4-mapped-v6 sk does not match the
-corresponding v4 address tb2.
-
-  bhash2[] -> tb2(::ffff:X.X.X.X) -> tb2(X.X.X.X)
-
-Then, listen() for the first socket calls inet_csk_get_port(), where the
-v4 address matches the v4-mapped-v6 tb2 and WARN_ON() is triggered.
-
-To avoid that, we need to check if v4-mapped-v6 sk address matches with
-the corresponding v4 address tb2 in inet_bind2_bucket_match().
-
-The same checks are needed in inet_bind2_bucket_addr_match() too, so we
-can move all checks there and call it from inet_bind2_bucket_match().
-
-Note that now tb->family is just an address family of tb->(v6_)?rcv_saddr
-and not of sockets in the bucket.  This could be refactored later by
-defining tb->rcv_saddr as tb->v6_rcv_saddr.s6_addr32[3] and prepending
-::ffff: when creating v4 tb2.
-
-[0]:
-WARNING: CPU: 0 PID: 5049 at net/ipv4/inet_connection_sock.c:587 inet_csk_get_port+0xf96/0x2350 net/ipv4/inet_connection_sock.c:587
-Modules linked in:
-CPU: 0 PID: 5049 Comm: syz-executor288 Not tainted 6.6.0-rc2-syzkaller-00018-g2cf0f7156238 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
-RIP: 0010:inet_csk_get_port+0xf96/0x2350 net/ipv4/inet_connection_sock.c:587
-Code: 7c 24 08 e8 4c b6 8a 01 31 d2 be 88 01 00 00 48 c7 c7 e0 94 ae 8b e8 59 2e a3 f8 2e 2e 2e 31 c0 e9 04 fe ff ff e8 ca 88 d0 f8 <0f> 0b e9 0f f9 ff ff e8 be 88 d0 f8 49 8d 7e 48 e8 65 ca 5a 00 31
-RSP: 0018:ffffc90003abfbf0 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffff888026429100 RCX: 0000000000000000
-RDX: ffff88807edcbb80 RSI: ffffffff88b73d66 RDI: ffff888026c49f38
-RBP: ffff888026c49f30 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000000 R12: ffffffff9260f200
-R13: ffff888026c49880 R14: 0000000000000000 R15: ffff888026429100
-FS:  00005555557d5380(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000000045ad50 CR3: 0000000025754000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- inet_csk_listen_start+0x155/0x360 net/ipv4/inet_connection_sock.c:1256
- __inet_listen_sk+0x1b8/0x5c0 net/ipv4/af_inet.c:217
- inet_listen+0x93/0xd0 net/ipv4/af_inet.c:239
- __sys_listen+0x194/0x270 net/socket.c:1866
- __do_sys_listen net/socket.c:1875 [inline]
- __se_sys_listen net/socket.c:1873 [inline]
- __x64_sys_listen+0x53/0x80 net/socket.c:1873
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f3a5bce3af9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 c1 17 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffc1a1c79e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000032
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f3a5bce3af9
-RDX: 00007f3a5bce3af9 RSI: 0000000000000000 RDI: 0000000000000003
-RBP: 00007f3a5bd565f0 R08: 0000000000000006 R09: 0000000000000006
-R10: 0000000000000006 R11: 0000000000000246 R12: 0000000000000001
-R13: 431bde82d7b634db R14: 0000000000000001 R15: 0000000000000001
- </TASK>
-
-Fixes: c48ef9c4aed3 ("tcp: Fix bind() regression for v4-mapped-v6 non-wildcard address.")
-Reported-by: syzbot+71e724675ba3958edb31@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=71e724675ba3958edb31
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20231010013814.70571-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f203b76d7809 ("xfrm: Add virtual xfrm interfaces")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_hashtables.c |   24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ net/xfrm/xfrm_interface_core.c |   22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -148,8 +148,14 @@ static bool inet_bind2_bucket_addr_match
- 					 const struct sock *sk)
+--- a/net/xfrm/xfrm_interface_core.c
++++ b/net/xfrm/xfrm_interface_core.c
+@@ -380,8 +380,8 @@ static int xfrmi_rcv_cb(struct sk_buff *
+ 	skb->dev = dev;
+ 
+ 	if (err) {
+-		dev->stats.rx_errors++;
+-		dev->stats.rx_dropped++;
++		DEV_STATS_INC(dev, rx_errors);
++		DEV_STATS_INC(dev, rx_dropped);
+ 
+ 		return 0;
+ 	}
+@@ -426,7 +426,6 @@ static int
+ xfrmi_xmit2(struct sk_buff *skb, struct net_device *dev, struct flowi *fl)
  {
- #if IS_ENABLED(CONFIG_IPV6)
--	if (sk->sk_family != tb2->family)
--		return false;
-+	if (sk->sk_family != tb2->family) {
-+		if (sk->sk_family == AF_INET)
-+			return ipv6_addr_v4mapped(&tb2->v6_rcv_saddr) &&
-+				tb2->v6_rcv_saddr.s6_addr32[3] == sk->sk_rcv_saddr;
-+
-+		return ipv6_addr_v4mapped(&sk->sk_v6_rcv_saddr) &&
-+			sk->sk_v6_rcv_saddr.s6_addr32[3] == tb2->rcv_saddr;
-+	}
+ 	struct xfrm_if *xi = netdev_priv(dev);
+-	struct net_device_stats *stats = &xi->dev->stats;
+ 	struct dst_entry *dst = skb_dst(skb);
+ 	unsigned int length = skb->len;
+ 	struct net_device *tdev;
+@@ -473,7 +472,7 @@ xfrmi_xmit2(struct sk_buff *skb, struct
+ 	tdev = dst->dev;
  
- 	if (sk->sk_family == AF_INET6)
- 		return ipv6_addr_equal(&tb2->v6_rcv_saddr,
-@@ -799,19 +805,7 @@ static bool inet_bind2_bucket_match(cons
- 	    tb->l3mdev != l3mdev)
- 		return false;
+ 	if (tdev == dev) {
+-		stats->collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 		net_warn_ratelimited("%s: Local routing loop detected!\n",
+ 				     dev->name);
+ 		goto tx_err_dst_release;
+@@ -512,13 +511,13 @@ xmit:
+ 	if (net_xmit_eval(err) == 0) {
+ 		dev_sw_netstats_tx_add(dev, 1, length);
+ 	} else {
+-		stats->tx_errors++;
+-		stats->tx_aborted_errors++;
++		DEV_STATS_INC(dev, tx_errors);
++		DEV_STATS_INC(dev, tx_aborted_errors);
+ 	}
  
--#if IS_ENABLED(CONFIG_IPV6)
--	if (sk->sk_family != tb->family) {
--		if (sk->sk_family == AF_INET)
--			return ipv6_addr_v4mapped(&tb->v6_rcv_saddr) &&
--				tb->v6_rcv_saddr.s6_addr32[3] == sk->sk_rcv_saddr;
--
--		return false;
--	}
--
--	if (sk->sk_family == AF_INET6)
--		return ipv6_addr_equal(&tb->v6_rcv_saddr, &sk->sk_v6_rcv_saddr);
--#endif
--	return tb->rcv_saddr == sk->sk_rcv_saddr;
-+	return inet_bind2_bucket_addr_match(tb, sk);
+ 	return 0;
+ tx_err_link_failure:
+-	stats->tx_carrier_errors++;
++	DEV_STATS_INC(dev, tx_carrier_errors);
+ 	dst_link_failure(skb);
+ tx_err_dst_release:
+ 	dst_release(dst);
+@@ -528,7 +527,6 @@ tx_err_dst_release:
+ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct xfrm_if *xi = netdev_priv(dev);
+-	struct net_device_stats *stats = &xi->dev->stats;
+ 	struct dst_entry *dst = skb_dst(skb);
+ 	struct flowi fl;
+ 	int ret;
+@@ -545,7 +543,7 @@ static netdev_tx_t xfrmi_xmit(struct sk_
+ 			dst = ip6_route_output(dev_net(dev), NULL, &fl.u.ip6);
+ 			if (dst->error) {
+ 				dst_release(dst);
+-				stats->tx_carrier_errors++;
++				DEV_STATS_INC(dev, tx_carrier_errors);
+ 				goto tx_err;
+ 			}
+ 			skb_dst_set(skb, dst);
+@@ -561,7 +559,7 @@ static netdev_tx_t xfrmi_xmit(struct sk_
+ 			fl.u.ip4.flowi4_flags |= FLOWI_FLAG_ANYSRC;
+ 			rt = __ip_route_output_key(dev_net(dev), &fl.u.ip4);
+ 			if (IS_ERR(rt)) {
+-				stats->tx_carrier_errors++;
++				DEV_STATS_INC(dev, tx_carrier_errors);
+ 				goto tx_err;
+ 			}
+ 			skb_dst_set(skb, &rt->dst);
+@@ -580,8 +578,8 @@ static netdev_tx_t xfrmi_xmit(struct sk_
+ 	return NETDEV_TX_OK;
+ 
+ tx_err:
+-	stats->tx_errors++;
+-	stats->tx_dropped++;
++	DEV_STATS_INC(dev, tx_errors);
++	DEV_STATS_INC(dev, tx_dropped);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
  }
- 
- bool inet_bind2_bucket_match_addr_any(const struct inet_bind2_bucket *tb, const struct net *net,
 
 
