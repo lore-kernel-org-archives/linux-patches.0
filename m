@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA7115E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C25015E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6DmQ8SZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC15AC433C8;
-	Mon, 23 Oct 2023 11:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/SZuWvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9ECC433C9;
+	Mon, 23 Oct 2023 11:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061061;
-	bh=MSGB2PKXxfzM730NkfldPHpr4hFJItU8sW9Tj2e+AoE=;
+	s=korg; t=1698061064;
+	bh=RUwJPIeRYgIsMDYe7YbskXxfaItez8hekDprhtGT6P4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v6DmQ8SZ7byvCBVKbhFqmaJk3xPneUL6yFYZLHuMq90COyBluVvVYpB9GpUAFNfQ5
-	 kl8mPTyEeYVObVqXkhw2cxfLiekrdFw4anLEPfPkXvlBZ2gCZovDjl/Ud3knDYlF04
-	 j7IEo312H/tX8pH88mGYKB+avRop1wj+cwiN4ltM=
+	b=l/SZuWvEEU/DEeBZ/sOD4RbKhcOFJ/YePjQgA7txc1NSR2IB6w3Aj33q6sie3mevS
+	 sXi4ELxZsrKJQwrEzPI0ZveNxCyvARH0RFejUZPMOLluTXZpQH3uKV6++xAc9dNXPB
+	 m8KLpZ+wOjkwjDXuxtjuYa4oUbu4p2vYw9xH8wR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Ser <contact@emersion.fr>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/137] drm/atomic-helper: relax unregistered connector check
-Date: Mon, 23 Oct 2023 12:56:57 +0200
-Message-ID: <20231023104822.998563701@linuxfoundation.org>
+Subject: [PATCH 5.15 061/137] powerpc/32s: Remove capability to disable KUEP at boottime
+Date: Mon, 23 Oct 2023 12:56:58 +0200
+Message-ID: <20231023104823.027059168@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -39,95 +36,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simon Ser <contact@emersion.fr>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 2b7947bd32e243c52870d54141d3b4ea6775e63d ]
+[ Upstream commit df415cd758261bceff27f34a145dd8328bbfb018 ]
 
-The driver might pull connectors which weren't submitted by
-user-space into the atomic state. For instance,
-intel_dp_mst_atomic_master_trans_check() pulls in connectors
-sharing the same DP-MST stream. However, if the connector is
-unregistered, this later fails with:
+Disabling KUEP at boottime makes things unnecessarily complex.
 
-    [  559.425658] i915 0000:00:02.0: [drm:drm_atomic_helper_check_modeset] [CONNECTOR:378:DP-7] is not registered
+Still allow disabling KUEP at build time, but when it's built-in
+it is always there.
 
-Skip the unregistered connector check to allow user-space to turn
-off connectors one-by-one.
-
-See this wlroots issue:
-https://gitlab.freedesktop.org/wlroots/wlroots/-/issues/3407
-
-Previous discussion:
-https://lore.kernel.org/intel-gfx/Y6GX7z17WmDSKwta@ideak-desk.fi.intel.com/
-
-Signed-off-by: Simon Ser <contact@emersion.fr>
-Cc: stable@vger.kernel.org
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231005131623.114379-1-contact@emersion.fr
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/96f583f82423a29a4205c60b9721079111b35567.1634627931.git.christophe.leroy@csgroup.eu
+Stable-dep-of: f0eee815babe ("powerpc/47x: Fix 47x syscall return crash")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_atomic_helper.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ arch/powerpc/include/asm/book3s/32/kup.h |  3 +--
+ arch/powerpc/mm/book3s32/kuep.c          | 10 ++--------
+ 2 files changed, 3 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -285,7 +285,8 @@ static int
- update_connector_routing(struct drm_atomic_state *state,
- 			 struct drm_connector *connector,
- 			 struct drm_connector_state *old_connector_state,
--			 struct drm_connector_state *new_connector_state)
-+			 struct drm_connector_state *new_connector_state,
-+			 bool added_by_user)
- {
- 	const struct drm_connector_helper_funcs *funcs;
- 	struct drm_encoder *new_encoder;
-@@ -336,9 +337,13 @@ update_connector_routing(struct drm_atom
- 	 * there's a chance the connector may have been destroyed during the
- 	 * process, but it's better to ignore that then cause
- 	 * drm_atomic_helper_resume() to fail.
-+	 *
-+	 * Last, we want to ignore connector registration when the connector
-+	 * was not pulled in the atomic state by user-space (ie, was pulled
-+	 * in by the driver, e.g. when updating a DP-MST stream).
- 	 */
- 	if (!state->duplicated && drm_connector_is_unregistered(connector) &&
--	    crtc_state->active) {
-+	    added_by_user && crtc_state->active) {
- 		DRM_DEBUG_ATOMIC("[CONNECTOR:%d:%s] is not registered\n",
- 				 connector->base.id, connector->name);
- 		return -EINVAL;
-@@ -610,7 +615,10 @@ drm_atomic_helper_check_modeset(struct d
- 	struct drm_connector *connector;
- 	struct drm_connector_state *old_connector_state, *new_connector_state;
- 	int i, ret;
--	unsigned int connectors_mask = 0;
-+	unsigned int connectors_mask = 0, user_connectors_mask = 0;
-+
-+	for_each_oldnew_connector_in_state(state, connector, old_connector_state, new_connector_state, i)
-+		user_connectors_mask |= BIT(i);
+diff --git a/arch/powerpc/include/asm/book3s/32/kup.h b/arch/powerpc/include/asm/book3s/32/kup.h
+index 9f38040f0641d..fb6c39225dd19 100644
+--- a/arch/powerpc/include/asm/book3s/32/kup.h
++++ b/arch/powerpc/include/asm/book3s/32/kup.h
+@@ -12,7 +12,6 @@
+ #include <linux/jump_label.h>
  
- 	for_each_oldnew_crtc_in_state(state, crtc, old_crtc_state, new_crtc_state, i) {
- 		bool has_connectors =
-@@ -675,7 +683,8 @@ drm_atomic_helper_check_modeset(struct d
- 		 */
- 		ret = update_connector_routing(state, connector,
- 					       old_connector_state,
--					       new_connector_state);
-+					       new_connector_state,
-+					       BIT(i) & user_connectors_mask);
- 		if (ret)
- 			return ret;
- 		if (old_connector_state->crtc) {
+ extern struct static_key_false disable_kuap_key;
+-extern struct static_key_false disable_kuep_key;
+ 
+ static __always_inline bool kuap_is_disabled(void)
+ {
+@@ -21,7 +20,7 @@ static __always_inline bool kuap_is_disabled(void)
+ 
+ static __always_inline bool kuep_is_disabled(void)
+ {
+-	return !IS_ENABLED(CONFIG_PPC_KUEP) || static_branch_unlikely(&disable_kuep_key);
++	return !IS_ENABLED(CONFIG_PPC_KUEP);
+ }
+ 
+ static inline void kuep_lock(void)
+diff --git a/arch/powerpc/mm/book3s32/kuep.c b/arch/powerpc/mm/book3s32/kuep.c
+index c20733d6e02cb..8474edce3df9a 100644
+--- a/arch/powerpc/mm/book3s32/kuep.c
++++ b/arch/powerpc/mm/book3s32/kuep.c
+@@ -3,18 +3,12 @@
+ #include <asm/kup.h>
+ #include <asm/smp.h>
+ 
+-struct static_key_false disable_kuep_key;
+-
+ void setup_kuep(bool disabled)
+ {
+-	if (!disabled)
+-		kuep_lock();
++	kuep_lock();
+ 
+ 	if (smp_processor_id() != boot_cpuid)
+ 		return;
+ 
+-	if (disabled)
+-		static_branch_enable(&disable_kuep_key);
+-	else
+-		pr_info("Activating Kernel Userspace Execution Prevention\n");
++	pr_info("Activating Kernel Userspace Execution Prevention\n");
+ }
+-- 
+2.40.1
+
 
 
