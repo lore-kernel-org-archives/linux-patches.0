@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01F115E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A986C15E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIExHcN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30562C433C8;
-	Mon, 23 Oct 2023 11:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cB0bwKT+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252D1C433C7;
+	Mon, 23 Oct 2023 11:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060505;
-	bh=5Xhl9qr09WtscU36y0mkLap+vG8t1XlB8anFbrDPH3I=;
+	s=korg; t=1698060508;
+	bh=XdmObQvU7LNheXihBgsMOMsHFRG7zyF4I2pfy/XK+0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FIExHcN0r3Z3lzgmohUlRSozIMGEMoYiLzwD9BCazuscYzk8THJAgPDdWUOc1W1+k
-	 FWNok6Kejtr5Lv2xjxU2G29DyHfH6rzvF8PpqKHj5YmFr6YP6FG670aHMlZgKw3akv
-	 zXztfTv/2V/qpXPk1Z4gTtVA6tLP3W5JlWI5/TLY=
+	b=cB0bwKT+2qntYsQ7CPewiXi7XqNTIZbuGpm6jFw9UwyYLB7ms/biMtxzTNkf/VaLK
+	 itNiuflE5Kn11Re77rL+xN0ajCBHckTbYHsby7WhDErDwmOFXrVFyIbyYa9/iSQOCv
+	 cSDVTNEmL7KsYYEStwX3yptM29qkpBXe+J5Q0nGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Geliang Tang <geliang.tang@suse.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 194/196] mptcp: avoid sending RST when closing the initial subflow
-Date: Mon, 23 Oct 2023 12:57:39 +0200
-Message-ID: <20231023104833.841969105@linuxfoundation.org>
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.1 169/196] s390/pci: fix iommu bitmap allocation
+Date: Mon, 23 Oct 2023 12:57:14 +0200
+Message-ID: <20231023104833.202874198@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -44,94 +42,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <geliang.tang@suse.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit 14c56686a64c65ba716ff48f1f4b19c85f4cb2a9 upstream.
+commit c1ae1c59c8c6e0b66a718308c623e0cb394dab6b upstream.
 
-When closing the first subflow, the MPTCP protocol unconditionally
-calls tcp_disconnect(), which in turn generates a reset if the subflow
-is established.
+Since the fixed commits both zdev->iommu_bitmap and zdev->lazy_bitmap
+are allocated as vzalloc(zdev->iommu_pages / 8). The problem is that
+zdev->iommu_bitmap is a pointer to unsigned long but the above only
+yields an allocation that is a multiple of sizeof(unsigned long) which
+is 8 on s390x if the number of IOMMU pages is a multiple of 64.
+This in turn is the case only if the effective IOMMU aperture is
+a multiple of 64 * 4K = 256K. This is usually the case and so didn't
+cause visible issues since both the virt_to_phys(high_memory) reduced
+limit and hardware limits use nice numbers.
 
-That is unexpected and different from what MPTCP does with MPJ
-subflows, where resets are generated only on FASTCLOSE and other edge
-scenarios.
+Under KVM, and in particular with QEMU limiting the IOMMU aperture to
+the vfio DMA limit (default 65535), it is possible for the reported
+aperture not to be a multiple of 256K however. In this case we end up
+with an iommu_bitmap whose allocation is not a multiple of
+8 causing bitmap operations to access it out of bounds.
 
-We can't reuse for the first subflow the same code in place for MPJ
-subflows, as MPTCP clean them up completely via a tcp_close() call,
-while must keep the first subflow socket alive for later re-usage, due
-to implementation constraints.
+Sadly we can't just fix this in the obvious way and use bitmap_zalloc()
+because for large RAM systems (tested on 8 TiB) the zdev->iommu_bitmap
+grows too large for kmalloc(). So add our own bitmap_vzalloc() wrapper.
+This might be a candidate for common code, but this area of code will
+be replaced by the upcoming conversion to use the common code DMA API on
+s390 so just add a local routine.
 
-This patch adds a new helper __mptcp_subflow_disconnect() that
-encapsulates, a logic similar to tcp_close, issuing a reset only when
-the MPTCP_CF_FASTCLOSE flag is set, and performing a clean shutdown
-otherwise.
-
-Fixes: c2b2ae3925b6 ("mptcp: handle correctly disconnect() failures")
+Fixes: 224593215525 ("s390/pci: use virtual memory for iommu bitmap")
+Fixes: 13954fd6913a ("s390/pci_dma: improve lazy flush for unmap")
 Cc: stable@vger.kernel.org
-Reviewed-by: Matthieu Baerts <matttbe@kernel.org>
-Co-developed-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Geliang Tang <geliang.tang@suse.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20231018-send-net-20231018-v1-4-17ecb002e41d@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts <matttbe@kernel.org>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ arch/s390/pci/pci_dma.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2368,6 +2368,26 @@ bool __mptcp_retransmit_pending_data(str
- #define MPTCP_CF_PUSH		BIT(1)
- #define MPTCP_CF_FASTCLOSE	BIT(2)
- 
-+/* be sure to send a reset only if the caller asked for it, also
-+ * clean completely the subflow status when the subflow reaches
-+ * TCP_CLOSE state
-+ */
-+static void __mptcp_subflow_disconnect(struct sock *ssk,
-+				       struct mptcp_subflow_context *subflow,
-+				       unsigned int flags)
-+{
-+	if (((1 << ssk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)) ||
-+	    (flags & MPTCP_CF_FASTCLOSE)) {
-+		/* The MPTCP code never wait on the subflow sockets, TCP-level
-+		 * disconnect should never fail
-+		 */
-+		WARN_ON_ONCE(tcp_disconnect(ssk, 0));
-+		mptcp_subflow_ctx_reset(subflow);
-+	} else {
-+		tcp_shutdown(ssk, SEND_SHUTDOWN);
-+	}
-+}
+--- a/arch/s390/pci/pci_dma.c
++++ b/arch/s390/pci/pci_dma.c
+@@ -544,6 +544,17 @@ static void s390_dma_unmap_sg(struct dev
+ 		s->dma_length = 0;
+ 	}
+ }
 +
- /* subflow sockets can be either outgoing (connect) or incoming
-  * (accept).
-  *
-@@ -2405,7 +2425,7 @@ static void __mptcp_close_ssk(struct soc
- 	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
- 
- 	if ((flags & MPTCP_CF_FASTCLOSE) && !__mptcp_check_fallback(msk)) {
--		/* be sure to force the tcp_disconnect() path,
-+		/* be sure to force the tcp_close path
- 		 * to generate the egress reset
- 		 */
- 		ssk->sk_lingertime = 0;
-@@ -2415,12 +2435,8 @@ static void __mptcp_close_ssk(struct soc
- 
- 	need_push = (flags & MPTCP_CF_PUSH) && __mptcp_retransmit_pending_data(sk);
- 	if (!dispose_it) {
--		/* The MPTCP code never wait on the subflow sockets, TCP-level
--		 * disconnect should never fail
--		 */
--		WARN_ON_ONCE(tcp_disconnect(ssk, 0));
-+		__mptcp_subflow_disconnect(ssk, subflow, flags);
- 		msk->subflow->state = SS_UNCONNECTED;
--		mptcp_subflow_ctx_reset(subflow);
- 		release_sock(ssk);
- 
- 		goto out;
++static unsigned long *bitmap_vzalloc(size_t bits, gfp_t flags)
++{
++	size_t n = BITS_TO_LONGS(bits);
++	size_t bytes;
++
++	if (unlikely(check_mul_overflow(n, sizeof(unsigned long), &bytes)))
++		return NULL;
++
++	return vzalloc(bytes);
++}
+ 	
+ int zpci_dma_init_device(struct zpci_dev *zdev)
+ {
+@@ -584,13 +595,13 @@ int zpci_dma_init_device(struct zpci_dev
+ 				zdev->end_dma - zdev->start_dma + 1);
+ 	zdev->end_dma = zdev->start_dma + zdev->iommu_size - 1;
+ 	zdev->iommu_pages = zdev->iommu_size >> PAGE_SHIFT;
+-	zdev->iommu_bitmap = vzalloc(zdev->iommu_pages / 8);
++	zdev->iommu_bitmap = bitmap_vzalloc(zdev->iommu_pages, GFP_KERNEL);
+ 	if (!zdev->iommu_bitmap) {
+ 		rc = -ENOMEM;
+ 		goto free_dma_table;
+ 	}
+ 	if (!s390_iommu_strict) {
+-		zdev->lazy_bitmap = vzalloc(zdev->iommu_pages / 8);
++		zdev->lazy_bitmap = bitmap_vzalloc(zdev->iommu_pages, GFP_KERNEL);
+ 		if (!zdev->lazy_bitmap) {
+ 			rc = -ENOMEM;
+ 			goto free_bitmap;
 
 
