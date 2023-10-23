@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6D71102
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAE61102
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQZdArAa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0BAC433C8;
-	Mon, 23 Oct 2023 10:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2Xbm5BP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D011C433C7;
+	Mon, 23 Oct 2023 10:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058735;
-	bh=o5n3GFRsTsjyBVtv4ONTvryifFzmUf0gEX6MM7OJGB4=;
+	s=korg; t=1698058738;
+	bh=QiagPxZIlB4EZk8RMUPx2EXceJ4XEoTflqnyV7eXHDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQZdArAarRQtv8xcVThMM+cNeCLR/hmIqDRpo4YXaPK2BHfX2pE2DAaYs9TuFMF4V
-	 wmOTdSGoUFlxHUB9vr8ROzWqU+BiUbbnm/0VH50VpXI9lrg2M3QTPJh1oARMB/yQIm
-	 njPtNG1JBP+W2KIu4FHU6RJUQOONpO+7YmwO24Q0=
+	b=H2Xbm5BPnBL4FSs5lpUXfemNNB1p/IV3XEJXBDSVE9wxxiLs29QMxpTUJD0Cp9mLx
+	 i8v9z4bEo9HS2KHfX930KJVnNa2l8PM8PYpGqEShEqo2S8w+o4cGVMxrPdA6fqr9K8
+	 rFA9w9so3AxmeofGVVfzzUt2+t+eMYS2EoSOKHwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 01/66] RDMA/cxgb4: Check skb value for failure to allocate
-Date: Mon, 23 Oct 2023 12:55:51 +0200
-Message-ID: <20231023104810.836687095@linuxfoundation.org>
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 4.14 10/66] usb: xhci: xhci-ring: Use sysdev for mapping bounce buffer
+Date: Mon, 23 Oct 2023 12:56:00 +0200
+Message-ID: <20231023104811.167118678@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -42,39 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
 
-[ Upstream commit 8fb8a82086f5bda6893ea6557c5a458e4549c6d7 ]
+commit 41a43013d2366db5b88b42bbcd8e8f040b6ccf21 upstream.
 
-get_skb() can fail to allocate skb, so check it.
+As mentioned in:
+  commit 474ed23a6257 ("xhci: align the last trb before link if it is
+easily splittable.")
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+A bounce buffer is utilized for ensuring that transfers that span across
+ring segments are aligned to the EP's max packet size.  However, the device
+that is used to map the DMA buffer to is currently using the XHCI HCD,
+which does not carry any DMA operations in certain configrations.
+Migration to using the sysdev entry was introduced for DWC3 based
+implementations where the IOMMU operations are present.
 
-Fixes: 5be78ee924ae ("RDMA/cxgb4: Fix LE hash collision bug for active open connection")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Link: https://lore.kernel.org/r/20230905124048.284165-1-artem.chernyshev@red-soft.ru
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Replace the reference to the controller device to sysdev instead.  This
+allows the bounce buffer to be properly mapped to any implementations that
+have an IOMMU involved.
+
+cc: stable@vger.kernel.org
+Fixes: 4c39d4b949d3 ("usb: xhci: use bus->sysdev for DMA configuration")
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230915143108.1532163-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/cxgb4/cm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/host/xhci-ring.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
-index 357960d48e668..2086844dfade9 100644
---- a/drivers/infiniband/hw/cxgb4/cm.c
-+++ b/drivers/infiniband/hw/cxgb4/cm.c
-@@ -1902,6 +1902,9 @@ static int send_fw_act_open_req(struct c4iw_ep *ep, unsigned int atid)
- 	int win;
- 
- 	skb = get_skb(NULL, sizeof(*req), GFP_KERNEL);
-+	if (!skb)
-+		return -ENOMEM;
-+
- 	req = __skb_put_zero(skb, sizeof(*req));
- 	req->op_compl = htonl(WR_OP_V(FW_OFLD_CONNECTION_WR));
- 	req->len16_pkd = htonl(FW_WR_LEN16_V(DIV_ROUND_UP(sizeof(*req), 16)));
--- 
-2.40.1
-
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -700,7 +700,7 @@ static void xhci_giveback_urb_in_irq(str
+ static void xhci_unmap_td_bounce_buffer(struct xhci_hcd *xhci,
+ 		struct xhci_ring *ring, struct xhci_td *td)
+ {
+-	struct device *dev = xhci_to_hcd(xhci)->self.controller;
++	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
+ 	struct xhci_segment *seg = td->bounce_seg;
+ 	struct urb *urb = td->urb;
+ 	size_t len;
+@@ -3272,7 +3272,7 @@ static u32 xhci_td_remainder(struct xhci
+ static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
+ 			 u32 *trb_buff_len, struct xhci_segment *seg)
+ {
+-	struct device *dev = xhci_to_hcd(xhci)->self.controller;
++	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
+ 	unsigned int unalign;
+ 	unsigned int max_pkt;
+ 	u32 new_buff_len;
 
 
