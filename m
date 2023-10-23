@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22545F4FE
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FD414A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnSqHpDa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E742C433C9;
-	Mon, 23 Oct 2023 11:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUVJgBnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B42C433C7;
+	Mon, 23 Oct 2023 11:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059675;
-	bh=mrWc4PeitKIygLqqYT5L1avyL/2fy1VJQFdsl74/h40=;
+	s=korg; t=1698059677;
+	bh=gkqq28tBKkQcXZqPZ01cR35AIuYuqmL/MrB3TVo0MSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YnSqHpDaDGD1utRMgDofCTBT+KP4N4aASEJar4auO3X3qoqgH+4me2eoFwahoU6It
-	 uioSLgnILlxcxZz+xQa9cvkNFVpzWKokEXIcDE8zehbItJzJm53eQORyq1dGQJheV9
-	 RTirKcv7zhk1/1HfEjrduNn9CuVhN6L79dUxTgqE=
+	b=WUVJgBnBIcjlywb+EKFNBE8IMZX3yxnicc092SHWewfRwgCH47Sluf9URgyOnZcMj
+	 WlPC0hocpyjRUc5WQ6Kfvy0hpgC7kCuMin4tHQtKT0Cy29GVjucQRNY9UArU0ADmwR
+	 9jvb24+1PYJ3hjQ+sVx3VYtyy+6IHKlCraewUeCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sili Luo <rootlab@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 15/98] ixgbe: fix crash with empty VF macvlan list
-Date: Mon, 23 Oct 2023 12:56:04 +0200
-Message-ID: <20231023104814.120943940@linuxfoundation.org>
+Subject: [PATCH 4.19 16/98] net: nfc: fix races in nfc_llcp_sock_get() and nfc_llcp_sock_get_sn()
+Date: Mon, 23 Oct 2023 12:56:05 +0200
+Message-ID: <20231023104814.156175200@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -44,47 +45,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7b5add9af567c44e12196107f0fe106e194034fd ]
+[ Upstream commit 31c07dffafce914c1d1543c135382a11ff058d93 ]
 
-The adapter->vf_mvs.l list needs to be initialized even if the list is
-empty.  Otherwise it will lead to crashes.
+Sili Luo reported a race in nfc_llcp_sock_get(), leading to UAF.
 
-Fixes: a1cbb15c1397 ("ixgbe: Add macvlan support for VF")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Link: https://lore.kernel.org/r/ZSADNdIw8zFx1xw2@kadam
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Getting a reference on the socket found in a lookup while
+holding a lock should happen before releasing the lock.
+
+nfc_llcp_sock_get_sn() has a similar problem.
+
+Finally nfc_llcp_recv_snl() needs to make sure the socket
+found by nfc_llcp_sock_from_sn() does not disappear.
+
+Fixes: 8f50020ed9b8 ("NFC: LLCP late binding")
+Reported-by: Sili Luo <rootlab@huawei.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Willy Tarreau <w@1wt.eu>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20231009123110.3735515-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/nfc/llcp_core.c | 30 ++++++++++++------------------
+ 1 file changed, 12 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
-index 6055a4917ff69..9b463ef62be55 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
-@@ -28,6 +28,9 @@ static inline void ixgbe_alloc_vf_macvlans(struct ixgbe_adapter *adapter,
- 	struct vf_macvlans *mv_list;
- 	int num_vf_macvlans, i;
+diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
+index bdc1a9d0965af..c30b28465e644 100644
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -216,17 +216,13 @@ static struct nfc_llcp_sock *nfc_llcp_sock_get(struct nfc_llcp_local *local,
  
-+	/* Initialize list of VF macvlans */
-+	INIT_LIST_HEAD(&adapter->vf_mvs.l);
-+
- 	num_vf_macvlans = hw->mac.num_rar_entries -
- 			  (IXGBE_MAX_PF_MACVLANS + 1 + num_vfs);
- 	if (!num_vf_macvlans)
-@@ -36,8 +39,6 @@ static inline void ixgbe_alloc_vf_macvlans(struct ixgbe_adapter *adapter,
- 	mv_list = kcalloc(num_vf_macvlans, sizeof(struct vf_macvlans),
- 			  GFP_KERNEL);
- 	if (mv_list) {
--		/* Initialize list of VF macvlans */
--		INIT_LIST_HEAD(&adapter->vf_mvs.l);
- 		for (i = 0; i < num_vf_macvlans; i++) {
- 			mv_list[i].vf = -1;
- 			mv_list[i].free = true;
+ 		if (tmp_sock->ssap == ssap && tmp_sock->dsap == dsap) {
+ 			llcp_sock = tmp_sock;
++			sock_hold(&llcp_sock->sk);
+ 			break;
+ 		}
+ 	}
+ 
+ 	read_unlock(&local->sockets.lock);
+ 
+-	if (llcp_sock == NULL)
+-		return NULL;
+-
+-	sock_hold(&llcp_sock->sk);
+-
+ 	return llcp_sock;
+ }
+ 
+@@ -338,7 +334,8 @@ static int nfc_llcp_wks_sap(const char *service_name, size_t service_name_len)
+ 
+ static
+ struct nfc_llcp_sock *nfc_llcp_sock_from_sn(struct nfc_llcp_local *local,
+-					    const u8 *sn, size_t sn_len)
++					    const u8 *sn, size_t sn_len,
++					    bool needref)
+ {
+ 	struct sock *sk;
+ 	struct nfc_llcp_sock *llcp_sock, *tmp_sock;
+@@ -374,6 +371,8 @@ struct nfc_llcp_sock *nfc_llcp_sock_from_sn(struct nfc_llcp_local *local,
+ 
+ 		if (memcmp(sn, tmp_sock->service_name, sn_len) == 0) {
+ 			llcp_sock = tmp_sock;
++			if (needref)
++				sock_hold(&llcp_sock->sk);
+ 			break;
+ 		}
+ 	}
+@@ -415,7 +414,8 @@ u8 nfc_llcp_get_sdp_ssap(struct nfc_llcp_local *local,
+ 		 * to this service name.
+ 		 */
+ 		if (nfc_llcp_sock_from_sn(local, sock->service_name,
+-					  sock->service_name_len) != NULL) {
++					  sock->service_name_len,
++					  false) != NULL) {
+ 			mutex_unlock(&local->sdp_lock);
+ 
+ 			return LLCP_SAP_MAX;
+@@ -816,16 +816,7 @@ static struct nfc_llcp_sock *nfc_llcp_connecting_sock_get(struct nfc_llcp_local
+ static struct nfc_llcp_sock *nfc_llcp_sock_get_sn(struct nfc_llcp_local *local,
+ 						  const u8 *sn, size_t sn_len)
+ {
+-	struct nfc_llcp_sock *llcp_sock;
+-
+-	llcp_sock = nfc_llcp_sock_from_sn(local, sn, sn_len);
+-
+-	if (llcp_sock == NULL)
+-		return NULL;
+-
+-	sock_hold(&llcp_sock->sk);
+-
+-	return llcp_sock;
++	return nfc_llcp_sock_from_sn(local, sn, sn_len, true);
+ }
+ 
+ static const u8 *nfc_llcp_connect_sn(const struct sk_buff *skb, size_t *sn_len)
+@@ -1290,7 +1281,8 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+ 			}
+ 
+ 			llcp_sock = nfc_llcp_sock_from_sn(local, service_name,
+-							  service_name_len);
++							  service_name_len,
++							  true);
+ 			if (!llcp_sock) {
+ 				sap = 0;
+ 				goto add_snl;
+@@ -1310,6 +1302,7 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+ 
+ 				if (sap == LLCP_SAP_MAX) {
+ 					sap = 0;
++					nfc_llcp_sock_put(llcp_sock);
+ 					goto add_snl;
+ 				}
+ 
+@@ -1327,6 +1320,7 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+ 
+ 			pr_debug("%p %d\n", llcp_sock, sap);
+ 
++			nfc_llcp_sock_put(llcp_sock);
+ add_snl:
+ 			sdp = nfc_llcp_build_sdres_tlv(tid, sap);
+ 			if (sdp == NULL)
 -- 
 2.40.1
 
