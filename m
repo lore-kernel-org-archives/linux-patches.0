@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B91D14282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3272C14282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3DIIP1m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B936AC433C7;
-	Mon, 23 Oct 2023 11:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/whpDk7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEFFC433C7;
+	Mon, 23 Oct 2023 11:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059408;
-	bh=BDInuwsvJoO0e4UE2wacurZeLx//S96kbCxAl+7ckrM=;
+	s=korg; t=1698059412;
+	bh=LNybofKXxPnqQx23d7BADsfwz+dOpFvRkILz0oCaWoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E3DIIP1mLS/Z/qc4kdgPsApopKRNWV1yC6D47WAARq8zscpu/J4+p+zSLCu94UwQ/
-	 nn8DeGz6gcJyubclMeRamsGmizqxWjIpj6RW5HYD8no7PbyyBF4nUxO6T+3WUCwde+
-	 2okMLVanylRFgfvexp+S3/IEO5XDbse62CcfmmBM=
+	b=H/whpDk7fVdfBp64DJbWvE94NFsuZ7yz+pCHF4x/u5eC403wzxYkk0KlMlFUUM+JC
+	 GumcTsYaQxyEWD11ipSNcUzbjJC7dnTC8MrrilIYJx+muoWLWYv8s2JHVzNIMzIM22
+	 NyPF5sIM8IbYvbJcAP9KgZH2eqrbXOKkT6h9FNCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
+	Rouven Czerwinski <r.czerwinski@pengutronix.de>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.5 167/241] mtd: rawnand: arasan: Ensure program page operations are successful
-Date: Mon, 23 Oct 2023 12:55:53 +0200
-Message-ID: <20231023104837.949575616@linuxfoundation.org>
+Subject: [PATCH 6.5 168/241] mtd: rawnand: Ensure the nand chip supports cached reads
+Date: Mon, 23 Oct 2023 12:55:54 +0200
+Message-ID: <20231023104837.974287107@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,74 +41,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Rouven Czerwinski <r.czerwinski@pengutronix.de>
 
-commit 3a4a893dbb19e229db3b753f0462520b561dee98 upstream.
+commit f6ca3fb6978f94d95ee79f95085fc22e71ca17cc upstream.
 
-The NAND core complies with the ONFI specification, which itself
-mentions that after any program or erase operation, a status check
-should be performed to see whether the operation was finished *and*
-successful.
+Both the JEDEC and ONFI specification say that read cache sequential
+support is an optional command. This means that we not only need to
+check whether the individual controller supports the command, we also
+need to check the parameter pages for both ONFI and JEDEC NAND flashes
+before enabling sequential cache reads.
 
-The NAND core offers helpers to finish a page write (sending the
-"PAGE PROG" command, waiting for the NAND chip to be ready again, and
-checking the operation status). But in some cases, advanced controller
-drivers might want to optimize this and craft their own page write
-helper to leverage additional hardware capabilities, thus not always
-using the core facilities.
+This fixes support for NAND flashes which don't support enabling cache
+reads, i.e. Samsung K9F4G08U0F or Toshiba TC58NVG0S3HTA00.
 
-Some drivers, like this one, do not use the core helper to finish a page
-write because the final cycles are automatically managed by the
-hardware. In this case, the additional care must be taken to manually
-perform the final status check.
+Sequential cache reads are now only available for ONFI and JEDEC
+devices, if individual vendors implement this, it needs to be enabled
+per vendor.
 
-Let's read the NAND chip status at the end of the page write helper and
-return -EIO upon error.
+Tested on i.MX6Q with a Samsung NAND flash chip that doesn't support
+sequential reads.
 
-Cc: Michal Simek <michal.simek@amd.com>
+Fixes: 003fe4b9545b ("mtd: rawnand: Support for sequential cache reads")
 Cc: stable@vger.kernel.org
-Fixes: 88ffef1b65cf ("mtd: rawnand: arasan: Support the hardware BCH ECC engine")
+Signed-off-by: Rouven Czerwinski <r.czerwinski@pengutronix.de>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/linux-mtd/20230717194221.229778-2-miquel.raynal@bootlin.com
+Link: https://lore.kernel.org/linux-mtd/20230922141717.35977-1-r.czerwinski@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/arasan-nand-controller.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/nand_base.c  |    3 +++
+ drivers/mtd/nand/raw/nand_jedec.c |    3 +++
+ drivers/mtd/nand/raw/nand_onfi.c  |    3 +++
+ include/linux/mtd/jedec.h         |    3 +++
+ include/linux/mtd/onfi.h          |    1 +
+ include/linux/mtd/rawnand.h       |    2 ++
+ 6 files changed, 15 insertions(+)
 
---- a/drivers/mtd/nand/raw/arasan-nand-controller.c
-+++ b/drivers/mtd/nand/raw/arasan-nand-controller.c
-@@ -515,6 +515,7 @@ static int anfc_write_page_hw_ecc(struct
+--- a/drivers/mtd/nand/raw/nand_base.c
++++ b/drivers/mtd/nand/raw/nand_base.c
+@@ -5109,6 +5109,9 @@ static void rawnand_check_cont_read_supp
+ {
  	struct mtd_info *mtd = nand_to_mtd(chip);
- 	unsigned int len = mtd->writesize + (oob_required ? mtd->oobsize : 0);
- 	dma_addr_t dma_addr;
-+	u8 status;
- 	int ret;
- 	struct anfc_op nfc_op = {
- 		.pkt_reg =
-@@ -561,10 +562,21 @@ static int anfc_write_page_hw_ecc(struct
+ 
++	if (!chip->parameters.supports_read_cache)
++		return;
++
+ 	if (chip->read_retries)
+ 		return;
+ 
+--- a/drivers/mtd/nand/raw/nand_jedec.c
++++ b/drivers/mtd/nand/raw/nand_jedec.c
+@@ -94,6 +94,9 @@ int nand_jedec_detect(struct nand_chip *
+ 		goto free_jedec_param_page;
  	}
  
- 	/* Spare data is not protected */
--	if (oob_required)
-+	if (oob_required) {
- 		ret = nand_write_oob_std(chip, page);
-+		if (ret)
-+			return ret;
-+	}
++	if (p->opt_cmd[0] & JEDEC_OPT_CMD_READ_CACHE)
++		chip->parameters.supports_read_cache = true;
 +
-+	/* Check write status on the chip side */
-+	ret = nand_status_op(chip, &status);
-+	if (ret)
-+		return ret;
+ 	memorg->pagesize = le32_to_cpu(p->byte_per_page);
+ 	mtd->writesize = memorg->pagesize;
+ 
+--- a/drivers/mtd/nand/raw/nand_onfi.c
++++ b/drivers/mtd/nand/raw/nand_onfi.c
+@@ -303,6 +303,9 @@ int nand_onfi_detect(struct nand_chip *c
+ 			   ONFI_FEATURE_ADDR_TIMING_MODE, 1);
+ 	}
+ 
++	if (le16_to_cpu(p->opt_cmd) & ONFI_OPT_CMD_READ_CACHE)
++		chip->parameters.supports_read_cache = true;
 +
-+	if (status & NAND_STATUS_FAIL)
-+		return -EIO;
+ 	onfi = kzalloc(sizeof(*onfi), GFP_KERNEL);
+ 	if (!onfi) {
+ 		ret = -ENOMEM;
+--- a/include/linux/mtd/jedec.h
++++ b/include/linux/mtd/jedec.h
+@@ -21,6 +21,9 @@ struct jedec_ecc_info {
+ /* JEDEC features */
+ #define JEDEC_FEATURE_16_BIT_BUS	(1 << 0)
  
--	return ret;
-+	return 0;
- }
++/* JEDEC Optional Commands */
++#define JEDEC_OPT_CMD_READ_CACHE	BIT(1)
++
+ struct nand_jedec_params {
+ 	/* rev info and features block */
+ 	/* 'J' 'E' 'S' 'D'  */
+--- a/include/linux/mtd/onfi.h
++++ b/include/linux/mtd/onfi.h
+@@ -55,6 +55,7 @@
+ #define ONFI_SUBFEATURE_PARAM_LEN	4
  
- static int anfc_sel_write_page_hw_ecc(struct nand_chip *chip, const u8 *buf,
+ /* ONFI optional commands SET/GET FEATURES supported? */
++#define ONFI_OPT_CMD_READ_CACHE		BIT(1)
+ #define ONFI_OPT_CMD_SET_GET_FEATURES	BIT(2)
+ 
+ struct nand_onfi_params {
+--- a/include/linux/mtd/rawnand.h
++++ b/include/linux/mtd/rawnand.h
+@@ -225,6 +225,7 @@ struct gpio_desc;
+  * struct nand_parameters - NAND generic parameters from the parameter page
+  * @model: Model name
+  * @supports_set_get_features: The NAND chip supports setting/getting features
++ * @supports_read_cache: The NAND chip supports read cache operations
+  * @set_feature_list: Bitmap of features that can be set
+  * @get_feature_list: Bitmap of features that can be get
+  * @onfi: ONFI specific parameters
+@@ -233,6 +234,7 @@ struct nand_parameters {
+ 	/* Generic parameters */
+ 	const char *model;
+ 	bool supports_set_get_features;
++	bool supports_read_cache;
+ 	DECLARE_BITMAP(set_feature_list, ONFI_FEATURE_NUMBER);
+ 	DECLARE_BITMAP(get_feature_list, ONFI_FEATURE_NUMBER);
+ 
 
 
