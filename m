@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A80134C3
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8618C134C3
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2D+X+wSR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D2CC433C8;
-	Mon, 23 Oct 2023 11:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEAT4WhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02077C433C7;
+	Mon, 23 Oct 2023 11:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059778;
-	bh=VoNI6hcMEJIR273zaIYM3O8F7cRrt050Zw0jkA6/ils=;
+	s=korg; t=1698059781;
+	bh=seOWjltZWi1v8SIetp7Ru9/amYgV7YycCB/09cq5Bac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2D+X+wSRGngrALYnbxZ7/vPvXycT9ltRV5YBp7pHtXi1bsTwlL9DxaPny6vFvhTVs
-	 0OD/dniz19ebfwx4F3o+FruvX46EPYtDt3SUBXmsPi2hvN9s4fv6mvdP8MjLKdO5Fo
-	 b+sgTn19ugaEAycuqRPqb65qPs1uJzSv2wM1T1cc=
+	b=hEAT4WhUhyPMaWd3Fu/ZQ1vDEVITRbFRbWBXxW471NdwZirqeSP67WSssQZPDEdgF
+	 xztmhOwE0USsH8WwAexKgb/eJPjaL4csihy03mK4Ydyr+AtDx/j704NJAUNjlvmw8X
+	 9nKZpw2uWiCJv7MSMadaTY1c7SsgTWdsCdkKCV0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 4.19 49/98] regmap: fix NULL deref on lookup
-Date: Mon, 23 Oct 2023 12:56:38 +0200
-Message-ID: <20231023104815.342729007@linuxfoundation.org>
+	Jim Mattson <jmattson@google.com>,
+	Mingwei Zhang <mizhang@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 4.19 50/98] KVM: x86: Mask LVTPC when handling a PMI
+Date: Mon, 23 Oct 2023 12:56:39 +0200
+Message-ID: <20231023104815.378615397@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -42,35 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jim Mattson <jmattson@google.com>
 
-commit c6df843348d6b71ea986266c12831cb60c2cf325 upstream.
+commit a16eb25b09c02a54c1c1b449d4b6cfa2cf3f013a upstream.
 
-Not all regmaps have a name so make sure to check for that to avoid
-dereferencing a NULL pointer when dev_get_regmap() is used to lookup a
-named regmap.
+Per the SDM, "When the local APIC handles a performance-monitoring
+counters interrupt, it automatically sets the mask flag in the LVT
+performance counter register."  Add this behavior to KVM's local APIC
+emulation.
 
-Fixes: e84861fec32d ("regmap: dev_get_regmap_match(): fix string comparison")
-Cc: stable@vger.kernel.org      # 5.8
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231006082104.16707-1-johan+linaro@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Failure to mask the LVTPC entry results in spurious PMIs, e.g. when
+running Linux as a guest, PMI handlers that do a "late_ack" spew a large
+number of "dazed and confused" spurious NMI warnings.
+
+Fixes: f5132b01386b ("KVM: Expose a version 2 architectural PMU to a guests")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Tested-by: Mingwei Zhang <mizhang@google.com>
+Signed-off-by: Mingwei Zhang <mizhang@google.com>
+Link: https://lore.kernel.org/r/20230925173448.3518223-3-mizhang@google.com
+[sean: massage changelog, correct Fixes]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/lapic.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -1343,7 +1343,7 @@ static int dev_get_regmap_match(struct d
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -2201,13 +2201,17 @@ int kvm_apic_local_deliver(struct kvm_la
+ {
+ 	u32 reg = kvm_lapic_get_reg(apic, lvt_type);
+ 	int vector, mode, trig_mode;
++	int r;
  
- 	/* If the user didn't specify a name match any */
- 	if (data)
--		return !strcmp((*r)->name, data);
-+		return (*r)->name && !strcmp((*r)->name, data);
- 	else
- 		return 1;
+ 	if (kvm_apic_hw_enabled(apic) && !(reg & APIC_LVT_MASKED)) {
+ 		vector = reg & APIC_VECTOR_MASK;
+ 		mode = reg & APIC_MODE_MASK;
+ 		trig_mode = reg & APIC_LVT_LEVEL_TRIGGER;
+-		return __apic_accept_irq(apic, mode, vector, 1, trig_mode,
+-					NULL);
++
++		r = __apic_accept_irq(apic, mode, vector, 1, trig_mode, NULL);
++		if (r && lvt_type == APIC_LVTPC)
++			kvm_lapic_set_reg(apic, APIC_LVTPC, reg | APIC_LVT_MASKED);
++		return r;
+ 	}
+ 	return 0;
  }
 
 
