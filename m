@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E9514AA6
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB9D14AA3
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEmDwcfk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92789C433C7;
-	Mon, 23 Oct 2023 11:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJ+VHJII"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AD7C433CB;
+	Mon, 23 Oct 2023 11:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059746;
-	bh=UU5KHLb85Lq9QitD+vhWGskFSuGan/Qp3a7D79CkJgE=;
+	s=korg; t=1698059748;
+	bh=H0zgPKtooeFAF2VN/yn1l/unshUhBB9OMDQBmDIgOHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CEmDwcfkFXOijjhpOYv2soQaLNNip8rhfsNy92xN5tMqDifETAWZNcuwxf+2Gurgn
-	 mh5wTRbw0AQmKj8nPny3C5JkCOTDR6enSRockvt+xEazDPp+GpiHKU/bqgE40xv5np
-	 uYAWCFL/Zux/B41+7q1oaBhK32YdU93/49ijcm5E=
+	b=iJ+VHJII0DK00cl/i/yReKW922wpnMam924obEVYwFSag86mkJkMPBSt8EpBp1y3O
+	 8BvNf8JFG2VZkzzgSLpnZy8kdlFKf/bF0+oa7obMWMRfs7AG1BgpAEAi8Z5F5VdrO1
+	 bHvlAiPs7usMbF4WJznS43uwgcDAbOK/vDaRTnfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fei Yang <fei.yang@intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4.19 39/98] x86/alternatives: Disable KASAN in apply_alternatives()
-Date: Mon, 23 Oct 2023 12:56:28 +0200
-Message-ID: <20231023104814.971089835@linuxfoundation.org>
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Daniel Borkmann <daniel@iogearbox.net>
+Subject: [PATCH 4.19 40/98] dev_forward_skb: do not scrub skb mark within the same name space
+Date: Mon, 23 Oct 2023 12:56:29 +0200
+Message-ID: <20231023104815.011824493@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -44,77 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-commit d35652a5fc9944784f6f50a5c979518ff8dacf61 upstream.
+commit ff70202b2d1ad522275c6aadc8c53519b6a22c57 upstream.
 
-Fei has reported that KASAN triggers during apply_alternatives() on
-a 5-level paging machine:
+The goal is to keep the mark during a bpf_redirect(), like it is done for
+legacy encapsulation / decapsulation, when there is no x-netns.
+This was initially done in commit 213dd74aee76 ("skbuff: Do not scrub skb
+mark within the same name space").
 
-	BUG: KASAN: out-of-bounds in rcu_is_watching()
-	Read of size 4 at addr ff110003ee6419a0 by task swapper/0/0
-	...
-	__asan_load4()
-	rcu_is_watching()
-	trace_hardirqs_on()
-	text_poke_early()
-	apply_alternatives()
-	...
+When the call to skb_scrub_packet() was added in dev_forward_skb() (commit
+8b27f27797ca ("skb: allow skb_scrub_packet() to be used by tunnels")), the
+second argument (xnet) was set to true to force a call to skb_orphan(). At
+this time, the mark was always cleanned up by skb_scrub_packet(), whatever
+xnet value was.
+This call to skb_orphan() was removed later in commit
+9c4c325252c5 ("skbuff: preserve sock reference when scrubbing the skb.").
+But this 'true' stayed here without any real reason.
 
-On machines with 5-level paging, cpu_feature_enabled(X86_FEATURE_LA57)
-gets patched. It includes KASAN code, where KASAN_SHADOW_START depends on
-__VIRTUAL_MASK_SHIFT, which is defined with cpu_feature_enabled().
+Let's correctly set xnet in ____dev_forward_skb(), this function has access
+to the previous interface and to the new interface.
 
-KASAN gets confused when apply_alternatives() patches the
-KASAN_SHADOW_START users. A test patch that makes KASAN_SHADOW_START
-static, by replacing __VIRTUAL_MASK_SHIFT with 56, works around the issue.
-
-Fix it for real by disabling KASAN while the kernel is patching alternatives.
-
-[ mingo: updated the changelog ]
-
-Fixes: 6657fca06e3f ("x86/mm: Allow to boot without LA57 if CONFIG_X86_5LEVEL=y")
-Reported-by: Fei Yang <fei.yang@intel.com>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231012100424.1456-1-kirill.shutemov@linux.intel.com
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/alternative.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ include/linux/netdevice.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -366,6 +366,17 @@ void __init_or_module noinline apply_alt
- 	u8 insnbuf[MAX_PATCH_LEN];
- 
- 	DPRINTK("alt table %px, -> %px", start, end);
-+
-+	/*
-+	 * In the case CONFIG_X86_5LEVEL=y, KASAN_SHADOW_START is defined using
-+	 * cpu_feature_enabled(X86_FEATURE_LA57) and is therefore patched here.
-+	 * During the process, KASAN becomes confused seeing partial LA57
-+	 * conversion and triggers a false-positive out-of-bound report.
-+	 *
-+	 * Disable KASAN until the patching is complete.
-+	 */
-+	kasan_disable_current();
-+
- 	/*
- 	 * The scan order should be from start to end. A later scanned
- 	 * alternative code can overwrite previously scanned alternative code.
-@@ -426,6 +437,8 @@ void __init_or_module noinline apply_alt
- 
- 		text_poke_early(instr, insnbuf, insnbuf_sz);
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -3661,7 +3661,7 @@ static __always_inline int ____dev_forwa
+ 		return NET_RX_DROP;
  	}
-+
-+	kasan_enable_current();
- }
  
- #ifdef CONFIG_SMP
+-	skb_scrub_packet(skb, true);
++	skb_scrub_packet(skb, !net_eq(dev_net(dev), dev_net(skb->dev)));
+ 	skb->priority = 0;
+ 	return 0;
+ }
 
 
