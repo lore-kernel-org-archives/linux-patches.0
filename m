@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0747F13FEC
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E838D13FEC
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vdjty33r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778ABC433C7;
-	Mon, 23 Oct 2023 11:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXUaUW5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CE2C433CB;
+	Mon, 23 Oct 2023 11:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059250;
-	bh=SPLVXAwqJGtchHlV1C73jT3GFdV7ygxRV+6VOi3bpUo=;
+	s=korg; t=1698059253;
+	bh=PSsnyk3iOjdqG8GmVKXhcbzoyT/H4yt0/BAGSI+H6o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vdjty33r0IqIxWNXPJKTqMzc6nDXYAm6idVnuK/3d8FtXZGQ6+shzvLWlhvbYAZMm
-	 bThoegMJPfohmxxlHGPfJz2SYCReXV/xBrolcUYFifxkYDtAWS8iacNDCqR5DnE2QV
-	 tiCziMbH9Hx4+pP1Hn+1f4wtDOFrGdtgM2zjZ624=
+	b=RXUaUW5wHPULj+NCh4ptmcK42tD+yoNRBOuNN7b0b+j5e5HkXWeUN15WuVNjs+X2b
+	 AN3VVA1+3s3MObv0rlWn9h2qKmQ21aushXcxss8AQV5gu0SvwjY6j/SwN2hOf54Rvm
+	 pW/fBcVp62VP9bAtUG0s9Gwb+Rylojp8c2QmZaT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Greear <greearb@candelatech.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 114/241] wifi: iwlwifi: Ensure ack flag is properly cleared.
-Date: Mon, 23 Oct 2023 12:55:00 +0200
-Message-ID: <20231023104836.666723937@linuxfoundation.org>
+	Justin Chen <justin.chen@broadcom.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.5 089/241] net: phy: bcm7xxx: Add missing 16nm EPHY statistics
+Date: Mon, 23 Oct 2023 12:54:35 +0200
+Message-ID: <20231023104836.060936286@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,46 +44,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Greear <greearb@candelatech.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit e8fbe99e87877f0412655f40d7c45bf8471470ac ]
+commit 6200e00e112ce2d17b066a20dd2476d9aecbefa6 upstream.
 
-Debugging indicates that nothing else is clearing the info->flags,
-so some frames were flagged as ACKed when they should not be.
-Explicitly clear the ack flag to ensure this does not happen.
+The .probe() function would allocate the necessary space and ensure that
+the library call sizes the number of statistics but the callbacks
+necessary to fetch the name and values were not wired up.
 
-Signed-off-by: Ben Greear <greearb@candelatech.com>
-Acked-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230808205605.4105670-1-greearb@candelatech.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Justin Chen <justin.chen@broadcom.com>
+Fixes: f68d08c437f9 ("net: phy: bcm7xxx: Add EPHY entry for 72165")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20231017205119.416392-1-florian.fainelli@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 3 +++
+ drivers/net/phy/bcm7xxx.c |    3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index 36d70d589aedd..898dca3936435 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -1612,6 +1612,7 @@ static void iwl_mvm_rx_tx_cmd_single(struct iwl_mvm *mvm,
- 		iwl_trans_free_tx_cmd(mvm->trans, info->driver_data[1]);
- 
- 		memset(&info->status, 0, sizeof(info->status));
-+		info->flags &= ~(IEEE80211_TX_STAT_ACK | IEEE80211_TX_STAT_TX_FILTERED);
- 
- 		/* inform mac80211 about what happened with the frame */
- 		switch (status & TX_STATUS_MSK) {
-@@ -1964,6 +1965,8 @@ static void iwl_mvm_tx_reclaim(struct iwl_mvm *mvm, int sta_id, int tid,
- 		 */
- 		if (!is_flush)
- 			info->flags |= IEEE80211_TX_STAT_ACK;
-+		else
-+			info->flags &= ~IEEE80211_TX_STAT_ACK;
- 	}
- 
- 	/*
--- 
-2.40.1
-
+--- a/drivers/net/phy/bcm7xxx.c
++++ b/drivers/net/phy/bcm7xxx.c
+@@ -894,6 +894,9 @@ static int bcm7xxx_28nm_probe(struct phy
+ 	.name		= _name,					\
+ 	/* PHY_BASIC_FEATURES */					\
+ 	.flags		= PHY_IS_INTERNAL,				\
++	.get_sset_count	= bcm_phy_get_sset_count,			\
++	.get_strings	= bcm_phy_get_strings,				\
++	.get_stats	= bcm7xxx_28nm_get_phy_stats,			\
+ 	.probe		= bcm7xxx_28nm_probe,				\
+ 	.config_init	= bcm7xxx_16nm_ephy_config_init,		\
+ 	.config_aneg	= genphy_config_aneg,				\
 
 
