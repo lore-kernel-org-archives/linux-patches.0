@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A225315EA5
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8B215EA5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAZ1ni9Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C77BC433C9;
-	Mon, 23 Oct 2023 11:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJTPeUtM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072E1C433CA;
+	Mon, 23 Oct 2023 11:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061343;
-	bh=xZUqhsoRCu/dB6gCK7DGBobwx/eMSRalt9P4WMvhjTU=;
+	s=korg; t=1698061346;
+	bh=Hz2Bw/OmJAHeIuyXfn0nV0SHCXgW7MCobWajqKUHpWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PAZ1ni9QJOeRnstgxcQOQSmmb03T8YVJ+KEqCN6sOjgOoLUM74tyhY17sWuqb2V6p
-	 E2QUJPo/r2r36lX5p8ELTbjfCRHIdKuR+RzBqDWPEUPWBuIG8j39H/yCh+tF8kLUe3
-	 9h7KfMMXIqI86BDXv//s0QVnbge19kd+47DWnBH8=
+	b=QJTPeUtMBHJDousj7gnnjpmRBlZxsknLs34dCWabEsS0bBBug7RiDG9xiPE1axDxC
+	 59fCpY77xJ04BywwZSNwGkCqnRBNmtFcVIjIGoy1M8cleeRnbiUILj8gLdrAGyk5oE
+	 Z/Ift5nrnJ1CuA3qE3FGkfSPoQEdpNy/LWRAMGLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	Ross Lagerwall <ross.lagerwall@citrix.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Pu Lehui <pulehui@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 016/202] xen-netback: use default TX queue size for vifs
-Date: Mon, 23 Oct 2023 12:55:23 +0200
-Message-ID: <20231023104827.083254773@linuxfoundation.org>
+Subject: [PATCH 5.10 017/202] riscv, bpf: Factor out emit_call for kernel and bpf context
+Date: Mon, 23 Oct 2023 12:55:24 +0200
+Message-ID: <20231023104827.110596063@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -45,48 +44,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roger Pau Monne <roger.pau@citrix.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 66cf7435a26917c0c4d6245ad9137e7606e84fdf ]
+[ Upstream commit 0fd1fd0104954380477353aea29c347e85dff16d ]
 
-Do not set netback interfaces (vifs) default TX queue size to the ring size.
-The TX queue size is not related to the ring size, and using the ring size (32)
-as the queue size can lead to packet drops.  Note the TX side of the vif
-interface in the netback domain is the one receiving packets to be injected
-to the guest.
+The current emit_call function is not suitable for kernel function call as
+it store return value to bpf R0 register. We can separate it out for common
+use. Meanwhile, simplify judgment logic, that is, fixed function address
+can use jal or auipc+jalr, while the unfixed can use only auipc+jalr.
 
-Do not explicitly set the TX queue length to any value when creating the
-interface, and instead use the system default.  Note that the queue length can
-also be adjusted at runtime.
-
-Fixes: f942dc2552b8 ('xen network backend driver')
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-Reviewed-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-Acked-by: Wei Liu <wei.liu@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Björn Töpel <bjorn@rivosinc.com>
+Acked-by: Björn Töpel <bjorn@rivosinc.com>
+Link: https://lore.kernel.org/bpf/20230215135205.1411105-3-pulehui@huaweicloud.com
+Stable-dep-of: 2f1b0d3d7331 ("riscv, bpf: Sign-extend return values")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/xen-netback/interface.c |    3 ---
- 1 file changed, 3 deletions(-)
+ arch/riscv/net/bpf_jit_comp64.c | 30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
---- a/drivers/net/xen-netback/interface.c
-+++ b/drivers/net/xen-netback/interface.c
-@@ -41,7 +41,6 @@
- #include <asm/xen/hypercall.h>
- #include <xen/balloon.h>
+diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+index 053dc83e323b6..53d1f520c5890 100644
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -394,12 +394,12 @@ static void emit_sext_32_rd(u8 *rd, struct rv_jit_context *ctx)
+ 	*rd = RV_REG_T2;
+ }
  
--#define XENVIF_QUEUE_LENGTH 32
- #define XENVIF_NAPI_WEIGHT  64
+-static int emit_jump_and_link(u8 rd, s64 rvoff, bool force_jalr,
++static int emit_jump_and_link(u8 rd, s64 rvoff, bool fixed_addr,
+ 			      struct rv_jit_context *ctx)
+ {
+ 	s64 upper, lower;
  
- /* Number of bytes allowed on the internal guest Rx queue. */
-@@ -528,8 +527,6 @@ struct xenvif *xenvif_alloc(struct devic
- 	dev->features = dev->hw_features | NETIF_F_RXCSUM;
- 	dev->ethtool_ops = &xenvif_ethtool_ops;
+-	if (rvoff && is_21b_int(rvoff) && !force_jalr) {
++	if (rvoff && fixed_addr && is_21b_int(rvoff)) {
+ 		emit(rv_jal(rd, rvoff >> 1), ctx);
+ 		return 0;
+ 	} else if (in_auipc_jalr_range(rvoff)) {
+@@ -420,24 +420,17 @@ static bool is_signed_bpf_cond(u8 cond)
+ 		cond == BPF_JSGE || cond == BPF_JSLE;
+ }
  
--	dev->tx_queue_len = XENVIF_QUEUE_LENGTH;
--
- 	dev->min_mtu = ETH_MIN_MTU;
- 	dev->max_mtu = ETH_MAX_MTU - VLAN_ETH_HLEN;
+-static int emit_call(bool fixed, u64 addr, struct rv_jit_context *ctx)
++static int emit_call(u64 addr, bool fixed_addr, struct rv_jit_context *ctx)
+ {
+ 	s64 off = 0;
+ 	u64 ip;
+-	u8 rd;
+-	int ret;
  
+ 	if (addr && ctx->insns) {
+ 		ip = (u64)(long)(ctx->insns + ctx->ninsns);
+ 		off = addr - ip;
+ 	}
+ 
+-	ret = emit_jump_and_link(RV_REG_RA, off, !fixed, ctx);
+-	if (ret)
+-		return ret;
+-	rd = bpf_to_rv_reg(BPF_REG_0, ctx);
+-	emit_mv(rd, RV_REG_A0, ctx);
+-	return 0;
++	return emit_jump_and_link(RV_REG_RA, off, fixed_addr, ctx);
+ }
+ 
+ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+@@ -731,7 +724,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 	/* JUMP off */
+ 	case BPF_JMP | BPF_JA:
+ 		rvoff = rv_offset(i, off, ctx);
+-		ret = emit_jump_and_link(RV_REG_ZERO, rvoff, false, ctx);
++		ret = emit_jump_and_link(RV_REG_ZERO, rvoff, true, ctx);
+ 		if (ret)
+ 			return ret;
+ 		break;
+@@ -850,17 +843,20 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 	/* function call */
+ 	case BPF_JMP | BPF_CALL:
+ 	{
+-		bool fixed;
++		bool fixed_addr;
+ 		u64 addr;
+ 
+ 		mark_call(ctx);
+-		ret = bpf_jit_get_func_addr(ctx->prog, insn, extra_pass, &addr,
+-					    &fixed);
++		ret = bpf_jit_get_func_addr(ctx->prog, insn, extra_pass,
++					    &addr, &fixed_addr);
+ 		if (ret < 0)
+ 			return ret;
+-		ret = emit_call(fixed, addr, ctx);
++
++		ret = emit_call(addr, fixed_addr, ctx);
+ 		if (ret)
+ 			return ret;
++
++		emit_mv(bpf_to_rv_reg(BPF_REG_0, ctx), RV_REG_A0, ctx);
+ 		break;
+ 	}
+ 	/* tail call */
+@@ -875,7 +871,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 			break;
+ 
+ 		rvoff = epilogue_offset(ctx);
+-		ret = emit_jump_and_link(RV_REG_ZERO, rvoff, false, ctx);
++		ret = emit_jump_and_link(RV_REG_ZERO, rvoff, true, ctx);
+ 		if (ret)
+ 			return ret;
+ 		break;
+-- 
+2.40.1
+
 
 
