@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD9915E87
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57C115E87
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Opt//yeg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13202C433C7;
-	Mon, 23 Oct 2023 11:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nlp6EOMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3003AC433C7;
+	Mon, 23 Oct 2023 11:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060822;
-	bh=DVwT7IKpzaVIxS90JOSKktoR8Pi7p0ICdP/SLH7b7WA=;
+	s=korg; t=1698060825;
+	bh=2oVNCDvAfMD5iiUhajQALHV14USaIfLTV4cojuEOGtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Opt//yegts4pdkCgOf7MbNKq7RyKSKlKW7OVUP1cEFvvRLEX9tMr5t7R0MzVR75bl
-	 9pWZ0SH7SS7RQ1VDchxE/nbTsdi4JSfKVy8RRRC9uWO2Gm66BOmXaac9zjlsCI5Elg
-	 1vdGtc2FeQ4b26aQdhwVPUMtIMJzI9kqbp9fZvro=
+	b=Nlp6EOMdtZwVlizaoxk41ht3aelvTZnj1xpuLKx+cJ14rn8DTNmr4e0R05qwGelRT
+	 dP/ISmDy5RZ4SrmEzHflxe91MWBr8/S7V3D8CEKF/EgJxB+FAXonW0CXrY8Io/IcFa
+	 KcZcQa/UNS6d+M6xBl5zgvtzaMJb2N8PoPz0jxqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 067/123] net: usb: smsc95xx: Fix an error code in smsc95xx_reset()
-Date: Mon, 23 Oct 2023 12:57:05 +0200
-Message-ID: <20231023104819.920660954@linuxfoundation.org>
+	Kai Uwe Broulik <foss-linux@broulik.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 098/123] drm: panel-orientation-quirks: Add quirk for One Mix 2S
+Date: Mon, 23 Oct 2023 12:57:36 +0200
+Message-ID: <20231023104820.984669024@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -42,32 +43,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kai Uwe Broulik <foss-linux@broulik.de>
 
-commit c53647a5df9e66dd9fedf240198e1fe50d88c286 upstream.
+[ Upstream commit cbb7eb2dbd9472816e42a1b0fdb51af49abbf812 ]
 
-Return a negative error code instead of success.
+The One Mix 2S is a mini laptop with a 1200x1920 portrait screen
+mounted in a landscape oriented clamshell case. Because of the too
+generic DMI strings this entry is also doing bios-date matching.
 
-Fixes: 2f7ca802bdae ("net: Add SMSC LAN9500 USB2.0 10/100 ethernet adapter driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/147927f0-9ada-45cc-81ff-75a19dd30b76@moroto.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kai Uwe Broulik <foss-linux@broulik.de>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231001114710.336172-1-foss-linux@broulik.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc95xx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/net/usb/smsc95xx.c
-+++ b/drivers/net/usb/smsc95xx.c
-@@ -1040,7 +1040,7 @@ static int smsc95xx_reset(struct usbnet
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 6106fa7c43028..43de9dfcba19a 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -44,6 +44,14 @@ static const struct drm_dmi_panel_orientation_data gpd_micropc = {
+ 	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
+ };
  
- 	if (timeout >= 100) {
- 		netdev_warn(dev->net, "timeout waiting for completion of Lite Reset\n");
--		return ret;
-+		return -ETIMEDOUT;
- 	}
- 
- 	ret = smsc95xx_write_reg(dev, PM_CTRL, PM_CTL_PHY_RST_);
++static const struct drm_dmi_panel_orientation_data gpd_onemix2s = {
++	.width = 1200,
++	.height = 1920,
++	.bios_dates = (const char * const []){ "05/21/2018", "10/26/2018",
++		"03/04/2019", NULL },
++	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
++};
++
+ static const struct drm_dmi_panel_orientation_data gpd_pocket = {
+ 	.width = 1200,
+ 	.height = 1920,
+@@ -329,6 +337,14 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "LTH17"),
+ 		},
+ 		.driver_data = (void *)&lcd800x1280_rightside_up,
++	}, {	/* One Mix 2S (generic strings, also match on bios date) */
++		.matches = {
++		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Default string"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Default string"),
++		  DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Default string"),
++		  DMI_EXACT_MATCH(DMI_BOARD_NAME, "Default string"),
++		},
++		.driver_data = (void *)&gpd_onemix2s,
+ 	},
+ 	{}
+ };
+-- 
+2.40.1
+
 
 
