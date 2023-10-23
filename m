@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EECE14A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0661F14A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01OmN6B0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6F8C433CB;
-	Mon, 23 Oct 2023 11:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MS/zGO08"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750C5C433C8;
+	Mon, 23 Oct 2023 11:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059619;
-	bh=moxeWhXuepqlxXF8ggTXvBhwAX1hDED4dqO+IowhgEo=;
+	s=korg; t=1698059621;
+	bh=ujHTTZezBnBZFcFZeEHPTHALu6NSm7VyDeKTjVQ75SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=01OmN6B06+WQ41aPn/IsxC3cZAQ/3cdY8jGdjlfAIiKRj8G1CKLJZ4nhkHxsF+IBC
-	 szAroIAaRPzFn8QqbGzausgyNZgParvk4tBtrR1Z7rBSmXyOQSqFpINht0v5MjXjzK
-	 RBejXD8PI11k/qbyCr8AhrhVdklFeXQJP8cj/IT0=
+	b=MS/zGO08Jh3ebg36bPp2bkUp+JlaNk4qshEpsOMibbDKgMyhYjvMWEP1LZbRlZhSi
+	 YJVCeQBP0rpBrfqp/hx6Y1kAbqdRuyNfWWrwWohCaPv+nT42ncYoECFDuazXEWbpVi
+	 VZRNCX/cEIZhLMPxWK+OfoE7O1IJ3uRkMwDVz+ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wedson Almeida Filho <walmeida@microsoft.com>,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Finn Behrens <me@kloenk.dev>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.5 211/241] rust: error: fix the description for `ECHILD`
-Date: Mon, 23 Oct 2023 12:56:37 +0200
-Message-ID: <20231023104838.993608503@linuxfoundation.org>
+	Ferry Toth <ftoth@exalondelft.nl>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.5 212/241] gpiolib: acpi: Add missing memset(0) to acpi_get_gpiod_from_data()
+Date: Mon, 23 Oct 2023 12:56:38 +0200
+Message-ID: <20231023104839.017756748@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -45,42 +43,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wedson Almeida Filho <walmeida@microsoft.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 17bfcd6a81535d7d580ddafb6e54806890aaca6c upstream.
+commit 479ac419206b5fe4ce4e40de61ac3210a36711aa upstream.
 
-A mistake was made and the description of `ECHILD` is wrong (it reuses
-the description of `ENOEXEC`). This fixes it to reflect what's in
-`errno-base.h`.
+When refactoring the acpi_get_gpiod_from_data() the change missed
+cleaning up the variable on stack. Add missing memset().
 
-Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
-Reviewed-by: Finn Behrens <me@kloenk.dev>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Fixes: 266def2a0f5b ("rust: error: add codes from `errno-base.h`")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230930144958.46051-1-wedsonaf@gmail.com
-[ Use the plural, as noticed by Benno. ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Reported-by: Ferry Toth <ftoth@exalondelft.nl>
+Fixes: 16ba046e86e9 ("gpiolib: acpi: teach acpi_find_gpio() to handle data-only nodes")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/error.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpiolib-acpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
-index 05fcab6abfe6..0f29e7b2194c 100644
---- a/rust/kernel/error.rs
-+++ b/rust/kernel/error.rs
-@@ -37,7 +37,7 @@ macro_rules! declare_err {
-     declare_err!(E2BIG, "Argument list too long.");
-     declare_err!(ENOEXEC, "Exec format error.");
-     declare_err!(EBADF, "Bad file number.");
--    declare_err!(ECHILD, "Exec format error.");
-+    declare_err!(ECHILD, "No child processes.");
-     declare_err!(EAGAIN, "Try again.");
-     declare_err!(ENOMEM, "Out of memory.");
-     declare_err!(EACCES, "Permission denied.");
+diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
+index fbda452fb4d6..51e41676de0b 100644
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -951,6 +951,7 @@ static struct gpio_desc *acpi_get_gpiod_from_data(struct fwnode_handle *fwnode,
+ 	if (!propname)
+ 		return ERR_PTR(-EINVAL);
+ 
++	memset(&lookup, 0, sizeof(lookup));
+ 	lookup.index = index;
+ 
+ 	ret = acpi_gpio_property_lookup(fwnode, propname, index, &lookup);
 -- 
 2.42.0
 
