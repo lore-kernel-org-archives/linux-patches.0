@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5414914A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE1514A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3NdWBSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C086CC433C8;
-	Mon, 23 Oct 2023 11:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkhHeuYl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD56FC433C7;
+	Mon, 23 Oct 2023 11:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059136;
-	bh=v/W6UNHjwtb6rJnAe0LnW0OM1oXCe6DZIDeB9ORVx+k=;
+	s=korg; t=1698059139;
+	bh=PcmpkqieuFKhZnlzCbhBWYpPlh0aADngdvPyJGq582I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b3NdWBSA6yOzOq2kkzjeTr/gGx7/b6B9UpDRihTFMRnhh3KADFNtgpkfJ0tkI4Fq6
-	 ISKSLEimvoc+bWb6cmT+SOdeCqCa26Xipr1VhO27f/8kQU84Y1nIMC059K+VVEHZM2
-	 cA/PmlV56kIAc26f0zxywg5J215z2vMGOuLIrwCY=
+	b=xkhHeuYlKz36DXyUMsQg1b4NtZqmQnWRX2IABTSYov9dtUt75cPBEtt5w2m99GBeP
+	 4adRz9yV1+WKvV+bv3SBP+r8EkV9CDVRu5J/hAGGIr9qbQXDVWEMgBj2MDRC2dBrhW
+	 zFr/W98JYsR4XpTS4uCWbpHGVtf2ulcaLuuawkYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Theune <ct@flyingcircus.io>,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.5 076/241] net/sched: sch_hfsc: upgrade rt to sc when it becomes a inner curve
-Date: Mon, 23 Oct 2023 12:54:22 +0200
-Message-ID: <20231023104835.743082318@linuxfoundation.org>
+	"wuqiang.matt" <wuqiang.matt@bytedance.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.5 059/241] fprobe: Fix to ensure the number of active retprobes is not zero
+Date: Mon, 23 Oct 2023 12:54:05 +0200
+Message-ID: <20231023104835.349175234@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -44,90 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit a13b67c9a015c4e21601ef9aa4ec9c5d972df1b4 upstream.
+commit 700b2b439766e8aab8a7174991198497345bd411 upstream.
 
-Christian Theune says:
-   I upgraded from 6.1.38 to 6.1.55 this morning and it broke my traffic shaping script,
-   leaving me with a non-functional uplink on a remote router.
+The number of active retprobes can be zero but it is not acceptable,
+so return EINVAL error if detected.
 
-A 'rt' curve cannot be used as a inner curve (parent class), but we were
-allowing such configurations since the qdisc was introduced. Such
-configurations would trigger a UAF as Budimir explains:
-   The parent will have vttree_insert() called on it in init_vf(),
-   but will not have vttree_remove() called on it in update_vf()
-   because it does not have the HFSC_FSC flag set.
+Link: https://lore.kernel.org/all/169750018550.186853.11198884812017796410.stgit@devnote2/
 
-The qdisc always assumes that inner classes have the HFSC_FSC flag set.
-This is by design as it doesn't make sense 'qdisc wise' for an 'rt'
-curve to be an inner curve.
-
-Budimir's original patch disallows users to add classes with a 'rt'
-parent, but this is too strict as it breaks users that have been using
-'rt' as a inner class. Another approach, taken by this patch, is to
-upgrade the inner 'rt' into a 'sc', warning the user in the process.
-It avoids the UAF reported by Budimir while also being more permissive
-to bad scripts/users/code using 'rt' as a inner class.
-
-Users checking the `tc class ls [...]` or `tc class get [...]` dumps would
-observe the curve change and are potentially breaking with this change.
-
-v1->v2: https://lore.kernel.org/all/20231013151057.2611860-1-pctammela@mojatatu.com/
-- Correct 'Fixes' tag and merge with revert (Jakub)
-
-Cc: Christian Theune <ct@flyingcircus.io>
-Cc: Budimir Markovic <markovicbudimir@gmail.com>
-Fixes: b3d26c5702c7 ("net/sched: sch_hfsc: Ensure inner classes have fsc curve")
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20231017143602.3191556-1-pctammela@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: wuqiang.matt <wuqiang.matt@bytedance.com>
+Closes: https://lore.kernel.org/all/20231016222103.cb9f426edc60220eabd8aa6a@kernel.org/
+Fixes: 5b0ab78998e3 ("fprobe: Add exit_handler support")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_hfsc.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ kernel/trace/fprobe.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -903,6 +903,14 @@ hfsc_change_usc(struct hfsc_class *cl, s
- 	cl->cl_flags |= HFSC_USC;
- }
+--- a/kernel/trace/fprobe.c
++++ b/kernel/trace/fprobe.c
+@@ -189,7 +189,7 @@ static int fprobe_init_rethook(struct fp
+ {
+ 	int i, size;
  
-+static void
-+hfsc_upgrade_rt(struct hfsc_class *cl)
-+{
-+	cl->cl_fsc = cl->cl_rsc;
-+	rtsc_init(&cl->cl_virtual, &cl->cl_fsc, cl->cl_vt, cl->cl_total);
-+	cl->cl_flags |= HFSC_FSC;
-+}
-+
- static const struct nla_policy hfsc_policy[TCA_HFSC_MAX + 1] = {
- 	[TCA_HFSC_RSC]	= { .len = sizeof(struct tc_service_curve) },
- 	[TCA_HFSC_FSC]	= { .len = sizeof(struct tc_service_curve) },
-@@ -1012,10 +1020,6 @@ hfsc_change_class(struct Qdisc *sch, u32
- 		if (parent == NULL)
- 			return -ENOENT;
- 	}
--	if (!(parent->cl_flags & HFSC_FSC) && parent != &q->root) {
--		NL_SET_ERR_MSG(extack, "Invalid parent - parent class must have FSC");
--		return -EINVAL;
--	}
- 
- 	if (classid == 0 || TC_H_MAJ(classid ^ sch->handle) != 0)
+-	if (num < 0)
++	if (num <= 0)
  		return -EINVAL;
-@@ -1066,6 +1070,12 @@ hfsc_change_class(struct Qdisc *sch, u32
- 	cl->cf_tree = RB_ROOT;
  
- 	sch_tree_lock(sch);
-+	/* Check if the inner class is a misconfigured 'rt' */
-+	if (!(parent->cl_flags & HFSC_FSC) && parent != &q->root) {
-+		NL_SET_ERR_MSG(extack,
-+			       "Forced curve change on parent 'rt' to 'sc'");
-+		hfsc_upgrade_rt(parent);
-+	}
- 	qdisc_class_hash_insert(&q->clhash, &cl->cl_common);
- 	list_add_tail(&cl->siblings, &parent->children);
- 	if (parent->level == 0)
+ 	if (!fp->exit_handler) {
+@@ -202,8 +202,8 @@ static int fprobe_init_rethook(struct fp
+ 		size = fp->nr_maxactive;
+ 	else
+ 		size = num * num_possible_cpus() * 2;
+-	if (size < 0)
+-		return -E2BIG;
++	if (size <= 0)
++		return -EINVAL;
+ 
+ 	fp->rethook = rethook_alloc((void *)fp, fprobe_exit_handler);
+ 	if (!fp->rethook)
 
 
