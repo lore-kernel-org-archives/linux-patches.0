@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF6915484
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE0015484
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGZN3P16"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDAA3C433C7;
-	Mon, 23 Oct 2023 11:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yi+RnBCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB4BC433C8;
+	Mon, 23 Oct 2023 11:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060008;
-	bh=kgDRL7snNTQuyWmm3RKRPS43F0WouPB/+xIT8dkuUGk=;
+	s=korg; t=1698060011;
+	bh=jowL/yMXqpGJeySnhMXsYEeess69t/9bHwfu9TPCKHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NGZN3P16+3dBYi86Jrl35flJdnmhAOxIpp1meYDxr6+kXUkIJdqlXcN8VAVS7jFVi
-	 FsBaJFaNi0RA7W6Zx7MwO/1fwp/c4GouMWOZli7NXBkypGeRApxFa7+7DExsZKPOa1
-	 eLyJbuG8DEIpBltx9rORGC8Mnp4DckkrvuV/n9uY=
+	b=yi+RnBCqycMGgyqQPdYLX4rrQzneSR5GOuJbWvbeMyRHdLP5S8KCn3266T3hIk3KE
+	 hYOxRyOkNbwXjBauydFt7bVEJlL8707bCIqzOSUIERL/mCtUcfSoiKWh6z4tK+oTo+
+	 8su5NwysIIg6T3k6QU1Dsnd1UV57FEHB61wu80qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Mingwei Zhang <mizhang@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 020/196] KVM: x86: Mask LVTPC when handling a PMI
-Date: Mon, 23 Oct 2023 12:54:45 +0200
-Message-ID: <20231023104829.058093502@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 029/196] tcp: check mptcp-level constraints for backlog coalescing
+Date: Mon, 23 Oct 2023 12:54:54 +0200
+Message-ID: <20231023104829.311570123@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,53 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Mattson <jmattson@google.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit a16eb25b09c02a54c1c1b449d4b6cfa2cf3f013a upstream.
+commit 6db8a37dfc541e059851652cfd4f0bb13b8ff6af upstream.
 
-Per the SDM, "When the local APIC handles a performance-monitoring
-counters interrupt, it automatically sets the mask flag in the LVT
-performance counter register."  Add this behavior to KVM's local APIC
-emulation.
+The MPTCP protocol can acquire the subflow-level socket lock and
+cause the tcp backlog usage. When inserting new skbs into the
+backlog, the stack will try to coalesce them.
 
-Failure to mask the LVTPC entry results in spurious PMIs, e.g. when
-running Linux as a guest, PMI handlers that do a "late_ack" spew a large
-number of "dazed and confused" spurious NMI warnings.
+Currently, we have no check in place to ensure that such coalescing
+will respect the MPTCP-level DSS, and that may cause data stream
+corruption, as reported by Christoph.
 
-Fixes: f5132b01386b ("KVM: Expose a version 2 architectural PMU to a guests")
+Address the issue by adding the relevant admission check for coalescing
+in tcp_add_backlog().
+
+Note the issue is not easy to reproduce, as the MPTCP protocol tries
+hard to avoid acquiring the subflow-level socket lock.
+
+Fixes: 648ef4b88673 ("mptcp: Implement MPTCP receive path")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Tested-by: Mingwei Zhang <mizhang@google.com>
-Signed-off-by: Mingwei Zhang <mizhang@google.com>
-Link: https://lore.kernel.org/r/20230925173448.3518223-3-mizhang@google.com
-[sean: massage changelog, correct Fixes]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/420
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20231018-send-net-20231018-v1-2-17ecb002e41d@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_ipv4.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2535,13 +2535,17 @@ int kvm_apic_local_deliver(struct kvm_la
- {
- 	u32 reg = kvm_lapic_get_reg(apic, lvt_type);
- 	int vector, mode, trig_mode;
-+	int r;
- 
- 	if (kvm_apic_hw_enabled(apic) && !(reg & APIC_LVT_MASKED)) {
- 		vector = reg & APIC_VECTOR_MASK;
- 		mode = reg & APIC_MODE_MASK;
- 		trig_mode = reg & APIC_LVT_LEVEL_TRIGGER;
--		return __apic_accept_irq(apic, mode, vector, 1, trig_mode,
--					NULL);
-+
-+		r = __apic_accept_irq(apic, mode, vector, 1, trig_mode, NULL);
-+		if (r && lvt_type == APIC_LVTPC)
-+			kvm_lapic_set_reg(apic, APIC_LVTPC, reg | APIC_LVT_MASKED);
-+		return r;
- 	}
- 	return 0;
- }
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -1818,6 +1818,7 @@ bool tcp_add_backlog(struct sock *sk, st
+ #ifdef CONFIG_TLS_DEVICE
+ 	    tail->decrypted != skb->decrypted ||
+ #endif
++	    !mptcp_skb_can_collapse(tail, skb) ||
+ 	    thtail->doff != th->doff ||
+ 	    memcmp(thtail + 1, th + 1, hdrlen - sizeof(*th)))
+ 		goto no_coalesce;
 
 
