@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5914415EAD
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526791640A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09xESkFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D0CC433C7;
-	Mon, 23 Oct 2023 11:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzV/o+lo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17DEC433C7;
+	Mon, 23 Oct 2023 11:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061681;
-	bh=ibbv6hnBcuWKKT3RcVIeR2B8z8am5WNgWsO2Lq/ajLA=;
+	s=korg; t=1698061684;
+	bh=QBXptyPM/7TgDxA8LeJOj2iXbsHHLvVrVNla13WQ7Dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=09xESkFwf0xsGsKud9mqgvJVG6G+7hTjh7lNS1+sCI0eEOoZL3cnNP4L2753RhLfJ
-	 cufWIREARUguNm3RpB8xeScFULSqyotUBHjDKU/9xucRzNdkhoo4iCsfYEmQ06q2LB
-	 6p9r0bfbgzZsw6QHUpjRIHxD8VwGXGZlzswUNf1o=
+	b=tzV/o+loSBEIRctGESycASQKGg5vXE9C7+1LhlSvx+I/XT8AArRHRZ0k67g/PkkY5
+	 4tGaKMjrURhjxevH54rAn8beflhcIBJInE7jvCMsY+Qycb58zgykU2+mIwT5nNMnqS
+	 FE1XZ0ykyNWNx+angC08CiAith3lrukzMI/SzFL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.10 092/202] ice: fix over-shifted variable
-Date: Mon, 23 Oct 2023 12:56:39 +0200
-Message-ID: <20231023104829.216753425@linuxfoundation.org>
+	John Garry <john.garry@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 122/202] resource: Add irqresource_disabled()
+Date: Mon, 23 Oct 2023 12:57:09 +0200
+Message-ID: <20231023104830.095909853@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -45,45 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Brandeburg <jesse.brandeburg@intel.com>
+From: John Garry <john.garry@huawei.com>
 
-commit 242e34500a32631f85c2b4eb6cb42a368a39e54f upstream.
+[ Upstream commit 9806731db684a475ade1e95d166089b9edbd9da3 ]
 
-Since the introduction of the ice driver the code has been
-double-shifting the RSS enabling field, because the define already has
-shifts in it and can't have the regular pattern of "a << shiftval &
-mask" applied.
+Add a common function to set the fields for a irq resource to disabled,
+which mimics what is done in acpi_dev_irqresource_disabled(), with a view
+to replace that function.
 
-Most places in the code got it right, but one line was still wrong. Fix
-this one location for easy backports to stable. An in-progress patch
-fixes the defines to "standard" and will be applied as part of the
-regular -next process sometime after this one.
-
-Fixes: d76a60ba7afb ("ice: Add support for VLANs and offloads")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-CC: stable@vger.kernel.org
-Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20231010203101.406248-1-jacob.e.keller@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: John Garry <john.garry@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/1606905417-183214-3-git-send-email-john.garry@huawei.com
+Stable-dep-of: c1ed72171ed5 ("ACPI: resource: Skip IRQ override on ASUS ExpertBook B1402CBA")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lib.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/ioport.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -931,8 +931,7 @@ static void ice_set_rss_vsi_ctx(struct i
+diff --git a/include/linux/ioport.h b/include/linux/ioport.h
+index 5135d4b86cd6a..f9bf374f96336 100644
+--- a/include/linux/ioport.h
++++ b/include/linux/ioport.h
+@@ -307,6 +307,13 @@ struct resource *devm_request_free_mem_region(struct device *dev,
+ struct resource *request_free_mem_region(struct resource *base,
+ 		unsigned long size, const char *name);
  
- 	ctxt->info.q_opt_rss = ((lut_type << ICE_AQ_VSI_Q_OPT_RSS_LUT_S) &
- 				ICE_AQ_VSI_Q_OPT_RSS_LUT_M) |
--				((hash_type << ICE_AQ_VSI_Q_OPT_RSS_HASH_S) &
--				 ICE_AQ_VSI_Q_OPT_RSS_HASH_M);
-+				(hash_type & ICE_AQ_VSI_Q_OPT_RSS_HASH_M);
- }
- 
- /**
++static inline void irqresource_disabled(struct resource *res, u32 irq)
++{
++	res->start = irq;
++	res->end = irq;
++	res->flags = IORESOURCE_IRQ | IORESOURCE_DISABLED | IORESOURCE_UNSET;
++}
++
+ #ifdef CONFIG_IO_STRICT_DEVMEM
+ void revoke_devmem(struct resource *res);
+ #else
+-- 
+2.40.1
+
 
 
