@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A3E15E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619DF15E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grRkzUOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B608BC433C8;
-	Mon, 23 Oct 2023 11:29:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jw5Lgxob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C02C433C8;
+	Mon, 23 Oct 2023 11:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060567;
-	bh=ysvA8v46okhoBfGKAUDmqz0fCJC8VKS8jB6nJPyDvqY=;
+	s=korg; t=1698060570;
+	bh=qZcZPQxBbgrRnc/+fen7SgYCRjvn3PirovvBwnwf8GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=grRkzUOr74DmkvG8Njf3ltt5muExnjxp6stJM6J3mw7LZwBACoAXr39/+GymiV+ug
-	 Qa8Aws28KQJroxix/i9lI8wpU74E4GFlFGM7+ANVcah/Igp1/IMp3qs2yNzHBlhm2E
-	 FVgIWqCa4b2ZNiAScG2vY5w9PB1QxzKNLAeaQ2zg=
+	b=Jw5LgxobkcBb9RSpZEQc6rFxyyaCG/fMxWWCgg4Yb3d9+7vEoRN8r1DgUvvwPlZ/D
+	 GVkXsvy5ftkBOEO1X7IBStPohSZ579ff+UqXnd1iTzH5jJT3Z1T+aS+e9v+rTjOyF1
+	 /rIdA/E+2nNAPrkZSlTBIPaDLGwBJ3nIhTRMUruA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.4 019/123] dmaengine: stm32-mdma: abort resume if no ongoing transfer
-Date: Mon, 23 Oct 2023 12:56:17 +0200
-Message-ID: <20231023104818.388764690@linuxfoundation.org>
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.4 020/123] usb: xhci: xhci-ring: Use sysdev for mapping bounce buffer
+Date: Mon, 23 Oct 2023 12:56:18 +0200
+Message-ID: <20231023104818.417936956@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -41,37 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
 
-commit 81337b9a72dc58a5fa0ae8a042e8cb59f9bdec4a upstream.
+commit 41a43013d2366db5b88b42bbcd8e8f040b6ccf21 upstream.
 
-chan->desc can be null, if transfer is terminated when resume is called,
-leading to a NULL pointer when retrieving the hwdesc.
-To avoid this case, check that chan->desc is not null and channel is
-disabled (transfer previously paused or terminated).
+As mentioned in:
+  commit 474ed23a6257 ("xhci: align the last trb before link if it is
+easily splittable.")
 
-Fixes: a4ffb13c8946 ("dmaengine: Add STM32 MDMA driver")
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231004163531.2864160-1-amelie.delaunay@foss.st.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+A bounce buffer is utilized for ensuring that transfers that span across
+ring segments are aligned to the EP's max packet size.  However, the device
+that is used to map the DMA buffer to is currently using the XHCI HCD,
+which does not carry any DMA operations in certain configrations.
+Migration to using the sysdev entry was introduced for DWC3 based
+implementations where the IOMMU operations are present.
+
+Replace the reference to the controller device to sysdev instead.  This
+allows the bounce buffer to be properly mapped to any implementations that
+have an IOMMU involved.
+
+cc: stable@vger.kernel.org
+Fixes: 4c39d4b949d3 ("usb: xhci: use bus->sysdev for DMA configuration")
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230915143108.1532163-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/stm32-mdma.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/host/xhci-ring.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/stm32-mdma.c
-+++ b/drivers/dma/stm32-mdma.c
-@@ -1207,6 +1207,10 @@ static int stm32_mdma_resume(struct dma_
- 	unsigned long flags;
- 	u32 status, reg;
- 
-+	/* Transfer can be terminated */
-+	if (!chan->desc || (stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id)) & STM32_MDMA_CCR_EN))
-+		return -EPERM;
-+
- 	hwdesc = chan->desc->node[chan->curr_hwdesc].hwdesc;
- 
- 	spin_lock_irqsave(&chan->vchan.lock, flags);
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -714,7 +714,7 @@ static void xhci_giveback_urb_in_irq(str
+ static void xhci_unmap_td_bounce_buffer(struct xhci_hcd *xhci,
+ 		struct xhci_ring *ring, struct xhci_td *td)
+ {
+-	struct device *dev = xhci_to_hcd(xhci)->self.controller;
++	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
+ 	struct xhci_segment *seg = td->bounce_seg;
+ 	struct urb *urb = td->urb;
+ 	size_t len;
+@@ -3283,7 +3283,7 @@ static u32 xhci_td_remainder(struct xhci
+ static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
+ 			 u32 *trb_buff_len, struct xhci_segment *seg)
+ {
+-	struct device *dev = xhci_to_hcd(xhci)->self.controller;
++	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
+ 	unsigned int unalign;
+ 	unsigned int max_pkt;
+ 	u32 new_buff_len;
 
 
