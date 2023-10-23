@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49321102
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BC01102
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rz1U4rkK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9EB7C433C8;
-	Mon, 23 Oct 2023 10:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYF2ecIa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71C7C433C8;
+	Mon, 23 Oct 2023 10:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058774;
-	bh=xOxnWn4/7FqQ0++R+LMqjd9Z86oyV9zsh7sumx6mZsk=;
+	s=korg; t=1698058777;
+	bh=TxAOpqGj67/V4lWgJSg/BB+QNz0WP1njc166WxdhFMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rz1U4rkKq5Da6JanYEzDUKJvTjq5oLLmXl7GmL5aJBu3OUc3bvspPL9MoTV4xgrw2
-	 icEdAUOg+NTEVAMP44Oq9wqsJBxiyAOlN2bTKv44bMJyJUzNjzixpNDKM00JxxPLTU
-	 qVckqwGnIohZZjbnr+Dvg6E0cIzXiRnhPI6ryEBo=
+	b=AYF2ecIaFkdDfBkRW9hJmlHqsimXHhasc3P+T8ktGuKCMBXDzy25WD5IR+w4y/T8m
+	 v5j01q9RBd48a8UKl2rGC6/mFsHxR0HsnplfqXyzx1gl9td13KL6ePqRu3PdtyBefH
+	 4C9eqlHjWvcOXTvfBNajCqYEBRxdSefx2WPuVZ6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Fuzzey <martin.fuzzey@flowbird.group>,
-	Lucas Stach <l.stach@pengutronix.de>
-Subject: [PATCH 4.14 04/66] drm: etvnaviv: fix bad backport leading to warning
-Date: Mon, 23 Oct 2023 12:55:54 +0200
-Message-ID: <20231023104810.945378602@linuxfoundation.org>
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 05/66] ieee802154: ca8210: Fix a potential UAF in ca8210_probe
+Date: Mon, 23 Oct 2023 12:55:55 +0200
+Message-ID: <20231023104810.984891741@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -41,83 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Fuzzey <martin.fuzzey@flowbird.group>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-When updating from 5.4.219 -> 5.4.256 I started getting a runtime warning:
+[ Upstream commit f990874b1c98fe8e57ee9385669f501822979258 ]
 
-[   58.229857] ------------[ cut here ]------------
-[   58.234599] WARNING: CPU: 1 PID: 565 at drivers/gpu/drm/drm_gem.c:1020 drm_gem_object_put+0x90/0x98
-[   58.249935] Modules linked in: qmi_wwan cdc_wdm option usb_wwan smsc95xx rsi_usb rsi_91x btrsi ci_hdrc_imx ci_hdrc
-[   58.260499] ueventd: modprobe usb:v2F8Fp7FFFd0200dc00dsc00dp00icFEisc01ip02in00 done
-[   58.288877] CPU: 1 PID: 565 Comm: android.display Not tainted 5.4.256pkn-5.4-bsp-snapshot-svn-7423 #2195
-[   58.288883] Hardware name: Freescale i.MX6 Quad/DualLite (Device Tree)
-[   58.288888] Backtrace:
-[   58.288912] [<c010e784>] (dump_backtrace) from [<c010eaa4>] (show_stack+0x20/0x24)
-[   58.288920]  r7:00000000 r6:60010013 r5:00000000 r4:c14cd224
-[   58.328337] [<c010ea84>] (show_stack) from [<c0cf9ca4>] (dump_stack+0xe8/0x120)
-[   58.335661] [<c0cf9bbc>] (dump_stack) from [<c012efd0>] (__warn+0xd4/0xe8)
-[   58.342542]  r10:eda54000 r9:c06ca53c r8:000003fc r7:00000009 r6:c111ed54 r5:00000000
-[   58.350374]  r4:00000000 r3:76cf564a
-[   58.353957] [<c012eefc>] (__warn) from [<c012f094>] (warn_slowpath_fmt+0xb0/0xc0)
-[   58.361445]  r9:00000009 r8:c06ca53c r7:000003fc r6:c111ed54 r5:c1406048 r4:00000000
-[   58.369198] [<c012efe8>] (warn_slowpath_fmt) from [<c06ca53c>] (drm_gem_object_put+0x90/0x98)
-[   58.377728]  r9:edda7e40 r8:edd39360 r7:ad16e000 r6:edda7eb0 r5:00000000 r4:edaa3200
-[   58.385524] [<c06ca4ac>] (drm_gem_object_put) from [<bf0125a8>] (etnaviv_gem_prime_mmap_obj+0x34/0x3c [etnaviv])
-[   58.395704]  r5:00000000 r4:edaa3200
-[   58.399334] [<bf012574>] (etnaviv_gem_prime_mmap_obj [etnaviv]) from [<bf0143a0>] (etnaviv_gem_mmap+0x3c/0x60 [etnaviv])
-[   58.410205]  r5:edd39360 r4:00000000
-[   58.413816] [<bf014364>] (etnaviv_gem_mmap [etnaviv]) from [<c02c5e08>] (mmap_region+0x37c/0x67c)
-[   58.422689]  r5:ad16d000 r4:edda7eb8
-[   58.426272] [<c02c5a8c>] (mmap_region) from [<c02c6528>] (do_mmap+0x420/0x544)
-[   58.433500]  r10:000000fb r9:000fffff r8:ffffffff r7:00000001 r6:00000003 r5:00000001
-[   58.441330]  r4:00001000
-[   58.443876] [<c02c6108>] (do_mmap) from [<c02a5b2c>] (vm_mmap_pgoff+0xd0/0x100)
-[   58.451190]  r10:eda54040 r9:00001000 r8:00000000 r7:00000000 r6:00000003 r5:c1406048
-[   58.459020]  r4:edb8ff24
-[   58.461561] [<c02a5a5c>] (vm_mmap_pgoff) from [<c02c3ac8>] (ksys_mmap_pgoff+0xdc/0x10c)
-[   58.469570]  r10:000000c0 r9:edb8e000 r8:ed650b40 r7:00000003 r6:00001000 r5:00000000
-[   58.477400]  r4:00000001
-[   58.479941] [<c02c39ec>] (ksys_mmap_pgoff) from [<c02c3b24>] (sys_mmap_pgoff+0x2c/0x34)
-[   58.487949]  r8:c0101224 r7:000000c0 r6:951ece38 r5:00010001 r4:00000065
-[   58.494658] [<c02c3af8>] (sys_mmap_pgoff) from [<c0101000>] (ret_fast_syscall+0x0/0x28)
+If of_clk_add_provider() fails in ca8210_register_ext_clock(),
+it calls clk_unregister() to release priv->clk and returns an
+error. However, the caller ca8210_probe() then calls ca8210_remove(),
+where priv->clk is freed again in ca8210_unregister_ext_clock(). In
+this case, a use-after-free may happen in the second time we call
+clk_unregister().
 
-It looks like this was a backporting error for the upstream patch
-963b2e8c428f "drm/etnaviv: fix reference leak when mmaping imported buffer"
+Fix this by removing the first clk_unregister(). Also, priv->clk could
+be an error code on failure of clk_register_fixed_rate(). Use
+IS_ERR_OR_NULL to catch this case in ca8210_unregister_ext_clock().
 
-In the 5.4 kernel there are 2 variants of the object put function:
-	drm_gem_object_put() [which requires lock to be held]
-	drm_gem_object_put_unlocked() [which requires lock to be NOT held]
-
-In later kernels [5.14+] this has gone and there just drm_gem_object_put()
-which requires lock to be NOT held.
-
-So the memory leak pach, which added a call to drm_gem_object_put() was correct
-on newer kernels but wrong on 5.4 and earlier ones.
-
-So switch back to using the _unlocked variant for old kernels.
-This should only be applied to the 5.4, 4.19 and 4.14 longterm branches;
-mainline and more recent longterms already have the correct fix.
-
-Signed-off-by: Martin Fuzzey <martin.fuzzey@flowbird.group>
-Fixes: 0c6df5364798 "drm/etnaviv: fix reference leak when mmaping imported buffer" [5.4.y]
-Fixes: 0838cb217a52 "drm/etnaviv: fix reference leak when mmaping imported buffer" [4.19.y]
-Fixes: 1c9544fbc979 "drm/etnaviv: fix reference leak when mmaping imported buffer" [4.14.y]
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ded845a781a5 ("ieee802154: Add CA8210 IEEE 802.15.4 device driver")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Message-ID: <20231007033049.22353-1-dinghao.liu@zju.edu.cn>
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ieee802154/ca8210.c | 17 +++--------------
+ 1 file changed, 3 insertions(+), 14 deletions(-)
 
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
-@@ -107,7 +107,7 @@ static int etnaviv_gem_prime_mmap_obj(st
- 	ret = dma_buf_mmap(etnaviv_obj->base.dma_buf, vma, 0);
- 	if (!ret) {
- 		/* Drop the reference acquired by drm_gem_mmap_obj(). */
--		drm_gem_object_put(&etnaviv_obj->base);
-+		drm_gem_object_put_unlocked(&etnaviv_obj->base);
- 	}
+diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
+index 4ec65582eaf70..d903106436dc6 100644
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -2782,7 +2782,6 @@ static int ca8210_register_ext_clock(struct spi_device *spi)
+ 	struct device_node *np = spi->dev.of_node;
+ 	struct ca8210_priv *priv = spi_get_drvdata(spi);
+ 	struct ca8210_platform_data *pdata = spi->dev.platform_data;
+-	int ret = 0;
  
- 	return ret;
+ 	if (!np)
+ 		return -EFAULT;
+@@ -2799,18 +2798,8 @@ static int ca8210_register_ext_clock(struct spi_device *spi)
+ 		dev_crit(&spi->dev, "Failed to register external clk\n");
+ 		return PTR_ERR(priv->clk);
+ 	}
+-	ret = of_clk_add_provider(np, of_clk_src_simple_get, priv->clk);
+-	if (ret) {
+-		clk_unregister(priv->clk);
+-		dev_crit(
+-			&spi->dev,
+-			"Failed to register external clock as clock provider\n"
+-		);
+-	} else {
+-		dev_info(&spi->dev, "External clock set as clock provider\n");
+-	}
+ 
+-	return ret;
++	return of_clk_add_provider(np, of_clk_src_simple_get, priv->clk);
+ }
+ 
+ /**
+@@ -2822,8 +2811,8 @@ static void ca8210_unregister_ext_clock(struct spi_device *spi)
+ {
+ 	struct ca8210_priv *priv = spi_get_drvdata(spi);
+ 
+-	if (!priv->clk)
+-		return
++	if (IS_ERR_OR_NULL(priv->clk))
++		return;
+ 
+ 	of_clk_del_provider(spi->dev.of_node);
+ 	clk_unregister(priv->clk);
+-- 
+2.40.1
+
 
 
