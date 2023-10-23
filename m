@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E90A15E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1926415E86
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="an5NujNy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B290C433C7;
-	Mon, 23 Oct 2023 11:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iFYGqUB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8849CC433C8;
+	Mon, 23 Oct 2023 11:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060476;
-	bh=V2OW4cIZc2WD7a0quWgjq8GQGTG+uKzM3mkud601OxI=;
+	s=korg; t=1698060478;
+	bh=DW9F2nQvS9rYlGDZmQZwgfQ/9V0/XhefLS1IbpFV+G0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=an5NujNyyXgokfI0S3sZlpzdh6WzcbJAJ8ptc4GeTEFpQz0L0glePcgwmA1CLtc4Y
-	 l/FM0Ra1ftkrywtgLh/or5tVMRrgVknMGnxJLbiQAzKhCsnywc8sB+8b3qf1Ms0tCp
-	 q1TchKMZ1RSvuQkO0MJg/SYjbhFisO4CuJNJbiwE=
+	b=iFYGqUB3jKWzjuXRyNGFZXe9UAb7f67mb1cJs/QPWf8qx8xTaDEfq09qfrp+/tDh5
+	 UY/lq3pZMdAI+BJ/s5Isf/M4zH42ckFobu5MhuGJiPhX3ETNaMS43+60rey82nsoUv
+	 o19knfwOONkWdEzxxZroAyM54bumdx94nOxx3oCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Francis Laniel <flaniel@linux.microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 185/196] tracing/kprobes: Return EADDRNOTAVAIL when func matches several symbols
-Date: Mon, 23 Oct 2023 12:57:30 +0200
-Message-ID: <20231023104833.613819036@linuxfoundation.org>
+	Budimir Markovic <markovicbudimir@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.1 168/196] perf: Disallow mis-matched inherited group reads
+Date: Mon, 23 Oct 2023 12:57:13 +0200
+Message-ID: <20231023104833.178306443@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,145 +41,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francis Laniel <flaniel@linux.microsoft.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit b022f0c7e404887a7c5229788fc99eff9f9a80d5 ]
+commit 32671e3799ca2e4590773fd0e63aaa4229e50c06 upstream.
 
-When a kprobe is attached to a function that's name is not unique (is
-static and shares the name with other functions in the kernel), the
-kprobe is attached to the first function it finds. This is a bug as the
-function that it is attaching to is not necessarily the one that the
-user wants to attach to.
+Because group consistency is non-atomic between parent (filedesc) and children
+(inherited) events, it is possible for PERF_FORMAT_GROUP read() to try and sum
+non-matching counter groups -- with non-sensical results.
 
-Instead of blindly picking a function to attach to what is ambiguous,
-error with EADDRNOTAVAIL to let the user know that this function is not
-unique, and that the user must use another unique function with an
-address offset to get to the function they want to attach to.
+Add group_generation to distinguish the case where a parent group removes and
+adds an event and thus has the same number, but a different configuration of
+events as inherited groups.
 
-Link: https://lore.kernel.org/all/20231020104250.9537-2-flaniel@linux.microsoft.com/
+This became a problem when commit fa8c269353d5 ("perf/core: Invert
+perf_read_group() loops") flipped the order of child_list and sibling_list.
+Previously it would iterate the group (sibling_list) first, and for each
+sibling traverse the child_list. In this order, only the group composition of
+the parent is relevant. By flipping the order the group composition of the
+child (inherited) events becomes an issue and the mis-match in group
+composition becomes evident.
 
-Cc: stable@vger.kernel.org
-Fixes: 413d37d1eb69 ("tracing: Add kprobe-based event tracer")
-Suggested-by: Masami Hiramatsu <mhiramat@kernel.org>
-Signed-off-by: Francis Laniel <flaniel@linux.microsoft.com>
-Link: https://lore.kernel.org/lkml/20230819101105.b0c104ae4494a7d1f2eea742@kernel.org/
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+That said; even prior to this commit, while reading of a group that is not
+equally inherited was not broken, it still made no sense.
+
+(Ab)use ECHILD as error return to indicate issues with child process group
+composition.
+
+Fixes: fa8c269353d5 ("perf/core: Invert perf_read_group() loops")
+Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20231018115654.GK33217@noisy.programming.kicks-ass.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_kprobe.c | 63 +++++++++++++++++++++++++++++++++++++
- kernel/trace/trace_probe.h  |  1 +
- 2 files changed, 64 insertions(+)
+ include/linux/perf_event.h |    1 +
+ kernel/events/core.c       |   39 +++++++++++++++++++++++++++++++++------
+ 2 files changed, 34 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
-index 5a75b039e5860..22852029c6924 100644
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -705,6 +705,25 @@ static struct notifier_block trace_kprobe_module_nb = {
- 	.priority = 1	/* Invoked after kprobe module callback */
- };
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -694,6 +694,7 @@ struct perf_event {
+ 	/* The cumulative AND of all event_caps for events in this group. */
+ 	int				group_caps;
  
-+static int count_symbols(void *data, unsigned long unused)
-+{
-+	unsigned int *count = data;
-+
-+	(*count)++;
-+
-+	return 0;
-+}
-+
-+static unsigned int number_of_same_symbols(char *func_name)
-+{
-+	unsigned int count;
-+
-+	count = 0;
-+	kallsyms_on_each_match_symbol(count_symbols, func_name, &count);
-+
-+	return count;
-+}
-+
- static int __trace_kprobe_create(int argc, const char *argv[])
- {
- 	/*
-@@ -834,6 +853,31 @@ static int __trace_kprobe_create(int argc, const char *argv[])
- 		}
++	unsigned int			group_generation;
+ 	struct perf_event		*group_leader;
+ 	struct pmu			*pmu;
+ 	void				*pmu_private;
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -1962,6 +1962,7 @@ static void perf_group_attach(struct per
+ 
+ 	list_add_tail(&event->sibling_list, &group_leader->sibling_list);
+ 	group_leader->nr_siblings++;
++	group_leader->group_generation++;
+ 
+ 	perf_event__header_size(group_leader);
+ 
+@@ -2156,6 +2157,7 @@ static void perf_group_detach(struct per
+ 	if (leader != event) {
+ 		list_del_init(&event->sibling_list);
+ 		event->group_leader->nr_siblings--;
++		event->group_leader->group_generation++;
+ 		goto out;
  	}
  
-+	if (symbol && !strchr(symbol, ':')) {
-+		unsigned int count;
-+
-+		count = number_of_same_symbols(symbol);
-+		if (count > 1) {
-+			/*
-+			 * Users should use ADDR to remove the ambiguity of
-+			 * using KSYM only.
-+			 */
-+			trace_probe_log_err(0, NON_UNIQ_SYMBOL);
-+			ret = -EADDRNOTAVAIL;
-+
-+			goto error;
-+		} else if (count == 0) {
-+			/*
-+			 * We can return ENOENT earlier than when register the
-+			 * kprobe.
-+			 */
-+			trace_probe_log_err(0, BAD_PROBE_ADDR);
-+			ret = -ENOENT;
-+
-+			goto error;
-+		}
+@@ -5279,7 +5281,7 @@ static int __perf_read_group_add(struct
+ 					u64 read_format, u64 *values)
+ {
+ 	struct perf_event_context *ctx = leader->ctx;
+-	struct perf_event *sub;
++	struct perf_event *sub, *parent;
+ 	unsigned long flags;
+ 	int n = 1; /* skip @nr */
+ 	int ret;
+@@ -5289,6 +5291,33 @@ static int __perf_read_group_add(struct
+ 		return ret;
+ 
+ 	raw_spin_lock_irqsave(&ctx->lock, flags);
++	/*
++	 * Verify the grouping between the parent and child (inherited)
++	 * events is still in tact.
++	 *
++	 * Specifically:
++	 *  - leader->ctx->lock pins leader->sibling_list
++	 *  - parent->child_mutex pins parent->child_list
++	 *  - parent->ctx->mutex pins parent->sibling_list
++	 *
++	 * Because parent->ctx != leader->ctx (and child_list nests inside
++	 * ctx->mutex), group destruction is not atomic between children, also
++	 * see perf_event_release_kernel(). Additionally, parent can grow the
++	 * group.
++	 *
++	 * Therefore it is possible to have parent and child groups in a
++	 * different configuration and summing over such a beast makes no sense
++	 * what so ever.
++	 *
++	 * Reject this.
++	 */
++	parent = leader->parent;
++	if (parent &&
++	    (parent->group_generation != leader->group_generation ||
++	     parent->nr_siblings != leader->nr_siblings)) {
++		ret = -ECHILD;
++		goto unlock;
 +	}
-+
- 	trace_probe_log_set_index(0);
- 	if (event) {
- 		ret = traceprobe_parse_event_name(&event, &group, gbuf,
-@@ -1744,6 +1788,7 @@ static int unregister_kprobe_event(struct trace_kprobe *tk)
+ 
+ 	/*
+ 	 * Since we co-schedule groups, {enabled,running} times of siblings
+@@ -5322,8 +5351,9 @@ static int __perf_read_group_add(struct
+ 			values[n++] = atomic64_read(&sub->lost_samples);
+ 	}
+ 
++unlock:
+ 	raw_spin_unlock_irqrestore(&ctx->lock, flags);
+-	return 0;
++	return ret;
  }
  
- #ifdef CONFIG_PERF_EVENTS
-+
- /* create a trace_kprobe, but don't add it to global lists */
- struct trace_event_call *
- create_local_trace_kprobe(char *func, void *addr, unsigned long offs,
-@@ -1754,6 +1799,24 @@ create_local_trace_kprobe(char *func, void *addr, unsigned long offs,
- 	int ret;
- 	char *event;
+ static int perf_read_group(struct perf_event *event,
+@@ -5342,10 +5372,6 @@ static int perf_read_group(struct perf_e
  
-+	if (func) {
-+		unsigned int count;
-+
-+		count = number_of_same_symbols(func);
-+		if (count > 1)
-+			/*
-+			 * Users should use addr to remove the ambiguity of
-+			 * using func only.
-+			 */
-+			return ERR_PTR(-EADDRNOTAVAIL);
-+		else if (count == 0)
-+			/*
-+			 * We can return ENOENT earlier than when register the
-+			 * kprobe.
-+			 */
-+			return ERR_PTR(-ENOENT);
-+	}
-+
- 	/*
- 	 * local trace_kprobes are not added to dyn_event, so they are never
- 	 * searched in find_trace_kprobe(). Therefore, there is no concern of
-diff --git a/kernel/trace/trace_probe.h b/kernel/trace/trace_probe.h
-index f41c330bd60f1..f48b3ed20b095 100644
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -404,6 +404,7 @@ extern int traceprobe_define_arg_fields(struct trace_event_call *event_call,
- 	C(BAD_MAXACT,		"Invalid maxactive number"),		\
- 	C(MAXACT_TOO_BIG,	"Maxactive is too big"),		\
- 	C(BAD_PROBE_ADDR,	"Invalid probed address or symbol"),	\
-+	C(NON_UNIQ_SYMBOL,	"The symbol is not unique"),		\
- 	C(BAD_RETPROBE,		"Retprobe address must be an function entry"), \
- 	C(BAD_ADDR_SUFFIX,	"Invalid probed address suffix"), \
- 	C(NO_GROUP_NAME,	"Group name is not specified"),		\
--- 
-2.42.0
-
+ 	values[0] = 1 + leader->nr_siblings;
+ 
+-	/*
+-	 * By locking the child_mutex of the leader we effectively
+-	 * lock the child list of all siblings.. XXX explain how.
+-	 */
+ 	mutex_lock(&leader->child_mutex);
+ 
+ 	ret = __perf_read_group_add(leader, read_format, values);
+@@ -13267,6 +13293,7 @@ static int inherit_group(struct perf_eve
+ 		    !perf_get_aux_event(child_ctr, leader))
+ 			return -EINVAL;
+ 	}
++	leader->group_generation = parent_event->group_generation;
+ 	return 0;
+ }
+ 
 
 
