@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6051F4FE
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEA314AA9
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CHeGHSc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22311C433C7;
-	Mon, 23 Oct 2023 11:11:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxtZIkLQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166E3C433CA;
+	Mon, 23 Oct 2023 11:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059462;
-	bh=wJ7pUbV84HiffUVhOn+ycNrRDqskNchTw9sMiOWTrWA=;
+	s=korg; t=1698059465;
+	bh=KNPtezlZ5hvGu2WTqWXxnVup4nSRBGNOdsJUYFIDgIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1CHeGHScdgXNC9lXgpxYkx1Nty+PPbrYE8zeRoVauzz79Fb/SqOd/8guBIvuX3PTa
-	 wp4lt3gIgxyiP0Krwt7K9//q/FvOOgnT061waPJTg8DF5DSlwfRd04kPKRdBeYylnA
-	 4SL9t1IMYNFXo3uRx3fSQLvoE5/5n1BU4/uiL0vA=
+	b=OxtZIkLQaZ95xRy1+MDqZUBf1CiG/MIjiQjUljHK3V8QB1d72dztxNmmJh4lSF12W
+	 PAiN1npXgrhJy5ma60pGMQwUCbpHpSh0Fv9Tt6Jcao2bRUi6VQV1s4k/SasEzMCvwS
+	 yv41qls3Ft8SUcafCbOE82RkJhnSxsAah6LeGo3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.5 186/241] fanotify: limit reporting of event with non-decodeable file handles
-Date: Mon, 23 Oct 2023 12:56:12 +0200
-Message-ID: <20231023104838.416246576@linuxfoundation.org>
+	Scott Mayhew <smayhew@redhat.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 6.5 187/241] NFS: Fix potential oops in nfs_inode_remove_request()
+Date: Mon, 23 Oct 2023 12:56:13 +0200
+Message-ID: <20231023104838.440109672@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,87 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Scott Mayhew <smayhew@redhat.com>
 
-commit 97ac489775f26acfd46a8a60c2f84ce7cc79fa4b upstream.
+commit 6a6d4644ce935ddec4f76223ac0ca68da56bd2d3 upstream.
 
-Commit a95aef69a740 ("fanotify: support reporting non-decodeable file
-handles") merged in v6.5-rc1, added the ability to use an fanotify group
-with FAN_REPORT_FID mode to watch filesystems that do not support nfs
-export, but do know how to encode non-decodeable file handles, with the
-newly introduced AT_HANDLE_FID flag.
+Once a folio's private data has been cleared, it's possible for another
+process to clear the folio->mapping (e.g. via invalidate_complete_folio2
+or evict_mapping_folio), so it wouldn't be safe to call
+nfs_page_to_inode() after that.
 
-At the time that this commit was merged, there were no filesystems
-in-tree with those traits.
-
-Commit 16aac5ad1fa9 ("ovl: support encoding non-decodable file handles"),
-merged in v6.6-rc1, added this trait to overlayfs, thus allowing fanotify
-watching of overlayfs with FAN_REPORT_FID mode.
-
-In retrospect, allowing an fanotify filesystem/mount mark on such
-filesystem in FAN_REPORT_FID mode will result in getting events with
-file handles, without the ability to resolve the filesystem objects from
-those file handles (i.e. no open_by_handle_at() support).
-
-For v6.6, the safer option would be to allow this mode for inode marks
-only, where the caller has the opportunity to use name_to_handle_at() at
-the time of setting the mark. In the future we can revise this decision.
-
-Fixes: a95aef69a740 ("fanotify: support reporting non-decodeable file handles")
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20231018100000.2453965-2-amir73il@gmail.com>
+Fixes: 0c493b5cf16e ("NFS: Convert buffered writes to use folios")
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Tested-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ fs/nfs/write.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index f69c451018e3..62fe0b679e58 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1585,16 +1585,25 @@ static int fanotify_test_fsid(struct dentry *dentry, __kernel_fsid_t *fsid)
- }
- 
- /* Check if filesystem can encode a unique fid */
--static int fanotify_test_fid(struct dentry *dentry)
-+static int fanotify_test_fid(struct dentry *dentry, unsigned int flags)
+diff --git a/fs/nfs/write.c b/fs/nfs/write.c
+index 7720b5e43014..9d82d50ce0b1 100644
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -788,6 +788,8 @@ static void nfs_inode_add_request(struct nfs_page *req)
+  */
+ static void nfs_inode_remove_request(struct nfs_page *req)
  {
-+	unsigned int mark_type = flags & FANOTIFY_MARK_TYPE_BITS;
-+	const struct export_operations *nop = dentry->d_sb->s_export_op;
++	struct nfs_inode *nfsi = NFS_I(nfs_page_to_inode(req));
 +
-+	/*
-+	 * We need to make sure that the filesystem supports encoding of
-+	 * file handles so user can use name_to_handle_at() to compare fids
-+	 * reported with events to the file handle of watched objects.
-+	 */
-+	if (!nop)
-+		return -EOPNOTSUPP;
-+
- 	/*
--	 * We need to make sure that the file system supports at least
--	 * encoding a file handle so user can use name_to_handle_at() to
--	 * compare fid returned with event to the file handle of watched
--	 * objects. However, even the relaxed AT_HANDLE_FID flag requires
--	 * at least empty export_operations for ecoding unique file ids.
-+	 * For sb/mount mark, we also need to make sure that the filesystem
-+	 * supports decoding file handles, so user has a way to map back the
-+	 * reported fids to filesystem objects.
- 	 */
--	if (!dentry->d_sb->s_export_op)
-+	if (mark_type != FAN_MARK_INODE && !nop->fh_to_dentry)
- 		return -EOPNOTSUPP;
+ 	if (nfs_page_group_sync_on_bit(req, PG_REMOVE)) {
+ 		struct folio *folio = nfs_page_to_folio(req->wb_head);
+ 		struct address_space *mapping = folio_file_mapping(folio);
+@@ -802,7 +804,7 @@ static void nfs_inode_remove_request(struct nfs_page *req)
+ 	}
  
- 	return 0;
-@@ -1812,7 +1821,7 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
- 		if (ret)
- 			goto path_put_and_out;
- 
--		ret = fanotify_test_fid(path.dentry);
-+		ret = fanotify_test_fid(path.dentry, flags);
- 		if (ret)
- 			goto path_put_and_out;
- 
+ 	if (test_and_clear_bit(PG_INODE_REF, &req->wb_flags)) {
+-		atomic_long_dec(&NFS_I(nfs_page_to_inode(req))->nrequests);
++		atomic_long_dec(&nfsi->nrequests);
+ 		nfs_release_request(req);
+ 	}
+ }
 -- 
 2.42.0
 
