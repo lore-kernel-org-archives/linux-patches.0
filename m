@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D454414A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA54B14A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weSNqyoA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544DEC433C7;
-	Mon, 23 Oct 2023 11:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWCI3SRA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A6CC433C7;
+	Mon, 23 Oct 2023 11:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058999;
-	bh=hvzz+QMVhQFFmO4/BYaqRURsQ8yQEyq2RJZQrRMPke4=;
+	s=korg; t=1698059002;
+	bh=SyNLVEp6grhF0mqngArybkgRJKGEyORr9gSl9/KkP9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=weSNqyoAkWaXOdo9lhd6pcPC6lyWw9UnoA7H3KOUsrx3pxfPoKpKUnq68RuEofe6i
-	 YdEu7Qzd+qguWnRqjS4VkOBb1RwYmibnO6lbV7br91puHDMEfNnKr7mEighFI/Puwb
-	 5kf5Fz3q92HEb+BpEtw5jB8OtdpWg/Gvb8uhfcdg=
+	b=lWCI3SRA02Z8paonARh72vYaVRl09i3TrRrHgFvyZqAEr8g7edjZrfCJJDYBUHhA5
+	 xxZXMXDBE3vxzMUirfT16QqoFBvCm1Ga9BXq8xc///RyPjsE+94YCUfE0vbLS4a0nC
+	 UCutEFpvXXzAncVM/d1DmCeAwHyRSBjw8xe02C60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.5 005/241] Bluetooth: hci_event: Fix coding style
-Date: Mon, 23 Oct 2023 12:53:11 +0200
-Message-ID: <20231023104833.979958278@linuxfoundation.org>
+	Kees Cook <keescook@chromium.org>,
+	"Lee, Chun-Yi" <jlee@suse.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.5 006/241] Bluetooth: avoid memcmp() out of bounds warning
+Date: Mon, 23 Oct 2023 12:53:12 +0200
+Message-ID: <20231023104834.006347723@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -40,32 +44,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 35d91d95a0cd61ebb90e0246dc917fd25e519b8c upstream.
+commit 9d1a3c74746428102d55371fbf74b484733937d9 upstream.
 
-This fixes the following code style problem:
+bacmp() is a wrapper around memcpy(), which contain compile-time
+checks for buffer overflow. Since the hci_conn_request_evt() also calls
+bt_dev_dbg() with an implicit NULL pointer check, the compiler is now
+aware of a case where 'hdev' is NULL and treats this as meaning that
+zero bytes are available:
 
-ERROR: that open brace { should be on the previous line
-+	if (!bacmp(&hdev->bdaddr, &ev->bdaddr))
-+	{
+In file included from net/bluetooth/hci_event.c:32:
+In function 'bacmp',
+    inlined from 'hci_conn_request_evt' at net/bluetooth/hci_event.c:3276:7:
+include/net/bluetooth/bluetooth.h:364:16: error: 'memcmp' specified bound 6 exceeds source size 0 [-Werror=stringop-overread]
+  364 |         return memcmp(ba1, ba2, sizeof(bdaddr_t));
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Add another NULL pointer check before the bacmp() to ensure the compiler
+understands the code flow enough to not warn about it.  Since the patch
+that introduced the warning is marked for stable backports, this one
+should also go that way to avoid introducing build regressions.
 
 Fixes: 1ffc6f8cc332 ("Bluetooth: Reject connection with the device which has same BD_ADDR")
+Cc: Kees Cook <keescook@chromium.org>
+Cc: "Lee, Chun-Yi" <jlee@suse.com>
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/bluetooth/hci_event.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
-@@ -3275,8 +3275,7 @@ static void hci_conn_request_evt(struct
+@@ -3275,7 +3275,7 @@ static void hci_conn_request_evt(struct
  	/* Reject incoming connection from device with same BD ADDR against
  	 * CVE-2020-26555
  	 */
--	if (!bacmp(&hdev->bdaddr, &ev->bdaddr))
--	{
-+	if (!bacmp(&hdev->bdaddr, &ev->bdaddr)) {
+-	if (!bacmp(&hdev->bdaddr, &ev->bdaddr)) {
++	if (hdev && !bacmp(&hdev->bdaddr, &ev->bdaddr)) {
  		bt_dev_dbg(hdev, "Reject connection with same BD_ADDR %pMR\n",
  			   &ev->bdaddr);
  		hci_reject_conn(hdev, &ev->bdaddr);
