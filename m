@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5EE15EA7
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803D215EA7
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bt9Fdi1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A1EC433C9;
-	Mon, 23 Oct 2023 11:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeLl9TSH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC3CC433C7;
+	Mon, 23 Oct 2023 11:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061480;
-	bh=pnMqs6lKFO79nQSAyC1ZdmZBn7CTjqCi9ciHHw5l0iI=;
+	s=korg; t=1698061483;
+	bh=U1ngJBwG2outroxx6Q37hgX9lBSfrDY4H/aktK9QhhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bt9Fdi1TwVyaZUKPF/t5STTlOsE0piTiXDIVE7J3JNt/UUXWPyCp8vQcvPIjTpiZa
-	 PZ/1sU9KME2OVkk6KApzabpV0S8Vn/hRjEWfxTz2Ewpv7aJR6xlMTv7QbXjHa1p4Lb
-	 WOcmgdj/YIT0uQO5y3Sl6lOdFnHolGsP+SlGqkso=
+	b=yeLl9TSHwtQ12CYC09sxXz9lI4bD1mlmjZKrhoNkbl+Sfbd7jYyp7dyoO+IXbaWyg
+	 r454phnpn3tXC/CVNUxDqP9DPW16Bkl1FwBxC2p/7vAxE/FFl6aWNZdCYIR0sJ0b3a
+	 hgNnyn/gRdlLmINhQGwm36c9kujj8ZXMFmtiG61c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/202] powerpc/64e: Fix wrong test in __ptep_test_and_clear_young()
-Date: Mon, 23 Oct 2023 12:56:08 +0200
-Message-ID: <20231023104828.339761657@linuxfoundation.org>
+	Fei Yang <fei.yang@intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.10 062/202] x86/alternatives: Disable KASAN in apply_alternatives()
+Date: Mon, 23 Oct 2023 12:56:09 +0200
+Message-ID: <20231023104828.369748414@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -42,52 +44,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 5ea0bbaa32e8f54e9a57cfee4a3b8769b80be0d2 ]
+commit d35652a5fc9944784f6f50a5c979518ff8dacf61 upstream.
 
-Commit 45201c879469 ("powerpc/nohash: Remove hash related code from
-nohash headers.") replaced:
+Fei has reported that KASAN triggers during apply_alternatives() on
+a 5-level paging machine:
 
-  if ((pte_val(*ptep) & (_PAGE_ACCESSED | _PAGE_HASHPTE)) == 0)
-	return 0;
+	BUG: KASAN: out-of-bounds in rcu_is_watching()
+	Read of size 4 at addr ff110003ee6419a0 by task swapper/0/0
+	...
+	__asan_load4()
+	rcu_is_watching()
+	trace_hardirqs_on()
+	text_poke_early()
+	apply_alternatives()
+	...
 
-By:
+On machines with 5-level paging, cpu_feature_enabled(X86_FEATURE_LA57)
+gets patched. It includes KASAN code, where KASAN_SHADOW_START depends on
+__VIRTUAL_MASK_SHIFT, which is defined with cpu_feature_enabled().
 
-  if (pte_young(*ptep))
-	return 0;
+KASAN gets confused when apply_alternatives() patches the
+KASAN_SHADOW_START users. A test patch that makes KASAN_SHADOW_START
+static, by replacing __VIRTUAL_MASK_SHIFT with 56, works around the issue.
 
-But it should be:
+Fix it for real by disabling KASAN while the kernel is patching alternatives.
 
-  if (!pte_young(*ptep))
-	return 0;
+[ mingo: updated the changelog ]
 
-Fix it.
-
-Fixes: 45201c879469 ("powerpc/nohash: Remove hash related code from nohash headers.")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/8bb7f06494e21adada724ede47a4c3d97e879d40.1695659959.git.christophe.leroy@csgroup.eu
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6657fca06e3f ("x86/mm: Allow to boot without LA57 if CONFIG_X86_5LEVEL=y")
+Reported-by: Fei Yang <fei.yang@intel.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231012100424.1456-1-kirill.shutemov@linux.intel.com
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/include/asm/nohash/64/pgtable.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/alternative.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/arch/powerpc/include/asm/nohash/64/pgtable.h b/arch/powerpc/include/asm/nohash/64/pgtable.h
-index a4d475c0fc2c0..6075fac882862 100644
---- a/arch/powerpc/include/asm/nohash/64/pgtable.h
-+++ b/arch/powerpc/include/asm/nohash/64/pgtable.h
-@@ -216,7 +216,7 @@ static inline int __ptep_test_and_clear_young(struct mm_struct *mm,
- {
- 	unsigned long old;
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -424,6 +424,17 @@ void __init_or_module noinline apply_alt
+ 	u8 insn_buff[MAX_PATCH_LEN];
  
--	if (pte_young(*ptep))
-+	if (!pte_young(*ptep))
- 		return 0;
- 	old = pte_update(mm, addr, ptep, _PAGE_ACCESSED, 0, 0);
- 	return (old & _PAGE_ACCESSED) != 0;
--- 
-2.40.1
-
+ 	DPRINTK("alt table %px, -> %px", start, end);
++
++	/*
++	 * In the case CONFIG_X86_5LEVEL=y, KASAN_SHADOW_START is defined using
++	 * cpu_feature_enabled(X86_FEATURE_LA57) and is therefore patched here.
++	 * During the process, KASAN becomes confused seeing partial LA57
++	 * conversion and triggers a false-positive out-of-bound report.
++	 *
++	 * Disable KASAN until the patching is complete.
++	 */
++	kasan_disable_current();
++
+ 	/*
+ 	 * The scan order should be from start to end. A later scanned
+ 	 * alternative code can overwrite previously scanned alternative code.
+@@ -491,6 +502,8 @@ void __init_or_module noinline apply_alt
+ next:
+ 		optimize_nops(instr, a->instrlen);
+ 	}
++
++	kasan_enable_current();
+ }
+ 
+ #if defined(CONFIG_RETPOLINE) && defined(CONFIG_STACK_VALIDATION)
 
 
