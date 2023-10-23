@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DF215E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876E415E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XT4sqo4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A54C433C7;
-	Mon, 23 Oct 2023 11:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ys7iZ8lk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038C1C433C7;
+	Mon, 23 Oct 2023 11:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060895;
-	bh=M/t4p0612jsrSHk+9f1E5JrSilt/bGVS4EHiWYtzI6k=;
+	s=korg; t=1698060898;
+	bh=FefQmusnEmSxDfKGmrX5dCmEyp/MRaDy14VS3tqq9TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XT4sqo4hmVfg8QzUorR9evTEH72pilRteEPPhmOYq27IBWoRGd/Qrtma7N9zcvkow
-	 gX3qd4I3wS9sphf7Rn6bgxTEExthvbRKDcUey63ZVfmTaJbndGJqxNOVOgvFoqAnGs
-	 2YrVcAPk/+augT4G3lcwoHUxo+/Ow+SgAjyFc5Vw=
+	b=ys7iZ8lkYIqeyCRmOW6zZg9epWJHLbfnK6cgr0tivlx1mx8ZeZz9qCAZXXBjHKCs7
+	 yVEE1p7Xp+kztuFc87Av9PKWp/Hsiw1vz2UcpY7/LZHcIBOfHpsQFjpz1d5/vi2wAj
+	 eot7tP2QbouBtqH3AwBxIo+vcwmrCuZmeOU+JHHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.4 104/123] mtd: physmap-core: Restore map_rom fallback
-Date: Mon, 23 Oct 2023 12:57:42 +0200
-Message-ID: <20231023104821.200572428@linuxfoundation.org>
+	Haibo Chen <haibo.chen@nxp.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 105/123] mmc: core: sdio: hold retuning if sdio in 1-bit mode
+Date: Mon, 23 Oct 2023 12:57:43 +0200
+Message-ID: <20231023104821.237840606@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -41,43 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit 6792b7fce610bcd1cf3e07af3607fe7e2c38c1d8 upstream.
+commit 32a9cdb8869dc111a0c96cf8e1762be9684af15b upstream.
 
-When the exact mapping type driver was not available, the old
-physmap_of_core driver fell back to mapping the region as ROM.
-Unfortunately this feature was lost when the DT and pdata cases were
-merged.  Revive this useful feature.
+tuning only support in 4-bit mode or 8 bit mode, so in 1-bit mode,
+need to hold retuning.
 
-Fixes: 642b1e8dbed7bbbf ("mtd: maps: Merge physmap_of.c into physmap-core.c")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/550e8c8c1da4c4baeb3d71ff79b14a18d4194f9e.1693407371.git.geert+renesas@glider.be
+Find this issue when use manual tuning method on imx93. When system
+resume back, SDIO WIFI try to switch back to 4 bit mode, first will
+trigger retuning, and all tuning command failed.
+
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: dfa13ebbe334 ("mmc: host: Add facility to support re-tuning")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230830093922.3095850-1-haibo.chen@nxp.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/maps/physmap-core.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/mmc/core/sdio.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/maps/physmap-core.c
-+++ b/drivers/mtd/maps/physmap-core.c
-@@ -533,6 +533,17 @@ static int physmap_flash_probe(struct pl
- 		if (info->probe_type) {
- 			info->mtds[i] = do_map_probe(info->probe_type,
- 						     &info->maps[i]);
-+
-+			/* Fall back to mapping region as ROM */
-+			if (!info->mtds[i] && IS_ENABLED(CONFIG_MTD_ROM) &&
-+			    strcmp(info->probe_type, "map_rom")) {
-+				dev_warn(&dev->dev,
-+					 "map_probe() failed for type %s\n",
-+					 info->probe_type);
-+
-+				info->mtds[i] = do_map_probe("map_rom",
-+							     &info->maps[i]);
-+			}
- 		} else {
- 			int j;
+--- a/drivers/mmc/core/sdio.c
++++ b/drivers/mmc/core/sdio.c
+@@ -1014,8 +1014,14 @@ static int mmc_sdio_resume(struct mmc_ho
+ 		}
+ 		err = mmc_sdio_reinit_card(host);
+ 	} else if (mmc_card_wake_sdio_irq(host)) {
+-		/* We may have switched to 1-bit mode during suspend */
++		/*
++		 * We may have switched to 1-bit mode during suspend,
++		 * need to hold retuning, because tuning only supprt
++		 * 4-bit mode or 8 bit mode.
++		 */
++		mmc_retune_hold_now(host);
+ 		err = sdio_enable_4bit_bus(host->card);
++		mmc_retune_release(host);
+ 	}
  
+ 	if (err)
 
 
