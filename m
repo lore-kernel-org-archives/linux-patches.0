@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CB618021
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D76818021
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZhCibzR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9717BC433CD;
-	Mon, 23 Oct 2023 11:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQaH2avF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CF2C433C7;
+	Mon, 23 Oct 2023 11:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061918;
-	bh=HTCohLF81oY6u1eic6bg5PsG7cMRX71oCWmQAS3k4Lo=;
+	s=korg; t=1698061921;
+	bh=qpaM67UQlyFuZZJHwSr76EOll8phKIA2JMxX2VBdZPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ZhCibzRHldAvWOxZxUeadudq3V/IdOWVGqT8wV7wplFNg0Xdt5cS7bjC61O1v6b5
-	 ZrWBuC/WdVYu/T0SXE4+FqNKtVmFnd9wO8TltbzBKEgoHbSuquQZydkY/fDjDAplX0
-	 W8uoBxHdsz1c100MMcrufqEigas/r5btY31LXq4I=
+	b=vQaH2avFBPDbRNI2kW7oJZOOAytlL9PZSzP38/OzoMdsTW3flkY2AkclsXyhb8bmQ
+	 U5PACEN1OAYX2AhYPzNv8amQmLUwnGHw8saJOv9YVZHMFWHL00m4wSvCnZ1LMX53h1
+	 YmIfs7PYwL4TqlXrUQSFTrfm6Mmko5fY3azlXX9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puliang Lu <puliang.lu@fibocom.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 188/202] USB: serial: option: add Fibocom to DELL custom modem FM101R-GL
-Date: Mon, 23 Oct 2023 12:58:15 +0200
-Message-ID: <20231023104831.938308481@linuxfoundation.org>
+	Budimir Markovic <markovicbudimir@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.10 189/202] perf: Disallow mis-matched inherited group reads
+Date: Mon, 23 Oct 2023 12:58:16 +0200
+Message-ID: <20231023104831.966243287@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -41,88 +41,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puliang Lu <puliang.lu@fibocom.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 52480e1f1a259c93d749ba3961af0bffedfe7a7a upstream.
+commit 32671e3799ca2e4590773fd0e63aaa4229e50c06 upstream.
 
-Update the USB serial option driver support for the Fibocom
-FM101R-GL LTE modules as there are actually several different variants.
+Because group consistency is non-atomic between parent (filedesc) and children
+(inherited) events, it is possible for PERF_FORMAT_GROUP read() to try and sum
+non-matching counter groups -- with non-sensical results.
 
-- VID:PID 413C:8213, FM101R-GL are laptop M.2 cards (with
-  MBIM interfaces for Linux)
+Add group_generation to distinguish the case where a parent group removes and
+adds an event and thus has the same number, but a different configuration of
+events as inherited groups.
 
-- VID:PID 413C:8215, FM101R-GL ESIM are laptop M.2 cards (with
-  MBIM interface for Linux)
+This became a problem when commit fa8c269353d5 ("perf/core: Invert
+perf_read_group() loops") flipped the order of child_list and sibling_list.
+Previously it would iterate the group (sibling_list) first, and for each
+sibling traverse the child_list. In this order, only the group composition of
+the parent is relevant. By flipping the order the group composition of the
+child (inherited) events becomes an issue and the mis-match in group
+composition becomes evident.
 
-0x8213: mbim, tty
-0x8215: mbim, tty
+That said; even prior to this commit, while reading of a group that is not
+equally inherited was not broken, it still made no sense.
 
-T:  Bus=04 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=413c ProdID=8213 Rev= 5.04
-S:  Manufacturer=Fibocom Wireless Inc.
-S:  Product=Fibocom FM101-GL Module
-S:  SerialNumber=a3b7cbf0
-C:* #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=896mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=(none)
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+(Ab)use ECHILD as error return to indicate issues with child process group
+composition.
 
-T:  Bus=04 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=413c ProdID=8215 Rev= 5.04
-S:  Manufacturer=Fibocom Wireless Inc.
-S:  Product=Fibocom FM101-GL Module
-S:  SerialNumber=a3b7cbf0
-C:* #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=896mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=(none)
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-
-Signed-off-by: Puliang Lu <puliang.lu@fibocom.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: fa8c269353d5 ("perf/core: Invert perf_read_group() loops")
+Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20231018115654.GK33217@noisy.programming.kicks-ass.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/perf_event.h |    1 +
+ kernel/events/core.c       |   39 +++++++++++++++++++++++++++++++++------
+ 2 files changed, 34 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -203,6 +203,9 @@ static void option_instat_callback(struc
- #define DELL_PRODUCT_5829E_ESIM			0x81e4
- #define DELL_PRODUCT_5829E			0x81e6
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -659,6 +659,7 @@ struct perf_event {
+ 	/* The cumulative AND of all event_caps for events in this group. */
+ 	int				group_caps;
  
-+#define DELL_PRODUCT_FM101R			0x8213
-+#define DELL_PRODUCT_FM101R_ESIM		0x8215
-+
- #define KYOCERA_VENDOR_ID			0x0c88
- #define KYOCERA_PRODUCT_KPC650			0x17da
- #define KYOCERA_PRODUCT_KPC680			0x180a
-@@ -1108,6 +1111,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(0) | RSVD(6) },
- 	{ USB_DEVICE(DELL_VENDOR_ID, DELL_PRODUCT_5829E_ESIM),
- 	  .driver_info = RSVD(0) | RSVD(6) },
-+	{ USB_DEVICE_INTERFACE_CLASS(DELL_VENDOR_ID, DELL_PRODUCT_FM101R, 0xff) },
-+	{ USB_DEVICE_INTERFACE_CLASS(DELL_VENDOR_ID, DELL_PRODUCT_FM101R_ESIM, 0xff) },
- 	{ USB_DEVICE(ANYDATA_VENDOR_ID, ANYDATA_PRODUCT_ADU_E100A) },	/* ADU-E100, ADU-310 */
- 	{ USB_DEVICE(ANYDATA_VENDOR_ID, ANYDATA_PRODUCT_ADU_500A) },
- 	{ USB_DEVICE(ANYDATA_VENDOR_ID, ANYDATA_PRODUCT_ADU_620UW) },
++	unsigned int			group_generation;
+ 	struct perf_event		*group_leader;
+ 	struct pmu			*pmu;
+ 	void				*pmu_private;
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -2053,6 +2053,7 @@ static void perf_group_attach(struct per
+ 
+ 	list_add_tail(&event->sibling_list, &group_leader->sibling_list);
+ 	group_leader->nr_siblings++;
++	group_leader->group_generation++;
+ 
+ 	perf_event__header_size(group_leader);
+ 
+@@ -2245,6 +2246,7 @@ static void perf_group_detach(struct per
+ 	if (leader != event) {
+ 		list_del_init(&event->sibling_list);
+ 		event->group_leader->nr_siblings--;
++		event->group_leader->group_generation++;
+ 		goto out;
+ 	}
+ 
+@@ -5222,7 +5224,7 @@ static int __perf_read_group_add(struct
+ 					u64 read_format, u64 *values)
+ {
+ 	struct perf_event_context *ctx = leader->ctx;
+-	struct perf_event *sub;
++	struct perf_event *sub, *parent;
+ 	unsigned long flags;
+ 	int n = 1; /* skip @nr */
+ 	int ret;
+@@ -5232,6 +5234,33 @@ static int __perf_read_group_add(struct
+ 		return ret;
+ 
+ 	raw_spin_lock_irqsave(&ctx->lock, flags);
++	/*
++	 * Verify the grouping between the parent and child (inherited)
++	 * events is still in tact.
++	 *
++	 * Specifically:
++	 *  - leader->ctx->lock pins leader->sibling_list
++	 *  - parent->child_mutex pins parent->child_list
++	 *  - parent->ctx->mutex pins parent->sibling_list
++	 *
++	 * Because parent->ctx != leader->ctx (and child_list nests inside
++	 * ctx->mutex), group destruction is not atomic between children, also
++	 * see perf_event_release_kernel(). Additionally, parent can grow the
++	 * group.
++	 *
++	 * Therefore it is possible to have parent and child groups in a
++	 * different configuration and summing over such a beast makes no sense
++	 * what so ever.
++	 *
++	 * Reject this.
++	 */
++	parent = leader->parent;
++	if (parent &&
++	    (parent->group_generation != leader->group_generation ||
++	     parent->nr_siblings != leader->nr_siblings)) {
++		ret = -ECHILD;
++		goto unlock;
++	}
+ 
+ 	/*
+ 	 * Since we co-schedule groups, {enabled,running} times of siblings
+@@ -5261,8 +5290,9 @@ static int __perf_read_group_add(struct
+ 			values[n++] = primary_event_id(sub);
+ 	}
+ 
++unlock:
+ 	raw_spin_unlock_irqrestore(&ctx->lock, flags);
+-	return 0;
++	return ret;
+ }
+ 
+ static int perf_read_group(struct perf_event *event,
+@@ -5281,10 +5311,6 @@ static int perf_read_group(struct perf_e
+ 
+ 	values[0] = 1 + leader->nr_siblings;
+ 
+-	/*
+-	 * By locking the child_mutex of the leader we effectively
+-	 * lock the child list of all siblings.. XXX explain how.
+-	 */
+ 	mutex_lock(&leader->child_mutex);
+ 
+ 	ret = __perf_read_group_add(leader, read_format, values);
+@@ -12820,6 +12846,7 @@ static int inherit_group(struct perf_eve
+ 		    !perf_get_aux_event(child_ctr, leader))
+ 			return -EINVAL;
+ 	}
++	leader->group_generation = parent_event->group_generation;
+ 	return 0;
+ }
+ 
 
 
