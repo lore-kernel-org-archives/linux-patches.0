@@ -1,121 +1,129 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48A61D53E
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 17:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D32210EA;
+	Mon, 23 Oct 2023 17:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DKWJwkGD"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6b20577ef7bso2696922b3a.3
-        for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:16:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698081405; x=1698686205; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8UmNA3JhvAwp9p6qqygcIMsmnra1xRqmMhLwxS7P5RI=;
-        b=DKWJwkGDUJcZRTaQgjwJ558ILmyeQxYk3cIE1JhxuRneorJPfM1cVL9bIXO8pRFu0c
-         /N0XjmbxpdmGVprH8zGYna4pZ/+doI2tbr1x04dnfY5JhN9kWFqdEoQKJN1bO10nQ/nA
-         9NroyVMO8rMDEbRAeDWdmt+/xl62D62Mo3YMFqTM9NAK5vPM89rsxlxzGr4H9VirrOhs
-         8t28mXbapPvGzALLpJaxwbwevzNhvn/onjQeRaGuRw3ExCXsAWtkNe1PHxphlvs6ztdC
-         0Osllw8XAIF206cQlAWYpcqpaPdjlrW+7iY+x1ra/j8dKFqHnjN6gdUaRFfOpI/6xucw
-         6oEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698081405; x=1698686205;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8UmNA3JhvAwp9p6qqygcIMsmnra1xRqmMhLwxS7P5RI=;
-        b=L7hj9LBy+xgg/4TxRTi37hx736dGqnw35cYxh29iQw6i/FLvgkXJRYfE1onBLpvUUO
-         vvQmzVrlws0HAR3KJcM0LhOp6UbUKNnWN4VL9JkFMPBx24XTYXZd5b+msLtPcTzyAHgx
-         sENm4Y6d0+ed8M6TXkteTmYiYeG8gO78atVmvTPQ0rXWpyA+n7PNf/maQ8HJpjLyK+SK
-         +UBZfM1UeSMTeSesshCdaPNBHPKLsN6i7MLcS6J2woWfa09vKvgbU9D1yQRpLgWyjtXL
-         Up89xDuateUjJvypp7wOwd8wllLbGsq5go4KNBJQteoE/cVRoWGg00HtJdjjBUbuTT7e
-         x78Q==
-X-Gm-Message-State: AOJu0Yx9ng+yK/wGpw8+/D9A1gG8vWAuukkBqLBuqgG/6w7OUb6l8vqk
-	n47JLAByskrfenJ9SM2wkWmtYFpnI1R4I595BJNW3Q==
-X-Google-Smtp-Source: AGHT+IGjInKpQgIG1aOOsF/TPL8qt6E39iqr99A3ZlMym6netNqwXxSEhKKw32twN44OhP4SWSJB0+MDVHKQffPtg9k=
-X-Received: by 2002:a05:6a20:4299:b0:15e:bcd:57f5 with SMTP id
- o25-20020a056a20429900b0015e0bcd57f5mr285107pzj.3.1698081404981; Mon, 23 Oct
- 2023 10:16:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sHJfJAgG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B35EC433C8;
+	Mon, 23 Oct 2023 17:45:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1698083116;
+	bh=x+AnEYyCYS2x5kfZRpQSdT2vBC5eC4hfcf5UNbmXbyI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=sHJfJAgGebHbRUreMFoDdC8Zx8dwCATh8GgoqOwJdOdKi6QiUQNgPthgDj+l7nyvc
+	 anHJUj49RvwOHDH1ZNUq4L7n6uhCGow7ZrZ7z9YQrom2xQCdZcg8Hj10u69GREJvE0
+	 7nEAeAd30mv52yNgOCDf1i2373ZrpBAhzltQROTz2U4qG/0nIXfXfIdUuL3uQGwWrz
+	 tbVYFGsgJrrF8Mo7oOyay4W9phJbcAlGKYKccfiOMnMaozXelfFstGSLZcinX4+nbz
+	 JWfiF5wchZHfTlrOJBdvEtztk14mKxsIDTrb0ypSpz+Epg8ZTXnJNFGs86m1ZMqc8C
+	 3YPtcv8wiyirQ==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	x86@kernel.org,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	"H. Peter Anvin" <hpa@zytor.com>
+Subject: [PATCH 1/4] x86/rust: support RETPOLINE
+Date: Mon, 23 Oct 2023 19:44:45 +0200
+Message-ID: <20231023174449.251550-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231023104820.849461819@linuxfoundation.org> <724521b8-9c63-4645-b3e0-30d9635573a7@linaro.org>
-In-Reply-To: <724521b8-9c63-4645-b3e0-30d9635573a7@linaro.org>
-From: =?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
-Date: Mon, 23 Oct 2023 11:16:33 -0600
-Message-ID: <CAEUSe7-zbuRsgsr2EYq+OeW9iEJyZHmo8u9K3pDCAFRKnCEv0A@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/137] 5.15.137-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
-	conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hello!
+Support the `RETPOLINE` speculation mitigation by enabling the target
+features that Clang does.
 
-On Mon, 23 Oct 2023 at 09:11, Daniel D=C3=ADaz <daniel.diaz@linaro.org> wro=
-te:
-> On 23/10/23 4:55 a. m., Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.15.137 release.
-> > There are 137 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 25 Oct 2023 10:47:57 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >       https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.15.137-rc1.gz
-> > or in the git tree and branch at:
-> >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.15.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
->
-> We see lots of errors on Arm 32-bits:
->
-> -----8<-----
-> /builds/linux/drivers/gpio/gpio-vf610.c:249:11: error: 'IRQCHIP_IMMUTABLE=
-' undeclared here (not in a function); did you mean 'IS_IMMUTABLE'?
->    .flags =3D IRQCHIP_IMMUTABLE | IRQCHIP_MASK_ON_SUSPEND
->             ^~~~~~~~~~~~~~~~~
->             IS_IMMUTABLE
-> /builds/linux/drivers/gpio/gpio-vf610.c:251:2: error: 'GPIOCHIP_IRQ_RESOU=
-RCE_HELPERS' undeclared here (not in a function)
->    GPIOCHIP_IRQ_RESOURCE_HELPERS,
->    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> /builds/linux/drivers/gpio/gpio-vf610.c:251:2: warning: excess elements i=
-n struct initializer
-> /builds/linux/drivers/gpio/gpio-vf610.c:251:2: note: (near initialization=
- for 'vf610_irqchip')
-> /builds/linux/drivers/gpio/gpio-vf610.c: In function 'vf610_gpio_probe':
-> /builds/linux/drivers/gpio/gpio-vf610.c:340:2: error: implicit declaratio=
-n of function 'gpio_irq_chip_set_chip'; did you mean 'gpiochip_get_data'? [=
--Werror=3Dimplicit-function-declaration]
->    gpio_irq_chip_set_chip(girq, &vf610_irqchip);
->    ^~~~~~~~~~~~~~~~~~~~~~
->    gpiochip_get_data
-> cc1: some warnings being treated as errors
-> ----->8-----
+The existing target feature being enabled was a leftover from
+our old `rust` branch, and it is not enough: the target feature
+`retpoline-external-thunk` only implies `retpoline-indirect-calls`, but
+not `retpoline-indirect-branches` (see LLVM's `X86.td`), unlike Clang's
+flag of the same name `-mretpoline-external-thunk` which does imply both
+(see Clang's `lib/Driver/ToolChains/Arch/X86.cpp`).
 
-Bisection points to "gpio: vf610: make irq_chip immutable" (upstream
-commit e6ef4f8ede09f4af7cde000717b349b50bc62576).
+Without this, `objtool` would complain if enabled for individual object
+files (like it is planned in the future), e.g.
 
-Greetings!
+    rust/core.o: warning: objtool:
+    _R...escape_default+0x13: indirect jump found in RETPOLINE build
 
-Daniel D=C3=ADaz
-daniel.diaz@linaro.org
+In addition, change the comment to note that LLVM is the one disabling
+jump tables when retpoline is enabled, thus we do not need to use
+`-Zno-jump-tables` for Rust here -- see commit c58f2166ab39 ("Introduce
+the "retpoline" x86 mitigation technique ...") [1]:
+
+    The goal is simple: avoid generating code which contains an indirect
+    branch that could have its prediction poisoned by an attacker. In
+    many cases, the compiler can simply use directed conditional
+    branches and a small search tree. LLVM already has support for
+    lowering switches in this way and the first step of this patch is
+    to disable jump-table lowering of switches and introduce a pass to
+    rewrite explicit indirectbr sequences into a switch over integers.
+
+As well as a live example at [2].
+
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://github.com/llvm/llvm-project/commit/c58f2166ab3987f37cb0d7815b561bff5a20a69a [1]
+Link: https://godbolt.org/z/esT8xnaxj [2]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ arch/x86/Makefile               | 2 +-
+ scripts/generate_rust_target.rs | 7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/Makefile b/arch/x86/Makefile
+index 5bfe5caaa444..3df7c7c81918 100644
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -195,7 +195,7 @@ ifdef CONFIG_RETPOLINE
+   KBUILD_CFLAGS += $(RETPOLINE_CFLAGS)
+   # Additionally, avoid generating expensive indirect jumps which
+   # are subject to retpolines for small number of switch cases.
+-  # clang turns off jump table generation by default when under
++  # LLVM turns off jump table generation by default when under
+   # retpoline builds, however, gcc does not for x86. This has
+   # only been fixed starting from gcc stable version 8.4.0 and
+   # onwards, but not for older ones. See gcc bug #86952.
+diff --git a/scripts/generate_rust_target.rs b/scripts/generate_rust_target.rs
+index 3c6cbe2b278d..163089ae13ba 100644
+--- a/scripts/generate_rust_target.rs
++++ b/scripts/generate_rust_target.rs
+@@ -156,7 +156,14 @@ fn main() {
+         );
+         let mut features = "-3dnow,-3dnowa,-mmx,+soft-float".to_string();
+         if cfg.has("RETPOLINE") {
++            // The kernel uses `-mretpoline-external-thunk` (for Clang), which Clang maps to the
++            // target feature of the same name plus the other two target features in
++            // `clang/lib/Driver/ToolChains/Arch/X86.cpp`. These should be eventually enabled via
++            // `-Ctarget-feature` when `rustc` starts recognizing them (or via a new dedicated
++            // flag); see https://github.com/rust-lang/rust/issues/116852.
+             features += ",+retpoline-external-thunk";
++            features += ",+retpoline-indirect-branches";
++            features += ",+retpoline-indirect-calls";
+         }
+         ts.push("features", features);
+         ts.push("llvm-target", "x86_64-linux-gnu");
+
+base-commit: 58720809f52779dc0f08e53e54b014209d13eebb
+-- 
+2.42.0
+
