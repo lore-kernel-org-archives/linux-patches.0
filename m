@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DD3171C3
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4518F171DA
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IATjs+HC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97429C433CA;
-	Mon, 23 Oct 2023 11:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IelAY9Q+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCEBC433C8;
+	Mon, 23 Oct 2023 11:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061823;
-	bh=DtptvEwHAZSKg2IN87fTGBJYcWPc40oje24av1a+K+0=;
+	s=korg; t=1698061826;
+	bh=bhS1fa7fIhYM4MaWGEBo/w4BKfSwDoI7G1zinIKVTD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IATjs+HCPMsCZ/XlZZrE6J0PvHL9xWxv4srKjBDyYvXXJD7Mh1WUwccDJqGYtzwmK
-	 VWpcKQluZxO3CoY4TWKVJPnXq4bh7meh+rwAWsNY1W1FJUxk9BTgcG5S+YHF/CYVd2
-	 p3f60jOo8ZhuLP8T+g4rjPnPzXCz2CXGHYopLJLg=
+	b=IelAY9Q+zhcmMYgDt6VO4h5O1/8pwmcigXqWE7D0SaqItfDmrlzLZ+a4nGMWXkl3z
+	 Exm+IfPxWfOHDZVuFAvthT3okSZcg0AjL4BF2qPmaKvuwiDE5wlOoMR5Paon+x8n2L
+	 81cjmX27UeghejuQ4u4W6eoZ1E6fpzTVMC/g5gMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
+	Martin Kurbanov <mmkurbanov@sberdevices.ru>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.10 176/202] mtd: rawnand: arasan: Ensure program page operations are successful
-Date: Mon, 23 Oct 2023 12:58:03 +0200
-Message-ID: <20231023104831.616037758@linuxfoundation.org>
+Subject: [PATCH 5.10 177/202] mtd: spinand: micron: correct bitmask for ecc status
+Date: Mon, 23 Oct 2023 12:58:04 +0200
+Message-ID: <20231023104831.642704025@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -41,74 +42,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Martin Kurbanov <mmkurbanov@sberdevices.ru>
 
-commit 3a4a893dbb19e229db3b753f0462520b561dee98 upstream.
+commit 9836a987860e33943945d4b257729a4f94eae576 upstream.
 
-The NAND core complies with the ONFI specification, which itself
-mentions that after any program or erase operation, a status check
-should be performed to see whether the operation was finished *and*
-successful.
+Valid bitmask is 0x70 in the status register.
 
-The NAND core offers helpers to finish a page write (sending the
-"PAGE PROG" command, waiting for the NAND chip to be ready again, and
-checking the operation status). But in some cases, advanced controller
-drivers might want to optimize this and craft their own page write
-helper to leverage additional hardware capabilities, thus not always
-using the core facilities.
-
-Some drivers, like this one, do not use the core helper to finish a page
-write because the final cycles are automatically managed by the
-hardware. In this case, the additional care must be taken to manually
-perform the final status check.
-
-Let's read the NAND chip status at the end of the page write helper and
-return -EIO upon error.
-
-Cc: Michal Simek <michal.simek@amd.com>
-Cc: stable@vger.kernel.org
-Fixes: 88ffef1b65cf ("mtd: rawnand: arasan: Support the hardware BCH ECC engine")
+Fixes: a508e8875e13 ("mtd: spinand: Add initial support for Micron MT29F2G01ABAGD")
+Signed-off-by: Martin Kurbanov <mmkurbanov@sberdevices.ru>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/linux-mtd/20230717194221.229778-2-miquel.raynal@bootlin.com
+Link: https://lore.kernel.org/linux-mtd/20230905145637.139068-1-mmkurbanov@sberdevices.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/arasan-nand-controller.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/spi/micron.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/arasan-nand-controller.c
-+++ b/drivers/mtd/nand/raw/arasan-nand-controller.c
-@@ -451,6 +451,7 @@ static int anfc_write_page_hw_ecc(struct
- 	struct mtd_info *mtd = nand_to_mtd(chip);
- 	unsigned int len = mtd->writesize + (oob_required ? mtd->oobsize : 0);
- 	dma_addr_t dma_addr;
-+	u8 status;
- 	int ret;
- 	struct anfc_op nfc_op = {
- 		.pkt_reg =
-@@ -497,10 +498,21 @@ static int anfc_write_page_hw_ecc(struct
- 	}
+--- a/drivers/mtd/nand/spi/micron.c
++++ b/drivers/mtd/nand/spi/micron.c
+@@ -12,7 +12,7 @@
  
- 	/* Spare data is not protected */
--	if (oob_required)
-+	if (oob_required) {
- 		ret = nand_write_oob_std(chip, page);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	/* Check write status on the chip side */
-+	ret = nand_status_op(chip, &status);
-+	if (ret)
-+		return ret;
-+
-+	if (status & NAND_STATUS_FAIL)
-+		return -EIO;
+ #define SPINAND_MFR_MICRON		0x2c
  
--	return ret;
-+	return 0;
- }
- 
- static int anfc_sel_write_page_hw_ecc(struct nand_chip *chip, const u8 *buf,
+-#define MICRON_STATUS_ECC_MASK		GENMASK(7, 4)
++#define MICRON_STATUS_ECC_MASK		GENMASK(6, 4)
+ #define MICRON_STATUS_ECC_NO_BITFLIPS	(0 << 4)
+ #define MICRON_STATUS_ECC_1TO3_BITFLIPS	(1 << 4)
+ #define MICRON_STATUS_ECC_4TO6_BITFLIPS	(3 << 4)
 
 
