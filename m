@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B92714282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8468C14282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zt9bvCEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82CAC433C9;
-	Mon, 23 Oct 2023 11:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4r+js+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11A9C433C8;
+	Mon, 23 Oct 2023 11:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059828;
-	bh=z7l7CPkZOMZKJPdUhUNQTc31N1GrfOm+U3AwlUGoUWM=;
+	s=korg; t=1698059831;
+	bh=txzMAzRMB4zHXnCdzcmw2U6qxjcEArFD8FmySzRhCsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zt9bvCEtT+0OTjFZ1G1RGpwxTcG4IzjkbzCZh0qo2WPm29SI1YM/cvUY9NJ/tFsOd
-	 /KHOGUH/N9BVzP2RNT4eext38Ya7plzhqFfXn53LO/gz/4ncO3/BunK53SCqRFlYNw
-	 t19gbEvR8x/m0+hW6KgWsQPC80b0TueecMprls7k=
+	b=Q4r+js+OLB+hK8fOHsdiSAfNSkO31daGZnqKGxONfnEPB/klIGg8SZp9hLD+lKALl
+	 z9k4UyRspNjYasAc1IsFJ4GSkd4iM7bENUiX5l4/OBAI+rXgeQ3DzDUVgdbTUVEyO/
+	 /KbsGaUm2bSJzXkXcmQKWvdEc8aT/xhFPnB4TA9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 4.19 29/98] ceph: fix incorrect revoked caps assert in ceph_fill_file_size()
-Date: Mon, 23 Oct 2023 12:56:18 +0200
-Message-ID: <20231023104814.613199687@linuxfoundation.org>
+	Michal Schmidt <mschmidt@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 4.19 60/98] i40e: prevent crash on probe if hw registers have invalid values
+Date: Mon, 23 Oct 2023 12:56:49 +0200
+Message-ID: <20231023104815.732145791@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -42,44 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-commit 15c0a870dc44ed14e01efbdd319d232234ee639f upstream.
+commit fc6f716a5069180c40a8c9b63631e97da34f64a3 upstream.
 
-When truncating the inode the MDS will acquire the xlock for the
-ifile Locker, which will revoke the 'Frwsxl' caps from the clients.
-But when the client just releases and flushes the 'Fw' caps to MDS,
-for exmaple, and once the MDS receives the caps flushing msg it
-just thought the revocation has finished. Then the MDS will continue
-truncating the inode and then issued the truncate notification to
-all the clients. While just before the clients receives the cap
-flushing ack they receive the truncation notification, the clients
-will detecte that the 'issued | dirty' is still holding the 'Fw'
-caps.
+The hardware provides the indexes of the first and the last available
+queue and VF. From the indexes, the driver calculates the numbers of
+queues and VFs. In theory, a faulty device might say the last index is
+smaller than the first index. In that case, the driver's calculation
+would underflow, it would attempt to write to non-existent registers
+outside of the ioremapped range and crash.
 
-Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/56693
-Fixes: b0d7c2231015 ("ceph: introduce i_truncate_mutex")
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+I ran into this not by having a faulty device, but by an operator error.
+I accidentally ran a QE test meant for i40e devices on an ice device.
+The test used 'echo i40e > /sys/...ice PCI device.../driver_override',
+bound the driver to the device and crashed in one of the wr32 calls in
+i40e_clear_hw.
+
+Add checks to prevent underflows in the calculations of num_queues and
+num_vfs. With this fix, the wrong device probing reports errors and
+returns a failure without crashing.
+
+Fixes: 838d41d92a90 ("i40e: clear all queues and interrupts")
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Link: https://lore.kernel.org/r/20231011233334.336092-2-jacob.e.keller@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/inode.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_common.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ceph/inode.c
-+++ b/fs/ceph/inode.c
-@@ -631,9 +631,7 @@ int ceph_fill_file_size(struct inode *in
- 			ci->i_truncate_seq = truncate_seq;
- 
- 			/* the MDS should have revoked these caps */
--			WARN_ON_ONCE(issued & (CEPH_CAP_FILE_EXCL |
--					       CEPH_CAP_FILE_RD |
--					       CEPH_CAP_FILE_WR |
-+			WARN_ON_ONCE(issued & (CEPH_CAP_FILE_RD |
- 					       CEPH_CAP_FILE_LAZYIO));
- 			/*
- 			 * If we hold relevant caps, or in the case where we're
+--- a/drivers/net/ethernet/intel/i40e/i40e_common.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_common.c
+@@ -1332,7 +1332,7 @@ void i40e_clear_hw(struct i40e_hw *hw)
+ 		     I40E_PFLAN_QALLOC_FIRSTQ_SHIFT;
+ 	j = (val & I40E_PFLAN_QALLOC_LASTQ_MASK) >>
+ 	    I40E_PFLAN_QALLOC_LASTQ_SHIFT;
+-	if (val & I40E_PFLAN_QALLOC_VALID_MASK)
++	if (val & I40E_PFLAN_QALLOC_VALID_MASK && j >= base_queue)
+ 		num_queues = (j - base_queue) + 1;
+ 	else
+ 		num_queues = 0;
+@@ -1342,7 +1342,7 @@ void i40e_clear_hw(struct i40e_hw *hw)
+ 	    I40E_PF_VT_PFALLOC_FIRSTVF_SHIFT;
+ 	j = (val & I40E_PF_VT_PFALLOC_LASTVF_MASK) >>
+ 	    I40E_PF_VT_PFALLOC_LASTVF_SHIFT;
+-	if (val & I40E_PF_VT_PFALLOC_VALID_MASK)
++	if (val & I40E_PF_VT_PFALLOC_VALID_MASK && j >= i)
+ 		num_vfs = (j - i) + 1;
+ 	else
+ 		num_vfs = 0;
 
 
