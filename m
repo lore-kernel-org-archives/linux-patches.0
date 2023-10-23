@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D43A23C5
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4189F23C5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtDwsRyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F20FC433C7;
-	Mon, 23 Oct 2023 11:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lx3u37QH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBB5C433C7;
+	Mon, 23 Oct 2023 11:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060674;
-	bh=2GNCL/7jcQe397vdAZ3ulH10C+gBPq00n5/ORV14eqU=;
+	s=korg; t=1698060677;
+	bh=LBUuZXbk+IhQ20p6FQb3Do44494ME5muQsdkxOmsnR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtDwsRyFPyPwGr29TMMPS9dVvDfyycXEjfrnIuqHFhflqyOq7QyrCXKHDz9+IEhRU
-	 n76gC5nQMJc4i8OwPfu/ghQsQDMKqly1vZ4Ng8zQgbk0+bXRmZMRU0PsNkA8co9Aml
-	 2JpilLuGoYP51wgI1FB/784BjLYUET1cxJ7X3N5k=
+	b=lx3u37QH4NgDRb6tXXSZ5NteZMYcV+8lU4J/kFmoCnr5nBSfuOQl1dNtZ5ZJLbZ86
+	 BhqSPqfIz7qOrGjHcpcyaDUZ49mhG/8OIWTqomT/kmJ2MhKPMD4v3jhTni0ZGeISK9
+	 W5WrwJyQGZu9R1O8FwzY/2Fh0WdSrAXJUYewWeks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Mingwei Zhang <mizhang@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.4 055/123] KVM: x86: Mask LVTPC when handling a PMI
-Date: Mon, 23 Oct 2023 12:56:53 +0200
-Message-ID: <20231023104819.548890033@linuxfoundation.org>
+	=?UTF-8?q?Bla=C5=BEej=20Kraj=C5=88=C3=A1k?= <krajnak@levonet.sk>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 5.4 056/123] netfilter: nft_payload: fix wrong mac header matching
+Date: Mon, 23 Oct 2023 12:56:54 +0200
+Message-ID: <20231023104819.579819126@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -36,59 +35,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jim Mattson <jmattson@google.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit a16eb25b09c02a54c1c1b449d4b6cfa2cf3f013a upstream.
+commit d351c1ea2de3e36e608fc355d8ae7d0cc80e6cd6 upstream.
 
-Per the SDM, "When the local APIC handles a performance-monitoring
-counters interrupt, it automatically sets the mask flag in the LVT
-performance counter register."  Add this behavior to KVM's local APIC
-emulation.
+mcast packets get looped back to the local machine.
+Such packets have a 0-length mac header, we should treat
+this like "mac header not set" and abort rule evaluation.
 
-Failure to mask the LVTPC entry results in spurious PMIs, e.g. when
-running Linux as a guest, PMI handlers that do a "late_ack" spew a large
-number of "dazed and confused" spurious NMI warnings.
+As-is, we just copy data from the network header instead.
 
-Fixes: f5132b01386b ("KVM: Expose a version 2 architectural PMU to a guests")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Tested-by: Mingwei Zhang <mizhang@google.com>
-Signed-off-by: Mingwei Zhang <mizhang@google.com>
-Link: https://lore.kernel.org/r/20230925173448.3518223-3-mizhang@google.com
-[sean: massage changelog, correct Fixes]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 96518518cc41 ("netfilter: add nftables")
+Reported-by: Blažej Krajňák <krajnak@levonet.sk>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/netfilter/nft_payload.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2244,13 +2244,17 @@ int kvm_apic_local_deliver(struct kvm_la
- {
- 	u32 reg = kvm_lapic_get_reg(apic, lvt_type);
- 	int vector, mode, trig_mode;
-+	int r;
+--- a/net/netfilter/nft_payload.c
++++ b/net/netfilter/nft_payload.c
+@@ -84,7 +84,7 @@ void nft_payload_eval(const struct nft_e
  
- 	if (kvm_apic_hw_enabled(apic) && !(reg & APIC_LVT_MASKED)) {
- 		vector = reg & APIC_VECTOR_MASK;
- 		mode = reg & APIC_MODE_MASK;
- 		trig_mode = reg & APIC_LVT_LEVEL_TRIGGER;
--		return __apic_accept_irq(apic, mode, vector, 1, trig_mode,
--					NULL);
-+
-+		r = __apic_accept_irq(apic, mode, vector, 1, trig_mode, NULL);
-+		if (r && lvt_type == APIC_LVTPC)
-+			kvm_lapic_set_reg(apic, APIC_LVTPC, reg | APIC_LVT_MASKED);
-+		return r;
- 	}
- 	return 0;
- }
+ 	switch (priv->base) {
+ 	case NFT_PAYLOAD_LL_HEADER:
+-		if (!skb_mac_header_was_set(skb))
++		if (!skb_mac_header_was_set(skb) || skb_mac_header_len(skb) == 0)
+ 			goto err;
+ 
+ 		if (skb_vlan_tag_present(skb)) {
 
 
