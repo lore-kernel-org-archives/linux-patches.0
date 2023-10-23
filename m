@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA1C15E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6D815E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjiu8/g9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164DDC433C8;
-	Mon, 23 Oct 2023 11:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6vN0QFF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05796C433C7;
+	Mon, 23 Oct 2023 11:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061196;
-	bh=HsmlTkv0oL49chyMGjUSQQONQMZKpfvmHv003lOjhzo=;
+	s=korg; t=1698061199;
+	bh=Ei0TWvd0Nh3lCNlmezKgWdah7thm0FOr/mcr3hfh4Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yjiu8/g9z2jD0rEZ+ZgPTqQV3TQGOnswBsaAzBwG59GYFsF6mNcT49xRFq/zRl2Z4
-	 VoHUu24eN3ZzPxeitkQfWz5LltriLfIe+RfWazkq7nZSF+ZeD9c8MSLjIqWV776oUF
-	 0Lown9ZyLIBzy++YDSV8YAj6+7kGzXQegXdn39Fw=
+	b=g6vN0QFF5Q0qMYzwvj1HgfwfFUE7+/vAx7EcF5MKhhDXyKJY/EHtV5/N+RGTuUPYK
+	 sSOgDjz5+FQRyntpnE0MYDTL++UGkAfJX2TaItYn3g7IHJU7CmO3PN4yPVJr9XLCm1
+	 h2IgyHCY5GbXpcUBnsROalR1EN+d2iUEdA4XhlJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <dcbw@redhat.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Ben Greear <greearb@candelatech.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/137] wifi: mwifiex: Sanity check tlv_len and tlv_bitmap_len
-Date: Mon, 23 Oct 2023 12:57:15 +0200
-Message-ID: <20231023104823.549687999@linuxfoundation.org>
+Subject: [PATCH 5.15 079/137] wifi: iwlwifi: Ensure ack flag is properly cleared.
+Date: Mon, 23 Oct 2023 12:57:16 +0200
+Message-ID: <20231023104823.580148196@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -44,60 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Ben Greear <greearb@candelatech.com>
 
-[ Upstream commit d5a93b7d2877aae4ba7590ad6cb65f8d33079489 ]
+[ Upstream commit e8fbe99e87877f0412655f40d7c45bf8471470ac ]
 
-Add sanity checks for both `tlv_len` and `tlv_bitmap_len` before
-decoding data from `event_buf`.
+Debugging indicates that nothing else is clearing the info->flags,
+so some frames were flagged as ACKed when they should not be.
+Explicitly clear the ack flag to ensure this does not happen.
 
-This prevents any malicious or buggy firmware from overflowing
-`event_buf` through large values for `tlv_len` and `tlv_bitmap_len`.
-
-Suggested-by: Dan Williams <dcbw@redhat.com>
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/d4f8780527d551552ee96f17a0229e02e1c200d1.1692931954.git.gustavoars@kernel.org
+Signed-off-by: Ben Greear <greearb@candelatech.com>
+Acked-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230808205605.4105670-1-greearb@candelatech.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/marvell/mwifiex/11n_rxreorder.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-index cbe4a200e4eaf..e5f34805c92cc 100644
---- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-+++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-@@ -933,6 +933,14 @@ void mwifiex_11n_rxba_sync_event(struct mwifiex_private *priv,
- 	while (tlv_buf_left >= sizeof(*tlv_rxba)) {
- 		tlv_type = le16_to_cpu(tlv_rxba->header.type);
- 		tlv_len  = le16_to_cpu(tlv_rxba->header.len);
-+		if (size_add(sizeof(tlv_rxba->header), tlv_len) > tlv_buf_left) {
-+			mwifiex_dbg(priv->adapter, WARN,
-+				    "TLV size (%zu) overflows event_buf buf_left=%d\n",
-+				    size_add(sizeof(tlv_rxba->header), tlv_len),
-+				    tlv_buf_left);
-+			return;
-+		}
-+
- 		if (tlv_type != TLV_TYPE_RXBA_SYNC) {
- 			mwifiex_dbg(priv->adapter, ERROR,
- 				    "Wrong TLV id=0x%x\n", tlv_type);
-@@ -941,6 +949,14 @@ void mwifiex_11n_rxba_sync_event(struct mwifiex_private *priv,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+index e354918c2480f..b127e0b527ce0 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+@@ -1445,6 +1445,7 @@ static void iwl_mvm_rx_tx_cmd_single(struct iwl_mvm *mvm,
+ 		iwl_trans_free_tx_cmd(mvm->trans, info->driver_data[1]);
  
- 		tlv_seq_num = le16_to_cpu(tlv_rxba->seq_num);
- 		tlv_bitmap_len = le16_to_cpu(tlv_rxba->bitmap_len);
-+		if (size_add(sizeof(*tlv_rxba), tlv_bitmap_len) > tlv_buf_left) {
-+			mwifiex_dbg(priv->adapter, WARN,
-+				    "TLV size (%zu) overflows event_buf buf_left=%d\n",
-+				    size_add(sizeof(*tlv_rxba), tlv_bitmap_len),
-+				    tlv_buf_left);
-+			return;
-+		}
-+
- 		mwifiex_dbg(priv->adapter, INFO,
- 			    "%pM tid=%d seq_num=%d bitmap_len=%d\n",
- 			    tlv_rxba->mac, tlv_rxba->tid, tlv_seq_num,
+ 		memset(&info->status, 0, sizeof(info->status));
++		info->flags &= ~(IEEE80211_TX_STAT_ACK | IEEE80211_TX_STAT_TX_FILTERED);
+ 
+ 		/* inform mac80211 about what happened with the frame */
+ 		switch (status & TX_STATUS_MSK) {
+@@ -1790,6 +1791,8 @@ static void iwl_mvm_tx_reclaim(struct iwl_mvm *mvm, int sta_id, int tid,
+ 		 */
+ 		if (!is_flush)
+ 			info->flags |= IEEE80211_TX_STAT_ACK;
++		else
++			info->flags &= ~IEEE80211_TX_STAT_ACK;
+ 	}
+ 
+ 	/*
 -- 
 2.40.1
 
