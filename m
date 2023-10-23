@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399E4156C2
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F3314F6E
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdhyA2+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A737AC433CB;
-	Mon, 23 Oct 2023 11:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="herTjPZ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2783C433C7;
+	Mon, 23 Oct 2023 11:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060170;
-	bh=ptdZkBPKAlpZKgEUjjKbiyvzA8zy77LUwaq+PzYV/qw=;
+	s=korg; t=1698060173;
+	bh=cZGsV8VeEUwsvLkYEQIKZNu2WlXawgi3ARezfgI9jVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TdhyA2+HNBhVG+32+94EU50INyZPZk8Sda7RaB/MQONiV+3uaXx7/3uN5lg7uBz3h
-	 pB3uC4SON5gcOG+q8bxKqW4VM2QxZeTYlwSsrgV3+s+UlW6WkFf1R1DpBqOX3RAlYF
-	 EPXxniqua8RlOd+uqf8L6kGlO9Mh30pOyC9TLUvg=
+	b=herTjPZ+8AWxrDxxY+kNH9dr+bWkv4Zv8uxM4fxG+EnJGc0zEN3N/QHFeMVgjeBe1
+	 dApzxsrwO5UynNT4dKGlAL6/OoxQ+72DWZDV3iTjHzAJpgJewe0geKh6D0btDi+JoB
+	 fazRiFq0SdSgqr4ux61HGhBlU4Z8jVW5lXaIzOcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Stefan Wahren <wahrenst@gmx.net>,
 	Eric Dumazet <edumazet@google.com>,
 	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 054/196] tcp: fix excessive TLP and RACK timeouts from HZ rounding
-Date: Mon, 23 Oct 2023 12:55:19 +0200
-Message-ID: <20231023104830.060253008@linuxfoundation.org>
+Subject: [PATCH 6.1 055/196] tcp: tsq: relax tcp_small_queue_check() when rtx queue contains a single skb
+Date: Mon, 23 Oct 2023 12:55:20 +0200
+Message-ID: <20231023104830.091262472@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -43,96 +43,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 1c2709cfff1dedbb9591e989e2f001484208d914 upstream.
+commit f921a4a5bffa8a0005b190fb9421a7fc1fd716b6 upstream.
 
-We discovered from packet traces of slow loss recovery on kernels with
-the default HZ=250 setting (and min_rtt < 1ms) that after reordering,
-when receiving a SACKed sequence range, the RACK reordering timer was
-firing after about 16ms rather than the desired value of roughly
-min_rtt/4 + 2ms. The problem is largely due to the RACK reorder timer
-calculation adding in TCP_TIMEOUT_MIN, which is 2 jiffies. On kernels
-with HZ=250, this is 2*4ms = 8ms. The TLP timer calculation has the
-exact same issue.
+In commit 75eefc6c59fd ("tcp: tsq: add a shortcut in tcp_small_queue_check()")
+we allowed to send an skb regardless of TSQ limits being hit if rtx queue
+was empty or had a single skb, in order to better fill the pipe
+when/if TX completions were slow.
 
-This commit fixes the TLP transmit timer and RACK reordering timer
-floor calculation to more closely match the intended 2ms floor even on
-kernels with HZ=250. It does this by adding in a new
-TCP_TIMEOUT_MIN_US floor of 2000 us and then converting to jiffies,
-instead of the current approach of converting to jiffies and then
-adding th TCP_TIMEOUT_MIN value of 2 jiffies.
+Then later, commit 75c119afe14f ("tcp: implement rb-tree based
+retransmit queue") accidentally removed the special case for
+one skb in rtx queue.
 
-Our testing has verified that on kernels with HZ=1000, as expected,
-this does not produce significant changes in behavior, but on kernels
-with the default HZ=250 the latency improvement can be large. For
-example, our tests show that for HZ=250 kernels at low RTTs this fix
-roughly halves the latency for the RACK reorder timer: instead of
-mostly firing at 16ms it mostly fires at 8ms.
+Stefan Wahren reported a regression in single TCP flow throughput
+using a 100Mbit fec link, starting from commit 65466904b015 ("tcp: adjust
+TSO packet sizes based on min_rtt"). This last commit only made the
+regression more visible, because it locked the TCP flow on a particular
+behavior where TSQ prevented two skbs being pushed downstream,
+adding silences on the wire between each TSO packet.
 
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Fixes: bb4d991a28cc ("tcp: adjust tail loss probe timeout")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20231015174700.2206872-1-ncardwell.sw@gmail.com
+Many thanks to Stefan for his invaluable help !
+
+Fixes: 75c119afe14f ("tcp: implement rb-tree based retransmit queue")
+Link: https://lore.kernel.org/netdev/7f31ddc8-9971-495e-a1f6-819df542e0af@gmx.net/
+Reported-by: Stefan Wahren <wahrenst@gmx.net>
+Tested-by: Stefan Wahren <wahrenst@gmx.net>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20231017124526.4060202-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tcp.h       |    3 +++
- net/ipv4/tcp_output.c   |    9 +++++----
- net/ipv4/tcp_recovery.c |    2 +-
- 3 files changed, 9 insertions(+), 5 deletions(-)
+ net/ipv4/tcp_output.c |   16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -141,6 +141,9 @@ void tcp_time_wait(struct sock *sk, int
- #define TCP_RTO_MAX	((unsigned)(120*HZ))
- #define TCP_RTO_MIN	((unsigned)(HZ/5))
- #define TCP_TIMEOUT_MIN	(2U) /* Min timeout for TCP timers in jiffies */
-+
-+#define TCP_TIMEOUT_MIN_US (2*USEC_PER_MSEC) /* Min TCP timeout in microsecs */
-+
- #define TCP_TIMEOUT_INIT ((unsigned)(1*HZ))	/* RFC6298 2.1 initial RTO value	*/
- #define TCP_TIMEOUT_FALLBACK ((unsigned)(3*HZ))	/* RFC 1122 initial RTO value, now
- 						 * used as a fallback RTO for the
 --- a/net/ipv4/tcp_output.c
 +++ b/net/ipv4/tcp_output.c
-@@ -2735,7 +2735,7 @@ bool tcp_schedule_loss_probe(struct sock
- {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
- 	struct tcp_sock *tp = tcp_sk(sk);
--	u32 timeout, rto_delta_us;
-+	u32 timeout, timeout_us, rto_delta_us;
- 	int early_retrans;
+@@ -2489,6 +2489,18 @@ static bool tcp_pacing_check(struct sock
+ 	return true;
+ }
  
- 	/* Don't do any loss probe on a Fast Open connection before 3WHS
-@@ -2759,11 +2759,12 @@ bool tcp_schedule_loss_probe(struct sock
- 	 * sample is available then probe after TCP_TIMEOUT_INIT.
- 	 */
- 	if (tp->srtt_us) {
--		timeout = usecs_to_jiffies(tp->srtt_us >> 2);
-+		timeout_us = tp->srtt_us >> 2;
- 		if (tp->packets_out == 1)
--			timeout += TCP_RTO_MIN;
-+			timeout_us += tcp_rto_min_us(sk);
- 		else
--			timeout += TCP_TIMEOUT_MIN;
-+			timeout_us += TCP_TIMEOUT_MIN_US;
-+		timeout = usecs_to_jiffies(timeout_us);
- 	} else {
- 		timeout = TCP_TIMEOUT_INIT;
++static bool tcp_rtx_queue_empty_or_single_skb(const struct sock *sk)
++{
++	const struct rb_node *node = sk->tcp_rtx_queue.rb_node;
++
++	/* No skb in the rtx queue. */
++	if (!node)
++		return true;
++
++	/* Only one skb in rtx queue. */
++	return !node->rb_left && !node->rb_right;
++}
++
+ /* TCP Small Queues :
+  * Control number of packets in qdisc/devices to two packets / or ~1 ms.
+  * (These limits are doubled for retransmits)
+@@ -2526,12 +2538,12 @@ static bool tcp_small_queue_check(struct
+ 		limit += extra_bytes;
  	}
---- a/net/ipv4/tcp_recovery.c
-+++ b/net/ipv4/tcp_recovery.c
-@@ -104,7 +104,7 @@ bool tcp_rack_mark_lost(struct sock *sk)
- 	tp->rack.advanced = 0;
- 	tcp_rack_detect_loss(sk, &timeout);
- 	if (timeout) {
--		timeout = usecs_to_jiffies(timeout) + TCP_TIMEOUT_MIN;
-+		timeout = usecs_to_jiffies(timeout + TCP_TIMEOUT_MIN_US);
- 		inet_csk_reset_xmit_timer(sk, ICSK_TIME_REO_TIMEOUT,
- 					  timeout, inet_csk(sk)->icsk_rto);
- 	}
+ 	if (refcount_read(&sk->sk_wmem_alloc) > limit) {
+-		/* Always send skb if rtx queue is empty.
++		/* Always send skb if rtx queue is empty or has one skb.
+ 		 * No need to wait for TX completion to call us back,
+ 		 * after softirq/tasklet schedule.
+ 		 * This helps when TX completions are delayed too much.
+ 		 */
+-		if (tcp_rtx_queue_empty(sk))
++		if (tcp_rtx_queue_empty_or_single_skb(sk))
+ 			return false;
+ 
+ 		set_bit(TSQ_THROTTLED, &sk->sk_tsq_flags);
 
 
