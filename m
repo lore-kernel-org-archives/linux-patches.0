@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1EF15E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A3E15E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4CDKzs1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5745C433C8;
-	Mon, 23 Oct 2023 11:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grRkzUOr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B608BC433C8;
+	Mon, 23 Oct 2023 11:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060564;
-	bh=uOk0m1aJXZrhrbJDENs819+twT0gNwFYw1RGvUcn/7c=;
+	s=korg; t=1698060567;
+	bh=ysvA8v46okhoBfGKAUDmqz0fCJC8VKS8jB6nJPyDvqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G4CDKzs1dv8Srw5tSuaZ0GogSVxa5qdPv0vfyCiSNi8VnPl794uchPbvY/6TtJLki
-	 ui9rQRb/+M7Kas/Se/VvSPxZkvyu2C8McNd9UhgqISoCZ9dII0KlnOSkOOZF7r/VQs
-	 W2lE120l+ov/3Ft/yi7OJ6fEwa9dOM0q+t7Gppc8=
+	b=grRkzUOr74DmkvG8Njf3ltt5muExnjxp6stJM6J3mw7LZwBACoAXr39/+GymiV+ug
+	 Qa8Aws28KQJroxix/i9lI8wpU74E4GFlFGM7+ANVcah/Igp1/IMp3qs2yNzHBlhm2E
+	 FVgIWqCa4b2ZNiAScG2vY5w9PB1QxzKNLAeaQ2zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 018/123] workqueue: Override implicit ordered attribute in workqueue_apply_unbound_cpumask()
-Date: Mon, 23 Oct 2023 12:56:16 +0200
-Message-ID: <20231023104818.354164031@linuxfoundation.org>
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.4 019/123] dmaengine: stm32-mdma: abort resume if no ongoing transfer
+Date: Mon, 23 Oct 2023 12:56:17 +0200
+Message-ID: <20231023104818.388764690@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -42,57 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit ca10d851b9ad0338c19e8e3089e24d565ebfffd7 ]
+commit 81337b9a72dc58a5fa0ae8a042e8cb59f9bdec4a upstream.
 
-Commit 5c0338c68706 ("workqueue: restore WQ_UNBOUND/max_active==1
-to be ordered") enabled implicit ordered attribute to be added to
-WQ_UNBOUND workqueues with max_active of 1. This prevented the changing
-of attributes to these workqueues leading to fix commit 0a94efb5acbb
-("workqueue: implicit ordered attribute should be overridable").
+chan->desc can be null, if transfer is terminated when resume is called,
+leading to a NULL pointer when retrieving the hwdesc.
+To avoid this case, check that chan->desc is not null and channel is
+disabled (transfer previously paused or terminated).
 
-However, workqueue_apply_unbound_cpumask() was not updated at that time.
-So sysfs changes to wq_unbound_cpumask has no effect on WQ_UNBOUND
-workqueues with implicit ordered attribute. Since not all WQ_UNBOUND
-workqueues are visible on sysfs, we are not able to make all the
-necessary cpumask changes even if we iterates all the workqueue cpumasks
-in sysfs and changing them one by one.
-
-Fix this problem by applying the corresponding change made
-to apply_workqueue_attrs_locked() in the fix commit to
-workqueue_apply_unbound_cpumask().
-
-Fixes: 5c0338c68706 ("workqueue: restore WQ_UNBOUND/max_active==1 to be ordered")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a4ffb13c8946 ("dmaengine: Add STM32 MDMA driver")
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231004163531.2864160-1-amelie.delaunay@foss.st.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/workqueue.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/dma/stm32-mdma.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 856188b0681af..a2c4de2a11327 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -5273,9 +5273,13 @@ static int workqueue_apply_unbound_cpumask(void)
- 	list_for_each_entry(wq, &workqueues, list) {
- 		if (!(wq->flags & WQ_UNBOUND))
- 			continue;
-+
- 		/* creating multiple pwqs breaks ordering guarantee */
--		if (wq->flags & __WQ_ORDERED)
--			continue;
-+		if (!list_empty(&wq->pwqs)) {
-+			if (wq->flags & __WQ_ORDERED_EXPLICIT)
-+				continue;
-+			wq->flags &= ~__WQ_ORDERED;
-+		}
+--- a/drivers/dma/stm32-mdma.c
++++ b/drivers/dma/stm32-mdma.c
+@@ -1207,6 +1207,10 @@ static int stm32_mdma_resume(struct dma_
+ 	unsigned long flags;
+ 	u32 status, reg;
  
- 		ctx = apply_wqattrs_prepare(wq, wq->unbound_attrs);
- 		if (!ctx) {
--- 
-2.40.1
-
++	/* Transfer can be terminated */
++	if (!chan->desc || (stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id)) & STM32_MDMA_CCR_EN))
++		return -EPERM;
++
+ 	hwdesc = chan->desc->node[chan->curr_hwdesc].hwdesc;
+ 
+ 	spin_lock_irqsave(&chan->vchan.lock, flags);
 
 
