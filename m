@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5B014F6A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51D814F6A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6s/gC+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9DDC433C9;
-	Mon, 23 Oct 2023 11:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iT+gKEv0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F7AC433C7;
+	Mon, 23 Oct 2023 11:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060127;
-	bh=/0Msz1EWgZKVE9KByF1yCbiwHY1kdWe6aHPyawY4P7U=;
+	s=korg; t=1698060130;
+	bh=ZOF1oI9Wo/oWFbbn68IfF2FGxg3Stt6+mhY0tSbcpEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6s/gC+CUfQ3ou3ec8u9fc/Z99ewLoibgbUuOC4V0g0zJzE3WtfdNJhsnBwuzXYbz
-	 rL58sk+g450kQxIJfipPl9Hlkae2AETSx0u+1vw/o53gEhpJ1AcNPixYTR9aa2QF39
-	 LQ+cFi4GOsnn1Uyt74Bwa24UK3467ysLo75Mu6ac=
+	b=iT+gKEv0e3klAdo2L8hO2YkhbzsFvZiipPYA9vg0E/X2ajqL8EfC5/ZrXlaBSSYrv
+	 +8V1NrFfVtGaRQFO7u+vTRqSQbM2ajibOOZP3PDopLAnkEtzibxWqa7Nq6yg9QyUvo
+	 zHE7XFLTryNmnP9XxYzVbnJWETgsQIDTrNTCmh+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.1 050/196] wifi: cfg80211: use system_unbound_wq for wiphy work
-Date: Mon, 23 Oct 2023 12:55:15 +0200
-Message-ID: <20231023104829.935017764@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.1 068/196] netfilter: nft_set_rbtree: .deactivate fails if element has expired
+Date: Mon, 23 Oct 2023 12:55:33 +0200
+Message-ID: <20231023104830.466689853@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -41,34 +41,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 91d20ab9d9ca035527af503d00e1e30d6c375f2a upstream.
+commit d111692a59c1470ae530cbb39bcf0346c950ecc7 upstream.
 
-Since wiphy work items can run pretty much arbitrary
-code in the stack/driver, it can take longer to run
-all of this, so we shouldn't be using system_wq via
-schedule_work(). Also, we lock the wiphy (which is
-the reason this exists), so use system_unbound_wq.
+This allows to remove an expired element which is not possible in other
+existing set backends, this is more noticeable if gc-interval is high so
+expired elements remain in the tree. On-demand gc also does not help in
+this case, because this is delete element path. Return NULL if element
+has expired.
 
-Reported-and-tested-by: Kalle Valo <kvalo@kernel.org>
-Fixes: a3ee4dc84c4e ("wifi: cfg80211: add a work abstraction with special semantics")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 8d8540c4f5e0 ("netfilter: nft_set_rbtree: add timeout support")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_set_rbtree.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1618,7 +1618,7 @@ void wiphy_work_queue(struct wiphy *wiph
- 		list_add_tail(&work->entry, &rdev->wiphy_work_list);
- 	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
- 
--	schedule_work(&rdev->wiphy_work);
-+	queue_work(system_unbound_wq, &rdev->wiphy_work);
- }
- EXPORT_SYMBOL_GPL(wiphy_work_queue);
- 
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -568,6 +568,8 @@ static void *nft_rbtree_deactivate(const
+ 				   nft_rbtree_interval_end(this)) {
+ 				parent = parent->rb_right;
+ 				continue;
++			} else if (nft_set_elem_expired(&rbe->ext)) {
++				break;
+ 			} else if (!nft_set_elem_active(&rbe->ext, genmask)) {
+ 				parent = parent->rb_left;
+ 				continue;
 
 
