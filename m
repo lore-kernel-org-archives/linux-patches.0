@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BAE14282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3316515484
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OeqJmTKO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86D2C433CA;
-	Mon, 23 Oct 2023 11:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ovc5M4Um"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3896C433C7;
+	Mon, 23 Oct 2023 11:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059853;
-	bh=SAQ4R6bf3kNBN/cuwBblShJEtw1fRBZ7BysokwevPXI=;
+	s=korg; t=1698059856;
+	bh=JzB1lS4h6Vn0M8/w6hU5t0nR1I55J2Bc3fBI4CB4VZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OeqJmTKO2kyzt7nN8luI4gM8zK0R71MoncNhgBcK7tiGhuZB8VLngL/6BOmbn6a/J
-	 udDRdqvJSAxQ7Grr5me/qSb242sJK6jqe+ndYlNXCdDntcCYbuACiCyNgd0pOqP6QH
-	 /NH2BTDreDUgsQNAR/++ZpulvTwBiq+sJCvOaACM=
+	b=Ovc5M4Um5EI0sZ2tQJSHdRUYk991jAzTZbnuNur4wNwr5SCkzyj2nYYC4j+IpQxp6
+	 FyuqXNPcbKC54XGdxMOrhvsP2hPmWwFTmDtTm7cUUWKJyKzpZNxVyPMZHGaR63gmaK
+	 5i0BzGDIW6ZJjkkkfNLUkQTH+/JwC0B7i7DmDqJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ying Hsu <yinghsu@chromium.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 75/98] Bluetooth: Avoid redundant authentication
-Date: Mon, 23 Oct 2023 12:57:04 +0200
-Message-ID: <20231023104816.212380051@linuxfoundation.org>
+Subject: [PATCH 4.19 76/98] Bluetooth: hci_core: Fix build warnings
+Date: Mon, 23 Oct 2023 12:57:05 +0200
+Message-ID: <20231023104816.245640047@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -36,110 +35,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ying Hsu <yinghsu@chromium.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 1d8e801422d66e4b8c7b187c52196bef94eed887 ]
+[ Upstream commit dcda165706b9fbfd685898d46a6749d7d397e0c0 ]
 
-While executing the Android 13 CTS Verifier Secure Server test on a
-ChromeOS device, it was observed that the Bluetooth host initiates
-authentication for an RFCOMM connection after SSP completes.
-When this happens, some Intel Bluetooth controllers, like AC9560, would
-disconnect with "Connection Rejected due to Security Reasons (0x0e)".
+This fixes the following warnings:
 
-Historically, BlueZ did not mandate this authentication while an
-authenticated combination key was already in use for the connection.
-This behavior was changed since commit 7b5a9241b780
-("Bluetooth: Introduce requirements for security level 4").
-So, this patch addresses the aforementioned disconnection issue by
-restoring the previous behavior.
+net/bluetooth/hci_core.c: In function ‘hci_register_dev’:
+net/bluetooth/hci_core.c:2620:54: warning: ‘%d’ directive output may
+be truncated writing between 1 and 10 bytes into a region of size 5
+[-Wformat-truncation=]
+ 2620 |         snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
+      |                                                      ^~
+net/bluetooth/hci_core.c:2620:50: note: directive argument in the range
+[0, 2147483647]
+ 2620 |         snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
+      |                                                  ^~~~~~~
+net/bluetooth/hci_core.c:2620:9: note: ‘snprintf’ output between 5 and
+14 bytes into a destination of size 8
+ 2620 |         snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Signed-off-by: Ying Hsu <yinghsu@chromium.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 63 ++++++++++++++++++++++------------------
- 1 file changed, 35 insertions(+), 28 deletions(-)
+ include/net/bluetooth/hci_core.h | 2 +-
+ net/bluetooth/hci_core.c         | 8 +++++---
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 9d01cccc84ade..b876e97b61c92 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1388,34 +1388,41 @@ int hci_conn_security(struct hci_conn *conn, __u8 sec_level, __u8 auth_type,
- 	if (!test_bit(HCI_CONN_AUTH, &conn->flags))
- 		goto auth;
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 464a78200a31f..d3503f8c054ee 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -209,7 +209,7 @@ struct hci_dev {
+ 	struct list_head list;
+ 	struct mutex	lock;
  
--	/* An authenticated FIPS approved combination key has sufficient
--	 * security for security level 4. */
--	if (conn->key_type == HCI_LK_AUTH_COMBINATION_P256 &&
--	    sec_level == BT_SECURITY_FIPS)
--		goto encrypt;
--
--	/* An authenticated combination key has sufficient security for
--	   security level 3. */
--	if ((conn->key_type == HCI_LK_AUTH_COMBINATION_P192 ||
--	     conn->key_type == HCI_LK_AUTH_COMBINATION_P256) &&
--	    sec_level == BT_SECURITY_HIGH)
--		goto encrypt;
--
--	/* An unauthenticated combination key has sufficient security for
--	   security level 1 and 2. */
--	if ((conn->key_type == HCI_LK_UNAUTH_COMBINATION_P192 ||
--	     conn->key_type == HCI_LK_UNAUTH_COMBINATION_P256) &&
--	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW))
--		goto encrypt;
--
--	/* A combination key has always sufficient security for the security
--	   levels 1 or 2. High security level requires the combination key
--	   is generated using maximum PIN code length (16).
--	   For pre 2.1 units. */
--	if (conn->key_type == HCI_LK_COMBINATION &&
--	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW ||
--	     conn->pin_length == 16))
--		goto encrypt;
-+	switch (conn->key_type) {
-+	case HCI_LK_AUTH_COMBINATION_P256:
-+		/* An authenticated FIPS approved combination key has
-+		 * sufficient security for security level 4 or lower.
-+		 */
-+		if (sec_level <= BT_SECURITY_FIPS)
-+			goto encrypt;
-+		break;
-+	case HCI_LK_AUTH_COMBINATION_P192:
-+		/* An authenticated combination key has sufficient security for
-+		 * security level 3 or lower.
-+		 */
-+		if (sec_level <= BT_SECURITY_HIGH)
-+			goto encrypt;
-+		break;
-+	case HCI_LK_UNAUTH_COMBINATION_P192:
-+	case HCI_LK_UNAUTH_COMBINATION_P256:
-+		/* An unauthenticated combination key has sufficient security
-+		 * for security level 2 or lower.
-+		 */
-+		if (sec_level <= BT_SECURITY_MEDIUM)
-+			goto encrypt;
-+		break;
-+	case HCI_LK_COMBINATION:
-+		/* A combination key has always sufficient security for the
-+		 * security levels 2 or lower. High security level requires the
-+		 * combination key is generated using maximum PIN code length
-+		 * (16). For pre 2.1 units.
-+		 */
-+		if (sec_level <= BT_SECURITY_MEDIUM || conn->pin_length == 16)
-+			goto encrypt;
-+		break;
-+	default:
-+		break;
-+	}
+-	char		name[8];
++	const char	*name;
+ 	unsigned long	flags;
+ 	__u16		id;
+ 	__u8		bus;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 9fdc772ab32ea..4d89e38dceec3 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3193,7 +3193,11 @@ int hci_register_dev(struct hci_dev *hdev)
+ 	if (id < 0)
+ 		return id;
  
- auth:
- 	if (test_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags))
+-	snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
++	error = dev_set_name(&hdev->dev, "hci%u", id);
++	if (error)
++		return error;
++
++	hdev->name = dev_name(&hdev->dev);
+ 	hdev->id = id;
+ 
+ 	BT_DBG("%p name %s bus %d", hdev, hdev->name, hdev->bus);
+@@ -3215,8 +3219,6 @@ int hci_register_dev(struct hci_dev *hdev)
+ 	if (!IS_ERR_OR_NULL(bt_debugfs))
+ 		hdev->debugfs = debugfs_create_dir(hdev->name, bt_debugfs);
+ 
+-	dev_set_name(&hdev->dev, "%s", hdev->name);
+-
+ 	error = device_add(&hdev->dev);
+ 	if (error < 0)
+ 		goto err_wqueue;
 -- 
 2.40.1
 
