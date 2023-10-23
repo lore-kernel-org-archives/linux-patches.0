@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1535214A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA1814A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5Cocz95"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83AA5C433C8;
-	Mon, 23 Oct 2023 11:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFBDmiKM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7DDC433C7;
+	Mon, 23 Oct 2023 11:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058968;
-	bh=aEojCat8KpQ+l/jmlbm8MDc1sXzifGFCOkg2zxFRn34=;
+	s=korg; t=1698058971;
+	bh=2poGV2HlnzEkYALeEmU1slHSdYL5wQ59aDehi+wFPqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5Cocz951qwWijfcEO481m/hkb5z+wlGWmLQI7tdSsRz7sP82uLHALmUi127/lA7P
-	 FoF3WYmD6AEX2MONarqWMtFyeTsIXix8U/wJE/MLNQq2xI0eJeIxtZ+toCcpasjxgP
-	 YOG4fnfTPrkWMaQufB680ncMeod6w84BXrWx+QxQ=
+	b=gFBDmiKMnr1YeadAqrsuAziIzK237hBqG52i7nB+/o9iFh8hUckTQjsfkbzxTaCBL
+	 qvbrT7GkQV2q/W8PDRJbH4F4P7mA0hOv0QgHTb9iXmdjmEqDdSCqXe2JyumBXkofI2
+	 DSA8vXnSMcgbzywv/OrrWtd/Rb0aNzzpKPMe5p7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lee, Chun-Yi" <jlee@suse.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Lee
-Subject: [PATCH 6.5 002/241] Bluetooth: Reject connection with the device which has same BD_ADDR
-Date: Mon, 23 Oct 2023 12:53:08 +0200
-Message-ID: <20231023104833.899551700@linuxfoundation.org>
+	Roman Kagan <rkagan@amazon.de>,
+	Like Xu <likexu@tencent.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.5 020/241] KVM: x86/pmu: Truncate counter value to allowed width on write
+Date: Mon, 23 Oct 2023 12:53:26 +0200
+Message-ID: <20231023104834.421583525@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,86 +42,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee, Chun-Yi <jlee@suse.com>
+From: Roman Kagan <rkagan@amazon.de>
 
-commit 1ffc6f8cc33268731fcf9629fc4438f6db1191fc upstream.
+commit b29a2acd36dd7a33c63f260df738fb96baa3d4f8 upstream.
 
-This change is used to relieve CVE-2020-26555. The description of
-the CVE:
+Performance counters are defined to have width less than 64 bits.  The
+vPMU code maintains the counters in u64 variables but assumes the value
+to fit within the defined width.  However, for Intel non-full-width
+counters (MSR_IA32_PERFCTRx) the value receieved from the guest is
+truncated to 32 bits and then sign-extended to full 64 bits.  If a
+negative value is set, it's sign-extended to 64 bits, but then in
+kvm_pmu_incr_counter() it's incremented, truncated, and compared to the
+previous value for overflow detection.
 
-Bluetooth legacy BR/EDR PIN code pairing in Bluetooth Core Specification
-1.0B through 5.2 may permit an unauthenticated nearby device to spoof
-the BD_ADDR of the peer device to complete pairing without knowledge
-of the PIN. [1]
+That previous value is not truncated, so it always evaluates bigger than
+the truncated new one, and a PMI is injected.  If the PMI handler writes
+a negative counter value itself, the vCPU never quits the PMI loop.
 
-The detail of this attack is in IEEE paper:
-BlueMirror: Reflections on Bluetooth Pairing and Provisioning Protocols
-[2]
+Turns out that Linux PMI handler actually does write the counter with
+the value just read with RDPMC, so when no full-width support is exposed
+via MSR_IA32_PERF_CAPABILITIES, and the guest initializes the counter to
+a negative value, it locks up.
 
-It's a reflection attack. The paper mentioned that attacker can induce
-the attacked target to generate null link key (zero key) without PIN
-code. In BR/EDR, the key generation is actually handled in the controller
-which is below HCI.
+This has been observed in the field, for example, when the guest configures
+atop to use perfevents and runs two instances of it simultaneously.
 
-A condition of this attack is that attacker should change the
-BR_ADDR of his hacking device (Host B) to equal to the BR_ADDR with
-the target device being attacked (Host A).
+To address the problem, maintain the invariant that the counter value
+always fits in the defined bit width, by truncating the received value
+in the respective set_msr methods.  For better readability, factor the
+out into a helper function, pmc_write_counter(), shared by vmx and svm
+parts.
 
-Thus, we reject the connection with device which has same BD_ADDR
-both on HCI_Create_Connection and HCI_Connection_Request to prevent
-the attack. A similar implementation also shows in btstack project.
-[3][4]
-
+Fixes: 9cd803d496e7 ("KVM: x86: Update vPMCs when retiring instructions")
 Cc: stable@vger.kernel.org
-Link: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-26555 [1]
-Link: https://ieeexplore.ieee.org/abstract/document/9474325/authors#authors [2]
-Link: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L3523 [3]
-Link: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L7297 [4]
-Signed-off-by: Lee, Chun-Yi <jlee@suse.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Roman Kagan <rkagan@amazon.de>
+Link: https://lore.kernel.org/all/20230504120042.785651-1-rkagan@amazon.de
+Tested-by: Like Xu <likexu@tencent.com>
+[sean: tweak changelog, s/set/write in the helper]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c  |    9 +++++++++
- net/bluetooth/hci_event.c |   11 +++++++++++
- 2 files changed, 20 insertions(+)
+ arch/x86/kvm/pmu.h           |    6 ++++++
+ arch/x86/kvm/svm/pmu.c       |    2 +-
+ arch/x86/kvm/vmx/pmu_intel.c |    4 ++--
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1589,6 +1589,15 @@ struct hci_conn *hci_connect_acl(struct
- 		return ERR_PTR(-EOPNOTSUPP);
+--- a/arch/x86/kvm/pmu.h
++++ b/arch/x86/kvm/pmu.h
+@@ -74,6 +74,12 @@ static inline u64 pmc_read_counter(struc
+ 	return counter & pmc_bitmask(pmc);
+ }
+ 
++static inline void pmc_write_counter(struct kvm_pmc *pmc, u64 val)
++{
++	pmc->counter += val - pmc_read_counter(pmc);
++	pmc->counter &= pmc_bitmask(pmc);
++}
++
+ static inline void pmc_release_perf_event(struct kvm_pmc *pmc)
+ {
+ 	if (pmc->perf_event) {
+--- a/arch/x86/kvm/svm/pmu.c
++++ b/arch/x86/kvm/svm/pmu.c
+@@ -160,7 +160,7 @@ static int amd_pmu_set_msr(struct kvm_vc
+ 	/* MSR_PERFCTRn */
+ 	pmc = get_gp_pmc_amd(pmu, msr, PMU_TYPE_COUNTER);
+ 	if (pmc) {
+-		pmc->counter += data - pmc_read_counter(pmc);
++		pmc_write_counter(pmc, data);
+ 		pmc_update_sample_period(pmc);
+ 		return 0;
  	}
- 
-+	/* Reject outgoing connection to device with same BD ADDR against
-+	 * CVE-2020-26555
-+	 */
-+	if (!bacmp(&hdev->bdaddr, dst)) {
-+		bt_dev_dbg(hdev, "Reject connection with same BD_ADDR %pMR\n",
-+			   dst);
-+		return ERR_PTR(-ECONNREFUSED);
-+	}
-+
- 	acl = hci_conn_hash_lookup_ba(hdev, ACL_LINK, dst);
- 	if (!acl) {
- 		acl = hci_conn_add(hdev, ACL_LINK, dst, HCI_ROLE_MASTER);
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3272,6 +3272,17 @@ static void hci_conn_request_evt(struct
- 
- 	bt_dev_dbg(hdev, "bdaddr %pMR type 0x%x", &ev->bdaddr, ev->link_type);
- 
-+	/* Reject incoming connection from device with same BD ADDR against
-+	 * CVE-2020-26555
-+	 */
-+	if (!bacmp(&hdev->bdaddr, &ev->bdaddr))
-+	{
-+		bt_dev_dbg(hdev, "Reject connection with same BD_ADDR %pMR\n",
-+			   &ev->bdaddr);
-+		hci_reject_conn(hdev, &ev->bdaddr);
-+		return;
-+	}
-+
- 	mask |= hci_proto_connect_ind(hdev, &ev->bdaddr, ev->link_type,
- 				      &flags);
- 
+--- a/arch/x86/kvm/vmx/pmu_intel.c
++++ b/arch/x86/kvm/vmx/pmu_intel.c
+@@ -406,11 +406,11 @@ static int intel_pmu_set_msr(struct kvm_
+ 			if (!msr_info->host_initiated &&
+ 			    !(msr & MSR_PMC_FULL_WIDTH_BIT))
+ 				data = (s64)(s32)data;
+-			pmc->counter += data - pmc_read_counter(pmc);
++			pmc_write_counter(pmc, data);
+ 			pmc_update_sample_period(pmc);
+ 			break;
+ 		} else if ((pmc = get_fixed_pmc(pmu, msr))) {
+-			pmc->counter += data - pmc_read_counter(pmc);
++			pmc_write_counter(pmc, data);
+ 			pmc_update_sample_period(pmc);
+ 			break;
+ 		} else if ((pmc = get_gp_pmc(pmu, msr, MSR_P6_EVNTSEL0))) {
 
 
