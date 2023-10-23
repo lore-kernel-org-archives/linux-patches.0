@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18D214282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E079914282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbaHXRc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C81DC433C8;
-	Mon, 23 Oct 2023 11:10:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xylGSTGX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA96C433C8;
+	Mon, 23 Oct 2023 11:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059429;
-	bh=8YHNhdAj3J2SBXU9Tg3+reXFMHeTklAwxiVHiybWZl4=;
+	s=korg; t=1698059432;
+	bh=Ar0La9h1vNLBvctzfDrDl0zNBH3vk19WAoiUa4OdBPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbaHXRc67mvuNmNBxOk6ctRHroZMbcNr5deDT/JSunA6e/fgdwq2oKZ6YL/Ojg+V7
-	 uWKwEEM1QKT19GW3B4jFRH8NptH9gAz+FiIQ9dEud6Xq9qFCvTeX0nXe6oO+Y5vIzn
-	 zrYsAthXEz4mrot1vhqvjdhgDFAN6ad+iuq7qIhk=
+	b=xylGSTGXV0cWpdQCfzUQClVRTM+j00OG4xvfh+X225QM5wcTetRQs5c80jtqLpy0N
+	 WFiM1GQNdETXWcmO/cLAaLKniWHtCNz+OxPH0dBAKvVP+rAx8tZgkOVw9lJtUucLKO
+	 XCIQVuY2xbe9tsY+yF/2eumDain/hUIvIUi1B5Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 148/241] Bluetooth: hci_sync: always check if connection is alive before deleting
-Date: Mon, 23 Oct 2023 12:55:34 +0200
-Message-ID: <20231023104837.477017728@linuxfoundation.org>
+Subject: [PATCH 6.5 149/241] net/mlx5: E-switch, register event handler before arming the event
+Date: Mon, 23 Oct 2023 12:55:35 +0200
+Message-ID: <20231023104837.500867396@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,101 +43,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit a239110ee8e0b0aafa265f0d54f7a16744855e70 ]
+[ Upstream commit 7624e58a8b3a251e3e5108b32f2183b34453db32 ]
 
-In hci_abort_conn_sync it is possible that conn is deleted concurrently
-by something else, also e.g. when waiting for hdev->lock.  This causes
-double deletion of the conn, so UAF or conn_hash.list corruption.
+Currently, mlx5 is registering event handler for vport context change
+event some time after arming the event. this can lead to missing an
+event, which will result in wrong rules in the FDB.
+Hence, register the event handler before arming the event.
 
-Fix by having all code paths check that the connection is still in
-conn_hash before deleting it, while holding hdev->lock which prevents
-any races.
+This solution is valid since FW is sending vport context change event
+only on vports which SW armed, and SW arming the vport when enabling
+it, which is done after the FDB has been created.
 
-Log (when powering off while BAP streaming, occurs rarely):
-=======================================================================
-kernel BUG at lib/list_debug.c:56!
-...
- ? __list_del_entry_valid (lib/list_debug.c:56)
- hci_conn_del (net/bluetooth/hci_conn.c:154) bluetooth
- hci_abort_conn_sync (net/bluetooth/hci_sync.c:5415) bluetooth
- ? __pfx_hci_abort_conn_sync+0x10/0x10 [bluetooth]
- ? lock_release+0x1d5/0x3c0
- ? hci_disconnect_all_sync.constprop.0+0xb2/0x230 [bluetooth]
- ? __pfx_lock_release+0x10/0x10
- ? __kmem_cache_free+0x14d/0x2e0
- hci_disconnect_all_sync.constprop.0+0xda/0x230 [bluetooth]
- ? __pfx_hci_disconnect_all_sync.constprop.0+0x10/0x10 [bluetooth]
- ? hci_clear_adv_sync+0x14f/0x170 [bluetooth]
- ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
- hci_set_powered_sync+0x293/0x450 [bluetooth]
-=======================================================================
-
-Fixes: 94d9ba9f9888 ("Bluetooth: hci_sync: Fix UAF in hci_disconnect_all_sync")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 6933a9379559 ("net/mlx5: E-Switch, Use async events chain")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/eswitch.c   | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index d21127e992c0f..360813ab0c4db 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5374,6 +5374,7 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index 6e9b1b183190d..51afb97b9e452 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -1022,11 +1022,8 @@ const u32 *mlx5_esw_query_functions(struct mlx5_core_dev *dev)
+ 	return ERR_PTR(err);
+ }
+ 
+-static void mlx5_eswitch_event_handlers_register(struct mlx5_eswitch *esw)
++static void mlx5_eswitch_event_handler_register(struct mlx5_eswitch *esw)
  {
- 	int err = 0;
- 	u16 handle = conn->handle;
-+	bool disconnect = false;
- 	struct hci_conn *c;
- 
- 	switch (conn->state) {
-@@ -5389,24 +5390,15 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
- 		break;
- 	case BT_OPEN:
- 	case BT_BOUND:
--		hci_dev_lock(hdev);
--		hci_conn_failed(conn, reason);
--		hci_dev_unlock(hdev);
--		return 0;
-+		break;
- 	default:
--		hci_dev_lock(hdev);
--		conn->state = BT_CLOSED;
--		hci_disconn_cfm(conn, reason);
--		hci_conn_del(conn);
--		hci_dev_unlock(hdev);
--		return 0;
-+		disconnect = true;
-+		break;
+-	MLX5_NB_INIT(&esw->nb, eswitch_vport_event, NIC_VPORT_CHANGE);
+-	mlx5_eq_notifier_register(esw->dev, &esw->nb);
+-
+ 	if (esw->mode == MLX5_ESWITCH_OFFLOADS && mlx5_eswitch_is_funcs_handler(esw->dev)) {
+ 		MLX5_NB_INIT(&esw->esw_funcs.nb, mlx5_esw_funcs_changed_handler,
+ 			     ESW_FUNCTIONS_CHANGED);
+@@ -1034,13 +1031,11 @@ static void mlx5_eswitch_event_handlers_register(struct mlx5_eswitch *esw)
  	}
+ }
  
- 	hci_dev_lock(hdev);
+-static void mlx5_eswitch_event_handlers_unregister(struct mlx5_eswitch *esw)
++static void mlx5_eswitch_event_handler_unregister(struct mlx5_eswitch *esw)
+ {
+ 	if (esw->mode == MLX5_ESWITCH_OFFLOADS && mlx5_eswitch_is_funcs_handler(esw->dev))
+ 		mlx5_eq_notifier_unregister(esw->dev, &esw->esw_funcs.nb);
  
--	/* Check if the connection hasn't been cleanup while waiting
--	 * commands to complete.
--	 */
-+	/* Check if the connection has been cleaned up concurrently */
- 	c = hci_conn_hash_lookup_handle(hdev, handle);
- 	if (!c || c != conn) {
- 		err = 0;
-@@ -5418,7 +5410,13 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
- 	 * or in case of LE it was still scanning so it can be cleanup
- 	 * safely.
+-	mlx5_eq_notifier_unregister(esw->dev, &esw->nb);
+-
+ 	flush_workqueue(esw->work_queue);
+ }
+ 
+@@ -1419,6 +1414,9 @@ int mlx5_eswitch_enable_locked(struct mlx5_eswitch *esw, int num_vfs)
+ 
+ 	mlx5_eswitch_update_num_of_vfs(esw, num_vfs);
+ 
++	MLX5_NB_INIT(&esw->nb, eswitch_vport_event, NIC_VPORT_CHANGE);
++	mlx5_eq_notifier_register(esw->dev, &esw->nb);
++
+ 	if (esw->mode == MLX5_ESWITCH_LEGACY) {
+ 		err = esw_legacy_enable(esw);
+ 	} else {
+@@ -1431,7 +1429,7 @@ int mlx5_eswitch_enable_locked(struct mlx5_eswitch *esw, int num_vfs)
+ 
+ 	esw->fdb_table.flags |= MLX5_ESW_FDB_CREATED;
+ 
+-	mlx5_eswitch_event_handlers_register(esw);
++	mlx5_eswitch_event_handler_register(esw);
+ 
+ 	esw_info(esw->dev, "Enable: mode(%s), nvfs(%d), necvfs(%d), active vports(%d)\n",
+ 		 esw->mode == MLX5_ESWITCH_LEGACY ? "LEGACY" : "OFFLOADS",
+@@ -1558,7 +1556,8 @@ void mlx5_eswitch_disable_locked(struct mlx5_eswitch *esw)
  	 */
--	hci_conn_failed(conn, reason);
-+	if (disconnect) {
-+		conn->state = BT_CLOSED;
-+		hci_disconn_cfm(conn, reason);
-+		hci_conn_del(conn);
-+	} else {
-+		hci_conn_failed(conn, reason);
-+	}
+ 	mlx5_esw_mode_change_notify(esw, MLX5_ESWITCH_LEGACY);
  
- unlock:
- 	hci_dev_unlock(hdev);
+-	mlx5_eswitch_event_handlers_unregister(esw);
++	mlx5_eq_notifier_unregister(esw->dev, &esw->nb);
++	mlx5_eswitch_event_handler_unregister(esw);
+ 
+ 	esw_info(esw->dev, "Disable: mode(%s), nvfs(%d), necvfs(%d), active vports(%d)\n",
+ 		 esw->mode == MLX5_ESWITCH_LEGACY ? "LEGACY" : "OFFLOADS",
 -- 
 2.40.1
 
