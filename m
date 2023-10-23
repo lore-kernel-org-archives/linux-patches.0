@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D70814282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536E414282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:17:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMWYmQg7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5C8C433C7;
-	Mon, 23 Oct 2023 11:17:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYZQqytu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD17C433C8;
+	Mon, 23 Oct 2023 11:17:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059840;
-	bh=572KN/TaHGUt7ry0Hj3mLW1R5xRf7uXMeqCy64xxA7U=;
+	s=korg; t=1698059843;
+	bh=RKFr6jnxwCQjzJ7SirEH1CtDl+41QW016riwsQ7x/EY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qMWYmQg7soQAPgnko7X9dctCcKHN6TdHFJn0VhafDokCee63Io65cVSB3RIx9Jq5v
-	 gYqZP9KdNp0Fk68QDEsMaOQq/pp56JkmJkGKeXhN8VKeaLcPoe8ZFeBZu/cbdzP8r7
-	 jyBudTCQ/W7HjwFCjJMeUYQGijrPlCIapDyHbsr0=
+	b=AYZQqytuAZgq7D+T7a0QeO6mb2n5xkNfqLM47gRpJfFBc0XesHhf36CvIgUT9WJsj
+	 wSOk0wYjqIz5MGs4Th7LlTgl0LSR2FXVagcrtde4TIYDSxQPi/SmmqaH+EGS0U32Y8
+	 ax0zEm4Ex823+Y6OBfzBvy5n5GuvPK21K+LxSqGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 71/98] gpio: timberdale: Fix potential deadlock on &tgpio->lock
-Date: Mon, 23 Oct 2023 12:57:00 +0200
-Message-ID: <20231023104816.079759304@linuxfoundation.org>
+Subject: [PATCH 4.19 72/98] ata: libata-eh: Fix compilation warning in ata_eh_link_report()
+Date: Mon, 23 Oct 2023 12:57:01 +0200
+Message-ID: <20231023104816.115415034@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -37,68 +38,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 9e8bc2dda5a7a8e2babc9975f4b11c9a6196e490 ]
+[ Upstream commit 49728bdc702391902a473b9393f1620eea32acb0 ]
 
-As timbgpio_irq_enable()/timbgpio_irq_disable() callback could be
-executed under irq context, it could introduce double locks on
-&tgpio->lock if it preempts other execution units requiring
-the same locks.
+The 6 bytes length of the tries_buf string in ata_eh_link_report() is
+too short and results in a gcc compilation warning with W-!:
 
-timbgpio_gpio_set()
---> timbgpio_update_bit()
---> spin_lock(&tgpio->lock)
-<interrupt>
-   --> timbgpio_irq_disable()
-   --> spin_lock_irqsave(&tgpio->lock)
+drivers/ata/libata-eh.c: In function ‘ata_eh_link_report’:
+drivers/ata/libata-eh.c:2371:59: warning: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 4 [-Wformat-truncation=]
+ 2371 |                 snprintf(tries_buf, sizeof(tries_buf), " t%d",
+      |                                                           ^~
+drivers/ata/libata-eh.c:2371:56: note: directive argument in the range [-2147483648, 4]
+ 2371 |                 snprintf(tries_buf, sizeof(tries_buf), " t%d",
+      |                                                        ^~~~~~
+drivers/ata/libata-eh.c:2371:17: note: ‘snprintf’ output between 4 and 14 bytes into a destination of size 6
+ 2371 |                 snprintf(tries_buf, sizeof(tries_buf), " t%d",
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 2372 |                          ap->eh_tries);
+      |                          ~~~~~~~~~~~~~
 
-This flaw was found by an experimental static analysis tool I am
-developing for irq-related deadlock.
+Avoid this warning by increasing the string size to 16B.
 
-To prevent the potential deadlock, the patch uses spin_lock_irqsave()
-on &tgpio->lock inside timbgpio_gpio_set() to prevent the possible
-deadlock scenario.
-
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-timberdale.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/ata/libata-eh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-timberdale.c b/drivers/gpio/gpio-timberdale.c
-index 314e300d6ba33..1e6925c27ae29 100644
---- a/drivers/gpio/gpio-timberdale.c
-+++ b/drivers/gpio/gpio-timberdale.c
-@@ -55,9 +55,10 @@ static int timbgpio_update_bit(struct gpio_chip *gpio, unsigned index,
- 	unsigned offset, bool enabled)
- {
- 	struct timbgpio *tgpio = gpiochip_get_data(gpio);
-+	unsigned long flags;
- 	u32 reg;
+diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
+index 73a4dd37d04ae..63423d9e1457c 100644
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -2443,7 +2443,7 @@ static void ata_eh_link_report(struct ata_link *link)
+ 	struct ata_eh_context *ehc = &link->eh_context;
+ 	struct ata_queued_cmd *qc;
+ 	const char *frozen, *desc;
+-	char tries_buf[6] = "";
++	char tries_buf[16] = "";
+ 	int tag, nr_failed = 0;
  
--	spin_lock(&tgpio->lock);
-+	spin_lock_irqsave(&tgpio->lock, flags);
- 	reg = ioread32(tgpio->membase + offset);
- 
- 	if (enabled)
-@@ -66,7 +67,7 @@ static int timbgpio_update_bit(struct gpio_chip *gpio, unsigned index,
- 		reg &= ~(1 << index);
- 
- 	iowrite32(reg, tgpio->membase + offset);
--	spin_unlock(&tgpio->lock);
-+	spin_unlock_irqrestore(&tgpio->lock, flags);
- 
- 	return 0;
- }
+ 	if (ehc->i.flags & ATA_EHI_QUIET)
 -- 
 2.40.1
 
