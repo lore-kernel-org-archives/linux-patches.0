@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6482E11CB5
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D04411CB5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqSB1N83"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CDBC433C8;
-	Mon, 23 Oct 2023 11:47:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zoorDtQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF85C433C7;
+	Mon, 23 Oct 2023 11:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061675;
-	bh=tg52EG5PJZIHntpGBoLGDbZ1NTG9V0EClQnP3vQpLy4=;
+	s=korg; t=1698061678;
+	bh=ZUN4jbT3wbnzjNqQJNyBLqocaeIIzNKGb59r41Swlk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TqSB1N83icuexOPBR09gfeUGDJuA8zDZVUaF4dkKTk5nED22/lcZZPGV2yR9TENss
-	 es72oMON9gt8hYGjBQxFsW7dCnO5pcG59lwpo33V9su+bz2BcR77JgG+0yJgS0TOj4
-	 8D43do4DVMC+E4HnkfAByPwv9Nf+9IRAPMT+xqwE=
+	b=zoorDtQWfl0dY9wdUH95kTHbschQvQfyTly4VUj0mF7+KGVYCv+AGS7JbYkfS8KbP
+	 FFm36GN6wh8PDr2+G0wwpl9Bx9c4FOP9Ip6k9DMpq/oHz4Aqo3tTfHqzn7sWIZwDk/
+	 M+ZJhL5cGok7LZ/Qv3nGu8j0uQF3HnOObzcKXNVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 100/202] tcp: check mptcp-level constraints for backlog coalescing
-Date: Mon, 23 Oct 2023 12:56:47 +0200
-Message-ID: <20231023104829.460239324@linuxfoundation.org>
+	=?UTF-8?q?Bla=C5=BEej=20Kraj=C5=88=C3=A1k?= <krajnak@levonet.sk>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 5.10 101/202] netfilter: nft_payload: fix wrong mac header matching
+Date: Mon, 23 Oct 2023 12:56:48 +0200
+Message-ID: <20231023104829.487352943@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -37,53 +35,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 6db8a37dfc541e059851652cfd4f0bb13b8ff6af upstream.
+commit d351c1ea2de3e36e608fc355d8ae7d0cc80e6cd6 upstream.
 
-The MPTCP protocol can acquire the subflow-level socket lock and
-cause the tcp backlog usage. When inserting new skbs into the
-backlog, the stack will try to coalesce them.
+mcast packets get looped back to the local machine.
+Such packets have a 0-length mac header, we should treat
+this like "mac header not set" and abort rule evaluation.
 
-Currently, we have no check in place to ensure that such coalescing
-will respect the MPTCP-level DSS, and that may cause data stream
-corruption, as reported by Christoph.
+As-is, we just copy data from the network header instead.
 
-Address the issue by adding the relevant admission check for coalescing
-in tcp_add_backlog().
-
-Note the issue is not easy to reproduce, as the MPTCP protocol tries
-hard to avoid acquiring the subflow-level socket lock.
-
-Fixes: 648ef4b88673 ("mptcp: Implement MPTCP receive path")
-Cc: stable@vger.kernel.org
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/420
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20231018-send-net-20231018-v1-2-17ecb002e41d@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 96518518cc41 ("netfilter: add nftables")
+Reported-by: Blažej Krajňák <krajnak@levonet.sk>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_ipv4.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nft_payload.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1832,6 +1832,7 @@ bool tcp_add_backlog(struct sock *sk, st
- #ifdef CONFIG_TLS_DEVICE
- 	    tail->decrypted != skb->decrypted ||
- #endif
-+	    !mptcp_skb_can_collapse(tail, skb) ||
- 	    thtail->doff != th->doff ||
- 	    memcmp(thtail + 1, th + 1, hdrlen - sizeof(*th)))
- 		goto no_coalesce;
+--- a/net/netfilter/nft_payload.c
++++ b/net/netfilter/nft_payload.c
+@@ -93,7 +93,7 @@ void nft_payload_eval(const struct nft_e
+ 
+ 	switch (priv->base) {
+ 	case NFT_PAYLOAD_LL_HEADER:
+-		if (!skb_mac_header_was_set(skb))
++		if (!skb_mac_header_was_set(skb) || skb_mac_header_len(skb) == 0)
+ 			goto err;
+ 
+ 		if (skb_vlan_tag_present(skb)) {
 
 
