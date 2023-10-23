@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EE514A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E9814A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlf1kG9+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C1DC433C8;
-	Mon, 23 Oct 2023 11:14:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWv823M9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D956C433C8;
+	Mon, 23 Oct 2023 11:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059695;
-	bh=JoVejzIRFnbDD3UJpk5HN++MmsELeoDWZCkXPT9dwFI=;
+	s=korg; t=1698059698;
+	bh=XNwws2NeYFJKLQFdn1vcFeuoUlJDxB3Mq1nRR7yejFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qlf1kG9+6Ar2m5/YbwLXUdJxVxelJBVMdU4O+w9/b5c2AJk3LeCq76O7o8DE7l5Qh
-	 vCsYjhr8lQwIBrtebEV7c/FKjapxmkKqXpsQEPRCXCfvcgetiTzXoJL+Kx3VoMCcQK
-	 5FmAi2wgckFmeFE3GSktrZdzLSqkiQG7MnRBes1U=
+	b=MWv823M9ftCU5ASTx61UyoxeBlxjITif5PCtwtkFI3a7x/gOQhLIL1Trd9QEVkr/m
+	 EHb5ZZXm4YA8aaDdkqXxbv8U0KHj3w/CY6dQu4N47wbShmPAMvbVpCQKr7SYR4aZGT
+	 8mmOWiwFnZA/VrHG81XoAopBJjmlQPZJxv81A23Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 4.19 21/98] usb: xhci: xhci-ring: Use sysdev for mapping bounce buffer
-Date: Mon, 23 Oct 2023 12:56:10 +0200
-Message-ID: <20231023104814.339362711@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+1f53a30781af65d2c955@syzkaller.appspotmail.com
+Subject: [PATCH 4.19 22/98] net: usb: dm9601: fix uninitialized variable use in dm9601_mdio_read
+Date: Mon, 23 Oct 2023 12:56:11 +0200
+Message-ID: <20231023104814.376075835@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -41,54 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wesley Cheng <quic_wcheng@quicinc.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 41a43013d2366db5b88b42bbcd8e8f040b6ccf21 upstream.
+commit 8f8abb863fa5a4cc18955c6a0e17af0ded3e4a76 upstream.
 
-As mentioned in:
-  commit 474ed23a6257 ("xhci: align the last trb before link if it is
-easily splittable.")
+syzbot has found an uninit-value bug triggered by the dm9601 driver [1].
 
-A bounce buffer is utilized for ensuring that transfers that span across
-ring segments are aligned to the EP's max packet size.  However, the device
-that is used to map the DMA buffer to is currently using the XHCI HCD,
-which does not carry any DMA operations in certain configrations.
-Migration to using the sysdev entry was introduced for DWC3 based
-implementations where the IOMMU operations are present.
+This error happens because the variable res is not updated if the call
+to dm_read_shared_word returns an error. In this particular case -EPROTO
+was returned and res stayed uninitialized.
 
-Replace the reference to the controller device to sysdev instead.  This
-allows the bounce buffer to be properly mapped to any implementations that
-have an IOMMU involved.
+This can be avoided by checking the return value of dm_read_shared_word
+and propagating the error if the read operation failed.
 
-cc: stable@vger.kernel.org
-Fixes: 4c39d4b949d3 ("usb: xhci: use bus->sysdev for DMA configuration")
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230915143108.1532163-2-mathias.nyman@linux.intel.com
+[1] https://syzkaller.appspot.com/bug?extid=1f53a30781af65d2c955
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Reported-and-tested-by: syzbot+1f53a30781af65d2c955@syzkaller.appspotmail.com
+Acked-by: Peter Korsgaard <peter@korsgaard.com>
+Fixes: d0374f4f9c35cdfbee0 ("USB: Davicom DM9601 usbnet driver")
+Link: https://lore.kernel.org/r/20231009-topic-dm9601_uninit_mdio_read-v2-1-f2fe39739b6c@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/dm9601.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -689,7 +689,7 @@ static void xhci_giveback_urb_in_irq(str
- static void xhci_unmap_td_bounce_buffer(struct xhci_hcd *xhci,
- 		struct xhci_ring *ring, struct xhci_td *td)
- {
--	struct device *dev = xhci_to_hcd(xhci)->self.controller;
-+	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	struct xhci_segment *seg = td->bounce_seg;
- 	struct urb *urb = td->urb;
- 	size_t len;
-@@ -3199,7 +3199,7 @@ static u32 xhci_td_remainder(struct xhci
- static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
- 			 u32 *trb_buff_len, struct xhci_segment *seg)
- {
--	struct device *dev = xhci_to_hcd(xhci)->self.controller;
-+	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	unsigned int unalign;
- 	unsigned int max_pkt;
- 	u32 new_buff_len;
+--- a/drivers/net/usb/dm9601.c
++++ b/drivers/net/usb/dm9601.c
+@@ -221,13 +221,18 @@ static int dm9601_mdio_read(struct net_d
+ 	struct usbnet *dev = netdev_priv(netdev);
+ 
+ 	__le16 res;
++	int err;
+ 
+ 	if (phy_id) {
+ 		netdev_dbg(dev->net, "Only internal phy supported\n");
+ 		return 0;
+ 	}
+ 
+-	dm_read_shared_word(dev, 1, loc, &res);
++	err = dm_read_shared_word(dev, 1, loc, &res);
++	if (err < 0) {
++		netdev_err(dev->net, "MDIO read error: %d\n", err);
++		return err;
++	}
+ 
+ 	netdev_dbg(dev->net,
+ 		   "dm9601_mdio_read() phy_id=0x%02x, loc=0x%02x, returns=0x%04x\n",
 
 
