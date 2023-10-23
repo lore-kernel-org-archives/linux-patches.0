@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD06171C3
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EF2171C3
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/REk5yl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EA1C433C9;
-	Mon, 23 Oct 2023 11:50:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exRtngF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4462C433C8;
+	Mon, 23 Oct 2023 11:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061817;
-	bh=DN+m5Td9aXnqBU26SlBbzU0HZy6sMk9V9bbI0rr57Gw=;
+	s=korg; t=1698061820;
+	bh=0GNu3ImH74vau3drmfSXzoGzwJEy1gap0OEOrjxXx98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r/REk5yl+vrKORSzj9EZNsH7BQU5OZ/UR8msAIABwjZa7+ngKYneWT5Dn9Lyf84+N
-	 OKAItTheNKuEsnzGgf+jxh1q8QwXwt5SKV+SrM9vHFOY1dWl8uJWbtkkpoB7YQzz2K
-	 0ejBQyvo8BdOIS4mJgfJBQEwzwXGnbOxu3AWKiwE=
+	b=exRtngF5ovNZ9a+IUbDSaFVtfyeTCjfldJ1ZfP7I9ORDWaPQ29o4qDJ200C7f4bPf
+	 FnY0MIFC0IbQRWk3cxPPGWJI7XbmmFYGr01IMt5EHts7wyjHYnRWxix+8U28NJy3B1
+	 un94t1sTA++9bs2bEwf+Y5xLEbY1TJoWF66CCIMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bibek Kumar Patro <quic_bibekkum@quicinc.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.10 174/202] mtd: rawnand: qcom: Unmap the right resource upon probe failure
-Date: Mon, 23 Oct 2023 12:58:01 +0200
-Message-ID: <20231023104831.562937635@linuxfoundation.org>
+	Aviram Dali <aviramd@marvell.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Ravi Chandra Minnikanti <rminnikanti@marvell.com>
+Subject: [PATCH 5.10 175/202] mtd: rawnand: marvell: Ensure program page operations are successful
+Date: Mon, 23 Oct 2023 12:58:02 +0200
+Message-ID: <20231023104831.590434512@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -42,34 +42,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-commit 5279f4a9eed3ee7d222b76511ea7a22c89e7eefd upstream.
+commit 3e01d5254698ea3d18e09d96b974c762328352cd upstream.
 
-We currently provide the physical address of the DMA region
-rather than the output of dma_map_resource() which is obviously wrong.
+The NAND core complies with the ONFI specification, which itself
+mentions that after any program or erase operation, a status check
+should be performed to see whether the operation was finished *and*
+successful.
 
-Fixes: 7330fc505af4 ("mtd: rawnand: qcom: stop using phys_to_dma()")
+The NAND core offers helpers to finish a page write (sending the
+"PAGE PROG" command, waiting for the NAND chip to be ready again, and
+checking the operation status). But in some cases, advanced controller
+drivers might want to optimize this and craft their own page write
+helper to leverage additional hardware capabilities, thus not always
+using the core facilities.
+
+Some drivers, like this one, do not use the core helper to finish a page
+write because the final cycles are automatically managed by the
+hardware. In this case, the additional care must be taken to manually
+perform the final status check.
+
+Let's read the NAND chip status at the end of the page write helper and
+return -EIO upon error.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Fixes: 02f26ecf8c77 ("mtd: nand: add reworked Marvell NAND controller driver")
+Reported-by: Aviram Dali <aviramd@marvell.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230913070702.12707-1-quic_bibekkum@quicinc.com
+Tested-by: Ravi Chandra Minnikanti <rminnikanti@marvell.com>
+Link: https://lore.kernel.org/linux-mtd/20230717194221.229778-1-miquel.raynal@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/qcom_nandc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/marvell_nand.c |   23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2996,7 +2996,7 @@ err_nandc_alloc:
- err_aon_clk:
- 	clk_disable_unprepare(nandc->core_clk);
- err_core_clk:
--	dma_unmap_resource(dev, res->start, resource_size(res),
-+	dma_unmap_resource(dev, nandc->base_dma, resource_size(res),
- 			   DMA_BIDIRECTIONAL, 0);
- 	return ret;
+--- a/drivers/mtd/nand/raw/marvell_nand.c
++++ b/drivers/mtd/nand/raw/marvell_nand.c
+@@ -1148,6 +1148,7 @@ static int marvell_nfc_hw_ecc_hmg_do_wri
+ 		.ndcb[2] = NDCB2_ADDR5_PAGE(page),
+ 	};
+ 	unsigned int oob_bytes = lt->spare_bytes + (raw ? lt->ecc_bytes : 0);
++	u8 status;
+ 	int ret;
+ 
+ 	/* NFCv2 needs more information about the operation being executed */
+@@ -1181,7 +1182,18 @@ static int marvell_nfc_hw_ecc_hmg_do_wri
+ 
+ 	ret = marvell_nfc_wait_op(chip,
+ 				  PSEC_TO_MSEC(sdr->tPROG_max));
+-	return ret;
++	if (ret)
++		return ret;
++
++	/* Check write status on the chip side */
++	ret = nand_status_op(chip, &status);
++	if (ret)
++		return ret;
++
++	if (status & NAND_STATUS_FAIL)
++		return -EIO;
++
++	return 0;
  }
+ 
+ static int marvell_nfc_hw_ecc_hmg_write_page_raw(struct nand_chip *chip,
+@@ -1610,6 +1622,7 @@ static int marvell_nfc_hw_ecc_bch_write_
+ 	int data_len = lt->data_bytes;
+ 	int spare_len = lt->spare_bytes;
+ 	int chunk, ret;
++	u8 status;
+ 
+ 	marvell_nfc_select_target(chip, chip->cur_cs);
+ 
+@@ -1646,6 +1659,14 @@ static int marvell_nfc_hw_ecc_bch_write_
+ 	if (ret)
+ 		return ret;
+ 
++	/* Check write status on the chip side */
++	ret = nand_status_op(chip, &status);
++	if (ret)
++		return ret;
++
++	if (status & NAND_STATUS_FAIL)
++		return -EIO;
++
+ 	return 0;
+ }
+ 
 
 
