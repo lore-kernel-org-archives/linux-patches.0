@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356EB14012
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3336614012
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4VlGPk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88ADC433C7;
-	Mon, 23 Oct 2023 11:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpdcyLBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0020C433C9;
+	Mon, 23 Oct 2023 11:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059307;
-	bh=945q1fo9fQp/pEt3agFvNxVjTtCKLEWc2rCoxtttjEA=;
+	s=korg; t=1698059310;
+	bh=BoxHuBb5kbePTR/Z7Ow3Vw816SmzqPR0kJ5WTC2SZRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D4VlGPk3iru/utV3ljXopYbhhhCbQUprP8iaEOCSctJWp/7O5wW9oSNjzERmKkTAm
-	 D9e/3eWtKSma9bYWYCYaUt6dbc/GthkVoiKV2mEMMPce4++62CC8BdxziXYLQ4sbZJ
-	 vk37a8g3rd6NrR5a+mkufUV3MIC+WiYqfcJUD8sA=
+	b=mpdcyLBwBcr7Bqxr3pFyu7U/Hdp3jPcSTvsyswAkEn2yoenac6o6jApn82Xvzb9PK
+	 mr/rLAiZFkwF9EU/TIp7Qhp6l2lXf0iVwwDh4qQxfYEyaUYkPqeoNFDJ1zkxyaeYGL
+	 AOF98vWqFNmvDLdPP+bpev4KwV51wzowMIkfMrQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Ma Ke <make_ruc2021@163.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 134/241] btrfs: error when COWing block from a root that is being deleted
-Date: Mon, 23 Oct 2023 12:55:20 +0200
-Message-ID: <20231023104837.137517865@linuxfoundation.org>
+Subject: [PATCH 6.5 117/241] HID: holtek: fix slab-out-of-bounds Write in holtek_kbd_input_event
+Date: Mon, 23 Oct 2023 12:55:03 +0200
+Message-ID: <20231023104836.735596097@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,57 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit a2caab29884397e583d09be6546259a83ebfbdb1 ]
+[ Upstream commit ffe3b7837a2bb421df84d0177481db9f52c93a71 ]
 
-At btrfs_cow_block() we check if the block being COWed belongs to a root
-that is being deleted and if so we log an error message. However this is
-an unexpected case and it indicates a bug somewhere, so we should return
-an error and abort the transaction. So change this in the following ways:
+There is a slab-out-of-bounds Write bug in hid-holtek-kbd driver.
+The problem is the driver assumes the device must have an input
+but some malicious devices violate this assumption.
 
-1) Abort the transaction with -EUCLEAN, so that if the issue ever happens
-   it can easily be noticed;
+Fix this by checking hid_device's input is non-empty before its usage.
 
-2) Change the logged message level from error to critical, and change the
-   message itself to print the block's logical address and the ID of the
-   root;
-
-3) Return -EUCLEAN to the caller;
-
-4) As this is an unexpected scenario, that should never happen, mark the
-   check as unlikely, allowing the compiler to potentially generate better
-   code.
-
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/hid/hid-holtek-kbd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index 7afd0a6495f37..db1f3bc7f3284 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -682,9 +682,13 @@ noinline int btrfs_cow_block(struct btrfs_trans_handle *trans,
- 	u64 search_start;
- 	int ret;
+diff --git a/drivers/hid/hid-holtek-kbd.c b/drivers/hid/hid-holtek-kbd.c
+index 403506b9697e7..b346d68a06f5a 100644
+--- a/drivers/hid/hid-holtek-kbd.c
++++ b/drivers/hid/hid-holtek-kbd.c
+@@ -130,6 +130,10 @@ static int holtek_kbd_input_event(struct input_dev *dev, unsigned int type,
+ 		return -ENODEV;
  
--	if (test_bit(BTRFS_ROOT_DELETING, &root->state))
--		btrfs_err(fs_info,
--			"COW'ing blocks on a fs root that's being dropped");
-+	if (unlikely(test_bit(BTRFS_ROOT_DELETING, &root->state))) {
-+		btrfs_abort_transaction(trans, -EUCLEAN);
-+		btrfs_crit(fs_info,
-+		   "attempt to COW block %llu on root %llu that is being deleted",
-+			   buf->start, btrfs_root_id(root));
-+		return -EUCLEAN;
+ 	boot_hid = usb_get_intfdata(boot_interface);
++	if (list_empty(&boot_hid->inputs)) {
++		hid_err(hid, "no inputs found\n");
++		return -ENODEV;
 +	}
+ 	boot_hid_input = list_first_entry(&boot_hid->inputs,
+ 		struct hid_input, list);
  
- 	/*
- 	 * COWing must happen through a running transaction, which always
 -- 
 2.40.1
 
