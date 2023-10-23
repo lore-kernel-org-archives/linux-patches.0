@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E23815484
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F9915484
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7lLBtx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F446C433C8;
-	Mon, 23 Oct 2023 11:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrT64pQI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768B2C433C8;
+	Mon, 23 Oct 2023 11:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060020;
-	bh=bXLx30Ayi2IInuncAsQ24PirWEL+2b26r/Poq4/O/uU=;
+	s=korg; t=1698060022;
+	bh=jQj8lpnii3kQlb7HzvBKMbaPE9ghwANoKJDKbap3sb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M7lLBtx/me/hnRsUKgjQfWDbgU49KNrxDNmPJjmX3qRDhWhRY+KmcHEvi2mfvBrR+
-	 X4t1Wi9a7IAN2szCnZJ+vlJUALUxXWba9PX9h3u5FAV6lH1Z5X4ApLzmv1P7RprWPA
-	 Jw2pyoOcXFaEgOsXARUlM6rWQmpHNUH5vgSpP/fM=
+	b=yrT64pQII/zeIYyd3Crilqi2zNIyoPnjJQzvAAugr3X+VdBfdkpXHmMNBcqLzKjJ+
+	 LDFu6XXe/aP5+IgRvSk3inOv3WCMfHuMIny2h6MbGOd3tkahowjMecI38d6rPiE8xP
+	 GTP3dIbuBT4EEgRV7lvtuNmTf6MoR+ylH8fmwG3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com,
-	Zeng Heng <zengheng4@huawei.com>,
+	syzbot+e94d98936a0ed08bde43@syzkaller.appspotmail.com,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.1 032/196] fs/ntfs3: fix panic about slab-out-of-bounds caused by ntfs_list_ea()
-Date: Mon, 23 Oct 2023 12:54:57 +0200
-Message-ID: <20231023104829.396647260@linuxfoundation.org>
+Subject: [PATCH 6.1 033/196] fs/ntfs3: fix deadlock in mark_as_free_ex
+Date: Mon, 23 Oct 2023 12:54:58 +0200
+Message-ID: <20231023104829.423518550@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,64 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 8e7e27b2ee1e19c4040d4987e345f678a74c0aed upstream.
+commit bfbe5b31caa74ab97f1784fe9ade5f45e0d3de91 upstream.
 
-Here is a BUG report about linux-6.1 from syzbot, but it still remains
-within upstream:
-
-BUG: KASAN: slab-out-of-bounds in ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
-BUG: KASAN: slab-out-of-bounds in ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
-Read of size 1 at addr ffff888021acaf3d by task syz-executor128/3632
-
-Call Trace:
- kasan_report+0x139/0x170 mm/kasan/report.c:495
- ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
- ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
- vfs_listxattr fs/xattr.c:457 [inline]
- listxattr+0x293/0x2d0 fs/xattr.c:804
- path_listxattr fs/xattr.c:828 [inline]
- __do_sys_llistxattr fs/xattr.c:846 [inline]
-
-Before derefering field members of `ea` in unpacked_ea_size(), we need to
-check whether the EA_FULL struct is located in access validate range.
-
-Similarly, when derefering `ea->name` field member, we need to check
-whethe the ea->name is located in access validate range, too.
-
-Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
-Reported-by: syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-[almaz.alexandrovich@paragon-software.com: took the ret variable out of the loop block]
+Reported-by: syzbot+e94d98936a0ed08bde43@syzkaller.appspotmail.com
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/xattr.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ntfs3/fsntfs.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -209,7 +209,8 @@ static ssize_t ntfs_list_ea(struct ntfs_
- 	size = le32_to_cpu(info->size);
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -2428,10 +2428,12 @@ void mark_as_free_ex(struct ntfs_sb_info
+ {
+ 	CLST end, i, zone_len, zlen;
+ 	struct wnd_bitmap *wnd = &sbi->used.bitmap;
++	bool dirty = false;
  
- 	/* Enumerate all xattrs. */
--	for (ret = 0, off = 0; off < size; off += ea_size) {
-+	ret = 0;
-+	for (off = 0; off + sizeof(struct EA_FULL) < size; off += ea_size) {
- 		ea = Add2Ptr(ea_all, off);
- 		ea_size = unpacked_ea_size(ea);
+ 	down_write_nested(&wnd->rw_lock, BITMAP_MUTEX_CLUSTERS);
+ 	if (!wnd_is_used(wnd, lcn, len)) {
+-		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
++		/* mark volume as dirty out of wnd->rw_lock */
++		dirty = true;
  
-@@ -217,6 +218,10 @@ static ssize_t ntfs_list_ea(struct ntfs_
- 			break;
+ 		end = lcn + len;
+ 		len = 0;
+@@ -2485,6 +2487,8 @@ void mark_as_free_ex(struct ntfs_sb_info
  
- 		if (buffer) {
-+			/* Check if we can use field ea->name */
-+			if (off + ea_size > size)
-+				break;
-+
- 			if (ret + ea->name_len + 1 > bytes_per_buffer) {
- 				err = -ERANGE;
- 				goto out;
+ out:
+ 	up_write(&wnd->rw_lock);
++	if (dirty)
++		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
+ }
+ 
+ /*
 
 
