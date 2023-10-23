@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBE715E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598DB15E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWi5cD21"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA57DC433C7;
-	Mon, 23 Oct 2023 11:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seUMdL5V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61A3C433C7;
+	Mon, 23 Oct 2023 11:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061106;
-	bh=fNy1Wx48fQr2CCi8MVKVIgnWGrIcn4A55Wm5dUJbIRY=;
+	s=korg; t=1698061109;
+	bh=Smf/1YDRMQtiyZVixiidGV1lAz4Ng/k4PSPS2Ln4Vsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OWi5cD219O3C7l5B0a6/2HpHnj8FBUITrSEHRWUmzT0w2P9FniVxRIOZVn0RlEyT2
-	 Zs5iVvJOvvpaQGPRkgr93qu5OC0AkCp6rKlW4W6Y9H5mE9+ycdrXUhX5xUkMFWwJHZ
-	 L/OcxaAFNwKLFIGShih+jEozuod+eol2buf9S+60=
+	b=seUMdL5VDitnD9tyGemJXPi+Mh9K8yCUxDGTXtfrP7VBp5gPZRE949Cay1tDMnc0E
+	 CmqJmyw1qItr34ieyBmn4lcrmZtUSShoSGtmOG8XaWShlEphK3ayyMtGeQk2z4n1Up
+	 Y9gpuG4j66YlKSey3nvHax/hE9b0CmYTdWu6tylc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/137] gpio: timberdale: Fix potential deadlock on &tgpio->lock
-Date: Mon, 23 Oct 2023 12:57:11 +0200
-Message-ID: <20231023104823.432257819@linuxfoundation.org>
+	Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 048/137] net: pktgen: Fix interface flags printing
+Date: Mon, 23 Oct 2023 12:56:45 +0200
+Message-ID: <20231023104822.632968114@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -43,64 +41,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 
-[ Upstream commit 9e8bc2dda5a7a8e2babc9975f4b11c9a6196e490 ]
+commit 1d30162f35c7a73fc2f8cdcdcdbd690bedb99d1a upstream.
 
-As timbgpio_irq_enable()/timbgpio_irq_disable() callback could be
-executed under irq context, it could introduce double locks on
-&tgpio->lock if it preempts other execution units requiring
-the same locks.
+Device flags are displayed incorrectly:
+1) The comparison (i == F_FLOW_SEQ) is always false, because F_FLOW_SEQ
+is equal to (1 << FLOW_SEQ_SHIFT) == 2048, and the maximum value
+of the 'i' variable is (NR_PKT_FLAG - 1) == 17. It should be compared
+with FLOW_SEQ_SHIFT.
 
-timbgpio_gpio_set()
---> timbgpio_update_bit()
---> spin_lock(&tgpio->lock)
-<interrupt>
-   --> timbgpio_irq_disable()
-   --> spin_lock_irqsave(&tgpio->lock)
+2) Similarly to the F_IPSEC flag.
 
-This flaw was found by an experimental static analysis tool I am
-developing for irq-related deadlock.
+3) Also add spaces to the print end of the string literal "spi:%u"
+to prevent the output from merging with the flag that follows.
 
-To prevent the potential deadlock, the patch uses spin_lock_irqsave()
-on &tgpio->lock inside timbgpio_gpio_set() to prevent the possible
-deadlock scenario.
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
 
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 99c6d3d20d62 ("pktgen: Remove brute-force printing of flags")
+Signed-off-by: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-timberdale.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/core/pktgen.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpio/gpio-timberdale.c b/drivers/gpio/gpio-timberdale.c
-index de14949a3fe5a..92c1f2baa4bff 100644
---- a/drivers/gpio/gpio-timberdale.c
-+++ b/drivers/gpio/gpio-timberdale.c
-@@ -43,9 +43,10 @@ static int timbgpio_update_bit(struct gpio_chip *gpio, unsigned index,
- 	unsigned offset, bool enabled)
- {
- 	struct timbgpio *tgpio = gpiochip_get_data(gpio);
-+	unsigned long flags;
- 	u32 reg;
+--- a/net/core/pktgen.c
++++ b/net/core/pktgen.c
+@@ -668,19 +668,19 @@ static int pktgen_if_show(struct seq_fil
+ 	seq_puts(seq, "     Flags: ");
  
--	spin_lock(&tgpio->lock);
-+	spin_lock_irqsave(&tgpio->lock, flags);
- 	reg = ioread32(tgpio->membase + offset);
+ 	for (i = 0; i < NR_PKT_FLAGS; i++) {
+-		if (i == F_FLOW_SEQ)
++		if (i == FLOW_SEQ_SHIFT)
+ 			if (!pkt_dev->cflows)
+ 				continue;
  
- 	if (enabled)
-@@ -54,7 +55,7 @@ static int timbgpio_update_bit(struct gpio_chip *gpio, unsigned index,
- 		reg &= ~(1 << index);
+-		if (pkt_dev->flags & (1 << i))
++		if (pkt_dev->flags & (1 << i)) {
+ 			seq_printf(seq, "%s  ", pkt_flag_names[i]);
+-		else if (i == F_FLOW_SEQ)
+-			seq_puts(seq, "FLOW_RND  ");
+-
+ #ifdef CONFIG_XFRM
+-		if (i == F_IPSEC && pkt_dev->spi)
+-			seq_printf(seq, "spi:%u", pkt_dev->spi);
++			if (i == IPSEC_SHIFT && pkt_dev->spi)
++				seq_printf(seq, "spi:%u  ", pkt_dev->spi);
+ #endif
++		} else if (i == FLOW_SEQ_SHIFT) {
++			seq_puts(seq, "FLOW_RND  ");
++		}
+ 	}
  
- 	iowrite32(reg, tgpio->membase + offset);
--	spin_unlock(&tgpio->lock);
-+	spin_unlock_irqrestore(&tgpio->lock, flags);
- 
- 	return 0;
- }
--- 
-2.40.1
-
+ 	seq_puts(seq, "\n");
 
 
