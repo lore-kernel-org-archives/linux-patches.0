@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895E715EB1
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7355611CB5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAlfmgOn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01EC6C433C7;
-	Mon, 23 Oct 2023 11:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/q3xIfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5308C433C8;
+	Mon, 23 Oct 2023 11:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061663;
-	bh=QkKHxEAKdlv2EBNolLgPnvaTyM9fWQ+uTQSUsBhryEY=;
+	s=korg; t=1698061666;
+	bh=SI9YmKcQ/HlN3KLCGJFf5UptkuytH4kEJ648FQcO6sU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zAlfmgOn1IQwmAe0ybehkglY2cOe29qPSIkM/zJH2OV7d6Kzzn5R0JxUJL14iTsS+
-	 YZgLBmUh4jINXqNyAVolLJOkbaPpeaeg7ij/JM8GTtYU4y8dVMhtnKf7CKNT+biTSn
-	 0fHoSlKf1FW8lFm/CHOqPOav5oZsOZlvaec9Q0Hc=
+	b=x/q3xIfxjSuS+yTLKimkNFRdOHcD6Kt2qXzMBivZzGffMLJcWsW852yBCu6vIQjRf
+	 o8dlYvTHKDDxX4qXMWM9lKEx6vQ5WMaCmjjb98TnPzp/KhWKcXM45PI3meeP2kA1J4
+	 uij2+WD4ymbF5WIdIk4HHUrpe2ncbAcqN34cuokY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Mingwei Zhang <mizhang@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.10 096/202] KVM: x86: Mask LVTPC when handling a PMI
-Date: Mon, 23 Oct 2023 12:56:43 +0200
-Message-ID: <20231023104829.352644883@linuxfoundation.org>
+	Tom Dohrmann <erbse.13@gmx.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 5.10 097/202] x86/sev: Disable MMIO emulation from user mode
+Date: Mon, 23 Oct 2023 12:56:44 +0200
+Message-ID: <20231023104829.380095325@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -42,53 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Mattson <jmattson@google.com>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-commit a16eb25b09c02a54c1c1b449d4b6cfa2cf3f013a upstream.
+Upstream commit: a37cd2a59d0cb270b1bba568fd3a3b8668b9d3ba
 
-Per the SDM, "When the local APIC handles a performance-monitoring
-counters interrupt, it automatically sets the mask flag in the LVT
-performance counter register."  Add this behavior to KVM's local APIC
-emulation.
+A virt scenario can be constructed where MMIO memory can be user memory.
+When that happens, a race condition opens between when the hardware
+raises the #VC and when the #VC handler gets to emulate the instruction.
 
-Failure to mask the LVTPC entry results in spurious PMIs, e.g. when
-running Linux as a guest, PMI handlers that do a "late_ack" spew a large
-number of "dazed and confused" spurious NMI warnings.
+If the MOVS is replaced with a MOVS accessing kernel memory in that
+small race window, then write to kernel memory happens as the access
+checks are not done at emulation time.
 
-Fixes: f5132b01386b ("KVM: Expose a version 2 architectural PMU to a guests")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Tested-by: Mingwei Zhang <mizhang@google.com>
-Signed-off-by: Mingwei Zhang <mizhang@google.com>
-Link: https://lore.kernel.org/r/20230925173448.3518223-3-mizhang@google.com
-[sean: massage changelog, correct Fixes]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Disable MMIO emulation in user mode temporarily until a sensible use
+case appears and justifies properly handling the race window.
+
+Fixes: 0118b604c2c9 ("x86/sev-es: Handle MMIO String Instructions")
+Reported-by: Tom Dohrmann <erbse.13@gmx.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Tom Dohrmann <erbse.13@gmx.de>
+Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/x86/kernel/sev-es.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2397,13 +2397,17 @@ int kvm_apic_local_deliver(struct kvm_la
- {
- 	u32 reg = kvm_lapic_get_reg(apic, lvt_type);
- 	int vector, mode, trig_mode;
-+	int r;
+--- a/arch/x86/kernel/sev-es.c
++++ b/arch/x86/kernel/sev-es.c
+@@ -970,6 +970,9 @@ static enum es_result vc_handle_mmio(str
+ 	enum es_result ret;
+ 	long *reg_data;
  
- 	if (kvm_apic_hw_enabled(apic) && !(reg & APIC_LVT_MASKED)) {
- 		vector = reg & APIC_VECTOR_MASK;
- 		mode = reg & APIC_MODE_MASK;
- 		trig_mode = reg & APIC_LVT_LEVEL_TRIGGER;
--		return __apic_accept_irq(apic, mode, vector, 1, trig_mode,
--					NULL);
++	if (user_mode(ctxt->regs))
++		return ES_UNSUPPORTED;
 +
-+		r = __apic_accept_irq(apic, mode, vector, 1, trig_mode, NULL);
-+		if (r && lvt_type == APIC_LVTPC)
-+			kvm_lapic_set_reg(apic, APIC_LVTPC, reg | APIC_LVT_MASKED);
-+		return r;
- 	}
- 	return 0;
- }
+ 	switch (insn->opcode.bytes[0]) {
+ 	/* MMIO Write */
+ 	case 0x88:
 
 
