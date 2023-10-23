@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB3818025
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BEC20F6
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MivDZe1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176CDC433CA;
-	Mon, 23 Oct 2023 11:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syTvVFfS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CE8C433C9;
+	Mon, 23 Oct 2023 11:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061867;
-	bh=JO52m2rJ9iTsY1pAhpzV7d1H+58xajPK23XcueIe25o=;
+	s=korg; t=1698061870;
+	bh=Ibs1oz4hvjIqhklgpVF0Qcx3wUlG85jBAXjt/cWf36g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MivDZe1hsBEBYZqMXG092GRUBUiKUCglRUN+EBvNPyTgvFlsko++HlV2+He+CCAqS
-	 kE/yBWQOjHT2fVg2pzNFIUCu0mARW19wHDhl6bMaeyepaYB7NBDXlpOsgxr8pORtp8
-	 Ft20+s8D5/WbLWd+ft+kRZNZ7twLx/JI5ys9ivtQ=
+	b=syTvVFfSoHQjrzgsbVo075hF8Bk0TECXQnR/rUvUmR8eSf/g8CSQ2iuOvi6auLyJq
+	 bw1rXxRAXAs/xouHbmHx0dUVG2ZrmFZ9tyqnM6M0V8OCC6ZE59TLKcuZMpjoMF87Hc
+	 VMnzoEehTS/l7+n3toJ50ak7v5syr1GE2um3HPUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James John <me@donjajo.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 5.10 192/202] platform/x86: asus-wmi: Map 0x2a code, Ignore 0x2b and 0x2c events
-Date: Mon, 23 Oct 2023 12:58:19 +0200
-Message-ID: <20231023104832.046279004@linuxfoundation.org>
+	Haibo Chen <haibo.chen@nxp.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 5.10 193/202] gpio: vf610: set value before the direction to avoid a glitch
+Date: Mon, 23 Oct 2023 12:58:20 +0200
+Message-ID: <20231023104832.073817679@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -41,45 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit 235985d1763f7aba92c1c64e5f5aaec26c2c9b18 upstream.
+commit fc363413ef8ea842ae7a99e3caf5465dafdd3a49 upstream.
 
-Newer Asus laptops send the following new WMI event codes when some
-of the F1 - F12 "media" hotkeys are pressed:
+We found a glitch when configuring the pad as output high. To avoid this
+glitch, move the data value setting before direction config in the
+function vf610_gpio_direction_output().
 
-0x2a Screen Capture
-0x2b PrintScreen
-0x2c CapsLock
-
-Map 0x2a to KEY_SELECTIVE_SCREENSHOT mirroring how similar hotkeys
-are mapped on other laptops.
-
-PrintScreem and CapsLock are also reported as normal PS/2 keyboard events,
-map these event codes to KE_IGNORE to avoid "Unknown key code 0x%x\n" log
-messages.
-
-Reported-by: James John <me@donjajo.com>
-Closes: https://lore.kernel.org/platform-driver-x86/a2c441fe-457e-44cf-a146-0ecd86b037cf@donjajo.com/
-Closes: https://bbs.archlinux.org/viewtopic.php?pid=2123716
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231017090725.38163-4-hdegoede@redhat.com
+Fixes: 659d8a62311f ("gpio: vf610: add imx7ulp support")
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+[Bartosz: tweak the commit message]
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpio/gpio-vf610.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -475,6 +475,9 @@ static void asus_nb_wmi_quirks(struct as
- static const struct key_entry asus_nb_wmi_keymap[] = {
- 	{ KE_KEY, ASUS_WMI_BRN_DOWN, { KEY_BRIGHTNESSDOWN } },
- 	{ KE_KEY, ASUS_WMI_BRN_UP, { KEY_BRIGHTNESSUP } },
-+	{ KE_KEY, 0x2a, { KEY_SELECTIVE_SCREENSHOT } },
-+	{ KE_IGNORE, 0x2b, }, /* PrintScreen (also send via PS/2) on newer models */
-+	{ KE_IGNORE, 0x2c, }, /* CapsLock (also send via PS/2) on newer models */
- 	{ KE_KEY, 0x30, { KEY_VOLUMEUP } },
- 	{ KE_KEY, 0x31, { KEY_VOLUMEDOWN } },
- 	{ KE_KEY, 0x32, { KEY_MUTE } },
+--- a/drivers/gpio/gpio-vf610.c
++++ b/drivers/gpio/gpio-vf610.c
+@@ -127,14 +127,14 @@ static int vf610_gpio_direction_output(s
+ 	unsigned long mask = BIT(gpio);
+ 	u32 val;
+ 
++	vf610_gpio_set(chip, gpio, value);
++
+ 	if (port->sdata && port->sdata->have_paddr) {
+ 		val = vf610_gpio_readl(port->gpio_base + GPIO_PDDR);
+ 		val |= mask;
+ 		vf610_gpio_writel(val, port->gpio_base + GPIO_PDDR);
+ 	}
+ 
+-	vf610_gpio_set(chip, gpio, value);
+-
+ 	return pinctrl_gpio_direction_output(chip->base + gpio);
+ }
+ 
 
 
