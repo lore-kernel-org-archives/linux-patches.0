@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7B612B7A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5359B12B7A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8jh42oI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD612C433C7;
-	Mon, 23 Oct 2023 11:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqGi9Su5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4862C433C8;
+	Mon, 23 Oct 2023 11:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059483;
-	bh=OzOXlNAqqA9vaN8jC54Na6VhqB4vW28UKKJ5uWBzzm0=;
+	s=korg; t=1698059486;
+	bh=t5qLN3MxYJfBbwxP3YNL+cG5kXg1B8z6xBvmRZOG5Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8jh42oI+M0+QzzSyP0jrPIfI869xQsNlWQecWiMLpiqvP/nV265CGHt8MhmDVbk0
-	 pMWNAIpEjv6MtYp1y/rXRWLMFfjEgv0zJ4RGHnd7oSorTxW9uccqLE6hLkz1KEVL8A
-	 4Jo9BgADu+BftuA2fCLS/gJYRpdAvWBienFjDu1w=
+	b=RqGi9Su5YfjrSYHiMoPsKdJf2dvmInAWIYJx1HoPIs12k4FRSLnzthjVsuM6K3fP/
+	 a/6shWg5ZL+3OEnO2Z1lPL6sim1MzTmN+HnCYjslLreazI9G1FjE6u6lb4sku37PYL
+	 aqkolknd6SVTzxCKgAVoqaD4qY2t3hIVoycmJuhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.5 175/241] mmc: core: sdio: hold retuning if sdio in 1-bit mode
-Date: Mon, 23 Oct 2023 12:56:01 +0200
-Message-ID: <20231023104838.152437084@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.5 193/241] nvme-rdma: do not try to stop unallocated queues
+Date: Mon, 23 Oct 2023 12:56:19 +0200
+Message-ID: <20231023104838.579160459@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,45 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit 32a9cdb8869dc111a0c96cf8e1762be9684af15b upstream.
+commit 3820c4fdc247b6f0a4162733bdb8ddf8f2e8a1e4 upstream.
 
-tuning only support in 4-bit mode or 8 bit mode, so in 1-bit mode,
-need to hold retuning.
+Trying to stop a queue which hasn't been allocated will result
+in a warning due to calling mutex_lock() against an uninitialized mutex.
 
-Find this issue when use manual tuning method on imx93. When system
-resume back, SDIO WIFI try to switch back to 4 bit mode, first will
-trigger retuning, and all tuning command failed.
+ DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+ WARNING: CPU: 4 PID: 104150 at kernel/locking/mutex.c:579
 
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Fixes: dfa13ebbe334 ("mmc: host: Add facility to support re-tuning")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230830093922.3095850-1-haibo.chen@nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+ Call trace:
+  RIP: 0010:__mutex_lock+0x1173/0x14a0
+  nvme_rdma_stop_queue+0x1b/0xa0 [nvme_rdma]
+  nvme_rdma_teardown_io_queues.part.0+0xb0/0x1d0 [nvme_rdma]
+  nvme_rdma_delete_ctrl+0x50/0x100 [nvme_rdma]
+  nvme_do_delete_ctrl+0x149/0x158 [nvme_core]
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Tested-by: Yi Zhang <yi.zhang@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/sdio.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/nvme/host/rdma.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mmc/core/sdio.c
-+++ b/drivers/mmc/core/sdio.c
-@@ -1089,8 +1089,14 @@ static int mmc_sdio_resume(struct mmc_ho
- 		}
- 		err = mmc_sdio_reinit_card(host);
- 	} else if (mmc_card_wake_sdio_irq(host)) {
--		/* We may have switched to 1-bit mode during suspend */
-+		/*
-+		 * We may have switched to 1-bit mode during suspend,
-+		 * need to hold retuning, because tuning only supprt
-+		 * 4-bit mode or 8 bit mode.
-+		 */
-+		mmc_retune_hold_now(host);
- 		err = sdio_enable_4bit_bus(host->card);
-+		mmc_retune_release(host);
- 	}
+--- a/drivers/nvme/host/rdma.c
++++ b/drivers/nvme/host/rdma.c
+@@ -638,6 +638,9 @@ static void __nvme_rdma_stop_queue(struc
  
- 	if (err)
+ static void nvme_rdma_stop_queue(struct nvme_rdma_queue *queue)
+ {
++	if (!test_bit(NVME_RDMA_Q_ALLOCATED, &queue->flags))
++		return;
++
+ 	mutex_lock(&queue->queue_lock);
+ 	if (test_and_clear_bit(NVME_RDMA_Q_LIVE, &queue->flags))
+ 		__nvme_rdma_stop_queue(queue);
 
 
