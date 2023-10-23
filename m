@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9D27FE
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30CAC7FE
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1gxBl1xJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF9EC433CC;
-	Mon, 23 Oct 2023 11:23:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEAmxlqW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F99C433C8;
+	Mon, 23 Oct 2023 11:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060208;
-	bh=SqwJ7NxjqhMMkRRFLayJYiGyMTLROxxXYJQ6/J9DCx4=;
+	s=korg; t=1698060211;
+	bh=8OlAJz0uf7gOgeaSTmDCzQwx3wnWCnZUh+DSCIEN8Io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1gxBl1xJvi55wxE/hLw1Fm74RSdGuIVCt4vKrh+7xCFeH5aFRPj1UdllESHmwWWOW
-	 X6OuRXJ5SdDHU9RRnB8vyh6fSyJ0ih/l1YDT7e1WjHJGx6YcBYfENDSJlzQofYAOoW
-	 u//K/RS4aqXFgyf4UjCIn1vLXvjuJtXJyjaW3suk=
+	b=FEAmxlqWKcYf9lJ4zoOdZDinYcrgEWQtl8qBJlFWrrUHPylIVUoCbC1L/aaob+X99
+	 KGvD5CIQJwMmoTkoMmwB9j09OW7tu58nfKvbKTu4edsgtoxmOs/mBSKLx029ZM3NW3
+	 7rWVR/USjUv9ZPJQ5OmGHzeMpn2GFS1m9IMUtXps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jens Axboe <axboe@kernel.dk>,
 	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/196] btrfs: return -EUCLEAN for delayed tree ref with a ref count not equals to 1
-Date: Mon, 23 Oct 2023 12:56:00 +0200
-Message-ID: <20231023104831.216693729@linuxfoundation.org>
+Subject: [PATCH 6.1 096/196] btrfs: initialize start_slot in btrfs_log_prealloc_extents
+Date: Mon, 23 Oct 2023 12:56:01 +0200
+Message-ID: <20231023104831.243090259@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -37,54 +37,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 1bf76df3fee56d6637718e267f7c34ed70d0c7dc ]
+[ Upstream commit b4c639f699349880b7918b861e1bd360442ec450 ]
 
-When running a delayed tree reference, if we find a ref count different
-from 1, we return -EIO. This isn't an IO error, as it indicates either a
-bug in the delayed refs code or a memory corruption, so change the error
-code from -EIO to -EUCLEAN. Also tag the branch as 'unlikely' as this is
-not expected to ever happen, and change the error message to print the
-tree block's bytenr without the parenthesis (and there was a missing space
-between the 'block' word and the opening parenthesis), for consistency as
-that's the style we used everywhere else.
+Jens reported a compiler warning when using
+CONFIG_CC_OPTIMIZE_FOR_SIZE=y that looks like this
 
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+  fs/btrfs/tree-log.c: In function ‘btrfs_log_prealloc_extents’:
+  fs/btrfs/tree-log.c:4828:23: warning: ‘start_slot’ may be used
+  uninitialized [-Wmaybe-uninitialized]
+   4828 |                 ret = copy_items(trans, inode, dst_path, path,
+	|                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   4829 |                                  start_slot, ins_nr, 1, 0);
+	|                                  ~~~~~~~~~~~~~~~~~~~~~~~~~
+  fs/btrfs/tree-log.c:4725:13: note: ‘start_slot’ was declared here
+   4725 |         int start_slot;
+	|             ^~~~~~~~~~
+
+The compiler is incorrect, as we only use this code when ins_len > 0,
+and when ins_len > 0 we have start_slot properly initialized.  However
+we generally find the -Wmaybe-uninitialized warnings valuable, so
+initialize start_slot to get rid of the warning.
+
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Tested-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/tree-log.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 08ff10a81cb90..2a7c9088fe1f8 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -1663,12 +1663,12 @@ static int run_delayed_tree_ref(struct btrfs_trans_handle *trans,
- 		parent = ref->parent;
- 	ref_root = ref->root;
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index c03ff6a5a7f6b..7c33b28c02aeb 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -4767,7 +4767,7 @@ static int btrfs_log_prealloc_extents(struct btrfs_trans_handle *trans,
+ 	struct extent_buffer *leaf;
+ 	int slot;
+ 	int ins_nr = 0;
+-	int start_slot;
++	int start_slot = 0;
+ 	int ret;
  
--	if (node->ref_mod != 1) {
-+	if (unlikely(node->ref_mod != 1)) {
- 		btrfs_err(trans->fs_info,
--	"btree block(%llu) has %d references rather than 1: action %d ref_root %llu parent %llu",
-+	"btree block %llu has %d references rather than 1: action %d ref_root %llu parent %llu",
- 			  node->bytenr, node->ref_mod, node->action, ref_root,
- 			  parent);
--		return -EIO;
-+		return -EUCLEAN;
- 	}
- 	if (node->action == BTRFS_ADD_DELAYED_REF && insert_reserved) {
- 		BUG_ON(!extent_op || !extent_op->update_flags);
+ 	if (!(inode->flags & BTRFS_INODE_PREALLOC))
 -- 
 2.40.1
 
