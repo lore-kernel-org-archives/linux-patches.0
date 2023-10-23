@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFF415EA7
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639EF14AA8
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSu27yL6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18FAC433C8;
-	Mon, 23 Oct 2023 11:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qziYbUre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15E5C433C9;
+	Mon, 23 Oct 2023 11:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061349;
-	bh=jDJN+c2+M65q3Gn5rc9+xezeuK/IJNbUeEpY9Dn+uOU=;
+	s=korg; t=1698061352;
+	bh=hDPR7etOJhKBZxgAuaDO+7gtFn0IkHy868w6T2617Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSu27yL62qqJw+Gyl3TTFJ7Rh5ZaG27DwuOWKEv3qU1gbo1m1uUfr3vHb13RfaV/v
-	 gjIP73FcVkImZF8QQnKkVSzewwWIHEI2XRmJuCaRhFjL2Zs3146mu5/NvN8JYrH1BO
-	 lfsUuHJQI2k2i2obTJ9eahxZyUiLnsajgQlvJv/4=
+	b=qziYbUrekiYLg6ry0c/j+lWNm7L5yOWYOCQdqy/RzqPPGefimlhVKgjPfUsNME1bv
+	 mIivSO0R1m8FjbvXTjSU0AJRWhjKuswTLaaMETAXRhRQBRCsRh7SrH9A+mPrfdPEpX
+	 TE6de4bLLigqeyDYEfhXfGYx8l86SK9OXfEcC+tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 018/202] riscv, bpf: Sign-extend return values
-Date: Mon, 23 Oct 2023 12:55:25 +0200
-Message-ID: <20231023104827.141312597@linuxfoundation.org>
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Zack Rusin <zackr@vmware.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Subject: [PATCH 5.10 019/202] drm/vmwgfx: fix typo of sizeof argument
+Date: Mon, 23 Oct 2023 12:55:26 +0200
+Message-ID: <20231023104827.169619422@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -36,85 +37,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Björn Töpel <bjorn@rivosinc.com>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-[ Upstream commit 2f1b0d3d733169eb11680bfa97c266ae5e757148 ]
+[ Upstream commit 39465cac283702a7d4a507a558db81898029c6d3 ]
 
-The RISC-V architecture does not expose sub-registers, and hold all
-32-bit values in a sign-extended format [1] [2]:
+Since size of 'header' pointer and '*header' structure is equal on 64-bit
+machines issue probably didn't cause any wrong behavior. But anyway,
+fixing typo is required.
 
-  | The compiler and calling convention maintain an invariant that all
-  | 32-bit values are held in a sign-extended format in 64-bit
-  | registers. Even 32-bit unsigned integers extend bit 31 into bits
-  | 63 through 32. Consequently, conversion between unsigned and
-  | signed 32-bit integers is a no-op, as is conversion from a signed
-  | 32-bit integer to a signed 64-bit integer.
-
-While BPF, on the other hand, exposes sub-registers, and use
-zero-extension (similar to arm64/x86).
-
-This has led to some subtle bugs, where a BPF JITted program has not
-sign-extended the a0 register (return value in RISC-V land), passed
-the return value up the kernel, e.g.:
-
-  | int from_bpf(void);
-  |
-  | long foo(void)
-  | {
-  |    return from_bpf();
-  | }
-
-Here, a0 would be 0xffff_ffff, instead of the expected
-0xffff_ffff_ffff_ffff.
-
-Internally, the RISC-V JIT uses a5 as a dedicated register for BPF
-return values.
-
-Keep a5 zero-extended, but explicitly sign-extend a0 (which is used
-outside BPF land). Now that a0 (RISC-V ABI) and a5 (BPF ABI) differs,
-a0 is only moved to a5 for non-BPF native calls (BPF_PSEUDO_CALL).
-
-Fixes: 2353ecc6f91f ("bpf, riscv: add BPF JIT for RV64G")
-Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://github.com/riscv/riscv-isa-manual/releases/download/riscv-isa-release-056b6ff-2023-10-02/unpriv-isa-asciidoc.pdf # [2]
-Link: https://github.com/riscv-non-isa/riscv-elf-psabi-doc/releases/download/draft-20230929-e5c800e661a53efe3c2678d71a306323b60eb13b/riscv-abi.pdf # [2]
-Link: https://lore.kernel.org/bpf/20231004120706.52848-2-bjorn@kernel.org
+Fixes: 7a73ba7469cb ("drm/vmwgfx: Use TTM handles instead of SIDs as user-space surface handles.")
+Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Reviewed-by: Zack Rusin <zackr@vmware.com>
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230905100203.1716731-1-konstantin.meskhidze@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp64.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
-index 53d1f520c5890..0cc3dd9d32e64 100644
---- a/arch/riscv/net/bpf_jit_comp64.c
-+++ b/arch/riscv/net/bpf_jit_comp64.c
-@@ -201,7 +201,7 @@ static void __build_epilogue(bool is_tail_call, struct rv_jit_context *ctx)
- 	emit_addi(RV_REG_SP, RV_REG_SP, stack_adjust, ctx);
- 	/* Set return value. */
- 	if (!is_tail_call)
--		emit_mv(RV_REG_A0, RV_REG_A5, ctx);
-+		emit_addiw(RV_REG_A0, RV_REG_A5, 0, ctx);
- 	emit_jalr(RV_REG_ZERO, is_tail_call ? RV_REG_T3 : RV_REG_RA,
- 		  is_tail_call ? 4 : 0, /* skip TCC init */
- 		  ctx);
-@@ -856,7 +856,8 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
- 		if (ret)
- 			return ret;
- 
--		emit_mv(bpf_to_rv_reg(BPF_REG_0, ctx), RV_REG_A0, ctx);
-+		if (insn->src_reg != BPF_PSEUDO_CALL)
-+			emit_mv(bpf_to_rv_reg(BPF_REG_0, ctx), RV_REG_A0, ctx);
- 		break;
- 	}
- 	/* tail call */
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index 4c6c2e5abf95e..00082c679170a 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -1627,7 +1627,7 @@ static int vmw_cmd_tex_state(struct vmw_private *dev_priv,
+ {
+ 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdSetTextureState);
+ 	SVGA3dTextureState *last_state = (SVGA3dTextureState *)
+-	  ((unsigned long) header + header->size + sizeof(header));
++	  ((unsigned long) header + header->size + sizeof(*header));
+ 	SVGA3dTextureState *cur_state = (SVGA3dTextureState *)
+ 		((unsigned long) header + sizeof(*cmd));
+ 	struct vmw_resource *ctx;
 -- 
 2.40.1
 
