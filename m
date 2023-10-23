@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D0E15E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA8815E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/C6eI/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04FD2C433C7;
-	Mon, 23 Oct 2023 11:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpFbThNH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAE5C433C8;
+	Mon, 23 Oct 2023 11:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061049;
-	bh=QNAcABvDN48FM1jlykd6kHRabxP45u5cF21f8UUOaDo=;
+	s=korg; t=1698061052;
+	bh=zUh0FXAFCXOqZjzImjkWiJTRg01afi7vbTq7Nx7MTHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w/C6eI/EszhGg1dhFz8NNKxx2bB18nwxAdwJSTlEu5w5MLgW57KE0zpAJWHU6rj38
-	 pBzUXbvLydEnJ2tWoSWUGrCFnfIBF2Qa/f4znfJL3O6KiguyujkroKdm+E06SH67A5
-	 XSF19R8SKYRztHfulUqAomCDEdH4rBmXy9mpJsaA=
+	b=gpFbThNHBsdIHQYitPRio/eepZm7NNlHPmMZZrXIohVgtbIllwSRA+LkiykegMhVI
+	 V5nLxDXVgnwahz1GX5Hy1wyyOEHURV0GzA6+elNJjvmBOagWaxzv4TquU0e98dT6h7
+	 pSTKMGf1Zr/SeXXTBfQBYApsdlNhDAhGzMsSQzHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alisa-Dariana Roman <alisa.roman@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/137] iio: adc: ad7192: Correct reference voltage
-Date: Mon, 23 Oct 2023 12:56:53 +0200
-Message-ID: <20231023104822.881295379@linuxfoundation.org>
+Subject: [PATCH 5.15 057/137] perf: Add irq and exception return branch types
+Date: Mon, 23 Oct 2023 12:56:54 +0200
+Message-ID: <20231023104822.915156069@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -42,76 +41,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alisa-Dariana Roman <alisa.roman@analog.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-[ Upstream commit 7e7dcab620cd6d34939f615cac63fc0ef7e81c72 ]
+[ Upstream commit cedd3614e5d9c80908099c19f8716714ce0610b1 ]
 
-The avdd and the reference voltage are two different sources but the
-reference voltage was assigned according to the avdd supply.
+This expands generic branch type classification by adding two more entries
+there in i.e irq and exception return. Also updates the x86 implementation
+to process X86_BR_IRET and X86_BR_IRQ records as appropriate. This changes
+branch types reported to user space on x86 platform but it should not be a
+problem. The possible scenarios and impacts are enumerated here.
 
-Add vref regulator structure and set the reference voltage according to
-the vref supply from the devicetree.
-
-In case vref supply is missing, reference voltage is set according to
-the avdd supply for compatibility with old devicetrees.
-
-Fixes: b581f748cce0 ("staging: iio: adc: ad7192: move out of staging")
-Signed-off-by: Alisa-Dariana Roman <alisa.roman@analog.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230924152149.41884-1-alisadariana@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/1645681014-3346-1-git-send-email-anshuman.khandual@arm.com
+Stable-dep-of: e53899771a02 ("perf/x86/lbr: Filter vsyscall addresses")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7192.c | 29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ arch/x86/events/intel/lbr.c           | 4 ++--
+ include/uapi/linux/perf_event.h       | 2 ++
+ tools/include/uapi/linux/perf_event.h | 2 ++
+ tools/perf/util/branch.c              | 4 +++-
+ 4 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7192.c b/drivers/iio/adc/ad7192.c
-index 6df435e3c4218..31461d46c5941 100644
---- a/drivers/iio/adc/ad7192.c
-+++ b/drivers/iio/adc/ad7192.c
-@@ -177,6 +177,7 @@ struct ad7192_state {
- 	const struct ad7192_chip_info	*chip_info;
- 	struct regulator		*avdd;
- 	struct regulator		*dvdd;
-+	struct regulator		*vref;
- 	struct clk			*mclk;
- 	u16				int_vref_mv;
- 	u32				fclk;
-@@ -962,10 +963,30 @@ static int ad7192_probe(struct spi_device *spi)
- 	if (ret)
- 		return ret;
+diff --git a/arch/x86/events/intel/lbr.c b/arch/x86/events/intel/lbr.c
+index b3f92255cbd2d..bc3e40184719f 100644
+--- a/arch/x86/events/intel/lbr.c
++++ b/arch/x86/events/intel/lbr.c
+@@ -1352,10 +1352,10 @@ static int branch_map[X86_BR_TYPE_MAP_MAX] = {
+ 	PERF_BR_SYSCALL,	/* X86_BR_SYSCALL */
+ 	PERF_BR_SYSRET,		/* X86_BR_SYSRET */
+ 	PERF_BR_UNKNOWN,	/* X86_BR_INT */
+-	PERF_BR_UNKNOWN,	/* X86_BR_IRET */
++	PERF_BR_ERET,		/* X86_BR_IRET */
+ 	PERF_BR_COND,		/* X86_BR_JCC */
+ 	PERF_BR_UNCOND,		/* X86_BR_JMP */
+-	PERF_BR_UNKNOWN,	/* X86_BR_IRQ */
++	PERF_BR_IRQ,		/* X86_BR_IRQ */
+ 	PERF_BR_IND_CALL,	/* X86_BR_IND_CALL */
+ 	PERF_BR_UNKNOWN,	/* X86_BR_ABORT */
+ 	PERF_BR_UNKNOWN,	/* X86_BR_IN_TX */
+diff --git a/include/uapi/linux/perf_event.h b/include/uapi/linux/perf_event.h
+index f92880a15645a..a7fb8d2b77096 100644
+--- a/include/uapi/linux/perf_event.h
++++ b/include/uapi/linux/perf_event.h
+@@ -251,6 +251,8 @@ enum {
+ 	PERF_BR_SYSRET		= 8,	/* syscall return */
+ 	PERF_BR_COND_CALL	= 9,	/* conditional function call */
+ 	PERF_BR_COND_RET	= 10,	/* conditional function return */
++	PERF_BR_ERET		= 11,	/* exception return */
++	PERF_BR_IRQ		= 12,	/* irq */
+ 	PERF_BR_MAX,
+ };
  
--	ret = regulator_get_voltage(st->avdd);
--	if (ret < 0) {
--		dev_err(&spi->dev, "Device tree error, reference voltage undefined\n");
--		return ret;
-+	st->vref = devm_regulator_get_optional(&spi->dev, "vref");
-+	if (IS_ERR(st->vref)) {
-+		if (PTR_ERR(st->vref) != -ENODEV)
-+			return PTR_ERR(st->vref);
-+
-+		ret = regulator_get_voltage(st->avdd);
-+		if (ret < 0)
-+			return dev_err_probe(&spi->dev, ret,
-+					     "Device tree error, AVdd voltage undefined\n");
-+	} else {
-+		ret = regulator_enable(st->vref);
-+		if (ret) {
-+			dev_err(&spi->dev, "Failed to enable specified Vref supply\n");
-+			return ret;
-+		}
-+
-+		ret = devm_add_action_or_reset(&spi->dev, ad7192_reg_disable, st->vref);
-+		if (ret)
-+			return ret;
-+
-+		ret = regulator_get_voltage(st->vref);
-+		if (ret < 0)
-+			return dev_err_probe(&spi->dev, ret,
-+					     "Device tree error, Vref voltage undefined\n");
- 	}
- 	st->int_vref_mv = ret / 1000;
+diff --git a/tools/include/uapi/linux/perf_event.h b/tools/include/uapi/linux/perf_event.h
+index f92880a15645a..a7fb8d2b77096 100644
+--- a/tools/include/uapi/linux/perf_event.h
++++ b/tools/include/uapi/linux/perf_event.h
+@@ -251,6 +251,8 @@ enum {
+ 	PERF_BR_SYSRET		= 8,	/* syscall return */
+ 	PERF_BR_COND_CALL	= 9,	/* conditional function call */
+ 	PERF_BR_COND_RET	= 10,	/* conditional function return */
++	PERF_BR_ERET		= 11,	/* exception return */
++	PERF_BR_IRQ		= 12,	/* irq */
+ 	PERF_BR_MAX,
+ };
  
+diff --git a/tools/perf/util/branch.c b/tools/perf/util/branch.c
+index 2285b1eb3128d..a9a909db8cc7f 100644
+--- a/tools/perf/util/branch.c
++++ b/tools/perf/util/branch.c
+@@ -49,7 +49,9 @@ const char *branch_type_name(int type)
+ 		"SYSCALL",
+ 		"SYSRET",
+ 		"COND_CALL",
+-		"COND_RET"
++		"COND_RET",
++		"ERET",
++		"IRQ"
+ 	};
+ 
+ 	if (type >= 0 && type < PERF_BR_MAX)
 -- 
 2.40.1
 
