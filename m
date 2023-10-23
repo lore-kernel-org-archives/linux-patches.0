@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED63414AB9
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE2A14F6A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHSIviMT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FD9C433CB;
-	Mon, 23 Oct 2023 11:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMGyxoEz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C266C433C7;
+	Mon, 23 Oct 2023 11:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060053;
-	bh=xcP9cWrOtINcqUvxZXVWIiqoEHBN5TIeu5Unv08Q4kI=;
+	s=korg; t=1698060056;
+	bh=nSYFRlvD9XKIAr3h7s8A0bIEJaCAtZEX52ZLdULCkTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BHSIviMTd+Ag7bybif86kl1FrWHwySFHWYxSr2qAmkW7xvF9op5eighEcyKT7KeSC
-	 eFKyIfYVhr8ukTQWtThYPYU409G0aAOztLuDqob+Mx3OazWGAIFPSX6F2JfEgJtZvu
-	 ZBetwT96TsvuCtTSdL23LR3df0lWkYvA37H89C6Q=
+	b=PMGyxoEzuF63zfKR+mM2/Hk+Ery1A6n4ByzY+itspOJzoK7HIjKYd7z0bEW/oqMhV
+	 MF/odCWfH2hPf1rgEn2FRyQ45UaaqRFILiXjCHcBWmmnBh5IA+zacKCLPL1LN1gRdl
+	 9wkS1N7nXfbxNg2/WtSmcT8+buVueaVdeQ/1b4YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 042/196] ASoC: codecs: wcd938x-sdw: fix runtime PM imbalance on probe errors
-Date: Mon, 23 Oct 2023 12:55:07 +0200
-Message-ID: <20231023104829.700234414@linuxfoundation.org>
+Subject: [PATCH 6.1 043/196] ASoC: codecs: wcd938x: drop bogus bind error handling
+Date: Mon, 23 Oct 2023 12:55:08 +0200
+Message-ID: <20231023104829.729399178@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -44,54 +44,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit c5c0383082eace13da2ffceeea154db2780165e7 upstream.
+commit bfbc79de60c53e5fed505390440b87ef59ee268c upstream.
 
-Make sure to balance the runtime PM operations, including the disable
-count, on probe errors and on driver unbind.
+Drop the bogus error handling for a soundwire device backcast during
+bind() that cannot fail.
 
 Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
 Cc: stable@vger.kernel.org      # 5.14
 Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231003155558.27079-8-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20231003155558.27079-2-johan+linaro@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd938x-sdw.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ sound/soc/codecs/wcd938x.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/sound/soc/codecs/wcd938x-sdw.c
-+++ b/sound/soc/codecs/wcd938x-sdw.c
-@@ -1278,7 +1278,18 @@ static int wcd9380_probe(struct sdw_slav
- 	pm_runtime_set_active(dev);
- 	pm_runtime_enable(dev);
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -3454,10 +3454,6 @@ static int wcd938x_bind(struct device *d
+ 	wcd938x->sdw_priv[AIF1_CAP] = dev_get_drvdata(wcd938x->txdev);
+ 	wcd938x->sdw_priv[AIF1_CAP]->wcd938x = wcd938x;
+ 	wcd938x->tx_sdw_dev = dev_to_sdw_dev(wcd938x->txdev);
+-	if (!wcd938x->tx_sdw_dev) {
+-		dev_err(dev, "could not get txslave with matching of dev\n");
+-		return -EINVAL;
+-	}
  
--	return component_add(dev, &wcd938x_sdw_component_ops);
-+	ret = component_add(dev, &wcd938x_sdw_component_ops);
-+	if (ret)
-+		goto err_disable_rpm;
-+
-+	return 0;
-+
-+err_disable_rpm:
-+	pm_runtime_disable(dev);
-+	pm_runtime_set_suspended(dev);
-+	pm_runtime_dont_use_autosuspend(dev);
-+
-+	return ret;
- }
- 
- static int wcd9380_remove(struct sdw_slave *pdev)
-@@ -1287,6 +1298,10 @@ static int wcd9380_remove(struct sdw_sla
- 
- 	component_del(dev, &wcd938x_sdw_component_ops);
- 
-+	pm_runtime_disable(dev);
-+	pm_runtime_set_suspended(dev);
-+	pm_runtime_dont_use_autosuspend(dev);
-+
- 	return 0;
- }
- 
+ 	/* As TX is main CSR reg interface, which should not be suspended first.
+ 	 * expicilty add the dependency link */
 
 
