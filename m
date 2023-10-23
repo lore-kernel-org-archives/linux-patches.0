@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59FD15484
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FDB15492
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIt9akVv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2535BC433CA;
-	Mon, 23 Oct 2023 11:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRm8k6Jl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19221C433C8;
+	Mon, 23 Oct 2023 11:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060193;
-	bh=rjRxJRt5o67ZHq0tVXwNoXbP/TbZIwl1QnE6hDNXDs0=;
+	s=korg; t=1698060196;
+	bh=/S4DjT8q6h0eud3FuzLkJ7o4p41onZplSQ00NWSjBPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GIt9akVv7Ti3lgjLCy19wZ/ZpTVhqburS84h43FI/i10lIMiXcw9NqNhG1D11oIY7
-	 bz0vfd6MriyQpeIxHWG3MnAngx4H3JKUT2zb1OiDsmO+Y9iUFDk/cKZQDtBjljCFh+
-	 6h21rEwyuO9s1/zcnkgXzIY8DOQt6vRGGDvG1VIs=
+	b=pRm8k6JlYAzvGa/0p4zL87xhUop+iQG5Lfw8PAs60vGcvIh3VwbjHEiqm5+8uhlvL
+	 DjKwxerfA7Rmg8a41mcLSsHH2u/yDztCOX++Sl6piinqkQsnY5igwDK1bGW7N8UrGj
+	 FSeUrJFsINgDi1PIpsVEZ8noW7fx+iHvvl5XYxKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alisa-Dariana Roman <alisa.roman@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	David Thompson <davthompson@nvidia.com>,
+	Asmaa Mnebhi <asmaa@nvidia.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/196] iio: adc: ad7192: Correct reference voltage
-Date: Mon, 23 Oct 2023 12:55:55 +0200
-Message-ID: <20231023104831.083118765@linuxfoundation.org>
+Subject: [PATCH 6.1 091/196] pwr-mlxbf: extend Kconfig to include gpio-mlxbf3 dependency
+Date: Mon, 23 Oct 2023 12:55:56 +0200
+Message-ID: <20231023104831.109755639@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,75 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alisa-Dariana Roman <alisa.roman@analog.com>
+From: David Thompson <davthompson@nvidia.com>
 
-[ Upstream commit 7e7dcab620cd6d34939f615cac63fc0ef7e81c72 ]
+[ Upstream commit 82f07f1acf417b81e793145c167dd5e156024de4 ]
 
-The avdd and the reference voltage are two different sources but the
-reference voltage was assigned according to the avdd supply.
+The BlueField power handling driver (pwr-mlxbf.c) provides
+functionality for both BlueField-2 and BlueField-3 based
+platforms.  This driver also depends on the SoC-specific
+BlueField GPIO driver, whether gpio-mlxbf2 or gpio-mlxbf3.
+This patch extends the Kconfig definition to include the
+dependency on the gpio-mlxbf3 driver, if applicable.
 
-Add vref regulator structure and set the reference voltage according to
-the vref supply from the devicetree.
-
-In case vref supply is missing, reference voltage is set according to
-the avdd supply for compatibility with old devicetrees.
-
-Fixes: b581f748cce0 ("staging: iio: adc: ad7192: move out of staging")
-Signed-off-by: Alisa-Dariana Roman <alisa.roman@analog.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230924152149.41884-1-alisadariana@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Reviewed-by: Asmaa Mnebhi <asmaa@nvidia.com>
+Link: https://lore.kernel.org/r/20230823133743.31275-1-davthompson@nvidia.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7192.c | 29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ drivers/power/reset/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/ad7192.c b/drivers/iio/adc/ad7192.c
-index 18520f7bedccd..faf680140c178 100644
---- a/drivers/iio/adc/ad7192.c
-+++ b/drivers/iio/adc/ad7192.c
-@@ -177,6 +177,7 @@ struct ad7192_chip_info {
- struct ad7192_state {
- 	const struct ad7192_chip_info	*chip_info;
- 	struct regulator		*avdd;
-+	struct regulator		*vref;
- 	struct clk			*mclk;
- 	u16				int_vref_mv;
- 	u32				fclk;
-@@ -1014,10 +1015,30 @@ static int ad7192_probe(struct spi_device *spi)
- 	if (ret)
- 		return dev_err_probe(&spi->dev, ret, "Failed to enable specified DVdd supply\n");
+diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
+index a8c46ba5878fe..54201f0374104 100644
+--- a/drivers/power/reset/Kconfig
++++ b/drivers/power/reset/Kconfig
+@@ -299,7 +299,7 @@ config NVMEM_REBOOT_MODE
  
--	ret = regulator_get_voltage(st->avdd);
--	if (ret < 0) {
--		dev_err(&spi->dev, "Device tree error, reference voltage undefined\n");
--		return ret;
-+	st->vref = devm_regulator_get_optional(&spi->dev, "vref");
-+	if (IS_ERR(st->vref)) {
-+		if (PTR_ERR(st->vref) != -ENODEV)
-+			return PTR_ERR(st->vref);
-+
-+		ret = regulator_get_voltage(st->avdd);
-+		if (ret < 0)
-+			return dev_err_probe(&spi->dev, ret,
-+					     "Device tree error, AVdd voltage undefined\n");
-+	} else {
-+		ret = regulator_enable(st->vref);
-+		if (ret) {
-+			dev_err(&spi->dev, "Failed to enable specified Vref supply\n");
-+			return ret;
-+		}
-+
-+		ret = devm_add_action_or_reset(&spi->dev, ad7192_reg_disable, st->vref);
-+		if (ret)
-+			return ret;
-+
-+		ret = regulator_get_voltage(st->vref);
-+		if (ret < 0)
-+			return dev_err_probe(&spi->dev, ret,
-+					     "Device tree error, Vref voltage undefined\n");
- 	}
- 	st->int_vref_mv = ret / 1000;
+ config POWER_MLXBF
+ 	tristate "Mellanox BlueField power handling driver"
+-	depends on (GPIO_MLXBF2 && ACPI)
++	depends on (GPIO_MLXBF2 || GPIO_MLXBF3) && ACPI
+ 	help
+ 	  This driver supports reset or low power mode handling for Mellanox BlueField.
  
 -- 
 2.40.1
