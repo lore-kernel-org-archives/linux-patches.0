@@ -1,52 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F74154A0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3E315484
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUea84aQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D9FC433C8;
-	Mon, 23 Oct 2023 11:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Swgzh27M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8EFC433C8;
+	Mon, 23 Oct 2023 11:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059951;
-	bh=ZUtodJewW5wO3r4yHFwQ1YgPM14JIU5cImn28r0D7xU=;
+	s=korg; t=1698059954;
+	bh=Dd5HMipYhSvvnvzpnhJG9j2nI/qVNo6XWYgJZFJApSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JUea84aQ9spkwUFwoLWl7KMZLex0lPb9xEPaY7X0vb7givLwQMwq4F2g8LO9CtuPP
-	 sk5oFlCKKvMNqoX0TnGWihbrLANRHadD0hBSUf0gBT1xRJgNiQojmDpYhlVSEmU/4m
-	 jKmb/XiGgPcF5ZAfDlgnup2PKJ3C4vWT1MUiz4ns=
+	b=Swgzh27MIMFaQUfCKRXqfAG679CNAV7haDXf4r/M3xI4YYj1oEqccSVllRui3+yaC
+	 ErhIwhql0+8mGGfqC6Zvst9IryQNSUtdtwZls1yhADFAfAAH+wdyankqSyMQD8cRg3
+	 P3LE1IS3pJBjhqwMC0Shou9nTmzLUNAewmvODEcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Ben Segall <bsegall@google.com>,
-	Christoph Lameter <cl@linux.com>,
-	Daniel Bristot de Oliveira <bristot@redhat.com>,
-	David Rientjes <rientjes@google.com>,
-	Dennis Zhou <dennis@kernel.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Pekka Enberg <penberg@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Shakeel Butt <shakeelb@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Tejun Heo <tj@kernel.org>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Luiz Capitulino <luizcap@amazon.com>
-Subject: [PATCH 6.1 001/196] lib/Kconfig.debug: do not enable DEBUG_PREEMPT by default
-Date: Mon, 23 Oct 2023 12:54:26 +0200
-Message-ID: <20231023104828.533286108@linuxfoundation.org>
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 010/196] Bluetooth: Fix a refcnt underflow problem for hci_conn
+Date: Mon, 23 Oct 2023 12:54:35 +0200
+Message-ID: <20231023104828.787517711@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -65,85 +41,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-commit cc6003916ed46d7a67d91ee32de0f9138047d55f upstream.
+commit c7f59461f5a78994613afc112cdd73688aef9076 upstream.
 
-In workloads where this_cpu operations are frequently performed,
-enabling DEBUG_PREEMPT may result in significant increase in
-runtime overhead due to frequent invocation of
-__this_cpu_preempt_check() function.
+Syzbot reports a warning as follows:
 
-This can be demonstrated through benchmarks such as hackbench where this
-configuration results in a 10% reduction in performance, primarily due to
-the added overhead within memcg charging path.
+WARNING: CPU: 1 PID: 26946 at net/bluetooth/hci_conn.c:619
+hci_conn_timeout+0x122/0x210 net/bluetooth/hci_conn.c:619
+...
+Call Trace:
+ <TASK>
+ process_one_work+0x884/0x15c0 kernel/workqueue.c:2630
+ process_scheduled_works kernel/workqueue.c:2703 [inline]
+ worker_thread+0x8b9/0x1290 kernel/workqueue.c:2784
+ kthread+0x33c/0x440 kernel/kthread.c:388
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+ </TASK>
 
-Therefore, do not to enable DEBUG_PREEMPT by default and make users aware
-of its potential impact on performance in some workloads.
+It is because the HCI_EV_SIMPLE_PAIR_COMPLETE event handler drops
+hci_conn directly without check Simple Pairing whether be enabled. But
+the Simple Pairing process can only be used if both sides have the
+support enabled in the host stack.
 
-hackbench-process-sockets
-		      debug_preempt	 no_debug_preempt
-Amean     1       0.4743 (   0.00%)      0.4295 *   9.45%*
-Amean     4       1.4191 (   0.00%)      1.2650 *  10.86%*
-Amean     7       2.2677 (   0.00%)      2.0094 *  11.39%*
-Amean     12      3.6821 (   0.00%)      3.2115 *  12.78%*
-Amean     21      6.6752 (   0.00%)      5.7956 *  13.18%*
-Amean     30      9.6646 (   0.00%)      8.5197 *  11.85%*
-Amean     48     15.3363 (   0.00%)     13.5559 *  11.61%*
-Amean     79     24.8603 (   0.00%)     22.0597 *  11.27%*
-Amean     96     30.1240 (   0.00%)     26.8073 *  11.01%*
+Add hci_conn_ssp_enabled() for hci_conn in HCI_EV_IO_CAPA_REQUEST and
+HCI_EV_SIMPLE_PAIR_COMPLETE event handlers to fix the problem.
 
-Link: https://lkml.kernel.org/r/20230121033942.350387-1-42.hyeyoo@gmail.com
-Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Acked-by: Mel Gorman <mgorman@techsingularity.net>
-Acked-by: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Ben Segall <bsegall@google.com>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: Daniel Bristot de Oliveira <bristot@redhat.com>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Dennis Zhou <dennis@kernel.org>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Pekka Enberg <penberg@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Valentin Schneider <vschneid@redhat.com>
-Cc: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Luiz Capitulino <luizcap@amazon.com>
+Fixes: 0493684ed239 ("[Bluetooth] Disable disconnect timer during Simple Pairing")
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/Kconfig.debug |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_event.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -1219,13 +1219,16 @@ config DEBUG_TIMEKEEPING
- config DEBUG_PREEMPT
- 	bool "Debug preemptible kernel"
- 	depends on DEBUG_KERNEL && PREEMPTION && TRACE_IRQFLAGS_SUPPORT
--	default y
- 	help
- 	  If you say Y here then the kernel will use a debug variant of the
- 	  commonly used smp_processor_id() function and will print warnings
- 	  if kernel code uses it in a preemption-unsafe way. Also, the kernel
- 	  will detect preemption count underflows.
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5270,7 +5270,7 @@ static void hci_io_capa_request_evt(stru
+ 	hci_dev_lock(hdev);
  
-+	  This option has potential to introduce high runtime overhead,
-+	  depending on workload as it triggers debugging routines for each
-+	  this_cpu operation. It should only be used for debugging purposes.
-+
- menu "Lock Debugging (spinlocks, mutexes, etc...)"
+ 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &ev->bdaddr);
+-	if (!conn)
++	if (!conn || !hci_conn_ssp_enabled(conn))
+ 		goto unlock;
  
- config LOCK_DEBUGGING_SUPPORT
+ 	hci_conn_hold(conn);
+@@ -5517,7 +5517,7 @@ static void hci_simple_pair_complete_evt
+ 	hci_dev_lock(hdev);
+ 
+ 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &ev->bdaddr);
+-	if (!conn)
++	if (!conn || !hci_conn_ssp_enabled(conn))
+ 		goto unlock;
+ 
+ 	/* Reset the authentication requirement to unknown */
 
 
