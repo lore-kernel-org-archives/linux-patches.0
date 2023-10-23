@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE2A14F6A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95FB14F6A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMGyxoEz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C266C433C7;
-	Mon, 23 Oct 2023 11:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPdS7Hgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640E1C433C7;
+	Mon, 23 Oct 2023 11:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060056;
-	bh=nSYFRlvD9XKIAr3h7s8A0bIEJaCAtZEX52ZLdULCkTo=;
+	s=korg; t=1698060059;
+	bh=4avke8zB9IGboOb1jkRCQ1qkEMhK1ktfxEasSCL5pxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PMGyxoEzuF63zfKR+mM2/Hk+Ery1A6n4ByzY+itspOJzoK7HIjKYd7z0bEW/oqMhV
-	 MF/odCWfH2hPf1rgEn2FRyQ45UaaqRFILiXjCHcBWmmnBh5IA+zacKCLPL1LN1gRdl
-	 9wkS1N7nXfbxNg2/WtSmcT8+buVueaVdeQ/1b4YE=
+	b=aPdS7HgvZfx3dM+bKs7eAkNaHNAuQZCsOfKMOVD/pTHnJ4t1isLqsR2AWwEHUDjE6
+	 I+7Gqbfb7ONEfkgudipW305qUa5s8lQuXXjtanzbLs/YFxhVe/k1qeSuCN7gm9F1Th
+	 mtbRDnUEcXi6mliVQb72yflT/i3KmFf0auLUautg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 043/196] ASoC: codecs: wcd938x: drop bogus bind error handling
-Date: Mon, 23 Oct 2023 12:55:08 +0200
-Message-ID: <20231023104829.729399178@linuxfoundation.org>
+Subject: [PATCH 6.1 044/196] ASoC: codecs: wcd938x: fix unbind tear down order
+Date: Mon, 23 Oct 2023 12:55:09 +0200
+Message-ID: <20231023104829.757305789@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -44,34 +44,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit bfbc79de60c53e5fed505390440b87ef59ee268c upstream.
+commit fa2f8a991ba4aa733ac1c3b1be0c86148aa4c52c upstream.
 
-Drop the bogus error handling for a soundwire device backcast during
-bind() that cannot fail.
+Make sure to deregister the component before tearing down the resources
+it depends on during unbind().
 
 Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
 Cc: stable@vger.kernel.org      # 5.14
 Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231003155558.27079-2-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20231003155558.27079-3-johan+linaro@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd938x.c |    4 ----
- 1 file changed, 4 deletions(-)
+ sound/soc/codecs/wcd938x.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/sound/soc/codecs/wcd938x.c
 +++ b/sound/soc/codecs/wcd938x.c
-@@ -3454,10 +3454,6 @@ static int wcd938x_bind(struct device *d
- 	wcd938x->sdw_priv[AIF1_CAP] = dev_get_drvdata(wcd938x->txdev);
- 	wcd938x->sdw_priv[AIF1_CAP]->wcd938x = wcd938x;
- 	wcd938x->tx_sdw_dev = dev_to_sdw_dev(wcd938x->txdev);
--	if (!wcd938x->tx_sdw_dev) {
--		dev_err(dev, "could not get txslave with matching of dev\n");
--		return -EINVAL;
--	}
+@@ -3510,10 +3510,10 @@ static void wcd938x_unbind(struct device
+ {
+ 	struct wcd938x_priv *wcd938x = dev_get_drvdata(dev);
  
- 	/* As TX is main CSR reg interface, which should not be suspended first.
- 	 * expicilty add the dependency link */
++	snd_soc_unregister_component(dev);
+ 	device_link_remove(dev, wcd938x->txdev);
+ 	device_link_remove(dev, wcd938x->rxdev);
+ 	device_link_remove(wcd938x->rxdev, wcd938x->txdev);
+-	snd_soc_unregister_component(dev);
+ 	component_unbind_all(dev, wcd938x);
+ }
+ 
 
 
