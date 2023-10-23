@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0497614A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E5F14A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aC8oEr4G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717D7C433C8;
-	Mon, 23 Oct 2023 11:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMxPNCKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650E6C433C9;
+	Mon, 23 Oct 2023 11:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059076;
-	bh=Y+MDnGZ5igbOUkocfkWVQoR9eSk2CTWUxQOFvDKNQwE=;
+	s=korg; t=1698059079;
+	bh=DiONQnvU19tm7qBCYuiMvAlm36RLlggILsgLClT0c6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aC8oEr4GexoqKj9kUiPtWfb0n1Z/gAodeNo1myW0GJxtU7PtHUD8j0Ibk2nS/rGa8
-	 dXsNEi1/uRfSp6Nn7tni+Uu8VA9A4aqVED2K8bYCSIVXa0BIr4YTDluTwUlGIkZ5Bg
-	 6IVmlkczsOUyXhO3Be65wQqVCP0mAryj9YetAe6w=
+	b=fMxPNCKO8ttribykuAprxveoRPKx61+n8cUUF7kc9H3Vosp9yAdgO2QuvVl8sgKOB
+	 PVS7pFJDhXJ/UddJSxGUPnIusJ+r61W+KAtSfEEXf574YeVB/PNbnwgJoUjOxxW4ra
+	 iMV9Dl69/Aayu2gi6blYRFjhdHGoL39JXfUYu7no=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.5 055/241] xfrm6: fix inet6_dev refcount underflow problem
-Date: Mon, 23 Oct 2023 12:54:01 +0200
-Message-ID: <20231023104835.246216492@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.5 056/241] xfrm: fix a data-race in xfrm_gen_index()
+Date: Mon, 23 Oct 2023 12:54:02 +0200
+Message-ID: <20231023104835.271851849@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,54 +43,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit cc9b364bb1d58d3dae270c7a931a8cc717dc2b3b upstream.
+commit 3e4bc23926b83c3c67e5f61ae8571602754131a6 upstream.
 
-There are race conditions that may lead to inet6_dev refcount underflow
-in xfrm6_dst_destroy() and rt6_uncached_list_flush_dev().
+xfrm_gen_index() mutual exclusion uses net->xfrm.xfrm_policy_lock.
 
-One of the refcount underflow bugs is shown below:
-	(cpu 1)                	|	(cpu 2)
-xfrm6_dst_destroy()             |
-  ...                           |
-  in6_dev_put()                 |
-				|  rt6_uncached_list_flush_dev()
-  ...				|    ...
-				|    in6_dev_put()
-  rt6_uncached_list_del()       |    ...
-  ...                           |
+This means we must use a per-netns idx_generator variable,
+instead of a static one.
+Alternative would be to use an atomic variable.
 
-xfrm6_dst_destroy() calls rt6_uncached_list_del() after in6_dev_put(),
-so rt6_uncached_list_flush_dev() has a chance to call in6_dev_put()
-again for the same inet6_dev.
+syzbot reported:
 
-Fix it by moving in6_dev_put() after rt6_uncached_list_del() in
-xfrm6_dst_destroy().
+BUG: KCSAN: data-race in xfrm_sk_policy_insert / xfrm_sk_policy_insert
 
-Fixes: 510c321b5571 ("xfrm: reuse uncached_list to track xdsts")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
+write to 0xffffffff87005938 of 4 bytes by task 29466 on cpu 0:
+xfrm_gen_index net/xfrm/xfrm_policy.c:1385 [inline]
+xfrm_sk_policy_insert+0x262/0x640 net/xfrm/xfrm_policy.c:2347
+xfrm_user_policy+0x413/0x540 net/xfrm/xfrm_state.c:2639
+do_ipv6_setsockopt+0x1317/0x2ce0 net/ipv6/ipv6_sockglue.c:943
+ipv6_setsockopt+0x57/0x130 net/ipv6/ipv6_sockglue.c:1012
+rawv6_setsockopt+0x21e/0x410 net/ipv6/raw.c:1054
+sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
+__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
+__do_sys_setsockopt net/socket.c:2274 [inline]
+__se_sys_setsockopt net/socket.c:2271 [inline]
+__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+read to 0xffffffff87005938 of 4 bytes by task 29460 on cpu 1:
+xfrm_sk_policy_insert+0x13e/0x640
+xfrm_user_policy+0x413/0x540 net/xfrm/xfrm_state.c:2639
+do_ipv6_setsockopt+0x1317/0x2ce0 net/ipv6/ipv6_sockglue.c:943
+ipv6_setsockopt+0x57/0x130 net/ipv6/ipv6_sockglue.c:1012
+rawv6_setsockopt+0x21e/0x410 net/ipv6/raw.c:1054
+sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
+__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
+__do_sys_setsockopt net/socket.c:2274 [inline]
+__se_sys_setsockopt net/socket.c:2271 [inline]
+__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x00006ad8 -> 0x00006b18
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 29460 Comm: syz-executor.1 Not tainted 6.5.0-rc5-syzkaller-00243-g9106536c1aa3 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+
+Fixes: 1121994c803f ("netns xfrm: policy insertion in netns")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/xfrm6_policy.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/netns/xfrm.h |    1 +
+ net/xfrm/xfrm_policy.c   |    6 ++----
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
---- a/net/ipv6/xfrm6_policy.c
-+++ b/net/ipv6/xfrm6_policy.c
-@@ -117,10 +117,10 @@ static void xfrm6_dst_destroy(struct dst
+--- a/include/net/netns/xfrm.h
++++ b/include/net/netns/xfrm.h
+@@ -50,6 +50,7 @@ struct netns_xfrm {
+ 	struct list_head	policy_all;
+ 	struct hlist_head	*policy_byidx;
+ 	unsigned int		policy_idx_hmask;
++	unsigned int		idx_generator;
+ 	struct hlist_head	policy_inexact[XFRM_POLICY_MAX];
+ 	struct xfrm_policy_hash	policy_bydst[XFRM_POLICY_MAX];
+ 	unsigned int		policy_count[XFRM_POLICY_MAX * 2];
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -1372,8 +1372,6 @@ EXPORT_SYMBOL(xfrm_policy_hash_rebuild);
+  * of an absolute inpredictability of ordering of rules. This will not pass. */
+ static u32 xfrm_gen_index(struct net *net, int dir, u32 index)
  {
- 	struct xfrm_dst *xdst = (struct xfrm_dst *)dst;
+-	static u32 idx_generator;
+-
+ 	for (;;) {
+ 		struct hlist_head *list;
+ 		struct xfrm_policy *p;
+@@ -1381,8 +1379,8 @@ static u32 xfrm_gen_index(struct net *ne
+ 		int found;
  
--	if (likely(xdst->u.rt6.rt6i_idev))
--		in6_dev_put(xdst->u.rt6.rt6i_idev);
- 	dst_destroy_metrics_generic(dst);
- 	rt6_uncached_list_del(&xdst->u.rt6);
-+	if (likely(xdst->u.rt6.rt6i_idev))
-+		in6_dev_put(xdst->u.rt6.rt6i_idev);
- 	xfrm_dst_destroy(xdst);
- }
- 
+ 		if (!index) {
+-			idx = (idx_generator | dir);
+-			idx_generator += 8;
++			idx = (net->xfrm.idx_generator | dir);
++			net->xfrm.idx_generator += 8;
+ 		} else {
+ 			idx = index;
+ 			index = 0;
 
 
