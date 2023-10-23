@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D853214A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D79814A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c81uRQrx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54316C433C7;
-	Mon, 23 Oct 2023 11:13:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11Emg9n2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A30C433C8;
+	Mon, 23 Oct 2023 11:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059592;
-	bh=N32gROQCcIi+G2GrF3BzXoXr6ORZCDUDj0a7cOfjt3M=;
+	s=korg; t=1698059595;
+	bh=hO7/u4QvEpDSyIujDNLy4B/cM9A3gEd55peAsUr9LuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c81uRQrx3K9Dlp0C4lnkE+D5uheXcw08XRWzr14ou4D9f9O2z4luKXNc81upQSqbU
-	 /qKGFbXP+MYmQ6+pjG4citK/V9LMExgG5klehMuEUhc178Mj4MaBasvbwbmRmvBNLL
-	 m0FsIIGCiMpRAT7+xi1u9hNhA9J/6pvJcPyPvKOA=
+	b=11Emg9n2+ffQQF/13dlo+zfr7wX0xxOhNez6+G0xT4aEDnr1Q2qaSRp0hhtStnMvC
+	 YW7VO3XQS4oCj6zngXzqPFgIhfMagjOblWGUuuglojlGQky185XwbYcu7f5GORixiM
+	 m0iybA+4lS1+zomO3P+ORJXjkGtt/oEXl7xBj0nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
-	Merlijn Wajer <merlijn@wizzup.org>,
-	Pavel Machek <pavel@ucw.cz>,
-	Sebastian Reichel <sre@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Adrien Thierry <athierry@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 228/241] phy: mapphone-mdm6600: Fix pinctrl_pm handling for sleep pins
-Date: Mon, 23 Oct 2023 12:56:54 +0200
-Message-ID: <20231023104839.429482937@linuxfoundation.org>
+Subject: [PATCH 6.5 229/241] phy: qcom-qmp-usb: initialize PCS_USB registers
+Date: Mon, 23 Oct 2023 12:56:55 +0200
+Message-ID: <20231023104839.455519816@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -47,109 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Adrien Thierry <athierry@redhat.com>
 
-[ Upstream commit 3b384cc74b00b5ac21d18e4c1efc3c1da5300971 ]
+[ Upstream commit 2d3465a75c9f83684d17da6807423824bf260524 ]
 
-Looks like the driver sleep pins configuration is unusable. Adding the
-sleep pins causes the usb phy to not respond. We need to use the default
-pins in probe, and only set sleep pins at phy_mdm6600_device_power_off().
+Currently, PCS_USB registers that have their initialization data in a
+pcs_usb_tbl table are never initialized. Fix that.
 
-As the modem can also be booted to a serial port mode for firmware
-flashing, let's make the pin changes limited to probe and remove. For
-probe, we get the default pins automatically. We only need to set the
-sleep pins in phy_mdm6600_device_power_off() to prevent the modem from
-waking up because the gpio line glitches.
-
-If it turns out that we need a separate state for phy_mdm6600_power_on()
-and phy_mdm6600_power_off(), we can use the pinctrl idle state.
-
-Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
-Cc: Merlijn Wajer <merlijn@wizzup.org>
-Cc: Pavel Machek <pavel@ucw.cz>
-Cc: Sebastian Reichel <sre@kernel.org>
-Fixes: 2ad2af081622 ("phy: mapphone-mdm6600: Improve phy related runtime PM calls")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20230913060433.48373-3-tony@atomide.com
+Fixes: fc64623637da ("phy: qcom-qmp-combo,usb: add support for separate PCS_USB region")
+Signed-off-by: Adrien Thierry <athierry@redhat.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230828152353.16529-2-athierry@redhat.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/motorola/phy-mapphone-mdm6600.c | 29 +++++++++------------
- 1 file changed, 12 insertions(+), 17 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/phy/motorola/phy-mapphone-mdm6600.c b/drivers/phy/motorola/phy-mapphone-mdm6600.c
-index df48b1becebe6..376d023a0aa90 100644
---- a/drivers/phy/motorola/phy-mapphone-mdm6600.c
-+++ b/drivers/phy/motorola/phy-mapphone-mdm6600.c
-@@ -122,16 +122,10 @@ static int phy_mdm6600_power_on(struct phy *x)
- {
- 	struct phy_mdm6600 *ddata = phy_get_drvdata(x);
- 	struct gpio_desc *enable_gpio = ddata->ctrl_gpios[PHY_MDM6600_ENABLE];
--	int error;
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+index 466f0a56c82e1..f9cb60f12575b 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+@@ -2233,6 +2233,7 @@ static int qmp_usb_power_on(struct phy *phy)
+ 	void __iomem *tx = qmp->tx;
+ 	void __iomem *rx = qmp->rx;
+ 	void __iomem *pcs = qmp->pcs;
++	void __iomem *pcs_usb = qmp->pcs_usb;
+ 	void __iomem *status;
+ 	unsigned int val;
+ 	int ret;
+@@ -2256,6 +2257,9 @@ static int qmp_usb_power_on(struct phy *phy)
  
- 	if (!ddata->enabled)
- 		return -ENODEV;
+ 	qmp_usb_configure(pcs, cfg->pcs_tbl, cfg->pcs_tbl_num);
  
--	error = pinctrl_pm_select_default_state(ddata->dev);
--	if (error)
--		dev_warn(ddata->dev, "%s: error with default_state: %i\n",
--			 __func__, error);
--
- 	gpiod_set_value_cansleep(enable_gpio, 1);
- 
- 	/* Allow aggressive PM for USB, it's only needed for n_gsm port */
-@@ -160,11 +154,6 @@ static int phy_mdm6600_power_off(struct phy *x)
- 
- 	gpiod_set_value_cansleep(enable_gpio, 0);
- 
--	error = pinctrl_pm_select_sleep_state(ddata->dev);
--	if (error)
--		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
--			 __func__, error);
--
- 	return 0;
- }
- 
-@@ -456,6 +445,7 @@ static void phy_mdm6600_device_power_off(struct phy_mdm6600 *ddata)
- {
- 	struct gpio_desc *reset_gpio =
- 		ddata->ctrl_gpios[PHY_MDM6600_RESET];
-+	int error;
- 
- 	ddata->enabled = false;
- 	phy_mdm6600_cmd(ddata, PHY_MDM6600_CMD_BP_SHUTDOWN_REQ);
-@@ -471,6 +461,17 @@ static void phy_mdm6600_device_power_off(struct phy_mdm6600 *ddata)
- 	} else {
- 		dev_err(ddata->dev, "Timed out powering down\n");
- 	}
++	if (pcs_usb)
++		qmp_usb_configure(pcs_usb, cfg->pcs_usb_tbl, cfg->pcs_usb_tbl_num);
 +
-+	/*
-+	 * Keep reset gpio high with padconf internal pull-up resistor to
-+	 * prevent modem from waking up during deeper SoC idle states. The
-+	 * gpio bank lines can have glitches if not in the always-on wkup
-+	 * domain.
-+	 */
-+	error = pinctrl_pm_select_sleep_state(ddata->dev);
-+	if (error)
-+		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
-+			 __func__, error);
- }
+ 	if (cfg->has_pwrdn_delay)
+ 		usleep_range(10, 20);
  
- static void phy_mdm6600_deferred_power_on(struct work_struct *work)
-@@ -571,12 +572,6 @@ static int phy_mdm6600_probe(struct platform_device *pdev)
- 	ddata->dev = &pdev->dev;
- 	platform_set_drvdata(pdev, ddata);
- 
--	/* Active state selected in phy_mdm6600_power_on() */
--	error = pinctrl_pm_select_sleep_state(ddata->dev);
--	if (error)
--		dev_warn(ddata->dev, "%s: error with sleep_state: %i\n",
--			 __func__, error);
--
- 	error = phy_mdm6600_init_lines(ddata);
- 	if (error)
- 		return error;
 -- 
 2.42.0
 
