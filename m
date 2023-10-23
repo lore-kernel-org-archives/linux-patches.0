@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DC714F67
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB00F4FE
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEfiLa3j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD7CC433C7;
-	Mon, 23 Oct 2023 11:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kc8nUXfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C35CC433C7;
+	Mon, 23 Oct 2023 11:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059663;
-	bh=tmW/nX7+6CN8DgBthDCqJ6YaXZHP6i+hBwZQ5FvZwz8=;
+	s=korg; t=1698059665;
+	bh=2w7ofIH6LYVa0yUQ1hDQbtWrMA8Qvfu3WumNNyclDFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEfiLa3jI5gw65d+936u4cco3LFxlNwoNjdW3sBROztDAyk35VfnSRjAG7CBvxgoM
-	 Difkxph/QMzJwRZMSyjiud5+vIs4nvhXblJm/qKZLc45LRi/Io9T+iaf3e9z8/TrAV
-	 MFoqzUJcGdhJQibrRmLlk6uFmqPMRWxjsBpd0CyE=
+	b=kc8nUXfaDNiVG6rNfpk+kAhPTXRtjNVdb9Ma8qiBw8hf+2OOAHhkc2C2BUrKlCHak
+	 D6Lq6haoIKlgKXy72JyrRXLgJXT05HC4+4jKzXmwySVX3UOFQ4+pYBW3tcnM2iQOsw
+	 hxirhSJXtATQ6HMOgsGnSbUVJv6Xe6Lq11BvwH1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 11/98] drm/msm/dsi: skip the wait for video mode done if not applicable
-Date: Mon, 23 Oct 2023 12:56:00 +0200
-Message-ID: <20231023104813.980754071@linuxfoundation.org>
+Subject: [PATCH 4.19 12/98] ieee802154: ca8210: Fix a potential UAF in ca8210_probe
+Date: Mon, 23 Oct 2023 12:56:01 +0200
+Message-ID: <20231023104814.018032913@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -42,63 +42,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit ab483e3adcc178254eb1ce0fbdfbea65f86f1006 ]
+[ Upstream commit f990874b1c98fe8e57ee9385669f501822979258 ]
 
-dsi_wait4video_done() API waits for the DSI video mode engine to
-become idle so that we can transmit the DCS commands in the
-beginning of BLLP. However, with the current sequence, the MDP
-timing engine is turned on after the panel's pre_enable() callback
-which can send out the DCS commands needed to power up the panel.
+If of_clk_add_provider() fails in ca8210_register_ext_clock(),
+it calls clk_unregister() to release priv->clk and returns an
+error. However, the caller ca8210_probe() then calls ca8210_remove(),
+where priv->clk is freed again in ca8210_unregister_ext_clock(). In
+this case, a use-after-free may happen in the second time we call
+clk_unregister().
 
-During those cases, this API will always timeout and print out the
-error spam leading to long bootup times and log flooding.
+Fix this by removing the first clk_unregister(). Also, priv->clk could
+be an error code on failure of clk_register_fixed_rate(). Use
+IS_ERR_OR_NULL to catch this case in ca8210_unregister_ext_clock().
 
-Fix this by checking if the DSI video engine was actually busy before
-waiting for it to become idle otherwise this is a redundant wait.
-
-changes in v2:
-	- move the reg read below the video mode check
-	- minor fixes in commit text
-
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/34
-Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/557853/
-Link: https://lore.kernel.org/r/20230915204426.19011-1-quic_abhinavk@quicinc.com
+Fixes: ded845a781a5 ("ieee802154: Add CA8210 IEEE 802.15.4 device driver")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Message-ID: <20231007033049.22353-1-dinghao.liu@zju.edu.cn>
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/ieee802154/ca8210.c | 17 +++--------------
+ 1 file changed, 3 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 059578faa1c6d..5f4dd3659bf96 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1059,9 +1059,21 @@ static void dsi_wait4video_done(struct msm_dsi_host *msm_host)
+diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
+index f75faec23cc98..525f92e896699 100644
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -2781,7 +2781,6 @@ static int ca8210_register_ext_clock(struct spi_device *spi)
+ 	struct device_node *np = spi->dev.of_node;
+ 	struct ca8210_priv *priv = spi_get_drvdata(spi);
+ 	struct ca8210_platform_data *pdata = spi->dev.platform_data;
+-	int ret = 0;
  
- static void dsi_wait4video_eng_busy(struct msm_dsi_host *msm_host)
+ 	if (!np)
+ 		return -EFAULT;
+@@ -2798,18 +2797,8 @@ static int ca8210_register_ext_clock(struct spi_device *spi)
+ 		dev_crit(&spi->dev, "Failed to register external clk\n");
+ 		return PTR_ERR(priv->clk);
+ 	}
+-	ret = of_clk_add_provider(np, of_clk_src_simple_get, priv->clk);
+-	if (ret) {
+-		clk_unregister(priv->clk);
+-		dev_crit(
+-			&spi->dev,
+-			"Failed to register external clock as clock provider\n"
+-		);
+-	} else {
+-		dev_info(&spi->dev, "External clock set as clock provider\n");
+-	}
+ 
+-	return ret;
++	return of_clk_add_provider(np, of_clk_src_simple_get, priv->clk);
+ }
+ 
+ /**
+@@ -2821,8 +2810,8 @@ static void ca8210_unregister_ext_clock(struct spi_device *spi)
  {
-+	u32 data;
-+
- 	if (!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO))
- 		return;
+ 	struct ca8210_priv *priv = spi_get_drvdata(spi);
  
-+	data = dsi_read(msm_host, REG_DSI_STATUS0);
-+
-+	/* if video mode engine is not busy, its because
-+	 * either timing engine was not turned on or the
-+	 * DSI controller has finished transmitting the video
-+	 * data already, so no need to wait in those cases
-+	 */
-+	if (!(data & DSI_STATUS0_VIDEO_MODE_ENGINE_BUSY))
+-	if (!priv->clk)
+-		return
++	if (IS_ERR_OR_NULL(priv->clk))
 +		return;
-+
- 	if (msm_host->power_on && msm_host->enabled) {
- 		dsi_wait4video_done(msm_host);
- 		/* delay 4 ms to skip BLLP */
+ 
+ 	of_clk_del_provider(spi->dev.of_node);
+ 	clk_unregister(priv->clk);
 -- 
 2.40.1
 
