@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DD015E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4E615E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuIWNONF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21681C433C8;
-	Mon, 23 Oct 2023 11:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0jBKTc/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C76EC433C8;
+	Mon, 23 Oct 2023 11:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060617;
-	bh=ppEcqYJ0fLd0DHELKcmP3RgEouj+GU6x8olpZxkU6iE=;
+	s=korg; t=1698060620;
+	bh=XjkmDzXl7oXDbdR9G5s2Me5HKVZuYU9Ow4ExCtSnDVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OuIWNONF77g/1lUbzgZKdEeuMNF2/W24gKyR6VYGbo2Xn5Igk0R6BkvM/M6MKwrNk
-	 9pr0O60uO5NfOsNmKwjRJDpWmTcBYI+JTf2mIvMe1meAaAVryiecPAGq7hYMqMrJ2P
-	 US+n2zO+5/uS9nFZBO0CyEwgv/F7fV9HuzygpqTE=
+	b=f0jBKTc/OOX0LtVcs0O0RYhkDIWUb556txu0f71SDcKLzsAMQy1oowIkU+AJ2nm0j
+	 IKPc4Gnl8NLFDvhC+5Xj4gjwECPGN4KEhwXVn/d5dafX70KADuI+Bhgkj8sfob2P8N
+	 OhhOQMgmeQyEdXQDFlTIk8Ja+kg4VaiFn9dNT6/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.4 035/123] pinctrl: avoid unsafe code pattern in find_pinctrl()
-Date: Mon, 23 Oct 2023 12:56:33 +0200
-Message-ID: <20231023104818.913623822@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Piyush Mehta <piyush.mehta@amd.com>
+Subject: [PATCH 5.4 036/123] usb: gadget: udc-xilinx: replace memcpy with memcpy_toio
+Date: Mon, 23 Oct 2023 12:56:34 +0200
+Message-ID: <20231023104818.942868858@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -41,63 +41,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Piyush Mehta <piyush.mehta@amd.com>
 
-commit c153a4edff6ab01370fcac8e46f9c89cca1060c2 upstream.
+commit 3061b6491f491197a35e14e49f805d661b02acd4 upstream.
 
-The code in find_pinctrl() takes a mutex and traverses a list of pinctrl
-structures. Later the caller bumps up reference count on the found
-structure. Such pattern is not safe as pinctrl that was found may get
-deleted before the caller gets around to increasing the reference count.
+For ARM processor, unaligned access to device memory is not allowed.
+Method memcpy does not take care of alignment.
 
-Fix this by taking the reference count in find_pinctrl(), while it still
-holds the mutex.
+USB detection failure with the unalingned address of memory, with
+below kernel crash. To fix the unalingned address kernel panic,
+replace memcpy with memcpy_toio method.
 
+Kernel crash:
+Unable to handle kernel paging request at virtual address ffff80000c05008a
+Mem abort info:
+  ESR = 0x96000061
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x21: alignment fault
+Data abort info:
+  ISV = 0, ISS = 0x00000061
+  CM = 0, WnR = 1
+swapper pgtable: 4k pages, 48-bit VAs, pgdp=000000000143b000
+[ffff80000c05008a] pgd=100000087ffff003, p4d=100000087ffff003,
+pud=100000087fffe003, pmd=1000000800bcc003, pte=00680000a0010713
+Internal error: Oops: 96000061 [#1] SMP
+Modules linked in:
+CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.15.19-xilinx-v2022.1 #1
+Hardware name: ZynqMP ZCU102 Rev1.0 (DT)
+pstate: 200000c5 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __memcpy+0x30/0x260
+lr : __xudc_ep0_queue+0xf0/0x110
+sp : ffff800008003d00
+x29: ffff800008003d00 x28: ffff800009474e80 x27: 00000000000000a0
+x26: 0000000000000100 x25: 0000000000000012 x24: ffff000800bc8080
+x23: 0000000000000001 x22: 0000000000000012 x21: ffff000800bc8080
+x20: 0000000000000012 x19: ffff000800bc8080 x18: 0000000000000000
+x17: ffff800876482000 x16: ffff800008004000 x15: 0000000000004000
+x14: 00001f09785d0400 x13: 0103020101005567 x12: 0781400000000200
+x11: 00000000c5672a10 x10: 00000000000008d0 x9 : ffff800009463cf0
+x8 : ffff8000094757b0 x7 : 0201010055670781 x6 : 4000000002000112
+x5 : ffff80000c05009a x4 : ffff000800a15012 x3 : ffff00080362ad80
+x2 : 0000000000000012 x1 : ffff000800a15000 x0 : ffff80000c050088
+Call trace:
+ __memcpy+0x30/0x260
+ xudc_ep0_queue+0x3c/0x60
+ usb_ep_queue+0x38/0x44
+ composite_ep0_queue.constprop.0+0x2c/0xc0
+ composite_setup+0x8d0/0x185c
+ configfs_composite_setup+0x74/0xb0
+ xudc_irq+0x570/0xa40
+ __handle_irq_event_percpu+0x58/0x170
+ handle_irq_event+0x60/0x120
+ handle_fasteoi_irq+0xc0/0x220
+ handle_domain_irq+0x60/0x90
+ gic_handle_irq+0x74/0xa0
+ call_on_irq_stack+0x2c/0x60
+ do_interrupt_handler+0x54/0x60
+ el1_interrupt+0x30/0x50
+ el1h_64_irq_handler+0x18/0x24
+ el1h_64_irq+0x78/0x7c
+ arch_cpu_idle+0x18/0x2c
+ do_idle+0xdc/0x15c
+ cpu_startup_entry+0x28/0x60
+ rest_init+0xc8/0xe0
+ arch_call_rest_init+0x10/0x1c
+ start_kernel+0x694/0x6d4
+ __primary_switched+0xa4/0xac
+
+Fixes: 1f7c51660034 ("usb: gadget: Add xilinx usb2 device support")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/all/202209020044.CX2PfZzM-lkp@intel.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://lore.kernel.org/r/ZQs1RgTKg6VJqmPs@google.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Piyush Mehta <piyush.mehta@amd.com>
+Link: https://lore.kernel.org/r/20230929121514.13475-1-piyush.mehta@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/core.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/usb/gadget/udc/udc-xilinx.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/drivers/pinctrl/core.c
-+++ b/drivers/pinctrl/core.c
-@@ -1005,17 +1005,20 @@ static int add_setting(struct pinctrl *p
- 
- static struct pinctrl *find_pinctrl(struct device *dev)
- {
--	struct pinctrl *p;
-+	struct pinctrl *entry, *p = NULL;
- 
- 	mutex_lock(&pinctrl_list_mutex);
--	list_for_each_entry(p, &pinctrl_list, node)
--		if (p->dev == dev) {
--			mutex_unlock(&pinctrl_list_mutex);
--			return p;
-+
-+	list_for_each_entry(entry, &pinctrl_list, node) {
-+		if (entry->dev == dev) {
-+			p = entry;
-+			kref_get(&p->users);
-+			break;
+--- a/drivers/usb/gadget/udc/udc-xilinx.c
++++ b/drivers/usb/gadget/udc/udc-xilinx.c
+@@ -496,11 +496,13 @@ static int xudc_eptxrx(struct xusb_ep *e
+ 		/* Get the Buffer address and copy the transmit data.*/
+ 		eprambase = (u32 __force *)(udc->addr + ep->rambase);
+ 		if (ep->is_in) {
+-			memcpy(eprambase, bufferptr, bytestosend);
++			memcpy_toio((void __iomem *)eprambase, bufferptr,
++				    bytestosend);
+ 			udc->write_fn(udc->addr, ep->offset +
+ 				      XUSB_EP_BUF0COUNT_OFFSET, bufferlen);
+ 		} else {
+-			memcpy(bufferptr, eprambase, bytestosend);
++			memcpy_toio((void __iomem *)bufferptr, eprambase,
++				    bytestosend);
  		}
-+	}
+ 		/*
+ 		 * Enable the buffer for transmission.
+@@ -514,11 +516,13 @@ static int xudc_eptxrx(struct xusb_ep *e
+ 		eprambase = (u32 __force *)(udc->addr + ep->rambase +
+ 			     ep->ep_usb.maxpacket);
+ 		if (ep->is_in) {
+-			memcpy(eprambase, bufferptr, bytestosend);
++			memcpy_toio((void __iomem *)eprambase, bufferptr,
++				    bytestosend);
+ 			udc->write_fn(udc->addr, ep->offset +
+ 				      XUSB_EP_BUF1COUNT_OFFSET, bufferlen);
+ 		} else {
+-			memcpy(bufferptr, eprambase, bytestosend);
++			memcpy_toio((void __iomem *)bufferptr, eprambase,
++				    bytestosend);
+ 		}
+ 		/*
+ 		 * Enable the buffer for transmission.
+@@ -1020,7 +1024,7 @@ static int __xudc_ep0_queue(struct xusb_
+ 			   udc->addr);
+ 		length = req->usb_req.actual = min_t(u32, length,
+ 						     EP0_MAX_PACKET);
+-		memcpy(corebuf, req->usb_req.buf, length);
++		memcpy_toio((void __iomem *)corebuf, req->usb_req.buf, length);
+ 		udc->write_fn(udc->addr, XUSB_EP_BUF0COUNT_OFFSET, length);
+ 		udc->write_fn(udc->addr, XUSB_BUFFREADY_OFFSET, 1);
+ 	} else {
+@@ -1746,7 +1750,7 @@ static void xudc_handle_setup(struct xus
  
- 	mutex_unlock(&pinctrl_list_mutex);
--	return NULL;
-+	return p;
- }
+ 	/* Load up the chapter 9 command buffer.*/
+ 	ep0rambase = (u32 __force *) (udc->addr + XUSB_SETUP_PKT_ADDR_OFFSET);
+-	memcpy(&setup, ep0rambase, 8);
++	memcpy_toio((void __iomem *)&setup, ep0rambase, 8);
  
- static void pinctrl_free(struct pinctrl *p, bool inlist);
-@@ -1124,7 +1127,6 @@ struct pinctrl *pinctrl_get(struct devic
- 	p = find_pinctrl(dev);
- 	if (p) {
- 		dev_dbg(dev, "obtain a copy of previously claimed pinctrl\n");
--		kref_get(&p->users);
- 		return p;
- 	}
+ 	udc->setup = setup;
+ 	udc->setup.wValue = cpu_to_le16(setup.wValue);
+@@ -1833,7 +1837,7 @@ static void xudc_ep0_out(struct xusb_udc
+ 			     (ep0->rambase << 2));
+ 		buffer = req->usb_req.buf + req->usb_req.actual;
+ 		req->usb_req.actual = req->usb_req.actual + bytes_to_rx;
+-		memcpy(buffer, ep0rambase, bytes_to_rx);
++		memcpy_toio((void __iomem *)buffer, ep0rambase, bytes_to_rx);
  
+ 		if (req->usb_req.length == req->usb_req.actual) {
+ 			/* Data transfer completed get ready for Status stage */
+@@ -1909,7 +1913,7 @@ static void xudc_ep0_in(struct xusb_udc
+ 				     (ep0->rambase << 2));
+ 			buffer = req->usb_req.buf + req->usb_req.actual;
+ 			req->usb_req.actual = req->usb_req.actual + length;
+-			memcpy(ep0rambase, buffer, length);
++			memcpy_toio((void __iomem *)ep0rambase, buffer, length);
+ 		}
+ 		udc->write_fn(udc->addr, XUSB_EP_BUF0COUNT_OFFSET, count);
+ 		udc->write_fn(udc->addr, XUSB_BUFFREADY_OFFSET, 1);
 
 
