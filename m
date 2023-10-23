@@ -1,310 +1,186 @@
-Received: from out30-119.freemail.mail.aliyun.com (out30-119.freemail.mail.aliyun.com [115.124.30.119])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2088.outbound.protection.outlook.com [40.107.237.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A77911CA4
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 12:10:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R591e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046060;MF=guangguan.wang@linux.alibaba.com;NM=1;PH=DS;RN=7;SR=0;TI=SMTPD_---0Vukt7-U_1698062702;
-Received: from 30.221.100.158(mailfrom:guangguan.wang@linux.alibaba.com fp:SMTPD_---0Vukt7-U_1698062702)
-          by smtp.aliyun-inc.com;
-          Mon, 23 Oct 2023 20:05:03 +0800
-Message-ID: <80669f40-3bc5-440e-9440-e153d12e37ef@linux.alibaba.com>
-Date: Mon, 23 Oct 2023 20:05:01 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4ABB1B28F
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 14:34:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="Xo5HAH8E"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=hE/7j+4tygbDBLZLjRxRszPJKdkU1Q6LCaOweRUaGd+tHjWjTcBmdo1Au6a2hh2Hq9X0LMf4LaZm8pnlIGYLZCF1TtVClnKP0qIyZaT/wRVcXvanvV5rgq1JN4ua24D4CqVRZsOHLU5mdaw5wzr6gPFECNkVnnLgAe89H01sT9i38t+PaomhM5U1DvP/H+TG8SFu/OcNW18bxyW0kLeQmwflXQewRV1phMruj2bEstjpGiRZBLvfJEt/R74gu0/2YqFCXcCxjWtIZZUPuUsZwbqDcj6gPciOiGJ4Mz95EHIyORC0A+kkbr1jT4KFWmIOxkYmtH8APWkvMRs4Efgh+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2qMrdUbCBUzO/zkGPNrcQVbHghcfxxq3RHgorMVU904=;
+ b=OrioABFsTg1KSfy6DmSH/y3Vs8boX2VqyibJrDJ3XjSOPpq+reicLavv1bzwaT0x5csX/CHfoxQMuVhqrSLDjYhl/7BCHz2i8OU3Ptv6NhmkEqt8SiPYtgdgxe56K/+MruogSULFaphrbBtdAciqNy6MlH2+iJBhIYiDhKSRJKeeEIpxGWD8vKoG0OwgrsFA5OUtzQSuwELAPze3GoiFbqBYUjIBUzAyccLxMLn/bfIksVGv4WJ0ZlsccEmGMe1iOIHVj0o/fMJEf4/sHvu3YeX8p4xVylHkDx1c0k3Ons0I4ESteWRWBG+s94KKzvmjsNSHYeLw3qAq65kqhciMlw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2qMrdUbCBUzO/zkGPNrcQVbHghcfxxq3RHgorMVU904=;
+ b=Xo5HAH8EA+ObmqcmI/qaqMqTpq+8oa91pysQ5CqnB19Hic5WZ3QIBBuwUS1vX/sLUzNBYY1dqPgAootmH1YE7e0Ff7YQC9qoPX2tCLpAbOYa9zaM2Bc7X/Vakc6mOozyn31otYV2ApDHkfPrg7aQYgOAnPJCTUi1GQJ6RL8tzb4=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BL1PR12MB5874.namprd12.prod.outlook.com (2603:10b6:208:396::17)
+ by MN2PR12MB4240.namprd12.prod.outlook.com (2603:10b6:208:1d3::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6907.31; Mon, 23 Oct
+ 2023 14:34:05 +0000
+Received: from BL1PR12MB5874.namprd12.prod.outlook.com
+ ([fe80::7e38:5c00:e469:bde]) by BL1PR12MB5874.namprd12.prod.outlook.com
+ ([fe80::7e38:5c00:e469:bde%6]) with mapi id 15.20.6907.030; Mon, 23 Oct 2023
+ 14:34:04 +0000
+Message-ID: <dcb9d0bb-67a3-2f50-9d17-251baa24b066@amd.com>
+Date: Mon, 23 Oct 2023 09:34:02 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH] docs: rust: add "The Rust experiment" section
+Content-Language: en-US
+To: Miguel Ojeda <ojeda@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Benno Lossin <benno.lossin@proton.me>,
+ Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl
+ <aliceryhl@google.com>, Andrew Lunn <andrew@lunn.ch>,
+ linux-doc@vger.kernel.org, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev, andrew@lunn.ch
+References: <20231018160922.1018962-1-ojeda@kernel.org>
+From: Carlos Bilbao <carlos.bilbao@amd.com>
+In-Reply-To: <20231018160922.1018962-1-ojeda@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SA9PR13CA0170.namprd13.prod.outlook.com
+ (2603:10b6:806:28::25) To BL1PR12MB5874.namprd12.prod.outlook.com
+ (2603:10b6:208:396::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.5 159/241] net/smc: support smc release version
- negotiation in clc handshake
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Tony Lu <tonylu@linux.alibaba.com>,
- Jan Karcher <jaka@linux.ibm.com>, "David S. Miller" <davem@davemloft.net>,
- Sasha Levin <sashal@kernel.org>
-References: <20231023104833.832874523@linuxfoundation.org>
- <20231023104837.750719920@linuxfoundation.org>
-From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-In-Reply-To: <20231023104837.750719920@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5874:EE_|MN2PR12MB4240:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5fe2b0a7-c255-42e5-7adc-08dbd3d51b9b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	AE/8ZVzrxQCe9YCVc2Jdg9wqthrOi/i5FD7UI8RDlKOylLjSnj7gbkRnrNWz8EZHxRTaf2twERjeb/gQS44TM6NWj/GvKqsV4zfxWbP649qeVsl58Ki3YiP2T4vrs0LK9nxmw9qvXZOGIBbSMxdG1+SqOx7G+8O3kH7n619eiwweVKp84LN5DR9JBHNzjGWNkdEL5ZHLIdzVmO/1JftOhum2KwyzseeBtAf27AyYEZKBWzWT66oOC8jJnaeEt5zT2Y6vdL8EXn+JZfITVOmPsaq8raTYzqSDSZ0qi2gKIZj6s7lg80o+mVEdeey0Z0XNFwdqAb7nZbiclRgf1Gra/9YxIMW/jOaO3CWkxFEcpnHFnoOX96+4c3q2bGiCYtiNnZY4IeSQuyNjHkCY/TaiuU1yiYdyWsqKz38KUJxc5Mz1dlMlT1X/9T0UcEj1fXFRd2LqFYJPbTivMsSu+twhLP68xRgL5ZiAt2MNwHiTVeUOutGCSvKrOG/iG7RtcN7R2jXvZYRW8j1e4wQpFV3MbzB9tLotaU7O4W875wiZBsTM7/PGbzLdmLkcZADxQc6DiyLaAn2TLUN/PoIenIG59Qq09/y6vkNLalT5TPx+TpIUnONen4oCqtWpS3ybZN00Q7801q42JHzRSPXIkHgXyA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5874.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(39860400002)(366004)(136003)(346002)(376002)(230922051799003)(186009)(1800799009)(451199024)(64100799003)(31686004)(36756003)(316002)(66946007)(110136005)(54906003)(66556008)(66476007)(86362001)(31696002)(38100700002)(53546011)(83380400001)(26005)(2616005)(6512007)(6506007)(6486002)(2906002)(8936002)(478600001)(7416002)(5660300002)(44832011)(8676002)(41300700001)(4326008)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?dHByNzhEQ25JNWtnZFJSTG8vUFp5TXJBakhnNzRqemptWHNXRDhIWXBUTVdk?=
+ =?utf-8?B?dDhlOUFYZy8wMHM5bDhPLzRhUSs5citvUlF4T3hidTRVaVh3UThqKzB5UUM4?=
+ =?utf-8?B?S3ptVGZibGg5alAxRjNLekI0NG5oMFhpTnl2NzVPTnh5L0JHWHJldHFOTFc2?=
+ =?utf-8?B?Y2JESXNPQWd1R0JKdmxGUFQ0S3BFQU5LNTBzVVFqRTU1UXNUZWQvc1FTK0po?=
+ =?utf-8?B?VlN3QzgwNFMxUE1LZ0I2Y0kwTko0Y0J5M1JNdlU1bjlMVTBWK1ZLMXRiUjhx?=
+ =?utf-8?B?Z2F1eXM5SDV1S1JneUtsQjU4NHFFQ2oyL2xySkNJT0U2N1pYTVlJVUtadEg1?=
+ =?utf-8?B?eWFyUzA5RDNIc2hNZHgrVHBHMHNOWll1bmlacmREMWRldk1vb3puN0hXYjNp?=
+ =?utf-8?B?b1l2YjZRS3k1SjJEM3F0ekZqRk85UTRWU00yRGVFdnZWSzFCaUthZFNIcHpr?=
+ =?utf-8?B?NGtYT2lrblV4dXdRY2VDQkw3b1dmbFRGL3FlM0dLS2dNZkNRUWJ1SHh1Kytp?=
+ =?utf-8?B?Tzd4cjY4YXhlL3dkYVFSRWFXbHBQN2tyRlNUcFJ2bVVNcCtWY3dJZGIzNkp1?=
+ =?utf-8?B?aXg4U1o1ZkJscXlMT0lQcnk0MUdDdzl5VElvRUJlajRHb3hnMUZBRlplUG5z?=
+ =?utf-8?B?ZjZ1SE8yZGM1bU1pVXJ2cUl4d3Z1S3BWQ3J6ZmFiSVJMN21VSTRwcEkyUCtK?=
+ =?utf-8?B?ZFlTMkpHVUZkd1crcTZaelZBekFTc1ZxVFdVOTNNTGROc2M4dXRrVS84UDVj?=
+ =?utf-8?B?emNpS2tvbW1uOTlZWXl0akpKOGtMQnY0MGcwV3BQSGxNUDBPYnc0YTRzYWZ4?=
+ =?utf-8?B?VG1wYXI4bFYrYVhQMXZLa2NkT0FyRGs0YTB5aEdRaWJDSUtOWVdZVi9JNlph?=
+ =?utf-8?B?NGZ0Yjg2Y2xTZzl5amxqWVM5aDYyNjN6VVEySm02VjZLMlF5VUNydFFNQ2lr?=
+ =?utf-8?B?Y0Q2MFd2Y2dwQjBZZisxa096b2lCRzVmNjA4NVVyOHFHdnhORzU4VVJwekVP?=
+ =?utf-8?B?RXQ0aDJhRkQ5bFhyeUNKeWxyNm5JQktUeDNqOXdCTktSelJPZTZwbmt3cnll?=
+ =?utf-8?B?NkVuNzd6Sy9XcUo4Y0FXdTRUOGsveXJQM0NhZVg5ME9EY2djdTJGeVJqSWlX?=
+ =?utf-8?B?dndSOTh1RzdaZHRBOE1UWUt3MTF6dWVYNWhpNGNFaDhBbzcrM1VPNTM5dnlU?=
+ =?utf-8?B?TTJkRGtsQjlIVVdKTXFUSE9OQnBTV0pVaWQrVCtzN256RUo3VUJZZXRuMDA1?=
+ =?utf-8?B?d0loc0tOQ1RjUzFYVjgzb0lRYVZEMGN1aU1BaG1jbkRpWlp3bnpHRjI3a3I5?=
+ =?utf-8?B?MjAzMlRsMndWNHhjZmF2NTdONlVKR2MrcjZlY2M2K2lzcDRwK1U1c2FtZDM3?=
+ =?utf-8?B?cmhwdWtpR3pSSzVxcUlnSUFVSCs2cUhFYndKK0E5UE0wdjA3VVRoWmRxbjlN?=
+ =?utf-8?B?UENRZ1ZRVU1GMDdUV29TRS8zZVJoTXRHMThKQTJrblVvbUplaGZCWldaYkFR?=
+ =?utf-8?B?eFlOUVdJZUxnVFFSaXlyS2J5WTZNbFlLbFRGdlJTWXpsSzFmRE0za3JnYjgr?=
+ =?utf-8?B?SUs3cGtwbi95dmVWOS9jQU1GQUJsMk1lYXc1ZDZOSE9GTnJ3WmM1SEh3bVZB?=
+ =?utf-8?B?V3ZFdFVPYlF3c08yak5TZ2dWYTBiOTYxTW9zUTNhUVlGTFlmYm5FT28zREV4?=
+ =?utf-8?B?ckRVZ0d5TTMyQTlGK2MrOVNmc2RjUmgvQlVJb1c4WVZ1clZYeG90RE42MWJC?=
+ =?utf-8?B?U2tPSVdTQmIwOTdzTGhiT0VvU1FiRFlrQUtLL2NqSldlZ2czYWF6V2VBQ0VS?=
+ =?utf-8?B?ZklvYjZ4b3FPSUJRWnNETFlSZU8rcUllalJkYkZhR0dPVEV2aHpnL21Sdi90?=
+ =?utf-8?B?YTNpMnQvbFFhWTdzZ25zNEF2SWhDSS9EcEdLRWZoUG5PRDFORHZJVGNobHdW?=
+ =?utf-8?B?UmlwUHExUThzSU1xUHNPNWlvL3EzK1B3TlRxSXlMazc2SHJ5MHFrbDl2UEY4?=
+ =?utf-8?B?MWtHeXBMdk9YbTRHWXozU1k1cy95cXROMmtiOXRJR0ZUeWF0Ym5GM0R3d0ZK?=
+ =?utf-8?B?eEozejRyQ0xOdFpRRUJVUURlM2xvdmpyRnJtalJhMmNYR2E0cEFMbHRDQkZq?=
+ =?utf-8?Q?TwX4NTqEfv6nHyD2bzj+eH5UA?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5fe2b0a7-c255-42e5-7adc-08dbd3d51b9b
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5874.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2023 14:34:04.9261
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8BAdX0XR1BV4XQxL1UaYUDmf7XzBH1Dn9AmUPQ3GCrfLkmI8CkjXR49/gPCZTfUYKDjCpIO0kk+FMrNlSx1Fkg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4240
 
-Hi, Greg.
+On 10/18/23 11:09, Miguel Ojeda wrote:
+> Clarify that the Rust experiment is still going on to avoid
+> confusion for both kernel maintainers and end users.
+> 
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+> Andrew: I did not add a `Suggested-by` just in case, but please let me know
+> if you want it, of course.
+> 
+>   Documentation/rust/index.rst | 17 +++++++++++++++++
+>   1 file changed, 17 insertions(+)
+> 
+> diff --git a/Documentation/rust/index.rst b/Documentation/rust/index.rst
+> index e599be2cec9b..aaed36af15ce 100644
+> --- a/Documentation/rust/index.rst
+> +++ b/Documentation/rust/index.rst
+> @@ -6,6 +6,23 @@ Rust
+>   Documentation related to Rust within the kernel. To start using Rust
+>   in the kernel, please read the quick-start.rst guide.
+> 
+> +
+> +The Rust experiment
+> +-------------------
+> +
+> +The Rust support was merged in v6.1 into mainline in order to help in
+> +determining whether Rust as a language was suitable for the kernel, i.e. worth
+> +the tradeoffs.
+> +
+> +Currently, the Rust support is primarily intended for kernel developers and
+> +maintainers interested in the Rust support, so that they can start working on
+> +abstractions and drivers, as well as helping the development of infrastructure
+> +and tools.
+> +
+> +In particular, if you are an end user, please note that there are no in-tree
+> +drivers/modules suitable or intended for production use yet.
+> +
 
-[PATCH 6.5 159/241] net/smc: support smc release version negotiation in clc handshake
-[PATCH 6.5 160/241] net/smc: support smc v2.x features validate
+Personally, I would rephrase this to:
 
-The above two patches should not backport to stable tree 6.5, which may result in unexpected
-fallback if communication between 6.6 and 6.5(with these two patch) via SMC-R v2.1. The above
-two patches should not exist individually without the patch 7f0620b9(net/smc: support max
-connections per lgr negotiation) and the patch 69b888e3(net/smc: support max links per lgr 
-negotiation in clc handshake).
+"Please note that, as an end user, there are currently no in-tree drivers
+or modules suitable or intended for production use."
 
-The patch c68681ae46ea ("net/smc: fix smc clc failed issue when netdevice not in init_net")
-does not rely the feature SMC-R v2.1. But I think it may have conflict here when backport
-to stable tree 6.5:
+Also, I believe this should go here and not in Quick Start. The average end
+user, to whom this sentence seems to refer, typically begins his/her
+learning journey from the index page of our website.
 
-@@ -1201,6 +1201,7 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
- 		(struct smc_clc_msg_accept_confirm_v2 *)aclc;
- 	struct smc_clc_first_contact_ext *fce =
- 		smc_get_clc_first_contact_ext(clc_v2, false);    --conflict here
-+	struct net *net = sock_net(&smc->sk);
+I think this will be helpful.
 
+Reviewed-by: Carlos Bilbao <carlos.bilbao@amd.com>
 
-I think it is better to resolve the confilict rather than backport more patches.
-The resolution of the conflict should be like:
-
-@@ -1201,6 +1201,7 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
- 		(struct smc_clc_msg_accept_confirm_v2 *)aclc;
-  	struct smc_clc_first_contact_ext *fce =
-		(struct smc_clc_first_contact_ext *)
-			(((u8 *)clc_v2) + sizeof(*clc_v2));      --replace the line smc_get_clc_first_contact_ext(clc_v2, false);
-+	struct net *net = sock_net(&smc->sk);
+> +
+>   .. only:: rustdoc and html
+> 
+>   	You can also browse `rustdoc documentation <rustdoc/kernel/index.html>`_.
+> 
+> base-commit: 94f6f0550c625fab1f373bb86a6669b45e9748b3
+> --
+> 2.42.0
+> 
 
 Thanks,
-Guangguan Wang
-
-On 2023/10/23 18:55, Greg Kroah-Hartman wrote:
-> 6.5-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-> 
-> [ Upstream commit 1e700948c9db0d09f691f715e8f4b947e51e35b5 ]
-> 
-> Support smc release version negotiation in clc handshake based on
-> SMC v2, where no negotiation process for different releases, but
-> for different versions. The latest smc release version was updated
-> to v2.1. And currently there are two release versions of SMCv2, v2.0
-> and v2.1. In the release version negotiation, client sends the preferred
-> release version by CLC Proposal Message, server makes decision for which
-> release version to use based on the client preferred release version and
-> self-supported release version (here choose the minimum release version
-> of the client preferred and server latest supported), then the decision
-> returns to client by CLC Accept Message. Client confirms the decision by
-> CLC Confirm Message.
-> 
-> Client                                    Server
->       Proposal(preferred release version)
->      ------------------------------------>
-> 
->       Accept(accpeted release version)
->  min(client preferred, server latest supported)
->      <------------------------------------
-> 
->       Confirm(accpeted release version)
->      ------------------------------------>
-> 
-> Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-> Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-> Reviewed-by: Jan Karcher <jaka@linux.ibm.com>
-> Signed-off-by: David S. Miller <davem@davemloft.net>
-> Stable-dep-of: c68681ae46ea ("net/smc: fix smc clc failed issue when netdevice not in init_net")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  net/smc/af_smc.c   | 21 +++++++++++++++++----
->  net/smc/smc.h      |  5 ++++-
->  net/smc/smc_clc.c  | 14 +++++++-------
->  net/smc/smc_clc.h  | 23 ++++++++++++++++++++++-
->  net/smc/smc_core.h |  1 +
->  5 files changed, 51 insertions(+), 13 deletions(-)
-> 
-> diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-> index c0e4e587b4994..077e5864fc441 100644
-> --- a/net/smc/af_smc.c
-> +++ b/net/smc/af_smc.c
-> @@ -1198,8 +1198,7 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
->  	struct smc_clc_msg_accept_confirm_v2 *clc_v2 =
->  		(struct smc_clc_msg_accept_confirm_v2 *)aclc;
->  	struct smc_clc_first_contact_ext *fce =
-> -		(struct smc_clc_first_contact_ext *)
-> -			(((u8 *)clc_v2) + sizeof(*clc_v2));
-> +		smc_get_clc_first_contact_ext(clc_v2, false);
->  
->  	if (!ini->first_contact_peer || aclc->hdr.version == SMC_V1)
->  		return 0;
-> @@ -1218,6 +1217,9 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
->  			return SMC_CLC_DECL_NOINDIRECT;
->  		}
->  	}
-> +
-> +	ini->release_nr = fce->release;
-> +
->  	return 0;
->  }
->  
-> @@ -1386,6 +1388,13 @@ static int smc_connect_ism(struct smc_sock *smc,
->  		struct smc_clc_msg_accept_confirm_v2 *aclc_v2 =
->  			(struct smc_clc_msg_accept_confirm_v2 *)aclc;
->  
-> +		if (ini->first_contact_peer) {
-> +			struct smc_clc_first_contact_ext *fce =
-> +				smc_get_clc_first_contact_ext(aclc_v2, true);
-> +
-> +			ini->release_nr = fce->release;
-> +		}
-> +
->  		rc = smc_v2_determine_accepted_chid(aclc_v2, ini);
->  		if (rc)
->  			return rc;
-> @@ -1420,7 +1429,7 @@ static int smc_connect_ism(struct smc_sock *smc,
->  	}
->  
->  	rc = smc_clc_send_confirm(smc, ini->first_contact_local,
-> -				  aclc->hdr.version, eid, NULL);
-> +				  aclc->hdr.version, eid, ini);
->  	if (rc)
->  		goto connect_abort;
->  	mutex_unlock(&smc_server_lgr_pending);
-> @@ -1996,6 +2005,10 @@ static int smc_listen_v2_check(struct smc_sock *new_smc,
->  		}
->  	}
->  
-> +	ini->release_nr = pclc_v2_ext->hdr.flag.release;
-> +	if (pclc_v2_ext->hdr.flag.release > SMC_RELEASE)
-> +		ini->release_nr = SMC_RELEASE;
-> +
->  out:
->  	if (!ini->smcd_version && !ini->smcr_version)
->  		return rc;
-> @@ -2443,7 +2456,7 @@ static void smc_listen_work(struct work_struct *work)
->  	/* send SMC Accept CLC message */
->  	accept_version = ini->is_smcd ? ini->smcd_version : ini->smcr_version;
->  	rc = smc_clc_send_accept(new_smc, ini->first_contact_local,
-> -				 accept_version, ini->negotiated_eid);
-> +				 accept_version, ini->negotiated_eid, ini);
->  	if (rc)
->  		goto out_unlock;
->  
-> diff --git a/net/smc/smc.h b/net/smc/smc.h
-> index 1f2b912c43d10..24745fde4ac26 100644
-> --- a/net/smc/smc.h
-> +++ b/net/smc/smc.h
-> @@ -21,7 +21,10 @@
->  
->  #define SMC_V1		1		/* SMC version V1 */
->  #define SMC_V2		2		/* SMC version V2 */
-> -#define SMC_RELEASE	0
-> +
-> +#define SMC_RELEASE_0 0
-> +#define SMC_RELEASE_1 1
-> +#define SMC_RELEASE	SMC_RELEASE_1 /* the latest release version */
->  
->  #define SMCPROTO_SMC		0	/* SMC protocol, IPv4 */
->  #define SMCPROTO_SMC6		1	/* SMC protocol, IPv6 */
-> diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
-> index c90d9e5dda540..fb0be0817e8a5 100644
-> --- a/net/smc/smc_clc.c
-> +++ b/net/smc/smc_clc.c
-> @@ -420,11 +420,11 @@ smc_clc_msg_decl_valid(struct smc_clc_msg_decline *dclc)
->  	return true;
->  }
->  
-> -static void smc_clc_fill_fce(struct smc_clc_first_contact_ext *fce, int *len)
-> +static void smc_clc_fill_fce(struct smc_clc_first_contact_ext *fce, int *len, int release_nr)
->  {
->  	memset(fce, 0, sizeof(*fce));
->  	fce->os_type = SMC_CLC_OS_LINUX;
-> -	fce->release = SMC_RELEASE;
-> +	fce->release = release_nr;
->  	memcpy(fce->hostname, smc_hostname, sizeof(smc_hostname));
->  	(*len) += sizeof(*fce);
->  }
-> @@ -1019,7 +1019,7 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
->  				memcpy(clc_v2->d1.eid, eid, SMC_MAX_EID_LEN);
->  			len = SMCD_CLC_ACCEPT_CONFIRM_LEN_V2;
->  			if (first_contact)
-> -				smc_clc_fill_fce(&fce, &len);
-> +				smc_clc_fill_fce(&fce, &len, ini->release_nr);
->  			clc_v2->hdr.length = htons(len);
->  		}
->  		memcpy(trl.eyecatcher, SMCD_EYECATCHER,
-> @@ -1063,10 +1063,10 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
->  				memcpy(clc_v2->r1.eid, eid, SMC_MAX_EID_LEN);
->  			len = SMCR_CLC_ACCEPT_CONFIRM_LEN_V2;
->  			if (first_contact) {
-> -				smc_clc_fill_fce(&fce, &len);
-> +				smc_clc_fill_fce(&fce, &len, ini->release_nr);
->  				fce.v2_direct = !link->lgr->uses_gateway;
->  				memset(&gle, 0, sizeof(gle));
-> -				if (ini && clc->hdr.type == SMC_CLC_CONFIRM) {
-> +				if (clc->hdr.type == SMC_CLC_CONFIRM) {
->  					gle.gid_cnt = ini->smcrv2.gidlist.len;
->  					len += sizeof(gle);
->  					len += gle.gid_cnt * sizeof(gle.gid[0]);
-> @@ -1141,7 +1141,7 @@ int smc_clc_send_confirm(struct smc_sock *smc, bool clnt_first_contact,
->  
->  /* send CLC ACCEPT message across internal TCP socket */
->  int smc_clc_send_accept(struct smc_sock *new_smc, bool srv_first_contact,
-> -			u8 version, u8 *negotiated_eid)
-> +			u8 version, u8 *negotiated_eid, struct smc_init_info *ini)
->  {
->  	struct smc_clc_msg_accept_confirm_v2 aclc_v2;
->  	int len;
-> @@ -1149,7 +1149,7 @@ int smc_clc_send_accept(struct smc_sock *new_smc, bool srv_first_contact,
->  	memset(&aclc_v2, 0, sizeof(aclc_v2));
->  	aclc_v2.hdr.type = SMC_CLC_ACCEPT;
->  	len = smc_clc_send_confirm_accept(new_smc, &aclc_v2, srv_first_contact,
-> -					  version, negotiated_eid, NULL);
-> +					  version, negotiated_eid, ini);
->  	if (len < ntohs(aclc_v2.hdr.length))
->  		len = len >= 0 ? -EPROTO : -new_smc->clcsock->sk->sk_err;
->  
-> diff --git a/net/smc/smc_clc.h b/net/smc/smc_clc.h
-> index 5fee545c9a109..b923e89acafb0 100644
-> --- a/net/smc/smc_clc.h
-> +++ b/net/smc/smc_clc.h
-> @@ -370,6 +370,27 @@ smc_get_clc_smcd_v2_ext(struct smc_clc_v2_extension *prop_v2ext)
->  		 ntohs(prop_v2ext->hdr.smcd_v2_ext_offset));
->  }
->  
-> +static inline struct smc_clc_first_contact_ext *
-> +smc_get_clc_first_contact_ext(struct smc_clc_msg_accept_confirm_v2 *clc_v2,
-> +			      bool is_smcd)
-> +{
-> +	int clc_v2_len;
-> +
-> +	if (clc_v2->hdr.version == SMC_V1 ||
-> +	    !(clc_v2->hdr.typev2 & SMC_FIRST_CONTACT_MASK))
-> +		return NULL;
-> +
-> +	if (is_smcd)
-> +		clc_v2_len =
-> +			offsetofend(struct smc_clc_msg_accept_confirm_v2, d1);
-> +	else
-> +		clc_v2_len =
-> +			offsetofend(struct smc_clc_msg_accept_confirm_v2, r1);
-> +
-> +	return (struct smc_clc_first_contact_ext *)(((u8 *)clc_v2) +
-> +						    clc_v2_len);
-> +}
-> +
->  struct smcd_dev;
->  struct smc_init_info;
->  
-> @@ -382,7 +403,7 @@ int smc_clc_send_proposal(struct smc_sock *smc, struct smc_init_info *ini);
->  int smc_clc_send_confirm(struct smc_sock *smc, bool clnt_first_contact,
->  			 u8 version, u8 *eid, struct smc_init_info *ini);
->  int smc_clc_send_accept(struct smc_sock *smc, bool srv_first_contact,
-> -			u8 version, u8 *negotiated_eid);
-> +			u8 version, u8 *negotiated_eid, struct smc_init_info *ini);
->  void smc_clc_init(void) __init;
->  void smc_clc_exit(void);
->  void smc_clc_get_hostname(u8 **host);
-> diff --git a/net/smc/smc_core.h b/net/smc/smc_core.h
-> index 1645fba0d2d38..5bbc16f851e05 100644
-> --- a/net/smc/smc_core.h
-> +++ b/net/smc/smc_core.h
-> @@ -374,6 +374,7 @@ struct smc_init_info {
->  	u8			is_smcd;
->  	u8			smc_type_v1;
->  	u8			smc_type_v2;
-> +	u8			release_nr;
->  	u8			first_contact_peer;
->  	u8			first_contact_local;
->  	unsigned short		vlan_id;
+Carlos
