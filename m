@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1DD15484
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E5415484
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+SAv8Ip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4F8C433C9;
-	Mon, 23 Oct 2023 11:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UU7aXUDP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DDEC433C7;
+	Mon, 23 Oct 2023 11:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059892;
-	bh=hJixhL1UxwV6SwGGZTkYribNktKPKV7uklKnfuwj96M=;
+	s=korg; t=1698059895;
+	bh=hiW/Y1KIkHl0HAoWz8sARvzyiHspDX+vHsM73QHYB2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+SAv8Ipb1EY+z0CxhpAYqxF4pIP0PsqHMCQQrDoWEBmn1E3KSmjYL3CzHZWSq0qy
-	 /L866XYOzwwllc1aEJgPnKntjGW4qqswdILGSJbu6LYhCKsxrhSiA3fwe2EFnLVQh+
-	 5QaMN0EprLW77+PdKlfie4DuCC4clOEEznwOCDSA=
+	b=UU7aXUDP38exSytM4I3UN7FWMuTMpGUJTZO4OIMXv/DHxhcjshBXEAmy6Obq2bJy0
+	 /TGSE6kh7Jt8PRVtR+K3XcFqwZJQzGfqCBC5RQrOnND6yJy6cRENm466Apkh1PvJOD
+	 YrQI+JgjCAlfKcGQlKaPizphC8xyWuzvUSe0ZxQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil V L <sunilvl@ventanamicro.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 4.19 87/98] ACPI: irq: Fix incorrect return value in acpi_register_gsi()
-Date: Mon, 23 Oct 2023 12:57:16 +0200
-Message-ID: <20231023104816.616450444@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 4.19 62/98] netfilter: nft_set_rbtree: .deactivate fails if element has expired
+Date: Mon, 23 Oct 2023 12:56:51 +0200
+Message-ID: <20231023104815.799881309@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -41,48 +41,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 0c21a18d5d6c6a73d098fb9b4701572370942df9 upstream.
+commit d111692a59c1470ae530cbb39bcf0346c950ecc7 upstream.
 
-acpi_register_gsi() should return a negative value in case of failure.
+This allows to remove an expired element which is not possible in other
+existing set backends, this is more noticeable if gc-interval is high so
+expired elements remain in the tree. On-demand gc also does not help in
+this case, because this is delete element path. Return NULL if element
+has expired.
 
-Currently, it returns the return value from irq_create_fwspec_mapping().
-However, irq_create_fwspec_mapping() returns 0 for failure. Fix the
-issue by returning -EINVAL if irq_create_fwspec_mapping() returns zero.
-
-Fixes: d44fa3d46079 ("ACPI: Add support for ResourceSource/IRQ domain mapping")
-Cc: 4.11+ <stable@vger.kernel.org> # 4.11+
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-[ rjw: Rename a new local variable ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 8d8540c4f5e0 ("netfilter: nft_set_rbtree: add timeout support")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/irq.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/netfilter/nft_set_rbtree.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/acpi/irq.c
-+++ b/drivers/acpi/irq.c
-@@ -55,6 +55,7 @@ int acpi_register_gsi(struct device *dev
- 		      int polarity)
- {
- 	struct irq_fwspec fwspec;
-+	unsigned int irq;
- 
- 	if (WARN_ON(!acpi_gsi_domain_id)) {
- 		pr_warn("GSI: No registered irqchip, giving up\n");
-@@ -66,7 +67,11 @@ int acpi_register_gsi(struct device *dev
- 	fwspec.param[1] = acpi_dev_get_irq_type(trigger, polarity);
- 	fwspec.param_count = 2;
- 
--	return irq_create_fwspec_mapping(&fwspec);
-+	irq = irq_create_fwspec_mapping(&fwspec);
-+	if (!irq)
-+		return -EINVAL;
-+
-+	return irq;
- }
- EXPORT_SYMBOL_GPL(acpi_register_gsi);
- 
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -326,6 +326,8 @@ static void *nft_rbtree_deactivate(const
+ 				   nft_rbtree_interval_end(this)) {
+ 				parent = parent->rb_right;
+ 				continue;
++			} else if (nft_set_elem_expired(&rbe->ext)) {
++				break;
+ 			} else if (!nft_set_elem_active(&rbe->ext, genmask)) {
+ 				parent = parent->rb_left;
+ 				continue;
 
 
