@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1CE15EAD
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:49:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336961640A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VltYzLUr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD649C433C8;
-	Mon, 23 Oct 2023 11:49:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrNHcudM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D41C433C8;
+	Mon, 23 Oct 2023 11:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061764;
-	bh=XRwFHqpQoaGUXYbkkr0JkIcnvRTt5CEJFjPVw7RFEb4=;
+	s=korg; t=1698061767;
+	bh=CSlHwl3t7kbx4FTd9HY1HYKuKV+RWZBzBbThpBj1UAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VltYzLUruad2f4l/KRmUHxAJXa6h1W0J4MhWBPoUqFQbO9sDCeic00qWdjO/ktsPr
-	 LAtwFXzRBU0dXU7i/sJvXOIQ32xtA/k4ES9lCoGkENWeMdEJYX2Kh6L2mqDJIEaCD+
-	 K7+vlFFQNw1dRyoxoqgy+fSjMN//MNR7SDHtKsNA=
+	b=JrNHcudMfdziAueMV1W0mW4CbsXk9QU9NLt76XhFDGAFRiPHrtazsBNMWsVmp1UgO
+	 LW1/xBcE7+8LgZ/T53x8ExCjseGb5nBgrBqwbzuU6mjd70H/Yfdbhk6YyYIWc7cU0B
+	 qLQIqg63s/GQl0hsRBWAr/hZpN/9K4z7DVnLKegk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Konrad J Hambrick <kjhambrick@gmail.com>,
+	Calvin Walton <calvin.walton@kepstin.ca>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 130/202] ACPI: resource: Skip IRQ override on ASUS ExpertBook B1502CBA
-Date: Mon, 23 Oct 2023 12:57:17 +0200
-Message-ID: <20231023104830.333434449@linuxfoundation.org>
+Subject: [PATCH 5.10 121/202] thunderbolt: Workaround an IOMMU fault on certain systems with Intel Maple Ridge
+Date: Mon, 23 Oct 2023 12:57:08 +0200
+Message-ID: <20231023104830.067979336@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -42,50 +44,222 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Menzel <pmenzel@molgen.mpg.de>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 05cda427126f30ce3fc8ffd82fd6f5196398d502 ]
+[ Upstream commit 582620d9f6b352552bc9a3316fe2b1c3acd8742d ]
 
-Like the ASUS ExpertBook B2502CBA and various ASUS Vivobook laptops, the
-ASUS ExpertBook B1502CBA has an ACPI DSDT table that describes IRQ 1 as
-ActiveLow while the kernel overrides it to Edge_High.
+On some systems the IOMMU blocks the first couple of driver ready
+messages to the connection manager firmware as can be seen in below
+excerpts:
 
-    $ sudo dmesg | grep DMI
-    DMI: ASUSTeK COMPUTER INC. ASUS EXPERTBOOK B1502CBA_B1502CBA/B1502CBA, BIOS B1502CBA.300 01/18/2023
-    $ grep -A 40 PS2K dsdt.dsl | grep IRQ -A 1
-                    IRQ (Level, ActiveLow, Exclusive, )
-                        {1}
+  thunderbolt 0000:06:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0010 address=0xbb0e3400 flags=0x0020]
 
-This prevents the keyboard from working. To fix this issue, add this laptop
-to the skip_override_table so that the kernel does not override IRQ 1.
+or
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217323
-Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: c1ed72171ed5 ("ACPI: resource: Skip IRQ override on ASUS ExpertBook B1402CBA")
+  DMAR: DRHD: handling fault status reg 2
+  DMAR: [DMA Write] Request device [04:00.0] PASID ffffffff fault addr 69974000 [fault reason 05] PTE Write access is not set
+
+The reason is unknown and hard to debug because we were not able to
+reproduce this locally. This only happens on certain systems with Intel
+Maple Ridge Thunderbolt controller. If there is a device connected when
+the driver is loaded the issue does not happen either. Only when there
+is nothing connected (so typically when the system is booted up).
+
+We can work this around by sending the driver ready several times. After
+a couple of retries the message goes through and the controller works
+just fine. For this reason make the number of retries a parameter for
+icm_request() and then for Maple Ridge (and Titan Ridge as they us the
+same function but this should not matter) increase number of retries
+while shortening the timeout accordingly.
+
+Reported-by: Werner Sembach <wse@tuxedocomputers.com>
+Reported-by: Konrad J Hambrick <kjhambrick@gmail.com>
+Reported-by: Calvin Walton <calvin.walton@kepstin.ca>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=214259
+Cc: stable@vger.kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/thunderbolt/icm.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 57e8ba44df741..a49acf8ddacae 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -421,6 +421,13 @@ static const struct dmi_system_id asus_laptop[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "S5602ZA"),
- 		},
- 	},
-+	{
-+		.ident = "Asus ExpertBook B1502CBA",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "B1502CBA"),
-+		},
-+	},
- 	{
- 		.ident = "Asus ExpertBook B2402CBA",
- 		.matches = {
+diff --git a/drivers/thunderbolt/icm.c b/drivers/thunderbolt/icm.c
+index b2fb3397310e4..90f1d9a534614 100644
+--- a/drivers/thunderbolt/icm.c
++++ b/drivers/thunderbolt/icm.c
+@@ -41,6 +41,7 @@
+ #define PHY_PORT_CS1_LINK_STATE_SHIFT	26
+ 
+ #define ICM_TIMEOUT			5000	/* ms */
++#define ICM_RETRIES			3
+ #define ICM_APPROVE_TIMEOUT		10000	/* ms */
+ #define ICM_MAX_LINK			4
+ 
+@@ -280,10 +281,9 @@ static bool icm_copy(struct tb_cfg_request *req, const struct ctl_pkg *pkg)
+ 
+ static int icm_request(struct tb *tb, const void *request, size_t request_size,
+ 		       void *response, size_t response_size, size_t npackets,
+-		       unsigned int timeout_msec)
++		       int retries, unsigned int timeout_msec)
+ {
+ 	struct icm *icm = tb_priv(tb);
+-	int retries = 3;
+ 
+ 	do {
+ 		struct tb_cfg_request *req;
+@@ -394,7 +394,7 @@ static int icm_fr_get_route(struct tb *tb, u8 link, u8 depth, u64 *route)
+ 		return -ENOMEM;
+ 
+ 	ret = icm_request(tb, &request, sizeof(request), switches,
+-			  sizeof(*switches), npackets, ICM_TIMEOUT);
++			  sizeof(*switches), npackets, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		goto err_free;
+ 
+@@ -447,7 +447,7 @@ icm_fr_driver_ready(struct tb *tb, enum tb_security_level *security_level,
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -472,7 +472,7 @@ static int icm_fr_approve_switch(struct tb *tb, struct tb_switch *sw)
+ 	memset(&reply, 0, sizeof(reply));
+ 	/* Use larger timeout as establishing tunnels can take some time */
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_APPROVE_TIMEOUT);
++			  1, ICM_RETRIES, ICM_APPROVE_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -499,7 +499,7 @@ static int icm_fr_add_switch_key(struct tb *tb, struct tb_switch *sw)
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -527,7 +527,7 @@ static int icm_fr_challenge_switch_key(struct tb *tb, struct tb_switch *sw,
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -559,7 +559,7 @@ static int icm_fr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd)
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -996,7 +996,7 @@ icm_tr_driver_ready(struct tb *tb, enum tb_security_level *security_level,
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, 20000);
++			  1, 10, 2000);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1026,7 +1026,7 @@ static int icm_tr_approve_switch(struct tb *tb, struct tb_switch *sw)
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_APPROVE_TIMEOUT);
++			  1, ICM_RETRIES, ICM_APPROVE_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1054,7 +1054,7 @@ static int icm_tr_add_switch_key(struct tb *tb, struct tb_switch *sw)
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1083,7 +1083,7 @@ static int icm_tr_challenge_switch_key(struct tb *tb, struct tb_switch *sw,
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1115,7 +1115,7 @@ static int icm_tr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd)
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1141,7 +1141,7 @@ static int icm_tr_xdomain_tear_down(struct tb *tb, struct tb_xdomain *xd,
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1460,7 +1460,7 @@ icm_ar_driver_ready(struct tb *tb, enum tb_security_level *security_level,
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1486,7 +1486,7 @@ static int icm_ar_get_route(struct tb *tb, u8 link, u8 depth, u64 *route)
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1507,7 +1507,7 @@ static int icm_ar_get_boot_acl(struct tb *tb, uuid_t *uuids, size_t nuuids)
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1568,7 +1568,7 @@ static int icm_ar_set_boot_acl(struct tb *tb, const uuid_t *uuids,
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, ICM_TIMEOUT);
++			  1, ICM_RETRIES, ICM_TIMEOUT);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1590,7 +1590,7 @@ icm_icl_driver_ready(struct tb *tb, enum tb_security_level *security_level,
+ 
+ 	memset(&reply, 0, sizeof(reply));
+ 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
+-			  1, 20000);
++			  1, ICM_RETRIES, 20000);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.40.1
 
