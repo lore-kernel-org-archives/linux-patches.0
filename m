@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6883914F67
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECCD14F61
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wU1+mmlE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D42C433C7;
-	Mon, 23 Oct 2023 11:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dwu1Wy+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE524C433C8;
+	Mon, 23 Oct 2023 11:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059654;
-	bh=bt1Z/nCRlfX5BFEoMjn5q/yMVH0IgHyE+cu7YYsxMJ4=;
+	s=korg; t=1698059657;
+	bh=bGLXfwNdfdCRRUwgn2QIwfLMGi7A5ud9NsRD9eFfwxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wU1+mmlE/5C1o++OajcUXIc4fYlQHG3appwH+cODljmJVi93quNOIJgPJ6Pm0DvFn
-	 Gs538iMLRcQsDVZKNWG9IsRegRi3EE8CkMXGiF+MBAPXgmrwB4XMwxR2FYWw7OQGH7
-	 TdeEul9+iDDsx6YIbjR10sfWlkjVxcW1RbIbAfu4=
+	b=dwu1Wy+tNzcw5BFmn9E8V9nvzMpu2ZYkplq7z9a1ImpCHa9wzEyzXIKHWnTt/BixA
+	 IOo5NJZx5rPdACd5KfTSe+75JsSYTPDUX79jt1MEjzkDyHzfeujAMgVqJD4MiPYhE2
+	 3ogHn7frCie2j0VCjAi70jN1UybHJDLq2SCZiLyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrien Thierry <athierry@redhat.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 232/241] phy: qcom-qmp-combo: initialize PCS_USB registers
-Date: Mon, 23 Oct 2023 12:56:58 +0200
-Message-ID: <20231023104839.530637088@linuxfoundation.org>
+Subject: [PATCH 4.19 01/98] indirect call wrappers: helpers to speed-up indirect calls of builtin
+Date: Mon, 23 Oct 2023 12:55:50 +0200
+Message-ID: <20231023104813.632511787@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
-References: <20231023104833.832874523@linuxfoundation.org>
+In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
+References: <20231023104813.580375891@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,52 +39,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 76d20290d0c66a84a7a40c6231e73d1ab25994e5 ]
+[ Upstream commit 283c16a2dfd332bf5610c874f7b9f9c8b601ce53 ]
 
-Currently, PCS_USB registers that have their initialization data in a
-pcs_usb_tbl table are never initialized. Fix that.
+This header define a bunch of helpers that allow avoiding the
+retpoline overhead when calling builtin functions via function pointers.
+It boils down to explicitly comparing the function pointers to
+known builtin functions and eventually invoke directly the latter.
 
-Fixes: fc64623637da ("phy: qcom-qmp-combo,usb: add support for separate PCS_USB region")
-Reported-by: Adrien Thierry <athierry@redhat.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230829-topic-8550_usbphy-v3-2-34ec434194c5@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+The macros defined here implement the boilerplate for the above schema
+and will be used by the next patches.
+
+rfc -> v1:
+ - use branch prediction hint, as suggested by Eric
+v1  -> v2:
+ - list explicitly the builtin function names in INDIRECT_CALL_*(),
+   as suggested by Ed Cree
+
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 86a7e0b69bd5 ("net: prevent rewrite of msg_name in sock_sendmsg()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/indirect_call_wrapper.h | 51 +++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
+ create mode 100644 include/linux/indirect_call_wrapper.h
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 48639b88a1e28..3e6bec4c4d6ce 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -2649,6 +2649,7 @@ static int qmp_combo_usb_power_on(struct phy *phy)
- 	void __iomem *tx2 = qmp->tx2;
- 	void __iomem *rx2 = qmp->rx2;
- 	void __iomem *pcs = qmp->pcs;
-+	void __iomem *pcs_usb = qmp->pcs_usb;
- 	void __iomem *status;
- 	unsigned int val;
- 	int ret;
-@@ -2670,6 +2671,9 @@ static int qmp_combo_usb_power_on(struct phy *phy)
- 
- 	qmp_combo_configure(pcs, cfg->pcs_tbl, cfg->pcs_tbl_num);
- 
-+	if (pcs_usb)
-+		qmp_combo_configure(pcs_usb, cfg->pcs_usb_tbl, cfg->pcs_usb_tbl_num);
+diff --git a/include/linux/indirect_call_wrapper.h b/include/linux/indirect_call_wrapper.h
+new file mode 100644
+index 0000000000000..7c8b7f4948af5
+--- /dev/null
++++ b/include/linux/indirect_call_wrapper.h
+@@ -0,0 +1,51 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_INDIRECT_CALL_WRAPPER_H
++#define _LINUX_INDIRECT_CALL_WRAPPER_H
 +
- 	if (cfg->has_pwrdn_delay)
- 		usleep_range(10, 20);
- 
++#ifdef CONFIG_RETPOLINE
++
++/*
++ * INDIRECT_CALL_$NR - wrapper for indirect calls with $NR known builtin
++ *  @f: function pointer
++ *  @f$NR: builtin functions names, up to $NR of them
++ *  @__VA_ARGS__: arguments for @f
++ *
++ * Avoid retpoline overhead for known builtin, checking @f vs each of them and
++ * eventually invoking directly the builtin function. The functions are check
++ * in the given order. Fallback to the indirect call.
++ */
++#define INDIRECT_CALL_1(f, f1, ...)					\
++	({								\
++		likely(f == f1) ? f1(__VA_ARGS__) : f(__VA_ARGS__);	\
++	})
++#define INDIRECT_CALL_2(f, f2, f1, ...)					\
++	({								\
++		likely(f == f2) ? f2(__VA_ARGS__) :			\
++				  INDIRECT_CALL_1(f, f1, __VA_ARGS__);	\
++	})
++
++#define INDIRECT_CALLABLE_DECLARE(f)	f
++#define INDIRECT_CALLABLE_SCOPE
++
++#else
++#define INDIRECT_CALL_1(f, name, ...) f(__VA_ARGS__)
++#define INDIRECT_CALL_2(f, name, ...) f(__VA_ARGS__)
++#define INDIRECT_CALLABLE_DECLARE(f)
++#define INDIRECT_CALLABLE_SCOPE		static
++#endif
++
++/*
++ * We can use INDIRECT_CALL_$NR for ipv6 related functions only if ipv6 is
++ * builtin, this macro simplify dealing with indirect calls with only ipv4/ipv6
++ * alternatives
++ */
++#if IS_BUILTIN(CONFIG_IPV6)
++#define INDIRECT_CALL_INET(f, f2, f1, ...) \
++	INDIRECT_CALL_2(f, f2, f1, __VA_ARGS__)
++#elif IS_ENABLED(CONFIG_INET)
++#define INDIRECT_CALL_INET(f, f2, f1, ...) INDIRECT_CALL_1(f, f1, __VA_ARGS__)
++#else
++#define INDIRECT_CALL_INET(f, f2, f1, ...) f(__VA_ARGS__)
++#endif
++
++#endif
 -- 
-2.42.0
+2.40.1
 
 
 
