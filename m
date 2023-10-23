@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2825916405
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D1116405
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f06QagxF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98265C433C9;
-	Mon, 23 Oct 2023 11:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1gShG9V+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0E3C433C7;
+	Mon, 23 Oct 2023 11:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061418;
-	bh=4wtzIQfvaH+QTIAmbf7dvtKXC5HvoKvUplVDLqmTSNM=;
+	s=korg; t=1698061421;
+	bh=sSCjHeaKN51Lx96pIBlribKtCbW2mZraF00/zWFGpf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f06QagxFRlMU2b9tfK6Fdz9fJdQDK73NSVGIo7kZi3RUqVRRhZhBZzsHPfjDNU4ZW
-	 rF8sgpo4YByT89jmAhNTWefsd8qEUYa753Gl6Bw6p3pRPiUdLQrBZCFOZRutFr839L
-	 exN+kc/RWfRvG3FiWIfdEu6NMxhHoAkbCHiPfBUw=
+	b=1gShG9V+7dfXk6/ex24pWjBowE/TE11fHSCUXJ1zDlJYCk1pw+EROfukl1mYoWBU0
+	 i0OQbkp4ybBxnrJBEyXN7CNYohnHZykRf14S4hs4/gZ4Dcq3gjfY+d9qZWYwVbyjA4
+	 xrFksPRWJC59MVOMjB8XO1t4gev4rUkMKs5MhcMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jing Zhang <renyu.zj@linux.alibaba.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 004/202] perf/arm-cmn: Fix the unhandled overflow status of counter 4 to 7
-Date: Mon, 23 Oct 2023 12:55:11 +0200
-Message-ID: <20231023104826.709189963@linuxfoundation.org>
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.10 034/202] usb: xhci: xhci-ring: Use sysdev for mapping bounce buffer
+Date: Mon, 23 Oct 2023 12:55:41 +0200
+Message-ID: <20231023104827.591405957@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -43,41 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jing Zhang <renyu.zj@linux.alibaba.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
 
-[ Upstream commit 7f949f6f54ff593123ab95b6247bfa4542a65580 ]
+commit 41a43013d2366db5b88b42bbcd8e8f040b6ccf21 upstream.
 
-The register por_dt_pmovsr Bits[7:0] indicates overflow from counters 7
-to 0. But in arm_cmn_handle_irq(), only handled the overflow status of
-Bits[3:0] which results in unhandled overflow status of counters 4 to 7.
+As mentioned in:
+  commit 474ed23a6257 ("xhci: align the last trb before link if it is
+easily splittable.")
 
-So let the overflow status of DTC counters 4 to 7 to be handled.
+A bounce buffer is utilized for ensuring that transfers that span across
+ring segments are aligned to the EP's max packet size.  However, the device
+that is used to map the DMA buffer to is currently using the XHCI HCD,
+which does not carry any DMA operations in certain configrations.
+Migration to using the sysdev entry was introduced for DWC3 based
+implementations where the IOMMU operations are present.
 
-Fixes: 0ba64770a2f2 ("perf: Add Arm CMN-600 PMU driver")
-Signed-off-by: Jing Zhang <renyu.zj@linux.alibaba.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/1695612152-123633-1-git-send-email-renyu.zj@linux.alibaba.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Replace the reference to the controller device to sysdev instead.  This
+allows the bounce buffer to be properly mapped to any implementations that
+have an IOMMU involved.
+
+cc: stable@vger.kernel.org
+Fixes: 4c39d4b949d3 ("usb: xhci: use bus->sysdev for DMA configuration")
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230915143108.1532163-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/arm-cmn.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-ring.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index 36061aaf026c8..ac4428e8fae92 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -1177,7 +1177,7 @@ static irqreturn_t arm_cmn_handle_irq(int irq, void *dev_id)
- 		u64 delta;
- 		int i;
- 
--		for (i = 0; i < CMN_DTM_NUM_COUNTERS; i++) {
-+		for (i = 0; i < CMN_DT_NUM_COUNTERS; i++) {
- 			if (status & (1U << i)) {
- 				ret = IRQ_HANDLED;
- 				if (WARN_ON(!dtc->counters[i]))
--- 
-2.40.1
-
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -742,7 +742,7 @@ static void xhci_giveback_urb_in_irq(str
+ static void xhci_unmap_td_bounce_buffer(struct xhci_hcd *xhci,
+ 		struct xhci_ring *ring, struct xhci_td *td)
+ {
+-	struct device *dev = xhci_to_hcd(xhci)->self.controller;
++	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
+ 	struct xhci_segment *seg = td->bounce_seg;
+ 	struct urb *urb = td->urb;
+ 	size_t len;
+@@ -3325,7 +3325,7 @@ static u32 xhci_td_remainder(struct xhci
+ static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
+ 			 u32 *trb_buff_len, struct xhci_segment *seg)
+ {
+-	struct device *dev = xhci_to_hcd(xhci)->self.controller;
++	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
+ 	unsigned int unalign;
+ 	unsigned int max_pkt;
+ 	u32 new_buff_len;
 
 
