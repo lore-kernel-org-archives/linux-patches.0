@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2752B15E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE0115E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2smEE/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EF2C433C7;
-	Mon, 23 Oct 2023 11:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFpes3UO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F198C433CA;
+	Mon, 23 Oct 2023 11:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060526;
-	bh=dpP/IQm3plsrRAUyocUXqePt+Q3nLaKaSeFnRfI1mOY=;
+	s=korg; t=1698060528;
+	bh=KNOStMEJsEdlQoAHEH6tbOZqoe6HMdO0di7Rn1ZsOQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2smEE/6rc9emHkI3bFZhj2xTsvqk6KyzmcGusVC2fqpcMl+VR6SMaYD1TN8u/uCf
-	 t/YCc4QohKuaRmI0VbYeHXz08Sc2Dg3W37Cqex2Rx6vJcWAYf5rzPDlS0GRCMXgAJA
-	 UY9/bYC4szF0Oa83tf4xFU0fruL8u3puDYK0vkO8=
+	b=KFpes3UOYgwStOwl57Iownaf1aj405+plKNzKNxIeElpansyptUoFQTqkD44/lQ+3
+	 ITVW19CIxi9f1SHWGOsFboInS0mbJCngtOyRMmrMYNyxasb86zlaEFx2eFPfg3J5N6
+	 6jifECYVOgKluLQfED/X09ewPXxDMSPFTbasXBuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James John <me@donjajo.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 175/196] platform/x86: asus-wmi: Only map brightness codes when using asus-wmi backlight control
-Date: Mon, 23 Oct 2023 12:57:20 +0200
-Message-ID: <20231023104833.358933166@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 166/196] USB: serial: option: add entry for Sierra EM9191 with new firmware
+Date: Mon, 23 Oct 2023 12:57:11 +0200
+Message-ID: <20231023104833.128123941@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -35,95 +35,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Benoît Monin <benoit.monin@gmx.fr>
 
-commit a5b92be2482e5f9ef30be4e4cda12ed484381493 upstream.
+commit 064f6e2ba9eb59b2c87b866e1e968e79ccedf9dd upstream.
 
-Older Asus laptops change the backlight level themselves and then send
-WMI events with different codes for different backlight levels.
+Following a firmware update of the modem, the interface for the AT
+command port changed, so add it back.
 
-The asus-wmi.c code maps the entire range of codes reported on
-brightness down keypresses to an internal ASUS_WMI_BRN_DOWN code:
+T:  Bus=08 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=1199 ProdID=90d3 Rev=00.06
+S:  Manufacturer=Sierra Wireless, Incorporated
+S:  Product=Sierra Wireless EM9191
+S:  SerialNumber=xxxxxxxxxxxxxxxx
+C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=(none)
+I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
 
-define NOTIFY_BRNUP_MIN                0x11
-define NOTIFY_BRNUP_MAX                0x1f
-define NOTIFY_BRNDOWN_MIN              0x20
-define NOTIFY_BRNDOWN_MAX              0x2e
-
-        if (code >= NOTIFY_BRNUP_MIN && code <= NOTIFY_BRNUP_MAX)
-                code = ASUS_WMI_BRN_UP;
-        else if (code >= NOTIFY_BRNDOWN_MIN && code <= NOTIFY_BRNDOWN_MAX)
-                code = ASUS_WMI_BRN_DOWN;
-
-This mapping is causing issues on new laptop models which actually
-send 0x2b events for printscreen presses and 0x2c events for
-capslock presses, which get translated into spurious brightness-down
-presses.
-
-This mapping is really only necessary when asus-wmi has registered
-a backlight-device for backlight control. In this case the mapping
-was used to decide to filter out the keypresss since in this case
-the firmware has already modified the brightness itself and instead
-of reporting a keypress asus-wmi will just report the new brightness
-value to userspace.
-
-OTOH when the firmware does not adjust the brightness itself then
-it seems to always report 0x2e for brightness-down presses and
-0x2f for brightness up presses independent of the actual brightness
-level. So in this case the mapping of the code is not necessary
-and this translation actually leads to spurious brightness-down
-presses being send to userspace when pressing printscreen or capslock.
-
-Modify asus_wmi_handle_event_code() to only do the mapping
-when using asus-wmi backlight control to fix the spurious
-brightness-down presses.
-
-Reported-by: James John <me@donjajo.com>
-Closes: https://lore.kernel.org/platform-driver-x86/a2c441fe-457e-44cf-a146-0ecd86b037cf@donjajo.com/
-Closes: https://bbs.archlinux.org/viewtopic.php?pid=2123716
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231017090725.38163-3-hdegoede@redhat.com
+Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/asus-wmi.c |   15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -3268,7 +3268,6 @@ static void asus_wmi_handle_event_code(i
- {
- 	unsigned int key_value = 1;
- 	bool autorelease = 1;
--	int orig_code = code;
- 
- 	if (asus->driver->key_filter) {
- 		asus->driver->key_filter(asus->driver, &code, &key_value,
-@@ -3277,16 +3276,10 @@ static void asus_wmi_handle_event_code(i
- 			return;
- 	}
- 
--	if (code >= NOTIFY_BRNUP_MIN && code <= NOTIFY_BRNUP_MAX)
--		code = ASUS_WMI_BRN_UP;
--	else if (code >= NOTIFY_BRNDOWN_MIN && code <= NOTIFY_BRNDOWN_MAX)
--		code = ASUS_WMI_BRN_DOWN;
--
--	if (code == ASUS_WMI_BRN_DOWN || code == ASUS_WMI_BRN_UP) {
--		if (acpi_video_get_backlight_type() == acpi_backlight_vendor) {
--			asus_wmi_backlight_notify(asus, orig_code);
--			return;
--		}
-+	if (acpi_video_get_backlight_type() == acpi_backlight_vendor &&
-+	    code >= NOTIFY_BRNUP_MIN && code <= NOTIFY_BRNDOWN_MAX) {
-+		asus_wmi_backlight_notify(asus, code);
-+		return;
- 	}
- 
- 	if (code == NOTIFY_KBD_BRTUP) {
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2263,6 +2263,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1406, 0xff) },			/* GosunCn GM500 ECM/NCM */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
+ 	{ } /* Terminating entry */
 
 
