@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D79814A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A208214A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11Emg9n2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A30C433C8;
-	Mon, 23 Oct 2023 11:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtqd8bVz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C91AC433C7;
+	Mon, 23 Oct 2023 11:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059595;
-	bh=hO7/u4QvEpDSyIujDNLy4B/cM9A3gEd55peAsUr9LuM=;
+	s=korg; t=1698059598;
+	bh=Np/NaxBVxOfOtEiHWmM48Oeyn/J4VeJPYMgcJ0xNETs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=11Emg9n2+ffQQF/13dlo+zfr7wX0xxOhNez6+G0xT4aEDnr1Q2qaSRp0hhtStnMvC
-	 YW7VO3XQS4oCj6zngXzqPFgIhfMagjOblWGUuuglojlGQky185XwbYcu7f5GORixiM
-	 m0iybA+4lS1+zomO3P+ORJXjkGtt/oEXl7xBj0nA=
+	b=mtqd8bVzDBIl+G5uCnazH40X9LNQfwlcConoMf54Yfi8uGowZsFL1TxFv46Tz1s1Q
+	 1kaFMScdq/+vYxb6/G9tWHuAryOZro8v6QKMa1/gJ+ThzotnyiT0Hnb7Btk1xFE5I3
+	 xi35W9o9nJwom54pjPiFjoe6xULXFsg44fut53Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrien Thierry <athierry@redhat.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Adrien Thierry <athierry@redhat.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 229/241] phy: qcom-qmp-usb: initialize PCS_USB registers
-Date: Mon, 23 Oct 2023 12:56:55 +0200
-Message-ID: <20231023104839.455519816@linuxfoundation.org>
+Subject: [PATCH 6.5 230/241] phy: qcom-qmp-usb: split PCS_USB init table for sc8280xp and sa8775p
+Date: Mon, 23 Oct 2023 12:56:56 +0200
+Message-ID: <20231023104839.481561984@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -45,43 +45,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrien Thierry <athierry@redhat.com>
 
-[ Upstream commit 2d3465a75c9f83684d17da6807423824bf260524 ]
+[ Upstream commit c599dc5cca4dd6a5c664e4a8837246e68a96cb4c ]
 
-Currently, PCS_USB registers that have their initialization data in a
-pcs_usb_tbl table are never initialized. Fix that.
+For sc8280xp and sa8775p, PCS and PCS_USB initialization data is
+described in the same table, thus the pcs_usb offset is not being
+applied during initialization of PCS_USB registers. Fix this by adding
+the appropriate pcs_usb_tbl tables.
 
-Fixes: fc64623637da ("phy: qcom-qmp-combo,usb: add support for separate PCS_USB region")
-Signed-off-by: Adrien Thierry <athierry@redhat.com>
+Fixes: 8bd2d6e11c99 ("phy: qcom-qmp: Add SA8775P USB3 UNI phy")
+Fixes: c0c7769cdae2 ("phy: qcom-qmp: Add SC8280XP USB3 UNI phy")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230828152353.16529-2-athierry@redhat.com
+Signed-off-by: Adrien Thierry <athierry@redhat.com>
+Link: https://lore.kernel.org/r/20230828152353.16529-3-athierry@redhat.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 466f0a56c82e1..f9cb60f12575b 100644
+index f9cb60f12575b..575329004b901 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -2233,6 +2233,7 @@ static int qmp_usb_power_on(struct phy *phy)
- 	void __iomem *tx = qmp->tx;
- 	void __iomem *rx = qmp->rx;
- 	void __iomem *pcs = qmp->pcs;
-+	void __iomem *pcs_usb = qmp->pcs_usb;
- 	void __iomem *status;
- 	unsigned int val;
- 	int ret;
-@@ -2256,6 +2257,9 @@ static int qmp_usb_power_on(struct phy *phy)
+@@ -1480,8 +1480,6 @@ static const struct qmp_phy_init_tbl sc8280xp_usb3_uniphy_pcs_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RCVR_DTCT_DLY_P1U2_H, 0x03),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RX_SIGDET_LVL, 0xaa),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCS_TX_RX_CONFIG, 0x0c),
+-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_RXEQTRAINING_DFE_TIME_S2, 0x07),
+-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_CDR_RESET_TIME, 0x0a),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_ALIGN_DETECT_CONFIG1, 0x88),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_ALIGN_DETECT_CONFIG2, 0x13),
+@@ -1490,6 +1488,11 @@ static const struct qmp_phy_init_tbl sc8280xp_usb3_uniphy_pcs_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_REFGEN_REQ_CONFIG1, 0x21),
+ };
  
- 	qmp_usb_configure(pcs, cfg->pcs_tbl, cfg->pcs_tbl_num);
- 
-+	if (pcs_usb)
-+		qmp_usb_configure(pcs_usb, cfg->pcs_usb_tbl, cfg->pcs_usb_tbl_num);
++static const struct qmp_phy_init_tbl sc8280xp_usb3_uniphy_pcs_usb_tbl[] = {
++	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_RXEQTRAINING_DFE_TIME_S2, 0x07),
++	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
++};
 +
- 	if (cfg->has_pwrdn_delay)
- 		usleep_range(10, 20);
+ static const struct qmp_phy_init_tbl sa8775p_usb3_uniphy_pcs_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_LOCK_DETECT_CONFIG1, 0xc4),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_LOCK_DETECT_CONFIG2, 0x89),
+@@ -1499,9 +1502,6 @@ static const struct qmp_phy_init_tbl sa8775p_usb3_uniphy_pcs_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RCVR_DTCT_DLY_P1U2_H, 0x03),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RX_SIGDET_LVL, 0xaa),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCS_TX_RX_CONFIG, 0x0c),
+-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_RXEQTRAINING_DFE_TIME_S2, 0x07),
+-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
+-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_POWER_STATE_CONFIG1, 0x6f),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_CDR_RESET_TIME, 0x0a),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_ALIGN_DETECT_CONFIG1, 0x88),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_ALIGN_DETECT_CONFIG2, 0x13),
+@@ -1510,6 +1510,12 @@ static const struct qmp_phy_init_tbl sa8775p_usb3_uniphy_pcs_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_REFGEN_REQ_CONFIG1, 0x21),
+ };
  
++static const struct qmp_phy_init_tbl sa8775p_usb3_uniphy_pcs_usb_tbl[] = {
++	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_RXEQTRAINING_DFE_TIME_S2, 0x07),
++	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
++	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_POWER_STATE_CONFIG1, 0x6f),
++};
++
+ struct qmp_usb_offsets {
+ 	u16 serdes;
+ 	u16 pcs;
+@@ -1788,6 +1794,8 @@ static const struct qmp_phy_cfg sa8775p_usb3_uniphy_cfg = {
+ 	.rx_tbl_num		= ARRAY_SIZE(sc8280xp_usb3_uniphy_rx_tbl),
+ 	.pcs_tbl		= sa8775p_usb3_uniphy_pcs_tbl,
+ 	.pcs_tbl_num		= ARRAY_SIZE(sa8775p_usb3_uniphy_pcs_tbl),
++	.pcs_usb_tbl		= sa8775p_usb3_uniphy_pcs_usb_tbl,
++	.pcs_usb_tbl_num	= ARRAY_SIZE(sa8775p_usb3_uniphy_pcs_usb_tbl),
+ 	.clk_list		= qmp_v4_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
+ 	.reset_list		= qcm2290_usb3phy_reset_l,
+@@ -1833,6 +1841,8 @@ static const struct qmp_phy_cfg sc8280xp_usb3_uniphy_cfg = {
+ 	.rx_tbl_num		= ARRAY_SIZE(sc8280xp_usb3_uniphy_rx_tbl),
+ 	.pcs_tbl		= sc8280xp_usb3_uniphy_pcs_tbl,
+ 	.pcs_tbl_num		= ARRAY_SIZE(sc8280xp_usb3_uniphy_pcs_tbl),
++	.pcs_usb_tbl		= sc8280xp_usb3_uniphy_pcs_usb_tbl,
++	.pcs_usb_tbl_num	= ARRAY_SIZE(sc8280xp_usb3_uniphy_pcs_usb_tbl),
+ 	.clk_list		= qmp_v4_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
+ 	.reset_list		= qcm2290_usb3phy_reset_l,
 -- 
 2.42.0
 
