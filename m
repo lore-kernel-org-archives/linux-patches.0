@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D38814A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677E414A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLUTCzGU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDAC5C433C7;
-	Mon, 23 Oct 2023 11:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1wp9u1k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D609FC433C8;
+	Mon, 23 Oct 2023 11:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058943;
-	bh=S6RWBLQr7V3ImSS28rzxfZCtg6DGm4NCnUh9pwdhtKU=;
+	s=korg; t=1698058946;
+	bh=UDTJ3ZonlOPshDo7BKEX3SHU7SU267oFpNb++6BHwE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLUTCzGU19+M/50rJPrftTtojocGQO6TGR4+am4WvIyxHfI0luAHNPZkGpfyyjaRU
-	 WT6IEl0ehGSA8vV8XH/v25+uNdZtHwtun5IjQqBA1xuPN4Avb8tZvNM3Ccxtl+PS3O
-	 P9qUknnM79xSB5/LvOiHA5ij2g/W3lGc/COSddbY=
+	b=a1wp9u1kbRoGY9xL066K3LqjmPL7bJOLK9MNAg4PLkBcajwweV2t7sZpZeRvdhRHI
+	 /9gAuQw7p+GYrS/Hr87zBjlTnMTlOO8wYkSrqF2xA9XGcf+bX85gQyVwPw9d4tL/B3
+	 kytPJJrWJGRR0mNmEogMvDMArERYeeRgGhDjLRuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Zygo Blaxell <ce3g8jdj@umail.furryterror.org>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.5 012/241] btrfs: fix stripe length calculation for non-zoned data chunk allocation
-Date: Mon, 23 Oct 2023 12:53:18 +0200
-Message-ID: <20231023104834.201678172@linuxfoundation.org>
+	=?UTF-8?q?=E9=BB=84=E6=80=9D=E8=81=AA?= <huangsicong@iie.ac.cn>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.5 013/241] nfc: nci: fix possible NULL pointer dereference in send_acknowledge()
+Date: Mon, 23 Oct 2023 12:53:19 +0200
+Message-ID: <20231023104834.229287364@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -36,236 +37,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zygo Blaxell <ce3g8jdj@umail.furryterror.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 8a540e990d7da36813cb71a4a422712bfba448a4 upstream.
+commit 7937609cd387246aed994e81aa4fa951358fba41 upstream.
 
-Commit f6fca3917b4d "btrfs: store chunk size in space-info struct"
-broke data chunk allocations on non-zoned multi-device filesystems when
-using default chunk_size.  Commit 5da431b71d4b "btrfs: fix the max chunk
-size and stripe length calculation" partially fixed that, and this patch
-completes the fix for that case.
+Handle memory allocation failure from nci_skb_alloc() (calling
+alloc_skb()) to avoid possible NULL pointer dereference.
 
-After commit f6fca3917b4d and 5da431b71d4b, the sequence of events for
-a data chunk allocation on a non-zoned filesystem is:
-
-        1.  btrfs_create_chunk calls init_alloc_chunk_ctl, which copies
-        space_info->chunk_size (default 10 GiB) to ctl->max_stripe_len
-        unmodified.  Before f6fca3917b4d, ctl->max_stripe_len value was
-        1 GiB for non-zoned data chunks and not configurable.
-
-        2.  btrfs_create_chunk calls gather_device_info which consumes
-        and produces more fields of chunk_ctl.
-
-        3.  gather_device_info multiplies ctl->max_stripe_len by
-        ctl->dev_stripes (which is 1 in all cases except dup)
-        and calls find_free_dev_extent with that number as num_bytes.
-
-        4.  find_free_dev_extent locates the first dev_extent hole on
-        a device which is at least as large as num_bytes.  With default
-        max_chunk_size from f6fca3917b4d, it finds the first hole which is
-        longer than 10 GiB, or the largest hole if that hole is shorter
-        than 10 GiB.  This is different from the pre-f6fca3917b4d
-        behavior, where num_bytes is 1 GiB, and find_free_dev_extent
-        may choose a different hole.
-
-        5.  gather_device_info repeats step 4 with all devices to find
-        the first or largest dev_extent hole that can be allocated on
-        each device.
-
-        6.  gather_device_info sorts the device list by the hole size
-        on each device, using total unallocated space on each device to
-        break ties, then returns to btrfs_create_chunk with the list.
-
-        7.  btrfs_create_chunk calls decide_stripe_size_regular.
-
-        8.  decide_stripe_size_regular finds the largest stripe_len that
-        fits across the first nr_devs device dev_extent holes that were
-        found by gather_device_info (and satisfies other constraints
-        on stripe_len that are not relevant here).
-
-        9.  decide_stripe_size_regular caps the length of the stripe it
-        computed at 1 GiB.  This cap appeared in 5da431b71d4b to correct
-        one of the other regressions introduced in f6fca3917b4d.
-
-        10.  btrfs_create_chunk creates a new chunk with the above
-        computed size and number of devices.
-
-At step 4, gather_device_info() has found a location where stripe up to
-10 GiB in length could be allocated on several devices, and selected
-which devices should have a dev_extent allocated on them, but at step
-9, only 1 GiB of the space that was found on each device can be used.
-This mismatch causes new suboptimal chunk allocation cases that did not
-occur in pre-f6fca3917b4d kernels.
-
-Consider a filesystem using raid1 profile with 3 devices.  After some
-balances, device 1 has 10x 1 GiB unallocated space, while devices 2
-and 3 have 1x 10 GiB unallocated space, i.e. the same total amount of
-space, but distributed across different numbers of dev_extent holes.
-For visualization, let's ignore all the chunks that were allocated before
-this point, and focus on the remaining holes:
-
-        Device 1:  [_] [_] [_] [_] [_] [_] [_] [_] [_] [_] (10x 1 GiB unallocated)
-        Device 2:  [__________] (10 GiB contig unallocated)
-        Device 3:  [__________] (10 GiB contig unallocated)
-
-Before f6fca3917b4d, the allocator would fill these optimally by
-allocating chunks with dev_extents on devices 1 and 2 ([12]), 1 and 3
-([13]), or 2 and 3 ([23]):
-
-        [after 0 chunk allocations]
-        Device 1:  [_] [_] [_] [_] [_] [_] [_] [_] [_] [_] (10 GiB)
-        Device 2:  [__________] (10 GiB)
-        Device 3:  [__________] (10 GiB)
-
-        [after 1 chunk allocation]
-        Device 1:  [12] [_] [_] [_] [_] [_] [_] [_] [_] [_]
-        Device 2:  [12] [_________] (9 GiB)
-        Device 3:  [__________] (10 GiB)
-
-        [after 2 chunk allocations]
-        Device 1:  [12] [13] [_] [_] [_] [_] [_] [_] [_] [_] (8 GiB)
-        Device 2:  [12] [_________] (9 GiB)
-        Device 3:  [13] [_________] (9 GiB)
-
-        [after 3 chunk allocations]
-        Device 1:  [12] [13] [12] [_] [_] [_] [_] [_] [_] [_] (7 GiB)
-        Device 2:  [12] [12] [________] (8 GiB)
-        Device 3:  [13] [_________] (9 GiB)
-
-        [...]
-
-        [after 12 chunk allocations]
-        Device 1:  [12] [13] [12] [13] [12] [13] [12] [13] [_] [_] (2 GiB)
-        Device 2:  [12] [12] [23] [23] [12] [12] [23] [23] [__] (2 GiB)
-        Device 3:  [13] [13] [23] [23] [13] [23] [13] [23] [__] (2 GiB)
-
-        [after 13 chunk allocations]
-        Device 1:  [12] [13] [12] [13] [12] [13] [12] [13] [12] [_] (1 GiB)
-        Device 2:  [12] [12] [23] [23] [12] [12] [23] [23] [12] [_] (1 GiB)
-        Device 3:  [13] [13] [23] [23] [13] [23] [13] [23] [__] (2 GiB)
-
-        [after 14 chunk allocations]
-        Device 1:  [12] [13] [12] [13] [12] [13] [12] [13] [12] [13] (full)
-        Device 2:  [12] [12] [23] [23] [12] [12] [23] [23] [12] [_] (1 GiB)
-        Device 3:  [13] [13] [23] [23] [13] [23] [13] [23] [13] [_] (1 GiB)
-
-        [after 15 chunk allocations]
-        Device 1:  [12] [13] [12] [13] [12] [13] [12] [13] [12] [13] (full)
-        Device 2:  [12] [12] [23] [23] [12] [12] [23] [23] [12] [23] (full)
-        Device 3:  [13] [13] [23] [23] [13] [23] [13] [23] [13] [23] (full)
-
-This allocates all of the space with no waste.  The sorting function used
-by gather_device_info considers free space holes above 1 GiB in length
-to be equal to 1 GiB, so once find_free_dev_extent locates a sufficiently
-long hole on each device, all the holes appear equal in the sort, and the
-comparison falls back to sorting devices by total free space.  This keeps
-usable space on each device equal so they can all be filled completely.
-
-After f6fca3917b4d, the allocator prefers the devices with larger holes
-over the devices with more free space, so it makes bad allocation choices:
-
-        [after 1 chunk allocation]
-        Device 1:  [_] [_] [_] [_] [_] [_] [_] [_] [_] [_] (10 GiB)
-        Device 2:  [23] [_________] (9 GiB)
-        Device 3:  [23] [_________] (9 GiB)
-
-        [after 2 chunk allocations]
-        Device 1:  [_] [_] [_] [_] [_] [_] [_] [_] [_] [_] (10 GiB)
-        Device 2:  [23] [23] [________] (8 GiB)
-        Device 3:  [23] [23] [________] (8 GiB)
-
-        [after 3 chunk allocations]
-        Device 1:  [_] [_] [_] [_] [_] [_] [_] [_] [_] [_] (10 GiB)
-        Device 2:  [23] [23] [23] [_______] (7 GiB)
-        Device 3:  [23] [23] [23] [_______] (7 GiB)
-
-        [...]
-
-        [after 9 chunk allocations]
-        Device 1:  [_] [_] [_] [_] [_] [_] [_] [_] [_] [_] (10 GiB)
-        Device 2:  [23] [23] [23] [23] [23] [23] [23] [23] [23] [_] (1 GiB)
-        Device 3:  [23] [23] [23] [23] [23] [23] [23] [23] [23] [_] (1 GiB)
-
-        [after 10 chunk allocations]
-        Device 1:  [12] [_] [_] [_] [_] [_] [_] [_] [_] [_] (9 GiB)
-        Device 2:  [23] [23] [23] [23] [23] [23] [23] [23] [12] (full)
-        Device 3:  [23] [23] [23] [23] [23] [23] [23] [23] [_] (1 GiB)
-
-        [after 11 chunk allocations]
-        Device 1:  [12] [13] [_] [_] [_] [_] [_] [_] [_] [_] (8 GiB)
-        Device 2:  [23] [23] [23] [23] [23] [23] [23] [23] [12] (full)
-        Device 3:  [23] [23] [23] [23] [23] [23] [23] [23] [13] (full)
-
-No further allocations are possible, with 8 GiB wasted (4 GiB of data
-space).  The sort in gather_device_info now considers free space in
-holes longer than 1 GiB to be distinct, so it will prefer devices 2 and
-3 over device 1 until all but 1 GiB is allocated on devices 2 and 3.
-At that point, with only 1 GiB unallocated on every device, the largest
-hole length on each device is equal at 1 GiB, so the sort finally moves
-to ordering the devices with the most free space, but by this time it
-is too late to make use of the free space on device 1.
-
-Note that it's possible to contrive a case where the pre-f6fca3917b4d
-allocator fails the same way, but these cases generally have extensive
-dev_extent fragmentation as a precondition (e.g. many holes of 768M
-in length on one device, and few holes 1 GiB in length on the others).
-With the regression in f6fca3917b4d, bad chunk allocation can occur even
-under optimal conditions, when all dev_extent holes are exact multiples
-of stripe_len in length, as in the example above.
-
-Also note that post-f6fca3917b4d kernels do treat dev_extent holes
-larger than 10 GiB as equal, so the bad behavior won't show up on a
-freshly formatted filesystem; however, as the filesystem ages and fills
-up, and holes ranging from 1 GiB to 10 GiB in size appear, the problem
-can show up as a failure to balance after adding or removing devices,
-or an unexpected shortfall in available space due to unequal allocation.
-
-To fix the regression and make data chunk allocation work
-again, set ctl->max_stripe_len back to the original SZ_1G, or
-space_info->chunk_size if that's smaller (the latter can happen if the
-user set space_info->chunk_size to less than 1 GiB via sysfs, or it's
-a 32 MiB system chunk with a hardcoded chunk_size and stripe_len).
-
-While researching the background of the earlier commits, I found that an
-identical fix was already proposed at:
-
-  https://lore.kernel.org/linux-btrfs/de83ac46-a4a3-88d3-85ce-255b7abc5249@gmx.com/
-
-The previous review missed one detail:  ctl->max_stripe_len is used
-before decide_stripe_size_regular() is called, when it is too late for
-the changes in that function to have any effect.  ctl->max_stripe_len is
-not used directly by decide_stripe_size_regular(), but the parameter
-does heavily influence the per-device free space data presented to
-the function.
-
-Fixes: f6fca3917b4d ("btrfs: store chunk size in space-info struct")
-CC: stable@vger.kernel.org # 6.1+
-Link: https://lore.kernel.org/linux-btrfs/20231007051421.19657-1-ce3g8jdj@umail.furryterror.org/
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Zygo Blaxell <ce3g8jdj@umail.furryterror.org>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: 黄思聪 <huangsicong@iie.ac.cn>
+Fixes: 391d8a2da787 ("NFC: Add NCI over SPI receive")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20231013184129.18738-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/nfc/nci/spi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -5125,7 +5125,7 @@ static void init_alloc_chunk_ctl_policy_
- 	ASSERT(space_info);
+--- a/net/nfc/nci/spi.c
++++ b/net/nfc/nci/spi.c
+@@ -151,6 +151,8 @@ static int send_acknowledge(struct nci_s
+ 	int ret;
  
- 	ctl->max_chunk_size = READ_ONCE(space_info->chunk_size);
--	ctl->max_stripe_size = ctl->max_chunk_size;
-+	ctl->max_stripe_size = min_t(u64, ctl->max_chunk_size, SZ_1G);
+ 	skb = nci_skb_alloc(nspi->ndev, 0, GFP_KERNEL);
++	if (!skb)
++		return -ENOMEM;
  
- 	if (ctl->type & BTRFS_BLOCK_GROUP_SYSTEM)
- 		ctl->devs_max = min_t(int, ctl->devs_max, BTRFS_MAX_DEVS_SYS_CHUNK);
+ 	/* add the NCI SPI header to the start of the buffer */
+ 	hdr = skb_push(skb, NCI_SPI_HDR_LEN);
 
 
