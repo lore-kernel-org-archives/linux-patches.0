@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BE31116
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B1D1116
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmmr0tyY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34454C433C8;
-	Mon, 23 Oct 2023 11:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWBs3Eo1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B40C433C9;
+	Mon, 23 Oct 2023 11:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059174;
-	bh=vduIOFzdtK9iwceWwDuJuBMiWvHXf60t363SjhALsEY=;
+	s=korg; t=1698059177;
+	bh=8/+W5VHYID07gr7OQlSS/SNNHzyHQaCD5SL90lX6qCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lmmr0tyY/xvjjO2TMKn4YbbxZKrGi8dOjVhRmiF8HPGKOKDnLxHqSJZeG0guRAy/H
-	 RQbsmQayUcUdbFVEXngMy7dpc+95FndaYSnepFbntK8b7Eqono0b/lQv3uoz2bik9O
-	 RlznrDGHuTvDnBxzVxeDA7UJLQRXlYoIaykkal/c=
+	b=gWBs3Eo1jz6Ly6hOzboD1OsJDw+PYi0FnI8p1Yv8qPMxcvkQeO0coBoEofdvWOk8b
+	 txZ1Z3KDBLA4lf69/NUhu5ms6u4ytKsjrPgazBCbL9C+LzmLcJutDa/I04H4M5IVI3
+	 jjAT7c3GDgTBMCSPPlqh5PZ43fXpl4pJDxNnxgMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.5 062/241] net: ipv6: fix return value check in esp_remove_trailer
-Date: Mon, 23 Oct 2023 12:54:08 +0200
-Message-ID: <20231023104835.417869132@linuxfoundation.org>
+	Josua Mayer <josua@solid-run.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.5 063/241] net: rfkill: gpio: prevent value glitch during probe
+Date: Mon, 23 Oct 2023 12:54:09 +0200
+Message-ID: <20231023104835.443200365@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,32 +41,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Josua Mayer <josua@solid-run.com>
 
-commit dad4e491e30b20f4dc615c9da65d2142d703b5c2 upstream.
+commit b2f750c3a80b285cd60c9346f8c96bd0a2a66cde upstream.
 
-In esp_remove_trailer(), to avoid an unexpected result returned by
-pskb_trim, we should check the return value of pskb_trim().
+When either reset- or shutdown-gpio have are initially deasserted,
+e.g. after a reboot - or when the hardware does not include pull-down,
+there will be a short toggle of both IOs to logical 0 and back to 1.
 
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+It seems that the rfkill default is unblocked, so the driver should not
+glitch to output low during probe.
+It can lead e.g. to unexpected lte modem reconnect:
+
+[1] root@localhost:~# dmesg | grep "usb 2-1"
+[    2.136124] usb 2-1: new SuperSpeed USB device number 2 using xhci-hcd
+[   21.215278] usb 2-1: USB disconnect, device number 2
+[   28.833977] usb 2-1: new SuperSpeed USB device number 3 using xhci-hcd
+
+The glitch has been discovered on an arm64 board, now that device-tree
+support for the rfkill-gpio driver has finally appeared :).
+
+Change the flags for devm_gpiod_get_optional from GPIOD_OUT_LOW to
+GPIOD_ASIS to avoid any glitches.
+The rfkill driver will set the intended value during rfkill_sync_work.
+
+Fixes: 7176ba23f8b5 ("net: rfkill: add generic gpio rfkill driver")
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Link: https://lore.kernel.org/r/20231004163928.14609-1-josua@solid-run.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/esp6.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/rfkill/rfkill-gpio.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -770,7 +770,9 @@ static inline int esp_remove_trailer(str
- 		skb->csum = csum_block_sub(skb->csum, csumdiff,
- 					   skb->len - trimlen);
- 	}
--	pskb_trim(skb, skb->len - trimlen);
-+	ret = pskb_trim(skb, skb->len - trimlen);
-+	if (unlikely(ret))
-+		return ret;
+--- a/net/rfkill/rfkill-gpio.c
++++ b/net/rfkill/rfkill-gpio.c
+@@ -108,13 +108,13 @@ static int rfkill_gpio_probe(struct plat
  
- 	ret = nexthdr[1];
+ 	rfkill->clk = devm_clk_get(&pdev->dev, NULL);
+ 
+-	gpio = devm_gpiod_get_optional(&pdev->dev, "reset", GPIOD_OUT_LOW);
++	gpio = devm_gpiod_get_optional(&pdev->dev, "reset", GPIOD_ASIS);
+ 	if (IS_ERR(gpio))
+ 		return PTR_ERR(gpio);
+ 
+ 	rfkill->reset_gpio = gpio;
+ 
+-	gpio = devm_gpiod_get_optional(&pdev->dev, "shutdown", GPIOD_OUT_LOW);
++	gpio = devm_gpiod_get_optional(&pdev->dev, "shutdown", GPIOD_ASIS);
+ 	if (IS_ERR(gpio))
+ 		return PTR_ERR(gpio);
  
 
 
