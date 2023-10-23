@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721A015EA7
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FB415EB1
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BX7JrIBB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C87C433C8;
-	Mon, 23 Oct 2023 11:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnRClDfN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0004C433C9;
+	Mon, 23 Oct 2023 11:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061486;
-	bh=SojQXAHtkxasikaB+kjeLS6BzVgq/68V0jvcTjzWEh0=;
+	s=korg; t=1698061489;
+	bh=UiSRR63HkeTmuPCSR6k3byc6X4VsvRfQbbo9TyU/4Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BX7JrIBBhyGGNVEdKPCUBRIQ5p8ODzuLYQZjyIcsVCSPHf76cYjNhqjMuIE3yjfXs
-	 GGmoMFo5PjWFTO7Y1R7aeCuT6QJbj/dTFm0uxQgkV5pMSw6My9l6Frd2SsP/5/1+SF
-	 Wcac/KPZL4o3k9XWWZuFSfv9D+5CKKcHQiKjhIlI=
+	b=ZnRClDfNfK+Lri9ziJVfy4FbAXpyjDA/djwg4j2ZCqIeqs+IAbFvVwLyCw1eHeMCX
+	 ua8EFrQxumNsURacDv1ApqufyHcHhJbaDD7BkV/sxbWzosHO8PExTXgW7j77G3mSyg
+	 vEBLpRQ80v8ED+jFnlCTC0CLjvrBxP4it4NsGC0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenta Sato <tosainu.maple@gmail.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.10 036/202] usb: dwc3: Soft reset phy on probe for host
-Date: Mon, 23 Oct 2023 12:55:43 +0200
-Message-ID: <20231023104827.647518146@linuxfoundation.org>
+	Xingxing Luo <xingxing.luo@unisoc.com>
+Subject: [PATCH 5.10 037/202] usb: musb: Get the musb_qh poniter after musb_giveback
+Date: Mon, 23 Oct 2023 12:55:44 +0200
+Message-ID: <20231023104827.675959711@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -41,82 +40,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Xingxing Luo <xingxing.luo@unisoc.com>
 
-commit 8bea147dfdf823eaa8d3baeccc7aeb041b41944b upstream.
+commit 33d7e37232155aadebe4145dcc592f00dabd7a2b upstream.
 
-When there's phy initialization, we need to initiate a soft-reset
-sequence. That's done through USBCMD.HCRST in the xHCI driver and its
-initialization, However, the dwc3 driver may modify core configs before
-the soft-reset. This may result in some connection instability. So,
-ensure the phy is ready before the controller updates the GCTL.PRTCAPDIR
-or other settings by issuing phy soft-reset.
+When multiple threads are performing USB transmission, musb->lock will be
+unlocked when musb_giveback is executed. At this time, qh may be released
+in the dequeue process in other threads, resulting in a wild pointer, so
+it needs to be here get qh again, and judge whether qh is NULL, and when
+dequeue, you need to set qh to NULL.
 
-Note that some host-mode configurations may not expose device registers
-to initiate the controller soft-reset (via DCTL.CoreSftRst). So we reset
-through GUSB3PIPECTL and GUSB2PHYCFG instead.
-
+Fixes: dbac5d07d13e ("usb: musb: host: don't start next rx urb if current one failed")
 Cc: stable@vger.kernel.org
-Fixes: e835c0a4e23c ("usb: dwc3: don't reset device side if dwc3 was configured as host-only")
-Reported-by: Kenta Sato <tosainu.maple@gmail.com>
-Closes: https://lore.kernel.org/linux-usb/ZPUciRLUcjDywMVS@debian.me/
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Tested-by: Kenta Sato <tosainu.maple@gmail.com>
-Link: https://lore.kernel.org/r/70aea513215d273669152696cc02b20ddcdb6f1a.1694564261.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Xingxing Luo <xingxing.luo@unisoc.com>
+Link: https://lore.kernel.org/r/20230919033055.14085-1-xingxing.luo@unisoc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |   39 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 38 insertions(+), 1 deletion(-)
+ drivers/usb/musb/musb_host.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -277,9 +277,46 @@ int dwc3_core_soft_reset(struct dwc3 *dw
- 	 * XHCI driver will reset the host block. If dwc3 was configured for
- 	 * host-only mode or current role is host, then we can return early.
- 	 */
--	if (dwc->dr_mode == USB_DR_MODE_HOST || dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
-+	if (dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
- 		return 0;
+--- a/drivers/usb/musb/musb_host.c
++++ b/drivers/usb/musb/musb_host.c
+@@ -321,10 +321,16 @@ static void musb_advance_schedule(struct
+ 	musb_giveback(musb, urb, status);
+ 	qh->is_ready = ready;
  
 +	/*
-+	 * If the dr_mode is host and the dwc->current_dr_role is not the
-+	 * corresponding DWC3_GCTL_PRTCAP_HOST, then the dwc3_core_init_mode
-+	 * isn't executed yet. Ensure the phy is ready before the controller
-+	 * updates the GCTL.PRTCAPDIR or other settings by soft-resetting
-+	 * the phy.
-+	 *
-+	 * Note: GUSB3PIPECTL[n] and GUSB2PHYCFG[n] are port settings where n
-+	 * is port index. If this is a multiport host, then we need to reset
-+	 * all active ports.
++	 * musb->lock had been unlocked in musb_giveback, so qh may
++	 * be freed, need to get it again
 +	 */
-+	if (dwc->dr_mode == USB_DR_MODE_HOST) {
-+		u32 usb3_port;
-+		u32 usb2_port;
++	qh = musb_ep_get_qh(hw_ep, is_in);
 +
-+		usb3_port = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
-+		usb3_port |= DWC3_GUSB3PIPECTL_PHYSOFTRST;
-+		dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), usb3_port);
-+
-+		usb2_port = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-+		usb2_port |= DWC3_GUSB2PHYCFG_PHYSOFTRST;
-+		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), usb2_port);
-+
-+		/* Small delay for phy reset assertion */
-+		usleep_range(1000, 2000);
-+
-+		usb3_port &= ~DWC3_GUSB3PIPECTL_PHYSOFTRST;
-+		dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), usb3_port);
-+
-+		usb2_port &= ~DWC3_GUSB2PHYCFG_PHYSOFTRST;
-+		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), usb2_port);
-+
-+		/* Wait for clock synchronization */
-+		msleep(50);
-+		return 0;
-+	}
-+
- 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
- 	reg |= DWC3_DCTL_CSFTRST;
- 	reg &= ~DWC3_DCTL_RUN_STOP;
+ 	/* reclaim resources (and bandwidth) ASAP; deschedule it, and
+ 	 * invalidate qh as soon as list_empty(&hep->urb_list)
+ 	 */
+-	if (list_empty(&qh->hep->urb_list)) {
++	if (qh && list_empty(&qh->hep->urb_list)) {
+ 		struct list_head	*head;
+ 		struct dma_controller	*dma = musb->dma_controller;
+ 
+@@ -2404,6 +2410,7 @@ static int musb_urb_dequeue(struct usb_h
+ 		 * and its URB list has emptied, recycle this qh.
+ 		 */
+ 		if (ready && list_empty(&qh->hep->urb_list)) {
++			musb_ep_set_qh(qh->hw_ep, is_in, NULL);
+ 			qh->hep->hcpriv = NULL;
+ 			list_del(&qh->ring);
+ 			kfree(qh);
 
 
