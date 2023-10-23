@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A90415E87
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F60B15E87
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgTDSwHZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7335C433C9;
-	Mon, 23 Oct 2023 11:32:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwEqshRy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFCBC433C7;
+	Mon, 23 Oct 2023 11:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060721;
-	bh=/EwrvyJTTR2gjOSKKEMfvAR1Up5soAnDslAw/XrsD+g=;
+	s=korg; t=1698060724;
+	bh=yzXcIDP9vmlrvAP6T3U563NR4BO1FeDux+1ydWh5LUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TgTDSwHZGKoQIeqxzEl6IldedI+Z+OfCGxHLsP9AZZoVP9BEebYhYPbo7A+QhJcQd
-	 QoyyvtcyqyWVZpyRZRTqOKX4g7fb8B7NI4Sy+Y+maQCULsEWFO2SKZf7j2Tn3h0WUa
-	 iGHo/LtjU5A7f1DTfdZIVDJYXx4xpQZWe7HISrtw=
+	b=fwEqshRysUbZkunqkIZoYKElIvlClmQFzkJ4xntbKMPG3aSMroeSjto1AYAHda0Ec
+	 QkcKRgAyFWZA9rrmZysQLAhuuBW3Sry1qYXjQyHrO+e95XRS6OxjfEbQNv8TkmJCOu
+	 e2B7PpCOAgLSyLI4CJpQRB+amM3SwK6+/x/WuWCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Daniel Borkmann <daniel@iogearbox.net>
-Subject: [PATCH 5.4 043/123] dev_forward_skb: do not scrub skb mark within the same name space
-Date: Mon, 23 Oct 2023 12:56:41 +0200
-Message-ID: <20231023104819.167179971@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Ben Hutchings <ben@decadent.org.uk>
+Subject: [PATCH 5.4 044/123] Documentation: sysctl: align cells in second content column
+Date: Mon, 23 Oct 2023 12:56:42 +0200
+Message-ID: <20231023104819.200165516@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -42,45 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-commit ff70202b2d1ad522275c6aadc8c53519b6a22c57 upstream.
+commit 1faa34672f8a17a3e155e74bde9648564e9480d6 upstream.
 
-The goal is to keep the mark during a bpf_redirect(), like it is done for
-legacy encapsulation / decapsulation, when there is no x-netns.
-This was initially done in commit 213dd74aee76 ("skbuff: Do not scrub skb
-mark within the same name space").
+Stephen Rothwell reported htmldocs warning when merging net-next tree:
 
-When the call to skb_scrub_packet() was added in dev_forward_skb() (commit
-8b27f27797ca ("skb: allow skb_scrub_packet() to be used by tunnels")), the
-second argument (xnet) was set to true to force a call to skb_orphan(). At
-this time, the mark was always cleanned up by skb_scrub_packet(), whatever
-xnet value was.
-This call to skb_orphan() was removed later in commit
-9c4c325252c5 ("skbuff: preserve sock reference when scrubbing the skb.").
-But this 'true' stayed here without any real reason.
+Documentation/admin-guide/sysctl/net.rst:37: WARNING: Malformed table.
+Text in column margin in table line 4.
 
-Let's correctly set xnet in ____dev_forward_skb(), this function has access
-to the previous interface and to the new interface.
+========= =================== = ========== ==================
+Directory Content               Directory  Content
+========= =================== = ========== ==================
+802       E802 protocol         mptcp     Multipath TCP
+appletalk Appletalk protocol    netfilter Network Filter
+ax25      AX25                  netrom     NET/ROM
+bridge    Bridging              rose      X.25 PLP layer
+core      General parameter     tipc      TIPC
+ethernet  Ethernet protocol     unix      Unix domain sockets
+ipv4      IP version 4          x25       X.25 protocol
+ipv6      IP version 6
+========= =================== = ========== ==================
 
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
+The warning above is caused by cells in second "Content" column of
+/proc/sys/net subdirectory table which are in column margin.
+
+Align these cells against the column header to fix the warning.
+
+Link: https://lore.kernel.org/linux-next/20220823134905.57ed08d5@canb.auug.org.au/
+Fixes: 1202cdd665315c ("Remove DECnet support from kernel")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Link: https://lore.kernel.org/r/20220824035804.204322-1-bagasdotme@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Ben Hutchings <ben@decadent.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/netdevice.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/admin-guide/sysctl/net.rst |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -3763,7 +3763,7 @@ static __always_inline int ____dev_forwa
- 		return NET_RX_DROP;
- 	}
+--- a/Documentation/admin-guide/sysctl/net.rst
++++ b/Documentation/admin-guide/sysctl/net.rst
+@@ -31,18 +31,18 @@ see only some of them, depending on your
  
--	skb_scrub_packet(skb, true);
-+	skb_scrub_packet(skb, !net_eq(dev_net(dev), dev_net(skb->dev)));
- 	skb->priority = 0;
- 	return 0;
- }
+ Table : Subdirectories in /proc/sys/net
+ 
+- ========= =================== = ========== ==================
++ ========= =================== = ========== ===================
+  Directory Content               Directory  Content
+- ========= =================== = ========== ==================
+- 802       E802 protocol         mptcp     Multipath TCP
+- appletalk Appletalk protocol    netfilter Network Filter
++ ========= =================== = ========== ===================
++ 802       E802 protocol         mptcp      Multipath TCP
++ appletalk Appletalk protocol    netfilter  Network Filter
+  ax25      AX25                  netrom     NET/ROM
+- bridge    Bridging              rose      X.25 PLP layer
+- core      General parameter     tipc      TIPC
+- ethernet  Ethernet protocol     unix      Unix domain sockets
+- ipv4      IP version 4          x25       X.25 protocol
++ bridge    Bridging              rose       X.25 PLP layer
++ core      General parameter     tipc       TIPC
++ ethernet  Ethernet protocol     unix       Unix domain sockets
++ ipv4      IP version 4          x25        X.25 protocol
+  ipv6      IP version 6
+- ========= =================== = ========== ==================
++ ========= =================== = ========== ===================
+ 
+ 1. /proc/sys/net/core - Network core options
+ ============================================
 
 
