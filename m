@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBA515EA0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D51F15EA0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Jq4IIIf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD27EC433CA;
-	Mon, 23 Oct 2023 11:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jr5WGgDR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C30C433CB;
+	Mon, 23 Oct 2023 11:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061292;
-	bh=F9i3FVCFzUTLNLb7UUPSJ6c0XkCbtKKHYT9qFBOWKS8=;
+	s=korg; t=1698061295;
+	bh=yYZU+tWEY9rqDCssCwRdqYy7yQMgIIEfZNxF61AYD7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Jq4IIIfKwEOYadl5wD+Um7CfAty95BEzvLPgPmfMHhTnWXmaj+4+ylD6AuDWdiX6
-	 SatqSDzp6AsUH6RausQ3djYFNrtL4F6d32rgf440JH2vohP5wyANiG1Ih5++VDjPEo
-	 jjsP4ewEFVSNM8L+p9ayca2LP1dxbXGEI+43EQHg=
+	b=Jr5WGgDRWjLcd8TVQESEJbcaLI3GDHSFTfj+cP+7nSLaazrODcH3cJeYVQM+vhk+M
+	 wnpmMZKkZYBqL4a+yt5ptV4EGOpHvfG/s6juqDt3nmg5RRefP2XblSx90R+SQe86c9
+	 /HU0yF3jrGOwElJC5NtWYRj81UG2hL8zL4ZmdPJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 109/137] mmc: core: sdio: hold retuning if sdio in 1-bit mode
-Date: Mon, 23 Oct 2023 12:57:46 +0200
-Message-ID: <20231023104824.484540544@linuxfoundation.org>
+Subject: [PATCH 5.15 110/137] mmc: core: Capture correct oemid-bits for eMMC cards
+Date: Mon, 23 Oct 2023 12:57:47 +0200
+Message-ID: <20231023104824.514306328@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -42,45 +41,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Avri Altman <avri.altman@wdc.com>
 
-commit 32a9cdb8869dc111a0c96cf8e1762be9684af15b upstream.
+commit 84ee19bffc9306128cd0f1c650e89767079efeff upstream.
 
-tuning only support in 4-bit mode or 8 bit mode, so in 1-bit mode,
-need to hold retuning.
+The OEMID is an 8-bit binary number rather than 16-bit as the current code
+parses for. The OEMID occupies bits [111:104] in the CID register, see the
+eMMC spec JESD84-B51 paragraph 7.2.3. It seems that the 16-bit comes from
+the legacy MMC specs (v3.31 and before).
 
-Find this issue when use manual tuning method on imx93. When system
-resume back, SDIO WIFI try to switch back to 4 bit mode, first will
-trigger retuning, and all tuning command failed.
+Let's fix the parsing by simply move to use 8-bit instead of 16-bit. This
+means we ignore the impact on some of those old MMC cards that may be out
+there, but on the other hand this shouldn't be a problem as the OEMID seems
+not be an important feature for these cards.
 
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Fixes: dfa13ebbe334 ("mmc: host: Add facility to support re-tuning")
+Signed-off-by: Avri Altman <avri.altman@wdc.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230830093922.3095850-1-haibo.chen@nxp.com
+Link: https://lore.kernel.org/r/20230927071500.1791882-1-avri.altman@wdc.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/sdio.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/mmc/core/mmc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/core/sdio.c
-+++ b/drivers/mmc/core/sdio.c
-@@ -1073,8 +1073,14 @@ static int mmc_sdio_resume(struct mmc_ho
- 		}
- 		err = mmc_sdio_reinit_card(host);
- 	} else if (mmc_card_wake_sdio_irq(host)) {
--		/* We may have switched to 1-bit mode during suspend */
-+		/*
-+		 * We may have switched to 1-bit mode during suspend,
-+		 * need to hold retuning, because tuning only supprt
-+		 * 4-bit mode or 8 bit mode.
-+		 */
-+		mmc_retune_hold_now(host);
- 		err = sdio_enable_4bit_bus(host->card);
-+		mmc_retune_release(host);
- 	}
- 
- 	if (err)
+--- a/drivers/mmc/core/mmc.c
++++ b/drivers/mmc/core/mmc.c
+@@ -96,7 +96,7 @@ static int mmc_decode_cid(struct mmc_car
+ 	case 3: /* MMC v3.1 - v3.3 */
+ 	case 4: /* MMC v4 */
+ 		card->cid.manfid	= UNSTUFF_BITS(resp, 120, 8);
+-		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 16);
++		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 8);
+ 		card->cid.prod_name[0]	= UNSTUFF_BITS(resp, 96, 8);
+ 		card->cid.prod_name[1]	= UNSTUFF_BITS(resp, 88, 8);
+ 		card->cid.prod_name[2]	= UNSTUFF_BITS(resp, 80, 8);
 
 
