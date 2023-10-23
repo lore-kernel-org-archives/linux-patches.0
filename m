@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3301114A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EECE14A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ls/mDQ81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1814C433C9;
-	Mon, 23 Oct 2023 11:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01OmN6B0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6F8C433CB;
+	Mon, 23 Oct 2023 11:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059616;
-	bh=i9nYo0Cd04okGJltlTlA6W01bVJlnQ5WxU3c/K3qh/I=;
+	s=korg; t=1698059619;
+	bh=moxeWhXuepqlxXF8ggTXvBhwAX1hDED4dqO+IowhgEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ls/mDQ81sQR/Xu+LxWS4X8RAEmaEPCQCn+wN9Bc7C/ByXzimPVK6Tyn62Jh6YwtIG
-	 AGmLhQEXP8WAkhMFrN2rHhBMLFAB0KYjxeQVfBkd/gxu4tIiANs7aV4KmWHUcuZ9+6
-	 9tttVCH0MEBQzmBnwepsVEWrLW33PUHcVg19rORo=
+	b=01OmN6B06+WQ41aPn/IsxC3cZAQ/3cdY8jGdjlfAIiKRj8G1CKLJZ4nhkHxsF+IBC
+	 szAroIAaRPzFn8QqbGzausgyNZgParvk4tBtrR1Z7rBSmXyOQSqFpINht0v5MjXjzK
+	 RBejXD8PI11k/qbyCr8AhrhVdklFeXQJP8cj/IT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James John <me@donjajo.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.5 210/241] platform/x86: asus-wmi: Map 0x2a code, Ignore 0x2b and 0x2c events
-Date: Mon, 23 Oct 2023 12:56:36 +0200
-Message-ID: <20231023104838.969666248@linuxfoundation.org>
+	Wedson Almeida Filho <walmeida@microsoft.com>,
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Finn Behrens <me@kloenk.dev>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.5 211/241] rust: error: fix the description for `ECHILD`
+Date: Mon, 23 Oct 2023 12:56:37 +0200
+Message-ID: <20231023104838.993608503@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,45 +45,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Wedson Almeida Filho <walmeida@microsoft.com>
 
-commit 235985d1763f7aba92c1c64e5f5aaec26c2c9b18 upstream.
+commit 17bfcd6a81535d7d580ddafb6e54806890aaca6c upstream.
 
-Newer Asus laptops send the following new WMI event codes when some
-of the F1 - F12 "media" hotkeys are pressed:
+A mistake was made and the description of `ECHILD` is wrong (it reuses
+the description of `ENOEXEC`). This fixes it to reflect what's in
+`errno-base.h`.
 
-0x2a Screen Capture
-0x2b PrintScreen
-0x2c CapsLock
-
-Map 0x2a to KEY_SELECTIVE_SCREENSHOT mirroring how similar hotkeys
-are mapped on other laptops.
-
-PrintScreem and CapsLock are also reported as normal PS/2 keyboard events,
-map these event codes to KE_IGNORE to avoid "Unknown key code 0x%x\n" log
-messages.
-
-Reported-by: James John <me@donjajo.com>
-Closes: https://lore.kernel.org/platform-driver-x86/a2c441fe-457e-44cf-a146-0ecd86b037cf@donjajo.com/
-Closes: https://bbs.archlinux.org/viewtopic.php?pid=2123716
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231017090725.38163-4-hdegoede@redhat.com
+Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Reviewed-by: Finn Behrens <me@kloenk.dev>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Fixes: 266def2a0f5b ("rust: error: add codes from `errno-base.h`")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230930144958.46051-1-wedsonaf@gmail.com
+[ Use the plural, as noticed by Benno. ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c |    3 +++
- 1 file changed, 3 insertions(+)
+ rust/kernel/error.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -531,6 +531,9 @@ static void asus_nb_wmi_quirks(struct as
- static const struct key_entry asus_nb_wmi_keymap[] = {
- 	{ KE_KEY, ASUS_WMI_BRN_DOWN, { KEY_BRIGHTNESSDOWN } },
- 	{ KE_KEY, ASUS_WMI_BRN_UP, { KEY_BRIGHTNESSUP } },
-+	{ KE_KEY, 0x2a, { KEY_SELECTIVE_SCREENSHOT } },
-+	{ KE_IGNORE, 0x2b, }, /* PrintScreen (also send via PS/2) on newer models */
-+	{ KE_IGNORE, 0x2c, }, /* CapsLock (also send via PS/2) on newer models */
- 	{ KE_KEY, 0x30, { KEY_VOLUMEUP } },
- 	{ KE_KEY, 0x31, { KEY_VOLUMEDOWN } },
- 	{ KE_KEY, 0x32, { KEY_MUTE } },
+diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
+index 05fcab6abfe6..0f29e7b2194c 100644
+--- a/rust/kernel/error.rs
++++ b/rust/kernel/error.rs
+@@ -37,7 +37,7 @@ macro_rules! declare_err {
+     declare_err!(E2BIG, "Argument list too long.");
+     declare_err!(ENOEXEC, "Exec format error.");
+     declare_err!(EBADF, "Bad file number.");
+-    declare_err!(ECHILD, "Exec format error.");
++    declare_err!(ECHILD, "No child processes.");
+     declare_err!(EAGAIN, "Try again.");
+     declare_err!(ENOMEM, "Out of memory.");
+     declare_err!(EACCES, "Permission denied.");
+-- 
+2.42.0
+
 
 
