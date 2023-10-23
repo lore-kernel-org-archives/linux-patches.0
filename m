@@ -1,100 +1,139 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0BF1B27C
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 18:43:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D8C1E536
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 18:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lwwZCJGV"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1ca6809fb8aso23328955ad.1
-        for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:43:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698086581; x=1698691381; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/weOLyJtPWlh5siUgFN5Itg3AwgyF2jPHeNmSxivo64=;
-        b=lwwZCJGVllD3Xq4VnVdskNX4XwWa0HqJxSITP1nICa3UCsbqaX6rOsZxceKhAjStLC
-         PXZPNYwYPSs2AY4SKiE35OIrvn8d9am6FUE5qh0+IPbfaziIYEZ5kR81cNCLIxNqajas
-         bw+DYN1leqsmw7NbCh/jb2EcBNhmtBi0HnnHgIUSL42H65L+cPbzzSVMw+5yyXYMtqpY
-         J0YJ3+S9OzJU7sdtk52q9ZlFz3GSY0gravld+oFSghPrlLG+lTsk/5+n3QDR16u51YOf
-         HGIx394M1Bq7AopUXzbNSY0TuDDQ7vYsMWjYvGDK02jSiLmRYqiYXRFaUzxHx0aOH5XE
-         Nryw==
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-5a7afd45199so38092417b3.0
+        for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698086581; x=1698691381;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/weOLyJtPWlh5siUgFN5Itg3AwgyF2jPHeNmSxivo64=;
-        b=KRgIgedQVSKeZNme8pth5Dq96IkPEKN7KYOzVrMUbVXm80Eu7HdAhMJVeEMw5FbQVs
-         L/h4Cb/tpFmKh6tyT1el8xF0T/azij1rsux8sTb3usG6ciEWDJEexwKxXwfkiuytPgFl
-         VnSjYOS9XAFFaeAVb8T385JzB+FhJ6g8Uqi+a+hV3zaTb9Uk5bCUJDC18lf2q6eC+r7r
-         AwhFryO+Q6Gz5UBQuKA0NfRrXiNHD70/WPQVfTpLaB0bfRkPkUCuiVt2JnHKuQxKf8jf
-         FQj4D+uhM+MRNGeZwbGhpV/rpUeZJ7uyttJZcwv6Vhf90t2YMgd1p/gO3O1/jodXkHyl
-         kIZg==
-X-Gm-Message-State: AOJu0Yxg3e6K6P81sJ7sC72Kcg0g2DZl2VaabKBwj7R84rC0PfhO8wK/
-	pYphvi8gk+QgzP+mkXpZ7VM=
-X-Google-Smtp-Source: AGHT+IEZD90O8n0Vj11F0UcDsagtID81H9xP0zBmAnLN9X3dVPcTNym3zFvCwwvylZStx4FAQ/jzVw==
-X-Received: by 2002:a17:902:c215:b0:1c7:3558:721a with SMTP id 21-20020a170902c21500b001c73558721amr7044165pll.58.1698086580961;
-        Mon, 23 Oct 2023 11:43:00 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id i6-20020a170902c94600b001c9c3c377f2sm6238806pla.203.2023.10.23.11.42.56
+        d=1e100.net; s=20230601; t=1698087028; x=1698691828;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aYFfnW1lq/N35y1JdU1JiP7JMVnAqfYQ6cbBfI8EdMk=;
+        b=fEG8+FcuD/YKcefE41mx3wSY65qDxCeZzJJcHmtPqgidJ+uakdToB5Xnpo/iYxUHvx
+         t2bDLi4ndQJfsxlQTkTRH31qNxqXdPITCQm9bqk9pcaeTBFywUR7BneJpocSsycW6Mo7
+         c/jV1ofePyk/DxvifgZCR6lLVA9/6FMKj1MHLak/B/Lvu+tyH9k0kjtKYz+qgY1wFh7D
+         D7KFqds6tb/vUJQR+tyXjMFMVSgeMNnzSFCbtqRtBAemA1XGiCpReElT0JmYldhhLy3Q
+         FxMqf6WlHXaIsqCwsi7GBMblFmRRiaoygrLefpefs16LoDgU5ZLYnGjRkmCxGOzcTpS5
+         VVyw==
+X-Gm-Message-State: AOJu0YxCejDycKjBkDzKvEUukFNOwVygXaOBZ21MSUUooZ9dcQjMlLR2
+	lOjMsKXxfgVZSVmNLnbKwfMTntDaszVPuw==
+X-Google-Smtp-Source: AGHT+IHDzAq0HE7rRQzX34Pa7ISn1PuAeSiR1NO63OW7VaUYo4Bjq+cjhH3m2jV4PeYNOlVmrEyX+Q==
+X-Received: by 2002:a0d:d187:0:b0:59b:14ca:4316 with SMTP id t129-20020a0dd187000000b0059b14ca4316mr10224542ywd.43.1698087028300;
+        Mon, 23 Oct 2023 11:50:28 -0700 (PDT)
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com. [209.85.128.177])
+        by smtp.gmail.com with ESMTPSA id h14-20020a81b64e000000b005a927c75068sm2120718ywk.122.2023.10.23.11.50.28
+        for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 11:43:00 -0700 (PDT)
-Message-ID: <f53536ca-ec5b-4cdc-a340-e9c739ee30c4@gmail.com>
-Date: Mon, 23 Oct 2023 15:42:54 -0300
+        Mon, 23 Oct 2023 11:50:28 -0700 (PDT)
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-5a7afd45199so38092347b3.0
+        for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:28 -0700 (PDT)
+X-Received: by 2002:a81:a090:0:b0:5a7:baac:7b34 with SMTP id
+ x138-20020a81a090000000b005a7baac7b34mr10436542ywg.28.1698087027858; Mon, 23
+ Oct 2023 11:50:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] x86/rust: depend on !RETHUNK
-Content-Language: en-US
-To: Miguel Ojeda <ojeda@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
- Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
- Dave Hansen <dave.hansen@linux.intel.com>,
- Peter Zijlstra <peterz@infradead.org>, Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
- Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
- Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl
- <aliceryhl@google.com>, x86@kernel.org, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20231023174449.251550-1-ojeda@kernel.org>
- <20231023174449.251550-3-ojeda@kernel.org>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20231023174449.251550-3-ojeda@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20231023104820.849461819@linuxfoundation.org> <724521b8-9c63-4645-b3e0-30d9635573a7@linaro.org>
+ <CAEUSe7-zbuRsgsr2EYq+OeW9iEJyZHmo8u9K3pDCAFRKnCEv0A@mail.gmail.com>
+In-Reply-To: <CAEUSe7-zbuRsgsr2EYq+OeW9iEJyZHmo8u9K3pDCAFRKnCEv0A@mail.gmail.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 23 Oct 2023 20:50:15 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdXYB6QAE15RYs7eg9sVofesqNN1+vmPHkosqC_8A-JTSg@mail.gmail.com>
+Message-ID: <CAMuHMdXYB6QAE15RYs7eg9sVofesqNN1+vmPHkosqC_8A-JTSg@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/137] 5.15.137-rc1 review
+To: =?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/23/23 14:44, Miguel Ojeda wrote:
-> The Rust compiler does not support the equivalent of
-> `-mfunction-return=thunk-extern` yet [1]. Thus, currently, `objtool`
-> warns about it, e.g.:
-> 
->      samples/rust/rust_print.o: warning: objtool: _R...init+0xa5c:
->      'naked' return found in RETHUNK build
-> 
-> The support in `rustc` for `-Zfunction-return` has been submitted and
-> is being reviewed [2]. It adds the needed LLVM function attributes and,
-> with it, I got a RETHUNK kernel build with Rust enabled that does not
-> print the `objtool` related warnings, boots in QEMU and can load a kernel
-> loadable module.
-> 
-> In any case, until proper/complete support is added to `rustc`, make it
-> a hard restriction until the mitigation is in place.
-> 
-> This may have an impact for developers that may not need/care about the
-> mitigation in the Rust side (e.g. Ubuntu offers Rust as a "technology
-> preview" [3]), but given we are getting closer to having the first actual
-> in-tree Rust kernel users, it seems like the right time to disallow
-> it. This should also avoid confusion [4].
+CC maz
 
-I'll mention that I've tested boots, both in bare metal and QEMU, with
-`RUST=y` and `RETHUNK=y` and they were alright regardless of `objtool`
-warnings. Although, if you had an issue in the past then I'd like to know
-about it.
+On Mon, Oct 23, 2023 at 7:17=E2=80=AFPM Daniel D=C3=ADaz <daniel.diaz@linar=
+o.org> wrote:
+> On Mon, 23 Oct 2023 at 09:11, Daniel D=C3=ADaz <daniel.diaz@linaro.org> w=
+rote:
+> > On 23/10/23 4:55 a. m., Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 5.15.137 release=
+.
+> > > There are 137 patches in this series, all will be posted as a respons=
+e
+> > > to this one.  If anyone has any issues with these being applied, plea=
+se
+> > > let me know.
+> > >
+> > > Responses should be made by Wed, 25 Oct 2023 10:47:57 +0000.
+> > > Anything received after that time might be too late.
+> > >
+> > > The whole patch series can be found in one patch at:
+> > >       https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patc=
+h-5.15.137-rc1.gz
+> > > or in the git tree and branch at:
+> > >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stab=
+le-rc.git linux-5.15.y
+> > > and the diffstat can be found below.
+> > >
+> > > thanks,
+> > >
+> > > greg k-h
+> >
+> > We see lots of errors on Arm 32-bits:
+> >
+> > -----8<-----
+> > /builds/linux/drivers/gpio/gpio-vf610.c:249:11: error: 'IRQCHIP_IMMUTAB=
+LE' undeclared here (not in a function); did you mean 'IS_IMMUTABLE'?
+> >    .flags =3D IRQCHIP_IMMUTABLE | IRQCHIP_MASK_ON_SUSPEND
+> >             ^~~~~~~~~~~~~~~~~
+> >             IS_IMMUTABLE
+> > /builds/linux/drivers/gpio/gpio-vf610.c:251:2: error: 'GPIOCHIP_IRQ_RES=
+OURCE_HELPERS' undeclared here (not in a function)
+> >    GPIOCHIP_IRQ_RESOURCE_HELPERS,
+> >    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > /builds/linux/drivers/gpio/gpio-vf610.c:251:2: warning: excess elements=
+ in struct initializer
+> > /builds/linux/drivers/gpio/gpio-vf610.c:251:2: note: (near initializati=
+on for 'vf610_irqchip')
+> > /builds/linux/drivers/gpio/gpio-vf610.c: In function 'vf610_gpio_probe'=
+:
+> > /builds/linux/drivers/gpio/gpio-vf610.c:340:2: error: implicit declarat=
+ion of function 'gpio_irq_chip_set_chip'; did you mean 'gpiochip_get_data'?=
+ [-Werror=3Dimplicit-function-declaration]
+> >    gpio_irq_chip_set_chip(girq, &vf610_irqchip);
+> >    ^~~~~~~~~~~~~~~~~~~~~~
+> >    gpiochip_get_data
+> > cc1: some warnings being treated as errors
+> > ----->8-----
+>
+> Bisection points to "gpio: vf610: make irq_chip immutable" (upstream
+> commit e6ef4f8ede09f4af7cde000717b349b50bc62576).
+
+IRQCHIP_IMMUTABLE was introduced in commit 6c846d026d490b23 ("gpio:
+Don't fiddle with irqchips marked as immutable") in v5.19.
+Backporting (part of) that is probably not safe.
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
