@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50711102
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595EB1C35
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjU3cXfP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0914C433C8;
-	Mon, 23 Oct 2023 10:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TiIaJA43"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD6AC433C8;
+	Mon, 23 Oct 2023 10:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058765;
-	bh=zBdzIBdYOBZ8gZL0BD0rRPsjjxXzJRFcKZjv4f6WwtY=;
+	s=korg; t=1698058768;
+	bh=X6QHhf6Nm4pP+AA0hX30l9DDhIRblW5fETDOWdhbp34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjU3cXfPzBlV6VxEd68ooLS+lWB1WOxRNCIH7tMF62qOOrSiViMRPwyKgsIdD8TaH
-	 Y2ujLCuhvz+QExzXMas5XCc99fyZn3QQfQuIDwVg9JjMkjNhQ/1IZolx3qTpB0xMVH
-	 H8UreJdiqrBVEyuLccfyclv+W/OlnzpkBfSn9YQ0=
+	b=TiIaJA43KcIrewZMlT7gI5X21R7RhSHTeNDwF2rGu1PE/DX/6ac+zrA40FVT9JYqe
+	 E2MI/hfinJYCk/l+1WlCR33hnYxgBDK0r+mAm1GQfPVvQv7kF0EvQVVaLU2tVflGXl
+	 CiWdcOlAAJ4SawPTXweXM+2AnN0aO9qWwsvxeJ7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Berndt <matthias_berndt@gmx.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 4.14 19/66] Input: xpad - add PXN V900 support
-Date: Mon, 23 Oct 2023 12:56:09 +0200
-Message-ID: <20231023104811.514361064@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 02/66] platform/x86: hp-wmi:: Mark driver struct with __refdata to prevent section mismatch warning
+Date: Mon, 23 Oct 2023 12:55:52 +0200
+Message-ID: <20231023104810.872267789@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -35,44 +36,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthias Berndt <matthias_berndt@gmx.de>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit a65cd7ef5a864bdbbe037267c327786b7759d4c6 upstream.
+[ Upstream commit 5b44abbc39ca15df80d0da4756078c98c831090f ]
 
-Add VID and PID to the xpad_device table to allow driver to use the PXN
-V900 steering wheel, which is XTYPE_XBOX360 compatible in xinput mode.
+As described in the added code comment, a reference to .exit.text is ok
+for drivers registered via module_platform_driver_probe(). Make this
+explicit to prevent a section mismatch warning:
 
-Signed-off-by: Matthias Berndt <matthias_berndt@gmx.de>
-Link: https://lore.kernel.org/r/4932699.31r3eYUQgx@fedora
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	WARNING: modpost: drivers/platform/x86/hp/hp-wmi: section mismatch in reference: hp_wmi_driver+0x8 (section: .data) -> hp_wmi_bios_remove (section: .exit.text)
+
+Fixes: c165b80cfecc ("hp-wmi: fix handling of platform device")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231004111624.2667753-1-u.kleine-koenig@pengutronix.de
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/hp-wmi.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -269,6 +269,7 @@ static const struct xpad_device {
- 	{ 0x1038, 0x1430, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
- 	{ 0x1038, 0x1431, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
- 	{ 0x11c9, 0x55f0, "Nacon GC-100XF", 0, XTYPE_XBOX360 },
-+	{ 0x11ff, 0x0511, "PXN V900", 0, XTYPE_XBOX360 },
- 	{ 0x1209, 0x2882, "Ardwiino Controller", 0, XTYPE_XBOX360 },
- 	{ 0x12ab, 0x0004, "Honey Bee Xbox360 dancepad", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
- 	{ 0x12ab, 0x0301, "PDP AFTERGLOW AX.1", 0, XTYPE_XBOX360 },
-@@ -463,6 +464,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOXONE_VENDOR(0x0f0d),		/* Hori Controllers */
- 	XPAD_XBOX360_VENDOR(0x1038),		/* SteelSeries Controllers */
- 	XPAD_XBOX360_VENDOR(0x11c9),		/* Nacon GC100XF */
-+	XPAD_XBOX360_VENDOR(0x11ff),		/* PXN V900 */
- 	XPAD_XBOX360_VENDOR(0x1209),		/* Ardwiino Controllers */
- 	XPAD_XBOX360_VENDOR(0x12ab),		/* X-Box 360 dance pads */
- 	XPAD_XBOX360_VENDOR(0x1430),		/* RedOctane X-Box 360 controllers */
+--- a/drivers/platform/x86/hp-wmi.c
++++ b/drivers/platform/x86/hp-wmi.c
+@@ -1001,7 +1001,13 @@ static const struct dev_pm_ops hp_wmi_pm
+ 	.restore  = hp_wmi_resume_handler,
+ };
+ 
+-static struct platform_driver hp_wmi_driver = {
++/*
++ * hp_wmi_bios_remove() lives in .exit.text. For drivers registered via
++ * module_platform_driver_probe() this is ok because they cannot get unbound at
++ * runtime. So mark the driver struct with __refdata to prevent modpost
++ * triggering a section mismatch warning.
++ */
++static struct platform_driver hp_wmi_driver __refdata = {
+ 	.driver = {
+ 		.name = "hp-wmi",
+ 		.pm = &hp_wmi_pm_ops,
 
 
