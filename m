@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DCC23C5
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CED15E87
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHqOBj7F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3E8C433C7;
-	Mon, 23 Oct 2023 11:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HezwOVCy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDE7C433C8;
+	Mon, 23 Oct 2023 11:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060680;
-	bh=b99zhs0KGcE47oIM28oz/Sll3QZAShkGH3CbJHG/5Ds=;
+	s=korg; t=1698060683;
+	bh=eF5Z+ngLDEEa1QM9I37NTBveIs9RZY0hpRSJBFY9lgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHqOBj7FBqxPiUfy8yPFpjh5U1fbz9PRJD1ZSJyaLOdrxIv2Dm0YaYeNuvcYACRve
-	 WG0B2imj3RVq3dlstn3JLTpc+rAuTEu2moDsoTKPaMA/NKrKw4DneitsESttgD3682
-	 MJPNpuvvmDQaF+5tI9wT1gM7xRBCIo76B7FdlROk=
+	b=HezwOVCyuHTCRdiEAo1VXzo2j2jXmCJgm0cU+slpWr2HMyhGXsmZH+28iXZJdE8bV
+	 vntBBlixclFCNk2VmSfB7kr7hDGuaP9J3R3bhPVgSNYl5TZUNdgtUix5jU2qh3xvhw
+	 hDN4QzHygbOSvzKztS63hVB4BEtc6cVguB3/eViE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Eugen Hristev <eugen.hristev@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 039/123] dmaengine: mediatek: Fix deadlock caused by synchronize_irq()
-Date: Mon, 23 Oct 2023 12:56:37 +0200
-Message-ID: <20231023104819.037540274@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>,
+	Manish Chopra <manishc@marvell.com>
+Subject: [PATCH 5.4 057/123] qed: fix LL2 RX buffer allocation
+Date: Mon, 23 Oct 2023 12:56:55 +0200
+Message-ID: <20231023104819.609833805@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -37,59 +35,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Manish Chopra <manishc@marvell.com>
 
-[ Upstream commit 01f1ae2733e2bb4de92fefcea5fda847d92aede1 ]
+commit 2f3389c73832ad90b63208c0fc281ad080114c7a upstream.
 
-The synchronize_irq(c->irq) will not return until the IRQ handler
-mtk_uart_apdma_irq_handler() is completed. If the synchronize_irq()
-holds a spin_lock and waits the IRQ handler to complete, but the
-IRQ handler also needs the same spin_lock. The deadlock will happen.
-The process is shown below:
+Driver allocates the LL2 rx buffers from kmalloc()
+area to construct the skb using slab_build_skb()
 
-          cpu0                        cpu1
-mtk_uart_apdma_device_pause() | mtk_uart_apdma_irq_handler()
-  spin_lock_irqsave()         |
-                              |   spin_lock_irqsave()
-  //hold the lock to wait     |
-  synchronize_irq()           |
+The required size allocation seems to have overlooked
+for accounting both skb_shared_info size and device
+placement padding bytes which results into the below
+panic when doing skb_put() for a standard MTU sized frame.
 
-This patch reorders the synchronize_irq(c->irq) outside the spin_lock
-in order to mitigate the bug.
+skbuff: skb_over_panic: text:ffffffffc0b0225f len:1514 put:1514
+head:ff3dabceaf39c000 data:ff3dabceaf39c042 tail:0x62c end:0x566
+dev:<NULL>
+…
+skb_panic+0x48/0x4a
+skb_put.cold+0x10/0x10
+qed_ll2b_complete_rx_packet+0x14f/0x260 [qed]
+qed_ll2_rxq_handle_completion.constprop.0+0x169/0x200 [qed]
+qed_ll2_rxq_completion+0xba/0x320 [qed]
+qed_int_sp_dpc+0x1a7/0x1e0 [qed]
 
-Fixes: 9135408c3ace ("dmaengine: mediatek: Add MediaTek UART APDMA support")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reviewed-by: Eugen Hristev <eugen.hristev@collabora.com>
-Link: https://lore.kernel.org/r/20230806032511.45263-1-duoming@zju.edu.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch fixes this by accouting skb_shared_info and device
+placement padding size bytes when allocating the buffers.
+
+Cc: David S. Miller <davem@davemloft.net>
+Fixes: 0a7fb11c23c0 ("qed: Add Light L2 support")
+Signed-off-by: Manish Chopra <manishc@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/mediatek/mtk-uart-apdma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/qlogic/qed/qed_ll2.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
-index 7718d09e3d29f..5d1ba3ba3755a 100644
---- a/drivers/dma/mediatek/mtk-uart-apdma.c
-+++ b/drivers/dma/mediatek/mtk-uart-apdma.c
-@@ -450,9 +450,8 @@ static int mtk_uart_apdma_device_pause(struct dma_chan *chan)
- 	mtk_uart_apdma_write(c, VFF_EN, VFF_EN_CLR_B);
- 	mtk_uart_apdma_write(c, VFF_INT_EN, VFF_INT_EN_CLR_B);
+--- a/drivers/net/ethernet/qlogic/qed/qed_ll2.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_ll2.c
+@@ -113,7 +113,10 @@ static void qed_ll2b_complete_tx_packet(
+ static int qed_ll2_alloc_buffer(struct qed_dev *cdev,
+ 				u8 **data, dma_addr_t *phys_addr)
+ {
+-	*data = kmalloc(cdev->ll2->rx_size, GFP_ATOMIC);
++	size_t size = cdev->ll2->rx_size + NET_SKB_PAD +
++		      SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
++
++	*data = kmalloc(size, GFP_ATOMIC);
+ 	if (!(*data)) {
+ 		DP_INFO(cdev, "Failed to allocate LL2 buffer data\n");
+ 		return -ENOMEM;
+@@ -2449,7 +2452,7 @@ static int qed_ll2_start(struct qed_dev
+ 	INIT_LIST_HEAD(&cdev->ll2->list);
+ 	spin_lock_init(&cdev->ll2->lock);
  
--	synchronize_irq(c->irq);
--
- 	spin_unlock_irqrestore(&c->vc.lock, flags);
-+	synchronize_irq(c->irq);
+-	cdev->ll2->rx_size = NET_SKB_PAD + ETH_HLEN +
++	cdev->ll2->rx_size = PRM_DMA_PAD_BYTES_NUM + ETH_HLEN +
+ 			     L1_CACHE_BYTES + params->mtu;
  
- 	return 0;
- }
--- 
-2.40.1
-
+ 	/* Allocate memory for LL2.
 
 
