@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B2415E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645D115E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdGu+QbM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6AAC433C7;
-	Mon, 23 Oct 2023 11:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5TkL96C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61FAC433C9;
+	Mon, 23 Oct 2023 11:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060629;
-	bh=ZO9gz6YhaU+AfMBbWSxdNIBqIPTYfhUkAAd1KQ3ZmF4=;
+	s=korg; t=1698060632;
+	bh=QjRSRJVeWVOl14a3ontjSXdm9geEKvFYXsAOXLfyKL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cdGu+QbMNDgoVVCyT0qPEEy1qhXB/GQmPGcjDyD8EzmfXiVPIu9r9CtZGswgG3gX/
-	 vD/4hjEDK6uEcV7grOkSEymXgzSmCwkN3jONwI244pbgokCGy2LZG13Jg1shrb4tt5
-	 9a1gUMXNtbZdDhopHVaY0fv95FjQiirDkXqUjy0s=
+	b=o5TkL96Cyo4qA1pwKagYeNzpTD8ssMmzJI+/pS7DuWoODUhx1KUkpg2H2daSL5YVe
+	 JJ9S6ELR7RusuChPJdNkk0U9kxS+7pAGMH3FIgzRe0vkHGVVPIk/9t6i69sWM+KY91
+	 uL2emV7IHZhTzJaUPGIQsUhhdayi3p9RpJgfz3Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	Ross Lagerwall <ross.lagerwall@citrix.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 013/123] xen-netback: use default TX queue size for vifs
-Date: Mon, 23 Oct 2023 12:56:11 +0200
-Message-ID: <20231023104818.186273621@linuxfoundation.org>
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Zack Rusin <zackr@vmware.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Subject: [PATCH 5.4 014/123] drm/vmwgfx: fix typo of sizeof argument
+Date: Mon, 23 Oct 2023 12:56:12 +0200
+Message-ID: <20231023104818.221470294@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -38,55 +37,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roger Pau Monne <roger.pau@citrix.com>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-[ Upstream commit 66cf7435a26917c0c4d6245ad9137e7606e84fdf ]
+[ Upstream commit 39465cac283702a7d4a507a558db81898029c6d3 ]
 
-Do not set netback interfaces (vifs) default TX queue size to the ring size.
-The TX queue size is not related to the ring size, and using the ring size (32)
-as the queue size can lead to packet drops.  Note the TX side of the vif
-interface in the netback domain is the one receiving packets to be injected
-to the guest.
+Since size of 'header' pointer and '*header' structure is equal on 64-bit
+machines issue probably didn't cause any wrong behavior. But anyway,
+fixing typo is required.
 
-Do not explicitly set the TX queue length to any value when creating the
-interface, and instead use the system default.  Note that the queue length can
-also be adjusted at runtime.
-
-Fixes: f942dc2552b8 ('xen network backend driver')
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-Reviewed-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-Acked-by: Wei Liu <wei.liu@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 7a73ba7469cb ("drm/vmwgfx: Use TTM handles instead of SIDs as user-space surface handles.")
+Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Reviewed-by: Zack Rusin <zackr@vmware.com>
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230905100203.1716731-1-konstantin.meskhidze@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/xen-netback/interface.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/xen-netback/interface.c
-+++ b/drivers/net/xen-netback/interface.c
-@@ -41,7 +41,6 @@
- #include <asm/xen/hypercall.h>
- #include <xen/balloon.h>
- 
--#define XENVIF_QUEUE_LENGTH 32
- #define XENVIF_NAPI_WEIGHT  64
- 
- /* Number of bytes allowed on the internal guest Rx queue. */
-@@ -526,8 +525,6 @@ struct xenvif *xenvif_alloc(struct devic
- 	dev->features = dev->hw_features | NETIF_F_RXCSUM;
- 	dev->ethtool_ops = &xenvif_ethtool_ops;
- 
--	dev->tx_queue_len = XENVIF_QUEUE_LENGTH;
--
- 	dev->min_mtu = ETH_MIN_MTU;
- 	dev->max_mtu = ETH_MAX_MTU - VLAN_ETH_HLEN;
- 
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index e3d20048075bf..8db3b3ddbb644 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -1623,7 +1623,7 @@ static int vmw_cmd_tex_state(struct vmw_private *dev_priv,
+ {
+ 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdSetTextureState);
+ 	SVGA3dTextureState *last_state = (SVGA3dTextureState *)
+-	  ((unsigned long) header + header->size + sizeof(header));
++	  ((unsigned long) header + header->size + sizeof(*header));
+ 	SVGA3dTextureState *cur_state = (SVGA3dTextureState *)
+ 		((unsigned long) header + sizeof(*cmd));
+ 	struct vmw_resource *ctx;
+-- 
+2.40.1
+
 
 
