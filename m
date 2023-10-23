@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4F714282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B5D14282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqXcUeam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A094C433C7;
-	Mon, 23 Oct 2023 11:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iW85IVbf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93659C433C7;
+	Mon, 23 Oct 2023 11:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059793;
-	bh=wb+R7tyIk0PGnaaTOibhKy5LlUbjKs4jKjtLXLuv7Ok=;
+	s=korg; t=1698059796;
+	bh=IBGzJfsCS2CGNSIL8B/j7lIQs0zj8g5HVArOc/jKI64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqXcUeamQMcv03xcA34DELxkL4s3CG/fGwCew9o0n+Hj+XXOP9yGpK9xt+1VFhPzp
-	 BDv8XYaTIt/fBjdAw2QuH8Se+QhSvDdT0nliDU/rSqj6B+eJtl58m6NYWN9J79aFjR
-	 7UJm2/5htZqCd66XQDJY2fkSdZ2lvxd5VSzuvo3c=
+	b=iW85IVbf1x1znJdIN5hcoJVeFhsAbgtcuvN7j7hNLXUr+4LCLzF4G/B8eW0GQTRAu
+	 r2QeLfj1dzRIHB07i13Zkx6g2mU7A1YE6LhapzheztshakMh9Cjzu7ZwAPP4fONssV
+	 X+Pxa6Ln6gzPUfbWhde9h8QYZOvldW8BFnIP96kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ma Ke <make_ruc2021@163.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 4.19 54/98] net: ipv4: fix return value check in esp_remove_trailer
-Date: Mon, 23 Oct 2023 12:56:43 +0200
-Message-ID: <20231023104815.520999683@linuxfoundation.org>
+Subject: [PATCH 4.19 55/98] net: ipv6: fix return value check in esp_remove_trailer
+Date: Mon, 23 Oct 2023 12:56:44 +0200
+Message-ID: <20231023104815.557864528@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -43,7 +43,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Ma Ke <make_ruc2021@163.com>
 
-commit 513f61e2193350c7a345da98559b80f61aec4fa6 upstream.
+commit dad4e491e30b20f4dc615c9da65d2142d703b5c2 upstream.
 
 In esp_remove_trailer(), to avoid an unexpected result returned by
 pskb_trim, we should check the return value of pskb_trim().
@@ -52,12 +52,12 @@ Signed-off-by: Ma Ke <make_ruc2021@163.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/esp4.c |    4 +++-
+ net/ipv6/esp6.c |    4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -565,7 +565,9 @@ static inline int esp_remove_trailer(str
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -517,7 +517,9 @@ static inline int esp_remove_trailer(str
  		skb->csum = csum_block_sub(skb->csum, csumdiff,
  					   skb->len - trimlen);
  	}
