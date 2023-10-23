@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336961640A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E21C171DA
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrNHcudM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D41C433C8;
-	Mon, 23 Oct 2023 11:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnowMb1B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E827C433C7;
+	Mon, 23 Oct 2023 11:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061767;
-	bh=CSlHwl3t7kbx4FTd9HY1HYKuKV+RWZBzBbThpBj1UAE=;
+	s=korg; t=1698061770;
+	bh=r0fSKuc8APkOz0lkc+ptEp0ZUyG89I4HYVanOXBho2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JrNHcudMfdziAueMV1W0mW4CbsXk9QU9NLt76XhFDGAFRiPHrtazsBNMWsVmp1UgO
-	 LW1/xBcE7+8LgZ/T53x8ExCjseGb5nBgrBqwbzuU6mjd70H/Yfdbhk6YyYIWc7cU0B
-	 qLQIqg63s/GQl0hsRBWAr/hZpN/9K4z7DVnLKegk=
+	b=PnowMb1Bis6+Aj9KRbDw+XXnT3ObmQ2SMonQzrqi/YzspzeCPl7ISpJteevThnpJ3
+	 hA0EwvX3MirykHy86Pc3cEBs9P4N+1xp9Wxf8V2aEE39NLuke9gCWdSVACGCF5Ta2b
+	 5U5MjTp0ucMEJtQ465AIpnBtxRROPSajO+fhzmCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Konrad J Hambrick <kjhambrick@gmail.com>,
-	Calvin Walton <calvin.walton@kepstin.ca>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
+	Carl Philipp Klemm <philipp@uvos.xyz>,
+	Merlijn Wajer <merlijn@wizzup.org>,
+	Pavel Machek <pavel@ucw.cz>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 121/202] thunderbolt: Workaround an IOMMU fault on certain systems with Intel Maple Ridge
-Date: Mon, 23 Oct 2023 12:57:08 +0200
-Message-ID: <20231023104830.067979336@linuxfoundation.org>
+Subject: [PATCH 5.10 151/202] ARM: dts: ti: omap: Fix noisy serial with overrun-throttle-ms for mapphone
+Date: Mon, 23 Oct 2023 12:57:38 +0200
+Message-ID: <20231023104830.937443212@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -44,222 +46,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 582620d9f6b352552bc9a3316fe2b1c3acd8742d ]
+[ Upstream commit 5ad37b5e30433afa7a5513e3eb61f69fa0976785 ]
 
-On some systems the IOMMU blocks the first couple of driver ready
-messages to the connection manager firmware as can be seen in below
-excerpts:
+On mapphone devices we may get lots of noise on the micro-USB port in debug
+uart mode until the phy-cpcap-usb driver probes. Let's limit the noise by
+using overrun-throttle-ms.
 
-  thunderbolt 0000:06:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0010 address=0xbb0e3400 flags=0x0020]
+Note that there is also a related separate issue where the charger cable
+connected may cause random sysrq requests until phy-cpcap-usb probes that
+still remains.
 
-or
-
-  DMAR: DRHD: handling fault status reg 2
-  DMAR: [DMA Write] Request device [04:00.0] PASID ffffffff fault addr 69974000 [fault reason 05] PTE Write access is not set
-
-The reason is unknown and hard to debug because we were not able to
-reproduce this locally. This only happens on certain systems with Intel
-Maple Ridge Thunderbolt controller. If there is a device connected when
-the driver is loaded the issue does not happen either. Only when there
-is nothing connected (so typically when the system is booted up).
-
-We can work this around by sending the driver ready several times. After
-a couple of retries the message goes through and the controller works
-just fine. For this reason make the number of retries a parameter for
-icm_request() and then for Maple Ridge (and Titan Ridge as they us the
-same function but this should not matter) increase number of retries
-while shortening the timeout accordingly.
-
-Reported-by: Werner Sembach <wse@tuxedocomputers.com>
-Reported-by: Konrad J Hambrick <kjhambrick@gmail.com>
-Reported-by: Calvin Walton <calvin.walton@kepstin.ca>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=214259
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+Cc: Carl Philipp Klemm <philipp@uvos.xyz>
+Cc: Merlijn Wajer <merlijn@wizzup.org>
+Cc: Pavel Machek <pavel@ucw.cz>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/icm.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ arch/arm/boot/dts/motorola-mapphone-common.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/thunderbolt/icm.c b/drivers/thunderbolt/icm.c
-index b2fb3397310e4..90f1d9a534614 100644
---- a/drivers/thunderbolt/icm.c
-+++ b/drivers/thunderbolt/icm.c
-@@ -41,6 +41,7 @@
- #define PHY_PORT_CS1_LINK_STATE_SHIFT	26
+diff --git a/arch/arm/boot/dts/motorola-mapphone-common.dtsi b/arch/arm/boot/dts/motorola-mapphone-common.dtsi
+index 8cb26b924d3ca..f9392a135d387 100644
+--- a/arch/arm/boot/dts/motorola-mapphone-common.dtsi
++++ b/arch/arm/boot/dts/motorola-mapphone-common.dtsi
+@@ -765,6 +765,7 @@ &uart1 {
+ &uart3 {
+ 	interrupts-extended = <&wakeupgen GIC_SPI 74 IRQ_TYPE_LEVEL_HIGH
+ 			       &omap4_pmx_core 0x17c>;
++	overrun-throttle-ms = <500>;
+ };
  
- #define ICM_TIMEOUT			5000	/* ms */
-+#define ICM_RETRIES			3
- #define ICM_APPROVE_TIMEOUT		10000	/* ms */
- #define ICM_MAX_LINK			4
- 
-@@ -280,10 +281,9 @@ static bool icm_copy(struct tb_cfg_request *req, const struct ctl_pkg *pkg)
- 
- static int icm_request(struct tb *tb, const void *request, size_t request_size,
- 		       void *response, size_t response_size, size_t npackets,
--		       unsigned int timeout_msec)
-+		       int retries, unsigned int timeout_msec)
- {
- 	struct icm *icm = tb_priv(tb);
--	int retries = 3;
- 
- 	do {
- 		struct tb_cfg_request *req;
-@@ -394,7 +394,7 @@ static int icm_fr_get_route(struct tb *tb, u8 link, u8 depth, u64 *route)
- 		return -ENOMEM;
- 
- 	ret = icm_request(tb, &request, sizeof(request), switches,
--			  sizeof(*switches), npackets, ICM_TIMEOUT);
-+			  sizeof(*switches), npackets, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		goto err_free;
- 
-@@ -447,7 +447,7 @@ icm_fr_driver_ready(struct tb *tb, enum tb_security_level *security_level,
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -472,7 +472,7 @@ static int icm_fr_approve_switch(struct tb *tb, struct tb_switch *sw)
- 	memset(&reply, 0, sizeof(reply));
- 	/* Use larger timeout as establishing tunnels can take some time */
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_APPROVE_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_APPROVE_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -499,7 +499,7 @@ static int icm_fr_add_switch_key(struct tb *tb, struct tb_switch *sw)
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -527,7 +527,7 @@ static int icm_fr_challenge_switch_key(struct tb *tb, struct tb_switch *sw,
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -559,7 +559,7 @@ static int icm_fr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd)
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -996,7 +996,7 @@ icm_tr_driver_ready(struct tb *tb, enum tb_security_level *security_level,
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, 20000);
-+			  1, 10, 2000);
- 	if (ret)
- 		return ret;
- 
-@@ -1026,7 +1026,7 @@ static int icm_tr_approve_switch(struct tb *tb, struct tb_switch *sw)
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_APPROVE_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_APPROVE_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1054,7 +1054,7 @@ static int icm_tr_add_switch_key(struct tb *tb, struct tb_switch *sw)
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1083,7 +1083,7 @@ static int icm_tr_challenge_switch_key(struct tb *tb, struct tb_switch *sw,
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1115,7 +1115,7 @@ static int icm_tr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd)
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1141,7 +1141,7 @@ static int icm_tr_xdomain_tear_down(struct tb *tb, struct tb_xdomain *xd,
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1460,7 +1460,7 @@ icm_ar_driver_ready(struct tb *tb, enum tb_security_level *security_level,
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1486,7 +1486,7 @@ static int icm_ar_get_route(struct tb *tb, u8 link, u8 depth, u64 *route)
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1507,7 +1507,7 @@ static int icm_ar_get_boot_acl(struct tb *tb, uuid_t *uuids, size_t nuuids)
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1568,7 +1568,7 @@ static int icm_ar_set_boot_acl(struct tb *tb, const uuid_t *uuids,
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, ICM_TIMEOUT);
-+			  1, ICM_RETRIES, ICM_TIMEOUT);
- 	if (ret)
- 		return ret;
- 
-@@ -1590,7 +1590,7 @@ icm_icl_driver_ready(struct tb *tb, enum tb_security_level *security_level,
- 
- 	memset(&reply, 0, sizeof(reply));
- 	ret = icm_request(tb, &request, sizeof(request), &reply, sizeof(reply),
--			  1, 20000);
-+			  1, ICM_RETRIES, 20000);
- 	if (ret)
- 		return ret;
- 
+ &uart4 {
 -- 
 2.40.1
 
