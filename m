@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5ACF125BF
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AF1125BF
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MY5uwiS8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405CEC433C8;
-	Mon, 23 Oct 2023 11:26:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXJpLMyt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4751CC433C7;
+	Mon, 23 Oct 2023 11:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060362;
-	bh=8GumJjW4J3X87KKWs4CwsX8+L04VFPwAMzh3B27mHJw=;
+	s=korg; t=1698060365;
+	bh=cpYnA431QBcXozcBtKXLmgK8d+XsPK9s7K7vI6C01y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MY5uwiS8J0mhhM7PpRXIma/cjXDSrUBlSEfFkJqQsz/R1RjXb0Tj8lrSKZPsNs6LN
-	 79lVAluXHyOC1MK6uSjUCm4P8j7LiDwLITJwdecgGLulixUkd0489ulHZunpd8/4Q+
-	 Bt1aauIFvGOZfR70ONSmSnu6HDMD1YxQbo8A/DTQ=
+	b=ZXJpLMyta8J05m/9d/eFdsL/MTuz94lFtjxKNcTVOTlXBdqUJ/gjLLnMOOLyLXpKg
+	 qOoNURPXhIuh1mk6zDexlw4EAcZ/VAUMd3G8sgln/s4fhhb0SrY9D92ltfLEmBSgW7
+	 cZ+jsXIQOPfjwUNOIFXktOeNN2qakBYbhsNGoge4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 147/196] mtd: physmap-core: Restore map_rom fallback
-Date: Mon, 23 Oct 2023 12:56:52 +0200
-Message-ID: <20231023104832.636689454@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 148/196] dt-bindings: mmc: sdhci-msm: correct minimum number of clocks
+Date: Mon, 23 Oct 2023 12:56:53 +0200
+Message-ID: <20231023104832.663102928@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -41,43 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 6792b7fce610bcd1cf3e07af3607fe7e2c38c1d8 upstream.
+commit 1bbac8d6af085408885675c1e29b2581250be124 upstream.
 
-When the exact mapping type driver was not available, the old
-physmap_of_core driver fell back to mapping the region as ROM.
-Unfortunately this feature was lost when the DT and pdata cases were
-merged.  Revive this useful feature.
+In the TXT binding before conversion, the "xo" clock was listed as
+optional.  Conversion kept it optional in "clock-names", but not in
+"clocks".  This fixes dbts_check warnings like:
 
-Fixes: 642b1e8dbed7bbbf ("mtd: maps: Merge physmap_of.c into physmap-core.c")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/550e8c8c1da4c4baeb3d71ff79b14a18d4194f9e.1693407371.git.geert+renesas@glider.be
+  qcom-sdx65-mtp.dtb: mmc@8804000: clocks: [[13, 59], [13, 58]] is too short
+
+Cc: <stable@vger.kernel.org>
+Fixes: a45537723f4b ("dt-bindings: mmc: sdhci-msm: Convert bindings to yaml")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230825135503.282135-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/maps/physmap-core.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ Documentation/devicetree/bindings/mmc/sdhci-msm.yaml |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/maps/physmap-core.c
-+++ b/drivers/mtd/maps/physmap-core.c
-@@ -552,6 +552,17 @@ static int physmap_flash_probe(struct pl
- 		if (info->probe_type) {
- 			info->mtds[i] = do_map_probe(info->probe_type,
- 						     &info->maps[i]);
-+
-+			/* Fall back to mapping region as ROM */
-+			if (!info->mtds[i] && IS_ENABLED(CONFIG_MTD_ROM) &&
-+			    strcmp(info->probe_type, "map_rom")) {
-+				dev_warn(&dev->dev,
-+					 "map_probe() failed for type %s\n",
-+					 info->probe_type);
-+
-+				info->mtds[i] = do_map_probe("map_rom",
-+							     &info->maps[i]);
-+			}
- 		} else {
- 			int j;
+--- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
++++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+@@ -59,7 +59,7 @@ properties:
+     maxItems: 4
  
+   clocks:
+-    minItems: 3
++    minItems: 2
+     items:
+       - description: Main peripheral bus clock, PCLK/HCLK - AHB Bus clock
+       - description: SDC MMC clock, MCLK
 
 
