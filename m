@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054FC14282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5D414282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRcQ/IrI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E2AC433C8;
-	Mon, 23 Oct 2023 11:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbfLbe+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C94EC433C7;
+	Mon, 23 Oct 2023 11:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059804;
-	bh=TeqSShdVz+4nswovjkRRHGCCQyEGqIJFpbqoM5gmOOg=;
+	s=korg; t=1698059807;
+	bh=C4ZfornsxXPF0362fRDGOmGe3Tf/OtW/LjpNuWOCVho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRcQ/IrIG0zqqgMhV+BE4jlGFnQIy6lclbOmajfpsKtxfDyyVCmAHWtzbeusYeUoh
-	 XaAGXNnDqdOFgdZEKsNOoAvjMDhtppWSVZ+iGBLfgVFQWowVq5HabLYBg5ZFYN7dFY
-	 o8z024D9HtofG5Ua52d3+x4CzuWGXqpzl6HQIUsY=
+	b=mbfLbe+AxuRk/3zsroS3ICukk4etNDBxwIwZfLzrLaxqro49gQZekfhW2ieIeRN8o
+	 aXVIjtV9XN3CMiZst6JSN6JZ2ztOpvj4eLb+U16ozSfvjTzPeOSBrMZsZI0BH7P2eH
+	 qKap+6B8YJnBa8FbnMbupRqWG9ractYbcJE1ks3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 58/98] tcp: tsq: relax tcp_small_queue_check() when rtx queue contains a single skb
-Date: Mon, 23 Oct 2023 12:56:47 +0200
-Message-ID: <20231023104815.661613824@linuxfoundation.org>
+	Matthias Berndt <matthias_berndt@gmx.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 4.19 32/98] Input: xpad - add PXN V900 support
+Date: Mon, 23 Oct 2023 12:56:21 +0200
+Message-ID: <20231023104814.726457093@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -43,76 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Matthias Berndt <matthias_berndt@gmx.de>
 
-commit f921a4a5bffa8a0005b190fb9421a7fc1fd716b6 upstream.
+commit a65cd7ef5a864bdbbe037267c327786b7759d4c6 upstream.
 
-In commit 75eefc6c59fd ("tcp: tsq: add a shortcut in tcp_small_queue_check()")
-we allowed to send an skb regardless of TSQ limits being hit if rtx queue
-was empty or had a single skb, in order to better fill the pipe
-when/if TX completions were slow.
+Add VID and PID to the xpad_device table to allow driver to use the PXN
+V900 steering wheel, which is XTYPE_XBOX360 compatible in xinput mode.
 
-Then later, commit 75c119afe14f ("tcp: implement rb-tree based
-retransmit queue") accidentally removed the special case for
-one skb in rtx queue.
-
-Stefan Wahren reported a regression in single TCP flow throughput
-using a 100Mbit fec link, starting from commit 65466904b015 ("tcp: adjust
-TSO packet sizes based on min_rtt"). This last commit only made the
-regression more visible, because it locked the TCP flow on a particular
-behavior where TSQ prevented two skbs being pushed downstream,
-adding silences on the wire between each TSO packet.
-
-Many thanks to Stefan for his invaluable help !
-
-Fixes: 75c119afe14f ("tcp: implement rb-tree based retransmit queue")
-Link: https://lore.kernel.org/netdev/7f31ddc8-9971-495e-a1f6-819df542e0af@gmx.net/
-Reported-by: Stefan Wahren <wahrenst@gmx.net>
-Tested-by: Stefan Wahren <wahrenst@gmx.net>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20231017124526.4060202-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matthias Berndt <matthias_berndt@gmx.de>
+Link: https://lore.kernel.org/r/4932699.31r3eYUQgx@fedora
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_output.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/input/joystick/xpad.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -2220,6 +2220,18 @@ static int tcp_mtu_probe(struct sock *sk
- 	return -1;
- }
- 
-+static bool tcp_rtx_queue_empty_or_single_skb(const struct sock *sk)
-+{
-+	const struct rb_node *node = sk->tcp_rtx_queue.rb_node;
-+
-+	/* No skb in the rtx queue. */
-+	if (!node)
-+		return true;
-+
-+	/* Only one skb in rtx queue. */
-+	return !node->rb_left && !node->rb_right;
-+}
-+
- /* TCP Small Queues :
-  * Control number of packets in qdisc/devices to two packets / or ~1 ms.
-  * (These limits are doubled for retransmits)
-@@ -2242,12 +2254,12 @@ static bool tcp_small_queue_check(struct
- 	limit <<= factor;
- 
- 	if (refcount_read(&sk->sk_wmem_alloc) > limit) {
--		/* Always send skb if rtx queue is empty.
-+		/* Always send skb if rtx queue is empty or has one skb.
- 		 * No need to wait for TX completion to call us back,
- 		 * after softirq/tasklet schedule.
- 		 * This helps when TX completions are delayed too much.
- 		 */
--		if (tcp_rtx_queue_empty(sk))
-+		if (tcp_rtx_queue_empty_or_single_skb(sk))
- 			return false;
- 
- 		set_bit(TSQ_THROTTLED, &sk->sk_tsq_flags);
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -266,6 +266,7 @@ static const struct xpad_device {
+ 	{ 0x1038, 0x1430, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
+ 	{ 0x1038, 0x1431, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
+ 	{ 0x11c9, 0x55f0, "Nacon GC-100XF", 0, XTYPE_XBOX360 },
++	{ 0x11ff, 0x0511, "PXN V900", 0, XTYPE_XBOX360 },
+ 	{ 0x1209, 0x2882, "Ardwiino Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x12ab, 0x0004, "Honey Bee Xbox360 dancepad", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
+ 	{ 0x12ab, 0x0301, "PDP AFTERGLOW AX.1", 0, XTYPE_XBOX360 },
+@@ -460,6 +461,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOXONE_VENDOR(0x0f0d),		/* Hori Controllers */
+ 	XPAD_XBOX360_VENDOR(0x1038),		/* SteelSeries Controllers */
+ 	XPAD_XBOX360_VENDOR(0x11c9),		/* Nacon GC100XF */
++	XPAD_XBOX360_VENDOR(0x11ff),		/* PXN V900 */
+ 	XPAD_XBOX360_VENDOR(0x1209),		/* Ardwiino Controllers */
+ 	XPAD_XBOX360_VENDOR(0x12ab),		/* X-Box 360 dance pads */
+ 	XPAD_XBOX360_VENDOR(0x1430),		/* RedOctane X-Box 360 controllers */
 
 
