@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB38615484
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59FD15484
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkrR3IV1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C7AC433C7;
-	Mon, 23 Oct 2023 11:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIt9akVv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2535BC433CA;
+	Mon, 23 Oct 2023 11:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060190;
-	bh=Th1z5anTtlk1THDLH2N6t1tbqqcInv901s3CtuG/HBQ=;
+	s=korg; t=1698060193;
+	bh=rjRxJRt5o67ZHq0tVXwNoXbP/TbZIwl1QnE6hDNXDs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tkrR3IV1sPVAJGz4SvOHWxQNp9Z35ePz8wVLWaFrftPMJ4gGAlJFsb1B6eSJkweGk
-	 G8svmR/Ki1bwLZ8abgf0PKdqthxglZd0C63EUiv7zaSs7ZnSlaHCWzRDQg885fTe7G
-	 eEGCD7qic5IlxBUQQqEkuf8rPg9uEHOe3hADO0x4=
+	b=GIt9akVv7Ti3lgjLCy19wZ/ZpTVhqburS84h43FI/i10lIMiXcw9NqNhG1D11oIY7
+	 bz0vfd6MriyQpeIxHWG3MnAngx4H3JKUT2zb1OiDsmO+Y9iUFDk/cKZQDtBjljCFh+
+	 6h21rEwyuO9s1/zcnkgXzIY8DOQt6vRGGDvG1VIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Alisa-Dariana Roman <alisa.roman@analog.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/196] iio: adc: ad7192: Simplify using devm_regulator_get_enable()
-Date: Mon, 23 Oct 2023 12:55:54 +0200
-Message-ID: <20231023104831.055671591@linuxfoundation.org>
+Subject: [PATCH 6.1 090/196] iio: adc: ad7192: Correct reference voltage
+Date: Mon, 23 Oct 2023 12:55:55 +0200
+Message-ID: <20231023104831.083118765@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,57 +42,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Alisa-Dariana Roman <alisa.roman@analog.com>
 
-[ Upstream commit 1ccef2e6e9205e209ad958d2e591bcca60981007 ]
+[ Upstream commit 7e7dcab620cd6d34939f615cac63fc0ef7e81c72 ]
 
-Use devm_regulator_get_enable() instead of open coded get, enable,
-add-action-to-disable-at-detach - pattern. Also drop the seemingly unused
-struct member 'dvdd'.
+The avdd and the reference voltage are two different sources but the
+reference voltage was assigned according to the avdd supply.
 
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://lore.kernel.org/r/9719c445c095d3d308e2fc9f4f93294f5806c41c.1660934107.git.mazziesaccount@gmail.com
+Add vref regulator structure and set the reference voltage according to
+the vref supply from the devicetree.
+
+In case vref supply is missing, reference voltage is set according to
+the avdd supply for compatibility with old devicetrees.
+
+Fixes: b581f748cce0 ("staging: iio: adc: ad7192: move out of staging")
+Signed-off-by: Alisa-Dariana Roman <alisa.roman@analog.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230924152149.41884-1-alisadariana@gmail.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 7e7dcab620cd ("iio: adc: ad7192: Correct reference voltage")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7192.c | 15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
+ drivers/iio/adc/ad7192.c | 29 +++++++++++++++++++++++++----
+ 1 file changed, 25 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/iio/adc/ad7192.c b/drivers/iio/adc/ad7192.c
-index 80eff7090f14a..18520f7bedccd 100644
+index 18520f7bedccd..faf680140c178 100644
 --- a/drivers/iio/adc/ad7192.c
 +++ b/drivers/iio/adc/ad7192.c
-@@ -177,7 +177,6 @@ struct ad7192_chip_info {
+@@ -177,6 +177,7 @@ struct ad7192_chip_info {
  struct ad7192_state {
  	const struct ad7192_chip_info	*chip_info;
  	struct regulator		*avdd;
--	struct regulator		*dvdd;
++	struct regulator		*vref;
  	struct clk			*mclk;
  	u16				int_vref_mv;
  	u32				fclk;
-@@ -1011,19 +1010,9 @@ static int ad7192_probe(struct spi_device *spi)
+@@ -1014,10 +1015,30 @@ static int ad7192_probe(struct spi_device *spi)
  	if (ret)
- 		return ret;
+ 		return dev_err_probe(&spi->dev, ret, "Failed to enable specified DVdd supply\n");
  
--	st->dvdd = devm_regulator_get(&spi->dev, "dvdd");
--	if (IS_ERR(st->dvdd))
--		return PTR_ERR(st->dvdd);
--
--	ret = regulator_enable(st->dvdd);
--	if (ret) {
--		dev_err(&spi->dev, "Failed to enable specified DVdd supply\n");
+-	ret = regulator_get_voltage(st->avdd);
+-	if (ret < 0) {
+-		dev_err(&spi->dev, "Device tree error, reference voltage undefined\n");
 -		return ret;
--	}
--
--	ret = devm_add_action_or_reset(&spi->dev, ad7192_reg_disable, st->dvdd);
-+	ret = devm_regulator_get_enable(&spi->dev, "dvdd");
- 	if (ret)
--		return ret;
-+		return dev_err_probe(&spi->dev, ret, "Failed to enable specified DVdd supply\n");
++	st->vref = devm_regulator_get_optional(&spi->dev, "vref");
++	if (IS_ERR(st->vref)) {
++		if (PTR_ERR(st->vref) != -ENODEV)
++			return PTR_ERR(st->vref);
++
++		ret = regulator_get_voltage(st->avdd);
++		if (ret < 0)
++			return dev_err_probe(&spi->dev, ret,
++					     "Device tree error, AVdd voltage undefined\n");
++	} else {
++		ret = regulator_enable(st->vref);
++		if (ret) {
++			dev_err(&spi->dev, "Failed to enable specified Vref supply\n");
++			return ret;
++		}
++
++		ret = devm_add_action_or_reset(&spi->dev, ad7192_reg_disable, st->vref);
++		if (ret)
++			return ret;
++
++		ret = regulator_get_voltage(st->vref);
++		if (ret < 0)
++			return dev_err_probe(&spi->dev, ret,
++					     "Device tree error, Vref voltage undefined\n");
+ 	}
+ 	st->int_vref_mv = ret / 1000;
  
- 	ret = regulator_get_voltage(st->avdd);
- 	if (ret < 0) {
 -- 
 2.40.1
 
