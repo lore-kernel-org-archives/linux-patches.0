@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC2E12B7A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB7212B9E
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGPiT05W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE70C433C7;
-	Mon, 23 Oct 2023 11:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kl9OMfHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D91C433C8;
+	Mon, 23 Oct 2023 11:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059516;
-	bh=ROk9UdBFCPd0RZ5m8PhSgAOjoSpsZcsWwohdFPwwqOM=;
+	s=korg; t=1698059519;
+	bh=Nd4aurxRobVm9DhIUoz7un6lpjg6XJgPo9xnKbzwhf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cGPiT05WfdNKIrvuNdwk/2jKuvZ7DsZA4+Hj5e8tFdxN5bRUkcEXcW7/cogpJnUWJ
-	 a+DnjDKWHMF5tUFkyvnG3iakoXuAWKV1l6uvjceSfIKnSPlniWfMdIrlnfOM3S4ynO
-	 qEO0j4XEOJ3FvOLWACfqU9n8FqUYIuvK3K7wGOvw=
+	b=Kl9OMfHIHvqKB9hsod/MRVBq7OC6HgSb5zT8rUIknIbX2uhmYMmUMejt4qUXO/orx
+	 /fDtNqbWLe8escumXcT5xCMKEyLYoHX9qpC7vPQyCobiw0F+2wLv1DvrPWo75WeZMm
+	 PtybsS2posFR0lb3WbcirDiLnaELw2/t6eqQwP7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Altman <avri.altman@wdc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.5 176/241] mmc: core: Capture correct oemid-bits for eMMC cards
-Date: Mon, 23 Oct 2023 12:56:02 +0200
-Message-ID: <20231023104838.176168312@linuxfoundation.org>
+	Linus Walleij <linus.walleij@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.5 177/241] pinctrl: qcom: lpass-lpi: fix concurrent register updates
+Date: Mon, 23 Oct 2023 12:56:03 +0200
+Message-ID: <20231023104838.199697338@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,39 +41,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avri Altman <avri.altman@wdc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 84ee19bffc9306128cd0f1c650e89767079efeff upstream.
+commit c8befdc411e5fd1bf95a13e8744c8ca79b412bee upstream.
 
-The OEMID is an 8-bit binary number rather than 16-bit as the current code
-parses for. The OEMID occupies bits [111:104] in the CID register, see the
-eMMC spec JESD84-B51 paragraph 7.2.3. It seems that the 16-bit comes from
-the legacy MMC specs (v3.31 and before).
+The Qualcomm LPASS LPI pin controller driver uses one lock for guarding
+Read-Modify-Write code for slew rate registers.  However the pin
+configuration and muxing registers have exactly the same RMW code but
+are not protected.
 
-Let's fix the parsing by simply move to use 8-bit instead of 16-bit. This
-means we ignore the impact on some of those old MMC cards that may be out
-there, but on the other hand this shouldn't be a problem as the OEMID seems
-not be an important feature for these cards.
+Pin controller framework does not provide locking here, thus it is
+possible to trigger simultaneous change of pin configuration registers
+resulting in non-atomic changes.
 
-Signed-off-by: Avri Altman <avri.altman@wdc.com>
+Protect from concurrent access by re-using the same lock used to cover
+the slew rate register.  Using the same lock instead of adding second
+one will make more sense, once we add support for newer Qualcomm SoC,
+where slew rate is configured in the same register as pin
+configuration/muxing.
+
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230927071500.1791882-1-avri.altman@wdc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20231013145705.219954-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/mmc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -104,7 +104,7 @@ static int mmc_decode_cid(struct mmc_car
- 	case 3: /* MMC v3.1 - v3.3 */
- 	case 4: /* MMC v4 */
- 		card->cid.manfid	= UNSTUFF_BITS(resp, 120, 8);
--		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 16);
-+		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 8);
- 		card->cid.prod_name[0]	= UNSTUFF_BITS(resp, 96, 8);
- 		card->cid.prod_name[1]	= UNSTUFF_BITS(resp, 88, 8);
- 		card->cid.prod_name[2]	= UNSTUFF_BITS(resp, 80, 8);
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+@@ -31,7 +31,8 @@ struct lpi_pinctrl {
+ 	char __iomem *tlmm_base;
+ 	char __iomem *slew_base;
+ 	struct clk_bulk_data clks[MAX_LPI_NUM_CLKS];
+-	struct mutex slew_access_lock;
++	/* Protects from concurrent register updates */
++	struct mutex lock;
+ 	DECLARE_BITMAP(ever_gpio, MAX_NR_GPIO);
+ 	const struct lpi_pinctrl_variant_data *data;
+ };
+@@ -102,6 +103,7 @@ static int lpi_gpio_set_mux(struct pinct
+ 	if (WARN_ON(i == g->nfuncs))
+ 		return -EINVAL;
+ 
++	mutex_lock(&pctrl->lock);
+ 	val = lpi_gpio_read(pctrl, pin, LPI_GPIO_CFG_REG);
+ 
+ 	/*
+@@ -127,6 +129,7 @@ static int lpi_gpio_set_mux(struct pinct
+ 
+ 	u32p_replace_bits(&val, i, LPI_GPIO_FUNCTION_MASK);
+ 	lpi_gpio_write(pctrl, pin, LPI_GPIO_CFG_REG, val);
++	mutex_unlock(&pctrl->lock);
+ 
+ 	return 0;
+ }
+@@ -232,14 +235,14 @@ static int lpi_config_set(struct pinctrl
+ 			if (slew_offset == LPI_NO_SLEW)
+ 				break;
+ 
+-			mutex_lock(&pctrl->slew_access_lock);
++			mutex_lock(&pctrl->lock);
+ 
+ 			sval = ioread32(pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
+ 			sval &= ~(LPI_SLEW_RATE_MASK << slew_offset);
+ 			sval |= arg << slew_offset;
+ 			iowrite32(sval, pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
+ 
+-			mutex_unlock(&pctrl->slew_access_lock);
++			mutex_unlock(&pctrl->lock);
+ 			break;
+ 		default:
+ 			return -EINVAL;
+@@ -255,6 +258,7 @@ static int lpi_config_set(struct pinctrl
+ 		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
+ 	}
+ 
++	mutex_lock(&pctrl->lock);
+ 	val = lpi_gpio_read(pctrl, group, LPI_GPIO_CFG_REG);
+ 
+ 	u32p_replace_bits(&val, pullup, LPI_GPIO_PULL_MASK);
+@@ -263,6 +267,7 @@ static int lpi_config_set(struct pinctrl
+ 	u32p_replace_bits(&val, output_enabled, LPI_GPIO_OE_MASK);
+ 
+ 	lpi_gpio_write(pctrl, group, LPI_GPIO_CFG_REG, val);
++	mutex_unlock(&pctrl->lock);
+ 
+ 	return 0;
+ }
+@@ -464,7 +469,7 @@ int lpi_pinctrl_probe(struct platform_de
+ 	pctrl->chip.label = dev_name(dev);
+ 	pctrl->chip.can_sleep = false;
+ 
+-	mutex_init(&pctrl->slew_access_lock);
++	mutex_init(&pctrl->lock);
+ 
+ 	pctrl->ctrl = devm_pinctrl_register(dev, &pctrl->desc, pctrl);
+ 	if (IS_ERR(pctrl->ctrl)) {
+@@ -486,7 +491,7 @@ int lpi_pinctrl_probe(struct platform_de
+ 	return 0;
+ 
+ err_pinctrl:
+-	mutex_destroy(&pctrl->slew_access_lock);
++	mutex_destroy(&pctrl->lock);
+ 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
+ 
+ 	return ret;
+@@ -498,7 +503,7 @@ int lpi_pinctrl_remove(struct platform_d
+ 	struct lpi_pinctrl *pctrl = platform_get_drvdata(pdev);
+ 	int i;
+ 
+-	mutex_destroy(&pctrl->slew_access_lock);
++	mutex_destroy(&pctrl->lock);
+ 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
+ 
+ 	for (i = 0; i < pctrl->data->npins; i++)
 
 
