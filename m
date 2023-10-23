@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2471915E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E90A15E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxKZarNF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90439C433C7;
-	Mon, 23 Oct 2023 11:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="an5NujNy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B290C433C7;
+	Mon, 23 Oct 2023 11:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060473;
-	bh=Vui3eJrnpHziMPwQq/vrVa3JtFcO8wIwMmpiAJKDRtY=;
+	s=korg; t=1698060476;
+	bh=V2OW4cIZc2WD7a0quWgjq8GQGTG+uKzM3mkud601OxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oxKZarNFbGx1ovc+s8+K2xZLR2Te7DoU8ADDKFK2nRBxBoUXkpeffEk0/r/o5o9yw
-	 4+mCdYEFyeovnC0SNXY1lukinq1R/FKNhHe1obrD0ztObHDApAPgAGT47yHl7/lrVl
-	 E8wJwbG5Wjq1rll/fBFbgWbe6VSftsMhxTDPD9RE=
+	b=an5NujNyyXgokfI0S3sZlpzdh6WzcbJAJ8ptc4GeTEFpQz0L0glePcgwmA1CLtc4Y
+	 l/FM0Ra1ftkrywtgLh/or5tVMRrgVknMGnxJLbiQAzKhCsnywc8sB+8b3qf1Ms0tCp
+	 q1TchKMZ1RSvuQkO0MJg/SYjbhFisO4CuJNJbiwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Francis Laniel <flaniel@linux.microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 184/196] kallsyms: Add helper kallsyms_on_each_match_symbol()
-Date: Mon, 23 Oct 2023 12:57:29 +0200
-Message-ID: <20231023104833.588256511@linuxfoundation.org>
+Subject: [PATCH 6.1 185/196] tracing/kprobes: Return EADDRNOTAVAIL when func matches several symbols
+Date: Mon, 23 Oct 2023 12:57:30 +0200
+Message-ID: <20231023104833.613819036@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,91 +42,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Francis Laniel <flaniel@linux.microsoft.com>
 
-[ Upstream commit 4dc533e0f2c04174e1ae4aa98e7cffc1c04b9998 ]
+[ Upstream commit b022f0c7e404887a7c5229788fc99eff9f9a80d5 ]
 
-Function kallsyms_on_each_symbol() traverses all symbols and submits each
-symbol to the hook 'fn' for judgment and processing. For some cases, the
-hook actually only handles the matched symbol, such as livepatch.
+When a kprobe is attached to a function that's name is not unique (is
+static and shares the name with other functions in the kernel), the
+kprobe is attached to the first function it finds. This is a bug as the
+function that it is attaching to is not necessarily the one that the
+user wants to attach to.
 
-Because all symbols are currently sorted by name, all the symbols with the
-same name are clustered together. Function kallsyms_lookup_names() gets
-the start and end positions of the set corresponding to the specified
-name. So we can easily and quickly traverse all the matches.
+Instead of blindly picking a function to attach to what is ambiguous,
+error with EADDRNOTAVAIL to let the user know that this function is not
+unique, and that the user must use another unique function with an
+address offset to get to the function they want to attach to.
 
-The test results are as follows (twice): (x86)
-kallsyms_on_each_match_symbol:     7454,     7984
-kallsyms_on_each_symbol      : 11733809, 11785803
+Link: https://lore.kernel.org/all/20231020104250.9537-2-flaniel@linux.microsoft.com/
 
-kallsyms_on_each_match_symbol() consumes only 0.066% of
-kallsyms_on_each_symbol()'s time. In other words, 1523x better
-performance.
-
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Stable-dep-of: b022f0c7e404 ("tracing/kprobes: Return EADDRNOTAVAIL when func matches several symbols")
+Cc: stable@vger.kernel.org
+Fixes: 413d37d1eb69 ("tracing: Add kprobe-based event tracer")
+Suggested-by: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Francis Laniel <flaniel@linux.microsoft.com>
+Link: https://lore.kernel.org/lkml/20230819101105.b0c104ae4494a7d1f2eea742@kernel.org/
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kallsyms.h |  8 ++++++++
- kernel/kallsyms.c        | 18 ++++++++++++++++++
- 2 files changed, 26 insertions(+)
+ kernel/trace/trace_kprobe.c | 63 +++++++++++++++++++++++++++++++++++++
+ kernel/trace/trace_probe.h  |  1 +
+ 2 files changed, 64 insertions(+)
 
-diff --git a/include/linux/kallsyms.h b/include/linux/kallsyms.h
-index 649faac31ddb1..0cd33be7142ad 100644
---- a/include/linux/kallsyms.h
-+++ b/include/linux/kallsyms.h
-@@ -69,6 +69,8 @@ static inline void *dereference_symbol_descriptor(void *ptr)
- int kallsyms_on_each_symbol(int (*fn)(void *, const char *, struct module *,
- 				      unsigned long),
- 			    void *data);
-+int kallsyms_on_each_match_symbol(int (*fn)(void *, unsigned long),
-+				  const char *name, void *data);
+diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
+index 5a75b039e5860..22852029c6924 100644
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -705,6 +705,25 @@ static struct notifier_block trace_kprobe_module_nb = {
+ 	.priority = 1	/* Invoked after kprobe module callback */
+ };
  
- /* Lookup the address for a symbol. Returns 0 if not found. */
- unsigned long kallsyms_lookup_name(const char *name);
-@@ -168,6 +170,12 @@ static inline int kallsyms_on_each_symbol(int (*fn)(void *, const char *, struct
- {
- 	return -EOPNOTSUPP;
- }
-+
-+static inline int kallsyms_on_each_match_symbol(int (*fn)(void *, unsigned long),
-+						const char *name, void *data)
++static int count_symbols(void *data, unsigned long unused)
 +{
-+	return -EOPNOTSUPP;
++	unsigned int *count = data;
++
++	(*count)++;
++
++	return 0;
 +}
- #endif /*CONFIG_KALLSYMS*/
- 
- static inline void print_ip_sym(const char *loglvl, unsigned long ip)
-diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
-index 32cba13eee6c4..824bcc7b5dbc3 100644
---- a/kernel/kallsyms.c
-+++ b/kernel/kallsyms.c
-@@ -303,6 +303,24 @@ int kallsyms_on_each_symbol(int (*fn)(void *, const char *, struct module *,
- 	return 0;
- }
- 
-+int kallsyms_on_each_match_symbol(int (*fn)(void *, unsigned long),
-+				  const char *name, void *data)
++
++static unsigned int number_of_same_symbols(char *func_name)
 +{
-+	int ret;
-+	unsigned int i, start, end;
++	unsigned int count;
 +
-+	ret = kallsyms_lookup_names(name, &start, &end);
-+	if (ret)
-+		return 0;
++	count = 0;
++	kallsyms_on_each_match_symbol(count_symbols, func_name, &count);
 +
-+	for (i = start; !ret && i <= end; i++) {
-+		ret = fn(data, kallsyms_sym_address(get_symbol_seq(i)));
-+		cond_resched();
++	return count;
++}
++
+ static int __trace_kprobe_create(int argc, const char *argv[])
+ {
+ 	/*
+@@ -834,6 +853,31 @@ static int __trace_kprobe_create(int argc, const char *argv[])
+ 		}
+ 	}
+ 
++	if (symbol && !strchr(symbol, ':')) {
++		unsigned int count;
++
++		count = number_of_same_symbols(symbol);
++		if (count > 1) {
++			/*
++			 * Users should use ADDR to remove the ambiguity of
++			 * using KSYM only.
++			 */
++			trace_probe_log_err(0, NON_UNIQ_SYMBOL);
++			ret = -EADDRNOTAVAIL;
++
++			goto error;
++		} else if (count == 0) {
++			/*
++			 * We can return ENOENT earlier than when register the
++			 * kprobe.
++			 */
++			trace_probe_log_err(0, BAD_PROBE_ADDR);
++			ret = -ENOENT;
++
++			goto error;
++		}
 +	}
 +
-+	return ret;
-+}
+ 	trace_probe_log_set_index(0);
+ 	if (event) {
+ 		ret = traceprobe_parse_event_name(&event, &group, gbuf,
+@@ -1744,6 +1788,7 @@ static int unregister_kprobe_event(struct trace_kprobe *tk)
+ }
+ 
+ #ifdef CONFIG_PERF_EVENTS
 +
- static unsigned long get_symbol_pos(unsigned long addr,
- 				    unsigned long *symbolsize,
- 				    unsigned long *offset)
+ /* create a trace_kprobe, but don't add it to global lists */
+ struct trace_event_call *
+ create_local_trace_kprobe(char *func, void *addr, unsigned long offs,
+@@ -1754,6 +1799,24 @@ create_local_trace_kprobe(char *func, void *addr, unsigned long offs,
+ 	int ret;
+ 	char *event;
+ 
++	if (func) {
++		unsigned int count;
++
++		count = number_of_same_symbols(func);
++		if (count > 1)
++			/*
++			 * Users should use addr to remove the ambiguity of
++			 * using func only.
++			 */
++			return ERR_PTR(-EADDRNOTAVAIL);
++		else if (count == 0)
++			/*
++			 * We can return ENOENT earlier than when register the
++			 * kprobe.
++			 */
++			return ERR_PTR(-ENOENT);
++	}
++
+ 	/*
+ 	 * local trace_kprobes are not added to dyn_event, so they are never
+ 	 * searched in find_trace_kprobe(). Therefore, there is no concern of
+diff --git a/kernel/trace/trace_probe.h b/kernel/trace/trace_probe.h
+index f41c330bd60f1..f48b3ed20b095 100644
+--- a/kernel/trace/trace_probe.h
++++ b/kernel/trace/trace_probe.h
+@@ -404,6 +404,7 @@ extern int traceprobe_define_arg_fields(struct trace_event_call *event_call,
+ 	C(BAD_MAXACT,		"Invalid maxactive number"),		\
+ 	C(MAXACT_TOO_BIG,	"Maxactive is too big"),		\
+ 	C(BAD_PROBE_ADDR,	"Invalid probed address or symbol"),	\
++	C(NON_UNIQ_SYMBOL,	"The symbol is not unique"),		\
+ 	C(BAD_RETPROBE,		"Retprobe address must be an function entry"), \
+ 	C(BAD_ADDR_SUFFIX,	"Invalid probed address suffix"), \
+ 	C(NO_GROUP_NAME,	"Group name is not specified"),		\
 -- 
 2.42.0
 
