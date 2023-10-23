@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E33D13FEC
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6463513FEC
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WpzQxrqA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE42DC433C8;
-	Mon, 23 Oct 2023 11:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJSyUlqh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4BECC433C7;
+	Mon, 23 Oct 2023 11:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059221;
-	bh=tn9U+zJFW73tmbPFvb+5FqbSPyEiXmFejR6LvZJZp7w=;
+	s=korg; t=1698059224;
+	bh=5EtgBvODPS/MDGdp223TCuAnisUqlItihkfpJvkhgsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WpzQxrqAO3bqAsvmIR5r4bgjfO5acf1jgiyevQyDWz46CVD6zr1TQ+M371lstW7D6
-	 82VP0LARCgSyUMydu48ajBv5zF1YUypdbMMrEDCgQndac81E7YRup6SgZ4Ugm6qaxt
-	 FV5YyMqZxd8yRa69ueobpibOhe0i6EIGAL9ncCy8=
+	b=uJSyUlqhUu2be7TGDVBMW715tfRie1udQa8tWof+4Qcj0S7hOf3hVxtK0SjSl+bz9
+	 PgkPLZTujDTZsu4IU+GrpxErXaMOQtDipt3rFfMK3i2EzVJVvqxm2m+q03emqBC0pV
+	 jYlDMS19XBvblaUxRjla8VdHyqSJZ3kfbbSrrkSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Peter Rosin <peda@axentia.se>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 105/241] i2c: mux: Avoid potential false error message in i2c_mux_add_adapter
-Date: Mon, 23 Oct 2023 12:54:51 +0200
-Message-ID: <20231023104836.459582403@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.5 088/241] selftests: openvswitch: Add version check for pyroute2
+Date: Mon, 23 Oct 2023 12:54:34 +0200
+Message-ID: <20231023104836.036041968@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,37 +42,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Aaron Conole <aconole@redhat.com>
 
-[ Upstream commit b13e59e74ff71a1004e0508107e91e9a84fd7388 ]
+commit 92e37f20f20a23fec4626ae72eda50f127acb130 upstream.
 
-I2C_CLASS_DEPRECATED is a flag and not an actual class.
-There's nothing speaking against both, parent and child, having
-I2C_CLASS_DEPRECATED set. Therefore exclude it from the check.
+Paolo Abeni reports that on some systems the pyroute2 version isn't
+new enough to run the test suite.  Ensure that we support a minimum
+version of 0.6 for all cases (which does include the existing ones).
+The 0.6.1 version was released in May of 2021, so should be
+propagated to most installations at this point.
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Acked-by: Peter Rosin <peda@axentia.se>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The alternative that Paolo proposed was to only skip when the
+add-flow is being run.  This would be okay for most cases, except
+if a future test case is added that needs to do flow dump without
+an associated add (just guessing).  In that case, it could also be
+broken and we would need additional skip logic anyway.  Just draw
+a line in the sand now.
+
+Fixes: 25f16c873fb1 ("selftests: add openvswitch selftest suite")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Closes: https://lore.kernel.org/lkml/8470c431e0930d2ea204a9363a60937289b7fdbe.camel@redhat.com/
+Signed-off-by: Aaron Conole <aconole@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-mux.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/openvswitch/openvswitch.sh |    2 +-
+ tools/testing/selftests/net/openvswitch/ovs-dpctl.py   |   10 +++++++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/i2c-mux.c b/drivers/i2c/i2c-mux.c
-index 313904be5f3bd..57ff09f18c371 100644
---- a/drivers/i2c/i2c-mux.c
-+++ b/drivers/i2c/i2c-mux.c
-@@ -341,7 +341,7 @@ int i2c_mux_add_adapter(struct i2c_mux_core *muxc,
- 		priv->adap.lock_ops = &i2c_parent_lock_ops;
+--- a/tools/testing/selftests/net/openvswitch/openvswitch.sh
++++ b/tools/testing/selftests/net/openvswitch/openvswitch.sh
+@@ -204,7 +204,7 @@ run_test() {
+ 	fi
  
- 	/* Sanity check on class */
--	if (i2c_mux_parent_classes(parent) & class)
-+	if (i2c_mux_parent_classes(parent) & class & ~I2C_CLASS_DEPRECATED)
- 		dev_err(&parent->dev,
- 			"Segment %d behind mux can't share classes with ancestors\n",
- 			chan_id);
--- 
-2.40.1
-
+ 	if python3 ovs-dpctl.py -h 2>&1 | \
+-	     grep "Need to install the python" >/dev/null 2>&1; then
++	     grep -E "Need to (install|upgrade) the python" >/dev/null 2>&1; then
+ 		stdbuf -o0 printf "TEST: %-60s  [PYLIB]\n" "${tdesc}"
+ 		return $ksft_skip
+ 	fi
+--- a/tools/testing/selftests/net/openvswitch/ovs-dpctl.py
++++ b/tools/testing/selftests/net/openvswitch/ovs-dpctl.py
+@@ -25,8 +25,10 @@ try:
+     from pyroute2.netlink import nlmsg_atoms
+     from pyroute2.netlink.exceptions import NetlinkError
+     from pyroute2.netlink.generic import GenericNetlinkSocket
++    import pyroute2
++
+ except ModuleNotFoundError:
+-    print("Need to install the python pyroute2 package.")
++    print("Need to install the python pyroute2 package >= 0.6.")
+     sys.exit(0)
+ 
+ 
+@@ -1459,6 +1461,12 @@ def main(argv):
+     nlmsg_atoms.ovskey = ovskey
+     nlmsg_atoms.ovsactions = ovsactions
+ 
++    # version check for pyroute2
++    prverscheck = pyroute2.__version__.split(".")
++    if int(prverscheck[0]) == 0 and int(prverscheck[1]) < 6:
++        print("Need to upgrade the python pyroute2 package to >= 0.6.")
++        sys.exit(0)
++
+     parser = argparse.ArgumentParser()
+     parser.add_argument(
+         "-v",
 
 
