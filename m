@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162CF125CA
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C26125CA
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+YFNWAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8464EC433C9;
-	Mon, 23 Oct 2023 10:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZD5ROnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A90FC433C9;
+	Mon, 23 Oct 2023 10:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058785;
-	bh=ayGIM2wTkf667ms9a+s5x4TM6uwPmYhRwAvZRUOwHHk=;
+	s=korg; t=1698058788;
+	bh=UZUEjC57LyaqurG2J+2ozFYrQS4o8ABpxdKeqUzuJb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+YFNWARNwGo1VSgupVahDdB9C6OtKHODMhgprc0eR6f+Rz8VMghwS2cELbMlqAZL
-	 tJJBrhD9ISD0+fickpEPm00VNPrKTGcmSVxIL/LhGT7OBRH7KgAYwa3Mi0Z9biQx1T
-	 QIAe6K9vVvJXcy1Fk8sfOtmNU527ixm8RVo56bvo=
+	b=tZD5ROnVMLQcV1iMhrFTYaakTU+njA/0AX+YRtL+1xejfXsJnQ0c9w673CTs6m7Un
+	 kFiMKdcQ8tFyR9AshBfPw9tJoIJMBSv2pG7wFQli2mpH/UGMIVhzLxCL3FQ0Wtk9Cu
+	 ONdDtartNUVQV5ObmuqX/7fD/pvmjfWmC1CA8Xi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Cline <jeremy@jcline.org>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+0839b78e119aae1fec78@syzkaller.appspotmail.com
-Subject: [PATCH 4.14 08/66] nfc: nci: assert requested protocol is valid
-Date: Mon, 23 Oct 2023 12:55:58 +0200
-Message-ID: <20231023104811.090794844@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 09/66] workqueue: Override implicit ordered attribute in workqueue_apply_unbound_cpumask()
+Date: Mon, 23 Oct 2023 12:55:59 +0200
+Message-ID: <20231023104811.128111051@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -44,45 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Cline <jeremy@jcline.org>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 354a6e707e29cb0c007176ee5b8db8be7bd2dee0 ]
+[ Upstream commit ca10d851b9ad0338c19e8e3089e24d565ebfffd7 ]
 
-The protocol is used in a bit mask to determine if the protocol is
-supported. Assert the provided protocol is less than the maximum
-defined so it doesn't potentially perform a shift-out-of-bounds and
-provide a clearer error for undefined protocols vs unsupported ones.
+Commit 5c0338c68706 ("workqueue: restore WQ_UNBOUND/max_active==1
+to be ordered") enabled implicit ordered attribute to be added to
+WQ_UNBOUND workqueues with max_active of 1. This prevented the changing
+of attributes to these workqueues leading to fix commit 0a94efb5acbb
+("workqueue: implicit ordered attribute should be overridable").
 
-Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
-Reported-and-tested-by: syzbot+0839b78e119aae1fec78@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0839b78e119aae1fec78
-Signed-off-by: Jeremy Cline <jeremy@jcline.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20231009200054.82557-1-jeremy@jcline.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+However, workqueue_apply_unbound_cpumask() was not updated at that time.
+So sysfs changes to wq_unbound_cpumask has no effect on WQ_UNBOUND
+workqueues with implicit ordered attribute. Since not all WQ_UNBOUND
+workqueues are visible on sysfs, we are not able to make all the
+necessary cpumask changes even if we iterates all the workqueue cpumasks
+in sysfs and changing them one by one.
+
+Fix this problem by applying the corresponding change made
+to apply_workqueue_attrs_locked() in the fix commit to
+workqueue_apply_unbound_cpumask().
+
+Fixes: 5c0338c68706 ("workqueue: restore WQ_UNBOUND/max_active==1 to be ordered")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/workqueue.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index 216228c39acba..d42c603dd635c 100644
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -906,6 +906,11 @@ static int nci_activate_target(struct nfc_dev *nfc_dev,
- 		return -EINVAL;
- 	}
- 
-+	if (protocol >= NFC_PROTO_MAX) {
-+		pr_err("the requested nfc protocol is invalid\n");
-+		return -EINVAL;
-+	}
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -5001,9 +5001,13 @@ static int workqueue_apply_unbound_cpuma
+ 	list_for_each_entry(wq, &workqueues, list) {
+ 		if (!(wq->flags & WQ_UNBOUND))
+ 			continue;
 +
- 	if (!(nci_target->supported_protocols & (1 << protocol))) {
- 		pr_err("target does not support the requested protocol 0x%x\n",
- 		       protocol);
--- 
-2.40.1
-
+ 		/* creating multiple pwqs breaks ordering guarantee */
+-		if (wq->flags & __WQ_ORDERED)
+-			continue;
++		if (!list_empty(&wq->pwqs)) {
++			if (wq->flags & __WQ_ORDERED_EXPLICIT)
++				continue;
++			wq->flags &= ~__WQ_ORDERED;
++		}
+ 
+ 		ctx = apply_wqattrs_prepare(wq, wq->unbound_attrs);
+ 		if (!ctx) {
 
 
