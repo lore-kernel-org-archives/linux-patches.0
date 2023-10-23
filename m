@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042C1154A0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9520154A0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppu8AKmM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F187C433C7;
-	Mon, 23 Oct 2023 11:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCV/vRnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538BBC433C9;
+	Mon, 23 Oct 2023 11:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060326;
-	bh=pJJ/RUvvfFsnhYfotZVXYNEXfQz8XX8k4MPj2C/ucVs=;
+	s=korg; t=1698060329;
+	bh=5QibKPPUyDqTISSQWtvLArm43YX5jPe4/oQtTrGVkhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ppu8AKmMEZ9gWsHLxjhXQa1ImZE89lZoRB557oWEoxE4gC4q5JWVUrIouj4idxEIJ
-	 UDqsNZeoFLOMc5ADVmktB7hU0gYoMBjU9AaarA1+4+MdNch4sY4HG+bT9LxYrGAB2t
-	 RYpUHS1nH8d2IUXAvc5Jv30h/H8vk4AYi0H3PZys=
+	b=OCV/vRnVe3lSI9WBUTJuRJEVUH+lHvdo+VJsj27/QV0jSHfJB8nVopfsbTkAiar2x
+	 GPMy3PfRzfwKobjIP1xCs8wVCS32TVYRfC8rESz7W7h04OZgV9ADboAGDCFiKnsWmH
+	 aSKkBQnmmJ+YVZAT8/sWlFZ50lJa9CFEFmqH7Fro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Ariel Levkovich <lariel@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Hannes Reinecke <hare@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/196] net/mlx5e: Dont offload internal port if filter device is out device
-Date: Mon, 23 Oct 2023 12:56:39 +0200
-Message-ID: <20231023104832.277904083@linuxfoundation.org>
+Subject: [PATCH 6.1 135/196] net/tls: split tls_rx_reader_lock
+Date: Mon, 23 Oct 2023 12:56:40 +0200
+Message-ID: <20231023104832.304523522@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -43,44 +43,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit 06b4eac9c4beda520b8a4dbbb8e33dba9d1c8fba ]
+[ Upstream commit f9ae3204fb45d0749befc1cdff50f691c7461e5a ]
 
-In the cited commit, if the routing device is ovs internal port, the
-out device is set to uplink, and packets go out after encapsulation.
+Split tls_rx_reader_{lock,unlock} into an 'acquire/release' and
+the actual locking part.
+With that we can use the tls_rx_reader_lock in situations where
+the socket is already locked.
 
-If filter device is uplink, it can trigger the following syndrome:
-mlx5_core 0000:08:00.0: mlx5_cmd_out_err:803:(pid 3966): SET_FLOW_TABLE_ENTRY(0x936) op_mod(0x0) failed, status bad parameter(0x3), syndrome (0xcdb051), err(-22)
-
-Fix this issue by not offloading internal port if filter device is out
-device. In this case, packets are not forwarded to the root table to
-be processed, the termination table is used instead to forward them
-from uplink to uplink.
-
-Fixes: 100ad4e2d758 ("net/mlx5e: Offload internal port as encap route device")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Ariel Levkovich <lariel@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Suggested-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20230726191556.41714-6-hare@suse.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 419ce133ab92 ("tcp: allow again tcp_disconnect() when threads are waiting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/tls/tls_sw.c | 38 ++++++++++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-index cd15d36b1507e..907ad6ffe7275 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-@@ -23,7 +23,8 @@ static int mlx5e_set_int_port_tunnel(struct mlx5e_priv *priv,
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 9be00ebbb2341..c5c8fdadc05e8 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1851,13 +1851,10 @@ tls_read_flush_backlog(struct sock *sk, struct tls_prot_info *prot,
+ 	return sk_flush_backlog(sk);
+ }
  
- 	route_dev = dev_get_by_index(dev_net(e->out_dev), e->route_dev_ifindex);
+-static int tls_rx_reader_lock(struct sock *sk, struct tls_sw_context_rx *ctx,
+-			      bool nonblock)
++static int tls_rx_reader_acquire(struct sock *sk, struct tls_sw_context_rx *ctx,
++				 bool nonblock)
+ {
+ 	long timeo;
+-	int err;
+-
+-	lock_sock(sk);
  
--	if (!route_dev || !netif_is_ovs_master(route_dev))
-+	if (!route_dev || !netif_is_ovs_master(route_dev) ||
-+	    attr->parse_attr->filter_dev == e->out_dev)
- 		goto out;
+ 	timeo = sock_rcvtimeo(sk, nonblock);
  
- 	err = mlx5e_set_fwd_to_int_port_actions(priv, attr, e->route_dev_ifindex,
+@@ -1871,26 +1868,30 @@ static int tls_rx_reader_lock(struct sock *sk, struct tls_sw_context_rx *ctx,
+ 			      !READ_ONCE(ctx->reader_present), &wait);
+ 		remove_wait_queue(&ctx->wq, &wait);
+ 
+-		if (timeo <= 0) {
+-			err = -EAGAIN;
+-			goto err_unlock;
+-		}
+-		if (signal_pending(current)) {
+-			err = sock_intr_errno(timeo);
+-			goto err_unlock;
+-		}
++		if (timeo <= 0)
++			return -EAGAIN;
++		if (signal_pending(current))
++			return sock_intr_errno(timeo);
+ 	}
+ 
+ 	WRITE_ONCE(ctx->reader_present, 1);
+ 
+ 	return 0;
++}
+ 
+-err_unlock:
+-	release_sock(sk);
++static int tls_rx_reader_lock(struct sock *sk, struct tls_sw_context_rx *ctx,
++			      bool nonblock)
++{
++	int err;
++
++	lock_sock(sk);
++	err = tls_rx_reader_acquire(sk, ctx, nonblock);
++	if (err)
++		release_sock(sk);
+ 	return err;
+ }
+ 
+-static void tls_rx_reader_unlock(struct sock *sk, struct tls_sw_context_rx *ctx)
++static void tls_rx_reader_release(struct sock *sk, struct tls_sw_context_rx *ctx)
+ {
+ 	if (unlikely(ctx->reader_contended)) {
+ 		if (wq_has_sleeper(&ctx->wq))
+@@ -1902,6 +1903,11 @@ static void tls_rx_reader_unlock(struct sock *sk, struct tls_sw_context_rx *ctx)
+ 	}
+ 
+ 	WRITE_ONCE(ctx->reader_present, 0);
++}
++
++static void tls_rx_reader_unlock(struct sock *sk, struct tls_sw_context_rx *ctx)
++{
++	tls_rx_reader_release(sk, ctx);
+ 	release_sock(sk);
+ }
+ 
 -- 
 2.40.1
 
