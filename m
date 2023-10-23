@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D363FFB
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9FE3FFB
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gk/bGnqR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D31C433C8;
-	Mon, 23 Oct 2023 11:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPaJasUj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB318C433C8;
+	Mon, 23 Oct 2023 11:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058860;
-	bh=uXnCFGSLYOTzL+p31Jwjc1rzNZFQ9YShHTdFZjusy9c=;
+	s=korg; t=1698058863;
+	bh=z+S12Dkr21p1R+eL53rc2PiDUVdoKZ4AGs3Wotz97PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gk/bGnqRGve7312LkY2MxD8dCR1EsyKG3tnFrWPsFvK/eEw21ZhWZxD2LFu7HXWyZ
-	 NZXfU5dNi5nofJa5ios4Ckyzo/ERDx/saYSyynD/Aaf0/uxxpKLr2NSPedd2ITdT4a
-	 n2uYUINY0v3ZmkCrXZScOTAXiEv+b/33ZXMxqP8o=
+	b=xPaJasUjPH4IuML9y5LCTqxijLnU7GQThSOWCfTLZW6bzgf4wXsqOzQzWVWeIT459
+	 XKfm0X4E1DvWLChE8x5wjPbgHfaiW9534TAgk824TGSDKetrGd9AktRVADyQCqyFJz
+	 aKELtmZyilB/FuwLn8HelnR1t16lSD4e2PAAGTYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>
-Subject: [PATCH 4.14 23/66] usb: gadget: ncm: Handle decoding of multiple NTBs in unwrap call
-Date: Mon, 23 Oct 2023 12:56:13 +0200
-Message-ID: <20231023104811.678057443@linuxfoundation.org>
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 4.14 24/66] x86/cpu: Fix AMD erratum #1485 on Zen4-based CPUs
+Date: Mon, 23 Oct 2023 12:56:14 +0200
+Message-ID: <20231023104811.716846388@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -42,103 +43,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 427694cfaafa565a3db5c5ea71df6bc095dca92f upstream.
+commit f454b18e07f518bcd0c05af17a2239138bff52de upstream.
 
-When NCM is used with hosts like Windows PC, it is observed that there are
-multiple NTB's contained in one usb request giveback. Since the driver
-unwraps the obtained request data assuming only one NTB is present, we
-loose the subsequent NTB's present resulting in data loss.
+Fix erratum #1485 on Zen4 parts where running with STIBP disabled can
+cause an #UD exception. The performance impact of the fix is negligible.
 
-Fix this by checking the parsed block length with the obtained data
-length in usb request and continue parsing after the last byte of current
-NTB.
-
-Cc: stable@vger.kernel.org
-Fixes: 9f6ce4240a2b ("usb: gadget: f_ncm.c added")
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Maciej Żenczykowski <maze@google.com>
-Link: https://lore.kernel.org/r/20230927105858.12950-1-quic_kriskura@quicinc.com
+Reported-by: René Rebe <rene@exactcode.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: René Rebe <rene@exactcode.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/D99589F4-BC5D-430B-87B2-72C20370CF57@exactcode.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |   26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ arch/x86/include/asm/msr-index.h |    4 ++++
+ arch/x86/kernel/cpu/amd.c        |    9 +++++++++
+ 2 files changed, 13 insertions(+)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1201,7 +1201,8 @@ static int ncm_unwrap_ntb(struct gether
- 			  struct sk_buff_head *list)
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -442,6 +442,10 @@
+ 
+ #define MSR_AMD64_VIRT_SPEC_CTRL	0xc001011f
+ 
++/* Zen4 */
++#define MSR_ZEN4_BP_CFG			0xc001102e
++#define MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT 5
++
+ /* Fam 17h MSRs */
+ #define MSR_F17H_IRPERF			0xc00000e9
+ 
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -24,6 +24,7 @@
+ 
+ static const int amd_erratum_383[];
+ static const int amd_erratum_400[];
++static const int amd_erratum_1485[];
+ static bool cpu_has_amd_erratum(struct cpuinfo_x86 *cpu, const int *erratum);
+ 
+ /*
+@@ -974,6 +975,10 @@ static void init_amd(struct cpuinfo_x86
+ 	/* AMD CPUs don't reset SS attributes on SYSRET, Xen does. */
+ 	if (!cpu_has(c, X86_FEATURE_XENPV))
+ 		set_cpu_bug(c, X86_BUG_SYSRET_SS_ATTRS);
++
++	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) &&
++	    cpu_has_amd_erratum(c, amd_erratum_1485))
++		msr_set_bit(MSR_ZEN4_BP_CFG, MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT);
+ }
+ 
+ #ifdef CONFIG_X86_32
+@@ -1102,6 +1107,10 @@ static const int amd_erratum_383[] =
+ 	AMD_OSVW_ERRATUM(3, AMD_MODEL_RANGE(0x10, 0, 0, 0xff, 0xf));
+ 
+ 
++static const int amd_erratum_1485[] =
++	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x19, 0x10, 0x0, 0x1f, 0xf),
++			   AMD_MODEL_RANGE(0x19, 0x60, 0x0, 0xaf, 0xf));
++
+ static bool cpu_has_amd_erratum(struct cpuinfo_x86 *cpu, const int *erratum)
  {
- 	struct f_ncm	*ncm = func_to_ncm(&port->func);
--	__le16		*tmp = (void *) skb->data;
-+	unsigned char	*ntb_ptr = skb->data;
-+	__le16		*tmp;
- 	unsigned	index, index2;
- 	int		ndp_index;
- 	unsigned	dg_len, dg_len2;
-@@ -1214,6 +1215,10 @@ static int ncm_unwrap_ntb(struct gether
- 	const struct ndp_parser_opts *opts = ncm->parser_opts;
- 	unsigned	crc_len = ncm->is_crc ? sizeof(uint32_t) : 0;
- 	int		dgram_counter;
-+	int		to_process = skb->len;
-+
-+parse_ntb:
-+	tmp = (__le16 *)ntb_ptr;
- 
- 	/* dwSignature */
- 	if (get_unaligned_le32(tmp) != opts->nth_sign) {
-@@ -1260,7 +1265,7 @@ static int ncm_unwrap_ntb(struct gether
- 		 * walk through NDP
- 		 * dwSignature
- 		 */
--		tmp = (void *)(skb->data + ndp_index);
-+		tmp = (__le16 *)(ntb_ptr + ndp_index);
- 		if (get_unaligned_le32(tmp) != ncm->ndp_sign) {
- 			INFO(port->func.config->cdev, "Wrong NDP SIGN\n");
- 			goto err;
-@@ -1317,11 +1322,11 @@ static int ncm_unwrap_ntb(struct gether
- 			if (ncm->is_crc) {
- 				uint32_t crc, crc2;
- 
--				crc = get_unaligned_le32(skb->data +
-+				crc = get_unaligned_le32(ntb_ptr +
- 							 index + dg_len -
- 							 crc_len);
- 				crc2 = ~crc32_le(~0,
--						 skb->data + index,
-+						 ntb_ptr + index,
- 						 dg_len - crc_len);
- 				if (crc != crc2) {
- 					INFO(port->func.config->cdev,
-@@ -1348,7 +1353,7 @@ static int ncm_unwrap_ntb(struct gether
- 							 dg_len - crc_len);
- 			if (skb2 == NULL)
- 				goto err;
--			skb_put_data(skb2, skb->data + index,
-+			skb_put_data(skb2, ntb_ptr + index,
- 				     dg_len - crc_len);
- 
- 			skb_queue_tail(list, skb2);
-@@ -1361,10 +1366,17 @@ static int ncm_unwrap_ntb(struct gether
- 		} while (ndp_len > 2 * (opts->dgram_item_len * 2));
- 	} while (ndp_index);
- 
--	dev_consume_skb_any(skb);
--
- 	VDBG(port->func.config->cdev,
- 	     "Parsed NTB with %d frames\n", dgram_counter);
-+
-+	to_process -= block_len;
-+	if (to_process != 0) {
-+		ntb_ptr = (unsigned char *)(ntb_ptr + block_len);
-+		goto parse_ntb;
-+	}
-+
-+	dev_consume_skb_any(skb);
-+
- 	return 0;
- err:
- 	skb_queue_purge(list);
+ 	int osvw_id = *erratum++;
 
 
