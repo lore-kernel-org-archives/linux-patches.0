@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399621804F
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E23D18021
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zExaxDOf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED98C433C9;
-	Mon, 23 Oct 2023 11:51:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSp7F/P/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DF6C433C7;
+	Mon, 23 Oct 2023 11:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061900;
-	bh=wFAIbEjHOYVoGrRWc7kPHGgB5ZEjOR7V6tS3CyD9F50=;
+	s=korg; t=1698061903;
+	bh=hN+mRGYYDi+Efp6Nh2ze41eCw8AgeMXdFerRWjHBd94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zExaxDOfkLe16VXzJpqPGS0bptEAsbD4JJhe7Ne3l8EYJWdYuIOuL2E5h6KK6vIgR
-	 1EDpR6H7nmDot+CV2SBeEalDfXS1eGYgJh/x9RBn7Cr4QVAysoO+P40NTj3zbiaj5U
-	 6yr+uEFyCCeTsVqtBtyxJLP/hH3RIqhZIrzuWv1c=
+	b=JSp7F/P/m/DkR2IMnFViyHh8ckv0jz8mrmY2mScHvwD1y3IM99kNdpNcVrTq9DL36
+	 zuiJdqT9SLaH6vRjZDnd0kOVsCfz9S1PsArNUW4bEeYjCOSZ978ZVr1o57zqEg/emI
+	 qdraltGDGPcE7OHnxEGrFKHfMcM+N8U5bJ9/KVxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 202/202] xfrm6: fix inet6_dev refcount underflow problem
-Date: Mon, 23 Oct 2023 12:58:29 +0200
-Message-ID: <20231023104832.312700481@linuxfoundation.org>
+	Sunil V L <sunilvl@ventanamicro.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 183/202] ACPI: irq: Fix incorrect return value in acpi_register_gsi()
+Date: Mon, 23 Oct 2023 12:58:10 +0200
+Message-ID: <20231023104831.802812747@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -43,56 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-[ Upstream commit cc9b364bb1d58d3dae270c7a931a8cc717dc2b3b ]
+commit 0c21a18d5d6c6a73d098fb9b4701572370942df9 upstream.
 
-There are race conditions that may lead to inet6_dev refcount underflow
-in xfrm6_dst_destroy() and rt6_uncached_list_flush_dev().
+acpi_register_gsi() should return a negative value in case of failure.
 
-One of the refcount underflow bugs is shown below:
-	(cpu 1)                	|	(cpu 2)
-xfrm6_dst_destroy()             |
-  ...                           |
-  in6_dev_put()                 |
-				|  rt6_uncached_list_flush_dev()
-  ...				|    ...
-				|    in6_dev_put()
-  rt6_uncached_list_del()       |    ...
-  ...                           |
+Currently, it returns the return value from irq_create_fwspec_mapping().
+However, irq_create_fwspec_mapping() returns 0 for failure. Fix the
+issue by returning -EINVAL if irq_create_fwspec_mapping() returns zero.
 
-xfrm6_dst_destroy() calls rt6_uncached_list_del() after in6_dev_put(),
-so rt6_uncached_list_flush_dev() has a chance to call in6_dev_put()
-again for the same inet6_dev.
-
-Fix it by moving in6_dev_put() after rt6_uncached_list_del() in
-xfrm6_dst_destroy().
-
-Fixes: 510c321b5571 ("xfrm: reuse uncached_list to track xdsts")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d44fa3d46079 ("ACPI: Add support for ResourceSource/IRQ domain mapping")
+Cc: 4.11+ <stable@vger.kernel.org> # 4.11+
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+[ rjw: Rename a new local variable ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/xfrm6_policy.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/irq.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/xfrm6_policy.c
-+++ b/net/ipv6/xfrm6_policy.c
-@@ -120,11 +120,11 @@ static void xfrm6_dst_destroy(struct dst
+--- a/drivers/acpi/irq.c
++++ b/drivers/acpi/irq.c
+@@ -52,6 +52,7 @@ int acpi_register_gsi(struct device *dev
+ 		      int polarity)
  {
- 	struct xfrm_dst *xdst = (struct xfrm_dst *)dst;
+ 	struct irq_fwspec fwspec;
++	unsigned int irq;
  
--	if (likely(xdst->u.rt6.rt6i_idev))
--		in6_dev_put(xdst->u.rt6.rt6i_idev);
- 	dst_destroy_metrics_generic(dst);
- 	if (xdst->u.rt6.rt6i_uncached_list)
- 		rt6_uncached_list_del(&xdst->u.rt6);
-+	if (likely(xdst->u.rt6.rt6i_idev))
-+		in6_dev_put(xdst->u.rt6.rt6i_idev);
- 	xfrm_dst_destroy(xdst);
+ 	if (WARN_ON(!acpi_gsi_domain_id)) {
+ 		pr_warn("GSI: No registered irqchip, giving up\n");
+@@ -63,7 +64,11 @@ int acpi_register_gsi(struct device *dev
+ 	fwspec.param[1] = acpi_dev_get_irq_type(trigger, polarity);
+ 	fwspec.param_count = 2;
+ 
+-	return irq_create_fwspec_mapping(&fwspec);
++	irq = irq_create_fwspec_mapping(&fwspec);
++	if (!irq)
++		return -EINVAL;
++
++	return irq;
  }
+ EXPORT_SYMBOL_GPL(acpi_register_gsi);
  
 
 
