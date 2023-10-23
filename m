@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC8515E82
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CBD15E82
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmKlBcIf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0604C433CC;
-	Mon, 23 Oct 2023 11:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGnCGYOb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91715C433BA;
+	Mon, 23 Oct 2023 11:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060294;
-	bh=xS8zL+AxSUjuAR96mxItdFFMpw2JaKMOmLPsJBO02mo=;
+	s=korg; t=1698060297;
+	bh=MPTOG4HFYO9WrlG/S2+S8rsgUqrC609AfJ87cOSZAcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tmKlBcIfDp8c1XX17BGOM+ZCjN3iUSmAiCoaJihZkRAVoy9d5JVqnCT9Gp3RByVaR
-	 sP1+aWe6aKeA5FXVp9stfdAJX/2xotCmilE3bQ1wnTpPgdb0qRvG6wzARra6Gm8VwI
-	 aoLOe+SEAe1klaAheaXPTf1oucolPjb8GTQ/IS+k=
+	b=HGnCGYObU+qNAgnhTojw7cvt9F2vlw8azZp7gp4YrUPqLDucvTDz1lYhb4vOV2+JU
+	 rG7q8QfsEBs+HNFS91JWTQWv6Q0B9xhT7l/zrwW5wvLSN4CXvHNirHHmsgArJihC1U
+	 95PrEyF7m3oTu/014o+TYxF6tQlQGxSBviCu6cBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martino Fontana <tinozzo123@gmail.com>,
-	"Daniel J. Ogorchock" <djogorchock@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Renan Guilherme Lebre Ramos <japareaggae@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/196] HID: nintendo: reinitialize USB Pro Controller after resuming from suspend
-Date: Mon, 23 Oct 2023 12:56:29 +0200
-Message-ID: <20231023104832.012747253@linuxfoundation.org>
+Subject: [PATCH 6.1 125/196] platform/x86: touchscreen_dmi: Add info for the Positivo C4128B
+Date: Mon, 23 Oct 2023 12:56:30 +0200
+Message-ID: <20231023104832.038882835@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -43,262 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martino Fontana <tinozzo123@gmail.com>
+From: Renan Guilherme Lebre Ramos <japareaggae@gmail.com>
 
-[ Upstream commit 95ea4d9fd385fe335b989f22d409df079a042b7a ]
+[ Upstream commit aa7dcba3bae6869122828b144a3cfd231718089d ]
 
-When suspending the computer, a Switch Pro Controller connected via USB will
-lose its internal status. However, because the USB connection was technically
-never lost, when resuming the computer, the driver will attempt to communicate
-with the controller as if nothing happened (and fail).
-Because of this, the user was forced to manually disconnect the controller
-(or to press the sync button on the controller to power it off), so that it
-can be re-initialized.
+Add information for the Positivo C4128B, a notebook/tablet convertible.
 
-With this patch, the controller will be automatically re-initialized after
-resuming from suspend.
-
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=216233
-
-Signed-off-by: Martino Fontana <tinozzo123@gmail.com>
-Reviewed-by: Daniel J. Ogorchock <djogorchock@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Link: https://github.com/onitake/gsl-firmware/pull/217
+Signed-off-by: Renan Guilherme Lebre Ramos <japareaggae@gmail.com>
+Link: https://lore.kernel.org/r/20231004235900.426240-1-japareaggae@gmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-nintendo.c | 175 ++++++++++++++++++++++---------------
- 1 file changed, 103 insertions(+), 72 deletions(-)
+ drivers/platform/x86/touchscreen_dmi.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
-index 5bfc0c4504608..8a8a3dd8af0c1 100644
---- a/drivers/hid/hid-nintendo.c
-+++ b/drivers/hid/hid-nintendo.c
-@@ -2011,7 +2011,9 @@ static int joycon_read_info(struct joycon_ctlr *ctlr)
- 	struct joycon_input_report *report;
- 
- 	req.subcmd_id = JC_SUBCMD_REQ_DEV_INFO;
-+	mutex_lock(&ctlr->output_mutex);
- 	ret = joycon_send_subcmd(ctlr, &req, 0, HZ);
-+	mutex_unlock(&ctlr->output_mutex);
- 	if (ret) {
- 		hid_err(ctlr->hdev, "Failed to get joycon info; ret=%d\n", ret);
- 		return ret;
-@@ -2040,6 +2042,85 @@ static int joycon_read_info(struct joycon_ctlr *ctlr)
- 	return 0;
- }
- 
-+static int joycon_init(struct hid_device *hdev)
-+{
-+	struct joycon_ctlr *ctlr = hid_get_drvdata(hdev);
-+	int ret = 0;
-+
-+	mutex_lock(&ctlr->output_mutex);
-+	/* if handshake command fails, assume ble pro controller */
-+	if ((jc_type_is_procon(ctlr) || jc_type_is_chrggrip(ctlr)) &&
-+	    !joycon_send_usb(ctlr, JC_USB_CMD_HANDSHAKE, HZ)) {
-+		hid_dbg(hdev, "detected USB controller\n");
-+		/* set baudrate for improved latency */
-+		ret = joycon_send_usb(ctlr, JC_USB_CMD_BAUDRATE_3M, HZ);
-+		if (ret) {
-+			hid_err(hdev, "Failed to set baudrate; ret=%d\n", ret);
-+			goto out_unlock;
-+		}
-+		/* handshake */
-+		ret = joycon_send_usb(ctlr, JC_USB_CMD_HANDSHAKE, HZ);
-+		if (ret) {
-+			hid_err(hdev, "Failed handshake; ret=%d\n", ret);
-+			goto out_unlock;
-+		}
-+		/*
-+		 * Set no timeout (to keep controller in USB mode).
-+		 * This doesn't send a response, so ignore the timeout.
-+		 */
-+		joycon_send_usb(ctlr, JC_USB_CMD_NO_TIMEOUT, HZ/10);
-+	} else if (jc_type_is_chrggrip(ctlr)) {
-+		hid_err(hdev, "Failed charging grip handshake\n");
-+		ret = -ETIMEDOUT;
-+		goto out_unlock;
-+	}
-+
-+	/* get controller calibration data, and parse it */
-+	ret = joycon_request_calibration(ctlr);
-+	if (ret) {
-+		/*
-+		 * We can function with default calibration, but it may be
-+		 * inaccurate. Provide a warning, and continue on.
-+		 */
-+		hid_warn(hdev, "Analog stick positions may be inaccurate\n");
-+	}
-+
-+	/* get IMU calibration data, and parse it */
-+	ret = joycon_request_imu_calibration(ctlr);
-+	if (ret) {
-+		/*
-+		 * We can function with default calibration, but it may be
-+		 * inaccurate. Provide a warning, and continue on.
-+		 */
-+		hid_warn(hdev, "Unable to read IMU calibration data\n");
-+	}
-+
-+	/* Set the reporting mode to 0x30, which is the full report mode */
-+	ret = joycon_set_report_mode(ctlr);
-+	if (ret) {
-+		hid_err(hdev, "Failed to set report mode; ret=%d\n", ret);
-+		goto out_unlock;
-+	}
-+
-+	/* Enable rumble */
-+	ret = joycon_enable_rumble(ctlr);
-+	if (ret) {
-+		hid_err(hdev, "Failed to enable rumble; ret=%d\n", ret);
-+		goto out_unlock;
-+	}
-+
-+	/* Enable the IMU */
-+	ret = joycon_enable_imu(ctlr);
-+	if (ret) {
-+		hid_err(hdev, "Failed to enable the IMU; ret=%d\n", ret);
-+		goto out_unlock;
-+	}
-+
-+out_unlock:
-+	mutex_unlock(&ctlr->output_mutex);
-+	return ret;
-+}
-+
- /* Common handler for parsing inputs */
- static int joycon_ctlr_read_handler(struct joycon_ctlr *ctlr, u8 *data,
- 							      int size)
-@@ -2171,85 +2252,19 @@ static int nintendo_hid_probe(struct hid_device *hdev,
- 
- 	hid_device_io_start(hdev);
- 
--	/* Initialize the controller */
--	mutex_lock(&ctlr->output_mutex);
--	/* if handshake command fails, assume ble pro controller */
--	if ((jc_type_is_procon(ctlr) || jc_type_is_chrggrip(ctlr)) &&
--	    !joycon_send_usb(ctlr, JC_USB_CMD_HANDSHAKE, HZ)) {
--		hid_dbg(hdev, "detected USB controller\n");
--		/* set baudrate for improved latency */
--		ret = joycon_send_usb(ctlr, JC_USB_CMD_BAUDRATE_3M, HZ);
--		if (ret) {
--			hid_err(hdev, "Failed to set baudrate; ret=%d\n", ret);
--			goto err_mutex;
--		}
--		/* handshake */
--		ret = joycon_send_usb(ctlr, JC_USB_CMD_HANDSHAKE, HZ);
--		if (ret) {
--			hid_err(hdev, "Failed handshake; ret=%d\n", ret);
--			goto err_mutex;
--		}
--		/*
--		 * Set no timeout (to keep controller in USB mode).
--		 * This doesn't send a response, so ignore the timeout.
--		 */
--		joycon_send_usb(ctlr, JC_USB_CMD_NO_TIMEOUT, HZ/10);
--	} else if (jc_type_is_chrggrip(ctlr)) {
--		hid_err(hdev, "Failed charging grip handshake\n");
--		ret = -ETIMEDOUT;
--		goto err_mutex;
--	}
--
--	/* get controller calibration data, and parse it */
--	ret = joycon_request_calibration(ctlr);
-+	ret = joycon_init(hdev);
- 	if (ret) {
--		/*
--		 * We can function with default calibration, but it may be
--		 * inaccurate. Provide a warning, and continue on.
--		 */
--		hid_warn(hdev, "Analog stick positions may be inaccurate\n");
--	}
--
--	/* get IMU calibration data, and parse it */
--	ret = joycon_request_imu_calibration(ctlr);
--	if (ret) {
--		/*
--		 * We can function with default calibration, but it may be
--		 * inaccurate. Provide a warning, and continue on.
--		 */
--		hid_warn(hdev, "Unable to read IMU calibration data\n");
--	}
--
--	/* Set the reporting mode to 0x30, which is the full report mode */
--	ret = joycon_set_report_mode(ctlr);
--	if (ret) {
--		hid_err(hdev, "Failed to set report mode; ret=%d\n", ret);
--		goto err_mutex;
--	}
--
--	/* Enable rumble */
--	ret = joycon_enable_rumble(ctlr);
--	if (ret) {
--		hid_err(hdev, "Failed to enable rumble; ret=%d\n", ret);
--		goto err_mutex;
--	}
--
--	/* Enable the IMU */
--	ret = joycon_enable_imu(ctlr);
--	if (ret) {
--		hid_err(hdev, "Failed to enable the IMU; ret=%d\n", ret);
--		goto err_mutex;
-+		hid_err(hdev, "Failed to initialize controller; ret=%d\n", ret);
-+		goto err_close;
- 	}
- 
- 	ret = joycon_read_info(ctlr);
- 	if (ret) {
- 		hid_err(hdev, "Failed to retrieve controller info; ret=%d\n",
- 			ret);
--		goto err_mutex;
-+		goto err_close;
- 	}
- 
--	mutex_unlock(&ctlr->output_mutex);
--
- 	/* Initialize the leds */
- 	ret = joycon_leds_create(ctlr);
- 	if (ret) {
-@@ -2275,8 +2290,6 @@ static int nintendo_hid_probe(struct hid_device *hdev,
- 	hid_dbg(hdev, "probe - success\n");
- 	return 0;
- 
--err_mutex:
--	mutex_unlock(&ctlr->output_mutex);
- err_close:
- 	hid_hw_close(hdev);
- err_stop:
-@@ -2306,6 +2319,20 @@ static void nintendo_hid_remove(struct hid_device *hdev)
- 	hid_hw_stop(hdev);
- }
- 
-+#ifdef CONFIG_PM
-+
-+static int nintendo_hid_resume(struct hid_device *hdev)
-+{
-+	int ret = joycon_init(hdev);
-+
-+	if (ret)
-+		hid_err(hdev, "Failed to restore controller after resume");
-+
-+	return ret;
-+}
-+
-+#endif
-+
- static const struct hid_device_id nintendo_hid_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_NINTENDO,
- 			 USB_DEVICE_ID_NINTENDO_PROCON) },
-@@ -2327,6 +2354,10 @@ static struct hid_driver nintendo_hid_driver = {
- 	.probe		= nintendo_hid_probe,
- 	.remove		= nintendo_hid_remove,
- 	.raw_event	= nintendo_hid_event,
-+
-+#ifdef CONFIG_PM
-+	.resume		= nintendo_hid_resume,
-+#endif
+diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
+index 68e66b60445c3..9a92d515abb9b 100644
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -740,6 +740,21 @@ static const struct ts_dmi_data pipo_w11_data = {
+ 	.properties	= pipo_w11_props,
  };
- module_hid_driver(nintendo_hid_driver);
  
++static const struct property_entry positivo_c4128b_props[] = {
++	PROPERTY_ENTRY_U32("touchscreen-min-x", 4),
++	PROPERTY_ENTRY_U32("touchscreen-min-y", 13),
++	PROPERTY_ENTRY_U32("touchscreen-size-x", 1915),
++	PROPERTY_ENTRY_U32("touchscreen-size-y", 1269),
++	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-positivo-c4128b.fw"),
++	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
++	{ }
++};
++
++static const struct ts_dmi_data positivo_c4128b_data = {
++	.acpi_name	= "MSSL1680:00",
++	.properties	= positivo_c4128b_props,
++};
++
+ static const struct property_entry pov_mobii_wintab_p800w_v20_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-min-x", 32),
+ 	PROPERTY_ENTRY_U32("touchscreen-min-y", 16),
+@@ -1457,6 +1472,14 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
+ 			DMI_MATCH(DMI_BIOS_VERSION, "MOMO.G.WI71C.MABMRBA02"),
+ 		},
+ 	},
++	{
++		/* Positivo C4128B */
++		.driver_data = (void *)&positivo_c4128b_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "C4128B-1"),
++		},
++	},
+ 	{
+ 		/* Point of View mobii wintab p800w (v2.0) */
+ 		.driver_data = (void *)&pov_mobii_wintab_p800w_v20_data,
 -- 
 2.40.1
 
