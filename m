@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EC715493
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B471515492
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flVjRF1+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8F9C43391;
-	Mon, 23 Oct 2023 11:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QttXQHDo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23A4C433C7;
+	Mon, 23 Oct 2023 11:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060267;
-	bh=xu3rHB4Wao+xb73wd/oM03QPow3vlSi1ZPfLGJGflWI=;
+	s=korg; t=1698060270;
+	bh=EQbvuCRc5NdvCuDfcbJYqriwxtqNwrcc+GkHcBcX9sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flVjRF1+YQ7RQ3y6/0rxdgpGxDj9SpKLgRD6bQTqrFO4xChq0Ukz5uvlfEbp2iDCb
-	 Av81oMS1Zvbh+H738Udkq1aMRvqgqoYnGg7mH+7Ayq4s9xtKMBqA8CeU/u2HCwT9U/
-	 i3h3h6JfpFDURjt8xB9Ui89Sd5sr2x6b2TdkdmDE=
+	b=QttXQHDolbUjzWm0y+rid5iksYj6g9LAv5SAFZul2bGy4vgX7llxMHK57nXdiS9cm
+	 zp9c3hSgbi9QAW2xuC+4g9qxuWQtnk4Ku9bpzZVJVuStXvX0FyD+eT9905VxfR/0JJ
+	 MSQgD51AjD2EMJmoL5jcC5XE5yKieB40ejLxCPPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <uwu@icenowy.me>,
-	Matthias Kaehlcke <mka@chromium.org>,
+	Ying Hsu <yinghsu@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/196] usb: misc: onboard_usb_hub: add Genesys Logic GL850G hub support
-Date: Mon, 23 Oct 2023 12:55:43 +0200
-Message-ID: <20231023104830.754735961@linuxfoundation.org>
+Subject: [PATCH 6.1 108/196] Bluetooth: Avoid redundant authentication
+Date: Mon, 23 Oct 2023 12:56:13 +0200
+Message-ID: <20231023104831.581865904@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,69 +42,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: Ying Hsu <yinghsu@chromium.org>
 
-[ Upstream commit 9bae996ffa28ac03b6d95382a2a082eb219e745a ]
+[ Upstream commit 1d8e801422d66e4b8c7b187c52196bef94eed887 ]
 
-Genesys Logic GL850G is a 4-port USB 2.0 STT hub that has a reset pin to
-toggle and a 3.3V core supply exported (although an integrated LDO is
-available for powering it with 5V).
+While executing the Android 13 CTS Verifier Secure Server test on a
+ChromeOS device, it was observed that the Bluetooth host initiates
+authentication for an RFCOMM connection after SSP completes.
+When this happens, some Intel Bluetooth controllers, like AC9560, would
+disconnect with "Connection Rejected due to Security Reasons (0x0e)".
 
-Add the support for this hub, for controlling the reset pin and the core
-power supply.
+Historically, BlueZ did not mandate this authentication while an
+authenticated combination key was already in use for the connection.
+This behavior was changed since commit 7b5a9241b780
+("Bluetooth: Introduce requirements for security level 4").
+So, this patch addresses the aforementioned disconnection issue by
+restoring the previous behavior.
 
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Acked-by: Matthias Kaehlcke <mka@chromium.org>
-Link: https://lore.kernel.org/r/20221206055228.306074-4-uwu@icenowy.me
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: e59e38158c61 ("usb: misc: onboard_hub: add support for Microchip USB2412 USB 2.0 hub")
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/onboard_usb_hub.c | 2 ++
- drivers/usb/misc/onboard_usb_hub.h | 5 +++++
- 2 files changed, 7 insertions(+)
+ net/bluetooth/hci_conn.c | 63 ++++++++++++++++++++++------------------
+ 1 file changed, 35 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/usb/misc/onboard_usb_hub.c b/drivers/usb/misc/onboard_usb_hub.c
-index 832d3ba9368ff..87df27425ec5f 100644
---- a/drivers/usb/misc/onboard_usb_hub.c
-+++ b/drivers/usb/misc/onboard_usb_hub.c
-@@ -329,6 +329,7 @@ static struct platform_driver onboard_hub_driver = {
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index f8ba3f5aa877b..728be9307f526 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -2364,34 +2364,41 @@ int hci_conn_security(struct hci_conn *conn, __u8 sec_level, __u8 auth_type,
+ 	if (!test_bit(HCI_CONN_AUTH, &conn->flags))
+ 		goto auth;
  
- /************************** USB driver **************************/
+-	/* An authenticated FIPS approved combination key has sufficient
+-	 * security for security level 4. */
+-	if (conn->key_type == HCI_LK_AUTH_COMBINATION_P256 &&
+-	    sec_level == BT_SECURITY_FIPS)
+-		goto encrypt;
+-
+-	/* An authenticated combination key has sufficient security for
+-	   security level 3. */
+-	if ((conn->key_type == HCI_LK_AUTH_COMBINATION_P192 ||
+-	     conn->key_type == HCI_LK_AUTH_COMBINATION_P256) &&
+-	    sec_level == BT_SECURITY_HIGH)
+-		goto encrypt;
+-
+-	/* An unauthenticated combination key has sufficient security for
+-	   security level 1 and 2. */
+-	if ((conn->key_type == HCI_LK_UNAUTH_COMBINATION_P192 ||
+-	     conn->key_type == HCI_LK_UNAUTH_COMBINATION_P256) &&
+-	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW))
+-		goto encrypt;
+-
+-	/* A combination key has always sufficient security for the security
+-	   levels 1 or 2. High security level requires the combination key
+-	   is generated using maximum PIN code length (16).
+-	   For pre 2.1 units. */
+-	if (conn->key_type == HCI_LK_COMBINATION &&
+-	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW ||
+-	     conn->pin_length == 16))
+-		goto encrypt;
++	switch (conn->key_type) {
++	case HCI_LK_AUTH_COMBINATION_P256:
++		/* An authenticated FIPS approved combination key has
++		 * sufficient security for security level 4 or lower.
++		 */
++		if (sec_level <= BT_SECURITY_FIPS)
++			goto encrypt;
++		break;
++	case HCI_LK_AUTH_COMBINATION_P192:
++		/* An authenticated combination key has sufficient security for
++		 * security level 3 or lower.
++		 */
++		if (sec_level <= BT_SECURITY_HIGH)
++			goto encrypt;
++		break;
++	case HCI_LK_UNAUTH_COMBINATION_P192:
++	case HCI_LK_UNAUTH_COMBINATION_P256:
++		/* An unauthenticated combination key has sufficient security
++		 * for security level 2 or lower.
++		 */
++		if (sec_level <= BT_SECURITY_MEDIUM)
++			goto encrypt;
++		break;
++	case HCI_LK_COMBINATION:
++		/* A combination key has always sufficient security for the
++		 * security levels 2 or lower. High security level requires the
++		 * combination key is generated using maximum PIN code length
++		 * (16). For pre 2.1 units.
++		 */
++		if (sec_level <= BT_SECURITY_MEDIUM || conn->pin_length == 16)
++			goto encrypt;
++		break;
++	default:
++		break;
++	}
  
-+#define VENDOR_ID_GENESYS	0x05e3
- #define VENDOR_ID_MICROCHIP	0x0424
- #define VENDOR_ID_REALTEK	0x0bda
- #define VENDOR_ID_TI		0x0451
-@@ -405,6 +406,7 @@ static void onboard_hub_usbdev_disconnect(struct usb_device *udev)
- }
- 
- static const struct usb_device_id onboard_hub_id_table[] = {
-+	{ USB_DEVICE(VENDOR_ID_GENESYS, 0x0608) }, /* Genesys Logic GL850G USB 2.0 */
- 	{ USB_DEVICE(VENDOR_ID_MICROCHIP, 0x2514) }, /* USB2514B USB 2.0 */
- 	{ USB_DEVICE(VENDOR_ID_MICROCHIP, 0x2517) }, /* USB2517 USB 2.0 */
- 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0411) }, /* RTS5411 USB 3.1 */
-diff --git a/drivers/usb/misc/onboard_usb_hub.h b/drivers/usb/misc/onboard_usb_hub.h
-index 2cde54b69eede..a97b0594773fa 100644
---- a/drivers/usb/misc/onboard_usb_hub.h
-+++ b/drivers/usb/misc/onboard_usb_hub.h
-@@ -22,11 +22,16 @@ static const struct onboard_hub_pdata ti_tusb8041_data = {
- 	.reset_us = 3000,
- };
- 
-+static const struct onboard_hub_pdata genesys_gl850g_data = {
-+	.reset_us = 3,
-+};
-+
- static const struct of_device_id onboard_hub_match[] = {
- 	{ .compatible = "usb424,2514", .data = &microchip_usb424_data, },
- 	{ .compatible = "usb424,2517", .data = &microchip_usb424_data, },
- 	{ .compatible = "usb451,8140", .data = &ti_tusb8041_data, },
- 	{ .compatible = "usb451,8142", .data = &ti_tusb8041_data, },
-+	{ .compatible = "usb5e3,608", .data = &genesys_gl850g_data, },
- 	{ .compatible = "usbbda,411", .data = &realtek_rts5411_data, },
- 	{ .compatible = "usbbda,5411", .data = &realtek_rts5411_data, },
- 	{ .compatible = "usbbda,414", .data = &realtek_rts5411_data, },
+ auth:
+ 	if (test_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags))
 -- 
 2.40.1
 
