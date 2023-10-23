@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71B815E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE3C15E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cR/KHhA2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8A7C433C7;
-	Mon, 23 Oct 2023 11:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4nCaoZQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E57C433D9;
+	Mon, 23 Oct 2023 11:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060543;
-	bh=VXJjAu2sMhXDs0EZj7uBGZICgvpDslAlyJrQTGwuoUs=;
+	s=korg; t=1698060546;
+	bh=9eAKNzb2K0W7ZMwk/j1JDoofgBkMSGBgqpYELoIFssY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cR/KHhA2v0ap2/UsaaAQzebXCNSMGHlMabCgxHJ7aDDlgY9QHy4TFrctkgtWNtE0/
-	 5sbcvx7bpqpMX2iEsS9gkVcK8bR95P6vKB2pSFCxE+e+s6pGGHtc5/6/LCYEtVlqkS
-	 xSVsYUOs7i9sQpQQwqGZpUTnIyMUnibJEI1BhJwo=
+	b=F4nCaoZQCbyuu5JrgboT403gDKal/5EKnndN5dyLspWc8Ck6VqA2lbSGOXEQGlEnu
+	 ehGwTpXmDeI4h1/W/pJYIB4gO7jvqJZlSkxUA9q7C+FpxtOUkAqWQOluekK1OdNXBG
+	 vTOAP9uop7Do7UQdW0WCX6zWPPDC3q0pGFLhfFnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	linux-kernel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Xiaoke Wang <xkernel.wang@foxmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 003/123] lib/test_meminit: fix off-by-one error in test_pages()
-Date: Mon, 23 Oct 2023 12:56:01 +0200
-Message-ID: <20231023104817.835166472@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>
+Subject: [PATCH 5.4 004/123] pwm: hibvt: Explicitly set .polarity in .get_state()
+Date: Mon, 23 Oct 2023 12:56:02 +0200
+Message-ID: <20231023104817.870105759@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -38,44 +35,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit efb78fa86e95 ("lib/test_meminit: allocate pages up to order
-MAX_ORDER") works great in kernels 6.4 and newer thanks to commit
-23baf831a32c ("mm, treewide: redefine MAX_ORDER sanely"), but for older
-kernels, the loop is off by one, which causes crashes when the test
-runs.
+commit 6f57937980142715e927697a6ffd2050f38ed6f6 upstream.
 
-Fix this up by changing "<= MAX_ORDER" "< MAX_ORDER" to allow the test
-to work properly for older kernel branches.
+The driver only both polarities. Complete the implementation of
+.get_state() by setting .polarity according to the configured hardware
+state.
 
-Fixes: cbfffe51221b ("lib/test_meminit: allocate pages up to order MAX_ORDER")
-Cc: Andrew Donnellan <ajd@linux.ibm.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Xiaoke Wang <xkernel.wang@foxmail.com>
-Cc: <stable@vger.kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d09f00810850 ("pwm: Add PWM driver for HiSilicon BVT SOCs")
+Link: https://lore.kernel.org/r/20230228135508.1798428-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/test_meminit.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pwm/pwm-hibvt.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/lib/test_meminit.c
-+++ b/lib/test_meminit.c
-@@ -86,7 +86,7 @@ static int __init test_pages(int *total_
- 	int failures = 0, num_tests = 0;
- 	int i;
+--- a/drivers/pwm/pwm-hibvt.c
++++ b/drivers/pwm/pwm-hibvt.c
+@@ -146,6 +146,7 @@ static void hibvt_pwm_get_state(struct p
  
--	for (i = 0; i <= MAX_ORDER; i++)
-+	for (i = 0; i < MAX_ORDER; i++)
- 		num_tests += do_alloc_pages_order(i, &failures);
+ 	value = readl(base + PWM_CTRL_ADDR(pwm->hwpwm));
+ 	state->enabled = (PWM_ENABLE_MASK & value);
++	state->polarity = (PWM_POLARITY_MASK & value) ? PWM_POLARITY_INVERSED : PWM_POLARITY_NORMAL;
+ }
  
- 	REPORT_FAILURES_IN_FN();
+ static int hibvt_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 
 
