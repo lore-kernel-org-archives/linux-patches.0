@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AE711CA6
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675A5179BF
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16x+dwv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B89C433C9;
-	Mon, 23 Oct 2023 11:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcivKCHn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38DAC433C7;
+	Mon, 23 Oct 2023 11:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061891;
-	bh=1arOhbXKhuJmGETMZs/9yMRcysWOnhvrxtO9PwyPulU=;
+	s=korg; t=1698061894;
+	bh=Pq0aP/7mThjtCiULCTBbJe60gMzGQqGtaLj5kQQfqT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=16x+dwv2TuQHBg4ltGrNwLK7gY4e5SYNhLLGScyvKgp85qWg1wYvjuBtpx6cw9R+l
-	 CcixMHWltOE1hS8VKNZZ/ur2wTNFHJdf4q+p9l3X5KWcKutDM/hsvl0JrtDnx0c+gY
-	 wgY50olc3+lDmR01YP5k3ZHA1suAoBN7xKH22Uio=
+	b=bcivKCHnaJ3lYT5C75ib9/0AlS2h1T7rZLFIGqOkacLmZxLjSIeqY/sgPKR4wktGn
+	 Sw7KpZdeq9W5E4PQRnnLybpC+0SlggtbeMb51WxVW6UdZ/1DQutTNbN/7AT/XVVp23
+	 DmIBwH3BuC5iKes8yN1CIM3eRftEj+o/Qo0XpbuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 5.10 182/202] pNFS: Fix a hang in nfs4_evict_inode()
-Date: Mon, 23 Oct 2023 12:58:09 +0200
-Message-ID: <20231023104831.776195603@linuxfoundation.org>
+	syzbot+c90849c50ed209d77689@syzkaller.appspotmail.com,
+	Edward AD <twuufnxlz@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 200/202] Bluetooth: hci_sock: fix slab oob read in create_monitor_event
+Date: Mon, 23 Oct 2023 12:58:27 +0200
+Message-ID: <20231023104832.259587803@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -41,84 +42,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Edward AD <twuufnxlz@gmail.com>
 
-commit f63955721a8020e979b99cc417dcb6da3106aa24 upstream.
+commit 18f547f3fc074500ab5d419cf482240324e73a7e upstream.
 
-We are not allowed to call pnfs_mark_matching_lsegs_return() without
-also holding a reference to the layout header, since doing so could lead
-to the reference count going to zero when we call
-pnfs_layout_remove_lseg(). This again can lead to a hang when we get to
-nfs4_evict_inode() and are unable to clear the layout pointer.
+When accessing hdev->name, the actual string length should prevail
 
-pnfs_layout_return_unused_byserver() is guilty of this behaviour, and
-has been seen to trigger the refcount warning prior to a hang.
-
-Fixes: b6d49ecd1081 ("NFSv4: Fix a pNFS layout related use-after-free race when freeing the inode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Reported-by: syzbot+c90849c50ed209d77689@syzkaller.appspotmail.com
+Fixes: dcda165706b9 ("Bluetooth: hci_core: Fix build warnings")
+Signed-off-by: Edward AD <twuufnxlz@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pnfs.c |   33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ net/bluetooth/hci_sock.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -2633,31 +2633,44 @@ pnfs_should_return_unused_layout(struct
- 	return mode == 0;
- }
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -438,7 +438,7 @@ static struct sk_buff *create_monitor_ev
+ 		ni->type = hdev->dev_type;
+ 		ni->bus = hdev->bus;
+ 		bacpy(&ni->bdaddr, &hdev->bdaddr);
+-		memcpy(ni->name, hdev->name, 8);
++		memcpy(ni->name, hdev->name, strlen(hdev->name));
  
--static int
--pnfs_layout_return_unused_byserver(struct nfs_server *server, void *data)
-+static int pnfs_layout_return_unused_byserver(struct nfs_server *server,
-+					      void *data)
- {
- 	const struct pnfs_layout_range *range = data;
-+	const struct cred *cred;
- 	struct pnfs_layout_hdr *lo;
- 	struct inode *inode;
-+	nfs4_stateid stateid;
-+	enum pnfs_iomode iomode;
-+
- restart:
- 	rcu_read_lock();
- 	list_for_each_entry_rcu(lo, &server->layouts, plh_layouts) {
--		if (!pnfs_layout_can_be_returned(lo) ||
-+		inode = lo->plh_inode;
-+		if (!inode || !pnfs_layout_can_be_returned(lo) ||
- 		    test_bit(NFS_LAYOUT_RETURN_REQUESTED, &lo->plh_flags))
- 			continue;
--		inode = lo->plh_inode;
- 		spin_lock(&inode->i_lock);
--		if (!pnfs_should_return_unused_layout(lo, range)) {
-+		if (!lo->plh_inode ||
-+		    !pnfs_should_return_unused_layout(lo, range)) {
- 			spin_unlock(&inode->i_lock);
- 			continue;
- 		}
-+		pnfs_get_layout_hdr(lo);
-+		pnfs_set_plh_return_info(lo, range->iomode, 0);
-+		if (pnfs_mark_matching_lsegs_return(lo, &lo->plh_return_segs,
-+						    range, 0) != 0 ||
-+		    !pnfs_prepare_layoutreturn(lo, &stateid, &cred, &iomode)) {
-+			spin_unlock(&inode->i_lock);
-+			rcu_read_unlock();
-+			pnfs_put_layout_hdr(lo);
-+			cond_resched();
-+			goto restart;
-+		}
- 		spin_unlock(&inode->i_lock);
--		inode = pnfs_grab_inode_layout_hdr(lo);
--		if (!inode)
--			continue;
- 		rcu_read_unlock();
--		pnfs_mark_layout_for_return(inode, range);
--		iput(inode);
-+		pnfs_send_layoutreturn(lo, &stateid, &cred, iomode, false);
-+		pnfs_put_layout_hdr(lo);
- 		cond_resched();
- 		goto restart;
- 	}
+ 		opcode = cpu_to_le16(HCI_MON_NEW_INDEX);
+ 		break;
 
 
