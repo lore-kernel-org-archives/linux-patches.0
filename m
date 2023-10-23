@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3FCF4FE
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C597F4FE
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgScqaSb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493FCC433C9;
-	Mon, 23 Oct 2023 11:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKyvddbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42524C433C7;
+	Mon, 23 Oct 2023 11:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059453;
-	bh=05RB0ks7ucXzpxe95g1LKHt3rlFXlBknE1wTSDoYlQk=;
+	s=korg; t=1698059456;
+	bh=nzRpaXyFnm1ZNeeAgkETRyZpsHCwkQNCuDFEJ9HICog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NgScqaSbye/EPR66CRyyT1/kLF3NLb/fPFNrfWYzZK6sbReyK4C5/B8NbR9Deg17k
-	 yaOICcSQETHAizHUKEt+TpVI6zYPRK6QlUIMRd/s+K9Cv8qVglXKyT0wevwc+7cXcJ
-	 Nql3Bz2JX0KcCCVaXzCBZdzdn2ohxlW+bSYE3MDs=
+	b=jKyvddbS6RQuaWfEUvmoDTZXmoqToAouaZStMdOCeGo9Q6/aBw/c+XwoHVi3W0RRm
+	 iOOaTXd2DbJCfJYPdmZsmYqWsMn++tUNHLzQbt94AU4xq/KbY2tNi6HuysFpECTnJZ
+	 dMSxLx0leL7SWL0tw8405sox2iuS0lLxFgbQTF34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	D Scott Phillips <scott@os.amperecomputing.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.5 183/241] ACPI: bus: Move acpi_arm_init() to the place of after acpi_ghes_init()
-Date: Mon, 23 Oct 2023 12:56:09 +0200
-Message-ID: <20231023104838.343797271@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: [PATCH 6.5 184/241] perf dlfilter: Fix use of addr_location__exit() in dlfilter__object_code()
+Date: Mon, 23 Oct 2023 12:56:10 +0200
+Message-ID: <20231023104838.368460241@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,52 +41,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hanjun Guo <guohanjun@huawei.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit d5921c460e543228d100daf67dac7a03dfaaa40a upstream.
+commit 7a48b58eb5ff3798f0480d2da16bf27df9654fc7 upstream.
 
-acpi_agdi_init() in acpi_arm_init() will register a SDEI event, so
-it needs the SDEI subsystem to be initialized (which is done in
-acpi_ghes_init()) before the AGDI driver probing.
+Stop calling addr_location__exit() when addr_location__init() was not
+called.
 
-In commit fcea0ccf4fd7 ("ACPI: bus: Consolidate all arm specific
-initialisation into acpi_arm_init()"), the acpi_agdi_init() was
-called before acpi_ghes_init() and it causes following failure:
-
-| [    0.515864] sdei: Failed to create event 1073741825: -5
-| [    0.515866] agdi agdi.0: Failed to register for SDEI event 1073741825
-| [    0.515867] agdi: probe of agdi.0 failed with error -5
-| ...
-| [    0.516022] sdei: SDEIv1.0 (0x0) detected in firmware.
-
-Fix it by moving acpi_arm_init() to the place of after
-acpi_ghes_init().
-
-Fixes: fcea0ccf4fd7 ("ACPI: bus: Consolidate all arm specific initialisation into acpi_arm_init()")
-Reported-by: D Scott Phillips <scott@os.amperecomputing.com>
-Signed-off-by: Hanjun Guo <guohanjun@huawei.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Tested-by: D Scott Phillips <scott@os.amperecomputing.com>
-Cc: 6.5+ <stable@vger.kernel.org> # 6.5+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 0dd5041c9a0e ("perf addr_location: Add init/exit/copy functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20230928071605.17624-1-adrian.hunter@intel.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/bus.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/dlfilter.c |   34 ++++++++++++++++------------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
---- a/drivers/acpi/bus.c
-+++ b/drivers/acpi/bus.c
-@@ -1387,10 +1387,10 @@ static int __init acpi_init(void)
- 	acpi_init_ffh();
+--- a/tools/perf/util/dlfilter.c
++++ b/tools/perf/util/dlfilter.c
+@@ -280,13 +280,21 @@ static struct perf_event_attr *dlfilter_
+ 	return &d->evsel->core.attr;
+ }
  
- 	pci_mmcfg_late_init();
--	acpi_arm_init();
- 	acpi_viot_early_init();
- 	acpi_hest_init();
- 	acpi_ghes_init();
-+	acpi_arm_init();
- 	acpi_scan_init();
- 	acpi_ec_init();
- 	acpi_debugfs_init();
++static __s32 code_read(__u64 ip, struct map *map, struct machine *machine, void *buf, __u32 len)
++{
++	u64 offset = map__map_ip(map, ip);
++
++	if (ip + len >= map__end(map))
++		len = map__end(map) - ip;
++
++	return dso__data_read_offset(map__dso(map), machine, offset, buf, len);
++}
++
+ static __s32 dlfilter__object_code(void *ctx, __u64 ip, void *buf, __u32 len)
+ {
+ 	struct dlfilter *d = (struct dlfilter *)ctx;
+ 	struct addr_location *al;
+ 	struct addr_location a;
+-	struct map *map;
+-	u64 offset;
+ 	__s32 ret;
+ 
+ 	if (!d->ctx_valid)
+@@ -296,27 +304,17 @@ static __s32 dlfilter__object_code(void
+ 	if (!al)
+ 		return -1;
+ 
+-	map = al->map;
+-
+-	if (map && ip >= map__start(map) && ip < map__end(map) &&
++	if (al->map && ip >= map__start(al->map) && ip < map__end(al->map) &&
+ 	    machine__kernel_ip(d->machine, ip) == machine__kernel_ip(d->machine, d->sample->ip))
+-		goto have_map;
++		return code_read(ip, al->map, d->machine, buf, len);
+ 
+ 	addr_location__init(&a);
++
+ 	thread__find_map_fb(al->thread, d->sample->cpumode, ip, &a);
+-	if (!a.map) {
+-		ret = -1;
+-		goto out;
+-	}
+-
+-	map = a.map;
+-have_map:
+-	offset = map__map_ip(map, ip);
+-	if (ip + len >= map__end(map))
+-		len = map__end(map) - ip;
+-	ret = dso__data_read_offset(map__dso(map), d->machine, offset, buf, len);
+-out:
++	ret = a.map ? code_read(ip, a.map, d->machine, buf, len) : -1;
++
+ 	addr_location__exit(&a);
++
+ 	return ret;
+ }
+ 
 
 
