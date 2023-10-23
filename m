@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF9D111B0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E64A111B0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGym+Tqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08ED5C433C7;
-	Mon, 23 Oct 2023 11:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+dMkdq1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE902C433C8;
+	Mon, 23 Oct 2023 11:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059372;
-	bh=Z/pKTflNtGeXr2t8UWZdBjF7NhHlzpzvAMri5hezy/s=;
+	s=korg; t=1698059375;
+	bh=/BeDtL9QMqLHaOBXspQ5mjDhTEgDdjaBBREA4263tRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGym+TqpGmMefFeGGUT99kOeWBKhWSNaG9zQWSrWuXTXT5IHdH3Ya15LSVHkZo0cn
-	 4t5H84jOdDbFNqPIi/UFFwaUxzaMg1e9hCr3yXIFrw+V5OHklia4xhFt08xQJXFyFP
-	 +4WD69/IFpALZYd7nkGbRqdYwdvIRBv0Q3vNm08o=
+	b=1+dMkdq1UabI0IYZQY6w6hBFXPzij/GCAcMfnyaCogZQB8i+ragINTpfdGUzoL80e
+	 z9oBL8td/0bMYu0Qkn6x65+4Y8MS0UJOqXhPaTUDx16EFmzdhjsjC5LFfrX3uDggDp
+	 GD2UONkCTCdnFAThj9gXttNJ138OXS17GrWk652Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Amir Tzin <amirtz@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Hannes Reinecke <hare@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 156/241] net/mlx5e: Fix VF representors reporting zero counters to "ip -s" command
-Date: Mon, 23 Oct 2023 12:55:42 +0200
-Message-ID: <20231023104837.675945130@linuxfoundation.org>
+Subject: [PATCH 6.5 157/241] net/tls: split tls_rx_reader_lock
+Date: Mon, 23 Oct 2023 12:55:43 +0200
+Message-ID: <20231023104837.701046060@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,88 +43,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Tzin <amirtz@nvidia.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit 80f1241484dd1b1d4eab1a0211d52ec2bd83e2f1 ]
+[ Upstream commit f9ae3204fb45d0749befc1cdff50f691c7461e5a ]
 
-Although vf_vport entry of struct mlx5e_stats is never updated, its
-values are mistakenly copied to the caller structure in the VF
-representor .ndo_get_stat_64 callback mlx5e_rep_get_stats(). Remove
-redundant entry and use the updated one, rep_stats, instead.
+Split tls_rx_reader_{lock,unlock} into an 'acquire/release' and
+the actual locking part.
+With that we can use the tls_rx_reader_lock in situations where
+the socket is already locked.
 
-Fixes: 64b68e369649 ("net/mlx5: Refactor and expand rep vport stat group")
-Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
-Signed-off-by: Amir Tzin <amirtz@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Suggested-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20230726191556.41714-6-hare@suse.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 419ce133ab92 ("tcp: allow again tcp_disconnect() when threads are waiting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c   |  2 +-
- drivers/net/ethernet/mellanox/mlx5/core/en_stats.h | 11 ++++++++++-
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c    |  5 +++--
- 3 files changed, 14 insertions(+), 4 deletions(-)
+ net/tls/tls_sw.c | 38 ++++++++++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 5bdd2d09a8d5c..0cd44ef190058 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -704,7 +704,7 @@ mlx5e_rep_get_stats(struct net_device *dev, struct rtnl_link_stats64 *stats)
- 
- 	/* update HW stats in background for next time */
- 	mlx5e_queue_update_stats(priv);
--	memcpy(stats, &priv->stats.vf_vport, sizeof(*stats));
-+	mlx5e_stats_copy_rep_stats(stats, &priv->stats.rep_stats);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index e047abc600893..a83f474933033 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1845,13 +1845,10 @@ tls_read_flush_backlog(struct sock *sk, struct tls_prot_info *prot,
+ 	return sk_flush_backlog(sk);
  }
  
- static int mlx5e_rep_change_mtu(struct net_device *netdev, int new_mtu)
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
-index 1ff8a06027dcf..67938b4ea1b90 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
-@@ -475,11 +475,20 @@ struct mlx5e_stats {
- 	struct mlx5e_vnic_env_stats vnic;
- 	struct mlx5e_vport_stats vport;
- 	struct mlx5e_pport_stats pport;
--	struct rtnl_link_stats64 vf_vport;
- 	struct mlx5e_pcie_stats pcie;
- 	struct mlx5e_rep_stats rep_stats;
- };
+-static int tls_rx_reader_lock(struct sock *sk, struct tls_sw_context_rx *ctx,
+-			      bool nonblock)
++static int tls_rx_reader_acquire(struct sock *sk, struct tls_sw_context_rx *ctx,
++				 bool nonblock)
+ {
+ 	long timeo;
+-	int err;
+-
+-	lock_sock(sk);
  
-+static inline void mlx5e_stats_copy_rep_stats(struct rtnl_link_stats64 *vf_vport,
-+					      struct mlx5e_rep_stats *rep_stats)
+ 	timeo = sock_rcvtimeo(sk, nonblock);
+ 
+@@ -1865,26 +1862,30 @@ static int tls_rx_reader_lock(struct sock *sk, struct tls_sw_context_rx *ctx,
+ 			      !READ_ONCE(ctx->reader_present), &wait);
+ 		remove_wait_queue(&ctx->wq, &wait);
+ 
+-		if (timeo <= 0) {
+-			err = -EAGAIN;
+-			goto err_unlock;
+-		}
+-		if (signal_pending(current)) {
+-			err = sock_intr_errno(timeo);
+-			goto err_unlock;
+-		}
++		if (timeo <= 0)
++			return -EAGAIN;
++		if (signal_pending(current))
++			return sock_intr_errno(timeo);
+ 	}
+ 
+ 	WRITE_ONCE(ctx->reader_present, 1);
+ 
+ 	return 0;
++}
+ 
+-err_unlock:
+-	release_sock(sk);
++static int tls_rx_reader_lock(struct sock *sk, struct tls_sw_context_rx *ctx,
++			      bool nonblock)
 +{
-+	memset(vf_vport, 0, sizeof(*vf_vport));
-+	vf_vport->rx_packets = rep_stats->vport_rx_packets;
-+	vf_vport->tx_packets = rep_stats->vport_tx_packets;
-+	vf_vport->rx_bytes = rep_stats->vport_rx_bytes;
-+	vf_vport->tx_bytes = rep_stats->vport_tx_bytes;
++	int err;
++
++	lock_sock(sk);
++	err = tls_rx_reader_acquire(sk, ctx, nonblock);
++	if (err)
++		release_sock(sk);
+ 	return err;
+ }
+ 
+-static void tls_rx_reader_unlock(struct sock *sk, struct tls_sw_context_rx *ctx)
++static void tls_rx_reader_release(struct sock *sk, struct tls_sw_context_rx *ctx)
+ {
+ 	if (unlikely(ctx->reader_contended)) {
+ 		if (wq_has_sleeper(&ctx->wq))
+@@ -1896,6 +1897,11 @@ static void tls_rx_reader_unlock(struct sock *sk, struct tls_sw_context_rx *ctx)
+ 	}
+ 
+ 	WRITE_ONCE(ctx->reader_present, 0);
 +}
 +
- extern mlx5e_stats_grp_t mlx5e_nic_stats_grps[];
- unsigned int mlx5e_nic_stats_grps_num(struct mlx5e_priv *priv);
++static void tls_rx_reader_unlock(struct sock *sk, struct tls_sw_context_rx *ctx)
++{
++	tls_rx_reader_release(sk, ctx);
+ 	release_sock(sk);
+ }
  
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index 4b22a91482cec..5797d8607633e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -4931,7 +4931,8 @@ static int scan_tc_matchall_fdb_actions(struct mlx5e_priv *priv,
- 			if (err)
- 				return err;
- 
--			rpriv->prev_vf_vport_stats = priv->stats.vf_vport;
-+			mlx5e_stats_copy_rep_stats(&rpriv->prev_vf_vport_stats,
-+						   &priv->stats.rep_stats);
- 			break;
- 		default:
- 			NL_SET_ERR_MSG_MOD(extack, "mlx5 supports only police action for matchall");
-@@ -4971,7 +4972,7 @@ void mlx5e_tc_stats_matchall(struct mlx5e_priv *priv,
- 	u64 dbytes;
- 	u64 dpkts;
- 
--	cur_stats = priv->stats.vf_vport;
-+	mlx5e_stats_copy_rep_stats(&cur_stats, &priv->stats.rep_stats);
- 	dpkts = cur_stats.rx_packets - rpriv->prev_vf_vport_stats.rx_packets;
- 	dbytes = cur_stats.rx_bytes - rpriv->prev_vf_vport_stats.rx_bytes;
- 	rpriv->prev_vf_vport_stats = cur_stats;
 -- 
 2.40.1
 
