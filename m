@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6771102
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49321102
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUzWQwcy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52B6C433C8;
-	Mon, 23 Oct 2023 10:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rz1U4rkK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9EB7C433C8;
+	Mon, 23 Oct 2023 10:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058771;
-	bh=J+NlDES5Sv4A2AkphsefrvP/qM67+W1jzLDWEsb5WZY=;
+	s=korg; t=1698058774;
+	bh=xOxnWn4/7FqQ0++R+LMqjd9Z86oyV9zsh7sumx6mZsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iUzWQwcy/3WRTk2I2uQaouun8hNFmWuETIwufkRHA2YIKuUuwFXZEufa+uqrwdpW1
-	 HMAJQ23c0hUbEx2D46vDve7gGTCuUHaBCQpmDVTqeo5yj66AoEUddtp4FLL0xhUbJA
-	 WpUcM2aC3C0eXtNeigVzwAohn4qq5JDFqmwVHB9A=
+	b=Rz1U4rkKq5Da6JanYEzDUKJvTjq5oLLmXl7GmL5aJBu3OUc3bvspPL9MoTV4xgrw2
+	 icEdAUOg+NTEVAMP44Oq9wqsJBxiyAOlN2bTKv44bMJyJUzNjzixpNDKM00JxxPLTU
+	 qVckqwGnIohZZjbnr+Dvg6E0cIzXiRnhPI6ryEBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 4.14 03/66] HID: logitech-hidpp: Fix kernel crash on receiver USB disconnect
-Date: Mon, 23 Oct 2023 12:55:53 +0200
-Message-ID: <20231023104810.906730627@linuxfoundation.org>
+	Martin Fuzzey <martin.fuzzey@flowbird.group>,
+	Lucas Stach <l.stach@pengutronix.de>
+Subject: [PATCH 4.14 04/66] drm: etvnaviv: fix bad backport leading to warning
+Date: Mon, 23 Oct 2023 12:55:54 +0200
+Message-ID: <20231023104810.945378602@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -41,177 +41,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Martin Fuzzey <martin.fuzzey@flowbird.group>
 
-commit dac501397b9d81e4782232c39f94f4307b137452 upstream.
+When updating from 5.4.219 -> 5.4.256 I started getting a runtime warning:
 
-hidpp_connect_event() has *four* time-of-check vs time-of-use (TOCTOU)
-races when it races with itself.
+[   58.229857] ------------[ cut here ]------------
+[   58.234599] WARNING: CPU: 1 PID: 565 at drivers/gpu/drm/drm_gem.c:1020 drm_gem_object_put+0x90/0x98
+[   58.249935] Modules linked in: qmi_wwan cdc_wdm option usb_wwan smsc95xx rsi_usb rsi_91x btrsi ci_hdrc_imx ci_hdrc
+[   58.260499] ueventd: modprobe usb:v2F8Fp7FFFd0200dc00dsc00dp00icFEisc01ip02in00 done
+[   58.288877] CPU: 1 PID: 565 Comm: android.display Not tainted 5.4.256pkn-5.4-bsp-snapshot-svn-7423 #2195
+[   58.288883] Hardware name: Freescale i.MX6 Quad/DualLite (Device Tree)
+[   58.288888] Backtrace:
+[   58.288912] [<c010e784>] (dump_backtrace) from [<c010eaa4>] (show_stack+0x20/0x24)
+[   58.288920]  r7:00000000 r6:60010013 r5:00000000 r4:c14cd224
+[   58.328337] [<c010ea84>] (show_stack) from [<c0cf9ca4>] (dump_stack+0xe8/0x120)
+[   58.335661] [<c0cf9bbc>] (dump_stack) from [<c012efd0>] (__warn+0xd4/0xe8)
+[   58.342542]  r10:eda54000 r9:c06ca53c r8:000003fc r7:00000009 r6:c111ed54 r5:00000000
+[   58.350374]  r4:00000000 r3:76cf564a
+[   58.353957] [<c012eefc>] (__warn) from [<c012f094>] (warn_slowpath_fmt+0xb0/0xc0)
+[   58.361445]  r9:00000009 r8:c06ca53c r7:000003fc r6:c111ed54 r5:c1406048 r4:00000000
+[   58.369198] [<c012efe8>] (warn_slowpath_fmt) from [<c06ca53c>] (drm_gem_object_put+0x90/0x98)
+[   58.377728]  r9:edda7e40 r8:edd39360 r7:ad16e000 r6:edda7eb0 r5:00000000 r4:edaa3200
+[   58.385524] [<c06ca4ac>] (drm_gem_object_put) from [<bf0125a8>] (etnaviv_gem_prime_mmap_obj+0x34/0x3c [etnaviv])
+[   58.395704]  r5:00000000 r4:edaa3200
+[   58.399334] [<bf012574>] (etnaviv_gem_prime_mmap_obj [etnaviv]) from [<bf0143a0>] (etnaviv_gem_mmap+0x3c/0x60 [etnaviv])
+[   58.410205]  r5:edd39360 r4:00000000
+[   58.413816] [<bf014364>] (etnaviv_gem_mmap [etnaviv]) from [<c02c5e08>] (mmap_region+0x37c/0x67c)
+[   58.422689]  r5:ad16d000 r4:edda7eb8
+[   58.426272] [<c02c5a8c>] (mmap_region) from [<c02c6528>] (do_mmap+0x420/0x544)
+[   58.433500]  r10:000000fb r9:000fffff r8:ffffffff r7:00000001 r6:00000003 r5:00000001
+[   58.441330]  r4:00001000
+[   58.443876] [<c02c6108>] (do_mmap) from [<c02a5b2c>] (vm_mmap_pgoff+0xd0/0x100)
+[   58.451190]  r10:eda54040 r9:00001000 r8:00000000 r7:00000000 r6:00000003 r5:c1406048
+[   58.459020]  r4:edb8ff24
+[   58.461561] [<c02a5a5c>] (vm_mmap_pgoff) from [<c02c3ac8>] (ksys_mmap_pgoff+0xdc/0x10c)
+[   58.469570]  r10:000000c0 r9:edb8e000 r8:ed650b40 r7:00000003 r6:00001000 r5:00000000
+[   58.477400]  r4:00000001
+[   58.479941] [<c02c39ec>] (ksys_mmap_pgoff) from [<c02c3b24>] (sys_mmap_pgoff+0x2c/0x34)
+[   58.487949]  r8:c0101224 r7:000000c0 r6:951ece38 r5:00010001 r4:00000065
+[   58.494658] [<c02c3af8>] (sys_mmap_pgoff) from [<c0101000>] (ret_fast_syscall+0x0/0x28)
 
-hidpp_connect_event() primarily runs from a workqueue but it also runs
-on probe() and if a "device-connected" packet is received by the hw
-when the thread running hidpp_connect_event() from probe() is waiting on
-the hw, then a second thread running hidpp_connect_event() will be
-started from the workqueue.
+It looks like this was a backporting error for the upstream patch
+963b2e8c428f "drm/etnaviv: fix reference leak when mmaping imported buffer"
 
-This opens the following races (note the below code is simplified):
+In the 5.4 kernel there are 2 variants of the object put function:
+	drm_gem_object_put() [which requires lock to be held]
+	drm_gem_object_put_unlocked() [which requires lock to be NOT held]
 
-1. Retrieving + printing the protocol (harmless race):
+In later kernels [5.14+] this has gone and there just drm_gem_object_put()
+which requires lock to be NOT held.
 
-	if (!hidpp->protocol_major) {
-		hidpp_root_get_protocol_version()
-		hidpp->protocol_major = response.rap.params[0];
-	}
+So the memory leak pach, which added a call to drm_gem_object_put() was correct
+on newer kernels but wrong on 5.4 and earlier ones.
 
-We can actually see this race hit in the dmesg in the abrt output
-attached to rhbz#2227968:
+So switch back to using the _unlocked variant for old kernels.
+This should only be applied to the 5.4, 4.19 and 4.14 longterm branches;
+mainline and more recent longterms already have the correct fix.
 
-[ 3064.624215] logitech-hidpp-device 0003:046D:4071.0049: HID++ 4.5 device connected.
-[ 3064.658184] logitech-hidpp-device 0003:046D:4071.0049: HID++ 4.5 device connected.
-
-Testing with extra logging added has shown that after this the 2 threads
-take turn grabbing the hw access mutex (send_mutex) so they ping-pong
-through all the other TOCTOU cases managing to hit all of them:
-
-2. Updating the name to the HIDPP name (harmless race):
-
-	if (hidpp->name == hdev->name) {
-		...
-		hidpp->name = new_name;
-	}
-
-3. Initializing the power_supply class for the battery (problematic!):
-
-hidpp_initialize_battery()
-{
-        if (hidpp->battery.ps)
-                return 0;
-
-	probe_battery(); /* Blocks, threads take turns executing this */
-
-	hidpp->battery.desc.properties =
-		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
-
-	hidpp->battery.ps =
-		devm_power_supply_register(&hidpp->hid_dev->dev,
-					   &hidpp->battery.desc, cfg);
-}
-
-4. Creating delayed input_device (potentially problematic):
-
-	if (hidpp->delayed_input)
-		return;
-
-	hidpp->delayed_input = hidpp_allocate_input(hdev);
-
-The really big problem here is 3. Hitting the race leads to the following
-sequence:
-
-	hidpp->battery.desc.properties =
-		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
-
-	hidpp->battery.ps =
-		devm_power_supply_register(&hidpp->hid_dev->dev,
-					   &hidpp->battery.desc, cfg);
-
-	...
-
-	hidpp->battery.desc.properties =
-		devm_kmemdup(dev, hidpp_battery_props, cnt, GFP_KERNEL);
-
-	hidpp->battery.ps =
-		devm_power_supply_register(&hidpp->hid_dev->dev,
-					   &hidpp->battery.desc, cfg);
-
-So now we have registered 2 power supplies for the same battery,
-which looks a bit weird from userspace's pov but this is not even
-the really big problem.
-
-Notice how:
-
-1. This is all devm-maganaged
-2. The hidpp->battery.desc struct is shared between the 2 power supplies
-3. hidpp->battery.desc.properties points to the result from the second
-   devm_kmemdup()
-
-This causes a use after free scenario on USB disconnect of the receiver:
-1. The last registered power supply class device gets unregistered
-2. The memory from the last devm_kmemdup() call gets freed,
-   hidpp->battery.desc.properties now points to freed memory
-3. The first registered power supply class device gets unregistered,
-   this involves sending a remove uevent to userspace which invokes
-   power_supply_uevent() to fill the uevent data
-4. power_supply_uevent() uses hidpp->battery.desc.properties which
-   now points to freed memory leading to backtraces like this one:
-
-Sep 22 20:01:35 eric kernel: BUG: unable to handle page fault for address: ffffb2140e017f08
-...
-Sep 22 20:01:35 eric kernel: Workqueue: usb_hub_wq hub_event
-Sep 22 20:01:35 eric kernel: RIP: 0010:power_supply_uevent+0xee/0x1d0
-...
-Sep 22 20:01:35 eric kernel:  ? asm_exc_page_fault+0x26/0x30
-Sep 22 20:01:35 eric kernel:  ? power_supply_uevent+0xee/0x1d0
-Sep 22 20:01:35 eric kernel:  ? power_supply_uevent+0x10d/0x1d0
-Sep 22 20:01:35 eric kernel:  dev_uevent+0x10f/0x2d0
-Sep 22 20:01:35 eric kernel:  kobject_uevent_env+0x291/0x680
-Sep 22 20:01:35 eric kernel:  power_supply_unregister+0x8e/0xa0
-Sep 22 20:01:35 eric kernel:  release_nodes+0x3d/0xb0
-Sep 22 20:01:35 eric kernel:  devres_release_group+0xfc/0x130
-Sep 22 20:01:35 eric kernel:  hid_device_remove+0x56/0xa0
-Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
-Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
-Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
-Sep 22 20:01:35 eric kernel:  ? __queue_work+0x1df/0x440
-Sep 22 20:01:35 eric kernel:  hid_destroy_device+0x4b/0x60
-Sep 22 20:01:35 eric kernel:  logi_dj_remove+0x9a/0x100 [hid_logitech_dj 5c91534a0ead2b65e04dd799a0437e3b99b21bc4]
-Sep 22 20:01:35 eric kernel:  hid_device_remove+0x44/0xa0
-Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
-Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
-Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
-Sep 22 20:01:35 eric kernel:  ? __queue_work+0x1df/0x440
-Sep 22 20:01:35 eric kernel:  hid_destroy_device+0x4b/0x60
-Sep 22 20:01:35 eric kernel:  usbhid_disconnect+0x47/0x60 [usbhid 727dcc1c0b94e6b4418727a468398ac3bca492f3]
-Sep 22 20:01:35 eric kernel:  usb_unbind_interface+0x90/0x270
-Sep 22 20:01:35 eric kernel:  device_release_driver_internal+0x19f/0x200
-Sep 22 20:01:35 eric kernel:  bus_remove_device+0xc6/0x130
-Sep 22 20:01:35 eric kernel:  device_del+0x15c/0x3f0
-Sep 22 20:01:35 eric kernel:  ? kobject_put+0xa0/0x1d0
-Sep 22 20:01:35 eric kernel:  usb_disable_device+0xcd/0x1e0
-Sep 22 20:01:35 eric kernel:  usb_disconnect+0xde/0x2c0
-Sep 22 20:01:35 eric kernel:  usb_disconnect+0xc3/0x2c0
-Sep 22 20:01:35 eric kernel:  hub_event+0xe80/0x1c10
-
-There have been quite a few bug reports (see Link tags) about this crash.
-
-Fix all the TOCTOU issues, including the really bad power-supply related
-system crash on USB disconnect, by making probe() use the workqueue for
-running hidpp_connect_event() too, so that it can never run more then once.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227221
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227968
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2227968
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2242189
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217412#c58
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231005182638.3776-1-hdegoede@redhat.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Martin Fuzzey <martin.fuzzey@flowbird.group>
+Fixes: 0c6df5364798 "drm/etnaviv: fix reference leak when mmaping imported buffer" [5.4.y]
+Fixes: 0838cb217a52 "drm/etnaviv: fix reference leak when mmaping imported buffer" [4.19.y]
+Fixes: 1c9544fbc979 "drm/etnaviv: fix reference leak when mmaping imported buffer" [4.14.y]
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-logitech-hidpp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -3128,7 +3128,8 @@ static int hidpp_probe(struct hid_device
- 	/* Allow incoming packets */
- 	hid_device_io_start(hdev);
- 
--	hidpp_connect_event(hidpp);
-+	schedule_work(&hidpp->work);
-+	flush_work(&hidpp->work);
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
+@@ -107,7 +107,7 @@ static int etnaviv_gem_prime_mmap_obj(st
+ 	ret = dma_buf_mmap(etnaviv_obj->base.dma_buf, vma, 0);
+ 	if (!ret) {
+ 		/* Drop the reference acquired by drm_gem_mmap_obj(). */
+-		drm_gem_object_put(&etnaviv_obj->base);
++		drm_gem_object_put_unlocked(&etnaviv_obj->base);
+ 	}
  
  	return ret;
- 
 
 
