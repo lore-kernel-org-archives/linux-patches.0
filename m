@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0869B15E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB8C15E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shlfP38m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725C7C433C9;
-	Mon, 23 Oct 2023 11:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vtrx3ZG9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C934C433C8;
+	Mon, 23 Oct 2023 11:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061016;
-	bh=0CwH573QRe9laIkjVbMyk3hvEncudgkMUEzFbmv4SZ0=;
+	s=korg; t=1698061020;
+	bh=5wiBpbB3xN3kP22V6ToPDL7xqqavfHBOqzwkEK0zWVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shlfP38mg8cKwzC3WuacBIWpjGZd+VL2nyaAIlk7Mwa1NSIJf60B2XcRet8wuLxdU
-	 KEIVqMWPnxjEKZSIXbX6muTldQzhy8Ht4u1uAds2hlWKEpQxVXBypqMZkPpPQ+kzZa
-	 dx7rhVHaED6uOyIJrXLR9vX8oiFA9AHuoj/Toymc=
+	b=Vtrx3ZG9IDPZNBgs3muepC1cHSeoh6lZum2o43gbnkZYAXYRq9eVI8sucJbwAY8A0
+	 Ix1i4m8A/b45wk0DE12SUtoyHoJlBUaZntwj9PdwSNAozCuyPa6gnGfyM13/d3/qLa
+	 LT1IrvWPeqcaeZYaifT4vLZoeg5Hub7+/br0rWdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Simon Horman <horms@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 044/137] neighbor: tracing: Move pin6 inside CONFIG_IPV6=y section
-Date: Mon, 23 Oct 2023 12:56:41 +0200
-Message-ID: <20231023104822.517278043@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 018/137] tcp: check mptcp-level constraints for backlog coalescing
+Date: Mon, 23 Oct 2023 12:56:15 +0200
+Message-ID: <20231023104821.561259654@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -37,103 +37,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 2915240eddba96b37de4c7e9a3d0ac6f9548454b upstream.
+commit 6db8a37dfc541e059851652cfd4f0bb13b8ff6af upstream.
 
-When CONFIG_IPV6=n, and building with W=1:
+The MPTCP protocol can acquire the subflow-level socket lock and
+cause the tcp backlog usage. When inserting new skbs into the
+backlog, the stack will try to coalesce them.
 
-    In file included from include/trace/define_trace.h:102,
-		     from include/trace/events/neigh.h:255,
-		     from net/core/net-traces.c:51:
-    include/trace/events/neigh.h: In function ‘trace_event_raw_event_neigh_create’:
-    include/trace/events/neigh.h:42:34: error: variable ‘pin6’ set but not used [-Werror=unused-but-set-variable]
-       42 |                 struct in6_addr *pin6;
-	  |                                  ^~~~
-    include/trace/trace_events.h:402:11: note: in definition of macro ‘DECLARE_EVENT_CLASS’
-      402 |         { assign; }                                                     \
-	  |           ^~~~~~
-    include/trace/trace_events.h:44:30: note: in expansion of macro ‘PARAMS’
-       44 |                              PARAMS(assign),                   \
-	  |                              ^~~~~~
-    include/trace/events/neigh.h:23:1: note: in expansion of macro ‘TRACE_EVENT’
-       23 | TRACE_EVENT(neigh_create,
-	  | ^~~~~~~~~~~
-    include/trace/events/neigh.h:41:9: note: in expansion of macro ‘TP_fast_assign’
-       41 |         TP_fast_assign(
-	  |         ^~~~~~~~~~~~~~
-    In file included from include/trace/define_trace.h:103,
-		     from include/trace/events/neigh.h:255,
-		     from net/core/net-traces.c:51:
-    include/trace/events/neigh.h: In function ‘perf_trace_neigh_create’:
-    include/trace/events/neigh.h:42:34: error: variable ‘pin6’ set but not used [-Werror=unused-but-set-variable]
-       42 |                 struct in6_addr *pin6;
-	  |                                  ^~~~
-    include/trace/perf.h:51:11: note: in definition of macro ‘DECLARE_EVENT_CLASS’
-       51 |         { assign; }                                                     \
-	  |           ^~~~~~
-    include/trace/trace_events.h:44:30: note: in expansion of macro ‘PARAMS’
-       44 |                              PARAMS(assign),                   \
-	  |                              ^~~~~~
-    include/trace/events/neigh.h:23:1: note: in expansion of macro ‘TRACE_EVENT’
-       23 | TRACE_EVENT(neigh_create,
-	  | ^~~~~~~~~~~
-    include/trace/events/neigh.h:41:9: note: in expansion of macro ‘TP_fast_assign’
-       41 |         TP_fast_assign(
-	  |         ^~~~~~~~~~~~~~
+Currently, we have no check in place to ensure that such coalescing
+will respect the MPTCP-level DSS, and that may cause data stream
+corruption, as reported by Christoph.
 
-Indeed, the variable pin6 is declared and initialized unconditionally,
-while it is only used and needlessly re-initialized when support for
-IPv6 is enabled.
+Address the issue by adding the relevant admission check for coalescing
+in tcp_add_backlog().
 
-Fix this by dropping the unused variable initialization, and moving the
-variable declaration inside the existing section protected by a check
-for CONFIG_IPV6.
+Note the issue is not easy to reproduce, as the MPTCP protocol tries
+hard to avoid acquiring the subflow-level socket lock.
 
-Fixes: fc651001d2c5ca4f ("neighbor: Add tracepoint to __neigh_create")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Simon Horman <horms@kernel.org> # build-tested
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 648ef4b88673 ("mptcp: Implement MPTCP receive path")
+Cc: stable@vger.kernel.org
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/420
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20231018-send-net-20231018-v1-2-17ecb002e41d@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/neigh.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_ipv4.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/trace/events/neigh.h
-+++ b/include/trace/events/neigh.h
-@@ -39,7 +39,6 @@ TRACE_EVENT(neigh_create,
- 	),
- 
- 	TP_fast_assign(
--		struct in6_addr *pin6;
- 		__be32 *p32;
- 
- 		__entry->family = tbl->family;
-@@ -47,7 +46,6 @@ TRACE_EVENT(neigh_create,
- 		__entry->entries = atomic_read(&tbl->gc_entries);
- 		__entry->created = n != NULL;
- 		__entry->gc_exempt = exempt_from_gc;
--		pin6 = (struct in6_addr *)__entry->primary_key6;
- 		p32 = (__be32 *)__entry->primary_key4;
- 
- 		if (tbl->family == AF_INET)
-@@ -57,6 +55,8 @@ TRACE_EVENT(neigh_create,
- 
- #if IS_ENABLED(CONFIG_IPV6)
- 		if (tbl->family == AF_INET6) {
-+			struct in6_addr *pin6;
-+
- 			pin6 = (struct in6_addr *)__entry->primary_key6;
- 			*pin6 = *(struct in6_addr *)pkey;
- 		}
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -1863,6 +1863,7 @@ bool tcp_add_backlog(struct sock *sk, st
+ #ifdef CONFIG_TLS_DEVICE
+ 	    tail->decrypted != skb->decrypted ||
+ #endif
++	    !mptcp_skb_can_collapse(tail, skb) ||
+ 	    thtail->doff != th->doff ||
+ 	    memcmp(thtail + 1, th + 1, hdrlen - sizeof(*th)))
+ 		goto no_coalesce;
 
 
