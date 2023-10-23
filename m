@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8947C14A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7680814A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mu3idL4X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029A1C433C8;
-	Mon, 23 Oct 2023 11:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8Wh2H+j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E5AC433C7;
+	Mon, 23 Oct 2023 11:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059719;
-	bh=sINyUQC2Tkad5zrFqeT9R8ku7MZhf5L5u50Q1PsaWBQ=;
+	s=korg; t=1698059722;
+	bh=i6gtapZHBoJ91PbYTHeJpkOmTSPXV1899NQSFHY1n7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mu3idL4XcQGQjfOUzdgJbqmvJUNVTH+t9I/P7yrXWalst00Y4krm9DuqZSVRzAy2D
-	 r9ZurrF8HXh/OlttFc/t3mohycumPbOawMYWpVjoT9+vE5KWM3ZjWJWElyP3gQXySZ
-	 feMYT7aoePrxVs7nVhkN3G3IJhg31p59EMh1K11o=
+	b=k8Wh2H+jJ1nd6tZlWlSFeJneb/2UY0vc+w7ClVryWoqJabYCFLJ1rHXFAqFk2/+8Y
+	 N5XNNcu20fng3mtRHXlk0jWMu9ATRqEvEdVan25I1Ht+8TvupMDHQz3F3sZKBsVX/B
+	 0QqC3vTwXFDDs2Lidkpj5Gf5/EWTECUgx1qAUGUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jordan Rife <jrife@google.com>,
+	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 03/98] net: fix kernel-doc warnings for socket.c
-Date: Mon, 23 Oct 2023 12:55:52 +0200
-Message-ID: <20231023104813.707818167@linuxfoundation.org>
+Subject: [PATCH 4.19 04/98] net: prevent rewrite of msg_name in sock_sendmsg()
+Date: Mon, 23 Oct 2023 12:55:53 +0200
+Message-ID: <20231023104813.746004398@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -42,95 +44,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Jordan Rife <jrife@google.com>
 
-[ Upstream commit 85806af0c6bac0feb777e255a25fd5d0cf6ad38e ]
+[ Upstream commit 86a7e0b69bd5b812e48a20c66c2161744f3caa16 ]
 
-Fix kernel-doc warnings by moving the kernel-doc notation to be
-immediately above the functions that it describes.
+Callers of sock_sendmsg(), and similarly kernel_sendmsg(), in kernel
+space may observe their value of msg_name change in cases where BPF
+sendmsg hooks rewrite the send address. This has been confirmed to break
+NFS mounts running in UDP mode and has the potential to break other
+systems.
 
-Fixes these warnings for sock_sendmsg() and sock_recvmsg():
+This patch:
 
-../net/socket.c:658: warning: Excess function parameter 'sock' description in 'INDIRECT_CALLABLE_DECLARE'
-../net/socket.c:658: warning: Excess function parameter 'msg' description in 'INDIRECT_CALLABLE_DECLARE'
-../net/socket.c:889: warning: Excess function parameter 'sock' description in 'INDIRECT_CALLABLE_DECLARE'
-../net/socket.c:889: warning: Excess function parameter 'msg' description in 'INDIRECT_CALLABLE_DECLARE'
-../net/socket.c:889: warning: Excess function parameter 'flags' description in 'INDIRECT_CALLABLE_DECLARE'
+1) Creates a new function called __sock_sendmsg() with same logic as the
+   old sock_sendmsg() function.
+2) Replaces calls to sock_sendmsg() made by __sys_sendto() and
+   __sys_sendmsg() with __sock_sendmsg() to avoid an unnecessary copy,
+   as these system calls are already protected.
+3) Modifies sock_sendmsg() so that it makes a copy of msg_name if
+   present before passing it down the stack to insulate callers from
+   changes to the send address.
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/netdev/20230912013332.2048422-1-jrife@google.com/
+Fixes: 1cedee13d25a ("bpf: Hooks for sys_sendmsg")
+Cc: stable@vger.kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Jordan Rife <jrife@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 86a7e0b69bd5 ("net: prevent rewrite of msg_name in sock_sendmsg()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/socket.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ net/socket.c | 29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
 diff --git a/net/socket.c b/net/socket.c
-index dc4d4ecd6cea2..adf1fb37c17c6 100644
+index adf1fb37c17c6..d9eaab948d69f 100644
 --- a/net/socket.c
 +++ b/net/socket.c
-@@ -645,14 +645,6 @@ void __sock_tx_timestamp(__u16 tsflags, __u8 *tx_flags)
- }
- EXPORT_SYMBOL(__sock_tx_timestamp);
- 
--/**
-- *	sock_sendmsg - send a message through @sock
-- *	@sock: socket
-- *	@msg: message to send
-- *
-- *	Sends @msg through @sock, passing through LSM.
-- *	Returns the number of bytes sent, or an error code.
-- */
- INDIRECT_CALLABLE_DECLARE(int inet_sendmsg(struct socket *, struct msghdr *,
- 					   size_t));
- static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
-@@ -663,6 +655,14 @@ static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
+@@ -655,6 +655,14 @@ static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
  	return ret;
  }
  
-+/**
-+ *	sock_sendmsg - send a message through @sock
-+ *	@sock: socket
-+ *	@msg: message to send
-+ *
-+ *	Sends @msg through @sock, passing through LSM.
-+ *	Returns the number of bytes sent, or an error code.
-+ */
++static int __sock_sendmsg(struct socket *sock, struct msghdr *msg)
++{
++	int err = security_socket_sendmsg(sock, msg,
++					  msg_data_left(msg));
++
++	return err ?: sock_sendmsg_nosec(sock, msg);
++}
++
+ /**
+  *	sock_sendmsg - send a message through @sock
+  *	@sock: socket
+@@ -665,10 +673,19 @@ static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
+  */
  int sock_sendmsg(struct socket *sock, struct msghdr *msg)
  {
- 	int err = security_socket_sendmsg(sock, msg,
-@@ -853,15 +853,6 @@ void __sock_recv_ts_and_drops(struct msghdr *msg, struct sock *sk,
- }
- EXPORT_SYMBOL_GPL(__sock_recv_ts_and_drops);
+-	int err = security_socket_sendmsg(sock, msg,
+-					  msg_data_left(msg));
++	struct sockaddr_storage *save_addr = (struct sockaddr_storage *)msg->msg_name;
++	struct sockaddr_storage address;
++	int ret;
  
--/**
-- *	sock_recvmsg - receive a message from @sock
-- *	@sock: socket
-- *	@msg: message to receive
-- *	@flags: message flags
-- *
-- *	Receives @msg from @sock, passing through LSM. Returns the total number
-- *	of bytes received, or an error.
-- */
- INDIRECT_CALLABLE_DECLARE(int inet_recvmsg(struct socket *, struct msghdr *,
- 					   size_t , int ));
- static inline int sock_recvmsg_nosec(struct socket *sock, struct msghdr *msg,
-@@ -871,6 +862,15 @@ static inline int sock_recvmsg_nosec(struct socket *sock, struct msghdr *msg,
- 				   msg_data_left(msg), flags);
+-	return err ?: sock_sendmsg_nosec(sock, msg);
++	if (msg->msg_name) {
++		memcpy(&address, msg->msg_name, msg->msg_namelen);
++		msg->msg_name = &address;
++	}
++
++	ret = __sock_sendmsg(sock, msg);
++	msg->msg_name = save_addr;
++
++	return ret;
  }
+ EXPORT_SYMBOL(sock_sendmsg);
  
-+/**
-+ *	sock_recvmsg - receive a message from @sock
-+ *	@sock: socket
-+ *	@msg: message to receive
-+ *	@flags: message flags
-+ *
-+ *	Receives @msg from @sock, passing through LSM. Returns the total number
-+ *	of bytes received, or an error.
-+ */
- int sock_recvmsg(struct socket *sock, struct msghdr *msg, int flags)
- {
- 	int err = security_socket_recvmsg(sock, msg, msg_data_left(msg), flags);
+@@ -975,7 +992,7 @@ static ssize_t sock_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	if (sock->type == SOCK_SEQPACKET)
+ 		msg.msg_flags |= MSG_EOR;
+ 
+-	res = sock_sendmsg(sock, &msg);
++	res = __sock_sendmsg(sock, &msg);
+ 	*from = msg.msg_iter;
+ 	return res;
+ }
+@@ -1908,7 +1925,7 @@ int __sys_sendto(int fd, void __user *buff, size_t len, unsigned int flags,
+ 	if (sock->file->f_flags & O_NONBLOCK)
+ 		flags |= MSG_DONTWAIT;
+ 	msg.msg_flags = flags;
+-	err = sock_sendmsg(sock, &msg);
++	err = __sock_sendmsg(sock, &msg);
+ 
+ out_put:
+ 	fput_light(sock->file, fput_needed);
+@@ -2236,7 +2253,7 @@ static int ___sys_sendmsg(struct socket *sock, struct user_msghdr __user *msg,
+ 		err = sock_sendmsg_nosec(sock, msg_sys);
+ 		goto out_freectl;
+ 	}
+-	err = sock_sendmsg(sock, msg_sys);
++	err = __sock_sendmsg(sock, msg_sys);
+ 	/*
+ 	 * If this is sendmmsg() and sending to current destination address was
+ 	 * successful, remember it.
 -- 
 2.40.1
 
