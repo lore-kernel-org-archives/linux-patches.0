@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7032513FEC
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F52714012
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAFPw/R/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F59C433C8;
-	Mon, 23 Oct 2023 11:08:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D54NzdYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31B3C433C7;
+	Mon, 23 Oct 2023 11:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059286;
-	bh=76C/8/vIbCsMcOp6LBk/nkmDv3YDpPxq1qA3UmfYU3M=;
+	s=korg; t=1698059289;
+	bh=k0kPx7dEa6xOJMdf8fYjYOzJEx9p6GGOBm63XViqet0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CAFPw/R/zWdePsIkal55zR3+SkNNEfsIlfAESK1n88MpXV2ea4HrCH4r0MIVswi+4
-	 y3is/2o53MGZBNli+8cWLZDeo8FDGFaQ6imzKfgOxW5q4kJjG87W1kBk8EQUsQUb3n
-	 3S3mJeMmk9h7Qo8yKXyUQmC3f+hcG9ZL2P+Z1HiE=
+	b=D54NzdYCw6co23l/pg6kzwsPGP1+sYZP0SqIbKGA6tTvTtYJVZObn5vMQ6wWKl9sr
+	 YhWkoRzbmS2JDdel5HsYbX3j/YZCvw7k806Bu87Wbkv65bPbSCX52Pg24QKd1tehQp
+	 Li3v2x+jn2v2W7DdZxqhNboCs89arknwzhnS6bPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Benjamin Coddington <bcodding@redhat.com>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 127/241] SUNRPC/TLS: Lock the lower_xprt during the tls handshake
-Date: Mon, 23 Oct 2023 12:55:13 +0200
-Message-ID: <20231023104836.966801988@linuxfoundation.org>
+Subject: [PATCH 6.5 128/241] nfs: decrement nrequests counter before releasing the req
+Date: Mon, 23 Oct 2023 12:55:14 +0200
+Message-ID: <20231023104836.989758276@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,91 +43,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anna Schumaker <Anna.Schumaker@Netapp.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 26e8bfa30dac2ccd29dd25f391dfc73475c33329 ]
+[ Upstream commit dd1b2026323a2d075ac553cecfd7a0c23c456c59 ]
 
-Otherwise we run the risk of having the lower_xprt freed from underneath
-us, causing an oops that looks like this:
+I hit this panic in testing:
 
-[  224.150698] BUG: kernel NULL pointer dereference, address: 0000000000000018
-[  224.150951] #PF: supervisor read access in kernel mode
-[  224.151117] #PF: error_code(0x0000) - not-present page
-[  224.151278] PGD 0 P4D 0
-[  224.151361] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[  224.151499] CPU: 2 PID: 99 Comm: kworker/u10:6 Not tainted 6.6.0-rc3-g6465e260f487 #41264 a00b0960990fb7bc6d6a330ee03588b67f08a47b
-[  224.151977] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 2/2/2022
-[  224.152216] Workqueue: xprtiod xs_tcp_tls_setup_socket [sunrpc]
-[  224.152434] RIP: 0010:xs_tcp_tls_setup_socket+0x3cc/0x7e0 [sunrpc]
-[  224.152643] Code: 00 00 48 8b 7c 24 08 e9 f3 01 00 00 48 83 7b c0 00 0f 85 d2 01 00 00 49 8d 84 24 f8 05 00 00 48 89 44 24 10 48 8b 00 48 89 c5 <4c> 8b 68 18 66 41 83 3f 0a 75 71 45 31 ff 4c 89 ef 31 f6 e8 5c 76
-[  224.153246] RSP: 0018:ffffb00ec060fd18 EFLAGS: 00010246
-[  224.153427] RAX: 0000000000000000 RBX: ffff8c06c2e53e40 RCX: 0000000000000001
-[  224.153652] RDX: ffff8c073bca2408 RSI: 0000000000000282 RDI: ffff8c06c259ee00
-[  224.153868] RBP: 0000000000000000 R08: ffffffff9da55aa0 R09: 0000000000000001
-[  224.154084] R10: 00000034306c30f1 R11: 0000000000000002 R12: ffff8c06c2e51800
-[  224.154300] R13: ffff8c06c355d400 R14: 0000000004208160 R15: ffff8c06c2e53820
-[  224.154521] FS:  0000000000000000(0000) GS:ffff8c073bd00000(0000) knlGS:0000000000000000
-[  224.154763] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  224.154940] CR2: 0000000000000018 CR3: 0000000062c1e000 CR4: 0000000000750ee0
-[  224.155157] PKRU: 55555554
-[  224.155244] Call Trace:
-[  224.155325]  <TASK>
-[  224.155395]  ? __die_body+0x68/0xb0
-[  224.155507]  ? page_fault_oops+0x34c/0x3a0
-[  224.155635]  ? _raw_spin_unlock_irqrestore+0xe/0x40
-[  224.155793]  ? exc_page_fault+0x7a/0x1b0
-[  224.155916]  ? asm_exc_page_fault+0x26/0x30
-[  224.156047]  ? xs_tcp_tls_setup_socket+0x3cc/0x7e0 [sunrpc ae3a15912ae37fd51dafbdbc2dbd069117f8f5c8]
-[  224.156367]  ? xs_tcp_tls_setup_socket+0x2fe/0x7e0 [sunrpc ae3a15912ae37fd51dafbdbc2dbd069117f8f5c8]
-[  224.156697]  ? __pfx_xs_tls_handshake_done+0x10/0x10 [sunrpc ae3a15912ae37fd51dafbdbc2dbd069117f8f5c8]
-[  224.157013]  process_scheduled_works+0x24e/0x450
-[  224.157158]  worker_thread+0x21c/0x2d0
-[  224.157275]  ? __pfx_worker_thread+0x10/0x10
-[  224.157409]  kthread+0xe8/0x110
-[  224.157510]  ? __pfx_kthread+0x10/0x10
-[  224.157628]  ret_from_fork+0x37/0x50
-[  224.157741]  ? __pfx_kthread+0x10/0x10
-[  224.157859]  ret_from_fork_asm+0x1b/0x30
-[  224.157983]  </TASK>
+[ 6235.500016] run fstests generic/464 at 2023-09-18 22:51:24
+[ 6288.410761] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[ 6288.412174] #PF: supervisor read access in kernel mode
+[ 6288.413160] #PF: error_code(0x0000) - not-present page
+[ 6288.413992] PGD 0 P4D 0
+[ 6288.414603] Oops: 0000 [#1] PREEMPT SMP PTI
+[ 6288.415419] CPU: 0 PID: 340798 Comm: kworker/u18:8 Not tainted 6.6.0-rc1-gdcf620ceebac #95
+[ 6288.416538] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-1.fc38 04/01/2014
+[ 6288.417701] Workqueue: nfsiod rpc_async_release [sunrpc]
+[ 6288.418676] RIP: 0010:nfs_inode_remove_request+0xc8/0x150 [nfs]
+[ 6288.419836] Code: ff ff 48 8b 43 38 48 8b 7b 10 a8 04 74 5b 48 85 ff 74 56 48 8b 07 a9 00 00 08 00 74 58 48 8b 07 f6 c4 10 74 50 e8 c8 44 b3 d5 <48> 8b 00 f0 48 ff 88 30 ff ff ff 5b 5d 41 5c c3 cc cc cc cc 48 8b
+[ 6288.422389] RSP: 0018:ffffbd618353bda8 EFLAGS: 00010246
+[ 6288.423234] RAX: 0000000000000000 RBX: ffff9a29f9a25280 RCX: 0000000000000000
+[ 6288.424351] RDX: ffff9a29f9a252b4 RSI: 000000000000000b RDI: ffffef41448e3840
+[ 6288.425345] RBP: ffffef41448e3840 R08: 0000000000000038 R09: ffffffffffffffff
+[ 6288.426334] R10: 0000000000033f80 R11: ffff9a2a7fffa000 R12: ffff9a29093f98c4
+[ 6288.427353] R13: 0000000000000000 R14: ffff9a29230f62e0 R15: ffff9a29230f62d0
+[ 6288.428358] FS:  0000000000000000(0000) GS:ffff9a2a77c00000(0000) knlGS:0000000000000000
+[ 6288.429513] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 6288.430427] CR2: 0000000000000000 CR3: 0000000264748002 CR4: 0000000000770ef0
+[ 6288.431553] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[ 6288.432715] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[ 6288.433698] PKRU: 55555554
+[ 6288.434196] Call Trace:
+[ 6288.434667]  <TASK>
+[ 6288.435132]  ? __die+0x1f/0x70
+[ 6288.435723]  ? page_fault_oops+0x159/0x450
+[ 6288.436389]  ? try_to_wake_up+0x98/0x5d0
+[ 6288.437044]  ? do_user_addr_fault+0x65/0x660
+[ 6288.437728]  ? exc_page_fault+0x7a/0x180
+[ 6288.438368]  ? asm_exc_page_fault+0x22/0x30
+[ 6288.439137]  ? nfs_inode_remove_request+0xc8/0x150 [nfs]
+[ 6288.440112]  ? nfs_inode_remove_request+0xa0/0x150 [nfs]
+[ 6288.440924]  nfs_commit_release_pages+0x16e/0x340 [nfs]
+[ 6288.441700]  ? __pfx_call_transmit+0x10/0x10 [sunrpc]
+[ 6288.442475]  ? _raw_spin_lock_irqsave+0x23/0x50
+[ 6288.443161]  nfs_commit_release+0x15/0x40 [nfs]
+[ 6288.443926]  rpc_free_task+0x36/0x60 [sunrpc]
+[ 6288.444741]  rpc_async_release+0x29/0x40 [sunrpc]
+[ 6288.445509]  process_one_work+0x171/0x340
+[ 6288.446135]  worker_thread+0x277/0x3a0
+[ 6288.446724]  ? __pfx_worker_thread+0x10/0x10
+[ 6288.447376]  kthread+0xf0/0x120
+[ 6288.447903]  ? __pfx_kthread+0x10/0x10
+[ 6288.448500]  ret_from_fork+0x2d/0x50
+[ 6288.449078]  ? __pfx_kthread+0x10/0x10
+[ 6288.449665]  ret_from_fork_asm+0x1b/0x30
+[ 6288.450283]  </TASK>
+[ 6288.450688] Modules linked in: rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver nfs lockd grace sunrpc nls_iso8859_1 nls_cp437 vfat fat 9p netfs ext4 kvm_intel crc16 mbcache jbd2 joydev kvm xfs irqbypass virtio_net pcspkr net_failover psmouse failover 9pnet_virtio cirrus drm_shmem_helper virtio_balloon drm_kms_helper button evdev drm loop dm_mod zram zsmalloc crct10dif_pclmul crc32_pclmul ghash_clmulni_intel sha512_ssse3 sha512_generic virtio_blk nvme aesni_intel crypto_simd cryptd nvme_core t10_pi i6300esb crc64_rocksoft_generic crc64_rocksoft crc64 virtio_pci virtio virtio_pci_legacy_dev virtio_pci_modern_dev virtio_ring serio_raw btrfs blake2b_generic libcrc32c crc32c_generic crc32c_intel xor raid6_pq autofs4
+[ 6288.460211] CR2: 0000000000000000
+[ 6288.460787] ---[ end trace 0000000000000000 ]---
+[ 6288.461571] RIP: 0010:nfs_inode_remove_request+0xc8/0x150 [nfs]
+[ 6288.462500] Code: ff ff 48 8b 43 38 48 8b 7b 10 a8 04 74 5b 48 85 ff 74 56 48 8b 07 a9 00 00 08 00 74 58 48 8b 07 f6 c4 10 74 50 e8 c8 44 b3 d5 <48> 8b 00 f0 48 ff 88 30 ff ff ff 5b 5d 41 5c c3 cc cc cc cc 48 8b
+[ 6288.465136] RSP: 0018:ffffbd618353bda8 EFLAGS: 00010246
+[ 6288.465963] RAX: 0000000000000000 RBX: ffff9a29f9a25280 RCX: 0000000000000000
+[ 6288.467035] RDX: ffff9a29f9a252b4 RSI: 000000000000000b RDI: ffffef41448e3840
+[ 6288.468093] RBP: ffffef41448e3840 R08: 0000000000000038 R09: ffffffffffffffff
+[ 6288.469121] R10: 0000000000033f80 R11: ffff9a2a7fffa000 R12: ffff9a29093f98c4
+[ 6288.470109] R13: 0000000000000000 R14: ffff9a29230f62e0 R15: ffff9a29230f62d0
+[ 6288.471106] FS:  0000000000000000(0000) GS:ffff9a2a77c00000(0000) knlGS:0000000000000000
+[ 6288.472216] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 6288.473059] CR2: 0000000000000000 CR3: 0000000264748002 CR4: 0000000000770ef0
+[ 6288.474096] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[ 6288.475097] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[ 6288.476148] PKRU: 55555554
+[ 6288.476665] note: kworker/u18:8[340798] exited with irqs disabled
 
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Once we've released "req", it's not safe to dereference it anymore.
+Decrement the nrequests counter before dropping the reference.
+
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Tested-by: Benjamin Coddington <bcodding@redhat.com>
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/nfs/write.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 9f010369100a2..f392718951b1e 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2645,6 +2645,10 @@ static void xs_tcp_tls_setup_socket(struct work_struct *work)
- 	rcu_read_lock();
- 	lower_xprt = rcu_dereference(lower_clnt->cl_xprt);
- 	rcu_read_unlock();
-+
-+	if (wait_on_bit_lock(&lower_xprt->state, XPRT_LOCKED, TASK_KILLABLE))
-+		goto out_unlock;
-+
- 	status = xs_tls_handshake_sync(lower_xprt, &upper_xprt->xprtsec);
- 	if (status) {
- 		trace_rpc_tls_not_started(upper_clnt, upper_xprt);
-@@ -2654,6 +2658,7 @@ static void xs_tcp_tls_setup_socket(struct work_struct *work)
- 	status = xs_tcp_tls_finish_connecting(lower_xprt, upper_transport);
- 	if (status)
- 		goto out_close;
-+	xprt_release_write(lower_xprt, NULL);
+diff --git a/fs/nfs/write.c b/fs/nfs/write.c
+index 8c1ee1a1a28f1..7720b5e43014b 100644
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -802,8 +802,8 @@ static void nfs_inode_remove_request(struct nfs_page *req)
+ 	}
  
- 	trace_rpc_socket_connect(upper_xprt, upper_transport->sock, 0);
- 	if (!xprt_test_and_set_connected(upper_xprt)) {
-@@ -2675,6 +2680,7 @@ static void xs_tcp_tls_setup_socket(struct work_struct *work)
- 	return;
+ 	if (test_and_clear_bit(PG_INODE_REF, &req->wb_flags)) {
+-		nfs_release_request(req);
+ 		atomic_long_dec(&NFS_I(nfs_page_to_inode(req))->nrequests);
++		nfs_release_request(req);
+ 	}
+ }
  
- out_close:
-+	xprt_release_write(lower_xprt, NULL);
- 	rpc_shutdown_client(lower_clnt);
- 
- 	/* xprt_force_disconnect() wakes tasks with a fixed tk_status code.
 -- 
 2.40.1
 
