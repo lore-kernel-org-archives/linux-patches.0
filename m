@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA56168B0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97CC168B0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVMPoQhm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B91DC433C8;
-	Mon, 23 Oct 2023 11:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLhvGYW8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24594C433C8;
+	Mon, 23 Oct 2023 11:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061731;
-	bh=UtZ/XSDVwY08IM+f877s0u+Oc4SGyNd7y6cChupQpw4=;
+	s=korg; t=1698061734;
+	bh=yssk2AKsu2ELNdjaLnUoiIxrQke8YN5NBZXkfB4LzQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rVMPoQhmikrWOq2PDOjzt+r2x2cp7Tg30yDflpVKHTGrDgKm/siNZ4ww+D+noSPTd
-	 r4TRNgPn78ukisUh0w23wrKi0q47/gyxHvbOYBviA0wVnG/05S4B+gRaZPKyLrOi5E
-	 rCPvl/1HX17kKfB56J+YGcDUpMBTbQh6D4Qw3ugc=
+	b=GLhvGYW8R4gFqOeBa5w/DQygtw+xkc3FHS3RGHKN6K9gYcAkq4Dah5XsqFQ9JE4JR
+	 AIgNAT83tZ/apIDYrupjOmjEKxtx5iTq/YZY94csuexZ3WtA0lC8w03djGVfojLCpI
+	 WTjGdLyt/8cvyZmkSxjnEHQJ2jqjfdc/qcVgdNKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 145/202] drm/connector: Give connector sysfs devices there own device_type
-Date: Mon, 23 Oct 2023 12:57:32 +0200
-Message-ID: <20231023104830.775596985@linuxfoundation.org>
+Subject: [PATCH 5.10 146/202] drm/connector: Add a fwnode pointer to drm_connector and register with ACPI (v2)
+Date: Mon, 23 Oct 2023 12:57:33 +0200
+Message-ID: <20231023104830.803647220@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -45,120 +45,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 331de7db3012b8e8e8d77beebc8f743e288d4c42 ]
+[ Upstream commit 48c429c6d18db115c277b75000152d8fa4cd35d0 ]
 
-Give connector sysfs devices there own device_type, this allows us to
-check if a device passed to functions dealing with generic devices is
-a drm_connector or not.
+Add a fwnode pointer to struct drm_connector and register an acpi_bus_type
+for the connectors with the ACPI subsystem (when CONFIG_ACPI is enabled).
 
-A check like this is necessary in the drm_connector_acpi_bus_match()
-function added in the next patch in this series.
+The adding of the fwnode pointer allows drivers to associate a fwnode
+that represents a connector with that connector.
 
+When the new fwnode pointer points to an ACPI-companion, then the new
+acpi_bus_type will cause the ACPI subsys to bind the device instantiated
+for the connector with the fwnode by calling acpi_bind_one(). This will
+result in a firmware_node symlink under /sys/class/card#-<connecter-name>/
+which helps to verify that the fwnode-s and connectors are properly
+matched.
+
+Changes in v2:
+- Make drm_connector_cleanup() call fwnode_handle_put() on
+  connector->fwnode and document this
+
+Co-developed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Tested-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://lore.kernel.org/r/20210817215201.795062-2-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20210817215201.795062-3-hdegoede@redhat.com
 Stable-dep-of: 89434b069e46 ("usb: typec: altmodes/displayport: Signal hpd low when exiting mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_sysfs.c | 50 +++++++++++++++++++++++++++----------
- 1 file changed, 37 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/drm_connector.c |  2 ++
+ drivers/gpu/drm/drm_sysfs.c     | 37 +++++++++++++++++++++++++++++++++
+ include/drm/drm_connector.h     |  8 +++++++
+ 3 files changed, 47 insertions(+)
 
+diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
+index 9c3bbe2c3e6f9..c08501a5620d5 100644
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -471,6 +471,8 @@ void drm_connector_cleanup(struct drm_connector *connector)
+ 	drm_mode_object_unregister(dev, &connector->base);
+ 	kfree(connector->name);
+ 	connector->name = NULL;
++	fwnode_handle_put(connector->fwnode);
++	connector->fwnode = NULL;
+ 	spin_lock_irq(&dev->mode_config.connector_list_lock);
+ 	list_del(&connector->head);
+ 	dev->mode_config.num_connector--;
 diff --git a/drivers/gpu/drm/drm_sysfs.c b/drivers/gpu/drm/drm_sysfs.c
-index f0336c8046392..a3b71478c5904 100644
+index a3b71478c5904..71a0d9596efee 100644
 --- a/drivers/gpu/drm/drm_sysfs.c
 +++ b/drivers/gpu/drm/drm_sysfs.c
-@@ -50,6 +50,10 @@ static struct device_type drm_sysfs_device_minor = {
- 	.name = "drm_minor"
- };
+@@ -10,6 +10,7 @@
+  * Copyright (c) 2003-2004 IBM Corp.
+  */
  
-+static struct device_type drm_sysfs_device_connector = {
-+	.name = "drm_connector",
-+};
-+
++#include <linux/acpi.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/export.h>
+@@ -56,6 +57,39 @@ static struct device_type drm_sysfs_device_connector = {
+ 
  struct class *drm_class;
  
- static char *drm_devnode(struct device *dev, umode_t *mode)
-@@ -102,6 +106,11 @@ void drm_sysfs_destroy(void)
- 	drm_class = NULL;
- }
- 
-+static void drm_sysfs_release(struct device *dev)
++#ifdef CONFIG_ACPI
++static bool drm_connector_acpi_bus_match(struct device *dev)
 +{
-+	kfree(dev);
++	return dev->type == &drm_sysfs_device_connector;
 +}
 +
- /*
-  * Connector properties
-  */
-@@ -274,27 +283,47 @@ static const struct attribute_group *connector_dev_groups[] = {
- int drm_sysfs_connector_add(struct drm_connector *connector)
++static struct acpi_device *drm_connector_acpi_find_companion(struct device *dev)
++{
++	struct drm_connector *connector = to_drm_connector(dev);
++
++	return to_acpi_device_node(connector->fwnode);
++}
++
++static struct acpi_bus_type drm_connector_acpi_bus = {
++	.name = "drm_connector",
++	.match = drm_connector_acpi_bus_match,
++	.find_companion = drm_connector_acpi_find_companion,
++};
++
++static void drm_sysfs_acpi_register(void)
++{
++	register_acpi_bus_type(&drm_connector_acpi_bus);
++}
++
++static void drm_sysfs_acpi_unregister(void)
++{
++	unregister_acpi_bus_type(&drm_connector_acpi_bus);
++}
++#else
++static void drm_sysfs_acpi_register(void) { }
++static void drm_sysfs_acpi_unregister(void) { }
++#endif
++
+ static char *drm_devnode(struct device *dev, umode_t *mode)
  {
- 	struct drm_device *dev = connector->dev;
-+	struct device *kdev;
-+	int r;
- 
- 	if (connector->kdev)
- 		return 0;
- 
--	connector->kdev =
--		device_create_with_groups(drm_class, dev->primary->kdev, 0,
--					  connector, connector_dev_groups,
--					  "card%d-%s", dev->primary->index,
--					  connector->name);
-+	kdev = kzalloc(sizeof(*kdev), GFP_KERNEL);
-+	if (!kdev)
-+		return -ENOMEM;
-+
-+	device_initialize(kdev);
-+	kdev->class = drm_class;
-+	kdev->type = &drm_sysfs_device_connector;
-+	kdev->parent = dev->primary->kdev;
-+	kdev->groups = connector_dev_groups;
-+	kdev->release = drm_sysfs_release;
-+	dev_set_drvdata(kdev, connector);
-+
-+	r = dev_set_name(kdev, "card%d-%s", dev->primary->index, connector->name);
-+	if (r)
-+		goto err_free;
-+
- 	DRM_DEBUG("adding \"%s\" to sysfs\n",
- 		  connector->name);
- 
--	if (IS_ERR(connector->kdev)) {
--		DRM_ERROR("failed to register connector device: %ld\n", PTR_ERR(connector->kdev));
--		return PTR_ERR(connector->kdev);
-+	r = device_add(kdev);
-+	if (r) {
-+		drm_err(dev, "failed to register connector device: %d\n", r);
-+		goto err_free;
+ 	return kasprintf(GFP_KERNEL, "dri/%s", dev_name(dev));
+@@ -89,6 +123,8 @@ int drm_sysfs_init(void)
  	}
  
-+	connector->kdev = kdev;
+ 	drm_class->devnode = drm_devnode;
 +
- 	if (connector->ddc)
- 		return sysfs_create_link(&connector->kdev->kobj,
- 				 &connector->ddc->dev.kobj, "ddc");
++	drm_sysfs_acpi_register();
  	return 0;
-+
-+err_free:
-+	put_device(kdev);
-+	return r;
  }
  
- void drm_sysfs_connector_remove(struct drm_connector *connector)
-@@ -375,11 +404,6 @@ void drm_sysfs_connector_status_event(struct drm_connector *connector,
- }
- EXPORT_SYMBOL(drm_sysfs_connector_status_event);
- 
--static void drm_sysfs_release(struct device *dev)
--{
--	kfree(dev);
--}
--
- struct device *drm_sysfs_minor_alloc(struct drm_minor *minor)
+@@ -101,6 +137,7 @@ void drm_sysfs_destroy(void)
  {
- 	const char *minor_str;
+ 	if (IS_ERR_OR_NULL(drm_class))
+ 		return;
++	drm_sysfs_acpi_unregister();
+ 	class_remove_file(drm_class, &class_attr_version.attr);
+ 	class_destroy(drm_class);
+ 	drm_class = NULL;
+diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+index 928136556174c..ffad68f775cc6 100644
+--- a/include/drm/drm_connector.h
++++ b/include/drm/drm_connector.h
+@@ -1174,6 +1174,14 @@ struct drm_connector {
+ 	struct device *kdev;
+ 	/** @attr: sysfs attributes */
+ 	struct device_attribute *attr;
++	/**
++	 * @fwnode: associated fwnode supplied by platform firmware
++	 *
++	 * Drivers can set this to associate a fwnode with a connector, drivers
++	 * are expected to get a reference on the fwnode when setting this.
++	 * drm_connector_cleanup() will call fwnode_handle_put() on this.
++	 */
++	struct fwnode_handle *fwnode;
+ 
+ 	/**
+ 	 * @head:
 -- 
 2.40.1
 
