@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063DC14282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0545F14282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpZS/K9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73522C433C8;
-	Mon, 23 Oct 2023 11:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PxJn/7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F0BC433C8;
+	Mon, 23 Oct 2023 11:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059423;
-	bh=BNXZOM9BNAdCcf/gx7xOQ76tZevUiuH7WgaAlujbFIw=;
+	s=korg; t=1698059426;
+	bh=XxiFUZWroY6+KyMuiG+hxsVcI8JBDlkyuVgt3TkxPa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpZS/K9VyTsb0RfCHyG55KSmTfbw5j1OoOZ6AjpzJoTXRxj3mW5pD1e6kCRT+EYds
-	 RY/m27/jte0AzxXA3VJBLmC3+f3DvrFAXat56K5xMwcIZbqCmlQIg7ujKsYA6YUkjl
-	 ENGd7pIbpL5BkiGZBuOZv3yFI7Bbigt9dB306vL0=
+	b=2PxJn/7bQha05kxmkNhOE3uM8Je5urahFfg7LZ6pTc7DasqUSmfCHi3XIePq9YRJa
+	 LO1oaU7Ffkffuy3TgbM2vI6I74UPKpMHi5C//JKTTJzPREyGEjRWzcCkY34PYyHAAV
+	 gPlC8s1znpI439XI4mpbKW0gFd65dyJbQ7uDuIE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislaw Kardach <skardach@google.com>,
-	Sven van Ashbrook <svenva@chromium.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.5 172/241] mmc: sdhci-pci-gli: fix LPM negotiation so x86/S0ix SoCs can suspend
-Date: Mon, 23 Oct 2023 12:55:58 +0200
-Message-ID: <20231023104838.075763024@linuxfoundation.org>
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 147/241] Bluetooth: hci_sync: delete CIS in BT_OPEN/CONNECT/BOUND when aborting
+Date: Mon, 23 Oct 2023 12:55:33 +0200
+Message-ID: <20231023104837.453264085@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,167 +42,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven van Ashbrook <svenva@chromium.org>
+From: Pauli Virtanen <pav@iki.fi>
 
-commit 1202d617e3d04c8d27a14ef30784a698c48170b3 upstream.
+[ Upstream commit 2889bdd0a9a195533c2103e7b39ab0de844d72f6 ]
 
-To improve the r/w performance of GL9763E, the current driver inhibits LPM
-negotiation while the device is active.
+Dropped CIS that are in state BT_OPEN/BT_BOUND, and in state BT_CONNECT
+with HCI_CONN_CREATE_CIS unset, should be cleaned up immediately.
+Closing CIS ISO sockets should result to the hci_conn be deleted, so
+that potentially pending CIG removal can run.
 
-This prevents a large number of SoCs from suspending, notably x86 systems
-which commonly use S0ix as the suspend mechanism - for example, Intel
-Alder Lake and Raptor Lake processors.
+hci_abort_conn cannot refer to them by handle, since their handle is
+still unset if Set CIG Parameters has not yet completed.
 
-Failure description:
-1. Userspace initiates s2idle suspend (e.g. via writing to
-   /sys/power/state)
-2. This switches the runtime_pm device state to active, which disables
-   LPM negotiation, then calls the "regular" suspend callback
-3. With LPM negotiation disabled, the bus cannot enter low-power state
-4. On a large number of SoCs, if the bus not in a low-power state, S0ix
-   cannot be entered, which in turn prevents the SoC from entering
-   suspend.
+This fixes CIS not being terminated if the socket is shut down
+immediately after connection, so that the hci_abort_conn runs before Set
+CIG Parameters completes. See new BlueZ test "ISO Connect Close - Success"
 
-Fix by re-enabling LPM negotiation in the device's suspend callback.
-
-Suggested-by: Stanislaw Kardach <skardach@google.com>
-Fixes: f9e5b33934ce ("mmc: host: Improve I/O read/write performance for GL9763E")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sven van Ashbrook <svenva@chromium.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20230831160055.v3.1.I7ed1ca09797be2dd76ca914c57d88b32d24dac88@changeid
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: a239110ee8e0 ("Bluetooth: hci_sync: always check if connection is alive before deleting")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-pci-gli.c |  104 ++++++++++++++++++++++++---------------
- 1 file changed, 66 insertions(+), 38 deletions(-)
+ net/bluetooth/hci_sync.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/mmc/host/sdhci-pci-gli.c
-+++ b/drivers/mmc/host/sdhci-pci-gli.c
-@@ -1144,42 +1144,6 @@ static u32 sdhci_gl9750_readl(struct sdh
- 	return value;
- }
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 73cdd051dd464..d21127e992c0f 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5302,6 +5302,10 @@ static int hci_connect_cancel_sync(struct hci_dev *hdev, struct hci_conn *conn,
+ 		if (test_bit(HCI_CONN_CREATE_CIS, &conn->flags))
+ 			return hci_disconnect_sync(hdev, conn, reason);
  
--#ifdef CONFIG_PM_SLEEP
--static int sdhci_pci_gli_resume(struct sdhci_pci_chip *chip)
--{
--	struct sdhci_pci_slot *slot = chip->slots[0];
--
--	pci_free_irq_vectors(slot->chip->pdev);
--	gli_pcie_enable_msi(slot);
--
--	return sdhci_pci_resume_host(chip);
--}
--
--static int sdhci_cqhci_gli_resume(struct sdhci_pci_chip *chip)
--{
--	struct sdhci_pci_slot *slot = chip->slots[0];
--	int ret;
--
--	ret = sdhci_pci_gli_resume(chip);
--	if (ret)
--		return ret;
--
--	return cqhci_resume(slot->host->mmc);
--}
--
--static int sdhci_cqhci_gli_suspend(struct sdhci_pci_chip *chip)
--{
--	struct sdhci_pci_slot *slot = chip->slots[0];
--	int ret;
--
--	ret = cqhci_suspend(slot->host->mmc);
--	if (ret)
--		return ret;
--
--	return sdhci_suspend_host(slot->host);
--}
--#endif
--
- static void gl9763e_hs400_enhanced_strobe(struct mmc_host *mmc,
- 					  struct mmc_ios *ios)
- {
-@@ -1420,6 +1384,70 @@ static int gl9763e_runtime_resume(struct
- }
- #endif
- 
-+#ifdef CONFIG_PM_SLEEP
-+static int sdhci_pci_gli_resume(struct sdhci_pci_chip *chip)
-+{
-+	struct sdhci_pci_slot *slot = chip->slots[0];
++		/* CIS with no Create CIS sent have nothing to cancel */
++		if (bacmp(&conn->dst, BDADDR_ANY))
++			return HCI_ERROR_LOCAL_HOST_TERM;
 +
-+	pci_free_irq_vectors(slot->chip->pdev);
-+	gli_pcie_enable_msi(slot);
-+
-+	return sdhci_pci_resume_host(chip);
-+}
-+
-+static int gl9763e_resume(struct sdhci_pci_chip *chip)
-+{
-+	struct sdhci_pci_slot *slot = chip->slots[0];
-+	int ret;
-+
-+	ret = sdhci_pci_gli_resume(chip);
-+	if (ret)
-+		return ret;
-+
-+	ret = cqhci_resume(slot->host->mmc);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Disable LPM negotiation to bring device back in sync
-+	 * with its runtime_pm state.
-+	 */
-+	gl9763e_set_low_power_negotiation(slot, false);
-+
-+	return 0;
-+}
-+
-+static int gl9763e_suspend(struct sdhci_pci_chip *chip)
-+{
-+	struct sdhci_pci_slot *slot = chip->slots[0];
-+	int ret;
-+
-+	/*
-+	 * Certain SoCs can suspend only with the bus in low-
-+	 * power state, notably x86 SoCs when using S0ix.
-+	 * Re-enable LPM negotiation to allow entering L1 state
-+	 * and entering system suspend.
-+	 */
-+	gl9763e_set_low_power_negotiation(slot, true);
-+
-+	ret = cqhci_suspend(slot->host->mmc);
-+	if (ret)
-+		goto err_suspend;
-+
-+	ret = sdhci_suspend_host(slot->host);
-+	if (ret)
-+		goto err_suspend_host;
-+
-+	return 0;
-+
-+err_suspend_host:
-+	cqhci_resume(slot->host->mmc);
-+err_suspend:
-+	gl9763e_set_low_power_negotiation(slot, false);
-+	return ret;
-+}
-+#endif
-+
- static int gli_probe_slot_gl9763e(struct sdhci_pci_slot *slot)
- {
- 	struct pci_dev *pdev = slot->chip->pdev;
-@@ -1527,8 +1555,8 @@ const struct sdhci_pci_fixes sdhci_gl976
- 	.probe_slot	= gli_probe_slot_gl9763e,
- 	.ops            = &sdhci_gl9763e_ops,
- #ifdef CONFIG_PM_SLEEP
--	.resume		= sdhci_cqhci_gli_resume,
--	.suspend	= sdhci_cqhci_gli_suspend,
-+	.resume		= gl9763e_resume,
-+	.suspend	= gl9763e_suspend,
- #endif
- #ifdef CONFIG_PM
- 	.runtime_suspend = gl9763e_runtime_suspend,
+ 		/* There is no way to cancel a BIS without terminating the BIG
+ 		 * which is done later on connection cleanup.
+ 		 */
+@@ -5384,13 +5388,11 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
+ 		err = hci_reject_conn_sync(hdev, conn, reason);
+ 		break;
+ 	case BT_OPEN:
+-		/* Cleanup bises that failed to be established */
+-		if (test_and_clear_bit(HCI_CONN_BIG_SYNC_FAILED, &conn->flags)) {
+-			hci_dev_lock(hdev);
+-			hci_conn_failed(conn, reason);
+-			hci_dev_unlock(hdev);
+-		}
+-		break;
++	case BT_BOUND:
++		hci_dev_lock(hdev);
++		hci_conn_failed(conn, reason);
++		hci_dev_unlock(hdev);
++		return 0;
+ 	default:
+ 		hci_dev_lock(hdev);
+ 		conn->state = BT_CLOSED;
+-- 
+2.40.1
+
 
 
