@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D12814A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8947C14A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5PNt/wr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194CFC433C8;
-	Mon, 23 Oct 2023 11:15:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mu3idL4X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029A1C433C8;
+	Mon, 23 Oct 2023 11:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059716;
-	bh=zHlveqMFY3ASo9XyzXYO/IfV2A6BEWPx8yA9TMv2wt8=;
+	s=korg; t=1698059719;
+	bh=sINyUQC2Tkad5zrFqeT9R8ku7MZhf5L5u50Q1PsaWBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m5PNt/wrR0+BytJ57qGanoRDPbbdlNxDhi8rAX/ZYjgZSwAiLXGCO0IbuXxpYf/jm
-	 hccu5DjL0dPd6q6kaZW7T3LWn78m4EeqmWXN1lkNnDZ0NmnN/OPzQ8Y3mkPDoijNfi
-	 bls30KnX+YpjNgpZZifWe+/PGNaLP/tvQPqP5h+8=
+	b=mu3idL4XcQGQjfOUzdgJbqmvJUNVTH+t9I/P7yrXWalst00Y4krm9DuqZSVRzAy2D
+	 r9ZurrF8HXh/OlttFc/t3mohycumPbOawMYWpVjoT9+vE5KWM3ZjWJWElyP3gQXySZ
+	 feMYT7aoePrxVs7nVhkN3G3IJhg31p59EMh1K11o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
-	Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
-Subject: [PATCH 4.19 28/98] mcb: remove is_added flag from mcb_device struct
-Date: Mon, 23 Oct 2023 12:56:17 +0200
-Message-ID: <20231023104814.578935044@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 03/98] net: fix kernel-doc warnings for socket.c
+Date: Mon, 23 Oct 2023 12:55:52 +0200
+Message-ID: <20231023104813.707818167@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -42,79 +42,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 0f28ada1fbf0054557cddcdb93ad17f767105208 upstream.
+[ Upstream commit 85806af0c6bac0feb777e255a25fd5d0cf6ad38e ]
 
-When calling mcb_bus_add_devices(), both mcb devices and the mcb
-bus will attempt to attach a device to a driver because they share
-the same bus_type. This causes an issue when trying to cast the
-container of the device to mcb_device struct using to_mcb_device(),
-leading to a wrong cast when the mcb_bus is added. A crash occurs
-when freing the ida resources as the bus numbering of mcb_bus gets
-confused with the is_added flag on the mcb_device struct.
+Fix kernel-doc warnings by moving the kernel-doc notation to be
+immediately above the functions that it describes.
 
-The only reason for this cast was to keep an is_added flag on the
-mcb_device struct that does not seem necessary. The function
-device_attach() handles already bound devices and the mcb subsystem
-does nothing special with this is_added flag so remove it completely.
+Fixes these warnings for sock_sendmsg() and sock_recvmsg():
 
-Fixes: 18d288198099 ("mcb: Correctly initialize the bus's device")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Co-developed-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
-Signed-off-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
-Link: https://lore.kernel.org/r/20230906114901.63174-2-JoseJavier.Rodriguez@duagon.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+../net/socket.c:658: warning: Excess function parameter 'sock' description in 'INDIRECT_CALLABLE_DECLARE'
+../net/socket.c:658: warning: Excess function parameter 'msg' description in 'INDIRECT_CALLABLE_DECLARE'
+../net/socket.c:889: warning: Excess function parameter 'sock' description in 'INDIRECT_CALLABLE_DECLARE'
+../net/socket.c:889: warning: Excess function parameter 'msg' description in 'INDIRECT_CALLABLE_DECLARE'
+../net/socket.c:889: warning: Excess function parameter 'flags' description in 'INDIRECT_CALLABLE_DECLARE'
+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 86a7e0b69bd5 ("net: prevent rewrite of msg_name in sock_sendmsg()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mcb/mcb-core.c  |   10 +++-------
- drivers/mcb/mcb-parse.c |    2 --
- include/linux/mcb.h     |    1 -
- 3 files changed, 3 insertions(+), 10 deletions(-)
+ net/socket.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
---- a/drivers/mcb/mcb-core.c
-+++ b/drivers/mcb/mcb-core.c
-@@ -392,17 +392,13 @@ EXPORT_SYMBOL_GPL(mcb_free_dev);
- 
- static int __mcb_bus_add_devices(struct device *dev, void *data)
- {
--	struct mcb_device *mdev = to_mcb_device(dev);
- 	int retval;
- 
--	if (mdev->is_added)
--		return 0;
--
- 	retval = device_attach(dev);
--	if (retval < 0)
-+	if (retval < 0) {
- 		dev_err(dev, "Error adding device (%d)\n", retval);
--
--	mdev->is_added = true;
-+		return retval;
-+	}
- 
- 	return 0;
+diff --git a/net/socket.c b/net/socket.c
+index dc4d4ecd6cea2..adf1fb37c17c6 100644
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -645,14 +645,6 @@ void __sock_tx_timestamp(__u16 tsflags, __u8 *tx_flags)
  }
---- a/drivers/mcb/mcb-parse.c
-+++ b/drivers/mcb/mcb-parse.c
-@@ -98,8 +98,6 @@ static int chameleon_parse_gdd(struct mc
- 	mdev->mem.end = mdev->mem.start + size - 1;
- 	mdev->mem.flags = IORESOURCE_MEM;
+ EXPORT_SYMBOL(__sock_tx_timestamp);
  
--	mdev->is_added = false;
--
- 	ret = mcb_device_register(bus, mdev);
- 	if (ret < 0)
- 		goto err;
---- a/include/linux/mcb.h
-+++ b/include/linux/mcb.h
-@@ -66,7 +66,6 @@ static inline struct mcb_bus *to_mcb_bus
- struct mcb_device {
- 	struct device dev;
- 	struct mcb_bus *bus;
--	bool is_added;
- 	struct mcb_driver *driver;
- 	u16 id;
- 	int inst;
+-/**
+- *	sock_sendmsg - send a message through @sock
+- *	@sock: socket
+- *	@msg: message to send
+- *
+- *	Sends @msg through @sock, passing through LSM.
+- *	Returns the number of bytes sent, or an error code.
+- */
+ INDIRECT_CALLABLE_DECLARE(int inet_sendmsg(struct socket *, struct msghdr *,
+ 					   size_t));
+ static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
+@@ -663,6 +655,14 @@ static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
+ 	return ret;
+ }
+ 
++/**
++ *	sock_sendmsg - send a message through @sock
++ *	@sock: socket
++ *	@msg: message to send
++ *
++ *	Sends @msg through @sock, passing through LSM.
++ *	Returns the number of bytes sent, or an error code.
++ */
+ int sock_sendmsg(struct socket *sock, struct msghdr *msg)
+ {
+ 	int err = security_socket_sendmsg(sock, msg,
+@@ -853,15 +853,6 @@ void __sock_recv_ts_and_drops(struct msghdr *msg, struct sock *sk,
+ }
+ EXPORT_SYMBOL_GPL(__sock_recv_ts_and_drops);
+ 
+-/**
+- *	sock_recvmsg - receive a message from @sock
+- *	@sock: socket
+- *	@msg: message to receive
+- *	@flags: message flags
+- *
+- *	Receives @msg from @sock, passing through LSM. Returns the total number
+- *	of bytes received, or an error.
+- */
+ INDIRECT_CALLABLE_DECLARE(int inet_recvmsg(struct socket *, struct msghdr *,
+ 					   size_t , int ));
+ static inline int sock_recvmsg_nosec(struct socket *sock, struct msghdr *msg,
+@@ -871,6 +862,15 @@ static inline int sock_recvmsg_nosec(struct socket *sock, struct msghdr *msg,
+ 				   msg_data_left(msg), flags);
+ }
+ 
++/**
++ *	sock_recvmsg - receive a message from @sock
++ *	@sock: socket
++ *	@msg: message to receive
++ *	@flags: message flags
++ *
++ *	Receives @msg from @sock, passing through LSM. Returns the total number
++ *	of bytes received, or an error.
++ */
+ int sock_recvmsg(struct socket *sock, struct msghdr *msg, int flags)
+ {
+ 	int err = security_socket_recvmsg(sock, msg, msg_data_left(msg), flags);
+-- 
+2.40.1
+
 
 
