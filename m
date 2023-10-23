@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB46814282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2DE14282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sU5hZPWw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27158C433C8;
-	Mon, 23 Oct 2023 11:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZaBPdHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E29C433C7;
+	Mon, 23 Oct 2023 11:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059813;
-	bh=j+DRAatsckkGMEMhFH7FHNVsoZrr0ryZhIAmBjF3cLc=;
+	s=korg; t=1698059816;
+	bh=2mpMTdgCw5RbC3FnPtG8/sOzrzhrzPvAoUoqsx2XzSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sU5hZPWw0O2to5Vwx5EsFYSzOhRCcmNQ0Gtsimf9VKndJPI8308K02ZgaQiCMMjqY
-	 UYDt3U3uku/eGPx+V8tHnTkKsIyPyz//JG1RPB8IejSf7W/Tx130zCtg/Eoz6QZWnd
-	 bIaJb05IQRKGwFsf2N+6VGm2jbRJ54Y2qgmxGJIc=
+	b=HZaBPdHJVviWUh2qENtp3BQ/R/ECE0EO3tdgrsJcipfwtKP1Rro0Ql/pTQAdVzWAJ
+	 fr3yT5Fc4a3zeMOo62VifCeG8BeaZz+lWsvvClpsT+F75t3Tx0cZmMF+RTy0PVuH5C
+	 Z7Abx6vVEmHgqQ5SPuwvG6tRcmqvVYxXqM/fHzBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 4.19 34/98] pinctrl: avoid unsafe code pattern in find_pinctrl()
-Date: Mon, 23 Oct 2023 12:56:23 +0200
-Message-ID: <20231023104814.801160994@linuxfoundation.org>
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 4.19 35/98] x86/cpu: Fix AMD erratum #1485 on Zen4-based CPUs
+Date: Mon, 23 Oct 2023 12:56:24 +0200
+Message-ID: <20231023104814.837660899@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -35,69 +36,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit c153a4edff6ab01370fcac8e46f9c89cca1060c2 upstream.
+commit f454b18e07f518bcd0c05af17a2239138bff52de upstream.
 
-The code in find_pinctrl() takes a mutex and traverses a list of pinctrl
-structures. Later the caller bumps up reference count on the found
-structure. Such pattern is not safe as pinctrl that was found may get
-deleted before the caller gets around to increasing the reference count.
+Fix erratum #1485 on Zen4 parts where running with STIBP disabled can
+cause an #UD exception. The performance impact of the fix is negligible.
 
-Fix this by taking the reference count in find_pinctrl(), while it still
-holds the mutex.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://lore.kernel.org/r/ZQs1RgTKg6VJqmPs@google.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reported-by: René Rebe <rene@exactcode.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: René Rebe <rene@exactcode.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/D99589F4-BC5D-430B-87B2-72C20370CF57@exactcode.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/core.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ arch/x86/include/asm/msr-index.h |    4 ++++
+ arch/x86/kernel/cpu/amd.c        |    8 ++++++++
+ 2 files changed, 12 insertions(+)
 
---- a/drivers/pinctrl/core.c
-+++ b/drivers/pinctrl/core.c
-@@ -1001,17 +1001,20 @@ static int add_setting(struct pinctrl *p
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -446,6 +446,10 @@
  
- static struct pinctrl *find_pinctrl(struct device *dev)
- {
--	struct pinctrl *p;
-+	struct pinctrl *entry, *p = NULL;
+ #define MSR_AMD64_VIRT_SPEC_CTRL	0xc001011f
  
- 	mutex_lock(&pinctrl_list_mutex);
--	list_for_each_entry(p, &pinctrl_list, node)
--		if (p->dev == dev) {
--			mutex_unlock(&pinctrl_list_mutex);
--			return p;
++/* Zen4 */
++#define MSR_ZEN4_BP_CFG			0xc001102e
++#define MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT 5
 +
-+	list_for_each_entry(entry, &pinctrl_list, node) {
-+		if (entry->dev == dev) {
-+			p = entry;
-+			kref_get(&p->users);
-+			break;
- 		}
-+	}
+ /* Fam 17h MSRs */
+ #define MSR_F17H_IRPERF			0xc00000e9
  
- 	mutex_unlock(&pinctrl_list_mutex);
--	return NULL;
-+	return p;
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -72,6 +72,10 @@ static const int amd_zenbleed[] =
+ 			   AMD_MODEL_RANGE(0x17, 0x90, 0x0, 0x91, 0xf),
+ 			   AMD_MODEL_RANGE(0x17, 0xa0, 0x0, 0xaf, 0xf));
+ 
++static const int amd_erratum_1485[] =
++	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x19, 0x10, 0x0, 0x1f, 0xf),
++			   AMD_MODEL_RANGE(0x19, 0x60, 0x0, 0xaf, 0xf));
++
+ static bool cpu_has_amd_erratum(struct cpuinfo_x86 *cpu, const int *erratum)
+ {
+ 	int osvw_id = *erratum++;
+@@ -1122,6 +1126,10 @@ static void init_amd(struct cpuinfo_x86
+ 	check_null_seg_clears_base(c);
+ 
+ 	zenbleed_check(c);
++
++	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) &&
++	     cpu_has_amd_erratum(c, amd_erratum_1485))
++		msr_set_bit(MSR_ZEN4_BP_CFG, MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT);
  }
  
- static void pinctrl_free(struct pinctrl *p, bool inlist);
-@@ -1120,7 +1123,6 @@ struct pinctrl *pinctrl_get(struct devic
- 	p = find_pinctrl(dev);
- 	if (p) {
- 		dev_dbg(dev, "obtain a copy of previously claimed pinctrl\n");
--		kref_get(&p->users);
- 		return p;
- 	}
- 
+ #ifdef CONFIG_X86_32
 
 
