@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B4113FEC
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C824213FEC
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDacdS3j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526D4C433C7;
-	Mon, 23 Oct 2023 11:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5Qbccl+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C5D6C433C9;
+	Mon, 23 Oct 2023 11:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059271;
-	bh=DaLQmYbwrZNzHMtpYpKmg/XUl+1hn9EacilLDn3pwZM=;
+	s=korg; t=1698059274;
+	bh=+5zHCygy55EN3OtOF8NTFleAzbWg0m/KEJk0GTYV228=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VDacdS3jBnfDpaXRodvcvAQHjlWGf6wT7k9mN0r++Ahkmmpd5nO5EA8DoNzaoocwz
-	 djLfszNdUPHAwlruWOkNeZm4kF9GdQfgm310acA8hRm0dgbunaxwSToVYBs87Vz3H9
-	 J1HCT/1PNDi8fmsMbdGxvOCnXIkT7FDr36/lfB+Y=
+	b=a5Qbccl+Tb/0RZzVhcSqvSl7Xqt1DmeuUgusvxjcYQ2UN6pnsCtC97Y2jqWM0hgc7
+	 lHHOK9SCShxUa/NT+CHQ5qSB5AIaYKlfh1xaTgnD+RXn61GOK58oGsd5S9aJSSi2qm
+	 uOxvv+OMPGdoCvp2RDpBMTZ/MsYXi1YjkYTNi+0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.5 095/241] net: check for altname conflicts when changing netdevs netns
-Date: Mon, 23 Oct 2023 12:54:41 +0200
-Message-ID: <20231023104836.215988430@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.5 086/241] netfilter: nf_tables: do not remove elements if set backend implements .abort
+Date: Mon, 23 Oct 2023 12:54:32 +0200
+Message-ID: <20231023104835.984142674@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,87 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 7663d522099ecc464512164e660bc771b2ff7b64 upstream.
+commit ebd032fa881882fef2acb9da1bbde48d8233241d upstream.
 
-It's currently possible to create an altname conflicting
-with an altname or real name of another device by creating
-it in another netns and moving it over:
+pipapo set backend maintains two copies of the datastructure, removing
+the elements from the copy that is going to be discarded slows down
+the abort path significantly, from several minutes to few seconds after
+this patch.
 
- [ ~]$ ip link add dev eth0 type dummy
-
- [ ~]$ ip netns add test
- [ ~]$ ip -netns test link add dev ethX netns test type dummy
- [ ~]$ ip -netns test link property add dev ethX altname eth0
- [ ~]$ ip -netns test link set dev ethX netns 1
-
- [ ~]$ ip link
- ...
- 3: eth0: <BROADCAST,NOARP> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-     link/ether 02:40:88:62:ec:b8 brd ff:ff:ff:ff:ff:ff
- ...
- 5: ethX: <BROADCAST,NOARP> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-     link/ether 26:b7:28:78:38:0f brd ff:ff:ff:ff:ff:ff
-     altname eth0
-
-Create a macro for walking the altnames, this hopefully makes
-it clearer that the list we walk contains only altnames.
-Which is otherwise not entirely intuitive.
-
-Fixes: 36fbf1e52bd3 ("net: rtnetlink: add linkprop commands to add and delete alternative ifnames")
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 212ed75dc5fb ("netfilter: nf_tables: integrate pipapo into commit protocol")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev.c |    9 ++++++++-
- net/core/dev.h |    3 +++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -1079,7 +1079,8 @@ static int __dev_alloc_name(struct net *
- 
- 		for_each_netdev(net, d) {
- 			struct netdev_name_node *name_node;
--			list_for_each_entry(name_node, &d->name_node->list, list) {
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -10336,7 +10336,10 @@ static int __nf_tables_abort(struct net
+ 				break;
+ 			}
+ 			te = (struct nft_trans_elem *)trans->data;
+-			nft_setelem_remove(net, te->set, &te->elem);
++			if (!te->set->ops->abort ||
++			    nft_setelem_is_catchall(te->set, &te->elem))
++				nft_setelem_remove(net, te->set, &te->elem);
 +
-+			netdev_for_each_altname(d, name_node) {
- 				if (!sscanf(name_node->name, name, &i))
- 					continue;
- 				if (i < 0 || i >= max_netdevices)
-@@ -10968,6 +10969,7 @@ EXPORT_SYMBOL(unregister_netdev);
- int __dev_change_net_namespace(struct net_device *dev, struct net *net,
- 			       const char *pat, int new_ifindex)
- {
-+	struct netdev_name_node *name_node;
- 	struct net *net_old = dev_net(dev);
- 	char new_name[IFNAMSIZ] = {};
- 	int err, new_nsid;
-@@ -11000,6 +11002,11 @@ int __dev_change_net_namespace(struct ne
- 		if (err < 0)
- 			goto out;
- 	}
-+	/* Check that none of the altnames conflicts. */
-+	err = -EEXIST;
-+	netdev_for_each_altname(dev, name_node)
-+		if (netdev_name_in_use(net, name_node->name))
-+			goto out;
- 
- 	/* Check that new_ifindex isn't used yet. */
- 	err = -EBUSY;
---- a/net/core/dev.h
-+++ b/net/core/dev.h
-@@ -62,6 +62,9 @@ struct netdev_name_node {
- int netdev_get_name(struct net *net, char *name, int ifindex);
- int dev_change_name(struct net_device *dev, const char *newname);
- 
-+#define netdev_for_each_altname(dev, namenode)				\
-+	list_for_each_entry((namenode), &(dev)->name_node->list, list)
-+
- int netdev_name_node_alt_create(struct net_device *dev, const char *name);
- int netdev_name_node_alt_destroy(struct net_device *dev, const char *name);
+ 			if (!nft_setelem_is_catchall(te->set, &te->elem))
+ 				atomic_dec(&te->set->nelems);
  
 
 
