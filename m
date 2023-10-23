@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3E915E80;
-	Mon, 23 Oct 2023 11:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15796125BF
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9JrcLm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45013C433C8;
-	Mon, 23 Oct 2023 11:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQsD5Zqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4829EC433C8;
+	Mon, 23 Oct 2023 11:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060356;
-	bh=xXvY4xmd2AnMqShJdWovg+G43rAKn8hdI+9YL5/JR7g=;
+	s=korg; t=1698060359;
+	bh=W+Rn5eM4JmhrYnnJpj1hOiAy14j9eXh75Yjssh8UqME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9JrcLm6joP5AnMckmalDI0P/9GR9I55kAMQ9ce8vpyC9dRPd4k7r12UJI36no4cP
-	 Na4N3JUxTl6s3tXCDNFiG6hPUfdXzraqu7ZCFUBhgqQIvQEREn/XkJ54k5wKbVjTFz
-	 li5gcjJ7t0U8wjlMgGcKJKO3onXo/2qJMD3sxC1A=
+	b=bQsD5ZqsiZPbXW8Q9KlK/TFXy55Y81SW2s0mvOy5aytluIxJAZtchZp7Uw6U9jaJw
+	 6ATGYjNHLRtPoJTC3rbqpTymHFqoWSCURKnQBsNm+4dlt+JYvK+hJebHqeZCfb7wFN
+	 Lh/ZPQRkk1eEOe+NLlJpLeXecsmwyxPaWCN7qbK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	intel-wired-lan@lists.osuosl.org,
-	netdev@vger.kernel.org,
-	Sasha Levin <sashal@kernel.org>,
-	Gurucharan G <gurucharanx.g@intel.com>
-Subject: [PATCH 6.1 137/196] ice: Remove redundant pci_enable_pcie_error_reporting()
-Date: Mon, 23 Oct 2023 12:56:42 +0200
-Message-ID: <20231023104832.357990560@linuxfoundation.org>
+	Martin Kurbanov <mmkurbanov@sberdevices.ru>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 146/196] mtd: spinand: micron: correct bitmask for ecc status
+Date: Mon, 23 Oct 2023 12:56:51 +0200
+Message-ID: <20231023104832.609836762@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -46,65 +42,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Martin Kurbanov <mmkurbanov@sberdevices.ru>
 
-[ Upstream commit ba153552c18d7eb839ec0bad7d7484e29ba4719c ]
+commit 9836a987860e33943945d4b257729a4f94eae576 upstream.
 
-pci_enable_pcie_error_reporting() enables the device to send ERR_*
-Messages.  Since f26e58bf6f54 ("PCI/AER: Enable error reporting when AER is
-native"), the PCI core does this for all devices during enumeration.
+Valid bitmask is 0x70 in the status register.
 
-Remove the redundant pci_enable_pcie_error_reporting() call from the
-driver.  Also remove the corresponding pci_disable_pcie_error_reporting()
-from the driver .remove() path.
-
-Note that this doesn't control interrupt generation by the Root Port; that
-is controlled by the AER Root Error Command register, which is managed by
-the AER service driver.
-
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
-Cc: intel-wired-lan@lists.osuosl.org
-Cc: netdev@vger.kernel.org
-Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 0288c3e709e5 ("ice: reset first in crash dump kernels")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a508e8875e13 ("mtd: spinand: Add initial support for Micron MT29F2G01ABAGD")
+Signed-off-by: Martin Kurbanov <mmkurbanov@sberdevices.ru>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230905145637.139068-1-mmkurbanov@sberdevices.ru
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/mtd/nand/spi/micron.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index ae733207d0116..f0f39364819ac 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -4723,7 +4723,6 @@ ice_probe(struct pci_dev *pdev, const struct pci_device_id __always_unused *ent)
- 		return err;
- 	}
+--- a/drivers/mtd/nand/spi/micron.c
++++ b/drivers/mtd/nand/spi/micron.c
+@@ -12,7 +12,7 @@
  
--	pci_enable_pcie_error_reporting(pdev);
- 	pci_set_master(pdev);
+ #define SPINAND_MFR_MICRON		0x2c
  
- 	pf->pdev = pdev;
-@@ -5016,7 +5015,6 @@ ice_probe(struct pci_dev *pdev, const struct pci_device_id __always_unused *ent)
- 	ice_devlink_destroy_regions(pf);
- 	ice_deinit_hw(hw);
- err_exit_unroll:
--	pci_disable_pcie_error_reporting(pdev);
- 	pci_disable_device(pdev);
- 	return err;
- }
-@@ -5142,7 +5140,6 @@ static void ice_remove(struct pci_dev *pdev)
- 	ice_reset(&pf->hw, ICE_RESET_PFR);
- 	pci_wait_for_pending_transaction(pdev);
- 	ice_clear_interrupt_scheme(pf);
--	pci_disable_pcie_error_reporting(pdev);
- 	pci_disable_device(pdev);
- }
- 
--- 
-2.40.1
-
+-#define MICRON_STATUS_ECC_MASK		GENMASK(7, 4)
++#define MICRON_STATUS_ECC_MASK		GENMASK(6, 4)
+ #define MICRON_STATUS_ECC_NO_BITFLIPS	(0 << 4)
+ #define MICRON_STATUS_ECC_1TO3_BITFLIPS	(1 << 4)
+ #define MICRON_STATUS_ECC_4TO6_BITFLIPS	(3 << 4)
 
 
