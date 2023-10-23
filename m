@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DA014A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9D014A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKVzlK0C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 400B0C433C9;
-	Mon, 23 Oct 2023 11:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZ2wPhr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B540C433C9;
+	Mon, 23 Oct 2023 11:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059017;
-	bh=3cMHVZyOCNfWcJpUuGcgYZEoiqEJdt09gXYlWck0Fq4=;
+	s=korg; t=1698059020;
+	bh=aw50T25sjhcD3kMamFaVrLOuiE9YrZtsYs++IG9OzE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKVzlK0CIq0PQyGRovHEMo9ZxWsTmiI+7ksD3N59KsBNyqau81erIbxioiwnjt5kl
-	 nRwBzKnFtWAPiVB5b6zHWaiLF0UORqF+Li78KknrziKyzqVjXRay0RD3MHRsetlc4x
-	 mc3fNiwgc7p7ttJG/TPlWeGFwFNac7VcdJVkRPVY=
+	b=PZ2wPhr9nD86uVsL2A5hfGnQXUf+kuo/xSckTJdqBcOcVqdnXYkMh+T0rsbkTZucZ
+	 pcjLPWXJSoyG0ok12c1vOFVjoitvq95Eh06RkrFBRAKmzPr6lx++7OjkbHSDF3G7KM
+	 uhaXrDX0fqi71uEO283EPT8Jcq3Qb6J8A5gZKB4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.5 028/241] selftests: mptcp: join: no RST when rm subflow/addr
-Date: Mon, 23 Oct 2023 12:53:34 +0200
-Message-ID: <20231023104834.613132414@linuxfoundation.org>
+	rtm@csail.mit.edu,
+	Jeff Moyer <jmoyer@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.5 037/241] io_uring: fix crash with IORING_SETUP_NO_MMAP and invalid SQ ring address
+Date: Mon, 23 Oct 2023 12:53:43 +0200
+Message-ID: <20231023104834.826933454@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,132 +42,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts <matttbe@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 2cfaa8b3b7aece3c7b13dd10db20dcea65875692 upstream.
+commit 8b51a3956d44ea6ade962874ade14de9a7d16556 upstream.
 
-Recently, we noticed that some RST were wrongly generated when removing
-the initial subflow.
+If we specify a valid CQ ring address but an invalid SQ ring address,
+we'll correctly spot this and free the allocated pages and clear them
+to NULL. However, we don't clear the ring page count, and hence will
+attempt to free the pages again. We've already cleared the address of
+the page array when freeing them, but we don't check for that. This
+causes the following crash:
 
-This patch makes sure RST are not sent when removing any subflows or any
-addresses.
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+Oops [#1]
+Modules linked in:
+CPU: 0 PID: 20 Comm: kworker/u2:1 Not tainted 6.6.0-rc5-dirty #56
+Hardware name: ucbbar,riscvemu-bare (DT)
+Workqueue: events_unbound io_ring_exit_work
+epc : io_pages_free+0x2a/0x58
+ ra : io_rings_free+0x3a/0x50
+ epc : ffffffff808811a2 ra : ffffffff80881406 sp : ffff8f80000c3cd0
+ status: 0000000200000121 badaddr: 0000000000000000 cause: 000000000000000d
+ [<ffffffff808811a2>] io_pages_free+0x2a/0x58
+ [<ffffffff80881406>] io_rings_free+0x3a/0x50
+ [<ffffffff80882176>] io_ring_exit_work+0x37e/0x424
+ [<ffffffff80027234>] process_one_work+0x10c/0x1f4
+ [<ffffffff8002756e>] worker_thread+0x252/0x31c
+ [<ffffffff8002f5e4>] kthread+0xc4/0xe0
+ [<ffffffff8000332a>] ret_from_fork+0xa/0x1c
 
-Fixes: c2b2ae3925b6 ("mptcp: handle correctly disconnect() failures")
+Check for a NULL array in io_pages_free(), but also clear the page counts
+when we free them to be on the safer side.
+
+Reported-by: rtm@csail.mit.edu
+Fixes: 03d89a2de25b ("io_uring: support for user allocated memory for rings/sqes")
 Cc: stable@vger.kernel.org
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts <matttbe@kernel.org>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20231018-send-net-20231018-v1-5-17ecb002e41d@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Jeff Moyer <jmoyer@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ io_uring/io_uring.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -2282,6 +2282,7 @@ remove_tests()
- 		chk_join_nr 1 1 1
- 		chk_rm_tx_nr 1
- 		chk_rm_nr 1 1
-+		chk_rst_nr 0 0
- 	fi
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2666,7 +2666,11 @@ static void io_pages_free(struct page **
  
- 	# multiple subflows, remove
-@@ -2294,6 +2295,7 @@ remove_tests()
- 			run_tests $ns1 $ns2 10.0.1.1 slow
- 		chk_join_nr 2 2 2
- 		chk_rm_nr 2 2
-+		chk_rst_nr 0 0
- 	fi
- 
- 	# single address, remove
-@@ -2306,6 +2308,7 @@ remove_tests()
- 		chk_join_nr 1 1 1
- 		chk_add_nr 1 1
- 		chk_rm_nr 1 1 invert
-+		chk_rst_nr 0 0
- 	fi
- 
- 	# subflow and signal, remove
-@@ -2319,6 +2322,7 @@ remove_tests()
- 		chk_join_nr 2 2 2
- 		chk_add_nr 1 1
- 		chk_rm_nr 1 1
-+		chk_rst_nr 0 0
- 	fi
- 
- 	# subflows and signal, remove
-@@ -2333,6 +2337,7 @@ remove_tests()
- 		chk_join_nr 3 3 3
- 		chk_add_nr 1 1
- 		chk_rm_nr 2 2
-+		chk_rst_nr 0 0
- 	fi
- 
- 	# addresses remove
-@@ -2347,6 +2352,7 @@ remove_tests()
- 		chk_join_nr 3 3 3
- 		chk_add_nr 3 3
- 		chk_rm_nr 3 3 invert
-+		chk_rst_nr 0 0
- 	fi
- 
- 	# invalid addresses remove
-@@ -2361,6 +2367,7 @@ remove_tests()
- 		chk_join_nr 1 1 1
- 		chk_add_nr 3 3
- 		chk_rm_nr 3 1 invert
-+		chk_rst_nr 0 0
- 	fi
- 
- 	# subflows and signal, flush
-@@ -2375,6 +2382,7 @@ remove_tests()
- 		chk_join_nr 3 3 3
- 		chk_add_nr 1 1
- 		chk_rm_nr 1 3 invert simult
-+		chk_rst_nr 0 0
- 	fi
- 
- 	# subflows flush
-@@ -2394,6 +2402,7 @@ remove_tests()
- 		else
- 			chk_rm_nr 3 3
- 		fi
-+		chk_rst_nr 0 0
- 	fi
- 
- 	# addresses flush
-@@ -2408,6 +2417,7 @@ remove_tests()
- 		chk_join_nr 3 3 3
- 		chk_add_nr 3 3
- 		chk_rm_nr 3 3 invert simult
-+		chk_rst_nr 0 0
- 	fi
- 
- 	# invalid addresses flush
-@@ -2422,6 +2432,7 @@ remove_tests()
- 		chk_join_nr 1 1 1
- 		chk_add_nr 3 3
- 		chk_rm_nr 3 1 invert
-+		chk_rst_nr 0 0
- 	fi
- 
- 	# remove id 0 subflow
-@@ -2433,6 +2444,7 @@ remove_tests()
- 			run_tests $ns1 $ns2 10.0.1.1 slow
- 		chk_join_nr 1 1 1
- 		chk_rm_nr 1 1
-+		chk_rst_nr 0 0
- 	fi
- 
- 	# remove id 0 address
-@@ -2445,6 +2457,7 @@ remove_tests()
- 		chk_join_nr 1 1 1
- 		chk_add_nr 1 1
- 		chk_rm_nr 1 1 invert
-+		chk_rst_nr 0 0 invert
- 	fi
+ 	if (!pages)
+ 		return;
++
+ 	page_array = *pages;
++	if (!page_array)
++		return;
++
+ 	for (i = 0; i < npages; i++)
+ 		unpin_user_page(page_array[i]);
+ 	kvfree(page_array);
+@@ -2750,7 +2754,9 @@ static void io_rings_free(struct io_ring
+ 		ctx->sq_sqes = NULL;
+ 	} else {
+ 		io_pages_free(&ctx->ring_pages, ctx->n_ring_pages);
++		ctx->n_ring_pages = 0;
+ 		io_pages_free(&ctx->sqe_pages, ctx->n_sqe_pages);
++		ctx->n_sqe_pages = 0;
+ 	}
  }
  
 
