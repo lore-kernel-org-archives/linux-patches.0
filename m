@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAFB11CB5
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19FC5230
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xy+cT4nq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88BB8C433C9;
-	Mon, 23 Oct 2023 11:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+wWYOON"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB74CC433C7;
+	Mon, 23 Oct 2023 11:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061554;
-	bh=mg4GJsExYbctqV4GE+0/6GXo1BqCwUfQxZz0e5CvzJ8=;
+	s=korg; t=1698061558;
+	bh=R97K8b9AMRJweNVe2GtII5vKFzNd9V6bUGOk8VsMbDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xy+cT4nqLYY8d2hbMeaStNllPW6Gw2JJrVL+9v94iTy4G08c3ToaSMrqk25JeY/wE
-	 idhoiTo5SShh5eqAqjViQIx2tzturmFwG8TzIXFN8ebmSeM1ieH89hX5rBCHrrKSbz
-	 D8KPpfNJoQqOoMaFhN/7xfl+CMWbTY94EK5249qo=
+	b=O+wWYOONUTC+AMItLW9lKqtKSmQyDLX46+bwVV6BP/wc+2ReZ6WQwDIrW7ORuV0a2
+	 q+j+rH1odzsNwIhtWnd/S5j2FagFQCT1qC1VT9cK0QHpu1RkrSJn5he8hiSqWHsCj8
+	 m2mK32ryzkiGHoxUi8RSQDs03Tru4zMUH9JXLyag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Lee, Chun-Yi" <jlee@suse.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Lee
-Subject: [PATCH 5.10 086/202] Bluetooth: hci_event: Ignore NULL link key
-Date: Mon, 23 Oct 2023 12:56:33 +0200
-Message-ID: <20231023104829.049139199@linuxfoundation.org>
+Subject: [PATCH 5.10 087/202] Bluetooth: Reject connection with the device which has same BD_ADDR
+Date: Mon, 23 Oct 2023 12:56:34 +0200
+Message-ID: <20231023104829.076167322@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -44,10 +44,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Lee, Chun-Yi <jlee@suse.com>
 
-commit 33155c4aae5260475def6f7438e4e35564f4f3ba upstream.
+commit 1ffc6f8cc33268731fcf9629fc4438f6db1191fc upstream.
 
-This change is used to relieve CVE-2020-26555. The description of the
-CVE:
+This change is used to relieve CVE-2020-26555. The description of
+the CVE:
 
 Bluetooth legacy BR/EDR PIN code pairing in Bluetooth Core Specification
 1.0B through 5.2 may permit an unauthenticated nearby device to spoof
@@ -63,46 +63,65 @@ the attacked target to generate null link key (zero key) without PIN
 code. In BR/EDR, the key generation is actually handled in the controller
 which is below HCI.
 
-Thus, we can ignore null link key in the handler of "Link Key Notification
-event" to relieve the attack. A similar implementation also shows in
-btstack project. [3]
+A condition of this attack is that attacker should change the
+BR_ADDR of his hacking device (Host B) to equal to the BR_ADDR with
+the target device being attacked (Host A).
 
-v3: Drop the connection when null link key be detected.
-
-v2:
-- Used Link: tag instead of Closes:
-- Used bt_dev_dbg instead of BT_DBG
-- Added Fixes: tag
+Thus, we reject the connection with device which has same BD_ADDR
+both on HCI_Create_Connection and HCI_Connection_Request to prevent
+the attack. A similar implementation also shows in btstack project.
+[3][4]
 
 Cc: stable@vger.kernel.org
-Fixes: 55ed8ca10f35 ("Bluetooth: Implement link key handling for the management interface")
 Link: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-26555 [1]
 Link: https://ieeexplore.ieee.org/abstract/document/9474325/authors#authors [2]
-Link: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L3722 [3]
+Link: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L3523 [3]
+Link: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L7297 [4]
 Signed-off-by: Lee, Chun-Yi <jlee@suse.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/bluetooth/hci_conn.c  |    9 +++++++++
+ net/bluetooth/hci_event.c |   11 +++++++++++
+ 2 files changed, 20 insertions(+)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -4065,6 +4065,15 @@ static void hci_link_key_notify_evt(stru
- 	if (!conn)
- 		goto unlock;
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1249,6 +1249,15 @@ struct hci_conn *hci_connect_acl(struct
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 	}
  
-+	/* Ignore NULL link key against CVE-2020-26555 */
-+	if (!memcmp(ev->link_key, ZERO_KEY, HCI_LINK_KEY_SIZE)) {
-+		bt_dev_dbg(hdev, "Ignore NULL link key (ZERO KEY) for %pMR",
-+			   &ev->bdaddr);
-+		hci_disconnect(conn, HCI_ERROR_AUTH_FAILURE);
-+		hci_conn_drop(conn);
-+		goto unlock;
++	/* Reject outgoing connection to device with same BD ADDR against
++	 * CVE-2020-26555
++	 */
++	if (!bacmp(&hdev->bdaddr, dst)) {
++		bt_dev_dbg(hdev, "Reject connection with same BD_ADDR %pMR\n",
++			   dst);
++		return ERR_PTR(-ECONNREFUSED);
 +	}
 +
- 	hci_conn_hold(conn);
- 	conn->disc_timeout = HCI_DISCONN_TIMEOUT;
- 	hci_conn_drop(conn);
+ 	acl = hci_conn_hash_lookup_ba(hdev, ACL_LINK, dst);
+ 	if (!acl) {
+ 		acl = hci_conn_add(hdev, ACL_LINK, dst, HCI_ROLE_MASTER);
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -2701,6 +2701,17 @@ static void hci_conn_request_evt(struct
+ 	BT_DBG("%s bdaddr %pMR type 0x%x", hdev->name, &ev->bdaddr,
+ 	       ev->link_type);
+ 
++	/* Reject incoming connection from device with same BD ADDR against
++	 * CVE-2020-26555
++	 */
++	if (!bacmp(&hdev->bdaddr, &ev->bdaddr))
++	{
++		bt_dev_dbg(hdev, "Reject connection with same BD_ADDR %pMR\n",
++			   &ev->bdaddr);
++		hci_reject_conn(hdev, &ev->bdaddr);
++		return;
++	}
++
+ 	mask |= hci_proto_connect_ind(hdev, &ev->bdaddr, ev->link_type,
+ 				      &flags);
+ 
 
 
