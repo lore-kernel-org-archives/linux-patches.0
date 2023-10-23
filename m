@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD2415EA5
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450A015EA5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NzW4hI3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE691C433C7;
-	Mon, 23 Oct 2023 11:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VA9arPdM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A10C433C8;
+	Mon, 23 Oct 2023 11:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061391;
-	bh=54envUzWuJLxbv7LNYx8cZ0x9HIPkEgN8cduhtBPPSE=;
+	s=korg; t=1698061394;
+	bh=ZxYwFJpUI5OmNZV1HOeoXi85qJf3oD8Jg+oQpGOUTsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NzW4hI3Boewq/TNC6gr0DtYXUKvPTxJ75xbrrb2yEwyEhRXLAyvUVQ+O1+Deqkxbg
-	 kl8yoW0OR5EjUmAh6DvHohdc4/qlsIPYRLc/14ZxSzONcuARkGW94+Yk3fez823zpK
-	 QhcYWLxatzPS5N5ChvnsmIAoeU/Fr2wpjVRd81y8=
+	b=VA9arPdMODSyEgdMpJTj2OO4CG6D/cgJzMcCD1JIRtkJymJiifq8ZUhnpkL2ZkJGR
+	 k1Rbna+bVCTL8bprZ2hMoTDcyfZ5K+oYFMTBz0GMD3iQPQ5zPnLXDFAbL+IoheF8GU
+	 Jkq5jn0tXptM4+genAVUz6cFRVf2LC/qPx7eTFmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Lorenzo Colitti <lorenzo@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Patrick Rohr <prohr@google.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 031/202] net: release reference to inet6_dev pointer
-Date: Mon, 23 Oct 2023 12:55:38 +0200
-Message-ID: <20231023104827.509183884@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 5.10 032/202] media: mtk-jpeg: Fix use after free bug due to uncanceled work
+Date: Mon, 23 Oct 2023 12:55:39 +0200
+Message-ID: <20231023104827.537514156@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -40,45 +38,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patrick Rohr <prohr@google.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-commit 5cb249686e67dbef3ffe53887fa725eefc5a7144 upstream.
+commit c677d7ae83141d390d1253abebafa49c962afb52 upstream.
 
-addrconf_prefix_rcv returned early without releasing the inet6_dev
-pointer when the PIO lifetime is less than accept_ra_min_lft.
+In mtk_jpeg_probe, &jpeg->job_timeout_work is bound with
+mtk_jpeg_job_timeout_work. Then mtk_jpeg_dec_device_run
+and mtk_jpeg_enc_device_run may be called to start the
+work.
+If we remove the module which will call mtk_jpeg_remove
+to make cleanup, there may be a unfinished work. The
+possible sequence is as follows, which will cause a
+typical UAF bug.
 
-Fixes: 5027d54a9c30 ("net: change accept_ra_min_rtr_lft to affect all RA lifetimes")
-Cc: Maciej Żenczykowski <maze@google.com>
-Cc: Lorenzo Colitti <lorenzo@google.com>
-Cc: David Ahern <dsahern@kernel.org>
-Cc: Simon Horman <horms@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Maciej Żenczykowski <maze@google.com>
-Signed-off-by: Patrick Rohr <prohr@google.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix it by canceling the work before cleanup in the mtk_jpeg_remove
+
+CPU0                  CPU1
+
+                    |mtk_jpeg_job_timeout_work
+mtk_jpeg_remove     |
+  v4l2_m2m_release  |
+    kfree(m2m_dev); |
+                    |
+                    | v4l2_m2m_get_curr_priv
+                    |   m2m_dev->curr_ctx //use
+Fixes: b2f0d2724ba4 ("[media] vcodec: mediatek: Add Mediatek JPEG Decoder Driver")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/addrconf.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -2727,7 +2727,7 @@ void addrconf_prefix_rcv(struct net_devi
- 	}
+--- a/drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c
+@@ -1455,6 +1455,7 @@ static int mtk_jpeg_remove(struct platfo
+ {
+ 	struct mtk_jpeg_dev *jpeg = platform_get_drvdata(pdev);
  
- 	if (valid_lft != 0 && valid_lft < in6_dev->cnf.accept_ra_min_lft)
--		return;
-+		goto put;
- 
- 	/*
- 	 *	Two things going on here:
++	cancel_delayed_work_sync(&jpeg->job_timeout_work);
+ 	pm_runtime_disable(&pdev->dev);
+ 	video_unregister_device(jpeg->vdev);
+ 	video_device_release(jpeg->vdev);
 
 
