@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322A512B7A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA8912B7A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="he9qmQ9A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C23CC433C7;
-	Mon, 23 Oct 2023 11:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPvNSyWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923ADC433C7;
+	Mon, 23 Oct 2023 11:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059496;
-	bh=5zc5w87uJD10+ooMxwqknq3cPhAGci4TVmqZQScBI9U=;
+	s=korg; t=1698059499;
+	bh=X5SEx12bApcOGg2fww70UtIsTHN/K15ElC4dTYG/02Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=he9qmQ9A6jH1vS3NZt8wwqmCf9uMgvamOSLDHq8qflcwabl+CWTPAb6OQcgSUwckl
-	 th574SJ3SZUunczoAYni2uB8k/ET5+Dp4BcS5I//0uzY67CsNf6cxk8B94hs5RFuPi
-	 /DvK9UVTrRLsEH0meDxCCpV2/UPd5nFDtds9AyPc=
+	b=uPvNSyWOydcC1Ib6ZRId2OY1xfI3ZIVU+OGaN7qx/jq4bekFn+CJOW+JqCkTdB6iW
+	 ARbpD46tGDh6/QECzAt3eBdjObG+TO7cIoMx1wtPECDtZfoIVdqJcpC9qk6r/oeHq0
+	 Cuntox/qm35krJrC4ZFmgs7O2mxKgSstP5DkrDCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puliang Lu <puliang.lu@fibocom.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.5 196/241] USB: serial: option: add Fibocom to DELL custom modem FM101R-GL
-Date: Mon, 23 Oct 2023 12:56:22 +0200
-Message-ID: <20231023104838.647287434@linuxfoundation.org>
+	Gil Fine <gil.fine@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.5 197/241] thunderbolt: Call tb_switch_put() once DisplayPort bandwidth request is finished
+Date: Mon, 23 Oct 2023 12:56:23 +0200
+Message-ID: <20231023104838.669907021@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,88 +41,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puliang Lu <puliang.lu@fibocom.com>
+From: Gil Fine <gil.fine@linux.intel.com>
 
-commit 52480e1f1a259c93d749ba3961af0bffedfe7a7a upstream.
+commit ec4405ed92036f5bb487b5c2f9a28f9e36a3e3d5 upstream.
 
-Update the USB serial option driver support for the Fibocom
-FM101R-GL LTE modules as there are actually several different variants.
+When handling DisplayPort bandwidth request tb_switch_find_by_route() is
+called and it returns a router structure with reference count increased.
+In order to avoid resource leak call tb_switch_put() when finished.
 
-- VID:PID 413C:8213, FM101R-GL are laptop M.2 cards (with
-  MBIM interfaces for Linux)
-
-- VID:PID 413C:8215, FM101R-GL ESIM are laptop M.2 cards (with
-  MBIM interface for Linux)
-
-0x8213: mbim, tty
-0x8215: mbim, tty
-
-T:  Bus=04 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=413c ProdID=8213 Rev= 5.04
-S:  Manufacturer=Fibocom Wireless Inc.
-S:  Product=Fibocom FM101-GL Module
-S:  SerialNumber=a3b7cbf0
-C:* #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=896mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=(none)
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-
-T:  Bus=04 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=413c ProdID=8215 Rev= 5.04
-S:  Manufacturer=Fibocom Wireless Inc.
-S:  Product=Fibocom FM101-GL Module
-S:  SerialNumber=a3b7cbf0
-C:* #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=896mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=(none)
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-
-Signed-off-by: Puliang Lu <puliang.lu@fibocom.com>
+Fixes: 6ce3563520be ("thunderbolt: Add support for DisplayPort bandwidth allocation mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/thunderbolt/tb.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -203,6 +203,9 @@ static void option_instat_callback(struc
- #define DELL_PRODUCT_5829E_ESIM			0x81e4
- #define DELL_PRODUCT_5829E			0x81e6
+diff --git a/drivers/thunderbolt/tb.c b/drivers/thunderbolt/tb.c
+index dd0a1ef8cf12..27bd6ca6f99e 100644
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -1907,14 +1907,14 @@ static void tb_handle_dp_bandwidth_request(struct work_struct *work)
+ 	in = &sw->ports[ev->port];
+ 	if (!tb_port_is_dpin(in)) {
+ 		tb_port_warn(in, "bandwidth request to non-DP IN adapter\n");
+-		goto unlock;
++		goto put_sw;
+ 	}
  
-+#define DELL_PRODUCT_FM101R			0x8213
-+#define DELL_PRODUCT_FM101R_ESIM		0x8215
-+
- #define KYOCERA_VENDOR_ID			0x0c88
- #define KYOCERA_PRODUCT_KPC650			0x17da
- #define KYOCERA_PRODUCT_KPC680			0x180a
-@@ -1108,6 +1111,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(0) | RSVD(6) },
- 	{ USB_DEVICE(DELL_VENDOR_ID, DELL_PRODUCT_5829E_ESIM),
- 	  .driver_info = RSVD(0) | RSVD(6) },
-+	{ USB_DEVICE_INTERFACE_CLASS(DELL_VENDOR_ID, DELL_PRODUCT_FM101R, 0xff) },
-+	{ USB_DEVICE_INTERFACE_CLASS(DELL_VENDOR_ID, DELL_PRODUCT_FM101R_ESIM, 0xff) },
- 	{ USB_DEVICE(ANYDATA_VENDOR_ID, ANYDATA_PRODUCT_ADU_E100A) },	/* ADU-E100, ADU-310 */
- 	{ USB_DEVICE(ANYDATA_VENDOR_ID, ANYDATA_PRODUCT_ADU_500A) },
- 	{ USB_DEVICE(ANYDATA_VENDOR_ID, ANYDATA_PRODUCT_ADU_620UW) },
+ 	tb_port_dbg(in, "handling bandwidth allocation request\n");
+ 
+ 	if (!usb4_dp_port_bandwidth_mode_enabled(in)) {
+ 		tb_port_warn(in, "bandwidth allocation mode not enabled\n");
+-		goto unlock;
++		goto put_sw;
+ 	}
+ 
+ 	ret = usb4_dp_port_requested_bandwidth(in);
+@@ -1923,7 +1923,7 @@ static void tb_handle_dp_bandwidth_request(struct work_struct *work)
+ 			tb_port_dbg(in, "no bandwidth request active\n");
+ 		else
+ 			tb_port_warn(in, "failed to read requested bandwidth\n");
+-		goto unlock;
++		goto put_sw;
+ 	}
+ 	requested_bw = ret;
+ 
+@@ -1932,7 +1932,7 @@ static void tb_handle_dp_bandwidth_request(struct work_struct *work)
+ 	tunnel = tb_find_tunnel(tb, TB_TUNNEL_DP, in, NULL);
+ 	if (!tunnel) {
+ 		tb_port_warn(in, "failed to find tunnel\n");
+-		goto unlock;
++		goto put_sw;
+ 	}
+ 
+ 	out = tunnel->dst_port;
+@@ -1959,6 +1959,8 @@ static void tb_handle_dp_bandwidth_request(struct work_struct *work)
+ 		tb_recalc_estimated_bandwidth(tb);
+ 	}
+ 
++put_sw:
++	tb_switch_put(sw);
+ unlock:
+ 	mutex_unlock(&tb->lock);
+ 
+-- 
+2.42.0
+
 
 
