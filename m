@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F127FE
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793A27FE
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RefXImSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03051C433CB;
-	Mon, 23 Oct 2023 11:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBxJC0EM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED272C433C9;
+	Mon, 23 Oct 2023 11:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060199;
-	bh=TCRD706zQzDoJmaUwrTOIAgcu1aS2Sfp5FEDbhKLhQA=;
+	s=korg; t=1698060202;
+	bh=YYY4fRfzog/KkbMSs00mKCZrh3sPR3sESk0ke43gneQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RefXImSCpQdHlCq0pR/654CYZfsdNI35uqNtEtDd9Z+9bPNUgh68+jtLj/4XHKj/F
-	 LAloJLShb8EtTgkI7bJVEvIUAhZTxciIOy0c/0d5BYZBcGQQBzwkfw8poCcQvlfcd1
-	 xOVNjVfbhLdnLNKFZruc9X2QSF907Z1YnXF2hdg0=
+	b=CBxJC0EMJCXkreTDRc6V56afQWfPSDDUPeK6a7FnMbaHy6t5riPzxWfzBhIZ+7LgA
+	 OUdF6KC0NkvrgCEvpa/YbuSr3sAtSIYxtzLp4TTej70+wJPGr9vhrBhwZTqg803/2N
+	 hLNyYyM9Z6DwlwXnUhVJCup6pgdtkPj30qTTmNVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
-	Carl Philipp Klemm <philipp@uvos.xyz>,
-	Merlijn Wajer <merlijn@wizzup.org>,
-	Pavel Machek <pavel@ucw.cz>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Chunhai Guo <guochunhai@vivo.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/196] ARM: dts: ti: omap: Fix noisy serial with overrun-throttle-ms for mapphone
-Date: Mon, 23 Oct 2023 12:55:57 +0200
-Message-ID: <20231023104831.136403493@linuxfoundation.org>
+Subject: [PATCH 6.1 093/196] fs-writeback: do not requeue a clean inode having skipped pages
+Date: Mon, 23 Oct 2023 12:55:58 +0200
+Message-ID: <20231023104831.162505644@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -46,41 +43,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Chunhai Guo <guochunhai@vivo.com>
 
-[ Upstream commit 5ad37b5e30433afa7a5513e3eb61f69fa0976785 ]
+[ Upstream commit be049c3a088d512187407b7fd036cecfab46d565 ]
 
-On mapphone devices we may get lots of noise on the micro-USB port in debug
-uart mode until the phy-cpcap-usb driver probes. Let's limit the noise by
-using overrun-throttle-ms.
+When writing back an inode and performing an fsync on it concurrently, a
+deadlock issue may arise as shown below. In each writeback iteration, a
+clean inode is requeued to the wb->b_dirty queue due to non-zero
+pages_skipped, without anything actually being written. This causes an
+infinite loop and prevents the plug from being flushed, resulting in a
+deadlock. We now avoid requeuing the clean inode to prevent this issue.
 
-Note that there is also a related separate issue where the charger cable
-connected may cause random sysrq requests until phy-cpcap-usb probes that
-still remains.
+    wb_writeback        fsync (inode-Y)
+blk_start_plug(&plug)
+for (;;) {
+  iter i-1: some reqs with page-X added into plug->mq_list // f2fs node page-X with PG_writeback
+                        filemap_fdatawrite
+                          __filemap_fdatawrite_range // write inode-Y with sync_mode WB_SYNC_ALL
+                           do_writepages
+                            f2fs_write_data_pages
+                             __f2fs_write_data_pages // wb_sync_req[DATA]++ for WB_SYNC_ALL
+                              f2fs_write_cache_pages
+                               f2fs_write_single_data_page
+                                f2fs_do_write_data_page
+                                 f2fs_outplace_write_data
+                                  f2fs_update_data_blkaddr
+                                   f2fs_wait_on_page_writeback
+                                     wait_on_page_writeback // wait for f2fs node page-X
+  iter i:
+    progress = __writeback_inodes_wb(wb, work)
+    . writeback_sb_inodes
+    .   __writeback_single_inode // write inode-Y with sync_mode WB_SYNC_NONE
+    .   . do_writepages
+    .   .   f2fs_write_data_pages
+    .   .   .  __f2fs_write_data_pages // skip writepages due to (wb_sync_req[DATA]>0)
+    .   .   .   wbc->pages_skipped += get_dirty_pages(inode) // wbc->pages_skipped = 1
+    .   if (!(inode->i_state & I_DIRTY_ALL)) // i_state = I_SYNC | I_SYNC_QUEUED
+    .    total_wrote++;  // total_wrote = 1
+    .   requeue_inode // requeue inode-Y to wb->b_dirty queue due to non-zero pages_skipped
+    if (progress) // progress = 1
+      continue;
+  iter i+1:
+      queue_io
+      // similar process with iter i, infinite for-loop !
+}
+blk_finish_plug(&plug)   // flush plug won't be called
 
-Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
-Cc: Carl Philipp Klemm <philipp@uvos.xyz>
-Cc: Merlijn Wajer <merlijn@wizzup.org>
-Cc: Pavel Machek <pavel@ucw.cz>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Chunhai Guo <guochunhai@vivo.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230916045131.957929-1-guochunhai@vivo.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/motorola-mapphone-common.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ fs/fs-writeback.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/motorola-mapphone-common.dtsi b/arch/arm/boot/dts/motorola-mapphone-common.dtsi
-index d69f0f4b4990d..d2d516d113baa 100644
---- a/arch/arm/boot/dts/motorola-mapphone-common.dtsi
-+++ b/arch/arm/boot/dts/motorola-mapphone-common.dtsi
-@@ -640,6 +640,7 @@ &uart1 {
- &uart3 {
- 	interrupts-extended = <&wakeupgen GIC_SPI 74 IRQ_TYPE_LEVEL_HIGH
- 			       &omap4_pmx_core 0x17c>;
-+	overrun-throttle-ms = <500>;
- };
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index d387708977a50..a5c31a479aacc 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -1522,10 +1522,15 @@ static void requeue_inode(struct inode *inode, struct bdi_writeback *wb,
  
- &uart4 {
+ 	if (wbc->pages_skipped) {
+ 		/*
+-		 * writeback is not making progress due to locked
+-		 * buffers. Skip this inode for now.
++		 * Writeback is not making progress due to locked buffers.
++		 * Skip this inode for now. Although having skipped pages
++		 * is odd for clean inodes, it can happen for some
++		 * filesystems so handle that gracefully.
+ 		 */
+-		redirty_tail_locked(inode, wb);
++		if (inode->i_state & I_DIRTY_ALL)
++			redirty_tail_locked(inode, wb);
++		else
++			inode_cgwb_move_to_attached(inode, wb);
+ 		return;
+ 	}
+ 
 -- 
 2.40.1
 
