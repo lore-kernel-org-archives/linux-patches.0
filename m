@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9FE3FFB
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD9D12B90
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPaJasUj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB318C433C8;
-	Mon, 23 Oct 2023 11:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnG5aBnG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC712C433C9;
+	Mon, 23 Oct 2023 11:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058863;
-	bh=z+S12Dkr21p1R+eL53rc2PiDUVdoKZ4AGs3Wotz97PY=;
+	s=korg; t=1698058866;
+	bh=hHccltMc1fLkWjY1jdTOAN2Ik8Wv3WGopUtkHBlwg18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPaJasUjPH4IuML9y5LCTqxijLnU7GQThSOWCfTLZW6bzgf4wXsqOzQzWVWeIT459
-	 XKfm0X4E1DvWLChE8x5wjPbgHfaiW9534TAgk824TGSDKetrGd9AktRVADyQCqyFJz
-	 aKELtmZyilB/FuwLn8HelnR1t16lSD4e2PAAGTYg=
+	b=lnG5aBnGKxkLMYYhM24j6Ccw0Y9FMlhJgV1HvrgJw+aR5XRVmUheMgxUo2bxdCUw8
+	 qf3aCq2pDX7dBw2+az3vpbvBjFlfuT+0bTh4ijvpqw74TOWBR0+3hv1XDuk9H00ki4
+	 xqTsxFAnkk6rvod5r/LY3WtAjAcp6YUCCVqWv83o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 4.14 24/66] x86/cpu: Fix AMD erratum #1485 on Zen4-based CPUs
-Date: Mon, 23 Oct 2023 12:56:14 +0200
-Message-ID: <20231023104811.716846388@linuxfoundation.org>
+	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>
+Subject: [PATCH 4.14 25/66] usb: hub: Guard against accesses to uninitialized BOS descriptors
+Date: Mon, 23 Oct 2023 12:56:15 +0200
+Message-ID: <20231023104811.762381622@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -43,68 +41,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
-commit f454b18e07f518bcd0c05af17a2239138bff52de upstream.
+commit f74a7afc224acd5e922c7a2e52244d891bbe44ee upstream.
 
-Fix erratum #1485 on Zen4 parts where running with STIBP disabled can
-cause an #UD exception. The performance impact of the fix is negligible.
+Many functions in drivers/usb/core/hub.c and drivers/usb/core/hub.h
+access fields inside udev->bos without checking if it was allocated and
+initialized. If usb_get_bos_descriptor() fails for whatever
+reason, udev->bos will be NULL and those accesses will result in a
+crash:
 
-Reported-by: René Rebe <rene@exactcode.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: René Rebe <rene@exactcode.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/D99589F4-BC5D-430B-87B2-72C20370CF57@exactcode.com
+BUG: kernel NULL pointer dereference, address: 0000000000000018
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP NOPTI
+CPU: 5 PID: 17818 Comm: kworker/5:1 Tainted: G W 5.15.108-18910-gab0e1cb584e1 #1 <HASH:1f9e 1>
+Hardware name: Google Kindred/Kindred, BIOS Google_Kindred.12672.413.0 02/03/2021
+Workqueue: usb_hub_wq hub_event
+RIP: 0010:hub_port_reset+0x193/0x788
+Code: 89 f7 e8 20 f7 15 00 48 8b 43 08 80 b8 96 03 00 00 03 75 36 0f b7 88 92 03 00 00 81 f9 10 03 00 00 72 27 48 8b 80 a8 03 00 00 <48> 83 78 18 00 74 19 48 89 df 48 8b 75 b0 ba 02 00 00 00 4c 89 e9
+RSP: 0018:ffffab740c53fcf8 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffffa1bc5f678000 RCX: 0000000000000310
+RDX: fffffffffffffdff RSI: 0000000000000286 RDI: ffffa1be9655b840
+RBP: ffffab740c53fd70 R08: 00001b7d5edaa20c R09: ffffffffb005e060
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
+R13: ffffab740c53fd3e R14: 0000000000000032 R15: 0000000000000000
+FS: 0000000000000000(0000) GS:ffffa1be96540000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000018 CR3: 000000022e80c005 CR4: 00000000003706e0
+Call Trace:
+hub_event+0x73f/0x156e
+? hub_activate+0x5b7/0x68f
+process_one_work+0x1a2/0x487
+worker_thread+0x11a/0x288
+kthread+0x13a/0x152
+? process_one_work+0x487/0x487
+? kthread_associate_blkcg+0x70/0x70
+ret_from_fork+0x1f/0x30
+
+Fall back to a default behavior if the BOS descriptor isn't accessible
+and skip all the functionalities that depend on it: LPM support checks,
+Super Speed capabilitiy checks, U1/U2 states setup.
+
+Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+Cc: stable <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230830100418.1952143-1-ricardo.canuelo@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/msr-index.h |    4 ++++
- arch/x86/kernel/cpu/amd.c        |    9 +++++++++
- 2 files changed, 13 insertions(+)
+ drivers/usb/core/hub.c |   28 ++++++++++++++++++++++++----
+ drivers/usb/core/hub.h |    2 +-
+ 2 files changed, 25 insertions(+), 5 deletions(-)
 
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -442,6 +442,10 @@
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -143,6 +143,10 @@ int usb_device_supports_lpm(struct usb_d
+ 	if (udev->quirks & USB_QUIRK_NO_LPM)
+ 		return 0;
  
- #define MSR_AMD64_VIRT_SPEC_CTRL	0xc001011f
- 
-+/* Zen4 */
-+#define MSR_ZEN4_BP_CFG			0xc001102e
-+#define MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT 5
++	/* Skip if the device BOS descriptor couldn't be read */
++	if (!udev->bos)
++		return 0;
 +
- /* Fam 17h MSRs */
- #define MSR_F17H_IRPERF			0xc00000e9
+ 	/* USB 2.1 (and greater) devices indicate LPM support through
+ 	 * their USB 2.0 Extended Capabilities BOS descriptor.
+ 	 */
+@@ -316,6 +320,10 @@ static void usb_set_lpm_parameters(struc
+ 	if (!udev->lpm_capable || udev->speed < USB_SPEED_SUPER)
+ 		return;
  
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -24,6 +24,7 @@
- 
- static const int amd_erratum_383[];
- static const int amd_erratum_400[];
-+static const int amd_erratum_1485[];
- static bool cpu_has_amd_erratum(struct cpuinfo_x86 *cpu, const int *erratum);
- 
- /*
-@@ -974,6 +975,10 @@ static void init_amd(struct cpuinfo_x86
- 	/* AMD CPUs don't reset SS attributes on SYSRET, Xen does. */
- 	if (!cpu_has(c, X86_FEATURE_XENPV))
- 		set_cpu_bug(c, X86_BUG_SYSRET_SS_ATTRS);
++	/* Skip if the device BOS descriptor couldn't be read */
++	if (!udev->bos)
++		return;
 +
-+	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) &&
-+	    cpu_has_amd_erratum(c, amd_erratum_1485))
-+		msr_set_bit(MSR_ZEN4_BP_CFG, MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT);
+ 	hub = usb_hub_to_struct_hub(udev->parent);
+ 	/* It doesn't take time to transition the roothub into U0, since it
+ 	 * doesn't have an upstream link.
+@@ -2621,7 +2629,8 @@ out_authorized:
  }
  
- #ifdef CONFIG_X86_32
-@@ -1102,6 +1107,10 @@ static const int amd_erratum_383[] =
- 	AMD_OSVW_ERRATUM(3, AMD_MODEL_RANGE(0x10, 0, 0, 0xff, 0xf));
+ /*
+- * Return 1 if port speed is SuperSpeedPlus, 0 otherwise
++ * Return 1 if port speed is SuperSpeedPlus, 0 otherwise or if the
++ * capability couldn't be checked.
+  * check it from the link protocol field of the current speed ID attribute.
+  * current speed ID is got from ext port status request. Sublink speed attribute
+  * table is returned with the hub BOS SSP device capability descriptor
+@@ -2631,8 +2640,12 @@ static int port_speed_is_ssp(struct usb_
+ 	int ssa_count;
+ 	u32 ss_attr;
+ 	int i;
+-	struct usb_ssp_cap_descriptor *ssp_cap = hdev->bos->ssp_cap;
++	struct usb_ssp_cap_descriptor *ssp_cap;
  
- 
-+static const int amd_erratum_1485[] =
-+	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x19, 0x10, 0x0, 0x1f, 0xf),
-+			   AMD_MODEL_RANGE(0x19, 0x60, 0x0, 0xaf, 0xf));
++	if (!hdev->bos)
++		return 0;
 +
- static bool cpu_has_amd_erratum(struct cpuinfo_x86 *cpu, const int *erratum)
++	ssp_cap = hdev->bos->ssp_cap;
+ 	if (!ssp_cap)
+ 		return 0;
+ 
+@@ -3968,8 +3981,15 @@ static void usb_enable_link_state(struct
+ 		enum usb3_link_state state)
  {
- 	int osvw_id = *erratum++;
+ 	int timeout, ret;
+-	__u8 u1_mel = udev->bos->ss_cap->bU1devExitLat;
+-	__le16 u2_mel = udev->bos->ss_cap->bU2DevExitLat;
++	__u8 u1_mel;
++	__le16 u2_mel;
++
++	/* Skip if the device BOS descriptor couldn't be read */
++	if (!udev->bos)
++		return;
++
++	u1_mel = udev->bos->ss_cap->bU1devExitLat;
++	u2_mel = udev->bos->ss_cap->bU2DevExitLat;
+ 
+ 	/* If the device says it doesn't have *any* exit latency to come out of
+ 	 * U1 or U2, it's probably lying.  Assume it doesn't implement that link
+--- a/drivers/usb/core/hub.h
++++ b/drivers/usb/core/hub.h
+@@ -145,7 +145,7 @@ static inline int hub_is_superspeedplus(
+ {
+ 	return (hdev->descriptor.bDeviceProtocol == USB_HUB_PR_SS &&
+ 		le16_to_cpu(hdev->descriptor.bcdUSB) >= 0x0310 &&
+-		hdev->bos->ssp_cap);
++		hdev->bos && hdev->bos->ssp_cap);
+ }
+ 
+ static inline unsigned hub_power_on_good_delay(struct usb_hub *hub)
 
 
