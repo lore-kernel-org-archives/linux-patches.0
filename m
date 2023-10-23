@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3336614012
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D9414012
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpdcyLBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0020C433C9;
-	Mon, 23 Oct 2023 11:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XuC8T/E0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98015C433C8;
+	Mon, 23 Oct 2023 11:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059310;
-	bh=BoxHuBb5kbePTR/Z7Ow3Vw816SmzqPR0kJ5WTC2SZRA=;
+	s=korg; t=1698059313;
+	bh=lbUy9yM1rCMIrWMARrTQfoAwhrEWFwzNVg7KjPk3VZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mpdcyLBwBcr7Bqxr3pFyu7U/Hdp3jPcSTvsyswAkEn2yoenac6o6jApn82Xvzb9PK
-	 mr/rLAiZFkwF9EU/TIp7Qhp6l2lXf0iVwwDh4qQxfYEyaUYkPqeoNFDJ1zkxyaeYGL
-	 AOF98vWqFNmvDLdPP+bpev4KwV51wzowMIkfMrQI=
+	b=XuC8T/E04YCjFevPJIjJi/ISv5n6XdFJDnOqshA55D/4peFHWCrujB5m0R5iGLjsv
+	 U8tRO/ZVVzgg27N7rsHZL0OEn5lKWBQ4mqD06r1hEET5kw5sKjM6ZuHJb6EZhLN/Hk
+	 pl+EIl4CyfR/1qBAL64CmO+nYLIn7FLfrOp3Lhq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 117/241] HID: holtek: fix slab-out-of-bounds Write in holtek_kbd_input_event
-Date: Mon, 23 Oct 2023 12:55:03 +0200
-Message-ID: <20231023104836.735596097@linuxfoundation.org>
+Subject: [PATCH 6.5 135/241] btrfs: error out when reallocating block for defrag using a stale transaction
+Date: Mon, 23 Oct 2023 12:55:21 +0200
+Message-ID: <20231023104837.161104442@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,38 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ffe3b7837a2bb421df84d0177481db9f52c93a71 ]
+[ Upstream commit e36f94914021e58ee88a8856c7fdf35adf9c7ee1 ]
 
-There is a slab-out-of-bounds Write bug in hid-holtek-kbd driver.
-The problem is the driver assumes the device must have an input
-but some malicious devices violate this assumption.
+At btrfs_realloc_node() we have these checks to verify we are not using a
+stale transaction (a past transaction with an unblocked state or higher),
+and the only thing we do is to trigger two WARN_ON(). This however is a
+critical problem, highly unexpected and if it happens it's most likely due
+to a bug, so we should error out and turn the fs into error state so that
+such issue is much more easily noticed if it's triggered.
 
-Fix this by checking hid_device's input is non-empty before its usage.
+The problem is critical because in btrfs_realloc_node() we COW tree blocks,
+and using such stale transaction will lead to not persisting the extent
+buffers used for the COW operations, as allocating tree block adds the
+range of the respective extent buffers to the ->dirty_pages iotree of the
+transaction, and a stale transaction, in the unlocked state or higher,
+will not flush dirty extent buffers anymore, therefore resulting in not
+persisting the tree block and resource leaks (not cleaning the dirty_pages
+iotree for example).
 
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+So do the following changes:
+
+1) Return -EUCLEAN if we find a stale transaction;
+
+2) Turn the fs into error state, with error -EUCLEAN, so that no
+   transaction can be committed, and generate a stack trace;
+
+3) Combine both conditions into a single if statement, as both are related
+   and have the same error message;
+
+4) Mark the check as unlikely, since this is not expected to ever happen.
+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-holtek-kbd.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/ctree.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-holtek-kbd.c b/drivers/hid/hid-holtek-kbd.c
-index 403506b9697e7..b346d68a06f5a 100644
---- a/drivers/hid/hid-holtek-kbd.c
-+++ b/drivers/hid/hid-holtek-kbd.c
-@@ -130,6 +130,10 @@ static int holtek_kbd_input_event(struct input_dev *dev, unsigned int type,
- 		return -ENODEV;
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index db1f3bc7f3284..da519c1b6ad08 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -817,8 +817,22 @@ int btrfs_realloc_node(struct btrfs_trans_handle *trans,
+ 	int progress_passed = 0;
+ 	struct btrfs_disk_key disk_key;
  
- 	boot_hid = usb_get_intfdata(boot_interface);
-+	if (list_empty(&boot_hid->inputs)) {
-+		hid_err(hid, "no inputs found\n");
-+		return -ENODEV;
+-	WARN_ON(trans->transaction != fs_info->running_transaction);
+-	WARN_ON(trans->transid != fs_info->generation);
++	/*
++	 * COWing must happen through a running transaction, which always
++	 * matches the current fs generation (it's a transaction with a state
++	 * less than TRANS_STATE_UNBLOCKED). If it doesn't, then turn the fs
++	 * into error state to prevent the commit of any transaction.
++	 */
++	if (unlikely(trans->transaction != fs_info->running_transaction ||
++		     trans->transid != fs_info->generation)) {
++		btrfs_abort_transaction(trans, -EUCLEAN);
++		btrfs_crit(fs_info,
++"unexpected transaction when attempting to reallocate parent %llu for root %llu, transaction %llu running transaction %llu fs generation %llu",
++			   parent->start, btrfs_root_id(root), trans->transid,
++			   fs_info->running_transaction->transid,
++			   fs_info->generation);
++		return -EUCLEAN;
 +	}
- 	boot_hid_input = list_first_entry(&boot_hid->inputs,
- 		struct hid_input, list);
  
+ 	parent_nritems = btrfs_header_nritems(parent);
+ 	blocksize = fs_info->nodesize;
 -- 
 2.40.1
 
