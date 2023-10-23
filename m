@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E3214A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C6314A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iloQV43o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF9CC433C8;
-	Mon, 23 Oct 2023 11:12:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJ8RyH0t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A218FC433C7;
+	Mon, 23 Oct 2023 11:12:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059555;
-	bh=WJ6bRM+hB52EvqDbs7VfNPE/LYIpBFVLrWOA8eqQxBg=;
+	s=korg; t=1698059558;
+	bh=YCAJHvv+322iXrFacMiU9ZyJXyBnXfIBrlZb7+KgYDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iloQV43oT99QcxOfubJWlRvM0DlBPje0tcnnOBvzftDqYkf80yfMu6rTuDDX8tx8o
-	 08EPREqBXoUF1caiAVKzi1BSIa15ah5gdgm8dPiLMh+W+xLi7UkDDAP1Mx1LeYqL1q
-	 mFYBbcWNDOvWn/JlG+zAPHH1UKRNkF5+pgU9L08g=
+	b=CJ8RyH0tJeXanlqMJE+0gSQuXQNg3HzaEs7qMNPXOZJJsNczORs3bPLRNk8tBI8jy
+	 gpzbJuGcpDqJ7uI547neW8hivShTudYwt2Yo+eGupPuggRgOowJ2dwTXGz32sONpHe
+	 eoWqtAf1wbQzlQK2oriz/A9q0psZJiRrysJ1/Ar8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Maxime Ripard <maxime@cerno.tech>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 217/241] ASoC: cs42l42: Fix missing include of gpio/consumer.h
-Date: Mon, 23 Oct 2023 12:56:43 +0200
-Message-ID: <20231023104839.141749554@linuxfoundation.org>
+Subject: [PATCH 6.5 218/241] drm/bridge: ti-sn65dsi86: Associate DSI device lifetime with auxiliary device
+Date: Mon, 23 Oct 2023 12:56:44 +0200
+Message-ID: <20231023104839.166867358@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -36,49 +38,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit d6cbc6a3a856a7d8047316d81e2e039e44432acb ]
+[ Upstream commit 7b821db95140e2c118567aee22a78bf85f3617e0 ]
 
-The call to gpiod_set_value_cansleep() in cs42l42_sdw_update_status()
-needs the header file gpio/consumer.h to be included.
+The kernel produces a warning splat and the DSI device fails to register
+in this driver if the i2c driver probes, populates child auxiliary
+devices, and then somewhere in ti_sn_bridge_probe() a function call
+returns -EPROBE_DEFER. When the auxiliary driver probe defers, the dsi
+device created by devm_mipi_dsi_device_register_full() is left
+registered because the devm managed device used to manage the lifetime
+of the DSI device is the parent i2c device, not the auxiliary device
+that is being probed.
 
-This was introduced by commit 2d066c6a7865 ("ASoC: cs42l42: Avoid stale
-SoundWire ATTACH after hard reset")
+Associate the DSI device created and managed by this driver to the
+lifetime of the auxiliary device, not the i2c device, so that the DSI
+device is removed when the auxiliary driver unbinds. Similarly change
+the device pointer used for dev_err_probe() so the deferred probe errors
+are associated with the auxiliary device instead of the parent i2c
+device so we can narrow down future problems faster.
 
-and caused error:
-    sound/soc/codecs/cs42l42-sdw.c:374:4: error: implicit declaration of
-    function ‘gpiod_set_value_cansleep’;
-    did you mean gpio_set_value_cansleep’?
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 2d066c6a7865 ("ASoC: cs42l42: Avoid stale SoundWire ATTACH after hard reset")
-Link: https://lore.kernel.org/r/20231011134853.20059-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Maxime Ripard <maxime@cerno.tech>
+Fixes: c3b75d4734cb ("drm/bridge: sn65dsi86: Register and attach our DSI device at probe")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231002235407.769399-1-swboyd@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l42-sdw.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/cs42l42-sdw.c b/sound/soc/codecs/cs42l42-sdw.c
-index 974bae4abfad1..94a66a325303b 100644
---- a/sound/soc/codecs/cs42l42-sdw.c
-+++ b/sound/soc/codecs/cs42l42-sdw.c
-@@ -6,6 +6,7 @@
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index f448b903e1907..84148a79414b7 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -692,7 +692,7 @@ static struct ti_sn65dsi86 *bridge_to_ti_sn65dsi86(struct drm_bridge *bridge)
+ 	return container_of(bridge, struct ti_sn65dsi86, bridge);
+ }
  
- #include <linux/acpi.h>
- #include <linux/device.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/iopoll.h>
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
+-static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
++static int ti_sn_attach_host(struct auxiliary_device *adev, struct ti_sn65dsi86 *pdata)
+ {
+ 	int val;
+ 	struct mipi_dsi_host *host;
+@@ -707,7 +707,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
+ 	if (!host)
+ 		return -EPROBE_DEFER;
+ 
+-	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
++	dsi = devm_mipi_dsi_device_register_full(&adev->dev, host, &info);
+ 	if (IS_ERR(dsi))
+ 		return PTR_ERR(dsi);
+ 
+@@ -725,7 +725,7 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
+ 
+ 	pdata->dsi = dsi;
+ 
+-	return devm_mipi_dsi_attach(dev, dsi);
++	return devm_mipi_dsi_attach(&adev->dev, dsi);
+ }
+ 
+ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
+@@ -1298,9 +1298,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
+ 	struct device_node *np = pdata->dev->of_node;
+ 	int ret;
+ 
+-	pdata->next_bridge = devm_drm_of_get_bridge(pdata->dev, np, 1, 0);
++	pdata->next_bridge = devm_drm_of_get_bridge(&adev->dev, np, 1, 0);
+ 	if (IS_ERR(pdata->next_bridge))
+-		return dev_err_probe(pdata->dev, PTR_ERR(pdata->next_bridge),
++		return dev_err_probe(&adev->dev, PTR_ERR(pdata->next_bridge),
+ 				     "failed to create panel bridge\n");
+ 
+ 	ti_sn_bridge_parse_lanes(pdata, np);
+@@ -1319,9 +1319,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
+ 
+ 	drm_bridge_add(&pdata->bridge);
+ 
+-	ret = ti_sn_attach_host(pdata);
++	ret = ti_sn_attach_host(adev, pdata);
+ 	if (ret) {
+-		dev_err_probe(pdata->dev, ret, "failed to attach dsi host\n");
++		dev_err_probe(&adev->dev, ret, "failed to attach dsi host\n");
+ 		goto err_remove_bridge;
+ 	}
+ 
 -- 
 2.42.0
 
