@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EEC14282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF6014282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRtbgzsB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5841C433C8;
-	Mon, 23 Oct 2023 11:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxQwh1Nt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02C6C433C9;
+	Mon, 23 Oct 2023 11:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059787;
-	bh=kEKYuMC+SLXJuuWhxm0RmUNhYcCMG18/qIgjLY3EfZU=;
+	s=korg; t=1698059790;
+	bh=BYtS8i/sNBZPDlpIA2bGvds8+XdU4lyul/5ZS/6r7Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRtbgzsBOX6UJYJ4mIk3nKgvna+dLN5p4jKiWVs0QfpMo/EYyKVCgMtDaaUtvONtl
-	 tvpRx07r4QOK4WPEg5KfuaA3V5vHJwiyL4tsLEUTdz0TiEapBIZ03/kwwxzOKSYYhs
-	 +OctHHKuQ2f9xdVbcUMr2NElxD/W0D4KLLycqYZg=
+	b=UxQwh1NtEbbDoZv/hyCFCK7yiEuEq0nRPiKpoO5UfaWMJW3dOdkFgHoCf5Q9pHC18
+	 9DYiF7AyAdv5NtJL7MWcTdfm/+HqiVc5gmtKx3RMUPgGCAFZnrXfM6iIjuGVuV07Br
+	 3GA9Gck0RpZ+DzJPbbuZBZ3QsLZh0DU3NqI1UHYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 4.19 52/98] xfrm: fix a data-race in xfrm_gen_index()
-Date: Mon, 23 Oct 2023 12:56:41 +0200
-Message-ID: <20231023104815.448047498@linuxfoundation.org>
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 4.19 53/98] xfrm: interface: use DEV_STATS_INC()
+Date: Mon, 23 Oct 2023 12:56:42 +0200
+Message-ID: <20231023104815.485394334@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -45,99 +44,180 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-commit 3e4bc23926b83c3c67e5f61ae8571602754131a6 upstream.
+commit f7c4e3e5d4f6609b4725a97451948ca2e425379a upstream.
 
-xfrm_gen_index() mutual exclusion uses net->xfrm.xfrm_policy_lock.
+syzbot/KCSAN reported data-races in xfrm whenever dev->stats fields
+are updated.
 
-This means we must use a per-netns idx_generator variable,
-instead of a static one.
-Alternative would be to use an atomic variable.
+It appears all of these updates can happen from multiple cpus.
 
-syzbot reported:
+Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
 
-BUG: KCSAN: data-race in xfrm_sk_policy_insert / xfrm_sk_policy_insert
+BUG: KCSAN: data-race in xfrmi_xmit / xfrmi_xmit
 
-write to 0xffffffff87005938 of 4 bytes by task 29466 on cpu 0:
-xfrm_gen_index net/xfrm/xfrm_policy.c:1385 [inline]
-xfrm_sk_policy_insert+0x262/0x640 net/xfrm/xfrm_policy.c:2347
-xfrm_user_policy+0x413/0x540 net/xfrm/xfrm_state.c:2639
-do_ipv6_setsockopt+0x1317/0x2ce0 net/ipv6/ipv6_sockglue.c:943
-ipv6_setsockopt+0x57/0x130 net/ipv6/ipv6_sockglue.c:1012
-rawv6_setsockopt+0x21e/0x410 net/ipv6/raw.c:1054
-sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
-__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
-__do_sys_setsockopt net/socket.c:2274 [inline]
-__se_sys_setsockopt net/socket.c:2271 [inline]
-__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
+read-write to 0xffff88813726b160 of 8 bytes by task 23986 on cpu 1:
+xfrmi_xmit+0x74e/0xb20 net/xfrm/xfrm_interface_core.c:583
+__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
+netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+xmit_one net/core/dev.c:3544 [inline]
+dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
+__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
+dev_queue_xmit include/linux/netdevice.h:3082 [inline]
+neigh_connected_output+0x231/0x2a0 net/core/neighbour.c:1581
+neigh_output include/net/neighbour.h:542 [inline]
+ip_finish_output2+0x74a/0x850 net/ipv4/ip_output.c:230
+ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:318
+NF_HOOK_COND include/linux/netfilter.h:293 [inline]
+ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:432
+dst_output include/net/dst.h:458 [inline]
+ip_local_out net/ipv4/ip_output.c:127 [inline]
+ip_send_skb+0x72/0xe0 net/ipv4/ip_output.c:1487
+udp_send_skb+0x6a4/0x990 net/ipv4/udp.c:963
+udp_sendmsg+0x1249/0x12d0 net/ipv4/udp.c:1246
+inet_sendmsg+0x63/0x80 net/ipv4/af_inet.c:840
+sock_sendmsg_nosec net/socket.c:730 [inline]
+sock_sendmsg net/socket.c:753 [inline]
+____sys_sendmsg+0x37c/0x4d0 net/socket.c:2540
+___sys_sendmsg net/socket.c:2594 [inline]
+__sys_sendmmsg+0x269/0x500 net/socket.c:2680
+__do_sys_sendmmsg net/socket.c:2709 [inline]
+__se_sys_sendmmsg net/socket.c:2706 [inline]
+__x64_sys_sendmmsg+0x57/0x60 net/socket.c:2706
 do_syscall_x64 arch/x86/entry/common.c:50 [inline]
 do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
 entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-read to 0xffffffff87005938 of 4 bytes by task 29460 on cpu 1:
-xfrm_sk_policy_insert+0x13e/0x640
-xfrm_user_policy+0x413/0x540 net/xfrm/xfrm_state.c:2639
-do_ipv6_setsockopt+0x1317/0x2ce0 net/ipv6/ipv6_sockglue.c:943
-ipv6_setsockopt+0x57/0x130 net/ipv6/ipv6_sockglue.c:1012
-rawv6_setsockopt+0x21e/0x410 net/ipv6/raw.c:1054
-sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
-__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
-__do_sys_setsockopt net/socket.c:2274 [inline]
-__se_sys_setsockopt net/socket.c:2271 [inline]
-__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
+read-write to 0xffff88813726b160 of 8 bytes by task 23987 on cpu 0:
+xfrmi_xmit+0x74e/0xb20 net/xfrm/xfrm_interface_core.c:583
+__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
+netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+xmit_one net/core/dev.c:3544 [inline]
+dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
+__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
+dev_queue_xmit include/linux/netdevice.h:3082 [inline]
+neigh_connected_output+0x231/0x2a0 net/core/neighbour.c:1581
+neigh_output include/net/neighbour.h:542 [inline]
+ip_finish_output2+0x74a/0x850 net/ipv4/ip_output.c:230
+ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:318
+NF_HOOK_COND include/linux/netfilter.h:293 [inline]
+ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:432
+dst_output include/net/dst.h:458 [inline]
+ip_local_out net/ipv4/ip_output.c:127 [inline]
+ip_send_skb+0x72/0xe0 net/ipv4/ip_output.c:1487
+udp_send_skb+0x6a4/0x990 net/ipv4/udp.c:963
+udp_sendmsg+0x1249/0x12d0 net/ipv4/udp.c:1246
+inet_sendmsg+0x63/0x80 net/ipv4/af_inet.c:840
+sock_sendmsg_nosec net/socket.c:730 [inline]
+sock_sendmsg net/socket.c:753 [inline]
+____sys_sendmsg+0x37c/0x4d0 net/socket.c:2540
+___sys_sendmsg net/socket.c:2594 [inline]
+__sys_sendmmsg+0x269/0x500 net/socket.c:2680
+__do_sys_sendmmsg net/socket.c:2709 [inline]
+__se_sys_sendmmsg net/socket.c:2706 [inline]
+__x64_sys_sendmmsg+0x57/0x60 net/socket.c:2706
 do_syscall_x64 arch/x86/entry/common.c:50 [inline]
 do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
 entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-value changed: 0x00006ad8 -> 0x00006b18
+value changed: 0x00000000000010d7 -> 0x00000000000010d8
 
 Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 29460 Comm: syz-executor.1 Not tainted 6.5.0-rc5-syzkaller-00243-g9106536c1aa3 #0
+CPU: 0 PID: 23987 Comm: syz-executor.5 Not tainted 6.5.0-syzkaller-10885-g0468be89b3fa #0
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
 
-Fixes: 1121994c803f ("netns xfrm: policy insertion in netns")
+Fixes: f203b76d7809 ("xfrm: Add virtual xfrm interfaces")
 Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netns/xfrm.h |    1 +
- net/xfrm/xfrm_policy.c   |    6 ++----
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ net/xfrm/xfrm_interface_core.c |   22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
---- a/include/net/netns/xfrm.h
-+++ b/include/net/netns/xfrm.h
-@@ -48,6 +48,7 @@ struct netns_xfrm {
- 	struct list_head	policy_all;
- 	struct hlist_head	*policy_byidx;
- 	unsigned int		policy_idx_hmask;
-+	unsigned int		idx_generator;
- 	struct hlist_head	policy_inexact[XFRM_POLICY_MAX];
- 	struct xfrm_policy_hash	policy_bydst[XFRM_POLICY_MAX];
- 	unsigned int		policy_count[XFRM_POLICY_MAX * 2];
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -654,8 +654,6 @@ EXPORT_SYMBOL(xfrm_policy_hash_rebuild);
-  * of an absolute inpredictability of ordering of rules. This will not pass. */
- static u32 xfrm_gen_index(struct net *net, int dir, u32 index)
- {
--	static u32 idx_generator;
--
- 	for (;;) {
- 		struct hlist_head *list;
- 		struct xfrm_policy *p;
-@@ -663,8 +661,8 @@ static u32 xfrm_gen_index(struct net *ne
- 		int found;
+--- a/net/xfrm/xfrm_interface_core.c
++++ b/net/xfrm/xfrm_interface_core.c
+@@ -219,8 +219,8 @@ static int xfrmi_rcv_cb(struct sk_buff *
+ 	skb->dev = dev;
  
- 		if (!index) {
--			idx = (idx_generator | dir);
--			idx_generator += 8;
-+			idx = (net->xfrm.idx_generator | dir);
-+			net->xfrm.idx_generator += 8;
- 		} else {
- 			idx = index;
- 			index = 0;
+ 	if (err) {
+-		dev->stats.rx_errors++;
+-		dev->stats.rx_dropped++;
++		DEV_STATS_INC(dev, rx_errors);
++		DEV_STATS_INC(dev, rx_dropped);
+ 
+ 		return 0;
+ 	}
+@@ -260,7 +260,6 @@ static int
+ xfrmi_xmit2(struct sk_buff *skb, struct net_device *dev, struct flowi *fl)
+ {
+ 	struct xfrm_if *xi = netdev_priv(dev);
+-	struct net_device_stats *stats = &xi->dev->stats;
+ 	struct dst_entry *dst = skb_dst(skb);
+ 	unsigned int length = skb->len;
+ 	struct net_device *tdev;
+@@ -286,7 +285,7 @@ xfrmi_xmit2(struct sk_buff *skb, struct
+ 	tdev = dst->dev;
+ 
+ 	if (tdev == dev) {
+-		stats->collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 		net_warn_ratelimited("%s: Local routing loop detected!\n",
+ 				     dev->name);
+ 		goto tx_err_dst_release;
+@@ -329,13 +328,13 @@ xmit:
+ 		tstats->tx_packets++;
+ 		u64_stats_update_end(&tstats->syncp);
+ 	} else {
+-		stats->tx_errors++;
+-		stats->tx_aborted_errors++;
++		DEV_STATS_INC(dev, tx_errors);
++		DEV_STATS_INC(dev, tx_aborted_errors);
+ 	}
+ 
+ 	return 0;
+ tx_err_link_failure:
+-	stats->tx_carrier_errors++;
++	DEV_STATS_INC(dev, tx_carrier_errors);
+ 	dst_link_failure(skb);
+ tx_err_dst_release:
+ 	dst_release(dst);
+@@ -345,7 +344,6 @@ tx_err_dst_release:
+ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct xfrm_if *xi = netdev_priv(dev);
+-	struct net_device_stats *stats = &xi->dev->stats;
+ 	struct dst_entry *dst = skb_dst(skb);
+ 	struct flowi fl;
+ 	int ret;
+@@ -362,7 +360,7 @@ static netdev_tx_t xfrmi_xmit(struct sk_
+ 			dst = ip6_route_output(dev_net(dev), NULL, &fl.u.ip6);
+ 			if (dst->error) {
+ 				dst_release(dst);
+-				stats->tx_carrier_errors++;
++				DEV_STATS_INC(dev, tx_carrier_errors);
+ 				goto tx_err;
+ 			}
+ 			skb_dst_set(skb, dst);
+@@ -378,7 +376,7 @@ static netdev_tx_t xfrmi_xmit(struct sk_
+ 			fl.u.ip4.flowi4_flags |= FLOWI_FLAG_ANYSRC;
+ 			rt = __ip_route_output_key(dev_net(dev), &fl.u.ip4);
+ 			if (IS_ERR(rt)) {
+-				stats->tx_carrier_errors++;
++				DEV_STATS_INC(dev, tx_carrier_errors);
+ 				goto tx_err;
+ 			}
+ 			skb_dst_set(skb, &rt->dst);
+@@ -397,8 +395,8 @@ static netdev_tx_t xfrmi_xmit(struct sk_
+ 	return NETDEV_TX_OK;
+ 
+ tx_err:
+-	stats->tx_errors++;
+-	stats->tx_dropped++;
++	DEV_STATS_INC(dev, tx_errors);
++	DEV_STATS_INC(dev, tx_dropped);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
+ }
 
 
