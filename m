@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC7C15E87
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7041415E87
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wr/LK2zd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0957BC433C9;
-	Mon, 23 Oct 2023 11:31:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrdL8Ss6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD980C433C8;
+	Mon, 23 Oct 2023 11:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060709;
-	bh=YC+4BUEuwRD89FVgqdpGdTYsRGjBk+O8cGGvoe+INfQ=;
+	s=korg; t=1698060712;
+	bh=LBYxX5p0AeG4tAoziJJCtducElrpG5fdHEUk60EEpkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wr/LK2zdK3EjJpuUuz/KoU5u/OVeGhhazD9kcOXDhT5Av0tmvS4w2AeY6k9I30QE2
-	 XZg9opPN3XRZQhbS0P8neRl+1oJVtQRuCCK+vpE85D//+oqSSjrpy/qAH+6fPj9Ie+
-	 BxdowclwNgv4DLiGsCPK4bzVQrmt4UI/J2eXKrgU=
+	b=wrdL8Ss67cZ6TeB5/6KUGOcuZTImD2OAgktDIdQFIP4hhD0xYj33tUU2lO/gtGejP
+	 2qlXxzIasGSdXrScblSz2K65nIj8WzTE018uZZZRi78cRTJ+Z10NXCiovLghWr9LTJ
+	 kH5mHIqvIa1ZeWLzu9SHNF05pMW49uELu6nbQBQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 066/123] ipv4: fib: annotate races around nh->nh_saddr_genid and nh->nh_saddr
-Date: Mon, 23 Oct 2023 12:57:04 +0200
-Message-ID: <20231023104819.886447115@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 040/123] powerpc/8xx: Fix pte_access_permitted() for PAGE_NONE
+Date: Mon, 23 Oct 2023 12:56:38 +0200
+Message-ID: <20231023104819.067330728@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -44,110 +42,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit 195374d893681da43a39796e53b30ac4f20400c4 upstream.
+[ Upstream commit 5d9cea8a552ee122e21fbd5a3c5d4eb85f648e06 ]
 
-syzbot reported a data-race while accessing nh->nh_saddr_genid [1]
+On 8xx, PAGE_NONE is handled by setting _PAGE_NA instead of clearing
+_PAGE_USER.
 
-Add annotations, but leave the code lazy as intended.
+But then pte_user() returns 1 also for PAGE_NONE.
 
-[1]
-BUG: KCSAN: data-race in fib_select_path / fib_select_path
+As _PAGE_NA prevent reads, add a specific version of pte_read()
+that returns 0 when _PAGE_NA is set instead of always returning 1.
 
-write to 0xffff8881387166f0 of 4 bytes by task 6778 on cpu 1:
-fib_info_update_nhc_saddr net/ipv4/fib_semantics.c:1334 [inline]
-fib_result_prefsrc net/ipv4/fib_semantics.c:1354 [inline]
-fib_select_path+0x292/0x330 net/ipv4/fib_semantics.c:2269
-ip_route_output_key_hash_rcu+0x659/0x12c0 net/ipv4/route.c:2810
-ip_route_output_key_hash net/ipv4/route.c:2644 [inline]
-__ip_route_output_key include/net/route.h:134 [inline]
-ip_route_output_flow+0xa6/0x150 net/ipv4/route.c:2872
-send4+0x1f5/0x520 drivers/net/wireguard/socket.c:61
-wg_socket_send_skb_to_peer+0x94/0x130 drivers/net/wireguard/socket.c:175
-wg_socket_send_buffer_to_peer+0xd6/0x100 drivers/net/wireguard/socket.c:200
-wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
-wg_packet_handshake_send_worker+0x10c/0x150 drivers/net/wireguard/send.c:51
-process_one_work kernel/workqueue.c:2630 [inline]
-process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2703
-worker_thread+0x525/0x730 kernel/workqueue.c:2784
-kthread+0x1d7/0x210 kernel/kthread.c:388
-ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
-ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
-
-read to 0xffff8881387166f0 of 4 bytes by task 6759 on cpu 0:
-fib_result_prefsrc net/ipv4/fib_semantics.c:1350 [inline]
-fib_select_path+0x1cb/0x330 net/ipv4/fib_semantics.c:2269
-ip_route_output_key_hash_rcu+0x659/0x12c0 net/ipv4/route.c:2810
-ip_route_output_key_hash net/ipv4/route.c:2644 [inline]
-__ip_route_output_key include/net/route.h:134 [inline]
-ip_route_output_flow+0xa6/0x150 net/ipv4/route.c:2872
-send4+0x1f5/0x520 drivers/net/wireguard/socket.c:61
-wg_socket_send_skb_to_peer+0x94/0x130 drivers/net/wireguard/socket.c:175
-wg_socket_send_buffer_to_peer+0xd6/0x100 drivers/net/wireguard/socket.c:200
-wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
-wg_packet_handshake_send_worker+0x10c/0x150 drivers/net/wireguard/send.c:51
-process_one_work kernel/workqueue.c:2630 [inline]
-process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2703
-worker_thread+0x525/0x730 kernel/workqueue.c:2784
-kthread+0x1d7/0x210 kernel/kthread.c:388
-ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
-ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
-
-value changed: 0x959d3217 -> 0x959d3218
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 6759 Comm: kworker/u4:15 Not tainted 6.6.0-rc4-syzkaller-00029-gcbf3a2cb156a #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/06/2023
-Workqueue: wg-kex-wg1 wg_packet_handshake_send_worker
-
-Fixes: 436c3b66ec98 ("ipv4: Invalidate nexthop cache nh_saddr more correctly.")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20231017192304.82626-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 351750331fc1 ("powerpc/mm: Introduce _PAGE_NA")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/57bcfbe578e43123f9ed73e040229b80f1ad56ec.1695659959.git.christophe.leroy@csgroup.eu
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_semantics.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ arch/powerpc/include/asm/nohash/32/pte-8xx.h | 7 +++++++
+ arch/powerpc/include/asm/nohash/pgtable.h    | 2 ++
+ 2 files changed, 9 insertions(+)
 
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -1333,15 +1333,18 @@ __be32 fib_info_update_nhc_saddr(struct
- 				 unsigned char scope)
- {
- 	struct fib_nh *nh;
-+	__be32 saddr;
+diff --git a/arch/powerpc/include/asm/nohash/32/pte-8xx.h b/arch/powerpc/include/asm/nohash/32/pte-8xx.h
+index c9e4b2d90f65c..93ecf4e80ca70 100644
+--- a/arch/powerpc/include/asm/nohash/32/pte-8xx.h
++++ b/arch/powerpc/include/asm/nohash/32/pte-8xx.h
+@@ -91,6 +91,13 @@ static inline pte_t pte_wrprotect(pte_t pte)
  
- 	if (nhc->nhc_family != AF_INET)
- 		return inet_select_addr(nhc->nhc_dev, 0, scope);
+ #define pte_wrprotect pte_wrprotect
  
- 	nh = container_of(nhc, struct fib_nh, nh_common);
--	nh->nh_saddr = inet_select_addr(nh->fib_nh_dev, nh->fib_nh_gw4, scope);
--	nh->nh_saddr_genid = atomic_read(&net->ipv4.dev_addr_genid);
-+	saddr = inet_select_addr(nh->fib_nh_dev, nh->fib_nh_gw4, scope);
- 
--	return nh->nh_saddr;
-+	WRITE_ONCE(nh->nh_saddr, saddr);
-+	WRITE_ONCE(nh->nh_saddr_genid, atomic_read(&net->ipv4.dev_addr_genid));
++static inline int pte_read(pte_t pte)
++{
++	return (pte_val(pte) & _PAGE_RO) != _PAGE_NA;
++}
 +
-+	return saddr;
++#define pte_read pte_read
++
+ static inline int pte_write(pte_t pte)
+ {
+ 	return !(pte_val(pte) & _PAGE_RO);
+diff --git a/arch/powerpc/include/asm/nohash/pgtable.h b/arch/powerpc/include/asm/nohash/pgtable.h
+index 3d2a78ab051a7..15dec9994c780 100644
+--- a/arch/powerpc/include/asm/nohash/pgtable.h
++++ b/arch/powerpc/include/asm/nohash/pgtable.h
+@@ -45,7 +45,9 @@ static inline int pte_write(pte_t pte)
+ 	return pte_val(pte) & _PAGE_RW;
  }
- 
- __be32 fib_result_prefsrc(struct net *net, struct fib_result *res)
-@@ -1355,8 +1358,9 @@ __be32 fib_result_prefsrc(struct net *ne
- 		struct fib_nh *nh;
- 
- 		nh = container_of(nhc, struct fib_nh, nh_common);
--		if (nh->nh_saddr_genid == atomic_read(&net->ipv4.dev_addr_genid))
--			return nh->nh_saddr;
-+		if (READ_ONCE(nh->nh_saddr_genid) ==
-+		    atomic_read(&net->ipv4.dev_addr_genid))
-+			return READ_ONCE(nh->nh_saddr);
- 	}
- 
- 	return fib_info_update_nhc_saddr(net, nhc, res->fi->fib_scope);
+ #endif
++#ifndef pte_read
+ static inline int pte_read(pte_t pte)		{ return 1; }
++#endif
+ static inline int pte_dirty(pte_t pte)		{ return pte_val(pte) & _PAGE_DIRTY; }
+ static inline int pte_special(pte_t pte)	{ return pte_val(pte) & _PAGE_SPECIAL; }
+ static inline int pte_none(pte_t pte)		{ return (pte_val(pte) & ~_PTE_NONE_MASK) == 0; }
+-- 
+2.40.1
+
 
 
