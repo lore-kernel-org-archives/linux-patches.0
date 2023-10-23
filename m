@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF72215E87
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD9915E87
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5o+spj2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F9DDC433C8;
-	Mon, 23 Oct 2023 11:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Opt//yeg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13202C433C7;
+	Mon, 23 Oct 2023 11:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060819;
-	bh=0gerTLoR77TQrbdHlkntlQhLQXPaCvSd6VA+cPGBhZI=;
+	s=korg; t=1698060822;
+	bh=DVwT7IKpzaVIxS90JOSKktoR8Pi7p0ICdP/SLH7b7WA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5o+spj2KHchQ/joZkOUiOhG0Muth/pC0Apss2lmn+RhrRGUkmPQECnM93Zr4Ghdi
-	 7/vstPH7XCT+kvsmTeKYjMlSpeP7rg5s98u5s5V4C+5ReyoA3rwmgUAOST+q0VZiqT
-	 xApUc/W1CBPE2PWNwThOxpDsw2Kn8WU+zWhmr2fw=
+	b=Opt//yegts4pdkCgOf7MbNKq7RyKSKlKW7OVUP1cEFvvRLEX9tMr5t7R0MzVR75bl
+	 9pWZ0SH7SS7RQ1VDchxE/nbTsdi4JSfKVy8RRRC9uWO2Gm66BOmXaac9zjlsCI5Elg
+	 1vdGtc2FeQ4b26aQdhwVPUMtIMJzI9kqbp9fZvro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Wang <hui.wang@canonical.com>,
-	Tamim Khan <tamim@fusetak.com>,
-	Sunand <sunandchakradhar@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 076/123] ACPI: resource: Skip IRQ override on Asus Vivobook K3402ZA/K3502ZA
-Date: Mon, 23 Oct 2023 12:57:14 +0200
-Message-ID: <20231023104820.246017961@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 067/123] net: usb: smsc95xx: Fix an error code in smsc95xx_reset()
+Date: Mon, 23 Oct 2023 12:57:05 +0200
+Message-ID: <20231023104819.920660954@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -44,68 +42,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamim Khan <tamim@fusetak.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit e12dee3736731e24b1e7367f87d66ac0fcd73ce7 ]
+commit c53647a5df9e66dd9fedf240198e1fe50d88c286 upstream.
 
-In the ACPI DSDT table for Asus VivoBook K3402ZA/K3502ZA
-IRQ 1 is described as ActiveLow; however, the kernel overrides
-it to Edge_High. This prevents the internal keyboard from working
-on these laptops. In order to fix this add these laptops to the
-skip_override_table so that the kernel does not override IRQ 1 to
-Edge_High.
+Return a negative error code instead of success.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216158
-Reviewed-by: Hui Wang <hui.wang@canonical.com>
-Tested-by: Tamim Khan <tamim@fusetak.com>
-Tested-by: Sunand <sunandchakradhar@gmail.com>
-Signed-off-by: Tamim Khan <tamim@fusetak.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: c1ed72171ed5 ("ACPI: resource: Skip IRQ override on ASUS ExpertBook B1402CBA")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2f7ca802bdae ("net: Add SMSC LAN9500 USB2.0 10/100 ethernet adapter driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/147927f0-9ada-45cc-81ff-75a19dd30b76@moroto.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/resource.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/net/usb/smsc95xx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 6489dd3ff0741..27b364e23c60b 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -392,6 +392,24 @@ static const struct dmi_system_id medion_laptop[] = {
- 	{ }
- };
+--- a/drivers/net/usb/smsc95xx.c
++++ b/drivers/net/usb/smsc95xx.c
+@@ -1040,7 +1040,7 @@ static int smsc95xx_reset(struct usbnet
  
-+static const struct dmi_system_id asus_laptop[] = {
-+	{
-+		.ident = "Asus Vivobook K3402ZA",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "K3402ZA"),
-+		},
-+	},
-+	{
-+		.ident = "Asus Vivobook K3502ZA",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "K3502ZA"),
-+		},
-+	},
-+	{ }
-+};
-+
- struct irq_override_cmp {
- 	const struct dmi_system_id *system;
- 	unsigned char irq;
-@@ -402,6 +420,7 @@ struct irq_override_cmp {
+ 	if (timeout >= 100) {
+ 		netdev_warn(dev->net, "timeout waiting for completion of Lite Reset\n");
+-		return ret;
++		return -ETIMEDOUT;
+ 	}
  
- static const struct irq_override_cmp skip_override_table[] = {
- 	{ medion_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0 },
-+	{ asus_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0 },
- };
- 
- static bool acpi_dev_irq_override(u32 gsi, u8 triggering, u8 polarity,
--- 
-2.40.1
-
+ 	ret = smsc95xx_write_reg(dev, PM_CTRL, PM_CTL_PHY_RST_);
 
 
