@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EC211CA6
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0BC1C10
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B7Uc6SdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC4DC433C7;
-	Mon, 23 Oct 2023 11:41:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jy6g2TMY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BDBC433C8;
+	Mon, 23 Oct 2023 11:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061268;
-	bh=Xy3xfJzdcG5qMh9jGEWkFGZL+34GRynBQiwY/SosX20=;
+	s=korg; t=1698061271;
+	bh=jzVAqPkA+DNmrW/PSzbuNJ/rLtzw7clVCGDMNC3nyBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B7Uc6SdFR/kGhL8SgSI5HERLtj7c13GjKmMikxcLfdokGbhIDGpZajDcmt8QL5FZn
-	 Qkczw5Jp0X2keXH7b3BPaqNv7U5qidYkIJQNjhXSrX+rDUVA5efHqyxHO6LQca67Da
-	 4J566aH9UZM5+CSKiJo4a6z0+xHrTVrpUGD5mUb0=
+	b=Jy6g2TMYVti8zEJBYxIRDHLEI5fo3ZcGaFuF9v1PXBcbVK5ulYjf3fTokgHDaiq1I
+	 6oHBlrq4pk8BgrYSXYwlNq2KnhLpGbC7Ou5MbTFdC8SvaSopuBq8UXMTvf0e57iaVd
+	 6fNxup4kcuyrUHuxGNdWxLLjUh4jXxhmN+McVvvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/137] ASoC: pxa: fix a memory leak in probe()
-Date: Mon, 23 Oct 2023 12:58:05 +0200
-Message-ID: <20231023104825.032852886@linuxfoundation.org>
+	noreply@ellerman.id.au,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 5.15 129/137] serial: 8250: omap: Move uart_write() inside PM section
+Date: Mon, 23 Oct 2023 12:58:06 +0200
+Message-ID: <20231023104825.060629730@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -36,42 +36,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit aa6464edbd51af4a2f8db43df866a7642b244b5f ]
+commit c53aab20762255ee03e65dd66b3cba3887ad39d1 upstream.
 
-Free the "priv" pointer before returning the error code.
+If CONFIG_PM is not set (e.g. m68k/allmodconfig):
 
-Fixes: 90eb6b59d311 ("ASoC: pxa-ssp: add support for an external clock in devicetree")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/84ac2313-1420-471a-b2cb-3269a2e12a7c@moroto.mountain
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    drivers/tty/serial/8250/8250_omap.c:169:13: error: ‘uart_write’ defined but not used [-Werror=unused-function]
+      169 | static void uart_write(struct omap8250_priv *priv, u32 reg, u32 val)
+	  |             ^~~~~~~~~~
+
+Fix tis by moving uart_write() inside the existing section protected
+by #ifdef CONFIG_PM.
+
+Reported-by: noreply@ellerman.id.au
+Link: http://kisskb.ellerman.id.au/kisskb/buildresult/14925095/
+Fixes: 398cecc24846e867 ("serial: 8250: omap: Fix imprecise external abort for omap_8250_pm()")
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20230515065706.1723477-1-geert@linux-m68k.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/pxa/pxa-ssp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_omap.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/pxa/pxa-ssp.c b/sound/soc/pxa/pxa-ssp.c
-index 7f13a35e9cc14..d6a2af293f458 100644
---- a/sound/soc/pxa/pxa-ssp.c
-+++ b/sound/soc/pxa/pxa-ssp.c
-@@ -779,7 +779,7 @@ static int pxa_ssp_probe(struct snd_soc_dai *dai)
- 		if (IS_ERR(priv->extclk)) {
- 			ret = PTR_ERR(priv->extclk);
- 			if (ret == -EPROBE_DEFER)
--				return ret;
-+				goto err_priv;
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -159,11 +159,6 @@ static u32 uart_read(struct omap8250_pri
+ 	return readl(priv->membase + (reg << OMAP_UART_REGSHIFT));
+ }
  
- 			priv->extclk = NULL;
- 		}
--- 
-2.42.0
-
+-static void uart_write(struct omap8250_priv *priv, u32 reg, u32 val)
+-{
+-	writel(val, priv->membase + (reg << OMAP_UART_REGSHIFT));
+-}
+-
+ /*
+  * Called on runtime PM resume path from omap8250_restore_regs(), and
+  * omap8250_set_mctrl().
+@@ -1589,6 +1584,11 @@ static int omap8250_lost_context(struct
+ 	return 0;
+ }
+ 
++static void uart_write(struct omap8250_priv *priv, u32 reg, u32 val)
++{
++	writel(val, priv->membase + (reg << OMAP_UART_REGSHIFT));
++}
++
+ /* TODO: in future, this should happen via API in drivers/reset/ */
+ static int omap8250_soft_reset(struct device *dev)
+ {
 
 
