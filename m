@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF7015E87
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFCD15E87
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvnkawcG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D11BC433C7;
-	Mon, 23 Oct 2023 11:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztVYNClp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E5DC433CD;
+	Mon, 23 Oct 2023 11:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060789;
-	bh=kUGEyMCGZtEsAOLP4J1NDSqju0KB7GSr0HWrG1w0hVY=;
+	s=korg; t=1698060792;
+	bh=9TqllOs2yZH1XuEzq7XTJ8QrrAUkzOKZCdNZC2xEOig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qvnkawcGx1JCnPKCn/L8IEXiJxPyt86p+SM3NXy2EeA8kMmQ/WurIkgwfsnjCc9YK
-	 gRNg25+t6U4Gz7L3etul77PvJeClDboa36M/Sp04wqRVJNSlqCa9QwJJEgpO/zk6IN
-	 oWzmvdYUO0PBfuKrImoqa6nlznjHH0i4jx7OEHXA=
+	b=ztVYNClp8XJEm8Jw8II//ArZx8FhDkT5f5gJG2fBTsKmyFXjIcswdIAQ0WrM6mHQB
+	 sH2HgJgSRWYjf/Fz6wGT5jN4q05kuyQd3Q58npV4eDW1v56XLwYOeopNRk8s1tinwg
+	 jHRCUrTLkejb+fjWAlp1lLZqxlDNAdXFhBcvCWXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Wen Gong <quic_wgong@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 093/123] Bluetooth: hci_core: Fix build warnings
-Date: Mon, 23 Oct 2023 12:57:31 +0200
-Message-ID: <20231023104820.811785294@linuxfoundation.org>
+Subject: [PATCH 5.4 094/123] wifi: mac80211: allow transmitting EAPOL frames with tainted key
+Date: Mon, 23 Oct 2023 12:57:32 +0200
+Message-ID: <20231023104820.843702896@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -35,80 +36,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Wen Gong <quic_wgong@quicinc.com>
 
-[ Upstream commit dcda165706b9fbfd685898d46a6749d7d397e0c0 ]
+[ Upstream commit 61304336c67358d49a989e5e0060d8c99bad6ca8 ]
 
-This fixes the following warnings:
+Lower layer device driver stop/wake TX by calling ieee80211_stop_queue()/
+ieee80211_wake_queue() while hw scan. Sometimes hw scan and PTK rekey are
+running in parallel, when M4 sent from wpa_supplicant arrive while the TX
+queue is stopped, then the M4 will pending send, and then new key install
+from wpa_supplicant. After TX queue wake up by lower layer device driver,
+the M4 will be dropped by below call stack.
 
-net/bluetooth/hci_core.c: In function ‘hci_register_dev’:
-net/bluetooth/hci_core.c:2620:54: warning: ‘%d’ directive output may
-be truncated writing between 1 and 10 bytes into a region of size 5
-[-Wformat-truncation=]
- 2620 |         snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
-      |                                                      ^~
-net/bluetooth/hci_core.c:2620:50: note: directive argument in the range
-[0, 2147483647]
- 2620 |         snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
-      |                                                  ^~~~~~~
-net/bluetooth/hci_core.c:2620:9: note: ‘snprintf’ output between 5 and
-14 bytes into a destination of size 8
- 2620 |         snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+When key install started, the current key flag is set KEY_FLAG_TAINTED in
+ieee80211_pairwise_rekey(), and then mac80211 wait key install complete by
+lower layer device driver. Meanwhile ieee80211_tx_h_select_key() will return
+TX_DROP for the M4 in step 12 below, and then ieee80211_free_txskb() called
+by ieee80211_tx_dequeue(), so the M4 will not send and free, then the rekey
+process failed becaue AP not receive M4. Please see details in steps below.
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+There are a interval between KEY_FLAG_TAINTED set for current key flag and
+install key complete by lower layer device driver, the KEY_FLAG_TAINTED is
+set in this interval, all packet including M4 will be dropped in this
+interval, the interval is step 8~13 as below.
+
+issue steps:
+      TX thread                 install key thread
+1.   stop_queue                      -idle-
+2.   sending M4                      -idle-
+3.   M4 pending                      -idle-
+4.     -idle-                  starting install key from wpa_supplicant
+5.     -idle-                  =>ieee80211_key_replace()
+6.     -idle-                  =>ieee80211_pairwise_rekey() and set
+                                 currently key->flags |= KEY_FLAG_TAINTED
+7.     -idle-                  =>ieee80211_key_enable_hw_accel()
+8.     -idle-                  =>drv_set_key() and waiting key install
+                                 complete from lower layer device driver
+9.   wake_queue                     -waiting state-
+10.  re-sending M4                  -waiting state-
+11.  =>ieee80211_tx_h_select_key()  -waiting state-
+12.  drop M4 by KEY_FLAG_TAINTED    -waiting state-
+13.    -idle-                   install key complete with success/fail
+                                  success: clear flag KEY_FLAG_TAINTED
+                                  fail: start disconnect
+
+Hence add check in step 11 above to allow the EAPOL send out in the
+interval. If lower layer device driver use the old key/cipher to encrypt
+the M4, then AP received/decrypt M4 correctly, after M4 send out, lower
+layer device driver install the new key/cipher to hardware and return
+success.
+
+If lower layer device driver use new key/cipher to send the M4, then AP
+will/should drop the M4, then it is same result with this issue, AP will/
+should kick out station as well as this issue.
+
+issue log:
+kworker/u16:4-5238  [000]  6456.108926: stop_queue:           phy1 queue:0, reason:0
+wpa_supplicant-961  [003]  6456.119737: rdev_tx_control_port: wiphy_name=phy1 name=wlan0 ifindex=6 dest=ARRAY[9e, 05, 31, 20, 9b, d0] proto=36488 unencrypted=0
+wpa_supplicant-961  [003]  6456.119839: rdev_return_int_cookie: phy1, returned 0, cookie: 504
+wpa_supplicant-961  [003]  6456.120287: rdev_add_key:         phy1, netdev:wlan0(6), key_index: 0, mode: 0, pairwise: true, mac addr: 9e:05:31:20:9b:d0
+wpa_supplicant-961  [003]  6456.120453: drv_set_key:          phy1 vif:wlan0(2) sta:9e:05:31:20:9b:d0 cipher:0xfac04, flags=0x9, keyidx=0, hw_key_idx=0
+kworker/u16:9-3829  [001]  6456.168240: wake_queue:           phy1 queue:0, reason:0
+kworker/u16:9-3829  [001]  6456.168255: drv_wake_tx_queue:    phy1 vif:wlan0(2) sta:9e:05:31:20:9b:d0 ac:0 tid:7
+kworker/u16:9-3829  [001]  6456.168305: cfg80211_control_port_tx_status: wdev(1), cookie: 504, ack: false
+wpa_supplicant-961  [003]  6459.167982: drv_return_int:       phy1 - -110
+
+issue call stack:
+nl80211_frame_tx_status+0x230/0x340 [cfg80211]
+cfg80211_control_port_tx_status+0x1c/0x28 [cfg80211]
+ieee80211_report_used_skb+0x374/0x3e8 [mac80211]
+ieee80211_free_txskb+0x24/0x40 [mac80211]
+ieee80211_tx_dequeue+0x644/0x954 [mac80211]
+ath10k_mac_tx_push_txq+0xac/0x238 [ath10k_core]
+ath10k_mac_op_wake_tx_queue+0xac/0xe0 [ath10k_core]
+drv_wake_tx_queue+0x80/0x168 [mac80211]
+__ieee80211_wake_txqs+0xe8/0x1c8 [mac80211]
+_ieee80211_wake_txqs+0xb4/0x120 [mac80211]
+ieee80211_wake_txqs+0x48/0x80 [mac80211]
+tasklet_action_common+0xa8/0x254
+tasklet_action+0x2c/0x38
+__do_softirq+0xdc/0x384
+
+Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
+Link: https://lore.kernel.org/r/20230801064751.25803-1-quic_wgong@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h | 2 +-
- net/bluetooth/hci_core.c         | 8 +++++---
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ net/mac80211/tx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index ecad25900ad78..b54f17677ac0c 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -219,7 +219,7 @@ struct hci_dev {
- 	struct list_head list;
- 	struct mutex	lock;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index d82d22b6a2a94..8bd01dfa75cb1 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -651,7 +651,8 @@ ieee80211_tx_h_select_key(struct ieee80211_tx_data *tx)
+ 		}
  
--	char		name[8];
-+	const char	*name;
- 	unsigned long	flags;
- 	__u16		id;
- 	__u8		bus;
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 21469934fc3c0..54c55c30db17b 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3317,7 +3317,11 @@ int hci_register_dev(struct hci_dev *hdev)
- 	if (id < 0)
- 		return id;
+ 		if (unlikely(tx->key && tx->key->flags & KEY_FLAG_TAINTED &&
+-			     !ieee80211_is_deauth(hdr->frame_control)))
++			     !ieee80211_is_deauth(hdr->frame_control)) &&
++			     tx->skb->protocol != tx->sdata->control_port_protocol)
+ 			return TX_DROP;
  
--	snprintf(hdev->name, sizeof(hdev->name), "hci%d", id);
-+	error = dev_set_name(&hdev->dev, "hci%u", id);
-+	if (error)
-+		return error;
-+
-+	hdev->name = dev_name(&hdev->dev);
- 	hdev->id = id;
- 
- 	BT_DBG("%p name %s bus %d", hdev, hdev->name, hdev->bus);
-@@ -3339,8 +3343,6 @@ int hci_register_dev(struct hci_dev *hdev)
- 	if (!IS_ERR_OR_NULL(bt_debugfs))
- 		hdev->debugfs = debugfs_create_dir(hdev->name, bt_debugfs);
- 
--	dev_set_name(&hdev->dev, "%s", hdev->name);
--
- 	error = device_add(&hdev->dev);
- 	if (error < 0)
- 		goto err_wqueue;
+ 		if (!skip_hw && tx->key &&
 -- 
 2.40.1
 
