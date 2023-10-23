@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF09A125CA
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E88125CA
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ith9Lkz1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A686C43391;
-	Mon, 23 Oct 2023 11:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZNRQekp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24AC2C433CB;
+	Mon, 23 Oct 2023 11:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058803;
-	bh=DbrcvbD9K39Zf+6trxOpxqtx/fmcfO+UBbrRaE4PczA=;
+	s=korg; t=1698058806;
+	bh=sPeE4Xs3x0Hp9CPsYT3ASFekDqcNJ1yUUIkZOQpEiEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ith9Lkz1G8SlIjuzPkV/Ni5KTfAFZ1GD2ky2ghMBa/TLrAD68JLdRoZt+kMAP5zmv
-	 3ExMqOr1e1R7xYpdgqvvx7be60yqlf9h9UOcJVqnwCSs8tz3HNTNp9zU7Bc56vACW5
-	 noLna6QjVyQWpKJee7eDwYhpk23fEvIeyk2V/Jx4=
+	b=vZNRQekpBZR3Jg4+zdx+pqKqGCA7FD6RhMKdPUzgwxusWmpXhO379aNSP5UZZhV+G
+	 rtv7ZhyspGAtTQtY098kTuMN2Do0Kk81dLIK5aq04IX4a+XVDKMQE31p4Lzc6QRv+a
+	 5atl40d019seZiL3sXqHKO/FJgT2T1/YU1IiDKDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E9=BB=84=E6=80=9D=E8=81=AA?= <huangsicong@iie.ac.cn>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 32/66] nfc: nci: fix possible NULL pointer dereference in send_acknowledge()
-Date: Mon, 23 Oct 2023 12:56:22 +0200
-Message-ID: <20231023104812.032154129@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 4.14 33/66] regmap: fix NULL deref on lookup
+Date: Mon, 23 Oct 2023 12:56:23 +0200
+Message-ID: <20231023104812.069360510@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -37,42 +36,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 7937609cd387246aed994e81aa4fa951358fba41 upstream.
+commit c6df843348d6b71ea986266c12831cb60c2cf325 upstream.
 
-Handle memory allocation failure from nci_skb_alloc() (calling
-alloc_skb()) to avoid possible NULL pointer dereference.
+Not all regmaps have a name so make sure to check for that to avoid
+dereferencing a NULL pointer when dev_get_regmap() is used to lookup a
+named regmap.
 
-Reported-by: 黄思聪 <huangsicong@iie.ac.cn>
-Fixes: 391d8a2da787 ("NFC: Add NCI over SPI receive")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20231013184129.18738-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e84861fec32d ("regmap: dev_get_regmap_match(): fix string comparison")
+Cc: stable@vger.kernel.org      # 5.8
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20231006082104.16707-1-johan+linaro@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/nci/spi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/base/regmap/regmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/nfc/nci/spi.c
-+++ b/net/nfc/nci/spi.c
-@@ -163,6 +163,8 @@ static int send_acknowledge(struct nci_s
- 	int ret;
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -1242,7 +1242,7 @@ static int dev_get_regmap_match(struct d
  
- 	skb = nci_skb_alloc(nspi->ndev, 0, GFP_KERNEL);
-+	if (!skb)
-+		return -ENOMEM;
- 
- 	/* add the NCI SPI header to the start of the buffer */
- 	hdr = skb_push(skb, NCI_SPI_HDR_LEN);
+ 	/* If the user didn't specify a name match any */
+ 	if (data)
+-		return !strcmp((*r)->name, data);
++		return (*r)->name && !strcmp((*r)->name, data);
+ 	else
+ 		return 1;
+ }
 
 
