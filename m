@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B011429B
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD6314AA9
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G49kbs8e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DBDC433C9;
-	Mon, 23 Oct 2023 11:09:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fwPphra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB719C433C7;
+	Mon, 23 Oct 2023 11:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059390;
-	bh=Ves5z23CSYPnkzOmyzFck6LkDnVfT5AwO9WV5o0BCpU=;
+	s=korg; t=1698059393;
+	bh=tI5ORdKRgra8O1Sc2KkiNTFb8Gr6E/zyr5BiGhgiRYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G49kbs8eerKBuAdDBfd0Og4j2KX0fwYYQcIl38AjiXupli0CEBxgXGOCvBQ4re1Ni
-	 8BieNmyCvvfxxdj+7hbPqYujmuIz3ou2eQUT8rV+KuEkxVjEHtfW8GIBvbVKVq9QvW
-	 tqW2kBTWt3SKYTumvqas9Dpg4s9mOlWSnMYSZhQE=
+	b=2fwPphra2jEvzX9QL+fOscxIths/uHg5WIlkhqwFQJIyqT1hefVRHhK1pAYZfbAqD
+	 45MdZRzUAHRdbLWx/rKpABpNso2xq81u3azELxhH8rCrXedJkbeVUGbo9hksUtbX/n
+	 HtlS8vFXxIekv7qpD0PX/wUPOZ5Xpphh8Lpi9/eI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Eric Dumazet <edumazet@google.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 162/241] Bluetooth: hci_event: Fix using memcmp when comparing keys
-Date: Mon, 23 Oct 2023 12:55:48 +0200
-Message-ID: <20231023104837.824704991@linuxfoundation.org>
+Subject: [PATCH 6.5 163/241] tcp_bpf: properly release resources on error paths
+Date: Mon, 23 Oct 2023 12:55:49 +0200
+Message-ID: <20231023104837.849296216@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,72 +46,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit b541260615f601ae1b5d6d0cc54e790de706303b ]
+[ Upstream commit 68b54aeff804acceb02f228ea2e28419272c1fb9 ]
 
-memcmp is not consider safe to use with cryptographic secrets:
+In the blamed commit below, I completely forgot to release the acquired
+resources before erroring out in the TCP BPF code, as reported by Dan.
 
- 'Do  not  use memcmp() to compare security critical data, such as
- cryptographic secrets, because the required CPU time depends on the
- number of equal bytes.'
+Address the issues by replacing the bogus return with a jump to the
+relevant cleanup code.
 
-While usage of memcmp for ZERO_KEY may not be considered a security
-critical data, it can lead to more usage of memcmp with pairing keys
-which could introduce more security problems.
-
-Fixes: 455c2ff0a558 ("Bluetooth: Fix BR/EDR out-of-band pairing with only initiator data")
-Fixes: 33155c4aae52 ("Bluetooth: hci_event: Ignore NULL link key")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 419ce133ab92 ("tcp: allow again tcp_disconnect() when threads are waiting")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/8f99194c698bcef12666f0a9a999c58f8b1cb52c.1697557782.git.pabeni@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/ipv4/tcp_bpf.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 9d8aa6ad23dc2..dd70fd5313840 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -26,6 +26,8 @@
- /* Bluetooth HCI event handling. */
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index ba2e921881248..53b0d62fd2c2d 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -307,8 +307,10 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 		}
  
- #include <asm/unaligned.h>
-+#include <linux/crypto.h>
-+#include <crypto/algapi.h>
+ 		data = tcp_msg_wait_data(sk, psock, timeo);
+-		if (data < 0)
+-			return data;
++		if (data < 0) {
++			copied = data;
++			goto unlock;
++		}
+ 		if (data && !sk_psock_queue_empty(psock))
+ 			goto msg_bytes_ready;
+ 		copied = -EAGAIN;
+@@ -319,6 +321,8 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 	tcp_rcv_space_adjust(sk);
+ 	if (copied > 0)
+ 		__tcp_cleanup_rbuf(sk, copied);
++
++unlock:
+ 	release_sock(sk);
+ 	sk_psock_put(sk, psock);
+ 	return copied;
+@@ -353,8 +357,10 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
  
- #include <net/bluetooth/bluetooth.h>
- #include <net/bluetooth/hci_core.h>
-@@ -4730,7 +4732,7 @@ static void hci_link_key_notify_evt(struct hci_dev *hdev, void *data,
- 		goto unlock;
- 
- 	/* Ignore NULL link key against CVE-2020-26555 */
--	if (!memcmp(ev->link_key, ZERO_KEY, HCI_LINK_KEY_SIZE)) {
-+	if (!crypto_memneq(ev->link_key, ZERO_KEY, HCI_LINK_KEY_SIZE)) {
- 		bt_dev_dbg(hdev, "Ignore NULL link key (ZERO KEY) for %pMR",
- 			   &ev->bdaddr);
- 		hci_disconnect(conn, HCI_ERROR_AUTH_FAILURE);
-@@ -5270,8 +5272,8 @@ static u8 bredr_oob_data_present(struct hci_conn *conn)
- 		 * available, then do not declare that OOB data is
- 		 * present.
- 		 */
--		if (!memcmp(data->rand256, ZERO_KEY, 16) ||
--		    !memcmp(data->hash256, ZERO_KEY, 16))
-+		if (!crypto_memneq(data->rand256, ZERO_KEY, 16) ||
-+		    !crypto_memneq(data->hash256, ZERO_KEY, 16))
- 			return 0x00;
- 
- 		return 0x02;
-@@ -5281,8 +5283,8 @@ static u8 bredr_oob_data_present(struct hci_conn *conn)
- 	 * not supported by the hardware, then check that if
- 	 * P-192 data values are present.
- 	 */
--	if (!memcmp(data->rand192, ZERO_KEY, 16) ||
--	    !memcmp(data->hash192, ZERO_KEY, 16))
-+	if (!crypto_memneq(data->rand192, ZERO_KEY, 16) ||
-+	    !crypto_memneq(data->hash192, ZERO_KEY, 16))
- 		return 0x00;
- 
- 	return 0x01;
+ 		timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
+ 		data = tcp_msg_wait_data(sk, psock, timeo);
+-		if (data < 0)
+-			return data;
++		if (data < 0) {
++			ret = data;
++			goto unlock;
++		}
+ 		if (data) {
+ 			if (!sk_psock_queue_empty(psock))
+ 				goto msg_bytes_ready;
+@@ -365,6 +371,8 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 		copied = -EAGAIN;
+ 	}
+ 	ret = copied;
++
++unlock:
+ 	release_sock(sk);
+ 	sk_psock_put(sk, psock);
+ 	return ret;
 -- 
 2.40.1
 
