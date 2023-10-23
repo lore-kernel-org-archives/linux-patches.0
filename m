@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE81E6D18
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9AF1116
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+zv729b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D6BC433C7;
-	Mon, 23 Oct 2023 11:05:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0c7YshEA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F80C433C8;
+	Mon, 23 Oct 2023 11:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059156;
-	bh=LNSV4+dAvswF+ybo8xImDBmrjllpXDd95JvulVdh59s=;
+	s=korg; t=1698059159;
+	bh=jzNGlTmoxwcxyoVFuBKe0q0Klc5hk31NYMg8YOSVb6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+zv729b2nGNPq/7PqwtE8fdKofEq52CQFS+qXUGR5TmX3YmKjJtHvRCEUW5kYt18
-	 pMNU6/bvHGSSs04UNuswZkXc+y/AZkNZhse/aXTotVgpV78qdjm1RzIG1U+JGaNHsg
-	 4agcvvknzSMtN3hYaDqIndC7MYkTTNaMCFqV8S6I=
+	b=0c7YshEALBNPas+wHceA1h1Qcib/V+C23avh0yUXYge+w4Q3vinrcw0lW+h2gxmE5
+	 jbrSyIutZB9+MrMLqeixgo3vlZ77TKwUJKH8DyJ0h8M4WH3ww6Y1DeUSVH5lUbRJa7
+	 5cTEYgshFCkh8nyALNv4oQ5Kmx5D/wVFoJDVKock=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.5 082/241] netlink: Correct offload_xstats size
-Date: Mon, 23 Oct 2023 12:54:28 +0200
-Message-ID: <20231023104835.885866305@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.5 083/241] netfilter: nf_tables: do not refresh timeout when resetting element
+Date: Mon, 23 Oct 2023 12:54:29 +0200
+Message-ID: <20231023104835.910201407@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,88 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Paasch <cpaasch@apple.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 503930f8e113edc86f92b767efb4ea57bdffffb2 upstream.
+commit 4c90bba60c26db7dc7df450f748e86440149786e upstream.
 
-rtnl_offload_xstats_get_size_hw_s_info_one() conditionalizes the
-size-computation for IFLA_OFFLOAD_XSTATS_HW_S_INFO_USED based on whether
-or not the device has offload_xstats enabled.
+The dump and reset command should not refresh the timeout, this command
+is intended to allow users to list existing stateful objects and reset
+them, element expiration should be refresh via transaction instead with
+a specific command to achieve this, otherwise this is entering combo
+semantics that will be hard to be undone later (eg. a user asking to
+retrieve counters but _not_ requiring to refresh expiration).
 
-However, rtnl_offload_xstats_fill_hw_s_info_one() is adding the u8 for
-that field uncondtionally.
-
-syzkaller triggered a WARNING in rtnl_stats_get due to this:
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 754 at net/core/rtnetlink.c:5982 rtnl_stats_get+0x2f4/0x300
-Modules linked in:
-CPU: 0 PID: 754 Comm: syz-executor148 Not tainted 6.6.0-rc2-g331b78eb12af #45
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
-RIP: 0010:rtnl_stats_get+0x2f4/0x300 net/core/rtnetlink.c:5982
-Code: ff ff 89 ee e8 7d 72 50 ff 83 fd a6 74 17 e8 33 6e 50 ff 4c 89 ef be 02 00 00 00 e8 86 00 fa ff e9 7b fe ff ff e8 1c 6e 50 ff <0f> 0b eb e5 e8 73 79 7b 00 0f 1f 00 90 90 90 90 90 90 90 90 90 90
-RSP: 0018:ffffc900006837c0 EFLAGS: 00010293
-RAX: ffffffff81cf7f24 RBX: ffff8881015d9000 RCX: ffff888101815a00
-RDX: 0000000000000000 RSI: 00000000ffffffa6 RDI: 00000000ffffffa6
-RBP: 00000000ffffffa6 R08: ffffffff81cf7f03 R09: 0000000000000001
-R10: ffff888101ba47b9 R11: ffff888101815a00 R12: ffff8881017dae00
-R13: ffff8881017dad00 R14: ffffc90000683ab8 R15: ffffffff83c1f740
-FS:  00007fbc22dbc740(0000) GS:ffff88813bc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020000046 CR3: 000000010264e003 CR4: 0000000000170ef0
-Call Trace:
- <TASK>
- rtnetlink_rcv_msg+0x677/0x710 net/core/rtnetlink.c:6480
- netlink_rcv_skb+0xea/0x1c0 net/netlink/af_netlink.c:2545
- netlink_unicast+0x430/0x500 net/netlink/af_netlink.c:1342
- netlink_sendmsg+0x4fc/0x620 net/netlink/af_netlink.c:1910
- sock_sendmsg+0xa8/0xd0 net/socket.c:730
- ____sys_sendmsg+0x22a/0x320 net/socket.c:2541
- ___sys_sendmsg+0x143/0x190 net/socket.c:2595
- __x64_sys_sendmsg+0xd8/0x150 net/socket.c:2624
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x47/0xa0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-RIP: 0033:0x7fbc22e8d6a9
-Code: 5c c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 4f 37 0d 00 f7 d8 64 89 01 48
-RSP: 002b:00007ffc4320e778 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 00000000004007d0 RCX: 00007fbc22e8d6a9
-RDX: 0000000000000000 RSI: 0000000020000000 RDI: 0000000000000003
-RBP: 0000000000000001 R08: 0000000000000000 R09: 00000000004007d0
-R10: 0000000000000008 R11: 0000000000000246 R12: 00007ffc4320e898
-R13: 00007ffc4320e8a8 R14: 00000000004004a0 R15: 00007fbc22fa5a80
- </TASK>
----[ end trace 0000000000000000 ]---
-
-Which didn't happen prior to commit bf9f1baa279f ("net: add dedicated
-kmem_cache for typical/small skb->head") as the skb always was large
-enough.
-
-Fixes: 0e7788fd7622 ("net: rtnetlink: Add UAPI for obtaining L3 offload xstats")
-Signed-off-by: Christoph Paasch <cpaasch@apple.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://lore.kernel.org/r/20231013041448.8229-1-cpaasch@apple.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 079cd633219d ("netfilter: nf_tables: Introduce NFT_MSG_GETSETELEM_RESET")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/netfilter/nf_tables_api.c |   18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -5504,13 +5504,11 @@ static unsigned int
- rtnl_offload_xstats_get_size_hw_s_info_one(const struct net_device *dev,
- 					   enum netdev_offload_xstats_type type)
- {
--	bool enabled = netdev_offload_xstats_enabled(dev, type);
--
- 	return nla_total_size(0) +
- 		/* IFLA_OFFLOAD_XSTATS_HW_S_INFO_REQUEST */
- 		nla_total_size(sizeof(u8)) +
- 		/* IFLA_OFFLOAD_XSTATS_HW_S_INFO_USED */
--		(enabled ? nla_total_size(sizeof(u8)) : 0) +
-+		nla_total_size(sizeof(u8)) +
- 		0;
- }
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -5553,7 +5553,6 @@ static int nf_tables_fill_setelem(struct
+ 	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
+ 	unsigned char *b = skb_tail_pointer(skb);
+ 	struct nlattr *nest;
+-	u64 timeout = 0;
  
+ 	nest = nla_nest_start_noflag(skb, NFTA_LIST_ELEM);
+ 	if (nest == NULL)
+@@ -5589,15 +5588,11 @@ static int nf_tables_fill_setelem(struct
+ 		         htonl(*nft_set_ext_flags(ext))))
+ 		goto nla_put_failure;
+ 
+-	if (nft_set_ext_exists(ext, NFT_SET_EXT_TIMEOUT)) {
+-		timeout = *nft_set_ext_timeout(ext);
+-		if (nla_put_be64(skb, NFTA_SET_ELEM_TIMEOUT,
+-				 nf_jiffies64_to_msecs(timeout),
+-				 NFTA_SET_ELEM_PAD))
+-			goto nla_put_failure;
+-	} else if (set->flags & NFT_SET_TIMEOUT) {
+-		timeout = READ_ONCE(set->timeout);
+-	}
++	if (nft_set_ext_exists(ext, NFT_SET_EXT_TIMEOUT) &&
++	    nla_put_be64(skb, NFTA_SET_ELEM_TIMEOUT,
++			 nf_jiffies64_to_msecs(*nft_set_ext_timeout(ext)),
++			 NFTA_SET_ELEM_PAD))
++		goto nla_put_failure;
+ 
+ 	if (nft_set_ext_exists(ext, NFT_SET_EXT_EXPIRATION)) {
+ 		u64 expires, now = get_jiffies_64();
+@@ -5612,9 +5607,6 @@ static int nf_tables_fill_setelem(struct
+ 				 nf_jiffies64_to_msecs(expires),
+ 				 NFTA_SET_ELEM_PAD))
+ 			goto nla_put_failure;
+-
+-		if (reset)
+-			*nft_set_ext_expiration(ext) = now + timeout;
+ 	}
+ 
+ 	if (nft_set_ext_exists(ext, NFT_SET_EXT_USERDATA)) {
 
 
