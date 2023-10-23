@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD7814F6A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5B014F6A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlcwvwhl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4667FC433C8;
-	Mon, 23 Oct 2023 11:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6s/gC+C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9DDC433C9;
+	Mon, 23 Oct 2023 11:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060124;
-	bh=H3KqdsuM1+ZogLizeq/44eRGlEDxV5hcHcQATf7wGiY=;
+	s=korg; t=1698060127;
+	bh=/0Msz1EWgZKVE9KByF1yCbiwHY1kdWe6aHPyawY4P7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlcwvwhl4t9hJABO24gEWKQj5I4R/3DRjdV3VKl+S+vgX4yCfMwezLjeH6xIOTYSr
-	 0XWdqlu9OJTiuYA3Z4BeEnTKWw3p9bjsklrIX+zvJmsSIqSsVjrUFX2B4+DBKt6RHy
-	 TEBrXWcU4z3H9LdwTdeetehocpQv5mKvRgyRA+sc=
+	b=b6s/gC+CUfQ3ou3ec8u9fc/Z99ewLoibgbUuOC4V0g0zJzE3WtfdNJhsnBwuzXYbz
+	 rL58sk+g450kQxIJfipPl9Hlkae2AETSx0u+1vw/o53gEhpJ1AcNPixYTR9aa2QF39
+	 LQ+cFi4GOsnn1Uyt74Bwa24UK3467ysLo75Mu6ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.1 067/196] selftests: netfilter: Run nft_audit.sh in its own netns
-Date: Mon, 23 Oct 2023 12:55:32 +0200
-Message-ID: <20231023104830.439100097@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.1 050/196] wifi: cfg80211: use system_unbound_wq for wiphy work
+Date: Mon, 23 Oct 2023 12:55:15 +0200
+Message-ID: <20231023104829.935017764@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -41,41 +41,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 2e2d9c7d4d37d74873583d7b0c94eac8b6869486 upstream.
+commit 91d20ab9d9ca035527af503d00e1e30d6c375f2a upstream.
 
-Don't mess with the host's firewall ruleset. Since audit logging is not
-per-netns, add an initial delay of a second so other selftests' netns
-cleanups have a chance to finish.
+Since wiphy work items can run pretty much arbitrary
+code in the stack/driver, it can take longer to run
+all of this, so we shouldn't be using system_wq via
+schedule_work(). Also, we lock the wiphy (which is
+the reason this exists), so use system_unbound_wq.
 
-Fixes: e8dbde59ca3f ("selftests: netfilter: Test nf_tables audit logging")
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Reported-and-tested-by: Kalle Valo <kvalo@kernel.org>
+Fixes: a3ee4dc84c4e ("wifi: cfg80211: add a work abstraction with special semantics")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/netfilter/nft_audit.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/wireless/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/netfilter/nft_audit.sh b/tools/testing/selftests/netfilter/nft_audit.sh
-index e94a80859bbd..99ed5bd6e840 100755
---- a/tools/testing/selftests/netfilter/nft_audit.sh
-+++ b/tools/testing/selftests/netfilter/nft_audit.sh
-@@ -11,6 +11,12 @@ nft --version >/dev/null 2>&1 || {
- 	exit $SKIP_RC
- }
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1618,7 +1618,7 @@ void wiphy_work_queue(struct wiphy *wiph
+ 		list_add_tail(&work->entry, &rdev->wiphy_work_list);
+ 	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
  
-+# Run everything in a separate network namespace
-+[ "${1}" != "run" ] && { unshare -n "${0}" run; exit $?; }
-+
-+# give other scripts a chance to finish - audit_logread sees all activity
-+sleep 1
-+
- logfile=$(mktemp)
- rulefile=$(mktemp)
- echo "logging into $logfile"
--- 
-2.42.0
-
+-	schedule_work(&rdev->wiphy_work);
++	queue_work(system_unbound_wq, &rdev->wiphy_work);
+ }
+ EXPORT_SYMBOL_GPL(wiphy_work_queue);
+ 
 
 
