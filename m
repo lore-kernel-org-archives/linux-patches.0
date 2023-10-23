@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9491A125BF
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF1914AA8
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgS2eAVJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F54BC433C7;
-	Mon, 23 Oct 2023 11:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3uKRQOd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED971C433C9;
+	Mon, 23 Oct 2023 11:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060377;
-	bh=F8zy6IIxuCdlo/Q1ypqq3w5DXkSikCpAkLku4DpUKmk=;
+	s=korg; t=1698060380;
+	bh=1bqUgTDiqyLpdCMtCZnS4smjdW05xt8xLOx2Hm3a8+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kgS2eAVJID08nt4YEMDA6idbTbyqFMENedBBt2mYOm0ZQQF94eBPhavR1YDPLD7p1
-	 Wjh792uP4GmoytkdDDzR0IDE/WccBZwqTxyKtzAVOk1NmarmLwderxbuR0lu2uBjue
-	 LGlxTMMpnq0nBN1vi8R/ob33j2Tu7e8J1CKrGAJw=
+	b=w3uKRQOdFiHHO/M61ESeEuiT1uFS65+zUKaZy3aD3JD/+9mOFL0IEXkC07baNpMvU
+	 kLGm3RZSUhgi+xAEhhTa5zrKx5Q2tHWpVMMhMNQ0eSNwJWEgfBaO+iQ0peodH0Yl6O
+	 BwD+zP4IdXxBQL2f3zOUWuvUV+a9Xw475UbNGicA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Altman <avri.altman@wdc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 152/196] mmc: core: Capture correct oemid-bits for eMMC cards
-Date: Mon, 23 Oct 2023 12:56:57 +0200
-Message-ID: <20231023104832.772174125@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 153/196] Revert "pinctrl: avoid unsafe code pattern in find_pinctrl()"
+Date: Mon, 23 Oct 2023 12:56:58 +0200
+Message-ID: <20231023104832.797256552@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -41,39 +41,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avri Altman <avri.altman@wdc.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 84ee19bffc9306128cd0f1c650e89767079efeff upstream.
+commit 62140a1e4dec4594d5d1e1d353747bf2ef434e8b upstream.
 
-The OEMID is an 8-bit binary number rather than 16-bit as the current code
-parses for. The OEMID occupies bits [111:104] in the CID register, see the
-eMMC spec JESD84-B51 paragraph 7.2.3. It seems that the 16-bit comes from
-the legacy MMC specs (v3.31 and before).
+The commit breaks MMC enumeration on the Intel Merrifield
+plaform.
 
-Let's fix the parsing by simply move to use 8-bit instead of 16-bit. This
-means we ignore the impact on some of those old MMC cards that may be out
-there, but on the other hand this shouldn't be a problem as the OEMID seems
-not be an important feature for these cards.
+Before:
+[   36.439057] mmc0: SDHCI controller on PCI [0000:00:01.0] using ADMA
+[   36.450924] mmc2: SDHCI controller on PCI [0000:00:01.3] using ADMA
+[   36.459355] mmc1: SDHCI controller on PCI [0000:00:01.2] using ADMA
+[   36.706399] mmc0: new DDR MMC card at address 0001
+[   37.058972] mmc2: new ultra high speed DDR50 SDIO card at address 0001
+[   37.278977] mmcblk0: mmc0:0001 H4G1d 3.64 GiB
+[   37.297300]  mmcblk0: p1 p2 p3 p4 p5 p6 p7 p8 p9 p10
 
-Signed-off-by: Avri Altman <avri.altman@wdc.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230927071500.1791882-1-avri.altman@wdc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+After:
+[   36.436704] mmc2: SDHCI controller on PCI [0000:00:01.3] using ADMA
+[   36.436720] mmc1: SDHCI controller on PCI [0000:00:01.0] using ADMA
+[   36.463685] mmc0: SDHCI controller on PCI [0000:00:01.2] using ADMA
+[   36.720627] mmc1: new DDR MMC card at address 0001
+[   37.068181] mmc2: new ultra high speed DDR50 SDIO card at address 0001
+[   37.279998] mmcblk1: mmc1:0001 H4G1d 3.64 GiB
+[   37.302670]  mmcblk1: p1 p2 p3 p4 p5 p6 p7 p8 p9 p10
+
+This reverts commit c153a4edff6ab01370fcac8e46f9c89cca1060c2.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20231017141806.535191-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/mmc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/core.c |   16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -104,7 +104,7 @@ static int mmc_decode_cid(struct mmc_car
- 	case 3: /* MMC v3.1 - v3.3 */
- 	case 4: /* MMC v4 */
- 		card->cid.manfid	= UNSTUFF_BITS(resp, 120, 8);
--		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 16);
-+		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 8);
- 		card->cid.prod_name[0]	= UNSTUFF_BITS(resp, 96, 8);
- 		card->cid.prod_name[1]	= UNSTUFF_BITS(resp, 88, 8);
- 		card->cid.prod_name[2]	= UNSTUFF_BITS(resp, 80, 8);
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -1007,20 +1007,17 @@ static int add_setting(struct pinctrl *p
+ 
+ static struct pinctrl *find_pinctrl(struct device *dev)
+ {
+-	struct pinctrl *entry, *p = NULL;
++	struct pinctrl *p;
+ 
+ 	mutex_lock(&pinctrl_list_mutex);
+-
+-	list_for_each_entry(entry, &pinctrl_list, node) {
+-		if (entry->dev == dev) {
+-			p = entry;
+-			kref_get(&p->users);
+-			break;
++	list_for_each_entry(p, &pinctrl_list, node)
++		if (p->dev == dev) {
++			mutex_unlock(&pinctrl_list_mutex);
++			return p;
+ 		}
+-	}
+ 
+ 	mutex_unlock(&pinctrl_list_mutex);
+-	return p;
++	return NULL;
+ }
+ 
+ static void pinctrl_free(struct pinctrl *p, bool inlist);
+@@ -1129,6 +1126,7 @@ struct pinctrl *pinctrl_get(struct devic
+ 	p = find_pinctrl(dev);
+ 	if (p) {
+ 		dev_dbg(dev, "obtain a copy of previously claimed pinctrl\n");
++		kref_get(&p->users);
+ 		return p;
+ 	}
+ 
 
 
