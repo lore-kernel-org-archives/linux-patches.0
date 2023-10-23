@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E24115484
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B1315484
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNCySgL2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03BCC433C7;
-	Mon, 23 Oct 2023 11:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8WPKgfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27EEC433C7;
+	Mon, 23 Oct 2023 11:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059880;
-	bh=z9ckJKR7kJF42bybsY0TPF0yQg6JQejZlBHhZdussUU=;
+	s=korg; t=1698059883;
+	bh=Fth3i4WrW8eQ5UWZemDaVCL2R8bovsgsrHrPAX+q4v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xNCySgL2Ub2eXb/6hPakiyvSLyHhuZSxsPUAAszkRhblouGqoMDnRnA0ncAWTPspm
-	 sqU2/sPJK3nvgpg0MlOiGE44sxH/PlEi6YjhiTv2zy8/dwDCvqHPBbBoiFzKyN4xAd
-	 3f4y/vYQGlju1YW6SYg9E357NMsfxq69C7vqw6PA=
+	b=D8WPKgfoj5Z95Jg9CKMZ4LmPR7Y3a21JHEwqbIqfiz9Aw1uHcaH/TsaF7qCPxbXin
+	 rrWKg+9+QTkOc4MRctYwOrNWwzgyvNWTumB9bBn6iCybEOykGqXK2/vedObqK7Ljq+
+	 jwvDA9AApttZ1ysBYKaQfYtvxYPI/vljJ0uZ0MYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bibek Kumar Patro <quic_bibekkum@quicinc.com>,
+	Martin Kurbanov <mmkurbanov@sberdevices.ru>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 4.19 83/98] mtd: rawnand: qcom: Unmap the right resource upon probe failure
-Date: Mon, 23 Oct 2023 12:57:12 +0200
-Message-ID: <20231023104816.476411135@linuxfoundation.org>
+Subject: [PATCH 4.19 84/98] mtd: spinand: micron: correct bitmask for ecc status
+Date: Mon, 23 Oct 2023 12:57:13 +0200
+Message-ID: <20231023104816.512447376@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -42,34 +42,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+From: Martin Kurbanov <mmkurbanov@sberdevices.ru>
 
-commit 5279f4a9eed3ee7d222b76511ea7a22c89e7eefd upstream.
+commit 9836a987860e33943945d4b257729a4f94eae576 upstream.
 
-We currently provide the physical address of the DMA region
-rather than the output of dma_map_resource() which is obviously wrong.
+Valid bitmask is 0x70 in the status register.
 
-Fixes: 7330fc505af4 ("mtd: rawnand: qcom: stop using phys_to_dma()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Fixes: a508e8875e13 ("mtd: spinand: Add initial support for Micron MT29F2G01ABAGD")
+Signed-off-by: Martin Kurbanov <mmkurbanov@sberdevices.ru>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230913070702.12707-1-quic_bibekkum@quicinc.com
+Link: https://lore.kernel.org/linux-mtd/20230905145637.139068-1-mmkurbanov@sberdevices.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/qcom_nandc.c |    2 +-
+ drivers/mtd/nand/spi/micron.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2987,7 +2987,7 @@ err_nandc_alloc:
- err_aon_clk:
- 	clk_disable_unprepare(nandc->core_clk);
- err_core_clk:
--	dma_unmap_resource(dev, res->start, resource_size(res),
-+	dma_unmap_resource(dev, nandc->base_dma, resource_size(res),
- 			   DMA_BIDIRECTIONAL, 0);
- 	return ret;
- }
+--- a/drivers/mtd/nand/spi/micron.c
++++ b/drivers/mtd/nand/spi/micron.c
+@@ -12,7 +12,7 @@
+ 
+ #define SPINAND_MFR_MICRON		0x2c
+ 
+-#define MICRON_STATUS_ECC_MASK		GENMASK(7, 4)
++#define MICRON_STATUS_ECC_MASK		GENMASK(6, 4)
+ #define MICRON_STATUS_ECC_NO_BITFLIPS	(0 << 4)
+ #define MICRON_STATUS_ECC_1TO3_BITFLIPS	(1 << 4)
+ #define MICRON_STATUS_ECC_4TO6_BITFLIPS	(3 << 4)
 
 
