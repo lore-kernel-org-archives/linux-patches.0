@@ -1,103 +1,121 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3A733C8
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 16:41:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1quxz8-0000kX-4c; Mon, 23 Oct 2023 18:40:58 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1quxz7-003knD-IX; Mon, 23 Oct 2023 18:40:57 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1quxz7-004SVW-9F; Mon, 23 Oct 2023 18:40:57 +0200
-Date: Mon, 23 Oct 2023 18:40:57 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 4.19 06/98] platform/x86: hp-wmi:: Mark driver struct
- with __refdata to prevent section mismatch warning
-Message-ID: <20231023164057.7rlec7423jeha6sg@pengutronix.de>
-References: <20231023104813.580375891@linuxfoundation.org>
- <20231023104813.808917387@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48A61D53E
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 17:16:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DKWJwkGD"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6b20577ef7bso2696922b3a.3
+        for <patches@lists.linux.dev>; Mon, 23 Oct 2023 10:16:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698081405; x=1698686205; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8UmNA3JhvAwp9p6qqygcIMsmnra1xRqmMhLwxS7P5RI=;
+        b=DKWJwkGDUJcZRTaQgjwJ558ILmyeQxYk3cIE1JhxuRneorJPfM1cVL9bIXO8pRFu0c
+         /N0XjmbxpdmGVprH8zGYna4pZ/+doI2tbr1x04dnfY5JhN9kWFqdEoQKJN1bO10nQ/nA
+         9NroyVMO8rMDEbRAeDWdmt+/xl62D62Mo3YMFqTM9NAK5vPM89rsxlxzGr4H9VirrOhs
+         8t28mXbapPvGzALLpJaxwbwevzNhvn/onjQeRaGuRw3ExCXsAWtkNe1PHxphlvs6ztdC
+         0Osllw8XAIF206cQlAWYpcqpaPdjlrW+7iY+x1ra/j8dKFqHnjN6gdUaRFfOpI/6xucw
+         6oEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698081405; x=1698686205;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8UmNA3JhvAwp9p6qqygcIMsmnra1xRqmMhLwxS7P5RI=;
+        b=L7hj9LBy+xgg/4TxRTi37hx736dGqnw35cYxh29iQw6i/FLvgkXJRYfE1onBLpvUUO
+         vvQmzVrlws0HAR3KJcM0LhOp6UbUKNnWN4VL9JkFMPBx24XTYXZd5b+msLtPcTzyAHgx
+         sENm4Y6d0+ed8M6TXkteTmYiYeG8gO78atVmvTPQ0rXWpyA+n7PNf/maQ8HJpjLyK+SK
+         +UBZfM1UeSMTeSesshCdaPNBHPKLsN6i7MLcS6J2woWfa09vKvgbU9D1yQRpLgWyjtXL
+         Up89xDuateUjJvypp7wOwd8wllLbGsq5go4KNBJQteoE/cVRoWGg00HtJdjjBUbuTT7e
+         x78Q==
+X-Gm-Message-State: AOJu0Yx9ng+yK/wGpw8+/D9A1gG8vWAuukkBqLBuqgG/6w7OUb6l8vqk
+	n47JLAByskrfenJ9SM2wkWmtYFpnI1R4I595BJNW3Q==
+X-Google-Smtp-Source: AGHT+IGjInKpQgIG1aOOsF/TPL8qt6E39iqr99A3ZlMym6netNqwXxSEhKKw32twN44OhP4SWSJB0+MDVHKQffPtg9k=
+X-Received: by 2002:a05:6a20:4299:b0:15e:bcd:57f5 with SMTP id
+ o25-20020a056a20429900b0015e0bcd57f5mr285107pzj.3.1698081404981; Mon, 23 Oct
+ 2023 10:16:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3ytwruby3bw72jlh"
-Content-Disposition: inline
-In-Reply-To: <20231023104813.808917387@linuxfoundation.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: patches@lists.linux.dev
-
-
---3ytwruby3bw72jlh
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+References: <20231023104820.849461819@linuxfoundation.org> <724521b8-9c63-4645-b3e0-30d9635573a7@linaro.org>
+In-Reply-To: <724521b8-9c63-4645-b3e0-30d9635573a7@linaro.org>
+From: =?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
+Date: Mon, 23 Oct 2023 11:16:33 -0600
+Message-ID: <CAEUSe7-zbuRsgsr2EYq+OeW9iEJyZHmo8u9K3pDCAFRKnCEv0A@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/137] 5.15.137-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 23, 2023 at 12:55:55PM +0200, Greg Kroah-Hartman wrote:
-> 4.19-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
->=20
-> [ Upstream commit 5b44abbc39ca15df80d0da4756078c98c831090f ]
->=20
-> As described in the added code comment, a reference to .exit.text is ok
-> for drivers registered via module_platform_driver_probe(). Make this
-> explicit to prevent a section mismatch warning:
->=20
-> 	WARNING: modpost: drivers/platform/x86/hp/hp-wmi: section mismatch in re=
-ference: hp_wmi_driver+0x8 (section: .data) -> hp_wmi_bios_remove (section:=
- .exit.text)
+Hello!
 
-While that __ref is actually missing since the blamed commit, modpost
-only warns about .data -> .exit.text mismatches since
+On Mon, 23 Oct 2023 at 09:11, Daniel D=C3=ADaz <daniel.diaz@linaro.org> wro=
+te:
+> On 23/10/23 4:55 a. m., Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.137 release.
+> > There are 137 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Wed, 25 Oct 2023 10:47:57 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >       https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.15.137-rc1.gz
+> > or in the git tree and branch at:
+> >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.15.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+>
+> We see lots of errors on Arm 32-bits:
+>
+> -----8<-----
+> /builds/linux/drivers/gpio/gpio-vf610.c:249:11: error: 'IRQCHIP_IMMUTABLE=
+' undeclared here (not in a function); did you mean 'IS_IMMUTABLE'?
+>    .flags =3D IRQCHIP_IMMUTABLE | IRQCHIP_MASK_ON_SUSPEND
+>             ^~~~~~~~~~~~~~~~~
+>             IS_IMMUTABLE
+> /builds/linux/drivers/gpio/gpio-vf610.c:251:2: error: 'GPIOCHIP_IRQ_RESOU=
+RCE_HELPERS' undeclared here (not in a function)
+>    GPIOCHIP_IRQ_RESOURCE_HELPERS,
+>    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> /builds/linux/drivers/gpio/gpio-vf610.c:251:2: warning: excess elements i=
+n struct initializer
+> /builds/linux/drivers/gpio/gpio-vf610.c:251:2: note: (near initialization=
+ for 'vf610_irqchip')
+> /builds/linux/drivers/gpio/gpio-vf610.c: In function 'vf610_gpio_probe':
+> /builds/linux/drivers/gpio/gpio-vf610.c:340:2: error: implicit declaratio=
+n of function 'gpio_irq_chip_set_chip'; did you mean 'gpiochip_get_data'? [=
+-Werror=3Dimplicit-function-declaration]
+>    gpio_irq_chip_set_chip(girq, &vf610_irqchip);
+>    ^~~~~~~~~~~~~~~~~~~~~~
+>    gpiochip_get_data
+> cc1: some warnings being treated as errors
+> ----->8-----
 
-	f177cd0c15fc ("modpost: Don't let "driver"s reference .exit.*")
+Bisection points to "gpio: vf610: make irq_chip immutable" (upstream
+commit e6ef4f8ede09f4af7cde000717b349b50bc62576).
 
-(currently in next). So if your goal is to silence warnings in stable,
-patches of this type don't need to be backported unless f177cd0c15fc is
-backported, too. (But they don't hurt either.)
+Greetings!
 
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---3ytwruby3bw72jlh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmU2ohgACgkQj4D7WH0S
-/k67NAf/cwJACbeWsHfiFrzBD+mQFMDTgFaKsnA23c8NkBuOsDADy+eXIQs9t2Zf
-+4ZaNAneodJsAa608GV6XOMmH1l+CqrUDp1QZJYvlgo74MU37OMWmA0+T3TioJJo
-NGtOKsSGFe/zYT3aPad44tGQvj6rcSwPQCdtpSJk9eYX402BWZWyt9+WOuaPShlz
-ls9QSXCJ+7OCLUmWvA9GJYIbx+xc0DYU4+SOvvKmPi6YSYQMhoJoEupKlu1irpHS
-QRvl7wXUhPy+GVpfRGtMB1UEe787+xwuVtWwk0M9QjSNk25H94CqJxUw1Io2Cn6H
-LJedYJKQufSq6Yo+sWkxongnb/POaA==
-=0Fgb
------END PGP SIGNATURE-----
-
---3ytwruby3bw72jlh--
+Daniel D=C3=ADaz
+daniel.diaz@linaro.org
