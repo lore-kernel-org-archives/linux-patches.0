@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD9D12B90
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6235312B7A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnG5aBnG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC712C433C9;
-	Mon, 23 Oct 2023 11:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTPvg40m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5259C433C9;
+	Mon, 23 Oct 2023 11:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058866;
-	bh=hHccltMc1fLkWjY1jdTOAN2Ik8Wv3WGopUtkHBlwg18=;
+	s=korg; t=1698058869;
+	bh=wSr1l1aBykWYClGexQuVQOaHNcdt5aJT3i4Gi7YGV0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lnG5aBnGKxkLMYYhM24j6Ccw0Y9FMlhJgV1HvrgJw+aR5XRVmUheMgxUo2bxdCUw8
-	 qf3aCq2pDX7dBw2+az3vpbvBjFlfuT+0bTh4ijvpqw74TOWBR0+3hv1XDuk9H00ki4
-	 xqTsxFAnkk6rvod5r/LY3WtAjAcp6YUCCVqWv83o=
+	b=LTPvg40moQmJx1aFh/2IzsprUHXiClLh1Mhhx8okJSNmwGtkWaEA/hBtHKijzgtOH
+	 dg3WE4BXFKwZP1KBioljqOXgfVQwwQa2pOqlSYqO+nl0pcTvHUIWAjDEfMlJGiBt7d
+	 hFeDd16VTwE09IjFdSi+Ndj07CrvmtlZ04qBMdZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>
-Subject: [PATCH 4.14 25/66] usb: hub: Guard against accesses to uninitialized BOS descriptors
-Date: Mon, 23 Oct 2023 12:56:15 +0200
-Message-ID: <20231023104811.762381622@linuxfoundation.org>
+	"Lee, Chun-Yi" <jlee@suse.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Lee
+Subject: [PATCH 4.14 26/66] Bluetooth: hci_event: Ignore NULL link key
+Date: Mon, 23 Oct 2023 12:56:16 +0200
+Message-ID: <20231023104811.795940763@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -34,139 +36,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+From: Lee, Chun-Yi <jlee@suse.com>
 
-commit f74a7afc224acd5e922c7a2e52244d891bbe44ee upstream.
+commit 33155c4aae5260475def6f7438e4e35564f4f3ba upstream.
 
-Many functions in drivers/usb/core/hub.c and drivers/usb/core/hub.h
-access fields inside udev->bos without checking if it was allocated and
-initialized. If usb_get_bos_descriptor() fails for whatever
-reason, udev->bos will be NULL and those accesses will result in a
-crash:
+This change is used to relieve CVE-2020-26555. The description of the
+CVE:
 
-BUG: kernel NULL pointer dereference, address: 0000000000000018
-PGD 0 P4D 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 5 PID: 17818 Comm: kworker/5:1 Tainted: G W 5.15.108-18910-gab0e1cb584e1 #1 <HASH:1f9e 1>
-Hardware name: Google Kindred/Kindred, BIOS Google_Kindred.12672.413.0 02/03/2021
-Workqueue: usb_hub_wq hub_event
-RIP: 0010:hub_port_reset+0x193/0x788
-Code: 89 f7 e8 20 f7 15 00 48 8b 43 08 80 b8 96 03 00 00 03 75 36 0f b7 88 92 03 00 00 81 f9 10 03 00 00 72 27 48 8b 80 a8 03 00 00 <48> 83 78 18 00 74 19 48 89 df 48 8b 75 b0 ba 02 00 00 00 4c 89 e9
-RSP: 0018:ffffab740c53fcf8 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffffa1bc5f678000 RCX: 0000000000000310
-RDX: fffffffffffffdff RSI: 0000000000000286 RDI: ffffa1be9655b840
-RBP: ffffab740c53fd70 R08: 00001b7d5edaa20c R09: ffffffffb005e060
-R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
-R13: ffffab740c53fd3e R14: 0000000000000032 R15: 0000000000000000
-FS: 0000000000000000(0000) GS:ffffa1be96540000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000018 CR3: 000000022e80c005 CR4: 00000000003706e0
-Call Trace:
-hub_event+0x73f/0x156e
-? hub_activate+0x5b7/0x68f
-process_one_work+0x1a2/0x487
-worker_thread+0x11a/0x288
-kthread+0x13a/0x152
-? process_one_work+0x487/0x487
-? kthread_associate_blkcg+0x70/0x70
-ret_from_fork+0x1f/0x30
+Bluetooth legacy BR/EDR PIN code pairing in Bluetooth Core Specification
+1.0B through 5.2 may permit an unauthenticated nearby device to spoof
+the BD_ADDR of the peer device to complete pairing without knowledge
+of the PIN. [1]
 
-Fall back to a default behavior if the BOS descriptor isn't accessible
-and skip all the functionalities that depend on it: LPM support checks,
-Super Speed capabilitiy checks, U1/U2 states setup.
+The detail of this attack is in IEEE paper:
+BlueMirror: Reflections on Bluetooth Pairing and Provisioning Protocols
+[2]
 
-Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-Cc: stable <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230830100418.1952143-1-ricardo.canuelo@collabora.com
+It's a reflection attack. The paper mentioned that attacker can induce
+the attacked target to generate null link key (zero key) without PIN
+code. In BR/EDR, the key generation is actually handled in the controller
+which is below HCI.
+
+Thus, we can ignore null link key in the handler of "Link Key Notification
+event" to relieve the attack. A similar implementation also shows in
+btstack project. [3]
+
+v3: Drop the connection when null link key be detected.
+
+v2:
+- Used Link: tag instead of Closes:
+- Used bt_dev_dbg instead of BT_DBG
+- Added Fixes: tag
+
+Cc: stable@vger.kernel.org
+Fixes: 55ed8ca10f35 ("Bluetooth: Implement link key handling for the management interface")
+Link: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-26555 [1]
+Link: https://ieeexplore.ieee.org/abstract/document/9474325/authors#authors [2]
+Link: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L3722 [3]
+Signed-off-by: Lee, Chun-Yi <jlee@suse.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |   28 ++++++++++++++++++++++++----
- drivers/usb/core/hub.h |    2 +-
- 2 files changed, 25 insertions(+), 5 deletions(-)
+ net/bluetooth/hci_event.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -143,6 +143,10 @@ int usb_device_supports_lpm(struct usb_d
- 	if (udev->quirks & USB_QUIRK_NO_LPM)
- 		return 0;
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3494,6 +3494,15 @@ static void hci_link_key_notify_evt(stru
+ 	if (!conn)
+ 		goto unlock;
  
-+	/* Skip if the device BOS descriptor couldn't be read */
-+	if (!udev->bos)
-+		return 0;
++	/* Ignore NULL link key against CVE-2020-26555 */
++	if (!memcmp(ev->link_key, ZERO_KEY, HCI_LINK_KEY_SIZE)) {
++		bt_dev_dbg(hdev, "Ignore NULL link key (ZERO KEY) for %pMR",
++			   &ev->bdaddr);
++		hci_disconnect(conn, HCI_ERROR_AUTH_FAILURE);
++		hci_conn_drop(conn);
++		goto unlock;
++	}
 +
- 	/* USB 2.1 (and greater) devices indicate LPM support through
- 	 * their USB 2.0 Extended Capabilities BOS descriptor.
- 	 */
-@@ -316,6 +320,10 @@ static void usb_set_lpm_parameters(struc
- 	if (!udev->lpm_capable || udev->speed < USB_SPEED_SUPER)
- 		return;
- 
-+	/* Skip if the device BOS descriptor couldn't be read */
-+	if (!udev->bos)
-+		return;
-+
- 	hub = usb_hub_to_struct_hub(udev->parent);
- 	/* It doesn't take time to transition the roothub into U0, since it
- 	 * doesn't have an upstream link.
-@@ -2621,7 +2629,8 @@ out_authorized:
- }
- 
- /*
-- * Return 1 if port speed is SuperSpeedPlus, 0 otherwise
-+ * Return 1 if port speed is SuperSpeedPlus, 0 otherwise or if the
-+ * capability couldn't be checked.
-  * check it from the link protocol field of the current speed ID attribute.
-  * current speed ID is got from ext port status request. Sublink speed attribute
-  * table is returned with the hub BOS SSP device capability descriptor
-@@ -2631,8 +2640,12 @@ static int port_speed_is_ssp(struct usb_
- 	int ssa_count;
- 	u32 ss_attr;
- 	int i;
--	struct usb_ssp_cap_descriptor *ssp_cap = hdev->bos->ssp_cap;
-+	struct usb_ssp_cap_descriptor *ssp_cap;
- 
-+	if (!hdev->bos)
-+		return 0;
-+
-+	ssp_cap = hdev->bos->ssp_cap;
- 	if (!ssp_cap)
- 		return 0;
- 
-@@ -3968,8 +3981,15 @@ static void usb_enable_link_state(struct
- 		enum usb3_link_state state)
- {
- 	int timeout, ret;
--	__u8 u1_mel = udev->bos->ss_cap->bU1devExitLat;
--	__le16 u2_mel = udev->bos->ss_cap->bU2DevExitLat;
-+	__u8 u1_mel;
-+	__le16 u2_mel;
-+
-+	/* Skip if the device BOS descriptor couldn't be read */
-+	if (!udev->bos)
-+		return;
-+
-+	u1_mel = udev->bos->ss_cap->bU1devExitLat;
-+	u2_mel = udev->bos->ss_cap->bU2DevExitLat;
- 
- 	/* If the device says it doesn't have *any* exit latency to come out of
- 	 * U1 or U2, it's probably lying.  Assume it doesn't implement that link
---- a/drivers/usb/core/hub.h
-+++ b/drivers/usb/core/hub.h
-@@ -145,7 +145,7 @@ static inline int hub_is_superspeedplus(
- {
- 	return (hdev->descriptor.bDeviceProtocol == USB_HUB_PR_SS &&
- 		le16_to_cpu(hdev->descriptor.bcdUSB) >= 0x0310 &&
--		hdev->bos->ssp_cap);
-+		hdev->bos && hdev->bos->ssp_cap);
- }
- 
- static inline unsigned hub_power_on_good_delay(struct usb_hub *hub)
+ 	hci_conn_hold(conn);
+ 	conn->disc_timeout = HCI_DISCONN_TIMEOUT;
+ 	hci_conn_drop(conn);
 
 
