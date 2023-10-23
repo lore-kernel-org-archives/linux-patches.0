@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EF314A99
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E3214A99
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lk4D9q4S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E87C433C7;
-	Mon, 23 Oct 2023 11:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iloQV43o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF9CC433C8;
+	Mon, 23 Oct 2023 11:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059551;
-	bh=TfQR8TfVFtgz6Rt+gDGxLks7BsjJ5XCx3NecZxRjems=;
+	s=korg; t=1698059555;
+	bh=WJ6bRM+hB52EvqDbs7VfNPE/LYIpBFVLrWOA8eqQxBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lk4D9q4SXBwT1AF9qiS1jB1C8I5kg/6p0D9uHerLejt+QFEacLMaJ3vKebnrgKNAG
-	 DUg1wA6i72w0pedBWbEKzK/F2hdlQPZ6oSaCmGLpMeRJ/xuQyalZMruhlF5zMkGSwa
-	 BdRSzWtrKAuOE3pA3HeMs+KtGijAy4eBBrXkqtCY=
+	b=iloQV43oT99QcxOfubJWlRvM0DlBPje0tcnnOBvzftDqYkf80yfMu6rTuDDX8tx8o
+	 08EPREqBXoUF1caiAVKzi1BSIa15ah5gdgm8dPiLMh+W+xLi7UkDDAP1Mx1LeYqL1q
+	 mFYBbcWNDOvWn/JlG+zAPHH1UKRNkF5+pgU9L08g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 216/241] ASoC: pxa: fix a memory leak in probe()
-Date: Mon, 23 Oct 2023 12:56:42 +0200
-Message-ID: <20231023104839.117537853@linuxfoundation.org>
+Subject: [PATCH 6.5 217/241] ASoC: cs42l42: Fix missing include of gpio/consumer.h
+Date: Mon, 23 Oct 2023 12:56:43 +0200
+Message-ID: <20231023104839.141749554@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -36,40 +36,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit aa6464edbd51af4a2f8db43df866a7642b244b5f ]
+[ Upstream commit d6cbc6a3a856a7d8047316d81e2e039e44432acb ]
 
-Free the "priv" pointer before returning the error code.
+The call to gpiod_set_value_cansleep() in cs42l42_sdw_update_status()
+needs the header file gpio/consumer.h to be included.
 
-Fixes: 90eb6b59d311 ("ASoC: pxa-ssp: add support for an external clock in devicetree")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/84ac2313-1420-471a-b2cb-3269a2e12a7c@moroto.mountain
+This was introduced by commit 2d066c6a7865 ("ASoC: cs42l42: Avoid stale
+SoundWire ATTACH after hard reset")
+
+and caused error:
+    sound/soc/codecs/cs42l42-sdw.c:374:4: error: implicit declaration of
+    function ‘gpiod_set_value_cansleep’;
+    did you mean gpio_set_value_cansleep’?
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 2d066c6a7865 ("ASoC: cs42l42: Avoid stale SoundWire ATTACH after hard reset")
+Link: https://lore.kernel.org/r/20231011134853.20059-1-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/pxa/pxa-ssp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/cs42l42-sdw.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/pxa/pxa-ssp.c b/sound/soc/pxa/pxa-ssp.c
-index 430dd446321e5..452f0caf415b9 100644
---- a/sound/soc/pxa/pxa-ssp.c
-+++ b/sound/soc/pxa/pxa-ssp.c
-@@ -779,7 +779,7 @@ static int pxa_ssp_probe(struct snd_soc_dai *dai)
- 		if (IS_ERR(priv->extclk)) {
- 			ret = PTR_ERR(priv->extclk);
- 			if (ret == -EPROBE_DEFER)
--				return ret;
-+				goto err_priv;
+diff --git a/sound/soc/codecs/cs42l42-sdw.c b/sound/soc/codecs/cs42l42-sdw.c
+index 974bae4abfad1..94a66a325303b 100644
+--- a/sound/soc/codecs/cs42l42-sdw.c
++++ b/sound/soc/codecs/cs42l42-sdw.c
+@@ -6,6 +6,7 @@
  
- 			priv->extclk = NULL;
- 		}
+ #include <linux/acpi.h>
+ #include <linux/device.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/iopoll.h>
+ #include <linux/module.h>
+ #include <linux/mod_devicetable.h>
 -- 
 2.42.0
 
