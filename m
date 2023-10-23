@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658AB14A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4651914A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eptWebjJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3FDEC433C7;
-	Mon, 23 Oct 2023 11:04:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkN+Jb4b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C68C433B6;
+	Mon, 23 Oct 2023 11:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059044;
-	bh=p8g/h72p6noXk1RraYT40Dn1hi7QuiaR5vIs+6aJQQ0=;
+	s=korg; t=1698059047;
+	bh=cBGSD1Qu3cy5AbPY2tEiz/9sNQV7lklGlR0tAxig00w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eptWebjJfXvppPN01RvEMDLSQYoRUxULRGRRh/qI66d5SoZna2sJAeSz3LeLAVZ7C
-	 om7qGeptBawFfR/vrN3O9dVMb3Q9KlkPu8Ec/4+6ibge6PnyNnp48M3cMsajlKtwKN
-	 t06CjrWHAORcO4yOYSnpmrZ3f356wI4tOA7/XC5E=
+	b=zkN+Jb4b7F4XARxSmsYKN/awhx/xio2PzQ/I7QgrEkAUPbemM8Z4UBrD3G04X3sda
+	 ZKKJR9+n7iSjDomJltSmhv4e5cjhqwyYSp71eQ2SsGTBfBboDMaFh6l8f1Af+wjBTQ
+	 +XvVZ1QbcsldWPMOll8k5gaZCVWzFjZkaNGL7WB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Guzenko <l.guzenko@web.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.5 045/241] ALSA: hda/relatek: Enable Mute LED on HP Laptop 15s-fq5xxx
-Date: Mon, 23 Oct 2023 12:53:51 +0200
-Message-ID: <20231023104835.012844932@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.5 046/241] ASoC: codecs: wcd938x-sdw: fix use after free on driver unbind
+Date: Mon, 23 Oct 2023 12:53:52 +0200
+Message-ID: <20231023104835.036065548@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,31 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luka Guzenko <l.guzenko@web.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 56e85993896b914032d11e32ecbf8415e7b2f621 upstream.
+commit f0dfdcbe706462495d47982eecd13a61aabd644d upstream.
 
-This HP Laptop uses ALC236 codec with COEF 0x07 controlling the
-mute LED. Enable existing quirk for this device.
+Make sure to deregister the component when the driver is being unbound
+and before the underlying device-managed resources are freed.
 
-Signed-off-by: Luka Guzenko <l.guzenko@web.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231016221328.1521674-1-l.guzenko@web.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
+Cc: stable@vger.kernel.org      # 5.14
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20231003155558.27079-7-johan+linaro@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/wcd938x-sdw.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9669,6 +9669,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x89c6, "Zbook Fury 17 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x89ca, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x89d3, "HP EliteBook 645 G9 (MB 89D2)", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x8a20, "HP Laptop 15s-fq5xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8a25, "HP Victus 16-d1xxx (MB 8A25)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8a78, "HP Dev One", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x103c, 0x8aa0, "HP ProBook 440 G9 (MB 8A9E)", ALC236_FIXUP_HP_GPIO_LED),
+--- a/sound/soc/codecs/wcd938x-sdw.c
++++ b/sound/soc/codecs/wcd938x-sdw.c
+@@ -1281,6 +1281,15 @@ static int wcd9380_probe(struct sdw_slav
+ 	return component_add(dev, &wcd938x_sdw_component_ops);
+ }
+ 
++static int wcd9380_remove(struct sdw_slave *pdev)
++{
++	struct device *dev = &pdev->dev;
++
++	component_del(dev, &wcd938x_sdw_component_ops);
++
++	return 0;
++}
++
+ static const struct sdw_device_id wcd9380_slave_id[] = {
+ 	SDW_SLAVE_ENTRY(0x0217, 0x10d, 0),
+ 	{},
+@@ -1320,6 +1329,7 @@ static const struct dev_pm_ops wcd938x_s
+ 
+ static struct sdw_driver wcd9380_codec_driver = {
+ 	.probe	= wcd9380_probe,
++	.remove	= wcd9380_remove,
+ 	.ops = &wcd9380_slave_ops,
+ 	.id_table = wcd9380_slave_id,
+ 	.driver = {
 
 
