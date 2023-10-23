@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3D115EAD
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222361640A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOUCgiDK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98ED1C433C7;
-	Mon, 23 Oct 2023 11:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Di8Brd6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E6EC433C8;
+	Mon, 23 Oct 2023 11:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061549;
-	bh=X4EHtzdvG4e5pft3fdLCRJUoiT0y4jBblRueJxgWxDM=;
+	s=korg; t=1698061552;
+	bh=CHdY694qwkMJBO81ZXCzjfPC7szp+zFVAaq7iRd2JUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WOUCgiDKRttD7jDotjb6Oi9OJ4Xoxggo2lnfCFgJCKynMnHZJIdbxQOL7hCFCPAY5
-	 XgR3hIiZEkYOf+0TixO+nZOcTeltQehi56B55QkXh2Y27NNZp2pl1aEkYdCCkLG57E
-	 cAWhNwxzd3jz4KqChZhvx3RIVJrL6FtIAYBY1E/k=
+	b=Di8Brd6fSibA21HeVIMUwY99bu79BGzEQM3cFBI6Bi0IvrWcfctBqWY7lol2mG9PQ
+	 XJOptdt01Uu+Nlm1UEQ5ApMr6xCNh0pQnx+R2zgc+8KwhcLYKd+o+wRtGEHVBnClZd
+	 EAQCQKnD9fB8/H8XppEpTDJo3kiOcfd8oUqtg37c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Ben Hutchings <ben@decadent.org.uk>
-Subject: [PATCH 5.10 084/202] Documentation: sysctl: align cells in second content column
-Date: Mon, 23 Oct 2023 12:56:31 +0200
-Message-ID: <20231023104828.995782524@linuxfoundation.org>
+	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>
+Subject: [PATCH 5.10 085/202] usb: hub: Guard against accesses to uninitialized BOS descriptors
+Date: Mon, 23 Oct 2023 12:56:32 +0200
+Message-ID: <20231023104829.022014457@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -37,80 +34,139 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
-commit 1faa34672f8a17a3e155e74bde9648564e9480d6 upstream.
+commit f74a7afc224acd5e922c7a2e52244d891bbe44ee upstream.
 
-Stephen Rothwell reported htmldocs warning when merging net-next tree:
+Many functions in drivers/usb/core/hub.c and drivers/usb/core/hub.h
+access fields inside udev->bos without checking if it was allocated and
+initialized. If usb_get_bos_descriptor() fails for whatever
+reason, udev->bos will be NULL and those accesses will result in a
+crash:
 
-Documentation/admin-guide/sysctl/net.rst:37: WARNING: Malformed table.
-Text in column margin in table line 4.
+BUG: kernel NULL pointer dereference, address: 0000000000000018
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP NOPTI
+CPU: 5 PID: 17818 Comm: kworker/5:1 Tainted: G W 5.15.108-18910-gab0e1cb584e1 #1 <HASH:1f9e 1>
+Hardware name: Google Kindred/Kindred, BIOS Google_Kindred.12672.413.0 02/03/2021
+Workqueue: usb_hub_wq hub_event
+RIP: 0010:hub_port_reset+0x193/0x788
+Code: 89 f7 e8 20 f7 15 00 48 8b 43 08 80 b8 96 03 00 00 03 75 36 0f b7 88 92 03 00 00 81 f9 10 03 00 00 72 27 48 8b 80 a8 03 00 00 <48> 83 78 18 00 74 19 48 89 df 48 8b 75 b0 ba 02 00 00 00 4c 89 e9
+RSP: 0018:ffffab740c53fcf8 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffffa1bc5f678000 RCX: 0000000000000310
+RDX: fffffffffffffdff RSI: 0000000000000286 RDI: ffffa1be9655b840
+RBP: ffffab740c53fd70 R08: 00001b7d5edaa20c R09: ffffffffb005e060
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
+R13: ffffab740c53fd3e R14: 0000000000000032 R15: 0000000000000000
+FS: 0000000000000000(0000) GS:ffffa1be96540000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000018 CR3: 000000022e80c005 CR4: 00000000003706e0
+Call Trace:
+hub_event+0x73f/0x156e
+? hub_activate+0x5b7/0x68f
+process_one_work+0x1a2/0x487
+worker_thread+0x11a/0x288
+kthread+0x13a/0x152
+? process_one_work+0x487/0x487
+? kthread_associate_blkcg+0x70/0x70
+ret_from_fork+0x1f/0x30
 
-========= =================== = ========== ==================
-Directory Content               Directory  Content
-========= =================== = ========== ==================
-802       E802 protocol         mptcp     Multipath TCP
-appletalk Appletalk protocol    netfilter Network Filter
-ax25      AX25                  netrom     NET/ROM
-bridge    Bridging              rose      X.25 PLP layer
-core      General parameter     tipc      TIPC
-ethernet  Ethernet protocol     unix      Unix domain sockets
-ipv4      IP version 4          x25       X.25 protocol
-ipv6      IP version 6
-========= =================== = ========== ==================
+Fall back to a default behavior if the BOS descriptor isn't accessible
+and skip all the functionalities that depend on it: LPM support checks,
+Super Speed capabilitiy checks, U1/U2 states setup.
 
-The warning above is caused by cells in second "Content" column of
-/proc/sys/net subdirectory table which are in column margin.
-
-Align these cells against the column header to fix the warning.
-
-Link: https://lore.kernel.org/linux-next/20220823134905.57ed08d5@canb.auug.org.au/
-Fixes: 1202cdd665315c ("Remove DECnet support from kernel")
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Link: https://lore.kernel.org/r/20220824035804.204322-1-bagasdotme@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Cc: Ben Hutchings <ben@decadent.org.uk>
+Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+Cc: stable <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230830100418.1952143-1-ricardo.canuelo@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/sysctl/net.rst |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/usb/core/hub.c |   28 ++++++++++++++++++++++++----
+ drivers/usb/core/hub.h |    2 +-
+ 2 files changed, 25 insertions(+), 5 deletions(-)
 
---- a/Documentation/admin-guide/sysctl/net.rst
-+++ b/Documentation/admin-guide/sysctl/net.rst
-@@ -31,18 +31,18 @@ see only some of them, depending on your
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -149,6 +149,10 @@ int usb_device_supports_lpm(struct usb_d
+ 	if (udev->quirks & USB_QUIRK_NO_LPM)
+ 		return 0;
  
- Table : Subdirectories in /proc/sys/net
++	/* Skip if the device BOS descriptor couldn't be read */
++	if (!udev->bos)
++		return 0;
++
+ 	/* USB 2.1 (and greater) devices indicate LPM support through
+ 	 * their USB 2.0 Extended Capabilities BOS descriptor.
+ 	 */
+@@ -325,6 +329,10 @@ static void usb_set_lpm_parameters(struc
+ 	if (!udev->lpm_capable || udev->speed < USB_SPEED_SUPER)
+ 		return;
  
-- ========= =================== = ========== ==================
-+ ========= =================== = ========== ===================
-  Directory Content               Directory  Content
-- ========= =================== = ========== ==================
-- 802       E802 protocol         mptcp     Multipath TCP
-- appletalk Appletalk protocol    netfilter Network Filter
-+ ========= =================== = ========== ===================
-+ 802       E802 protocol         mptcp      Multipath TCP
-+ appletalk Appletalk protocol    netfilter  Network Filter
-  ax25      AX25                  netrom     NET/ROM
-- bridge    Bridging              rose      X.25 PLP layer
-- core      General parameter     tipc      TIPC
-- ethernet  Ethernet protocol     unix      Unix domain sockets
-- ipv4      IP version 4          x25       X.25 protocol
-+ bridge    Bridging              rose       X.25 PLP layer
-+ core      General parameter     tipc       TIPC
-+ ethernet  Ethernet protocol     unix       Unix domain sockets
-+ ipv4      IP version 4          x25        X.25 protocol
-  ipv6      IP version 6
-- ========= =================== = ========== ==================
-+ ========= =================== = ========== ===================
++	/* Skip if the device BOS descriptor couldn't be read */
++	if (!udev->bos)
++		return;
++
+ 	hub = usb_hub_to_struct_hub(udev->parent);
+ 	/* It doesn't take time to transition the roothub into U0, since it
+ 	 * doesn't have an upstream link.
+@@ -2684,7 +2692,8 @@ out_authorized:
+ }
  
- 1. /proc/sys/net/core - Network core options
- ============================================
+ /*
+- * Return 1 if port speed is SuperSpeedPlus, 0 otherwise
++ * Return 1 if port speed is SuperSpeedPlus, 0 otherwise or if the
++ * capability couldn't be checked.
+  * check it from the link protocol field of the current speed ID attribute.
+  * current speed ID is got from ext port status request. Sublink speed attribute
+  * table is returned with the hub BOS SSP device capability descriptor
+@@ -2694,8 +2703,12 @@ static int port_speed_is_ssp(struct usb_
+ 	int ssa_count;
+ 	u32 ss_attr;
+ 	int i;
+-	struct usb_ssp_cap_descriptor *ssp_cap = hdev->bos->ssp_cap;
++	struct usb_ssp_cap_descriptor *ssp_cap;
+ 
++	if (!hdev->bos)
++		return 0;
++
++	ssp_cap = hdev->bos->ssp_cap;
+ 	if (!ssp_cap)
+ 		return 0;
+ 
+@@ -4114,8 +4127,15 @@ static void usb_enable_link_state(struct
+ 		enum usb3_link_state state)
+ {
+ 	int timeout, ret;
+-	__u8 u1_mel = udev->bos->ss_cap->bU1devExitLat;
+-	__le16 u2_mel = udev->bos->ss_cap->bU2DevExitLat;
++	__u8 u1_mel;
++	__le16 u2_mel;
++
++	/* Skip if the device BOS descriptor couldn't be read */
++	if (!udev->bos)
++		return;
++
++	u1_mel = udev->bos->ss_cap->bU1devExitLat;
++	u2_mel = udev->bos->ss_cap->bU2DevExitLat;
+ 
+ 	/* If the device says it doesn't have *any* exit latency to come out of
+ 	 * U1 or U2, it's probably lying.  Assume it doesn't implement that link
+--- a/drivers/usb/core/hub.h
++++ b/drivers/usb/core/hub.h
+@@ -141,7 +141,7 @@ static inline int hub_is_superspeedplus(
+ {
+ 	return (hdev->descriptor.bDeviceProtocol == USB_HUB_PR_SS &&
+ 		le16_to_cpu(hdev->descriptor.bcdUSB) >= 0x0310 &&
+-		hdev->bos->ssp_cap);
++		hdev->bos && hdev->bos->ssp_cap);
+ }
+ 
+ static inline unsigned hub_power_on_good_delay(struct usb_hub *hub)
 
 
