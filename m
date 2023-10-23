@@ -1,94 +1,85 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A463F1848
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 21:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B544E23770
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 22:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bxlioY2y"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-66d0252578aso22375956d6.0
-        for <patches@lists.linux.dev>; Mon, 23 Oct 2023 14:01:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HZ9N4ASZ"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-d9a7a3e17d1so3520015276.2
+        for <patches@lists.linux.dev>; Mon, 23 Oct 2023 15:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698094877; x=1698699677; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YbeI5inRzR7k95NjvuTc2Wfz9EEbnQ9XK4gjlca4j1U=;
-        b=bxlioY2yN4LEE64wd5T29x3FII7hdAC15j9vc+5pSiovvoXh5gLrqRiOFKtSBQpjRs
-         +pUw8CBli0GURxChc5ZPVavI4hYIGn2aDq4/zWLK2MHvgQ6K+jgiS7oUP+BqiYLUaTsY
-         PigBMhNuRGFLp9fItrgaZqwVhA5Bhtu0EBu470/IvWyenx/B/Rzzm2uGU5Ca+AIJDWR6
-         W60Oaex8YTrUSPmCZusfZlnysHFGknixj9Ao0Q4TzwncH9pQ+8VJyorpXTsHcGQpFwT2
-         u4ir5mUKZYkUaCg6fxPiQ8VyPJz/rCS3QtruTNcjr2Wthpy4qs3SMWRkMqYxhTVEmyzw
-         gceQ==
+        d=gmail.com; s=20230601; t=1698099364; x=1698704164; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3068ADSkqthpsqS93q+/p6HJQnWPBgqqNzVxtTtH1Vs=;
+        b=HZ9N4ASZvri2DpYzmjOSfaxoxefMzNBoySdHjODHs3qJz+lvzmBWP/4ptwSqNVtBWd
+         TKKwuRAAjJRY1BR0fc5gV7fSkjnlSMRy7H97TdyY251nsRd/2K10vJ7LCgiL9YCAkNS0
+         FvUddAR2eB/ipifUVSNqP7tekZyvULgqUuVa2gs47PrAuLFpVoHE3uBasNIrNVTQLfEN
+         F942WYvBOMGwOSOBGNY1xJkycdF7S4zgAq8N95p1b2XOIeQg48OLWirE+qXIpxgsoP+5
+         7lezkg+xzPha1AJAlX/qT6dv3/V/GIThdYjj5Pi9hIq6gc/pZtQdYaWYlPD9tW4yTZij
+         0maA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698094877; x=1698699677;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YbeI5inRzR7k95NjvuTc2Wfz9EEbnQ9XK4gjlca4j1U=;
-        b=akZ2cGFPsFoSTOp+7buY5IYcNZVxhxGr/JpWsMa5c5wcLLPMAJvHwAqO3KOJMJTflC
-         PMzxI2MDQJ9QsjfzIZ8cwmOVVQvDgvBL9prJuj92/jlaikPSdtW5XeEQ4EGSDvuIqvZL
-         HkfLE2EdendxQuEU2Zkigs0j+nDqNnzEWPNrU70RU0HZZJLJvtgz08DsHcypqrUGPW5o
-         7xD0DXpTkA3er1tliDU2S1tR7EExLCtg81ad2nEpwtgtSQU/7VvJcUpHWHpIuNcbUiJo
-         JCNbq+rDnIK+1lG/T2+CjeifIbDkfTVqIGfChGMX86n4kmLkK4krN+rCFcFO8p++9CbI
-         XAMw==
-X-Gm-Message-State: AOJu0YxEy1iC92DMTsrMIVekRzNnAwVFmEdqdPKikkgShy1YrnUCSbsI
-	R8NGAwshQ9OVnIudEXPSWes=
-X-Google-Smtp-Source: AGHT+IFpbMGlO6hn9OtY92vdiN8s8picsYdngOOf/s+eB+0K2iCLDsU98Dk3YpMsLCbHR9aWWL5o2g==
-X-Received: by 2002:a05:6214:29c2:b0:66d:18ec:8e7b with SMTP id gh2-20020a05621429c200b0066d18ec8e7bmr13255980qvb.62.1698094877337;
-        Mon, 23 Oct 2023 14:01:17 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id l4-20020ad44084000000b0066cfb9cc087sm3148888qvp.134.2023.10.23.14.01.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 14:01:16 -0700 (PDT)
-Message-ID: <0dd204e6-5f16-4c85-b8f3-949b673464c2@gmail.com>
-Date: Mon, 23 Oct 2023 14:01:06 -0700
+        d=1e100.net; s=20230601; t=1698099364; x=1698704164;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3068ADSkqthpsqS93q+/p6HJQnWPBgqqNzVxtTtH1Vs=;
+        b=BVXdyciAKbLaY2ZbRd/Ivut9GrMRnajOisbTyo6w4115kBBfKoo6mJyYl4Af+DHUTD
+         n4rHmXZlQnw1dTRQLHhRJFrpuc5fnWKFyt7SagxzkMZO+awYaGJ2MVi4qLtxAQ0Ok6Kl
+         oL/Y+qAqZ5jvhoFHlSkG0hdakyKqdHKTV4O90LMWWcV4P/LyDONLxdU3uYlyk06emJHd
+         hKW+cXlkfKFErTIyHIGPrCN1Js09yE3Bw7OoUN2NHWYiQmmIJqOzJy1/9yOZUGS1Df4g
+         3Kbf+qjAdQ5JTo2u1qjdl1O1DVHOppd4anINtT8y4JIelwASH1wePHovhQy5S8mrYyZd
+         UMkA==
+X-Gm-Message-State: AOJu0YwGSxdVsmMWTaYX2E6wqH2di22X9dNTqHoYujpmM7PZZIptTQJk
+	8A74D+TSDLNtajXiHrEUpm5OQ/+iYxN9S+p4djw=
+X-Google-Smtp-Source: AGHT+IF8p1LuTV4Z7cYDNFOYhYTinKbuj7AVx4nc7X9tNQZkyEJtkxXHEbQAp3XO7hfv3Pmf67iQbUWSKzOhvTiWuIw=
+X-Received: by 2002:a25:aaa9:0:b0:d9a:c61e:4466 with SMTP id
+ t38-20020a25aaa9000000b00d9ac61e4466mr10600798ybi.61.1698099364644; Mon, 23
+ Oct 2023 15:16:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.5 000/241] 6.5.9-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20231023104833.832874523@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20231023174449.251550-1-ojeda@kernel.org> <20231023174449.251550-3-ojeda@kernel.org>
+ <f53536ca-ec5b-4cdc-a340-e9c739ee30c4@gmail.com>
+In-Reply-To: <f53536ca-ec5b-4cdc-a340-e9c739ee30c4@gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 24 Oct 2023 00:15:53 +0200
+Message-ID: <CANiq72nTE_qua9w+EeqiPCukst4876Gi7gHeusFLofYZRoJCDw@mail.gmail.com>
+Subject: Re: [PATCH 3/4] x86/rust: depend on !RETHUNK
+To: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
+	Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, 
+	Peter Zijlstra <peterz@infradead.org>, Josh Poimboeuf <jpoimboe@kernel.org>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, x86@kernel.org, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/23/23 03:53, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.9 release.
-> There are 241 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 25 Oct 2023 10:47:57 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.9-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Mon, Oct 23, 2023 at 8:43=E2=80=AFPM Martin Rodriguez Reboredo
+<yakoyoku@gmail.com> wrote:
+>
+> I'll mention that I've tested boots, both in bare metal and QEMU, with
+> `RUST=3Dy` and `RETHUNK=3Dy` and they were alright regardless of `objtool=
+`
+> warnings. Although, if you had an issue in the past then I'd like to know
+> about it.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+These are mitigations -- things do functionally work if they are not
+applied, but you would be vulnerable.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+In other words, it is not like e.g. IBT where you could have noticed
+it breaking by running it normally if you happened to have a supported
+platform.
 
+Cheers,
+Miguel
