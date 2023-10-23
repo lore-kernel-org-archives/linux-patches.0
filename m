@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C6016405
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544F116405
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P83Tq6RR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71F9C433C8;
-	Mon, 23 Oct 2023 11:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPXw2O5t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C441BC433C7;
+	Mon, 23 Oct 2023 11:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061403;
-	bh=Y/ZEZ/e0eo5opXqzvUt1k/NWVrMOQr1ndVe9VQaumyQ=;
+	s=korg; t=1698061406;
+	bh=yIXFesigVfZvzlUMw6/IiHdVxXN2L7x7FUNNWTIwT1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P83Tq6RR/O9nFDw6EmAHNaOCvi2L/miUiz78vl03ZvuW86EdV0Z9lgIoBqruDbJzm
-	 dRQEHjneXfz7CCA1dbhz/Kl79J45TbBcA8j/zTgXpXJZDwEE8VQBD8hdXq4QvSjcY8
-	 OmARaPl8N5usY9u46l8CV16ePuPo/yBZrpx9cy2c=
+	b=uPXw2O5tJseyDTymV3/HsgpXjL/ssv+p/uUkELOnDSRD2hTGfOQixhjH39hEC0Kj1
+	 mOfQatwimg2kYNT3gTe4cPVr4/dJEKTEmY9StLSxUVV9HPuD2qiw0gB7CyvdqP60WG
+	 ztkWVstm5zIUJsO+WH65WOVAHK65TO7yvCYXtXwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Jordan Rife <jrife@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 009/202] net: prevent address rewrite in kernel_bind()
-Date: Mon, 23 Oct 2023 12:55:16 +0200
-Message-ID: <20231023104826.862365554@linuxfoundation.org>
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 010/202] drm/msm/dp: do not reinitialize phy unless retry during link training
+Date: Mon, 23 Oct 2023 12:55:17 +0200
+Message-ID: <20231023104826.894116571@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -43,89 +44,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jrife@google.com>
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-commit c889a99a21bf124c3db08d09df919f0eccc5ea4c upstream.
+[ Upstream commit 0c1a2e69bcb506f48ebf94bd199bab0b93f66da2 ]
 
-Similar to the change in commit 0bdf399342c5("net: Avoid address
-overwrite in kernel_connect"), BPF hooks run on bind may rewrite the
-address passed to kernel_bind(). This change
+DP PHY re-initialization done using dp_ctrl_reinitialize_mainlink() will
+cause PLL unlocked initially and then PLL gets locked at the end of
+initialization. PLL_UNLOCKED interrupt will fire during this time if the
+interrupt mask is enabled.
 
-1) Makes a copy of the bind address in kernel_bind() to insulate
-   callers.
-2) Replaces direct calls to sock->ops->bind() in net with kernel_bind()
+However currently DP driver link training implementation incorrectly
+re-initializes PHY unconditionally during link training as the PHY was
+already configured in dp_ctrl_enable_mainlink_clocks().
 
-Link: https://lore.kernel.org/netdev/20230912013332.2048422-1-jrife@google.com/
-Fixes: 4fbac77d2d09 ("bpf: Hooks for sys_bind")
-Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Jordan Rife <jrife@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by re-initializing the PHY only if the previous link training
+failed.
+
+[drm:dp_aux_isr] *ERROR* Unexpected DP AUX IRQ 0x01000000 when not busy
+
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/30
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/551847/
+Link: https://lore.kernel.org/r/1691533190-19335-1-git-send-email-quic_khsieh@quicinc.com
+[quic_abhinavk@quicinc.com: added line break in commit text]
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_sync.c |    4 ++--
- net/rds/tcp_connect.c           |    2 +-
- net/rds/tcp_listen.c            |    2 +-
- net/socket.c                    |    6 +++++-
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/net/netfilter/ipvs/ip_vs_sync.c
-+++ b/net/netfilter/ipvs/ip_vs_sync.c
-@@ -1441,7 +1441,7 @@ static int bind_mcastif_addr(struct sock
- 	sin.sin_addr.s_addr  = addr;
- 	sin.sin_port         = 0;
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 9fac55c24214a..07becbf3c64fc 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1665,13 +1665,6 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
+ 		return rc;
  
--	return sock->ops->bind(sock, (struct sockaddr*)&sin, sizeof(sin));
-+	return kernel_bind(sock, (struct sockaddr *)&sin, sizeof(sin));
- }
- 
- static void get_mcast_sockaddr(union ipvs_sockaddr *sa, int *salen,
-@@ -1548,7 +1548,7 @@ static int make_receive_sock(struct netn
- 
- 	get_mcast_sockaddr(&mcast_addr, &salen, &ipvs->bcfg, id);
- 	sock->sk->sk_bound_dev_if = dev->ifindex;
--	result = sock->ops->bind(sock, (struct sockaddr *)&mcast_addr, salen);
-+	result = kernel_bind(sock, (struct sockaddr *)&mcast_addr, salen);
- 	if (result < 0) {
- 		pr_err("Error binding to the multicast addr\n");
- 		goto error;
---- a/net/rds/tcp_connect.c
-+++ b/net/rds/tcp_connect.c
-@@ -141,7 +141,7 @@ int rds_tcp_conn_path_connect(struct rds
- 		addrlen = sizeof(sin);
+ 	while (--link_train_max_retries) {
+-		rc = dp_ctrl_reinitialize_mainlink(ctrl);
+-		if (rc) {
+-			DRM_ERROR("Failed to reinitialize mainlink. rc=%d\n",
+-					rc);
+-			break;
+-		}
+-
+ 		training_step = DP_TRAINING_NONE;
+ 		rc = dp_ctrl_setup_main_link(ctrl, &cr, &training_step);
+ 		if (rc == 0) {
+@@ -1712,6 +1705,12 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
+ 				break; /* lane == 1 already */
+ 			}
+ 		}
++
++		rc = dp_ctrl_reinitialize_mainlink(ctrl);
++		if (rc) {
++			DRM_ERROR("Failed to reinitialize mainlink. rc=%d\n", rc);
++			break;
++		}
  	}
  
--	ret = sock->ops->bind(sock, addr, addrlen);
-+	ret = kernel_bind(sock, addr, addrlen);
- 	if (ret) {
- 		rdsdebug("bind failed with %d at address %pI6c\n",
- 			 ret, &conn->c_laddr);
---- a/net/rds/tcp_listen.c
-+++ b/net/rds/tcp_listen.c
-@@ -301,7 +301,7 @@ struct socket *rds_tcp_listen_init(struc
- 		addr_len = sizeof(*sin);
- 	}
- 
--	ret = sock->ops->bind(sock, (struct sockaddr *)&ss, addr_len);
-+	ret = kernel_bind(sock, (struct sockaddr *)&ss, addr_len);
- 	if (ret < 0) {
- 		rdsdebug("could not bind %s listener socket: %d\n",
- 			 isv6 ? "IPv6" : "IPv4", ret);
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -3414,7 +3414,11 @@ static long compat_sock_ioctl(struct fil
- 
- int kernel_bind(struct socket *sock, struct sockaddr *addr, int addrlen)
- {
--	return sock->ops->bind(sock, addr, addrlen);
-+	struct sockaddr_storage address;
-+
-+	memcpy(&address, addr, addrlen);
-+
-+	return sock->ops->bind(sock, (struct sockaddr *)&address, addrlen);
- }
- EXPORT_SYMBOL(kernel_bind);
- 
+ 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
+-- 
+2.40.1
+
 
 
