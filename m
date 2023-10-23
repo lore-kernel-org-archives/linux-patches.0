@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D1214A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE88214A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wco0uZ6b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717EBC433C7;
-	Mon, 23 Oct 2023 11:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAAkHZ6A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4BFC433C8;
+	Mon, 23 Oct 2023 11:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058977;
-	bh=MJWYpbl55FUtwSJY36b6EPq7+VD9W8R186RNBp+m+1M=;
+	s=korg; t=1698058980;
+	bh=cHamRBfA1TZ1jqBhIm2GuwDFKBNN8+6gEOpVHGUsB6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wco0uZ6bzbqC10Z4vTCQTgrehHjdF+ek5LgTMU/dU5JB5YW0x5AuSgxm3dMA2xE5E
-	 gV2tTrH7RUVw1Ljkw8HcyR9L9UHeHz+zNzjoJCpQwDSbbNWsgOgRTz75IBL9m+ar+1
-	 OVoKdQGoSjMt0iuABTfAQbmcpoZNUWDrxa47NHbw=
+	b=kAAkHZ6A8rahHcIkr9UmTNwkmA42Cc3dMaccqnhmHMw5DS/5ETSYysd7mjXT1wzQP
+	 fBIpZXLOkhW0oLxMuH+PLN92dnHQDfcDutL+BK0uRYk4xWmlpDKfX3ukmDVIEpginG
+	 pCEb26k9M/zOfMUBiExkdorPSNP9P68GFnomjHjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Maxim Levitsky <mlevitsk@redhat.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.5 022/241] x86: KVM: SVM: always update the x2avic msr interception
-Date: Mon, 23 Oct 2023 12:53:28 +0200
-Message-ID: <20231023104834.474679289@linuxfoundation.org>
+Subject: [PATCH 6.5 023/241] x86: KVM: SVM: add support for Invalid IPI Vector interception
+Date: Mon, 23 Oct 2023 12:53:29 +0200
+Message-ID: <20231023104834.498063284@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -45,53 +44,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxim Levitsky <mlevitsk@redhat.com>
 
-commit b65235f6e102354ccafda601eaa1c5bef5284d21 upstream.
+commit 2dcf37abf9d3aab7f975002d29fc7c17272def38 upstream.
 
-The following problem exists since x2avic was enabled in the KVM:
+In later revisions of AMD's APM, there is a new 'incomplete IPI' exit code:
 
-svm_set_x2apic_msr_interception is called to enable the interception of
-the x2apic msrs.
+"Invalid IPI Vector - The vector for the specified IPI was set to an
+illegal value (VEC < 16)"
 
-In particular it is called at the moment the guest resets its apic.
+Note that tests on Zen2 machine show that this VM exit doesn't happen and
+instead AVIC just does nothing.
 
-Assuming that the guest's apic was in x2apic mode, the reset will bring
-it back to the xapic mode.
+Add support for this exit code by doing nothing, instead of filling
+the kernel log with errors.
 
-The svm_set_x2apic_msr_interception however has an erroneous check for
-'!apic_x2apic_mode()' which prevents it from doing anything in this case.
+Also replace an unthrottled 'pr_err()' if another unknown incomplete
+IPI exit happens with vcpu_unimpl()
 
-As a result of this, all x2apic msrs are left unintercepted, and that
-exposes the bare metal x2apic (if enabled) to the guest.
-Oops.
+(e.g in case AMD adds yet another 'Invalid IPI' exit reason)
 
-Remove the erroneous '!apic_x2apic_mode()' check to fix that.
-
-This fixes CVE-2023-5090
-
-Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
-Cc: stable@vger.kernel.org
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Tested-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 Reviewed-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230928173354.217464-2-mlevitsk@redhat.com>
+Message-Id: <20230928173354.217464-3-mlevitsk@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/x86/include/asm/svm.h |    1 +
+ arch/x86/kvm/svm/avic.c    |    5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -829,8 +829,7 @@ void svm_set_x2apic_msr_interception(str
- 	if (intercept == svm->x2avic_msrs_intercepted)
- 		return;
+--- a/arch/x86/include/asm/svm.h
++++ b/arch/x86/include/asm/svm.h
+@@ -268,6 +268,7 @@ enum avic_ipi_failure_cause {
+ 	AVIC_IPI_FAILURE_TARGET_NOT_RUNNING,
+ 	AVIC_IPI_FAILURE_INVALID_TARGET,
+ 	AVIC_IPI_FAILURE_INVALID_BACKING_PAGE,
++	AVIC_IPI_FAILURE_INVALID_IPI_VECTOR,
+ };
  
--	if (!x2avic_enabled ||
--	    !apic_x2apic_mode(svm->vcpu.arch.apic))
-+	if (!x2avic_enabled)
- 		return;
+ #define AVIC_PHYSICAL_MAX_INDEX_MASK	GENMASK_ULL(8, 0)
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -529,8 +529,11 @@ int avic_incomplete_ipi_interception(str
+ 	case AVIC_IPI_FAILURE_INVALID_BACKING_PAGE:
+ 		WARN_ONCE(1, "Invalid backing page\n");
+ 		break;
++	case AVIC_IPI_FAILURE_INVALID_IPI_VECTOR:
++		/* Invalid IPI with vector < 16 */
++		break;
+ 	default:
+-		pr_err("Unknown IPI interception\n");
++		vcpu_unimpl(vcpu, "Unknown avic incomplete IPI interception\n");
+ 	}
  
- 	for (i = 0; i < MAX_DIRECT_ACCESS_MSRS; i++) {
+ 	return 1;
 
 
