@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C6514263
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7677014263
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3ORxyaj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA16C433C8;
-	Mon, 23 Oct 2023 11:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYjcS66D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47BAC433C8;
+	Mon, 23 Oct 2023 11:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059384;
-	bh=8EdUQUO7erUTLh9eh+lXsTV/7MqMJ9+8SY1GyKS9/tk=;
+	s=korg; t=1698059387;
+	bh=uLKE75M24s8c8tKeRMlLuzZUSG52iz6EChGtoBmjMQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3ORxyajq5H6sDoSh8hXDgvgcm6el7CRXmW1R8y6H3cdpHWVtj9mkPVoczJ3GF9f/
-	 uOnySStJvTKKtnZ+95eoNH5GLqHgfZdRF6qpBMsbwXU0gAJcZyVeR4Eg1j6S86l40I
-	 sOLXoKL1SdY12IMcNZr1dOjZbO5nS2WbUUFHoiuo=
+	b=GYjcS66Dh14eb6X6fsGH4XPLVLx+BJuxv0wAkuNZincmAHUDkXaoxbC05x8i2e9O6
+	 GHJSD1n3RrbrziTu0/72uRl+RTiv+Ir+/qYZJ6X4NjK+dr1B23reg/kctlUWd8rWfs
+	 SIkih73lzP4tksRLHwwAWzfWjnWwaPQhBVMW+iOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Jan Karcher <jaka@linux.ibm.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Albert Huang <huangjie.albert@bytedance.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 160/241] net/smc: support smc v2.x features validate
-Date: Mon, 23 Oct 2023 12:55:46 +0200
-Message-ID: <20231023104837.775218104@linuxfoundation.org>
+Subject: [PATCH 6.5 161/241] net/smc: fix smc clc failed issue when netdevice not in init_net
+Date: Mon, 23 Oct 2023 12:55:47 +0200
+Message-ID: <20231023104837.800243857@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -44,177 +44,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+From: Albert Huang <huangjie.albert@bytedance.com>
 
-[ Upstream commit 6ac1e6563f5915cd38b6bc6a8b26964b2252f751 ]
+[ Upstream commit c68681ae46eaaa1640b52fe366d21a93b2185df5 ]
 
-Support SMC v2.x features validate for SMC v2.1. This is the frame
-code for SMC v2.x features validate, and will take effects only when
-the negotiated release version is v2.1 or later.
+If the netdevice is within a container and communicates externally
+through network technologies such as VxLAN, we won't be able to find
+routing information in the init_net namespace. To address this issue,
+we need to add a struct net parameter to the smc_ib_find_route function.
+This allow us to locate the routing information within the corresponding
+net namespace, ensuring the correct completion of the SMC CLC interaction.
 
-For Server, v2.x features' validation should be done in smc_clc_srv_
-v2x_features_validate when receiving v2.1 or later CLC Proposal Message,
-such as max conns, max links negotiation, the decision of the final
-value of max conns and max links should be made in this function.
-And final check for server when receiving v2.1 or later CLC Confirm
-Message should be done in smc_clc_v2x_features_confirm_check.
-
-For client, v2.x features' validation should be done in smc_clc_clnt_
-v2x_features_validate when receiving v2.1 or later CLC Accept Message,
-for example, the decision to accpt the accepted value or to decline
-should be made in this function.
-
-Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Reviewed-by: Jan Karcher <jaka@linux.ibm.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: c68681ae46ea ("net/smc: fix smc clc failed issue when netdevice not in init_net")
+Fixes: e5c4744cfb59 ("net/smc: add SMC-Rv2 connection establishment")
+Signed-off-by: Albert Huang <huangjie.albert@bytedance.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Link: https://lore.kernel.org/r/20231011074851.95280-1-huangjie.albert@bytedance.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c  | 18 ++++++++++++++++++
- net/smc/smc_clc.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- net/smc/smc_clc.h |  7 +++++++
- 3 files changed, 71 insertions(+)
+ net/smc/af_smc.c | 3 ++-
+ net/smc/smc_ib.c | 7 ++++---
+ net/smc/smc_ib.h | 2 +-
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 077e5864fc441..fa7b8015cd7bb 100644
+index fa7b8015cd7bb..01bd576ffa5e1 100644
 --- a/net/smc/af_smc.c
 +++ b/net/smc/af_smc.c
 @@ -1199,6 +1199,7 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
  		(struct smc_clc_msg_accept_confirm_v2 *)aclc;
  	struct smc_clc_first_contact_ext *fce =
  		smc_get_clc_first_contact_ext(clc_v2, false);
-+	int rc;
++	struct net *net = sock_net(&smc->sk);
+ 	int rc;
  
  	if (!ini->first_contact_peer || aclc->hdr.version == SMC_V1)
- 		return 0;
-@@ -1219,6 +1220,9 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
- 	}
- 
- 	ini->release_nr = fce->release;
-+	rc = smc_clc_clnt_v2x_features_validate(fce, ini);
-+	if (rc)
-+		return rc;
- 
- 	return 0;
- }
-@@ -1393,6 +1397,9 @@ static int smc_connect_ism(struct smc_sock *smc,
- 				smc_get_clc_first_contact_ext(aclc_v2, true);
- 
- 			ini->release_nr = fce->release;
-+			rc = smc_clc_clnt_v2x_features_validate(fce, ini);
-+			if (rc)
-+				return rc;
- 		}
- 
- 		rc = smc_v2_determine_accepted_chid(aclc_v2, ini);
-@@ -2443,6 +2450,10 @@ static void smc_listen_work(struct work_struct *work)
- 	if (rc)
- 		goto out_decl;
- 
-+	rc = smc_clc_srv_v2x_features_validate(pclc, ini);
-+	if (rc)
-+		goto out_decl;
-+
- 	mutex_lock(&smc_server_lgr_pending);
- 	smc_close_init(new_smc);
- 	smc_rx_init(new_smc);
-@@ -2475,6 +2486,13 @@ static void smc_listen_work(struct work_struct *work)
- 		goto out_decl;
- 	}
- 
-+	rc = smc_clc_v2x_features_confirm_check(cclc, ini);
-+	if (rc) {
-+		if (!ini->is_smcd)
-+			goto out_unlock;
-+		goto out_decl;
-+	}
-+
- 	/* finish worker */
- 	if (!ini->is_smcd) {
- 		rc = smc_listen_rdma_finish(new_smc, cclc,
-diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
-index fb0be0817e8a5..f50d1b019a80f 100644
---- a/net/smc/smc_clc.c
-+++ b/net/smc/smc_clc.c
-@@ -1156,6 +1156,52 @@ int smc_clc_send_accept(struct smc_sock *new_smc, bool srv_first_contact,
- 	return len > 0 ? 0 : len;
+@@ -1208,7 +1209,7 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
+ 		memcpy(ini->smcrv2.nexthop_mac, &aclc->r0.lcl.mac, ETH_ALEN);
+ 		ini->smcrv2.uses_gateway = false;
+ 	} else {
+-		if (smc_ib_find_route(smc->clcsock->sk->sk_rcv_saddr,
++		if (smc_ib_find_route(net, smc->clcsock->sk->sk_rcv_saddr,
+ 				      smc_ib_gid_to_ipv4(aclc->r0.lcl.gid),
+ 				      ini->smcrv2.nexthop_mac,
+ 				      &ini->smcrv2.uses_gateway))
+diff --git a/net/smc/smc_ib.c b/net/smc/smc_ib.c
+index 9b66d6aeeb1ae..89981dbe46c94 100644
+--- a/net/smc/smc_ib.c
++++ b/net/smc/smc_ib.c
+@@ -193,7 +193,7 @@ bool smc_ib_port_active(struct smc_ib_device *smcibdev, u8 ibport)
+ 	return smcibdev->pattr[ibport - 1].state == IB_PORT_ACTIVE;
  }
  
-+int smc_clc_srv_v2x_features_validate(struct smc_clc_msg_proposal *pclc,
-+				      struct smc_init_info *ini)
-+{
-+	struct smc_clc_v2_extension *pclc_v2_ext;
-+
-+	if ((!(ini->smcd_version & SMC_V2) && !(ini->smcr_version & SMC_V2)) ||
-+	    ini->release_nr < SMC_RELEASE_1)
-+		return 0;
-+
-+	pclc_v2_ext = smc_get_clc_v2_ext(pclc);
-+	if (!pclc_v2_ext)
-+		return SMC_CLC_DECL_NOV2EXT;
-+
-+	return 0;
-+}
-+
-+int smc_clc_clnt_v2x_features_validate(struct smc_clc_first_contact_ext *fce,
-+				       struct smc_init_info *ini)
-+{
-+	if (ini->release_nr < SMC_RELEASE_1)
-+		return 0;
-+
-+	return 0;
-+}
-+
-+int smc_clc_v2x_features_confirm_check(struct smc_clc_msg_accept_confirm *cclc,
-+				       struct smc_init_info *ini)
-+{
-+	struct smc_clc_msg_accept_confirm_v2 *clc_v2 =
-+		(struct smc_clc_msg_accept_confirm_v2 *)cclc;
-+	struct smc_clc_first_contact_ext *fce =
-+		smc_get_clc_first_contact_ext(clc_v2, ini->is_smcd);
-+
-+	if (cclc->hdr.version == SMC_V1 ||
-+	    !(cclc->hdr.typev2 & SMC_FIRST_CONTACT_MASK))
-+		return 0;
-+
-+	if (ini->release_nr != fce->release)
-+		return SMC_CLC_DECL_RELEASEERR;
-+
-+	if (fce->release < SMC_RELEASE_1)
-+		return 0;
-+
-+	return 0;
-+}
-+
- void smc_clc_get_hostname(u8 **host)
+-int smc_ib_find_route(__be32 saddr, __be32 daddr,
++int smc_ib_find_route(struct net *net, __be32 saddr, __be32 daddr,
+ 		      u8 nexthop_mac[], u8 *uses_gateway)
  {
- 	*host = &smc_hostname[0];
-diff --git a/net/smc/smc_clc.h b/net/smc/smc_clc.h
-index b923e89acafb0..32fa56bfa06d5 100644
---- a/net/smc/smc_clc.h
-+++ b/net/smc/smc_clc.h
-@@ -45,6 +45,7 @@
- #define SMC_CLC_DECL_NOSEID	0x03030006  /* peer sent no SEID	      */
- #define SMC_CLC_DECL_NOSMCD2DEV	0x03030007  /* no SMC-Dv2 device found	      */
- #define SMC_CLC_DECL_NOUEID	0x03030008  /* peer sent no UEID	      */
-+#define SMC_CLC_DECL_RELEASEERR	0x03030009  /* release version negotiate failed */
- #define SMC_CLC_DECL_MODEUNSUPP	0x03040000  /* smc modes do not match (R or D)*/
- #define SMC_CLC_DECL_RMBE_EC	0x03050000  /* peer has eyecatcher in RMBE    */
- #define SMC_CLC_DECL_OPTUNSUPP	0x03060000  /* fastopen sockopt not supported */
-@@ -404,6 +405,12 @@ int smc_clc_send_confirm(struct smc_sock *smc, bool clnt_first_contact,
- 			 u8 version, u8 *eid, struct smc_init_info *ini);
- int smc_clc_send_accept(struct smc_sock *smc, bool srv_first_contact,
- 			u8 version, u8 *negotiated_eid, struct smc_init_info *ini);
-+int smc_clc_srv_v2x_features_validate(struct smc_clc_msg_proposal *pclc,
-+				      struct smc_init_info *ini);
-+int smc_clc_clnt_v2x_features_validate(struct smc_clc_first_contact_ext *fce,
-+				       struct smc_init_info *ini);
-+int smc_clc_v2x_features_confirm_check(struct smc_clc_msg_accept_confirm *cclc,
-+				       struct smc_init_info *ini);
- void smc_clc_init(void) __init;
- void smc_clc_exit(void);
- void smc_clc_get_hostname(u8 **host);
+ 	struct neighbour *neigh = NULL;
+@@ -205,7 +205,7 @@ int smc_ib_find_route(__be32 saddr, __be32 daddr,
+ 
+ 	if (daddr == cpu_to_be32(INADDR_NONE))
+ 		goto out;
+-	rt = ip_route_output_flow(&init_net, &fl4, NULL);
++	rt = ip_route_output_flow(net, &fl4, NULL);
+ 	if (IS_ERR(rt))
+ 		goto out;
+ 	if (rt->rt_uses_gateway && rt->rt_gw_family != AF_INET)
+@@ -235,6 +235,7 @@ static int smc_ib_determine_gid_rcu(const struct net_device *ndev,
+ 	if (smcrv2 && attr->gid_type == IB_GID_TYPE_ROCE_UDP_ENCAP &&
+ 	    smc_ib_gid_to_ipv4((u8 *)&attr->gid) != cpu_to_be32(INADDR_NONE)) {
+ 		struct in_device *in_dev = __in_dev_get_rcu(ndev);
++		struct net *net = dev_net(ndev);
+ 		const struct in_ifaddr *ifa;
+ 		bool subnet_match = false;
+ 
+@@ -248,7 +249,7 @@ static int smc_ib_determine_gid_rcu(const struct net_device *ndev,
+ 		}
+ 		if (!subnet_match)
+ 			goto out;
+-		if (smcrv2->daddr && smc_ib_find_route(smcrv2->saddr,
++		if (smcrv2->daddr && smc_ib_find_route(net, smcrv2->saddr,
+ 						       smcrv2->daddr,
+ 						       smcrv2->nexthop_mac,
+ 						       &smcrv2->uses_gateway))
+diff --git a/net/smc/smc_ib.h b/net/smc/smc_ib.h
+index 034295676e881..ebcb05ede7f55 100644
+--- a/net/smc/smc_ib.h
++++ b/net/smc/smc_ib.h
+@@ -113,7 +113,7 @@ void smc_ib_sync_sg_for_device(struct smc_link *lnk,
+ int smc_ib_determine_gid(struct smc_ib_device *smcibdev, u8 ibport,
+ 			 unsigned short vlan_id, u8 gid[], u8 *sgid_index,
+ 			 struct smc_init_info_smcrv2 *smcrv2);
+-int smc_ib_find_route(__be32 saddr, __be32 daddr,
++int smc_ib_find_route(struct net *net, __be32 saddr, __be32 daddr,
+ 		      u8 nexthop_mac[], u8 *uses_gateway);
+ bool smc_ib_is_valid_local_systemid(void);
+ int smcr_nl_get_device(struct sk_buff *skb, struct netlink_callback *cb);
 -- 
 2.40.1
 
