@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DADA1429B
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7E71429B
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XY5EST6n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD40C433C7;
-	Mon, 23 Oct 2023 11:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOzaGNKP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF745C433C7;
+	Mon, 23 Oct 2023 11:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059907;
-	bh=BL3oPa17BFM9whotBj2dmrK32x6lhMKyWudlypXbH3c=;
+	s=korg; t=1698059910;
+	bh=rwIUsgw4/7HYb1UQeqvp0rO+fIeEAbNN+pk26nvU2GQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XY5EST6nucfJYpgzFuA1O51/vRFsZGmEuce8vDErSQ12n3dillP7uI5yxuPdcN29f
-	 XYLp2NOUGVvvQi+WeUwGJmbUQ4X/aeONnS0ce/r45r/goAUKXv5+lDy612b3t8V9/P
-	 GKeFM/yXkg55S0Ml/ogA3Hbfjbr5aiYDgWjj9VJQ=
+	b=eOzaGNKPw2lCcmeO9cVxObeM8gxwB0EbZRqGPS/XFzdnTj3dtX/MIQWYLK9FfaYr9
+	 Lhbe84e70J+3AG0KhWUaCxzr97is266lTYd3xJqufWKb4mQz5nNtvR4qpVOHumXNDJ
+	 gmt1+Wwr4YRKvSTiHJwjtbfEJvPmQDV0ZICT1OXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
-	Carl Philipp Klemm <philipp@uvos.xyz>,
-	Merlijn Wajer <merlijn@wizzup.org>,
-	Pavel Machek <pavel@ucw.cz>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 66/98] ARM: dts: ti: omap: Fix noisy serial with overrun-throttle-ms for mapphone
-Date: Mon, 23 Oct 2023 12:56:55 +0200
-Message-ID: <20231023104815.921121881@linuxfoundation.org>
+Subject: [PATCH 4.19 67/98] btrfs: return -EUCLEAN for delayed tree ref with a ref count not equals to 1
+Date: Mon, 23 Oct 2023 12:56:56 +0200
+Message-ID: <20231023104815.954409527@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -46,41 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 5ad37b5e30433afa7a5513e3eb61f69fa0976785 ]
+[ Upstream commit 1bf76df3fee56d6637718e267f7c34ed70d0c7dc ]
 
-On mapphone devices we may get lots of noise on the micro-USB port in debug
-uart mode until the phy-cpcap-usb driver probes. Let's limit the noise by
-using overrun-throttle-ms.
+When running a delayed tree reference, if we find a ref count different
+from 1, we return -EIO. This isn't an IO error, as it indicates either a
+bug in the delayed refs code or a memory corruption, so change the error
+code from -EIO to -EUCLEAN. Also tag the branch as 'unlikely' as this is
+not expected to ever happen, and change the error message to print the
+tree block's bytenr without the parenthesis (and there was a missing space
+between the 'block' word and the opening parenthesis), for consistency as
+that's the style we used everywhere else.
 
-Note that there is also a related separate issue where the charger cable
-connected may cause random sysrq requests until phy-cpcap-usb probes that
-still remains.
-
-Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
-Cc: Carl Philipp Klemm <philipp@uvos.xyz>
-Cc: Merlijn Wajer <merlijn@wizzup.org>
-Cc: Pavel Machek <pavel@ucw.cz>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/omap4-droid4-xt894.dts | 1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/extent-tree.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/omap4-droid4-xt894.dts b/arch/arm/boot/dts/omap4-droid4-xt894.dts
-index 459720f5f5586..91c8a05ab67ae 100644
---- a/arch/arm/boot/dts/omap4-droid4-xt894.dts
-+++ b/arch/arm/boot/dts/omap4-droid4-xt894.dts
-@@ -669,6 +669,7 @@ &uart1 {
- &uart3 {
- 	interrupts-extended = <&wakeupgen GIC_SPI 74 IRQ_TYPE_LEVEL_HIGH
- 			       &omap4_pmx_core 0x17c>;
-+	overrun-throttle-ms = <500>;
- };
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index bb05b0a82c8ba..902ab00bfd7ab 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -2327,12 +2327,12 @@ static int run_delayed_tree_ref(struct btrfs_trans_handle *trans,
+ 		parent = ref->parent;
+ 	ref_root = ref->root;
  
- &uart4 {
+-	if (node->ref_mod != 1) {
++	if (unlikely(node->ref_mod != 1)) {
+ 		btrfs_err(trans->fs_info,
+-	"btree block(%llu) has %d references rather than 1: action %d ref_root %llu parent %llu",
++	"btree block %llu has %d references rather than 1: action %d ref_root %llu parent %llu",
+ 			  node->bytenr, node->ref_mod, node->action, ref_root,
+ 			  parent);
+-		return -EIO;
++		return -EUCLEAN;
+ 	}
+ 	if (node->action == BTRFS_ADD_DELAYED_REF && insert_reserved) {
+ 		BUG_ON(!extent_op || !extent_op->update_flags);
 -- 
 2.40.1
 
