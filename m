@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5F814F6A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727F914F6A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y95ubzTA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0288CC433C7;
-	Mon, 23 Oct 2023 11:22:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qug/hCQA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1196C433C8;
+	Mon, 23 Oct 2023 11:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060154;
-	bh=HTwWeekizCdQoXAtIzHBgWtL7IDRWZUmYdxN7ddKFNg=;
+	s=korg; t=1698060157;
+	bh=FpmgVBcRp6at5F2e5ALI/kE7qKJWhKe5dBkoEyJbXl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y95ubzTAGrHLuIdF8xvGCBVcL3Kr8H8r2WMTIInGE+G0XsuQpPRxZ1gR/aubsgf+s
-	 xkT8TwbgBY2ZOGLyy6IkgRRpCnJvW8tQcQvkt0h9tawll7PuCvrr4AZ32hnDeQcVwl
-	 Yhyp/e70UB2seBzgdLKg18yhyFWyKbrK8shYSXaw=
+	b=Qug/hCQAKfuV8C23DAtYRmTzgCA0Lfb8bD0QNAl99B0LVFrLNzrDlBJbSD/hoAIyZ
+	 nS/nXtraQfLThWJA6nSRH5EH6wv3qaNMIuJcDoOKnOhuywFF8ZF3GSQDy7CW/Z/bJc
+	 YgCCs1vOtONLM+uuBeLBhxqFFIZF1wd9DDTj5QkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 076/196] net: check for altname conflicts when changing netdevs netns
-Date: Mon, 23 Oct 2023 12:55:41 +0200
-Message-ID: <20231023104830.698361283@linuxfoundation.org>
+	Juntong Deng <juntong.deng@outlook.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 077/196] selftests/mm: fix awk usage in charge_reserved_hugetlb.sh and hugetlb_reparenting_test.sh that may cause error
+Date: Mon, 23 Oct 2023 12:55:42 +0200
+Message-ID: <20231023104830.729040688@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,87 +43,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Juntong Deng <juntong.deng@outlook.com>
 
-commit 7663d522099ecc464512164e660bc771b2ff7b64 upstream.
+[ Upstream commit bbe246f875d064ecfb872fe4f66152e743dfd22d ]
 
-It's currently possible to create an altname conflicting
-with an altname or real name of another device by creating
-it in another netns and moving it over:
+According to the awk manual, the -e option does not need to be specified
+in front of 'program' (unless you need to mix program-file).
 
- [ ~]$ ip link add dev eth0 type dummy
+The redundant -e option can cause error when users use awk tools other
+than gawk (for example, mawk does not support the -e option).
 
- [ ~]$ ip netns add test
- [ ~]$ ip -netns test link add dev ethX netns test type dummy
- [ ~]$ ip -netns test link property add dev ethX altname eth0
- [ ~]$ ip -netns test link set dev ethX netns 1
+Error Example:
+awk: not an option: -e
 
- [ ~]$ ip link
- ...
- 3: eth0: <BROADCAST,NOARP> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-     link/ether 02:40:88:62:ec:b8 brd ff:ff:ff:ff:ff:ff
- ...
- 5: ethX: <BROADCAST,NOARP> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-     link/ether 26:b7:28:78:38:0f brd ff:ff:ff:ff:ff:ff
-     altname eth0
-
-Create a macro for walking the altnames, this hopefully makes
-it clearer that the list we walk contains only altnames.
-Which is otherwise not entirely intuitive.
-
-Fixes: 36fbf1e52bd3 ("net: rtnetlink: add linkprop commands to add and delete alternative ifnames")
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/VI1P193MB075228810591AF2FDD7D42C599C3A@VI1P193MB0752.EURP193.PROD.OUTLOOK.COM
+Signed-off-by: Juntong Deng <juntong.deng@outlook.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c |    9 ++++++++-
- net/core/dev.h |    3 +++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ tools/testing/selftests/vm/charge_reserved_hugetlb.sh  | 4 ++--
+ tools/testing/selftests/vm/hugetlb_reparenting_test.sh | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -1054,7 +1054,8 @@ static int __dev_alloc_name(struct net *
+diff --git a/tools/testing/selftests/vm/charge_reserved_hugetlb.sh b/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
+index a5cb4b09a46c4..0899019a7fcb4 100644
+--- a/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
++++ b/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
+@@ -25,7 +25,7 @@ if [[ "$1" == "-cgroup-v2" ]]; then
+ fi
  
- 		for_each_netdev(net, d) {
- 			struct netdev_name_node *name_node;
--			list_for_each_entry(name_node, &d->name_node->list, list) {
-+
-+			netdev_for_each_altname(d, name_node) {
- 				if (!sscanf(name_node->name, name, &i))
- 					continue;
- 				if (i < 0 || i >= max_netdevices)
-@@ -10949,6 +10950,7 @@ EXPORT_SYMBOL(unregister_netdev);
- int __dev_change_net_namespace(struct net_device *dev, struct net *net,
- 			       const char *pat, int new_ifindex)
- {
-+	struct netdev_name_node *name_node;
- 	struct net *net_old = dev_net(dev);
- 	char new_name[IFNAMSIZ] = {};
- 	int err, new_nsid;
-@@ -10981,6 +10983,11 @@ int __dev_change_net_namespace(struct ne
- 		if (err < 0)
- 			goto out;
- 	}
-+	/* Check that none of the altnames conflicts. */
-+	err = -EEXIST;
-+	netdev_for_each_altname(dev, name_node)
-+		if (netdev_name_in_use(net, name_node->name))
-+			goto out;
+ if [[ $cgroup2 ]]; then
+-  cgroup_path=$(mount -t cgroup2 | head -1 | awk -e '{print $3}')
++  cgroup_path=$(mount -t cgroup2 | head -1 | awk '{print $3}')
+   if [[ -z "$cgroup_path" ]]; then
+     cgroup_path=/dev/cgroup/memory
+     mount -t cgroup2 none $cgroup_path
+@@ -33,7 +33,7 @@ if [[ $cgroup2 ]]; then
+   fi
+   echo "+hugetlb" >$cgroup_path/cgroup.subtree_control
+ else
+-  cgroup_path=$(mount -t cgroup | grep ",hugetlb" | awk -e '{print $3}')
++  cgroup_path=$(mount -t cgroup | grep ",hugetlb" | awk '{print $3}')
+   if [[ -z "$cgroup_path" ]]; then
+     cgroup_path=/dev/cgroup/memory
+     mount -t cgroup memory,hugetlb $cgroup_path
+diff --git a/tools/testing/selftests/vm/hugetlb_reparenting_test.sh b/tools/testing/selftests/vm/hugetlb_reparenting_test.sh
+index bf2d2a684edfd..14d26075c8635 100644
+--- a/tools/testing/selftests/vm/hugetlb_reparenting_test.sh
++++ b/tools/testing/selftests/vm/hugetlb_reparenting_test.sh
+@@ -20,7 +20,7 @@ fi
  
- 	/* Check that new_ifindex isn't used yet. */
- 	err = -EBUSY;
---- a/net/core/dev.h
-+++ b/net/core/dev.h
-@@ -61,6 +61,9 @@ struct netdev_name_node {
- int netdev_get_name(struct net *net, char *name, int ifindex);
- int dev_change_name(struct net_device *dev, const char *newname);
  
-+#define netdev_for_each_altname(dev, namenode)				\
-+	list_for_each_entry((namenode), &(dev)->name_node->list, list)
-+
- int netdev_name_node_alt_create(struct net_device *dev, const char *name);
- int netdev_name_node_alt_destroy(struct net_device *dev, const char *name);
- 
+ if [[ $cgroup2 ]]; then
+-  CGROUP_ROOT=$(mount -t cgroup2 | head -1 | awk -e '{print $3}')
++  CGROUP_ROOT=$(mount -t cgroup2 | head -1 | awk '{print $3}')
+   if [[ -z "$CGROUP_ROOT" ]]; then
+     CGROUP_ROOT=/dev/cgroup/memory
+     mount -t cgroup2 none $CGROUP_ROOT
+@@ -28,7 +28,7 @@ if [[ $cgroup2 ]]; then
+   fi
+   echo "+hugetlb +memory" >$CGROUP_ROOT/cgroup.subtree_control
+ else
+-  CGROUP_ROOT=$(mount -t cgroup | grep ",hugetlb" | awk -e '{print $3}')
++  CGROUP_ROOT=$(mount -t cgroup | grep ",hugetlb" | awk '{print $3}')
+   if [[ -z "$CGROUP_ROOT" ]]; then
+     CGROUP_ROOT=/dev/cgroup/memory
+     mount -t cgroup memory,hugetlb $CGROUP_ROOT
+-- 
+2.40.1
+
 
 
