@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012131429B
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E536814A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgGnYeO2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7006CC433C7;
-	Mon, 23 Oct 2023 11:01:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLAuRgOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63181C433C8;
+	Mon, 23 Oct 2023 11:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058904;
-	bh=d7kCKKsg4iMhqOvBj2b/CQ6ok4UKC6PbXGRSwXJpbW4=;
+	s=korg; t=1698058907;
+	bh=x8WPdiSkM1BxZMQ4/c0ALudjSkYAojW/1Hi3I6bO63E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgGnYeO2HTOy8mDKX8XoYfVZuVaRIy/nKWkSSi9G47F1dxpDIPsDEIdldyep5Tz2O
-	 b3OZIkum9OLuHyoyjTtqWbvr2VbGYu2N/i57yMgnStwyfYB54kcySMsOhgow1o+0aN
-	 vDFtSHciF5hpsV5MzPiMgYHhCpf/a8g0jVIhbVmA=
+	b=jLAuRgOfBabbZKgP6jvb4yAdr6W38k0Aqfs33EyBBhnndnrP3ef47lgJ1WcqVNYfZ
+	 Hr+TGIu1zfJ4iwH/DH5D6CRgSS69uG3vuO2DAxW5iSXxoGcP1dhUrmiPcYC4LWjBVe
+	 MmJpgTuXo6JTXu/XSDkpS6iFPkTwKIiBKZ+mSkwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 4.14 66/66] Bluetooth: hci_event: Fix using memcmp when comparing keys
-Date: Mon, 23 Oct 2023 12:56:56 +0200
-Message-ID: <20231023104813.281406942@linuxfoundation.org>
+	Wen Gong <quic_wgong@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 52/66] wifi: mac80211: allow transmitting EAPOL frames with tainted key
+Date: Mon, 23 Oct 2023 12:56:42 +0200
+Message-ID: <20231023104812.779991116@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -40,69 +42,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Wen Gong <quic_wgong@quicinc.com>
 
-commit b541260615f601ae1b5d6d0cc54e790de706303b upstream.
+[ Upstream commit 61304336c67358d49a989e5e0060d8c99bad6ca8 ]
 
-memcmp is not consider safe to use with cryptographic secrets:
+Lower layer device driver stop/wake TX by calling ieee80211_stop_queue()/
+ieee80211_wake_queue() while hw scan. Sometimes hw scan and PTK rekey are
+running in parallel, when M4 sent from wpa_supplicant arrive while the TX
+queue is stopped, then the M4 will pending send, and then new key install
+from wpa_supplicant. After TX queue wake up by lower layer device driver,
+the M4 will be dropped by below call stack.
 
- 'Do  not  use memcmp() to compare security critical data, such as
- cryptographic secrets, because the required CPU time depends on the
- number of equal bytes.'
+When key install started, the current key flag is set KEY_FLAG_TAINTED in
+ieee80211_pairwise_rekey(), and then mac80211 wait key install complete by
+lower layer device driver. Meanwhile ieee80211_tx_h_select_key() will return
+TX_DROP for the M4 in step 12 below, and then ieee80211_free_txskb() called
+by ieee80211_tx_dequeue(), so the M4 will not send and free, then the rekey
+process failed becaue AP not receive M4. Please see details in steps below.
 
-While usage of memcmp for ZERO_KEY may not be considered a security
-critical data, it can lead to more usage of memcmp with pairing keys
-which could introduce more security problems.
+There are a interval between KEY_FLAG_TAINTED set for current key flag and
+install key complete by lower layer device driver, the KEY_FLAG_TAINTED is
+set in this interval, all packet including M4 will be dropped in this
+interval, the interval is step 8~13 as below.
 
-Fixes: 455c2ff0a558 ("Bluetooth: Fix BR/EDR out-of-band pairing with only initiator data")
-Fixes: 33155c4aae52 ("Bluetooth: hci_event: Ignore NULL link key")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+issue steps:
+      TX thread                 install key thread
+1.   stop_queue                      -idle-
+2.   sending M4                      -idle-
+3.   M4 pending                      -idle-
+4.     -idle-                  starting install key from wpa_supplicant
+5.     -idle-                  =>ieee80211_key_replace()
+6.     -idle-                  =>ieee80211_pairwise_rekey() and set
+                                 currently key->flags |= KEY_FLAG_TAINTED
+7.     -idle-                  =>ieee80211_key_enable_hw_accel()
+8.     -idle-                  =>drv_set_key() and waiting key install
+                                 complete from lower layer device driver
+9.   wake_queue                     -waiting state-
+10.  re-sending M4                  -waiting state-
+11.  =>ieee80211_tx_h_select_key()  -waiting state-
+12.  drop M4 by KEY_FLAG_TAINTED    -waiting state-
+13.    -idle-                   install key complete with success/fail
+                                  success: clear flag KEY_FLAG_TAINTED
+                                  fail: start disconnect
+
+Hence add check in step 11 above to allow the EAPOL send out in the
+interval. If lower layer device driver use the old key/cipher to encrypt
+the M4, then AP received/decrypt M4 correctly, after M4 send out, lower
+layer device driver install the new key/cipher to hardware and return
+success.
+
+If lower layer device driver use new key/cipher to send the M4, then AP
+will/should drop the M4, then it is same result with this issue, AP will/
+should kick out station as well as this issue.
+
+issue log:
+kworker/u16:4-5238  [000]  6456.108926: stop_queue:           phy1 queue:0, reason:0
+wpa_supplicant-961  [003]  6456.119737: rdev_tx_control_port: wiphy_name=phy1 name=wlan0 ifindex=6 dest=ARRAY[9e, 05, 31, 20, 9b, d0] proto=36488 unencrypted=0
+wpa_supplicant-961  [003]  6456.119839: rdev_return_int_cookie: phy1, returned 0, cookie: 504
+wpa_supplicant-961  [003]  6456.120287: rdev_add_key:         phy1, netdev:wlan0(6), key_index: 0, mode: 0, pairwise: true, mac addr: 9e:05:31:20:9b:d0
+wpa_supplicant-961  [003]  6456.120453: drv_set_key:          phy1 vif:wlan0(2) sta:9e:05:31:20:9b:d0 cipher:0xfac04, flags=0x9, keyidx=0, hw_key_idx=0
+kworker/u16:9-3829  [001]  6456.168240: wake_queue:           phy1 queue:0, reason:0
+kworker/u16:9-3829  [001]  6456.168255: drv_wake_tx_queue:    phy1 vif:wlan0(2) sta:9e:05:31:20:9b:d0 ac:0 tid:7
+kworker/u16:9-3829  [001]  6456.168305: cfg80211_control_port_tx_status: wdev(1), cookie: 504, ack: false
+wpa_supplicant-961  [003]  6459.167982: drv_return_int:       phy1 - -110
+
+issue call stack:
+nl80211_frame_tx_status+0x230/0x340 [cfg80211]
+cfg80211_control_port_tx_status+0x1c/0x28 [cfg80211]
+ieee80211_report_used_skb+0x374/0x3e8 [mac80211]
+ieee80211_free_txskb+0x24/0x40 [mac80211]
+ieee80211_tx_dequeue+0x644/0x954 [mac80211]
+ath10k_mac_tx_push_txq+0xac/0x238 [ath10k_core]
+ath10k_mac_op_wake_tx_queue+0xac/0xe0 [ath10k_core]
+drv_wake_tx_queue+0x80/0x168 [mac80211]
+__ieee80211_wake_txqs+0xe8/0x1c8 [mac80211]
+_ieee80211_wake_txqs+0xb4/0x120 [mac80211]
+ieee80211_wake_txqs+0x48/0x80 [mac80211]
+tasklet_action_common+0xa8/0x254
+tasklet_action+0x2c/0x38
+__do_softirq+0xdc/0x384
+
+Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
+Link: https://lore.kernel.org/r/20230801064751.25803-1-quic_wgong@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/mac80211/tx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -25,6 +25,8 @@
- /* Bluetooth HCI event handling. */
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 7e62a55a03de1..3914214dee05a 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -650,7 +650,8 @@ ieee80211_tx_h_select_key(struct ieee80211_tx_data *tx)
+ 		}
  
- #include <asm/unaligned.h>
-+#include <linux/crypto.h>
-+#include <crypto/algapi.h>
+ 		if (unlikely(tx->key && tx->key->flags & KEY_FLAG_TAINTED &&
+-			     !ieee80211_is_deauth(hdr->frame_control)))
++			     !ieee80211_is_deauth(hdr->frame_control)) &&
++			     tx->skb->protocol != tx->sdata->control_port_protocol)
+ 			return TX_DROP;
  
- #include <net/bluetooth/bluetooth.h>
- #include <net/bluetooth/hci_core.h>
-@@ -3505,7 +3507,7 @@ static void hci_link_key_notify_evt(stru
- 		goto unlock;
- 
- 	/* Ignore NULL link key against CVE-2020-26555 */
--	if (!memcmp(ev->link_key, ZERO_KEY, HCI_LINK_KEY_SIZE)) {
-+	if (!crypto_memneq(ev->link_key, ZERO_KEY, HCI_LINK_KEY_SIZE)) {
- 		bt_dev_dbg(hdev, "Ignore NULL link key (ZERO KEY) for %pMR",
- 			   &ev->bdaddr);
- 		hci_disconnect(conn, HCI_ERROR_AUTH_FAILURE);
-@@ -3991,8 +3993,8 @@ static u8 bredr_oob_data_present(struct
- 		 * available, then do not declare that OOB data is
- 		 * present.
- 		 */
--		if (!memcmp(data->rand256, ZERO_KEY, 16) ||
--		    !memcmp(data->hash256, ZERO_KEY, 16))
-+		if (!crypto_memneq(data->rand256, ZERO_KEY, 16) ||
-+		    !crypto_memneq(data->hash256, ZERO_KEY, 16))
- 			return 0x00;
- 
- 		return 0x02;
-@@ -4002,8 +4004,8 @@ static u8 bredr_oob_data_present(struct
- 	 * not supported by the hardware, then check that if
- 	 * P-192 data values are present.
- 	 */
--	if (!memcmp(data->rand192, ZERO_KEY, 16) ||
--	    !memcmp(data->hash192, ZERO_KEY, 16))
-+	if (!crypto_memneq(data->rand192, ZERO_KEY, 16) ||
-+	    !crypto_memneq(data->hash192, ZERO_KEY, 16))
- 		return 0x00;
- 
- 	return 0x01;
+ 		if (!skip_hw && tx->key &&
+-- 
+2.40.1
+
 
 
