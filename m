@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4954614012
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FECF1116
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6iR5EG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7ABC433C9;
-	Mon, 23 Oct 2023 11:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EK816pSa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F29C433CC;
+	Mon, 23 Oct 2023 11:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059233;
-	bh=rM5dkQUcTRJJ53MK30kfZnZMKcFFYVtNyoNjeRz3a7I=;
+	s=korg; t=1698059236;
+	bh=UZBOZLKAQjj0k3OfLm1BeaQeVHDuV+riPz4dKSCrBo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6iR5EG3ADwkUvqaUpDFcFNNcU2wdsIUZPQr3cyj7iWLifHc3/ewbqwtYY0oJpXNc
-	 ttN3Md1/xZzR5adeUW3HcBSeGWK6EehhRhknQLXENJBr6k9eYCIwAQ38c8/8/Juwzu
-	 oISZpnYRlL32bui32+JCI6k91nX9YxX5WRsB4KTU=
+	b=EK816pSahhPlg8DWpOA5GX1zNlrYGnLLbV6wNbvOIL/I9SdMfl+up5kLwt0OxbBGC
+	 ZtxspVpCl2vXKsMsAede1RdgOOwSGSFtrvm5VFdm18gPDzESgCZGQZMaDA4PAon9+u
+	 aNJIgo1IUl1QazDxIieyKHatCG1wyRjvpYmh8ggo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 108/241] gpio: timberdale: Fix potential deadlock on &tgpio->lock
-Date: Mon, 23 Oct 2023 12:54:54 +0200
-Message-ID: <20231023104836.529464876@linuxfoundation.org>
+Subject: [PATCH 6.5 109/241] ata: libata-core: Fix compilation warning in ata_dev_config_ncq()
+Date: Mon, 23 Oct 2023 12:54:55 +0200
+Message-ID: <20231023104836.552174495@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -37,68 +38,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 9e8bc2dda5a7a8e2babc9975f4b11c9a6196e490 ]
+[ Upstream commit ed518d9ba980dc0d27c7d1dea1e627ba001d1977 ]
 
-As timbgpio_irq_enable()/timbgpio_irq_disable() callback could be
-executed under irq context, it could introduce double locks on
-&tgpio->lock if it preempts other execution units requiring
-the same locks.
+The 24 bytes length allocated to the ncq_desc string in
+ata_dev_config_lba() for ata_dev_config_ncq() to use is too short,
+causing the following gcc compilation warnings when compiling with W=1:
 
-timbgpio_gpio_set()
---> timbgpio_update_bit()
---> spin_lock(&tgpio->lock)
-<interrupt>
-   --> timbgpio_irq_disable()
-   --> spin_lock_irqsave(&tgpio->lock)
+drivers/ata/libata-core.c: In function ‘ata_dev_configure’:
+drivers/ata/libata-core.c:2378:56: warning: ‘%d’ directive output may be truncated writing between 1 and 2 bytes into a region of size between 1 and 11 [-Wformat-truncation=]
+ 2378 |                 snprintf(desc, desc_sz, "NCQ (depth %d/%d)%s", hdepth,
+      |                                                        ^~
+In function ‘ata_dev_config_ncq’,
+    inlined from ‘ata_dev_config_lba’ at drivers/ata/libata-core.c:2649:8,
+    inlined from ‘ata_dev_configure’ at drivers/ata/libata-core.c:2952:9:
+drivers/ata/libata-core.c:2378:41: note: directive argument in the range [1, 32]
+ 2378 |                 snprintf(desc, desc_sz, "NCQ (depth %d/%d)%s", hdepth,
+      |                                         ^~~~~~~~~~~~~~~~~~~~~
+drivers/ata/libata-core.c:2378:17: note: ‘snprintf’ output between 16 and 31 bytes into a destination of size 24
+ 2378 |                 snprintf(desc, desc_sz, "NCQ (depth %d/%d)%s", hdepth,
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 2379 |                         ddepth, aa_desc);
+      |                         ~~~~~~~~~~~~~~~~
 
-This flaw was found by an experimental static analysis tool I am
-developing for irq-related deadlock.
+Avoid these warnings and the potential truncation by changing the size
+of the ncq_desc string to 32 characters.
 
-To prevent the potential deadlock, the patch uses spin_lock_irqsave()
-on &tgpio->lock inside timbgpio_gpio_set() to prevent the possible
-deadlock scenario.
-
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-timberdale.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/ata/libata-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-timberdale.c b/drivers/gpio/gpio-timberdale.c
-index de14949a3fe5a..92c1f2baa4bff 100644
---- a/drivers/gpio/gpio-timberdale.c
-+++ b/drivers/gpio/gpio-timberdale.c
-@@ -43,9 +43,10 @@ static int timbgpio_update_bit(struct gpio_chip *gpio, unsigned index,
- 	unsigned offset, bool enabled)
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index 2a21f4d9500db..97a842b57a751 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -2624,7 +2624,7 @@ static int ata_dev_config_lba(struct ata_device *dev)
  {
- 	struct timbgpio *tgpio = gpiochip_get_data(gpio);
-+	unsigned long flags;
- 	u32 reg;
+ 	const u16 *id = dev->id;
+ 	const char *lba_desc;
+-	char ncq_desc[24];
++	char ncq_desc[32];
+ 	int ret;
  
--	spin_lock(&tgpio->lock);
-+	spin_lock_irqsave(&tgpio->lock, flags);
- 	reg = ioread32(tgpio->membase + offset);
- 
- 	if (enabled)
-@@ -54,7 +55,7 @@ static int timbgpio_update_bit(struct gpio_chip *gpio, unsigned index,
- 		reg &= ~(1 << index);
- 
- 	iowrite32(reg, tgpio->membase + offset);
--	spin_unlock(&tgpio->lock);
-+	spin_unlock_irqrestore(&tgpio->lock, flags);
- 
- 	return 0;
- }
+ 	dev->flags |= ATA_DFLAG_LBA;
 -- 
 2.40.1
 
