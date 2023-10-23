@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB7C14A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75F914A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPOC+3Fv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E7BC433C9;
-	Mon, 23 Oct 2023 11:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THclJSAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27765C433C7;
+	Mon, 23 Oct 2023 11:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058928;
-	bh=cIzGsWAaNl/uobJxDNYqktuHZJsP/CMJKiENaEeFvfE=;
+	s=korg; t=1698058931;
+	bh=f2j2H9hDEiw2o+0gy1vAKKV7Ecr/6Ps9hjmVnvoZhpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPOC+3FvOm6eAjHpHb63XViMFQOE4guqBaOLMpLMh3jHQAY3XUvYJ3fgU4HSl2XRh
-	 IUjOgs93uvIwlzbVckri8Qit2PW32uxCSoOxaOjMCnxox04UYgEMFkM5T1KK37uKPx
-	 UmpMZ62gXMF6ZE+TdUMjHWO9vjD17u4Xwjz/vqGk=
+	b=THclJSAytm6AncBksNYFVptfJghwF5w0cmgSE+tloK/A1sDGsCLmxjgBV0feJ4BMY
+	 bDQ0MLvmq/nsAsbpWj+cQPt94GBW7iIsrgGvaGh9lCuNY/tA4YTOkl6zEThO0Yw6WO
+	 YEia71jJxc+xQx2bJwBraPQEQBMf9QhVKmH9aw9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.14 59/66] USB: serial: option: add entry for Sierra EM9191 with new firmware
-Date: Mon, 23 Oct 2023 12:56:49 +0200
-Message-ID: <20231023104813.012790184@linuxfoundation.org>
+	Ying Hsu <yinghsu@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 50/66] Bluetooth: Avoid redundant authentication
+Date: Mon, 23 Oct 2023 12:56:40 +0200
+Message-ID: <20231023104812.705002053@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -35,49 +36,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Monin <benoit.monin@gmx.fr>
+From: Ying Hsu <yinghsu@chromium.org>
 
-commit 064f6e2ba9eb59b2c87b866e1e968e79ccedf9dd upstream.
+[ Upstream commit 1d8e801422d66e4b8c7b187c52196bef94eed887 ]
 
-Following a firmware update of the modem, the interface for the AT
-command port changed, so add it back.
+While executing the Android 13 CTS Verifier Secure Server test on a
+ChromeOS device, it was observed that the Bluetooth host initiates
+authentication for an RFCOMM connection after SSP completes.
+When this happens, some Intel Bluetooth controllers, like AC9560, would
+disconnect with "Connection Rejected due to Security Reasons (0x0e)".
 
-T:  Bus=08 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=1199 ProdID=90d3 Rev=00.06
-S:  Manufacturer=Sierra Wireless, Incorporated
-S:  Product=Sierra Wireless EM9191
-S:  SerialNumber=xxxxxxxxxxxxxxxx
-C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=(none)
-I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+Historically, BlueZ did not mandate this authentication while an
+authenticated combination key was already in use for the connection.
+This behavior was changed since commit 7b5a9241b780
+("Bluetooth: Introduce requirements for security level 4").
+So, this patch addresses the aforementioned disconnection issue by
+restoring the previous behavior.
 
-Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/hci_conn.c | 63 ++++++++++++++++++++++------------------
+ 1 file changed, 35 insertions(+), 28 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2265,6 +2265,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1406, 0xff) },			/* GosunCn GM500 ECM/NCM */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
- 	{ } /* Terminating entry */
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index ffa2f4ad46328..ce4bbc426946f 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1269,34 +1269,41 @@ int hci_conn_security(struct hci_conn *conn, __u8 sec_level, __u8 auth_type,
+ 	if (!test_bit(HCI_CONN_AUTH, &conn->flags))
+ 		goto auth;
+ 
+-	/* An authenticated FIPS approved combination key has sufficient
+-	 * security for security level 4. */
+-	if (conn->key_type == HCI_LK_AUTH_COMBINATION_P256 &&
+-	    sec_level == BT_SECURITY_FIPS)
+-		goto encrypt;
+-
+-	/* An authenticated combination key has sufficient security for
+-	   security level 3. */
+-	if ((conn->key_type == HCI_LK_AUTH_COMBINATION_P192 ||
+-	     conn->key_type == HCI_LK_AUTH_COMBINATION_P256) &&
+-	    sec_level == BT_SECURITY_HIGH)
+-		goto encrypt;
+-
+-	/* An unauthenticated combination key has sufficient security for
+-	   security level 1 and 2. */
+-	if ((conn->key_type == HCI_LK_UNAUTH_COMBINATION_P192 ||
+-	     conn->key_type == HCI_LK_UNAUTH_COMBINATION_P256) &&
+-	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW))
+-		goto encrypt;
+-
+-	/* A combination key has always sufficient security for the security
+-	   levels 1 or 2. High security level requires the combination key
+-	   is generated using maximum PIN code length (16).
+-	   For pre 2.1 units. */
+-	if (conn->key_type == HCI_LK_COMBINATION &&
+-	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW ||
+-	     conn->pin_length == 16))
+-		goto encrypt;
++	switch (conn->key_type) {
++	case HCI_LK_AUTH_COMBINATION_P256:
++		/* An authenticated FIPS approved combination key has
++		 * sufficient security for security level 4 or lower.
++		 */
++		if (sec_level <= BT_SECURITY_FIPS)
++			goto encrypt;
++		break;
++	case HCI_LK_AUTH_COMBINATION_P192:
++		/* An authenticated combination key has sufficient security for
++		 * security level 3 or lower.
++		 */
++		if (sec_level <= BT_SECURITY_HIGH)
++			goto encrypt;
++		break;
++	case HCI_LK_UNAUTH_COMBINATION_P192:
++	case HCI_LK_UNAUTH_COMBINATION_P256:
++		/* An unauthenticated combination key has sufficient security
++		 * for security level 2 or lower.
++		 */
++		if (sec_level <= BT_SECURITY_MEDIUM)
++			goto encrypt;
++		break;
++	case HCI_LK_COMBINATION:
++		/* A combination key has always sufficient security for the
++		 * security levels 2 or lower. High security level requires the
++		 * combination key is generated using maximum PIN code length
++		 * (16). For pre 2.1 units.
++		 */
++		if (sec_level <= BT_SECURITY_MEDIUM || conn->pin_length == 16)
++			goto encrypt;
++		break;
++	default:
++		break;
++	}
+ 
+ auth:
+ 	if (test_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags))
+-- 
+2.40.1
+
 
 
