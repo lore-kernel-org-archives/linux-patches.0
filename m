@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FECF1116
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273AF1116
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EK816pSa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F29C433CC;
-	Mon, 23 Oct 2023 11:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjcsfJxP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95290C433C7;
+	Mon, 23 Oct 2023 11:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059236;
-	bh=UZBOZLKAQjj0k3OfLm1BeaQeVHDuV+riPz4dKSCrBo0=;
+	s=korg; t=1698059239;
+	bh=om8IqGEF+0CnBECsQjWILHqXydGv1s4Cq75gI8ne+bA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EK816pSahhPlg8DWpOA5GX1zNlrYGnLLbV6wNbvOIL/I9SdMfl+up5kLwt0OxbBGC
-	 ZtxspVpCl2vXKsMsAede1RdgOOwSGSFtrvm5VFdm18gPDzESgCZGQZMaDA4PAon9+u
-	 aNJIgo1IUl1QazDxIieyKHatCG1wyRjvpYmh8ggo=
+	b=zjcsfJxPAuHKnEQtl8nApJ9awQsh2i+6eLhxScj/JUDv0MWFbFS5wVvP8fXkI/czE
+	 i43yyuHc6tuJ8OYSv+mSd2bvLjvyKJB09neAnkOFojts2TS/MqVs7r9nOejaaSy5qP
+	 SACpSYNKwXWEP8VUnsF31uyrEW7wmd48RlMV4bZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 109/241] ata: libata-core: Fix compilation warning in ata_dev_config_ncq()
-Date: Mon, 23 Oct 2023 12:54:55 +0200
-Message-ID: <20231023104836.552174495@linuxfoundation.org>
+Subject: [PATCH 6.5 110/241] ata: libata-eh: Fix compilation warning in ata_eh_link_report()
+Date: Mon, 23 Oct 2023 12:54:56 +0200
+Message-ID: <20231023104836.574785318@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -47,30 +47,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit ed518d9ba980dc0d27c7d1dea1e627ba001d1977 ]
+[ Upstream commit 49728bdc702391902a473b9393f1620eea32acb0 ]
 
-The 24 bytes length allocated to the ncq_desc string in
-ata_dev_config_lba() for ata_dev_config_ncq() to use is too short,
-causing the following gcc compilation warnings when compiling with W=1:
+The 6 bytes length of the tries_buf string in ata_eh_link_report() is
+too short and results in a gcc compilation warning with W-!:
 
-drivers/ata/libata-core.c: In function ‘ata_dev_configure’:
-drivers/ata/libata-core.c:2378:56: warning: ‘%d’ directive output may be truncated writing between 1 and 2 bytes into a region of size between 1 and 11 [-Wformat-truncation=]
- 2378 |                 snprintf(desc, desc_sz, "NCQ (depth %d/%d)%s", hdepth,
-      |                                                        ^~
-In function ‘ata_dev_config_ncq’,
-    inlined from ‘ata_dev_config_lba’ at drivers/ata/libata-core.c:2649:8,
-    inlined from ‘ata_dev_configure’ at drivers/ata/libata-core.c:2952:9:
-drivers/ata/libata-core.c:2378:41: note: directive argument in the range [1, 32]
- 2378 |                 snprintf(desc, desc_sz, "NCQ (depth %d/%d)%s", hdepth,
-      |                                         ^~~~~~~~~~~~~~~~~~~~~
-drivers/ata/libata-core.c:2378:17: note: ‘snprintf’ output between 16 and 31 bytes into a destination of size 24
- 2378 |                 snprintf(desc, desc_sz, "NCQ (depth %d/%d)%s", hdepth,
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 2379 |                         ddepth, aa_desc);
-      |                         ~~~~~~~~~~~~~~~~
+drivers/ata/libata-eh.c: In function ‘ata_eh_link_report’:
+drivers/ata/libata-eh.c:2371:59: warning: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 4 [-Wformat-truncation=]
+ 2371 |                 snprintf(tries_buf, sizeof(tries_buf), " t%d",
+      |                                                           ^~
+drivers/ata/libata-eh.c:2371:56: note: directive argument in the range [-2147483648, 4]
+ 2371 |                 snprintf(tries_buf, sizeof(tries_buf), " t%d",
+      |                                                        ^~~~~~
+drivers/ata/libata-eh.c:2371:17: note: ‘snprintf’ output between 4 and 14 bytes into a destination of size 6
+ 2371 |                 snprintf(tries_buf, sizeof(tries_buf), " t%d",
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 2372 |                          ap->eh_tries);
+      |                          ~~~~~~~~~~~~~
 
-Avoid these warnings and the potential truncation by changing the size
-of the ncq_desc string to 32 characters.
+Avoid this warning by increasing the string size to 16B.
 
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
@@ -78,22 +73,22 @@ Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 2 +-
+ drivers/ata/libata-eh.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index 2a21f4d9500db..97a842b57a751 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -2624,7 +2624,7 @@ static int ata_dev_config_lba(struct ata_device *dev)
- {
- 	const u16 *id = dev->id;
- 	const char *lba_desc;
--	char ncq_desc[24];
-+	char ncq_desc[32];
- 	int ret;
+diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
+index 150e7ab62d1ae..e7c4edb04f8ed 100644
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -2366,7 +2366,7 @@ static void ata_eh_link_report(struct ata_link *link)
+ 	struct ata_eh_context *ehc = &link->eh_context;
+ 	struct ata_queued_cmd *qc;
+ 	const char *frozen, *desc;
+-	char tries_buf[6] = "";
++	char tries_buf[16] = "";
+ 	int tag, nr_failed = 0;
  
- 	dev->flags |= ATA_DFLAG_LBA;
+ 	if (ehc->i.flags & ATA_EHI_QUIET)
 -- 
 2.40.1
 
