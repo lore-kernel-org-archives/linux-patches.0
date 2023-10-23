@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6625915EB8
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E1815EB8
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j12MwN/4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57EAC433C9;
-	Mon, 23 Oct 2023 11:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SuYfmXuq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C362AC433C8;
+	Mon, 23 Oct 2023 11:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061808;
-	bh=MGCbT8p7rdQFxEWmWDonXpf2hcA/gPamjWGqvu7ZpUg=;
+	s=korg; t=1698061811;
+	bh=Ue5eVI9v8sCxIKOpQOO9mAJWMQDtE4gJ9M5pFskxQwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j12MwN/4R9njoDK4tQUbMabblR+gB49M4TUurTekum9VhVF9znbKV9r0OikWcJ3eF
-	 ceZd+DUcxZ27wXtz+lg1krAIRVWVmGkAYF+glZvi5fqMw0joOoYzENHw2G+ANqeItK
-	 HwAi8Yi9HV8ve92w60zw3pKMK+ANHZeqp/lJoQxo=
+	b=SuYfmXuqetqGXQUc39A+BGXgMqDQ9xzjBLGdB/Ig74sHTVT+e5wGKqfpy7AUKe1jX
+	 2o1RULykcrwooZPzI4U+xtvDCVL0SU0Mr81llts8bgjvNQHIhvAeWOt51Wr4mX0tK+
+	 DiYnI9eKp0VZz2Edp7nfE0MBbSmQYvP4kwzqY4wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Renan Guilherme Lebre Ramos <japareaggae@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 171/202] platform/x86: touchscreen_dmi: Add info for the Positivo C4128B
-Date: Mon, 23 Oct 2023 12:57:58 +0200
-Message-ID: <20231023104831.480387993@linuxfoundation.org>
+Subject: [PATCH 5.10 172/202] net/mlx5: Handle fw tracer change ownership event based on MTRC
+Date: Mon, 23 Oct 2023 12:57:59 +0200
+Message-ID: <20231023104831.509887930@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -42,63 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Renan Guilherme Lebre Ramos <japareaggae@gmail.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit aa7dcba3bae6869122828b144a3cfd231718089d ]
+[ Upstream commit 92fd39634541eb0a11bf1bafbc8ba92d6ddb8dba ]
 
-Add information for the Positivo C4128B, a notebook/tablet convertible.
+Currently, whenever fw issues a change ownership event, the PF that owns
+the fw tracer drops its ownership directly and the other PFs try to pick
+up the ownership via what MTRC register suggests.
 
-Link: https://github.com/onitake/gsl-firmware/pull/217
-Signed-off-by: Renan Guilherme Lebre Ramos <japareaggae@gmail.com>
-Link: https://lore.kernel.org/r/20231004235900.426240-1-japareaggae@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+In some cases, driver releases the ownership of the tracer and reacquires
+it later on. Whenever the driver releases ownership of the tracer, fw
+issues a change ownership event. This event can be delayed and come after
+driver has reacquired ownership of the tracer. Thus the late event will
+trigger the tracer owner PF to release the ownership again and lead to a
+scenario where no PF is owning the tracer.
+
+To prevent the scenario described above, when handling a change
+ownership event, do not drop ownership of the tracer directly, instead
+read the fw MTRC register to retrieve the up-to-date owner of the tracer
+and set it accordingly in driver level.
+
+Fixes: f53aaa31cce7 ("net/mlx5: FW tracer, implement tracer logic")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Shay Drory <shayd@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index 55a18cd0c298f..eedff2ae28511 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -726,6 +726,21 @@ static const struct ts_dmi_data pipo_w11_data = {
- 	.properties	= pipo_w11_props,
- };
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+index 5273644fb2bf9..86088ccab23aa 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+@@ -821,7 +821,7 @@ static void mlx5_fw_tracer_ownership_change(struct work_struct *work)
  
-+static const struct property_entry positivo_c4128b_props[] = {
-+	PROPERTY_ENTRY_U32("touchscreen-min-x", 4),
-+	PROPERTY_ENTRY_U32("touchscreen-min-y", 13),
-+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1915),
-+	PROPERTY_ENTRY_U32("touchscreen-size-y", 1269),
-+	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-positivo-c4128b.fw"),
-+	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
-+	{ }
-+};
-+
-+static const struct ts_dmi_data positivo_c4128b_data = {
-+	.acpi_name	= "MSSL1680:00",
-+	.properties	= positivo_c4128b_props,
-+};
-+
- static const struct property_entry pov_mobii_wintab_p800w_v20_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-min-x", 32),
- 	PROPERTY_ENTRY_U32("touchscreen-min-y", 16),
-@@ -1389,6 +1404,14 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_BIOS_VERSION, "MOMO.G.WI71C.MABMRBA02"),
- 		},
- 	},
-+	{
-+		/* Positivo C4128B */
-+		.driver_data = (void *)&positivo_c4128b_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "C4128B-1"),
-+		},
-+	},
- 	{
- 		/* Point of View mobii wintab p800w (v2.0) */
- 		.driver_data = (void *)&pov_mobii_wintab_p800w_v20_data,
+ 	mlx5_core_dbg(tracer->dev, "FWTracer: ownership changed, current=(%d)\n", tracer->owner);
+ 	if (tracer->owner) {
+-		tracer->owner = false;
++		mlx5_fw_tracer_ownership_acquire(tracer);
+ 		return;
+ 	}
+ 
 -- 
 2.40.1
 
