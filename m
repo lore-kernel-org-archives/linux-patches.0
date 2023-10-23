@@ -1,22 +1,22 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE6114F70;
-	Mon, 23 Oct 2023 16:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2168A14F70;
+	Mon, 23 Oct 2023 16:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uv8P4u2s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DA7C433C7;
-	Mon, 23 Oct 2023 16:24:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TElwggnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC54C433C8;
+	Mon, 23 Oct 2023 16:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698078296;
-	bh=QafwhIyKRywPgzKy2niqWZ7a6petGIcryfRlf2IB1GE=;
+	s=k20201202; t=1698078376;
+	bh=Pec3Hdd6h4GWenCSxBeHkXiGRLPSZPyKZ+4k2kijwsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uv8P4u2sNzRrofvbSUkXlHEHg1CkEkrW+GHfHKgKffBQ9qQwRmXq5HKaJalEmh9j0
-	 zDrxDYwbxL1nRSZQa8jnY0pgGaDcwTeyO6TcCGDifHN0M/qYsqMfgUqqwia2td2xXr
-	 WFchUyEswZzcxBpbCaJpmvvMTYw0OArQtzJSa9UyI5xBdixnX6miU+Nj0ofjasL17b
-	 NMS4gGWbEdMDD7uOi55PXK5G3Eg/bHIW+5cy4pE4WSVQb1EdDaoGhWj0vkSWuPq71C
-	 t3TJzBLcczrOSheZWWZpMu+61ji//cctcF8hvTTAqydcwFcN3XOmle7gTcoJyl1GHJ
-	 cXwlWTAwPI8EQ==
+	b=TElwggnrojo1hAzLiuWSNZU578wf6RjqwhvYuzUlfw2Ru36EzGmxVIabj3NuQrJ27
+	 piN32zOTx8KOE4BEC/Ie9LBxbQbNAo9vTYJXkgxol5bE5RxO3ASjusJAorXT7ZhhXX
+	 9zC8u995mNMjZR4ZKKTXjcpMk3JjfQC1bv3F/XLcWl/kDV4P3BOFJLDPKt46M2Wplk
+	 11lGgyBKftx6h0xWLuI2aKmyiW7232pGqbFFgvx7bxZ8l0DqlfYeLcWLMD8cWVJfbm
+	 exMT1AOhc4S/VGmJzIZF/ffnl0uIrsH1K9CuE1TXSyPyC9P4S9WtU4f9s2X860K/dJ
+	 OSNvqk3HfM17Q==
 From: SeongJae Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org,
@@ -37,11 +37,11 @@ Cc: stable@vger.kernel.org,
 	conor@kernel.org,
 	damon@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.1 000/196] 6.1.60-rc1 review
-Date: Mon, 23 Oct 2023 16:24:53 +0000
-Message-Id: <20231023162453.188072-1-sj@kernel.org>
+Subject: Re: [PATCH 6.5 000/241] 6.5.9-rc1 review
+Date: Mon, 23 Oct 2023 16:26:13 +0000
+Message-Id: <20231023162613.188096-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
+In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -53,10 +53,10 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Mon, 23 Oct 2023 12:54:25 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Mon, 23 Oct 2023 12:53:06 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 6.1.60 release.
-> There are 196 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.5.9 release.
+> There are 241 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -75,7 +75,7 @@ passes the kunit test with the fix.
 Tested-by: SeongJae Park <sj@kernel.org>
 
 [1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] fa9447b759f6 ("Linux 6.1.60-rc1")
+[2] b83aad774cc8 ("Linux 6.5.9-rc1")
 [3] https://github.com/awslabs/damon-tests/commit/6182d52940e83623376ceceb6c0b90e661abba3b
 
 Thanks,
@@ -91,7 +91,11 @@ ok 3 selftests: damon: debugfs_target_ids.sh
 ok 4 selftests: damon: debugfs_empty_targets.sh
 ok 5 selftests: damon: debugfs_huge_count_read_write.sh
 ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: sysfs.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
 ok 2 selftests: damon-tests: huge_count_read_write.sh
 ok 3 selftests: damon-tests: buffer_overflow.sh
 ok 4 selftests: damon-tests: rm_contexts.sh
@@ -105,6 +109,7 @@ ok 11 selftests: damon-tests: build_arm64.sh
 ok 12 selftests: damon-tests: build_i386_idle_flag.sh
 ok 13 selftests: damon-tests: build_i386_highpte.sh
 ok 14 selftests: damon-tests: build_nomemcg.sh
+ [33m
 not ok 1 selftests: damon-tests: kunit.sh # exit=1
 
  [91mFAIL [39m
