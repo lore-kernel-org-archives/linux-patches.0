@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D857914A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59E014A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSDus2aD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541BFC433C8;
-	Mon, 23 Oct 2023 11:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaHp70BR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF24C433C8;
+	Mon, 23 Oct 2023 11:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059082;
-	bh=EeqZBH3rjtD+n3stPzGBDxX/S9CX3KR4ZlbZ3VFvuM4=;
+	s=korg; t=1698059085;
+	bh=A9ENBREbf22c592yixCuzCdwmRf66Vs+ntCMfFNChEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZSDus2aDlXVmJFZy57wnBki1QUg9uC21P+rpOCyLz6tzkLnVWLLf6eMkCeJHPvQ+p
-	 jc7uk68M2ArMB9r9A228kORuec3z5Ielzbue6vHGoOXPK+9WU05I80K31tbujMc5fF
-	 UjfCC0HgD8aem+8UXjzsXMRUSaW5cPL+9tFU+dps=
+	b=AaHp70BRqk+7RO4oLXGr9npHhMpSsvzmkH3J04KgHRYhEvLmv1HjBFZJ22OkQVtjm
+	 TUCnUDpUvEB23YXtwxXG1m2FVEZxx86kFNLYXyYNxIJwJQVCzZ9vCwBHjZpU+0KheW
+	 ggmfOhsy7hlSXYr4gvRLtsu3HWHW1W3mF0rLorNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+53ce40c8c0322c06aea5@syzkaller.appspotmail.com,
-	Pavel Skripkin <paskripkin@gmail.com>,
+	syzbot+60cf892fc31d1f4358fc@syzkaller.appspotmail.com,
+	Ziqi Zhao <astrajoan@yahoo.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.5 030/241] fs/ntfs3: Fix OOB read in ntfs_init_from_boot
-Date: Mon, 23 Oct 2023 12:53:36 +0200
-Message-ID: <20231023104834.663926761@linuxfoundation.org>
+Subject: [PATCH 6.5 031/241] fs/ntfs3: Fix possible null-pointer dereference in hdr_find_e()
+Date: Mon, 23 Oct 2023 12:53:37 +0200
+Message-ID: <20231023104834.686945569@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,41 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Skripkin <paskripkin@gmail.com>
+From: Ziqi Zhao <astrajoan@yahoo.com>
 
-commit 34e6552a442f268eefd408e47f4f2d471aa64829 upstream.
+commit 1f9b94af923c88539426ed811ae7e9543834a5c5 upstream.
 
-Syzbot was able to create a device which has the last sector of size
-512.
+Upon investigation of the C reproducer provided by Syzbot, it seemed
+the reproducer was trying to mount a corrupted NTFS filesystem, then
+issue a rename syscall to some nodes in the filesystem. This can be
+shown by modifying the reproducer to only include the mount syscall,
+and investigating the filesystem by e.g. `ls` and `rm` commands. As a
+result, during the problematic call to `hdr_fine_e`, the `inode` being
+supplied did not go through `indx_init`, hence the `cmp` function
+pointer was never set.
 
-After failing to boot from initial sector, reading from boot info from
-offset 511 causes OOB read.
+The fix is simply to check whether `cmp` is not set, and return NULL
+if that's the case, in order to be consistent with other error
+scenarios of the `hdr_find_e` method. The rationale behind this patch
+is that:
 
-To prevent such reports add sanity check to validate if size of buffer_head
-if big enough to hold ntfs3 bootinfo
+- We should prevent crashing the kernel even if the mounted filesystem
+  is corrupted. Any syscalls made on the filesystem could return
+  invalid, but the kernel should be able to sustain these calls.
 
-Fixes: 6a4cd3ea7d77 ("fs/ntfs3: Alternative boot if primary boot is corrupted")
-Reported-by: syzbot+53ce40c8c0322c06aea5@syzkaller.appspotmail.com
-Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
+- Only very specific corruption would lead to this bug, so it would be
+  a pretty rare case in actual usage anyways. Therefore, introducing a
+  check to specifically protect against this bug seems appropriate.
+  Because of its rarity, an `unlikely` clause is used to wrap around
+  this nullity check.
+
+Reported-by: syzbot+60cf892fc31d1f4358fc@syzkaller.appspotmail.com
+Signed-off-by: Ziqi Zhao <astrajoan@yahoo.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/super.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ntfs3/index.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -855,6 +855,11 @@ static int ntfs_init_from_boot(struct su
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -729,6 +729,9 @@ static struct NTFS_DE *hdr_find_e(const
+ 	u32 total = le32_to_cpu(hdr->total);
+ 	u16 offs[128];
  
- check_boot:
- 	err = -EINVAL;
++	if (unlikely(!cmp))
++		return NULL;
 +
-+	/* Corrupted image; do not read OOB */
-+	if (bh->b_size - sizeof(*boot) < boot_off)
-+		goto out;
-+
- 	boot = (struct NTFS_BOOT *)Add2Ptr(bh->b_data, boot_off);
- 
- 	if (memcmp(boot->system_id, "NTFS    ", sizeof("NTFS    ") - 1)) {
+ fill_table:
+ 	if (end > total)
+ 		return NULL;
 
 
