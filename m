@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF5212B9E
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C091B14263
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iP9FBocY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAEE8C433C7;
-	Mon, 23 Oct 2023 11:09:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vzXeGRn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBDAC433CC;
+	Mon, 23 Oct 2023 11:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059360;
-	bh=M3BSKEX2ahY37YgAv5jpxmUxFbKCjaBzdER2EVBP9C8=;
+	s=korg; t=1698059363;
+	bh=l2Ke88IK5zoub5QncbR8AK8z5fy+V8/XiklX61Ix9AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iP9FBocYe9uj8y3M/U/Jck756i7As2DNjtdg1JR8skCJGx2USt1xYou6xcFQ1uOnw
-	 9MOebTbWIz0420FHptO6ANdhjgUc54niW8CzX87UCvIb05tMvJuUS+BvN05hHJkuGI
-	 9xRYD3hjpqjXSBHUU5rwX/VUsiLNaWP/9QXS+QHI=
+	b=1vzXeGRnw+7eNaVxFhvGE8lWeP55fO1W1a3GwmirERn1DDmnVBpNUMuGdUBV8P+3P
+	 2e1vF0Gv0Fs+9AksB07Dm4jv56sufVfOI4DvHeNkvY83MNXMYBKzsGoCNQOt45c90U
+	 RL4Jcvmy54LwZbFgICusTvdreQ8yPAusmhnbEdOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 115/241] rfkill: sync before userspace visibility/changes
-Date: Mon, 23 Oct 2023 12:55:01 +0200
-Message-ID: <20231023104836.689871403@linuxfoundation.org>
+Subject: [PATCH 6.5 145/241] Bluetooth: hci_sync: Introduce PTR_UINT/UINT_PTR macros
+Date: Mon, 23 Oct 2023 12:55:31 +0200
+Message-ID: <20231023104837.406502947@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,126 +41,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 2c3dfba4cf84ac4f306cc6653b37b6dd6859ae9d ]
+[ Upstream commit a1f6c3aef13c9e7f8d459bd464e9e34da1342c0c ]
 
-If userspace quickly opens /dev/rfkill after a new
-instance was created, it might see the old state of
-the instance from before the sync work runs and may
-even _change_ the state, only to have the sync work
-change it again.
+This introduces PTR_UINT/UINT_PTR macros and replace the use of
+PTR_ERR/ERR_PTR.
 
-Fix this by doing the sync inline where needed, not
-just for /dev/rfkill but also for sysfs.
-
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: acab8ff29a2a ("Bluetooth: ISO: Fix invalid context error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rfkill/core.c | 32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ include/net/bluetooth/hci_sync.h |  3 +++
+ net/bluetooth/hci_conn.c         | 19 ++++++++++---------
+ net/bluetooth/hci_sync.c         |  4 ++--
+ 3 files changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/net/rfkill/core.c b/net/rfkill/core.c
-index 01fca7a10b4bb..08630896b6c88 100644
---- a/net/rfkill/core.c
-+++ b/net/rfkill/core.c
-@@ -48,6 +48,7 @@ struct rfkill {
- 	bool			persistent;
- 	bool			polling_paused;
- 	bool			suspended;
-+	bool			need_sync;
+diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
+index b516a0f4a55b8..57eeb07aeb251 100644
+--- a/include/net/bluetooth/hci_sync.h
++++ b/include/net/bluetooth/hci_sync.h
+@@ -5,6 +5,9 @@
+  * Copyright (C) 2021 Intel Corporation
+  */
  
- 	const struct rfkill_ops	*ops;
- 	void			*data;
-@@ -368,6 +369,17 @@ static void rfkill_set_block(struct rfkill *rfkill, bool blocked)
- 		rfkill_event(rfkill);
++#define UINT_PTR(_handle)		((void *)((uintptr_t)_handle))
++#define PTR_UINT(_ptr)			((uintptr_t)((void *)_ptr))
++
+ typedef int (*hci_cmd_sync_work_func_t)(struct hci_dev *hdev, void *data);
+ typedef void (*hci_cmd_sync_work_destroy_t)(struct hci_dev *hdev, void *data,
+ 					    int err);
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 4e9654fe89c9e..6d6192f514d0f 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -874,7 +874,7 @@ static void bis_cleanup(struct hci_conn *conn)
+ 
+ static int remove_cig_sync(struct hci_dev *hdev, void *data)
+ {
+-	u8 handle = PTR_ERR(data);
++	u8 handle = PTR_UINT(data);
+ 
+ 	return hci_le_remove_cig_sync(hdev, handle);
+ }
+@@ -883,7 +883,8 @@ static int hci_le_remove_cig(struct hci_dev *hdev, u8 handle)
+ {
+ 	bt_dev_dbg(hdev, "handle 0x%2.2x", handle);
+ 
+-	return hci_cmd_sync_queue(hdev, remove_cig_sync, ERR_PTR(handle), NULL);
++	return hci_cmd_sync_queue(hdev, remove_cig_sync, UINT_PTR(handle),
++				  NULL);
  }
  
-+static void rfkill_sync(struct rfkill *rfkill)
-+{
-+	lockdep_assert_held(&rfkill_global_mutex);
-+
-+	if (!rfkill->need_sync)
-+		return;
-+
-+	rfkill_set_block(rfkill, rfkill_global_states[rfkill->type].cur);
-+	rfkill->need_sync = false;
-+}
-+
- static void rfkill_update_global_state(enum rfkill_type type, bool blocked)
+ static void find_cis(struct hci_conn *conn, void *data)
+@@ -1278,7 +1279,7 @@ u8 hci_conn_set_handle(struct hci_conn *conn, u16 handle)
+ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
  {
- 	int i;
-@@ -730,6 +742,10 @@ static ssize_t soft_show(struct device *dev, struct device_attribute *attr,
+ 	struct hci_conn *conn;
+-	u16 handle = PTR_ERR(data);
++	u16 handle = PTR_UINT(data);
+ 
+ 	conn = hci_conn_hash_lookup_handle(hdev, handle);
+ 	if (!conn)
+@@ -1308,7 +1309,7 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+ static int hci_connect_le_sync(struct hci_dev *hdev, void *data)
  {
- 	struct rfkill *rfkill = to_rfkill(dev);
+ 	struct hci_conn *conn;
+-	u16 handle = PTR_ERR(data);
++	u16 handle = PTR_UINT(data);
  
-+	mutex_lock(&rfkill_global_mutex);
-+	rfkill_sync(rfkill);
-+	mutex_unlock(&rfkill_global_mutex);
-+
- 	return sysfs_emit(buf, "%d\n", (rfkill->state & RFKILL_BLOCK_SW) ? 1 : 0);
- }
+ 	conn = hci_conn_hash_lookup_handle(hdev, handle);
+ 	if (!conn)
+@@ -1390,7 +1391,7 @@ struct hci_conn *hci_connect_le(struct hci_dev *hdev, bdaddr_t *dst,
+ 	clear_bit(HCI_CONN_SCANNING, &conn->flags);
  
-@@ -751,6 +767,7 @@ static ssize_t soft_store(struct device *dev, struct device_attribute *attr,
- 		return -EINVAL;
+ 	err = hci_cmd_sync_queue(hdev, hci_connect_le_sync,
+-				 ERR_PTR(conn->handle),
++				 UINT_PTR(conn->handle),
+ 				 create_le_conn_complete);
+ 	if (err) {
+ 		hci_conn_del(conn);
+@@ -1767,7 +1768,7 @@ static int hci_le_create_big(struct hci_conn *conn, struct bt_iso_qos *qos)
  
- 	mutex_lock(&rfkill_global_mutex);
-+	rfkill_sync(rfkill);
- 	rfkill_set_block(rfkill, state);
- 	mutex_unlock(&rfkill_global_mutex);
- 
-@@ -783,6 +800,10 @@ static ssize_t state_show(struct device *dev, struct device_attribute *attr,
+ static int set_cig_params_sync(struct hci_dev *hdev, void *data)
  {
- 	struct rfkill *rfkill = to_rfkill(dev);
+-	u8 cig_id = PTR_ERR(data);
++	u8 cig_id = PTR_UINT(data);
+ 	struct hci_conn *conn;
+ 	struct bt_iso_qos *qos;
+ 	struct iso_cig_params pdu;
+@@ -1877,7 +1878,7 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
  
-+	mutex_lock(&rfkill_global_mutex);
-+	rfkill_sync(rfkill);
-+	mutex_unlock(&rfkill_global_mutex);
-+
- 	return sysfs_emit(buf, "%d\n", user_state_from_blocked(rfkill->state));
- }
+ done:
+ 	if (hci_cmd_sync_queue(hdev, set_cig_params_sync,
+-			       ERR_PTR(qos->ucast.cig), NULL) < 0)
++			       UINT_PTR(qos->ucast.cig), NULL) < 0)
+ 		return false;
  
-@@ -805,6 +826,7 @@ static ssize_t state_store(struct device *dev, struct device_attribute *attr,
- 		return -EINVAL;
- 
- 	mutex_lock(&rfkill_global_mutex);
-+	rfkill_sync(rfkill);
- 	rfkill_set_block(rfkill, state == RFKILL_USER_STATE_SOFT_BLOCKED);
- 	mutex_unlock(&rfkill_global_mutex);
- 
-@@ -1032,14 +1054,10 @@ static void rfkill_uevent_work(struct work_struct *work)
- 
- static void rfkill_sync_work(struct work_struct *work)
+ 	return true;
+@@ -2891,7 +2892,7 @@ u32 hci_conn_get_phy(struct hci_conn *conn)
+ static int abort_conn_sync(struct hci_dev *hdev, void *data)
  {
--	struct rfkill *rfkill;
--	bool cur;
--
--	rfkill = container_of(work, struct rfkill, sync_work);
-+	struct rfkill *rfkill = container_of(work, struct rfkill, sync_work);
+ 	struct hci_conn *conn;
+-	u16 handle = PTR_ERR(data);
++	u16 handle = PTR_UINT(data);
  
- 	mutex_lock(&rfkill_global_mutex);
--	cur = rfkill_global_states[rfkill->type].cur;
--	rfkill_set_block(rfkill, cur);
-+	rfkill_sync(rfkill);
- 	mutex_unlock(&rfkill_global_mutex);
- }
- 
-@@ -1087,6 +1105,7 @@ int __must_check rfkill_register(struct rfkill *rfkill)
- 			round_jiffies_relative(POLL_INTERVAL));
- 
- 	if (!rfkill->persistent || rfkill_epo_lock_active) {
-+		rfkill->need_sync = true;
- 		schedule_work(&rfkill->sync_work);
- 	} else {
- #ifdef CONFIG_RFKILL_INPUT
-@@ -1171,6 +1190,7 @@ static int rfkill_fop_open(struct inode *inode, struct file *file)
- 		ev = kzalloc(sizeof(*ev), GFP_KERNEL);
- 		if (!ev)
- 			goto free;
-+		rfkill_sync(rfkill);
- 		rfkill_fill_event(&ev->ev, rfkill, RFKILL_OP_ADD);
- 		list_add_tail(&ev->list, &data->events);
+ 	conn = hci_conn_hash_lookup_handle(hdev, handle);
+ 	if (!conn)
+@@ -2931,6 +2932,6 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ 		}
  	}
+ 
+-	return hci_cmd_sync_queue(hdev, abort_conn_sync, ERR_PTR(conn->handle),
++	return hci_cmd_sync_queue(hdev, abort_conn_sync, UINT_PTR(conn->handle),
+ 				  NULL);
+ }
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index caf4263ef9b77..73cdd051dd464 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6545,7 +6545,7 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
+ 
+ static int _update_adv_data_sync(struct hci_dev *hdev, void *data)
+ {
+-	u8 instance = PTR_ERR(data);
++	u8 instance = PTR_UINT(data);
+ 
+ 	return hci_update_adv_data_sync(hdev, instance);
+ }
+@@ -6553,5 +6553,5 @@ static int _update_adv_data_sync(struct hci_dev *hdev, void *data)
+ int hci_update_adv_data(struct hci_dev *hdev, u8 instance)
+ {
+ 	return hci_cmd_sync_queue(hdev, _update_adv_data_sync,
+-				  ERR_PTR(instance), NULL);
++				  UINT_PTR(instance), NULL);
+ }
 -- 
 2.40.1
 
