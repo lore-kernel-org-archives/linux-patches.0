@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE451C10
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FA015EA0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q886yPiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F76C433C7;
-	Mon, 23 Oct 2023 11:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVNTeURC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13B1C433C8;
+	Mon, 23 Oct 2023 11:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061283;
-	bh=xA8ILK7krTV+BEkH5wuvXp17JESaS+0WFILke1LRmEs=;
+	s=korg; t=1698061286;
+	bh=mhpd7mQfqduPaHBF2p/N6zsdmM7gYbfxR4rAQWBorHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q886yPiMTwgkj+x8gkDJCQG+t+2usGSjb2gIeXCqH6KEvV2ShraZy9a0FYW0Io/cY
-	 7yhwxOyMnP2pQtQzxagZcj5RC3Mn85GSvKB5/eMa1TKmSGP+wX3tTPW/LFaHME5eLc
-	 see3AtLhUDIreykVSXmIngyY/tz+vOwoX5Z5mraY=
+	b=kVNTeURCoOwcF8gyozroBDW9HCrXlo25yWhJKDsCquTUW0oFhCUl7vJ7L18xV/rje
+	 5o8xKx7Pt4q6mH+iiT+himuRP/aTswrg91xxArHo6E8IXjgk248+2nSqL4K2Q9wUPQ
+	 VlID0RaQFh5vhFQD9/MR6gf15nCtrxYaXUsmkjV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
-	Merlijn Wajer <merlijn@wizzup.org>,
-	Pavel Machek <pavel@ucw.cz>,
-	Sebastian Reichel <sre@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 133/137] phy: mapphone-mdm6600: Fix runtime PM for remove
-Date: Mon, 23 Oct 2023 12:58:10 +0200
-Message-ID: <20231023104825.173116982@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.15 107/137] mtd: physmap-core: Restore map_rom fallback
+Date: Mon, 23 Oct 2023 12:57:44 +0200
+Message-ID: <20231023104824.429656756@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -47,40 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit b99e0ba9633af51638e5ee1668da2e33620c134f ]
+commit 6792b7fce610bcd1cf3e07af3607fe7e2c38c1d8 upstream.
 
-Otherwise we will get an underflow on remove.
+When the exact mapping type driver was not available, the old
+physmap_of_core driver fell back to mapping the region as ROM.
+Unfortunately this feature was lost when the DT and pdata cases were
+merged.  Revive this useful feature.
 
-Cc: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
-Cc: Merlijn Wajer <merlijn@wizzup.org>
-Cc: Pavel Machek <pavel@ucw.cz>
-Cc: Sebastian Reichel <sre@kernel.org>
-Fixes: f7f50b2a7b05 ("phy: mapphone-mdm6600: Add runtime PM support for n_gsm on USB suspend")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20230913060433.48373-2-tony@atomide.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 642b1e8dbed7bbbf ("mtd: maps: Merge physmap_of.c into physmap-core.c")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/550e8c8c1da4c4baeb3d71ff79b14a18d4194f9e.1693407371.git.geert+renesas@glider.be
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/motorola/phy-mapphone-mdm6600.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/maps/physmap-core.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/phy/motorola/phy-mapphone-mdm6600.c b/drivers/phy/motorola/phy-mapphone-mdm6600.c
-index 436b5ab6dc6d5..c3e2ab6a2a717 100644
---- a/drivers/phy/motorola/phy-mapphone-mdm6600.c
-+++ b/drivers/phy/motorola/phy-mapphone-mdm6600.c
-@@ -641,6 +641,7 @@ static int phy_mdm6600_remove(struct platform_device *pdev)
- 	struct phy_mdm6600 *ddata = platform_get_drvdata(pdev);
- 	struct gpio_desc *reset_gpio = ddata->ctrl_gpios[PHY_MDM6600_RESET];
+--- a/drivers/mtd/maps/physmap-core.c
++++ b/drivers/mtd/maps/physmap-core.c
+@@ -556,6 +556,17 @@ static int physmap_flash_probe(struct pl
+ 		if (info->probe_type) {
+ 			info->mtds[i] = do_map_probe(info->probe_type,
+ 						     &info->maps[i]);
++
++			/* Fall back to mapping region as ROM */
++			if (!info->mtds[i] && IS_ENABLED(CONFIG_MTD_ROM) &&
++			    strcmp(info->probe_type, "map_rom")) {
++				dev_warn(&dev->dev,
++					 "map_probe() failed for type %s\n",
++					 info->probe_type);
++
++				info->mtds[i] = do_map_probe("map_rom",
++							     &info->maps[i]);
++			}
+ 		} else {
+ 			int j;
  
-+	pm_runtime_get_noresume(ddata->dev);
- 	pm_runtime_dont_use_autosuspend(ddata->dev);
- 	pm_runtime_put_sync(ddata->dev);
- 	pm_runtime_disable(ddata->dev);
--- 
-2.42.0
-
 
 
