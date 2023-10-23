@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B471515492
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5087515492
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QttXQHDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23A4C433C7;
-	Mon, 23 Oct 2023 11:24:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhVwJfpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16D3C433C8;
+	Mon, 23 Oct 2023 11:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060270;
-	bh=EQbvuCRc5NdvCuDfcbJYqriwxtqNwrcc+GkHcBcX9sY=;
+	s=korg; t=1698060273;
+	bh=Sxr94YQXeA89CQiEaNysI2fCx6/mHsp88Yhtmb0EQYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QttXQHDolbUjzWm0y+rid5iksYj6g9LAv5SAFZul2bGy4vgX7llxMHK57nXdiS9cm
-	 zp9c3hSgbi9QAW2xuC+4g9qxuWQtnk4Ku9bpzZVJVuStXvX0FyD+eT9905VxfR/0JJ
-	 MSQgD51AjD2EMJmoL5jcC5XE5yKieB40ejLxCPPc=
+	b=nhVwJfpQJPVZlXidsYBP2OdObDwWpYDFWeWTTu/qtw4NDELIxgiVPM7iaotfItgn8
+	 7tcIPi+W+bsqomhEAUIf/PXnfce8yTEa/YSAXx2BXnlEWMLn0KIk2sCwNMi0HxqEOq
+	 ADOZk+sWByozkRfbM+7khmZEa+x18fbL8tosyJJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ying Hsu <yinghsu@chromium.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Kai Uwe Broulik <foss-linux@broulik.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/196] Bluetooth: Avoid redundant authentication
-Date: Mon, 23 Oct 2023 12:56:13 +0200
-Message-ID: <20231023104831.581865904@linuxfoundation.org>
+Subject: [PATCH 6.1 117/196] drm: panel-orientation-quirks: Add quirk for One Mix 2S
+Date: Mon, 23 Oct 2023 12:56:22 +0200
+Message-ID: <20231023104831.823158838@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,104 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ying Hsu <yinghsu@chromium.org>
+From: Kai Uwe Broulik <foss-linux@broulik.de>
 
-[ Upstream commit 1d8e801422d66e4b8c7b187c52196bef94eed887 ]
+[ Upstream commit cbb7eb2dbd9472816e42a1b0fdb51af49abbf812 ]
 
-While executing the Android 13 CTS Verifier Secure Server test on a
-ChromeOS device, it was observed that the Bluetooth host initiates
-authentication for an RFCOMM connection after SSP completes.
-When this happens, some Intel Bluetooth controllers, like AC9560, would
-disconnect with "Connection Rejected due to Security Reasons (0x0e)".
+The One Mix 2S is a mini laptop with a 1200x1920 portrait screen
+mounted in a landscape oriented clamshell case. Because of the too
+generic DMI strings this entry is also doing bios-date matching.
 
-Historically, BlueZ did not mandate this authentication while an
-authenticated combination key was already in use for the connection.
-This behavior was changed since commit 7b5a9241b780
-("Bluetooth: Introduce requirements for security level 4").
-So, this patch addresses the aforementioned disconnection issue by
-restoring the previous behavior.
-
-Signed-off-by: Ying Hsu <yinghsu@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Kai Uwe Broulik <foss-linux@broulik.de>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231001114710.336172-1-foss-linux@broulik.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 63 ++++++++++++++++++++++------------------
- 1 file changed, 35 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index f8ba3f5aa877b..728be9307f526 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2364,34 +2364,41 @@ int hci_conn_security(struct hci_conn *conn, __u8 sec_level, __u8 auth_type,
- 	if (!test_bit(HCI_CONN_AUTH, &conn->flags))
- 		goto auth;
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 0cb646cb04ee1..d5c15292ae937 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -38,6 +38,14 @@ static const struct drm_dmi_panel_orientation_data gpd_micropc = {
+ 	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
+ };
  
--	/* An authenticated FIPS approved combination key has sufficient
--	 * security for security level 4. */
--	if (conn->key_type == HCI_LK_AUTH_COMBINATION_P256 &&
--	    sec_level == BT_SECURITY_FIPS)
--		goto encrypt;
--
--	/* An authenticated combination key has sufficient security for
--	   security level 3. */
--	if ((conn->key_type == HCI_LK_AUTH_COMBINATION_P192 ||
--	     conn->key_type == HCI_LK_AUTH_COMBINATION_P256) &&
--	    sec_level == BT_SECURITY_HIGH)
--		goto encrypt;
--
--	/* An unauthenticated combination key has sufficient security for
--	   security level 1 and 2. */
--	if ((conn->key_type == HCI_LK_UNAUTH_COMBINATION_P192 ||
--	     conn->key_type == HCI_LK_UNAUTH_COMBINATION_P256) &&
--	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW))
--		goto encrypt;
--
--	/* A combination key has always sufficient security for the security
--	   levels 1 or 2. High security level requires the combination key
--	   is generated using maximum PIN code length (16).
--	   For pre 2.1 units. */
--	if (conn->key_type == HCI_LK_COMBINATION &&
--	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW ||
--	     conn->pin_length == 16))
--		goto encrypt;
-+	switch (conn->key_type) {
-+	case HCI_LK_AUTH_COMBINATION_P256:
-+		/* An authenticated FIPS approved combination key has
-+		 * sufficient security for security level 4 or lower.
-+		 */
-+		if (sec_level <= BT_SECURITY_FIPS)
-+			goto encrypt;
-+		break;
-+	case HCI_LK_AUTH_COMBINATION_P192:
-+		/* An authenticated combination key has sufficient security for
-+		 * security level 3 or lower.
-+		 */
-+		if (sec_level <= BT_SECURITY_HIGH)
-+			goto encrypt;
-+		break;
-+	case HCI_LK_UNAUTH_COMBINATION_P192:
-+	case HCI_LK_UNAUTH_COMBINATION_P256:
-+		/* An unauthenticated combination key has sufficient security
-+		 * for security level 2 or lower.
-+		 */
-+		if (sec_level <= BT_SECURITY_MEDIUM)
-+			goto encrypt;
-+		break;
-+	case HCI_LK_COMBINATION:
-+		/* A combination key has always sufficient security for the
-+		 * security levels 2 or lower. High security level requires the
-+		 * combination key is generated using maximum PIN code length
-+		 * (16). For pre 2.1 units.
-+		 */
-+		if (sec_level <= BT_SECURITY_MEDIUM || conn->pin_length == 16)
-+			goto encrypt;
-+		break;
-+	default:
-+		break;
-+	}
- 
- auth:
- 	if (test_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags))
++static const struct drm_dmi_panel_orientation_data gpd_onemix2s = {
++	.width = 1200,
++	.height = 1920,
++	.bios_dates = (const char * const []){ "05/21/2018", "10/26/2018",
++		"03/04/2019", NULL },
++	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
++};
++
+ static const struct drm_dmi_panel_orientation_data gpd_pocket = {
+ 	.width = 1200,
+ 	.height = 1920,
+@@ -401,6 +409,14 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "LTH17"),
+ 		},
+ 		.driver_data = (void *)&lcd800x1280_rightside_up,
++	}, {	/* One Mix 2S (generic strings, also match on bios date) */
++		.matches = {
++		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Default string"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Default string"),
++		  DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Default string"),
++		  DMI_EXACT_MATCH(DMI_BOARD_NAME, "Default string"),
++		},
++		.driver_data = (void *)&gpd_onemix2s,
+ 	},
+ 	{}
+ };
 -- 
 2.40.1
 
