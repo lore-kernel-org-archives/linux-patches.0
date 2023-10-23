@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5865316405
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E95916405
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIQj4wca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D65C433C7;
-	Mon, 23 Oct 2023 11:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sE5/2WFK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD203C433CA;
+	Mon, 23 Oct 2023 11:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061409;
-	bh=qsdncAZaLpG/aYy583+543sW2KP6jfoobCjgp0KlnCg=;
+	s=korg; t=1698061412;
+	bh=6LYJo5RS1lqMK56bllyuleoh5DPPYGkN/L8+YqAwI3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zIQj4wcaYz+aCn3uBT02uzVltV0fwPonrs3KnVs21if1QCNQtCmaapTxiqVAS2lsW
-	 S0UkVs0ZQqmuN+VhBQ2AtHwU9uob90EfiAZsbW9OhqlzX+4hRnBBWDmtHdPsA1ZMIa
-	 msZZUNA5HpBhEn0Yqa1FdNauL8PyD51MDjLolhrg=
+	b=sE5/2WFK9vYrRWqpbX2UfUUhg6eqMkjxyIzPmxzCUQVaZe83udDd14Z0DVZGeV/e3
+	 T2zrMzCJlZRtQGdF0Fv9sf+vnVOT9mPIimCVqd6K+CLIMCACAaDd19JFh7yTNElLsX
+	 In4TGnOz3UZJxzVQP0PM3OXilc44HrNUbr3SN9ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Nia Espera <nespera@igalia.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 011/202] drm/msm/dsi: skip the wait for video mode done if not applicable
-Date: Mon, 23 Oct 2023 12:55:18 +0200
-Message-ID: <20231023104826.929612090@linuxfoundation.org>
+Subject: [PATCH 5.10 012/202] drm/msm/dpu: change _dpu_plane_calc_bw() to use u64 to avoid overflow
+Date: Mon, 23 Oct 2023 12:55:19 +0200
+Message-ID: <20231023104826.962748547@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -44,61 +45,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit ab483e3adcc178254eb1ce0fbdfbea65f86f1006 ]
+[ Upstream commit 95e681ca3b65e4ce3d2537b47672d787b7d30375 ]
 
-dsi_wait4video_done() API waits for the DSI video mode engine to
-become idle so that we can transmit the DCS commands in the
-beginning of BLLP. However, with the current sequence, the MDP
-timing engine is turned on after the panel's pre_enable() callback
-which can send out the DCS commands needed to power up the panel.
+_dpu_plane_calc_bw() uses integer variables to calculate the bandwidth
+used during plane bandwidth calculations. However for high resolution
+displays this overflows easily and leads to below errors
 
-During those cases, this API will always timeout and print out the
-error spam leading to long bootup times and log flooding.
+[dpu error]crtc83 failed performance check -7
 
-Fix this by checking if the DSI video engine was actually busy before
-waiting for it to become idle otherwise this is a redundant wait.
+Promote the intermediate variables to u64 to avoid overflow.
 
 changes in v2:
-	- move the reg read below the video mode check
-	- minor fixes in commit text
+	- change to u64 where actually needed in the math
 
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/34
-Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: c33b7c0389e1 ("drm/msm/dpu: add support for clk and bw scaling for display")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/557853/
-Link: https://lore.kernel.org/r/20230915204426.19011-1-quic_abhinavk@quicinc.com
+Reported-by: Nia Espera <nespera@igalia.com>
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/32
+Tested-by: Nia Espera <nespera@igalia.com>
+Patchwork: https://patchwork.freedesktop.org/patch/556288/
+Link: https://lore.kernel.org/r/20230908012616.20654-1-quic_abhinavk@quicinc.com
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 5a76aa1389173..fb7792ca39e2c 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1075,9 +1075,21 @@ static void dsi_wait4video_done(struct msm_dsi_host *msm_host)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 7ea90d25a3b69..8aa9f2335f57a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -147,6 +147,7 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+ 	const struct dpu_format *fmt = NULL;
+ 	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+ 	int src_width, src_height, dst_height, fps;
++	u64 plane_pixel_rate, plane_bit_rate;
+ 	u64 plane_prefill_bw;
+ 	u64 plane_bw;
+ 	u32 hw_latency_lines;
+@@ -168,13 +169,12 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+ 	scale_factor = src_height > dst_height ?
+ 		mult_frac(src_height, 1, dst_height) : 1;
  
- static void dsi_wait4video_eng_busy(struct msm_dsi_host *msm_host)
- {
-+	u32 data;
-+
- 	if (!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO))
- 		return;
+-	plane_bw =
+-		src_width * mode->vtotal * fps * fmt->bpp *
+-		scale_factor;
++	plane_pixel_rate = src_width * mode->vtotal * fps;
++	plane_bit_rate = plane_pixel_rate * fmt->bpp;
  
-+	data = dsi_read(msm_host, REG_DSI_STATUS0);
+-	plane_prefill_bw =
+-		src_width * hw_latency_lines * fps * fmt->bpp *
+-		scale_factor * mode->vtotal;
++	plane_bw = plane_bit_rate * scale_factor;
 +
-+	/* if video mode engine is not busy, its because
-+	 * either timing engine was not turned on or the
-+	 * DSI controller has finished transmitting the video
-+	 * data already, so no need to wait in those cases
-+	 */
-+	if (!(data & DSI_STATUS0_VIDEO_MODE_ENGINE_BUSY))
-+		return;
-+
- 	if (msm_host->power_on && msm_host->enabled) {
- 		dsi_wait4video_done(msm_host);
- 		/* delay 4 ms to skip BLLP */
++	plane_prefill_bw = plane_bw * hw_latency_lines;
+ 
+ 	do_div(plane_prefill_bw, (vbp+vpw));
+ 
 -- 
 2.40.1
 
