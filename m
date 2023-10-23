@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E5F14A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D857914A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMxPNCKO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650E6C433C9;
-	Mon, 23 Oct 2023 11:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSDus2aD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541BFC433C8;
+	Mon, 23 Oct 2023 11:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059079;
-	bh=DiONQnvU19tm7qBCYuiMvAlm36RLlggILsgLClT0c6A=;
+	s=korg; t=1698059082;
+	bh=EeqZBH3rjtD+n3stPzGBDxX/S9CX3KR4ZlbZ3VFvuM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fMxPNCKO8ttribykuAprxveoRPKx61+n8cUUF7kc9H3Vosp9yAdgO2QuvVl8sgKOB
-	 PVS7pFJDhXJ/UddJSxGUPnIusJ+r61W+KAtSfEEXf574YeVB/PNbnwgJoUjOxxW4ra
-	 iMV9Dl69/Aayu2gi6blYRFjhdHGoL39JXfUYu7no=
+	b=ZSDus2aDlXVmJFZy57wnBki1QUg9uC21P+rpOCyLz6tzkLnVWLLf6eMkCeJHPvQ+p
+	 jc7uk68M2ArMB9r9A228kORuec3z5Ielzbue6vHGoOXPK+9WU05I80K31tbujMc5fF
+	 UjfCC0HgD8aem+8UXjzsXMRUSaW5cPL+9tFU+dps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.5 056/241] xfrm: fix a data-race in xfrm_gen_index()
-Date: Mon, 23 Oct 2023 12:54:02 +0200
-Message-ID: <20231023104835.271851849@linuxfoundation.org>
+	syzbot+53ce40c8c0322c06aea5@syzkaller.appspotmail.com,
+	Pavel Skripkin <paskripkin@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.5 030/241] fs/ntfs3: Fix OOB read in ntfs_init_from_boot
+Date: Mon, 23 Oct 2023 12:53:36 +0200
+Message-ID: <20231023104834.663926761@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,101 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pavel Skripkin <paskripkin@gmail.com>
 
-commit 3e4bc23926b83c3c67e5f61ae8571602754131a6 upstream.
+commit 34e6552a442f268eefd408e47f4f2d471aa64829 upstream.
 
-xfrm_gen_index() mutual exclusion uses net->xfrm.xfrm_policy_lock.
+Syzbot was able to create a device which has the last sector of size
+512.
 
-This means we must use a per-netns idx_generator variable,
-instead of a static one.
-Alternative would be to use an atomic variable.
+After failing to boot from initial sector, reading from boot info from
+offset 511 causes OOB read.
 
-syzbot reported:
+To prevent such reports add sanity check to validate if size of buffer_head
+if big enough to hold ntfs3 bootinfo
 
-BUG: KCSAN: data-race in xfrm_sk_policy_insert / xfrm_sk_policy_insert
-
-write to 0xffffffff87005938 of 4 bytes by task 29466 on cpu 0:
-xfrm_gen_index net/xfrm/xfrm_policy.c:1385 [inline]
-xfrm_sk_policy_insert+0x262/0x640 net/xfrm/xfrm_policy.c:2347
-xfrm_user_policy+0x413/0x540 net/xfrm/xfrm_state.c:2639
-do_ipv6_setsockopt+0x1317/0x2ce0 net/ipv6/ipv6_sockglue.c:943
-ipv6_setsockopt+0x57/0x130 net/ipv6/ipv6_sockglue.c:1012
-rawv6_setsockopt+0x21e/0x410 net/ipv6/raw.c:1054
-sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
-__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
-__do_sys_setsockopt net/socket.c:2274 [inline]
-__se_sys_setsockopt net/socket.c:2271 [inline]
-__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-read to 0xffffffff87005938 of 4 bytes by task 29460 on cpu 1:
-xfrm_sk_policy_insert+0x13e/0x640
-xfrm_user_policy+0x413/0x540 net/xfrm/xfrm_state.c:2639
-do_ipv6_setsockopt+0x1317/0x2ce0 net/ipv6/ipv6_sockglue.c:943
-ipv6_setsockopt+0x57/0x130 net/ipv6/ipv6_sockglue.c:1012
-rawv6_setsockopt+0x21e/0x410 net/ipv6/raw.c:1054
-sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
-__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
-__do_sys_setsockopt net/socket.c:2274 [inline]
-__se_sys_setsockopt net/socket.c:2271 [inline]
-__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x00006ad8 -> 0x00006b18
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 29460 Comm: syz-executor.1 Not tainted 6.5.0-rc5-syzkaller-00243-g9106536c1aa3 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-
-Fixes: 1121994c803f ("netns xfrm: policy insertion in netns")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 6a4cd3ea7d77 ("fs/ntfs3: Alternative boot if primary boot is corrupted")
+Reported-by: syzbot+53ce40c8c0322c06aea5@syzkaller.appspotmail.com
+Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netns/xfrm.h |    1 +
- net/xfrm/xfrm_policy.c   |    6 ++----
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ fs/ntfs3/super.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/include/net/netns/xfrm.h
-+++ b/include/net/netns/xfrm.h
-@@ -50,6 +50,7 @@ struct netns_xfrm {
- 	struct list_head	policy_all;
- 	struct hlist_head	*policy_byidx;
- 	unsigned int		policy_idx_hmask;
-+	unsigned int		idx_generator;
- 	struct hlist_head	policy_inexact[XFRM_POLICY_MAX];
- 	struct xfrm_policy_hash	policy_bydst[XFRM_POLICY_MAX];
- 	unsigned int		policy_count[XFRM_POLICY_MAX * 2];
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -1372,8 +1372,6 @@ EXPORT_SYMBOL(xfrm_policy_hash_rebuild);
-  * of an absolute inpredictability of ordering of rules. This will not pass. */
- static u32 xfrm_gen_index(struct net *net, int dir, u32 index)
- {
--	static u32 idx_generator;
--
- 	for (;;) {
- 		struct hlist_head *list;
- 		struct xfrm_policy *p;
-@@ -1381,8 +1379,8 @@ static u32 xfrm_gen_index(struct net *ne
- 		int found;
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -855,6 +855,11 @@ static int ntfs_init_from_boot(struct su
  
- 		if (!index) {
--			idx = (idx_generator | dir);
--			idx_generator += 8;
-+			idx = (net->xfrm.idx_generator | dir);
-+			net->xfrm.idx_generator += 8;
- 		} else {
- 			idx = index;
- 			index = 0;
+ check_boot:
+ 	err = -EINVAL;
++
++	/* Corrupted image; do not read OOB */
++	if (bh->b_size - sizeof(*boot) < boot_off)
++		goto out;
++
+ 	boot = (struct NTFS_BOOT *)Add2Ptr(bh->b_data, boot_off);
+ 
+ 	if (memcmp(boot->system_id, "NTFS    ", sizeof("NTFS    ") - 1)) {
 
 
