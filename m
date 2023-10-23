@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBA0125BF
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19D7125BF
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9I/+M1x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39ECBC433C7;
-	Mon, 23 Oct 2023 11:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1efDsaeP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3600DC433CA;
+	Mon, 23 Oct 2023 11:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060368;
-	bh=FUeFBnuTXi7JnBxyLnskcj2VOqlTAy5/Ozm1Is3RZCk=;
+	s=korg; t=1698060371;
+	bh=02ZSTIK7SbBdXUxvnITlbi9FVLuL8XP/cBkKoeWLle8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9I/+M1xomMbgFOrpCoOL3Y82EXCeKEHEyYHGl5zl2EwUwdrUiAcAtcUPKjqye5FP
-	 94+ENYP3+qDqQq/UdjYpkLzA7ZX45By7WebS32GCUWhFztnSawfD75cH8XLAwFZ++w
-	 qkh7XxCyXNeMz+UQXyLz+hZnl50zxB8jQTsH+/jY=
+	b=1efDsaePWhp/qnlQ9tjbhUVw4xYycgYKYrAil0kSGBo79PKtWmga6A5S5BOoghYsq
+	 gvf2JSWiv4X6yfuwe5j4JPv/bPt56tX3PvrNW+xDDe3gR2shknhZq7d9fjjXGOhlIK
+	 vejg26Y+/2jeJVJll2LDPlBbtT8jUpS+EXKth9To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislaw Kardach <skardach@google.com>,
-	Sven van Ashbrook <svenva@chromium.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Pablo Sun <pablo.sun@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioachino.delregno@collabora.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 149/196] mmc: sdhci-pci-gli: fix LPM negotiation so x86/S0ix SoCs can suspend
-Date: Mon, 23 Oct 2023 12:56:54 +0200
-Message-ID: <20231023104832.689828317@linuxfoundation.org>
+Subject: [PATCH 6.1 150/196] mmc: mtk-sd: Use readl_poll_timeout_atomic in msdc_reset_hw
+Date: Mon, 23 Oct 2023 12:56:55 +0200
+Message-ID: <20231023104832.718700638@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -43,167 +43,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven van Ashbrook <svenva@chromium.org>
+From: Pablo Sun <pablo.sun@mediatek.com>
 
-commit 1202d617e3d04c8d27a14ef30784a698c48170b3 upstream.
+commit c7bb120c1c66672b657e95d0942c989b8275aeb3 upstream.
 
-To improve the r/w performance of GL9763E, the current driver inhibits LPM
-negotiation while the device is active.
+Use atomic readl_poll_timeout_atomic, because msdc_reset_hw
+may be invoked in IRQ handler in the following context:
 
-This prevents a large number of SoCs from suspending, notably x86 systems
-which commonly use S0ix as the suspend mechanism - for example, Intel
-Alder Lake and Raptor Lake processors.
+  msdc_irq() -> msdc_cmd_done() -> msdc_reset_hw()
 
-Failure description:
-1. Userspace initiates s2idle suspend (e.g. via writing to
-   /sys/power/state)
-2. This switches the runtime_pm device state to active, which disables
-   LPM negotiation, then calls the "regular" suspend callback
-3. With LPM negotiation disabled, the bus cannot enter low-power state
-4. On a large number of SoCs, if the bus not in a low-power state, S0ix
-   cannot be entered, which in turn prevents the SoC from entering
-   suspend.
+The following kernel BUG stack trace can be observed on
+Genio 1200 EVK after initializing MSDC1 hardware during kernel boot:
 
-Fix by re-enabling LPM negotiation in the device's suspend callback.
+[    1.187441] BUG: scheduling while atomic: swapper/0/0/0x00010002
+[    1.189157] Modules linked in:
+[    1.204633] CPU: 0 PID: 0 Comm: swapper/0 Tainted: G        W         5.15.42-mtk+modified #1
+[    1.205713] Hardware name: MediaTek Genio 1200 EVK-P1V2-EMMC (DT)
+[    1.206484] Call trace:
+[    1.206796]  dump_backtrace+0x0/0x1ac
+[    1.207266]  show_stack+0x24/0x30
+[    1.207692]  dump_stack_lvl+0x68/0x84
+[    1.208162]  dump_stack+0x1c/0x38
+[    1.208587]  __schedule_bug+0x68/0x80
+[    1.209056]  __schedule+0x6ec/0x7c0
+[    1.209502]  schedule+0x7c/0x110
+[    1.209915]  schedule_hrtimeout_range_clock+0xc4/0x1f0
+[    1.210569]  schedule_hrtimeout_range+0x20/0x30
+[    1.211148]  usleep_range_state+0x84/0xc0
+[    1.211661]  msdc_reset_hw+0xc8/0x1b0
+[    1.212134]  msdc_cmd_done.isra.0+0x4ac/0x5f0
+[    1.212693]  msdc_irq+0x104/0x2d4
+[    1.213121]  __handle_irq_event_percpu+0x68/0x280
+[    1.213725]  handle_irq_event+0x70/0x15c
+[    1.214230]  handle_fasteoi_irq+0xb0/0x1a4
+[    1.214755]  handle_domain_irq+0x6c/0x9c
+[    1.215260]  gic_handle_irq+0xc4/0x180
+[    1.215741]  call_on_irq_stack+0x2c/0x54
+[    1.216245]  do_interrupt_handler+0x5c/0x70
+[    1.216782]  el1_interrupt+0x30/0x80
+[    1.217242]  el1h_64_irq_handler+0x1c/0x2c
+[    1.217769]  el1h_64_irq+0x78/0x7c
+[    1.218206]  cpuidle_enter_state+0xc8/0x600
+[    1.218744]  cpuidle_enter+0x44/0x5c
+[    1.219205]  do_idle+0x224/0x2d0
+[    1.219624]  cpu_startup_entry+0x30/0x80
+[    1.220129]  rest_init+0x108/0x134
+[    1.220568]  arch_call_rest_init+0x1c/0x28
+[    1.221094]  start_kernel+0x6c0/0x700
+[    1.221564]  __primary_switched+0xc0/0xc8
 
-Suggested-by: Stanislaw Kardach <skardach@google.com>
-Fixes: f9e5b33934ce ("mmc: host: Improve I/O read/write performance for GL9763E")
+Fixes: ffaea6ebfe9c ("mmc: mtk-sd: Use readl_poll_timeout instead of open-coded polling")
+Signed-off-by: Pablo Sun <pablo.sun@mediatek.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioachino.delregno@collabora.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sven van Ashbrook <svenva@chromium.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20230831160055.v3.1.I7ed1ca09797be2dd76ca914c57d88b32d24dac88@changeid
+Link: https://lore.kernel.org/r/20230922095348.22182-1-pablo.sun@mediatek.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-gli.c |  104 ++++++++++++++++++++++++---------------
- 1 file changed, 66 insertions(+), 38 deletions(-)
+ drivers/mmc/host/mtk-sd.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/host/sdhci-pci-gli.c
-+++ b/drivers/mmc/host/sdhci-pci-gli.c
-@@ -756,42 +756,6 @@ static u32 sdhci_gl9750_readl(struct sdh
- 	return value;
- }
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -655,11 +655,11 @@ static void msdc_reset_hw(struct msdc_ho
+ 	u32 val;
  
--#ifdef CONFIG_PM_SLEEP
--static int sdhci_pci_gli_resume(struct sdhci_pci_chip *chip)
--{
--	struct sdhci_pci_slot *slot = chip->slots[0];
--
--	pci_free_irq_vectors(slot->chip->pdev);
--	gli_pcie_enable_msi(slot);
--
--	return sdhci_pci_resume_host(chip);
--}
--
--static int sdhci_cqhci_gli_resume(struct sdhci_pci_chip *chip)
--{
--	struct sdhci_pci_slot *slot = chip->slots[0];
--	int ret;
--
--	ret = sdhci_pci_gli_resume(chip);
--	if (ret)
--		return ret;
--
--	return cqhci_resume(slot->host->mmc);
--}
--
--static int sdhci_cqhci_gli_suspend(struct sdhci_pci_chip *chip)
--{
--	struct sdhci_pci_slot *slot = chip->slots[0];
--	int ret;
--
--	ret = cqhci_suspend(slot->host->mmc);
--	if (ret)
--		return ret;
--
--	return sdhci_suspend_host(slot->host);
--}
--#endif
--
- static void gl9763e_hs400_enhanced_strobe(struct mmc_host *mmc,
- 					  struct mmc_ios *ios)
- {
-@@ -1040,6 +1004,70 @@ static int gl9763e_runtime_resume(struct
- }
- #endif
+ 	sdr_set_bits(host->base + MSDC_CFG, MSDC_CFG_RST);
+-	readl_poll_timeout(host->base + MSDC_CFG, val, !(val & MSDC_CFG_RST), 0, 0);
++	readl_poll_timeout_atomic(host->base + MSDC_CFG, val, !(val & MSDC_CFG_RST), 0, 0);
  
-+#ifdef CONFIG_PM_SLEEP
-+static int sdhci_pci_gli_resume(struct sdhci_pci_chip *chip)
-+{
-+	struct sdhci_pci_slot *slot = chip->slots[0];
-+
-+	pci_free_irq_vectors(slot->chip->pdev);
-+	gli_pcie_enable_msi(slot);
-+
-+	return sdhci_pci_resume_host(chip);
-+}
-+
-+static int gl9763e_resume(struct sdhci_pci_chip *chip)
-+{
-+	struct sdhci_pci_slot *slot = chip->slots[0];
-+	int ret;
-+
-+	ret = sdhci_pci_gli_resume(chip);
-+	if (ret)
-+		return ret;
-+
-+	ret = cqhci_resume(slot->host->mmc);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Disable LPM negotiation to bring device back in sync
-+	 * with its runtime_pm state.
-+	 */
-+	gl9763e_set_low_power_negotiation(slot, false);
-+
-+	return 0;
-+}
-+
-+static int gl9763e_suspend(struct sdhci_pci_chip *chip)
-+{
-+	struct sdhci_pci_slot *slot = chip->slots[0];
-+	int ret;
-+
-+	/*
-+	 * Certain SoCs can suspend only with the bus in low-
-+	 * power state, notably x86 SoCs when using S0ix.
-+	 * Re-enable LPM negotiation to allow entering L1 state
-+	 * and entering system suspend.
-+	 */
-+	gl9763e_set_low_power_negotiation(slot, true);
-+
-+	ret = cqhci_suspend(slot->host->mmc);
-+	if (ret)
-+		goto err_suspend;
-+
-+	ret = sdhci_suspend_host(slot->host);
-+	if (ret)
-+		goto err_suspend_host;
-+
-+	return 0;
-+
-+err_suspend_host:
-+	cqhci_resume(slot->host->mmc);
-+err_suspend:
-+	gl9763e_set_low_power_negotiation(slot, false);
-+	return ret;
-+}
-+#endif
-+
- static int gli_probe_slot_gl9763e(struct sdhci_pci_slot *slot)
- {
- 	struct pci_dev *pdev = slot->chip->pdev;
-@@ -1147,8 +1175,8 @@ const struct sdhci_pci_fixes sdhci_gl976
- 	.probe_slot	= gli_probe_slot_gl9763e,
- 	.ops            = &sdhci_gl9763e_ops,
- #ifdef CONFIG_PM_SLEEP
--	.resume		= sdhci_cqhci_gli_resume,
--	.suspend	= sdhci_cqhci_gli_suspend,
-+	.resume		= gl9763e_resume,
-+	.suspend	= gl9763e_suspend,
- #endif
- #ifdef CONFIG_PM
- 	.runtime_suspend = gl9763e_runtime_suspend,
+ 	sdr_set_bits(host->base + MSDC_FIFOCS, MSDC_FIFOCS_CLR);
+-	readl_poll_timeout(host->base + MSDC_FIFOCS, val,
+-			   !(val & MSDC_FIFOCS_CLR), 0, 0);
++	readl_poll_timeout_atomic(host->base + MSDC_FIFOCS, val,
++				  !(val & MSDC_FIFOCS_CLR), 0, 0);
+ 
+ 	val = readl(host->base + MSDC_INT);
+ 	writel(val, host->base + MSDC_INT);
 
 
