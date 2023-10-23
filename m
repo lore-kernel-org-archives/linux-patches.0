@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0444F15E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF2115E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDldrV6x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CDD0C433CB;
-	Mon, 23 Oct 2023 11:36:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xy0rMWMs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1B4C433C9;
+	Mon, 23 Oct 2023 11:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060981;
-	bh=QcRpx+F19sTyw3Mz0aBFs56Vx7AlotxF76fi8ftEQAY=;
+	s=korg; t=1698060984;
+	bh=4LF9tOSLzXCLUF9hdVgXMBkuH8CjGRISJc/YWkymsro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BDldrV6xIKRmlUYx10Di7Hh8pQkzB0aR5S0hHkqhr8MzBZ00BQ5gFH/5jhz2VQEYt
-	 yz3xHiCWagcHd9ymsZRZYYponPo5ebbs3HTgQOHB0E1QtCX1EVixzImLFPkn0dm4QS
-	 wmrCMiauGfn9GpaGxdh0PnzbnoKgXO02zeB5a5Og=
+	b=xy0rMWMsRlilMjc/gmUlBDNJgYhhB9SdSfcaj3KNdMJZpt2naDrwAv4F6bnW+ZJ8T
+	 NYW5kIIAjD2RvDcO58Bg6E1sb6x4CjthR1y1jugOUZmB/INBahk59AKKUBwtPvg1At
+	 hGqXAW7E3p5kAiAsMvIWqf45X8yGu7Rhd/uZObPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 034/137] net: rfkill: gpio: prevent value glitch during probe
-Date: Mon, 23 Oct 2023 12:56:31 +0200
-Message-ID: <20231023104822.182545022@linuxfoundation.org>
+	Tom Dohrmann <erbse.13@gmx.de>,
+	Joerg Roedel <jroedel@suse.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 5.15 017/137] x86/sev: Check for user-space IOIO pointing to kernel space
+Date: Mon, 23 Oct 2023 12:56:14 +0200
+Message-ID: <20231023104821.524048898@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -41,56 +43,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Joerg Roedel <jroedel@suse.de>
 
-commit b2f750c3a80b285cd60c9346f8c96bd0a2a66cde upstream.
+Upstream commit: 63e44bc52047f182601e7817da969a105aa1f721
 
-When either reset- or shutdown-gpio have are initially deasserted,
-e.g. after a reboot - or when the hardware does not include pull-down,
-there will be a short toggle of both IOs to logical 0 and back to 1.
+Check the memory operand of INS/OUTS before emulating the instruction.
+The #VC exception can get raised from user-space, but the memory operand
+can be manipulated to access kernel memory before the emulation actually
+begins and after the exception handler has run.
 
-It seems that the rfkill default is unblocked, so the driver should not
-glitch to output low during probe.
-It can lead e.g. to unexpected lte modem reconnect:
+  [ bp: Massage commit message. ]
 
-[1] root@localhost:~# dmesg | grep "usb 2-1"
-[    2.136124] usb 2-1: new SuperSpeed USB device number 2 using xhci-hcd
-[   21.215278] usb 2-1: USB disconnect, device number 2
-[   28.833977] usb 2-1: new SuperSpeed USB device number 3 using xhci-hcd
-
-The glitch has been discovered on an arm64 board, now that device-tree
-support for the rfkill-gpio driver has finally appeared :).
-
-Change the flags for devm_gpiod_get_optional from GPIOD_OUT_LOW to
-GPIOD_ASIS to avoid any glitches.
-The rfkill driver will set the intended value during rfkill_sync_work.
-
-Fixes: 7176ba23f8b5 ("net: rfkill: add generic gpio rfkill driver")
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Link: https://lore.kernel.org/r/20231004163928.14609-1-josua@solid-run.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 597cfe48212a ("x86/boot/compressed/64: Setup a GHCB-based VC Exception handler")
+Reported-by: Tom Dohrmann <erbse.13@gmx.de>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rfkill/rfkill-gpio.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/boot/compressed/sev.c |    5 +++++
+ arch/x86/kernel/sev-shared.c   |   31 +++++++++++++++++++++++++++++--
+ 2 files changed, 34 insertions(+), 2 deletions(-)
 
---- a/net/rfkill/rfkill-gpio.c
-+++ b/net/rfkill/rfkill-gpio.c
-@@ -98,13 +98,13 @@ static int rfkill_gpio_probe(struct plat
+--- a/arch/x86/boot/compressed/sev.c
++++ b/arch/x86/boot/compressed/sev.c
+@@ -110,6 +110,11 @@ static enum es_result vc_ioio_check(stru
+ 	return ES_OK;
+ }
  
- 	rfkill->clk = devm_clk_get(&pdev->dev, NULL);
++static bool fault_in_kernel_space(unsigned long address)
++{
++	return false;
++}
++
+ #undef __init
+ #undef __pa
+ #define __init
+--- a/arch/x86/kernel/sev-shared.c
++++ b/arch/x86/kernel/sev-shared.c
+@@ -213,6 +213,23 @@ fail:
+ 	sev_es_terminate(GHCB_SEV_ES_REASON_GENERAL_REQUEST);
+ }
  
--	gpio = devm_gpiod_get_optional(&pdev->dev, "reset", GPIOD_OUT_LOW);
-+	gpio = devm_gpiod_get_optional(&pdev->dev, "reset", GPIOD_ASIS);
- 	if (IS_ERR(gpio))
- 		return PTR_ERR(gpio);
++static enum es_result vc_insn_string_check(struct es_em_ctxt *ctxt,
++					   unsigned long address,
++					   bool write)
++{
++	if (user_mode(ctxt->regs) && fault_in_kernel_space(address)) {
++		ctxt->fi.vector     = X86_TRAP_PF;
++		ctxt->fi.error_code = X86_PF_USER;
++		ctxt->fi.cr2        = address;
++		if (write)
++			ctxt->fi.error_code |= X86_PF_WRITE;
++
++		return ES_EXCEPTION;
++	}
++
++	return ES_OK;
++}
++
+ static enum es_result vc_insn_string_read(struct es_em_ctxt *ctxt,
+ 					  void *src, char *buf,
+ 					  unsigned int data_size,
+@@ -220,7 +237,12 @@ static enum es_result vc_insn_string_rea
+ 					  bool backwards)
+ {
+ 	int i, b = backwards ? -1 : 1;
+-	enum es_result ret = ES_OK;
++	unsigned long address = (unsigned long)src;
++	enum es_result ret;
++
++	ret = vc_insn_string_check(ctxt, address, false);
++	if (ret != ES_OK)
++		return ret;
  
- 	rfkill->reset_gpio = gpio;
+ 	for (i = 0; i < count; i++) {
+ 		void *s = src + (i * data_size * b);
+@@ -241,7 +263,12 @@ static enum es_result vc_insn_string_wri
+ 					   bool backwards)
+ {
+ 	int i, s = backwards ? -1 : 1;
+-	enum es_result ret = ES_OK;
++	unsigned long address = (unsigned long)dst;
++	enum es_result ret;
++
++	ret = vc_insn_string_check(ctxt, address, true);
++	if (ret != ES_OK)
++		return ret;
  
--	gpio = devm_gpiod_get_optional(&pdev->dev, "shutdown", GPIOD_OUT_LOW);
-+	gpio = devm_gpiod_get_optional(&pdev->dev, "shutdown", GPIOD_ASIS);
- 	if (IS_ERR(gpio))
- 		return PTR_ERR(gpio);
- 
+ 	for (i = 0; i < count; i++) {
+ 		void *d = dst + (i * data_size * s);
 
 
