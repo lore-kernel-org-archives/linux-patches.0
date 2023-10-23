@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D1116405
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C98516405
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1gShG9V+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0E3C433C7;
-	Mon, 23 Oct 2023 11:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/C2xkb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F35C433C9;
+	Mon, 23 Oct 2023 11:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061421;
-	bh=sSCjHeaKN51Lx96pIBlribKtCbW2mZraF00/zWFGpf8=;
+	s=korg; t=1698061424;
+	bh=4Nduy33OMSOtdi+yXEPfb9z1Kuuvy/Kep9OylbeQbWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1gShG9V+7dfXk6/ex24pWjBowE/TE11fHSCUXJ1zDlJYCk1pw+EROfukl1mYoWBU0
-	 i0OQbkp4ybBxnrJBEyXN7CNYohnHZykRf14S4hs4/gZ4Dcq3gjfY+d9qZWYwVbyjA4
-	 xrFksPRWJC59MVOMjB8XO1t4gev4rUkMKs5MhcMI=
+	b=F/C2xkb+12RKz2ZHWJ7JZS3j1ozuvGBevTiQY2gIcaMM2cC4v4zpgMPKH267+cggE
+	 UAcKdTiGuFGvMvGot9cTMCpefpBgE41e+Mfsdrx9ioIW8MsJuX6x/pjATN5wE/VQjq
+	 dxirA2Aqi1kGcvV1CHno0gfkpo9Xy2DIpM90GVnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.10 034/202] usb: xhci: xhci-ring: Use sysdev for mapping bounce buffer
-Date: Mon, 23 Oct 2023 12:55:41 +0200
-Message-ID: <20231023104827.591405957@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
+	Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
+Subject: [PATCH 5.10 043/202] mcb: remove is_added flag from mcb_device struct
+Date: Mon, 23 Oct 2023 12:55:50 +0200
+Message-ID: <20231023104827.842767868@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -41,54 +42,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wesley Cheng <quic_wcheng@quicinc.com>
+From: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
 
-commit 41a43013d2366db5b88b42bbcd8e8f040b6ccf21 upstream.
+commit 0f28ada1fbf0054557cddcdb93ad17f767105208 upstream.
 
-As mentioned in:
-  commit 474ed23a6257 ("xhci: align the last trb before link if it is
-easily splittable.")
+When calling mcb_bus_add_devices(), both mcb devices and the mcb
+bus will attempt to attach a device to a driver because they share
+the same bus_type. This causes an issue when trying to cast the
+container of the device to mcb_device struct using to_mcb_device(),
+leading to a wrong cast when the mcb_bus is added. A crash occurs
+when freing the ida resources as the bus numbering of mcb_bus gets
+confused with the is_added flag on the mcb_device struct.
 
-A bounce buffer is utilized for ensuring that transfers that span across
-ring segments are aligned to the EP's max packet size.  However, the device
-that is used to map the DMA buffer to is currently using the XHCI HCD,
-which does not carry any DMA operations in certain configrations.
-Migration to using the sysdev entry was introduced for DWC3 based
-implementations where the IOMMU operations are present.
+The only reason for this cast was to keep an is_added flag on the
+mcb_device struct that does not seem necessary. The function
+device_attach() handles already bound devices and the mcb subsystem
+does nothing special with this is_added flag so remove it completely.
 
-Replace the reference to the controller device to sysdev instead.  This
-allows the bounce buffer to be properly mapped to any implementations that
-have an IOMMU involved.
-
-cc: stable@vger.kernel.org
-Fixes: 4c39d4b949d3 ("usb: xhci: use bus->sysdev for DMA configuration")
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230915143108.1532163-2-mathias.nyman@linux.intel.com
+Fixes: 18d288198099 ("mcb: Correctly initialize the bus's device")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Co-developed-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
+Signed-off-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
+Link: https://lore.kernel.org/r/20230906114901.63174-2-JoseJavier.Rodriguez@duagon.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mcb/mcb-core.c  |   10 +++-------
+ drivers/mcb/mcb-parse.c |    2 --
+ include/linux/mcb.h     |    1 -
+ 3 files changed, 3 insertions(+), 10 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -742,7 +742,7 @@ static void xhci_giveback_urb_in_irq(str
- static void xhci_unmap_td_bounce_buffer(struct xhci_hcd *xhci,
- 		struct xhci_ring *ring, struct xhci_td *td)
+--- a/drivers/mcb/mcb-core.c
++++ b/drivers/mcb/mcb-core.c
+@@ -389,17 +389,13 @@ EXPORT_SYMBOL_NS_GPL(mcb_free_dev, MCB);
+ 
+ static int __mcb_bus_add_devices(struct device *dev, void *data)
  {
--	struct device *dev = xhci_to_hcd(xhci)->self.controller;
-+	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	struct xhci_segment *seg = td->bounce_seg;
- 	struct urb *urb = td->urb;
- 	size_t len;
-@@ -3325,7 +3325,7 @@ static u32 xhci_td_remainder(struct xhci
- static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
- 			 u32 *trb_buff_len, struct xhci_segment *seg)
- {
--	struct device *dev = xhci_to_hcd(xhci)->self.controller;
-+	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	unsigned int unalign;
- 	unsigned int max_pkt;
- 	u32 new_buff_len;
+-	struct mcb_device *mdev = to_mcb_device(dev);
+ 	int retval;
+ 
+-	if (mdev->is_added)
+-		return 0;
+-
+ 	retval = device_attach(dev);
+-	if (retval < 0)
++	if (retval < 0) {
+ 		dev_err(dev, "Error adding device (%d)\n", retval);
+-
+-	mdev->is_added = true;
++		return retval;
++	}
+ 
+ 	return 0;
+ }
+--- a/drivers/mcb/mcb-parse.c
++++ b/drivers/mcb/mcb-parse.c
+@@ -99,8 +99,6 @@ static int chameleon_parse_gdd(struct mc
+ 	mdev->mem.end = mdev->mem.start + size - 1;
+ 	mdev->mem.flags = IORESOURCE_MEM;
+ 
+-	mdev->is_added = false;
+-
+ 	ret = mcb_device_register(bus, mdev);
+ 	if (ret < 0)
+ 		goto err;
+--- a/include/linux/mcb.h
++++ b/include/linux/mcb.h
+@@ -63,7 +63,6 @@ static inline struct mcb_bus *to_mcb_bus
+ struct mcb_device {
+ 	struct device dev;
+ 	struct mcb_bus *bus;
+-	bool is_added;
+ 	struct mcb_driver *driver;
+ 	u16 id;
+ 	int inst;
 
 
