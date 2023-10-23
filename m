@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270F514AA3
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E9514AA6
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKXFtJJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9771AC433C9;
-	Mon, 23 Oct 2023 11:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEmDwcfk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92789C433C7;
+	Mon, 23 Oct 2023 11:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059743;
-	bh=poPTQtm1osShE9l7vJuBFZL9SmqgbdoEVINNjWn9yr4=;
+	s=korg; t=1698059746;
+	bh=UU5KHLb85Lq9QitD+vhWGskFSuGan/Qp3a7D79CkJgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKXFtJJTnusiG8KhlSYpbxdI1gADKveTzSWTNIKInqTSbstSWUchxXfwPIJrR9o+u
-	 JOaimzVlW+FbJDwMptZBuSrz8ELVTaB/nsiOf79DVhoeBQVj/f+qcXHdvweJtp3Kau
-	 DoVslCxTXLfSv1S+SocFarXxk9RkyOPS6SAejzHM=
+	b=CEmDwcfkFXOijjhpOYv2soQaLNNip8rhfsNy92xN5tMqDifETAWZNcuwxf+2Gurgn
+	 mh5wTRbw0AQmKj8nPny3C5JkCOTDR6enSRockvt+xEazDPp+GpiHKU/bqgE40xv5np
+	 uYAWCFL/Zux/B41+7q1oaBhK32YdU93/49ijcm5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	syzbot+0434ac83f907a1dbdd1e@syzkaller.appspotmail.com,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 4.19 30/98] Input: powermate - fix use-after-free in powermate_config_complete
-Date: Mon, 23 Oct 2023 12:56:19 +0200
-Message-ID: <20231023104814.649355905@linuxfoundation.org>
+	Fei Yang <fei.yang@intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 4.19 39/98] x86/alternatives: Disable KASAN in apply_alternatives()
+Date: Mon, 23 Oct 2023 12:56:28 +0200
+Message-ID: <20231023104814.971089835@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -42,39 +44,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-commit 5c15c60e7be615f05a45cd905093a54b11f461bc upstream.
+commit d35652a5fc9944784f6f50a5c979518ff8dacf61 upstream.
 
-syzbot has found a use-after-free bug [1] in the powermate driver. This
-happens when the device is disconnected, which leads to a memory free from
-the powermate_device struct.  When an asynchronous control message
-completes after the kfree and its callback is invoked, the lock does not
-exist anymore and hence the bug.
+Fei has reported that KASAN triggers during apply_alternatives() on
+a 5-level paging machine:
 
-Use usb_kill_urb() on pm->config to cancel any in-progress requests upon
-device disconnection.
+	BUG: KASAN: out-of-bounds in rcu_is_watching()
+	Read of size 4 at addr ff110003ee6419a0 by task swapper/0/0
+	...
+	__asan_load4()
+	rcu_is_watching()
+	trace_hardirqs_on()
+	text_poke_early()
+	apply_alternatives()
+	...
 
-[1] https://syzkaller.appspot.com/bug?extid=0434ac83f907a1dbdd1e
+On machines with 5-level paging, cpu_feature_enabled(X86_FEATURE_LA57)
+gets patched. It includes KASAN code, where KASAN_SHADOW_START depends on
+__VIRTUAL_MASK_SHIFT, which is defined with cpu_feature_enabled().
 
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reported-by: syzbot+0434ac83f907a1dbdd1e@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/20230916-topic-powermate_use_after_free-v3-1-64412b81a7a2@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+KASAN gets confused when apply_alternatives() patches the
+KASAN_SHADOW_START users. A test patch that makes KASAN_SHADOW_START
+static, by replacing __VIRTUAL_MASK_SHIFT with 56, works around the issue.
+
+Fix it for real by disabling KASAN while the kernel is patching alternatives.
+
+[ mingo: updated the changelog ]
+
+Fixes: 6657fca06e3f ("x86/mm: Allow to boot without LA57 if CONFIG_X86_5LEVEL=y")
+Reported-by: Fei Yang <fei.yang@intel.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231012100424.1456-1-kirill.shutemov@linux.intel.com
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/powermate.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/alternative.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/input/misc/powermate.c
-+++ b/drivers/input/misc/powermate.c
-@@ -424,6 +424,7 @@ static void powermate_disconnect(struct
- 		pm->requires_update = 0;
- 		usb_kill_urb(pm->irq);
- 		input_unregister_device(pm->input);
-+		usb_kill_urb(pm->config);
- 		usb_free_urb(pm->irq);
- 		usb_free_urb(pm->config);
- 		powermate_free_buffers(interface_to_usbdev(intf), pm);
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -366,6 +366,17 @@ void __init_or_module noinline apply_alt
+ 	u8 insnbuf[MAX_PATCH_LEN];
+ 
+ 	DPRINTK("alt table %px, -> %px", start, end);
++
++	/*
++	 * In the case CONFIG_X86_5LEVEL=y, KASAN_SHADOW_START is defined using
++	 * cpu_feature_enabled(X86_FEATURE_LA57) and is therefore patched here.
++	 * During the process, KASAN becomes confused seeing partial LA57
++	 * conversion and triggers a false-positive out-of-bound report.
++	 *
++	 * Disable KASAN until the patching is complete.
++	 */
++	kasan_disable_current();
++
+ 	/*
+ 	 * The scan order should be from start to end. A later scanned
+ 	 * alternative code can overwrite previously scanned alternative code.
+@@ -426,6 +437,8 @@ void __init_or_module noinline apply_alt
+ 
+ 		text_poke_early(instr, insnbuf, insnbuf_sz);
+ 	}
++
++	kasan_enable_current();
+ }
+ 
+ #ifdef CONFIG_SMP
 
 
