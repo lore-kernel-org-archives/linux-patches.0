@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA3214A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D1214A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFkdjLER"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86414C433C9;
-	Mon, 23 Oct 2023 11:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wco0uZ6b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717EBC433C7;
+	Mon, 23 Oct 2023 11:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058974;
-	bh=I48jHKlmTuX1pyy2ucxro1XzV2/lgTnYuGM+e8blY0Q=;
+	s=korg; t=1698058977;
+	bh=MJWYpbl55FUtwSJY36b6EPq7+VD9W8R186RNBp+m+1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nFkdjLERV82xE2gbPaqrJLlmb5K9XcAVKGTxpCWMXnxbXwYLMweh9OP483j+N7PX3
-	 1AaY7ZD2JjXUfF+5PtEcBMqDeKvec8yEmDCIrNYsMtcG1W3juPAwNML+HzNxdmoBBa
-	 DqtMWoh8yT2DflbsMy5hv5FFD8oCNhFpx48e9apU=
+	b=Wco0uZ6bzbqC10Z4vTCQTgrehHjdF+ek5LgTMU/dU5JB5YW0x5AuSgxm3dMA2xE5E
+	 gV2tTrH7RUVw1Ljkw8HcyR9L9UHeHz+zNzjoJCpQwDSbbNWsgOgRTz75IBL9m+ar+1
+	 OVoKdQGoSjMt0iuABTfAQbmcpoZNUWDrxa47NHbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyler Stachecki <stachecki.tyler@gmail.com>,
-	Leonardo Bras <leobras@redhat.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
 	Sean Christopherson <seanjc@google.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.5 021/241] KVM: x86: Constrain guest-supported xfeatures only at KVM_GET_XSAVE{2}
-Date: Mon, 23 Oct 2023 12:53:27 +0200
-Message-ID: <20231023104834.448183629@linuxfoundation.org>
+Subject: [PATCH 6.5 022/241] x86: KVM: SVM: always update the x2avic msr interception
+Date: Mon, 23 Oct 2023 12:53:28 +0200
+Message-ID: <20231023104834.474679289@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -44,115 +43,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-commit 8647c52e9504c99752a39f1d44f6268f82c40a5c upstream.
+commit b65235f6e102354ccafda601eaa1c5bef5284d21 upstream.
 
-Mask off xfeatures that aren't exposed to the guest only when saving guest
-state via KVM_GET_XSAVE{2} instead of modifying user_xfeatures directly.
-Preserving the maximal set of xfeatures in user_xfeatures restores KVM's
-ABI for KVM_SET_XSAVE, which prior to commit ad856280ddea ("x86/kvm/fpu:
-Limit guest user_xfeatures to supported bits of XCR0") allowed userspace
-to load xfeatures that are supported by the host, irrespective of what
-xfeatures are exposed to the guest.
+The following problem exists since x2avic was enabled in the KVM:
 
-There is no known use case where userspace *intentionally* loads xfeatures
-that aren't exposed to the guest, but the bug fixed by commit ad856280ddea
-was specifically that KVM_GET_SAVE{2} would save xfeatures that weren't
-exposed to the guest, e.g. would lead to userspace unintentionally loading
-guest-unsupported xfeatures when live migrating a VM.
+svm_set_x2apic_msr_interception is called to enable the interception of
+the x2apic msrs.
 
-Restricting KVM_SET_XSAVE to guest-supported xfeatures is especially
-problematic for QEMU-based setups, as QEMU has a bug where instead of
-terminating the VM if KVM_SET_XSAVE fails, QEMU instead simply stops
-loading guest state, i.e. resumes the guest after live migration with
-incomplete guest state, and ultimately results in guest data corruption.
+In particular it is called at the moment the guest resets its apic.
 
-Note, letting userspace restore all host-supported xfeatures does not fix
-setups where a VM is migrated from a host *without* commit ad856280ddea,
-to a target with a subset of host-supported xfeatures.  However there is
-no way to safely address that scenario, e.g. KVM could silently drop the
-unsupported features, but that would be a clear violation of KVM's ABI and
-so would require userspace to opt-in, at which point userspace could
-simply be updated to sanitize the to-be-loaded XSAVE state.
+Assuming that the guest's apic was in x2apic mode, the reset will bring
+it back to the xapic mode.
 
-Reported-by: Tyler Stachecki <stachecki.tyler@gmail.com>
-Closes: https://lore.kernel.org/all/20230914010003.358162-1-tstachecki@bloomberg.net
-Fixes: ad856280ddea ("x86/kvm/fpu: Limit guest user_xfeatures to supported bits of XCR0")
+The svm_set_x2apic_msr_interception however has an erroneous check for
+'!apic_x2apic_mode()' which prevents it from doing anything in this case.
+
+As a result of this, all x2apic msrs are left unintercepted, and that
+exposes the bare metal x2apic (if enabled) to the guest.
+Oops.
+
+Remove the erroneous '!apic_x2apic_mode()' check to fix that.
+
+This fixes CVE-2023-5090
+
+Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
 Cc: stable@vger.kernel.org
-Cc: Leonardo Bras <leobras@redhat.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Message-Id: <20230928001956.924301-3-seanjc@google.com>
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Tested-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20230928173354.217464-2-mlevitsk@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/xstate.c |    5 +----
- arch/x86/kvm/cpuid.c         |    8 --------
- arch/x86/kvm/x86.c           |   18 ++++++++++++++++--
- 3 files changed, 17 insertions(+), 14 deletions(-)
+ arch/x86/kvm/svm/svm.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -1543,10 +1543,7 @@ static int fpstate_realloc(u64 xfeatures
- 		fpregs_restore_userregs();
- 
- 	newfps->xfeatures = curfps->xfeatures | xfeatures;
--
--	if (!guest_fpu)
--		newfps->user_xfeatures = curfps->user_xfeatures | xfeatures;
--
-+	newfps->user_xfeatures = curfps->user_xfeatures | xfeatures;
- 	newfps->xfd = curfps->xfd & ~xfeatures;
- 
- 	/* Do the final updates within the locked region */
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -326,14 +326,6 @@ static void kvm_vcpu_after_set_cpuid(str
- 	vcpu->arch.guest_supported_xcr0 =
- 		cpuid_get_supported_xcr0(vcpu->arch.cpuid_entries, vcpu->arch.cpuid_nent);
- 
--	/*
--	 * FP+SSE can always be saved/restored via KVM_{G,S}ET_XSAVE, even if
--	 * XSAVE/XCRO are not exposed to the guest, and even if XSAVE isn't
--	 * supported by the host.
--	 */
--	vcpu->arch.guest_fpu.fpstate->user_xfeatures = vcpu->arch.guest_supported_xcr0 |
--						       XFEATURE_MASK_FPSSE;
--
- 	kvm_update_pv_runtime(vcpu);
- 
- 	vcpu->arch.maxphyaddr = cpuid_query_maxphyaddr(vcpu);
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -5389,12 +5389,26 @@ static int kvm_vcpu_ioctl_x86_set_debugr
- static void kvm_vcpu_ioctl_x86_get_xsave2(struct kvm_vcpu *vcpu,
- 					  u8 *state, unsigned int size)
- {
-+	/*
-+	 * Only copy state for features that are enabled for the guest.  The
-+	 * state itself isn't problematic, but setting bits in the header for
-+	 * features that are supported in *this* host but not exposed to the
-+	 * guest can result in KVM_SET_XSAVE failing when live migrating to a
-+	 * compatible host without the features that are NOT exposed to the
-+	 * guest.
-+	 *
-+	 * FP+SSE can always be saved/restored via KVM_{G,S}ET_XSAVE, even if
-+	 * XSAVE/XCRO are not exposed to the guest, and even if XSAVE isn't
-+	 * supported by the host.
-+	 */
-+	u64 supported_xcr0 = vcpu->arch.guest_supported_xcr0 |
-+			     XFEATURE_MASK_FPSSE;
-+
- 	if (fpstate_is_confidential(&vcpu->arch.guest_fpu))
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -829,8 +829,7 @@ void svm_set_x2apic_msr_interception(str
+ 	if (intercept == svm->x2avic_msrs_intercepted)
  		return;
  
- 	fpu_copy_guest_fpstate_to_uabi(&vcpu->arch.guest_fpu, state, size,
--				       vcpu->arch.guest_fpu.fpstate->user_xfeatures,
--				       vcpu->arch.pkru);
-+				       supported_xcr0, vcpu->arch.pkru);
- }
+-	if (!x2avic_enabled ||
+-	    !apic_x2apic_mode(svm->vcpu.arch.apic))
++	if (!x2avic_enabled)
+ 		return;
  
- static void kvm_vcpu_ioctl_x86_get_xsave(struct kvm_vcpu *vcpu,
+ 	for (i = 0; i < MAX_DIRECT_ACCESS_MSRS; i++) {
 
 
