@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638C014A8A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A3D14282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMDkCuyq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3522C433C7;
-	Mon, 23 Oct 2023 11:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJOViV+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5B9C433C8;
+	Mon, 23 Oct 2023 11:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059399;
-	bh=3RBULcfVMBN94PPsKwuFFWwZJmF3f53CKerBGCeHsNA=;
+	s=korg; t=1698059402;
+	bh=eSZDGzjZnCry1pW/gshQFJeby5A4F+UD5vYKi8IDgGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMDkCuyq6sCHNuFeVHikXpWzFddySpK5rsJ9yX0UKEQEKDCCVgsQ/zRPq6DCc12g9
-	 +G5ORV1IRBAXNxhHNcK7Hf5LkxK1ep/tdHuIXB8mjENiOf22gdYfgy1C9tWr07T7go
-	 HU9PnuLP7eYQcn9yaOAOWHLATfyBM+T9D0NN/VHg=
+	b=jJOViV+nJpGlBDw2N0OeMI3cekVcCn4WQcX8s+go3e8JJFeYWOAAQJ4br6PGoqVdS
+	 /iBCk5wtRYMBN9833T1sHS/Y8r/otzRkAuNguN4ghLi+cVkE/vkwu396FNNSIs9I53
+	 qOxJwGh0R+a86sZitmCE3tHRG6X9mu5guSZv54JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bibek Kumar Patro <quic_bibekkum@quicinc.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.5 164/241] mtd: rawnand: qcom: Unmap the right resource upon probe failure
-Date: Mon, 23 Oct 2023 12:55:50 +0200
-Message-ID: <20231023104837.874317824@linuxfoundation.org>
+Subject: [PATCH 6.5 165/241] mtd: rawnand: pl353: Ensure program page operations are successful
+Date: Mon, 23 Oct 2023 12:55:51 +0200
+Message-ID: <20231023104837.899319351@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,34 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-commit 5279f4a9eed3ee7d222b76511ea7a22c89e7eefd upstream.
+commit 9777cc13fd2c3212618904636354be60835e10bb upstream.
 
-We currently provide the physical address of the DMA region
-rather than the output of dma_map_resource() which is obviously wrong.
+The NAND core complies with the ONFI specification, which itself
+mentions that after any program or erase operation, a status check
+should be performed to see whether the operation was finished *and*
+successful.
 
-Fixes: 7330fc505af4 ("mtd: rawnand: qcom: stop using phys_to_dma()")
+The NAND core offers helpers to finish a page write (sending the
+"PAGE PROG" command, waiting for the NAND chip to be ready again, and
+checking the operation status). But in some cases, advanced controller
+drivers might want to optimize this and craft their own page write
+helper to leverage additional hardware capabilities, thus not always
+using the core facilities.
+
+Some drivers, like this one, do not use the core helper to finish a page
+write because the final cycles are automatically managed by the
+hardware. In this case, the additional care must be taken to manually
+perform the final status check.
+
+Let's read the NAND chip status at the end of the page write helper and
+return -EIO upon error.
+
+Cc: Michal Simek <michal.simek@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Fixes: 08d8c62164a3 ("mtd: rawnand: pl353: Add support for the ARM PL353 SMC NAND controller")
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230913070702.12707-1-quic_bibekkum@quicinc.com
+Tested-by: Michal Simek <michal.simek@amd.com>
+Link: https://lore.kernel.org/linux-mtd/20230717194221.229778-3-miquel.raynal@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/qcom_nandc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/pl35x-nand-controller.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -3309,7 +3309,7 @@ err_nandc_alloc:
- err_aon_clk:
- 	clk_disable_unprepare(nandc->core_clk);
- err_core_clk:
--	dma_unmap_resource(dev, res->start, resource_size(res),
-+	dma_unmap_resource(dev, nandc->base_dma, resource_size(res),
- 			   DMA_BIDIRECTIONAL, 0);
- 	return ret;
- }
+--- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
++++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+@@ -513,6 +513,7 @@ static int pl35x_nand_write_page_hwecc(s
+ 	u32 addr1 = 0, addr2 = 0, row;
+ 	u32 cmd_addr;
+ 	int i, ret;
++	u8 status;
+ 
+ 	ret = pl35x_smc_set_ecc_mode(nfc, chip, PL35X_SMC_ECC_CFG_MODE_APB);
+ 	if (ret)
+@@ -565,6 +566,14 @@ static int pl35x_nand_write_page_hwecc(s
+ 	if (ret)
+ 		goto disable_ecc_engine;
+ 
++	/* Check write status on the chip side */
++	ret = nand_status_op(chip, &status);
++	if (ret)
++		goto disable_ecc_engine;
++
++	if (status & NAND_STATUS_FAIL)
++		ret = -EIO;
++
+ disable_ecc_engine:
+ 	pl35x_smc_set_ecc_mode(nfc, chip, PL35X_SMC_ECC_CFG_MODE_BYPASS);
+ 
 
 
