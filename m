@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD68F14F6A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291CC14F6A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaOEkNvx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F27C433C8;
-	Mon, 23 Oct 2023 11:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijlhWc7z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52750C433C7;
+	Mon, 23 Oct 2023 11:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060062;
-	bh=EeXAqM553gZDENN2oO7kFYYBZ+xxNNomuO2U6fO98jM=;
+	s=korg; t=1698060065;
+	bh=ToR+wkV+pk+YzaMSKVH3TKGsmVqWZWllthWW3jNoYAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HaOEkNvxSxyRYNGVsa8xnN62DSgL5j3XQIokxRefnLWwrH4Zi3U+UOLdd+ya/Ywd+
-	 q62Dd64hII39fN+bdougOI4Qh0/hbERzM+M+LiFoLjHaSIQr73fcIHyNwQesFpZien
-	 iUocHK510j+ba0+wddZh9Dgobe7pTVr87IHCOXII=
+	b=ijlhWc7za4JoC6aQlRoOdG9tqWQRPKf3CqrWc8yknqE0unRk7MqF8h4sOXA0cHDAr
+	 FHJ0rruOGaJvJfmKgY1N//xDFZaRDfSL1hp3JBkwjXpJSPkwMCssa52Kk9y3Dytymc
+	 9Q5ISOmHgNhF/Lw5mqPuyU5tPQh8hZCqAy9h+ABg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 045/196] ASoC: codecs: wcd938x: fix resource leaks on bind errors
-Date: Mon, 23 Oct 2023 12:55:10 +0200
-Message-ID: <20231023104829.787038389@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>,
+	Manish Chopra <manishc@marvell.com>
+Subject: [PATCH 6.1 046/196] qed: fix LL2 RX buffer allocation
+Date: Mon, 23 Oct 2023 12:55:11 +0200
+Message-ID: <20231023104829.819186339@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -36,139 +35,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Manish Chopra <manishc@marvell.com>
 
-commit da29b94ed3547cee9d510d02eca4009f2de476cf upstream.
+commit 2f3389c73832ad90b63208c0fc281ad080114c7a upstream.
 
-Add the missing code to release resources on bind errors, including the
-references taken by wcd938x_sdw_device_get() which also need to be
-dropped on unbind().
+Driver allocates the LL2 rx buffers from kmalloc()
+area to construct the skb using slab_build_skb()
 
-Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
-Cc: stable@vger.kernel.org      # 5.14
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231003155558.27079-4-johan+linaro@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The required size allocation seems to have overlooked
+for accounting both skb_shared_info size and device
+placement padding bytes which results into the below
+panic when doing skb_put() for a standard MTU sized frame.
+
+skbuff: skb_over_panic: text:ffffffffc0b0225f len:1514 put:1514
+head:ff3dabceaf39c000 data:ff3dabceaf39c042 tail:0x62c end:0x566
+dev:<NULL>
+…
+skb_panic+0x48/0x4a
+skb_put.cold+0x10/0x10
+qed_ll2b_complete_rx_packet+0x14f/0x260 [qed]
+qed_ll2_rxq_handle_completion.constprop.0+0x169/0x200 [qed]
+qed_ll2_rxq_completion+0xba/0x320 [qed]
+qed_int_sp_dpc+0x1a7/0x1e0 [qed]
+
+This patch fixes this by accouting skb_shared_info and device
+placement padding size bytes when allocating the buffers.
+
+Cc: David S. Miller <davem@davemloft.net>
+Fixes: 0a7fb11c23c0 ("qed: Add Light L2 support")
+Signed-off-by: Manish Chopra <manishc@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd938x.c |   44 ++++++++++++++++++++++++++++++++++----------
- 1 file changed, 34 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/qlogic/qed/qed_ll2.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/sound/soc/codecs/wcd938x.c
-+++ b/sound/soc/codecs/wcd938x.c
-@@ -3441,7 +3441,8 @@ static int wcd938x_bind(struct device *d
- 	wcd938x->rxdev = wcd938x_sdw_device_get(wcd938x->rxnode);
- 	if (!wcd938x->rxdev) {
- 		dev_err(dev, "could not find slave with matching of node\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_unbind;
- 	}
- 	wcd938x->sdw_priv[AIF1_PB] = dev_get_drvdata(wcd938x->rxdev);
- 	wcd938x->sdw_priv[AIF1_PB]->wcd938x = wcd938x;
-@@ -3449,7 +3450,8 @@ static int wcd938x_bind(struct device *d
- 	wcd938x->txdev = wcd938x_sdw_device_get(wcd938x->txnode);
- 	if (!wcd938x->txdev) {
- 		dev_err(dev, "could not find txslave with matching of node\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_put_rxdev;
- 	}
- 	wcd938x->sdw_priv[AIF1_CAP] = dev_get_drvdata(wcd938x->txdev);
- 	wcd938x->sdw_priv[AIF1_CAP]->wcd938x = wcd938x;
-@@ -3460,31 +3462,35 @@ static int wcd938x_bind(struct device *d
- 	if (!device_link_add(wcd938x->rxdev, wcd938x->txdev, DL_FLAG_STATELESS |
- 			    DL_FLAG_PM_RUNTIME)) {
- 		dev_err(dev, "could not devlink tx and rx\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_put_txdev;
- 	}
- 
- 	if (!device_link_add(dev, wcd938x->txdev, DL_FLAG_STATELESS |
- 					DL_FLAG_PM_RUNTIME)) {
- 		dev_err(dev, "could not devlink wcd and tx\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_remove_rxtx_link;
- 	}
- 
- 	if (!device_link_add(dev, wcd938x->rxdev, DL_FLAG_STATELESS |
- 					DL_FLAG_PM_RUNTIME)) {
- 		dev_err(dev, "could not devlink wcd and rx\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_remove_tx_link;
- 	}
- 
- 	wcd938x->regmap = dev_get_regmap(&wcd938x->tx_sdw_dev->dev, NULL);
- 	if (!wcd938x->regmap) {
- 		dev_err(dev, "could not get TX device regmap\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_remove_rx_link;
- 	}
- 
- 	ret = wcd938x_irq_init(wcd938x, dev);
- 	if (ret) {
- 		dev_err(dev, "%s: IRQ init failed: %d\n", __func__, ret);
--		return ret;
-+		goto err_remove_rx_link;
- 	}
- 
- 	wcd938x->sdw_priv[AIF1_PB]->slave_irq = wcd938x->virq;
-@@ -3493,17 +3499,33 @@ static int wcd938x_bind(struct device *d
- 	ret = wcd938x_set_micbias_data(wcd938x);
- 	if (ret < 0) {
- 		dev_err(dev, "%s: bad micbias pdata\n", __func__);
--		return ret;
-+		goto err_remove_rx_link;
- 	}
- 
- 	ret = snd_soc_register_component(dev, &soc_codec_dev_wcd938x,
- 					 wcd938x_dais, ARRAY_SIZE(wcd938x_dais));
--	if (ret)
-+	if (ret) {
- 		dev_err(dev, "%s: Codec registration failed\n",
- 				__func__);
-+		goto err_remove_rx_link;
-+	}
- 
--	return ret;
-+	return 0;
- 
-+err_remove_rx_link:
-+	device_link_remove(dev, wcd938x->rxdev);
-+err_remove_tx_link:
-+	device_link_remove(dev, wcd938x->txdev);
-+err_remove_rxtx_link:
-+	device_link_remove(wcd938x->rxdev, wcd938x->txdev);
-+err_put_txdev:
-+	put_device(wcd938x->txdev);
-+err_put_rxdev:
-+	put_device(wcd938x->rxdev);
-+err_unbind:
-+	component_unbind_all(dev, wcd938x);
+--- a/drivers/net/ethernet/qlogic/qed/qed_ll2.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_ll2.c
+@@ -113,7 +113,10 @@ static void qed_ll2b_complete_tx_packet(
+ static int qed_ll2_alloc_buffer(struct qed_dev *cdev,
+ 				u8 **data, dma_addr_t *phys_addr)
+ {
+-	*data = kmalloc(cdev->ll2->rx_size, GFP_ATOMIC);
++	size_t size = cdev->ll2->rx_size + NET_SKB_PAD +
++		      SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
 +
-+	return ret;
- }
++	*data = kmalloc(size, GFP_ATOMIC);
+ 	if (!(*data)) {
+ 		DP_INFO(cdev, "Failed to allocate LL2 buffer data\n");
+ 		return -ENOMEM;
+@@ -2590,7 +2593,7 @@ static int qed_ll2_start(struct qed_dev
+ 	INIT_LIST_HEAD(&cdev->ll2->list);
+ 	spin_lock_init(&cdev->ll2->lock);
  
- static void wcd938x_unbind(struct device *dev)
-@@ -3514,6 +3536,8 @@ static void wcd938x_unbind(struct device
- 	device_link_remove(dev, wcd938x->txdev);
- 	device_link_remove(dev, wcd938x->rxdev);
- 	device_link_remove(wcd938x->rxdev, wcd938x->txdev);
-+	put_device(wcd938x->txdev);
-+	put_device(wcd938x->rxdev);
- 	component_unbind_all(dev, wcd938x);
- }
+-	cdev->ll2->rx_size = NET_SKB_PAD + ETH_HLEN +
++	cdev->ll2->rx_size = PRM_DMA_PAD_BYTES_NUM + ETH_HLEN +
+ 			     L1_CACHE_BYTES + params->mtu;
  
+ 	/* Allocate memory for LL2.
 
 
