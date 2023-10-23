@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403CB14263
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7473F14263
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUgr4Kvf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD959C433C7;
-	Mon, 23 Oct 2023 11:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QX8wNnhp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9366DC433C7;
+	Mon, 23 Oct 2023 11:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059319;
-	bh=PQ+SVLY1BXc7vfU22Dw4WBgvWkAATLkowOmpJ/idphY=;
+	s=korg; t=1698059322;
+	bh=daQXxgwxXaonwPO1/ZuougRlZxjlDUHLAbr93wRlLTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUgr4KvfQY2II3h0Cf1ILmflGUD6itW5SgW7Sgf3vD4bnOnQFcwzJBrhKgGmkmWs4
-	 brc9Yq+GYnTp857nLvXmiXhgn6pgwikx6NjW0MCIBJJub1PGq7GzBVbCIrOlfqBvo8
-	 nUBQ4r+w2v1lYki30yurEfSq75P/jq+V0JII0VUc=
+	b=QX8wNnhp402InHTVPgIY0nDPMZFUdIwUncjSGX78AvQVUDhVC+gpv4qfNTPuy6e5g
+	 FSrTy3WwC3ZB6R/3gtyDuM7R1iWkR0QJout4WBAYEWuEsKcE0whPAYfvqyD1mWiY0C
+	 g7pjADc9eN76bEI8hou9UYFoIXfe/O25dWJGT7XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Feifei Xu <Feifei.Xu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Rain <rain@sunshowers.io>,
+	Rahul Rameshbabu <sergeantsagara@protonmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 137/241] drm/amd/pm: add unique_id for gc 11.0.3
-Date: Mon, 23 Oct 2023 12:55:23 +0200
-Message-ID: <20231023104837.206555059@linuxfoundation.org>
+Subject: [PATCH 6.5 138/241] HID: multitouch: Add required quirk for Synaptics 0xcd7e device
+Date: Mon, 23 Oct 2023 12:55:24 +0200
+Message-ID: <20231023104837.229624412@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -43,32 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kenneth Feng <kenneth.feng@amd.com>
+From: Rahul Rameshbabu <sergeantsagara@protonmail.com>
 
-[ Upstream commit 4953856f280b2b606089a72a93a1e9212a3adaca ]
+[ Upstream commit 1437e4547edf41689d7135faaca4222ef0081bc1 ]
 
-add unique_id for gc 11.0.3
+Register the Synaptics device as a special multitouch device with certain
+quirks that may improve usability of the touchpad device.
 
-Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
-Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Rain <rain@sunshowers.io>
+Closes: https://lore.kernel.org/linux-input/2bbb8e1d-1793-4df1-810f-cb0137341ff4@app.fastmail.com/
+Signed-off-by: Rahul Rameshbabu <sergeantsagara@protonmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_pm.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-multitouch.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-index d68fe5474676b..7f7a476b6829c 100644
---- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-@@ -2077,6 +2077,7 @@ static int default_attr_update(struct amdgpu_device *adev, struct amdgpu_device_
- 		case IP_VERSION(11, 0, 0):
- 		case IP_VERSION(11, 0, 1):
- 		case IP_VERSION(11, 0, 2):
-+		case IP_VERSION(11, 0, 3):
- 			*states = ATTR_STATE_SUPPORTED;
- 			break;
- 		default:
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 521b2ffb42449..8db4ae05febc8 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -2144,6 +2144,10 @@ static const struct hid_device_id mt_devices[] = {
+ 			USB_DEVICE_ID_MTP_STM)},
+ 
+ 	/* Synaptics devices */
++	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
++		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
++			USB_VENDOR_ID_SYNAPTICS, 0xcd7e) },
++
+ 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
+ 		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
+ 			USB_VENDOR_ID_SYNAPTICS, 0xce08) },
 -- 
 2.40.1
 
