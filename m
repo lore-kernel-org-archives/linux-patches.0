@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F141215EA0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF00B15EA0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Btd0NRjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9D8C433CD;
-	Mon, 23 Oct 2023 11:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYjSqyj3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DA7C433C9;
+	Mon, 23 Oct 2023 11:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061303;
-	bh=ecA5/z0L0kRpulKBC8vbVL91OtJ9aNrOJ3RDuNn9mIQ=;
+	s=korg; t=1698061307;
+	bh=ONhfmNg3h8thCwtzCAjFYDaGP22ybEteJ2LPhCLlySg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Btd0NRjVUJYK9VmnNVzbDCZQTXFzPzRHN/iFPG5qdBJ2AqqrT20ppxelgzkN7+cP6
-	 jFe2p84zLToGaUy9ayII+acoLa1J26++AVM1eGWacnL+5j0LBqWoKRUl0ki2piYkr4
-	 wfmhXAr9V01v1c9mZW03rby4adwqkNW94S3syID4=
+	b=mYjSqyj3hIN1ECJHaJ1OUuoOg58cnrMXVdyAueHtiZ6AxaYfAuPikmqu5Tq/UkF33
+	 VW+O8HU1L8DgFAFb4VM+daQY/Ti+6PTCCJVv+rnAe+vCSCDhypU2ij8hVhcPl+8KKg
+	 X41B4En7fDZHYWTWnF+rz5+XhgHIR9xK/UwxWCCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: [PATCH 5.15 113/137] NFSv4.1: fixup use EXCHGID4_FLAG_USE_PNFS_DS for DS server
-Date: Mon, 23 Oct 2023 12:57:50 +0200
-Message-ID: <20231023104824.598597594@linuxfoundation.org>
+	Aviram Dali <aviramd@marvell.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Ravi Chandra Minnikanti <rminnikanti@marvell.com>
+Subject: [PATCH 5.15 104/137] mtd: rawnand: marvell: Ensure program page operations are successful
+Date: Mon, 23 Oct 2023 12:57:41 +0200
+Message-ID: <20231023104824.346007324@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -41,40 +42,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-commit 379e4adfddd6a2f95a4f2029b8ddcbacf92b21f9 upstream.
+commit 3e01d5254698ea3d18e09d96b974c762328352cd upstream.
 
-This patches fixes commit 51d674a5e488 "NFSv4.1: use
-EXCHGID4_FLAG_USE_PNFS_DS for DS server", purpose of that
-commit was to mark EXCHANGE_ID to the DS with the appropriate
-flag.
+The NAND core complies with the ONFI specification, which itself
+mentions that after any program or erase operation, a status check
+should be performed to see whether the operation was finished *and*
+successful.
 
-However, connection to MDS can return both EXCHGID4_FLAG_USE_PNFS_DS
-and EXCHGID4_FLAG_USE_PNFS_MDS set but previous patch would only
-remember the USE_PNFS_DS and for the 2nd EXCHANGE_ID send that
-to the MDS.
+The NAND core offers helpers to finish a page write (sending the
+"PAGE PROG" command, waiting for the NAND chip to be ready again, and
+checking the operation status). But in some cases, advanced controller
+drivers might want to optimize this and craft their own page write
+helper to leverage additional hardware capabilities, thus not always
+using the core facilities.
 
-Instead, just mark the pnfs path exclusively.
+Some drivers, like this one, do not use the core helper to finish a page
+write because the final cycles are automatically managed by the
+hardware. In this case, the additional care must be taken to manually
+perform the final status check.
 
-Fixes: 51d674a5e488 ("NFSv4.1: use EXCHGID4_FLAG_USE_PNFS_DS for DS server")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Let's read the NAND chip status at the end of the page write helper and
+return -EIO upon error.
+
+Cc: stable@vger.kernel.org
+Fixes: 02f26ecf8c77 ("mtd: nand: add reworked Marvell NAND controller driver")
+Reported-by: Aviram Dali <aviramd@marvell.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Tested-by: Ravi Chandra Minnikanti <rminnikanti@marvell.com>
+Link: https://lore.kernel.org/linux-mtd/20230717194221.229778-1-miquel.raynal@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4proc.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/mtd/nand/raw/marvell_nand.c |   23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -8794,8 +8794,6 @@ static int _nfs4_proc_exchange_id(struct
- 	/* Save the EXCHANGE_ID verifier session trunk tests */
- 	memcpy(clp->cl_confirm.data, argp->verifier.data,
- 	       sizeof(clp->cl_confirm.data));
--	if (resp->flags & EXCHGID4_FLAG_USE_PNFS_DS)
--		set_bit(NFS_CS_DS, &clp->cl_flags);
- out:
- 	trace_nfs4_exchange_id(clp, status);
- 	rpc_put_task(task);
+--- a/drivers/mtd/nand/raw/marvell_nand.c
++++ b/drivers/mtd/nand/raw/marvell_nand.c
+@@ -1148,6 +1148,7 @@ static int marvell_nfc_hw_ecc_hmg_do_wri
+ 		.ndcb[2] = NDCB2_ADDR5_PAGE(page),
+ 	};
+ 	unsigned int oob_bytes = lt->spare_bytes + (raw ? lt->ecc_bytes : 0);
++	u8 status;
+ 	int ret;
+ 
+ 	/* NFCv2 needs more information about the operation being executed */
+@@ -1181,7 +1182,18 @@ static int marvell_nfc_hw_ecc_hmg_do_wri
+ 
+ 	ret = marvell_nfc_wait_op(chip,
+ 				  PSEC_TO_MSEC(sdr->tPROG_max));
+-	return ret;
++	if (ret)
++		return ret;
++
++	/* Check write status on the chip side */
++	ret = nand_status_op(chip, &status);
++	if (ret)
++		return ret;
++
++	if (status & NAND_STATUS_FAIL)
++		return -EIO;
++
++	return 0;
+ }
+ 
+ static int marvell_nfc_hw_ecc_hmg_write_page_raw(struct nand_chip *chip,
+@@ -1610,6 +1622,7 @@ static int marvell_nfc_hw_ecc_bch_write_
+ 	int data_len = lt->data_bytes;
+ 	int spare_len = lt->spare_bytes;
+ 	int chunk, ret;
++	u8 status;
+ 
+ 	marvell_nfc_select_target(chip, chip->cur_cs);
+ 
+@@ -1646,6 +1659,14 @@ static int marvell_nfc_hw_ecc_bch_write_
+ 	if (ret)
+ 		return ret;
+ 
++	/* Check write status on the chip side */
++	ret = nand_status_op(chip, &status);
++	if (ret)
++		return ret;
++
++	if (status & NAND_STATUS_FAIL)
++		return -EIO;
++
+ 	return 0;
+ }
+ 
 
 
