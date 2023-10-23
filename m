@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36241168B0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2449A101D9
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRd3sjk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5275C433C7;
-	Mon, 23 Oct 2023 11:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKMCMcP7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9075DC433CC;
+	Mon, 23 Oct 2023 11:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061628;
-	bh=eyzEg+DRUU5G+ieUva3YpeIwBlEMUMXGHc8rVRsl7cQ=;
+	s=korg; t=1698061630;
+	bh=T63ezU1HWpTi3LiR7/A0XT52KWB5xg+5Kv2OEJfjZrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NRd3sjk31lWWEqli2KPa5GqCTYmfr3+DQBORT0rqNz3xcef8OQDWKANpKiDUSau0x
-	 D/F43e8lqwcrd+FBg5Hb//EIB5NSW4+l8dJ4VmpaAcdcGYwql3z+Yipx5Vc4eSiVB8
-	 pP9Kpl2YBu/MFIgNPt2WcMuZuOLUTmey3RW8X5t8=
+	b=BKMCMcP7k64x7IBmOZlA7ge9762+mC8XDUrdWmjL+aT0z8ADBaQuVuTsbV7D+7fUk
+	 ugbsT7ytjagSfgSdAndKMTiZ8COmkQZMJpKOSHHU4F8iZ+u7yLY4Gph709ECK5iIaI
+	 nnebjmBVMymFWFF+DbwK41t0Mg0KWL+GJBzbsBa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
+	=?UTF-8?q?=E9=BB=84=E6=80=9D=E8=81=AA?= <huangsicong@iie.ac.cn>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 111/202] tcp: tsq: relax tcp_small_queue_check() when rtx queue contains a single skb
-Date: Mon, 23 Oct 2023 12:56:58 +0200
-Message-ID: <20231023104829.780448499@linuxfoundation.org>
+Subject: [PATCH 5.10 094/202] nfc: nci: fix possible NULL pointer dereference in send_acknowledge()
+Date: Mon, 23 Oct 2023 12:56:41 +0200
+Message-ID: <20231023104829.292086908@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -37,82 +37,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit f921a4a5bffa8a0005b190fb9421a7fc1fd716b6 upstream.
+commit 7937609cd387246aed994e81aa4fa951358fba41 upstream.
 
-In commit 75eefc6c59fd ("tcp: tsq: add a shortcut in tcp_small_queue_check()")
-we allowed to send an skb regardless of TSQ limits being hit if rtx queue
-was empty or had a single skb, in order to better fill the pipe
-when/if TX completions were slow.
+Handle memory allocation failure from nci_skb_alloc() (calling
+alloc_skb()) to avoid possible NULL pointer dereference.
 
-Then later, commit 75c119afe14f ("tcp: implement rb-tree based
-retransmit queue") accidentally removed the special case for
-one skb in rtx queue.
-
-Stefan Wahren reported a regression in single TCP flow throughput
-using a 100Mbit fec link, starting from commit 65466904b015 ("tcp: adjust
-TSO packet sizes based on min_rtt"). This last commit only made the
-regression more visible, because it locked the TCP flow on a particular
-behavior where TSQ prevented two skbs being pushed downstream,
-adding silences on the wire between each TSO packet.
-
-Many thanks to Stefan for his invaluable help !
-
-Fixes: 75c119afe14f ("tcp: implement rb-tree based retransmit queue")
-Link: https://lore.kernel.org/netdev/7f31ddc8-9971-495e-a1f6-819df542e0af@gmx.net/
-Reported-by: Stefan Wahren <wahrenst@gmx.net>
-Tested-by: Stefan Wahren <wahrenst@gmx.net>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20231017124526.4060202-1-edumazet@google.com
+Reported-by: 黄思聪 <huangsicong@iie.ac.cn>
+Fixes: 391d8a2da787 ("NFC: Add NCI over SPI receive")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20231013184129.18738-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_output.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ net/nfc/nci/spi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -2482,6 +2482,18 @@ static bool tcp_pacing_check(struct sock
- 	return true;
- }
+--- a/net/nfc/nci/spi.c
++++ b/net/nfc/nci/spi.c
+@@ -151,6 +151,8 @@ static int send_acknowledge(struct nci_s
+ 	int ret;
  
-+static bool tcp_rtx_queue_empty_or_single_skb(const struct sock *sk)
-+{
-+	const struct rb_node *node = sk->tcp_rtx_queue.rb_node;
-+
-+	/* No skb in the rtx queue. */
-+	if (!node)
-+		return true;
-+
-+	/* Only one skb in rtx queue. */
-+	return !node->rb_left && !node->rb_right;
-+}
-+
- /* TCP Small Queues :
-  * Control number of packets in qdisc/devices to two packets / or ~1 ms.
-  * (These limits are doubled for retransmits)
-@@ -2519,12 +2531,12 @@ static bool tcp_small_queue_check(struct
- 		limit += extra_bytes;
- 	}
- 	if (refcount_read(&sk->sk_wmem_alloc) > limit) {
--		/* Always send skb if rtx queue is empty.
-+		/* Always send skb if rtx queue is empty or has one skb.
- 		 * No need to wait for TX completion to call us back,
- 		 * after softirq/tasklet schedule.
- 		 * This helps when TX completions are delayed too much.
- 		 */
--		if (tcp_rtx_queue_empty(sk))
-+		if (tcp_rtx_queue_empty_or_single_skb(sk))
- 			return false;
+ 	skb = nci_skb_alloc(nspi->ndev, 0, GFP_KERNEL);
++	if (!skb)
++		return -ENOMEM;
  
- 		set_bit(TSQ_THROTTLED, &sk->sk_tsq_flags);
+ 	/* add the NCI SPI header to the start of the buffer */
+ 	hdr = skb_push(skb, NCI_SPI_HDR_LEN);
 
 
