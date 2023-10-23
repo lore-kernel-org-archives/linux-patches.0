@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855A415E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA7115E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6u7YBJK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFC3C433C8;
-	Mon, 23 Oct 2023 11:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6DmQ8SZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC15AC433C8;
+	Mon, 23 Oct 2023 11:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061058;
-	bh=p3ep+pYMxWToEnrEmCLLwHNhiU91jlMq00M8kGxTzdo=;
+	s=korg; t=1698061061;
+	bh=MSGB2PKXxfzM730NkfldPHpr4hFJItU8sW9Tj2e+AoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6u7YBJKnG4hkia66SwUccmJJT7z/yf+OgElxHC5113DcLxcrY50Ni5ZrEMNtwFXO
-	 mhngYU0sZa/YfQrT+rKdV4hKMeVu3TNLyrNNGAIfHtagvpDC9C2tyuNTvfnzYuZz/h
-	 nHkZG2ba6AEUUiuNN0rCkSqJesjMeB/6O6tHDROo=
+	b=v6DmQ8SZ7byvCBVKbhFqmaJk3xPneUL6yFYZLHuMq90COyBluVvVYpB9GpUAFNfQ5
+	 kl8mPTyEeYVObVqXkhw2cxfLiekrdFw4anLEPfPkXvlBZ2gCZovDjl/Ud3knDYlF04
+	 j7IEo312H/tX8pH88mGYKB+avRop1wj+cwiN4ltM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	JP Kobryn <inwardvessel@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Simon Ser <contact@emersion.fr>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/137] perf/x86/lbr: Filter vsyscall addresses
-Date: Mon, 23 Oct 2023 12:56:56 +0200
-Message-ID: <20231023104822.971018350@linuxfoundation.org>
+Subject: [PATCH 5.15 060/137] drm/atomic-helper: relax unregistered connector check
+Date: Mon, 23 Oct 2023 12:56:57 +0200
+Message-ID: <20231023104822.998563701@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -37,82 +39,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: JP Kobryn <inwardvessel@gmail.com>
+From: Simon Ser <contact@emersion.fr>
 
-[ Upstream commit e53899771a02f798d436655efbd9d4b46c0f9265 ]
+[ Upstream commit 2b7947bd32e243c52870d54141d3b4ea6775e63d ]
 
-We found that a panic can occur when a vsyscall is made while LBR sampling
-is active. If the vsyscall is interrupted (NMI) for perf sampling, this
-call sequence can occur (most recent at top):
+The driver might pull connectors which weren't submitted by
+user-space into the atomic state. For instance,
+intel_dp_mst_atomic_master_trans_check() pulls in connectors
+sharing the same DP-MST stream. However, if the connector is
+unregistered, this later fails with:
 
-    __insn_get_emulate_prefix()
-    insn_get_emulate_prefix()
-    insn_get_prefixes()
-    insn_get_opcode()
-    decode_branch_type()
-    get_branch_type()
-    intel_pmu_lbr_filter()
-    intel_pmu_handle_irq()
-    perf_event_nmi_handler()
+    [  559.425658] i915 0000:00:02.0: [drm:drm_atomic_helper_check_modeset] [CONNECTOR:378:DP-7] is not registered
 
-Within __insn_get_emulate_prefix() at frame 0, a macro is called:
+Skip the unregistered connector check to allow user-space to turn
+off connectors one-by-one.
 
-    peek_nbyte_next(insn_byte_t, insn, i)
+See this wlroots issue:
+https://gitlab.freedesktop.org/wlroots/wlroots/-/issues/3407
 
-Within this macro, this dereference occurs:
+Previous discussion:
+https://lore.kernel.org/intel-gfx/Y6GX7z17WmDSKwta@ideak-desk.fi.intel.com/
 
-    (insn)->next_byte
-
-Inspecting registers at this point, the value of the next_byte field is the
-address of the vsyscall made, for example the location of the vsyscall
-version of gettimeofday() at 0xffffffffff600000. The access to an address
-in the vsyscall region will trigger an oops due to an unhandled page fault.
-
-To fix the bug, filtering for vsyscalls can be done when
-determining the branch type. This patch will return
-a "none" branch if a kernel address if found to lie in the
-vsyscall region.
-
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: JP Kobryn <inwardvessel@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Simon Ser <contact@emersion.fr>
 Cc: stable@vger.kernel.org
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231005131623.114379-1-contact@emersion.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/utils.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_atomic_helper.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/events/utils.c b/arch/x86/events/utils.c
-index a32368945462f..b30508b88bf22 100644
---- a/arch/x86/events/utils.c
-+++ b/arch/x86/events/utils.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <asm/insn.h>
-+#include <linux/mm.h>
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -285,7 +285,8 @@ static int
+ update_connector_routing(struct drm_atomic_state *state,
+ 			 struct drm_connector *connector,
+ 			 struct drm_connector_state *old_connector_state,
+-			 struct drm_connector_state *new_connector_state)
++			 struct drm_connector_state *new_connector_state,
++			 bool added_by_user)
+ {
+ 	const struct drm_connector_helper_funcs *funcs;
+ 	struct drm_encoder *new_encoder;
+@@ -336,9 +337,13 @@ update_connector_routing(struct drm_atom
+ 	 * there's a chance the connector may have been destroyed during the
+ 	 * process, but it's better to ignore that then cause
+ 	 * drm_atomic_helper_resume() to fail.
++	 *
++	 * Last, we want to ignore connector registration when the connector
++	 * was not pulled in the atomic state by user-space (ie, was pulled
++	 * in by the driver, e.g. when updating a DP-MST stream).
+ 	 */
+ 	if (!state->duplicated && drm_connector_is_unregistered(connector) &&
+-	    crtc_state->active) {
++	    added_by_user && crtc_state->active) {
+ 		DRM_DEBUG_ATOMIC("[CONNECTOR:%d:%s] is not registered\n",
+ 				 connector->base.id, connector->name);
+ 		return -EINVAL;
+@@ -610,7 +615,10 @@ drm_atomic_helper_check_modeset(struct d
+ 	struct drm_connector *connector;
+ 	struct drm_connector_state *old_connector_state, *new_connector_state;
+ 	int i, ret;
+-	unsigned int connectors_mask = 0;
++	unsigned int connectors_mask = 0, user_connectors_mask = 0;
++
++	for_each_oldnew_connector_in_state(state, connector, old_connector_state, new_connector_state, i)
++		user_connectors_mask |= BIT(i);
  
- #include "perf_event.h"
- 
-@@ -58,9 +59,9 @@ int branch_type(unsigned long from, unsigned long to, int abort)
- 		 * The LBR logs any address in the IP, even if the IP just
- 		 * faulted. This means userspace can control the from address.
- 		 * Ensure we don't blindly read any address by validating it is
--		 * a known text address.
-+		 * a known text address and not a vsyscall address.
+ 	for_each_oldnew_crtc_in_state(state, crtc, old_crtc_state, new_crtc_state, i) {
+ 		bool has_connectors =
+@@ -675,7 +683,8 @@ drm_atomic_helper_check_modeset(struct d
  		 */
--		if (kernel_text_address(from)) {
-+		if (kernel_text_address(from) && !in_gate_area_no_mm(from)) {
- 			addr = (void *)from;
- 			/*
- 			 * Assume we can get the maximum possible size
--- 
-2.40.1
-
+ 		ret = update_connector_routing(state, connector,
+ 					       old_connector_state,
+-					       new_connector_state);
++					       new_connector_state,
++					       BIT(i) & user_connectors_mask);
+ 		if (ret)
+ 			return ret;
+ 		if (old_connector_state->crtc) {
 
 
