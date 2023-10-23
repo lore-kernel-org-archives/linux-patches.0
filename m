@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D84815EA0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8384723C5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vi55G+XB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C56C433BC;
-	Mon, 23 Oct 2023 11:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aXvemiA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94CDCC433C7;
+	Mon, 23 Oct 2023 11:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061161;
-	bh=SDA4XowiJzJhv/lfxQ051bO77OlsuWp1moUWa83Nny8=;
+	s=korg; t=1698061164;
+	bh=HsHU/hxIx6OGgHyNYdylrWbEX6I6fNxyiLps4g40wZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vi55G+XB92qCV0WBLT/dVKUnEBMSr3c1HccDeTLoxjaFZyReyt2yBDJueDQ7e6tUk
-	 8Lq0v1L0mg56/atSiEhBHiXG1VZmnKiXqdBT3mgyWf7AHG7chFk2ETwSlNdPaGX0KC
-	 Bk5w6TOXaF8uMnqJJZtzrJRrZ5R6NOMkx/STwLTI=
+	b=2aXvemiAwNVdH6rzRyeMEm0jR6+u02HDjzxCjc8G84ANhyykTPcsRpfD0Ch17/+07
+	 vFIkFgbRFswS80ZACPXv29wXzhzgfvJzP0xGXxnL24Bp6nsanrXmqnTbB0CkeO9psi
+	 FAjw0FsqQk8t/EqWSQHUQUxAXFR+VZnpGPQUKWyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 093/137] btrfs: error when COWing block from a root that is being deleted
-Date: Mon, 23 Oct 2023 12:57:30 +0200
-Message-ID: <20231023104824.032449368@linuxfoundation.org>
+Subject: [PATCH 5.15 094/137] btrfs: error out when reallocating block for defrag using a stale transaction
+Date: Mon, 23 Oct 2023 12:57:31 +0200
+Message-ID: <20231023104824.061862411@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -44,55 +44,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit a2caab29884397e583d09be6546259a83ebfbdb1 ]
+[ Upstream commit e36f94914021e58ee88a8856c7fdf35adf9c7ee1 ]
 
-At btrfs_cow_block() we check if the block being COWed belongs to a root
-that is being deleted and if so we log an error message. However this is
-an unexpected case and it indicates a bug somewhere, so we should return
-an error and abort the transaction. So change this in the following ways:
+At btrfs_realloc_node() we have these checks to verify we are not using a
+stale transaction (a past transaction with an unblocked state or higher),
+and the only thing we do is to trigger two WARN_ON(). This however is a
+critical problem, highly unexpected and if it happens it's most likely due
+to a bug, so we should error out and turn the fs into error state so that
+such issue is much more easily noticed if it's triggered.
 
-1) Abort the transaction with -EUCLEAN, so that if the issue ever happens
-   it can easily be noticed;
+The problem is critical because in btrfs_realloc_node() we COW tree blocks,
+and using such stale transaction will lead to not persisting the extent
+buffers used for the COW operations, as allocating tree block adds the
+range of the respective extent buffers to the ->dirty_pages iotree of the
+transaction, and a stale transaction, in the unlocked state or higher,
+will not flush dirty extent buffers anymore, therefore resulting in not
+persisting the tree block and resource leaks (not cleaning the dirty_pages
+iotree for example).
 
-2) Change the logged message level from error to critical, and change the
-   message itself to print the block's logical address and the ID of the
-   root;
+So do the following changes:
 
-3) Return -EUCLEAN to the caller;
+1) Return -EUCLEAN if we find a stale transaction;
 
-4) As this is an unexpected scenario, that should never happen, mark the
-   check as unlikely, allowing the compiler to potentially generate better
-   code.
+2) Turn the fs into error state, with error -EUCLEAN, so that no
+   transaction can be committed, and generate a stack trace;
+
+3) Combine both conditions into a single if statement, as both are related
+   and have the same error message;
+
+4) Mark the check as unlikely, since this is not expected to ever happen.
 
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/btrfs/ctree.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index 8bc1166215138..8fe6aaa7b11fd 100644
+index 8fe6aaa7b11fd..8b53313bf3b2c 100644
 --- a/fs/btrfs/ctree.c
 +++ b/fs/btrfs/ctree.c
-@@ -545,9 +545,13 @@ noinline int btrfs_cow_block(struct btrfs_trans_handle *trans,
- 	u64 search_start;
- 	int ret;
+@@ -680,8 +680,22 @@ int btrfs_realloc_node(struct btrfs_trans_handle *trans,
+ 	int progress_passed = 0;
+ 	struct btrfs_disk_key disk_key;
  
--	if (test_bit(BTRFS_ROOT_DELETING, &root->state))
--		btrfs_err(fs_info,
--			"COW'ing blocks on a fs root that's being dropped");
-+	if (unlikely(test_bit(BTRFS_ROOT_DELETING, &root->state))) {
+-	WARN_ON(trans->transaction != fs_info->running_transaction);
+-	WARN_ON(trans->transid != fs_info->generation);
++	/*
++	 * COWing must happen through a running transaction, which always
++	 * matches the current fs generation (it's a transaction with a state
++	 * less than TRANS_STATE_UNBLOCKED). If it doesn't, then turn the fs
++	 * into error state to prevent the commit of any transaction.
++	 */
++	if (unlikely(trans->transaction != fs_info->running_transaction ||
++		     trans->transid != fs_info->generation)) {
 +		btrfs_abort_transaction(trans, -EUCLEAN);
 +		btrfs_crit(fs_info,
-+		   "attempt to COW block %llu on root %llu that is being deleted",
-+			   buf->start, btrfs_root_id(root));
++"unexpected transaction when attempting to reallocate parent %llu for root %llu, transaction %llu running transaction %llu fs generation %llu",
++			   parent->start, btrfs_root_id(root), trans->transid,
++			   fs_info->running_transaction->transid,
++			   fs_info->generation);
 +		return -EUCLEAN;
 +	}
  
- 	/*
- 	 * COWing must happen through a running transaction, which always
+ 	parent_nritems = btrfs_header_nritems(parent);
+ 	blocksize = fs_info->nodesize;
 -- 
 2.40.1
 
