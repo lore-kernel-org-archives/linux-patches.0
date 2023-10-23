@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFFE14A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D4A14A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2doEVGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC1FC433C7;
-	Mon, 23 Oct 2023 11:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcq0O5Eo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FB0C433C9;
+	Mon, 23 Oct 2023 11:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059112;
-	bh=GdFR3xdOYQmSPeymNGR1IBCGOnoK0+cgySdZLY5/J/w=;
+	s=korg; t=1698059115;
+	bh=ly+FwnJsXK6aE7n0TagRNVBdQPqpMCoVSJrptp6pbiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F2doEVGHSOBhG/1yRRsV264gtJv8Goc/2n5pBNX823UPq1i0RaD7XwVOu6M3dUpyE
-	 7taZtkPux1fsRXAaGPCRAYvukSF1AMVG875tV32GhaDsiwCKFCKJjrnPb2/uuyV/pl
-	 PPVqvSys4sAIFEhvYTbWIzwEBFXlTx478hLa7pGY=
+	b=kcq0O5EoZe3J715UhTyzbzXIeQFEUP1uA8d8JPrdbU873cOCnwiGFe/WLY3KkhoxC
+	 xepp7qImfRU99KrW734G3BGfGtIlm6hCqV+VefnJiCv+Z9Y6QkDN72Fn6HAfO5VaHd
+	 Sn+gFOAE0BuDyNxmsiOeFggI5qTqaj2WRdsRxwtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.5 068/241] tun: prevent negative ifindex
-Date: Mon, 23 Oct 2023 12:54:14 +0200
-Message-ID: <20231023104835.558895942@linuxfoundation.org>
+	Shailend Chand <shailend@google.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.5 069/241] gve: Do not fully free QPL pages on prefill errors
+Date: Mon, 23 Oct 2023 12:54:15 +0200
+Message-ID: <20231023104835.581440837@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -44,96 +41,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Shailend Chand <shailend@google.com>
 
-commit cbfbfe3aee718dc4c3c837f5d2463170ee59d78c upstream.
+commit 95535e37e8959f50e7aee365a5bdc9e5ed720443 upstream.
 
-After commit 956db0a13b47 ("net: warn about attempts to register
-negative ifindex") syzbot is able to trigger the following splat.
+The prefill function should have only removed the page count bias it
+added. Fully freeing the page will cause gve_free_queue_page_list to
+free a page the driver no longer owns.
 
-Negative ifindex are not supported.
-
-WARNING: CPU: 1 PID: 6003 at net/core/dev.c:9596 dev_index_reserve+0x104/0x210
-Modules linked in:
-CPU: 1 PID: 6003 Comm: syz-executor926 Not tainted 6.6.0-rc4-syzkaller-g19af4a4ed414 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/06/2023
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : dev_index_reserve+0x104/0x210
-lr : dev_index_reserve+0x100/0x210
-sp : ffff800096a878e0
-x29: ffff800096a87930 x28: ffff0000d04380d0 x27: ffff0000d04380f8
-x26: ffff0000d04380f0 x25: 1ffff00012d50f20 x24: 1ffff00012d50f1c
-x23: dfff800000000000 x22: ffff8000929c21c0 x21: 00000000ffffffea
-x20: ffff0000d04380e0 x19: ffff800096a87900 x18: ffff800096a874c0
-x17: ffff800084df5008 x16: ffff80008051f9c4 x15: 0000000000000001
-x14: 1fffe0001a087198 x13: 0000000000000000 x12: 0000000000000000
-x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
-x8 : ffff0000d41c9bc0 x7 : 0000000000000000 x6 : 0000000000000000
-x5 : ffff800091763d88 x4 : 0000000000000000 x3 : ffff800084e04748
-x2 : 0000000000000001 x1 : 00000000fead71c7 x0 : 0000000000000000
-Call trace:
-dev_index_reserve+0x104/0x210
-register_netdevice+0x598/0x1074 net/core/dev.c:10084
-tun_set_iff+0x630/0xb0c drivers/net/tun.c:2850
-__tun_chr_ioctl+0x788/0x2af8 drivers/net/tun.c:3118
-tun_chr_ioctl+0x38/0x4c drivers/net/tun.c:3403
-vfs_ioctl fs/ioctl.c:51 [inline]
-__do_sys_ioctl fs/ioctl.c:871 [inline]
-__se_sys_ioctl fs/ioctl.c:857 [inline]
-__arm64_sys_ioctl+0x14c/0x1c8 fs/ioctl.c:857
-__invoke_syscall arch/arm64/kernel/syscall.c:37 [inline]
-invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:51
-el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:136
-do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:155
-el0_svc+0x58/0x16c arch/arm64/kernel/entry-common.c:678
-el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:696
-el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:595
-irq event stamp: 11348
-hardirqs last enabled at (11347): [<ffff80008a716574>] __raw_spin_unlock_irqrestore include/linux/spinlock_api_smp.h:151 [inline]
-hardirqs last enabled at (11347): [<ffff80008a716574>] _raw_spin_unlock_irqrestore+0x38/0x98 kernel/locking/spinlock.c:194
-hardirqs last disabled at (11348): [<ffff80008a627820>] el1_dbg+0x24/0x80 arch/arm64/kernel/entry-common.c:436
-softirqs last enabled at (11138): [<ffff8000887ca53c>] spin_unlock_bh include/linux/spinlock.h:396 [inline]
-softirqs last enabled at (11138): [<ffff8000887ca53c>] release_sock+0x15c/0x1b0 net/core/sock.c:3531
-softirqs last disabled at (11136): [<ffff8000887ca41c>] spin_lock_bh include/linux/spinlock.h:356 [inline]
-softirqs last disabled at (11136): [<ffff8000887ca41c>] release_sock+0x3c/0x1b0 net/core/sock.c:3518
-
-Fixes: fb7589a16216 ("tun: Add ability to create tun device with given index")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://lore.kernel.org/r/20231016180851.3560092-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 82fd151d38d9 ("gve: Reduce alloc and copy costs in the GQ rx path")
+Signed-off-by: Shailend Chand <shailend@google.com>
+Link: https://lore.kernel.org/r/20231014014121.2843922-1-shailend@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/tun.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/google/gve/gve_rx.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -3068,10 +3068,11 @@ static long __tun_chr_ioctl(struct file
- 	struct net *net = sock_net(&tfile->sk);
- 	struct tun_struct *tun;
- 	void __user* argp = (void __user*)arg;
--	unsigned int ifindex, carrier;
-+	unsigned int carrier;
- 	struct ifreq ifr;
- 	kuid_t owner;
- 	kgid_t group;
-+	int ifindex;
- 	int sndbuf;
- 	int vnet_hdr_sz;
- 	int le;
-@@ -3127,7 +3128,9 @@ static long __tun_chr_ioctl(struct file
- 		ret = -EFAULT;
- 		if (copy_from_user(&ifindex, argp, sizeof(ifindex)))
- 			goto unlock;
--
-+		ret = -EINVAL;
-+		if (ifindex < 0)
-+			goto unlock;
- 		ret = 0;
- 		tfile->ifindex = ifindex;
- 		goto unlock;
+diff --git a/drivers/net/ethernet/google/gve/gve_rx.c b/drivers/net/ethernet/google/gve/gve_rx.c
+index d1da7413dc4d..e84a066aa1a4 100644
+--- a/drivers/net/ethernet/google/gve/gve_rx.c
++++ b/drivers/net/ethernet/google/gve/gve_rx.c
+@@ -146,7 +146,7 @@ static int gve_prefill_rx_pages(struct gve_rx_ring *rx)
+ 		err = gve_rx_alloc_buffer(priv, &priv->pdev->dev, &rx->data.page_info[i],
+ 					  &rx->data.data_ring[i]);
+ 		if (err)
+-			goto alloc_err;
++			goto alloc_err_rda;
+ 	}
+ 
+ 	if (!rx->data.raw_addressing) {
+@@ -171,12 +171,26 @@ static int gve_prefill_rx_pages(struct gve_rx_ring *rx)
+ 	return slots;
+ 
+ alloc_err_qpl:
++	/* Fully free the copy pool pages. */
+ 	while (j--) {
+ 		page_ref_sub(rx->qpl_copy_pool[j].page,
+ 			     rx->qpl_copy_pool[j].pagecnt_bias - 1);
+ 		put_page(rx->qpl_copy_pool[j].page);
+ 	}
+-alloc_err:
++
++	/* Do not fully free QPL pages - only remove the bias added in this
++	 * function with gve_setup_rx_buffer.
++	 */
++	while (i--)
++		page_ref_sub(rx->data.page_info[i].page,
++			     rx->data.page_info[i].pagecnt_bias - 1);
++
++	gve_unassign_qpl(priv, rx->data.qpl->id);
++	rx->data.qpl = NULL;
++
++	return err;
++
++alloc_err_rda:
+ 	while (i--)
+ 		gve_rx_free_buffer(&priv->pdev->dev,
+ 				   &rx->data.page_info[i],
+-- 
+2.42.0
+
 
 
