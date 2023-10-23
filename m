@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75F914A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940C914A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THclJSAy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27765C433C7;
-	Mon, 23 Oct 2023 11:02:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgY5fHzH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107E6C433C8;
+	Mon, 23 Oct 2023 11:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058931;
-	bh=f2j2H9hDEiw2o+0gy1vAKKV7Ecr/6Ps9hjmVnvoZhpE=;
+	s=korg; t=1698058934;
+	bh=ekwJpQacmUiCAVgahGlcj9VWfgfJ1YQeVxYQFtZAcM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=THclJSAytm6AncBksNYFVptfJghwF5w0cmgSE+tloK/A1sDGsCLmxjgBV0feJ4BMY
-	 bDQ0MLvmq/nsAsbpWj+cQPt94GBW7iIsrgGvaGh9lCuNY/tA4YTOkl6zEThO0Yw6WO
-	 YEia71jJxc+xQx2bJwBraPQEQBMf9QhVKmH9aw9U=
+	b=tgY5fHzHNjWjMgjJlJ4ms3XqTVs/lsRzI2LOXRTiXOpJhidHGDYhAqSRMrJ/T/+QH
+	 ur/Nw1kJj1otmIZhlji6WcnAXg1kcnlONHUXYOFooh2uOgbJmaGXVYH5KxNyin4D/9
+	 kTtLEAPB8LkXy0rSXwnPaQtroy+RwytUX0DiXeQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ying Hsu <yinghsu@chromium.org>,
+	"Lee, Chun-Yi" <jlee@suse.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 50/66] Bluetooth: Avoid redundant authentication
-Date: Mon, 23 Oct 2023 12:56:40 +0200
-Message-ID: <20231023104812.705002053@linuxfoundation.org>
+	Lee
+Subject: [PATCH 6.5 001/241] Bluetooth: hci_event: Ignore NULL link key
+Date: Mon, 23 Oct 2023 12:53:07 +0200
+Message-ID: <20231023104833.874024052@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
-References: <20231023104810.781270702@linuxfoundation.org>
+In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
+References: <20231023104833.832874523@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,110 +38,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.14-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ying Hsu <yinghsu@chromium.org>
+From: Lee, Chun-Yi <jlee@suse.com>
 
-[ Upstream commit 1d8e801422d66e4b8c7b187c52196bef94eed887 ]
+commit 33155c4aae5260475def6f7438e4e35564f4f3ba upstream.
 
-While executing the Android 13 CTS Verifier Secure Server test on a
-ChromeOS device, it was observed that the Bluetooth host initiates
-authentication for an RFCOMM connection after SSP completes.
-When this happens, some Intel Bluetooth controllers, like AC9560, would
-disconnect with "Connection Rejected due to Security Reasons (0x0e)".
+This change is used to relieve CVE-2020-26555. The description of the
+CVE:
 
-Historically, BlueZ did not mandate this authentication while an
-authenticated combination key was already in use for the connection.
-This behavior was changed since commit 7b5a9241b780
-("Bluetooth: Introduce requirements for security level 4").
-So, this patch addresses the aforementioned disconnection issue by
-restoring the previous behavior.
+Bluetooth legacy BR/EDR PIN code pairing in Bluetooth Core Specification
+1.0B through 5.2 may permit an unauthenticated nearby device to spoof
+the BD_ADDR of the peer device to complete pairing without knowledge
+of the PIN. [1]
 
-Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+The detail of this attack is in IEEE paper:
+BlueMirror: Reflections on Bluetooth Pairing and Provisioning Protocols
+[2]
+
+It's a reflection attack. The paper mentioned that attacker can induce
+the attacked target to generate null link key (zero key) without PIN
+code. In BR/EDR, the key generation is actually handled in the controller
+which is below HCI.
+
+Thus, we can ignore null link key in the handler of "Link Key Notification
+event" to relieve the attack. A similar implementation also shows in
+btstack project. [3]
+
+v3: Drop the connection when null link key be detected.
+
+v2:
+- Used Link: tag instead of Closes:
+- Used bt_dev_dbg instead of BT_DBG
+- Added Fixes: tag
+
+Cc: stable@vger.kernel.org
+Fixes: 55ed8ca10f35 ("Bluetooth: Implement link key handling for the management interface")
+Link: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-26555 [1]
+Link: https://ieeexplore.ieee.org/abstract/document/9474325/authors#authors [2]
+Link: https://github.com/bluekitchen/btstack/blob/master/src/hci.c#L3722 [3]
+Signed-off-by: Lee, Chun-Yi <jlee@suse.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c | 63 ++++++++++++++++++++++------------------
- 1 file changed, 35 insertions(+), 28 deletions(-)
+ net/bluetooth/hci_event.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index ffa2f4ad46328..ce4bbc426946f 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1269,34 +1269,41 @@ int hci_conn_security(struct hci_conn *conn, __u8 sec_level, __u8 auth_type,
- 	if (!test_bit(HCI_CONN_AUTH, &conn->flags))
- 		goto auth;
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -4725,6 +4725,15 @@ static void hci_link_key_notify_evt(stru
+ 	if (!conn)
+ 		goto unlock;
  
--	/* An authenticated FIPS approved combination key has sufficient
--	 * security for security level 4. */
--	if (conn->key_type == HCI_LK_AUTH_COMBINATION_P256 &&
--	    sec_level == BT_SECURITY_FIPS)
--		goto encrypt;
--
--	/* An authenticated combination key has sufficient security for
--	   security level 3. */
--	if ((conn->key_type == HCI_LK_AUTH_COMBINATION_P192 ||
--	     conn->key_type == HCI_LK_AUTH_COMBINATION_P256) &&
--	    sec_level == BT_SECURITY_HIGH)
--		goto encrypt;
--
--	/* An unauthenticated combination key has sufficient security for
--	   security level 1 and 2. */
--	if ((conn->key_type == HCI_LK_UNAUTH_COMBINATION_P192 ||
--	     conn->key_type == HCI_LK_UNAUTH_COMBINATION_P256) &&
--	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW))
--		goto encrypt;
--
--	/* A combination key has always sufficient security for the security
--	   levels 1 or 2. High security level requires the combination key
--	   is generated using maximum PIN code length (16).
--	   For pre 2.1 units. */
--	if (conn->key_type == HCI_LK_COMBINATION &&
--	    (sec_level == BT_SECURITY_MEDIUM || sec_level == BT_SECURITY_LOW ||
--	     conn->pin_length == 16))
--		goto encrypt;
-+	switch (conn->key_type) {
-+	case HCI_LK_AUTH_COMBINATION_P256:
-+		/* An authenticated FIPS approved combination key has
-+		 * sufficient security for security level 4 or lower.
-+		 */
-+		if (sec_level <= BT_SECURITY_FIPS)
-+			goto encrypt;
-+		break;
-+	case HCI_LK_AUTH_COMBINATION_P192:
-+		/* An authenticated combination key has sufficient security for
-+		 * security level 3 or lower.
-+		 */
-+		if (sec_level <= BT_SECURITY_HIGH)
-+			goto encrypt;
-+		break;
-+	case HCI_LK_UNAUTH_COMBINATION_P192:
-+	case HCI_LK_UNAUTH_COMBINATION_P256:
-+		/* An unauthenticated combination key has sufficient security
-+		 * for security level 2 or lower.
-+		 */
-+		if (sec_level <= BT_SECURITY_MEDIUM)
-+			goto encrypt;
-+		break;
-+	case HCI_LK_COMBINATION:
-+		/* A combination key has always sufficient security for the
-+		 * security levels 2 or lower. High security level requires the
-+		 * combination key is generated using maximum PIN code length
-+		 * (16). For pre 2.1 units.
-+		 */
-+		if (sec_level <= BT_SECURITY_MEDIUM || conn->pin_length == 16)
-+			goto encrypt;
-+		break;
-+	default:
-+		break;
++	/* Ignore NULL link key against CVE-2020-26555 */
++	if (!memcmp(ev->link_key, ZERO_KEY, HCI_LINK_KEY_SIZE)) {
++		bt_dev_dbg(hdev, "Ignore NULL link key (ZERO KEY) for %pMR",
++			   &ev->bdaddr);
++		hci_disconnect(conn, HCI_ERROR_AUTH_FAILURE);
++		hci_conn_drop(conn);
++		goto unlock;
 +	}
- 
- auth:
- 	if (test_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags))
--- 
-2.40.1
-
++
+ 	hci_conn_hold(conn);
+ 	conn->disc_timeout = HCI_DISCONN_TIMEOUT;
+ 	hci_conn_drop(conn);
 
 
