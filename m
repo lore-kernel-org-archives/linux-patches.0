@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F04F12B90
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9DC1845
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="da2Tj7ef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0564C433CA;
-	Mon, 23 Oct 2023 11:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbtKUVjI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD984C433C7;
+	Mon, 23 Oct 2023 11:01:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698058878;
-	bh=9ZTfNpl8Feoe8vdg9cphyAJl8qwSTC2XlZDX5YnyoDQ=;
+	s=korg; t=1698058881;
+	bh=I12qBV8MyzZNzl9N2ySD7sBynhOV0XEHKGSVk5d7H94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=da2Tj7ef1fZ4gQ7763nEPoQmfid95ZixaQ50QhDlrCY0nU7IK+brhr85ABsGA2Jkf
-	 SRdflwWqRS7ZSQSqwM25C1GpZ5Lxn+oMMmGcUX/5MVUrFQJ1fzx3bJWHqpqSVaj5fv
-	 xyH7qhSwBWHdD2Xi1c0OT5Dr60iAxatF4YrEYjlw=
+	b=ZbtKUVjIwHy639SH7hrYCnhGAlitvlZmp1Me4k5WeC+8s20micyTh6lRf7TH55Ioy
+	 /Kg2EzRpatAL0WyPwh1MLZlSBlt7dwYijI3EmsmB59AN0q+zq26Oog1+iZqfbk4XhZ
+	 0pCY0QDJrtNh5mWOvB5ai7R28Yyx3JrgchSjlTMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 4.14 29/66] Bluetooth: vhci: Fix race when opening vhci device
-Date: Mon, 23 Oct 2023 12:56:19 +0200
-Message-ID: <20231023104811.914460622@linuxfoundation.org>
+	Firo Yang <firo.yang@suse.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 4.14 20/66] cgroup: Remove duplicates in cgroup v1 tasks file
+Date: Mon, 23 Oct 2023 12:56:10 +0200
+Message-ID: <20231023104811.552233034@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104810.781270702@linuxfoundation.org>
 References: <20231023104810.781270702@linuxfoundation.org>
@@ -35,57 +36,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
+From: Michal Koutný <mkoutny@suse.com>
 
-commit 92d4abd66f7080075793970fc8f241239e58a9e7 upstream.
+commit 1ca0b605150501b7dc59f3016271da4eb3e96fce upstream.
 
-When the vhci device is opened in the two-step way, i.e.: open device
-then write a vendor packet with requested controller type, the device
-shall respond with a vendor packet which includes HCI index of created
-interface.
+One PID may appear multiple times in a preloaded pidlist.
+(Possibly due to PID recycling but we have reports of the same
+task_struct appearing with different PIDs, thus possibly involving
+transfer of PID via de_thread().)
 
-When the virtual HCI is created, the host sends a reset request to the
-controller. This request is processed by the vhci_send_frame() function.
-However, this request is send by a different thread, so it might happen
-that this HCI request will be received before the vendor response is
-queued in the read queue. This results in the HCI vendor response and
-HCI reset request inversion in the read queue which leads to improper
-behavior of btvirt:
+Because v1 seq_file iterator uses PIDs as position, it leads to
+a message:
+> seq_file: buggy .next function kernfs_seq_next did not update position index
 
-> dmesg
-[1754256.640122] Bluetooth: MGMT ver 1.22
-[1754263.023806] Bluetooth: MGMT ver 1.22
-[1754265.043775] Bluetooth: hci1: Opcode 0x c03 failed: -110
+Conservative and quick fix consists of removing duplicates from `tasks`
+file (as opposed to removing pidlists altogether). It doesn't affect
+correctness (it's sufficient to show a PID once), performance impact
+would be hidden by unconditional sorting of the pidlist already in place
+(asymptotically).
 
-In order to synchronize vhci two-step open/setup process with virtual
-HCI initialization, this patch adds internal lock when queuing data in
-the vhci_send_frame() function.
-
-Signed-off-by: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://lore.kernel.org/r/20230823174804.23632-1-mkoutny@suse.com/
+Suggested-by: Firo Yang <firo.yang@suse.com>
+Signed-off-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_vhci.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/cgroup/cgroup-v1.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/bluetooth/hci_vhci.c
-+++ b/drivers/bluetooth/hci_vhci.c
-@@ -82,7 +82,10 @@ static int vhci_send_frame(struct hci_de
- 	struct vhci_data *data = hci_get_drvdata(hdev);
+--- a/kernel/cgroup/cgroup-v1.c
++++ b/kernel/cgroup/cgroup-v1.c
+@@ -392,10 +392,9 @@ static int pidlist_array_load(struct cgr
+ 	}
+ 	css_task_iter_end(&it);
+ 	length = n;
+-	/* now sort & (if procs) strip out duplicates */
++	/* now sort & strip out duplicates (tgids or recycled thread PIDs) */
+ 	sort(array, length, sizeof(pid_t), cmppid, NULL);
+-	if (type == CGROUP_FILE_PROCS)
+-		length = pidlist_uniq(array, length);
++	length = pidlist_uniq(array, length);
  
- 	memcpy(skb_push(skb, 1), &hci_skb_pkt_type(skb), 1);
-+
-+	mutex_lock(&data->open_mutex);
- 	skb_queue_tail(&data->readq, skb);
-+	mutex_unlock(&data->open_mutex);
- 
- 	wake_up_interruptible(&data->read_wait);
- 	return 0;
+ 	l = cgroup_pidlist_find_create(cgrp, type);
+ 	if (!l) {
 
 
