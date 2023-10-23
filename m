@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96C914A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BD114A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvtIflc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540A5C433C7;
-	Mon, 23 Oct 2023 11:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ERTIoJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34999C433C8;
+	Mon, 23 Oct 2023 11:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059094;
-	bh=tNa5ulcuJCNCWDgnf09L7f21PHbRIdVStDxa4So9FC8=;
+	s=korg; t=1698059097;
+	bh=tEFpoLKDE6uvgqBIN8FkCvmsTMWAqoM/UN+5fQUCy3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KvtIflc6o5EBfkDoi0CzkF5qx0UsCPbOq4okpOBETibBbmogKtH+eyybDy1ZLcSS1
-	 umhl8A1/8bmuV1PiaFektTMa4P9Xx+4W6g9Kinubv8OqYIUTCEblZnw0hDNE2Hd8Xo
-	 GKnBQh0o/ElxymV1YCT0usQzi8emtfOQwooU0mf0=
+	b=2ERTIoJwLmTExPFZyMsiD5FpECQ889IZ22MTJUT+riNmXx0+vafjCoBY46HryjplK
+	 nqazJeCtOhQyomscq2N+30c+8iP5gYWhvCt01X0fAZ6ED2cb+AYVgQLxeVn/w+vAoV
+	 B0Axinvcu4UU2qcwNke5hkdQrNjfHJBr6OkAUQO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e94d98936a0ed08bde43@syzkaller.appspotmail.com,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.5 034/241] fs/ntfs3: fix deadlock in mark_as_free_ex
-Date: Mon, 23 Oct 2023 12:53:40 +0200
-Message-ID: <20231023104834.756543232@linuxfoundation.org>
+	Martin <mwolf@adiumentum.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.5 035/241] Revert "net: wwan: iosm: enable runtime pm support for 7560"
+Date: Mon, 23 Oct 2023 12:53:41 +0200
+Message-ID: <20231023104834.780154413@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,41 +43,306 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-commit bfbe5b31caa74ab97f1784fe9ade5f45e0d3de91 upstream.
+commit 1db34aa58d80988f5ee99d2fd9d8f7489c3b0681 upstream.
 
-Reported-by: syzbot+e94d98936a0ed08bde43@syzkaller.appspotmail.com
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Runtime power management support breaks Intel LTE modem where dmesg dump
+showes timeout errors:
+
+```
+[   72.027442] iosm 0000:01:00.0: msg timeout
+[   72.531638] iosm 0000:01:00.0: msg timeout
+[   73.035414] iosm 0000:01:00.0: msg timeout
+[   73.540359] iosm 0000:01:00.0: msg timeout
+```
+
+Furthermore, when shutting down with `poweroff` and modem attached, the
+system rebooted instead of powering down as expected. The modem works
+again only after power cycling.
+
+Revert runtime power management support for IOSM driver as introduced by
+commit e4f5073d53be6c ("net: wwan: iosm: enable runtime pm support for
+7560").
+
+Fixes: e4f5073d53be ("net: wwan: iosm: enable runtime pm support for 7560")
+Reported-by: Martin <mwolf@adiumentum.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217996
+Link: https://lore.kernel.org/r/267abf02-4b60-4a2e-92cd-709e3da6f7d3@gmail.com/
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fsntfs.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wwan/iosm/iosm_ipc_imem.c  | 17 -----------------
+ drivers/net/wwan/iosm/iosm_ipc_imem.h  |  2 --
+ drivers/net/wwan/iosm/iosm_ipc_pcie.c  |  4 +---
+ drivers/net/wwan/iosm/iosm_ipc_port.c  | 17 +----------------
+ drivers/net/wwan/iosm/iosm_ipc_trace.c |  8 --------
+ drivers/net/wwan/iosm/iosm_ipc_wwan.c  | 21 ++-------------------
+ 6 files changed, 4 insertions(+), 65 deletions(-)
 
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -2461,10 +2461,12 @@ void mark_as_free_ex(struct ntfs_sb_info
- {
- 	CLST end, i, zone_len, zlen;
- 	struct wnd_bitmap *wnd = &sbi->used.bitmap;
-+	bool dirty = false;
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_imem.c b/drivers/net/wwan/iosm/iosm_ipc_imem.c
+index 635301d677e1..829515a601b3 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_imem.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_imem.c
+@@ -4,7 +4,6 @@
+  */
  
- 	down_write_nested(&wnd->rw_lock, BITMAP_MUTEX_CLUSTERS);
- 	if (!wnd_is_used(wnd, lcn, len)) {
--		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
-+		/* mark volume as dirty out of wnd->rw_lock */
-+		dirty = true;
+ #include <linux/delay.h>
+-#include <linux/pm_runtime.h>
  
- 		end = lcn + len;
- 		len = 0;
-@@ -2518,6 +2520,8 @@ void mark_as_free_ex(struct ntfs_sb_info
+ #include "iosm_ipc_chnl_cfg.h"
+ #include "iosm_ipc_devlink.h"
+@@ -632,11 +631,6 @@ static void ipc_imem_run_state_worker(struct work_struct *instance)
+ 	/* Complete all memory stores after setting bit */
+ 	smp_mb__after_atomic();
  
- out:
- 	up_write(&wnd->rw_lock);
-+	if (dirty)
-+		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
+-	if (ipc_imem->pcie->pci->device == INTEL_CP_DEVICE_7560_ID) {
+-		pm_runtime_mark_last_busy(ipc_imem->dev);
+-		pm_runtime_put_autosuspend(ipc_imem->dev);
+-	}
+-
+ 	return;
+ 
+ err_ipc_mux_deinit:
+@@ -1240,7 +1234,6 @@ void ipc_imem_cleanup(struct iosm_imem *ipc_imem)
+ 
+ 	/* forward MDM_NOT_READY to listeners */
+ 	ipc_uevent_send(ipc_imem->dev, UEVENT_MDM_NOT_READY);
+-	pm_runtime_get_sync(ipc_imem->dev);
+ 
+ 	hrtimer_cancel(&ipc_imem->td_alloc_timer);
+ 	hrtimer_cancel(&ipc_imem->tdupdate_timer);
+@@ -1426,16 +1419,6 @@ struct iosm_imem *ipc_imem_init(struct iosm_pcie *pcie, unsigned int device_id,
+ 
+ 		set_bit(IOSM_DEVLINK_INIT, &ipc_imem->flag);
+ 	}
+-
+-	if (!pm_runtime_enabled(ipc_imem->dev))
+-		pm_runtime_enable(ipc_imem->dev);
+-
+-	pm_runtime_set_autosuspend_delay(ipc_imem->dev,
+-					 IPC_MEM_AUTO_SUSPEND_DELAY_MS);
+-	pm_runtime_use_autosuspend(ipc_imem->dev);
+-	pm_runtime_allow(ipc_imem->dev);
+-	pm_runtime_mark_last_busy(ipc_imem->dev);
+-
+ 	return ipc_imem;
+ devlink_channel_fail:
+ 	ipc_devlink_deinit(ipc_imem->ipc_devlink);
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_imem.h b/drivers/net/wwan/iosm/iosm_ipc_imem.h
+index 0144b45e2afb..5664ac507c90 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_imem.h
++++ b/drivers/net/wwan/iosm/iosm_ipc_imem.h
+@@ -103,8 +103,6 @@ struct ipc_chnl_cfg;
+ #define FULLY_FUNCTIONAL 0
+ #define IOSM_DEVLINK_INIT 1
+ 
+-#define IPC_MEM_AUTO_SUSPEND_DELAY_MS 5000
+-
+ /* List of the supported UL/DL pipes. */
+ enum ipc_mem_pipes {
+ 	IPC_MEM_PIPE_0 = 0,
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_pcie.c b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
+index 3a259c9abefd..04517bd3325a 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_pcie.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
+@@ -6,7 +6,6 @@
+ #include <linux/acpi.h>
+ #include <linux/bitfield.h>
+ #include <linux/module.h>
+-#include <linux/pm_runtime.h>
+ #include <net/rtnetlink.h>
+ 
+ #include "iosm_ipc_imem.h"
+@@ -438,8 +437,7 @@ static int __maybe_unused ipc_pcie_resume_cb(struct device *dev)
+ 	return 0;
  }
  
- /*
+-static DEFINE_RUNTIME_DEV_PM_OPS(iosm_ipc_pm, ipc_pcie_suspend_cb,
+-				 ipc_pcie_resume_cb, NULL);
++static SIMPLE_DEV_PM_OPS(iosm_ipc_pm, ipc_pcie_suspend_cb, ipc_pcie_resume_cb);
+ 
+ static struct pci_driver iosm_ipc_driver = {
+ 	.name = KBUILD_MODNAME,
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_port.c b/drivers/net/wwan/iosm/iosm_ipc_port.c
+index 2ba1ddca3945..5d5b4183e14a 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_port.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_port.c
+@@ -3,8 +3,6 @@
+  * Copyright (C) 2020-21 Intel Corporation.
+  */
+ 
+-#include <linux/pm_runtime.h>
+-
+ #include "iosm_ipc_chnl_cfg.h"
+ #include "iosm_ipc_imem_ops.h"
+ #include "iosm_ipc_port.h"
+@@ -15,16 +13,12 @@ static int ipc_port_ctrl_start(struct wwan_port *port)
+ 	struct iosm_cdev *ipc_port = wwan_port_get_drvdata(port);
+ 	int ret = 0;
+ 
+-	pm_runtime_get_sync(ipc_port->ipc_imem->dev);
+ 	ipc_port->channel = ipc_imem_sys_port_open(ipc_port->ipc_imem,
+ 						   ipc_port->chl_id,
+ 						   IPC_HP_CDEV_OPEN);
+ 	if (!ipc_port->channel)
+ 		ret = -EIO;
+ 
+-	pm_runtime_mark_last_busy(ipc_port->ipc_imem->dev);
+-	pm_runtime_put_autosuspend(ipc_port->ipc_imem->dev);
+-
+ 	return ret;
+ }
+ 
+@@ -33,24 +27,15 @@ static void ipc_port_ctrl_stop(struct wwan_port *port)
+ {
+ 	struct iosm_cdev *ipc_port = wwan_port_get_drvdata(port);
+ 
+-	pm_runtime_get_sync(ipc_port->ipc_imem->dev);
+ 	ipc_imem_sys_port_close(ipc_port->ipc_imem, ipc_port->channel);
+-	pm_runtime_mark_last_busy(ipc_port->ipc_imem->dev);
+-	pm_runtime_put_autosuspend(ipc_port->ipc_imem->dev);
+ }
+ 
+ /* transfer control data to modem */
+ static int ipc_port_ctrl_tx(struct wwan_port *port, struct sk_buff *skb)
+ {
+ 	struct iosm_cdev *ipc_port = wwan_port_get_drvdata(port);
+-	int ret;
+ 
+-	pm_runtime_get_sync(ipc_port->ipc_imem->dev);
+-	ret = ipc_imem_sys_cdev_write(ipc_port, skb);
+-	pm_runtime_mark_last_busy(ipc_port->ipc_imem->dev);
+-	pm_runtime_put_autosuspend(ipc_port->ipc_imem->dev);
+-
+-	return ret;
++	return ipc_imem_sys_cdev_write(ipc_port, skb);
+ }
+ 
+ static const struct wwan_port_ops ipc_wwan_ctrl_ops = {
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_trace.c b/drivers/net/wwan/iosm/iosm_ipc_trace.c
+index 4368373797b6..eeecfa3d10c5 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_trace.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_trace.c
+@@ -3,9 +3,7 @@
+  * Copyright (C) 2020-2021 Intel Corporation.
+  */
+ 
+-#include <linux/pm_runtime.h>
+ #include <linux/wwan.h>
+-
+ #include "iosm_ipc_trace.h"
+ 
+ /* sub buffer size and number of sub buffer */
+@@ -99,8 +97,6 @@ static ssize_t ipc_trace_ctrl_file_write(struct file *filp,
+ 	if (ret)
+ 		return ret;
+ 
+-	pm_runtime_get_sync(ipc_trace->ipc_imem->dev);
+-
+ 	mutex_lock(&ipc_trace->trc_mutex);
+ 	if (val == TRACE_ENABLE && ipc_trace->mode != TRACE_ENABLE) {
+ 		ipc_trace->channel = ipc_imem_sys_port_open(ipc_trace->ipc_imem,
+@@ -121,10 +117,6 @@ static ssize_t ipc_trace_ctrl_file_write(struct file *filp,
+ 	ret = count;
+ unlock:
+ 	mutex_unlock(&ipc_trace->trc_mutex);
+-
+-	pm_runtime_mark_last_busy(ipc_trace->ipc_imem->dev);
+-	pm_runtime_put_autosuspend(ipc_trace->ipc_imem->dev);
+-
+ 	return ret;
+ }
+ 
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_wwan.c b/drivers/net/wwan/iosm/iosm_ipc_wwan.c
+index 93d17de08786..ff747fc79aaf 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_wwan.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_wwan.c
+@@ -6,7 +6,6 @@
+ #include <linux/etherdevice.h>
+ #include <linux/if_arp.h>
+ #include <linux/if_link.h>
+-#include <linux/pm_runtime.h>
+ #include <linux/rtnetlink.h>
+ #include <linux/wwan.h>
+ #include <net/pkt_sched.h>
+@@ -52,13 +51,11 @@ static int ipc_wwan_link_open(struct net_device *netdev)
+ 	struct iosm_netdev_priv *priv = wwan_netdev_drvpriv(netdev);
+ 	struct iosm_wwan *ipc_wwan = priv->ipc_wwan;
+ 	int if_id = priv->if_id;
+-	int ret = 0;
+ 
+ 	if (if_id < IP_MUX_SESSION_START ||
+ 	    if_id >= ARRAY_SIZE(ipc_wwan->sub_netlist))
+ 		return -EINVAL;
+ 
+-	pm_runtime_get_sync(ipc_wwan->ipc_imem->dev);
+ 	/* get channel id */
+ 	priv->ch_id = ipc_imem_sys_wwan_open(ipc_wwan->ipc_imem, if_id);
+ 
+@@ -66,8 +63,7 @@ static int ipc_wwan_link_open(struct net_device *netdev)
+ 		dev_err(ipc_wwan->dev,
+ 			"cannot connect wwan0 & id %d to the IPC mem layer",
+ 			if_id);
+-		ret = -ENODEV;
+-		goto err_out;
++		return -ENODEV;
+ 	}
+ 
+ 	/* enable tx path, DL data may follow */
+@@ -76,11 +72,7 @@ static int ipc_wwan_link_open(struct net_device *netdev)
+ 	dev_dbg(ipc_wwan->dev, "Channel id %d allocated to if_id %d",
+ 		priv->ch_id, priv->if_id);
+ 
+-err_out:
+-	pm_runtime_mark_last_busy(ipc_wwan->ipc_imem->dev);
+-	pm_runtime_put_autosuspend(ipc_wwan->ipc_imem->dev);
+-
+-	return ret;
++	return 0;
+ }
+ 
+ /* Bring-down the wwan net link */
+@@ -90,12 +82,9 @@ static int ipc_wwan_link_stop(struct net_device *netdev)
+ 
+ 	netif_stop_queue(netdev);
+ 
+-	pm_runtime_get_sync(priv->ipc_wwan->ipc_imem->dev);
+ 	ipc_imem_sys_wwan_close(priv->ipc_wwan->ipc_imem, priv->if_id,
+ 				priv->ch_id);
+ 	priv->ch_id = -1;
+-	pm_runtime_mark_last_busy(priv->ipc_wwan->ipc_imem->dev);
+-	pm_runtime_put_autosuspend(priv->ipc_wwan->ipc_imem->dev);
+ 
+ 	return 0;
+ }
+@@ -117,7 +106,6 @@ static netdev_tx_t ipc_wwan_link_transmit(struct sk_buff *skb,
+ 	    if_id >= ARRAY_SIZE(ipc_wwan->sub_netlist))
+ 		return -EINVAL;
+ 
+-	pm_runtime_get(ipc_wwan->ipc_imem->dev);
+ 	/* Send the SKB to device for transmission */
+ 	ret = ipc_imem_sys_wwan_transmit(ipc_wwan->ipc_imem,
+ 					 if_id, priv->ch_id, skb);
+@@ -131,14 +119,9 @@ static netdev_tx_t ipc_wwan_link_transmit(struct sk_buff *skb,
+ 		ret = NETDEV_TX_BUSY;
+ 		dev_err(ipc_wwan->dev, "unable to push packets");
+ 	} else {
+-		pm_runtime_mark_last_busy(ipc_wwan->ipc_imem->dev);
+-		pm_runtime_put_autosuspend(ipc_wwan->ipc_imem->dev);
+ 		goto exit;
+ 	}
+ 
+-	pm_runtime_mark_last_busy(ipc_wwan->ipc_imem->dev);
+-	pm_runtime_put_autosuspend(ipc_wwan->ipc_imem->dev);
+-
+ 	return ret;
+ 
+ exit:
+-- 
+2.42.0
+
 
 
