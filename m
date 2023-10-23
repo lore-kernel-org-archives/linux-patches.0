@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD9416405
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C597416405
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1fLe513"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2792DC433CA;
-	Mon, 23 Oct 2023 11:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NPE9O/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131DDC433CC;
+	Mon, 23 Oct 2023 11:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061322;
-	bh=9z03cF4JLoECgM0+ZAWFiQK/FMMZbi+57J69KT80A7I=;
+	s=korg; t=1698061325;
+	bh=dgauo/7yKoDXSh6OYZRO9zZF+3Mwgwi2dgHUCfJyVZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1fLe513BKo8rExRYzOYXt0pF/e4h66Jg4dfOp+a5vegdb0ArLePMezmwdG76uVwu
-	 zfiYAMyECI8tE7+RsEYP+HjgSazJZOm19CcpyR9YGHxCxyJFDR+L4ER+G9UvEPAoPO
-	 haZJJdKfABU5y6uAOrg18W9qD68IPWO3OQILhgX8=
+	b=0NPE9O/mZBawrvjbCdixeu76+QuX/G4GWAVv7PfaybD5xIJmbalhCKNKmz6pc2jAV
+	 i7o2m/baF8c24TW0I43d/0gAdAt6o+grbXr/KW7c88JRUm3tTwB97gGPR0wT1i6Yvw
+	 LNq/iQHTVDPr8scFrsTjZdPNs/lOzkqmQ4x4mRy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
 	Bart Van Assche <bvanassche@acm.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 001/202] RDMA/srp: Make struct scsi_cmnd and struct srp_request adjacent
-Date: Mon, 23 Oct 2023 12:55:08 +0200
-Message-ID: <20231023104826.612173305@linuxfoundation.org>
+Subject: [PATCH 5.10 002/202] RDMA/srp: Do not call scsi_done() from srp_abort()
+Date: Mon, 23 Oct 2023 12:55:09 +0200
+Message-ID: <20231023104826.639859777@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -44,345 +46,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit ad215aaea4f9d637f441566cdbbc610e9849e1fa ]
+[ Upstream commit e193b7955dfad68035b983a0011f4ef3590c85eb ]
 
-Define .init_cmd_priv and .exit_cmd_priv callback functions in struct
-scsi_host_template. Set .cmd_size such that the SCSI core allocates
-per-command private data. Use scsi_cmd_priv() to access that private
-data. Remove the req_ring pointer from struct srp_rdma_ch since it is no
-longer necessary. Convert srp_alloc_req_data() and srp_free_req_data()
-into functions that initialize one instance of the SRP-private command
-data. This is a micro-optimization since this patch removes several
-pointer dereferences from the hot path.
+After scmd_eh_abort_handler() has called the SCSI LLD eh_abort_handler
+callback, it performs one of the following actions:
+* Call scsi_queue_insert().
+* Call scsi_finish_command().
+* Call scsi_eh_scmd_add().
+Hence, SCSI abort handlers must not call scsi_done(). Otherwise all
+the above actions would trigger a use-after-free. Hence remove the
+scsi_done() call from srp_abort(). Keep the srp_free_req() call
+before returning SUCCESS because we may not see the command again if
+SUCCESS is returned.
 
-Note: due to commit e73a5e8e8003 ("scsi: core: Only return started
-requests from scsi_host_find_tag()"), it is no longer necessary to protect
-the completion path against duplicate responses.
-
-Link: https://lore.kernel.org/r/20210524041211.9480-6-bvanassche@acm.org
+Cc: Bob Pearson <rpearsonhpe@gmail.com>
+Cc: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Fixes: d8536670916a ("IB/srp: Avoid having aborted requests hang")
 Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: e193b7955dfa ("RDMA/srp: Do not call scsi_done() from srp_abort()")
+Link: https://lore.kernel.org/r/20230823205727.505681-1-bvanassche@acm.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.c | 153 ++++++++++++----------------
- drivers/infiniband/ulp/srp/ib_srp.h |   2 -
- 2 files changed, 63 insertions(+), 92 deletions(-)
+ drivers/infiniband/ulp/srp/ib_srp.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
-index 9b9b9557ae746..f47d104e6c9d7 100644
+index f47d104e6c9d7..12bc24ee2d131 100644
 --- a/drivers/infiniband/ulp/srp/ib_srp.c
 +++ b/drivers/infiniband/ulp/srp/ib_srp.c
-@@ -965,67 +965,52 @@ static void srp_disconnect_target(struct srp_target_port *target)
- 	}
- }
- 
--static void srp_free_req_data(struct srp_target_port *target,
--			      struct srp_rdma_ch *ch)
-+static int srp_exit_cmd_priv(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
- {
-+	struct srp_target_port *target = host_to_target(shost);
- 	struct srp_device *dev = target->srp_host->srp_dev;
- 	struct ib_device *ibdev = dev->dev;
--	struct srp_request *req;
--	int i;
-+	struct srp_request *req = scsi_cmd_priv(cmd);
- 
--	if (!ch->req_ring)
--		return;
--
--	for (i = 0; i < target->req_ring_size; ++i) {
--		req = &ch->req_ring[i];
--		if (dev->use_fast_reg)
--			kfree(req->fr_list);
--		if (req->indirect_dma_addr) {
--			ib_dma_unmap_single(ibdev, req->indirect_dma_addr,
--					    target->indirect_size,
--					    DMA_TO_DEVICE);
--		}
--		kfree(req->indirect_desc);
-+	kfree(req->fr_list);
-+	if (req->indirect_dma_addr) {
-+		ib_dma_unmap_single(ibdev, req->indirect_dma_addr,
-+				    target->indirect_size,
-+				    DMA_TO_DEVICE);
- 	}
-+	kfree(req->indirect_desc);
- 
--	kfree(ch->req_ring);
--	ch->req_ring = NULL;
-+	return 0;
- }
- 
--static int srp_alloc_req_data(struct srp_rdma_ch *ch)
-+static int srp_init_cmd_priv(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
- {
--	struct srp_target_port *target = ch->target;
-+	struct srp_target_port *target = host_to_target(shost);
- 	struct srp_device *srp_dev = target->srp_host->srp_dev;
- 	struct ib_device *ibdev = srp_dev->dev;
--	struct srp_request *req;
-+	struct srp_request *req = scsi_cmd_priv(cmd);
- 	dma_addr_t dma_addr;
--	int i, ret = -ENOMEM;
-+	int ret = -ENOMEM;
- 
--	ch->req_ring = kcalloc(target->req_ring_size, sizeof(*ch->req_ring),
--			       GFP_KERNEL);
--	if (!ch->req_ring)
--		goto out;
--
--	for (i = 0; i < target->req_ring_size; ++i) {
--		req = &ch->req_ring[i];
--		if (srp_dev->use_fast_reg) {
--			req->fr_list = kmalloc_array(target->mr_per_cmd,
--						sizeof(void *), GFP_KERNEL);
--			if (!req->fr_list)
--				goto out;
--		}
--		req->indirect_desc = kmalloc(target->indirect_size, GFP_KERNEL);
--		if (!req->indirect_desc)
--			goto out;
--
--		dma_addr = ib_dma_map_single(ibdev, req->indirect_desc,
--					     target->indirect_size,
--					     DMA_TO_DEVICE);
--		if (ib_dma_mapping_error(ibdev, dma_addr))
-+	if (srp_dev->use_fast_reg) {
-+		req->fr_list = kmalloc_array(target->mr_per_cmd, sizeof(void *),
-+					GFP_KERNEL);
-+		if (!req->fr_list)
- 			goto out;
-+	}
-+	req->indirect_desc = kmalloc(target->indirect_size, GFP_KERNEL);
-+	if (!req->indirect_desc)
-+		goto out;
- 
--		req->indirect_dma_addr = dma_addr;
-+	dma_addr = ib_dma_map_single(ibdev, req->indirect_desc,
-+				     target->indirect_size,
-+				     DMA_TO_DEVICE);
-+	if (ib_dma_mapping_error(ibdev, dma_addr)) {
-+		srp_exit_cmd_priv(shost, cmd);
-+		goto out;
- 	}
-+
-+	req->indirect_dma_addr = dma_addr;
- 	ret = 0;
- 
- out:
-@@ -1067,10 +1052,6 @@ static void srp_remove_target(struct srp_target_port *target)
- 	}
- 	cancel_work_sync(&target->tl_err_work);
- 	srp_rport_put(target->rport);
--	for (i = 0; i < target->ch_count; i++) {
--		ch = &target->ch[i];
--		srp_free_req_data(target, ch);
--	}
- 	kfree(target->ch);
- 	target->ch = NULL;
- 
-@@ -1289,22 +1270,32 @@ static void srp_finish_req(struct srp_rdma_ch *ch, struct srp_request *req,
- 	}
- }
- 
--static void srp_terminate_io(struct srp_rport *rport)
-+struct srp_terminate_context {
-+	struct srp_target_port *srp_target;
-+	int scsi_result;
-+};
-+
-+static bool srp_terminate_cmd(struct scsi_cmnd *scmnd, void *context_ptr,
-+			      bool reserved)
- {
--	struct srp_target_port *target = rport->lld_data;
--	struct srp_rdma_ch *ch;
--	int i, j;
-+	struct srp_terminate_context *context = context_ptr;
-+	struct srp_target_port *target = context->srp_target;
-+	u32 tag = blk_mq_unique_tag(scmnd->request);
-+	struct srp_rdma_ch *ch = &target->ch[blk_mq_unique_tag_to_hwq(tag)];
-+	struct srp_request *req = scsi_cmd_priv(scmnd);
- 
--	for (i = 0; i < target->ch_count; i++) {
--		ch = &target->ch[i];
-+	srp_finish_req(ch, req, NULL, context->scsi_result);
- 
--		for (j = 0; j < target->req_ring_size; ++j) {
--			struct srp_request *req = &ch->req_ring[j];
-+	return true;
-+}
- 
--			srp_finish_req(ch, req, NULL,
--				       DID_TRANSPORT_FAILFAST << 16);
--		}
--	}
-+static void srp_terminate_io(struct srp_rport *rport)
-+{
-+	struct srp_target_port *target = rport->lld_data;
-+	struct srp_terminate_context context = { .srp_target = target,
-+		.scsi_result = DID_TRANSPORT_FAILFAST << 16 };
-+
-+	scsi_host_busy_iter(target->scsi_host, srp_terminate_cmd, &context);
- }
- 
- /* Calculate maximum initiator to target information unit length. */
-@@ -1360,13 +1351,12 @@ static int srp_rport_reconnect(struct srp_rport *rport)
- 		ch = &target->ch[i];
- 		ret += srp_new_cm_id(ch);
- 	}
--	for (i = 0; i < target->ch_count; i++) {
--		ch = &target->ch[i];
--		for (j = 0; j < target->req_ring_size; ++j) {
--			struct srp_request *req = &ch->req_ring[j];
-+	{
-+		struct srp_terminate_context context = {
-+			.srp_target = target, .scsi_result = DID_RESET << 16};
- 
--			srp_finish_req(ch, req, NULL, DID_RESET << 16);
--		}
-+		scsi_host_busy_iter(target->scsi_host, srp_terminate_cmd,
-+				    &context);
- 	}
- 	for (i = 0; i < target->ch_count; i++) {
- 		ch = &target->ch[i];
-@@ -1962,13 +1952,10 @@ static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp)
- 		spin_unlock_irqrestore(&ch->lock, flags);
- 	} else {
- 		scmnd = scsi_host_find_tag(target->scsi_host, rsp->tag);
--		if (scmnd && scmnd->host_scribble) {
--			req = (void *)scmnd->host_scribble;
-+		if (scmnd) {
-+			req = scsi_cmd_priv(scmnd);
- 			scmnd = srp_claim_req(ch, req, NULL, scmnd);
- 		} else {
--			scmnd = NULL;
--		}
--		if (!scmnd) {
- 			shost_printk(KERN_ERR, target->scsi_host,
- 				     "Null scmnd for RSP w/tag %#016llx received on ch %td / QP %#x\n",
- 				     rsp->tag, ch - target->ch, ch->qp->qp_num);
-@@ -1996,7 +1983,6 @@ static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp)
- 		srp_free_req(ch, req, scmnd,
- 			     be32_to_cpu(rsp->req_lim_delta));
- 
--		scmnd->host_scribble = NULL;
- 		scmnd->scsi_done(scmnd);
- 	}
- }
-@@ -2164,13 +2150,12 @@ static int srp_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *scmnd)
- {
- 	struct srp_target_port *target = host_to_target(shost);
- 	struct srp_rdma_ch *ch;
--	struct srp_request *req;
-+	struct srp_request *req = scsi_cmd_priv(scmnd);
- 	struct srp_iu *iu;
- 	struct srp_cmd *cmd;
- 	struct ib_device *dev;
- 	unsigned long flags;
+@@ -2781,7 +2781,6 @@ static int srp_abort(struct scsi_cmnd *scmnd)
  	u32 tag;
--	u16 idx;
- 	int len, ret;
+ 	u16 ch_idx;
+ 	struct srp_rdma_ch *ch;
+-	int ret;
  
- 	scmnd->result = srp_chkready(target->rport);
-@@ -2180,10 +2165,6 @@ static int srp_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *scmnd)
- 	WARN_ON_ONCE(scmnd->request->tag < 0);
- 	tag = blk_mq_unique_tag(scmnd->request);
- 	ch = &target->ch[blk_mq_unique_tag_to_hwq(tag)];
--	idx = blk_mq_unique_tag_to_tag(tag);
--	WARN_ONCE(idx >= target->req_ring_size, "%s: tag %#x: idx %d >= %d\n",
--		  dev_name(&shost->shost_gendev), tag, idx,
--		  target->req_ring_size);
+ 	shost_printk(KERN_ERR, target->scsi_host, "SRP abort called\n");
  
- 	spin_lock_irqsave(&ch->lock, flags);
- 	iu = __srp_get_tx_iu(ch, SRP_IU_CMD);
-@@ -2192,13 +2173,10 @@ static int srp_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *scmnd)
- 	if (!iu)
- 		goto err;
- 
--	req = &ch->req_ring[idx];
- 	dev = target->srp_host->srp_dev->dev;
- 	ib_dma_sync_single_for_cpu(dev, iu->dma, ch->max_it_iu_len,
- 				   DMA_TO_DEVICE);
- 
--	scmnd->host_scribble = (void *) req;
--
- 	cmd = iu->buf;
- 	memset(cmd, 0, sizeof *cmd);
- 
-@@ -3075,6 +3053,8 @@ static struct scsi_host_template srp_template = {
- 	.target_alloc			= srp_target_alloc,
- 	.slave_configure		= srp_slave_configure,
- 	.info				= srp_target_info,
-+	.init_cmd_priv			= srp_init_cmd_priv,
-+	.exit_cmd_priv			= srp_exit_cmd_priv,
- 	.queuecommand			= srp_queuecommand,
- 	.change_queue_depth             = srp_change_queue_depth,
- 	.eh_timed_out			= srp_timed_out,
-@@ -3088,6 +3068,7 @@ static struct scsi_host_template srp_template = {
- 	.cmd_per_lun			= SRP_DEFAULT_CMD_SQ_SIZE,
- 	.shost_attrs			= srp_host_attrs,
- 	.track_queue_depth		= 1,
-+	.cmd_size			= sizeof(struct srp_request),
- };
- 
- static int srp_sdev_count(struct Scsi_Host *host)
-@@ -3735,8 +3716,6 @@ static ssize_t srp_create_target(struct device *dev,
- 	if (ret)
- 		goto out;
- 
--	target->req_ring_size = target->queue_size - SRP_TSK_MGMT_SQ_SIZE;
--
- 	if (!srp_conn_unique(target->srp_host, target)) {
- 		if (target->using_rdma_cm) {
- 			shost_printk(KERN_INFO, target->scsi_host,
-@@ -3839,10 +3818,6 @@ static ssize_t srp_create_target(struct device *dev,
- 		if (ret)
- 			goto err_disconnect;
- 
--		ret = srp_alloc_req_data(ch);
--		if (ret)
--			goto err_disconnect;
--
- 		ret = srp_connect_ch(ch, max_iu_len, multich);
- 		if (ret) {
- 			char dst[64];
-@@ -3861,7 +3836,6 @@ static ssize_t srp_create_target(struct device *dev,
- 				goto free_ch;
- 			} else {
- 				srp_free_ch_ib(target, ch);
--				srp_free_req_data(target, ch);
- 				target->ch_count = ch - target->ch;
- 				goto connected;
- 			}
-@@ -3922,7 +3896,6 @@ static ssize_t srp_create_target(struct device *dev,
- 	for (i = 0; i < target->ch_count; i++) {
- 		ch = &target->ch[i];
- 		srp_free_ch_ib(target, ch);
--		srp_free_req_data(target, ch);
+@@ -2797,19 +2796,14 @@ static int srp_abort(struct scsi_cmnd *scmnd)
+ 	shost_printk(KERN_ERR, target->scsi_host,
+ 		     "Sending SRP abort for tag %#x\n", tag);
+ 	if (srp_send_tsk_mgmt(ch, tag, scmnd->device->lun,
+-			      SRP_TSK_ABORT_TASK, NULL) == 0)
+-		ret = SUCCESS;
+-	else if (target->rport->state == SRP_RPORT_LOST)
+-		ret = FAST_IO_FAIL;
+-	else
+-		ret = FAILED;
+-	if (ret == SUCCESS) {
++			      SRP_TSK_ABORT_TASK, NULL) == 0) {
+ 		srp_free_req(ch, req, scmnd, 0);
+-		scmnd->result = DID_ABORT << 16;
+-		scmnd->scsi_done(scmnd);
++		return SUCCESS;
  	}
++	if (target->rport->state == SRP_RPORT_LOST)
++		return FAST_IO_FAIL;
  
- 	kfree(target->ch);
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.h b/drivers/infiniband/ulp/srp/ib_srp.h
-index 85bac20d9007d..152242e8f733d 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.h
-+++ b/drivers/infiniband/ulp/srp/ib_srp.h
-@@ -176,7 +176,6 @@ struct srp_rdma_ch {
+-	return ret;
++	return FAILED;
+ }
  
- 	struct srp_iu	      **tx_ring;
- 	struct srp_iu	      **rx_ring;
--	struct srp_request     *req_ring;
- 	int			comp_vector;
- 
- 	u64			tsk_mgmt_tag;
-@@ -222,7 +221,6 @@ struct srp_target_port {
- 	int			mr_pool_size;
- 	int			mr_per_cmd;
- 	int			queue_size;
--	int			req_ring_size;
- 	int			comp_vector;
- 	int			tl_retry_count;
- 
+ static int srp_reset_device(struct scsi_cmnd *scmnd)
 -- 
 2.40.1
 
