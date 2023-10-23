@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FED015E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1195D15E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4+zTmKR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6D8C433C8;
-	Mon, 23 Oct 2023 11:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ix8PWOAr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB0CC433C7;
+	Mon, 23 Oct 2023 11:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060401;
-	bh=ba/jhXZD/a0FhOuBUB8KrnqanHUH0MKMc1moquPwePY=;
+	s=korg; t=1698060403;
+	bh=Olwpl6IpUHbZ2Tb6BQILlaK3pmEYma6F2uYGi1uuMEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4+zTmKRA9gEMMan9SgDaKuM80Drh18B/lUPBJD9KqxP58vDp18JXOLOi36cz/GqM
-	 CTH7RPAPIFuUJ4cn59H/+sF4RwBBeZRqkPIrBA6kPcBTuB5OmLpTeQZulyIfLDfozh
-	 MTT8oWzKzEDKERFOK7YOlB4cV47PwqJnjqfQW+tA=
+	b=Ix8PWOArZ/9k9MFAUDDSU2m+SM2/6/r1AZJUrlZ0Vcef4avFxNAQS6OAJxbuG/uCU
+	 em8RjX0FjGiSlU/utOIAqOaQXgucUQ9YbTKd7lhGyEj0hjZphYMy07p8UxaA8LT+NH
+	 xXpmLM7vCNuUfjAvXNtHc8DSpsUc0peJLyd5t90M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Christoph Hellwig <hch@lst.de>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
+	welsh@cassens.com,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 159/196] nvme: sanitize metadata bounce buffer for reads
-Date: Mon, 23 Oct 2023 12:57:04 +0200
-Message-ID: <20231023104832.948074868@linuxfoundation.org>
+Subject: [PATCH 6.1 160/196] nvme-pci: add BOGUS_NID for Intel 0a54 device
+Date: Mon, 23 Oct 2023 12:57:05 +0200
+Message-ID: <20231023104832.973045886@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -46,41 +43,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Keith Busch <kbusch@kernel.org>
 
-commit 2b32c76e2b0154b98b9322ae7546b8156cd703e6 upstream.
+commit 5c3f4066462a5f6cac04d3dd81c9f551fabbc6c7 upstream.
 
-User can request more metadata bytes than the device will write. Ensure
-kernel buffer is initialized so we're not leaking unsanitized memory on
-the copy-out.
+These ones claim cmic and nmic capable, so need special consideration to ignore
+their duplicate identifiers.
 
-Fixes: 0b7f1f26f95a51a ("nvme: use the block layer for userspace passthrough metadata")
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217981
+Reported-by: welsh@cassens.com
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/ioctl.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/nvme/host/pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/ioctl.c
-+++ b/drivers/nvme/host/ioctl.c
-@@ -32,9 +32,13 @@ static void *nvme_add_user_metadata(stru
- 	if (!buf)
- 		goto out;
- 
--	ret = -EFAULT;
--	if ((req_op(req) == REQ_OP_DRV_OUT) && copy_from_user(buf, ubuf, len))
--		goto out_free_meta;
-+	if (req_op(req) == REQ_OP_DRV_OUT) {
-+		ret = -EFAULT;
-+		if (copy_from_user(buf, ubuf, len))
-+			goto out_free_meta;
-+	} else {
-+		memset(buf, 0, len);
-+	}
- 
- 	bip = bio_integrity_alloc(bio, GFP_KERNEL, 1);
- 	if (IS_ERR(bip)) {
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3439,7 +3439,8 @@ static const struct pci_device_id nvme_i
+ 	{ PCI_VDEVICE(INTEL, 0x0a54),	/* Intel P4500/P4600 */
+ 		.driver_data = NVME_QUIRK_STRIPE_SIZE |
+ 				NVME_QUIRK_DEALLOCATE_ZEROES |
+-				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
++				NVME_QUIRK_IGNORE_DEV_SUBNQN |
++				NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_VDEVICE(INTEL, 0x0a55),	/* Dell Express Flash P4600 */
+ 		.driver_data = NVME_QUIRK_STRIPE_SIZE |
+ 				NVME_QUIRK_DEALLOCATE_ZEROES, },
 
 
