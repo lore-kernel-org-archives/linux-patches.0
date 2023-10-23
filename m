@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B961A12B7A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC2E12B7A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1//9Qis"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384C3C433C7;
-	Mon, 23 Oct 2023 11:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGPiT05W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE70C433C7;
+	Mon, 23 Oct 2023 11:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059513;
-	bh=HfVQleODybMbqbGeG3osDZG3BUQ5hXnUB5HrGJXs6xI=;
+	s=korg; t=1698059516;
+	bh=ROk9UdBFCPd0RZ5m8PhSgAOjoSpsZcsWwohdFPwwqOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1//9QisYyB8LxdXWW4BoxB5kZL4nXP1fX1qPtjLAz+2zlSRf5idBQOVUl91hRxfz
-	 OjT5j8Jui6+W+0pPcOwBu0/hTMRVptZFqP/iE7fKmj4gENmGwzzOWFD/+J+yQI+8E8
-	 hqgUQI6J1A8IjTRAm7OdjhbVuUcGcpL6m2wKWbaM=
+	b=cGPiT05WfdNKIrvuNdwk/2jKuvZ7DsZA4+Hj5e8tFdxN5bRUkcEXcW7/cogpJnUWJ
+	 a+DnjDKWHMF5tUFkyvnG3iakoXuAWKV1l6uvjceSfIKnSPlniWfMdIrlnfOM3S4ynO
+	 qEO0j4XEOJ3FvOLWACfqU9n8FqUYIuvK3K7wGOvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Kenzior <denkenz@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.5 202/241] KEYS: asymmetric: Fix sign/verify on pkcs1pad without a hash
-Date: Mon, 23 Oct 2023 12:56:28 +0200
-Message-ID: <20231023104838.785220081@linuxfoundation.org>
+	Avri Altman <avri.altman@wdc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.5 176/241] mmc: core: Capture correct oemid-bits for eMMC cards
+Date: Mon, 23 Oct 2023 12:56:02 +0200
+Message-ID: <20231023104838.176168312@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,47 +41,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Avri Altman <avri.altman@wdc.com>
 
-commit b11950356c4b416d2e87941f3aa7a8bf089db72b upstream.
+commit 84ee19bffc9306128cd0f1c650e89767079efeff upstream.
 
-The new sign/verify code broke the case of pkcs1pad without a
-hash algorithm.  Fix it by setting issig correctly for this case.
+The OEMID is an 8-bit binary number rather than 16-bit as the current code
+parses for. The OEMID occupies bits [111:104] in the CID register, see the
+eMMC spec JESD84-B51 paragraph 7.2.3. It seems that the 16-bit comes from
+the legacy MMC specs (v3.31 and before).
 
-Fixes: 63ba4d67594a ("KEYS: asymmetric: Use new crypto interface without scatterlists")
-Cc: stable@vger.kernel.org # v6.5
-Reported-by: Denis Kenzior <denkenz@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Tested-by: Denis Kenzior <denkenz@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Let's fix the parsing by simply move to use 8-bit instead of 16-bit. This
+means we ignore the impact on some of those old MMC cards that may be out
+there, but on the other hand this shouldn't be a problem as the OEMID seems
+not be an important feature for these cards.
+
+Signed-off-by: Avri Altman <avri.altman@wdc.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230927071500.1791882-1-avri.altman@wdc.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/asymmetric_keys/public_key.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/mmc/core/mmc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/asymmetric_keys/public_key.c b/crypto/asymmetric_keys/public_key.c
-index abeecb8329b3..1dcab27986a6 100644
---- a/crypto/asymmetric_keys/public_key.c
-+++ b/crypto/asymmetric_keys/public_key.c
-@@ -81,14 +81,13 @@ software_key_determine_akcipher(const struct public_key *pkey,
- 		 * RSA signatures usually use EMSA-PKCS1-1_5 [RFC3447 sec 8.2].
- 		 */
- 		if (strcmp(encoding, "pkcs1") == 0) {
-+			*sig = op == kernel_pkey_sign ||
-+			       op == kernel_pkey_verify;
- 			if (!hash_algo) {
--				*sig = false;
- 				n = snprintf(alg_name, CRYPTO_MAX_ALG_NAME,
- 					     "pkcs1pad(%s)",
- 					     pkey->pkey_algo);
- 			} else {
--				*sig = op == kernel_pkey_sign ||
--				       op == kernel_pkey_verify;
- 				n = snprintf(alg_name, CRYPTO_MAX_ALG_NAME,
- 					     "pkcs1pad(%s,%s)",
- 					     pkey->pkey_algo, hash_algo);
--- 
-2.42.0
-
+--- a/drivers/mmc/core/mmc.c
++++ b/drivers/mmc/core/mmc.c
+@@ -104,7 +104,7 @@ static int mmc_decode_cid(struct mmc_car
+ 	case 3: /* MMC v3.1 - v3.3 */
+ 	case 4: /* MMC v4 */
+ 		card->cid.manfid	= UNSTUFF_BITS(resp, 120, 8);
+-		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 16);
++		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 8);
+ 		card->cid.prod_name[0]	= UNSTUFF_BITS(resp, 96, 8);
+ 		card->cid.prod_name[1]	= UNSTUFF_BITS(resp, 88, 8);
+ 		card->cid.prod_name[2]	= UNSTUFF_BITS(resp, 80, 8);
 
 
