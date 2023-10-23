@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6291C168B0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB8D15EAD
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5nIw8xs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CD7C433C7;
-	Mon, 23 Oct 2023 11:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kc/bDVbe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD14BC433C8;
+	Mon, 23 Oct 2023 11:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061696;
-	bh=v6WCvvd6ijV1BKKyHZhrpkhaY/35d/Opp6qCs33QXUo=;
+	s=korg; t=1698061699;
+	bh=Cd5eNCygJW5AoRSbz9/nZWRGlSnbL9T3xfkhKy6aqKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w5nIw8xsbXziiwdosNocY6TWaVmCbg5Ksyo6K3tkSdLOQAmSLSX7KhqmCJDf6MxL5
-	 fAYXAADuNzWV69ZRl4CU35qFV/5bZJLIFpMJldLRARJ+V/WmnAWDItl5ajkbUmtQMc
-	 trOZ/tfm/qhPIu3//kDSQALQkV2Kr6H37bJDr3rw=
+	b=kc/bDVbeopkoMCyKGRFvHfC/RB+ZF5ZwD8GmkDCVXex57TMGkmln7fzOkKsUBw1E7
+	 e+qlspS3RD1A3yKf5gO+wBRRuPT1WhEdBTFsOF1Lhlw9qOMv9WYHkgIUtmeRFfgTrZ
+	 Cu43Tk2vvIZLeJM4hkDmjaywBGioO9DRHyuPaGwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 134/202] usb: core: Track SuperSpeed Plus GenXxY
-Date: Mon, 23 Oct 2023 12:57:21 +0200
-Message-ID: <20231023104830.449104794@linuxfoundation.org>
+Subject: [PATCH 5.10 135/202] xhci: cleanup xhci_hub_control port references
+Date: Mon, 23 Oct 2023 12:57:22 +0200
+Message-ID: <20231023104830.479558881@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -35,182 +35,379 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 0299809be415567366b66f248eed93848b8dc9f3 ]
+[ Upstream commit faaae0190dcd1e230616c85bbc3b339f27ba5b81 ]
 
-Introduce ssp_rate field to usb_device structure to capture the
-connected SuperSpeed Plus signaling rate generation and lane count with
-the corresponding usb_ssp_rate enum.
+Both port number and port structure of a port are referred to several
+times when handing hub requests in xhci.
 
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/b7805d121e5ae4ad5ae144bd860b6ac04ee47436.1615432770.git.Thinh.Nguyen@synopsys.com
+Use more suitable data types and readable names for these.
+Cleanup only, no functional changes
+
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230202150505.618915-6-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: f74a7afc224a ("usb: hub: Guard against accesses to uninitialized BOS descriptors")
+Stable-dep-of: d7cdfc319b2b ("xhci: track port suspend state correctly in unsuccessful resume cases")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/hcd.c |  6 +++-
- drivers/usb/core/hub.c | 78 ++++++++++++++++++++++++++++++++++++++++++
- include/linux/usb.h    |  2 ++
- 3 files changed, 85 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-hub.c | 123 ++++++++++++++++++------------------
+ 1 file changed, 63 insertions(+), 60 deletions(-)
 
-diff --git a/drivers/usb/core/hcd.c b/drivers/usb/core/hcd.c
-index 63bb04d262d84..0a77717d6af20 100644
---- a/drivers/usb/core/hcd.c
-+++ b/drivers/usb/core/hcd.c
-@@ -2745,6 +2745,7 @@ int usb_add_hcd(struct usb_hcd *hcd,
+diff --git a/drivers/usb/host/xhci-hub.c b/drivers/usb/host/xhci-hub.c
+index 7bb3067418076..c2a8d455eeace 100644
+--- a/drivers/usb/host/xhci-hub.c
++++ b/drivers/usb/host/xhci-hub.c
+@@ -1108,11 +1108,14 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 	u16 test_mode = 0;
+ 	struct xhci_hub *rhub;
+ 	struct xhci_port **ports;
++	struct xhci_port *port;
++	int portnum1;
  
- 	rhdev->rx_lanes = 1;
- 	rhdev->tx_lanes = 1;
-+	rhdev->ssp_rate = USB_SSP_GEN_UNKNOWN;
+ 	rhub = xhci_get_rhub(hcd);
+ 	ports = rhub->ports;
+ 	max_ports = rhub->num_ports;
+ 	bus_state = &rhub->bus_state;
++	portnum1 = wIndex & 0xff;
  
- 	switch (hcd->speed) {
- 	case HCD_USB11:
-@@ -2762,8 +2763,11 @@ int usb_add_hcd(struct usb_hcd *hcd,
- 	case HCD_USB32:
- 		rhdev->rx_lanes = 2;
- 		rhdev->tx_lanes = 2;
--		fallthrough;
-+		rhdev->ssp_rate = USB_SSP_GEN_2x2;
-+		rhdev->speed = USB_SPEED_SUPER_PLUS;
-+		break;
- 	case HCD_USB31:
-+		rhdev->ssp_rate = USB_SSP_GEN_2x1;
- 		rhdev->speed = USB_SPEED_SUPER_PLUS;
+ 	spin_lock_irqsave(&xhci->lock, flags);
+ 	switch (typeReq) {
+@@ -1146,10 +1149,12 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 		spin_unlock_irqrestore(&xhci->lock, flags);
+ 		return retval;
+ 	case GetPortStatus:
+-		if (!wIndex || wIndex > max_ports)
++		if (!portnum1 || portnum1 > max_ports)
+ 			goto error;
++
+ 		wIndex--;
+-		temp = readl(ports[wIndex]->addr);
++		port = ports[portnum1 - 1];
++		temp = readl(port->addr);
+ 		if (temp == ~(u32)0) {
+ 			xhci_hc_died(xhci);
+ 			retval = -ENODEV;
+@@ -1162,7 +1167,7 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 			goto error;
+ 
+ 		xhci_dbg(xhci, "Get port status %d-%d read: 0x%x, return 0x%x",
+-			 hcd->self.busnum, wIndex + 1, temp, status);
++			 hcd->self.busnum, portnum1, temp, status);
+ 
+ 		put_unaligned(cpu_to_le32(status), (__le32 *) buf);
+ 		/* if USB 3.1 extended port status return additional 4 bytes */
+@@ -1174,7 +1179,7 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 				retval = -EINVAL;
+ 				break;
+ 			}
+-			port_li = readl(ports[wIndex]->addr + PORTLI);
++			port_li = readl(port->addr + PORTLI);
+ 			status = xhci_get_ext_port_status(temp, port_li);
+ 			put_unaligned_le32(status, &buf[4]);
+ 		}
+@@ -1188,11 +1193,14 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 			test_mode = (wIndex & 0xff00) >> 8;
+ 		/* The MSB of wIndex is the U1/U2 timeout */
+ 		timeout = (wIndex & 0xff00) >> 8;
++
+ 		wIndex &= 0xff;
+-		if (!wIndex || wIndex > max_ports)
++		if (!portnum1 || portnum1 > max_ports)
+ 			goto error;
++
++		port = ports[portnum1 - 1];
+ 		wIndex--;
+-		temp = readl(ports[wIndex]->addr);
++		temp = readl(port->addr);
+ 		if (temp == ~(u32)0) {
+ 			xhci_hc_died(xhci);
+ 			retval = -ENODEV;
+@@ -1202,11 +1210,10 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 		/* FIXME: What new port features do we need to support? */
+ 		switch (wValue) {
+ 		case USB_PORT_FEAT_SUSPEND:
+-			temp = readl(ports[wIndex]->addr);
++			temp = readl(port->addr);
+ 			if ((temp & PORT_PLS_MASK) != XDEV_U0) {
+ 				/* Resume the port to U0 first */
+-				xhci_set_link_state(xhci, ports[wIndex],
+-							XDEV_U0);
++				xhci_set_link_state(xhci, port, XDEV_U0);
+ 				spin_unlock_irqrestore(&xhci->lock, flags);
+ 				msleep(10);
+ 				spin_lock_irqsave(&xhci->lock, flags);
+@@ -1215,16 +1222,16 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 			 * a port unless the port reports that it is in the
+ 			 * enabled (PED = ‘1’,PLS < ‘3’) state.
+ 			 */
+-			temp = readl(ports[wIndex]->addr);
++			temp = readl(port->addr);
+ 			if ((temp & PORT_PE) == 0 || (temp & PORT_RESET)
+ 				|| (temp & PORT_PLS_MASK) >= XDEV_U3) {
+ 				xhci_warn(xhci, "USB core suspending port %d-%d not in U0/U1/U2\n",
+-					  hcd->self.busnum, wIndex + 1);
++					  hcd->self.busnum, portnum1);
+ 				goto error;
+ 			}
+ 
+ 			slot_id = xhci_find_slot_id_by_port(hcd, xhci,
+-					wIndex + 1);
++							    portnum1);
+ 			if (!slot_id) {
+ 				xhci_warn(xhci, "slot_id is zero\n");
+ 				goto error;
+@@ -1234,21 +1241,21 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 			xhci_stop_device(xhci, slot_id, 1);
+ 			spin_lock_irqsave(&xhci->lock, flags);
+ 
+-			xhci_set_link_state(xhci, ports[wIndex], XDEV_U3);
++			xhci_set_link_state(xhci, port, XDEV_U3);
+ 
+ 			spin_unlock_irqrestore(&xhci->lock, flags);
+ 			msleep(10); /* wait device to enter */
+ 			spin_lock_irqsave(&xhci->lock, flags);
+ 
+-			temp = readl(ports[wIndex]->addr);
++			temp = readl(port->addr);
+ 			bus_state->suspended_ports |= 1 << wIndex;
+ 			break;
+ 		case USB_PORT_FEAT_LINK_STATE:
+-			temp = readl(ports[wIndex]->addr);
++			temp = readl(port->addr);
+ 			/* Disable port */
+ 			if (link_state == USB_SS_PORT_LS_SS_DISABLED) {
+ 				xhci_dbg(xhci, "Disable port %d-%d\n",
+-					 hcd->self.busnum, wIndex + 1);
++					 hcd->self.busnum, portnum1);
+ 				temp = xhci_port_state_to_neutral(temp);
+ 				/*
+ 				 * Clear all change bits, so that we get a new
+@@ -1257,18 +1264,17 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 				temp |= PORT_CSC | PORT_PEC | PORT_WRC |
+ 					PORT_OCC | PORT_RC | PORT_PLC |
+ 					PORT_CEC;
+-				writel(temp | PORT_PE, ports[wIndex]->addr);
+-				temp = readl(ports[wIndex]->addr);
++				writel(temp | PORT_PE, port->addr);
++				temp = readl(port->addr);
+ 				break;
+ 			}
+ 
+ 			/* Put link in RxDetect (enable port) */
+ 			if (link_state == USB_SS_PORT_LS_RX_DETECT) {
+ 				xhci_dbg(xhci, "Enable port %d-%d\n",
+-					 hcd->self.busnum, wIndex + 1);
+-				xhci_set_link_state(xhci, ports[wIndex],
+-							link_state);
+-				temp = readl(ports[wIndex]->addr);
++					 hcd->self.busnum, portnum1);
++				xhci_set_link_state(xhci, port,	link_state);
++				temp = readl(port->addr);
+ 				break;
+ 			}
+ 
+@@ -1298,11 +1304,10 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 				}
+ 
+ 				xhci_dbg(xhci, "Enable compliance mode transition for port %d-%d\n",
+-					 hcd->self.busnum, wIndex + 1);
+-				xhci_set_link_state(xhci, ports[wIndex],
+-						link_state);
++					 hcd->self.busnum, portnum1);
++				xhci_set_link_state(xhci, port, link_state);
+ 
+-				temp = readl(ports[wIndex]->addr);
++				temp = readl(port->addr);
+ 				break;
+ 			}
+ 			/* Port must be enabled */
+@@ -1313,8 +1318,7 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 			/* Can't set port link state above '3' (U3) */
+ 			if (link_state > USB_SS_PORT_LS_U3) {
+ 				xhci_warn(xhci, "Cannot set port %d-%d link state %d\n",
+-					  hcd->self.busnum, wIndex + 1,
+-					  link_state);
++					  hcd->self.busnum, portnum1, link_state);
+ 				goto error;
+ 			}
+ 
+@@ -1339,8 +1343,7 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 					reinit_completion(&bus_state->u3exit_done[wIndex]);
+ 				}
+ 				if (pls <= XDEV_U3) /* U1, U2, U3 */
+-					xhci_set_link_state(xhci, ports[wIndex],
+-							    USB_SS_PORT_LS_U0);
++					xhci_set_link_state(xhci, port, USB_SS_PORT_LS_U0);
+ 				if (!wait_u0) {
+ 					if (pls > XDEV_U3)
+ 						goto error;
+@@ -1350,16 +1353,16 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 				if (!wait_for_completion_timeout(&bus_state->u3exit_done[wIndex],
+ 								 msecs_to_jiffies(500)))
+ 					xhci_dbg(xhci, "missing U0 port change event for port %d-%d\n",
+-						 hcd->self.busnum, wIndex + 1);
++						 hcd->self.busnum, portnum1);
+ 				spin_lock_irqsave(&xhci->lock, flags);
+-				temp = readl(ports[wIndex]->addr);
++				temp = readl(port->addr);
+ 				break;
+ 			}
+ 
+ 			if (link_state == USB_SS_PORT_LS_U3) {
+ 				int retries = 16;
+ 				slot_id = xhci_find_slot_id_by_port(hcd, xhci,
+-						wIndex + 1);
++								    portnum1);
+ 				if (slot_id) {
+ 					/* unlock to execute stop endpoint
+ 					 * commands */
+@@ -1368,16 +1371,16 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 					xhci_stop_device(xhci, slot_id, 1);
+ 					spin_lock_irqsave(&xhci->lock, flags);
+ 				}
+-				xhci_set_link_state(xhci, ports[wIndex], USB_SS_PORT_LS_U3);
++				xhci_set_link_state(xhci, port, USB_SS_PORT_LS_U3);
+ 				spin_unlock_irqrestore(&xhci->lock, flags);
+ 				while (retries--) {
+ 					usleep_range(4000, 8000);
+-					temp = readl(ports[wIndex]->addr);
++					temp = readl(port->addr);
+ 					if ((temp & PORT_PLS_MASK) == XDEV_U3)
+ 						break;
+ 				}
+ 				spin_lock_irqsave(&xhci->lock, flags);
+-				temp = readl(ports[wIndex]->addr);
++				temp = readl(port->addr);
+ 				bus_state->suspended_ports |= 1 << wIndex;
+ 			}
+ 			break;
+@@ -1392,39 +1395,38 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 			break;
+ 		case USB_PORT_FEAT_RESET:
+ 			temp = (temp | PORT_RESET);
+-			writel(temp, ports[wIndex]->addr);
++			writel(temp, port->addr);
+ 
+-			temp = readl(ports[wIndex]->addr);
++			temp = readl(port->addr);
+ 			xhci_dbg(xhci, "set port reset, actual port %d-%d status  = 0x%x\n",
+-				 hcd->self.busnum, wIndex + 1, temp);
++				 hcd->self.busnum, portnum1, temp);
+ 			break;
+ 		case USB_PORT_FEAT_REMOTE_WAKE_MASK:
+-			xhci_set_remote_wake_mask(xhci, ports[wIndex],
+-						  wake_mask);
+-			temp = readl(ports[wIndex]->addr);
++			xhci_set_remote_wake_mask(xhci, port, wake_mask);
++			temp = readl(port->addr);
+ 			xhci_dbg(xhci, "set port remote wake mask, actual port %d-%d status  = 0x%x\n",
+-				 hcd->self.busnum, wIndex + 1, temp);
++				 hcd->self.busnum, portnum1, temp);
+ 			break;
+ 		case USB_PORT_FEAT_BH_PORT_RESET:
+ 			temp |= PORT_WR;
+-			writel(temp, ports[wIndex]->addr);
+-			temp = readl(ports[wIndex]->addr);
++			writel(temp, port->addr);
++			temp = readl(port->addr);
+ 			break;
+ 		case USB_PORT_FEAT_U1_TIMEOUT:
+ 			if (hcd->speed < HCD_USB3)
+ 				goto error;
+-			temp = readl(ports[wIndex]->addr + PORTPMSC);
++			temp = readl(port->addr + PORTPMSC);
+ 			temp &= ~PORT_U1_TIMEOUT_MASK;
+ 			temp |= PORT_U1_TIMEOUT(timeout);
+-			writel(temp, ports[wIndex]->addr + PORTPMSC);
++			writel(temp, port->addr + PORTPMSC);
+ 			break;
+ 		case USB_PORT_FEAT_U2_TIMEOUT:
+ 			if (hcd->speed < HCD_USB3)
+ 				goto error;
+-			temp = readl(ports[wIndex]->addr + PORTPMSC);
++			temp = readl(port->addr + PORTPMSC);
+ 			temp &= ~PORT_U2_TIMEOUT_MASK;
+ 			temp |= PORT_U2_TIMEOUT(timeout);
+-			writel(temp, ports[wIndex]->addr + PORTPMSC);
++			writel(temp, port->addr + PORTPMSC);
+ 			break;
+ 		case USB_PORT_FEAT_TEST:
+ 			/* 4.19.6 Port Test Modes (USB2 Test Mode) */
+@@ -1440,13 +1442,16 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 			goto error;
+ 		}
+ 		/* unblock any posted writes */
+-		temp = readl(ports[wIndex]->addr);
++		temp = readl(port->addr);
  		break;
- 	default:
-diff --git a/drivers/usb/core/hub.c b/drivers/usb/core/hub.c
-index b91b01c2c5dee..cfcd4f2ffffaa 100644
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -31,6 +31,7 @@
- #include <linux/pm_qos.h>
- #include <linux/kobject.h>
+ 	case ClearPortFeature:
+-		if (!wIndex || wIndex > max_ports)
++		if (!portnum1 || portnum1 > max_ports)
+ 			goto error;
++
++		port = ports[portnum1 - 1];
++
+ 		wIndex--;
+-		temp = readl(ports[wIndex]->addr);
++		temp = readl(port->addr);
+ 		if (temp == ~(u32)0) {
+ 			xhci_hc_died(xhci);
+ 			retval = -ENODEV;
+@@ -1456,7 +1461,7 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 		temp = xhci_port_state_to_neutral(temp);
+ 		switch (wValue) {
+ 		case USB_PORT_FEAT_SUSPEND:
+-			temp = readl(ports[wIndex]->addr);
++			temp = readl(port->addr);
+ 			xhci_dbg(xhci, "clear USB_PORT_FEAT_SUSPEND\n");
+ 			xhci_dbg(xhci, "PORTSC %04x\n", temp);
+ 			if (temp & PORT_RESET)
+@@ -1467,20 +1472,18 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
  
-+#include <linux/bitfield.h>
- #include <linux/uaccess.h>
- #include <asm/byteorder.h>
+ 				set_bit(wIndex, &bus_state->resuming_ports);
+ 				usb_hcd_start_port_resume(&hcd->self, wIndex);
+-				xhci_set_link_state(xhci, ports[wIndex],
+-						    XDEV_RESUME);
++				xhci_set_link_state(xhci, port, XDEV_RESUME);
+ 				spin_unlock_irqrestore(&xhci->lock, flags);
+ 				msleep(USB_RESUME_TIMEOUT);
+ 				spin_lock_irqsave(&xhci->lock, flags);
+-				xhci_set_link_state(xhci, ports[wIndex],
+-							XDEV_U0);
++				xhci_set_link_state(xhci, port, XDEV_U0);
+ 				clear_bit(wIndex, &bus_state->resuming_ports);
+ 				usb_hcd_end_port_resume(&hcd->self, wIndex);
+ 			}
+ 			bus_state->port_c_suspend |= 1 << wIndex;
  
-@@ -2691,6 +2692,81 @@ int usb_authorize_device(struct usb_device *usb_dev)
- 	return result;
- }
- 
-+/**
-+ * get_port_ssp_rate - Match the extended port status to SSP rate
-+ * @hdev: The hub device
-+ * @ext_portstatus: extended port status
-+ *
-+ * Match the extended port status speed id to the SuperSpeed Plus sublink speed
-+ * capability attributes. Base on the number of connected lanes and speed,
-+ * return the corresponding enum usb_ssp_rate.
-+ */
-+static enum usb_ssp_rate get_port_ssp_rate(struct usb_device *hdev,
-+					   u32 ext_portstatus)
-+{
-+	struct usb_ssp_cap_descriptor *ssp_cap = hdev->bos->ssp_cap;
-+	u32 attr;
-+	u8 speed_id;
-+	u8 ssac;
-+	u8 lanes;
-+	int i;
-+
-+	if (!ssp_cap)
-+		goto out;
-+
-+	speed_id = ext_portstatus & USB_EXT_PORT_STAT_RX_SPEED_ID;
-+	lanes = USB_EXT_PORT_RX_LANES(ext_portstatus) + 1;
-+
-+	ssac = le32_to_cpu(ssp_cap->bmAttributes) &
-+		USB_SSP_SUBLINK_SPEED_ATTRIBS;
-+
-+	for (i = 0; i <= ssac; i++) {
-+		u8 ssid;
-+
-+		attr = le32_to_cpu(ssp_cap->bmSublinkSpeedAttr[i]);
-+		ssid = FIELD_GET(USB_SSP_SUBLINK_SPEED_SSID, attr);
-+		if (speed_id == ssid) {
-+			u16 mantissa;
-+			u8 lse;
-+			u8 type;
-+
-+			/*
-+			 * Note: currently asymmetric lane types are only
-+			 * applicable for SSIC operate in SuperSpeed protocol
-+			 */
-+			type = FIELD_GET(USB_SSP_SUBLINK_SPEED_ST, attr);
-+			if (type == USB_SSP_SUBLINK_SPEED_ST_ASYM_RX ||
-+			    type == USB_SSP_SUBLINK_SPEED_ST_ASYM_TX)
-+				goto out;
-+
-+			if (FIELD_GET(USB_SSP_SUBLINK_SPEED_LP, attr) !=
-+			    USB_SSP_SUBLINK_SPEED_LP_SSP)
-+				goto out;
-+
-+			lse = FIELD_GET(USB_SSP_SUBLINK_SPEED_LSE, attr);
-+			mantissa = FIELD_GET(USB_SSP_SUBLINK_SPEED_LSM, attr);
-+
-+			/* Convert to Gbps */
-+			for (; lse < USB_SSP_SUBLINK_SPEED_LSE_GBPS; lse++)
-+				mantissa /= 1000;
-+
-+			if (mantissa >= 10 && lanes == 1)
-+				return USB_SSP_GEN_2x1;
-+
-+			if (mantissa >= 10 && lanes == 2)
-+				return USB_SSP_GEN_2x2;
-+
-+			if (mantissa >= 5 && lanes == 2)
-+				return USB_SSP_GEN_1x2;
-+
-+			goto out;
-+		}
-+	}
-+
-+out:
-+	return USB_SSP_GEN_UNKNOWN;
-+}
-+
- /*
-  * Return 1 if port speed is SuperSpeedPlus, 0 otherwise or if the
-  * capability couldn't be checked.
-@@ -2878,9 +2954,11 @@ static int hub_port_wait_reset(struct usb_hub *hub, int port1,
- 		/* extended portstatus Rx and Tx lane count are zero based */
- 		udev->rx_lanes = USB_EXT_PORT_RX_LANES(ext_portstatus) + 1;
- 		udev->tx_lanes = USB_EXT_PORT_TX_LANES(ext_portstatus) + 1;
-+		udev->ssp_rate = get_port_ssp_rate(hub->hdev, ext_portstatus);
- 	} else {
- 		udev->rx_lanes = 1;
- 		udev->tx_lanes = 1;
-+		udev->ssp_rate = USB_SSP_GEN_UNKNOWN;
- 	}
- 	if (hub_is_wusb(hub))
- 		udev->speed = USB_SPEED_WIRELESS;
-diff --git a/include/linux/usb.h b/include/linux/usb.h
-index bc59237727033..8bc1119afc317 100644
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -565,6 +565,7 @@ struct usb3_lpm_parameters {
-  * @speed: device speed: high/full/low (or error)
-  * @rx_lanes: number of rx lanes in use, USB 3.2 adds dual-lane support
-  * @tx_lanes: number of tx lanes in use, USB 3.2 adds dual-lane support
-+ * @ssp_rate: SuperSpeed Plus phy signaling rate and lane count
-  * @tt: Transaction Translator info; used with low/full speed dev, highspeed hub
-  * @ttport: device port on that tt hub
-  * @toggle: one bit for each endpoint, with ([0] = IN, [1] = OUT) endpoints
-@@ -642,6 +643,7 @@ struct usb_device {
- 	enum usb_device_speed	speed;
- 	unsigned int		rx_lanes;
- 	unsigned int		tx_lanes;
-+	enum usb_ssp_rate	ssp_rate;
- 
- 	struct usb_tt	*tt;
- 	int		ttport;
+ 			slot_id = xhci_find_slot_id_by_port(hcd, xhci,
+-					wIndex + 1);
++					portnum1);
+ 			if (!slot_id) {
+ 				xhci_dbg(xhci, "slot_id is zero\n");
+ 				goto error;
+@@ -1498,11 +1501,11 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
+ 		case USB_PORT_FEAT_C_PORT_LINK_STATE:
+ 		case USB_PORT_FEAT_C_PORT_CONFIG_ERROR:
+ 			xhci_clear_port_change_bit(xhci, wValue, wIndex,
+-					ports[wIndex]->addr, temp);
++					port->addr, temp);
+ 			break;
+ 		case USB_PORT_FEAT_ENABLE:
+ 			xhci_disable_port(hcd, xhci, wIndex,
+-					ports[wIndex]->addr, temp);
++					port->addr, temp);
+ 			break;
+ 		case USB_PORT_FEAT_POWER:
+ 			xhci_set_port_power(xhci, hcd, wIndex, false, &flags);
 -- 
 2.40.1
 
