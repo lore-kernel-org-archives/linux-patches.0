@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BCD168B0
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78895168B0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyRVClGz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09552C433C8;
-	Mon, 23 Oct 2023 11:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gazvga1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E689EC433C7;
+	Mon, 23 Oct 2023 11:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061740;
-	bh=+2D8GMhpgkumZbqdLvZnhyH8hiUSPCubL8ZOx2/4GYc=;
+	s=korg; t=1698061743;
+	bh=IjjfcJuMDyru9+CyHjpeMvxkkmCfNsS3Lnsi6XlywI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyRVClGzjL757wIdCSgYnEby9M49Cy+XBSdirKBsDk+aU7vO+Moq3aeNSxXxwEPsU
-	 trDP2MnVNxpHcJDatXvgPslGpsBpqN2wK5rRRGlvERGsFWoDo/99Fr8N4dILPAguCG
-	 ZRSfQ5PU7UVEXGCKxw8U0xOInyevK1Pi8cRQx/nM=
+	b=Gazvga1zMUKLJB0bXq9JbbmiPBsHu8ofPdzPyd8sBOTkTo7ZNDRR78mTxQoOb1EkU
+	 /qOq22oLpcQfBByNX0LWL3j7iL2YmlSO8HsPQNKjZpB/pE/1OFPQHMP3if7/mDUtfO
+	 3wUwB1QjnyXNJfsKHNThkgCToHzqyy3rleQtR89s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 148/202] drm/connector: Add support for out-of-band hotplug notification (v3)
-Date: Mon, 23 Oct 2023 12:57:35 +0200
-Message-ID: <20231023104830.857709106@linuxfoundation.org>
+Subject: [PATCH 5.10 149/202] usb: typec: altmodes/displayport: Notify drm subsys of hotplug events
+Date: Mon, 23 Oct 2023 12:57:36 +0200
+Message-ID: <20231023104830.883973906@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -45,107 +45,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 72ad49682dde3d9de5708b8699dc8e0b44962322 ]
+[ Upstream commit 7f811394878535ed9a6849717de8c2959ae38899 ]
 
-Add a new drm_connector_oob_hotplug_event() function and
-oob_hotplug_event drm_connector_funcs member.
+Use the new drm_connector_oob_hotplug_event() functions to let drm/kms
+drivers know about DisplayPort over Type-C hotplug events.
 
-On some hardware a hotplug event notification may come from outside the
-display driver / device. An example of this is some USB Type-C setups
-where the hardware muxes the DisplayPort data and aux-lines but does
-not pass the altmode HPD status bit to the GPU's DP HPD pin.
-
-In cases like this the new drm_connector_oob_hotplug_event() function can
-be used to report these out-of-band events.
-
-Changes in v2:
-- Make drm_connector_oob_hotplug_event() take a fwnode as argument and
-  have it call drm_connector_find_by_fwnode() internally. This allows
-  making drm_connector_find_by_fwnode() a drm-internal function and
-  avoids code outside the drm subsystem potentially holding on the
-  a drm_connector reference for a longer period.
-
-Changes in v3:
-- Drop the data argument to the drm_connector_oob_hotplug_event
-  function since it is not used atm. This can be re-added later when
-  a use for it actually arises.
-
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Tested-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://lore.kernel.org/r/20210817215201.795062-5-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20210817215201.795062-9-hdegoede@redhat.com
 Stable-dep-of: 89434b069e46 ("usb: typec: altmodes/displayport: Signal hpd low when exiting mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_connector.c | 27 +++++++++++++++++++++++++++
- include/drm/drm_connector.h     |  9 +++++++++
- 2 files changed, 36 insertions(+)
+ drivers/usb/typec/altmodes/Kconfig       |  1 +
+ drivers/usb/typec/altmodes/displayport.c | 23 +++++++++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
-index fc06f73acd3c9..c4ed4f1b369c1 100644
---- a/drivers/gpu/drm/drm_connector.c
-+++ b/drivers/gpu/drm/drm_connector.c
-@@ -2514,6 +2514,33 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
- 	return found;
- }
+diff --git a/drivers/usb/typec/altmodes/Kconfig b/drivers/usb/typec/altmodes/Kconfig
+index 60d375e9c3c7c..1a6b5e872b0d9 100644
+--- a/drivers/usb/typec/altmodes/Kconfig
++++ b/drivers/usb/typec/altmodes/Kconfig
+@@ -4,6 +4,7 @@ menu "USB Type-C Alternate Mode drivers"
  
-+/**
-+ * drm_connector_oob_hotplug_event - Report out-of-band hotplug event to connector
-+ * @connector: connector to report the event on
-+ *
-+ * On some hardware a hotplug event notification may come from outside the display
-+ * driver / device. An example of this is some USB Type-C setups where the hardware
-+ * muxes the DisplayPort data and aux-lines but does not pass the altmode HPD
-+ * status bit to the GPU's DP HPD pin.
-+ *
-+ * This function can be used to report these out-of-band events after obtaining
-+ * a drm_connector reference through calling drm_connector_find_by_fwnode().
-+ */
-+void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode)
-+{
-+	struct drm_connector *connector;
-+
-+	connector = drm_connector_find_by_fwnode(connector_fwnode);
-+	if (IS_ERR(connector))
-+		return;
-+
-+	if (connector->funcs->oob_hotplug_event)
-+		connector->funcs->oob_hotplug_event(connector);
-+
-+	drm_connector_put(connector);
-+}
-+EXPORT_SYMBOL(drm_connector_oob_hotplug_event);
-+
+ config TYPEC_DP_ALTMODE
+ 	tristate "DisplayPort Alternate Mode driver"
++	depends on DRM
+ 	help
+ 	  DisplayPort USB Type-C Alternate Mode allows DisplayPort
+ 	  displays and adapters to be attached to the USB Type-C
+diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
+index 0d4b1c0eeefb3..8083d5faf0c98 100644
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -11,8 +11,10 @@
+ #include <linux/delay.h>
+ #include <linux/mutex.h>
+ #include <linux/module.h>
++#include <linux/property.h>
+ #include <linux/usb/pd_vdo.h>
+ #include <linux/usb/typec_dp.h>
++#include <drm/drm_connector.h>
+ #include "displayport.h"
  
- /**
-  * DOC: Tile group
-diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
-index d6c7554f1d405..03d39532c7080 100644
---- a/include/drm/drm_connector.h
-+++ b/include/drm/drm_connector.h
-@@ -1030,6 +1030,14 @@ struct drm_connector_funcs {
- 	 */
- 	void (*atomic_print_state)(struct drm_printer *p,
- 				   const struct drm_connector_state *state);
-+
-+	/**
-+	 * @oob_hotplug_event:
-+	 *
-+	 * This will get called when a hotplug-event for a drm-connector
-+	 * has been received from a source outside the display driver / device.
-+	 */
-+	void (*oob_hotplug_event)(struct drm_connector *connector);
+ #define DP_HEADER(_dp, cmd)		(VDO((_dp)->alt->svid, 1, cmd) | \
+@@ -57,11 +59,13 @@ struct dp_altmode {
+ 	struct typec_displayport_data data;
+ 
+ 	enum dp_state state;
++	bool hpd;
+ 
+ 	struct mutex lock; /* device lock */
+ 	struct work_struct work;
+ 	struct typec_altmode *alt;
+ 	const struct typec_altmode *port;
++	struct fwnode_handle *connector_fwnode;
  };
  
- /**
-@@ -1612,6 +1620,7 @@ drm_connector_is_unregistered(struct drm_connector *connector)
- 		DRM_CONNECTOR_UNREGISTERED;
- }
+ static int dp_altmode_notify(struct dp_altmode *dp)
+@@ -122,6 +126,7 @@ static int dp_altmode_configure(struct dp_altmode *dp, u8 con)
+ static int dp_altmode_status_update(struct dp_altmode *dp)
+ {
+ 	bool configured = !!DP_CONF_GET_PIN_ASSIGN(dp->data.conf);
++	bool hpd = !!(dp->data.status & DP_STATUS_HPD_STATE);
+ 	u8 con = DP_STATUS_CONNECTION(dp->data.status);
+ 	int ret = 0;
  
-+void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode);
- const char *drm_get_connector_type_name(unsigned int connector_type);
- const char *drm_get_connector_status_name(enum drm_connector_status status);
- const char *drm_get_subpixel_order_name(enum subpixel_order order);
+@@ -134,6 +139,11 @@ static int dp_altmode_status_update(struct dp_altmode *dp)
+ 		ret = dp_altmode_configure(dp, con);
+ 		if (!ret)
+ 			dp->state = DP_STATE_CONFIGURE;
++	} else {
++		if (dp->hpd != hpd) {
++			drm_connector_oob_hotplug_event(dp->connector_fwnode);
++			dp->hpd = hpd;
++		}
+ 	}
+ 
+ 	return ret;
+@@ -526,6 +536,7 @@ static const struct attribute_group dp_altmode_group = {
+ int dp_altmode_probe(struct typec_altmode *alt)
+ {
+ 	const struct typec_altmode *port = typec_altmode_get_partner(alt);
++	struct fwnode_handle *fwnode;
+ 	struct dp_altmode *dp;
+ 	int ret;
+ 
+@@ -554,6 +565,11 @@ int dp_altmode_probe(struct typec_altmode *alt)
+ 	alt->desc = "DisplayPort";
+ 	alt->ops = &dp_altmode_ops;
+ 
++	fwnode = dev_fwnode(alt->dev.parent->parent); /* typec_port fwnode */
++	dp->connector_fwnode = fwnode_find_reference(fwnode, "displayport", 0);
++	if (IS_ERR(dp->connector_fwnode))
++		dp->connector_fwnode = NULL;
++
+ 	typec_altmode_set_drvdata(alt, dp);
+ 
+ 	dp->state = DP_STATE_ENTER;
+@@ -569,6 +585,13 @@ void dp_altmode_remove(struct typec_altmode *alt)
+ 
+ 	sysfs_remove_group(&alt->dev.kobj, &dp_altmode_group);
+ 	cancel_work_sync(&dp->work);
++
++	if (dp->connector_fwnode) {
++		if (dp->hpd)
++			drm_connector_oob_hotplug_event(dp->connector_fwnode);
++
++		fwnode_handle_put(dp->connector_fwnode);
++	}
+ }
+ EXPORT_SYMBOL_GPL(dp_altmode_remove);
+ 
 -- 
 2.40.1
 
