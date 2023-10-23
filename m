@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A986C15E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5E815E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cB0bwKT+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252D1C433C7;
-	Mon, 23 Oct 2023 11:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFEyRbRt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09002C433C8;
+	Mon, 23 Oct 2023 11:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060508;
-	bh=XdmObQvU7LNheXihBgsMOMsHFRG7zyF4I2pfy/XK+0c=;
+	s=korg; t=1698060511;
+	bh=ef1OH7mBpr3SJ1P0jrBYY76OcZeYQrCF2yntHysor4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cB0bwKT+2qntYsQ7CPewiXi7XqNTIZbuGpm6jFw9UwyYLB7ms/biMtxzTNkf/VaLK
-	 itNiuflE5Kn11Re77rL+xN0ajCBHckTbYHsby7WhDErDwmOFXrVFyIbyYa9/iSQOCv
-	 cSDVTNEmL7KsYYEStwX3yptM29qkpBXe+J5Q0nGw=
+	b=bFEyRbRtkwEOZ9giZXMmW3oroOfXJLA59Ey2uzvm2docaDkzM2hDDUMnqv0GD2iWg
+	 8W2TEyPL9gHoZw+5ELDCY6bHZFicy5AG0S3sJ30QSgS3qUt8UszbEUqCQDgW8NfBZs
+	 9kF8MGd7irYYej60DyswzSBeWb47FKGKTBU2f2Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.1 169/196] s390/pci: fix iommu bitmap allocation
-Date: Mon, 23 Oct 2023 12:57:14 +0200
-Message-ID: <20231023104833.202874198@linuxfoundation.org>
+	Francis Laniel <flaniel@linux.microsoft.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 170/196] selftests/ftrace: Add new test case which checks non unique symbol
+Date: Mon, 23 Oct 2023 12:57:15 +0200
+Message-ID: <20231023104833.229046676@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -42,79 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Francis Laniel <flaniel@linux.microsoft.com>
 
-commit c1ae1c59c8c6e0b66a718308c623e0cb394dab6b upstream.
+commit 03b80ff8023adae6780e491f66e932df8165e3a0 upstream.
 
-Since the fixed commits both zdev->iommu_bitmap and zdev->lazy_bitmap
-are allocated as vzalloc(zdev->iommu_pages / 8). The problem is that
-zdev->iommu_bitmap is a pointer to unsigned long but the above only
-yields an allocation that is a multiple of sizeof(unsigned long) which
-is 8 on s390x if the number of IOMMU pages is a multiple of 64.
-This in turn is the case only if the effective IOMMU aperture is
-a multiple of 64 * 4K = 256K. This is usually the case and so didn't
-cause visible issues since both the virt_to_phys(high_memory) reduced
-limit and hardware limits use nice numbers.
+If name_show() is non unique, this test will try to install a kprobe on this
+function which should fail returning EADDRNOTAVAIL.
+On kernel where name_show() is not unique, this test is skipped.
 
-Under KVM, and in particular with QEMU limiting the IOMMU aperture to
-the vfio DMA limit (default 65535), it is possible for the reported
-aperture not to be a multiple of 256K however. In this case we end up
-with an iommu_bitmap whose allocation is not a multiple of
-8 causing bitmap operations to access it out of bounds.
+Link: https://lore.kernel.org/all/20231020104250.9537-3-flaniel@linux.microsoft.com/
 
-Sadly we can't just fix this in the obvious way and use bitmap_zalloc()
-because for large RAM systems (tested on 8 TiB) the zdev->iommu_bitmap
-grows too large for kmalloc(). So add our own bitmap_vzalloc() wrapper.
-This might be a candidate for common code, but this area of code will
-be replaced by the upcoming conversion to use the common code DMA API on
-s390 so just add a local routine.
-
-Fixes: 224593215525 ("s390/pci: use virtual memory for iommu bitmap")
-Fixes: 13954fd6913a ("s390/pci_dma: improve lazy flush for unmap")
 Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Francis Laniel <flaniel@linux.microsoft.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/pci/pci_dma.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc |   13 ++++++++++
+ 1 file changed, 13 insertions(+)
+ create mode 100644 tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
 
---- a/arch/s390/pci/pci_dma.c
-+++ b/arch/s390/pci/pci_dma.c
-@@ -544,6 +544,17 @@ static void s390_dma_unmap_sg(struct dev
- 		s->dma_length = 0;
- 	}
- }
+--- /dev/null
++++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
+@@ -0,0 +1,13 @@
++#!/bin/sh
++# SPDX-License-Identifier: GPL-2.0
++# description: Test failure of registering kprobe on non unique symbol
++# requires: kprobe_events
 +
-+static unsigned long *bitmap_vzalloc(size_t bits, gfp_t flags)
-+{
-+	size_t n = BITS_TO_LONGS(bits);
-+	size_t bytes;
++SYMBOL='name_show'
 +
-+	if (unlikely(check_mul_overflow(n, sizeof(unsigned long), &bytes)))
-+		return NULL;
++# We skip this test on kernel where SYMBOL is unique or does not exist.
++if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}" /proc/kallsyms)" -le '1' ]; then
++	exit_unsupported
++fi
 +
-+	return vzalloc(bytes);
-+}
- 	
- int zpci_dma_init_device(struct zpci_dev *zdev)
- {
-@@ -584,13 +595,13 @@ int zpci_dma_init_device(struct zpci_dev
- 				zdev->end_dma - zdev->start_dma + 1);
- 	zdev->end_dma = zdev->start_dma + zdev->iommu_size - 1;
- 	zdev->iommu_pages = zdev->iommu_size >> PAGE_SHIFT;
--	zdev->iommu_bitmap = vzalloc(zdev->iommu_pages / 8);
-+	zdev->iommu_bitmap = bitmap_vzalloc(zdev->iommu_pages, GFP_KERNEL);
- 	if (!zdev->iommu_bitmap) {
- 		rc = -ENOMEM;
- 		goto free_dma_table;
- 	}
- 	if (!s390_iommu_strict) {
--		zdev->lazy_bitmap = vzalloc(zdev->iommu_pages / 8);
-+		zdev->lazy_bitmap = bitmap_vzalloc(zdev->iommu_pages, GFP_KERNEL);
- 		if (!zdev->lazy_bitmap) {
- 			rc = -ENOMEM;
- 			goto free_bitmap;
++! echo "p:test_non_unique ${SYMBOL}" > kprobe_events
 
 
