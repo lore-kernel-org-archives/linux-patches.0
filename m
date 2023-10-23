@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDAD14F6A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F1714F6A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZV7Q1a8L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 979EEC433C8;
-	Mon, 23 Oct 2023 11:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EtvEmxLP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96057C433C9;
+	Mon, 23 Oct 2023 11:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060095;
-	bh=GslRicI7TSWWaAYMje1sNYYPUVpwXJ+TD5xOWELiIfY=;
+	s=korg; t=1698060098;
+	bh=PuL6+/stWqGawMsw4BnWcy2hinYEcBvqWhj/I3FwAX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZV7Q1a8LOxwdtP3VFANLuYpq3Rqu8vjpwni8p2niTla6/9+AO6tdBbuuCMehF3jiC
-	 gVpfzZepmnFfvowCPamfW0XBrqQE5ORfa6gg7O3Sx72LJBGx1wmh1t9pyjpvkEEJ1S
-	 crmln1Kc4xbCC09CxtqmlrFGWtwyQNV8Ir+B8rl8=
+	b=EtvEmxLPwuVfm13JLHLjbDWm9OflH1Vd5Kk8bfERlt41MTZngY4KrY9aOifLLJOHJ
+	 9fJzmvP9jUj3KTCXIE/ko36iggURBeYuywehFKq9vqp4gseBYbdWtCpkK189cyOLH+
+	 fVt4iZHoi5b7c7nlH4H2c+TbXrXzZntzijO606SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.1 049/196] xfrm: interface: use DEV_STATS_INC()
-Date: Mon, 23 Oct 2023 12:55:14 +0200
-Message-ID: <20231023104829.905784090@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 058/196] ipv4: fib: annotate races around nh->nh_saddr_genid and nh->nh_saddr
+Date: Mon, 23 Oct 2023 12:55:23 +0200
+Message-ID: <20231023104830.178342581@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -44,180 +46,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-commit f7c4e3e5d4f6609b4725a97451948ca2e425379a upstream.
+commit 195374d893681da43a39796e53b30ac4f20400c4 upstream.
 
-syzbot/KCSAN reported data-races in xfrm whenever dev->stats fields
-are updated.
+syzbot reported a data-race while accessing nh->nh_saddr_genid [1]
 
-It appears all of these updates can happen from multiple cpus.
+Add annotations, but leave the code lazy as intended.
 
-Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
+[1]
+BUG: KCSAN: data-race in fib_select_path / fib_select_path
 
-BUG: KCSAN: data-race in xfrmi_xmit / xfrmi_xmit
+write to 0xffff8881387166f0 of 4 bytes by task 6778 on cpu 1:
+fib_info_update_nhc_saddr net/ipv4/fib_semantics.c:1334 [inline]
+fib_result_prefsrc net/ipv4/fib_semantics.c:1354 [inline]
+fib_select_path+0x292/0x330 net/ipv4/fib_semantics.c:2269
+ip_route_output_key_hash_rcu+0x659/0x12c0 net/ipv4/route.c:2810
+ip_route_output_key_hash net/ipv4/route.c:2644 [inline]
+__ip_route_output_key include/net/route.h:134 [inline]
+ip_route_output_flow+0xa6/0x150 net/ipv4/route.c:2872
+send4+0x1f5/0x520 drivers/net/wireguard/socket.c:61
+wg_socket_send_skb_to_peer+0x94/0x130 drivers/net/wireguard/socket.c:175
+wg_socket_send_buffer_to_peer+0xd6/0x100 drivers/net/wireguard/socket.c:200
+wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
+wg_packet_handshake_send_worker+0x10c/0x150 drivers/net/wireguard/send.c:51
+process_one_work kernel/workqueue.c:2630 [inline]
+process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2703
+worker_thread+0x525/0x730 kernel/workqueue.c:2784
+kthread+0x1d7/0x210 kernel/kthread.c:388
+ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
 
-read-write to 0xffff88813726b160 of 8 bytes by task 23986 on cpu 1:
-xfrmi_xmit+0x74e/0xb20 net/xfrm/xfrm_interface_core.c:583
-__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
-netdev_start_xmit include/linux/netdevice.h:4903 [inline]
-xmit_one net/core/dev.c:3544 [inline]
-dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
-__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
-dev_queue_xmit include/linux/netdevice.h:3082 [inline]
-neigh_connected_output+0x231/0x2a0 net/core/neighbour.c:1581
-neigh_output include/net/neighbour.h:542 [inline]
-ip_finish_output2+0x74a/0x850 net/ipv4/ip_output.c:230
-ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:318
-NF_HOOK_COND include/linux/netfilter.h:293 [inline]
-ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:432
-dst_output include/net/dst.h:458 [inline]
-ip_local_out net/ipv4/ip_output.c:127 [inline]
-ip_send_skb+0x72/0xe0 net/ipv4/ip_output.c:1487
-udp_send_skb+0x6a4/0x990 net/ipv4/udp.c:963
-udp_sendmsg+0x1249/0x12d0 net/ipv4/udp.c:1246
-inet_sendmsg+0x63/0x80 net/ipv4/af_inet.c:840
-sock_sendmsg_nosec net/socket.c:730 [inline]
-sock_sendmsg net/socket.c:753 [inline]
-____sys_sendmsg+0x37c/0x4d0 net/socket.c:2540
-___sys_sendmsg net/socket.c:2594 [inline]
-__sys_sendmmsg+0x269/0x500 net/socket.c:2680
-__do_sys_sendmmsg net/socket.c:2709 [inline]
-__se_sys_sendmmsg net/socket.c:2706 [inline]
-__x64_sys_sendmmsg+0x57/0x60 net/socket.c:2706
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+read to 0xffff8881387166f0 of 4 bytes by task 6759 on cpu 0:
+fib_result_prefsrc net/ipv4/fib_semantics.c:1350 [inline]
+fib_select_path+0x1cb/0x330 net/ipv4/fib_semantics.c:2269
+ip_route_output_key_hash_rcu+0x659/0x12c0 net/ipv4/route.c:2810
+ip_route_output_key_hash net/ipv4/route.c:2644 [inline]
+__ip_route_output_key include/net/route.h:134 [inline]
+ip_route_output_flow+0xa6/0x150 net/ipv4/route.c:2872
+send4+0x1f5/0x520 drivers/net/wireguard/socket.c:61
+wg_socket_send_skb_to_peer+0x94/0x130 drivers/net/wireguard/socket.c:175
+wg_socket_send_buffer_to_peer+0xd6/0x100 drivers/net/wireguard/socket.c:200
+wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
+wg_packet_handshake_send_worker+0x10c/0x150 drivers/net/wireguard/send.c:51
+process_one_work kernel/workqueue.c:2630 [inline]
+process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2703
+worker_thread+0x525/0x730 kernel/workqueue.c:2784
+kthread+0x1d7/0x210 kernel/kthread.c:388
+ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
 
-read-write to 0xffff88813726b160 of 8 bytes by task 23987 on cpu 0:
-xfrmi_xmit+0x74e/0xb20 net/xfrm/xfrm_interface_core.c:583
-__netdev_start_xmit include/linux/netdevice.h:4889 [inline]
-netdev_start_xmit include/linux/netdevice.h:4903 [inline]
-xmit_one net/core/dev.c:3544 [inline]
-dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3560
-__dev_queue_xmit+0xeee/0x1de0 net/core/dev.c:4340
-dev_queue_xmit include/linux/netdevice.h:3082 [inline]
-neigh_connected_output+0x231/0x2a0 net/core/neighbour.c:1581
-neigh_output include/net/neighbour.h:542 [inline]
-ip_finish_output2+0x74a/0x850 net/ipv4/ip_output.c:230
-ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:318
-NF_HOOK_COND include/linux/netfilter.h:293 [inline]
-ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:432
-dst_output include/net/dst.h:458 [inline]
-ip_local_out net/ipv4/ip_output.c:127 [inline]
-ip_send_skb+0x72/0xe0 net/ipv4/ip_output.c:1487
-udp_send_skb+0x6a4/0x990 net/ipv4/udp.c:963
-udp_sendmsg+0x1249/0x12d0 net/ipv4/udp.c:1246
-inet_sendmsg+0x63/0x80 net/ipv4/af_inet.c:840
-sock_sendmsg_nosec net/socket.c:730 [inline]
-sock_sendmsg net/socket.c:753 [inline]
-____sys_sendmsg+0x37c/0x4d0 net/socket.c:2540
-___sys_sendmsg net/socket.c:2594 [inline]
-__sys_sendmmsg+0x269/0x500 net/socket.c:2680
-__do_sys_sendmmsg net/socket.c:2709 [inline]
-__se_sys_sendmmsg net/socket.c:2706 [inline]
-__x64_sys_sendmmsg+0x57/0x60 net/socket.c:2706
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x00000000000010d7 -> 0x00000000000010d8
+value changed: 0x959d3217 -> 0x959d3218
 
 Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 23987 Comm: syz-executor.5 Not tainted 6.5.0-syzkaller-10885-g0468be89b3fa #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+CPU: 0 PID: 6759 Comm: kworker/u4:15 Not tainted 6.6.0-rc4-syzkaller-00029-gcbf3a2cb156a #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/06/2023
+Workqueue: wg-kex-wg1 wg_packet_handshake_send_worker
 
-Fixes: f203b76d7809 ("xfrm: Add virtual xfrm interfaces")
+Fixes: 436c3b66ec98 ("ipv4: Invalidate nexthop cache nh_saddr more correctly.")
 Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20231017192304.82626-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_interface_core.c |   22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ net/ipv4/fib_semantics.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/net/xfrm/xfrm_interface_core.c
-+++ b/net/xfrm/xfrm_interface_core.c
-@@ -379,8 +379,8 @@ static int xfrmi_rcv_cb(struct sk_buff *
- 	skb->dev = dev;
- 
- 	if (err) {
--		dev->stats.rx_errors++;
--		dev->stats.rx_dropped++;
-+		DEV_STATS_INC(dev, rx_errors);
-+		DEV_STATS_INC(dev, rx_dropped);
- 
- 		return 0;
- 	}
-@@ -425,7 +425,6 @@ static int
- xfrmi_xmit2(struct sk_buff *skb, struct net_device *dev, struct flowi *fl)
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -1325,15 +1325,18 @@ __be32 fib_info_update_nhc_saddr(struct
+ 				 unsigned char scope)
  {
- 	struct xfrm_if *xi = netdev_priv(dev);
--	struct net_device_stats *stats = &xi->dev->stats;
- 	struct dst_entry *dst = skb_dst(skb);
- 	unsigned int length = skb->len;
- 	struct net_device *tdev;
-@@ -464,7 +463,7 @@ xfrmi_xmit2(struct sk_buff *skb, struct
- 	tdev = dst->dev;
+ 	struct fib_nh *nh;
++	__be32 saddr;
  
- 	if (tdev == dev) {
--		stats->collisions++;
-+		DEV_STATS_INC(dev, collisions);
- 		net_warn_ratelimited("%s: Local routing loop detected!\n",
- 				     dev->name);
- 		goto tx_err_dst_release;
-@@ -503,13 +502,13 @@ xmit:
- 	if (net_xmit_eval(err) == 0) {
- 		dev_sw_netstats_tx_add(dev, 1, length);
- 	} else {
--		stats->tx_errors++;
--		stats->tx_aborted_errors++;
-+		DEV_STATS_INC(dev, tx_errors);
-+		DEV_STATS_INC(dev, tx_aborted_errors);
- 	}
+ 	if (nhc->nhc_family != AF_INET)
+ 		return inet_select_addr(nhc->nhc_dev, 0, scope);
  
- 	return 0;
- tx_err_link_failure:
--	stats->tx_carrier_errors++;
-+	DEV_STATS_INC(dev, tx_carrier_errors);
- 	dst_link_failure(skb);
- tx_err_dst_release:
- 	dst_release(dst);
-@@ -519,7 +518,6 @@ tx_err_dst_release:
- static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct xfrm_if *xi = netdev_priv(dev);
--	struct net_device_stats *stats = &xi->dev->stats;
- 	struct dst_entry *dst = skb_dst(skb);
- 	struct flowi fl;
- 	int ret;
-@@ -536,7 +534,7 @@ static netdev_tx_t xfrmi_xmit(struct sk_
- 			dst = ip6_route_output(dev_net(dev), NULL, &fl.u.ip6);
- 			if (dst->error) {
- 				dst_release(dst);
--				stats->tx_carrier_errors++;
-+				DEV_STATS_INC(dev, tx_carrier_errors);
- 				goto tx_err;
- 			}
- 			skb_dst_set(skb, dst);
-@@ -552,7 +550,7 @@ static netdev_tx_t xfrmi_xmit(struct sk_
- 			fl.u.ip4.flowi4_flags |= FLOWI_FLAG_ANYSRC;
- 			rt = __ip_route_output_key(dev_net(dev), &fl.u.ip4);
- 			if (IS_ERR(rt)) {
--				stats->tx_carrier_errors++;
-+				DEV_STATS_INC(dev, tx_carrier_errors);
- 				goto tx_err;
- 			}
- 			skb_dst_set(skb, &rt->dst);
-@@ -571,8 +569,8 @@ static netdev_tx_t xfrmi_xmit(struct sk_
- 	return NETDEV_TX_OK;
+ 	nh = container_of(nhc, struct fib_nh, nh_common);
+-	nh->nh_saddr = inet_select_addr(nh->fib_nh_dev, nh->fib_nh_gw4, scope);
+-	nh->nh_saddr_genid = atomic_read(&net->ipv4.dev_addr_genid);
++	saddr = inet_select_addr(nh->fib_nh_dev, nh->fib_nh_gw4, scope);
  
- tx_err:
--	stats->tx_errors++;
--	stats->tx_dropped++;
-+	DEV_STATS_INC(dev, tx_errors);
-+	DEV_STATS_INC(dev, tx_dropped);
- 	kfree_skb(skb);
- 	return NETDEV_TX_OK;
+-	return nh->nh_saddr;
++	WRITE_ONCE(nh->nh_saddr, saddr);
++	WRITE_ONCE(nh->nh_saddr_genid, atomic_read(&net->ipv4.dev_addr_genid));
++
++	return saddr;
  }
+ 
+ __be32 fib_result_prefsrc(struct net *net, struct fib_result *res)
+@@ -1347,8 +1350,9 @@ __be32 fib_result_prefsrc(struct net *ne
+ 		struct fib_nh *nh;
+ 
+ 		nh = container_of(nhc, struct fib_nh, nh_common);
+-		if (nh->nh_saddr_genid == atomic_read(&net->ipv4.dev_addr_genid))
+-			return nh->nh_saddr;
++		if (READ_ONCE(nh->nh_saddr_genid) ==
++		    atomic_read(&net->ipv4.dev_addr_genid))
++			return READ_ONCE(nh->nh_saddr);
+ 	}
+ 
+ 	return fib_info_update_nhc_saddr(net, nhc, res->fi->fib_scope);
 
 
