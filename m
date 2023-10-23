@@ -1,71 +1,74 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C31621A1C
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 19:10:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0683224C9
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 19:27:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="IdZx+F5f"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6ce532451c7so734145a34.2
-        for <patches@lists.linux.dev>; Mon, 23 Oct 2023 12:10:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E3gprw14"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-41cd6e1d4fbso20266261cf.1
+        for <patches@lists.linux.dev>; Mon, 23 Oct 2023 12:27:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1698088224; x=1698693024; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=V5dCh8qscABtOqwm1BbzDvVj8ruCpus/OdmtCpZWjQ0=;
-        b=IdZx+F5fUsgLyfvRHkUGLJEQ1dPF6ySu4yjnV4keju/Bi+XeN/22GjBHgiduVSQ430
-         xxKTzh30hFU2BaNgklQlaOa1d8qI59PWpBIvrP4DGm+4kVmk8nky0h7EMfb5N6KPAfMG
-         fO8JHkXoWkan5jKq132xEUop16o08+zUBk7Nk=
+        d=gmail.com; s=20230601; t=1698089278; x=1698694078; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7uPS1FFufaRhK/k1kDczCmhK4LKtdz1IcFeYK/ffRJw=;
+        b=E3gprw14Tl8ezN0RKUNlDs/lWhN0O0FtbEGNwaxry3JYNuzQVxTjvgqVP3WK+Wtzhi
+         nqLarQBSEbWQ1/6uNJjGwL0AGEFTSIczHmLZre5RFf/dzBvMWAPqCwg1ec2NtJ/94Qmv
+         bOh4emPVFnA+BoWPkU1rooZXK1p5Apt89HE6YXo5AtCbOevU5ymxQKIlnV8E07UaYe6U
+         M80PpjOqmhqRlOoawofu6x5GywdR7S0vGgkvU30eUyngtqR8LQRpozrs8z3zrd/Fblps
+         BmVNX/0ZU6Ex7W+q6rTLZ2F9oXdNz8226WkqmdvVa3Q79c5PQntPqAnzTO+r0/eB4ETZ
+         QvHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698088224; x=1698693024;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=V5dCh8qscABtOqwm1BbzDvVj8ruCpus/OdmtCpZWjQ0=;
-        b=RDUJA+LmCsfwJWBsTxoYrg/b/AFa2zGeIl8QN3KAmaasWQyjFdRV4Y6eGSCNqN4n6a
-         YblQ28ltCiKmbRO6lnZ2x5Iueeck2o4ncGVwNoGMmfDqt7LtWphObDl5DfqN6UY7+90S
-         QcTlFTSrFjzrrTZAx5XK+Jb5AZ1UtcJJCTWa7LugBqogvARR7DZe3JB+TZNlv9duvw7E
-         ir8Iq9zdOgpUhJ7vHP6b1dRrz3tWnuxitEJ1b+ODsUHPxjmBI0+fmZRWtSI/nywNgkmW
-         PJjvqHoIT+fLyOXSgIW2TwheSi/6g0VXmMaIIFJrLkuj+fn/jDP/tJA1QtebwrgCytMa
-         owFA==
-X-Gm-Message-State: AOJu0YyyhAVrEczS3MZzXcnTYS438t3bD5MP13g/fNtVa2GFKibd/PFy
-	IpiruuKmCeaUl5zrP+fZd1wh2g==
-X-Google-Smtp-Source: AGHT+IHCpcHou3BX6f5py1fK64rYTiaV6rKcRtQ6XKHVdySmwQAxFZ6RHax21NBS+y02N6pwIh0adA==
-X-Received: by 2002:a9d:7483:0:b0:6c0:79ed:be35 with SMTP id t3-20020a9d7483000000b006c079edbe35mr8435872otk.24.1698088223968;
-        Mon, 23 Oct 2023 12:10:23 -0700 (PDT)
-Received: from fedora64.linuxtx.org ([99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id m26-20020a4add1a000000b0057bcbc23738sm1612572oou.17.2023.10.23.12.10.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Oct 2023 12:10:23 -0700 (PDT)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Mon, 23 Oct 2023 14:10:20 -0500
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org
-Subject: Re: [PATCH 6.5 000/241] 6.5.9-rc1 review
-Message-ID: <ZTbFHKxuwhf2LccC@fedora64.linuxtx.org>
-References: <20231023104833.832874523@linuxfoundation.org>
+        d=1e100.net; s=20230601; t=1698089278; x=1698694078;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7uPS1FFufaRhK/k1kDczCmhK4LKtdz1IcFeYK/ffRJw=;
+        b=MYol+qbRZ12f89BRdJI/5wfE+ew5YWVEtJb5R+qLRV01TapSdhUnBHLf2S34UlSXsI
+         TbCXEWBOgYLZU3rqBDG+r38D4mchX14yXhiH2cIi8Bi/483cLzlSWExlecFwVUPqsPiS
+         DviayKdyHmtVJJUIc7UC5CPxGffmmDhrsuAHw7c3TBegk0AhY9phlhdecXCIT90eJUA6
+         7jsJ0fzcdyBRohcy3V+KY19VLrtByyDRzo6FCJuZc0nXvfe2ZqFLbtfDXcRCYc1ifbwE
+         5s7+M2S13mV1CYTWsQeyYScCOgp/eMWBro5mk9Cehn2MP1On1f4Ca+HpEgZJxnfAiQhb
+         jdeA==
+X-Gm-Message-State: AOJu0YxjzwjSzvYSOREfR9GVXcZHikffY2cMdB7DNRrTbD3b4qHEGleP
+	aHtpqYIgRZLz+OcCxJi1YqE=
+X-Google-Smtp-Source: AGHT+IFYL1IyfQ3j3isIrCCK4NxOmZ7CB2WlQtdpk5hzEQZ184KwvTeBb43qjX5EG1f1sHTaDxDHTg==
+X-Received: by 2002:ac8:5bd0:0:b0:40d:b839:b5ac with SMTP id b16-20020ac85bd0000000b0040db839b5acmr9103243qtb.15.1698089278247;
+        Mon, 23 Oct 2023 12:27:58 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id b23-20020ac86bd7000000b0041969bc2e4csm2953158qtt.32.2023.10.23.12.27.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Oct 2023 12:27:57 -0700 (PDT)
+Message-ID: <43474e9f-ff6c-4a1e-9101-9bead276dda8@gmail.com>
+Date: Mon, 23 Oct 2023 12:27:54 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/196] 6.1.60-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20231023104828.488041585@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 23, 2023 at 12:53:06PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.9 release.
-> There are 241 patches in this series, all will be posted as a response
+On 10/23/23 03:54, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.60 release.
+> There are 196 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -73,16 +76,19 @@ On Mon, Oct 23, 2023 at 12:53:06PM +0200, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.9-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.60-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
 
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
+
