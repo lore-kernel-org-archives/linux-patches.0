@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA54B14A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D237A14A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWCI3SRA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A6CC433C7;
-	Mon, 23 Oct 2023 11:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9VDU+6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1D7C433C7;
+	Mon, 23 Oct 2023 11:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059002;
-	bh=SyNLVEp6grhF0mqngArybkgRJKGEyORr9gSl9/KkP9U=;
+	s=korg; t=1698059005;
+	bh=s3pM945Cz4uLcP0y/U1Ku7KRtWnrafyxyadcEh7hlnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lWCI3SRA02Z8paonARh72vYaVRl09i3TrRrHgFvyZqAEr8g7edjZrfCJJDYBUHhA5
-	 xxZXMXDBE3vxzMUirfT16QqoFBvCm1Ga9BXq8xc///RyPjsE+94YCUfE0vbLS4a0nC
-	 UCutEFpvXXzAncVM/d1DmCeAwHyRSBjw8xe02C60=
+	b=l9VDU+6fEPa7JB0gtughQKnXqz0/J1x+W8rtSAgQQs9fWD/gv8pgaGQpeJW51Xn3C
+	 AaPUW/9tS+1FmCC9UyTbDTiTxMlobS8pJmxQEw/ZjHNdgEy53GBGGhXW80kqrG/Kk2
+	 +/h3j8ycvLSoaP7Kt2cLFjyobcd9S1GnoKYVXM0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	"Lee, Chun-Yi" <jlee@suse.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 6.5 006/241] Bluetooth: avoid memcmp() out of bounds warning
-Date: Mon, 23 Oct 2023 12:53:12 +0200
-Message-ID: <20231023104834.006347723@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.5 007/241] Bluetooth: hci_conn: Fix modifying handle while aborting
+Date: Mon, 23 Oct 2023 12:53:13 +0200
+Message-ID: <20231023104834.032751280@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -44,52 +40,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 9d1a3c74746428102d55371fbf74b484733937d9 upstream.
+commit 16e3b6429159795a87add7584eb100b19aa1d70b upstream.
 
-bacmp() is a wrapper around memcpy(), which contain compile-time
-checks for buffer overflow. Since the hci_conn_request_evt() also calls
-bt_dev_dbg() with an implicit NULL pointer check, the compiler is now
-aware of a case where 'hdev' is NULL and treats this as meaning that
-zero bytes are available:
+This introduces hci_conn_set_handle which takes care of verifying the
+conditions where the hci_conn handle can be modified, including when
+hci_conn_abort has been called and also checks that the handles is
+valid as well.
 
-In file included from net/bluetooth/hci_event.c:32:
-In function 'bacmp',
-    inlined from 'hci_conn_request_evt' at net/bluetooth/hci_event.c:3276:7:
-include/net/bluetooth/bluetooth.h:364:16: error: 'memcmp' specified bound 6 exceeds source size 0 [-Werror=stringop-overread]
-  364 |         return memcmp(ba1, ba2, sizeof(bdaddr_t));
-      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Add another NULL pointer check before the bacmp() to ensure the compiler
-understands the code flow enough to not warn about it.  Since the patch
-that introduced the warning is marked for stable backports, this one
-should also go that way to avoid introducing build regressions.
-
-Fixes: 1ffc6f8cc332 ("Bluetooth: Reject connection with the device which has same BD_ADDR")
-Cc: Kees Cook <keescook@chromium.org>
-Cc: "Lee, Chun-Yi" <jlee@suse.com>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/bluetooth/hci_core.h |    1 +
+ net/bluetooth/hci_conn.c         |   27 +++++++++++++++++++++++++++
+ net/bluetooth/hci_event.c        |   29 +++++++++++------------------
+ 3 files changed, 39 insertions(+), 18 deletions(-)
 
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1426,6 +1426,7 @@ int hci_conn_switch_role(struct hci_conn
+ void hci_conn_enter_active_mode(struct hci_conn *conn, __u8 force_active);
+ 
+ void hci_conn_failed(struct hci_conn *conn, u8 status);
++u8 hci_conn_set_handle(struct hci_conn *conn, u16 handle);
+ 
+ /*
+  * hci_conn_get() and hci_conn_put() are used to control the life-time of an
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1248,6 +1248,33 @@ void hci_conn_failed(struct hci_conn *co
+ 	hci_conn_del(conn);
+ }
+ 
++/* This function requires the caller holds hdev->lock */
++u8 hci_conn_set_handle(struct hci_conn *conn, u16 handle)
++{
++	struct hci_dev *hdev = conn->hdev;
++
++	bt_dev_dbg(hdev, "hcon %p handle 0x%4.4x", conn, handle);
++
++	if (conn->handle == handle)
++		return 0;
++
++	if (handle > HCI_CONN_HANDLE_MAX) {
++		bt_dev_err(hdev, "Invalid handle: 0x%4.4x > 0x%4.4x",
++			   handle, HCI_CONN_HANDLE_MAX);
++		return HCI_ERROR_INVALID_PARAMETERS;
++	}
++
++	/* If abort_reason has been sent it means the connection is being
++	 * aborted and the handle shall not be changed.
++	 */
++	if (conn->abort_reason)
++		return conn->abort_reason;
++
++	conn->handle = handle;
++
++	return 0;
++}
++
+ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+ {
+ 	struct hci_conn *conn = data;
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
-@@ -3275,7 +3275,7 @@ static void hci_conn_request_evt(struct
- 	/* Reject incoming connection from device with same BD ADDR against
- 	 * CVE-2020-26555
- 	 */
--	if (!bacmp(&hdev->bdaddr, &ev->bdaddr)) {
-+	if (hdev && !bacmp(&hdev->bdaddr, &ev->bdaddr)) {
- 		bt_dev_dbg(hdev, "Reject connection with same BD_ADDR %pMR\n",
- 			   &ev->bdaddr);
- 		hci_reject_conn(hdev, &ev->bdaddr);
+@@ -3180,13 +3180,9 @@ static void hci_conn_complete_evt(struct
+ 	}
+ 
+ 	if (!status) {
+-		conn->handle = __le16_to_cpu(ev->handle);
+-		if (conn->handle > HCI_CONN_HANDLE_MAX) {
+-			bt_dev_err(hdev, "Invalid handle: 0x%4.4x > 0x%4.4x",
+-				   conn->handle, HCI_CONN_HANDLE_MAX);
+-			status = HCI_ERROR_INVALID_PARAMETERS;
++		status = hci_conn_set_handle(conn, __le16_to_cpu(ev->handle));
++		if (status)
+ 			goto done;
+-		}
+ 
+ 		if (conn->type == ACL_LINK) {
+ 			conn->state = BT_CONFIG;
+@@ -3879,11 +3875,9 @@ static u8 hci_cc_le_set_cig_params(struc
+ 		if (conn->state != BT_BOUND && conn->state != BT_CONNECT)
+ 			continue;
+ 
+-		conn->handle = __le16_to_cpu(rp->handle[i]);
++		if (hci_conn_set_handle(conn, __le16_to_cpu(rp->handle[i])))
++			continue;
+ 
+-		bt_dev_dbg(hdev, "%p handle 0x%4.4x parent %p", conn,
+-			   conn->handle, conn->parent);
+-		
+ 		if (conn->state == BT_CONNECT)
+ 			pending = true;
+ 	}
+@@ -5055,11 +5049,8 @@ static void hci_sync_conn_complete_evt(s
+ 
+ 	switch (status) {
+ 	case 0x00:
+-		conn->handle = __le16_to_cpu(ev->handle);
+-		if (conn->handle > HCI_CONN_HANDLE_MAX) {
+-			bt_dev_err(hdev, "Invalid handle: 0x%4.4x > 0x%4.4x",
+-				   conn->handle, HCI_CONN_HANDLE_MAX);
+-			status = HCI_ERROR_INVALID_PARAMETERS;
++		status = hci_conn_set_handle(conn, __le16_to_cpu(ev->handle));
++		if (status) {
+ 			conn->state = BT_CLOSED;
+ 			break;
+ 		}
+@@ -6992,7 +6983,7 @@ static void hci_le_create_big_complete_e
+ {
+ 	struct hci_evt_le_create_big_complete *ev = data;
+ 	struct hci_conn *conn;
+-	__u8 bis_idx = 0;
++	__u8 i = 0;
+ 
+ 	BT_DBG("%s status 0x%2.2x", hdev->name, ev->status);
+ 
+@@ -7010,7 +7001,9 @@ static void hci_le_create_big_complete_e
+ 		    conn->iso_qos.bcast.big != ev->handle)
+ 			continue;
+ 
+-		conn->handle = __le16_to_cpu(ev->bis_handle[bis_idx++]);
++		if (hci_conn_set_handle(conn,
++					__le16_to_cpu(ev->bis_handle[i++])))
++			continue;
+ 
+ 		if (!ev->status) {
+ 			conn->state = BT_CONNECTED;
+@@ -7029,7 +7022,7 @@ static void hci_le_create_big_complete_e
+ 		rcu_read_lock();
+ 	}
+ 
+-	if (!ev->status && !bis_idx)
++	if (!ev->status && !i)
+ 		/* If no BISes have been connected for the BIG,
+ 		 * terminate. This is in case all bound connections
+ 		 * have been closed before the BIG creation
 
 
