@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5D615E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0366C15E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnsuQhsT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBE1C433C7;
-	Mon, 23 Oct 2023 11:29:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXSaeN5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745F1C433CB;
+	Mon, 23 Oct 2023 11:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060593;
-	bh=U65vydzV0oMB9BgM6HXe5lj7l+zlCdG3CKeutgMAkS8=;
+	s=korg; t=1698060596;
+	bh=bfHIqVVuwz9bmWP+jr9WBfYt+KziWXW0QtWm2EbHKaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TnsuQhsT2G5um8xnoHbMcIFC7IP90XYiGVpli+gZHre3Vtwe5P4TqPJt7WFN5bIye
-	 Bo9oYN3321vj5jcE55bwh5VV4YB3/PfDIvnwS/Hajv72G4bi13axRynkHJ7/3sSplZ
-	 Jt/iVO/zRthZJ+i3NlDoEakItvoes1mfy+30zQBY=
+	b=OXSaeN5S3sMOy1jskXVbDC5vBAzM08Idj8xtEuh9hPJI8n76xfqV3H481nzHzrnhQ
+	 BPZ5jgHTw+xfeeI/rRasc/XOvYGRzAhSgHXAB47eRX1sEe1sCpfRlWXoq+/sEss94D
+	 4DH/ZmlW2RLcjxd2YmGuOpryJlwuxYjCkmu2v07A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 010/123] ravb: Fix up dma_free_coherent() call in ravb_remove()
-Date: Mon, 23 Oct 2023 12:56:08 +0200
-Message-ID: <20231023104818.079309411@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
+	Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
+Subject: [PATCH 5.4 028/123] mcb: remove is_added flag from mcb_device struct
+Date: Mon, 23 Oct 2023 12:56:26 +0200
+Message-ID: <20231023104818.685308305@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104817.691299567@linuxfoundation.org>
 References: <20231023104817.691299567@linuxfoundation.org>
@@ -43,47 +42,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
 
-[ Upstream commit e6864af61493113558c502b5cd0d754c19b93277 ]
+commit 0f28ada1fbf0054557cddcdb93ad17f767105208 upstream.
 
-In ravb_remove(), dma_free_coherent() should be call after
-unregister_netdev(). Otherwise, this controller is possible to use
-the freed buffer.
+When calling mcb_bus_add_devices(), both mcb devices and the mcb
+bus will attempt to attach a device to a driver because they share
+the same bus_type. This causes an issue when trying to cast the
+container of the device to mcb_device struct using to_mcb_device(),
+leading to a wrong cast when the mcb_bus is added. A crash occurs
+when freing the ida resources as the bus numbering of mcb_bus gets
+confused with the is_added flag on the mcb_device struct.
 
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20231005011201.14368-2-yoshihiro.shimoda.uh@renesas.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The only reason for this cast was to keep an is_added flag on the
+mcb_device struct that does not seem necessary. The function
+device_attach() handles already bound devices and the mcb subsystem
+does nothing special with this is_added flag so remove it completely.
+
+Fixes: 18d288198099 ("mcb: Correctly initialize the bus's device")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Co-developed-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
+Signed-off-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
+Link: https://lore.kernel.org/r/20230906114901.63174-2-JoseJavier.Rodriguez@duagon.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mcb/mcb-core.c  |   10 +++-------
+ drivers/mcb/mcb-parse.c |    2 --
+ include/linux/mcb.h     |    1 -
+ 3 files changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 231a1295c4700..4698fbde7fb74 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2212,14 +2212,14 @@ static int ravb_remove(struct platform_device *pdev)
- 	if (priv->chip_id != RCAR_GEN2)
- 		ravb_ptp_stop(ndev);
+--- a/drivers/mcb/mcb-core.c
++++ b/drivers/mcb/mcb-core.c
+@@ -389,17 +389,13 @@ EXPORT_SYMBOL_GPL(mcb_free_dev);
  
--	dma_free_coherent(ndev->dev.parent, priv->desc_bat_size, priv->desc_bat,
--			  priv->desc_bat_dma);
- 	/* Set reset mode */
- 	ravb_write(ndev, CCC_OPC_RESET, CCC);
- 	unregister_netdev(ndev);
- 	netif_napi_del(&priv->napi[RAVB_NC]);
- 	netif_napi_del(&priv->napi[RAVB_BE]);
- 	ravb_mdio_release(priv);
-+	dma_free_coherent(ndev->dev.parent, priv->desc_bat_size, priv->desc_bat,
-+			  priv->desc_bat_dma);
- 	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	free_netdev(ndev);
--- 
-2.40.1
-
+ static int __mcb_bus_add_devices(struct device *dev, void *data)
+ {
+-	struct mcb_device *mdev = to_mcb_device(dev);
+ 	int retval;
+ 
+-	if (mdev->is_added)
+-		return 0;
+-
+ 	retval = device_attach(dev);
+-	if (retval < 0)
++	if (retval < 0) {
+ 		dev_err(dev, "Error adding device (%d)\n", retval);
+-
+-	mdev->is_added = true;
++		return retval;
++	}
+ 
+ 	return 0;
+ }
+--- a/drivers/mcb/mcb-parse.c
++++ b/drivers/mcb/mcb-parse.c
+@@ -99,8 +99,6 @@ static int chameleon_parse_gdd(struct mc
+ 	mdev->mem.end = mdev->mem.start + size - 1;
+ 	mdev->mem.flags = IORESOURCE_MEM;
+ 
+-	mdev->is_added = false;
+-
+ 	ret = mcb_device_register(bus, mdev);
+ 	if (ret < 0)
+ 		goto err;
+--- a/include/linux/mcb.h
++++ b/include/linux/mcb.h
+@@ -63,7 +63,6 @@ static inline struct mcb_bus *to_mcb_bus
+ struct mcb_device {
+ 	struct device dev;
+ 	struct mcb_bus *bus;
+-	bool is_added;
+ 	struct mcb_driver *driver;
+ 	u16 id;
+ 	int inst;
 
 
