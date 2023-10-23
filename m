@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BC315EA5
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772B315EA5
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRsxBcAH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD08C433CC;
-	Mon, 23 Oct 2023 11:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhiwOWtL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05EEC433C9;
+	Mon, 23 Oct 2023 11:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061367;
-	bh=IVU3t0iDHy73gQKGWr58nGN8gjjzyZ0qQW4gTPxs1TE=;
+	s=korg; t=1698061370;
+	bh=Lbu2wJ25cC7wY+0QDN2JXEFzJnjLxxZ/SAST+Vpg6ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qRsxBcAHTgPlC0WnbTt5lDRHuok4TIcsDHwGh4r/jA4xKmKEQ64Zi7NKhY6yBeKZx
-	 JblXZSw3KodhUOCJ0EUJpmP+FtnIwTt8EFQnl+sLoWMl2kjcVmGx6AfcFX7rnItBNK
-	 SZduZrvsoPuMegTSygMeXwGIdu/DVWshTS+OZNss=
+	b=LhiwOWtLy0tYy5MlywsucvpjINIvQwG9o3qE88h4Fu7iguMi499R47JKHGr/Ciay7
+	 uOvaf1AjNOsNYuGphQaTxWHWKi1YUzb/Skx7MJHrH4ane6wJ/fSKJUOE/6OdR9NG1r
+	 1q5NAv51eRUCXShZnNLSRjjlRC3ISvVVV3XUf/qA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	linux-kernel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Xiaoke Wang <xkernel.wang@foxmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 006/202] lib/test_meminit: fix off-by-one error in test_pages()
-Date: Mon, 23 Oct 2023 12:55:13 +0200
-Message-ID: <20231023104826.776616509@linuxfoundation.org>
+	Ralph Siemsen <ralph.siemsen@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 024/202] pinctrl: renesas: rzn1: Enable missing PINMUX
+Date: Mon, 23 Oct 2023 12:55:31 +0200
+Message-ID: <20231023104827.316217212@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104826.569169691@linuxfoundation.org>
 References: <20231023104826.569169691@linuxfoundation.org>
@@ -44,38 +44,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Ralph Siemsen <ralph.siemsen@linaro.org>
 
-commit efb78fa86e95 ("lib/test_meminit: allocate pages up to order
-MAX_ORDER") works great in kernels 6.4 and newer thanks to commit
-23baf831a32c ("mm, treewide: redefine MAX_ORDER sanely"), but for older
-kernels, the loop is off by one, which causes crashes when the test
-runs.
+[ Upstream commit f055ff23c331f28aa4ace4b72dc56f63b9a726c8 ]
 
-Fix this up by changing "<= MAX_ORDER" "< MAX_ORDER" to allow the test
-to work properly for older kernel branches.
+Enable pin muxing (eg. programmable function), so that the RZ/N1 GPIO
+pins will be configured as specified by the pinmux in the DTS.
 
-Fixes: 2a1cf9fe09d9 ("lib/test_meminit: allocate pages up to order MAX_ORDER")
-Cc: Andrew Donnellan <ajd@linux.ibm.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Xiaoke Wang <xkernel.wang@foxmail.com>
-Cc: <stable@vger.kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This used to be enabled implicitly via CONFIG_GENERIC_PINMUX_FUNCTIONS,
+however that was removed, since the RZ/N1 driver does not call any of
+the generic pinmux functions.
+
+Fixes: 1308fb4e4eae14e6 ("pinctrl: rzn1: Do not select GENERIC_PIN{CTRL_GROUPS,MUX_FUNCTIONS}")
+Signed-off-by: Ralph Siemsen <ralph.siemsen@linaro.org>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20231004200008.1306798-1-ralph.siemsen@linaro.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_meminit.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/renesas/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/lib/test_meminit.c
-+++ b/lib/test_meminit.c
-@@ -86,7 +86,7 @@ static int __init test_pages(int *total_
- 	int failures = 0, num_tests = 0;
- 	int i;
+diff --git a/drivers/pinctrl/renesas/Kconfig b/drivers/pinctrl/renesas/Kconfig
+index e941b8440dbc8..39559ce9d1ed9 100644
+--- a/drivers/pinctrl/renesas/Kconfig
++++ b/drivers/pinctrl/renesas/Kconfig
+@@ -212,6 +212,7 @@ config PINCTRL_RZN1
+ 	depends on OF
+ 	depends on ARCH_RZN1 || COMPILE_TEST
+ 	select GENERIC_PINCONF
++	select PINMUX
+ 	help
+ 	  This selects pinctrl driver for Renesas RZ/N1 devices.
  
--	for (i = 0; i <= MAX_ORDER; i++)
-+	for (i = 0; i < MAX_ORDER; i++)
- 		num_tests += do_alloc_pages_order(i, &failures);
- 
- 	REPORT_FAILURES_IN_FN();
+-- 
+2.40.1
+
 
 
