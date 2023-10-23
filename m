@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B21914A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4D213FF0
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:05:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nka3Grws"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E7BC433C8;
-	Mon, 23 Oct 2023 11:05:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pV9WcSd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800E6C433CA;
+	Mon, 23 Oct 2023 11:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059148;
-	bh=P1jFpBMmufE5fTIMDv+8Zh3tPCs2xsf3WhPLpUAW4Qs=;
+	s=korg; t=1698059150;
+	bh=Ljhi2M/Z2Ol53POLdJxHqe0SOuoanpVo59AXNwp3ios=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nka3GrwsvCl/HDCqtF7b7D8pCcD0yxpFVyL3xq98eZNJ/aoyxjI5FscJhnRPkNcZs
-	 WWsq5wYXSlkjAto0rCDZ1MSQw/G/NFjDwxaxt26L7hpglY7YyGdAiGjUVNtG40Tkao
-	 i5Unbb/tYDFQCdT5ADje2EweCDqX56ZgfJ4doVRI=
+	b=2pV9WcSdQMdWgWTE3YsEGRAbrPV3RHezdk4Cx5spw+TTmVZyLk2w7OnKkWchvLIgY
+	 D3JnbLMvX9OKwWoRjFw+BgZu802uvwTzMWjWwcK7eZ1oqjtfB6U6uvvn1SffQMgkF/
+	 Lv0BucDL2DV9VThSERIpi17eOlPDjjvZ55QTLngA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Conole <aconole@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.5 079/241] selftests: openvswitch: Fix the ct_tuple for v4
-Date: Mon, 23 Oct 2023 12:54:25 +0200
-Message-ID: <20231023104835.813283733@linuxfoundation.org>
+	Phil Sutter <phil@nwl.cc>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.5 080/241] selftests: netfilter: Run nft_audit.sh in its own netns
+Date: Mon, 23 Oct 2023 12:54:26 +0200
+Message-ID: <20231023104835.836931451@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -41,42 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Conole <aconole@redhat.com>
+From: Phil Sutter <phil@nwl.cc>
 
-commit 8eff0e062201e26739c74ac2355b7362622b7190 upstream.
+commit 2e2d9c7d4d37d74873583d7b0c94eac8b6869486 upstream.
 
-The ct_tuple v4 data structure decode / encode routines were using
-the v6 IP address decode and relying on default encode. This could
-cause exceptions during encode / decode depending on how a ct4
-tuple would appear in a netlink message.
+Don't mess with the host's firewall ruleset. Since audit logging is not
+per-netns, add an initial delay of a second so other selftests' netns
+cleanups have a chance to finish.
 
-Caught during code review.
-
-Fixes: e52b07aa1a54 ("selftests: openvswitch: add flow dump support")
-Signed-off-by: Aaron Conole <aconole@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e8dbde59ca3f ("selftests: netfilter: Test nf_tables audit logging")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/openvswitch/ovs-dpctl.py |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/netfilter/nft_audit.sh |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/tools/testing/selftests/net/openvswitch/ovs-dpctl.py
-+++ b/tools/testing/selftests/net/openvswitch/ovs-dpctl.py
-@@ -732,12 +732,14 @@ class ovskey(nla):
-                 "src",
-                 lambda x: str(ipaddress.IPv4Address(x)),
-                 int,
-+                convert_ipv4,
-             ),
-             (
-                 "dst",
-                 "dst",
--                lambda x: str(ipaddress.IPv6Address(x)),
-+                lambda x: str(ipaddress.IPv4Address(x)),
-                 int,
-+                convert_ipv4,
-             ),
-             ("tp_src", "tp_src", "%d", int),
-             ("tp_dst", "tp_dst", "%d", int),
+--- a/tools/testing/selftests/netfilter/nft_audit.sh
++++ b/tools/testing/selftests/netfilter/nft_audit.sh
+@@ -11,6 +11,12 @@ nft --version >/dev/null 2>&1 || {
+ 	exit $SKIP_RC
+ }
+ 
++# Run everything in a separate network namespace
++[ "${1}" != "run" ] && { unshare -n "${0}" run; exit $?; }
++
++# give other scripts a chance to finish - audit_logread sees all activity
++sleep 1
++
+ logfile=$(mktemp)
+ rulefile=$(mktemp)
+ echo "logging into $logfile"
 
 
