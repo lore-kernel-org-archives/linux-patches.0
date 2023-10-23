@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFE115E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D39215E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aohyoqcX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA2DC433C8;
-	Mon, 23 Oct 2023 11:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fb/GV/tY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC67EC433C8;
+	Mon, 23 Oct 2023 11:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061076;
-	bh=YPk4LF+SL/ZuyGZfeVn23s4R393SDRZmOSF7dAYX3Qo=;
+	s=korg; t=1698061079;
+	bh=oaRjAazGyl1/avvZs1MOoIFq3ZfC3XwFC8SRFCMTRbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aohyoqcXgSHDunUX8xCC72Gi7kaRbAh6jv6o4xhBNnWuXsIN0RoHOyW4Khg7L3V4X
-	 qJItMvJZS6R2E8eIUjxP/LoQUw/Pi9+MYQz472WQwy8+p3Bfwe0a0pZxfYIbNtVNe7
-	 AS11XrGt8CBHWHlOSP9S/a6zy4LY/Gw5A6lVtPPw=
+	b=Fb/GV/tY7hNqeP67+mi6l+CwpEH8KD5hh16S8pKaXjCRklZPb8SzyR83WuWn5n+XK
+	 XFp8ZzWIz7cI5YuSn12FnkFZDElFpQe1bHYd+oIOw2VJ9fIWPgERPtVzJVm+im7Z19
+	 07pTGfmoBo9SLYsXiIWHfCUYin6ibg46ipZ4C/Fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.15 047/137] netfilter: nf_tables: revert do not remove elements if set backend implements .abort
-Date: Mon, 23 Oct 2023 12:56:44 +0200
-Message-ID: <20231023104822.603163481@linuxfoundation.org>
+	Sili Luo <rootlab@huawei.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 065/137] mctp: perform route lookups under a RCU read-side lock
+Date: Mon, 23 Oct 2023 12:57:02 +0200
+Message-ID: <20231023104823.153083742@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -41,35 +44,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-commit f86fb94011aeb3b26337fc22204ca726aeb8bc24 upstream.
+[ Upstream commit 5093bbfc10ab6636b32728e35813cbd79feb063c ]
 
-nf_tables_abort_release() path calls nft_set_elem_destroy() for
-NFT_MSG_NEWSETELEM which releases the element, however, a reference to
-the element still remains in the working copy.
+Our current route lookups (mctp_route_lookup and mctp_route_lookup_null)
+traverse the net's route list without the RCU read lock held. This means
+the route lookup is subject to preemption, resulting in an potential
+grace period expiry, and so an eventual kfree() while we still have the
+route pointer.
 
-Fixes: ebd032fa8818 ("netfilter: nf_tables: do not remove elements if set backend implements .abort")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add the proper read-side critical section locks around the route
+lookups, preventing premption and a possible parallel kfree.
+
+The remaining net->mctp.routes accesses are already under a
+rcu_read_lock, or protected by the RTNL for updates.
+
+Based on an analysis from Sili Luo <rootlab@huawei.com>, where
+introducing a delay in the route lookup could cause a UAF on
+simultaneous sendmsg() and route deletion.
+
+Reported-by: Sili Luo <rootlab@huawei.com>
+Fixes: 889b7da23abf ("mctp: Add initial routing framework")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/29c4b0e67dc1bf3571df3982de87df90cae9b631.1696837310.git.jk@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/mctp/route.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -9713,10 +9713,7 @@ static int __nf_tables_abort(struct net
- 				break;
- 			}
- 			te = (struct nft_trans_elem *)trans->data;
--			if (!te->set->ops->abort ||
--			    nft_setelem_is_catchall(te->set, &te->elem))
--				nft_setelem_remove(net, te->set, &te->elem);
--
-+			nft_setelem_remove(net, te->set, &te->elem);
- 			if (!nft_setelem_is_catchall(te->set, &te->elem))
- 				atomic_dec(&te->set->nelems);
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index 859f57fd3871f..5ef6b3b0a3d99 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -549,6 +549,8 @@ struct mctp_route *mctp_route_lookup(struct net *net, unsigned int dnet,
+ {
+ 	struct mctp_route *tmp, *rt = NULL;
  
++	rcu_read_lock();
++
+ 	list_for_each_entry_rcu(tmp, &net->mctp.routes, list) {
+ 		/* TODO: add metrics */
+ 		if (mctp_rt_match_eid(tmp, dnet, daddr)) {
+@@ -559,21 +561,29 @@ struct mctp_route *mctp_route_lookup(struct net *net, unsigned int dnet,
+ 		}
+ 	}
+ 
++	rcu_read_unlock();
++
+ 	return rt;
+ }
+ 
+ static struct mctp_route *mctp_route_lookup_null(struct net *net,
+ 						 struct net_device *dev)
+ {
+-	struct mctp_route *rt;
++	struct mctp_route *tmp, *rt = NULL;
+ 
+-	list_for_each_entry_rcu(rt, &net->mctp.routes, list) {
+-		if (rt->dev->dev == dev && rt->type == RTN_LOCAL &&
+-		    refcount_inc_not_zero(&rt->refs))
+-			return rt;
++	rcu_read_lock();
++
++	list_for_each_entry_rcu(tmp, &net->mctp.routes, list) {
++		if (tmp->dev->dev == dev && tmp->type == RTN_LOCAL &&
++		    refcount_inc_not_zero(&tmp->refs)) {
++			rt = tmp;
++			break;
++		}
+ 	}
+ 
+-	return NULL;
++	rcu_read_unlock();
++
++	return rt;
+ }
+ 
+ /* sends a skb to rt and releases the route. */
+-- 
+2.40.1
+
 
 
