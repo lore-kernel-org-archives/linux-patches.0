@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2DE14282
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBFD14282
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZaBPdHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E29C433C7;
-	Mon, 23 Oct 2023 11:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdyAjaFA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19962C433C7;
+	Mon, 23 Oct 2023 11:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059816;
-	bh=2mpMTdgCw5RbC3FnPtG8/sOzrzhrzPvAoUoqsx2XzSw=;
+	s=korg; t=1698059819;
+	bh=Jx/ckxkBU6x17NkHuDTJkJ9V5buw4c0NUU4SHTRKPM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZaBPdHJVviWUh2qENtp3BQ/R/ECE0EO3tdgrsJcipfwtKP1Rro0Ql/pTQAdVzWAJ
-	 fr3yT5Fc4a3zeMOo62VifCeG8BeaZz+lWsvvClpsT+F75t3Tx0cZmMF+RTy0PVuH5C
-	 Z7Abx6vVEmHgqQ5SPuwvG6tRcmqvVYxXqM/fHzBg=
+	b=LdyAjaFA93gPCM3gBovXZMpxHXBjBMnS4uKIz7oSth5y6jUMq080+cEIAaWLGyK0a
+	 1c7sxGqeWxMxudklZ9MGCw09mjLVGfWzHqz0YJ444j193TSx2sg344CL/NH/31Ltu4
+	 qWKYoOhf+vzxbl07UnG2/ueM3hxwEPlyqn/jXlag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 4.19 35/98] x86/cpu: Fix AMD erratum #1485 on Zen4-based CPUs
-Date: Mon, 23 Oct 2023 12:56:24 +0200
-Message-ID: <20231023104814.837660899@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Piyush Mehta <piyush.mehta@amd.com>
+Subject: [PATCH 4.19 36/98] usb: gadget: udc-xilinx: replace memcpy with memcpy_toio
+Date: Mon, 23 Oct 2023 12:56:25 +0200
+Message-ID: <20231023104814.873986769@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104813.580375891@linuxfoundation.org>
 References: <20231023104813.580375891@linuxfoundation.org>
@@ -36,67 +35,161 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Piyush Mehta <piyush.mehta@amd.com>
 
-commit f454b18e07f518bcd0c05af17a2239138bff52de upstream.
+commit 3061b6491f491197a35e14e49f805d661b02acd4 upstream.
 
-Fix erratum #1485 on Zen4 parts where running with STIBP disabled can
-cause an #UD exception. The performance impact of the fix is negligible.
+For ARM processor, unaligned access to device memory is not allowed.
+Method memcpy does not take care of alignment.
 
-Reported-by: René Rebe <rene@exactcode.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: René Rebe <rene@exactcode.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/D99589F4-BC5D-430B-87B2-72C20370CF57@exactcode.com
+USB detection failure with the unalingned address of memory, with
+below kernel crash. To fix the unalingned address kernel panic,
+replace memcpy with memcpy_toio method.
+
+Kernel crash:
+Unable to handle kernel paging request at virtual address ffff80000c05008a
+Mem abort info:
+  ESR = 0x96000061
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x21: alignment fault
+Data abort info:
+  ISV = 0, ISS = 0x00000061
+  CM = 0, WnR = 1
+swapper pgtable: 4k pages, 48-bit VAs, pgdp=000000000143b000
+[ffff80000c05008a] pgd=100000087ffff003, p4d=100000087ffff003,
+pud=100000087fffe003, pmd=1000000800bcc003, pte=00680000a0010713
+Internal error: Oops: 96000061 [#1] SMP
+Modules linked in:
+CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.15.19-xilinx-v2022.1 #1
+Hardware name: ZynqMP ZCU102 Rev1.0 (DT)
+pstate: 200000c5 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __memcpy+0x30/0x260
+lr : __xudc_ep0_queue+0xf0/0x110
+sp : ffff800008003d00
+x29: ffff800008003d00 x28: ffff800009474e80 x27: 00000000000000a0
+x26: 0000000000000100 x25: 0000000000000012 x24: ffff000800bc8080
+x23: 0000000000000001 x22: 0000000000000012 x21: ffff000800bc8080
+x20: 0000000000000012 x19: ffff000800bc8080 x18: 0000000000000000
+x17: ffff800876482000 x16: ffff800008004000 x15: 0000000000004000
+x14: 00001f09785d0400 x13: 0103020101005567 x12: 0781400000000200
+x11: 00000000c5672a10 x10: 00000000000008d0 x9 : ffff800009463cf0
+x8 : ffff8000094757b0 x7 : 0201010055670781 x6 : 4000000002000112
+x5 : ffff80000c05009a x4 : ffff000800a15012 x3 : ffff00080362ad80
+x2 : 0000000000000012 x1 : ffff000800a15000 x0 : ffff80000c050088
+Call trace:
+ __memcpy+0x30/0x260
+ xudc_ep0_queue+0x3c/0x60
+ usb_ep_queue+0x38/0x44
+ composite_ep0_queue.constprop.0+0x2c/0xc0
+ composite_setup+0x8d0/0x185c
+ configfs_composite_setup+0x74/0xb0
+ xudc_irq+0x570/0xa40
+ __handle_irq_event_percpu+0x58/0x170
+ handle_irq_event+0x60/0x120
+ handle_fasteoi_irq+0xc0/0x220
+ handle_domain_irq+0x60/0x90
+ gic_handle_irq+0x74/0xa0
+ call_on_irq_stack+0x2c/0x60
+ do_interrupt_handler+0x54/0x60
+ el1_interrupt+0x30/0x50
+ el1h_64_irq_handler+0x18/0x24
+ el1h_64_irq+0x78/0x7c
+ arch_cpu_idle+0x18/0x2c
+ do_idle+0xdc/0x15c
+ cpu_startup_entry+0x28/0x60
+ rest_init+0xc8/0xe0
+ arch_call_rest_init+0x10/0x1c
+ start_kernel+0x694/0x6d4
+ __primary_switched+0xa4/0xac
+
+Fixes: 1f7c51660034 ("usb: gadget: Add xilinx usb2 device support")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/all/202209020044.CX2PfZzM-lkp@intel.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Piyush Mehta <piyush.mehta@amd.com>
+Link: https://lore.kernel.org/r/20230929121514.13475-1-piyush.mehta@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/msr-index.h |    4 ++++
- arch/x86/kernel/cpu/amd.c        |    8 ++++++++
- 2 files changed, 12 insertions(+)
+ drivers/usb/gadget/udc/udc-xilinx.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -446,6 +446,10 @@
+--- a/drivers/usb/gadget/udc/udc-xilinx.c
++++ b/drivers/usb/gadget/udc/udc-xilinx.c
+@@ -496,11 +496,13 @@ static int xudc_eptxrx(struct xusb_ep *e
+ 		/* Get the Buffer address and copy the transmit data.*/
+ 		eprambase = (u32 __force *)(udc->addr + ep->rambase);
+ 		if (ep->is_in) {
+-			memcpy(eprambase, bufferptr, bytestosend);
++			memcpy_toio((void __iomem *)eprambase, bufferptr,
++				    bytestosend);
+ 			udc->write_fn(udc->addr, ep->offset +
+ 				      XUSB_EP_BUF0COUNT_OFFSET, bufferlen);
+ 		} else {
+-			memcpy(bufferptr, eprambase, bytestosend);
++			memcpy_toio((void __iomem *)bufferptr, eprambase,
++				    bytestosend);
+ 		}
+ 		/*
+ 		 * Enable the buffer for transmission.
+@@ -514,11 +516,13 @@ static int xudc_eptxrx(struct xusb_ep *e
+ 		eprambase = (u32 __force *)(udc->addr + ep->rambase +
+ 			     ep->ep_usb.maxpacket);
+ 		if (ep->is_in) {
+-			memcpy(eprambase, bufferptr, bytestosend);
++			memcpy_toio((void __iomem *)eprambase, bufferptr,
++				    bytestosend);
+ 			udc->write_fn(udc->addr, ep->offset +
+ 				      XUSB_EP_BUF1COUNT_OFFSET, bufferlen);
+ 		} else {
+-			memcpy(bufferptr, eprambase, bytestosend);
++			memcpy_toio((void __iomem *)bufferptr, eprambase,
++				    bytestosend);
+ 		}
+ 		/*
+ 		 * Enable the buffer for transmission.
+@@ -1020,7 +1024,7 @@ static int __xudc_ep0_queue(struct xusb_
+ 			   udc->addr);
+ 		length = req->usb_req.actual = min_t(u32, length,
+ 						     EP0_MAX_PACKET);
+-		memcpy(corebuf, req->usb_req.buf, length);
++		memcpy_toio((void __iomem *)corebuf, req->usb_req.buf, length);
+ 		udc->write_fn(udc->addr, XUSB_EP_BUF0COUNT_OFFSET, length);
+ 		udc->write_fn(udc->addr, XUSB_BUFFREADY_OFFSET, 1);
+ 	} else {
+@@ -1746,7 +1750,7 @@ static void xudc_handle_setup(struct xus
  
- #define MSR_AMD64_VIRT_SPEC_CTRL	0xc001011f
+ 	/* Load up the chapter 9 command buffer.*/
+ 	ep0rambase = (u32 __force *) (udc->addr + XUSB_SETUP_PKT_ADDR_OFFSET);
+-	memcpy(&setup, ep0rambase, 8);
++	memcpy_toio((void __iomem *)&setup, ep0rambase, 8);
  
-+/* Zen4 */
-+#define MSR_ZEN4_BP_CFG			0xc001102e
-+#define MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT 5
-+
- /* Fam 17h MSRs */
- #define MSR_F17H_IRPERF			0xc00000e9
+ 	udc->setup = setup;
+ 	udc->setup.wValue = cpu_to_le16(setup.wValue);
+@@ -1833,7 +1837,7 @@ static void xudc_ep0_out(struct xusb_udc
+ 			     (ep0->rambase << 2));
+ 		buffer = req->usb_req.buf + req->usb_req.actual;
+ 		req->usb_req.actual = req->usb_req.actual + bytes_to_rx;
+-		memcpy(buffer, ep0rambase, bytes_to_rx);
++		memcpy_toio((void __iomem *)buffer, ep0rambase, bytes_to_rx);
  
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -72,6 +72,10 @@ static const int amd_zenbleed[] =
- 			   AMD_MODEL_RANGE(0x17, 0x90, 0x0, 0x91, 0xf),
- 			   AMD_MODEL_RANGE(0x17, 0xa0, 0x0, 0xaf, 0xf));
- 
-+static const int amd_erratum_1485[] =
-+	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x19, 0x10, 0x0, 0x1f, 0xf),
-+			   AMD_MODEL_RANGE(0x19, 0x60, 0x0, 0xaf, 0xf));
-+
- static bool cpu_has_amd_erratum(struct cpuinfo_x86 *cpu, const int *erratum)
- {
- 	int osvw_id = *erratum++;
-@@ -1122,6 +1126,10 @@ static void init_amd(struct cpuinfo_x86
- 	check_null_seg_clears_base(c);
- 
- 	zenbleed_check(c);
-+
-+	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) &&
-+	     cpu_has_amd_erratum(c, amd_erratum_1485))
-+		msr_set_bit(MSR_ZEN4_BP_CFG, MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT);
- }
- 
- #ifdef CONFIG_X86_32
+ 		if (req->usb_req.length == req->usb_req.actual) {
+ 			/* Data transfer completed get ready for Status stage */
+@@ -1909,7 +1913,7 @@ static void xudc_ep0_in(struct xusb_udc
+ 				     (ep0->rambase << 2));
+ 			buffer = req->usb_req.buf + req->usb_req.actual;
+ 			req->usb_req.actual = req->usb_req.actual + length;
+-			memcpy(ep0rambase, buffer, length);
++			memcpy_toio((void __iomem *)ep0rambase, buffer, length);
+ 		}
+ 		udc->write_fn(udc->addr, XUSB_EP_BUF0COUNT_OFFSET, count);
+ 		udc->write_fn(udc->addr, XUSB_BUFFREADY_OFFSET, 1);
 
 
