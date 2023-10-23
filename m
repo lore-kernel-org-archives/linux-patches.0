@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FD012B7A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7B612B7A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFy3P/mM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E493FC433C7;
-	Mon, 23 Oct 2023 11:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8jh42oI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD612C433C7;
+	Mon, 23 Oct 2023 11:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059480;
-	bh=LsU1XAqc1e/0jVO/ypT0aq/VyDM4YaHxX6lbcvgq3Gg=;
+	s=korg; t=1698059483;
+	bh=OzOXlNAqqA9vaN8jC54Na6VhqB4vW28UKKJ5uWBzzm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QFy3P/mMCXbAkPb8fe5wWP+HKhJz6dk4x8j5cR6M/kvQQVt1z9FTM/KmgB380XTCS
-	 XPkirNKr1KyCbVtUylbN/F23yqKNAm2AIdpi1oWWLcTZtF2F1dTgTp2UhXfw3G+I4X
-	 L9JzVJhmN6aZiChE8c3Q+X8yeOo0ubaTyXqtu9zY=
+	b=x8jh42oI+M0+QzzSyP0jrPIfI869xQsNlWQecWiMLpiqvP/nV265CGHt8MhmDVbk0
+	 pMWNAIpEjv6MtYp1y/rXRWLMFfjEgv0zJ4RGHnd7oSorTxW9uccqLE6hLkz1KEVL8A
+	 4Jo9BgADu+BftuA2fCLS/gJYRpdAvWBienFjDu1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.5 192/241] nvmet-auth: complete a request only after freeing the dhchap pointers
-Date: Mon, 23 Oct 2023 12:56:18 +0200
-Message-ID: <20231023104838.556596997@linuxfoundation.org>
+	Haibo Chen <haibo.chen@nxp.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.5 175/241] mmc: core: sdio: hold retuning if sdio in 1-bit mode
+Date: Mon, 23 Oct 2023 12:56:01 +0200
+Message-ID: <20231023104838.152437084@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -42,100 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit f965b281fd872b2e18bd82dd97730db9834d0750 upstream.
+commit 32a9cdb8869dc111a0c96cf8e1762be9684af15b upstream.
 
-It may happen that the work to destroy a queue
-(for example nvmet_tcp_release_queue_work()) is started while
-an auth-send or auth-receive command is still completing.
+tuning only support in 4-bit mode or 8 bit mode, so in 1-bit mode,
+need to hold retuning.
 
-nvmet_sq_destroy() will block, waiting for all the references
-to the sq to be dropped, the last reference is then
-dropped when nvmet_req_complete() is called.
+Find this issue when use manual tuning method on imx93. When system
+resume back, SDIO WIFI try to switch back to 4 bit mode, first will
+trigger retuning, and all tuning command failed.
 
-When this happens, both nvmet_sq_destroy() and
-nvmet_execute_auth_send()/_receive() will free the dhchap pointers by
-calling nvmet_auth_sq_free().
-Since there isn't any lock, the two threads may race against each other,
-causing double frees and memory corruptions, as reported by KASAN.
-
-Reproduced by stress blktests nvme/041 nvme/042 nvme/043
-
- nvme nvme2: qid 0: authenticated with hash hmac(sha512) dhgroup ffdhe4096
- ==================================================================
- BUG: KASAN: double-free in kfree+0xec/0x4b0
-
- Call Trace:
-  <TASK>
-  kfree+0xec/0x4b0
-  nvmet_auth_sq_free+0xe1/0x160 [nvmet]
-  nvmet_execute_auth_send+0x482/0x16d0 [nvmet]
-  process_one_work+0x8e5/0x1510
-
- Allocated by task 191846:
-  __kasan_kmalloc+0x81/0xa0
-  nvmet_auth_ctrl_sesskey+0xf6/0x380 [nvmet]
-  nvmet_auth_reply+0x119/0x990 [nvmet]
-
- Freed by task 143270:
-  kfree+0xec/0x4b0
-  nvmet_auth_sq_free+0xe1/0x160 [nvmet]
-  process_one_work+0x8e5/0x1510
-
-Fix this bug by calling nvmet_req_complete() only after freeing the
-pointers, so we will prevent the race by holding the sq reference.
-
-V2: remove redundant code
-
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: dfa13ebbe334 ("mmc: host: Add facility to support re-tuning")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230830093922.3095850-1-haibo.chen@nxp.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/mmc/core/sdio.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -333,19 +333,21 @@ done:
- 			 __func__, ctrl->cntlid, req->sq->qid,
- 			 status, req->error_loc);
- 	req->cqe->result.u64 = 0;
--	nvmet_req_complete(req, status);
- 	if (req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2 &&
- 	    req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
- 		unsigned long auth_expire_secs = ctrl->kato ? ctrl->kato : 120;
- 
- 		mod_delayed_work(system_wq, &req->sq->auth_expired_work,
- 				 auth_expire_secs * HZ);
--		return;
-+		goto complete;
+--- a/drivers/mmc/core/sdio.c
++++ b/drivers/mmc/core/sdio.c
+@@ -1089,8 +1089,14 @@ static int mmc_sdio_resume(struct mmc_ho
+ 		}
+ 		err = mmc_sdio_reinit_card(host);
+ 	} else if (mmc_card_wake_sdio_irq(host)) {
+-		/* We may have switched to 1-bit mode during suspend */
++		/*
++		 * We may have switched to 1-bit mode during suspend,
++		 * need to hold retuning, because tuning only supprt
++		 * 4-bit mode or 8 bit mode.
++		 */
++		mmc_retune_hold_now(host);
+ 		err = sdio_enable_4bit_bus(host->card);
++		mmc_retune_release(host);
  	}
- 	/* Final states, clear up variables */
- 	nvmet_auth_sq_free(req->sq);
- 	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE2)
- 		nvmet_ctrl_fatal_error(ctrl);
-+
-+complete:
-+	nvmet_req_complete(req, status);
- }
  
- static int nvmet_auth_challenge(struct nvmet_req *req, void *d, int al)
-@@ -514,11 +516,12 @@ void nvmet_execute_auth_receive(struct n
- 	kfree(d);
- done:
- 	req->cqe->result.u64 = 0;
--	nvmet_req_complete(req, status);
-+
- 	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2)
- 		nvmet_auth_sq_free(req->sq);
- 	else if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE1) {
- 		nvmet_auth_sq_free(req->sq);
- 		nvmet_ctrl_fatal_error(ctrl);
- 	}
-+	nvmet_req_complete(req, status);
- }
+ 	if (err)
 
 
