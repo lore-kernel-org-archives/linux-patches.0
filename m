@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB1514A81
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4018914A81
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/mcQW9A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A556C433C9;
-	Mon, 23 Oct 2023 11:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDTCrF2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA350C433C9;
+	Mon, 23 Oct 2023 11:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698059068;
-	bh=ivrtI1ZHLYv3wsCwrZOws0rK4BN3OBIaxiGXab1wUS0=;
+	s=korg; t=1698059071;
+	bh=C3YOnnqnLG0pHxvz6N8Hr5knuMuj+duSu3ZGDjRP+00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/mcQW9ARtkIw7YL9gYid9fVRM3mjhWcXrF8GMUxj08J3u8zdwMlShus9d7RgfN0b
-	 2z3OzL9VZ4SlgOfZbCbkhzFWxADAQBPWY2tmb61dYxddEyXWR550Zo5HVCKYf86U8j
-	 6O773cNYrKYA7puRuT1RKCUMOZ9TPJSgnNLa8OqI=
+	b=lDTCrF2WdswhCtZb4nrWiHZss+TiFFJguI2a/u0pFfBkgN68qJYAT26i4S4c/kHql
+	 wR8RKKh3dPtip/+DMkgFohCWLYDGRXqbXz7Gw3+PrQioWEHG2vDaOIwx0vl1rcYota
+	 3ak7xVMwAdE6/4m5zCaMGUCPmVdcpHCVoX5tfZR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.5 052/241] ASoC: codecs: wcd938x: fix runtime PM imbalance on remove
-Date: Mon, 23 Oct 2023 12:53:58 +0200
-Message-ID: <20231023104835.177710411@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>,
+	Manish Chopra <manishc@marvell.com>
+Subject: [PATCH 6.5 053/241] qed: fix LL2 RX buffer allocation
+Date: Mon, 23 Oct 2023 12:53:59 +0200
+Message-ID: <20231023104835.201321107@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 References: <20231023104833.832874523@linuxfoundation.org>
@@ -36,49 +35,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Manish Chopra <manishc@marvell.com>
 
-commit 3ebebb2c1eca92a15107b2d7aeff34196fd9e217 upstream.
+commit 2f3389c73832ad90b63208c0fc281ad080114c7a upstream.
 
-Make sure to balance the runtime PM operations, including the disable
-count, on driver unbind.
+Driver allocates the LL2 rx buffers from kmalloc()
+area to construct the skb using slab_build_skb()
 
-Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
-Cc: stable@vger.kernel.org      # 5.14
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231003155558.27079-6-johan+linaro@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The required size allocation seems to have overlooked
+for accounting both skb_shared_info size and device
+placement padding bytes which results into the below
+panic when doing skb_put() for a standard MTU sized frame.
+
+skbuff: skb_over_panic: text:ffffffffc0b0225f len:1514 put:1514
+head:ff3dabceaf39c000 data:ff3dabceaf39c042 tail:0x62c end:0x566
+dev:<NULL>
+…
+skb_panic+0x48/0x4a
+skb_put.cold+0x10/0x10
+qed_ll2b_complete_rx_packet+0x14f/0x260 [qed]
+qed_ll2_rxq_handle_completion.constprop.0+0x169/0x200 [qed]
+qed_ll2_rxq_completion+0xba/0x320 [qed]
+qed_int_sp_dpc+0x1a7/0x1e0 [qed]
+
+This patch fixes this by accouting skb_shared_info and device
+placement padding size bytes when allocating the buffers.
+
+Cc: David S. Miller <davem@davemloft.net>
+Fixes: 0a7fb11c23c0 ("qed: Add Light L2 support")
+Signed-off-by: Manish Chopra <manishc@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd938x.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/qlogic/qed/qed_ll2.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/sound/soc/codecs/wcd938x.c
-+++ b/sound/soc/codecs/wcd938x.c
-@@ -3620,9 +3620,15 @@ err_disable_regulators:
- 
- static void wcd938x_remove(struct platform_device *pdev)
+--- a/drivers/net/ethernet/qlogic/qed/qed_ll2.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_ll2.c
+@@ -113,7 +113,10 @@ static void qed_ll2b_complete_tx_packet(
+ static int qed_ll2_alloc_buffer(struct qed_dev *cdev,
+ 				u8 **data, dma_addr_t *phys_addr)
  {
--	struct wcd938x_priv *wcd938x = dev_get_drvdata(&pdev->dev);
-+	struct device *dev = &pdev->dev;
-+	struct wcd938x_priv *wcd938x = dev_get_drvdata(dev);
+-	*data = kmalloc(cdev->ll2->rx_size, GFP_ATOMIC);
++	size_t size = cdev->ll2->rx_size + NET_SKB_PAD +
++		      SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
 +
-+	component_master_del(dev, &wcd938x_comp_ops);
-+
-+	pm_runtime_disable(dev);
-+	pm_runtime_set_suspended(dev);
-+	pm_runtime_dont_use_autosuspend(dev);
++	*data = kmalloc(size, GFP_ATOMIC);
+ 	if (!(*data)) {
+ 		DP_INFO(cdev, "Failed to allocate LL2 buffer data\n");
+ 		return -ENOMEM;
+@@ -2589,7 +2592,7 @@ static int qed_ll2_start(struct qed_dev
+ 	INIT_LIST_HEAD(&cdev->ll2->list);
+ 	spin_lock_init(&cdev->ll2->lock);
  
--	component_master_del(&pdev->dev, &wcd938x_comp_ops);
- 	regulator_bulk_disable(WCD938X_MAX_SUPPLY, wcd938x->supplies);
- 	regulator_bulk_free(WCD938X_MAX_SUPPLY, wcd938x->supplies);
- }
+-	cdev->ll2->rx_size = NET_SKB_PAD + ETH_HLEN +
++	cdev->ll2->rx_size = PRM_DMA_PAD_BYTES_NUM + ETH_HLEN +
+ 			     L1_CACHE_BYTES + params->mtu;
+ 
+ 	/* Allocate memory for LL2.
 
 
