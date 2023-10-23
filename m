@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6D815E83
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782C415E83
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6vN0QFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05796C433C7;
-	Mon, 23 Oct 2023 11:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKj1C0IJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7184C433C9;
+	Mon, 23 Oct 2023 11:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698061199;
-	bh=Ei0TWvd0Nh3lCNlmezKgWdah7thm0FOr/mcr3hfh4Pc=;
+	s=korg; t=1698061202;
+	bh=HKpSXiGYZY5pywuxAqkC072u865ZfoQZ0JfQLPoS7B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6vN0QFF5Q0qMYzwvj1HgfwfFUE7+/vAx7EcF5MKhhDXyKJY/EHtV5/N+RGTuUPYK
-	 sSOgDjz5+FQRyntpnE0MYDTL++UGkAfJX2TaItYn3g7IHJU7CmO3PN4yPVJr9XLCm1
-	 h2IgyHCY5GbXpcUBnsROalR1EN+d2iUEdA4XhlJ4=
+	b=xKj1C0IJushbrGqa5+IPZtN2mTXG6kRKlBrFkviZ0zPimp8iH5PnJcE1Fxl5qR/ir
+	 J+mv+hAiKwP325V4P7UZvvvq9t8kbioCCOCUtWoKYayhrNRSVDRY4cMEUo9fjgF9cH
+	 y0AOge6vBvu+wDOGn3EP7r9KYXTUs73l0at0xaes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Greear <greearb@candelatech.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ma Ke <make_ruc2021@163.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/137] wifi: iwlwifi: Ensure ack flag is properly cleared.
-Date: Mon, 23 Oct 2023 12:57:16 +0200
-Message-ID: <20231023104823.580148196@linuxfoundation.org>
+Subject: [PATCH 5.15 080/137] HID: holtek: fix slab-out-of-bounds Write in holtek_kbd_input_event
+Date: Mon, 23 Oct 2023 12:57:17 +0200
+Message-ID: <20231023104823.612326592@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104820.849461819@linuxfoundation.org>
 References: <20231023104820.849461819@linuxfoundation.org>
@@ -43,44 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Greear <greearb@candelatech.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit e8fbe99e87877f0412655f40d7c45bf8471470ac ]
+[ Upstream commit ffe3b7837a2bb421df84d0177481db9f52c93a71 ]
 
-Debugging indicates that nothing else is clearing the info->flags,
-so some frames were flagged as ACKed when they should not be.
-Explicitly clear the ack flag to ensure this does not happen.
+There is a slab-out-of-bounds Write bug in hid-holtek-kbd driver.
+The problem is the driver assumes the device must have an input
+but some malicious devices violate this assumption.
 
-Signed-off-by: Ben Greear <greearb@candelatech.com>
-Acked-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230808205605.4105670-1-greearb@candelatech.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix this by checking hid_device's input is non-empty before its usage.
+
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/hid-holtek-kbd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index e354918c2480f..b127e0b527ce0 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -1445,6 +1445,7 @@ static void iwl_mvm_rx_tx_cmd_single(struct iwl_mvm *mvm,
- 		iwl_trans_free_tx_cmd(mvm->trans, info->driver_data[1]);
+diff --git a/drivers/hid/hid-holtek-kbd.c b/drivers/hid/hid-holtek-kbd.c
+index 403506b9697e7..b346d68a06f5a 100644
+--- a/drivers/hid/hid-holtek-kbd.c
++++ b/drivers/hid/hid-holtek-kbd.c
+@@ -130,6 +130,10 @@ static int holtek_kbd_input_event(struct input_dev *dev, unsigned int type,
+ 		return -ENODEV;
  
- 		memset(&info->status, 0, sizeof(info->status));
-+		info->flags &= ~(IEEE80211_TX_STAT_ACK | IEEE80211_TX_STAT_TX_FILTERED);
+ 	boot_hid = usb_get_intfdata(boot_interface);
++	if (list_empty(&boot_hid->inputs)) {
++		hid_err(hid, "no inputs found\n");
++		return -ENODEV;
++	}
+ 	boot_hid_input = list_first_entry(&boot_hid->inputs,
+ 		struct hid_input, list);
  
- 		/* inform mac80211 about what happened with the frame */
- 		switch (status & TX_STATUS_MSK) {
-@@ -1790,6 +1791,8 @@ static void iwl_mvm_tx_reclaim(struct iwl_mvm *mvm, int sta_id, int tid,
- 		 */
- 		if (!is_flush)
- 			info->flags |= IEEE80211_TX_STAT_ACK;
-+		else
-+			info->flags &= ~IEEE80211_TX_STAT_ACK;
- 	}
- 
- 	/*
 -- 
 2.40.1
 
