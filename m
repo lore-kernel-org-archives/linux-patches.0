@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F9C14F6A
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856E214F6A
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:21:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwOE5y4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C1EC433C7;
-	Mon, 23 Oct 2023 11:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UOuTykNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1675C433C7;
+	Mon, 23 Oct 2023 11:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060077;
-	bh=ykHLXh2ptk1/uTEz0Ze8k9wyLqx7wOpVqKm6uppl0a0=;
+	s=korg; t=1698060080;
+	bh=5zA+0Jbi+LwdrXcUywgQjO7QJl/nPbUCua6qLqV4tMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GwOE5y4x96dysA1bihK1HwmJFpRPhwHSnoPm70XeQNq4kTO/hVp/H2JXTUd+g69zl
-	 SB0fHI+5/EjQOvXgshxe1EELiMC2+bWd+m0hVtHJw0h/rlnKs04q81NcOLXDU5xQl+
-	 lESKEXGFuSS53/v4XgtKMVy03m6rPoU1p+690/OI=
+	b=UOuTykNTcmqG6L+lQBogeqZbsOMyOSLBCR52LcTcQsC/rtsThifMm8kNCJt/GTpLz
+	 XhbkivXtYSiPtxwrThkQmNxNp/isLvfNthpyz0kVxCU6oAHFTUlixad/xm0jXfYxBs
+	 i1ifvMEi0+u/qdwMNXFj6UIExtMluNU5V0mrV7nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tyler Stachecki <stachecki.tyler@gmail.com>,
+	Leonardo Bras <leobras@redhat.com>,
 	Sean Christopherson <seanjc@google.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 024/196] x86/fpu: Allow caller to constrain xfeatures when copying to uabi buffer
-Date: Mon, 23 Oct 2023 12:54:49 +0200
-Message-ID: <20231023104829.169243324@linuxfoundation.org>
+Subject: [PATCH 6.1 025/196] KVM: x86: Constrain guest-supported xfeatures only at KVM_GET_XSAVE{2}
+Date: Mon, 23 Oct 2023 12:54:50 +0200
+Message-ID: <20231023104829.195202788@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -43,154 +46,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 18164f66e6c59fda15c198b371fa008431efdb22 upstream.
+commit 8647c52e9504c99752a39f1d44f6268f82c40a5c upstream.
 
-Plumb an xfeatures mask into __copy_xstate_to_uabi_buf() so that KVM can
-constrain which xfeatures are saved into the userspace buffer without
-having to modify the user_xfeatures field in KVM's guest_fpu state.
+Mask off xfeatures that aren't exposed to the guest only when saving guest
+state via KVM_GET_XSAVE{2} instead of modifying user_xfeatures directly.
+Preserving the maximal set of xfeatures in user_xfeatures restores KVM's
+ABI for KVM_SET_XSAVE, which prior to commit ad856280ddea ("x86/kvm/fpu:
+Limit guest user_xfeatures to supported bits of XCR0") allowed userspace
+to load xfeatures that are supported by the host, irrespective of what
+xfeatures are exposed to the guest.
 
-KVM's ABI for KVM_GET_XSAVE{2} is that features that are not exposed to
-guest must not show up in the effective xstate_bv field of the buffer.
-Saving only the guest-supported xfeatures allows userspace to load the
-saved state on a different host with a fewer xfeatures, so long as the
-target host supports the xfeatures that are exposed to the guest.
+There is no known use case where userspace *intentionally* loads xfeatures
+that aren't exposed to the guest, but the bug fixed by commit ad856280ddea
+was specifically that KVM_GET_SAVE{2} would save xfeatures that weren't
+exposed to the guest, e.g. would lead to userspace unintentionally loading
+guest-unsupported xfeatures when live migrating a VM.
 
-KVM currently sets user_xfeatures directly to restrict KVM_GET_XSAVE{2} to
-the set of guest-supported xfeatures, but doing so broke KVM's historical
-ABI for KVM_SET_XSAVE, which allows userspace to load any xfeatures that
-are supported by the *host*.
+Restricting KVM_SET_XSAVE to guest-supported xfeatures is especially
+problematic for QEMU-based setups, as QEMU has a bug where instead of
+terminating the VM if KVM_SET_XSAVE fails, QEMU instead simply stops
+loading guest state, i.e. resumes the guest after live migration with
+incomplete guest state, and ultimately results in guest data corruption.
 
+Note, letting userspace restore all host-supported xfeatures does not fix
+setups where a VM is migrated from a host *without* commit ad856280ddea,
+to a target with a subset of host-supported xfeatures.  However there is
+no way to safely address that scenario, e.g. KVM could silently drop the
+unsupported features, but that would be a clear violation of KVM's ABI and
+so would require userspace to opt-in, at which point userspace could
+simply be updated to sanitize the to-be-loaded XSAVE state.
+
+Reported-by: Tyler Stachecki <stachecki.tyler@gmail.com>
+Closes: https://lore.kernel.org/all/20230914010003.358162-1-tstachecki@bloomberg.net
+Fixes: ad856280ddea ("x86/kvm/fpu: Limit guest user_xfeatures to supported bits of XCR0")
 Cc: stable@vger.kernel.org
+Cc: Leonardo Bras <leobras@redhat.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230928001956.924301-2-seanjc@google.com>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Message-Id: <20230928001956.924301-3-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/fpu/api.h |    3 ++-
- arch/x86/kernel/fpu/core.c     |    5 +++--
- arch/x86/kernel/fpu/xstate.c   |    7 +++++--
- arch/x86/kernel/fpu/xstate.h   |    3 ++-
- arch/x86/kvm/x86.c             |   21 +++++++++------------
- 5 files changed, 21 insertions(+), 18 deletions(-)
+ arch/x86/kernel/fpu/xstate.c |    5 +----
+ arch/x86/kvm/cpuid.c         |    8 --------
+ arch/x86/kvm/x86.c           |   18 ++++++++++++++++--
+ 3 files changed, 17 insertions(+), 14 deletions(-)
 
---- a/arch/x86/include/asm/fpu/api.h
-+++ b/arch/x86/include/asm/fpu/api.h
-@@ -148,7 +148,8 @@ static inline void fpu_update_guest_xfd(
- static inline void fpu_sync_guest_vmexit_xfd_state(void) { }
- #endif
- 
--extern void fpu_copy_guest_fpstate_to_uabi(struct fpu_guest *gfpu, void *buf, unsigned int size, u32 pkru);
-+extern void fpu_copy_guest_fpstate_to_uabi(struct fpu_guest *gfpu, void *buf,
-+					   unsigned int size, u64 xfeatures, u32 pkru);
- extern int fpu_copy_uabi_to_guest_fpstate(struct fpu_guest *gfpu, const void *buf, u64 xcr0, u32 *vpkru);
- 
- static inline void fpstate_set_confidential(struct fpu_guest *gfpu)
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -369,14 +369,15 @@ int fpu_swap_kvm_fpstate(struct fpu_gues
- EXPORT_SYMBOL_GPL(fpu_swap_kvm_fpstate);
- 
- void fpu_copy_guest_fpstate_to_uabi(struct fpu_guest *gfpu, void *buf,
--				    unsigned int size, u32 pkru)
-+				    unsigned int size, u64 xfeatures, u32 pkru)
- {
- 	struct fpstate *kstate = gfpu->fpstate;
- 	union fpregs_state *ustate = buf;
- 	struct membuf mb = { .p = buf, .left = size };
- 
- 	if (cpu_feature_enabled(X86_FEATURE_XSAVE)) {
--		__copy_xstate_to_uabi_buf(mb, kstate, pkru, XSTATE_COPY_XSAVE);
-+		__copy_xstate_to_uabi_buf(mb, kstate, xfeatures, pkru,
-+					  XSTATE_COPY_XSAVE);
- 	} else {
- 		memcpy(&ustate->fxsave, &kstate->regs.fxsave,
- 		       sizeof(ustate->fxsave));
 --- a/arch/x86/kernel/fpu/xstate.c
 +++ b/arch/x86/kernel/fpu/xstate.c
-@@ -1053,6 +1053,7 @@ static void copy_feature(bool from_xstat
-  * __copy_xstate_to_uabi_buf - Copy kernel saved xstate to a UABI buffer
-  * @to:		membuf descriptor
-  * @fpstate:	The fpstate buffer from which to copy
-+ * @xfeatures:	The mask of xfeatures to save (XSAVE mode only)
-  * @pkru_val:	The PKRU value to store in the PKRU component
-  * @copy_mode:	The requested copy mode
-  *
-@@ -1063,7 +1064,8 @@ static void copy_feature(bool from_xstat
-  * It supports partial copy but @to.pos always starts from zero.
-  */
- void __copy_xstate_to_uabi_buf(struct membuf to, struct fpstate *fpstate,
--			       u32 pkru_val, enum xstate_copy_mode copy_mode)
-+			       u64 xfeatures, u32 pkru_val,
-+			       enum xstate_copy_mode copy_mode)
- {
- 	const unsigned int off_mxcsr = offsetof(struct fxregs_state, mxcsr);
- 	struct xregs_state *xinit = &init_fpstate.regs.xsave;
-@@ -1087,7 +1089,7 @@ void __copy_xstate_to_uabi_buf(struct me
- 		break;
+@@ -1543,10 +1543,7 @@ static int fpstate_realloc(u64 xfeatures
+ 		fpregs_restore_userregs();
  
- 	case XSTATE_COPY_XSAVE:
--		header.xfeatures &= fpstate->user_xfeatures;
-+		header.xfeatures &= fpstate->user_xfeatures & xfeatures;
- 		break;
- 	}
+ 	newfps->xfeatures = curfps->xfeatures | xfeatures;
+-
+-	if (!guest_fpu)
+-		newfps->user_xfeatures = curfps->user_xfeatures | xfeatures;
+-
++	newfps->user_xfeatures = curfps->user_xfeatures | xfeatures;
+ 	newfps->xfd = curfps->xfd & ~xfeatures;
  
-@@ -1189,6 +1191,7 @@ void copy_xstate_to_uabi_buf(struct memb
- 			     enum xstate_copy_mode copy_mode)
- {
- 	__copy_xstate_to_uabi_buf(to, tsk->thread.fpu.fpstate,
-+				  tsk->thread.fpu.fpstate->user_xfeatures,
- 				  tsk->thread.pkru, copy_mode);
- }
+ 	/* Do the final updates within the locked region */
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -338,14 +338,6 @@ static void kvm_vcpu_after_set_cpuid(str
+ 	vcpu->arch.guest_supported_xcr0 =
+ 		cpuid_get_supported_xcr0(vcpu->arch.cpuid_entries, vcpu->arch.cpuid_nent);
  
---- a/arch/x86/kernel/fpu/xstate.h
-+++ b/arch/x86/kernel/fpu/xstate.h
-@@ -43,7 +43,8 @@ enum xstate_copy_mode {
+-	/*
+-	 * FP+SSE can always be saved/restored via KVM_{G,S}ET_XSAVE, even if
+-	 * XSAVE/XCRO are not exposed to the guest, and even if XSAVE isn't
+-	 * supported by the host.
+-	 */
+-	vcpu->arch.guest_fpu.fpstate->user_xfeatures = vcpu->arch.guest_supported_xcr0 |
+-						       XFEATURE_MASK_FPSSE;
+-
+ 	kvm_update_pv_runtime(vcpu);
  
- struct membuf;
- extern void __copy_xstate_to_uabi_buf(struct membuf to, struct fpstate *fpstate,
--				      u32 pkru_val, enum xstate_copy_mode copy_mode);
-+				      u64 xfeatures, u32 pkru_val,
-+				      enum xstate_copy_mode copy_mode);
- extern void copy_xstate_to_uabi_buf(struct membuf to, struct task_struct *tsk,
- 				    enum xstate_copy_mode mode);
- extern int copy_uabi_from_kernel_to_xstate(struct fpstate *fpstate, const void *kbuf, u32 *pkru);
+ 	vcpu->arch.maxphyaddr = cpuid_query_maxphyaddr(vcpu);
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -5301,26 +5301,23 @@ static int kvm_vcpu_ioctl_x86_set_debugr
- 	return 0;
- }
- 
--static void kvm_vcpu_ioctl_x86_get_xsave(struct kvm_vcpu *vcpu,
--					 struct kvm_xsave *guest_xsave)
-+
-+static void kvm_vcpu_ioctl_x86_get_xsave2(struct kvm_vcpu *vcpu,
-+					  u8 *state, unsigned int size)
+@@ -5305,12 +5305,26 @@ static int kvm_vcpu_ioctl_x86_set_debugr
+ static void kvm_vcpu_ioctl_x86_get_xsave2(struct kvm_vcpu *vcpu,
+ 					  u8 *state, unsigned int size)
  {
++	/*
++	 * Only copy state for features that are enabled for the guest.  The
++	 * state itself isn't problematic, but setting bits in the header for
++	 * features that are supported in *this* host but not exposed to the
++	 * guest can result in KVM_SET_XSAVE failing when live migrating to a
++	 * compatible host without the features that are NOT exposed to the
++	 * guest.
++	 *
++	 * FP+SSE can always be saved/restored via KVM_{G,S}ET_XSAVE, even if
++	 * XSAVE/XCRO are not exposed to the guest, and even if XSAVE isn't
++	 * supported by the host.
++	 */
++	u64 supported_xcr0 = vcpu->arch.guest_supported_xcr0 |
++			     XFEATURE_MASK_FPSSE;
++
  	if (fpstate_is_confidential(&vcpu->arch.guest_fpu))
  		return;
  
--	fpu_copy_guest_fpstate_to_uabi(&vcpu->arch.guest_fpu,
--				       guest_xsave->region,
--				       sizeof(guest_xsave->region),
-+	fpu_copy_guest_fpstate_to_uabi(&vcpu->arch.guest_fpu, state, size,
-+				       vcpu->arch.guest_fpu.fpstate->user_xfeatures,
- 				       vcpu->arch.pkru);
+ 	fpu_copy_guest_fpstate_to_uabi(&vcpu->arch.guest_fpu, state, size,
+-				       vcpu->arch.guest_fpu.fpstate->user_xfeatures,
+-				       vcpu->arch.pkru);
++				       supported_xcr0, vcpu->arch.pkru);
  }
  
--static void kvm_vcpu_ioctl_x86_get_xsave2(struct kvm_vcpu *vcpu,
--					  u8 *state, unsigned int size)
-+static void kvm_vcpu_ioctl_x86_get_xsave(struct kvm_vcpu *vcpu,
-+					 struct kvm_xsave *guest_xsave)
- {
--	if (fpstate_is_confidential(&vcpu->arch.guest_fpu))
--		return;
--
--	fpu_copy_guest_fpstate_to_uabi(&vcpu->arch.guest_fpu,
--				       state, size, vcpu->arch.pkru);
-+	return kvm_vcpu_ioctl_x86_get_xsave2(vcpu, (void *)guest_xsave->region,
-+					     sizeof(guest_xsave->region));
- }
- 
- static int kvm_vcpu_ioctl_x86_set_xsave(struct kvm_vcpu *vcpu,
+ static void kvm_vcpu_ioctl_x86_get_xsave(struct kvm_vcpu *vcpu,
 
 
