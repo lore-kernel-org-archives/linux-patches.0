@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEC515E84
-	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163A915E84
+	for <patches@lists.linux.dev>; Mon, 23 Oct 2023 11:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnpeXEZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921E1C433C8;
-	Mon, 23 Oct 2023 11:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0k6rj9+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B676C433C8;
+	Mon, 23 Oct 2023 11:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698060395;
-	bh=W03cFtJB8ppZZEcedQ2NS9soX2R5H7NfJAQoRAO8p7o=;
+	s=korg; t=1698060397;
+	bh=SV6BtxR0oVGgdR2P71txoRQvZJO3vGRjQ4IRH1Oruxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LnpeXEZT7lVqZcwlVwK6D9fsFemrnUPfzDj+oLxxyYEu+//OaF48hbkaWTMjoXPBh
-	 Fc2fArtlkbmjc6KHpnB4Mh5Sm9pXRuWqucD7WuY3cA5kFWLKssGA6ZB20AzXWZ22TH
-	 suSccVYqUOpKJrbbLHCun7Ir9jK4Lt9kRqJeH5bg=
+	b=S0k6rj9+IS5V/f75mVZW9eEJAZNxPFpJfiKqZEE0ZNt0LF/ljKzgutK9O90IRhZJx
+	 NoixMPlUHhG0dWMu7GV12sIaz0mm295ZbXYyxFEV/dvYK2PPrh/2Z/ERUTZ5LrOinl
+	 0ohnla7K47PsSy3Ox6gys/pZZB/A+W+Gqqkg3Kc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil V L <sunilvl@ventanamicro.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 157/196] ACPI: irq: Fix incorrect return value in acpi_register_gsi()
-Date: Mon, 23 Oct 2023 12:57:02 +0200
-Message-ID: <20231023104832.896253301@linuxfoundation.org>
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 6.1 158/196] nfs42: client needs to strip file modes suid/sgid bit after ALLOCATE op
+Date: Mon, 23 Oct 2023 12:57:03 +0200
+Message-ID: <20231023104832.922771366@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231023104828.488041585@linuxfoundation.org>
 References: <20231023104828.488041585@linuxfoundation.org>
@@ -41,48 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-commit 0c21a18d5d6c6a73d098fb9b4701572370942df9 upstream.
+commit f588d72bd95f748849685412b1f0c7959ca228cf upstream.
 
-acpi_register_gsi() should return a negative value in case of failure.
+The Linux NFS server strips the SUID and SGID from the file mode
+on ALLOCATE op.
 
-Currently, it returns the return value from irq_create_fwspec_mapping().
-However, irq_create_fwspec_mapping() returns 0 for failure. Fix the
-issue by returning -EINVAL if irq_create_fwspec_mapping() returns zero.
+Modify _nfs42_proc_fallocate to add NFS_INO_REVAL_FORCED to
+nfs_set_cache_invalid's argument to force update of the file
+mode suid/sgid bit.
 
-Fixes: d44fa3d46079 ("ACPI: Add support for ResourceSource/IRQ domain mapping")
-Cc: 4.11+ <stable@vger.kernel.org> # 4.11+
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-[ rjw: Rename a new local variable ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/irq.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/nfs/nfs42proc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/irq.c
-+++ b/drivers/acpi/irq.c
-@@ -57,6 +57,7 @@ int acpi_register_gsi(struct device *dev
- 		      int polarity)
- {
- 	struct irq_fwspec fwspec;
-+	unsigned int irq;
- 
- 	fwspec.fwnode = acpi_get_gsi_domain_id(gsi);
- 	if (WARN_ON(!fwspec.fwnode)) {
-@@ -68,7 +69,11 @@ int acpi_register_gsi(struct device *dev
- 	fwspec.param[1] = acpi_dev_get_irq_type(trigger, polarity);
- 	fwspec.param_count = 2;
- 
--	return irq_create_fwspec_mapping(&fwspec);
-+	irq = irq_create_fwspec_mapping(&fwspec);
-+	if (!irq)
-+		return -EINVAL;
-+
-+	return irq;
- }
- EXPORT_SYMBOL_GPL(acpi_register_gsi);
- 
+--- a/fs/nfs/nfs42proc.c
++++ b/fs/nfs/nfs42proc.c
+@@ -81,7 +81,8 @@ static int _nfs42_proc_fallocate(struct
+ 	if (status == 0) {
+ 		if (nfs_should_remove_suid(inode)) {
+ 			spin_lock(&inode->i_lock);
+-			nfs_set_cache_invalid(inode, NFS_INO_INVALID_MODE);
++			nfs_set_cache_invalid(inode,
++				NFS_INO_REVAL_FORCED | NFS_INO_INVALID_MODE);
+ 			spin_unlock(&inode->i_lock);
+ 		}
+ 		status = nfs_post_op_update_inode_force_wcc(inode,
 
 
