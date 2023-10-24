@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9BB1BDC8
-	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 08:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001151BDE8
+	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 08:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXIiJktf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8337DC433C8;
-	Tue, 24 Oct 2023 08:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdnGvoWu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CAAC433C7;
+	Tue, 24 Oct 2023 08:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698135755;
-	bh=4pSVrj+SSWFw7rLDfWopdukUhyQvQyk5SOKZaKQkS0o=;
+	s=korg; t=1698135970;
+	bh=gm0drRnvD+4lU1NBJfDjluSiLt5PHG26cjTrB3u6d+k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YXIiJktfIv7Abl+M8zp4gbGGj0GnTXHzbrf4LD6M0kU3+1RZuMGmw4+l/2mugI9G5
-	 NzUyjVtiWRV40ghQoAtw9uX5HPgnClbG/LqF2u0ghSL+1bkjWu1A9tPmpfODc9Vaa9
-	 2/N6CZmcPCtUv4cfv/jRzn5l8tZouQt+uLICfyNo=
-Date: Tue, 24 Oct 2023 10:22:32 +0200
+	b=PdnGvoWu8TSJChVrRJLSe0c1bdp1X2/VlSV5Hh1ythDQQSBeHPn/XmnRJsIKlK0kw
+	 w8ueo5aXHvPEbPEyKtg8w9ZbEMkopnPkCi4rP4r4UMqwCTz3sdE9q/MljQSb2gLwkQ
+	 l8SVwgDGrC3jfYWmTbL6fbJEzDv6BQzBwYy9l+g0=
+Date: Tue, 24 Oct 2023 10:26:07 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Guenter Roeck <linux@roeck-us.net>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -23,10 +23,10 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 4.14 00/66] 4.14.328-rc1 review
-Message-ID: <2023102417-blade-bartender-29e2@gregkh>
-References: <20231023104810.781270702@linuxfoundation.org>
- <f3b2a4ac-042d-4c20-4020-3a09822811ac@roeck-us.net>
+Subject: Re: [PATCH 5.4 000/123] 5.4.259-rc1 review
+Message-ID: <2023102452-tainted-mandolin-8c33@gregkh>
+References: <20231023104817.691299567@linuxfoundation.org>
+ <5bd191c3-a58a-e6b4-12a6-64efb9b03f2e@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,12 +35,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f3b2a4ac-042d-4c20-4020-3a09822811ac@roeck-us.net>
+In-Reply-To: <5bd191c3-a58a-e6b4-12a6-64efb9b03f2e@roeck-us.net>
 
-On Mon, Oct 23, 2023 at 07:37:36AM -0700, Guenter Roeck wrote:
+On Mon, Oct 23, 2023 at 07:36:25AM -0700, Guenter Roeck wrote:
 > On 10/23/23 03:55, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 4.14.328 release.
-> > There are 66 patches in this series, all will be posted as a response
+> > This is the start of the stable review cycle for the 5.4.259 release.
+> > There are 123 patches in this series, all will be posted as a response
 > > to this one.  If anyone has any issues with these being applied, please
 > > let me know.
 > > 
@@ -48,14 +48,25 @@ On Mon, Oct 23, 2023 at 07:37:36AM -0700, Guenter Roeck wrote:
 > > Anything received after that time might be too late.
 > > 
 > 
-> Building s390:allmodconfig ... failed
-> --------------
-> Error log:
-> In file included from include/linux/kernel.h:10,
->                  from arch/s390/pci/pci_dma.c:8:
-> arch/s390/pci/pci_dma.c: In function 'bitmap_vzalloc':
-> arch/s390/pci/pci_dma.c:536:15: error: implicit declaration of function 'check_mul_overflow'
+> drivers/gpio/gpio-vf610.c:249:18: error: 'IRQCHIP_IMMUTABLE' undeclared here (not in a function); did you mean 'IS_IMMUTABLE'?
+>   249 |         .flags = IRQCHIP_IMMUTABLE | IRQCHIP_MASK_ON_SUSPEND
+>       |                  ^~~~~~~~~~~~~~~~~
+>       |                  IS_IMMUTABLE
+> drivers/gpio/gpio-vf610.c:250:27: error: 'IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND' undeclared here (not in a function); did you mean 'IRQCHIP_MASK_ON_SUSPEND'?
+>   250 |                         | IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND,
+>       |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>       |                           IRQCHIP_MASK_ON_SUSPEND
+> drivers/gpio/gpio-vf610.c:251:9: error: 'GPIOCHIP_IRQ_RESOURCE_HELPERS' undeclared here (not in a function)
+>   251 |         GPIOCHIP_IRQ_RESOURCE_HELPERS,
+>       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> drivers/gpio/gpio-vf610.c:251:9: warning: excess elements in struct initializer
+> drivers/gpio/gpio-vf610.c:251:9: note: (near initialization for 'vf610_irqchip')
+> drivers/gpio/gpio-vf610.c: In function 'vf610_gpio_probe':
+> drivers/gpio/gpio-vf610.c:340:9: error: implicit declaration of function 'gpio_irq_chip_set_chip'
+> 
+> Also affects v5.10.y and v5.15.y.
 
-Ah the header file maze.  I've fixed this up now, thanks.
+Thanks, I'll go drop the offending patches from all of these trees now
+and push out some -rc2 releases.
 
 greg k-h
