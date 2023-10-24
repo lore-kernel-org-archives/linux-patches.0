@@ -1,49 +1,49 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC333CD11
-	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 19:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA24C24A09
+	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 19:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PqynpUDj"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-1e58a522e41so3194291fac.2
-        for <patches@lists.linux.dev>; Tue, 24 Oct 2023 12:35:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iRBiIgIM"
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-57ad95c555eso2964378eaf.3
+        for <patches@lists.linux.dev>; Tue, 24 Oct 2023 12:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698176124; x=1698780924; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1698176324; x=1698781124; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ehA1XcRSKytZRvPE2Xg2Y2Q4wNLjAC3JoeQ4eBMwi+4=;
-        b=PqynpUDjBmgboHWA+d7EGokAKudsgmmUh8XXUmM1Wb+N+NYk8fCEulZFkRhAUR26mK
-         S3gGit345MVH1rYQX9ZeS2VQJ/T6yg3PtEwJwNhdhCCoJaU9Vy8pLsVA8ZzMWlwDHHls
-         D5vhdzGf2dzy/Ob8vnMh0G/pbAZXjaUqkEMrjOljsU1sGvFZJ+hzBkMDVcCqOfG2PaIC
-         IunyMe0w7OX7n9U/SLhFynaW7OgMWhwoG3kXeI0WbRP5ncivfIlBsbM84/AFyrpF0FLZ
-         THALSYkPfLfui2G2WP9Bf6IlIID6tN3Nhuuto29Kq1pbFaKgDsUPT115gdY3OT3K64n8
-         xxpw==
+        bh=yuTM2h0Za1xwO3OgU5JiMSRU9mqcRe/XE1zlT+0MqRA=;
+        b=iRBiIgIMvw6gmVq1mh4Y4cUllw3LDSeBH9HKgvym5GqUNgZfpKtXAFRtLNGM2dARZW
+         S9fsSi1RQVqXjNLOQD6Gqjup/3yBYUKeUfpYiiSPW9UIMK1/VBJaa3xW3PoJZIzrH/Sn
+         r9w+WPoSHb+WwqpUjkLW+DIkaWymOdyGwabduF03NfTtfqUQ12d75D46e8drkQpPK7wK
+         Mn0lCAyAhrZFURjD/9hGqkmI/spknC+eTl0KwLhavNvDLE0z0ajssDEw2VjVjZNh4rZH
+         HV2U/8R19h3As7679ein2VkhOGVnDRMfN5ZlGYjxhONp/tbd7FsoA9DHYy2vHN2cp0Ia
+         9gkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698176124; x=1698780924;
+        d=1e100.net; s=20230601; t=1698176324; x=1698781124;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ehA1XcRSKytZRvPE2Xg2Y2Q4wNLjAC3JoeQ4eBMwi+4=;
-        b=H4xQlRvrq7yQfpy1nTYX/XebVsffyWoRJS/OW2uX/PCOoxxUTMvTyDH0DAU2PwSpyb
-         enX9JMmak6C81JSdFdV+9VkUBmrQ/95b/qg3Dcus7l4zYsLHSzrV/3+XJsBQM0h6uIUI
-         Dgpr6uj3AgbnKcyUzV9wSLK4P9o8rocBxBSipqEEatF1TPbz6lUVCki7DQD4tBfjVX7j
-         N5IvLAkN1qyPx9JM1HuNGmFLlblnujxFYrTSM4NLRDOZriapTxadXplVOfDf+SNuk13T
-         Nschd9XhGyuTslGX6eIVmumHR5+WFLY9lW776fF7mIZ3ak+XiVPzX5NtD4WQN3benYW1
-         Hyrw==
-X-Gm-Message-State: AOJu0YynQYUQdYeK4A9wiA+0KUvWA225Ga+zYx20Gl6G5/A3PjyNPDOL
-	v7ZO6E/STSGUibWLapIYrn+T0g==
-X-Google-Smtp-Source: AGHT+IE9aZLHfzH7tXX3IKOTFJS+ZasvFhDJUQ8Do+lJsRvSYCEQR8ZHDKqmAR8jqceYk84cEWmD/w==
-X-Received: by 2002:a05:6871:5225:b0:1ea:2ed0:2978 with SMTP id ht37-20020a056871522500b001ea2ed02978mr15790291oac.22.1698176123750;
-        Tue, 24 Oct 2023 12:35:23 -0700 (PDT)
+        bh=yuTM2h0Za1xwO3OgU5JiMSRU9mqcRe/XE1zlT+0MqRA=;
+        b=Ccbr8Te0AULU4fe+LsloSRfXGAe2zNQ1pTLR9JdE5jFQCqfEHIxUUBHZvmSDVpC8bB
+         c5EQ/YB56o/PnFq1gJWArWzEHIL330iqpuRShE8V2nKCpLnNQGrVhurj+J8qLypa0VqO
+         s7YgwDiA5mRNktllRFwpkmranbp+aNCYT7aFw9g8EeZX+IOt4YQgUfEoIGA8QDJNcdxm
+         FyFv6oRVVVIdJK0Dt+TLXra9YDcMviZtHQoJvIgUlc31NLAu00SbWN7lomnHoWhiqiVK
+         wXQa5Z3eEVS17OdzwlNX/7hytfhrpj/gDJX4+RHDTCti9193LOSESrHIiee8Dahn8cyR
+         382A==
+X-Gm-Message-State: AOJu0Yx6euTu33jkY4z9LsOELpeAieADTUK2yozmRY3/Inhb/a2YnHi8
+	z8qm4n0k2OcIczUDa7aE98Xipg==
+X-Google-Smtp-Source: AGHT+IFuj7nrOGCJqa4WvnYMW9DaPkCEQgbz1KNABRFKijasEGNBEgavi5YFX5ZsY02Ib731vpKaCA==
+X-Received: by 2002:a4a:bd05:0:b0:581:ff09:62e4 with SMTP id n5-20020a4abd05000000b00581ff0962e4mr12843476oop.2.1698176323647;
+        Tue, 24 Oct 2023 12:38:43 -0700 (PDT)
 Received: from [192.168.17.16] ([138.84.45.126])
-        by smtp.gmail.com with ESMTPSA id n6-20020a05687104c600b001d6e9bb67d2sm2297818oai.7.2023.10.24.12.35.22
+        by smtp.gmail.com with ESMTPSA id d9-20020a0568301b6900b006ce2c31dd9bsm1993535ote.20.2023.10.24.12.38.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Oct 2023 12:35:23 -0700 (PDT)
-Message-ID: <add093f4-7d9b-40f8-9939-fc4a9c6804c1@linaro.org>
-Date: Tue, 24 Oct 2023 13:35:21 -0600
+        Tue, 24 Oct 2023 12:38:43 -0700 (PDT)
+Message-ID: <dcddf886-0687-49c2-b96b-0673cc0639fc@linaro.org>
+Date: Tue, 24 Oct 2023 13:38:40 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,7 +51,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/135] 5.15.137-rc2 review
+Subject: Re: [PATCH 5.10 000/199] 5.10.199-rc2 review
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
@@ -60,27 +60,27 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
  conor@kernel.org
-References: <20231024083327.980887231@linuxfoundation.org>
+References: <20231024083326.219645073@linuxfoundation.org>
 From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
-In-Reply-To: <20231024083327.980887231@linuxfoundation.org>
+In-Reply-To: <20231024083326.219645073@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 Hello!
 
 On 24/10/23 2:36 a. m., Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.137 release.
-> There are 135 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.10.199 release.
+> There are 199 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Thu, 26 Oct 2023 08:32:55 +0000.
+> Responses should be made by Thu, 26 Oct 2023 08:32:45 +0000.
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.137-rc2.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.199-rc2.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
 > and the diffstat can be found below.
 > 
 > thanks,
@@ -93,37 +93,37 @@ No regressions on arm64, arm, x86_64, and i386.
 Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
 ## Build
-* kernel: 5.15.137-rc2
+* kernel: 5.10.199-rc2
 * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.15.y
-* git commit: bc0ffd9b5ee2ac6b8d9c4d3eba4b4facfb911ae1
-* git describe: v5.15.135-237-gbc0ffd9b5ee2
-* test details: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.135-237-gbc0ffd9b5ee2
+* git branch: linux-5.10.y
+* git commit: e31b6513c43d7f4efa2c5913dd7d4fbef162e736
+* git describe: v5.10.198-200-ge31b6513c43d
+* test details: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.198-200-ge31b6513c43d
 
-## No test regressions (compared to v5.15.135-103-gf11fc66f963f)
+## No test regressions (compared to v5.10.198)
 
-## No metric regressions (compared to v5.15.135-103-gf11fc66f963f)
+## No metric regressions (compared to v5.10.198)
 
-## No test fixes (compared to v5.15.135-103-gf11fc66f963f)
+## No test fixes (compared to v5.10.198)
 
-## No metric fixes (compared to v5.15.135-103-gf11fc66f963f)
+## No metric fixes (compared to v5.10.198)
 
 ## Test result summary
-total: 87626, pass: 69916, fail: 2587, skip: 15056, xfail: 67
+total: 89095, pass: 69854, fail: 2647, skip: 16533, xfail: 61
 
 ## Build Summary
 * arc: 5 total, 5 passed, 0 failed
 * arm: 114 total, 114 passed, 0 failed
-* arm64: 38 total, 38 passed, 0 failed
+* arm64: 40 total, 40 passed, 0 failed
 * i386: 32 total, 32 passed, 0 failed
 * mips: 24 total, 24 passed, 0 failed
-* parisc: 3 total, 3 passed, 0 failed
-* powerpc: 24 total, 24 passed, 0 failed
-* riscv: 8 total, 8 passed, 0 failed
+* parisc: 3 total, 0 passed, 3 failed
+* powerpc: 23 total, 23 passed, 0 failed
+* riscv: 9 total, 9 passed, 0 failed
 * s390: 9 total, 9 passed, 0 failed
 * sh: 12 total, 12 passed, 0 failed
 * sparc: 6 total, 6 passed, 0 failed
-* x86_64: 34 total, 34 passed, 0 failed
+* x86_64: 35 total, 35 passed, 0 failed
 
 ## Test suites summary
 * boot
@@ -173,15 +173,11 @@ total: 87626, pass: 69916, fail: 2587, skip: 15056, xfail: 67
 * kselftest-ptrace
 * kselftest-rseq
 * kselftest-rtc
-* kselftest-seccomp
 * kselftest-sigaltstack
 * kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
 * kselftest-tc-testing
 * kselftest-timens
+* kselftest-timers
 * kselftest-tmpfs
 * kselftest-tpm2
 * kselftest-user
@@ -236,3 +232,4 @@ daniel.diaz@linaro.org
 -- 
 Linaro LKFT
 https://lkft.linaro.org
+
