@@ -1,157 +1,238 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0358427ED2
-	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 19:22:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id AF9DD1C007B; Tue, 24 Oct 2023 21:22:20 +0200 (CEST)
-Date: Tue, 24 Oct 2023 21:22:19 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Pavel Machek <pavel@denx.de>, niklas.soderlund+renesas@ragnatech.se,
-	yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be,
-	biju.das.jz@bp.renesas.com, Chris.Paterson2@renesas.com,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org
-Subject: Re: renesas_sdhi problems in 5.10-stable was Re: [PATCH 5.10
- 000/226] 5.10.198-rc1 review
-Message-ID: <ZTgZa1ic1iFbdaTM@duo.ucw.cz>
-References: <20231009130126.697995596@linuxfoundation.org>
- <ZSRVgj5AqJbDXqZU@duo.ucw.cz>
- <ZSRe78MAQwbBdyFP@duo.ucw.cz>
- <ZSUy+zA0+Chm6dFb@duo.ucw.cz>
- <ZSU+GHl1q7T/TBp5@duo.ucw.cz>
- <ZSWg1fv3gOyV5t+h@shikoro>
- <2023101057-runny-pellet-8952@gregkh>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC333CD11
+	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 19:35:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PqynpUDj"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-1e58a522e41so3194291fac.2
+        for <patches@lists.linux.dev>; Tue, 24 Oct 2023 12:35:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698176124; x=1698780924; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ehA1XcRSKytZRvPE2Xg2Y2Q4wNLjAC3JoeQ4eBMwi+4=;
+        b=PqynpUDjBmgboHWA+d7EGokAKudsgmmUh8XXUmM1Wb+N+NYk8fCEulZFkRhAUR26mK
+         S3gGit345MVH1rYQX9ZeS2VQJ/T6yg3PtEwJwNhdhCCoJaU9Vy8pLsVA8ZzMWlwDHHls
+         D5vhdzGf2dzy/Ob8vnMh0G/pbAZXjaUqkEMrjOljsU1sGvFZJ+hzBkMDVcCqOfG2PaIC
+         IunyMe0w7OX7n9U/SLhFynaW7OgMWhwoG3kXeI0WbRP5ncivfIlBsbM84/AFyrpF0FLZ
+         THALSYkPfLfui2G2WP9Bf6IlIID6tN3Nhuuto29Kq1pbFaKgDsUPT115gdY3OT3K64n8
+         xxpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698176124; x=1698780924;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ehA1XcRSKytZRvPE2Xg2Y2Q4wNLjAC3JoeQ4eBMwi+4=;
+        b=H4xQlRvrq7yQfpy1nTYX/XebVsffyWoRJS/OW2uX/PCOoxxUTMvTyDH0DAU2PwSpyb
+         enX9JMmak6C81JSdFdV+9VkUBmrQ/95b/qg3Dcus7l4zYsLHSzrV/3+XJsBQM0h6uIUI
+         Dgpr6uj3AgbnKcyUzV9wSLK4P9o8rocBxBSipqEEatF1TPbz6lUVCki7DQD4tBfjVX7j
+         N5IvLAkN1qyPx9JM1HuNGmFLlblnujxFYrTSM4NLRDOZriapTxadXplVOfDf+SNuk13T
+         Nschd9XhGyuTslGX6eIVmumHR5+WFLY9lW776fF7mIZ3ak+XiVPzX5NtD4WQN3benYW1
+         Hyrw==
+X-Gm-Message-State: AOJu0YynQYUQdYeK4A9wiA+0KUvWA225Ga+zYx20Gl6G5/A3PjyNPDOL
+	v7ZO6E/STSGUibWLapIYrn+T0g==
+X-Google-Smtp-Source: AGHT+IE9aZLHfzH7tXX3IKOTFJS+ZasvFhDJUQ8Do+lJsRvSYCEQR8ZHDKqmAR8jqceYk84cEWmD/w==
+X-Received: by 2002:a05:6871:5225:b0:1ea:2ed0:2978 with SMTP id ht37-20020a056871522500b001ea2ed02978mr15790291oac.22.1698176123750;
+        Tue, 24 Oct 2023 12:35:23 -0700 (PDT)
+Received: from [192.168.17.16] ([138.84.45.126])
+        by smtp.gmail.com with ESMTPSA id n6-20020a05687104c600b001d6e9bb67d2sm2297818oai.7.2023.10.24.12.35.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Oct 2023 12:35:23 -0700 (PDT)
+Message-ID: <add093f4-7d9b-40f8-9939-fc4a9c6804c1@linaro.org>
+Date: Tue, 24 Oct 2023 13:35:21 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="llYF3KVE0Ra1/NWQ"
-Content-Disposition: inline
-In-Reply-To: <2023101057-runny-pellet-8952@gregkh>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 000/135] 5.15.137-rc2 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20231024083327.980887231@linuxfoundation.org>
+From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
+In-Reply-To: <20231024083327.980887231@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Hello!
+
+On 24/10/23 2:36 a. m., Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.137 release.
+> There are 135 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 26 Oct 2023 08:32:55 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.137-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+
+Results from Linaro's test farm.
+No regressions on arm64, arm, x86_64, and i386.
+
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 5.15.137-rc2
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.15.y
+* git commit: bc0ffd9b5ee2ac6b8d9c4d3eba4b4facfb911ae1
+* git describe: v5.15.135-237-gbc0ffd9b5ee2
+* test details: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.135-237-gbc0ffd9b5ee2
+
+## No test regressions (compared to v5.15.135-103-gf11fc66f963f)
+
+## No metric regressions (compared to v5.15.135-103-gf11fc66f963f)
+
+## No test fixes (compared to v5.15.135-103-gf11fc66f963f)
+
+## No metric fixes (compared to v5.15.135-103-gf11fc66f963f)
+
+## Test result summary
+total: 87626, pass: 69916, fail: 2587, skip: 15056, xfail: 67
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 114 total, 114 passed, 0 failed
+* arm64: 38 total, 38 passed, 0 failed
+* i386: 32 total, 32 passed, 0 failed
+* mips: 24 total, 24 passed, 0 failed
+* parisc: 3 total, 3 passed, 0 failed
+* powerpc: 24 total, 24 passed, 0 failed
+* riscv: 8 total, 8 passed, 0 failed
+* s390: 9 total, 9 passed, 0 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 34 total, 34 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
 
 
---llYF3KVE0Ra1/NWQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Greetings!
 
-Hi!
+Daniel Díaz
+daniel.diaz@linaro.org
 
-> > > And testing failed. So
-> > >=20
-> > > commit f5799b4e142884c2e7aa99f813113af4a3395ffb
-> > > Author: Wolfram Sang <wsa+renesas@sang-engineering.com>
-> > > Date:   Tue Nov 10 15:20:57 2020 +0100
-> > >=20
-> > >     mmc: renesas_sdhi: populate SCC pointer at the proper place
-> > >    =20
-> > >     [ Upstream commit d14ac691bb6f6ebaa7eeec21ca04dd47300ff5b6 ]
-> > >=20
-> > > seems to be the buggy commit that breaks renesas boards in 5.10.
-> >=20
-> > This patch was part of a series. Did the other two patches come with it?
-> >=20
-> > b161d87dfd3d ("mmc: renesas_sdhi: probe into TMIO after SCC parameters =
-have been setup")
->=20
-> Yes.
->=20
-> > 45bffc371fef ("mmc: renesas_sdhi: only reset SCC when its pointer is po=
-pulated")
->=20
-> No :(
->=20
-> > If not, I could imagine that could lead to a crash. No idea why only
-> > with 5.10, though.
->=20
-> The above commit is only in 5.11, so newer kernels should be fine.
->=20
-> I'll go queue up the one missing patch now, thanks.
-
-Thank you. Patch indeed appears to be in 5.10.199.
-
-But we still have failures on Renesas with 5.10.199-rc2:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/1=
-047368849
-
-And they still happed during MMC init:
-
-    2.638013] renesas_sdhi_internal_dmac ee100000.mmc: Got CD GPIO
-[    2.638846] INFO: trying to register non-static key.
-[    2.644192] ledtrig-cpu: registered to indicate activity on CPUs
-[    2.649066] The code is fine but needs lockdep annotation, or maybe
-[    2.649069] you didn't initialize this object before use?
-[    2.649071] turning off the locking correctness validator.
-[    2.649080] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.10.199-rc2-arm64=
--renesas-ge31b6513c43d #1
-[    2.649082] Hardware name: HopeRun HiHope RZ/G2M with sub board (DT)
-[    2.649086] Call trace:
-[    2.655106] SMCCC: SOC_ID: ARCH_SOC_ID not implemented, skipping ....
-[    2.661354]  dump_backtrace+0x0/0x194
-[    2.661361]  show_stack+0x14/0x20
-[    2.667430] usbcore: registered new interface driver usbhid
-[    2.672230]  dump_stack+0xe8/0x130
-[    2.672238]  register_lock_class+0x480/0x514
-[    2.672244]  __lock_acquire+0x74/0x20ec
-[    2.681113] usbhid: USB HID core driver
-[    2.687450]  lock_acquire+0x218/0x350
-[    2.687456]  _raw_spin_lock+0x58/0x80
-[    2.687464]  tmio_mmc_irq+0x410/0x9ac
-[    2.688556] renesas_sdhi_internal_dmac ee160000.mmc: mmc0 base at 0x0000=
-0000ee160000, max clock rate 200 MHz
-[    2.744936]  __handle_irq_event_percpu+0xbc/0x340
-[    2.749635]  handle_irq_event+0x60/0x100
-[    2.753553]  handle_fasteoi_irq+0xa0/0x1ec
-[    2.757644]  __handle_domain_irq+0x7c/0xdc
-[    2.761736]  efi_header_end+0x4c/0xd0
-[    2.765393]  el1_irq+0xcc/0x180
-[    2.768530]  arch_cpu_idle+0x14/0x2c
-[    2.772100]  default_idle_call+0x58/0xe4
-[    2.776019]  do_idle+0x244/0x2c0
-[    2.779242]  cpu_startup_entry+0x20/0x6c
-[    2.783160]  rest_init+0x164/0x28c
-[    2.786561]  arch_call_rest_init+0xc/0x14
-[    2.790565]  start_kernel+0x4c4/0x4f8
-[    2.794233] Unable to handle kernel NULL pointer dereference at virtual =
-address 0000000000000014
-[    2.803011] Mem abort info:
-
-=66rom https://lava.ciplatform.org/scheduler/job/1025535
-=66rom
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/536097=
-3735 .
-
-Is there something else missing?
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---llYF3KVE0Ra1/NWQ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZTgZawAKCRAw5/Bqldv6
-8lQ8AKCik1QaBTn5m7YuXb/lLY/car/XYwCgjDo/FjpueiEG4fDOuu7j9yjTttI=
-=quL0
------END PGP SIGNATURE-----
-
---llYF3KVE0Ra1/NWQ--
+-- 
+Linaro LKFT
+https://lkft.linaro.org
