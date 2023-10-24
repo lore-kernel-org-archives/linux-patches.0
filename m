@@ -1,171 +1,346 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA65241F3
-	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 08:35:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-59b5484fbe6so43826917b3.1
-        for <patches@lists.linux.dev>; Tue, 24 Oct 2023 01:35:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698136518; x=1698741318;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=C6WGKCx/tnchPSjDNC0icQpihqJVUVz/LWjSt9rOyiY=;
-        b=p37csJhotAHiMemwaK4JR3DzEeRfzLH75tsrwzLYr6Z9Sjqf3zgtfzFcGMGCqccJ5C
-         PDlDIMLzGC9z2D9unO5lPgn2sp5bESNS7ulsoICKZRJiRLROEv2F88w/pxo597Br/DF5
-         KcLazpsdyg0kDW8fm0RzQW3qq8kgoIK5mUZXcytLZOb5jtWXq5h6ayuGpKUX+pw3M6z5
-         mbOjSXJmfom8NbKHNzgyWScZzCfvT21A1AgSs75l3lH8xkfubRwscI+S/F5AfBfVvyNB
-         LlSWmR4yjJ8AoSmZBRFDEs9WdQYXFPTltEe69q9FIf+WIKsmhSWYyItg5gZRZusjgNPh
-         buHA==
-X-Gm-Message-State: AOJu0YypPlnVaqmUZUgOJKTA5tyojPECi4/fhQ4yozkW6I9LPp5wo235
-	ppLWicYYPIV1tJN10aMM3cLyD9ptfv8SQA==
-X-Google-Smtp-Source: AGHT+IF7niR967MydNWHouFfgz9TFuFFmEkMxlMi3dzxEjhUrmFfWKXsyx3Br+imS2NJ7oI60tzluw==
-X-Received: by 2002:a81:6d09:0:b0:5a7:ab56:e081 with SMTP id i9-20020a816d09000000b005a7ab56e081mr13829155ywc.19.1698136518524;
-        Tue, 24 Oct 2023 01:35:18 -0700 (PDT)
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com. [209.85.128.180])
-        by smtp.gmail.com with ESMTPSA id a23-20020a0dd817000000b005a8dbe385d1sm3881330ywe.12.2023.10.24.01.35.18
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Oct 2023 01:35:18 -0700 (PDT)
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-5a8ee23f043so43696697b3.3
-        for <patches@lists.linux.dev>; Tue, 24 Oct 2023 01:35:18 -0700 (PDT)
-X-Received: by 2002:a81:52d3:0:b0:5a7:a838:3fa with SMTP id
- g202-20020a8152d3000000b005a7a83803famr11277453ywb.3.1698136517845; Tue, 24
- Oct 2023 01:35:17 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B499C2137F
+	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 08:36:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBKAL5VW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A69C433C7;
+	Tue, 24 Oct 2023 08:36:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1698136591;
+	bh=VGwUu7FzzH7r/7ogFyc/mTwV5Aan2WfqrEhp54ZJT8w=;
+	h=From:To:Cc:Subject:Date:From;
+	b=WBKAL5VWdpB2Hu/G7ArFl44B2BKSAdrR3i114u2EesB8I0TnWX/eDUkbKrFJUma13
+	 +bpK/mfzo5mBk7R2B+V6ZNBbobFoLWQgvVAIlNrWkRyDLu3x2ArnPniI2docSYNM67
+	 Kknz8hW2DuPslCfYLpxRjKC0e7+R/eOcK8vpj7jI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 4.14 00/65] 4.14.328-rc2 review
+Date: Tue, 24 Oct 2023 10:36:27 +0200
+Message-ID: <20231024083251.452724764@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231023104820.849461819@linuxfoundation.org> <724521b8-9c63-4645-b3e0-30d9635573a7@linaro.org>
- <CAEUSe7-zbuRsgsr2EYq+OeW9iEJyZHmo8u9K3pDCAFRKnCEv0A@mail.gmail.com>
- <CAMuHMdXYB6QAE15RYs7eg9sVofesqNN1+vmPHkosqC_8A-JTSg@mail.gmail.com>
- <9737cd7b-f3c6-7e90-f92c-0ceeed788980@roeck-us.net> <2023102453-backspin-immunize-b110@gregkh>
-In-Reply-To: <2023102453-backspin-immunize-b110@gregkh>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 24 Oct 2023 10:35:05 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdVR9KFdu=t=8cowyY_-88Hutd-1OxKh6w+f+Cu+YXgtWQ@mail.gmail.com>
-Message-ID: <CAMuHMdVR9KFdu=t=8cowyY_-88Hutd-1OxKh6w+f+Cu+YXgtWQ@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/137] 5.15.137-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Guenter Roeck <linux@roeck-us.net>, =?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>, 
-	stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.328-rc2.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.14.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.14.328-rc2
+X-KernelTest-Deadline: 2023-10-26T08:32+00:00
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Greg,
+This is the start of the stable review cycle for the 4.14.328 release.
+There are 65 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-On Tue, Oct 24, 2023 at 10:31=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
-> On Mon, Oct 23, 2023 at 12:56:48PM -0700, Guenter Roeck wrote:
-> > On 10/23/23 11:50, Geert Uytterhoeven wrote:
-> > > CC maz
-> > >
-> > > On Mon, Oct 23, 2023 at 7:17=E2=80=AFPM Daniel D=C3=ADaz <daniel.diaz=
-@linaro.org> wrote:
-> > > > On Mon, 23 Oct 2023 at 09:11, Daniel D=C3=ADaz <daniel.diaz@linaro.=
-org> wrote:
-> > > > > On 23/10/23 4:55 a. m., Greg Kroah-Hartman wrote:
-> > > > > > This is the start of the stable review cycle for the 5.15.137 r=
-elease.
-> > > > > > There are 137 patches in this series, all will be posted as a r=
-esponse
-> > > > > > to this one.  If anyone has any issues with these being applied=
-, please
-> > > > > > let me know.
-> > > > > >
-> > > > > > Responses should be made by Wed, 25 Oct 2023 10:47:57 +0000.
-> > > > > > Anything received after that time might be too late.
-> > > > > >
-> > > > > > The whole patch series can be found in one patch at:
-> > > > > >        https://www.kernel.org/pub/linux/kernel/v5.x/stable-revi=
-ew/patch-5.15.137-rc1.gz
-> > > > > > or in the git tree and branch at:
-> > > > > >        git://git.kernel.org/pub/scm/linux/kernel/git/stable/lin=
-ux-stable-rc.git linux-5.15.y
-> > > > > > and the diffstat can be found below.
-> > > > > >
-> > > > > > thanks,
-> > > > > >
-> > > > > > greg k-h
-> > > > >
-> > > > > We see lots of errors on Arm 32-bits:
-> > > > >
-> > > > > -----8<-----
-> > > > > /builds/linux/drivers/gpio/gpio-vf610.c:249:11: error: 'IRQCHIP_I=
-MMUTABLE' undeclared here (not in a function); did you mean 'IS_IMMUTABLE'?
-> > > > >     .flags =3D IRQCHIP_IMMUTABLE | IRQCHIP_MASK_ON_SUSPEND
-> > > > >              ^~~~~~~~~~~~~~~~~
-> > > > >              IS_IMMUTABLE
-> > > > > /builds/linux/drivers/gpio/gpio-vf610.c:251:2: error: 'GPIOCHIP_I=
-RQ_RESOURCE_HELPERS' undeclared here (not in a function)
-> > > > >     GPIOCHIP_IRQ_RESOURCE_HELPERS,
-> > > > >     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > > > > /builds/linux/drivers/gpio/gpio-vf610.c:251:2: warning: excess el=
-ements in struct initializer
-> > > > > /builds/linux/drivers/gpio/gpio-vf610.c:251:2: note: (near initia=
-lization for 'vf610_irqchip')
-> > > > > /builds/linux/drivers/gpio/gpio-vf610.c: In function 'vf610_gpio_=
-probe':
-> > > > > /builds/linux/drivers/gpio/gpio-vf610.c:340:2: error: implicit de=
-claration of function 'gpio_irq_chip_set_chip'; did you mean 'gpiochip_get_=
-data'? [-Werror=3Dimplicit-function-declaration]
-> > > > >     gpio_irq_chip_set_chip(girq, &vf610_irqchip);
-> > > > >     ^~~~~~~~~~~~~~~~~~~~~~
-> > > > >     gpiochip_get_data
-> > > > > cc1: some warnings being treated as errors
-> > > > > ----->8-----
-> > > >
-> > > > Bisection points to "gpio: vf610: make irq_chip immutable" (upstrea=
-m
-> > > > commit e6ef4f8ede09f4af7cde000717b349b50bc62576).
-> > >
-> > > IRQCHIP_IMMUTABLE was introduced in commit 6c846d026d490b23 ("gpio:
-> > > Don't fiddle with irqchips marked as immutable") in v5.19.
-> > > Backporting (part of) that is probably not safe.
-> > >
-> >
-> > In this context: What exactly does commit e6ef4f8ede09 fix that makes i=
-t
-> > a stable release candidate ?
->
-> It is needed as a dependency for 430232619791 ("gpio: vf610: mask the
-> gpio irq in system suspend and support wakeup") which says it:
->   Fixes: 7f2691a19627 ("gpio: vf610: add gpiolib/IRQ chip driver for Vybr=
-id")
-> which was in the 3.19 kernel release.
->
-> That's why it was added.  And then none of my x86 builds caught this
-> build failure before I pushed out the -rcs.
+Responses should be made by Thu, 26 Oct 2023 08:32:31 +0000.
+Anything received after that time might be too late.
 
-Ah, the difference between semantic and lexical changes ;-)
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.328-rc2.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+and the diffstat can be found below.
 
-The proper backport would be to just add
+thanks,
 
-       .flags =3D IRQCHIP_MASK_ON_SUSPEND | IRQCHIP_ENABLE_WAKEUP_ON_SUSPEN=
-D,
+greg k-h
 
-Don't bother with the IRQCHIP_IMMUTABLE.
+-------------
+Pseudo-Shortlog of commits:
 
-Gr{oetje,eeting}s,
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.14.328-rc2
 
-                        Geert
+Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+    Bluetooth: hci_event: Fix using memcmp when comparing keys
 
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
+Kees Cook <keescook@chromium.org>
+    Bluetooth: hci_sock: Correctly bounds check and pad HCI_MON_NEW_INDEX name
 
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Edward AD <twuufnxlz@gmail.com>
+    Bluetooth: hci_sock: fix slab oob read in create_monitor_event
+
+Haibo Chen <haibo.chen@nxp.com>
+    gpio: vf610: set value before the direction to avoid a glitch
+
+Niklas Schnelle <schnelle@linux.ibm.com>
+    s390/pci: fix iommu bitmap allocation
+
+Peter Zijlstra <peterz@infradead.org>
+    perf: Disallow mis-matched inherited group reads
+
+Puliang Lu <puliang.lu@fibocom.com>
+    USB: serial: option: add Fibocom to DELL custom modem FM101R-GL
+
+Benoît Monin <benoit.monin@gmx.fr>
+    USB: serial: option: add entry for Sierra EM9191 with new firmware
+
+Fabio Porcedda <fabio.porcedda@gmail.com>
+    USB: serial: option: add Telit LE910C4-WWX 0x1035 composition
+
+Sunil V L <sunilvl@ventanamicro.com>
+    ACPI: irq: Fix incorrect return value in acpi_register_gsi()
+
+Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+    Revert "pinctrl: avoid unsafe code pattern in find_pinctrl()"
+
+Avri Altman <avri.altman@wdc.com>
+    mmc: core: Capture correct oemid-bits for eMMC cards
+
+Kees Cook <keescook@chromium.org>
+    sky2: Make sure there is at least one frag_addr available
+
+Benjamin Berg <benjamin.berg@intel.com>
+    wifi: cfg80211: avoid leaking stack data into trace
+
+Wen Gong <quic_wgong@quicinc.com>
+    wifi: mac80211: allow transmitting EAPOL frames with tainted key
+
+Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+    Bluetooth: hci_core: Fix build warnings
+
+Ying Hsu <yinghsu@chromium.org>
+    Bluetooth: Avoid redundant authentication
+
+Ma Ke <make_ruc2021@163.com>
+    HID: holtek: fix slab-out-of-bounds Write in holtek_kbd_input_event
+
+Clément Léger <cleger@rivosinc.com>
+    tracing: relax trace_event_eval_update() execution with cond_resched()
+
+Damien Le Moal <dlemoal@kernel.org>
+    ata: libata-eh: Fix compilation warning in ata_eh_link_report()
+
+Chengfeng Ye <dg573847474@gmail.com>
+    gpio: timberdale: Fix potential deadlock on &tgpio->lock
+
+Jeff Layton <jlayton@kernel.org>
+    overlayfs: set ctime when setting mtime and atime
+
+Heiner Kallweit <hkallweit1@gmail.com>
+    i2c: mux: Avoid potential false error message in i2c_mux_add_adapter
+
+Josef Bacik <josef@toxicpanda.com>
+    btrfs: initialize start_slot in btrfs_log_prealloc_extents
+
+Tony Lindgren <tony@atomide.com>
+    ARM: dts: ti: omap: Fix noisy serial with overrun-throttle-ms for mapphone
+
+Michal Schmidt <mschmidt@redhat.com>
+    i40e: prevent crash on probe if hw registers have invalid values
+
+Dan Carpenter <dan.carpenter@linaro.org>
+    net: usb: smsc95xx: Fix an error code in smsc95xx_reset()
+
+Josua Mayer <josua@solid-run.com>
+    net: rfkill: gpio: prevent value glitch during probe
+
+Ma Ke <make_ruc2021@163.com>
+    net: ipv6: fix return value check in esp_remove_trailer
+
+Ma Ke <make_ruc2021@163.com>
+    net: ipv4: fix return value check in esp_remove_trailer
+
+Eric Dumazet <edumazet@google.com>
+    xfrm: fix a data-race in xfrm_gen_index()
+
+Florian Westphal <fw@strlen.de>
+    netfilter: nft_payload: fix wrong mac header matching
+
+Jim Mattson <jmattson@google.com>
+    KVM: x86: Mask LVTPC when handling a PMI
+
+Johan Hovold <johan+linaro@kernel.org>
+    regmap: fix NULL deref on lookup
+
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+    nfc: nci: fix possible NULL pointer dereference in send_acknowledge()
+
+Arnd Bergmann <arnd@arndb.de>
+    Bluetooth: avoid memcmp() out of bounds warning
+
+Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+    Bluetooth: hci_event: Fix coding style
+
+Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
+    Bluetooth: vhci: Fix race when opening vhci device
+
+Ziyang Xuan <william.xuanziyang@huawei.com>
+    Bluetooth: Fix a refcnt underflow problem for hci_conn
+
+Lee, Chun-Yi <jlee@suse.com>
+    Bluetooth: Reject connection with the device which has same BD_ADDR
+
+Lee, Chun-Yi <jlee@suse.com>
+    Bluetooth: hci_event: Ignore NULL link key
+
+Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+    usb: hub: Guard against accesses to uninitialized BOS descriptors
+
+Borislav Petkov (AMD) <bp@alien8.de>
+    x86/cpu: Fix AMD erratum #1485 on Zen4-based CPUs
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    usb: gadget: ncm: Handle decoding of multiple NTB's in unwrap call
+
+Piyush Mehta <piyush.mehta@amd.com>
+    usb: gadget: udc-xilinx: replace memcpy with memcpy_toio
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    pinctrl: avoid unsafe code pattern in find_pinctrl()
+
+Michal Koutný <mkoutny@suse.com>
+    cgroup: Remove duplicates in cgroup v1 tasks file
+
+Matthias Berndt <matthias_berndt@gmx.de>
+    Input: xpad - add PXN V900 support
+
+Javier Carrasco <javier.carrasco.cruz@gmail.com>
+    Input: powermate - fix use-after-free in powermate_config_complete
+
+Xiubo Li <xiubli@redhat.com>
+    ceph: fix incorrect revoked caps assert in ceph_fill_file_size()
+
+Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+    mcb: remove is_added flag from mcb_device struct
+
+Alexander Zangerl <az@breathe-safe.com>
+    iio: pressure: ms5611: ms5611_prom_is_valid false negative bug
+
+Phil Elwell <phil@raspberrypi.com>
+    iio: pressure: bmp280: Fix NULL pointer exception
+
+Xingxing Luo <xingxing.luo@unisoc.com>
+    usb: musb: Modify the "HWVers" register address
+
+Xingxing Luo <xingxing.luo@unisoc.com>
+    usb: musb: Get the musb_qh poniter after musb_giveback
+
+Javier Carrasco <javier.carrasco.cruz@gmail.com>
+    net: usb: dm9601: fix uninitialized variable use in dm9601_mdio_read
+
+Wesley Cheng <quic_wcheng@quicinc.com>
+    usb: xhci: xhci-ring: Use sysdev for mapping bounce buffer
+
+Waiman Long <longman@redhat.com>
+    workqueue: Override implicit ordered attribute in workqueue_apply_unbound_cpumask()
+
+Jeremy Cline <jeremy@jcline.org>
+    nfc: nci: assert requested protocol is valid
+
+Dan Carpenter <dan.carpenter@linaro.org>
+    ixgbe: fix crash with empty VF macvlan list
+
+Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+    drm/vmwgfx: fix typo of sizeof argument
+
+Dinghao Liu <dinghao.liu@zju.edu.cn>
+    ieee802154: ca8210: Fix a potential UAF in ca8210_probe
+
+Martin Fuzzey <martin.fuzzey@flowbird.group>
+    drm: etvnaviv: fix bad backport leading to warning
+
+Hans de Goede <hdegoede@redhat.com>
+    HID: logitech-hidpp: Fix kernel crash on receiver USB disconnect
+
+Artem Chernyshev <artem.chernyshev@red-soft.ru>
+    RDMA/cxgb4: Check skb value for failure to allocate
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                       |  4 +-
+ arch/arm/boot/dts/omap4-droid4-xt894.dts       |  1 +
+ arch/s390/pci/pci_dma.c                        | 16 +++++-
+ arch/x86/include/asm/msr-index.h               |  4 ++
+ arch/x86/kernel/cpu/amd.c                      |  9 ++++
+ arch/x86/kvm/lapic.c                           |  8 ++-
+ drivers/acpi/irq.c                             |  7 ++-
+ drivers/ata/libata-eh.c                        |  2 +-
+ drivers/base/regmap/regmap.c                   |  2 +-
+ drivers/bluetooth/hci_vhci.c                   |  3 ++
+ drivers/gpio/gpio-timberdale.c                 |  5 +-
+ drivers/gpio/gpio-vf610.c                      |  4 +-
+ drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c    |  2 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c        |  2 +-
+ drivers/hid/hid-holtek-kbd.c                   |  4 ++
+ drivers/hid/hid-logitech-hidpp.c               |  3 +-
+ drivers/i2c/i2c-mux.c                          |  2 +-
+ drivers/iio/pressure/bmp280-core.c             |  2 +-
+ drivers/iio/pressure/ms5611_core.c             |  2 +-
+ drivers/infiniband/hw/cxgb4/cm.c               |  3 ++
+ drivers/input/joystick/xpad.c                  |  2 +
+ drivers/input/misc/powermate.c                 |  1 +
+ drivers/mcb/mcb-core.c                         | 10 ++--
+ drivers/mcb/mcb-parse.c                        |  2 -
+ drivers/mmc/core/mmc.c                         |  2 +-
+ drivers/net/ethernet/intel/i40e/i40e_common.c  |  4 +-
+ drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c |  5 +-
+ drivers/net/ethernet/marvell/sky2.h            |  2 +-
+ drivers/net/ieee802154/ca8210.c                | 17 ++----
+ drivers/net/usb/dm9601.c                       |  7 ++-
+ drivers/net/usb/smsc95xx.c                     |  2 +-
+ drivers/usb/core/hub.c                         | 28 ++++++++--
+ drivers/usb/core/hub.h                         |  2 +-
+ drivers/usb/gadget/function/f_ncm.c            | 26 +++++++---
+ drivers/usb/gadget/udc/udc-xilinx.c            | 20 ++++---
+ drivers/usb/host/xhci-ring.c                   |  4 +-
+ drivers/usb/musb/musb_debugfs.c                |  2 +-
+ drivers/usb/musb/musb_host.c                   |  9 +++-
+ drivers/usb/serial/option.c                    |  7 +++
+ fs/btrfs/tree-log.c                            |  2 +-
+ fs/ceph/inode.c                                |  4 +-
+ fs/overlayfs/copy_up.c                         |  2 +-
+ include/linux/mcb.h                            |  1 -
+ include/linux/perf_event.h                     |  1 +
+ include/net/bluetooth/hci_core.h               |  2 +-
+ include/net/netns/xfrm.h                       |  1 +
+ kernel/cgroup/cgroup-v1.c                      |  5 +-
+ kernel/events/core.c                           | 39 +++++++++++---
+ kernel/trace/trace_events.c                    |  1 +
+ kernel/workqueue.c                             |  8 ++-
+ net/bluetooth/hci_conn.c                       | 72 ++++++++++++++++----------
+ net/bluetooth/hci_core.c                       |  8 +--
+ net/bluetooth/hci_event.c                      | 33 +++++++++---
+ net/bluetooth/hci_sock.c                       |  3 +-
+ net/ipv4/esp4.c                                |  4 +-
+ net/ipv6/esp6.c                                |  4 +-
+ net/mac80211/tx.c                              |  3 +-
+ net/netfilter/nft_payload.c                    |  2 +-
+ net/nfc/nci/core.c                             |  5 ++
+ net/nfc/nci/spi.c                              |  2 +
+ net/rfkill/rfkill-gpio.c                       |  4 +-
+ net/wireless/nl80211.c                         |  2 +-
+ net/xfrm/xfrm_policy.c                         |  6 +--
+ 63 files changed, 310 insertions(+), 141 deletions(-)
+
+
