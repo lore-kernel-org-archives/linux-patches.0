@@ -1,161 +1,98 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C0E134B2
-	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 18:24:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F9A219ED
+	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 18:48:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GK7bMKUz"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698171894; x=1729707894;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=yfBgd2EvMXfs22XWfbAiHh+pw1w/zf5DdHM6/F3T2Wg=;
-  b=GK7bMKUzDVSSrjZy9sgYIuiHXDrLcwPfTCk2tNTKnLeC8zAX3LLpYIQO
-   C93Vt+ULDXIBsA+emmhUlaKoaeQP43/8ByfK0WvNH6UuVLM4KEbXl6bOq
-   BfJJ4JkqoQ1iyCahssYxoPvzT0iE/KT1tHHMWID7z6edZRRQoVwDKiXc4
-   7nKA2IzfUztMYoAA0kaiiRt5oBonJe7XoxT7TsVpGVyYmQWxs5HAF0Xg+
-   G8LfgKt3HjExl0i7zUoawVJkNd1Csc+XiBsdo8ILAQh8GUU7TI2p9ZP8Y
-   o3GkbnAJeTOL9FY8wPoPZnF7A3GI0ohrBxEdVFv4RrSc1yMu/L6krLbsP
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10873"; a="473364386"
-X-IronPort-AV: E=Sophos;i="6.03,248,1694761200"; 
-   d="scan'208";a="473364386"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2023 11:24:53 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10873"; a="758570380"
-X-IronPort-AV: E=Sophos;i="6.03,248,1694761200"; 
-   d="scan'208";a="758570380"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
-  by orsmga002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 24 Oct 2023 11:24:52 -0700
-Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Tue, 24 Oct 2023 11:24:52 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Tue, 24 Oct 2023 11:24:51 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Tue, 24 Oct 2023 11:24:51 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.100)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.32; Tue, 24 Oct 2023 11:24:51 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FwLE2Hw4FsNQC8xbE/o2/EsPO14dJs24Xy7G76bLslZpIuEVvXAtnl/o3WStlsfQWt2eP/GcUClSyE8Pf1viH/38cWePEn1uTMKv53slzyXkDiD0sVMHJnyj/vQnuZFJb5sG660xaODnIBHXgbZB9bwP815UxXTl028cYrShCOu2XFpTAwqNxa1MWneSzyIOcA7bjuF8EJrTRfQAS9/5BjtvG5KE/Njg9pQ6/ZT0HXsjT6/EgcB2T+LTmTURjV2g7K/nYSjyZWlibRxWfonUEJB6VCm1+8x3cxRzj2qs2UA1X5THoc7e56ADTFDlvLdp60dOO7rr/l2R/uxaNq1WhQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yfBgd2EvMXfs22XWfbAiHh+pw1w/zf5DdHM6/F3T2Wg=;
- b=DIWnL//rl10ZFXuD8GxOlFfomUQ5DcU8Dkvjmw9zeuVjDtMUWfb+uGi9eZwKM3atHzSdpULf5Iiw00X1Rg99ygJBoMppa9x9J/zMzt68FNov3I37zXkaaXIGp36piq/SHHg3rvoExdDQF6alz5rF3UXG/beWrG68I8FwCU/2RBugpoY2vcI3QLjK0SpjclQXrhNmN9nxgZOr1FdTJYLNXu7yZwBflMhRUyAgiUYu2Z/TrhPrvHcePzW5K82EuUzXPuJnzn6WAYXiZdfcu6+bRuMSPneSbgdVf0VtMxwtZ5KvxolEaPlq48eJrwSb9T4frWv6dCBvH1xpJfZuAMpgPQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by SN7PR11MB8066.namprd11.prod.outlook.com (2603:10b6:806:2df::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6907.26; Tue, 24 Oct
- 2023 18:24:50 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::3ffb:89e2:2724:4c5]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::3ffb:89e2:2724:4c5%2]) with mapi id 15.20.6907.025; Tue, 24 Oct 2023
- 18:24:50 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: "Yu, Fenghua" <fenghua.yu@intel.com>, "Chatre, Reinette"
-	<reinette.chatre@intel.com>, Peter Newman <peternewman@google.com>, "Jonathan
- Corbet" <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
-	"x86@kernel.org" <x86@kernel.org>
-CC: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
-	<james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, Babu Moger
-	<babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: RE: [PATCH] x86/resctrl: mba_MBps: Fall back to total b/w if local
- b/w unavailable
-Thread-Topic: [PATCH] x86/resctrl: mba_MBps: Fall back to total b/w if local
- b/w unavailable
-Thread-Index: AQHaBqYtRjw2ybQBRkugDlcC/RU7LLBZQKZw
-Date: Tue, 24 Oct 2023 18:24:50 +0000
-Message-ID: <SJ1PR11MB6083F84A3A83F26F4111900EFCDFA@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <20231024181600.8270-1-tony.luck@intel.com>
-In-Reply-To: <20231024181600.8270-1-tony.luck@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|SN7PR11MB8066:EE_
-x-ms-office365-filtering-correlation-id: 57d26e8d-1c6e-4146-6020-08dbd4be8270
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: YUlkmw41W/rLcKad72umVws3aPBoAjSbZO2UMMYeLkvV/MIfYhXAit3ssGKUqF3wIQ6vxCHrprje+5lor5dcmnEIzmYtruVPRKOBHVulZHg6PsZLMIqBeUYF0Nnee4nB5B/+vPTm18Q/4hPisy1aRUptE+G0I6zLfWm0greIQBf4Z+B1Lg11Dx+Bw3OwaBEYInLF11F5c1JNOELYXHX+STWiNi5vGtOSBlAVZCVrd3NE7vHPBBm3ng0cQniSE9oWvLrk8gog7qcnt2HV08+CHx2M2ypFJwT7/i6D9Ja23qM51ECbcgmTSkj0xxxXfWBakcllsB+6bCg/xCICrQbi4UEXAiwvXNxh2TQ5kwDbpRR+7xUHkM+fJc5OzJ0ZoP5fU8CgDrs3K7h2Bqgc02dmsi13RoJEHu2R0fwc/37JBUGq7a82Eo0c3Ik28WINUmN2jlK6Eq01jI3nKn3O6RzQkyP56/8N8Iah17328fMs3+IX1pRwyDE9rgvct2cJ59bvteRkNs7boG6VkCBo7VT4X7uAJXrvtIDvqt3prknpuj+58rsw1cHF6QiQ6/Ooyu5eiIqb5tMZI/EEl/f7IxDvgkookQFJsabaAZ5QADAkptDGeFPdugTLdQBpLCaVG3d0
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(39860400002)(366004)(396003)(346002)(376002)(230922051799003)(1800799009)(451199024)(186009)(64100799003)(55016003)(9686003)(6506007)(7696005)(2906002)(26005)(71200400001)(5660300002)(4326008)(478600001)(7416002)(8676002)(41300700001)(52536014)(4744005)(8936002)(54906003)(64756008)(66556008)(66476007)(86362001)(82960400001)(76116006)(122000001)(316002)(66446008)(66946007)(110136005)(38100700002)(38070700009)(33656002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?DpPg4VLsCYx5+7LcXHqKjn2fBQFCwBwL72y9iCGuu7OIPSi0wGVL/Az3vlgT?=
- =?us-ascii?Q?gU+rIWG3Z4UZEbo8VAEwP7gzvJaXSepDUlPivl1kx7b1E4Ilos8fi6+E/cpd?=
- =?us-ascii?Q?/1yYlwUdoCnjLXDHXnZXTaCvD5/fcvKdygl8ihTit0aBAtoqUiII5FphngCd?=
- =?us-ascii?Q?w4jnyY7dOZNyRpzy0UAE9bfFH8uQqmuZwPE7ZCfLuSnCalo498U5kf+94VMt?=
- =?us-ascii?Q?tHgo4QeoKUs8ZpYGJpZUCzsMxNwr+VBmBj5MAHbFVTSI3MF7STbz4mEBOi7L?=
- =?us-ascii?Q?Z0DFjuzGym4I0Uf5ba0r6P7RLOpza9BaBhaLktdnz9p6w/N/4ufMKUBbWlWt?=
- =?us-ascii?Q?EbrtX8cHoplo15CaPCr5MyoEYZ/0+r4RsX/RcHIv5t6RD5toFRfUArqO5LQm?=
- =?us-ascii?Q?qmDVRGmN8GMTdRzHWaBHKHIi8ebfkYRFes+oVXc4465bt2TsfcY6iR1LnBSf?=
- =?us-ascii?Q?YlrBwero2N5WWl0JnxTvVtlbiVgWgKSt2ZFe/0igXB1Yp9ZFU3VMWDea8bcP?=
- =?us-ascii?Q?QLYb6Y+n60Mwb5iccigSEK1KFoD5vjIIX1PK0M7XFvXV6mRDr05KbAiaf2d2?=
- =?us-ascii?Q?yVwe62vPUUVrtbCgBdIGATNoXsjaPCgo9L2bh7nv8rGyTIEsTwpaHWQuSKKW?=
- =?us-ascii?Q?QE/yz1IVVPYalGKmdxVenDz95Ko/pbiGq4JKZMKDhaLuImzGJ1W4jbNQWqwd?=
- =?us-ascii?Q?vJKVedPcsoG19QCtwaUIdw1hC6TXfWKRYxLZ+J6soWq1OiDMPj2OGsttx4k/?=
- =?us-ascii?Q?lNK0l3FMN3Vx0oYAaqz1qBtL5qyTKezqUVXDnWEoV7gpesTRuTaQ7v90C2Bd?=
- =?us-ascii?Q?ZBpukA2x8PLVEQI97bLYq65z3Ib0C9DIHIYKVu3U0u1LiYtuONmtMV5ERgtz?=
- =?us-ascii?Q?94HQQzgxQkptv7oJehjU+3oqYacFOb/xkKm/hlQO00WEZ0cjCef90fRTcyTv?=
- =?us-ascii?Q?ysqmnMJeqWhsFoZgMOiI04HHdxIHUkxAmfmDHnSVLC7FFNxYAdN7aZz3C7mz?=
- =?us-ascii?Q?JcAoMx2/MVfX7a/OiqRLT0XG2rSlxBl5tNPuQZ3E7MWyKhfcA5eIBJDVeYQY?=
- =?us-ascii?Q?Qei+73RZJ8Bqfhyrj2n132XHS+4CPl8iltJruHcK0AK67eBiXL2dt1Ylnb5+?=
- =?us-ascii?Q?IX8iwOiTl1Oz9Z0yOEz5iymMSu06iu7FNc9ur3iBbyHTIHzkBaTVmm1ImKc0?=
- =?us-ascii?Q?GkJ5DfUiyrWFEkf99/mA/zdPjI1Lxiak7c9APG7ha23znC46v0Q0m/gVu7Ry?=
- =?us-ascii?Q?7bGDrgPSHyCMPOrNfh3lIwweQgV+Kw+Ku1ZpkrcfoTs4oYAtL1laNiH3lGLR?=
- =?us-ascii?Q?41w+rsqPzwsld6N4qHBZrT55KtPmnmYHyIB0uTZ/RCtr4PePZmJ/Rv69ZZfU?=
- =?us-ascii?Q?bm6qHniZh5RUOSQrITWAh6P450hjPouCEIS2gE1RmjKCW3LYEes+j8+T++o7?=
- =?us-ascii?Q?zn0LjxeOnv8bQiWPMYzwUq+mRizUGcqoY5EGBxPujGvhNwTKRUReHBpIlShW?=
- =?us-ascii?Q?IuoGQLp7tOPIcoz4iPZSYZjXQnVZpdmydAjAt4n9ZnbVx/s/Lb37QuCqEr/w?=
- =?us-ascii?Q?jJgg6MC3DdT21Xc8o5l59JC37cf/NwpnsNx4/YOZ?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gj6cLlTP"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6b497c8575aso4779466b3a.1
+        for <patches@lists.linux.dev>; Tue, 24 Oct 2023 11:48:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698173320; x=1698778120; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DFRAuWK32VTGr08EDsBUV/zh4O1jsXdg+48RuQhbEtQ=;
+        b=gj6cLlTP/eIOYtA55uef1GGP7NVjmdtCdBLFBptyEjCAgRMPz9GxoIHSs6JWfsX6gt
+         AAydrsXbto4chpSt+l/6GSVpfXVnV25Q5PmY10qT1Pne1/0VJgkOqKZA/2D5Jw2/kQyO
+         eECUITtquITowKsp67zAEqhs6pBYO74EqV5kzjIZbNSgkif5n1fOF7YVsKf8Fn3My9nb
+         ZyKQKAm6hXrxiBmVnZ8Y+0XIbYWczmD9SwlnmJBe9pfGPL8EevA+ps9P1cENW2pjLiXi
+         Bdzwy1GjizhbWdps3HW5R+btJhF7rUGbgGCiqvJPotRBC34ChTBqjeT6zm6ei8nT181V
+         hVKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698173320; x=1698778120;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DFRAuWK32VTGr08EDsBUV/zh4O1jsXdg+48RuQhbEtQ=;
+        b=rJRYPHYR+4s/8YY3jJRXmsyd7T4G31iEJdngK1/7IXAxDVFtGVNkX/YAc6O1zyKjwq
+         UDP3jH0Lx4YRx07oaTEfFk47O7x2B828zj2YJ4K+PlgwlgVdppjlOBb+kp5101mK4+Dx
+         2IS752Apt6tdvDuk+oD2BsDaGVMULBCu6QfmZV8ZO+8m899hwzX0wGfXIDWKrh9a9aOu
+         rh386alzY55Y2Lm0rojc4JBRe7dT9U00cf137+ZkosY91B6qcAZNRPFRnVR+tKBCdm8n
+         zo3Z+88aF9kT9lXr7lF1g9YsOX/F4/hirlriIC8IDuybjZB4Bwkxlz/jMc15aofGmyGO
+         U+Vw==
+X-Gm-Message-State: AOJu0YzhEIJDr4cL8BZqqg7t0soIInVuHu9+FHhNlY9/DeoBk0n6z9xx
+	cEFlNIb8WUVLXsKiP9EC9ss=
+X-Google-Smtp-Source: AGHT+IGYqlQhFzyXGwIJxZYzz10J32/aPAHvTNFD/mHPn6Cz/ujm1FsJgr5vpKqfqwNFp0i0LrBu2A==
+X-Received: by 2002:a05:6a21:1448:b0:16b:c725:1dc with SMTP id oc8-20020a056a21144800b0016bc72501dcmr3160186pzb.35.1698173319867;
+        Tue, 24 Oct 2023 11:48:39 -0700 (PDT)
+Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
+        by smtp.gmail.com with ESMTPSA id h1-20020a625301000000b006be484e5b9asm8297905pfb.188.2023.10.24.11.48.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Oct 2023 11:48:39 -0700 (PDT)
+Message-ID: <cd0eb23b-6c46-4069-ba29-9820c99b8ca8@gmail.com>
+Date: Tue, 24 Oct 2023 15:48:33 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 57d26e8d-1c6e-4146-6020-08dbd4be8270
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Oct 2023 18:24:50.0272
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: brYtxsEgtk1yXHuVgaZ8G/ECBim8WPeQY2OjJRzK4gv2J2ZCV+mwv9VqBioZReN0JZHjyHvrm1zvSq2JwidIyA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB8066
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] x86/rust: depend on !RETHUNK
+Content-Language: en-US
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+ Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+ Dave Hansen <dave.hansen@linux.intel.com>,
+ Peter Zijlstra <peterz@infradead.org>, Josh Poimboeuf <jpoimboe@kernel.org>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
+ Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl
+ <aliceryhl@google.com>, x86@kernel.org, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20231023174449.251550-1-ojeda@kernel.org>
+ <20231023174449.251550-3-ojeda@kernel.org>
+ <f53536ca-ec5b-4cdc-a340-e9c739ee30c4@gmail.com>
+ <CANiq72nTE_qua9w+EeqiPCukst4876Gi7gHeusFLofYZRoJCDw@mail.gmail.com>
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+In-Reply-To: <CANiq72nTE_qua9w+EeqiPCukst4876Gi7gHeusFLofYZRoJCDw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> If local bandwidth measurement is not available, do not give up on
-> providing the "mba_MBps" feedback option completely, make the code fall
-> back to using total bandwidth.
+On 10/23/23 19:15, Miguel Ojeda wrote:
+> On Mon, Oct 23, 2023 at 8:43 PM Martin Rodriguez Reboredo
+> <yakoyoku@gmail.com> wrote:
+>>
+>> I'll mention that I've tested boots, both in bare metal and QEMU, with
+>> `RUST=y` and `RETHUNK=y` and they were alright regardless of `objtool`
+>> warnings. Although, if you had an issue in the past then I'd like to know
+>> about it.
+> 
+> These are mitigations -- things do functionally work if they are not
+> applied, but you would be vulnerable.
+> 
+> In other words, it is not like e.g. IBT where you could have noticed
+> it breaking by running it normally if you happened to have a supported
+> platform.
+> 
+> Cheers,
+> Miguel
 
-N.B. I don't have a system yet that does this. Tested using boot command li=
-ne
-"clearcpuid=3Dcqm_mbm_local" argument to the kernel to fake the non-prescen=
-ce
-of local bandwidth monitoring.
+'Guess you have a point...
 
--Tony
+Acked-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
