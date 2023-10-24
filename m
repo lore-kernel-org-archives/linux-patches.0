@@ -1,129 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F6F23C6
-	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 08:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3BF2F5B
+	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 08:49:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPhaXG/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB77BC433CC;
-	Tue, 24 Oct 2023 08:41:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698136895;
-	bh=4eFu4rt7wR4jt5IgYVUl8wvT/+YjiWdAY2/ByetleT0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZPhaXG/UtL5sd4cBIff03LX7/uXLzIR4uYDwsHOVHWiKv8FLzk51j2uuNu1bL6lSO
-	 otKK8Ky2qfj9f6QKgB2soBD35mW6GimWcZ8KPzrr0KtwOSY8rv2EAy5oKM2T4opug4
-	 L6f//B6p0bZn7QXv3wZsBYzwGRSicNqqPFzifNb0=
-Date: Tue, 24 Oct 2023 10:41:32 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="itegzj+p"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-32d8c2c6dfdso2700957f8f.1
+        for <patches@lists.linux.dev>; Tue, 24 Oct 2023 01:49:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698137341; x=1698742141; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mo7Xx0J6SUzUUTIhfv7Y9XKD/ghnjNlWvwQxCcFYVUc=;
+        b=itegzj+p+MNdrzy/qupquVpEJJ2cAlzLsDOXrt80m/grPPCoUp6yKBPac7AjqF1XUU
+         tniVIgBG9sPOwRQGna2Twe/Wz7dAiCfYyue4CgQUIIWe9sGBU9svBcQM5yBjx8jwLtI1
+         Slbzw1J1kWWKFR/ynzJMcBnCuvbgE3KRV2WZ6eLS8VK0Vs/dhsDR4ZiFGiUAZjhkIeU6
+         BUc8h3Nu/KemOaMCNmK04Ncs7Nzj4AvLPLMLYKO2vkmFnTt8dOXRfiQd9eG35ow1BU2A
+         fch/m+S3Dr5LWMsf63InhSssdaIGWw/hrpwCngePmvtCACm3w6wiXdcZlLn+fQVlz5iL
+         1ncA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698137341; x=1698742141;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Mo7Xx0J6SUzUUTIhfv7Y9XKD/ghnjNlWvwQxCcFYVUc=;
+        b=T588gvVHVupZa0zFamdKGfLKwmxQLNw0HmeGn1yCDMM3zxf+Am1WkwPwXafvgh4Foo
+         XxcAkm5ABzFnUs3q9xEScHr6fEYF5sFOqfXMIEtdN1vz4RoHO+eC6HUpy+2nwiBxyMwG
+         1GPh3yu13dNA5JBQivoNVyeT9ip++rAw9lUf0GsOE6uKGx7tR8EuCDw3/JBiekHnxuyR
+         PYuczDMXygry4LLXzVqxHgO4Su//7mBgxOtSq3SwslRMDo0gGbFLaBM3WEvcyGrwTlzP
+         RcBavSnwg/y79TP9Qd5flBQwOTS7t953pAkelo83JcFmMWgnn6vZg2UImqd+MoVt25qN
+         lAHA==
+X-Gm-Message-State: AOJu0YxnMQBWwgWdwINso5rUSjIB3FqwKyYymCPGGAkI2jvqD1uwSCRR
+	VIiUYOXSYRnx8aDpHSaFJG97CDFEjC4=
+X-Google-Smtp-Source: AGHT+IFYnntQKKmgFF57gLWNDHCriOfCR2w7Uuy18Hr38cyfpNHRgWxpL0oHJ/uZOKpa1PxvtEpIrw==
+X-Received: by 2002:a5d:5291:0:b0:32d:a717:717a with SMTP id c17-20020a5d5291000000b0032da717717amr10157922wrv.40.1698137341339;
+        Tue, 24 Oct 2023 01:49:01 -0700 (PDT)
+Received: from debian ([63.135.72.41])
+        by smtp.gmail.com with ESMTPSA id y10-20020a5d470a000000b0032d9efeccd8sm9465323wrq.51.2023.10.24.01.49.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Oct 2023 01:49:01 -0700 (PDT)
+Date: Tue, 24 Oct 2023 09:48:59 +0100
+From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 5.15 000/137] 5.15.137-rc1 review
-Message-ID: <2023102413-delirium-manliness-d8b4@gregkh>
-References: <20231023104820.849461819@linuxfoundation.org>
- <724521b8-9c63-4645-b3e0-30d9635573a7@linaro.org>
- <CAEUSe7-zbuRsgsr2EYq+OeW9iEJyZHmo8u9K3pDCAFRKnCEv0A@mail.gmail.com>
- <CAMuHMdXYB6QAE15RYs7eg9sVofesqNN1+vmPHkosqC_8A-JTSg@mail.gmail.com>
- <9737cd7b-f3c6-7e90-f92c-0ceeed788980@roeck-us.net>
- <2023102453-backspin-immunize-b110@gregkh>
- <CAMuHMdVR9KFdu=t=8cowyY_-88Hutd-1OxKh6w+f+Cu+YXgtWQ@mail.gmail.com>
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.5 000/241] 6.5.9-rc1 review
+Message-ID: <ZTeE-_JQy4M2TfO6@debian>
+References: <20231023104833.832874523@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMuHMdVR9KFdu=t=8cowyY_-88Hutd-1OxKh6w+f+Cu+YXgtWQ@mail.gmail.com>
+In-Reply-To: <20231023104833.832874523@linuxfoundation.org>
 
-On Tue, Oct 24, 2023 at 10:35:05AM +0200, Geert Uytterhoeven wrote:
-> Hi Greg,
-> 
-> On Tue, Oct 24, 2023 at 10:31 AM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> > On Mon, Oct 23, 2023 at 12:56:48PM -0700, Guenter Roeck wrote:
-> > > On 10/23/23 11:50, Geert Uytterhoeven wrote:
-> > > > CC maz
-> > > >
-> > > > On Mon, Oct 23, 2023 at 7:17 PM Daniel Díaz <daniel.diaz@linaro.org> wrote:
-> > > > > On Mon, 23 Oct 2023 at 09:11, Daniel Díaz <daniel.diaz@linaro.org> wrote:
-> > > > > > On 23/10/23 4:55 a. m., Greg Kroah-Hartman wrote:
-> > > > > > > This is the start of the stable review cycle for the 5.15.137 release.
-> > > > > > > There are 137 patches in this series, all will be posted as a response
-> > > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > > let me know.
-> > > > > > >
-> > > > > > > Responses should be made by Wed, 25 Oct 2023 10:47:57 +0000.
-> > > > > > > Anything received after that time might be too late.
-> > > > > > >
-> > > > > > > The whole patch series can be found in one patch at:
-> > > > > > >        https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.137-rc1.gz
-> > > > > > > or in the git tree and branch at:
-> > > > > > >        git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > > > > > > and the diffstat can be found below.
-> > > > > > >
-> > > > > > > thanks,
-> > > > > > >
-> > > > > > > greg k-h
-> > > > > >
-> > > > > > We see lots of errors on Arm 32-bits:
-> > > > > >
-> > > > > > -----8<-----
-> > > > > > /builds/linux/drivers/gpio/gpio-vf610.c:249:11: error: 'IRQCHIP_IMMUTABLE' undeclared here (not in a function); did you mean 'IS_IMMUTABLE'?
-> > > > > >     .flags = IRQCHIP_IMMUTABLE | IRQCHIP_MASK_ON_SUSPEND
-> > > > > >              ^~~~~~~~~~~~~~~~~
-> > > > > >              IS_IMMUTABLE
-> > > > > > /builds/linux/drivers/gpio/gpio-vf610.c:251:2: error: 'GPIOCHIP_IRQ_RESOURCE_HELPERS' undeclared here (not in a function)
-> > > > > >     GPIOCHIP_IRQ_RESOURCE_HELPERS,
-> > > > > >     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > > > > > /builds/linux/drivers/gpio/gpio-vf610.c:251:2: warning: excess elements in struct initializer
-> > > > > > /builds/linux/drivers/gpio/gpio-vf610.c:251:2: note: (near initialization for 'vf610_irqchip')
-> > > > > > /builds/linux/drivers/gpio/gpio-vf610.c: In function 'vf610_gpio_probe':
-> > > > > > /builds/linux/drivers/gpio/gpio-vf610.c:340:2: error: implicit declaration of function 'gpio_irq_chip_set_chip'; did you mean 'gpiochip_get_data'? [-Werror=implicit-function-declaration]
-> > > > > >     gpio_irq_chip_set_chip(girq, &vf610_irqchip);
-> > > > > >     ^~~~~~~~~~~~~~~~~~~~~~
-> > > > > >     gpiochip_get_data
-> > > > > > cc1: some warnings being treated as errors
-> > > > > > ----->8-----
-> > > > >
-> > > > > Bisection points to "gpio: vf610: make irq_chip immutable" (upstream
-> > > > > commit e6ef4f8ede09f4af7cde000717b349b50bc62576).
-> > > >
-> > > > IRQCHIP_IMMUTABLE was introduced in commit 6c846d026d490b23 ("gpio:
-> > > > Don't fiddle with irqchips marked as immutable") in v5.19.
-> > > > Backporting (part of) that is probably not safe.
-> > > >
-> > >
-> > > In this context: What exactly does commit e6ef4f8ede09 fix that makes it
-> > > a stable release candidate ?
-> >
-> > It is needed as a dependency for 430232619791 ("gpio: vf610: mask the
-> > gpio irq in system suspend and support wakeup") which says it:
-> >   Fixes: 7f2691a19627 ("gpio: vf610: add gpiolib/IRQ chip driver for Vybrid")
-> > which was in the 3.19 kernel release.
-> >
-> > That's why it was added.  And then none of my x86 builds caught this
-> > build failure before I pushed out the -rcs.
-> 
-> Ah, the difference between semantic and lexical changes ;-)
-> 
-> The proper backport would be to just add
-> 
->        .flags = IRQCHIP_MASK_ON_SUSPEND | IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND,
-> 
-> Don't bother with the IRQCHIP_IMMUTABLE.
+Hi Greg,
 
-Thanks, I'll look into that after this round of stable kernels are
-released.
+On Mon, Oct 23, 2023 at 12:53:06PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.5.9 release.
+> There are 241 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 25 Oct 2023 10:47:57 +0000.
+> Anything received after that time might be too late.
 
-greg k-h
+Build test (gcc version 13.2.1 20230827):
+mips: 52 configs -> no failure
+arm: 70 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
+
+Boot test:
+x86_64: Booted on my test laptop. No regression.
+x86_64: Booted on qemu. No regression. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
+
+[1]. https://openqa.qa.codethink.co.uk/tests/5364
+[2]. https://openqa.qa.codethink.co.uk/tests/5365
+[3]. https://openqa.qa.codethink.co.uk/tests/5371
+
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+
+-- 
+Regards
+Sudip
