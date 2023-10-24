@@ -1,98 +1,157 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BC33B7BF;
-	Tue, 24 Oct 2023 19:04:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VBYbvBKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C509C433C7;
-	Tue, 24 Oct 2023 19:04:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698174292;
-	bh=UePWOfJRy8TLiNw0353xusU6uO7DUdE/+xmJDDjDZ7c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VBYbvBKkk425mSdIbztpXW6CR7F5qv9qltj6V2LGVqPM/kbaivwHg9z7/lw76LN1y
-	 CfPNZ+CfEKg+31ah9YmF7vViIY0VJ+TtWlRGUTKUcSzn7XrOlsn1VztglemzSCLkET
-	 KNhNm7uof3lVl5PmSwzDQFfMJUkmW7aFVa/MvOdakIQ+iclDjaNG+Ck1o3nDAwl89M
-	 guE0Jgoan78X1B7SnOAre9I3ysWehpIDYhirMh5PyDC1jJrddHQOie1Z5TutmSBvPg
-	 8a24Eb+kaCgUG/d+ia0sJU1iHBRWwnaZIBk6uouEeTsczBWQek2wgzWOC5PPFE/7kC
-	 PJJtKMLPNAWpw==
-From: SeongJae Park <sj@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0358427ED2
+	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 19:22:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id AF9DD1C007B; Tue, 24 Oct 2023 21:22:20 +0200 (CEST)
+Date: Tue, 24 Oct 2023 21:22:19 +0200
+From: Pavel Machek <pavel@denx.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 5.15 000/135] 5.15.137-rc2 review
-Date: Tue, 24 Oct 2023 19:04:49 +0000
-Message-Id: <20231024190449.189664-1-sj@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231024083327.980887231@linuxfoundation.org>
-References: 
+Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Pavel Machek <pavel@denx.de>, niklas.soderlund+renesas@ragnatech.se,
+	yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be,
+	biju.das.jz@bp.renesas.com, Chris.Paterson2@renesas.com,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
+Subject: Re: renesas_sdhi problems in 5.10-stable was Re: [PATCH 5.10
+ 000/226] 5.10.198-rc1 review
+Message-ID: <ZTgZa1ic1iFbdaTM@duo.ucw.cz>
+References: <20231009130126.697995596@linuxfoundation.org>
+ <ZSRVgj5AqJbDXqZU@duo.ucw.cz>
+ <ZSRe78MAQwbBdyFP@duo.ucw.cz>
+ <ZSUy+zA0+Chm6dFb@duo.ucw.cz>
+ <ZSU+GHl1q7T/TBp5@duo.ucw.cz>
+ <ZSWg1fv3gOyV5t+h@shikoro>
+ <2023101057-runny-pellet-8952@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="llYF3KVE0Ra1/NWQ"
+Content-Disposition: inline
+In-Reply-To: <2023101057-runny-pellet-8952@gregkh>
 
-Hello,
 
-On Tue, 24 Oct 2023 10:36:50 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+--llYF3KVE0Ra1/NWQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> This is the start of the stable review cycle for the 5.15.137 release.
-> There are 135 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 26 Oct 2023 08:32:55 +0000.
-> Anything received after that time might be too late.
+Hi!
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+> > > And testing failed. So
+> > >=20
+> > > commit f5799b4e142884c2e7aa99f813113af4a3395ffb
+> > > Author: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> > > Date:   Tue Nov 10 15:20:57 2020 +0100
+> > >=20
+> > >     mmc: renesas_sdhi: populate SCC pointer at the proper place
+> > >    =20
+> > >     [ Upstream commit d14ac691bb6f6ebaa7eeec21ca04dd47300ff5b6 ]
+> > >=20
+> > > seems to be the buggy commit that breaks renesas boards in 5.10.
+> >=20
+> > This patch was part of a series. Did the other two patches come with it?
+> >=20
+> > b161d87dfd3d ("mmc: renesas_sdhi: probe into TMIO after SCC parameters =
+have been setup")
+>=20
+> Yes.
+>=20
+> > 45bffc371fef ("mmc: renesas_sdhi: only reset SCC when its pointer is po=
+pulated")
+>=20
+> No :(
+>=20
+> > If not, I could imagine that could lead to a crash. No idea why only
+> > with 5.10, though.
+>=20
+> The above commit is only in 5.11, so newer kernels should be fine.
+>=20
+> I'll go queue up the one missing patch now, thanks.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Thank you. Patch indeed appears to be in 5.10.199.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] bc0ffd9b5ee2 ("Linux 5.15.137-rc2")
+But we still have failures on Renesas with 5.10.199-rc2:
 
-Thanks,
-SJ
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/1=
+047368849
 
-[...]
+And they still happed during MMC init:
 
----
+    2.638013] renesas_sdhi_internal_dmac ee100000.mmc: Got CD GPIO
+[    2.638846] INFO: trying to register non-static key.
+[    2.644192] ledtrig-cpu: registered to indicate activity on CPUs
+[    2.649066] The code is fine but needs lockdep annotation, or maybe
+[    2.649069] you didn't initialize this object before use?
+[    2.649071] turning off the locking correctness validator.
+[    2.649080] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.10.199-rc2-arm64=
+-renesas-ge31b6513c43d #1
+[    2.649082] Hardware name: HopeRun HiHope RZ/G2M with sub board (DT)
+[    2.649086] Call trace:
+[    2.655106] SMCCC: SOC_ID: ARCH_SOC_ID not implemented, skipping ....
+[    2.661354]  dump_backtrace+0x0/0x194
+[    2.661361]  show_stack+0x14/0x20
+[    2.667430] usbcore: registered new interface driver usbhid
+[    2.672230]  dump_stack+0xe8/0x130
+[    2.672238]  register_lock_class+0x480/0x514
+[    2.672244]  __lock_acquire+0x74/0x20ec
+[    2.681113] usbhid: USB HID core driver
+[    2.687450]  lock_acquire+0x218/0x350
+[    2.687456]  _raw_spin_lock+0x58/0x80
+[    2.687464]  tmio_mmc_irq+0x410/0x9ac
+[    2.688556] renesas_sdhi_internal_dmac ee160000.mmc: mmc0 base at 0x0000=
+0000ee160000, max clock rate 200 MHz
+[    2.744936]  __handle_irq_event_percpu+0xbc/0x340
+[    2.749635]  handle_irq_event+0x60/0x100
+[    2.753553]  handle_fasteoi_irq+0xa0/0x1ec
+[    2.757644]  __handle_domain_irq+0x7c/0xdc
+[    2.761736]  efi_header_end+0x4c/0xd0
+[    2.765393]  el1_irq+0xcc/0x180
+[    2.768530]  arch_cpu_idle+0x14/0x2c
+[    2.772100]  default_idle_call+0x58/0xe4
+[    2.776019]  do_idle+0x244/0x2c0
+[    2.779242]  cpu_startup_entry+0x20/0x6c
+[    2.783160]  rest_init+0x164/0x28c
+[    2.786561]  arch_call_rest_init+0xc/0x14
+[    2.790565]  start_kernel+0x4c4/0x4f8
+[    2.794233] Unable to handle kernel NULL pointer dereference at virtual =
+address 0000000000000014
+[    2.803011] Mem abort info:
 
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+=66rom https://lava.ciplatform.org/scheduler/job/1025535
+=66rom
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/536097=
+3735 .
+
+Is there something else missing?
+
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--llYF3KVE0Ra1/NWQ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZTgZawAKCRAw5/Bqldv6
+8lQ8AKCik1QaBTn5m7YuXb/lLY/car/XYwCgjDo/FjpueiEG4fDOuu7j9yjTttI=
+=quL0
+-----END PGP SIGNATURE-----
+
+--llYF3KVE0Ra1/NWQ--
