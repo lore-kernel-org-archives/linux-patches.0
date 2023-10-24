@@ -1,49 +1,63 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F9A219ED
-	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 18:48:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3FA2511B
+	for <patches@lists.linux.dev>; Tue, 24 Oct 2023 18:52:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gj6cLlTP"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6b497c8575aso4779466b3a.1
-        for <patches@lists.linux.dev>; Tue, 24 Oct 2023 11:48:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698173320; x=1698778120; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DFRAuWK32VTGr08EDsBUV/zh4O1jsXdg+48RuQhbEtQ=;
-        b=gj6cLlTP/eIOYtA55uef1GGP7NVjmdtCdBLFBptyEjCAgRMPz9GxoIHSs6JWfsX6gt
-         AAydrsXbto4chpSt+l/6GSVpfXVnV25Q5PmY10qT1Pne1/0VJgkOqKZA/2D5Jw2/kQyO
-         eECUITtquITowKsp67zAEqhs6pBYO74EqV5kzjIZbNSgkif5n1fOF7YVsKf8Fn3My9nb
-         ZyKQKAm6hXrxiBmVnZ8Y+0XIbYWczmD9SwlnmJBe9pfGPL8EevA+ps9P1cENW2pjLiXi
-         Bdzwy1GjizhbWdps3HW5R+btJhF7rUGbgGCiqvJPotRBC34ChTBqjeT6zm6ei8nT181V
-         hVKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698173320; x=1698778120;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DFRAuWK32VTGr08EDsBUV/zh4O1jsXdg+48RuQhbEtQ=;
-        b=rJRYPHYR+4s/8YY3jJRXmsyd7T4G31iEJdngK1/7IXAxDVFtGVNkX/YAc6O1zyKjwq
-         UDP3jH0Lx4YRx07oaTEfFk47O7x2B828zj2YJ4K+PlgwlgVdppjlOBb+kp5101mK4+Dx
-         2IS752Apt6tdvDuk+oD2BsDaGVMULBCu6QfmZV8ZO+8m899hwzX0wGfXIDWKrh9a9aOu
-         rh386alzY55Y2Lm0rojc4JBRe7dT9U00cf137+ZkosY91B6qcAZNRPFRnVR+tKBCdm8n
-         zo3Z+88aF9kT9lXr7lF1g9YsOX/F4/hirlriIC8IDuybjZB4Bwkxlz/jMc15aofGmyGO
-         U+Vw==
-X-Gm-Message-State: AOJu0YzhEIJDr4cL8BZqqg7t0soIInVuHu9+FHhNlY9/DeoBk0n6z9xx
-	cEFlNIb8WUVLXsKiP9EC9ss=
-X-Google-Smtp-Source: AGHT+IGYqlQhFzyXGwIJxZYzz10J32/aPAHvTNFD/mHPn6Cz/ujm1FsJgr5vpKqfqwNFp0i0LrBu2A==
-X-Received: by 2002:a05:6a21:1448:b0:16b:c725:1dc with SMTP id oc8-20020a056a21144800b0016bc72501dcmr3160186pzb.35.1698173319867;
-        Tue, 24 Oct 2023 11:48:39 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id h1-20020a625301000000b006be484e5b9asm8297905pfb.188.2023.10.24.11.48.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Oct 2023 11:48:39 -0700 (PDT)
-Message-ID: <cd0eb23b-6c46-4069-ba29-9820c99b8ca8@gmail.com>
-Date: Tue, 24 Oct 2023 15:48:33 -0300
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="OdrR0WPF";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="Fm0bmcYH"
+ARC-Seal: i=1; a=rsa-sha256; t=1698172477; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=n2YzjC4uF+3fBqX14R4lLu+X+5Efv0qpsvwUCqSQ5Nm7YPUGYLPqUITFSHJW7FkQ0k
+    GuMQ4cKlXw7Zz+L/XZE9UMzJliHoqVj4QJjGdW4RkgWai9kIGmC3fPK00ucOmStJsFQq
+    9rYVU3sqWncPo6HUgsf+lDm1+pgolQxg5jKGqTmnImJ1IGZXLaOMM5bG3sTVeximjqHP
+    ZWcWJtU2vtnF4xKJ5YWkZQlgMO2vuE+ERWBv25yYkh28VOdiDEBaCaaOEsA4a2PcADBd
+    Jd9s7Gvab4Ba/FUzYy7eyZoTjpAlgZ53y7iVo1STMx5sZnhlb0hfiKF5Xikq03AQQaKt
+    1h1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1698172477;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=irgnW47MlS2Q3xCqUkAQJFUtWndQeeYVGNA2HNDBznw=;
+    b=htDyC3LI/QMBTb4e6hNBoO16brfn6hnbgdy27ra5QOQKLonO7pbmSOz20zPuV1Z2Gl
+    kXT6uApptfQyEBJMGTrVeUUcd/iagc7ahZOjTwiQdxQNMsgB1NpybTMPDtlkmEZprm0i
+    7Xd20Ah3fj9UqfYtktdejX6VlmRIi4CTd24uLj19Y193Ds0g+fpAujzxZ6+gS6yn32fK
+    ax3W3QefYRPLWZ6qLP69xyBU/YhpLYPG0BY5sogEWy7DBvAdzrKsRN3rU8cYrHx+BoSn
+    8+TFRw+AmTlgXaapSUGL5DvzzetdJhA/79BTmA2x/fRPkesqewIA1YbUwOL4pc85yUXu
+    ltjA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1698172477;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=irgnW47MlS2Q3xCqUkAQJFUtWndQeeYVGNA2HNDBznw=;
+    b=OdrR0WPFKYTYeB5dz4ycnzOkkUtXvJ9Bcbs7DimiXV6JbHYYWeihh3HghWJmqk7yHo
+    esZay3B1KtEz1x3hmp97mposiQWNRWEuYXEPfI8oYB9R2pmUcgSCw3XrdO0kIn4nuu7o
+    SteVFMngkAe3mqnhs2dM6zTiT2zqlKna35TgA7uos8AZGpw/5RMwMBxrwkhMFRGn/Nx/
+    Tiy98B/B0BiC3dxBBk+OuU9LFpQW1fWn1QPMIRL/2xlRKWg9tXBy0zxj1Mka/Kj0hUDH
+    83JonFJUAUt3zyKQswc8//xsUgvJdFTDRmsU1FROCQBmtbAr+ROEwp2JSumn2CU8Yzgd
+    UxkA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1698172477;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=irgnW47MlS2Q3xCqUkAQJFUtWndQeeYVGNA2HNDBznw=;
+    b=Fm0bmcYHoP7YPaHSMTfdNXh3NY98cRR6cQNaDtkHenvcktzGjtYnnCWq6mnGlb2l0Y
+    KSwpyMwprv7OSAoVV4AQ==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjG14FZxedJy6qgO1qCHSa1GLptZHusl129OHEdFq1USEbMhpqw=="
+Received: from [IPV6:2a00:6020:4a8e:5004::923]
+    by smtp.strato.de (RZmta 49.9.0 AUTH)
+    with ESMTPSA id K48ab2z9OIYaTOF
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Tue, 24 Oct 2023 20:34:36 +0200 (CEST)
+Message-ID: <b4a1bdc2-54f8-428a-a82a-0308a4bc7f92@hartkopp.net>
+Date: Tue, 24 Oct 2023 20:34:30 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,48 +65,117 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] x86/rust: depend on !RETHUNK
+Subject: Re: [PATCH 6.1 043/131] can: isotp: isotp_sendmsg(): fix TX state
+ detection and wait behavior
+To: Lukas Magel <lukas.magel@posteo.net>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: patches@lists.linux.dev, Maxime Jayat <maxime.jayat@mobile-devices.fr>,
+ Marc Kleine-Budde <mkl@pengutronix.de>, Sasha Levin <sashal@kernel.org>,
+ stable@vger.kernel.org, Michal Sojka <michal.sojka@cvut.cz>
+References: <20231016084000.050926073@linuxfoundation.org>
+ <20231016084001.142952122@linuxfoundation.org>
 Content-Language: en-US
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
- Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
- Dave Hansen <dave.hansen@linux.intel.com>,
- Peter Zijlstra <peterz@infradead.org>, Josh Poimboeuf <jpoimboe@kernel.org>,
- Wedson Almeida Filho <wedsonaf@gmail.com>,
- Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
- Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl
- <aliceryhl@google.com>, x86@kernel.org, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20231023174449.251550-1-ojeda@kernel.org>
- <20231023174449.251550-3-ojeda@kernel.org>
- <f53536ca-ec5b-4cdc-a340-e9c739ee30c4@gmail.com>
- <CANiq72nTE_qua9w+EeqiPCukst4876Gi7gHeusFLofYZRoJCDw@mail.gmail.com>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <CANiq72nTE_qua9w+EeqiPCukst4876Gi7gHeusFLofYZRoJCDw@mail.gmail.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <20231016084001.142952122@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 10/23/23 19:15, Miguel Ojeda wrote:
-> On Mon, Oct 23, 2023 at 8:43 PM Martin Rodriguez Reboredo
-> <yakoyoku@gmail.com> wrote:
->>
->> I'll mention that I've tested boots, both in bare metal and QEMU, with
->> `RUST=y` and `RETHUNK=y` and they were alright regardless of `objtool`
->> warnings. Although, if you had an issue in the past then I'd like to know
->> about it.
-> 
-> These are mitigations -- things do functionally work if they are not
-> applied, but you would be vulnerable.
-> 
-> In other words, it is not like e.g. IBT where you could have noticed
-> it breaking by running it normally if you happened to have a supported
-> platform.
-> 
-> Cheers,
-> Miguel
+Hello Lukas, hello Greg,
 
-'Guess you have a point...
+this patch fixed the issue introduced with
 
-Acked-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+79e19fa79cb5 ("can: isotp: isotp_ops: fix poll() to not report false 
+EPOLLOUT events")
+
+for Linux 6.1 and Linux 6.5 which is fine.
+
+Unfortunately the problematic patch has also been applied to 5.15 and 
+5.10 (referencing another upstream commit as it needed a backport).
+
+@Lukas: The 5.x code is much more similar to the latest code, so would 
+it probably fix the issue to remove the "wq_has_sleeper(&so->wait)" 
+condition?
+
+@Greg: I double checked the changes and fixes from the latest 6.6 kernel 
+compared to the 5.10 when isotp.c was introduced in the mainline kernel.
+Would it be ok, to "backport" the latest 6.6 code to the 5.x LTS trees?
+It really is the same isotp code but only some kernel API functions and 
+names have been changed.
+
+Best regards,
+Oliver
+
+On 16.10.23 10:40, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Lukas Magel <lukas.magel@posteo.net>
+> 
+> [ Upstream commit d9c2ba65e651467de739324d978b04ed8729f483 ]
+> 
+> With patch [1], isotp_poll was updated to also queue the poller in the
+> so->wait queue, which is used for send state changes. Since the queue
+> now also contains polling tasks that are not interested in sending, the
+> queue fill state can no longer be used as an indication of send
+> readiness. As a consequence, nonblocking writes can lead to a race and
+> lock-up of the socket if there is a second task polling the socket in
+> parallel.
+> 
+> With this patch, isotp_sendmsg does not consult wq_has_sleepers but
+> instead tries to atomically set so->tx.state and waits on so->wait if it
+> is unable to do so. This behavior is in alignment with isotp_poll, which
+> also checks so->tx.state to determine send readiness.
+> 
+> V2:
+> - Revert direct exit to goto err_event_drop
+> 
+> [1] https://lore.kernel.org/all/20230331125511.372783-1-michal.sojka@cvut.cz
+> 
+> Reported-by: Maxime Jayat <maxime.jayat@mobile-devices.fr>
+> Closes: https://lore.kernel.org/linux-can/11328958-453f-447f-9af8-3b5824dfb041@munic.io/
+> Signed-off-by: Lukas Magel <lukas.magel@posteo.net>
+> Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
+> Fixes: 79e19fa79cb5 ("can: isotp: isotp_ops: fix poll() to not report false EPOLLOUT events")
+> Link: https://github.com/pylessard/python-udsoncan/issues/178#issuecomment-1743786590
+> Link: https://lore.kernel.org/all/20230827092205.7908-1-lukas.magel@posteo.net
+> Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>   net/can/isotp.c | 19 ++++++++-----------
+>   1 file changed, 8 insertions(+), 11 deletions(-)
+> 
+> diff --git a/net/can/isotp.c b/net/can/isotp.c
+> index 8c97f4061ffd7..545889935d39c 100644
+> --- a/net/can/isotp.c
+> +++ b/net/can/isotp.c
+> @@ -925,21 +925,18 @@ static int isotp_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
+>   	if (!so->bound || so->tx.state == ISOTP_SHUTDOWN)
+>   		return -EADDRNOTAVAIL;
+>   
+> -wait_free_buffer:
+> -	/* we do not support multiple buffers - for now */
+> -	if (wq_has_sleeper(&so->wait) && (msg->msg_flags & MSG_DONTWAIT))
+> -		return -EAGAIN;
+> +	while (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
+> +		/* we do not support multiple buffers - for now */
+> +		if (msg->msg_flags & MSG_DONTWAIT)
+> +			return -EAGAIN;
+>   
+> -	/* wait for complete transmission of current pdu */
+> -	err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
+> -	if (err)
+> -		goto err_event_drop;
+> -
+> -	if (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
+>   		if (so->tx.state == ISOTP_SHUTDOWN)
+>   			return -EADDRNOTAVAIL;
+>   
+> -		goto wait_free_buffer;
+> +		/* wait for complete transmission of current pdu */
+> +		err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
+> +		if (err)
+> +			goto err_event_drop;
+>   	}
+>   
+>   	if (!size || size > MAX_MSG_LENGTH) {
