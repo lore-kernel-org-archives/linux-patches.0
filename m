@@ -1,107 +1,163 @@
-Received: from omta34.uswest2.a.cloudfilter.net (omta34.uswest2.a.cloudfilter.net [35.89.44.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD501360
-	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 02:52:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C63847B
+	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 05:16:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="kJ77jxSA"
-Received: from eig-obgw-5009a.ext.cloudfilter.net ([10.0.29.176])
-	by cmsmtp with ESMTPS
-	id v9zOqQUhH8HtevU02qdYUz; Wed, 25 Oct 2023 02:52:02 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id vU01qaEM8I9guvU02qgNqi; Wed, 25 Oct 2023 02:52:02 +0000
-X-Authority-Analysis: v=2.4 cv=Ds1FRUz+ c=1 sm=1 tr=0 ts=653882d2
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=bhdUkHdE2iEA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=_OMBJEvUAhyczVGQSLIA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Vf9QCsmeTEwrLa8hL7Sr2z2WQTo0ojoFeAd5yGbr6AM=; b=kJ77jxSAZiXjyUcDqggTSBGqc6
-	xG4A9loaERFovKoUMNayC/tjVVXgL1GifpLkgv1aOkLKK//J7/J9rTqex5ykNMhH7w/aMA8zCVz0/
-	5n0HjHC7A9QBBizkmF9ot4xahD3iOe5hbrvdw4domTfeHeFFaVI9qFnYh+bpRYL/a7p0a7CHncYgP
-	iLuYAy+9HS5E49wUhnGjYfj8jIczgPiNOIuYxpVfXdhUTYvuZKoBhkpQY/GoWLI3Qht32XQ3VE/nb
-	z77PQhdzm1ujl2znR62RThl+AyAXNak3427zQjBd1jZW7Tp2hJPKE+kAjMrU1Rht7SI+PYrmLLPxO
-	ku5RJJbw==;
-Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:52644 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1qvTzz-001NaP-2B;
-	Tue, 24 Oct 2023 20:51:59 -0600
-Subject: Re: [PATCH 5.15 000/135] 5.15.137-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20231024083327.980887231@linuxfoundation.org>
-In-Reply-To: <20231024083327.980887231@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <e5748b29-d6c5-6c0f-6f83-84835bee31c5@w6rz.net>
-Date: Tue, 24 Oct 2023 19:51:57 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WfDKpks9"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-41cdc669c5eso135201cf.1
+        for <patches@lists.linux.dev>; Tue, 24 Oct 2023 22:16:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1698210991; x=1698815791; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=baZe6Er/ufhd0Yrnb7R1vtwdXlCqo8z/yXvbEj5eRBg=;
+        b=WfDKpks9wM906gPnA72rPJ5/oWKJlkowloN4kokkn4+nUDtLZcn9w/K+CbI0yC3nTk
+         znexBj3UGDvTpdcRlstGs9O72jEboLVoLnCEGQnMfIq/7XZ6zY5FWgLUUc2NYtxnh1L/
+         DTYusfFk1OhTxH63++YBv+J8jLvKX1j7QSOO9bQvgo4gWkqol4Wb4E1+7zRw0mCJczsA
+         t8D967mIzG+ODtzOiEOyIFdOgNInMf6v62enMg5YoHZ0qJjEmpslqSvDKa3PxgnnMUeh
+         BsrAr9sV/xiSenG9rPfxOf8koJmy/wV6EDU+nJSO+dEcriUeJ+aH3RbQfTKkN1DvCwNz
+         5jwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698210991; x=1698815791;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=baZe6Er/ufhd0Yrnb7R1vtwdXlCqo8z/yXvbEj5eRBg=;
+        b=deCrVJvFsPZvDy9IJRD7Pj5dYmN7w9RlEWQKOQIYieSwur1Yj5a0p/4bRnIVw58O4R
+         hexazAGCI88MJHSHvIs9YZ6kx8OBAAnSXO6fXSEFu1gfshkQacAEdK9fEJKy5QBOdDSv
+         jjAMGJtCfkyHlNSz3CY13ys71zXg3epkk4kPfx/pFWO4CXdvMB6Rz0O3a/3XU4WfAbPu
+         Y/hn9aqTqWwvgAsg6puLx0OCdMTMMnc2xxfb+NCtEwZEPMnhIwrMoplc2JXVX1aGwUTt
+         2baRfpRISSZ1ty/2e5XGcsoSDgEbQWaINYg02mJEznGuygvN8rQkIa2KTh7VxwPcrshz
+         0Nfg==
+X-Gm-Message-State: AOJu0YwCNYtaPWPNSQf54W6bCrVpMutelXeuSHeS/jlaIYcler9mvQVh
+	fKZASk4KepdGOAbzOClywFPEwknbMqfD5LeRPNrn3w==
+X-Google-Smtp-Source: AGHT+IEzASoZCc/TRs0iyuhbg3NuUUgSxk35u16AmQj/DeiUVHb7V9/maMfbF9YIF+4At8GWNCRv/or/uAtFz+84vVs=
+X-Received: by 2002:a05:622a:4784:b0:41e:29ad:8b8b with SMTP id
+ do4-20020a05622a478400b0041e29ad8b8bmr142206qtb.10.1698210991149; Tue, 24 Oct
+ 2023 22:16:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 98.207.139.8
-X-Source-L: No
-X-Exim-ID: 1qvTzz-001NaP-2B
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:52644
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfCXBOLDTZdX09tHK+880D1BpEj40IjBehgMmpD6SVFD2o/8unQd9vJo1zOOY3HZiU/8itwom+ClhoGMwlhuIXJr8OfghVNYMV++RTvunpFGkiDw0sMKP
- rqSqPrj9Bz45Ksy3whlMP6YVAC2y+HqPnkuoPADOSeYrgdOedpkKqbYjWkWCbx8fyxzkLuh3T2zx9g==
+References: <20230824170617.074557800@linuxfoundation.org> <20230824170623.040455914@linuxfoundation.org>
+ <2023102428-implicate-predict-0966@gregkh>
+In-Reply-To: <2023102428-implicate-predict-0966@gregkh>
+From: John Sperbeck <jsperbeck@google.com>
+Date: Tue, 24 Oct 2023 22:16:18 -0700
+Message-ID: <CAFNjLiWdyUzFpSSpfoPBjGRB4Eyhr=NH4TG0M0sydHTcUwvpxg@mail.gmail.com>
+Subject: Re: [PATCH 5.10 134/135] objtool/x86: Fixup frame-pointer vs rethunk
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: bp@alien8.de, jpoimboe@kernel.org, patches@lists.linux.dev, 
+	peterz@infradead.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/24/23 1:36 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.137 release.
-> There are 135 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Oct 24, 2023 at 11:12=E2=80=AFAM Greg KH <gregkh@linuxfoundation.or=
+g> wrote:
 >
-> Responses should be made by Thu, 26 Oct 2023 08:32:55 +0000.
-> Anything received after that time might be too late.
+> On Tue, Oct 24, 2023 at 05:47:54PM +0000, John Sperbeck wrote:
+> > > 5.10-stable review patch.  If anyone has any objections, please let m=
+e know.
+> > >
+> > > ------------------
+> > >
+> > > From: Peter Zijlstra <peterz@infradead.org>
+> > >
+> > > commit dbf46008775516f7f25c95b7760041c286299783 upstream.
+> > >
+> > > For stack-validation of a frame-pointer build, objtool validates that
+> > > every CALL instruction is preceded by a frame-setup. The new SRSO
+> > > return thunks violate this with their RSB stuffing trickery.
+> > >
+> > > Extend the __fentry__ exception to also cover the embedded_insn case
+> > > used for this. This cures:
+> > >
+> > >   vmlinux.o: warning: objtool: srso_untrain_ret+0xd: call without fra=
+me pointer save/setup
+> > >
+> > > Fixes: 4ae68b26c3ab ("objtool/x86: Fix SRSO mess")
+> > > Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+> > > Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+> > > Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+> > > Link: https://lore.kernel.org/r/20230816115921.GH980931@hirez.program=
+ming.kicks-ass.net
+> > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > > ---
+> > >  tools/objtool/check.c |   17 +++++++++++------
+> > >  1 file changed, 11 insertions(+), 6 deletions(-)
+> > >
+> > > --- a/tools/objtool/check.c
+> > > +++ b/tools/objtool/check.c
+> > > @@ -2079,12 +2079,17 @@ static int decode_sections(struct objtoo
+> > >     return 0;
+> > >  }
+> > >
+> > > -static bool is_fentry_call(struct instruction *insn)
+> > > +static bool is_special_call(struct instruction *insn)
+> > >  {
+> > > -   if (insn->type =3D=3D INSN_CALL &&
+> > > -       insn->call_dest &&
+> > > -       insn->call_dest->fentry)
+> > > -           return true;
+> > > +   if (insn->type =3D=3D INSN_CALL) {
+> > > +           struct symbol *dest =3D insn->call_dest;
+> > > +
+> > > +           if (!dest)
+> > > +                   return false;
+> > > +
+> > > +           if (dest->fentry)
+> > > +                   return true;
+> > > +   }
+> > >
+> > >     return false;
+> > >  }
+> > > @@ -2958,7 +2963,7 @@ static int validate_branch(struct objtoo
+> > >                     if (ret)
+> > >                             return ret;
+> > >
+> > > -                   if (!no_fp && func && !is_fentry_call(insn) &&
+> > > +                   if (!no_fp && func && !is_special_call(insn) &&
+> > >                         !has_valid_stack_frame(&state)) {
+> > >                             WARN_FUNC("call without frame pointer sav=
+e/setup",
+> > >                                       sec, insn->offset);
+> > >
+> > >
+> > >
+> >
+> > We still see the 'srso_untrain_ret+0xd: call without frame pointer save=
+/setup' warning with v5.15.136.  It looks like the backport might be incomp=
+lete.  Is this additional change needed?
+> >
+> > diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+> > index 36ad0b6b94a9..c3bb96e5bfa6 100644
+> > --- a/tools/objtool/check.c
+> > +++ b/tools/objtool/check.c
+> > @@ -2202,7 +2202,7 @@ static bool is_special_call(struct instruction *i=
+nsn)
+> >               if (!dest)
+> >                       return false;
+> >
+> > -             if (dest->fentry)
+> > +             if (dest->fentry || dest->embedded_insn)
+> >                       return true;
+> >       }
+> >
 >
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.137-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
+> Possibly, I remember this was a pain to backport.  Can you try this and
+> see?  If so, can you send a working and tested patch?
 >
 > thanks,
 >
 > greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
-
-Tested-by: Ron Economos <re@w6rz.net>
-
+I think I can do that.  What's the process for a patch that would only
+go to certain stable branches?  The 6.5 branch is okay.  A fix would
+apply to 6.1, 5.15, and 5.10.  The original partial backport hasn't
+gone into early releases, but I don't know if it will in the future.
