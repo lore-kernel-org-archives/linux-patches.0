@@ -1,98 +1,91 @@
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out199-15.us.a.mail.aliyun.com (out199-15.us.a.mail.aliyun.com [47.90.199.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EAD224FB
-	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 12:47:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TTV7/yg7"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3575826ba20so94715ab.0
-        for <patches@lists.linux.dev>; Wed, 25 Oct 2023 05:47:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1698238025; x=1698842825; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XJxjqRLgdOTokPI2dBdsj6G6P4onvQmQvzd+w/Pmuro=;
-        b=TTV7/yg71Y5PnHPp2au5KantIfCYKvjZ9Bbxo+nCR0yLFf+lxMzlko8Hpo+QgFtxCf
-         k8WhhtvN4O5O3O/RMMFzju4atB9/9vyhHOHnpn/B2k9LF56Z3cUjQzuv1amiID93B5wK
-         Vd9AXzzMyLOSgQA81P2fDygl+QXrHqRrGbosY9MhD3UoVxIjVJ/WV8iLHpfo+K+Q5js7
-         gkR6e61H1zpVBbV/EZoy4ghV5sb0hpTO5knB8o5GxdI5xEkUAjpmDkp1RolqMZ4qdxtM
-         8Pta5jhR3NX8j0LbN4BvDHNqMK3UxFMSiBuJ13FBLiHgNWwUXGT0q2BAmVBNEuoLPKDK
-         7zNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698238025; x=1698842825;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XJxjqRLgdOTokPI2dBdsj6G6P4onvQmQvzd+w/Pmuro=;
-        b=Fsy0PZUyj3hmanD3+naG3k9uHuM0kiB5abjZWFQJ1rkbPdpZxLAeGaFkwTWwYcDmuG
-         UBzRhHYen2mIFIIqx7+YA32mLJmkEY4spkG/oQ/9Wm+3MqE1DjOmkm6F9u0AG8xJlchL
-         L/02lFjCxGoXuhNTv6vlVUo/bRJRQMVk+JmIgj5WxD3UpO1sA0mbrOOlZT5Zc6h67Apk
-         8WBTq02DI/B3YMkFoP34ychtv70tbBllystHNYdtHbjknTIdPCmwJitGPuFE2Ljnd4rp
-         8MpX2SJbSxO2dzHURVY8RG8wbglm2wOmc2KKgUcHCvLo5vA0ISC7y+azRY7mGidT241Z
-         OoGQ==
-X-Gm-Message-State: AOJu0YwdwUpBevFINs2WkCkDpbZn+StkFpZ62yff31nTW7tp4uHnWBdh
-	51/2HYMRu5JV/fjdAoHUMzsZk/ipfdN2YXFgF7R4Ng==
-X-Google-Smtp-Source: AGHT+IFGpxrkAvVp6+0E7/WqwAn933CD5Xj0OXEGjguHzqWRxId8NLFOVha5htsC5vsrifflo+7QyGx0F73yiS9Alzs=
-X-Received: by 2002:a05:6e02:b24:b0:357:cb1a:9621 with SMTP id
- e4-20020a056e020b2400b00357cb1a9621mr218988ilu.10.1698238024990; Wed, 25 Oct
- 2023 05:47:04 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FA38467
+	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 13:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R181e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046059;MF=guangguan.wang@linux.alibaba.com;NM=1;PH=DS;RN=8;SR=0;TI=SMTPD_---0Vuul-qK_1698238834;
+Received: from 30.221.101.240(mailfrom:guangguan.wang@linux.alibaba.com fp:SMTPD_---0Vuul-qK_1698238834)
+          by smtp.aliyun-inc.com;
+          Wed, 25 Oct 2023 21:00:35 +0800
+Message-ID: <ea9b79ce-3618-454c-bea3-abb1c59e2eaf@linux.alibaba.com>
+Date: Wed, 25 Oct 2023 21:00:33 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231024181600.8270-1-tony.luck@intel.com>
-In-Reply-To: <20231024181600.8270-1-tony.luck@intel.com>
-From: Peter Newman <peternewman@google.com>
-Date: Wed, 25 Oct 2023 14:46:53 +0200
-Message-ID: <CALPaoChftF-H6GauKq4-c_qBJP1GJbR3-ByE5krsaQF4y4y9oQ@mail.gmail.com>
-Subject: Re: [PATCH] x86/resctrl: mba_MBps: Fall back to total b/w if local
- b/w unavailable
-To: Tony Luck <tony.luck@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>, Reinette Chatre <reinette.chatre@intel.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org, 
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse <james.morse@arm.com>, 
-	Jamie Iles <quic_jiles@quicinc.com>, Babu Moger <babu.moger@amd.com>, 
-	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org, 
-	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.5 159/241] net/smc: support smc release version
+ negotiation in clc handshake
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ huangjie.albert@bytedance.com
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Tony Lu <tonylu@linux.alibaba.com>, Jan Karcher <jaka@linux.ibm.com>,
+ "David S. Miller" <davem@davemloft.net>, Sasha Levin <sashal@kernel.org>
+References: <20231023104833.832874523@linuxfoundation.org>
+ <20231023104837.750719920@linuxfoundation.org>
+ <80669f40-3bc5-440e-9440-e153d12e37ef@linux.alibaba.com>
+ <2023102521-undated-edition-d501@gregkh>
+From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+In-Reply-To: <2023102521-undated-edition-d501@gregkh>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Tony,
 
-On Tue, Oct 24, 2023 at 8:16=E2=80=AFPM Tony Luck <tony.luck@intel.com> wro=
-te:
-> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
-> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-> @@ -418,6 +418,14 @@ static int __mon_event_count(u32 rmid, struct rmid_r=
-ead *rr)
->         return 0;
->  }
->
-> +static struct mbm_state *get_mbm_data(struct rdt_domain *dom_mbm, int rm=
-id)
-> +{
-> +       if (is_mbm_local_enabled())
-> +               return &dom_mbm->mbm_local[rmid];
-> +
-> +       return &dom_mbm->mbm_total[rmid];
-> +}
 
-That looks very similar to the get_mbm_state() function I added to
-this same file recently:
+On 2023/10/25 18:08, Greg Kroah-Hartman wrote:
+> On Mon, Oct 23, 2023 at 08:05:01PM +0800, Guangguan Wang wrote:
+>> Hi, Greg.
+>>
+>> [PATCH 6.5 159/241] net/smc: support smc release version negotiation in clc handshake
+>> [PATCH 6.5 160/241] net/smc: support smc v2.x features validate
+>>
+>> The above two patches should not backport to stable tree 6.5, which may result in unexpected
+>> fallback if communication between 6.6 and 6.5(with these two patch) via SMC-R v2.1. The above
+>> two patches should not exist individually without the patch 7f0620b9(net/smc: support max
+>> connections per lgr negotiation) and the patch 69b888e3(net/smc: support max links per lgr 
+>> negotiation in clc handshake).
+>>
+>> The patch c68681ae46ea ("net/smc: fix smc clc failed issue when netdevice not in init_net")
+>> does not rely the feature SMC-R v2.1. But I think it may have conflict here when backport
+>> to stable tree 6.5:
+>>
+>> @@ -1201,6 +1201,7 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
+>>  		(struct smc_clc_msg_accept_confirm_v2 *)aclc;
+>>  	struct smc_clc_first_contact_ext *fce =
+>>  		smc_get_clc_first_contact_ext(clc_v2, false);    --conflict here
+>> +	struct net *net = sock_net(&smc->sk);
+>>
+>>
+>> I think it is better to resolve the confilict rather than backport more patches.
+>> The resolution of the conflict should be like:
+>>
+>> @@ -1201,6 +1201,7 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
+>>  		(struct smc_clc_msg_accept_confirm_v2 *)aclc;
+>>   	struct smc_clc_first_contact_ext *fce =
+>> 		(struct smc_clc_first_contact_ext *)
+>> 			(((u8 *)clc_v2) + sizeof(*clc_v2));      --replace the line smc_get_clc_first_contact_ext(clc_v2, false);
+>> +	struct net *net = sock_net(&smc->sk);
+> 
+> Thanks for letting me know.
+> 
+> I've dropped this patch entirely from the 6.5.y queue now (and the
+> follow-on ones.)  Can you send a backported, and tested, set of patches
+> to us for inclusion if you want this fixed up in the 6.5.y tree?  That
+> way we make sure to get this done properly.
+> 
+> thanks,
+> 
+> greg k-h
 
-https://lore.kernel.org/all/20221220164132.443083-2-peternewman%40google.co=
-m
+I think it is more appropriate for Albert Huang, who is the author of the patch("net/smc: fix smc clc failed issue when
+netdevice not in init_net"), to do this because he knows the background of the fix and how to test it.
 
-I think the name you picked is misleadingly general. "local if
-available, otherwise total" seems to be a choice specific to the mbps
-controller. I think these functions should be reconciled a little
-better.
+Thanks,
+Guangguan Wang
 
-Other than that, looks good.
-
-Reviewed-by: Peter Newman <peternewman@google.com>
