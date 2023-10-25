@@ -1,169 +1,182 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2068.outbound.protection.outlook.com [40.107.243.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E09C27EF2
-	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 16:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="p1n/GnLw"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=myQMNlCmJZsf55SnHMWkuvFWU59j+tnbKdfjjg8R1gZbG11vOyjpLZgZj4UGdyTKGIZNxZEQRV9dETGa+qFxkqOHrnMnfqy7wHyVtD9wdWcT4DYTLyTiJBGy8W1e2d3jS6cxyet16umw02gFucGyKfpugknLcN+0+qYZm0smJC2tQXs7ZBaL1nJJq4rr1BJK2CRHfsfk2b5t7KLUwwKWwHWRQ98ARUbWbg8Q20TWE6+umxHqEPgYq9Xff6KzySe9MTsqW66oibyZBPyymm7mOSwjeYw0TF87tEq6qyb7wrBb4MdusXrF1ovcatRW6XhPIaUPgZHA7AtqE2ZL0icolQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gLnW964FuWBfeeXovqMYPYNZvlfbKmGkHp81NxqgNTA=;
- b=Jwu7JcK8SkCnbeJCDeOStuUETamQMcT4+dMkWXwHVKo0t6qqtMN52cA+OSIHd1+MfybTRULDT38ZDveHzVZP2Q6Z4s3ucw0UkHmt9w/VEv2MBrOLr4OJOZnMzZ4QaLnrM67x4jIPrFe/5tD9jE8YMzxJGTfvrXA3QLHYvoFGu/FZy3dLWouLx3uv9vGiPeJPLwt/OdPT5cYejgTOjDsPXECrGWeuyKpFkphPOj2EoTpExiAORnN5zX5yh719xXGN+sY7jttViEHCo7LDQ+e0cgJWYrIT6T2v6LxlwLiNoJM54ZjzIfR8Ogo2otaBHRXaMiHT36tywu2KJ3fhDmFSMw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gLnW964FuWBfeeXovqMYPYNZvlfbKmGkHp81NxqgNTA=;
- b=p1n/GnLwJUwEUVhb8InrAEtEItwypB4xlRdJRUeLyT6epSjCC3L3OKPZt2BKF4A2pvZj39at/1hKVZNJWyAshEhp3Vw+gmrAHKAI8jxy2rlde7nju+oH4xtCHZIkqjCV04CrDybGLlP/VmAYcvxAH0XMXjhyTG6ODzT+Dr3E8uk=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
- by IA1PR12MB6329.namprd12.prod.outlook.com (2603:10b6:208:3e5::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6907.26; Wed, 25 Oct
- 2023 16:01:26 +0000
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::1e4c:5da0:33ed:ff3a]) by MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::1e4c:5da0:33ed:ff3a%7]) with mapi id 15.20.6933.019; Wed, 25 Oct 2023
- 16:01:25 +0000
-Message-ID: <74a372a8-6908-4f9f-a79d-febeb6136379@amd.com>
-Date: Wed, 25 Oct 2023 11:01:22 -0500
-User-Agent: Mozilla Thunderbird
-Reply-To: babu.moger@amd.com
-Subject: Re: [PATCH] x86/resctrl: mba_MBps: Fall back to total b/w if local
- b/w unavailable
-To: "Luck, Tony" <tony.luck@intel.com>, "Moger, Babu" <bmoger@amd.com>,
- "Yu, Fenghua" <fenghua.yu@intel.com>,
- "Chatre, Reinette" <reinette.chatre@intel.com>,
- Peter Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
- Shuah Khan <skhan@linuxfoundation.org>, "x86@kernel.org" <x86@kernel.org>
-Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
- <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
- Randy Dunlap <rdunlap@infradead.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
- "patches@lists.linux.dev" <patches@lists.linux.dev>
-References: <20231024181600.8270-1-tony.luck@intel.com>
- <2504daf3-16fa-9474-e9c5-cd6aa99d4776@amd.com>
- <SJ1PR11MB60838985036B7A3F2296448FFCDFA@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: "Moger, Babu" <babu.moger@amd.com>
-In-Reply-To: <SJ1PR11MB60838985036B7A3F2296448FFCDFA@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SN7PR18CA0016.namprd18.prod.outlook.com
- (2603:10b6:806:f3::20) To MW3PR12MB4553.namprd12.prod.outlook.com
- (2603:10b6:303:2c::19)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05507522C
+	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 17:12:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-1dcfe9cd337so3181085fac.2
+        for <patches@lists.linux.dev>; Wed, 25 Oct 2023 10:12:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698253924; x=1698858724;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=x6UkPVw/GSelcy6GD1xMl2P635kTGDpqZ7QzhPfb3ZQ=;
+        b=XEOfvfxzpUXS7DtZ49XfpR3egusZPQOXUWb5BM08Z3nuP1ozzvrHqhLIErKviyUH9v
+         tbhbOcYq9Nlke/UByHnD5qfAtab7UbG+MvaCZMBskwpCxGXbd+yMPYubFtjAeF5CuROh
+         JFMb6ofqvqrjOV0qKzRQLDs3UrHG8nHQfvc8gOqDwX1gSMBZ7wLzoymt4RmETfsHkbKc
+         vN0I9GZ1VE4Jdm3m5eGX0MZo4/mMuyRL5pRb//6oMlop5xIbJQ7z7qhYagwyA0gG3l8s
+         bAsFjqvBLNvOEvtr3lS/6LcePDFEhU2zdLKhePGIt5R4IFg5yhtR/TcYihYDUlP7zRbK
+         bDtA==
+X-Gm-Message-State: AOJu0YyCLONYo+6f5hw6y9vHCOrpgD+OCMMd0RAAcbk/pk71VZw9mJDN
+	Po4wWjlKAqmEhTg+gU6vs9U73zoPDK56JA==
+X-Google-Smtp-Source: AGHT+IEoYOID5dlVe9JZ/UbBSOgTwYj7o01ITT9IH1jfv9qQoeuisxsZLtPETZUkXS7K/SFqVjhCFQ==
+X-Received: by 2002:a05:6870:1309:b0:1ea:125f:cffa with SMTP id 9-20020a056870130900b001ea125fcffamr12255698oab.34.1698253923732;
+        Wed, 25 Oct 2023 10:12:03 -0700 (PDT)
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com. [209.85.160.52])
+        by smtp.gmail.com with ESMTPSA id cj19-20020a05687c041300b001c02f12abd0sm2673265oac.38.2023.10.25.10.12.03
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Oct 2023 10:12:03 -0700 (PDT)
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-1e9c42fc0c9so3194825fac.1
+        for <patches@lists.linux.dev>; Wed, 25 Oct 2023 10:12:03 -0700 (PDT)
+X-Received: by 2002:a05:6902:1890:b0:d9a:d196:67c1 with SMTP id
+ cj16-20020a056902189000b00d9ad19667c1mr18693936ybb.10.1698253566394; Wed, 25
+ Oct 2023 10:06:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|IA1PR12MB6329:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9c03b596-1264-4d3d-6937-08dbd573a400
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	6iQLPpYax2PQQl6Uf90OrfmcScYsQWeN+wTrsVj3cxPMlI7afCdGkUsYewAC0YJE05bQlXhFaFrqZUW/D2rEVyWNKDXJIo20g1cJo94FS8N1Wc81PGe/vyxrN/FDf1T9gBVPQZpd0CmlR+rbKN6jjFdG8KOhQyEPbYOglX+vSL5I3AKW/fImpkX1HhPkvTlT/Que/Yk+T3qwgvpxXjQGAkE3axwjf3sXhDk0O+UtjyKnBBIbzKnQD2BlVxKxkXaaNPLxNr8uwzTsfY1T/JEdqF3tTKuHxsxjp+uqV8zYSPwT5r3sXgOvzXuGv6ijkfP4TaniOy2X3VlpY4WZs0GiC2iL2UqbfD6LmU6VqO1G//x29X+X2wrcw/Lxgt5fDMeMo7L/qYME8kC4EIf1RWdr7eaDpnSlohXYao6nzjzeRqF8gZSVZrgz0Xw7t4NIGOF2KOJXIc3nwom+CVAKwTycipTtxoO8zZc+rq3GhaKkBpdHdJT4yM18UQHxHjhKzy6o10LAQpKF9B7IQTzxWkgJsKMve45Eu8ndgKA/uz9iQPj2xIPmLZrI2yzRDTKThbk8IDqlIudZymT6DV4mv4xZ42JfieAFUhMiIsKTNq1fz0A635s4Jif2z2YGet23et90uKMBjTI3O6uehC+9z5bv8O3cxt2u79NSnzxQcDtD5rQ=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4553.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(366004)(136003)(396003)(346002)(376002)(230922051799003)(186009)(451199024)(64100799003)(1800799009)(110136005)(6506007)(6666004)(53546011)(8676002)(7416002)(4326008)(41300700001)(478600001)(8936002)(2906002)(5660300002)(3450700001)(6486002)(54906003)(66556008)(6512007)(66476007)(316002)(66946007)(86362001)(31696002)(2616005)(38100700002)(921008)(26005)(31686004)(36756003)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?bzJBcTIrWDBBdkZiUml3NUhLTTFqSmVFOUNQb3pUVTArU1liVnZhd1p3b0s4?=
- =?utf-8?B?S2FPM3ppVTAvM2FDNnlJeHJQbWJ1UlFYSWoxTlVlQUNpSEw4bEtkeUF3aHFq?=
- =?utf-8?B?eXlBa3FhK09wQStVdjRRUUlDMngrZE53R2xFQmJieFZDYUpVQUpmMGJKSFVM?=
- =?utf-8?B?OXhwNkRjclN1V1p6ckFDQmpGYXMrNUZHTjZxaWpMU3FDR2VFN2dOS0tyUDFw?=
- =?utf-8?B?Z29IdWZVSUpjM09DN1FLdHRIcS8vTlg2dnNxRU9mMGF0T2VnWFB3cGZHQnpZ?=
- =?utf-8?B?NU5xTGRteDJYU0hiQVd4QldhaWhQL2g5czdrVUFERCtOdm40dTJVZ2lzL2x6?=
- =?utf-8?B?RjBOTFRjMWVPV21RZlliOExyalgxbFJqNWF4ekVmanFYWC9xMFZibFJ0MCtE?=
- =?utf-8?B?ckxGckhJRGU4QmFvaVpGaXp0dERNbTlGS0UrejFYbXdGNituNmF6NXgwZktj?=
- =?utf-8?B?dHhTRHh1c1Z1Si9mZ2tTaXQwK0E3cWVjbXhpOWx2TUFCN3hwNGZKdXltdDBi?=
- =?utf-8?B?UGp1YnJLb2k1OGNQYlZnTm1TZFR5a1pvUjJrdzMyWlc5MU5LUlVBaG5hSjFm?=
- =?utf-8?B?bFhzRXVZVm93d0pRL1Y4ejZXUFcrYktHZTEvSlRDT1lGVVBDSmZveFkvRU1B?=
- =?utf-8?B?eW1zcHR5R1dIR01oMkZqc1UwcVJZMVBvRCs5cWtSbEFhekd1eTE0ZmZXdHZZ?=
- =?utf-8?B?QjEwRFF4TUU1MXZuVmtqajUyZmkxcHp0R2xmeFVSMVlVWWs1MGdOWTh5NVkx?=
- =?utf-8?B?ZFJMR09vMllTcmkwZHdQRFVDRUVmSHlKQWx6S2p6V0tqWmRBelZ4c1Q4SWJv?=
- =?utf-8?B?TXUwckhmc0F3Rzl6TUd2RGROcnFJZHFNZHJTaUtxZWxGZnBncUJ1cUE0TnBC?=
- =?utf-8?B?VGljbFFFZFZxdFZJYUFCT3VqdWVpRFYyQWVEMWN6Smd5RjFZMlc5RlhjUHd0?=
- =?utf-8?B?Sm5oSkYvWE1VaDA5VlBmSGhjYnRXY0twWXJOYXRXV29NeUNlZ3ovRkZmS1FO?=
- =?utf-8?B?dzJWV1NtSWt6SkpaNTcwNHZraHUwdGs3TDZ6WUZrV2xCeVc2cXhKT3VsV0g4?=
- =?utf-8?B?YlQ3alVvT0c2TjFpQzBzTWxGdDZsNjlML2pLdFp5a2dEK3NRVFRmQkl1UVJE?=
- =?utf-8?B?ZHNoY0JnbFhJQWI1Nm9CUEdwQU9DWk5mNGF2VmZFYlZvSjB2ajNhWDZCWTJw?=
- =?utf-8?B?M3hEMlB1MzYrZ1lhNXpBcGNRYUdkMTRQcDlnVmg4aWgySVp2TnhZM1ExTFdQ?=
- =?utf-8?B?ZUxDdStzQkpGQTNNS0tiYjZrSGFwRExxWUZGNG5nTHR1Q2N2QWx5c2JjMWh0?=
- =?utf-8?B?dk9mbGFFVHUreHlyZmlRZVZNUkZaenVIZFFSbGtZbU1hMGJtRHN0ZUVlTTVO?=
- =?utf-8?B?T1hvQ3NaM1Rkc2pnS0Jma2Npc2p6NXM2ZGI1c0hXVXA3YnkwVE9VTmZNUWxn?=
- =?utf-8?B?cEk0MXlXWjRPRndHRzBBRzVpaitYZ0hCOEdDWEZlU0IreVRHN2JYR0psWlUx?=
- =?utf-8?B?akNTZGhaRXdDdEs5Nk1LVVBhbm9OOXlzRlU1bFp5VGthVDBnajhibXNQUjI4?=
- =?utf-8?B?K0xJalNTaVpXVmVZc1lGenRzL29xcFBMUW1XbG11aXVoNlFJN29LZmFZeit6?=
- =?utf-8?B?VVNUNDZJMnd5N2E1L2xKU2RwcUxVMHZONVdQUEZpczVvQ29pZHdEdWVIeDZM?=
- =?utf-8?B?U1NXRVYzTWhpQTJRRVVTa1N1YUMxQkVhTERZMEpPd05CeHZBdFJ0bjgxUnp3?=
- =?utf-8?B?MWJXWWhCM1ZaN2xzUXBvSEVzZU9PTUFLZlRkREM2bHNRK0NwUWowckxKOWla?=
- =?utf-8?B?N1BhcVd4K0VLV09ndXJXdysvaWFseldRNTZvdkQ4VVV0eElrYzFCNzhrQXRK?=
- =?utf-8?B?eEZBZ01kQm5ITlRHU1hRZDFpNVFoSVRnRGxieHJubDFNZGRlNkFvdEE2UlRO?=
- =?utf-8?B?N0FtNFRycWZjck9xd1cyWnZaQ29ncWJkR2tCWTJnNUdDejZZK21nV1d6Rmd5?=
- =?utf-8?B?ZFBEOGRlZDhkbnAxOE5JV001enkyMWVHTjJXNmdwRHVzcGVIMWF4Y0NoejNq?=
- =?utf-8?B?bjRXenZlUGJyclRxekhxQTN2TVN0MzF3NEtkMkNwMS9TN2ZHR05iTTZGZFJO?=
- =?utf-8?Q?i+t0=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c03b596-1264-4d3d-6937-08dbd573a400
-X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Oct 2023 16:01:25.4018
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /kdkCeFpyI/fVAwCayNOa+cYXVqlUhn2NgIY1mJ4SgHUJNMQLqtYldtJC2czIqun
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6329
+References: <20231009130126.697995596@linuxfoundation.org> <ZSRVgj5AqJbDXqZU@duo.ucw.cz>
+ <ZSRe78MAQwbBdyFP@duo.ucw.cz> <ZSUy+zA0+Chm6dFb@duo.ucw.cz>
+ <ZSU+GHl1q7T/TBp5@duo.ucw.cz> <ZSWg1fv3gOyV5t+h@shikoro> <2023101057-runny-pellet-8952@gregkh>
+ <ZTgZa1ic1iFbdaTM@duo.ucw.cz> <CAMuHMdXQApuOPfU1zNKcHKN5=fCuLBSDiLtF06U7e4Tx0+noyA@mail.gmail.com>
+ <CAMuHMdVrdmBgopnPnJK_ij52wz2WVBdYRHur2KfosFnT945ULw@mail.gmail.com> <CAMuHMdWZvTGrFgx_o3g3usOwkDvD2rw5QH9_ibo=OKdw17sAzg@mail.gmail.com>
+In-Reply-To: <CAMuHMdWZvTGrFgx_o3g3usOwkDvD2rw5QH9_ibo=OKdw17sAzg@mail.gmail.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Wed, 25 Oct 2023 19:05:53 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdXvpiGQ7jqAG69Zo=10wV-E0bioC9AYUHwwhRGmLXygWA@mail.gmail.com>
+Message-ID: <CAMuHMdXvpiGQ7jqAG69Zo=10wV-E0bioC9AYUHwwhRGmLXygWA@mail.gmail.com>
+Subject: Re: renesas_sdhi problems in 5.10-stable was Re: [PATCH 5.10 000/226]
+ 5.10.198-rc1 review
+To: Pavel Machek <pavel@denx.de>, Wolfram Sang <wsa+renesas@sang-engineering.com>, 
+	Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, niklas.soderlund+renesas@ragnatech.se, 
+	yoshihiro.shimoda.uh@renesas.com, biju.das.jz@bp.renesas.com, 
+	Chris.Paterson2@renesas.com, stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, jonathanh@nvidia.com, 
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, 
+	rwarsow@gmx.de, conor@kernel.org, linux-reneas-soc@vger.kernel.org, 
+	Linux MMC List <linux-mmc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Tony,
+On Wed, Oct 25, 2023 at 2:35=E2=80=AFPM Geert Uytterhoeven <geert@linux-m68=
+k.org> wrote:
+> On Wed, Oct 25, 2023 at 12:53=E2=80=AFPM Geert Uytterhoeven
+> <geert@linux-m68k.org> wrote:
+> > On Wed, Oct 25, 2023 at 12:47=E2=80=AFPM Geert Uytterhoeven
+> > <geert@linux-m68k.org> wrote:
+> > > On Tue, Oct 24, 2023 at 9:22=E2=80=AFPM Pavel Machek <pavel@denx.de> =
+wrote:
+> > > > But we still have failures on Renesas with 5.10.199-rc2:
+> > > >
+> > > > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pip=
+elines/1047368849
+> > > >
+> > > > And they still happed during MMC init:
+> > > >
+> > > >     2.638013] renesas_sdhi_internal_dmac ee100000.mmc: Got CD GPIO
+> > > > [    2.638846] INFO: trying to register non-static key.
+> > > > [    2.644192] ledtrig-cpu: registered to indicate activity on CPUs
+> > > > [    2.649066] The code is fine but needs lockdep annotation, or ma=
+ybe
+> > > > [    2.649069] you didn't initialize this object before use?
+> > > > [    2.649071] turning off the locking correctness validator.
+> > > > [    2.649080] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.10.199-r=
+c2-arm64-renesas-ge31b6513c43d #1
+> > > > [    2.649082] Hardware name: HopeRun HiHope RZ/G2M with sub board =
+(DT)
+> > > > [    2.649086] Call trace:
+> > > > [    2.655106] SMCCC: SOC_ID: ARCH_SOC_ID not implemented, skipping=
+ ....
+> > > > [    2.661354]  dump_backtrace+0x0/0x194
+> > > > [    2.661361]  show_stack+0x14/0x20
+> > > > [    2.667430] usbcore: registered new interface driver usbhid
+> > > > [    2.672230]  dump_stack+0xe8/0x130
+> > > > [    2.672238]  register_lock_class+0x480/0x514
+> > > > [    2.672244]  __lock_acquire+0x74/0x20ec
+> > > > [    2.681113] usbhid: USB HID core driver
+> > > > [    2.687450]  lock_acquire+0x218/0x350
+> > > > [    2.687456]  _raw_spin_lock+0x58/0x80
+> > > > [    2.687464]  tmio_mmc_irq+0x410/0x9ac
+> > > > [    2.688556] renesas_sdhi_internal_dmac ee160000.mmc: mmc0 base a=
+t 0x00000000ee160000, max clock rate 200 MHz
+> > > > [    2.744936]  __handle_irq_event_percpu+0xbc/0x340
+> > > > [    2.749635]  handle_irq_event+0x60/0x100
+> > > > [    2.753553]  handle_fasteoi_irq+0xa0/0x1ec
+> > > > [    2.757644]  __handle_domain_irq+0x7c/0xdc
+> > > > [    2.761736]  efi_header_end+0x4c/0xd0
+> > > > [    2.765393]  el1_irq+0xcc/0x180
+> > > > [    2.768530]  arch_cpu_idle+0x14/0x2c
+> > > > [    2.772100]  default_idle_call+0x58/0xe4
+> > > > [    2.776019]  do_idle+0x244/0x2c0
+> > > > [    2.779242]  cpu_startup_entry+0x20/0x6c
+> > > > [    2.783160]  rest_init+0x164/0x28c
+> > > > [    2.786561]  arch_call_rest_init+0xc/0x14
+> > > > [    2.790565]  start_kernel+0x4c4/0x4f8
+> > > > [    2.794233] Unable to handle kernel NULL pointer dereference at =
+virtual address 0000000000000014
+> > > > [    2.803011] Mem abort info:
+> > > >
+> > > > from https://lava.ciplatform.org/scheduler/job/1025535
+> > > > from
+> > > > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/job=
+s/5360973735 .
+> > > >
+> > > > Is there something else missing?
+> > >
+> > > I don't have a HopeRun HiHope RZ/G2M, but both v5.10.198 and v5.10.19=
+9
+> > > seem to work fine on Salvator-XS with R-Car H3 ES2.0 and Salvator-X
+> > > with R-Car M3-W ES1.0, using a config based on latest renesas_defconf=
+ig.
+> >
+> > Sorry, I looked at the wrong log on R-Car M3-W.
+> > I do see the issue with v5.10.198, but not with v5.10.199.
+>
+> It seems to be an intermittent issue. Investigating...
 
-On 10/24/23 18:43, Luck, Tony wrote:
->> Is this customer requirement ?
-> 
-> Any customer using the mba_MBps feedback mount option will need this
-> on platforms that don't support local bandwidth measurement.
-> 
->> What do you mean by " If local bandwidth measurement is not available" ?
->> Is the hardware supports only total bandwidth and not local?
-> 
-> There's going to be an Intel CPU that will only provide "total" bandwidth.
+After spending too much time on bisecting, the bad guy turns out to
+be commit 6d3745bbc3341d3b ("mmc: renesas_sdhi: register irqs before
+registering controller") in v5.10.198.
 
-ok.
+Adding debug information shows the lock is mmc_host.lock.
 
-Why dont you use get_mbm_state which is already available instead of
-writing another function(get_mbm_data).
+It is definitely initialized:
 
-You can pass evtid, rmid, domain information. Decide the evtid based on
-what is available. I think that will make code simpler.
+    renesas_sdhi_probe()
+    {
+        ...
+        tmio_mmc_host_alloc()
+            mmc_alloc_host
+                spin_lock_init(&host->lock);
+        ...
+        devm_request_irq()
+        -> tmio_mmc_irq
+            tmio_mmc_cmd_irq()
+                spin_lock(&host->lock);
+        ...
+    }
 
-> 
-> The CPUID enumeration in (CPUID.(EAX=0FH, ECX=1H) ).EDX{2}
-> will be "0" indicating that the local mbm monitor event is not supported.
-> 
->> It can get real ugly if we try to handle one special case.
-> 
-> Hard to predict the future (I didn't see this coming, or I'd have had Vikas
-> implement the fallback in the original mba_MBps code). But I don't believe
-> this will be a one-off special case.
-> 
-> I'm also wondering why this feedback loop picked "local" rather than "total".
-> I dug into the e-mail archives, and I don't see any discussion. There's just
-> an RFC series, and then the v2 series was applied with a few small suggestions
-> from Thomas to make things cleaner..
+That leaves us with a missing lockdep annotation?
 
-May be MSR write which feedback loop does only has local effect. This will
-be interesting to know.
--- 
-Thanks
-Babu Moger
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
