@@ -1,178 +1,206 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2046.outbound.protection.outlook.com [40.107.93.46])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E63533981
-	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 23:41:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7671933E3
+	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 23:50:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="4NF4Xkog"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RoOCEq9u6TdixIhbeYWSl5+vsK6FkgRCozAXYujxUcS9deKEUSYJK8GbWewxwiKc8ZqWjzOBnqw20hc/jz/AgXkGRnC+qGXdjkpD4lWGjyUK85Ja3XjUuONRG60NrTEr1AzLHp7oXCYO0lo35PI+TEAOWCoxwRuW0urwmDbLKeAMulGhoczQ16R4MfgDj+etgo/0imsFtsQ8PXERWjdiqMPm6tKk4s2+/aimR5OIGMiyPAoqHgk8EJmIG13/o7tumJrrAuPxtVYkL5I0hDKCp/h8NSngVSjLSHHTE5AzLPdbLXWF/9HNxSMDiSX6VoNkr78yfKPNRe9n7lpqrX7HmQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zfI3Is2whQXCSWrqhZp0+ykGnrwvaG6n7aEyPh0ljGQ=;
- b=acA3HQdXoQhOn8FSYnnxQzyrq70KmVJfznh2DrQ7fDtOi+FXnKkn07fvmb2UuL8CjW07ZKgXdRicuEWW62viFvoZxCiH3WFJEypnG7dcTxpPvpliISRDiUzVkskpkojlTcIGWNCdp1e7MiVg87ZYIHqtcng12xEz097mt88UQ2asCjkQyYCOAcI0dSF8UUhvPS4wsbqRoWUagtjaxCZ4b+gJn4K5iq48OHUWHVIMu/azpLxc2RwRvOJEnLOPiB+WszedfWJUqLp1MzDW0VDN7sy4Dedo6hzSaDSLwK9RtmMKqG1owrqD6DoIMlfd2gnw2xt0kPX55FieBDwVJhl3yg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zfI3Is2whQXCSWrqhZp0+ykGnrwvaG6n7aEyPh0ljGQ=;
- b=4NF4XkogCfBQzu43MetFUrtD0B59IYeax0ZxDtN9EMoINIYEU+4bjR76cdLy8iQewlN2qwq4rcFewd4RHPw+dkZEwwSz9CGcsB8izqi9MSvrRYbeZRvdyXZOc5vEctcEfPqadgbhhHKNZzNwEwuIbswjxC3ZW4uFs5duUgmCdMY=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
- by MW4PR12MB6778.namprd12.prod.outlook.com (2603:10b6:303:1e8::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6907.33; Wed, 25 Oct
- 2023 23:41:54 +0000
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::1e4c:5da0:33ed:ff3a]) by MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::1e4c:5da0:33ed:ff3a%7]) with mapi id 15.20.6933.019; Wed, 25 Oct 2023
- 23:41:54 +0000
-Message-ID: <88541b20-6745-28e3-6ba8-803a71554d6f@amd.com>
-Date: Wed, 25 Oct 2023 18:41:49 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Reply-To: babu.moger@amd.com
-Subject: Re: [PATCH] x86/resctrl: mba_MBps: Fall back to total b/w if local
- b/w unavailable
-Content-Language: en-US
-To: Tony Luck <tony.luck@intel.com>, "Moger, Babu" <babu.moger@amd.com>
-Cc: Peter Newman <peternewman@google.com>, Fenghua Yu <fenghua.yu@intel.com>,
- Reinette Chatre <reinette.chatre@intel.com>, Jonathan Corbet
- <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
- Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse <james.morse@arm.com>,
- Jamie Iles <quic_jiles@quicinc.com>, Randy Dunlap <rdunlap@infradead.org>,
- linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- patches@lists.linux.dev
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XG82FvZV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1698277856; x=1729813856;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=iJNPjfBkpOrsDLWbkVxuMpn1IMLnek67+59Y0vzWlQs=;
+  b=XG82FvZVSGLS1AoHw2cyFylGHthz+JafODtbHYeVOYOSWOS+4ZPPV+YX
+   Hpk1VWpWNuDVn951uK+W2kNcsq5VwZtbAjzAVctNdz60fpxUbEyjPSMhB
+   WG/fQGU+luKj8CyJkjCa5tHHoieiL7bNBzRGiADi9beBwGrzivQ7RlXtq
+   paJ45tgsAwnMO1hvlOBRhFbiDNSFDgxWATTyKXagt+Z6wBiJSTqwJCDEg
+   YVPe8kj1ZElNEHyb+OUqhwStv7zHDO0ve5Sqr67VJf7CSRpbYPz0BgY1e
+   HhXDcmJ0Q+YnKUShumjSQTOwMF/IIswZEIDyJqtvai30rHuWTspfBqziA
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10874"; a="386301695"
+X-IronPort-AV: E=Sophos;i="6.03,252,1694761200"; 
+   d="scan'208";a="386301695"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2023 16:50:55 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10874"; a="1090395752"
+X-IronPort-AV: E=Sophos;i="6.03,252,1694761200"; 
+   d="scan'208";a="1090395752"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2023 16:50:54 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	x86@kernel.org
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v2] x86/resctrl: mba_MBps: Fall back to total b/w if local b/w unavailable
+Date: Wed, 25 Oct 2023 16:50:46 -0700
+Message-ID: <20231025235046.12940-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20231024181600.8270-1-tony.luck@intel.com>
 References: <20231024181600.8270-1-tony.luck@intel.com>
- <CALPaoChftF-H6GauKq4-c_qBJP1GJbR3-ByE5krsaQF4y4y9oQ@mail.gmail.com>
- <ZTluypa9bCWv4k2n@agluck-desk3>
- <e4994218-a7a2-4505-868e-a5c825ca4db0@amd.com>
- <b8ea0a74-347d-475f-a36d-8944ced16951@amd.com>
- <ZTmAFVuYlMuCbQHz@agluck-desk3>
-From: "Moger, Babu" <bmoger@amd.com>
-In-Reply-To: <ZTmAFVuYlMuCbQHz@agluck-desk3>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BN0PR03CA0016.namprd03.prod.outlook.com
- (2603:10b6:408:e6::21) To MW3PR12MB4553.namprd12.prod.outlook.com
- (2603:10b6:303:2c::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|MW4PR12MB6778:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2309f36c-b695-4445-efca-08dbd5b3f7d2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	6NLrLrmckvnceejGg/28CUajrNKh0tiX3KgaCxmtjJeJS2yEjUGZAltrCwHra3KuD+z5DrxxSDginBziFy0DduCN9OW1x7UznNwi8Gb+QaxiYITU7piCRVrAvauojyfBZWS2VkXikCY4fAJc5yHEqyTIC3cJEjX8ec/SNiyObub3rVEqPg9iF72VyabxqLQwHf9PtNw4uA4y17NXVBa46gRWozbUMrOdagMjUAHIXRpZQWierPMrkp1wmeHlssZREXMcpby9GMO0oX1OCjODLISfesOurYa9j4je/VD11XOA5GltYwxhMwakG5SKjHCevIQX1q2tORVXoOzBHIvhUehp+8Dd3ZU33AbGEz2m9pGqVXwt2IVvu5hM0xsm8iibjntRXtqFJ/OSs34Mm+/et1khPOnibiH65x9STwc+i6vo86mFzZFpbJBK3JWXbB5c2+qSLGl1oJFOBsoe4ksrQuqCBZepJ06HE9CTcM9vqWGByXGDmTCLpnZleOwxPioHQXnOBF+nP87gvTP8ZekhL2LvSmdHwOb1dB7AgqtsnqAaSwdOrsuRpsQW1IJANwgocmgbEr8VupNg38g1u1+uzrlmlqPyHdVe30Qd3VqubyozFuGxho2WpV7nvviV0T4wb7LVRnwQ4MbGXVufGfWlbw==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4553.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(346002)(366004)(376002)(39860400002)(396003)(230922051799003)(186009)(1800799009)(64100799003)(451199024)(26005)(31686004)(31696002)(38100700002)(2906002)(7416002)(5660300002)(36756003)(4326008)(8936002)(8676002)(6636002)(110136005)(6486002)(2616005)(54906003)(41300700001)(66476007)(66556008)(316002)(478600001)(66946007)(6506007)(83380400001)(6512007)(53546011)(6666004)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?dUpMNU5sSEVlQXlCT0xUc29Ic1RRSzRKVEE2bU1Ya0Vpdm9paXhoWjRNYW1y?=
- =?utf-8?B?a0VqbndvSDY5L2t3aGYyTHB4N1plOTZkeHljOTlLSkkwV3d2UFIzNEtHTXZa?=
- =?utf-8?B?d2xJNXFCamUxb0NrU2U1YnpqMGJPcmhlcGpEcTBudkZRVTQ5RGdOTW53cDVD?=
- =?utf-8?B?d295YmlyV1BsYmI2b2JBd2dRdjlXZjNxRjMrNndxMGFsQ3U1RGE5SUw3Umly?=
- =?utf-8?B?bjRqVmllalA4UWFrRy9YRmk0RVYyNmc4QTBVQjdRYjU1U25ZeU1FUGVEL25r?=
- =?utf-8?B?NWdaMGxHNjg5WEZkbVdJTUFRajZiTTNGa1JuMHJEQnZWQnNkRnZ0Mi8ramZH?=
- =?utf-8?B?dW0wY21iU0M4c2crV0EvUDlCU0VndlMyTlV5TGszSVJxZ3c4UXRIRWtpTjFx?=
- =?utf-8?B?bmI2YVQzWnpnYXM0VnFFT05ETWZCYis3cUZXWHV6WFB4b3hsWGlsTFBkdTJ1?=
- =?utf-8?B?ZzRWRkF5b1JJa2M0dzRaMkZrOTRBekpCN3MyekZJbUhoSENWR2k0SHN0YW1m?=
- =?utf-8?B?blVvVXBGYk9jSnRpelRLcXJNVjYrN20weUZnbEw2SWpvbFhsajNiYUlxT0hU?=
- =?utf-8?B?MUJQbVo2Vk84RlgvMzNTbFNUNDhsZlE5clc5WWFyeHpzdUw2Nk03MzRCL05J?=
- =?utf-8?B?dFpGbG9UYXkxTW5nRFF4NVBHNlBNbmsvNGFSK2tKdHFtSk9EbS9MbzVhbU9o?=
- =?utf-8?B?am9sUkgrKy9UaDJwd1Jnbk5kSnBlemIyWSthSTY2aExMMm5DRFpJN0U4R0ZZ?=
- =?utf-8?B?Z3gzanVoQllDb00ycDBENURNakMvaHVRN3VsbjZvYzlVK0J0di9Vcmx5TzFL?=
- =?utf-8?B?YlZJSWpTNTR6dkJuY0RYNWxmOXc3ZVE3eDQyOXZrSUZRNGJMd241U1lVbjhq?=
- =?utf-8?B?NkRjM3FBVXB1MmxuV2pMV0N3US9HSFYzOXdRR1BmTGFMUUwrNTRpUytoL0ho?=
- =?utf-8?B?VllsY2V0R0oxOXN1Q2hJaVhkZWZQQWV4YTNiQVdIWXdBUU5UODJPd1VTNDBn?=
- =?utf-8?B?RkIwQnQ2cnNIRG5Nd2hyTWxkaHIzZmNrODVVNmU1Z0xDTDdPTWxZdFkyUUlk?=
- =?utf-8?B?bmxrMGdzZFA5MEFiejB4MCt6V2JOYVZrVnA4cm5VTVg0ODc1bzJYLzlaRGZ5?=
- =?utf-8?B?Rml5aDQ4ZU9NV1FIcm5kejhMR2xGcit5RGozTjZvcTc2TE1Mb0tzS2VHQ1ZY?=
- =?utf-8?B?cC9XZUMxekZ1c2Q4SXFvU0lKSm03a0RpV0NzTVlpZzE3MW9zNFYrUTB5dHpJ?=
- =?utf-8?B?L1ZJRDZkeFhGaGhIMW5WNE1UcXM3c2Y2eTJ6d0pZTS84UXhBZzcyb0xZT3l5?=
- =?utf-8?B?Yk1qTWh2Z3R6NEN6NDRyaFRrUnhEUkxWaFFBVVUyeTQ0UmFsZE9EMU11WFZq?=
- =?utf-8?B?MnJ1RzhIdG9YY1R2bjFqZEZVbTdOL05ucGVGV2ZZZmwyd0NDTG9XMERiVmsr?=
- =?utf-8?B?QlgxenB2ZkVDVXhSRVEvbkhWdi9QVmt5MGFYcTVtRTI2L3RTZnMwa2ViNXV6?=
- =?utf-8?B?bXArZ2VVUmJCTjVGeW4zTnFUaHppU3BTejlYYkIxTkgxS0FzTUJaMzRHS2dR?=
- =?utf-8?B?VXNaNkpKQWNmVGo4TkMzZURZTGFNM2FNbGRIbmxvekhBWHc0bVo3N3dZVWlL?=
- =?utf-8?B?bkZpK1lXUUZyTFlsajVDTXFxbzY4Y3ZNNE5CdDlWN3ROcnZkOUhBNmp4MHBM?=
- =?utf-8?B?VzdrelEvTEJNb1lsVnRSWGpWM2VqT0ZjZUlmTG1tbWY5Y0FaNE5RQVMzY3hn?=
- =?utf-8?B?ZE9NUCtYcDg0VE5CZTlaWGtjN2xQTlJXTUYzNUZObC9pRFBYTGw2VEd2cFp0?=
- =?utf-8?B?SjM2SnR5Z2ExRGEvaVU0ckVFQXhKdW1FV2Jya3NVTHhEUUpGUnJicm1mL0Jv?=
- =?utf-8?B?NEdlVXlzODQyR0JrQm9hNUlkVExnc24rcVNKZUJ6R1FqbVNRS3RCL0cxckMx?=
- =?utf-8?B?bXBzYU80Y2oxODNKbVp0ZUQrWG9LN3cvVEVvRjIvN1hnMVdRL0VZTkRscjN2?=
- =?utf-8?B?cE9aYkxLSnRUVDEvcEVNTFNGaW53aDFFbUJNWENzUjFvMjBkc1QxYlN3MmhF?=
- =?utf-8?B?UjU2OEkxTUlRQnE0dTZhazU1RkdZbC9qeTd1RFhad0ZCU3dZWjVJMVdYYmN4?=
- =?utf-8?Q?4ezw=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2309f36c-b695-4445-efca-08dbd5b3f7d2
-X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Oct 2023 23:41:53.8498
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gtwjWc83VyDs6/MjNqRD/4JvkLHnAw4znXbuW69xdqyEu9FwLZfZ6Dh8cXdx9RPE
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6778
+Content-Transfer-Encoding: 8bit
 
-Hi Tony,
+On Intel the various resource director technology (RDT) features are all
+orthogonal and independently enumerated. Thus it is possible to have
+a system that  provides "total" memory bandwidth measurements without
+providing "local" bandwidth measurements.
 
-On 10/25/2023 3:52 PM, Tony Luck wrote:
-> On Wed, Oct 25, 2023 at 03:42:14PM -0500, Moger, Babu wrote:
->> I meant, I was thinking bit different.
->>
->>> You need these changes in only two functions, mbm_bw_count and
->>> update_mba_bw. You decide which event you want to use based on availability,
->>>
->>> Something like this. I updated mbm_bw_count.
->>>
->>> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c
->>> b/arch/x86/kernel/cpu/resctrl/monitor.c
->>> index 0ad23475fe16..302993e4fbc3 100644
->>> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
->>> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
->>> @@ -436,8 +436,16 @@ static int __mon_event_count(u32 rmid, struct
->>> rmid_read *rr)
->>>    */
->>>   static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
->>>   {
->>> -       struct mbm_state *m = &rr->d->mbm_local[rmid];
->>>          u64 cur_bw, bytes, cur_bytes;
->>> +       struct mbm_state *m;
->>> +       int evtid;
->>> +
->>> +       if (is_mbm_local_enabled())
->>> +               evtid = QOS_L3_MBM_LOCAL_EVENT_ID;
->>> +       else
->>> +               evtid = QOS_L3_MBM_TOTAL_EVENT_ID;
->>> +
->>> +       m = get_mbm_state(rr->d, rmid, evtid);
-> Ok. Yes. That seems simpler.
->
-> Maybe I should just set a global "mbm_evtid" at mount
+If local bandwidth measurement is not available, do not give up on
+providing the "mba_MBps" feedback option completely, make the code fall
+back to using total bandwidth.
 
-Lets not make it global yet. This is only affecting couple of functions 
-when mba_MPps is enabled.
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
 
-> time. No need to check every time to see if is_mbm_local_enabled()
-> somehow changed and local b/w measurements were suddenly
-> available!
+Changes since v1:
 
-What changed suddenly? Can you please elaborate.
++ Both Peter and Babu didn't like my get_mbm_data() function. Peter
+  thought it just needed a more descriptive name. But Babu explained
+  how to get rid of it completley. I went with a modified version of
+  Babu's suggestion (saving the event to use for mba_MBps during
+  initialization, instead of checking every time).
 
-Thanks
+ arch/x86/kernel/cpu/resctrl/monitor.c  | 41 ++++++++++++++++----------
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c |  2 +-
+ 2 files changed, 27 insertions(+), 16 deletions(-)
 
-Babu
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index f136ac046851..6c3536af024e 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -73,6 +73,13 @@ unsigned int resctrl_rmid_realloc_threshold;
+  */
+ unsigned int resctrl_rmid_realloc_limit;
+ 
++/*
++ * MBM monitor event to use for the mba_MBps mount option.
++ * Preference is QOS_L3_MBM_LOCAL_EVENT_ID, but fall
++ * back to QOS_L3_MBM_TOTAL_EVENT_ID.
++ */
++static enum resctrl_event_id mba_mbps_evt_id;
++
+ #define CF(cf)	((unsigned long)(1048576 * (cf) + 0.5))
+ 
+ /*
+@@ -431,7 +438,7 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
+  */
+ static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
+ {
+-	struct mbm_state *m = &rr->d->mbm_local[rmid];
++	struct mbm_state *m = get_mbm_state(rr->d, rmid, mba_mbps_evt_id);
+ 	u64 cur_bw, bytes, cur_bytes;
+ 
+ 	cur_bytes = rr->val;
+@@ -526,14 +533,14 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+ 	struct list_head *head;
+ 	struct rdtgroup *entry;
+ 
+-	if (!is_mbm_local_enabled())
++	if (!is_mbm_enabled())
+ 		return;
+ 
+ 	r_mba = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
+ 
+ 	closid = rgrp->closid;
+ 	rmid = rgrp->mon.rmid;
+-	pmbm_data = &dom_mbm->mbm_local[rmid];
++	pmbm_data = get_mbm_state(dom_mbm, rmid, mba_mbps_evt_id);
+ 
+ 	dom_mba = get_domain_from_cpu(smp_processor_id(), r_mba);
+ 	if (!dom_mba) {
+@@ -553,7 +560,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+ 	 */
+ 	head = &rgrp->mon.crdtgrp_list;
+ 	list_for_each_entry(entry, head, mon.crdtgrp_list) {
+-		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
++		cmbm_data = get_mbm_state(dom_mbm, entry->mon.rmid, mba_mbps_evt_id);
+ 		cur_bw += cmbm_data->prev_bw;
+ 		delta_bw += cmbm_data->delta_bw;
+ 	}
+@@ -595,7 +602,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+ 	 */
+ 	pmbm_data->delta_comp = true;
+ 	list_for_each_entry(entry, head, mon.crdtgrp_list) {
+-		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
++		cmbm_data = get_mbm_state(dom_mbm, entry->mon.rmid, mba_mbps_evt_id);
+ 		cmbm_data->delta_comp = true;
+ 	}
+ }
+@@ -621,15 +628,15 @@ static void mbm_update(struct rdt_resource *r, struct rdt_domain *d, int rmid)
+ 		rr.evtid = QOS_L3_MBM_LOCAL_EVENT_ID;
+ 		rr.val = 0;
+ 		__mon_event_count(rmid, &rr);
+-
+-		/*
+-		 * Call the MBA software controller only for the
+-		 * control groups and when user has enabled
+-		 * the software controller explicitly.
+-		 */
+-		if (is_mba_sc(NULL))
+-			mbm_bw_count(rmid, &rr);
+ 	}
++
++	/*
++	 * Call the MBA software controller only for the
++	 * control groups and when user has enabled
++	 * the software controller explicitly.
++	 */
++	if (is_mba_sc(NULL))
++		mbm_bw_count(rmid, &rr);
+ }
+ 
+ /*
+@@ -769,10 +776,14 @@ static void l3_mon_evt_init(struct rdt_resource *r)
+ 
+ 	if (is_llc_occupancy_enabled())
+ 		list_add_tail(&llc_occupancy_event.list, &r->evt_list);
+-	if (is_mbm_total_enabled())
++	if (is_mbm_total_enabled()) {
+ 		list_add_tail(&mbm_total_event.list, &r->evt_list);
+-	if (is_mbm_local_enabled())
++		mba_mbps_evt_id = QOS_L3_MBM_TOTAL_EVENT_ID;
++	}
++	if (is_mbm_local_enabled()) {
+ 		list_add_tail(&mbm_local_event.list, &r->evt_list);
++		mba_mbps_evt_id = QOS_L3_MBM_LOCAL_EVENT_ID;
++	}
+ }
+ 
+ int __init rdt_get_mon_l3_config(struct rdt_resource *r)
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index 69a1de92384a..0c4f8a1b8df0 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -2294,7 +2294,7 @@ static bool supports_mba_mbps(void)
+ {
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
+ 
+-	return (is_mbm_local_enabled() &&
++	return (is_mbm_enabled() &&
+ 		r->alloc_capable && is_mba_linear());
+ }
+ 
+-- 
+2.41.0
 
