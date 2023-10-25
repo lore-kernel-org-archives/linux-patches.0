@@ -1,156 +1,98 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B6927EE2
-	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 12:35:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-6ce2bcb131fso3649535a34.1
-        for <patches@lists.linux.dev>; Wed, 25 Oct 2023 05:35:17 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EAD224FB
+	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 12:47:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TTV7/yg7"
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3575826ba20so94715ab.0
+        for <patches@lists.linux.dev>; Wed, 25 Oct 2023 05:47:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1698238025; x=1698842825; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XJxjqRLgdOTokPI2dBdsj6G6P4onvQmQvzd+w/Pmuro=;
+        b=TTV7/yg71Y5PnHPp2au5KantIfCYKvjZ9Bbxo+nCR0yLFf+lxMzlko8Hpo+QgFtxCf
+         k8WhhtvN4O5O3O/RMMFzju4atB9/9vyhHOHnpn/B2k9LF56Z3cUjQzuv1amiID93B5wK
+         Vd9AXzzMyLOSgQA81P2fDygl+QXrHqRrGbosY9MhD3UoVxIjVJ/WV8iLHpfo+K+Q5js7
+         gkR6e61H1zpVBbV/EZoy4ghV5sb0hpTO5knB8o5GxdI5xEkUAjpmDkp1RolqMZ4qdxtM
+         8Pta5jhR3NX8j0LbN4BvDHNqMK3UxFMSiBuJ13FBLiHgNWwUXGT0q2BAmVBNEuoLPKDK
+         7zNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698237316; x=1698842116;
+        d=1e100.net; s=20230601; t=1698238025; x=1698842825;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3EHsQZuTAFlWrpT/TkHiVwF2+NYzk80BIkUmSEmXuGE=;
-        b=hKdWUM04WKe9hK5cuKQEq7tavN6NZt0etr/XST2nH3Ip2DtURBD1+/kuvybzI1MYAd
-         MRh5QmpLujYGIKJTcx+a5vVFEBiraJH8Zb3HpvY4GV2fpvpvW83Uf8Et+H1txJMr9xO9
-         69UZVK/bKDLLesFWm2iTvpDg2gPGod63vInA16OHwIPnCVr0PjjQC4w05tV996vGO1cj
-         sYDdcead1fieHV+fz0ag2xNdrcFMP+l2Ncyw0ydLggMR2fl4HmJAsknNiT8LX9Vszy7G
-         Trvg1fTlFoTh8qo1pMdgZPqQJIlYd6bVqUdspMLZU61/DwGLCSSQkdbiMFh+c3MIf/J8
-         v4RA==
-X-Gm-Message-State: AOJu0YwDCyclxpoSb4gKgwCWYGRCqMYBrIXsG18l6eJw5N5DqSt+532Q
-	mxFEAB1+oAVI6FmtEKjWSQ4BoDDXV2N96Q==
-X-Google-Smtp-Source: AGHT+IEi61TJcbTJ6hDhzzWGKps4jnGPwv/io6TPweR4h0HAEk/HWcr+xwlszd0jfjNs4301QZeVSg==
-X-Received: by 2002:a05:6830:919:b0:6aa:ecb5:f186 with SMTP id v25-20020a056830091900b006aaecb5f186mr16167516ott.7.1698237316552;
-        Wed, 25 Oct 2023 05:35:16 -0700 (PDT)
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com. [209.85.210.47])
-        by smtp.gmail.com with ESMTPSA id h8-20020a056830164800b006ce32816a35sm2258699otr.81.2023.10.25.05.35.16
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 05:35:16 -0700 (PDT)
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6ce2bcb131fso3649523a34.1
-        for <patches@lists.linux.dev>; Wed, 25 Oct 2023 05:35:16 -0700 (PDT)
-X-Received: by 2002:a05:6830:10c2:b0:6cd:a989:c7ea with SMTP id
- z2-20020a05683010c200b006cda989c7eamr16906112oto.16.1698237315941; Wed, 25
- Oct 2023 05:35:15 -0700 (PDT)
+        bh=XJxjqRLgdOTokPI2dBdsj6G6P4onvQmQvzd+w/Pmuro=;
+        b=Fsy0PZUyj3hmanD3+naG3k9uHuM0kiB5abjZWFQJ1rkbPdpZxLAeGaFkwTWwYcDmuG
+         UBzRhHYen2mIFIIqx7+YA32mLJmkEY4spkG/oQ/9Wm+3MqE1DjOmkm6F9u0AG8xJlchL
+         L/02lFjCxGoXuhNTv6vlVUo/bRJRQMVk+JmIgj5WxD3UpO1sA0mbrOOlZT5Zc6h67Apk
+         8WBTq02DI/B3YMkFoP34ychtv70tbBllystHNYdtHbjknTIdPCmwJitGPuFE2Ljnd4rp
+         8MpX2SJbSxO2dzHURVY8RG8wbglm2wOmc2KKgUcHCvLo5vA0ISC7y+azRY7mGidT241Z
+         OoGQ==
+X-Gm-Message-State: AOJu0YwdwUpBevFINs2WkCkDpbZn+StkFpZ62yff31nTW7tp4uHnWBdh
+	51/2HYMRu5JV/fjdAoHUMzsZk/ipfdN2YXFgF7R4Ng==
+X-Google-Smtp-Source: AGHT+IFGpxrkAvVp6+0E7/WqwAn933CD5Xj0OXEGjguHzqWRxId8NLFOVha5htsC5vsrifflo+7QyGx0F73yiS9Alzs=
+X-Received: by 2002:a05:6e02:b24:b0:357:cb1a:9621 with SMTP id
+ e4-20020a056e020b2400b00357cb1a9621mr218988ilu.10.1698238024990; Wed, 25 Oct
+ 2023 05:47:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231009130126.697995596@linuxfoundation.org> <ZSRVgj5AqJbDXqZU@duo.ucw.cz>
- <ZSRe78MAQwbBdyFP@duo.ucw.cz> <ZSUy+zA0+Chm6dFb@duo.ucw.cz>
- <ZSU+GHl1q7T/TBp5@duo.ucw.cz> <ZSWg1fv3gOyV5t+h@shikoro> <2023101057-runny-pellet-8952@gregkh>
- <ZTgZa1ic1iFbdaTM@duo.ucw.cz> <CAMuHMdXQApuOPfU1zNKcHKN5=fCuLBSDiLtF06U7e4Tx0+noyA@mail.gmail.com>
- <CAMuHMdVrdmBgopnPnJK_ij52wz2WVBdYRHur2KfosFnT945ULw@mail.gmail.com>
-In-Reply-To: <CAMuHMdVrdmBgopnPnJK_ij52wz2WVBdYRHur2KfosFnT945ULw@mail.gmail.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Wed, 25 Oct 2023 14:35:04 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdWZvTGrFgx_o3g3usOwkDvD2rw5QH9_ibo=OKdw17sAzg@mail.gmail.com>
-Message-ID: <CAMuHMdWZvTGrFgx_o3g3usOwkDvD2rw5QH9_ibo=OKdw17sAzg@mail.gmail.com>
-Subject: Re: renesas_sdhi problems in 5.10-stable was Re: [PATCH 5.10 000/226]
- 5.10.198-rc1 review
-To: Pavel Machek <pavel@denx.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Wolfram Sang <wsa+renesas@sang-engineering.com>, niklas.soderlund+renesas@ragnatech.se, 
-	yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be, 
-	biju.das.jz@bp.renesas.com, Chris.Paterson2@renesas.com, 
-	stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+References: <20231024181600.8270-1-tony.luck@intel.com>
+In-Reply-To: <20231024181600.8270-1-tony.luck@intel.com>
+From: Peter Newman <peternewman@google.com>
+Date: Wed, 25 Oct 2023 14:46:53 +0200
+Message-ID: <CALPaoChftF-H6GauKq4-c_qBJP1GJbR3-ByE5krsaQF4y4y9oQ@mail.gmail.com>
+Subject: Re: [PATCH] x86/resctrl: mba_MBps: Fall back to total b/w if local
+ b/w unavailable
+To: Tony Luck <tony.luck@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>, Reinette Chatre <reinette.chatre@intel.com>, 
+	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org, 
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse <james.morse@arm.com>, 
+	Jamie Iles <quic_jiles@quicinc.com>, Babu Moger <babu.moger@amd.com>, 
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org, 
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Pavel,
+Hi Tony,
 
-On Wed, Oct 25, 2023 at 12:53=E2=80=AFPM Geert Uytterhoeven
-<geert@linux-m68k.org> wrote:
-> On Wed, Oct 25, 2023 at 12:47=E2=80=AFPM Geert Uytterhoeven
-> <geert@linux-m68k.org> wrote:
-> > On Tue, Oct 24, 2023 at 9:22=E2=80=AFPM Pavel Machek <pavel@denx.de> wr=
-ote:
-> > > But we still have failures on Renesas with 5.10.199-rc2:
-> > >
-> > > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipel=
-ines/1047368849
-> > >
-> > > And they still happed during MMC init:
-> > >
-> > >     2.638013] renesas_sdhi_internal_dmac ee100000.mmc: Got CD GPIO
-> > > [    2.638846] INFO: trying to register non-static key.
-> > > [    2.644192] ledtrig-cpu: registered to indicate activity on CPUs
-> > > [    2.649066] The code is fine but needs lockdep annotation, or mayb=
-e
-> > > [    2.649069] you didn't initialize this object before use?
-> > > [    2.649071] turning off the locking correctness validator.
-> > > [    2.649080] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.10.199-rc2=
--arm64-renesas-ge31b6513c43d #1
-> > > [    2.649082] Hardware name: HopeRun HiHope RZ/G2M with sub board (D=
-T)
-> > > [    2.649086] Call trace:
-> > > [    2.655106] SMCCC: SOC_ID: ARCH_SOC_ID not implemented, skipping .=
-...
-> > > [    2.661354]  dump_backtrace+0x0/0x194
-> > > [    2.661361]  show_stack+0x14/0x20
-> > > [    2.667430] usbcore: registered new interface driver usbhid
-> > > [    2.672230]  dump_stack+0xe8/0x130
-> > > [    2.672238]  register_lock_class+0x480/0x514
-> > > [    2.672244]  __lock_acquire+0x74/0x20ec
-> > > [    2.681113] usbhid: USB HID core driver
-> > > [    2.687450]  lock_acquire+0x218/0x350
-> > > [    2.687456]  _raw_spin_lock+0x58/0x80
-> > > [    2.687464]  tmio_mmc_irq+0x410/0x9ac
-> > > [    2.688556] renesas_sdhi_internal_dmac ee160000.mmc: mmc0 base at =
-0x00000000ee160000, max clock rate 200 MHz
-> > > [    2.744936]  __handle_irq_event_percpu+0xbc/0x340
-> > > [    2.749635]  handle_irq_event+0x60/0x100
-> > > [    2.753553]  handle_fasteoi_irq+0xa0/0x1ec
-> > > [    2.757644]  __handle_domain_irq+0x7c/0xdc
-> > > [    2.761736]  efi_header_end+0x4c/0xd0
-> > > [    2.765393]  el1_irq+0xcc/0x180
-> > > [    2.768530]  arch_cpu_idle+0x14/0x2c
-> > > [    2.772100]  default_idle_call+0x58/0xe4
-> > > [    2.776019]  do_idle+0x244/0x2c0
-> > > [    2.779242]  cpu_startup_entry+0x20/0x6c
-> > > [    2.783160]  rest_init+0x164/0x28c
-> > > [    2.786561]  arch_call_rest_init+0xc/0x14
-> > > [    2.790565]  start_kernel+0x4c4/0x4f8
-> > > [    2.794233] Unable to handle kernel NULL pointer dereference at vi=
-rtual address 0000000000000014
-> > > [    2.803011] Mem abort info:
-> > >
-> > > from https://lava.ciplatform.org/scheduler/job/1025535
-> > > from
-> > > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/=
-5360973735 .
-> > >
-> > > Is there something else missing?
-> >
-> > I don't have a HopeRun HiHope RZ/G2M, but both v5.10.198 and v5.10.199
-> > seem to work fine on Salvator-XS with R-Car H3 ES2.0 and Salvator-X
-> > with R-Car M3-W ES1.0, using a config based on latest renesas_defconfig=
-.
+On Tue, Oct 24, 2023 at 8:16=E2=80=AFPM Tony Luck <tony.luck@intel.com> wro=
+te:
+> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
+> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+> @@ -418,6 +418,14 @@ static int __mon_event_count(u32 rmid, struct rmid_r=
+ead *rr)
+>         return 0;
+>  }
 >
-> Sorry, I looked at the wrong log on R-Car M3-W.
-> I do see the issue with v5.10.198, but not with v5.10.199.
+> +static struct mbm_state *get_mbm_data(struct rdt_domain *dom_mbm, int rm=
+id)
+> +{
+> +       if (is_mbm_local_enabled())
+> +               return &dom_mbm->mbm_local[rmid];
+> +
+> +       return &dom_mbm->mbm_total[rmid];
+> +}
 
-It seems to be an intermittent issue. Investigating...
+That looks very similar to the get_mbm_state() function I added to
+this same file recently:
 
-Gr{oetje,eeting}s,
+https://lore.kernel.org/all/20221220164132.443083-2-peternewman%40google.co=
+m
 
-                        Geert
+I think the name you picked is misleadingly general. "local if
+available, otherwise total" seems to be a choice specific to the mbps
+controller. I think these functions should be reconciled a little
+better.
 
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
+Other than that, looks good.
 
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Reviewed-by: Peter Newman <peternewman@google.com>
