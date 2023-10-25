@@ -1,140 +1,133 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2052.outbound.protection.outlook.com [40.107.92.52])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BF010FB
-	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 19:11:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A9830FBF
+	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 19:38:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="tgOepSRB"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=MCUe75/u/8MYrhig/3pKr/HD4a2sR0OE+T+0lkbbVATnJVr45rm8nHsdGBsRJYIdtzfE7JV+oLr9pUijUbGt0bZ0dmsGAzghlRcVVFDl1UOQ/mQcfWvEoZUmrKsjpZkM9i6JZWHolaDmT0pW4MX4P1Fj3hOga1LGnV4Kbo1INJ8zqer51RSvR1pMdtmlnBaU5/NbfIx6NGTp0UmmclGVzuQV8oJWDRat20Jsd7m/D2Xe+/dotVuEV0P0aEiEhAux2hZJDLKD32LQgGR7sIYVyLTacJl1kCAEz/wHeTOla0X3dZr8KA5oHlebd2cjkfsrakWtM9/3Baby4GE4pE20YA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BGZTWbe16FlEM8eEjP0poL7KwuGV9hnSbvKJqqdWZv0=;
- b=CaJZ5gTrEeT2TdQ35eN9y3zlq8UWI3X7p7373pGyLgTdHGwQ5qs2QjIm6MCncO+ZG9lGTpsrXxHIxvD8vKKeFfzjXnlH24ryvtraQS88pwvegWCTdZnFndDXcg+U+4acKBOd5ZxnSpZ5GBIrzgWrWTv6hlBJVdt50LdZIflc4N3eJH2e922QMfrSqEzfv/hooR8p6Dnx4XDJKQWuTqjmC/UvyIiu/re+VYa7MnJe5gzth+i+n//yV4UFa6hVmAJxuRm9m79/FCb0D59GuyOcVETevpsWW8TPBrOzNGcPXBRZSk/NrMeExvmfqt7nciZoGfyj4Ogin8hUHqXnaoRkEg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BGZTWbe16FlEM8eEjP0poL7KwuGV9hnSbvKJqqdWZv0=;
- b=tgOepSRBocs4Omav8eRzWUr05eh7KA+/CZMnyfe0LSKGEFHoBPR58FhWGACsX8zyal8qT28OpLTAlLpWiDGZWZux9XxKZ+1HaD7FvW9KzwzsNIg/6VDWqluEwBEmZg4mqA59XnIrxbmpQug0K7659mHQKB5EKQiOX++bEtxHHfyyA4JUbSQM8w0JFseTNplindijbFRLAs9C+gGHPVb4hqlLk9ggM8NraH4dnH8DVOwmJk/mPFHtaX8AMEz+DJPmD0Q3ZLszkVUTVffiF/3aSsc9jM1lXzwwxOF76JwLIqjoTGdZAh9j9iIzqsSQJwZGSxUqLEspOZ0Sb7A2frBFdg==
-Received: from CY5P221CA0143.NAMP221.PROD.OUTLOOK.COM (2603:10b6:930:6a::13)
- by BN9PR12MB5196.namprd12.prod.outlook.com (2603:10b6:408:11d::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6907.33; Wed, 25 Oct
- 2023 19:11:57 +0000
-Received: from CY4PEPF0000E9D2.namprd03.prod.outlook.com
- (2603:10b6:930:6a:cafe::27) by CY5P221CA0143.outlook.office365.com
- (2603:10b6:930:6a::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6933.19 via Frontend
- Transport; Wed, 25 Oct 2023 19:11:57 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CY4PEPF0000E9D2.mail.protection.outlook.com (10.167.241.145) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6933.19 via Frontend Transport; Wed, 25 Oct 2023 19:11:56 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 25 Oct
- 2023 12:11:47 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 25 Oct
- 2023 12:11:47 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
- Transport; Wed, 25 Oct 2023 12:11:47 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
-	<stable@vger.kernel.org>
-Subject: Re: [PATCH 6.1 000/131] 6.1.59-rc1 review
-In-Reply-To: <20231016084000.050926073@linuxfoundation.org>
-References: <20231016084000.050926073@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hH3mLeAY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1698262734; x=1729798734;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=+1FcziEC4Fko1fRoSTXWHKNgLHQEHQDm0zdcSDsN4rg=;
+  b=hH3mLeAYfAhB6KTxIo83zYyM/CheGWVVasJ8zOHJiT23FDOIG9mzc1NC
+   o/tlc+thAUXX2Stsh84Mvo966F2F+dx+15IhAG6a+iwEGodTQ8mIbEafi
+   JTJOKXCfm5ulfj+w75lUJJV7PoLaJDvzR6Y80EQUyPo8evG6hPjdFTo1z
+   TL29pBYjmoLx7ZSUH4fJim46LyFwiC+SDN534xvB8aB26jNR4JKJXHbFI
+   4fHCH/gc1H6MZJVshW9DjoLf4TK3K3OxA8JPV1JBhJ7kC/Ykk+coVWDqR
+   MrJJsgVBm5lJ17jqWY3+7i8DgFyMvV39YPWyWm7XlZnFVWKWvqq3i5QeA
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10874"; a="8941199"
+X-IronPort-AV: E=Sophos;i="6.03,250,1694761200"; 
+   d="scan'208";a="8941199"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2023 12:38:52 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10874"; a="829350374"
+X-IronPort-AV: E=Sophos;i="6.03,250,1694761200"; 
+   d="scan'208";a="829350374"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2023 12:38:52 -0700
+Date: Wed, 25 Oct 2023 12:38:50 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Peter Newman <peternewman@google.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] x86/resctrl: mba_MBps: Fall back to total b/w if local
+ b/w unavailable
+Message-ID: <ZTluypa9bCWv4k2n@agluck-desk3>
+References: <20231024181600.8270-1-tony.luck@intel.com>
+ <CALPaoChftF-H6GauKq4-c_qBJP1GJbR3-ByE5krsaQF4y4y9oQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <2928ebcd-7bc5-4efb-8a4d-7de219df02a8@rnnvmail201.nvidia.com>
-Date: Wed, 25 Oct 2023 12:11:47 -0700
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000E9D2:EE_|BN9PR12MB5196:EE_
-X-MS-Office365-Filtering-Correlation-Id: c8ac8d28-ce0a-4238-cf8c-08dbd58e41d9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	vdO2gwKF/+j5lCqv5f+HeWa98gES2x+Ae3VX6LaQo8El3Pv9ptMlwUPll3t+b/z2skX6gpy7qZ93pBjLb1aVzfC2gcp7omnL328MBfgEgjtJxNHgtmlSLduJ0kxZ9P/DMx8Kk7LyZkm8zY4+4SqKArDQ3QWmS7IJH6c1oe1lDYiM4M+C6ec2o6j5GsWk/E4pAG5lNPrFPrYcGSiaobPvsx4CkxTP9N9RH9gl7h6PSQ9UBR/XeY4QzI3gdKkzd63a+a5UWcmD0O8Da9FzCgwk/FvE3vva1RMxUcPJ/uTd5G7QdFJL118BFDs5QrKnkVmIQEhNduAnIuWnr0ioktVZddr6KCuI3+lp8uYLhJoBzVnUB5GbZkjeDls35R1UmZx0rtfeshxUuIdptYbQH+HafjdzVIy/EusJ+VO/+EN4EctcdM3qBk/9udQZGtyQgpYr7JWiPUoaRES/422M4OOlrSFMgENzN//dGkcds+86uJxM+vohO0m5d8lRO2BIG2vRSZP6WNFRjFpTkk4JYVuju+mtmyvZm7Oiuy/+jwnxkBL49BL9Wzca4BMBjhkdLUwY5XsqjNTbRD0hP0KAvSYZ9Rql00+aAV4sGpsCDiIvQf51At4Le8YSRXA3lb5UOkp8jW4eqaCL9U8B2fi9zP4wEowty2UB8PyFkzztFO804hY+h1rSa2oIMBctSXEn+Q7p3BZnxsehYc3G2SH5E8VwSEAjwecwtIOC95SsNVIzZGF5HpdhKskjjuJh4rIDFpXw03/6GMLqF4unXqJ6cIuQHajWRmKLj5lqnmTRSFLPtl0=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(136003)(396003)(39860400002)(376002)(346002)(230922051799003)(451199024)(64100799003)(82310400011)(1800799009)(186009)(40470700004)(46966006)(36840700001)(7636003)(31696002)(40480700001)(82740400003)(426003)(336012)(26005)(356005)(36860700001)(47076005)(7416002)(2906002)(316002)(966005)(41300700001)(4326008)(478600001)(70206006)(8676002)(8936002)(70586007)(6916009)(5660300002)(54906003)(86362001)(40460700003)(31686004);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Oct 2023 19:11:56.8829
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c8ac8d28-ce0a-4238-cf8c-08dbd58e41d9
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CY4PEPF0000E9D2.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR12MB5196
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALPaoChftF-H6GauKq4-c_qBJP1GJbR3-ByE5krsaQF4y4y9oQ@mail.gmail.com>
 
-On Mon, 16 Oct 2023 10:39:43 +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.59 release.
-> There are 131 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Oct 25, 2023 at 02:46:53PM +0200, Peter Newman wrote:
+> Hi Tony,
 > 
-> Responses should be made by Wed, 18 Oct 2023 08:39:40 +0000.
-> Anything received after that time might be too late.
+> On Tue, Oct 24, 2023 at 8:16 PM Tony Luck <tony.luck@intel.com> wrote:
+> > --- a/arch/x86/kernel/cpu/resctrl/monitor.c
+> > +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+> > @@ -418,6 +418,14 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
+> >         return 0;
+> >  }
+> >
+> > +static struct mbm_state *get_mbm_data(struct rdt_domain *dom_mbm, int rmid)
+> > +{
+> > +       if (is_mbm_local_enabled())
+> > +               return &dom_mbm->mbm_local[rmid];
+> > +
+> > +       return &dom_mbm->mbm_total[rmid];
+> > +}
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.59-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
+> That looks very similar to the get_mbm_state() function I added to
+> this same file recently:
 > 
-> thanks,
+> https://lore.kernel.org/all/20221220164132.443083-2-peternewman%40google.com
 > 
-> greg k-h
+> I think the name you picked is misleadingly general. "local if
+> available, otherwise total" seems to be a choice specific to the mbps
+> controller. I think these functions should be reconciled a little
+> better.
+> 
 
-All tests passing for Tegra ...
+Peter (and Babu, who made the same point about get_mbm_state().
 
-Test results for stable-v6.1:
-    10 builds:	10 pass, 0 fail
-    26 boots:	26 pass, 0 fail
-    116 tests:	116 pass, 0 fail
+Do you want to see your function extended to do the "pick an MBM event?"
 
-Linux version:	6.1.59-rc1-g9b707223d2e9
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+I could add a s/w defined "event" to the enum resctrl_event_id and
+extend get_mbm_state() like this:
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
-Jon
+static struct mbm_state *get_mbm_state(struct rdt_domain *d, u32 rmid,
+				       enum resctrl_event_id evtid)
+{
+	switch (evtid) {
+	case QOS_L3_MBM_TOTAL_EVENT_ID:
+		return &d->mbm_total[rmid];
+	case QOS_L3_MBM_LOCAL_EVENT_ID:
+		return &d->mbm_local[rmid];
++	case QOS_L3_MBM_LOCAL_OR_TOTAL_EVENT_ID:
++		if (is_mbm_local_enabled())
++			return &d->mbm_local[rmid];
++		if (is_mbm_total_enabled())
++			return &d->mbm_total[rmid];
++		fallthrough;
+	default:
+		return NULL;
+	}
+}
+
+Is this the direction you are thinking of?
+
+Callers then look like:
+
+static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
+{
+	struct mbm_state *m = get_mbm_state(rr->d, rmid, QOS_L3_MBM_LOCAL_OR_TOTAL_EVENT_ID);
+	u64 cur_bw, bytes, cur_bytes;
+
+similar for the other three places where this is needed.
+
+Any suggestions on how "QOS_L3_MBM_LOCAL_OR_TOTAL_EVENT_ID" could be
+abbreviated, or just have some different, but descriptive, name?
+
+-Tony
