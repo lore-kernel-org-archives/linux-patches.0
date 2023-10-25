@@ -1,138 +1,82 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817B0F516
-	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 06:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CD55CBE
+	for <patches@lists.linux.dev>; Wed, 25 Oct 2023 10:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGRsTNvr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F2AC433C8;
-	Wed, 25 Oct 2023 06:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZjrRxW/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893AFC433C7;
+	Wed, 25 Oct 2023 10:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698213772;
-	bh=BWocz7wrPKfbnq2oxxVcy2MLgNDyj+rVF5RLJ++1qAc=;
+	s=korg; t=1698228486;
+	bh=rQZngrJPodypktqWe65fZUp4NUgFzXhqXBIT3hE1Lx0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hGRsTNvrheqr9/y9+LX+Lug/6SxLN+Yehvo7HT+qzS08HknJDHmhgjZzFy/j+xr6G
-	 1Oa7Y8zvSKR8OaTkC+U0n2485v4Il00CRpz58Zo0FDNv9SJneVmuDmsDx+dXG1+gW3
-	 1VIeWTcsD6UnXTq8qhyR72aO8dUDmXApr7WbuFfE=
-Date: Wed, 25 Oct 2023 08:02:49 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: John Sperbeck <jsperbeck@google.com>
-Cc: bp@alien8.de, jpoimboe@kernel.org, patches@lists.linux.dev,
-	peterz@infradead.org, stable@vger.kernel.org
-Subject: Re: [PATCH 5.10 134/135] objtool/x86: Fixup frame-pointer vs rethunk
-Message-ID: <2023102503-anteater-renderer-d02e@gregkh>
-References: <20230824170617.074557800@linuxfoundation.org>
- <20230824170623.040455914@linuxfoundation.org>
- <2023102428-implicate-predict-0966@gregkh>
- <CAFNjLiWdyUzFpSSpfoPBjGRB4Eyhr=NH4TG0M0sydHTcUwvpxg@mail.gmail.com>
+	b=sZjrRxW/7DDnWCl+6ML4nYPNav6rYPyJZwafUoSn/ZqXdr93aw8cfbT0sh7MYAUJ8
+	 nKoxlXBzVpq2h3QTNBrqJBgbZNJ3DIw7kICRcnDlfr/jGaio27O+sM0e3UMQWVXrJ6
+	 3FbkgKh5ScapRsTwyj/2aMuc1Gfb+X4bBducAwes=
+Date: Wed, 25 Oct 2023 12:08:04 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Jan Karcher <jaka@linux.ibm.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.5 159/241] net/smc: support smc release version
+ negotiation in clc handshake
+Message-ID: <2023102521-undated-edition-d501@gregkh>
+References: <20231023104833.832874523@linuxfoundation.org>
+ <20231023104837.750719920@linuxfoundation.org>
+ <80669f40-3bc5-440e-9440-e153d12e37ef@linux.alibaba.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFNjLiWdyUzFpSSpfoPBjGRB4Eyhr=NH4TG0M0sydHTcUwvpxg@mail.gmail.com>
+In-Reply-To: <80669f40-3bc5-440e-9440-e153d12e37ef@linux.alibaba.com>
 
-On Tue, Oct 24, 2023 at 10:16:18PM -0700, John Sperbeck wrote:
-> On Tue, Oct 24, 2023 at 11:12 AM Greg KH <gregkh@linuxfoundation.org> wrote:
-> >
-> > On Tue, Oct 24, 2023 at 05:47:54PM +0000, John Sperbeck wrote:
-> > > > 5.10-stable review patch.  If anyone has any objections, please let me know.
-> > > >
-> > > > ------------------
-> > > >
-> > > > From: Peter Zijlstra <peterz@infradead.org>
-> > > >
-> > > > commit dbf46008775516f7f25c95b7760041c286299783 upstream.
-> > > >
-> > > > For stack-validation of a frame-pointer build, objtool validates that
-> > > > every CALL instruction is preceded by a frame-setup. The new SRSO
-> > > > return thunks violate this with their RSB stuffing trickery.
-> > > >
-> > > > Extend the __fentry__ exception to also cover the embedded_insn case
-> > > > used for this. This cures:
-> > > >
-> > > >   vmlinux.o: warning: objtool: srso_untrain_ret+0xd: call without frame pointer save/setup
-> > > >
-> > > > Fixes: 4ae68b26c3ab ("objtool/x86: Fix SRSO mess")
-> > > > Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-> > > > Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-> > > > Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-> > > > Link: https://lore.kernel.org/r/20230816115921.GH980931@hirez.programming.kicks-ass.net
-> > > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > > ---
-> > > >  tools/objtool/check.c |   17 +++++++++++------
-> > > >  1 file changed, 11 insertions(+), 6 deletions(-)
-> > > >
-> > > > --- a/tools/objtool/check.c
-> > > > +++ b/tools/objtool/check.c
-> > > > @@ -2079,12 +2079,17 @@ static int decode_sections(struct objtoo
-> > > >     return 0;
-> > > >  }
-> > > >
-> > > > -static bool is_fentry_call(struct instruction *insn)
-> > > > +static bool is_special_call(struct instruction *insn)
-> > > >  {
-> > > > -   if (insn->type == INSN_CALL &&
-> > > > -       insn->call_dest &&
-> > > > -       insn->call_dest->fentry)
-> > > > -           return true;
-> > > > +   if (insn->type == INSN_CALL) {
-> > > > +           struct symbol *dest = insn->call_dest;
-> > > > +
-> > > > +           if (!dest)
-> > > > +                   return false;
-> > > > +
-> > > > +           if (dest->fentry)
-> > > > +                   return true;
-> > > > +   }
-> > > >
-> > > >     return false;
-> > > >  }
-> > > > @@ -2958,7 +2963,7 @@ static int validate_branch(struct objtoo
-> > > >                     if (ret)
-> > > >                             return ret;
-> > > >
-> > > > -                   if (!no_fp && func && !is_fentry_call(insn) &&
-> > > > +                   if (!no_fp && func && !is_special_call(insn) &&
-> > > >                         !has_valid_stack_frame(&state)) {
-> > > >                             WARN_FUNC("call without frame pointer save/setup",
-> > > >                                       sec, insn->offset);
-> > > >
-> > > >
-> > > >
-> > >
-> > > We still see the 'srso_untrain_ret+0xd: call without frame pointer save/setup' warning with v5.15.136.  It looks like the backport might be incomplete.  Is this additional change needed?
-> > >
-> > > diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-> > > index 36ad0b6b94a9..c3bb96e5bfa6 100644
-> > > --- a/tools/objtool/check.c
-> > > +++ b/tools/objtool/check.c
-> > > @@ -2202,7 +2202,7 @@ static bool is_special_call(struct instruction *insn)
-> > >               if (!dest)
-> > >                       return false;
-> > >
-> > > -             if (dest->fentry)
-> > > +             if (dest->fentry || dest->embedded_insn)
-> > >                       return true;
-> > >       }
-> > >
-> >
-> > Possibly, I remember this was a pain to backport.  Can you try this and
-> > see?  If so, can you send a working and tested patch?
-> >
-> > thanks,
-> >
-> > greg k-h
+On Mon, Oct 23, 2023 at 08:05:01PM +0800, Guangguan Wang wrote:
+> Hi, Greg.
 > 
-> I think I can do that.  What's the process for a patch that would only
-> go to certain stable branches?
+> [PATCH 6.5 159/241] net/smc: support smc release version negotiation in clc handshake
+> [PATCH 6.5 160/241] net/smc: support smc v2.x features validate
+> 
+> The above two patches should not backport to stable tree 6.5, which may result in unexpected
+> fallback if communication between 6.6 and 6.5(with these two patch) via SMC-R v2.1. The above
+> two patches should not exist individually without the patch 7f0620b9(net/smc: support max
+> connections per lgr negotiation) and the patch 69b888e3(net/smc: support max links per lgr 
+> negotiation in clc handshake).
+> 
+> The patch c68681ae46ea ("net/smc: fix smc clc failed issue when netdevice not in init_net")
+> does not rely the feature SMC-R v2.1. But I think it may have conflict here when backport
+> to stable tree 6.5:
+> 
+> @@ -1201,6 +1201,7 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
+>  		(struct smc_clc_msg_accept_confirm_v2 *)aclc;
+>  	struct smc_clc_first_contact_ext *fce =
+>  		smc_get_clc_first_contact_ext(clc_v2, false);    --conflict here
+> +	struct net *net = sock_net(&smc->sk);
+> 
+> 
+> I think it is better to resolve the confilict rather than backport more patches.
+> The resolution of the conflict should be like:
+> 
+> @@ -1201,6 +1201,7 @@ static int smc_connect_rdma_v2_prepare(struct smc_sock *smc,
+>  		(struct smc_clc_msg_accept_confirm_v2 *)aclc;
+>   	struct smc_clc_first_contact_ext *fce =
+> 		(struct smc_clc_first_contact_ext *)
+> 			(((u8 *)clc_v2) + sizeof(*clc_v2));      --replace the line smc_get_clc_first_contact_ext(clc_v2, false);
+> +	struct net *net = sock_net(&smc->sk);
 
-Send it to use and say "This only applies to X and Y", there are loads
-of examples on the stable mailing list of this happening all the time.
+Thanks for letting me know.
+
+I've dropped this patch entirely from the 6.5.y queue now (and the
+follow-on ones.)  Can you send a backported, and tested, set of patches
+to us for inclusion if you want this fixed up in the 6.5.y tree?  That
+way we make sure to get this done properly.
 
 thanks,
 
