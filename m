@@ -1,92 +1,170 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2075.outbound.protection.outlook.com [40.107.92.75])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8507B13AF8
-	for <patches@lists.linux.dev>; Thu, 26 Oct 2023 13:40:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-User-agent: mu4e 1.10.7; emacs 30.0.50
-From: Sam James <sam@gentoo.org>
-To: gregkh@linuxfoundation.org, Qu Wenruo <wqu@suse.com>
-Cc: dsterba@suse.com,patches@lists.linux.dev,stable@vger.kernel.org,linux-btrfs@vger.kernel.org
-Subject: Re: [PATCH 6.5 211/285] btrfs: scrub: fix grouping of read IO
-In-Reply-To: <20230917191058.870881178@linuxfoundation.org>
-Date: Thu, 26 Oct 2023 14:31:39 +0100
-Organization: Gentoo
-Message-ID: <87fs1x1p93.fsf@gentoo.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3472D049
+	for <patches@lists.linux.dev>; Thu, 26 Oct 2023 13:55:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="3zpl88of"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=UJnDfMnSZ7rlp5mzxo6kTf4q+vqz6wP2Y00pfsxNlfSqHcMrYvguFNGsSoddLHAeNQOoSqGRlojsT6s36aySwSOIXN33BQKzz2T+BNphhe7EbYBbPlVto2Xs8NIJTkAgiGVp8eA+Qx5khuZcE8Xbd9ZX+40wVaFPRlzfP1Dwlb6uLtyIrT4lmU+3rhlo5/fWgT7l5bm8YXyijiLfKBU/b0VaNleULdEGENjuNu1DEnKSUFqqZA4uSu7FfFCtDHChAKWcSH4769n7u4lBeNGeApeyr6K5Tbb1MCh0Ea38pqRR1vW5mM9qPoi2vZ3p5A2gOmR2qZ2DNbmyrbJ5ZgQYKA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=l1iB3evqeb7DePzb+B0TCoSuDZy04T8MeCjFYh1ejHo=;
+ b=D+toviA/hce8DpCxG6VYx+F8Ac7tWdLbN9AG0/NRW/M6CVAvOOpzi7pJkwHv7pwwIUgL+kgl3T/4/NiXh9JO2T9J4s/PLDYcEzwx4VLcU6n+bciuRexmXaWpxnvgTExz8fK6WLEubNdnT2ELGBJKKqHmt2vKT2fEBkKPZ/kL0/xfanlUt3AlaELhcbfAKkxHhjHPCLQ3sxHJ1EgNP5X4c7RZz4kHkx1XzydcuPEFYSpqZ2TAdKIlX3os5i6vrJvmDYNzQaDFKT/if+Unyu78TZRE6FvGw4kakpKZc3yz8AkV32xrP0LnAbSqT515F0m7A+idwFc6uymj1yl7TsbYKg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=l1iB3evqeb7DePzb+B0TCoSuDZy04T8MeCjFYh1ejHo=;
+ b=3zpl88ofll9GNWFvaTzhp3rRIXMVBaoFV/hxvC2VZ9Gq2pMu4fVwVFAsXQVJySuzHhJpE5uHnGH1zAYVyW1N0g2PMry00I7IhkPfK8WxR1XRE8cEnieSHD96B2NpF2UL5AJwzxTJkFqFMp4NJjMhgnRum/aTbS3nd92A3yqvkeo=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
+ by CY8PR12MB9036.namprd12.prod.outlook.com (2603:10b6:930:78::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6907.33; Thu, 26 Oct
+ 2023 13:55:30 +0000
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::1e4c:5da0:33ed:ff3a]) by MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::1e4c:5da0:33ed:ff3a%7]) with mapi id 15.20.6933.019; Thu, 26 Oct 2023
+ 13:55:30 +0000
+Message-ID: <95fc35a2-2f19-4ba5-ad3a-7d7ae578289c@amd.com>
+Date: Thu, 26 Oct 2023 08:55:27 -0500
+User-Agent: Mozilla Thunderbird
+Reply-To: babu.moger@amd.com
+Subject: Re: [PATCH] x86/resctrl: mba_MBps: Fall back to total b/w if local
+ b/w unavailable
+Content-Language: en-US
+To: Peter Newman <peternewman@google.com>, Tony Luck <tony.luck@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+ Reinette Chatre <reinette.chatre@intel.com>, Jonathan Corbet
+ <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
+ Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse <james.morse@arm.com>,
+ Jamie Iles <quic_jiles@quicinc.com>, Randy Dunlap <rdunlap@infradead.org>,
+ linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20231024181600.8270-1-tony.luck@intel.com>
+ <CALPaoChftF-H6GauKq4-c_qBJP1GJbR3-ByE5krsaQF4y4y9oQ@mail.gmail.com>
+ <ZTluypa9bCWv4k2n@agluck-desk3>
+ <CALPaoCj72V=o60tqsFMRzaeUw-1+rN7pyhsdCyVEV=0tN_CZ7A@mail.gmail.com>
+From: "Moger, Babu" <babu.moger@amd.com>
+In-Reply-To: <CALPaoCj72V=o60tqsFMRzaeUw-1+rN7pyhsdCyVEV=0tN_CZ7A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SA1PR02CA0008.namprd02.prod.outlook.com
+ (2603:10b6:806:2cf::13) To MW3PR12MB4553.namprd12.prod.outlook.com
+ (2603:10b6:303:2c::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|CY8PR12MB9036:EE_
+X-MS-Office365-Filtering-Correlation-Id: 20d4e0fd-01c5-47ab-9219-08dbd62b3750
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	0bgkrBk69yB8y9JJUaQr4fS9CSq0qE+U51DKuXWN6Qg6HQXs7FKy2qcv1rh1uNlq/VsGSAHyke3HAh7b60ntrVITAVMRmAspTdocjLniYWyZl8UxW6yeCxw9pU6ggDGmaToTMQMDtqdvflqUNRW1hbuXF0kBhLBP8qtFikKNpPI2/QBMYIHdDWNFl1Q6laW9ZDHnpFgI4Q9BzpHPedP664lYylIWjYZzmSp0R5na9gqxv0yEPk4+E37GLaMgW+pSACqs61kitop5eothio0zp2Sm759pf6R35NC+Xj/9soRlJ/bzdmc6/qTq+Goai6YevHgBYMnKFZ8GdhG3ZA4929nbjmb7ERfSlpvZc7c13r21lyQ3Tgi+euskn6gTmTZP3nEPVoY4nHUMjib5kLDcEotMxVZBzeZ6NcXSyu+JOVUUp6YrnDWuIT5F/mFXy/isMkL7/roUJUjZ1G2YJ4jUUD4aohxwoPQ83Kr1ltxA531z5i6dUTby1hKOOe9SORUQWdnGobAT3OntidtbfrkUc2TCn8IJt8FsKMDPqecS7XaAOV/fL5dmwIZrBBNcPxcbe0mTYgmC4fANxYZUV9+cFy2bQw9sTDcuwbtCRz5fNAdbfqVbqo+DQoZ0sjygRXXmHvXajcKmpDbAssGC6aG1Cg==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4553.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(136003)(346002)(366004)(376002)(39860400002)(230922051799003)(1800799009)(186009)(451199024)(64100799003)(2906002)(86362001)(41300700001)(38100700002)(6506007)(54906003)(316002)(66476007)(66556008)(66946007)(6666004)(478600001)(110136005)(6512007)(53546011)(6486002)(3450700001)(966005)(83380400001)(31696002)(36756003)(5660300002)(2616005)(8676002)(4326008)(7416002)(8936002)(26005)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?a2ttMTdQV1JMY2dBR0lqaXhRd2dHT01vVXFQdXJGNWFYU0YvM1dUczVzRUtP?=
+ =?utf-8?B?SHYzZnZCYjQxZFJOZDdQZ0tJdlZGV0l1SlkvZDE2SHZ5QVZGOGdDYmFHeFRV?=
+ =?utf-8?B?NGVrcTR2TVVWUy9XWnRmRDJtQWRxaTIrdjhxUDFZWlp3bG02aDBRdWEyMElK?=
+ =?utf-8?B?Y2gvU2dMQUI3cWVDdWwvT0pYczU2VzNCUVBRNUl1QWh0cTVPMmJyZmM2M2lj?=
+ =?utf-8?B?YUFxSWxWSkhJVkJrd0psbnNVdEo0cDVweHZOKzVHOEV5dk1TSGVtWTVBQXZ3?=
+ =?utf-8?B?ZWtGa3lWNFkxS2EwRFk2c3VON3hYcjRlQUtjb2FqMHhMOWNSYitTUkx2V3FW?=
+ =?utf-8?B?V1l6RHRQa1QyaWVJUFFtYml4ZlhpSEV1d1RubTg5UXVXZ2d1K2dWVVVsek5M?=
+ =?utf-8?B?YURSdEIvUXBLVG9KNUtMbnBKQlBtZGJrUEhuWWVoSXFJSFZBcGhHaSt6NnZY?=
+ =?utf-8?B?KzRqNm9RQzljWDRVTVVybm11R3pOTG43ZXcybkhkcXNDajhCODllbkQ5aURO?=
+ =?utf-8?B?TWpiV3hla0NVQUw0U1BTQk00dERvb05ZaVJnV2FENFk1VzZNNFllWFJhMFJK?=
+ =?utf-8?B?ditBa0JvMXpYeGdueWhGVEg4OXRXM1lzeTJkNCtSTDd6YzBxdFREcHpYQ2hW?=
+ =?utf-8?B?WkZKS3UrTk0xNldMZWsvdUFMViszVEhCaUtOdGZ6ZTc2UUxPS3p3eWFZSCs4?=
+ =?utf-8?B?K05ZRXdyQ3JyaUlvbmhxbS82dW1xZXZaNlZrdmlJVCtBRFMzTUVMa3NRNmNa?=
+ =?utf-8?B?TEMxcnpLWXMyamZvUUU2RG5kVVk4Tm9NSmNOa1djRnE2MmlDRFhYZXN0TFdW?=
+ =?utf-8?B?bzRzMkc3eFZ4YkEyR0I2MFZvN2srVDhBYmYyVy9GVUNMQlNTRzA1R0F4a3Fj?=
+ =?utf-8?B?dTJycXZLdEhtOEpWQlJ1eS9GbkVVRHNyajFWUnowRzFhVkFCQUxRWGluVUI4?=
+ =?utf-8?B?TEE4cEJwUU5rUG0rM3JSWTF6T21ZRytpRFlQWldmdUErdVlhSDBrNUxST05S?=
+ =?utf-8?B?bG1SRksvdXVQanpaZGZLVUFad2VqMjZ6SitGaTYwbXZScTZYT2thRFpVWDBI?=
+ =?utf-8?B?NHVpdzBSTExodU1pRHJXOThFSkRWK2RTSzFhQjgrVnBFS2pBUHQyRk53MjNy?=
+ =?utf-8?B?NnpYeEV6Z2VNN3VQckYzSlZGYUovT3VEcmtMOEQrZjlNUVEyZnV4VjE3R1VN?=
+ =?utf-8?B?WGhMVjNVczlhNFpYSW5Ca3dJd3ZQL2t3SzA0SnZybWs2REFXaXJaT0pIRnA3?=
+ =?utf-8?B?ZWR5bGwzVzVJaFdFdFg1S01Xb2l5SnY4RTZKZWVuU2RodnVQa3Iyb1k1SE9U?=
+ =?utf-8?B?OEg1UjY0NHp6SW1NNnYzdWd3WUZBME9QVndtQ1puRVlETUZRSkV0Q3hvNHVt?=
+ =?utf-8?B?UFEwNDk2VFZDSXltRXNzSTQzQ3RYZ3lqNFdIZ1FoMXFJV2FUZ01INnhiU3I5?=
+ =?utf-8?B?Kzg4OEpXeGd6YngvM29Eb1Nlb2pCcjhqZHdwUS9TcHU4TkJyK3Mrb0crMnVu?=
+ =?utf-8?B?akNacjdITGJ5SVYrTXphbHBkMkdTWFhpK1NUNlRHT0h4Q1BGV3BKYUE1UkRz?=
+ =?utf-8?B?QzA5YTh5UzRXcHBuMDhTZW15U0pDS1hoZWdQT09tR2hZUTdJblhkYisvdlB6?=
+ =?utf-8?B?ZWtNKzZwMTdLKy9RZExQbXBxNEhld0F3SGh0d0JEL1lOV0ZveVdReElISHlG?=
+ =?utf-8?B?VzY4cFlwNmFyWU92aklvekdOaGV1R0lmQkF6K2x3ZG9yckU1akpIZC83aWc1?=
+ =?utf-8?B?KzJ0cWFjS3k4NFkyRTNCODE1WSthT2RHZXQwQjNYUXY5ZG1aaURSZG1ZWXNH?=
+ =?utf-8?B?czJPVkNyNHpvY0RsU1dlMzdPbHJzYjdERndqQjJJaUNGYnRDNVZWREttUkZZ?=
+ =?utf-8?B?NnVUMVNzSWdKWkMyNlVqSG5OUzBKK2paMWpvLzl1ZDNmNWJyUVVRVld1cHgy?=
+ =?utf-8?B?bjZJY2Vaek1ybVF1YlBidHNBekhZbjVGTnFibXY4MGFHZTQ4MkRFRzZ3T2xn?=
+ =?utf-8?B?WlJPVDZEVHd6T21rdk8wQUVXcmlRd2U4d3ZXc1h2Z0o4dFIycTVwN0tINjRX?=
+ =?utf-8?B?aDlDamNNUElhSktQYXg5UVpDYkVXSWpDYVlIY0NJWkJmU0FWY3lGaXlybEVj?=
+ =?utf-8?Q?Kuyw=3D?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 20d4e0fd-01c5-47ab-9219-08dbd62b3750
+X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2023 13:55:30.4304
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: a5dM8WVrz8H7xdabOmy9jAteyvPhcECUI6RuhA5oyI9Lb1cOc5hEpzNHlEciXTKA
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB9036
 
-'btrfs: scrub: fix grouping of read IO' seems to intorduce a
--Wmaybe-uninitialized warning (which becomes fatal with the kernel's
-passed -Werror=3D...) with 6.5.9:
+Hi Tony,
 
-```
-# CC      fs/btrfs/scrub.o
-  x86_64-pc-linux-gnu-gcc -Wp,-MMD,fs/btrfs/.scrub.o.d -nostdinc -I/var/tmp=
-/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/arch/x86/include -I.=
-/arch/x86/include/generated -I/var/tmp/portage/sys-kernel/gentoo-kernel-6.5=
-.9/work/linux-6.5/include -I./include -I/var/tmp/portage/sys-kernel/gentoo-=
-kernel-6.5.9/work/linux-6.5/arch/x86/include/uapi -I./arch/x86/include/gene=
-rated/uapi -I/var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5=
-/include/uapi -I./include/generated/uapi -include /var/tmp/portage/sys-kern=
-el/gentoo-kernel-6.5.9/work/linux-6.5/include/linux/compiler-version.h -inc=
-lude /var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/include=
-/linux/kconfig.h -include /var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/w=
-ork/linux-6.5/include/linux/compiler_types.h -D__KERNEL__ -Werror -fmacro-p=
-refix-map=3D/var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/=
-=3D -std=3Dgnu11 -fshort-wchar -funsigned-char -fno-common -fno-PIE -fno-st=
-rict-aliasing -Wall -Wundef -Werror=3Dimplicit-function-declaration -Werror=
-=3Dimplicit-int -Werror=3Dreturn-type -Werror=3Dstrict-prototypes -Wno-form=
-at-security -Wno-trigraphs -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx =
--fcf-protection=3Dbranch -fno-jump-tables -m64 -falign-jumps=3D1 -falign-lo=
-ops=3D1 -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3D3 -mskip=
--rax-setup -march=3Dcore2 -mno-red-zone -mcmodel=3Dkernel -Wno-sign-compare=
- -fno-asynchronous-unwind-tables -mindirect-branch=3Dthunk-extern -mindirec=
-t-branch-register -mindirect-branch-cs-prefix -mfunction-return=3Dthunk-ext=
-ern -fno-jump-tables -mharden-sls=3Dall -fno-delete-null-pointer-checks -Wn=
-o-frame-address -Wno-format-truncation -Wno-format-overflow -Wno-address-of=
--packed-member -O2 -fno-allow-store-data-races -Wframe-larger-than=3D2048 -=
-fstack-protector-strong -Wno-main -Wno-unused-but-set-variable -Wno-unused-=
-const-variable -Wno-dangling-pointer -fomit-frame-pointer -ftrivial-auto-va=
-r-init=3Dzero -fno-stack-clash-protection -fzero-call-used-regs=3Dused-gpr =
--falign-functions=3D16 -Wvla -Wno-pointer-sign -Wcast-function-type -fstric=
-t-flex-arrays=3D3 -Wno-stringop-truncation -Wno-stringop-overflow -Wno-rest=
-rict -Wno-maybe-uninitialized -Wno-array-bounds -Wno-alloc-size-larger-than=
- -Wimplicit-fallthrough=3D5 -fno-strict-overflow -fno-stack-check -fconserv=
-e-stack -Werror=3Ddate-time -Werror=3Dincompatible-pointer-types -Werror=3D=
-designated-init -Wno-packed-not-aligned -DRANDSTRUCT -fplugin=3D./scripts/g=
-cc-plugins/randomize_layout_plugin.so -fplugin-arg-randomize_layout_plugin-=
-performance-mode -fplugin=3D./scripts/gcc-plugins/latent_entropy_plugin.so =
--fplugin=3D./scripts/gcc-plugins/structleak_plugin.so -fplugin=3D./scripts/=
-gcc-plugins/stackleak_plugin.so -DLATENT_ENTROPY_PLUGIN -DSTRUCTLEAK_PLUGIN=
- -DSTACKLEAK_PLUGIN -fplugin-arg-stackleak_plugin-track-min-size=3D100 -fpl=
-ugin-arg-stackleak_plugin-arch=3Dx86 -Wextra -Wunused -Wno-unused-parameter=
- -Wmissing-declarations -Wmissing-format-attribute -Wmissing-prototypes -Wo=
-ld-style-definition -Wmissing-include-dirs -Wunused-but-set-variable -Wunus=
-ed-const-variable -Wpacked-not-aligned -Wstringop-truncation -Wmaybe-uninit=
-ialized -Wno-missing-field-initializers -Wno-sign-compare -Wno-type-limits =
--Wno-shift-negative-value -I /var/tmp/portage/sys-kernel/gentoo-kernel-6.5.=
-9/work/linux-6.5/fs/btrfs -I ./fs/btrfs    -DKBUILD_MODFILE=3D'"fs/btrfs/bt=
-rfs"' -DKBUILD_BASENAME=3D'"scrub"' -DKBUILD_MODNAME=3D'"btrfs"' -D__KBUILD=
-_MODNAME=3Dkmod_btrfs -c -o fs/btrfs/scrub.o /var/tmp/portage/sys-kernel/ge=
-ntoo-kernel-6.5.9/work/linux-6.5/fs/btrfs/scrub.c
-/var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/fs/btrfs/scr=
-ub.c: In function =E2=80=98scrub_simple_mirror.isra=E2=80=99:
-/var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/fs/btrfs/scr=
-ub.c:2075:29: error: =E2=80=98found_logical=E2=80=99 may be used uninitiali=
-zed [-Werror=3Dmaybe-uninitialized[https://gcc.gnu.org/onlinedocs/gcc/Warni=
-ng-Options.html#index-Wmaybe-uninitialized]]
- 2075 |                 cur_logical =3D found_logical + BTRFS_STRIPE_LEN;
-/var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/fs/btrfs/scr=
-ub.c:2040:21: note: =E2=80=98found_logical=E2=80=99 was declared here
- 2040 |                 u64 found_logical;
-      |                     ^~~~~~~~~~~~~
-```
+On 10/25/23 16:06, Peter Newman wrote:
+> Hi Tony,
+> 
+> On Wed, Oct 25, 2023, 21:38 Tony Luck <tony.luck@intel.com> wrote:
+>>
+>> On Wed, Oct 25, 2023 at 02:46:53PM +0200, Peter Newman wrote:
+>>
+>>>> +static struct mbm_state *get_mbm_data(struct rdt_domain *dom_mbm, int rmid)
+>>>> +{
+>>>> +       if (is_mbm_local_enabled())
+>>>> +               return &dom_mbm->mbm_local[rmid];
+>>>> +
+>>>> +       return &dom_mbm->mbm_total[rmid];
+>>>> +}
+>>>
+>>> That looks very similar to the get_mbm_state() function I added to
+>>> this same file recently:
+>>>
+>>> https://lore.kernel.org/all/20221220164132.443083-2-peternewman%40google.com
+>>>
+>>> I think the name you picked is misleadingly general. "local if
+>>> available, otherwise total" seems to be a choice specific to the mbps
+>>> controller. I think these functions should be reconciled a little
+>>> better.
+>>>
+>>
+>> Peter (and Babu, who made the same point about get_mbm_state().
+>>
+>> Do you want to see your function extended to do the "pick an MBM event?"
+> 
+> What I meant was I think it would be enough to just give the function
+> you added a name that's more specific to the Mbps controller use case.
+> For example, get_mba_sc_mbm_state().
+
+I actually liked this idea. Add a new function get_mba_sc_mbm_state. That
+way we exactly know why this function is used. I see you already sent a v2
+making the event global. Making it global may not be good idea. Can you
+please update the patch and resend. Also please add the comment about why
+you are adding that function.
+-- 
+Thanks
+Babu Moger
