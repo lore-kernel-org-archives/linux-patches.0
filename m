@@ -1,208 +1,196 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
+Received: from EUR04-HE1-obe.outbound.protection.outlook.com (mail-he1eur04on2084.outbound.protection.outlook.com [40.107.7.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DDC38FA0
-	for <patches@lists.linux.dev>; Thu, 26 Oct 2023 20:02:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5FEC8E8
+	for <patches@lists.linux.dev>; Thu, 26 Oct 2023 21:02:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="V3KiXJ/Y"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698350546; x=1729886546;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=wjSZygfJTLzc3CEGzIuqI0B49Tz5lLOHyJHjqouS46w=;
-  b=V3KiXJ/YNgh7JwSyWDIUJyLFVNNQXBMQyA1ycuYEKDN5PRJk6vKBEBfB
-   XD5CHA2iSfTUQDNhqw7YldjtPc2hkbFK1NBwBVd04JU0UnCIgPZ5RGLZE
-   bjH+zrnUO/kee3yyO8oeUGKhCF4IfM6ELqRmuE/8AS1GXGKq5plpJ2NoY
-   j5oCzzdP/KBzblS7EgiIHrK5glBoQTmbjUL0PKLqjHFoCZTK5H9soGvND
-   PMPe5PQsy8pkWoZZPpVCP46PwRUCRM03Zb6m4BJpR143Bl+yt8qcuWpz8
-   Y+HEPOb+dQYyBWH0x3uSvSIwiI5COnRiPrCjfOrHVeqSCZavWBSDCQsVW
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10875"; a="367850591"
-X-IronPort-AV: E=Sophos;i="6.03,254,1694761200"; 
-   d="scan'208";a="367850591"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Oct 2023 13:02:25 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10875"; a="903034800"
-X-IronPort-AV: E=Sophos;i="6.03,254,1694761200"; 
-   d="scan'208";a="903034800"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Oct 2023 12:59:58 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	x86@kernel.org
-Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v3] x86/resctrl: mba_MBps: Fall back to total b/w if local b/w unavailable
-Date: Thu, 26 Oct 2023 13:02:14 -0700
-Message-ID: <20231026200214.16017-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20231025235046.12940-1-tony.luck@intel.com>
-References: <20231025235046.12940-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="S8SQIOOe"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=QV5RzHOszi8t1lRec0N6nWGrmNiy3m2pGf3jOn1hfhF3VuCMQthbWNOMlsCuvMHO/YXQBcmAziUbqDfh8beMbq23AvlF7zVRLoFp/NFFIQ32/vpYePwU6LYJwDrteM6ZkZiNB9BHF5k2BXP8dZJmyHVkY+4Tjmloxo5vQSwBPklrGuKzHu7EdJGy1vfiJc4tMQv/Hih+7vTqNMamEBPjOyR1Vv1ghd+FhRuq3Kz9nq7bY/z1uLjKVGraznfeMYev5nROLI5t1EMyUQQOLl/PfMpZ6Nztvn6l7vu4WrTaFxW9SsKlwbWt7FCectjSYfkaHItgmZHNgIK1/oV//oT9Ng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WJzq/+QeKioGz6goUKHWYAPKhYBR6sOMSrqMqFOSkCo=;
+ b=oSehuxfZv/kDQxgn44V/8Xez8VPeqpDtA/oVNc3DpPckUE3KeupT/ujvjKdmrG3xaN0QahjfxZYUU/Fpn64RMAGvagna5kORqogGNPoZvEbozAPs5LPMa714iFHtmRCTGQsn4UQrVT7IOHUa/vLaBWXYq0C3qwwNEwUkfZl1O28qUXPhDF2Np1yy5LyUy+/qVN35UJKwow4CR/SOnyLdWRysilWtGzEvxGIkyGKSPt9ZqZhCO+muRR8BbmHrH+BEVlJzDVFSsdI8mTDSRHzkw1eLEQg885tcKdENHjQZGPCSqO0upM6Fh+wkvBN4XYn+b+zqzBSfhFbgOYjI2X37Ww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=suse.com; dmarc=pass action=none header.from=suse.com;
+ dkim=pass header.d=suse.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WJzq/+QeKioGz6goUKHWYAPKhYBR6sOMSrqMqFOSkCo=;
+ b=S8SQIOOefmZpBgBjFMEnFty+uAlq3FvMtRAE4jqdZXjhvwi8HPED0TmvM4qpngAlL2F2d4wWN61y25IqiYnO+qDYMqYto47dyQKJTOVGM5FlxqigYjg0kEsOW3wj5O/IgLqsJgk3OXQEDanVQfcPHEHUbY/blHUqDpSB38HMPwt0sNjudI96lZK4Q5RgL7kuHxgqpKjnyPxec0usPSJyb0vzulGAGYqkKYYW603sx7KouCocmTZeMl90eceigonP8MEBFu2Zl4EeIopOQ4T9Eb3qtn4bl2rsNNh5C711xtbXH+F3jHtlJpepMdpUVFO040a0Kc/cpIpVkJUiQfoXpw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=suse.com;
+Received: from AS8PR04MB8465.eurprd04.prod.outlook.com (2603:10a6:20b:348::19)
+ by AM0PR04MB7186.eurprd04.prod.outlook.com (2603:10a6:208:193::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6933.11; Thu, 26 Oct
+ 2023 21:01:58 +0000
+Received: from AS8PR04MB8465.eurprd04.prod.outlook.com
+ ([fe80::46d9:6544:503:c37e]) by AS8PR04MB8465.eurprd04.prod.outlook.com
+ ([fe80::46d9:6544:503:c37e%4]) with mapi id 15.20.6933.019; Thu, 26 Oct 2023
+ 21:01:58 +0000
+Message-ID: <740c38b1-60eb-41da-93e0-7d7671f0b3fc@suse.com>
+Date: Fri, 27 Oct 2023 07:31:42 +1030
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.5 211/285] btrfs: scrub: fix grouping of read IO
+To: =?UTF-8?Q?Holger_Hoffst=C3=A4tte?= <holger@applied-asynchrony.com>,
+ Sam James <sam@gentoo.org>, gregkh@linuxfoundation.org
+Cc: dsterba@suse.com, patches@lists.linux.dev, stable@vger.kernel.org,
+ linux-btrfs@vger.kernel.org
+References: <87fs1x1p93.fsf@gentoo.org>
+ <02e8fca0-43bd-ad60-6aec-6bcc74d594ee@applied-asynchrony.com>
+Content-Language: en-US
+From: Qu Wenruo <wqu@suse.com>
+Autocrypt: addr=wqu@suse.com; keydata=
+ xsBNBFnVga8BCACyhFP3ExcTIuB73jDIBA/vSoYcTyysFQzPvez64TUSCv1SgXEByR7fju3o
+ 8RfaWuHCnkkea5luuTZMqfgTXrun2dqNVYDNOV6RIVrc4YuG20yhC1epnV55fJCThqij0MRL
+ 1NxPKXIlEdHvN0Kov3CtWA+R1iNN0RCeVun7rmOrrjBK573aWC5sgP7YsBOLK79H3tmUtz6b
+ 9Imuj0ZyEsa76Xg9PX9Hn2myKj1hfWGS+5og9Va4hrwQC8ipjXik6NKR5GDV+hOZkktU81G5
+ gkQtGB9jOAYRs86QG/b7PtIlbd3+pppT0gaS+wvwMs8cuNG+Pu6KO1oC4jgdseFLu7NpABEB
+ AAHNGFF1IFdlbnJ1byA8d3F1QHN1c2UuY29tPsLAlAQTAQgAPgIbAwULCQgHAgYVCAkKCwIE
+ FgIDAQIeAQIXgBYhBC3fcuWlpVuonapC4cI9kfOhJf6oBQJjTSJVBQkNOgemAAoJEMI9kfOh
+ Jf6oapEH/3r/xcalNXMvyRODoprkDraOPbCnULLPNwwp4wLP0/nKXvAlhvRbDpyx1+Ht/3gW
+ p+Klw+S9zBQemxu+6v5nX8zny8l7Q6nAM5InkLaD7U5OLRgJ0O1MNr/UTODIEVx3uzD2X6MR
+ ECMigQxu9c3XKSELXVjTJYgRrEo8o2qb7xoInk4mlleji2rRrqBh1rS0pEexImWphJi+Xgp3
+ dxRGHsNGEbJ5+9yK9Nc5r67EYG4bwm+06yVT8aQS58ZI22C/UeJpPwcsYrdABcisd7dddj4Q
+ RhWiO4Iy5MTGUD7PdfIkQ40iRcQzVEL1BeidP8v8C4LVGmk4vD1wF6xTjQRKfXHOwE0EWdWB
+ rwEIAKpT62HgSzL9zwGe+WIUCMB+nOEjXAfvoUPUwk+YCEDcOdfkkM5FyBoJs8TCEuPXGXBO
+ Cl5P5B8OYYnkHkGWutAVlUTV8KESOIm/KJIA7jJA+Ss9VhMjtePfgWexw+P8itFRSRrrwyUf
+ E+0WcAevblUi45LjWWZgpg3A80tHP0iToOZ5MbdYk7YFBE29cDSleskfV80ZKxFv6koQocq0
+ vXzTfHvXNDELAuH7Ms/WJcdUzmPyBf3Oq6mKBBH8J6XZc9LjjNZwNbyvsHSrV5bgmu/THX2n
+ g/3be+iqf6OggCiy3I1NSMJ5KtR0q2H2Nx2Vqb1fYPOID8McMV9Ll6rh8S8AEQEAAcLAfAQY
+ AQgAJgIbDBYhBC3fcuWlpVuonapC4cI9kfOhJf6oBQJjTSJuBQkNOge/AAoJEMI9kfOhJf6o
+ rq8H/3LJmWxL6KO2y/BgOMYDZaFWE3TtdrlIEG8YIDJzIYbNIyQ4lw61RR+0P4APKstsu5VJ
+ 9E3WR7vfxSiOmHCRIWPi32xwbkD5TwaA5m2uVg6xjb5wbdHm+OhdSBcw/fsg19aHQpsmh1/Q
+ bjzGi56yfTxxt9R2WmFIxe6MIDzLlNw3JG42/ark2LOXywqFRnOHgFqxygoMKEG7OcGy5wJM
+ AavA+Abj+6XoedYTwOKkwq+RX2hvXElLZbhYlE+npB1WsFYn1wJ22lHoZsuJCLba5lehI+//
+ ShSsZT5Tlfgi92e9P7y+I/OzMvnBezAll+p/Ly2YczznKM5tV0gboCWeusM=
+In-Reply-To: <02e8fca0-43bd-ad60-6aec-6bcc74d594ee@applied-asynchrony.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MEWP282CA0139.AUSP282.PROD.OUTLOOK.COM
+ (2603:10c6:220:1d5::19) To AS8PR04MB8465.eurprd04.prod.outlook.com
+ (2603:10a6:20b:348::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS8PR04MB8465:EE_|AM0PR04MB7186:EE_
+X-MS-Office365-Filtering-Correlation-Id: ddcd21bf-da40-4c63-e490-08dbd666cace
+X-LD-Processed: f7a17af6-1c5c-4a36-aa8b-f5be247aa4ba,ExtFwd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	u54PqfGiXmApkwXpWTVSA8ymlDkxGTxXXQIi2cFYvgPYzQy/2gplgtikjV3KDURDjccMrpwij4O8GB37uMvYJtP5Nz2bmubWZpTja+6IJHeVw0qoli+Q3QF2uJ+eaokN/hKbs9WgqoF9CcWowDmbK/auKD/glR7z2x/+ih4tBy/cWWvOwV0ZDErlKLZSXkEJlsjkMpVY+2tz8l8ZRfV4be+FZnaQk05ZzHHKNJpIz+9ehYgonFWIjRERzglIjY6o4VqFTPPEqPla2fhftWCjAF22ygD7XQfszfCu1Hs1PD1F3rbdfgC34WCZcSijzJttmdL9AUmBnYjVKb77xAFquhkg+SCy0+DObYS1pi9IzQpDicOtnH7JNWCFVD1oyW652Oqqs3haL2kZ/ZBtSr1GiANZYdPrGLWJgCOIeqSkv2DkNTqLsX+ex9qvJV4k0R6MDWn7xst/bYf2QmhAjRyveGKHONVQHpngqN2b6OJV1tnXu2qHe6hQavw7DYEA2fFkZ0Ow0tx721l2uBVynXi/5Mc7LXcQS7pXhGAXeRZZRkUtHo8Bp6MfH7D0qY8aYRDlKz9QUj4W1EHjrGlu4ZA+eyXovcParP/ZtfA9alZdQTtg96R3mmpgQs1XytcnEM21Qe+Yvl2hdp4uOa6l6ns6rf0D75HbspRCbvCvygs0V69eodaC47QOIpnOOgRmcH0v
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB8465.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(39860400002)(136003)(396003)(366004)(376002)(230173577357003)(230273577357003)(230922051799003)(451199024)(64100799003)(186009)(1800799009)(83380400001)(31696002)(86362001)(6486002)(6512007)(110136005)(41300700001)(66476007)(66946007)(66556008)(316002)(478600001)(6506007)(5660300002)(6666004)(4326008)(4001150100001)(8676002)(38100700002)(36756003)(53546011)(2906002)(8936002)(26005)(2616005)(66574015)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?QVVqSFAxTkVralppUk9wMmQ0OFNSZ3lsb0RSWnkxMjZCRExVZFVvc3pEcy96?=
+ =?utf-8?B?R3JDb3prSXVjZThoSUNaem9rYUpNcVo2MVJpeUxoM3hwZ2drNFlHTnJEU1pn?=
+ =?utf-8?B?WWxKdXlUeHJxREUrejF1ZkY2SXVvMFNjQks2RTZ2cVF3ckV4enRmN1hYMmU4?=
+ =?utf-8?B?cEhNMDc2U1BpT2tEYWU4RGRCV3AyaWdNWG9Jd1ZkMlBNSzNRWnI0OGIyN3VU?=
+ =?utf-8?B?K1JqdXNSSzB5Vk1qcjRVQ2l1RzhHaklmSDZlRTMwVFo0M054WVhvcnQva1Ux?=
+ =?utf-8?B?MFZHdm1sWjZxcjVmTnRkdEpnVDRJenZEc0p2NkcvaFNsUUo4M2JudEExYmp2?=
+ =?utf-8?B?dDJiZW5Ma1FuNVRpTTRMSitpL1ROYWRUSHVMTzZ4b0FZYWo2ZW0xQ0c0YkN2?=
+ =?utf-8?B?RkZreVh1N2NpbnF0TUhrSHg4c0xrVStudGNuNDUrWWlJMU91RHhBTEZRUC9Y?=
+ =?utf-8?B?eGpBRnV0RHlpc2YyWXlKZnk1Tk1mcWZZWVNxclgvcWtYREFGaStabXVTK3Nu?=
+ =?utf-8?B?a0FqNytrREk4akkxb1pKK05yRFI4cFp6L09CQUh6RzFmSWtvdjJkME1QUFho?=
+ =?utf-8?B?TjdzZ0dJdDdKRStlWkJnNk1MbGdyWm8reHhhbk5JYzdLYU14OGJ4ZCtjUG9J?=
+ =?utf-8?B?V1hLSVhpR002MXl2ZUNRT29yeFBWOHk4TktTd0o1OVNEaUNML3B4ZllkM2FR?=
+ =?utf-8?B?TkJUcFVjOFhrNSs0MGErWE5hYklVZVkzbWhiYkVUcVhHcnkra1dmTVBWTTQ2?=
+ =?utf-8?B?c1M5N0ZzNWZjOEVlZStYWmh0T3YzdGhBNEtHVThuRE9BRDFQMURJZDh2L0E2?=
+ =?utf-8?B?dG54bHIvRC9JK3FwdVdWc0xIQjY1S2VoTThoOE04akN1MnNyeUZrSkhZTVMx?=
+ =?utf-8?B?UXE4akp6UVFEcTZmZkZFeVFmbHkrTHRrUjFocDlnZGwxRWtNM0Y2RTA0Sk56?=
+ =?utf-8?B?ZTR2aEw1a01uQUo3bEVEcDNqQ3JvcElocjNwMjRoN1ZXcXZOSklYSk1KemZ0?=
+ =?utf-8?B?UHBhVFZMelVra1BrQzhOdlhLVHE4TndTZXRsUEp0WFVuUThla0VSNC9qRjNQ?=
+ =?utf-8?B?UU41eWtEN0FQbFM5NlBDNXpTRU5zY1liL2xsWjhjSXpSSU1QU2pENFZhSlYv?=
+ =?utf-8?B?bG5xeE9rSHhod2RoY2xlak0vWFdTREhDYlZGUUQrNE84aG1ENFBHQk9hU1N0?=
+ =?utf-8?B?OHRaU3NESVhuVUFIR0RYU20zV28yWHF4c1hRYjM3TmdsQmZqVTArYWJ4dWM3?=
+ =?utf-8?B?bDA3b0NtWGFRUFZaSDZlSG1tNWtrZkw2YXZIdjAyT0ZucmpHTERUWFFlWmtX?=
+ =?utf-8?B?eEgzOGZvOCthMFRIdHVpV1JGM1lFWkpJTlNVUjZ4bjU1TFozUHdhWjdmMlg4?=
+ =?utf-8?B?eE5LWTJla2o5eUlnRnNjQTl1UHU5bFhmSnFoSHc2QnJDZjcvWHhmaElOdlVm?=
+ =?utf-8?B?Q0dTd3prZGRUWUNJV01ZcllQVDV4cDczbzZoUDhXclozVkhWaHhFdVVQZnZM?=
+ =?utf-8?B?bW9OdkJwVFRoYnhTT2g2RTFYSndUdVkxb2tqRXlHTGhGNXF5alRDajV3a01X?=
+ =?utf-8?B?UDRXaHQvaWtWNU85SkdpeVJ0UW1VQVA3ZjBpZ0c3RUtHT2l5M0o5MTdOcjZK?=
+ =?utf-8?B?OWEvNHR6L2d2N3lxcGdGTzNNN2Y5ZDY3OG5OK0w5V0ovMWkrVmhmZVR3aTUw?=
+ =?utf-8?B?VkNReHBacGpWdWlGQm9ockkyeHJMVTZseVBpUHQraU5nRzNnWmpGcEJTR3pV?=
+ =?utf-8?B?UEZtTDRLQk1JYjFWajF0eGtUd1JVUXdTdjZoZnhlSFhsbHZUT1Iwek9rWUE0?=
+ =?utf-8?B?ZmxRdHg1NzNEalJDOFE4YmQzQld2M1dnanFoOEhrclVGbUgrckF3VGVleTNV?=
+ =?utf-8?B?SzhWTGVsSVNMYnhGUWRIaWpqZE8rd2pMK0NqbVRNSEdvbFpqMjlFdS9LVE5C?=
+ =?utf-8?B?Umw2T2lzK0tkbGx5azdlRW1XdzgyemZ1NzlOR0tVVGkvaDNMQVgzWUJPeHVT?=
+ =?utf-8?B?cGRSalhRTXV1ZENGeVk3VC9VSll4YTBDaEpoYnlvVjVkL3gxV0Z4TUdQZTQ2?=
+ =?utf-8?B?bXJEa0hLZVpYWXFpcTNRc09lVkRhTHRPUUp3cmJFb0N1Y09YVnRnaXlvbjN6?=
+ =?utf-8?Q?385Q=3D?=
+X-OriginatorOrg: suse.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ddcd21bf-da40-4c63-e490-08dbd666cace
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB8465.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2023 21:01:58.5351
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: f7a17af6-1c5c-4a36-aa8b-f5be247aa4ba
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1syBj6ISOidVON07+4Z5R61v5eNB7JorN5PMWPAOMuLcMb+HwyDWEZAXas0JURKI
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB7186
 
-On Intel the various resource director technology (RDT) features are all
-orthogonal and independently enumerated. Thus it is possible to have
-a system that  provides "total" memory bandwidth measurements without
-providing "local" bandwidth measurements.
 
-If local bandwidth measurement is not available, do not give up on
-providing the "mba_MBps" feedback option completely, make the code fall
-back to using total bandwidth.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
-Change since v2:
+On 2023/10/27 00:30, Holger Hoffstätte wrote:
+> On 2023-10-26 15:31, Sam James wrote:
+>> 'btrfs: scrub: fix grouping of read IO' seems to intorduce a
+>> -Wmaybe-uninitialized warning (which becomes fatal with the kernel's
+>> passed -Werror=...) with 6.5.9:
+>>
+>> ```
+>> /var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/fs/btrfs/scrub.c: In function ‘scrub_simple_mirror.isra’:
+>> /var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/fs/btrfs/scrub.c:2075:29: error: ‘found_logical’ may be used uninitialized [-Werror=maybe-uninitialized[https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmaybe-uninitialized]]
+>>   2075 |                 cur_logical = found_logical + BTRFS_STRIPE_LEN;
+>> /var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/fs/btrfs/scrub.c:2040:21: note: ‘found_logical’ was declared here
+>>   2040 |                 u64 found_logical;
+>>        |                     ^~~~~~~~~~~~~
+>> ```
+> 
+> Good find! found_logical is passed by reference to 
+> queue_scrub_stripe(..) (inlined)
+> where it is used without ever being set:
+> 
+> ...
+>      /* Either >0 as no more extents or <0 for error. */
+>      if (ret)
+>          return ret;
+>      if (found_logical_ret)
+>          *found_logical_ret = stripe->logical;
+>      sctx->cur_stripe++;
+> ...
+> 
+> Something is missing here, and somehow I don't think it's just the 
+> top-level
+> initialisation of found_logical.
 
-Babu doesn't like the global variable. So here's a version without it.
+This looks like a false alert for me.
 
-Note that my preference is still the v2 version. But as I tell newbies
-to Linux "Your job isn't to get YOUR patch upstream. You job is to get
-the problem fixed.".  So taking my own advice I don't really mind
-whether v2 or v3 is applied.
+@found_logical is intentionally uninitialized to catch any uninitialized 
+usage by compiler.
 
- arch/x86/kernel/cpu/resctrl/monitor.c  | 43 ++++++++++++++++++--------
- arch/x86/kernel/cpu/resctrl/rdtgroup.c |  2 +-
- 2 files changed, 31 insertions(+), 14 deletions(-)
+It would be set by queue_scrub_stripe() when there is any stripe found.
 
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index f136ac046851..29e86310677d 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -418,6 +418,20 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
- 	return 0;
- }
- 
-+/*
-+ * For legacy compatibility use the local memory bandwidth to drive
-+ * the mba_MBps feedback control loop. But on platforms that do not
-+ * provide the local event fall back to use the total bandwidth event
-+ * instead.
-+ */
-+static enum resctrl_event_id pick_mba_mbps_event(void)
-+{
-+	if (is_mbm_local_enabled())
-+		return QOS_L3_MBM_LOCAL_EVENT_ID;
-+
-+	return QOS_L3_MBM_TOTAL_EVENT_ID;
-+}
-+
- /*
-  * mbm_bw_count() - Update bw count from values previously read by
-  *		    __mon_event_count().
-@@ -431,9 +445,11 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
-  */
- static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
- {
--	struct mbm_state *m = &rr->d->mbm_local[rmid];
-+	enum resctrl_event_id mba_mbps_evt_id = pick_mba_mbps_event();
- 	u64 cur_bw, bytes, cur_bytes;
-+	struct mbm_state *m;
- 
-+	m = get_mbm_state(rr->d, rmid, mba_mbps_evt_id);
- 	cur_bytes = rr->val;
- 	bytes = cur_bytes - m->prev_bw_bytes;
- 	m->prev_bw_bytes = cur_bytes;
-@@ -518,6 +534,7 @@ void mon_event_count(void *info)
-  */
- static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
- {
-+	enum resctrl_event_id mba_mbps_evt_id = pick_mba_mbps_event();
- 	u32 closid, rmid, cur_msr_val, new_msr_val;
- 	struct mbm_state *pmbm_data, *cmbm_data;
- 	u32 cur_bw, delta_bw, user_bw;
-@@ -526,14 +543,14 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
- 	struct list_head *head;
- 	struct rdtgroup *entry;
- 
--	if (!is_mbm_local_enabled())
-+	if (!is_mbm_enabled())
- 		return;
- 
- 	r_mba = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
- 
- 	closid = rgrp->closid;
- 	rmid = rgrp->mon.rmid;
--	pmbm_data = &dom_mbm->mbm_local[rmid];
-+	pmbm_data = get_mbm_state(dom_mbm, rmid, mba_mbps_evt_id);
- 
- 	dom_mba = get_domain_from_cpu(smp_processor_id(), r_mba);
- 	if (!dom_mba) {
-@@ -553,7 +570,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
- 	 */
- 	head = &rgrp->mon.crdtgrp_list;
- 	list_for_each_entry(entry, head, mon.crdtgrp_list) {
--		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
-+		cmbm_data = get_mbm_state(dom_mbm, entry->mon.rmid, mba_mbps_evt_id);
- 		cur_bw += cmbm_data->prev_bw;
- 		delta_bw += cmbm_data->delta_bw;
- 	}
-@@ -595,7 +612,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
- 	 */
- 	pmbm_data->delta_comp = true;
- 	list_for_each_entry(entry, head, mon.crdtgrp_list) {
--		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
-+		cmbm_data = get_mbm_state(dom_mbm, entry->mon.rmid, mba_mbps_evt_id);
- 		cmbm_data->delta_comp = true;
- 	}
- }
-@@ -621,15 +638,15 @@ static void mbm_update(struct rdt_resource *r, struct rdt_domain *d, int rmid)
- 		rr.evtid = QOS_L3_MBM_LOCAL_EVENT_ID;
- 		rr.val = 0;
- 		__mon_event_count(rmid, &rr);
--
--		/*
--		 * Call the MBA software controller only for the
--		 * control groups and when user has enabled
--		 * the software controller explicitly.
--		 */
--		if (is_mba_sc(NULL))
--			mbm_bw_count(rmid, &rr);
- 	}
-+
-+	/*
-+	 * Call the MBA software controller only for the
-+	 * control groups and when user has enabled
-+	 * the software controller explicitly.
-+	 */
-+	if (is_mba_sc(NULL))
-+		mbm_bw_count(rmid, &rr);
- }
- 
- /*
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 69a1de92384a..0c4f8a1b8df0 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -2294,7 +2294,7 @@ static bool supports_mba_mbps(void)
- {
- 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
- 
--	return (is_mbm_local_enabled() &&
-+	return (is_mbm_enabled() &&
- 		r->alloc_capable && is_mba_linear());
- }
- 
--- 
-2.41.0
+If there is no stripe found, queue_scrub_stripe() would return >0, then 
+we know there is no more extent and break the loop.
+If there is any error, we error out too, thus no problem with that.
 
+So to me this looks like a false alert.
+
+Mind to share the compiler and its version?
+
+Thanks,
+Qu
+> 
+> -h
