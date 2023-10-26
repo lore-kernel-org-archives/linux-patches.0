@@ -1,162 +1,121 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F76163
-	for <patches@lists.linux.dev>; Thu, 26 Oct 2023 00:20:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9AB199
+	for <patches@lists.linux.dev>; Thu, 26 Oct 2023 01:23:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MYik67gz"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698279623; x=1729815623;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=PbtOIKhqSb9anV/QE8snBXCsQjEd+yqLFJl8YHIKbMg=;
-  b=MYik67gzMGoHjI/HNSzfPGk6S7rOYyYb2IVwVEUkVm4PMvHSpKvdCXD3
-   sVSN0hvgnQT5JqNM2qoT8qIpHZ/apUDIufQBa0q8Kw8EXelGj40Sleapy
-   dqDyxM1cUjd4ULc51zPoGnU/AhvalZrpTFS6krtMmzaOl1fwWHXnvDtB9
-   u147oLP42QXVEW5sXRpRm0xBgqNiudB5Z4CAEID5A98JEaj9MMmDVJyqa
-   YQmhh2fQhSFA+ZmzVjEaol8X5cP4ywk6pqYFXudwqce/69sj7NwtS0CxO
-   Bt4uP3ILZqMH4z4mG8iBnlOSmX3w8ugirp0qsbHulydimk8qfkzfCZ5gK
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10874"; a="6045553"
-X-IronPort-AV: E=Sophos;i="6.03,252,1694761200"; 
-   d="scan'208";a="6045553"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2023 17:20:09 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10874"; a="788300604"
-X-IronPort-AV: E=Sophos;i="6.03,252,1694761200"; 
-   d="scan'208";a="788300604"
-Received: from zhiquan-linux-dev.bj.intel.com ([10.238.156.102])
-  by orsmga008.jf.intel.com with ESMTP; 25 Oct 2023 17:20:05 -0700
-From: Zhiquan Li <zhiquan1.li@intel.com>
-To: x86@kernel.org,
-	linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	bp@alien8.de,
-	mingo@kernel.org,
-	tony.luck@intel.com,
-	naoya.horiguchi@nec.com
-Cc: dan.carpenter@linaro.org,
-	zhiquan1.li@intel.com,
-	Youquan Song <youquan.song@intel.com>
-Subject: [PATCH v5] x86/mce: Mark fatal MCE's page as poison to avoid panic in the kdump kernel
-Date: Thu, 26 Oct 2023 08:39:03 +0800
-Message-Id: <20231026003903.382885-1-zhiquan1.li@intel.com>
-X-Mailer: git-send-email 2.25.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I/UcB93L"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-5a8628e54d4so3356627b3.0
+        for <patches@lists.linux.dev>; Wed, 25 Oct 2023 18:23:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698283388; x=1698888188; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=u8mIrYZi0yJBTkfE0I4Tn+5fir+dZ0INB4+AMiyws7E=;
+        b=I/UcB93LmzOhNRfXtQuOf/DJilLh0W9vHfgErGQSCzs9K4CaO8l4G2sDjM2JQIV84d
+         8y7lrXS03gbJ2CQent3Q1LSl5lNtHbeKrhOuP2mcUGq7I+GS52+SiB11/SqxY525QlNm
+         aTsc4GlQjR/qes7ZvDZtyOYNu5b2T8n29zqx9dV3caAltMEAs51WXbV+73ZUIQemdMsY
+         m/1W/jU0ZRc9L+Fh04FCOtb+vuPWF6IAF/quHpGT5bkhrG84OW2L0V+VxxYf5WhR5QPF
+         bPaGaxI0h/0nkX8ht39bM5Ah54uZ2tFLJSBQlMfk7C3hFiFlgQ62bBkB7JlGdJUey4lC
+         ZjSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698283388; x=1698888188;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u8mIrYZi0yJBTkfE0I4Tn+5fir+dZ0INB4+AMiyws7E=;
+        b=v0olrEzbwiCe/XZFQ/47JRt++hsTZIBUzfy19vQ4V6lyHW4LsUEeSlm2S61tdAw4k4
+         IEONaJ/mKMiCDSwzyiOssj3LzFCvQCsc+B9z7CTsNZd8J3cP2CbaTYMlnWWXVFwL6Rjn
+         YpOYYWbfVo6gvrkItGwq+cftHN5TwHHkorcvBf/dfttj6ixqBc2SooEfI6TtyRJH4C+x
+         zW46vbpRQ+txx1d9f3BMoNRnoy3xZ5UQZmf56PmRxLnzpmZjsKJ3JhAp2xk4xZHvUhjx
+         +/6B2ALnF7LskwFTm04O41ab4GI/piZq3a9dGZAYfGHlKY7j/T5Wewpwo9e8XaCQxvFa
+         LrGQ==
+X-Gm-Message-State: AOJu0YyTQufsts84rgIZhnWyxqOPbUrB602lAzd70q/SVZqy0zS3T76x
+	gYaZDq0NauTU1vYC/hbaUiAkWOL7vAo=
+X-Google-Smtp-Source: AGHT+IGwukaFvT8vY/voibhmBVtjgWzcSiUUw9BiDcENmNzE9Khnzsip0n0ndTjeCqA7hU1ggCVOIQ==
+X-Received: by 2002:a05:690c:d89:b0:5a7:c887:43bd with SMTP id da9-20020a05690c0d8900b005a7c88743bdmr3072178ywb.15.1698283388461;
+        Wed, 25 Oct 2023 18:23:08 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id b190-20020a0dd9c7000000b005a23ab90366sm5535995ywe.11.2023.10.25.18.23.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Oct 2023 18:23:08 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <757599b5-aa8d-3915-230e-cea920aa0084@roeck-us.net>
+Date: Wed, 25 Oct 2023 18:23:04 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: renesas_sdhi problems in 5.10-stable was Re: [PATCH 5.10 000/226]
+ 5.10.198-rc1 review
+Content-Language: en-US
+To: Pavel Machek <pavel@denx.de>, Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ niklas.soderlund+renesas@ragnatech.se, yoshihiro.shimoda.uh@renesas.com,
+ biju.das.jz@bp.renesas.com, Chris.Paterson2@renesas.com,
+ stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, jonathanh@nvidia.com, f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, linux-reneas-soc@vger.kernel.org,
+ Linux MMC List <linux-mmc@vger.kernel.org>
+References: <ZSRe78MAQwbBdyFP@duo.ucw.cz> <ZSUy+zA0+Chm6dFb@duo.ucw.cz>
+ <ZSU+GHl1q7T/TBp5@duo.ucw.cz> <ZSWg1fv3gOyV5t+h@shikoro>
+ <2023101057-runny-pellet-8952@gregkh> <ZTgZa1ic1iFbdaTM@duo.ucw.cz>
+ <CAMuHMdXQApuOPfU1zNKcHKN5=fCuLBSDiLtF06U7e4Tx0+noyA@mail.gmail.com>
+ <CAMuHMdVrdmBgopnPnJK_ij52wz2WVBdYRHur2KfosFnT945ULw@mail.gmail.com>
+ <CAMuHMdWZvTGrFgx_o3g3usOwkDvD2rw5QH9_ibo=OKdw17sAzg@mail.gmail.com>
+ <CAMuHMdXvpiGQ7jqAG69Zo=10wV-E0bioC9AYUHwwhRGmLXygWA@mail.gmail.com>
+ <ZTmP+WuZGKQQiYzb@duo.ucw.cz>
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <ZTmP+WuZGKQQiYzb@duo.ucw.cz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Memory errors don't happen very often, especially fatal ones. However,
-in large-scale scenarios such as data centers, that probability
-increases with the amount of machines present.
+On 10/25/23 15:00, Pavel Machek wrote:
+> Hi!
+> 
+>>>>> I don't have a HopeRun HiHope RZ/G2M, but both v5.10.198 and v5.10.199
+>>>>> seem to work fine on Salvator-XS with R-Car H3 ES2.0 and Salvator-X
+>>>>> with R-Car M3-W ES1.0, using a config based on latest renesas_defconfig.
+>>>>
+>>>> Sorry, I looked at the wrong log on R-Car M3-W.
+>>>> I do see the issue with v5.10.198, but not with v5.10.199.
+>>>
+>>> It seems to be an intermittent issue. Investigating...
+>>
+>> After spending too much time on bisecting, the bad guy turns out to
+>> be commit 6d3745bbc3341d3b ("mmc: renesas_sdhi: register irqs before
+>> registering controller") in v5.10.198.
+> 
+> Thanks for bisection, let me take a look.
+> 
+> I reverted 6d3745bbc3341d3b on top of 5.10.199 and that solved my
+> issues:
+> 
+> https://gitlab.com/cip-project/cip-kernel/linux-cip/-/pipelines/1049624365
+> 
+> (Strange thing is I seen a failure on qemu this fixed, too. I guess
+> that must be some kind of glitch).
+> 
 
-When a fatal machine check happens, mce_panic() is called based on the
-severity grading of that error. The page containing the error is not
-marked as poison.
+qemu interrupt timing is different, which can result in exposing race
+conditions which are not seen with real hardware. Plus, of course, there
+is always the possibility that the qemu emulation is buggy.
 
-However, when kexec is enabled, tools like makedumpfile understand when
-pages are marked as poison and do not touch them so as not to cause
-a fatal machine check exception again while dumping the previous
-kernel's memory.
+What is your qemu command line ? I'd like to add it to my tests if possible.
 
-Therefore, mark the page containing the error as poisoned so that the
-kexec'ed kernel can avoid accessing the page.
-
-Co-developed-by: Youquan Song <youquan.song@intel.com>
-Signed-off-by: Youquan Song <youquan.song@intel.com>
-Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
-Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-
----
-
-V4: https://lore.kernel.org/all/20231023042237.173290-1-zhiquan1.li@intel.com/
-
-V4 -> V5:
-- Fixed the bug reported by Dan Carpenter, that was introduced at V3.
-  Link: https://lore.kernel.org/all/12eb6db6-bc24-4e7c-af34-a5c68d49d52a@moroto.mountain/
-- Many thanks to Boris for re-writing the commit message and comment.
-
-V3: https://lore.kernel.org/all/20231014051754.3759099-1-zhiquan1.li@intel.com/
-
-V3 -> V4:
-- Rebased to v6.6-rc7.
-- Added the check if kexec is enabled highlighted by Boris.
-- Re-wrote the commit message suggested by Tony.
-
-V2: https://lore.kernel.org/all/20230914030539.1622477-1-zhiquan1.li@intel.com/
-
-V2 -> V3:
-- Rebased to v6.6-rc5.
-- Moved the logic of function mce_set_page_hwpoison_now() into
-  mce_panic().
-- Explained full scenario in commit message per Boris's suggestion.
-- Included Ingo's fixes.
-  Link: https://lore.kernel.org/all/ZRsUpM%2FXtPAE50Rm@gmail.com/
-
-V1: https://lore.kernel.org/all/20230127015030.30074-1-tony.luck@intel.com/
-
-V1 -> V2:
-- Revised the commit message as per Naoya's suggestion.
-- Replaced "TODO" comment in code with comments based on mailing list
-  discussion on the lack of value in covering other page types.
-- Added the tag from Naoya.
-  Link: https://lore.kernel.org/all/20230327083739.GA956278@hori.linux.bs1.fc.nec.co.jp/
----
- arch/x86/kernel/cpu/mce/core.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index 6f35f724cc14..20ab11aec60b 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -44,6 +44,7 @@
- #include <linux/sync_core.h>
- #include <linux/task_work.h>
- #include <linux/hardirq.h>
-+#include <linux/kexec.h>
- 
- #include <asm/intel-family.h>
- #include <asm/processor.h>
-@@ -233,6 +234,7 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
- 	struct llist_node *pending;
- 	struct mce_evt_llist *l;
- 	int apei_err = 0;
-+	struct page *p;
- 
- 	/*
- 	 * Allow instrumentation around external facilities usage. Not that it
-@@ -286,6 +288,20 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
- 	if (!fake_panic) {
- 		if (panic_timeout == 0)
- 			panic_timeout = mca_cfg.panic_timeout;
-+
-+		/*
-+		 * Kdump skips the poisoned page in order to avoid
-+		 * touching the error bits again. Poison the page even
-+		 * if the error is fatal and the machine is about to
-+		 * panic.
-+		 */
-+		if (kexec_crash_loaded()) {
-+			if (final && (final->status & MCI_STATUS_ADDRV)) {
-+				p = pfn_to_online_page(final->addr >> PAGE_SHIFT);
-+				if (p)
-+					SetPageHWPoison(p);
-+			}
-+		}
- 		panic(msg);
- 	} else
- 		pr_emerg(HW_ERR "Fake kernel panic: %s\n", msg);
--- 
-2.25.1
+Thanks,
+Guenter
 
