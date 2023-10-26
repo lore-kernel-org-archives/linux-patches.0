@@ -1,284 +1,172 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2054.outbound.protection.outlook.com [40.107.243.54])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E516C1D52B
-	for <patches@lists.linux.dev>; Thu, 26 Oct 2023 22:40:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F85314F9D
+	for <patches@lists.linux.dev>; Thu, 26 Oct 2023 22:59:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="5Vqvqt4+"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RtQxDMeW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1698361177; x=1729897177;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=lmJG963th2RuE19bKfJAFgWgnygZggBBnEgwPeRyifI=;
+  b=RtQxDMeWvTXjkLD1W9mJSttobSK/Hlz/aP8+2TBE7chrgnZDnqyBu37z
+   bajNuxnU2wkIaLu89BItJCT6iHQfjuOLuCkTsVyLOvwOu4HIPdedZyYIV
+   Kb2atCA+8BUp4zH4988hQlrFsLq2L2Ycanpbo8cEVVTPQVV4AH5ZDdv9N
+   DoUkG9/92riBrZWl/S0WReuAKBNnutH1Qdzaj4H7iKV0ZBV2Nh7W9uHhw
+   9cgoncFbMAI4dDwHxgiPjoKJj9dSFrhggOYevtJKCwS+WHIhsQedcgt6c
+   V7nzmdrBYBUgeV19O5cGCKx4f+KpoFhZ8qu+g8oEPz5Lz5gNU5hYFIr2O
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10875"; a="378034894"
+X-IronPort-AV: E=Sophos;i="6.03,254,1694761200"; 
+   d="scan'208";a="378034894"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Oct 2023 15:59:36 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10875"; a="850066902"
+X-IronPort-AV: E=Sophos;i="6.03,254,1694761200"; 
+   d="scan'208";a="850066902"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+  by FMSMGA003.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 26 Oct 2023 15:59:35 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.34; Thu, 26 Oct 2023 15:59:35 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.34; Thu, 26 Oct 2023 15:59:34 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.34 via Frontend Transport; Thu, 26 Oct 2023 15:59:34 -0700
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (104.47.57.41) by
+ edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.32; Thu, 26 Oct 2023 15:59:34 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AVXhjvoWUFp5dR1hmjqTYWcEP/Sf/i94aoQ4+VugAkqWKpdSLSkQdZtjeV+cafmzoo3lW2WVXyl/oAEdLKclns33z6UIOyH/LtITqFS6RmjDDZAnD0ntUPvSEjttRYCz232uuJcPL5OJdznDw+cZkNeRXAueHkS1HG4VsIKd3hBOuiUrJs2PE5/fqdEs654RIWJ4R6SY+WxwbErnQAHSIvowdRcHCaaGE1my1iRSHMdlA4d6iMNw2+UWgtnEMv4le9VrPyW+n1gzLLefgzAuWqUdbfZ/cot2l4wzq4K3aLrycbnLc5YEwYKhqp1rerSTzpK/0Z3sgkCu2Y1tNmiVpg==
+ b=PE5JueVaTvkUPZtZhniFoxEa7Z7h5y0NstPcru9BOfBftMmD0wfOEMQB1p4GyyrUAiUORG9DO0Gg1IEikCoFZ/Br1jd2QMhL6U8elTrPpCTMDUl7SKTxmOFoqYLgqwAI3iU4+9vd2jbmqz5ckmMOzjn3xOr82M8NJdRLDifszXPbP5U7kbPbmf53toxJ9YBwsZkbfqbk1tM0FOG3XfHGXKe7+w5hn0TDIP5uOKxIsbpsiXS9e1Aom+WgrPKpzr6NmjWtRvs7AdWEOi/A9IJ5i3IkGGxEzTjPBGEO92VIB/twcyoPOTvYrgnW3OYfjh6bnIPJe1zYoIyTMxtvnDm0nA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=d3Tda/ZvMRc4T5IM9oz76YDeinAIKHlQ+eTTKBDrLD4=;
- b=l1u8XhSC1DJdEjoR19RqlTIzTxNwxs3R6ayAeXXom3lEs9rTabkdDXNun0kaqrusRxiexKpvt0X/ks+kiYCJJsN2OlpuCn+bsBWE4cposuJgLuxXb5PTCM7+RefS05MWKlFiXf2u70CyqLGaMqFA0JVjOLd/6an0I3VgrWJBnIdwfJgPJeDy878d0asNuIOFaR6MYP7j87shs76TZr8k/1fomKyd+UstRv7SoXzpe7YbpVAaR6woiHcli6Xh3RoXlvDmCDV3TuwhMCIk53ZohS/v7RyQinH7TjSvZ2AtUG//qwRFT4XvWh0FNbUBBPJNCfaOSjQAMFR+Y0Vvb5qGlQ==
+ bh=lmJG963th2RuE19bKfJAFgWgnygZggBBnEgwPeRyifI=;
+ b=R2yg7kQki0vRYQTOjParbLI7LHkNt8DQH7T1xEojXcnyDTxOsaHokcKpwGW6BkBeVrGdQ0V7TFMPEwwNAbhjPawCuI0Zs3YVlZcmfpwVWnzkwBcIY2rX+CeMmF+x7Sah7dicQOVJFUI+4RQ3t+KIiRe/fJLEXzibhI4xSjuzzAioPp2R0dSx7Na6uTtwONyMx67aYNeKRrHbp8YT9RnN8tUF4wIVvzPatXYrySlCWgeG8Yw0h4u+xV06TWyTKKPa/DGhFpVxkrL6o48X84aDIMMip6rlC4dbeaW+M2+swrEh80azkn/klg4MmtqFCpgzlKjLeWz5foPEutUMUTXFyg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=d3Tda/ZvMRc4T5IM9oz76YDeinAIKHlQ+eTTKBDrLD4=;
- b=5Vqvqt4+s1QWBKGPRK3H6de3v0jH1gpql2GCCqqZV7d+6F5/W21Dwi6/sBMkzRd04G05u+UFtKT6N8Ke72Qo0aFXVrQihsM6AIAweH1vfl+ttOLExm1O27+0FeoSOCNNYplWvdlMGmtyPjvvcUdWYoaBehDD7QxqnFX+t14IcIU=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
- by MW3PR12MB4524.namprd12.prod.outlook.com (2603:10b6:303:2d::12) with
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
+ by BY1PR11MB8006.namprd11.prod.outlook.com (2603:10b6:a03:52d::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6933.19; Thu, 26 Oct
- 2023 22:40:28 +0000
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::1e4c:5da0:33ed:ff3a]) by MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::1e4c:5da0:33ed:ff3a%7]) with mapi id 15.20.6933.019; Thu, 26 Oct 2023
- 22:40:28 +0000
-Message-ID: <a03e5f5e-ac9c-f8b1-0260-d58ede569d67@amd.com>
-Date: Thu, 26 Oct 2023 17:40:25 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Reply-To: babu.moger@amd.com
-Subject: Re: [PATCH v3] x86/resctrl: mba_MBps: Fall back to total b/w if local
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6907.33; Thu, 26 Oct
+ 2023 22:59:32 +0000
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::3ffb:89e2:2724:4c5]) by SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::3ffb:89e2:2724:4c5%2]) with mapi id 15.20.6907.025; Thu, 26 Oct 2023
+ 22:59:32 +0000
+From: "Luck, Tony" <tony.luck@intel.com>
+To: "babu.moger@amd.com" <babu.moger@amd.com>, "Yu, Fenghua"
+	<fenghua.yu@intel.com>, "Chatre, Reinette" <reinette.chatre@intel.com>,
+	"Peter Newman" <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, "x86@kernel.org" <x86@kernel.org>
+CC: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
+	<james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, Randy Dunlap
+	<rdunlap@infradead.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
+	<linux-doc@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>
+Subject: RE: [PATCH v3] x86/resctrl: mba_MBps: Fall back to total b/w if local
  b/w unavailable
-Content-Language: en-US
-To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>,
- Reinette Chatre <reinette.chatre@intel.com>,
- Peter Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
- Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org
-Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
- <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
- Babu Moger <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
- linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- patches@lists.linux.dev
+Thread-Topic: [PATCH v3] x86/resctrl: mba_MBps: Fall back to total b/w if
+ local b/w unavailable
+Thread-Index: AQHaCEddvpO8kujzW0Wys14hXinuwrBcqkOAgAADlJA=
+Date: Thu, 26 Oct 2023 22:59:32 +0000
+Message-ID: <SJ1PR11MB6083C75727F30800AFC7A1C9FCDDA@SJ1PR11MB6083.namprd11.prod.outlook.com>
 References: <20231025235046.12940-1-tony.luck@intel.com>
  <20231026200214.16017-1-tony.luck@intel.com>
-From: "Moger, Babu" <bmoger@amd.com>
-In-Reply-To: <20231026200214.16017-1-tony.luck@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SA1PR03CA0003.namprd03.prod.outlook.com
- (2603:10b6:806:2d3::14) To MW3PR12MB4553.namprd12.prod.outlook.com
- (2603:10b6:303:2c::19)
+ <a03e5f5e-ac9c-f8b1-0260-d58ede569d67@amd.com>
+In-Reply-To: <a03e5f5e-ac9c-f8b1-0260-d58ede569d67@amd.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|BY1PR11MB8006:EE_
+x-ms-office365-filtering-correlation-id: 597c9315-e2a4-45ff-32b7-08dbd677376e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 20+fyRsWCNLZF9NqjdukY4LembRg/XIkydX9iiB0/Ky/SdB4yv3DwFX+bqOszA1jLD72LdAC+IGcdSvH7tZtHl0lBDQstTTJ8ZKPCm5GIE2xU/9ysnkF9R6W89+jVLEcdv7QXX4wgiVtGSToMK2o8jxoE8np3ojeHdXBpCiObIRAPRoXjC+Xs7Y0IqTVk0ph/nsxkPDBZA1UEVslpTSty+jsPnf7vvFutZaEaFuwFYQvVBwkfWa5SsYngccK92rbMsiaj+2XKus6Kz+ij6y8OU0Ze3LBcRDy+h6f6zUcok47pYXpgFyTwYy6q4lLG1bN6D43jCNEnXy5TUxkF/dxAaPhAJ37gAvj3OBQbQ/US2n5EYt0bbh6XphV3WqAF3x+FSRNgVBLHNwmMsFAkK+zJbPPA7Wy+H1zo6lodnCv5QUUyXakATuO5BPkoZvS6QP9T6DpO3QjV2BtKpjFtBJuKLnAedQcyJ67FG/RddT+eySlg9QJq60/H7vGGV/u7jWLlJ5WfE46olL3F0fTZIhT46NlenCEXQN/8LbhUkdaXa1q+cyTO2YDqk6w4dEfwxhzUkf94W1pJyjflabgSeY1OKFAACWHXJcLSDaewrE0mKkG9UsdbLf7ue/JwKYqyroR
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(366004)(346002)(376002)(136003)(39860400002)(230922051799003)(451199024)(64100799003)(186009)(1800799009)(55016003)(4744005)(41300700001)(2906002)(38100700002)(122000001)(110136005)(52536014)(316002)(64756008)(66556008)(76116006)(82960400001)(66946007)(66476007)(478600001)(6506007)(7696005)(66446008)(71200400001)(9686003)(54906003)(86362001)(7416002)(4326008)(8676002)(33656002)(5660300002)(8936002)(26005)(38070700009);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Zmk3N3VCUytWMVgxYkF1cldUa2hsZ0xZN2VwZTI4YjVNRjlPbG5TQjc0TlRG?=
+ =?utf-8?B?WkFGTk5yRDhtTGRqb3QxZDNpMGlhR25QOHB6RjRlNENYYldWWk5SSU5XYXUw?=
+ =?utf-8?B?aU1ZVUhmWm1sRHBPcVJEQWhUSEpKVVpJclhmd2hWbG9FaHFMY3Bocm5LQm1O?=
+ =?utf-8?B?WWZCTnkxYlNkS0h6ZVQ2b25uTUFFRmQrdGNCREZtSlRUQVdJWU9EcUtzc1ZL?=
+ =?utf-8?B?QURhVTZiOFRPcTlheDREaXRqZUJaY1lwQ1NTTkxCTWpyTzlLSWhPYm55dExy?=
+ =?utf-8?B?OTVHYjZzY0p4Z09QUE4vczdiUVVCaHU4Mjl5R1dzOFhIdFQ0dzZDQzNtYjYx?=
+ =?utf-8?B?a3IvanpzYk55ekdodyt4a2Z5M3AwQlNTYXVuRVdyQ0s3bjdpdWRjRW41VDht?=
+ =?utf-8?B?VS9haTNzdnlRbzJ0T0kvcml4WHJOYmtGWnVkQnFSNHduY25lSDdRc1hBYjlU?=
+ =?utf-8?B?NGh2N2dtbEYyU0QwYW9JaTlEZ2puWkp5cG5KQzB3U0ova21OaHl5UDZrWlJ4?=
+ =?utf-8?B?eHZPR0J3MHU5MWs0Vnk1UXU0SjZLWlpiLy80UXNZQ21ydllzVDVIalhPOENx?=
+ =?utf-8?B?bjZEazRoVWZ6emg1Wk5Zcm1wY3VneTNITDRtU0x6Rm9XcVlkeHhQUXlFdVhz?=
+ =?utf-8?B?akQ1VVRydENuQU5IRVR3c0JDcHRsZXJ6SWxoUTFXUzR5RFhtSkUyaldRakZ5?=
+ =?utf-8?B?aE85UWwyZzF5WnpqeFBlRUFOeDhXdHp0UjlRelQ3aWJvOWNqTHY4S3l6bk96?=
+ =?utf-8?B?Y0lGSEc5b09CTmxnak5QOC93RHdQdE9jZjR5b3R6eWJRa1RqWjI0NStrMVQ5?=
+ =?utf-8?B?NC9Xb1ZhV3dWNXRhbisvU3UyVFF4WjRGTHRUdzFSS0tiVUUzcDZzemErY0Fn?=
+ =?utf-8?B?SWo1OTRJSGFkMDkrWGxxUXo1MnVIZFJpbTVqQWNGRnVzeVVETHBaL09zMnlp?=
+ =?utf-8?B?ZjIxcG80cURXZmc4cHV1MGx2R2NPVG5QSWR3K1MvK05qK0gzMjFsaUtaK1dl?=
+ =?utf-8?B?ZS81YWhrRkVyMUY5UHFMNjhCcWRiWHZCbWFMb2h3WTRISHNHa3hKazk2Mm95?=
+ =?utf-8?B?OUE5TEFUMUEvYWVYZWtncC9xWUVUaXhMeXVlSERmYzE5QVFqWFluYlFrWHJT?=
+ =?utf-8?B?RzZxMCs1MnM3c0RJNmt4bDl3ZUZ4TTJqb2tqOVNRWWErdHd1a0tQUm15RWxW?=
+ =?utf-8?B?UnNuYy9OTzQwOEhTZndmdTErSzB0WFdrdDdVR2VKTlpGV2tJNlN5SCtMTFdn?=
+ =?utf-8?B?ZG54MHZmNDNRVnFmQnQ4S2pWd2NsS0pQN3YrQ2pKVDkwUzYvS05TdXNpRUVZ?=
+ =?utf-8?B?YU1pa0Jpa3hGa1JMVlc5SS9RbU5tcmVWZUozRzFDQysvbUJSQWI0MVpuczFP?=
+ =?utf-8?B?MEZKajR4SlFDNzZYdjRBZm82OWRQTzJ4RTVSQVZyc21BRFJxVktPOUc5bnVB?=
+ =?utf-8?B?TTEwcTI5S3J5bGY0UzczT3plSkEvVndSdFFITG1iT0xoWkpmNzVtZExnUWs3?=
+ =?utf-8?B?UmwrekQ1UmtHR1Npdm9pSUJrRmFydDFoMlExUTY4WVF1aDdnTlFvdTY3QlQ3?=
+ =?utf-8?B?N3k1N3p4NkR2TmZsRC9DM3VnYkJmWitEK1JKYUVuTzM3UDgveEY1NFl5QUtO?=
+ =?utf-8?B?ZVBQNFpXTWFINUZlMERNdE9JaE4yQkFBSmlWdldHYnpVd01QMThkL3VGVTVm?=
+ =?utf-8?B?dmlvaFZxdHFDV05BZDRWcFJUMDJTY2JCR1VYVGRLb0tLM2lWdGtNOGY5amdN?=
+ =?utf-8?B?QlF5VkkxZDZCYUp5OENTSEYxUmdOZ3cxd0x4eG4yc2VCUThKV3hSb1RVUE1G?=
+ =?utf-8?B?eWZYWjN6Q2Y2MUxCUm41cTVDcXRuaFJidGY2aDVOejl4M1Q3V3lENHlhVjRT?=
+ =?utf-8?B?MWxGUVJQdGVyQ3JpVWtTU2lpU3Q4amJnMXBCK29ySlBiWUhqTm42bWF6REs2?=
+ =?utf-8?B?R1dpY3NvamxzVWxGTDNjMmpiVU51ZnIvVndUWTBiUDhXYzdGdkJXSTY5eU1m?=
+ =?utf-8?B?MHE0MFU3L2tpREZTV0FGS1RjT2hSc1dkdlNzdTdEamVlVzZndDZjRHpwNkdl?=
+ =?utf-8?B?SVZmRlgzUVYvN2xWTzgwMTdiR1ZoV2t0c3RreXZiSmNibXlncUhuQW1jYWgz?=
+ =?utf-8?Q?yuCcagG3WWSWkRYmuXT+etwGM?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|MW3PR12MB4524:EE_
-X-MS-Office365-Filtering-Correlation-Id: 757abfe3-0d73-4ae2-8895-08dbd6748d5f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	kF3CpZxC3CUvLtYOJhoxs2EQypF+YohB6Iu5V6pAYnxm9fTtDpfl5RCZDhLxWSUv4/GrpYgYKolLtmnD3hXDPfz/G69BHvDZ4cxaPlZzovQ+nLPHBfVNpWM7rd86tPnT3q9o4z5Ys/u/jbKrjik769DFLniVxyGdQIi0+I43xAD337Lkcb9CSO8nPX2dSwlCoZn/Ohha9QUJchcnGc/4vdqz9SRUhdFxyFXI2ApAdrE+9HREhk8VuuXEz65ubPVUvGzxI+cfvfd6NCa0jDmF+bu8tSFtYs/uxl7rotEPL22U3Gq/aEJzHPUzsj2TpT5e0aWDZnPY1ZlbpFNuRPvstf5LJLD9Y9Guc5ZW16FRDFhgo5NgZ+oPYQPnMHH34xOANWi0WruXY2vCe7YmC6cAOp1x22/1Ma6xSZEirOWbkAJ3CzTumWCbxwOU/hCdci3i7dmi805/BoR3OzTrP19G//r2U1cUyVJ2vB1V0kgSVwABRt6F8ta5RJH3lPrAIuKkthdk7lhjouEjmBeI/6McEJn6Lpnp0MbkXNRBb8AV2XR7UaQNjlfCcwGB8yIKTOrCRZSh6Z+jRzhWQfyxoIbEWXRoYQxTs4V5LppRDBvLgtAJSfcL3ougPt1Lk4r6TzMx7Y6oWlwG5ok7z/CZriZRqQ==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4553.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(346002)(136003)(39860400002)(396003)(366004)(230922051799003)(1800799009)(64100799003)(186009)(451199024)(26005)(110136005)(478600001)(6512007)(316002)(6506007)(54906003)(66946007)(66476007)(66556008)(36756003)(6666004)(2616005)(6486002)(7416002)(83380400001)(38100700002)(8676002)(8936002)(4326008)(2906002)(31686004)(5660300002)(41300700001)(53546011)(31696002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?SEtobDI0VGorOEhnVFVnK0dhaGtEUDYwYnVzODVRUnVEOGxiZzRCK1ZXQjEx?=
- =?utf-8?B?dDhNdEhJMW5iSDlZbTNBSDFXTGJFQUFIclhGa3RoRTZodUVNNnYvZ2dyK1dG?=
- =?utf-8?B?MmkwZWlRVDV0ekFHWWNmaGFjYi9SeWFkeHcyc2JtblRIZlhIU3ZDTjMrdzJY?=
- =?utf-8?B?dTRvQlFydjh3MDcvdE42eEZwS1VJam92OER0emNkOE1IdER2Q3J6dEdNcVNY?=
- =?utf-8?B?eVlqOUg1K003R3RNRjJGbU16czNMQlFFRjB0ZHVhVERLWld6M3oza0FNOERE?=
- =?utf-8?B?MEd1K25KWk94TnVmbVJRc3NKZUdiNkNYb3YxbUQxWmFMR0ljall2T3Y3bmRB?=
- =?utf-8?B?eFVnVGc1VWJKckZyMzJ4KzE2cExzTFRMRE1IWFNZN3VoWXlRRms3WUtZRDhl?=
- =?utf-8?B?UklGbFFZYjJ1K1VaLzVyTldPaGZ3UFh2OWs5SGRYaDBEMDZuQkFha201a2Jv?=
- =?utf-8?B?STEyV0hMUzZtZmliaW80RGpJMzhTdlNCQ2V0OGMwY3VnV0t0Rmt5NXdGdmo2?=
- =?utf-8?B?bEV2TEZsQWRPeFRvTlFSTXFlTmNKTlVON2plcFhrenlMRjFwdTYyVTZaMjRu?=
- =?utf-8?B?bjlvaUpGRmFvN2ZWZVNuUHV5RDlqVnFzQVNYMHptL2JqSlplQkdnS29Rcmt6?=
- =?utf-8?B?V3BKR2E0Vi9oTi80dXJqN0gxUFUxWkJKbWt0eE16MTVjU0NkOVlVUTJuOG1l?=
- =?utf-8?B?d3puU25pNWVoSFhjZzQ5TkpFc1RQTWVVek5xNkNac1JaMFhuK01vZEw3Znl0?=
- =?utf-8?B?UDRwYVExOHQrcTdMWUd4eUpYczNUSk5vTER4MVpwWHpKOEJnb1V6VzZ0eFVW?=
- =?utf-8?B?UHYreGZNejNvcHRORXZ4QjZLWFBnOXcxTEF6U2x4cm1qdEZxbzBSclJ6YTdn?=
- =?utf-8?B?ZlRXd0dLVFZnSEVFamNDbG1xNzZueDIrQjNNa1JQS2RndkpwOGVtbWJsbHJr?=
- =?utf-8?B?TzkvemdSd3dpUk1CakJ0elB5QWhWQUhWb2F4cGNIV2RRaVpab1RnZTBBS0JY?=
- =?utf-8?B?c0V4K29ZVnp3Nk1UdEhIR01ITXJXMi9QQUYxSXN0N1VXK1piaGFCU3FJdlBK?=
- =?utf-8?B?Q3djbnpXU3pEUFV5VExNRXlqYms5ZUdwbmJselB2NUNnZVF6T3ZQOVRUNXJD?=
- =?utf-8?B?aW5oalhaSk9SODd5VERDTjhyS3VPTDg5d1YyN3JnbHdJNURhazVid2g2ejFj?=
- =?utf-8?B?ZkZyY0lGYUlYTHB5K3lwQThxWDdxVzc4U1E2S1VBUUNSNyswQjVGd3hMUWNY?=
- =?utf-8?B?MlZDVG5QbzlHem9vSTFKaUE0aDRRSktKai9QS2ZvelFUWFQ5aGNjaE4rb21T?=
- =?utf-8?B?bkN4Slp2ODlXZFJuR01zNTdnZDE1a1ZneTVRSHB3ZUNPbFNBNFpIYVU3SHkr?=
- =?utf-8?B?cE9NU1BSWFNweEhlR2VPRmQ2Qmg4UHJOT2lOMG84TU9RZWdzK2JNdFB1SmJW?=
- =?utf-8?B?Rm5yem5GeG5BcGNtWFhOM3FBUVM4eDdvaTlKVVpRdDlIc09SNXJUOC9mdW9E?=
- =?utf-8?B?bDRTT3h2MWRLWWl2elVYUlgzbmNiS2ZmRS9FYkFoSE53MXcxcU0wdlpnMGN1?=
- =?utf-8?B?Z25URWVIMGtoZmNBZGtSdWgrL05OZjhKSGNsL1AyNGpJT1hCbWpidTJUVmJM?=
- =?utf-8?B?dk5peEFxTktjeEtYY2lCdnNxZDczZVVMV250VDg3c2s3VFlJZnZtamxxTlhY?=
- =?utf-8?B?dGhpV05aYUVkdEZQbjRIak41M0Z3eW9xQVlDTC9EckgzcGpiR0Jzb2g4ODFS?=
- =?utf-8?B?dWtoUFNvclZ2VmdJSmE3ZTJWODJqaU8xOXhKWkVFeS9EU3JlK0Y5R0ZrM2RR?=
- =?utf-8?B?WVF1VHdHYlRaaUtuMW5QUjVXSmlmMHU3M0lubVdwRVJhTWNkbHQyb25wL0Yr?=
- =?utf-8?B?d1UzekloSmNMb0V4MzJUeDJGaUFMK01zQ3dHeWpzVjl6czdDYkl6N3VESmNq?=
- =?utf-8?B?dnlrTWt4T3dRWjdNSlUzeUh0OXJEVHd3WHZaR0x6d3M1djl3dWRWb3kyZWtp?=
- =?utf-8?B?ZitTS1RPNFNpMG5JL2lBWGtUUlBnNE9vRkJoV3g1MmlBb1U5ZTlPZXU4VGxi?=
- =?utf-8?B?K0hjWkR2WnVPZ2N4VzF3WTZkbjFoL1MySFVnbE1wd3lmek5YWmV2MXllYlQz?=
- =?utf-8?Q?UKeg=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 757abfe3-0d73-4ae2-8895-08dbd6748d5f
-X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2023 22:40:28.0713
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 597c9315-e2a4-45ff-32b7-08dbd677376e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Oct 2023 22:59:32.1910
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 13bQGhv9OCKaQMuIlLK28wV+l5eIOHhu/ziLsKS/hJDXhYS7cuuMpMnP6NOetBQW
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4524
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Gi0EpnF4cNTLMW3tcc888NAPXNIXgrfeT+DIj4CxXNHfo0i03PBBnWAvx4bvx9SP1zGYo3T44gO37XdojTZIYQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY1PR11MB8006
+X-OriginatorOrg: intel.com
 
-Hi Tony,
-
-On 10/26/2023 3:02 PM, Tony Luck wrote:
-> On Intel the various resource director technology (RDT) features are all
-> orthogonal and independently enumerated. Thus it is possible to have
-> a system that  provides "total" memory bandwidth measurements without
-> providing "local" bandwidth measurements.
->
-> If local bandwidth measurement is not available, do not give up on
-> providing the "mba_MBps" feedback option completely, make the code fall
-> back to using total bandwidth.
->
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
-> Change since v2:
->
-> Babu doesn't like the global variable. So here's a version without it.
->
-> Note that my preference is still the v2 version. But as I tell newbies
-> to Linux "Your job isn't to get YOUR patch upstream. You job is to get
-> the problem fixed.".  So taking my own advice I don't really mind
-> whether v2 or v3 is applied.
-Hmm. I like v3 better. Few minor comments below.
->
->   arch/x86/kernel/cpu/resctrl/monitor.c  | 43 ++++++++++++++++++--------
->   arch/x86/kernel/cpu/resctrl/rdtgroup.c |  2 +-
->   2 files changed, 31 insertions(+), 14 deletions(-)
->
-> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-> index f136ac046851..29e86310677d 100644
-> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
-> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-> @@ -418,6 +418,20 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
->   	return 0;
->   }
->   
-> +/*
-> + * For legacy compatibility use the local memory bandwidth to drive
-> + * the mba_MBps feedback control loop. But on platforms that do not
-> + * provide the local event fall back to use the total bandwidth event
-> + * instead.
-> + */
-> +static enum resctrl_event_id pick_mba_mbps_event(void)
-> +{
-> +	if (is_mbm_local_enabled())
-> +		return QOS_L3_MBM_LOCAL_EVENT_ID;
-> +
-> +	return QOS_L3_MBM_TOTAL_EVENT_ID;
-> +}
-> +
->   /*
->    * mbm_bw_count() - Update bw count from values previously read by
->    *		    __mon_event_count().
-> @@ -431,9 +445,11 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
->    */
->   static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
->   {
-> -	struct mbm_state *m = &rr->d->mbm_local[rmid];
-> +	enum resctrl_event_id mba_mbps_evt_id = pick_mba_mbps_event();
-
-How about evt_id instead of mba_mbps_evt_id? It seems pretty mouthful 
-for temp variable.
-
->   	u64 cur_bw, bytes, cur_bytes;
-> +	struct mbm_state *m;
->   
-> +	m = get_mbm_state(rr->d, rmid, mba_mbps_evt_id);
->   	cur_bytes = rr->val;
->   	bytes = cur_bytes - m->prev_bw_bytes;
->   	m->prev_bw_bytes = cur_bytes;
-> @@ -518,6 +534,7 @@ void mon_event_count(void *info)
->    */
->   static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
->   {
-> +	enum resctrl_event_id mba_mbps_evt_id = pick_mba_mbps_event();
-same comment as above.
->   	u32 closid, rmid, cur_msr_val, new_msr_val;
->   	struct mbm_state *pmbm_data, *cmbm_data;
->   	u32 cur_bw, delta_bw, user_bw;
-> @@ -526,14 +543,14 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
->   	struct list_head *head;
->   	struct rdtgroup *entry;
->   
-> -	if (!is_mbm_local_enabled())
-> +	if (!is_mbm_enabled())
->   		return;
->   
->   	r_mba = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
->   
->   	closid = rgrp->closid;
->   	rmid = rgrp->mon.rmid;
-> -	pmbm_data = &dom_mbm->mbm_local[rmid];
-> +	pmbm_data = get_mbm_state(dom_mbm, rmid, mba_mbps_evt_id);
->   
->   	dom_mba = get_domain_from_cpu(smp_processor_id(), r_mba);
->   	if (!dom_mba) {
-> @@ -553,7 +570,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
->   	 */
->   	head = &rgrp->mon.crdtgrp_list;
->   	list_for_each_entry(entry, head, mon.crdtgrp_list) {
-> -		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
-> +		cmbm_data = get_mbm_state(dom_mbm, entry->mon.rmid, mba_mbps_evt_id);
->   		cur_bw += cmbm_data->prev_bw;
->   		delta_bw += cmbm_data->delta_bw;
->   	}
-> @@ -595,7 +612,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
->   	 */
->   	pmbm_data->delta_comp = true;
->   	list_for_each_entry(entry, head, mon.crdtgrp_list) {
-> -		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
-> +		cmbm_data = get_mbm_state(dom_mbm, entry->mon.rmid, mba_mbps_evt_id);
->   		cmbm_data->delta_comp = true;
->   	}
->   }
-> @@ -621,15 +638,15 @@ static void mbm_update(struct rdt_resource *r, struct rdt_domain *d, int rmid)
->   		rr.evtid = QOS_L3_MBM_LOCAL_EVENT_ID;
->   		rr.val = 0;
->   		__mon_event_count(rmid, &rr);
-> -
-> -		/*
-> -		 * Call the MBA software controller only for the
-> -		 * control groups and when user has enabled
-> -		 * the software controller explicitly.
-> -		 */
-> -		if (is_mba_sc(NULL))
-> -			mbm_bw_count(rmid, &rr);
->   	}
-> +
-> +	/*
-> +	 * Call the MBA software controller only for the
-> +	 * control groups and when user has enabled
-> +	 * the software controller explicitly.
-> +	 */
-> +	if (is_mba_sc(NULL))
-> +		mbm_bw_count(rmid, &rr);
->   }
->   
->   /*
-> diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> index 69a1de92384a..0c4f8a1b8df0 100644
-> --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> @@ -2294,7 +2294,7 @@ static bool supports_mba_mbps(void)
->   {
->   	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
->   
-> -	return (is_mbm_local_enabled() &&
-> +	return (is_mbm_enabled() &&
->   		r->alloc_capable && is_mba_linear());
->   }
->   
-
-Otherwise looks good to me.
-
-Thanks
-
-Babu
-
+Pj4gICBzdGF0aWMgdm9pZCBtYm1fYndfY291bnQodTMyIHJtaWQsIHN0cnVjdCBybWlkX3JlYWQg
+KnJyKQ0KPj4gICB7DQo+PiAtCXN0cnVjdCBtYm1fc3RhdGUgKm0gPSAmcnItPmQtPm1ibV9sb2Nh
+bFtybWlkXTsNCj4+ICsJZW51bSByZXNjdHJsX2V2ZW50X2lkIG1iYV9tYnBzX2V2dF9pZCA9IHBp
+Y2tfbWJhX21icHNfZXZlbnQoKTsNCj4NCj4gSG93IGFib3V0IGV2dF9pZCBpbnN0ZWFkIG9mIG1i
+YV9tYnBzX2V2dF9pZD8gSXQgc2VlbXMgcHJldHR5IG1vdXRoZnVsIA0KPiBmb3IgdGVtcCB2YXJp
+YWJsZS4NCg0KU3VyZS4gVGhlIGxvbmcgbmFtZSBtYWRlIHNlbnNlIGFzIGEgZ2xvYmEuIEJ1dCBh
+cyB5b3Ugc2F5LCBhIHRlbXANCnZhcmlhYmxlIGRvZXNuJ3QgbmVlZCB0byBiZSBzbyB2ZXJib3Nl
+LiBDb250ZXh0IGZyb20gYmVpbmcgaW5pdGlhbGl6ZWQNCmJ5IHRoZSBwaWNrX21iYV9tYnBzX2V2
+ZW50KCkgZnVuY3Rpb24gYWxzbyBoZWxwcyByZWFkZXIgdG8gc2VlIHdoYXQNCml0IGlzIHVzZWQg
+Zm9yLg0KDQpJJ2xsIG1ha2UgdGhhdCBjaGFuZ2UgaWYgb3RoZXJzIHZvdGUgZm9yIHRoZSB2MyBh
+cHByb2FjaCBvdmVyIHYyLg0KDQotVG9ueQ0KDQoNCg0K
