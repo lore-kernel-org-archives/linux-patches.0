@@ -1,80 +1,63 @@
-Received: from EUR04-DB3-obe.outbound.protection.outlook.com (mail-db3eur04on2051.outbound.protection.outlook.com [40.107.6.51])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2054.outbound.protection.outlook.com [40.107.243.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D258941740
-	for <patches@lists.linux.dev>; Thu, 26 Oct 2023 21:44:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E516C1D52B
+	for <patches@lists.linux.dev>; Thu, 26 Oct 2023 22:40:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="c8PYqJdD"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="5Vqvqt4+"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RKaNza+aT1iR2Vdf2dmdEOGAxeej+XtssfnATU+tRbLH/zB5AzN6QURTRNi4Bi1uSmjfVi/PO9XNfWzPMt8sqam5+Z+d5MYzZOTo4vvc0R/R7cEmz23DzFGyg8HCg1gR291Kg2kfe+ku2HAHP6JsE+fQFG5RfJhT1vQ8oeqGe/XHT37OXp1HefmiH3IwU0NPEN5xEqCuAzAI2aeCZ/i7GD5xJkUyrzM2DhY76DA7vcG7T6SXREEo2xX/zBYfxgxFLQfaJPMq45A3yaJglMtPhB32TyvOSuppNDjWlmDheGove8TqUz7O/aSgOPcIQdkLPbLkKrI+rx0tbU5u+KmIVA==
+ b=AVXhjvoWUFp5dR1hmjqTYWcEP/Sf/i94aoQ4+VugAkqWKpdSLSkQdZtjeV+cafmzoo3lW2WVXyl/oAEdLKclns33z6UIOyH/LtITqFS6RmjDDZAnD0ntUPvSEjttRYCz232uuJcPL5OJdznDw+cZkNeRXAueHkS1HG4VsIKd3hBOuiUrJs2PE5/fqdEs654RIWJ4R6SY+WxwbErnQAHSIvowdRcHCaaGE1my1iRSHMdlA4d6iMNw2+UWgtnEMv4le9VrPyW+n1gzLLefgzAuWqUdbfZ/cot2l4wzq4K3aLrycbnLc5YEwYKhqp1rerSTzpK/0Z3sgkCu2Y1tNmiVpg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gH0oZ3ieM7Z3h7H08hzcgcDMbDaTBHyKSlEYz68rB20=;
- b=GFfwhTXQjVdRU9qGB9dqKfewtKmghAoXHmJ/2IySBz5L6B3o5Zt8qsIYcrIxyHMUglraqplYx8Y8ycpbb2T0g53K6l9jFDzq0QCsPYRbHVATfxtKsD7FOYedB5Nn74mxMNoA8BR0c9HgA+E0c80susksKlCaTrd35nNADUcmbuTh5il8tpHvVJ63kYt0yAHQQTR9QvqnwSmFRGWxeP1y39zPsrGkF9/irfvO9AEMqwMUjk+AUeXwMR2BgAQpGjqEp0dZhjnAYbs1NgWYrfhj4JI0LomxOUUrEzgeOLr5Z8wzlNKSnxNZwp+Xv4HMC7WyeXfIAeUmB9ixelIPGRW2mg==
+ bh=d3Tda/ZvMRc4T5IM9oz76YDeinAIKHlQ+eTTKBDrLD4=;
+ b=l1u8XhSC1DJdEjoR19RqlTIzTxNwxs3R6ayAeXXom3lEs9rTabkdDXNun0kaqrusRxiexKpvt0X/ks+kiYCJJsN2OlpuCn+bsBWE4cposuJgLuxXb5PTCM7+RefS05MWKlFiXf2u70CyqLGaMqFA0JVjOLd/6an0I3VgrWJBnIdwfJgPJeDy878d0asNuIOFaR6MYP7j87shs76TZr8k/1fomKyd+UstRv7SoXzpe7YbpVAaR6woiHcli6Xh3RoXlvDmCDV3TuwhMCIk53ZohS/v7RyQinH7TjSvZ2AtUG//qwRFT4XvWh0FNbUBBPJNCfaOSjQAMFR+Y0Vvb5qGlQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=suse.com; dmarc=pass action=none header.from=suse.com;
- dkim=pass header.d=suse.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=selector1;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gH0oZ3ieM7Z3h7H08hzcgcDMbDaTBHyKSlEYz68rB20=;
- b=c8PYqJdDvQMYhc+Jx/m3XA7mduqeAsuAV14QNB7j0XuwPfKZKOIm2UwvmvHqMYTdpAJm9iyccOygUMMVbt/yEosrRp3F6TKNqjAmVCxQeC8bEynHp1aqHh30bnJmOKq+2drXOQwiU3nqrk7w/QDdf0P37N8sSoBpMFSURW5el8cbEDBDJdTaEQjK2JBICKHLUmlXM4Jxa1bDrvYBwPF+vMomoskqZpTFgvrRw0mT3uxXIgQeL8KyNrGH6es8mE9N7o0hLnbNuY18acC4y/R6scBLgotJAnmILBiJHkWZzNfh+fqGxoa5gUIUG0WC3irJhN1CRvMYe9X12doBi15Dhg==
+ bh=d3Tda/ZvMRc4T5IM9oz76YDeinAIKHlQ+eTTKBDrLD4=;
+ b=5Vqvqt4+s1QWBKGPRK3H6de3v0jH1gpql2GCCqqZV7d+6F5/W21Dwi6/sBMkzRd04G05u+UFtKT6N8Ke72Qo0aFXVrQihsM6AIAweH1vfl+ttOLExm1O27+0FeoSOCNNYplWvdlMGmtyPjvvcUdWYoaBehDD7QxqnFX+t14IcIU=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=suse.com;
-Received: from AS8PR04MB8465.eurprd04.prod.outlook.com (2603:10a6:20b:348::19)
- by PAWPR04MB10054.eurprd04.prod.outlook.com (2603:10a6:102:38b::17) with
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
+ by MW3PR12MB4524.namprd12.prod.outlook.com (2603:10b6:303:2d::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6886.36; Thu, 26 Oct
- 2023 21:44:03 +0000
-Received: from AS8PR04MB8465.eurprd04.prod.outlook.com
- ([fe80::46d9:6544:503:c37e]) by AS8PR04MB8465.eurprd04.prod.outlook.com
- ([fe80::46d9:6544:503:c37e%4]) with mapi id 15.20.6933.019; Thu, 26 Oct 2023
- 21:44:02 +0000
-Message-ID: <04b4f1f8-ce65-4acb-8025-5bf01fb77aaa@suse.com>
-Date: Fri, 27 Oct 2023 08:13:53 +1030
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.5 211/285] btrfs: scrub: fix grouping of read IO
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6933.19; Thu, 26 Oct
+ 2023 22:40:28 +0000
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::1e4c:5da0:33ed:ff3a]) by MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::1e4c:5da0:33ed:ff3a%7]) with mapi id 15.20.6933.019; Thu, 26 Oct 2023
+ 22:40:28 +0000
+Message-ID: <a03e5f5e-ac9c-f8b1-0260-d58ede569d67@amd.com>
+Date: Thu, 26 Oct 2023 17:40:25 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Reply-To: babu.moger@amd.com
+Subject: Re: [PATCH v3] x86/resctrl: mba_MBps: Fall back to total b/w if local
+ b/w unavailable
 Content-Language: en-US
-To: Sam James <sam@gentoo.org>
-Cc: =?UTF-8?Q?Holger_Hoffst=C3=A4tte?= <holger@applied-asynchrony.com>,
- gregkh@linuxfoundation.org, dsterba@suse.com, patches@lists.linux.dev,
- stable@vger.kernel.org, linux-btrfs@vger.kernel.org
-References: <87fs1x1p93.fsf@gentoo.org>
- <02e8fca0-43bd-ad60-6aec-6bcc74d594ee@applied-asynchrony.com>
- <740c38b1-60eb-41da-93e0-7d7671f0b3fc@suse.com> <878r7paxys.fsf@gentoo.org>
-From: Qu Wenruo <wqu@suse.com>
-Autocrypt: addr=wqu@suse.com; keydata=
- xsBNBFnVga8BCACyhFP3ExcTIuB73jDIBA/vSoYcTyysFQzPvez64TUSCv1SgXEByR7fju3o
- 8RfaWuHCnkkea5luuTZMqfgTXrun2dqNVYDNOV6RIVrc4YuG20yhC1epnV55fJCThqij0MRL
- 1NxPKXIlEdHvN0Kov3CtWA+R1iNN0RCeVun7rmOrrjBK573aWC5sgP7YsBOLK79H3tmUtz6b
- 9Imuj0ZyEsa76Xg9PX9Hn2myKj1hfWGS+5og9Va4hrwQC8ipjXik6NKR5GDV+hOZkktU81G5
- gkQtGB9jOAYRs86QG/b7PtIlbd3+pppT0gaS+wvwMs8cuNG+Pu6KO1oC4jgdseFLu7NpABEB
- AAHNGFF1IFdlbnJ1byA8d3F1QHN1c2UuY29tPsLAlAQTAQgAPgIbAwULCQgHAgYVCAkKCwIE
- FgIDAQIeAQIXgBYhBC3fcuWlpVuonapC4cI9kfOhJf6oBQJjTSJVBQkNOgemAAoJEMI9kfOh
- Jf6oapEH/3r/xcalNXMvyRODoprkDraOPbCnULLPNwwp4wLP0/nKXvAlhvRbDpyx1+Ht/3gW
- p+Klw+S9zBQemxu+6v5nX8zny8l7Q6nAM5InkLaD7U5OLRgJ0O1MNr/UTODIEVx3uzD2X6MR
- ECMigQxu9c3XKSELXVjTJYgRrEo8o2qb7xoInk4mlleji2rRrqBh1rS0pEexImWphJi+Xgp3
- dxRGHsNGEbJ5+9yK9Nc5r67EYG4bwm+06yVT8aQS58ZI22C/UeJpPwcsYrdABcisd7dddj4Q
- RhWiO4Iy5MTGUD7PdfIkQ40iRcQzVEL1BeidP8v8C4LVGmk4vD1wF6xTjQRKfXHOwE0EWdWB
- rwEIAKpT62HgSzL9zwGe+WIUCMB+nOEjXAfvoUPUwk+YCEDcOdfkkM5FyBoJs8TCEuPXGXBO
- Cl5P5B8OYYnkHkGWutAVlUTV8KESOIm/KJIA7jJA+Ss9VhMjtePfgWexw+P8itFRSRrrwyUf
- E+0WcAevblUi45LjWWZgpg3A80tHP0iToOZ5MbdYk7YFBE29cDSleskfV80ZKxFv6koQocq0
- vXzTfHvXNDELAuH7Ms/WJcdUzmPyBf3Oq6mKBBH8J6XZc9LjjNZwNbyvsHSrV5bgmu/THX2n
- g/3be+iqf6OggCiy3I1NSMJ5KtR0q2H2Nx2Vqb1fYPOID8McMV9Ll6rh8S8AEQEAAcLAfAQY
- AQgAJgIbDBYhBC3fcuWlpVuonapC4cI9kfOhJf6oBQJjTSJuBQkNOge/AAoJEMI9kfOhJf6o
- rq8H/3LJmWxL6KO2y/BgOMYDZaFWE3TtdrlIEG8YIDJzIYbNIyQ4lw61RR+0P4APKstsu5VJ
- 9E3WR7vfxSiOmHCRIWPi32xwbkD5TwaA5m2uVg6xjb5wbdHm+OhdSBcw/fsg19aHQpsmh1/Q
- bjzGi56yfTxxt9R2WmFIxe6MIDzLlNw3JG42/ark2LOXywqFRnOHgFqxygoMKEG7OcGy5wJM
- AavA+Abj+6XoedYTwOKkwq+RX2hvXElLZbhYlE+npB1WsFYn1wJ22lHoZsuJCLba5lehI+//
- ShSsZT5Tlfgi92e9P7y+I/OzMvnBezAll+p/Ly2YczznKM5tV0gboCWeusM=
-In-Reply-To: <878r7paxys.fsf@gentoo.org>
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>,
+ Reinette Chatre <reinette.chatre@intel.com>,
+ Peter Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
+ Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
+ <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
+ Babu Moger <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
+ linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20231025235046.12940-1-tony.luck@intel.com>
+ <20231026200214.16017-1-tony.luck@intel.com>
+From: "Moger, Babu" <bmoger@amd.com>
+In-Reply-To: <20231026200214.16017-1-tony.luck@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MEWPR01CA0048.ausprd01.prod.outlook.com
- (2603:10c6:220:1df::16) To AS8PR04MB8465.eurprd04.prod.outlook.com
- (2603:10a6:20b:348::19)
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SA1PR03CA0003.namprd03.prod.outlook.com
+ (2603:10b6:806:2d3::14) To MW3PR12MB4553.namprd12.prod.outlook.com
+ (2603:10b6:303:2c::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -82,141 +65,220 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS8PR04MB8465:EE_|PAWPR04MB10054:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3e319a70-8853-4092-bd04-08dbd66cab51
-X-LD-Processed: f7a17af6-1c5c-4a36-aa8b-f5be247aa4ba,ExtFwd
+X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|MW3PR12MB4524:EE_
+X-MS-Office365-Filtering-Correlation-Id: 757abfe3-0d73-4ae2-8895-08dbd6748d5f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	nUgWnPgYTxrOqQU2BVbKS/FTEa/+wsy2q7MZkMS9qdCsOzNVJa42AX7j39n48hrS50MvzjG+UZjcUWiV5HLXcA3ehfOUr6tM9Ii1bvQSYsnrlnXPf0m1K0gSDUIsyCUcd3XBv05YbuThVE5qme6TzN8FqBrY4ZGRYyueOtTL7K6NhJC4hLaYbMo3gbM+ZGCGa79bskvZZ0vHTjdP5mGWlVgChRqGt7YzCfTbgTxdr4EYSZe9DXGWRxv3iFK0mTw+JfQkoWvhf5jYHdWKXbs5vkf5+uB/CTGkhTvsk9l+7blDASSFjqxBI1CzlEjFUVQJk7i83vEZU0mkPft7j45vEExeSEj3z4MeWHxSpXx4zGY1qizSFTYrIzxEq+nAdNI408h+QvyU9ZGJIir9/p5oWpkc/We8zwbTj4Jid5Ljr4ilYLuj9WmtVRX3PXbUYNxsSklx4Nujvv74sw/XMwbTSiyyzI494HJomvYQrcgPwDhcupynDzbyMPgJECblk8cW591THT3sWmHcA5aeZ9H9kqtNzKFHR09rQPxeQyDv664wnr4ipHACFWerZ3/bPYSK4RBsKL9bWwPnJM5j6dGnloIgPfWxZHlT4sMOTJa2aUe0cDfQx035hhoj99qAmVpx2iDdE0Ax3exyCNnjFZnOYStpTQEKx+qQL42cyOm1ER8ntnGkX7PQ0u7upiTvX/7s
+	kF3CpZxC3CUvLtYOJhoxs2EQypF+YohB6Iu5V6pAYnxm9fTtDpfl5RCZDhLxWSUv4/GrpYgYKolLtmnD3hXDPfz/G69BHvDZ4cxaPlZzovQ+nLPHBfVNpWM7rd86tPnT3q9o4z5Ys/u/jbKrjik769DFLniVxyGdQIi0+I43xAD337Lkcb9CSO8nPX2dSwlCoZn/Ohha9QUJchcnGc/4vdqz9SRUhdFxyFXI2ApAdrE+9HREhk8VuuXEz65ubPVUvGzxI+cfvfd6NCa0jDmF+bu8tSFtYs/uxl7rotEPL22U3Gq/aEJzHPUzsj2TpT5e0aWDZnPY1ZlbpFNuRPvstf5LJLD9Y9Guc5ZW16FRDFhgo5NgZ+oPYQPnMHH34xOANWi0WruXY2vCe7YmC6cAOp1x22/1Ma6xSZEirOWbkAJ3CzTumWCbxwOU/hCdci3i7dmi805/BoR3OzTrP19G//r2U1cUyVJ2vB1V0kgSVwABRt6F8ta5RJH3lPrAIuKkthdk7lhjouEjmBeI/6McEJn6Lpnp0MbkXNRBb8AV2XR7UaQNjlfCcwGB8yIKTOrCRZSh6Z+jRzhWQfyxoIbEWXRoYQxTs4V5LppRDBvLgtAJSfcL3ougPt1Lk4r6TzMx7Y6oWlwG5ok7z/CZriZRqQ==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB8465.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(346002)(376002)(39860400002)(396003)(366004)(230173577357003)(230273577357003)(230922051799003)(186009)(451199024)(1800799009)(64100799003)(6486002)(41300700001)(6506007)(53546011)(31686004)(2616005)(478600001)(38100700002)(6512007)(6666004)(83380400001)(26005)(66574015)(5660300002)(4326008)(66946007)(8936002)(8676002)(316002)(4001150100001)(86362001)(2906002)(6916009)(66476007)(66556008)(31696002)(36756003)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4553.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(346002)(136003)(39860400002)(396003)(366004)(230922051799003)(1800799009)(64100799003)(186009)(451199024)(26005)(110136005)(478600001)(6512007)(316002)(6506007)(54906003)(66946007)(66476007)(66556008)(36756003)(6666004)(2616005)(6486002)(7416002)(83380400001)(38100700002)(8676002)(8936002)(4326008)(2906002)(31686004)(5660300002)(41300700001)(53546011)(31696002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?VHVxTHdWSGtWMXFVUVNJME9ZNUFRNWU2cTRRcFpRV3RmblNta1duTzBhcGtK?=
- =?utf-8?B?TTlRMGFBZXhueHRhckE4d0ZYUHpha0NMWTlOQyszM3NNcThLeVp2bm5INzZn?=
- =?utf-8?B?NVhiSzVmU2toR3lEa1h6WnhmdldPZW1Nb2J0YmdMOWxLRXQwUlpTaVpZYVFz?=
- =?utf-8?B?MWNxTTRhTkNnU1kvUklKcFpQalcyeUQvaVJNQWxna2VNUVdCaURVbitJcXlo?=
- =?utf-8?B?d1lQRFVRclBmVkRmRk1LZ0g4djNBQmtJdlh0MHNsazRGRlpRdFVUT3phd3lt?=
- =?utf-8?B?TTlBR0tRc2R5MmZYWmdZZDRIenBCK1ROeXRnQUZYUEtQallBSE9KRlB6aFh5?=
- =?utf-8?B?d2ppMkNjd1pkUXhFMFVmTXNyT2FEZEJOcUVCeTh3WVpWVjdGWDAwdkhQa1dT?=
- =?utf-8?B?amdQYkYyVGY1anhFSTJPaDhHZVZ0dXNyMkVpNjVlWSt1MlRnblBLSmk3V3hj?=
- =?utf-8?B?RjRaaTE2bnNWMnZjd0RLVU9hT2pQbDdtK01qaEREY3p2dS9IQ2d2SW8rWGZp?=
- =?utf-8?B?VGFVajFwRlFvbEhqaVVyWW4vYk45OU5uRCtRaGNlcXRCWU9MV1BYbzlsUU5y?=
- =?utf-8?B?MlUwdnZRUFd1RG81Q0N5ZE91d01KK0hlVFBNeE85ak1iZEROTU5Pd2JJT0lJ?=
- =?utf-8?B?cWJFQWt1c3Q2eG9MRTlDOWpNOTdXbytqL25jQ1Q4SU1VVGtJc2k2Q3E4MXVq?=
- =?utf-8?B?QmxOaVhBRzY0UGQ5SHlBWnJIbXNVMzFzSFNKeVovZmRWcmgxSHBrdlZGVTUr?=
- =?utf-8?B?QnZTZTgxbkFjVWpKcWR2eWlvTUpKVnlPbDRqdVNRU0liM1AxQ0RUeGg2TmNH?=
- =?utf-8?B?T1ZaYVJOUzJ6QzRuc3ZGWjdwTkplOURuTG1PZkFHL0xjZ3ZXdndjcERveXBB?=
- =?utf-8?B?dGh1QklUNW5iWkhXNzhHWEZvbWttUzVQbS9JWERnSGlndFMwaExWRnpacUph?=
- =?utf-8?B?VFh6UktiOS9qVFJVWGNlYTVSOU14SHAzN1ovNFl3Vk1jc0VXbmt4ZGM1YjRI?=
- =?utf-8?B?b0M3S1dzdy82WWRESTZ0RUtyM09DeTJzTkZocVUzbVhBbG1sOE9hTkkxenU1?=
- =?utf-8?B?NVM4SzFnc0Q2T09WekdhVjVBZTlHZ2dtQlNpdFJkanpXTDVoZjdwWjBLNFR1?=
- =?utf-8?B?RWZBZGxCMzFMcm1ULzhhU3dFaFlUbFFwdUlxSWdaM1U4V1NQaXFibStlWmZV?=
- =?utf-8?B?dlZJd3lhSG1tdkZMZDNqaStkMUd6OFJnbXpVeDg2cEhTS2RUbVZoYU5zbU51?=
- =?utf-8?B?ejdZQUtNdjNKWkpKM01uUmczdjNWS2RnQVh1dURQUExEa3dyV1VQc2JveWdu?=
- =?utf-8?B?Tkd3d3UrQ3p0VTRhdjlrbEc1YU5MUDBMR212M2RIT1JFNXdUYm9LbXF6YnZ3?=
- =?utf-8?B?N2hXS01kbThyZzltMkF1L3pNOVZ3ZnVsSU5kakNhU1lodTZjWVdLbUJ6Risv?=
- =?utf-8?B?M0JFdWkwTHhnTzEyU2N5RUFxVU1aRHFsWThOLzFueTB0elAwazJoS1FBcG1X?=
- =?utf-8?B?eVYvQmdKbkxoZ2h0UW5INzBqbDNYY1MwY2dCNVoxT2FmQ2NJUUxVQVB6Ykcy?=
- =?utf-8?B?MFcrWCtrNm5xVUNBeW40WDZKNTBzckQrTWd0eHBSK0NZNjVUd0tKU29YbytX?=
- =?utf-8?B?QlF1WUxwRTEzRDExeVlnYk15Yit4NmNzVzNtQTVzMUhMbkZhNTVPOU1TUHln?=
- =?utf-8?B?S0V3cWI5R04xRE9QalNPejBFemxTVGJJRmtxMnNsL3VMdUNzdjVnZnIxdzVF?=
- =?utf-8?B?anJZUTc2M1F3cVIwUVRGeEM0ck80MXoySlg5bGFjS015WnJHZlR5SjVnWE41?=
- =?utf-8?B?NFRzK2lOcHhscWVNNUNIUTdzWElIQm1wYTRPU2dmRkdoU0ZQZlB6UFpOa2tm?=
- =?utf-8?B?QUJDdGZjQ2hOMnZXMW9yc3JOL2JPdGN0VzJPNm5mY3ROdS9IczZXSlV1NGFz?=
- =?utf-8?B?YVJCRnErZ09ZWUo1cUZYdnlBUGxKUnc4QkgrRktjQ2V3TWFjaXZyd29XUjBr?=
- =?utf-8?B?bnZ1MEM1MUFrN2JONWdQYnZjejRpSkllWkFEOU9ISzNPOXNFUGY1QmVOL212?=
- =?utf-8?B?a3R0ZUxhT3A5Y04xNXdlT1c5L1pQZGFxZURaSDhBL2hwajhKdER6bFc4VlBE?=
- =?utf-8?Q?DiUg=3D?=
-X-OriginatorOrg: suse.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3e319a70-8853-4092-bd04-08dbd66cab51
-X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB8465.eurprd04.prod.outlook.com
+	=?utf-8?B?SEtobDI0VGorOEhnVFVnK0dhaGtEUDYwYnVzODVRUnVEOGxiZzRCK1ZXQjEx?=
+ =?utf-8?B?dDhNdEhJMW5iSDlZbTNBSDFXTGJFQUFIclhGa3RoRTZodUVNNnYvZ2dyK1dG?=
+ =?utf-8?B?MmkwZWlRVDV0ekFHWWNmaGFjYi9SeWFkeHcyc2JtblRIZlhIU3ZDTjMrdzJY?=
+ =?utf-8?B?dTRvQlFydjh3MDcvdE42eEZwS1VJam92OER0emNkOE1IdER2Q3J6dEdNcVNY?=
+ =?utf-8?B?eVlqOUg1K003R3RNRjJGbU16czNMQlFFRjB0ZHVhVERLWld6M3oza0FNOERE?=
+ =?utf-8?B?MEd1K25KWk94TnVmbVJRc3NKZUdiNkNYb3YxbUQxWmFMR0ljall2T3Y3bmRB?=
+ =?utf-8?B?eFVnVGc1VWJKckZyMzJ4KzE2cExzTFRMRE1IWFNZN3VoWXlRRms3WUtZRDhl?=
+ =?utf-8?B?UklGbFFZYjJ1K1VaLzVyTldPaGZ3UFh2OWs5SGRYaDBEMDZuQkFha201a2Jv?=
+ =?utf-8?B?STEyV0hMUzZtZmliaW80RGpJMzhTdlNCQ2V0OGMwY3VnV0t0Rmt5NXdGdmo2?=
+ =?utf-8?B?bEV2TEZsQWRPeFRvTlFSTXFlTmNKTlVON2plcFhrenlMRjFwdTYyVTZaMjRu?=
+ =?utf-8?B?bjlvaUpGRmFvN2ZWZVNuUHV5RDlqVnFzQVNYMHptL2JqSlplQkdnS29Rcmt6?=
+ =?utf-8?B?V3BKR2E0Vi9oTi80dXJqN0gxUFUxWkJKbWt0eE16MTVjU0NkOVlVUTJuOG1l?=
+ =?utf-8?B?d3puU25pNWVoSFhjZzQ5TkpFc1RQTWVVek5xNkNac1JaMFhuK01vZEw3Znl0?=
+ =?utf-8?B?UDRwYVExOHQrcTdMWUd4eUpYczNUSk5vTER4MVpwWHpKOEJnb1V6VzZ0eFVW?=
+ =?utf-8?B?UHYreGZNejNvcHRORXZ4QjZLWFBnOXcxTEF6U2x4cm1qdEZxbzBSclJ6YTdn?=
+ =?utf-8?B?ZlRXd0dLVFZnSEVFamNDbG1xNzZueDIrQjNNa1JQS2RndkpwOGVtbWJsbHJr?=
+ =?utf-8?B?TzkvemdSd3dpUk1CakJ0elB5QWhWQUhWb2F4cGNIV2RRaVpab1RnZTBBS0JY?=
+ =?utf-8?B?c0V4K29ZVnp3Nk1UdEhIR01ITXJXMi9QQUYxSXN0N1VXK1piaGFCU3FJdlBK?=
+ =?utf-8?B?Q3djbnpXU3pEUFV5VExNRXlqYms5ZUdwbmJselB2NUNnZVF6T3ZQOVRUNXJD?=
+ =?utf-8?B?aW5oalhaSk9SODd5VERDTjhyS3VPTDg5d1YyN3JnbHdJNURhazVid2g2ejFj?=
+ =?utf-8?B?ZkZyY0lGYUlYTHB5K3lwQThxWDdxVzc4U1E2S1VBUUNSNyswQjVGd3hMUWNY?=
+ =?utf-8?B?MlZDVG5QbzlHem9vSTFKaUE0aDRRSktKai9QS2ZvelFUWFQ5aGNjaE4rb21T?=
+ =?utf-8?B?bkN4Slp2ODlXZFJuR01zNTdnZDE1a1ZneTVRSHB3ZUNPbFNBNFpIYVU3SHkr?=
+ =?utf-8?B?cE9NU1BSWFNweEhlR2VPRmQ2Qmg4UHJOT2lOMG84TU9RZWdzK2JNdFB1SmJW?=
+ =?utf-8?B?Rm5yem5GeG5BcGNtWFhOM3FBUVM4eDdvaTlKVVpRdDlIc09SNXJUOC9mdW9E?=
+ =?utf-8?B?bDRTT3h2MWRLWWl2elVYUlgzbmNiS2ZmRS9FYkFoSE53MXcxcU0wdlpnMGN1?=
+ =?utf-8?B?Z25URWVIMGtoZmNBZGtSdWgrL05OZjhKSGNsL1AyNGpJT1hCbWpidTJUVmJM?=
+ =?utf-8?B?dk5peEFxTktjeEtYY2lCdnNxZDczZVVMV250VDg3c2s3VFlJZnZtamxxTlhY?=
+ =?utf-8?B?dGhpV05aYUVkdEZQbjRIak41M0Z3eW9xQVlDTC9EckgzcGpiR0Jzb2g4ODFS?=
+ =?utf-8?B?dWtoUFNvclZ2VmdJSmE3ZTJWODJqaU8xOXhKWkVFeS9EU3JlK0Y5R0ZrM2RR?=
+ =?utf-8?B?WVF1VHdHYlRaaUtuMW5QUjVXSmlmMHU3M0lubVdwRVJhTWNkbHQyb25wL0Yr?=
+ =?utf-8?B?d1UzekloSmNMb0V4MzJUeDJGaUFMK01zQ3dHeWpzVjl6czdDYkl6N3VESmNq?=
+ =?utf-8?B?dnlrTWt4T3dRWjdNSlUzeUh0OXJEVHd3WHZaR0x6d3M1djl3dWRWb3kyZWtp?=
+ =?utf-8?B?ZitTS1RPNFNpMG5JL2lBWGtUUlBnNE9vRkJoV3g1MmlBb1U5ZTlPZXU4VGxi?=
+ =?utf-8?B?K0hjWkR2WnVPZ2N4VzF3WTZkbjFoL1MySFVnbE1wd3lmek5YWmV2MXllYlQz?=
+ =?utf-8?Q?UKeg=3D?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 757abfe3-0d73-4ae2-8895-08dbd6748d5f
+X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2023 21:44:02.7060
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2023 22:40:28.0713
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: f7a17af6-1c5c-4a36-aa8b-f5be247aa4ba
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xLzsMOisfaa0OKtyXJgo/gIckVV7L/7+kP79OHMfNnY7bqx68PcoDm+Y2Ymt+FCR
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR04MB10054
+X-MS-Exchange-CrossTenant-UserPrincipalName: 13bQGhv9OCKaQMuIlLK28wV+l5eIOHhu/ziLsKS/hJDXhYS7cuuMpMnP6NOetBQW
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4524
 
+Hi Tony,
 
+On 10/26/2023 3:02 PM, Tony Luck wrote:
+> On Intel the various resource director technology (RDT) features are all
+> orthogonal and independently enumerated. Thus it is possible to have
+> a system that  provides "total" memory bandwidth measurements without
+> providing "local" bandwidth measurements.
+>
+> If local bandwidth measurement is not available, do not give up on
+> providing the "mba_MBps" feedback option completely, make the code fall
+> back to using total bandwidth.
+>
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+> Change since v2:
+>
+> Babu doesn't like the global variable. So here's a version without it.
+>
+> Note that my preference is still the v2 version. But as I tell newbies
+> to Linux "Your job isn't to get YOUR patch upstream. You job is to get
+> the problem fixed.".  So taking my own advice I don't really mind
+> whether v2 or v3 is applied.
+Hmm. I like v3 better. Few minor comments below.
+>
+>   arch/x86/kernel/cpu/resctrl/monitor.c  | 43 ++++++++++++++++++--------
+>   arch/x86/kernel/cpu/resctrl/rdtgroup.c |  2 +-
+>   2 files changed, 31 insertions(+), 14 deletions(-)
+>
+> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+> index f136ac046851..29e86310677d 100644
+> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
+> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+> @@ -418,6 +418,20 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
+>   	return 0;
+>   }
+>   
+> +/*
+> + * For legacy compatibility use the local memory bandwidth to drive
+> + * the mba_MBps feedback control loop. But on platforms that do not
+> + * provide the local event fall back to use the total bandwidth event
+> + * instead.
+> + */
+> +static enum resctrl_event_id pick_mba_mbps_event(void)
+> +{
+> +	if (is_mbm_local_enabled())
+> +		return QOS_L3_MBM_LOCAL_EVENT_ID;
+> +
+> +	return QOS_L3_MBM_TOTAL_EVENT_ID;
+> +}
+> +
+>   /*
+>    * mbm_bw_count() - Update bw count from values previously read by
+>    *		    __mon_event_count().
+> @@ -431,9 +445,11 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
+>    */
+>   static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
+>   {
+> -	struct mbm_state *m = &rr->d->mbm_local[rmid];
+> +	enum resctrl_event_id mba_mbps_evt_id = pick_mba_mbps_event();
 
-On 2023/10/27 07:42, Sam James wrote:
-> 
-> Qu Wenruo <wqu@suse.com> writes:
-> 
->> On 2023/10/27 00:30, Holger Hoffstätte wrote:
->>> On 2023-10-26 15:31, Sam James wrote:
->>>> 'btrfs: scrub: fix grouping of read IO' seems to intorduce a
->>>> -Wmaybe-uninitialized warning (which becomes fatal with the kernel's
->>>> passed -Werror=...) with 6.5.9:
->>>>
->>>> ```
->>>> /var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/fs/btrfs/scrub.c: In function ‘scrub_simple_mirror.isra’:
->>>> /var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/fs/btrfs/scrub.c:2075:29:
->>>> error: ‘found_logical’ may be used uninitialized
->>>> [-Werror=maybe-uninitialized[https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmaybe-uninitialized]]
->>>>    2075 |                 cur_logical = found_logical + BTRFS_STRIPE_LEN;
->>>> /var/tmp/portage/sys-kernel/gentoo-kernel-6.5.9/work/linux-6.5/fs/btrfs/scrub.c:2040:21: note: ‘found_logical’ was declared here
->>>>    2040 |                 u64 found_logical;
->>>>         |                     ^~~~~~~~~~~~~
->>>> ```
->>> Good find! found_logical is passed by reference to
->>> queue_scrub_stripe(..) (inlined)
->>> where it is used without ever being set:
->>> ...
->>>       /* Either >0 as no more extents or <0 for error. */
->>>       if (ret)
->>>           return ret;
->>>       if (found_logical_ret)
->>>           *found_logical_ret = stripe->logical;
->>>       sctx->cur_stripe++;
->>> ...
->>> Something is missing here, and somehow I don't think it's just the
->>> top-level
->>> initialisation of found_logical.
->>
->> This looks like a false alert for me.
->>
->> @found_logical is intentionally uninitialized to catch any
->> uninitialized usage by compiler.
->>
-> 
-> I feel like this sort of thing is going to be inevitable with -Wmaybe-uninitialized.
+How about evt_id instead of mba_mbps_evt_id? It seems pretty mouthful 
+for temp variable.
 
-Indeed, it can be tricky for compilers to handle.
+>   	u64 cur_bw, bytes, cur_bytes;
+> +	struct mbm_state *m;
+>   
+> +	m = get_mbm_state(rr->d, rmid, mba_mbps_evt_id);
+>   	cur_bytes = rr->val;
+>   	bytes = cur_bytes - m->prev_bw_bytes;
+>   	m->prev_bw_bytes = cur_bytes;
+> @@ -518,6 +534,7 @@ void mon_event_count(void *info)
+>    */
+>   static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+>   {
+> +	enum resctrl_event_id mba_mbps_evt_id = pick_mba_mbps_event();
+same comment as above.
+>   	u32 closid, rmid, cur_msr_val, new_msr_val;
+>   	struct mbm_state *pmbm_data, *cmbm_data;
+>   	u32 cur_bw, delta_bw, user_bw;
+> @@ -526,14 +543,14 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+>   	struct list_head *head;
+>   	struct rdtgroup *entry;
+>   
+> -	if (!is_mbm_local_enabled())
+> +	if (!is_mbm_enabled())
+>   		return;
+>   
+>   	r_mba = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
+>   
+>   	closid = rgrp->closid;
+>   	rmid = rgrp->mon.rmid;
+> -	pmbm_data = &dom_mbm->mbm_local[rmid];
+> +	pmbm_data = get_mbm_state(dom_mbm, rmid, mba_mbps_evt_id);
+>   
+>   	dom_mba = get_domain_from_cpu(smp_processor_id(), r_mba);
+>   	if (!dom_mba) {
+> @@ -553,7 +570,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+>   	 */
+>   	head = &rgrp->mon.crdtgrp_list;
+>   	list_for_each_entry(entry, head, mon.crdtgrp_list) {
+> -		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
+> +		cmbm_data = get_mbm_state(dom_mbm, entry->mon.rmid, mba_mbps_evt_id);
+>   		cur_bw += cmbm_data->prev_bw;
+>   		delta_bw += cmbm_data->delta_bw;
+>   	}
+> @@ -595,7 +612,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+>   	 */
+>   	pmbm_data->delta_comp = true;
+>   	list_for_each_entry(entry, head, mon.crdtgrp_list) {
+> -		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
+> +		cmbm_data = get_mbm_state(dom_mbm, entry->mon.rmid, mba_mbps_evt_id);
+>   		cmbm_data->delta_comp = true;
+>   	}
+>   }
+> @@ -621,15 +638,15 @@ static void mbm_update(struct rdt_resource *r, struct rdt_domain *d, int rmid)
+>   		rr.evtid = QOS_L3_MBM_LOCAL_EVENT_ID;
+>   		rr.val = 0;
+>   		__mon_event_count(rmid, &rr);
+> -
+> -		/*
+> -		 * Call the MBA software controller only for the
+> -		 * control groups and when user has enabled
+> -		 * the software controller explicitly.
+> -		 */
+> -		if (is_mba_sc(NULL))
+> -			mbm_bw_count(rmid, &rr);
+>   	}
+> +
+> +	/*
+> +	 * Call the MBA software controller only for the
+> +	 * control groups and when user has enabled
+> +	 * the software controller explicitly.
+> +	 */
+> +	if (is_mba_sc(NULL))
+> +		mbm_bw_count(rmid, &rr);
+>   }
+>   
+>   /*
+> diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> index 69a1de92384a..0c4f8a1b8df0 100644
+> --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> @@ -2294,7 +2294,7 @@ static bool supports_mba_mbps(void)
+>   {
+>   	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
+>   
+> -	return (is_mbm_local_enabled() &&
+> +	return (is_mbm_enabled() &&
+>   		r->alloc_capable && is_mba_linear());
+>   }
+>   
 
-But it's not that frequent, thus the btrfs community is mostly fine to 
-handle those reports manually.
+Otherwise looks good to me.
 
-> 
->> It would be set by queue_scrub_stripe() when there is any stripe found.
->>
->> If there is no stripe found, queue_scrub_stripe() would return >0,
->> then we know there is no more extent and break the loop.
->> If there is any error, we error out too, thus no problem with that.
->>
->> So to me this looks like a false alert.
->>
->> Mind to share the compiler and its version?
->>
-> 
-> Sure, GCC 14.0.0 20231022 (experimental). Sorry, I'd meant to include
-> that in the original post..
+Thanks
 
-Wow, the first time I can not catch up on the toolchain version...
+Babu
 
-And considering it's still experimental, I'd say if we got another 
-report on this particular call site, we may consider add a fix for it, 
-by simply initializing @found_logical to zero.
-
-Thanks,
-Qu
-> 
->> Thanks,
->> Qu
->>> -h
-> 
