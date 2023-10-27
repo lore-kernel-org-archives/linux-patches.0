@@ -1,34 +1,34 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DC539855
-	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 17:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C583984F
+	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 17:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IbIKRCBE"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Lvjfmee7"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698426101; x=1729962101;
+  t=1698426102; x=1729962102;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=jAVKFX+vaV6MZ7MbRQwvQO7Qe37BB/mxkHKB6ZjkpCk=;
-  b=IbIKRCBExLYySfYZEW56VViAlRpdOhVOMCPMLh+J7wFBnigYwrmeQlMF
-   1EkAlBoNEZMQHxoF1wPwYG4NAsuuum91nfiE0kNV4emajTwxfiTLPBPRo
-   OLFxWIB5O62C2FBXvm6i6CGezaFBWluihMqgVGa4b9GwNqJJUmV9IjKnV
-   JacVijRfn53PqcRWvKkYFST9QyI+qENg/G4+goOSO0c/9ij7Y6E7wJ2t9
-   fFV82qno0LIydA1z/U2A4R0euZ/xAarFv+QU5TWhN2EofI5w4XKosN+IE
-   NrcTzJS/zmpTTS2R+LXztGPwZBkvlpqMWCnkkAbAVKTsBGdK0KvdhwkLm
+  bh=q5E2bhYf2dMQUdkDHlF7uY8ToTzJMpiMxWpjZP6f9Y8=;
+  b=Lvjfmee7z++e3YngAIL4EuUfb2DwDM7ON0qqCCLFsC0zpTaxB+pgP93p
+   QkvW0pIjoDrwzf9QTB+L/0m3AqXCIen/vKnb0uaVsRrSrX2aPq33v4GZe
+   nSvPUHg1PK5Dm1MIqPCC2OmlHTeTn/nFGsWupCW3xxv8TotZh9T5EoDHl
+   XgccNCDKeq7F1239Frlmx/SFd+Ze+fLFgmS2uikdn10zIzyDELgEDRD+j
+   xdXmjEZkO9GAPdu8HwItNhnwXsuklj24K5oOmN6OuJ3H06JCeId406a8T
+   SJaBPoKYukjNAB6c5kBeaLqKUtTtp20IGHhNXMZB5RtM4htufQKDG9Pti
    Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10876"; a="612085"
+X-IronPort-AV: E=McAfee;i="6600,9927,10876"; a="612104"
 X-IronPort-AV: E=Sophos;i="6.03,256,1694761200"; 
-   d="scan'208";a="612085"
+   d="scan'208";a="612104"
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
   by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2023 10:01:20 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10876"; a="1090988220"
+X-IronPort-AV: E=McAfee;i="6600,9927,10876"; a="1090988226"
 X-IronPort-AV: E=Sophos;i="6.03,256,1694761200"; 
-   d="scan'208";a="1090988220"
+   d="scan'208";a="1090988226"
 Received: from rchatre-ws.ostc.intel.com ([10.54.69.144])
   by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2023 10:01:19 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -46,9 +46,9 @@ Cc: kvm@vger.kernel.org,
 	reinette.chatre@intel.com,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH V3 19/26] vfio/pci: Store Linux IRQ number in per-interrupt context
-Date: Fri, 27 Oct 2023 10:00:51 -0700
-Message-Id: <fe821ea81644a358e664438e8a4af5adbac02b84.1698422237.git.reinette.chatre@intel.com>
+Subject: [RFC PATCH V3 21/26] vfio/pci: Replace backend specific calls with callbacks
+Date: Fri, 27 Oct 2023 10:00:53 -0700
+Message-Id: <ac8c3b0bffc6680e9039ac04b3c33efe9195073e.1698422237.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1698422237.git.reinette.chatre@intel.com>
 References: <cover.1698422237.git.reinette.chatre@intel.com>
@@ -60,64 +60,121 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Linux IRQ number is a property shared among all interrupt
-backends but not all interrupt management backends have a simple
-query for it. pci_irq_vector() can be used to obtain the Linux
-IRQ number of a MSI-X interrupt but there is no such
-query for IMS interrupts.
-
-The Linux IRQ number is needed during interrupt free as well
-as during register of IRQ bypass producer. It is unnecessary to
-query the Linux IRQ number at each stage, the number can be
-stored at the time the interrupt is allocated and obtained
-from its per-interrupt context when needed.
+The backend specific code needed to manage the interrupts are
+isolated into separate functions. With the backend specific
+code isolated into functions, these functions
+can be turned into callbacks for other backends to use.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
 Changes since RFC V2:
 - New patch
 
- drivers/vfio/pci/vfio_pci_intrs.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/vfio/pci/vfio_pci_intrs.c | 17 +++++++++++------
+ include/linux/vfio_pci_core.h     | 15 +++++++++++++++
+ 2 files changed, 26 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
-index 8d84e7d62594..fd0713dc9f81 100644
+index c1f65b8adfe2..1e6376b048de 100644
 --- a/drivers/vfio/pci/vfio_pci_intrs.c
 +++ b/drivers/vfio/pci/vfio_pci_intrs.c
-@@ -29,6 +29,7 @@ struct vfio_pci_irq_ctx {
- 	char			*name;
- 	bool			masked;
- 	struct irq_bypass_producer	producer;
-+	int			virq;
- };
- 
- static bool irq_is(struct vfio_pci_intr_ctx *intr_ctx, int type)
-@@ -431,10 +432,11 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_intr_ctx *intr_ctx,
+@@ -490,7 +490,7 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_intr_ctx *intr_ctx,
  
  	if (ctx && ctx->trigger) {
  		irq_bypass_unregister_producer(&ctx->producer);
--		irq = pci_irq_vector(pdev, vector);
-+		irq = ctx->virq;
- 		cmd = vfio_pci_memory_lock_and_enable(vdev);
--		free_irq(irq, ctx->trigger);
-+		free_irq(ctx->virq, ctx->trigger);
- 		vfio_pci_memory_unlock_and_restore(vdev, cmd);
-+		ctx->virq = 0;
- 		/* Interrupt stays allocated, will be freed at MSI-X disable. */
+-		vfio_msi_free_interrupt(intr_ctx, ctx, vector);
++		intr_ctx->ops->msi_free_interrupt(intr_ctx, ctx, vector);
  		kfree(ctx->name);
  		ctx->name = NULL;
-@@ -488,8 +490,10 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_intr_ctx *intr_ctx,
+ 		eventfd_ctx_put(ctx->trigger);
+@@ -507,7 +507,7 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_intr_ctx *intr_ctx,
+ 			return -ENOMEM;
+ 	}
+ 
+-	ctx->name = vfio_msi_device_name(intr_ctx, vector, index);
++	ctx->name = intr_ctx->ops->msi_device_name(intr_ctx, vector, index);
+ 	if (!ctx->name)
+ 		return -ENOMEM;
+ 
+@@ -519,7 +519,7 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_intr_ctx *intr_ctx,
+ 
+ 	ctx->trigger = trigger;
+ 
+-	ret = vfio_msi_request_interrupt(intr_ctx, ctx, vector, index);
++	ret = intr_ctx->ops->msi_request_interrupt(intr_ctx, ctx, vector, index);
  	if (ret)
  		goto out_put_eventfd_ctx;
  
-+	ctx->virq = irq;
+@@ -708,7 +708,7 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_intr_ctx *intr_ctx,
+ 	unsigned int i;
+ 
+ 	if (irq_is(intr_ctx, index) && !count && (flags & VFIO_IRQ_SET_DATA_NONE)) {
+-		vfio_msi_disable(intr_ctx, index);
++		intr_ctx->ops->msi_disable(intr_ctx, index);
+ 		return 0;
+ 	}
+ 
+@@ -723,13 +723,13 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_intr_ctx *intr_ctx,
+ 			return vfio_msi_set_block(intr_ctx, start, count,
+ 						  fds, index);
+ 
+-		ret = vfio_msi_enable(intr_ctx, start + count, index);
++		ret = intr_ctx->ops->msi_enable(intr_ctx, start + count, index);
+ 		if (ret)
+ 			return ret;
+ 
+ 		ret = vfio_msi_set_block(intr_ctx, start, count, fds, index);
+ 		if (ret)
+-			vfio_msi_disable(intr_ctx, index);
++			intr_ctx->ops->msi_disable(intr_ctx, index);
+ 
+ 		return ret;
+ 	}
+@@ -872,6 +872,11 @@ static struct vfio_pci_intr_ops vfio_pci_intr_ops = {
+ 	.set_msix_trigger = vfio_pci_set_msi_trigger,
+ 	.set_err_trigger = vfio_pci_set_err_trigger,
+ 	.set_req_trigger = vfio_pci_set_req_trigger,
++	.msi_enable = vfio_msi_enable,
++	.msi_disable = vfio_msi_disable,
++	.msi_request_interrupt = vfio_msi_request_interrupt,
++	.msi_free_interrupt = vfio_msi_free_interrupt,
++	.msi_device_name = vfio_msi_device_name,
+ };
+ 
+ void vfio_pci_init_intr_ctx(struct vfio_pci_core_device *vdev,
+diff --git a/include/linux/vfio_pci_core.h b/include/linux/vfio_pci_core.h
+index 8d2fb51a2dcc..f0951084a26f 100644
+--- a/include/linux/vfio_pci_core.h
++++ b/include/linux/vfio_pci_core.h
+@@ -69,6 +69,8 @@ struct vfio_pci_intr_ctx {
+ 	int				irq_type;
+ };
+ 
++struct vfio_pci_irq_ctx;
 +
- 	ctx->producer.token = trigger;
--	ctx->producer.irq = irq;
-+	ctx->producer.irq = ctx->virq;
- 	ret = irq_bypass_register_producer(&ctx->producer);
- 	if (unlikely(ret)) {
- 		dev_info(&pdev->dev,
+ struct vfio_pci_intr_ops {
+ 	int (*set_intx_mask)(struct vfio_pci_intr_ctx *intr_ctx,
+ 			     unsigned int index, unsigned int start,
+@@ -91,6 +93,19 @@ struct vfio_pci_intr_ops {
+ 	int (*set_req_trigger)(struct vfio_pci_intr_ctx *intr_ctx,
+ 			       unsigned int index, unsigned int start,
+ 			       unsigned int count, uint32_t flags, void *data);
++	int (*msi_enable)(struct vfio_pci_intr_ctx *intr_ctx, int nvec,
++			  unsigned int index);
++	void (*msi_disable)(struct vfio_pci_intr_ctx *intr_ctx,
++			    unsigned int index);
++	int (*msi_request_interrupt)(struct vfio_pci_intr_ctx *intr_ctx,
++				     struct vfio_pci_irq_ctx *ctx,
++				     unsigned int vector,
++				     unsigned int index);
++	void (*msi_free_interrupt)(struct vfio_pci_intr_ctx *intr_ctx,
++				   struct vfio_pci_irq_ctx *ctx,
++				   unsigned int vector);
++	char *(*msi_device_name)(struct vfio_pci_intr_ctx *intr_ctx,
++				 unsigned int vector, unsigned int index);
+ };
+ 
+ struct vfio_pci_core_device {
 -- 
 2.34.1
 
