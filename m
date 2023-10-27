@@ -1,120 +1,200 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE63618654
-	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 14:54:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9AC1F5E7;
+	Fri, 27 Oct 2023 15:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QOsTCLpo"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-1e9b6f39f9eso1450600fac.2
-        for <patches@lists.linux.dev>; Fri, 27 Oct 2023 07:54:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698418497; x=1699023297; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=FRGus6ktymyimDivswpJ27Ui0IhpUZQSXAOmlCFn8oc=;
-        b=QOsTCLpo6D0oc+b+lYvg3obxoknGiPtJtZ65HdVv0MNXP2r2wUG4Hw6iz0oP5kLBFy
-         VezZCruCW8cdVyPeXBQJTAVqYHX/xK55kmp6MHnFGOzk2BRt18SElPzWRQrPikBirsyK
-         Nuu9Tg4B5HBmDh1ZabBPPFFuD/kPbIoG/BGcqxA/aPgDlYcWMt9+2P/DlMfMB3uHQN9P
-         jWhRc4jB9AADbvzuvPSj/CfRasKTUiKIFHfXTyPQLnHHLEkmUYIS6C2yU6OXB3cveyvZ
-         T5Zbd3avkvwJqeavwMQ9UHAMIyYDtJN1Af2cdvOjG+WxGQ7p4WYg4ejpLfO0pKifrCLV
-         WY7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698418497; x=1699023297;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FRGus6ktymyimDivswpJ27Ui0IhpUZQSXAOmlCFn8oc=;
-        b=ayaOhv/GOWKIoo88wq0ecJeJe/TAk/pl3DC4QssYVPQuChtSOVrH2W1pXkAC/xBieq
-         DVv3lUOvOoG5eNg+zbN7F5JaDlkUyVBIuPb6tiex1ifiCewSpEuMJ5Y1z8wSeNJsiDCQ
-         pfz/jzuGBYj1WPLfjNNJ9pxSY27vWIvo5DDBMHJGIkInQNgGyxC7zh1+wqooXMTJYkXt
-         VcgfJayz+36UAKZqWb2H/8QqF+IVW6kI3eb/qi8B0GkNdrvHpDYDQmbryX2v3qoZngs4
-         k9xt/0HelhHI1927mamNsYFlLphkIi6tZ7DQ9HSc4RSFzearo1Jptr72neQABaIZVVbX
-         egGQ==
-X-Gm-Message-State: AOJu0Yxnr8aXCo7gZL+0nXWpIvYLoSOnZDmswMEkow/fkNqSp1a3vr3k
-	/QqB9NAxxt2S5u+YNzjImPLRFxG5l4k=
-X-Google-Smtp-Source: AGHT+IHSGc3YoPxDtEzMBIIDVpjwJ36pSYYOeGGCT294/VUaa1hkpwh4XVkxyOqA2FN25iDzWFlFUg==
-X-Received: by 2002:a05:6871:7582:b0:1ea:15e6:9420 with SMTP id nz2-20020a056871758200b001ea15e69420mr3162839oac.52.1698418496787;
-        Fri, 27 Oct 2023 07:54:56 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id i184-20020a25d1c1000000b00d677aec54ffsm706978ybg.60.2023.10.27.07.54.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 07:54:56 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <43b45922-118c-3f77-80f2-960fa398cf1f@roeck-us.net>
-Date: Fri, 27 Oct 2023 07:54:54 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J/Lav+w/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9002FC433C8;
+	Fri, 27 Oct 2023 15:48:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1698421706;
+	bh=Hy/FQULDu9zWeRDtjQvNW569qijmMlcI9GMzkeTwT4A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=J/Lav+w/Q7kocodO3Evvm4cQYUPtOaYEQeVrWek/DnxCm8yj6WT5breizqXZY/rA6
+	 gMn1vyC9eTqDfnE89W+5frLA6J8artD4lZeHiqDwW9PaBL7Qibik98u6r9N2lXKVnY
+	 7xQL6PlDcdSbVvX5dOZh9CuEA6QMcr+S4psRxkO80M+gLgni6i5iK7yAiX1W9EqpEF
+	 tlJ70ZlxTPlt6qqHOwcnnXE7e5qnRxcwXws7Xk70bgCmDXHdVZX5Wvmc06TxEawBX3
+	 +ybQoTv9fqooR8ovLjLNDi/+5XebPIvjN8M9Jr3zLl8d6W/noWQtAIESx5igyWRIld
+	 dkN7uUyhA/Rbg==
+Date: Fri, 27 Oct 2023 08:48:23 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Conor Dooley <conor@kernel.org>
+Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+	ndesaulniers@google.com, trix@redhat.com, samitolvanen@google.com,
+	twd2.me@gmail.com, linux-riscv@lists.infradead.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH v4] RISC-V: build: Allow LTO to be selected
+Message-ID: <20231027154823.GA3812247@dev-arch.thelio-3990X>
+References: <20231017-riscv-lto-v4-1-e7810b24e805@kernel.org>
+ <20231027-disband-return-3a26708d772f@spud>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 5.10 000/199] 5.10.199-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20231024083326.219645073@linuxfoundation.org>
- <6413ac66-2608-cd76-1b3c-5a185fe6d88d@roeck-us.net>
- <2023102728-gigantic-favorable-71a6@gregkh>
-From: Guenter Roeck <linux@roeck-us.net>
-In-Reply-To: <2023102728-gigantic-favorable-71a6@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231027-disband-return-3a26708d772f@spud>
 
-On 10/27/23 05:25, Greg Kroah-Hartman wrote:
-> On Wed, Oct 25, 2023 at 08:07:26AM -0700, Guenter Roeck wrote:
->> On 10/24/23 01:36, Greg Kroah-Hartman wrote:
->>> This is the start of the stable review cycle for the 5.10.199 release.
->>> There are 199 patches in this series, all will be posted as a response
->>> to this one.  If anyone has any issues with these being applied, please
->>> let me know.
->>>
->>> Responses should be made by Thu, 26 Oct 2023 08:32:45 +0000.
->>> Anything received after that time might be too late.
->>>
->>
->> Build reference: v5.10.198-200-ge31b6513c43d
->> Compiler version: x86_64-linux-gcc (GCC) 11.4.0
->> Assembler version: GNU assembler (GNU Binutils) 2.40
->>
->> Building x86_64:defconfig ... passed
->> Building x86_64:allyesconfig ... failed
->> --------------
->> Error log:
->> Unsupported relocation type: unknown type rel type name (-1940038754)
->> make[3]: *** [arch/x86/boot/compressed/Makefile:122: arch/x86/boot/compressed/vmlinux.relocs] Error 1
->> make[3]: *** Deleting file 'arch/x86/boot/compressed/vmlinux.relocs'
->> make[3]: *** Waiting for unfinished jobs....
->> x86_64-linux-objcopy: vmlinux: unsupported relocation type 0x9e
->> x86_64-linux-objcopy: vmlinux[.text]: relocation count is negative: bad value
->> make[3]: *** [arch/x86/boot/compressed/Makefile:114: arch/x86/boot/compressed/vmlinux.bin] Error 1
->> make[2]: *** [arch/x86/boot/Makefile:115: arch/x86/boot/compressed/vmlinux] Error 2
->> make[1]: *** [arch/x86/Makefile:274: bzImage] Error 2
->> make: *** [Makefile:192: __sub-make] Error 2
->>
->> No idea what is causing it, but it is persistent. Something odd between
->> compiler/binutils/objcopy.
->>
->> Guess it doesn't matter since the release is out already.
+On Fri, Oct 27, 2023 at 02:45:27PM +0100, Conor Dooley wrote:
+> Hey Nathan,
 > 
-> If the commit that causes this can be figured out, we can revert it.
+> On Tue, Oct 17, 2023 at 03:21:04PM -0700, Nathan Chancellor wrote:
+> > From: Wende Tan <twd2.me@gmail.com>
+> > 
+> > Allow LTO to be selected for RISC-V, only when LLD >= 14, since there is
+> > an issue [1] in prior LLD versions that prevents LLD to generate proper
+> > machine code for RISC-V when writing `nop`s.
+> > 
+> > To avoid boot failures in QEMU [2], '-mattr=+c' and '-mattr=+relax'
+> > need to be passed via '-mllvm' to ld.lld, as there appears to be an
+> > issue with LLVM's target-features and LTO [3], which can result in
+> > incorrect relocations to branch targets [4]. Once this is fixed in LLVM,
+> > it can be made conditional on affected ld.lld versions.
+> > 
+> > Disable LTO for arch/riscv/kernel/pi, as llvm-objcopy expects an ELF
+> > object file when manipulating the files in that subfolder, rather than
+> > LLVM bitcode.
+> > 
+> > [1] https://github.com/llvm/llvm-project/issues/50505, resolved by LLVM
+> >     commit e63455d5e0e5 ("[MC] Use local MCSubtargetInfo in writeNops")
+> > [2] https://github.com/ClangBuiltLinux/linux/issues/1942
+> > [3] https://github.com/llvm/llvm-project/issues/59350
+> > [4] https://github.com/llvm/llvm-project/issues/65090
+> > 
+> > Tested-by: Wende Tan <twd2.me@gmail.com>
+> > Signed-off-by: Wende Tan <twd2.me@gmail.com>
+> > Co-developed-by: Nathan Chancellor <nathan@kernel.org>
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> > Testing notes from Nathan:
+> > 
+> > I tested LLVM 14 through 18 with defconfig + full/thin LTO and
+> > allmodconfig + thin LTO. allmodconfig + thin LTO with LLVM 15 and 16
+> > shows
+> > 
+> >   ld.lld: error: section size decrease is too large
+> > 
+> > when linking vmlinux. This appears to be resolved in LLVM 17 with
+> > https://github.com/llvm/llvm-project/commit/9d37ea95df1b84cca9b5e954d8964c976a5e303e
+> > (I did not bisect but the commit message lines up with the issue). I
+> > kept the existing version check because defconfig worked fine but we may
+> > want to bump it to 17.0.0 if randconfigs trip over this.
+> > 
+> > v4 now boots in QEMU for me with both full and thin LTO.
+> > 
+> > Testing notes from Wende:
+> > 
+> > I have tested enabling LTO for `defconfig`. The LLD took ~2m21s and ~3GiB
+> > on our Intel Xeon Gold 6140 server and produced an 18MiB Image. The image
+> > can boot to shell using an archriscv rootfs on QEMU.
+> > 
+> > I have also tested it for `allyesconfig` without COMPILE_TEST, FTRACE,
+> > KASAN, and GCOV. The LLD took ~7h03m and ~335GiB on the server,
+> > successfully producing a 1.7GiB Image. Unfortunately, we cannot boot this
+> > image because the `create_kernel_page_table()` -> `alloc_pmd_early()` ->
+> > `BUG_ON()` logic limits the image to be < 1GiB. Maybe we can fix it in a
+> > separate patch further.
+> > 
+> > Changes in v4:
+> > - Pass '-mattr=+c' and '-mattr=+relax' to ld.lld via '-mllvm' flags when
+> >   doing LTO due to LLVM not appearing to honor target-features when
+> >   performing LTO, which can result in incorrect branch targets. This
+> >   fixes boot with CONFIG_LTO_CLANG=y with LLVM 15.0.0+.
+> > - Tidy up commit message and move testing notes to below the fold, as it
+> >   is not too relevant to the git history and it makes the rest of the
+> >   message more of an imperative mood.
+> > - Link to v3: https://lore.kernel.org/r/20231003-riscv-lto-v3-1-8aca61a4ecb4@kernel.org
+> > 
+> > Changes in v3:
+> > - Disable LTO in arch/riscv/kernel/pi/Makefile, which was added to the
+> >   kernel after the submission of v2. This change matches arm64.
+> > - Link to v2: https://lore.kernel.org/r/20220512205545.992288-1-twd2.me@gmail.com/
+> > 
+> > Changes in v2:
+> > - Some textual changes suggested by Nick.
+> > - Drop the changes to `arch/riscv/Makefile`, since the LLVM issue is
+> >   filed and resolved.
+> > - Drop the unnecessary changes to `arch/riscv/kernel/vdso/Makefile`.
+> > - Link to v1: https://lore.kernel.org/r/20210719205208.1023221-1-twd2.me@gmail.com/
+> > ---
+> >  arch/riscv/Kconfig            | 3 +++
+> >  arch/riscv/Makefile           | 5 +++++
+> >  arch/riscv/kernel/pi/Makefile | 3 +++
+> >  3 files changed, 11 insertions(+)
+> > 
+> > diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+> > index d607ab0f7c6d..523640f7441e 100644
+> > --- a/arch/riscv/Kconfig
+> > +++ b/arch/riscv/Kconfig
+> > @@ -46,6 +46,9 @@ config RISCV
+> >  	select ARCH_SUPPORTS_CFI_CLANG
+> >  	select ARCH_SUPPORTS_DEBUG_PAGEALLOC if MMU
+> >  	select ARCH_SUPPORTS_HUGETLBFS if MMU
+> > +	# LLD >= 14: https://github.com/llvm/llvm-project/issues/50505
+> > +	select ARCH_SUPPORTS_LTO_CLANG if LLD_VERSION >= 140000
+> > +	select ARCH_SUPPORTS_LTO_CLANG_THIN if LLD_VERSION >= 140000
+> >  	select ARCH_SUPPORTS_PAGE_TABLE_CHECK if MMU
+> >  	select ARCH_SUPPORTS_PER_VMA_LOCK if MMU
+> >  	select ARCH_USE_MEMTEST
+> > diff --git a/arch/riscv/Makefile b/arch/riscv/Makefile
+> > index 1329e060c548..709400ceac60 100644
+> > --- a/arch/riscv/Makefile
+> > +++ b/arch/riscv/Makefile
+> > @@ -52,6 +52,11 @@ ifndef CONFIG_AS_IS_LLVM
+> >  	KBUILD_CFLAGS += -Wa,-mno-relax
+> >  	KBUILD_AFLAGS += -Wa,-mno-relax
+> >  endif
+> > +# LLVM has an issue with target-features and LTO: https://github.com/llvm/llvm-project/issues/59350
+> > +# Ensure it is aware of linker relaxation with LTO, otherwise relocations may
+> > +# be incorrect: https://github.com/llvm/llvm-project/issues/65090
+> > +else ifeq ($(CONFIG_LTO_CLANG),y)
+> > +	KBUILD_LDFLAGS += -mllvm -mattr=+c -mllvm -mattr=+relax
+> >  endif
+> >  endif
+> >  
+> > diff --git a/arch/riscv/kernel/pi/Makefile b/arch/riscv/kernel/pi/Makefile
+> > index 07915dc9279e..b75f150b923d 100644
+> > --- a/arch/riscv/kernel/pi/Makefile
+> > +++ b/arch/riscv/kernel/pi/Makefile
+> > @@ -9,6 +9,9 @@ KBUILD_CFLAGS	:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) -fpie \
+> >  		   -fno-asynchronous-unwind-tables -fno-unwind-tables \
+> >  		   $(call cc-option,-fno-addrsig)
+> >  
 > 
+> > +# Disable LTO
+> 
+> FWIW, this is a bit of a statement of the obvious, rather than being
+> helpful. If this ends up being respun, I think it'd be good to add the
+> context from the commit message.
 
-The final release built fine. I see this happen once in a while but
-was never able to figure out what causes it to happen. So far it was
-always persistent on a given source but disappeared as soon as something
-changed in the code (making it all but impossible to bisect).
-Looks like that happened again.
+Heh, good point. I had copied this from arm64 IIRC so I was not paying
+much attention. If I have to respin, I will update this to:
 
-Guenter
+# Disable LTO, as objcopy needs to work on ELF files, rather than LLVM
+# bitcode.
+
+> Otherwise,
+> 
+> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+
+Thanks for the review!
+
+> > +KBUILD_CFLAGS	:= $(filter-out $(CC_FLAGS_LTO), $(KBUILD_CFLAGS))
+> > +
+> >  KBUILD_CFLAGS	+= -mcmodel=medany
+> >  
+> >  CFLAGS_cmdline_early.o += -D__NO_FORTIFY
+> > 
+> > ---
+> > base-commit: 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
+> > change-id: 20231003-riscv-lto-f013beed8587
+> > 
+> > Best regards,
+> > -- 
+> > Nathan Chancellor <nathan@kernel.org>
+> > 
+
 
