@@ -1,65 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82AE238BCE
-	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 16:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F408638BCE
+	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 16:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bzOCpHyB";
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s7aS4m3A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820C9C433C8
-	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 16:27:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="apOMbx2I";
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kR7uDf06"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1922BC433C7
+	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 16:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698424058;
-	bh=kEkw3mT5ax9TK4lledPH/qOgSDVWEicwbZhmX0r6WA0=;
-	h=Resent-From:Resent-Date:Resent-To:From:To:Cc:Date:Subject:From;
-	b=bzOCpHyBYVf6sNn+lsTzZPQ20Ncznhr3YfdhqgPXe9AUvEthb8/FE7RTrElsb/HjD
-	 P6QijvOwxmHraLTjmZwf6fF8JFsOU3ZwMKUXmga16oR2tQoXTQMWoY9hr98ShfBYJL
-	 i/ZW3NVEkStzFz8Cnq26dKN4JOy0GnY5IZuchrrJZCwzCODKBzc/mqOov/R7/M7HPM
-	 eGU4DhgFedE7BMnWw2nYrXY9gi+ERKc7Vz5XLV9COSrOdz03aMYPUaSQ+h/xigF338
-	 VJdeBDuYxD1MhB7FML28RoqH44j4DYyr2LIMaDITNuepB7CbEIjW0GqFJQN6slHolj
-	 wDVm2f4N5l7iQ==
+	s=k20201202; t=1698424061;
+	bh=ZIhEUto7Ie2F1PnCeV7zW6ioXwNxMy5PW9CRsJ9ceaM=;
+	h=Resent-From:Resent-Date:Resent-To:From:To:Cc:Date:In-Reply-To:
+	 References:Subject:From;
+	b=apOMbx2IMgv9XRn974vegRClvwRjzhwaXvjSnGFmXhQpuhh5XsutyAxJoIuhN1Pjk
+	 5TWhh07xGSLaYsq2nWs2ioYPB1Ad1VkQ1E7lXivRTgDVWDzginGQbqiSDVP7FgX7ac
+	 V+/j8A3fwajwEu4LEThjOMjyJFXhTgAETMegQ857XmLq8Z5qLS6qjajlLQrJXVnXNW
+	 FVHvHrE8P8i8tPud9t06PIZG0kEmFI+fjjenukv6xH2CUzIQ/d5icmWdlPXw0H+jeA
+	 fagsy33vRo/pCFCtOAKuYacg/33tvQJLZCy3/pUBbHNPODsq71I5TEnYUMMP2xdyp4
+	 rc8QlGcmbaqQQ==
 Resent-From: Mark Brown <broonie@finisterre.sirena.org.uk>
-Resent-Date: Fri, 27 Oct 2023 17:27:34 +0100
-Resent-Message-ID: <ZTvk9g3xluATbCOz@finisterre.sirena.org.uk>
+Resent-Date: Fri, 27 Oct 2023 17:27:38 +0100
+Resent-Message-ID: <ZTvk+jc6cik0jA9K@finisterre.sirena.org.uk>
 Resent-To: patches@lists.linux.dev
 Envelope-to: broonie@sirena.co.uk
-Delivery-date: Fri, 27 Oct 2023 16:24:13 +0100
+Delivery-date: Fri, 27 Oct 2023 16:24:35 +0100
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
 	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.94.2)
 	(envelope-from <arnd@kernel.org>)
-	id 1qwOh1-00FfF9-1x
-	for broonie@sirena.co.uk; Fri, 27 Oct 2023 16:24:13 +0100
+	id 1qwOhM-00FfFc-Nv
+	for broonie@sirena.co.uk; Fri, 27 Oct 2023 16:24:35 +0100
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 1475561009
-	for <broonie@sirena.co.uk>; Fri, 27 Oct 2023 15:24:10 +0000 (UTC)
+	by dfw.source.kernel.org (Postfix) with ESMTP id 08AF361009
+	for <broonie@sirena.co.uk>; Fri, 27 Oct 2023 15:24:32 +0000 (UTC)
 Received: by smtp.kernel.org (Postfix)
-	id C8ED0C433C8; Fri, 27 Oct 2023 15:24:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD276C433C7;
-	Fri, 27 Oct 2023 15:24:07 +0000 (UTC)
+	id BDE3DC433CB; Fri, 27 Oct 2023 15:24:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF2EC433CA;
+	Fri, 27 Oct 2023 15:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698420249;
-	bh=kEkw3mT5ax9TK4lledPH/qOgSDVWEicwbZhmX0r6WA0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=s7aS4m3AextXHTYeOf7pTDE+cmH03DexsvUQmfE4zI5I/scVBQA2mgziEJ8CU2y3H
-	 +hKzuNQpja4BeT9nxPOEpJCvdoUQ+gHLY4seVpQOWqtmjJn5WPBcC51b0BAfeoew+X
-	 Xn9hRIrbfyzsIykS25M4iTO7Ac5p962wOukK/cgjb/AVhRcRbg+CVf2ugXHFTD0nLN
-	 9tX709Sx7UGwF6vv53UITcxZpe7sWwfY0+2uqzRdSUGt7ZV0K4ZWP+/Vdcde0nk/Sv
-	 p60oVpM/tlltIB5+SZ6yFRXCOQECWkv6Gmyx4KIcbDdXrtzhUrwzSNkQBpPRbhfe5s
-	 4//numtfGvoYQ==
+	s=k20201202; t=1698420271;
+	bh=ZIhEUto7Ie2F1PnCeV7zW6ioXwNxMy5PW9CRsJ9ceaM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=kR7uDf06h08elvu+XJN8uZlCZ8dl1wqzgxoWyGmvZjCeMLQULFLtq6usskfz3qYS+
+	 JL1BZvVg2IZX1FH0mJbEyKq3GzuYT1UlOQqnZmlpFvd01imUoGbeecshd/eYSLYXB2
+	 OJ5hG6QPDg3s9L33vsAeAfk7itH22rIeemJ1LlMHWyfAXTs7/eMgFt/daFGMV31Yip
+	 wQ4tmit17eQkF1VvPfcVQ9nABob44XSSjs+q+dPZkzL6fIUA5S9HdzTLvEmCrmQxD+
+	 6kUkvUmAes0O4NtGxZw3R/qRGaU8n5XdGvzJ5YnWSnwn5Ekf1o4TxUQzD8JkRIGK4A
+	 EZRQgWSrO+Jdw==
 From: Arnd Bergmann <arnd@kernel.org>
 To: Mark Brown <broonie@kernel.org>
 Cc: Arnd Bergmann <arnd@arndb.de>,
 	Liam Girdwood <lgirdwood@gmail.com>,
 	Jaroslav Kysela <perex@perex.cz>,
 	Takashi Iwai <tiwai@suse.com>,
-	Syed Saba Kareem <Syed.SabaKareem@amd.com>,
-	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
+	Weidong Wang <wangweidong.a@awinic.com>,
+	Shuming Fan <shumingf@realtek.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Herve Codina <herve.codina@bootlin.com>,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Date: Fri, 27 Oct 2023 17:23:52 +0200
-Message-Id: <20231027152403.386257-1-arnd@kernel.org>
+Date: Fri, 27 Oct 2023 17:23:53 +0200
+Message-Id: <20231027152403.386257-2-arnd@kernel.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20231027152403.386257-1-arnd@kernel.org>
+References: <20231027152403.386257-1-arnd@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -69,60 +74,42 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2604:1380:4641:c500::1
 X-SA-Exim-Mail-From: arnd@kernel.org
-Subject: [PATCH 1/3] ASoC: amd: acp: add ACPI dependency
+Subject: [PATCH 2/3] ASoC: codecs: aw88399: fix typo in Kconfig select
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: M3df/LhhV3RI
+X-TUID: piJ8cbEPl9mC
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-A newly added function requires CONFIG_ACPI to avoid a build error:
+The aw88395_lib module is shared by all the aw883* drivers that
+need to select the corresponding Kconfig symbol. The newly added
+aw88399 incorrectly selects SND_SOC_AW88399_LIB instead, which
+is not defined anywhere in the kernel, causing a link failure when
+the actual one is missing:
 
-sound/soc/amd/acp/acp-legacy-common.c: In function 'check_acp_pdm':
-sound/soc/amd/acp/acp-legacy-common.c:401:19: error: implicit declaration of function 'acpi_find_child_device'; did you mean 'acpi_match_device'? [-Werror=implicit-function-declaration]
-  401 |         pdm_dev = acpi_find_child_device(ACPI_COMPANION(&pci->dev), pdm_addr, 0);
-      |                   ^~~~~~~~~~~~~~~~~~~~~~
-      |                   acpi_match_device
+arm-linux-gnueabi-ld: sound/soc/codecs/aw88399.o: in function `aw88399_codec_probe':
+aw88399.c:(.text+0xbc6): undefined reference to `aw88395_dev_load_acf_check'
+arm-linux-gnueabi-ld: aw88399.c:(.text+0xbea): undefined reference to `aw88395_dev_cfg_load'
 
-The acp drivers really only work when ACPI is enabled already, so just
-avoid the build failure with hard dependency in everything that
-enables the acp-legacy-common portion.
-
-Fixes: 3a94c8ad0aae ("ASoC: amd: acp: add code for scanning acp pdm controller")
+Fixes: 8ade6cc7e261 ("ASoC: codecs: Add aw88399 amplifier driver")
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- sound/soc/amd/acp/Kconfig | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/soc/codecs/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/acp/Kconfig b/sound/soc/amd/acp/Kconfig
-index c0b2a2df8f80..b0e4d5117b81 100644
---- a/sound/soc/amd/acp/Kconfig
-+++ b/sound/soc/amd/acp/Kconfig
-@@ -30,13 +30,15 @@ config SND_SOC_AMD_ACP_PCM
- 
- config SND_SOC_AMD_ACP_PCI
- 	tristate "AMD ACP PCI Driver Support"
--	select SND_SOC_AMD_ACP_LEGACY_COMMON
- 	depends on X86 && PCI
-+	depends on ACPI
-+	select SND_SOC_AMD_ACP_LEGACY_COMMON
+diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+index cc4026d93654..3429419ca694 100644
+--- a/sound/soc/codecs/Kconfig
++++ b/sound/soc/codecs/Kconfig
+@@ -687,7 +687,7 @@ config SND_SOC_AW88399
+ 	select CRC8
+ 	select REGMAP_I2C
+ 	select GPIOLIB
+-	select SND_SOC_AW88399_LIB
++	select SND_SOC_AW88395_LIB
  	help
- 	  This options enables generic PCI driver for ACP device.
- 
- config SND_AMD_ASOC_RENOIR
- 	tristate "AMD ACP ASOC Renoir Support"
-+	depends on ACPI
- 	select SND_SOC_AMD_ACP_PCM
- 	select SND_SOC_AMD_ACP_I2S
- 	select SND_SOC_AMD_ACP_PDM
-@@ -47,6 +49,7 @@ config SND_AMD_ASOC_RENOIR
- 
- config SND_AMD_ASOC_REMBRANDT
- 	tristate "AMD ACP ASOC Rembrandt Support"
-+	depends on ACPI
- 	select SND_SOC_AMD_ACP_PCM
- 	select SND_SOC_AMD_ACP_I2S
- 	select SND_SOC_AMD_ACP_PDM
+ 	  This option enables support for aw88399 Smart PA.
+ 	  The awinic AW88399 is an I2S/TDM input, high efficiency
 -- 
 2.39.2
 
