@@ -1,200 +1,128 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9AC1F5E7;
-	Fri, 27 Oct 2023 15:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82AE238BCE
+	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 16:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J/Lav+w/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9002FC433C8;
-	Fri, 27 Oct 2023 15:48:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bzOCpHyB";
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s7aS4m3A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820C9C433C8
+	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 16:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698421706;
-	bh=Hy/FQULDu9zWeRDtjQvNW569qijmMlcI9GMzkeTwT4A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=J/Lav+w/Q7kocodO3Evvm4cQYUPtOaYEQeVrWek/DnxCm8yj6WT5breizqXZY/rA6
-	 gMn1vyC9eTqDfnE89W+5frLA6J8artD4lZeHiqDwW9PaBL7Qibik98u6r9N2lXKVnY
-	 7xQL6PlDcdSbVvX5dOZh9CuEA6QMcr+S4psRxkO80M+gLgni6i5iK7yAiX1W9EqpEF
-	 tlJ70ZlxTPlt6qqHOwcnnXE7e5qnRxcwXws7Xk70bgCmDXHdVZX5Wvmc06TxEawBX3
-	 +ybQoTv9fqooR8ovLjLNDi/+5XebPIvjN8M9Jr3zLl8d6W/noWQtAIESx5igyWRIld
-	 dkN7uUyhA/Rbg==
-Date: Fri, 27 Oct 2023 08:48:23 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Conor Dooley <conor@kernel.org>
-Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	ndesaulniers@google.com, trix@redhat.com, samitolvanen@google.com,
-	twd2.me@gmail.com, linux-riscv@lists.infradead.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH v4] RISC-V: build: Allow LTO to be selected
-Message-ID: <20231027154823.GA3812247@dev-arch.thelio-3990X>
-References: <20231017-riscv-lto-v4-1-e7810b24e805@kernel.org>
- <20231027-disband-return-3a26708d772f@spud>
+	s=k20201202; t=1698424058;
+	bh=kEkw3mT5ax9TK4lledPH/qOgSDVWEicwbZhmX0r6WA0=;
+	h=Resent-From:Resent-Date:Resent-To:From:To:Cc:Date:Subject:From;
+	b=bzOCpHyBYVf6sNn+lsTzZPQ20Ncznhr3YfdhqgPXe9AUvEthb8/FE7RTrElsb/HjD
+	 P6QijvOwxmHraLTjmZwf6fF8JFsOU3ZwMKUXmga16oR2tQoXTQMWoY9hr98ShfBYJL
+	 i/ZW3NVEkStzFz8Cnq26dKN4JOy0GnY5IZuchrrJZCwzCODKBzc/mqOov/R7/M7HPM
+	 eGU4DhgFedE7BMnWw2nYrXY9gi+ERKc7Vz5XLV9COSrOdz03aMYPUaSQ+h/xigF338
+	 VJdeBDuYxD1MhB7FML28RoqH44j4DYyr2LIMaDITNuepB7CbEIjW0GqFJQN6slHolj
+	 wDVm2f4N5l7iQ==
+Resent-From: Mark Brown <broonie@finisterre.sirena.org.uk>
+Resent-Date: Fri, 27 Oct 2023 17:27:34 +0100
+Resent-Message-ID: <ZTvk9g3xluATbCOz@finisterre.sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Fri, 27 Oct 2023 16:24:13 +0100
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <arnd@kernel.org>)
+	id 1qwOh1-00FfF9-1x
+	for broonie@sirena.co.uk; Fri, 27 Oct 2023 16:24:13 +0100
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id 1475561009
+	for <broonie@sirena.co.uk>; Fri, 27 Oct 2023 15:24:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id C8ED0C433C8; Fri, 27 Oct 2023 15:24:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD276C433C7;
+	Fri, 27 Oct 2023 15:24:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1698420249;
+	bh=kEkw3mT5ax9TK4lledPH/qOgSDVWEicwbZhmX0r6WA0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=s7aS4m3AextXHTYeOf7pTDE+cmH03DexsvUQmfE4zI5I/scVBQA2mgziEJ8CU2y3H
+	 +hKzuNQpja4BeT9nxPOEpJCvdoUQ+gHLY4seVpQOWqtmjJn5WPBcC51b0BAfeoew+X
+	 Xn9hRIrbfyzsIykS25M4iTO7Ac5p962wOukK/cgjb/AVhRcRbg+CVf2ugXHFTD0nLN
+	 9tX709Sx7UGwF6vv53UITcxZpe7sWwfY0+2uqzRdSUGt7ZV0K4ZWP+/Vdcde0nk/Sv
+	 p60oVpM/tlltIB5+SZ6yFRXCOQECWkv6Gmyx4KIcbDdXrtzhUrwzSNkQBpPRbhfe5s
+	 4//numtfGvoYQ==
+From: Arnd Bergmann <arnd@kernel.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Syed Saba Kareem <Syed.SabaKareem@amd.com>,
+	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Date: Fri, 27 Oct 2023 17:23:52 +0200
+Message-Id: <20231027152403.386257-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231027-disband-return-3a26708d772f@spud>
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2604:1380:4641:c500::1
+X-SA-Exim-Mail-From: arnd@kernel.org
+Subject: [PATCH 1/3] ASoC: amd: acp: add ACPI dependency
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: M3df/LhhV3RI
 
-On Fri, Oct 27, 2023 at 02:45:27PM +0100, Conor Dooley wrote:
-> Hey Nathan,
-> 
-> On Tue, Oct 17, 2023 at 03:21:04PM -0700, Nathan Chancellor wrote:
-> > From: Wende Tan <twd2.me@gmail.com>
-> > 
-> > Allow LTO to be selected for RISC-V, only when LLD >= 14, since there is
-> > an issue [1] in prior LLD versions that prevents LLD to generate proper
-> > machine code for RISC-V when writing `nop`s.
-> > 
-> > To avoid boot failures in QEMU [2], '-mattr=+c' and '-mattr=+relax'
-> > need to be passed via '-mllvm' to ld.lld, as there appears to be an
-> > issue with LLVM's target-features and LTO [3], which can result in
-> > incorrect relocations to branch targets [4]. Once this is fixed in LLVM,
-> > it can be made conditional on affected ld.lld versions.
-> > 
-> > Disable LTO for arch/riscv/kernel/pi, as llvm-objcopy expects an ELF
-> > object file when manipulating the files in that subfolder, rather than
-> > LLVM bitcode.
-> > 
-> > [1] https://github.com/llvm/llvm-project/issues/50505, resolved by LLVM
-> >     commit e63455d5e0e5 ("[MC] Use local MCSubtargetInfo in writeNops")
-> > [2] https://github.com/ClangBuiltLinux/linux/issues/1942
-> > [3] https://github.com/llvm/llvm-project/issues/59350
-> > [4] https://github.com/llvm/llvm-project/issues/65090
-> > 
-> > Tested-by: Wende Tan <twd2.me@gmail.com>
-> > Signed-off-by: Wende Tan <twd2.me@gmail.com>
-> > Co-developed-by: Nathan Chancellor <nathan@kernel.org>
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > ---
-> > Testing notes from Nathan:
-> > 
-> > I tested LLVM 14 through 18 with defconfig + full/thin LTO and
-> > allmodconfig + thin LTO. allmodconfig + thin LTO with LLVM 15 and 16
-> > shows
-> > 
-> >   ld.lld: error: section size decrease is too large
-> > 
-> > when linking vmlinux. This appears to be resolved in LLVM 17 with
-> > https://github.com/llvm/llvm-project/commit/9d37ea95df1b84cca9b5e954d8964c976a5e303e
-> > (I did not bisect but the commit message lines up with the issue). I
-> > kept the existing version check because defconfig worked fine but we may
-> > want to bump it to 17.0.0 if randconfigs trip over this.
-> > 
-> > v4 now boots in QEMU for me with both full and thin LTO.
-> > 
-> > Testing notes from Wende:
-> > 
-> > I have tested enabling LTO for `defconfig`. The LLD took ~2m21s and ~3GiB
-> > on our Intel Xeon Gold 6140 server and produced an 18MiB Image. The image
-> > can boot to shell using an archriscv rootfs on QEMU.
-> > 
-> > I have also tested it for `allyesconfig` without COMPILE_TEST, FTRACE,
-> > KASAN, and GCOV. The LLD took ~7h03m and ~335GiB on the server,
-> > successfully producing a 1.7GiB Image. Unfortunately, we cannot boot this
-> > image because the `create_kernel_page_table()` -> `alloc_pmd_early()` ->
-> > `BUG_ON()` logic limits the image to be < 1GiB. Maybe we can fix it in a
-> > separate patch further.
-> > 
-> > Changes in v4:
-> > - Pass '-mattr=+c' and '-mattr=+relax' to ld.lld via '-mllvm' flags when
-> >   doing LTO due to LLVM not appearing to honor target-features when
-> >   performing LTO, which can result in incorrect branch targets. This
-> >   fixes boot with CONFIG_LTO_CLANG=y with LLVM 15.0.0+.
-> > - Tidy up commit message and move testing notes to below the fold, as it
-> >   is not too relevant to the git history and it makes the rest of the
-> >   message more of an imperative mood.
-> > - Link to v3: https://lore.kernel.org/r/20231003-riscv-lto-v3-1-8aca61a4ecb4@kernel.org
-> > 
-> > Changes in v3:
-> > - Disable LTO in arch/riscv/kernel/pi/Makefile, which was added to the
-> >   kernel after the submission of v2. This change matches arm64.
-> > - Link to v2: https://lore.kernel.org/r/20220512205545.992288-1-twd2.me@gmail.com/
-> > 
-> > Changes in v2:
-> > - Some textual changes suggested by Nick.
-> > - Drop the changes to `arch/riscv/Makefile`, since the LLVM issue is
-> >   filed and resolved.
-> > - Drop the unnecessary changes to `arch/riscv/kernel/vdso/Makefile`.
-> > - Link to v1: https://lore.kernel.org/r/20210719205208.1023221-1-twd2.me@gmail.com/
-> > ---
-> >  arch/riscv/Kconfig            | 3 +++
-> >  arch/riscv/Makefile           | 5 +++++
-> >  arch/riscv/kernel/pi/Makefile | 3 +++
-> >  3 files changed, 11 insertions(+)
-> > 
-> > diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-> > index d607ab0f7c6d..523640f7441e 100644
-> > --- a/arch/riscv/Kconfig
-> > +++ b/arch/riscv/Kconfig
-> > @@ -46,6 +46,9 @@ config RISCV
-> >  	select ARCH_SUPPORTS_CFI_CLANG
-> >  	select ARCH_SUPPORTS_DEBUG_PAGEALLOC if MMU
-> >  	select ARCH_SUPPORTS_HUGETLBFS if MMU
-> > +	# LLD >= 14: https://github.com/llvm/llvm-project/issues/50505
-> > +	select ARCH_SUPPORTS_LTO_CLANG if LLD_VERSION >= 140000
-> > +	select ARCH_SUPPORTS_LTO_CLANG_THIN if LLD_VERSION >= 140000
-> >  	select ARCH_SUPPORTS_PAGE_TABLE_CHECK if MMU
-> >  	select ARCH_SUPPORTS_PER_VMA_LOCK if MMU
-> >  	select ARCH_USE_MEMTEST
-> > diff --git a/arch/riscv/Makefile b/arch/riscv/Makefile
-> > index 1329e060c548..709400ceac60 100644
-> > --- a/arch/riscv/Makefile
-> > +++ b/arch/riscv/Makefile
-> > @@ -52,6 +52,11 @@ ifndef CONFIG_AS_IS_LLVM
-> >  	KBUILD_CFLAGS += -Wa,-mno-relax
-> >  	KBUILD_AFLAGS += -Wa,-mno-relax
-> >  endif
-> > +# LLVM has an issue with target-features and LTO: https://github.com/llvm/llvm-project/issues/59350
-> > +# Ensure it is aware of linker relaxation with LTO, otherwise relocations may
-> > +# be incorrect: https://github.com/llvm/llvm-project/issues/65090
-> > +else ifeq ($(CONFIG_LTO_CLANG),y)
-> > +	KBUILD_LDFLAGS += -mllvm -mattr=+c -mllvm -mattr=+relax
-> >  endif
-> >  endif
-> >  
-> > diff --git a/arch/riscv/kernel/pi/Makefile b/arch/riscv/kernel/pi/Makefile
-> > index 07915dc9279e..b75f150b923d 100644
-> > --- a/arch/riscv/kernel/pi/Makefile
-> > +++ b/arch/riscv/kernel/pi/Makefile
-> > @@ -9,6 +9,9 @@ KBUILD_CFLAGS	:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) -fpie \
-> >  		   -fno-asynchronous-unwind-tables -fno-unwind-tables \
-> >  		   $(call cc-option,-fno-addrsig)
-> >  
-> 
-> > +# Disable LTO
-> 
-> FWIW, this is a bit of a statement of the obvious, rather than being
-> helpful. If this ends up being respun, I think it'd be good to add the
-> context from the commit message.
+From: Arnd Bergmann <arnd@arndb.de>
 
-Heh, good point. I had copied this from arm64 IIRC so I was not paying
-much attention. If I have to respin, I will update this to:
+A newly added function requires CONFIG_ACPI to avoid a build error:
 
-# Disable LTO, as objcopy needs to work on ELF files, rather than LLVM
-# bitcode.
+sound/soc/amd/acp/acp-legacy-common.c: In function 'check_acp_pdm':
+sound/soc/amd/acp/acp-legacy-common.c:401:19: error: implicit declaration of function 'acpi_find_child_device'; did you mean 'acpi_match_device'? [-Werror=implicit-function-declaration]
+  401 |         pdm_dev = acpi_find_child_device(ACPI_COMPANION(&pci->dev), pdm_addr, 0);
+      |                   ^~~~~~~~~~~~~~~~~~~~~~
+      |                   acpi_match_device
 
-> Otherwise,
-> 
-> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+The acp drivers really only work when ACPI is enabled already, so just
+avoid the build failure with hard dependency in everything that
+enables the acp-legacy-common portion.
 
-Thanks for the review!
+Fixes: 3a94c8ad0aae ("ASoC: amd: acp: add code for scanning acp pdm controller")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ sound/soc/amd/acp/Kconfig | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-> > +KBUILD_CFLAGS	:= $(filter-out $(CC_FLAGS_LTO), $(KBUILD_CFLAGS))
-> > +
-> >  KBUILD_CFLAGS	+= -mcmodel=medany
-> >  
-> >  CFLAGS_cmdline_early.o += -D__NO_FORTIFY
-> > 
-> > ---
-> > base-commit: 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
-> > change-id: 20231003-riscv-lto-f013beed8587
-> > 
-> > Best regards,
-> > -- 
-> > Nathan Chancellor <nathan@kernel.org>
-> > 
-
+diff --git a/sound/soc/amd/acp/Kconfig b/sound/soc/amd/acp/Kconfig
+index c0b2a2df8f80..b0e4d5117b81 100644
+--- a/sound/soc/amd/acp/Kconfig
++++ b/sound/soc/amd/acp/Kconfig
+@@ -30,13 +30,15 @@ config SND_SOC_AMD_ACP_PCM
+ 
+ config SND_SOC_AMD_ACP_PCI
+ 	tristate "AMD ACP PCI Driver Support"
+-	select SND_SOC_AMD_ACP_LEGACY_COMMON
+ 	depends on X86 && PCI
++	depends on ACPI
++	select SND_SOC_AMD_ACP_LEGACY_COMMON
+ 	help
+ 	  This options enables generic PCI driver for ACP device.
+ 
+ config SND_AMD_ASOC_RENOIR
+ 	tristate "AMD ACP ASOC Renoir Support"
++	depends on ACPI
+ 	select SND_SOC_AMD_ACP_PCM
+ 	select SND_SOC_AMD_ACP_I2S
+ 	select SND_SOC_AMD_ACP_PDM
+@@ -47,6 +49,7 @@ config SND_AMD_ASOC_RENOIR
+ 
+ config SND_AMD_ASOC_REMBRANDT
+ 	tristate "AMD ACP ASOC Rembrandt Support"
++	depends on ACPI
+ 	select SND_SOC_AMD_ACP_PCM
+ 	select SND_SOC_AMD_ACP_I2S
+ 	select SND_SOC_AMD_ACP_PDM
+-- 
+2.39.2
 
