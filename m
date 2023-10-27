@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DB318646
-	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 12:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE41B1CFB8
+	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 12:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7YUwcJF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6D0C43391;
-	Fri, 27 Oct 2023 12:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFVirIHa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93D1C433C8;
+	Fri, 27 Oct 2023 12:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698409007;
-	bh=4NRUlTmk1LuMcKNw3A1i1UU6nGDzxkPn/7MnfP+vx0k=;
+	s=korg; t=1698409549;
+	bh=MYEyUUlsJs+iZgGeLmTbL5xofgyQMNOOT9INtcAOOjM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=N7YUwcJFEbmTMB2amn0vCRT5AIo9J+oPZ8RpvrzxMixPxDTxyQgtqTzhp+HR8ftbC
-	 xql6Y6+Zh9+nxy5JeI/7ORnJ1UzPsJN25lMN0cAKamgY7h4fjpOdGFxzd7m1Z08Yue
-	 m3qGUe1jzzloMzUPmzxzlUYg1IJuRODAiIOoIQIc=
-Date: Fri, 27 Oct 2023 14:16:44 +0200
+	b=JFVirIHauXlFphEwwzwy1n45Ac8RgLlrM4OavdZx4EQ3WLxm686kL7tjZMwFC8MJ5
+	 jsInj/eZiC3y39ii8Z1egcQjEmBaS89V1Omf09kv6DvZc2aIc1E9rdPX+pXIULl228
+	 aywtQ1H3UgY3qU7GL3NaVTA/DlMxzOAv+VaUoo4k=
+Date: Fri, 27 Oct 2023 14:25:46 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Oliver Hartkopp <socketcan@hartkopp.net>
-Cc: Lukas Magel <lukas.magel@posteo.net>, patches@lists.linux.dev,
-	Maxime Jayat <maxime.jayat@mobile-devices.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org,
-	Michal Sojka <michal.sojka@cvut.cz>
-Subject: Re: [PATCH 6.1 043/131] can: isotp: isotp_sendmsg(): fix TX state
- detection and wait behavior
-Message-ID: <2023102721-voltage-thyself-e881@gregkh>
-References: <20231016084000.050926073@linuxfoundation.org>
- <20231016084001.142952122@linuxfoundation.org>
- <b4a1bdc2-54f8-428a-a82a-0308a4bc7f92@hartkopp.net>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 5.10 000/199] 5.10.199-rc2 review
+Message-ID: <2023102728-gigantic-favorable-71a6@gregkh>
+References: <20231024083326.219645073@linuxfoundation.org>
+ <6413ac66-2608-cd76-1b3c-5a185fe6d88d@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,32 +35,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b4a1bdc2-54f8-428a-a82a-0308a4bc7f92@hartkopp.net>
+In-Reply-To: <6413ac66-2608-cd76-1b3c-5a185fe6d88d@roeck-us.net>
 
-On Tue, Oct 24, 2023 at 08:34:30PM +0200, Oliver Hartkopp wrote:
-> Hello Lukas, hello Greg,
+On Wed, Oct 25, 2023 at 08:07:26AM -0700, Guenter Roeck wrote:
+> On 10/24/23 01:36, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.10.199 release.
+> > There are 199 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Thu, 26 Oct 2023 08:32:45 +0000.
+> > Anything received after that time might be too late.
+> > 
 > 
-> this patch fixed the issue introduced with
+> Build reference: v5.10.198-200-ge31b6513c43d
+> Compiler version: x86_64-linux-gcc (GCC) 11.4.0
+> Assembler version: GNU assembler (GNU Binutils) 2.40
 > 
-> 79e19fa79cb5 ("can: isotp: isotp_ops: fix poll() to not report false
-> EPOLLOUT events")
+> Building x86_64:defconfig ... passed
+> Building x86_64:allyesconfig ... failed
+> --------------
+> Error log:
+> Unsupported relocation type: unknown type rel type name (-1940038754)
+> make[3]: *** [arch/x86/boot/compressed/Makefile:122: arch/x86/boot/compressed/vmlinux.relocs] Error 1
+> make[3]: *** Deleting file 'arch/x86/boot/compressed/vmlinux.relocs'
+> make[3]: *** Waiting for unfinished jobs....
+> x86_64-linux-objcopy: vmlinux: unsupported relocation type 0x9e
+> x86_64-linux-objcopy: vmlinux[.text]: relocation count is negative: bad value
+> make[3]: *** [arch/x86/boot/compressed/Makefile:114: arch/x86/boot/compressed/vmlinux.bin] Error 1
+> make[2]: *** [arch/x86/boot/Makefile:115: arch/x86/boot/compressed/vmlinux] Error 2
+> make[1]: *** [arch/x86/Makefile:274: bzImage] Error 2
+> make: *** [Makefile:192: __sub-make] Error 2
 > 
-> for Linux 6.1 and Linux 6.5 which is fine.
+> No idea what is causing it, but it is persistent. Something odd between
+> compiler/binutils/objcopy.
 > 
-> Unfortunately the problematic patch has also been applied to 5.15 and 5.10
-> (referencing another upstream commit as it needed a backport).
-> 
-> @Lukas: The 5.x code is much more similar to the latest code, so would it
-> probably fix the issue to remove the "wq_has_sleeper(&so->wait)" condition?
-> 
-> @Greg: I double checked the changes and fixes from the latest 6.6 kernel
-> compared to the 5.10 when isotp.c was introduced in the mainline kernel.
-> Would it be ok, to "backport" the latest 6.6 code to the 5.x LTS trees?
-> It really is the same isotp code but only some kernel API functions and
-> names have been changed.
+> Guess it doesn't matter since the release is out already.
 
-Sure, if you think it is ok, please send the backported and tested patch
-series and we will be glad to review them.
+If the commit that causes this can be figured out, we can revert it.
 
 thanks,
 
