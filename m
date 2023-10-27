@@ -1,57 +1,33 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93F93984F
-	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 17:01:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B2C38BAC
+	for <patches@lists.linux.dev>; Fri, 27 Oct 2023 22:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MBHc0pIb"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698426106; x=1729962106;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=rp7C9TZkUzJPsNhPFEIC2B+5Ox/xRqY6xhnZVuHn0yI=;
-  b=MBHc0pIbmw/POgZAK3AyrAp4f789HN6/b6v5mVqhxG1aAZVCJphZS2lZ
-   5cxeQpgs2sjGQYtOuGbt5HBDU2lMxTlMxSUd1fSNYwNY71aJsRuM7sAPX
-   +eev7Rps8f5qB2wfRfVCJ6IRHodRpbAi7sKSGzoIiQX6kHdXiywkpKNtU
-   N6VHLCPwX3N+5LRbuiRovR3ptTj5lNM8epQV41g2mkZiUYJltibviOD3+
-   7uDqrOp0THx8fzybAGb5O4AeObvp9lDqsXur7yxPiq/VG1GixdtLzzSYT
-   3jSCX4W9SZpgKCidF+ZqEFso/7vVPLkGVM5KIzZhDQAO5sgjq3+UTX2fk
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10876"; a="612152"
-X-IronPort-AV: E=Sophos;i="6.03,256,1694761200"; 
-   d="scan'208";a="612152"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2023 10:01:22 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10876"; a="1090988252"
-X-IronPort-AV: E=Sophos;i="6.03,256,1694761200"; 
-   d="scan'208";a="1090988252"
-Received: from rchatre-ws.ostc.intel.com ([10.54.69.144])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2023 10:01:21 -0700
-From: Reinette Chatre <reinette.chatre@intel.com>
-To: jgg@nvidia.com,
-	yishaih@nvidia.com,
-	shameerali.kolothum.thodi@huawei.com,
-	kevin.tian@intel.com,
-	alex.williamson@redhat.com
-Cc: kvm@vger.kernel.org,
-	dave.jiang@intel.com,
-	jing2.liu@intel.com,
-	ashok.raj@intel.com,
-	fenghua.yu@intel.com,
-	tom.zanussi@linux.intel.com,
-	reinette.chatre@intel.com,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [RFC PATCH V3 26/26] vfio/pci: Support IMS cookie modification
-Date: Fri, 27 Oct 2023 10:00:58 -0700
-Message-Id: <5a118965e4ae827c28c2b1de6fa791e9ebfd5958.1698422237.git.reinette.chatre@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1698422237.git.reinette.chatre@intel.com>
-References: <cover.1698422237.git.reinette.chatre@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WE3pnlpZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7320C433C8;
+	Fri, 27 Oct 2023 22:58:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1698447503;
+	bh=v0fn/GRMcqD4S8f59Pl/v9wXT1tqBn6J2jGwnNSU6qE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=WE3pnlpZWQ33FUNxLtQns1irVZjRPFEDm5zc48cSiLPNQZrOtQR4UF3wAAM3/15KP
+	 nOGNa9625CgTCMxJKz9b+pgyt5CkCCp9Hg44Uqz0Fh4gZ5FQXD2Udh+ylQgNfit8pn
+	 oAmUMdbvVGo/Vav1eLZQxrKhLBUGl662kB3GmYD0uuWBwgVbOzXnsZfy2RZW/uHmRE
+	 vNkMQ47w5bUf4TUuReOyxQ6BcCKBk66gq22oGwULyXEgemmT8lxCSu62pbHhzDZk8j
+	 jT/5/P6OaFSL6PS1UKzefTNBKDOADyqT649Y4xmXGFY+mn/LGgKnrCQBSD+sr6LYqy
+	 M5MtPOWPmEUbg==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	Boqun Feng <boqun.feng@gmail.com>
+Subject: [PATCH] clk: Fix clk gate kunit test on big-endian CPUs
+Date: Fri, 27 Oct 2023 15:58:21 -0700
+Message-ID: <20231027225821.95833-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.42.0.820.g83a721a137-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,103 +36,158 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-IMS supports an implementation specific cookie that is associated
-with each interrupt. By default the IMS interrupt allocation backend
-will assign a default cookie to a new interrupt instance.
+The clk gate kunit test checks that the implementation of the basic clk
+gate reads and writes the proper bits in an MMIO register. The
+implementation of the basic clk gate type uses writel() and readl()
+which operate on little-endian registers. This test fails on big-endian
+CPUs because the clk gate implementation writes to 'fake_reg' with
+writel(), which converts the value to be written to little-endian before
+storing the value in the fake register. When the test checks the bits in
+the fake register on a big-endian machine it falsely assumes the format
+of the register is also big-endian, when it is really always
+little-endian. Suffice to say things don't work very well.
 
-Add support for a virtual device driver to set the interrupt instance
-specific cookie. For example, the virtual device driver may intercept
-the guest's MMIO write that configuresa a new PASID for a particular
-interrupt. Calling vfio_pci_ims_set_cookie() with the new PASID value
-as IMS cookie enables subsequent interrupts to be allocated with
-accurate data.
+Mark 'fake_reg' as __le32 and push through endian accessor fixes
+wherever the value is inspected to make this test endian agnostic.
+There's a CLK_GATE_BIG_ENDIAN flag for big-endian MMIO devices, which
+this test isn't using. A follow-up patch will test with and without that
+flag.
 
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Reported-by: Boqun Feng <boqun.feng@gmail.com>
+Closes: https://lore.kernel.org/r/ZTLH5o0GlFBYsAHq@boqun-archlinux
+Tested-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
-No changes since RFC V2.
+ drivers/clk/clk-gate_test.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
- drivers/vfio/pci/vfio_pci_intrs.c | 53 +++++++++++++++++++++++++++++++
- include/linux/vfio_pci_core.h     |  3 ++
- 2 files changed, 56 insertions(+)
-
-diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
-index 32ebc8fec4c4..5dc22dd9390e 100644
---- a/drivers/vfio/pci/vfio_pci_intrs.c
-+++ b/drivers/vfio/pci/vfio_pci_intrs.c
-@@ -1188,6 +1188,59 @@ int vfio_pci_ims_hwirq(struct vfio_pci_intr_ctx *intr_ctx, unsigned int vector)
- }
- EXPORT_SYMBOL_GPL(vfio_pci_ims_hwirq);
+diff --git a/drivers/clk/clk-gate_test.c b/drivers/clk/clk-gate_test.c
+index e136aaad48bf..c96d93b19ddf 100644
+--- a/drivers/clk/clk-gate_test.c
++++ b/drivers/clk/clk-gate_test.c
+@@ -131,7 +131,7 @@ struct clk_gate_test_context {
+ 	void __iomem *fake_mem;
+ 	struct clk_hw *hw;
+ 	struct clk_hw *parent;
+-	u32 fake_reg; /* Keep at end, KASAN can detect out of bounds */
++	__le32 fake_reg; /* Keep at end, KASAN can detect out of bounds */
+ };
  
-+/*
-+ * vfio_pci_ims_set_cookie() - Set unique cookie for vector.
-+ * @intr_ctx:	Interrupt context.
-+ * @vector:	Vector.
-+ * @icookie:	New cookie for @vector.
-+ *
-+ * When new IMS interrupt is allocated for @vector it will be
-+ * assigned @icookie.
-+ */
-+int vfio_pci_ims_set_cookie(struct vfio_pci_intr_ctx *intr_ctx,
-+			    unsigned int vector,
-+			    union msi_instance_cookie *icookie)
-+{
-+	struct vfio_pci_irq_ctx *ctx;
-+	int ret = -EINVAL;
-+
-+	mutex_lock(&intr_ctx->igate);
-+
-+	if (!intr_ctx->ims_backed_irq)
-+		goto out_unlock;
-+
-+	ctx = vfio_irq_ctx_get(intr_ctx, vector);
-+	if (ctx) {
-+		if (WARN_ON_ONCE(ctx->emulated)) {
-+			ret = -EINVAL;
-+			goto out_unlock;
-+		}
-+		ctx->icookie = *icookie;
-+		ret = 0;
-+		goto out_unlock;
-+	}
-+
-+	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL_ACCOUNT);
-+	if (!ctx) {
-+		ret = -ENOMEM;
-+		goto out_unlock;
-+	}
-+
-+	ctx->icookie = *icookie;
-+	ret = xa_insert(&intr_ctx->ctx, vector, ctx, GFP_KERNEL_ACCOUNT);
-+	if (ret) {
-+		kfree(ctx);
-+		goto out_unlock;
-+	}
-+
-+	ret = 0;
-+
-+out_unlock:
-+	mutex_unlock(&intr_ctx->igate);
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(vfio_pci_ims_set_cookie);
-+
- int vfio_pci_set_irqs_ioctl(struct vfio_pci_intr_ctx *intr_ctx, uint32_t flags,
- 			    unsigned int index, unsigned int start,
- 			    unsigned int count, void *data)
-diff --git a/include/linux/vfio_pci_core.h b/include/linux/vfio_pci_core.h
-index dbc77839ef26..b989b533e852 100644
---- a/include/linux/vfio_pci_core.h
-+++ b/include/linux/vfio_pci_core.h
-@@ -181,6 +181,9 @@ int vfio_pci_set_irqs_ioctl(struct vfio_pci_intr_ctx *intr_ctx, uint32_t flags,
- 			    unsigned int index, unsigned int start,
- 			    unsigned int count, void *data);
- int vfio_pci_ims_hwirq(struct vfio_pci_intr_ctx *intr_ctx, unsigned int vector);
-+int vfio_pci_ims_set_cookie(struct vfio_pci_intr_ctx *intr_ctx,
-+			    unsigned int vector,
-+			    union msi_instance_cookie *icookie);
- void vfio_pci_send_signal(struct vfio_pci_intr_ctx *intr_ctx, unsigned int vector);
- int vfio_pci_set_emulated(struct vfio_pci_intr_ctx *intr_ctx,
- 			  unsigned int start, unsigned int count);
+ static struct clk_gate_test_context *clk_gate_test_alloc_ctx(struct kunit *test)
+@@ -166,7 +166,7 @@ static void clk_gate_test_enable(struct kunit *test)
+ 
+ 	KUNIT_ASSERT_EQ(test, clk_prepare_enable(clk), 0);
+ 
+-	KUNIT_EXPECT_EQ(test, enable_val, ctx->fake_reg);
++	KUNIT_EXPECT_EQ(test, enable_val, le32_to_cpu(ctx->fake_reg));
+ 	KUNIT_EXPECT_TRUE(test, clk_hw_is_enabled(hw));
+ 	KUNIT_EXPECT_TRUE(test, clk_hw_is_prepared(hw));
+ 	KUNIT_EXPECT_TRUE(test, clk_hw_is_enabled(parent));
+@@ -183,10 +183,10 @@ static void clk_gate_test_disable(struct kunit *test)
+ 	u32 disable_val = 0;
+ 
+ 	KUNIT_ASSERT_EQ(test, clk_prepare_enable(clk), 0);
+-	KUNIT_ASSERT_EQ(test, enable_val, ctx->fake_reg);
++	KUNIT_ASSERT_EQ(test, enable_val, le32_to_cpu(ctx->fake_reg));
+ 
+ 	clk_disable_unprepare(clk);
+-	KUNIT_EXPECT_EQ(test, disable_val, ctx->fake_reg);
++	KUNIT_EXPECT_EQ(test, disable_val, le32_to_cpu(ctx->fake_reg));
+ 	KUNIT_EXPECT_FALSE(test, clk_hw_is_enabled(hw));
+ 	KUNIT_EXPECT_FALSE(test, clk_hw_is_prepared(hw));
+ 	KUNIT_EXPECT_FALSE(test, clk_hw_is_enabled(parent));
+@@ -246,7 +246,7 @@ static void clk_gate_test_invert_enable(struct kunit *test)
+ 
+ 	KUNIT_ASSERT_EQ(test, clk_prepare_enable(clk), 0);
+ 
+-	KUNIT_EXPECT_EQ(test, enable_val, ctx->fake_reg);
++	KUNIT_EXPECT_EQ(test, enable_val, le32_to_cpu(ctx->fake_reg));
+ 	KUNIT_EXPECT_TRUE(test, clk_hw_is_enabled(hw));
+ 	KUNIT_EXPECT_TRUE(test, clk_hw_is_prepared(hw));
+ 	KUNIT_EXPECT_TRUE(test, clk_hw_is_enabled(parent));
+@@ -263,10 +263,10 @@ static void clk_gate_test_invert_disable(struct kunit *test)
+ 	u32 disable_val = BIT(15);
+ 
+ 	KUNIT_ASSERT_EQ(test, clk_prepare_enable(clk), 0);
+-	KUNIT_ASSERT_EQ(test, enable_val, ctx->fake_reg);
++	KUNIT_ASSERT_EQ(test, enable_val, le32_to_cpu(ctx->fake_reg));
+ 
+ 	clk_disable_unprepare(clk);
+-	KUNIT_EXPECT_EQ(test, disable_val, ctx->fake_reg);
++	KUNIT_EXPECT_EQ(test, disable_val, le32_to_cpu(ctx->fake_reg));
+ 	KUNIT_EXPECT_FALSE(test, clk_hw_is_enabled(hw));
+ 	KUNIT_EXPECT_FALSE(test, clk_hw_is_prepared(hw));
+ 	KUNIT_EXPECT_FALSE(test, clk_hw_is_enabled(parent));
+@@ -290,7 +290,7 @@ static int clk_gate_test_invert_init(struct kunit *test)
+ 					    2000000);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, parent);
+ 
+-	ctx->fake_reg = BIT(15); /* Default to off */
++	ctx->fake_reg = cpu_to_le32(BIT(15)); /* Default to off */
+ 	hw = clk_hw_register_gate_parent_hw(NULL, "test_gate", parent, 0,
+ 					    ctx->fake_mem, 15,
+ 					    CLK_GATE_SET_TO_DISABLE, NULL);
+@@ -319,7 +319,7 @@ static void clk_gate_test_hiword_enable(struct kunit *test)
+ 
+ 	KUNIT_ASSERT_EQ(test, clk_prepare_enable(clk), 0);
+ 
+-	KUNIT_EXPECT_EQ(test, enable_val, ctx->fake_reg);
++	KUNIT_EXPECT_EQ(test, enable_val, le32_to_cpu(ctx->fake_reg));
+ 	KUNIT_EXPECT_TRUE(test, clk_hw_is_enabled(hw));
+ 	KUNIT_EXPECT_TRUE(test, clk_hw_is_prepared(hw));
+ 	KUNIT_EXPECT_TRUE(test, clk_hw_is_enabled(parent));
+@@ -336,10 +336,10 @@ static void clk_gate_test_hiword_disable(struct kunit *test)
+ 	u32 disable_val = BIT(9 + 16);
+ 
+ 	KUNIT_ASSERT_EQ(test, clk_prepare_enable(clk), 0);
+-	KUNIT_ASSERT_EQ(test, enable_val, ctx->fake_reg);
++	KUNIT_ASSERT_EQ(test, enable_val, le32_to_cpu(ctx->fake_reg));
+ 
+ 	clk_disable_unprepare(clk);
+-	KUNIT_EXPECT_EQ(test, disable_val, ctx->fake_reg);
++	KUNIT_EXPECT_EQ(test, disable_val, le32_to_cpu(ctx->fake_reg));
+ 	KUNIT_EXPECT_FALSE(test, clk_hw_is_enabled(hw));
+ 	KUNIT_EXPECT_FALSE(test, clk_hw_is_prepared(hw));
+ 	KUNIT_EXPECT_FALSE(test, clk_hw_is_enabled(parent));
+@@ -387,7 +387,7 @@ static void clk_gate_test_is_enabled(struct kunit *test)
+ 	struct clk_gate_test_context *ctx;
+ 
+ 	ctx = clk_gate_test_alloc_ctx(test);
+-	ctx->fake_reg = BIT(7);
++	ctx->fake_reg = cpu_to_le32(BIT(7));
+ 	hw = clk_hw_register_gate(NULL, "test_gate", NULL, 0, ctx->fake_mem, 7,
+ 				  0, NULL);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, hw);
+@@ -402,7 +402,7 @@ static void clk_gate_test_is_disabled(struct kunit *test)
+ 	struct clk_gate_test_context *ctx;
+ 
+ 	ctx = clk_gate_test_alloc_ctx(test);
+-	ctx->fake_reg = BIT(4);
++	ctx->fake_reg = cpu_to_le32(BIT(4));
+ 	hw = clk_hw_register_gate(NULL, "test_gate", NULL, 0, ctx->fake_mem, 7,
+ 				  0, NULL);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, hw);
+@@ -417,7 +417,7 @@ static void clk_gate_test_is_enabled_inverted(struct kunit *test)
+ 	struct clk_gate_test_context *ctx;
+ 
+ 	ctx = clk_gate_test_alloc_ctx(test);
+-	ctx->fake_reg = BIT(31);
++	ctx->fake_reg = cpu_to_le32(BIT(31));
+ 	hw = clk_hw_register_gate(NULL, "test_gate", NULL, 0, ctx->fake_mem, 2,
+ 				  CLK_GATE_SET_TO_DISABLE, NULL);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, hw);
+@@ -432,7 +432,7 @@ static void clk_gate_test_is_disabled_inverted(struct kunit *test)
+ 	struct clk_gate_test_context *ctx;
+ 
+ 	ctx = clk_gate_test_alloc_ctx(test);
+-	ctx->fake_reg = BIT(29);
++	ctx->fake_reg = cpu_to_le32(BIT(29));
+ 	hw = clk_hw_register_gate(NULL, "test_gate", NULL, 0, ctx->fake_mem, 29,
+ 				  CLK_GATE_SET_TO_DISABLE, NULL);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, hw);
+
+base-commit: 831187c6946f29ba8309d386d5ca466eec8b9f79
 -- 
-2.34.1
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
