@@ -1,26 +1,26 @@
 Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603D97F5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B7510EA
 	for <patches@lists.linux.dev>; Sat, 28 Oct 2023 06:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from dggpeml500021.china.huawei.com (unknown [172.30.72.56])
-	by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4SHVJz3v8Vz1L9JF;
-	Sat, 28 Oct 2023 14:40:19 +0800 (CST)
+Received: from dggpeml500021.china.huawei.com (unknown [172.30.72.54])
+	by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4SHVK00D2sz1L9JY;
+	Sat, 28 Oct 2023 14:40:20 +0800 (CST)
 Received: from huawei.com (10.175.127.227) by dggpeml500021.china.huawei.com
  (7.185.36.21) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.31; Sat, 28 Oct
- 2023 14:43:14 +0800
+ 2023 14:43:15 +0800
 From: Baokun Li <libaokun1@huawei.com>
 To: <stable@vger.kernel.org>
 CC: <gregkh@linuxfoundation.org>, <sashal@kernel.org>, <tytso@mit.edu>,
 	<jack@suse.cz>, <ritesh.list@gmail.com>, <patches@lists.linux.dev>,
-	<yangerkun@huawei.com>, <libaokun1@huawei.com>, <stable@kernel.org>
-Subject: [PATCH 5.15 2/3] ext4: fix BUG in ext4_mb_new_inode_pa() due to overflow
-Date: Sat, 28 Oct 2023 14:47:48 +0800
-Message-ID: <20231028064749.833278-2-libaokun1@huawei.com>
+	<yangerkun@huawei.com>, <libaokun1@huawei.com>
+Subject: [PATCH 5.15 3/3] ext4: avoid overlapping preallocations due to overflow
+Date: Sat, 28 Oct 2023 14:47:49 +0800
+Message-ID: <20231028064749.833278-3-libaokun1@huawei.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20231028064749.833278-1-libaokun1@huawei.com>
 References: <20231028064749.833278-1-libaokun1@huawei.com>
@@ -37,55 +37,21 @@ X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
  dggpeml500021.china.huawei.com (7.185.36.21)
 X-CFilter-Loop: Reflected
 
-commit bc056e7163ac7db945366de219745cf94f32a3e6 upstream.
+commit bedc5d34632c21b5adb8ca7143d4c1f794507e4c upstream.
 
-When we calculate the end position of ext4_free_extent, this position may
-be exactly where ext4_lblk_t (i.e. uint) overflows. For example, if
-ac_g_ex.fe_logical is 4294965248 and ac_orig_goal_len is 2048, then the
-computed end is 0x100000000, which is 0. If ac->ac_o_ex.fe_logical is not
-the first case of adjusting the best extent, that is, new_bex_end > 0, the
-following BUG_ON will be triggered:
+Let's say we want to allocate 2 blocks starting from 4294966386, after
+predicting the file size, start is aligned to 4294965248, len is changed
+to 2048, then end = start + size = 0x100000000. Since end is of
+type ext4_lblk_t, i.e. uint, end is truncated to 0.
 
-=========================================================
-kernel BUG at fs/ext4/mballoc.c:5116!
-invalid opcode: 0000 [#1] PREEMPT SMP PTI
-CPU: 3 PID: 673 Comm: xfs_io Tainted: G E 6.5.0-rc1+ #279
-RIP: 0010:ext4_mb_new_inode_pa+0xc5/0x430
-Call Trace:
- <TASK>
- ext4_mb_use_best_found+0x203/0x2f0
- ext4_mb_try_best_found+0x163/0x240
- ext4_mb_regular_allocator+0x158/0x1550
- ext4_mb_new_blocks+0x86a/0xe10
- ext4_ext_map_blocks+0xb0c/0x13a0
- ext4_map_blocks+0x2cd/0x8f0
- ext4_iomap_begin+0x27b/0x400
- iomap_iter+0x222/0x3d0
- __iomap_dio_rw+0x243/0xcb0
- iomap_dio_rw+0x16/0x80
-=========================================================
+This causes (pa->pa_lstart >= end) to always hold when checking if the
+current extent to be allocated crosses already preallocated blocks, so the
+resulting ac_g_ex may cross already preallocated blocks. Hence we convert
+the end type to loff_t and use pa_logical_end() to avoid overflow.
 
-A simple reproducer demonstrating the problem:
-
-	mkfs.ext4 -F /dev/sda -b 4096 100M
-	mount /dev/sda /tmp/test
-	fallocate -l1M /tmp/test/tmp
-	fallocate -l10M /tmp/test/file
-	fallocate -i -o 1M -l16777203M /tmp/test/file
-	fsstress -d /tmp/test -l 0 -n 100000 -p 8 &
-	sleep 10 && killall -9 fsstress
-	rm -f /tmp/test/tmp
-	xfs_io -c "open -ad /tmp/test/file" -c "pwrite -S 0xff 0 8192"
-
-We simply refactor the logic for adjusting the best extent by adding
-a temporary ext4_free_extent ex and use extent_logical_end() to avoid
-overflow, which also simplifies the code.
-
-Cc: stable@kernel.org # 6.4
-Fixes: 93cdf49f6eca ("ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()")
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20230724121059.11834-3-libaokun1@huawei.com
+Link: https://lore.kernel.org/r/20230724121059.11834-4-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 
 Conflicts:
@@ -93,66 +59,57 @@ Conflicts:
 
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 ---
- fs/ext4/mballoc.c | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ fs/ext4/mballoc.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
 diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 33a715532c03..005212912342 100644
+index 005212912342..f3dc84ff0efa 100644
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -4664,8 +4664,11 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 	pa = ac->ac_pa;
+@@ -4049,8 +4049,7 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
+ 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
+ 	struct ext4_super_block *es = sbi->s_es;
+ 	int bsbits, max;
+-	ext4_lblk_t end;
+-	loff_t size, start_off;
++	loff_t size, start_off, end;
+ 	loff_t orig_size __maybe_unused;
+ 	ext4_lblk_t start;
+ 	struct ext4_inode_info *ei = EXT4_I(ac->ac_inode);
+@@ -4158,7 +4157,7 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
+ 	/* check we don't cross already preallocated blocks */
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(pa, &ei->i_prealloc_list, pa_inode_list) {
+-		ext4_lblk_t pa_end;
++		loff_t pa_end;
  
- 	if (ac->ac_b_ex.fe_len < ac->ac_g_ex.fe_len) {
--		int new_bex_start;
--		int new_bex_end;
-+		struct ext4_free_extent ex = {
-+			.fe_logical = ac->ac_g_ex.fe_logical,
-+			.fe_len = ac->ac_g_ex.fe_len,
-+		};
-+		loff_t orig_goal_end = extent_logical_end(sbi, &ex);
+ 		if (pa->pa_deleted)
+ 			continue;
+@@ -4168,8 +4167,7 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
+ 			continue;
+ 		}
  
- 		/* we can't allocate as much as normalizer wants.
- 		 * so, found space must get proper lstart
-@@ -4684,29 +4687,23 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 		 *    still cover original start
- 		 * 3. Else, keep the best ex at start of original request.
- 		 */
--		new_bex_end = ac->ac_g_ex.fe_logical +
--			EXT4_C2B(sbi, ac->ac_g_ex.fe_len);
--		new_bex_start = new_bex_end - EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
--		if (ac->ac_o_ex.fe_logical >= new_bex_start)
--			goto adjust_bex;
-+		ex.fe_len = ac->ac_b_ex.fe_len;
+-		pa_end = pa->pa_lstart + EXT4_C2B(EXT4_SB(ac->ac_sb),
+-						  pa->pa_len);
++		pa_end = pa_logical_end(EXT4_SB(ac->ac_sb), pa);
  
--		new_bex_start = ac->ac_g_ex.fe_logical;
--		new_bex_end =
--			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
--		if (ac->ac_o_ex.fe_logical < new_bex_end)
-+		ex.fe_logical = orig_goal_end - EXT4_C2B(sbi, ex.fe_len);
-+		if (ac->ac_o_ex.fe_logical >= ex.fe_logical)
- 			goto adjust_bex;
+ 		/* PA must not overlap original request */
+ 		BUG_ON(!(ac->ac_o_ex.fe_logical >= pa_end ||
+@@ -4198,12 +4196,11 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
+ 	/* XXX: extra loop to check we really don't overlap preallocations */
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(pa, &ei->i_prealloc_list, pa_inode_list) {
+-		ext4_lblk_t pa_end;
++		loff_t pa_end;
  
--		new_bex_start = ac->ac_o_ex.fe_logical;
--		new_bex_end =
--			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
-+		ex.fe_logical = ac->ac_g_ex.fe_logical;
-+		if (ac->ac_o_ex.fe_logical < extent_logical_end(sbi, &ex))
-+			goto adjust_bex;
- 
-+		ex.fe_logical = ac->ac_o_ex.fe_logical;
- adjust_bex:
--		ac->ac_b_ex.fe_logical = new_bex_start;
-+		ac->ac_b_ex.fe_logical = ex.fe_logical;
- 
- 		BUG_ON(ac->ac_o_ex.fe_logical < ac->ac_b_ex.fe_logical);
- 		BUG_ON(ac->ac_o_ex.fe_len > ac->ac_b_ex.fe_len);
--		BUG_ON(new_bex_end > (ac->ac_g_ex.fe_logical +
--				      EXT4_C2B(sbi, ac->ac_g_ex.fe_len)));
-+		BUG_ON(extent_logical_end(sbi, &ex) > orig_goal_end);
- 	}
- 
- 	/* preallocation can change ac_b_ex, thus we store actually
+ 		spin_lock(&pa->pa_lock);
+ 		if (pa->pa_deleted == 0) {
+-			pa_end = pa->pa_lstart + EXT4_C2B(EXT4_SB(ac->ac_sb),
+-							  pa->pa_len);
++			pa_end = pa_logical_end(EXT4_SB(ac->ac_sb), pa);
+ 			BUG_ON(!(start >= pa_end || end <= pa->pa_lstart));
+ 		}
+ 		spin_unlock(&pa->pa_lock);
 -- 
 2.31.1
 
