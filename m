@@ -1,121 +1,78 @@
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E62ECA
-	for <patches@lists.linux.dev>; Sat, 28 Oct 2023 06:53:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from dggpeml500021.china.huawei.com (unknown [172.30.72.53])
-	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4SHV6Y5LtMzMmHs;
-	Sat, 28 Oct 2023 14:31:17 +0800 (CST)
-Received: from huawei.com (10.175.127.227) by dggpeml500021.china.huawei.com
- (7.185.36.21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.31; Sat, 28 Oct
- 2023 14:35:33 +0800
-From: Baokun Li <libaokun1@huawei.com>
-To: <stable@vger.kernel.org>
-CC: <gregkh@linuxfoundation.org>, <sashal@kernel.org>, <tytso@mit.edu>,
-	<jack@suse.cz>, <ritesh.list@gmail.com>, <patches@lists.linux.dev>,
-	<yangerkun@huawei.com>, <libaokun1@huawei.com>
-Subject: [PATCH 5.10 1/3] ext4: add two helper functions extent_logical_end() and pa_logical_end()
-Date: Sat, 28 Oct 2023 14:40:07 +0800
-Message-ID: <20231028064009.766680-1-libaokun1@huawei.com>
-X-Mailer: git-send-email 2.31.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8806B63A5
+	for <patches@lists.linux.dev>; Sat, 28 Oct 2023 17:46:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XnuSl/PE"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-5a90d6ab962so25243457b3.2
+        for <patches@lists.linux.dev>; Sat, 28 Oct 2023 10:46:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698515178; x=1699119978; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sFhnQuUqv8UTHRqRrIkRXb7c02Iw0Hc4wKGalfdouzc=;
+        b=XnuSl/PErkyEOBApDIYEraerfRhaeQAKULuAP4LluN2L3UkLUdHFiRxrr2lP6KU4xt
+         Isw/uNdOweaKlQOdYE0ST0QSHlzn2etCQ4VFWZVdqcRDhjttFyvVkltmIte8tUMrR8pI
+         Mo+NIgl5fY9vDrnqpyupldbCRt/9f2fqSIuyIP51uImQav2I6CFxn1w5riRc9qpm9yMy
+         Kixkz/5/YIBNTjfjasOliFuTWLnt2OvLOQ4DKJzD+DP33c+01ucnSejfiPM57sEDHNnp
+         bSTIcRm7lVAElko4EVqksStE5Cpq+Dwt6p5FMoB/W3lEs05FExma3tB3EDZ3rZIblgJW
+         rPyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698515178; x=1699119978;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sFhnQuUqv8UTHRqRrIkRXb7c02Iw0Hc4wKGalfdouzc=;
+        b=i8jiUQSERfJJBx0yEpYpDqyAYh5EIGw+ghXa6+VJHnCudiD6HE3ROMAxSwGnDtE/X4
+         GzXATBLSvqccBKxStK9Y8QcXufV5NKpItPonppYLdHohPFwRoLX5ea6SqZh1YYPMrVCT
+         LF6JctkGHO47g08zBNgTO4Elm4EJs1N/5cHBEX8GLvuim7QTiYoBd3u1CkHn7TDLsXC+
+         C2SlsSPCD8tsDFDfaAbdJbYrlKzz0Mc21Yv6J2nvFIC31Sqd45h2PltvTZua3d4Z2/w9
+         lh5TerFSqZN0Oeqr5NleWBLmOWt2z51iDiDOdfDN0m3x4bWiE4epNIWKZiOss7kOh6sv
+         AEsA==
+X-Gm-Message-State: AOJu0YxjZdIw8dyfLm/hTW/JFV97ExU2OhrOjC1XL6cIB+FR+axjzehp
+	WPt6x5rWnL3ZxBZZ8j7F6n0mzloBGuu57QqC+ho=
+X-Google-Smtp-Source: AGHT+IHAxMPBGirG7gH46wHtSu0aBHOeNtb/ZOn1UoqO0DTDtNy8aeRXKoNbZJXOEdCZkY6oxpO+PxGDP+soAskdUW8=
+X-Received: by 2002:a81:e445:0:b0:5ae:b86a:f384 with SMTP id
+ t5-20020a81e445000000b005aeb86af384mr6227239ywl.2.1698515178514; Sat, 28 Oct
+ 2023 10:46:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.175.127.227]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- dggpeml500021.china.huawei.com (7.185.36.21)
-X-CFilter-Loop: Reflected
+References: <20231023174449.251550-1-ojeda@kernel.org> <20231023174449.251550-3-ojeda@kernel.org>
+In-Reply-To: <20231023174449.251550-3-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sat, 28 Oct 2023 19:46:07 +0200
+Message-ID: <CANiq72kmtSPp_qi7BWexfr5eOBCSVMgkkYaivtboRrNexKWMpA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] x86/rust: depend on !RETHUNK
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Josh Poimboeuf <jpoimboe@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, x86@kernel.org, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Andrea Righi <andrea.righi@canonical.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-commit 43bbddc067883d94de7a43d5756a295439fbe37d upstream.
+On Mon, Oct 23, 2023 at 7:45=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> The Rust compiler does not support the equivalent of
+> `-mfunction-return=3Dthunk-extern` yet [1]. Thus, currently, `objtool`
+> warns about it, e.g.:
 
-When we use lstart + len to calculate the end of free extent or prealloc
-space, it may exceed the maximum value of 4294967295(0xffffffff) supported
-by ext4_lblk_t and cause overflow, which may lead to various problems.
+I just realized I did not Cc Andrea when I sent this, which was my
+intention -- done here, sorry!
 
-Therefore, we add two helper functions, extent_logical_end() and
-pa_logical_end(), to limit the type of end to loff_t, and also convert
-lstart to loff_t for calculation to avoid overflow.
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20230724121059.11834-2-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-
-Conflicts:
-	fs/ext4/mballoc.c
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
----
- fs/ext4/mballoc.c |  7 +++----
- fs/ext4/mballoc.h | 14 ++++++++++++++
- 2 files changed, 17 insertions(+), 4 deletions(-)
-
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index b35d59d41c89..b994561f3f28 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3545,7 +3545,7 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
- 
- 	/* first, let's learn actual file size
- 	 * given current request is allocated */
--	size = ac->ac_o_ex.fe_logical + EXT4_C2B(sbi, ac->ac_o_ex.fe_len);
-+	size = extent_logical_end(sbi, &ac->ac_o_ex);
- 	size = size << bsbits;
- 	if (size < i_size_read(ac->ac_inode))
- 		size = i_size_read(ac->ac_inode);
-@@ -3885,8 +3885,7 @@ ext4_mb_use_preallocated(struct ext4_allocation_context *ac)
- 		/* all fields in this condition don't change,
- 		 * so we can skip locking for them */
- 		if (ac->ac_o_ex.fe_logical < pa->pa_lstart ||
--		    ac->ac_o_ex.fe_logical >= (pa->pa_lstart +
--					       EXT4_C2B(sbi, pa->pa_len)))
-+		    ac->ac_o_ex.fe_logical >= pa_logical_end(sbi, pa))
- 			continue;
- 
- 		/* non-extent files can't have physical blocks past 2^32 */
-@@ -4704,7 +4703,7 @@ static void ext4_mb_group_or_file(struct ext4_allocation_context *ac)
- 	if (unlikely(ac->ac_flags & EXT4_MB_HINT_GOAL_ONLY))
- 		return;
- 
--	size = ac->ac_o_ex.fe_logical + EXT4_C2B(sbi, ac->ac_o_ex.fe_len);
-+	size = extent_logical_end(sbi, &ac->ac_o_ex);
- 	isize = (i_size_read(ac->ac_inode) + ac->ac_sb->s_blocksize - 1)
- 		>> bsbits;
- 
-diff --git a/fs/ext4/mballoc.h b/fs/ext4/mballoc.h
-index 7be6288e48ec..1e9c402189cb 100644
---- a/fs/ext4/mballoc.h
-+++ b/fs/ext4/mballoc.h
-@@ -199,6 +199,20 @@ static inline ext4_fsblk_t ext4_grp_offs_to_block(struct super_block *sb,
- 		(fex->fe_start << EXT4_SB(sb)->s_cluster_bits);
- }
- 
-+static inline loff_t extent_logical_end(struct ext4_sb_info *sbi,
-+					struct ext4_free_extent *fex)
-+{
-+	/* Use loff_t to avoid end exceeding ext4_lblk_t max. */
-+	return (loff_t)fex->fe_logical + EXT4_C2B(sbi, fex->fe_len);
-+}
-+
-+static inline loff_t pa_logical_end(struct ext4_sb_info *sbi,
-+				    struct ext4_prealloc_space *pa)
-+{
-+	/* Use loff_t to avoid end exceeding ext4_lblk_t max. */
-+	return (loff_t)pa->pa_lstart + EXT4_C2B(sbi, pa->pa_len);
-+}
-+
- typedef int (*ext4_mballoc_query_range_fn)(
- 	struct super_block		*sb,
- 	ext4_group_t			agno,
--- 
-2.31.1
-
+Cheers,
+Miguel
