@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C362031D
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1F52031A
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y48Q4EgL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4197FC433C7;
-	Tue, 31 Oct 2023 17:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7v4sRzw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3684EC433C8;
+	Tue, 31 Oct 2023 17:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771860;
-	bh=fdKZ2wIxgDaBkCeHoFA9yMK63TB1E8P1G5+MFh/mtlc=;
+	s=korg; t=1698771863;
+	bh=NbaIE+tKU5LLo0gX5aBPqFRnBtLbEzLbGbOdJ34OP8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y48Q4EgLvlkm676b83DbR83ga4Dm+W6aLR5VW+Kh6EQfGyubB2cEBCN2n+tEJHAqN
-	 GKnMi8+S4IhjUHZ4Rn72HE2O/qxG6C2iUGik5lx6VJE1jak7LIARoxmds5NX5Xyjhh
-	 dXU50NoKuhip1WTRdtxZAFERtLO5W0Q8ch2z0eFU=
+	b=A7v4sRzwW3tzYDhMUeKRyRjEIztQcH9LQDw3Np8fvt9wxgmWKK9lKkq1gN7XKII6+
+	 oDb5z5hz18ssKOar8tBxAw5tGlc2LGJqCA3qL3PpbjPqGQdyYxayOqzAsZ0KnX18Ef
+	 hOrPlK6tXY8UkEsM1lG/LnYY+XdVmMYm7WhCP6LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 27/86] drm/i915/pmu: Check if pmu is closed before stopping event
-Date: Tue, 31 Oct 2023 18:00:52 +0100
-Message-ID: <20231031165919.456886750@linuxfoundation.org>
+	Shigeru Yoshida <syoshida@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+c74c24b43c9ae534f0e0@syzkaller.appspotmail.com,
+	syzbot+2c97a98a5ba9ea9c23bd@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 45/86] net: usb: smsc95xx: Fix uninit-value access in smsc95xx_read_reg
+Date: Tue, 31 Oct 2023 18:01:10 +0100
+Message-ID: <20231031165920.003586114@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,59 +44,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-commit 4cbed7702eb775cca22fff6827a549092cb59f61 upstream.
+[ Upstream commit 51a32e828109b4a209efde44505baa356b37a4ce ]
 
-When the driver unbinds, pmu is unregistered and i915->uabi_engines is
-set to RB_ROOT. Due to this, when i915 PMU tries to stop the engine
-events, it issues a warn_on because engine lookup fails.
+syzbot reported the following uninit-value access issue [1]:
 
-All perf hooks are taking care of this using a pmu->closed flag that is
-set when PMU unregisters. The stop event seems to have been left out.
+smsc95xx 1-1:0.0 (unnamed net_device) (uninitialized): Failed to read reg index 0x00000030: -32
+smsc95xx 1-1:0.0 (unnamed net_device) (uninitialized): Error reading E2P_CMD
+=====================================================
+BUG: KMSAN: uninit-value in smsc95xx_reset+0x409/0x25f0 drivers/net/usb/smsc95xx.c:896
+ smsc95xx_reset+0x409/0x25f0 drivers/net/usb/smsc95xx.c:896
+ smsc95xx_bind+0x9bc/0x22e0 drivers/net/usb/smsc95xx.c:1131
+ usbnet_probe+0x100b/0x4060 drivers/net/usb/usbnet.c:1750
+ usb_probe_interface+0xc75/0x1210 drivers/usb/core/driver.c:396
+ really_probe+0x506/0xf40 drivers/base/dd.c:658
+ __driver_probe_device+0x2a7/0x5d0 drivers/base/dd.c:800
+ driver_probe_device+0x72/0x7b0 drivers/base/dd.c:830
+ __device_attach_driver+0x55a/0x8f0 drivers/base/dd.c:958
+ bus_for_each_drv+0x3ff/0x620 drivers/base/bus.c:457
+ __device_attach+0x3bd/0x640 drivers/base/dd.c:1030
+ device_initial_probe+0x32/0x40 drivers/base/dd.c:1079
+ bus_probe_device+0x3d8/0x5a0 drivers/base/bus.c:532
+ device_add+0x16ae/0x1f20 drivers/base/core.c:3622
+ usb_set_configuration+0x31c9/0x38c0 drivers/usb/core/message.c:2207
+ usb_generic_driver_probe+0x109/0x2a0 drivers/usb/core/generic.c:238
+ usb_probe_device+0x290/0x4a0 drivers/usb/core/driver.c:293
+ really_probe+0x506/0xf40 drivers/base/dd.c:658
+ __driver_probe_device+0x2a7/0x5d0 drivers/base/dd.c:800
+ driver_probe_device+0x72/0x7b0 drivers/base/dd.c:830
+ __device_attach_driver+0x55a/0x8f0 drivers/base/dd.c:958
+ bus_for_each_drv+0x3ff/0x620 drivers/base/bus.c:457
+ __device_attach+0x3bd/0x640 drivers/base/dd.c:1030
+ device_initial_probe+0x32/0x40 drivers/base/dd.c:1079
+ bus_probe_device+0x3d8/0x5a0 drivers/base/bus.c:532
+ device_add+0x16ae/0x1f20 drivers/base/core.c:3622
+ usb_new_device+0x15f6/0x22f0 drivers/usb/core/hub.c:2589
+ hub_port_connect drivers/usb/core/hub.c:5440 [inline]
+ hub_port_connect_change drivers/usb/core/hub.c:5580 [inline]
+ port_event drivers/usb/core/hub.c:5740 [inline]
+ hub_event+0x53bc/0x7290 drivers/usb/core/hub.c:5822
+ process_one_work kernel/workqueue.c:2630 [inline]
+ process_scheduled_works+0x104e/0x1e70 kernel/workqueue.c:2703
+ worker_thread+0xf45/0x1490 kernel/workqueue.c:2784
+ kthread+0x3e8/0x540 kernel/kthread.c:388
+ ret_from_fork+0x66/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
 
-Check for pmu->closed in pmu_event_stop as well.
+Local variable buf.i225 created at:
+ smsc95xx_read_reg drivers/net/usb/smsc95xx.c:90 [inline]
+ smsc95xx_reset+0x203/0x25f0 drivers/net/usb/smsc95xx.c:892
+ smsc95xx_bind+0x9bc/0x22e0 drivers/net/usb/smsc95xx.c:1131
 
-Based on discussion here -
-https://patchwork.freedesktop.org/patch/492079/?series=105790&rev=2
+CPU: 1 PID: 773 Comm: kworker/1:2 Not tainted 6.6.0-rc1-syzkaller-00125-ge42bebf6db29 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
+Workqueue: usb_hub_wq hub_event
+=====================================================
 
-v2: s/is/if/ in commit title
-v3: Add fixes tag and cc stable
+Similar to e9c65989920f ("net: usb: smsc75xx: Fix uninit-value access in
+__smsc75xx_read_reg"), this issue is caused because usbnet_read_cmd() reads
+less bytes than requested (zero byte in the reproducer). In this case,
+'buf' is not properly filled.
 
-Cc: <stable@vger.kernel.org> # v5.11+
-Fixes: b00bccb3f0bb ("drm/i915/pmu: Handle PCI unbind")
-Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231020152441.3764850-1-umesh.nerlige.ramappa@intel.com
-(cherry picked from commit 31f6a06f0c543b43a38fab10f39e5fc45ad62aa2)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch fixes the issue by returning -ENODATA if usbnet_read_cmd() reads
+less bytes than requested.
+
+sysbot reported similar uninit-value access issue [2]. The root cause is
+the same as mentioned above, and this patch addresses it as well.
+
+Fixes: 2f7ca802bdae ("net: Add SMSC LAN9500 USB2.0 10/100 ethernet adapter driver")
+Reported-and-tested-by: syzbot+c74c24b43c9ae534f0e0@syzkaller.appspotmail.com
+Reported-and-tested-by: syzbot+2c97a98a5ba9ea9c23bd@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c74c24b43c9ae534f0e0 [1]
+Closes: https://syzkaller.appspot.com/bug?extid=2c97a98a5ba9ea9c23bd [2]
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_pmu.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/usb/smsc95xx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/i915_pmu.c
-+++ b/drivers/gpu/drm/i915/i915_pmu.c
-@@ -760,9 +760,18 @@ static void i915_pmu_event_start(struct
- 
- static void i915_pmu_event_stop(struct perf_event *event, int flags)
- {
-+	struct drm_i915_private *i915 =
-+		container_of(event->pmu, typeof(*i915), pmu.base);
-+	struct i915_pmu *pmu = &i915->pmu;
+diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
+index 17da42fe605c3..a530f20ee2575 100644
+--- a/drivers/net/usb/smsc95xx.c
++++ b/drivers/net/usb/smsc95xx.c
+@@ -95,7 +95,9 @@ static int __must_check smsc95xx_read_reg(struct usbnet *dev, u32 index,
+ 	ret = fn(dev, USB_VENDOR_REQUEST_READ_REGISTER, USB_DIR_IN
+ 		 | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 		 0, index, &buf, 4);
+-	if (ret < 0) {
++	if (ret < 4) {
++		ret = ret < 0 ? ret : -ENODATA;
 +
-+	if (pmu->closed)
-+		goto out;
-+
- 	if (flags & PERF_EF_UPDATE)
- 		i915_pmu_event_read(event);
- 	i915_pmu_disable(event);
-+
-+out:
- 	event->hw.state = PERF_HES_STOPPED;
- }
- 
+ 		if (ret != -ENODEV)
+ 			netdev_warn(dev->net, "Failed to read reg index 0x%08x: %d\n",
+ 				    index, ret);
+-- 
+2.42.0
+
 
 
