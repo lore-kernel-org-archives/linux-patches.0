@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C221E51A
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596862031A
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRp/BIkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3387C433C8;
-	Tue, 31 Oct 2023 17:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzW5blxf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FECC433C8;
+	Tue, 31 Oct 2023 17:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771893;
-	bh=7cOqsuz18i8YjqyuKG4ojYZVAazoe5zhtpiFgMofdDQ=;
+	s=korg; t=1698771896;
+	bh=1Mwy/jmEEX/VZZNz6YEczlT409dZHhokDz0GX07PitA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vRp/BIkEiBKpvyzFEB22eXqfuwRZz+LZh5Jjm2mTGDX4yLCotjWtoibjYEECcGG5f
-	 LpjvUaafhmFuj5V9Xq3mwTCIzZUYSpEa53jDhy9EPFBw8Gc963Hg3clul+ddVUrgqY
-	 lNdPJT3xI4bpxjdi3xvhBq/CFvyeQAGBPErpM7r4=
+	b=zzW5blxfFNeSFHTzDTdnxT+iuYAF/oGgaxq0XYvLjie+nOnR43mjY/QmDWSDAIHGb
+	 o4vvFztVKnZcryymguY3u3AjvGD55WhQTOGpmOWnd8chn1lWrG/DFqEl3I1gLatxpJ
+	 K7d5hiRnZG1MG9yq4BsqAPIEeX5LgoSHmwaKvgBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Paolo Gentili <paolo.gentili@canonical.com>
-Subject: [PATCH 6.1 28/86] drm/amd: Disable ASPM for VI w/ all Intel systems
-Date: Tue, 31 Oct 2023 18:00:53 +0100
-Message-ID: <20231031165919.488951590@linuxfoundation.org>
+	Michal Schmidt <mschmidt@redhat.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 55/86] iavf: in iavf_down, disable queues when removing the driver
+Date: Tue, 31 Oct 2023 18:01:20 +0100
+Message-ID: <20231031165920.291542868@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -42,39 +45,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-commit 64ffd2f1d00c6235dabe9704bbb0d9ce3e28147f upstream.
+[ Upstream commit 53798666648af3aa0dd512c2380576627237a800 ]
 
-Originally we were quirking ASPM disabled specifically for VI when
-used with Alder Lake, but it appears to have problems with Rocket
-Lake as well.
+In iavf_down, we're skipping the scheduling of certain operations if
+the driver is being removed. However, the IAVF_FLAG_AQ_DISABLE_QUEUES
+request must not be skipped in this case, because iavf_close waits
+for the transition to the __IAVF_DOWN state, which happens in
+iavf_virtchnl_completion after the queues are released.
 
-Like we've done in the case of dpm for newer platforms, disable
-ASPM for all Intel systems.
+Without this fix, "rmmod iavf" takes half a second per interface that's
+up and prints the "Device resources not yet released" warning.
 
-Cc: stable@vger.kernel.org # 5.15+
-Fixes: 0064b0ce85bb ("drm/amd/pm: enable ASPM by default")
-Reported-and-tested-by: Paolo Gentili <paolo.gentili@canonical.com>
-Closes: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2036742
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c8de44b577eb ("iavf: do not process adminq tasks when __IAVF_IN_REMOVE_TASK is set")
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Tested-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20231025183213.874283-1-jacob.e.keller@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vi.c |    2 +-
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/vi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vi.c
-@@ -1147,7 +1147,7 @@ static void vi_program_aspm(struct amdgp
- 	bool bL1SS = false;
- 	bool bClkReqSupport = true;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 1ae90f8f9941f..326bb5fdf5f90 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -1449,9 +1449,9 @@ void iavf_down(struct iavf_adapter *adapter)
+ 			adapter->aq_required |= IAVF_FLAG_AQ_DEL_FDIR_FILTER;
+ 		if (!list_empty(&adapter->adv_rss_list_head))
+ 			adapter->aq_required |= IAVF_FLAG_AQ_DEL_ADV_RSS_CFG;
+-		adapter->aq_required |= IAVF_FLAG_AQ_DISABLE_QUEUES;
+ 	}
  
--	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_aspm_support_quirk())
-+	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_pcie_dynamic_switching_supported())
- 		return;
++	adapter->aq_required |= IAVF_FLAG_AQ_DISABLE_QUEUES;
+ 	mod_delayed_work(adapter->wq, &adapter->watchdog_task, 0);
+ }
  
- 	if (adev->flags & AMD_IS_APU ||
+-- 
+2.42.0
+
 
 
