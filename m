@@ -1,61 +1,61 @@
 Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.80])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4759A14F9A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E803213AFD
 	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 09:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="QJV5EScP";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="yFKk8U+c"
-ARC-Seal: i=1; a=rsa-sha256; t=1698744597; cv=none;
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="YN+exxea";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="P65ZEk70"
+ARC-Seal: i=1; a=rsa-sha256; t=1698744595; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=FqfrjacrWmSxUAAhvg9EMLSJUdbndlbnKsJQ8JX2yqcT4CEj2mgkYG1wcD0QVaoMtB
-    wLc4eC0nioLpVrt3EW+OTQjRe3Zum1DOaRhTC7xesReSdC2rVE2Dqqvzm0nBxdej2CHv
-    v5MpNW+fQps6YKOmlHE8J1AaOxTQTaVsGxdRJAU1VlXT2zBcvA2m7o9QSKA44ZWxl5A7
-    FoswmqRyc7qIg9/PkEclR6OUPYGsAFtfePinKi2SPeRu4jfYlc29mnko++1jf7h48yyV
-    L2yvV+m9lLhbilf6p776JxguvOg6fhcEioSPzj9q69ZRBRmvxRDhhgIOyzzNZGumH1V1
-    7EVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744597;
+    b=Oi3lRsfP339z7GzySLlcFWCElboDJPhaCBdy8pUFQiq4IqHcV0a9qcdiv53458sLnp
+    cjHW63pHjorWEjJvgZafaUqwXwNceF9FiMoIEQ0b0bbAssBHRLDAXpywJ5J0dBJGgwBm
+    jBhV1anQyE4OTFo+DLFYzI1eOOJgZDlRLO3SRx0dArfgfwc21Cqvn/BDPT/jM4yG8wB8
+    n/PHh+nYo9ciNqzSvCrc9z4RQkSh3UTAaxNTn2Y9qc9c0yTBKY89nS5JqRoJzzc6FH/Q
+    wrbjg6GyDqhdPVL+H0Y4K0DsAQmYDcX0IIiZvomuk2ckn1slPpCYHl7G5m4Qwr1TAUwq
+    c8ig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744595;
     s=strato-dkim-0002; d=strato.com;
     h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
     From:Subject:Sender;
-    bh=sOZtvX6fAm3rEME4QaBlcvE5hEKaO1W/hBkfGk6fYKY=;
-    b=IMppRmy4itzX5KFCdfxxfwHFbnLQ7IUXMmRb+61tvuF6CHIcf2PH1jlaisIepfK6wN
-    QC05cWeqBjYXF+Kwx/bKweZvo0r/6F0l8R29HkNgfCI7X39yCpdCEnQOSCt6Egby8Aa8
-    fEj4MFb9OyrAhg4CxgAFufosOv9hjJPd9j+h17fe/ds1B0qk+CGhgGmHN9EThUvEBgeU
-    VSTnEo2e02r0pMndiv3f3mdJqqlsXxi1+mAGzqWR5107cloXjbXnIb18wHfbEaBL4IWL
-    /YzXoVHyyOM6i1127hjDTqKH5WXBla/WMS/IWh9Yi7PWZVVOeTGTTsZAatjSp5bvBA9R
-    XT8w==
+    bh=kCiPsmHP7A+8+OSHVc4VVcQK0OfGm/StDJ6OGxer1S0=;
+    b=BBBwb/wUOoyvriS6qDFDbI8NfOqCNvw6KJrJAtXA1Yhg4sSUwM49pp1TMIk33+rWQz
+    Y+GQEU1ZJ8GL7k403DplVwLAii8BJRVb7lmDjkpv5nFjez2WGoskxs7Doy3xFyN8oME3
+    XeVOgRnZlpQOaRMN66iflX9SVKHvBXbOY7o+r9rHIluB4lBTeQ6ylYCHevoLtJ4jEByV
+    N706ihBBJB80TxCSfmJUJMugNvG8vBM7bXdclaR1/kNj4JnK0vpoEq/SUme3lTIjKK3+
+    bQTXkY2zFpNRXNiw7YxVhS5UBYOtwCZbP/SNPXqJXzygCg9ZesKH66coYInh+vYTghFf
+    +1NQ==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
 X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744597;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744595;
     s=strato-dkim-0002; d=hartkopp.net;
     h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
     From:Subject:Sender;
-    bh=sOZtvX6fAm3rEME4QaBlcvE5hEKaO1W/hBkfGk6fYKY=;
-    b=QJV5EScPf9jLbNTQse9lvsh7PbJCA3JSF/dHcbpPoy16ea0t2EGwPS/SBjqjWVHUMk
-    UEG1S6U6Y+gdTz606Mmqi89Ivqy+JBEg/VqNrATgF3P99Z0kMcvB2STQQd2vYZJIJ9Tr
-    3ml9Yc80tIaOMmCsNkR00igcJE5e4x1UhVlq3z7cbYWzbOQB4X9yZVbPg1qZVTDGF8ml
-    nOHatpik2FLrsdteFdE12KUyd3QrsX01D7VVtfqveWA8pHiL+8UmNZaA5S+rPS6upQza
-    obQ4KSL/hQK2iLFbs4on5XIDIlPdp/SQfGVlKqipwj4UkCmtWx3w81W+Ude+B75/PmO7
-    doLw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1698744597;
+    bh=kCiPsmHP7A+8+OSHVc4VVcQK0OfGm/StDJ6OGxer1S0=;
+    b=YN+exxeaBMFYyaCiIHQukjkmMzRVYMvc7swu5VIbZd2g5uiApPY/4KHBr+IyDVATTm
+    n4bT3jS0emwlppbvig7D0S1mtC/CpnoV5W4JJnm9eYRAiHxScmCwwOAW1MKYUSENguWT
+    77Ohf4hA6Wra9SjJYoJW/+vAR0MvbRw2WRD6vd8w/Vkgv+X3665jwAXCEzm2jG5JlIsJ
+    6Bv/enUrxESJBUBfs2pfvjpU5JNNcaDdlbV8k3O9l3mTkjKWIb9ePMyioQ9JoTbEglWr
+    y7Z4kd89zTIevOxCLIL3Hq7NqpATsOGFgxBUPaorfwRZcOZLrPoyxb+Zm3zc2pFuycJn
+    Im5Q==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1698744595;
     s=strato-dkim-0003; d=hartkopp.net;
     h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
     From:Subject:Sender;
-    bh=sOZtvX6fAm3rEME4QaBlcvE5hEKaO1W/hBkfGk6fYKY=;
-    b=yFKk8U+cx0AVy8qdLLjfmEEm4UbXoBM9u49HfmjtVQl+S357f7Vhrp3C+vR5hlGElD
-    umQBYVKrTBw4i6mK2tAQ==
+    bh=kCiPsmHP7A+8+OSHVc4VVcQK0OfGm/StDJ6OGxer1S0=;
+    b=P65ZEk70H9dcYD0pqpZfhDUGEjoOEi42dMTvS8RGAlY4fpP3oiGgxqQCFYDoU5JD1B
+    xnTRiIekbzK2JdsD66BQ==
 X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjGrp7owjzFK3JbFk1mS0k+8CejuVITM8sik0"
 Received: from lenov17.lan
     by smtp.strato.de (RZmta 49.9.1 DYNA|AUTH)
-    with ESMTPSA id Kda39bz9V9TuFhI
+    with ESMTPSA id Kda39bz9V9TtFhE
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
 	(Client did not present a certificate);
-    Tue, 31 Oct 2023 10:29:56 +0100 (CET)
+    Tue, 31 Oct 2023 10:29:55 +0100 (CET)
 From: Oliver Hartkopp <socketcan@hartkopp.net>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -66,11 +66,11 @@ Cc: linux-can@vger.kernel.org,
 	maxime.jayat@mobile-devices.fr,
 	mkl@pengutronix.de,
 	michal.sojka@cvut.cz,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com
-Subject: [PATCH stable 5.10 06/10] can: isotp: check CAN address family in isotp_bind()
-Date: Tue, 31 Oct 2023 10:29:14 +0100
-Message-Id: <20231031092918.2668-7-socketcan@hartkopp.net>
+	Patrick Menschel <menschel.p@posteo.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>
+Subject: [PATCH stable 5.10 03/10] can: isotp: Add error message if txqueuelen is too small
+Date: Tue, 31 Oct 2023 10:29:11 +0100
+Message-Id: <20231031092918.2668-4-socketcan@hartkopp.net>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20231031092918.2668-1-socketcan@hartkopp.net>
 References: <20231031092918.2668-1-socketcan@hartkopp.net>
@@ -83,46 +83,47 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="us-ascii"
 
-commit c6adf659a8ba85913e16a571d5a9bcd17d3d1234 upstream
+From: Patrick Menschel <menschel.p@posteo.de>
 
-Add missing check to block non-AF_CAN binds.
+commit c69d190f7bb9a03cf5237d45a457993730d01605 upstream
 
-Syzbot created some code which matched the right sockaddr struct size
-but used AF_XDP (0x2C) instead of AF_CAN (0x1D) in the address family
-field:
+This patch adds an additional error message in case that txqueuelen is
+set too small and advices the user to increase txqueuelen.
 
-bind$xdp(r2, &(0x7f0000000540)={0x2c, 0x0, r4, 0x0, r2}, 0x10)
-                                ^^^^
-This has no funtional impact but the userspace should be notified about
-the wrong address family field content.
+This is likely to happen even with small transfers if txqueuelen is at
+default value 10 frames.
 
-Link: https://syzkaller.appspot.com/text?tag=CrashLog&x=11ff9d8c480000
-Reported-by: syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20230104201844.13168-1-socketcan@hartkopp.net
+Link: https://lore.kernel.org/r/20210427052150.2308-4-menschel.p@posteo.de
+Signed-off-by: Patrick Menschel <menschel.p@posteo.de>
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 ---
- net/can/isotp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/can/isotp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/net/can/isotp.c b/net/can/isotp.c
-index 902cb61b6495..87de9a08cc85 100644
+index 009d5216f3ea..ef72e5344789 100644
 --- a/net/can/isotp.c
 +++ b/net/can/isotp.c
-@@ -1127,10 +1127,13 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
- 	int do_rx_reg = 1;
+@@ -811,14 +811,16 @@ static enum hrtimer_restart isotp_tx_timer_handler(struct hrtimer *hrtimer)
  
- 	if (len < ISOTP_MIN_NAMELEN)
- 		return -EINVAL;
+ 		skb->dev = dev;
+ 		can_skb_set_owner(skb, sk);
  
-+	if (addr->can_family != AF_CAN)
-+		return -EINVAL;
-+
- 	/* sanitize tx/rx CAN identifiers */
- 	tx_id = addr->can_addr.tp.tx_id;
- 	if (tx_id & CAN_EFF_FLAG)
- 		tx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
- 	else
+ 		can_send_ret = can_send(skb, 1);
+-		if (can_send_ret)
++		if (can_send_ret) {
+ 			pr_notice_once("can-isotp: %s: can_send_ret %pe\n",
+ 				       __func__, ERR_PTR(can_send_ret));
+-
++			if (can_send_ret == -ENOBUFS)
++				pr_notice_once("can-isotp: tx queue is full, increasing txqueuelen may prevent this error\n");
++		}
+ 		if (so->tx.idx >= so->tx.len) {
+ 			/* we are done */
+ 			so->tx.state = ISOTP_IDLE;
+ 			dev_put(dev);
+ 			wake_up_interruptible(&so->wait);
 -- 
 2.34.1
 
