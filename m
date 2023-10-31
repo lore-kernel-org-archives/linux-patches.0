@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1532031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12C92031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxXSTg2e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65017C433C8;
-	Tue, 31 Oct 2023 17:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qrt57Coz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C644C433C7;
+	Tue, 31 Oct 2023 17:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771779;
-	bh=JxzAxP7WBd+E4zgGOi5ii3i3Xd9suGaxc4RF5rbJvfI=;
+	s=korg; t=1698771782;
+	bh=OOmHEUdcIcmKB7tZAtldCOHDEt2k7iD9wnbU2WDcB94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxXSTg2eH013HyYRm+3lF/4FdRSbp5ztrfykJe3POrJUTX3sqZFyTO2gy3h0XRbtW
-	 dGl6DSC8nAs3fH/IKBO44Wx0sFffl09csT1o76iEovc8ys6xVGSQ0vwvu4RcJiINos
-	 f3ZPlpRaDR74mzCgf+gf0mpWsjuMPdZ1SBd9wr74=
+	b=Qrt57CozRwbEhUVHx4zDYY2eF0N85eSxQJ9nfpVpFxC4KBstYjLf8pP1qrEBlS0ti
+	 L0wgMUhSUrWtlzwgE2RGClaNKXNaczS0SsrndC24Uqa7b/s37Fue/Ehiu+sFRUIf0p
+	 8G9hoJU3DSJBtIxwU7MDC2KAFOJdi5JctZbVQtVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christopher Obbard <chris.obbard@collabora.com>,
 	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.1 18/86] arm64: dts: rockchip: Add i2s0-2ch-bus-bclk-off pins to RK3399
-Date: Tue, 31 Oct 2023 18:00:43 +0100
-Message-ID: <20231031165919.176856657@linuxfoundation.org>
+Subject: [PATCH 6.1 19/86] arm64: dts: rockchip: Fix i2s0 pin conflict on ROCK Pi 4 boards
+Date: Tue, 31 Oct 2023 18:00:44 +0100
+Message-ID: <20231031165919.212507437@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,44 +43,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Christopher Obbard <chris.obbard@collabora.com>
 
-commit 3975e72b164dc8347a28dd0d5f11b346af534635 upstream.
+commit 8cd79b729e746cb167f1563d015a93fc0a079899 upstream.
 
-Commit 0efaf8078393 ("arm64: dts: rockchip: add i2s0-2ch-bus pins on
-rk3399") introduced a pinctl for i2s0 in two-channel mode. Commit
-91419ae0420f ("arm64: dts: rockchip: use BCLK to GPIO switch on rk3399")
-modified i2s0 to switch the corresponding pins off when idle.
+Commit 91419ae0420f ("arm64: dts: rockchip: use BCLK to GPIO switch on
+rk3399") modified i2s0 to switch the corresponding pins off when idle.
+For the ROCK Pi 4 boards, this means that i2s0 has the following pinctrl
+setting:
 
-Although an idle pinctrl node was added for i2s0 in 8-channel mode, a
-similar idle pinctrl node for i2s0 in 2-channel mode was not added. Add
-it.
+    pinctrl-names = "bclk_on", "bclk_off";
+    pinctrl-0 = <&i2s0_2ch_bus>;
+    pinctrl-1 = <&i2s0_8ch_bus_bclk_off>;
+
+Due to this change, i2s0 fails to probe on my Radxa ROCK 4SE and ROCK Pi
+4B boards:
+
+    rockchip-pinctrl pinctrl: pin gpio3-29 already requested by leds; cannot claim for ff880000.i2s
+    rockchip-pinctrl pinctrl: pin-125 (ff880000.i2s) status -22
+    rockchip-pinctrl pinctrl: could not request pin 125 (gpio3-29) from group i2s0-8ch-bus-bclk-off  on device rockchip-pinctrl
+    rockchip-i2s ff880000.i2s: Error applying setting, reverse things back
+    rockchip-i2s ff880000.i2s: bclk disable failed -22
+
+A pin requested for i2s0_8ch_bus_bclk_off has already been requested by
+user_led2, so whichever driver probes first will have the pin allocated.
+
+The hardware uses 2-channel i2s so fix this error by setting pinctl-1 to
+i2s0_2ch_bus_bclk_off which doesn't contain the pin allocated to user_led2.
+
+I checked the schematics for all Radxa boards based on ROCK Pi 4 and this
+change is compatible with all boards.
 
 Fixes: 91419ae0420f ("arm64: dts: rockchip: use BCLK to GPIO switch on rk3399")
 Signed-off-by: Christopher Obbard <chris.obbard@collabora.com>
-Link: https://lore.kernel.org/r/20231013114737.494410-2-chris.obbard@collabora.com
+Link: https://lore.kernel.org/r/20231013114737.494410-3-chris.obbard@collabora.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399.dtsi |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399.dtsi
-@@ -2396,6 +2396,16 @@
- 					<4 RK_PA0 1 &pcfg_pull_none>;
- 			};
+--- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
+@@ -493,6 +493,7 @@
  
-+			i2s0_2ch_bus_bclk_off: i2s0-2ch-bus-bclk-off {
-+				rockchip,pins =
-+					<3 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>,
-+					<3 RK_PD1 1 &pcfg_pull_none>,
-+					<3 RK_PD2 1 &pcfg_pull_none>,
-+					<3 RK_PD3 1 &pcfg_pull_none>,
-+					<3 RK_PD7 1 &pcfg_pull_none>,
-+					<4 RK_PA0 1 &pcfg_pull_none>;
-+			};
-+
- 			i2s0_8ch_bus: i2s0-8ch-bus {
- 				rockchip,pins =
- 					<3 RK_PD0 1 &pcfg_pull_none>,
+ &i2s0 {
+ 	pinctrl-0 = <&i2s0_2ch_bus>;
++	pinctrl-1 = <&i2s0_2ch_bus_bclk_off>;
+ 	rockchip,capture-channels = <2>;
+ 	rockchip,playback-channels = <2>;
+ 	status = "okay";
 
 
