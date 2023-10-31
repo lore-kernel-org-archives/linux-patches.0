@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B051208C7
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B10208C7
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEyGBvA1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46ED8C433C8;
-	Tue, 31 Oct 2023 17:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDHN7Cbs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481A1C433C8;
+	Tue, 31 Oct 2023 17:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774609;
-	bh=pUyMH+nX0EJKYq24EO24I7mdP3yiSgCVpA82bvklxHs=;
+	s=korg; t=1698774612;
+	bh=ee/xhwhDhAKEjQwBU6vlgXhwBZMOv6k4+7Vryl/BM8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UEyGBvA13mJmjTLpAwbCbA8bhceiJFpi01F3ooCqyGAiLBIwCVKWEPTmWzwFEUpnz
-	 r1ac0pEjKO3BPWXbo8Y3md0wu8ARN/AE9ThSikf0R1ho88BzZl8CQOC69+QNqK7DSS
-	 /2fD6bRgrk5xKNyOaHczytA8R35JZRWUacsTIJtM=
+	b=hDHN7CbskTntzkEHMryobYqeQ2ihERbmAlZqO1pzcVJr+n6riQGOwFS1jdXo8Rduc
+	 BG8sU/VhAhy0yY4cR5aHWcgU1RwI6XqS11Dn9il2rY17VAn2WS+JFulo1mUL+MfwEJ
+	 jB0lLH87pFehoMyLqgYL/BfkQ3/gYREFQFL0lqUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Dell Jin <dell.jin.code@outlook.com>,
+	Ciprian Regus <ciprian.regus@analog.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 068/112] wifi: cfg80211: fix assoc response warning on failed links
-Date: Tue, 31 Oct 2023 18:01:09 +0100
-Message-ID: <20231031165903.464320035@linuxfoundation.org>
+Subject: [PATCH 6.5 059/112] net: ethernet: adi: adin1110: Fix uninitialized variable
+Date: Tue, 31 Oct 2023 18:01:00 +0100
+Message-ID: <20231031165903.182164849@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -41,41 +43,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Dell Jin <dell.jin.code@outlook.com>
 
-[ Upstream commit c434b2be2d80d236bb090fdb493d4bd5ed589238 ]
+[ Upstream commit 965f9b8c0c1b37fa2a0e3ef56e40d5666d4cbb5c ]
 
-The warning here shouldn't be done before we even set the
-bss field (or should've used the input data). Move the
-assignment before the warning to fix it.
+The spi_transfer struct has to have all it's fields initialized to 0 in
+this case, since not all of them are set before starting the transfer.
+Otherwise, spi_sync_transfer() will sometimes return an error.
 
-We noticed this now because of Wen's bugfix, where the bug
-fixed there had previously hidden this other bug.
-
-Fixes: 53ad07e9823b ("wifi: cfg80211: support reporting failed links")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: a526a3cc9c8d ("net: ethernet: adi: adin1110: Fix SPI transfers")
+Signed-off-by: Dell Jin <dell.jin.code@outlook.com>
+Signed-off-by: Ciprian Regus <ciprian.regus@analog.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/mlme.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/adi/adin1110.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
-index 3e2c398abddcc..55a1d3633853f 100644
---- a/net/wireless/mlme.c
-+++ b/net/wireless/mlme.c
-@@ -43,10 +43,11 @@ void cfg80211_rx_assoc_resp(struct net_device *dev,
- 
- 	for (link_id = 0; link_id < ARRAY_SIZE(data->links); link_id++) {
- 		cr.links[link_id].status = data->links[link_id].status;
-+		cr.links[link_id].bss = data->links[link_id].bss;
-+
- 		WARN_ON_ONCE(cr.links[link_id].status != WLAN_STATUS_SUCCESS &&
- 			     (!cr.ap_mld_addr || !cr.links[link_id].bss));
- 
--		cr.links[link_id].bss = data->links[link_id].bss;
- 		if (!cr.links[link_id].bss)
- 			continue;
- 		cr.links[link_id].bssid = data->links[link_id].bss->bssid;
+diff --git a/drivers/net/ethernet/adi/adin1110.c b/drivers/net/ethernet/adi/adin1110.c
+index ca66b747b7c5d..d7c274af6d4da 100644
+--- a/drivers/net/ethernet/adi/adin1110.c
++++ b/drivers/net/ethernet/adi/adin1110.c
+@@ -294,7 +294,7 @@ static int adin1110_read_fifo(struct adin1110_port_priv *port_priv)
+ {
+ 	struct adin1110_priv *priv = port_priv->priv;
+ 	u32 header_len = ADIN1110_RD_HEADER_LEN;
+-	struct spi_transfer t;
++	struct spi_transfer t = {0};
+ 	u32 frame_size_no_fcs;
+ 	struct sk_buff *rxb;
+ 	u32 frame_size;
 -- 
 2.42.0
 
