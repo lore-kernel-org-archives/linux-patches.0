@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2E82031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE8D2031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoQ1CD86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF88C433C7;
-	Tue, 31 Oct 2023 17:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HAIw2R0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE664C433C8;
+	Tue, 31 Oct 2023 17:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771800;
-	bh=SQvd8uJV6bEhLME/aPVVaUibD8UyQsMHCPL1ba469v4=;
+	s=korg; t=1698771803;
+	bh=Vx4necyDxDLokXvCtSreCYtk8N/U6j00mx96U6vn1uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HoQ1CD86v4O8nulZRAgUbTgZBKKafTYX3OMYfR+NpoweleQXS3EctFNqakP4VbWrK
-	 7Vs+T2z8bXmD5AB/fVMLMl/ZLNrGcgLXqLV/l9gt+W/s78TqHYtydep9ZDEkPjYNuL
-	 QQ4BkIcl4xQQrSXL25wS0S8lJMcZa1///ugc3m6A=
+	b=HAIw2R0jlpe/j/b9J/bD2tpmdq7ZN+O49L2PaZdRioThH0cDRhpYKGpJtn7xNPOSk
+	 xznI1L3IF5tzVe11KUvlm/QBEWMWaFIZ1mX3EcO7CQrKuYYbBWl3sNBGaUICWHmAH0
+	 9iLAzryn7GQklBLJKgF9UCgClYvsE/s6VoB1R8JU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 24/86] hugetlbfs: extend hugetlb_vma_lock to private VMAs
-Date: Tue, 31 Oct 2023 18:00:49 +0100
-Message-ID: <20231031165919.364477734@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Takashi Iwai <tiwai@suse.de>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 05/86] ASoC: codecs: wcd938x: Convert to platform remove callback returning void
+Date: Tue, 31 Oct 2023 18:00:30 +0100
+Message-ID: <20231031165918.777236098@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -38,165 +38,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit bf4916922c60f43efaa329744b3eef539aa6a2b2 upstream.
+[ Upstream commit 7cd686a59b36860511965882dad1f76df2c25766 ]
 
-Extend the locking scheme used to protect shared hugetlb mappings from
-truncate vs page fault races, in order to protect private hugetlb mappings
-(with resv_map) against MADV_DONTNEED.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-Add a read-write semaphore to the resv_map data structure, and use that
-from the hugetlb_vma_(un)lock_* functions, in preparation for closing the
-race between MADV_DONTNEED and page faults.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Link: https://lkml.kernel.org/r/20231006040020.3677377-3-riel@surriel.com
-Fixes: 04ada095dcfc ("hugetlb: don't delete vma_lock in hugetlb MADV_DONTNEED processing")
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Takashi Iwai <tiwai@suse.de>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20230315150745.67084-57-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 69a026a2357e ("ASoC: codecs: wcd938x: fix regulator leaks on probe errors")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/hugetlb.h |    6 ++++++
- mm/hugetlb.c            |   41 +++++++++++++++++++++++++++++++++++++----
- 2 files changed, 43 insertions(+), 4 deletions(-)
+ sound/soc/codecs/wcd938x.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -70,6 +70,7 @@ struct resv_map {
- 	long adds_in_progress;
- 	struct list_head region_cache;
- 	long region_cache_count;
-+	struct rw_semaphore rw_sema;
- #ifdef CONFIG_CGROUP_HUGETLB
- 	/*
- 	 * On private mappings, the counter to uncharge reservations is stored
-@@ -879,6 +880,11 @@ static inline bool hugepage_migration_su
- 	return arch_hugetlb_migration_supported(h);
+diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
+index c3964aa00b288..73d7c92e87242 100644
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -3616,11 +3616,9 @@ static int wcd938x_probe(struct platform_device *pdev)
+ 	return 0;
  }
  
-+static inline bool __vma_private_lock(struct vm_area_struct *vma)
-+{
-+	return (!(vma->vm_flags & VM_MAYSHARE)) && vma->vm_private_data;
-+}
-+
- /*
-  * Movability check is different as compared to migration check.
-  * It determines whether or not a huge page should be placed on
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -96,6 +96,7 @@ static void hugetlb_vma_lock_alloc(struc
- static void __hugetlb_vma_unlock_write_free(struct vm_area_struct *vma);
- static void hugetlb_unshare_pmds(struct vm_area_struct *vma,
- 		unsigned long start, unsigned long end);
-+static struct resv_map *vma_resv_map(struct vm_area_struct *vma);
- 
- static inline bool subpool_is_free(struct hugepage_subpool *spool)
+-static int wcd938x_remove(struct platform_device *pdev)
++static void wcd938x_remove(struct platform_device *pdev)
  {
-@@ -272,6 +273,10 @@ void hugetlb_vma_lock_read(struct vm_are
- 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
- 
- 		down_read(&vma_lock->rw_sema);
-+	} else if (__vma_private_lock(vma)) {
-+		struct resv_map *resv_map = vma_resv_map(vma);
-+
-+		down_read(&resv_map->rw_sema);
- 	}
+ 	component_master_del(&pdev->dev, &wcd938x_comp_ops);
+-
+-	return 0;
  }
  
-@@ -281,6 +286,10 @@ void hugetlb_vma_unlock_read(struct vm_a
- 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
+ #if defined(CONFIG_OF)
+@@ -3634,7 +3632,7 @@ MODULE_DEVICE_TABLE(of, wcd938x_dt_match);
  
- 		up_read(&vma_lock->rw_sema);
-+	} else if (__vma_private_lock(vma)) {
-+		struct resv_map *resv_map = vma_resv_map(vma);
-+
-+		up_read(&resv_map->rw_sema);
- 	}
- }
- 
-@@ -290,6 +299,10 @@ void hugetlb_vma_lock_write(struct vm_ar
- 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
- 
- 		down_write(&vma_lock->rw_sema);
-+	} else if (__vma_private_lock(vma)) {
-+		struct resv_map *resv_map = vma_resv_map(vma);
-+
-+		down_write(&resv_map->rw_sema);
- 	}
- }
- 
-@@ -299,17 +312,27 @@ void hugetlb_vma_unlock_write(struct vm_
- 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
- 
- 		up_write(&vma_lock->rw_sema);
-+	} else if (__vma_private_lock(vma)) {
-+		struct resv_map *resv_map = vma_resv_map(vma);
-+
-+		up_write(&resv_map->rw_sema);
- 	}
- }
- 
- int hugetlb_vma_trylock_write(struct vm_area_struct *vma)
- {
--	struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
- 
--	if (!__vma_shareable_lock(vma))
--		return 1;
-+	if (__vma_shareable_lock(vma)) {
-+		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
- 
--	return down_write_trylock(&vma_lock->rw_sema);
-+		return down_write_trylock(&vma_lock->rw_sema);
-+	} else if (__vma_private_lock(vma)) {
-+		struct resv_map *resv_map = vma_resv_map(vma);
-+
-+		return down_write_trylock(&resv_map->rw_sema);
-+	}
-+
-+	return 1;
- }
- 
- void hugetlb_vma_assert_locked(struct vm_area_struct *vma)
-@@ -318,6 +341,10 @@ void hugetlb_vma_assert_locked(struct vm
- 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
- 
- 		lockdep_assert_held(&vma_lock->rw_sema);
-+	} else if (__vma_private_lock(vma)) {
-+		struct resv_map *resv_map = vma_resv_map(vma);
-+
-+		lockdep_assert_held(&resv_map->rw_sema);
- 	}
- }
- 
-@@ -350,6 +377,11 @@ static void __hugetlb_vma_unlock_write_f
- 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
- 
- 		__hugetlb_vma_unlock_write_put(vma_lock);
-+	} else if (__vma_private_lock(vma)) {
-+		struct resv_map *resv_map = vma_resv_map(vma);
-+
-+		/* no free for anon vmas, but still need to unlock */
-+		up_write(&resv_map->rw_sema);
- 	}
- }
- 
-@@ -1068,6 +1100,7 @@ struct resv_map *resv_map_alloc(void)
- 	kref_init(&resv_map->refs);
- 	spin_lock_init(&resv_map->lock);
- 	INIT_LIST_HEAD(&resv_map->regions);
-+	init_rwsem(&resv_map->rw_sema);
- 
- 	resv_map->adds_in_progress = 0;
- 	/*
+ static struct platform_driver wcd938x_codec_driver = {
+ 	.probe = wcd938x_probe,
+-	.remove = wcd938x_remove,
++	.remove_new = wcd938x_remove,
+ 	.driver = {
+ 		.name = "wcd938x_codec",
+ 		.of_match_table = of_match_ptr(wcd938x_dt_match),
+-- 
+2.42.0
+
 
 
