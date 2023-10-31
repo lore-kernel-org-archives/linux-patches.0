@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F93208CF
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C0B208B8
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XptvboDm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E562FC433C8;
-	Tue, 31 Oct 2023 17:46:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPOw/ahy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51A6C433C9;
+	Tue, 31 Oct 2023 17:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774418;
-	bh=OY6dltYYOQWATzViVI5jzZHOYdxxFcY9PqyEtQmpX7Y=;
+	s=korg; t=1698774421;
+	bh=v6oP9dCY9HsutAeT7qat7nt3BfXa81LB/kEyu+qbRBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XptvboDmELFQN7+nS2l1Q2Ppu/8qI8N1zCS9uRr2Z16MV5BkKfgODMErSZfVs3uuF
-	 8l8/Y7jcPc4KWjPYYlKl5tE6lf9mCW9cdiIloOA4DOa7YV2ji3iRAwDk/XSu2ppFkM
-	 kcnTX7NiL+Hc61ZEjUEeLmmVZB1ZzlAw5+yyxAZU=
+	b=VPOw/ahytBqNAPRlA4aIq0pF/FqlBG5MdPb656+Cp1hESDfA3yjPkISlAGDEt0oIa
+	 04Xvly+mVuflyJ2MIg+FOfdGnM05RQoAEGo7vhhtfpTP61tnF1FwkkKtvRcBkH3czR
+	 eqT7S8QnX0QrI2ALpSHcO9R9btyOSmS1i+QdXve0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.5 040/112] drm/i915/pmu: Check if pmu is closed before stopping event
-Date: Tue, 31 Oct 2023 18:00:41 +0100
-Message-ID: <20231031165902.571074261@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Paolo Gentili <paolo.gentili@canonical.com>
+Subject: [PATCH 6.5 041/112] drm/amd: Disable ASPM for VI w/ all Intel systems
+Date: Tue, 31 Oct 2023 18:00:42 +0100
+Message-ID: <20231031165902.605131587@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -43,59 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 4cbed7702eb775cca22fff6827a549092cb59f61 upstream.
+commit 64ffd2f1d00c6235dabe9704bbb0d9ce3e28147f upstream.
 
-When the driver unbinds, pmu is unregistered and i915->uabi_engines is
-set to RB_ROOT. Due to this, when i915 PMU tries to stop the engine
-events, it issues a warn_on because engine lookup fails.
+Originally we were quirking ASPM disabled specifically for VI when
+used with Alder Lake, but it appears to have problems with Rocket
+Lake as well.
 
-All perf hooks are taking care of this using a pmu->closed flag that is
-set when PMU unregisters. The stop event seems to have been left out.
+Like we've done in the case of dpm for newer platforms, disable
+ASPM for all Intel systems.
 
-Check for pmu->closed in pmu_event_stop as well.
-
-Based on discussion here -
-https://patchwork.freedesktop.org/patch/492079/?series=105790&rev=2
-
-v2: s/is/if/ in commit title
-v3: Add fixes tag and cc stable
-
-Cc: <stable@vger.kernel.org> # v5.11+
-Fixes: b00bccb3f0bb ("drm/i915/pmu: Handle PCI unbind")
-Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231020152441.3764850-1-umesh.nerlige.ramappa@intel.com
-(cherry picked from commit 31f6a06f0c543b43a38fab10f39e5fc45ad62aa2)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: stable@vger.kernel.org # 5.15+
+Fixes: 0064b0ce85bb ("drm/amd/pm: enable ASPM by default")
+Reported-and-tested-by: Paolo Gentili <paolo.gentili@canonical.com>
+Closes: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2036742
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_pmu.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/vi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/i915_pmu.c
-+++ b/drivers/gpu/drm/i915/i915_pmu.c
-@@ -832,9 +832,18 @@ static void i915_pmu_event_start(struct
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -1124,7 +1124,7 @@ static void vi_program_aspm(struct amdgp
+ 	bool bL1SS = false;
+ 	bool bClkReqSupport = true;
  
- static void i915_pmu_event_stop(struct perf_event *event, int flags)
- {
-+	struct drm_i915_private *i915 =
-+		container_of(event->pmu, typeof(*i915), pmu.base);
-+	struct i915_pmu *pmu = &i915->pmu;
-+
-+	if (pmu->closed)
-+		goto out;
-+
- 	if (flags & PERF_EF_UPDATE)
- 		i915_pmu_event_read(event);
- 	i915_pmu_disable(event);
-+
-+out:
- 	event->hw.state = PERF_HES_STOPPED;
- }
+-	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_aspm_support_quirk())
++	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_pcie_dynamic_switching_supported())
+ 		return;
  
+ 	if (adev->flags & AMD_IS_APU ||
 
 
