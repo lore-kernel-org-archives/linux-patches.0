@@ -1,74 +1,98 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DA922309
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 19:37:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id A646A1C006B; Tue, 31 Oct 2023 20:37:51 +0100 (CET)
-Date: Tue, 31 Oct 2023 20:37:51 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org
-Subject: Re: [PATCH 6.1 00/86] 6.1.61-rc1 review
-Message-ID: <ZUFXj2hq63YTicUl@duo.ucw.cz>
-References: <20231031165918.608547597@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4EC2231F;
+	Tue, 31 Oct 2023 20:23:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s5sH2Uci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC330C433C7;
+	Tue, 31 Oct 2023 20:23:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1698783833;
+	bh=kWiaXu3zrQZh2hYqfEmW4X7fxyTTU9Vm8/7Xl0jbDBA=;
+	h=From:Date:Subject:To:Cc:From;
+	b=s5sH2Uci1k2u4vWV23OrrzgnwwQKx+y5oaE0RpqzJ6Twf7lV29B/bkx2x9CbcHhgn
+	 Hfd01CAIq4EtfvIWkc1Z1uGI+U2bw5mIEmczPNeG9ThqFF59TgRArd+ZG48aTt/xQO
+	 8YhKl5stfQntyVPcWA/n+sG96SC7KQ+v4r6KyyjP65sVayY4vxc7OtPoNZZG33e5Rq
+	 seCYRCmchOws3UuX2GEynHkpSlssIUm2Xt5uwMQyf8S/Ad1tvFFudq5lDlcboCi0+T
+	 YEbawG7N7XeSujIVQIduOldpcybF3VriG1dlAyZU6iS+kx1M2qvC6MmTR7NSgZBFbt
+	 Eex9Tbeiqjthg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 31 Oct 2023 13:23:35 -0700
+Subject: [PATCH net] tcp: Fix -Wc23-extensions in tcp_options_write()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="BnlW4BmLlON+NOdB"
-Content-Disposition: inline
-In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231031-tcp-ao-fix-label-in-compound-statement-warning-v1-1-c9731d115f17@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAEdiQWUC/x2NywqDMBAAf0X23AWjxZr+SvGwJlu7oJuQpA8Q/
+ 73B4xxmZofMSTjDvdkh8UeyBK1gLg24F+nCKL4ydG3Xm7Y3WFxECviUH64084qi6MIWw1s95kK
+ FN9aCX0oquiDPfnDW3sarHaFGY+KqnsMHKBeYjuMPgHtvwIUAAAA=
+To: edumazet@google.com, davem@davemloft.net, dsahern@kernel.org, 
+ kuba@kernel.org, pabeni@redhat.com
+Cc: ndesaulniers@google.com, trix@redhat.com, 0x7f454c46@gmail.com, 
+ fruggeri@arista.com, noureddine@arista.com, netdev@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1514; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=kWiaXu3zrQZh2hYqfEmW4X7fxyTTU9Vm8/7Xl0jbDBA=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKmOSREXvu1tr+8+bHVSuOeh38onXBunXjs4y4cn7rHcg
+ Za26s9POkpZGMQ4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBErl9gZNh04/vrW5sNPmfM
+ aXzGUKT2ZEVGzo5L0ccv7ubqSViXlHqUkWGt9YUSyxlBEl+f7VFIuhPVxS8b+8PzTKPVTYYTk//
+ lC/ADAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
+Clang warns (or errors with CONFIG_WERROR=y) when CONFIG_TCP_AO is set:
 
---BnlW4BmLlON+NOdB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  net/ipv4/tcp_output.c:663:2: error: label at end of compound statement is a C23 extension [-Werror,-Wc23-extensions]
+    663 |         }
+        |         ^
+  1 error generated.
 
-Hi!
+On earlier releases (such as clang-11, the current minimum supported
+version for building the kernel) that do not support C23, this was a
+hard error unconditionally:
 
-> This is the start of the stable review cycle for the 6.1.61 release.
-> There are 86 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Thu, 02 Nov 2023 16:59:03 +0000.
-> Anything received after that time might be too late.
+  net/ipv4/tcp_output.c:663:2: error: expected statement
+          }
+          ^
+  1 error generated.
 
-CIP testing did not find any problems here:
+Add a semicolon after the label to create an empty statement, which
+resolves the warning or error for all compilers.
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.1.y
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1953
+Fixes: 1e03d32bea8e ("net/tcp: Add TCP-AO sign to outgoing packets")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ net/ipv4/tcp_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index f558c054cf6e..6064895daece 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -658,7 +658,7 @@ static void tcp_options_write(struct tcphdr *th, struct tcp_sock *tp,
+ 			memset(ptr, TCPOPT_NOP, sizeof(*ptr));
+ 			ptr++;
+ 		}
+-out_ao:
++out_ao:;
+ #endif
+ 	}
+ 	if (unlikely(opts->mss)) {
+
+---
+base-commit: 55c900477f5b3897d9038446f72a281cae0efd86
+change-id: 20231031-tcp-ao-fix-label-in-compound-statement-warning-ebd6c9978498
 
 Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
---BnlW4BmLlON+NOdB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZUFXjwAKCRAw5/Bqldv6
-8l6sAKCESYqWsfxWJ0qO+btkf3S10vXzsACfe+YrIOEMXHKtLDQMU962AQJvssU=
-=7IYS
------END PGP SIGNATURE-----
-
---BnlW4BmLlON+NOdB--
