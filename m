@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF11922301
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F28022307
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxHc2sJ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AC6C433B9;
-	Tue, 31 Oct 2023 17:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+FMbapU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C237CC433C8;
+	Tue, 31 Oct 2023 17:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774317;
-	bh=uj+NkztfoCAjdXGBb631aF9z1x1oa51ZnAnUWd/dYAc=;
+	s=korg; t=1698774320;
+	bh=xKK6KD/2R5oRxcZZWswie7IH/kgca451/kw4hgengv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wxHc2sJ0T0nOpIRZ0e+hni3ZmsFftLqc4Y3FzWE7otj5DHyjI8kV5vrFMwPGY4yPw
-	 qZAC3o4dP6KOuRGKKqifPbqg4wtdzbfiX4UwCgMkFgvoODsnefKJJhGpTkfXyLI6p9
-	 rn29FhOKF5tZ7TOOW8q1WJcSTKqyfyUcc+uYOrPY=
+	b=f+FMbapUSqqTiaKm7zxTOH7XyNnr7RmMT/yTPwkQRHlnlTApj2TieBo6oAEjxzLxl
+	 fWJ2L5f9IKsmWz2KXMWfi3CaeOp5ALTHzfq+ihE8wgbrlLjv5jkn9XaQbKSdTpbppx
+	 hwvypzp6fJ8U84RgKITmxD0Mwh46i8fI0916bBiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bharath SM <bharathsm@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 003/112] smb3: allow controlling length of time directory entries are cached with dir leases
-Date: Tue, 31 Oct 2023 18:00:04 +0100
-Message-ID: <20231031165901.421990053@linuxfoundation.org>
+Subject: [PATCH 6.5 002/112] vdpa/mlx5: Fix firmware error on creation of 1k VQs
+Date: Tue, 31 Oct 2023 18:00:03 +0100
+Message-ID: <20231031165901.397100073@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -42,94 +43,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 238b351d0935df568ecb3dc5aef25971778f0f7c ]
+[ Upstream commit abb0dcf9938c93f765abf8cb45567cadef0af6b2 ]
 
-Currently with directory leases we cache directory contents for a fixed period
-of time (default 30 seconds) but for many workloads this is too short.  Allow
-configuring the maximum amount of time directory entries are cached when a
-directory lease is held on that directory. Add module load parm "max_dir_cache"
+A firmware error is triggered when configuring a 9k MTU on the PF after
+switching to switchdev mode and then using a vdpa device with larger
+(1k) rings:
+mlx5_cmd_out_err: CREATE_GENERAL_OBJECT(0xa00) op_mod(0xd) failed, status bad resource(0x5), syndrome (0xf6db90), err(-22)
 
-For example to set the timeout to 10 minutes you would do:
+This is due to the fact that the hw VQ size parameters are computed
+based on the umem_1/2/3_buffer_param_a/b capabilities and all
+device capabilities are read only when the driver is moved to switchdev mode.
 
-  echo 600 > /sys/module/cifs/parameters/dir_cache_timeout
+The problematic configuration flow looks like this:
+1) Create VF
+2) Unbind VF
+3) Switch PF to switchdev mode.
+4) Bind VF
+5) Set PF MTU to 9k
+6) create vDPA device
+7) Start VM with vDPA device and 1K queue size
 
-or to disable caching directory contents:
+Note that setting the MTU before step 3) doesn't trigger this issue.
 
-  echo 0 > /sys/module/cifs/parameters/dir_cache_timeout
+This patch reads the forementioned umem parameters at the latest point
+possible before the VQs of the device are created.
 
-Reviewed-by: Bharath SM <bharathsm@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+v2:
+- Allocate output with kmalloc to reduce stack frame size.
+- Removed stable from cc.
+
+Fixes: 1a86b377aa21 ("vdpa/mlx5: Add VDPA driver for supported mlx5 devices")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Message-Id: <20230831155702.1080754-1-dtatulea@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cached_dir.c |  4 ++--
- fs/smb/client/cifsfs.c     | 10 ++++++++++
- fs/smb/client/cifsglob.h   |  1 +
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/vdpa/mlx5/net/mlx5_vnet.c | 63 ++++++++++++++++++++++++++-----
+ drivers/vdpa/mlx5/net/mlx5_vnet.h |  9 +++++
+ 2 files changed, 63 insertions(+), 9 deletions(-)
 
-diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
-index 2d5e9a9d5b8be..9d84c4a7bd0ce 100644
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -145,7 +145,7 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
- 	const char *npath;
+diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+index 37be945a02308..a01d27b7af1b5 100644
+--- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
++++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+@@ -625,30 +625,70 @@ static void cq_destroy(struct mlx5_vdpa_net *ndev, u16 idx)
+ 	mlx5_db_free(ndev->mvdev.mdev, &vcq->db);
+ }
  
- 	if (tcon == NULL || tcon->cfids == NULL || tcon->nohandlecache ||
--	    is_smb1_server(tcon->ses->server))
-+	    is_smb1_server(tcon->ses->server) || (dir_cache_timeout == 0))
- 		return -EOPNOTSUPP;
- 
- 	ses = tcon->ses;
-@@ -582,7 +582,7 @@ cifs_cfids_laundromat_thread(void *p)
- 			return 0;
- 		spin_lock(&cfids->cfid_list_lock);
- 		list_for_each_entry_safe(cfid, q, &cfids->entries, entry) {
--			if (time_after(jiffies, cfid->time + HZ * 30)) {
-+			if (time_after(jiffies, cfid->time + HZ * dir_cache_timeout)) {
- 				list_del(&cfid->entry);
- 				list_add(&cfid->entry, &entry);
- 				cfids->num_entries--;
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index a4d8b0ea1c8cb..9a6d7e66408d1 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -117,6 +117,10 @@ module_param(cifs_max_pending, uint, 0444);
- MODULE_PARM_DESC(cifs_max_pending, "Simultaneous requests to server for "
- 				   "CIFS/SMB1 dialect (N/A for SMB3) "
- 				   "Default: 32767 Range: 2 to 32767.");
-+unsigned int dir_cache_timeout = 30;
-+module_param(dir_cache_timeout, uint, 0644);
-+MODULE_PARM_DESC(dir_cache_timeout, "Number of seconds to cache directory contents for which we have a lease. Default: 30 "
-+				 "Range: 1 to 65000 seconds, 0 to disable caching dir contents");
- #ifdef CONFIG_CIFS_STATS2
- unsigned int slow_rsp_threshold = 1;
- module_param(slow_rsp_threshold, uint, 0644);
-@@ -1679,6 +1683,12 @@ init_cifs(void)
- 			 CIFS_MAX_REQ);
- 	}
- 
-+	/* Limit max to about 18 hours, and setting to zero disables directory entry caching */
-+	if (dir_cache_timeout > 65000) {
-+		dir_cache_timeout = 65000;
-+		cifs_dbg(VFS, "dir_cache_timeout set to max of 65000 seconds\n");
++static int read_umem_params(struct mlx5_vdpa_net *ndev)
++{
++	u32 in[MLX5_ST_SZ_DW(query_hca_cap_in)] = {};
++	u16 opmod = (MLX5_CAP_VDPA_EMULATION << 1) | (HCA_CAP_OPMOD_GET_CUR & 0x01);
++	struct mlx5_core_dev *mdev = ndev->mvdev.mdev;
++	int out_size;
++	void *caps;
++	void *out;
++	int err;
++
++	out_size = MLX5_ST_SZ_BYTES(query_hca_cap_out);
++	out = kzalloc(out_size, GFP_KERNEL);
++	if (!out)
++		return -ENOMEM;
++
++	MLX5_SET(query_hca_cap_in, in, opcode, MLX5_CMD_OP_QUERY_HCA_CAP);
++	MLX5_SET(query_hca_cap_in, in, op_mod, opmod);
++	err = mlx5_cmd_exec_inout(mdev, query_hca_cap, in, out);
++	if (err) {
++		mlx5_vdpa_warn(&ndev->mvdev,
++			"Failed reading vdpa umem capabilities with err %d\n", err);
++		goto out;
 +	}
 +
- 	cifsiod_wq = alloc_workqueue("cifsiod", WQ_FREEZABLE|WQ_MEM_RECLAIM, 0);
- 	if (!cifsiod_wq) {
- 		rc = -ENOMEM;
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 35782a6bede0b..f8eb787ecffab 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1987,6 +1987,7 @@ extern unsigned int CIFSMaxBufSize;  /* max size not including hdr */
- extern unsigned int cifs_min_rcv;    /* min size of big ntwrk buf pool */
- extern unsigned int cifs_min_small;  /* min size of small buf pool */
- extern unsigned int cifs_max_pending; /* MAX requests at once to server*/
-+extern unsigned int dir_cache_timeout; /* max time for directory lease caching of dir */
- extern bool disable_legacy_dialects;  /* forbid vers=1.0 and vers=2.0 mounts */
- extern atomic_t mid_count;
++	caps =  MLX5_ADDR_OF(query_hca_cap_out, out, capability);
++
++	ndev->umem_1_buffer_param_a = MLX5_GET(virtio_emulation_cap, caps, umem_1_buffer_param_a);
++	ndev->umem_1_buffer_param_b = MLX5_GET(virtio_emulation_cap, caps, umem_1_buffer_param_b);
++
++	ndev->umem_2_buffer_param_a = MLX5_GET(virtio_emulation_cap, caps, umem_2_buffer_param_a);
++	ndev->umem_2_buffer_param_b = MLX5_GET(virtio_emulation_cap, caps, umem_2_buffer_param_b);
++
++	ndev->umem_3_buffer_param_a = MLX5_GET(virtio_emulation_cap, caps, umem_3_buffer_param_a);
++	ndev->umem_3_buffer_param_b = MLX5_GET(virtio_emulation_cap, caps, umem_3_buffer_param_b);
++
++out:
++	kfree(out);
++	return 0;
++}
++
+ static void set_umem_size(struct mlx5_vdpa_net *ndev, struct mlx5_vdpa_virtqueue *mvq, int num,
+ 			  struct mlx5_vdpa_umem **umemp)
+ {
+-	struct mlx5_core_dev *mdev = ndev->mvdev.mdev;
+-	int p_a;
+-	int p_b;
++	u32 p_a;
++	u32 p_b;
  
+ 	switch (num) {
+ 	case 1:
+-		p_a = MLX5_CAP_DEV_VDPA_EMULATION(mdev, umem_1_buffer_param_a);
+-		p_b = MLX5_CAP_DEV_VDPA_EMULATION(mdev, umem_1_buffer_param_b);
++		p_a = ndev->umem_1_buffer_param_a;
++		p_b = ndev->umem_1_buffer_param_b;
+ 		*umemp = &mvq->umem1;
+ 		break;
+ 	case 2:
+-		p_a = MLX5_CAP_DEV_VDPA_EMULATION(mdev, umem_2_buffer_param_a);
+-		p_b = MLX5_CAP_DEV_VDPA_EMULATION(mdev, umem_2_buffer_param_b);
++		p_a = ndev->umem_2_buffer_param_a;
++		p_b = ndev->umem_2_buffer_param_b;
+ 		*umemp = &mvq->umem2;
+ 		break;
+ 	case 3:
+-		p_a = MLX5_CAP_DEV_VDPA_EMULATION(mdev, umem_3_buffer_param_a);
+-		p_b = MLX5_CAP_DEV_VDPA_EMULATION(mdev, umem_3_buffer_param_b);
++		p_a = ndev->umem_3_buffer_param_a;
++		p_b = ndev->umem_3_buffer_param_b;
+ 		*umemp = &mvq->umem3;
+ 		break;
+ 	}
++
+ 	(*umemp)->size = p_a * mvq->num_ent + p_b;
+ }
+ 
+@@ -2679,6 +2719,11 @@ static int setup_driver(struct mlx5_vdpa_dev *mvdev)
+ 		goto out;
+ 	}
+ 	mlx5_vdpa_add_debugfs(ndev);
++
++	err = read_umem_params(ndev);
++	if (err)
++		goto err_setup;
++
+ 	err = setup_virtqueues(mvdev);
+ 	if (err) {
+ 		mlx5_vdpa_warn(mvdev, "setup_virtqueues\n");
+diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.h b/drivers/vdpa/mlx5/net/mlx5_vnet.h
+index 36c44d9fdd166..65ebbba206621 100644
+--- a/drivers/vdpa/mlx5/net/mlx5_vnet.h
++++ b/drivers/vdpa/mlx5/net/mlx5_vnet.h
+@@ -65,6 +65,15 @@ struct mlx5_vdpa_net {
+ 	struct hlist_head macvlan_hash[MLX5V_MACVLAN_SIZE];
+ 	struct mlx5_vdpa_irq_pool irqp;
+ 	struct dentry *debugfs;
++
++	u32 umem_1_buffer_param_a;
++	u32 umem_1_buffer_param_b;
++
++	u32 umem_2_buffer_param_a;
++	u32 umem_2_buffer_param_b;
++
++	u32 umem_3_buffer_param_a;
++	u32 umem_3_buffer_param_b;
+ };
+ 
+ struct mlx5_vdpa_counter {
 -- 
 2.42.0
 
