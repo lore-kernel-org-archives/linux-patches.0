@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DA31DDF8
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 14:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A3F1DDF5
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 14:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XU80opqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F85C433C7;
-	Tue, 31 Oct 2023 14:14:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xa9Vez+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8B5C433C8;
+	Tue, 31 Oct 2023 14:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698761693;
-	bh=nlEm283WusGISiE6qLgsMAufTVs38h/y0a69A6MiIdM=;
+	s=korg; t=1698761714;
+	bh=khGEn39FkvAPM0ASHtxtq/8OCG+nQQbqSlKOUDzMFzQ=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=XU80opqpD+OV76Sl+qo/qIMigMAS6jnCwFBMvXMXUn6pI6EJCJnwQsJI5Cj+fiYuJ
-	 EI3nlpcr5uG90sJD8bYOAc86gTA275L7V8j0N84OoD/fOxWeSEaiIZqqtMTVbd/+lT
-	 oKRezNkbdj1mgfjEX50OV9fCqgqCSRsiTGRQ/woQ=
-Subject: Patch "objtool/x86: add missing embedded_insn check" has been added to the 5.10-stable tree
+	b=Xa9Vez+BVejz8noj+pxh5wXcQR93lIHaYfpK9mIUsRZSj+7FddLOXWet1K1WHvrgG
+	 IbviM0NIqza8e/o7ku8o+Yqr3QgPfwbqWooqEs3IVYaAugB3HEUNIe8qdeWkULhV7E
+	 FRB1Jv7tQio+y/nBaSNfGztVQhmEJsC8pvCelzyo=
+Subject: Patch "objtool/x86: add missing embedded_insn check" has been added to the 5.15-stable tree
 To: bp@alien8.de,gregkh@linuxfoundation.org,jpoimboe@kernel.org,jsperbeck@google.com,patches@lists.linux.dev,peterz@infradead.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Tue, 31 Oct 2023 15:14:49 +0100
+Date: Tue, 31 Oct 2023 15:15:11 +0100
 In-Reply-To: <20231028184131.2103810-1-jsperbeck@google.com>
-Message-ID: <2023103149-latticed-stowing-d674@gregkh>
+Message-ID: <2023103109-pancake-jitters-c8b1@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,12 +37,12 @@ This is a note to let you know that I've just added the patch titled
 
     objtool/x86: add missing embedded_insn check
 
-to the 5.10-stable tree which can be found at:
+to the 5.15-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
      objtool-x86-add-missing-embedded_insn-check.patch
-and it can be found in the queue-5.10 subdirectory.
+and it can be found in the queue-5.15 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
@@ -79,7 +79,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/tools/objtool/check.c
 +++ b/tools/objtool/check.c
-@@ -2107,7 +2107,7 @@ static bool is_special_call(struct instr
+@@ -2202,7 +2202,7 @@ static bool is_special_call(struct instr
  		if (!dest)
  			return false;
  
@@ -92,4 +92,4 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 Patches currently in stable-queue which might be from jsperbeck@google.com are
 
-queue-5.10/objtool-x86-add-missing-embedded_insn-check.patch
+queue-5.15/objtool-x86-add-missing-embedded_insn-check.patch
