@@ -1,36 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADAC2031A;
-	Tue, 31 Oct 2023 17:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1344B2031A
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ForlYB7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF41C433C8;
-	Tue, 31 Oct 2023 17:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SB1yHhf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8475CC433C8;
+	Tue, 31 Oct 2023 17:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771923;
-	bh=hm1D7rvcVL1UD9JyXlp7WexD9tdMY4XFxDEXz6bIG14=;
+	s=korg; t=1698771925;
+	bh=zXsQs2icC08+beyTjE2DT0gjg6zbXhqXylNOtT2Lr5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ForlYB7AkKrbCXWhQRHBYnUqDVrtT8FMfTEU5uHV+CjKpEHwJIKTfIEAos2P2ADch
-	 sIwhgkIiWlqPN6lB29KWQo6obvi7R6NTFAjdNtqjIxlZLlSwciqz4Spz6XQ+jb+t8Y
-	 pJp+PNxFFIv6k/UkYQTWFCBPNAexnry/2Pbar69k=
+	b=SB1yHhf3AOBAAo8NzBwHMJzDczVDqwNSrNoeselQsmI9UzlxBLheScSgUD+BVD6I0
+	 X5X/ncTHHyPHgDNdwC4m0cezfLCsci3K+tmLl90ndsU/C44jZg1O0U82PYkXAj+rtm
+	 DDBPdw2CqBpzGwf2n9RldBj7UcT2+HG4d5kzWV1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	nic_swsd@realtek.com,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Marco Elver <elver@google.com>,
-	netdev@vger.kernel.org,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 34/86] r8169: fix the KCSAN reported data-race in rtl_tx() while reading tp->cur_tx
-Date: Tue, 31 Oct 2023 18:00:59 +0100
-Message-ID: <20231031165919.695003549@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Peng Zhang <zhangpeng.00@bytedance.com>,
+	jason.sim@samsung.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 25/86] maple_tree: add GFP_KERNEL to allocations in mas_expected_entries()
+Date: Tue, 31 Oct 2023 18:00:50 +0100
+Message-ID: <20231031165919.395404950@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,178 +37,219 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-[ Upstream commit c1c0ce31b2420d5c173228a2132a492ede03d81f ]
+commit 099d7439ce03d0e7bc8f0c3d7878b562f3a48d3d upstream.
 
-KCSAN reported the following data-race:
+Users complained about OOM errors during fork without triggering
+compaction.  This can be fixed by modifying the flags used in
+mas_expected_entries() so that the compaction will be triggered in low
+memory situations.  Since mas_expected_entries() is only used during fork,
+the extra argument does not need to be passed through.
 
-==================================================================
-BUG: KCSAN: data-race in rtl8169_poll [r8169] / rtl8169_start_xmit [r8169]
+Additionally, the two test_maple_tree test cases and one benchmark test
+were altered to use the correct locking type so that allocations would not
+trigger sleeping and thus fail.  Testing was completed with lockdep atomic
+sleep detection.
 
-write (marked) to 0xffff888102474b74 of 4 bytes by task 5358 on cpu 29:
-rtl8169_start_xmit (drivers/net/ethernet/realtek/r8169_main.c:4254) r8169
-dev_hard_start_xmit (./include/linux/netdevice.h:4889 ./include/linux/netdevice.h:4903 net/core/dev.c:3544 net/core/dev.c:3560)
-sch_direct_xmit (net/sched/sch_generic.c:342)
-__dev_queue_xmit (net/core/dev.c:3817 net/core/dev.c:4306)
-ip_finish_output2 (./include/linux/netdevice.h:3082 ./include/net/neighbour.h:526 ./include/net/neighbour.h:540 net/ipv4/ip_output.c:233)
-__ip_finish_output (net/ipv4/ip_output.c:311 net/ipv4/ip_output.c:293)
-ip_finish_output (net/ipv4/ip_output.c:328)
-ip_output (net/ipv4/ip_output.c:435)
-ip_send_skb (./include/net/dst.h:458 net/ipv4/ip_output.c:127 net/ipv4/ip_output.c:1486)
-udp_send_skb (net/ipv4/udp.c:963)
-udp_sendmsg (net/ipv4/udp.c:1246)
-inet_sendmsg (net/ipv4/af_inet.c:840 (discriminator 4))
-sock_sendmsg (net/socket.c:730 net/socket.c:753)
-__sys_sendto (net/socket.c:2177)
-__x64_sys_sendto (net/socket.c:2185)
-do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+The additional locking change requires rwsem support additions to the
+tools/ directory through the use of pthreads pthread_rwlock_t.  With this
+change test_maple_tree works in userspace, as a module, and in-kernel.
 
-read to 0xffff888102474b74 of 4 bytes by interrupt on cpu 21:
-rtl8169_poll (drivers/net/ethernet/realtek/r8169_main.c:4397 drivers/net/ethernet/realtek/r8169_main.c:4581) r8169
-__napi_poll (net/core/dev.c:6527)
-net_rx_action (net/core/dev.c:6596 net/core/dev.c:6727)
-__do_softirq (kernel/softirq.c:553)
-__irq_exit_rcu (kernel/softirq.c:427 kernel/softirq.c:632)
-irq_exit_rcu (kernel/softirq.c:647)
-common_interrupt (arch/x86/kernel/irq.c:247 (discriminator 14))
-asm_common_interrupt (./arch/x86/include/asm/idtentry.h:636)
-cpuidle_enter_state (drivers/cpuidle/cpuidle.c:291)
-cpuidle_enter (drivers/cpuidle/cpuidle.c:390)
-call_cpuidle (kernel/sched/idle.c:135)
-do_idle (kernel/sched/idle.c:219 kernel/sched/idle.c:282)
-cpu_startup_entry (kernel/sched/idle.c:378 (discriminator 1))
-start_secondary (arch/x86/kernel/smpboot.c:210 arch/x86/kernel/smpboot.c:294)
-secondary_startup_64_no_verify (arch/x86/kernel/head_64.S:433)
+Users may notice that the system gave up early on attempting to start new
+processes instead of attempting to reclaim memory.
 
-value changed: 0x002f4815 -> 0x002f4816
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 21 PID: 0 Comm: swapper/21 Tainted: G             L     6.6.0-rc2-kcsan-00143-gb5cbe7c00aa0 #41
-Hardware name: ASRock X670E PG Lightning/X670E PG Lightning, BIOS 1.21 04/26/2023
-==================================================================
-
-The write side of drivers/net/ethernet/realtek/r8169_main.c is:
-==================
-   4251         /* rtl_tx needs to see descriptor changes before updated tp->cur_tx */
-   4252         smp_wmb();
-   4253
- → 4254         WRITE_ONCE(tp->cur_tx, tp->cur_tx + frags + 1);
-   4255
-   4256         stop_queue = !netif_subqueue_maybe_stop(dev, 0, rtl_tx_slots_avail(tp),
-   4257                                                 R8169_TX_STOP_THRS,
-   4258                                                 R8169_TX_START_THRS);
-
-The read side is the function rtl_tx():
-
-   4355 static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
-   4356                    int budget)
-   4357 {
-   4358         unsigned int dirty_tx, bytes_compl = 0, pkts_compl = 0;
-   4359         struct sk_buff *skb;
-   4360
-   4361         dirty_tx = tp->dirty_tx;
-   4362
-   4363         while (READ_ONCE(tp->cur_tx) != dirty_tx) {
-   4364                 unsigned int entry = dirty_tx % NUM_TX_DESC;
-   4365                 u32 status;
-   4366
-   4367                 status = le32_to_cpu(tp->TxDescArray[entry].opts1);
-   4368                 if (status & DescOwn)
-   4369                         break;
-   4370
-   4371                 skb = tp->tx_skb[entry].skb;
-   4372                 rtl8169_unmap_tx_skb(tp, entry);
-   4373
-   4374                 if (skb) {
-   4375                         pkts_compl++;
-   4376                         bytes_compl += skb->len;
-   4377                         napi_consume_skb(skb, budget);
-   4378                 }
-   4379                 dirty_tx++;
-   4380         }
-   4381
-   4382         if (tp->dirty_tx != dirty_tx) {
-   4383                 dev_sw_netstats_tx_add(dev, pkts_compl, bytes_compl);
-   4384                 WRITE_ONCE(tp->dirty_tx, dirty_tx);
-   4385
-   4386                 netif_subqueue_completed_wake(dev, 0, pkts_compl, bytes_compl,
-   4387                                               rtl_tx_slots_avail(tp),
-   4388                                               R8169_TX_START_THRS);
-   4389                 /*
-   4390                  * 8168 hack: TxPoll requests are lost when the Tx packets are
-   4391                  * too close. Let's kick an extra TxPoll request when a burst
-   4392                  * of start_xmit activity is detected (if it is not detected,
-   4393                  * it is slow enough). -- FR
-   4394                  * If skb is NULL then we come here again once a tx irq is
-   4395                  * triggered after the last fragment is marked transmitted.
-   4396                  */
- → 4397                 if (tp->cur_tx != dirty_tx && skb)
-   4398                         rtl8169_doorbell(tp);
-   4399         }
-   4400 }
-
-Obviously from the code, an earlier detected data-race for tp->cur_tx was fixed in the
-line 4363:
-
-   4363         while (READ_ONCE(tp->cur_tx) != dirty_tx) {
-
-but the same solution is required for protecting the other access to tp->cur_tx:
-
- → 4397                 if (READ_ONCE(tp->cur_tx) != dirty_tx && skb)
-   4398                         rtl8169_doorbell(tp);
-
-The write in the line 4254 is protected with WRITE_ONCE(), but the read in the line 4397
-might have suffered read tearing under some compiler optimisations.
-
-The fix eliminated the KCSAN data-race report for this bug.
-
-It is yet to be evaluated what happens if tp->cur_tx changes between the test in line 4363
-and line 4397. This test should certainly not be cached by the compiler in some register
-for such a long time, while asynchronous writes to tp->cur_tx might have occurred in line
-4254 in the meantime.
-
-Fixes: 94d8a98e6235c ("r8169: reduce number of workaround doorbell rings")
-Cc: Heiner Kallweit <hkallweit1@gmail.com>
-Cc: nic_swsd@realtek.com
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Marco Elver <elver@google.com>
-Cc: netdev@vger.kernel.org
-Link: https://lore.kernel.org/lkml/dc7fc8fa-4ea4-e9a9-30a6-7c83e6b53188@alu.unizg.hr/
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Acked-by: Marco Elver <elver@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20230915093243epcms1p46fa00bbac1ab7b7dca94acb66c44c456@epcms1p4
+Link: https://lkml.kernel.org/r/20231012155233.2272446-1-Liam.Howlett@oracle.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reviewed-by: Peng Zhang <zhangpeng.00@bytedance.com>
+Cc: <jason.sim@samsung.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/maple_tree.c            |    2 +-
+ lib/test_maple_tree.c       |   35 ++++++++++++++++++++++++-----------
+ tools/include/linux/rwsem.h |   40 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 65 insertions(+), 12 deletions(-)
+ create mode 100644 tools/include/linux/rwsem.h
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index a9a0dca0c0305..5288daaf59b5b 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4380,7 +4380,7 @@ static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
- 		 * If skb is NULL then we come here again once a tx irq is
- 		 * triggered after the last fragment is marked transmitted.
- 		 */
--		if (tp->cur_tx != dirty_tx && skb)
-+		if (READ_ONCE(tp->cur_tx) != dirty_tx && skb)
- 			rtl8169_doorbell(tp);
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -5913,7 +5913,7 @@ int mas_expected_entries(struct ma_state
+ 	/* Internal nodes */
+ 	nr_nodes += DIV_ROUND_UP(nr_nodes, nonleaf_cap);
+ 	/* Add working room for split (2 nodes) + new parents */
+-	mas_node_count(mas, nr_nodes + 3);
++	mas_node_count_gfp(mas, nr_nodes + 3, GFP_KERNEL);
+ 
+ 	/* Detect if allocations run out */
+ 	mas->mas_flags |= MA_STATE_PREALLOC;
+--- a/lib/test_maple_tree.c
++++ b/lib/test_maple_tree.c
+@@ -9,6 +9,7 @@
+ 
+ #include <linux/maple_tree.h>
+ #include <linux/module.h>
++#include <linux/rwsem.h>
+ 
+ #define MTREE_ALLOC_MAX 0x2000000000000Ul
+ #ifndef CONFIG_DEBUG_MAPLE_TREE
+@@ -1678,17 +1679,21 @@ static noinline void __init check_forkin
+ 	void *val;
+ 	MA_STATE(mas, mt, 0, 0);
+ 	MA_STATE(newmas, mt, 0, 0);
++	struct rw_semaphore newmt_lock;
++
++	init_rwsem(&newmt_lock);
+ 
+ 	for (i = 0; i <= nr_entries; i++)
+ 		mtree_store_range(mt, i*10, i*10 + 5,
+ 				  xa_mk_value(i), GFP_KERNEL);
+ 
+ 	mt_set_non_kernel(99999);
+-	mt_init_flags(&newmt, MT_FLAGS_ALLOC_RANGE);
++	mt_init_flags(&newmt, MT_FLAGS_ALLOC_RANGE | MT_FLAGS_LOCK_EXTERN);
++	mt_set_external_lock(&newmt, &newmt_lock);
+ 	newmas.tree = &newmt;
+ 	mas_reset(&newmas);
+ 	mas_reset(&mas);
+-	mas_lock(&newmas);
++	down_write(&newmt_lock);
+ 	mas.index = 0;
+ 	mas.last = 0;
+ 	if (mas_expected_entries(&newmas, nr_entries)) {
+@@ -1703,10 +1708,10 @@ static noinline void __init check_forkin
+ 	}
+ 	rcu_read_unlock();
+ 	mas_destroy(&newmas);
+-	mas_unlock(&newmas);
+ 	mt_validate(&newmt);
+ 	mt_set_non_kernel(0);
+-	mtree_destroy(&newmt);
++	__mt_destroy(&newmt);
++	up_write(&newmt_lock);
+ }
+ 
+ static noinline void __init check_iteration(struct maple_tree *mt)
+@@ -1818,6 +1823,10 @@ static noinline void __init bench_forkin
+ 	void *val;
+ 	MA_STATE(mas, mt, 0, 0);
+ 	MA_STATE(newmas, mt, 0, 0);
++	struct rw_semaphore newmt_lock;
++
++	init_rwsem(&newmt_lock);
++	mt_set_external_lock(&newmt, &newmt_lock);
+ 
+ 	for (i = 0; i <= nr_entries; i++)
+ 		mtree_store_range(mt, i*10, i*10 + 5,
+@@ -1832,7 +1841,7 @@ static noinline void __init bench_forkin
+ 		mas.index = 0;
+ 		mas.last = 0;
+ 		rcu_read_lock();
+-		mas_lock(&newmas);
++		down_write(&newmt_lock);
+ 		if (mas_expected_entries(&newmas, nr_entries)) {
+ 			printk("OOM!");
+ 			BUG_ON(1);
+@@ -1843,11 +1852,11 @@ static noinline void __init bench_forkin
+ 			mas_store(&newmas, val);
+ 		}
+ 		mas_destroy(&newmas);
+-		mas_unlock(&newmas);
+ 		rcu_read_unlock();
+ 		mt_validate(&newmt);
+ 		mt_set_non_kernel(0);
+-		mtree_destroy(&newmt);
++		__mt_destroy(&newmt);
++		up_write(&newmt_lock);
  	}
  }
--- 
-2.42.0
-
+ #endif
+@@ -2453,6 +2462,10 @@ static noinline void __init check_dup_ga
+ 	void *tmp;
+ 	MA_STATE(mas, mt, 0, 0);
+ 	MA_STATE(newmas, &newmt, 0, 0);
++	struct rw_semaphore newmt_lock;
++
++	init_rwsem(&newmt_lock);
++	mt_set_external_lock(&newmt, &newmt_lock);
+ 
+ 	if (!zero_start)
+ 		i = 1;
+@@ -2462,9 +2475,9 @@ static noinline void __init check_dup_ga
+ 		mtree_store_range(mt, i*10, (i+1)*10 - gap,
+ 				  xa_mk_value(i), GFP_KERNEL);
+ 
+-	mt_init_flags(&newmt, MT_FLAGS_ALLOC_RANGE);
++	mt_init_flags(&newmt, MT_FLAGS_ALLOC_RANGE | MT_FLAGS_LOCK_EXTERN);
+ 	mt_set_non_kernel(99999);
+-	mas_lock(&newmas);
++	down_write(&newmt_lock);
+ 	ret = mas_expected_entries(&newmas, nr_entries);
+ 	mt_set_non_kernel(0);
+ 	MT_BUG_ON(mt, ret != 0);
+@@ -2477,9 +2490,9 @@ static noinline void __init check_dup_ga
+ 	}
+ 	rcu_read_unlock();
+ 	mas_destroy(&newmas);
+-	mas_unlock(&newmas);
+ 
+-	mtree_destroy(&newmt);
++	__mt_destroy(&newmt);
++	up_write(&newmt_lock);
+ }
+ 
+ /* Duplicate many sizes of trees.  Mainly to test expected entry values */
+--- /dev/null
++++ b/tools/include/linux/rwsem.h
+@@ -0,0 +1,40 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++#ifndef _TOOLS__RWSEM_H
++#define _TOOLS__RWSEM_H
++
++#include <pthread.h>
++
++struct rw_semaphore {
++	pthread_rwlock_t lock;
++};
++
++static inline int init_rwsem(struct rw_semaphore *sem)
++{
++	return pthread_rwlock_init(&sem->lock, NULL);
++}
++
++static inline int exit_rwsem(struct rw_semaphore *sem)
++{
++	return pthread_rwlock_destroy(&sem->lock);
++}
++
++static inline int down_read(struct rw_semaphore *sem)
++{
++	return pthread_rwlock_rdlock(&sem->lock);
++}
++
++static inline int up_read(struct rw_semaphore *sem)
++{
++	return pthread_rwlock_unlock(&sem->lock);
++}
++
++static inline int down_write(struct rw_semaphore *sem)
++{
++	return pthread_rwlock_wrlock(&sem->lock);
++}
++
++static inline int up_write(struct rw_semaphore *sem)
++{
++	return pthread_rwlock_unlock(&sem->lock);
++}
++#endif /* _TOOLS_RWSEM_H */
 
 
