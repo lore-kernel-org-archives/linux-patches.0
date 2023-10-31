@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5320320323
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F7E2031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvKudZbX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38EBC433C8;
-	Tue, 31 Oct 2023 17:05:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2+QCFAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41A9C433C7;
+	Tue, 31 Oct 2023 17:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771949;
-	bh=/RpvyGnqvTpwg+yiP39y6IKu03IcBsUHIKtxWk7L3JI=;
+	s=korg; t=1698771952;
+	bh=M25EofJh/vSOvmGQleWOdTNQoF+8sZRhEDwv2t7/Ac0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hvKudZbXwWjmxt1HprGUhEvZevxFwo8lYVV/kyos3/qTuXjUDLOds0k0onk1bsZaS
-	 4RNRaOlI4/CTW9W49Az7Qd4hv8R+4xRviw/Ye2LHPpx+XHtUQf/+ZDJH/oiIPkCKA3
-	 u8JqPSylFA7dv6imbnjvwQdYdxUv928hPtD3hQ60=
+	b=s2+QCFABVEsxVC97asjBEaA0GcUIjzV5DlE3L62LFRsXSZC3zohsW170M15/aEURf
+	 KEOlaAx7ja6Jxe5SPxKMymZLOFvPBIk662rhKzMfiaYPVT9kgAcxQ+qTJLbvBormxR
+	 7vse4/NV3KzluuKt30N6wWTZB9wqYcyAfhNQcFb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stable@vger.kernel.org,
 	Peng Fan <peng.fan@nxp.com>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 75/86] nvmem: imx: correct nregs for i.MX6SLL
-Date: Tue, 31 Oct 2023 18:01:40 +0100
-Message-ID: <20231031165920.884768195@linuxfoundation.org>
+Subject: [PATCH 6.1 76/86] nvmem: imx: correct nregs for i.MX6UL
+Date: Tue, 31 Oct 2023 18:01:41 +0100
+Message-ID: <20231031165920.912971495@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -44,15 +44,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-commit 414a98abbefd82d591f4e2d1efd2917bcd3b6f6d upstream.
+commit 7d6e10f5d254681983b53d979422c8de3fadbefb upstream.
 
-The nregs for i.MX6SLL should be 80 per fuse map, correct it.
+The nregs for i.MX6UL should be 144 per fuse map, correct it.
 
-Fixes: 6da27821a6f5 ("nvmem: imx-ocotp: add support for imx6sll")
+Fixes: 4aa2b4802046 ("nvmem: octop: Add support for imx6ul")
 Cc: Stable@vger.kernel.org
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20231013124904.175782-2-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20231013124904.175782-3-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  drivers/nvmem/imx-ocotp.c |    2 +-
@@ -60,12 +60,12 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/nvmem/imx-ocotp.c
 +++ b/drivers/nvmem/imx-ocotp.c
-@@ -506,7 +506,7 @@ static const struct ocotp_params imx6sl_
+@@ -520,7 +520,7 @@ static const struct ocotp_params imx6sx_
  };
  
- static const struct ocotp_params imx6sll_params = {
+ static const struct ocotp_params imx6ul_params = {
 -	.nregs = 128,
-+	.nregs = 80,
++	.nregs = 144,
  	.bank_address_words = 0,
  	.set_timing = imx_ocotp_set_imx6_timing,
  	.ctrl = IMX_OCOTP_BM_CTRL_DEFAULT,
