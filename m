@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B154C208C7
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4138208D9
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmlMlwZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA0FC433C9;
-	Tue, 31 Oct 2023 17:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XN/bq64i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4B9C433CA;
+	Tue, 31 Oct 2023 17:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774471;
-	bh=c4cUGdYCDqW3utYO/pZ4pKouJPUnuWbN5DTbdUVtmwc=;
+	s=korg; t=1698774474;
+	bh=QaX0zIPE9wm+4wQF9yBtmuj3HjGjKKFKVPEt1pw4mNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmlMlwZRq04l8nBArmc5De1tbS8BL8g3J//sAaQE6RCeIXjVeXsuXiJjizCo4/HTA
-	 x72yP0Gdcrd1PY94nhUS/HuQ9zZyTdKWvPWY+xMGEy/GASqusGtIq3gZnQIt49hKvN
-	 SpA/TNoSZNHBzuIw6RybDyaslJNrgTfdo3K2eCpU=
+	b=XN/bq64irbxZJAxKZ/r9oYPgjPFiYfJ5yZj2phzCuo+zPSDF9tX+OT6i/fa6pfYwp
+	 u2vCBYE9b7yP5keinA6kTuBRlWGhj3W8EUmw01YLjn88hkOoR+4R5ROLe17JurGu0g
+	 oNoKzZNgB1hei30ujCxteugnp/r2kXMnthKnHpgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Shakeel Butt <shakeelb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 056/112] net: do not leave an empty skb in write queue
-Date: Tue, 31 Oct 2023 18:00:57 +0100
-Message-ID: <20231031165903.082981401@linuxfoundation.org>
+Subject: [PATCH 6.5 057/112] neighbour: fix various data-races
+Date: Tue, 31 Oct 2023 18:00:58 +0100
+Message-ID: <20231031165903.117895645@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -45,70 +44,172 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 72bf4f1767f0386970dc04726dc5bc2e3991dc19 ]
+[ Upstream commit a9beb7e81bcb876615e1fbb3c07f3f9dba69831f ]
 
-Under memory stress conditions, tcp_sendmsg_locked()
-might call sk_stream_wait_memory(), thus releasing the socket lock.
+1) tbl->gc_thresh1, tbl->gc_thresh2, tbl->gc_thresh3 and tbl->gc_interval
+   can be written from sysfs.
 
-If a fresh skb has been allocated prior to this,
-we should not leave it in the write queue otherwise
-tcp_write_xmit() could panic.
+2) tbl->last_flush is read locklessly from neigh_alloc()
 
-This apparently does not happen often, but a future change
-in __sk_mem_raise_allocated() that Shakeel and others are
-considering would increase chances of being hurt.
+3) tbl->proxy_queue.qlen is read locklessly from neightbl_fill_info()
 
-Under discussion is to remove this controversial part:
+4) neightbl_fill_info() reads cpu stats that can be changed concurrently.
 
-    /* Fail only if socket is _under_ its sndbuf.
-     * In this case we cannot block, so that we have to fail.
-     */
-    if (sk->sk_wmem_queued + size >= sk->sk_sndbuf) {
-        /* Force charge with __GFP_NOFAIL */
-        if (memcg_charge && !charged) {
-            mem_cgroup_charge_skmem(sk->sk_memcg, amt,
-                gfp_memcg_charge() | __GFP_NOFAIL);
-        }
-        return 1;
-    }
-
-Fixes: fdfc5c8594c2 ("tcp: remove empty skb from write queue in error cases")
+Fixes: c7fb64db001f ("[NETLINK]: Neighbour table configuration and statistics via rtnetlink")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Shakeel Butt <shakeelb@google.com>
-Link: https://lore.kernel.org/r/20231019112457.1190114-1-edumazet@google.com
+Link: https://lore.kernel.org/r/20231019122104.1448310-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/core/neighbour.c | 67 +++++++++++++++++++++++---------------------
+ 1 file changed, 35 insertions(+), 32 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 9bdc1b2eaf734..a0a87446f827c 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -925,10 +925,11 @@ int tcp_send_mss(struct sock *sk, int *size_goal, int flags)
- 	return mss_now;
- }
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index f16ec0e8a0348..4a1d669b46f90 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -251,7 +251,8 @@ bool neigh_remove_one(struct neighbour *ndel, struct neigh_table *tbl)
  
--/* In some cases, both sendmsg() could have added an skb to the write queue,
-- * but failed adding payload on it.  We need to remove it to consume less
-+/* In some cases, sendmsg() could have added an skb to the write queue,
-+ * but failed adding payload on it. We need to remove it to consume less
-  * memory, but more importantly be able to generate EPOLLOUT for Edge Trigger
-- * epoll() users.
-+ * epoll() users. Another reason is that tcp_write_xmit() does not like
-+ * finding an empty skb in the write queue.
-  */
- void tcp_remove_empty_skb(struct sock *sk)
+ static int neigh_forced_gc(struct neigh_table *tbl)
  {
-@@ -1286,6 +1287,7 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
+-	int max_clean = atomic_read(&tbl->gc_entries) - tbl->gc_thresh2;
++	int max_clean = atomic_read(&tbl->gc_entries) -
++			READ_ONCE(tbl->gc_thresh2);
+ 	unsigned long tref = jiffies - 5 * HZ;
+ 	struct neighbour *n, *tmp;
+ 	int shrunk = 0;
+@@ -280,7 +281,7 @@ static int neigh_forced_gc(struct neigh_table *tbl)
+ 		}
+ 	}
  
- wait_for_space:
- 		set_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
-+		tcp_remove_empty_skb(sk);
- 		if (copied)
- 			tcp_push(sk, flags & ~MSG_MORE, mss_now,
- 				 TCP_NAGLE_PUSH, size_goal);
+-	tbl->last_flush = jiffies;
++	WRITE_ONCE(tbl->last_flush, jiffies);
+ 
+ 	write_unlock_bh(&tbl->lock);
+ 
+@@ -464,17 +465,17 @@ static struct neighbour *neigh_alloc(struct neigh_table *tbl,
+ {
+ 	struct neighbour *n = NULL;
+ 	unsigned long now = jiffies;
+-	int entries;
++	int entries, gc_thresh3;
+ 
+ 	if (exempt_from_gc)
+ 		goto do_alloc;
+ 
+ 	entries = atomic_inc_return(&tbl->gc_entries) - 1;
+-	if (entries >= tbl->gc_thresh3 ||
+-	    (entries >= tbl->gc_thresh2 &&
+-	     time_after(now, tbl->last_flush + 5 * HZ))) {
+-		if (!neigh_forced_gc(tbl) &&
+-		    entries >= tbl->gc_thresh3) {
++	gc_thresh3 = READ_ONCE(tbl->gc_thresh3);
++	if (entries >= gc_thresh3 ||
++	    (entries >= READ_ONCE(tbl->gc_thresh2) &&
++	     time_after(now, READ_ONCE(tbl->last_flush) + 5 * HZ))) {
++		if (!neigh_forced_gc(tbl) && entries >= gc_thresh3) {
+ 			net_info_ratelimited("%s: neighbor table overflow!\n",
+ 					     tbl->id);
+ 			NEIGH_CACHE_STAT_INC(tbl, table_fulls);
+@@ -955,13 +956,14 @@ static void neigh_periodic_work(struct work_struct *work)
+ 
+ 	if (time_after(jiffies, tbl->last_rand + 300 * HZ)) {
+ 		struct neigh_parms *p;
+-		tbl->last_rand = jiffies;
++
++		WRITE_ONCE(tbl->last_rand, jiffies);
+ 		list_for_each_entry(p, &tbl->parms_list, list)
+ 			p->reachable_time =
+ 				neigh_rand_reach_time(NEIGH_VAR(p, BASE_REACHABLE_TIME));
+ 	}
+ 
+-	if (atomic_read(&tbl->entries) < tbl->gc_thresh1)
++	if (atomic_read(&tbl->entries) < READ_ONCE(tbl->gc_thresh1))
+ 		goto out;
+ 
+ 	for (i = 0 ; i < (1 << nht->hash_shift); i++) {
+@@ -2167,15 +2169,16 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
+ 	ndtmsg->ndtm_pad2   = 0;
+ 
+ 	if (nla_put_string(skb, NDTA_NAME, tbl->id) ||
+-	    nla_put_msecs(skb, NDTA_GC_INTERVAL, tbl->gc_interval, NDTA_PAD) ||
+-	    nla_put_u32(skb, NDTA_THRESH1, tbl->gc_thresh1) ||
+-	    nla_put_u32(skb, NDTA_THRESH2, tbl->gc_thresh2) ||
+-	    nla_put_u32(skb, NDTA_THRESH3, tbl->gc_thresh3))
++	    nla_put_msecs(skb, NDTA_GC_INTERVAL, READ_ONCE(tbl->gc_interval),
++			  NDTA_PAD) ||
++	    nla_put_u32(skb, NDTA_THRESH1, READ_ONCE(tbl->gc_thresh1)) ||
++	    nla_put_u32(skb, NDTA_THRESH2, READ_ONCE(tbl->gc_thresh2)) ||
++	    nla_put_u32(skb, NDTA_THRESH3, READ_ONCE(tbl->gc_thresh3)))
+ 		goto nla_put_failure;
+ 	{
+ 		unsigned long now = jiffies;
+-		long flush_delta = now - tbl->last_flush;
+-		long rand_delta = now - tbl->last_rand;
++		long flush_delta = now - READ_ONCE(tbl->last_flush);
++		long rand_delta = now - READ_ONCE(tbl->last_rand);
+ 		struct neigh_hash_table *nht;
+ 		struct ndt_config ndc = {
+ 			.ndtc_key_len		= tbl->key_len,
+@@ -2183,7 +2186,7 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
+ 			.ndtc_entries		= atomic_read(&tbl->entries),
+ 			.ndtc_last_flush	= jiffies_to_msecs(flush_delta),
+ 			.ndtc_last_rand		= jiffies_to_msecs(rand_delta),
+-			.ndtc_proxy_qlen	= tbl->proxy_queue.qlen,
++			.ndtc_proxy_qlen	= READ_ONCE(tbl->proxy_queue.qlen),
+ 		};
+ 
+ 		rcu_read_lock();
+@@ -2206,17 +2209,17 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
+ 			struct neigh_statistics	*st;
+ 
+ 			st = per_cpu_ptr(tbl->stats, cpu);
+-			ndst.ndts_allocs		+= st->allocs;
+-			ndst.ndts_destroys		+= st->destroys;
+-			ndst.ndts_hash_grows		+= st->hash_grows;
+-			ndst.ndts_res_failed		+= st->res_failed;
+-			ndst.ndts_lookups		+= st->lookups;
+-			ndst.ndts_hits			+= st->hits;
+-			ndst.ndts_rcv_probes_mcast	+= st->rcv_probes_mcast;
+-			ndst.ndts_rcv_probes_ucast	+= st->rcv_probes_ucast;
+-			ndst.ndts_periodic_gc_runs	+= st->periodic_gc_runs;
+-			ndst.ndts_forced_gc_runs	+= st->forced_gc_runs;
+-			ndst.ndts_table_fulls		+= st->table_fulls;
++			ndst.ndts_allocs		+= READ_ONCE(st->allocs);
++			ndst.ndts_destroys		+= READ_ONCE(st->destroys);
++			ndst.ndts_hash_grows		+= READ_ONCE(st->hash_grows);
++			ndst.ndts_res_failed		+= READ_ONCE(st->res_failed);
++			ndst.ndts_lookups		+= READ_ONCE(st->lookups);
++			ndst.ndts_hits			+= READ_ONCE(st->hits);
++			ndst.ndts_rcv_probes_mcast	+= READ_ONCE(st->rcv_probes_mcast);
++			ndst.ndts_rcv_probes_ucast	+= READ_ONCE(st->rcv_probes_ucast);
++			ndst.ndts_periodic_gc_runs	+= READ_ONCE(st->periodic_gc_runs);
++			ndst.ndts_forced_gc_runs	+= READ_ONCE(st->forced_gc_runs);
++			ndst.ndts_table_fulls		+= READ_ONCE(st->table_fulls);
+ 		}
+ 
+ 		if (nla_put_64bit(skb, NDTA_STATS, sizeof(ndst), &ndst,
+@@ -2445,16 +2448,16 @@ static int neightbl_set(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		goto errout_tbl_lock;
+ 
+ 	if (tb[NDTA_THRESH1])
+-		tbl->gc_thresh1 = nla_get_u32(tb[NDTA_THRESH1]);
++		WRITE_ONCE(tbl->gc_thresh1, nla_get_u32(tb[NDTA_THRESH1]));
+ 
+ 	if (tb[NDTA_THRESH2])
+-		tbl->gc_thresh2 = nla_get_u32(tb[NDTA_THRESH2]);
++		WRITE_ONCE(tbl->gc_thresh2, nla_get_u32(tb[NDTA_THRESH2]));
+ 
+ 	if (tb[NDTA_THRESH3])
+-		tbl->gc_thresh3 = nla_get_u32(tb[NDTA_THRESH3]);
++		WRITE_ONCE(tbl->gc_thresh3, nla_get_u32(tb[NDTA_THRESH3]));
+ 
+ 	if (tb[NDTA_GC_INTERVAL])
+-		tbl->gc_interval = nla_get_msecs(tb[NDTA_GC_INTERVAL]);
++		WRITE_ONCE(tbl->gc_interval, nla_get_msecs(tb[NDTA_GC_INTERVAL]));
+ 
+ 	err = 0;
+ 
 -- 
 2.42.0
 
