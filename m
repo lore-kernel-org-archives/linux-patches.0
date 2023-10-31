@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EF32031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299F42031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmDQe7bZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD545C433C8;
-	Tue, 31 Oct 2023 17:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="en8Hp437"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA0CC433C7;
+	Tue, 31 Oct 2023 17:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771846;
-	bh=gNatnRRK28wsQlmEA9jKk0uExOfEc59YObfDI14A+V4=;
+	s=korg; t=1698771849;
+	bh=ZfkmFqCQzZzQ+e4nqu4zaA3XYSGtIoobP/qk51IcSI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zmDQe7bZLTPniZu2r3zALZEocQxqtGIH02DApDEFNHWJ3BVGvRUV1IE5JpOdzYuNq
-	 qX3tEDaptmiy7F0kJI3v+mkL3Be6wNAOxHxc9Uh8LtaerssmL1qoAYmdbXXAWnof94
-	 N3BFx0frttu1JD7PUGT0ywdVRWkX6Fy6xb4HE8ts=
+	b=en8Hp437DJ+SW3LOcXhPzdM7Utk+YEJTQYb8Hk5aEP9v3wUgpImsNpAfhQsSXBMs3
+	 emegiDQ2FBg1ssgN9vEcFmiHHL+yhXNVGwQg+YHH0jra2TtD6TUX4ctDwfSptvdxJ4
+	 Na9/A1ssYW3tdm3P6x2emAPssTenhKsOFryC2epo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Mateusz Palczewski <mateusz.palczewski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 6.1 40/86] igb: Fix potential memory leak in igb_add_ethtool_nfc_entry
-Date: Tue, 31 Oct 2023 18:01:05 +0100
-Message-ID: <20231031165919.869903175@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 41/86] neighbour: fix various data-races
+Date: Tue, 31 Oct 2023 18:01:06 +0100
+Message-ID: <20231031165919.898394166@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -45,45 +42,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Palczewski <mateusz.palczewski@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8c0b48e01daba5ca58f939a8425855d3f4f2ed14 ]
+[ Upstream commit a9beb7e81bcb876615e1fbb3c07f3f9dba69831f ]
 
-Add check for return of igb_update_ethtool_nfc_entry so that in case
-of any potential errors the memory alocated for input will be freed.
+1) tbl->gc_thresh1, tbl->gc_thresh2, tbl->gc_thresh3 and tbl->gc_interval
+   can be written from sysfs.
 
-Fixes: 0e71def25281 ("igb: add support of RX network flow classification")
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+2) tbl->last_flush is read locklessly from neigh_alloc()
+
+3) tbl->proxy_queue.qlen is read locklessly from neightbl_fill_info()
+
+4) neightbl_fill_info() reads cpu stats that can be changed concurrently.
+
+Fixes: c7fb64db001f ("[NETLINK]: Neighbour table configuration and statistics via rtnetlink")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20231019122104.1448310-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_ethtool.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/core/neighbour.c | 67 +++++++++++++++++++++++---------------------
+ 1 file changed, 35 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_ethtool.c b/drivers/net/ethernet/intel/igb/igb_ethtool.c
-index 96fa1c420f910..ceff537d9d22d 100644
---- a/drivers/net/ethernet/intel/igb/igb_ethtool.c
-+++ b/drivers/net/ethernet/intel/igb/igb_ethtool.c
-@@ -2978,11 +2978,15 @@ static int igb_add_ethtool_nfc_entry(struct igb_adapter *adapter,
- 	if (err)
- 		goto err_out_w_lock;
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index b20c9768d9f3f..41daa47d03934 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -251,7 +251,8 @@ bool neigh_remove_one(struct neighbour *ndel, struct neigh_table *tbl)
  
--	igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
-+	err = igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
-+	if (err)
-+		goto err_out_input_filter;
+ static int neigh_forced_gc(struct neigh_table *tbl)
+ {
+-	int max_clean = atomic_read(&tbl->gc_entries) - tbl->gc_thresh2;
++	int max_clean = atomic_read(&tbl->gc_entries) -
++			READ_ONCE(tbl->gc_thresh2);
+ 	unsigned long tref = jiffies - 5 * HZ;
+ 	struct neighbour *n, *tmp;
+ 	int shrunk = 0;
+@@ -280,7 +281,7 @@ static int neigh_forced_gc(struct neigh_table *tbl)
+ 		}
+ 	}
  
- 	spin_unlock(&adapter->nfc_lock);
- 	return 0;
+-	tbl->last_flush = jiffies;
++	WRITE_ONCE(tbl->last_flush, jiffies);
  
-+err_out_input_filter:
-+	igb_erase_filter(adapter, input);
- err_out_w_lock:
- 	spin_unlock(&adapter->nfc_lock);
- err_out:
+ 	write_unlock_bh(&tbl->lock);
+ 
+@@ -464,17 +465,17 @@ static struct neighbour *neigh_alloc(struct neigh_table *tbl,
+ {
+ 	struct neighbour *n = NULL;
+ 	unsigned long now = jiffies;
+-	int entries;
++	int entries, gc_thresh3;
+ 
+ 	if (exempt_from_gc)
+ 		goto do_alloc;
+ 
+ 	entries = atomic_inc_return(&tbl->gc_entries) - 1;
+-	if (entries >= tbl->gc_thresh3 ||
+-	    (entries >= tbl->gc_thresh2 &&
+-	     time_after(now, tbl->last_flush + 5 * HZ))) {
+-		if (!neigh_forced_gc(tbl) &&
+-		    entries >= tbl->gc_thresh3) {
++	gc_thresh3 = READ_ONCE(tbl->gc_thresh3);
++	if (entries >= gc_thresh3 ||
++	    (entries >= READ_ONCE(tbl->gc_thresh2) &&
++	     time_after(now, READ_ONCE(tbl->last_flush) + 5 * HZ))) {
++		if (!neigh_forced_gc(tbl) && entries >= gc_thresh3) {
+ 			net_info_ratelimited("%s: neighbor table overflow!\n",
+ 					     tbl->id);
+ 			NEIGH_CACHE_STAT_INC(tbl, table_fulls);
+@@ -955,13 +956,14 @@ static void neigh_periodic_work(struct work_struct *work)
+ 
+ 	if (time_after(jiffies, tbl->last_rand + 300 * HZ)) {
+ 		struct neigh_parms *p;
+-		tbl->last_rand = jiffies;
++
++		WRITE_ONCE(tbl->last_rand, jiffies);
+ 		list_for_each_entry(p, &tbl->parms_list, list)
+ 			p->reachable_time =
+ 				neigh_rand_reach_time(NEIGH_VAR(p, BASE_REACHABLE_TIME));
+ 	}
+ 
+-	if (atomic_read(&tbl->entries) < tbl->gc_thresh1)
++	if (atomic_read(&tbl->entries) < READ_ONCE(tbl->gc_thresh1))
+ 		goto out;
+ 
+ 	for (i = 0 ; i < (1 << nht->hash_shift); i++) {
+@@ -2157,15 +2159,16 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
+ 	ndtmsg->ndtm_pad2   = 0;
+ 
+ 	if (nla_put_string(skb, NDTA_NAME, tbl->id) ||
+-	    nla_put_msecs(skb, NDTA_GC_INTERVAL, tbl->gc_interval, NDTA_PAD) ||
+-	    nla_put_u32(skb, NDTA_THRESH1, tbl->gc_thresh1) ||
+-	    nla_put_u32(skb, NDTA_THRESH2, tbl->gc_thresh2) ||
+-	    nla_put_u32(skb, NDTA_THRESH3, tbl->gc_thresh3))
++	    nla_put_msecs(skb, NDTA_GC_INTERVAL, READ_ONCE(tbl->gc_interval),
++			  NDTA_PAD) ||
++	    nla_put_u32(skb, NDTA_THRESH1, READ_ONCE(tbl->gc_thresh1)) ||
++	    nla_put_u32(skb, NDTA_THRESH2, READ_ONCE(tbl->gc_thresh2)) ||
++	    nla_put_u32(skb, NDTA_THRESH3, READ_ONCE(tbl->gc_thresh3)))
+ 		goto nla_put_failure;
+ 	{
+ 		unsigned long now = jiffies;
+-		long flush_delta = now - tbl->last_flush;
+-		long rand_delta = now - tbl->last_rand;
++		long flush_delta = now - READ_ONCE(tbl->last_flush);
++		long rand_delta = now - READ_ONCE(tbl->last_rand);
+ 		struct neigh_hash_table *nht;
+ 		struct ndt_config ndc = {
+ 			.ndtc_key_len		= tbl->key_len,
+@@ -2173,7 +2176,7 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
+ 			.ndtc_entries		= atomic_read(&tbl->entries),
+ 			.ndtc_last_flush	= jiffies_to_msecs(flush_delta),
+ 			.ndtc_last_rand		= jiffies_to_msecs(rand_delta),
+-			.ndtc_proxy_qlen	= tbl->proxy_queue.qlen,
++			.ndtc_proxy_qlen	= READ_ONCE(tbl->proxy_queue.qlen),
+ 		};
+ 
+ 		rcu_read_lock();
+@@ -2196,17 +2199,17 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
+ 			struct neigh_statistics	*st;
+ 
+ 			st = per_cpu_ptr(tbl->stats, cpu);
+-			ndst.ndts_allocs		+= st->allocs;
+-			ndst.ndts_destroys		+= st->destroys;
+-			ndst.ndts_hash_grows		+= st->hash_grows;
+-			ndst.ndts_res_failed		+= st->res_failed;
+-			ndst.ndts_lookups		+= st->lookups;
+-			ndst.ndts_hits			+= st->hits;
+-			ndst.ndts_rcv_probes_mcast	+= st->rcv_probes_mcast;
+-			ndst.ndts_rcv_probes_ucast	+= st->rcv_probes_ucast;
+-			ndst.ndts_periodic_gc_runs	+= st->periodic_gc_runs;
+-			ndst.ndts_forced_gc_runs	+= st->forced_gc_runs;
+-			ndst.ndts_table_fulls		+= st->table_fulls;
++			ndst.ndts_allocs		+= READ_ONCE(st->allocs);
++			ndst.ndts_destroys		+= READ_ONCE(st->destroys);
++			ndst.ndts_hash_grows		+= READ_ONCE(st->hash_grows);
++			ndst.ndts_res_failed		+= READ_ONCE(st->res_failed);
++			ndst.ndts_lookups		+= READ_ONCE(st->lookups);
++			ndst.ndts_hits			+= READ_ONCE(st->hits);
++			ndst.ndts_rcv_probes_mcast	+= READ_ONCE(st->rcv_probes_mcast);
++			ndst.ndts_rcv_probes_ucast	+= READ_ONCE(st->rcv_probes_ucast);
++			ndst.ndts_periodic_gc_runs	+= READ_ONCE(st->periodic_gc_runs);
++			ndst.ndts_forced_gc_runs	+= READ_ONCE(st->forced_gc_runs);
++			ndst.ndts_table_fulls		+= READ_ONCE(st->table_fulls);
+ 		}
+ 
+ 		if (nla_put_64bit(skb, NDTA_STATS, sizeof(ndst), &ndst,
+@@ -2435,16 +2438,16 @@ static int neightbl_set(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		goto errout_tbl_lock;
+ 
+ 	if (tb[NDTA_THRESH1])
+-		tbl->gc_thresh1 = nla_get_u32(tb[NDTA_THRESH1]);
++		WRITE_ONCE(tbl->gc_thresh1, nla_get_u32(tb[NDTA_THRESH1]));
+ 
+ 	if (tb[NDTA_THRESH2])
+-		tbl->gc_thresh2 = nla_get_u32(tb[NDTA_THRESH2]);
++		WRITE_ONCE(tbl->gc_thresh2, nla_get_u32(tb[NDTA_THRESH2]));
+ 
+ 	if (tb[NDTA_THRESH3])
+-		tbl->gc_thresh3 = nla_get_u32(tb[NDTA_THRESH3]);
++		WRITE_ONCE(tbl->gc_thresh3, nla_get_u32(tb[NDTA_THRESH3]));
+ 
+ 	if (tb[NDTA_GC_INTERVAL])
+-		tbl->gc_interval = nla_get_msecs(tb[NDTA_GC_INTERVAL]);
++		WRITE_ONCE(tbl->gc_interval, nla_get_msecs(tb[NDTA_GC_INTERVAL]));
+ 
+ 	err = 0;
+ 
 -- 
 2.42.0
 
