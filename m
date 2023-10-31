@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C282031D
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F3720329
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:06:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhXoJ82r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C566FC433C9;
-	Tue, 31 Oct 2023 17:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeK/oLyl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0ABEC433C8;
+	Tue, 31 Oct 2023 17:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771996;
-	bh=DNMHHOvFHOWXJSBvYaweh8aRuLPnjNOivcGOM5LtpKE=;
+	s=korg; t=1698771999;
+	bh=v6KQtOa2LiYewbdzCudkSPD9igTHdIoQW+CpLGeWr5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QhXoJ82rTsFewQWev2VbVUAjNkKSaxyazYmQRGem86VKBAyDbdJNFXcA86C4GGcvC
-	 KwHG5ryTDHnWbLRGFLUpulWVKXa8j6WQZhQPZuVH/SHkocWUnzuQu9uEuVj36qOfBq
-	 lUVptDaV5cCJQNO3wrhaE3gIOhgJwIH/JupGJxhw=
+	b=xeK/oLylLOaMnl1vNQ2jzq5vwYBO7LI8LkobEP4M5ekDsLdnE0+6xD360pausCj8z
+	 nacDjGv2HJ6t7Oyj1M5PUGIPj6t7IDExd21EqbwBYb1/Xwh5uOHBfqTxHb2Qlpws/B
+	 dFDvxYyAEXRGOIaY1uyaco+pl11o+AD3aH6BYcIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhang <zhangjian.3032@bytedance.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.1 68/86] i2c: aspeed: Fix i2c bus hang in slave read
-Date: Tue, 31 Oct 2023 18:01:33 +0100
-Message-ID: <20231031165920.671772535@linuxfoundation.org>
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 59/86] io_uring/fdinfo: lock SQ thread while retrieving thread cpu/pid
+Date: Tue, 31 Oct 2023 18:01:24 +0100
+Message-ID: <20231031165920.417125737@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,49 +42,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Zhang <zhangjian.3032@bytedance.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 54f1840ddee9bbdc8dd89fbbfdfa632401244146 upstream.
+commit 7644b1a1c9a7ae8ab99175989bfc8676055edb46 upstream.
 
-When the `CONFIG_I2C_SLAVE` option is enabled and the device operates
-as a slave, a situation arises where the master sends a START signal
-without the accompanying STOP signal. This action results in a
-persistent I2C bus timeout. The core issue stems from the fact that
-the i2c controller remains in a slave read state without a timeout
-mechanism. As a consequence, the bus perpetually experiences timeouts.
+We could race with SQ thread exit, and if we do, we'll hit a NULL pointer
+dereference when the thread is cleared. Grab the SQPOLL data lock before
+attempting to get the task cpu and pid for fdinfo, this ensures we have a
+stable view of it.
 
-In this case, the i2c bus will be reset, but the slave_state reset is
-missing.
-
-Fixes: fee465150b45 ("i2c: aspeed: Reset the i2c controller when timeout occurs")
-Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
-Acked-by: Andi Shyti <andi.shyti@kernel.org>
-Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218032
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-aspeed.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ io_uring/fdinfo.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -749,6 +749,8 @@ static void __aspeed_i2c_reg_slave(struc
- 	func_ctrl_reg_val = readl(bus->base + ASPEED_I2C_FUN_CTRL_REG);
- 	func_ctrl_reg_val |= ASPEED_I2CD_SLAVE_EN;
- 	writel(func_ctrl_reg_val, bus->base + ASPEED_I2C_FUN_CTRL_REG);
+diff --git a/io_uring/fdinfo.c b/io_uring/fdinfo.c
+index 882bd56b01ed0..ea2c2ded4e412 100644
+--- a/io_uring/fdinfo.c
++++ b/io_uring/fdinfo.c
+@@ -51,7 +51,6 @@ static __cold int io_uring_show_cred(struct seq_file *m, unsigned int id,
+ static __cold void __io_uring_show_fdinfo(struct io_ring_ctx *ctx,
+ 					  struct seq_file *m)
+ {
+-	struct io_sq_data *sq = NULL;
+ 	struct io_overflow_cqe *ocqe;
+ 	struct io_rings *r = ctx->rings;
+ 	unsigned int sq_mask = ctx->sq_entries - 1, cq_mask = ctx->cq_entries - 1;
+@@ -62,6 +61,7 @@ static __cold void __io_uring_show_fdinfo(struct io_ring_ctx *ctx,
+ 	unsigned int cq_shift = 0;
+ 	unsigned int sq_shift = 0;
+ 	unsigned int sq_entries, cq_entries;
++	int sq_pid = -1, sq_cpu = -1;
+ 	bool has_lock;
+ 	unsigned int i;
+ 
+@@ -139,13 +139,19 @@ static __cold void __io_uring_show_fdinfo(struct io_ring_ctx *ctx,
+ 	has_lock = mutex_trylock(&ctx->uring_lock);
+ 
+ 	if (has_lock && (ctx->flags & IORING_SETUP_SQPOLL)) {
+-		sq = ctx->sq_data;
+-		if (!sq->thread)
+-			sq = NULL;
++		struct io_sq_data *sq = ctx->sq_data;
 +
-+	bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
- }
++		if (mutex_trylock(&sq->lock)) {
++			if (sq->thread) {
++				sq_pid = task_pid_nr(sq->thread);
++				sq_cpu = task_cpu(sq->thread);
++			}
++			mutex_unlock(&sq->lock);
++		}
+ 	}
  
- static int aspeed_i2c_reg_slave(struct i2c_client *client)
-@@ -765,7 +767,6 @@ static int aspeed_i2c_reg_slave(struct i
- 	__aspeed_i2c_reg_slave(bus, client->addr);
- 
- 	bus->slave = client;
--	bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
- 	spin_unlock_irqrestore(&bus->lock, flags);
- 
- 	return 0;
+-	seq_printf(m, "SqThread:\t%d\n", sq ? task_pid_nr(sq->thread) : -1);
+-	seq_printf(m, "SqThreadCpu:\t%d\n", sq ? task_cpu(sq->thread) : -1);
++	seq_printf(m, "SqThread:\t%d\n", sq_pid);
++	seq_printf(m, "SqThreadCpu:\t%d\n", sq_cpu);
+ 	seq_printf(m, "UserFiles:\t%u\n", ctx->nr_user_files);
+ 	for (i = 0; has_lock && i < ctx->nr_user_files; i++) {
+ 		struct file *f = io_file_from_index(&ctx->file_table, i);
+-- 
+2.42.0
+
 
 
