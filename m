@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2894C2031D
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152002031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQFaxNtB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AC4C433C7;
-	Tue, 31 Oct 2023 17:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0UbSpA0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84742C433C9;
+	Tue, 31 Oct 2023 17:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771852;
-	bh=SDR9WyHPaawjraB9kuwFC6cFUB5kvdw30/En1S4crRM=;
+	s=korg; t=1698771854;
+	bh=Bev+ZGCK09Bjg20im2KL4/On+77LlwwRFx8ry6HmW20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQFaxNtBgOR2oxIfFEMD3q6S3vgwXWZxJAOMAiUYgsraCWmbVdu4/irX1Sv5OrhZX
-	 1tWGnGl9DNiTkPJfD/9N31gItYiYY/dayyRvHpLlQ6aJMHuFsZqw60053Zn3opPzk8
-	 fTQVAeeTAJi0em6XPLdxTP/N8EnVgLUHkm0takzM=
+	b=i0UbSpA06Ro3b3mj6DAE8HUfvx0aBSJUtrRCwvGQJtqv3v/8BbNRHhG2q0g/bAps6
+	 RoSQztAczKOUolS7NJ3/DbiVUHUoyTKl+cLaS0BXOdlL5v7PybR7M+yCQiGvDP15Li
+	 8HODE2LntOiYrZ79e2ImFGvnJq0RKRiMIhIjItQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dima Ruinskiy <dima.ruinskiy@intel.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Sasha Neftin <sasha.neftin@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dell Jin <dell.jin.code@outlook.com>,
+	Ciprian Regus <ciprian.regus@analog.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 42/86] igc: Fix ambiguity in the ethtool advertising
-Date: Tue, 31 Oct 2023 18:01:07 +0100
-Message-ID: <20231031165919.929535055@linuxfoundation.org>
+Subject: [PATCH 6.1 43/86] net: ethernet: adi: adin1110: Fix uninitialized variable
+Date: Tue, 31 Oct 2023 18:01:08 +0100
+Message-ID: <20231031165919.954603888@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -46,84 +43,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Neftin <sasha.neftin@intel.com>
+From: Dell Jin <dell.jin.code@outlook.com>
 
-[ Upstream commit e7684d29efdf37304c62bb337ea55b3428ca118e ]
+[ Upstream commit 965f9b8c0c1b37fa2a0e3ef56e40d5666d4cbb5c ]
 
-The 'ethtool_convert_link_mode_to_legacy_u32' method does not allow us to
-advertise 2500M speed support and TP (twisted pair) properly. Convert to
-'ethtool_link_ksettings_test_link_mode' to advertise supported speed and
-eliminate ambiguity.
+The spi_transfer struct has to have all it's fields initialized to 0 in
+this case, since not all of them are set before starting the transfer.
+Otherwise, spi_sync_transfer() will sometimes return an error.
 
-Fixes: 8c5ad0dae93c ("igc: Add ethtool support")
-Suggested-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
-Suggested-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Signed-off-by: Sasha Neftin <sasha.neftin@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20231019203641.3661960-1-jacob.e.keller@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a526a3cc9c8d ("net: ethernet: adi: adin1110: Fix SPI transfers")
+Signed-off-by: Dell Jin <dell.jin.code@outlook.com>
+Signed-off-by: Ciprian Regus <ciprian.regus@analog.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ethtool.c | 35 ++++++++++++++------
- 1 file changed, 25 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/adi/adin1110.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-index e23b95edb05ef..81897f7a90a91 100644
---- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-@@ -1817,7 +1817,7 @@ igc_ethtool_set_link_ksettings(struct net_device *netdev,
- 	struct igc_adapter *adapter = netdev_priv(netdev);
- 	struct net_device *dev = adapter->netdev;
- 	struct igc_hw *hw = &adapter->hw;
--	u32 advertising;
-+	u16 advertised = 0;
- 
- 	/* When adapter in resetting mode, autoneg/speed/duplex
- 	 * cannot be changed
-@@ -1842,18 +1842,33 @@ igc_ethtool_set_link_ksettings(struct net_device *netdev,
- 	while (test_and_set_bit(__IGC_RESETTING, &adapter->state))
- 		usleep_range(1000, 2000);
- 
--	ethtool_convert_link_mode_to_legacy_u32(&advertising,
--						cmd->link_modes.advertising);
--	/* Converting to legacy u32 drops ETHTOOL_LINK_MODE_2500baseT_Full_BIT.
--	 * We have to check this and convert it to ADVERTISE_2500_FULL
--	 * (aka ETHTOOL_LINK_MODE_2500baseX_Full_BIT) explicitly.
--	 */
--	if (ethtool_link_ksettings_test_link_mode(cmd, advertising, 2500baseT_Full))
--		advertising |= ADVERTISE_2500_FULL;
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  2500baseT_Full))
-+		advertised |= ADVERTISE_2500_FULL;
-+
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  1000baseT_Full))
-+		advertised |= ADVERTISE_1000_FULL;
-+
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  100baseT_Full))
-+		advertised |= ADVERTISE_100_FULL;
-+
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  100baseT_Half))
-+		advertised |= ADVERTISE_100_HALF;
-+
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  10baseT_Full))
-+		advertised |= ADVERTISE_10_FULL;
-+
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  10baseT_Half))
-+		advertised |= ADVERTISE_10_HALF;
- 
- 	if (cmd->base.autoneg == AUTONEG_ENABLE) {
- 		hw->mac.autoneg = 1;
--		hw->phy.autoneg_advertised = advertising;
-+		hw->phy.autoneg_advertised = advertised;
- 		if (adapter->fc_autoneg)
- 			hw->fc.requested_mode = igc_fc_default;
- 	} else {
+diff --git a/drivers/net/ethernet/adi/adin1110.c b/drivers/net/ethernet/adi/adin1110.c
+index ed2863ed6a5bb..7474afc0e8e73 100644
+--- a/drivers/net/ethernet/adi/adin1110.c
++++ b/drivers/net/ethernet/adi/adin1110.c
+@@ -294,7 +294,7 @@ static int adin1110_read_fifo(struct adin1110_port_priv *port_priv)
+ {
+ 	struct adin1110_priv *priv = port_priv->priv;
+ 	u32 header_len = ADIN1110_RD_HEADER_LEN;
+-	struct spi_transfer t;
++	struct spi_transfer t = {0};
+ 	u32 frame_size_no_fcs;
+ 	struct sk_buff *rxb;
+ 	u32 frame_size;
 -- 
 2.42.0
 
