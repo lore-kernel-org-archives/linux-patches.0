@@ -1,40 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1B2208D5
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC0C208C6
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWGabrB6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575D6C433C8;
-	Tue, 31 Oct 2023 17:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdjSjQaO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7469C433C9;
+	Tue, 31 Oct 2023 17:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774435;
-	bh=mzkYLKw++9kwZ4JCA90CK3PNLuy3nMbGy5UObs4nUXI=;
+	s=korg; t=1698774439;
+	bh=ANN6YBuEV0Nmh1Akadguq0IFhBdRcLsPtNZixoCq9Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fWGabrB6a0Awt9kmMGGDNeflYTFY2EK6VHh0P8i3dD8AXtxlAnl8uYkW4aShqDOkl
-	 ANkyLW7e9uDQ49CKKLttQMZd4/qh2rKndUGs40Vdks5SNIhTGdZZUY7QRgmumtYcUQ
-	 Web7+daEVeWudwGf+/bz4yzVpbeRNdzcEoXSmWDg=
+	b=IdjSjQaOv2H1+8+jhnw7pz4vEmr4WT9UdldFcSaaSbNrv+hqTnEeH603dNdksB3/s
+	 +Yzg6JjD07BK/KB+xZuRrQQS4jQEsWhuiqOqmyX4HcymBYVdoCqILp1Lo5jJ3xFYO+
+	 9xe1Nzl/upYvYtuioU2NbQGtuR07S6NEy3ofXNz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Vaibhav Hiremath <hvaibhav@ti.com>,
-	Felipe Balbi <balbi@ti.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Xunlei Pang <pang.xunlei@linaro.org>,
-	John Stultz <john.stultz@linaro.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-	linux-omap@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	Hao Ge <gehao@kylinos.cn>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 045/112] ARM: OMAP: timer32K: fix all kernel-doc warnings
-Date: Tue, 31 Oct 2023 18:00:46 +0100
-Message-ID: <20231031165902.728892368@linuxfoundation.org>
+Subject: [PATCH 6.5 046/112] firmware/imx-dsp: Fix use_after_free in imx_dsp_setup_channels()
+Date: Tue, 31 Oct 2023 18:00:47 +0100
+Message-ID: <20231031165902.755614131@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -53,82 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Hao Ge <gehao@kylinos.cn>
 
-[ Upstream commit 7eeca8ccd1066c68d6002dbbe26433f8c17c53eb ]
+[ Upstream commit 1558b1a8dd388f5fcc3abc1e24de854a295044c3 ]
 
-Fix kernel-doc warnings reported by the kernel test robot:
+dsp_chan->name and chan_name points to same block of memory,
+because dev_err still needs to be used it,so we need free
+it's memory after use to avoid use_after_free.
 
-timer32k.c:186: warning: cannot understand function prototype: 'struct timespec64 persistent_ts; '
-timer32k.c:191: warning: Function parameter or member 'ts' not described in 'omap_read_persistent_clock64'
-timer32k.c:216: warning: Function parameter or member 'vbase' not described in 'omap_init_clocksource_32k'
-timer32k.c:216: warning: Excess function parameter 'pbase' description in 'omap_init_clocksource_32k'
-timer32k.c:216: warning: Excess function parameter 'size' description in 'omap_init_clocksource_32k'
-timer32k.c:216: warning: No description found for return value of 'omap_init_clocksource_32k'
-
-Fixes: a451570c008b ("ARM: OMAP: 32k counter: Provide y2038-safe omap_read_persistent_clock() replacement")
-Fixes: 1fe97c8f6a1d ("ARM: OMAP: Make OMAP clocksource source selection using kernel param")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/all/202310070106.8QSyJOm3-lkp@intel.com/
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Vaibhav Hiremath <hvaibhav@ti.com>
-Cc: Felipe Balbi <balbi@ti.com>
-Cc: Tony Lindgren <tony@atomide.com>
-Cc: Xunlei Pang <pang.xunlei@linaro.org>
-Cc: John Stultz <john.stultz@linaro.org>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Aaro Koskinen <aaro.koskinen@iki.fi>
-Cc: Janusz Krzysztofik <jmkrzyszt@gmail.com>
-Cc: linux-omap@vger.kernel.org
-Cc: linux-arm-kernel@lists.infradead.org
-Message-ID: <20231007001603.24972-1-rdunlap@infradead.org>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Fixes: e527adfb9b7d ("firmware: imx-dsp: Fix an error handling path in imx_dsp_setup_channels()")
+Signed-off-by: Hao Ge <gehao@kylinos.cn>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap1/timer32k.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/firmware/imx/imx-dsp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-omap1/timer32k.c b/arch/arm/mach-omap1/timer32k.c
-index 410d17d1d4431..f618a6df29382 100644
---- a/arch/arm/mach-omap1/timer32k.c
-+++ b/arch/arm/mach-omap1/timer32k.c
-@@ -176,17 +176,18 @@ static u64 notrace omap_32k_read_sched_clock(void)
- 	return sync32k_cnt_reg ? readl_relaxed(sync32k_cnt_reg) : 0;
- }
+diff --git a/drivers/firmware/imx/imx-dsp.c b/drivers/firmware/imx/imx-dsp.c
+index 1f410809d3ee4..0f656e4191d5c 100644
+--- a/drivers/firmware/imx/imx-dsp.c
++++ b/drivers/firmware/imx/imx-dsp.c
+@@ -115,11 +115,11 @@ static int imx_dsp_setup_channels(struct imx_dsp_ipc *dsp_ipc)
+ 		dsp_chan->idx = i % 2;
+ 		dsp_chan->ch = mbox_request_channel_byname(cl, chan_name);
+ 		if (IS_ERR(dsp_chan->ch)) {
+-			kfree(dsp_chan->name);
+ 			ret = PTR_ERR(dsp_chan->ch);
+ 			if (ret != -EPROBE_DEFER)
+ 				dev_err(dev, "Failed to request mbox chan %s ret %d\n",
+ 					chan_name, ret);
++			kfree(dsp_chan->name);
+ 			goto out;
+ 		}
  
-+static struct timespec64 persistent_ts;
-+static cycles_t cycles;
-+static unsigned int persistent_mult, persistent_shift;
-+
- /**
-  * omap_read_persistent_clock64 -  Return time from a persistent clock.
-+ * @ts: &struct timespec64 for the returned time
-  *
-  * Reads the time from a source which isn't disabled during PM, the
-  * 32k sync timer.  Convert the cycles elapsed since last read into
-  * nsecs and adds to a monotonically increasing timespec64.
-  */
--static struct timespec64 persistent_ts;
--static cycles_t cycles;
--static unsigned int persistent_mult, persistent_shift;
--
- static void omap_read_persistent_clock64(struct timespec64 *ts)
- {
- 	unsigned long long nsecs;
-@@ -206,10 +207,9 @@ static void omap_read_persistent_clock64(struct timespec64 *ts)
- /**
-  * omap_init_clocksource_32k - setup and register counter 32k as a
-  * kernel clocksource
-- * @pbase: base addr of counter_32k module
-- * @size: size of counter_32k to map
-+ * @vbase: base addr of counter_32k module
-  *
-- * Returns 0 upon success or negative error code upon failure.
-+ * Returns: %0 upon success or negative error code upon failure.
-  *
-  */
- static int __init omap_init_clocksource_32k(void __iomem *vbase)
 -- 
 2.42.0
 
