@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5894208C6
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EBB208CF
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+5rK14u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29C2C433CC;
-	Tue, 31 Oct 2023 17:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVNuoIMB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8119C433C8;
+	Tue, 31 Oct 2023 17:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774386;
-	bh=1hJRVeoEX/MUYZ0VYJd8azimnmqOHAgpBHK50jIhmkQ=;
+	s=korg; t=1698774389;
+	bh=y32jm0l3zJZGS9+GA7bvRV8RCI0oTp6f/dUcXTOx2y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+5rK14u3L31XdMuIWbqDVq7nVMD0zQ6jfkdyZ8h6q0pZhvICLw6/0k0vTFn9YF5G
-	 mOr3iFp5pm0UrKKSqvK+pZJD85tYS4Yfd9HTdTw0SkDpUl2Fn0+UzMJ4NHW7xd83Ej
-	 BWxsjHW0vOWyReCa8sjlHxWiGoAHy/l9EHKSh4ik=
+	b=KVNuoIMB1mlcTzG69d8gMXK6o7L7A+qQIlKydh6DozUS7Y7sSIGQgq/RPTQxpsADi
+	 w7krISilcoB1z6uKlC7r4rPNTS+bVPXyVryn6qyypWz/VFiTMtMmQ8aWMLeBDuaJc5
+	 zOmwacX5on0L4dmKmyie5lWU7sEx6ewvpvZ9oUZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	"Gonglei (Arei)" <arei.gonglei@huawei.com>,
+	Halil Pasic <pasic@linux.ibm.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.5 010/112] virtio-mmio: fix memory leak of vm_dev
-Date: Tue, 31 Oct 2023 18:00:11 +0100
-Message-ID: <20231031165901.624097343@linuxfoundation.org>
+	zhenwei pi <pizhenwei@bytedance.com>
+Subject: [PATCH 6.5 011/112] virtio-crypto: handle config changed by work queue
+Date: Tue, 31 Oct 2023 18:00:12 +0100
+Message-ID: <20231031165901.647488493@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -44,86 +43,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Heyne <mheyne@amazon.de>
+From: zhenwei pi <pizhenwei@bytedance.com>
 
-commit fab7f259227b8f70aa6d54e1de1a1f5f4729041c upstream.
+commit fa2e6947aa8844f25f5bad0d8cd1a541d9bc83eb upstream.
 
-With the recent removal of vm_dev from devres its memory is only freed
-via the callback virtio_mmio_release_dev. However, this only takes
-effect after device_add is called by register_virtio_device. Until then
-it's an unmanaged resource and must be explicitly freed on error exit.
+MST pointed out: config change callback is also handled incorrectly
+in this driver, it takes a mutex from interrupt context.
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
+Handle config changed by work queue instead.
 
 Cc: stable@vger.kernel.org
-Fixes: 55c91fedd03d ("virtio-mmio: don't break lifecycle of vm_dev")
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Tested-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-Message-Id: <20230911090328.40538-1-mheyne@amazon.de>
+Cc: Gonglei (Arei) <arei.gonglei@huawei.com>
+Cc: Halil Pasic <pasic@linux.ibm.com>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+Message-Id: <20231007064309.844889-1-pizhenwei@bytedance.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virtio/virtio_mmio.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/crypto/virtio/virtio_crypto_common.h |    3 +++
+ drivers/crypto/virtio/virtio_crypto_core.c   |   14 +++++++++++++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
---- a/drivers/virtio/virtio_mmio.c
-+++ b/drivers/virtio/virtio_mmio.c
-@@ -631,14 +631,17 @@ static int virtio_mmio_probe(struct plat
- 	spin_lock_init(&vm_dev->lock);
+--- a/drivers/crypto/virtio/virtio_crypto_common.h
++++ b/drivers/crypto/virtio/virtio_crypto_common.h
+@@ -35,6 +35,9 @@ struct virtio_crypto {
+ 	struct virtqueue *ctrl_vq;
+ 	struct data_queue *data_vq;
  
- 	vm_dev->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(vm_dev->base))
--		return PTR_ERR(vm_dev->base);
-+	if (IS_ERR(vm_dev->base)) {
-+		rc = PTR_ERR(vm_dev->base);
-+		goto free_vm_dev;
-+	}
- 
- 	/* Check magic value */
- 	magic = readl(vm_dev->base + VIRTIO_MMIO_MAGIC_VALUE);
- 	if (magic != ('v' | 'i' << 8 | 'r' << 16 | 't' << 24)) {
- 		dev_warn(&pdev->dev, "Wrong magic value 0x%08lx!\n", magic);
--		return -ENODEV;
-+		rc = -ENODEV;
-+		goto free_vm_dev;
- 	}
- 
- 	/* Check device version */
-@@ -646,7 +649,8 @@ static int virtio_mmio_probe(struct plat
- 	if (vm_dev->version < 1 || vm_dev->version > 2) {
- 		dev_err(&pdev->dev, "Version %ld not supported!\n",
- 				vm_dev->version);
--		return -ENXIO;
-+		rc = -ENXIO;
-+		goto free_vm_dev;
- 	}
- 
- 	vm_dev->vdev.id.device = readl(vm_dev->base + VIRTIO_MMIO_DEVICE_ID);
-@@ -655,7 +659,8 @@ static int virtio_mmio_probe(struct plat
- 		 * virtio-mmio device with an ID 0 is a (dummy) placeholder
- 		 * with no function. End probing now with no error reported.
- 		 */
--		return -ENODEV;
-+		rc = -ENODEV;
-+		goto free_vm_dev;
- 	}
- 	vm_dev->vdev.id.vendor = readl(vm_dev->base + VIRTIO_MMIO_VENDOR_ID);
- 
-@@ -685,6 +690,10 @@ static int virtio_mmio_probe(struct plat
- 		put_device(&vm_dev->vdev.dev);
- 
- 	return rc;
++	/* Work struct for config space updates */
++	struct work_struct config_work;
 +
-+free_vm_dev:
-+	kfree(vm_dev);
-+	return rc;
+ 	/* To protect the vq operations for the controlq */
+ 	spinlock_t ctrl_lock;
+ 
+--- a/drivers/crypto/virtio/virtio_crypto_core.c
++++ b/drivers/crypto/virtio/virtio_crypto_core.c
+@@ -335,6 +335,14 @@ static void virtcrypto_del_vqs(struct vi
+ 	virtcrypto_free_queues(vcrypto);
  }
  
- static int virtio_mmio_remove(struct platform_device *pdev)
++static void vcrypto_config_changed_work(struct work_struct *work)
++{
++	struct virtio_crypto *vcrypto =
++		container_of(work, struct virtio_crypto, config_work);
++
++	virtcrypto_update_status(vcrypto);
++}
++
+ static int virtcrypto_probe(struct virtio_device *vdev)
+ {
+ 	int err = -EFAULT;
+@@ -454,6 +462,8 @@ static int virtcrypto_probe(struct virti
+ 	if (err)
+ 		goto free_engines;
+ 
++	INIT_WORK(&vcrypto->config_work, vcrypto_config_changed_work);
++
+ 	return 0;
+ 
+ free_engines:
+@@ -490,6 +500,7 @@ static void virtcrypto_remove(struct vir
+ 
+ 	dev_info(&vdev->dev, "Start virtcrypto_remove.\n");
+ 
++	flush_work(&vcrypto->config_work);
+ 	if (virtcrypto_dev_started(vcrypto))
+ 		virtcrypto_dev_stop(vcrypto);
+ 	virtio_reset_device(vdev);
+@@ -504,7 +515,7 @@ static void virtcrypto_config_changed(st
+ {
+ 	struct virtio_crypto *vcrypto = vdev->priv;
+ 
+-	virtcrypto_update_status(vcrypto);
++	schedule_work(&vcrypto->config_work);
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
+@@ -512,6 +523,7 @@ static int virtcrypto_freeze(struct virt
+ {
+ 	struct virtio_crypto *vcrypto = vdev->priv;
+ 
++	flush_work(&vcrypto->config_work);
+ 	virtio_reset_device(vdev);
+ 	virtcrypto_free_unused_reqs(vcrypto);
+ 	if (virtcrypto_dev_started(vcrypto))
 
 
