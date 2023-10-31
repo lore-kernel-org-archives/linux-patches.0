@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4852031A
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383232031A
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNriDAfB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63DFC433C8;
-	Tue, 31 Oct 2023 17:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2ZvWSd/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8AC7C433C8;
+	Tue, 31 Oct 2023 17:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771914;
-	bh=sFG3QXaRGqJZbQ6uNurM8TAflbkYBksgo2P/2X2tPBw=;
+	s=korg; t=1698771917;
+	bh=/p8tFqlkqXEpdklW2YDb7ZfN/9bTj5KDGqpfh/6AEBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNriDAfB5TWDQZ6316HCvokWK8E5lLqL4MrRgSq2N5uo5n17voKFyw88vUKcLMro+
-	 43EA7o5nuQFU+0j2m1BWY4BaILUUxG7HHgIZ/Li/W7VhJQv7AqetyDtMbcsVaeHEMy
-	 VEbCAQqPT6hlJbG/4aOhng/E+c/EAXIf4qQlDz1I=
+	b=f2ZvWSd/9668/m5BaEWmW2yYPyraJUPvMxy/wB08PWMvMxNY0eCnvvEZEoziXTAp2
+	 5t9S+VHAYAIdq5U8EWHTJ/TMGrzkLHKRfjYa/H25SpgbJIPM9v+rmok0qnULEd0chu
+	 gOFWcLf7s6qHI8mBWMwHppVWvNRq7zvwzCdN7+LY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Ge <gehao@kylinos.cn>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 31/86] firmware/imx-dsp: Fix use_after_free in imx_dsp_setup_channels()
-Date: Tue, 31 Oct 2023 18:00:56 +0100
-Message-ID: <20231031165919.590325902@linuxfoundation.org>
+Subject: [PATCH 6.1 32/86] clk: ti: Fix missing omap4 mcbsp functional clock and aliases
+Date: Tue, 31 Oct 2023 18:00:57 +0100
+Message-ID: <20231031165919.621975722@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -37,46 +38,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hao Ge <gehao@kylinos.cn>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 1558b1a8dd388f5fcc3abc1e24de854a295044c3 ]
+[ Upstream commit cc2d819dd7df94a72bde7b9b9331a6535084092d ]
 
-dsp_chan->name and chan_name points to same block of memory,
-because dev_err still needs to be used it,so we need free
-it's memory after use to avoid use_after_free.
+We are using a wrong mcbsp functional clock. The interconnect target module
+driver provided clock for mcbsp is not same as the mcbsp functional clock
+known as the gfclk main_clk. The mcbsp functional clocks for mcbsp should
+have been added before we dropped the legacy platform data.
 
-Fixes: e527adfb9b7d ("firmware: imx-dsp: Fix an error handling path in imx_dsp_setup_channels()")
-Signed-off-by: Hao Ge <gehao@kylinos.cn>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Additionally we are also missing the clock aliases for the clocks used by
+the audio driver if reparenting is needed. This causes audio driver errors
+like "CLKS: could not clk_get() prcm_fck" for mcbsp as reported by Andreas.
+The mcbsp clock aliases too should have been added before we dropped the
+legacy platform data.
+
+Let's add the clocks and aliases with a single patch to fix the issue.
+
+Fixes: 349355ce3a05 ("ARM: OMAP2+: Drop legacy platform data for omap4 mcbsp")
+Reported-by: Andreas Kemnade <andreas@kemnade.info>
+Reported-by: Péter Ujfalusi <peter.ujfalusi@gmail.com>
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/imx/imx-dsp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/omap4-l4-abe.dtsi | 6 ++++++
+ arch/arm/boot/dts/omap4-l4.dtsi     | 2 ++
+ drivers/clk/ti/clk-44xx.c           | 5 +++++
+ 3 files changed, 13 insertions(+)
 
-diff --git a/drivers/firmware/imx/imx-dsp.c b/drivers/firmware/imx/imx-dsp.c
-index 1f410809d3ee4..0f656e4191d5c 100644
---- a/drivers/firmware/imx/imx-dsp.c
-+++ b/drivers/firmware/imx/imx-dsp.c
-@@ -115,11 +115,11 @@ static int imx_dsp_setup_channels(struct imx_dsp_ipc *dsp_ipc)
- 		dsp_chan->idx = i % 2;
- 		dsp_chan->ch = mbox_request_channel_byname(cl, chan_name);
- 		if (IS_ERR(dsp_chan->ch)) {
--			kfree(dsp_chan->name);
- 			ret = PTR_ERR(dsp_chan->ch);
- 			if (ret != -EPROBE_DEFER)
- 				dev_err(dev, "Failed to request mbox chan %s ret %d\n",
- 					chan_name, ret);
-+			kfree(dsp_chan->name);
- 			goto out;
- 		}
- 
+diff --git a/arch/arm/boot/dts/omap4-l4-abe.dtsi b/arch/arm/boot/dts/omap4-l4-abe.dtsi
+index 7ae8b620515c5..59f546a278f87 100644
+--- a/arch/arm/boot/dts/omap4-l4-abe.dtsi
++++ b/arch/arm/boot/dts/omap4-l4-abe.dtsi
+@@ -109,6 +109,8 @@
+ 				reg = <0x0 0xff>, /* MPU private access */
+ 				      <0x49022000 0xff>; /* L3 Interconnect */
+ 				reg-names = "mpu", "dma";
++				clocks = <&abe_clkctrl OMAP4_MCBSP1_CLKCTRL 24>;
++				clock-names = "fck";
+ 				interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-names = "common";
+ 				ti,buffer-size = <128>;
+@@ -142,6 +144,8 @@
+ 				reg = <0x0 0xff>, /* MPU private access */
+ 				      <0x49024000 0xff>; /* L3 Interconnect */
+ 				reg-names = "mpu", "dma";
++				clocks = <&abe_clkctrl OMAP4_MCBSP2_CLKCTRL 24>;
++				clock-names = "fck";
+ 				interrupts = <GIC_SPI 22 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-names = "common";
+ 				ti,buffer-size = <128>;
+@@ -175,6 +179,8 @@
+ 				reg = <0x0 0xff>, /* MPU private access */
+ 				      <0x49026000 0xff>; /* L3 Interconnect */
+ 				reg-names = "mpu", "dma";
++				clocks = <&abe_clkctrl OMAP4_MCBSP3_CLKCTRL 24>;
++				clock-names = "fck";
+ 				interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-names = "common";
+ 				ti,buffer-size = <128>;
+diff --git a/arch/arm/boot/dts/omap4-l4.dtsi b/arch/arm/boot/dts/omap4-l4.dtsi
+index 46b8f9efd4131..3fcef3080eaec 100644
+--- a/arch/arm/boot/dts/omap4-l4.dtsi
++++ b/arch/arm/boot/dts/omap4-l4.dtsi
+@@ -2043,6 +2043,8 @@
+ 				compatible = "ti,omap4-mcbsp";
+ 				reg = <0x0 0xff>; /* L4 Interconnect */
+ 				reg-names = "mpu";
++				clocks = <&l4_per_clkctrl OMAP4_MCBSP4_CLKCTRL 24>;
++				clock-names = "fck";
+ 				interrupts = <GIC_SPI 16 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-names = "common";
+ 				ti,buffer-size = <128>;
+diff --git a/drivers/clk/ti/clk-44xx.c b/drivers/clk/ti/clk-44xx.c
+index 868bc7af21b0b..9b2824ed785b9 100644
+--- a/drivers/clk/ti/clk-44xx.c
++++ b/drivers/clk/ti/clk-44xx.c
+@@ -749,9 +749,14 @@ static struct ti_dt_clk omap44xx_clks[] = {
+ 	DT_CLK(NULL, "mcbsp1_sync_mux_ck", "abe-clkctrl:0028:26"),
+ 	DT_CLK(NULL, "mcbsp2_sync_mux_ck", "abe-clkctrl:0030:26"),
+ 	DT_CLK(NULL, "mcbsp3_sync_mux_ck", "abe-clkctrl:0038:26"),
++	DT_CLK("40122000.mcbsp", "prcm_fck", "abe-clkctrl:0028:26"),
++	DT_CLK("40124000.mcbsp", "prcm_fck", "abe-clkctrl:0030:26"),
++	DT_CLK("40126000.mcbsp", "prcm_fck", "abe-clkctrl:0038:26"),
+ 	DT_CLK(NULL, "mcbsp4_sync_mux_ck", "l4-per-clkctrl:00c0:26"),
++	DT_CLK("48096000.mcbsp", "prcm_fck", "l4-per-clkctrl:00c0:26"),
+ 	DT_CLK(NULL, "ocp2scp_usb_phy_phy_48m", "l3-init-clkctrl:00c0:8"),
+ 	DT_CLK(NULL, "otg_60m_gfclk", "l3-init-clkctrl:0040:24"),
++	DT_CLK(NULL, "pad_fck", "pad_clks_ck"),
+ 	DT_CLK(NULL, "per_mcbsp4_gfclk", "l4-per-clkctrl:00c0:24"),
+ 	DT_CLK(NULL, "pmd_stm_clock_mux_ck", "emu-sys-clkctrl:0000:20"),
+ 	DT_CLK(NULL, "pmd_trace_clk_mux_ck", "emu-sys-clkctrl:0000:22"),
 -- 
 2.42.0
 
