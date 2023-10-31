@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EBE1208C7
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FA3208D8
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3Bag1fK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEBB3C433C7;
-	Tue, 31 Oct 2023 17:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQgmJJNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5965C433CA;
+	Tue, 31 Oct 2023 17:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774539;
-	bh=i9fAX0ltx6uR6/jyBRRRif65PVmoQY0+AOGav0FClqg=;
+	s=korg; t=1698774542;
+	bh=eJC+CvqeTWkLLFVTr50LAmd8scizRWCW0WSbwxKRFxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3Bag1fK1/GgtTZLq1mVbG/UkTJS0bo98jpgupWY10b9RHQh6MLcFc/ZBUgdIGzYE
-	 iUfTtrPzS8Ik48oYrJdSQdEG1BGcFJcW9G5PvMziQ4O/tDuZAjE+fBoIzU037bhtyb
-	 d0ViM+wbAO/hjkSufcifWonTTQ6QrMN4r9cJm8LE=
+	b=CQgmJJNIG2jlKOv8WwQuuYmspzDpdXEXwNu4JKs3ClUrf39F4/AOrj1L6Wt9T+UaS
+	 isGALGqkBrv638BEo/j2AFMu2s5Bnf3T2Cf0UQoYeUKnCPL4tmVNWUz0ClkJVaIJWn
+	 0QK0R0pt+jUj+iMw2CL+oB+7dq6eJaUH8C+Rbvb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Hannes Reinecke <hare@suse.de>,
-	James Bottomley <James.Bottomley@HansenPartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.5 080/112] scsi: sd: Introduce manage_shutdown device flag
-Date: Tue, 31 Oct 2023 18:01:21 +0100
-Message-ID: <20231031165903.842177836@linuxfoundation.org>
+	Khazhismel Kumykov <khazhy@google.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.5 081/112] blk-throttle: check for overflow in calculate_bytes_allowed
+Date: Tue, 31 Oct 2023 18:01:22 +0100
+Message-ID: <20231031165903.873194815@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -44,176 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Khazhismel Kumykov <khazhy@chromium.org>
 
-commit 24eca2dce0f8d19db808c972b0281298d0bafe99 upstream.
+commit 2dd710d476f2f1f6eaca884f625f69ef4389ed40 upstream.
 
-Commit aa3998dbeb3a ("ata: libata-scsi: Disable scsi device
-manage_system_start_stop") change setting the manage_system_start_stop
-flag to false for libata managed disks to enable libata internal
-management of disk suspend/resume. However, a side effect of this change
-is that on system shutdown, disks are no longer being stopped (set to
-standby mode with the heads unloaded). While this is not a critical
-issue, this unclean shutdown is not recommended and shows up with
-increased smart counters (e.g. the unexpected power loss counter
-"Unexpect_Power_Loss_Ct").
+Inexact, we may reject some not-overflowing values incorrectly, but
+they'll be on the order of exabytes allowed anyways.
 
-Instead of defining a shutdown driver method for all ATA adapter
-drivers (not all of them define that operation), this patch resolves
-this issue by further refining the sd driver start/stop control of disks
-using the new flag manage_shutdown. If this new flag is set to true by
-a low level driver, the function sd_shutdown() will issue a
-START STOP UNIT command with the start argument set to 0 when a disk
-needs to be powered off (suspended) on system power off, that is, when
-system_state is equal to SYSTEM_POWER_OFF.
+This fixes divide error crash on x86 if bps_limit is not configured or
+is set too high in the rare case that jiffy_elapsed is greater than HZ.
 
-Similarly to the other manage_xxx flags, the new manage_shutdown flag is
-exposed through sysfs as a read-write device attribute.
-
-To avoid any confusion between manage_shutdown and
-manage_system_start_stop, the comments describing these flags in
-include/scsi/scsi.h are also improved.
-
-Fixes: aa3998dbeb3a ("ata: libata-scsi: Disable scsi device manage_system_start_stop")
-Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218038
-Link: https://lore.kernel.org/all/cd397c88-bf53-4768-9ab8-9d107df9e613@gmail.com/
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: James Bottomley <James.Bottomley@HansenPartnership.com>
-Acked-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: e8368b57c006 ("blk-throttle: use calculate_io/bytes_allowed() for throtl_trim_slice()")
+Fixes: 8d6bbaada2e0 ("blk-throttle: prevent overflow while calculating wait time")
+Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20231020223617.2739774-1-khazhy@google.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c  |    5 +++--
- drivers/firewire/sbp2.c    |    1 +
- drivers/scsi/sd.c          |   39 ++++++++++++++++++++++++++++++++++++---
- include/scsi/scsi_device.h |   20 ++++++++++++++++++--
- 4 files changed, 58 insertions(+), 7 deletions(-)
+ block/blk-throttle.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1103,10 +1103,11 @@ int ata_scsi_dev_config(struct scsi_devi
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -723,6 +723,12 @@ static unsigned int calculate_io_allowed
  
- 		/*
- 		 * Ask the sd driver to issue START STOP UNIT on runtime suspend
--		 * and resume only. For system level suspend/resume, devices
--		 * power state is handled directly by libata EH.
-+		 * and resume and shutdown only. For system level suspend/resume,
-+		 * devices power state is handled directly by libata EH.
- 		 */
- 		sdev->manage_runtime_start_stop = true;
-+		sdev->manage_shutdown = true;
- 	}
- 
- 	/*
---- a/drivers/firewire/sbp2.c
-+++ b/drivers/firewire/sbp2.c
-@@ -1521,6 +1521,7 @@ static int sbp2_scsi_slave_configure(str
- 	if (sbp2_param_exclusive_login) {
- 		sdev->manage_system_start_stop = true;
- 		sdev->manage_runtime_start_stop = true;
-+		sdev->manage_shutdown = true;
- 	}
- 
- 	if (sdev->type == TYPE_ROM)
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -221,7 +221,8 @@ manage_start_stop_show(struct device *de
- 
- 	return sysfs_emit(buf, "%u\n",
- 			  sdp->manage_system_start_stop &&
--			  sdp->manage_runtime_start_stop);
-+			  sdp->manage_runtime_start_stop &&
-+			  sdp->manage_shutdown);
- }
- static DEVICE_ATTR_RO(manage_start_stop);
- 
-@@ -287,6 +288,35 @@ manage_runtime_start_stop_store(struct d
- }
- static DEVICE_ATTR_RW(manage_runtime_start_stop);
- 
-+static ssize_t manage_shutdown_show(struct device *dev,
-+				    struct device_attribute *attr, char *buf)
-+{
-+	struct scsi_disk *sdkp = to_scsi_disk(dev);
-+	struct scsi_device *sdp = sdkp->device;
-+
-+	return sysfs_emit(buf, "%u\n", sdp->manage_shutdown);
-+}
-+
-+static ssize_t manage_shutdown_store(struct device *dev,
-+				     struct device_attribute *attr,
-+				     const char *buf, size_t count)
-+{
-+	struct scsi_disk *sdkp = to_scsi_disk(dev);
-+	struct scsi_device *sdp = sdkp->device;
-+	bool v;
-+
-+	if (!capable(CAP_SYS_ADMIN))
-+		return -EACCES;
-+
-+	if (kstrtobool(buf, &v))
-+		return -EINVAL;
-+
-+	sdp->manage_shutdown = v;
-+
-+	return count;
-+}
-+static DEVICE_ATTR_RW(manage_shutdown);
-+
- static ssize_t
- allow_restart_show(struct device *dev, struct device_attribute *attr, char *buf)
+ static u64 calculate_bytes_allowed(u64 bps_limit, unsigned long jiffy_elapsed)
  {
-@@ -619,6 +649,7 @@ static struct attribute *sd_disk_attrs[]
- 	&dev_attr_manage_start_stop.attr,
- 	&dev_attr_manage_system_start_stop.attr,
- 	&dev_attr_manage_runtime_start_stop.attr,
-+	&dev_attr_manage_shutdown.attr,
- 	&dev_attr_protection_type.attr,
- 	&dev_attr_protection_mode.attr,
- 	&dev_attr_app_tag_own.attr,
-@@ -3858,8 +3889,10 @@ static void sd_shutdown(struct device *d
- 		sd_sync_cache(sdkp, NULL);
- 	}
- 
--	if (system_state != SYSTEM_RESTART &&
--	    sdkp->device->manage_system_start_stop) {
-+	if ((system_state != SYSTEM_RESTART &&
-+	     sdkp->device->manage_system_start_stop) ||
-+	    (system_state == SYSTEM_POWER_OFF &&
-+	     sdkp->device->manage_shutdown)) {
- 		sd_printk(KERN_NOTICE, sdkp, "Stopping disk\n");
- 		sd_start_stop_device(sdkp, 0);
- 	}
---- a/include/scsi/scsi_device.h
-+++ b/include/scsi/scsi_device.h
-@@ -162,8 +162,24 @@ struct scsi_device {
- 				 * core. */
- 	unsigned int eh_timeout; /* Error handling timeout */
- 
--	bool manage_system_start_stop; /* Let HLD (sd) manage system start/stop */
--	bool manage_runtime_start_stop; /* Let HLD (sd) manage runtime start/stop */
 +	/*
-+	 * If true, let the high-level device driver (sd) manage the device
-+	 * power state for system suspend/resume (suspend to RAM and
-+	 * hibernation) operations.
++	 * Can result be wider than 64 bits?
++	 * We check against 62, not 64, due to ilog2 truncation.
 +	 */
-+	bool manage_system_start_stop;
-+
-+	/*
-+	 * If true, let the high-level device driver (sd) manage the device
-+	 * power state for runtime device suspand and resume operations.
-+	 */
-+	bool manage_runtime_start_stop;
-+
-+	/*
-+	 * If true, let the high-level device driver (sd) manage the device
-+	 * power state for system shutdown (power off) operations.
-+	 */
-+	bool manage_shutdown;
++	if (ilog2(bps_limit) + ilog2(jiffy_elapsed) - ilog2(HZ) > 62)
++		return U64_MAX;
+ 	return mul_u64_u64_div_u64(bps_limit, (u64)jiffy_elapsed, (u64)HZ);
+ }
  
- 	unsigned removable:1;
- 	unsigned changed:1;	/* Data invalid due to media change */
 
 
