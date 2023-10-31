@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE716208C7
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC26F208C7
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPzb22Vh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66898C433C7;
-	Tue, 31 Oct 2023 17:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQ1k3JvZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50402C433C8;
+	Tue, 31 Oct 2023 17:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774638;
-	bh=ox3QIHgcbOO2wZnJsePBzOURl5k3NCc8PjmR5NpPsJE=;
+	s=korg; t=1698774641;
+	bh=m9001MpuYbP/HKkdgdScqGRYG6vsSow63oZ/1F5UPpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPzb22Vhm/UwEme7EbPLT5EiHO78sQyuHpHXF0L0uu3elc0yUOLbsNpbTNKR8UvQH
-	 c6CHPQDvy+I128VYH2HjYSbi9rKgUaPX0e5K7qLSZCDj5Z6V9KINAzag7leGJ4gCbB
-	 kBolyrh6W4rWPUmgkfM27SDx19dyUZT5VT5Hw2nA=
+	b=RQ1k3JvZOCHKLiB0MrlAz1NCo9o4cZqSr6OV+b/SiQzaERYQv42ajufEeo89ID+2i
+	 x8mEabrPBtpRECZvZsK2VbDfgKIfLsqcCy4h6reDJgRx2tH0l5xrezOZ58VMjbXN/f
+	 J73czRiuIuuay0fn49MY856PmICw96s7BLGhWOuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.5 102/112] x86/tsc: Defer marking TSC unstable to a worker
-Date: Tue, 31 Oct 2023 18:01:43 +0100
-Message-ID: <20231031165904.488815457@linuxfoundation.org>
+	David Lazar <dlazar@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.5 103/112] x86/i8259: Skip probing when ACPI/MADT advertises PCAT compatibility
+Date: Tue, 31 Oct 2023 18:01:44 +0100
+Message-ID: <20231031165904.518002594@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -43,98 +45,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-commit bd94d86f490b70c58b3fc5739328a53ad4b18d86 upstream.
+commit 128b0c9781c9f2651bea163cb85e52a6c7be0f9e upstream.
 
-Tetsuo reported the following lockdep splat when the TSC synchronization
-fails during CPU hotplug:
+David and a few others reported that on certain newer systems some legacy
+interrupts fail to work correctly.
 
-   tsc: Marking TSC unstable due to check_tsc_sync_source failed
+Debugging revealed that the BIOS of these systems leaves the legacy PIC in
+uninitialized state which makes the PIC detection fail and the kernel
+switches to a dummy implementation.
 
-   WARNING: inconsistent lock state
-   inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage.
-   ffffffff8cfa1c78 (watchdog_lock){?.-.}-{2:2}, at: clocksource_watchdog+0x23/0x5a0
-   {IN-HARDIRQ-W} state was registered at:
-     _raw_spin_lock_irqsave+0x3f/0x60
-     clocksource_mark_unstable+0x1b/0x90
-     mark_tsc_unstable+0x41/0x50
-     check_tsc_sync_source+0x14f/0x180
-     sysvec_call_function_single+0x69/0x90
+Unfortunately this fallback causes quite some code to fail as it depends on
+checks for the number of legacy PIC interrupts or the availability of the
+real PIC.
 
-   Possible unsafe locking scenario:
-     lock(watchdog_lock);
-     <Interrupt>
-       lock(watchdog_lock);
+In theory there is no reason to use the PIC on any modern system when
+IO/APIC is available, but the dependencies on the related checks cannot be
+resolved trivially and on short notice. This needs lots of analysis and
+rework.
 
-   stack backtrace:
-    _raw_spin_lock+0x30/0x40
-    clocksource_watchdog+0x23/0x5a0
-    run_timer_softirq+0x2a/0x50
-    sysvec_apic_timer_interrupt+0x6e/0x90
+The PIC detection has been added to avoid quirky checks and force selection
+of the dummy implementation all over the place, especially in VM guest
+scenarios. So it's not an option to revert the relevant commit as that
+would break a lot of other scenarios.
 
-The reason is the recent conversion of the TSC synchronization function
-during CPU hotplug on the control CPU to a SMP function call. In case
-that the synchronization with the upcoming CPU fails, the TSC has to be
-marked unstable via clocksource_mark_unstable().
+One solution would be to try to initialize the PIC on detection fail and
+retry the detection, but that puts the burden on everything which does not
+have a PIC.
 
-clocksource_mark_unstable() acquires 'watchdog_lock', but that lock is
-taken with interrupts enabled in the watchdog timer callback to minimize
-interrupt disabled time. That's obviously a possible deadlock scenario,
+Fortunately the ACPI/MADT table header has a flag field, which advertises
+in bit 0 that the system is PCAT compatible, which means it has a legacy
+8259 PIC.
 
-Before that change the synchronization function was invoked in thread
-context so this could not happen.
+Evaluate that bit and if set avoid the detection routine and keep the real
+PIC installed, which then gets initialized (for nothing) and makes the rest
+of the code with all the dependencies work again.
 
-As it is not crucical whether the unstable marking happens slightly
-delayed, defer the call to a worker thread which avoids the lock context
-problem.
-
-Fixes: 9d349d47f0e3 ("x86/smpboot: Make TSC synchronization function call based")
-Reported-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Fixes: e179f6914152 ("x86, irq, pic: Probe for legacy PIC and set legacy_pic appropriately")
+Reported-by: David Lazar <dlazar@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Tested-by: David Lazar <dlazar@gmail.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/87zg064ceg.ffs@tglx
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218003
+Link: https://lore.kernel.org/r/875y2u5s8g.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/tsc_sync.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/i8259.h |    2 ++
+ arch/x86/kernel/acpi/boot.c  |    3 +++
+ arch/x86/kernel/i8259.c      |   38 ++++++++++++++++++++++++++++++--------
+ 3 files changed, 35 insertions(+), 8 deletions(-)
 
-diff --git a/arch/x86/kernel/tsc_sync.c b/arch/x86/kernel/tsc_sync.c
-index bbc440c93e08..1123ef3ccf90 100644
---- a/arch/x86/kernel/tsc_sync.c
-+++ b/arch/x86/kernel/tsc_sync.c
-@@ -15,6 +15,7 @@
-  * ( The serial nature of the boot logic and the CPU hotplug lock
-  *   protects against more than 2 CPUs entering this code. )
-  */
-+#include <linux/workqueue.h>
- #include <linux/topology.h>
- #include <linux/spinlock.h>
- #include <linux/kernel.h>
-@@ -342,6 +343,13 @@ static inline unsigned int loop_timeout(int cpu)
- 	return (cpumask_weight(topology_core_cpumask(cpu)) > 1) ? 2 : 20;
- }
+--- a/arch/x86/include/asm/i8259.h
++++ b/arch/x86/include/asm/i8259.h
+@@ -69,6 +69,8 @@ struct legacy_pic {
+ 	void (*make_irq)(unsigned int irq);
+ };
  
-+static void tsc_sync_mark_tsc_unstable(struct work_struct *work)
-+{
-+	mark_tsc_unstable("check_tsc_sync_source failed");
-+}
++void legacy_pic_pcat_compat(void);
 +
-+static DECLARE_WORK(tsc_sync_work, tsc_sync_mark_tsc_unstable);
-+
- /*
-  * The freshly booted CPU initiates this via an async SMP function call.
-  */
-@@ -395,7 +403,7 @@ retry:
- 			"turning off TSC clock.\n", max_warp);
- 		if (random_warps)
- 			pr_warn("TSC warped randomly between CPUs\n");
--		mark_tsc_unstable("check_tsc_sync_source failed");
-+		schedule_work(&tsc_sync_work);
+ extern struct legacy_pic *legacy_pic;
+ extern struct legacy_pic null_legacy_pic;
+ 
+--- a/arch/x86/kernel/acpi/boot.c
++++ b/arch/x86/kernel/acpi/boot.c
+@@ -148,6 +148,9 @@ static int __init acpi_parse_madt(struct
+ 		pr_debug("Local APIC address 0x%08x\n", madt->address);
  	}
  
++	if (madt->flags & ACPI_MADT_PCAT_COMPAT)
++		legacy_pic_pcat_compat();
++
+ 	/* ACPI 6.3 and newer support the online capable bit. */
+ 	if (acpi_gbl_FADT.header.revision > 6 ||
+ 	    (acpi_gbl_FADT.header.revision == 6 &&
+--- a/arch/x86/kernel/i8259.c
++++ b/arch/x86/kernel/i8259.c
+@@ -32,6 +32,7 @@
+  */
+ static void init_8259A(int auto_eoi);
+ 
++static bool pcat_compat __ro_after_init;
+ static int i8259A_auto_eoi;
+ DEFINE_RAW_SPINLOCK(i8259A_lock);
+ 
+@@ -301,15 +302,32 @@ static void unmask_8259A(void)
+ 
+ static int probe_8259A(void)
+ {
++	unsigned char new_val, probe_val = ~(1 << PIC_CASCADE_IR);
+ 	unsigned long flags;
+-	unsigned char probe_val = ~(1 << PIC_CASCADE_IR);
+-	unsigned char new_val;
++
++	/*
++	 * If MADT has the PCAT_COMPAT flag set, then do not bother probing
++	 * for the PIC. Some BIOSes leave the PIC uninitialized and probing
++	 * fails.
++	 *
++	 * Right now this causes problems as quite some code depends on
++	 * nr_legacy_irqs() > 0 or has_legacy_pic() == true. This is silly
++	 * when the system has an IO/APIC because then PIC is not required
++	 * at all, except for really old machines where the timer interrupt
++	 * must be routed through the PIC. So just pretend that the PIC is
++	 * there and let legacy_pic->init() initialize it for nothing.
++	 *
++	 * Alternatively this could just try to initialize the PIC and
++	 * repeat the probe, but for cases where there is no PIC that's
++	 * just pointless.
++	 */
++	if (pcat_compat)
++		return nr_legacy_irqs();
++
  	/*
--- 
-2.42.0
-
+-	 * Check to see if we have a PIC.
+-	 * Mask all except the cascade and read
+-	 * back the value we just wrote. If we don't
+-	 * have a PIC, we will read 0xff as opposed to the
+-	 * value we wrote.
++	 * Check to see if we have a PIC.  Mask all except the cascade and
++	 * read back the value we just wrote. If we don't have a PIC, we
++	 * will read 0xff as opposed to the value we wrote.
+ 	 */
+ 	raw_spin_lock_irqsave(&i8259A_lock, flags);
+ 
+@@ -431,5 +449,9 @@ static int __init i8259A_init_ops(void)
+ 
+ 	return 0;
+ }
+-
+ device_initcall(i8259A_init_ops);
++
++void __init legacy_pic_pcat_compat(void)
++{
++	pcat_compat = true;
++}
 
 
