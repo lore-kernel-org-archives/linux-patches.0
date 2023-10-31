@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F3720329
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF1E1945A
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeK/oLyl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0ABEC433C8;
-	Tue, 31 Oct 2023 17:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mq/iYpbj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1722C433C9;
+	Tue, 31 Oct 2023 17:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771999;
-	bh=v6KQtOa2LiYewbdzCudkSPD9igTHdIoQW+CpLGeWr5Y=;
+	s=korg; t=1698772002;
+	bh=YoUii1frjK6CzLH148iN8L4ezNp7kxPqa0f8umiHZ3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xeK/oLylLOaMnl1vNQ2jzq5vwYBO7LI8LkobEP4M5ekDsLdnE0+6xD360pausCj8z
-	 nacDjGv2HJ6t7Oyj1M5PUGIPj6t7IDExd21EqbwBYb1/Xwh5uOHBfqTxHb2Qlpws/B
-	 dFDvxYyAEXRGOIaY1uyaco+pl11o+AD3aH6BYcIc=
+	b=Mq/iYpbjucgxrlU6N9vVXE968YmzaNrqI4rMTVY1DCKIFU/vjks8WZyEi2pN+JNev
+	 Fi5VUC/QpEhtLPYIL96qgck+bsW9PIlU9YxNFdhf0PDEojvVSbta2gqGhqTEMcjChq
+	 vmYkFhxOe1qb1f8BHnbTJfi2rEN431im5SRzs8Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 59/86] io_uring/fdinfo: lock SQ thread while retrieving thread cpu/pid
-Date: Tue, 31 Oct 2023 18:01:24 +0100
-Message-ID: <20231031165920.417125737@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 85/86] ext4: avoid overlapping preallocations due to overflow
+Date: Tue, 31 Oct 2023 18:01:50 +0100
+Message-ID: <20231031165921.177854011@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -42,71 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 7644b1a1c9a7ae8ab99175989bfc8676055edb46 upstream.
+commit bedc5d34632c21b5adb8ca7143d4c1f794507e4c upstream.
 
-We could race with SQ thread exit, and if we do, we'll hit a NULL pointer
-dereference when the thread is cleared. Grab the SQPOLL data lock before
-attempting to get the task cpu and pid for fdinfo, this ensures we have a
-stable view of it.
+Let's say we want to allocate 2 blocks starting from 4294966386, after
+predicting the file size, start is aligned to 4294965248, len is changed
+to 2048, then end = start + size = 0x100000000. Since end is of
+type ext4_lblk_t, i.e. uint, end is truncated to 0.
 
-Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218032
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This causes (pa->pa_lstart >= end) to always hold when checking if the
+current extent to be allocated crosses already preallocated blocks, so the
+resulting ac_g_ex may cross already preallocated blocks. Hence we convert
+the end type to loff_t and use pa_logical_end() to avoid overflow.
+
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20230724121059.11834-4-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/fdinfo.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ fs/ext4/mballoc.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/io_uring/fdinfo.c b/io_uring/fdinfo.c
-index 882bd56b01ed0..ea2c2ded4e412 100644
---- a/io_uring/fdinfo.c
-+++ b/io_uring/fdinfo.c
-@@ -51,7 +51,6 @@ static __cold int io_uring_show_cred(struct seq_file *m, unsigned int id,
- static __cold void __io_uring_show_fdinfo(struct io_ring_ctx *ctx,
- 					  struct seq_file *m)
- {
--	struct io_sq_data *sq = NULL;
- 	struct io_overflow_cqe *ocqe;
- 	struct io_rings *r = ctx->rings;
- 	unsigned int sq_mask = ctx->sq_entries - 1, cq_mask = ctx->cq_entries - 1;
-@@ -62,6 +61,7 @@ static __cold void __io_uring_show_fdinfo(struct io_ring_ctx *ctx,
- 	unsigned int cq_shift = 0;
- 	unsigned int sq_shift = 0;
- 	unsigned int sq_entries, cq_entries;
-+	int sq_pid = -1, sq_cpu = -1;
- 	bool has_lock;
- 	unsigned int i;
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -4022,8 +4022,7 @@ ext4_mb_normalize_request(struct ext4_al
+ 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
+ 	struct ext4_super_block *es = sbi->s_es;
+ 	int bsbits, max;
+-	ext4_lblk_t end;
+-	loff_t size, start_off;
++	loff_t size, start_off, end;
+ 	loff_t orig_size __maybe_unused;
+ 	ext4_lblk_t start;
+ 	struct ext4_inode_info *ei = EXT4_I(ac->ac_inode);
+@@ -4131,7 +4130,7 @@ ext4_mb_normalize_request(struct ext4_al
+ 	/* check we don't cross already preallocated blocks */
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(pa, &ei->i_prealloc_list, pa_inode_list) {
+-		ext4_lblk_t pa_end;
++		loff_t pa_end;
  
-@@ -139,13 +139,19 @@ static __cold void __io_uring_show_fdinfo(struct io_ring_ctx *ctx,
- 	has_lock = mutex_trylock(&ctx->uring_lock);
+ 		if (pa->pa_deleted)
+ 			continue;
+@@ -4141,8 +4140,7 @@ ext4_mb_normalize_request(struct ext4_al
+ 			continue;
+ 		}
  
- 	if (has_lock && (ctx->flags & IORING_SETUP_SQPOLL)) {
--		sq = ctx->sq_data;
--		if (!sq->thread)
--			sq = NULL;
-+		struct io_sq_data *sq = ctx->sq_data;
-+
-+		if (mutex_trylock(&sq->lock)) {
-+			if (sq->thread) {
-+				sq_pid = task_pid_nr(sq->thread);
-+				sq_cpu = task_cpu(sq->thread);
-+			}
-+			mutex_unlock(&sq->lock);
-+		}
- 	}
+-		pa_end = pa->pa_lstart + EXT4_C2B(EXT4_SB(ac->ac_sb),
+-						  pa->pa_len);
++		pa_end = pa_logical_end(EXT4_SB(ac->ac_sb), pa);
  
--	seq_printf(m, "SqThread:\t%d\n", sq ? task_pid_nr(sq->thread) : -1);
--	seq_printf(m, "SqThreadCpu:\t%d\n", sq ? task_cpu(sq->thread) : -1);
-+	seq_printf(m, "SqThread:\t%d\n", sq_pid);
-+	seq_printf(m, "SqThreadCpu:\t%d\n", sq_cpu);
- 	seq_printf(m, "UserFiles:\t%u\n", ctx->nr_user_files);
- 	for (i = 0; has_lock && i < ctx->nr_user_files; i++) {
- 		struct file *f = io_file_from_index(&ctx->file_table, i);
--- 
-2.42.0
-
+ 		/* PA must not overlap original request */
+ 		BUG_ON(!(ac->ac_o_ex.fe_logical >= pa_end ||
+@@ -4171,12 +4169,11 @@ ext4_mb_normalize_request(struct ext4_al
+ 	/* XXX: extra loop to check we really don't overlap preallocations */
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(pa, &ei->i_prealloc_list, pa_inode_list) {
+-		ext4_lblk_t pa_end;
++		loff_t pa_end;
+ 
+ 		spin_lock(&pa->pa_lock);
+ 		if (pa->pa_deleted == 0) {
+-			pa_end = pa->pa_lstart + EXT4_C2B(EXT4_SB(ac->ac_sb),
+-							  pa->pa_len);
++			pa_end = pa_logical_end(EXT4_SB(ac->ac_sb), pa);
+ 			BUG_ON(!(start >= pa_end || end <= pa->pa_lstart));
+ 		}
+ 		spin_unlock(&pa->pa_lock);
 
 
