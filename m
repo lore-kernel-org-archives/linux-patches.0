@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCBD2031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2052031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3YGBE4n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FA6C433C8;
-	Tue, 31 Oct 2023 17:03:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HC4GJB5V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3C1C433C7;
+	Tue, 31 Oct 2023 17:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771794;
-	bh=bbhKeUVx5bEAGKLXeD0Yz+FwytSEVsH2p6ibNMhVz58=;
+	s=korg; t=1698771797;
+	bh=hU76tPOwe4WJeVzf8y2IhacloJFkDIvS3u/tHueZtBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p3YGBE4nVnCX958dawUrCqJA2hv7xDvxvzbbGuW22j96Eh2T6yA/hJF6beNnRxr3K
-	 3iQV3a9wcEScOBUOvXCo5Alhqq5k0Gn7cPuBA7xsFixnSR+/OM8V3w7oDv6NtAWtc/
-	 3WljMuvOumpZpieB0Ffjrgm9kfsECBsEk5lUWnCo=
+	b=HC4GJB5VQPkCJzoWbY3TxU5W7CKw1MJLfq7X9I5j582+0chUQ/9JK6aN4hVEfQO63
+	 J0GmbqEBmfxGb2cia6XmGbeVUN9wY+/cwPpHOwjfbSvFy7/c2mv1ULFpJy3hWsHXTO
+	 tbkLQFpnC6b1gOMxmspGK1kZ19hWG7TV5FxK1zsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Oscar Salvador <osalvador@suse.de>,
+	Gregory Price <gregory.price@memverge.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 22/86] mm/page_alloc: correct start page when guard page debug is enabled
-Date: Tue, 31 Oct 2023 18:00:47 +0100
-Message-ID: <20231031165919.299159597@linuxfoundation.org>
+Subject: [PATCH 6.1 23/86] mm/migrate: fix do_pages_move for compat pointers
+Date: Tue, 31 Oct 2023 18:00:48 +0100
+Message-ID: <20231031165919.334748103@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -44,63 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Gregory Price <gourry.memverge@gmail.com>
 
-commit 61e21cf2d2c3cc5e60e8d0a62a77e250fccda62c upstream.
+commit 229e2253766c7cdfe024f1fe280020cc4711087c upstream.
 
-When guard page debug is enabled and set_page_guard returns success, we
-miss to forward page to point to start of next split range and we will do
-split unexpectedly in page range without target page.  Move start page
-update before set_page_guard to fix this.
+do_pages_move does not handle compat pointers for the page list.
+correctly.  Add in_compat_syscall check and appropriate get_user fetch
+when iterating the page list.
 
-As we split to wrong target page, then splited pages are not able to merge
-back to original order when target page is put back and splited pages
-except target page is not usable.  To be specific:
+It makes the syscall in compat mode (32-bit userspace, 64-bit kernel)
+work the same way as the native 32-bit syscall again, restoring the
+behavior before my broken commit 5b1b561ba73c ("mm: simplify
+compat_sys_move_pages").
 
-Consider target page is the third page in buddy page with order 2.
-| buddy-2 | Page | Target | Page |
+More specifically, my patch moved the parsing of the 'pages' array from
+the main entry point into do_pages_stat(), which left the syscall
+working correctly for the 'stat' operation (nodes = NULL), while the
+'move' operation (nodes != NULL) is now missing the conversion and
+interprets 'pages' as an array of 64-bit pointers instead of the
+intended 32-bit userspace pointers.
 
-After break down to target page, we will only set first page to Guard
-because of bug.
-| Guard   | Page | Target | Page |
+It is possible that nobody noticed this bug because the few
+applications that actually call move_pages are unlikely to run in
+compat mode because of their large memory requirements, but this
+clearly fixes a user-visible regression and should have been caught by
+ltp.
 
-When we try put_page_back_buddy with target page, the buddy page of target
-if neither guard nor buddy, Then it's not able to construct original page
-with order 2
-| Guard | Page | buddy-0 | Page |
-
-All pages except target page is not in free list and is not usable.
-
-Link: https://lkml.kernel.org/r/20230927094401.68205-1-shikemeng@huaweicloud.com
-Fixes: 06be6ff3d2ec ("mm,hwpoison: rework soft offline for free pages")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Oscar Salvador <osalvador@suse.de>
+Link: https://lkml.kernel.org/r/20231003144857.752952-1-gregory.price@memverge.com
+Fixes: 5b1b561ba73c ("mm: simplify compat_sys_move_pages")
+Signed-off-by: Gregory Price <gregory.price@memverge.com>
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Co-developed-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/migrate.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -9638,6 +9638,7 @@ static void break_down_buddy_pages(struc
- 			next_page = page;
- 			current_buddy = page + size;
- 		}
-+		page = next_page;
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -1787,6 +1787,7 @@ static int do_pages_move(struct mm_struc
+ 			 const int __user *nodes,
+ 			 int __user *status, int flags)
+ {
++	compat_uptr_t __user *compat_pages = (void __user *)pages;
+ 	int current_node = NUMA_NO_NODE;
+ 	LIST_HEAD(pagelist);
+ 	int start, i;
+@@ -1800,8 +1801,17 @@ static int do_pages_move(struct mm_struc
+ 		int node;
  
- 		if (set_page_guard(zone, current_buddy, high, migratetype))
- 			continue;
-@@ -9645,7 +9646,6 @@ static void break_down_buddy_pages(struc
- 		if (current_buddy != target) {
- 			add_to_free_list(current_buddy, zone, high, migratetype);
- 			set_buddy_order(current_buddy, high);
--			page = next_page;
- 		}
- 	}
- }
+ 		err = -EFAULT;
+-		if (get_user(p, pages + i))
+-			goto out_flush;
++		if (in_compat_syscall()) {
++			compat_uptr_t cp;
++
++			if (get_user(cp, compat_pages + i))
++				goto out_flush;
++
++			p = compat_ptr(cp);
++		} else {
++			if (get_user(p, pages + i))
++				goto out_flush;
++		}
+ 		if (get_user(node, nodes + i))
+ 			goto out_flush;
+ 		addr = (unsigned long)untagged_addr(p);
 
 
