@@ -1,36 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F2F2031C;
-	Tue, 31 Oct 2023 17:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C4E200D8
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBHmDYcR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D23C433C8;
-	Tue, 31 Oct 2023 17:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnFuUUBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52EAC433C9;
+	Tue, 31 Oct 2023 17:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771833;
-	bh=MNHYYuTVg7AHC+87jLzyL50hOnflXzSCOihC1UFKyyg=;
+	s=korg; t=1698771836;
+	bh=sybyvJX6f9RTDd4I66HTmH7b4oAKg2Y6v0GKwxDwycU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LBHmDYcRavUjnXC9KiXWDgZyOGOIu/pXy24BrCTmT9UdMSqYlZO05g8M325puKIxs
-	 jYH0MkTPADd7lbr49ZYn9ui9qLI7cPAKUGEQYD7tYbrh1VMD9eGkbkUz9/E57O52jL
-	 f0NCxpwkolmCPqU3Be6JNbCf2mFr14yreF0Ul+wA=
+	b=EnFuUUBRDvESn+2/tUhH0T7nzVZymjUjR/DBd+IUM6GZjI8FtBlL3xRLNTMuHsf+9
+	 5k6ZsceGGMLe89MFxFrHrxzFYvQ4rFVlJSdQoAGaViUns4WDuu/w5f6lnY/4VVgHWa
+	 WIQ9Li1ipp45ND4+jU0rK8gQIk3hmrblVCCxKn8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	nic_swsd@realtek.com,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	netdev@vger.kernel.org,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 36/86] r8169: fix the KCSAN reported data race in rtl_rx while reading desc->opts1
-Date: Tue, 31 Oct 2023 18:01:01 +0100
-Message-ID: <20231031165919.757002724@linuxfoundation.org>
+Subject: [PATCH 6.1 37/86] iavf: initialize waitqueues before starting watchdog_task
+Date: Tue, 31 Oct 2023 18:01:02 +0100
+Message-ID: <20231031165919.794321733@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,106 +38,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit f97eee484e71890131f9c563c5cc6d5a69e4308d ]
+[ Upstream commit 7db3111043885c146e795c199d39c3f9042d97c0 ]
 
-KCSAN reported the following data-race bug:
+It is not safe to initialize the waitqueues after queueing the
+watchdog_task. It will be using them.
 
-==================================================================
-BUG: KCSAN: data-race in rtl8169_poll (drivers/net/ethernet/realtek/r8169_main.c:4430 drivers/net/ethernet/realtek/r8169_main.c:4583) r8169
+The chance of this causing a real problem is very small, because
+there will be some sleeping before any of the waitqueues get used.
+I got a crash only after inserting an artificial sleep in iavf_probe.
 
-race at unknown origin, with read to 0xffff888117e43510 of 4 bytes by interrupt on cpu 21:
-rtl8169_poll (drivers/net/ethernet/realtek/r8169_main.c:4430 drivers/net/ethernet/realtek/r8169_main.c:4583) r8169
-__napi_poll (net/core/dev.c:6527)
-net_rx_action (net/core/dev.c:6596 net/core/dev.c:6727)
-__do_softirq (kernel/softirq.c:553)
-__irq_exit_rcu (kernel/softirq.c:427 kernel/softirq.c:632)
-irq_exit_rcu (kernel/softirq.c:647)
-sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1074 (discriminator 14))
-asm_sysvec_apic_timer_interrupt (./arch/x86/include/asm/idtentry.h:645)
-cpuidle_enter_state (drivers/cpuidle/cpuidle.c:291)
-cpuidle_enter (drivers/cpuidle/cpuidle.c:390)
-call_cpuidle (kernel/sched/idle.c:135)
-do_idle (kernel/sched/idle.c:219 kernel/sched/idle.c:282)
-cpu_startup_entry (kernel/sched/idle.c:378 (discriminator 1))
-start_secondary (arch/x86/kernel/smpboot.c:210 arch/x86/kernel/smpboot.c:294)
-secondary_startup_64_no_verify (arch/x86/kernel/head_64.S:433)
+Queue the watchdog_task as the last step in iavf_probe. Add a comment to
+prevent repeating the mistake.
 
-value changed: 0x80003fff -> 0x3402805f
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 21 PID: 0 Comm: swapper/21 Tainted: G             L     6.6.0-rc2-kcsan-00143-gb5cbe7c00aa0 #41
-Hardware name: ASRock X670E PG Lightning/X670E PG Lightning, BIOS 1.21 04/26/2023
-==================================================================
-
-drivers/net/ethernet/realtek/r8169_main.c:
-==========================================
-   4429
- → 4430                 status = le32_to_cpu(desc->opts1);
-   4431                 if (status & DescOwn)
-   4432                         break;
-   4433
-   4434                 /* This barrier is needed to keep us from reading
-   4435                  * any other fields out of the Rx descriptor until
-   4436                  * we know the status of DescOwn
-   4437                  */
-   4438                 dma_rmb();
-   4439
-   4440                 if (unlikely(status & RxRES)) {
-   4441                         if (net_ratelimit())
-   4442                                 netdev_warn(dev, "Rx ERROR. status = %08x\n",
-
-Marco Elver explained that dma_rmb() doesn't prevent the compiler to tear up the access to
-desc->opts1 which can be written to concurrently. READ_ONCE() should prevent that from
-happening:
-
-   4429
- → 4430                 status = le32_to_cpu(READ_ONCE(desc->opts1));
-   4431                 if (status & DescOwn)
-   4432                         break;
-   4433
-
-As the consequence of this fix, this KCSAN warning was eliminated.
-
-Fixes: 6202806e7c03a ("r8169: drop member opts1_mask from struct rtl8169_private")
-Suggested-by: Marco Elver <elver@google.com>
-Cc: Heiner Kallweit <hkallweit1@gmail.com>
-Cc: nic_swsd@realtek.com
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: netdev@vger.kernel.org
-Link: https://lore.kernel.org/lkml/dc7fc8fa-4ea4-e9a9-30a6-7c83e6b53188@alu.unizg.hr/
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Acked-by: Marco Elver <elver@google.com>
+Fixes: fe2647ab0c99 ("i40evf: prevent VF close returning before state transitions to DOWN")
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index f677f625a4939..80b6079b8a8e3 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4413,7 +4413,7 @@ static int rtl_rx(struct net_device *dev, struct rtl8169_private *tp, int budget
- 		dma_addr_t addr;
- 		u32 status;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index a39f7f0d6ab0b..1ae90f8f9941f 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -5020,8 +5020,6 @@ static int iavf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	INIT_WORK(&adapter->finish_config, iavf_finish_config);
+ 	INIT_DELAYED_WORK(&adapter->watchdog_task, iavf_watchdog_task);
+ 	INIT_DELAYED_WORK(&adapter->client_task, iavf_client_task);
+-	queue_delayed_work(adapter->wq, &adapter->watchdog_task,
+-			   msecs_to_jiffies(5 * (pdev->devfn & 0x07)));
  
--		status = le32_to_cpu(desc->opts1);
-+		status = le32_to_cpu(READ_ONCE(desc->opts1));
- 		if (status & DescOwn)
- 			break;
+ 	/* Setup the wait queue for indicating transition to down status */
+ 	init_waitqueue_head(&adapter->down_waitqueue);
+@@ -5032,6 +5030,9 @@ static int iavf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	/* Setup the wait queue for indicating virtchannel events */
+ 	init_waitqueue_head(&adapter->vc_waitqueue);
  
++	queue_delayed_work(adapter->wq, &adapter->watchdog_task,
++			   msecs_to_jiffies(5 * (pdev->devfn & 0x07)));
++	/* Initialization goes on in the work. Do not add more of it below. */
+ 	return 0;
+ 
+ err_ioremap:
 -- 
 2.42.0
 
