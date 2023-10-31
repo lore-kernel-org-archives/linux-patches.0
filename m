@@ -1,98 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4EC2231F;
-	Tue, 31 Oct 2023 20:23:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s5sH2Uci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC330C433C7;
-	Tue, 31 Oct 2023 20:23:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698783833;
-	bh=kWiaXu3zrQZh2hYqfEmW4X7fxyTTU9Vm8/7Xl0jbDBA=;
-	h=From:Date:Subject:To:Cc:From;
-	b=s5sH2Uci1k2u4vWV23OrrzgnwwQKx+y5oaE0RpqzJ6Twf7lV29B/bkx2x9CbcHhgn
-	 Hfd01CAIq4EtfvIWkc1Z1uGI+U2bw5mIEmczPNeG9ThqFF59TgRArd+ZG48aTt/xQO
-	 8YhKl5stfQntyVPcWA/n+sG96SC7KQ+v4r6KyyjP65sVayY4vxc7OtPoNZZG33e5Rq
-	 seCYRCmchOws3UuX2GEynHkpSlssIUm2Xt5uwMQyf8S/Ad1tvFFudq5lDlcboCi0+T
-	 YEbawG7N7XeSujIVQIduOldpcybF3VriG1dlAyZU6iS+kx1M2qvC6MmTR7NSgZBFbt
-	 Eex9Tbeiqjthg==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 31 Oct 2023 13:23:35 -0700
-Subject: [PATCH net] tcp: Fix -Wc23-extensions in tcp_options_write()
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE981DFE9
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 20:41:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qxvYD-0000zK-1h; Tue, 31 Oct 2023 21:41:25 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qxvYC-005eEs-CK; Tue, 31 Oct 2023 21:41:24 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qxvYC-00AAZU-33; Tue, 31 Oct 2023 21:41:24 +0100
+Date: Tue, 31 Oct 2023 21:41:23 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Mark Brown <broonie@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Takashi Iwai <tiwai@suse.de>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 05/86] ASoC: codecs: wcd938x: Convert to platform
+ remove callback returning void
+Message-ID: <20231031204123.thehtrqhmludytt6@pengutronix.de>
+References: <20231031165918.608547597@linuxfoundation.org>
+ <20231031165918.777236098@linuxfoundation.org>
+ <958957ff-bbaa-4fbc-a796-30e2fdf61453@sirena.org.uk>
+ <2023103133-skating-last-e2f6@gregkh>
+ <8744aeca-36cb-4d47-86f9-92fa70a234e1@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231031-tcp-ao-fix-label-in-compound-statement-warning-v1-1-c9731d115f17@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAEdiQWUC/x2NywqDMBAAf0X23AWjxZr+SvGwJlu7oJuQpA8Q/
- 73B4xxmZofMSTjDvdkh8UeyBK1gLg24F+nCKL4ydG3Xm7Y3WFxECviUH64084qi6MIWw1s95kK
- FN9aCX0oquiDPfnDW3sarHaFGY+KqnsMHKBeYjuMPgHtvwIUAAAA=
-To: edumazet@google.com, davem@davemloft.net, dsahern@kernel.org, 
- kuba@kernel.org, pabeni@redhat.com
-Cc: ndesaulniers@google.com, trix@redhat.com, 0x7f454c46@gmail.com, 
- fruggeri@arista.com, noureddine@arista.com, netdev@vger.kernel.org, 
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1514; i=nathan@kernel.org;
- h=from:subject:message-id; bh=kWiaXu3zrQZh2hYqfEmW4X7fxyTTU9Vm8/7Xl0jbDBA=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDKmOSREXvu1tr+8+bHVSuOeh38onXBunXjs4y4cn7rHcg
- Za26s9POkpZGMQ4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBErl9gZNh04/vrW5sNPmfM
- aXzGUKT2ZEVGzo5L0ccv7ubqSViXlHqUkWGt9YUSyxlBEl+f7VFIuhPVxS8b+8PzTKPVTYYTk//
- lC/ADAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="c6fu7lmipstxgsjl"
+Content-Disposition: inline
+In-Reply-To: <8744aeca-36cb-4d47-86f9-92fa70a234e1@sirena.org.uk>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: patches@lists.linux.dev
 
-Clang warns (or errors with CONFIG_WERROR=y) when CONFIG_TCP_AO is set:
 
-  net/ipv4/tcp_output.c:663:2: error: label at end of compound statement is a C23 extension [-Werror,-Wc23-extensions]
-    663 |         }
-        |         ^
-  1 error generated.
+--c6fu7lmipstxgsjl
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On earlier releases (such as clang-11, the current minimum supported
-version for building the kernel) that do not support C23, this was a
-hard error unconditionally:
+On Tue, Oct 31, 2023 at 05:49:03PM +0000, Mark Brown wrote:
+> On Tue, Oct 31, 2023 at 06:44:52PM +0100, Greg Kroah-Hartman wrote:
+> > On Tue, Oct 31, 2023 at 05:11:27PM +0000, Mark Brown wrote:
+>=20
+> > > This doesn't seem like obvious stable material - it's not fixing any
+> > > leaks or anything, just preparing for an API transition?
+>=20
+> > It was taken to make the patch after this one apply cleanly, that's all.
+>=20
+> Ah, I see.
 
-  net/ipv4/tcp_output.c:663:2: error: expected statement
-          }
-          ^
-  1 error generated.
+The patch has a footer:
 
-Add a semicolon after the label to create an empty statement, which
-resolves the warning or error for all compilers.
+	Stable-dep-of: 69a026a2357e ("ASoC: codecs: wcd938x: fix regulator leaks o=
+n probe errors")
 
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1953
-Fixes: 1e03d32bea8e ("net/tcp: Add TCP-AO sign to outgoing packets")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- net/ipv4/tcp_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+to make this point explicit. I really like the addition of this
+information to the stable backports.
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index f558c054cf6e..6064895daece 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -658,7 +658,7 @@ static void tcp_options_write(struct tcphdr *th, struct tcp_sock *tp,
- 			memset(ptr, TCPOPT_NOP, sizeof(*ptr));
- 			ptr++;
- 		}
--out_ao:
-+out_ao:;
- #endif
- 	}
- 	if (unlikely(opts->mss)) {
+Thanks to whoever had the idea and implemented that!
 
----
-base-commit: 55c900477f5b3897d9038446f72a281cae0efd86
-change-id: 20231031-tcp-ao-fix-label-in-compound-statement-warning-ebd6c9978498
+Best regards
+Uwe
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
 
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--c6fu7lmipstxgsjl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmVBZnMACgkQj4D7WH0S
+/k6MEwf/f7FJi+RTbZrGKzccG4CQzbujzIq7pVd59QBaB9WCL8rGCtP4cWcB0IP9
+djL68EiWkAEB8qFRQQOAW3N5Ah0eVa5ODSwvqZAZo4ajsxvLV+VhmLk2JCL5pFGP
+4FiKHEKxEF0bWS7iZuOLSyGbNAPBZNItCA9Qvxy0xXSPGQ1Va5nS9zRJpLmY2SMU
+UDTrhTOhwt5cX7yLjwmzmaq3gNxIy1Svj8511MP11nvReYzgCc4HgTUN+JcieRlM
+tP3TRRrinQoOadJHKrULJZsLAtB+MSdngbJqE+pAIF/Q/68W6QnyKI389x/rVHwq
+gKWc8MwSdfGAvzp2Mb0JsyLklQP+vg==
+=nAJH
+-----END PGP SIGNATURE-----
+
+--c6fu7lmipstxgsjl--
