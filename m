@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98152031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C362031D
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtHIZVZh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F93C433C7;
-	Tue, 31 Oct 2023 17:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y48Q4EgL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4197FC433C7;
+	Tue, 31 Oct 2023 17:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771857;
-	bh=GRSws6JG/6XaGWpNEPruK4gcfGFTDlu8JNBc4lMrsXk=;
+	s=korg; t=1698771860;
+	bh=fdKZ2wIxgDaBkCeHoFA9yMK63TB1E8P1G5+MFh/mtlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AtHIZVZhAIdAohT6l1QxzzdlXas351y9S5OCuvJuye0i/76aKur05tKw1sAa2V7UA
-	 WcHbcQ03pyoiEeUIzc4GDBy1OKm3/jjeHofnMc9fC4YFLy7QDfB3Cbnfr5MwJfdVB5
-	 xSCU45mkXLfAhp+z1oklnSENDvH/x7zmGEJ4pEA8=
+	b=Y48Q4EgLvlkm676b83DbR83ga4Dm+W6aLR5VW+Kh6EQfGyubB2cEBCN2n+tEJHAqN
+	 GKnMi8+S4IhjUHZ4Rn72HE2O/qxG6C2iUGik5lx6VJE1jak7LIARoxmds5NX5Xyjhh
+	 dXU50NoKuhip1WTRdtxZAFERtLO5W0Q8ch2z0eFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 44/86] net: ieee802154: adf7242: Fix some potential buffer overflow in adf7242_stats_show()
-Date: Tue, 31 Oct 2023 18:01:09 +0100
-Message-ID: <20231031165919.980101035@linuxfoundation.org>
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.1 27/86] drm/i915/pmu: Check if pmu is closed before stopping event
+Date: Tue, 31 Oct 2023 18:00:52 +0100
+Message-ID: <20231031165919.456886750@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -42,46 +43,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
 
-[ Upstream commit ca082f019d8fbb983f03080487946da714154bae ]
+commit 4cbed7702eb775cca22fff6827a549092cb59f61 upstream.
 
-strncat() usage in adf7242_debugfs_init() is wrong.
-The size given to strncat() is the maximum number of bytes that can be
-written, excluding the trailing NULL.
+When the driver unbinds, pmu is unregistered and i915->uabi_engines is
+set to RB_ROOT. Due to this, when i915 PMU tries to stop the engine
+events, it issues a warn_on because engine lookup fails.
 
-Here, the size that is passed, DNAME_INLINE_LEN, does not take into account
-the size of "adf7242-" that is already in the array.
+All perf hooks are taking care of this using a pmu->closed flag that is
+set when PMU unregisters. The stop event seems to have been left out.
 
-In order to fix it, use snprintf() instead.
+Check for pmu->closed in pmu_event_stop as well.
 
-Fixes: 7302b9d90117 ("ieee802154/adf7242: Driver for ADF7242 MAC IEEE802154")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Based on discussion here -
+https://patchwork.freedesktop.org/patch/492079/?series=105790&rev=2
+
+v2: s/is/if/ in commit title
+v3: Add fixes tag and cc stable
+
+Cc: <stable@vger.kernel.org> # v5.11+
+Fixes: b00bccb3f0bb ("drm/i915/pmu: Handle PCI unbind")
+Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231020152441.3764850-1-umesh.nerlige.ramappa@intel.com
+(cherry picked from commit 31f6a06f0c543b43a38fab10f39e5fc45ad62aa2)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ieee802154/adf7242.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/i915_pmu.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ieee802154/adf7242.c b/drivers/net/ieee802154/adf7242.c
-index 5cf218c674a5a..32d92bdabd234 100644
---- a/drivers/net/ieee802154/adf7242.c
-+++ b/drivers/net/ieee802154/adf7242.c
-@@ -1162,9 +1162,10 @@ static int adf7242_stats_show(struct seq_file *file, void *offset)
+--- a/drivers/gpu/drm/i915/i915_pmu.c
++++ b/drivers/gpu/drm/i915/i915_pmu.c
+@@ -760,9 +760,18 @@ static void i915_pmu_event_start(struct
  
- static void adf7242_debugfs_init(struct adf7242_local *lp)
+ static void i915_pmu_event_stop(struct perf_event *event, int flags)
  {
--	char debugfs_dir_name[DNAME_INLINE_LEN + 1] = "adf7242-";
-+	char debugfs_dir_name[DNAME_INLINE_LEN + 1];
++	struct drm_i915_private *i915 =
++		container_of(event->pmu, typeof(*i915), pmu.base);
++	struct i915_pmu *pmu = &i915->pmu;
++
++	if (pmu->closed)
++		goto out;
++
+ 	if (flags & PERF_EF_UPDATE)
+ 		i915_pmu_event_read(event);
+ 	i915_pmu_disable(event);
++
++out:
+ 	event->hw.state = PERF_HES_STOPPED;
+ }
  
--	strncat(debugfs_dir_name, dev_name(&lp->spi->dev), DNAME_INLINE_LEN);
-+	snprintf(debugfs_dir_name, sizeof(debugfs_dir_name),
-+		 "adf7242-%s", dev_name(&lp->spi->dev));
- 
- 	lp->debugfs_root = debugfs_create_dir(debugfs_dir_name, NULL);
- 
--- 
-2.42.0
-
 
 
