@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3B1200C9
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90CF208C7
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkfjoYCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7DAC433C7;
-	Tue, 31 Oct 2023 17:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z76So7Tw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F9FC433C8;
+	Tue, 31 Oct 2023 17:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774465;
-	bh=0ji1KJqSDxJsyj49aC/zCZIJzYhGzMLqh1bBZaoQ9vo=;
+	s=korg; t=1698774468;
+	bh=b0Wy1OQeYNFlAH+zzDFM3hrrbEfvqFPHb/1RgCPqqP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zkfjoYCcn9ZCxmsZpfGs+PkubjNTwIKB4FLODFzH+V0yemQqASYVCR2J7ojzsaJu3
-	 katxTiZw5nII/bnC0kULPHDLmw7s1HCrKcwreVDHwayhSu5fuwDG9SK9xdxV3LrZ9P
-	 kWEFvPlrp40vSB3XxP5Ettg9h9eAo1arCfA+gE3s=
+	b=z76So7TwesGsB20xcCNVV9avizolX/zgb1zI0brIQlYsFfymFJU8NHQalHzsVvCU3
+	 IF/WkAGFINbJ/BT+UYFNSz36Ss2yNTaAoYzyn4fSRoZN5ME8U8+4qvG1iqsFgYCpZr
+	 bRIlzdmGh0aBG5VS+8iI9xySNLry0vVx00wbLwfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Mateusz Palczewski <mateusz.palczewski@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 054/112] treewide: Spelling fix in comment
-Date: Tue, 31 Oct 2023 18:00:55 +0100
-Message-ID: <20231031165903.023054719@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 6.5 055/112] igb: Fix potential memory leak in igb_add_ethtool_nfc_entry
+Date: Tue, 31 Oct 2023 18:00:56 +0100
+Message-ID: <20231031165903.053323803@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -43,34 +45,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Mateusz Palczewski <mateusz.palczewski@intel.com>
 
-[ Upstream commit fb71ba0ed8be9534493c80ba00142a64d9972a72 ]
+[ Upstream commit 8c0b48e01daba5ca58f939a8425855d3f4f2ed14 ]
 
-reques -> request
+Add check for return of igb_update_ethtool_nfc_entry so that in case
+of any potential errors the memory alocated for input will be freed.
 
-Fixes: 09dde54c6a69 ("PS3: gelic: Add wireless support for PS3")
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 0e71def25281 ("igb: add support of RX network flow classification")
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/toshiba/ps3_gelic_wireless.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igb/igb_ethtool.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/toshiba/ps3_gelic_wireless.c b/drivers/net/ethernet/toshiba/ps3_gelic_wireless.c
-index dc14a66583ff3..44488c153ea25 100644
---- a/drivers/net/ethernet/toshiba/ps3_gelic_wireless.c
-+++ b/drivers/net/ethernet/toshiba/ps3_gelic_wireless.c
-@@ -1217,7 +1217,7 @@ static int gelic_wl_set_encodeext(struct net_device *netdev,
- 		key_index = wl->current_key;
+diff --git a/drivers/net/ethernet/intel/igb/igb_ethtool.c b/drivers/net/ethernet/intel/igb/igb_ethtool.c
+index 319ed601eaa1e..4ee849985e2b8 100644
+--- a/drivers/net/ethernet/intel/igb/igb_ethtool.c
++++ b/drivers/net/ethernet/intel/igb/igb_ethtool.c
+@@ -2978,11 +2978,15 @@ static int igb_add_ethtool_nfc_entry(struct igb_adapter *adapter,
+ 	if (err)
+ 		goto err_out_w_lock;
  
- 	if (!enc->length && (ext->ext_flags & IW_ENCODE_EXT_SET_TX_KEY)) {
--		/* reques to change default key index */
-+		/* request to change default key index */
- 		pr_debug("%s: request to change default key to %d\n",
- 			 __func__, key_index);
- 		wl->current_key = key_index;
+-	igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
++	err = igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
++	if (err)
++		goto err_out_input_filter;
+ 
+ 	spin_unlock(&adapter->nfc_lock);
+ 	return 0;
+ 
++err_out_input_filter:
++	igb_erase_filter(adapter, input);
+ err_out_w_lock:
+ 	spin_unlock(&adapter->nfc_lock);
+ err_out:
 -- 
 2.42.0
 
