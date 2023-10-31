@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329701DFC4
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD01200D8
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aX1OwtLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463F5C433C8;
-	Tue, 31 Oct 2023 17:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZKVb1SR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF89C433C7;
+	Tue, 31 Oct 2023 17:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771758;
-	bh=lT9xX85WsZLKa+SWzr+yXApbNFUM3AT5jOO93U8sJmk=;
+	s=korg; t=1698771761;
+	bh=LlSMDeBH+e4Pa2qXJ8krGv8YU8XXj/sJYosEMwpqAfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aX1OwtLx9EnYtG7MOgXmRoFvt9s2Wl+RzB+NqYzODFLkXBRqSda4fHSQKYuPEJk3a
-	 BE2n1UveiGKz2yD2n7TmxzcD1xCO74UJRheV1tPn30OD0wbEYmzQZBELZV4x2HLlr6
-	 qj62/uc6/J18ZOCZXv5xPZAXTQs2ZhwiwZOk0Ogg=
+	b=yZKVb1SRf3rIkbuG3Ag+ZJVRmYvZE5L072SLRZwKEErWxYToCk1BcVncybuuOzncB
+	 hqim8XseBtf08RCiczr3gNuf9fkCv+95oQEKpzkALEdn6GFPHY+ZLMGp/nNzQc2Kjz
+	 AfKKfpJJdzNMzf3ulCqGkO8/RibGcry6sGS6CtFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <cloehle@hyperstone.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 03/86] mmc: block: ioctl: do write error check for spi
-Date: Tue, 31 Oct 2023 18:00:28 +0100
-Message-ID: <20231031165918.715359623@linuxfoundation.org>
+	Gavin Shan <gshan@redhat.com>,
+	Zhenyu Zhang <zhenyzha@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	David Hildenbrand <david@redhat.com>
+Subject: [PATCH 6.1 12/86] virtio_balloon: Fix endless deflation and inflation on arm64
+Date: Tue, 31 Oct 2023 18:00:37 +0100
+Message-ID: <20231031165918.998695518@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -42,52 +43,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <CLoehle@hyperstone.com>
+From: Gavin Shan <gshan@redhat.com>
 
-[ Upstream commit 568898cbc8b570311b3b94a3202b8233f4168144 ]
+commit 07622bd415639e9709579f400afd19e7e9866e5e upstream.
 
-SPI doesn't have the usual PROG path we can check for error bits
-after moving back to TRAN. Instead it holds the line LOW until
-completion. We can then check if the card shows any errors or
-is in IDLE state, indicating the line is no longer LOW because
-the card was reset.
+The deflation request to the target, which isn't unaligned to the
+guest page size causes endless deflation and inflation actions. For
+example, we receive the flooding QMP events for the changes on memory
+balloon's size after a deflation request to the unaligned target is
+sent for the ARM64 guest, where we have 64KB base page size.
 
-Signed-off-by: Christian Loehle <cloehle@hyperstone.com>
+  /home/gavin/sandbox/qemu.main/build/qemu-system-aarch64      \
+  -accel kvm -machine virt,gic-version=host -cpu host          \
+  -smp maxcpus=8,cpus=8,sockets=2,clusters=2,cores=2,threads=1 \
+  -m 1024M,slots=16,maxmem=64G                                 \
+  -object memory-backend-ram,id=mem0,size=512M                 \
+  -object memory-backend-ram,id=mem1,size=512M                 \
+  -numa node,nodeid=0,memdev=mem0,cpus=0-3                     \
+  -numa node,nodeid=1,memdev=mem1,cpus=4-7                     \
+    :                                                          \
+  -device virtio-balloon-pci,id=balloon0,bus=pcie.10
+
+  { "execute" : "balloon", "arguments": { "value" : 1073672192 } }
+  {"return": {}}
+  {"timestamp": {"seconds": 1693272173, "microseconds": 88667},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272174, "microseconds": 89704},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272175, "microseconds": 90819},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272176, "microseconds": 91961},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272177, "microseconds": 93040},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073676288}}
+  {"timestamp": {"seconds": 1693272178, "microseconds": 94117},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073676288}}
+  {"timestamp": {"seconds": 1693272179, "microseconds": 95337},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272180, "microseconds": 96615},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073676288}}
+  {"timestamp": {"seconds": 1693272181, "microseconds": 97626},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272182, "microseconds": 98693},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073676288}}
+  {"timestamp": {"seconds": 1693272183, "microseconds": 99698},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272184, "microseconds": 100727},  \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272185, "microseconds": 90430},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272186, "microseconds": 102999},  \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073676288}}
+     :
+  <The similar QMP events repeat>
+
+Fix it by aligning the target up to the guest page size, 64KB in this
+specific case. With this applied, no flooding QMP events are observed
+and the memory balloon's size can be stablizied to 0x3ffe0000 soon
+after the deflation request is sent.
+
+  { "execute" : "balloon", "arguments": { "value" : 1073672192 } }
+  {"return": {}}
+  {"timestamp": {"seconds": 1693273328, "microseconds": 793075},  \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  { "execute" : "query-balloon" }
+  {"return": {"actual": 1073610752}}
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/55920f880c9742f486f64aa44e25508e@hyperstone.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: f19c5a73e6f7 ("mmc: core: Fix error propagation for some ioctl commands")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Message-Id: <20230831011007.1032822-1-gshan@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/virtio/virtio_balloon.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-index baefe2886f0b2..1aab4f47eab98 100644
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -180,6 +180,7 @@ static void mmc_blk_rw_rq_prep(struct mmc_queue_req *mqrq,
- 			       int recovery_mode,
- 			       struct mmc_queue *mq);
- static void mmc_blk_hsq_req_done(struct mmc_request *mrq);
-+static int mmc_spi_err_check(struct mmc_card *card);
+--- a/drivers/virtio/virtio_balloon.c
++++ b/drivers/virtio/virtio_balloon.c
+@@ -395,7 +395,11 @@ static inline s64 towards_target(struct
+ 	virtio_cread_le(vb->vdev, struct virtio_balloon_config, num_pages,
+ 			&num_pages);
  
- static struct mmc_blk_data *mmc_blk_get(struct gendisk *disk)
- {
-@@ -623,6 +624,11 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
- 	if ((card->host->caps & MMC_CAP_WAIT_WHILE_BUSY) && use_r1b_resp)
- 		return 0;
+-	target = num_pages;
++	/*
++	 * Aligned up to guest page size to avoid inflating and deflating
++	 * balloon endlessly.
++	 */
++	target = ALIGN(num_pages, VIRTIO_BALLOON_PAGES_PER_PAGE);
+ 	return target - vb->num_pages;
+ }
  
-+	if (mmc_host_is_spi(card->host)) {
-+		if (idata->ic.write_flag || r1b_resp || cmd.flags & MMC_RSP_SPI_BUSY)
-+			return mmc_spi_err_check(card);
-+		return err;
-+	}
- 	/* Ensure RPMB/R1B command has completed by polling with CMD13. */
- 	if (idata->rpmb || r1b_resp)
- 		err = mmc_poll_for_busy(card, busy_timeout_ms, false,
--- 
-2.42.0
-
 
 
