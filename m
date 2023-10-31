@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F207822306
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DA522302
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aai8Uo/L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8C2C433C7;
-	Tue, 31 Oct 2023 17:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1xo5FXb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DB5C433C9;
+	Tue, 31 Oct 2023 17:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774456;
-	bh=DTjLQvotgE+3qPLo6Flb0QLwbyCkz1cXmtqF/dziDgQ=;
+	s=korg; t=1698774459;
+	bh=NJFVWUEEvBZcX1pFuqJEPAANT6eOLbO4qBYCcONdSro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aai8Uo/L4fpUxAi66tXJEbeawEIbWaNkg1COcOZYaUVfZhh8/2wamB8/o0nnHa5eR
-	 FDFqJW2nowLJgYEGSmVTiefVKyXAXlmrZIi2c7nChFGB7MzqHub8iDyvoTVlI7eqzj
-	 XK5SkdAwmqeToDLCBbSOxLHcxMJyoXogRErFdQNg=
+	b=q1xo5FXb6yLqtZBiuKFt4bdlg2ZQe9nJRT6yga4RAYtbNj0ixAH5OwmufQrGZuZJv
+	 0I3/Dfw5nhA5doaGuSLpIvE1hGU6H6kTBtV8c2Pilq8VEubXmRmi/xzOSI4+KBUAg1
+	 c9xEBdkfuG5852oBuJ4rMbAEXz2fxBwgWj9dwYUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 025/112] mm/page_alloc: correct start page when guard page debug is enabled
-Date: Tue, 31 Oct 2023 18:00:26 +0100
-Message-ID: <20231031165902.103135069@linuxfoundation.org>
+	Michal Schmidt <mschmidt@redhat.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 052/112] iavf: initialize waitqueues before starting watchdog_task
+Date: Tue, 31 Oct 2023 18:00:53 +0100
+Message-ID: <20231031165902.945231992@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -44,63 +44,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-commit 61e21cf2d2c3cc5e60e8d0a62a77e250fccda62c upstream.
+[ Upstream commit 7db3111043885c146e795c199d39c3f9042d97c0 ]
 
-When guard page debug is enabled and set_page_guard returns success, we
-miss to forward page to point to start of next split range and we will do
-split unexpectedly in page range without target page.  Move start page
-update before set_page_guard to fix this.
+It is not safe to initialize the waitqueues after queueing the
+watchdog_task. It will be using them.
 
-As we split to wrong target page, then splited pages are not able to merge
-back to original order when target page is put back and splited pages
-except target page is not usable.  To be specific:
+The chance of this causing a real problem is very small, because
+there will be some sleeping before any of the waitqueues get used.
+I got a crash only after inserting an artificial sleep in iavf_probe.
 
-Consider target page is the third page in buddy page with order 2.
-| buddy-2 | Page | Target | Page |
+Queue the watchdog_task as the last step in iavf_probe. Add a comment to
+prevent repeating the mistake.
 
-After break down to target page, we will only set first page to Guard
-because of bug.
-| Guard   | Page | Target | Page |
-
-When we try put_page_back_buddy with target page, the buddy page of target
-if neither guard nor buddy, Then it's not able to construct original page
-with order 2
-| Guard | Page | buddy-0 | Page |
-
-All pages except target page is not in free list and is not usable.
-
-Link: https://lkml.kernel.org/r/20230927094401.68205-1-shikemeng@huaweicloud.com
-Fixes: 06be6ff3d2ec ("mm,hwpoison: rework soft offline for free pages")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fe2647ab0c99 ("i40evf: prevent VF close returning before state transitions to DOWN")
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -6528,6 +6528,7 @@ static void break_down_buddy_pages(struc
- 			next_page = page;
- 			current_buddy = page + size;
- 		}
-+		page = next_page;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 8ea5c0825c3c4..14875cd85a8e3 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -4982,8 +4982,6 @@ static int iavf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	INIT_WORK(&adapter->finish_config, iavf_finish_config);
+ 	INIT_DELAYED_WORK(&adapter->watchdog_task, iavf_watchdog_task);
+ 	INIT_DELAYED_WORK(&adapter->client_task, iavf_client_task);
+-	queue_delayed_work(adapter->wq, &adapter->watchdog_task,
+-			   msecs_to_jiffies(5 * (pdev->devfn & 0x07)));
  
- 		if (set_page_guard(zone, current_buddy, high, migratetype))
- 			continue;
-@@ -6535,7 +6536,6 @@ static void break_down_buddy_pages(struc
- 		if (current_buddy != target) {
- 			add_to_free_list(current_buddy, zone, high, migratetype);
- 			set_buddy_order(current_buddy, high);
--			page = next_page;
- 		}
- 	}
- }
+ 	/* Setup the wait queue for indicating transition to down status */
+ 	init_waitqueue_head(&adapter->down_waitqueue);
+@@ -4994,6 +4992,9 @@ static int iavf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	/* Setup the wait queue for indicating virtchannel events */
+ 	init_waitqueue_head(&adapter->vc_waitqueue);
+ 
++	queue_delayed_work(adapter->wq, &adapter->watchdog_task,
++			   msecs_to_jiffies(5 * (pdev->devfn & 0x07)));
++	/* Initialization goes on in the work. Do not add more of it below. */
+ 	return 0;
+ 
+ err_ioremap:
+-- 
+2.42.0
+
 
 
