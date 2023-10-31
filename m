@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5D72032B
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27922031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wp3jPDC1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510D7C433C7;
-	Tue, 31 Oct 2023 17:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0isiBvP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F233C433C9;
+	Tue, 31 Oct 2023 17:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771931;
-	bh=bjMaL6ESUJNqF0rNbzKTUL/83EjeqL0l6jXcwcH4/+8=;
+	s=korg; t=1698771934;
+	bh=4Pvx8WKrLP/b7I+XD/H5OvPacM1r8WMejH2LCTyOEt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wp3jPDC1DNA8X72n8natAys9QZ/ON8my0/zX3Dh7YUlHFR7j1+YEuVhUbFfuejIc2
-	 TWLnnX4P54Jyc50BL7Uyw/KYUtpZM+A89nBEdbk9G03LBnN+PYVaZsQGQk3rrsXZP6
-	 VA3BNS81fummLJ2pvxWaIBlmwyAmN0JOnauXWd4k=
+	b=j0isiBvPpoAgJt6fZFj/z+XJPfX6WOuIcCqQqH1qJh28JGyt73/arHYvuvm/bBpzX
+	 Soo8abTakfCA2dhHTedSFZPB4ewoEf7HSRUSfw4qR1swW07PBrbuwqw06If09sif8Z
+	 paIudYm27HlPqDbOAkJ0TI5sABFNcBIN+tLkid74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Yujie Liu <yujie.liu@intel.com>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.1 69/86] tracing/kprobes: Fix the description of variable length arguments
-Date: Tue, 31 Oct 2023 18:01:34 +0100
-Message-ID: <20231031165920.699906734@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.1 70/86] misc: fastrpc: Reset metadata buffer to avoid incorrect free
+Date: Tue, 31 Oct 2023 18:01:35 +0100
+Message-ID: <20231031165920.731570216@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,51 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yujie Liu <yujie.liu@intel.com>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit e0f831836cead677fb07d54bd6bf499df35640c2 upstream.
+commit 1c29d80134ac116e0196c7bad58a2121381b679c upstream.
 
-Fix the following kernel-doc warnings:
+Metadata buffer is allocated during get_args for any remote call.
+This buffer carries buffers, fdlists and other payload information
+for the call. If the buffer is not reset, put_args might find some
+garbage FDs in the fdlist which might have an existing mapping in
+the list. This could result in improper freeing of FD map when DSP
+might still be using the buffer. Added change to reset the metadata
+buffer after allocation.
 
-kernel/trace/trace_kprobe.c:1029: warning: Excess function parameter 'args' description in '__kprobe_event_gen_cmd_start'
-kernel/trace/trace_kprobe.c:1097: warning: Excess function parameter 'args' description in '__kprobe_event_add_fields'
-
-Refer to the usage of variable length arguments elsewhere in the kernel
-code, "@..." is the proper way to express it in the description.
-
-Link: https://lore.kernel.org/all/20231027041315.2613166-1-yujie.liu@intel.com/
-
-Fixes: 2a588dd1d5d6 ("tracing: Add kprobe event command generation functions")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310190437.paI6LYJF-lkp@intel.com/
-Signed-off-by: Yujie Liu <yujie.liu@intel.com>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 8f6c1d8c4f0c ("misc: fastrpc: Add fdlist implementation")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20231013122007.174464-2-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_kprobe.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/fastrpc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -989,7 +989,7 @@ EXPORT_SYMBOL_GPL(kprobe_event_cmd_init)
-  * @name: The name of the kprobe event
-  * @loc: The location of the kprobe event
-  * @kretprobe: Is this a return probe?
-- * @args: Variable number of arg (pairs), one pair for each field
-+ * @...: Variable number of arg (pairs), one pair for each field
-  *
-  * NOTE: Users normally won't want to call this function directly, but
-  * rather use the kprobe_event_gen_cmd_start() wrapper, which automatically
-@@ -1062,7 +1062,7 @@ EXPORT_SYMBOL_GPL(__kprobe_event_gen_cmd
- /**
-  * __kprobe_event_add_fields - Add probe fields to a kprobe command from arg list
-  * @cmd: A pointer to the dynevent_cmd struct representing the new event
-- * @args: Variable number of arg (pairs), one pair for each field
-+ * @...: Variable number of arg (pairs), one pair for each field
-  *
-  * NOTE: Users normally won't want to call this function directly, but
-  * rather use the kprobe_event_add_fields() wrapper, which
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -903,6 +903,7 @@ static int fastrpc_get_args(u32 kernel,
+ 	if (err)
+ 		return err;
+ 
++	memset(ctx->buf->virt, 0, pkt_size);
+ 	rpra = ctx->buf->virt;
+ 	list = fastrpc_invoke_buf_start(rpra, ctx->nscalars);
+ 	pages = fastrpc_phy_page_start(list, ctx->nscalars);
 
 
