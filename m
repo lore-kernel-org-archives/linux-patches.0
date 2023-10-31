@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A1B2031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1532031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6jUl+Um"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564D4C433C9;
-	Tue, 31 Oct 2023 17:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxXSTg2e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65017C433C8;
+	Tue, 31 Oct 2023 17:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771776;
-	bh=u/DVd2WC9piEJeBOWao07KYzQV/zX+1uDfBUvZHq3iY=;
+	s=korg; t=1698771779;
+	bh=JxzAxP7WBd+E4zgGOi5ii3i3Xd9suGaxc4RF5rbJvfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c6jUl+Um/1Vv0TTWl8phPr+QKP3EdHuZnl17Copw3dJgLx4vUe1DpvsRAiax/btye
-	 PO+401doTTus0QYCnwTtaPm3LkKmszX3+yNCgizwa7wouwYY0rkTbdtHak616cIUJc
-	 E51dzBF6vWP0Z91U92Xqq31DTW8wXd+dJwDUL4As=
+	b=jxXSTg2eH013HyYRm+3lF/4FdRSbp5ztrfykJe3POrJUTX3sqZFyTO2gy3h0XRbtW
+	 dGl6DSC8nAs3fH/IKBO44Wx0sFffl09csT1o76iEovc8ys6xVGSQ0vwvu4RcJiINos
+	 f3ZPlpRaDR74mzCgf+gf0mpWsjuMPdZ1SBd9wr74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eric.auger@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.1 17/86] vhost: Allow null msg.size on VHOST_IOTLB_INVALIDATE
-Date: Tue, 31 Oct 2023 18:00:42 +0100
-Message-ID: <20231031165919.148117473@linuxfoundation.org>
+	Christopher Obbard <chris.obbard@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.1 18/86] arm64: dts: rockchip: Add i2s0-2ch-bus-bclk-off pins to RK3399
+Date: Tue, 31 Oct 2023 18:00:43 +0100
+Message-ID: <20231031165919.176856657@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -42,49 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Christopher Obbard <chris.obbard@collabora.com>
 
-commit ca50ec377c2e94b0a9f8735de2856cd0f13beab4 upstream.
+commit 3975e72b164dc8347a28dd0d5f11b346af534635 upstream.
 
-Commit e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb
-entries") Forbade vhost iotlb msg with null size to prevent entries
-with size = start = 0 and last = ULONG_MAX to end up in the iotlb.
+Commit 0efaf8078393 ("arm64: dts: rockchip: add i2s0-2ch-bus pins on
+rk3399") introduced a pinctl for i2s0 in two-channel mode. Commit
+91419ae0420f ("arm64: dts: rockchip: use BCLK to GPIO switch on rk3399")
+modified i2s0 to switch the corresponding pins off when idle.
 
-Then commit 95932ab2ea07 ("vhost: allow batching hint without size")
-only applied the check for VHOST_IOTLB_UPDATE and VHOST_IOTLB_INVALIDATE
-message types to fix a regression observed with batching hit.
+Although an idle pinctrl node was added for i2s0 in 8-channel mode, a
+similar idle pinctrl node for i2s0 in 2-channel mode was not added. Add
+it.
 
-Still, the introduction of that check introduced a regression for
-some users attempting to invalidate the whole ULONG_MAX range by
-setting the size to 0. This is the case with qemu/smmuv3/vhost
-integration which does not work anymore. It Looks safe to partially
-revert the original commit and allow VHOST_IOTLB_INVALIDATE messages
-with null size. vhost_iotlb_del_range() will compute a correct end
-iova. Same for vhost_vdpa_iotlb_unmap().
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Fixes: e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb entries")
-Cc: stable@vger.kernel.org # v5.17+
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20230927140544.205088-1-eric.auger@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 91419ae0420f ("arm64: dts: rockchip: use BCLK to GPIO switch on rk3399")
+Signed-off-by: Christopher Obbard <chris.obbard@collabora.com>
+Link: https://lore.kernel.org/r/20231013114737.494410-2-chris.obbard@collabora.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vhost.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399.dtsi |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -1176,9 +1176,7 @@ ssize_t vhost_chr_write_iter(struct vhos
- 		goto done;
- 	}
+--- a/arch/arm64/boot/dts/rockchip/rk3399.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399.dtsi
+@@ -2396,6 +2396,16 @@
+ 					<4 RK_PA0 1 &pcfg_pull_none>;
+ 			};
  
--	if ((msg.type == VHOST_IOTLB_UPDATE ||
--	     msg.type == VHOST_IOTLB_INVALIDATE) &&
--	     msg.size == 0) {
-+	if (msg.type == VHOST_IOTLB_UPDATE && msg.size == 0) {
- 		ret = -EINVAL;
- 		goto done;
- 	}
++			i2s0_2ch_bus_bclk_off: i2s0-2ch-bus-bclk-off {
++				rockchip,pins =
++					<3 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>,
++					<3 RK_PD1 1 &pcfg_pull_none>,
++					<3 RK_PD2 1 &pcfg_pull_none>,
++					<3 RK_PD3 1 &pcfg_pull_none>,
++					<3 RK_PD7 1 &pcfg_pull_none>,
++					<4 RK_PA0 1 &pcfg_pull_none>;
++			};
++
+ 			i2s0_8ch_bus: i2s0-8ch-bus {
+ 				rockchip,pins =
+ 					<3 RK_PD0 1 &pcfg_pull_none>,
 
 
