@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B212031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A983B2031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTioll8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B99C433C7;
-	Tue, 31 Oct 2023 17:02:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlW28h8C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F5CC433C8;
+	Tue, 31 Oct 2023 17:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771770;
-	bh=DdDSAXuOvGFFvNvvCDfKAcys2iXO4oA/fE5sxyxWdEI=;
+	s=korg; t=1698771773;
+	bh=QVYQYwKQesKT6dnjXI0kAdrZI3eyRiTKO6tYh9b9uCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTioll8Tblqusew7yhNmnNjQP3/J0pFbNL4slLyw6FeN6kzy/A7B1sz3DiglnYhXP
-	 b8rzyhdbncZ41x/aHw4HLso4v5/Pa7Q99JlzQx8d7MR9cYK2ENj/zoIFsdtZrelPgv
-	 AvicM3PUMeaw75CeTJtZQje/zBGCcfa82XdcaYY0=
+	b=FlW28h8CUN8P2VP31O1bTQ4HpC+XjNdKrMGsb7jYaxC2jfmL7TrLi8rJVHKv9pdhw
+	 Rmhs4gjJWLMFKnkPyX9LcHM4t1rFHCGAtkrPx2W5V8yA25ur2AeOjXuwI0xVkA0XRT
+	 czP3LGABDEAqR7KIlGsNxhjXHsO/Kw0zYFlxQ9k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 6.1 15/86] virtio_pci: fix the common cfg map size
-Date: Tue, 31 Oct 2023 18:00:40 +0100
-Message-ID: <20231031165919.086294973@linuxfoundation.org>
+	Alexandru Matei <alexandru.matei@uipath.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 16/86] vsock/virtio: initialize the_virtio_vsock before using VQs
+Date: Tue, 31 Oct 2023 18:00:41 +0100
+Message-ID: <20231031165919.119889453@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -42,39 +42,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Alexandru Matei <alexandru.matei@uipath.com>
 
-commit 061b39fdfe7fd98946e67637213bcbb10a318cca upstream.
+commit 53b08c4985158430fd6d035fb49443bada535210 upstream.
 
-The function vp_modern_map_capability() takes the size parameter,
-which corresponds to the size of virtio_pci_common_cfg. As a result,
-this indicates the size of memory area to map.
+Once VQs are filled with empty buffers and we kick the host, it can send
+connection requests. If the_virtio_vsock is not initialized before,
+replies are silently dropped and do not reach the host.
 
-Now the size is the size of virtio_pci_common_cfg, but some feature(such
-as the _F_RING_RESET) needs the virtio_pci_modern_common_cfg, so this
-commit changes the size to the size of virtio_pci_modern_common_cfg.
+virtio_transport_send_pkt() can queue packets once the_virtio_vsock is
+set, but they won't be processed until vsock->tx_run is set to true. We
+queue vsock->send_pkt_work when initialization finishes to send those
+packets queued earlier.
 
-Cc: stable@vger.kernel.org
-Fixes: 0b50cece0b78 ("virtio_pci: introduce helper to get/set queue reset")
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Message-Id: <20231010031120.81272-3-xuanzhuo@linux.alibaba.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Fixes: 0deab087b16a ("vsock/virtio: use RCU to avoid use-after-free on the_virtio_vsock")
+Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://lore.kernel.org/r/20231024191742.14259-1-alexandru.matei@uipath.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virtio/virtio_pci_modern_dev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/vmw_vsock/virtio_transport.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/drivers/virtio/virtio_pci_modern_dev.c
-+++ b/drivers/virtio/virtio_pci_modern_dev.c
-@@ -282,7 +282,7 @@ int vp_modern_probe(struct virtio_pci_mo
- 	err = -EINVAL;
- 	mdev->common = vp_modern_map_capability(mdev, common,
- 				      sizeof(struct virtio_pci_common_cfg), 4,
--				      0, sizeof(struct virtio_pci_common_cfg),
-+				      0, sizeof(struct virtio_pci_modern_common_cfg),
- 				      NULL, NULL);
- 	if (!mdev->common)
- 		goto err_map_common;
+--- a/net/vmw_vsock/virtio_transport.c
++++ b/net/vmw_vsock/virtio_transport.c
+@@ -590,6 +590,11 @@ static int virtio_vsock_vqs_init(struct
+ 
+ 	virtio_device_ready(vdev);
+ 
++	return 0;
++}
++
++static void virtio_vsock_vqs_start(struct virtio_vsock *vsock)
++{
+ 	mutex_lock(&vsock->tx_lock);
+ 	vsock->tx_run = true;
+ 	mutex_unlock(&vsock->tx_lock);
+@@ -604,7 +609,16 @@ static int virtio_vsock_vqs_init(struct
+ 	vsock->event_run = true;
+ 	mutex_unlock(&vsock->event_lock);
+ 
+-	return 0;
++	/* virtio_transport_send_pkt() can queue packets once
++	 * the_virtio_vsock is set, but they won't be processed until
++	 * vsock->tx_run is set to true. We queue vsock->send_pkt_work
++	 * when initialization finishes to send those packets queued
++	 * earlier.
++	 * We don't need to queue the other workers (rx, event) because
++	 * as long as we don't fill the queues with empty buffers, the
++	 * host can't send us any notification.
++	 */
++	queue_work(virtio_vsock_workqueue, &vsock->send_pkt_work);
+ }
+ 
+ static void virtio_vsock_vqs_del(struct virtio_vsock *vsock)
+@@ -707,6 +721,7 @@ static int virtio_vsock_probe(struct vir
+ 		goto out;
+ 
+ 	rcu_assign_pointer(the_virtio_vsock, vsock);
++	virtio_vsock_vqs_start(vsock);
+ 
+ 	mutex_unlock(&the_virtio_vsock_mutex);
+ 
+@@ -779,6 +794,7 @@ static int virtio_vsock_restore(struct v
+ 		goto out;
+ 
+ 	rcu_assign_pointer(the_virtio_vsock, vsock);
++	virtio_vsock_vqs_start(vsock);
+ 
+ out:
+ 	mutex_unlock(&the_virtio_vsock_mutex);
 
 
