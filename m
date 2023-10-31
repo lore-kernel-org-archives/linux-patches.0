@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D41C208B8
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3446F208B8
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqkciNGY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBA4C433C8;
-	Tue, 31 Oct 2023 17:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u472gXON"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F39C433C7;
+	Tue, 31 Oct 2023 17:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774430;
-	bh=k1VfUGf081mtmgogIyUpQ+PftFC6fTgQ/30HEpGonx8=;
+	s=korg; t=1698774433;
+	bh=K100DZw3UA4trDT4snxSukm3qY8CrFonz+WIwpfEljM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqkciNGYxqwJ8mcV75GBLorN8qcUy+yJBLkYpME8B3cyGBfAWjbYB6ydeaLtP+UgR
-	 DiZiJxydF6SqhylyCbbi/Cs62VPMrfhWVHNp9gK1UC7Y/mImPTXsuH2xb8xsmrkYrG
-	 GnKGHOA2+pEeycpexvsQCdXpi/Z7yw1Q9NcV92tA=
+	b=u472gXONTL7koOEgV6Z30KyUupDavm9JXZNVoW4guf4Xr3v4fFNivxUIgEPykbjy5
+	 nJzF107UavIoSkZUORBqWx0N51Guv5u41OR0asjKNHtO1+gWClqK709A8r+ZR1Ic2m
+	 Y9bj3p3OMkNscYo+k46DvTyuq+ehbBQ+Ba8n7Gyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 043/112] btrfs: remove v0 extent handling
-Date: Tue, 31 Oct 2023 18:00:44 +0100
-Message-ID: <20231031165902.671556999@linuxfoundation.org>
+Subject: [PATCH 6.5 044/112] btrfs: fix unwritten extent buffer after snapshotting a new subvolume
+Date: Tue, 31 Oct 2023 18:00:45 +0100
+Message-ID: <20231031165902.700318494@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -42,310 +43,419 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 182741d287fb1ea870ee6ef45aa1915a0b031233 ]
+[ Upstream commit eb96e221937af3c7bb8a63208dbab813ca5d3d7e ]
 
-The v0 extent item has been deprecated for a long time, and we don't have
-any report from the community either.
+When creating a snapshot of a subvolume that was created in the current
+transaction, we can end up not persisting a dirty extent buffer that is
+referenced by the snapshot, resulting in IO errors due to checksum failures
+when trying to read the extent buffer later from disk. A sequence of steps
+that leads to this is the following:
 
-So it's time to remove the v0 extent specific error handling, and just
-treat them as regular extent tree corruption.
+1) At ioctl.c:create_subvol() we allocate an extent buffer, with logical
+   address 36007936, for the leaf/root of a new subvolume that has an ID
+   of 291. We mark the extent buffer as dirty, and at this point the
+   subvolume tree has a single node/leaf which is also its root (level 0);
 
-This patch would remove the btrfs_print_v0_err() helper, and enhance the
-involved error handling to treat them just as any extent tree
-corruption. No reports regarding v0 extents have been seen since the
-graceful handling was added in 2018.
+2) We no longer commit the transaction used to create the subvolume at
+   create_subvol(). We used to, but that was recently removed in
+   commit 1b53e51a4a8f ("btrfs: don't commit transaction for every subvol
+   create");
 
-This involves:
+3) The transaction used to create the subvolume has an ID of 33, so the
+   extent buffer 36007936 has a generation of 33;
 
-- btrfs_backref_add_tree_node()
-  This change is a little tricky, the new code is changed to only handle
-  BTRFS_TREE_BLOCK_REF_KEY and BTRFS_SHARED_BLOCK_REF_KEY.
+4) Several updates happen to subvolume 291 during transaction 33, several
+   files created and its tree height changes from 0 to 1, so we end up with
+   a new root at level 1 and the extent buffer 36007936 is now a leaf of
+   that new root node, which is extent buffer 36048896.
 
-  But this is safe, as we have rejected any unknown inline refs through
-  btrfs_get_extent_inline_ref_type().
-  For keyed backrefs, we're safe to skip anything we don't know (that's
-  if it can pass tree-checker in the first place).
+   The commit root remains as 36007936, since we are still at transaction
+   33;
 
-- btrfs_lookup_extent_info()
-- lookup_inline_extent_backref()
-- run_delayed_extent_op()
-- __btrfs_free_extent()
-- add_tree_block()
-  Regular error handling of unexpected extent tree item, and abort
-  transaction (if we have a trans handle).
+5) Creation of a snapshot of subvolume 291, with an ID of 292, starts at
+   ioctl.c:create_snapshot(). This triggers a commit of transaction 33 and
+   we end up at transaction.c:create_pending_snapshot(), in the critical
+   section of a transaction commit.
 
-- remove_extent_data_ref()
-  It's pretty much the same as the regular rejection of unknown backref
-  key.
-  But for this particular case, we can also remove a BUG_ON().
+   There we COW the root of subvolume 291, which is extent buffer 36048896.
+   The COW operation returns extent buffer 36048896, since there's no need
+   to COW because the extent buffer was created in this transaction and it
+   was not written yet.
 
-- extent_data_ref_count()
-  We can remove the BTRFS_EXTENT_REF_V0_KEY BUG_ON(), as it would be
-  rejected by the only caller.
+   The we call btrfs_copy_root() against the root node 36048896. During
+   this operation we allocate a new extent buffer to turn into the root
+   node of the snapshot, copy the contents of the root node 36048896 into
+   this snapshot root extent buffer, set the owner to 292 (the ID of the
+   snapshot), etc, and then we call btrfs_inc_ref(). This will create a
+   delayed reference for each leaf pointed by the root node with a
+   reference root of 292 - this includes a reference for the leaf
+   36007936.
 
-- btrfs_print_leaf()
-  Remove the handling for BTRFS_EXTENT_REF_V0_KEY.
+   After that we set the bit BTRFS_ROOT_FORCE_COW in the root's state.
 
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+   Then we call btrfs_insert_dir_item(), to create the directory entry in
+   in the tree of subvolume 291 that points to the snapshot. This ends up
+   needing to modify leaf 36007936 to insert the respective directory
+   items. Because the bit BTRFS_ROOT_FORCE_COW is set for the root's state,
+   we need to COW the leaf. We end up at btrfs_force_cow_block() and then
+   at update_ref_for_cow().
+
+   At update_ref_for_cow() we call btrfs_block_can_be_shared() which
+   returns false, despite the fact the leaf 36007936 is shared - the
+   subvolume's root and the snapshot's root point to that leaf. The
+   reason that it incorrectly returns false is because the commit root
+   of the subvolume is extent buffer 36007936 - it was the initial root
+   of the subvolume when we created it. So btrfs_block_can_be_shared()
+   which has the following logic:
+
+   int btrfs_block_can_be_shared(struct btrfs_root *root,
+                                 struct extent_buffer *buf)
+   {
+       if (test_bit(BTRFS_ROOT_SHAREABLE, &root->state) &&
+           buf != root->node && buf != root->commit_root &&
+           (btrfs_header_generation(buf) <=
+            btrfs_root_last_snapshot(&root->root_item) ||
+            btrfs_header_flag(buf, BTRFS_HEADER_FLAG_RELOC)))
+               return 1;
+
+       return 0;
+   }
+
+   Returns false (0) since 'buf' (extent buffer 36007936) matches the
+   root's commit root.
+
+   As a result, at update_ref_for_cow(), we don't check for the number
+   of references for extent buffer 36007936, we just assume it's not
+   shared and therefore that it has only 1 reference, so we set the local
+   variable 'refs' to 1.
+
+   Later on, in the final if-else statement at update_ref_for_cow():
+
+   static noinline int update_ref_for_cow(struct btrfs_trans_handle *trans,
+                                          struct btrfs_root *root,
+                                          struct extent_buffer *buf,
+                                          struct extent_buffer *cow,
+                                          int *last_ref)
+   {
+      (...)
+      if (refs > 1) {
+          (...)
+      } else {
+          (...)
+          btrfs_clear_buffer_dirty(trans, buf);
+          *last_ref = 1;
+      }
+   }
+
+   So we mark the extent buffer 36007936 as not dirty, and as a result
+   we don't write it to disk later in the transaction commit, despite the
+   fact that the snapshot's root points to it.
+
+   Attempting to access the leaf or dumping the tree for example shows
+   that the extent buffer was not written:
+
+   $ btrfs inspect-internal dump-tree -t 292 /dev/sdb
+   btrfs-progs v6.2.2
+   file tree key (292 ROOT_ITEM 33)
+   node 36110336 level 1 items 2 free space 119 generation 33 owner 292
+   node 36110336 flags 0x1(WRITTEN) backref revision 1
+   checksum stored a8103e3e
+   checksum calced a8103e3e
+   fs uuid 90c9a46f-ae9f-4626-9aff-0cbf3e2e3a79
+   chunk uuid e8c9c885-78f4-4d31-85fe-89e5f5fd4a07
+           key (256 INODE_ITEM 0) block 36007936 gen 33
+           key (257 EXTENT_DATA 0) block 36052992 gen 33
+   checksum verify failed on 36007936 wanted 0x00000000 found 0x86005f29
+   checksum verify failed on 36007936 wanted 0x00000000 found 0x86005f29
+   total bytes 107374182400
+   bytes used 38572032
+   uuid 90c9a46f-ae9f-4626-9aff-0cbf3e2e3a79
+
+   The respective on disk region is full of zeroes as the device was
+   trimmed at mkfs time.
+
+   Obviously 'btrfs check' also detects and complains about this:
+
+   $ btrfs check /dev/sdb
+   Opening filesystem to check...
+   Checking filesystem on /dev/sdb
+   UUID: 90c9a46f-ae9f-4626-9aff-0cbf3e2e3a79
+   generation: 33 (33)
+   [1/7] checking root items
+   [2/7] checking extents
+   checksum verify failed on 36007936 wanted 0x00000000 found 0x86005f29
+   checksum verify failed on 36007936 wanted 0x00000000 found 0x86005f29
+   checksum verify failed on 36007936 wanted 0x00000000 found 0x86005f29
+   bad tree block 36007936, bytenr mismatch, want=36007936, have=0
+   owner ref check failed [36007936 4096]
+   ERROR: errors found in extent allocation tree or chunk allocation
+   [3/7] checking free space tree
+   [4/7] checking fs roots
+   checksum verify failed on 36007936 wanted 0x00000000 found 0x86005f29
+   checksum verify failed on 36007936 wanted 0x00000000 found 0x86005f29
+   checksum verify failed on 36007936 wanted 0x00000000 found 0x86005f29
+   bad tree block 36007936, bytenr mismatch, want=36007936, have=0
+   The following tree block(s) is corrupted in tree 292:
+        tree block bytenr: 36110336, level: 1, node key: (256, 1, 0)
+   root 292 root dir 256 not found
+   ERROR: errors found in fs roots
+   found 38572032 bytes used, error(s) found
+   total csum bytes: 16048
+   total tree bytes: 1265664
+   total fs tree bytes: 1118208
+   total extent tree bytes: 65536
+   btree space waste bytes: 562598
+   file data blocks allocated: 65978368
+    referenced 36569088
+
+Fix this by updating btrfs_block_can_be_shared() to consider that an
+extent buffer may be shared if it matches the commit root and if its
+generation matches the current transaction's generation.
+
+This can be reproduced with the following script:
+
+   $ cat test.sh
+   #!/bin/bash
+
+   MNT=/mnt/sdi
+   DEV=/dev/sdi
+
+   # Use a filesystem with a 64K node size so that we have the same node
+   # size on every machine regardless of its page size (on x86_64 default
+   # node size is 16K due to the 4K page size, while on PPC it's 64K by
+   # default). This way we can make sure we are able to create a btree for
+   # the subvolume with a height of 2.
+   mkfs.btrfs -f -n 64K $DEV
+   mount $DEV $MNT
+
+   btrfs subvolume create $MNT/subvol
+
+   # Create a few empty files on the subvolume, this bumps its btree
+   # height to 2 (root node at level 1 and 2 leaves).
+   for ((i = 1; i <= 300; i++)); do
+       echo -n > $MNT/subvol/file_$i
+   done
+
+   btrfs subvolume snapshot -r $MNT/subvol $MNT/subvol/snap
+
+   umount $DEV
+
+   btrfs check $DEV
+
+Running it on a 6.5 kernel (or any 6.6-rc kernel at the moment):
+
+   $ ./test.sh
+   Create subvolume '/mnt/sdi/subvol'
+   Create a readonly snapshot of '/mnt/sdi/subvol' in '/mnt/sdi/subvol/snap'
+   Opening filesystem to check...
+   Checking filesystem on /dev/sdi
+   UUID: bbdde2ff-7d02-45ca-8a73-3c36f23755a1
+   [1/7] checking root items
+   [2/7] checking extents
+   parent transid verify failed on 30539776 wanted 7 found 5
+   parent transid verify failed on 30539776 wanted 7 found 5
+   parent transid verify failed on 30539776 wanted 7 found 5
+   Ignoring transid failure
+   owner ref check failed [30539776 65536]
+   ERROR: errors found in extent allocation tree or chunk allocation
+   [3/7] checking free space tree
+   [4/7] checking fs roots
+   parent transid verify failed on 30539776 wanted 7 found 5
+   Ignoring transid failure
+   Wrong key of child node/leaf, wanted: (256, 1, 0), have: (2, 132, 0)
+   Wrong generation of child node/leaf, wanted: 5, have: 7
+   root 257 root dir 256 not found
+   ERROR: errors found in fs roots
+   found 917504 bytes used, error(s) found
+   total csum bytes: 0
+   total tree bytes: 851968
+   total fs tree bytes: 393216
+   total extent tree bytes: 65536
+   btree space waste bytes: 736550
+   file data blocks allocated: 0
+    referenced 0
+
+A test case for fstests will follow soon.
+
+Fixes: 1b53e51a4a8f ("btrfs: don't commit transaction for every subvol create")
+CC: stable@vger.kernel.org # 6.5+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: eb96e221937a ("btrfs: fix unwritten extent buffer after snapshotting a new subvolume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/backref.c              | 29 +++++++++++----------------
- fs/btrfs/extent-tree.c          | 35 ++++++++++++++++++++-------------
- fs/btrfs/messages.c             |  6 ------
- fs/btrfs/messages.h             |  2 --
- fs/btrfs/print-tree.c           | 10 ++++------
- fs/btrfs/relocation.c           | 11 ++++++-----
- include/trace/events/btrfs.h    |  1 -
- include/uapi/linux/btrfs_tree.h |  6 +++++-
- 8 files changed, 48 insertions(+), 52 deletions(-)
+ fs/btrfs/backref.c    | 14 +++++++++-----
+ fs/btrfs/backref.h    |  3 ++-
+ fs/btrfs/ctree.c      | 21 ++++++++++++++++-----
+ fs/btrfs/ctree.h      |  3 ++-
+ fs/btrfs/relocation.c |  7 ++++---
+ 5 files changed, 33 insertions(+), 15 deletions(-)
 
 diff --git a/fs/btrfs/backref.c b/fs/btrfs/backref.c
-index 79336fa853db3..b7d54efb47288 100644
+index b7d54efb47288..a4a809efc92fc 100644
 --- a/fs/btrfs/backref.c
 +++ b/fs/btrfs/backref.c
-@@ -3373,7 +3373,6 @@ int btrfs_backref_add_tree_node(struct btrfs_backref_cache *cache,
+@@ -3196,12 +3196,14 @@ static int handle_direct_tree_backref(struct btrfs_backref_cache *cache,
+  * We still need to do a tree search to find out the parents. This is for
+  * TREE_BLOCK_REF backref (keyed or inlined).
+  *
++ * @trans:	Transaction handle.
+  * @ref_key:	The same as @ref_key in  handle_direct_tree_backref()
+  * @tree_key:	The first key of this tree block.
+  * @path:	A clean (released) path, to avoid allocating path every time
+  *		the function get called.
+  */
+-static int handle_indirect_tree_backref(struct btrfs_backref_cache *cache,
++static int handle_indirect_tree_backref(struct btrfs_trans_handle *trans,
++					struct btrfs_backref_cache *cache,
+ 					struct btrfs_path *path,
+ 					struct btrfs_key *ref_key,
+ 					struct btrfs_key *tree_key,
+@@ -3315,7 +3317,7 @@ static int handle_indirect_tree_backref(struct btrfs_backref_cache *cache,
+ 			 * If we know the block isn't shared we can avoid
+ 			 * checking its backrefs.
+ 			 */
+-			if (btrfs_block_can_be_shared(root, eb))
++			if (btrfs_block_can_be_shared(trans, root, eb))
+ 				upper->checked = 0;
+ 			else
+ 				upper->checked = 1;
+@@ -3363,11 +3365,13 @@ static int handle_indirect_tree_backref(struct btrfs_backref_cache *cache,
+  *	 links aren't yet bi-directional. Needs to finish such links.
+  *	 Use btrfs_backref_finish_upper_links() to finish such linkage.
+  *
++ * @trans:	Transaction handle.
+  * @path:	Released path for indirect tree backref lookup
+  * @iter:	Released backref iter for extent tree search
+  * @node_key:	The first key of the tree block
+  */
+-int btrfs_backref_add_tree_node(struct btrfs_backref_cache *cache,
++int btrfs_backref_add_tree_node(struct btrfs_trans_handle *trans,
++				struct btrfs_backref_cache *cache,
+ 				struct btrfs_path *path,
+ 				struct btrfs_backref_iter *iter,
  				struct btrfs_key *node_key,
- 				struct btrfs_backref_node *cur)
- {
--	struct btrfs_fs_info *fs_info = cache->fs_info;
- 	struct btrfs_backref_edge *edge;
- 	struct btrfs_backref_node *exist;
- 	int ret;
-@@ -3462,25 +3461,21 @@ int btrfs_backref_add_tree_node(struct btrfs_backref_cache *cache,
- 			ret = handle_direct_tree_backref(cache, &key, cur);
+@@ -3467,8 +3471,8 @@ int btrfs_backref_add_tree_node(struct btrfs_backref_cache *cache,
+ 			 * offset means the root objectid. We need to search
+ 			 * the tree to get its parent bytenr.
+ 			 */
+-			ret = handle_indirect_tree_backref(cache, path, &key, node_key,
+-							   cur);
++			ret = handle_indirect_tree_backref(trans, cache, path,
++							   &key, node_key, cur);
  			if (ret < 0)
  				goto out;
--			continue;
--		} else if (unlikely(key.type == BTRFS_EXTENT_REF_V0_KEY)) {
--			ret = -EINVAL;
--			btrfs_print_v0_err(fs_info);
--			btrfs_handle_fs_error(fs_info, ret, NULL);
--			goto out;
--		} else if (key.type != BTRFS_TREE_BLOCK_REF_KEY) {
--			continue;
-+		} else if (key.type == BTRFS_TREE_BLOCK_REF_KEY) {
-+			/*
-+			 * key.type == BTRFS_TREE_BLOCK_REF_KEY, inline ref
-+			 * offset means the root objectid. We need to search
-+			 * the tree to get its parent bytenr.
-+			 */
-+			ret = handle_indirect_tree_backref(cache, path, &key, node_key,
-+							   cur);
-+			if (ret < 0)
-+				goto out;
  		}
--
- 		/*
--		 * key.type == BTRFS_TREE_BLOCK_REF_KEY, inline ref offset
--		 * means the root objectid. We need to search the tree to get
--		 * its parent bytenr.
-+		 * Unrecognized tree backref items (if it can pass tree-checker)
-+		 * would be ignored.
- 		 */
--		ret = handle_indirect_tree_backref(cache, path, &key, node_key,
--						   cur);
--		if (ret < 0)
--			goto out;
- 	}
- 	ret = 0;
- 	cur->checked = 1;
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 2cf8d646085c2..14ea6b587e97b 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -187,8 +187,10 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
- 			num_refs = btrfs_extent_refs(leaf, ei);
- 			extent_flags = btrfs_extent_flags(leaf, ei);
- 		} else {
--			ret = -EINVAL;
--			btrfs_print_v0_err(fs_info);
-+			ret = -EUCLEAN;
-+			btrfs_err(fs_info,
-+			"unexpected extent item size, has %u expect >= %zu",
-+				  item_size, sizeof(*ei));
- 			if (trans)
- 				btrfs_abort_transaction(trans, ret);
- 			else
-@@ -624,12 +626,12 @@ static noinline int remove_extent_data_ref(struct btrfs_trans_handle *trans,
- 		ref2 = btrfs_item_ptr(leaf, path->slots[0],
- 				      struct btrfs_shared_data_ref);
- 		num_refs = btrfs_shared_data_ref_count(leaf, ref2);
--	} else if (unlikely(key.type == BTRFS_EXTENT_REF_V0_KEY)) {
--		btrfs_print_v0_err(trans->fs_info);
--		btrfs_abort_transaction(trans, -EINVAL);
--		return -EINVAL;
- 	} else {
--		BUG();
-+		btrfs_err(trans->fs_info,
-+			  "unrecognized backref key (%llu %u %llu)",
-+			  key.objectid, key.type, key.offset);
-+		btrfs_abort_transaction(trans, -EUCLEAN);
-+		return -EUCLEAN;
- 	}
- 
- 	BUG_ON(num_refs < refs_to_drop);
-@@ -660,7 +662,6 @@ static noinline u32 extent_data_ref_count(struct btrfs_path *path,
- 	leaf = path->nodes[0];
- 	btrfs_item_key_to_cpu(leaf, &key, path->slots[0]);
- 
--	BUG_ON(key.type == BTRFS_EXTENT_REF_V0_KEY);
- 	if (iref) {
- 		/*
- 		 * If type is invalid, we should have bailed out earlier than
-@@ -881,8 +882,10 @@ int lookup_inline_extent_backref(struct btrfs_trans_handle *trans,
- 	leaf = path->nodes[0];
- 	item_size = btrfs_item_size(leaf, path->slots[0]);
- 	if (unlikely(item_size < sizeof(*ei))) {
--		err = -EINVAL;
--		btrfs_print_v0_err(fs_info);
-+		err = -EUCLEAN;
-+		btrfs_err(fs_info,
-+			  "unexpected extent item size, has %llu expect >= %zu",
-+			  item_size, sizeof(*ei));
- 		btrfs_abort_transaction(trans, err);
- 		goto out;
- 	}
-@@ -1683,8 +1686,10 @@ static int run_delayed_extent_op(struct btrfs_trans_handle *trans,
- 	item_size = btrfs_item_size(leaf, path->slots[0]);
- 
- 	if (unlikely(item_size < sizeof(*ei))) {
--		err = -EINVAL;
--		btrfs_print_v0_err(fs_info);
-+		err = -EUCLEAN;
-+		btrfs_err(fs_info,
-+			  "unexpected extent item size, has %u expect >= %zu",
-+			  item_size, sizeof(*ei));
- 		btrfs_abort_transaction(trans, err);
- 		goto out;
- 	}
-@@ -3113,8 +3118,10 @@ static int __btrfs_free_extent(struct btrfs_trans_handle *trans,
- 	leaf = path->nodes[0];
- 	item_size = btrfs_item_size(leaf, extent_slot);
- 	if (unlikely(item_size < sizeof(*ei))) {
--		ret = -EINVAL;
--		btrfs_print_v0_err(info);
-+		ret = -EUCLEAN;
-+		btrfs_err(trans->fs_info,
-+			  "unexpected extent item size, has %u expect >= %zu",
-+			  item_size, sizeof(*ei));
- 		btrfs_abort_transaction(trans, ret);
- 		goto out;
- 	}
-diff --git a/fs/btrfs/messages.c b/fs/btrfs/messages.c
-index 23fc11af498ac..21f2d101f681d 100644
---- a/fs/btrfs/messages.c
-+++ b/fs/btrfs/messages.c
-@@ -252,12 +252,6 @@ void __cold _btrfs_printk(const struct btrfs_fs_info *fs_info, const char *fmt,
+diff --git a/fs/btrfs/backref.h b/fs/btrfs/backref.h
+index 1616e3e3f1e41..71d535e03dca8 100644
+--- a/fs/btrfs/backref.h
++++ b/fs/btrfs/backref.h
+@@ -540,7 +540,8 @@ static inline void btrfs_backref_panic(struct btrfs_fs_info *fs_info,
+ 		    bytenr);
  }
- #endif
  
--void __cold btrfs_print_v0_err(struct btrfs_fs_info *fs_info)
--{
--	btrfs_err(fs_info,
--"Unsupported V0 extent filesystem detected. Aborting. Please re-create your filesystem with a newer kernel");
--}
--
- #if BITS_PER_LONG == 32
- void __cold btrfs_warn_32bit_limit(struct btrfs_fs_info *fs_info)
+-int btrfs_backref_add_tree_node(struct btrfs_backref_cache *cache,
++int btrfs_backref_add_tree_node(struct btrfs_trans_handle *trans,
++				struct btrfs_backref_cache *cache,
+ 				struct btrfs_path *path,
+ 				struct btrfs_backref_iter *iter,
+ 				struct btrfs_key *node_key,
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index da519c1b6ad08..617d4827eec26 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -367,7 +367,8 @@ int btrfs_copy_root(struct btrfs_trans_handle *trans,
+ /*
+  * check if the tree block can be shared by multiple trees
+  */
+-int btrfs_block_can_be_shared(struct btrfs_root *root,
++int btrfs_block_can_be_shared(struct btrfs_trans_handle *trans,
++			      struct btrfs_root *root,
+ 			      struct extent_buffer *buf)
  {
-diff --git a/fs/btrfs/messages.h b/fs/btrfs/messages.h
-index deedc1a168e24..1ae6f8e23e071 100644
---- a/fs/btrfs/messages.h
-+++ b/fs/btrfs/messages.h
-@@ -181,8 +181,6 @@ do {								\
- #define ASSERT(expr)	(void)(expr)
- #endif
+ 	/*
+@@ -376,11 +377,21 @@ int btrfs_block_can_be_shared(struct btrfs_root *root,
+ 	 * not allocated by tree relocation, we know the block is not shared.
+ 	 */
+ 	if (test_bit(BTRFS_ROOT_SHAREABLE, &root->state) &&
+-	    buf != root->node && buf != root->commit_root &&
++	    buf != root->node &&
+ 	    (btrfs_header_generation(buf) <=
+ 	     btrfs_root_last_snapshot(&root->root_item) ||
+-	     btrfs_header_flag(buf, BTRFS_HEADER_FLAG_RELOC)))
+-		return 1;
++	     btrfs_header_flag(buf, BTRFS_HEADER_FLAG_RELOC))) {
++		if (buf != root->commit_root)
++			return 1;
++		/*
++		 * An extent buffer that used to be the commit root may still be
++		 * shared because the tree height may have increased and it
++		 * became a child of a higher level root. This can happen when
++		 * snapshotting a subvolume created in the current transaction.
++		 */
++		if (btrfs_header_generation(buf) == trans->transid)
++			return 1;
++	}
  
--void __cold btrfs_print_v0_err(struct btrfs_fs_info *fs_info);
--
- __printf(5, 6)
- __cold
- void __btrfs_handle_fs_error(struct btrfs_fs_info *fs_info, const char *function,
-diff --git a/fs/btrfs/print-tree.c b/fs/btrfs/print-tree.c
-index aa06d9ca911d9..0c93439e929fb 100644
---- a/fs/btrfs/print-tree.c
-+++ b/fs/btrfs/print-tree.c
-@@ -95,8 +95,10 @@ static void print_extent_item(const struct extent_buffer *eb, int slot, int type
- 	int ref_index = 0;
+ 	return 0;
+ }
+@@ -415,7 +426,7 @@ static noinline int update_ref_for_cow(struct btrfs_trans_handle *trans,
+ 	 * are only allowed for blocks use full backrefs.
+ 	 */
  
- 	if (unlikely(item_size < sizeof(*ei))) {
--		btrfs_print_v0_err(eb->fs_info);
--		btrfs_handle_fs_error(eb->fs_info, -EINVAL, NULL);
-+		btrfs_err(eb->fs_info,
-+			  "unexpected extent item size, has %u expect >= %zu",
-+			  item_size, sizeof(*ei));
-+		btrfs_handle_fs_error(eb->fs_info, -EUCLEAN, NULL);
- 	}
- 
- 	ei = btrfs_item_ptr(eb, slot, struct btrfs_extent_item);
-@@ -291,10 +293,6 @@ void btrfs_print_leaf(const struct extent_buffer *l)
- 			       btrfs_file_extent_num_bytes(l, fi),
- 			       btrfs_file_extent_ram_bytes(l, fi));
- 			break;
--		case BTRFS_EXTENT_REF_V0_KEY:
--			btrfs_print_v0_err(fs_info);
--			btrfs_handle_fs_error(fs_info, -EINVAL, NULL);
--			break;
- 		case BTRFS_BLOCK_GROUP_ITEM_KEY:
- 			bi = btrfs_item_ptr(l, i,
- 					    struct btrfs_block_group_item);
+-	if (btrfs_block_can_be_shared(root, buf)) {
++	if (btrfs_block_can_be_shared(trans, root, buf)) {
+ 		ret = btrfs_lookup_extent_info(trans, fs_info, buf->start,
+ 					       btrfs_header_level(buf), 1,
+ 					       &refs, &flags);
+diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
+index 9419f4e37a58c..ff40acd63a374 100644
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -540,7 +540,8 @@ int btrfs_copy_root(struct btrfs_trans_handle *trans,
+ 		      struct btrfs_root *root,
+ 		      struct extent_buffer *buf,
+ 		      struct extent_buffer **cow_ret, u64 new_root_objectid);
+-int btrfs_block_can_be_shared(struct btrfs_root *root,
++int btrfs_block_can_be_shared(struct btrfs_trans_handle *trans,
++			      struct btrfs_root *root,
+ 			      struct extent_buffer *buf);
+ int btrfs_del_ptr(struct btrfs_trans_handle *trans, struct btrfs_root *root,
+ 		  struct btrfs_path *path, int level, int slot);
 diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index 5f4ff7d5b5c19..d69a331a6d113 100644
+index d69a331a6d113..62ed57551824c 100644
 --- a/fs/btrfs/relocation.c
 +++ b/fs/btrfs/relocation.c
-@@ -3256,12 +3256,13 @@ static int add_tree_block(struct reloc_control *rc,
- 			if (type == BTRFS_TREE_BLOCK_REF_KEY)
- 				owner = btrfs_extent_inline_ref_offset(eb, iref);
- 		}
--	} else if (unlikely(item_size == sizeof(struct btrfs_extent_item_v0))) {
--		btrfs_print_v0_err(eb->fs_info);
--		btrfs_handle_fs_error(eb->fs_info, -EINVAL, NULL);
--		return -EINVAL;
- 	} else {
--		BUG();
-+		btrfs_print_leaf(eb);
-+		btrfs_err(rc->block_group->fs_info,
-+			  "unrecognized tree backref at tree block %llu slot %u",
-+			  eb->start, path->slots[0]);
-+		btrfs_release_path(path);
-+		return -EUCLEAN;
- 	}
+@@ -466,6 +466,7 @@ static bool handle_useless_nodes(struct reloc_control *rc,
+  * cached.
+  */
+ static noinline_for_stack struct btrfs_backref_node *build_backref_tree(
++			struct btrfs_trans_handle *trans,
+ 			struct reloc_control *rc, struct btrfs_key *node_key,
+ 			int level, u64 bytenr)
+ {
+@@ -499,8 +500,8 @@ static noinline_for_stack struct btrfs_backref_node *build_backref_tree(
  
- 	btrfs_release_path(path);
-diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
-index a8206f5332e99..da0734b182f2f 100644
---- a/include/trace/events/btrfs.h
-+++ b/include/trace/events/btrfs.h
-@@ -38,7 +38,6 @@ struct find_free_extent_ctl;
- 	__print_symbolic(type,						\
- 		{ BTRFS_TREE_BLOCK_REF_KEY, 	"TREE_BLOCK_REF" },	\
- 		{ BTRFS_EXTENT_DATA_REF_KEY, 	"EXTENT_DATA_REF" },	\
--		{ BTRFS_EXTENT_REF_V0_KEY, 	"EXTENT_REF_V0" },	\
- 		{ BTRFS_SHARED_BLOCK_REF_KEY, 	"SHARED_BLOCK_REF" },	\
- 		{ BTRFS_SHARED_DATA_REF_KEY, 	"SHARED_DATA_REF" })
+ 	/* Breadth-first search to build backref cache */
+ 	do {
+-		ret = btrfs_backref_add_tree_node(cache, path, iter, node_key,
+-						  cur);
++		ret = btrfs_backref_add_tree_node(trans, cache, path, iter,
++						  node_key, cur);
+ 		if (ret < 0) {
+ 			err = ret;
+ 			goto out;
+@@ -2803,7 +2804,7 @@ int relocate_tree_blocks(struct btrfs_trans_handle *trans,
  
-diff --git a/include/uapi/linux/btrfs_tree.h b/include/uapi/linux/btrfs_tree.h
-index ab38d0f411fa4..fc3c32186d7eb 100644
---- a/include/uapi/linux/btrfs_tree.h
-+++ b/include/uapi/linux/btrfs_tree.h
-@@ -220,7 +220,11 @@
- 
- #define BTRFS_EXTENT_DATA_REF_KEY	178
- 
--#define BTRFS_EXTENT_REF_V0_KEY		180
-+/*
-+ * Obsolete key. Defintion removed in 6.6, value may be reused in the future.
-+ *
-+ * #define BTRFS_EXTENT_REF_V0_KEY	180
-+ */
- 
- #define BTRFS_SHARED_BLOCK_REF_KEY	182
- 
+ 	/* Do tree relocation */
+ 	rbtree_postorder_for_each_entry_safe(block, next, blocks, rb_node) {
+-		node = build_backref_tree(rc, &block->key,
++		node = build_backref_tree(trans, rc, &block->key,
+ 					  block->level, block->bytenr);
+ 		if (IS_ERR(node)) {
+ 			err = PTR_ERR(node);
 -- 
 2.42.0
 
