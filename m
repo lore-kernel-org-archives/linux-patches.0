@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2052031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2E82031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HC4GJB5V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3C1C433C7;
-	Tue, 31 Oct 2023 17:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoQ1CD86"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF88C433C7;
+	Tue, 31 Oct 2023 17:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771797;
-	bh=hU76tPOwe4WJeVzf8y2IhacloJFkDIvS3u/tHueZtBo=;
+	s=korg; t=1698771800;
+	bh=SQvd8uJV6bEhLME/aPVVaUibD8UyQsMHCPL1ba469v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HC4GJB5VQPkCJzoWbY3TxU5W7CKw1MJLfq7X9I5j582+0chUQ/9JK6aN4hVEfQO63
-	 J0GmbqEBmfxGb2cia6XmGbeVUN9wY+/cwPpHOwjfbSvFy7/c2mv1ULFpJy3hWsHXTO
-	 tbkLQFpnC6b1gOMxmspGK1kZ19hWG7TV5FxK1zsA=
+	b=HoQ1CD86v4O8nulZRAgUbTgZBKKafTYX3OMYfR+NpoweleQXS3EctFNqakP4VbWrK
+	 7Vs+T2z8bXmD5AB/fVMLMl/ZLNrGcgLXqLV/l9gt+W/s78TqHYtydep9ZDEkPjYNuL
+	 QQ4BkIcl4xQQrSXL25wS0S8lJMcZa1///ugc3m6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gregory.price@memverge.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Rik van Riel <riel@surriel.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Muchun Song <muchun.song@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 23/86] mm/migrate: fix do_pages_move for compat pointers
-Date: Tue, 31 Oct 2023 18:00:48 +0100
-Message-ID: <20231031165919.334748103@linuxfoundation.org>
+Subject: [PATCH 6.1 24/86] hugetlbfs: extend hugetlb_vma_lock to private VMAs
+Date: Tue, 31 Oct 2023 18:00:49 +0100
+Message-ID: <20231031165919.364477734@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,74 +44,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry.memverge@gmail.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit 229e2253766c7cdfe024f1fe280020cc4711087c upstream.
+commit bf4916922c60f43efaa329744b3eef539aa6a2b2 upstream.
 
-do_pages_move does not handle compat pointers for the page list.
-correctly.  Add in_compat_syscall check and appropriate get_user fetch
-when iterating the page list.
+Extend the locking scheme used to protect shared hugetlb mappings from
+truncate vs page fault races, in order to protect private hugetlb mappings
+(with resv_map) against MADV_DONTNEED.
 
-It makes the syscall in compat mode (32-bit userspace, 64-bit kernel)
-work the same way as the native 32-bit syscall again, restoring the
-behavior before my broken commit 5b1b561ba73c ("mm: simplify
-compat_sys_move_pages").
+Add a read-write semaphore to the resv_map data structure, and use that
+from the hugetlb_vma_(un)lock_* functions, in preparation for closing the
+race between MADV_DONTNEED and page faults.
 
-More specifically, my patch moved the parsing of the 'pages' array from
-the main entry point into do_pages_stat(), which left the syscall
-working correctly for the 'stat' operation (nodes = NULL), while the
-'move' operation (nodes != NULL) is now missing the conversion and
-interprets 'pages' as an array of 64-bit pointers instead of the
-intended 32-bit userspace pointers.
-
-It is possible that nobody noticed this bug because the few
-applications that actually call move_pages are unlikely to run in
-compat mode because of their large memory requirements, but this
-clearly fixes a user-visible regression and should have been caught by
-ltp.
-
-Link: https://lkml.kernel.org/r/20231003144857.752952-1-gregory.price@memverge.com
-Fixes: 5b1b561ba73c ("mm: simplify compat_sys_move_pages")
-Signed-off-by: Gregory Price <gregory.price@memverge.com>
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Co-developed-by: Arnd Bergmann <arnd@arndb.de>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lkml.kernel.org/r/20231006040020.3677377-3-riel@surriel.com
+Fixes: 04ada095dcfc ("hugetlb: don't delete vma_lock in hugetlb MADV_DONTNEED processing")
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Muchun Song <muchun.song@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ include/linux/hugetlb.h |    6 ++++++
+ mm/hugetlb.c            |   41 +++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 43 insertions(+), 4 deletions(-)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -1787,6 +1787,7 @@ static int do_pages_move(struct mm_struc
- 			 const int __user *nodes,
- 			 int __user *status, int flags)
- {
-+	compat_uptr_t __user *compat_pages = (void __user *)pages;
- 	int current_node = NUMA_NO_NODE;
- 	LIST_HEAD(pagelist);
- 	int start, i;
-@@ -1800,8 +1801,17 @@ static int do_pages_move(struct mm_struc
- 		int node;
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -70,6 +70,7 @@ struct resv_map {
+ 	long adds_in_progress;
+ 	struct list_head region_cache;
+ 	long region_cache_count;
++	struct rw_semaphore rw_sema;
+ #ifdef CONFIG_CGROUP_HUGETLB
+ 	/*
+ 	 * On private mappings, the counter to uncharge reservations is stored
+@@ -879,6 +880,11 @@ static inline bool hugepage_migration_su
+ 	return arch_hugetlb_migration_supported(h);
+ }
  
- 		err = -EFAULT;
--		if (get_user(p, pages + i))
--			goto out_flush;
-+		if (in_compat_syscall()) {
-+			compat_uptr_t cp;
++static inline bool __vma_private_lock(struct vm_area_struct *vma)
++{
++	return (!(vma->vm_flags & VM_MAYSHARE)) && vma->vm_private_data;
++}
 +
-+			if (get_user(cp, compat_pages + i))
-+				goto out_flush;
+ /*
+  * Movability check is different as compared to migration check.
+  * It determines whether or not a huge page should be placed on
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -96,6 +96,7 @@ static void hugetlb_vma_lock_alloc(struc
+ static void __hugetlb_vma_unlock_write_free(struct vm_area_struct *vma);
+ static void hugetlb_unshare_pmds(struct vm_area_struct *vma,
+ 		unsigned long start, unsigned long end);
++static struct resv_map *vma_resv_map(struct vm_area_struct *vma);
+ 
+ static inline bool subpool_is_free(struct hugepage_subpool *spool)
+ {
+@@ -272,6 +273,10 @@ void hugetlb_vma_lock_read(struct vm_are
+ 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
+ 
+ 		down_read(&vma_lock->rw_sema);
++	} else if (__vma_private_lock(vma)) {
++		struct resv_map *resv_map = vma_resv_map(vma);
 +
-+			p = compat_ptr(cp);
-+		} else {
-+			if (get_user(p, pages + i))
-+				goto out_flush;
-+		}
- 		if (get_user(node, nodes + i))
- 			goto out_flush;
- 		addr = (unsigned long)untagged_addr(p);
++		down_read(&resv_map->rw_sema);
+ 	}
+ }
+ 
+@@ -281,6 +286,10 @@ void hugetlb_vma_unlock_read(struct vm_a
+ 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
+ 
+ 		up_read(&vma_lock->rw_sema);
++	} else if (__vma_private_lock(vma)) {
++		struct resv_map *resv_map = vma_resv_map(vma);
++
++		up_read(&resv_map->rw_sema);
+ 	}
+ }
+ 
+@@ -290,6 +299,10 @@ void hugetlb_vma_lock_write(struct vm_ar
+ 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
+ 
+ 		down_write(&vma_lock->rw_sema);
++	} else if (__vma_private_lock(vma)) {
++		struct resv_map *resv_map = vma_resv_map(vma);
++
++		down_write(&resv_map->rw_sema);
+ 	}
+ }
+ 
+@@ -299,17 +312,27 @@ void hugetlb_vma_unlock_write(struct vm_
+ 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
+ 
+ 		up_write(&vma_lock->rw_sema);
++	} else if (__vma_private_lock(vma)) {
++		struct resv_map *resv_map = vma_resv_map(vma);
++
++		up_write(&resv_map->rw_sema);
+ 	}
+ }
+ 
+ int hugetlb_vma_trylock_write(struct vm_area_struct *vma)
+ {
+-	struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
+ 
+-	if (!__vma_shareable_lock(vma))
+-		return 1;
++	if (__vma_shareable_lock(vma)) {
++		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
+ 
+-	return down_write_trylock(&vma_lock->rw_sema);
++		return down_write_trylock(&vma_lock->rw_sema);
++	} else if (__vma_private_lock(vma)) {
++		struct resv_map *resv_map = vma_resv_map(vma);
++
++		return down_write_trylock(&resv_map->rw_sema);
++	}
++
++	return 1;
+ }
+ 
+ void hugetlb_vma_assert_locked(struct vm_area_struct *vma)
+@@ -318,6 +341,10 @@ void hugetlb_vma_assert_locked(struct vm
+ 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
+ 
+ 		lockdep_assert_held(&vma_lock->rw_sema);
++	} else if (__vma_private_lock(vma)) {
++		struct resv_map *resv_map = vma_resv_map(vma);
++
++		lockdep_assert_held(&resv_map->rw_sema);
+ 	}
+ }
+ 
+@@ -350,6 +377,11 @@ static void __hugetlb_vma_unlock_write_f
+ 		struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
+ 
+ 		__hugetlb_vma_unlock_write_put(vma_lock);
++	} else if (__vma_private_lock(vma)) {
++		struct resv_map *resv_map = vma_resv_map(vma);
++
++		/* no free for anon vmas, but still need to unlock */
++		up_write(&resv_map->rw_sema);
+ 	}
+ }
+ 
+@@ -1068,6 +1100,7 @@ struct resv_map *resv_map_alloc(void)
+ 	kref_init(&resv_map->refs);
+ 	spin_lock_init(&resv_map->lock);
+ 	INIT_LIST_HEAD(&resv_map->regions);
++	init_rwsem(&resv_map->rw_sema);
+ 
+ 	resv_map->adds_in_progress = 0;
+ 	/*
 
 
