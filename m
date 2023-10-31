@@ -1,61 +1,61 @@
-Received: from mo4-p04-ob.smtp.rzone.de (mo4-p04-ob.smtp.rzone.de [85.215.255.120])
+Received: from mo4-p03-ob.smtp.rzone.de (mo4-p03-ob.smtp.rzone.de [81.169.146.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A9D13AE5
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 09:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DA013AFD
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 09:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="QCLvKWPZ";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="OCP4GPaQ"
-ARC-Seal: i=1; a=rsa-sha256; t=1698744634; cv=none;
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="fzeHofjJ";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="f6q3VlM0"
+ARC-Seal: i=1; a=rsa-sha256; t=1698744633; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=WEtcoBxq607FNl7RXl7ybICm+I7J9vNC4D87MqspYXjhQQOQRztbNk6YWIRhP6/gDq
-    FN/hXnL8k+/Xkr+CIpe+Bkz+F66b0fqZhqndIg96lAIk3TjKpJBW4uVPmHXpj2Lgmpbf
-    vqcYqn0VCrVMoeOyYB9ZsfWJWPhJ3dS8qMbKdjZScMB2GFIUa4Oiq1LxzIDp6sCsmUoC
-    ideM7/OBHVeYhCDthfC7aDgy+BmDWIdm86O/7mN5vBXLirMS0wFfAjoX9rFFgJuqsP5l
-    WDu+X/knAbaExKQGQTJ7Ux3rVYTVr5hgIeJsC91ystOqOp6XAJ15dpzQhipT1iAhsU7s
-    zNeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744634;
+    b=ki1WecRyHZq1BaXVz48SBh00kGu9Uu4LvI/O2i9AdB+M3fuBYqPdCvYrARe9HnOW74
+    0ETO3MC4LQjvzo5Kb4bSfwdKlpHpkAVI8ic8n59+YgksHQ7QSHc/ATJDR6LxaIRsKbdH
+    QbaeRCAuzkTpcQktAfl2Cc91xoIo4qD+8xaOlxTn+pFFaP9QmxjEy3mfP/S5Pk99kvan
+    NV+nFhEEYHe/+7M3QYNixXe3mcOPMxKGfkg6jEWmCcgpWW1C37i7XJNUMk0ObmEYXp+1
+    iVUeeqcsSILLqV8J+zaNtO25Y5Sv+0dXPkXNf5Lzf1siOtvXeuamIo7UOgrnlA4kxPh5
+    UIpg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744633;
     s=strato-dkim-0002; d=strato.com;
     h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
     From:Subject:Sender;
-    bh=xdObQ6rRlhqkD+wsQSFHGBaasDNQtFt5NFcRHBEmpSI=;
-    b=coeS+hJVWLwvTt1KNMN5vYU553YOKyp7qu04smPnvvysXjfghk5OtTfebLBE4OgAYS
-    uMi3lK5Oe+o1ps7xwq9ukE2A3s/iDhznbt6z7A5B0wROo2froKzd7fSEkM6kLri9iiZR
-    gASl9X1gLDRC3CcqgyZchm2hG3GxOki+qnf02Ze73Yiy8c59BXRsQfvuwAuDITmI58d8
-    BPVLblMKb5EEPbDdL6bnLgmnMe8CxejKuAcdozOW+P6gfSFehfXEdQMPuhqWNd/KtqQg
-    TYG7jbQQwL3XFwquyFvKQZwG7benv1bzKfJs8VMyNB/AnuDUCvg4otkp3onfg5IYUqnB
-    Vw0A==
+    bh=fWDmKNduZW32ZnQUBctI2DiGvAEE01WL3BcUXhWh/LI=;
+    b=JR7mWFc7Aq41wQ38+1c7NKHdMNL0hQE30q+GFo+l3c4qWI8ojFZmArw/Nxq6e0OgLc
+    WDhMRompTaCBbBmLfu+7/LXQXFebohpmTpe6UIxUqfC4iE2qV7qT9V90iB4NgMoBs3co
+    TV/DDKAaMysrsIP0Ir7R4OY41+Adt7EIayv2e/ct+hY3Eo7U5NGTI9CgKWC0xPVdBQI6
+    +rhW8P9oNeQzv8vPRKQ+8nySL82cbLPSF9AW5r116EvOtUr5w4xPXYQDBua6mO6DX+YI
+    kCI8PzzaBlM0W56Y2UC/MCHNWfnwoM1PWqT7VhSckd3Xk9aJULjIsAZHLWnzRj7QpjAK
+    YClQ==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
-X-RZG-CLASS-ID: mo04
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744634;
+X-RZG-CLASS-ID: mo03
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744633;
     s=strato-dkim-0002; d=hartkopp.net;
     h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
     From:Subject:Sender;
-    bh=xdObQ6rRlhqkD+wsQSFHGBaasDNQtFt5NFcRHBEmpSI=;
-    b=QCLvKWPZUrO3c2Q7WuoAa1IVCoM9XWVaiYTjhtSFYRscX1L2zI029UKugE3JhFXvq+
-    68mwK4VqwPNnU22gWsfoVly6rgLyeWYu72Cx9cSuc4bIppx1N5yFgnYAcsRUZUcVp338
-    om3+P7kk6wk0cL2UjlSHjYVODirb8P0TVSly1dBZQLPmLOMRmKpiEgXfrgDkLx4Ddcod
-    oH6zQdhlnwdk43ndV6QvvtXtbqXVry0g9DR0aWlHYThZxLPUBmZMG1ewHeIx8n7Dez7i
-    IwyaH8fbLGNJObmBszW5PA6X8pgM0xhDqVvhWDdr4jD2+c5usZf3rJthUxsBtQGqM+4b
-    sKYg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1698744634;
+    bh=fWDmKNduZW32ZnQUBctI2DiGvAEE01WL3BcUXhWh/LI=;
+    b=fzeHofjJVJdIDzpjHfkwYb5bNmx3aMcy+KbJU+L7FflX3Slu1TbfyI1P4uQLYbbCWX
+    oBE9u/u9Zk/nYQtz8mHEEBdPgEsVfvC9tkkuAQGPFevDX8py/7Z4zF8hm/2ddTbLb/Tr
+    yGCqakP1zKhXIAyymMquwnDq8ulxTkJeUvl2RL9TGUHkQ9W7jhmR7IQHogtGq1J3ayZw
+    xNh+zdNF9UcnhX5FGoyMDCCo9tCbQ4AK1qhRRqaYJ59rMZU0cdbgV61ZNaHrQSXyDd3P
+    aPvJEIK1G/C3q+OdNJwPruVc+hnZ6dUcarPvQxtj6I0f6D/PM7kQRQGMydbeEakwie86
+    gBmA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1698744633;
     s=strato-dkim-0003; d=hartkopp.net;
     h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
     From:Subject:Sender;
-    bh=xdObQ6rRlhqkD+wsQSFHGBaasDNQtFt5NFcRHBEmpSI=;
-    b=OCP4GPaQh9FHXx/VR1d/YYIjcNjgaL6valXec3Y188GfFmew1YcZhfBSOHC3xraSrQ
-    SCTG6FQK65WF/+jGQCBQ==
+    bh=fWDmKNduZW32ZnQUBctI2DiGvAEE01WL3BcUXhWh/LI=;
+    b=f6q3VlM0A3MennfyKt88Z0SBbh+d8KbGUaU9tN7ea7Q/eWU+dFcZnjQLe3ZE1NI9wA
+    Lb+OZEW2nzOIXLMCONDA==
 X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjGrp7owjzFK3JbFk1mS0k+8CejuVITM8sik0"
 Received: from lenov17.lan
     by smtp.strato.de (RZmta 49.9.1 DYNA|AUTH)
-    with ESMTPSA id Kda39bz9V9UYFhe
+    with ESMTPSA id Kda39bz9V9UWFhb
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
 	(Client did not present a certificate);
-    Tue, 31 Oct 2023 10:30:34 +0100 (CET)
+    Tue, 31 Oct 2023 10:30:32 +0100 (CET)
 From: Oliver Hartkopp <socketcan@hartkopp.net>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -67,9 +67,9 @@ Cc: linux-can@vger.kernel.org,
 	mkl@pengutronix.de,
 	michal.sojka@cvut.cz,
 	Oliver Hartkopp <socketcan@hartkopp.net>
-Subject: [PATCH stable 5.15 7/7] can: isotp: isotp_sendmsg(): fix TX state detection and wait behavior
-Date: Tue, 31 Oct 2023 10:30:25 +0100
-Message-Id: <20231031093025.2699-8-socketcan@hartkopp.net>
+Subject: [PATCH stable 5.15 4/7] can: isotp: handle wait_event_interruptible() return values
+Date: Tue, 31 Oct 2023 10:30:22 +0100
+Message-Id: <20231031093025.2699-5-socketcan@hartkopp.net>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20231031093025.2699-1-socketcan@hartkopp.net>
 References: <20231031093025.2699-1-socketcan@hartkopp.net>
@@ -82,79 +82,40 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="us-ascii"
 
-From: Lukas Magel <lukas.magel@posteo.net>
+commit 823b2e42720f96f277940c37ea438b7c5ead51a4 upstream
 
-[ Upstream commit d9c2ba65e651467de739324d978b04ed8729f483 ]
+When wait_event_interruptible() has been interrupted by a signal the
+tx.state value might not be ISOTP_IDLE. Force the state machines
+into idle state to inhibit the timer handlers to continue working.
 
-With patch [1], isotp_poll was updated to also queue the poller in the
-so->wait queue, which is used for send state changes. Since the queue
-now also contains polling tasks that are not interested in sending, the
-queue fill state can no longer be used as an indication of send
-readiness. As a consequence, nonblocking writes can lead to a race and
-lock-up of the socket if there is a second task polling the socket in
-parallel.
-
-With this patch, isotp_sendmsg does not consult wq_has_sleepers but
-instead tries to atomically set so->tx.state and waits on so->wait if it
-is unable to do so. This behavior is in alignment with isotp_poll, which
-also checks so->tx.state to determine send readiness.
-
-V2:
-- Revert direct exit to goto err_event_drop
-
-[1] https://lore.kernel.org/all/20230331125511.372783-1-michal.sojka@cvut.cz
-
-Reported-by: Maxime Jayat <maxime.jayat@mobile-devices.fr>
-Closes: https://lore.kernel.org/linux-can/11328958-453f-447f-9af8-3b5824dfb041@munic.io/
-Signed-off-by: Lukas Magel <lukas.magel@posteo.net>
-Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Fixes: 79e19fa79cb5 ("can: isotp: isotp_ops: fix poll() to not report false EPOLLOUT events")
-Link: https://github.com/pylessard/python-udsoncan/issues/178#issuecomment-1743786590
-Link: https://lore.kernel.org/all/20230827092205.7908-1-lukas.magel@posteo.net
+Fixes: 866337865f37 ("can: isotp: fix tx state handling for echo tx processing")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20230112192347.1944-1-socketcan@hartkopp.net
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ net/can/isotp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/net/can/isotp.c b/net/can/isotp.c
-index 00cb38b4a6f4..7f62628c6ddd 100644
+index 82e56f3dd2c6..683010c71a8a 100644
 --- a/net/can/isotp.c
 +++ b/net/can/isotp.c
-@@ -923,25 +923,22 @@ static int isotp_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
- 	int err;
+@@ -1069,10 +1069,14 @@ static int isotp_release(struct socket *sock)
+ 	net = sock_net(sk);
  
- 	if (!so->bound || so->tx.state == ISOTP_SHUTDOWN)
- 		return -EADDRNOTAVAIL;
+ 	/* wait for complete transmission of current pdu */
+ 	wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
  
--wait_free_buffer:
--	/* we do not support multiple buffers - for now */
--	if (wq_has_sleeper(&so->wait) && (msg->msg_flags & MSG_DONTWAIT))
--		return -EAGAIN;
-+	while (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
-+		/* we do not support multiple buffers - for now */
-+		if (msg->msg_flags & MSG_DONTWAIT)
-+			return -EAGAIN;
- 
--	/* wait for complete transmission of current pdu */
--	err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
--	if (err)
--		goto err_event_drop;
--
--	if (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
- 		if (so->tx.state == ISOTP_SHUTDOWN)
- 			return -EADDRNOTAVAIL;
- 
--		goto wait_free_buffer;
-+		/* wait for complete transmission of current pdu */
-+		err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
-+		if (err)
-+			goto err_event_drop;
- 	}
- 
- 	if (!size || size > MAX_MSG_LENGTH) {
- 		err = -EINVAL;
- 		goto err_out_drop;
++	/* force state machines to be idle also when a signal occurred */
++	so->tx.state = ISOTP_IDLE;
++	so->rx.state = ISOTP_IDLE;
++
+ 	spin_lock(&isotp_notifier_lock);
+ 	while (isotp_busy_notifier == so) {
+ 		spin_unlock(&isotp_notifier_lock);
+ 		schedule_timeout_uninterruptible(1);
+ 		spin_lock(&isotp_notifier_lock);
 -- 
 2.34.1
 
