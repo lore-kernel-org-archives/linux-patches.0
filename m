@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E314E13AEF
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF042031D
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKfoU3RQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24074C433C9;
-	Tue, 31 Oct 2023 17:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pM/p8sNE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CFCC433CA;
+	Tue, 31 Oct 2023 17:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771972;
-	bh=HDIlyBM+0JHtUvFjddxfMqSxLUELi9wtjCJ+RWVTx1k=;
+	s=korg; t=1698771975;
+	bh=EywPMT0oVkxPw2nap7rDpJcA5BvVi5gZsYFKxVFlaqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZKfoU3RQOrOrGDahyFBF93XxNJWhc1OWPaz0UrGEZxCimTn/jqs4ede/vCzShGJlA
-	 BfKQXqjuP4JsUyUg4akHUWaih+ed7fp9scb/7w9aoFCP7iNPBV7FFLEPIhyjWvieWh
-	 FbcKrsS55pLr/uwPEaci/0kVm03ib6Y3/k+Rtq5E=
+	b=pM/p8sNEuDs4radlS8ifTNJQY0it74Sywvkq3LrX72hQsmuL9HqAscsusCGHeGCKH
+	 MqSpZFDlpkzVxhwFL3riOcv1mGSay3+dJrwFpIM0/czlOieMYRn0FTx5P+sh5aVa4F
+	 j85Jin9mbUiaoYkQkKet+jysIM9CKM2zB1K/v1qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	David Lazar <dlazar@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 82/86] platform/x86: Add s2idle quirk for more Lenovo laptops
-Date: Tue, 31 Oct 2023 18:01:47 +0100
-Message-ID: <20231031165921.084472908@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 83/86] ext4: add two helper functions extent_logical_end() and pa_logical_end()
+Date: Tue, 31 Oct 2023 18:01:48 +0100
+Message-ID: <20231031165921.113649127@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,118 +42,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lazar <dlazar@gmail.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 3bde7ec13c971445faade32172cb0b4370b841d9 upstream.
+commit 43bbddc067883d94de7a43d5756a295439fbe37d upstream.
 
-When suspending to idle and resuming on some Lenovo laptops using the
-Mendocino APU, multiple NVME IOMMU page faults occur, showing up in
-dmesg as repeated errors:
+When we use lstart + len to calculate the end of free extent or prealloc
+space, it may exceed the maximum value of 4294967295(0xffffffff) supported
+by ext4_lblk_t and cause overflow, which may lead to various problems.
 
-nvme 0000:01:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x000b
-address=0xb6674000 flags=0x0000]
+Therefore, we add two helper functions, extent_logical_end() and
+pa_logical_end(), to limit the type of end to loff_t, and also convert
+lstart to loff_t for calculation to avoid overflow.
 
-The system is unstable afterwards.
-
-Applying the s2idle quirk introduced by commit 455cd867b85b ("platform/x86:
-thinkpad_acpi: Add a s2idle resume quirk for a number of laptops")
-allows these systems to work with the IOMMU enabled and s2idle
-resume to work.
-
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218024
-Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
-Suggested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Signed-off-by: David Lazar <dlazar@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://lore.kernel.org/r/ZTlsyOaFucF2pWrL@localhost
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20230724121059.11834-2-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/thinkpad_acpi.c |   73 +++++++++++++++++++++++++++++++++++
- 1 file changed, 73 insertions(+)
+ fs/ext4/mballoc.c |    7 +++----
+ fs/ext4/mballoc.h |   14 ++++++++++++++
+ 2 files changed, 17 insertions(+), 4 deletions(-)
 
---- a/drivers/platform/x86/thinkpad_acpi.c
-+++ b/drivers/platform/x86/thinkpad_acpi.c
-@@ -4513,6 +4513,79 @@ static const struct dmi_system_id fwbug_
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21A1"),
- 		}
- 	},
-+	/* https://bugzilla.kernel.org/show_bug.cgi?id=218024 */
-+	{
-+		.ident = "V14 G4 AMN",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "82YT"),
-+		}
-+	},
-+	{
-+		.ident = "V14 G4 AMN",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83GE"),
-+		}
-+	},
-+	{
-+		.ident = "V15 G4 AMN",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "82YU"),
-+		}
-+	},
-+	{
-+		.ident = "V15 G4 AMN",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83CQ"),
-+		}
-+	},
-+	{
-+		.ident = "IdeaPad 1 14AMN7",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "82VF"),
-+		}
-+	},
-+	{
-+		.ident = "IdeaPad 1 15AMN7",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "82VG"),
-+		}
-+	},
-+	{
-+		.ident = "IdeaPad 1 15AMN7",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "82X5"),
-+		}
-+	},
-+	{
-+		.ident = "IdeaPad Slim 3 14AMN8",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "82XN"),
-+		}
-+	},
-+	{
-+		.ident = "IdeaPad Slim 3 15AMN8",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
-+		}
-+	},
- 	{}
- };
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -4052,7 +4052,7 @@ ext4_mb_normalize_request(struct ext4_al
  
+ 	/* first, let's learn actual file size
+ 	 * given current request is allocated */
+-	size = ac->ac_o_ex.fe_logical + EXT4_C2B(sbi, ac->ac_o_ex.fe_len);
++	size = extent_logical_end(sbi, &ac->ac_o_ex);
+ 	size = size << bsbits;
+ 	if (size < i_size_read(ac->ac_inode))
+ 		size = i_size_read(ac->ac_inode);
+@@ -4407,8 +4407,7 @@ ext4_mb_use_preallocated(struct ext4_all
+ 		/* all fields in this condition don't change,
+ 		 * so we can skip locking for them */
+ 		if (ac->ac_o_ex.fe_logical < pa->pa_lstart ||
+-		    ac->ac_o_ex.fe_logical >= (pa->pa_lstart +
+-					       EXT4_C2B(sbi, pa->pa_len)))
++		    ac->ac_o_ex.fe_logical >= pa_logical_end(sbi, pa))
+ 			continue;
+ 
+ 		/* non-extent files can't have physical blocks past 2^32 */
+@@ -5229,7 +5228,7 @@ static void ext4_mb_group_or_file(struct
+ 
+ 	group_pa_eligible = sbi->s_mb_group_prealloc > 0;
+ 	inode_pa_eligible = true;
+-	size = ac->ac_o_ex.fe_logical + EXT4_C2B(sbi, ac->ac_o_ex.fe_len);
++	size = extent_logical_end(sbi, &ac->ac_o_ex);
+ 	isize = (i_size_read(ac->ac_inode) + ac->ac_sb->s_blocksize - 1)
+ 		>> bsbits;
+ 
+--- a/fs/ext4/mballoc.h
++++ b/fs/ext4/mballoc.h
+@@ -218,6 +218,20 @@ static inline ext4_fsblk_t ext4_grp_offs
+ 		(fex->fe_start << EXT4_SB(sb)->s_cluster_bits);
+ }
+ 
++static inline loff_t extent_logical_end(struct ext4_sb_info *sbi,
++					struct ext4_free_extent *fex)
++{
++	/* Use loff_t to avoid end exceeding ext4_lblk_t max. */
++	return (loff_t)fex->fe_logical + EXT4_C2B(sbi, fex->fe_len);
++}
++
++static inline loff_t pa_logical_end(struct ext4_sb_info *sbi,
++				    struct ext4_prealloc_space *pa)
++{
++	/* Use loff_t to avoid end exceeding ext4_lblk_t max. */
++	return (loff_t)pa->pa_lstart + EXT4_C2B(sbi, pa->pa_len);
++}
++
+ typedef int (*ext4_mballoc_query_range_fn)(
+ 	struct super_block		*sb,
+ 	ext4_group_t			agno,
 
 
