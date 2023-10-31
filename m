@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF4720B17
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0206620B1F
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpYk9/Un"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74CF6C433C8;
-	Tue, 31 Oct 2023 17:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B88WSca8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F10FC433C7;
+	Tue, 31 Oct 2023 17:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774365;
-	bh=5PycGoNx/KG4GheLANlSgJaeUphrJcJ0Bf5J9j4v2kw=;
+	s=korg; t=1698774368;
+	bh=vPKO9Ao0UaJG7g6vRMs/1uwFkg81kUvNA9C0OtD4AIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OpYk9/Unmq9Iwlb6oqDL514eDrCxA/Baqzujnxc4IApAJoyC1TUsT+GQS5pGwtsUm
-	 mz4dnQWIjpjcdDK5A5erhNf9Fp+hw5NP+CukFYOMtKLlQe4lQQFg5c9hc2ff7AWV/0
-	 J3H+SMpv8iJAUrzNjyA8dXHE18adRYo63eAlCb0g=
+	b=B88WSca8FFP+Wxph3+GrDEnKZ34Ialkr0ZUvD5UkNOpC8zf2lsMrYy2Szn+XT2v1y
+	 GezSKnlOOxxR846a6otTlh2pSm/8gwX++NLOrV86af3Vc43QnJTcF6thomLH28Velc
+	 DTsv8BCxkIgWXHzfhZFMQ7ASjrmlYNXJVO1l0c/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Obbard <chris.obbard@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.5 021/112] arm64: dts: rockchip: Fix i2s0 pin conflict on ROCK Pi 4 boards
-Date: Tue, 31 Oct 2023 18:00:22 +0100
-Message-ID: <20231031165901.974913796@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 004/112] smb3: allow controlling maximum number of cached directories
+Date: Tue, 31 Oct 2023 18:00:05 +0100
+Message-ID: <20231031165901.451692983@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -41,55 +41,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Obbard <chris.obbard@collabora.com>
+From: Steve French <stfrench@microsoft.com>
 
-commit 8cd79b729e746cb167f1563d015a93fc0a079899 upstream.
+[ Upstream commit 6a50d71d0ffff6791737eb502b27f74fb87d0cae ]
 
-Commit 91419ae0420f ("arm64: dts: rockchip: use BCLK to GPIO switch on
-rk3399") modified i2s0 to switch the corresponding pins off when idle.
-For the ROCK Pi 4 boards, this means that i2s0 has the following pinctrl
-setting:
+Allow adjusting the maximum number of cached directories per share
+(defaults to 16) via mount parm "max_cached_dirs"
 
-    pinctrl-names = "bclk_on", "bclk_off";
-    pinctrl-0 = <&i2s0_2ch_bus>;
-    pinctrl-1 = <&i2s0_8ch_bus_bclk_off>;
-
-Due to this change, i2s0 fails to probe on my Radxa ROCK 4SE and ROCK Pi
-4B boards:
-
-    rockchip-pinctrl pinctrl: pin gpio3-29 already requested by leds; cannot claim for ff880000.i2s
-    rockchip-pinctrl pinctrl: pin-125 (ff880000.i2s) status -22
-    rockchip-pinctrl pinctrl: could not request pin 125 (gpio3-29) from group i2s0-8ch-bus-bclk-off  on device rockchip-pinctrl
-    rockchip-i2s ff880000.i2s: Error applying setting, reverse things back
-    rockchip-i2s ff880000.i2s: bclk disable failed -22
-
-A pin requested for i2s0_8ch_bus_bclk_off has already been requested by
-user_led2, so whichever driver probes first will have the pin allocated.
-
-The hardware uses 2-channel i2s so fix this error by setting pinctl-1 to
-i2s0_2ch_bus_bclk_off which doesn't contain the pin allocated to user_led2.
-
-I checked the schematics for all Radxa boards based on ROCK Pi 4 and this
-change is compatible with all boards.
-
-Fixes: 91419ae0420f ("arm64: dts: rockchip: use BCLK to GPIO switch on rk3399")
-Signed-off-by: Christopher Obbard <chris.obbard@collabora.com>
-Link: https://lore.kernel.org/r/20231013114737.494410-3-chris.obbard@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/cached_dir.c |  7 ++++---
+ fs/smb/client/cached_dir.h |  2 +-
+ fs/smb/client/cifsfs.c     |  2 ++
+ fs/smb/client/cifsglob.h   |  1 +
+ fs/smb/client/connect.c    |  1 +
+ fs/smb/client/fs_context.c | 11 ++++++++++-
+ fs/smb/client/fs_context.h |  4 +++-
+ 7 files changed, 22 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-@@ -493,6 +493,7 @@
+diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
+index 9d84c4a7bd0ce..b17f067e4ada0 100644
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -18,7 +18,8 @@ static void smb2_close_cached_fid(struct kref *ref);
  
- &i2s0 {
- 	pinctrl-0 = <&i2s0_2ch_bus>;
-+	pinctrl-1 = <&i2s0_2ch_bus_bclk_off>;
- 	rockchip,capture-channels = <2>;
- 	rockchip,playback-channels = <2>;
- 	status = "okay";
+ static struct cached_fid *find_or_create_cached_dir(struct cached_fids *cfids,
+ 						    const char *path,
+-						    bool lookup_only)
++						    bool lookup_only,
++						    __u32 max_cached_dirs)
+ {
+ 	struct cached_fid *cfid;
+ 
+@@ -43,7 +44,7 @@ static struct cached_fid *find_or_create_cached_dir(struct cached_fids *cfids,
+ 		spin_unlock(&cfids->cfid_list_lock);
+ 		return NULL;
+ 	}
+-	if (cfids->num_entries >= MAX_CACHED_FIDS) {
++	if (cfids->num_entries >= max_cached_dirs) {
+ 		spin_unlock(&cfids->cfid_list_lock);
+ 		return NULL;
+ 	}
+@@ -162,7 +163,7 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+ 	if (!utf16_path)
+ 		return -ENOMEM;
+ 
+-	cfid = find_or_create_cached_dir(cfids, path, lookup_only);
++	cfid = find_or_create_cached_dir(cfids, path, lookup_only, tcon->max_cached_dirs);
+ 	if (cfid == NULL) {
+ 		kfree(utf16_path);
+ 		return -ENOENT;
+diff --git a/fs/smb/client/cached_dir.h b/fs/smb/client/cached_dir.h
+index facc9b154d009..a82ff2cea789c 100644
+--- a/fs/smb/client/cached_dir.h
++++ b/fs/smb/client/cached_dir.h
+@@ -49,7 +49,7 @@ struct cached_fid {
+ 	struct cached_dirents dirents;
+ };
+ 
+-#define MAX_CACHED_FIDS 16
++/* default MAX_CACHED_FIDS is 16 */
+ struct cached_fids {
+ 	/* Must be held when:
+ 	 * - accessing the cfids->entries list
+diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
+index 9a6d7e66408d1..e19df244ea7ea 100644
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -699,6 +699,8 @@ cifs_show_options(struct seq_file *s, struct dentry *root)
+ 		seq_printf(s, ",snapshot=%llu", tcon->snapshot_time);
+ 	if (tcon->handle_timeout)
+ 		seq_printf(s, ",handletimeout=%u", tcon->handle_timeout);
++	if (tcon->max_cached_dirs != MAX_CACHED_FIDS)
++		seq_printf(s, ",max_cached_dirs=%u", tcon->max_cached_dirs);
+ 
+ 	/*
+ 	 * Display file and directory attribute timeout in seconds.
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index f8eb787ecffab..b4c1c4742f08a 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -1192,6 +1192,7 @@ struct cifs_tcon {
+ 	__u32 max_chunks;
+ 	__u32 max_bytes_chunk;
+ 	__u32 max_bytes_copy;
++	__u32 max_cached_dirs;
+ #ifdef CONFIG_CIFS_FSCACHE
+ 	u64 resource_id;		/* server resource id */
+ 	struct fscache_volume *fscache;	/* cookie for share */
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 352e251c41132..f00d02608ee46 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -2657,6 +2657,7 @@ cifs_get_tcon(struct cifs_ses *ses, struct smb3_fs_context *ctx)
+ 	tcon->retry = ctx->retry;
+ 	tcon->nocase = ctx->nocase;
+ 	tcon->broken_sparse_sup = ctx->no_sparse;
++	tcon->max_cached_dirs = ctx->max_cached_dirs;
+ 	if (ses->server->capabilities & SMB2_GLOBAL_CAP_DIRECTORY_LEASING)
+ 		tcon->nohandlecache = ctx->nohandlecache;
+ 	else
+diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
+index f12203c49b802..a3493da12ad1e 100644
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -150,6 +150,7 @@ const struct fs_parameter_spec smb3_fs_parameters[] = {
+ 	fsparam_u32("closetimeo", Opt_closetimeo),
+ 	fsparam_u32("echo_interval", Opt_echo_interval),
+ 	fsparam_u32("max_credits", Opt_max_credits),
++	fsparam_u32("max_cached_dirs", Opt_max_cached_dirs),
+ 	fsparam_u32("handletimeout", Opt_handletimeout),
+ 	fsparam_u64("snapshot", Opt_snapshot),
+ 	fsparam_u32("max_channels", Opt_max_channels),
+@@ -1165,6 +1166,14 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 		if (result.uint_32 > 1)
+ 			ctx->multichannel = true;
+ 		break;
++	case Opt_max_cached_dirs:
++		if (result.uint_32 < 1) {
++			cifs_errorf(fc, "%s: Invalid max_cached_dirs, needs to be 1 or more\n",
++				    __func__);
++			goto cifs_parse_mount_err;
++		}
++		ctx->max_cached_dirs = result.uint_32;
++		break;
+ 	case Opt_handletimeout:
+ 		ctx->handle_timeout = result.uint_32;
+ 		if (ctx->handle_timeout > SMB3_MAX_HANDLE_TIMEOUT) {
+@@ -1593,7 +1602,7 @@ int smb3_init_fs_context(struct fs_context *fc)
+ 	ctx->acregmax = CIFS_DEF_ACTIMEO;
+ 	ctx->acdirmax = CIFS_DEF_ACTIMEO;
+ 	ctx->closetimeo = SMB3_DEF_DCLOSETIMEO;
+-
++	ctx->max_cached_dirs = MAX_CACHED_FIDS;
+ 	/* Most clients set timeout to 0, allows server to use its default */
+ 	ctx->handle_timeout = 0; /* See MS-SMB2 spec section 2.2.14.2.12 */
+ 
+diff --git a/fs/smb/client/fs_context.h b/fs/smb/client/fs_context.h
+index f4eaf85589022..9d8d34af02114 100644
+--- a/fs/smb/client/fs_context.h
++++ b/fs/smb/client/fs_context.h
+@@ -128,6 +128,7 @@ enum cifs_param {
+ 	Opt_closetimeo,
+ 	Opt_echo_interval,
+ 	Opt_max_credits,
++	Opt_max_cached_dirs,
+ 	Opt_snapshot,
+ 	Opt_max_channels,
+ 	Opt_handletimeout,
+@@ -261,6 +262,7 @@ struct smb3_fs_context {
+ 	__u32 handle_timeout; /* persistent and durable handle timeout in ms */
+ 	unsigned int max_credits; /* smb3 max_credits 10 < credits < 60000 */
+ 	unsigned int max_channels;
++	unsigned int max_cached_dirs;
+ 	__u16 compression; /* compression algorithm 0xFFFF default 0=disabled */
+ 	bool rootfs:1; /* if it's a SMB root file system */
+ 	bool witness:1; /* use witness protocol */
+@@ -287,7 +289,7 @@ extern void smb3_update_mnt_flags(struct cifs_sb_info *cifs_sb);
+  */
+ #define SMB3_MAX_DCLOSETIMEO (1 << 30)
+ #define SMB3_DEF_DCLOSETIMEO (1 * HZ) /* even 1 sec enough to help eg open/write/close/open/read */
+-
++#define MAX_CACHED_FIDS 16
+ extern char *cifs_sanitize_prepath(char *prepath, gfp_t gfp);
+ 
+ #endif
+-- 
+2.42.0
+
 
 
