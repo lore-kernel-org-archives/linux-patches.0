@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AF32031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789802031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pc2aBmRT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E780BC433C7;
-	Tue, 31 Oct 2023 17:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQgefSjF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9E4C433C8;
+	Tue, 31 Oct 2023 17:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771812;
-	bh=+9jqxY4GqxrF1X/Z7x2klOGhHCE/rciHHNPmQTRgrVo=;
+	s=korg; t=1698771815;
+	bh=7onUowU+/tH5/hFFIRrbcwXJ56Hz1/N6xgnXkBsodaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pc2aBmRTaxjhxAwdF0936YrnsxvVnOcTgyHo1mpRUwaLl8QVbPJRMLgvVOGGNc+WD
-	 jJkyZAr6011m7jGl0jRupMtcYgk3toIz4WSBKftSdRwKC8seEDjD60KYMc6AQlYC7O
-	 K0mqYj69KMaJ+SMEc0bwtMjxUt0YJFJePJcXMyY4=
+	b=zQgefSjFwuPfB7KpDtRYNoYg+QwNrkV/viRT2dTB2Po7fBB/QTu0S7HWEoczbduEh
+	 kkeUf4MAi2Nip1N7EZ5NOaT38VRLkhBNgc5J0tvue9U/ohUWfEKLn0QkhXaW9Xa7Tk
+	 ovv3C0sBgw1p3yiOhqHxP/zAFm0MHrRCxEPM/7zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 08/86] ASoC: codecs: wcd938x: fix runtime PM imbalance on remove
-Date: Tue, 31 Oct 2023 18:00:33 +0100
-Message-ID: <20231031165918.874882512@linuxfoundation.org>
+Subject: [PATCH 6.1 09/86] pinctrl: qcom: lpass-lpi: fix concurrent register updates
+Date: Tue, 31 Oct 2023 18:00:34 +0100
+Message-ID: <20231031165918.907158629@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,46 +42,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 3ebebb2c1eca92a15107b2d7aeff34196fd9e217 ]
+[ Upstream commit c8befdc411e5fd1bf95a13e8744c8ca79b412bee ]
 
-Make sure to balance the runtime PM operations, including the disable
-count, on driver unbind.
+The Qualcomm LPASS LPI pin controller driver uses one lock for guarding
+Read-Modify-Write code for slew rate registers.  However the pin
+configuration and muxing registers have exactly the same RMW code but
+are not protected.
 
-Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
-Cc: stable@vger.kernel.org      # 5.14
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231003155558.27079-6-johan+linaro@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Pin controller framework does not provide locking here, thus it is
+possible to trigger simultaneous change of pin configuration registers
+resulting in non-atomic changes.
+
+Protect from concurrent access by re-using the same lock used to cover
+the slew rate register.  Using the same lock instead of adding second
+one will make more sense, once we add support for newer Qualcomm SoC,
+where slew rate is configured in the same register as pin
+configuration/muxing.
+
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20231013145705.219954-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd938x.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
-index 7181176feb73c..a2abd1a111612 100644
---- a/sound/soc/codecs/wcd938x.c
-+++ b/sound/soc/codecs/wcd938x.c
-@@ -3619,9 +3619,15 @@ static int wcd938x_probe(struct platform_device *pdev)
+diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+index a55998ae29fa4..bfcc5c45b8fa5 100644
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+@@ -24,7 +24,8 @@ struct lpi_pinctrl {
+ 	char __iomem *tlmm_base;
+ 	char __iomem *slew_base;
+ 	struct clk_bulk_data clks[MAX_LPI_NUM_CLKS];
+-	struct mutex slew_access_lock;
++	/* Protects from concurrent register updates */
++	struct mutex lock;
+ 	const struct lpi_pinctrl_variant_data *data;
+ };
  
- static void wcd938x_remove(struct platform_device *pdev)
- {
--	struct wcd938x_priv *wcd938x = dev_get_drvdata(&pdev->dev);
-+	struct device *dev = &pdev->dev;
-+	struct wcd938x_priv *wcd938x = dev_get_drvdata(dev);
-+
-+	component_master_del(dev, &wcd938x_comp_ops);
-+
-+	pm_runtime_disable(dev);
-+	pm_runtime_set_suspended(dev);
-+	pm_runtime_dont_use_autosuspend(dev);
+@@ -94,9 +95,11 @@ static int lpi_gpio_set_mux(struct pinctrl_dev *pctldev, unsigned int function,
+ 	if (WARN_ON(i == g->nfuncs))
+ 		return -EINVAL;
  
--	component_master_del(&pdev->dev, &wcd938x_comp_ops);
- 	regulator_bulk_disable(WCD938X_MAX_SUPPLY, wcd938x->supplies);
- 	regulator_bulk_free(WCD938X_MAX_SUPPLY, wcd938x->supplies);
++	mutex_lock(&pctrl->lock);
+ 	val = lpi_gpio_read(pctrl, pin, LPI_GPIO_CFG_REG);
+ 	u32p_replace_bits(&val, i, LPI_GPIO_FUNCTION_MASK);
+ 	lpi_gpio_write(pctrl, pin, LPI_GPIO_CFG_REG, val);
++	mutex_unlock(&pctrl->lock);
+ 
+ 	return 0;
  }
+@@ -202,14 +205,14 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+ 			if (slew_offset == LPI_NO_SLEW)
+ 				break;
+ 
+-			mutex_lock(&pctrl->slew_access_lock);
++			mutex_lock(&pctrl->lock);
+ 
+ 			sval = ioread32(pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
+ 			sval &= ~(LPI_SLEW_RATE_MASK << slew_offset);
+ 			sval |= arg << slew_offset;
+ 			iowrite32(sval, pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
+ 
+-			mutex_unlock(&pctrl->slew_access_lock);
++			mutex_unlock(&pctrl->lock);
+ 			break;
+ 		default:
+ 			return -EINVAL;
+@@ -225,6 +228,7 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+ 		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
+ 	}
+ 
++	mutex_lock(&pctrl->lock);
+ 	val = lpi_gpio_read(pctrl, group, LPI_GPIO_CFG_REG);
+ 
+ 	u32p_replace_bits(&val, pullup, LPI_GPIO_PULL_MASK);
+@@ -233,6 +237,7 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+ 	u32p_replace_bits(&val, output_enabled, LPI_GPIO_OE_MASK);
+ 
+ 	lpi_gpio_write(pctrl, group, LPI_GPIO_CFG_REG, val);
++	mutex_unlock(&pctrl->lock);
+ 
+ 	return 0;
+ }
+@@ -432,7 +437,7 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
+ 	pctrl->chip.of_gpio_n_cells = 2;
+ 	pctrl->chip.can_sleep = false;
+ 
+-	mutex_init(&pctrl->slew_access_lock);
++	mutex_init(&pctrl->lock);
+ 
+ 	pctrl->ctrl = devm_pinctrl_register(dev, &pctrl->desc, pctrl);
+ 	if (IS_ERR(pctrl->ctrl)) {
+@@ -454,7 +459,7 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ err_pinctrl:
+-	mutex_destroy(&pctrl->slew_access_lock);
++	mutex_destroy(&pctrl->lock);
+ 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
+ 
+ 	return ret;
+@@ -466,7 +471,7 @@ int lpi_pinctrl_remove(struct platform_device *pdev)
+ 	struct lpi_pinctrl *pctrl = platform_get_drvdata(pdev);
+ 	int i;
+ 
+-	mutex_destroy(&pctrl->slew_access_lock);
++	mutex_destroy(&pctrl->lock);
+ 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
+ 
+ 	for (i = 0; i < pctrl->data->npins; i++)
 -- 
 2.42.0
 
