@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B3B13AEF
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED52113AEF
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zc7SF6/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83012C433C7;
-	Tue, 31 Oct 2023 17:06:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Td5dP44M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F9BC433C7;
+	Tue, 31 Oct 2023 17:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771960;
-	bh=CyFqALFA/ufUDJ4ewZbZpEwvK1ZNyXrPoxdwlZcvci0=;
+	s=korg; t=1698771963;
+	bh=XW49930dVcXcLybR4VelViqYpc5J/XH2bA+ePaNsbHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zc7SF6/5olo8bR52YYoj+TqMtEEm+6FJsNzZyBPacXMuuGcItetL054rkjIaSRoAn
-	 xoqPFrF+BT16wDnu4guDFj1+d6QDkHdX5OH3XHSnc+O3hBojnf0scNzCgFYs05a7ph
-	 1qbNI8Gy6L7+VoP2y38i++YkNpIbWDI8ofgwO1Ks=
+	b=Td5dP44MkpU4mMuYxVMvBld2krfjS/nzKshnNjE8MX2afczKyknDVe0CzeCMIE8q+
+	 xHxtyhNq0vEvzbc3AXSuTOIr8mvKJK2jyv7vWzmo/PkJfVFAeV7RNhJubVJhJxZ0T0
+	 TY17KSAG4Q4RUrTcjmesH0jXUKW61X3ILja8PGv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 61/86] iio: exynos-adc: request second interupt only when touchscreen mode is used
-Date: Tue, 31 Oct 2023 18:01:26 +0100
-Message-ID: <20231031165920.474570450@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.1 79/86] perf/core: Fix potential NULL deref
+Date: Tue, 31 Oct 2023 18:01:44 +0100
+Message-ID: <20231031165920.991824339@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -42,72 +42,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 865b080e3229102f160889328ce2e8e97aa65ea0 upstream.
+commit a71ef31485bb51b846e8db8b3a35e432cc15afb5 upstream.
 
-Second interrupt is needed only when touchscreen mode is used, so don't
-request it unconditionally. This removes the following annoying warning
-during boot:
+Smatch is awesome.
 
-exynos-adc 14d10000.adc: error -ENXIO: IRQ index 1 not found
-
-Fixes: 2bb8ad9b44c5 ("iio: exynos-adc: add experimental touchscreen support")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20231009101412.916922-1-m.szyprowski@samsung.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 32671e3799ca ("perf: Disallow mis-matched inherited group reads")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/exynos_adc.c |   26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ kernel/events/core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/exynos_adc.c
-+++ b/drivers/iio/adc/exynos_adc.c
-@@ -826,16 +826,26 @@ static int exynos_adc_probe(struct platf
- 		}
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -13293,7 +13293,8 @@ static int inherit_group(struct perf_eve
+ 		    !perf_get_aux_event(child_ctr, leader))
+ 			return -EINVAL;
  	}
+-	leader->group_generation = parent_event->group_generation;
++	if (leader)
++		leader->group_generation = parent_event->group_generation;
+ 	return 0;
+ }
  
-+	/* leave out any TS related code if unreachable */
-+	if (IS_REACHABLE(CONFIG_INPUT)) {
-+		has_ts = of_property_read_bool(pdev->dev.of_node,
-+					       "has-touchscreen") || pdata;
-+	}
-+
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq < 0)
- 		return irq;
- 	info->irq = irq;
- 
--	irq = platform_get_irq(pdev, 1);
--	if (irq == -EPROBE_DEFER)
--		return irq;
--
--	info->tsirq = irq;
-+	if (has_ts) {
-+		irq = platform_get_irq(pdev, 1);
-+		if (irq == -EPROBE_DEFER)
-+			return irq;
-+
-+		info->tsirq = irq;
-+	} else {
-+		info->tsirq = -1;
-+	}
- 
- 	info->dev = &pdev->dev;
- 
-@@ -900,12 +910,6 @@ static int exynos_adc_probe(struct platf
- 	if (info->data->init_hw)
- 		info->data->init_hw(info);
- 
--	/* leave out any TS related code if unreachable */
--	if (IS_REACHABLE(CONFIG_INPUT)) {
--		has_ts = of_property_read_bool(pdev->dev.of_node,
--					       "has-touchscreen") || pdata;
--	}
--
- 	if (pdata)
- 		info->delay = pdata->delay;
- 	else
 
 
