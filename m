@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97961208D8
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2547208C7
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q49E9jz2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131A9C433C8;
-	Tue, 31 Oct 2023 17:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOzFLRvO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6ABEC433C8;
+	Tue, 31 Oct 2023 17:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774653;
-	bh=P6cDMcdo1o+HAQAReHR6aFq7oN5Q1IFm2fJALjITWKE=;
+	s=korg; t=1698774656;
+	bh=Jn/fscTC40WucxoDOG6mkkxJ7fZ3oQ/3NaXDbI8D2JM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q49E9jz2J4+wjvG8AWcDEjClXZoeTyRns6U+a7v7ytkf8n+AT4VNvQWdsUQ8GXLvx
-	 rGYEk/JKmQrz7mBHp5w/eMTjCJuyVxodOZCU469niSWS8Dt9HkZn4h+cjULTaT01Qo
-	 fbLt/9IuAcEXiupKSBqzg6q3AjctQ/WIn8DeXEHY=
+	b=dOzFLRvOw/FOUWTrzpVyk+K80EyU5+12NFpmt3QtuMp6bsHPyWLukxPNKadNGFzDO
+	 +tpy2PdIgpYnSE2CoKQC6Z+0sMtHVVBkUcXqOsyXk1n1UO6fIbDggXtCFRU66HiCYJ
+	 auqO/IeMj6iG0I+LHB5+RZ2WyC3QZ7W6LC1aQI38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Daly <pdaly@redhat.com>,
-	"Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.5 107/112] clk: Sanitize possible_parent_show to Handle Return Value of of_clk_get_parent_name
-Date: Tue, 31 Oct 2023 18:01:48 +0100
-Message-ID: <20231031165904.642846297@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.5 098/112] misc: fastrpc: Unmap only if buffer is unmapped from DSP
+Date: Tue, 31 Oct 2023 18:01:39 +0100
+Message-ID: <20231031165904.376411753@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -42,73 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessandro Carminati <alessandro.carminati@gmail.com>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit ceb87a361d0b079ecbc7d2831618c19087f304a9 upstream.
+commit 509143385db364c67556a914bef6c9a42fd2c74c upstream.
 
-In the possible_parent_show function, ensure proper handling of the return
-value from of_clk_get_parent_name to prevent potential issues arising from
-a NULL return.
-The current implementation invokes seq_puts directly on the result of
-of_clk_get_parent_name without verifying the return value, which can lead
-to kernel panic if the function returns NULL.
+For unmapping any buffer from kernel, it should first be unmapped
+from DSP. In case unmap from DSP request fails, the map should not
+be removed from kernel as it might lead to SMMU faults and other
+memory issues.
 
-This patch addresses the concern by introducing a check on the return
-value of of_clk_get_parent_name. If the return value is not NULL, the
-function proceeds to call seq_puts, providing the returned value as
-argument.
-However, if of_clk_get_parent_name returns NULL, the function provides a
-static string as argument, avoiding the panic.
-
-Fixes: 1ccc0ddf046a ("clk: Use seq_puts() in possible_parent_show()")
-Reported-by: Philip Daly <pdaly@redhat.com>
-Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
-Link: https://lore.kernel.org/r/20230921073217.572151-1-alessandro.carminati@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 5c1b97c7d7b7 ("misc: fastrpc: add support for FASTRPC_IOCTL_MEM_MAP/UNMAP")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20231013122007.174464-5-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/clk.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/misc/fastrpc.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -3416,6 +3416,7 @@ static void possible_parent_show(struct
- 				 unsigned int i, char terminator)
- {
- 	struct clk_core *parent;
-+	const char *name = NULL;
- 
- 	/*
- 	 * Go through the following options to fetch a parent's name.
-@@ -3430,18 +3431,20 @@ static void possible_parent_show(struct
- 	 * registered (yet).
- 	 */
- 	parent = clk_core_get_parent_by_index(core, i);
--	if (parent)
-+	if (parent) {
- 		seq_puts(s, parent->name);
--	else if (core->parents[i].name)
-+	} else if (core->parents[i].name) {
- 		seq_puts(s, core->parents[i].name);
--	else if (core->parents[i].fw_name)
-+	} else if (core->parents[i].fw_name) {
- 		seq_printf(s, "<%s>(fw)", core->parents[i].fw_name);
--	else if (core->parents[i].index >= 0)
--		seq_puts(s,
--			 of_clk_get_parent_name(core->of_node,
--						core->parents[i].index));
--	else
--		seq_puts(s, "(missing)");
-+	} else {
-+		if (core->parents[i].index >= 0)
-+			name = of_clk_get_parent_name(core->of_node, core->parents[i].index);
-+		if (!name)
-+			name = "(missing)";
-+
-+		seq_puts(s, name);
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1980,11 +1980,13 @@ static int fastrpc_req_mem_unmap_impl(st
+ 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_MEM_UNMAP, 1, 0);
+ 	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
+ 				      &args[0]);
+-	fastrpc_map_put(map);
+-	if (err)
++	if (err) {
+ 		dev_err(dev, "unmmap\tpt fd = %d, 0x%09llx error\n",  map->fd, map->raddr);
++		return err;
 +	}
++	fastrpc_map_put(map);
  
- 	seq_putc(s, terminator);
+-	return err;
++	return 0;
  }
+ 
+ static int fastrpc_req_mem_unmap(struct fastrpc_user *fl, char __user *argp)
 
 
