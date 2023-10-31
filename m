@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC422031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B212031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cnro6BUJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573D0C433C9;
-	Tue, 31 Oct 2023 17:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTioll8T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B99C433C7;
+	Tue, 31 Oct 2023 17:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771767;
-	bh=/ISZtNM/NaNNvDx52S8Z4MAYlZbs+UL6bIutgyzL2UQ=;
+	s=korg; t=1698771770;
+	bh=DdDSAXuOvGFFvNvvCDfKAcys2iXO4oA/fE5sxyxWdEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cnro6BUJlfWhXrads5pRjKfXjoQkntbjW/oUgktRmPyduycIodtrQnAaRhyZL3w1F
-	 MRZgorMq2xOm3LStl+c0+PS3PEBMkqkbMIl19oGCXRv4LIQ3l2OegAFAVVuwHIU3bJ
-	 09Y+ni6WZqvt3rfK/qJR5Uo4GP/ZNOiLBHi8EIpU=
+	b=CTioll8Tblqusew7yhNmnNjQP3/J0pFbNL4slLyw6FeN6kzy/A7B1sz3DiglnYhXP
+	 b8rzyhdbncZ41x/aHw4HLso4v5/Pa7Q99JlzQx8d7MR9cYK2ENj/zoIFsdtZrelPgv
+	 AvicM3PUMeaw75CeTJtZQje/zBGCcfa82XdcaYY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gonglei (Arei)" <arei.gonglei@huawei.com>,
-	Halil Pasic <pasic@linux.ibm.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	zhenwei pi <pizhenwei@bytedance.com>
-Subject: [PATCH 6.1 14/86] virtio-crypto: handle config changed by work queue
-Date: Tue, 31 Oct 2023 18:00:39 +0100
-Message-ID: <20231031165919.056613126@linuxfoundation.org>
+	Jason Wang <jasowang@redhat.com>
+Subject: [PATCH 6.1 15/86] virtio_pci: fix the common cfg map size
+Date: Tue, 31 Oct 2023 18:00:40 +0100
+Message-ID: <20231031165919.086294973@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,90 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhenwei pi <pizhenwei@bytedance.com>
+From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
 
-commit fa2e6947aa8844f25f5bad0d8cd1a541d9bc83eb upstream.
+commit 061b39fdfe7fd98946e67637213bcbb10a318cca upstream.
 
-MST pointed out: config change callback is also handled incorrectly
-in this driver, it takes a mutex from interrupt context.
+The function vp_modern_map_capability() takes the size parameter,
+which corresponds to the size of virtio_pci_common_cfg. As a result,
+this indicates the size of memory area to map.
 
-Handle config changed by work queue instead.
+Now the size is the size of virtio_pci_common_cfg, but some feature(such
+as the _F_RING_RESET) needs the virtio_pci_modern_common_cfg, so this
+commit changes the size to the size of virtio_pci_modern_common_cfg.
 
 Cc: stable@vger.kernel.org
-Cc: Gonglei (Arei) <arei.gonglei@huawei.com>
-Cc: Halil Pasic <pasic@linux.ibm.com>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-Message-Id: <20231007064309.844889-1-pizhenwei@bytedance.com>
+Fixes: 0b50cece0b78 ("virtio_pci: introduce helper to get/set queue reset")
+Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Message-Id: <20231010031120.81272-3-xuanzhuo@linux.alibaba.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/virtio/virtio_crypto_common.h |    3 +++
- drivers/crypto/virtio/virtio_crypto_core.c   |   14 +++++++++++++-
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/virtio/virtio_pci_modern_dev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/virtio/virtio_crypto_common.h
-+++ b/drivers/crypto/virtio/virtio_crypto_common.h
-@@ -35,6 +35,9 @@ struct virtio_crypto {
- 	struct virtqueue *ctrl_vq;
- 	struct data_queue *data_vq;
- 
-+	/* Work struct for config space updates */
-+	struct work_struct config_work;
-+
- 	/* To protect the vq operations for the controlq */
- 	spinlock_t ctrl_lock;
- 
---- a/drivers/crypto/virtio/virtio_crypto_core.c
-+++ b/drivers/crypto/virtio/virtio_crypto_core.c
-@@ -335,6 +335,14 @@ static void virtcrypto_del_vqs(struct vi
- 	virtcrypto_free_queues(vcrypto);
- }
- 
-+static void vcrypto_config_changed_work(struct work_struct *work)
-+{
-+	struct virtio_crypto *vcrypto =
-+		container_of(work, struct virtio_crypto, config_work);
-+
-+	virtcrypto_update_status(vcrypto);
-+}
-+
- static int virtcrypto_probe(struct virtio_device *vdev)
- {
- 	int err = -EFAULT;
-@@ -454,6 +462,8 @@ static int virtcrypto_probe(struct virti
- 	if (err)
- 		goto free_engines;
- 
-+	INIT_WORK(&vcrypto->config_work, vcrypto_config_changed_work);
-+
- 	return 0;
- 
- free_engines:
-@@ -489,6 +499,7 @@ static void virtcrypto_remove(struct vir
- 
- 	dev_info(&vdev->dev, "Start virtcrypto_remove.\n");
- 
-+	flush_work(&vcrypto->config_work);
- 	if (virtcrypto_dev_started(vcrypto))
- 		virtcrypto_dev_stop(vcrypto);
- 	virtio_reset_device(vdev);
-@@ -503,7 +514,7 @@ static void virtcrypto_config_changed(st
- {
- 	struct virtio_crypto *vcrypto = vdev->priv;
- 
--	virtcrypto_update_status(vcrypto);
-+	schedule_work(&vcrypto->config_work);
- }
- 
- #ifdef CONFIG_PM_SLEEP
-@@ -511,6 +522,7 @@ static int virtcrypto_freeze(struct virt
- {
- 	struct virtio_crypto *vcrypto = vdev->priv;
- 
-+	flush_work(&vcrypto->config_work);
- 	virtio_reset_device(vdev);
- 	virtcrypto_free_unused_reqs(vcrypto);
- 	if (virtcrypto_dev_started(vcrypto))
+--- a/drivers/virtio/virtio_pci_modern_dev.c
++++ b/drivers/virtio/virtio_pci_modern_dev.c
+@@ -282,7 +282,7 @@ int vp_modern_probe(struct virtio_pci_mo
+ 	err = -EINVAL;
+ 	mdev->common = vp_modern_map_capability(mdev, common,
+ 				      sizeof(struct virtio_pci_common_cfg), 4,
+-				      0, sizeof(struct virtio_pci_common_cfg),
++				      0, sizeof(struct virtio_pci_modern_common_cfg),
+ 				      NULL, NULL);
+ 	if (!mdev->common)
+ 		goto err_map_common;
 
 
