@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28992031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE09A2031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLRwd0fa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCE6C433C7;
-	Tue, 31 Oct 2023 17:03:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sd+18Ds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACE6C433C7;
+	Tue, 31 Oct 2023 17:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771785;
-	bh=uLaa1h3qaVwHW47fye1V818NdRA7WeZIN/Z5YQddxD0=;
+	s=korg; t=1698771788;
+	bh=0pRMOR92IAXhO+GLvy48JMxWF/wdl/em4jAeww6fMEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PLRwd0fapItSSj4oZcaSjA18zWEo6vqxguCLiunJ02lDDHxq8fHav6nxPeDohD7M4
-	 W2EhotulowoQ1MVHxU54pQjwdofdnftS2PA0W9tfQegQClpxaRbCx8/dgndaYZWSAy
-	 dEcVyuegl078cgWfbdKxTX5Dk94G9JWmd/dfsY4Q=
+	b=1sd+18Ds724S5uZ07g1oCSXhS0sqdgqLPDzlEB62jg1HaxWHLZyotUtSvYfBpqibY
+	 gwLbVrtaBla90fu7BUlwM17UvQPlj14fpH/E7xhE+J1LumAbVbxU37L/YiTox0D7z9
+	 zUz76Xm7VL387F1HHE8PK2xOaCNGLtLZf/xkAmW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Ott <sebott@redhat.com>,
-	Kees Cook <keescook@chromium.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Yu Zhao <yuzhao@google.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Rik van Riel <riel@surriel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Muchun Song <muchun.song@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 20/86] mm: fix vm_brk_flags() to not bail out while holding lock
-Date: Tue, 31 Oct 2023 18:00:45 +0100
-Message-ID: <20231031165919.240148290@linuxfoundation.org>
+Subject: [PATCH 6.1 21/86] hugetlbfs: clear resv_map pointer if mmap fails
+Date: Tue, 31 Oct 2023 18:00:46 +0100
+Message-ID: <20231031165919.266100789@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -44,46 +44,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Ott <sebott@redhat.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit e0f81ab1e4f42ffece6440dc78f583eb352b9a71 upstream.
+commit 92fe9dcbe4e109a7ce6bab3e452210a35b0ab493 upstream.
 
-Calling vm_brk_flags() with flags set other than VM_EXEC will exit the
-function without releasing the mmap_write_lock.
+Patch series "hugetlbfs: close race between MADV_DONTNEED and page fault", v7.
 
-Just do the sanity check before the lock is acquired.  This doesn't fix an
-actual issue since no caller sets a flag other than VM_EXEC.
+Malloc libraries, like jemalloc and tcalloc, take decisions on when to
+call madvise independently from the code in the main application.
 
-Link: https://lkml.kernel.org/r/20230929171937.work.697-kees@kernel.org
-Fixes: 2e7ce7d354f2 ("mm/mmap: change do_brk_flags() to expand existing VMA and add do_brk_munmap()")
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Yu Zhao <yuzhao@google.com>
+This sometimes results in the application page faulting on an address,
+right after the malloc library has shot down the backing memory with
+MADV_DONTNEED.
+
+Usually this is harmless, because we always have some 4kB pages sitting
+around to satisfy a page fault.  However, with hugetlbfs systems often
+allocate only the exact number of huge pages that the application wants.
+
+Due to TLB batching, hugetlbfs MADV_DONTNEED will free pages outside of
+any lock taken on the page fault path, which can open up the following
+race condition:
+
+       CPU 1                            CPU 2
+
+       MADV_DONTNEED
+       unmap page
+       shoot down TLB entry
+                                       page fault
+                                       fail to allocate a huge page
+                                       killed with SIGBUS
+       free page
+
+Fix that race by extending the hugetlb_vma_lock locking scheme to also
+cover private hugetlb mappings (with resv_map), and pulling the locking
+from __unmap_hugepage_final_range into helper functions called from
+zap_page_range_single.  This ensures page faults stay locked out of the
+MADV_DONTNEED VMA until the huge pages have actually been freed.
+
+
+This patch (of 3):
+
+Hugetlbfs leaves a dangling pointer in the VMA if mmap fails.  This has
+not been a problem so far, but other code in this patch series tries to
+follow that pointer.
+
+Link: https://lkml.kernel.org/r/20231006040020.3677377-1-riel@surriel.com
+Link: https://lkml.kernel.org/r/20231006040020.3677377-2-riel@surriel.com
+Fixes: 04ada095dcfc ("hugetlb: don't delete vma_lock in hugetlb MADV_DONTNEED processing")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mmap.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/hugetlb.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -3147,13 +3147,13 @@ int vm_brk_flags(unsigned long addr, uns
- 	if (!len)
- 		return 0;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -1138,8 +1138,7 @@ static void set_vma_resv_map(struct vm_a
+ 	VM_BUG_ON_VMA(!is_vm_hugetlb_page(vma), vma);
+ 	VM_BUG_ON_VMA(vma->vm_flags & VM_MAYSHARE, vma);
  
--	if (mmap_write_lock_killable(mm))
--		return -EINTR;
--
- 	/* Until we need other flags, refuse anything except VM_EXEC. */
- 	if ((flags & (~VM_EXEC)) != 0)
- 		return -EINVAL;
+-	set_vma_private_data(vma, (get_vma_private_data(vma) &
+-				HPAGE_RESV_MASK) | (unsigned long)map);
++	set_vma_private_data(vma, (unsigned long)map);
+ }
  
-+	if (mmap_write_lock_killable(mm))
-+		return -EINTR;
-+
- 	ret = check_brk_limits(addr, len);
- 	if (ret)
- 		goto limits_failed;
+ static void set_vma_resv_flags(struct vm_area_struct *vma, unsigned long flags)
+@@ -6898,8 +6897,10 @@ out_err:
+ 		 */
+ 		if (chg >= 0 && add < 0)
+ 			region_abort(resv_map, from, to, regions_needed);
+-	if (vma && is_vma_resv_set(vma, HPAGE_RESV_OWNER))
++	if (vma && is_vma_resv_set(vma, HPAGE_RESV_OWNER)) {
+ 		kref_put(&resv_map->refs, resv_map_release);
++		set_vma_resv_map(vma, NULL);
++	}
+ 	return false;
+ }
+ 
 
 
