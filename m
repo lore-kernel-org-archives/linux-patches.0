@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1344B2031A
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE3720321
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SB1yHhf3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8475CC433C8;
-	Tue, 31 Oct 2023 17:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DqeWmWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D10AC433C7;
+	Tue, 31 Oct 2023 17:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771925;
-	bh=zXsQs2icC08+beyTjE2DT0gjg6zbXhqXylNOtT2Lr5E=;
+	s=korg; t=1698771928;
+	bh=vcG6lDt4jd0dIn6DeGe6k2UmFaXRSy7t02dSUH8p6HQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SB1yHhf3AOBAAo8NzBwHMJzDczVDqwNSrNoeselQsmI9UzlxBLheScSgUD+BVD6I0
-	 X5X/ncTHHyPHgDNdwC4m0cezfLCsci3K+tmLl90ndsU/C44jZg1O0U82PYkXAj+rtm
-	 DDBPdw2CqBpzGwf2n9RldBj7UcT2+HG4d5kzWV1s=
+	b=1DqeWmWQeibvxkzCgrdNtZZLL/oR5WtJh3Oy3QYTqIdP8wk+GQDKPZeFSrhsF+fDG
+	 JjIsaRU+MRkmT4dACUdX8kwlBnTMgtbXhLaAJiORFl30tiztQG5qGfmXT+RX1MuqYr
+	 +i/bUAlVJe+LQr6Du9DULYC3DNhd6Kn+Po7dzvdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	jason.sim@samsung.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 25/86] maple_tree: add GFP_KERNEL to allocations in mas_expected_entries()
-Date: Tue, 31 Oct 2023 18:00:50 +0100
-Message-ID: <20231031165919.395404950@linuxfoundation.org>
+	Jonathan Cameron <jic23@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Peter Rosin <peda@axentia.se>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 60/86] iio: afe: rescale: Accept only offset channels
+Date: Tue, 31 Oct 2023 18:01:25 +0100
+Message-ID: <20231031165920.449533199@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,213 +44,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-commit 099d7439ce03d0e7bc8f0c3d7878b562f3a48d3d upstream.
+commit bee448390e5166d019e9e037194d487ee94399d9 upstream.
 
-Users complained about OOM errors during fork without triggering
-compaction.  This can be fixed by modifying the flags used in
-mas_expected_entries() so that the compaction will be triggered in low
-memory situations.  Since mas_expected_entries() is only used during fork,
-the extra argument does not need to be passed through.
+As noted by Jonathan Cameron: it is perfectly legal for a channel
+to have an offset but no scale in addition to the raw interface.
+The conversion will imply that scale is 1:1.
 
-Additionally, the two test_maple_tree test cases and one benchmark test
-were altered to use the correct locking type so that allocations would not
-trigger sleeping and thus fail.  Testing was completed with lockdep atomic
-sleep detection.
+Make rescale_configure_channel() accept just scale, or just offset
+to process a channel.
 
-The additional locking change requires rwsem support additions to the
-tools/ directory through the use of pthreads pthread_rwlock_t.  With this
-change test_maple_tree works in userspace, as a module, and in-kernel.
+When a user asks for IIO_CHAN_INFO_OFFSET in rescale_read_raw()
+we now have to deal with the fact that OFFSET could be present
+but SCALE missing. Add code to simply scale 1:1 in this case.
 
-Users may notice that the system gave up early on attempting to start new
-processes instead of attempting to reclaim memory.
-
-Link: https://lkml.kernel.org/r/20230915093243epcms1p46fa00bbac1ab7b7dca94acb66c44c456@epcms1p4
-Link: https://lkml.kernel.org/r/20231012155233.2272446-1-Liam.Howlett@oracle.com
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reviewed-by: Peng Zhang <zhangpeng.00@bytedance.com>
-Cc: <jason.sim@samsung.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/linux-iio/CACRpkdZXBjHU4t-GVOCFxRO-AHGxKnxMeHD2s4Y4PuC29gBq6g@mail.gmail.com/
+Fixes: 53ebee949980 ("iio: afe: iio-rescale: Support processed channels")
+Fixes: 9decacd8b3a4 ("iio: afe: rescale: Fix boolean logic bug")
+Reported-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Peter Rosin <peda@axentia.se>
+Link: https://lore.kernel.org/r/20230902-iio-rescale-only-offset-v2-1-988b807754c8@linaro.org
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c            |    2 +-
- lib/test_maple_tree.c       |   35 ++++++++++++++++++++++++-----------
- tools/include/linux/rwsem.h |   40 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 65 insertions(+), 12 deletions(-)
- create mode 100644 tools/include/linux/rwsem.h
+ drivers/iio/afe/iio-rescale.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -5913,7 +5913,7 @@ int mas_expected_entries(struct ma_state
- 	/* Internal nodes */
- 	nr_nodes += DIV_ROUND_UP(nr_nodes, nonleaf_cap);
- 	/* Add working room for split (2 nodes) + new parents */
--	mas_node_count(mas, nr_nodes + 3);
-+	mas_node_count_gfp(mas, nr_nodes + 3, GFP_KERNEL);
- 
- 	/* Detect if allocations run out */
- 	mas->mas_flags |= MA_STATE_PREALLOC;
---- a/lib/test_maple_tree.c
-+++ b/lib/test_maple_tree.c
-@@ -9,6 +9,7 @@
- 
- #include <linux/maple_tree.h>
- #include <linux/module.h>
-+#include <linux/rwsem.h>
- 
- #define MTREE_ALLOC_MAX 0x2000000000000Ul
- #ifndef CONFIG_DEBUG_MAPLE_TREE
-@@ -1678,17 +1679,21 @@ static noinline void __init check_forkin
- 	void *val;
- 	MA_STATE(mas, mt, 0, 0);
- 	MA_STATE(newmas, mt, 0, 0);
-+	struct rw_semaphore newmt_lock;
-+
-+	init_rwsem(&newmt_lock);
- 
- 	for (i = 0; i <= nr_entries; i++)
- 		mtree_store_range(mt, i*10, i*10 + 5,
- 				  xa_mk_value(i), GFP_KERNEL);
- 
- 	mt_set_non_kernel(99999);
--	mt_init_flags(&newmt, MT_FLAGS_ALLOC_RANGE);
-+	mt_init_flags(&newmt, MT_FLAGS_ALLOC_RANGE | MT_FLAGS_LOCK_EXTERN);
-+	mt_set_external_lock(&newmt, &newmt_lock);
- 	newmas.tree = &newmt;
- 	mas_reset(&newmas);
- 	mas_reset(&mas);
--	mas_lock(&newmas);
-+	down_write(&newmt_lock);
- 	mas.index = 0;
- 	mas.last = 0;
- 	if (mas_expected_entries(&newmas, nr_entries)) {
-@@ -1703,10 +1708,10 @@ static noinline void __init check_forkin
- 	}
- 	rcu_read_unlock();
- 	mas_destroy(&newmas);
--	mas_unlock(&newmas);
- 	mt_validate(&newmt);
- 	mt_set_non_kernel(0);
--	mtree_destroy(&newmt);
-+	__mt_destroy(&newmt);
-+	up_write(&newmt_lock);
- }
- 
- static noinline void __init check_iteration(struct maple_tree *mt)
-@@ -1818,6 +1823,10 @@ static noinline void __init bench_forkin
- 	void *val;
- 	MA_STATE(mas, mt, 0, 0);
- 	MA_STATE(newmas, mt, 0, 0);
-+	struct rw_semaphore newmt_lock;
-+
-+	init_rwsem(&newmt_lock);
-+	mt_set_external_lock(&newmt, &newmt_lock);
- 
- 	for (i = 0; i <= nr_entries; i++)
- 		mtree_store_range(mt, i*10, i*10 + 5,
-@@ -1832,7 +1841,7 @@ static noinline void __init bench_forkin
- 		mas.index = 0;
- 		mas.last = 0;
- 		rcu_read_lock();
--		mas_lock(&newmas);
-+		down_write(&newmt_lock);
- 		if (mas_expected_entries(&newmas, nr_entries)) {
- 			printk("OOM!");
- 			BUG_ON(1);
-@@ -1843,11 +1852,11 @@ static noinline void __init bench_forkin
- 			mas_store(&newmas, val);
+--- a/drivers/iio/afe/iio-rescale.c
++++ b/drivers/iio/afe/iio-rescale.c
+@@ -214,8 +214,18 @@ static int rescale_read_raw(struct iio_d
+ 				return ret < 0 ? ret : -EOPNOTSUPP;
  		}
- 		mas_destroy(&newmas);
--		mas_unlock(&newmas);
- 		rcu_read_unlock();
- 		mt_validate(&newmt);
- 		mt_set_non_kernel(0);
--		mtree_destroy(&newmt);
-+		__mt_destroy(&newmt);
-+		up_write(&newmt_lock);
- 	}
- }
- #endif
-@@ -2453,6 +2462,10 @@ static noinline void __init check_dup_ga
- 	void *tmp;
- 	MA_STATE(mas, mt, 0, 0);
- 	MA_STATE(newmas, &newmt, 0, 0);
-+	struct rw_semaphore newmt_lock;
-+
-+	init_rwsem(&newmt_lock);
-+	mt_set_external_lock(&newmt, &newmt_lock);
  
- 	if (!zero_start)
- 		i = 1;
-@@ -2462,9 +2475,9 @@ static noinline void __init check_dup_ga
- 		mtree_store_range(mt, i*10, (i+1)*10 - gap,
- 				  xa_mk_value(i), GFP_KERNEL);
+-		ret = iio_read_channel_scale(rescale->source, &scale, &scale2);
+-		return rescale_process_offset(rescale, ret, scale, scale2,
++		if (iio_channel_has_info(rescale->source->channel,
++					 IIO_CHAN_INFO_SCALE)) {
++			ret = iio_read_channel_scale(rescale->source, &scale, &scale2);
++			return rescale_process_offset(rescale, ret, scale, scale2,
++						      schan_off, val, val2);
++		}
++
++		/*
++		 * If we get here we have no scale so scale 1:1 but apply
++		 * rescaler and offset, if any.
++		 */
++		return rescale_process_offset(rescale, IIO_VAL_FRACTIONAL, 1, 1,
+ 					      schan_off, val, val2);
+ 	default:
+ 		return -EINVAL;
+@@ -280,8 +290,9 @@ static int rescale_configure_channel(str
+ 	chan->type = rescale->cfg->type;
  
--	mt_init_flags(&newmt, MT_FLAGS_ALLOC_RANGE);
-+	mt_init_flags(&newmt, MT_FLAGS_ALLOC_RANGE | MT_FLAGS_LOCK_EXTERN);
- 	mt_set_non_kernel(99999);
--	mas_lock(&newmas);
-+	down_write(&newmt_lock);
- 	ret = mas_expected_entries(&newmas, nr_entries);
- 	mt_set_non_kernel(0);
- 	MT_BUG_ON(mt, ret != 0);
-@@ -2477,9 +2490,9 @@ static noinline void __init check_dup_ga
- 	}
- 	rcu_read_unlock();
- 	mas_destroy(&newmas);
--	mas_unlock(&newmas);
- 
--	mtree_destroy(&newmt);
-+	__mt_destroy(&newmt);
-+	up_write(&newmt_lock);
- }
- 
- /* Duplicate many sizes of trees.  Mainly to test expected entry values */
---- /dev/null
-+++ b/tools/include/linux/rwsem.h
-@@ -0,0 +1,40 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
-+#ifndef _TOOLS__RWSEM_H
-+#define _TOOLS__RWSEM_H
-+
-+#include <pthread.h>
-+
-+struct rw_semaphore {
-+	pthread_rwlock_t lock;
-+};
-+
-+static inline int init_rwsem(struct rw_semaphore *sem)
-+{
-+	return pthread_rwlock_init(&sem->lock, NULL);
-+}
-+
-+static inline int exit_rwsem(struct rw_semaphore *sem)
-+{
-+	return pthread_rwlock_destroy(&sem->lock);
-+}
-+
-+static inline int down_read(struct rw_semaphore *sem)
-+{
-+	return pthread_rwlock_rdlock(&sem->lock);
-+}
-+
-+static inline int up_read(struct rw_semaphore *sem)
-+{
-+	return pthread_rwlock_unlock(&sem->lock);
-+}
-+
-+static inline int down_write(struct rw_semaphore *sem)
-+{
-+	return pthread_rwlock_wrlock(&sem->lock);
-+}
-+
-+static inline int up_write(struct rw_semaphore *sem)
-+{
-+	return pthread_rwlock_unlock(&sem->lock);
-+}
-+#endif /* _TOOLS_RWSEM_H */
+ 	if (iio_channel_has_info(schan, IIO_CHAN_INFO_RAW) &&
+-	    iio_channel_has_info(schan, IIO_CHAN_INFO_SCALE)) {
+-		dev_info(dev, "using raw+scale source channel\n");
++	    (iio_channel_has_info(schan, IIO_CHAN_INFO_SCALE) ||
++	     iio_channel_has_info(schan, IIO_CHAN_INFO_OFFSET))) {
++		dev_info(dev, "using raw+scale/offset source channel\n");
+ 	} else if (iio_channel_has_info(schan, IIO_CHAN_INFO_PROCESSED)) {
+ 		dev_info(dev, "using processed channel\n");
+ 		rescale->chan_processed = true;
 
 
