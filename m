@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B662031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCBD2031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/EPDdo3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F96C433C7;
-	Tue, 31 Oct 2023 17:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3YGBE4n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FA6C433C8;
+	Tue, 31 Oct 2023 17:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771791;
-	bh=zZ7SLVEkHXOzlYrlj1vm0tGfY9JApPKQUpEzd3oIfW8=;
+	s=korg; t=1698771794;
+	bh=bbhKeUVx5bEAGKLXeD0Yz+FwytSEVsH2p6ibNMhVz58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/EPDdo3+8IY4Mrp88f2WGbbmIPmicCJTzf3AyumWiKWS0NFHh2k3SjfRPamMzWPJ
-	 Kvmf3EQD/jNajydr/lbkPGpaacgL3DYD+D0D2TCEluCjtCvV5Bwc+ZuAiektTfZebJ
-	 9YSJBOTZelb0SGyeFKAq4q1vHVr11JeO61209zOw=
+	b=p3YGBE4nVnCX958dawUrCqJA2hv7xDvxvzbbGuW22j96Eh2T6yA/hJF6beNnRxr3K
+	 3iQV3a9wcEScOBUOvXCo5Alhqq5k0Gn7cPuBA7xsFixnSR+/OM8V3w7oDv6NtAWtc/
+	 3WljMuvOumpZpieB0Ffjrgm9kfsECBsEk5lUWnCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Altman <avri.altman@wdc.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 04/86] mmc: core: Fix error propagation for some ioctl commands
-Date: Tue, 31 Oct 2023 18:00:29 +0100
-Message-ID: <20231031165918.749940500@linuxfoundation.org>
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 22/86] mm/page_alloc: correct start page when guard page debug is enabled
+Date: Tue, 31 Oct 2023 18:00:47 +0100
+Message-ID: <20231031165919.299159597@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -43,100 +44,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit f19c5a73e6f78d69efce66cfdce31148c76a61a6 ]
+commit 61e21cf2d2c3cc5e60e8d0a62a77e250fccda62c upstream.
 
-Userspace has currently no way of checking the internal R1 response error
-bits for some commands. This is a problem for some commands, like RPMB for
-example. Typically, we may detect that the busy completion has successfully
-ended, while in fact the card did not complete the requested operation.
+When guard page debug is enabled and set_page_guard returns success, we
+miss to forward page to point to start of next split range and we will do
+split unexpectedly in page range without target page.  Move start page
+update before set_page_guard to fix this.
 
-To fix the problem, let's always poll with CMD13 for these commands and
-during the polling, let's also aggregate the R1 response bits. Before
-completing the ioctl request, let's propagate the R1 response bits too.
+As we split to wrong target page, then splited pages are not able to merge
+back to original order when target page is put back and splited pages
+except target page is not usable.  To be specific:
 
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Co-developed-by: Christian Loehle <christian.loehle@arm.com>
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230913112921.553019-1-ulf.hansson@linaro.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Consider target page is the third page in buddy page with order 2.
+| buddy-2 | Page | Target | Page |
+
+After break down to target page, we will only set first page to Guard
+because of bug.
+| Guard   | Page | Target | Page |
+
+When we try put_page_back_buddy with target page, the buddy page of target
+if neither guard nor buddy, Then it's not able to construct original page
+with order 2
+| Guard | Page | buddy-0 | Page |
+
+All pages except target page is not in free list and is not usable.
+
+Link: https://lkml.kernel.org/r/20230927094401.68205-1-shikemeng@huaweicloud.com
+Fixes: 06be6ff3d2ec ("mm,hwpoison: rework soft offline for free pages")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ mm/page_alloc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-index 1aab4f47eab98..1fc6767f18782 100644
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -181,6 +181,7 @@ static void mmc_blk_rw_rq_prep(struct mmc_queue_req *mqrq,
- 			       struct mmc_queue *mq);
- static void mmc_blk_hsq_req_done(struct mmc_request *mrq);
- static int mmc_spi_err_check(struct mmc_card *card);
-+static int mmc_blk_busy_cb(void *cb_data, bool *busy);
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -9638,6 +9638,7 @@ static void break_down_buddy_pages(struc
+ 			next_page = page;
+ 			current_buddy = page + size;
+ 		}
++		page = next_page;
  
- static struct mmc_blk_data *mmc_blk_get(struct gendisk *disk)
- {
-@@ -472,7 +473,7 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
- 	struct mmc_data data = {};
- 	struct mmc_request mrq = {};
- 	struct scatterlist sg;
--	bool r1b_resp, use_r1b_resp = false;
-+	bool r1b_resp;
- 	unsigned int busy_timeout_ms;
- 	int err;
- 	unsigned int target_part;
-@@ -566,8 +567,7 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
- 	busy_timeout_ms = idata->ic.cmd_timeout_ms ? : MMC_BLK_TIMEOUT_MS;
- 	r1b_resp = (cmd.flags & MMC_RSP_R1B) == MMC_RSP_R1B;
- 	if (r1b_resp)
--		use_r1b_resp = mmc_prepare_busy_cmd(card->host, &cmd,
--						    busy_timeout_ms);
-+		mmc_prepare_busy_cmd(card->host, &cmd, busy_timeout_ms);
- 
- 	mmc_wait_for_req(card->host, &mrq);
- 	memcpy(&idata->ic.response, cmd.resp, sizeof(cmd.resp));
-@@ -620,19 +620,28 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
- 	if (idata->ic.postsleep_min_us)
- 		usleep_range(idata->ic.postsleep_min_us, idata->ic.postsleep_max_us);
- 
--	/* No need to poll when using HW busy detection. */
--	if ((card->host->caps & MMC_CAP_WAIT_WHILE_BUSY) && use_r1b_resp)
--		return 0;
--
- 	if (mmc_host_is_spi(card->host)) {
- 		if (idata->ic.write_flag || r1b_resp || cmd.flags & MMC_RSP_SPI_BUSY)
- 			return mmc_spi_err_check(card);
- 		return err;
+ 		if (set_page_guard(zone, current_buddy, high, migratetype))
+ 			continue;
+@@ -9645,7 +9646,6 @@ static void break_down_buddy_pages(struc
+ 		if (current_buddy != target) {
+ 			add_to_free_list(current_buddy, zone, high, migratetype);
+ 			set_buddy_order(current_buddy, high);
+-			page = next_page;
+ 		}
  	}
--	/* Ensure RPMB/R1B command has completed by polling with CMD13. */
--	if (idata->rpmb || r1b_resp)
--		err = mmc_poll_for_busy(card, busy_timeout_ms, false,
--					MMC_BUSY_IO);
-+
-+	/*
-+	 * Ensure RPMB, writes and R1B responses are completed by polling with
-+	 * CMD13. Note that, usually we don't need to poll when using HW busy
-+	 * detection, but here it's needed since some commands may indicate the
-+	 * error through the R1 status bits.
-+	 */
-+	if (idata->rpmb || idata->ic.write_flag || r1b_resp) {
-+		struct mmc_blk_busy_data cb_data = {
-+			.card = card,
-+		};
-+
-+		err = __mmc_poll_for_busy(card->host, 0, busy_timeout_ms,
-+					  &mmc_blk_busy_cb, &cb_data);
-+
-+		idata->ic.response[0] = cb_data.status;
-+	}
- 
- 	return err;
  }
--- 
-2.42.0
-
 
 
