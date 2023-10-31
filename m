@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7221C208C7
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF85208CF
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1NC+Izf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0EF7C433C7;
-	Tue, 31 Oct 2023 17:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7kDKGuC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD14AC433C7;
+	Tue, 31 Oct 2023 17:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774627;
-	bh=4H1KD4EIJqyj4jWsfqDh//7hBjCmlLfxS6FDIihUkio=;
+	s=korg; t=1698774630;
+	bh=/WhrXBozo3fDBTD0n8HtPSes2fKtG6j5LLjZM3z4P3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X1NC+Izfmra6GPjr7mt3drKQ3ws+BRULq+YopPK0fK/UuLyVVSOY06z0XuK+duzo/
-	 IVvryb59bvMNQTHpORS575HadQSEmzPn+QVn+60v6+aDIeeWZMBGetxxmGj3+Boeg9
-	 KDkvlmBXvo4eNzn8lVO9jgm0wa0X3e95CME79vlQ=
+	b=a7kDKGuCCOcdG0aSHWLKeIeyaylkm2Fxwxeoc8GLJSOsvQwMLY2aB3GlACGRnENmq
+	 cQxeWRr81ssfKAjJLmUT3xxWO3bCOwk4h55x8vjYnrL88Rk6mPdYuDYbgj2A7yiLXH
+	 b+vGNGI/EbMPiCpdtjwevCldDyKXtt9SL79yIBNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 111/112] mm/damon/sysfs: check DAMOS regions update progress from before_terminate()
-Date: Tue, 31 Oct 2023 18:01:52 +0100
-Message-ID: <20231031165904.762790861@linuxfoundation.org>
+	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Subject: [PATCH 6.5 112/112] accel/ivpu/37xx: Fix missing VPUIP interrupts
+Date: Tue, 31 Oct 2023 18:01:53 +0100
+Message-ID: <20231031165904.797819526@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -41,62 +41,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Karol Wachowski <karol.wachowski@linux.intel.com>
 
-commit 76b7069bcc89dec33f03eb08abee165d0306b754 upstream.
+commit b132ac51d7a50c37683be56c96ff64f8c887930f upstream.
 
-DAMON_SYSFS can receive DAMOS tried regions update request while kdamond
-is already out of the main loop and before_terminate callback
-(damon_sysfs_before_terminate() in this case) is not yet called.  And
-damon_sysfs_handle_cmd() can further be finished before the callback is
-invoked.  Then, damon_sysfs_before_terminate() unlocks damon_sysfs_lock,
-which is not locked by anyone.  This happens because the callback function
-assumes damon_sysfs_cmd_request_callback() should be called before it.
-Check if the assumption was true before doing the unlock, to avoid this
-problem.
+Move sequence of masking and unmasking global interrupts from buttress
+interrupt handler to generic one that handles both VPUIP and BTRS
+interrupts. Unmasking global interrupts will re-trigger MSI for any
+pending interrupts.
 
-Link: https://lkml.kernel.org/r/20231007200432.3110-1-sj@kernel.org
-Fixes: f1d13cacabe1 ("mm/damon/sysfs: implement DAMOS tried regions update command")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.2.x]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Lack of this sequence will cause the driver to miss any
+VPUIP interrupt that comes after reading VPU_37XX_HOST_SS_ICB_STATUS_0
+and before clearing all active interrupt sources.
+
+Fixes: 35b137630f08 ("accel/ivpu: Introduce a new DRM driver for Intel VPU")
+Cc: stable@vger.kernel.org
+Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231024161952.759914-1-stanislaw.gruszka@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/accel/ivpu/ivpu_hw_mtl.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1202,6 +1202,8 @@ static int damon_sysfs_set_targets(struc
- 	return 0;
+--- a/drivers/accel/ivpu/ivpu_hw_mtl.c
++++ b/drivers/accel/ivpu/ivpu_hw_mtl.c
+@@ -953,9 +953,6 @@ static u32 ivpu_hw_mtl_irqb_handler(stru
+ 	if (status == 0)
+ 		return 0;
+ 
+-	/* Disable global interrupt before handling local buttress interrupts */
+-	REGB_WR32(MTL_BUTTRESS_GLOBAL_INT_MASK, 0x1);
+-
+ 	if (REG_TEST_FLD(MTL_BUTTRESS_INTERRUPT_STAT, FREQ_CHANGE, status))
+ 		ivpu_dbg(vdev, IRQ, "FREQ_CHANGE irq: %08x", REGB_RD32(MTL_BUTTRESS_CURRENT_PLL));
+ 
+@@ -986,9 +983,6 @@ static u32 ivpu_hw_mtl_irqb_handler(stru
+ 	else
+ 		REGB_WR32(MTL_BUTTRESS_INTERRUPT_STAT, status);
+ 
+-	/* Re-enable global interrupt */
+-	REGB_WR32(MTL_BUTTRESS_GLOBAL_INT_MASK, 0x0);
+-
+ 	if (schedule_recovery)
+ 		ivpu_pm_schedule_recovery(vdev);
+ 
+@@ -1000,9 +994,14 @@ static irqreturn_t ivpu_hw_mtl_irq_handl
+ 	struct ivpu_device *vdev = ptr;
+ 	u32 ret_irqv, ret_irqb;
+ 
++	REGB_WR32(MTL_BUTTRESS_GLOBAL_INT_MASK, 0x1);
++
+ 	ret_irqv = ivpu_hw_mtl_irqv_handler(vdev, irq);
+ 	ret_irqb = ivpu_hw_mtl_irqb_handler(vdev, irq);
+ 
++	/* Re-enable global interrupts to re-trigger MSI for pending interrupts */
++	REGB_WR32(MTL_BUTTRESS_GLOBAL_INT_MASK, 0x0);
++
+ 	return IRQ_RETVAL(ret_irqb | ret_irqv);
  }
  
-+static bool damon_sysfs_schemes_regions_updating;
-+
- static void damon_sysfs_before_terminate(struct damon_ctx *ctx)
- {
- 	struct damon_target *t, *next;
-@@ -1209,10 +1211,12 @@ static void damon_sysfs_before_terminate
- 
- 	/* damon_sysfs_schemes_update_regions_stop() might not yet called */
- 	kdamond = damon_sysfs_cmd_request.kdamond;
--	if (kdamond && damon_sysfs_cmd_request.cmd ==
-+	if (kdamond && (damon_sysfs_cmd_request.cmd ==
- 			DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS &&
-+			damon_sysfs_schemes_regions_updating) &&
- 			ctx == kdamond->damon_ctx) {
- 		damon_sysfs_schemes_update_regions_stop(ctx);
-+		damon_sysfs_schemes_regions_updating = false;
- 		mutex_unlock(&damon_sysfs_lock);
- 	}
- 
-@@ -1331,7 +1335,6 @@ static int damon_sysfs_commit_input(stru
- static int damon_sysfs_cmd_request_callback(struct damon_ctx *c)
- {
- 	struct damon_sysfs_kdamond *kdamond;
--	static bool damon_sysfs_schemes_regions_updating;
- 	int err = 0;
- 
- 	/* avoid deadlock due to concurrent state_store('off') */
 
 
