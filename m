@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2965208C7
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6D7208C7
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T82RpS9H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413D7C433C8;
-	Tue, 31 Oct 2023 17:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sXdl92C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3B8C433C8;
+	Tue, 31 Oct 2023 17:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774515;
-	bh=u1gmawsYRdXjuVHzYZGNPVIF9TqUsTqzu3iO0QmnRQc=;
+	s=korg; t=1698774518;
+	bh=XM3K/JkW+rZ0e45kd/dtT9BqDzhnGn+Au0mUsmz8jyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T82RpS9HQyeWicYEX4zTxFaHUEQf9ZJTESzIcW8y/WE8eP9YGEft9+XH2gkBqYdPO
-	 y8HbXdjqK1ojUU4xDeFMpYqTPzBgBVz/R3aCLIRTFLuGN4mUVO5M382tgqH0TzOGyr
-	 18KnyEy3j3lMX5TR03cHkC0Y1Hw6q+unucBL7NJk=
+	b=0sXdl92CBbY3qXyAVkS5sRV2f8dFdA2po58UIVLtZjyPuvGHxNL7F9BF9tPssEm9B
+	 Z7SD8t9Zxv+9CUaqNokndFmQHKfZK/zzTkOkGzsWFSTUeClEoAwJ2ZW4w1WOOwqxLf
+	 DnRPe5coaVeBgDoNQ1x6AArKvifMSyM2WpY07vbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 073/112] drm/i915/perf: Determine context valid in OA reports
-Date: Tue, 31 Oct 2023 18:01:14 +0100
-Message-ID: <20231031165903.622067161@linuxfoundation.org>
+	Ivan Vecera <ivecera@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.5 074/112] i40e: Fix wrong check for I40E_TXR_FLAGS_WB_ON_ITR
+Date: Tue, 31 Oct 2023 18:01:15 +0100
+Message-ID: <20231031165903.653717919@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -43,53 +44,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit cba94bbcff08d209710dd7bdc139caad675a6f8d ]
+[ Upstream commit 77a8c982ff0d4c3a14022c6fe9e3dbfb327552ec ]
 
-When supporting OA for TGL, it was seen that the context valid bit in
-the report ID was not defined, however revisiting the spec seems to have
-this bit defined. The bit is used to determine if a context is valid on
-a context switch and is essential to determine active and idle periods
-for a context. Re-enable the context valid bit for gen12 platforms.
+The I40E_TXR_FLAGS_WB_ON_ITR is i40e_ring flag and not i40e_pf one.
 
-BSpec: 52196 (description of report_id)
-
-v2: Include BSpec reference (Ashutosh)
-
-Fixes: 00a7f0d7155c ("drm/i915/tgl: Add perf support on TGL")
-Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230802202854.1224547-1-umesh.nerlige.ramappa@intel.com
-(cherry picked from commit 7eeaedf79989a8f131939782832e21e9218ed2a0)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 8e0764b4d6be42 ("i40e/i40evf: Add support for writeback on ITR feature for X722")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20231023212714.178032-1-jacob.e.keller@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_perf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_txrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_perf.c b/drivers/gpu/drm/i915/i915_perf.c
-index 49c6f1ff11284..331685e1b7b7d 100644
---- a/drivers/gpu/drm/i915/i915_perf.c
-+++ b/drivers/gpu/drm/i915/i915_perf.c
-@@ -482,8 +482,7 @@ static void oa_report_id_clear(struct i915_perf_stream *stream, u32 *report)
- static bool oa_report_ctx_invalid(struct i915_perf_stream *stream, void *report)
- {
- 	return !(oa_report_id(stream, report) &
--	       stream->perf->gen8_valid_ctx_bit) &&
--	       GRAPHICS_VER(stream->perf->i915) <= 11;
-+	       stream->perf->gen8_valid_ctx_bit);
- }
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+index 93485a6824365..b59fef9d7c4ad 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+@@ -2854,7 +2854,7 @@ int i40e_napi_poll(struct napi_struct *napi, int budget)
+ 		return budget;
+ 	}
  
- static u64 oa_timestamp(struct i915_perf_stream *stream, void *report)
-@@ -5106,6 +5105,7 @@ static void i915_perf_init_info(struct drm_i915_private *i915)
- 		perf->gen8_valid_ctx_bit = BIT(16);
- 		break;
- 	case 12:
-+		perf->gen8_valid_ctx_bit = BIT(16);
- 		/*
- 		 * Calculate offset at runtime in oa_pin_context for gen12 and
- 		 * cache the value in perf->ctx_oactxctrl_offset.
+-	if (vsi->back->flags & I40E_TXR_FLAGS_WB_ON_ITR)
++	if (q_vector->tx.ring[0].flags & I40E_TXR_FLAGS_WB_ON_ITR)
+ 		q_vector->arm_wb_state = false;
+ 
+ 	/* Exit the polling mode, but don't re-enable interrupts if stack might
 -- 
 2.42.0
 
