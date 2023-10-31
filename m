@@ -1,58 +1,58 @@
 Received: from mo4-p03-ob.smtp.rzone.de (mo4-p03-ob.smtp.rzone.de [85.215.255.102])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD2D101E1
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 09:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45A413AE5
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 09:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="NcbayBmM";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="7DJBThod"
-ARC-Seal: i=1; a=rsa-sha256; t=1698744598; cv=none;
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="lmcibq+L";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="L+9eP1Fj"
+ARC-Seal: i=1; a=rsa-sha256; t=1698744597; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=AK0RI7g7OWhU5BBxH5S4cYSbhMesglfOcXp4KimSomyyenq4ZJk5O4C3ggQLz+UAu2
-    f0y6cSIezuWzipoQDqj9dIKEsaOe1oW2b9H00XWni1AzMIKfq5oVlyo7jkiBV5dgtYZP
-    kyyAiSteILfb1ysB6gfPyptY8g06GPIqtx0iQb5ZoXbfF4LMLPm/e8d43h/jNNjS3/A1
-    lNYXrv0gg0Qt49rXegW1oUg0Or/jAFieFLy9X48rhnwo8/OEcmTqnbS4ABkF7MLcFv3m
-    SB3cMNER4er1Oy/y9SuiecodD3Xl6KA00N6mqDGqZjWbULCVXuSFsnz6EzXA9FvdkZnm
-    XUgQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744598;
+    b=V97ICwzDmgyVNmXWNbF57ToZCurZB7XvyasjEeaz+rmQJNbyHusuB0L+XvE2k23Sl3
+    1m40LfHo3bXHu4HZjgRCCp6CQRV3GVX/VA8hu5iZ/YIPEee6URznRUaXrDYtRJJZWoBH
+    Mu7jgyInZYb8a8M3mIgavup28wwZSYnosUab/cCRFeQTnADUxLvrfe9X51eAp21SzeCE
+    w/iH8DxTaFJKwRIHtJ+GVCOVxrctuRBLtQvJa2Xi9wLuwnUMmozC+zIdCAk1xWfYgqiw
+    YYPK4vuvf9fzdvJCNp0MBp1ppCtz5XDO3VoVPHU6nND94g/22fIVCu+tvpAOvI/zDkEY
+    oKfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744597;
     s=strato-dkim-0002; d=strato.com;
     h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
     From:Subject:Sender;
-    bh=ebGAvzRCuJbCaJaJS6/JZmOl0rVWjzcFYSvIW/E7qT0=;
-    b=MDOU0nhMfeQq1rJZ6uLji9PFgQrWJjAus2qXHGf/PRZaAGDQx5UFclN+7+y86sOzj8
-    tMNfyDLv1qf7m7nR+d5tQV+9P8IfHbjSnwZWYF4HWfx39YVPNwwbYNhv9TEp5sEBX7Y0
-    U59czErMynHGaozJ2p1U0SphtZbMlCIL09DjY9WdkOwzF2L6sVwFzNhCpmTQRhC4xFta
-    vDyhFR8SrDOUCgEiKFt9M3sAc4qhctD04YqojsFM0ac1l4AODrvTlGk2mHGlIF5BTXRD
-    KrPYTaaYif7uZYsPeM12+PuCk5GuvyeyaUC+cS1vdfPXW0NHtMmEyIiPECF6gTUiRkjy
-    gbDw==
+    bh=cMohUgZNJMTVeoM6OkAxwBWpzdf/KkSfTakcu6Sty1g=;
+    b=XTPHlNFTPJq0gVlqrCNYBrqVDKzzhbEE3yihhmhF8GiMMUlYMIpczwFdBl9vwFGMi0
+    JTt7JBI/3sGhBasXJtIhbAoX7txGjmKcS217GdGML+T2XMkWUi82TSdi787etTp0Fs/9
+    rKsZkqWpPT5Fo3BXbI3MQ9oWLF8Lj90WLbOzHyO7kO3/bvdkjZ2PuZIzURP7PcGoH9LC
+    eABv7N1QPWuVVsueROwN8mdJ/BO2w0Cvt01dA+idWbY+tTiwT0AHGa9v884iU12CDklp
+    6tz/+axq9sdkEvbzHarnCvSyQ2YZgyExsuf79K7oS4u2QzX7fFyBCcyWxO3AxI4j6rGB
+    5dag==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
 X-RZG-CLASS-ID: mo03
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744598;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1698744597;
     s=strato-dkim-0002; d=hartkopp.net;
     h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
     From:Subject:Sender;
-    bh=ebGAvzRCuJbCaJaJS6/JZmOl0rVWjzcFYSvIW/E7qT0=;
-    b=NcbayBmMvyYKg4cDMMlg2PHKsPn6RfLAaxIrpMdC8QMDrpwKNJoA1Edv1DrFdRJjAy
-    3ncNk0HVucP41dlFpkFPjthWf7A3Qskv+uP/1Nlie5CPZIZ9vHwT16G/tDwHLzfSO9vu
-    vXj9C/9rn5Scd7LottH+zGg5rrb5axqwCKoZkTYaf4AoODodQ/EhM1cOSDqFJ7/mT6UP
-    yp6iobl7D/KcAgsQz8ADZhaG05v1Ggl+nTAMcKvBrNENA1VuY5e4ZrMvyQycttMpFeX1
-    aR777gd7sy3F1mvtTH5OYBIdH+mV9n0W1v9+Ryn479SJGskKeBFA27JMu4FIUaGUwKvn
-    TVzg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1698744598;
+    bh=cMohUgZNJMTVeoM6OkAxwBWpzdf/KkSfTakcu6Sty1g=;
+    b=lmcibq+LIMbtb47LsA+dHQXGPxLKuO2VmHiBghdBBPRAoI8FITKFQkp96rD9ZlMcCG
+    QteEFVouEmPlizZcF2FMEHe1abV9IC+VO+J2uAGK4sHwmuhXpjeI+9nwu3mZ2SWpaRsS
+    BX93RD5+qB293rY+DARas+ls1Cy0qnZzE1zErQ4lC6MOkCRjIAiBjcUb8d2JS/lQ9dg5
+    M6EzB/h680b+wTiaJdXDll15wSY7VhQ6f6nW4+CgZr3OFz4p2usHEJnZvScQeMG4cJJW
+    /S3GSKqM6nGZNBoCGfpgTtpSYNDSfjvMjOh5oQAcd7BGf32DB04O8spkGWZQbG8FqmmT
+    +vTg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1698744597;
     s=strato-dkim-0003; d=hartkopp.net;
     h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
     From:Subject:Sender;
-    bh=ebGAvzRCuJbCaJaJS6/JZmOl0rVWjzcFYSvIW/E7qT0=;
-    b=7DJBThody0Sm8OROlSjJySLEt5IH0glAxwSWvMGH2KjY/Uu8y45PQH0WnMDdyNz9ca
-    Yezni/3FibzHI9VXw8BQ==
+    bh=cMohUgZNJMTVeoM6OkAxwBWpzdf/KkSfTakcu6Sty1g=;
+    b=L+9eP1Fjq+VI3wlbybXTVWsqU+JIh/WP+3LPRwFAzRrOmSAcLL9ESCXrWqjCeyAUDF
+    ZIYbC2mAFnogLgjrKOCA==
 X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjGrp7owjzFK3JbFk1mS0k+8CejuVITM8sik0"
 Received: from lenov17.lan
     by smtp.strato.de (RZmta 49.9.1 DYNA|AUTH)
-    with ESMTPSA id Kda39bz9V9TvFhM
+    with ESMTPSA id Kda39bz9V9TvFhK
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
 	(Client did not present a certificate);
     Tue, 31 Oct 2023 10:29:57 +0100 (CET)
@@ -67,9 +67,9 @@ Cc: linux-can@vger.kernel.org,
 	mkl@pengutronix.de,
 	michal.sojka@cvut.cz,
 	Oliver Hartkopp <socketcan@hartkopp.net>
-Subject: [PATCH stable 5.10 09/10] can: isotp: isotp_bind(): do not validate unused address information
-Date: Tue, 31 Oct 2023 10:29:17 +0100
-Message-Id: <20231031092918.2668-10-socketcan@hartkopp.net>
+Subject: [PATCH stable 5.10 07/10] can: isotp: handle wait_event_interruptible() return values
+Date: Tue, 31 Oct 2023 10:29:15 +0100
+Message-Id: <20231031092918.2668-8-socketcan@hartkopp.net>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20231031092918.2668-1-socketcan@hartkopp.net>
 References: <20231031092918.2668-1-socketcan@hartkopp.net>
@@ -82,84 +82,40 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="us-ascii"
 
-commit b76b163f46b661499921a0049982764a6659bfe7 upstream
+commit 823b2e42720f96f277940c37ea438b7c5ead51a4 upstream
 
-With commit 2aa39889c463 ("can: isotp: isotp_bind(): return -EINVAL on
-incorrect CAN ID formatting") the bind() syscall returns -EINVAL when
-the given CAN ID needed to be sanitized. But in the case of an unconfirmed
-broadcast mode the rx CAN ID is not needed and may be uninitialized from
-the caller - which is ok.
+When wait_event_interruptible() has been interrupted by a signal the
+tx.state value might not be ISOTP_IDLE. Force the state machines
+into idle state to inhibit the timer handlers to continue working.
 
-This patch makes sure the result of an inproper CAN ID format is only
-provided when the address information is needed.
-
-Link: https://lore.kernel.org/all/20220517145653.2556-1-socketcan@hartkopp.net
+Fixes: 866337865f37 ("can: isotp: fix tx state handling for echo tx processing")
+Cc: stable@vger.kernel.org
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20230112192347.1944-1-socketcan@hartkopp.net
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 ---
- net/can/isotp.c | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ net/can/isotp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/net/can/isotp.c b/net/can/isotp.c
-index f362b50484fc..08dfa34d68d5 100644
+index 87de9a08cc85..42194b0d176c 100644
 --- a/net/can/isotp.c
 +++ b/net/can/isotp.c
-@@ -1214,38 +1214,43 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
- 	struct sock *sk = sock->sk;
- 	struct isotp_sock *so = isotp_sk(sk);
- 	struct net *net = sock_net(sk);
- 	int ifindex;
- 	struct net_device *dev;
--	canid_t tx_id, rx_id;
-+	canid_t tx_id = addr->can_addr.tp.tx_id;
-+	canid_t rx_id = addr->can_addr.tp.rx_id;
- 	int err = 0;
- 	int notify_enetdown = 0;
+@@ -1069,10 +1069,14 @@ static int isotp_release(struct socket *sock)
+ 	net = sock_net(sk);
  
- 	if (len < ISOTP_MIN_NAMELEN)
- 		return -EINVAL;
+ 	/* wait for complete transmission of current pdu */
+ 	wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
  
- 	if (addr->can_family != AF_CAN)
- 		return -EINVAL;
- 
--	/* sanitize tx/rx CAN identifiers */
--	tx_id = addr->can_addr.tp.tx_id;
-+	/* sanitize tx CAN identifier */
- 	if (tx_id & CAN_EFF_FLAG)
- 		tx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
- 	else
- 		tx_id &= CAN_SFF_MASK;
- 
--	rx_id = addr->can_addr.tp.rx_id;
--	if (rx_id & CAN_EFF_FLAG)
--		rx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
--	else
--		rx_id &= CAN_SFF_MASK;
--
--	/* give feedback on wrong CAN-ID values */
--	if (tx_id != addr->can_addr.tp.tx_id ||
--	    rx_id != addr->can_addr.tp.rx_id)
-+	/* give feedback on wrong CAN-ID value */
-+	if (tx_id != addr->can_addr.tp.tx_id)
- 		return -EINVAL;
- 
-+	/* sanitize rx CAN identifier (if needed) */
-+	if (isotp_register_rxid(so)) {
-+		if (rx_id & CAN_EFF_FLAG)
-+			rx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
-+		else
-+			rx_id &= CAN_SFF_MASK;
++	/* force state machines to be idle also when a signal occurred */
++	so->tx.state = ISOTP_IDLE;
++	so->rx.state = ISOTP_IDLE;
 +
-+		/* give feedback on wrong CAN-ID value */
-+		if (rx_id != addr->can_addr.tp.rx_id)
-+			return -EINVAL;
-+	}
-+
- 	if (!addr->can_ifindex)
- 		return -ENODEV;
- 
- 	lock_sock(sk);
- 
+ 	spin_lock(&isotp_notifier_lock);
+ 	while (isotp_busy_notifier == so) {
+ 		spin_unlock(&isotp_notifier_lock);
+ 		schedule_timeout_uninterruptible(1);
+ 		spin_lock(&isotp_notifier_lock);
 -- 
 2.34.1
 
