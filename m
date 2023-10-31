@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE005208C7
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B051208C7
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJ7UIoGi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FE1C433C7;
-	Tue, 31 Oct 2023 17:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEyGBvA1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46ED8C433C8;
+	Tue, 31 Oct 2023 17:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774606;
-	bh=AtY9GNfqnzVs/Hy40qumy8bYxuMywspGmOVLkCy9JTk=;
+	s=korg; t=1698774609;
+	bh=pUyMH+nX0EJKYq24EO24I7mdP3yiSgCVpA82bvklxHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJ7UIoGijVJPDgCilgZjrykcBWXbc5aaAd+6VB1aLgq9a5KvY3U63ocu1H/9BkRx4
-	 rsrcdMgaJbfK6SMO75ihXrceDGCCEGPkPfeK8NZp5AGEJJCpNhSd/iaUY5qHVuic5V
-	 60TkoPeqeYhohNvhbl1NFyqOSOBBJ+O0gJ8C9LrA=
+	b=UEyGBvA13mJmjTLpAwbCbA8bhceiJFpi01F3ooCqyGAiLBIwCVKWEPTmWzwFEUpnz
+	 r1ac0pEjKO3BPWXbo8Y3md0wu8ARN/AE9ThSikf0R1ho88BzZl8CQOC69+QNqK7DSS
+	 /2fD6bRgrk5xKNyOaHczytA8R35JZRWUacsTIJtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Greear <greearb@candelatech.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 067/112] wifi: cfg80211: pass correct pointer to rdev_inform_bss()
-Date: Tue, 31 Oct 2023 18:01:08 +0100
-Message-ID: <20231031165903.432831007@linuxfoundation.org>
+Subject: [PATCH 6.5 068/112] wifi: cfg80211: fix assoc response warning on failed links
+Date: Tue, 31 Oct 2023 18:01:09 +0100
+Message-ID: <20231031165903.464320035@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -42,36 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Greear <greearb@candelatech.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 3e3929ef889e650dd585dc0f4f7f18240688811a ]
+[ Upstream commit c434b2be2d80d236bb090fdb493d4bd5ed589238 ]
 
-Confusing struct member names here resulted in passing
-the wrong pointer, causing crashes. Pass the correct one.
+The warning here shouldn't be done before we even set the
+bss field (or should've used the input data). Move the
+assignment before the warning to fix it.
 
-Fixes: eb142608e2c4 ("wifi: cfg80211: use a struct for inform_single_bss data")
-Signed-off-by: Ben Greear <greearb@candelatech.com>
-Link: https://lore.kernel.org/r/20231021154827.1142734-1-greearb@candelatech.com
-[rewrite commit message, add fixes]
+We noticed this now because of Wen's bugfix, where the bug
+fixed there had previously hidden this other bug.
+
+Fixes: 53ad07e9823b ("wifi: cfg80211: support reporting failed links")
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/mlme.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 939deecf0bbef..8210a6090ac16 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2125,7 +2125,7 @@ cfg80211_inform_single_bss_data(struct wiphy *wiphy,
- 	if (!res)
- 		goto drop;
+diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
+index 3e2c398abddcc..55a1d3633853f 100644
+--- a/net/wireless/mlme.c
++++ b/net/wireless/mlme.c
+@@ -43,10 +43,11 @@ void cfg80211_rx_assoc_resp(struct net_device *dev,
  
--	rdev_inform_bss(rdev, &res->pub, ies, data->drv_data);
-+	rdev_inform_bss(rdev, &res->pub, ies, drv_data->drv_data);
+ 	for (link_id = 0; link_id < ARRAY_SIZE(data->links); link_id++) {
+ 		cr.links[link_id].status = data->links[link_id].status;
++		cr.links[link_id].bss = data->links[link_id].bss;
++
+ 		WARN_ON_ONCE(cr.links[link_id].status != WLAN_STATUS_SUCCESS &&
+ 			     (!cr.ap_mld_addr || !cr.links[link_id].bss));
  
- 	if (data->bss_source == BSS_SOURCE_MBSSID) {
- 		/* this is a nontransmitting bss, we need to add it to
+-		cr.links[link_id].bss = data->links[link_id].bss;
+ 		if (!cr.links[link_id].bss)
+ 			continue;
+ 		cr.links[link_id].bssid = data->links[link_id].bss->bssid;
 -- 
 2.42.0
 
