@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789802031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CFC2031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQgefSjF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9E4C433C8;
-	Tue, 31 Oct 2023 17:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8g4LAax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D761BC433C7;
+	Tue, 31 Oct 2023 17:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771815;
-	bh=7onUowU+/tH5/hFFIRrbcwXJ56Hz1/N6xgnXkBsodaQ=;
+	s=korg; t=1698771818;
+	bh=/FtEwPzhzzYGnd8EA12m70+E9HUXO7bWU7BvYHEjEqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQgefSjFwuPfB7KpDtRYNoYg+QwNrkV/viRT2dTB2Po7fBB/QTu0S7HWEoczbduEh
-	 kkeUf4MAi2Nip1N7EZ5NOaT38VRLkhBNgc5J0tvue9U/ohUWfEKLn0QkhXaW9Xa7Tk
-	 ovv3C0sBgw1p3yiOhqHxP/zAFm0MHrRCxEPM/7zI=
+	b=q8g4LAaxEcJgd9VjYTN7eIEyaH0zJcbma2KhjpqAGZmDGTLtafyYYtlDQwFrO+ncx
+	 8FR1COXI3sD8S32XRPwdMV+Imdt5ZpSE1Bj5nphwlI/vKwKOqfTPJf6uX3c1dqZ3uA
+	 6do4PM9/KDWNULNtzJ/OkktdMr/JuDcnjQLmshWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
+	Javier Rodriguez <josejavier.rodriguez@duagon.com>,
+	Johannes Thumshirn <jth@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 09/86] pinctrl: qcom: lpass-lpi: fix concurrent register updates
-Date: Tue, 31 Oct 2023 18:00:34 +0100
-Message-ID: <20231031165918.907158629@linuxfoundation.org>
+Subject: [PATCH 6.1 10/86] mcb: Return actual parsed size when reading chameleon table
+Date: Tue, 31 Oct 2023 18:00:35 +0100
+Message-ID: <20231031165918.942161370@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -36,128 +37,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
 
-[ Upstream commit c8befdc411e5fd1bf95a13e8744c8ca79b412bee ]
+[ Upstream commit a889c276d33d333ae96697510f33533f6e9d9591 ]
 
-The Qualcomm LPASS LPI pin controller driver uses one lock for guarding
-Read-Modify-Write code for slew rate registers.  However the pin
-configuration and muxing registers have exactly the same RMW code but
-are not protected.
+The function chameleon_parse_cells() returns the number of cells
+parsed which has an undetermined size. This return value is only
+used for error checking but the number of cells is never used.
 
-Pin controller framework does not provide locking here, thus it is
-possible to trigger simultaneous change of pin configuration registers
-resulting in non-atomic changes.
+Change return value to be number of bytes parsed to allow for
+memory management improvements.
 
-Protect from concurrent access by re-using the same lock used to cover
-the slew rate register.  Using the same lock instead of adding second
-one will make more sense, once we add support for newer Qualcomm SoC,
-where slew rate is configured in the same register as pin
-configuration/muxing.
-
-Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20231013145705.219954-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Co-developed-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Javier Rodriguez <josejavier.rodriguez@duagon.com>
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Link: https://lore.kernel.org/r/20230411083329.4506-2-jth@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/mcb/mcb-parse.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-index a55998ae29fa4..bfcc5c45b8fa5 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -24,7 +24,8 @@ struct lpi_pinctrl {
- 	char __iomem *tlmm_base;
- 	char __iomem *slew_base;
- 	struct clk_bulk_data clks[MAX_LPI_NUM_CLKS];
--	struct mutex slew_access_lock;
-+	/* Protects from concurrent register updates */
-+	struct mutex lock;
- 	const struct lpi_pinctrl_variant_data *data;
- };
- 
-@@ -94,9 +95,11 @@ static int lpi_gpio_set_mux(struct pinctrl_dev *pctldev, unsigned int function,
- 	if (WARN_ON(i == g->nfuncs))
- 		return -EINVAL;
- 
-+	mutex_lock(&pctrl->lock);
- 	val = lpi_gpio_read(pctrl, pin, LPI_GPIO_CFG_REG);
- 	u32p_replace_bits(&val, i, LPI_GPIO_FUNCTION_MASK);
- 	lpi_gpio_write(pctrl, pin, LPI_GPIO_CFG_REG, val);
-+	mutex_unlock(&pctrl->lock);
- 
- 	return 0;
+diff --git a/drivers/mcb/mcb-parse.c b/drivers/mcb/mcb-parse.c
+index c41cbacc75a2c..656b6b71c7682 100644
+--- a/drivers/mcb/mcb-parse.c
++++ b/drivers/mcb/mcb-parse.c
+@@ -128,7 +128,7 @@ static void chameleon_parse_bar(void __iomem *base,
+ 	}
  }
-@@ -202,14 +205,14 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
- 			if (slew_offset == LPI_NO_SLEW)
- 				break;
  
--			mutex_lock(&pctrl->slew_access_lock);
-+			mutex_lock(&pctrl->lock);
+-static int chameleon_get_bar(char __iomem **base, phys_addr_t mapbase,
++static int chameleon_get_bar(void __iomem **base, phys_addr_t mapbase,
+ 			     struct chameleon_bar **cb)
+ {
+ 	struct chameleon_bar *c;
+@@ -177,12 +177,13 @@ int chameleon_parse_cells(struct mcb_bus *bus, phys_addr_t mapbase,
+ {
+ 	struct chameleon_fpga_header *header;
+ 	struct chameleon_bar *cb;
+-	char __iomem *p = base;
++	void __iomem *p = base;
+ 	int num_cells = 0;
+ 	uint32_t dtype;
+ 	int bar_count;
+ 	int ret;
+ 	u32 hsize;
++	u32 table_size;
  
- 			sval = ioread32(pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
- 			sval &= ~(LPI_SLEW_RATE_MASK << slew_offset);
- 			sval |= arg << slew_offset;
- 			iowrite32(sval, pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
+ 	hsize = sizeof(struct chameleon_fpga_header);
  
--			mutex_unlock(&pctrl->slew_access_lock);
-+			mutex_unlock(&pctrl->lock);
- 			break;
- 		default:
- 			return -EINVAL;
-@@ -225,6 +228,7 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
- 		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
+@@ -237,12 +238,16 @@ int chameleon_parse_cells(struct mcb_bus *bus, phys_addr_t mapbase,
+ 		num_cells++;
  	}
  
-+	mutex_lock(&pctrl->lock);
- 	val = lpi_gpio_read(pctrl, group, LPI_GPIO_CFG_REG);
+-	if (num_cells == 0)
+-		num_cells = -EINVAL;
++	if (num_cells == 0) {
++		ret = -EINVAL;
++		goto free_bar;
++	}
  
- 	u32p_replace_bits(&val, pullup, LPI_GPIO_PULL_MASK);
-@@ -233,6 +237,7 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
- 	u32p_replace_bits(&val, output_enabled, LPI_GPIO_OE_MASK);
++	table_size = p - base;
++	pr_debug("%d cell(s) found. Chameleon table size: 0x%04x bytes\n", num_cells, table_size);
+ 	kfree(cb);
+ 	kfree(header);
+-	return num_cells;
++	return table_size;
  
- 	lpi_gpio_write(pctrl, group, LPI_GPIO_CFG_REG, val);
-+	mutex_unlock(&pctrl->lock);
- 
- 	return 0;
- }
-@@ -432,7 +437,7 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
- 	pctrl->chip.of_gpio_n_cells = 2;
- 	pctrl->chip.can_sleep = false;
- 
--	mutex_init(&pctrl->slew_access_lock);
-+	mutex_init(&pctrl->lock);
- 
- 	pctrl->ctrl = devm_pinctrl_register(dev, &pctrl->desc, pctrl);
- 	if (IS_ERR(pctrl->ctrl)) {
-@@ -454,7 +459,7 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
- 	return 0;
- 
- err_pinctrl:
--	mutex_destroy(&pctrl->slew_access_lock);
-+	mutex_destroy(&pctrl->lock);
- 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
- 
- 	return ret;
-@@ -466,7 +471,7 @@ int lpi_pinctrl_remove(struct platform_device *pdev)
- 	struct lpi_pinctrl *pctrl = platform_get_drvdata(pdev);
- 	int i;
- 
--	mutex_destroy(&pctrl->slew_access_lock);
-+	mutex_destroy(&pctrl->lock);
- 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
- 
- 	for (i = 0; i < pctrl->data->npins; i++)
+ free_bar:
+ 	kfree(cb);
 -- 
 2.42.0
 
