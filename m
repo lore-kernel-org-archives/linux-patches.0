@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3387522302
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C54F22301
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JzwJVXYl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EEBC433C8;
-	Tue, 31 Oct 2023 17:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8gKOaIL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B1FC433C8;
+	Tue, 31 Oct 2023 17:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774331;
-	bh=G/WjIDDWMhtz4PspuT5PWcX+F5EXmeezZQa2WLWjSms=;
+	s=korg; t=1698774334;
+	bh=qm53SfkhdPQpvkabOs79Bou9umkzKEMN1/uSAPQw7MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JzwJVXYlxsRYLRDhXJ/ukCDnOVp1vvLn2dg1DK64omHoAFxQtuglxSo6tqWMJU5Xg
-	 c7QIwjFuzbZ3o1BjlIKZC5+lZI74DzGiVm29e9DbTcHfyaVWYsKgjbyNv79yCuLyPN
-	 jWQyQAO1eRwemf4Au4SQ4/+n47LTXRdHUk9zTGxY=
+	b=H8gKOaILDIoLRFmBUyp5/3sSEAYnMj/KYhDDHcIwRNVsye9qPPaCDGwqVXyplgSxK
+	 x9vyfyouGS3QLeWiKu6YfSbxGvsdKx4Y4mg8+bnHbPuSXDPvE128Y+6FvC0mzrjzYt
+	 93kFKlrI1tDgN/02kjNFQ8MqZ3JGsiqruGrSyx5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eric.auger@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.5 014/112] vhost: Allow null msg.size on VHOST_IOTLB_INVALIDATE
-Date: Tue, 31 Oct 2023 18:00:15 +0100
-Message-ID: <20231031165901.745450668@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.5 015/112] arm64: dts: qcom: apq8096-db820c: fix missing clock populate
+Date: Tue, 31 Oct 2023 18:00:16 +0100
+Message-ID: <20231031165901.790007990@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -42,49 +42,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit ca50ec377c2e94b0a9f8735de2856cd0f13beab4 upstream.
+commit 2ca3e844e3f978c0dbc95072dbf379abfc4a27db upstream.
 
-Commit e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb
-entries") Forbade vhost iotlb msg with null size to prevent entries
-with size = start = 0 and last = ULONG_MAX to end up in the iotlb.
+Commit 704e26678c8d ("arm64: dts: qcom: apq8096-db820c: drop simple-bus
+from clocks") removed "simple-bus" compatible from "clocks" node, but
+one of the clocks - divclk1 - is a gpio-gate-clock, which does not have
+CLK_OF_DECLARE.  This means it will not be instantiated if placed in
+some subnode.  Move the clocks to the root node, so regular devices will
+be populated.
 
-Then commit 95932ab2ea07 ("vhost: allow batching hint without size")
-only applied the check for VHOST_IOTLB_UPDATE and VHOST_IOTLB_INVALIDATE
-message types to fix a regression observed with batching hit.
-
-Still, the introduction of that check introduced a regression for
-some users attempting to invalidate the whole ULONG_MAX range by
-setting the size to 0. This is the case with qemu/smmuv3/vhost
-integration which does not work anymore. It Looks safe to partially
-revert the original commit and allow VHOST_IOTLB_INVALIDATE messages
-with null size. vhost_iotlb_del_range() will compute a correct end
-iova. Same for vhost_vdpa_iotlb_unmap().
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Fixes: e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb entries")
-Cc: stable@vger.kernel.org # v5.17+
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20230927140544.205088-1-eric.auger@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Closes: https://lore.kernel.org/all/CAA8EJprF==p87oN+RiwAiNeURF1JcHGfL2Ez5zxqYPRRbN-hhg@mail.gmail.com/
+Cc: stable@vger.kernel.org
+Fixes: 704e26678c8d ("arm64: dts: qcom: apq8096-db820c: drop simple-bus from clocks")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230901081812.19121-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vhost.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dts | 32 ++++++++++-----------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -1458,9 +1458,7 @@ ssize_t vhost_chr_write_iter(struct vhos
- 		goto done;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+index 385b178314db..3067a4091a7a 100644
+--- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
++++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+@@ -62,25 +62,23 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
  
--	if ((msg.type == VHOST_IOTLB_UPDATE ||
--	     msg.type == VHOST_IOTLB_INVALIDATE) &&
--	     msg.size == 0) {
-+	if (msg.type == VHOST_IOTLB_UPDATE && msg.size == 0) {
- 		ret = -EINVAL;
- 		goto done;
- 	}
+-	clocks {
+-		divclk4: divclk4 {
+-			compatible = "fixed-clock";
+-			#clock-cells = <0>;
+-			clock-frequency = <32768>;
+-			clock-output-names = "divclk4";
++	div1_mclk: divclk1 {
++		compatible = "gpio-gate-clock";
++		pinctrl-0 = <&audio_mclk>;
++		pinctrl-names = "default";
++		clocks = <&rpmcc RPM_SMD_DIV_CLK1>;
++		#clock-cells = <0>;
++		enable-gpios = <&pm8994_gpios 15 0>;
++	};
+ 
+-			pinctrl-names = "default";
+-			pinctrl-0 = <&divclk4_pin_a>;
+-		};
++	divclk4: divclk4 {
++		compatible = "fixed-clock";
++		#clock-cells = <0>;
++		clock-frequency = <32768>;
++		clock-output-names = "divclk4";
+ 
+-		div1_mclk: divclk1 {
+-			compatible = "gpio-gate-clock";
+-			pinctrl-0 = <&audio_mclk>;
+-			pinctrl-names = "default";
+-			clocks = <&rpmcc RPM_SMD_DIV_CLK1>;
+-			#clock-cells = <0>;
+-			enable-gpios = <&pm8994_gpios 15 0>;
+-		};
++		pinctrl-names = "default";
++		pinctrl-0 = <&divclk4_pin_a>;
+ 	};
+ 
+ 	gpio-keys {
+-- 
+2.42.0
+
 
 
