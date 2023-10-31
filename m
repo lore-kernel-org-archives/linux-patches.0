@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90CF208C7
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B154C208C7
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z76So7Tw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F9FC433C8;
-	Tue, 31 Oct 2023 17:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmlMlwZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA0FC433C9;
+	Tue, 31 Oct 2023 17:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774468;
-	bh=b0Wy1OQeYNFlAH+zzDFM3hrrbEfvqFPHb/1RgCPqqP4=;
+	s=korg; t=1698774471;
+	bh=c4cUGdYCDqW3utYO/pZ4pKouJPUnuWbN5DTbdUVtmwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z76So7TwesGsB20xcCNVV9avizolX/zgb1zI0brIQlYsFfymFJU8NHQalHzsVvCU3
-	 IF/WkAGFINbJ/BT+UYFNSz36Ss2yNTaAoYzyn4fSRoZN5ME8U8+4qvG1iqsFgYCpZr
-	 bRIlzdmGh0aBG5VS+8iI9xySNLry0vVx00wbLwfk=
+	b=QmlMlwZRq04l8nBArmc5De1tbS8BL8g3J//sAaQE6RCeIXjVeXsuXiJjizCo4/HTA
+	 x72yP0Gdcrd1PY94nhUS/HuQ9zZyTdKWvPWY+xMGEy/GASqusGtIq3gZnQIt49hKvN
+	 SpA/TNoSZNHBzuIw6RybDyaslJNrgTfdo3K2eCpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Mateusz Palczewski <mateusz.palczewski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 6.5 055/112] igb: Fix potential memory leak in igb_add_ethtool_nfc_entry
-Date: Tue, 31 Oct 2023 18:00:56 +0100
-Message-ID: <20231031165903.053323803@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 056/112] net: do not leave an empty skb in write queue
+Date: Tue, 31 Oct 2023 18:00:57 +0100
+Message-ID: <20231031165903.082981401@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -45,45 +43,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Palczewski <mateusz.palczewski@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8c0b48e01daba5ca58f939a8425855d3f4f2ed14 ]
+[ Upstream commit 72bf4f1767f0386970dc04726dc5bc2e3991dc19 ]
 
-Add check for return of igb_update_ethtool_nfc_entry so that in case
-of any potential errors the memory alocated for input will be freed.
+Under memory stress conditions, tcp_sendmsg_locked()
+might call sk_stream_wait_memory(), thus releasing the socket lock.
 
-Fixes: 0e71def25281 ("igb: add support of RX network flow classification")
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+If a fresh skb has been allocated prior to this,
+we should not leave it in the write queue otherwise
+tcp_write_xmit() could panic.
+
+This apparently does not happen often, but a future change
+in __sk_mem_raise_allocated() that Shakeel and others are
+considering would increase chances of being hurt.
+
+Under discussion is to remove this controversial part:
+
+    /* Fail only if socket is _under_ its sndbuf.
+     * In this case we cannot block, so that we have to fail.
+     */
+    if (sk->sk_wmem_queued + size >= sk->sk_sndbuf) {
+        /* Force charge with __GFP_NOFAIL */
+        if (memcg_charge && !charged) {
+            mem_cgroup_charge_skmem(sk->sk_memcg, amt,
+                gfp_memcg_charge() | __GFP_NOFAIL);
+        }
+        return 1;
+    }
+
+Fixes: fdfc5c8594c2 ("tcp: remove empty skb from write queue in error cases")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Shakeel Butt <shakeelb@google.com>
+Link: https://lore.kernel.org/r/20231019112457.1190114-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_ethtool.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ipv4/tcp.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_ethtool.c b/drivers/net/ethernet/intel/igb/igb_ethtool.c
-index 319ed601eaa1e..4ee849985e2b8 100644
---- a/drivers/net/ethernet/intel/igb/igb_ethtool.c
-+++ b/drivers/net/ethernet/intel/igb/igb_ethtool.c
-@@ -2978,11 +2978,15 @@ static int igb_add_ethtool_nfc_entry(struct igb_adapter *adapter,
- 	if (err)
- 		goto err_out_w_lock;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 9bdc1b2eaf734..a0a87446f827c 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -925,10 +925,11 @@ int tcp_send_mss(struct sock *sk, int *size_goal, int flags)
+ 	return mss_now;
+ }
  
--	igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
-+	err = igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
-+	if (err)
-+		goto err_out_input_filter;
+-/* In some cases, both sendmsg() could have added an skb to the write queue,
+- * but failed adding payload on it.  We need to remove it to consume less
++/* In some cases, sendmsg() could have added an skb to the write queue,
++ * but failed adding payload on it. We need to remove it to consume less
+  * memory, but more importantly be able to generate EPOLLOUT for Edge Trigger
+- * epoll() users.
++ * epoll() users. Another reason is that tcp_write_xmit() does not like
++ * finding an empty skb in the write queue.
+  */
+ void tcp_remove_empty_skb(struct sock *sk)
+ {
+@@ -1286,6 +1287,7 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
  
- 	spin_unlock(&adapter->nfc_lock);
- 	return 0;
- 
-+err_out_input_filter:
-+	igb_erase_filter(adapter, input);
- err_out_w_lock:
- 	spin_unlock(&adapter->nfc_lock);
- err_out:
+ wait_for_space:
+ 		set_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
++		tcp_remove_empty_skb(sk);
+ 		if (copied)
+ 			tcp_push(sk, flags & ~MSG_MORE, mss_now,
+ 				 TCP_NAGLE_PUSH, size_goal);
 -- 
 2.42.0
 
