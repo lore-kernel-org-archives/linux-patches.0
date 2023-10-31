@@ -1,32 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E090208C7
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC57208C6;
+	Tue, 31 Oct 2023 17:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/iAVU/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B020CC433C9;
-	Tue, 31 Oct 2023 17:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuaIN2+Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB8CC433C8;
+	Tue, 31 Oct 2023 17:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774445;
-	bh=VVUXwAHOILqhH3BmsNWBj7QrvRVM92P5alnC2IgdjyY=;
+	s=korg; t=1698774448;
+	bh=hsfzrZs7/cXaKBqieR0jhkwXFXlpN9DMDVFMyCIrp4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D/iAVU/p2vQZc4oYabL7ReqZZFTewuZSY7gOir+4JAeoOA1lAqtyldgwedlJdNyoY
-	 aDqiEmBxTK0ZPll2hBx5RdzmNEGv4xx9gdIbYtX5FYeQrDknJ7tD/9AGycGQZUTfBT
-	 7KYjcvxxKELAodziW7FxAQooB+Uj6ANGry0TrnEc=
+	b=wuaIN2+Qr9JPYRAUnZOWnnV31vF+fYmXWClohQWYP/mmKg393q3m60KJXYbJFjdEE
+	 JpB3p6RsUrwnAllbWGGCqFN1zYwvzdi14ytnhe8i3kCfqlNiBRw7r8+giUh5YJNS73
+	 K0h6CB/a7E3j0A7DPbYIb5/Xqh2J8mLFidkAY33U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	nic_swsd@realtek.com,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Marco Elver <elver@google.com>,
+	netdev@vger.kernel.org,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 048/112] clk: ti: Fix missing omap5 mcbsp functional clock and aliases
-Date: Tue, 31 Oct 2023 18:00:49 +0100
-Message-ID: <20231031165902.815664318@linuxfoundation.org>
+Subject: [PATCH 6.5 049/112] r8169: fix the KCSAN reported data-race in rtl_tx() while reading tp->cur_tx
+Date: Tue, 31 Oct 2023 18:00:50 +0100
+Message-ID: <20231031165902.852598166@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -46,92 +50,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-[ Upstream commit 0b9a4a67c60d3e15b39a69d480a50ce7eeff9bc1 ]
+[ Upstream commit c1c0ce31b2420d5c173228a2132a492ede03d81f ]
 
-We are using a wrong mcbsp functional clock. The interconnect target module
-driver provided clock for mcbsp is not same as the mcbsp functional clock
-known as the gfclk main_clk. The mcbsp functional clocks for mcbsp should
-have been added before we dropped the legacy platform data.
+KCSAN reported the following data-race:
 
-Additionally we are also missing the clock aliases for the clocks used by
-the audio driver if reparenting is needed. This causes audio driver errors
-like "CLKS: could not clk_get() prcm_fck" for mcbsp as reported by Andreas.
-The mcbsp clock aliases too should have been added before we dropped the
-legacy platform data.
+==================================================================
+BUG: KCSAN: data-race in rtl8169_poll [r8169] / rtl8169_start_xmit [r8169]
 
-Let's add the clocks and aliases with a single patch to fix the issue
-similar to omap4. On omap5, there is no mcbsp4 instance on the l4_per
-interconnect.
+write (marked) to 0xffff888102474b74 of 4 bytes by task 5358 on cpu 29:
+rtl8169_start_xmit (drivers/net/ethernet/realtek/r8169_main.c:4254) r8169
+dev_hard_start_xmit (./include/linux/netdevice.h:4889 ./include/linux/netdevice.h:4903 net/core/dev.c:3544 net/core/dev.c:3560)
+sch_direct_xmit (net/sched/sch_generic.c:342)
+__dev_queue_xmit (net/core/dev.c:3817 net/core/dev.c:4306)
+ip_finish_output2 (./include/linux/netdevice.h:3082 ./include/net/neighbour.h:526 ./include/net/neighbour.h:540 net/ipv4/ip_output.c:233)
+__ip_finish_output (net/ipv4/ip_output.c:311 net/ipv4/ip_output.c:293)
+ip_finish_output (net/ipv4/ip_output.c:328)
+ip_output (net/ipv4/ip_output.c:435)
+ip_send_skb (./include/net/dst.h:458 net/ipv4/ip_output.c:127 net/ipv4/ip_output.c:1486)
+udp_send_skb (net/ipv4/udp.c:963)
+udp_sendmsg (net/ipv4/udp.c:1246)
+inet_sendmsg (net/ipv4/af_inet.c:840 (discriminator 4))
+sock_sendmsg (net/socket.c:730 net/socket.c:753)
+__sys_sendto (net/socket.c:2177)
+__x64_sys_sendto (net/socket.c:2185)
+do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
 
-Fixes: b1da0fa21bd1 ("ARM: OMAP2+: Drop legacy platform data for omap5 mcbsp")
-Cc: H. Nikolaus Schaller <hns@goldelico.com>
-Reported-by: Andreas Kemnade <andreas@kemnade.info>
-Reported-by: Péter Ujfalusi <peter.ujfalusi@gmail.com>
-Acked-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+read to 0xffff888102474b74 of 4 bytes by interrupt on cpu 21:
+rtl8169_poll (drivers/net/ethernet/realtek/r8169_main.c:4397 drivers/net/ethernet/realtek/r8169_main.c:4581) r8169
+__napi_poll (net/core/dev.c:6527)
+net_rx_action (net/core/dev.c:6596 net/core/dev.c:6727)
+__do_softirq (kernel/softirq.c:553)
+__irq_exit_rcu (kernel/softirq.c:427 kernel/softirq.c:632)
+irq_exit_rcu (kernel/softirq.c:647)
+common_interrupt (arch/x86/kernel/irq.c:247 (discriminator 14))
+asm_common_interrupt (./arch/x86/include/asm/idtentry.h:636)
+cpuidle_enter_state (drivers/cpuidle/cpuidle.c:291)
+cpuidle_enter (drivers/cpuidle/cpuidle.c:390)
+call_cpuidle (kernel/sched/idle.c:135)
+do_idle (kernel/sched/idle.c:219 kernel/sched/idle.c:282)
+cpu_startup_entry (kernel/sched/idle.c:378 (discriminator 1))
+start_secondary (arch/x86/kernel/smpboot.c:210 arch/x86/kernel/smpboot.c:294)
+secondary_startup_64_no_verify (arch/x86/kernel/head_64.S:433)
+
+value changed: 0x002f4815 -> 0x002f4816
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 21 PID: 0 Comm: swapper/21 Tainted: G             L     6.6.0-rc2-kcsan-00143-gb5cbe7c00aa0 #41
+Hardware name: ASRock X670E PG Lightning/X670E PG Lightning, BIOS 1.21 04/26/2023
+==================================================================
+
+The write side of drivers/net/ethernet/realtek/r8169_main.c is:
+==================
+   4251         /* rtl_tx needs to see descriptor changes before updated tp->cur_tx */
+   4252         smp_wmb();
+   4253
+ → 4254         WRITE_ONCE(tp->cur_tx, tp->cur_tx + frags + 1);
+   4255
+   4256         stop_queue = !netif_subqueue_maybe_stop(dev, 0, rtl_tx_slots_avail(tp),
+   4257                                                 R8169_TX_STOP_THRS,
+   4258                                                 R8169_TX_START_THRS);
+
+The read side is the function rtl_tx():
+
+   4355 static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
+   4356                    int budget)
+   4357 {
+   4358         unsigned int dirty_tx, bytes_compl = 0, pkts_compl = 0;
+   4359         struct sk_buff *skb;
+   4360
+   4361         dirty_tx = tp->dirty_tx;
+   4362
+   4363         while (READ_ONCE(tp->cur_tx) != dirty_tx) {
+   4364                 unsigned int entry = dirty_tx % NUM_TX_DESC;
+   4365                 u32 status;
+   4366
+   4367                 status = le32_to_cpu(tp->TxDescArray[entry].opts1);
+   4368                 if (status & DescOwn)
+   4369                         break;
+   4370
+   4371                 skb = tp->tx_skb[entry].skb;
+   4372                 rtl8169_unmap_tx_skb(tp, entry);
+   4373
+   4374                 if (skb) {
+   4375                         pkts_compl++;
+   4376                         bytes_compl += skb->len;
+   4377                         napi_consume_skb(skb, budget);
+   4378                 }
+   4379                 dirty_tx++;
+   4380         }
+   4381
+   4382         if (tp->dirty_tx != dirty_tx) {
+   4383                 dev_sw_netstats_tx_add(dev, pkts_compl, bytes_compl);
+   4384                 WRITE_ONCE(tp->dirty_tx, dirty_tx);
+   4385
+   4386                 netif_subqueue_completed_wake(dev, 0, pkts_compl, bytes_compl,
+   4387                                               rtl_tx_slots_avail(tp),
+   4388                                               R8169_TX_START_THRS);
+   4389                 /*
+   4390                  * 8168 hack: TxPoll requests are lost when the Tx packets are
+   4391                  * too close. Let's kick an extra TxPoll request when a burst
+   4392                  * of start_xmit activity is detected (if it is not detected,
+   4393                  * it is slow enough). -- FR
+   4394                  * If skb is NULL then we come here again once a tx irq is
+   4395                  * triggered after the last fragment is marked transmitted.
+   4396                  */
+ → 4397                 if (tp->cur_tx != dirty_tx && skb)
+   4398                         rtl8169_doorbell(tp);
+   4399         }
+   4400 }
+
+Obviously from the code, an earlier detected data-race for tp->cur_tx was fixed in the
+line 4363:
+
+   4363         while (READ_ONCE(tp->cur_tx) != dirty_tx) {
+
+but the same solution is required for protecting the other access to tp->cur_tx:
+
+ → 4397                 if (READ_ONCE(tp->cur_tx) != dirty_tx && skb)
+   4398                         rtl8169_doorbell(tp);
+
+The write in the line 4254 is protected with WRITE_ONCE(), but the read in the line 4397
+might have suffered read tearing under some compiler optimisations.
+
+The fix eliminated the KCSAN data-race report for this bug.
+
+It is yet to be evaluated what happens if tp->cur_tx changes between the test in line 4363
+and line 4397. This test should certainly not be cached by the compiler in some register
+for such a long time, while asynchronous writes to tp->cur_tx might have occurred in line
+4254 in the meantime.
+
+Fixes: 94d8a98e6235c ("r8169: reduce number of workaround doorbell rings")
+Cc: Heiner Kallweit <hkallweit1@gmail.com>
+Cc: nic_swsd@realtek.com
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Marco Elver <elver@google.com>
+Cc: netdev@vger.kernel.org
+Link: https://lore.kernel.org/lkml/dc7fc8fa-4ea4-e9a9-30a6-7c83e6b53188@alu.unizg.hr/
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Acked-by: Marco Elver <elver@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/ti/omap/omap5-l4-abe.dtsi | 6 ++++++
- drivers/clk/ti/clk-54xx.c                   | 4 ++++
- 2 files changed, 10 insertions(+)
+ drivers/net/ethernet/realtek/r8169_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/ti/omap/omap5-l4-abe.dtsi b/arch/arm/boot/dts/ti/omap/omap5-l4-abe.dtsi
-index a03bca5a35844..97b0c3b5f573f 100644
---- a/arch/arm/boot/dts/ti/omap/omap5-l4-abe.dtsi
-+++ b/arch/arm/boot/dts/ti/omap/omap5-l4-abe.dtsi
-@@ -109,6 +109,8 @@
- 				reg = <0x0 0xff>, /* MPU private access */
- 				      <0x49022000 0xff>; /* L3 Interconnect */
- 				reg-names = "mpu", "dma";
-+				clocks = <&abe_clkctrl OMAP5_MCBSP1_CLKCTRL 24>;
-+				clock-names = "fck";
- 				interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-names = "common";
- 				ti,buffer-size = <128>;
-@@ -142,6 +144,8 @@
- 				reg = <0x0 0xff>, /* MPU private access */
- 				      <0x49024000 0xff>; /* L3 Interconnect */
- 				reg-names = "mpu", "dma";
-+				clocks = <&abe_clkctrl OMAP5_MCBSP2_CLKCTRL 24>;
-+				clock-names = "fck";
- 				interrupts = <GIC_SPI 22 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-names = "common";
- 				ti,buffer-size = <128>;
-@@ -175,6 +179,8 @@
- 				reg = <0x0 0xff>, /* MPU private access */
- 				      <0x49026000 0xff>; /* L3 Interconnect */
- 				reg-names = "mpu", "dma";
-+				clocks = <&abe_clkctrl OMAP5_MCBSP3_CLKCTRL 24>;
-+				clock-names = "fck";
- 				interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-names = "common";
- 				ti,buffer-size = <128>;
-diff --git a/drivers/clk/ti/clk-54xx.c b/drivers/clk/ti/clk-54xx.c
-index b4aff76eb3735..74dfd5823f835 100644
---- a/drivers/clk/ti/clk-54xx.c
-+++ b/drivers/clk/ti/clk-54xx.c
-@@ -565,15 +565,19 @@ static struct ti_dt_clk omap54xx_clks[] = {
- 	DT_CLK(NULL, "gpio8_dbclk", "l4per-clkctrl:00f8:8"),
- 	DT_CLK(NULL, "mcbsp1_gfclk", "abe-clkctrl:0028:24"),
- 	DT_CLK(NULL, "mcbsp1_sync_mux_ck", "abe-clkctrl:0028:26"),
-+	DT_CLK("40122000.mcbsp", "prcm_fck", "abe-clkctrl:0028:26"),
- 	DT_CLK(NULL, "mcbsp2_gfclk", "abe-clkctrl:0030:24"),
- 	DT_CLK(NULL, "mcbsp2_sync_mux_ck", "abe-clkctrl:0030:26"),
-+	DT_CLK("40124000.mcbsp", "prcm_fck", "abe-clkctrl:0030:26"),
- 	DT_CLK(NULL, "mcbsp3_gfclk", "abe-clkctrl:0038:24"),
- 	DT_CLK(NULL, "mcbsp3_sync_mux_ck", "abe-clkctrl:0038:26"),
-+	DT_CLK("40126000.mcbsp", "prcm_fck", "abe-clkctrl:0038:26"),
- 	DT_CLK(NULL, "mmc1_32khz_clk", "l3init-clkctrl:0008:8"),
- 	DT_CLK(NULL, "mmc1_fclk", "l3init-clkctrl:0008:25"),
- 	DT_CLK(NULL, "mmc1_fclk_mux", "l3init-clkctrl:0008:24"),
- 	DT_CLK(NULL, "mmc2_fclk", "l3init-clkctrl:0010:25"),
- 	DT_CLK(NULL, "mmc2_fclk_mux", "l3init-clkctrl:0010:24"),
-+	DT_CLK(NULL, "pad_fck", "pad_clks_ck"),
- 	DT_CLK(NULL, "sata_ref_clk", "l3init-clkctrl:0068:8"),
- 	DT_CLK(NULL, "timer10_gfclk_mux", "l4per-clkctrl:0008:24"),
- 	DT_CLK(NULL, "timer11_gfclk_mux", "l4per-clkctrl:0010:24"),
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index 6351a2dc13bce..281aaa8518472 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4394,7 +4394,7 @@ static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
+ 		 * If skb is NULL then we come here again once a tx irq is
+ 		 * triggered after the last fragment is marked transmitted.
+ 		 */
+-		if (tp->cur_tx != dirty_tx && skb)
++		if (READ_ONCE(tp->cur_tx) != dirty_tx && skb)
+ 			rtl8169_doorbell(tp);
+ 	}
+ }
 -- 
 2.42.0
 
