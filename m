@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AB0208C7
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936F2208C7
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORCjnCa1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241F1C433C9;
-	Tue, 31 Oct 2023 17:49:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKgafbFk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1065FC433C9;
+	Tue, 31 Oct 2023 17:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774565;
-	bh=yqOVujloTdEjJRqNr4RXLLW5sobJAwOrxoA1ZRm37Dw=;
+	s=korg; t=1698774568;
+	bh=fI0dxdbEaPgvGGw5BxXkJaYwAw0rz2YKMFEfHNOuwlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ORCjnCa1WMe05xtXqDR6PlaS7c4zGY+gGbxSbh0Z6oKAbcsa5kFE+TylvZcPyKzKH
-	 ghOTxmE3aUPra/vHQO2Ic917LdxyX/+/p6O1+E5s4yEQVbFMXPFWp3X+TADJHt30S7
-	 EGfp3McXjuFKS8biUc6jofmGZieG8uQs0+8A9ZkM=
+	b=HKgafbFkIB+lqOfLm/m5l7FBWpF3h169HG2OWBSRHHGxoiJaO/y5E0+TRRL6SJNWP
+	 FHNKtU7RCWRckG0uRPp6UXVINsYCVrtB94hbBpRHCowST4MtrN9zG5YrHeKB1CFvYa
+	 LxO5teufnlGfllal4w6XlW939VTm5F1W+jMbOmEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hayes Wang <hayeswang@realtek.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Grant Grundler <grundler@chromium.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 062/112] r8152: Increase USB control msg timeout to 5000ms as per spec
-Date: Tue, 31 Oct 2023 18:01:03 +0100
-Message-ID: <20231031165903.285079372@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Peter Rosin <peda@axentia.se>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.5 089/112] i2c: muxes: i2c-mux-gpmux: Use of_get_i2c_adapter_by_node()
+Date: Tue, 31 Oct 2023 18:01:30 +0100
+Message-ID: <20231031165904.120541987@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -44,77 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Herve Codina <herve.codina@bootlin.com>
 
-[ Upstream commit a5feba71ec9c14a54c3babdc732c5b6866d8ee43 ]
+commit 3dc0ec46f6e7511fc4fdf6b6cda439382bc957f1 upstream.
 
-According to the comment next to USB_CTRL_GET_TIMEOUT and
-USB_CTRL_SET_TIMEOUT, although sending/receiving control messages is
-usually quite fast, the spec allows them to take up to 5 seconds.
-Let's increase the timeout in the Realtek driver from 500ms to 5000ms
-(using the #defines) to account for this.
+i2c-mux-gpmux uses the pair of_find_i2c_adapter_by_node() /
+i2c_put_adapter(). These pair alone is not correct to properly lock the
+I2C parent adapter.
 
-This is not just a theoretical change. The need for the longer timeout
-was seen in testing. Specifically, if you drop a sc7180-trogdor based
-Chromebook into the kdb debugger and then "go" again after sitting in
-the debugger for a while, the next USB control message takes a long
-time. Out of ~40 tests the slowest USB control message was 4.5
-seconds.
+Indeed, i2c_put_adapter() decrements the module refcount while
+of_find_i2c_adapter_by_node() does not increment it. This leads to an
+underflow of the parent module refcount.
 
-While dropping into kdb is not exactly an end-user scenario, the above
-is similar to what could happen due to an temporary interrupt storm,
-what could happen if there was a host controller (HW or SW) issue, or
-what could happen if the Realtek device got into a confused state and
-needed time to recover.
+Use the dedicated function, of_get_i2c_adapter_by_node(), to handle
+correctly the module refcount.
 
-This change is fairly critical since the r8152 driver in Linux doesn't
-expect register reads/writes (which are backed by USB control
-messages) to fail.
-
-Fixes: ac718b69301c ("net/usb: new driver for RTL8152")
-Suggested-by: Hayes Wang <hayeswang@realtek.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Grant Grundler <grundler@chromium.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ac8498f0ce53 ("i2c: i2c-mux-gpmux: new driver")
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Cc: stable@vger.kernel.org
+Acked-by: Peter Rosin <peda@axentia.se>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/r8152.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/i2c/muxes/i2c-mux-gpmux.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index e88bedca8f32f..bf83ce5317cea 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -1212,7 +1212,7 @@ int get_registers(struct r8152 *tp, u16 value, u16 index, u16 size, void *data)
- 
- 	ret = usb_control_msg(tp->udev, tp->pipe_ctrl_in,
- 			      RTL8152_REQ_GET_REGS, RTL8152_REQT_READ,
--			      value, index, tmp, size, 500);
-+			      value, index, tmp, size, USB_CTRL_GET_TIMEOUT);
- 	if (ret < 0)
- 		memset(data, 0xff, size);
- 	else
-@@ -1235,7 +1235,7 @@ int set_registers(struct r8152 *tp, u16 value, u16 index, u16 size, void *data)
- 
- 	ret = usb_control_msg(tp->udev, tp->pipe_ctrl_out,
- 			      RTL8152_REQ_SET_REGS, RTL8152_REQT_WRITE,
--			      value, index, tmp, size, 500);
-+			      value, index, tmp, size, USB_CTRL_SET_TIMEOUT);
- 
- 	kfree(tmp);
- 
-@@ -9512,7 +9512,8 @@ static u8 __rtl_get_hw_ver(struct usb_device *udev)
- 
- 	ret = usb_control_msg(udev, usb_rcvctrlpipe(udev, 0),
- 			      RTL8152_REQ_GET_REGS, RTL8152_REQT_READ,
--			      PLA_TCR0, MCU_TYPE_PLA, tmp, sizeof(*tmp), 500);
-+			      PLA_TCR0, MCU_TYPE_PLA, tmp, sizeof(*tmp),
-+			      USB_CTRL_GET_TIMEOUT);
- 	if (ret > 0)
- 		ocp_data = (__le32_to_cpu(*tmp) >> 16) & VERSION_MASK;
- 
--- 
-2.42.0
-
+--- a/drivers/i2c/muxes/i2c-mux-gpmux.c
++++ b/drivers/i2c/muxes/i2c-mux-gpmux.c
+@@ -52,7 +52,7 @@ static struct i2c_adapter *mux_parent_ad
+ 		dev_err(dev, "Cannot parse i2c-parent\n");
+ 		return ERR_PTR(-ENODEV);
+ 	}
+-	parent = of_find_i2c_adapter_by_node(parent_np);
++	parent = of_get_i2c_adapter_by_node(parent_np);
+ 	of_node_put(parent_np);
+ 	if (!parent)
+ 		return ERR_PTR(-EPROBE_DEFER);
 
 
