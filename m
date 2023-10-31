@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F7E2031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA7013AEF
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2+QCFAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41A9C433C7;
-	Tue, 31 Oct 2023 17:05:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9xea2t1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BEADC433C9;
+	Tue, 31 Oct 2023 17:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771952;
-	bh=M25EofJh/vSOvmGQleWOdTNQoF+8sZRhEDwv2t7/Ac0=;
+	s=korg; t=1698771955;
+	bh=nAccZD9z7NEq6rVuO43L+P6da0m9h2MvUkwv1IWSJwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s2+QCFABVEsxVC97asjBEaA0GcUIjzV5DlE3L62LFRsXSZC3zohsW170M15/aEURf
-	 KEOlaAx7ja6Jxe5SPxKMymZLOFvPBIk662rhKzMfiaYPVT9kgAcxQ+qTJLbvBormxR
-	 7vse4/NV3KzluuKt30N6wWTZB9wqYcyAfhNQcFb4=
+	b=M9xea2t1O0L/lIOcU2fYm2TF3XRx99qC7gzJPPrWXx0UqwayWACiE91l/+iA1MGqR
+	 ItYdFBjWaiLXqQbR3O94lOJTeImorZGib0zOLlcnVA/fgPf+E0E+KezfC7h8mPz3tm
+	 wq2zYLsGeFfxl2LvdMTUKPYptduJHzN8PbQ6V+AY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Peng Fan <peng.fan@nxp.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 76/86] nvmem: imx: correct nregs for i.MX6UL
-Date: Tue, 31 Oct 2023 18:01:41 +0100
-Message-ID: <20231031165920.912971495@linuxfoundation.org>
+	David Lazar <dlazar@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 77/86] x86/i8259: Skip probing when ACPI/MADT advertises PCAT compatibility
+Date: Tue, 31 Oct 2023 18:01:42 +0100
+Message-ID: <20231031165920.937735348@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -42,32 +43,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 7d6e10f5d254681983b53d979422c8de3fadbefb upstream.
+commit 128b0c9781c9f2651bea163cb85e52a6c7be0f9e upstream.
 
-The nregs for i.MX6UL should be 144 per fuse map, correct it.
+David and a few others reported that on certain newer systems some legacy
+interrupts fail to work correctly.
 
-Fixes: 4aa2b4802046 ("nvmem: octop: Add support for imx6ul")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20231013124904.175782-3-srinivas.kandagatla@linaro.org
+Debugging revealed that the BIOS of these systems leaves the legacy PIC in
+uninitialized state which makes the PIC detection fail and the kernel
+switches to a dummy implementation.
+
+Unfortunately this fallback causes quite some code to fail as it depends on
+checks for the number of legacy PIC interrupts or the availability of the
+real PIC.
+
+In theory there is no reason to use the PIC on any modern system when
+IO/APIC is available, but the dependencies on the related checks cannot be
+resolved trivially and on short notice. This needs lots of analysis and
+rework.
+
+The PIC detection has been added to avoid quirky checks and force selection
+of the dummy implementation all over the place, especially in VM guest
+scenarios. So it's not an option to revert the relevant commit as that
+would break a lot of other scenarios.
+
+One solution would be to try to initialize the PIC on detection fail and
+retry the detection, but that puts the burden on everything which does not
+have a PIC.
+
+Fortunately the ACPI/MADT table header has a flag field, which advertises
+in bit 0 that the system is PCAT compatible, which means it has a legacy
+8259 PIC.
+
+Evaluate that bit and if set avoid the detection routine and keep the real
+PIC installed, which then gets initialized (for nothing) and makes the rest
+of the code with all the dependencies work again.
+
+Fixes: e179f6914152 ("x86, irq, pic: Probe for legacy PIC and set legacy_pic appropriately")
+Reported-by: David Lazar <dlazar@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: David Lazar <dlazar@gmail.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Cc: stable@vger.kernel.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218003
+Link: https://lore.kernel.org/r/875y2u5s8g.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/imx-ocotp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/i8259.h |    2 ++
+ arch/x86/kernel/acpi/boot.c  |    3 +++
+ arch/x86/kernel/i8259.c      |   38 ++++++++++++++++++++++++++++++--------
+ 3 files changed, 35 insertions(+), 8 deletions(-)
 
---- a/drivers/nvmem/imx-ocotp.c
-+++ b/drivers/nvmem/imx-ocotp.c
-@@ -520,7 +520,7 @@ static const struct ocotp_params imx6sx_
+--- a/arch/x86/include/asm/i8259.h
++++ b/arch/x86/include/asm/i8259.h
+@@ -69,6 +69,8 @@ struct legacy_pic {
+ 	void (*make_irq)(unsigned int irq);
  };
  
- static const struct ocotp_params imx6ul_params = {
--	.nregs = 128,
-+	.nregs = 144,
- 	.bank_address_words = 0,
- 	.set_timing = imx_ocotp_set_imx6_timing,
- 	.ctrl = IMX_OCOTP_BM_CTRL_DEFAULT,
++void legacy_pic_pcat_compat(void);
++
+ extern struct legacy_pic *legacy_pic;
+ extern struct legacy_pic null_legacy_pic;
+ 
+--- a/arch/x86/kernel/acpi/boot.c
++++ b/arch/x86/kernel/acpi/boot.c
+@@ -147,6 +147,9 @@ static int __init acpi_parse_madt(struct
+ 		pr_debug("Local APIC address 0x%08x\n", madt->address);
+ 	}
+ 
++	if (madt->flags & ACPI_MADT_PCAT_COMPAT)
++		legacy_pic_pcat_compat();
++
+ 	/* ACPI 6.3 and newer support the online capable bit. */
+ 	if (acpi_gbl_FADT.header.revision > 6 ||
+ 	    (acpi_gbl_FADT.header.revision == 6 &&
+--- a/arch/x86/kernel/i8259.c
++++ b/arch/x86/kernel/i8259.c
+@@ -32,6 +32,7 @@
+  */
+ static void init_8259A(int auto_eoi);
+ 
++static bool pcat_compat __ro_after_init;
+ static int i8259A_auto_eoi;
+ DEFINE_RAW_SPINLOCK(i8259A_lock);
+ 
+@@ -301,15 +302,32 @@ static void unmask_8259A(void)
+ 
+ static int probe_8259A(void)
+ {
++	unsigned char new_val, probe_val = ~(1 << PIC_CASCADE_IR);
+ 	unsigned long flags;
+-	unsigned char probe_val = ~(1 << PIC_CASCADE_IR);
+-	unsigned char new_val;
++
++	/*
++	 * If MADT has the PCAT_COMPAT flag set, then do not bother probing
++	 * for the PIC. Some BIOSes leave the PIC uninitialized and probing
++	 * fails.
++	 *
++	 * Right now this causes problems as quite some code depends on
++	 * nr_legacy_irqs() > 0 or has_legacy_pic() == true. This is silly
++	 * when the system has an IO/APIC because then PIC is not required
++	 * at all, except for really old machines where the timer interrupt
++	 * must be routed through the PIC. So just pretend that the PIC is
++	 * there and let legacy_pic->init() initialize it for nothing.
++	 *
++	 * Alternatively this could just try to initialize the PIC and
++	 * repeat the probe, but for cases where there is no PIC that's
++	 * just pointless.
++	 */
++	if (pcat_compat)
++		return nr_legacy_irqs();
++
+ 	/*
+-	 * Check to see if we have a PIC.
+-	 * Mask all except the cascade and read
+-	 * back the value we just wrote. If we don't
+-	 * have a PIC, we will read 0xff as opposed to the
+-	 * value we wrote.
++	 * Check to see if we have a PIC.  Mask all except the cascade and
++	 * read back the value we just wrote. If we don't have a PIC, we
++	 * will read 0xff as opposed to the value we wrote.
+ 	 */
+ 	raw_spin_lock_irqsave(&i8259A_lock, flags);
+ 
+@@ -431,5 +449,9 @@ static int __init i8259A_init_ops(void)
+ 
+ 	return 0;
+ }
+-
+ device_initcall(i8259A_init_ops);
++
++void __init legacy_pic_pcat_compat(void)
++{
++	pcat_compat = true;
++}
 
 
