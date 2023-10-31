@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC57208C6;
-	Tue, 31 Oct 2023 17:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE5920B10;
+	Tue, 31 Oct 2023 17:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuaIN2+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB8CC433C8;
-	Tue, 31 Oct 2023 17:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7dxyG59"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CDEDC433CA;
+	Tue, 31 Oct 2023 17:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774448;
-	bh=hsfzrZs7/cXaKBqieR0jhkwXFXlpN9DMDVFMyCIrp4g=;
+	s=korg; t=1698774450;
+	bh=AuQaPTDWaQPr8qcm0wv1byEuz+gfHp4MSNNjVxGHKiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wuaIN2+Qr9JPYRAUnZOWnnV31vF+fYmXWClohQWYP/mmKg393q3m60KJXYbJFjdEE
-	 JpB3p6RsUrwnAllbWGGCqFN1zYwvzdi14ytnhe8i3kCfqlNiBRw7r8+giUh5YJNS73
-	 K0h6CB/a7E3j0A7DPbYIb5/Xqh2J8mLFidkAY33U=
+	b=Z7dxyG597YJNNwH89PAfQ3ZRyXQopcg4AsSlZtjzRxWucFlWgkpH9bSqBeusN1Ygj
+	 sZ8CIXWQ5/baUUQWfTFRBl5J31AQNdlMRwLZI+otTB8awYZ/bSUR2HYbWn34gABUfs
+	 V9sJir7K76K4Q7vbq1YFF54W/LoVYmMsB4Vi8314=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -28,9 +28,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	netdev@vger.kernel.org,
 	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 049/112] r8169: fix the KCSAN reported data-race in rtl_tx() while reading tp->cur_tx
-Date: Tue, 31 Oct 2023 18:00:50 +0100
-Message-ID: <20231031165902.852598166@linuxfoundation.org>
+Subject: [PATCH 6.5 050/112] r8169: fix the KCSAN reported data-race in rtl_tx while reading TxDescArray[entry].opts1
+Date: Tue, 31 Oct 2023 18:00:51 +0100
+Message-ID: <20231031165902.885743379@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -52,41 +52,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-[ Upstream commit c1c0ce31b2420d5c173228a2132a492ede03d81f ]
+[ Upstream commit dcf75a0f6bc136de94e88178ae5f51b7f879abc9 ]
 
 KCSAN reported the following data-race:
 
 ==================================================================
-BUG: KCSAN: data-race in rtl8169_poll [r8169] / rtl8169_start_xmit [r8169]
+BUG: KCSAN: data-race in rtl8169_poll (drivers/net/ethernet/realtek/r8169_main.c:4368 drivers/net/ethernet/realtek/r8169_main.c:4581) r8169
 
-write (marked) to 0xffff888102474b74 of 4 bytes by task 5358 on cpu 29:
-rtl8169_start_xmit (drivers/net/ethernet/realtek/r8169_main.c:4254) r8169
-dev_hard_start_xmit (./include/linux/netdevice.h:4889 ./include/linux/netdevice.h:4903 net/core/dev.c:3544 net/core/dev.c:3560)
-sch_direct_xmit (net/sched/sch_generic.c:342)
-__dev_queue_xmit (net/core/dev.c:3817 net/core/dev.c:4306)
-ip_finish_output2 (./include/linux/netdevice.h:3082 ./include/net/neighbour.h:526 ./include/net/neighbour.h:540 net/ipv4/ip_output.c:233)
-__ip_finish_output (net/ipv4/ip_output.c:311 net/ipv4/ip_output.c:293)
-ip_finish_output (net/ipv4/ip_output.c:328)
-ip_output (net/ipv4/ip_output.c:435)
-ip_send_skb (./include/net/dst.h:458 net/ipv4/ip_output.c:127 net/ipv4/ip_output.c:1486)
-udp_send_skb (net/ipv4/udp.c:963)
-udp_sendmsg (net/ipv4/udp.c:1246)
-inet_sendmsg (net/ipv4/af_inet.c:840 (discriminator 4))
-sock_sendmsg (net/socket.c:730 net/socket.c:753)
-__sys_sendto (net/socket.c:2177)
-__x64_sys_sendto (net/socket.c:2185)
-do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
-
-read to 0xffff888102474b74 of 4 bytes by interrupt on cpu 21:
-rtl8169_poll (drivers/net/ethernet/realtek/r8169_main.c:4397 drivers/net/ethernet/realtek/r8169_main.c:4581) r8169
+race at unknown origin, with read to 0xffff888140d37570 of 4 bytes by interrupt on cpu 21:
+rtl8169_poll (drivers/net/ethernet/realtek/r8169_main.c:4368 drivers/net/ethernet/realtek/r8169_main.c:4581) r8169
 __napi_poll (net/core/dev.c:6527)
 net_rx_action (net/core/dev.c:6596 net/core/dev.c:6727)
 __do_softirq (kernel/softirq.c:553)
 __irq_exit_rcu (kernel/softirq.c:427 kernel/softirq.c:632)
 irq_exit_rcu (kernel/softirq.c:647)
-common_interrupt (arch/x86/kernel/irq.c:247 (discriminator 14))
-asm_common_interrupt (./arch/x86/include/asm/idtentry.h:636)
+sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1074 (discriminator 14))
+asm_sysvec_apic_timer_interrupt (./arch/x86/include/asm/idtentry.h:645)
 cpuidle_enter_state (drivers/cpuidle/cpuidle.c:291)
 cpuidle_enter (drivers/cpuidle/cpuidle.c:390)
 call_cpuidle (kernel/sched/idle.c:135)
@@ -95,26 +76,17 @@ cpu_startup_entry (kernel/sched/idle.c:378 (discriminator 1))
 start_secondary (arch/x86/kernel/smpboot.c:210 arch/x86/kernel/smpboot.c:294)
 secondary_startup_64_no_verify (arch/x86/kernel/head_64.S:433)
 
-value changed: 0x002f4815 -> 0x002f4816
+value changed: 0xb0000042 -> 0x00000000
 
 Reported by Kernel Concurrency Sanitizer on:
 CPU: 21 PID: 0 Comm: swapper/21 Tainted: G             L     6.6.0-rc2-kcsan-00143-gb5cbe7c00aa0 #41
 Hardware name: ASRock X670E PG Lightning/X670E PG Lightning, BIOS 1.21 04/26/2023
 ==================================================================
 
-The write side of drivers/net/ethernet/realtek/r8169_main.c is:
-==================
-   4251         /* rtl_tx needs to see descriptor changes before updated tp->cur_tx */
-   4252         smp_wmb();
-   4253
- → 4254         WRITE_ONCE(tp->cur_tx, tp->cur_tx + frags + 1);
-   4255
-   4256         stop_queue = !netif_subqueue_maybe_stop(dev, 0, rtl_tx_slots_avail(tp),
-   4257                                                 R8169_TX_STOP_THRS,
-   4258                                                 R8169_TX_START_THRS);
+The read side is in
 
-The read side is the function rtl_tx():
-
+drivers/net/ethernet/realtek/r8169_main.c
+=========================================
    4355 static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
    4356                    int budget)
    4357 {
@@ -127,7 +99,7 @@ The read side is the function rtl_tx():
    4364                 unsigned int entry = dirty_tx % NUM_TX_DESC;
    4365                 u32 status;
    4366
-   4367                 status = le32_to_cpu(tp->TxDescArray[entry].opts1);
+ → 4367                 status = le32_to_cpu(tp->TxDescArray[entry].opts1);
    4368                 if (status & DescOwn)
    4369                         break;
    4370
@@ -157,32 +129,20 @@ The read side is the function rtl_tx():
    4394                  * If skb is NULL then we come here again once a tx irq is
    4395                  * triggered after the last fragment is marked transmitted.
    4396                  */
- → 4397                 if (tp->cur_tx != dirty_tx && skb)
+   4397                 if (READ_ONCE(tp->cur_tx) != dirty_tx && skb)
    4398                         rtl8169_doorbell(tp);
    4399         }
    4400 }
 
-Obviously from the code, an earlier detected data-race for tp->cur_tx was fixed in the
-line 4363:
+tp->TxDescArray[entry].opts1 is reported to have a data-race and READ_ONCE() fixes
+this KCSAN warning.
 
-   4363         while (READ_ONCE(tp->cur_tx) != dirty_tx) {
+   4366
+ → 4367                 status = le32_to_cpu(READ_ONCE(tp->TxDescArray[entry].opts1));
+   4368                 if (status & DescOwn)
+   4369                         break;
+   4370
 
-but the same solution is required for protecting the other access to tp->cur_tx:
-
- → 4397                 if (READ_ONCE(tp->cur_tx) != dirty_tx && skb)
-   4398                         rtl8169_doorbell(tp);
-
-The write in the line 4254 is protected with WRITE_ONCE(), but the read in the line 4397
-might have suffered read tearing under some compiler optimisations.
-
-The fix eliminated the KCSAN data-race report for this bug.
-
-It is yet to be evaluated what happens if tp->cur_tx changes between the test in line 4363
-and line 4397. This test should certainly not be cached by the compiler in some register
-for such a long time, while asynchronous writes to tp->cur_tx might have occurred in line
-4254 in the meantime.
-
-Fixes: 94d8a98e6235c ("r8169: reduce number of workaround doorbell rings")
 Cc: Heiner Kallweit <hkallweit1@gmail.com>
 Cc: nic_swsd@realtek.com
 Cc: "David S. Miller" <davem@davemloft.net>
@@ -194,6 +154,7 @@ Cc: netdev@vger.kernel.org
 Link: https://lore.kernel.org/lkml/dc7fc8fa-4ea4-e9a9-30a6-7c83e6b53188@alu.unizg.hr/
 Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 Acked-by: Marco Elver <elver@google.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -201,18 +162,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 6351a2dc13bce..281aaa8518472 100644
+index 281aaa8518472..7e14a1d958c8e 100644
 --- a/drivers/net/ethernet/realtek/r8169_main.c
 +++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4394,7 +4394,7 @@ static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
- 		 * If skb is NULL then we come here again once a tx irq is
- 		 * triggered after the last fragment is marked transmitted.
- 		 */
--		if (tp->cur_tx != dirty_tx && skb)
-+		if (READ_ONCE(tp->cur_tx) != dirty_tx && skb)
- 			rtl8169_doorbell(tp);
- 	}
- }
+@@ -4364,7 +4364,7 @@ static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
+ 		unsigned int entry = dirty_tx % NUM_TX_DESC;
+ 		u32 status;
+ 
+-		status = le32_to_cpu(tp->TxDescArray[entry].opts1);
++		status = le32_to_cpu(READ_ONCE(tp->TxDescArray[entry].opts1));
+ 		if (status & DescOwn)
+ 			break;
+ 
 -- 
 2.42.0
 
