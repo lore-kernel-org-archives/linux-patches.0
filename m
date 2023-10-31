@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D6220B34
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75139210F0
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDpimOBD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D09C433C7;
-	Tue, 31 Oct 2023 17:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o01VfA/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4897C433CC;
+	Tue, 31 Oct 2023 17:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774480;
-	bh=9znv38mbVSfWtGZLYGZsEbRu38RP1d8hctw0gIQJzVs=;
+	s=korg; t=1698774483;
+	bh=Fxz8nP0hfukXpe4fmzISJL36gwrPkjaBGe5FfwRpD/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FDpimOBDPQreasgolJwzv1AaAOpL9xulEFhX7n36UtWJOZx90TMAEJq1JclBg8zXe
-	 VY7TuQVbjxi612msecDDxlHQ1zWpatL9j+VT2grEKo2zUpgOI7tRA1e1G+mUGUQxmQ
-	 U1nGkfDNFgSp4aRzPpkJGN6h96PZ2ijrYluE5ggU=
+	b=o01VfA/749XgQ3l/8gBzJRpnDmAFPsxJFm3iCBR+Hj/RgzsrYwc4dTe3gCr/InEMN
+	 vBpciJl8gKmJC40uSdrRu3ZPTvOCns86ONPDQ0QRDdMsBwucyP+icdvNdXbur6pqe/
+	 viKmPDZ8D+y+c9EfLH8xQm6QEslJIT2OiKn4fMH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gregory.price@memverge.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Shuah Khan <shuah@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 026/112] mm/migrate: fix do_pages_move for compat pointers
-Date: Tue, 31 Oct 2023 18:00:27 +0100
-Message-ID: <20231031165902.137470385@linuxfoundation.org>
+Subject: [PATCH 6.5 027/112] selftests/mm: include mman header to access MREMAP_DONTUNMAP identifier
+Date: Tue, 31 Oct 2023 18:00:28 +0100
+Message-ID: <20231031165902.169542361@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -43,74 +44,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry.memverge@gmail.com>
+From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
 
-commit 229e2253766c7cdfe024f1fe280020cc4711087c upstream.
+commit e2de156b0d918b5ebe975577d25f9ef92379a756 upstream.
 
-do_pages_move does not handle compat pointers for the page list.
-correctly.  Add in_compat_syscall check and appropriate get_user fetch
-when iterating the page list.
+Definition for MREMAP_DONTUNMAP is not present in glibc older than 2.32
+thus throwing an undeclared error when running make on mm.  Including
+linux/mman.h solves the build error for people having older glibc.
 
-It makes the syscall in compat mode (32-bit userspace, 64-bit kernel)
-work the same way as the native 32-bit syscall again, restoring the
-behavior before my broken commit 5b1b561ba73c ("mm: simplify
-compat_sys_move_pages").
-
-More specifically, my patch moved the parsing of the 'pages' array from
-the main entry point into do_pages_stat(), which left the syscall
-working correctly for the 'stat' operation (nodes = NULL), while the
-'move' operation (nodes != NULL) is now missing the conversion and
-interprets 'pages' as an array of 64-bit pointers instead of the
-intended 32-bit userspace pointers.
-
-It is possible that nobody noticed this bug because the few
-applications that actually call move_pages are unlikely to run in
-compat mode because of their large memory requirements, but this
-clearly fixes a user-visible regression and should have been caught by
-ltp.
-
-Link: https://lkml.kernel.org/r/20231003144857.752952-1-gregory.price@memverge.com
-Fixes: 5b1b561ba73c ("mm: simplify compat_sys_move_pages")
-Signed-off-by: Gregory Price <gregory.price@memverge.com>
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Co-developed-by: Arnd Bergmann <arnd@arndb.de>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lkml.kernel.org/r/20231012155257.891776-1-samasth.norway.ananda@oracle.com
+Fixes: 0183d777c29a ("selftests: mm: remove duplicate unneeded defines")
+Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/linux-mm/CA+G9fYvV-71XqpCr_jhdDfEtN701fBdG3q+=bafaZiGwUXy_aA@mail.gmail.com/
+Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Shuah Khan <shuah@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ tools/testing/selftests/mm/mremap_dontunmap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -2160,6 +2160,7 @@ static int do_pages_move(struct mm_struc
- 			 const int __user *nodes,
- 			 int __user *status, int flags)
- {
-+	compat_uptr_t __user *compat_pages = (void __user *)pages;
- 	int current_node = NUMA_NO_NODE;
- 	LIST_HEAD(pagelist);
- 	int start, i;
-@@ -2172,8 +2173,17 @@ static int do_pages_move(struct mm_struc
- 		int node;
- 
- 		err = -EFAULT;
--		if (get_user(p, pages + i))
--			goto out_flush;
-+		if (in_compat_syscall()) {
-+			compat_uptr_t cp;
-+
-+			if (get_user(cp, compat_pages + i))
-+				goto out_flush;
-+
-+			p = compat_ptr(cp);
-+		} else {
-+			if (get_user(p, pages + i))
-+				goto out_flush;
-+		}
- 		if (get_user(node, nodes + i))
- 			goto out_flush;
- 
+diff --git a/tools/testing/selftests/mm/mremap_dontunmap.c b/tools/testing/selftests/mm/mremap_dontunmap.c
+index ca2359835e75..a06e73ec8568 100644
+--- a/tools/testing/selftests/mm/mremap_dontunmap.c
++++ b/tools/testing/selftests/mm/mremap_dontunmap.c
+@@ -7,6 +7,7 @@
+  */
+ #define _GNU_SOURCE
+ #include <sys/mman.h>
++#include <linux/mman.h>
+ #include <errno.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+-- 
+2.42.0
+
 
 
