@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BAF208DF
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B490F208D8
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQ0/zyDU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33257C433C7;
-	Tue, 31 Oct 2023 17:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbfKFBlm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A017C433C8;
+	Tue, 31 Oct 2023 17:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698774647;
-	bh=wCaAbmycb7mxeLeJxKB08U0MsV1PTyCMeTIDW335I/0=;
+	s=korg; t=1698774650;
+	bh=wOsHDKWvUZSzeWzizJiZBiybIymL2/TYwf0l+936aIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQ0/zyDUBivb7a5ra1uCtH5E5ZWBnQVbWTxwT/ppBhdrLgHfEw6nX00o9bttuD/fM
-	 FZ0atGPLMQu6QUCBYH9C6LiEk4yQO1Nt6AhRaE4W8kD8/0aZGKOMnoeZyMZ612HKsp
-	 1+4tF2ZKkS04Oah27AfMESkX6SirerC8c4U4XVeE=
+	b=cbfKFBlmR8uJSDqdWrtRq6qWhMkvwkGRVFjoM4vvkT1hckgo2VlwX+W+Q+WCG8VRP
+	 3so7vjd0rWXL+XCGUQRHGPeO9j+SwyAo0fpgGlmGLxUjwy+OOxCjMssCTztKyj2Wnv
+	 ReiCU1uVmmYuiyArolXg05r80h1D6/cxXAC6vnvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.5 105/112] perf/core: Fix potential NULL deref
-Date: Tue, 31 Oct 2023 18:01:46 +0100
-Message-ID: <20231031165904.582339818@linuxfoundation.org>
+	Sam Ravnborg <sam@ravnborg.org>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 6.5 106/112] sparc32: fix a braino in fault handling in csum_and_copy_..._user()
+Date: Tue, 31 Oct 2023 18:01:47 +0100
+Message-ID: <20231031165904.611422815@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 References: <20231031165901.318222981@linuxfoundation.org>
@@ -42,32 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit a71ef31485bb51b846e8db8b3a35e432cc15afb5 upstream.
+commit 1f36cd05e0081f2c75769a551d584c4ffb2a5660 upstream.
 
-Smatch is awesome.
+Fault handler used to make non-trivial calls, so it needed
+to set a stack frame up.  Used to be
+	save ... - grab a stack frame, old %o... become %i...
+	....
+	ret	- go back to address originally in %o7, currently %i7
+	 restore - switch to previous stack frame, in delay slot
+Non-trivial calls had been gone since ab5e8b331244 and that code should
+have become
+	retl	- go back to address in %o7
+	 clr %o0 - have return value set to 0
+What it had become instead was
+	ret	- go back to address in %i7 - return address of *caller*
+	 clr %o0 - have return value set to 0
+which is not good, to put it mildly - we forcibly return 0 from
+csum_and_copy_{from,to}_iter() (which is what the call of that
+thing had been inlined into) and do that without dropping the
+stack frame of said csum_and_copy_..._iter().  Confuses the
+hell out of the caller of csum_and_copy_..._iter(), obviously...
 
-Fixes: 32671e3799ca ("perf: Disallow mis-matched inherited group reads")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Fixes: ab5e8b331244 "sparc32: propagate the calling conventions change down to __csum_partial_copy_sparc_generic()"
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/sparc/lib/checksum_32.S |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -13383,7 +13383,8 @@ static int inherit_group(struct perf_eve
- 		    !perf_get_aux_event(child_ctr, leader))
- 			return -EINVAL;
- 	}
--	leader->group_generation = parent_event->group_generation;
-+	if (leader)
-+		leader->group_generation = parent_event->group_generation;
- 	return 0;
- }
+--- a/arch/sparc/lib/checksum_32.S
++++ b/arch/sparc/lib/checksum_32.S
+@@ -453,5 +453,5 @@ ccslow:	cmp	%g1, 0
+  * we only bother with faults on loads... */
  
+ cc_fault:
+-	ret
++	retl
+ 	 clr	%o0
 
 
