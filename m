@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCFE1E51A
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C221E51A
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H40ZnmLK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8720C433C8;
-	Tue, 31 Oct 2023 17:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRp/BIkE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3387C433C8;
+	Tue, 31 Oct 2023 17:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771890;
-	bh=j0fgNlGqBJJwRkZGZVepL6jgv0UljlKuHlS3sL4v9Ao=;
+	s=korg; t=1698771893;
+	bh=7cOqsuz18i8YjqyuKG4ojYZVAazoe5zhtpiFgMofdDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H40ZnmLKY38I+2+BQeot5ajrNPLupeZMSS2Sm/D/IWlxi3iFtGHptLbJfnmjYZ6q/
-	 gNs/un0lXwUQi2dZk+b9/OXGxcgmmEQEDMDk9q1AUrNd9PraA6+zNNYqOt+w6bPrZ3
-	 n3xwGe+JEMpeZAuu36ycJu0NjVPyuD77cUVc37mM=
+	b=vRp/BIkEiBKpvyzFEB22eXqfuwRZz+LZh5Jjm2mTGDX4yLCotjWtoibjYEECcGG5f
+	 LpjvUaafhmFuj5V9Xq3mwTCIzZUYSpEa53jDhy9EPFBw8Gc963Hg3clul+ddVUrgqY
+	 lNdPJT3xI4bpxjdi3xvhBq/CFvyeQAGBPErpM7r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sui Jingfeng <suijingfeng@loongson.cn>,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 54/86] drm/logicvc: Kconfig: select REGMAP and REGMAP_MMIO
-Date: Tue, 31 Oct 2023 18:01:19 +0100
-Message-ID: <20231031165920.264863305@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Paolo Gentili <paolo.gentili@canonical.com>
+Subject: [PATCH 6.1 28/86] drm/amd: Disable ASPM for VI w/ all Intel systems
+Date: Tue, 31 Oct 2023 18:00:53 +0100
+Message-ID: <20231031165919.488951590@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -42,42 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sui Jingfeng <suijingfeng@loongson.cn>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 4e6c38c38723a954b85aa9ee62603bb4a37acbb4 ]
+commit 64ffd2f1d00c6235dabe9704bbb0d9ce3e28147f upstream.
 
-drm/logicvc driver is depend on REGMAP and REGMAP_MMIO, should select this
-two kconfig option, otherwise the driver failed to compile on platform
-without REGMAP_MMIO selected:
+Originally we were quirking ASPM disabled specifically for VI when
+used with Alder Lake, but it appears to have problems with Rocket
+Lake as well.
 
-ERROR: modpost: "__devm_regmap_init_mmio_clk" [drivers/gpu/drm/logicvc/logicvc-drm.ko] undefined!
-make[1]: *** [scripts/Makefile.modpost:136: Module.symvers] Error 1
-make: *** [Makefile:1978: modpost] Error 2
+Like we've done in the case of dpm for newer platforms, disable
+ASPM for all Intel systems.
 
-Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
-Acked-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-Fixes: efeeaefe9be5 ("drm: Add support for the LogiCVC display controller")
-Link: https://patchwork.freedesktop.org/patch/msgid/20230608024207.581401-1-suijingfeng@loongson.cn
-Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # 5.15+
+Fixes: 0064b0ce85bb ("drm/amd/pm: enable ASPM by default")
+Reported-and-tested-by: Paolo Gentili <paolo.gentili@canonical.com>
+Closes: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2036742
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/logicvc/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/vi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/logicvc/Kconfig b/drivers/gpu/drm/logicvc/Kconfig
-index fa7a883688094..1df22a852a23e 100644
---- a/drivers/gpu/drm/logicvc/Kconfig
-+++ b/drivers/gpu/drm/logicvc/Kconfig
-@@ -5,5 +5,7 @@ config DRM_LOGICVC
- 	select DRM_KMS_HELPER
- 	select DRM_KMS_DMA_HELPER
- 	select DRM_GEM_DMA_HELPER
-+	select REGMAP
-+	select REGMAP_MMIO
- 	help
- 	  DRM display driver for the logiCVC programmable logic block from Xylon
--- 
-2.42.0
-
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -1147,7 +1147,7 @@ static void vi_program_aspm(struct amdgp
+ 	bool bL1SS = false;
+ 	bool bClkReqSupport = true;
+ 
+-	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_aspm_support_quirk())
++	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_pcie_dynamic_switching_supported())
+ 		return;
+ 
+ 	if (adev->flags & AMD_IS_APU ||
 
 
