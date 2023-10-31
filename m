@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE09A2031C
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B662031C
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sd+18Ds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACE6C433C7;
-	Tue, 31 Oct 2023 17:03:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/EPDdo3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F96C433C7;
+	Tue, 31 Oct 2023 17:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771788;
-	bh=0pRMOR92IAXhO+GLvy48JMxWF/wdl/em4jAeww6fMEQ=;
+	s=korg; t=1698771791;
+	bh=zZ7SLVEkHXOzlYrlj1vm0tGfY9JApPKQUpEzd3oIfW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1sd+18Ds724S5uZ07g1oCSXhS0sqdgqLPDzlEB62jg1HaxWHLZyotUtSvYfBpqibY
-	 gwLbVrtaBla90fu7BUlwM17UvQPlj14fpH/E7xhE+J1LumAbVbxU37L/YiTox0D7z9
-	 zUz76Xm7VL387F1HHE8PK2xOaCNGLtLZf/xkAmW4=
+	b=T/EPDdo3+8IY4Mrp88f2WGbbmIPmicCJTzf3AyumWiKWS0NFHh2k3SjfRPamMzWPJ
+	 Kvmf3EQD/jNajydr/lbkPGpaacgL3DYD+D0D2TCEluCjtCvV5Bwc+ZuAiektTfZebJ
+	 9YSJBOTZelb0SGyeFKAq4q1vHVr11JeO61209zOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Rik van Riel <riel@surriel.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 21/86] hugetlbfs: clear resv_map pointer if mmap fails
-Date: Tue, 31 Oct 2023 18:00:46 +0100
-Message-ID: <20231031165919.266100789@linuxfoundation.org>
+	Avri Altman <avri.altman@wdc.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 04/86] mmc: core: Fix error propagation for some ioctl commands
+Date: Tue, 31 Oct 2023 18:00:29 +0100
+Message-ID: <20231031165918.749940500@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -44,87 +43,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-commit 92fe9dcbe4e109a7ce6bab3e452210a35b0ab493 upstream.
+[ Upstream commit f19c5a73e6f78d69efce66cfdce31148c76a61a6 ]
 
-Patch series "hugetlbfs: close race between MADV_DONTNEED and page fault", v7.
+Userspace has currently no way of checking the internal R1 response error
+bits for some commands. This is a problem for some commands, like RPMB for
+example. Typically, we may detect that the busy completion has successfully
+ended, while in fact the card did not complete the requested operation.
 
-Malloc libraries, like jemalloc and tcalloc, take decisions on when to
-call madvise independently from the code in the main application.
+To fix the problem, let's always poll with CMD13 for these commands and
+during the polling, let's also aggregate the R1 response bits. Before
+completing the ioctl request, let's propagate the R1 response bits too.
 
-This sometimes results in the application page faulting on an address,
-right after the malloc library has shot down the backing memory with
-MADV_DONTNEED.
-
-Usually this is harmless, because we always have some 4kB pages sitting
-around to satisfy a page fault.  However, with hugetlbfs systems often
-allocate only the exact number of huge pages that the application wants.
-
-Due to TLB batching, hugetlbfs MADV_DONTNEED will free pages outside of
-any lock taken on the page fault path, which can open up the following
-race condition:
-
-       CPU 1                            CPU 2
-
-       MADV_DONTNEED
-       unmap page
-       shoot down TLB entry
-                                       page fault
-                                       fail to allocate a huge page
-                                       killed with SIGBUS
-       free page
-
-Fix that race by extending the hugetlb_vma_lock locking scheme to also
-cover private hugetlb mappings (with resv_map), and pulling the locking
-from __unmap_hugepage_final_range into helper functions called from
-zap_page_range_single.  This ensures page faults stay locked out of the
-MADV_DONTNEED VMA until the huge pages have actually been freed.
-
-
-This patch (of 3):
-
-Hugetlbfs leaves a dangling pointer in the VMA if mmap fails.  This has
-not been a problem so far, but other code in this patch series tries to
-follow that pointer.
-
-Link: https://lkml.kernel.org/r/20231006040020.3677377-1-riel@surriel.com
-Link: https://lkml.kernel.org/r/20231006040020.3677377-2-riel@surriel.com
-Fixes: 04ada095dcfc ("hugetlb: don't delete vma_lock in hugetlb MADV_DONTNEED processing")
-Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Co-developed-by: Christian Loehle <christian.loehle@arm.com>
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230913112921.553019-1-ulf.hansson@linaro.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/mmc/core/block.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -1138,8 +1138,7 @@ static void set_vma_resv_map(struct vm_a
- 	VM_BUG_ON_VMA(!is_vm_hugetlb_page(vma), vma);
- 	VM_BUG_ON_VMA(vma->vm_flags & VM_MAYSHARE, vma);
+diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
+index 1aab4f47eab98..1fc6767f18782 100644
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -181,6 +181,7 @@ static void mmc_blk_rw_rq_prep(struct mmc_queue_req *mqrq,
+ 			       struct mmc_queue *mq);
+ static void mmc_blk_hsq_req_done(struct mmc_request *mrq);
+ static int mmc_spi_err_check(struct mmc_card *card);
++static int mmc_blk_busy_cb(void *cb_data, bool *busy);
  
--	set_vma_private_data(vma, (get_vma_private_data(vma) &
--				HPAGE_RESV_MASK) | (unsigned long)map);
-+	set_vma_private_data(vma, (unsigned long)map);
- }
+ static struct mmc_blk_data *mmc_blk_get(struct gendisk *disk)
+ {
+@@ -472,7 +473,7 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
+ 	struct mmc_data data = {};
+ 	struct mmc_request mrq = {};
+ 	struct scatterlist sg;
+-	bool r1b_resp, use_r1b_resp = false;
++	bool r1b_resp;
+ 	unsigned int busy_timeout_ms;
+ 	int err;
+ 	unsigned int target_part;
+@@ -566,8 +567,7 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
+ 	busy_timeout_ms = idata->ic.cmd_timeout_ms ? : MMC_BLK_TIMEOUT_MS;
+ 	r1b_resp = (cmd.flags & MMC_RSP_R1B) == MMC_RSP_R1B;
+ 	if (r1b_resp)
+-		use_r1b_resp = mmc_prepare_busy_cmd(card->host, &cmd,
+-						    busy_timeout_ms);
++		mmc_prepare_busy_cmd(card->host, &cmd, busy_timeout_ms);
  
- static void set_vma_resv_flags(struct vm_area_struct *vma, unsigned long flags)
-@@ -6898,8 +6897,10 @@ out_err:
- 		 */
- 		if (chg >= 0 && add < 0)
- 			region_abort(resv_map, from, to, regions_needed);
--	if (vma && is_vma_resv_set(vma, HPAGE_RESV_OWNER))
-+	if (vma && is_vma_resv_set(vma, HPAGE_RESV_OWNER)) {
- 		kref_put(&resv_map->refs, resv_map_release);
-+		set_vma_resv_map(vma, NULL);
+ 	mmc_wait_for_req(card->host, &mrq);
+ 	memcpy(&idata->ic.response, cmd.resp, sizeof(cmd.resp));
+@@ -620,19 +620,28 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
+ 	if (idata->ic.postsleep_min_us)
+ 		usleep_range(idata->ic.postsleep_min_us, idata->ic.postsleep_max_us);
+ 
+-	/* No need to poll when using HW busy detection. */
+-	if ((card->host->caps & MMC_CAP_WAIT_WHILE_BUSY) && use_r1b_resp)
+-		return 0;
+-
+ 	if (mmc_host_is_spi(card->host)) {
+ 		if (idata->ic.write_flag || r1b_resp || cmd.flags & MMC_RSP_SPI_BUSY)
+ 			return mmc_spi_err_check(card);
+ 		return err;
+ 	}
+-	/* Ensure RPMB/R1B command has completed by polling with CMD13. */
+-	if (idata->rpmb || r1b_resp)
+-		err = mmc_poll_for_busy(card, busy_timeout_ms, false,
+-					MMC_BUSY_IO);
++
++	/*
++	 * Ensure RPMB, writes and R1B responses are completed by polling with
++	 * CMD13. Note that, usually we don't need to poll when using HW busy
++	 * detection, but here it's needed since some commands may indicate the
++	 * error through the R1 status bits.
++	 */
++	if (idata->rpmb || idata->ic.write_flag || r1b_resp) {
++		struct mmc_blk_busy_data cb_data = {
++			.card = card,
++		};
++
++		err = __mmc_poll_for_busy(card->host, 0, busy_timeout_ms,
++					  &mmc_blk_busy_cb, &cb_data);
++
++		idata->ic.response[0] = cb_data.status;
 +	}
- 	return false;
- }
  
+ 	return err;
+ }
+-- 
+2.42.0
+
 
 
