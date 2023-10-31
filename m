@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DAF13AEF
-	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B3B13AEF
+	for <patches@lists.linux.dev>; Tue, 31 Oct 2023 17:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BiIxl2rH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DA7C433C7;
-	Tue, 31 Oct 2023 17:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zc7SF6/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83012C433C7;
+	Tue, 31 Oct 2023 17:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1698771958;
-	bh=sUGuSo7klqd16L9mn88twJiZc2y7MDcrIyIvuYrX/3s=;
+	s=korg; t=1698771960;
+	bh=CyFqALFA/ufUDJ4ewZbZpEwvK1ZNyXrPoxdwlZcvci0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BiIxl2rHK6YBlkdT9AQCDwxZeZhDksOGYidCTJsSZp2cDKb5v0DXlaJ9qQPHIAmmb
-	 rUA0ggIDpFoNLyEF0pvfcwRm8TajZwRlFmHXuk8zx2VGhoIcd1zElcFQNMizJ1hgqi
-	 +Xahr9wM22EWDSIlTsAc3pC6DbCVbVkqh12P8kto=
+	b=Zc7SF6/5olo8bR52YYoj+TqMtEEm+6FJsNzZyBPacXMuuGcItetL054rkjIaSRoAn
+	 xoqPFrF+BT16wDnu4guDFj1+d6QDkHdX5OH3XHSnc+O3hBojnf0scNzCgFYs05a7ph
+	 1qbNI8Gy6L7+VoP2y38i++YkNpIbWDI8ofgwO1Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.1 78/86] x86/cpu: Add model number for Intel Arrow Lake mobile processor
-Date: Tue, 31 Oct 2023 18:01:43 +0100
-Message-ID: <20231031165920.965042564@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 61/86] iio: exynos-adc: request second interupt only when touchscreen mode is used
+Date: Tue, 31 Oct 2023 18:01:26 +0100
+Message-ID: <20231031165920.474570450@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231031165918.608547597@linuxfoundation.org>
 References: <20231031165918.608547597@linuxfoundation.org>
@@ -41,41 +42,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Luck <tony.luck@intel.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit b99d70c0d1380f1368fd4a82271280c4fd28558b upstream.
+commit 865b080e3229102f160889328ce2e8e97aa65ea0 upstream.
 
-For "reasons" Intel has code-named this CPU with a "_H" suffix.
+Second interrupt is needed only when touchscreen mode is used, so don't
+request it unconditionally. This removes the following annoying warning
+during boot:
 
-[ dhansen: As usual, apply this and send it upstream quickly to
-	   make it easier for anyone who is doing work that
-	   consumes this. ]
+exynos-adc 14d10000.adc: error -ENXIO: IRQ index 1 not found
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20231025202513.12358-1-tony.luck%40intel.com
+Fixes: 2bb8ad9b44c5 ("iio: exynos-adc: add experimental touchscreen support")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20231009101412.916922-1-m.szyprowski@samsung.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/intel-family.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/adc/exynos_adc.c |   26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -27,6 +27,7 @@
-  *		_X	- regular server parts
-  *		_D	- micro server parts
-  *		_N,_P	- other mobile parts
-+ *		_H	- premium mobile parts
-  *		_S	- other client parts
-  *
-  *		Historical OPTDIFFs:
-@@ -125,6 +126,7 @@
+--- a/drivers/iio/adc/exynos_adc.c
++++ b/drivers/iio/adc/exynos_adc.c
+@@ -826,16 +826,26 @@ static int exynos_adc_probe(struct platf
+ 		}
+ 	}
  
- #define INTEL_FAM6_LUNARLAKE_M		0xBD
++	/* leave out any TS related code if unreachable */
++	if (IS_REACHABLE(CONFIG_INPUT)) {
++		has_ts = of_property_read_bool(pdev->dev.of_node,
++					       "has-touchscreen") || pdata;
++	}
++
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
+ 		return irq;
+ 	info->irq = irq;
  
-+#define INTEL_FAM6_ARROWLAKE_H		0xC5
- #define INTEL_FAM6_ARROWLAKE		0xC6
+-	irq = platform_get_irq(pdev, 1);
+-	if (irq == -EPROBE_DEFER)
+-		return irq;
+-
+-	info->tsirq = irq;
++	if (has_ts) {
++		irq = platform_get_irq(pdev, 1);
++		if (irq == -EPROBE_DEFER)
++			return irq;
++
++		info->tsirq = irq;
++	} else {
++		info->tsirq = -1;
++	}
  
- /* "Small Core" Processors (Atom/E-Core) */
+ 	info->dev = &pdev->dev;
+ 
+@@ -900,12 +910,6 @@ static int exynos_adc_probe(struct platf
+ 	if (info->data->init_hw)
+ 		info->data->init_hw(info);
+ 
+-	/* leave out any TS related code if unreachable */
+-	if (IS_REACHABLE(CONFIG_INPUT)) {
+-		has_ts = of_property_read_bool(pdev->dev.of_node,
+-					       "has-touchscreen") || pdata;
+-	}
+-
+ 	if (pdata)
+ 		info->delay = pdata->delay;
+ 	else
 
 
