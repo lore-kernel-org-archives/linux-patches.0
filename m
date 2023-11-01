@@ -1,65 +1,88 @@
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EBEA35
-	for <patches@lists.linux.dev>; Wed,  1 Nov 2023 01:47:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from dggpeml500021.china.huawei.com (unknown [172.30.72.56])
-	by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4SKqYY4s9bz1P7m5;
-	Wed,  1 Nov 2023 09:44:17 +0800 (CST)
-Received: from [10.174.177.174] (10.174.177.174) by
- dggpeml500021.china.huawei.com (7.185.36.21) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.31; Wed, 1 Nov 2023 09:47:17 +0800
-Message-ID: <bc45bd9a-0ca6-536d-8eea-751befda32a3@huawei.com>
-Date: Wed, 1 Nov 2023 09:47:17 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73206EA6
+	for <patches@lists.linux.dev>; Wed,  1 Nov 2023 02:28:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="XyG2YIua"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3b2e22f1937so3408498b6e.1
+        for <patches@lists.linux.dev>; Tue, 31 Oct 2023 19:28:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1698805728; x=1699410528; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3NOS13AWfl+zD92mnNkBlpojb9vC6m6JveBvE3ib1D0=;
+        b=XyG2YIuaV2fQSxDP7FMlMEKYe+RK1ng0ADiv0GyhmKU9xOLBiGQEm9WMltS7Y3ljyu
+         0GmXMHwVp2B4lbM+BG4pw5O0X3buHTJJnZm8cP/bp0xPdQioVBHrIcNeLbVvpvjyxc3f
+         7VJUE6i0QVdQjuEeqxv0imsy1+5LQIIB1owzc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698805728; x=1699410528;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3NOS13AWfl+zD92mnNkBlpojb9vC6m6JveBvE3ib1D0=;
+        b=KMpOQgDtVkFEq3v9+YvA53w7Vi9zDv9ETUClu6oiJpwOG0xtNx75zagUQJLNoIHtVr
+         odQbwYOgMjHSrgyATEg8Nnp2I1jm5C4B4h7SUaEgUnJua2HdsiK6FsrPuyMjro+C572M
+         TfEO1FjhSCGuXCivR+LeQKIPxYEcWAPIHtdjmYpHMuyErBsSvSPmYPjr66WYHNbBPkCG
+         PNlwLng0ZSkLRrTTt5Sgv9rBbM0PPu5Bc0vJxgUBuzphT45wR84Xlre6m0wkt/dYMF5L
+         Gt6CTOR/dOK6OCARTdaH923R+srh7m3ACKuJRdG84dtHzELOiwQNqbhw6uUM92BXc6+H
+         O6AQ==
+X-Gm-Message-State: AOJu0YxLp4p1EYoniSssP2mmAZBPTOr/ai5FkUVxrg6JJV80oFCTswge
+	9wufVJyT/g/+S4dcNXAW0AWSGg==
+X-Google-Smtp-Source: AGHT+IHOvyiAUD7ZHPdpP44HLsndQ+RdyPrWrmwj5thEHMOLwAMgNq37HfZjGr3nOGtKfd7GtWMEuA==
+X-Received: by 2002:a05:6808:3a85:b0:3a9:cfb5:4641 with SMTP id fb5-20020a0568083a8500b003a9cfb54641mr13949893oib.48.1698805728594;
+        Tue, 31 Oct 2023 19:28:48 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id t2-20020a0568080b2200b003af6eeed9b6sm101348oij.27.2023.10.31.19.28.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Oct 2023 19:28:48 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Tue, 31 Oct 2023 21:28:44 -0500
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
+Subject: Re: [PATCH 6.5 000/112] 6.5.10-rc1 review
+Message-ID: <ZUG33Hft8a4XYnrD@fedora64.linuxtx.org>
+References: <20231031165901.318222981@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH 5.15 1/3] ext4: add two helper functions
- extent_logical_end() and pa_logical_end()
-Content-Language: en-US
-To: Greg KH <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <sashal@kernel.org>, <tytso@mit.edu>,
-	<jack@suse.cz>, <ritesh.list@gmail.com>, <patches@lists.linux.dev>,
-	<yangerkun@huawei.com>, Baokun Li <libaokun1@huawei.com>
-References: <20231028064749.833278-1-libaokun1@huawei.com>
- <2023103126-careless-frequency-07c1@gregkh>
- <e8b4cdee-55ad-647f-e209-db0c8ed07c3f@huawei.com>
- <2023103129-variably-surfboard-d608@gregkh>
-From: Baokun Li <libaokun1@huawei.com>
-In-Reply-To: <2023103129-variably-surfboard-d608@gregkh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.174.177.174]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- dggpeml500021.china.huawei.com (7.185.36.21)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
 
-On 2023/10/31 22:11, Greg KH wrote:
-> On Tue, Oct 31, 2023 at 09:17:23PM +0800, Baokun Li wrote:
->> On 2023/10/31 20:51, Greg KH wrote:
->>> On Sat, Oct 28, 2023 at 02:47:47PM +0800, Baokun Li wrote:
->>>> commit 43bbddc067883d94de7a43d5756a295439fbe37d upstream.
->>> Why just 5.15 and older?  What about 6.1.y?  We can't take patches only
->>> for older stable kernels, otherwise you will have a regression when you
->>> upgrade.  Please send a series for 6.1.y if you wish to have us apply
->>> these for older kernels.
->> Since this series of patches for 5.15 also applies to 6.1.y, sorry for not
->> clarifying this.
-> Ok, thanks, now queued up.
->
+On Tue, Oct 31, 2023 at 06:00:01PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.5.10 release.
+> There are 112 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 02 Nov 2023 16:58:38 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.10-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
 > greg k-h
-Thank you very much for your work！
 
--- 
-With Best Regards,
-Baokun Li
-.
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
+
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
