@@ -1,129 +1,155 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB49134BC;
-	Wed,  1 Nov 2023 19:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCF612E44
+	for <patches@lists.linux.dev>; Wed,  1 Nov 2023 19:53:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rna+fo/L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8133C433C7;
-	Wed,  1 Nov 2023 19:43:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698867834;
-	bh=iWWsfVS+rpKy6OxoYr/8+r3ZrokHZiq9cZGVvMK8dcc=;
-	h=From:Date:Subject:To:Cc:From;
-	b=rna+fo/LNh/XVBYP5kckUPBwWVWrAimsosLF7qlmVIYjFi3ake97U+Jo9Oc1QC2Q6
-	 nLVNAEMRRyqtV/rX/L5Er4F0YISxAYj1yvSQ6pjXau/eoQNL8v8pc0JxCPh0Dr5qr/
-	 kLWEz2fxsWrzOdhQe+NCiREtXWFi60GWDmWJH3JwsPfm0HFU7vbeUEHh9aKJco0SG9
-	 gZPoZxabk/81cbaXwHLZBOD3q0IphAVutG6rhE6YKmw81WMOMm44stD3B8VTsBhP+k
-	 mV2YeoYTI5eb+ebxpTG4Sfco6ouUS9OyKajsHuDQczMuNu1A100bYmmMaJ3dtH1YzK
-	 KejYfKEMx718g==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 01 Nov 2023 12:43:29 -0700
-Subject: [PATCH] LoongArch: Mark __percpu functions as always inline
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WfKHAKEl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1698868430; x=1730404430;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=M9xVc4RU+I+3lt8fPQ1rra7oPUQkh/bproxiAKQkZww=;
+  b=WfKHAKElx0rAmOyxqSY+7XJhGAwe53bS8NWEnTxqFaQ8w6lX06KKoTn8
+   XvW/7bZYVsdLVhZgVRXSgEk+FKL/8v97w0S0ssNwcRfpC755NyjP2geeD
+   3FVSMJi8rfXAT+E/g70nuAfzarxDsRUz9T0aBwmqBQFoK5aJTUqywL9N0
+   qEbTFdDYBOyD9V3bTAh5yv93juWTevceDCUGUnMam5cMn6QDov1Ga5QVD
+   1NGxVWob5IImbpfkPouuH4B8me5q7d1adI2BvtlVSsbPn+XuriKFYPoKv
+   z1whL2z2DcZ/Nq1WQREbXNo3pqm1Zu01kkUC5boZUsMVTng6B8mzhA1ot
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10881"; a="378960543"
+X-IronPort-AV: E=Sophos;i="6.03,269,1694761200"; 
+   d="scan'208";a="378960543"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2023 12:53:49 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.03,269,1694761200"; 
+   d="scan'208";a="9151150"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+  by fmviesa001.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 01 Nov 2023 12:53:49 -0700
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.34; Wed, 1 Nov 2023 12:53:49 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.34 via Frontend Transport; Wed, 1 Nov 2023 12:53:49 -0700
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (104.47.73.168)
+ by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.34; Wed, 1 Nov 2023 12:53:48 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DWfDnZG/gdG0LldSQMU7uXc+s0WUmj4Bp7yIuQprl1S35+yhZr7HssEgaaKxmEDQdmzxTiZO/UV8xJPwGqVpb4rAPvV4IdhjbZ+EDimxGDNnoWN/uFlKtpn3e3Isl6OAgOBb9BWMPI0ROjZFf0K9hO8aXEXgcATUgQh8jIAUDJW7/NoeOcfLT9Oow8/53etQn0mpsVMt3UZP+wklrHsNSpn1Zyzo1kn/F7onLA065LlkjVbb4UHa2aEj1ab12XhbCApagNxxXqWeI1kB5x4eecepyP5AGBRSeXwfRr/WDsOqaKe70jE6t7VQ8MHvK3rvQlAfDJP9giJguGtFXMWbPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=M9xVc4RU+I+3lt8fPQ1rra7oPUQkh/bproxiAKQkZww=;
+ b=E9Uf0XBMMYy8SnR113a6Mu+quJSJQnz2vO+HHwqogmBsLrmySqMc0P2PoOfGIsg8Gg0vPr+m2BDimqwNeYAQKVGo8jT72kpcQCWkwOER7BEyWLcwQ3WRsew75cUjAjJRZkKbNfEwYBoNDv7JWRa/KRCAH7qCTAThJkJP0tCM1yr3blI2i1vGIcE+Zpst2DJ0EGuic5GvVcY4ff8+D2sEhRQE5DD/LFpi1yrRrIEvbDUHFextBQbhumSYEltXTbaSAh0kxVUmmyzwiRFko753A36oJ+lZ2oxPJ4CdBy+/6FA8fa7Jc5CFwBfYIIuP4LJdNZKqJdS7QPbyHSorwv4Pfg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
+ by IA0PR11MB7401.namprd11.prod.outlook.com (2603:10b6:208:433::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.19; Wed, 1 Nov
+ 2023 19:53:44 +0000
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::2b58:930f:feba:8848]) by SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::2b58:930f:feba:8848%5]) with mapi id 15.20.6933.029; Wed, 1 Nov 2023
+ 19:53:44 +0000
+From: "Luck, Tony" <tony.luck@intel.com>
+To: "Yu, Fenghua" <fenghua.yu@intel.com>, "Chatre, Reinette"
+	<reinette.chatre@intel.com>, Peter Newman <peternewman@google.com>, "Jonathan
+ Corbet" <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+	"x86@kernel.org" <x86@kernel.org>
+CC: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
+	<james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, Babu Moger
+	<babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [PATCH v10 3/8] x86/resctrl: Prepare for different scope for
+ control/monitor operations
+Thread-Topic: [PATCH v10 3/8] x86/resctrl: Prepare for different scope for
+ control/monitor operations
+Thread-Index: AQHaDD+m8/venzY3sEKkZr/G3i5JJ7Bl4TZw
+Date: Wed, 1 Nov 2023 19:53:44 +0000
+Message-ID: <SJ1PR11MB6083401EF56E9AED2C8245A5FCA7A@SJ1PR11MB6083.namprd11.prod.outlook.com>
+References: <20231020213100.123598-1-tony.luck@intel.com>
+ <20231031211708.37390-1-tony.luck@intel.com>
+ <20231031211708.37390-4-tony.luck@intel.com>
+In-Reply-To: <20231031211708.37390-4-tony.luck@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|IA0PR11MB7401:EE_
+x-ms-office365-filtering-correlation-id: d27e9ca0-c936-4e5a-540e-08dbdb14411b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: lBQR9A5Sy2+xYX4YyxR7hhscQ6w4aqW4N0a2BzNK8uwOiVKwS0F0IvD2GbPI2GRCsmAKz0LMCFEl7hoHVIv6CwvXyatZu5zorsDgdluYnc9hYP5EotqunW3UKQyVqksoNYft+Se4z1ffmGnnKsGMHnGhWv84UxISJyr9jLJ7nqoPxNzBSkJbUEPvCkHUoiuB6PTzCTCvqOhUQ3hXSPS04d26yYDmZfjNK5Ur4BUYwWjNbNCaE5YQHv6Vml04DhBW/5pstl/30fXq0x0lNg4OGzWjFT0NEZAx4KODX5ttd1EljhLTyR+3m/cbB8GgKEqkIO/sEEAabEYOfjQnDA1QpRzljyHMCDO+Bejzt25bopxyFV42wctcVnbvXrb2+KKHg7PUi67C3peRee3K2jYfhJEHJzbEWx0yn8Ffimp4kBzY3n5D9v9P2kqPy5SxXfofam1YwD6m8affZpYfToA4Eerd4D7iOc8ShFOGVEsXEpU6DSbUlRSWaSvAXrUUb2GiJFJonaz0RAtKYzenbqyYunPkr2NS75hBZyiuvYa0m8o/OQk1qVBUcTa2Y37XC8EUtg278/G7g4dJ6EZ8sQZ/ZF1cgp/PdunQmWNQWWBzLic8T9cQGDEZftT4Sdh9Ka1w
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(39860400002)(136003)(396003)(376002)(346002)(230922051799003)(186009)(1800799009)(451199024)(64100799003)(478600001)(26005)(9686003)(6506007)(8676002)(5660300002)(7696005)(7416002)(52536014)(76116006)(110136005)(64756008)(41300700001)(66946007)(316002)(54906003)(4326008)(8936002)(66446008)(66556008)(66476007)(38070700009)(82960400001)(122000001)(2906002)(38100700002)(71200400001)(558084003)(86362001)(33656002)(55016003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?2Tto3EWlmJsYdRkLmSp1tChcziq7146UyRbw2jlypO1dSKcwmmtCOZuiGMxe?=
+ =?us-ascii?Q?KRBRMXXY6rSQBtVoQGDdxfph7dYj2mx4uh5czVHmf2+ozarw0LkSRfRxfShC?=
+ =?us-ascii?Q?O5MI+A1qexZPVaS8kJa00mMBfUZKUec28KEHS5aUf9ChazOt7L3vS9rhqoGL?=
+ =?us-ascii?Q?H/xj8FMWrMIH5w5/ZxwIhg70TjKyGC0VU52GGvN7xkU2U8ZmbeOtACe7LDUn?=
+ =?us-ascii?Q?L53ErXdITCjZqRK6PPEkW+WNyo2F4ulHsiWllUEHjVQ0AjPiJaXQEgppFmQx?=
+ =?us-ascii?Q?EdM/qUCo42+xvJ2+vPaSoMxPx9SElWSPCp5TUr3aRUFuE2UhzQDbk+pJ0e9E?=
+ =?us-ascii?Q?sMIlZ8X6mDRqBcWHKD+FlJlybS8yJpcDgAX38nnS4wYxSVLRCpUG1KFfRpJU?=
+ =?us-ascii?Q?ApqXCwabReGjaSxIUwMyeWW0qWetiNvwEdfY2XIoxm6sdGdpR3I/xWqdNsvc?=
+ =?us-ascii?Q?xw9xA4QkpRr53IFcYt3ZFacQWxrpzNViapcP77FT9iENmvZAWCs5du8o6LOs?=
+ =?us-ascii?Q?YBacWrureXw/8iS3tpJ0LjDw8yhWoKpHbtpLU25IVjdoczDLGk/jDZlTsLM0?=
+ =?us-ascii?Q?ZiLJYyfY/fnco0tD6BHsOzHSyhgK7S649m7pHqJPjHi29iAfnDj9ZADCdzE3?=
+ =?us-ascii?Q?/uZxSyw0263AZKYQkFiGXpb6/CxwtKOMCyUIdL4Vy2UUbipiDho51ZjfWe3N?=
+ =?us-ascii?Q?nsBCEvWjkS4kNqyNRMKjbTrHwqrkWOc3qpKltGeqNXewlg1HuBRbnYhJ7E+Y?=
+ =?us-ascii?Q?yanFamZnq6eBYPPkpSsIiVmA0MBIrJvM8CdXK6sVJ+xoBVE4VN6hSyl6cF3v?=
+ =?us-ascii?Q?NUfaym3CcOKWU7jBSnDrDxvRKx+ISDvH53RB8S0KOu1F7jqimFnsBhg8Z2Uv?=
+ =?us-ascii?Q?Q/AVgoM1yQiyy4XVktpxnSZd86a5E430YKZAwQCJYEm29w4oYnAztZR86giI?=
+ =?us-ascii?Q?5gbuo2JAsoWknEdn4mmK3bYi2QH8JP6TRL966pSPo/VbRP9zLxKCrPXWeiea?=
+ =?us-ascii?Q?Ucl3s9L0cRnocm3usWkEIwsJTvga9ASHE9hkbuk1XKwMuc9kRVHUyHnJisB2?=
+ =?us-ascii?Q?1bbAnAYZQ6TpYXkhCMx/r6bBFz8Lae9oD5v8gM9kLkgILtmTHZHm7xvXC4Oe?=
+ =?us-ascii?Q?ey2ZYpwnYp6+NbdKaX0vap5Z0IJpGKJTsi9aC5YaCfqIUVSsIr10/WOKiLcs?=
+ =?us-ascii?Q?yMezrwExjetA1ThQzXptOy44AKTHJVb8O1Sh4CztstKsJF3MgB2myhKMrOd/?=
+ =?us-ascii?Q?07NThSdb6rWlNTpI2TrvePHq1neJHAE8Qa+Z8dOEZmX0EheSwsBDPn58OZkB?=
+ =?us-ascii?Q?SBEJXMq0ZxatCBiatgY4TQHPPPeGlqH5s0MUJeB3bOSMRlABrqs4Rt4plcDU?=
+ =?us-ascii?Q?QeSkxhhFgYXB3GTIR2hbf6/Iq5mnKsHaPH+nLtBJ6tVavAetuj/KTEtneVAw?=
+ =?us-ascii?Q?fd59grPkslM05u7ukKoHXwZf2Ln5Ec/iwI75c7u3lOyR25lVBT0a0TmcAlX7?=
+ =?us-ascii?Q?jQ8Ss0yfUs8GIJBt4ja9A1fQoXy5KWTTRNpUP4oKWyMQOqW8CAEvy8/voc/l?=
+ =?us-ascii?Q?DZhWZygtTJwberkOAnVlfJ7fHMedEdCBDJjXrq28?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231101-loongarch-always-inline-percpu-ops-v1-1-b8f2e9a71729@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAGCqQmUC/x3NwQrCMAyA4VcZORtYJqziq4iHEtMtUNqSoE7G3
- t2y43f5/x1cTMXhPuxg8lHXWjroMgCvsSyC+uqGaZyuRCNhrrUs0XjFmL/x56glaxFsYtzeWJs
- jpxCYZroFStBDzSTpdk4ez+P4AxEhNfN0AAAA
-To: chenhuacai@kernel.org, kernel@xen0n.name
-Cc: ndesaulniers@google.com, trix@redhat.com, jiaxun.yang@flygoat.com, 
- loongarch@lists.linux.dev, llvm@lists.linux.dev, patches@lists.linux.dev, 
- stable@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3635; i=nathan@kernel.org;
- h=from:subject:message-id; bh=iWWsfVS+rpKy6OxoYr/8+r3ZrokHZiq9cZGVvMK8dcc=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDKlOqyoNpfgPu/hFLDxbyyC4P3Gvq1vzPdeko34OylULH
- cwOx2d1lLIwiHEwyIopslQ/Vj1uaDjnLOONU5Ng5rAygQxh4OIUgImwaDAybBH4qWnmVuB55cik
- z+9PWeh+WHJ/d5HWzdUlQgzhtfOe8DEy9G4RDTnAMXer8K/ZMio104Ubd+5lOxnBKHYqbuV0efk
- NTAA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d27e9ca0-c936-4e5a-540e-08dbdb14411b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Nov 2023 19:53:44.1095
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: B1e1CGLVTztyV0kjH3nD216VEsTVP4IH7M80i+06UlAFXYvol/kEw+7SJZwH+nB81w9uevxjywZydb4WE7jS5Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR11MB7401
+X-OriginatorOrg: intel.com
 
-A recent change to the optimization pipeline in LLVM reveals some
-fragility around the inlining of LoongArch's __percpu functions, which
-manifests as a BUILD_BUG() failure:
++/*
++ * domain_add_cpu - Add a cpu to either/both resource's domain lists.
++ */
++static void domain_add_cpu(int cpu, struct rdt_resource *r)
 
-  In file included from kernel/sched/build_policy.c:17:
-  In file included from include/linux/sched/cputime.h:5:
-  In file included from include/linux/sched/signal.h:5:
-  In file included from include/linux/rculist.h:11:
-  In file included from include/linux/rcupdate.h:26:
-  In file included from include/linux/irqflags.h:18:
-  arch/loongarch/include/asm/percpu.h:97:3: error: call to '__compiletime_assert_51' declared with 'error' attribute: BUILD_BUG failed
-     97 |                 BUILD_BUG();
-        |                 ^
-  include/linux/build_bug.h:59:21: note: expanded from macro 'BUILD_BUG'
-     59 | #define BUILD_BUG() BUILD_BUG_ON_MSG(1, "BUILD_BUG failed")
-        |                     ^
-  include/linux/build_bug.h:39:37: note: expanded from macro 'BUILD_BUG_ON_MSG'
-     39 | #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
-        |                                     ^
-  include/linux/compiler_types.h:425:2: note: expanded from macro 'compiletime_assert'
-    425 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-        |         ^
-  include/linux/compiler_types.h:413:2: note: expanded from macro '_compiletime_assert'
-    413 |         __compiletime_assert(condition, msg, prefix, suffix)
-        |         ^
-  include/linux/compiler_types.h:406:4: note: expanded from macro '__compiletime_assert'
-    406 |                         prefix ## suffix();                             \
-        |                         ^
-  <scratch space>:86:1: note: expanded from here
-     86 | __compiletime_assert_51
-        | ^
-  1 error generated.
+Bother. Missed one comment that needs s/cpu/CPU/
 
-If these functions are not inlined, the BUILD_BUG() in the default case
-cannot be eliminated since the compiler cannot prove it is never used,
-resulting in a build failure due to the error attribute.
-
-Mark these functions as __always_inline so that the BUILD_BUG() only
-triggers when the default case genuinely cannot be eliminated due to an
-unexpected size.
-
-Cc:  <stable@vger.kernel.org>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1955
-Fixes: 46859ac8af52 ("LoongArch: Add multi-processor (SMP) support")
-Link: https://github.com/llvm/llvm-project/commit/1a2e77cf9e11dbf56b5720c607313a566eebb16e
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/loongarch/include/asm/percpu.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/arch/loongarch/include/asm/percpu.h b/arch/loongarch/include/asm/percpu.h
-index b9f567e66016..8fb857ae962b 100644
---- a/arch/loongarch/include/asm/percpu.h
-+++ b/arch/loongarch/include/asm/percpu.h
-@@ -32,7 +32,7 @@ static inline void set_my_cpu_offset(unsigned long off)
- #define __my_cpu_offset __my_cpu_offset
- 
- #define PERCPU_OP(op, asm_op, c_op)					\
--static inline unsigned long __percpu_##op(void *ptr,			\
-+static __always_inline unsigned long __percpu_##op(void *ptr,			\
- 			unsigned long val, int size)			\
- {									\
- 	unsigned long ret;						\
-@@ -63,7 +63,7 @@ PERCPU_OP(and, and, &)
- PERCPU_OP(or, or, |)
- #undef PERCPU_OP
- 
--static inline unsigned long __percpu_read(void *ptr, int size)
-+static __always_inline unsigned long __percpu_read(void *ptr, int size)
- {
- 	unsigned long ret;
- 
-
----
-base-commit: 278be83601dd1725d4732241f066d528e160a39d
-change-id: 20231101-loongarch-always-inline-percpu-ops-cf77c161871f
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+-Tony
