@@ -1,128 +1,129 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CA51A262
-	for <patches@lists.linux.dev>; Wed,  1 Nov 2023 18:59:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB49134BC;
+	Wed,  1 Nov 2023 19:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HumqjjPB"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1cc37fb1310so632535ad.1
-        for <patches@lists.linux.dev>; Wed, 01 Nov 2023 11:59:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698865153; x=1699469953; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=T5EbXY9IBY5AblESRrd+YAAl/mo8GDz1fxu4/YgQcRU=;
-        b=HumqjjPB1ir17WeEizBrMgqrllnZJGkTiTjYy0a1sUEv02dsNQNNb0exxSJnhv//WN
-         iCk1yXKl/gZ9h86bN59P7GCKDeySi2M9HnLvwOTIc0zRuxB/gE3IX2k7E+CBDIZUN4TD
-         FQJQohhq7Qy0IKayTCCUcwYtkdH08VnX18rx61201YwzYVg9bS1eAqTOtRYwWNyxEG30
-         Bl128s4tEAi8wg/sSdViVNWIJxEDcur3f9zQfe/ujArmY8Zucj2ZBJNy9rlo4+snJg6R
-         EPZVUU97NBjqaI3zzDphz0zne9n02CrB99W8rt8Qu9/5KkugSI7IOcZAmsLODGGkoRAl
-         cd+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698865153; x=1699469953;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=T5EbXY9IBY5AblESRrd+YAAl/mo8GDz1fxu4/YgQcRU=;
-        b=YenwHTMlln1ZcG3BF9Qs6+KL4zGq7NCj5wyrboN7RddmV4D8shUjLx6WxZpHPIlm5U
-         d+yauyVJn87d0Jeo5cgLTT4rjcJVTopXb2nES8LkDyU2Ic+NdeKBRxxR32FPRB9wnni0
-         abs04JcyI2k1zTzXqrx3LN4CSB6ZvBD5DAnK/buEOCbKAwAlJbT8VgeZJ3NiAqJzdU5u
-         H0g3ivDDOW+ULU2VPMZLybqN0Fn4k62Y04PFq2v+dzntTpw/bfjQx8LubYWWBuTKynLl
-         e4QnEaiV/bPewufpphkdpSLM0ReXv3XJ51/7Xd6vWqDE608aGAt7Kbs24VDQInggojse
-         rgTQ==
-X-Gm-Message-State: AOJu0YxzkJnBbXu0RvcPvXh7t/PQUhR9Khg5fRjZNFt90O4zcdjbV+KB
-	MUbihwvZIB3nogVJMzkyt2FXepkpRoY=
-X-Google-Smtp-Source: AGHT+IHyITq814Pz/QSMwbHRVVQ5ZxRgKJ6Mf0ag+LyocKmJGUGmxc4m6q6SDopEYX0YBaZIeMiqpw==
-X-Received: by 2002:a17:903:41c4:b0:1cc:4a84:27fc with SMTP id u4-20020a17090341c400b001cc4a8427fcmr9277840ple.52.1698865153392;
-        Wed, 01 Nov 2023 11:59:13 -0700 (PDT)
-Received: from [10.230.29.214] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id s8-20020a170902ea0800b001ca21c8abf7sm1626852plg.188.2023.11.01.11.59.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Nov 2023 11:59:12 -0700 (PDT)
-Message-ID: <cd5f408b-afe5-4d06-9800-221d0a8aa6ca@gmail.com>
-Date: Wed, 1 Nov 2023 11:59:10 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rna+fo/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8133C433C7;
+	Wed,  1 Nov 2023 19:43:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1698867834;
+	bh=iWWsfVS+rpKy6OxoYr/8+r3ZrokHZiq9cZGVvMK8dcc=;
+	h=From:Date:Subject:To:Cc:From;
+	b=rna+fo/LNh/XVBYP5kckUPBwWVWrAimsosLF7qlmVIYjFi3ake97U+Jo9Oc1QC2Q6
+	 nLVNAEMRRyqtV/rX/L5Er4F0YISxAYj1yvSQ6pjXau/eoQNL8v8pc0JxCPh0Dr5qr/
+	 kLWEz2fxsWrzOdhQe+NCiREtXWFi60GWDmWJH3JwsPfm0HFU7vbeUEHh9aKJco0SG9
+	 gZPoZxabk/81cbaXwHLZBOD3q0IphAVutG6rhE6YKmw81WMOMm44stD3B8VTsBhP+k
+	 mV2YeoYTI5eb+ebxpTG4Sfco6ouUS9OyKajsHuDQczMuNu1A100bYmmMaJ3dtH1YzK
+	 KejYfKEMx718g==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 01 Nov 2023 12:43:29 -0700
+Subject: [PATCH] LoongArch: Mark __percpu functions as always inline
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.5 000/111] 6.5.10-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20231101120147.190909952@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- HGuUuzv+GKZ6nsysJw==
-In-Reply-To: <20231101120147.190909952@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20231101-loongarch-always-inline-percpu-ops-v1-1-b8f2e9a71729@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAGCqQmUC/x3NwQrCMAyA4VcZORtYJqziq4iHEtMtUNqSoE7G3
+ t2y43f5/x1cTMXhPuxg8lHXWjroMgCvsSyC+uqGaZyuRCNhrrUs0XjFmL/x56glaxFsYtzeWJs
+ jpxCYZroFStBDzSTpdk4ez+P4AxEhNfN0AAAA
+To: chenhuacai@kernel.org, kernel@xen0n.name
+Cc: ndesaulniers@google.com, trix@redhat.com, jiaxun.yang@flygoat.com, 
+ loongarch@lists.linux.dev, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ stable@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3635; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=iWWsfVS+rpKy6OxoYr/8+r3ZrokHZiq9cZGVvMK8dcc=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKlOqyoNpfgPu/hFLDxbyyC4P3Gvq1vzPdeko34OylULH
+ cwOx2d1lLIwiHEwyIopslQ/Vj1uaDjnLOONU5Ng5rAygQxh4OIUgImwaDAybBH4qWnmVuB55cik
+ z+9PWeh+WHJ/d5HWzdUlQgzhtfOe8DEy9G4RDTnAMXer8K/ZMio104Ubd+5lOxnBKHYqbuV0efk
+ NTAA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
+A recent change to the optimization pipeline in LLVM reveals some
+fragility around the inlining of LoongArch's __percpu functions, which
+manifests as a BUILD_BUG() failure:
 
+  In file included from kernel/sched/build_policy.c:17:
+  In file included from include/linux/sched/cputime.h:5:
+  In file included from include/linux/sched/signal.h:5:
+  In file included from include/linux/rculist.h:11:
+  In file included from include/linux/rcupdate.h:26:
+  In file included from include/linux/irqflags.h:18:
+  arch/loongarch/include/asm/percpu.h:97:3: error: call to '__compiletime_assert_51' declared with 'error' attribute: BUILD_BUG failed
+     97 |                 BUILD_BUG();
+        |                 ^
+  include/linux/build_bug.h:59:21: note: expanded from macro 'BUILD_BUG'
+     59 | #define BUILD_BUG() BUILD_BUG_ON_MSG(1, "BUILD_BUG failed")
+        |                     ^
+  include/linux/build_bug.h:39:37: note: expanded from macro 'BUILD_BUG_ON_MSG'
+     39 | #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+        |                                     ^
+  include/linux/compiler_types.h:425:2: note: expanded from macro 'compiletime_assert'
+    425 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+        |         ^
+  include/linux/compiler_types.h:413:2: note: expanded from macro '_compiletime_assert'
+    413 |         __compiletime_assert(condition, msg, prefix, suffix)
+        |         ^
+  include/linux/compiler_types.h:406:4: note: expanded from macro '__compiletime_assert'
+    406 |                         prefix ## suffix();                             \
+        |                         ^
+  <scratch space>:86:1: note: expanded from here
+     86 | __compiletime_assert_51
+        | ^
+  1 error generated.
 
-On 11/1/2023 5:03 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.10 release.
-> There are 111 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 03 Nov 2023 12:01:18 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.10-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+If these functions are not inlined, the BUILD_BUG() in the default case
+cannot be eliminated since the compiler cannot prove it is never used,
+resulting in a build failure due to the error attribute.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Mark these functions as __always_inline so that the BUILD_BUG() only
+triggers when the default case genuinely cannot be eliminated due to an
+unexpected size.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc:  <stable@vger.kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1955
+Fixes: 46859ac8af52 ("LoongArch: Add multi-processor (SMP) support")
+Link: https://github.com/llvm/llvm-project/commit/1a2e77cf9e11dbf56b5720c607313a566eebb16e
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/loongarch/include/asm/percpu.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/loongarch/include/asm/percpu.h b/arch/loongarch/include/asm/percpu.h
+index b9f567e66016..8fb857ae962b 100644
+--- a/arch/loongarch/include/asm/percpu.h
++++ b/arch/loongarch/include/asm/percpu.h
+@@ -32,7 +32,7 @@ static inline void set_my_cpu_offset(unsigned long off)
+ #define __my_cpu_offset __my_cpu_offset
+ 
+ #define PERCPU_OP(op, asm_op, c_op)					\
+-static inline unsigned long __percpu_##op(void *ptr,			\
++static __always_inline unsigned long __percpu_##op(void *ptr,			\
+ 			unsigned long val, int size)			\
+ {									\
+ 	unsigned long ret;						\
+@@ -63,7 +63,7 @@ PERCPU_OP(and, and, &)
+ PERCPU_OP(or, or, |)
+ #undef PERCPU_OP
+ 
+-static inline unsigned long __percpu_read(void *ptr, int size)
++static __always_inline unsigned long __percpu_read(void *ptr, int size)
+ {
+ 	unsigned long ret;
+ 
+
+---
+base-commit: 278be83601dd1725d4732241f066d528e160a39d
+change-id: 20231101-loongarch-always-inline-percpu-ops-cf77c161871f
+
+Best regards,
 -- 
-Florian
+Nathan Chancellor <nathan@kernel.org>
+
