@@ -1,126 +1,146 @@
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23715C9A
-	for <patches@lists.linux.dev>; Wed,  1 Nov 2023 07:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9555680
+	for <patches@lists.linux.dev>; Wed,  1 Nov 2023 09:43:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="giJuhped"
-Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-4a9183bf741so1892532e0c.1
-        for <patches@lists.linux.dev>; Wed, 01 Nov 2023 00:43:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MDsBqIfi"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1cc2f17ab26so33267785ad.0
+        for <patches@lists.linux.dev>; Wed, 01 Nov 2023 02:43:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698824627; x=1699429427; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o326kRv6U2+ln56Jt/MYDAHMNlJTSIjb+AyTX5/qVok=;
-        b=giJuhpedVy+TNBSP2xNBCsvQOH21B+Sp8t1AalR8nanbu4x4je55kjO3CKdRphUF3a
-         2vRUcbV0NDF1/oXozfFezJJEbpt9PCYtTkoSaXiL9Vc7vK4j7TesAkRPvWf+twJfBdbR
-         1i5p1BGz1OzbNyA4WizPJqAb8dSOFI0gVQ5Id2Qj0/kdOQabBSQ1e7pbNAa+f90uGXO3
-         1mv8kygKadSeWTtXrfR9kmiElmmltqYMxLdVYNEBCTJnH494Krj0EOyvgrxJZMc7RcOH
-         HL4PkNV+f7NVfM7DEWBkIIFFtRF8syjUO6DWqy97/ciObRiEU6y92FPyFwWgnlcr9iuU
-         wRig==
+        d=gmail.com; s=20230601; t=1698831797; x=1699436597; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2A7Y/11whjGsMhAiEp81xRL7zeK5hRlJmAi1MKSmNLM=;
+        b=MDsBqIfibPUOY5ISsSxuKGOs+wWP85H07qiqNvlhtZoZ/YF7SyALxqrUppr4ih+sqz
+         r0H/tct5FcL3mAFFXUqGzlFsbhKOR8aGZ+KbIGb8u5XQKSylo/VQvzwS90d4lN0YIurR
+         6WsMFbazq0GFDkTfLZM9EcCA0FSoVXC4Yvp+I8j9wVS1J9nhiAsjbjNPAt60YZ3UrUmq
+         5/Pl7rYxPysXjhywSNc/BrfP+FZ+Hh4gOPYhrfzBw44FP9B29PROJvymsYa6bCaY3zBe
+         xEMz6PWAyevUaezFZm7fsKW2kCBELyiuhOdzDuLXCwMQ9/4a7zcII7GvndLfIMQBbzGN
+         uyKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698824627; x=1699429427;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=o326kRv6U2+ln56Jt/MYDAHMNlJTSIjb+AyTX5/qVok=;
-        b=M8edct5qKyitdSPv94oPZA2cg5zrqBO9YxeMSly28UHwjozZ3TNtHqcx/dVZNvdFrv
-         pZBTAmdrCU1pNCB1l0fQZ7idD2O6m8IJB+rl7/f+/YodwfEFKYFrz9TQSUqGadSp8tZh
-         kXP+XDxJ+qjKsMukEHQGcdQq8O/QZcHhn+lxfzBljOOdUp6QKDLVDn9djtr4hd7TayEc
-         J9nn7crMYT+/d5bKgD80LgG0NMmG7dDGPtCF94dN1n3a9fdhOQIWFFlr8OGm5kGueZ9C
-         TGDz8Eu++C7LLkTqeortyg4fWJI4DQaxt6R+CRxzakwyCAt9S7ylH3WkMymC6+/GRwlg
-         WEBA==
-X-Gm-Message-State: AOJu0YyG6kZpogKhAxlsTTGRGl1puZgHqbwFJ7t3YNStL5QbOJuEU6AD
-	IMx7UssooiQITtdkDXsQb5b8Wn9ddMuUtb2AYNlk8A==
-X-Google-Smtp-Source: AGHT+IFn3LGbnhJgUHon1Qrj2iYMBd9vIZpHUDasLkNig6UIZDiIb8D4aXIR1PweykwfXhCvN8gmudyh11ujhfzYAYM=
-X-Received: by 2002:a1f:ab0b:0:b0:4a4:680:bfad with SMTP id
- u11-20020a1fab0b000000b004a40680bfadmr13344693vke.7.1698824627486; Wed, 01
- Nov 2023 00:43:47 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698831797; x=1699436597;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2A7Y/11whjGsMhAiEp81xRL7zeK5hRlJmAi1MKSmNLM=;
+        b=JJSA2A3Ivy+vu/1ozZcKGVzv89IJDL4ynFa0Qao48whPdTJAPTB3+jhCtmJOWZwzI5
+         9V7t4rcakU3Wu5u1mv1ytgIBiTXYn0etbuM76JisTOCefck2Eipp0/4U54IvK9xsk/FS
+         YVbVPNVLpnB6IGmzjofnaEsiyGxtoLNsoNZz3V4x/EKOjwuVAku3xHTCpzW9FpZakMLF
+         Vl37csfXWZn3mpNYH7pvQmjAfWc4GNfOvqqLlQAXZxD/JBzf3kpG0Sv5YI5ilhFYNzdW
+         vVAWPk+/7zwhhCA5OhOTDvRVWNrxLcspZj+bWBRhfwe1iVu83ZYAOgj0I185lc2CZI3Q
+         zISw==
+X-Gm-Message-State: AOJu0YwX0sy8QT2dcRVw4run6OsXWZVm9hO2T2U34STahAO4G7w6rTtb
+	2onluEg7WZb9kste71xT4qM=
+X-Google-Smtp-Source: AGHT+IGT4O+L81nSAQ1uLW6groCXyS4JSYmHYensOGSr/USkULHyEEJ53PQy564JiPHsQnCSCV9Ktg==
+X-Received: by 2002:a17:902:d4c2:b0:1cc:5aef:f2cf with SMTP id o2-20020a170902d4c200b001cc5aeff2cfmr6986814plg.9.1698831797023;
+        Wed, 01 Nov 2023 02:43:17 -0700 (PDT)
+Received: from debian.me ([103.131.18.64])
+        by smtp.gmail.com with ESMTPSA id h18-20020a170902eed200b001b3bf8001a9sm990713plb.48.2023.11.01.02.43.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Nov 2023 02:43:16 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id A3A8997EF4A3; Wed,  1 Nov 2023 16:43:13 +0700 (WIB)
+Date: Wed, 1 Nov 2023 16:43:12 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Peter Newman <peternewman@google.com>, x86@kernel.org
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] x86/resctrl: Fix unused variable warning in
+ cache_alloc_hsw_probe()
+Message-ID: <ZUIdsK5LGmRww9ER@debian.me>
+References: <20231031220534.37730-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231031165901.318222981@linuxfoundation.org> <38fbd463-1160-0212-b9d2-6efeaaa6548e@w6rz.net>
-In-Reply-To: <38fbd463-1160-0212-b9d2-6efeaaa6548e@w6rz.net>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 1 Nov 2023 13:13:35 +0530
-Message-ID: <CA+G9fYtSAX+aPUvUShSvb=LOAsQBEMfxRVAi0CJ-PD+SiQLPwg@mail.gmail.com>
-Subject: Re: [PATCH 6.5 000/112] 6.5.10-rc1 review
-To: Ron Economos <re@w6rz.net>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
-	conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/kDkZH0oq/bEChkj"
+Content-Disposition: inline
+In-Reply-To: <20231031220534.37730-1-tony.luck@intel.com>
+
+
+--/kDkZH0oq/bEChkj
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, 1 Nov 2023 at 04:21, Ron Economos <re@w6rz.net> wrote:
->
-> On 10/31/23 10:00 AM, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.5.10 release.
-> > There are 112 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Thu, 02 Nov 2023 16:58:38 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >       https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.5.10-rc1.gz
-> > or in the git tree and branch at:
-> >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.5.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
->
-> The build fails on RISC-V.
->
-> arch/riscv/mm/hugetlbpage.c: In function =E2=80=98set_huge_pte_at=E2=80=
-=99:
-> arch/riscv/mm/hugetlbpage.c:188:13: error: =E2=80=98sz=E2=80=99 undeclare=
-d (first use in
-> this function); did you mean =E2=80=98s8=E2=80=99?
->    188 |         if (sz >=3D PGDIR_SIZE)
->        |             ^~
->        |             s8
-> arch/riscv/mm/hugetlbpage.c:188:13: note: each undeclared identifier is
-> reported only once for each function it appears in
->
-> Caused by commit 16b6f77970f7a690c61de142511c9ac488d83e04
->
-> riscv: fix set_huge_pte_at() for NAPOT mappings when a swap entry is set
+On Tue, Oct 31, 2023 at 03:05:34PM -0700, Tony Luck wrote:
+> In a "W=3D1" build gcc throws a warning:
+>=20
+> arch/x86/kernel/cpu/resctrl/core.c: In function =E2=80=98cache_alloc_hsw_=
+probe=E2=80=99:
+> arch/x86/kernel/cpu/resctrl/core.c:139:16: warning: variable =E2=80=98h=
+=E2=80=99 set but not used
+>=20
+> Fix by switching from rdmsr() to rdmsrl() using a single u64 argument
+> for the MSR value instead of the pair of u32 for the high and low
+> halves.
+>=20
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+> This has been annoying me for a while as the only warning from the
+> resctrl code when building with W=3D1.
+>=20
+> N.B. compile tested only. I don't have a Haswell system to check this wor=
+ks.
+>=20
+>  arch/x86/kernel/cpu/resctrl/core.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/res=
+ctrl/core.c
+> index 19e0681f0435..4084131d391d 100644
+> --- a/arch/x86/kernel/cpu/resctrl/core.c
+> +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> @@ -136,15 +136,16 @@ static inline void cache_alloc_hsw_probe(void)
+>  {
+>  	struct rdt_hw_resource *hw_res =3D &rdt_resources_all[RDT_RESOURCE_L3];
+>  	struct rdt_resource *r  =3D &hw_res->r_resctrl;
+> -	u32 l, h, max_cbm =3D BIT_MASK(20) - 1;
+> +	u32 max_cbm =3D BIT_MASK(20) - 1;
+> +	u64 l3_cbm_0;
+> =20
+>  	if (wrmsr_safe(MSR_IA32_L3_CBM_BASE, max_cbm, 0))
+>  		return;
+> =20
+> -	rdmsr(MSR_IA32_L3_CBM_BASE, l, h);
+> +	rdmsrl(MSR_IA32_L3_CBM_BASE, l3_cbm_0);
+> =20
+>  	/* If all the bits were set in MSR, return success */
+> -	if (l !=3D max_cbm)
+> +	if (l3_cbm_0 !=3D max_cbm)
+>  		return;
+> =20
+>  	hw_res->num_closid =3D 4;
 
-The above build error was also noticed in our CI system.
+No noticeable regressions on my Acer Aspire E15 (the laptop uses Intel Core
+i3 Haswell), thanks!
 
-> This patch requires mainline commit 62ba41d2761206664a1fdc998051324457da2=
-dd6
->
-> mm: riscv: fix an unsafe pte read in huge_pte_alloc()
->
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-Following riscv builds failed as other reported.
-riscv:
-  * build/clang-nightly-defconfig
-  * build/clang-17-lkftconfig
-  * build/clang-17-defconfig
-  * build/gcc-13-defconfig
-  * build/gcc-13-lkftconfig
-  * build/gcc-8-defconfig
+--=20
+An old man doll... just what I always wanted! - Clara
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+--/kDkZH0oq/bEChkj
+Content-Type: application/pgp-signature; name="signature.asc"
 
---
-Linaro LKFT
-https://lkft.linaro.org
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZUIdqgAKCRD2uYlJVVFO
+o7upAQChP7LAJsVZ5cqzDRXlqbqiXTpUB/Z1skpOBG/2zdp9JQEArZ7+m7m+fKJv
++QWUOzcotSAdWID8x86Qxj8mNM+kuQc=
+=nlab
+-----END PGP SIGNATURE-----
+
+--/kDkZH0oq/bEChkj--
