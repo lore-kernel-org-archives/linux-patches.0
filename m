@@ -1,101 +1,79 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6B9643
-	for <patches@lists.linux.dev>; Wed,  1 Nov 2023 02:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AF110F2
+	for <patches@lists.linux.dev>; Wed,  1 Nov 2023 04:50:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W/U0MXmy"
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3b2ec5ee2e4so3814220b6e.3
-        for <patches@lists.linux.dev>; Tue, 31 Oct 2023 19:55:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DRpXkx8J"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-54357417e81so7750a12.0
+        for <patches@lists.linux.dev>; Tue, 31 Oct 2023 21:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698807354; x=1699412154; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=j0NzdQStEiGv9KFgnf7s7Dkfku/GDCcYtb+3dYJ4A6s=;
-        b=W/U0MXmyK3AotxCKBvlLLP93Zih2Q7dXPHKkxrCIJhNx1HLNWpUuozZlTv4mO9vtO1
-         TzdLbK9/qqNlph8fEzLI79BxNiy6FWl2qMGC68XG1SYaZo48MsG59hPIAA/cSdindExX
-         9oKi2iqtuznXKLjcfbMW6eSPcm048Gph0OZjnLZbwDg9vk4SS9g4ALRZ2mTXu4Z0Kurd
-         6+YOnzrUwbVYzcDzc9rIstMUS+jEP5t9ITm/IQdryi1O81vcqyUZKtVRU6FO+cAdvR4W
-         DVFM2736Gkzxjkou0trixJbOaXHW4Y/GVYXret0YrcPnTd+Q5l3E8nS7k00gGowBtGr9
-         cTzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698807354; x=1699412154;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1698814200; x=1699419000; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=j0NzdQStEiGv9KFgnf7s7Dkfku/GDCcYtb+3dYJ4A6s=;
-        b=YdTw6YdkWkIVQrN/y89H1RbHwqezjstA1gqMZfun13R5xth5z+lOEG5edmNARIveml
-         bEHZWzGABXO0vPdM0ReFMDfh+KUa1ndFS6UlYnbkZBlIVoo5zCf5d7pGmZQtBrXoCkg2
-         ZiXGBliabgfhqSvk99G5LlabnJbJIFpvtExLFuem11/H2R88n6BYF6Xps+c5i0odLffA
-         2e7L0t5ok2v8YLu9AZap8K3ucILW3BOshOE3QpwjpesxjqgMLkXI6RFu25mpEqDhOdtW
-         VziNtxbDJPLF7OfRev8atZIoZbPHcJV1Xb+8wzUT8PhdecAknCsY8PDUGmgrUflc2yja
-         JSLQ==
-X-Gm-Message-State: AOJu0Yz1R7aByq2tZRB6Q94CIsdz50CCKc5Dd8jsCqTJhppn1fwXXiTz
-	ePbG3UfWOLUzZPalAnVM+rs=
-X-Google-Smtp-Source: AGHT+IEStQwsggjPSVxZK7H5JCYfLs39GZqsiwnTtQ+CObQ6899CyJph8hU23Brat08VnMaMx09eYw==
-X-Received: by 2002:a05:6808:1491:b0:3b2:e9ab:68e6 with SMTP id e17-20020a056808149100b003b2e9ab68e6mr19602702oiw.0.1698807353830;
-        Tue, 31 Oct 2023 19:55:53 -0700 (PDT)
-Received: from debian.me ([103.131.18.64])
-        by smtp.gmail.com with ESMTPSA id t14-20020a056a00138e00b00692cb1224casm282776pfg.183.2023.10.31.19.55.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Oct 2023 19:55:53 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-	id ED3FE80A7352; Wed,  1 Nov 2023 09:55:50 +0700 (WIB)
-Date: Wed, 1 Nov 2023 09:55:50 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.5 000/112] 6.5.10-rc1 review
-Message-ID: <ZUG-NpRAuu4XwwM3@debian.me>
-References: <20231031165901.318222981@linuxfoundation.org>
+        bh=yhQrGrRiXOP6T/LjlMKW+7pqde7WtEKCtrVNN6uAKIY=;
+        b=DRpXkx8JScKsSSGLjQFH6n9rzl/ATh19a1qXpWjqQJHE2++Z530OhMCPRDgSZTmnFT
+         /oHIqQXb1Vz7+7jFE40NgpSYeISi5T7Zcei+7n54bW0o76T3sSwqlfVr1/h40VtCg/+D
+         /IkG1Rz2Q7+ZA9cF7S5rPdGBGI/BVQahtLNowRp3tcmQCL9qQOYAz9tVNo84iu0vNnJi
+         UHzanHWfBP9gtaPmKoEPjme7ugdnKaYFDK+dRa5/z3EdsNOqBnVJ4g7OIN+NrKhgEyK6
+         Fy/KNCknkZ324tGH38iVQ/l+q4Yr8YdM0O8C/p+jD+O0IC1BGHHJ0mNh0e3MDe9vDig7
+         AmGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698814200; x=1699419000;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yhQrGrRiXOP6T/LjlMKW+7pqde7WtEKCtrVNN6uAKIY=;
+        b=w6DPqJT++aebVcP+EKCo4vWohiKUkPkM5eVNqGw96jF2G6GolxwtSnLILp0h1lKiq1
+         QShoao0/DOiHZyKMMnHoffVP1k7LsU9Kx2epnUg0dqNwUbobm8YuLU8qOLFzJdqcN2z4
+         JNP+W6sUzcuhvC+RXq5hB2w+ReBTumsp1Ca4aPA8vCED/UzBe0qSktb2oF7RshhCbYKm
+         iH6k6yc1B4tAFOn2qg/9dE6kle72Gv8TL8z6xZHsQS4yxJ+YRhQyHzPsffL0BWQRLiBQ
+         cnsILAox4byx+TZw/q6lfsPhVWQTlq0VdHhjmT6E3Ijv7Du54vYWslbRxcicAZQEhO4J
+         Nx/A==
+X-Gm-Message-State: AOJu0Yxvj3MJ6uZIJwrCMA7PMuMWGun0efnCz9X5HsWq6Dp+S0xXaEpq
+	zOkGf/mwqdAMlJz5P/cLdSsiSRkgnmb+r3KzUl8T5w==
+X-Google-Smtp-Source: AGHT+IHxAeRmRNwusd8SDjsAoXM6juVtUd+PfRg+3YUq/OHZ9FhyQX9RugH2kSnb5B3Bir6sLB+JT2x3UIjYR1Fpsdk=
+X-Received: by 2002:a50:c04f:0:b0:542:d737:dc7e with SMTP id
+ u15-20020a50c04f000000b00542d737dc7emr258881edd.0.1698814199560; Tue, 31 Oct
+ 2023 21:49:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Vle9uzRdIeXCXV/5"
-Content-Disposition: inline
-In-Reply-To: <20231031165901.318222981@linuxfoundation.org>
-
-
---Vle9uzRdIeXCXV/5
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20231031-tcp-ao-fix-label-in-compound-statement-warning-v1-1-c9731d115f17@kernel.org>
+In-Reply-To: <20231031-tcp-ao-fix-label-in-compound-statement-warning-v1-1-c9731d115f17@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
+Date: Wed, 1 Nov 2023 05:49:45 +0100
+Message-ID: <CANn89i+YpJ+y23f=b0uByVJCqh1Rjau44vP-saRD60kFG7J4fw@mail.gmail.com>
+Subject: Re: [PATCH net] tcp: Fix -Wc23-extensions in tcp_options_write()
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: davem@davemloft.net, dsahern@kernel.org, kuba@kernel.org, 
+	pabeni@redhat.com, ndesaulniers@google.com, trix@redhat.com, 
+	0x7f454c46@gmail.com, fruggeri@arista.com, noureddine@arista.com, 
+	netdev@vger.kernel.org, linux-kernel@vger.kernel.org, llvm@lists.linux.dev, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 31, 2023 at 06:00:01PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.10 release.
-> There are 112 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
+On Tue, Oct 31, 2023 at 9:23=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
+g> wrote:
+>
+> Clang warns (or errors with CONFIG_WERROR=3Dy) when CONFIG_TCP_AO is set:
+>
+>   net/ipv4/tcp_output.c:663:2: error: label at end of compound statement =
+is a C23 extension [-Werror,-Wc23-extensions]
+>     663 |         }
+>         |         ^
+>   1 error generated.
+>
+> On earlier releases (such as clang-11, the current minimum supported
+> version for building the kernel) that do not support C23, this was a
+> hard error unconditionally:
 
-Successfully compiled and installed bindeb-pkgs on my computer (Acer
-Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---Vle9uzRdIeXCXV/5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZUG+MgAKCRD2uYlJVVFO
-o6baAQD20q0IJ4WDIRVrIyup95Hfba4bvyoyagAZDcgcE5O89wD/YaDzNu69EkY6
-BlW4dXfh2BCC8RntPiHO6JexD+7YHgY=
-=ntj6
------END PGP SIGNATURE-----
-
---Vle9uzRdIeXCXV/5--
+Reviewed-by: Eric Dumazet <edumazet@google.com>
