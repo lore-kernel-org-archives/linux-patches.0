@@ -1,179 +1,161 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2079.outbound.protection.outlook.com [40.107.243.79])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C38D7486
-	for <patches@lists.linux.dev>; Thu,  2 Nov 2023 13:02:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBC13C16;
+	Thu,  2 Nov 2023 15:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="0gVbQWRZ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ELFjWaQLeXuo9AZ0dtoyjpMaRgtt4yuHmaFOWXtAEL4RaruxTuMInaVkPAsaGERCOtt/TczdMPsvoCVPOSJm9WoamrVZPCHCHq9bgFTmrgnOf5a0K7N6vPQICKnlNwvMCmJ160C4JKhejAprAZAi3J2rqP5khGtn1VNVGeLaawRV/+UIo05D9HRkBxp/qtoDUSp6ZJmeVKRBfoSRN0Fh8vaWz1XhaZtW9WEjUZqVqZB/9ZfGkGn+sTluwEdxmI16bW6H+TlHVdr0Cj5Nym2z83aIivCY1vrqgp7nL5Zn3RG66VjLhC399+qG/IPKGGQGO9dEuogR3dlxaJ+PNbs28A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mWDPUv1ZypQC6SeMpVx2QV4qWPDizmY9M3Y6MyuJQWQ=;
- b=gnqkWtXD772qNbaUQOnC1g/ABpX6EthzqlgmvZbNMD6mXvVQj3/dRbWtRJgK9VC4p7MEryc7PUZ5PqAkyBx086oINKCkakllSx9wCUa1DAcsl1EEL6BoYZhg5JmSDdKO3MSxac7gUr3AfejJFgu3FmUWBnzUqhoy//NypmO+2F9W1fXVd+3gRVzQHB5uTE32yTt6cEjM2MHF2Sz3GMqQt2Eh+JcfPbEAv3VWI4RuPdplSpTbq077Btf//jj5qxldvZrepdjszfuQMQjdbJfVn2gUE+0Mtedq0kyxeYLGyXN91PB0jSz4jI4R5mT2E0RiaAMI45DGPV01MC38Mj/qOA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mWDPUv1ZypQC6SeMpVx2QV4qWPDizmY9M3Y6MyuJQWQ=;
- b=0gVbQWRZsp31cXzHeNR0Dc3TVVLR8S2lkoBPei5+rhg77HucHpUx8+Lq945ARykXE7YvbExcV6rIwMix8FhgFSGBF0FhPJrgq35CK8R3sA5ZCWGbtEo6/TclSnnZ+AaqIz31wBnDMJ48vQS1juj7m80m+LphjX/e1tzEpaFKeek=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
- by SA1PR12MB7173.namprd12.prod.outlook.com (2603:10b6:806:2b4::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6933.24; Thu, 2 Nov
- 2023 13:02:39 +0000
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::2ba5:fd62:f75e:cf66]) by MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::2ba5:fd62:f75e:cf66%4]) with mapi id 15.20.6954.021; Thu, 2 Nov 2023
- 13:02:39 +0000
-Message-ID: <79afcda4-507f-4439-9093-814a6f6b2926@amd.com>
-Date: Thu, 2 Nov 2023 08:02:36 -0500
-User-Agent: Mozilla Thunderbird
-Reply-To: babu.moger@amd.com
-Subject: Re: [PATCH v2] x86/resctrl: Fix unused variable warning in
- cache_alloc_hsw_probe()
-Content-Language: en-US
-To: Tony Luck <tony.luck@intel.com>
-Cc: "Yu, Fenghua" <fenghua.yu@intel.com>,
- "Chatre, Reinette" <reinette.chatre@intel.com>,
- Peter Newman <peternewman@google.com>, "x86@kernel.org" <x86@kernel.org>,
- Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse <james.morse@arm.com>,
- Jamie Iles <quic_jiles@quicinc.com>, Randy Dunlap <rdunlap@infradead.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "patches@lists.linux.dev" <patches@lists.linux.dev>
-References: <20231031220534.37730-1-tony.luck@intel.com>
- <d47235e0-7ecd-483e-82c3-78f13c77df67@amd.com>
- <SJ1PR11MB6083C14236AC0AFCB49DFB15FCA7A@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <9e6a979a-48db-4b25-884f-ac8d4c2bb078@amd.com>
- <ZULCd/TGJL9Dmncf@agluck-desk3>
-From: "Moger, Babu" <babu.moger@amd.com>
-In-Reply-To: <ZULCd/TGJL9Dmncf@agluck-desk3>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SA0PR11CA0123.namprd11.prod.outlook.com
- (2603:10b6:806:131::8) To MW3PR12MB4553.namprd12.prod.outlook.com
- (2603:10b6:303:2c::19)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qdf8tKnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3647FC433C7;
+	Thu,  2 Nov 2023 15:43:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1698939797;
+	bh=fmWkFw792BH84PRGV1BX0heQWqrdPlVNLaz2U+olMxA=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Qdf8tKnBk4lJRHSoNIR4vekMZEgbi3Cx+tzkmk3iij3FBMMO7jrhJkl1UOi0Uu73p
+	 u0nL75qceUwh/jjsXnsGCoLABvvrbxZsHPNRrdOzj3VxUlC0rXNG6TQVzhierjw32k
+	 FYkcF9pV42NzzOicEkOqSJIWQv4KCmYd5h466LY07ZbaEDR7DbtHiTBz61RlCYYPkC
+	 tiH7o4x3B+EZQM3PTuIDhkMMSGD32cuQjoJIwxCYMnz+1w6fswqmMbF0XGyV/LkX6F
+	 VBejvYTjGldZNGEGCLr/32mugLUNNJURM8lfexuOn06gtOsTMI2jYaPSJLk+AMWMR5
+	 1UGWWHQE72UtQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 02 Nov 2023 08:43:02 -0700
+Subject: [PATCH v2] LoongArch: Mark __percpu functions as always inline
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|SA1PR12MB7173:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3045687d-c022-45ae-d21c-08dbdba3fe02
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	8klCSHIvfOINBgtVMIz02aE7QPDhdHMNFcmbMTSR0hsVmjp+QQ9W2SDvzAVAtcMgj3SH/2nsrpjveO6vcbDEY5pABy9IPU2OwjcUcA51pG/D9HO4l3c+jcuASo72xXxMaq0x1mXHwBCK+5+pnl9BxvzoW4nmg4ym+fL77NjL1nPxYnpOoDR1g8/SY/9VP1Fth1FZEoxFq3T+qGa2BYM/7qXnAQyp3VvKCFES4O760QS81ApF1ZCoEGX6FZS2HG66u5lu4mF1zdhvVfyC7I/y1Vk0RfWzfra2oERtDqgIXe0qznNYC+4LjY8bAJYRDEBReMumCB8ui5XU6HJOQZ5J2GF+wgMMIs7f4keCMNH/l3aqT3hHMkZXYx+kvR/lLvqKE/KFiBPh3HCmMK1mOxMZI4gQuKW+rE4lGkrqWygg7ikSEibWiePwSwJm1G5N497DC0bxis0U1C4jrVqGbflamTEJCJ4q4CIXlr3Sy0EcXN1J6oB5VAtjGZnoQlgwGNnWD1TfvX/ZZEHgmjRXf92MUxdbMRTLxmSEHD+57B8/onFpCGsHNcdvqsUZ+M7IGLgZ4pgX/by80C/8GYfaTXQskGeRRgaqSYeXAdFFElzqDTOgdq7mMVye8ZLFiDK/q0iBZKUReHHcajUCR6UAeyBge2oaLRNhodi6z0Puh/KHBInxC4rP00jSAGehom97xiSS
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4553.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(376002)(136003)(346002)(396003)(366004)(230273577357003)(230173577357003)(230922051799003)(1800799009)(186009)(64100799003)(451199024)(6512007)(31686004)(2906002)(6666004)(6486002)(86362001)(36756003)(7416002)(3450700001)(8936002)(8676002)(4326008)(31696002)(53546011)(2616005)(6916009)(38100700002)(478600001)(54906003)(6506007)(66476007)(316002)(66556008)(41300700001)(5660300002)(83380400001)(66946007)(26005)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?M1dsQWVuM3lwRDVNNzBmeVo2TDN2VFFyY3lSN0hRQUI3R0ZmQ0tzaWRValF6?=
- =?utf-8?B?eFJMS250anN2STRuVXVINzZJVXVOVlQyV2RTMWJodC9QMy8ydWovL2FkdXQx?=
- =?utf-8?B?Z2FyMzhtU1BsbkxLUlozbFFUNDFVTHh1M3pONTNIMGkxQ1R4WWpadVFBRHlh?=
- =?utf-8?B?Z1hXM1IyNDRVTDdPUHkzYXVwZ1dzdU41TXE5WTZIQWVBR2tXTkhaZUVCVDZn?=
- =?utf-8?B?a3liYnJKSzZkZFNQZW1JQTBUckdVMENHeEFFVW92bFlFVG02VUlHZTIrMU1T?=
- =?utf-8?B?STNJSHIrKzRpcGxpN3ZuSlRhZEdJanZIenJTTWhvSDlteG84ays3MHNlOHU1?=
- =?utf-8?B?YVArR21nRmlQQWZHN3poMFQwc1VuTmZmczRUS2tRTGQ0MjRsV3BMVEZkQ2gz?=
- =?utf-8?B?VDhnVlBZZEoxS21oNFZqV2NRVWg3ZGxaRG5oK21RRHlHOUtWN2VZeHo0eUVG?=
- =?utf-8?B?eXhEOEVKTlBqQVlhV2hGeG1CMjNVZHNqRkZTZmlndVNjNk1NN1dtL3k3a0ZK?=
- =?utf-8?B?aDk3ZGlVVFZrNUF0and0K0NlRlQ3UGJuUG0rSGtZRHdVZTYxZlhkbnNKbFoy?=
- =?utf-8?B?Qkd5dTBWZHBua0JEQ0c5cnlVc1B5eFVDbUQvRGVuNkpER1h0ZjBQdldLNnY5?=
- =?utf-8?B?ZDZnQ1NiSU01RWFqdHhHbDFIWHJyNmFMNmx3ODl4RXcvU3Nrd3ltQXVZRHdE?=
- =?utf-8?B?LytzZHpjc3VINGZ1M2pCRFh5UWJGSDZIQW9hSGJLK3hqWXJHS1lpNTZPZzdj?=
- =?utf-8?B?TndxK0lSc2tmWnJNRHVUNW1nUXdxZW12d3NTQzZuUmUxeC9hcCtlQ1VJV1Jw?=
- =?utf-8?B?NDU3Zm5HTHFjd3REeDYyK3pFZDIzWFpvbXV5RWc5K1NaZkxnaURWRXd3bGlx?=
- =?utf-8?B?UjlqOEdhNjZneDlJTytVL1BQcVoralpjZnlEOFYwRXhGYkQzOUVqZmRaeTB3?=
- =?utf-8?B?anBIOGlJWVpoakJyM2hvNlNaRE5xTk9wR3c4T2M2aFB0c2FPMXlEWWFzK1py?=
- =?utf-8?B?OHhPWEt5NysrQXNIdWZTUGxsL3Q1RjExWHBUSzlSaFozQXdOVXhHNkFGVnZ3?=
- =?utf-8?B?WjJSOGhvZ3NpZkYzZDJBU0xrNVVSamdPcUZGemFhY3JNTmo3Tk1XZzIxTlZ0?=
- =?utf-8?B?QUowR2NtMlBZdkdsb3ZpVGFId21RK2IvdVFxQkVpLzdHY05hUTQyTVIwUUJu?=
- =?utf-8?B?REhscTNlYkl3cmdTTUtPOWdEWmppT0tFZFgzQU1aU1RIb1V3UzA2QlVORVAx?=
- =?utf-8?B?b3Q1V3VneHZBN2xxSnE4WEtUeFdmRDNYWFFNbWk2RkNaZklvbWpzcGl6eXY0?=
- =?utf-8?B?WGZrNDdHR3IzR1c0SFdzR1Fmb1NnUVJhVXlkNnlzM0xjbWFGSFFOVDU0LytM?=
- =?utf-8?B?dDU0M201KzRTb0pjeXBrNWl4QkdQR0lJbStYL1BjY0VjdU9vZDU3OXhxMm5x?=
- =?utf-8?B?SklpRmZNOU9NQnVqbjIybDFrQ2F6dWVacUhDV1F5MndFYms3NXhucVUyWitC?=
- =?utf-8?B?MVRqNFFFSjMzVENndVZpUEFOQUNRQmhQUUhkajg1OUs5QStpa2dXNHdNeE12?=
- =?utf-8?B?MmFTK1FkMEpDdlFHWFZUZFFsMjdEcGFoN3JleWxTK1JrcFJ2M2IyTjlwUW5I?=
- =?utf-8?B?Vm9hUEk5UG9ScjVuUDdmNzNZS1d4V1AwbkY0b3JLcFU3NGkxV1MwUjNQOFY0?=
- =?utf-8?B?cmE5NGkxQkR2aG1aMGJYMnp2TktxWFZOR2VnRzEyOFY3UnVsL0o5eWRMcVlL?=
- =?utf-8?B?U21aNWdFVlU5Vm9PTFJuYnBXMnN6SEk1VGFaRktYYldXd0o3TjU5UFc2UFVJ?=
- =?utf-8?B?SWFvYU9iSnU3dGR6b2hVUUVtS1Q1SmpWOHpTTm5WZjZUTndBU0hySkhEd2JR?=
- =?utf-8?B?UUR2UG53QlJIaHcrOVBNeEh6MGV6RjV5VXdHdGsvZExRUW1QbloxSFlnYjl5?=
- =?utf-8?B?cTNOTDB6WmJWckpZZUo0YWtCQkZkL2FyQlNJUFFaTTNYTjNNS29mTCs4S2xU?=
- =?utf-8?B?d01TaVhUeDVzejZ3TFNzM1hwQS9jdnBBa2YxbmVWN2ZGM0pwWDhETzhoK1Ra?=
- =?utf-8?B?WkdBSXlvYXVnVlNpRTJUK29KTXlBcVYwNE12TFQrMnR0dWV0d25jY2l5NmtQ?=
- =?utf-8?Q?VQFI=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3045687d-c022-45ae-d21c-08dbdba3fe02
-X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2023 13:02:39.2870
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TkbF5HeQacoWFFQXJ9OhmhEdnkch5wT0ToVSPkSiIV1iJYoRnudSzYMnJfvb2LXF
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7173
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231102-loongarch-always-inline-percpu-ops-v2-1-31c51959a5c0@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAIXDQ2UC/5WNQQ7CIBAAv2I4u6aLibSe/IfpAXFpNxIgi1abp
+ n8X+wOPM4eZRRUSpqLOu0UJTVw4xQp6v1NutHEg4HtlpRt9RGwQQkpxsOJGsOFt5wIcA0eCTOL
+ yC1Iu4LwxDk/YGvSqhrKQ5882ufaVRy7PJPP2nPBn/8pPCAi31mvqrEGju8uDJFI4JBlUv67rF
+ 4wAASXVAAAA
+To: chenhuacai@kernel.org, kernel@xen0n.name
+Cc: ndesaulniers@google.com, trix@redhat.com, jiaxun.yang@flygoat.com, 
+ loongarch@lists.linux.dev, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ stable@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4824; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=fmWkFw792BH84PRGV1BX0heQWqrdPlVNLaz2U+olMxA=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDKnOh6e+/3jg4MvoxhcRaeaKWZOmvs1WXfTrrVr4chmLf
+ CPe2cHHOkpZGMQ4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBE7p1jZNjUa8W5Z7p60IZ9
+ nmt0w5XaGlyetiTe5qwu1arr7LqwSJ6RYZ7y19o7+rnf1NdJifftrvidNuUjw8cLHikKf99sWLN
+ 9JSsA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Looks good.
+A recent change to the optimization pipeline in LLVM reveals some
+fragility around the inlining of LoongArch's __percpu functions, which
+manifests as a BUILD_BUG() failure:
 
-On 11/1/23 16:26, Tony Luck wrote:
-> In a "W=1" build gcc throws a warning:
-> 
-> arch/x86/kernel/cpu/resctrl/core.c: In function ‘cache_alloc_hsw_probe’:
-> arch/x86/kernel/cpu/resctrl/core.c:139:16: warning: variable ‘h’ set but not used
-> 
-> Fix by switching from wrmsr_safe() to wrmsrl_safe(), and from rdmsr()
-> to rdmsrl() using a single u64 argument for the MSR value instead of
-> the pair of u32 for the high and low halves.
-> 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
+  In file included from kernel/sched/build_policy.c:17:
+  In file included from include/linux/sched/cputime.h:5:
+  In file included from include/linux/sched/signal.h:5:
+  In file included from include/linux/rculist.h:11:
+  In file included from include/linux/rcupdate.h:26:
+  In file included from include/linux/irqflags.h:18:
+  arch/loongarch/include/asm/percpu.h:97:3: error: call to '__compiletime_assert_51' declared with 'error' attribute: BUILD_BUG failed
+     97 |                 BUILD_BUG();
+        |                 ^
+  include/linux/build_bug.h:59:21: note: expanded from macro 'BUILD_BUG'
+     59 | #define BUILD_BUG() BUILD_BUG_ON_MSG(1, "BUILD_BUG failed")
+        |                     ^
+  include/linux/build_bug.h:39:37: note: expanded from macro 'BUILD_BUG_ON_MSG'
+     39 | #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+        |                                     ^
+  include/linux/compiler_types.h:425:2: note: expanded from macro 'compiletime_assert'
+    425 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+        |         ^
+  include/linux/compiler_types.h:413:2: note: expanded from macro '_compiletime_assert'
+    413 |         __compiletime_assert(condition, msg, prefix, suffix)
+        |         ^
+  include/linux/compiler_types.h:406:4: note: expanded from macro '__compiletime_assert'
+    406 |                         prefix ## suffix();                             \
+        |                         ^
+  <scratch space>:86:1: note: expanded from here
+     86 | __compiletime_assert_51
+        | ^
+  1 error generated.
 
-Reviewed-by: Babu Moger <babu.moger@amd.com>
+If these functions are not inlined (which the compiler is free to do
+even with functions marked with the standard 'inline' keyword), the
+BUILD_BUG() in the default case cannot be eliminated since the compiler
+cannot prove it is never used, resulting in a build failure due to the
+error attribute.
 
-> ---
-> Changes since v1 (suggested by Babu)
-> 
-> Switch both the wrmsr() and rdmsr() to the 64-bit versions.
-> 
->  arch/x86/kernel/cpu/resctrl/core.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> index 19e0681f0435..d29ebe345de6 100644
-> --- a/arch/x86/kernel/cpu/resctrl/core.c
-> +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> @@ -136,15 +136,15 @@ static inline void cache_alloc_hsw_probe(void)
->  {
->  	struct rdt_hw_resource *hw_res = &rdt_resources_all[RDT_RESOURCE_L3];
->  	struct rdt_resource *r  = &hw_res->r_resctrl;
-> -	u32 l, h, max_cbm = BIT_MASK(20) - 1;
-> +	u64 max_cbm = BIT_ULL_MASK(20) - 1, l3_cbm_0;
->  
-> -	if (wrmsr_safe(MSR_IA32_L3_CBM_BASE, max_cbm, 0))
-> +	if (wrmsrl_safe(MSR_IA32_L3_CBM_BASE, max_cbm))
->  		return;
->  
-> -	rdmsr(MSR_IA32_L3_CBM_BASE, l, h);
-> +	rdmsrl(MSR_IA32_L3_CBM_BASE, l3_cbm_0);
->  
->  	/* If all the bits were set in MSR, return success */
-> -	if (l != max_cbm)
-> +	if (l3_cbm_0 != max_cbm)
->  		return;
->  
->  	hw_res->num_closid = 4;
+Mark these functions as __always_inline to guarantee inlining so that
+the BUILD_BUG() only triggers when the default case genuinely cannot be
+eliminated due to an unexpected size.
 
+Cc:  <stable@vger.kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1955
+Fixes: 46859ac8af52 ("LoongArch: Add multi-processor (SMP) support")
+Link: https://github.com/llvm/llvm-project/commit/1a2e77cf9e11dbf56b5720c607313a566eebb16e
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+Changes in v2:
+- Change 'inline' to __always_inline for all functions that contain
+  BUILD_BUG() (Huacai)
+- Notate that 'inline' does not guarantee inlining in the commit message
+  to further clarify the change to __always_inline.
+- Link to v1: https://lore.kernel.org/r/20231101-loongarch-always-inline-percpu-ops-v1-1-b8f2e9a71729@kernel.org
+---
+ arch/loongarch/include/asm/percpu.h | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/arch/loongarch/include/asm/percpu.h b/arch/loongarch/include/asm/percpu.h
+index b9f567e66016..313852fba845 100644
+--- a/arch/loongarch/include/asm/percpu.h
++++ b/arch/loongarch/include/asm/percpu.h
+@@ -32,7 +32,7 @@ static inline void set_my_cpu_offset(unsigned long off)
+ #define __my_cpu_offset __my_cpu_offset
+ 
+ #define PERCPU_OP(op, asm_op, c_op)					\
+-static inline unsigned long __percpu_##op(void *ptr,			\
++static __always_inline unsigned long __percpu_##op(void *ptr,		\
+ 			unsigned long val, int size)			\
+ {									\
+ 	unsigned long ret;						\
+@@ -63,7 +63,7 @@ PERCPU_OP(and, and, &)
+ PERCPU_OP(or, or, |)
+ #undef PERCPU_OP
+ 
+-static inline unsigned long __percpu_read(void *ptr, int size)
++static __always_inline unsigned long __percpu_read(void *ptr, int size)
+ {
+ 	unsigned long ret;
+ 
+@@ -100,7 +100,8 @@ static inline unsigned long __percpu_read(void *ptr, int size)
+ 	return ret;
+ }
+ 
+-static inline void __percpu_write(void *ptr, unsigned long val, int size)
++static __always_inline void __percpu_write(void *ptr, unsigned long val,
++					   int size)
+ {
+ 	switch (size) {
+ 	case 1:
+@@ -132,8 +133,8 @@ static inline void __percpu_write(void *ptr, unsigned long val, int size)
+ 	}
+ }
+ 
+-static inline unsigned long __percpu_xchg(void *ptr, unsigned long val,
+-						int size)
++static __always_inline unsigned long __percpu_xchg(void *ptr, unsigned long val,
++						   int size)
+ {
+ 	switch (size) {
+ 	case 1:
+
+---
+base-commit: 278be83601dd1725d4732241f066d528e160a39d
+change-id: 20231101-loongarch-always-inline-percpu-ops-cf77c161871f
+
+Best regards,
 -- 
-Thanks
-Babu Moger
+Nathan Chancellor <nathan@kernel.org>
+
