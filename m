@@ -1,109 +1,136 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC5018E3B
-	for <patches@lists.linux.dev>; Wed,  1 Nov 2023 21:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA57372
+	for <patches@lists.linux.dev>; Thu,  2 Nov 2023 00:41:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dabbelt.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dabbelt.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="griO7eMp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698873977; x=1730409977;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=W/tSw6Scof6Iowi5GgeffcVwE78iqgrLgeV/J7eZZQI=;
-  b=griO7eMpF5cxCy9ltVStBpzPF2mB1vmoZv+Z/MVuusupU7zT53OCpWjS
-   i6Y0sjK0LMpNojeOUIirzA/Y/6WPsW2dOrtdcsIGzwgF1td6hKjlhnurj
-   yRqbsfPCQ6S04UT5iaGf91geIlE/dcb2LFshSw+V9Mge1jh2BZ7QCVINT
-   Y+DxrZdKhJ9xxvhCpXcKgbqLrBx2fb9X2zCriqcCwjUn5yaKzook73ZTo
-   2TnTzIkvc+C2I876vF/hAmuTVSjnjXAB3yfgB6qpKpJAIKs+fSriY/Sf5
-   8Fs/ANZCWoULgrNcwthmoMyVG38sb2ds2OQHpjwOj8dCuHNICxxyCm6CD
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10881"; a="419699896"
-X-IronPort-AV: E=Sophos;i="6.03,269,1694761200"; 
-   d="scan'208";a="419699896"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2023 14:26:17 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10881"; a="764691693"
-X-IronPort-AV: E=Sophos;i="6.03,269,1694761200"; 
-   d="scan'208";a="764691693"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2023 14:26:16 -0700
-Date: Wed, 1 Nov 2023 14:26:15 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: "Moger, Babu" <babu.moger@amd.com>
-Cc: "Yu, Fenghua" <fenghua.yu@intel.com>,
-	"Chatre, Reinette" <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	"x86@kernel.org" <x86@kernel.org>,
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: [PATCH v2] x86/resctrl: Fix unused variable warning in
- cache_alloc_hsw_probe()
-Message-ID: <ZULCd/TGJL9Dmncf@agluck-desk3>
-References: <20231031220534.37730-1-tony.luck@intel.com>
- <d47235e0-7ecd-483e-82c3-78f13c77df67@amd.com>
- <SJ1PR11MB6083C14236AC0AFCB49DFB15FCA7A@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <9e6a979a-48db-4b25-884f-ac8d4c2bb078@amd.com>
+	dkim=pass (2048-bit key) header.d=dabbelt-com.20230601.gappssmtp.com header.i=@dabbelt-com.20230601.gappssmtp.com header.b="cC5Uu6py"
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-1dcfb2a3282so251568fac.2
+        for <patches@lists.linux.dev>; Wed, 01 Nov 2023 17:41:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dabbelt-com.20230601.gappssmtp.com; s=20230601; t=1698885671; x=1699490471; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:to:from:cc
+         :in-reply-to:subject:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PAmpgjdK8hmw86qRod49rM//sCJ8Bz8+YBV91rFwGG4=;
+        b=cC5Uu6pyHI3eA2hX+kMjdRZv9LXDsKgAJZxc4pYfJA+rK2lN1UeMv5OT8h1Vv23BED
+         M9dqgP0PAAxDLqusn9iMLFYUJBSelMBiqcjGUBiZ+b3CFxvv1pkEN/scFDVuyNY9rjiY
+         mChWkqlqCHdzEnPVi2gpviyuC8spAQ8kz80UJ5G33kBpeKRsGjB1cX2Dqmtva59TGdeC
+         gbHMGnaTjQyJY0pVJxiSqhuu0TobClpakNr/UUp7qXrDbzCgojtdsPq/oGs7XWv0pQHK
+         MbzGFcf+YyXErzGBzxwYAZ0tPITDxGiARehyqoh5koctrpex+k/L5cOQahXvUa5T5xQN
+         P0/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698885671; x=1699490471;
+        h=content-transfer-encoding:mime-version:message-id:to:from:cc
+         :in-reply-to:subject:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PAmpgjdK8hmw86qRod49rM//sCJ8Bz8+YBV91rFwGG4=;
+        b=dIWPJmZUUy4MkGzYiC5r7oerItK/8tvvLCRrc3ACUB8Cgkt9xjpW450JMzZYuGh9Wq
+         ZmuZIWNpib9NrDbVnjtAQncIDRXxvQ0gAQTCVdPlDiOriBIs/q0c8JDqm7wsBOsYeDXu
+         zMA4ZE25KH0qZ8wCGE6xkEUdzL5IXkq9wUAvW5fyCWUC7RIwltR1sp32jmxqdwzpskDI
+         gKRHaKk40ejFgZG7PiB2Zhsz2zz+yi4szRzNeqyYWNnioZF4j8VerpIC+pbkp/neQUAz
+         dJw1heZkvf+WH+eR4XgJ9JoYT1wIOt2byX0maO+LMdYnENauAvQx5RZmEPsbJr5yDGiY
+         /JYw==
+X-Gm-Message-State: AOJu0Yw3C+7IIelNGNCXCXueDIR2a3NXqPOIuCmYulYQNSClTVK9gtNS
+	E+pCi2faFlVNUZneadoF0QPFhg==
+X-Google-Smtp-Source: AGHT+IFFaftpgSzJhJuGLJNG/sHeW9v22Ui/IWzm0dd7hWk1pkaNfdav4oOzey1zsg3meE6Ku8MPMQ==
+X-Received: by 2002:a05:6871:528e:b0:1ea:6883:9a01 with SMTP id hu14-20020a056871528e00b001ea68839a01mr24276948oac.32.1698885670962;
+        Wed, 01 Nov 2023 17:41:10 -0700 (PDT)
+Received: from localhost ([12.44.203.122])
+        by smtp.gmail.com with ESMTPSA id s15-20020a63b40f000000b00588e8421fa8sm308240pgf.84.2023.11.01.17.41.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Nov 2023 17:41:10 -0700 (PDT)
+Date: Wed, 01 Nov 2023 17:41:10 -0700 (PDT)
+X-Google-Original-Date: Wed, 01 Nov 2023 17:31:33 PDT (-0700)
+Subject:     Re: [PATCH net] tcp: Fix -Wc23-extensions in tcp_options_write()
+In-Reply-To: <20231031-tcp-ao-fix-label-in-compound-statement-warning-v1-1-c9731d115f17@kernel.org>
+CC: edumazet@google.com, davem@davemloft.net, dsahern@kernel.org, kuba@kernel.org,
+  pabeni@redhat.com, ndesaulniers@google.com, trix@redhat.com, 0x7f454c46@gmail.com,
+  fruggeri@arista.com, noureddine@arista.com, netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+  llvm@lists.linux.dev, patches@lists.linux.dev, nathan@kernel.org
+From: Palmer Dabbelt <palmer@dabbelt.com>
+To: nathan@kernel.org
+Message-ID: <mhng-df0ad8f4-f79c-427c-9798-8682fca4f516@palmer-ri-x1c9a>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Mime-Version: 1.0 (MHng)
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <9e6a979a-48db-4b25-884f-ac8d4c2bb078@amd.com>
 
-In a "W=1" build gcc throws a warning:
+On Tue, 31 Oct 2023 13:23:35 PDT (-0700), nathan@kernel.org wrote:
+> Clang warns (or errors with CONFIG_WERROR=y) when CONFIG_TCP_AO is set:
+>
+>   net/ipv4/tcp_output.c:663:2: error: label at end of compound statement is a C23 extension [-Werror,-Wc23-extensions]
+>     663 |         }
+>         |         ^
+>   1 error generated.
+>
+> On earlier releases (such as clang-11, the current minimum supported
+> version for building the kernel) that do not support C23, this was a
+> hard error unconditionally:
+>
+>   net/ipv4/tcp_output.c:663:2: error: expected statement
+>           }
+>           ^
+>   1 error generated.
+>
+> Add a semicolon after the label to create an empty statement, which
+> resolves the warning or error for all compilers.
+>
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/1953
+> Fixes: 1e03d32bea8e ("net/tcp: Add TCP-AO sign to outgoing packets")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  net/ipv4/tcp_output.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+> index f558c054cf6e..6064895daece 100644
+> --- a/net/ipv4/tcp_output.c
+> +++ b/net/ipv4/tcp_output.c
+> @@ -658,7 +658,7 @@ static void tcp_options_write(struct tcphdr *th, struct tcp_sock *tp,
+>  			memset(ptr, TCPOPT_NOP, sizeof(*ptr));
+>  			ptr++;
+>  		}
+> -out_ao:
+> +out_ao:;
+>  #endif
+>  	}
+>  	if (unlikely(opts->mss)) {
+>
+> ---
+> base-commit: 55c900477f5b3897d9038446f72a281cae0efd86
+> change-id: 20231031-tcp-ao-fix-label-in-compound-statement-warning-ebd6c9978498
+>
+> Best regards,
 
-arch/x86/kernel/cpu/resctrl/core.c: In function ‘cache_alloc_hsw_probe’:
-arch/x86/kernel/cpu/resctrl/core.c:139:16: warning: variable ‘h’ set but not used
+This gives me a
 
-Fix by switching from wrmsr_safe() to wrmsrl_safe(), and from rdmsr()
-to rdmsrl() using a single u64 argument for the MSR value instead of
-the pair of u32 for the high and low halves.
+linux/net/ipv4/tcp_output.c:663:2: error: expected statement
+        }
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
-Changes since v1 (suggested by Babu)
+on GCC for me.  So I think something like
 
-Switch both the wrmsr() and rdmsr() to the 64-bit versions.
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index f558c054cf6e..ca09763acaa8 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -659,6 +659,11 @@ static void tcp_options_write(struct tcphdr *th, struct tcp_sock *tp,
+ 			ptr++;
+ 		}
+ out_ao:
++	/*
++	 * Labels at the end of compound statements are a C23 feature, so
++	 * introduce a block to avoid a warning/error on strict toolchains.
++	 */
++	{}
+ #endif
+ 	}
+ 	if (unlikely(opts->mss)) {
 
- arch/x86/kernel/cpu/resctrl/core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 19e0681f0435..d29ebe345de6 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -136,15 +136,15 @@ static inline void cache_alloc_hsw_probe(void)
- {
- 	struct rdt_hw_resource *hw_res = &rdt_resources_all[RDT_RESOURCE_L3];
- 	struct rdt_resource *r  = &hw_res->r_resctrl;
--	u32 l, h, max_cbm = BIT_MASK(20) - 1;
-+	u64 max_cbm = BIT_ULL_MASK(20) - 1, l3_cbm_0;
- 
--	if (wrmsr_safe(MSR_IA32_L3_CBM_BASE, max_cbm, 0))
-+	if (wrmsrl_safe(MSR_IA32_L3_CBM_BASE, max_cbm))
- 		return;
- 
--	rdmsr(MSR_IA32_L3_CBM_BASE, l, h);
-+	rdmsrl(MSR_IA32_L3_CBM_BASE, l3_cbm_0);
- 
- 	/* If all the bits were set in MSR, return success */
--	if (l != max_cbm)
-+	if (l3_cbm_0 != max_cbm)
- 		return;
- 
- 	hw_res->num_closid = 4;
--- 
-2.41.0
-
+should do it (though it's still build testing...)
