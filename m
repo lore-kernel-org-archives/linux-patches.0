@@ -1,107 +1,139 @@
-Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95AEBED8
-	for <patches@lists.linux.dev>; Thu,  2 Nov 2023 00:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0C3ED8;
+	Thu,  2 Nov 2023 01:07:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="l0tKnyoi"
-Received: from eig-obgw-6004a.ext.cloudfilter.net ([10.0.30.197])
-	by cmsmtp with ESMTPS
-	id xv66qGhehWcCIyLxuq1Li4; Thu, 02 Nov 2023 00:53:42 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id yLxtqDpcewasUyLxtqe4xQ; Thu, 02 Nov 2023 00:53:41 +0000
-X-Authority-Analysis: v=2.4 cv=ZpP+lv3G c=1 sm=1 tr=0 ts=6542f315
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=BNY50KLci1gA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=y1/A9KzQdZErrHAMekzb9r7zRRUmKRUgzgMl4Pu2QwE=; b=l0tKnyoiaPJ7Hf4Sd2IyQZ9EsG
-	0k2+Y6rJwD2bEdu6iUfnxidADRDV9jmmRTNhKadZmNrVARJoBP6Wgy2bEpk7bF3ZJDwKBSO7OEeDL
-	6tfTx4ydVG8K4E0PA8jViHPqMLGYGClzEzQGsNSnE0bANWpQ65gLih06cTHVzFRdoFzIGkij2QcUd
-	e/mAGE6Cqmxtd/wGN/xuc5V6DPeSc2dPxKhmMXtGz6e/dNxOmYWcK31q9dYDHpMcpKKpgEwubdCJV
-	DMGmUUs0DSj6sUsopBJ76YY1TsDGiXX0gF1qIq42xlOoeIuj7lpN/3m/WhsA1IQ1ITgLHTUmJ16qF
-	Z7sohtTw==;
-Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:53614 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1qyLxr-000Hj8-08;
-	Wed, 01 Nov 2023 18:53:39 -0600
-Subject: Re: [PATCH 6.5 000/111] 6.5.10-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20231101120147.190909952@linuxfoundation.org>
-In-Reply-To: <20231101120147.190909952@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <ed8a6a02-e9f7-0c03-2fa3-08f8f9956040@w6rz.net>
-Date: Wed, 1 Nov 2023 17:53:36 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eHlHp2PM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0DC4C433C8;
+	Thu,  2 Nov 2023 01:07:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1698887245;
+	bh=bt/lkt4dy1gi54m725q76c9DzTFRJyTNf0BQmwj5u4k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eHlHp2PMIvBUDVHR661JJDncqlkJTtIwaAU336jsUHR4qVZk+FTMK9am4VpDUDLiK
+	 18jdtk9x2GnYkK5wzz1V+/2ybMp7JfaUBU6sWRRrAGdnPFs1lFUWqvruiuwlqQM3EO
+	 M5gzBv4HlODQWcBpk7gEq171ZPxY4R1d6EVYWJd4GqnBSng+/k0b+3YDBkhFnrvkkP
+	 5ddGTgjfl93NJ9qXbIBgnAPMqKLCxAd39WXvugA4Dn9XBwSKio++tmfoQ2F3W8meJA
+	 3x1Lx+hCwzpMYYwP9YopRfhBfYWg9yxOcK0DvqfPfGSZZy/HLNMpi+KPIKxdLSGrRn
+	 F1ZcXRtYYjROA==
+Date: Wed, 1 Nov 2023 18:07:23 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: edumazet@google.com, davem@davemloft.net, dsahern@kernel.org,
+	kuba@kernel.org, pabeni@redhat.com, ndesaulniers@google.com,
+	trix@redhat.com, 0x7f454c46@gmail.com, fruggeri@arista.com,
+	noureddine@arista.com, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH net] tcp: Fix -Wc23-extensions in tcp_options_write()
+Message-ID: <20231102010723.GA406542@dev-arch.thelio-3990X>
+References: <20231031-tcp-ao-fix-label-in-compound-statement-warning-v1-1-c9731d115f17@kernel.org>
+ <mhng-df0ad8f4-f79c-427c-9798-8682fca4f516@palmer-ri-x1c9a>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 98.207.139.8
-X-Source-L: No
-X-Exim-ID: 1qyLxr-000Hj8-08
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:53614
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfPpT4KisgWqwnFZ4FJtIRZcgIUdiWU5/V75Luz2Ki7hSke0a7b9mI5F1AdFF8+0SHDPS9NMz50cMJuEQbF85pLI6kmL91QMBzScLZdUrNTQ+x1T8mPmq
- g00MnoIs0nAbL+cfyDyXNBJk8IEsBAycVs8zA3FcBeSIE3tw+c0jGLQ0ek86iwo43ihhZmCmoMZHhw==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <mhng-df0ad8f4-f79c-427c-9798-8682fca4f516@palmer-ri-x1c9a>
 
-On 11/1/23 5:03 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.10 release.
-> There are 111 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 03 Nov 2023 12:01:18 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.10-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Wed, Nov 01, 2023 at 05:41:10PM -0700, Palmer Dabbelt wrote:
+> On Tue, 31 Oct 2023 13:23:35 PDT (-0700), nathan@kernel.org wrote:
+> > Clang warns (or errors with CONFIG_WERROR=y) when CONFIG_TCP_AO is set:
+> > 
+> >   net/ipv4/tcp_output.c:663:2: error: label at end of compound statement is a C23 extension [-Werror,-Wc23-extensions]
+> >     663 |         }
+> >         |         ^
+> >   1 error generated.
+> > 
+> > On earlier releases (such as clang-11, the current minimum supported
+> > version for building the kernel) that do not support C23, this was a
+> > hard error unconditionally:
+> > 
+> >   net/ipv4/tcp_output.c:663:2: error: expected statement
+> >           }
+> >           ^
+> >   1 error generated.
+> > 
+> > Add a semicolon after the label to create an empty statement, which
+> > resolves the warning or error for all compilers.
+> > 
+> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1953
+> > Fixes: 1e03d32bea8e ("net/tcp: Add TCP-AO sign to outgoing packets")
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >  net/ipv4/tcp_output.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+> > index f558c054cf6e..6064895daece 100644
+> > --- a/net/ipv4/tcp_output.c
+> > +++ b/net/ipv4/tcp_output.c
+> > @@ -658,7 +658,7 @@ static void tcp_options_write(struct tcphdr *th, struct tcp_sock *tp,
+> >  			memset(ptr, TCPOPT_NOP, sizeof(*ptr));
+> >  			ptr++;
+> >  		}
+> > -out_ao:
+> > +out_ao:;
+> >  #endif
+> >  	}
+> >  	if (unlikely(opts->mss)) {
+> > 
+> > ---
+> > base-commit: 55c900477f5b3897d9038446f72a281cae0efd86
+> > change-id: 20231031-tcp-ao-fix-label-in-compound-statement-warning-ebd6c9978498
+> > 
+> > Best regards,
+> 
+> This gives me a
+> 
+> linux/net/ipv4/tcp_output.c:663:2: error: expected statement
+>        }
+> 
+> on GCC for me.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+What GCC version?
 
-Tested-by: Ron Economos <re@w6rz.net>
+I cannot reproduce that error with my patch applied. I tested mainline
+at commit deefd5024f07 ("Merge tag 'vfio-v6.7-rc1' of
+https://github.com/awilliam/linux-vfio") using GCC 6 from kernel.org and
+I can reproduce a similar failure with ARCH=x86_64 allyesconfig:
 
+  net/ipv4/tcp_output.c: In function 'tcp_options_write':
+  net/ipv4/tcp_output.c:661:1: error: label at end of compound statement
+   out_ao:
+   ^~~~~~
+
+With this change applied, the error disappears for GCC 6 and GCC 13
+continues to build without error. I can try the other supported versions
+later, I just did an older and newer one for a quick test.
+
+> So I think something like
+> 
+> diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+> index f558c054cf6e..ca09763acaa8 100644
+> --- a/net/ipv4/tcp_output.c
+> +++ b/net/ipv4/tcp_output.c
+> @@ -659,6 +659,11 @@ static void tcp_options_write(struct tcphdr *th, struct tcp_sock *tp,
+> 			ptr++;
+> 		}
+> out_ao:
+> +	/*
+> +	 * Labels at the end of compound statements are a C23 feature, so
+> +	 * introduce a block to avoid a warning/error on strict toolchains.
+> +	 */
+> +	{}
+> #endif
+> 	}
+> 	if (unlikely(opts->mss)) {
+> 
+> should do it (though it's still build testing...)
+
+I am not opposed to this once we understand what versions are affected
+by this so that we have some timeline of removing this workaround.
+
+Cheers,
+Nathan
