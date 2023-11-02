@@ -1,166 +1,140 @@
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2065.outbound.protection.outlook.com [40.107.101.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AC16FD5
-	for <patches@lists.linux.dev>; Thu,  2 Nov 2023 08:19:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE44611713
+	for <patches@lists.linux.dev>; Thu,  2 Nov 2023 09:29:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="JN4nEjT0"
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 99EA13F17D
-	for <patches@lists.linux.dev>; Thu,  2 Nov 2023 08:19:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1698913156;
-	bh=xOlOPXtFC14sPmMq/gNPsGSMRG8MAsaEPYDXA9iMskI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=JN4nEjT00TjHbWBdeSMPl3Ql3f9ZqUB6r5tqDGexxWoWyVmO13JcbaMuLtNcBz/NB
-	 +ckNBAM/7DLnRetfsKfKVe4xm8zN62gWtB7aDLaIHty1MjDDTaJPi52Nc36NMk/u9A
-	 1gGYdvkfsiJ+LIQidhqvlr1CZDwlvvx7h+I+pjMPooYt0vBg28J4go5cUmUt9SImrQ
-	 qTHUSPMWBTZDgikN/cVsrKcAjmuONqWz2lfuluM6CRdcrCx+RzUOmwCg4cVvf7cEKG
-	 7EkwBMEEG4fyr3MLQ5iFRH4Aigs0Q1zU2+05uixXmnhVBr+Ee9gD1Ad6qA1RqM+9Pj
-	 DO409ITyPYgWQ==
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-9be601277c2so41496966b.2
-        for <patches@lists.linux.dev>; Thu, 02 Nov 2023 01:19:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698913156; x=1699517956;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xOlOPXtFC14sPmMq/gNPsGSMRG8MAsaEPYDXA9iMskI=;
-        b=JcfdZzS6VNqyyESTejHlGcwQ4rb3c3U9ggjAHaTF4simhyI3879+/dURP/LG/HztCY
-         L/VjHv54B0glofQCOnHK6WP21B97S3AymyMZfecvstPv8XSwALs27dQEmA2jDs8Qf2IC
-         R5shXoO6vkyQ2NXcrdsJ+CotxirfRFlnQlhnuYEZHIxeRmp9P2wq9zYQXL69BsPB9+H0
-         r7kVa8wevQ4Ykos96BaZx6my19Cr49hGgd25yZAweNYK6w5d5WeNCCaNGcGts7qbgVqB
-         DgjjkLbomKfc9cxe2eUOSgzxAVXhGLQFo3Z4QTvlec4c2xrJwYZ8VQvBclHsHTxmp93D
-         WEig==
-X-Gm-Message-State: AOJu0YxqJ4+I/XVrkhwg8UegErhRikc+Vs01Qnx2yim+e6xyPEBPYvBc
-	D+AVrN8qHF2YXG0L4C2hfA6ISHzkWMJzX3Df95OpDcdwG5MnRZS1+88AiKgW/bejxeva6W9xpE3
-	mR4w8v11Wboj1i24SbzyDxsNaUIDe3+RDUOU=
-X-Received: by 2002:a17:906:1915:b0:9bd:a73a:7a0a with SMTP id a21-20020a170906191500b009bda73a7a0amr2841639eje.58.1698913156310;
-        Thu, 02 Nov 2023 01:19:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEHH7IwIDgeKMPODTE0ZBXQTLEF6du+DVJY7/Nuswo3vcdrTQrgwmSzdl0XspVexrQnCQ+rxQ==
-X-Received: by 2002:a17:906:1915:b0:9bd:a73a:7a0a with SMTP id a21-20020a170906191500b009bda73a7a0amr2841622eje.58.1698913155904;
-        Thu, 02 Nov 2023 01:19:15 -0700 (PDT)
-Received: from localhost (host-79-33-130-95.retail.telecomitalia.it. [79.33.130.95])
-        by smtp.gmail.com with ESMTPSA id pv21-20020a170907209500b0099c53c4407dsm824959ejb.78.2023.11.02.01.19.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Nov 2023 01:19:15 -0700 (PDT)
-Date: Thu, 2 Nov 2023 09:19:14 +0100
-From: Andrea Righi <andrea.righi@canonical.com>
-To: Luis Chamberlain <mcgrof@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Cc: linux-modules@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, keescook@chromium.org,
-	zhumao001@208suo.com, yangtiezhu@loongson.cn, ojeda@kernel.org
-Subject: Re: [GIT PULL] Modules changes for v6.7-rc1
-Message-ID: <ZUNbgnCEXC92GLZm@gpd>
-References: <ZUKxT1CL9/0Dn6NE@bombadil.infradead.org>
- <CAHk-=whFXNYXG2ES8HdoaMC=O4bakMXGZezmoqA3SXwn4xJUPQ@mail.gmail.com>
- <CAHk-=wi=goCaTm6ZOKzm_ztky9ZT-vuGDWv39vVdtQT+oW=zEg@mail.gmail.com>
- <ZUNPy/sMRxdo+o2w@gpd>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Jm1Y99jD"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=YetczJZ0sISt192FeDe3g9hX5rcXz7aSzfoVN7jG4BBW7CD4SnSsJghSmy4HEkAxF569udeHb5HnVIH14KELyO3BypivQtxmknf72o5XjIt9ynxs1TtPsywTtrSUCp3hsQHQx0AwNW9wrxDB3s9++wz85lLHzXebGs1+Wr3iM8qCcSnlSJTuD6/x4ieNLiG83FWRm6Y1IyWRIkwoRg+0N2wj7qp1o8LLJnrNe1wGEkwM73UIrL+SPWBeJYwDgw1L8w02gf/D8PBQZ7kTWIenGNQYENoKVxz478/FJUFgK24XquXoFvI6ysB7sZ5Of8csOevjlomqVxT6yytW4bIXNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=MOUIrVhZjEwKTHZvHPMIoZXgF5DMs2fZ9izxhQA+1Oo=;
+ b=lSZ17gpYbOrBtq4IEabjGyennQhXhAE2Y6XcrSEvF/6UISqtyJzLtwGS18tg7FaRBDVwb1iMvv+FGmb5dVTBy0qRIRvl318MHY1jMuE9Hnn5+p5/tyqnqam9EDL+UbpTOWFA1dI4fZGNPyV3C44y35cl16k5yxxtIZJmXiAC64blDXZv+xfc9rQ070nCuUfs9yS93iqa12+5Sdxfy+YX7Zn+KuVQL6/EM7JpJnnQtPUlR1SaJrHrEPAdaWhxDLmvRM/fuKOvLkozCFx+uNMbd6VkHzGQbErV/b3RcxzkEn9D0bT31YnJGfY5F7ugEUNWkclHRVmK1Mb8xmYP/pS50Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MOUIrVhZjEwKTHZvHPMIoZXgF5DMs2fZ9izxhQA+1Oo=;
+ b=Jm1Y99jDubyNokgYdxaD2QnNqc/bBz95gA81dEWmAiWuVFt/P9gmzb5BEmo5TQsVtczpdCFamvsFXYDNPMIjh6ZQ605jhCOqCSks/l35Ueo5aNy4L0439172PJyhc36c3mvCEmALyvMhRuGCwZRqinanhXG4XJPC0xyolz0HnaUwX3EbxQ4k3RsgNI6esARgoS0e8CRNHjxYnLNgn1N51ENcVsLvcE0/rT8Fx5yAn24ALL3FAL1/T7NPEbPoya0+gb1ZJpP6Lkx219LCp5QS3nRlMe4OTvXNb6gKTnF7DmSqrQLaL8jbyT05ZHJX5PG26eQXTy7iudzHK+mt+XZ9uA==
+Received: from MN2PR16CA0044.namprd16.prod.outlook.com (2603:10b6:208:234::13)
+ by SA3PR12MB8762.namprd12.prod.outlook.com (2603:10b6:806:31f::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.21; Thu, 2 Nov
+ 2023 09:29:21 +0000
+Received: from BL02EPF0001A104.namprd05.prod.outlook.com
+ (2603:10b6:208:234:cafe::a7) by MN2PR16CA0044.outlook.office365.com
+ (2603:10b6:208:234::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.21 via Frontend
+ Transport; Thu, 2 Nov 2023 09:29:21 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ BL02EPF0001A104.mail.protection.outlook.com (10.167.241.135) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6954.19 via Frontend Transport; Thu, 2 Nov 2023 09:29:20 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 2 Nov 2023
+ 02:29:06 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Thu, 2 Nov 2023 02:29:06 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
+ Transport; Thu, 2 Nov 2023 02:29:06 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
+	<stable@vger.kernel.org>
+Subject: Re: [PATCH 6.5 000/111] 6.5.10-rc2 review
+In-Reply-To: <20231101120147.190909952@linuxfoundation.org>
+References: <20231101120147.190909952@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZUNPy/sMRxdo+o2w@gpd>
+Message-ID: <0e14c74a-0d85-404a-b2df-689d8e877769@drhqmail201.nvidia.com>
+Date: Thu, 2 Nov 2023 02:29:06 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A104:EE_|SA3PR12MB8762:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9c12ee80-a1c2-4245-e102-08dbdb8631c5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	It3/ehIjxu5iJs93KT7SoTsyQHCId/iNnaMuLNusyrtLlwK3eEfRxwTFAHZ+uc7AGRpo0XqIaH3RBKPZvOcfS6KM26Vz7OAvS1BiY46MgXa0RF/IAxs0jaG2KzjjAsZ3Q28sAg8omdHtLGDNWLkni99IR7PEueN9fV4uu2flEo6+JJKFpVAZc1Y18GoCHwZ6S6YvXm/wh7/yk+DiUG+MCmtZ9sIQiQA3C1IRlz8H9OON8Bc8cGBjvwI5D2uvaafpxAGLOzyj/IWAu+4j3eYkOeMyGgxztlPT3V56uT5QClyN8JUcnm9EKDz39ao2GlPVgSftjsoZw/xmaVqDvuWTnZQZeHxqLnC0KRkGAja+d4/RwF4U4CiEjyNez0xP89sBUHmm8K4V24JubUIKOPUvE3vTNdPW0xTABBcjeqSPC8lJnZwEjaKXJDHTOmXjKBpDcUw9c00k2u/00LJ5eJw38SfmieqomsGHIWBJrNhALqO+LXr0jKnrrutcU1yvuJ2gEPk/kCvTPXHZUTRaBNYlDjgw31PJ/OxmEzraw9dGRvCc2JlkkYBaqQHDFxWhIq5T6Cv8LVOJ+w2WtNP5gk26Q54mF7pIDw/YYE75bYxfJ0qoOWhphShz7B3Qpx1x9ChTSB/8EopgNFx0MQpnr7IyFfyM+zNXx9CvqoqAQFqOzuIqDuEod2oo3feXlB63pS1m8A7p8ukL2APbA2u/BsG1hxzxh/TM9JyBDMwwZYTU/BNs3p3ZLGCieMBkk2B9rzN7D/pJSoqupJti6U//81xgnz/SIXN1bvp+gJO23xjNTTQ=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(39860400002)(396003)(376002)(346002)(136003)(230922051799003)(64100799003)(451199024)(1800799009)(82310400011)(186009)(46966006)(40470700004)(36840700001)(966005)(31686004)(54906003)(5660300002)(70206006)(8676002)(70586007)(8936002)(316002)(6916009)(4326008)(2906002)(7416002)(478600001)(40480700001)(40460700003)(41300700001)(26005)(36860700001)(426003)(336012)(82740400003)(31696002)(86362001)(47076005)(356005)(7636003);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2023 09:29:20.8334
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9c12ee80-a1c2-4245-e102-08dbdb8631c5
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL02EPF0001A104.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB8762
 
-On Thu, Nov 02, 2023 at 08:29:17AM +0100, Andrea Righi wrote:
-> On Wed, Nov 01, 2023 at 09:21:09PM -1000, Linus Torvalds wrote:
-> > On Wed, 1 Nov 2023 at 21:02, Linus Torvalds
-> > <torvalds@linux-foundation.org> wrote:
-> > >
-> > > kmalloc() isn't just about "use physically contiguous allocations".
-> > > It's also more memory-efficient, and a *lot* faster than vmalloc(),
-> > > which has to play VM tricks.
-> > 
-> > I've pulled this, but I think you should do something like the
-> > attached (UNTESTED!) patch.
-> > 
-> >                 Linus
+On Wed, 01 Nov 2023 13:03:25 +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.5.10 release.
+> There are 111 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Looks good to me, I'll give it a try ASAP.
+> Responses should be made by Fri, 03 Nov 2023 12:01:18 +0000.
+> Anything received after that time might be too late.
 > 
-> -Andrea
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.10-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Just tested this both with zstd and gzip module compression, all good.
+All tests passing for Tegra ...
 
-You can add my:
+Test results for stable-v6.5:
+    10 builds:	10 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    116 tests:	116 pass, 0 fail
 
-Tested-by: Andrea Righi <andrea.righi@canonical.com>
+Linux version:	6.5.10-rc2-gb4d7fa7ca278
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-Or if you need a proper paperwork:
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
---
-
-From: Andrea Righi <andrea.righi@canonical.com>
-Subject: [PATCH] module/decompress: use kvmalloc() consistently
-
-We consistently switched from kmalloc() to vmalloc() in module
-decompression to prevent potential memory allocation failures with large
-modules, however vmalloc() is not as memory-efficient and fast as
-kmalloc().
-
-Since we don't know in general the size of the workspace required by the
-decompression algorithm, it is more reasonable to use kvmalloc()
-consistently, also considering that we don't have special memory
-requirements here.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Tested-by: Andrea Righi <andrea.righi@canonical.com>
-Signed-off-by: Andrea Righi <andrea.righi@canonical.com>
----
- kernel/module/decompress.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/kernel/module/decompress.c b/kernel/module/decompress.c
-index 4156d59be440..474e68f0f063 100644
---- a/kernel/module/decompress.c
-+++ b/kernel/module/decompress.c
-@@ -100,7 +100,7 @@ static ssize_t module_gzip_decompress(struct load_info *info,
- 	s.next_in = buf + gzip_hdr_len;
- 	s.avail_in = size - gzip_hdr_len;
- 
--	s.workspace = vmalloc(zlib_inflate_workspacesize());
-+	s.workspace = kvmalloc(zlib_inflate_workspacesize(), GFP_KERNEL);
- 	if (!s.workspace)
- 		return -ENOMEM;
- 
-@@ -138,7 +138,7 @@ static ssize_t module_gzip_decompress(struct load_info *info,
- out_inflate_end:
- 	zlib_inflateEnd(&s);
- out:
--	vfree(s.workspace);
-+	kvfree(s.workspace);
- 	return retval;
- }
- #elif defined(CONFIG_MODULE_COMPRESS_XZ)
-@@ -241,7 +241,7 @@ static ssize_t module_zstd_decompress(struct load_info *info,
- 	}
- 
- 	wksp_size = zstd_dstream_workspace_bound(header.windowSize);
--	wksp = vmalloc(wksp_size);
-+	wksp = kvmalloc(wksp_size, GFP_KERNEL);
- 	if (!wksp) {
- 		retval = -ENOMEM;
- 		goto out;
-@@ -284,7 +284,7 @@ static ssize_t module_zstd_decompress(struct load_info *info,
- 	retval = new_size;
- 
-  out:
--	vfree(wksp);
-+	kvfree(wksp);
- 	return retval;
- }
- #else
--- 
-2.40.1
-
+Jon
