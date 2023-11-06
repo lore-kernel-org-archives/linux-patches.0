@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77D220B09
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AB020B09
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdzua9+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5081BC433CA;
-	Mon,  6 Nov 2023 13:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7EVc/4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CC2C433C9;
+	Mon,  6 Nov 2023 13:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276981;
-	bh=HIWL0vMCD0juI6tob85avYzVwO+TfFrx3efd7S7f/ko=;
+	s=korg; t=1699276984;
+	bh=0omnNeCbJsm96omzs3CTnl8wdAnNaHX2QZoFEIZnnRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xdzua9+yJqlwPLFrpWFMGztiEAyt1dTd2bby7XJEUJOdW8DAItXlT+yRvrHx/P+AS
-	 T+vO39JI36b0+97656zLJO9v0SPSHbBdqe7kYx50OdsPrJHQ79DCnX0t7AGXl/nCnK
-	 xtjFt8qs4hQeOM357e2avVh60wVdI2z+4AM2Yylk=
+	b=x7EVc/4MHwEAkEudbEgMMbLLKZ1ZBDOglr7Ys/K31COIaJImEWeU8vp97WgY2/Hi/
+	 B1zfAg7qhXbNzG9ctqZSAhv5dx9s393P2a79MSddFkKQ9p1cU8Dga0gZJoj6u7V4h0
+	 2/sCi+qtMw85tJLLYZ4XXRlR+IsYD7iJQ8oPiSCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cameron Williams <cang1@live.co.uk>
-Subject: [PATCH 5.4 72/74] tty: 8250: Add support for additional Brainboxes UC cards
-Date: Mon,  6 Nov 2023 14:04:32 +0100
-Message-ID: <20231106130304.158526271@linuxfoundation.org>
+Subject: [PATCH 5.4 73/74] tty: 8250: Add support for Brainboxes UP cards
+Date: Mon,  6 Nov 2023 14:04:33 +0100
+Message-ID: <20231106130304.196556823@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
 References: <20231106130301.687882731@linuxfoundation.org>
@@ -42,120 +42,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Cameron Williams <cang1@live.co.uk>
 
-commit c563db486db7d245c0e2f319443417ae8e692f7f upstream.
+commit 2c6fec1e1532f15350be7e14ba6b88a39d289fe4 upstream.
 
-Add device IDs for some more Brainboxes UC cards, namely
-UC-235/UC-246, UC-253/UC-734, UC-302, UC-313, UC-346, UC-357,
-UC-607 and UC-836.
+Add support for the Brainboxes UP (powered PCI) range of
+cards, namely UP-189, UP-200, UP-869 and UP-880.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Link: https://lore.kernel.org/r/DU0PR02MB789969998A6C3FAFCD95C85DC4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
+Link: https://lore.kernel.org/r/DU0PR02MB7899B5B59FF3D8587E88C117C4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |   57 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
+ drivers/tty/serial/8250/8250_pci.c |   60 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
 
 --- a/drivers/tty/serial/8250/8250_pci.c
 +++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -5131,6 +5131,17 @@ static const struct pci_device_id serial
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
- 		pbn_b2_1_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0AA2,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_1_115200 },
-+	/*
-+	 * Brainboxes UC-253/UC-734
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0CA1,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
- 	/*
- 	 * Brainboxes UC-260/271/701/756
- 	 */
-@@ -5163,6 +5174,14 @@ static const struct pci_device_id serial
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
- 		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x08E2,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x08E3,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
- 	/*
- 	 * Brainboxes UC-310
- 	 */
-@@ -5173,6 +5192,14 @@ static const struct pci_device_id serial
- 	/*
- 	 * Brainboxes UC-313
- 	 */
-+	{       PCI_VENDOR_ID_INTASHIELD, 0x08A1,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{       PCI_VENDOR_ID_INTASHIELD, 0x08A2,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
- 	{       PCI_VENDOR_ID_INTASHIELD, 0x08A3,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
-@@ -5187,6 +5214,10 @@ static const struct pci_device_id serial
- 	/*
- 	 * Brainboxes UC-346
- 	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0B01,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_4_115200 },
- 	{	PCI_VENDOR_ID_INTASHIELD, 0x0B02,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
-@@ -5198,6 +5229,10 @@ static const struct pci_device_id serial
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
- 		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0A82,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
- 	{	PCI_VENDOR_ID_INTASHIELD, 0x0A83,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
-@@ -5216,6 +5251,28 @@ static const struct pci_device_id serial
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
+@@ -5154,6 +5154,66 @@ static const struct pci_device_id serial
+ 		PCI_CLASS_COMMUNICATION_MULTISERIAL << 8, 0xffff00,
  		pbn_b2_4_115200 },
-+	/*
-+	 * Brainboxes UC-607
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x09A1,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x09A2,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x09A3,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	/*
-+	 * Brainboxes UC-836
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0D41,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_4_115200 },
  	/*
- 	 * Perle PCI-RAS cards
++	 * Brainboxes UP-189
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0AC1,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0AC2,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0AC3,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	/*
++	 * Brainboxes UP-200
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0B21,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0B22,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0B23,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	/*
++	 * Brainboxes UP-869
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C01,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C02,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C03,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	/*
++	 * Brainboxes UP-880
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C21,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C22,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C23,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	/*
+ 	 * Brainboxes UC-268
  	 */
+ 	{       PCI_VENDOR_ID_INTASHIELD, 0x0841,
 
 
