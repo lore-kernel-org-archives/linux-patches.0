@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709DF23747
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BED123747
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZpMQ0pB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32D3C433C8;
-	Mon,  6 Nov 2023 13:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vAMJZACO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC773C433C8;
+	Mon,  6 Nov 2023 13:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277028;
-	bh=NSBCYlLIO4/wuHmR6ricTtsOSvrYCaxsXSUGJBAVs9E=;
+	s=korg; t=1699277031;
+	bh=3tPkQp3sH/mvAi8sxHAL7KaxYOYWTyntzb/MXwn/WzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AZpMQ0pBl0uZM/DCGsBotyGTj3/epODFsK2KFWTjJYXeOayYnPoc91+vcJZZ0N7fl
-	 KhHiiU5VBTx618Ceb8MjFcT2t60RWwqNvS4tF08c9MIzWbIGDAuM75Pnf255RYfmf2
-	 YZabWuOyEuVrhu4NhvuYOifNpzfgbliDLjnnBMdk=
+	b=vAMJZACO1aNHOD0DMI9a7VNvdwdr3KkrJTtJhYRTObW4ilBKUCsmwmXE66oahRrIn
+	 TkSnq2evXFDd88nz6ZFXoM1gojCeofRYt6Ho9snvUFwNGXUSJErfEOS6xgyxmsPqlv
+	 2us3WvR0OKbt5ao2KBbBq/ZDnetLFFKW3wT1NWgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 5.15 014/128] nfsd: lock_rename() needs both directories to live on the same fs
-Date: Mon,  6 Nov 2023 14:02:54 +0100
-Message-ID: <20231106130309.764619005@linuxfoundation.org>
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 5.15 015/128] drm/i915/pmu: Check if pmu is closed before stopping event
+Date: Mon,  6 Nov 2023 14:02:55 +0100
+Message-ID: <20231106130309.816471000@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,51 +43,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
 
-commit 1aee9158bc978f91701c5992e395efbc6da2de3c upstream.
+commit 4cbed7702eb775cca22fff6827a549092cb59f61 upstream.
 
-... checking that after lock_rename() is too late.  Incidentally,
-NFSv2 had no nfserr_xdev...
+When the driver unbinds, pmu is unregistered and i915->uabi_engines is
+set to RB_ROOT. Due to this, when i915 PMU tries to stop the engine
+events, it issues a warn_on because engine lookup fails.
 
-Fixes: aa387d6ce153 "nfsd: fix EXDEV checking in rename"
-Cc: stable@vger.kernel.org # v3.9+
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
-Tested-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+All perf hooks are taking care of this using a pmu->closed flag that is
+set when PMU unregisters. The stop event seems to have been left out.
+
+Check for pmu->closed in pmu_event_stop as well.
+
+Based on discussion here -
+https://patchwork.freedesktop.org/patch/492079/?series=105790&rev=2
+
+v2: s/is/if/ in commit title
+v3: Add fixes tag and cc stable
+
+Cc: <stable@vger.kernel.org> # v5.11+
+Fixes: b00bccb3f0bb ("drm/i915/pmu: Handle PCI unbind")
+Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231020152441.3764850-1-umesh.nerlige.ramappa@intel.com
+(cherry picked from commit 31f6a06f0c543b43a38fab10f39e5fc45ad62aa2)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/i915_pmu.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -1762,6 +1762,12 @@ nfsd_rename(struct svc_rqst *rqstp, stru
- 	if (!flen || isdotent(fname, flen) || !tlen || isdotent(tname, tlen))
- 		goto out;
+--- a/drivers/gpu/drm/i915/i915_pmu.c
++++ b/drivers/gpu/drm/i915/i915_pmu.c
+@@ -761,9 +761,18 @@ static void i915_pmu_event_start(struct
  
-+	err = (rqstp->rq_vers == 2) ? nfserr_acces : nfserr_xdev;
-+	if (ffhp->fh_export->ex_path.mnt != tfhp->fh_export->ex_path.mnt)
-+		goto out;
-+	if (ffhp->fh_export->ex_path.dentry != tfhp->fh_export->ex_path.dentry)
+ static void i915_pmu_event_stop(struct perf_event *event, int flags)
+ {
++	struct drm_i915_private *i915 =
++		container_of(event->pmu, typeof(*i915), pmu.base);
++	struct i915_pmu *pmu = &i915->pmu;
++
++	if (pmu->closed)
 +		goto out;
 +
- retry:
- 	host_err = fh_want_write(ffhp);
- 	if (host_err) {
-@@ -1796,12 +1802,6 @@ retry:
- 	if (ndentry == trap)
- 		goto out_dput_new;
+ 	if (flags & PERF_EF_UPDATE)
+ 		i915_pmu_event_read(event);
+ 	i915_pmu_disable(event);
++
++out:
+ 	event->hw.state = PERF_HES_STOPPED;
+ }
  
--	host_err = -EXDEV;
--	if (ffhp->fh_export->ex_path.mnt != tfhp->fh_export->ex_path.mnt)
--		goto out_dput_new;
--	if (ffhp->fh_export->ex_path.dentry != tfhp->fh_export->ex_path.dentry)
--		goto out_dput_new;
--
- 	if ((ndentry->d_sb->s_export_op->flags & EXPORT_OP_CLOSE_BEFORE_UNLINK) &&
- 	    nfsd_has_cached_files(ndentry)) {
- 		close_cached = true;
 
 
