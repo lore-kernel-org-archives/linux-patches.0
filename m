@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1BA208C0
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A521208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uiTf355"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC582C433C9;
-	Mon,  6 Nov 2023 13:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7iMF1+8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA23C433C9;
+	Mon,  6 Nov 2023 13:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276757;
-	bh=mJpb9rnxGppv9TQxA0xuRzXea0iceEYToht9h1La4IQ=;
+	s=korg; t=1699276760;
+	bh=FBnzIl7+ciMGdOZd6TkQVlhKw75gOo1HCfgsQzekWR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0uiTf355/+f3FxIuxyFCQJ9z6tLZTvreExuHIBTkl5PasL9CtOCgtSAAk9Z6s9SEm
-	 3wIBwr8V7x+vSpUxHyxiqRCmEfHLvswbSsBhU8V9pgpHUMX8yi6JryYEgLbK5HYUfK
-	 lNUcgYowRtigrJNFqKSlfwwIT043043qYMXRchFs=
+	b=F7iMF1+8VlREV7Ku4AhmkhD4Ty4IunbutVpW2lc5Y+7smMtqcUyKc/9E0O38Hzb5W
+	 ec+tPgECBzE9IPjFt83++k0PPjUqEJZ/kSFPjvK+jeNp19v5OPyATSlw223s/j1f7S
+	 mkuxwZQh2A5EKJq5jnaUTP9bWOeKpmEBEcYgYcYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Richard Purdie <richard.purdie@linuxfoundation.org>,
-	Bruce Ashfield <bruce.ashfield@gmail.com>,
-	Mikko Rapeli <mikko.rapeli@linaro.org>,
-	Paul Gortmaker <paul.gortmaker@windriver.com>,
-	Randy MacLeod <randy.macleod@windriver.com>,
-	Tony Lindgren <tony@atomide.com>
-Subject: [PATCH 6.5 86/88] serial: core: Fix runtime PM handling for pending tx
-Date: Mon,  6 Nov 2023 14:04:20 +0100
-Message-ID: <20231106130308.979479321@linuxfoundation.org>
+	Mark Hasemeyer <markhas@chromium.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.5 87/88] ALSA: hda: intel-dsp-config: Fix JSL Chromebook quirk detection
+Date: Mon,  6 Nov 2023 14:04:21 +0100
+Message-ID: <20231106130309.029384279@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -46,43 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Mark Hasemeyer <markhas@chromium.org>
 
-commit 6f699743aebf07538e506a46c5965eb8bdd2c716 upstream.
+commit 7c05b44e1a50d9cbfc4f731dddc436a24ddc129a upstream.
 
-Richard reported that a serial port may end up sometimes with tx data
-pending in the buffer for long periods of time.
+Some Jasperlake Chromebooks overwrite the system vendor DMI value to the
+name of the OEM that manufactured the device. This breaks Chromebook
+quirk detection as it expects the system vendor to be "Google".
 
-Turns out we bail out early on any errors from pm_runtime_get(),
-including -EINPROGRESS. To fix the issue, we need to ignore -EINPROGRESS
-as we only care about the runtime PM usage count at this point. We check
-for an active runtime PM state later on for tx.
+Add another quirk detection entry that looks for "Google" in the BIOS
+version.
 
-Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
-Cc: stable <stable@kernel.org>
-Reported-by: Richard Purdie <richard.purdie@linuxfoundation.org>
-Cc: Bruce Ashfield <bruce.ashfield@gmail.com>
-Cc: Mikko Rapeli <mikko.rapeli@linaro.org>
-Cc: Paul Gortmaker <paul.gortmaker@windriver.com>
-Cc: Randy MacLeod <randy.macleod@windriver.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Tested-by: Richard Purdie <richard.purdie@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20231023074856.61896-1-tony@atomide.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Mark Hasemeyer <markhas@chromium.org>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20231018235944.1860717-1-markhas@chromium.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/intel-dsp-config.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -147,7 +147,7 @@ static void __uart_start(struct tty_stru
- 
- 	/* Increment the runtime PM usage count for the active check below */
- 	err = pm_runtime_get(&port_dev->dev);
--	if (err < 0) {
-+	if (err < 0 && err != -EINPROGRESS) {
- 		pm_runtime_put_noidle(&port_dev->dev);
- 		return;
- 	}
+--- a/sound/hda/intel-dsp-config.c
++++ b/sound/hda/intel-dsp-config.c
+@@ -343,6 +343,12 @@ static const struct config_entry config_
+ 					DMI_MATCH(DMI_SYS_VENDOR, "Google"),
+ 				}
+ 			},
++			{
++				.ident = "Google firmware",
++				.matches = {
++					DMI_MATCH(DMI_BIOS_VERSION, "Google"),
++				}
++			},
+ 			{}
+ 		}
+ 	},
 
 
