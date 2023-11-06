@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E113179A6
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9879B179A6
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nPUY/Pws"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B5BC433C9;
-	Mon,  6 Nov 2023 13:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vM6OZkus"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFCCC433CB;
+	Mon,  6 Nov 2023 13:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277177;
-	bh=BG9j/aQ5GJk3K0nMT65oQ+/qc0815touKeukFvwlpz4=;
+	s=korg; t=1699277180;
+	bh=gouSndlmGQXDDItnshoszdchlw14vbM3VvgPAxc+txM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nPUY/Pws2HsyuHQ4yn18lyrKBcqjZj326AEVIl9cfLTrU22UR5N9uK09BOd93tqix
-	 oHYlEec74YJuN3MVPKHN+7ZsV8DGF/e8/8x0yojh+XM8gHlL85lA0M30VJMujt8ruD
-	 TMK4Wpzva9Jp9xMuP9sqK2FL54A/1dpffZg9AqSk=
+	b=vM6OZkusxgcIc+C3T+Mbze3d+hmuMb5L8cfzYOsluC+gET8YqUEEUiUHct1i/uxmM
+	 QRwfIbKcFZjijZ7ltY3odSMbG2yJgp2QsJRMA/aEwd467LTH31hjyC4CCwk7IZVk0z
+	 MwMSavUG5gJCw9fFCjGlRgnn5oFMX3ZqBxB53kew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fred Chen <fred.chenchen03@gmail.com>,
-	Neal Cardwell <ncardwell@google.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Mateusz Palczewski <mateusz.palczewski@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/128] tcp: fix wrong RTO timeout when received SACK reneging
-Date: Mon,  6 Nov 2023 14:03:15 +0100
-Message-ID: <20231106130310.721032733@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 5.15 026/128] igb: Fix potential memory leak in igb_add_ethtool_nfc_entry
+Date: Mon,  6 Nov 2023 14:03:06 +0100
+Message-ID: <20231106130310.312723522@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -43,94 +45,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fred Chen <fred.chenchen03@gmail.com>
+From: Mateusz Palczewski <mateusz.palczewski@intel.com>
 
-[ Upstream commit d2a0fc372aca561556e765d0a9ec365c7c12f0ad ]
+[ Upstream commit 8c0b48e01daba5ca58f939a8425855d3f4f2ed14 ]
 
-This commit fix wrong RTO timeout when received SACK reneging.
+Add check for return of igb_update_ethtool_nfc_entry so that in case
+of any potential errors the memory alocated for input will be freed.
 
-When an ACK arrived pointing to a SACK reneging, tcp_check_sack_reneging()
-will rearm the RTO timer for min(1/2*srtt, 10ms) into to the future.
-
-But since the commit 62d9f1a6945b ("tcp: fix TLP timer not set when
-CA_STATE changes from DISORDER to OPEN") merged, the tcp_set_xmit_timer()
-is moved after tcp_fastretrans_alert()(which do the SACK reneging check),
-so the RTO timeout will be overwrited by tcp_set_xmit_timer() with
-icsk_rto instead of 1/2*srtt.
-
-Here is a packetdrill script to check this bug:
-0     socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
-+0    bind(3, ..., ...) = 0
-+0    listen(3, 1) = 0
-
-// simulate srtt to 100ms
-+0    < S 0:0(0) win 32792 <mss 1000, sackOK,nop,nop,nop,wscale 7>
-+0    > S. 0:0(0) ack 1 <mss 1460,nop,nop,sackOK,nop,wscale 7>
-+.1    < . 1:1(0) ack 1 win 1024
-
-+0    accept(3, ..., ...) = 4
-
-+0    write(4, ..., 10000) = 10000
-+0    > P. 1:10001(10000) ack 1
-
-// inject sack
-+.1    < . 1:1(0) ack 1 win 257 <sack 1001:10001,nop,nop>
-+0    > . 1:1001(1000) ack 1
-
-// inject sack reneging
-+.1    < . 1:1(0) ack 1001 win 257 <sack 9001:10001,nop,nop>
-
-// we expect rto fired in 1/2*srtt (50ms)
-+.05    > . 1001:2001(1000) ack 1
-
-This fix remove the FLAG_SET_XMIT_TIMER from ack_flag when
-tcp_check_sack_reneging() set RTO timer with 1/2*srtt to avoid
-being overwrited later.
-
-Fixes: 62d9f1a6945b ("tcp: fix TLP timer not set when CA_STATE changes from DISORDER to OPEN")
-Signed-off-by: Fred Chen <fred.chenchen03@gmail.com>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Tested-by: Neal Cardwell <ncardwell@google.com>
+Fixes: 0e71def25281 ("igb: add support of RX network flow classification")
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_ethtool.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index d1e431ad5f619..8e4b42d394bed 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -2195,16 +2195,17 @@ void tcp_enter_loss(struct sock *sk)
-  * restore sanity to the SACK scoreboard. If the apparent reneging
-  * persists until this RTO then we'll clear the SACK scoreboard.
-  */
--static bool tcp_check_sack_reneging(struct sock *sk, int flag)
-+static bool tcp_check_sack_reneging(struct sock *sk, int *ack_flag)
- {
--	if (flag & FLAG_SACK_RENEGING &&
--	    flag & FLAG_SND_UNA_ADVANCED) {
-+	if (*ack_flag & FLAG_SACK_RENEGING &&
-+	    *ack_flag & FLAG_SND_UNA_ADVANCED) {
- 		struct tcp_sock *tp = tcp_sk(sk);
- 		unsigned long delay = max(usecs_to_jiffies(tp->srtt_us >> 4),
- 					  msecs_to_jiffies(10));
+diff --git a/drivers/net/ethernet/intel/igb/igb_ethtool.c b/drivers/net/ethernet/intel/igb/igb_ethtool.c
+index b2f46004a3d0f..39c7bdf8c0e2d 100644
+--- a/drivers/net/ethernet/intel/igb/igb_ethtool.c
++++ b/drivers/net/ethernet/intel/igb/igb_ethtool.c
+@@ -2974,11 +2974,15 @@ static int igb_add_ethtool_nfc_entry(struct igb_adapter *adapter,
+ 	if (err)
+ 		goto err_out_w_lock;
  
- 		inet_csk_reset_xmit_timer(sk, ICSK_TIME_RETRANS,
- 					  delay, TCP_RTO_MAX);
-+		*ack_flag &= ~FLAG_SET_XMIT_TIMER;
- 		return true;
- 	}
- 	return false;
-@@ -2974,7 +2975,7 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
- 		tp->prior_ssthresh = 0;
+-	igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
++	err = igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
++	if (err)
++		goto err_out_input_filter;
  
- 	/* B. In all the states check for reneging SACKs. */
--	if (tcp_check_sack_reneging(sk, flag))
-+	if (tcp_check_sack_reneging(sk, ack_flag))
- 		return;
+ 	spin_unlock(&adapter->nfc_lock);
+ 	return 0;
  
- 	/* C. Check consistency of the current state. */
++err_out_input_filter:
++	igb_erase_filter(adapter, input);
+ err_out_w_lock:
+ 	spin_unlock(&adapter->nfc_lock);
+ err_out:
 -- 
 2.42.0
 
