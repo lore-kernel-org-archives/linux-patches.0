@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383BC22F1B
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7955A241FC
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvnjUW3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30DBC433C8;
-	Mon,  6 Nov 2023 13:30:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQhM1Rvl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DB1C433C9;
+	Mon,  6 Nov 2023 13:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277454;
-	bh=GN2yaOJ252AZllo9ZyRLBQq4SWBYypjvnuO70ZZuGOM=;
+	s=korg; t=1699277457;
+	bh=TT2tFTdY0mMaZwb5FVUOLW4Mt1N7wKj5Vs1BM69N3gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TvnjUW3u9GWZV0KuM1FS4KRJAf4Vm2GzPHpeTI5vPDSVOUVFqWPw69jxwfRUFyAvQ
-	 4bOhpor4jVmhME8aCFBcMq+1Po60G0HOvEAHdQKcm4OiZySIyCuUmOlNDwXT7Bj1g8
-	 FQZWTLll0t05J3MWOzSOYugJAOygdo6mEi18d6Xc=
+	b=UQhM1RvlmP1m7JVAELrScpkUPSXUIDDClPkQ7wI4IJ2DR0PCFbKVYZJ72sLCSWz6q
+	 WhXbXyTrJxo2t5YxZSIV3HGkCH6cHN1nAaqAnsLLa0nsGerEcCxab8xBXMxR31BDlu
+	 c6JkNXCzoK1+LaLihiGCc1DC6I7+9lTJd940lEZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 5.10 07/95] mmc: renesas_sdhi: use custom mask for TMIO_MASK_ALL
-Date: Mon,  6 Nov 2023 14:03:35 +0100
-Message-ID: <20231106130304.963166478@linuxfoundation.org>
+	Lukasz Majczak <lma@semihalf.com>,
+	Radoslaw Biernacki <rad@chromium.org>,
+	Manasi Navare <navaremanasi@chromium.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 08/95] drm/dp_mst: Fix NULL deref in get_mst_branch_device_by_guid_helper()
+Date: Mon,  6 Nov 2023 14:03:36 +0100
+Message-ID: <20231106130305.006138465@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -43,57 +43,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Lukasz Majczak <lma@semihalf.com>
 
-commit 9f12cac1bb88e3296990e760d867a98308d6b0ac upstream.
+[ Upstream commit 3d887d512494d678b17c57b835c32f4e48d34f26 ]
 
-Populate the new member for custom mask values to make sure this value
-is applied whenever needed. Also, rename the define holding the value
-because this is not only about initialization anymore.
+As drm_dp_get_mst_branch_device_by_guid() is called from
+drm_dp_get_mst_branch_device_by_guid(), mstb parameter has to be checked,
+otherwise NULL dereference may occur in the call to
+the memcpy() and cause following:
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://lore.kernel.org/r/20210304092903.8534-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-[geert: Backport to v5.10.199]
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[12579.365869] BUG: kernel NULL pointer dereference, address: 0000000000000049
+[12579.365878] #PF: supervisor read access in kernel mode
+[12579.365880] #PF: error_code(0x0000) - not-present page
+[12579.365882] PGD 0 P4D 0
+[12579.365887] Oops: 0000 [#1] PREEMPT SMP NOPTI
+...
+[12579.365895] Workqueue: events_long drm_dp_mst_up_req_work
+[12579.365899] RIP: 0010:memcmp+0xb/0x29
+[12579.365921] Call Trace:
+[12579.365927] get_mst_branch_device_by_guid_helper+0x22/0x64
+[12579.365930] drm_dp_mst_up_req_work+0x137/0x416
+[12579.365933] process_one_work+0x1d0/0x419
+[12579.365935] worker_thread+0x11a/0x289
+[12579.365938] kthread+0x13e/0x14f
+[12579.365941] ? process_one_work+0x419/0x419
+[12579.365943] ? kthread_blkcg+0x31/0x31
+[12579.365946] ret_from_fork+0x1f/0x30
+
+As get_mst_branch_device_by_guid_helper() is recursive, moving condition
+to the first line allow to remove a similar one for step over of NULL elements
+inside a loop.
+
+Fixes: 5e93b8208d3c ("drm/dp/mst: move GUID storage from mgr, port to only mst branch")
+Cc: <stable@vger.kernel.org> # 4.14+
+Signed-off-by: Lukasz Majczak <lma@semihalf.com>
+Reviewed-by: Radoslaw Biernacki <rad@chromium.org>
+Signed-off-by: Manasi Navare <navaremanasi@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230922063410.23626-1-lma@semihalf.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/renesas_sdhi_core.c |    3 ++-
- drivers/mmc/host/tmio_mmc.h          |    2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_dp_mst_topology.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/host/renesas_sdhi_core.c
-+++ b/drivers/mmc/host/renesas_sdhi_core.c
-@@ -571,7 +571,7 @@ static void renesas_sdhi_reset(struct tm
+diff --git a/drivers/gpu/drm/drm_dp_mst_topology.c b/drivers/gpu/drm/drm_dp_mst_topology.c
+index b5e15933cb5f4..27305f3398819 100644
+--- a/drivers/gpu/drm/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/drm_dp_mst_topology.c
+@@ -2612,14 +2612,14 @@ static struct drm_dp_mst_branch *get_mst_branch_device_by_guid_helper(
+ 	struct drm_dp_mst_branch *found_mstb;
+ 	struct drm_dp_mst_port *port;
  
- 	if (host->pdata->flags & TMIO_MMC_MIN_RCAR2)
- 		sd_ctrl_write32_as_16_and_16(host, CTL_IRQ_MASK,
--					     TMIO_MASK_INIT_RCAR2);
-+					     TMIO_MASK_ALL_RCAR2);
- }
++	if (!mstb)
++		return NULL;
++
+ 	if (memcmp(mstb->guid, guid, 16) == 0)
+ 		return mstb;
  
- #define SH_MOBILE_SDHI_MIN_TAP_ROW 3
-@@ -1012,6 +1012,7 @@ int renesas_sdhi_probe(struct platform_d
- 		host->ops.start_signal_voltage_switch =
- 			renesas_sdhi_start_signal_voltage_switch;
- 		host->sdcard_irq_setbit_mask = TMIO_STAT_ALWAYS_SET_27;
-+		host->sdcard_irq_mask_all = TMIO_MASK_ALL_RCAR2;
- 		host->reset = renesas_sdhi_reset;
- 	} else {
- 		host->sdcard_irq_mask_all = TMIO_MASK_ALL;
---- a/drivers/mmc/host/tmio_mmc.h
-+++ b/drivers/mmc/host/tmio_mmc.h
-@@ -97,8 +97,8 @@
  
- /* Define some IRQ masks */
- /* This is the mask used at reset by the chip */
--#define TMIO_MASK_INIT_RCAR2	0x8b7f031d /* Initial value for R-Car Gen2+ */
- #define TMIO_MASK_ALL           0x837f031d
-+#define TMIO_MASK_ALL_RCAR2	0x8b7f031d
- #define TMIO_MASK_READOP  (TMIO_STAT_RXRDY | TMIO_STAT_DATAEND)
- #define TMIO_MASK_WRITEOP (TMIO_STAT_TXRQ | TMIO_STAT_DATAEND)
- #define TMIO_MASK_CMD     (TMIO_STAT_CMDRESPEND | TMIO_STAT_CMDTIMEOUT | \
+ 	list_for_each_entry(port, &mstb->ports, next) {
+-		if (!port->mstb)
+-			continue;
+-
+ 		found_mstb = get_mst_branch_device_by_guid_helper(port->mstb, guid);
+ 
+ 		if (found_mstb)
+-- 
+2.42.0
+
 
 
