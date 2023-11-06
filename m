@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED942374A
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04F22374A
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzC8zTb0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5586AC433C9;
-	Mon,  6 Nov 2023 13:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjbR0uld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A770C433C8;
+	Mon,  6 Nov 2023 13:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277594;
-	bh=lKeE7RgWYM7QcHDy36kaFXIc8ojYmeRVWhiCaPOcVW8=;
+	s=korg; t=1699277597;
+	bh=8+KEwUoGSlKHb+LMC0JxvtLMaMOy8GtVKehbzU+7xfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzC8zTb0oSmrlXYaAb98vOBGxOXNmyPtKhxdjqu9GxPEvKtfLCkwMeealEwyP89u4
-	 xSSxkSBonlxBsncTgWWmbP7fYu/m/PU/4jsbE0xO3MYg/B5QDvKAc5yNKa3yzADz0b
-	 qCF1b+PabFYKfsLbOGwm/EmmXMV49jfkZykPnjOs=
+	b=SjbR0uldiot4lhblmIwhg7WhCEl33/fNmBjNmxhANXE1H/46gTehbBGxsFma9bzL+
+	 g7zYNeeCJa7ULN+3RBXZsA3tr25ZWK32yZb2JhitGGZUumIJgVBK0NBvf32TK12/Op
+	 RID45dLIJvQHwe2J/cSuGlNCv5keQGI/kCCP+6us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liming Sun <limings@nvidia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Su Hui <suhui@nfschina.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 72/95] platform/mellanox: mlxbf-tmfifo: Fix a warning message
-Date: Mon,  6 Nov 2023 14:04:40 +0100
-Message-ID: <20231106130307.337161700@linuxfoundation.org>
+Subject: [PATCH 5.10 73/95] net: chelsio: cxgb4: add an error code check in t4_load_phy_fw
+Date: Mon,  6 Nov 2023 14:04:41 +0100
+Message-ID: <20231106130307.380817793@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -42,63 +42,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liming Sun <limings@nvidia.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 99c09c985e5973c8f0ad976ebae069548dd86f12 ]
+[ Upstream commit 9f771493da935299c6393ad3563b581255d01a37 ]
 
-This commit fixes the smatch static checker warning in function
-mlxbf_tmfifo_rxtx_word() which complains data not initialized at
-line 634 when IS_VRING_DROP() is TRUE.
+t4_set_params_timeout() can return -EINVAL if failed, add check
+for this.
 
-Signed-off-by: Liming Sun <limings@nvidia.com>
-Link: https://lore.kernel.org/r/20231012230235.219861-1-limings@nvidia.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/chelsio/cxgb4/t4_hw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index 194f3205e5597..767f4406e55f1 100644
---- a/drivers/platform/mellanox/mlxbf-tmfifo.c
-+++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -588,24 +588,25 @@ static void mlxbf_tmfifo_rxtx_word(struct mlxbf_tmfifo_vring *vring,
+diff --git a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
+index 964ea3491b80b..7e8a8ea6d8f7d 100644
+--- a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
++++ b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
+@@ -3846,6 +3846,8 @@ int t4_load_phy_fw(struct adapter *adap, int win,
+ 		 FW_PARAMS_PARAM_Z_V(FW_PARAMS_PARAM_DEV_PHYFW_DOWNLOAD));
+ 	ret = t4_set_params_timeout(adap, adap->mbox, adap->pf, 0, 1,
+ 				    &param, &val, 30000);
++	if (ret)
++		return ret;
  
- 	if (vring->cur_len + sizeof(u64) <= len) {
- 		/* The whole word. */
--		if (!IS_VRING_DROP(vring)) {
--			if (is_rx)
-+		if (is_rx) {
-+			if (!IS_VRING_DROP(vring))
- 				memcpy(addr + vring->cur_len, &data,
- 				       sizeof(u64));
--			else
--				memcpy(&data, addr + vring->cur_len,
--				       sizeof(u64));
-+		} else {
-+			memcpy(&data, addr + vring->cur_len,
-+			       sizeof(u64));
- 		}
- 		vring->cur_len += sizeof(u64);
- 	} else {
- 		/* Leftover bytes. */
--		if (!IS_VRING_DROP(vring)) {
--			if (is_rx)
-+		if (is_rx) {
-+			if (!IS_VRING_DROP(vring))
- 				memcpy(addr + vring->cur_len, &data,
- 				       len - vring->cur_len);
--			else
--				memcpy(&data, addr + vring->cur_len,
--				       len - vring->cur_len);
-+		} else {
-+			data = 0;
-+			memcpy(&data, addr + vring->cur_len,
-+			       len - vring->cur_len);
- 		}
- 		vring->cur_len = len;
- 	}
+ 	/* If we have version number support, then check to see that the new
+ 	 * firmware got loaded properly.
 -- 
 2.42.0
 
