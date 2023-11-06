@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE66F23763
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B622323763
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J1OLEa9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B000C433C7;
-	Mon,  6 Nov 2023 13:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKZeYJPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30460C433C8;
+	Mon,  6 Nov 2023 13:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277465;
-	bh=lCMdZUx/KkwcV1XFyEXmBd9wc/vYnclCSwShSPg35Jg=;
+	s=korg; t=1699277468;
+	bh=D+TY+m+MYIWzhvOBcLdtrA40ZBACI+MTMD/YjzoyGWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J1OLEa9TZvhhmbHzeDltUP0ANU8hfyr8QFW0i3TRD9QCcKJPnI4mcWloFeqv3QnIF
-	 EUv2bhBodNGhkjce17ZdMaev879FLq3JdDerdsjK9qZ/+Oc7yBTBZNd/CxdvYbTN2v
-	 NBt8S/dRm2id5jARPKxejbxPNW3OhQDElTpl1ahk=
+	b=NKZeYJPShmiL1UlPKrZJYgB5IAPSEBTAgA/nNJecrYcXbVd4ykR25Od6nXT9zMGme
+	 Is4b8EZTWCmamYd+Xziw0j8jE27k1ycfzb/cOT0WoS9agSFV1xiwbwZEQ6odE5rmXi
+	 5rNrVybKKhvABfSOp9IFqt8DKemJPUiri3nrCzbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.10 24/95] i40e: Fix wrong check for I40E_TXR_FLAGS_WB_ON_ITR
-Date: Mon,  6 Nov 2023 14:03:52 +0100
-Message-ID: <20231106130305.595584119@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 5.10 33/95] misc: fastrpc: Clean buffers on remote invocation failures
+Date: Mon,  6 Nov 2023 14:04:01 +0100
+Message-ID: <20231106130305.926933443@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -44,38 +42,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-[ Upstream commit 77a8c982ff0d4c3a14022c6fe9e3dbfb327552ec ]
+commit 1c8093591d1e372d700fe65423e7315a8ecf721b upstream.
 
-The I40E_TXR_FLAGS_WB_ON_ITR is i40e_ring flag and not i40e_pf one.
+With current design, buffers and dma handles are not freed in case
+of remote invocation failures returned from DSP. This could result
+in buffer leakings and dma handle pointing to wrong memory in the
+fastrpc kernel. Adding changes to clean buffers and dma handles
+even when remote invocation to DSP returns failures.
 
-Fixes: 8e0764b4d6be42 ("i40e/i40evf: Add support for writeback on ITR feature for X722")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20231023212714.178032-1-jacob.e.keller@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20231013122007.174464-4-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_txrx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/fastrpc.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-index 43be33d87e391..88d8f17cefd8e 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-@@ -2663,7 +2663,7 @@ int i40e_napi_poll(struct napi_struct *napi, int budget)
- 		return budget;
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -993,11 +993,6 @@ static int fastrpc_internal_invoke(struc
+ 	if (err)
+ 		goto bail;
+ 
+-	/* Check the response from remote dsp */
+-	err = ctx->retval;
+-	if (err)
+-		goto bail;
+-
+ 	if (ctx->nscalars) {
+ 		/* make sure that all memory writes by DSP are seen by CPU */
+ 		dma_rmb();
+@@ -1007,6 +1002,11 @@ static int fastrpc_internal_invoke(struc
+ 			goto bail;
  	}
  
--	if (vsi->back->flags & I40E_TXR_FLAGS_WB_ON_ITR)
-+	if (q_vector->tx.ring[0].flags & I40E_TXR_FLAGS_WB_ON_ITR)
- 		q_vector->arm_wb_state = false;
- 
- 	/* Exit the polling mode, but don't re-enable interrupts if stack might
--- 
-2.42.0
-
++	/* Check the response from remote dsp */
++	err = ctx->retval;
++	if (err)
++		goto bail;
++
+ bail:
+ 	if (err != -ERESTARTSYS && err != -ETIMEDOUT) {
+ 		/* We are done with this compute context */
 
 
