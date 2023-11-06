@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4C220B09
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F39720B09
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVckLCrC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66ADBC433C9;
-	Mon,  6 Nov 2023 13:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TL/SIJq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535E6C433C7;
+	Mon,  6 Nov 2023 13:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276916;
-	bh=pHcL38GxGJh0Ib8gA8xusiRKWME/vSs3Kzn7c4cB8vQ=;
+	s=korg; t=1699276919;
+	bh=E6J0d2wvN48ru/3mKz7FVGtspAfoG80YxubvpK0h1Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sVckLCrCVQd2ms4LQZSwJvuy4vjxwHtXoFX3POxHBYtGgLUaClIgYXiA6Azcp3Hgz
-	 GcvtvHlqGfycY+DTSlWeFU3gofzZiyLEKs+xGfCbpEHZ8FChJM3jtor0nobY2by2ME
-	 5MLYSjXSq+jnAVLDgQGsz3Z5ou9ByqkF0DJCxJBo=
+	b=TL/SIJq7ftgMs+BglyaEUx/BuAQfcPr5Xzmj2X1b08osnyAftHzvmCSc5gR9Y7Qu8
+	 38rWc+km9eYEc0uEsOPiIvMTqWbAji79QjeDQFumsnSeInNxniVh6oBeAr/mufgdqb
+	 rzQmtqXK9rSTwEsBemu4ErU+aMhp0vNHkYe2paiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peter Rosin <peda@axentia.se>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.4 21/74] i2c: muxes: i2c-mux-pinctrl: Use of_get_i2c_adapter_by_node()
-Date: Mon,  6 Nov 2023 14:03:41 +0100
-Message-ID: <20231106130302.444437826@linuxfoundation.org>
+Subject: [PATCH 5.4 22/74] i2c: muxes: i2c-mux-gpmux: Use of_get_i2c_adapter_by_node()
+Date: Mon,  6 Nov 2023 14:03:42 +0100
+Message-ID: <20231106130302.478863694@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
 References: <20231106130301.687882731@linuxfoundation.org>
@@ -45,9 +45,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Herve Codina <herve.codina@bootlin.com>
 
-commit 3171d37b58a76e1febbf3f4af2d06234a98cf88b upstream.
+commit 3dc0ec46f6e7511fc4fdf6b6cda439382bc957f1 upstream.
 
-i2c-mux-pinctrl uses the pair of_find_i2c_adapter_by_node() /
+i2c-mux-gpmux uses the pair of_find_i2c_adapter_by_node() /
 i2c_put_adapter(). These pair alone is not correct to properly lock the
 I2C parent adapter.
 
@@ -58,7 +58,7 @@ underflow of the parent module refcount.
 Use the dedicated function, of_get_i2c_adapter_by_node(), to handle
 correctly the module refcount.
 
-Fixes: c4aee3e1b0de ("i2c: mux: pinctrl: remove platform_data")
+Fixes: ac8498f0ce53 ("i2c: i2c-mux-gpmux: new driver")
 Signed-off-by: Herve Codina <herve.codina@bootlin.com>
 Cc: stable@vger.kernel.org
 Acked-by: Peter Rosin <peda@axentia.se>
@@ -66,12 +66,12 @@ Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/muxes/i2c-mux-pinctrl.c |    2 +-
+ drivers/i2c/muxes/i2c-mux-gpmux.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/muxes/i2c-mux-pinctrl.c
-+++ b/drivers/i2c/muxes/i2c-mux-pinctrl.c
-@@ -62,7 +62,7 @@ static struct i2c_adapter *i2c_mux_pinct
+--- a/drivers/i2c/muxes/i2c-mux-gpmux.c
++++ b/drivers/i2c/muxes/i2c-mux-gpmux.c
+@@ -52,7 +52,7 @@ static struct i2c_adapter *mux_parent_ad
  		dev_err(dev, "Cannot parse i2c-parent\n");
  		return ERR_PTR(-ENODEV);
  	}
