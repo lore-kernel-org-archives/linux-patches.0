@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A393720316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ABF20320
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDSx/+YE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE2EC433C7;
-	Mon,  6 Nov 2023 13:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arWoONe/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08799C433C9;
+	Mon,  6 Nov 2023 13:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276612;
-	bh=pEN+eGy/tY768i9FK42u04Bmhvp+Jt2ONiji+zvKoEo=;
+	s=korg; t=1699276615;
+	bh=AJzdowyFu+Y/qtH/Eb8B7P3qDIfnM1Wku+BEnGJn5wM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDSx/+YE2PMOgnj8VhwGgf+XRaxd7oCpnMwjieAI5o+f0NWTzwpLNaimBPBXnr5kP
-	 HIp22XZDq7Pv6u1eVyJtXwKy3NrxeLCaSXBz09R+iVl5d89cOYxXgVto507imTAo8G
-	 JYtjkfOPacPmbJWC19C2iYt3Xu5LfKNLX981fXNM=
+	b=arWoONe/0ZV30/jg5+0QM7nzKBFJZyM91n2i2L2U8kGZkNIC8OvcIyKJuNB0+5GOD
+	 6vrp8KhJyUrucwX+9Oc9G27uv/GinqYwaLfPwIk5Qa6XBAcYbVxscobaLdb/Z81rkn
+	 xK+knH4MvLCSzjBwh4rZvfGL4rfkASLvfZV47ON4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Karolina Stolarek <karolina.stolarek@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 38/88] s390/kasan: handle DCSS mapping in memory holes
-Date: Mon,  6 Nov 2023 14:03:32 +0100
-Message-ID: <20231106130307.220283424@linuxfoundation.org>
+Subject: [PATCH 6.5 39/88] drm/ttm: Reorder sys manager cleanup step
+Date: Mon,  6 Nov 2023 14:03:33 +0100
+Message-ID: <20231106130307.251041108@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -37,61 +36,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Karolina Stolarek <karolina.stolarek@intel.com>
 
-[ Upstream commit 327899674eef18f96644be87aa5510b7523fe4f6 ]
+[ Upstream commit 3b401e30c249849d803de6c332dad2a595a58658 ]
 
-When physical memory is defined under z/VM using DEF STOR CONFIG, there
-may be memory holes that are not hotpluggable memory. In such cases,
-DCSS mapping could be placed in one of these memory holes. Subsequently,
-attempting memory access to such DCSS mapping would result in a kasan
-failure because there is no shadow memory mapping for it.
+With the current cleanup flow, we could trigger a NULL pointer
+dereference if there is a delayed destruction of a BO with a
+system resource that gets executed on drain_workqueue() call,
+as we attempt to free a resource using an already released
+resource manager.
 
-To maintain consistency with cases where DCSS mapping is positioned after
-the kernel identity mapping, which is then covered by kasan zero shadow
-mapping, handle the scenario above by populating zero shadow mapping
-for memory holes where DCSS mapping could potentially be placed.
+Remove the device from the device list and drain its workqueue
+before releasing the system domain manager in ttm_device_fini().
 
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Karolina Stolarek <karolina.stolarek@intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231016121525.2237838-1-karolina.stolarek@intel.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/vmem.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_device.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/s390/boot/vmem.c b/arch/s390/boot/vmem.c
-index c67f59db7a512..f66d642251fe8 100644
---- a/arch/s390/boot/vmem.c
-+++ b/arch/s390/boot/vmem.c
-@@ -57,6 +57,7 @@ static void kasan_populate_shadow(void)
- 	pmd_t pmd_z = __pmd(__pa(kasan_early_shadow_pte) | _SEGMENT_ENTRY);
- 	pud_t pud_z = __pud(__pa(kasan_early_shadow_pmd) | _REGION3_ENTRY);
- 	p4d_t p4d_z = __p4d(__pa(kasan_early_shadow_pud) | _REGION2_ENTRY);
-+	unsigned long memgap_start = 0;
- 	unsigned long untracked_end;
- 	unsigned long start, end;
- 	int i;
-@@ -101,8 +102,12 @@ static void kasan_populate_shadow(void)
- 	 * +- shadow end ----+---------+- shadow end ---+
- 	 */
+diff --git a/drivers/gpu/drm/ttm/ttm_device.c b/drivers/gpu/drm/ttm/ttm_device.c
+index 7726a72befc54..d48b39132b324 100644
+--- a/drivers/gpu/drm/ttm/ttm_device.c
++++ b/drivers/gpu/drm/ttm/ttm_device.c
+@@ -232,10 +232,6 @@ void ttm_device_fini(struct ttm_device *bdev)
+ 	struct ttm_resource_manager *man;
+ 	unsigned i;
  
--	for_each_physmem_usable_range(i, &start, &end)
-+	for_each_physmem_usable_range(i, &start, &end) {
- 		kasan_populate(start, end, POPULATE_KASAN_MAP_SHADOW);
-+		if (memgap_start && physmem_info.info_source == MEM_DETECT_DIAG260)
-+			kasan_populate(memgap_start, start, POPULATE_KASAN_ZERO_SHADOW);
-+		memgap_start = end;
-+	}
- 	if (IS_ENABLED(CONFIG_KASAN_VMALLOC)) {
- 		untracked_end = VMALLOC_START;
- 		/* shallowly populate kasan shadow for vmalloc and modules */
+-	man = ttm_manager_type(bdev, TTM_PL_SYSTEM);
+-	ttm_resource_manager_set_used(man, false);
+-	ttm_set_driver_manager(bdev, TTM_PL_SYSTEM, NULL);
+-
+ 	mutex_lock(&ttm_global_mutex);
+ 	list_del(&bdev->device_list);
+ 	mutex_unlock(&ttm_global_mutex);
+@@ -243,6 +239,10 @@ void ttm_device_fini(struct ttm_device *bdev)
+ 	drain_workqueue(bdev->wq);
+ 	destroy_workqueue(bdev->wq);
+ 
++	man = ttm_manager_type(bdev, TTM_PL_SYSTEM);
++	ttm_resource_manager_set_used(man, false);
++	ttm_set_driver_manager(bdev, TTM_PL_SYSTEM, NULL);
++
+ 	spin_lock(&bdev->lru_lock);
+ 	for (i = 0; i < TTM_MAX_BO_PRIORITY; ++i)
+ 		if (list_empty(&man->lru[0]))
 -- 
 2.42.0
 
