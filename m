@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946D120316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739D120316
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ki0I5bLd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDE2C433C8;
-	Mon,  6 Nov 2023 13:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMHwThHB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E288BC433C7;
+	Mon,  6 Nov 2023 13:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276542;
-	bh=loUCKoprdXJsVQ7uZdkiLCZRNqKziYvbeus94tHOuBQ=;
+	s=korg; t=1699276545;
+	bh=JxZscK3rDOGNiHptFuQG8H6QVMFLyBn2f8FHX4iAae0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ki0I5bLd15PDwfNatbUyQNpCTALgF9wdOk8WAPGNpZsPIbEVZFxfktyvZPTg97sWX
-	 0W8lmi7DptwatWlBuArhwE2aVO3cE+1ulwBBkiDEHCgaq1PiTfKLX2N9hKxX+zCNbc
-	 H3bFno3D4ne5KysgpU3OJBAtJ2nqrytlfsCz/b0E=
+	b=xMHwThHB9S37XL7BMAIkaLaFN354zKaEKGCEX7q98Pw7ITwqksQ56u5YmXVG5secy
+	 aefb6JBTzFYOrlevw6fwDw/05EQoy9fJ2QMiNoBffNcvXs/FaKFGI21myuh0tIXRwx
+	 9wkhpQCkmtVBBIy0oX1N13E5BJ/D0/QqfV2q4QJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 04/88] ASoC: fsl-asoc-card: use integer type for fll_id and pll_id
-Date: Mon,  6 Nov 2023 14:02:58 +0100
-Message-ID: <20231106130305.929590204@linuxfoundation.org>
+Subject: [PATCH 6.5 05/88] ASoC: core: Do not call link_exit() on uninitialized rtd objects
+Date: Mon,  6 Nov 2023 14:02:59 +0100
+Message-ID: <20231106130305.963933242@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -36,79 +37,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit 2b21207afd06714986a3d22442ed4860ba4f9ced ]
+[ Upstream commit dd9f9cc1e6b9391140afa5cf27bb47c9e2a08d02 ]
 
-As the pll_id and pll_id can be zero (WM8960_SYSCLK_AUTO)
-with the commit 2bbc2df46e67 ("ASoC: wm8960: Make automatic the
-default clocking mode")
+On init we have sequence:
 
-Then the machine driver will skip to call set_sysclk() and set_pll()
-for codec, when the sysclk rate is different with what wm8960 read
-at probe, the output sound frequency is wrong.
+	for_each_card_prelinks(card, i, dai_link) {
+		ret = snd_soc_add_pcm_runtime(card, dai_link);
 
-So change the fll_id and pll_id initial value, still keep machine
-driver's behavior same as before.
+	ret = init_some_other_things(...);
+	if (ret)
+		goto probe_end:
 
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://lore.kernel.org/r/1695202992-24864-1-git-send-email-shengjiu.wang@nxp.com
+	for_each_card_rtds(card, rtd) {
+		ret = soc_init_pcm_runtime(card, rtd);
+
+probe_end:
+
+while on exit:
+	for_each_card_rtds(card, rtd)
+		snd_soc_link_exit(rtd);
+
+If init_some_other_things() step fails due to error we end up with
+not fully setup rtds and try to call snd_soc_link_exit on them, which
+depending on contents on .link_exit handler, can end up dereferencing
+NULL pointer.
+
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20230929103243.705433-2-amadeuszx.slawinski@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl-asoc-card.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/sound/soc.h  |  2 ++
+ sound/soc/soc-core.c | 20 +++++++++++++++-----
+ 2 files changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
-index 76b5bfc288fde..bab7d34cf585b 100644
---- a/sound/soc/fsl/fsl-asoc-card.c
-+++ b/sound/soc/fsl/fsl-asoc-card.c
-@@ -52,8 +52,8 @@ struct codec_priv {
- 	unsigned long mclk_freq;
- 	unsigned long free_freq;
- 	u32 mclk_id;
--	u32 fll_id;
--	u32 pll_id;
-+	int fll_id;
-+	int pll_id;
- };
+diff --git a/include/sound/soc.h b/include/sound/soc.h
+index b27f84580c5b0..cf34810882347 100644
+--- a/include/sound/soc.h
++++ b/include/sound/soc.h
+@@ -1125,6 +1125,8 @@ struct snd_soc_pcm_runtime {
+ 	unsigned int pop_wait:1;
+ 	unsigned int fe_compr:1; /* for Dynamic PCM */
  
- /**
-@@ -206,7 +206,7 @@ static int fsl_asoc_card_hw_params(struct snd_pcm_substream *substream,
++	bool initialized;
++
+ 	int num_components;
+ 	struct snd_soc_component *components[]; /* CPU/Codec/Platform */
+ };
+diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+index 1a0bde23f5e6f..2d85164457f73 100644
+--- a/sound/soc/soc-core.c
++++ b/sound/soc/soc-core.c
+@@ -1259,7 +1259,7 @@ static int soc_init_pcm_runtime(struct snd_soc_card *card,
+ 	snd_soc_runtime_get_dai_fmt(rtd);
+ 	ret = snd_soc_runtime_set_dai_fmt(rtd, dai_link->dai_fmt);
+ 	if (ret)
+-		return ret;
++		goto err;
+ 
+ 	/* add DPCM sysfs entries */
+ 	soc_dpcm_debugfs_add(rtd);
+@@ -1284,17 +1284,26 @@ static int soc_init_pcm_runtime(struct snd_soc_card *card,
+ 	/* create compress_device if possible */
+ 	ret = snd_soc_dai_compress_new(cpu_dai, rtd, num);
+ 	if (ret != -ENOTSUPP)
+-		return ret;
++		goto err;
+ 
+ 	/* create the pcm */
+ 	ret = soc_new_pcm(rtd, num);
+ 	if (ret < 0) {
+ 		dev_err(card->dev, "ASoC: can't create pcm %s :%d\n",
+ 			dai_link->stream_name, ret);
+-		return ret;
++		goto err;
  	}
  
- 	/* Specific configuration for PLL */
--	if (codec_priv->pll_id && codec_priv->fll_id) {
-+	if (codec_priv->pll_id >= 0 && codec_priv->fll_id >= 0) {
- 		if (priv->sample_format == SNDRV_PCM_FORMAT_S24_LE)
- 			pll_out = priv->sample_rate * 384;
- 		else
-@@ -248,7 +248,7 @@ static int fsl_asoc_card_hw_free(struct snd_pcm_substream *substream)
- 
- 	priv->streams &= ~BIT(substream->stream);
- 
--	if (!priv->streams && codec_priv->pll_id && codec_priv->fll_id) {
-+	if (!priv->streams && codec_priv->pll_id >= 0 && codec_priv->fll_id >= 0) {
- 		/* Force freq to be free_freq to avoid error message in codec */
- 		ret = snd_soc_dai_set_sysclk(asoc_rtd_to_codec(rtd, 0),
- 					     codec_priv->mclk_id,
-@@ -621,6 +621,10 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
- 	priv->card.dapm_routes = audio_map;
- 	priv->card.num_dapm_routes = ARRAY_SIZE(audio_map);
- 	priv->card.driver_name = DRIVER_NAME;
+-	return snd_soc_pcm_dai_new(rtd);
++	ret = snd_soc_pcm_dai_new(rtd);
++	if (ret < 0)
++		goto err;
 +
-+	priv->codec_priv.fll_id = -1;
-+	priv->codec_priv.pll_id = -1;
++	rtd->initialized = true;
 +
- 	/* Diversify the card configurations */
- 	if (of_device_is_compatible(np, "fsl,imx-audio-cs42888")) {
- 		codec_dai_name = "cs42888";
++	return 0;
++err:
++	snd_soc_link_exit(rtd);
++	return ret;
+ }
+ 
+ static void soc_set_name_prefix(struct snd_soc_card *card,
+@@ -1892,7 +1901,8 @@ static void soc_cleanup_card_resources(struct snd_soc_card *card)
+ 
+ 	/* release machine specific resources */
+ 	for_each_card_rtds(card, rtd)
+-		snd_soc_link_exit(rtd);
++		if (rtd->initialized)
++			snd_soc_link_exit(rtd);
+ 	/* remove and free each DAI */
+ 	soc_remove_link_dais(card);
+ 	soc_remove_link_components(card);
 -- 
 2.42.0
 
