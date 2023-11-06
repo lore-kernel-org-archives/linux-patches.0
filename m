@@ -1,49 +1,49 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9065829D0F
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 17:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBAD29417
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 17:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hg3y0MmQ"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-6c115026985so4885118b3a.1
-        for <patches@lists.linux.dev>; Mon, 06 Nov 2023 09:43:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hjoj23h9"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1cc0d0a0355so35042495ad.3
+        for <patches@lists.linux.dev>; Mon, 06 Nov 2023 09:52:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699292583; x=1699897383; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1699293160; x=1699897960; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CXH5ahRPz8knk5h9KfR4IuZwTMLTaHWDUAgFgEvqapQ=;
-        b=hg3y0MmQk+4lTE4bhhJa5doCUPjn6JDGHcUJwx8PXqfBCXFGgPTtLDHiX7Y4JaXt2J
-         e+HyMmxKyuWmIN6ub1x4qJPN4ddm+r/e6tOvDUh7bfJltdeWckL/UyIMe56GbP9gxSgu
-         UqQ12Q/b4csCBC/3JEi6zGMZJFVetkp6YE5uo8uYnb5rhMmSvHFrWGOYMOgZgwoFoHyl
-         /eaz0bkGlNaSLO8BsV8hLxIJdVfGPHly6doFk3Cn88gLwUVhxigY8Jei1p/I4uu6Fc4Z
-         6tQ45Eli2p+DpUhACfwbbwbTuro3U717xxUqgdvcGZQQh8nz5NLqMHZ2ovpX5Rx/hMjS
-         ruKQ==
+        bh=mvMLV/XYihjMVpZoZAMN1HtjGi3fRmETd2VsU6bI7YU=;
+        b=Hjoj23h9B8ZMScwmDM34Wg49ujAg+GraWIAXJ1abAhQo1E8BtPLT5LSkcOKq+oHHFO
+         Eus9BFLApRaLr/rgVQvlWkOJKBTNXdtSvMqWSY8wMCgcV/7bzK0xThRQseCqsrunyKF5
+         q3r4MPYnlXN7LLBmiAvIaASHzjTIFjCR9BtKZKy+IRatykdLuKKTEOOp6mopJD7lMEfH
+         NLrGoTMdoHRL10v8kiJxKM2zQ37yityob5O0LBVuVN/75GUiKB+FlvYA0spyGBBw/B+f
+         Yd2nU+NLCuqcJedwvYcXX3t7l5BPwpCEp8FL4Uo5fp0SO8RtmnwisDBwKb86VC2sRomR
+         tKHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699292583; x=1699897383;
+        d=1e100.net; s=20230601; t=1699293160; x=1699897960;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CXH5ahRPz8knk5h9KfR4IuZwTMLTaHWDUAgFgEvqapQ=;
-        b=nH6wNJWDwS4mk09aO6vj7QgavvUgaGMuE73eCobWBq6UN651KRn9SfKfWZDEIQHG3s
-         NfwfmQoLmAS+ssvhj2Ks0Dsu/LmewBsytffGbnlxusCN77C7JR3eSTDfRtJ5dHsOfHEI
-         noDmVkYDb+QH581Iw9GKpg6dS/C+YsqQsAduVcDPBU/oji20u/N/eC23RE5rzIEtOEAA
-         GYpKceeQiX1qgxt9XlKXbJZ+PadbY2r/vI+eEpCY+RZJJtzP78GA6TsGy+ywRdPcm3/n
-         ME5onc7S/nEEafdwDTR9UtC9j/NrChhwyEXNtuVEvnn/MY4hLOsNjSosuPXzv6j24d4w
-         SCiw==
-X-Gm-Message-State: AOJu0YxsC+KOccutx71yqrQBLKxAJfoiVZ2SsU1SnrX1iX/LHCHBwsvQ
-	nupFxgQD3MJWTp/xczXmpnY=
-X-Google-Smtp-Source: AGHT+IGdwlguaisgUp5xLqOca+yiZGMYX7D1ugesp5ymFRkqq5g+jSkbzdQHAeC4eV9GmySDDqEaYg==
-X-Received: by 2002:a05:6a20:ae25:b0:16b:bd0f:ad0d with SMTP id dp37-20020a056a20ae2500b0016bbd0fad0dmr21552292pzb.28.1699292582698;
-        Mon, 06 Nov 2023 09:43:02 -0800 (PST)
+        bh=mvMLV/XYihjMVpZoZAMN1HtjGi3fRmETd2VsU6bI7YU=;
+        b=tNAcfnbQNkvA9dw2HuRlmaM/lAzwXCRJ/jeNVIqYnyI9vY4MKMFFmuXdVvz+7H1Jy5
+         D0hHQHlID5oZRfPf+07V8+gOx2WjT27hHDKAz2UstXbARIYecxVoHAZu7x7lp2+T6GSz
+         7pO3I0jqcHlTccCSqHt2WwcBKRRDoq3qSH9heeB4yNFl3B2nDK9e4SDVA5HzUflnh/Xz
+         RscS75T4gyWEngHPCdyEtA8+MkauFPo8hCPECP0aKvjpJinNp4iMcNFvRe75GFlyNR74
+         ZUZ9P8ECW3V6lVMFBmzS8hkIC6GW+W6N7V0u7XLPYdywNeRXkpbt/C1CjR+1iethfrOa
+         zzqA==
+X-Gm-Message-State: AOJu0YwoVjtFdn5gGkw3vYtMTUAbHHy/OR3zi0o3tUaWMsp7nuxOjXQr
+	HFFHoqpbfeDSEh4Vj3rnHqc=
+X-Google-Smtp-Source: AGHT+IHkBjm95S2cCyGqYNTJXIfdVIzMId/N24sP+ZbAuxhORjpVmXmMljjPwYKN6tI93qg3Uu5XSw==
+X-Received: by 2002:a17:902:e80e:b0:1cc:482c:bc54 with SMTP id u14-20020a170902e80e00b001cc482cbc54mr23308613plg.48.1699293160443;
+        Mon, 06 Nov 2023 09:52:40 -0800 (PST)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id 14-20020a17090a01ce00b00273744e6eccsm6319954pjd.12.2023.11.06.09.43.00
+        by smtp.googlemail.com with ESMTPSA id iz18-20020a170902ef9200b001c9c6a78a56sm6188602plb.97.2023.11.06.09.52.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Nov 2023 09:43:02 -0800 (PST)
-Message-ID: <b2867987-809f-4005-a303-9d8dba8882af@gmail.com>
-Date: Mon, 6 Nov 2023 09:42:59 -0800
+        Mon, 06 Nov 2023 09:52:39 -0800 (PST)
+Message-ID: <a6e89e5c-9f9b-435f-ade3-f88fa4103abd@gmail.com>
+Date: Mon, 6 Nov 2023 09:52:37 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,74 +51,44 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/128] 5.15.138-rc1 review
+Subject: Re: [PATCH 6.1 00/62] 6.1.62-rc1 review
 Content-Language: en-US
-To: Allen Pais <stable.kernel.dev@gmail.com>,
- Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- Sasha Levin <sashal@kernel.org>, mizhang@google.com,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, Vegard Nossum <vegard.nossum@oracle.com>,
- Darren Kenny <darren.kenny@oracle.com>
-References: <20231106130309.112650042@linuxfoundation.org>
- <2665d8bc-111c-45ca-a473-b1c892867e9c@oracle.com>
- <CAJq+SaCqtQwk+eCgXT9jQU33Ufqr+aOaQq+VsXHCqdc1Qp8Vkg@mail.gmail.com>
+ conor@kernel.org
+References: <20231106130301.807965064@linuxfoundation.org>
 From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <CAJq+SaCqtQwk+eCgXT9jQU33Ufqr+aOaQq+VsXHCqdc1Qp8Vkg@mail.gmail.com>
+In-Reply-To: <20231106130301.807965064@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 11/6/23 09:08, Allen Pais wrote:
->>
->> On 06/11/23 6:32 pm, Greg Kroah-Hartman wrote:
->>> This is the start of the stable review cycle for the 5.15.138 release.
->>> There are 128 patches in this series, all will be posted as a response
->>> to this one.  If anyone has any issues with these being applied, please
->>> let me know.
->>>
->>> Responses should be made by Wed, 08 Nov 2023 13:02:46 +0000.
->>> Anything received after that time might be too late.
->>>
->>
->> I am seeing a build failure with perf:
->>
->> tools/perf/util/evlist.c: In function evlist__add_aux_dummy:
->> tools/perf/util/evlist.c:266:31: error: implicit declaration of function
->> evlist__dummy_event; did you mean evlist__add_sb_eventâ€™?
->> [-Werror=implicit-function-declaration]
->>     266 |         struct evsel *evsel = evlist__dummy_event(evlist);
->>         |                               ^~~~~~~~~~~~~~~~~~~
->>         |                               evlist__add_sb_event
->>
->>
->> I think we should drop these three commits:
->>
->> 20a5799cae7dc perf evlist: Avoid frequency mode for the dummy event
->> 7de783c81c7e7 perf tools: Get rid of evlist__add_on_all_cpus()
->> 141ce9207068e perf evlist: Add evlist__add_dummy_on_all_cpus()
->>
->> Backport was requested here:
->> https://lore.kernel.org/stable/CAL715WLTjMGQrhm6wWqFSeL_Oq-HzoQd5CqewvLRLv0Xbnibgw@mail.gmail.com/
->>
+On 11/6/23 05:03, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.62 release.
+> There are 62 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
+> Responses should be made by Wed, 08 Nov 2023 13:02:46 +0000.
+> Anything received after that time might be too late.
 > 
->   Just tested perf build, I see the same errors:
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.62-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 > 
-> tools/perf/util/evlist.c: In function 'evlist__add_aux_dummy':
-> /linux/tools/perf/util/evlist.c:266:24: error: implicit declaration of
-> function 'evlist__dummy_event'; did you mean 'evlist__add_sb_event'?
-> [-Werror=implicit-function-declaration]
->    struct evsel *evsel = evlist__dummy_event(evlist);
->                          ^~~~~~~~~~~~~~~~~~~
->                          evlist__add_sb_event
-> linux/tools/perf/util/evlist.c:266:24: error: initialization makes
-> pointer from integer without a cast [-Werror=int-conversion]
+> thanks,
+> 
+> greg k-h
 
-Yep, same here (and on 5.10 as well).
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
+
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
 Florian
 
