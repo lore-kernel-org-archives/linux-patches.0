@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D058A23763
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44F22374A
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZKg7zPo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60DFC433C8;
-	Mon,  6 Nov 2023 13:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xq0DB06J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E399EC433C9;
+	Mon,  6 Nov 2023 13:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277568;
-	bh=LyRMqAjmlg97yQuS3Rz+P4EzqV+HI2E1HhDY4Dlb524=;
+	s=korg; t=1699277571;
+	bh=XJA37UATytYhuqz0GmWoprC4Athg8ZhxmWCc+EdLzRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZKg7zPow07YMVFe4EvkM2nImSwTf0tH1lPjhZTnoVQWh2byQUiLXi4EFpPLh3Od9
-	 81BdX+/5uH/F92PLTlecfE+iob7mIHylRZ52heHrg9AGxDO968/T03HjFCDnhpsNMQ
-	 jISZiof8hdGPzgWNhblQqU9qA7rQxmRW4AOCY15Y=
+	b=Xq0DB06JcjhD0/GO7CtW1NRzF/WWWBOW0xNvE3U+r6rl6OUatzqCB1TVKBP7E2kZw
+	 neJej45woYMFj24b2TjW4SUxxtr/rIwBcN28gF+gq0kOlQUGOMLnABhvCJHv3GbdMd
+	 DelUtt23WrbGW6vA6BtXlwJ9xFYdXDEqTuvF7Lq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 23/95] gtp: fix fragmentation needed check with gso
-Date: Mon,  6 Nov 2023 14:03:51 +0100
-Message-ID: <20231106130305.564728077@linuxfoundation.org>
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 5.10 56/95] rpmsg: Fix kfree() of static memory on setting driver_override
+Date: Mon,  6 Nov 2023 14:04:24 +0100
+Message-ID: <20231106130306.736393046@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -42,38 +42,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 4530e5b8e2dad63dcad2206232dd86e4b1489b6c ]
+commit 42cd402b8fd4672b692400fe5f9eecd55d2794ac upstream.
 
-Call skb_gso_validate_network_len() to check if packet is over PMTU.
+The driver_override field from platform driver should not be initialized
+from static memory (string literal) because the core later kfree() it,
+for example when driver_override is set via sysfs.
 
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Use dedicated helper to set driver_override properly.
+
+Fixes: 950a7388f02b ("rpmsg: Turn name service into a stand alone driver")
+Fixes: c0cdc19f84a4 ("rpmsg: Driver for user space endpoint interface")
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20220419113435.246203-13-krzysztof.kozlowski@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/gtp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/rpmsg/rpmsg_internal.h |   13 +++++++++++--
+ include/linux/rpmsg.h          |    6 ++++--
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 05ea3a18552b6..ed247cba22916 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -538,8 +538,9 @@ static int gtp_build_skb_ip4(struct sk_buff *skb, struct net_device *dev,
+--- a/drivers/rpmsg/rpmsg_internal.h
++++ b/drivers/rpmsg/rpmsg_internal.h
+@@ -84,10 +84,19 @@ struct device *rpmsg_find_device(struct
+  */
+ static inline int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev)
+ {
++	int ret;
++
+ 	strcpy(rpdev->id.name, "rpmsg_chrdev");
+-	rpdev->driver_override = "rpmsg_chrdev";
++	ret = driver_set_override(&rpdev->dev, &rpdev->driver_override,
++				  rpdev->id.name, strlen(rpdev->id.name));
++	if (ret)
++		return ret;
++
++	ret = rpmsg_register_device(rpdev);
++	if (ret)
++		kfree(rpdev->driver_override);
  
- 	rt->dst.ops->update_pmtu(&rt->dst, NULL, skb, mtu, false);
+-	return rpmsg_register_device(rpdev);
++	return ret;
+ }
  
--	if (!skb_is_gso(skb) && (iph->frag_off & htons(IP_DF)) &&
--	    mtu < ntohs(iph->tot_len)) {
-+	if (iph->frag_off & htons(IP_DF) &&
-+	    ((!skb_is_gso(skb) && skb->len > mtu) ||
-+	     (skb_is_gso(skb) && !skb_gso_validate_network_len(skb, mtu)))) {
- 		netdev_dbg(dev, "packet too big, fragmentation needed\n");
- 		icmp_ndo_send(skb, ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED,
- 			      htonl(mtu));
--- 
-2.42.0
-
+ #endif
+--- a/include/linux/rpmsg.h
++++ b/include/linux/rpmsg.h
+@@ -41,7 +41,9 @@ struct rpmsg_channel_info {
+  * rpmsg_device - device that belong to the rpmsg bus
+  * @dev: the device struct
+  * @id: device id (used to match between rpmsg drivers and devices)
+- * @driver_override: driver name to force a match
++ * @driver_override: driver name to force a match; do not set directly,
++ *                   because core frees it; use driver_set_override() to
++ *                   set or clear it.
+  * @src: local address
+  * @dst: destination address
+  * @ept: the rpmsg endpoint of this channel
+@@ -50,7 +52,7 @@ struct rpmsg_channel_info {
+ struct rpmsg_device {
+ 	struct device dev;
+ 	struct rpmsg_device_id id;
+-	char *driver_override;
++	const char *driver_override;
+ 	u32 src;
+ 	u32 dst;
+ 	struct rpmsg_endpoint *ept;
 
 
