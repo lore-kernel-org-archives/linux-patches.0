@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAA5219E9
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D59224D0
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0EvK2tC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497B3C433C7;
-	Mon,  6 Nov 2023 13:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrtdqdQk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3184AC433CB;
+	Mon,  6 Nov 2023 13:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277153;
-	bh=5YArsuUHkX62/WxjksXs1g0igiF3OJL2F0uH1DDC4FA=;
+	s=korg; t=1699277156;
+	bh=6uI5E4n6CRiUGZxgyl2jXde94FZAJVYf8Mxu6VuNEc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0EvK2tCej2+TjKZsiwQAEeg8G43TVXFMpPjAiLRJxv4RcgU67OZCFKaD01ggqAmF
-	 ilVDAT26dY8CUNewNqDjvlEec32BmSUAOV3Qja1We/jxY1f7LLcEam+RSS4JEwQ0hr
-	 7uS0zsJUhx/5zz62VeQaCklDM+5/hN73C3ZOv3ZA=
+	b=vrtdqdQkCiLFbAwzJlauDkzbcyBbXOBChV2AWh+G3glS2dpzEGqIsT952omiBjoXQ
+	 KpnfOWy9Aif1fl9h1Q58RprglhrMh4vfctR4kadmlF8nhfSiky5L3r2lg1tnKGsPiP
+	 mYrixk9JBsyxQLPstsThEzSktMgA1e5fJ4W4zjwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"David S. Miller" <davem@davemloft.net>,
+	Liam Beguin <liambeguin@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/128] net: ieee802154: adf7242: Fix some potential buffer overflow in adf7242_stats_show()
-Date: Mon,  6 Nov 2023 14:03:09 +0100
-Message-ID: <20231106130310.445132199@linuxfoundation.org>
+Subject: [PATCH 5.15 056/128] iio: afe: rescale: reorder includes
+Date: Mon,  6 Nov 2023 14:03:36 +0100
+Message-ID: <20231106130311.644479223@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,44 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Liam Beguin <liambeguin@gmail.com>
 
-[ Upstream commit ca082f019d8fbb983f03080487946da714154bae ]
+[ Upstream commit cd717ac6f69db4953ca701c6220c7cb58e17f35a ]
 
-strncat() usage in adf7242_debugfs_init() is wrong.
-The size given to strncat() is the maximum number of bytes that can be
-written, excluding the trailing NULL.
+Includes should be ordered alphabetically which is already the case,
+but follow what is done in other drivers by separation IIO specific
+headers with a blank line.
 
-Here, the size that is passed, DNAME_INLINE_LEN, does not take into account
-the size of "adf7242-" that is already in the array.
-
-In order to fix it, use snprintf() instead.
-
-Fixes: 7302b9d90117 ("ieee802154/adf7242: Driver for ADF7242 MAC IEEE802154")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Liam Beguin <liambeguin@gmail.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20220108205319.2046348-6-liambeguin@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: bee448390e51 ("iio: afe: rescale: Accept only offset channels")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/adf7242.c | 5 +++--
+ drivers/iio/afe/iio-rescale.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ieee802154/adf7242.c b/drivers/net/ieee802154/adf7242.c
-index 07adbeec19787..14cf8b0dfad90 100644
---- a/drivers/net/ieee802154/adf7242.c
-+++ b/drivers/net/ieee802154/adf7242.c
-@@ -1162,9 +1162,10 @@ static int adf7242_stats_show(struct seq_file *file, void *offset)
+diff --git a/drivers/iio/afe/iio-rescale.c b/drivers/iio/afe/iio-rescale.c
+index cc28713b0dc8b..b0934f85a4a04 100644
+--- a/drivers/iio/afe/iio-rescale.c
++++ b/drivers/iio/afe/iio-rescale.c
+@@ -9,14 +9,15 @@
  
- static void adf7242_debugfs_init(struct adf7242_local *lp)
- {
--	char debugfs_dir_name[DNAME_INLINE_LEN + 1] = "adf7242-";
-+	char debugfs_dir_name[DNAME_INLINE_LEN + 1];
+ #include <linux/err.h>
+ #include <linux/gcd.h>
+-#include <linux/iio/consumer.h>
+-#include <linux/iio/iio.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/property.h>
  
--	strncat(debugfs_dir_name, dev_name(&lp->spi->dev), DNAME_INLINE_LEN);
-+	snprintf(debugfs_dir_name, sizeof(debugfs_dir_name),
-+		 "adf7242-%s", dev_name(&lp->spi->dev));
++#include <linux/iio/consumer.h>
++#include <linux/iio/iio.h>
++
+ struct rescale;
  
- 	lp->debugfs_root = debugfs_create_dir(debugfs_dir_name, NULL);
- 
+ struct rescale_cfg {
 -- 
 2.42.0
 
