@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BEE224D0
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1896B22EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="se6QDnkU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937E5C433C8;
-	Mon,  6 Nov 2023 13:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E01yzlGo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C5AC433C7;
+	Mon,  6 Nov 2023 13:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277319;
-	bh=cSt55G7q/DuuobbY6ly7J7W5NwJbPGy/HGbaP1EOxOA=;
+	s=korg; t=1699277321;
+	bh=URpMQznk22nhQM+KQh+c+BRLFzwplQjM9PZqB+qvriI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=se6QDnkUPl9mm+xytyFdrhI1lqDpMSz3aQUlDVmjcABkiD1XbxM9l70jzA67TYTR6
-	 wlWX4iQPD3bLSlSO9t1eAw3x7nCFFd6aL7NNPBo4LkzC1HtKTwZzZgQN3GS29xL5cj
-	 sPYiZGvGS+atb/YFROM0OVctxcyH5wzFENH3ICjg=
+	b=E01yzlGowK8Ks1uQdBvQNKjal6LOKsUImE3NjBu5BayDQACtmtoc5O4bz4UCLgVrb
+	 4GryI57NEdzFLv/Toa0ZWZapHDBaVsJJFxjS/qJUPibBQnLy4rJRxvXoiEtowyy41E
+	 GxO3ov/Xa/GbuvwbKsXMCFCCSUNePSatHFkes1/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Paolo Gentili <paolo.gentili@canonical.com>
-Subject: [PATCH 5.15 112/128] drm/amd: Disable ASPM for VI w/ all Intel systems
-Date: Mon,  6 Nov 2023 14:04:32 +0100
-Message-ID: <20231106130314.267167914@linuxfoundation.org>
+	Vicki Pfau <vi@endrift.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 5.15 113/128] PCI: Prevent xHCI driver from claiming AMD VanGogh USB3 DRD device
+Date: Mon,  6 Nov 2023 14:04:33 +0100
+Message-ID: <20231106130314.307271341@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,40 +41,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Vicki Pfau <vi@endrift.com>
 
-commit 64ffd2f1d00c6235dabe9704bbb0d9ce3e28147f upstream.
+commit 7e6f3b6d2c352b5fde37ce3fed83bdf6172eebd4 upstream.
 
-Originally we were quirking ASPM disabled specifically for VI when
-used with Alder Lake, but it appears to have problems with Rocket
-Lake as well.
+The AMD VanGogh SoC contains a DesignWare USB3 Dual-Role Device that can be
+operated as either a USB Host or a USB Device, similar to on the AMD Nolan
+platform.
 
-Like we've done in the case of dpm for newer platforms, disable
-ASPM for all Intel systems.
+be6646bfbaec ("PCI: Prevent xHCI driver from claiming AMD Nolan USB3 DRD
+device") added a quirk to let the dwc3 driver claim the Nolan device since
+it provides more specific support.
 
-Cc: stable@vger.kernel.org # 5.15+
-Fixes: 0064b0ce85bb ("drm/amd/pm: enable ASPM by default")
-Reported-and-tested-by: Paolo Gentili <paolo.gentili@canonical.com>
-Closes: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2036742
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Extend that quirk to include the VanGogh SoC USB3 device.
+
+Link: https://lore.kernel.org/r/20230927202212.2388216-1-vi@endrift.com
+Signed-off-by: Vicki Pfau <vi@endrift.com>
+[bhelgaas: include be6646bfbaec reference, add stable tag]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org	# v3.19+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/quirks.c    |    8 +++++---
+ include/linux/pci_ids.h |    1 +
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/vi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vi.c
-@@ -1147,7 +1147,7 @@ static void vi_program_aspm(struct amdgp
- 	bool bL1SS = false;
- 	bool bClkReqSupport = true;
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -592,7 +592,7 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
+ /*
+  * In the AMD NL platform, this device ([1022:7912]) has a class code of
+  * PCI_CLASS_SERIAL_USB_XHCI (0x0c0330), which means the xhci driver will
+- * claim it.
++ * claim it. The same applies on the VanGogh platform device ([1022:163a]).
+  *
+  * But the dwc3 driver is a more specific driver for this device, and we'd
+  * prefer to use it instead of xhci. To prevent xhci from claiming the
+@@ -600,7 +600,7 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
+  * defines as "USB device (not host controller)". The dwc3 driver can then
+  * claim it based on its Vendor and Device ID.
+  */
+-static void quirk_amd_nl_class(struct pci_dev *pdev)
++static void quirk_amd_dwc_class(struct pci_dev *pdev)
+ {
+ 	u32 class = pdev->class;
  
--	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_aspm_support_quirk())
-+	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_pcie_dynamic_switching_supported())
- 		return;
+@@ -610,7 +610,9 @@ static void quirk_amd_nl_class(struct pc
+ 		 class, pdev->class);
+ }
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_NL_USB,
+-		quirk_amd_nl_class);
++		quirk_amd_dwc_class);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_VANGOGH_USB,
++		quirk_amd_dwc_class);
  
- 	if (adev->flags & AMD_IS_APU ||
+ /*
+  * Synopsys USB 3.x host HAPS platform has a class code of
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -556,6 +556,7 @@
+ #define PCI_DEVICE_ID_AMD_17H_M30H_DF_F3 0x1493
+ #define PCI_DEVICE_ID_AMD_17H_M60H_DF_F3 0x144b
+ #define PCI_DEVICE_ID_AMD_17H_M70H_DF_F3 0x1443
++#define PCI_DEVICE_ID_AMD_VANGOGH_USB	0x163a
+ #define PCI_DEVICE_ID_AMD_19H_DF_F3	0x1653
+ #define PCI_DEVICE_ID_AMD_19H_M40H_DF_F3 0x167c
+ #define PCI_DEVICE_ID_AMD_19H_M50H_DF_F3 0x166d
 
 
