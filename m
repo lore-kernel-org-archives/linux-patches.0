@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEAF1A71D
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F346208C0
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgPu2tGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD7BC433C9;
-	Mon,  6 Nov 2023 13:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fORemOu9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA319C433C7;
+	Mon,  6 Nov 2023 13:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277483;
-	bh=xpiHaf33Dkkf7AB+AFUSjzeTw81gXybfgVNBjCnltBM=;
+	s=korg; t=1699277486;
+	bh=47Zs9sWPoqf7GhbBRhdGTqZJDIOIle82LLL+pHbfkMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgPu2tGgz3D3NmFy1cIsqW5J968DgaO5s3EORo1Q03nOcS2F1rbW3rknyvUGLwK6Z
-	 peq/spBH9+nmuKVOTtYlzEfbMNIDP+z2RlAqyAwX49tYScJUBIY8HH19iBbPGqBofu
-	 fasRw3CH6MiKpPsgneNulrDfnkjR6ormyhDhOnyk=
+	b=fORemOu9V4USkLGPOCDanuv4AuqSprhuIRW6QV/nxyi51jCwp6nRA18/oaWAR0H2o
+	 o1kGmLQOZohBUX3HP3xvb1avBOu1OfxfKjAuqyzVeZmsBqxhfpds22vW5vmCkHVNkE
+	 0EVm4lewPfLBJBq9zcapgewfiavtoJFqj6E0mKhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 5.10 38/95] sparc32: fix a braino in fault handling in csum_and_copy_..._user()
-Date: Mon,  6 Nov 2023 14:04:06 +0100
-Message-ID: <20231106130306.112846322@linuxfoundation.org>
+	Philip Daly <pdaly@redhat.com>,
+	"Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 5.10 39/95] clk: Sanitize possible_parent_show to Handle Return Value of of_clk_get_parent_name
+Date: Mon,  6 Nov 2023 14:04:07 +0100
+Message-ID: <20231106130306.141946646@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -41,45 +42,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Alessandro Carminati <alessandro.carminati@gmail.com>
 
-commit 1f36cd05e0081f2c75769a551d584c4ffb2a5660 upstream.
+commit ceb87a361d0b079ecbc7d2831618c19087f304a9 upstream.
 
-Fault handler used to make non-trivial calls, so it needed
-to set a stack frame up.  Used to be
-	save ... - grab a stack frame, old %o... become %i...
-	....
-	ret	- go back to address originally in %o7, currently %i7
-	 restore - switch to previous stack frame, in delay slot
-Non-trivial calls had been gone since ab5e8b331244 and that code should
-have become
-	retl	- go back to address in %o7
-	 clr %o0 - have return value set to 0
-What it had become instead was
-	ret	- go back to address in %i7 - return address of *caller*
-	 clr %o0 - have return value set to 0
-which is not good, to put it mildly - we forcibly return 0 from
-csum_and_copy_{from,to}_iter() (which is what the call of that
-thing had been inlined into) and do that without dropping the
-stack frame of said csum_and_copy_..._iter().  Confuses the
-hell out of the caller of csum_and_copy_..._iter(), obviously...
+In the possible_parent_show function, ensure proper handling of the return
+value from of_clk_get_parent_name to prevent potential issues arising from
+a NULL return.
+The current implementation invokes seq_puts directly on the result of
+of_clk_get_parent_name without verifying the return value, which can lead
+to kernel panic if the function returns NULL.
 
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Fixes: ab5e8b331244 "sparc32: propagate the calling conventions change down to __csum_partial_copy_sparc_generic()"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+This patch addresses the concern by introducing a check on the return
+value of of_clk_get_parent_name. If the return value is not NULL, the
+function proceeds to call seq_puts, providing the returned value as
+argument.
+However, if of_clk_get_parent_name returns NULL, the function provides a
+static string as argument, avoiding the panic.
+
+Fixes: 1ccc0ddf046a ("clk: Use seq_puts() in possible_parent_show()")
+Reported-by: Philip Daly <pdaly@redhat.com>
+Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
+Link: https://lore.kernel.org/r/20230921073217.572151-1-alessandro.carminati@gmail.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/lib/checksum_32.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk.c |   21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
---- a/arch/sparc/lib/checksum_32.S
-+++ b/arch/sparc/lib/checksum_32.S
-@@ -463,5 +463,5 @@ ccslow:	cmp	%g1, 0
-  * we only bother with faults on loads... */
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -3167,6 +3167,7 @@ static void possible_parent_show(struct
+ 				 unsigned int i, char terminator)
+ {
+ 	struct clk_core *parent;
++	const char *name = NULL;
  
- cc_fault:
--	ret
-+	retl
- 	 clr	%o0
+ 	/*
+ 	 * Go through the following options to fetch a parent's name.
+@@ -3181,18 +3182,20 @@ static void possible_parent_show(struct
+ 	 * registered (yet).
+ 	 */
+ 	parent = clk_core_get_parent_by_index(core, i);
+-	if (parent)
++	if (parent) {
+ 		seq_puts(s, parent->name);
+-	else if (core->parents[i].name)
++	} else if (core->parents[i].name) {
+ 		seq_puts(s, core->parents[i].name);
+-	else if (core->parents[i].fw_name)
++	} else if (core->parents[i].fw_name) {
+ 		seq_printf(s, "<%s>(fw)", core->parents[i].fw_name);
+-	else if (core->parents[i].index >= 0)
+-		seq_puts(s,
+-			 of_clk_get_parent_name(core->of_node,
+-						core->parents[i].index));
+-	else
+-		seq_puts(s, "(missing)");
++	} else {
++		if (core->parents[i].index >= 0)
++			name = of_clk_get_parent_name(core->of_node, core->parents[i].index);
++		if (!name)
++			name = "(missing)";
++
++		seq_puts(s, name);
++	}
+ 
+ 	seq_putc(s, terminator);
+ }
 
 
