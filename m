@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B583B22EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AA722EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPbrGnPo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3013CC433C8;
-	Mon,  6 Nov 2023 13:25:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVoBtCD/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21409C433C7;
+	Mon,  6 Nov 2023 13:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277121;
-	bh=+pBGrb50CLJYs/M2ImAtZcf3trmYGyMBRSQoIRwa9t8=;
+	s=korg; t=1699277124;
+	bh=lHuwWL5UfKNocigVFlXWRwsJi02nD5XCJR7hZjhZFog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPbrGnPoqydJ088CclIkMhJE+2KzvLxFI1ZnoMZtAOOB3B5LtKNuvuuB/Me7r+ncP
-	 eQFtb4uoC493ox8n2Dy/foMJCknE3y557ZXceWwhKTleopodKsDU3kT/uI3tApQm8R
-	 L9xKZGC8qZP46O0jWBI7Ucj5V8c4Yfi5y5qFLD4o=
+	b=VVoBtCD/qaQApik6lX8Uv70/hA325acECjYrbqhmGcEkA3vrKw8eTNe3OohjgRwu3
+	 eYGCovOO+nsEE2LcORzIcFE0qFYI/2/gq3YuMwaa1xIm+N3DdJcCzup5cdmF+a9rJM
+	 oEFjaYIbVb4o5f9N0sheN9g4c5dfnwhLpItceaMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dima Ruinskiy <dima.ruinskiy@intel.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Sasha Neftin <sasha.neftin@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/128] igc: Fix ambiguity in the ethtool advertising
-Date: Mon,  6 Nov 2023 14:03:08 +0100
-Message-ID: <20231106130310.413362602@linuxfoundation.org>
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 5.15 046/128] i2c: stm32f7: Fix PEC handling in case of SMBUS transfers
+Date: Mon,  6 Nov 2023 14:03:26 +0100
+Message-ID: <20231106130311.220476392@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -46,86 +43,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Neftin <sasha.neftin@intel.com>
+From: Alain Volmat <alain.volmat@foss.st.com>
 
-[ Upstream commit e7684d29efdf37304c62bb337ea55b3428ca118e ]
+commit c896ff2dd8f30a6b0a922c83a96f6d43f05f0e92 upstream.
 
-The 'ethtool_convert_link_mode_to_legacy_u32' method does not allow us to
-advertise 2500M speed support and TP (twisted pair) properly. Convert to
-'ethtool_link_ksettings_test_link_mode' to advertise supported speed and
-eliminate ambiguity.
+In case of SMBUS byte read with PEC enabled, the whole transfer
+is split into two commands.  A first write command, followed by
+a read command.  The write command does not have any PEC byte
+and a PEC byte is appended at the end of the read command.
+(cf Read byte protocol with PEC in SMBUS specification)
 
-Fixes: 8c5ad0dae93c ("igc: Add ethtool support")
-Suggested-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
-Suggested-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Signed-off-by: Sasha Neftin <sasha.neftin@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20231019203641.3661960-1-jacob.e.keller@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Within the STM32 I2C controller, handling (either sending
+or receiving) of the PEC byte is done via the PECBYTE bit in
+register CR2.
+
+Currently, the PECBYTE is set at the beginning of a transfer,
+which lead to sending a PEC byte at the end of the write command
+(hence losing the real last byte), and also does not check the
+PEC byte received during the read command.
+
+This patch corrects the function stm32f7_i2c_smbus_xfer_msg
+in order to only set the PECBYTE during the read command.
+
+Fixes: 9e48155f6bfe ("i2c: i2c-stm32f7: Add initial SMBus protocols support")
+Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
+Reviewed-by: Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
+Acked-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ethtool.c | 35 ++++++++++++++------
- 1 file changed, 25 insertions(+), 10 deletions(-)
+ drivers/i2c/busses/i2c-stm32f7.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-index 17cb4c13d0020..3bffd2729a439 100644
---- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-@@ -1810,7 +1810,7 @@ igc_ethtool_set_link_ksettings(struct net_device *netdev,
- 	struct igc_adapter *adapter = netdev_priv(netdev);
- 	struct net_device *dev = adapter->netdev;
- 	struct igc_hw *hw = &adapter->hw;
--	u32 advertising;
-+	u16 advertised = 0;
- 
- 	/* When adapter in resetting mode, autoneg/speed/duplex
- 	 * cannot be changed
-@@ -1835,18 +1835,33 @@ igc_ethtool_set_link_ksettings(struct net_device *netdev,
- 	while (test_and_set_bit(__IGC_RESETTING, &adapter->state))
- 		usleep_range(1000, 2000);
- 
--	ethtool_convert_link_mode_to_legacy_u32(&advertising,
--						cmd->link_modes.advertising);
--	/* Converting to legacy u32 drops ETHTOOL_LINK_MODE_2500baseT_Full_BIT.
--	 * We have to check this and convert it to ADVERTISE_2500_FULL
--	 * (aka ETHTOOL_LINK_MODE_2500baseX_Full_BIT) explicitly.
--	 */
--	if (ethtool_link_ksettings_test_link_mode(cmd, advertising, 2500baseT_Full))
--		advertising |= ADVERTISE_2500_FULL;
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  2500baseT_Full))
-+		advertised |= ADVERTISE_2500_FULL;
-+
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  1000baseT_Full))
-+		advertised |= ADVERTISE_1000_FULL;
-+
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  100baseT_Full))
-+		advertised |= ADVERTISE_100_FULL;
-+
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  100baseT_Half))
-+		advertised |= ADVERTISE_100_HALF;
-+
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  10baseT_Full))
-+		advertised |= ADVERTISE_10_FULL;
-+
-+	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
-+						  10baseT_Half))
-+		advertised |= ADVERTISE_10_HALF;
- 
- 	if (cmd->base.autoneg == AUTONEG_ENABLE) {
- 		hw->mac.autoneg = 1;
--		hw->phy.autoneg_advertised = advertising;
-+		hw->phy.autoneg_advertised = advertised;
- 		if (adapter->fc_autoneg)
- 			hw->fc.requested_mode = igc_fc_default;
+--- a/drivers/i2c/busses/i2c-stm32f7.c
++++ b/drivers/i2c/busses/i2c-stm32f7.c
+@@ -1063,9 +1063,10 @@ static int stm32f7_i2c_smbus_xfer_msg(st
+ 	/* Configure PEC */
+ 	if ((flags & I2C_CLIENT_PEC) && f7_msg->size != I2C_SMBUS_QUICK) {
+ 		cr1 |= STM32F7_I2C_CR1_PECEN;
+-		cr2 |= STM32F7_I2C_CR2_PECBYTE;
+-		if (!f7_msg->read_write)
++		if (!f7_msg->read_write) {
++			cr2 |= STM32F7_I2C_CR2_PECBYTE;
+ 			f7_msg->count++;
++		}
  	} else {
--- 
-2.42.0
-
+ 		cr1 &= ~STM32F7_I2C_CR1_PECEN;
+ 		cr2 &= ~STM32F7_I2C_CR2_PECBYTE;
+@@ -1153,8 +1154,10 @@ static void stm32f7_i2c_smbus_rep_start(
+ 	f7_msg->stop = true;
+ 
+ 	/* Add one byte for PEC if needed */
+-	if (cr1 & STM32F7_I2C_CR1_PECEN)
++	if (cr1 & STM32F7_I2C_CR1_PECEN) {
++		cr2 |= STM32F7_I2C_CR2_PECBYTE;
+ 		f7_msg->count++;
++	}
+ 
+ 	/* Set number of bytes to be transferred */
+ 	cr2 &= ~(STM32F7_I2C_CR2_NBYTES_MASK);
 
 
