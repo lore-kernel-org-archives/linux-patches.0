@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7A1200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0045D200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8teDQpr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1791AC433C8;
-	Mon,  6 Nov 2023 13:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8kGIi3i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403C2C433C9;
+	Mon,  6 Nov 2023 13:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699275960;
-	bh=TIakA465LLUkm8vIVNFZRkmfCuy5QJW/RWWnOloVAqA=;
+	s=korg; t=1699275963;
+	bh=GS4zEiYZY0q/mPfcmmDh/XIlAFSO+T2dAgPXvwCGMbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C8teDQpr6DnMxAp9+/KZoPuviqourfdn0MxiNE06E4lDCFH4AK3Y1/uZd34yguKfv
-	 6/BAVOlftkTRu5uKAADljTjkP6E0sLxZ7OyEFUXC2rsYiW2EJC2mAlkMETevtRTqWy
-	 palPhK+G+bMBgKGWkr3Fe0VrvAXx5EERYmOgH7xk=
+	b=s8kGIi3itoDfgGoXF/74zUfni2EY6kkgLcBUXL/X9nrs1QBV01Uh6pzOrnOi3TbcJ
+	 fxABWbqHbjNKAJ7QiymiANMXMEMJ7UQZGCitWlZAs42W3RGahZNNNnWq5u/C3QZEYX
+	 hicfgHTL2G2O+nTukVb1qwkNbUF6KbRyiCaUujIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Mateusz Palczewski <mateusz.palczewski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Grant Grundler <grundler@chromium.org>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 4.14 05/48] igb: Fix potential memory leak in igb_add_ethtool_nfc_entry
-Date: Mon,  6 Nov 2023 14:02:56 +0100
-Message-ID: <20231106130258.046357408@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 06/48] r8152: Increase USB control msg timeout to 5000ms as per spec
+Date: Mon,  6 Nov 2023 14:02:57 +0100
+Message-ID: <20231106130258.080163490@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -45,45 +44,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Palczewski <mateusz.palczewski@intel.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 8c0b48e01daba5ca58f939a8425855d3f4f2ed14 ]
+[ Upstream commit a5feba71ec9c14a54c3babdc732c5b6866d8ee43 ]
 
-Add check for return of igb_update_ethtool_nfc_entry so that in case
-of any potential errors the memory alocated for input will be freed.
+According to the comment next to USB_CTRL_GET_TIMEOUT and
+USB_CTRL_SET_TIMEOUT, although sending/receiving control messages is
+usually quite fast, the spec allows them to take up to 5 seconds.
+Let's increase the timeout in the Realtek driver from 500ms to 5000ms
+(using the #defines) to account for this.
 
-Fixes: 0e71def25281 ("igb: add support of RX network flow classification")
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+This is not just a theoretical change. The need for the longer timeout
+was seen in testing. Specifically, if you drop a sc7180-trogdor based
+Chromebook into the kdb debugger and then "go" again after sitting in
+the debugger for a while, the next USB control message takes a long
+time. Out of ~40 tests the slowest USB control message was 4.5
+seconds.
+
+While dropping into kdb is not exactly an end-user scenario, the above
+is similar to what could happen due to an temporary interrupt storm,
+what could happen if there was a host controller (HW or SW) issue, or
+what could happen if the Realtek device got into a confused state and
+needed time to recover.
+
+This change is fairly critical since the r8152 driver in Linux doesn't
+expect register reads/writes (which are backed by USB control
+messages) to fail.
+
+Fixes: ac718b69301c ("net/usb: new driver for RTL8152")
+Suggested-by: Hayes Wang <hayeswang@realtek.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Grant Grundler <grundler@chromium.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_ethtool.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/usb/r8152.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_ethtool.c b/drivers/net/ethernet/intel/igb/igb_ethtool.c
-index 77108b0a07f51..c8b5650b7eac5 100644
---- a/drivers/net/ethernet/intel/igb/igb_ethtool.c
-+++ b/drivers/net/ethernet/intel/igb/igb_ethtool.c
-@@ -2951,11 +2951,15 @@ static int igb_add_ethtool_nfc_entry(struct igb_adapter *adapter,
- 	if (err)
- 		goto err_out_w_lock;
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index d17d125a34540..a0b40bdbdd84f 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -786,7 +786,7 @@ int get_registers(struct r8152 *tp, u16 value, u16 index, u16 size, void *data)
  
--	igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
-+	err = igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
-+	if (err)
-+		goto err_out_input_filter;
+ 	ret = usb_control_msg(tp->udev, usb_rcvctrlpipe(tp->udev, 0),
+ 			      RTL8152_REQ_GET_REGS, RTL8152_REQT_READ,
+-			      value, index, tmp, size, 500);
++			      value, index, tmp, size, USB_CTRL_GET_TIMEOUT);
+ 	if (ret < 0)
+ 		memset(data, 0xff, size);
+ 	else
+@@ -809,7 +809,7 @@ int set_registers(struct r8152 *tp, u16 value, u16 index, u16 size, void *data)
  
- 	spin_unlock(&adapter->nfc_lock);
- 	return 0;
+ 	ret = usb_control_msg(tp->udev, usb_sndctrlpipe(tp->udev, 0),
+ 			      RTL8152_REQ_SET_REGS, RTL8152_REQT_WRITE,
+-			      value, index, tmp, size, 500);
++			      value, index, tmp, size, USB_CTRL_SET_TIMEOUT);
  
-+err_out_input_filter:
-+	igb_erase_filter(adapter, input);
- err_out_w_lock:
- 	spin_unlock(&adapter->nfc_lock);
- err_out:
+ 	kfree(tmp);
+ 
+@@ -5084,7 +5084,8 @@ static u8 rtl_get_version(struct usb_interface *intf)
+ 
+ 	ret = usb_control_msg(udev, usb_rcvctrlpipe(udev, 0),
+ 			      RTL8152_REQ_GET_REGS, RTL8152_REQT_READ,
+-			      PLA_TCR0, MCU_TYPE_PLA, tmp, sizeof(*tmp), 500);
++			      PLA_TCR0, MCU_TYPE_PLA, tmp, sizeof(*tmp),
++			      USB_CTRL_GET_TIMEOUT);
+ 	if (ret > 0)
+ 		ocp_data = (__le32_to_cpu(*tmp) >> 16) & VERSION_MASK;
+ 
 -- 
 2.42.0
 
