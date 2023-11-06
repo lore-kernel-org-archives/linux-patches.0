@@ -1,181 +1,456 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE23250F9;
-	Mon,  6 Nov 2023 13:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4755123763
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHAo4JYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0D8C433CA;
-	Mon,  6 Nov 2023 13:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuJJzZct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AED2C433C8;
+	Mon,  6 Nov 2023 13:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277459;
-	bh=CiUcfjAe5ELa2nPtt3P/C5uWPuSKhYODGIUCgmCLO9w=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FHAo4JYkHmmOa4viRuhm/MEp8Bz4++LgnDiXSevzdyT8/6xMYyW8Qdx9Bz/XzN8mR
-	 sUimoGhQbVJMxJ8Ld+NS5+BEeSM8ooedTfh2KmS9pe2hRNvxE1iBl2apdA+ncsUOW0
-	 9Or9t23sazWXmhtiYZliByMtgVK1IeFMhhwomoa8=
+	s=korg; t=1699277462;
+	bh=dZF8Xs6RtYZa+d7vmwfE3cdMM8YIULdcxQRL02GHo9g=;
+	h=From:To:Cc:Subject:Date:From;
+	b=CuJJzZctjnq04mFJP3Onft9RHooUjLgfj5qIvPVJ+OQI+17kIsnmKodgX3C343iEF
+	 G8io6X8XtVVFebWLX7SzR23kkPnQbG6MueuLcJ9KkKg9tx/b/QqLzDtFTUbo+wiZZg
+	 iXQN5Oj8BwEhdGTjn/ANTiv9XIofImWGyn3ckr8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	nic_swsd@realtek.com,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Marco Elver <elver@google.com>,
-	netdev@vger.kernel.org,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 09/95] r8169: fix the KCSAN reported data-race in rtl_tx while reading TxDescArray[entry].opts1
-Date: Mon,  6 Nov 2023 14:03:37 +0100
-Message-ID: <20231106130305.047794271@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 5.10 00/95] 5.10.200-rc1 review
+Date: Mon,  6 Nov 2023 14:03:28 +0100
+Message-ID: <20231106130304.678610325@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
-References: <20231106130304.678610325@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.200-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.10.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.10.200-rc1
+X-KernelTest-Deadline: 2023-11-08T13:03+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 5.10.200 release.
+There are 95 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Wed, 08 Nov 2023 13:02:46 +0000.
+Anything received after that time might be too late.
 
-From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.200-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+and the diffstat can be found below.
 
-[ Upstream commit dcf75a0f6bc136de94e88178ae5f51b7f879abc9 ]
+thanks,
 
-KCSAN reported the following data-race:
+greg k-h
 
-==================================================================
-BUG: KCSAN: data-race in rtl8169_poll (drivers/net/ethernet/realtek/r8169_main.c:4368 drivers/net/ethernet/realtek/r8169_main.c:4581) r8169
+-------------
+Pseudo-Shortlog of commits:
 
-race at unknown origin, with read to 0xffff888140d37570 of 4 bytes by interrupt on cpu 21:
-rtl8169_poll (drivers/net/ethernet/realtek/r8169_main.c:4368 drivers/net/ethernet/realtek/r8169_main.c:4581) r8169
-__napi_poll (net/core/dev.c:6527)
-net_rx_action (net/core/dev.c:6596 net/core/dev.c:6727)
-__do_softirq (kernel/softirq.c:553)
-__irq_exit_rcu (kernel/softirq.c:427 kernel/softirq.c:632)
-irq_exit_rcu (kernel/softirq.c:647)
-sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1074 (discriminator 14))
-asm_sysvec_apic_timer_interrupt (./arch/x86/include/asm/idtentry.h:645)
-cpuidle_enter_state (drivers/cpuidle/cpuidle.c:291)
-cpuidle_enter (drivers/cpuidle/cpuidle.c:390)
-call_cpuidle (kernel/sched/idle.c:135)
-do_idle (kernel/sched/idle.c:219 kernel/sched/idle.c:282)
-cpu_startup_entry (kernel/sched/idle.c:378 (discriminator 1))
-start_secondary (arch/x86/kernel/smpboot.c:210 arch/x86/kernel/smpboot.c:294)
-secondary_startup_64_no_verify (arch/x86/kernel/head_64.S:433)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.10.200-rc1
 
-value changed: 0xb0000042 -> 0x00000000
+Mark Hasemeyer <markhas@chromium.org>
+    ALSA: hda: intel-dsp-config: Fix JSL Chromebook quirk detection
 
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 21 PID: 0 Comm: swapper/21 Tainted: G             L     6.6.0-rc2-kcsan-00143-gb5cbe7c00aa0 #41
-Hardware name: ASRock X670E PG Lightning/X670E PG Lightning, BIOS 1.21 04/26/2023
-==================================================================
+Cameron Williams <cang1@live.co.uk>
+    tty: 8250: Add support for Intashield IS-100
 
-The read side is in
+Cameron Williams <cang1@live.co.uk>
+    tty: 8250: Add support for Brainboxes UP cards
 
-drivers/net/ethernet/realtek/r8169_main.c
-=========================================
-   4355 static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
-   4356                    int budget)
-   4357 {
-   4358         unsigned int dirty_tx, bytes_compl = 0, pkts_compl = 0;
-   4359         struct sk_buff *skb;
-   4360
-   4361         dirty_tx = tp->dirty_tx;
-   4362
-   4363         while (READ_ONCE(tp->cur_tx) != dirty_tx) {
-   4364                 unsigned int entry = dirty_tx % NUM_TX_DESC;
-   4365                 u32 status;
-   4366
- → 4367                 status = le32_to_cpu(tp->TxDescArray[entry].opts1);
-   4368                 if (status & DescOwn)
-   4369                         break;
-   4370
-   4371                 skb = tp->tx_skb[entry].skb;
-   4372                 rtl8169_unmap_tx_skb(tp, entry);
-   4373
-   4374                 if (skb) {
-   4375                         pkts_compl++;
-   4376                         bytes_compl += skb->len;
-   4377                         napi_consume_skb(skb, budget);
-   4378                 }
-   4379                 dirty_tx++;
-   4380         }
-   4381
-   4382         if (tp->dirty_tx != dirty_tx) {
-   4383                 dev_sw_netstats_tx_add(dev, pkts_compl, bytes_compl);
-   4384                 WRITE_ONCE(tp->dirty_tx, dirty_tx);
-   4385
-   4386                 netif_subqueue_completed_wake(dev, 0, pkts_compl, bytes_compl,
-   4387                                               rtl_tx_slots_avail(tp),
-   4388                                               R8169_TX_START_THRS);
-   4389                 /*
-   4390                  * 8168 hack: TxPoll requests are lost when the Tx packets are
-   4391                  * too close. Let's kick an extra TxPoll request when a burst
-   4392                  * of start_xmit activity is detected (if it is not detected,
-   4393                  * it is slow enough). -- FR
-   4394                  * If skb is NULL then we come here again once a tx irq is
-   4395                  * triggered after the last fragment is marked transmitted.
-   4396                  */
-   4397                 if (READ_ONCE(tp->cur_tx) != dirty_tx && skb)
-   4398                         rtl8169_doorbell(tp);
-   4399         }
-   4400 }
+Cameron Williams <cang1@live.co.uk>
+    tty: 8250: Add support for additional Brainboxes UC cards
 
-tp->TxDescArray[entry].opts1 is reported to have a data-race and READ_ONCE() fixes
-this KCSAN warning.
+Cameron Williams <cang1@live.co.uk>
+    tty: 8250: Remove UC-257 and UC-431
 
-   4366
- → 4367                 status = le32_to_cpu(READ_ONCE(tp->TxDescArray[entry].opts1));
-   4368                 if (status & DescOwn)
-   4369                         break;
-   4370
+Andrey Konovalov <andreyknvl@gmail.com>
+    usb: raw-gadget: properly handle interrupted requests
 
-Cc: Heiner Kallweit <hkallweit1@gmail.com>
-Cc: nic_swsd@realtek.com
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Marco Elver <elver@google.com>
-Cc: netdev@vger.kernel.org
-Link: https://lore.kernel.org/lkml/dc7fc8fa-4ea4-e9a9-30a6-7c83e6b53188@alu.unizg.hr/
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Acked-by: Marco Elver <elver@google.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/ethernet/realtek/r8169_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+LihaSika <lihasika@gmail.com>
+    usb: storage: set 1.50 as the lower bcdDevice for older "Super Top" compatibility
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index c025dadcce289..d47adc7725ad5 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4470,7 +4470,7 @@ static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
- 		struct sk_buff *skb = tp->tx_skb[entry].skb;
- 		u32 status;
- 
--		status = le32_to_cpu(tp->TxDescArray[entry].opts1);
-+		status = le32_to_cpu(READ_ONCE(tp->TxDescArray[entry].opts1));
- 		if (status & DescOwn)
- 			break;
- 
--- 
-2.42.0
+Vicki Pfau <vi@endrift.com>
+    PCI: Prevent xHCI driver from claiming AMD VanGogh USB3 DRD device
 
+Lukas Magel <lukas.magel@posteo.net>
+    can: isotp: isotp_sendmsg(): fix TX state detection and wait behavior
+
+Oliver Hartkopp <socketcan@hartkopp.net>
+    can: isotp: isotp_bind(): do not validate unused address information
+
+Oliver Hartkopp <socketcan@hartkopp.net>
+    can: isotp: add local echo tx processing and tx without FC
+
+Oliver Hartkopp <socketcan@hartkopp.net>
+    can: isotp: handle wait_event_interruptible() return values
+
+Oliver Hartkopp <socketcan@hartkopp.net>
+    can: isotp: check CAN address family in isotp_bind()
+
+Oliver Hartkopp <socketcan@hartkopp.net>
+    can: isotp: isotp_bind(): return -EINVAL on incorrect CAN ID formatting
+
+Oliver Hartkopp <socketcan@hartkopp.net>
+    can: isotp: set max PDU size to 64 kByte
+
+Patrick Menschel <menschel.p@posteo.de>
+    can: isotp: Add error message if txqueuelen is too small
+
+Patrick Menschel <menschel.p@posteo.de>
+    can: isotp: add symbolic error message to isotp_module_init()
+
+Patrick Menschel <menschel.p@posteo.de>
+    can: isotp: change error format from decimal to symbolic error names
+
+Ian Rogers <irogers@google.com>
+    perf evlist: Avoid frequency mode for the dummy event
+
+Namhyung Kim <namhyung@kernel.org>
+    perf tools: Get rid of evlist__add_on_all_cpus()
+
+Adrian Hunter <adrian.hunter@intel.com>
+    perf evlist: Add evlist__add_dummy_on_all_cpus()
+
+Michael Ellerman <mpe@ellerman.id.au>
+    powerpc/mm: Fix boot crash with FLATMEM
+
+Su Hui <suhui@nfschina.com>
+    net: chelsio: cxgb4: add an error code check in t4_load_phy_fw
+
+Liming Sun <limings@nvidia.com>
+    platform/mellanox: mlxbf-tmfifo: Fix a warning message
+
+Tomas Henzl <thenzl@redhat.com>
+    scsi: mpt3sas: Fix in error path
+
+Jorge Maidana <jorgem.linux@gmail.com>
+    fbdev: uvesafb: Call cn_del_callback() at the end of uvesafb_exit()
+
+Shuming Fan <shumingf@realtek.com>
+    ASoC: rt5650: fix the wrong result of key button
+
+Florian Westphal <fw@strlen.de>
+    netfilter: nfnetlink_log: silence bogus compiler warning
+
+William A. Kennington III <william@wkennington.com>
+    spi: npcm-fiu: Fix UMA reads when dummy.nbytes == 0
+
+Arnd Bergmann <arnd@arndb.de>
+    fbdev: atyfb: only use ioremap_uc() on i386 and ia64
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: synaptics-rmi4 - handle reset delay when using SMBus trsnsport
+
+Zhang Shurong <zhang_shurong@foxmail.com>
+    dmaengine: ste_dma40: Fix PM disable depth imbalance in d40_probe
+
+Ben Wolsieffer <ben.wolsieffer@hefring.com>
+    irqchip/stm32-exti: add missing DT IRQ flag translation
+
+Anup Patel <apatel@ventanamicro.com>
+    irqchip/riscv-intc: Mark all INTC nodes as initialized
+
+Gustavo A. R. Silva <gustavoars@kernel.org>
+    net: sched: cls_u32: Fix allocation size in u32_init()
+
+Juergen Gross <jgross@suse.com>
+    x86: Fix .brk attribute in linker script
+
+Hangyu Hua <hbh25y@gmail.com>
+    rpmsg: Fix possible refcount leak in rpmsg_register_device_override()
+
+Bjorn Andersson <quic_bjorande@quicinc.com>
+    rpmsg: glink: Release driver_override
+
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+    rpmsg: Fix calling device_lock() on non-initialized device
+
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+    rpmsg: Fix kfree() of static memory on setting driver_override
+
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+    rpmsg: Constify local variable in field store macro
+
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+    driver: platform: Add helper for safer setting of driver_override
+
+John Sperbeck <jsperbeck@google.com>
+    objtool/x86: add missing embedded_insn check
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: avoid overlapping preallocations due to overflow
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: fix BUG in ext4_mb_new_inode_pa() due to overflow
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: add two helper functions extent_logical_end() and pa_logical_end()
+
+Josh Poimboeuf <jpoimboe@kernel.org>
+    x86/mm: Fix RESERVE_BRK() for older binutils
+
+Josh Poimboeuf <jpoimboe@redhat.com>
+    x86/mm: Simplify RESERVE_BRK()
+
+Chao Yu <chao@kernel.org>
+    f2fs: fix to do sanity check on inode type during garbage collection
+
+Steve French <stfrench@microsoft.com>
+    smbdirect: missing rc checks while waiting for rdma events
+
+Wang Hai <wanghai38@huawei.com>
+    kobject: Fix slab-out-of-bounds in fill_kobj_path()
+
+Thomas Gleixner <tglx@linutronix.de>
+    x86/i8259: Skip probing when ACPI/MADT advertises PCAT compatibility
+
+Robert Hancock <robert.hancock@calian.com>
+    iio: adc: xilinx-xadc: Don't clobber preset voltage/temperature thresholds
+
+Bartosz Golaszewski <bgolaszewski@baylibre.com>
+    iio: adc: xilinx: use more devres helpers and remove remove()
+
+Bartosz Golaszewski <bgolaszewski@baylibre.com>
+    iio: adc: xilinx: use devm_krealloc() instead of kfree() + kcalloc()
+
+Bartosz Golaszewski <bgolaszewski@baylibre.com>
+    iio: adc: xilinx: use helper variable for &pdev->dev
+
+Alessandro Carminati <alessandro.carminati@gmail.com>
+    clk: Sanitize possible_parent_show to Handle Return Value of of_clk_get_parent_name
+
+Al Viro <viro@zeniv.linux.org.uk>
+    sparc32: fix a braino in fault handling in csum_and_copy_..._user()
+
+Peter Zijlstra <peterz@infradead.org>
+    perf/core: Fix potential NULL deref
+
+Peng Fan <peng.fan@nxp.com>
+    nvmem: imx: correct nregs for i.MX6UL
+
+Peng Fan <peng.fan@nxp.com>
+    nvmem: imx: correct nregs for i.MX6SLL
+
+Peng Fan <peng.fan@nxp.com>
+    nvmem: imx: correct nregs for i.MX6ULL
+
+Ekansh Gupta <quic_ekangupt@quicinc.com>
+    misc: fastrpc: Clean buffers on remote invocation failures
+
+Yujie Liu <yujie.liu@intel.com>
+    tracing/kprobes: Fix the description of variable length arguments
+
+Jian Zhang <zhangjian.3032@bytedance.com>
+    i2c: aspeed: Fix i2c bus hang in slave read
+
+Alain Volmat <alain.volmat@foss.st.com>
+    i2c: stm32f7: Fix PEC handling in case of SMBUS transfers
+
+Herve Codina <herve.codina@bootlin.com>
+    i2c: muxes: i2c-demux-pinctrl: Use of_get_i2c_adapter_by_node()
+
+Herve Codina <herve.codina@bootlin.com>
+    i2c: muxes: i2c-mux-gpmux: Use of_get_i2c_adapter_by_node()
+
+Herve Codina <herve.codina@bootlin.com>
+    i2c: muxes: i2c-mux-pinctrl: Use of_get_i2c_adapter_by_node()
+
+Marek Szyprowski <m.szyprowski@samsung.com>
+    iio: exynos-adc: request second interupt only when touchscreen mode is used
+
+Haibo Li <haibo.li@mediatek.com>
+    kasan: print the original fault addr when access invalid shadow
+
+Ivan Vecera <ivecera@redhat.com>
+    i40e: Fix wrong check for I40E_TXR_FLAGS_WB_ON_ITR
+
+Pablo Neira Ayuso <pablo@netfilter.org>
+    gtp: fix fragmentation needed check with gso
+
+Pablo Neira Ayuso <pablo@netfilter.org>
+    gtp: uapi: fix GTPA_MAX
+
+Fred Chen <fred.chenchen03@gmail.com>
+    tcp: fix wrong RTO timeout when received SACK reneging
+
+Douglas Anderson <dianders@chromium.org>
+    r8152: Release firmware if we have an error in probe
+
+Douglas Anderson <dianders@chromium.org>
+    r8152: Cancel hw_phy_work if we have an error in probe
+
+Douglas Anderson <dianders@chromium.org>
+    r8152: Run the unload routine if we have errors during probe
+
+Douglas Anderson <dianders@chromium.org>
+    r8152: Increase USB control msg timeout to 5000ms as per spec
+
+Shigeru Yoshida <syoshida@redhat.com>
+    net: usb: smsc95xx: Fix uninit-value access in smsc95xx_read_reg
+
+Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+    net: ieee802154: adf7242: Fix some potential buffer overflow in adf7242_stats_show()
+
+Sasha Neftin <sasha.neftin@intel.com>
+    igc: Fix ambiguity in the ethtool advertising
+
+Eric Dumazet <edumazet@google.com>
+    neighbour: fix various data-races
+
+Mateusz Palczewski <mateusz.palczewski@intel.com>
+    igb: Fix potential memory leak in igb_add_ethtool_nfc_entry
+
+Kunwu Chan <chentao@kylinos.cn>
+    treewide: Spelling fix in comment
+
+Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+    r8169: fix the KCSAN reported data race in rtl_rx while reading desc->opts1
+
+Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+    r8169: fix the KCSAN reported data-race in rtl_tx while reading TxDescArray[entry].opts1
+
+Lukasz Majczak <lma@semihalf.com>
+    drm/dp_mst: Fix NULL deref in get_mst_branch_device_by_guid_helper()
+
+Wolfram Sang <wsa+renesas@sang-engineering.com>
+    mmc: renesas_sdhi: use custom mask for TMIO_MASK_ALL
+
+Kemeng Shi <shikemeng@huaweicloud.com>
+    mm/page_alloc: correct start page when guard page debug is enabled
+
+Maximilian Heyne <mheyne@amazon.de>
+    virtio-mmio: fix memory leak of vm_dev
+
+Gavin Shan <gshan@redhat.com>
+    virtio_balloon: Fix endless deflation and inflation on arm64
+
+Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
+    mcb-lpc: Reallocate memory region to avoid memory overlapping
+
+Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
+    mcb: Return actual parsed size when reading chameleon table
+
+Francis Laniel <flaniel@linux.microsoft.com>
+    selftests/ftrace: Add new test case which checks non unique symbol
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   4 +-
+ arch/powerpc/kernel/setup-common.c                 |   2 +
+ arch/powerpc/mm/mem.c                              |   1 -
+ arch/sparc/lib/checksum_32.S                       |   2 +-
+ arch/x86/include/asm/i8259.h                       |   2 +
+ arch/x86/include/asm/setup.h                       |  46 +--
+ arch/x86/kernel/acpi/boot.c                        |   3 +
+ arch/x86/kernel/i8259.c                            |  38 +-
+ arch/x86/kernel/setup.c                            |   5 -
+ arch/x86/kernel/vmlinux.lds.S                      |   2 +-
+ drivers/base/driver.c                              |  69 ++++
+ drivers/base/platform.c                            |  28 +-
+ drivers/clk/clk.c                                  |  21 +-
+ drivers/dma/ste_dma40.c                            |   1 +
+ drivers/gpu/drm/drm_dp_mst_topology.c              |   6 +-
+ drivers/i2c/busses/i2c-aspeed.c                    |   3 +-
+ drivers/i2c/busses/i2c-stm32f7.c                   |   9 +-
+ drivers/i2c/muxes/i2c-demux-pinctrl.c              |   2 +-
+ drivers/i2c/muxes/i2c-mux-gpmux.c                  |   2 +-
+ drivers/i2c/muxes/i2c-mux-pinctrl.c                |   2 +-
+ drivers/iio/adc/exynos_adc.c                       |  24 +-
+ drivers/iio/adc/xilinx-xadc-core.c                 | 179 ++++-----
+ drivers/input/mouse/synaptics.c                    |   1 +
+ drivers/input/rmi4/rmi_smbus.c                     |  50 ++-
+ drivers/irqchip/irq-riscv-intc.c                   |  10 +-
+ drivers/irqchip/irq-stm32-exti.c                   |   1 +
+ drivers/mcb/mcb-lpc.c                              |  35 +-
+ drivers/mcb/mcb-parse.c                            |  15 +-
+ drivers/misc/fastrpc.c                             |  10 +-
+ drivers/mmc/host/renesas_sdhi_core.c               |   3 +-
+ drivers/mmc/host/tmio_mmc.h                        |   2 +-
+ drivers/net/ethernet/chelsio/cxgb4/t4_hw.c         |   2 +
+ drivers/net/ethernet/intel/i40e/i40e_txrx.c        |   2 +-
+ drivers/net/ethernet/intel/igb/igb_ethtool.c       |   6 +-
+ drivers/net/ethernet/intel/igc/igc_ethtool.c       |  35 +-
+ drivers/net/ethernet/realtek/r8169_main.c          |   4 +-
+ drivers/net/ethernet/toshiba/ps3_gelic_wireless.c  |   2 +-
+ drivers/net/gtp.c                                  |   5 +-
+ drivers/net/ieee802154/adf7242.c                   |   5 +-
+ drivers/net/usb/r8152.c                            |  11 +-
+ drivers/net/usb/smsc95xx.c                         |   4 +-
+ drivers/nvmem/imx-ocotp.c                          |   6 +-
+ drivers/pci/quirks.c                               |   8 +-
+ drivers/platform/mellanox/mlxbf-tmfifo.c           |  21 +-
+ drivers/rpmsg/qcom_glink_native.c                  |   2 +
+ drivers/rpmsg/rpmsg_core.c                         |  37 +-
+ drivers/rpmsg/rpmsg_internal.h                     |   5 +-
+ drivers/scsi/mpt3sas/mpt3sas_scsih.c               |   4 +-
+ drivers/spi/spi-npcm-fiu.c                         |   5 +-
+ drivers/tty/serial/8250/8250_pci.c                 | 122 +++++-
+ drivers/usb/gadget/legacy/raw_gadget.c             |  26 +-
+ drivers/usb/storage/unusual_cypress.h              |   2 +-
+ drivers/video/fbdev/aty/atyfb_base.c               |   4 +
+ drivers/video/fbdev/uvesafb.c                      |   2 +-
+ drivers/virtio/virtio_balloon.c                    |   6 +-
+ drivers/virtio/virtio_mmio.c                       |  19 +-
+ fs/cifs/smbdirect.c                                |  14 +-
+ fs/ext4/mballoc.c                                  |  51 +--
+ fs/ext4/mballoc.h                                  |  14 +
+ fs/f2fs/gc.c                                       |   3 +-
+ include/linux/device/driver.h                      |   2 +
+ include/linux/kasan.h                              |   6 +-
+ include/linux/pci_ids.h                            |   1 +
+ include/linux/platform_device.h                    |   6 +-
+ include/linux/rpmsg.h                              |  14 +-
+ include/uapi/linux/can/isotp.h                     |  25 +-
+ include/uapi/linux/gtp.h                           |   2 +-
+ kernel/events/core.c                               |   3 +-
+ kernel/trace/trace_kprobe.c                        |   4 +-
+ lib/kobject.c                                      |  12 +-
+ mm/kasan/report.c                                  |   4 +-
+ mm/page_alloc.c                                    |   2 +-
+ net/can/isotp.c                                    | 446 +++++++++++++--------
+ net/core/neighbour.c                               |  67 ++--
+ net/ipv4/tcp_input.c                               |   9 +-
+ net/netfilter/nfnetlink_log.c                      |   2 +-
+ net/sched/cls_u32.c                                |   2 +-
+ sound/hda/intel-dsp-config.c                       |   6 +
+ sound/soc/codecs/rt5645.c                          |   2 +
+ tools/objtool/check.c                              |   2 +-
+ tools/perf/util/evlist.c                           |  21 +
+ tools/perf/util/evlist.h                           |   5 +
+ .../ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc |  13 +
+ 83 files changed, 1088 insertions(+), 573 deletions(-)
 
 
