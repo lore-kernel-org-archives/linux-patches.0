@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF62208C0
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7DA208C0
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPynPOIz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0581C433C7;
-	Mon,  6 Nov 2023 13:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qmpe6yoa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC94C433C8;
+	Mon,  6 Nov 2023 13:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277501;
-	bh=BXzyk2069wlZfWUZlBnEaz+jfidzL5ON1R0A0IYwRHo=;
+	s=korg; t=1699277504;
+	bh=XqnqQaKfkbhGoRNGdsQ57S1M6iSmjdfcFvmFm/iK1lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPynPOIzYTv2B+pkAeOBp1wC6ggE5+fmlczK9nNrhcaBFD9NeNq4zym6pCOZjJGKv
-	 KX57Jh59siXCavvc4Lp2lp4aIXEDmrGitdzZ+zVRKN/XagUkjh0opC/42JLEios5G8
-	 XyJ90eTysFuT044OTMR1hcrQ4giWYJHQLR7EYZv4=
+	b=Qmpe6yoa1tSvKxVDHlL9fBbB8jWAkuzOLlDKGONUbpeRX9W+iQ/dBnwwuC7VxbJxi
+	 LqTXQ6NXO+FyRDL+0pzJ/nrBIG0VAJoFzJSUOCJeXx55HNLsi1alDWySESuK/JoJy1
+	 K4nqmHOu/qkJYnFxQbUaTRmlw83eFJjMDPOJDfMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Hancock <robert.hancock@calian.com>,
-	"OGriofa, Conall" <conall.ogriofa@amd.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>,
-	O'Griofa
-Subject: [PATCH 5.10 43/95] iio: adc: xilinx-xadc: Dont clobber preset voltage/temperature thresholds
-Date: Mon,  6 Nov 2023 14:04:11 +0100
-Message-ID: <20231106130306.275999971@linuxfoundation.org>
+	David Lazar <dlazar@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 5.10 44/95] x86/i8259: Skip probing when ACPI/MADT advertises PCAT compatibility
+Date: Mon,  6 Nov 2023 14:04:12 +0100
+Message-ID: <20231106130306.308328384@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -45,73 +43,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Hancock <robert.hancock@calian.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 8d6b3ea4d9eaca80982442b68a292ce50ce0a135 ]
+commit 128b0c9781c9f2651bea163cb85e52a6c7be0f9e upstream.
 
-In the probe function, the driver was reading out the thresholds already
-set in the core, which can be configured by the user in the Vivado tools
-when the FPGA image is built. However, it later clobbered those values
-with zero or maximum values. In particular, the overtemperature shutdown
-threshold register was overwritten with the max value, which effectively
-prevents the FPGA from shutting down when the desired threshold was
-eached, potentially risking hardware damage in that case.
+David and a few others reported that on certain newer systems some legacy
+interrupts fail to work correctly.
 
-Remove this code to leave the preconfigured default threshold values
-intact.
+Debugging revealed that the BIOS of these systems leaves the legacy PIC in
+uninitialized state which makes the PIC detection fail and the kernel
+switches to a dummy implementation.
 
-The code was also disabling all alarms regardless of what enable state
-they were left in by the FPGA image, including the overtemperature
-shutdown feature. Leave these bits in their original state so they are
-not unconditionally disabled.
+Unfortunately this fallback causes quite some code to fail as it depends on
+checks for the number of legacy PIC interrupts or the availability of the
+real PIC.
 
-Fixes: bdc8cda1d010 ("iio:adc: Add Xilinx XADC driver")
-Signed-off-by: Robert Hancock <robert.hancock@calian.com>
-Acked-by: O'Griofa, Conall <conall.ogriofa@amd.com>
-Tested-by: O'Griofa, Conall <conall.ogriofa@amd.com>
-Link: https://lore.kernel.org/r/20230915001019.2862964-2-robert.hancock@calian.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In theory there is no reason to use the PIC on any modern system when
+IO/APIC is available, but the dependencies on the related checks cannot be
+resolved trivially and on short notice. This needs lots of analysis and
+rework.
+
+The PIC detection has been added to avoid quirky checks and force selection
+of the dummy implementation all over the place, especially in VM guest
+scenarios. So it's not an option to revert the relevant commit as that
+would break a lot of other scenarios.
+
+One solution would be to try to initialize the PIC on detection fail and
+retry the detection, but that puts the burden on everything which does not
+have a PIC.
+
+Fortunately the ACPI/MADT table header has a flag field, which advertises
+in bit 0 that the system is PCAT compatible, which means it has a legacy
+8259 PIC.
+
+Evaluate that bit and if set avoid the detection routine and keep the real
+PIC installed, which then gets initialized (for nothing) and makes the rest
+of the code with all the dependencies work again.
+
+Fixes: e179f6914152 ("x86, irq, pic: Probe for legacy PIC and set legacy_pic appropriately")
+Reported-by: David Lazar <dlazar@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: David Lazar <dlazar@gmail.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Cc: stable@vger.kernel.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218003
+Link: https://lore.kernel.org/r/875y2u5s8g.ffs@tglx
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/xilinx-xadc-core.c | 22 ----------------------
- 1 file changed, 22 deletions(-)
+ arch/x86/include/asm/i8259.h |    2 ++
+ arch/x86/kernel/acpi/boot.c  |    3 +++
+ arch/x86/kernel/i8259.c      |   38 ++++++++++++++++++++++++++++++--------
+ 3 files changed, 35 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iio/adc/xilinx-xadc-core.c b/drivers/iio/adc/xilinx-xadc-core.c
-index fec266682e91d..30b5a17ce41a7 100644
---- a/drivers/iio/adc/xilinx-xadc-core.c
-+++ b/drivers/iio/adc/xilinx-xadc-core.c
-@@ -1334,28 +1334,6 @@ static int xadc_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
+--- a/arch/x86/include/asm/i8259.h
++++ b/arch/x86/include/asm/i8259.h
+@@ -67,6 +67,8 @@ struct legacy_pic {
+ 	void (*make_irq)(unsigned int irq);
+ };
  
--	/* Disable all alarms */
--	ret = xadc_update_adc_reg(xadc, XADC_REG_CONF1, XADC_CONF1_ALARM_MASK,
--				  XADC_CONF1_ALARM_MASK);
--	if (ret)
--		return ret;
--
--	/* Set thresholds to min/max */
--	for (i = 0; i < 16; i++) {
--		/*
--		 * Set max voltage threshold and both temperature thresholds to
--		 * 0xffff, min voltage threshold to 0.
--		 */
--		if (i % 8 < 4 || i == 7)
--			xadc->threshold[i] = 0xffff;
--		else
--			xadc->threshold[i] = 0;
--		ret = xadc_write_adc_reg(xadc, XADC_REG_THRESHOLD(i),
--			xadc->threshold[i]);
--		if (ret)
--			return ret;
--	}
--
- 	/* Go to non-buffered mode */
- 	xadc_postdisable(indio_dev);
++void legacy_pic_pcat_compat(void);
++
+ extern struct legacy_pic *legacy_pic;
+ extern struct legacy_pic null_legacy_pic;
  
--- 
-2.42.0
-
+--- a/arch/x86/kernel/acpi/boot.c
++++ b/arch/x86/kernel/acpi/boot.c
+@@ -141,6 +141,9 @@ static int __init acpi_parse_madt(struct
+ 		       madt->address);
+ 	}
+ 
++	if (madt->flags & ACPI_MADT_PCAT_COMPAT)
++		legacy_pic_pcat_compat();
++
+ 	default_acpi_madt_oem_check(madt->header.oem_id,
+ 				    madt->header.oem_table_id);
+ 
+--- a/arch/x86/kernel/i8259.c
++++ b/arch/x86/kernel/i8259.c
+@@ -32,6 +32,7 @@
+  */
+ static void init_8259A(int auto_eoi);
+ 
++static bool pcat_compat __ro_after_init;
+ static int i8259A_auto_eoi;
+ DEFINE_RAW_SPINLOCK(i8259A_lock);
+ 
+@@ -301,15 +302,32 @@ static void unmask_8259A(void)
+ 
+ static int probe_8259A(void)
+ {
++	unsigned char new_val, probe_val = ~(1 << PIC_CASCADE_IR);
+ 	unsigned long flags;
+-	unsigned char probe_val = ~(1 << PIC_CASCADE_IR);
+-	unsigned char new_val;
++
++	/*
++	 * If MADT has the PCAT_COMPAT flag set, then do not bother probing
++	 * for the PIC. Some BIOSes leave the PIC uninitialized and probing
++	 * fails.
++	 *
++	 * Right now this causes problems as quite some code depends on
++	 * nr_legacy_irqs() > 0 or has_legacy_pic() == true. This is silly
++	 * when the system has an IO/APIC because then PIC is not required
++	 * at all, except for really old machines where the timer interrupt
++	 * must be routed through the PIC. So just pretend that the PIC is
++	 * there and let legacy_pic->init() initialize it for nothing.
++	 *
++	 * Alternatively this could just try to initialize the PIC and
++	 * repeat the probe, but for cases where there is no PIC that's
++	 * just pointless.
++	 */
++	if (pcat_compat)
++		return nr_legacy_irqs();
++
+ 	/*
+-	 * Check to see if we have a PIC.
+-	 * Mask all except the cascade and read
+-	 * back the value we just wrote. If we don't
+-	 * have a PIC, we will read 0xff as opposed to the
+-	 * value we wrote.
++	 * Check to see if we have a PIC.  Mask all except the cascade and
++	 * read back the value we just wrote. If we don't have a PIC, we
++	 * will read 0xff as opposed to the value we wrote.
+ 	 */
+ 	raw_spin_lock_irqsave(&i8259A_lock, flags);
+ 
+@@ -431,5 +449,9 @@ static int __init i8259A_init_ops(void)
+ 
+ 	return 0;
+ }
+-
+ device_initcall(i8259A_init_ops);
++
++void __init legacy_pic_pcat_compat(void)
++{
++	pcat_compat = true;
++}
 
 
