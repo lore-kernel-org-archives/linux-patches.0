@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1771EB5B
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5526F1EB5B
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:13:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FRxqK0p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4B4C433C8;
-	Mon,  6 Nov 2023 13:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwPdIPwj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2762C433C9;
+	Mon,  6 Nov 2023 13:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276377;
-	bh=L/u4dkvta+j4R9eMfevTIEInDAzP7mnpRclbRKdD4OI=;
+	s=korg; t=1699276380;
+	bh=xQvBIDYwOQHjQtF6jD5gg57TJpVLjpRVH9HH/JwPCYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FRxqK0p5fuHCrCb6z61577BVGlZSLeesg4lPRKqeRTREsFIKUvSk0qQs7uG0ITTD
-	 kYoDUVC8S+RG7Xh/Isk/zcaEbnpwEJmCVhZb5guVrfwKXR4t3uY43goTjhe/yZBJYz
-	 puL9Y9Mqa5uYczxMeiBHMLxRLVoomog+ZaUskR3w=
+	b=gwPdIPwjyNx2STyYvMCDGDIgM1h2JLEnSTzn3wwlNpzsB9DJtMzjFXGSFhKLCDHRX
+	 uXEb1m7uUYYaLFHC74mmmSgMvI0xybPvjKd9O9qRCn5Hu2eCFcMHaEKEiQBGPHQGFp
+	 sZFyfd7M970WC2GwvP8yNiOhilT3RHKq4tojjFjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roy Chateau <roy.chateau@mep-info.com>,
-	Mark Brown <broonie@kernel.org>,
+	Karolina Stolarek <karolina.stolarek@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 22/62] ASoC: codecs: tas2780: Fix log of failed reset via I2C.
-Date: Mon,  6 Nov 2023 14:03:28 +0100
-Message-ID: <20231106130302.608202612@linuxfoundation.org>
+Subject: [PATCH 6.1 23/62] drm/ttm: Reorder sys manager cleanup step
+Date: Mon,  6 Nov 2023 14:03:29 +0100
+Message-ID: <20231106130302.647118198@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.807965064@linuxfoundation.org>
 References: <20231106130301.807965064@linuxfoundation.org>
@@ -36,39 +36,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roy Chateau <roy.chateau@mep-info.com>
+From: Karolina Stolarek <karolina.stolarek@intel.com>
 
-[ Upstream commit 4e9a429ae80657bdc502d3f5078e2073656ec5fd ]
+[ Upstream commit 3b401e30c249849d803de6c332dad2a595a58658 ]
 
-Correctly log failures of reset via I2C.
+With the current cleanup flow, we could trigger a NULL pointer
+dereference if there is a delayed destruction of a BO with a
+system resource that gets executed on drain_workqueue() call,
+as we attempt to free a resource using an already released
+resource manager.
 
-Signed-off-by: Roy Chateau <roy.chateau@mep-info.com>
-Link: https://lore.kernel.org/r/20231013110239.473123-1-roy.chateau@mep-info.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Remove the device from the device list and drain its workqueue
+before releasing the system domain manager in ttm_device_fini().
+
+Signed-off-by: Karolina Stolarek <karolina.stolarek@intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231016121525.2237838-1-karolina.stolarek@intel.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2780.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_device.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2780.c b/sound/soc/codecs/tas2780.c
-index afdf0c863aa10..a2d27410bbefa 100644
---- a/sound/soc/codecs/tas2780.c
-+++ b/sound/soc/codecs/tas2780.c
-@@ -39,7 +39,7 @@ static void tas2780_reset(struct tas2780_priv *tas2780)
- 		usleep_range(2000, 2050);
- 	}
+diff --git a/drivers/gpu/drm/ttm/ttm_device.c b/drivers/gpu/drm/ttm/ttm_device.c
+index b84f74807ca13..ec9ddaad56a05 100644
+--- a/drivers/gpu/drm/ttm/ttm_device.c
++++ b/drivers/gpu/drm/ttm/ttm_device.c
+@@ -239,10 +239,6 @@ void ttm_device_fini(struct ttm_device *bdev)
+ 	struct ttm_resource_manager *man;
+ 	unsigned i;
  
--	snd_soc_component_write(tas2780->component, TAS2780_SW_RST,
-+	ret = snd_soc_component_write(tas2780->component, TAS2780_SW_RST,
- 				TAS2780_RST);
- 	if (ret)
- 		dev_err(tas2780->dev, "%s:errCode:0x%x Reset error!\n",
+-	man = ttm_manager_type(bdev, TTM_PL_SYSTEM);
+-	ttm_resource_manager_set_used(man, false);
+-	ttm_set_driver_manager(bdev, TTM_PL_SYSTEM, NULL);
+-
+ 	mutex_lock(&ttm_global_mutex);
+ 	list_del(&bdev->device_list);
+ 	mutex_unlock(&ttm_global_mutex);
+@@ -252,6 +248,10 @@ void ttm_device_fini(struct ttm_device *bdev)
+ 	if (ttm_bo_delayed_delete(bdev, true))
+ 		pr_debug("Delayed destroy list was clean\n");
+ 
++	man = ttm_manager_type(bdev, TTM_PL_SYSTEM);
++	ttm_resource_manager_set_used(man, false);
++	ttm_set_driver_manager(bdev, TTM_PL_SYSTEM, NULL);
++
+ 	spin_lock(&bdev->lru_lock);
+ 	for (i = 0; i < TTM_MAX_BO_PRIORITY; ++i)
+ 		if (list_empty(&man->lru[0]))
 -- 
 2.42.0
 
