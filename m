@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16BD250EA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025FA250EA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vsmH//o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D285C433C9;
-	Mon,  6 Nov 2023 13:34:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBWC6F+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F5AC433CC;
+	Mon,  6 Nov 2023 13:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277647;
-	bh=CT+2PVuEKkdbwdwI9XP1v4JnJnx//EGTKtyt5sCpFVg=;
+	s=korg; t=1699277650;
+	bh=ERIPijGz1RziISdf9VfMeKTqN2r5ZwoLR8m8m55NtRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1vsmH//o+95s0NvCitr8BJa/1eu3ur/vHAmaO09/vnmqjbAaycdmuOZDVOivn8iX1
-	 Mz8p/a88xukI4Xp7rBWduEM5EPdimCX9kwUZiBYNbDb3MP0niQpM4Cmzwfa9aF/w9q
-	 PifOrtNvP73vf1lrfat7mXEGwg0/10kCRjAsrAWE=
+	b=tBWC6F+rPGWFDDrvdhZoAe4HnX6LMKK0dshlCyth0M88PJypyrRBHi2IJq1VmtLFD
+	 EJyqA3EZELKfy3MX06O2jDeobjBw2Ix8HBuuFZtyVBD/jhv7IWMhi8IdibDFI6fUYZ
+	 WAcywlOeuFCsAvtkVMGGRudh1yLUR33FLkR3SrjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Colomar <alx@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dmitry Dunaev <dunaev@tecon.ru>,
+	Anup Patel <apatel@ventanamicro.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 61/95] net: sched: cls_u32: Fix allocation size in u32_init()
-Date: Mon,  6 Nov 2023 14:04:29 +0100
-Message-ID: <20231106130306.933706115@linuxfoundation.org>
+Subject: [PATCH 5.10 62/95] irqchip/riscv-intc: Mark all INTC nodes as initialized
+Date: Mon,  6 Nov 2023 14:04:30 +0100
+Message-ID: <20231106130306.972422092@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -44,103 +43,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Anup Patel <apatel@ventanamicro.com>
 
-[ Upstream commit c4d49196ceec80e30e8d981410d73331b49b7850 ]
+[ Upstream commit e13cd66bd821be417c498a34928652db4ac6b436 ]
 
-commit d61491a51f7e ("net/sched: cls_u32: Replace one-element array
-with flexible-array member") incorrecly replaced an instance of
-`sizeof(*tp_c)` with `struct_size(tp_c, hlist->ht, 1)`. This results
-in a an over-allocation of 8 bytes.
+The RISC-V INTC local interrupts are per-HART (or per-CPU) so we
+create INTC IRQ domain only for the INTC node belonging to the boot
+HART. This means only the boot HART INTC node will be marked as
+initialized and other INTC nodes won't be marked which results
+downstream interrupt controllers (such as PLIC, IMSIC and APLIC
+direct-mode) not being probed due to missing device suppliers.
 
-This change is wrong because `hlist` in `struct tc_u_common` is a
-pointer:
+To address this issue, we mark all INTC node for which we don't
+create IRQ domain as initialized.
 
-net/sched/cls_u32.c:
-struct tc_u_common {
-        struct tc_u_hnode __rcu *hlist;
-        void                    *ptr;
-        int                     refcnt;
-        struct idr              handle_idr;
-        struct hlist_node       hnode;
-        long                    knodes;
-};
-
-So, the use of `struct_size()` makes no sense: we don't need to allocate
-any extra space for a flexible-array member. `sizeof(*tp_c)` is just fine.
-
-So, `struct_size(tp_c, hlist->ht, 1)` translates to:
-
-sizeof(*tp_c) + sizeof(tp_c->hlist->ht) ==
-sizeof(struct tc_u_common) + sizeof(struct tc_u_knode *) ==
-						144 + 8  == 0x98 (byes)
-						     ^^^
-						      |
-						unnecessary extra
-						allocation size
-
-$ pahole -C tc_u_common net/sched/cls_u32.o
-struct tc_u_common {
-	struct tc_u_hnode *        hlist;                /*     0     8 */
-	void *                     ptr;                  /*     8     8 */
-	int                        refcnt;               /*    16     4 */
-
-	/* XXX 4 bytes hole, try to pack */
-
-	struct idr                 handle_idr;           /*    24    96 */
-	/* --- cacheline 1 boundary (64 bytes) was 56 bytes ago --- */
-	struct hlist_node          hnode;                /*   120    16 */
-	/* --- cacheline 2 boundary (128 bytes) was 8 bytes ago --- */
-	long int                   knodes;               /*   136     8 */
-
-	/* size: 144, cachelines: 3, members: 6 */
-	/* sum members: 140, holes: 1, sum holes: 4 */
-	/* last cacheline: 16 bytes */
-};
-
-And with `sizeof(*tp_c)`, we have:
-
-	sizeof(*tp_c) == sizeof(struct tc_u_common) == 144 == 0x90 (bytes)
-
-which is the correct and original allocation size.
-
-Fix this issue by replacing `struct_size(tp_c, hlist->ht, 1)` with
-`sizeof(*tp_c)`, and avoid allocating 8 too many bytes.
-
-The following difference in binary output is expected and reflects the
-desired change:
-
-| net/sched/cls_u32.o
-| @@ -6148,7 +6148,7 @@
-| include/linux/slab.h:599
-|     2cf5:      mov    0x0(%rip),%rdi        # 2cfc <u32_init+0xfc>
-|                        2cf8: R_X86_64_PC32     kmalloc_caches+0xc
-|-    2cfc:      mov    $0x98,%edx
-|+    2cfc:      mov    $0x90,%edx
-
-Reported-by: Alejandro Colomar <alx@kernel.org>
-Closes: https://lore.kernel.org/lkml/09b4a2ce-da74-3a19-6961-67883f634d98@kernel.org/
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Dmitry Dunaev <dunaev@tecon.ru>
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230926102801.1591126-1-dunaev@tecon.ru
+Link: https://lore.kernel.org/r/20231003044403.1974628-4-apatel@ventanamicro.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-riscv-intc.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index b2d2ba561eba1..f2a0c10682fc8 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -364,7 +364,7 @@ static int u32_init(struct tcf_proto *tp)
- 	idr_init(&root_ht->handle_idr);
+diff --git a/drivers/irqchip/irq-riscv-intc.c b/drivers/irqchip/irq-riscv-intc.c
+index 8017f6d32d52b..54c99441c1b54 100644
+--- a/drivers/irqchip/irq-riscv-intc.c
++++ b/drivers/irqchip/irq-riscv-intc.c
+@@ -109,8 +109,16 @@ static int __init riscv_intc_init(struct device_node *node,
+ 	 * for each INTC DT node. We only need to do INTC initialization
+ 	 * for the INTC DT node belonging to boot CPU (or boot HART).
+ 	 */
+-	if (riscv_hartid_to_cpuid(hartid) != smp_processor_id())
++	if (riscv_hartid_to_cpuid(hartid) != smp_processor_id()) {
++		/*
++		 * The INTC nodes of each CPU are suppliers for downstream
++		 * interrupt controllers (such as PLIC, IMSIC and APLIC
++		 * direct-mode) so we should mark an INTC node as initialized
++		 * if we are not creating IRQ domain for it.
++		 */
++		fwnode_dev_initialized(of_fwnode_handle(node), true);
+ 		return 0;
++	}
  
- 	if (tp_c == NULL) {
--		tp_c = kzalloc(struct_size(tp_c, hlist->ht, 1), GFP_KERNEL);
-+		tp_c = kzalloc(sizeof(*tp_c), GFP_KERNEL);
- 		if (tp_c == NULL) {
- 			kfree(root_ht);
- 			return -ENOBUFS;
+ 	intc_domain = irq_domain_add_linear(node, BITS_PER_LONG,
+ 					    &riscv_intc_domain_ops, NULL);
 -- 
 2.42.0
 
