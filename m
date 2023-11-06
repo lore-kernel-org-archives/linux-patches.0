@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B03A23747
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0729F23747
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UO8IEUPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADC3C433C9;
-	Mon,  6 Nov 2023 13:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19AcFtU/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77463C433C9;
+	Mon,  6 Nov 2023 13:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277039;
-	bh=dOJ6oXmzZnnJqFPxAFjNIalyeo0Dq5mw77Bt3SFpdfE=;
+	s=korg; t=1699277042;
+	bh=B24K2oF8uAXS5j/RYIiryPmr0dxiobaVc+UjJxVGYaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UO8IEUPMiSf7fGj2YlSnPmSBhDrolXNEnSuNSE4WHmthOR4R36MviC8sIfPMW78x0
-	 /4wO+PT7n1gDvkeTcJ6M0/xJEFZEpCF/vKsU41wIgMJwcDYmacuKbWotwf0uOvQkZW
-	 heo67nS/DIr0M52+5NohSYRq43PjV3hihoUVrBR8=
+	b=19AcFtU/ncdfEGY0SViigcYbbxSz+3ad/WsCwlHCbssHLxiOC02YLfmpmUDl9OeAy
+	 au0GLTtsolEjEuU7QPmKkKnB2iUaaNHTPybftgSoZSaZCZACoJqfBcv2uNY7iNBwxl
+	 wIxdGtDwiii+FDD9LErXVTtHC8XeO0RBgL4kLtug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Matei <alexandru.matei@uipath.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lukasz Majczak <lma@semihalf.com>,
+	Radoslaw Biernacki <rad@chromium.org>,
+	Manasi Navare <navaremanasi@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/128] vsock/virtio: initialize the_virtio_vsock before using VQs
-Date: Mon,  6 Nov 2023 14:02:58 +0100
-Message-ID: <20231106130309.953109207@linuxfoundation.org>
+Subject: [PATCH 5.15 019/128] drm/dp_mst: Fix NULL deref in get_mst_branch_device_by_guid_helper()
+Date: Mon,  6 Nov 2023 14:02:59 +0100
+Message-ID: <20231106130310.001708155@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -43,79 +43,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Matei <alexandru.matei@uipath.com>
+From: Lukasz Majczak <lma@semihalf.com>
 
-[ Upstream commit 53b08c4985158430fd6d035fb49443bada535210 ]
+[ Upstream commit 3d887d512494d678b17c57b835c32f4e48d34f26 ]
 
-Once VQs are filled with empty buffers and we kick the host, it can send
-connection requests. If the_virtio_vsock is not initialized before,
-replies are silently dropped and do not reach the host.
+As drm_dp_get_mst_branch_device_by_guid() is called from
+drm_dp_get_mst_branch_device_by_guid(), mstb parameter has to be checked,
+otherwise NULL dereference may occur in the call to
+the memcpy() and cause following:
 
-virtio_transport_send_pkt() can queue packets once the_virtio_vsock is
-set, but they won't be processed until vsock->tx_run is set to true. We
-queue vsock->send_pkt_work when initialization finishes to send those
-packets queued earlier.
+[12579.365869] BUG: kernel NULL pointer dereference, address: 0000000000000049
+[12579.365878] #PF: supervisor read access in kernel mode
+[12579.365880] #PF: error_code(0x0000) - not-present page
+[12579.365882] PGD 0 P4D 0
+[12579.365887] Oops: 0000 [#1] PREEMPT SMP NOPTI
+...
+[12579.365895] Workqueue: events_long drm_dp_mst_up_req_work
+[12579.365899] RIP: 0010:memcmp+0xb/0x29
+[12579.365921] Call Trace:
+[12579.365927] get_mst_branch_device_by_guid_helper+0x22/0x64
+[12579.365930] drm_dp_mst_up_req_work+0x137/0x416
+[12579.365933] process_one_work+0x1d0/0x419
+[12579.365935] worker_thread+0x11a/0x289
+[12579.365938] kthread+0x13e/0x14f
+[12579.365941] ? process_one_work+0x419/0x419
+[12579.365943] ? kthread_blkcg+0x31/0x31
+[12579.365946] ret_from_fork+0x1f/0x30
 
-Fixes: 0deab087b16a ("vsock/virtio: use RCU to avoid use-after-free on the_virtio_vsock")
-Signed-off-by: Alexandru Matei <alexandru.matei@uipath.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://lore.kernel.org/r/20231024191742.14259-1-alexandru.matei@uipath.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+As get_mst_branch_device_by_guid_helper() is recursive, moving condition
+to the first line allow to remove a similar one for step over of NULL elements
+inside a loop.
+
+Fixes: 5e93b8208d3c ("drm/dp/mst: move GUID storage from mgr, port to only mst branch")
+Cc: <stable@vger.kernel.org> # 4.14+
+Signed-off-by: Lukasz Majczak <lma@semihalf.com>
+Reviewed-by: Radoslaw Biernacki <rad@chromium.org>
+Signed-off-by: Manasi Navare <navaremanasi@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230922063410.23626-1-lma@semihalf.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_dp_mst_topology.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/vmw_vsock/virtio_transport.c b/net/vmw_vsock/virtio_transport.c
-index f6fa26228e5cf..0b41028ed544a 100644
---- a/net/vmw_vsock/virtio_transport.c
-+++ b/net/vmw_vsock/virtio_transport.c
-@@ -590,6 +590,11 @@ static int virtio_vsock_vqs_init(struct virtio_vsock *vsock)
+diff --git a/drivers/gpu/drm/drm_dp_mst_topology.c b/drivers/gpu/drm/drm_dp_mst_topology.c
+index d02e323a4ecde..865c7f39143ec 100644
+--- a/drivers/gpu/drm/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/drm_dp_mst_topology.c
+@@ -2615,14 +2615,14 @@ static struct drm_dp_mst_branch *get_mst_branch_device_by_guid_helper(
+ 	struct drm_dp_mst_branch *found_mstb;
+ 	struct drm_dp_mst_port *port;
  
- 	virtio_device_ready(vdev);
- 
-+	return 0;
-+}
++	if (!mstb)
++		return NULL;
 +
-+static void virtio_vsock_vqs_start(struct virtio_vsock *vsock)
-+{
- 	mutex_lock(&vsock->tx_lock);
- 	vsock->tx_run = true;
- 	mutex_unlock(&vsock->tx_lock);
-@@ -604,7 +609,16 @@ static int virtio_vsock_vqs_init(struct virtio_vsock *vsock)
- 	vsock->event_run = true;
- 	mutex_unlock(&vsock->event_lock);
+ 	if (memcmp(mstb->guid, guid, 16) == 0)
+ 		return mstb;
  
--	return 0;
-+	/* virtio_transport_send_pkt() can queue packets once
-+	 * the_virtio_vsock is set, but they won't be processed until
-+	 * vsock->tx_run is set to true. We queue vsock->send_pkt_work
-+	 * when initialization finishes to send those packets queued
-+	 * earlier.
-+	 * We don't need to queue the other workers (rx, event) because
-+	 * as long as we don't fill the queues with empty buffers, the
-+	 * host can't send us any notification.
-+	 */
-+	queue_work(virtio_vsock_workqueue, &vsock->send_pkt_work);
- }
  
- static void virtio_vsock_vqs_del(struct virtio_vsock *vsock)
-@@ -707,6 +721,7 @@ static int virtio_vsock_probe(struct virtio_device *vdev)
- 		goto out;
+ 	list_for_each_entry(port, &mstb->ports, next) {
+-		if (!port->mstb)
+-			continue;
+-
+ 		found_mstb = get_mst_branch_device_by_guid_helper(port->mstb, guid);
  
- 	rcu_assign_pointer(the_virtio_vsock, vsock);
-+	virtio_vsock_vqs_start(vsock);
- 
- 	mutex_unlock(&the_virtio_vsock_mutex);
- 
-@@ -779,6 +794,7 @@ static int virtio_vsock_restore(struct virtio_device *vdev)
- 		goto out;
- 
- 	rcu_assign_pointer(the_virtio_vsock, vsock);
-+	virtio_vsock_vqs_start(vsock);
- 
- out:
- 	mutex_unlock(&the_virtio_vsock_mutex);
+ 		if (found_mstb)
 -- 
 2.42.0
 
