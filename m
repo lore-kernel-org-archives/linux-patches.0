@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D00208CA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14529208CA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBm+iQ0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E59EC433C8;
-	Mon,  6 Nov 2023 13:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWyhn1Tb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DAF2C433C7;
+	Mon,  6 Nov 2023 13:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277141;
-	bh=YXcY2HOyoNXk3In9DWtBED7+tjXxcFWf6oVwdNkW38k=;
+	s=korg; t=1699277144;
+	bh=ea/vnmY1tXAjJFmi1dR4UV+Pq4XJReGagVJUlOoafRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HBm+iQ0RXjVT3/9V+mAfw6L2sVIUSsQJX5GnaaXgcSjhLk3oFTS59ph9JmK0P/09l
-	 wnHdWtZmWjiADnQGyOVe6nxQZ/6nYD0FUFnGVTuhQg+t0KRVNnprZ1bWG15baZyN/N
-	 eP1tGTddXLkbvqIGYsgp92Kl3xQelnhRv/hVP+88=
+	b=rWyhn1Tb/FxL+x7wNHO+AduL61u6SHIxrfHRaGmh8hp1+qjMHvlzVbRrwodjdccTP
+	 vU0QGHg/IX+JybZYteuZrEG7HkPE+8XVt0HplB8rcYouJSW6wNR1zyZyo9b1rfzymy
+	 j8gaIjDJCg5XNYoxC8Yo9PV9QqZa6+laGazoJKlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Peng Fan <peng.fan@nxp.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 5.15 052/128] nvmem: imx: correct nregs for i.MX6UL
-Date: Mon,  6 Nov 2023 14:03:32 +0100
-Message-ID: <20231106130311.469059269@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 5.15 053/128] perf/core: Fix potential NULL deref
+Date: Mon,  6 Nov 2023 14:03:33 +0100
+Message-ID: <20231106130311.517548378@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,32 +42,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 7d6e10f5d254681983b53d979422c8de3fadbefb upstream.
+commit a71ef31485bb51b846e8db8b3a35e432cc15afb5 upstream.
 
-The nregs for i.MX6UL should be 144 per fuse map, correct it.
+Smatch is awesome.
 
-Fixes: 4aa2b4802046 ("nvmem: octop: Add support for imx6ul")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20231013124904.175782-3-srinivas.kandagatla@linaro.org
+Fixes: 32671e3799ca ("perf: Disallow mis-matched inherited group reads")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/imx-ocotp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/events/core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/nvmem/imx-ocotp.c
-+++ b/drivers/nvmem/imx-ocotp.c
-@@ -499,7 +499,7 @@ static const struct ocotp_params imx6sx_
- };
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -13277,7 +13277,8 @@ static int inherit_group(struct perf_eve
+ 		    !perf_get_aux_event(child_ctr, leader))
+ 			return -EINVAL;
+ 	}
+-	leader->group_generation = parent_event->group_generation;
++	if (leader)
++		leader->group_generation = parent_event->group_generation;
+ 	return 0;
+ }
  
- static const struct ocotp_params imx6ul_params = {
--	.nregs = 128,
-+	.nregs = 144,
- 	.bank_address_words = 0,
- 	.set_timing = imx_ocotp_set_imx6_timing,
- 	.ctrl = IMX_OCOTP_BM_CTRL_DEFAULT,
 
 
