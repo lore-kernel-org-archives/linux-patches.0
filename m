@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37C3200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978EB200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwNVjo81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C22DC433C7;
-	Mon,  6 Nov 2023 13:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCApBTdD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BFCC433CA;
+	Mon,  6 Nov 2023 13:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276010;
-	bh=pkoH3EDZmq83zqC/93i9WQdW9Nuwq3jKoifn61uRNRQ=;
+	s=korg; t=1699276013;
+	bh=bCDL0ydR2reZld0XYEJvcu1lC1GDh36dzykxdCvZc1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WwNVjo81QXjmHHx63kUb1MEXJOsTa+QtK6FSmomIIvYP5il44kqNTm8G18hlQnDwq
-	 2TgSkPAeQfYFhzgiWctr7QjXmdvkb11pWC8urUaRUqB0/tH/H0hBmo8bUzDJDCt0I6
-	 Wj4ryjytBOT9Yef+Ic5D+36Lj9h8vVr6fd+nd7no=
+	b=dCApBTdDJb6bM/fex3x2p5op2RjyZ5ibaMPUxbCrOh4aukBltMzhY4vBn5Sk5EpmP
+	 1gLGD2tEpOeLO7PrubhQByIzqUsfB9OS4qm9H1lRSpq9DQM7EGeIwVi9+LBZJ5xIsJ
+	 Y81a6Prpt57+W2OgaN9riLjJkwIEkG5lsMP0UBoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Borislav Petkov <bp@suse.de>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 4.14 21/48] x86/mm: Simplify RESERVE_BRK()
-Date: Mon,  6 Nov 2023 14:03:12 +0100
-Message-ID: <20231106130258.599336089@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 39/48] net: chelsio: cxgb4: add an error code check in t4_load_phy_fw
+Date: Mon,  6 Nov 2023 14:03:30 +0100
+Message-ID: <20231106130259.203011682@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -43,75 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@redhat.com>
+From: Su Hui <suhui@nfschina.com>
 
-commit a1e2c031ec3949b8c039b739c0b5bf9c30007b00 upstream.
+[ Upstream commit 9f771493da935299c6393ad3563b581255d01a37 ]
 
-RESERVE_BRK() reserves data in the .brk_reservation section.  The data
-is initialized to zero, like BSS, so the macro specifies 'nobits' to
-prevent the data from taking up space in the vmlinux binary.  The only
-way to get the compiler to do that (without putting the variable in .bss
-proper) is to use inline asm.
+t4_set_params_timeout() can return -EINVAL if failed, add check
+for this.
 
-The macro also has a hack which encloses the inline asm in a discarded
-function, which allows the size to be passed (global inline asm doesn't
-allow inputs).
-
-Remove the need for the discarded function hack by just stringifying the
-size rather than supplying it as an input to the inline asm.
-
-Signed-off-by: Josh Poimboeuf <jpoimboe@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Borislav Petkov <bp@suse.de>
-Link: https://lore.kernel.org/r/20220506121631.133110232@infradead.org
-[nathan: Fix conflict due to lack of 2b6ff7dea670 and 33def8498fdd]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/setup.h |   30 +++++++++++-------------------
- 1 file changed, 11 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/chelsio/cxgb4/t4_hw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/include/asm/setup.h
-+++ b/arch/x86/include/asm/setup.h
-@@ -91,27 +91,19 @@ extern unsigned long _brk_end;
- void *extend_brk(size_t size, size_t align);
+diff --git a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
+index ecb8ef4a756fc..6ffd5f3dcf059 100644
+--- a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
++++ b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
+@@ -3710,6 +3710,8 @@ int t4_load_phy_fw(struct adapter *adap,
+ 		 FW_PARAMS_PARAM_Z_V(FW_PARAMS_PARAM_DEV_PHYFW_DOWNLOAD));
+ 	ret = t4_set_params_timeout(adap, adap->mbox, adap->pf, 0, 1,
+ 				    &param, &val, 30000);
++	if (ret)
++		return ret;
  
- /*
-- * Reserve space in the brk section.  The name must be unique within
-- * the file, and somewhat descriptive.  The size is in bytes.  Must be
-- * used at file scope.
-+ * Reserve space in the brk section.  The name must be unique within the file,
-+ * and somewhat descriptive.  The size is in bytes.
-  *
-- * (This uses a temp function to wrap the asm so we can pass it the
-- * size parameter; otherwise we wouldn't be able to.  We can't use a
-- * "section" attribute on a normal variable because it always ends up
-- * being @progbits, which ends up allocating space in the vmlinux
-- * executable.)
-+ * The allocation is done using inline asm (rather than using a section
-+ * attribute on a normal variable) in order to allow the use of @nobits, so
-+ * that it doesn't take up any space in the vmlinux file.
-  */
--#define RESERVE_BRK(name,sz)						\
--	static void __section(.discard.text) __used notrace		\
--	__brk_reservation_fn_##name##__(void) {				\
--		asm volatile (						\
--			".pushsection .brk_reservation,\"aw\",@nobits;" \
--			".brk." #name ":"				\
--			" 1:.skip %c0;"					\
--			" .size .brk." #name ", . - 1b;"		\
--			" .popsection"					\
--			: : "i" (sz));					\
--	}
-+#define RESERVE_BRK(name, size)						\
-+	asm(".pushsection .brk_reservation,\"aw\",@nobits\n\t"		\
-+	    ".brk." #name ":\n\t"					\
-+	    ".skip " __stringify(size) "\n\t"				\
-+	    ".size .brk." #name ", " __stringify(size) "\n\t"		\
-+	    ".popsection\n\t")
- 
- /* Helper for reserving space for arrays of things */
- #define RESERVE_BRK_ARRAY(type, name, entries)		\
+ 	/* If we have version number support, then check to see that the new
+ 	 * firmware got loaded properly.
+-- 
+2.42.0
+
 
 
