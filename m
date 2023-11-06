@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE8820B00
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038C620B00
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoHhSJjO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89956C433C9;
-	Mon,  6 Nov 2023 13:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRm8dVEa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7830DC433C7;
+	Mon,  6 Nov 2023 13:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276821;
-	bh=Z0nh1RgkR5ts4tuNlPaMKzDGX75+rZJoyM5ezKhSjyA=;
+	s=korg; t=1699276824;
+	bh=5/fubEUYfYSsXw5vlIEEjLDk+ieQKfnS/+AE1cBKPGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WoHhSJjOV8/Jhg7kXlXmSquJ1ATgBWGfpe6WIliOLfNCz0t5yjp4a4LB4UnxOJj7Y
-	 doBkeXTGtu44wCaE4UCwsdaE7OksYqhERUJkcTpiTnvLdIvt23aklvDfgN57/yG5Hv
-	 tVGrCMeDLU0pqXTFZB5BRVa3zZ/x9CornJ3ujTQc=
+	b=PRm8dVEa1R3GuiyrWDy8ETFmsQnQWrTiT8TTphkGLuZ8Mso6lTtjv73GGl1SLF98n
+	 i19pUDexW7vdLbuy/pc+8iEvipvBIMEiMXGNIouHWXk5+g1vJdgCeWQQcwA/ef0Mcb
+	 jlAxGk/Sz+5IOK1O2duSw6sDE2AZKBO2DmSjvG7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
-	Javier Rodriguez <josejavier.rodriguez@duagon.com>,
-	Johannes Thumshirn <jth@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 04/74] mcb-lpc: Reallocate memory region to avoid memory overlapping
-Date: Mon,  6 Nov 2023 14:03:24 +0100
-Message-ID: <20231106130301.825670699@linuxfoundation.org>
+	Gavin Shan <gshan@redhat.com>,
+	Zhenyu Zhang <zhenyzha@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	David Hildenbrand <david@redhat.com>
+Subject: [PATCH 5.4 05/74] virtio_balloon: Fix endless deflation and inflation on arm64
+Date: Mon,  6 Nov 2023 14:03:25 +0100
+Message-ID: <20231106130301.866216554@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
 References: <20231106130301.687882731@linuxfoundation.org>
@@ -37,97 +37,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
+From: Gavin Shan <gshan@redhat.com>
 
-[ Upstream commit 2025b2ca8004c04861903d076c67a73a0ec6dfca ]
+commit 07622bd415639e9709579f400afd19e7e9866e5e upstream.
 
-mcb-lpc requests a fixed-size memory region to parse the chameleon
-table, however, if the chameleon table is smaller that the allocated
-region, it could overlap with the IP Cores' memory regions.
+The deflation request to the target, which isn't unaligned to the
+guest page size causes endless deflation and inflation actions. For
+example, we receive the flooding QMP events for the changes on memory
+balloon's size after a deflation request to the unaligned target is
+sent for the ARM64 guest, where we have 64KB base page size.
 
-After parsing the chameleon table, drop/reallocate the memory region
-with the actual chameleon table size.
+  /home/gavin/sandbox/qemu.main/build/qemu-system-aarch64      \
+  -accel kvm -machine virt,gic-version=host -cpu host          \
+  -smp maxcpus=8,cpus=8,sockets=2,clusters=2,cores=2,threads=1 \
+  -m 1024M,slots=16,maxmem=64G                                 \
+  -object memory-backend-ram,id=mem0,size=512M                 \
+  -object memory-backend-ram,id=mem1,size=512M                 \
+  -numa node,nodeid=0,memdev=mem0,cpus=0-3                     \
+  -numa node,nodeid=1,memdev=mem1,cpus=4-7                     \
+    :                                                          \
+  -device virtio-balloon-pci,id=balloon0,bus=pcie.10
 
-Co-developed-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Signed-off-by: Javier Rodriguez <josejavier.rodriguez@duagon.com>
-Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Link: https://lore.kernel.org/r/20230411083329.4506-4-jth@kernel.org
+  { "execute" : "balloon", "arguments": { "value" : 1073672192 } }
+  {"return": {}}
+  {"timestamp": {"seconds": 1693272173, "microseconds": 88667},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272174, "microseconds": 89704},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272175, "microseconds": 90819},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272176, "microseconds": 91961},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272177, "microseconds": 93040},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073676288}}
+  {"timestamp": {"seconds": 1693272178, "microseconds": 94117},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073676288}}
+  {"timestamp": {"seconds": 1693272179, "microseconds": 95337},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272180, "microseconds": 96615},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073676288}}
+  {"timestamp": {"seconds": 1693272181, "microseconds": 97626},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272182, "microseconds": 98693},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073676288}}
+  {"timestamp": {"seconds": 1693272183, "microseconds": 99698},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272184, "microseconds": 100727},  \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272185, "microseconds": 90430},   \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  {"timestamp": {"seconds": 1693272186, "microseconds": 102999},  \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073676288}}
+     :
+  <The similar QMP events repeat>
+
+Fix it by aligning the target up to the guest page size, 64KB in this
+specific case. With this applied, no flooding QMP events are observed
+and the memory balloon's size can be stablizied to 0x3ffe0000 soon
+after the deflation request is sent.
+
+  { "execute" : "balloon", "arguments": { "value" : 1073672192 } }
+  {"return": {}}
+  {"timestamp": {"seconds": 1693273328, "microseconds": 793075},  \
+   "event": "BALLOON_CHANGE", "data": {"actual": 1073610752}}
+  { "execute" : "query-balloon" }
+  {"return": {"actual": 1073610752}}
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Message-Id: <20230831011007.1032822-1-gshan@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mcb/mcb-lpc.c | 35 +++++++++++++++++++++++++++++++----
- 1 file changed, 31 insertions(+), 4 deletions(-)
+ drivers/virtio/virtio_balloon.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mcb/mcb-lpc.c b/drivers/mcb/mcb-lpc.c
-index 8f1bde437a7e1..92915d2c2d464 100644
---- a/drivers/mcb/mcb-lpc.c
-+++ b/drivers/mcb/mcb-lpc.c
-@@ -23,7 +23,7 @@ static int mcb_lpc_probe(struct platform_device *pdev)
- {
- 	struct resource *res;
- 	struct priv *priv;
--	int ret = 0;
-+	int ret = 0, table_size;
+--- a/drivers/virtio/virtio_balloon.c
++++ b/drivers/virtio/virtio_balloon.c
+@@ -365,7 +365,11 @@ static inline s64 towards_target(struct
+ 	if (!virtio_has_feature(vb->vdev, VIRTIO_F_VERSION_1))
+ 		num_pages = le32_to_cpu((__force __le32)num_pages);
  
- 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
-@@ -58,16 +58,43 @@ static int mcb_lpc_probe(struct platform_device *pdev)
- 
- 	ret = chameleon_parse_cells(priv->bus, priv->mem->start, priv->base);
- 	if (ret < 0) {
--		mcb_release_bus(priv->bus);
--		return ret;
-+		goto out_mcb_bus;
- 	}
- 
--	dev_dbg(&pdev->dev, "Found %d cells\n", ret);
-+	table_size = ret;
-+
-+	if (table_size < CHAM_HEADER_SIZE) {
-+		/* Release the previous resources */
-+		devm_iounmap(&pdev->dev, priv->base);
-+		devm_release_mem_region(&pdev->dev, priv->mem->start, resource_size(priv->mem));
-+
-+		/* Then, allocate it again with the actual chameleon table size */
-+		res = devm_request_mem_region(&pdev->dev, priv->mem->start,
-+					      table_size,
-+					      KBUILD_MODNAME);
-+		if (!res) {
-+			dev_err(&pdev->dev, "Failed to request PCI memory\n");
-+			ret = -EBUSY;
-+			goto out_mcb_bus;
-+		}
-+
-+		priv->base = devm_ioremap(&pdev->dev, priv->mem->start, table_size);
-+		if (!priv->base) {
-+			dev_err(&pdev->dev, "Cannot ioremap\n");
-+			ret = -ENOMEM;
-+			goto out_mcb_bus;
-+		}
-+
-+		platform_set_drvdata(pdev, priv);
-+	}
- 
- 	mcb_bus_add_devices(priv->bus);
- 
- 	return 0;
- 
-+out_mcb_bus:
-+	mcb_release_bus(priv->bus);
-+	return ret;
+-	target = num_pages;
++	/*
++	 * Aligned up to guest page size to avoid inflating and deflating
++	 * balloon endlessly.
++	 */
++	target = ALIGN(num_pages, VIRTIO_BALLOON_PAGES_PER_PAGE);
+ 	return target - vb->num_pages;
  }
  
- static int mcb_lpc_remove(struct platform_device *pdev)
--- 
-2.42.0
-
 
 
