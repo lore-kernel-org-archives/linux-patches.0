@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95ABF22EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CD122EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jm59DjY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10510C433C8;
-	Mon,  6 Nov 2023 13:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQ2cSH81"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BFDC433C9;
+	Mon,  6 Nov 2023 13:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277269;
-	bh=JZWWk2dGqjbr6v9bIUZ0HT4tJAbO00zIThuaUyedKDI=;
+	s=korg; t=1699277272;
+	bh=smHaHhu46AnZJLQ/igQDKc/CZwYO0DGMPlIFNYr62s8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jm59DjY3tiRSa2Ac46cMQzt0akAGJi6iPM3wmYlb5CVK+AZkvtlGJvTlm3bDMheeD
-	 sJJove04Uug9swwAC35DLvNs537CANsv5u0hSLd0AlTV0T2pUkLc36dcarQwD6hzpc
-	 FpkB+XiByghtEo4ptKej4cR6u7mrO1Oca+TsbVNk=
+	b=BQ2cSH810XpyrY9am0Nvp7/w1FbcsHyWngHa8QA5kjhONatb2lHMl3c88X5kTFIXX
+	 5LUlHU98bjqbwYUDuLXt4H/jnueFLo6a0U64dfjbtvH/2ix3//OCjh6xAEKFA16Lvg
+	 CeMkJ9h+/Um+Hho4ovE+YzopZNHL3bFVWAhSnH9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 066/128] ext4: avoid overlapping preallocations due to overflow
-Date: Mon,  6 Nov 2023 14:03:46 +0100
-Message-ID: <20231106130312.100886875@linuxfoundation.org>
+	John Sperbeck <jsperbeck@google.com>
+Subject: [PATCH 5.15 067/128] objtool/x86: add missing embedded_insn check
+Date: Mon,  6 Nov 2023 14:03:47 +0100
+Message-ID: <20231106130312.152968628@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,75 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: John Sperbeck <jsperbeck@google.com>
 
-commit bedc5d34632c21b5adb8ca7143d4c1f794507e4c upstream.
+When dbf460087755 ("objtool/x86: Fixup frame-pointer vs rethunk")
+was backported to some stable branches, the check for dest->embedded_insn
+in is_special_call() was missed.  The result is that the warning it
+was intended to suppress still appears.  For example on 6.1 (on kernels
+before 6.1, the '-s' argument would instead be 'check'):
 
-Let's say we want to allocate 2 blocks starting from 4294966386, after
-predicting the file size, start is aligned to 4294965248, len is changed
-to 2048, then end = start + size = 0x100000000. Since end is of
-type ext4_lblk_t, i.e. uint, end is truncated to 0.
+$ tools/objtool/objtool -s arch/x86/lib/retpoline.o
+arch/x86/lib/retpoline.o: warning: objtool: srso_untrain_ret+0xd:
+    call without frame pointer save/setup
 
-This causes (pa->pa_lstart >= end) to always hold when checking if the
-current extent to be allocated crosses already preallocated blocks, so the
-resulting ac_g_ex may cross already preallocated blocks. Hence we convert
-the end type to loff_t and use pa_logical_end() to avoid overflow.
+With this patch, the warning is correctly suppressed, and the
+kernel still passes the normal Google kernel developer tests.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20230724121059.11834-4-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Signed-off-by: John Sperbeck <jsperbeck@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ tools/objtool/check.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -4049,8 +4049,7 @@ ext4_mb_normalize_request(struct ext4_al
- 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
- 	struct ext4_super_block *es = sbi->s_es;
- 	int bsbits, max;
--	ext4_lblk_t end;
--	loff_t size, start_off;
-+	loff_t size, start_off, end;
- 	loff_t orig_size __maybe_unused;
- 	ext4_lblk_t start;
- 	struct ext4_inode_info *ei = EXT4_I(ac->ac_inode);
-@@ -4158,7 +4157,7 @@ ext4_mb_normalize_request(struct ext4_al
- 	/* check we don't cross already preallocated blocks */
- 	rcu_read_lock();
- 	list_for_each_entry_rcu(pa, &ei->i_prealloc_list, pa_inode_list) {
--		ext4_lblk_t pa_end;
-+		loff_t pa_end;
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -2202,7 +2202,7 @@ static bool is_special_call(struct instr
+ 		if (!dest)
+ 			return false;
  
- 		if (pa->pa_deleted)
- 			continue;
-@@ -4168,8 +4167,7 @@ ext4_mb_normalize_request(struct ext4_al
- 			continue;
- 		}
+-		if (dest->fentry)
++		if (dest->fentry || dest->embedded_insn)
+ 			return true;
+ 	}
  
--		pa_end = pa->pa_lstart + EXT4_C2B(EXT4_SB(ac->ac_sb),
--						  pa->pa_len);
-+		pa_end = pa_logical_end(EXT4_SB(ac->ac_sb), pa);
- 
- 		/* PA must not overlap original request */
- 		BUG_ON(!(ac->ac_o_ex.fe_logical >= pa_end ||
-@@ -4198,12 +4196,11 @@ ext4_mb_normalize_request(struct ext4_al
- 	/* XXX: extra loop to check we really don't overlap preallocations */
- 	rcu_read_lock();
- 	list_for_each_entry_rcu(pa, &ei->i_prealloc_list, pa_inode_list) {
--		ext4_lblk_t pa_end;
-+		loff_t pa_end;
- 
- 		spin_lock(&pa->pa_lock);
- 		if (pa->pa_deleted == 0) {
--			pa_end = pa->pa_lstart + EXT4_C2B(EXT4_SB(ac->ac_sb),
--							  pa->pa_len);
-+			pa_end = pa_logical_end(EXT4_SB(ac->ac_sb), pa);
- 			BUG_ON(!(start >= pa_end || end <= pa->pa_lstart));
- 		}
- 		spin_unlock(&pa->pa_lock);
 
 
