@@ -1,110 +1,81 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CAE1A5A4;
-	Mon,  6 Nov 2023 11:52:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB771A592;
+	Mon,  6 Nov 2023 13:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PET7Y3fO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1699271526; x=1730807526;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=2GNjbmEJtZrouroHCNxWmbCT6s2EU3n4xNfku+20/b0=;
-  b=PET7Y3fO7v+gp6mUkVQNJODgH5Zr+8RCzbn/8cfrOGr2ssS3PPy8ST/R
-   P7f3Nec0V+ottOuyxHsAVs3OKQ/92haz6jKq2pp7ei5WewkRHV5LTUH3f
-   2Za7l2/cEjsTCfscXUCFueJAUiyTwa2UlIsNEsrUYjKIGLfY1vJaztbMk
-   5a1EGdw9K6HkQpkGjmfq/WWWDe+XFu9UUAxqrnbEvp/St8qKhoJIFiXZS
-   eg2HAdI07/EqWWJRPzSf8pvziBpZAKg3/auZuTi6ouUogWdfpGn8ca3MY
-   885bhbrH33MenQSYFFRqayBLPLFNBzB6aVQDTcoKVsoERFBK8cxKbGDjl
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10885"; a="475494044"
-X-IronPort-AV: E=Sophos;i="6.03,281,1694761200"; 
-   d="scan'208";a="475494044"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2023 03:52:05 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10885"; a="852981472"
-X-IronPort-AV: E=Sophos;i="6.03,281,1694761200"; 
-   d="scan'208";a="852981472"
-Received: from lkp-server01.sh.intel.com (HELO 17d9e85e5079) ([10.239.97.150])
-  by FMSMGA003.fm.intel.com with ESMTP; 06 Nov 2023 03:51:59 -0800
-Received: from kbuild by 17d9e85e5079 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1qzy97-0006NJ-1u;
-	Mon, 06 Nov 2023 11:51:57 +0000
-Date: Mon, 6 Nov 2023 19:51:14 +0800
-From: kernel test robot <lkp@intel.com>
-To: Nuno Das Neves <nunodasneves@linux.microsoft.com>,
-	linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org,
-	x86@kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arch@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, patches@lists.linux.dev,
-	mikelley@microsoft.com, kys@microsoft.com, wei.liu@kernel.org,
-	gregkh@linuxfoundation.org, haiyangz@microsoft.com,
-	decui@microsoft.com, apais@linux.microsoft.com,
-	Tianyu.Lan@microsoft.com, ssengar@linux.microsoft.com,
-	mukeshrathor@microsoft.com, stanislav.kinsburskiy@gmail.com,
-	jinankjain@linux.microsoft.com, vkuznets@redhat.com,
-	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-	dave.hansen@linux.intel.com, hpa@zytor.com, will@kernel.org,
-	catalin.marinas@arm.com
-Subject: Re: [PATCH v4 15/15] Drivers: hv: Add modules to expose /dev/mshv to
- VMMs running on Hyper-V
-Message-ID: <202311061950.zy9qRyzo-lkp@intel.com>
-References: <1696010501-24584-16-git-send-email-nunodasneves@linux.microsoft.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XPW14/pn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61037C433C7;
+	Mon,  6 Nov 2023 13:03:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699275806;
+	bh=UPMZ+xQmEGa91GQ0MSguOeCpnzIle8Ii2hBLfbabYwc=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=XPW14/pnY75zDigYeJwowboTAOW+s2t1lyx+BTS+i2jLbZ7xyG1aaUnL5QSrvM88J
+	 fVLxQu51xDIuuwbLJzr8TQdhp3k+1Dg7cptmmU5Jo0xRI/q6pdR5D/TWV9oRjPVyd+
+	 fAZhl6Doj6kjaW5c+aOlivbKIGm12F9oA80zaME10X6WxDsWph2F6VsoLtxUL7UcRx
+	 xr1Hc6AILeia6/CJFri8ua/kJmcMxBwStZH2ERHiNkunfHM2jWuOIl1FUnSFKj7xkg
+	 CKjUp+2hyJhfu3iVqra3LWz60/irIOf0MpgGCmo+Iu5ugROoFQW1Q3lIlI0Ahg3dPJ
+	 t1nnL3/UQzziQ==
+From: Mark Brown <broonie@kernel.org>
+To: wangweidong.a@awinic.com, Nathan Chancellor <nathan@kernel.org>
+Cc: lgirdwood@gmail.com, ndesaulniers@google.com, trix@redhat.com, 
+ alsa-devel@alsa-project.org, llvm@lists.linux.dev, patches@lists.linux.dev
+In-Reply-To: <20231027-asoc-aw88399-fix-wuninitialized-v1-1-b1044493e4cd@kernel.org>
+References: <20231027-asoc-aw88399-fix-wuninitialized-v1-1-b1044493e4cd@kernel.org>
+Subject: Re: [PATCH] ASoC: codecs: aw88399: Fix -Wuninitialized in
+ aw_dev_set_vcalb()
+Message-Id: <169927580382.3037292.16293961497695340316.b4-ty@kernel.org>
+Date: Mon, 06 Nov 2023 13:03:23 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1696010501-24584-16-git-send-email-nunodasneves@linux.microsoft.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-0438c
 
-Hi Nuno,
+On Fri, 27 Oct 2023 09:54:25 -0700, Nathan Chancellor wrote:
+> Clang warns (or errors with CONFIG_WERROR=y):
+> 
+>   sound/soc/codecs/aw88399.c:441:18: error: variable 'vsense_select' is uninitialized when used here [-Werror,-Wuninitialized]
+>     441 |         vsense_select = vsense_select & (~AW88399_VDSEL_MASK);
+>         |                         ^~~~~~~~~~~~~
+>   sound/soc/codecs/aw88399.c:431:28: note: initialize the variable 'vsense_select' to silence this warning
+>     431 |         unsigned int vsense_select, vsense_value;
+>         |                                   ^
+>         |                                    = 0
+>   1 error generated.
+> 
+> [...]
 
-kernel test robot noticed the following build errors:
+Applied to
 
-[auto build test ERROR on arnd-asm-generic/master]
-[also build test ERROR on tip/x86/core arm64/for-next/core linus/master v6.6 next-20231106]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Nuno-Das-Neves/hyperv-tlfs-Change-shared-HV_REGISTER_-defines-to-HV_MSR_/20230930-041305
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/arnd/asm-generic.git master
-patch link:    https://lore.kernel.org/r/1696010501-24584-16-git-send-email-nunodasneves%40linux.microsoft.com
-patch subject: [PATCH v4 15/15] Drivers: hv: Add modules to expose /dev/mshv to VMMs running on Hyper-V
-config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20231106/202311061950.zy9qRyzo-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231106/202311061950.zy9qRyzo-lkp@intel.com/reproduce)
+Thanks!
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202311061950.zy9qRyzo-lkp@intel.com/
+[1/1] ASoC: codecs: aw88399: Fix -Wuninitialized in aw_dev_set_vcalb()
+      commit: cba4590036855f4e3110d43c14385d2401080dbb
 
-All errors (new ones prefixed by >>):
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
->> drivers/hv/mshv_vtl_main.c:25:10: fatal error: ../../../kernel/fpu/legacy.h: No such file or directory
-      25 | #include "../../../kernel/fpu/legacy.h"
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   compilation terminated.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-vim +25 drivers/hv/mshv_vtl_main.c
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-    24	
-  > 25	#include "../../../kernel/fpu/legacy.h"
-    26	#include "mshv.h"
-    27	#include "mshv_vtl.h"
-    28	#include "hyperv_vmbus.h"
-    29	
+Thanks,
+Mark
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
