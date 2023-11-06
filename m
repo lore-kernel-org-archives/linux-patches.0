@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4E9208BD
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A17208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxjVNHt7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02DFAC433C7;
-	Mon,  6 Nov 2023 13:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEijtLpz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A86C433C8;
+	Mon,  6 Nov 2023 13:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276647;
-	bh=rVfC89Q3eVNF3e+rLMPmm7rYlXF/CcoyMcsE0ZkF/eM=;
+	s=korg; t=1699276650;
+	bh=TQ+ipI1Sx3+1TwvScCAfxfmBp0+MNqlMM9dHaRKtZkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CxjVNHt7TRbLtMmDexCUWvVSmm4kcZ/bwj0LPMdtatUo/3uMJ8iiuTSfiC3coWb9/
-	 I9j8d/hdEBAih8RNsh/NkKW/NqZYNf2mJyrrxcBWZ2thgm1WK8LxswIJIyZY7on0e3
-	 e5lPIHe2/WMJGu3g1igfJXdsZO3HXm3dJNaqppBI=
+	b=DEijtLpzNbFFUhU42J4SRPtpcdK1FSZJTJIH8Cd/TsN+u5rhvgMgUcQvzP0/aPcTg
+	 Bwe2kfOGEVUxnvFC80aaQ76dw52WrTrjW0MIK4d/khjBxTcIZU/Ohu8WD956BxI7m8
+	 ZqBjEzD4+Cu2Tbbmir77r68HdJcNMlMMf5RFvP2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 21/88] fs/ntfs3: Use kvmalloc instead of kmalloc(... __GFP_NOWARN)
-Date: Mon,  6 Nov 2023 14:03:15 +0100
-Message-ID: <20231106130306.553610045@linuxfoundation.org>
+Subject: [PATCH 6.5 22/88] fs/ntfs3: Add more attributes checks in mi_enum_attr()
+Date: Mon,  6 Nov 2023 14:03:16 +0100
+Message-ID: <20231106130306.593408984@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -43,76 +43,145 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit fc471e39e38fea6677017cbdd6d928088a59fc67 ]
+[ Upstream commit 013ff63b649475f0ee134e2c8d0c8e65284ede50 ]
 
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrlist.c | 15 +++++++++++++--
- fs/ntfs3/bitmap.c   |  3 ++-
- fs/ntfs3/super.c    |  2 +-
- 3 files changed, 16 insertions(+), 4 deletions(-)
+ fs/ntfs3/record.c | 68 ++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 52 insertions(+), 16 deletions(-)
 
-diff --git a/fs/ntfs3/attrlist.c b/fs/ntfs3/attrlist.c
-index 42631b31adf17..7c01735d1219d 100644
---- a/fs/ntfs3/attrlist.c
-+++ b/fs/ntfs3/attrlist.c
-@@ -52,7 +52,8 @@ int ntfs_load_attr_list(struct ntfs_inode *ni, struct ATTRIB *attr)
+diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
+index c12ebffc94da4..02cc91ed88357 100644
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -193,8 +193,9 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ {
+ 	const struct MFT_REC *rec = mi->mrec;
+ 	u32 used = le32_to_cpu(rec->used);
+-	u32 t32, off, asize;
++	u32 t32, off, asize, prev_type;
+ 	u16 t16;
++	u64 data_size, alloc_size, tot_size;
  
- 	if (!attr->non_res) {
- 		lsize = le32_to_cpu(attr->res.data_size);
--		le = kmalloc(al_aligned(lsize), GFP_NOFS | __GFP_NOWARN);
-+		/* attr is resident: lsize < record_size (1K or 4K) */
-+		le = kvmalloc(al_aligned(lsize), GFP_KERNEL);
- 		if (!le) {
- 			err = -ENOMEM;
- 			goto out;
-@@ -80,7 +81,17 @@ int ntfs_load_attr_list(struct ntfs_inode *ni, struct ATTRIB *attr)
- 		if (err < 0)
- 			goto out;
+ 	if (!attr) {
+ 		u32 total = le32_to_cpu(rec->total);
+@@ -213,6 +214,7 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 		if (!is_rec_inuse(rec))
+ 			return NULL;
  
--		le = kmalloc(al_aligned(lsize), GFP_NOFS | __GFP_NOWARN);
-+		/* attr is nonresident.
-+		 * The worst case:
-+		 * 1T (2^40) extremely fragmented file.
-+		 * cluster = 4K (2^12) => 2^28 fragments
-+		 * 2^9 fragments per one record => 2^19 records
-+		 * 2^5 bytes of ATTR_LIST_ENTRY per one record => 2^24 bytes.
-+		 *
-+		 * the result is 16M bytes per attribute list.
-+		 * Use kvmalloc to allocate in range [several Kbytes - dozen Mbytes]
-+		 */
-+		le = kvmalloc(al_aligned(lsize), GFP_KERNEL);
- 		if (!le) {
- 			err = -ENOMEM;
- 			goto out;
-diff --git a/fs/ntfs3/bitmap.c b/fs/ntfs3/bitmap.c
-index 107e808e06eae..d66055e30aff9 100644
---- a/fs/ntfs3/bitmap.c
-+++ b/fs/ntfs3/bitmap.c
-@@ -659,7 +659,8 @@ int wnd_init(struct wnd_bitmap *wnd, struct super_block *sb, size_t nbits)
- 		wnd->bits_last = wbits;
++		prev_type = 0;
+ 		attr = Add2Ptr(rec, off);
+ 	} else {
+ 		/* Check if input attr inside record. */
+@@ -226,11 +228,11 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 			return NULL;
+ 		}
  
- 	wnd->free_bits =
--		kcalloc(wnd->nwnd, sizeof(u16), GFP_NOFS | __GFP_NOWARN);
-+		kvmalloc_array(wnd->nwnd, sizeof(u16), GFP_KERNEL | __GFP_ZERO);
+-		if (off + asize < off) {
+-			/* Overflow check. */
++		/* Overflow check. */
++		if (off + asize < off)
+ 			return NULL;
+-		}
+ 
++		prev_type = le32_to_cpu(attr->type);
+ 		attr = Add2Ptr(attr, asize);
+ 		off += asize;
+ 	}
+@@ -250,7 +252,11 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 
+ 	/* 0x100 is last known attribute for now. */
+ 	t32 = le32_to_cpu(attr->type);
+-	if ((t32 & 0xf) || (t32 > 0x100))
++	if (!t32 || (t32 & 0xf) || (t32 > 0x100))
++		return NULL;
 +
- 	if (!wnd->free_bits)
- 		return -ENOMEM;
++	/* attributes in record must be ordered by type */
++	if (t32 < prev_type)
+ 		return NULL;
  
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index d6b5170253a69..bcb17a1723465 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -1388,7 +1388,7 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	/* Check overflow and boundary. */
+@@ -259,16 +265,15 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 
+ 	/* Check size of attribute. */
+ 	if (!attr->non_res) {
++		/* Check resident fields. */
+ 		if (asize < SIZEOF_RESIDENT)
+ 			return NULL;
+ 
+ 		t16 = le16_to_cpu(attr->res.data_off);
+-
+ 		if (t16 > asize)
+ 			return NULL;
+ 
+-		t32 = le32_to_cpu(attr->res.data_size);
+-		if (t16 + t32 > asize)
++		if (t16 + le32_to_cpu(attr->res.data_size) > asize)
+ 			return NULL;
+ 
+ 		t32 = sizeof(short) * attr->name_len;
+@@ -278,21 +283,52 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 		return attr;
  	}
  
- 	bytes = inode->i_size;
--	sbi->def_table = t = kmalloc(bytes, GFP_NOFS | __GFP_NOWARN);
-+	sbi->def_table = t = kvmalloc(bytes, GFP_KERNEL);
- 	if (!t) {
- 		err = -ENOMEM;
- 		goto put_inode_out;
+-	/* Check some nonresident fields. */
+-	if (attr->name_len &&
+-	    le16_to_cpu(attr->name_off) + sizeof(short) * attr->name_len >
+-		    le16_to_cpu(attr->nres.run_off)) {
++	/* Check nonresident fields. */
++	if (attr->non_res != 1)
++		return NULL;
++
++	t16 = le16_to_cpu(attr->nres.run_off);
++	if (t16 > asize)
++		return NULL;
++
++	t32 = sizeof(short) * attr->name_len;
++	if (t32 && le16_to_cpu(attr->name_off) + t32 > t16)
++		return NULL;
++
++	/* Check start/end vcn. */
++	if (le64_to_cpu(attr->nres.svcn) > le64_to_cpu(attr->nres.evcn) + 1)
++		return NULL;
++
++	data_size = le64_to_cpu(attr->nres.data_size);
++	if (le64_to_cpu(attr->nres.valid_size) > data_size)
+ 		return NULL;
+-	}
+ 
+-	if (attr->nres.svcn || !is_attr_ext(attr)) {
++	alloc_size = le64_to_cpu(attr->nres.alloc_size);
++	if (data_size > alloc_size)
++		return NULL;
++
++	t32 = mi->sbi->cluster_mask;
++	if (alloc_size & t32)
++		return NULL;
++
++	if (!attr->nres.svcn && is_attr_ext(attr)) {
++		/* First segment of sparse/compressed attribute */
++		if (asize + 8 < SIZEOF_NONRESIDENT_EX)
++			return NULL;
++
++		tot_size = le64_to_cpu(attr->nres.total_size);
++		if (tot_size & t32)
++			return NULL;
++
++		if (tot_size > alloc_size)
++			return NULL;
++	} else {
+ 		if (asize + 8 < SIZEOF_NONRESIDENT)
+ 			return NULL;
+ 
+ 		if (attr->nres.c_unit)
+ 			return NULL;
+-	} else if (asize + 8 < SIZEOF_NONRESIDENT_EX)
+-		return NULL;
++	}
+ 
+ 	return attr;
+ }
 -- 
 2.42.0
 
