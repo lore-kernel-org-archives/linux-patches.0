@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB6423747
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC71423747
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7j5FrbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48624C433C9;
-	Mon,  6 Nov 2023 13:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtlFUzXA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2626BC433C7;
+	Mon,  6 Nov 2023 13:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277019;
-	bh=h3KaH+3U6sUjgoXqmSrvw9mXfXTNA9qUAZJwaO3wUz8=;
+	s=korg; t=1699277022;
+	bh=+lg7vQr83VPYVdmNoET5vssqC7/uVqNuAorPi5cAxVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l7j5FrbGTEK3A4l/fdzBaSaA4u25HE6OYOfWAaGO1m8ZBvJSwVEJv9xq3+LKh45r+
-	 uwmEpWmNP2VjwOkALHHOE8fwPRU6q3YuoYGofq6/1w5m1bR/o3vJcqlE5lcDI6n+cA
-	 wVuCVvj8v1cOneRH22Qn1/vqV6X6PQlCF5zPe7rM=
+	b=wtlFUzXAER5S48mV9h6t2PAO3d28hh8I0k6kokdpvifZrDlg/vg7vkofR5a2eDZ4V
+	 oLrYIPrhuOFRO9juv15N70MF1tn8ScBkyYZ4/RWrxENmogf6xm4buz4GZ76q942HzI
+	 ityOMODbClI6+AogD8lntHTc4DhhAs+G8dIVYL1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eric.auger@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 5.15 011/128] vhost: Allow null msg.size on VHOST_IOTLB_INVALIDATE
-Date: Mon,  6 Nov 2023 14:02:51 +0100
-Message-ID: <20231106130309.640427592@linuxfoundation.org>
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 012/128] mm/page_alloc: correct start page when guard page debug is enabled
+Date: Mon,  6 Nov 2023 14:02:52 +0100
+Message-ID: <20231106130309.682245996@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,49 +44,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit ca50ec377c2e94b0a9f8735de2856cd0f13beab4 upstream.
+commit 61e21cf2d2c3cc5e60e8d0a62a77e250fccda62c upstream.
 
-Commit e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb
-entries") Forbade vhost iotlb msg with null size to prevent entries
-with size = start = 0 and last = ULONG_MAX to end up in the iotlb.
+When guard page debug is enabled and set_page_guard returns success, we
+miss to forward page to point to start of next split range and we will do
+split unexpectedly in page range without target page.  Move start page
+update before set_page_guard to fix this.
 
-Then commit 95932ab2ea07 ("vhost: allow batching hint without size")
-only applied the check for VHOST_IOTLB_UPDATE and VHOST_IOTLB_INVALIDATE
-message types to fix a regression observed with batching hit.
+As we split to wrong target page, then splited pages are not able to merge
+back to original order when target page is put back and splited pages
+except target page is not usable.  To be specific:
 
-Still, the introduction of that check introduced a regression for
-some users attempting to invalidate the whole ULONG_MAX range by
-setting the size to 0. This is the case with qemu/smmuv3/vhost
-integration which does not work anymore. It Looks safe to partially
-revert the original commit and allow VHOST_IOTLB_INVALIDATE messages
-with null size. vhost_iotlb_del_range() will compute a correct end
-iova. Same for vhost_vdpa_iotlb_unmap().
+Consider target page is the third page in buddy page with order 2.
+| buddy-2 | Page | Target | Page |
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Fixes: e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb entries")
-Cc: stable@vger.kernel.org # v5.17+
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20230927140544.205088-1-eric.auger@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+After break down to target page, we will only set first page to Guard
+because of bug.
+| Guard   | Page | Target | Page |
+
+When we try put_page_back_buddy with target page, the buddy page of target
+if neither guard nor buddy, Then it's not able to construct original page
+with order 2
+| Guard | Page | buddy-0 | Page |
+
+All pages except target page is not in free list and is not usable.
+
+Link: https://lkml.kernel.org/r/20230927094401.68205-1-shikemeng@huaweicloud.com
+Fixes: 06be6ff3d2ec ("mm,hwpoison: rework soft offline for free pages")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vhost.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ mm/page_alloc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -1171,9 +1171,7 @@ ssize_t vhost_chr_write_iter(struct vhos
- 		goto done;
- 	}
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -9481,6 +9481,7 @@ static void break_down_buddy_pages(struc
+ 			next_page = page;
+ 			current_buddy = page + size;
+ 		}
++		page = next_page;
  
--	if ((msg.type == VHOST_IOTLB_UPDATE ||
--	     msg.type == VHOST_IOTLB_INVALIDATE) &&
--	     msg.size == 0) {
-+	if (msg.type == VHOST_IOTLB_UPDATE && msg.size == 0) {
- 		ret = -EINVAL;
- 		goto done;
+ 		if (set_page_guard(zone, current_buddy, high, migratetype))
+ 			continue;
+@@ -9488,7 +9489,6 @@ static void break_down_buddy_pages(struc
+ 		if (current_buddy != target) {
+ 			add_to_free_list(current_buddy, zone, high, migratetype);
+ 			set_buddy_order(current_buddy, high);
+-			page = next_page;
+ 		}
  	}
+ }
 
 
