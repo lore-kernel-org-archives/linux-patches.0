@@ -1,49 +1,49 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBAD29417
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 17:52:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C799229CE0
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 17:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hjoj23h9"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1cc0d0a0355so35042495ad.3
-        for <patches@lists.linux.dev>; Mon, 06 Nov 2023 09:52:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PpmtF1et"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3b566bc6daaso2857108b6e.1
+        for <patches@lists.linux.dev>; Mon, 06 Nov 2023 09:53:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699293160; x=1699897960; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1699293188; x=1699897988; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=mvMLV/XYihjMVpZoZAMN1HtjGi3fRmETd2VsU6bI7YU=;
-        b=Hjoj23h9B8ZMScwmDM34Wg49ujAg+GraWIAXJ1abAhQo1E8BtPLT5LSkcOKq+oHHFO
-         Eus9BFLApRaLr/rgVQvlWkOJKBTNXdtSvMqWSY8wMCgcV/7bzK0xThRQseCqsrunyKF5
-         q3r4MPYnlXN7LLBmiAvIaASHzjTIFjCR9BtKZKy+IRatykdLuKKTEOOp6mopJD7lMEfH
-         NLrGoTMdoHRL10v8kiJxKM2zQ37yityob5O0LBVuVN/75GUiKB+FlvYA0spyGBBw/B+f
-         Yd2nU+NLCuqcJedwvYcXX3t7l5BPwpCEp8FL4Uo5fp0SO8RtmnwisDBwKb86VC2sRomR
-         tKHQ==
+        bh=9WROodUma+YX9D9t3U/MSNsWH+qYxH1P9vdKfkt+6QQ=;
+        b=PpmtF1etnSbNQ4mbFor3mm3pK2D9oLi8ZfGpZGDe2XbrGwse7cCrbJqqAbBTy+NGeP
+         10D9e2pqg2cW80pD3sMcMFc2xzDiSJUbhe1JOUz4loUftuS9N6zW4MDS0lirRqwwuZig
+         PlGFA7AVx1SCaYqfUPtZzeMI4SKbtIR6cHAfj8eZkAXakvwQKkOW+c2EIbpTfBZ+Jmxf
+         y50bHIWdPKgiVyo57RZeoupHPBKWhXu5q+8T2I2rqtkGThjPN+uOLxe/DyI41P631Nai
+         F251dDHUkr6DAzhJo/BPKgnsEvjtJHz9ZiXj4xD70e+YUbm3A1hghA6z4s+7pQN8HtY4
+         FTyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699293160; x=1699897960;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1699293188; x=1699897988;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mvMLV/XYihjMVpZoZAMN1HtjGi3fRmETd2VsU6bI7YU=;
-        b=tNAcfnbQNkvA9dw2HuRlmaM/lAzwXCRJ/jeNVIqYnyI9vY4MKMFFmuXdVvz+7H1Jy5
-         D0hHQHlID5oZRfPf+07V8+gOx2WjT27hHDKAz2UstXbARIYecxVoHAZu7x7lp2+T6GSz
-         7pO3I0jqcHlTccCSqHt2WwcBKRRDoq3qSH9heeB4yNFl3B2nDK9e4SDVA5HzUflnh/Xz
-         RscS75T4gyWEngHPCdyEtA8+MkauFPo8hCPECP0aKvjpJinNp4iMcNFvRe75GFlyNR74
-         ZUZ9P8ECW3V6lVMFBmzS8hkIC6GW+W6N7V0u7XLPYdywNeRXkpbt/C1CjR+1iethfrOa
-         zzqA==
-X-Gm-Message-State: AOJu0YwoVjtFdn5gGkw3vYtMTUAbHHy/OR3zi0o3tUaWMsp7nuxOjXQr
-	HFFHoqpbfeDSEh4Vj3rnHqc=
-X-Google-Smtp-Source: AGHT+IHkBjm95S2cCyGqYNTJXIfdVIzMId/N24sP+ZbAuxhORjpVmXmMljjPwYKN6tI93qg3Uu5XSw==
-X-Received: by 2002:a17:902:e80e:b0:1cc:482c:bc54 with SMTP id u14-20020a170902e80e00b001cc482cbc54mr23308613plg.48.1699293160443;
-        Mon, 06 Nov 2023 09:52:40 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id iz18-20020a170902ef9200b001c9c6a78a56sm6188602plb.97.2023.11.06.09.52.38
+        bh=9WROodUma+YX9D9t3U/MSNsWH+qYxH1P9vdKfkt+6QQ=;
+        b=EVxU1BCXVt8jF6qtvsQYzF/kGYn6ePUNstKZ/7W+vMESbuCghYnyh9/tf2RokbFEYa
+         0N9ye+l3/ck5L/W6grI0oPTBebPJvah1aw2DgjEmpx6QrsE/zeiugaKG/NojX+vLhirg
+         btjemBs+jfl3iK4xvEjuzWhfNFnfSDGVktJ/L20f7u2BoxUWB1cpEhW6ckChi1lx2Qgp
+         BH7ZBIpATcIBlEDeTbHaLHn5YXu7QJe+pvycGDa1jiYX78VRMd4u6KpVwtAYw7ncteeZ
+         yiUmTm9Xv3w3/uPOlDj1Vn3zVn+B2P8MRy/4AzZkscJDfu5z/tEhKil2BDqWipuN1eQa
+         0o7A==
+X-Gm-Message-State: AOJu0YwqMpxszQTMt54+1IO1RMP6Glf3A2D8NLe/74GAo4L70wtoZUw/
+	/47w7ExAsA5AOqfJfUUA9dT2MQ==
+X-Google-Smtp-Source: AGHT+IEL8z1Tr9lAONkY54ORSL5BRqixdea0A8W3dB2QXLDSm17ZTbZxHici7Eg4mDMAISCQAjNb8Q==
+X-Received: by 2002:a54:4407:0:b0:3ab:38b0:8b84 with SMTP id k7-20020a544407000000b003ab38b08b84mr31465404oiw.17.1699293187829;
+        Mon, 06 Nov 2023 09:53:07 -0800 (PST)
+Received: from [192.168.17.16] ([138.84.54.223])
+        by smtp.gmail.com with ESMTPSA id 11-20020aca100b000000b003b2e4b72a75sm1302246oiq.52.2023.11.06.09.53.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Nov 2023 09:52:39 -0800 (PST)
-Message-ID: <a6e89e5c-9f9b-435f-ade3-f88fa4103abd@gmail.com>
-Date: Mon, 6 Nov 2023 09:52:37 -0800
+        Mon, 06 Nov 2023 09:53:07 -0800 (PST)
+Message-ID: <8aec1bd5-befc-486c-9e47-7571b937b8c7@linaro.org>
+Date: Mon, 6 Nov 2023 11:53:04 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,24 +51,26 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 00/62] 6.1.62-rc1 review
-Content-Language: en-US
+Subject: Re: [PATCH 5.10 00/95] 5.10.200-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20231106130301.807965064@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20231106130301.807965064@linuxfoundation.org>
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20231106130304.678610325@linuxfoundation.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
+In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/6/23 05:03, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.62 release.
-> There are 62 patches in this series, all will be posted as a response
+Hello!
+
+On 06/11/23 7:03 a. m., Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.200 release.
+> There are 95 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -76,19 +78,38 @@ On 11/6/23 05:03, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.62-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.200-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+There seems to be a problem building for RISC-V with GCC 8, 12, and Clang 17. This is with defconfig, allnoconfig, tinyconfig:
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+-----8<-----
+/builds/linux/drivers/irqchip/irq-riscv-intc.c: In function 'riscv_intc_init':
+/builds/linux/drivers/irqchip/irq-riscv-intc.c:119:17: error: implicit declaration of function 'fwnode_dev_initialized'; did you mean 'zone_is_initialized'? [-Werror=implicit-function-declaration]
+   119 |                 fwnode_dev_initialized(of_fwnode_handle(node), true);
+       |                 ^~~~~~~~~~~~~~~~~~~~~~
+       |                 zone_is_initialized
+cc1: some warnings being treated as errors
+make[3]: *** [/builds/linux/scripts/Makefile.build:286: drivers/irqchip/irq-riscv-intc.o] Error 1
+make[3]: Target '__build' not remade because of errors.
+make[2]: *** [/builds/linux/scripts/Makefile.build:503: drivers/irqchip] Error 2
+make[2]: Target '__build' not remade because of errors.
+make[1]: *** [/builds/linux/Makefile:1832: drivers] Error 2
+make[1]: Target '__all' not remade because of errors.
+make: *** [Makefile:192: __sub-make] Error 2
+make: Target '__all' not remade because of errors.
+----->8-----
+
+Currently bisecting.
+
+Greetings!
+
+Daniel Díaz
+daniel.diaz@linaro.org
 
