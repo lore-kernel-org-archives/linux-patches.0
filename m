@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CF920316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A59520316
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwU+OKty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28B0C433C9;
-	Mon,  6 Nov 2023 13:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYN8CVxM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CA2C433C9;
+	Mon,  6 Nov 2023 13:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276483;
-	bh=xC4Ms2kA10+MuvjO3Ve3qQyflF6NzVUyNAGOjelnCzk=;
+	s=korg; t=1699276486;
+	bh=PJ/l7atXbNfx7W7xWubztAFabZx92P6apni08R+pxAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OwU+OKty8idQE7TyiJToa7nG5XqKH6/pBW58lER2lD9fR7akd3uBWJzCJ4KagZ9SF
-	 A0jPjkfm7zMdr9bBbYeQKzazA3qmjO2wxyfLRtRDuVP6KigkZaUYAJyhECwOPcqpPU
-	 qoqibHg+JG+cMEF9Td/JlRDIFxusJD8qm1bo0/10=
+	b=QYN8CVxMQK62U1hQmRpg5annGll4Hkn1RzY07xQRQ31gA7g7Dn477LbBi96MfIOdh
+	 UMZpx4zAmFoXoBi8VQ3D/7S6/9OE0hd/skQNvNi+9ElcCaA+AGv7qRQsSqwAioGviH
+	 EsbJHUhbya/yBAgOpdQEKuHfJB6stGNNcQVTb6M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cameron Williams <cang1@live.co.uk>
-Subject: [PATCH 6.1 57/62] tty: 8250: Add support for additional Brainboxes PX cards
-Date: Mon,  6 Nov 2023 14:04:03 +0100
-Message-ID: <20231106130303.798164852@linuxfoundation.org>
+Subject: [PATCH 6.1 58/62] tty: 8250: Add support for Intashield IX cards
+Date: Mon,  6 Nov 2023 14:04:04 +0100
+Message-ID: <20231106130303.835401419@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.807965064@linuxfoundation.org>
 References: <20231106130301.807965064@linuxfoundation.org>
@@ -42,76 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Cameron Williams <cang1@live.co.uk>
 
-commit 9604884e592cd04ead024c9737c67a77f175cab9 upstream.
+commit 62d2ec2ded278c7512d91ca7bf8eb9bac46baf90 upstream.
 
-Add support for some more of the Brainboxes PX (PCIe) range
-of serial cards, namely
-PX-275/PX-279, PX-475 (serial port, not LPT), PX-820,
-PX-803/PX-857 (additional ID).
+Add support for the IX-100, IX-200 and IX-400 serial cards.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Link: https://lore.kernel.org/r/DU0PR02MB78996BEC353FB346FC35444BC4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
+Link: https://lore.kernel.org/r/DU0PR02MB7899614E5837E82A03272A4BC4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |   29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/tty/serial/8250/8250_pci.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
 --- a/drivers/tty/serial/8250/8250_pci.c
 +++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -5207,6 +5207,13 @@ static const struct pci_device_id serial
- 		0, 0,
- 		pbn_oxsemi_4_15625000 },
- 	/*
-+	 * Brainboxes PX-275/279
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0E41,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_8_115200 },
+@@ -4949,6 +4949,27 @@ static const struct pci_device_id serial
+ 	{	PCI_VENDOR_ID_INTASHIELD, PCI_DEVICE_ID_INTASHIELD_IS400,
+ 		PCI_ANY_ID, PCI_ANY_ID, 0, 0,    /* 135a.0dc0 */
+ 		pbn_b2_4_115200 },
 +	/*
- 	 * Brainboxes PX-310
- 	 */
- 	{	PCI_VENDOR_ID_INTASHIELD, 0x400E,
-@@ -5253,17 +5260,39 @@ static const struct pci_device_id serial
- 		0, 0,
- 		pbn_oxsemi_4_15625000 },
- 	/*
-+	 * Brainboxes PX-475
++	 * IntaShield IX-100
 +	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x401D,
++	{	PCI_VENDOR_ID_INTASHIELD, 0x4027,
 +		PCI_ANY_ID, PCI_ANY_ID,
 +		0, 0,
 +		pbn_oxsemi_1_15625000 },
 +	/*
- 	 * Brainboxes PX-803/PX-857
- 	 */
- 	{	PCI_VENDOR_ID_INTASHIELD, 0x4009,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
- 		pbn_b0_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x4018,
++	 * IntaShield IX-200
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x4028,
 +		PCI_ANY_ID, PCI_ANY_ID,
 +		0, 0,
 +		pbn_oxsemi_2_15625000 },
- 	{	PCI_VENDOR_ID_INTASHIELD, 0x401E,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
- 		pbn_oxsemi_2_15625000 },
- 	/*
-+	 * Brainboxes PX-820
++	/*
++	 * IntaShield IX-400
 +	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x4002,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b0_4_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x4013,
++	{	PCI_VENDOR_ID_INTASHIELD, 0x4029,
 +		PCI_ANY_ID, PCI_ANY_ID,
 +		0, 0,
 +		pbn_oxsemi_4_15625000 },
-+	/*
- 	 * Brainboxes PX-846
- 	 */
- 	{	PCI_VENDOR_ID_INTASHIELD, 0x4008,
+ 	/* Brainboxes Devices */
+ 	/*
+ 	* Brainboxes UC-101
 
 
