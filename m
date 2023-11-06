@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF36B20B09
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D3A20B09
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxtAVqaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCDAC433C9;
-	Mon,  6 Nov 2023 13:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COptA7xi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE38C433C7;
+	Mon,  6 Nov 2023 13:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276987;
-	bh=1vJBYTZPHsyyma7OZaXf0mEeq8dtqYDjjF+LrTLP9rU=;
+	s=korg; t=1699276990;
+	bh=L5IHGY4ZtgwtPsZKHki5yYtlkzBiZUbTTDyCoWiAvx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxtAVqaA8Y4NlENiqnX3+B0se9rP6g11zo9SpYpwHZhzwisnH6YeRqxJpKfKKoty/
-	 2/ORTYVqCJbSlrNviRdXlib8k0pG7UFzYSs9aeCpY4N6Lu78rcMJcer5TWKDrj3AjP
-	 Juol6Z9rm/5aBPoKp1FwGK66zxkGapU9404jbbNk=
+	b=COptA7xi+3r78483y5hBb9Y6TWxAZLv3TX2USCjbPp8jrEMLe7TF8xjpRId1wua8v
+	 gop7xW3AwZ21Zr0rUpY0Yskd00himKPMhFVTdLbIeBg6xo57lCqWyuGmecUvJElCS+
+	 mTBRo7nmYfjY94kjT52uUNaX7zG9SQD5z+IoS44k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>
-Subject: [PATCH 5.4 74/74] tty: 8250: Add support for Intashield IS-100
-Date: Mon,  6 Nov 2023 14:04:34 +0100
-Message-ID: <20231106130304.228159040@linuxfoundation.org>
+	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 52/74] irqchip/stm32-exti: add missing DT IRQ flag translation
+Date: Mon,  6 Nov 2023 14:04:12 +0100
+Message-ID: <20231106130303.527049553@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
 References: <20231106130301.687882731@linuxfoundation.org>
@@ -40,34 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Ben Wolsieffer <ben.wolsieffer@hefring.com>
 
-commit 4d994e3cf1b541ff32dfb03fbbc60eea68f9645b upstream.
+[ Upstream commit 8554cba1d6dbd3c74e0549e28ddbaccbb1d6b30a ]
 
-Add support for the Intashield IS-100 1 port serial card.
+The STM32F4/7 EXTI driver was missing the xlate callback, so IRQ trigger
+flags specified in the device tree were being ignored. This was
+preventing the RTC alarm interrupt from working, because it must be set
+to trigger on the rising edge to function correctly.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Link: https://lore.kernel.org/r/DU0PR02MB7899A0E0CDAA505AF5A874CDC4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20231003162003.1649967-1-ben.wolsieffer@hefring.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/irqchip/irq-stm32-exti.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -5105,6 +5105,12 @@ static const struct pci_device_id serial
- 		pbn_b1_bt_1_115200 },
+diff --git a/drivers/irqchip/irq-stm32-exti.c b/drivers/irqchip/irq-stm32-exti.c
+index a8322a4e18d36..df18465a0985f 100644
+--- a/drivers/irqchip/irq-stm32-exti.c
++++ b/drivers/irqchip/irq-stm32-exti.c
+@@ -414,6 +414,7 @@ static const struct irq_domain_ops irq_exti_domain_ops = {
+ 	.map	= irq_map_generic_chip,
+ 	.alloc  = stm32_exti_alloc,
+ 	.free	= stm32_exti_free,
++	.xlate	= irq_domain_xlate_twocell,
+ };
  
- 	/*
-+	 * IntaShield IS-100
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0D60,
-+		PCI_ANY_ID, PCI_ANY_ID, 0, 0,
-+		pbn_b2_1_115200 },
-+	/*
- 	 * IntaShield IS-200
- 	 */
- 	{	PCI_VENDOR_ID_INTASHIELD, PCI_DEVICE_ID_INTASHIELD_IS200,
+ static void stm32_irq_ack(struct irq_data *d)
+-- 
+2.42.0
+
 
 
