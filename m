@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7B920320
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94A7208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6lFDdsU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49099C433C7;
-	Mon,  6 Nov 2023 13:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVkAZtCM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EFFC433C7;
+	Mon,  6 Nov 2023 13:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276165;
-	bh=t91FtmvjkprEn8lATo8hHEh51PqFtMhWuO7JeM7wQwE=;
+	s=korg; t=1699276168;
+	bh=TLYh+IxqQB+jfdWx7Mt84V8BvfteDkXrdBSv7c87xAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6lFDdsUyKpvCV/tg9ouyoZ5tGP/oFRzVZVMIfLDnUGW62KrzSSr9MEneZC3uYrxk
-	 V51KKjlQ+fimiEsy5w7AN5L51BOw3fvY981jnV7eq9CXgzZhBc+gTxRRwllXuHOKLX
-	 KlLPGqdwAFG53L7DXzpEyn9W/u8h3wM+0K1W0xwA=
+	b=UVkAZtCMrftjQNHmeevMr5sWvpV+9vGmT+oXjS08kU5O9Gjlzavc/G9mjh1B/19AG
+	 mh7k4gwzjo48cOHe7IFeVnK9t/cpTSa23BtiXLMfPp+tNfiDe38kf8hu1k0rmoVcsU
+	 AaMJ4RVeiyZRGtSyUneDiaxuGQ1C6KzQX9Ooi15I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Mateusz Palczewski <mateusz.palczewski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 4.19 12/61] igb: Fix potential memory leak in igb_add_ethtool_nfc_entry
-Date: Mon,  6 Nov 2023 14:03:08 +0100
-Message-ID: <20231106130259.983051542@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 4.19 13/61] gtp: fix fragmentation needed check with gso
+Date: Mon,  6 Nov 2023 14:03:09 +0100
+Message-ID: <20231106130300.033972803@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -45,47 +41,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Palczewski <mateusz.palczewski@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 8c0b48e01daba5ca58f939a8425855d3f4f2ed14 ]
+commit 4530e5b8e2dad63dcad2206232dd86e4b1489b6c upstream.
 
-Add check for return of igb_update_ethtool_nfc_entry so that in case
-of any potential errors the memory alocated for input will be freed.
+Call skb_gso_validate_network_len() to check if packet is over PMTU.
 
-Fixes: 0e71def25281 ("igb: add support of RX network flow classification")
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igb/igb_ethtool.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/gtp.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_ethtool.c b/drivers/net/ethernet/intel/igb/igb_ethtool.c
-index e19fbdf2ff304..f714c85c36c50 100644
---- a/drivers/net/ethernet/intel/igb/igb_ethtool.c
-+++ b/drivers/net/ethernet/intel/igb/igb_ethtool.c
-@@ -2994,11 +2994,15 @@ static int igb_add_ethtool_nfc_entry(struct igb_adapter *adapter,
- 	if (err)
- 		goto err_out_w_lock;
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -548,8 +548,9 @@ static int gtp_build_skb_ip4(struct sk_b
  
--	igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
-+	err = igb_update_ethtool_nfc_entry(adapter, input, input->sw_idx);
-+	if (err)
-+		goto err_out_input_filter;
+ 	rt->dst.ops->update_pmtu(&rt->dst, NULL, skb, mtu, false);
  
- 	spin_unlock(&adapter->nfc_lock);
- 	return 0;
- 
-+err_out_input_filter:
-+	igb_erase_filter(adapter, input);
- err_out_w_lock:
- 	spin_unlock(&adapter->nfc_lock);
- err_out:
--- 
-2.42.0
-
+-	if (!skb_is_gso(skb) && (iph->frag_off & htons(IP_DF)) &&
+-	    mtu < ntohs(iph->tot_len)) {
++	if (iph->frag_off & htons(IP_DF) &&
++	    ((!skb_is_gso(skb) && skb->len > mtu) ||
++	     (skb_is_gso(skb) && !skb_gso_validate_network_len(skb, mtu)))) {
+ 		netdev_dbg(dev, "packet too big, fragmentation needed\n");
+ 		icmp_ndo_send(skb, ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED,
+ 			      htonl(mtu));
 
 
