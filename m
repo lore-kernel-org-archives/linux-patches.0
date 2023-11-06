@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C03520B00
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0CE20B00
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLSSDFNh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B32DC433C7;
-	Mon,  6 Nov 2023 13:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gf7zUqXn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB61C433C8;
+	Mon,  6 Nov 2023 13:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276212;
-	bh=6WOs0g7ygWEl2LLEx3IFqlOo0aKsr0GegUGR7NIAU2k=;
+	s=korg; t=1699276214;
+	bh=nPCHQW7eSUi4czXBlVKu2c3qWuvLSqFWi1nfhq3jVgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLSSDFNhboWnTzEGrmdj1VGVyPggvuv0U1hEp00XDuEtSiJZCAyjmr1Y+huFG2CPJ
-	 SwcTg7WcvgLosUrTUuWe7WZec5NMIUg2pRTBIMCcllLPmhVL0AAxJ/aK5QJEjhA8XR
-	 Bhye5Op6m3cWl8q31IijWjowldKlzhC4innumfTo=
+	b=Gf7zUqXni2WycBMmZDdw/fqDiF1YPAEWSCMitOvN/JXbUt20ro7Cc/lH2HL6DeROP
+	 M7aIYwAS9/mofGJxYLQzAisamLmC2/xIBRHZx9FOOJWCYf/xQRJzx8umqm6lKJx3AC
+	 Yqi7R3CekeUbxMPt8FuaNIomZ4iZQwbkqYl/7F8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francis Laniel <flaniel@linux.microsoft.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
+	Javier Rodriguez <josejavier.rodriguez@duagon.com>,
+	Johannes Thumshirn <jth@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 03/61] selftests/ftrace: Add new test case which checks non unique symbol
-Date: Mon,  6 Nov 2023 14:02:59 +0100
-Message-ID: <20231106130259.688411639@linuxfoundation.org>
+Subject: [PATCH 4.19 04/61] mcb: Return actual parsed size when reading chameleon table
+Date: Mon,  6 Nov 2023 14:03:00 +0100
+Message-ID: <20231106130259.727146676@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -36,51 +37,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Francis Laniel <flaniel@linux.microsoft.com>
+From: Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
 
-[ Upstream commit 03b80ff8023adae6780e491f66e932df8165e3a0 ]
+[ Upstream commit a889c276d33d333ae96697510f33533f6e9d9591 ]
 
-If name_show() is non unique, this test will try to install a kprobe on this
-function which should fail returning EADDRNOTAVAIL.
-On kernel where name_show() is not unique, this test is skipped.
+The function chameleon_parse_cells() returns the number of cells
+parsed which has an undetermined size. This return value is only
+used for error checking but the number of cells is never used.
 
-Link: https://lore.kernel.org/all/20231020104250.9537-3-flaniel@linux.microsoft.com/
+Change return value to be number of bytes parsed to allow for
+memory management improvements.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Francis Laniel <flaniel@linux.microsoft.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Co-developed-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Javier Rodriguez <josejavier.rodriguez@duagon.com>
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Link: https://lore.kernel.org/r/20230411083329.4506-2-jth@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc  | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
- create mode 100644 tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
+ drivers/mcb/mcb-parse.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
-new file mode 100644
-index 0000000000000..bc9514428dbaf
---- /dev/null
-+++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
-@@ -0,0 +1,13 @@
-+#!/bin/sh
-+# SPDX-License-Identifier: GPL-2.0
-+# description: Test failure of registering kprobe on non unique symbol
-+# requires: kprobe_events
-+
-+SYMBOL='name_show'
-+
-+# We skip this test on kernel where SYMBOL is unique or does not exist.
-+if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}" /proc/kallsyms)" -le '1' ]; then
-+	exit_unsupported
-+fi
-+
-+! echo "p:test_non_unique ${SYMBOL}" > kprobe_events
+diff --git a/drivers/mcb/mcb-parse.c b/drivers/mcb/mcb-parse.c
+index 08a85e43ef885..b7354232221e6 100644
+--- a/drivers/mcb/mcb-parse.c
++++ b/drivers/mcb/mcb-parse.c
+@@ -127,7 +127,7 @@ static void chameleon_parse_bar(void __iomem *base,
+ 	}
+ }
+ 
+-static int chameleon_get_bar(char __iomem **base, phys_addr_t mapbase,
++static int chameleon_get_bar(void __iomem **base, phys_addr_t mapbase,
+ 			     struct chameleon_bar **cb)
+ {
+ 	struct chameleon_bar *c;
+@@ -176,12 +176,13 @@ int chameleon_parse_cells(struct mcb_bus *bus, phys_addr_t mapbase,
+ {
+ 	struct chameleon_fpga_header *header;
+ 	struct chameleon_bar *cb;
+-	char __iomem *p = base;
++	void __iomem *p = base;
+ 	int num_cells = 0;
+ 	uint32_t dtype;
+ 	int bar_count;
+ 	int ret;
+ 	u32 hsize;
++	u32 table_size;
+ 
+ 	hsize = sizeof(struct chameleon_fpga_header);
+ 
+@@ -236,12 +237,16 @@ int chameleon_parse_cells(struct mcb_bus *bus, phys_addr_t mapbase,
+ 		num_cells++;
+ 	}
+ 
+-	if (num_cells == 0)
+-		num_cells = -EINVAL;
++	if (num_cells == 0) {
++		ret = -EINVAL;
++		goto free_bar;
++	}
+ 
++	table_size = p - base;
++	pr_debug("%d cell(s) found. Chameleon table size: 0x%04x bytes\n", num_cells, table_size);
+ 	kfree(cb);
+ 	kfree(header);
+-	return num_cells;
++	return table_size;
+ 
+ free_bar:
+ 	kfree(cb);
 -- 
 2.42.0
 
