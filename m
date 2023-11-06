@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879E8208CA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7238C208CA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+C3ZmP2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0566FC433CA;
-	Mon,  6 Nov 2023 13:24:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Luee7mvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23E6C43391;
+	Mon,  6 Nov 2023 13:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277095;
-	bh=1gMgYALrO1wNyeYCfDLSd8s/03cpnUiUBwuLhTgqJMM=;
+	s=korg; t=1699277098;
+	bh=H2RB3C9btykCLQO8q/UAzH9W9SohdbitCUHK5q+Tagk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i+C3ZmP2lxEu0dsV2Hhsh1sDnVjc9bQ4C+bNqJZlw51EkxHY6o8gCi1cp27MiXPbV
-	 nCgGexQF3eym3A1PbzR5DdCq2l+cYZ4BboVciNWQukVFM1MjlhMR+S4aMaUYWJKOZx
-	 4LHEJBDv3B+GTg50DvjRqDVBxh79q3U0csGi9Jg4=
+	b=Luee7mvpbl7vGAJFa9eL8Tuj42w63irr8LpFcTnDze1uzrHkeIECHbH3RYhhBpcf1
+	 5RDpTKqQNummtR+8SwCAhtPnkrkcDoB8gZIqVCmiT2oHRzv4GfZ8jgO5UIvJaUB+96
+	 kWr2LccfAAL91482YUaAEjaj5h+TwVeI+H1HYAvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/128] gtp: fix fragmentation needed check with gso
-Date: Mon,  6 Nov 2023 14:03:17 +0100
-Message-ID: <20231106130310.822801825@linuxfoundation.org>
+	Ivan Vecera <ivecera@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.15 038/128] i40e: Fix wrong check for I40E_TXR_FLAGS_WB_ON_ITR
+Date: Mon,  6 Nov 2023 14:03:18 +0100
+Message-ID: <20231106130310.860492050@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,36 +44,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 4530e5b8e2dad63dcad2206232dd86e4b1489b6c ]
+[ Upstream commit 77a8c982ff0d4c3a14022c6fe9e3dbfb327552ec ]
 
-Call skb_gso_validate_network_len() to check if packet is over PMTU.
+The I40E_TXR_FLAGS_WB_ON_ITR is i40e_ring flag and not i40e_pf one.
 
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8e0764b4d6be42 ("i40e/i40evf: Add support for writeback on ITR feature for X722")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20231023212714.178032-1-jacob.e.keller@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_txrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index a3878aef0ea4a..69bbc868b9477 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -543,8 +543,9 @@ static int gtp_build_skb_ip4(struct sk_buff *skb, struct net_device *dev,
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+index 9787e794eeda6..1d096141625eb 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+@@ -2759,7 +2759,7 @@ int i40e_napi_poll(struct napi_struct *napi, int budget)
+ 		return budget;
+ 	}
  
- 	rt->dst.ops->update_pmtu(&rt->dst, NULL, skb, mtu, false);
+-	if (vsi->back->flags & I40E_TXR_FLAGS_WB_ON_ITR)
++	if (q_vector->tx.ring[0].flags & I40E_TXR_FLAGS_WB_ON_ITR)
+ 		q_vector->arm_wb_state = false;
  
--	if (!skb_is_gso(skb) && (iph->frag_off & htons(IP_DF)) &&
--	    mtu < ntohs(iph->tot_len)) {
-+	if (iph->frag_off & htons(IP_DF) &&
-+	    ((!skb_is_gso(skb) && skb->len > mtu) ||
-+	     (skb_is_gso(skb) && !skb_gso_validate_network_len(skb, mtu)))) {
- 		netdev_dbg(dev, "packet too big, fragmentation needed\n");
- 		icmp_ndo_send(skb, ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED,
- 			      htonl(mtu));
+ 	/* Exit the polling mode, but don't re-enable interrupts if stack might
 -- 
 2.42.0
 
