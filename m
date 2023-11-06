@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FC11EB5B
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA692200DE
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pG0HRW30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73936C433C8;
-	Mon,  6 Nov 2023 13:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bpPpz1D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EABC433C9;
+	Mon,  6 Nov 2023 13:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276385;
-	bh=hLcVDxqnggjD6qzDvZ9Th9mNxESH05Ym//2hUZSa3Xs=;
+	s=korg; t=1699276388;
+	bh=KSjglmY99RuNZcssYG1AvoDlwrzM+fEdmCwzBuzxf1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pG0HRW30XjJxyezJjP/i89MAHvHFe3d5QZCCzG/3yCY0UHtd95g91F0Hut7mBrSYg
-	 1PUf65yMObhbFEhxuAlnehgs8DU0d/tzVcgtWOcsn2MRc4qAZZ28UE5EOSFnhemtZ3
-	 c+SSOs2WigElyK2ERWnPfIYghuqFWQ1/DB68acR0=
+	b=1bpPpz1DrS7ANkLidd001b1dUjStcgMVs3Jheo5bftQtKxIpYfiLqIOV9glykMFnA
+	 KumflDbkWn3BfzoePh55DphM6PlDzj6sQKINrQV3CjhlhEME2KJnyVaVdQNObgxIyk
+	 DVjoFDsbUyxWrxHQp3GQ4U++0X6PnC8NMIwVROao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jorge Maidana <jorgem.linux@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 07/62] dmaengine: ste_dma40: Fix PM disable depth imbalance in d40_probe
-Date: Mon,  6 Nov 2023 14:03:13 +0100
-Message-ID: <20231106130302.073058335@linuxfoundation.org>
+Subject: [PATCH 6.1 25/62] fbdev: uvesafb: Call cn_del_callback() at the end of uvesafb_exit()
+Date: Mon,  6 Nov 2023 14:03:31 +0100
+Message-ID: <20231106130302.712446378@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.807965064@linuxfoundation.org>
 References: <20231106130301.807965064@linuxfoundation.org>
@@ -43,36 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Jorge Maidana <jorgem.linux@gmail.com>
 
-[ Upstream commit 0618c077a8c20e8c81e367988f70f7e32bb5a717 ]
+[ Upstream commit 1022e7e2f40574c74ed32c3811b03d26b0b81daf ]
 
-The pm_runtime_enable will increase power disable depth. Thus
-a pairing decrement is needed on the error handling path to
-keep it balanced according to context.
-We fix it by calling pm_runtime_disable when error returns.
+Delete the v86d netlink only after all the VBE tasks have been
+completed.
 
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/tencent_DD2D371DB5925B4B602B1E1D0A5FA88F1208@qq.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes initial state restore on module unload:
+uvesafb: VBE state restore call failed (eax=0x4f04, err=-19)
+
+Signed-off-by: Jorge Maidana <jorgem.linux@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/fbdev/uvesafb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 3b09fdc507e04..594b016e76efc 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -3697,6 +3697,7 @@ static int __init d40_probe(struct platform_device *pdev)
- 		regulator_disable(base->lcpa_regulator);
- 		regulator_put(base->lcpa_regulator);
+diff --git a/drivers/video/fbdev/uvesafb.c b/drivers/video/fbdev/uvesafb.c
+index 0e3cabbec4b40..a85463db9f986 100644
+--- a/drivers/video/fbdev/uvesafb.c
++++ b/drivers/video/fbdev/uvesafb.c
+@@ -1935,10 +1935,10 @@ static void uvesafb_exit(void)
+ 		}
  	}
-+	pm_runtime_disable(base->dev);
  
- 	kfree(base->lcla_pool.alloc_map);
- 	kfree(base->lookup_log_chans);
+-	cn_del_callback(&uvesafb_cn_id);
+ 	driver_remove_file(&uvesafb_driver.driver, &driver_attr_v86d);
+ 	platform_device_unregister(uvesafb_device);
+ 	platform_driver_unregister(&uvesafb_driver);
++	cn_del_callback(&uvesafb_cn_id);
+ }
+ 
+ module_exit(uvesafb_exit);
 -- 
 2.42.0
 
