@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A6320316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F410720316
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGq7f+v5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90718C433C8;
-	Mon,  6 Nov 2023 13:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzHIV+/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71297C433C7;
+	Mon,  6 Nov 2023 13:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276630;
-	bh=e/HEEpzhW+FAaao3+F4a4a0uUpNTZm+kyemaTM3TF9g=;
+	s=korg; t=1699276632;
+	bh=5+aAmxr6oRVn+AfrF+gW8KGrdJOxKw3ZOPu6gnfy3Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGq7f+v53LaF4t8GyTxrXrzRIAdpXHgKYzqZ/sT6qltG2FVFY8Wr0UFsQc6R1mDRh
-	 MUjdbIFDrXfFYwem90ZYm3b4MIRRxw5NRtLp6eLLTMAjc4QVhOnNxe2EiiiO5v1rVb
-	 VT5+1r3FnI1xp9Q/Wx95jkcy/kZjaGIQlTihL7VQ=
+	b=RzHIV+/26lub015ul+n70cR8UFs/KhIskKJV7+/szuxFbzLzOdfv0NBOG1rIB0boj
+	 Vc00YpOufRegXCkoi0gIe6ui687eZBraWm5Blo+6Bq/Ta1B39lkRs/xN2KJ1XGxOQk
+	 QKzEakIhS3S8hZoVSnwiE/Q8VJ3iRg46aN5kY7pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Rau <David.Rau.opensource@dm.renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alex Deucher <Alexander.Deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Luben Tuikov <luben.tuikov@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 43/88] ASoC: da7219: Correct the process of setting up Gnd switch in AAD
-Date: Mon,  6 Nov 2023 14:03:37 +0100
-Message-ID: <20231106130307.425644837@linuxfoundation.org>
+Subject: [PATCH 6.5 44/88] drm/amdgpu: Unset context priority is now invalid
+Date: Mon,  6 Nov 2023 14:03:38 +0100
+Message-ID: <20231106130307.461460734@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -36,64 +37,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Rau <David.Rau.opensource@dm.renesas.com>
+From: Luben Tuikov <luben.tuikov@amd.com>
 
-[ Upstream commit e8ecffd9962fe051d53a0761921b26d653b3df6b ]
+[ Upstream commit eab0261967aeab528db4d0a51806df8209aec179 ]
 
-Enable Gnd switch to improve stability when Jack insert event
-occurs, and then disable Gnd switch after Jack type detection
-is finished.
+A context priority value of AMD_CTX_PRIORITY_UNSET is now invalid--instead of
+carrying it around and passing it to the Direct Rendering Manager--and it
+becomes AMD_CTX_PRIORITY_NORMAL in amdgpu_ctx_ioctl(), the gateway to context
+creation.
 
-Signed-off-by: David Rau <David.Rau.opensource@dm.renesas.com>
-Link: https://lore.kernel.org/r/20231017021258.5929-1-David.Rau.opensource@dm.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Alex Deucher <Alexander.Deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Signed-off-by: Luben Tuikov <luben.tuikov@amd.com>
+Acked-by: Alex Deucher <Alexander.Deucher@amd.com>
+Link: https://lore.kernel.org/r/20231017035656.8211-1-luben.tuikov@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/da7219-aad.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
-index 581b334a6631d..3bbe850916493 100644
---- a/sound/soc/codecs/da7219-aad.c
-+++ b/sound/soc/codecs/da7219-aad.c
-@@ -59,9 +59,6 @@ static void da7219_aad_btn_det_work(struct work_struct *work)
- 	bool micbias_up = false;
- 	int retries = 0;
- 
--	/* Disable ground switch */
--	snd_soc_component_update_bits(component, 0xFB, 0x01, 0x00);
--
- 	/* Drive headphones/lineout */
- 	snd_soc_component_update_bits(component, DA7219_HP_L_CTRL,
- 			    DA7219_HP_L_AMP_OE_MASK,
-@@ -155,9 +152,6 @@ static void da7219_aad_hptest_work(struct work_struct *work)
- 		tonegen_freq_hptest = cpu_to_le16(DA7219_AAD_HPTEST_RAMP_FREQ_INT_OSC);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
+index 0dc9c655c4fbd..092962b93064f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
+@@ -47,7 +47,6 @@ const unsigned int amdgpu_ctx_num_entities[AMDGPU_HW_IP_NUM] = {
+ bool amdgpu_ctx_priority_is_valid(int32_t ctx_prio)
+ {
+ 	switch (ctx_prio) {
+-	case AMDGPU_CTX_PRIORITY_UNSET:
+ 	case AMDGPU_CTX_PRIORITY_VERY_LOW:
+ 	case AMDGPU_CTX_PRIORITY_LOW:
+ 	case AMDGPU_CTX_PRIORITY_NORMAL:
+@@ -55,6 +54,7 @@ bool amdgpu_ctx_priority_is_valid(int32_t ctx_prio)
+ 	case AMDGPU_CTX_PRIORITY_VERY_HIGH:
+ 		return true;
+ 	default:
++	case AMDGPU_CTX_PRIORITY_UNSET:
+ 		return false;
  	}
- 
--	/* Disable ground switch */
--	snd_soc_component_update_bits(component, 0xFB, 0x01, 0x00);
--
- 	/* Ensure gain ramping at fastest rate */
- 	gain_ramp_ctrl = snd_soc_component_read(component, DA7219_GAIN_RAMP_CTRL);
- 	snd_soc_component_write(component, DA7219_GAIN_RAMP_CTRL, DA7219_GAIN_RAMP_RATE_X8);
-@@ -421,6 +415,11 @@ static irqreturn_t da7219_aad_irq_thread(int irq, void *data)
- 			 * handle a removal, and we can check at the end of
- 			 * hptest if we have a valid result or not.
- 			 */
-+
-+			cancel_delayed_work_sync(&da7219_aad->jack_det_work);
-+			/* Disable ground switch */
-+			snd_soc_component_update_bits(component, 0xFB, 0x01, 0x00);
-+
- 			if (statusa & DA7219_JACK_TYPE_STS_MASK) {
- 				report |= SND_JACK_HEADSET;
- 				mask |=	SND_JACK_HEADSET | SND_JACK_LINEOUT;
+ }
 -- 
 2.42.0
 
