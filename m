@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16ED722EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086B522EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czODo1qD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81664C433C8;
-	Mon,  6 Nov 2023 13:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufo2mhX4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78416C433C8;
+	Mon,  6 Nov 2023 13:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277357;
-	bh=3E4e3FXo5dRZ7yrlYedqOGjQLzeOpG9H48IwICFGMrY=;
+	s=korg; t=1699277360;
+	bh=28p+mE82HZ1V02TO4S4bHWkrORoA5UYm963oBr7UFoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=czODo1qD44CmtxCDANvjVgGVucQYG0rNA1pd6u9A2wvFHvK5Ec9H3iu44hVrPOkx0
-	 sUe1p9i1/edHGOLHFUz+/zh82Eh/NIPVMeS5m6YdaW4d6gDqslon75lKUKEA9nAYS5
-	 ittGXGvGU0aEs1IlDGrTYyZNe/hcmKbNTbCDSVCI=
+	b=ufo2mhX4A39rpFbuWO1AsG0iDs/iEQkrDuCOtIFb9k4wkkbKhCnXqIMPgnL7oTKrN
+	 e4H9ayd1bdAd5a1L9OhaotGtNBJVvGaLklWndRFDqSmWqbeiMiLYznLFzaAytTS1jb
+	 iQJxdVESVl8L3T5psDpZ67Sk9cvFmNArvJs9kfjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Grant Grundler <grundler@chromium.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/128] net: chelsio: cxgb4: add an error code check in t4_load_phy_fw
-Date: Mon,  6 Nov 2023 14:04:17 +0100
-Message-ID: <20231106130313.573474414@linuxfoundation.org>
+Subject: [PATCH 5.15 098/128] r8152: Check for unplug in rtl_phy_patch_request()
+Date: Mon,  6 Nov 2023 14:04:18 +0100
+Message-ID: <20231106130313.625583367@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,33 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 9f771493da935299c6393ad3563b581255d01a37 ]
+[ Upstream commit dc90ba37a8c37042407fa6970b9830890cfe6047 ]
 
-t4_set_params_timeout() can return -EINVAL if failed, add check
-for this.
+If the adapter is unplugged while we're looping in
+rtl_phy_patch_request() we could end up looping for 10 seconds (2 ms *
+5000 loops). Add code similar to what's done in other places in the
+driver to check for unplug and bail.
 
-Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Grant Grundler <grundler@chromium.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4/t4_hw.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/usb/r8152.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
-index b1c9f65ab10f6..c99f5920c957c 100644
---- a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
-@@ -3816,6 +3816,8 @@ int t4_load_phy_fw(struct adapter *adap, int win,
- 		 FW_PARAMS_PARAM_Z_V(FW_PARAMS_PARAM_DEV_PHYFW_DOWNLOAD));
- 	ret = t4_set_params_timeout(adap, adap->mbox, adap->pf, 0, 1,
- 				    &param, &val, 30000);
-+	if (ret)
-+		return ret;
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index f6d5fbb9dee07..15610d7d677ce 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -4051,6 +4051,9 @@ static int rtl_phy_patch_request(struct r8152 *tp, bool request, bool wait)
+ 	for (i = 0; wait && i < 5000; i++) {
+ 		u32 ocp_data;
  
- 	/* If we have version number support, then check to see that the new
- 	 * firmware got loaded properly.
++		if (test_bit(RTL8152_UNPLUG, &tp->flags))
++			break;
++
+ 		usleep_range(1000, 2000);
+ 		ocp_data = ocp_reg_read(tp, OCP_PHY_PATCH_STAT);
+ 		if ((ocp_data & PATCH_READY) ^ check)
 -- 
 2.42.0
 
