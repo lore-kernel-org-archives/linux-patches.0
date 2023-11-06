@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E394224D0
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75078224D0
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r362mpr8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DDCC433C8;
-	Mon,  6 Nov 2023 13:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4nYsy1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8BF1C433C7;
+	Mon,  6 Nov 2023 13:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277307;
-	bh=A2bR43LHmqL1wU1auzRI6+9//d06Jzsx5FFntdSLDY0=;
+	s=korg; t=1699277310;
+	bh=+dJEkgQsaU88C/NIuuXgKOXJUWyXbI5J1QISNdlm3U8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r362mpr8Tx4ZYKRq11UzBc01y0xI+rRxWqQvcPRqI4akU36KJIJ6R4ztL4EcHbn+U
-	 EzfxYbEybHyB7XKiv7Jj3eni1+K79hEIy4n+GM9kr0+8Ec+1MTB6+ActMIdmxS7y9g
-	 St+GxTu6Ud9MbYshv7Mp93j4If8f15uQFHjhkF6w=
+	b=h4nYsy1pnTrvSAy7rfbA3sR+6M+ez4HekfVO9yYRLF18dM8E7ZGKwh45xD6lhIhM9
+	 BxFU+9PUY09dFPgx7cv73sKLicW61DYLaGjUHj1lJMuRxjiHiOHOfFZoGktgTyGLl7
+	 qk9PbskwG/01ZqAMAPk18oEd3ofzbAyU2gmcPGlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"linux-can@vger.kernel.org, lukas.magel@posteo.net, patches@lists.linux.dev, maxime.jayat@mobile-devices.fr, mkl@pengutronix.de, michal.sojka@cvut.cz, Oliver Hartkopp" <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Oliver Hartkopp <socketcan@hartkopp.net>
-Subject: [PATCH 5.15 109/128] can: isotp: isotp_bind(): do not validate unused address information
-Date: Mon,  6 Nov 2023 14:04:29 +0100
-Message-ID: <20231106130314.126278717@linuxfoundation.org>
+	Shuming Fan <shumingf@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 092/128] ASoC: rt5650: fix the wrong result of key button
+Date: Mon,  6 Nov 2023 14:04:12 +0100
+Message-ID: <20231106130313.335479352@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,78 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Shuming Fan <shumingf@realtek.com>
 
-commit b76b163f46b661499921a0049982764a6659bfe7 upstream
+[ Upstream commit f88dfbf333b3661faff996bb03af2024d907b76a ]
 
-With commit 2aa39889c463 ("can: isotp: isotp_bind(): return -EINVAL on
-incorrect CAN ID formatting") the bind() syscall returns -EINVAL when
-the given CAN ID needed to be sanitized. But in the case of an unconfirmed
-broadcast mode the rx CAN ID is not needed and may be uninitialized from
-the caller - which is ok.
+The RT5650 should enable a power setting for button detection to avoid the wrong result.
 
-This patch makes sure the result of an inproper CAN ID format is only
-provided when the address information is needed.
-
-Link: https://lore.kernel.org/all/20220517145653.2556-1-socketcan@hartkopp.net
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Shuming Fan <shumingf@realtek.com>
+Link: https://lore.kernel.org/r/20231013094525.715518-1-shumingf@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c |   29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ sound/soc/codecs/rt5645.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1216,7 +1216,8 @@ static int isotp_bind(struct socket *soc
- 	struct net *net = sock_net(sk);
- 	int ifindex;
- 	struct net_device *dev;
--	canid_t tx_id, rx_id;
-+	canid_t tx_id = addr->can_addr.tp.tx_id;
-+	canid_t rx_id = addr->can_addr.tp.rx_id;
- 	int err = 0;
- 	int notify_enetdown = 0;
+diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
+index 8ea6d43335626..385f2cca939a0 100644
+--- a/sound/soc/codecs/rt5645.c
++++ b/sound/soc/codecs/rt5645.c
+@@ -3251,6 +3251,8 @@ int rt5645_set_jack_detect(struct snd_soc_component *component,
+ 				RT5645_GP1_PIN_IRQ, RT5645_GP1_PIN_IRQ);
+ 		regmap_update_bits(rt5645->regmap, RT5645_GEN_CTRL1,
+ 				RT5645_DIG_GATE_CTRL, RT5645_DIG_GATE_CTRL);
++		regmap_update_bits(rt5645->regmap, RT5645_DEPOP_M1,
++				RT5645_HP_CB_MASK, RT5645_HP_CB_PU);
+ 	}
+ 	rt5645_irq(0, rt5645);
  
-@@ -1226,24 +1227,28 @@ static int isotp_bind(struct socket *soc
- 	if (addr->can_family != AF_CAN)
- 		return -EINVAL;
- 
--	/* sanitize tx/rx CAN identifiers */
--	tx_id = addr->can_addr.tp.tx_id;
-+	/* sanitize tx CAN identifier */
- 	if (tx_id & CAN_EFF_FLAG)
- 		tx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
- 	else
- 		tx_id &= CAN_SFF_MASK;
- 
--	rx_id = addr->can_addr.tp.rx_id;
--	if (rx_id & CAN_EFF_FLAG)
--		rx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
--	else
--		rx_id &= CAN_SFF_MASK;
--
--	/* give feedback on wrong CAN-ID values */
--	if (tx_id != addr->can_addr.tp.tx_id ||
--	    rx_id != addr->can_addr.tp.rx_id)
-+	/* give feedback on wrong CAN-ID value */
-+	if (tx_id != addr->can_addr.tp.tx_id)
- 		return -EINVAL;
- 
-+	/* sanitize rx CAN identifier (if needed) */
-+	if (isotp_register_rxid(so)) {
-+		if (rx_id & CAN_EFF_FLAG)
-+			rx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
-+		else
-+			rx_id &= CAN_SFF_MASK;
-+
-+		/* give feedback on wrong CAN-ID value */
-+		if (rx_id != addr->can_addr.tp.rx_id)
-+			return -EINVAL;
-+	}
-+
- 	if (!addr->can_ifindex)
- 		return -ENODEV;
- 
+-- 
+2.42.0
+
 
 
