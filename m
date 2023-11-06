@@ -1,31 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30FD20B00
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE1E20B00;
+	Mon,  6 Nov 2023 13:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxAMNA6o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1C3C433C9;
-	Mon,  6 Nov 2023 13:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhDAduR8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C154C433C9;
+	Mon,  6 Nov 2023 13:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276827;
-	bh=MLFczeqOZOKtZK0CftOqaETjFy3ZxCluxtKaYaZt+uI=;
+	s=korg; t=1699276830;
+	bh=CUElVMVLJVRdTR2DbEu+QURR/3AQt31D+zHeIckhn30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NxAMNA6oYdppfTePdPMJHH7z1kYYl5Oltm5Usmpqtw2iOU46D4jBaoQO2kmh1vCNX
-	 HbUnoLNlWSDr2AcO6xkxuJRTkgmD3n6/d7834spDtidv3u8AZFQ0MBzuq9vPSIcU0M
-	 4k5p4XiTlI5Uh/RixLPINagtPPT0YmRPywhIQlsU=
+	b=UhDAduR8grcZVAnFZKymIkZm7ipvh0qHdM2qwQB7dLUGkM9LE/B4W3G7BHCKAX1Lm
+	 frWGJBGHZLkzWEnGAxJS7AuxuLa1kK3H6zIj3coyRj6W7f+h155vnirOHGBnLkDMF1
+	 o1ERSCLWVVYgpavd8H15dZ+xltfkFCSiktM7AwO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 5.4 06/74] virtio-mmio: fix memory leak of vm_dev
-Date: Mon,  6 Nov 2023 14:03:26 +0100
-Message-ID: <20231106130301.912550787@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	nic_swsd@realtek.com,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Marco Elver <elver@google.com>,
+	netdev@vger.kernel.org,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 07/74] r8169: fix the KCSAN reported data-race in rtl_tx while reading TxDescArray[entry].opts1
+Date: Mon,  6 Nov 2023 14:03:27 +0100
+Message-ID: <20231106130301.951515372@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
 References: <20231106130301.687882731@linuxfoundation.org>
@@ -38,92 +43,139 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maximilian Heyne <mheyne@amazon.de>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-commit fab7f259227b8f70aa6d54e1de1a1f5f4729041c upstream.
+[ Upstream commit dcf75a0f6bc136de94e88178ae5f51b7f879abc9 ]
 
-With the recent removal of vm_dev from devres its memory is only freed
-via the callback virtio_mmio_release_dev. However, this only takes
-effect after device_add is called by register_virtio_device. Until then
-it's an unmanaged resource and must be explicitly freed on error exit.
+KCSAN reported the following data-race:
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
+==================================================================
+BUG: KCSAN: data-race in rtl8169_poll (drivers/net/ethernet/realtek/r8169_main.c:4368 drivers/net/ethernet/realtek/r8169_main.c:4581) r8169
 
-Cc: stable@vger.kernel.org
-Fixes: 55c91fedd03d ("virtio-mmio: don't break lifecycle of vm_dev")
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Tested-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+race at unknown origin, with read to 0xffff888140d37570 of 4 bytes by interrupt on cpu 21:
+rtl8169_poll (drivers/net/ethernet/realtek/r8169_main.c:4368 drivers/net/ethernet/realtek/r8169_main.c:4581) r8169
+__napi_poll (net/core/dev.c:6527)
+net_rx_action (net/core/dev.c:6596 net/core/dev.c:6727)
+__do_softirq (kernel/softirq.c:553)
+__irq_exit_rcu (kernel/softirq.c:427 kernel/softirq.c:632)
+irq_exit_rcu (kernel/softirq.c:647)
+sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1074 (discriminator 14))
+asm_sysvec_apic_timer_interrupt (./arch/x86/include/asm/idtentry.h:645)
+cpuidle_enter_state (drivers/cpuidle/cpuidle.c:291)
+cpuidle_enter (drivers/cpuidle/cpuidle.c:390)
+call_cpuidle (kernel/sched/idle.c:135)
+do_idle (kernel/sched/idle.c:219 kernel/sched/idle.c:282)
+cpu_startup_entry (kernel/sched/idle.c:378 (discriminator 1))
+start_secondary (arch/x86/kernel/smpboot.c:210 arch/x86/kernel/smpboot.c:294)
+secondary_startup_64_no_verify (arch/x86/kernel/head_64.S:433)
 
-Message-Id: <20230911090328.40538-1-mheyne@amazon.de>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+value changed: 0xb0000042 -> 0x00000000
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 21 PID: 0 Comm: swapper/21 Tainted: G             L     6.6.0-rc2-kcsan-00143-gb5cbe7c00aa0 #41
+Hardware name: ASRock X670E PG Lightning/X670E PG Lightning, BIOS 1.21 04/26/2023
+==================================================================
+
+The read side is in
+
+drivers/net/ethernet/realtek/r8169_main.c
+=========================================
+   4355 static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
+   4356                    int budget)
+   4357 {
+   4358         unsigned int dirty_tx, bytes_compl = 0, pkts_compl = 0;
+   4359         struct sk_buff *skb;
+   4360
+   4361         dirty_tx = tp->dirty_tx;
+   4362
+   4363         while (READ_ONCE(tp->cur_tx) != dirty_tx) {
+   4364                 unsigned int entry = dirty_tx % NUM_TX_DESC;
+   4365                 u32 status;
+   4366
+ → 4367                 status = le32_to_cpu(tp->TxDescArray[entry].opts1);
+   4368                 if (status & DescOwn)
+   4369                         break;
+   4370
+   4371                 skb = tp->tx_skb[entry].skb;
+   4372                 rtl8169_unmap_tx_skb(tp, entry);
+   4373
+   4374                 if (skb) {
+   4375                         pkts_compl++;
+   4376                         bytes_compl += skb->len;
+   4377                         napi_consume_skb(skb, budget);
+   4378                 }
+   4379                 dirty_tx++;
+   4380         }
+   4381
+   4382         if (tp->dirty_tx != dirty_tx) {
+   4383                 dev_sw_netstats_tx_add(dev, pkts_compl, bytes_compl);
+   4384                 WRITE_ONCE(tp->dirty_tx, dirty_tx);
+   4385
+   4386                 netif_subqueue_completed_wake(dev, 0, pkts_compl, bytes_compl,
+   4387                                               rtl_tx_slots_avail(tp),
+   4388                                               R8169_TX_START_THRS);
+   4389                 /*
+   4390                  * 8168 hack: TxPoll requests are lost when the Tx packets are
+   4391                  * too close. Let's kick an extra TxPoll request when a burst
+   4392                  * of start_xmit activity is detected (if it is not detected,
+   4393                  * it is slow enough). -- FR
+   4394                  * If skb is NULL then we come here again once a tx irq is
+   4395                  * triggered after the last fragment is marked transmitted.
+   4396                  */
+   4397                 if (READ_ONCE(tp->cur_tx) != dirty_tx && skb)
+   4398                         rtl8169_doorbell(tp);
+   4399         }
+   4400 }
+
+tp->TxDescArray[entry].opts1 is reported to have a data-race and READ_ONCE() fixes
+this KCSAN warning.
+
+   4366
+ → 4367                 status = le32_to_cpu(READ_ONCE(tp->TxDescArray[entry].opts1));
+   4368                 if (status & DescOwn)
+   4369                         break;
+   4370
+
+Cc: Heiner Kallweit <hkallweit1@gmail.com>
+Cc: nic_swsd@realtek.com
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Marco Elver <elver@google.com>
+Cc: netdev@vger.kernel.org
+Link: https://lore.kernel.org/lkml/dc7fc8fa-4ea4-e9a9-30a6-7c83e6b53188@alu.unizg.hr/
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Acked-by: Marco Elver <elver@google.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_mmio.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/virtio/virtio_mmio.c
-+++ b/drivers/virtio/virtio_mmio.c
-@@ -567,14 +567,17 @@ static int virtio_mmio_probe(struct plat
- 	spin_lock_init(&vm_dev->lock);
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index 8d2b184ff5758..b973198da96c3 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -6031,7 +6031,7 @@ static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
+ 		struct ring_info *tx_skb = tp->tx_skb + entry;
+ 		u32 status;
  
- 	vm_dev->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(vm_dev->base))
--		return PTR_ERR(vm_dev->base);
-+	if (IS_ERR(vm_dev->base)) {
-+		rc = PTR_ERR(vm_dev->base);
-+		goto free_vm_dev;
-+	}
+-		status = le32_to_cpu(tp->TxDescArray[entry].opts1);
++		status = le32_to_cpu(READ_ONCE(tp->TxDescArray[entry].opts1));
+ 		if (status & DescOwn)
+ 			break;
  
- 	/* Check magic value */
- 	magic = readl(vm_dev->base + VIRTIO_MMIO_MAGIC_VALUE);
- 	if (magic != ('v' | 'i' << 8 | 'r' << 16 | 't' << 24)) {
- 		dev_warn(&pdev->dev, "Wrong magic value 0x%08lx!\n", magic);
--		return -ENODEV;
-+		rc = -ENODEV;
-+		goto free_vm_dev;
- 	}
- 
- 	/* Check device version */
-@@ -582,7 +585,8 @@ static int virtio_mmio_probe(struct plat
- 	if (vm_dev->version < 1 || vm_dev->version > 2) {
- 		dev_err(&pdev->dev, "Version %ld not supported!\n",
- 				vm_dev->version);
--		return -ENXIO;
-+		rc = -ENXIO;
-+		goto free_vm_dev;
- 	}
- 
- 	vm_dev->vdev.id.device = readl(vm_dev->base + VIRTIO_MMIO_DEVICE_ID);
-@@ -591,7 +595,8 @@ static int virtio_mmio_probe(struct plat
- 		 * virtio-mmio device with an ID 0 is a (dummy) placeholder
- 		 * with no function. End probing now with no error reported.
- 		 */
--		return -ENODEV;
-+		rc = -ENODEV;
-+		goto free_vm_dev;
- 	}
- 	vm_dev->vdev.id.vendor = readl(vm_dev->base + VIRTIO_MMIO_VENDOR_ID);
- 
-@@ -621,6 +626,10 @@ static int virtio_mmio_probe(struct plat
- 		put_device(&vm_dev->vdev.dev);
- 
- 	return rc;
-+
-+free_vm_dev:
-+	kfree(vm_dev);
-+	return rc;
- }
- 
- static int virtio_mmio_remove(struct platform_device *pdev)
+-- 
+2.42.0
+
 
 
