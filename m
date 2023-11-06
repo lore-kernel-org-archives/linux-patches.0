@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886A920316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DEE20316
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm8oQzSj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CCEC433C9;
-	Mon,  6 Nov 2023 13:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkxoGWet"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E590AC433C8;
+	Mon,  6 Nov 2023 13:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276583;
-	bh=HuVZM4kqqtRb3g7w+n5fLVtZl3RGPA3MaO0oz3FgH54=;
+	s=korg; t=1699276586;
+	bh=ND+vgeM4Qn2gzcQg15H9do+f6xcQxCcDQBbtMEdiI1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mm8oQzSj10Hx5ZhVV2CRdtfF7kktC7ut3FsjwDCfaxSWLpzGzFR2kLU4G/epvJeR3
-	 ZALCfYHgQpm3XSZDWcCB85HWU5AWT29SkfN3ztam2IEjyHZQpZ0+9iAkPBBuy0ZQDt
-	 bi/RM4ig8+UnpIaqNVEFM9lYY0Cjb1Db4hqEI4aM=
+	b=UkxoGWetaWZBED7EMBrD3xFQkreL7xriRR14RD1vzfIE+vT0rKbZ30bNW1+SYc1Ft
+	 KqCdEdypUC1lw38xITQCecVsg+vx0unk0rs/xAzTc0pNYo0XWKreBJy3WnJgnczgUY
+	 P1EgYZwK4jIA9z0Eidh5HNwE3LmLYd1cveJtaeCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	"William A. Kennington III" <william@wkennington.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 29/88] fs/ntfs3: Avoid possible memory leak
-Date: Mon,  6 Nov 2023 14:03:23 +0100
-Message-ID: <20231106130306.858524574@linuxfoundation.org>
+Subject: [PATCH 6.5 30/88] spi: npcm-fiu: Fix UMA reads when dummy.nbytes == 0
+Date: Mon,  6 Nov 2023 14:03:24 +0100
+Message-ID: <20231106130306.888968771@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -42,39 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: William A. Kennington III <william@wkennington.com>
 
-[ Upstream commit e4494770a5cad3c9d1d2a65ed15d07656c0d9b82 ]
+[ Upstream commit 2ec8b010979036c2fe79a64adb6ecc0bd11e91d1 ]
 
-smatch warn:
-fs/ntfs3/fslog.c:2172 last_log_lsn() warn: possible memory leak of 'page_bufs'
-Jump to label 'out' to free 'page_bufs' and is more consistent with
-other code.
+We don't want to use the value of ilog2(0) as dummy.buswidth is 0 when
+dummy.nbytes is 0. Since we have no dummy bytes, we don't need to
+configure the dummy byte bits per clock register value anyway.
 
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: "William A. Kennington III" <william@wkennington.com>
+Link: https://lore.kernel.org/r/20230922182812.2728066-1-william@wkennington.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/spi/spi-npcm-fiu.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index 12f28cdf5c838..98ccb66508583 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -2168,8 +2168,10 @@ static int last_log_lsn(struct ntfs_log *log)
- 
- 			if (!page) {
- 				page = kmalloc(log->page_size, GFP_NOFS);
--				if (!page)
--					return -ENOMEM;
-+				if (!page) {
-+					err = -ENOMEM;
-+					goto out;
-+				}
- 			}
- 
- 			/*
+diff --git a/drivers/spi/spi-npcm-fiu.c b/drivers/spi/spi-npcm-fiu.c
+index eb353561509a8..01a2b9de18b7f 100644
+--- a/drivers/spi/spi-npcm-fiu.c
++++ b/drivers/spi/spi-npcm-fiu.c
+@@ -353,8 +353,9 @@ static int npcm_fiu_uma_read(struct spi_mem *mem,
+ 		uma_cfg |= ilog2(op->cmd.buswidth);
+ 		uma_cfg |= ilog2(op->addr.buswidth)
+ 			<< NPCM_FIU_UMA_CFG_ADBPCK_SHIFT;
+-		uma_cfg |= ilog2(op->dummy.buswidth)
+-			<< NPCM_FIU_UMA_CFG_DBPCK_SHIFT;
++		if (op->dummy.nbytes)
++			uma_cfg |= ilog2(op->dummy.buswidth)
++				<< NPCM_FIU_UMA_CFG_DBPCK_SHIFT;
+ 		uma_cfg |= ilog2(op->data.buswidth)
+ 			<< NPCM_FIU_UMA_CFG_RDBPCK_SHIFT;
+ 		uma_cfg |= op->dummy.nbytes << NPCM_FIU_UMA_CFG_DBSIZ_SHIFT;
 -- 
 2.42.0
 
