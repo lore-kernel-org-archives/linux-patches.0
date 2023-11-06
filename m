@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E759D200BA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5D1200BA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4dwKZOH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6465FC433C8;
-	Mon,  6 Nov 2023 13:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIUN9LdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F9DC433C8;
+	Mon,  6 Nov 2023 13:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276562;
-	bh=5P2xTagrHak8loe2MCy7J8A3FLnxolTd8zb+9zL4ewY=;
+	s=korg; t=1699276565;
+	bh=ZyK+4G9qhIwtIsUAReI0ITxChgZMGEisjshEZgikof0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4dwKZOHWqiTkldNDkHxscsL1aP2e/+lJzXOM5LfmoxQGLfOxBL5JDg9pyOpPUAa2
-	 4NQRGAZBY6CmD2MgmT6MfY5qMoK40HrPH1q6hSwHHiif3L45SpzeRmI47uwyLoTfSH
-	 1pekIDhoZCDq2R+ThA063jFYpomLqCwATM3fGPsE=
+	b=uIUN9LdA9NiminCgmpr1AidGW+fGvyQvtuI9VfgCSmNqpF4wNwN43+ZD+Y9OHYiF5
+	 ZkoAv9aZ/hMOIgh85V1bnXmQ0eDGyduhg88MPsRniq6GOJVR8Ztb1lcMRSq8a6BCg4
+	 gindy4in+q4zoykjh8y+neBOPL/EuEvykMHrYrPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Zary <linux@zary.sk>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 14/88] ata: pata_parport: fit3: implement IDE command set registers
-Date: Mon,  6 Nov 2023 14:03:08 +0100
-Message-ID: <20231106130306.321619580@linuxfoundation.org>
+Subject: [PATCH 6.5 23/88] fs/ntfs3: Fix alternative boot searching
+Date: Mon,  6 Nov 2023 14:03:17 +0100
+Message-ID: <20231106130306.632696587@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -43,68 +41,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Zary <linux@zary.sk>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 0c1e81d0b5ebd5813536dd5fcf5966ad043f37dc ]
+[ Upstream commit dcc852e509a4cba0ac6ac734077cef260e4e0fe6 ]
 
-fit3 protocol driver does not support accessing IDE control registers
-(device control/altstatus). The DOS driver does not use these registers
-either (as observed from DOSEMU trace). But the HW seems to be capable
-of accessing these registers - I simply tried bit 3 and it works!
-
-The control register is required to properly reset ATAPI devices or
-they will be detected only once (after a power cycle).
-
-Tested with EXP Computer CD-865 with MC-1285B EPP cable and
-TransDisk 3000.
-
-Signed-off-by: Ondrej Zary <linux@zary.sk>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_parport/fit3.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ fs/ntfs3/super.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ata/pata_parport/fit3.c b/drivers/ata/pata_parport/fit3.c
-index bad7aa920cdca..d2b81cf2e16d2 100644
---- a/drivers/ata/pata_parport/fit3.c
-+++ b/drivers/ata/pata_parport/fit3.c
-@@ -9,11 +9,6 @@
-  *
-  * The TD-2000 and certain older devices use a different protocol.
-  * Try the fit2 protocol module with them.
-- *
-- * NB:  The FIT adapters do not appear to support the control
-- * registers.  So, we map ALT_STATUS to STATUS and NO-OP writes
-- * to the device control register - this means that IDE reset
-- * will not work on these devices.
-  */
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index bcb17a1723465..9124d74ea676b 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -838,7 +838,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+ 	struct ntfs_sb_info *sbi = sb->s_fs_info;
+ 	int err;
+ 	u32 mb, gb, boot_sector_size, sct_per_clst, record_size;
+-	u64 sectors, clusters, mlcn, mlcn2;
++	u64 sectors, clusters, mlcn, mlcn2, dev_size0;
+ 	struct NTFS_BOOT *boot;
+ 	struct buffer_head *bh;
+ 	struct MFT_REC *rec;
+@@ -847,6 +847,9 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+ 	u32 boot_off = 0;
+ 	const char *hint = "Primary boot";
  
- #include <linux/module.h>
-@@ -37,8 +32,7 @@
++	/* Save original dev_size. Used with alternative boot. */
++	dev_size0 = dev_size;
++
+ 	sbi->volume.blocks = dev_size >> PAGE_SHIFT;
  
- static void fit3_write_regr(struct pi_adapter *pi, int cont, int regr, int val)
- {
--	if (cont == 1)
--		return;
-+	regr += cont << 3;
+ 	bh = ntfs_bread(sb, 0);
+@@ -1084,9 +1087,9 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+ 	}
  
- 	switch (pi->mode) {
- 	case 0:
-@@ -59,11 +53,7 @@ static int fit3_read_regr(struct pi_adapter *pi, int cont, int regr)
- {
- 	int  a, b;
+ out:
+-	if (err == -EINVAL && !bh->b_blocknr && dev_size > PAGE_SHIFT) {
++	if (err == -EINVAL && !bh->b_blocknr && dev_size0 > PAGE_SHIFT) {
+ 		u32 block_size = min_t(u32, sector_size, PAGE_SIZE);
+-		u64 lbo = dev_size - sizeof(*boot);
++		u64 lbo = dev_size0 - sizeof(*boot);
  
--	if (cont) {
--		if (regr != 6)
--			return 0xff;
--		regr = 7;
--	}
-+	regr += cont << 3;
+ 		/*
+ 	 	 * Try alternative boot (last sector)
+@@ -1100,6 +1103,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
  
- 	switch (pi->mode) {
- 	case 0:
+ 		boot_off = lbo & (block_size - 1);
+ 		hint = "Alternative boot";
++		dev_size = dev_size0; /* restore original size. */
+ 		goto check_boot;
+ 	}
+ 	brelse(bh);
 -- 
 2.42.0
 
