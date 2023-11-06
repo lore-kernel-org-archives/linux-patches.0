@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E06200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41851200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fT9Kob42"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4E1C433C8;
-	Mon,  6 Nov 2023 13:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bdom6FWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B252EC433C9;
+	Mon,  6 Nov 2023 13:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276025;
-	bh=Gs76nfyek6qIqcqga7yiSO6pFqhzqIUNqpH7MnZ21Xs=;
+	s=korg; t=1699276028;
+	bh=ziXeSXbsix2KjEvrJpou5dtQpv8o3jlYTu/q1OHTBes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fT9Kob42KImYA2z9srxDnMvGICG0opso3HtwXC13wGiV1jQA7jJHvGAT1aP7qaWZN
-	 gFZu4V4UWpYWaARPuiaev367mhmvHoOZrQTsuwladTu9wSOqae1pk7Mr/jQuI5VAmG
-	 tetfSgGPFkbVbOqhhLRWhQ/hBNWdmuAWdHjRM0Ek=
+	b=Bdom6FWSVat/RHyv2fVm3/umWcyd/Snxk8qiIPxiPabutBvvr1cScQyqBwHJGlCyn
+	 kaIbO2ODc3nUMZZpCIhpzBGA8eGU5mRqWden5jfz58h0CQO4QTeBDTrd7PDjBkat72
+	 d8fd5Iav3aoYsvFy7u1tw9R7lTyxI39F09rHdq/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 4.14 43/48] PCI: Prevent xHCI driver from claiming AMD VanGogh USB3 DRD device
-Date: Mon,  6 Nov 2023 14:03:34 +0100
-Message-ID: <20231106130259.323655851@linuxfoundation.org>
+	Liha Sikanen <lihasika@gmail.com>
+Subject: [PATCH 4.14 44/48] usb: storage: set 1.50 as the lower bcdDevice for older "Super Top" compatibility
+Date: Mon,  6 Nov 2023 14:03:35 +0100
+Message-ID: <20231106130259.354651023@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -41,71 +40,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: LihaSika <lihasika@gmail.com>
 
-commit 7e6f3b6d2c352b5fde37ce3fed83bdf6172eebd4 upstream.
+commit 0e3139e6543b241b3e65956a55c712333bef48ac upstream.
 
-The AMD VanGogh SoC contains a DesignWare USB3 Dual-Role Device that can be
-operated as either a USB Host or a USB Device, similar to on the AMD Nolan
-platform.
+Change lower bcdDevice value for "Super Top USB 2.0  SATA BRIDGE" to match
+1.50. I have such an older device with bcdDevice=1.50 and it will not work
+otherwise.
 
-be6646bfbaec ("PCI: Prevent xHCI driver from claiming AMD Nolan USB3 DRD
-device") added a quirk to let the dwc3 driver claim the Nolan device since
-it provides more specific support.
-
-Extend that quirk to include the VanGogh SoC USB3 device.
-
-Link: https://lore.kernel.org/r/20230927202212.2388216-1-vi@endrift.com
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-[bhelgaas: include be6646bfbaec reference, add stable tag]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org	# v3.19+
+Cc: stable@vger.kernel.org
+Signed-off-by: Liha Sikanen <lihasika@gmail.com>
+Link: https://lore.kernel.org/r/ccf7d12a-8362-4916-b3e0-f4150f54affd@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c    |    9 ++++++---
- include/linux/pci_ids.h |    1 +
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/usb/storage/unusual_cypress.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -429,14 +429,15 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
- /*
-  * In the AMD NL platform, this device ([1022:7912]) has a class code of
-  * PCI_CLASS_SERIAL_USB_XHCI (0x0c0330), which means the xhci driver will
-- * claim it.
-+ * claim it. The same applies on the VanGogh platform device ([1022:163a]).
-+ *
-  * But the dwc3 driver is a more specific driver for this device, and we'd
-  * prefer to use it instead of xhci. To prevent xhci from claiming the
-  * device, change the class code to 0x0c03fe, which the PCI r3.0 spec
-  * defines as "USB device (not host controller)". The dwc3 driver can then
-  * claim it based on its Vendor and Device ID.
-  */
--static void quirk_amd_nl_class(struct pci_dev *pdev)
-+static void quirk_amd_dwc_class(struct pci_dev *pdev)
- {
- 	u32 class = pdev->class;
+--- a/drivers/usb/storage/unusual_cypress.h
++++ b/drivers/usb/storage/unusual_cypress.h
+@@ -32,7 +32,7 @@ UNUSUAL_DEV(  0x04b4, 0x6831, 0x0000, 0x
+ 		"Cypress ISD-300LP",
+ 		USB_SC_CYP_ATACB, USB_PR_DEVICE, NULL, 0),
  
-@@ -446,7 +447,9 @@ static void quirk_amd_nl_class(struct pc
- 		 class, pdev->class);
- }
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_NL_USB,
--		quirk_amd_nl_class);
-+		quirk_amd_dwc_class);
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_VANGOGH_USB,
-+		quirk_amd_dwc_class);
- 
- /*
-  * Let's make the southbridge information explicit instead
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -541,6 +541,7 @@
- #define PCI_DEVICE_ID_AMD_16H_NB_F4	0x1534
- #define PCI_DEVICE_ID_AMD_16H_M30H_NB_F3 0x1583
- #define PCI_DEVICE_ID_AMD_16H_M30H_NB_F4 0x1584
-+#define PCI_DEVICE_ID_AMD_VANGOGH_USB	0x163a
- #define PCI_DEVICE_ID_AMD_CNB17H_F3	0x1703
- #define PCI_DEVICE_ID_AMD_LANCE		0x2000
- #define PCI_DEVICE_ID_AMD_LANCE_HOME	0x2001
+-UNUSUAL_DEV( 0x14cd, 0x6116, 0x0160, 0x0160,
++UNUSUAL_DEV( 0x14cd, 0x6116, 0x0150, 0x0160,
+ 		"Super Top",
+ 		"USB 2.0  SATA BRIDGE",
+ 		USB_SC_CYP_ATACB, USB_PR_DEVICE, NULL, 0),
 
 
