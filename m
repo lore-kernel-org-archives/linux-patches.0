@@ -1,35 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E71200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAE9200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWZmVHbg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 849D9C433C7;
-	Mon,  6 Nov 2023 13:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBjA17ZE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D31C433C8;
+	Mon,  6 Nov 2023 13:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699275992;
-	bh=M2D6xigNXpaS1wJAmxRDTN3cykVVaPnTYIYZGbOBEYI=;
+	s=korg; t=1699275995;
+	bh=Zskbcbbnsx3xGCgfqqQKPeR8C6k83Yr13Ri7ZKYz07U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWZmVHbgba70npMHvE8GJcVmGBhT30030h/XDSh5nz5b980wktOePiQlBwTU+VRsv
-	 Uk/SpSrvO1W5hUhc8dmOTk99pjXtaymdUUxqOIlpESKUTzWF10lMYRIaRH3LRvO71f
-	 uCmnEiBrapPFQ3iyZsgFXBjwCGGoU/kCo73XGkik=
+	b=LBjA17ZE4213RFbtcwdXYk8I0IXp1Iy//eSAJGGWX3w+ZF/mpV+LHHmcWAuHok5kX
+	 4yVy6izVy+bfi5xnoGvH8yb+JfJQ/f+hXPNOEXCHcwGeTJv4VyxOjqP2ORRfNZgiD9
+	 16hTCJsm9CijkL94w6wnBE/hJe6eHuNzP9M82uJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Baoquan He <bhe@redhat.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Helge Deller <deller@gmx.de>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
+	kernel test robot <lkp@intel.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 33/48] fbdev: atyfb: only use ioremap_uc() on i386 and ia64
-Date: Mon,  6 Nov 2023 14:03:24 +0100
-Message-ID: <20231106130258.988596134@linuxfoundation.org>
+Subject: [PATCH 4.14 34/48] netfilter: nfnetlink_log: silence bogus compiler warning
+Date: Mon,  6 Nov 2023 14:03:25 +0100
+Message-ID: <20231106130259.021369143@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -48,56 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit c1a8d1d0edb71dec15c9649cb56866c71c1ecd9e ]
+[ Upstream commit 2e1d175410972285333193837a4250a74cd472e6 ]
 
-ioremap_uc() is only meaningful on old x86-32 systems with the PAT
-extension, and on ia64 with its slightly unconventional ioremap()
-behavior, everywhere else this is the same as ioremap() anyway.
+net/netfilter/nfnetlink_log.c:800:18: warning: variable 'ctinfo' is uninitialized
 
-Change the only driver that still references ioremap_uc() to only do so
-on x86-32/ia64 in order to allow removing that interface at some
-point in the future for the other architectures.
+The warning is bogus, the variable is only used if ct is non-NULL and
+always initialised in that case.  Init to 0 too to silence this.
 
-On some architectures, ioremap_uc() just returns NULL, changing
-the driver to call ioremap() means that they now have a chance
-of working correctly.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: linux-fbdev@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202309100514.ndBFebXN-lkp@intel.com/
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/aty/atyfb_base.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/nfnetlink_log.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/aty/atyfb_base.c b/drivers/video/fbdev/aty/atyfb_base.c
-index d4b938276d238..71e95533613cd 100644
---- a/drivers/video/fbdev/aty/atyfb_base.c
-+++ b/drivers/video/fbdev/aty/atyfb_base.c
-@@ -3435,11 +3435,15 @@ static int atyfb_setup_generic(struct pci_dev *pdev, struct fb_info *info,
- 	}
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index 40ba9c8e3c078..7d7a94e3fc507 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -637,8 +637,8 @@ nfulnl_log_packet(struct net *net,
+ 	unsigned int plen;
+ 	struct nfnl_log_net *log = nfnl_log_pernet(net);
+ 	const struct nfnl_ct_hook *nfnl_ct = NULL;
++	enum ip_conntrack_info ctinfo = 0;
+ 	struct nf_conn *ct = NULL;
+-	enum ip_conntrack_info ctinfo;
  
- 	info->fix.mmio_start = raddr;
-+#if defined(__i386__) || defined(__ia64__)
- 	/*
- 	 * By using strong UC we force the MTRR to never have an
- 	 * effect on the MMIO region on both non-PAT and PAT systems.
- 	 */
- 	par->ati_regbase = ioremap_uc(info->fix.mmio_start, 0x1000);
-+#else
-+	par->ati_regbase = ioremap(info->fix.mmio_start, 0x1000);
-+#endif
- 	if (par->ati_regbase == NULL)
- 		return -ENOMEM;
- 
+ 	if (li_user && li_user->type == NF_LOG_TYPE_ULOG)
+ 		li = li_user;
 -- 
 2.42.0
 
