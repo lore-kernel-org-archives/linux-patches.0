@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B41220B09
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640F2219E9
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5ax5azN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACBDC433C7;
-	Mon,  6 Nov 2023 13:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhQrDghU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8B0C433C8;
+	Mon,  6 Nov 2023 13:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276853;
-	bh=xNTSN18jlsRADXZOgevUhWNhyPJOAtcVl1UMO8aRdXs=;
+	s=korg; t=1699276856;
+	bh=fzowBInAC3GCXaR9RmzOJbJ90xWDlN96rQnBrZ5QTRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B5ax5azNS7SX51tJl1loHUc58c6nUugSCmINPVsf6Pk2VKy6heGIOJ+3Ch43EC8jX
-	 op2CET5vCaDl66tYFLz5dyRg9+f/sjXKxyIbz8zk4EFJOsemmXKbjIFLFCTVkN1m47
-	 wjDAvWN6p15N6qJlNEYiCdKLLkMOAedUtBd8PWxQ=
+	b=fhQrDghUdhvj6AdHefrQsQ1TeMVsXNc3ibrmNj84mGxy3g/hy4D/xxoInTW38BwaA
+	 Y54G+G3DQ2a1wdVjiSJqhxGQyyZ3rBDJnhC286sNqv1LdH/P681ltooEuij6WHsdd0
+	 +Uzfi8lWCHphcVfV0GLZ+Hy25Sv12KOrs9brABB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Daly <pdaly@redhat.com>,
-	"Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 5.4 30/74] clk: Sanitize possible_parent_show to Handle Return Value of of_clk_get_parent_name
-Date: Mon,  6 Nov 2023 14:03:50 +0100
-Message-ID: <20231106130302.775393343@linuxfoundation.org>
+	Ivan Vecera <ivecera@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.4 31/74] i40e: Fix wrong check for I40E_TXR_FLAGS_WB_ON_ITR
+Date: Mon,  6 Nov 2023 14:03:51 +0100
+Message-ID: <20231106130302.810316556@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
 References: <20231106130301.687882731@linuxfoundation.org>
@@ -42,73 +44,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessandro Carminati <alessandro.carminati@gmail.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-commit ceb87a361d0b079ecbc7d2831618c19087f304a9 upstream.
+[ Upstream commit 77a8c982ff0d4c3a14022c6fe9e3dbfb327552ec ]
 
-In the possible_parent_show function, ensure proper handling of the return
-value from of_clk_get_parent_name to prevent potential issues arising from
-a NULL return.
-The current implementation invokes seq_puts directly on the result of
-of_clk_get_parent_name without verifying the return value, which can lead
-to kernel panic if the function returns NULL.
+The I40E_TXR_FLAGS_WB_ON_ITR is i40e_ring flag and not i40e_pf one.
 
-This patch addresses the concern by introducing a check on the return
-value of of_clk_get_parent_name. If the return value is not NULL, the
-function proceeds to call seq_puts, providing the returned value as
-argument.
-However, if of_clk_get_parent_name returns NULL, the function provides a
-static string as argument, avoiding the panic.
-
-Fixes: 1ccc0ddf046a ("clk: Use seq_puts() in possible_parent_show()")
-Reported-by: Philip Daly <pdaly@redhat.com>
-Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
-Link: https://lore.kernel.org/r/20230921073217.572151-1-alessandro.carminati@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8e0764b4d6be42 ("i40e/i40evf: Add support for writeback on ITR feature for X722")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20231023212714.178032-1-jacob.e.keller@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_txrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -3080,6 +3080,7 @@ static void possible_parent_show(struct
- 				 unsigned int i, char terminator)
- {
- 	struct clk_core *parent;
-+	const char *name = NULL;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+index 06987913837aa..6067c88668341 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+@@ -2669,7 +2669,7 @@ int i40e_napi_poll(struct napi_struct *napi, int budget)
+ 		return budget;
+ 	}
  
- 	/*
- 	 * Go through the following options to fetch a parent's name.
-@@ -3094,18 +3095,20 @@ static void possible_parent_show(struct
- 	 * registered (yet).
- 	 */
- 	parent = clk_core_get_parent_by_index(core, i);
--	if (parent)
-+	if (parent) {
- 		seq_puts(s, parent->name);
--	else if (core->parents[i].name)
-+	} else if (core->parents[i].name) {
- 		seq_puts(s, core->parents[i].name);
--	else if (core->parents[i].fw_name)
-+	} else if (core->parents[i].fw_name) {
- 		seq_printf(s, "<%s>(fw)", core->parents[i].fw_name);
--	else if (core->parents[i].index >= 0)
--		seq_puts(s,
--			 of_clk_get_parent_name(core->of_node,
--						core->parents[i].index));
--	else
--		seq_puts(s, "(missing)");
-+	} else {
-+		if (core->parents[i].index >= 0)
-+			name = of_clk_get_parent_name(core->of_node, core->parents[i].index);
-+		if (!name)
-+			name = "(missing)";
-+
-+		seq_puts(s, name);
-+	}
+-	if (vsi->back->flags & I40E_TXR_FLAGS_WB_ON_ITR)
++	if (q_vector->tx.ring[0].flags & I40E_TXR_FLAGS_WB_ON_ITR)
+ 		q_vector->arm_wb_state = false;
  
- 	seq_putc(s, terminator);
- }
+ 	/* Exit the polling mode, but don't re-enable interrupts if stack might
+-- 
+2.42.0
+
 
 
