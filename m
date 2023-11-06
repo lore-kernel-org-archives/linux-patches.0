@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7154322EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5328322EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3rSAknd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4A3C433C7;
-	Mon,  6 Nov 2023 13:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYzVeVfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0858C433C9;
+	Mon,  6 Nov 2023 13:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277340;
-	bh=WSU1EHmmHrFbZ5mA2sFqAwJDpglu/nofnxCG7y+o0HA=;
+	s=korg; t=1699277343;
+	bh=HLIzW+sxuj0pCimClavJ2tQQpSxDoYv/8ewxBJ2SkqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G3rSAknd9uY+DdQC3VKrAU/oVek2VxEdKtRD78ztrH25bvuFnyffwJh01KRqF9ict
-	 M52Bbf2uAJwLEycSHcRJsiFZOb3Ys8oLzUbp3HJKYtXz4T6i3JByqTRcUl9u613PF/
-	 XLefBoGc/cf/VlyB1iZfIraoiPZYyWcT9mK3lais=
+	b=DYzVeVfed6966q7XyE0igZgcyCNJoubgMi23FikZMXNbv9WZIMSiNfNurdKCy2Wmn
+	 iMTGL3sHWdxq5RC5VW3JLGlX0P8IlHUBD9vWjeeASm+S+NjvwRuT1z74DHx1184ZR2
+	 97yA+7bLLyMl68h/6+jHvN5EOVCVq177TDhscGo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>
-Subject: [PATCH 5.15 119/128] tty: 8250: Add support for additional Brainboxes UC cards
-Date: Mon,  6 Nov 2023 14:04:39 +0100
-Message-ID: <20231106130314.576975380@linuxfoundation.org>
+	Karolina Stolarek <karolina.stolarek@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 093/128] drm/ttm: Reorder sys manager cleanup step
+Date: Mon,  6 Nov 2023 14:04:13 +0100
+Message-ID: <20231106130313.379660210@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -34,128 +36,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Karolina Stolarek <karolina.stolarek@intel.com>
 
-commit c563db486db7d245c0e2f319443417ae8e692f7f upstream.
+[ Upstream commit 3b401e30c249849d803de6c332dad2a595a58658 ]
 
-Add device IDs for some more Brainboxes UC cards, namely
-UC-235/UC-246, UC-253/UC-734, UC-302, UC-313, UC-346, UC-357,
-UC-607 and UC-836.
+With the current cleanup flow, we could trigger a NULL pointer
+dereference if there is a delayed destruction of a BO with a
+system resource that gets executed on drain_workqueue() call,
+as we attempt to free a resource using an already released
+resource manager.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Link: https://lore.kernel.org/r/DU0PR02MB789969998A6C3FAFCD95C85DC4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Remove the device from the device list and drain its workqueue
+before releasing the system domain manager in ttm_device_fini().
+
+Signed-off-by: Karolina Stolarek <karolina.stolarek@intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231016121525.2237838-1-karolina.stolarek@intel.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |   57 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
+ drivers/gpu/drm/ttm/ttm_device.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -5367,6 +5367,17 @@ static const struct pci_device_id serial
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
- 		pbn_b2_1_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0AA2,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_1_115200 },
-+	/*
-+	 * Brainboxes UC-253/UC-734
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0CA1,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
- 	/*
- 	 * Brainboxes UC-260/271/701/756
- 	 */
-@@ -5399,6 +5410,14 @@ static const struct pci_device_id serial
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
- 		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x08E2,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x08E3,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
- 	/*
- 	 * Brainboxes UC-310
- 	 */
-@@ -5409,6 +5428,14 @@ static const struct pci_device_id serial
- 	/*
- 	 * Brainboxes UC-313
- 	 */
-+	{       PCI_VENDOR_ID_INTASHIELD, 0x08A1,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{       PCI_VENDOR_ID_INTASHIELD, 0x08A2,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
- 	{       PCI_VENDOR_ID_INTASHIELD, 0x08A3,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
-@@ -5423,6 +5450,10 @@ static const struct pci_device_id serial
- 	/*
- 	 * Brainboxes UC-346
- 	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0B01,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_4_115200 },
- 	{	PCI_VENDOR_ID_INTASHIELD, 0x0B02,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
-@@ -5434,6 +5465,10 @@ static const struct pci_device_id serial
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
- 		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0A82,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
- 	{	PCI_VENDOR_ID_INTASHIELD, 0x0A83,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
-@@ -5452,6 +5487,28 @@ static const struct pci_device_id serial
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
- 		pbn_b2_4_115200 },
-+	/*
-+	 * Brainboxes UC-607
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x09A1,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x09A2,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x09A3,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	/*
-+	 * Brainboxes UC-836
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0D41,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_4_115200 },
- 	/*
- 	 * Brainboxes PX-101
- 	 */
+diff --git a/drivers/gpu/drm/ttm/ttm_device.c b/drivers/gpu/drm/ttm/ttm_device.c
+index 2df59b3c2ea16..291cdd893fc50 100644
+--- a/drivers/gpu/drm/ttm/ttm_device.c
++++ b/drivers/gpu/drm/ttm/ttm_device.c
+@@ -234,10 +234,6 @@ void ttm_device_fini(struct ttm_device *bdev)
+ 	struct ttm_resource_manager *man;
+ 	unsigned i;
+ 
+-	man = ttm_manager_type(bdev, TTM_PL_SYSTEM);
+-	ttm_resource_manager_set_used(man, false);
+-	ttm_set_driver_manager(bdev, TTM_PL_SYSTEM, NULL);
+-
+ 	mutex_lock(&ttm_global_mutex);
+ 	list_del(&bdev->device_list);
+ 	mutex_unlock(&ttm_global_mutex);
+@@ -247,6 +243,10 @@ void ttm_device_fini(struct ttm_device *bdev)
+ 	if (ttm_bo_delayed_delete(bdev, true))
+ 		pr_debug("Delayed destroy list was clean\n");
+ 
++	man = ttm_manager_type(bdev, TTM_PL_SYSTEM);
++	ttm_resource_manager_set_used(man, false);
++	ttm_set_driver_manager(bdev, TTM_PL_SYSTEM, NULL);
++
+ 	spin_lock(&bdev->lru_lock);
+ 	for (i = 0; i < TTM_MAX_BO_PRIORITY; ++i)
+ 		if (list_empty(&man->lru[0]))
+-- 
+2.42.0
+
 
 
