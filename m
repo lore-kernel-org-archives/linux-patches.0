@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E740200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B0F200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mLVXknMG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20C6C433C8;
-	Mon,  6 Nov 2023 13:09:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ou7slfrR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B1C9C433C7;
+	Mon,  6 Nov 2023 13:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276154;
-	bh=TjbzbevQ5e4lVQmHt6pnKS0pXzAyxgRfxQewyZqpp+I=;
+	s=korg; t=1699276157;
+	bh=nnr8fvpKBxgQ3UN65rmjivZEC1giELQlNkHGYW3keKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mLVXknMGtB9yFJqMlsDd0Ib6gbFDdF7vw/iRxnU8WtcEa0pRoCXk2tzV+jICFjWew
-	 n6OxYO+tUD15po+ZKWTopkNZvNWqGpskXXJs58LcPuHmsh4VpKZWDVhvp015DrCUM+
-	 N4cW7g2jHGRKDdp4m4JOFmI5qzMu6jAYFOknQPs4=
+	b=ou7slfrRJDz0ytRVcfDuBX0pcKjtsafk3k0SwxWuVfgyctNA7s8ERyywGtWyduqW/
+	 FDcSg7kn+5Z003FFv97rDY9ntv+GSGAXyc3/j3HO8JSuRCyaijo2T5+VU89PZgLiBv
+	 19aVhfFpvKA4emKDisQfmgsgqgOLehKV3EhUtM30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Hasemeyer <markhas@chromium.org>,
-	Curtis Malainey <cujomalainey@chromium.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 30/30] ASoC: SOF: sof-pci-dev: Fix community key quirk detection
-Date: Mon,  6 Nov 2023 14:03:48 +0100
-Message-ID: <20231106130258.936216794@linuxfoundation.org>
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 01/61] mmc: sdio: Dont re-initialize powered-on removable SDIO cards at resume
+Date: Mon,  6 Nov 2023 14:02:57 +0100
+Message-ID: <20231106130259.620572008@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231106130257.903265688@linuxfoundation.org>
-References: <20231106130257.903265688@linuxfoundation.org>
+In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
+References: <20231106130259.573843228@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,46 +38,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Hasemeyer <markhas@chromium.org>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-commit 7dd692217b861a8292ff8ac2c9d4458538fd6b96 upstream.
+[ Upstream commit 6ebc581c3f9e6fd11a1c9da492a5e05bbe96885a ]
 
-Some Chromebooks do not populate the product family DMI value resulting
-in firmware load failures.
+It looks like the original idea behind always doing a re-initialization of
+a removable SDIO card during system resume in mmc_sdio_resume(), is to try
+to play safe to detect whether the card has been removed.
 
-Add another quirk detection entry that looks for "Google" in the BIOS
-version. Theoretically, PRODUCT_FAMILY could be replaced with
-BIOS_VERSION, but it is left as a quirk to be conservative.
+However, this seems like a really a bad idea as it will most likely screw
+things up, especially when the card is expected to remain powered on during
+system suspend by the SDIO func driver.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Mark Hasemeyer <markhas@chromium.org>
-Acked-by: Curtis Malainey <cujomalainey@chromium.org>
-Link: https://lore.kernel.org/r/20231020145953.v1.1.Iaf5702dc3f8af0fd2f81a22ba2da1a5e15b3604c@changeid
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Let's fix this, simply by trusting that the detect work checks if the card
+is alive and inserted, which is being scheduled at the PM_POST_SUSPEND
+notification anyway.
+
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Stable-dep-of: 32a9cdb8869d ("mmc: core: sdio: hold retuning if sdio in 1-bit mode")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/sof-pci-dev.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mmc/core/sdio.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/sound/soc/sof/sof-pci-dev.c
-+++ b/sound/soc/sof/sof-pci-dev.c
-@@ -145,6 +145,13 @@ static const struct dmi_system_id commun
- 			DMI_MATCH(DMI_PRODUCT_FAMILY, "Google"),
- 		}
- 	},
-+	{
-+		.ident = "Google firmware",
-+		.callback = chromebook_use_community_key,
-+		.matches = {
-+			DMI_MATCH(DMI_BIOS_VERSION, "Google"),
-+		}
-+	},
- 	{},
- };
+diff --git a/drivers/mmc/core/sdio.c b/drivers/mmc/core/sdio.c
+index 5f1ee88aa7615..5f6865717c9b4 100644
+--- a/drivers/mmc/core/sdio.c
++++ b/drivers/mmc/core/sdio.c
+@@ -963,7 +963,11 @@ static int mmc_sdio_resume(struct mmc_host *host)
+ 	/* Basic card reinitialization. */
+ 	mmc_claim_host(host);
  
+-	/* Restore power if needed */
++	/*
++	 * Restore power and reinitialize the card when needed. Note that a
++	 * removable card is checked from a detect work later on in the resume
++	 * process.
++	 */
+ 	if (!mmc_card_keep_power(host)) {
+ 		mmc_power_up(host, host->card->ocr);
+ 		/*
+@@ -977,12 +981,8 @@ static int mmc_sdio_resume(struct mmc_host *host)
+ 			pm_runtime_set_active(&host->card->dev);
+ 			pm_runtime_enable(&host->card->dev);
+ 		}
+-	}
+-
+-	/* No need to reinitialize powered-resumed nonremovable cards */
+-	if (mmc_card_is_removable(host) || !mmc_card_keep_power(host)) {
+-		err = mmc_sdio_reinit_card(host, mmc_card_keep_power(host));
+-	} else if (mmc_card_keep_power(host) && mmc_card_wake_sdio_irq(host)) {
++		err = mmc_sdio_reinit_card(host, 0);
++	} else if (mmc_card_wake_sdio_irq(host)) {
+ 		/* We may have switched to 1-bit mode during suspend */
+ 		err = sdio_enable_4bit_bus(host->card);
+ 	}
+-- 
+2.42.0
+
 
 
