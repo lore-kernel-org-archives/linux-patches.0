@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440C6241F4
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30286241F4
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jhmcxz07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E06C433C9;
-	Mon,  6 Nov 2023 13:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKBaiNCs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27F8C433C9;
+	Mon,  6 Nov 2023 13:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277208;
-	bh=2roMMTJsmhodd+6zEGxe+kbVB5mKaituLzIxPG+Hitk=;
+	s=korg; t=1699277211;
+	bh=7TYpCLUv+zb7nizxr7ISlQnj/xBI5GNvYCnPk+fLEmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jhmcxz07bDZWZo6gT/2H1ovUVnmaNsB1vSFmn+dGGf6Tox6Y8kG44zMApSr6d/NuW
-	 jdraYsuNYry0PifegfhEvtvDkA79f90I8YrM9erNnCkMdKB+6wWpvOzZABR77oKpI5
-	 gi9j+Cu4zDx7xLfNQx2jALRGmemhSvbvh2BpImLU=
+	b=PKBaiNCslUZMFYxKwN1G2WpSwysKTUejsYa1uYPdZnaDx15mnuJunxbZgEr5yletr
+	 NQS1zWgcz7CO4a0VOz7AudmO1Wi8EKM+0h01BDZegRNV2OV6oY1xEy4pNVRuFv4n4d
+	 2G19V1IGcTQkunoYwUOCna0OlX1Vc3ke5eOy/jxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alejandro Colomar <alx@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 075/128] ASoC: simple-card: fixup asoc_simple_probe() error handling
-Date: Mon,  6 Nov 2023 14:03:55 +0100
-Message-ID: <20231106130312.543108388@linuxfoundation.org>
+Subject: [PATCH 5.15 076/128] net: sched: cls_u32: Fix allocation size in u32_init()
+Date: Mon,  6 Nov 2023 14:03:56 +0100
+Message-ID: <20231106130312.581056520@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -44,83 +44,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit 41bae58df411f9accf01ea660730649b2fab1dab ]
+[ Upstream commit c4d49196ceec80e30e8d981410d73331b49b7850 ]
 
-asoc_simple_probe() is used for both "DT probe" (A) and "platform probe"
-(B). It uses "goto err" when error case, but it is not needed for
-"platform probe" case (B). Thus it is using "return" directly there.
+commit d61491a51f7e ("net/sched: cls_u32: Replace one-element array
+with flexible-array member") incorrecly replaced an instance of
+`sizeof(*tp_c)` with `struct_size(tp_c, hlist->ht, 1)`. This results
+in a an over-allocation of 8 bytes.
 
-	static int asoc_simple_probe(...)
-	{
- ^		if (...) {
- |			...
-(A)			if (ret < 0)
- |				goto err;
- v		} else {
- ^			...
- |			if (ret < 0)
-(B)				return -Exxx;
- v		}
+This change is wrong because `hlist` in `struct tc_u_common` is a
+pointer:
 
-		...
- ^		if (ret < 0)
-(C)			goto err;
- v		...
+net/sched/cls_u32.c:
+struct tc_u_common {
+        struct tc_u_hnode __rcu *hlist;
+        void                    *ptr;
+        int                     refcnt;
+        struct idr              handle_idr;
+        struct hlist_node       hnode;
+        long                    knodes;
+};
 
-	err:
-(D)		simple_util_clean_reference(card);
+So, the use of `struct_size()` makes no sense: we don't need to allocate
+any extra space for a flexible-array member. `sizeof(*tp_c)` is just fine.
 
-		return ret;
-	}
+So, `struct_size(tp_c, hlist->ht, 1)` translates to:
 
-Both case are using (C) part, and it calls (D) when err case.
-But (D) will do nothing for (B) case.
-Because of these behavior, current code itself is not wrong,
-but is confusable, and more, static analyzing tool will warning on
-(B) part (should use goto err).
+sizeof(*tp_c) + sizeof(tp_c->hlist->ht) ==
+sizeof(struct tc_u_common) + sizeof(struct tc_u_knode *) ==
+						144 + 8  == 0x98 (byes)
+						     ^^^
+						      |
+						unnecessary extra
+						allocation size
 
-To avoid static analyzing tool warning, this patch uses "goto err"
-on (B) part.
+$ pahole -C tc_u_common net/sched/cls_u32.o
+struct tc_u_common {
+	struct tc_u_hnode *        hlist;                /*     0     8 */
+	void *                     ptr;                  /*     8     8 */
+	int                        refcnt;               /*    16     4 */
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87o7hy7mlh.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	/* XXX 4 bytes hole, try to pack */
+
+	struct idr                 handle_idr;           /*    24    96 */
+	/* --- cacheline 1 boundary (64 bytes) was 56 bytes ago --- */
+	struct hlist_node          hnode;                /*   120    16 */
+	/* --- cacheline 2 boundary (128 bytes) was 8 bytes ago --- */
+	long int                   knodes;               /*   136     8 */
+
+	/* size: 144, cachelines: 3, members: 6 */
+	/* sum members: 140, holes: 1, sum holes: 4 */
+	/* last cacheline: 16 bytes */
+};
+
+And with `sizeof(*tp_c)`, we have:
+
+	sizeof(*tp_c) == sizeof(struct tc_u_common) == 144 == 0x90 (bytes)
+
+which is the correct and original allocation size.
+
+Fix this issue by replacing `struct_size(tp_c, hlist->ht, 1)` with
+`sizeof(*tp_c)`, and avoid allocating 8 too many bytes.
+
+The following difference in binary output is expected and reflects the
+desired change:
+
+| net/sched/cls_u32.o
+| @@ -6148,7 +6148,7 @@
+| include/linux/slab.h:599
+|     2cf5:      mov    0x0(%rip),%rdi        # 2cfc <u32_init+0xfc>
+|                        2cf8: R_X86_64_PC32     kmalloc_caches+0xc
+|-    2cfc:      mov    $0x98,%edx
+|+    2cfc:      mov    $0x90,%edx
+
+Reported-by: Alejandro Colomar <alx@kernel.org>
+Closes: https://lore.kernel.org/lkml/09b4a2ce-da74-3a19-6961-67883f634d98@kernel.org/
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/generic/simple-card.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/sched/cls_u32.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/generic/simple-card.c b/sound/soc/generic/simple-card.c
-index 283aa21879aa5..95e4c53cd90c7 100644
---- a/sound/soc/generic/simple-card.c
-+++ b/sound/soc/generic/simple-card.c
-@@ -680,10 +680,12 @@ static int asoc_simple_probe(struct platform_device *pdev)
- 		struct snd_soc_dai_link *dai_link = priv->dai_link;
- 		struct simple_dai_props *dai_props = priv->dai_props;
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 17edcf1d1c3b6..440c29dc058ed 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -364,7 +364,7 @@ static int u32_init(struct tcf_proto *tp)
+ 	idr_init(&root_ht->handle_idr);
  
-+		ret = -EINVAL;
-+
- 		cinfo = dev->platform_data;
- 		if (!cinfo) {
- 			dev_err(dev, "no info for asoc-simple-card\n");
--			return -EINVAL;
-+			goto err;
- 		}
- 
- 		if (!cinfo->name ||
-@@ -692,7 +694,7 @@ static int asoc_simple_probe(struct platform_device *pdev)
- 		    !cinfo->platform ||
- 		    !cinfo->cpu_dai.name) {
- 			dev_err(dev, "insufficient asoc_simple_card_info settings\n");
--			return -EINVAL;
-+			goto err;
- 		}
- 
- 		cpus			= dai_link->cpus;
+ 	if (tp_c == NULL) {
+-		tp_c = kzalloc(struct_size(tp_c, hlist->ht, 1), GFP_KERNEL);
++		tp_c = kzalloc(sizeof(*tp_c), GFP_KERNEL);
+ 		if (tp_c == NULL) {
+ 			kfree(root_ht);
+ 			return -ENOBUFS;
 -- 
 2.42.0
 
