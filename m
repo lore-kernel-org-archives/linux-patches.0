@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69B2241F4
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98FE241F4
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IhVmWlX/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF50C433CB;
-	Mon,  6 Nov 2023 13:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a166Q6Qf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1264BC433C7;
+	Mon,  6 Nov 2023 13:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277612;
-	bh=DypcVCRg8+RinQ1cGjwDe20ka33J3f2SvYA/vt9QCP8=;
+	s=korg; t=1699277615;
+	bh=YhvHFXyFvcB2X835AZ99RIf0NPjJYtOCTgnF4Me6ByI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IhVmWlX/u99zZXz3Of8ZU97bUZAJ5uFzMcI1UNLravmPq+PyC+oP2/0szEcaHFgZ+
-	 3JhyixMt0BswxoRjUsdIVSbqNq++nbO5jHgFgBrEI+p8aE2et7iseUc9udMpvdEaJJ
-	 bZ7bQmWUX7uFJtnvtINA7ewmZkK4x7XdN40Hc1Vc=
+	b=a166Q6Qf5+fZLo+WJg0+ZpXFl0Zp/hmnzFLZZXA8BBHAJgfiYpDyJkZrvsRvHQYP9
+	 hIoWnKqvbk+gb8TK5TmF0nBuU71PJuFvbbOAyODiRA5jk+7Tqoo6zlBurMz7O1RD54
+	 NKM9uvGCpXnDfG3VdlKLZPPnsOPY2cOPiFMZeUVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephane Eranian <eranian@google.com>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 77/95] perf evlist: Avoid frequency mode for the dummy event
-Date: Mon,  6 Nov 2023 14:04:45 +0100
-Message-ID: <20231106130307.528595560@linuxfoundation.org>
+	Patrick Menschel <menschel.p@posteo.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>
+Subject: [PATCH 5.10 78/95] can: isotp: change error format from decimal to symbolic error names
+Date: Mon,  6 Nov 2023 14:04:46 +0100
+Message-ID: <20231106130307.563786272@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -46,86 +42,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Patrick Menschel <menschel.p@posteo.de>
 
-[ Upstream commit f9cdeb58a9cf46c09b56f5f661ea8da24b6458c3 ]
+commit 46d8657a6b284e32b6b3bf1a6c93ee507fdd3cdb upstream
 
-Dummy events are created with an attribute where the period and freq
-are zero. evsel__config will then see the uninitialized values and
-initialize them in evsel__default_freq_period. As fequency mode is
-used by default the dummy event would be set to use frequency
-mode. However, this has no effect on the dummy event but does cause
-unnecessary timers/interrupts. Avoid this overhead by setting the
-period to 1 for dummy events.
+This patch changes the format string for errors from decimal %d to
+symbolic error names %pe to achieve more comprehensive log messages.
 
-evlist__add_aux_dummy calls evlist__add_dummy then sets freq=0 and
-period=1. This isn't necessary after this change and so the setting is
-removed.
-
->From Stephane:
-
-The dummy event is not counting anything. It is used to collect mmap
-records and avoid a race condition during the synthesize mmap phase of
-perf record. As such, it should not cause any overhead during active
-profiling. Yet, it did. Because of a bug the dummy event was
-programmed as a sampling event in frequency mode. Events in that mode
-incur more kernel overheads because on timer tick, the kernel has to
-look at the number of samples for each event and potentially adjust
-the sampling period to achieve the desired frequency. The dummy event
-was therefore adding a frequency event to task and ctx contexts we may
-otherwise not have any, e.g.,
-
-  perf record -a -e cpu/event=0x3c,period=10000000/.
-
-On each timer tick the perf_adjust_freq_unthr_context() is invoked and
-if ctx->nr_freq is non-zero, then the kernel will loop over ALL the
-events of the context looking for frequency mode ones. In doing, so it
-locks the context, and enable/disable the PMU of each hw event. If all
-the events of the context are in period mode, the kernel will have to
-traverse the list for nothing incurring overhead. The overhead is
-multiplied by a very large factor when this happens in a guest kernel.
-There is no need for the dummy event to be in frequency mode, it does
-not count anything and therefore should not cause extra overhead for
-no reason.
-
-Fixes: 5bae0250237f ("perf evlist: Introduce perf_evlist__new_dummy constructor")
-Reported-by: Stephane Eranian <eranian@google.com>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20230916035640.1074422-1-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20210427052150.2308-2-menschel.p@posteo.de
+Signed-off-by: Patrick Menschel <menschel.p@posteo.de>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/evlist.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/can/isotp.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/evlist.c b/tools/perf/util/evlist.c
-index f0ca9aa7c208e..84b328d2515bd 100644
---- a/tools/perf/util/evlist.c
-+++ b/tools/perf/util/evlist.c
-@@ -251,6 +251,9 @@ int evlist__add_dummy(struct evlist *evlist)
- 		.type	= PERF_TYPE_SOFTWARE,
- 		.config = PERF_COUNT_SW_DUMMY,
- 		.size	= sizeof(attr), /* to capture ABI version */
-+		/* Avoid frequency mode for dummy events to avoid associated timers. */
-+		.freq = 0,
-+		.sample_period = 1,
- 	};
- 	struct evsel *evsel = evsel__new_idx(&attr, evlist->core.nr_entries);
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -228,8 +228,8 @@ static int isotp_send_fc(struct sock *sk
  
-@@ -271,8 +274,6 @@ struct evsel *evlist__add_aux_dummy(struct evlist *evlist, bool system_wide)
- 	evsel->core.attr.exclude_kernel = 1;
- 	evsel->core.attr.exclude_guest = 1;
- 	evsel->core.attr.exclude_hv = 1;
--	evsel->core.attr.freq = 0;
--	evsel->core.attr.sample_period = 1;
- 	evsel->core.system_wide = system_wide;
- 	evsel->no_aux_samples = true;
- 	evsel->name = strdup("dummy:u");
--- 
-2.42.0
-
+ 	can_send_ret = can_send(nskb, 1);
+ 	if (can_send_ret)
+-		pr_notice_once("can-isotp: %s: can_send_ret %d\n",
+-			       __func__, can_send_ret);
++		pr_notice_once("can-isotp: %s: can_send_ret %pe\n",
++			       __func__, ERR_PTR(can_send_ret));
+ 
+ 	dev_put(dev);
+ 
+@@ -814,8 +814,8 @@ isotp_tx_burst:
+ 
+ 		can_send_ret = can_send(skb, 1);
+ 		if (can_send_ret)
+-			pr_notice_once("can-isotp: %s: can_send_ret %d\n",
+-				       __func__, can_send_ret);
++			pr_notice_once("can-isotp: %s: can_send_ret %pe\n",
++				       __func__, ERR_PTR(can_send_ret));
+ 
+ 		if (so->tx.idx >= so->tx.len) {
+ 			/* we are done */
+@@ -976,8 +976,8 @@ static int isotp_sendmsg(struct socket *
+ 	err = can_send(skb, 1);
+ 	dev_put(dev);
+ 	if (err) {
+-		pr_notice_once("can-isotp: %s: can_send_ret %d\n",
+-			       __func__, err);
++		pr_notice_once("can-isotp: %s: can_send_ret %pe\n",
++			       __func__, ERR_PTR(err));
+ 
+ 		/* no transmission -> no timeout monitoring */
+ 		if (hrtimer_sec)
 
 
