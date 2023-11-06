@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4075820320
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921A4208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9A7C2Lo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B138FC433C9;
-	Mon,  6 Nov 2023 13:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LECpReb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D49C433C9;
+	Mon,  6 Nov 2023 13:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276592;
-	bh=FPCTnaQN64qrkIfiifQTQjOthG0e1H+ZOGwcz4ElH1I=;
+	s=korg; t=1699276595;
+	bh=waLjVfGSw0pNTIMuZTdiC9OXZMz6FJWTeq2XjYIpYEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g9A7C2Lo1WOKRpYw4H1qAMPAJjvxS74Tbu6EWSQ5dcxizQ9qcsqZbK+1g/74RXwOp
-	 uRJlvRUY847vbFkseuMtQxUNRtvoVcJ2v0y+dmoA4HI5qmVuV+17uIxbl4ubBWUBwo
-	 MMoZ5GV4bYNd4KZys16S42oYtgAArdcDGr39qBRY=
+	b=LECpReb+Y/Esu3XY35cjGewdXFv0/jxzCwWUdn+DvAlHkT3eNoPHyntISBIfW3gR+
+	 Kgt2C1GPRXxzXBjXosMNafbTDPCM1b2nZl5OoNXTjhTHbbdvecQSoSMBcqI/HdYRHd
+	 W9zXnt1ODUUIYJLKEzmLoANIwEoWUrRE/1gz6zwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Florian Westphal <fw@strlen.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 32/88] netfilter: nfnetlink_log: silence bogus compiler warning
-Date: Mon,  6 Nov 2023 14:03:26 +0100
-Message-ID: <20231106130306.959443903@linuxfoundation.org>
+Subject: [PATCH 6.5 15/88] powerpc/85xx: Fix math emulation exception
+Date: Mon,  6 Nov 2023 14:03:09 +0100
+Message-ID: <20231106130306.356745582@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -42,37 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 2e1d175410972285333193837a4250a74cd472e6 ]
+[ Upstream commit 8e8a12ecbc86700b5e1a3596ce2b3c43dafad336 ]
 
-net/netfilter/nfnetlink_log.c:800:18: warning: variable 'ctinfo' is uninitialized
+Booting mpc85xx_defconfig kernel on QEMU leads to:
 
-The warning is bogus, the variable is only used if ct is non-NULL and
-always initialised in that case.  Init to 0 too to silence this.
+Bad trap at PC: fe9bab0, SR: 2d000, vector=800
+awk[82]: unhandled trap (5) at 0 nip fe9bab0 lr fe9e01c code 5 in libc-2.27.so[fe5a000+17a000]
+awk[82]: code: 3aa00000 3a800010 4bffe03c 9421fff0 7ca62b78 38a00000 93c10008 83c10008
+awk[82]: code: 38210010 4bffdec8 9421ffc0 7c0802a6 <fc00048e> d8010008 4815190d 93810030
+Trace/breakpoint trap
+WARNING: no useful console
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202309100514.ndBFebXN-lkp@intel.com/
-Signed-off-by: Florian Westphal <fw@strlen.de>
+This is because allthough CONFIG_MATH_EMULATION is selected,
+Exception 800 calls unknown_exception().
+
+Call emulation_assist_interrupt() instead.
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/066caa6d9480365da9b8ed83692d7101e10ac5f8.1695657339.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_log.c | 2 +-
+ arch/powerpc/kernel/head_85xx.S | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index e57eb168ee130..984f6f106e4ac 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -700,8 +700,8 @@ nfulnl_log_packet(struct net *net,
- 	unsigned int plen = 0;
- 	struct nfnl_log_net *log = nfnl_log_pernet(net);
- 	const struct nfnl_ct_hook *nfnl_ct = NULL;
-+	enum ip_conntrack_info ctinfo = 0;
- 	struct nf_conn *ct = NULL;
--	enum ip_conntrack_info ctinfo;
+diff --git a/arch/powerpc/kernel/head_85xx.S b/arch/powerpc/kernel/head_85xx.S
+index fdbee1093e2ba..f9634111e82ed 100644
+--- a/arch/powerpc/kernel/head_85xx.S
++++ b/arch/powerpc/kernel/head_85xx.S
+@@ -396,7 +396,7 @@ interrupt_base:
+ #ifdef CONFIG_PPC_FPU
+ 	FP_UNAVAILABLE_EXCEPTION
+ #else
+-	EXCEPTION(0x0800, FP_UNAVAIL, FloatingPointUnavailable, unknown_exception)
++	EXCEPTION(0x0800, FP_UNAVAIL, FloatingPointUnavailable, emulation_assist_interrupt)
+ #endif
  
- 	if (li_user && li_user->type == NF_LOG_TYPE_ULOG)
- 		li = li_user;
+ 	/* System Call Interrupt */
 -- 
 2.42.0
 
