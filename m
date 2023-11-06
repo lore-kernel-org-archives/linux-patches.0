@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E859200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0348A200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjVd1Nhk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC4CC433CA;
-	Mon,  6 Nov 2023 13:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1c18Sri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72391C433C8;
+	Mon,  6 Nov 2023 13:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276122;
-	bh=UJBiZv0vHqgXP3QAVODuemQim/zDsvDYMeuYqH4QSz0=;
+	s=korg; t=1699276124;
+	bh=MPnVdRzib4V4RE8zNh8lkexdQvc0nORv3WZ95lft1u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjVd1Nhk3B2Yj86iKE/RzPVy1ghPBw9Ac4MYidY97PJk9yOm+TNjiXl099syrhISW
-	 Zf148/Cktf5P/Lv1zhv3+EL93QDROc8f2wPr1b9bvQJltuTMIrb3grj6G0Cb9JVRQV
-	 kdXfDPsUWxbhkj3gWEAgGQsfGWNcNyXsZAfMZxN0=
+	b=B1c18SrioY/luWwv2JUyU0OJzWQxjRAvtXiSBP/K6c8LiDwVMLMHOpRPvFMzyJ09v
+	 +yEqEybvBP3ObZdd0fFGRC8KDajbSR8qDHLVZjpFQdI6zKeDLBhbkbQoSj9iRTJsHL
+	 RI7UwG75nKhVbEBSDLUwQh5oJfX4Mphx1T6BAkPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	stable <stable@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.6 27/30] misc: pci_endpoint_test: Add deviceID for J721S2 PCIe EP device support
-Date: Mon,  6 Nov 2023 14:03:45 +0100
-Message-ID: <20231106130258.848236474@linuxfoundation.org>
+	Richard Purdie <richard.purdie@linuxfoundation.org>,
+	Bruce Ashfield <bruce.ashfield@gmail.com>,
+	Mikko Rapeli <mikko.rapeli@linaro.org>,
+	Paul Gortmaker <paul.gortmaker@windriver.com>,
+	Randy MacLeod <randy.macleod@windriver.com>,
+	Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 6.6 28/30] serial: core: Fix runtime PM handling for pending tx
+Date: Mon,  6 Nov 2023 14:03:46 +0100
+Message-ID: <20231106130258.877067000@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.903265688@linuxfoundation.org>
 References: <20231106130257.903265688@linuxfoundation.org>
@@ -42,41 +46,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Tony Lindgren <tony@atomide.com>
 
-commit 8293703a492ae97c86af27c75b76e6239ec86483 upstream.
+commit 6f699743aebf07538e506a46c5965eb8bdd2c716 upstream.
 
-Add DEVICE_ID for J721S2 and enable support for endpoints configured
-with this DEVICE_ID in the pci_endpoint_test driver.
+Richard reported that a serial port may end up sometimes with tx data
+pending in the buffer for long periods of time.
 
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Turns out we bail out early on any errors from pm_runtime_get(),
+including -EINPROGRESS. To fix the issue, we need to ignore -EINPROGRESS
+as we only care about the runtime PM usage count at this point. We check
+for an active runtime PM state later on for tx.
+
+Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20231020120248.3168406-1-s-vadapalli@ti.com
+Reported-by: Richard Purdie <richard.purdie@linuxfoundation.org>
+Cc: Bruce Ashfield <bruce.ashfield@gmail.com>
+Cc: Mikko Rapeli <mikko.rapeli@linaro.org>
+Cc: Paul Gortmaker <paul.gortmaker@windriver.com>
+Cc: Randy MacLeod <randy.macleod@windriver.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Tested-by: Richard Purdie <richard.purdie@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20231023074856.61896-1-tony@atomide.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/pci_endpoint_test.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/tty/serial/serial_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -71,6 +71,7 @@
- #define PCI_DEVICE_ID_TI_AM654			0xb00c
- #define PCI_DEVICE_ID_TI_J7200			0xb00f
- #define PCI_DEVICE_ID_TI_AM64			0xb010
-+#define PCI_DEVICE_ID_TI_J721S2		0xb013
- #define PCI_DEVICE_ID_LS1088A			0x80c0
- #define PCI_DEVICE_ID_IMX8			0x0808
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -146,7 +146,7 @@ static void __uart_start(struct uart_sta
  
-@@ -999,6 +1000,9 @@ static const struct pci_device_id pci_en
- 	{ PCI_DEVICE(PCI_VENDOR_ID_TI, PCI_DEVICE_ID_TI_AM64),
- 	  .driver_data = (kernel_ulong_t)&j721e_data,
- 	},
-+	{ PCI_DEVICE(PCI_VENDOR_ID_TI, PCI_DEVICE_ID_TI_J721S2),
-+	  .driver_data = (kernel_ulong_t)&j721e_data,
-+	},
- 	{ }
- };
- MODULE_DEVICE_TABLE(pci, pci_endpoint_test_tbl);
+ 	/* Increment the runtime PM usage count for the active check below */
+ 	err = pm_runtime_get(&port_dev->dev);
+-	if (err < 0) {
++	if (err < 0 && err != -EINPROGRESS) {
+ 		pm_runtime_put_noidle(&port_dev->dev);
+ 		return;
+ 	}
 
 
