@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DA218AE4
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 11:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E518118AE4
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 11:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+0HsqvO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36E0C433CA;
-	Mon,  6 Nov 2023 11:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4mg9PAh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0828EC433C8;
+	Mon,  6 Nov 2023 11:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699269581;
-	bh=7EL4U8GsVy00SscQfZxiEM05ZtuEWwfWE/GdL/qJKBE=;
+	s=korg; t=1699269584;
+	bh=YFdw71EACWookALtUOkM2037aZRibhlG/fY7g8iV3z8=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=c+0HsqvOFyQOxqYOQfDIgakvwbe/SDv8sA5W/lviE4fHne5mSgf0QfsPihKB+qsM6
-	 4ozYc6Ob33W4Algq/VdZ23wIMENQJyfkeCZ9XxXibnYoDom8JPHckOoQ9btX81pFwx
-	 UWvZoWBIperLZA6pUpTDiGoFDxcqJjTZv0sIZlMw=
-Subject: Patch "can: isotp: isotp_bind(): do not validate unused address information" has been added to the 5.15-stable tree
-To: gregkh@linuxfoundation.org,lukas.magel@posteo.net,maxime.jayat@mobile-devices.fr,michal.sojka@cvut.cz,mkl@pengutronix.de,patches@lists.linux.dev,sashal@kernel.org,socketcan@hartkopp.net
+	b=b4mg9PAhd7QF8sWOZDQToYgPLqOsCN3MUsc/vdGXjgUBA/hYkM4Nfe4LVeTsvJUJm
+	 fhsF6MlGluBNdRWDCeH8vC4fjPB6E+kDL9YpY5CMbRJc2bEnWwulVPYJJJprJY076p
+	 sAzGgfECeGu3Hs/75ygZDmOnVtyacu2TOZL/AC24=
+Subject: Patch "can: isotp: isotp_bind(): return -EINVAL on incorrect CAN ID formatting" has been added to the 5.15-stable tree
+To: derekrobertwill@gmail.com,gregkh@linuxfoundation.org,lukas.magel@posteo.net,maxime.jayat@mobile-devices.fr,michal.sojka@cvut.cz,mkl@pengutronix.de,patches@lists.linux.dev,sashal@kernel.org,socketcan@hartkopp.net
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Mon, 06 Nov 2023 12:19:31 +0100
-In-Reply-To: <20231031093025.2699-7-socketcan@hartkopp.net>
-Message-ID: <2023110631-applaud-vagabond-e67d@gregkh>
+Date: Mon, 06 Nov 2023 12:19:32 +0100
+In-Reply-To: <20231031093025.2699-3-socketcan@hartkopp.net>
+Message-ID: <2023110631-eatable-fretful-545f@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,96 +35,62 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    can: isotp: isotp_bind(): do not validate unused address information
+    can: isotp: isotp_bind(): return -EINVAL on incorrect CAN ID formatting
 
 to the 5.15-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     can-isotp-isotp_bind-do-not-validate-unused-address-information.patch
+     can-isotp-isotp_bind-return-einval-on-incorrect-can-id-formatting.patch
 and it can be found in the queue-5.15 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable-owner@vger.kernel.org Tue Oct 31 10:31:04 2023
+From stable-owner@vger.kernel.org Tue Oct 31 10:30:57 2023
 From: Oliver Hartkopp <socketcan@hartkopp.net>
-Date: Tue, 31 Oct 2023 10:30:24 +0100
-Subject: can: isotp: isotp_bind(): do not validate unused address information
+Date: Tue, 31 Oct 2023 10:30:20 +0100
+Subject: can: isotp: isotp_bind(): return -EINVAL on incorrect CAN ID formatting
 To: gregkh@linuxfoundation.org, stable@vger.kernel.org, sashal@kernel.org
-Cc: linux-can@vger.kernel.org, lukas.magel@posteo.net, patches@lists.linux.dev, maxime.jayat@mobile-devices.fr, mkl@pengutronix.de, michal.sojka@cvut.cz, Oliver Hartkopp <socketcan@hartkopp.net>
-Message-ID: <20231031093025.2699-7-socketcan@hartkopp.net>
+Cc: linux-can@vger.kernel.org, lukas.magel@posteo.net, patches@lists.linux.dev, maxime.jayat@mobile-devices.fr, mkl@pengutronix.de, michal.sojka@cvut.cz, Oliver Hartkopp <socketcan@hartkopp.net>, Derek Will <derekrobertwill@gmail.com>
+Message-ID: <20231031093025.2699-3-socketcan@hartkopp.net>
 
 From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit b76b163f46b661499921a0049982764a6659bfe7 upstream
+commit 2aa39889c463195a0dfe2aff9fad413139c32a4f upstream
 
-With commit 2aa39889c463 ("can: isotp: isotp_bind(): return -EINVAL on
-incorrect CAN ID formatting") the bind() syscall returns -EINVAL when
-the given CAN ID needed to be sanitized. But in the case of an unconfirmed
-broadcast mode the rx CAN ID is not needed and may be uninitialized from
-the caller - which is ok.
+Commit 3ea566422cbd ("can: isotp: sanitize CAN ID checks in
+isotp_bind()") checks the given CAN ID address information by
+sanitizing the input values.
 
-This patch makes sure the result of an inproper CAN ID format is only
-provided when the address information is needed.
+This check (silently) removes obsolete bits by masking the given CAN
+IDs.
 
-Link: https://lore.kernel.org/all/20220517145653.2556-1-socketcan@hartkopp.net
+Derek Will suggested to give a feedback to the application programmer
+when the 'sanitizing' was actually needed which means the programmer
+provided CAN ID content in a wrong format (e.g. SFF CAN IDs with a CAN
+ID > 0x7FF).
+
+Link: https://lore.kernel.org/all/20220515181633.76671-1-socketcan@hartkopp.net
+Suggested-by: Derek Will <derekrobertwill@gmail.com>
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |   29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ net/can/isotp.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
 --- a/net/can/isotp.c
 +++ b/net/can/isotp.c
-@@ -1216,7 +1216,8 @@ static int isotp_bind(struct socket *soc
- 	struct net *net = sock_net(sk);
- 	int ifindex;
- 	struct net_device *dev;
--	canid_t tx_id, rx_id;
-+	canid_t tx_id = addr->can_addr.tp.tx_id;
-+	canid_t rx_id = addr->can_addr.tp.rx_id;
- 	int err = 0;
- 	int notify_enetdown = 0;
- 
-@@ -1226,24 +1227,28 @@ static int isotp_bind(struct socket *soc
- 	if (addr->can_family != AF_CAN)
- 		return -EINVAL;
- 
--	/* sanitize tx/rx CAN identifiers */
--	tx_id = addr->can_addr.tp.tx_id;
-+	/* sanitize tx CAN identifier */
- 	if (tx_id & CAN_EFF_FLAG)
- 		tx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
+@@ -1142,6 +1142,11 @@ static int isotp_bind(struct socket *soc
  	else
- 		tx_id &= CAN_SFF_MASK;
+ 		rx_id &= CAN_SFF_MASK;
  
--	rx_id = addr->can_addr.tp.rx_id;
--	if (rx_id & CAN_EFF_FLAG)
--		rx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
--	else
--		rx_id &= CAN_SFF_MASK;
--
--	/* give feedback on wrong CAN-ID values */
--	if (tx_id != addr->can_addr.tp.tx_id ||
--	    rx_id != addr->can_addr.tp.rx_id)
-+	/* give feedback on wrong CAN-ID value */
-+	if (tx_id != addr->can_addr.tp.tx_id)
- 		return -EINVAL;
- 
-+	/* sanitize rx CAN identifier (if needed) */
-+	if (isotp_register_rxid(so)) {
-+		if (rx_id & CAN_EFF_FLAG)
-+			rx_id &= (CAN_EFF_FLAG | CAN_EFF_MASK);
-+		else
-+			rx_id &= CAN_SFF_MASK;
-+
-+		/* give feedback on wrong CAN-ID value */
-+		if (rx_id != addr->can_addr.tp.rx_id)
-+			return -EINVAL;
-+	}
++	/* give feedback on wrong CAN-ID values */
++	if (tx_id != addr->can_addr.tp.tx_id ||
++	    rx_id != addr->can_addr.tp.rx_id)
++		return -EINVAL;
 +
  	if (!addr->can_ifindex)
  		return -ENODEV;
