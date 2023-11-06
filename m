@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8736D2030D
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703332030D
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTgcDpMF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045ACC433C8;
-	Mon,  6 Nov 2023 13:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEiaSx0c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4777C433C7;
+	Mon,  6 Nov 2023 13:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276804;
-	bh=VMdli3YjnAcqP784FrblFfWoxQCELLopP6uHsnp8TjY=;
+	s=korg; t=1699276807;
+	bh=XnUjxltdUrFt3KhkBej9xPO7jWXqf6hsjNHnCE2OmkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eTgcDpMFWJvGjDeDHPUKdJjNgzIR4lGZhbw6cl7GlRMsCYPuk9sEkok8PgKJIrb5k
-	 knFlCuO5RQer3PAYxkRenNaI5lTxYKNDSAxhFts3QvGJwlotWPr9oBkOSQnqRUHi1n
-	 E3OF7xFEgJgrhRyg1FdPJgFfmyjtHDJzTYOVCLtk=
+	b=qEiaSx0cM/6DpeVjnbfgBDqcRFiENOVuWHuoTe/1WErlhx8f/nsO67ZbBJ9LIqW66
+	 YIuwbbqL45r2lRCnuh762HM4Z2FtX4QQqAciCYWgaByWe/sBu50X4RMHa7SoUCTM7a
+	 hzJNo2KD/d0fHgWK0y7XQRzp91snQ+z/HmbhmlWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Grant Grundler <grundler@chromium.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 13/74] net: ieee802154: adf7242: Fix some potential buffer overflow in adf7242_stats_show()
-Date: Mon,  6 Nov 2023 14:03:33 +0100
-Message-ID: <20231106130302.162070618@linuxfoundation.org>
+Subject: [PATCH 5.4 14/74] r8152: Increase USB control msg timeout to 5000ms as per spec
+Date: Mon,  6 Nov 2023 14:03:34 +0100
+Message-ID: <20231106130302.201634649@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
 References: <20231106130301.687882731@linuxfoundation.org>
@@ -42,43 +44,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit ca082f019d8fbb983f03080487946da714154bae ]
+[ Upstream commit a5feba71ec9c14a54c3babdc732c5b6866d8ee43 ]
 
-strncat() usage in adf7242_debugfs_init() is wrong.
-The size given to strncat() is the maximum number of bytes that can be
-written, excluding the trailing NULL.
+According to the comment next to USB_CTRL_GET_TIMEOUT and
+USB_CTRL_SET_TIMEOUT, although sending/receiving control messages is
+usually quite fast, the spec allows them to take up to 5 seconds.
+Let's increase the timeout in the Realtek driver from 500ms to 5000ms
+(using the #defines) to account for this.
 
-Here, the size that is passed, DNAME_INLINE_LEN, does not take into account
-the size of "adf7242-" that is already in the array.
+This is not just a theoretical change. The need for the longer timeout
+was seen in testing. Specifically, if you drop a sc7180-trogdor based
+Chromebook into the kdb debugger and then "go" again after sitting in
+the debugger for a while, the next USB control message takes a long
+time. Out of ~40 tests the slowest USB control message was 4.5
+seconds.
 
-In order to fix it, use snprintf() instead.
+While dropping into kdb is not exactly an end-user scenario, the above
+is similar to what could happen due to an temporary interrupt storm,
+what could happen if there was a host controller (HW or SW) issue, or
+what could happen if the Realtek device got into a confused state and
+needed time to recover.
 
-Fixes: 7302b9d90117 ("ieee802154/adf7242: Driver for ADF7242 MAC IEEE802154")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+This change is fairly critical since the r8152 driver in Linux doesn't
+expect register reads/writes (which are backed by USB control
+messages) to fail.
+
+Fixes: ac718b69301c ("net/usb: new driver for RTL8152")
+Suggested-by: Hayes Wang <hayeswang@realtek.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Grant Grundler <grundler@chromium.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/adf7242.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/usb/r8152.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ieee802154/adf7242.c b/drivers/net/ieee802154/adf7242.c
-index cb29da961e12b..179e3e42b5f03 100644
---- a/drivers/net/ieee802154/adf7242.c
-+++ b/drivers/net/ieee802154/adf7242.c
-@@ -1162,9 +1162,10 @@ static int adf7242_stats_show(struct seq_file *file, void *offset)
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index a19f0431e6f99..fa13a19e844c1 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -850,7 +850,7 @@ int get_registers(struct r8152 *tp, u16 value, u16 index, u16 size, void *data)
  
- static void adf7242_debugfs_init(struct adf7242_local *lp)
- {
--	char debugfs_dir_name[DNAME_INLINE_LEN + 1] = "adf7242-";
-+	char debugfs_dir_name[DNAME_INLINE_LEN + 1];
+ 	ret = usb_control_msg(tp->udev, usb_rcvctrlpipe(tp->udev, 0),
+ 			      RTL8152_REQ_GET_REGS, RTL8152_REQT_READ,
+-			      value, index, tmp, size, 500);
++			      value, index, tmp, size, USB_CTRL_GET_TIMEOUT);
+ 	if (ret < 0)
+ 		memset(data, 0xff, size);
+ 	else
+@@ -873,7 +873,7 @@ int set_registers(struct r8152 *tp, u16 value, u16 index, u16 size, void *data)
  
--	strncat(debugfs_dir_name, dev_name(&lp->spi->dev), DNAME_INLINE_LEN);
-+	snprintf(debugfs_dir_name, sizeof(debugfs_dir_name),
-+		 "adf7242-%s", dev_name(&lp->spi->dev));
+ 	ret = usb_control_msg(tp->udev, usb_sndctrlpipe(tp->udev, 0),
+ 			      RTL8152_REQ_SET_REGS, RTL8152_REQT_WRITE,
+-			      value, index, tmp, size, 500);
++			      value, index, tmp, size, USB_CTRL_SET_TIMEOUT);
  
- 	lp->debugfs_root = debugfs_create_dir(debugfs_dir_name, NULL);
+ 	kfree(tmp);
+ 
+@@ -5584,7 +5584,8 @@ static u8 rtl_get_version(struct usb_interface *intf)
+ 
+ 	ret = usb_control_msg(udev, usb_rcvctrlpipe(udev, 0),
+ 			      RTL8152_REQ_GET_REGS, RTL8152_REQT_READ,
+-			      PLA_TCR0, MCU_TYPE_PLA, tmp, sizeof(*tmp), 500);
++			      PLA_TCR0, MCU_TYPE_PLA, tmp, sizeof(*tmp),
++			      USB_CTRL_GET_TIMEOUT);
+ 	if (ret > 0)
+ 		ocp_data = (__le32_to_cpu(*tmp) >> 16) & VERSION_MASK;
  
 -- 
 2.42.0
