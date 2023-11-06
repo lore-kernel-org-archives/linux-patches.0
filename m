@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4A6208BD
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5315B208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHRIkEUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD886C433C7;
-	Mon,  6 Nov 2023 13:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZcSar+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1921C433C7;
+	Mon,  6 Nov 2023 13:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276726;
-	bh=6Y2SBe5+MO2isqZnfvRlCFLhihD9grEYjYWOBF0O7cY=;
+	s=korg; t=1699276729;
+	bh=r4ghu6Ry2uOnc/eT3UTD3egmnneaogNlTRT7hB6od4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KHRIkEUyls5gJo9aLs+2lbIuxLNRon0FpCphVrNnkxq6ubK8Qeo2LB3jo0+ttv3GK
-	 UwlRvZUfwERrAZGzEeNwNDdWKpgpf52PBA/kOj5QnNq80cN+p8Vj0VraPZMjecksbz
-	 qVULcyBkGHzhNakjM2FgA1TfpEhRf1rJ2P1kUct4=
+	b=WZcSar+HuBAu4djwVI+D+b3rmA4lQ0vWtuTbI500YEbp5QInbOLZdZ55zEKanezQI
+	 Z53CE5BYHZ8QqfSEQhbQMbIsx/Ep1e6j5SWRTM6ht8tj69FQsDYvoiJwLvSLZZ98JC
+	 tE+LlBx62cYX5JXYyLj+ZGjHe7b6770BkLU0DQj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deepak R Varma <drv@mailo.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 48/88] LoongArch: Replace kmap_atomic() with kmap_local_page() in copy_user_highpage()
-Date: Mon,  6 Nov 2023 14:03:42 +0100
-Message-ID: <20231106130307.621590964@linuxfoundation.org>
+	Cameron Williams <cang1@live.co.uk>
+Subject: [PATCH 6.5 75/88] tty: 8250: Remove UC-257 and UC-431
+Date: Mon,  6 Nov 2023 14:04:09 +0100
+Message-ID: <20231106130308.502729822@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -42,45 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Cameron Williams <cang1@live.co.uk>
 
-[ Upstream commit 477a0ebec101359f49d92796e3b609857d564b52 ]
+commit 33092fb3af51deb80849e90a17bada44bbcde6b3 upstream.
 
-Replace kmap_atomic()/kunmap_atomic() calls with kmap_local_page()/
-kunmap_local() in copy_user_highpage() which can be invoked from both
-preemptible and atomic context [1].
+The UC-257 is a serial + LPT card, so remove it from this driver.
+A patch has been submitted to add it to parport_serial instead.
 
-[1] https://lore.kernel.org/all/20201029222652.302358281@linutronix.de/
+Additionaly, the UC-431 does not use this card ID, only the UC-420
+does. The 431 is a 3-port card and there is no generic 3-port configuration
+available, so remove reference to it from this driver.
 
-Suggested-by: Deepak R Varma <drv@mailo.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 152d1afa834c ("tty: Add support for Brainboxes UC cards.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cameron Williams <cang1@live.co.uk>
+Link: https://lore.kernel.org/r/DU0PR02MB78995ADF7394C74AD4CF3357C4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/mm/init.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/tty/serial/8250/8250_pci.c |    9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/arch/loongarch/mm/init.c b/arch/loongarch/mm/init.c
-index 51c9a6c90a169..d967d881c3fef 100644
---- a/arch/loongarch/mm/init.c
-+++ b/arch/loongarch/mm/init.c
-@@ -68,11 +68,11 @@ void copy_user_highpage(struct page *to, struct page *from,
- {
- 	void *vfrom, *vto;
- 
--	vto = kmap_atomic(to);
--	vfrom = kmap_atomic(from);
-+	vfrom = kmap_local_page(from);
-+	vto = kmap_local_page(to);
- 	copy_page(vto, vfrom);
--	kunmap_atomic(vfrom);
--	kunmap_atomic(vto);
-+	kunmap_local(vfrom);
-+	kunmap_local(vto);
- 	/* Make sure this page is cleared on other CPU's too before using it */
- 	smp_wmb();
- }
--- 
-2.42.0
-
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -4939,13 +4939,6 @@ static const struct pci_device_id serial
+ 		0, 0,
+ 		pbn_b2_1_115200 },
+ 	/*
+-	 * Brainboxes UC-257
+-	 */
+-	{	PCI_VENDOR_ID_INTASHIELD, 0x0861,
+-		PCI_ANY_ID, PCI_ANY_ID,
+-		0, 0,
+-		pbn_b2_2_115200 },
+-	/*
+ 	 * Brainboxes UC-260/271/701/756
+ 	 */
+ 	{	PCI_VENDOR_ID_INTASHIELD, 0x0D21,
+@@ -5024,7 +5017,7 @@ static const struct pci_device_id serial
+ 		0, 0,
+ 		pbn_b2_4_115200 },
+ 	/*
+-	 * Brainboxes UC-420/431
++	 * Brainboxes UC-420
+ 	 */
+ 	{       PCI_VENDOR_ID_INTASHIELD, 0x0921,
+ 		PCI_ANY_ID, PCI_ANY_ID,
 
 
