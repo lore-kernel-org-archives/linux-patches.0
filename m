@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4474C224D0
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2570D22EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBk8wD5+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B52C433C7;
-	Mon,  6 Nov 2023 13:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wF9EwJbw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969FBC433C9;
+	Mon,  6 Nov 2023 13:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277104;
-	bh=jaLyKziv7nzuXorxdZUWN+Ky6Bwov6E0aNZWASNt510=;
+	s=korg; t=1699277107;
+	bh=sj7CLzrpy3RzBSGqcQCFxjqlsBrCWQGgQSlHFIGW9O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CBk8wD5++SLlvT2uECamDctbHu2N8Sncuf9esmkUgfpDJXT57yYhZ/FUsagl5/MMS
-	 3vxW8gyaEDf26H5IvBv2JMn0xQjy8N5PaxH93IiTcq1Baft4uKzyg0axQF8k3Bdr21
-	 4MvDk913lRUt9B8SGUjTiXnZcbHcPNi6IauvHp3E=
+	b=wF9EwJbwL4So3QxX9YK/b7dYAGYivMQC7yNKqAx1/QFv+sIufrYiz4LhWScKz8e8t
+	 8h3zvy8UVtA0qNY0Iqo/letcORaLO901V+ob+/gWBUysMqcynqJyOxoPCFCay6iGrH
+	 XFGswTH4bug2jtiDQ+VeR2dxy7z5Wvw60/xRKQL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Robert Hancock <robert.hancock@calian.com>,
+	"OGriofa, Conall" <conall.ogriofa@amd.com>,
 	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 040/128] iio: exynos-adc: request second interupt only when touchscreen mode is used
-Date: Mon,  6 Nov 2023 14:03:20 +0100
-Message-ID: <20231106130310.960074128@linuxfoundation.org>
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	O'Griofa
+Subject: [PATCH 5.15 041/128] iio: adc: xilinx-xadc: Dont clobber preset voltage/temperature thresholds
+Date: Mon,  6 Nov 2023 14:03:21 +0100
+Message-ID: <20231106130311.008974234@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,72 +44,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Robert Hancock <robert.hancock@calian.com>
 
-commit 865b080e3229102f160889328ce2e8e97aa65ea0 upstream.
+commit 8d6b3ea4d9eaca80982442b68a292ce50ce0a135 upstream.
 
-Second interrupt is needed only when touchscreen mode is used, so don't
-request it unconditionally. This removes the following annoying warning
-during boot:
+In the probe function, the driver was reading out the thresholds already
+set in the core, which can be configured by the user in the Vivado tools
+when the FPGA image is built. However, it later clobbered those values
+with zero or maximum values. In particular, the overtemperature shutdown
+threshold register was overwritten with the max value, which effectively
+prevents the FPGA from shutting down when the desired threshold was
+eached, potentially risking hardware damage in that case.
 
-exynos-adc 14d10000.adc: error -ENXIO: IRQ index 1 not found
+Remove this code to leave the preconfigured default threshold values
+intact.
 
-Fixes: 2bb8ad9b44c5 ("iio: exynos-adc: add experimental touchscreen support")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20231009101412.916922-1-m.szyprowski@samsung.com
+The code was also disabling all alarms regardless of what enable state
+they were left in by the FPGA image, including the overtemperature
+shutdown feature. Leave these bits in their original state so they are
+not unconditionally disabled.
+
+Fixes: bdc8cda1d010 ("iio:adc: Add Xilinx XADC driver")
+Signed-off-by: Robert Hancock <robert.hancock@calian.com>
+Acked-by: O'Griofa, Conall <conall.ogriofa@amd.com>
+Tested-by: O'Griofa, Conall <conall.ogriofa@amd.com>
+Link: https://lore.kernel.org/r/20230915001019.2862964-2-robert.hancock@calian.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/exynos_adc.c |   26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ drivers/iio/adc/xilinx-xadc-core.c |   22 ----------------------
+ 1 file changed, 22 deletions(-)
 
---- a/drivers/iio/adc/exynos_adc.c
-+++ b/drivers/iio/adc/exynos_adc.c
-@@ -826,16 +826,26 @@ static int exynos_adc_probe(struct platf
- 		}
- 	}
+--- a/drivers/iio/adc/xilinx-xadc-core.c
++++ b/drivers/iio/adc/xilinx-xadc-core.c
+@@ -1434,28 +1434,6 @@ static int xadc_probe(struct platform_de
+ 	if (ret)
+ 		return ret;
  
-+	/* leave out any TS related code if unreachable */
-+	if (IS_REACHABLE(CONFIG_INPUT)) {
-+		has_ts = of_property_read_bool(pdev->dev.of_node,
-+					       "has-touchscreen") || pdata;
-+	}
-+
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq < 0)
- 		return irq;
- 	info->irq = irq;
- 
--	irq = platform_get_irq(pdev, 1);
--	if (irq == -EPROBE_DEFER)
--		return irq;
+-	/* Disable all alarms */
+-	ret = xadc_update_adc_reg(xadc, XADC_REG_CONF1, XADC_CONF1_ALARM_MASK,
+-				  XADC_CONF1_ALARM_MASK);
+-	if (ret)
+-		return ret;
 -
--	info->tsirq = irq;
-+	if (has_ts) {
-+		irq = platform_get_irq(pdev, 1);
-+		if (irq == -EPROBE_DEFER)
-+			return irq;
-+
-+		info->tsirq = irq;
-+	} else {
-+		info->tsirq = -1;
-+	}
- 
- 	info->dev = &pdev->dev;
- 
-@@ -900,12 +910,6 @@ static int exynos_adc_probe(struct platf
- 	if (info->data->init_hw)
- 		info->data->init_hw(info);
- 
--	/* leave out any TS related code if unreachable */
--	if (IS_REACHABLE(CONFIG_INPUT)) {
--		has_ts = of_property_read_bool(pdev->dev.of_node,
--					       "has-touchscreen") || pdata;
+-	/* Set thresholds to min/max */
+-	for (i = 0; i < 16; i++) {
+-		/*
+-		 * Set max voltage threshold and both temperature thresholds to
+-		 * 0xffff, min voltage threshold to 0.
+-		 */
+-		if (i % 8 < 4 || i == 7)
+-			xadc->threshold[i] = 0xffff;
+-		else
+-			xadc->threshold[i] = 0;
+-		ret = xadc_write_adc_reg(xadc, XADC_REG_THRESHOLD(i),
+-			xadc->threshold[i]);
+-		if (ret)
+-			return ret;
 -	}
 -
- 	if (pdata)
- 		info->delay = pdata->delay;
- 	else
+ 	/* Go to non-buffered mode */
+ 	xadc_postdisable(indio_dev);
+ 
 
 
