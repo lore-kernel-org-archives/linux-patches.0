@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9BB200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B310200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:07:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vc0sAOk+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF85C433C7;
-	Mon,  6 Nov 2023 13:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDgiONAG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD611C433C9;
+	Mon,  6 Nov 2023 13:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276049;
-	bh=lC5QrUYsZQtV32yCV88QMCHKVjw7BSZHs8UKDSZnro4=;
+	s=korg; t=1699276052;
+	bh=MmZZKdUtxwHt8WDF079NoMezPrTlKQPh/ELQPRsUXCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vc0sAOk+xFW5fAhjC6KlMUKy2BWgMdjB/5wRiur79mpykjK+EGupBjm9BFczcOBvn
-	 Qp5fEfy52ij2rIEl++PmJSZ+ziwVpWuQ1lO3j+4YRuUrBWyRTbOyNK+2LWgsFxRioO
-	 /i2gLxcIlDisqSdc5JNTCl7fdIYCW73kjvG4LQTo=
+	b=wDgiONAGLHqMVBX1JvRuLGV1sXJjLFPWBHXbf8kxNtPd/hMmygVXdGiQGefI4mruk
+	 kQImyaKKu4lZi0uqml/gNrBe7ZwPeTazJ4G6QCahCbi+TC5tkVTDCvsoeaeMfFyYdm
+	 8sQRS6GrKu7b/CwR20tMSq0SR3l/SiyxbvZvm/WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org,
 	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 4.14 24/48] rpmsg: Fix kfree() of static memory on setting driver_override
-Date: Mon,  6 Nov 2023 14:03:15 +0100
-Message-ID: <20231106130258.691643608@linuxfoundation.org>
+Subject: [PATCH 4.14 25/48] rpmsg: Fix calling device_lock() on non-initialized device
+Date: Mon,  6 Nov 2023 14:03:16 +0100
+Message-ID: <20231106130258.722050623@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -44,72 +44,153 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 42cd402b8fd4672b692400fe5f9eecd55d2794ac upstream.
+commit bb17d110cbf270d5247a6e261c5ad50e362d1675 upstream.
 
-The driver_override field from platform driver should not be initialized
-from static memory (string literal) because the core later kfree() it,
-for example when driver_override is set via sysfs.
+driver_set_override() helper uses device_lock() so it should not be
+called before rpmsg_register_device() (which calls device_register()).
+Effect can be seen with CONFIG_DEBUG_MUTEXES:
 
-Use dedicated helper to set driver_override properly.
+  DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+  WARNING: CPU: 3 PID: 57 at kernel/locking/mutex.c:582 __mutex_lock+0x1ec/0x430
+  ...
+  Call trace:
+   __mutex_lock+0x1ec/0x430
+   mutex_lock_nested+0x44/0x50
+   driver_set_override+0x124/0x150
+   qcom_glink_native_probe+0x30c/0x3b0
+   glink_rpm_probe+0x274/0x350
+   platform_probe+0x6c/0xe0
+   really_probe+0x17c/0x3d0
+   __driver_probe_device+0x114/0x190
+   driver_probe_device+0x3c/0xf0
+   ...
 
-Fixes: 950a7388f02b ("rpmsg: Turn name service into a stand alone driver")
-Fixes: c0cdc19f84a4 ("rpmsg: Driver for user space endpoint interface")
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Refactor the rpmsg_register_device() function to use two-step device
+registering (initialization + add) and call driver_set_override() in
+proper moment.
+
+This moves the code around, so while at it also NULL-ify the
+rpdev->driver_override in error path to be sure it won't be kfree()
+second time.
+
+Fixes: 42cd402b8fd4 ("rpmsg: Fix kfree() of static memory on setting driver_override")
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20220419113435.246203-13-krzysztof.kozlowski@linaro.org
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20220429195946.1061725-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+(cherry picked from commit bb17d110cbf270d5247a6e261c5ad50e362d1675)
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/rpmsg_internal.h |   13 +++++++++++--
- include/linux/rpmsg.h          |    6 ++++--
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/rpmsg/rpmsg_core.c     |   33 ++++++++++++++++++++++++++++++---
+ drivers/rpmsg/rpmsg_internal.h |   14 +-------------
+ include/linux/rpmsg.h          |    8 ++++++++
+ 3 files changed, 39 insertions(+), 16 deletions(-)
 
+--- a/drivers/rpmsg/rpmsg_core.c
++++ b/drivers/rpmsg/rpmsg_core.c
+@@ -474,24 +474,51 @@ static struct bus_type rpmsg_bus = {
+ 	.remove		= rpmsg_dev_remove,
+ };
+ 
+-int rpmsg_register_device(struct rpmsg_device *rpdev)
++/*
++ * A helper for registering rpmsg device with driver override and name.
++ * Drivers should not be using it, but instead rpmsg_register_device().
++ */
++int rpmsg_register_device_override(struct rpmsg_device *rpdev,
++				   const char *driver_override)
+ {
+ 	struct device *dev = &rpdev->dev;
+ 	int ret;
+ 
++	if (driver_override)
++		strcpy(rpdev->id.name, driver_override);
++
+ 	dev_set_name(&rpdev->dev, "%s.%s.%d.%d", dev_name(dev->parent),
+ 		     rpdev->id.name, rpdev->src, rpdev->dst);
+ 
+ 	rpdev->dev.bus = &rpmsg_bus;
+ 
+-	ret = device_register(&rpdev->dev);
++	device_initialize(dev);
++	if (driver_override) {
++		ret = driver_set_override(dev, &rpdev->driver_override,
++					  driver_override,
++					  strlen(driver_override));
++		if (ret) {
++			dev_err(dev, "device_set_override failed: %d\n", ret);
++			return ret;
++		}
++	}
++
++	ret = device_add(dev);
+ 	if (ret) {
+-		dev_err(dev, "device_register failed: %d\n", ret);
++		dev_err(dev, "device_add failed: %d\n", ret);
++		kfree(rpdev->driver_override);
++		rpdev->driver_override = NULL;
+ 		put_device(&rpdev->dev);
+ 	}
+ 
+ 	return ret;
+ }
++EXPORT_SYMBOL(rpmsg_register_device_override);
++
++int rpmsg_register_device(struct rpmsg_device *rpdev)
++{
++	return rpmsg_register_device_override(rpdev, NULL);
++}
+ EXPORT_SYMBOL(rpmsg_register_device);
+ 
+ /*
 --- a/drivers/rpmsg/rpmsg_internal.h
 +++ b/drivers/rpmsg/rpmsg_internal.h
-@@ -91,10 +91,19 @@ struct device *rpmsg_find_device(struct
+@@ -91,19 +91,7 @@ struct device *rpmsg_find_device(struct
   */
  static inline int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev)
  {
-+	int ret;
-+
- 	strcpy(rpdev->id.name, "rpmsg_chrdev");
--	rpdev->driver_override = "rpmsg_chrdev";
-+	ret = driver_set_override(&rpdev->dev, &rpdev->driver_override,
-+				  rpdev->id.name, strlen(rpdev->id.name));
-+	if (ret)
-+		return ret;
-+
-+	ret = rpmsg_register_device(rpdev);
-+	if (ret)
-+		kfree(rpdev->driver_override);
- 
--	return rpmsg_register_device(rpdev);
-+	return ret;
+-	int ret;
+-
+-	strcpy(rpdev->id.name, "rpmsg_chrdev");
+-	ret = driver_set_override(&rpdev->dev, &rpdev->driver_override,
+-				  rpdev->id.name, strlen(rpdev->id.name));
+-	if (ret)
+-		return ret;
+-
+-	ret = rpmsg_register_device(rpdev);
+-	if (ret)
+-		kfree(rpdev->driver_override);
+-
+-	return ret;
++	return rpmsg_register_device_override(rpdev, "rpmsg_ctrl");
  }
  
  #endif
 --- a/include/linux/rpmsg.h
 +++ b/include/linux/rpmsg.h
-@@ -66,7 +66,9 @@ struct rpmsg_channel_info {
-  * rpmsg_device - device that belong to the rpmsg bus
-  * @dev: the device struct
-  * @id: device id (used to match between rpmsg drivers and devices)
-- * @driver_override: driver name to force a match
-+ * @driver_override: driver name to force a match; do not set directly,
-+ *                   because core frees it; use driver_set_override() to
-+ *                   set or clear it.
-  * @src: local address
-  * @dst: destination address
-  * @ept: the rpmsg endpoint of this channel
-@@ -75,7 +77,7 @@ struct rpmsg_channel_info {
- struct rpmsg_device {
- 	struct device dev;
- 	struct rpmsg_device_id id;
--	char *driver_override;
-+	const char *driver_override;
- 	u32 src;
- 	u32 dst;
- 	struct rpmsg_endpoint *ept;
+@@ -140,6 +140,8 @@ struct rpmsg_driver {
+ 
+ #if IS_ENABLED(CONFIG_RPMSG)
+ 
++int rpmsg_register_device_override(struct rpmsg_device *rpdev,
++				   const char *driver_override);
+ int register_rpmsg_device(struct rpmsg_device *dev);
+ void unregister_rpmsg_device(struct rpmsg_device *dev);
+ int __register_rpmsg_driver(struct rpmsg_driver *drv, struct module *owner);
+@@ -164,6 +166,12 @@ unsigned int rpmsg_poll(struct rpmsg_end
+ 
+ #else
+ 
++static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
++						 const char *driver_override)
++{
++	return -ENXIO;
++}
++
+ static inline int register_rpmsg_device(struct rpmsg_device *dev)
+ {
+ 	return -ENXIO;
 
 
