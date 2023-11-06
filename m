@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A27EEBF
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1FB33D5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZyR7CWf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2144DC433D9;
-	Mon,  6 Nov 2023 13:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CL9WD7Yb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0758DC433C8;
+	Mon,  6 Nov 2023 13:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276305;
-	bh=/O6S/f8B7Wk4qXJPP1WoD2kZXrgJm90Almoc9tqyLcQ=;
+	s=korg; t=1699276308;
+	bh=JUFq5yO/YBGreBq6EuOpw6bcPRKYu3FYXEtq3pqyBTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZyR7CWfrkEDgfhs7odvZNB5pwWcA7vNEV+ho52ryuQbR/OeHFzp5VOTBzEeqcQEO
-	 aob/W+4q83e63eh2KSpWVoiEzNoJh8RQaaXeoxiBM0ioHdE51SzQl3mztJTNYkRVG6
-	 FgOtzMjxitbGmTXRAOjv6jTA+1Zz3ZWJb52l2S2g=
+	b=CL9WD7YbYyEDtgwuWXYDEgOs6xqSpj0KhwHYssOJLPfR30DuW1volNluml8GdOudD
+	 5Xw8xK5asi9AqR3tw5u4pVVhsYqCzirx+uZkMfygPz5WYpNPVSsbLvk6HwAsO4bdiI
+	 sBq6TbZdvVma+dUF193o88fZNTrDeAWSGT8rzd9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>
-Subject: [PATCH 4.19 58/61] tty: 8250: Remove UC-257 and UC-431
-Date: Mon,  6 Nov 2023 14:03:54 +0100
-Message-ID: <20231106130301.577976516@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 4.19 31/61] nfsd: lock_rename() needs both directories to live on the same fs
+Date: Mon,  6 Nov 2023 14:03:27 +0100
+Message-ID: <20231106130300.683892260@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -40,50 +42,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 33092fb3af51deb80849e90a17bada44bbcde6b3 upstream.
+commit 1aee9158bc978f91701c5992e395efbc6da2de3c upstream.
 
-The UC-257 is a serial + LPT card, so remove it from this driver.
-A patch has been submitted to add it to parport_serial instead.
+... checking that after lock_rename() is too late.  Incidentally,
+NFSv2 had no nfserr_xdev...
 
-Additionaly, the UC-431 does not use this card ID, only the UC-420
-does. The 431 is a 3-port card and there is no generic 3-port configuration
-available, so remove reference to it from this driver.
-
-Fixes: 152d1afa834c ("tty: Add support for Brainboxes UC cards.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Link: https://lore.kernel.org/r/DU0PR02MB78995ADF7394C74AD4CF3357C4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
+Fixes: aa387d6ce153 "nfsd: fix EXDEV checking in rename"
+Cc: stable@vger.kernel.org # v3.9+
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Acked-by: Chuck Lever <chuck.lever@oracle.com>
+Tested-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |    9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ fs/nfsd/vfs.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -4799,13 +4799,6 @@ static const struct pci_device_id serial
- 		0, 0,
- 		pbn_b2_1_115200 },
- 	/*
--	 * Brainboxes UC-257
--	 */
--	{	PCI_VENDOR_ID_INTASHIELD, 0x0861,
--		PCI_ANY_ID, PCI_ANY_ID,
--		0, 0,
--		pbn_b2_2_115200 },
--	/*
- 	 * Brainboxes UC-260/271/701/756
- 	 */
- 	{	PCI_VENDOR_ID_INTASHIELD, 0x0D21,
-@@ -4884,7 +4877,7 @@ static const struct pci_device_id serial
- 		0, 0,
- 		pbn_b2_4_115200 },
- 	/*
--	 * Brainboxes UC-420/431
-+	 * Brainboxes UC-420
- 	 */
- 	{       PCI_VENDOR_ID_INTASHIELD, 0x0921,
- 		PCI_ANY_ID, PCI_ANY_ID,
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1691,6 +1691,12 @@ nfsd_rename(struct svc_rqst *rqstp, stru
+ 	if (!flen || isdotent(fname, flen) || !tlen || isdotent(tname, tlen))
+ 		goto out;
+ 
++	err = (rqstp->rq_vers == 2) ? nfserr_acces : nfserr_xdev;
++	if (ffhp->fh_export->ex_path.mnt != tfhp->fh_export->ex_path.mnt)
++		goto out;
++	if (ffhp->fh_export->ex_path.dentry != tfhp->fh_export->ex_path.dentry)
++		goto out;
++
+ 	host_err = fh_want_write(ffhp);
+ 	if (host_err) {
+ 		err = nfserrno(host_err);
+@@ -1724,12 +1730,6 @@ nfsd_rename(struct svc_rqst *rqstp, stru
+ 	if (ndentry == trap)
+ 		goto out_dput_new;
+ 
+-	host_err = -EXDEV;
+-	if (ffhp->fh_export->ex_path.mnt != tfhp->fh_export->ex_path.mnt)
+-		goto out_dput_new;
+-	if (ffhp->fh_export->ex_path.dentry != tfhp->fh_export->ex_path.dentry)
+-		goto out_dput_new;
+-
+ 	host_err = vfs_rename(fdir, odentry, tdir, ndentry, NULL, 0);
+ 	if (!host_err) {
+ 		host_err = commit_metadata(tfhp);
 
 
