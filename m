@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E7D22F1B
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C8D179A6
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g53KUr+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48790C433C7;
-	Mon,  6 Nov 2023 13:26:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mz82IBYg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC35C433C8;
+	Mon,  6 Nov 2023 13:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277162;
-	bh=CsOgxSurSfocJM1Yyn5fNW6S7VOxvKb/Bqraa7ANh9M=;
+	s=korg; t=1699277165;
+	bh=Prm0MnXYZiA3QK8dQqwCThSsrU4FlBzrLQmrQFGr9fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g53KUr+z2FBqUkjeukZbma1np/L1H6Fgj2oHexRXdIhHQRTI7DBYnMGpuywtdJYXU
-	 GRd3cYu927oUNgpkbKiNXqTfn0DWidSJpyh8tv9fLhN65pVzqNy869YazWVSFtgxUg
-	 gdBqoWgXhCbfQFm8tkx0U6dDJec6fWQscjuu0E90=
+	b=Mz82IBYgw3sBVfi9kehZK5MRigrycow0w3EgcFJvU+VieQNKByveTNSfMKnkBAxvg
+	 FxqolqMeX8Z8QzbPpxkG6hQfitRn8gDrSMIq5M87peXDHN/a7fvCKvo5O2DRAMHkFb
+	 mGPU8YvbcbQnQF63jUujEvRJfTgA/grpQDWhbGOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Grant Grundler <grundler@chromium.org>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+c74c24b43c9ae534f0e0@syzkaller.appspotmail.com,
-	syzbot+2c97a98a5ba9ea9c23bd@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 030/128] net: usb: smsc95xx: Fix uninit-value access in smsc95xx_read_reg
-Date: Mon,  6 Nov 2023 14:03:10 +0100
-Message-ID: <20231106130310.484105314@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 031/128] r8152: Increase USB control msg timeout to 5000ms as per spec
+Date: Mon,  6 Nov 2023 14:03:11 +0100
+Message-ID: <20231106130310.531777297@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -44,101 +44,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 51a32e828109b4a209efde44505baa356b37a4ce ]
+[ Upstream commit a5feba71ec9c14a54c3babdc732c5b6866d8ee43 ]
 
-syzbot reported the following uninit-value access issue [1]:
+According to the comment next to USB_CTRL_GET_TIMEOUT and
+USB_CTRL_SET_TIMEOUT, although sending/receiving control messages is
+usually quite fast, the spec allows them to take up to 5 seconds.
+Let's increase the timeout in the Realtek driver from 500ms to 5000ms
+(using the #defines) to account for this.
 
-smsc95xx 1-1:0.0 (unnamed net_device) (uninitialized): Failed to read reg index 0x00000030: -32
-smsc95xx 1-1:0.0 (unnamed net_device) (uninitialized): Error reading E2P_CMD
-=====================================================
-BUG: KMSAN: uninit-value in smsc95xx_reset+0x409/0x25f0 drivers/net/usb/smsc95xx.c:896
- smsc95xx_reset+0x409/0x25f0 drivers/net/usb/smsc95xx.c:896
- smsc95xx_bind+0x9bc/0x22e0 drivers/net/usb/smsc95xx.c:1131
- usbnet_probe+0x100b/0x4060 drivers/net/usb/usbnet.c:1750
- usb_probe_interface+0xc75/0x1210 drivers/usb/core/driver.c:396
- really_probe+0x506/0xf40 drivers/base/dd.c:658
- __driver_probe_device+0x2a7/0x5d0 drivers/base/dd.c:800
- driver_probe_device+0x72/0x7b0 drivers/base/dd.c:830
- __device_attach_driver+0x55a/0x8f0 drivers/base/dd.c:958
- bus_for_each_drv+0x3ff/0x620 drivers/base/bus.c:457
- __device_attach+0x3bd/0x640 drivers/base/dd.c:1030
- device_initial_probe+0x32/0x40 drivers/base/dd.c:1079
- bus_probe_device+0x3d8/0x5a0 drivers/base/bus.c:532
- device_add+0x16ae/0x1f20 drivers/base/core.c:3622
- usb_set_configuration+0x31c9/0x38c0 drivers/usb/core/message.c:2207
- usb_generic_driver_probe+0x109/0x2a0 drivers/usb/core/generic.c:238
- usb_probe_device+0x290/0x4a0 drivers/usb/core/driver.c:293
- really_probe+0x506/0xf40 drivers/base/dd.c:658
- __driver_probe_device+0x2a7/0x5d0 drivers/base/dd.c:800
- driver_probe_device+0x72/0x7b0 drivers/base/dd.c:830
- __device_attach_driver+0x55a/0x8f0 drivers/base/dd.c:958
- bus_for_each_drv+0x3ff/0x620 drivers/base/bus.c:457
- __device_attach+0x3bd/0x640 drivers/base/dd.c:1030
- device_initial_probe+0x32/0x40 drivers/base/dd.c:1079
- bus_probe_device+0x3d8/0x5a0 drivers/base/bus.c:532
- device_add+0x16ae/0x1f20 drivers/base/core.c:3622
- usb_new_device+0x15f6/0x22f0 drivers/usb/core/hub.c:2589
- hub_port_connect drivers/usb/core/hub.c:5440 [inline]
- hub_port_connect_change drivers/usb/core/hub.c:5580 [inline]
- port_event drivers/usb/core/hub.c:5740 [inline]
- hub_event+0x53bc/0x7290 drivers/usb/core/hub.c:5822
- process_one_work kernel/workqueue.c:2630 [inline]
- process_scheduled_works+0x104e/0x1e70 kernel/workqueue.c:2703
- worker_thread+0xf45/0x1490 kernel/workqueue.c:2784
- kthread+0x3e8/0x540 kernel/kthread.c:388
- ret_from_fork+0x66/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+This is not just a theoretical change. The need for the longer timeout
+was seen in testing. Specifically, if you drop a sc7180-trogdor based
+Chromebook into the kdb debugger and then "go" again after sitting in
+the debugger for a while, the next USB control message takes a long
+time. Out of ~40 tests the slowest USB control message was 4.5
+seconds.
 
-Local variable buf.i225 created at:
- smsc95xx_read_reg drivers/net/usb/smsc95xx.c:90 [inline]
- smsc95xx_reset+0x203/0x25f0 drivers/net/usb/smsc95xx.c:892
- smsc95xx_bind+0x9bc/0x22e0 drivers/net/usb/smsc95xx.c:1131
+While dropping into kdb is not exactly an end-user scenario, the above
+is similar to what could happen due to an temporary interrupt storm,
+what could happen if there was a host controller (HW or SW) issue, or
+what could happen if the Realtek device got into a confused state and
+needed time to recover.
 
-CPU: 1 PID: 773 Comm: kworker/1:2 Not tainted 6.6.0-rc1-syzkaller-00125-ge42bebf6db29 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
-Workqueue: usb_hub_wq hub_event
-=====================================================
+This change is fairly critical since the r8152 driver in Linux doesn't
+expect register reads/writes (which are backed by USB control
+messages) to fail.
 
-Similar to e9c65989920f ("net: usb: smsc75xx: Fix uninit-value access in
-__smsc75xx_read_reg"), this issue is caused because usbnet_read_cmd() reads
-less bytes than requested (zero byte in the reproducer). In this case,
-'buf' is not properly filled.
-
-This patch fixes the issue by returning -ENODATA if usbnet_read_cmd() reads
-less bytes than requested.
-
-sysbot reported similar uninit-value access issue [2]. The root cause is
-the same as mentioned above, and this patch addresses it as well.
-
-Fixes: 2f7ca802bdae ("net: Add SMSC LAN9500 USB2.0 10/100 ethernet adapter driver")
-Reported-and-tested-by: syzbot+c74c24b43c9ae534f0e0@syzkaller.appspotmail.com
-Reported-and-tested-by: syzbot+2c97a98a5ba9ea9c23bd@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c74c24b43c9ae534f0e0 [1]
-Closes: https://syzkaller.appspot.com/bug?extid=2c97a98a5ba9ea9c23bd [2]
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Fixes: ac718b69301c ("net/usb: new driver for RTL8152")
+Suggested-by: Hayes Wang <hayeswang@realtek.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Grant Grundler <grundler@chromium.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc95xx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/usb/r8152.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
-index 16a6cdf025151..5f962f58ff496 100644
---- a/drivers/net/usb/smsc95xx.c
-+++ b/drivers/net/usb/smsc95xx.c
-@@ -84,7 +84,9 @@ static int __must_check __smsc95xx_read_reg(struct usbnet *dev, u32 index,
- 	ret = fn(dev, USB_VENDOR_REQUEST_READ_REGISTER, USB_DIR_IN
- 		 | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
- 		 0, index, &buf, 4);
--	if (ret < 0) {
-+	if (ret < 4) {
-+		ret = ret < 0 ? ret : -ENODATA;
-+
- 		if (ret != -ENODEV)
- 			netdev_warn(dev->net, "Failed to read reg index 0x%08x: %d\n",
- 				    index, ret);
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 4cd9bcca84c5b..89a1e40ff7005 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -1208,7 +1208,7 @@ int get_registers(struct r8152 *tp, u16 value, u16 index, u16 size, void *data)
+ 
+ 	ret = usb_control_msg(tp->udev, tp->pipe_ctrl_in,
+ 			      RTL8152_REQ_GET_REGS, RTL8152_REQT_READ,
+-			      value, index, tmp, size, 500);
++			      value, index, tmp, size, USB_CTRL_GET_TIMEOUT);
+ 	if (ret < 0)
+ 		memset(data, 0xff, size);
+ 	else
+@@ -1231,7 +1231,7 @@ int set_registers(struct r8152 *tp, u16 value, u16 index, u16 size, void *data)
+ 
+ 	ret = usb_control_msg(tp->udev, tp->pipe_ctrl_out,
+ 			      RTL8152_REQ_SET_REGS, RTL8152_REQT_WRITE,
+-			      value, index, tmp, size, 500);
++			      value, index, tmp, size, USB_CTRL_SET_TIMEOUT);
+ 
+ 	kfree(tmp);
+ 
+@@ -9538,7 +9538,8 @@ u8 rtl8152_get_version(struct usb_interface *intf)
+ 
+ 	ret = usb_control_msg(udev, usb_rcvctrlpipe(udev, 0),
+ 			      RTL8152_REQ_GET_REGS, RTL8152_REQT_READ,
+-			      PLA_TCR0, MCU_TYPE_PLA, tmp, sizeof(*tmp), 500);
++			      PLA_TCR0, MCU_TYPE_PLA, tmp, sizeof(*tmp),
++			      USB_CTRL_GET_TIMEOUT);
+ 	if (ret > 0)
+ 		ocp_data = (__le32_to_cpu(*tmp) >> 16) & VERSION_MASK;
+ 
 -- 
 2.42.0
 
