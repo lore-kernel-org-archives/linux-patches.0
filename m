@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EC0250EA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D6D250EA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDU6ARGl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A6EC433C7;
-	Mon,  6 Nov 2023 13:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngsYktN8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFAAC433C7;
+	Mon,  6 Nov 2023 13:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277659;
-	bh=CQYWp2CYQRZVtvYsgVkNS/5lSgiowZAibSqDkeNZhHo=;
+	s=korg; t=1699277662;
+	bh=Z7hRm13q043A8WyFFZFaDMHNvog4Ik3dhtMoiLBxEx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDU6ARGlWI3PzOiV+7C/QyGQro5YDOd13kT2dQskr9YMALu1t043YjauDsnLAaxoQ
-	 zoJ1+lQnA632DL/o9jb6eB/iLV0irjeXN8aweac4Toill+pVCzcpugB8hK6+ZvQ0hu
-	 Sq8POhH8pDLokHkzrV6X9JMb0V9LFleYZCdyc90I=
+	b=ngsYktN8u6wZdNuekIvkFlKhQzCItBI+IoKSJvJKaAwvQKHbJjyyNGT0kQnDuGT6Y
+	 whlprx2LJDhpQQLv5n3PEDAoKoBChq+h6tklW92i5vcp44+pqXpP3IOwiw6FIe6uHQ
+	 ItaXBoArqGZC3RgtH/tpipiXA2TTn+KgpGC2zcUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	lee@kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.10 55/95] rpmsg: Constify local variable in field store macro
-Date: Mon,  6 Nov 2023 14:04:23 +0100
-Message-ID: <20231106130306.700282260@linuxfoundation.org>
+	"linux-can@vger.kernel.org, lukas.magel@posteo.net, patches@lists.linux.dev, maxime.jayat@mobile-devices.fr, mkl@pengutronix.de, michal.sojka@cvut.cz, Oliver Hartkopp" <socketcan@hartkopp.net>,
+	Maxime Jayat <maxime.jayat@mobile-devices.fr>,
+	Lukas Magel <lukas.magel@posteo.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Oliver Hartkopp <socketcan@hartkopp.net>
+Subject: [PATCH 5.10 87/95] can: isotp: isotp_sendmsg(): fix TX state detection and wait behavior
+Date: Mon,  6 Nov 2023 14:04:55 +0100
+Message-ID: <20231106130307.879339728@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -41,33 +45,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Lukas Magel <lukas.magel@posteo.net>
 
-commit e5f89131a06142e91073b6959d91cea73861d40e upstream.
+[ Upstream commit d9c2ba65e651467de739324d978b04ed8729f483 ]
 
-Memory pointed by variable 'old' in field store macro is not modified,
-so it can be made a pointer to const.
+With patch [1], isotp_poll was updated to also queue the poller in the
+so->wait queue, which is used for send state changes. Since the queue
+now also contains polling tasks that are not interested in sending, the
+queue fill state can no longer be used as an indication of send
+readiness. As a consequence, nonblocking writes can lead to a race and
+lock-up of the socket if there is a second task polling the socket in
+parallel.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20220419113435.246203-12-krzysztof.kozlowski@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
+With this patch, isotp_sendmsg does not consult wq_has_sleepers but
+instead tries to atomically set so->tx.state and waits on so->wait if it
+is unable to do so. This behavior is in alignment with isotp_poll, which
+also checks so->tx.state to determine send readiness.
+
+V2:
+- Revert direct exit to goto err_event_drop
+
+[1] https://lore.kernel.org/all/20230331125511.372783-1-michal.sojka@cvut.cz
+
+Reported-by: Maxime Jayat <maxime.jayat@mobile-devices.fr>
+Closes: https://lore.kernel.org/linux-can/11328958-453f-447f-9af8-3b5824dfb041@munic.io/
+Signed-off-by: Lukas Magel <lukas.magel@posteo.net>
+Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Fixes: 79e19fa79cb5 ("can: isotp: isotp_ops: fix poll() to not report false EPOLLOUT events")
+Link: https://github.com/pylessard/python-udsoncan/issues/178#issuecomment-1743786590
+Link: https://lore.kernel.org/all/20230827092205.7908-1-lukas.magel@posteo.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/rpmsg_core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/can/isotp.c |   19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
---- a/drivers/rpmsg/rpmsg_core.c
-+++ b/drivers/rpmsg/rpmsg_core.c
-@@ -332,7 +332,8 @@ field##_store(struct device *dev, struct
- 	      const char *buf, size_t sz)				\
- {									\
- 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);		\
--	char *new, *old;						\
-+	const char *old;						\
-+	char *new;							\
- 									\
- 	new = kstrndup(buf, sz, GFP_KERNEL);				\
- 	if (!new)							\
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -925,21 +925,18 @@ static int isotp_sendmsg(struct socket *
+ 	if (!so->bound || so->tx.state == ISOTP_SHUTDOWN)
+ 		return -EADDRNOTAVAIL;
+ 
+-wait_free_buffer:
+-	/* we do not support multiple buffers - for now */
+-	if (wq_has_sleeper(&so->wait) && (msg->msg_flags & MSG_DONTWAIT))
+-		return -EAGAIN;
++	while (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
++		/* we do not support multiple buffers - for now */
++		if (msg->msg_flags & MSG_DONTWAIT)
++			return -EAGAIN;
+ 
+-	/* wait for complete transmission of current pdu */
+-	err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
+-	if (err)
+-		goto err_event_drop;
+-
+-	if (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
+ 		if (so->tx.state == ISOTP_SHUTDOWN)
+ 			return -EADDRNOTAVAIL;
+ 
+-		goto wait_free_buffer;
++		/* wait for complete transmission of current pdu */
++		err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
++		if (err)
++			goto err_event_drop;
+ 	}
+ 
+ 	if (!size || size > MAX_MSG_LENGTH) {
 
 
