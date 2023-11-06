@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB0A1EB5C
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B41220B09
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zutbimqr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF868C433C9;
-	Mon,  6 Nov 2023 13:20:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5ax5azN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACBDC433C7;
+	Mon,  6 Nov 2023 13:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276851;
-	bh=kMvcXWoUvYglUzsMulqvqZSkIDhAzugx3HwxsKDPZow=;
+	s=korg; t=1699276853;
+	bh=xNTSN18jlsRADXZOgevUhWNhyPJOAtcVl1UMO8aRdXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zutbimqrUv0j1E5oxzofOJk/2LezRaoEvCoSMvY//qxe5ynTbszS68TEtKLn8Lrm1
-	 H71BixjcrotX4Heus7qHOcAaBuG/Jjs/+GgJPKtM4cPxZObekiiv5KKUyPaHC8Z3SJ
-	 O0TS7aOIza+sr7vTNFvAOc0yyl0fFh5+3O/YNJtc=
+	b=B5ax5azNS7SX51tJl1loHUc58c6nUugSCmINPVsf6Pk2VKy6heGIOJ+3Ch43EC8jX
+	 op2CET5vCaDl66tYFLz5dyRg9+f/sjXKxyIbz8zk4EFJOsemmXKbjIFLFCTVkN1m47
+	 wjDAvWN6p15N6qJlNEYiCdKLLkMOAedUtBd8PWxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 5.4 29/74] perf/core: Fix potential NULL deref
-Date: Mon,  6 Nov 2023 14:03:49 +0100
-Message-ID: <20231106130302.726944825@linuxfoundation.org>
+	Philip Daly <pdaly@redhat.com>,
+	"Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 5.4 30/74] clk: Sanitize possible_parent_show to Handle Return Value of of_clk_get_parent_name
+Date: Mon,  6 Nov 2023 14:03:50 +0100
+Message-ID: <20231106130302.775393343@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
 References: <20231106130301.687882731@linuxfoundation.org>
@@ -42,32 +42,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Alessandro Carminati <alessandro.carminati@gmail.com>
 
-commit a71ef31485bb51b846e8db8b3a35e432cc15afb5 upstream.
+commit ceb87a361d0b079ecbc7d2831618c19087f304a9 upstream.
 
-Smatch is awesome.
+In the possible_parent_show function, ensure proper handling of the return
+value from of_clk_get_parent_name to prevent potential issues arising from
+a NULL return.
+The current implementation invokes seq_puts directly on the result of
+of_clk_get_parent_name without verifying the return value, which can lead
+to kernel panic if the function returns NULL.
 
-Fixes: 32671e3799ca ("perf: Disallow mis-matched inherited group reads")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+This patch addresses the concern by introducing a check on the return
+value of of_clk_get_parent_name. If the return value is not NULL, the
+function proceeds to call seq_puts, providing the returned value as
+argument.
+However, if of_clk_get_parent_name returns NULL, the function provides a
+static string as argument, avoiding the panic.
+
+Fixes: 1ccc0ddf046a ("clk: Use seq_puts() in possible_parent_show()")
+Reported-by: Philip Daly <pdaly@redhat.com>
+Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
+Link: https://lore.kernel.org/r/20230921073217.572151-1-alessandro.carminati@gmail.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/clk.c |   21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -12015,7 +12015,8 @@ static int inherit_group(struct perf_eve
- 		    !perf_get_aux_event(child_ctr, leader))
- 			return -EINVAL;
- 	}
--	leader->group_generation = parent_event->group_generation;
-+	if (leader)
-+		leader->group_generation = parent_event->group_generation;
- 	return 0;
- }
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -3080,6 +3080,7 @@ static void possible_parent_show(struct
+ 				 unsigned int i, char terminator)
+ {
+ 	struct clk_core *parent;
++	const char *name = NULL;
  
+ 	/*
+ 	 * Go through the following options to fetch a parent's name.
+@@ -3094,18 +3095,20 @@ static void possible_parent_show(struct
+ 	 * registered (yet).
+ 	 */
+ 	parent = clk_core_get_parent_by_index(core, i);
+-	if (parent)
++	if (parent) {
+ 		seq_puts(s, parent->name);
+-	else if (core->parents[i].name)
++	} else if (core->parents[i].name) {
+ 		seq_puts(s, core->parents[i].name);
+-	else if (core->parents[i].fw_name)
++	} else if (core->parents[i].fw_name) {
+ 		seq_printf(s, "<%s>(fw)", core->parents[i].fw_name);
+-	else if (core->parents[i].index >= 0)
+-		seq_puts(s,
+-			 of_clk_get_parent_name(core->of_node,
+-						core->parents[i].index));
+-	else
+-		seq_puts(s, "(missing)");
++	} else {
++		if (core->parents[i].index >= 0)
++			name = of_clk_get_parent_name(core->of_node, core->parents[i].index);
++		if (!name)
++			name = "(missing)";
++
++		seq_puts(s, name);
++	}
+ 
+ 	seq_putc(s, terminator);
+ }
 
 
