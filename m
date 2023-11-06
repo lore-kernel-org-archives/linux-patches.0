@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFF8250EA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EDF250EA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elq3d8/8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF96C433C7;
-	Mon,  6 Nov 2023 13:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mf4y/EM4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92FD9C433C8;
+	Mon,  6 Nov 2023 13:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277633;
-	bh=kUJ9ewnJ7DOKQgvPYdKSY3plzzhUuZpFPvrO/LPtOZU=;
+	s=korg; t=1699277636;
+	bh=O9ycetK5nQc4cSIO5JnkBy1sToNMdmyHvLUVB56ff90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=elq3d8/8zc40sTsFTGiq21X2V5535e9fI/iqUpSI8eeUhPbQURI7O/YGvQB+33yUy
-	 858gD8H4iY09rCEUDIzxd211dbNwG+munilZhffV98zJhUSzxRO3YZhoCKxhvFNJ49
-	 OD+O6jDDi1RKl+MqondXH2Vd0nLE4BtPF+VW5vT8=
+	b=Mf4y/EM4adw19+WlBn6rudz2rzd4rPXvFbJ5QOXk+BdFE0LbX1DEKPNiiorWcWXQJ
+	 5qWWJtkGOQUxlgNfS8GOcD5uijjoNTLmVGF7G49feECj9dkNCBqO0H5ONhkxTlSDWg
+	 BIA40mns+Jl70bxdCssDd6ASp3246jQ36xVTblv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"linux-can@vger.kernel.org, lukas.magel@posteo.net, patches@lists.linux.dev, maxime.jayat@mobile-devices.fr, mkl@pengutronix.de, michal.sojka@cvut.cz, Oliver Hartkopp" <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Oliver Hartkopp <socketcan@hartkopp.net>
-Subject: [PATCH 5.10 84/95] can: isotp: handle wait_event_interruptible() return values
-Date: Mon,  6 Nov 2023 14:04:52 +0100
-Message-ID: <20231106130307.782288442@linuxfoundation.org>
+	Chris Lew <quic_clew@quicinc.com>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.10 58/95] rpmsg: glink: Release driver_override
+Date: Mon,  6 Nov 2023 14:04:26 +0100
+Message-ID: <20231106130306.819973996@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -42,36 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-commit 823b2e42720f96f277940c37ea438b7c5ead51a4 upstream
+commit fb80ef67e8ff6a00d3faad4cb348dafdb8eccfd8 upstream.
 
-When wait_event_interruptible() has been interrupted by a signal the
-tx.state value might not be ISOTP_IDLE. Force the state machines
-into idle state to inhibit the timer handlers to continue working.
+Upon termination of the rpmsg_device, driver_override needs to be freed
+to avoid leaking the potentially assigned string.
 
-Fixes: 866337865f37 ("can: isotp: fix tx state handling for echo tx processing")
-Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20230112192347.1944-1-socketcan@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 42cd402b8fd4 ("rpmsg: Fix kfree() of static memory on setting driver_override")
+Fixes: 39e47767ec9b ("rpmsg: Add driver_override device attribute for rpmsg_device")
+Reviewed-by: Chris Lew <quic_clew@quicinc.com>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230109223931.1706429-1-quic_bjorande@quicinc.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/rpmsg/qcom_glink_native.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1071,6 +1071,10 @@ static int isotp_release(struct socket *
- 	/* wait for complete transmission of current pdu */
- 	wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1379,6 +1379,7 @@ static void qcom_glink_rpdev_release(str
+ 	struct glink_channel *channel = to_glink_channel(rpdev->ept);
  
-+	/* force state machines to be idle also when a signal occurred */
-+	so->tx.state = ISOTP_IDLE;
-+	so->rx.state = ISOTP_IDLE;
-+
- 	spin_lock(&isotp_notifier_lock);
- 	while (isotp_busy_notifier == so) {
- 		spin_unlock(&isotp_notifier_lock);
+ 	channel->rpdev = NULL;
++	kfree(rpdev->driver_override);
+ 	kfree(rpdev);
+ }
+ 
+@@ -1607,6 +1608,7 @@ static void qcom_glink_device_release(st
+ 
+ 	/* Release qcom_glink_alloc_channel() reference */
+ 	kref_put(&channel->refcount, qcom_glink_channel_release);
++	kfree(rpdev->driver_override);
+ 	kfree(rpdev);
+ }
+ 
 
 
