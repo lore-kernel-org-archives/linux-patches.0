@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D92A200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DEA200B2
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:05:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WauIyqEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5084BC433C7;
-	Mon,  6 Nov 2023 13:05:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+kHQXyZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40FBCC433C8;
+	Mon,  6 Nov 2023 13:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699275948;
-	bh=lLF8yrNgqdTi4FZewL3KF6P0KxEU4o+ADoHh81odH88=;
+	s=korg; t=1699275951;
+	bh=j1JQLVOI4LZMbwxxwzwtAuCuR/VqgYM7MbiMBHA1MqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WauIyqEcgYfWi8oPnDpI9FmMxG8THK/XZkG2s/nDpoQJ88IkwaEfox42uDIIzDTd4
-	 1FbxIpw+rlaN92DLoOEjOBebjh6s4oTv8+xEwdCI3srxCv8z7Uga80qJ7y3+/zzY05
-	 /DXkkZWYq8rBHMGdrV+7ht/eZgWBCQroTnQyA/3Y=
+	b=F+kHQXyZbPCK0/OP805X8iUTqHeXOZoyWt5KmAb7FEbWwNdIrqRvOu3sCnzmDeO7E
+	 nU/wuhK2yG2RsUFpNBOIYP7Idmkw60Jb1czpvX/puR+9Lery4miVw+LQs6Ani4TNxk
+	 YHQB7RyFRyDzDSHqLrPgG7mlcJDeZb9lZZfw3dLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenqing Liu <wenqingliu0120@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Kazunori Kobayashi <kazunori.kobayashi@miraclelinux.com>
-Subject: [PATCH 4.14 18/48] f2fs: fix to do sanity check on inode type during garbage collection
-Date: Mon,  6 Nov 2023 14:03:09 +0100
-Message-ID: <20231106130258.476492305@linuxfoundation.org>
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
+	Javier Rodriguez <josejavier.rodriguez@duagon.com>,
+	Johannes Thumshirn <jth@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 02/48] mcb-lpc: Reallocate memory region to avoid memory overlapping
+Date: Mon,  6 Nov 2023 14:02:53 +0100
+Message-ID: <20231106130257.947449226@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -37,72 +37,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
 
-commit 9056d6489f5a41cfbb67f719d2c0ce61ead72d9f upstream.
+[ Upstream commit 2025b2ca8004c04861903d076c67a73a0ec6dfca ]
 
-As report by Wenqing Liu in bugzilla:
+mcb-lpc requests a fixed-size memory region to parse the chameleon
+table, however, if the chameleon table is smaller that the allocated
+region, it could overlap with the IP Cores' memory regions.
 
-https://bugzilla.kernel.org/show_bug.cgi?id=215231
+After parsing the chameleon table, drop/reallocate the memory region
+with the actual chameleon table size.
 
-- Overview
-kernel NULL pointer dereference triggered  in folio_mark_dirty() when mount and operate on a crafted f2fs image
-
-- Reproduce
-tested on kernel 5.16-rc3, 5.15.X under root
-
-1. mkdir mnt
-2. mount -t f2fs tmp1.img mnt
-3. touch tmp
-4. cp tmp mnt
-
-F2FS-fs (loop0): sanity_check_inode: inode (ino=49) extent info [5942, 4294180864, 4] is incorrect, run fsck to fix
-F2FS-fs (loop0): f2fs_check_nid_range: out-of-range nid=31340049, run fsck to fix.
-BUG: kernel NULL pointer dereference, address: 0000000000000000
- folio_mark_dirty+0x33/0x50
- move_data_page+0x2dd/0x460 [f2fs]
- do_garbage_collect+0xc18/0x16a0 [f2fs]
- f2fs_gc+0x1d3/0xd90 [f2fs]
- f2fs_balance_fs+0x13a/0x570 [f2fs]
- f2fs_create+0x285/0x840 [f2fs]
- path_openat+0xe6d/0x1040
- do_filp_open+0xc5/0x140
- do_sys_openat2+0x23a/0x310
- do_sys_open+0x57/0x80
-
-The root cause is for special file: e.g. character, block, fifo or socket file,
-f2fs doesn't assign address space operations pointer array for mapping->a_ops field,
-so, in a fuzzed image, SSA table indicates a data block belong to special file, when
-f2fs tries to migrate that block, it causes NULL pointer access once move_data_page()
-calls a_ops->set_dirty_page().
-
-Cc: stable@vger.kernel.org
-Reported-by: Wenqing Liu <wenqingliu0120@gmail.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Kazunori Kobayashi <kazunori.kobayashi@miraclelinux.com>
+Co-developed-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Javier Rodriguez <josejavier.rodriguez@duagon.com>
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Link: https://lore.kernel.org/r/20230411083329.4506-4-jth@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mcb/mcb-lpc.c | 35 +++++++++++++++++++++++++++++++----
+ 1 file changed, 31 insertions(+), 4 deletions(-)
 
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -841,7 +841,8 @@ next_step:
+diff --git a/drivers/mcb/mcb-lpc.c b/drivers/mcb/mcb-lpc.c
+index 945091a883546..7d292acbba539 100644
+--- a/drivers/mcb/mcb-lpc.c
++++ b/drivers/mcb/mcb-lpc.c
+@@ -26,7 +26,7 @@ static int mcb_lpc_probe(struct platform_device *pdev)
+ {
+ 	struct resource *res;
+ 	struct priv *priv;
+-	int ret = 0;
++	int ret = 0, table_size;
  
- 		if (phase == 3) {
- 			inode = f2fs_iget(sb, dni.ino);
--			if (IS_ERR(inode) || is_bad_inode(inode))
-+			if (IS_ERR(inode) || is_bad_inode(inode) ||
-+					special_file(inode->i_mode))
- 				continue;
+ 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+@@ -61,16 +61,43 @@ static int mcb_lpc_probe(struct platform_device *pdev)
  
- 			/* if encrypted inode, let's go phase 3 */
+ 	ret = chameleon_parse_cells(priv->bus, priv->mem->start, priv->base);
+ 	if (ret < 0) {
+-		mcb_release_bus(priv->bus);
+-		return ret;
++		goto out_mcb_bus;
+ 	}
+ 
+-	dev_dbg(&pdev->dev, "Found %d cells\n", ret);
++	table_size = ret;
++
++	if (table_size < CHAM_HEADER_SIZE) {
++		/* Release the previous resources */
++		devm_iounmap(&pdev->dev, priv->base);
++		devm_release_mem_region(&pdev->dev, priv->mem->start, resource_size(priv->mem));
++
++		/* Then, allocate it again with the actual chameleon table size */
++		res = devm_request_mem_region(&pdev->dev, priv->mem->start,
++					      table_size,
++					      KBUILD_MODNAME);
++		if (!res) {
++			dev_err(&pdev->dev, "Failed to request PCI memory\n");
++			ret = -EBUSY;
++			goto out_mcb_bus;
++		}
++
++		priv->base = devm_ioremap(&pdev->dev, priv->mem->start, table_size);
++		if (!priv->base) {
++			dev_err(&pdev->dev, "Cannot ioremap\n");
++			ret = -ENOMEM;
++			goto out_mcb_bus;
++		}
++
++		platform_set_drvdata(pdev, priv);
++	}
+ 
+ 	mcb_bus_add_devices(priv->bus);
+ 
+ 	return 0;
+ 
++out_mcb_bus:
++	mcb_release_bus(priv->bus);
++	return ret;
+ }
+ 
+ static int mcb_lpc_remove(struct platform_device *pdev)
+-- 
+2.42.0
+
 
 
