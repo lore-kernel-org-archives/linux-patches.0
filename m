@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851B420316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B0C20316
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ivYbZ+Az"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01374C433C7;
-	Mon,  6 Nov 2023 13:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWPKrqyI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D882AC433C8;
+	Mon,  6 Nov 2023 13:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276506;
-	bh=AG6wSL99LncfQM4JWiLnJ+Zdd5kYkGSmmqq4wuvybII=;
+	s=korg; t=1699276509;
+	bh=pxT2UfW5zkgutyXYZ/THOyqobAfyZEMjZZJVmDOOAKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ivYbZ+Az/fkXXsx6RC3j9BW10/elkuTt8b8+NJLAuU/vQHlATukr2mlx624vz0Gm/
-	 AjQkmvMEM5z5mmasMVg3iXkvAYe3TUP4VOeNDemg2TMYPL/f7zpFCwtclO+J+krN4N
-	 7nxHVM63NVzyKlvNrgnf3wU8Bqp6+HlGqkvnvdGU=
+	b=HWPKrqyIO5+/E8+qdd3gOvpsvShWt1utYjTEWKRJUQiu2zdp7IYcmr4LXiZ2dV6Iz
+	 JgO1xjnWDnCTKfZ80LZF6ZqPnSZ3opSHWanwHEjIAMRbQ0brjmGUCCquvrmB5GBfKi
+	 Q1E3Z7DA35m3u/Z3aepqlee3UZRLvcHQrWHF/N8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephane Eranian <eranian@google.com>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 41/62] perf evlist: Avoid frequency mode for the dummy event
-Date: Mon,  6 Nov 2023 14:03:47 +0100
-Message-ID: <20231106130303.289386319@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	SeongJae Park <sj@kernel.org>
+Subject: [PATCH 6.1 42/62] x86: KVM: SVM: always update the x2avic msr interception
+Date: Mon,  6 Nov 2023 14:03:48 +0100
+Message-ID: <20231106130303.319739065@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.807965064@linuxfoundation.org>
 References: <20231106130301.807965064@linuxfoundation.org>
@@ -46,81 +44,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-[ Upstream commit f9cdeb58a9cf46c09b56f5f661ea8da24b6458c3 ]
+commit b65235f6e102354ccafda601eaa1c5bef5284d21 upstream.
 
-Dummy events are created with an attribute where the period and freq
-are zero. evsel__config will then see the uninitialized values and
-initialize them in evsel__default_freq_period. As fequency mode is
-used by default the dummy event would be set to use frequency
-mode. However, this has no effect on the dummy event but does cause
-unnecessary timers/interrupts. Avoid this overhead by setting the
-period to 1 for dummy events.
+The following problem exists since x2avic was enabled in the KVM:
 
-evlist__add_aux_dummy calls evlist__add_dummy then sets freq=0 and
-period=1. This isn't necessary after this change and so the setting is
-removed.
+svm_set_x2apic_msr_interception is called to enable the interception of
+the x2apic msrs.
 
->From Stephane:
+In particular it is called at the moment the guest resets its apic.
 
-The dummy event is not counting anything. It is used to collect mmap
-records and avoid a race condition during the synthesize mmap phase of
-perf record. As such, it should not cause any overhead during active
-profiling. Yet, it did. Because of a bug the dummy event was
-programmed as a sampling event in frequency mode. Events in that mode
-incur more kernel overheads because on timer tick, the kernel has to
-look at the number of samples for each event and potentially adjust
-the sampling period to achieve the desired frequency. The dummy event
-was therefore adding a frequency event to task and ctx contexts we may
-otherwise not have any, e.g.,
+Assuming that the guest's apic was in x2apic mode, the reset will bring
+it back to the xapic mode.
 
-  perf record -a -e cpu/event=0x3c,period=10000000/.
+The svm_set_x2apic_msr_interception however has an erroneous check for
+'!apic_x2apic_mode()' which prevents it from doing anything in this case.
 
-On each timer tick the perf_adjust_freq_unthr_context() is invoked and
-if ctx->nr_freq is non-zero, then the kernel will loop over ALL the
-events of the context looking for frequency mode ones. In doing, so it
-locks the context, and enable/disable the PMU of each hw event. If all
-the events of the context are in period mode, the kernel will have to
-traverse the list for nothing incurring overhead. The overhead is
-multiplied by a very large factor when this happens in a guest kernel.
-There is no need for the dummy event to be in frequency mode, it does
-not count anything and therefore should not cause extra overhead for
-no reason.
+As a result of this, all x2apic msrs are left unintercepted, and that
+exposes the bare metal x2apic (if enabled) to the guest.
+Oops.
 
-Fixes: 5bae0250237f ("perf evlist: Introduce perf_evlist__new_dummy constructor")
-Reported-by: Stephane Eranian <eranian@google.com>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20230916035640.1074422-1-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Remove the erroneous '!apic_x2apic_mode()' check to fix that.
+
+This fixes CVE-2023-5090
+
+Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Tested-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20230928173354.217464-2-mlevitsk@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/evlist.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/svm.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/tools/perf/util/evlist.c
-+++ b/tools/perf/util/evlist.c
-@@ -252,6 +252,9 @@ static struct evsel *evlist__dummy_event
- 		.type	= PERF_TYPE_SOFTWARE,
- 		.config = PERF_COUNT_SW_DUMMY,
- 		.size	= sizeof(attr), /* to capture ABI version */
-+		/* Avoid frequency mode for dummy events to avoid associated timers. */
-+		.freq = 0,
-+		.sample_period = 1,
- 	};
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -822,8 +822,7 @@ void svm_set_x2apic_msr_interception(str
+ 	if (intercept == svm->x2avic_msrs_intercepted)
+ 		return;
  
- 	return evsel__new_idx(&attr, evlist->core.nr_entries);
-@@ -278,8 +281,6 @@ struct evsel *evlist__add_aux_dummy(stru
- 	evsel->core.attr.exclude_kernel = 1;
- 	evsel->core.attr.exclude_guest = 1;
- 	evsel->core.attr.exclude_hv = 1;
--	evsel->core.attr.freq = 0;
--	evsel->core.attr.sample_period = 1;
- 	evsel->core.system_wide = system_wide;
- 	evsel->no_aux_samples = true;
- 	evsel->name = strdup("dummy:u");
+-	if (avic_mode != AVIC_MODE_X2 ||
+-	    !apic_x2apic_mode(svm->vcpu.arch.apic))
++	if (avic_mode != AVIC_MODE_X2)
+ 		return;
+ 
+ 	for (i = 0; i < MAX_DIRECT_ACCESS_MSRS; i++) {
 
 
