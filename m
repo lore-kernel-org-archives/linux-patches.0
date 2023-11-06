@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5FB22EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5A322EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2eHexOV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0877C433C7;
-	Mon,  6 Nov 2023 13:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftRY/H+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B8DC433C8;
+	Mon,  6 Nov 2023 13:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277127;
-	bh=JNQKAJ2DFrwGsJOFdLx7Rl197fVLGTGW3uE+y5JFGZk=;
+	s=korg; t=1699277130;
+	bh=2+pBBAOhXtd3SUi3qIV0AWd+DDIWO/lJURmqJTFeEHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c2eHexOVhadWt0uiuX1awxGzHP5hiWMM6ALr1FjfSOx8ZACVEw4keSUeV88B/BeXx
-	 1zXpQZ6og9zsY7BSqIZRiQRoESCgAoiN7qQLqhOfi4S42C8qRAeg2H/o3DVGiUMmGQ
-	 Dhhpq2EBY9tr5oLf6qlHvoB4YGrsdCX9noGG92Hg=
+	b=ftRY/H+OIhxsb2mOyl1I7kof/YTA8tN8SQ1dvtjw1WyTUmhYQ9AEM9zFrpgUE/XSU
+	 sBEdNXYvka5JQUkdGyQrvNAkJN38n96Z6w8ePBqCbxyhn2cmD/HqV6y4QNkclQNP6+
+	 0H+N/15NOZqCoEPeRjh4Tfp42HoQco+srP+Ugoj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhang <zhangjian.3032@bytedance.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.15 047/128] i2c: aspeed: Fix i2c bus hang in slave read
-Date: Mon,  6 Nov 2023 14:03:27 +0100
-Message-ID: <20231106130311.261343655@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Yujie Liu <yujie.liu@intel.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 048/128] tracing/kprobes: Fix the description of variable length arguments
+Date: Mon,  6 Nov 2023 14:03:28 +0100
+Message-ID: <20231106130311.298680411@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -43,49 +43,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Zhang <zhangjian.3032@bytedance.com>
+From: Yujie Liu <yujie.liu@intel.com>
 
-commit 54f1840ddee9bbdc8dd89fbbfdfa632401244146 upstream.
+commit e0f831836cead677fb07d54bd6bf499df35640c2 upstream.
 
-When the `CONFIG_I2C_SLAVE` option is enabled and the device operates
-as a slave, a situation arises where the master sends a START signal
-without the accompanying STOP signal. This action results in a
-persistent I2C bus timeout. The core issue stems from the fact that
-the i2c controller remains in a slave read state without a timeout
-mechanism. As a consequence, the bus perpetually experiences timeouts.
+Fix the following kernel-doc warnings:
 
-In this case, the i2c bus will be reset, but the slave_state reset is
-missing.
+kernel/trace/trace_kprobe.c:1029: warning: Excess function parameter 'args' description in '__kprobe_event_gen_cmd_start'
+kernel/trace/trace_kprobe.c:1097: warning: Excess function parameter 'args' description in '__kprobe_event_add_fields'
 
-Fixes: fee465150b45 ("i2c: aspeed: Reset the i2c controller when timeout occurs")
-Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
-Acked-by: Andi Shyti <andi.shyti@kernel.org>
-Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Refer to the usage of variable length arguments elsewhere in the kernel
+code, "@..." is the proper way to express it in the description.
+
+Link: https://lore.kernel.org/all/20231027041315.2613166-1-yujie.liu@intel.com/
+
+Fixes: 2a588dd1d5d6 ("tracing: Add kprobe event command generation functions")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310190437.paI6LYJF-lkp@intel.com/
+Signed-off-by: Yujie Liu <yujie.liu@intel.com>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-aspeed.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/trace_kprobe.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -744,6 +744,8 @@ static void __aspeed_i2c_reg_slave(struc
- 	func_ctrl_reg_val = readl(bus->base + ASPEED_I2C_FUN_CTRL_REG);
- 	func_ctrl_reg_val |= ASPEED_I2CD_SLAVE_EN;
- 	writel(func_ctrl_reg_val, bus->base + ASPEED_I2C_FUN_CTRL_REG);
-+
-+	bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
- }
- 
- static int aspeed_i2c_reg_slave(struct i2c_client *client)
-@@ -760,7 +762,6 @@ static int aspeed_i2c_reg_slave(struct i
- 	__aspeed_i2c_reg_slave(bus, client->addr);
- 
- 	bus->slave = client;
--	bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
- 	spin_unlock_irqrestore(&bus->lock, flags);
- 
- 	return 0;
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -945,7 +945,7 @@ EXPORT_SYMBOL_GPL(kprobe_event_cmd_init)
+  * @name: The name of the kprobe event
+  * @loc: The location of the kprobe event
+  * @kretprobe: Is this a return probe?
+- * @args: Variable number of arg (pairs), one pair for each field
++ * @...: Variable number of arg (pairs), one pair for each field
+  *
+  * NOTE: Users normally won't want to call this function directly, but
+  * rather use the kprobe_event_gen_cmd_start() wrapper, which automatically
+@@ -1018,7 +1018,7 @@ EXPORT_SYMBOL_GPL(__kprobe_event_gen_cmd
+ /**
+  * __kprobe_event_add_fields - Add probe fields to a kprobe command from arg list
+  * @cmd: A pointer to the dynevent_cmd struct representing the new event
+- * @args: Variable number of arg (pairs), one pair for each field
++ * @...: Variable number of arg (pairs), one pair for each field
+  *
+  * NOTE: Users normally won't want to call this function directly, but
+  * rather use the kprobe_event_add_fields() wrapper, which
 
 
