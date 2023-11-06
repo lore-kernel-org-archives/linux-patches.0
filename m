@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23AE17754
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 11:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5674A17754
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 11:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnxBrCWb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A42C433C8;
-	Mon,  6 Nov 2023 11:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEU8mIHx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93FBC433C7;
+	Mon,  6 Nov 2023 11:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699269575;
-	bh=djLnIoEA7Gk8B5XWF0OrFCbF5kwCuWaWYfrqmjK0Wlw=;
+	s=korg; t=1699269578;
+	bh=Z+WhEO3b2TaXrpXY9Tyo3G5KFFYeP+9Pg9KWbbFx3as=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=MnxBrCWbubvuyFZM/IIneLbt2buUSD9eWqurvnynlT7dapPUOizoSFb9oenb9FHyP
-	 TqJqVcGy+oahU06lrz5+BU/Ul9Z+5EbwoUYmbYArHmu0h/U+EzFWehVWXqBO1jKR4C
-	 NuenOtk/DbaEUldG+OA/2SOx+6OErnvzXultNMKE=
-Subject: Patch "can: isotp: check CAN address family in isotp_bind()" has been added to the 5.15-stable tree
-To: gregkh@linuxfoundation.org,lukas.magel@posteo.net,maxime.jayat@mobile-devices.fr,michal.sojka@cvut.cz,mkl@pengutronix.de,patches@lists.linux.dev,sashal@kernel.org,socketcan@hartkopp.net,syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com
+	b=MEU8mIHxESxry+//MyK/JMLOmO8fLcRRZ2GuSA5pyZDC4w9USJ8Ut7e2oiBY220gE
+	 REK6pxtEkChtA3EDPWvlAJkcZoylFsZaxZXE2ZfxEFii2cCEEoMY89jzk+1aFQ1kub
+	 aA+gwKpXq9h2O4B/ynflbpFaVa2p90cdmy0nxbHg=
+Subject: Patch "can: isotp: handle wait_event_interruptible() return values" has been added to the 5.15-stable tree
+To: gregkh@linuxfoundation.org,lukas.magel@posteo.net,maxime.jayat@mobile-devices.fr,michal.sojka@cvut.cz,mkl@pengutronix.de,patches@lists.linux.dev,sashal@kernel.org,socketcan@hartkopp.net
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Mon, 06 Nov 2023 12:19:29 +0100
-In-Reply-To: <20231031093025.2699-4-socketcan@hartkopp.net>
-Message-ID: <2023110629-clash-sevenfold-a78f@gregkh>
+Date: Mon, 06 Nov 2023 12:19:30 +0100
+In-Reply-To: <20231031093025.2699-5-socketcan@hartkopp.net>
+Message-ID: <2023110630-evident-pry-87e4@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,64 +35,58 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    can: isotp: check CAN address family in isotp_bind()
+    can: isotp: handle wait_event_interruptible() return values
 
 to the 5.15-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     can-isotp-check-can-address-family-in-isotp_bind.patch
+     can-isotp-handle-wait_event_interruptible-return-values.patch
 and it can be found in the queue-5.15 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable-owner@vger.kernel.org Tue Oct 31 10:31:04 2023
+From stable-owner@vger.kernel.org Tue Oct 31 10:30:57 2023
 From: Oliver Hartkopp <socketcan@hartkopp.net>
-Date: Tue, 31 Oct 2023 10:30:21 +0100
-Subject: can: isotp: check CAN address family in isotp_bind()
+Date: Tue, 31 Oct 2023 10:30:22 +0100
+Subject: can: isotp: handle wait_event_interruptible() return values
 To: gregkh@linuxfoundation.org, stable@vger.kernel.org, sashal@kernel.org
-Cc: linux-can@vger.kernel.org, lukas.magel@posteo.net, patches@lists.linux.dev, maxime.jayat@mobile-devices.fr, mkl@pengutronix.de, michal.sojka@cvut.cz, Oliver Hartkopp <socketcan@hartkopp.net>, syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com
-Message-ID: <20231031093025.2699-4-socketcan@hartkopp.net>
+Cc: linux-can@vger.kernel.org, lukas.magel@posteo.net, patches@lists.linux.dev, maxime.jayat@mobile-devices.fr, mkl@pengutronix.de, michal.sojka@cvut.cz, Oliver Hartkopp <socketcan@hartkopp.net>
+Message-ID: <20231031093025.2699-5-socketcan@hartkopp.net>
 
 From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit c6adf659a8ba85913e16a571d5a9bcd17d3d1234 upstream
+commit 823b2e42720f96f277940c37ea438b7c5ead51a4 upstream
 
-Add missing check to block non-AF_CAN binds.
+When wait_event_interruptible() has been interrupted by a signal the
+tx.state value might not be ISOTP_IDLE. Force the state machines
+into idle state to inhibit the timer handlers to continue working.
 
-Syzbot created some code which matched the right sockaddr struct size
-but used AF_XDP (0x2C) instead of AF_CAN (0x1D) in the address family
-field:
-
-bind$xdp(r2, &(0x7f0000000540)={0x2c, 0x0, r4, 0x0, r2}, 0x10)
-                                ^^^^
-This has no funtional impact but the userspace should be notified about
-the wrong address family field content.
-
-Link: https://syzkaller.appspot.com/text?tag=CrashLog&x=11ff9d8c480000
-Reported-by: syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com
+Fixes: 866337865f37 ("can: isotp: fix tx state handling for echo tx processing")
+Cc: stable@vger.kernel.org
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20230104201844.13168-1-socketcan@hartkopp.net
+Link: https://lore.kernel.org/all/20230112192347.1944-1-socketcan@hartkopp.net
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/can/isotp.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/net/can/isotp.c
 +++ b/net/can/isotp.c
-@@ -1129,6 +1129,9 @@ static int isotp_bind(struct socket *soc
- 	if (len < ISOTP_MIN_NAMELEN)
- 		return -EINVAL;
+@@ -1071,6 +1071,10 @@ static int isotp_release(struct socket *
+ 	/* wait for complete transmission of current pdu */
+ 	wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
  
-+	if (addr->can_family != AF_CAN)
-+		return -EINVAL;
++	/* force state machines to be idle also when a signal occurred */
++	so->tx.state = ISOTP_IDLE;
++	so->rx.state = ISOTP_IDLE;
 +
- 	/* sanitize tx/rx CAN identifiers */
- 	tx_id = addr->can_addr.tp.tx_id;
- 	if (tx_id & CAN_EFF_FLAG)
+ 	spin_lock(&isotp_notifier_lock);
+ 	while (isotp_busy_notifier == so) {
+ 		spin_unlock(&isotp_notifier_lock);
 
 
 Patches currently in stable-queue which might be from stable-owner@vger.kernel.org are
