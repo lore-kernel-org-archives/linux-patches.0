@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570FD200BA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30876200BA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nI76Sp8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9889C433CB;
-	Mon,  6 Nov 2023 13:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTeYsd1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F2FC433C8;
+	Mon,  6 Nov 2023 13:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276412;
-	bh=1vC+aW6xSzcdMkYixblVgb4JBUPnOmvExTMtgTHoQic=;
+	s=korg; t=1699276415;
+	bh=3bYBXkSUnz9AdQQnDJSQMmqLjUrVg9nVmd777WgqfHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nI76Sp8jwHh4VKozBJ0EbM8CIEW0E+DOoEmN+BBuHmLjvbFSeX0pG2uzLDL9JPRJC
-	 IOcdW0YwEQvFdDLaDoptreCIZhfAqZUIEZqPwYCQaz1HMEFzCYKwNKGE5PlAJ88wqK
-	 dkexI0r3KHkcCeexFK9KtxNl2tlhdmUKKZ0MVkkY=
+	b=BTeYsd1JljNslpeYxmcl+5uqJy3Feoz4CedzOepIrfIdmDgHctGu2/TBg+n+q2+to
+	 BCr9P7v4qqunlD1GXOhZY2Y9AKZ/Pog/ozs6H2MqyDhcvVWXl1EgoB9tCFlEXh7icd
+	 pBMymR0ziRkbbPseNT6+6A7Mqkauhu53OGzGoSfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Su Hui <suhui@nfschina.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 33/62] drm/amdgpu: Reserve fences for VM update
-Date: Mon,  6 Nov 2023 14:03:39 +0100
-Message-ID: <20231106130303.039000614@linuxfoundation.org>
+Subject: [PATCH 6.1 34/62] net: chelsio: cxgb4: add an error code check in t4_load_phy_fw
+Date: Mon,  6 Nov 2023 14:03:40 +0100
+Message-ID: <20231106130303.071269617@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.807965064@linuxfoundation.org>
 References: <20231106130301.807965064@linuxfoundation.org>
@@ -37,45 +36,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Kuehling <Felix.Kuehling@amd.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 316baf09d355aec1179981b6dfe28eba50c5ee5b ]
+[ Upstream commit 9f771493da935299c6393ad3563b581255d01a37 ]
 
-In amdgpu_dma_buf_move_notify reserve fences for the page table updates
-in amdgpu_vm_clear_freed and amdgpu_vm_handle_moved. This fixes a BUG_ON
-in dma_resv_add_fence when using SDMA for page table updates.
+t4_set_params_timeout() can return -EINVAL if failed, add check
+for this.
 
-Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/chelsio/cxgb4/t4_hw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-index 7bd8e33b14be5..e8b3e9520cf6e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-@@ -400,7 +400,10 @@ amdgpu_dma_buf_move_notify(struct dma_buf_attachment *attach)
- 				continue;
- 		}
+diff --git a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
+index 8d719f82854a9..76de55306c4d0 100644
+--- a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
++++ b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
+@@ -3816,6 +3816,8 @@ int t4_load_phy_fw(struct adapter *adap, int win,
+ 		 FW_PARAMS_PARAM_Z_V(FW_PARAMS_PARAM_DEV_PHYFW_DOWNLOAD));
+ 	ret = t4_set_params_timeout(adap, adap->mbox, adap->pf, 0, 1,
+ 				    &param, &val, 30000);
++	if (ret)
++		return ret;
  
--		r = amdgpu_vm_clear_freed(adev, vm, NULL);
-+		/* Reserve fences for two SDMA page table updates */
-+		r = dma_resv_reserve_fences(resv, 2);
-+		if (!r)
-+			r = amdgpu_vm_clear_freed(adev, vm, NULL);
- 		if (!r)
- 			r = amdgpu_vm_handle_moved(adev, vm);
- 
+ 	/* If we have version number support, then check to see that the new
+ 	 * firmware got loaded properly.
 -- 
 2.42.0
 
