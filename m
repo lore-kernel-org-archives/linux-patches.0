@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC6520316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FB720316
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPzi6hFH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B6CC433C7;
-	Mon,  6 Nov 2023 13:14:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/D2F69t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FEFAC433C8;
+	Mon,  6 Nov 2023 13:14:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276455;
-	bh=DygAq5cxPsjrG4N7KtUtKxbUzGITEkdsqhxows6mOsU=;
+	s=korg; t=1699276458;
+	bh=LgvoSewN0xOw9bKzhZtdzFomeWGOBHpSQ8x216m0PG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vPzi6hFHn2il2knMe/l9B3ralq9M/BMPTTS+XP8T2B2iQnqZ+9eM+Zw0PDGrVUpzX
-	 F2v/Z09bH1DfRJCodcsYYgNkd3MfO/uCpp5j8DF9rtcAw3B4Yz6F+oLF4H9iVCO9nd
-	 LO3pyfUjuANXiAUS1fqORFnf8YkNH4r1FdYixdBU=
+	b=g/D2F69tb4nEcFoAQh0WzSJGLhP6BElRex3dPk6/5203jOKocaN3OuuZlMQ14rjZZ
+	 4WbB2b4E4HQU/R9EiI64TJZrD462JUIw5fio2CEhb4y51IuTTIcaA0EgwiFvea68RW
+	 AV09fir/enVtIHQn5CAchN3fM/JzWRm7zqgQivII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Andrey Konovalov <andreyknvl@gmail.com>
-Subject: [PATCH 6.1 49/62] usb: raw-gadget: properly handle interrupted requests
-Date: Mon,  6 Nov 2023 14:03:55 +0100
-Message-ID: <20231106130303.537447530@linuxfoundation.org>
+	Daniel Starke <daniel.starke@siemens.com>
+Subject: [PATCH 6.1 50/62] tty: n_gsm: fix race condition in status line change on dead connections
+Date: Mon,  6 Nov 2023 14:03:56 +0100
+Message-ID: <20231106130303.568518652@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.807965064@linuxfoundation.org>
 References: <20231106130301.807965064@linuxfoundation.org>
@@ -41,108 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Konovalov <andreyknvl@gmail.com>
+From: Daniel Starke <daniel.starke@siemens.com>
 
-commit e8033bde451eddfb9b1bbd6e2d848c1b5c277222 upstream.
+commit 3a75b205de43365f80a33b98ec9289785da56243 upstream.
 
-Currently, if a USB request that was queued by Raw Gadget is interrupted
-(via a signal), wait_for_completion_interruptible returns -ERESTARTSYS.
-Raw Gadget then attempts to propagate this value to userspace as a return
-value from its ioctls. However, when -ERESTARTSYS is returned by a syscall
-handler, the kernel internally restarts the syscall.
+gsm_cleanup_mux() cleans up the gsm by closing all DLCIs, stopping all
+timers, removing the virtual tty devices and clearing the data queues.
+This procedure, however, may cause subsequent changes of the virtual modem
+status lines of a DLCI. More data is being added the outgoing data queue
+and the deleted kick timer is restarted to handle this. At this point many
+resources have already been removed by the cleanup procedure. Thus, a
+kernel panic occurs.
 
-This doesn't allow userspace applications to interrupt requests queued by
-Raw Gadget (which is required when the emulated device is asked to switch
-altsettings). It also violates the implied interface of Raw Gadget that a
-single ioctl must only queue a single USB request.
+Fix this by proving in gsm_modem_update() that the cleanup procedure has
+not been started and the mux is still alive.
 
-Instead, make Raw Gadget do what GadgetFS does: check whether the request
-was interrupted (dequeued with status == -ECONNRESET) and report -EINTR to
-userspace.
+Note that writing to a virtual tty is already protected by checks against
+the DLCI specific connection state.
 
-Fixes: f2c2e717642c ("usb: gadget: add raw-gadget interface")
+Fixes: c568f7086c6e ("tty: n_gsm: fix missing timer to handle stalled links")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
-Link: https://lore.kernel.org/r/0db45b1d7cc466e3d4d1ab353f61d63c977fbbc5.1698350424.git.andreyknvl@gmail.com
+Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
+Link: https://lore.kernel.org/r/20231026055844.3127-1-daniel.starke@siemens.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/legacy/raw_gadget.c |   26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/tty/n_gsm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/gadget/legacy/raw_gadget.c
-+++ b/drivers/usb/gadget/legacy/raw_gadget.c
-@@ -663,12 +663,12 @@ static int raw_process_ep0_io(struct raw
- 	if (WARN_ON(in && dev->ep0_out_pending)) {
- 		ret = -ENODEV;
- 		dev->state = STATE_DEV_FAILED;
--		goto out_done;
-+		goto out_unlock;
- 	}
- 	if (WARN_ON(!in && dev->ep0_in_pending)) {
- 		ret = -ENODEV;
- 		dev->state = STATE_DEV_FAILED;
--		goto out_done;
-+		goto out_unlock;
- 	}
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -3404,6 +3404,8 @@ static int gsm_modem_upd_via_msc(struct
  
- 	dev->req->buf = data;
-@@ -683,7 +683,7 @@ static int raw_process_ep0_io(struct raw
- 				"fail, usb_ep_queue returned %d\n", ret);
- 		spin_lock_irqsave(&dev->lock, flags);
- 		dev->state = STATE_DEV_FAILED;
--		goto out_done;
-+		goto out_queue_failed;
- 	}
- 
- 	ret = wait_for_completion_interruptible(&dev->ep0_done);
-@@ -692,13 +692,16 @@ static int raw_process_ep0_io(struct raw
- 		usb_ep_dequeue(dev->gadget->ep0, dev->req);
- 		wait_for_completion(&dev->ep0_done);
- 		spin_lock_irqsave(&dev->lock, flags);
--		goto out_done;
-+		if (dev->ep0_status == -ECONNRESET)
-+			dev->ep0_status = -EINTR;
-+		goto out_interrupted;
- 	}
- 
- 	spin_lock_irqsave(&dev->lock, flags);
--	ret = dev->ep0_status;
- 
--out_done:
-+out_interrupted:
-+	ret = dev->ep0_status;
-+out_queue_failed:
- 	dev->ep0_urb_queued = false;
- out_unlock:
- 	spin_unlock_irqrestore(&dev->lock, flags);
-@@ -1067,7 +1070,7 @@ static int raw_process_ep_io(struct raw_
- 				"fail, usb_ep_queue returned %d\n", ret);
- 		spin_lock_irqsave(&dev->lock, flags);
- 		dev->state = STATE_DEV_FAILED;
--		goto out_done;
-+		goto out_queue_failed;
- 	}
- 
- 	ret = wait_for_completion_interruptible(&done);
-@@ -1076,13 +1079,16 @@ static int raw_process_ep_io(struct raw_
- 		usb_ep_dequeue(ep->ep, ep->req);
- 		wait_for_completion(&done);
- 		spin_lock_irqsave(&dev->lock, flags);
--		goto out_done;
-+		if (ep->status == -ECONNRESET)
-+			ep->status = -EINTR;
-+		goto out_interrupted;
- 	}
- 
- 	spin_lock_irqsave(&dev->lock, flags);
--	ret = ep->status;
- 
--out_done:
-+out_interrupted:
-+	ret = ep->status;
-+out_queue_failed:
- 	ep->urb_queued = false;
- out_unlock:
- 	spin_unlock_irqrestore(&dev->lock, flags);
+ static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk)
+ {
++	if (dlci->gsm->dead)
++		return -EL2HLT;
+ 	if (dlci->adaption == 2) {
+ 		/* Send convergence layer type 2 empty data frame. */
+ 		gsm_modem_upd_via_data(dlci, brk);
 
 
