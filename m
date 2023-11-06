@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F410720316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68DE20316
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzHIV+/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71297C433C7;
-	Mon,  6 Nov 2023 13:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DREyrOth"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B16C433C7;
+	Mon,  6 Nov 2023 13:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276632;
-	bh=5+aAmxr6oRVn+AfrF+gW8KGrdJOxKw3ZOPu6gnfy3Us=;
+	s=korg; t=1699276635;
+	bh=zrh+HmPDpxJ2C0wGEGpBoZR1mgYLG231RDT35UvaCYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RzHIV+/26lub015ul+n70cR8UFs/KhIskKJV7+/szuxFbzLzOdfv0NBOG1rIB0boj
-	 Vc00YpOufRegXCkoi0gIe6ui687eZBraWm5Blo+6Bq/Ta1B39lkRs/xN2KJ1XGxOQk
-	 QKzEakIhS3S8hZoVSnwiE/Q8VJ3iRg46aN5kY7pk=
+	b=DREyrOthTwrzw8fFxKhbCh6y8Ra00Guiw11HfKLR2ZqIlCqyZhDa+hkYlRNHeD2cj
+	 MMKmlOV02D/z7WEvm7DYcXG/SJApVl46RaQQhMSRaSUrHgwlxbRYjige9F+BGAwpAu
+	 kOw60dH2wBqyyRkLIIwgYTyQzqz6Au5WzcC7dc2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <Alexander.Deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Luben Tuikov <luben.tuikov@amd.com>,
+	Jeffery Miller <jefferymiller@google.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 44/88] drm/amdgpu: Unset context priority is now invalid
-Date: Mon,  6 Nov 2023 14:03:38 +0100
-Message-ID: <20231106130307.461460734@linuxfoundation.org>
+Subject: [PATCH 6.5 17/88] Input: synaptics-rmi4 - handle reset delay when using SMBus trsnsport
+Date: Mon,  6 Nov 2023 14:03:11 +0100
+Message-ID: <20231106130306.425444469@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -37,52 +36,139 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luben Tuikov <luben.tuikov@amd.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit eab0261967aeab528db4d0a51806df8209aec179 ]
+[ Upstream commit 5030b2fe6aab37fe42d14f31842ea38be7c55c57 ]
 
-A context priority value of AMD_CTX_PRIORITY_UNSET is now invalid--instead of
-carrying it around and passing it to the Direct Rendering Manager--and it
-becomes AMD_CTX_PRIORITY_NORMAL in amdgpu_ctx_ioctl(), the gateway to context
-creation.
+Touch controllers need some time after receiving reset command for the
+firmware to finish re-initializing and be ready to respond to commands
+from the host. The driver already had handling for the post-reset delay
+for I2C and SPI transports, this change adds the handling to
+SMBus-connected devices.
 
-Cc: Alex Deucher <Alexander.Deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Signed-off-by: Luben Tuikov <luben.tuikov@amd.com>
-Acked-by: Alex Deucher <Alexander.Deucher@amd.com>
-Link: https://lore.kernel.org/r/20231017035656.8211-1-luben.tuikov@amd.com
+SMBus devices are peculiar because they implement legacy PS/2
+compatibility mode, so reset is actually issued by psmouse driver on the
+associated serio port, after which the control is passed to the RMI4
+driver with SMBus companion device.
+
+Note that originally the delay was added to psmouse driver in
+92e24e0e57f7 ("Input: psmouse - add delay when deactivating for SMBus
+mode"), but that resulted in an unwanted delay in "fast" reconnect
+handler for the serio port, so it was decided to revert the patch and
+have the delay being handled in the RMI4 driver, similar to the other
+transports.
+
+Tested-by: Jeffery Miller <jefferymiller@google.com>
+Link: https://lore.kernel.org/r/ZR1yUFJ8a9Zt606N@penguin
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/mouse/synaptics.c |  1 +
+ drivers/input/rmi4/rmi_smbus.c  | 50 ++++++++++++++++++---------------
+ 2 files changed, 29 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-index 0dc9c655c4fbd..092962b93064f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-@@ -47,7 +47,6 @@ const unsigned int amdgpu_ctx_num_entities[AMDGPU_HW_IP_NUM] = {
- bool amdgpu_ctx_priority_is_valid(int32_t ctx_prio)
+diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
+index cefc74b3b34b1..22d16d80efb93 100644
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -1753,6 +1753,7 @@ static int synaptics_create_intertouch(struct psmouse *psmouse,
+ 		psmouse_matches_pnp_id(psmouse, topbuttonpad_pnp_ids) &&
+ 		!SYN_CAP_EXT_BUTTONS_STICK(info->ext_cap_10);
+ 	const struct rmi_device_platform_data pdata = {
++		.reset_delay_ms = 30,
+ 		.sensor_pdata = {
+ 			.sensor_type = rmi_sensor_touchpad,
+ 			.axis_align.flip_y = true,
+diff --git a/drivers/input/rmi4/rmi_smbus.c b/drivers/input/rmi4/rmi_smbus.c
+index 7059a2762aebc..b0b099b5528a8 100644
+--- a/drivers/input/rmi4/rmi_smbus.c
++++ b/drivers/input/rmi4/rmi_smbus.c
+@@ -235,12 +235,29 @@ static void rmi_smb_clear_state(struct rmi_smb_xport *rmi_smb)
+ 
+ static int rmi_smb_enable_smbus_mode(struct rmi_smb_xport *rmi_smb)
  {
- 	switch (ctx_prio) {
--	case AMDGPU_CTX_PRIORITY_UNSET:
- 	case AMDGPU_CTX_PRIORITY_VERY_LOW:
- 	case AMDGPU_CTX_PRIORITY_LOW:
- 	case AMDGPU_CTX_PRIORITY_NORMAL:
-@@ -55,6 +54,7 @@ bool amdgpu_ctx_priority_is_valid(int32_t ctx_prio)
- 	case AMDGPU_CTX_PRIORITY_VERY_HIGH:
- 		return true;
- 	default:
-+	case AMDGPU_CTX_PRIORITY_UNSET:
- 		return false;
- 	}
+-	int retval;
++	struct i2c_client *client = rmi_smb->client;
++	int smbus_version;
++
++	/*
++	 * psmouse driver resets the controller, we only need to wait
++	 * to give the firmware chance to fully reinitialize.
++	 */
++	if (rmi_smb->xport.pdata.reset_delay_ms)
++		msleep(rmi_smb->xport.pdata.reset_delay_ms);
+ 
+ 	/* we need to get the smbus version to activate the touchpad */
+-	retval = rmi_smb_get_version(rmi_smb);
+-	if (retval < 0)
+-		return retval;
++	smbus_version = rmi_smb_get_version(rmi_smb);
++	if (smbus_version < 0)
++		return smbus_version;
++
++	rmi_dbg(RMI_DEBUG_XPORT, &client->dev, "Smbus version is %d",
++		smbus_version);
++
++	if (smbus_version != 2 && smbus_version != 3) {
++		dev_err(&client->dev, "Unrecognized SMB version %d\n",
++				smbus_version);
++		return -ENODEV;
++	}
+ 
+ 	return 0;
  }
+@@ -253,11 +270,10 @@ static int rmi_smb_reset(struct rmi_transport_dev *xport, u16 reset_addr)
+ 	rmi_smb_clear_state(rmi_smb);
+ 
+ 	/*
+-	 * we do not call the actual reset command, it has to be handled in
+-	 * PS/2 or there will be races between PS/2 and SMBus.
+-	 * PS/2 should ensure that a psmouse_reset is called before
+-	 * intializing the device and after it has been removed to be in a known
+-	 * state.
++	 * We do not call the actual reset command, it has to be handled in
++	 * PS/2 or there will be races between PS/2 and SMBus. PS/2 should
++	 * ensure that a psmouse_reset is called before initializing the
++	 * device and after it has been removed to be in a known state.
+ 	 */
+ 	return rmi_smb_enable_smbus_mode(rmi_smb);
+ }
+@@ -272,7 +288,6 @@ static int rmi_smb_probe(struct i2c_client *client)
+ {
+ 	struct rmi_device_platform_data *pdata = dev_get_platdata(&client->dev);
+ 	struct rmi_smb_xport *rmi_smb;
+-	int smbus_version;
+ 	int error;
+ 
+ 	if (!pdata) {
+@@ -311,18 +326,9 @@ static int rmi_smb_probe(struct i2c_client *client)
+ 	rmi_smb->xport.proto_name = "smb";
+ 	rmi_smb->xport.ops = &rmi_smb_ops;
+ 
+-	smbus_version = rmi_smb_get_version(rmi_smb);
+-	if (smbus_version < 0)
+-		return smbus_version;
+-
+-	rmi_dbg(RMI_DEBUG_XPORT, &client->dev, "Smbus version is %d",
+-		smbus_version);
+-
+-	if (smbus_version != 2 && smbus_version != 3) {
+-		dev_err(&client->dev, "Unrecognized SMB version %d\n",
+-				smbus_version);
+-		return -ENODEV;
+-	}
++	error = rmi_smb_enable_smbus_mode(rmi_smb);
++	if (error)
++		return error;
+ 
+ 	i2c_set_clientdata(client, rmi_smb);
+ 
 -- 
 2.42.0
 
