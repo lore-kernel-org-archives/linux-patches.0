@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBFF22EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B22F22EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ly5VKgGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC215C433C8;
-	Mon,  6 Nov 2023 13:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjz1tXlY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89377C433C8;
+	Mon,  6 Nov 2023 13:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277410;
-	bh=1hS7jEiam26d5O/oFif5t8ZOeUEgiAbbEgeewhNN8tA=;
+	s=korg; t=1699277412;
+	bh=KgSWccjMIt3EPT7zZMc4UsqvzQnje8rSGC4hb1DKwjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ly5VKgGmvY9iI6CwVRp3+HMC8xA3navGWEk0GAhDI5NxIFfr/JZejRqNFXlz4Phdi
-	 Giqyp1dZ6+epfG7qj1G4T8rgEEQpca4yrxpVATQKC03EeA/MMhipw+V+KwFMPHt5pX
-	 ULr3cECo5CROnKhB1EVB8AQoKv0byz96iY2eNNdI=
+	b=qjz1tXlYXTIY5oO+NQ/eyUlOt/SBuEhJDUMkn890QAadjVP0RXEp+miynhzZYGYgE
+	 Sr5a37jWP4FcKefSXbsyVUjIXJOOf6GFXNe5gxoN55wVNR7fQ0KEc/Rvc81c1CiUYn
+	 T42SbJxeuVC1GD/JL7hibx7RQT3L13/5ckfBWoCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Dima Ruinskiy <dima.ruinskiy@intel.com>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Sasha Neftin <sasha.neftin@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 13/95] neighbour: fix various data-races
-Date: Mon,  6 Nov 2023 14:03:41 +0100
-Message-ID: <20231106130305.210556004@linuxfoundation.org>
+Subject: [PATCH 5.10 14/95] igc: Fix ambiguity in the ethtool advertising
+Date: Mon,  6 Nov 2023 14:03:42 +0100
+Message-ID: <20231106130305.244774223@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -42,174 +46,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sasha Neftin <sasha.neftin@intel.com>
 
-[ Upstream commit a9beb7e81bcb876615e1fbb3c07f3f9dba69831f ]
+[ Upstream commit e7684d29efdf37304c62bb337ea55b3428ca118e ]
 
-1) tbl->gc_thresh1, tbl->gc_thresh2, tbl->gc_thresh3 and tbl->gc_interval
-   can be written from sysfs.
+The 'ethtool_convert_link_mode_to_legacy_u32' method does not allow us to
+advertise 2500M speed support and TP (twisted pair) properly. Convert to
+'ethtool_link_ksettings_test_link_mode' to advertise supported speed and
+eliminate ambiguity.
 
-2) tbl->last_flush is read locklessly from neigh_alloc()
-
-3) tbl->proxy_queue.qlen is read locklessly from neightbl_fill_info()
-
-4) neightbl_fill_info() reads cpu stats that can be changed concurrently.
-
-Fixes: c7fb64db001f ("[NETLINK]: Neighbour table configuration and statistics via rtnetlink")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20231019122104.1448310-1-edumazet@google.com
+Fixes: 8c5ad0dae93c ("igc: Add ethtool support")
+Suggested-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
+Suggested-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Signed-off-by: Sasha Neftin <sasha.neftin@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20231019203641.3661960-1-jacob.e.keller@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 67 +++++++++++++++++++++++---------------------
- 1 file changed, 35 insertions(+), 32 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_ethtool.c | 35 ++++++++++++++------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 15267428c4f83..4c43183a8d93a 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -224,7 +224,8 @@ bool neigh_remove_one(struct neighbour *ndel, struct neigh_table *tbl)
+diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+index d28ac3a025ab1..9b01912c6e171 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
++++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+@@ -1775,7 +1775,7 @@ igc_ethtool_set_link_ksettings(struct net_device *netdev,
+ 	struct igc_adapter *adapter = netdev_priv(netdev);
+ 	struct net_device *dev = adapter->netdev;
+ 	struct igc_hw *hw = &adapter->hw;
+-	u32 advertising;
++	u16 advertised = 0;
  
- static int neigh_forced_gc(struct neigh_table *tbl)
- {
--	int max_clean = atomic_read(&tbl->gc_entries) - tbl->gc_thresh2;
-+	int max_clean = atomic_read(&tbl->gc_entries) -
-+			READ_ONCE(tbl->gc_thresh2);
- 	unsigned long tref = jiffies - 5 * HZ;
- 	struct neighbour *n, *tmp;
- 	int shrunk = 0;
-@@ -253,7 +254,7 @@ static int neigh_forced_gc(struct neigh_table *tbl)
- 		}
- 	}
+ 	/* When adapter in resetting mode, autoneg/speed/duplex
+ 	 * cannot be changed
+@@ -1800,18 +1800,33 @@ igc_ethtool_set_link_ksettings(struct net_device *netdev,
+ 	while (test_and_set_bit(__IGC_RESETTING, &adapter->state))
+ 		usleep_range(1000, 2000);
  
--	tbl->last_flush = jiffies;
-+	WRITE_ONCE(tbl->last_flush, jiffies);
- 
- 	write_unlock_bh(&tbl->lock);
- 
-@@ -409,17 +410,17 @@ static struct neighbour *neigh_alloc(struct neigh_table *tbl,
- {
- 	struct neighbour *n = NULL;
- 	unsigned long now = jiffies;
--	int entries;
-+	int entries, gc_thresh3;
- 
- 	if (exempt_from_gc)
- 		goto do_alloc;
- 
- 	entries = atomic_inc_return(&tbl->gc_entries) - 1;
--	if (entries >= tbl->gc_thresh3 ||
--	    (entries >= tbl->gc_thresh2 &&
--	     time_after(now, tbl->last_flush + 5 * HZ))) {
--		if (!neigh_forced_gc(tbl) &&
--		    entries >= tbl->gc_thresh3) {
-+	gc_thresh3 = READ_ONCE(tbl->gc_thresh3);
-+	if (entries >= gc_thresh3 ||
-+	    (entries >= READ_ONCE(tbl->gc_thresh2) &&
-+	     time_after(now, READ_ONCE(tbl->last_flush) + 5 * HZ))) {
-+		if (!neigh_forced_gc(tbl) && entries >= gc_thresh3) {
- 			net_info_ratelimited("%s: neighbor table overflow!\n",
- 					     tbl->id);
- 			NEIGH_CACHE_STAT_INC(tbl, table_fulls);
-@@ -902,13 +903,14 @@ static void neigh_periodic_work(struct work_struct *work)
- 
- 	if (time_after(jiffies, tbl->last_rand + 300 * HZ)) {
- 		struct neigh_parms *p;
--		tbl->last_rand = jiffies;
+-	ethtool_convert_link_mode_to_legacy_u32(&advertising,
+-						cmd->link_modes.advertising);
+-	/* Converting to legacy u32 drops ETHTOOL_LINK_MODE_2500baseT_Full_BIT.
+-	 * We have to check this and convert it to ADVERTISE_2500_FULL
+-	 * (aka ETHTOOL_LINK_MODE_2500baseX_Full_BIT) explicitly.
+-	 */
+-	if (ethtool_link_ksettings_test_link_mode(cmd, advertising, 2500baseT_Full))
+-		advertising |= ADVERTISE_2500_FULL;
++	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
++						  2500baseT_Full))
++		advertised |= ADVERTISE_2500_FULL;
 +
-+		WRITE_ONCE(tbl->last_rand, jiffies);
- 		list_for_each_entry(p, &tbl->parms_list, list)
- 			p->reachable_time =
- 				neigh_rand_reach_time(NEIGH_VAR(p, BASE_REACHABLE_TIME));
- 	}
++	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
++						  1000baseT_Full))
++		advertised |= ADVERTISE_1000_FULL;
++
++	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
++						  100baseT_Full))
++		advertised |= ADVERTISE_100_FULL;
++
++	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
++						  100baseT_Half))
++		advertised |= ADVERTISE_100_HALF;
++
++	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
++						  10baseT_Full))
++		advertised |= ADVERTISE_10_FULL;
++
++	if (ethtool_link_ksettings_test_link_mode(cmd, advertising,
++						  10baseT_Half))
++		advertised |= ADVERTISE_10_HALF;
  
--	if (atomic_read(&tbl->entries) < tbl->gc_thresh1)
-+	if (atomic_read(&tbl->entries) < READ_ONCE(tbl->gc_thresh1))
- 		goto out;
- 
- 	for (i = 0 ; i < (1 << nht->hash_shift); i++) {
-@@ -2055,15 +2057,16 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
- 	ndtmsg->ndtm_pad2   = 0;
- 
- 	if (nla_put_string(skb, NDTA_NAME, tbl->id) ||
--	    nla_put_msecs(skb, NDTA_GC_INTERVAL, tbl->gc_interval, NDTA_PAD) ||
--	    nla_put_u32(skb, NDTA_THRESH1, tbl->gc_thresh1) ||
--	    nla_put_u32(skb, NDTA_THRESH2, tbl->gc_thresh2) ||
--	    nla_put_u32(skb, NDTA_THRESH3, tbl->gc_thresh3))
-+	    nla_put_msecs(skb, NDTA_GC_INTERVAL, READ_ONCE(tbl->gc_interval),
-+			  NDTA_PAD) ||
-+	    nla_put_u32(skb, NDTA_THRESH1, READ_ONCE(tbl->gc_thresh1)) ||
-+	    nla_put_u32(skb, NDTA_THRESH2, READ_ONCE(tbl->gc_thresh2)) ||
-+	    nla_put_u32(skb, NDTA_THRESH3, READ_ONCE(tbl->gc_thresh3)))
- 		goto nla_put_failure;
- 	{
- 		unsigned long now = jiffies;
--		long flush_delta = now - tbl->last_flush;
--		long rand_delta = now - tbl->last_rand;
-+		long flush_delta = now - READ_ONCE(tbl->last_flush);
-+		long rand_delta = now - READ_ONCE(tbl->last_rand);
- 		struct neigh_hash_table *nht;
- 		struct ndt_config ndc = {
- 			.ndtc_key_len		= tbl->key_len,
-@@ -2071,7 +2074,7 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
- 			.ndtc_entries		= atomic_read(&tbl->entries),
- 			.ndtc_last_flush	= jiffies_to_msecs(flush_delta),
- 			.ndtc_last_rand		= jiffies_to_msecs(rand_delta),
--			.ndtc_proxy_qlen	= tbl->proxy_queue.qlen,
-+			.ndtc_proxy_qlen	= READ_ONCE(tbl->proxy_queue.qlen),
- 		};
- 
- 		rcu_read_lock_bh();
-@@ -2094,17 +2097,17 @@ static int neightbl_fill_info(struct sk_buff *skb, struct neigh_table *tbl,
- 			struct neigh_statistics	*st;
- 
- 			st = per_cpu_ptr(tbl->stats, cpu);
--			ndst.ndts_allocs		+= st->allocs;
--			ndst.ndts_destroys		+= st->destroys;
--			ndst.ndts_hash_grows		+= st->hash_grows;
--			ndst.ndts_res_failed		+= st->res_failed;
--			ndst.ndts_lookups		+= st->lookups;
--			ndst.ndts_hits			+= st->hits;
--			ndst.ndts_rcv_probes_mcast	+= st->rcv_probes_mcast;
--			ndst.ndts_rcv_probes_ucast	+= st->rcv_probes_ucast;
--			ndst.ndts_periodic_gc_runs	+= st->periodic_gc_runs;
--			ndst.ndts_forced_gc_runs	+= st->forced_gc_runs;
--			ndst.ndts_table_fulls		+= st->table_fulls;
-+			ndst.ndts_allocs		+= READ_ONCE(st->allocs);
-+			ndst.ndts_destroys		+= READ_ONCE(st->destroys);
-+			ndst.ndts_hash_grows		+= READ_ONCE(st->hash_grows);
-+			ndst.ndts_res_failed		+= READ_ONCE(st->res_failed);
-+			ndst.ndts_lookups		+= READ_ONCE(st->lookups);
-+			ndst.ndts_hits			+= READ_ONCE(st->hits);
-+			ndst.ndts_rcv_probes_mcast	+= READ_ONCE(st->rcv_probes_mcast);
-+			ndst.ndts_rcv_probes_ucast	+= READ_ONCE(st->rcv_probes_ucast);
-+			ndst.ndts_periodic_gc_runs	+= READ_ONCE(st->periodic_gc_runs);
-+			ndst.ndts_forced_gc_runs	+= READ_ONCE(st->forced_gc_runs);
-+			ndst.ndts_table_fulls		+= READ_ONCE(st->table_fulls);
- 		}
- 
- 		if (nla_put_64bit(skb, NDTA_STATS, sizeof(ndst), &ndst,
-@@ -2328,16 +2331,16 @@ static int neightbl_set(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		goto errout_tbl_lock;
- 
- 	if (tb[NDTA_THRESH1])
--		tbl->gc_thresh1 = nla_get_u32(tb[NDTA_THRESH1]);
-+		WRITE_ONCE(tbl->gc_thresh1, nla_get_u32(tb[NDTA_THRESH1]));
- 
- 	if (tb[NDTA_THRESH2])
--		tbl->gc_thresh2 = nla_get_u32(tb[NDTA_THRESH2]);
-+		WRITE_ONCE(tbl->gc_thresh2, nla_get_u32(tb[NDTA_THRESH2]));
- 
- 	if (tb[NDTA_THRESH3])
--		tbl->gc_thresh3 = nla_get_u32(tb[NDTA_THRESH3]);
-+		WRITE_ONCE(tbl->gc_thresh3, nla_get_u32(tb[NDTA_THRESH3]));
- 
- 	if (tb[NDTA_GC_INTERVAL])
--		tbl->gc_interval = nla_get_msecs(tb[NDTA_GC_INTERVAL]);
-+		WRITE_ONCE(tbl->gc_interval, nla_get_msecs(tb[NDTA_GC_INTERVAL]));
- 
- 	err = 0;
- 
+ 	if (cmd->base.autoneg == AUTONEG_ENABLE) {
+ 		hw->mac.autoneg = 1;
+-		hw->phy.autoneg_advertised = advertising;
++		hw->phy.autoneg_advertised = advertised;
+ 		if (adapter->fc_autoneg)
+ 			hw->fc.requested_mode = igc_fc_default;
+ 	} else {
 -- 
 2.42.0
 
