@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63176208BD
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1BA208C0
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zy1XdTgU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3298C433C8;
-	Mon,  6 Nov 2023 13:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uiTf355"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC582C433C9;
+	Mon,  6 Nov 2023 13:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276754;
-	bh=ZgByRvMLe4rzYLR8UF1Ce/ehtnmoa3DFrOcQMqnM1rE=;
+	s=korg; t=1699276757;
+	bh=mJpb9rnxGppv9TQxA0xuRzXea0iceEYToht9h1La4IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zy1XdTgUwLXcRvISdqvt2tI95jTuDc8L8CAgrSbQCsMXXrmU2PGzLQ+2UNp4nKxHP
-	 gPa6TeSuBNziYuFtKRvDMF9+ywP1VQILt5mVnT0bTlLS/KOx1u4o6wNZRUcwiBajMa
-	 GuKRL/+43S0ScZH0oY3hiJkh9kGWxVj2aVorTwyI=
+	b=0uiTf355/+f3FxIuxyFCQJ9z6tLZTvreExuHIBTkl5PasL9CtOCgtSAAk9Z6s9SEm
+	 3wIBwr8V7x+vSpUxHyxiqRCmEfHLvswbSsBhU8V9pgpHUMX8yi6JryYEgLbK5HYUfK
+	 lNUcgYowRtigrJNFqKSlfwwIT043043qYMXRchFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>
-Subject: [PATCH 6.5 77/88] tty: 8250: Add support for Brainboxes UP cards
-Date: Mon,  6 Nov 2023 14:04:11 +0100
-Message-ID: <20231106130308.574008140@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Richard Purdie <richard.purdie@linuxfoundation.org>,
+	Bruce Ashfield <bruce.ashfield@gmail.com>,
+	Mikko Rapeli <mikko.rapeli@linaro.org>,
+	Paul Gortmaker <paul.gortmaker@windriver.com>,
+	Randy MacLeod <randy.macleod@windriver.com>,
+	Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 6.5 86/88] serial: core: Fix runtime PM handling for pending tx
+Date: Mon,  6 Nov 2023 14:04:20 +0100
+Message-ID: <20231106130308.979479321@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -40,89 +46,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Tony Lindgren <tony@atomide.com>
 
-commit 2c6fec1e1532f15350be7e14ba6b88a39d289fe4 upstream.
+commit 6f699743aebf07538e506a46c5965eb8bdd2c716 upstream.
 
-Add support for the Brainboxes UP (powered PCI) range of
-cards, namely UP-189, UP-200, UP-869 and UP-880.
+Richard reported that a serial port may end up sometimes with tx data
+pending in the buffer for long periods of time.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Link: https://lore.kernel.org/r/DU0PR02MB7899B5B59FF3D8587E88C117C4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
+Turns out we bail out early on any errors from pm_runtime_get(),
+including -EINPROGRESS. To fix the issue, we need to ignore -EINPROGRESS
+as we only care about the runtime PM usage count at this point. We check
+for an active runtime PM state later on for tx.
+
+Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
+Cc: stable <stable@kernel.org>
+Reported-by: Richard Purdie <richard.purdie@linuxfoundation.org>
+Cc: Bruce Ashfield <bruce.ashfield@gmail.com>
+Cc: Mikko Rapeli <mikko.rapeli@linaro.org>
+Cc: Paul Gortmaker <paul.gortmaker@windriver.com>
+Cc: Randy MacLeod <randy.macleod@windriver.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Tested-by: Richard Purdie <richard.purdie@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20231023074856.61896-1-tony@atomide.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |   60 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ drivers/tty/serial/serial_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -5081,6 +5081,66 @@ static const struct pci_device_id serial
- 		0, 0,
- 		pbn_b2_4_115200 },
- 	/*
-+	 * Brainboxes UP-189
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0AC1,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0AC2,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0AC3,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	/*
-+	 * Brainboxes UP-200
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0B21,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0B22,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0B23,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	/*
-+	 * Brainboxes UP-869
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0C01,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0C02,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0C03,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	/*
-+	 * Brainboxes UP-880
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0C21,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0C22,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0C23,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_2_115200 },
-+	/*
- 	 * Brainboxes PX-101
- 	 */
- 	{	PCI_VENDOR_ID_INTASHIELD, 0x4005,
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -147,7 +147,7 @@ static void __uart_start(struct tty_stru
+ 
+ 	/* Increment the runtime PM usage count for the active check below */
+ 	err = pm_runtime_get(&port_dev->dev);
+-	if (err < 0) {
++	if (err < 0 && err != -EINPROGRESS) {
+ 		pm_runtime_put_noidle(&port_dev->dev);
+ 		return;
+ 	}
 
 
