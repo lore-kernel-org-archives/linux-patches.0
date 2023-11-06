@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F022374A
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E712374A
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6WJOlIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73739C433C7;
-	Mon,  6 Nov 2023 13:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sD7C6Zdu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDC9C433C8;
+	Mon,  6 Nov 2023 13:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277546;
-	bh=MPS3XC1X2zJ2RkRZKPYMrr71GM60zotUrs3jWXAV/1k=;
+	s=korg; t=1699277549;
+	bh=0HV+SLqkJtsfIrOMII8k6fwnQ1V2KelzhExFNV3l3u8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6WJOlISePRT8JCs8HJm2dxDHfYf6I2VDja9ituQqUG9j1avN74YlQoiUPKEus8Gz
-	 3kLvTaj0P0OA9XW2+xC6e5C67OnKumdctDGKknLHGgHiDLhQuFP153SRTsxWMf2Dx4
-	 6Uzm3ceEVaTXwzgCjMNWQ39wqmmY3TlmnZbkxF+w=
+	b=sD7C6ZducatUDksoSySiBjYP1E+AtsZJYnD4iEQQORn3khXEkLl31QmpyOc34hOEc
+	 mhkMyqVQJkQ1HGjnSqcoKsDRjucUrzj453k4yhyr6KKBKu/oCQ7jFyf4+Q0opqVXxE
+	 m5m/uYefXQI/ONJsO7WtU0auf8uu/7/IiqBOwJXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	lee@kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.10 54/95] driver: platform: Add helper for safer setting of driver_override
-Date: Mon,  6 Nov 2023 14:04:22 +0100
-Message-ID: <20231106130306.670131513@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Peter Rosin <peda@axentia.se>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 5.10 27/95] i2c: muxes: i2c-mux-pinctrl: Use of_get_i2c_adapter_by_node()
+Date: Mon,  6 Nov 2023 14:03:55 +0100
+Message-ID: <20231106130305.712011348@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -42,201 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit 6c2f421174273de8f83cde4286d1c076d43a2d35 upstream.
+commit 3171d37b58a76e1febbf3f4af2d06234a98cf88b upstream.
 
-Several core drivers and buses expect that driver_override is a
-dynamically allocated memory thus later they can kfree() it.
+i2c-mux-pinctrl uses the pair of_find_i2c_adapter_by_node() /
+i2c_put_adapter(). These pair alone is not correct to properly lock the
+I2C parent adapter.
 
-However such assumption is not documented, there were in the past and
-there are already users setting it to a string literal. This leads to
-kfree() of static memory during device release (e.g. in error paths or
-during unbind):
+Indeed, i2c_put_adapter() decrements the module refcount while
+of_find_i2c_adapter_by_node() does not increment it. This leads to an
+underflow of the parent module refcount.
 
-    kernel BUG at ../mm/slub.c:3960!
-    Internal error: Oops - BUG: 0 [#1] PREEMPT SMP ARM
-    ...
-    (kfree) from [<c058da50>] (platform_device_release+0x88/0xb4)
-    (platform_device_release) from [<c0585be0>] (device_release+0x2c/0x90)
-    (device_release) from [<c0a69050>] (kobject_put+0xec/0x20c)
-    (kobject_put) from [<c0f2f120>] (exynos5_clk_probe+0x154/0x18c)
-    (exynos5_clk_probe) from [<c058de70>] (platform_drv_probe+0x6c/0xa4)
-    (platform_drv_probe) from [<c058b7ac>] (really_probe+0x280/0x414)
-    (really_probe) from [<c058baf4>] (driver_probe_device+0x78/0x1c4)
-    (driver_probe_device) from [<c0589854>] (bus_for_each_drv+0x74/0xb8)
-    (bus_for_each_drv) from [<c058b48c>] (__device_attach+0xd4/0x16c)
-    (__device_attach) from [<c058a638>] (bus_probe_device+0x88/0x90)
-    (bus_probe_device) from [<c05871fc>] (device_add+0x3dc/0x62c)
-    (device_add) from [<c075ff10>] (of_platform_device_create_pdata+0x94/0xbc)
-    (of_platform_device_create_pdata) from [<c07600ec>] (of_platform_bus_create+0x1a8/0x4fc)
-    (of_platform_bus_create) from [<c0760150>] (of_platform_bus_create+0x20c/0x4fc)
-    (of_platform_bus_create) from [<c07605f0>] (of_platform_populate+0x84/0x118)
-    (of_platform_populate) from [<c0f3c964>] (of_platform_default_populate_init+0xa0/0xb8)
-    (of_platform_default_populate_init) from [<c01031f8>] (do_one_initcall+0x8c/0x404)
+Use the dedicated function, of_get_i2c_adapter_by_node(), to handle
+correctly the module refcount.
 
-Provide a helper which clearly documents the usage of driver_override.
-This will allow later to reuse the helper and reduce the amount of
-duplicated code.
-
-Convert the platform driver to use a new helper and make the
-driver_override field const char (it is not modified by the core).
-
-Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20220419113435.246203-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: c4aee3e1b0de ("i2c: mux: pinctrl: remove platform_data")
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Cc: stable@vger.kernel.org
+Acked-by: Peter Rosin <peda@axentia.se>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/driver.c           |   69 ++++++++++++++++++++++++++++++++++++++++
- drivers/base/platform.c         |   28 ++--------------
- include/linux/device/driver.h   |    2 +
- include/linux/platform_device.h |    6 ++-
- 4 files changed, 80 insertions(+), 25 deletions(-)
+ drivers/i2c/muxes/i2c-mux-pinctrl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/base/driver.c
-+++ b/drivers/base/driver.c
-@@ -31,6 +31,75 @@ static struct device *next_device(struct
- }
- 
- /**
-+ * driver_set_override() - Helper to set or clear driver override.
-+ * @dev: Device to change
-+ * @override: Address of string to change (e.g. &device->driver_override);
-+ *            The contents will be freed and hold newly allocated override.
-+ * @s: NUL-terminated string, new driver name to force a match, pass empty
-+ *     string to clear it ("" or "\n", where the latter is only for sysfs
-+ *     interface).
-+ * @len: length of @s
-+ *
-+ * Helper to set or clear driver override in a device, intended for the cases
-+ * when the driver_override field is allocated by driver/bus code.
-+ *
-+ * Returns: 0 on success or a negative error code on failure.
-+ */
-+int driver_set_override(struct device *dev, const char **override,
-+			const char *s, size_t len)
-+{
-+	const char *new, *old;
-+	char *cp;
-+
-+	if (!override || !s)
-+		return -EINVAL;
-+
-+	/*
-+	 * The stored value will be used in sysfs show callback (sysfs_emit()),
-+	 * which has a length limit of PAGE_SIZE and adds a trailing newline.
-+	 * Thus we can store one character less to avoid truncation during sysfs
-+	 * show.
-+	 */
-+	if (len >= (PAGE_SIZE - 1))
-+		return -EINVAL;
-+
-+	if (!len) {
-+		/* Empty string passed - clear override */
-+		device_lock(dev);
-+		old = *override;
-+		*override = NULL;
-+		device_unlock(dev);
-+		kfree(old);
-+
-+		return 0;
-+	}
-+
-+	cp = strnchr(s, len, '\n');
-+	if (cp)
-+		len = cp - s;
-+
-+	new = kstrndup(s, len, GFP_KERNEL);
-+	if (!new)
-+		return -ENOMEM;
-+
-+	device_lock(dev);
-+	old = *override;
-+	if (cp != s) {
-+		*override = new;
-+	} else {
-+		/* "\n" passed - clear override */
-+		kfree(new);
-+		*override = NULL;
-+	}
-+	device_unlock(dev);
-+
-+	kfree(old);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(driver_set_override);
-+
-+/**
-  * driver_for_each_device - Iterator for devices bound to a driver.
-  * @drv: Driver we're iterating.
-  * @start: Device to begin with
---- a/drivers/base/platform.c
-+++ b/drivers/base/platform.c
-@@ -1046,31 +1046,11 @@ static ssize_t driver_override_store(str
- 				     const char *buf, size_t count)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
--	char *driver_override, *old, *cp;
-+	int ret;
- 
--	/* We need to keep extra room for a newline */
--	if (count >= (PAGE_SIZE - 1))
--		return -EINVAL;
--
--	driver_override = kstrndup(buf, count, GFP_KERNEL);
--	if (!driver_override)
--		return -ENOMEM;
--
--	cp = strchr(driver_override, '\n');
--	if (cp)
--		*cp = '\0';
--
--	device_lock(dev);
--	old = pdev->driver_override;
--	if (strlen(driver_override)) {
--		pdev->driver_override = driver_override;
--	} else {
--		kfree(driver_override);
--		pdev->driver_override = NULL;
--	}
--	device_unlock(dev);
--
--	kfree(old);
-+	ret = driver_set_override(dev, &pdev->driver_override, buf, count);
-+	if (ret)
-+		return ret;
- 
- 	return count;
- }
---- a/include/linux/device/driver.h
-+++ b/include/linux/device/driver.h
-@@ -150,6 +150,8 @@ extern int __must_check driver_create_fi
- extern void driver_remove_file(struct device_driver *driver,
- 			       const struct driver_attribute *attr);
- 
-+int driver_set_override(struct device *dev, const char **override,
-+			const char *s, size_t len);
- extern int __must_check driver_for_each_device(struct device_driver *drv,
- 					       struct device *start,
- 					       void *data,
---- a/include/linux/platform_device.h
-+++ b/include/linux/platform_device.h
-@@ -30,7 +30,11 @@ struct platform_device {
- 	struct resource	*resource;
- 
- 	const struct platform_device_id	*id_entry;
--	char *driver_override; /* Driver name to force a match */
-+	/*
-+	 * Driver name to force a match.  Do not set directly, because core
-+	 * frees it.  Use driver_set_override() to set or clear it.
-+	 */
-+	const char *driver_override;
- 
- 	/* MFD cell pointer */
- 	struct mfd_cell *mfd_cell;
+--- a/drivers/i2c/muxes/i2c-mux-pinctrl.c
++++ b/drivers/i2c/muxes/i2c-mux-pinctrl.c
+@@ -62,7 +62,7 @@ static struct i2c_adapter *i2c_mux_pinct
+ 		dev_err(dev, "Cannot parse i2c-parent\n");
+ 		return ERR_PTR(-ENODEV);
+ 	}
+-	parent = of_find_i2c_adapter_by_node(parent_np);
++	parent = of_get_i2c_adapter_by_node(parent_np);
+ 	of_node_put(parent_np);
+ 	if (!parent)
+ 		return ERR_PTR(-EPROBE_DEFER);
 
 
