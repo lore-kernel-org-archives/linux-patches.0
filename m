@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA00200DE
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B161D200BA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUNQ/7at"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B16C433C7;
-	Mon,  6 Nov 2023 13:13:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2xv7H+V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DBD0C433C8;
+	Mon,  6 Nov 2023 13:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276397;
-	bh=JPPBXpuMUTHBKNmF8y51W47G8EiCRq+uPiHpHM7gmiw=;
+	s=korg; t=1699276400;
+	bh=NLfr0Z24RYpRYf49x9WP4bcTYxhN0XGCEh41C8lAmc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YUNQ/7atD4vvKTbCZqTo09mVhwjNOYqqKD9hjAaPxvgnhh2bXYCgslMaE85DPD586
-	 KlqjldB30bw7dy9SBrbbBAVX+WVEmsMXSZgQEtGAyVgYZz8UNMG8fhU7Y6le/GkjnC
-	 Q5XXrf6VT8cTAu8flR5U2fmiJkTu3CuF3o/F0TLo=
+	b=f2xv7H+VOstro7O75HXMdsowOV1J8erMb5y7WGwC/IA12DXBKAHH0lo8glICSbO/q
+	 7bPKhapqsWhLcYV0tbso0Pb3t9Ibu/P68dX+I6CVXPJrY+OU15Ve/unv9iuz5e+9Lq
+	 0XUneYS4nS3xtK/am4IMFKgpiAGNPkGX1utbcJAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <Alexander.Deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Luben Tuikov <luben.tuikov@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Tianrui Zhao <zhaotianrui@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 28/62] gpu/drm: Eliminate DRM_SCHED_PRIORITY_UNSET
-Date: Mon,  6 Nov 2023 14:03:34 +0100
-Message-ID: <20231106130302.835019973@linuxfoundation.org>
+Subject: [PATCH 6.1 29/62] LoongArch: Export symbol invalid_pud_table for modules building
+Date: Mon,  6 Nov 2023 14:03:35 +0100
+Message-ID: <20231106130302.865274219@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.807965064@linuxfoundation.org>
 References: <20231106130301.807965064@linuxfoundation.org>
@@ -37,61 +37,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luben Tuikov <luben.tuikov@amd.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit fa8391ad68c16716e2c06ada397e99ceed2fb647 ]
+[ Upstream commit 449c2756c2323c9e32b2a2fa9c8b59ce91b5819d ]
 
-Eliminate DRM_SCHED_PRIORITY_UNSET, value of -2, whose only user was
-amdgpu. Furthermore, eliminate an index bug, in that when amdgpu boots, it
-calls drm_sched_entity_init() with DRM_SCHED_PRIORITY_UNSET, which uses it to
-index sched->sched_rq[].
+Export symbol invalid_pud_table for modules building (such as the KVM
+module) if 4-level page tables enabled. Otherwise we get:
 
-Cc: Alex Deucher <Alexander.Deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Signed-off-by: Luben Tuikov <luben.tuikov@amd.com>
-Acked-by: Alex Deucher <Alexander.Deucher@amd.com>
-Link: https://lore.kernel.org/r/20231017035656.8211-2-luben.tuikov@amd.com
+ERROR: modpost: "invalid_pud_table" [arch/loongarch/kvm/kvm.ko] undefined!
+
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Tianrui Zhao <zhaotianrui@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c | 3 ++-
- include/drm/gpu_scheduler.h             | 3 +--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ arch/loongarch/mm/init.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-index fdbeafda4e80a..1ed2142a6e7bf 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-@@ -64,7 +64,8 @@ amdgpu_ctx_to_drm_sched_prio(int32_t ctx_prio)
- {
- 	switch (ctx_prio) {
- 	case AMDGPU_CTX_PRIORITY_UNSET:
--		return DRM_SCHED_PRIORITY_UNSET;
-+		pr_warn_once("AMD-->DRM context priority value UNSET-->NORMAL");
-+		return DRM_SCHED_PRIORITY_NORMAL;
- 
- 	case AMDGPU_CTX_PRIORITY_VERY_LOW:
- 		return DRM_SCHED_PRIORITY_MIN;
-diff --git a/include/drm/gpu_scheduler.h b/include/drm/gpu_scheduler.h
-index 2ae4fd62e01c4..17e7e3145a058 100644
---- a/include/drm/gpu_scheduler.h
-+++ b/include/drm/gpu_scheduler.h
-@@ -55,8 +55,7 @@ enum drm_sched_priority {
- 	DRM_SCHED_PRIORITY_HIGH,
- 	DRM_SCHED_PRIORITY_KERNEL,
- 
--	DRM_SCHED_PRIORITY_COUNT,
--	DRM_SCHED_PRIORITY_UNSET = -2
-+	DRM_SCHED_PRIORITY_COUNT
- };
- 
- /**
+diff --git a/arch/loongarch/mm/init.c b/arch/loongarch/mm/init.c
+index c7e9c96719fa3..c74da7770e39e 100644
+--- a/arch/loongarch/mm/init.c
++++ b/arch/loongarch/mm/init.c
+@@ -228,6 +228,7 @@ pgd_t swapper_pg_dir[_PTRS_PER_PGD] __section(".bss..swapper_pg_dir");
+ pgd_t invalid_pg_dir[_PTRS_PER_PGD] __page_aligned_bss;
+ #ifndef __PAGETABLE_PUD_FOLDED
+ pud_t invalid_pud_table[PTRS_PER_PUD] __page_aligned_bss;
++EXPORT_SYMBOL(invalid_pud_table);
+ #endif
+ #ifndef __PAGETABLE_PMD_FOLDED
+ pmd_t invalid_pmd_table[PTRS_PER_PMD] __page_aligned_bss;
 -- 
 2.42.0
 
