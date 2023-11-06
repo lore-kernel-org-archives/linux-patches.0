@@ -1,37 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C03C208C0
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF62208C0
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsQBPmhw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2493C433C7;
-	Mon,  6 Nov 2023 13:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPynPOIz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0581C433C7;
+	Mon,  6 Nov 2023 13:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277498;
-	bh=UvbDOUmBBd0yILHq3MqRmA7MsVf21PuVzw+8gkJPgPI=;
+	s=korg; t=1699277501;
+	bh=BXzyk2069wlZfWUZlBnEaz+jfidzL5ON1R0A0IYwRHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KsQBPmhw9ksWv6+/3ZdCidc1H+TexaljZLsuINER1KIQ+QShwyhJjDj7yJpA+7UQb
-	 zO/MvDw4Vae1EPKBNfLaLc1rDj7p5AVbiQk2dfLnMiIwWpEI8iJBB/SZZ5usYDsytw
-	 5y5o815wxCT7o/kZ27yGWc2WGLjtFhsu2lcBbE1M=
+	b=NPynPOIzYTv2B+pkAeOBp1wC6ggE5+fmlczK9nNrhcaBFD9NeNq4zym6pCOZjJGKv
+	 KX57Jh59siXCavvc4Lp2lp4aIXEDmrGitdzZ+zVRKN/XagUkjh0opC/42JLEios5G8
+	 XyJ90eTysFuT044OTMR1hcrQ4giWYJHQLR7EYZv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Li <haibo.li@mediatek.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <keescook@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 25/95] kasan: print the original fault addr when access invalid shadow
-Date: Mon,  6 Nov 2023 14:03:53 +0100
-Message-ID: <20231106130305.642351349@linuxfoundation.org>
+	Robert Hancock <robert.hancock@calian.com>,
+	"OGriofa, Conall" <conall.ogriofa@amd.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>,
+	O'Griofa
+Subject: [PATCH 5.10 43/95] iio: adc: xilinx-xadc: Dont clobber preset voltage/temperature thresholds
+Date: Mon,  6 Nov 2023 14:04:11 +0100
+Message-ID: <20231106130306.275999971@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -50,90 +45,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Li <haibo.li@mediatek.com>
+From: Robert Hancock <robert.hancock@calian.com>
 
-commit babddbfb7d7d70ae7f10fedd75a45d8ad75fdddf upstream.
+[ Upstream commit 8d6b3ea4d9eaca80982442b68a292ce50ce0a135 ]
 
-when the checked address is illegal,the corresponding shadow address from
-kasan_mem_to_shadow may have no mapping in mmu table.  Access such shadow
-address causes kernel oops.  Here is a sample about oops on arm64(VA
-39bit) with KASAN_SW_TAGS and KASAN_OUTLINE on:
+In the probe function, the driver was reading out the thresholds already
+set in the core, which can be configured by the user in the Vivado tools
+when the FPGA image is built. However, it later clobbered those values
+with zero or maximum values. In particular, the overtemperature shutdown
+threshold register was overwritten with the max value, which effectively
+prevents the FPGA from shutting down when the desired threshold was
+eached, potentially risking hardware damage in that case.
 
-[ffffffb80aaaaaaa] pgd=000000005d3ce003, p4d=000000005d3ce003,
-    pud=000000005d3ce003, pmd=0000000000000000
-Internal error: Oops: 0000000096000006 [#1] PREEMPT SMP
-Modules linked in:
-CPU: 3 PID: 100 Comm: sh Not tainted 6.6.0-rc1-dirty #43
-Hardware name: linux,dummy-virt (DT)
-pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __hwasan_load8_noabort+0x5c/0x90
-lr : do_ib_ob+0xf4/0x110
-ffffffb80aaaaaaa is the shadow address for efffff80aaaaaaaa.
-The problem is reading invalid shadow in kasan_check_range.
+Remove this code to leave the preconfigured default threshold values
+intact.
 
-The generic kasan also has similar oops.
+The code was also disabling all alarms regardless of what enable state
+they were left in by the FPGA image, including the overtemperature
+shutdown feature. Leave these bits in their original state so they are
+not unconditionally disabled.
 
-It only reports the shadow address which causes oops but not
-the original address.
-
-Commit 2f004eea0fc8("x86/kasan: Print original address on #GP")
-introduce to kasan_non_canonical_hook but limit it to KASAN_INLINE.
-
-This patch extends it to KASAN_OUTLINE mode.
-
-Link: https://lkml.kernel.org/r/20231009073748.159228-1-haibo.li@mediatek.com
-Fixes: 2f004eea0fc8("x86/kasan: Print original address on #GP")
-Signed-off-by: Haibo Li <haibo.li@mediatek.com>
-Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Haibo Li <haibo.li@mediatek.com>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Kees Cook <keescook@chromium.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bdc8cda1d010 ("iio:adc: Add Xilinx XADC driver")
+Signed-off-by: Robert Hancock <robert.hancock@calian.com>
+Acked-by: O'Griofa, Conall <conall.ogriofa@amd.com>
+Tested-by: O'Griofa, Conall <conall.ogriofa@amd.com>
+Link: https://lore.kernel.org/r/20230915001019.2862964-2-robert.hancock@calian.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kasan.h |    6 +++---
- mm/kasan/report.c     |    4 +---
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ drivers/iio/adc/xilinx-xadc-core.c | 22 ----------------------
+ 1 file changed, 22 deletions(-)
 
---- a/include/linux/kasan.h
-+++ b/include/linux/kasan.h
-@@ -234,10 +234,10 @@ static inline void kasan_release_vmalloc
- 					 unsigned long free_region_end) {}
- #endif
+diff --git a/drivers/iio/adc/xilinx-xadc-core.c b/drivers/iio/adc/xilinx-xadc-core.c
+index fec266682e91d..30b5a17ce41a7 100644
+--- a/drivers/iio/adc/xilinx-xadc-core.c
++++ b/drivers/iio/adc/xilinx-xadc-core.c
+@@ -1334,28 +1334,6 @@ static int xadc_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
  
--#ifdef CONFIG_KASAN_INLINE
-+#ifdef CONFIG_KASAN
- void kasan_non_canonical_hook(unsigned long addr);
--#else /* CONFIG_KASAN_INLINE */
-+#else /* CONFIG_KASAN */
- static inline void kasan_non_canonical_hook(unsigned long addr) { }
--#endif /* CONFIG_KASAN_INLINE */
-+#endif /* CONFIG_KASAN */
+-	/* Disable all alarms */
+-	ret = xadc_update_adc_reg(xadc, XADC_REG_CONF1, XADC_CONF1_ALARM_MASK,
+-				  XADC_CONF1_ALARM_MASK);
+-	if (ret)
+-		return ret;
+-
+-	/* Set thresholds to min/max */
+-	for (i = 0; i < 16; i++) {
+-		/*
+-		 * Set max voltage threshold and both temperature thresholds to
+-		 * 0xffff, min voltage threshold to 0.
+-		 */
+-		if (i % 8 < 4 || i == 7)
+-			xadc->threshold[i] = 0xffff;
+-		else
+-			xadc->threshold[i] = 0;
+-		ret = xadc_write_adc_reg(xadc, XADC_REG_THRESHOLD(i),
+-			xadc->threshold[i]);
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	/* Go to non-buffered mode */
+ 	xadc_postdisable(indio_dev);
  
- #endif /* LINUX_KASAN_H */
---- a/mm/kasan/report.c
-+++ b/mm/kasan/report.c
-@@ -560,9 +560,8 @@ bool kasan_report(unsigned long addr, si
- 	return ret;
- }
- 
--#ifdef CONFIG_KASAN_INLINE
- /*
-- * With CONFIG_KASAN_INLINE, accesses to bogus pointers (outside the high
-+ * With CONFIG_KASAN, accesses to bogus pointers (outside the high
-  * canonical half of the address space) cause out-of-bounds shadow memory reads
-  * before the actual access. For addresses in the low canonical half of the
-  * address space, as well as most non-canonical addresses, that out-of-bounds
-@@ -598,4 +597,3 @@ void kasan_non_canonical_hook(unsigned l
- 	pr_alert("KASAN: %s in range [0x%016lx-0x%016lx]\n", bug_type,
- 		 orig_addr, orig_addr + KASAN_SHADOW_MASK);
- }
--#endif
+-- 
+2.42.0
+
 
 
