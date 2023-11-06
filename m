@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE0323777
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F355A250EB
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hk1HX3AC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D21C433C8;
-	Mon,  6 Nov 2023 13:44:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAwWcc+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D818C433C7;
+	Mon,  6 Nov 2023 13:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699278289;
-	bh=CL+ZUHlmu3+tefPiatLvmbyQ6rwnXsEKS9GWzrm7TiY=;
+	s=korg; t=1699278302;
+	bh=QjzKn7em8P0Qjfs26RUHz4+J3/6oh7Hzue1mBuAppAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hk1HX3ACyiljB1D2eV0BOKB7Ey8FbAypnE/2gS9qKY8JTG1Z2x2JUF2uJt/S0TK8J
-	 YkP09Z4bWVpYmXEsZSKdl0K61SXXunrU7MjpdLhY0bXkRaI0KnDXjo7LJqbT4tdQ4m
-	 H+CZK/k0UKBM+pwkAFnF1oto2Hlvq0LozGaFqiUY=
+	b=yAwWcc+DvADNkqQx2HYl/aFc62lKzsng//w/5ntSfT9hobPiFxkQ4ZlNfcMcnjLBP
+	 jhRDLKq5rRh2FVtL7rWjkHjfijkxBG0tntdX7s/pQCrBs5ExdSgEqlqh76z7cVhaFm
+	 HVlQjnHE1kcWhBKIws4C50dfCbQ3HdE4dm/pferY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,12 +21,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ruanjinjie@huawei.com,
 	stable@vger.kernel.org,
 	Mark Rutland <mark.rutland@arm.com>
-Subject: [PATCH 4.19 27/61] arm64: fix a concurrency issue in emulation_proc_handler()
-Date: Mon,  6 Nov 2023 14:03:23 +0100
-Message-ID: <20231106130300.548984031@linuxfoundation.org>
+Subject: [PATCH 5.4 34/74] arm64: fix a concurrency issue in emulation_proc_handler()
+Date: Mon,  6 Nov 2023 14:03:54 +0100
+Message-ID: <20231106130302.930471520@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
-References: <20231106130259.573843228@linuxfoundation.org>
+In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
+References: <20231106130301.687882731@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,7 +38,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -128,7 +128,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/arch/arm64/kernel/armv8_deprecated.c
 +++ b/arch/arm64/kernel/armv8_deprecated.c
-@@ -211,10 +211,12 @@ static int emulation_proc_handler(struct
+@@ -208,10 +208,12 @@ static int emulation_proc_handler(struct
  				  loff_t *ppos)
  {
  	int ret = 0;
