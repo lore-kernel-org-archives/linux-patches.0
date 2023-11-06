@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF8C200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C4A200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIUjzdqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F143C433C8;
-	Mon,  6 Nov 2023 13:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/9HYEgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968CEC433C7;
+	Mon,  6 Nov 2023 13:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276244;
-	bh=70MjOEJzaS3Vsn9UVX2QDP21QlKeXxoAvxsDE8UbquQ=;
+	s=korg; t=1699276247;
+	bh=alg/Dw/VafJw3yHQIG1l14tcHLZKIAXTyVZKi95rug0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oIUjzdqs94i8pcoHCjMQ8dhMGy6QC3OdRZBzyN5z1U4DGcS8LADBPunltdjmfODdl
-	 InVhmX0MNR3XFesscHBKQRqixUf9BFSxYMAc1JbZ2WfDhQodyqMhlHP8Z1N0w6CxH9
-	 y7Y7wE3E86OczD0LgblBRZlXcErUKdnUbqDBMeKo=
+	b=d/9HYEgOmVOsXr7fpv7R43cgTDladQbPQKpkXYzsHmWl6lEFn/uKh0P8MNgB48zWw
+	 TlGBr5GMXIZeHByccIBmOS4Q/Th9tXHFco8dSglnByrZU8PeXirlganAAacrKi+IKP
+	 794vZ21eTkY8J/j5yficdCV9UZQlJPhpqv1Y2CUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	lee@kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 4.19 39/61] rpmsg: Fix possible refcount leak in rpmsg_register_device_override()
-Date: Mon,  6 Nov 2023 14:03:35 +0100
-Message-ID: <20231106130300.964811140@linuxfoundation.org>
+	Juergen Gross <jgross@suse.com>,
+	Borislav Petkov <bp@suse.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Subject: [PATCH 4.19 40/61] x86: Fix .brk attribute in linker script
+Date: Mon,  6 Nov 2023 14:03:36 +0100
+Message-ID: <20231106130300.995790331@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -43,35 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Juergen Gross <jgross@suse.com>
 
-commit d7bd416d35121c95fe47330e09a5c04adbc5f928 upstream.
+commit 7e09ac27f43b382f5fe9bb7c7f4c465ece1f8a23 upstream.
 
-rpmsg_register_device_override need to call put_device to free vch when
-driver_set_override fails.
+Commit in Fixes added the "NOLOAD" attribute to the .brk section as a
+"failsafe" measure.
 
-Fix this by adding a put_device() to the error path.
+Unfortunately, this leads to the linker no longer covering the .brk
+section in a program header, resulting in the kernel loader not knowing
+that the memory for the .brk section must be reserved.
 
-Fixes: bb17d110cbf2 ("rpmsg: Fix calling device_lock() on non-initialized device")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Link: https://lore.kernel.org/r/20220624024120.11576-1-hbh25y@gmail.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
+This has led to crashes when loading the kernel as PV dom0 under Xen,
+but other scenarios could be hit by the same problem (e.g. in case an
+uncompressed kernel is used and the initrd is placed directly behind
+it).
+
+So drop the "NOLOAD" attribute. This has been verified to correctly
+cover the .brk section by a program header of the resulting ELF file.
+
+Fixes: e32683c6f7d2 ("x86/mm: Fix RESERVE_BRK() for older binutils")
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://lore.kernel.org/r/20220630071441.28576-4-jgross@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/rpmsg_core.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/vmlinux.lds.S |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/rpmsg/rpmsg_core.c
-+++ b/drivers/rpmsg/rpmsg_core.c
-@@ -550,6 +550,7 @@ int rpmsg_register_device_override(struc
- 					  strlen(driver_override));
- 		if (ret) {
- 			dev_err(dev, "device_set_override failed: %d\n", ret);
-+			put_device(dev);
- 			return ret;
- 		}
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -380,7 +380,7 @@ SECTIONS
  	}
+ 
+ 	. = ALIGN(PAGE_SIZE);
+-	.brk (NOLOAD) : AT(ADDR(.brk) - LOAD_OFFSET) {
++	.brk : AT(ADDR(.brk) - LOAD_OFFSET) {
+ 		__brk_base = .;
+ 		. += 64 * 1024;		/* 64k alignment slop space */
+ 		*(.bss..brk)		/* areas brk users have reserved */
 
 
