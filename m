@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE85F2374A
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51732374A
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWsauYom"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59274C433C8;
-	Mon,  6 Nov 2023 13:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6N7nqS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC94C433C9;
+	Mon,  6 Nov 2023 13:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277521;
-	bh=CGeSctzgBcq3W/HKbHjKTj/OvSPDzKxOoEdJ3nuZTsA=;
+	s=korg; t=1699277524;
+	bh=dVMYenqWrapLVYM6uYa1Ovht7nI91uLI/BGKC9bPWBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EWsauYom8YF5Kvq+qDd2Q6H65G7mJxXXQ6g28ZbD0+mAxcpb+6dZIVsBBYsinbJed
-	 vPMPFT/ADrBCx1MekXOB6VgdpRm9yVLRBeYgIb2frOdZ7t3MQc+gybI4CE6YWiOdiL
-	 CLN78kcN5r+HSR+kaTPYk2LY9LOSokt9KopFpJ/A=
+	b=y6N7nqS/+OobsSY09Wy01NWtrTrhO9Y16pps9RB40uMdM5XNXd82e/vfTI3n7XH0r
+	 0aY6X13f+1KGkqfju29IWFazauo16XQzQQ57YhV+Xqrld5P/YcmopJy00WCSMKGiHo
+	 Gz75i+cNGuvdKyHw+o9yTWV+Fr/vxxp/nFDM9/Q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Baokun Li <libaokun1@huawei.com>,
 	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 50/95] ext4: add two helper functions extent_logical_end() and pa_logical_end()
-Date: Mon,  6 Nov 2023 14:04:18 +0100
-Message-ID: <20231106130306.515095505@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.10 51/95] ext4: fix BUG in ext4_mb_new_inode_pa() due to overflow
+Date: Mon,  6 Nov 2023 14:04:19 +0100
+Message-ID: <20231106130306.559767641@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -44,79 +45,116 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-commit 43bbddc067883d94de7a43d5756a295439fbe37d upstream.
+commit bc056e7163ac7db945366de219745cf94f32a3e6 upstream.
 
-When we use lstart + len to calculate the end of free extent or prealloc
-space, it may exceed the maximum value of 4294967295(0xffffffff) supported
-by ext4_lblk_t and cause overflow, which may lead to various problems.
+When we calculate the end position of ext4_free_extent, this position may
+be exactly where ext4_lblk_t (i.e. uint) overflows. For example, if
+ac_g_ex.fe_logical is 4294965248 and ac_orig_goal_len is 2048, then the
+computed end is 0x100000000, which is 0. If ac->ac_o_ex.fe_logical is not
+the first case of adjusting the best extent, that is, new_bex_end > 0, the
+following BUG_ON will be triggered:
 
-Therefore, we add two helper functions, extent_logical_end() and
-pa_logical_end(), to limit the type of end to loff_t, and also convert
-lstart to loff_t for calculation to avoid overflow.
+=========================================================
+kernel BUG at fs/ext4/mballoc.c:5116!
+invalid opcode: 0000 [#1] PREEMPT SMP PTI
+CPU: 3 PID: 673 Comm: xfs_io Tainted: G E 6.5.0-rc1+ #279
+RIP: 0010:ext4_mb_new_inode_pa+0xc5/0x430
+Call Trace:
+ <TASK>
+ ext4_mb_use_best_found+0x203/0x2f0
+ ext4_mb_try_best_found+0x163/0x240
+ ext4_mb_regular_allocator+0x158/0x1550
+ ext4_mb_new_blocks+0x86a/0xe10
+ ext4_ext_map_blocks+0xb0c/0x13a0
+ ext4_map_blocks+0x2cd/0x8f0
+ ext4_iomap_begin+0x27b/0x400
+ iomap_iter+0x222/0x3d0
+ __iomap_dio_rw+0x243/0xcb0
+ iomap_dio_rw+0x16/0x80
+=========================================================
 
+A simple reproducer demonstrating the problem:
+
+	mkfs.ext4 -F /dev/sda -b 4096 100M
+	mount /dev/sda /tmp/test
+	fallocate -l1M /tmp/test/tmp
+	fallocate -l10M /tmp/test/file
+	fallocate -i -o 1M -l16777203M /tmp/test/file
+	fsstress -d /tmp/test -l 0 -n 100000 -p 8 &
+	sleep 10 && killall -9 fsstress
+	rm -f /tmp/test/tmp
+	xfs_io -c "open -ad /tmp/test/file" -c "pwrite -S 0xff 0 8192"
+
+We simply refactor the logic for adjusting the best extent by adding
+a temporary ext4_free_extent ex and use extent_logical_end() to avoid
+overflow, which also simplifies the code.
+
+Cc: stable@kernel.org # 6.4
+Fixes: 93cdf49f6eca ("ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()")
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20230724121059.11834-2-libaokun1@huawei.com
+Link: https://lore.kernel.org/r/20230724121059.11834-3-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |    7 +++----
- fs/ext4/mballoc.h |   14 ++++++++++++++
- 2 files changed, 17 insertions(+), 4 deletions(-)
+ fs/ext4/mballoc.c |   31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -3545,7 +3545,7 @@ ext4_mb_normalize_request(struct ext4_al
+@@ -4130,8 +4130,11 @@ ext4_mb_new_inode_pa(struct ext4_allocat
+ 	pa = ac->ac_pa;
  
- 	/* first, let's learn actual file size
- 	 * given current request is allocated */
--	size = ac->ac_o_ex.fe_logical + EXT4_C2B(sbi, ac->ac_o_ex.fe_len);
-+	size = extent_logical_end(sbi, &ac->ac_o_ex);
- 	size = size << bsbits;
- 	if (size < i_size_read(ac->ac_inode))
- 		size = i_size_read(ac->ac_inode);
-@@ -3885,8 +3885,7 @@ ext4_mb_use_preallocated(struct ext4_all
- 		/* all fields in this condition don't change,
- 		 * so we can skip locking for them */
- 		if (ac->ac_o_ex.fe_logical < pa->pa_lstart ||
--		    ac->ac_o_ex.fe_logical >= (pa->pa_lstart +
--					       EXT4_C2B(sbi, pa->pa_len)))
-+		    ac->ac_o_ex.fe_logical >= pa_logical_end(sbi, pa))
- 			continue;
+ 	if (ac->ac_b_ex.fe_len < ac->ac_g_ex.fe_len) {
+-		int new_bex_start;
+-		int new_bex_end;
++		struct ext4_free_extent ex = {
++			.fe_logical = ac->ac_g_ex.fe_logical,
++			.fe_len = ac->ac_g_ex.fe_len,
++		};
++		loff_t orig_goal_end = extent_logical_end(sbi, &ex);
  
- 		/* non-extent files can't have physical blocks past 2^32 */
-@@ -4704,7 +4703,7 @@ static void ext4_mb_group_or_file(struct
- 	if (unlikely(ac->ac_flags & EXT4_MB_HINT_GOAL_ONLY))
- 		return;
+ 		/* we can't allocate as much as normalizer wants.
+ 		 * so, found space must get proper lstart
+@@ -4150,29 +4153,23 @@ ext4_mb_new_inode_pa(struct ext4_allocat
+ 		 *    still cover original start
+ 		 * 3. Else, keep the best ex at start of original request.
+ 		 */
+-		new_bex_end = ac->ac_g_ex.fe_logical +
+-			EXT4_C2B(sbi, ac->ac_g_ex.fe_len);
+-		new_bex_start = new_bex_end - EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
+-		if (ac->ac_o_ex.fe_logical >= new_bex_start)
+-			goto adjust_bex;
++		ex.fe_len = ac->ac_b_ex.fe_len;
  
--	size = ac->ac_o_ex.fe_logical + EXT4_C2B(sbi, ac->ac_o_ex.fe_len);
-+	size = extent_logical_end(sbi, &ac->ac_o_ex);
- 	isize = (i_size_read(ac->ac_inode) + ac->ac_sb->s_blocksize - 1)
- 		>> bsbits;
+-		new_bex_start = ac->ac_g_ex.fe_logical;
+-		new_bex_end =
+-			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
+-		if (ac->ac_o_ex.fe_logical < new_bex_end)
++		ex.fe_logical = orig_goal_end - EXT4_C2B(sbi, ex.fe_len);
++		if (ac->ac_o_ex.fe_logical >= ex.fe_logical)
+ 			goto adjust_bex;
  
---- a/fs/ext4/mballoc.h
-+++ b/fs/ext4/mballoc.h
-@@ -199,6 +199,20 @@ static inline ext4_fsblk_t ext4_grp_offs
- 		(fex->fe_start << EXT4_SB(sb)->s_cluster_bits);
- }
+-		new_bex_start = ac->ac_o_ex.fe_logical;
+-		new_bex_end =
+-			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
++		ex.fe_logical = ac->ac_g_ex.fe_logical;
++		if (ac->ac_o_ex.fe_logical < extent_logical_end(sbi, &ex))
++			goto adjust_bex;
  
-+static inline loff_t extent_logical_end(struct ext4_sb_info *sbi,
-+					struct ext4_free_extent *fex)
-+{
-+	/* Use loff_t to avoid end exceeding ext4_lblk_t max. */
-+	return (loff_t)fex->fe_logical + EXT4_C2B(sbi, fex->fe_len);
-+}
-+
-+static inline loff_t pa_logical_end(struct ext4_sb_info *sbi,
-+				    struct ext4_prealloc_space *pa)
-+{
-+	/* Use loff_t to avoid end exceeding ext4_lblk_t max. */
-+	return (loff_t)pa->pa_lstart + EXT4_C2B(sbi, pa->pa_len);
-+}
-+
- typedef int (*ext4_mballoc_query_range_fn)(
- 	struct super_block		*sb,
- 	ext4_group_t			agno,
++		ex.fe_logical = ac->ac_o_ex.fe_logical;
+ adjust_bex:
+-		ac->ac_b_ex.fe_logical = new_bex_start;
++		ac->ac_b_ex.fe_logical = ex.fe_logical;
+ 
+ 		BUG_ON(ac->ac_o_ex.fe_logical < ac->ac_b_ex.fe_logical);
+ 		BUG_ON(ac->ac_o_ex.fe_len > ac->ac_b_ex.fe_len);
+-		BUG_ON(new_bex_end > (ac->ac_g_ex.fe_logical +
+-				      EXT4_C2B(sbi, ac->ac_g_ex.fe_len)));
++		BUG_ON(extent_logical_end(sbi, &ex) > orig_goal_end);
+ 	}
+ 
+ 	/* preallocation can change ac_b_ex, thus we store actually
 
 
