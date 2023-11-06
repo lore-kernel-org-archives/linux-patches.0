@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39901200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF8C200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTmHnk/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9632C433C7;
-	Mon,  6 Nov 2023 13:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIUjzdqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F143C433C8;
+	Mon,  6 Nov 2023 13:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276241;
-	bh=/fIuG5rtL+aaUE6m0m+EesJ50nKC0dfh+1ihlyH1hOc=;
+	s=korg; t=1699276244;
+	bh=70MjOEJzaS3Vsn9UVX2QDP21QlKeXxoAvxsDE8UbquQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cTmHnk/U6ri2UjgtcTNFGCb6G3sui3ACdKJhXeebKmTh+ARoRs7Ki61Q+FSrAa1Cb
-	 RapKwLPL5BjCgCFt81AKQ4ICJgwcQfXtUViwf1HMdY9e5djcnwLBT7wrrybMjBQWoN
-	 +36UStjCqYuCGeCeAWo3G77keGOjdHc8UdNLgFSM=
+	b=oIUjzdqs94i8pcoHCjMQ8dhMGy6QC3OdRZBzyN5z1U4DGcS8LADBPunltdjmfODdl
+	 InVhmX0MNR3XFesscHBKQRqixUf9BFSxYMAc1JbZ2WfDhQodyqMhlHP8Z1N0w6CxH9
+	 y7Y7wE3E86OczD0LgblBRZlXcErUKdnUbqDBMeKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org,
 	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lew <quic_clew@quicinc.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 4.19 38/61] rpmsg: glink: Release driver_override
-Date: Mon,  6 Nov 2023 14:03:34 +0100
-Message-ID: <20231106130300.928321557@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 4.19 39/61] rpmsg: Fix possible refcount leak in rpmsg_register_device_override()
+Date: Mon,  6 Nov 2023 14:03:35 +0100
+Message-ID: <20231106130300.964811140@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -43,34 +43,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-commit fb80ef67e8ff6a00d3faad4cb348dafdb8eccfd8 upstream.
+commit d7bd416d35121c95fe47330e09a5c04adbc5f928 upstream.
 
-Upon termination of the rpmsg_device, driver_override needs to be freed
-to avoid leaking the potentially assigned string.
+rpmsg_register_device_override need to call put_device to free vch when
+driver_set_override fails.
 
-Fixes: 42cd402b8fd4 ("rpmsg: Fix kfree() of static memory on setting driver_override")
-Fixes: 39e47767ec9b ("rpmsg: Add driver_override device attribute for rpmsg_device")
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230109223931.1706429-1-quic_bjorande@quicinc.com
+Fix this by adding a put_device() to the error path.
+
+Fixes: bb17d110cbf2 ("rpmsg: Fix calling device_lock() on non-initialized device")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Link: https://lore.kernel.org/r/20220624024120.11576-1-hbh25y@gmail.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/qcom_glink_native.c |    1 +
+ drivers/rpmsg/rpmsg_core.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1379,6 +1379,7 @@ static void qcom_glink_rpdev_release(str
- 	struct glink_channel *channel = to_glink_channel(rpdev->ept);
- 
- 	channel->rpdev = NULL;
-+	kfree(rpdev->driver_override);
- 	kfree(rpdev);
- }
- 
+--- a/drivers/rpmsg/rpmsg_core.c
++++ b/drivers/rpmsg/rpmsg_core.c
+@@ -550,6 +550,7 @@ int rpmsg_register_device_override(struc
+ 					  strlen(driver_override));
+ 		if (ret) {
+ 			dev_err(dev, "device_set_override failed: %d\n", ret);
++			put_device(dev);
+ 			return ret;
+ 		}
+ 	}
 
 
