@@ -1,35 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CB6208BD
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A81208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exf4vPjK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC51C433C8;
-	Mon,  6 Nov 2023 13:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3bCUAL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26243C433C7;
+	Mon,  6 Nov 2023 13:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276638;
-	bh=FsLGLYpIUc6/GiSd3/0O6jYzNTJYDJr+CYiTu+UbGeA=;
+	s=korg; t=1699276641;
+	bh=MDiRDevjjI651wAF32BGgxiqBsaNHAsJ7lZz3UqmUyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=exf4vPjKIf6qnlYGV5cMq0Q3G4pptKvJu1mEDBK+ccVWoY/IQxP76vpxPoZ1H6SZE
-	 4xNB4fEnwR1ly6u4vRrtgkPI1YfHOYNBQfX/tcbMIU++VMwpohYXNBSF3cQJ/uMLeS
-	 IBcxIBNfvr/x258VSUjVF68UdVPTIvccQweWejvk=
+	b=t3bCUAL/7rrqfbIrPc63Rmy62Mk8n+VXeQUE10syHpCFkBMHeL7W4b5FMZYA0e1gp
+	 5Lhx8eztMOA+LGQu9eyOqoQAK4j9QNrM6OdnFpnmDoO4bKQ0tYCadKW+dyI3S8Utli
+	 wldKct1bxFvkPdcs/VA1C2w4sQsilbJwzEJLaCbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Baoquan He <bhe@redhat.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Helge Deller <deller@gmx.de>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 18/88] fbdev: atyfb: only use ioremap_uc() on i386 and ia64
-Date: Mon,  6 Nov 2023 14:03:12 +0100
-Message-ID: <20231106130306.459429728@linuxfoundation.org>
+Subject: [PATCH 6.5 19/88] fs/ntfs3: Add ckeck in ni_update_parent()
+Date: Mon,  6 Nov 2023 14:03:13 +0100
+Message-ID: <20231106130306.494672100@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -48,56 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit c1a8d1d0edb71dec15c9649cb56866c71c1ecd9e ]
+[ Upstream commit 87d1888aa40f25773fa0b948bcb2545f97e2cb15 ]
 
-ioremap_uc() is only meaningful on old x86-32 systems with the PAT
-extension, and on ia64 with its slightly unconventional ioremap()
-behavior, everywhere else this is the same as ioremap() anyway.
+Check simple case when parent inode equals current inode.
 
-Change the only driver that still references ioremap_uc() to only do so
-on x86-32/ia64 in order to allow removing that interface at some
-point in the future for the other architectures.
-
-On some architectures, ioremap_uc() just returns NULL, changing
-the driver to call ioremap() means that they now have a chance
-of working correctly.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: linux-fbdev@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/aty/atyfb_base.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ntfs3/frecord.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/video/fbdev/aty/atyfb_base.c b/drivers/video/fbdev/aty/atyfb_base.c
-index cba2b113b28b0..a73114c1c6918 100644
---- a/drivers/video/fbdev/aty/atyfb_base.c
-+++ b/drivers/video/fbdev/aty/atyfb_base.c
-@@ -3440,11 +3440,15 @@ static int atyfb_setup_generic(struct pci_dev *pdev, struct fb_info *info,
- 	}
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 16bd9faa2d28b..8f34d6472ddbd 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -3208,6 +3208,12 @@ static bool ni_update_parent(struct ntfs_inode *ni, struct NTFS_DUP_INFO *dup,
+ 		if (!fname || !memcmp(&fname->dup, dup, sizeof(fname->dup)))
+ 			continue;
  
- 	info->fix.mmio_start = raddr;
-+#if defined(__i386__) || defined(__ia64__)
- 	/*
- 	 * By using strong UC we force the MTRR to never have an
- 	 * effect on the MMIO region on both non-PAT and PAT systems.
- 	 */
- 	par->ati_regbase = ioremap_uc(info->fix.mmio_start, 0x1000);
-+#else
-+	par->ati_regbase = ioremap(info->fix.mmio_start, 0x1000);
-+#endif
- 	if (par->ati_regbase == NULL)
- 		return -ENOMEM;
- 
++		/* Check simple case when parent inode equals current inode. */
++		if (ino_get(&fname->home) == ni->vfs_inode.i_ino) {
++			ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
++			continue;
++		}
++
+ 		/* ntfs_iget5 may sleep. */
+ 		dir = ntfs_iget5(sb, &fname->home, NULL);
+ 		if (IS_ERR(dir)) {
 -- 
 2.42.0
 
