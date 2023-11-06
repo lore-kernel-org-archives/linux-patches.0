@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EB6208BD
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8C5208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUpu2xMd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0FEC433C8;
-	Mon,  6 Nov 2023 13:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbYDCxFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10D1C433C7;
+	Mon,  6 Nov 2023 13:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276653;
-	bh=PZy0gEs3mIsN/v45teV5woRNZ4SiU2qjPQBBYreA7ek=;
+	s=korg; t=1699276656;
+	bh=9dQobiRNNlkXgz2XtENz8/mHVy6rRKVfrhl333bUvhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hUpu2xMdRnaUtEW+dOMmMWuI77n4gJ+pB6HxEP+VIGS1cgppS7wqL8zuNouUcfhUU
-	 1sn432bg0wUdxG75jZGxfmRELeVu/wn4EFC0tHCzAsflV5eQhJZ/Te1RL3i/fNo15e
-	 oeC7O1UGVdsomOa5WDJvS0oVkQybrWTqwqG6rNlM=
+	b=LbYDCxFS8o6GA3e5i8IrC4/spPlCMzJgcuv8H12iv64zQrb/vweyXpcvfqBnrBKlz
+	 yR+HovRZQU7hUySA3TGKHzOFP2l7mbRXSma7NcYPC+ybTzJub75bM4C/CahG6cf9DW
+	 ZxW5QBII5RpBp1W71D+hTcaAdjAX6w1K2/Cf6GSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Zary <linux@zary.sk>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 13/88] ata: pata_parport: add custom version of wait_after_reset
-Date: Mon,  6 Nov 2023 14:03:07 +0100
-Message-ID: <20231106130306.290956056@linuxfoundation.org>
+Subject: [PATCH 6.5 46/88] LoongArch: Use SYM_CODE_* to annotate exception handlers
+Date: Mon,  6 Nov 2023 14:03:40 +0100
+Message-ID: <20231106130307.552417293@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -43,114 +42,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Zary <linux@zary.sk>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit f343e578fef99a69b3322aca38b94a6d8ded2ce7 ]
+[ Upstream commit 00c2ca84c680f64b79b5e10a482ca435fd7d98ce ]
 
-Some parallel adapters (e.g. EXP Computer MC-1285B EPP Cable) return
-bogus values when there's no master device present. This can cause
-reset to fail, preventing the lone slave device (such as EXP Computer
-CD-865) from working.
+As described in include/linux/linkage.h,
 
-Add custom version of wait_after_reset that ignores master failure when
-a slave device is present. The custom version is also needed because
-the generic ata_sff_wait_after_reset uses direct port I/O for slave
-device detection.
+  FUNC -- C-like functions (proper stack frame etc.)
+  CODE -- non-C code (e.g. irq handlers with different, special stack etc.)
 
-Signed-off-by: Ondrej Zary <linux@zary.sk>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+  SYM_FUNC_{START, END} -- use for global functions
+  SYM_CODE_{START, END} -- use for non-C (special) functions
+
+So use SYM_CODE_* to annotate exception handlers.
+
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_parport/pata_parport.c | 68 ++++++++++++++++++++++++-
- 1 file changed, 67 insertions(+), 1 deletion(-)
+ arch/loongarch/include/asm/linkage.h |  8 +++++++
+ arch/loongarch/kernel/entry.S        |  4 ++--
+ arch/loongarch/kernel/genex.S        | 16 ++++++-------
+ arch/loongarch/mm/tlbex.S            | 36 ++++++++++++++--------------
+ 4 files changed, 36 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/ata/pata_parport/pata_parport.c b/drivers/ata/pata_parport/pata_parport.c
-index cf87bbb52f1ff..a7adfdcb5e27c 100644
---- a/drivers/ata/pata_parport/pata_parport.c
-+++ b/drivers/ata/pata_parport/pata_parport.c
-@@ -80,6 +80,72 @@ static bool pata_parport_devchk(struct ata_port *ap, unsigned int device)
- 	return (nsect == 0x55) && (lbal == 0xaa);
- }
+diff --git a/arch/loongarch/include/asm/linkage.h b/arch/loongarch/include/asm/linkage.h
+index 81b0c4cfbf4f2..e2eca1a25b4ef 100644
+--- a/arch/loongarch/include/asm/linkage.h
++++ b/arch/loongarch/include/asm/linkage.h
+@@ -33,4 +33,12 @@
+ 	.cfi_endproc;					\
+ 	SYM_END(name, SYM_T_FUNC)
  
-+static int pata_parport_wait_after_reset(struct ata_link *link,
-+					 unsigned int devmask,
-+					 unsigned long deadline)
-+{
-+	struct ata_port *ap = link->ap;
-+	struct pi_adapter *pi = ap->host->private_data;
-+	unsigned int dev0 = devmask & (1 << 0);
-+	unsigned int dev1 = devmask & (1 << 1);
-+	int rc, ret = 0;
++#define SYM_CODE_START(name)				\
++	SYM_START(name, SYM_L_GLOBAL, SYM_A_ALIGN)	\
++	.cfi_startproc;
 +
-+	ata_msleep(ap, ATA_WAIT_AFTER_RESET);
++#define SYM_CODE_END(name)				\
++	.cfi_endproc;					\
++	SYM_END(name, SYM_T_NONE)
 +
-+	/* always check readiness of the master device */
-+	rc = ata_sff_wait_ready(link, deadline);
-+	if (rc) {
-+		/*
-+		 * some adapters return bogus values if master device is not
-+		 * present, so don't abort now if a slave device is present
-+		 */
-+		if (!dev1)
-+			return rc;
-+		ret = -ENODEV;
-+	}
-+
-+	/*
-+	 * if device 1 was found in ata_devchk, wait for register
-+	 * access briefly, then wait for BSY to clear.
-+	 */
-+	if (dev1) {
-+		int i;
-+
-+		pata_parport_dev_select(ap, 1);
-+
-+		/*
-+		 * Wait for register access.  Some ATAPI devices fail
-+		 * to set nsect/lbal after reset, so don't waste too
-+		 * much time on it.  We're gonna wait for !BSY anyway.
-+		 */
-+		for (i = 0; i < 2; i++) {
-+			u8 nsect, lbal;
-+
-+			nsect = pi->proto->read_regr(pi, 0, ATA_REG_NSECT);
-+			lbal = pi->proto->read_regr(pi, 0, ATA_REG_LBAL);
-+			if (nsect == 1 && lbal == 1)
-+				break;
-+			/* give drive a breather */
-+			ata_msleep(ap, 50);
-+		}
-+
-+		rc = ata_sff_wait_ready(link, deadline);
-+		if (rc) {
-+			if (rc != -ENODEV)
-+				return rc;
-+			ret = rc;
-+		}
-+	}
-+
-+	pata_parport_dev_select(ap, 0);
-+	if (dev1)
-+		pata_parport_dev_select(ap, 1);
-+	if (dev0)
-+		pata_parport_dev_select(ap, 0);
-+
-+	return ret;
-+}
-+
- static int pata_parport_bus_softreset(struct ata_port *ap, unsigned int devmask,
- 				      unsigned long deadline)
- {
-@@ -94,7 +160,7 @@ static int pata_parport_bus_softreset(struct ata_port *ap, unsigned int devmask,
- 	ap->last_ctl = ap->ctl;
+ #endif
+diff --git a/arch/loongarch/kernel/entry.S b/arch/loongarch/kernel/entry.S
+index d737e3cf42d3f..1781c6a5befa2 100644
+--- a/arch/loongarch/kernel/entry.S
++++ b/arch/loongarch/kernel/entry.S
+@@ -18,7 +18,7 @@
+ 	.text
+ 	.cfi_sections	.debug_frame
+ 	.align	5
+-SYM_FUNC_START(handle_syscall)
++SYM_CODE_START(handle_syscall)
+ 	csrrd		t0, PERCPU_BASE_KS
+ 	la.pcrel	t1, kernelsp
+ 	add.d		t1, t1, t0
+@@ -66,7 +66,7 @@ SYM_FUNC_START(handle_syscall)
+ 	bl		do_syscall
  
- 	/* wait the port to become ready */
--	return ata_sff_wait_after_reset(&ap->link, devmask, deadline);
-+	return pata_parport_wait_after_reset(&ap->link, devmask, deadline);
- }
+ 	RESTORE_ALL_AND_RET
+-SYM_FUNC_END(handle_syscall)
++SYM_CODE_END(handle_syscall)
+ _ASM_NOKPROBE(handle_syscall)
  
- static int pata_parport_softreset(struct ata_link *link, unsigned int *classes,
+ SYM_CODE_START(ret_from_fork)
+diff --git a/arch/loongarch/kernel/genex.S b/arch/loongarch/kernel/genex.S
+index 78f0663846575..2bb3aa2dcfcb2 100644
+--- a/arch/loongarch/kernel/genex.S
++++ b/arch/loongarch/kernel/genex.S
+@@ -31,7 +31,7 @@ SYM_FUNC_START(__arch_cpu_idle)
+ 1:	jr	ra
+ SYM_FUNC_END(__arch_cpu_idle)
+ 
+-SYM_FUNC_START(handle_vint)
++SYM_CODE_START(handle_vint)
+ 	BACKUP_T0T1
+ 	SAVE_ALL
+ 	la_abs	t1, __arch_cpu_idle
+@@ -46,11 +46,11 @@ SYM_FUNC_START(handle_vint)
+ 	la_abs	t0, do_vint
+ 	jirl	ra, t0, 0
+ 	RESTORE_ALL_AND_RET
+-SYM_FUNC_END(handle_vint)
++SYM_CODE_END(handle_vint)
+ 
+-SYM_FUNC_START(except_vec_cex)
++SYM_CODE_START(except_vec_cex)
+ 	b	cache_parity_error
+-SYM_FUNC_END(except_vec_cex)
++SYM_CODE_END(except_vec_cex)
+ 
+ 	.macro	build_prep_badv
+ 	csrrd	t0, LOONGARCH_CSR_BADV
+@@ -66,7 +66,7 @@ SYM_FUNC_END(except_vec_cex)
+ 
+ 	.macro	BUILD_HANDLER exception handler prep
+ 	.align	5
+-	SYM_FUNC_START(handle_\exception)
++	SYM_CODE_START(handle_\exception)
+ 	666:
+ 	BACKUP_T0T1
+ 	SAVE_ALL
+@@ -76,7 +76,7 @@ SYM_FUNC_END(except_vec_cex)
+ 	jirl	ra, t0, 0
+ 	668:
+ 	RESTORE_ALL_AND_RET
+-	SYM_FUNC_END(handle_\exception)
++	SYM_CODE_END(handle_\exception)
+ 	SYM_DATA(unwind_hint_\exception, .word 668b - 666b)
+ 	.endm
+ 
+@@ -93,7 +93,7 @@ SYM_FUNC_END(except_vec_cex)
+ 	BUILD_HANDLER watch watch none
+ 	BUILD_HANDLER reserved reserved none	/* others */
+ 
+-SYM_FUNC_START(handle_sys)
++SYM_CODE_START(handle_sys)
+ 	la_abs	t0, handle_syscall
+ 	jr	t0
+-SYM_FUNC_END(handle_sys)
++SYM_CODE_END(handle_sys)
+diff --git a/arch/loongarch/mm/tlbex.S b/arch/loongarch/mm/tlbex.S
+index ca17dd3a19153..d5d682f3d29f3 100644
+--- a/arch/loongarch/mm/tlbex.S
++++ b/arch/loongarch/mm/tlbex.S
+@@ -17,7 +17,7 @@
+ #define PTRS_PER_PTE_BITS	(PAGE_SHIFT - 3)
+ 
+ 	.macro tlb_do_page_fault, write
+-	SYM_FUNC_START(tlb_do_page_fault_\write)
++	SYM_CODE_START(tlb_do_page_fault_\write)
+ 	SAVE_ALL
+ 	csrrd		a2, LOONGARCH_CSR_BADV
+ 	move		a0, sp
+@@ -25,13 +25,13 @@
+ 	li.w		a1, \write
+ 	bl		do_page_fault
+ 	RESTORE_ALL_AND_RET
+-	SYM_FUNC_END(tlb_do_page_fault_\write)
++	SYM_CODE_END(tlb_do_page_fault_\write)
+ 	.endm
+ 
+ 	tlb_do_page_fault 0
+ 	tlb_do_page_fault 1
+ 
+-SYM_FUNC_START(handle_tlb_protect)
++SYM_CODE_START(handle_tlb_protect)
+ 	BACKUP_T0T1
+ 	SAVE_ALL
+ 	move		a0, sp
+@@ -41,9 +41,9 @@ SYM_FUNC_START(handle_tlb_protect)
+ 	la_abs		t0, do_page_fault
+ 	jirl		ra, t0, 0
+ 	RESTORE_ALL_AND_RET
+-SYM_FUNC_END(handle_tlb_protect)
++SYM_CODE_END(handle_tlb_protect)
+ 
+-SYM_FUNC_START(handle_tlb_load)
++SYM_CODE_START(handle_tlb_load)
+ 	csrwr		t0, EXCEPTION_KS0
+ 	csrwr		t1, EXCEPTION_KS1
+ 	csrwr		ra, EXCEPTION_KS2
+@@ -187,16 +187,16 @@ nopage_tlb_load:
+ 	csrrd		ra, EXCEPTION_KS2
+ 	la_abs		t0, tlb_do_page_fault_0
+ 	jr		t0
+-SYM_FUNC_END(handle_tlb_load)
++SYM_CODE_END(handle_tlb_load)
+ 
+-SYM_FUNC_START(handle_tlb_load_ptw)
++SYM_CODE_START(handle_tlb_load_ptw)
+ 	csrwr		t0, LOONGARCH_CSR_KS0
+ 	csrwr		t1, LOONGARCH_CSR_KS1
+ 	la_abs		t0, tlb_do_page_fault_0
+ 	jr		t0
+-SYM_FUNC_END(handle_tlb_load_ptw)
++SYM_CODE_END(handle_tlb_load_ptw)
+ 
+-SYM_FUNC_START(handle_tlb_store)
++SYM_CODE_START(handle_tlb_store)
+ 	csrwr		t0, EXCEPTION_KS0
+ 	csrwr		t1, EXCEPTION_KS1
+ 	csrwr		ra, EXCEPTION_KS2
+@@ -343,16 +343,16 @@ nopage_tlb_store:
+ 	csrrd		ra, EXCEPTION_KS2
+ 	la_abs		t0, tlb_do_page_fault_1
+ 	jr		t0
+-SYM_FUNC_END(handle_tlb_store)
++SYM_CODE_END(handle_tlb_store)
+ 
+-SYM_FUNC_START(handle_tlb_store_ptw)
++SYM_CODE_START(handle_tlb_store_ptw)
+ 	csrwr		t0, LOONGARCH_CSR_KS0
+ 	csrwr		t1, LOONGARCH_CSR_KS1
+ 	la_abs		t0, tlb_do_page_fault_1
+ 	jr		t0
+-SYM_FUNC_END(handle_tlb_store_ptw)
++SYM_CODE_END(handle_tlb_store_ptw)
+ 
+-SYM_FUNC_START(handle_tlb_modify)
++SYM_CODE_START(handle_tlb_modify)
+ 	csrwr		t0, EXCEPTION_KS0
+ 	csrwr		t1, EXCEPTION_KS1
+ 	csrwr		ra, EXCEPTION_KS2
+@@ -497,16 +497,16 @@ nopage_tlb_modify:
+ 	csrrd		ra, EXCEPTION_KS2
+ 	la_abs		t0, tlb_do_page_fault_1
+ 	jr		t0
+-SYM_FUNC_END(handle_tlb_modify)
++SYM_CODE_END(handle_tlb_modify)
+ 
+-SYM_FUNC_START(handle_tlb_modify_ptw)
++SYM_CODE_START(handle_tlb_modify_ptw)
+ 	csrwr		t0, LOONGARCH_CSR_KS0
+ 	csrwr		t1, LOONGARCH_CSR_KS1
+ 	la_abs		t0, tlb_do_page_fault_1
+ 	jr		t0
+-SYM_FUNC_END(handle_tlb_modify_ptw)
++SYM_CODE_END(handle_tlb_modify_ptw)
+ 
+-SYM_FUNC_START(handle_tlb_refill)
++SYM_CODE_START(handle_tlb_refill)
+ 	csrwr		t0, LOONGARCH_CSR_TLBRSAVE
+ 	csrrd		t0, LOONGARCH_CSR_PGD
+ 	lddir		t0, t0, 3
+@@ -521,4 +521,4 @@ SYM_FUNC_START(handle_tlb_refill)
+ 	tlbfill
+ 	csrrd		t0, LOONGARCH_CSR_TLBRSAVE
+ 	ertn
+-SYM_FUNC_END(handle_tlb_refill)
++SYM_CODE_END(handle_tlb_refill)
 -- 
 2.42.0
 
