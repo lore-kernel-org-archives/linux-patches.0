@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F346208C0
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69259208C0
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fORemOu9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA319C433C7;
-	Mon,  6 Nov 2023 13:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtQZaDU/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89CBC433C7;
+	Mon,  6 Nov 2023 13:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277486;
-	bh=47Zs9sWPoqf7GhbBRhdGTqZJDIOIle82LLL+pHbfkMA=;
+	s=korg; t=1699277489;
+	bh=MmF0wkC/sQP9pfDnMQJV4qDoSmukMSDLfMy9gmMwWjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fORemOu9V4USkLGPOCDanuv4AuqSprhuIRW6QV/nxyi51jCwp6nRA18/oaWAR0H2o
-	 o1kGmLQOZohBUX3HP3xvb1avBOu1OfxfKjAuqyzVeZmsBqxhfpds22vW5vmCkHVNkE
-	 0EVm4lewPfLBJBq9zcapgewfiavtoJFqj6E0mKhU=
+	b=dtQZaDU/hWtztAMM3kOstBtR4kWoLG2T7G0FIr/Gu9TVPynZt/aYek0UDjepoZiBd
+	 GzGaMsRxpBwCwhBXj9x2jj70aLAR2pih9kN2oRH4+9ELA4ige7J9YKohZaXEnwelJp
+	 wT/wB8UG/FYkpYUkkJuLCdhWzdCeSpkPoS6eKfsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Daly <pdaly@redhat.com>,
-	"Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 5.10 39/95] clk: Sanitize possible_parent_show to Handle Return Value of of_clk_get_parent_name
-Date: Mon,  6 Nov 2023 14:04:07 +0100
-Message-ID: <20231106130306.141946646@linuxfoundation.org>
+	Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+	Anand Ashok Dumbre <anandash@xilinx.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 40/95] iio: adc: xilinx: use helper variable for &pdev->dev
+Date: Mon,  6 Nov 2023 14:04:08 +0100
+Message-ID: <20231106130306.181058291@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -42,73 +43,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessandro Carminati <alessandro.carminati@gmail.com>
+From: Bartosz Golaszewski <bgolaszewski@baylibre.com>
 
-commit ceb87a361d0b079ecbc7d2831618c19087f304a9 upstream.
+[ Upstream commit 9d8fd2a06a2bcce8eada1bad26cbe0fbfc27cdf4 ]
 
-In the possible_parent_show function, ensure proper handling of the return
-value from of_clk_get_parent_name to prevent potential issues arising from
-a NULL return.
-The current implementation invokes seq_puts directly on the result of
-of_clk_get_parent_name without verifying the return value, which can lead
-to kernel panic if the function returns NULL.
+It's more elegant to use a helper local variable to store the address
+of the underlying struct device than to dereference pdev everywhere.
 
-This patch addresses the concern by introducing a check on the return
-value of of_clk_get_parent_name. If the return value is not NULL, the
-function proceeds to call seq_puts, providing the returned value as
-argument.
-However, if of_clk_get_parent_name returns NULL, the function provides a
-static string as argument, avoiding the panic.
-
-Fixes: 1ccc0ddf046a ("clk: Use seq_puts() in possible_parent_show()")
-Reported-by: Philip Daly <pdaly@redhat.com>
-Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
-Link: https://lore.kernel.org/r/20230921073217.572151-1-alessandro.carminati@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Tested-by: Anand Ashok Dumbre <anandash@xilinx.com>
+Reviewed-by: Anand Ashok Dumbre <anandash@xilinx.com>
+Link: https://lore.kernel.org/r/20201130142759.28216-2-brgl@bgdev.pl
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 8d6b3ea4d9ea ("iio: adc: xilinx-xadc: Don't clobber preset voltage/temperature thresholds")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/iio/adc/xilinx-xadc-core.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -3167,6 +3167,7 @@ static void possible_parent_show(struct
- 				 unsigned int i, char terminator)
+diff --git a/drivers/iio/adc/xilinx-xadc-core.c b/drivers/iio/adc/xilinx-xadc-core.c
+index f93c34fe58731..8494eb424b331 100644
+--- a/drivers/iio/adc/xilinx-xadc-core.c
++++ b/drivers/iio/adc/xilinx-xadc-core.c
+@@ -1186,6 +1186,7 @@ static int xadc_parse_dt(struct iio_dev *indio_dev, struct device_node *np,
+ 
+ static int xadc_probe(struct platform_device *pdev)
  {
- 	struct clk_core *parent;
-+	const char *name = NULL;
++	struct device *dev = &pdev->dev;
+ 	const struct of_device_id *id;
+ 	struct iio_dev *indio_dev;
+ 	unsigned int bipolar_mask;
+@@ -1195,10 +1196,10 @@ static int xadc_probe(struct platform_device *pdev)
+ 	int irq;
+ 	int i;
  
- 	/*
- 	 * Go through the following options to fetch a parent's name.
-@@ -3181,18 +3182,20 @@ static void possible_parent_show(struct
- 	 * registered (yet).
- 	 */
- 	parent = clk_core_get_parent_by_index(core, i);
--	if (parent)
-+	if (parent) {
- 		seq_puts(s, parent->name);
--	else if (core->parents[i].name)
-+	} else if (core->parents[i].name) {
- 		seq_puts(s, core->parents[i].name);
--	else if (core->parents[i].fw_name)
-+	} else if (core->parents[i].fw_name) {
- 		seq_printf(s, "<%s>(fw)", core->parents[i].fw_name);
--	else if (core->parents[i].index >= 0)
--		seq_puts(s,
--			 of_clk_get_parent_name(core->of_node,
--						core->parents[i].index));
--	else
--		seq_puts(s, "(missing)");
-+	} else {
-+		if (core->parents[i].index >= 0)
-+			name = of_clk_get_parent_name(core->of_node, core->parents[i].index);
-+		if (!name)
-+			name = "(missing)";
-+
-+		seq_puts(s, name);
-+	}
+-	if (!pdev->dev.of_node)
++	if (!dev->of_node)
+ 		return -ENODEV;
  
- 	seq_putc(s, terminator);
- }
+-	id = of_match_node(xadc_of_match_table, pdev->dev.of_node);
++	id = of_match_node(xadc_of_match_table, dev->of_node);
+ 	if (!id)
+ 		return -EINVAL;
+ 
+@@ -1206,7 +1207,7 @@ static int xadc_probe(struct platform_device *pdev)
+ 	if (irq <= 0)
+ 		return -ENXIO;
+ 
+-	indio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*xadc));
++	indio_dev = devm_iio_device_alloc(dev, sizeof(*xadc));
+ 	if (!indio_dev)
+ 		return -ENOMEM;
+ 
+@@ -1226,7 +1227,7 @@ static int xadc_probe(struct platform_device *pdev)
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 	indio_dev->info = &xadc_info;
+ 
+-	ret = xadc_parse_dt(indio_dev, pdev->dev.of_node, &conf0);
++	ret = xadc_parse_dt(indio_dev, dev->of_node, &conf0);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1250,7 +1251,7 @@ static int xadc_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
+-	xadc->clk = devm_clk_get(&pdev->dev, NULL);
++	xadc->clk = devm_clk_get(dev, NULL);
+ 	if (IS_ERR(xadc->clk)) {
+ 		ret = PTR_ERR(xadc->clk);
+ 		goto err_free_samplerate_trigger;
+@@ -1276,7 +1277,7 @@ static int xadc_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	ret = request_irq(xadc->irq, xadc->ops->interrupt_handler, 0,
+-			dev_name(&pdev->dev), indio_dev);
++			  dev_name(dev), indio_dev);
+ 	if (ret)
+ 		goto err_clk_disable_unprepare;
+ 
+-- 
+2.42.0
+
 
 
