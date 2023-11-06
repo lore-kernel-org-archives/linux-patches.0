@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C220320B33
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D22420B33
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n92jH32O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D23C433C7;
-	Mon,  6 Nov 2023 13:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRmA4krX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF83FC433C7;
+	Mon,  6 Nov 2023 13:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276996;
-	bh=OpZSLtXGdEFkT6lsyrGRJZDhHK7GipF/vmSqgU301K0=;
+	s=korg; t=1699276999;
+	bh=0xbwN4Iw9HfqCivsB1ZjtAjhfT/qXrC2E98EgRrLX7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n92jH32OGk0MLG7DCzK6Rx5FmHAHweymf+KKshkJdIPotxtfLtkltMDMrydskPa4G
-	 C5gxIfEDbkBnGYuYLSLoH25lV5bo1rF9Hq815LijZD0rKM1bHVZHlQNu7QwOYsm/n3
-	 sNWZGfEW6s7/i/Ie+FaW4sdbr/efpB/4hAvpwWd4=
+	b=nRmA4krXg3i05sHHttA0JHu0OEYvGyea9qW8T0EA8r2CJGW9ihjy0uiUuYSr4LZ5i
+	 KgjsMhNJVO+xv5Lsm3V98RkU8jbdp/a0SYU8Rs2PT2nIksSE74YZyoUyzpYEJa+TQH
+	 KP6fvm5OUbz2pPfGTNBTuqLCoEnXFsKpJY59Gi+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffery Miller <jefferymiller@google.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Baoquan He <bhe@redhat.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Helge Deller <deller@gmx.de>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	linux-fbdev@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 54/74] Input: synaptics-rmi4 - handle reset delay when using SMBus trsnsport
-Date: Mon,  6 Nov 2023 14:04:14 +0100
-Message-ID: <20231106130303.594488327@linuxfoundation.org>
+Subject: [PATCH 5.4 55/74] fbdev: atyfb: only use ioremap_uc() on i386 and ia64
+Date: Mon,  6 Nov 2023 14:04:15 +0100
+Message-ID: <20231106130303.629558581@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
 References: <20231106130301.687882731@linuxfoundation.org>
@@ -42,132 +48,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 5030b2fe6aab37fe42d14f31842ea38be7c55c57 ]
+[ Upstream commit c1a8d1d0edb71dec15c9649cb56866c71c1ecd9e ]
 
-Touch controllers need some time after receiving reset command for the
-firmware to finish re-initializing and be ready to respond to commands
-from the host. The driver already had handling for the post-reset delay
-for I2C and SPI transports, this change adds the handling to
-SMBus-connected devices.
+ioremap_uc() is only meaningful on old x86-32 systems with the PAT
+extension, and on ia64 with its slightly unconventional ioremap()
+behavior, everywhere else this is the same as ioremap() anyway.
 
-SMBus devices are peculiar because they implement legacy PS/2
-compatibility mode, so reset is actually issued by psmouse driver on the
-associated serio port, after which the control is passed to the RMI4
-driver with SMBus companion device.
+Change the only driver that still references ioremap_uc() to only do so
+on x86-32/ia64 in order to allow removing that interface at some
+point in the future for the other architectures.
 
-Note that originally the delay was added to psmouse driver in
-92e24e0e57f7 ("Input: psmouse - add delay when deactivating for SMBus
-mode"), but that resulted in an unwanted delay in "fast" reconnect
-handler for the serio port, so it was decided to revert the patch and
-have the delay being handled in the RMI4 driver, similar to the other
-transports.
+On some architectures, ioremap_uc() just returns NULL, changing
+the driver to call ioremap() means that they now have a chance
+of working correctly.
 
-Tested-by: Jeffery Miller <jefferymiller@google.com>
-Link: https://lore.kernel.org/r/ZR1yUFJ8a9Zt606N@penguin
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: linux-fbdev@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/synaptics.c |  1 +
- drivers/input/rmi4/rmi_smbus.c  | 50 ++++++++++++++++++---------------
- 2 files changed, 29 insertions(+), 22 deletions(-)
+ drivers/video/fbdev/aty/atyfb_base.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
-index f2383c91113c3..9cfd2c1d4e3af 100644
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -1747,6 +1747,7 @@ static int synaptics_create_intertouch(struct psmouse *psmouse,
- 		psmouse_matches_pnp_id(psmouse, topbuttonpad_pnp_ids) &&
- 		!SYN_CAP_EXT_BUTTONS_STICK(info->ext_cap_10);
- 	const struct rmi_device_platform_data pdata = {
-+		.reset_delay_ms = 30,
- 		.sensor_pdata = {
- 			.sensor_type = rmi_sensor_touchpad,
- 			.axis_align.flip_y = true,
-diff --git a/drivers/input/rmi4/rmi_smbus.c b/drivers/input/rmi4/rmi_smbus.c
-index 2407ea43de59b..f38bf9a5f599d 100644
---- a/drivers/input/rmi4/rmi_smbus.c
-+++ b/drivers/input/rmi4/rmi_smbus.c
-@@ -235,12 +235,29 @@ static void rmi_smb_clear_state(struct rmi_smb_xport *rmi_smb)
+diff --git a/drivers/video/fbdev/aty/atyfb_base.c b/drivers/video/fbdev/aty/atyfb_base.c
+index 6dda5d885a03b..bb9ecf12e7630 100644
+--- a/drivers/video/fbdev/aty/atyfb_base.c
++++ b/drivers/video/fbdev/aty/atyfb_base.c
+@@ -3410,11 +3410,15 @@ static int atyfb_setup_generic(struct pci_dev *pdev, struct fb_info *info,
+ 	}
  
- static int rmi_smb_enable_smbus_mode(struct rmi_smb_xport *rmi_smb)
- {
--	int retval;
-+	struct i2c_client *client = rmi_smb->client;
-+	int smbus_version;
-+
-+	/*
-+	 * psmouse driver resets the controller, we only need to wait
-+	 * to give the firmware chance to fully reinitialize.
-+	 */
-+	if (rmi_smb->xport.pdata.reset_delay_ms)
-+		msleep(rmi_smb->xport.pdata.reset_delay_ms);
- 
- 	/* we need to get the smbus version to activate the touchpad */
--	retval = rmi_smb_get_version(rmi_smb);
--	if (retval < 0)
--		return retval;
-+	smbus_version = rmi_smb_get_version(rmi_smb);
-+	if (smbus_version < 0)
-+		return smbus_version;
-+
-+	rmi_dbg(RMI_DEBUG_XPORT, &client->dev, "Smbus version is %d",
-+		smbus_version);
-+
-+	if (smbus_version != 2 && smbus_version != 3) {
-+		dev_err(&client->dev, "Unrecognized SMB version %d\n",
-+				smbus_version);
-+		return -ENODEV;
-+	}
- 
- 	return 0;
- }
-@@ -253,11 +270,10 @@ static int rmi_smb_reset(struct rmi_transport_dev *xport, u16 reset_addr)
- 	rmi_smb_clear_state(rmi_smb);
- 
+ 	info->fix.mmio_start = raddr;
++#if defined(__i386__) || defined(__ia64__)
  	/*
--	 * we do not call the actual reset command, it has to be handled in
--	 * PS/2 or there will be races between PS/2 and SMBus.
--	 * PS/2 should ensure that a psmouse_reset is called before
--	 * intializing the device and after it has been removed to be in a known
--	 * state.
-+	 * We do not call the actual reset command, it has to be handled in
-+	 * PS/2 or there will be races between PS/2 and SMBus. PS/2 should
-+	 * ensure that a psmouse_reset is called before initializing the
-+	 * device and after it has been removed to be in a known state.
+ 	 * By using strong UC we force the MTRR to never have an
+ 	 * effect on the MMIO region on both non-PAT and PAT systems.
  	 */
- 	return rmi_smb_enable_smbus_mode(rmi_smb);
- }
-@@ -273,7 +289,6 @@ static int rmi_smb_probe(struct i2c_client *client,
- {
- 	struct rmi_device_platform_data *pdata = dev_get_platdata(&client->dev);
- 	struct rmi_smb_xport *rmi_smb;
--	int smbus_version;
- 	int error;
- 
- 	if (!pdata) {
-@@ -312,18 +327,9 @@ static int rmi_smb_probe(struct i2c_client *client,
- 	rmi_smb->xport.proto_name = "smb";
- 	rmi_smb->xport.ops = &rmi_smb_ops;
- 
--	smbus_version = rmi_smb_get_version(rmi_smb);
--	if (smbus_version < 0)
--		return smbus_version;
--
--	rmi_dbg(RMI_DEBUG_XPORT, &client->dev, "Smbus version is %d",
--		smbus_version);
--
--	if (smbus_version != 2 && smbus_version != 3) {
--		dev_err(&client->dev, "Unrecognized SMB version %d\n",
--				smbus_version);
--		return -ENODEV;
--	}
-+	error = rmi_smb_enable_smbus_mode(rmi_smb);
-+	if (error)
-+		return error;
- 
- 	i2c_set_clientdata(client, rmi_smb);
+ 	par->ati_regbase = ioremap_uc(info->fix.mmio_start, 0x1000);
++#else
++	par->ati_regbase = ioremap(info->fix.mmio_start, 0x1000);
++#endif
+ 	if (par->ati_regbase == NULL)
+ 		return -ENOMEM;
  
 -- 
 2.42.0
