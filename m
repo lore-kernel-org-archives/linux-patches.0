@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D239020316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC20420316
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2vqbd/3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4909AC433C8;
-	Mon,  6 Nov 2023 13:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0Pl2z69"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3657FC433C8;
+	Mon,  6 Nov 2023 13:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276497;
-	bh=rczBCUlMJGg0Yu2+bJlndUXgVQ8pd4zbSYEXr1WOxl0=;
+	s=korg; t=1699276500;
+	bh=axEDK5O55io1zjgoyJkO3wYFHvu0kWRfGUn1ENXepYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M2vqbd/3sqj4mnd3jPOgncaJr7/xcBK9kTDkeVUpX+I3Avr0J3TtW2SsFUuinNZ86
-	 gYz3xanjazWXKF4tSSVUC+Lzy+fiiWsbNE9zySL8F5m3591axCZ4LXTb3HZ1zXsLBN
-	 rEVQMwf/SXezRhUBPBMF32mpAJSEWwO2lxLToSMo=
+	b=z0Pl2z69GompLPubFf+So5knnz6nf3Tq6NnMA4S4SCwxe/1k3M2tq/thr4HbtmTp0
+	 NoZoQp1VjLU9AktLlS1pdbz59r++pG5JoyofwQfrx/1P4C1ivIH+BY+mO+EJQY48Qe
+	 GrY0U8aQYBffeiDHUsGnZBaG3rKjc6SVDEc1ZqnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Hasemeyer <markhas@chromium.org>,
-	Curtis Malainey <cujomalainey@chromium.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 62/62] ASoC: SOF: sof-pci-dev: Fix community key quirk detection
-Date: Mon,  6 Nov 2023 14:04:08 +0100
-Message-ID: <20231106130303.966731783@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 39/62] ceph_wait_on_conflict_unlink(): grab reference before dropping ->d_lock
+Date: Mon,  6 Nov 2023 14:03:45 +0100
+Message-ID: <20231106130303.230455325@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.807965064@linuxfoundation.org>
 References: <20231106130301.807965064@linuxfoundation.org>
@@ -42,42 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Hasemeyer <markhas@chromium.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 7dd692217b861a8292ff8ac2c9d4458538fd6b96 upstream.
+[ Upstream commit dc32464a5fe4946fe1a4d8f8e29961dc411933c5 ]
 
-Some Chromebooks do not populate the product family DMI value resulting
-in firmware load failures.
+Use of dget() after we'd dropped ->d_lock is too late - dentry might
+be gone by that point.
 
-Add another quirk detection entry that looks for "Google" in the BIOS
-version. Theoretically, PRODUCT_FAMILY could be replaced with
-BIOS_VERSION, but it is left as a quirk to be conservative.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Mark Hasemeyer <markhas@chromium.org>
-Acked-by: Curtis Malainey <cujomalainey@chromium.org>
-Link: https://lore.kernel.org/r/20231020145953.v1.1.Iaf5702dc3f8af0fd2f81a22ba2da1a5e15b3604c@changeid
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/sof-pci-dev.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ceph/mds_client.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/sof/sof-pci-dev.c
-+++ b/sound/soc/sof/sof-pci-dev.c
-@@ -141,6 +141,13 @@ static const struct dmi_system_id commun
- 			DMI_MATCH(DMI_PRODUCT_FAMILY, "Google"),
- 		}
- 	},
-+	{
-+		.ident = "Google firmware",
-+		.callback = chromebook_use_community_key,
-+		.matches = {
-+			DMI_MATCH(DMI_BIOS_VERSION, "Google"),
-+		}
-+	},
- 	{},
- };
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index f6a7fd47efd7a..82874be945248 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -709,8 +709,8 @@ int ceph_wait_on_conflict_unlink(struct dentry *dentry)
+ 		if (!d_same_name(udentry, pdentry, &dname))
+ 			goto next;
  
++		found = dget_dlock(udentry);
+ 		spin_unlock(&udentry->d_lock);
+-		found = dget(udentry);
+ 		break;
+ next:
+ 		spin_unlock(&udentry->d_lock);
+-- 
+2.42.0
+
 
 
