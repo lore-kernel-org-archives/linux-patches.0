@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0B1200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918A4200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vc9VFf5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1ADC433C8;
-	Mon,  6 Nov 2023 13:10:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPdGSHfJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F824C433C8;
+	Mon,  6 Nov 2023 13:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276223;
-	bh=hC0Qa+Ic2OoIZTQBsv/x1ikLFhCjbopL8MzZRf+1RbM=;
+	s=korg; t=1699276226;
+	bh=UC/Gih80UfWqJMubRGpC4KHqd5CsCTQLiTTUwEgI7J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vc9VFf5sRi11t/GaLoNIho8s/nBHrfqHGa3CMu1OoK/HQwNtjpPXgQ3QvM3gseZGZ
-	 oCkAxBVHwmzo4Pi7xEWgWETdtCF22QweJX7j1sbBoiwUQHbseLIp0YIPZuU97KqbuQ
-	 uz2sHLvSPGf3TSYDgKWpy53D1zqSNJZB0jvyUap8=
+	b=gPdGSHfJy921oXBfVBskgLEr4Vc1IrvM3zA7K4PX41kB/IYA8u93gCGOdFv6Dkvs1
+	 vwKmTJIEUTvnlNrGy+9SoTKqxZueuHKfxSX0ftlYFDOeNCYdQlNZbsMjKx5cGJZ06B
+	 yVnquhse4TwY0+EGWhGdn1xdufKj7Nt1TFmYPDkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 4.19 07/61] virtio-mmio: fix memory leak of vm_dev
-Date: Mon,  6 Nov 2023 14:03:03 +0100
-Message-ID: <20231106130259.817335570@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 08/61] r8169: rename r8169.c to r8169_main.c
+Date: Mon,  6 Nov 2023 14:03:04 +0100
+Message-ID: <20231106130259.846441245@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -44,86 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Heyne <mheyne@amazon.de>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit fab7f259227b8f70aa6d54e1de1a1f5f4729041c upstream.
+[ Upstream commit 25e992a4603cd5284127e2a6fda6b05bd58d12ed ]
 
-With the recent removal of vm_dev from devres its memory is only freed
-via the callback virtio_mmio_release_dev. However, this only takes
-effect after device_add is called by register_virtio_device. Until then
-it's an unmanaged resource and must be explicitly freed on error exit.
+In preparation of factoring out firmware handling rename r8169.c to
+r8169_main.c.
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
-
-Cc: stable@vger.kernel.org
-Fixes: 55c91fedd03d ("virtio-mmio: don't break lifecycle of vm_dev")
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Tested-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-Message-Id: <20230911090328.40538-1-mheyne@amazon.de>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: dcf75a0f6bc1 ("r8169: fix the KCSAN reported data-race in rtl_tx while reading TxDescArray[entry].opts1")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_mmio.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/realtek/Makefile                  | 1 +
+ drivers/net/ethernet/realtek/{r8169.c => r8169_main.c} | 0
+ 2 files changed, 1 insertion(+)
+ rename drivers/net/ethernet/realtek/{r8169.c => r8169_main.c} (100%)
 
---- a/drivers/virtio/virtio_mmio.c
-+++ b/drivers/virtio/virtio_mmio.c
-@@ -561,14 +561,17 @@ static int virtio_mmio_probe(struct plat
- 	spin_lock_init(&vm_dev->lock);
- 
- 	vm_dev->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(vm_dev->base))
--		return PTR_ERR(vm_dev->base);
-+	if (IS_ERR(vm_dev->base)) {
-+		rc = PTR_ERR(vm_dev->base);
-+		goto free_vm_dev;
-+	}
- 
- 	/* Check magic value */
- 	magic = readl(vm_dev->base + VIRTIO_MMIO_MAGIC_VALUE);
- 	if (magic != ('v' | 'i' << 8 | 'r' << 16 | 't' << 24)) {
- 		dev_warn(&pdev->dev, "Wrong magic value 0x%08lx!\n", magic);
--		return -ENODEV;
-+		rc = -ENODEV;
-+		goto free_vm_dev;
- 	}
- 
- 	/* Check device version */
-@@ -576,7 +579,8 @@ static int virtio_mmio_probe(struct plat
- 	if (vm_dev->version < 1 || vm_dev->version > 2) {
- 		dev_err(&pdev->dev, "Version %ld not supported!\n",
- 				vm_dev->version);
--		return -ENXIO;
-+		rc = -ENXIO;
-+		goto free_vm_dev;
- 	}
- 
- 	vm_dev->vdev.id.device = readl(vm_dev->base + VIRTIO_MMIO_DEVICE_ID);
-@@ -585,7 +589,8 @@ static int virtio_mmio_probe(struct plat
- 		 * virtio-mmio device with an ID 0 is a (dummy) placeholder
- 		 * with no function. End probing now with no error reported.
- 		 */
--		return -ENODEV;
-+		rc = -ENODEV;
-+		goto free_vm_dev;
- 	}
- 	vm_dev->vdev.id.vendor = readl(vm_dev->base + VIRTIO_MMIO_VENDOR_ID);
- 
-@@ -615,6 +620,10 @@ static int virtio_mmio_probe(struct plat
- 		put_device(&vm_dev->vdev.dev);
- 
- 	return rc;
-+
-+free_vm_dev:
-+	kfree(vm_dev);
-+	return rc;
- }
- 
- static int virtio_mmio_remove(struct platform_device *pdev)
+diff --git a/drivers/net/ethernet/realtek/Makefile b/drivers/net/ethernet/realtek/Makefile
+index 71b1da30ecb5b..7f68be4b9f51f 100644
+--- a/drivers/net/ethernet/realtek/Makefile
++++ b/drivers/net/ethernet/realtek/Makefile
+@@ -5,4 +5,5 @@
+ obj-$(CONFIG_8139CP) += 8139cp.o
+ obj-$(CONFIG_8139TOO) += 8139too.o
+ obj-$(CONFIG_ATP) += atp.o
++r8169-objs += r8169_main.o
+ obj-$(CONFIG_R8169) += r8169.o
+diff --git a/drivers/net/ethernet/realtek/r8169.c b/drivers/net/ethernet/realtek/r8169_main.c
+similarity index 100%
+rename from drivers/net/ethernet/realtek/r8169.c
+rename to drivers/net/ethernet/realtek/r8169_main.c
+-- 
+2.42.0
+
 
 
