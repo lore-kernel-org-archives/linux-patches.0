@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772F5208CA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61263208CA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UH9QZihy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E0AC433C7;
-	Mon,  6 Nov 2023 13:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AT9A7crW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF65EC433C7;
+	Mon,  6 Nov 2023 13:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277066;
-	bh=zr1YLyHKezK/F4PK/5pSgB+zSVlRf/rw4i8fN0mnDlU=;
+	s=korg; t=1699277069;
+	bh=7h6c470TrNzm/Rvpp93aPVaN760bVjhOko6uRGHROfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UH9QZihypug5htZigODq3UIcpfWNw2REDNBdfD1K6otEQcB9XUyv08DhdKq4Bdg47
-	 AC0r4KGZNclTvnE0qUsqD3Qfj226ZssE6iqRhua/SxyEk5ifc4UhSl+9YSekKhxBjN
-	 +6BpiG63EMWzM8Jy8gvpuH+4q0yE8wNzg3824f6k=
+	b=AT9A7crW7hGU1XzM/JMDtd+LoMqK4EQIVs9q69FzGyt0cH7FLvv8U8H3iZkcfMki0
+	 41ruZJ+BvBnmwjR6VUZL5mplb7ULOkprJUP4RbKYU3L0msW+ax0uxyk7ofMyYMpw8K
+	 A3DqdrJJDYAEo3f8x8YCNeBhZIjlwZ+1NJuSN67g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/128] pinctrl: qcom: lpass-lpi: fix concurrent register updates
-Date: Mon,  6 Nov 2023 14:02:43 +0100
-Message-ID: <20231106130309.279396477@linuxfoundation.org>
+Subject: [PATCH 5.15 004/128] tcp: remove dead code from tcp_sendmsg_locked()
+Date: Mon,  6 Nov 2023 14:02:44 +0100
+Message-ID: <20231106130309.319444675@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,122 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c8befdc411e5fd1bf95a13e8744c8ca79b412bee ]
+[ Upstream commit 3ded97bc41a1e76e1e72eeb192331c01ceacc4bc ]
 
-The Qualcomm LPASS LPI pin controller driver uses one lock for guarding
-Read-Modify-Write code for slew rate registers.  However the pin
-configuration and muxing registers have exactly the same RMW code but
-are not protected.
+TCP sendmsg() no longer puts payload in skb head, we can remove
+dead code.
 
-Pin controller framework does not provide locking here, thus it is
-possible to trigger simultaneous change of pin configuration registers
-resulting in non-atomic changes.
-
-Protect from concurrent access by re-using the same lock used to cover
-the slew rate register.  Using the same lock instead of adding second
-one will make more sense, once we add support for newer Qualcomm SoC,
-where slew rate is configured in the same register as pin
-configuration/muxing.
-
-Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20231013145705.219954-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 72377ab2d671 ("mptcp: more conservative check for zero probes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ net/ipv4/tcp.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-index dd1c9fd733c8f..ec37ad43a6364 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -102,7 +102,8 @@ struct lpi_pinctrl {
- 	char __iomem *tlmm_base;
- 	char __iomem *slew_base;
- 	struct clk_bulk_data clks[MAX_LPI_NUM_CLKS];
--	struct mutex slew_access_lock;
-+	/* Protects from concurrent register updates */
-+	struct mutex lock;
- 	const struct lpi_pinctrl_variant_data *data;
- };
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index a91cf000bb61b..2115a0e5c98f7 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1330,14 +1330,7 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
+ 		if (copy > msg_data_left(msg))
+ 			copy = msg_data_left(msg);
  
-@@ -330,9 +331,11 @@ static int lpi_gpio_set_mux(struct pinctrl_dev *pctldev, unsigned int function,
- 	if (WARN_ON(i == g->nfuncs))
- 		return -EINVAL;
+-		/* Where to copy to? */
+-		if (skb_availroom(skb) > 0 && !zc) {
+-			/* We have some space in skb head. Superb! */
+-			copy = min_t(int, copy, skb_availroom(skb));
+-			err = skb_add_data_nocache(sk, skb, &msg->msg_iter, copy);
+-			if (err)
+-				goto do_fault;
+-		} else if (!zc) {
++		if (!zc) {
+ 			bool merge = true;
+ 			int i = skb_shinfo(skb)->nr_frags;
+ 			struct page_frag *pfrag = sk_page_frag(sk);
+@@ -1437,7 +1430,6 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
  
-+	mutex_lock(&pctrl->lock);
- 	val = lpi_gpio_read(pctrl, pin, LPI_GPIO_CFG_REG);
- 	u32p_replace_bits(&val, i, LPI_GPIO_FUNCTION_MASK);
- 	lpi_gpio_write(pctrl, pin, LPI_GPIO_CFG_REG, val);
-+	mutex_unlock(&pctrl->lock);
+ do_error:
+ 	skb = tcp_write_queue_tail(sk);
+-do_fault:
+ 	tcp_remove_empty_skb(sk, skb);
  
- 	return 0;
- }
-@@ -438,14 +441,14 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
- 			if (slew_offset == NO_SLEW)
- 				break;
- 
--			mutex_lock(&pctrl->slew_access_lock);
-+			mutex_lock(&pctrl->lock);
- 
- 			sval = ioread32(pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
- 			sval &= ~(LPI_SLEW_RATE_MASK << slew_offset);
- 			sval |= arg << slew_offset;
- 			iowrite32(sval, pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
- 
--			mutex_unlock(&pctrl->slew_access_lock);
-+			mutex_unlock(&pctrl->lock);
- 			break;
- 		default:
- 			return -EINVAL;
-@@ -461,6 +464,7 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
- 		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
- 	}
- 
-+	mutex_lock(&pctrl->lock);
- 	val = lpi_gpio_read(pctrl, group, LPI_GPIO_CFG_REG);
- 
- 	u32p_replace_bits(&val, pullup, LPI_GPIO_PULL_MASK);
-@@ -469,6 +473,7 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
- 	u32p_replace_bits(&val, output_enabled, LPI_GPIO_OE_MASK);
- 
- 	lpi_gpio_write(pctrl, group, LPI_GPIO_CFG_REG, val);
-+	mutex_unlock(&pctrl->lock);
- 
- 	return 0;
- }
-@@ -642,7 +647,7 @@ static int lpi_pinctrl_probe(struct platform_device *pdev)
- 	pctrl->chip.of_gpio_n_cells = 2;
- 	pctrl->chip.can_sleep = false;
- 
--	mutex_init(&pctrl->slew_access_lock);
-+	mutex_init(&pctrl->lock);
- 
- 	pctrl->ctrl = devm_pinctrl_register(dev, &pctrl->desc, pctrl);
- 	if (IS_ERR(pctrl->ctrl)) {
-@@ -660,7 +665,7 @@ static int lpi_pinctrl_probe(struct platform_device *pdev)
- 	return 0;
- 
- err_pinctrl:
--	mutex_destroy(&pctrl->slew_access_lock);
-+	mutex_destroy(&pctrl->lock);
- 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
- 
- 	return ret;
-@@ -670,7 +675,7 @@ static int lpi_pinctrl_remove(struct platform_device *pdev)
- {
- 	struct lpi_pinctrl *pctrl = platform_get_drvdata(pdev);
- 
--	mutex_destroy(&pctrl->slew_access_lock);
-+	mutex_destroy(&pctrl->lock);
- 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
- 
- 	return 0;
+ 	if (copied + copied_syn)
 -- 
 2.42.0
 
