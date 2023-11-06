@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1FB33D5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C2733D5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CL9WD7Yb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0758DC433C8;
-	Mon,  6 Nov 2023 13:11:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuwMtZKi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D9AC433C7;
+	Mon,  6 Nov 2023 13:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276308;
-	bh=JUFq5yO/YBGreBq6EuOpw6bcPRKYu3FYXEtq3pqyBTU=;
+	s=korg; t=1699276311;
+	bh=BEEAZth+iIa3X788LPRUXM+dF446SeHyHmrGnmSkZVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CL9WD7YbYyEDtgwuWXYDEgOs6xqSpj0KhwHYssOJLPfR30DuW1volNluml8GdOudD
-	 5Xw8xK5asi9AqR3tw5u4pVVhsYqCzirx+uZkMfygPz5WYpNPVSsbLvk6HwAsO4bdiI
-	 sBq6TbZdvVma+dUF193o88fZNTrDeAWSGT8rzd9I=
+	b=vuwMtZKi7ibqBhZnqK5qUMzpEI5y+1r8waqYeg/v7OpIWRaiwChtYklOTZSnjHATZ
+	 7tZTCWmIv7eJvSftesvxCzgrgTZLoVDxed8jOFzUxh7tEz6EWdjDygw1I69wEY0uah
+	 3GZ2TEMftkgm7+zBaaPnw0Sv3E29xU/oNkmHc29A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 4.19 31/61] nfsd: lock_rename() needs both directories to live on the same fs
-Date: Mon,  6 Nov 2023 14:03:27 +0100
-Message-ID: <20231106130300.683892260@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Borislav Petkov <bp@suse.de>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 4.19 32/61] x86/mm: Simplify RESERVE_BRK()
+Date: Mon,  6 Nov 2023 14:03:28 +0100
+Message-ID: <20231106130300.716243343@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -42,51 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Josh Poimboeuf <jpoimboe@redhat.com>
 
-commit 1aee9158bc978f91701c5992e395efbc6da2de3c upstream.
+commit a1e2c031ec3949b8c039b739c0b5bf9c30007b00 upstream.
 
-... checking that after lock_rename() is too late.  Incidentally,
-NFSv2 had no nfserr_xdev...
+RESERVE_BRK() reserves data in the .brk_reservation section.  The data
+is initialized to zero, like BSS, so the macro specifies 'nobits' to
+prevent the data from taking up space in the vmlinux binary.  The only
+way to get the compiler to do that (without putting the variable in .bss
+proper) is to use inline asm.
 
-Fixes: aa387d6ce153 "nfsd: fix EXDEV checking in rename"
-Cc: stable@vger.kernel.org # v3.9+
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
-Tested-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+The macro also has a hack which encloses the inline asm in a discarded
+function, which allows the size to be passed (global inline asm doesn't
+allow inputs).
+
+Remove the need for the discarded function hack by just stringifying the
+size rather than supplying it as an input to the inline asm.
+
+Signed-off-by: Josh Poimboeuf <jpoimboe@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Borislav Petkov <bp@suse.de>
+Link: https://lore.kernel.org/r/20220506121631.133110232@infradead.org
+[nathan: Fix conflict due to lack of 2b6ff7dea670 and 33def8498fdd]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/setup.h |   30 +++++++++++-------------------
+ 1 file changed, 11 insertions(+), 19 deletions(-)
 
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -1691,6 +1691,12 @@ nfsd_rename(struct svc_rqst *rqstp, stru
- 	if (!flen || isdotent(fname, flen) || !tlen || isdotent(tname, tlen))
- 		goto out;
+--- a/arch/x86/include/asm/setup.h
++++ b/arch/x86/include/asm/setup.h
+@@ -91,27 +91,19 @@ extern unsigned long _brk_end;
+ void *extend_brk(size_t size, size_t align);
  
-+	err = (rqstp->rq_vers == 2) ? nfserr_acces : nfserr_xdev;
-+	if (ffhp->fh_export->ex_path.mnt != tfhp->fh_export->ex_path.mnt)
-+		goto out;
-+	if (ffhp->fh_export->ex_path.dentry != tfhp->fh_export->ex_path.dentry)
-+		goto out;
-+
- 	host_err = fh_want_write(ffhp);
- 	if (host_err) {
- 		err = nfserrno(host_err);
-@@ -1724,12 +1730,6 @@ nfsd_rename(struct svc_rqst *rqstp, stru
- 	if (ndentry == trap)
- 		goto out_dput_new;
+ /*
+- * Reserve space in the brk section.  The name must be unique within
+- * the file, and somewhat descriptive.  The size is in bytes.  Must be
+- * used at file scope.
++ * Reserve space in the brk section.  The name must be unique within the file,
++ * and somewhat descriptive.  The size is in bytes.
+  *
+- * (This uses a temp function to wrap the asm so we can pass it the
+- * size parameter; otherwise we wouldn't be able to.  We can't use a
+- * "section" attribute on a normal variable because it always ends up
+- * being @progbits, which ends up allocating space in the vmlinux
+- * executable.)
++ * The allocation is done using inline asm (rather than using a section
++ * attribute on a normal variable) in order to allow the use of @nobits, so
++ * that it doesn't take up any space in the vmlinux file.
+  */
+-#define RESERVE_BRK(name,sz)						\
+-	static void __section(.discard.text) __used notrace		\
+-	__brk_reservation_fn_##name##__(void) {				\
+-		asm volatile (						\
+-			".pushsection .brk_reservation,\"aw\",@nobits;" \
+-			".brk." #name ":"				\
+-			" 1:.skip %c0;"					\
+-			" .size .brk." #name ", . - 1b;"		\
+-			" .popsection"					\
+-			: : "i" (sz));					\
+-	}
++#define RESERVE_BRK(name, size)						\
++	asm(".pushsection .brk_reservation,\"aw\",@nobits\n\t"		\
++	    ".brk." #name ":\n\t"					\
++	    ".skip " __stringify(size) "\n\t"				\
++	    ".size .brk." #name ", " __stringify(size) "\n\t"		\
++	    ".popsection\n\t")
  
--	host_err = -EXDEV;
--	if (ffhp->fh_export->ex_path.mnt != tfhp->fh_export->ex_path.mnt)
--		goto out_dput_new;
--	if (ffhp->fh_export->ex_path.dentry != tfhp->fh_export->ex_path.dentry)
--		goto out_dput_new;
--
- 	host_err = vfs_rename(fdir, odentry, tdir, ndentry, NULL, 0);
- 	if (!host_err) {
- 		host_err = commit_metadata(tfhp);
+ /* Helper for reserving space for arrays of things */
+ #define RESERVE_BRK_ARRAY(type, name, entries)		\
 
 
