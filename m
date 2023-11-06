@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D071F200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A914E200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKeMG8gz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D01C433C9;
-	Mon,  6 Nov 2023 13:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TsSus7RO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2485EC433C8;
+	Mon,  6 Nov 2023 13:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699275969;
-	bh=b7MhugfoR61VxlYwVzvcYzgFFRleDtaBRn1K32nW9k0=;
+	s=korg; t=1699275972;
+	bh=iRSgre419D5U/BaTGC8fJmZ/xNl0eCxKi+uVXpBBbZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKeMG8gz1iJwujbjobrRSzC1U6na0172Yt6F1w3oBAz2dkkqr2bFBHKyTIMiTw6kD
-	 CfjWPVfb+nqVp0gNqe6sq00nlPaI3MAcrHA//DM+DMjeXXnJAlSVVdmBfFW6JhCi8Q
-	 mpFZ9NrIwOqs7aG2l2MMkItWY1ef8zADG+eohRvo=
+	b=TsSus7ROsgosTHZhtszHFnMkNqSqJZnEZ/1SP48lJZmnKXpNH8VEyCzZB7rV4b8fq
+	 EYIk+CFB+4UuTGKOWUq83WdFA1akYfCirQjyeZPePopGyADlsgKhp+A/8onaD+cdHX
+	 da/m1nkY2u2jceG9vq9VD5+7+b7Gb6a0M6tz6qHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 08/48] gtp: uapi: fix GTPA_MAX
-Date: Mon,  6 Nov 2023 14:02:59 +0100
-Message-ID: <20231106130258.138955695@linuxfoundation.org>
+	Ivan Vecera <ivecera@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 4.14 09/48] i40e: Fix wrong check for I40E_TXR_FLAGS_WB_ON_ITR
+Date: Mon,  6 Nov 2023 14:03:00 +0100
+Message-ID: <20231106130258.169048153@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -42,32 +44,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit adc8df12d91a2b8350b0cd4c7fec3e8546c9d1f8 ]
+[ Upstream commit 77a8c982ff0d4c3a14022c6fe9e3dbfb327552ec ]
 
-Subtract one to __GTPA_MAX, otherwise GTPA_MAX is off by 2.
+The I40E_TXR_FLAGS_WB_ON_ITR is i40e_ring flag and not i40e_pf one.
 
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8e0764b4d6be42 ("i40e/i40evf: Add support for writeback on ITR feature for X722")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20231023212714.178032-1-jacob.e.keller@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/gtp.h | 2 +-
+ drivers/net/ethernet/intel/i40e/i40e_txrx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/gtp.h b/include/uapi/linux/gtp.h
-index c7d66755d212b..78bd62014efd3 100644
---- a/include/uapi/linux/gtp.h
-+++ b/include/uapi/linux/gtp.h
-@@ -30,6 +30,6 @@ enum gtp_attrs {
- 	GTPA_PAD,
- 	__GTPA_MAX,
- };
--#define GTPA_MAX (__GTPA_MAX + 1)
-+#define GTPA_MAX (__GTPA_MAX - 1)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+index d79a2c8175c4c..02871e0e20249 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+@@ -2401,7 +2401,7 @@ int i40e_napi_poll(struct napi_struct *napi, int budget)
+ 		return budget;
+ 	}
  
- #endif /* _UAPI_LINUX_GTP_H_ */
+-	if (vsi->back->flags & I40E_TXR_FLAGS_WB_ON_ITR)
++	if (q_vector->tx.ring[0].flags & I40E_TXR_FLAGS_WB_ON_ITR)
+ 		q_vector->arm_wb_state = false;
+ 
+ 	/* Work is done so exit the polling mode and re-enable the interrupt */
 -- 
 2.42.0
 
