@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958D123747
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709DF23747
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJjgoF1y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B72C433C9;
-	Mon,  6 Nov 2023 13:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZpMQ0pB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32D3C433C8;
+	Mon,  6 Nov 2023 13:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277025;
-	bh=qJg1MumQCNi/sxcbLwIAfx8XAaTEfEywnCfF/kgM+OE=;
+	s=korg; t=1699277028;
+	bh=NSBCYlLIO4/wuHmR6ricTtsOSvrYCaxsXSUGJBAVs9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJjgoF1ygvQRR5c8DkwIVMyJGet49co+tpNJWWcqhktAh9d88y19xeheJ+9aXuiYQ
-	 gicdZ9gG7qIpriJuUj7xcKnTxm5LGGvMhczZ4kSVNvfjzKcuNobISDD8gJ/Ub/WefW
-	 9LxHKsIY6eCD3mneh+hut9kZGLyFj/DB3tvk+jfU=
+	b=AZpMQ0pBl0uZM/DCGsBotyGTj3/epODFsK2KFWTjJYXeOayYnPoc91+vcJZZ0N7fl
+	 KhHiiU5VBTx618Ceb8MjFcT2t60RWwqNvS4tF08c9MIzWbIGDAuM75Pnf255RYfmf2
+	 YZabWuOyEuVrhu4NhvuYOifNpzfgbliDLjnnBMdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gregory.price@memverge.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 013/128] mm/migrate: fix do_pages_move for compat pointers
-Date: Mon,  6 Nov 2023 14:02:53 +0100
-Message-ID: <20231106130309.730801784@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 5.15 014/128] nfsd: lock_rename() needs both directories to live on the same fs
+Date: Mon,  6 Nov 2023 14:02:54 +0100
+Message-ID: <20231106130309.764619005@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -43,74 +42,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry.memverge@gmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 229e2253766c7cdfe024f1fe280020cc4711087c upstream.
+commit 1aee9158bc978f91701c5992e395efbc6da2de3c upstream.
 
-do_pages_move does not handle compat pointers for the page list.
-correctly.  Add in_compat_syscall check and appropriate get_user fetch
-when iterating the page list.
+... checking that after lock_rename() is too late.  Incidentally,
+NFSv2 had no nfserr_xdev...
 
-It makes the syscall in compat mode (32-bit userspace, 64-bit kernel)
-work the same way as the native 32-bit syscall again, restoring the
-behavior before my broken commit 5b1b561ba73c ("mm: simplify
-compat_sys_move_pages").
-
-More specifically, my patch moved the parsing of the 'pages' array from
-the main entry point into do_pages_stat(), which left the syscall
-working correctly for the 'stat' operation (nodes = NULL), while the
-'move' operation (nodes != NULL) is now missing the conversion and
-interprets 'pages' as an array of 64-bit pointers instead of the
-intended 32-bit userspace pointers.
-
-It is possible that nobody noticed this bug because the few
-applications that actually call move_pages are unlikely to run in
-compat mode because of their large memory requirements, but this
-clearly fixes a user-visible regression and should have been caught by
-ltp.
-
-Link: https://lkml.kernel.org/r/20231003144857.752952-1-gregory.price@memverge.com
-Fixes: 5b1b561ba73c ("mm: simplify compat_sys_move_pages")
-Signed-off-by: Gregory Price <gregory.price@memverge.com>
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Co-developed-by: Arnd Bergmann <arnd@arndb.de>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: aa387d6ce153 "nfsd: fix EXDEV checking in rename"
+Cc: stable@vger.kernel.org # v3.9+
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Acked-by: Chuck Lever <chuck.lever@oracle.com>
+Tested-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/nfsd/vfs.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -1788,6 +1788,7 @@ static int do_pages_move(struct mm_struc
- 			 const int __user *nodes,
- 			 int __user *status, int flags)
- {
-+	compat_uptr_t __user *compat_pages = (void __user *)pages;
- 	int current_node = NUMA_NO_NODE;
- 	LIST_HEAD(pagelist);
- 	int start, i;
-@@ -1801,8 +1802,17 @@ static int do_pages_move(struct mm_struc
- 		int node;
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1762,6 +1762,12 @@ nfsd_rename(struct svc_rqst *rqstp, stru
+ 	if (!flen || isdotent(fname, flen) || !tlen || isdotent(tname, tlen))
+ 		goto out;
  
- 		err = -EFAULT;
--		if (get_user(p, pages + i))
--			goto out_flush;
-+		if (in_compat_syscall()) {
-+			compat_uptr_t cp;
++	err = (rqstp->rq_vers == 2) ? nfserr_acces : nfserr_xdev;
++	if (ffhp->fh_export->ex_path.mnt != tfhp->fh_export->ex_path.mnt)
++		goto out;
++	if (ffhp->fh_export->ex_path.dentry != tfhp->fh_export->ex_path.dentry)
++		goto out;
 +
-+			if (get_user(cp, compat_pages + i))
-+				goto out_flush;
-+
-+			p = compat_ptr(cp);
-+		} else {
-+			if (get_user(p, pages + i))
-+				goto out_flush;
-+		}
- 		if (get_user(node, nodes + i))
- 			goto out_flush;
- 		addr = (unsigned long)untagged_addr(p);
+ retry:
+ 	host_err = fh_want_write(ffhp);
+ 	if (host_err) {
+@@ -1796,12 +1802,6 @@ retry:
+ 	if (ndentry == trap)
+ 		goto out_dput_new;
+ 
+-	host_err = -EXDEV;
+-	if (ffhp->fh_export->ex_path.mnt != tfhp->fh_export->ex_path.mnt)
+-		goto out_dput_new;
+-	if (ffhp->fh_export->ex_path.dentry != tfhp->fh_export->ex_path.dentry)
+-		goto out_dput_new;
+-
+ 	if ((ndentry->d_sb->s_export_op->flags & EXPORT_OP_CLOSE_BEFORE_UNLINK) &&
+ 	    nfsd_has_cached_files(ndentry)) {
+ 		close_cached = true;
 
 
