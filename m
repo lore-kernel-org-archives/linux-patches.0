@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D6D250EA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819AB250EA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngsYktN8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFAAC433C7;
-	Mon,  6 Nov 2023 13:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+LvqLOg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F47C433C7;
+	Mon,  6 Nov 2023 13:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277662;
-	bh=Z7hRm13q043A8WyFFZFaDMHNvog4Ik3dhtMoiLBxEx4=;
+	s=korg; t=1699277665;
+	bh=d0GlEE3htWJA93CiEwqUzvnZjmwzcZz6gHckoXaDyM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ngsYktN8u6wZdNuekIvkFlKhQzCItBI+IoKSJvJKaAwvQKHbJjyyNGT0kQnDuGT6Y
-	 whlprx2LJDhpQQLv5n3PEDAoKoBChq+h6tklW92i5vcp44+pqXpP3IOwiw6FIe6uHQ
-	 ItaXBoArqGZC3RgtH/tpipiXA2TTn+KgpGC2zcUk=
+	b=w+LvqLOgsa8uIoaLPCH15K8OwR46Et4Huzv8UgcxLOy7rF2qTureRJ40Sh7SlPpB6
+	 SPHS39pBavh0eIDY/qN/yN+w6uFraVRmbHoLxMxf8CGqubl9mD1aIQLUU5RrGfUM1k
+	 nwic/O1EFbz0rLgZWysWNdHMh8IsxSZfnCV1UnaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"linux-can@vger.kernel.org, lukas.magel@posteo.net, patches@lists.linux.dev, maxime.jayat@mobile-devices.fr, mkl@pengutronix.de, michal.sojka@cvut.cz, Oliver Hartkopp" <socketcan@hartkopp.net>,
-	Maxime Jayat <maxime.jayat@mobile-devices.fr>,
-	Lukas Magel <lukas.magel@posteo.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Oliver Hartkopp <socketcan@hartkopp.net>
-Subject: [PATCH 5.10 87/95] can: isotp: isotp_sendmsg(): fix TX state detection and wait behavior
-Date: Mon,  6 Nov 2023 14:04:55 +0100
-Message-ID: <20231106130307.879339728@linuxfoundation.org>
+	Vicki Pfau <vi@endrift.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 5.10 88/95] PCI: Prevent xHCI driver from claiming AMD VanGogh USB3 DRD device
+Date: Mon,  6 Nov 2023 14:04:56 +0100
+Message-ID: <20231106130307.908253334@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -45,73 +41,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Magel <lukas.magel@posteo.net>
+From: Vicki Pfau <vi@endrift.com>
 
-[ Upstream commit d9c2ba65e651467de739324d978b04ed8729f483 ]
+commit 7e6f3b6d2c352b5fde37ce3fed83bdf6172eebd4 upstream.
 
-With patch [1], isotp_poll was updated to also queue the poller in the
-so->wait queue, which is used for send state changes. Since the queue
-now also contains polling tasks that are not interested in sending, the
-queue fill state can no longer be used as an indication of send
-readiness. As a consequence, nonblocking writes can lead to a race and
-lock-up of the socket if there is a second task polling the socket in
-parallel.
+The AMD VanGogh SoC contains a DesignWare USB3 Dual-Role Device that can be
+operated as either a USB Host or a USB Device, similar to on the AMD Nolan
+platform.
 
-With this patch, isotp_sendmsg does not consult wq_has_sleepers but
-instead tries to atomically set so->tx.state and waits on so->wait if it
-is unable to do so. This behavior is in alignment with isotp_poll, which
-also checks so->tx.state to determine send readiness.
+be6646bfbaec ("PCI: Prevent xHCI driver from claiming AMD Nolan USB3 DRD
+device") added a quirk to let the dwc3 driver claim the Nolan device since
+it provides more specific support.
 
-V2:
-- Revert direct exit to goto err_event_drop
+Extend that quirk to include the VanGogh SoC USB3 device.
 
-[1] https://lore.kernel.org/all/20230331125511.372783-1-michal.sojka@cvut.cz
-
-Reported-by: Maxime Jayat <maxime.jayat@mobile-devices.fr>
-Closes: https://lore.kernel.org/linux-can/11328958-453f-447f-9af8-3b5824dfb041@munic.io/
-Signed-off-by: Lukas Magel <lukas.magel@posteo.net>
-Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Fixes: 79e19fa79cb5 ("can: isotp: isotp_ops: fix poll() to not report false EPOLLOUT events")
-Link: https://github.com/pylessard/python-udsoncan/issues/178#issuecomment-1743786590
-Link: https://lore.kernel.org/all/20230827092205.7908-1-lukas.magel@posteo.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20230927202212.2388216-1-vi@endrift.com
+Signed-off-by: Vicki Pfau <vi@endrift.com>
+[bhelgaas: include be6646bfbaec reference, add stable tag]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org	# v3.19+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |   19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ drivers/pci/quirks.c    |    8 +++++---
+ include/linux/pci_ids.h |    1 +
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -925,21 +925,18 @@ static int isotp_sendmsg(struct socket *
- 	if (!so->bound || so->tx.state == ISOTP_SHUTDOWN)
- 		return -EADDRNOTAVAIL;
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -597,7 +597,7 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
+ /*
+  * In the AMD NL platform, this device ([1022:7912]) has a class code of
+  * PCI_CLASS_SERIAL_USB_XHCI (0x0c0330), which means the xhci driver will
+- * claim it.
++ * claim it. The same applies on the VanGogh platform device ([1022:163a]).
+  *
+  * But the dwc3 driver is a more specific driver for this device, and we'd
+  * prefer to use it instead of xhci. To prevent xhci from claiming the
+@@ -605,7 +605,7 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
+  * defines as "USB device (not host controller)". The dwc3 driver can then
+  * claim it based on its Vendor and Device ID.
+  */
+-static void quirk_amd_nl_class(struct pci_dev *pdev)
++static void quirk_amd_dwc_class(struct pci_dev *pdev)
+ {
+ 	u32 class = pdev->class;
  
--wait_free_buffer:
--	/* we do not support multiple buffers - for now */
--	if (wq_has_sleeper(&so->wait) && (msg->msg_flags & MSG_DONTWAIT))
--		return -EAGAIN;
-+	while (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
-+		/* we do not support multiple buffers - for now */
-+		if (msg->msg_flags & MSG_DONTWAIT)
-+			return -EAGAIN;
+@@ -615,7 +615,9 @@ static void quirk_amd_nl_class(struct pc
+ 		 class, pdev->class);
+ }
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_NL_USB,
+-		quirk_amd_nl_class);
++		quirk_amd_dwc_class);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_VANGOGH_USB,
++		quirk_amd_dwc_class);
  
--	/* wait for complete transmission of current pdu */
--	err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
--	if (err)
--		goto err_event_drop;
--
--	if (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
- 		if (so->tx.state == ISOTP_SHUTDOWN)
- 			return -EADDRNOTAVAIL;
- 
--		goto wait_free_buffer;
-+		/* wait for complete transmission of current pdu */
-+		err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
-+		if (err)
-+			goto err_event_drop;
- 	}
- 
- 	if (!size || size > MAX_MSG_LENGTH) {
+ /*
+  * Synopsys USB 3.x host HAPS platform has a class code of
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -555,6 +555,7 @@
+ #define PCI_DEVICE_ID_AMD_17H_M30H_DF_F3 0x1493
+ #define PCI_DEVICE_ID_AMD_17H_M60H_DF_F3 0x144b
+ #define PCI_DEVICE_ID_AMD_17H_M70H_DF_F3 0x1443
++#define PCI_DEVICE_ID_AMD_VANGOGH_USB	0x163a
+ #define PCI_DEVICE_ID_AMD_19H_DF_F3	0x1653
+ #define PCI_DEVICE_ID_AMD_CNB17H_F3	0x1703
+ #define PCI_DEVICE_ID_AMD_LANCE		0x2000
 
 
