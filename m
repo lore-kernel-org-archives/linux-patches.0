@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D045F33D5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC4733D5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPGPId/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C841C433C8;
-	Mon,  6 Nov 2023 13:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bELtJxq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD18C433C9;
+	Mon,  6 Nov 2023 13:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276299;
-	bh=5isV+wN3MjE/m2Z9cSFpolaSIZwO8Seeigsd2SwBX78=;
+	s=korg; t=1699276302;
+	bh=NAvBs3aB7TBHCXIU2bv+ZpOuZDP9C0WzaE5VuSt0liA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LPGPId/dju3nzTKZQr6SLjRd1eMx25jEKECx7FYRSGSK9xdjD4dnvoyMjjig8Tgmv
-	 cbbG6FSydp1j8LB3RF4Vx/40HFMmKBLDve0w10dN8eYRsv0WVpVIpkojnH3BC2IE4O
-	 w942tpbgcnf++xoiECdjLI5/3c9f5pq4+Wq8+r9I=
+	b=bELtJxq/XJsB5A8gBqbCpH6F3wDevFxBsPBzqz9Tr6FfoKCDKwQfsoyizkRC0gSZY
+	 jzhCELZLcEUImAz5duWYPpJGQJw8UUXdEiBdwbwRTqi2z+wW+dbgRT2FUAo8jT7zbR
+	 u8KNj+vtfuD93gk4Yb2O1tJH3ltvECvyPv0P50zY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenqing Liu <wenqingliu0120@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Kazunori Kobayashi <kazunori.kobayashi@miraclelinux.com>
-Subject: [PATCH 4.19 30/61] f2fs: fix to do sanity check on inode type during garbage collection
-Date: Mon,  6 Nov 2023 14:03:26 +0100
-Message-ID: <20231106130300.652595991@linuxfoundation.org>
+	Liha Sikanen <lihasika@gmail.com>
+Subject: [PATCH 4.19 57/61] usb: storage: set 1.50 as the lower bcdDevice for older "Super Top" compatibility
+Date: Mon,  6 Nov 2023 14:03:53 +0100
+Message-ID: <20231106130301.539344549@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -43,66 +40,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: LihaSika <lihasika@gmail.com>
 
-commit 9056d6489f5a41cfbb67f719d2c0ce61ead72d9f upstream.
+commit 0e3139e6543b241b3e65956a55c712333bef48ac upstream.
 
-As report by Wenqing Liu in bugzilla:
-
-https://bugzilla.kernel.org/show_bug.cgi?id=215231
-
-- Overview
-kernel NULL pointer dereference triggered  in folio_mark_dirty() when mount and operate on a crafted f2fs image
-
-- Reproduce
-tested on kernel 5.16-rc3, 5.15.X under root
-
-1. mkdir mnt
-2. mount -t f2fs tmp1.img mnt
-3. touch tmp
-4. cp tmp mnt
-
-F2FS-fs (loop0): sanity_check_inode: inode (ino=49) extent info [5942, 4294180864, 4] is incorrect, run fsck to fix
-F2FS-fs (loop0): f2fs_check_nid_range: out-of-range nid=31340049, run fsck to fix.
-BUG: kernel NULL pointer dereference, address: 0000000000000000
- folio_mark_dirty+0x33/0x50
- move_data_page+0x2dd/0x460 [f2fs]
- do_garbage_collect+0xc18/0x16a0 [f2fs]
- f2fs_gc+0x1d3/0xd90 [f2fs]
- f2fs_balance_fs+0x13a/0x570 [f2fs]
- f2fs_create+0x285/0x840 [f2fs]
- path_openat+0xe6d/0x1040
- do_filp_open+0xc5/0x140
- do_sys_openat2+0x23a/0x310
- do_sys_open+0x57/0x80
-
-The root cause is for special file: e.g. character, block, fifo or socket file,
-f2fs doesn't assign address space operations pointer array for mapping->a_ops field,
-so, in a fuzzed image, SSA table indicates a data block belong to special file, when
-f2fs tries to migrate that block, it causes NULL pointer access once move_data_page()
-calls a_ops->set_dirty_page().
+Change lower bcdDevice value for "Super Top USB 2.0  SATA BRIDGE" to match
+1.50. I have such an older device with bcdDevice=1.50 and it will not work
+otherwise.
 
 Cc: stable@vger.kernel.org
-Reported-by: Wenqing Liu <wenqingliu0120@gmail.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Kazunori Kobayashi <kazunori.kobayashi@miraclelinux.com>
+Signed-off-by: Liha Sikanen <lihasika@gmail.com>
+Link: https://lore.kernel.org/r/ccf7d12a-8362-4916-b3e0-f4150f54affd@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/gc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/storage/unusual_cypress.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -958,7 +958,8 @@ next_step:
+--- a/drivers/usb/storage/unusual_cypress.h
++++ b/drivers/usb/storage/unusual_cypress.h
+@@ -19,7 +19,7 @@ UNUSUAL_DEV(  0x04b4, 0x6831, 0x0000, 0x
+ 		"Cypress ISD-300LP",
+ 		USB_SC_CYP_ATACB, USB_PR_DEVICE, NULL, 0),
  
- 		if (phase == 3) {
- 			inode = f2fs_iget(sb, dni.ino);
--			if (IS_ERR(inode) || is_bad_inode(inode))
-+			if (IS_ERR(inode) || is_bad_inode(inode) ||
-+					special_file(inode->i_mode))
- 				continue;
- 
- 			if (!down_write_trylock(
+-UNUSUAL_DEV( 0x14cd, 0x6116, 0x0160, 0x0160,
++UNUSUAL_DEV( 0x14cd, 0x6116, 0x0150, 0x0160,
+ 		"Super Top",
+ 		"USB 2.0  SATA BRIDGE",
+ 		USB_SC_CYP_ATACB, USB_PR_DEVICE, NULL, 0),
 
 
