@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CDE20316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388D4200BA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmTE8wwK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB25AC433C7;
-	Mon,  6 Nov 2023 13:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BkX+R65L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4F2C433C8;
+	Mon,  6 Nov 2023 13:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276551;
-	bh=3tQVFrT+v1ZOr2n0DMOp4PTCexlsqAuTFkD7sBjeedk=;
+	s=korg; t=1699276554;
+	bh=4NzCPUAY30ahTZRzGIZKcga8avQo3QmZAi1VzBHs5G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dmTE8wwKy6sJTsmJFK5itk8P2tC2T03aRXKXZwdkI4gnuhzrKouOZFgRMAbgw3i45
-	 WdtAHZfRKcWydLQUJshOsxDSTH97MdTfhvaMBZYbuvuvUsX4EeJ1ydxmCGhRL3Z1IQ
-	 Esk+BQZoSub2rY+/BkpbWLYcp+3JFJl+keXPhWCI=
+	b=BkX+R65LTLuih2Utmm2GSA6iuTcPn+XhA0nH9T+E8fh4sqR2EiADVivElS9xxH1Ef
+	 dw6m+kmVQlmRATwQlvvis3ICzzJjK9yYOj43zHuN2lTm7V4NOmEqoPU/23+2ldI9I7
+	 aGWxlNaXOxhYep5r9ZYsrqJ3ajRSdkf8pChfukYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Colomar <alx@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 07/88] net: sched: cls_u32: Fix allocation size in u32_init()
-Date: Mon,  6 Nov 2023 14:03:01 +0100
-Message-ID: <20231106130306.041228496@linuxfoundation.org>
+Subject: [PATCH 6.5 08/88] arm64: dts: imx93: add the Flex-CAN stop mode by GPR
+Date: Mon,  6 Nov 2023 14:03:02 +0100
+Message-ID: <20231106130306.081314265@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -38,109 +36,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit c4d49196ceec80e30e8d981410d73331b49b7850 ]
+[ Upstream commit 23ed2be5404da7cee6a519fa69bf22d0f69da4e4 ]
 
-commit d61491a51f7e ("net/sched: cls_u32: Replace one-element array
-with flexible-array member") incorrecly replaced an instance of
-`sizeof(*tp_c)` with `struct_size(tp_c, hlist->ht, 1)`. This results
-in a an over-allocation of 8 bytes.
+imx93 A0 chip use the internal q-channel handshake signal in LPCG
+and CCM to automatically handle the Flex-CAN stop mode. But this
+method meet issue when do the system PM stress test. IC can't fix
+it easily. So in the new imx93 A1 chip, IC drop this method, and
+involve back the old way，use the GPR method to trigger the Flex-CAN
+stop mode signal. Now NXP claim to drop imx93 A0, and only support
+imx93 A1. So here add the stop mode through GPR.
 
-This change is wrong because `hlist` in `struct tc_u_common` is a
-pointer:
+This patch also fix a typo for aonmix_ns_gpr.
 
-net/sched/cls_u32.c:
-struct tc_u_common {
-        struct tc_u_hnode __rcu *hlist;
-        void                    *ptr;
-        int                     refcnt;
-        struct idr              handle_idr;
-        struct hlist_node       hnode;
-        long                    knodes;
-};
-
-So, the use of `struct_size()` makes no sense: we don't need to allocate
-any extra space for a flexible-array member. `sizeof(*tp_c)` is just fine.
-
-So, `struct_size(tp_c, hlist->ht, 1)` translates to:
-
-sizeof(*tp_c) + sizeof(tp_c->hlist->ht) ==
-sizeof(struct tc_u_common) + sizeof(struct tc_u_knode *) ==
-						144 + 8  == 0x98 (byes)
-						     ^^^
-						      |
-						unnecessary extra
-						allocation size
-
-$ pahole -C tc_u_common net/sched/cls_u32.o
-struct tc_u_common {
-	struct tc_u_hnode *        hlist;                /*     0     8 */
-	void *                     ptr;                  /*     8     8 */
-	int                        refcnt;               /*    16     4 */
-
-	/* XXX 4 bytes hole, try to pack */
-
-	struct idr                 handle_idr;           /*    24    96 */
-	/* --- cacheline 1 boundary (64 bytes) was 56 bytes ago --- */
-	struct hlist_node          hnode;                /*   120    16 */
-	/* --- cacheline 2 boundary (128 bytes) was 8 bytes ago --- */
-	long int                   knodes;               /*   136     8 */
-
-	/* size: 144, cachelines: 3, members: 6 */
-	/* sum members: 140, holes: 1, sum holes: 4 */
-	/* last cacheline: 16 bytes */
-};
-
-And with `sizeof(*tp_c)`, we have:
-
-	sizeof(*tp_c) == sizeof(struct tc_u_common) == 144 == 0x90 (bytes)
-
-which is the correct and original allocation size.
-
-Fix this issue by replacing `struct_size(tp_c, hlist->ht, 1)` with
-`sizeof(*tp_c)`, and avoid allocating 8 too many bytes.
-
-The following difference in binary output is expected and reflects the
-desired change:
-
-| net/sched/cls_u32.o
-| @@ -6148,7 +6148,7 @@
-| include/linux/slab.h:599
-|     2cf5:      mov    0x0(%rip),%rdi        # 2cfc <u32_init+0xfc>
-|                        2cf8: R_X86_64_PC32     kmalloc_caches+0xc
-|-    2cfc:      mov    $0x98,%edx
-|+    2cfc:      mov    $0x90,%edx
-
-Reported-by: Alejandro Colomar <alx@kernel.org>
-Closes: https://lore.kernel.org/lkml/09b4a2ce-da74-3a19-6961-67883f634d98@kernel.org/
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Link: https://lore.kernel.org/all/20230726112458.3524165-1-haibo.chen@nxp.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx93.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index da4c179a4d418..6663e971a13e7 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -366,7 +366,7 @@ static int u32_init(struct tcf_proto *tp)
- 	idr_init(&root_ht->handle_idr);
+diff --git a/arch/arm64/boot/dts/freescale/imx93.dtsi b/arch/arm64/boot/dts/freescale/imx93.dtsi
+index 1d8dd14b65cfa..2a9b89bf52698 100644
+--- a/arch/arm64/boot/dts/freescale/imx93.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx93.dtsi
+@@ -146,7 +146,7 @@
+ 			#size-cells = <1>;
+ 			ranges;
  
- 	if (tp_c == NULL) {
--		tp_c = kzalloc(struct_size(tp_c, hlist->ht, 1), GFP_KERNEL);
-+		tp_c = kzalloc(sizeof(*tp_c), GFP_KERNEL);
- 		if (tp_c == NULL) {
- 			kfree(root_ht);
- 			return -ENOBUFS;
+-			anomix_ns_gpr: syscon@44210000 {
++			aonmix_ns_gpr: syscon@44210000 {
+ 				compatible = "fsl,imx93-aonmix-ns-syscfg", "syscon";
+ 				reg = <0x44210000 0x1000>;
+ 			};
+@@ -280,6 +280,7 @@
+ 				assigned-clock-parents = <&clk IMX93_CLK_SYS_PLL_PFD1_DIV2>;
+ 				assigned-clock-rates = <40000000>;
+ 				fsl,clk-source = /bits/ 8 <0>;
++				fsl,stop-mode = <&aonmix_ns_gpr 0x14 0>;
+ 				status = "disabled";
+ 			};
+ 
+@@ -532,6 +533,7 @@
+ 				assigned-clock-parents = <&clk IMX93_CLK_SYS_PLL_PFD1_DIV2>;
+ 				assigned-clock-rates = <40000000>;
+ 				fsl,clk-source = /bits/ 8 <0>;
++				fsl,stop-mode = <&wakeupmix_gpr 0x0c 2>;
+ 				status = "disabled";
+ 			};
+ 
 -- 
 2.42.0
 
