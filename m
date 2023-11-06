@@ -1,188 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63A02E639;
-	Mon,  6 Nov 2023 21:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A612C859;
+	Mon,  6 Nov 2023 21:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F74yB8bJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6639CC433C8;
-	Mon,  6 Nov 2023 21:14:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rXYeTCNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4821EC433C9;
+	Mon,  6 Nov 2023 21:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699305269;
-	bh=yOk149MnqQ38qeZeV/4etw3iKo3CYD5n8FeZGzh/eFc=;
-	h=From:Date:Subject:To:Cc:From;
-	b=F74yB8bJbDjRxQPrWVBp0rcIBA/1CoKPsUPx+XDnqKASkuUkdBYoh37c6UvH0cKhX
-	 wIxHDWgXtlPaGXOi2W+s/3s/ethyy+T8dEhuh+3qTBw41Ih6QVQRtAjnj2XKSjEY3v
-	 28EGdOEvc/f2W/zne9ZsmlPve6sIp/pDj7j79xv0CgxoQMQekl7+fUewO2yBJ0EmnJ
-	 qmShe+edLqsf1VPBmi7+UaDKjkj8NT+By+yBgfSQYVbL/ksvsb97pYZRYyDbtZWlyz
-	 DtLWQV/7wgITaX6YSQPJVjbAOFvL1oYPinGSTkqfFCxqBKYm3mkcWEKo42hx2iKgGv
-	 BS/6AeS9E4u9Q==
+	s=k20201202; t=1699305411;
+	bh=k2iHsevdylVfNnzq7vpSFHrz7HmQmltAVDcN12lB57M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rXYeTCNVWqISuAwfrqkINqGZUcV4qtcxPGdhwjgQXWbySb/hqmbVlZ3jbClBYSZcU
+	 Z31DK2I3f59Tkv9EeDg1BGoAw8jf8EOPv+IPNxHcD7X5DSpCwql8fODXsgvOIHSXug
+	 uBF0ZvmhqKP8nlLwdZ1Iw1PZdcChZ9Yz+TqjrmnAHfZ6K9W2LFLlF+rz1gxZa7Gz+o
+	 erGJBRBZ89WPxVdDsrVDn/c5v9y80iLmnVMz7wDhMkvv+ngMA1R6LfnRJHEeB7Qu87
+	 Bd1KkuoRe1uPJaS7ncTHNi2LxqjkKfOFkp1e9AJLyLz67rvCKdFP5rhfI+WQI/5VV5
+	 P+5LCDGNU27Rg==
+Date: Mon, 6 Nov 2023 14:16:48 -0700
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 06 Nov 2023 14:14:16 -0700
-Subject: [PATCH net v3] tcp: Fix -Wc23-extensions in tcp_options_write()
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: Eric Dumazet <edumazet@google.com>, davem@davemloft.net,
+	dsahern@kernel.org, pabeni@redhat.com, ndesaulniers@google.com,
+	trix@redhat.com, 0x7f454c46@gmail.com, noureddine@arista.com,
+	hch@infradead.org, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH net v2] tcp: Fix -Wc23-extensions in tcp_options_write()
+Message-ID: <20231106211648.GA682811@dev-arch.thelio-3990X>
+References: <20231106-tcp-ao-fix-label-in-compound-statement-warning-v2-1-91eff6e1648c@kernel.org>
+ <CANn89i+GF=4QuVMevE7Ur2Zi0nDjBujMHWJayURR9fbcr+McnA@mail.gmail.com>
+ <20231106155806.GA1181828@dev-arch.thelio-3990X>
+ <20231106125257.43f52b1f@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231106-tcp-ao-fix-label-in-compound-statement-warning-v3-1-b54a64602a85@kernel.org>
-X-B4-Tracking: v=1; b=H4sIACdXSWUC/52OQQ6CMBBFr2K6dgwDCNSV9zAuShmgEaakragh3
- N2GjXGpyz8/895fhCdnyIvTbhGOZuON5Riy/U7oXnFHYJqYRZqkGSYZQtATKAutecKgahrAMGg
- 7TvbODfigAo3EAR7KseEOqG4KLWVZ5bISETo5iq+b8CKYgrjGY298sO61jZhxq/71zQgIWpYZN
- ojHFsvzjRzTcLCu21xz+uFjUvzMTyNfIrVtQVjklf7ir+v6BkvB94tSAQAA
-To: edumazet@google.com, davem@davemloft.net, dsahern@kernel.org, 
- kuba@kernel.org, pabeni@redhat.com
-Cc: ndesaulniers@google.com, trix@redhat.com, 0x7f454c46@gmail.com, 
- noureddine@arista.com, hch@infradead.org, netdev@vger.kernel.org, 
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4778; i=nathan@kernel.org;
- h=from:subject:message-id; bh=yOk149MnqQ38qeZeV/4etw3iKo3CYD5n8FeZGzh/eFc=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDKme4SaXfJoX3r0VsrR01445f1buSnbn39V4u66r97CQ1
- Z/WybukOkpZGMQ4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEXhoyMrRMdQr09N8oPO8f
- j/P1DmaWLyskL7e/VMz67PNJdY7P/LsM/2wEWY5F8B9kWFs2qVvhvo/T68KqtuoNuzdnub/7lHO
- sgxUA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231106125257.43f52b1f@kernel.org>
 
-Clang warns (or errors with CONFIG_WERROR=y) when CONFIG_TCP_AO is set:
+On Mon, Nov 06, 2023 at 12:52:57PM -0800, Jakub Kicinski wrote:
+> On Mon, 6 Nov 2023 08:58:06 -0700 Nathan Chancellor wrote:
+> > Ah, this suggestion is much better, thanks. I'll make this adjustment
+> > and send a v3 later today in case others have any suggested changes (I
+> > know netdev prefers waiting 24 hours for another revision but I'd like
+> > to get this warning cleared up by -rc1 so it does not proliferate into
+> > other trees and I sent v1 almost a week ago).
+> 
+> Definitely, sorry about the delay, feel free to post v3 ASAP.
 
-  net/ipv4/tcp_output.c:663:2: error: label at end of compound statement is a C23 extension [-Werror,-Wc23-extensions]
-    663 |         }
-        |         ^
-  1 error generated.
+Done, thanks Jakub!
 
-On earlier releases (such as clang-11, the current minimum supported
-version for building the kernel) that do not support C23, this was a
-hard error unconditionally:
+https://lore.kernel.org/20231106-tcp-ao-fix-label-in-compound-statement-warning-v3-1-b54a64602a85@kernel.org/
 
-  net/ipv4/tcp_output.c:663:2: error: expected statement
-          }
-          ^
-  1 error generated.
-
-While adding a semicolon after the label would resolve this, it is more
-in line with the kernel as a whole to refactor this block into a
-standalone function, which means the goto a label construct can just be
-replaced with a return statement. Do so to resolve the warning.
-
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1953
-Fixes: 1e03d32bea8e ("net/tcp: Add TCP-AO sign to outgoing packets")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-Changes in v3:
-- Don't use a pointer to a pointer for ptr parameter to avoid the extra
-  indirection in process_tcp_ao_options(), just return the modified ptr
-  value back to the caller (Eric)
-- Link to v2: https://lore.kernel.org/r/20231106-tcp-ao-fix-label-in-compound-statement-warning-v2-1-91eff6e1648c@kernel.org
-
-Changes in v2:
-- Break out problematic block into its own function so that goto can be
-  replaced with a simple return, instead of the simple semicolon
-  approach of v1 (Christoph)
-- Link to v1: https://lore.kernel.org/r/20231031-tcp-ao-fix-label-in-compound-statement-warning-v1-1-c9731d115f17@kernel.org
----
- net/ipv4/tcp_output.c | 70 ++++++++++++++++++++++++++++-----------------------
- 1 file changed, 39 insertions(+), 31 deletions(-)
-
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 0d8dd5b7e2e5..eb13a55d660c 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -601,6 +601,44 @@ static void bpf_skops_write_hdr_opt(struct sock *sk, struct sk_buff *skb,
- }
- #endif
- 
-+static __be32 *process_tcp_ao_options(struct tcp_sock *tp,
-+				      const struct tcp_request_sock *tcprsk,
-+				      struct tcp_out_options *opts,
-+				      struct tcp_key *key, __be32 *ptr)
-+{
-+#ifdef CONFIG_TCP_AO
-+	u8 maclen = tcp_ao_maclen(key->ao_key);
-+
-+	if (tcprsk) {
-+		u8 aolen = maclen + sizeof(struct tcp_ao_hdr);
-+
-+		*ptr++ = htonl((TCPOPT_AO << 24) | (aolen << 16) |
-+			       (tcprsk->ao_keyid << 8) |
-+			       (tcprsk->ao_rcv_next));
-+	} else {
-+		struct tcp_ao_key *rnext_key;
-+		struct tcp_ao_info *ao_info;
-+
-+		ao_info = rcu_dereference_check(tp->ao_info,
-+			lockdep_sock_is_held(&tp->inet_conn.icsk_inet.sk));
-+		rnext_key = READ_ONCE(ao_info->rnext_key);
-+		if (WARN_ON_ONCE(!rnext_key))
-+			return ptr;
-+		*ptr++ = htonl((TCPOPT_AO << 24) |
-+			       (tcp_ao_len(key->ao_key) << 16) |
-+			       (key->ao_key->sndid << 8) |
-+			       (rnext_key->rcvid));
-+	}
-+	opts->hash_location = (__u8 *)ptr;
-+	ptr += maclen / sizeof(*ptr);
-+	if (unlikely(maclen % sizeof(*ptr))) {
-+		memset(ptr, TCPOPT_NOP, sizeof(*ptr));
-+		ptr++;
-+	}
-+#endif
-+	return ptr;
-+}
-+
- /* Write previously computed TCP options to the packet.
-  *
-  * Beware: Something in the Internet is very sensitive to the ordering of
-@@ -629,37 +667,7 @@ static void tcp_options_write(struct tcphdr *th, struct tcp_sock *tp,
- 		opts->hash_location = (__u8 *)ptr;
- 		ptr += 4;
- 	} else if (tcp_key_is_ao(key)) {
--#ifdef CONFIG_TCP_AO
--		u8 maclen = tcp_ao_maclen(key->ao_key);
--
--		if (tcprsk) {
--			u8 aolen = maclen + sizeof(struct tcp_ao_hdr);
--
--			*ptr++ = htonl((TCPOPT_AO << 24) | (aolen << 16) |
--				       (tcprsk->ao_keyid << 8) |
--				       (tcprsk->ao_rcv_next));
--		} else {
--			struct tcp_ao_key *rnext_key;
--			struct tcp_ao_info *ao_info;
--
--			ao_info = rcu_dereference_check(tp->ao_info,
--				lockdep_sock_is_held(&tp->inet_conn.icsk_inet.sk));
--			rnext_key = READ_ONCE(ao_info->rnext_key);
--			if (WARN_ON_ONCE(!rnext_key))
--				goto out_ao;
--			*ptr++ = htonl((TCPOPT_AO << 24) |
--				       (tcp_ao_len(key->ao_key) << 16) |
--				       (key->ao_key->sndid << 8) |
--				       (rnext_key->rcvid));
--		}
--		opts->hash_location = (__u8 *)ptr;
--		ptr += maclen / sizeof(*ptr);
--		if (unlikely(maclen % sizeof(*ptr))) {
--			memset(ptr, TCPOPT_NOP, sizeof(*ptr));
--			ptr++;
--		}
--out_ao:
--#endif
-+		ptr = process_tcp_ao_options(tp, tcprsk, opts, key, ptr);
- 	}
- 	if (unlikely(opts->mss)) {
- 		*ptr++ = htonl((TCPOPT_MSS << 24) |
-
----
-base-commit: c1ed833e0b3b7b9edc82b97b73b2a8a10ceab241
-change-id: 20231031-tcp-ao-fix-label-in-compound-statement-warning-ebd6c9978498
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Cheers,
+Nathan
