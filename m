@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DC3210F7
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B382210E2
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LF+ZwOqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E633C433C7;
-	Mon,  6 Nov 2023 13:12:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+dcjwrn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C80C433CA;
+	Mon,  6 Nov 2023 13:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276333;
-	bh=MmgJofFQy2Y/0WARvuU5Iruza+EqlZ7pGXzR3X/ApXU=;
+	s=korg; t=1699276336;
+	bh=0FZbU6ZUWcU8hjXKAMqr6K03YsE8DjtYQovKhOBTTDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LF+ZwOqIN40fbldM3aGmWiVC9D+CzuFL5blMOfSCZVEZ16nvmVL5PhnS5gvDWq4Kz
-	 gu+lIjs2XYTqAdJppnrOa40GNpBYte0B7pdhk0Tl/GbliKJsiI56bGxWsOwUuXiaZN
-	 0DprApkj4lt2c3ExmWGZxXvfFeLFhiLeVvrsC1T8=
+	b=k+dcjwrnvUOgqNPcc5rE2X2BjXZYWK3Hg3OsUSJ8CutCx3qQYkSGjV2ak04caMFjP
+	 CEpIHuMJmMW4A8IVykGjTqqGBfCwVz2/gWat/g3/BV1lJi6AYSDhW7E0kyP7YzX0fQ
+	 KQoZU7/E5LVSTQa8/ywfE9QszJQu56My5bYccSfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cameron Williams <cang1@live.co.uk>
-Subject: [PATCH 4.19 61/61] tty: 8250: Add support for Intashield IS-100
-Date: Mon,  6 Nov 2023 14:03:57 +0100
-Message-ID: <20231106130301.671583685@linuxfoundation.org>
+Subject: [PATCH 4.19 59/61] tty: 8250: Add support for additional Brainboxes UC cards
+Date: Mon,  6 Nov 2023 14:03:55 +0100
+Message-ID: <20231106130301.612635322@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -42,32 +42,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Cameron Williams <cang1@live.co.uk>
 
-commit 4d994e3cf1b541ff32dfb03fbbc60eea68f9645b upstream.
+commit c563db486db7d245c0e2f319443417ae8e692f7f upstream.
 
-Add support for the Intashield IS-100 1 port serial card.
+Add device IDs for some more Brainboxes UC cards, namely
+UC-235/UC-246, UC-253/UC-734, UC-302, UC-313, UC-346, UC-357,
+UC-607 and UC-836.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Link: https://lore.kernel.org/r/DU0PR02MB7899A0E0CDAA505AF5A874CDC4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
+Link: https://lore.kernel.org/r/DU0PR02MB789969998A6C3FAFCD95C85DC4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/tty/serial/8250/8250_pci.c |   57 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
 
 --- a/drivers/tty/serial/8250/8250_pci.c
 +++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -4772,6 +4772,12 @@ static const struct pci_device_id serial
- 		pbn_b1_bt_1_115200 },
- 
- 	/*
-+	 * IntaShield IS-100
-+	 */
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0D60,
-+		PCI_ANY_ID, PCI_ANY_ID, 0, 0,
+@@ -4798,6 +4798,17 @@ static const struct pci_device_id serial
+ 		PCI_ANY_ID, PCI_ANY_ID,
+ 		0, 0,
+ 		pbn_b2_1_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0AA2,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
 +		pbn_b2_1_115200 },
 +	/*
- 	 * IntaShield IS-200
++	 * Brainboxes UC-253/UC-734
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0CA1,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
+ 	/*
+ 	 * Brainboxes UC-260/271/701/756
  	 */
- 	{	PCI_VENDOR_ID_INTASHIELD, PCI_DEVICE_ID_INTASHIELD_IS200,
+@@ -4830,6 +4841,14 @@ static const struct pci_device_id serial
+ 		PCI_ANY_ID, PCI_ANY_ID,
+ 		0, 0,
+ 		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x08E2,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x08E3,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
+ 	/*
+ 	 * Brainboxes UC-310
+ 	 */
+@@ -4840,6 +4859,14 @@ static const struct pci_device_id serial
+ 	/*
+ 	 * Brainboxes UC-313
+ 	 */
++	{       PCI_VENDOR_ID_INTASHIELD, 0x08A1,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{       PCI_VENDOR_ID_INTASHIELD, 0x08A2,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
+ 	{       PCI_VENDOR_ID_INTASHIELD, 0x08A3,
+ 		PCI_ANY_ID, PCI_ANY_ID,
+ 		0, 0,
+@@ -4854,6 +4881,10 @@ static const struct pci_device_id serial
+ 	/*
+ 	 * Brainboxes UC-346
+ 	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0B01,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_4_115200 },
+ 	{	PCI_VENDOR_ID_INTASHIELD, 0x0B02,
+ 		PCI_ANY_ID, PCI_ANY_ID,
+ 		0, 0,
+@@ -4865,6 +4896,10 @@ static const struct pci_device_id serial
+ 		PCI_ANY_ID, PCI_ANY_ID,
+ 		0, 0,
+ 		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0A82,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
+ 	{	PCI_VENDOR_ID_INTASHIELD, 0x0A83,
+ 		PCI_ANY_ID, PCI_ANY_ID,
+ 		0, 0,
+@@ -4883,6 +4918,28 @@ static const struct pci_device_id serial
+ 		PCI_ANY_ID, PCI_ANY_ID,
+ 		0, 0,
+ 		pbn_b2_4_115200 },
++	/*
++	 * Brainboxes UC-607
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x09A1,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x09A2,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x09A3,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	/*
++	 * Brainboxes UC-836
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0D41,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_4_115200 },
+ 	/*
+ 	 * Perle PCI-RAS cards
+ 	 */
 
 
