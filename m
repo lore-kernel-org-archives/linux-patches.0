@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54794250EA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D385250EA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umD+fRh8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80CEC433C8;
-	Mon,  6 Nov 2023 13:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMwl1DKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB72DC433CC;
+	Mon,  6 Nov 2023 13:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277627;
-	bh=H5oodI+zNPrmliIm3JY7QueUrWoxuNyDZsTrBBuCZq4=;
+	s=korg; t=1699277630;
+	bh=oKwT15UxJ6rFmSs2OL/uExB/p3QNKRzZ6ctjTiW1Sck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=umD+fRh8z6pPt9c5Sw6p3cvDDcrX+e071DDvrRpf0q0NqU/lvGa4C2OBEeyIxdLy4
-	 OZVUoxTVDlQklx0N1CHXKSC+09l2ozMZ6gL7KOcdMo0QKlGAevEDLyhWxLw86+ibsR
-	 m8Gop/qJgVwaUHzJezJAqDMIJFhyvHT8jU7lgZgc=
+	b=fMwl1DKj7P3PQXK2HR1CAybro10lEMolWz2NmdPBYFu5CGUEBL2w4XQD0cXMH+CMP
+	 e3+eDPK8YxRkS4cJqzh1NptARCiaYH8WzU+4/ZfaBjHJ9IywdETIW+nWc5nDrtvTyd
+	 k4pCfv6WzW0E+FWJ64JrtCiMfrdDcYep7Mm+iJYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Will <derekrobertwill@gmail.com>,
+	syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com,
 	Oliver Hartkopp <socketcan@hartkopp.net>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 82/95] can: isotp: isotp_bind(): return -EINVAL on incorrect CAN ID formatting
-Date: Mon,  6 Nov 2023 14:04:50 +0100
-Message-ID: <20231106130307.703149999@linuxfoundation.org>
+Subject: [PATCH 5.10 83/95] can: isotp: check CAN address family in isotp_bind()
+Date: Mon,  6 Nov 2023 14:04:51 +0100
+Message-ID: <20231106130307.746943991@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -44,42 +44,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 2aa39889c463195a0dfe2aff9fad413139c32a4f upstream
+commit c6adf659a8ba85913e16a571d5a9bcd17d3d1234 upstream
 
-Commit 3ea566422cbd ("can: isotp: sanitize CAN ID checks in
-isotp_bind()") checks the given CAN ID address information by
-sanitizing the input values.
+Add missing check to block non-AF_CAN binds.
 
-This check (silently) removes obsolete bits by masking the given CAN
-IDs.
+Syzbot created some code which matched the right sockaddr struct size
+but used AF_XDP (0x2C) instead of AF_CAN (0x1D) in the address family
+field:
 
-Derek Will suggested to give a feedback to the application programmer
-when the 'sanitizing' was actually needed which means the programmer
-provided CAN ID content in a wrong format (e.g. SFF CAN IDs with a CAN
-ID > 0x7FF).
+bind$xdp(r2, &(0x7f0000000540)={0x2c, 0x0, r4, 0x0, r2}, 0x10)
+                                ^^^^
+This has no funtional impact but the userspace should be notified about
+the wrong address family field content.
 
-Link: https://lore.kernel.org/all/20220515181633.76671-1-socketcan@hartkopp.net
-Suggested-by: Derek Will <derekrobertwill@gmail.com>
+Link: https://syzkaller.appspot.com/text?tag=CrashLog&x=11ff9d8c480000
+Reported-by: syzbot+5aed6c3aaba661f5b917@syzkaller.appspotmail.com
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20230104201844.13168-1-socketcan@hartkopp.net
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/can/isotp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/net/can/isotp.c
 +++ b/net/can/isotp.c
-@@ -1142,6 +1142,11 @@ static int isotp_bind(struct socket *soc
- 	else
- 		rx_id &= CAN_SFF_MASK;
+@@ -1129,6 +1129,9 @@ static int isotp_bind(struct socket *soc
+ 	if (len < ISOTP_MIN_NAMELEN)
+ 		return -EINVAL;
  
-+	/* give feedback on wrong CAN-ID values */
-+	if (tx_id != addr->can_addr.tp.tx_id ||
-+	    rx_id != addr->can_addr.tp.rx_id)
++	if (addr->can_family != AF_CAN)
 +		return -EINVAL;
 +
- 	if (!addr->can_ifindex)
- 		return -ENODEV;
- 
+ 	/* sanitize tx/rx CAN identifiers */
+ 	tx_id = addr->can_addr.tp.tx_id;
+ 	if (tx_id & CAN_EFF_FLAG)
 
 
