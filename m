@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E996B208CA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAA5219E9
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOUZ8k/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 609FAC433C8;
-	Mon,  6 Nov 2023 13:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0EvK2tC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497B3C433C7;
+	Mon,  6 Nov 2023 13:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277150;
-	bh=Cid7JzwXhEODJPEgJv0Az71wZcDyR+Hi2VXtQHLgqxM=;
+	s=korg; t=1699277153;
+	bh=5YArsuUHkX62/WxjksXs1g0igiF3OJL2F0uH1DDC4FA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lOUZ8k/pkUMi+iSnRK2A8fry9sGIKkyU3pzA8SoDoDX9Zp2XsnYnV+J3Rp58v9E0a
-	 pqfO3iD0EW79oL54FqDLsb2KyarahpJTiRkh4WW+Je7jU4ERZgnl2ODdYJnuvceEkU
-	 +v8qQ0OGos6/XpMgO96KNqMaUrnGptGFdlfkCbF4=
+	b=f0EvK2tCej2+TjKZsiwQAEeg8G43TVXFMpPjAiLRJxv4RcgU67OZCFKaD01ggqAmF
+	 ilVDAT26dY8CUNewNqDjvlEec32BmSUAOV3Qja1We/jxY1f7LLcEam+RSS4JEwQ0hr
+	 7uS0zsJUhx/5zz62VeQaCklDM+5/hN73C3ZOv3ZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Daly <pdaly@redhat.com>,
-	"Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 5.15 055/128] clk: Sanitize possible_parent_show to Handle Return Value of of_clk_get_parent_name
-Date: Mon,  6 Nov 2023 14:03:35 +0100
-Message-ID: <20231106130311.605832156@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 029/128] net: ieee802154: adf7242: Fix some potential buffer overflow in adf7242_stats_show()
+Date: Mon,  6 Nov 2023 14:03:09 +0100
+Message-ID: <20231106130310.445132199@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,73 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessandro Carminati <alessandro.carminati@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit ceb87a361d0b079ecbc7d2831618c19087f304a9 upstream.
+[ Upstream commit ca082f019d8fbb983f03080487946da714154bae ]
 
-In the possible_parent_show function, ensure proper handling of the return
-value from of_clk_get_parent_name to prevent potential issues arising from
-a NULL return.
-The current implementation invokes seq_puts directly on the result of
-of_clk_get_parent_name without verifying the return value, which can lead
-to kernel panic if the function returns NULL.
+strncat() usage in adf7242_debugfs_init() is wrong.
+The size given to strncat() is the maximum number of bytes that can be
+written, excluding the trailing NULL.
 
-This patch addresses the concern by introducing a check on the return
-value of of_clk_get_parent_name. If the return value is not NULL, the
-function proceeds to call seq_puts, providing the returned value as
-argument.
-However, if of_clk_get_parent_name returns NULL, the function provides a
-static string as argument, avoiding the panic.
+Here, the size that is passed, DNAME_INLINE_LEN, does not take into account
+the size of "adf7242-" that is already in the array.
 
-Fixes: 1ccc0ddf046a ("clk: Use seq_puts() in possible_parent_show()")
-Reported-by: Philip Daly <pdaly@redhat.com>
-Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
-Link: https://lore.kernel.org/r/20230921073217.572151-1-alessandro.carminati@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In order to fix it, use snprintf() instead.
+
+Fixes: 7302b9d90117 ("ieee802154/adf7242: Driver for ADF7242 MAC IEEE802154")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/net/ieee802154/adf7242.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -3182,6 +3182,7 @@ static void possible_parent_show(struct
- 				 unsigned int i, char terminator)
+diff --git a/drivers/net/ieee802154/adf7242.c b/drivers/net/ieee802154/adf7242.c
+index 07adbeec19787..14cf8b0dfad90 100644
+--- a/drivers/net/ieee802154/adf7242.c
++++ b/drivers/net/ieee802154/adf7242.c
+@@ -1162,9 +1162,10 @@ static int adf7242_stats_show(struct seq_file *file, void *offset)
+ 
+ static void adf7242_debugfs_init(struct adf7242_local *lp)
  {
- 	struct clk_core *parent;
-+	const char *name = NULL;
+-	char debugfs_dir_name[DNAME_INLINE_LEN + 1] = "adf7242-";
++	char debugfs_dir_name[DNAME_INLINE_LEN + 1];
  
- 	/*
- 	 * Go through the following options to fetch a parent's name.
-@@ -3196,18 +3197,20 @@ static void possible_parent_show(struct
- 	 * registered (yet).
- 	 */
- 	parent = clk_core_get_parent_by_index(core, i);
--	if (parent)
-+	if (parent) {
- 		seq_puts(s, parent->name);
--	else if (core->parents[i].name)
-+	} else if (core->parents[i].name) {
- 		seq_puts(s, core->parents[i].name);
--	else if (core->parents[i].fw_name)
-+	} else if (core->parents[i].fw_name) {
- 		seq_printf(s, "<%s>(fw)", core->parents[i].fw_name);
--	else if (core->parents[i].index >= 0)
--		seq_puts(s,
--			 of_clk_get_parent_name(core->of_node,
--						core->parents[i].index));
--	else
--		seq_puts(s, "(missing)");
-+	} else {
-+		if (core->parents[i].index >= 0)
-+			name = of_clk_get_parent_name(core->of_node, core->parents[i].index);
-+		if (!name)
-+			name = "(missing)";
-+
-+		seq_puts(s, name);
-+	}
+-	strncat(debugfs_dir_name, dev_name(&lp->spi->dev), DNAME_INLINE_LEN);
++	snprintf(debugfs_dir_name, sizeof(debugfs_dir_name),
++		 "adf7242-%s", dev_name(&lp->spi->dev));
  
- 	seq_putc(s, terminator);
- }
+ 	lp->debugfs_root = debugfs_create_dir(debugfs_dir_name, NULL);
+ 
+-- 
+2.42.0
+
 
 
