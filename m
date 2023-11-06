@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A17208BD
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EB6208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEijtLpz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A86C433C8;
-	Mon,  6 Nov 2023 13:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUpu2xMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0FEC433C8;
+	Mon,  6 Nov 2023 13:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276650;
-	bh=TQ+ipI1Sx3+1TwvScCAfxfmBp0+MNqlMM9dHaRKtZkg=;
+	s=korg; t=1699276653;
+	bh=PZy0gEs3mIsN/v45teV5woRNZ4SiU2qjPQBBYreA7ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DEijtLpzNbFFUhU42J4SRPtpcdK1FSZJTJIH8Cd/TsN+u5rhvgMgUcQvzP0/aPcTg
-	 Bwe2kfOGEVUxnvFC80aaQ76dw52WrTrjW0MIK4d/khjBxTcIZU/Ohu8WD956BxI7m8
-	 ZqBjEzD4+Cu2Tbbmir77r68HdJcNMlMMf5RFvP2g=
+	b=hUpu2xMdRnaUtEW+dOMmMWuI77n4gJ+pB6HxEP+VIGS1cgppS7wqL8zuNouUcfhUU
+	 1sn432bg0wUdxG75jZGxfmRELeVu/wn4EFC0tHCzAsflV5eQhJZ/Te1RL3i/fNo15e
+	 oeC7O1UGVdsomOa5WDJvS0oVkQybrWTqwqG6rNlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Ondrej Zary <linux@zary.sk>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 22/88] fs/ntfs3: Add more attributes checks in mi_enum_attr()
-Date: Mon,  6 Nov 2023 14:03:16 +0100
-Message-ID: <20231106130306.593408984@linuxfoundation.org>
+Subject: [PATCH 6.5 13/88] ata: pata_parport: add custom version of wait_after_reset
+Date: Mon,  6 Nov 2023 14:03:07 +0100
+Message-ID: <20231106130306.290956056@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -41,147 +43,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Ondrej Zary <linux@zary.sk>
 
-[ Upstream commit 013ff63b649475f0ee134e2c8d0c8e65284ede50 ]
+[ Upstream commit f343e578fef99a69b3322aca38b94a6d8ded2ce7 ]
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Some parallel adapters (e.g. EXP Computer MC-1285B EPP Cable) return
+bogus values when there's no master device present. This can cause
+reset to fail, preventing the lone slave device (such as EXP Computer
+CD-865) from working.
+
+Add custom version of wait_after_reset that ignores master failure when
+a slave device is present. The custom version is also needed because
+the generic ata_sff_wait_after_reset uses direct port I/O for slave
+device detection.
+
+Signed-off-by: Ondrej Zary <linux@zary.sk>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/record.c | 68 ++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 52 insertions(+), 16 deletions(-)
+ drivers/ata/pata_parport/pata_parport.c | 68 ++++++++++++++++++++++++-
+ 1 file changed, 67 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
-index c12ebffc94da4..02cc91ed88357 100644
---- a/fs/ntfs3/record.c
-+++ b/fs/ntfs3/record.c
-@@ -193,8 +193,9 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
- {
- 	const struct MFT_REC *rec = mi->mrec;
- 	u32 used = le32_to_cpu(rec->used);
--	u32 t32, off, asize;
-+	u32 t32, off, asize, prev_type;
- 	u16 t16;
-+	u64 data_size, alloc_size, tot_size;
- 
- 	if (!attr) {
- 		u32 total = le32_to_cpu(rec->total);
-@@ -213,6 +214,7 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
- 		if (!is_rec_inuse(rec))
- 			return NULL;
- 
-+		prev_type = 0;
- 		attr = Add2Ptr(rec, off);
- 	} else {
- 		/* Check if input attr inside record. */
-@@ -226,11 +228,11 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
- 			return NULL;
- 		}
- 
--		if (off + asize < off) {
--			/* Overflow check. */
-+		/* Overflow check. */
-+		if (off + asize < off)
- 			return NULL;
--		}
- 
-+		prev_type = le32_to_cpu(attr->type);
- 		attr = Add2Ptr(attr, asize);
- 		off += asize;
- 	}
-@@ -250,7 +252,11 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
- 
- 	/* 0x100 is last known attribute for now. */
- 	t32 = le32_to_cpu(attr->type);
--	if ((t32 & 0xf) || (t32 > 0x100))
-+	if (!t32 || (t32 & 0xf) || (t32 > 0x100))
-+		return NULL;
-+
-+	/* attributes in record must be ordered by type */
-+	if (t32 < prev_type)
- 		return NULL;
- 
- 	/* Check overflow and boundary. */
-@@ -259,16 +265,15 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
- 
- 	/* Check size of attribute. */
- 	if (!attr->non_res) {
-+		/* Check resident fields. */
- 		if (asize < SIZEOF_RESIDENT)
- 			return NULL;
- 
- 		t16 = le16_to_cpu(attr->res.data_off);
--
- 		if (t16 > asize)
- 			return NULL;
- 
--		t32 = le32_to_cpu(attr->res.data_size);
--		if (t16 + t32 > asize)
-+		if (t16 + le32_to_cpu(attr->res.data_size) > asize)
- 			return NULL;
- 
- 		t32 = sizeof(short) * attr->name_len;
-@@ -278,21 +283,52 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
- 		return attr;
- 	}
- 
--	/* Check some nonresident fields. */
--	if (attr->name_len &&
--	    le16_to_cpu(attr->name_off) + sizeof(short) * attr->name_len >
--		    le16_to_cpu(attr->nres.run_off)) {
-+	/* Check nonresident fields. */
-+	if (attr->non_res != 1)
-+		return NULL;
-+
-+	t16 = le16_to_cpu(attr->nres.run_off);
-+	if (t16 > asize)
-+		return NULL;
-+
-+	t32 = sizeof(short) * attr->name_len;
-+	if (t32 && le16_to_cpu(attr->name_off) + t32 > t16)
-+		return NULL;
-+
-+	/* Check start/end vcn. */
-+	if (le64_to_cpu(attr->nres.svcn) > le64_to_cpu(attr->nres.evcn) + 1)
-+		return NULL;
-+
-+	data_size = le64_to_cpu(attr->nres.data_size);
-+	if (le64_to_cpu(attr->nres.valid_size) > data_size)
- 		return NULL;
--	}
- 
--	if (attr->nres.svcn || !is_attr_ext(attr)) {
-+	alloc_size = le64_to_cpu(attr->nres.alloc_size);
-+	if (data_size > alloc_size)
-+		return NULL;
-+
-+	t32 = mi->sbi->cluster_mask;
-+	if (alloc_size & t32)
-+		return NULL;
-+
-+	if (!attr->nres.svcn && is_attr_ext(attr)) {
-+		/* First segment of sparse/compressed attribute */
-+		if (asize + 8 < SIZEOF_NONRESIDENT_EX)
-+			return NULL;
-+
-+		tot_size = le64_to_cpu(attr->nres.total_size);
-+		if (tot_size & t32)
-+			return NULL;
-+
-+		if (tot_size > alloc_size)
-+			return NULL;
-+	} else {
- 		if (asize + 8 < SIZEOF_NONRESIDENT)
- 			return NULL;
- 
- 		if (attr->nres.c_unit)
- 			return NULL;
--	} else if (asize + 8 < SIZEOF_NONRESIDENT_EX)
--		return NULL;
-+	}
- 
- 	return attr;
+diff --git a/drivers/ata/pata_parport/pata_parport.c b/drivers/ata/pata_parport/pata_parport.c
+index cf87bbb52f1ff..a7adfdcb5e27c 100644
+--- a/drivers/ata/pata_parport/pata_parport.c
++++ b/drivers/ata/pata_parport/pata_parport.c
+@@ -80,6 +80,72 @@ static bool pata_parport_devchk(struct ata_port *ap, unsigned int device)
+ 	return (nsect == 0x55) && (lbal == 0xaa);
  }
+ 
++static int pata_parport_wait_after_reset(struct ata_link *link,
++					 unsigned int devmask,
++					 unsigned long deadline)
++{
++	struct ata_port *ap = link->ap;
++	struct pi_adapter *pi = ap->host->private_data;
++	unsigned int dev0 = devmask & (1 << 0);
++	unsigned int dev1 = devmask & (1 << 1);
++	int rc, ret = 0;
++
++	ata_msleep(ap, ATA_WAIT_AFTER_RESET);
++
++	/* always check readiness of the master device */
++	rc = ata_sff_wait_ready(link, deadline);
++	if (rc) {
++		/*
++		 * some adapters return bogus values if master device is not
++		 * present, so don't abort now if a slave device is present
++		 */
++		if (!dev1)
++			return rc;
++		ret = -ENODEV;
++	}
++
++	/*
++	 * if device 1 was found in ata_devchk, wait for register
++	 * access briefly, then wait for BSY to clear.
++	 */
++	if (dev1) {
++		int i;
++
++		pata_parport_dev_select(ap, 1);
++
++		/*
++		 * Wait for register access.  Some ATAPI devices fail
++		 * to set nsect/lbal after reset, so don't waste too
++		 * much time on it.  We're gonna wait for !BSY anyway.
++		 */
++		for (i = 0; i < 2; i++) {
++			u8 nsect, lbal;
++
++			nsect = pi->proto->read_regr(pi, 0, ATA_REG_NSECT);
++			lbal = pi->proto->read_regr(pi, 0, ATA_REG_LBAL);
++			if (nsect == 1 && lbal == 1)
++				break;
++			/* give drive a breather */
++			ata_msleep(ap, 50);
++		}
++
++		rc = ata_sff_wait_ready(link, deadline);
++		if (rc) {
++			if (rc != -ENODEV)
++				return rc;
++			ret = rc;
++		}
++	}
++
++	pata_parport_dev_select(ap, 0);
++	if (dev1)
++		pata_parport_dev_select(ap, 1);
++	if (dev0)
++		pata_parport_dev_select(ap, 0);
++
++	return ret;
++}
++
+ static int pata_parport_bus_softreset(struct ata_port *ap, unsigned int devmask,
+ 				      unsigned long deadline)
+ {
+@@ -94,7 +160,7 @@ static int pata_parport_bus_softreset(struct ata_port *ap, unsigned int devmask,
+ 	ap->last_ctl = ap->ctl;
+ 
+ 	/* wait the port to become ready */
+-	return ata_sff_wait_after_reset(&ap->link, devmask, deadline);
++	return pata_parport_wait_after_reset(&ap->link, devmask, deadline);
+ }
+ 
+ static int pata_parport_softreset(struct ata_link *link, unsigned int *classes,
 -- 
 2.42.0
 
