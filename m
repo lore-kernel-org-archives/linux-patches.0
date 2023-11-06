@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E677522EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4F522EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFekewr0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34703C433C7;
-	Mon,  6 Nov 2023 13:29:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lBfwTFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553ACC433C7;
+	Mon,  6 Nov 2023 13:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277389;
-	bh=1AMQ5NbTl5KrkCX4ZhcwbVzyaKYcBMu5zIQHEWmDIik=;
+	s=korg; t=1699277392;
+	bh=txBK/I0A82ynbQOLJsjxULmkFlFliPmp7YJgdT93ngM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JFekewr0GtJ5NxsEhfnzzgtW4Z4ahVbCd2sdr9ZDI8CE3PXfMegBjGaOkn6Qyf3jn
-	 Io80xBhAKGMUl92ySRHKUAK1kDePtG579NCOLyRLjhQ9PDKOewiFLrTXliT//ypPnR
-	 Cthh+42xuNKeank80yAZiwM1cNa5UBdt/fRBg81U=
+	b=2lBfwTFZTjT545KYqRgx/NfRv++/+wUvcR7rUQNh8FNzL1DOp+ZTStDF8zrZswhqq
+	 LOCMww66BON41Nq4/XF/OBNGFkSkpE//AYeUUBkQVRQcbhw5FChIB9HlG9fA6gl7yR
+	 eahKghO/+C5SI/LkRzB1GgxmiZomUunJeV4c1Bzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	stable <stable@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 5.15 127/128] misc: pci_endpoint_test: Add deviceID for J721S2 PCIe EP device support
-Date: Mon,  6 Nov 2023 14:04:47 +0100
-Message-ID: <20231106130314.943405697@linuxfoundation.org>
+	Mark Hasemeyer <markhas@chromium.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 128/128] ALSA: hda: intel-dsp-config: Fix JSL Chromebook quirk detection
+Date: Mon,  6 Nov 2023 14:04:48 +0100
+Message-ID: <20231106130314.984945524@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,41 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Mark Hasemeyer <markhas@chromium.org>
 
-commit 8293703a492ae97c86af27c75b76e6239ec86483 upstream.
+commit 7c05b44e1a50d9cbfc4f731dddc436a24ddc129a upstream.
 
-Add DEVICE_ID for J721S2 and enable support for endpoints configured
-with this DEVICE_ID in the pci_endpoint_test driver.
+Some Jasperlake Chromebooks overwrite the system vendor DMI value to the
+name of the OEM that manufactured the device. This breaks Chromebook
+quirk detection as it expects the system vendor to be "Google".
 
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20231020120248.3168406-1-s-vadapalli@ti.com
+Add another quirk detection entry that looks for "Google" in the BIOS
+version.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Mark Hasemeyer <markhas@chromium.org>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20231018235944.1860717-1-markhas@chromium.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/pci_endpoint_test.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/hda/intel-dsp-config.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -71,6 +71,7 @@
- #define PCI_DEVICE_ID_TI_AM654			0xb00c
- #define PCI_DEVICE_ID_TI_J7200			0xb00f
- #define PCI_DEVICE_ID_TI_AM64			0xb010
-+#define PCI_DEVICE_ID_TI_J721S2		0xb013
- #define PCI_DEVICE_ID_LS1088A			0x80c0
- 
- #define is_am654_pci_dev(pdev)		\
-@@ -1004,6 +1005,9 @@ static const struct pci_device_id pci_en
- 	{ PCI_DEVICE(PCI_VENDOR_ID_TI, PCI_DEVICE_ID_TI_AM64),
- 	  .driver_data = (kernel_ulong_t)&j721e_data,
+--- a/sound/hda/intel-dsp-config.c
++++ b/sound/hda/intel-dsp-config.c
+@@ -330,6 +330,12 @@ static const struct config_entry config_
+ 					DMI_MATCH(DMI_SYS_VENDOR, "Google"),
+ 				}
+ 			},
++			{
++				.ident = "Google firmware",
++				.matches = {
++					DMI_MATCH(DMI_BIOS_VERSION, "Google"),
++				}
++			},
+ 			{}
+ 		}
  	},
-+	{ PCI_DEVICE(PCI_VENDOR_ID_TI, PCI_DEVICE_ID_TI_J721S2),
-+	  .driver_data = (kernel_ulong_t)&j721e_data,
-+	},
- 	{ }
- };
- MODULE_DEVICE_TABLE(pci, pci_endpoint_test_tbl);
 
 
