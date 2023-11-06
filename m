@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462CD20316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A6320316
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vu+gfPaQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF237C433C8;
-	Mon,  6 Nov 2023 13:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGq7f+v5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90718C433C8;
+	Mon,  6 Nov 2023 13:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276627;
-	bh=kwnoC+uNfRjt289lGFuKfSbvenq4alxN0/3u2ck4dx4=;
+	s=korg; t=1699276630;
+	bh=e/HEEpzhW+FAaao3+F4a4a0uUpNTZm+kyemaTM3TF9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vu+gfPaQ8iXt6kypUxkl47hr29IiZHhEOxRx9Eax5RhhJxtTvHdqGc1ihGCFdg+0W
-	 6ebjnw75Oaywg07/TINXz+9KTAcM598ZG8NljbiS+c1wxrWsSXGBEJuYX7xo8hudxs
-	 N+pEjZM6b7ajp+tItQHpOrcffKkmbTCzJ0GY+juo=
+	b=mGq7f+v53LaF4t8GyTxrXrzRIAdpXHgKYzqZ/sT6qltG2FVFY8Wr0UFsQc6R1mDRh
+	 MUjdbIFDrXfFYwem90ZYm3b4MIRRxw5NRtLp6eLLTMAjc4QVhOnNxe2EiiiO5v1rVb
+	 VT5+1r3FnI1xp9Q/Wx95jkcy/kZjaGIQlTihL7VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Jirman <megi@xff.cz>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	David Rau <David.Rau.opensource@dm.renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 16/88] media: i2c: ov8858: Dont set fwnode in the driver
-Date: Mon,  6 Nov 2023 14:03:10 +0100
-Message-ID: <20231106130306.394206308@linuxfoundation.org>
+Subject: [PATCH 6.5 43/88] ASoC: da7219: Correct the process of setting up Gnd switch in AAD
+Date: Mon,  6 Nov 2023 14:03:37 +0100
+Message-ID: <20231106130307.425644837@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -45,85 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Jirman <megi@xff.cz>
+From: David Rau <David.Rau.opensource@dm.renesas.com>
 
-[ Upstream commit c46f16f156ac58afcf4addc850bb5dfbca77b9fc ]
+[ Upstream commit e8ecffd9962fe051d53a0761921b26d653b3df6b ]
 
-This makes the driver work with the new check in
-v4l2_async_register_subdev() that was introduced recently in 6.6-rc1.
-Without this change, probe fails with:
+Enable Gnd switch to improve stability when Jack insert event
+occurs, and then disable Gnd switch after Jack type detection
+is finished.
 
-ov8858 1-0036: Detected OV8858 sensor, revision 0xb2
-ov8858 1-0036: sub-device fwnode is an endpoint!
-ov8858 1-0036: v4l2 async register subdev failed
-ov8858: probe of 1-0036 failed with error -22
-
-This also simplifies the driver a bit.
-
-Signed-off-by: Ondrej Jirman <megi@xff.cz>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: David Rau <David.Rau.opensource@dm.renesas.com>
+Link: https://lore.kernel.org/r/20231017021258.5929-1-David.Rau.opensource@dm.renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov8858.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ sound/soc/codecs/da7219-aad.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/i2c/ov8858.c b/drivers/media/i2c/ov8858.c
-index 3af6125a2eee8..4d9fd76e2f60f 100644
---- a/drivers/media/i2c/ov8858.c
-+++ b/drivers/media/i2c/ov8858.c
-@@ -1850,9 +1850,9 @@ static int ov8858_parse_of(struct ov8858 *ov8858)
- 	}
+diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
+index 581b334a6631d..3bbe850916493 100644
+--- a/sound/soc/codecs/da7219-aad.c
++++ b/sound/soc/codecs/da7219-aad.c
+@@ -59,9 +59,6 @@ static void da7219_aad_btn_det_work(struct work_struct *work)
+ 	bool micbias_up = false;
+ 	int retries = 0;
  
- 	ret = v4l2_fwnode_endpoint_parse(endpoint, &vep);
-+	fwnode_handle_put(endpoint);
- 	if (ret) {
- 		dev_err(dev, "Failed to parse endpoint: %d\n", ret);
--		fwnode_handle_put(endpoint);
- 		return ret;
- 	}
- 
-@@ -1864,12 +1864,9 @@ static int ov8858_parse_of(struct ov8858 *ov8858)
- 	default:
- 		dev_err(dev, "Unsupported number of data lanes %u\n",
- 			ov8858->num_lanes);
--		fwnode_handle_put(endpoint);
- 		return -EINVAL;
- 	}
- 
--	ov8858->subdev.fwnode = endpoint;
+-	/* Disable ground switch */
+-	snd_soc_component_update_bits(component, 0xFB, 0x01, 0x00);
 -
- 	return 0;
- }
+ 	/* Drive headphones/lineout */
+ 	snd_soc_component_update_bits(component, DA7219_HP_L_CTRL,
+ 			    DA7219_HP_L_AMP_OE_MASK,
+@@ -155,9 +152,6 @@ static void da7219_aad_hptest_work(struct work_struct *work)
+ 		tonegen_freq_hptest = cpu_to_le16(DA7219_AAD_HPTEST_RAMP_FREQ_INT_OSC);
+ 	}
  
-@@ -1913,7 +1910,7 @@ static int ov8858_probe(struct i2c_client *client)
- 
- 	ret = ov8858_init_ctrls(ov8858);
- 	if (ret)
--		goto err_put_fwnode;
-+		return ret;
- 
- 	sd = &ov8858->subdev;
- 	sd->flags |= V4L2_SUBDEV_FL_HAS_DEVNODE | V4L2_SUBDEV_FL_HAS_EVENTS;
-@@ -1964,8 +1961,6 @@ static int ov8858_probe(struct i2c_client *client)
- 	media_entity_cleanup(&sd->entity);
- err_free_handler:
- 	v4l2_ctrl_handler_free(&ov8858->ctrl_handler);
--err_put_fwnode:
--	fwnode_handle_put(ov8858->subdev.fwnode);
- 
- 	return ret;
- }
-@@ -1978,7 +1973,6 @@ static void ov8858_remove(struct i2c_client *client)
- 	v4l2_async_unregister_subdev(sd);
- 	media_entity_cleanup(&sd->entity);
- 	v4l2_ctrl_handler_free(&ov8858->ctrl_handler);
--	fwnode_handle_put(ov8858->subdev.fwnode);
- 
- 	pm_runtime_disable(&client->dev);
- 	if (!pm_runtime_status_suspended(&client->dev))
+-	/* Disable ground switch */
+-	snd_soc_component_update_bits(component, 0xFB, 0x01, 0x00);
+-
+ 	/* Ensure gain ramping at fastest rate */
+ 	gain_ramp_ctrl = snd_soc_component_read(component, DA7219_GAIN_RAMP_CTRL);
+ 	snd_soc_component_write(component, DA7219_GAIN_RAMP_CTRL, DA7219_GAIN_RAMP_RATE_X8);
+@@ -421,6 +415,11 @@ static irqreturn_t da7219_aad_irq_thread(int irq, void *data)
+ 			 * handle a removal, and we can check at the end of
+ 			 * hptest if we have a valid result or not.
+ 			 */
++
++			cancel_delayed_work_sync(&da7219_aad->jack_det_work);
++			/* Disable ground switch */
++			snd_soc_component_update_bits(component, 0xFB, 0x01, 0x00);
++
+ 			if (statusa & DA7219_JACK_TYPE_STS_MASK) {
+ 				report |= SND_JACK_HEADSET;
+ 				mask |=	SND_JACK_HEADSET | SND_JACK_LINEOUT;
 -- 
 2.42.0
 
