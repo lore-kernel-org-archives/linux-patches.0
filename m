@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6E722EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6246422EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMvWt3gb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06D9C433C7;
-	Mon,  6 Nov 2023 13:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/TxkOOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D158FC433C9;
+	Mon,  6 Nov 2023 13:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277439;
-	bh=AwaC2RJ62V+u7I4wYhum2fCq/p4vYBsC0JZ3cRp6xLw=;
+	s=korg; t=1699277442;
+	bh=77WW6xo70dm8VjERnfLMLjAC6pUPCLFMxM0aBAYAmSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMvWt3gbq8zQxCgkX5RhTifOWOH46eBK+PfWPG0rAX/lD3so92+sDIQ4wXgC3Z3Ob
-	 HsF07Kgl7aD0yTftlYV0xKA/eeyL+XP8SAjul6CLazy5Pe1mmnU7AUfJhYa4YTxzal
-	 ruG68fzCfjgBtkU/lJaBl59JYyK/9i/HE+zfLF+8=
+	b=M/TxkOOfAIm2ziog8vbs8yAJIIYwKaNWz8dNUjCy5u2n+fTtT4gFqkGA+sLXP4xoL
+	 Ol+ZuOiO9v+pZTkpuHQ13fxlpjjMhVO1AMd1oPn1nTzwrD0Sw4dysddsfceUdFFnnd
+	 q3aTkAYUOhXXrRzlkSeWuCjWHQJzBJ9CRjFWbchE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
+	Javier Rodriguez <josejavier.rodriguez@duagon.com>,
+	Johannes Thumshirn <jth@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 22/95] gtp: uapi: fix GTPA_MAX
-Date: Mon,  6 Nov 2023 14:03:50 +0100
-Message-ID: <20231106130305.531392891@linuxfoundation.org>
+Subject: [PATCH 5.10 03/95] mcb-lpc: Reallocate memory region to avoid memory overlapping
+Date: Mon,  6 Nov 2023 14:03:31 +0100
+Message-ID: <20231106130304.803720522@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -36,38 +37,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
 
-[ Upstream commit adc8df12d91a2b8350b0cd4c7fec3e8546c9d1f8 ]
+[ Upstream commit 2025b2ca8004c04861903d076c67a73a0ec6dfca ]
 
-Subtract one to __GTPA_MAX, otherwise GTPA_MAX is off by 2.
+mcb-lpc requests a fixed-size memory region to parse the chameleon
+table, however, if the chameleon table is smaller that the allocated
+region, it could overlap with the IP Cores' memory regions.
 
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+After parsing the chameleon table, drop/reallocate the memory region
+with the actual chameleon table size.
+
+Co-developed-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Javier Rodriguez <josejavier.rodriguez@duagon.com>
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Link: https://lore.kernel.org/r/20230411083329.4506-4-jth@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/gtp.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mcb/mcb-lpc.c | 35 +++++++++++++++++++++++++++++++----
+ 1 file changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/include/uapi/linux/gtp.h b/include/uapi/linux/gtp.h
-index 79f9191bbb24c..82d0e58ec3ce2 100644
---- a/include/uapi/linux/gtp.h
-+++ b/include/uapi/linux/gtp.h
-@@ -32,6 +32,6 @@ enum gtp_attrs {
- 	GTPA_PAD,
- 	__GTPA_MAX,
- };
--#define GTPA_MAX (__GTPA_MAX + 1)
-+#define GTPA_MAX (__GTPA_MAX - 1)
+diff --git a/drivers/mcb/mcb-lpc.c b/drivers/mcb/mcb-lpc.c
+index 506676754538b..d513d61f4ba84 100644
+--- a/drivers/mcb/mcb-lpc.c
++++ b/drivers/mcb/mcb-lpc.c
+@@ -23,7 +23,7 @@ static int mcb_lpc_probe(struct platform_device *pdev)
+ {
+ 	struct resource *res;
+ 	struct priv *priv;
+-	int ret = 0;
++	int ret = 0, table_size;
  
- #endif /* _UAPI_LINUX_GTP_H_ */
+ 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+@@ -58,16 +58,43 @@ static int mcb_lpc_probe(struct platform_device *pdev)
+ 
+ 	ret = chameleon_parse_cells(priv->bus, priv->mem->start, priv->base);
+ 	if (ret < 0) {
+-		mcb_release_bus(priv->bus);
+-		return ret;
++		goto out_mcb_bus;
+ 	}
+ 
+-	dev_dbg(&pdev->dev, "Found %d cells\n", ret);
++	table_size = ret;
++
++	if (table_size < CHAM_HEADER_SIZE) {
++		/* Release the previous resources */
++		devm_iounmap(&pdev->dev, priv->base);
++		devm_release_mem_region(&pdev->dev, priv->mem->start, resource_size(priv->mem));
++
++		/* Then, allocate it again with the actual chameleon table size */
++		res = devm_request_mem_region(&pdev->dev, priv->mem->start,
++					      table_size,
++					      KBUILD_MODNAME);
++		if (!res) {
++			dev_err(&pdev->dev, "Failed to request PCI memory\n");
++			ret = -EBUSY;
++			goto out_mcb_bus;
++		}
++
++		priv->base = devm_ioremap(&pdev->dev, priv->mem->start, table_size);
++		if (!priv->base) {
++			dev_err(&pdev->dev, "Cannot ioremap\n");
++			ret = -ENOMEM;
++			goto out_mcb_bus;
++		}
++
++		platform_set_drvdata(pdev, priv);
++	}
+ 
+ 	mcb_bus_add_devices(priv->bus);
+ 
+ 	return 0;
+ 
++out_mcb_bus:
++	mcb_release_bus(priv->bus);
++	return ret;
+ }
+ 
+ static int mcb_lpc_remove(struct platform_device *pdev)
 -- 
 2.42.0
 
