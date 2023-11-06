@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE87120B09
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16EF20B09
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1bP2x9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6BCC433C9;
-	Mon,  6 Nov 2023 13:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfLVPPS5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF2AC433C7;
+	Mon,  6 Nov 2023 13:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276937;
-	bh=XFnisP0Ql7efzYs/d9bZ2fOeVwEa19SD8dCzdFy03g8=;
+	s=korg; t=1699276940;
+	bh=ZvL0pADfQ9NK0M1ODdY3NMo8fxXG1I3cqki7R5z8M8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1bP2x9x9vQO4jn8VUpZSi5wRYFUl2ywApr3thbWDHx7g3t5HhtfBzZDk0wz/NK+0
-	 pWDpAXhKuulpJmdCKAa0BItzswYEvSnWsBpC6fRGIYwTMiBeu6xMzRROtm5pSPuCIh
-	 wKT1SRilJk+SVqI93RjEHrysgXFWmtT2TTyIUxlc=
+	b=UfLVPPS5N+xsiHlaEqHYOJYs5z4fdm+bZksP+UjU1GAIGIZaz04kz32BEYDfbeBf/
+	 TDZCPHdYwgXK5lNNmqf8XCsNEyS2n7q3fOaZF5HTnMnQngHcdMNUN0otMPFQXchr34
+	 wET0D5aArKt3vvbs77Pdn3opg2Z2nmulfzSWLJwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Borislav Petkov <bp@suse.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Subject: [PATCH 5.4 50/74] x86: Fix .brk attribute in linker script
-Date: Mon,  6 Nov 2023 14:04:10 +0100
-Message-ID: <20231106130303.455188790@linuxfoundation.org>
+	Jorge Maidana <jorgem.linux@gmail.com>,
+	Helge Deller <deller@gmx.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 59/74] fbdev: uvesafb: Call cn_del_callback() at the end of uvesafb_exit()
+Date: Mon,  6 Nov 2023 14:04:19 +0100
+Message-ID: <20231106130303.747019822@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
 References: <20231106130301.687882731@linuxfoundation.org>
@@ -42,45 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Jorge Maidana <jorgem.linux@gmail.com>
 
-commit 7e09ac27f43b382f5fe9bb7c7f4c465ece1f8a23 upstream.
+[ Upstream commit 1022e7e2f40574c74ed32c3811b03d26b0b81daf ]
 
-Commit in Fixes added the "NOLOAD" attribute to the .brk section as a
-"failsafe" measure.
+Delete the v86d netlink only after all the VBE tasks have been
+completed.
 
-Unfortunately, this leads to the linker no longer covering the .brk
-section in a program header, resulting in the kernel loader not knowing
-that the memory for the .brk section must be reserved.
+Fixes initial state restore on module unload:
+uvesafb: VBE state restore call failed (eax=0x4f04, err=-19)
 
-This has led to crashes when loading the kernel as PV dom0 under Xen,
-but other scenarios could be hit by the same problem (e.g. in case an
-uncompressed kernel is used and the initrd is placed directly behind
-it).
-
-So drop the "NOLOAD" attribute. This has been verified to correctly
-cover the .brk section by a program header of the resulting ELF file.
-
-Fixes: e32683c6f7d2 ("x86/mm: Fix RESERVE_BRK() for older binutils")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lore.kernel.org/r/20220630071441.28576-4-jgross@suse.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jorge Maidana <jorgem.linux@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/vmlinux.lds.S |    2 +-
+ drivers/video/fbdev/uvesafb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/vmlinux.lds.S
-+++ b/arch/x86/kernel/vmlinux.lds.S
-@@ -380,7 +380,7 @@ SECTIONS
- 	__end_of_kernel_reserve = .;
+diff --git a/drivers/video/fbdev/uvesafb.c b/drivers/video/fbdev/uvesafb.c
+index 7d3af1d19ad3f..115653ba761c0 100644
+--- a/drivers/video/fbdev/uvesafb.c
++++ b/drivers/video/fbdev/uvesafb.c
+@@ -1933,10 +1933,10 @@ static void uvesafb_exit(void)
+ 		}
+ 	}
  
- 	. = ALIGN(PAGE_SIZE);
--	.brk (NOLOAD) : AT(ADDR(.brk) - LOAD_OFFSET) {
-+	.brk : AT(ADDR(.brk) - LOAD_OFFSET) {
- 		__brk_base = .;
- 		. += 64 * 1024;		/* 64k alignment slop space */
- 		*(.bss..brk)		/* areas brk users have reserved */
+-	cn_del_callback(&uvesafb_cn_id);
+ 	driver_remove_file(&uvesafb_driver.driver, &driver_attr_v86d);
+ 	platform_device_unregister(uvesafb_device);
+ 	platform_driver_unregister(&uvesafb_driver);
++	cn_del_callback(&uvesafb_cn_id);
+ }
+ 
+ module_exit(uvesafb_exit);
+-- 
+2.42.0
+
 
 
