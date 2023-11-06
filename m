@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4397023777
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F772241FC
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjOxMQLL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE91C433C7;
-	Mon,  6 Nov 2023 13:33:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suIzOCCI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A469C433A9;
+	Mon,  6 Nov 2023 13:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277600;
-	bh=DSXOKVr1fjRJQwCJbzcOLLJ3gnufvHMW8cLs/ELakWs=;
+	s=korg; t=1699277603;
+	bh=cOjJXm1NWa81I5UPoPwTviZkhhWwBobXDjWTkACU97E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mjOxMQLLdyJJ7kEFz2K0r9UOm34m8Ec4KlZPBbGtvQ03efR0vc9dyDJ41bkJaNjke
-	 d0GunijyjKxDNgn1BV0/8jCUg9JWTC2N4Gidwfl+joJYyPk3k899XyV7KOzNedVcID
-	 VrA0ZjFkBIBKAuKE22GHmY5QkOII97q32wXkEsp0=
+	b=suIzOCCIwDUpLOa32HTrPtDrc243HU825dgXxPg7SbciFe8JIR0F1St0UsRcoqCs1
+	 xTGi/FkzqGfRdogYaoqil8/InJnxBJcWeNCKD3JYtqVJRj4CpNxj1HKC9Iq0NMsOiZ
+	 dJF0Op6Hddccc/Lyfye/ijH/qvk2vhPCKmxvspb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erhard Furtner <erhard_f@mailbox.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 74/95] powerpc/mm: Fix boot crash with FLATMEM
-Date: Mon,  6 Nov 2023 14:04:42 +0100
-Message-ID: <20231106130307.425671956@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 5.10 57/95] rpmsg: Fix calling device_lock() on non-initialized device
+Date: Mon,  6 Nov 2023 14:04:25 +0100
+Message-ID: <20231106130306.769382833@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -42,143 +42,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit daa9ada2093ed23d52b4c1fe6e13cf78f55cc85f ]
+commit bb17d110cbf270d5247a6e261c5ad50e362d1675 upstream.
 
-Erhard reported that his G5 was crashing with v6.6-rc kernels:
+driver_set_override() helper uses device_lock() so it should not be
+called before rpmsg_register_device() (which calls device_register()).
+Effect can be seen with CONFIG_DEBUG_MUTEXES:
 
-  mpic: Setting up HT PICs workarounds for U3/U4
-  BUG: Unable to handle kernel data access at 0xfeffbb62ffec65fe
-  Faulting instruction address: 0xc00000000005dc40
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  BE PAGE_SIZE=4K MMU=Hash SMP NR_CPUS=2 PowerMac
-  Modules linked in:
-  CPU: 0 PID: 0 Comm: swapper/0 Tainted: G                T  6.6.0-rc3-PMacGS #1
-  Hardware name: PowerMac11,2 PPC970MP 0x440101 PowerMac
-  NIP:  c00000000005dc40 LR: c000000000066660 CTR: c000000000007730
-  REGS: c0000000022bf510 TRAP: 0380   Tainted: G                T (6.6.0-rc3-PMacGS)
-  MSR:  9000000000001032 <SF,HV,ME,IR,DR,RI>  CR: 44004242  XER: 00000000
-  IRQMASK: 3
-  GPR00: 0000000000000000 c0000000022bf7b0 c0000000010c0b00 00000000000001ac
-  GPR04: 0000000003c80000 0000000000000300 c0000000f20001ae 0000000000000300
-  GPR08: 0000000000000006 feffbb62ffec65ff 0000000000000001 0000000000000000
-  GPR12: 9000000000001032 c000000002362000 c000000000f76b80 000000000349ecd8
-  GPR16: 0000000002367ba8 0000000002367f08 0000000000000006 0000000000000000
-  GPR20: 00000000000001ac c000000000f6f920 c0000000022cd985 000000000000000c
-  GPR24: 0000000000000300 00000003b0a3691d c0003e008030000e 0000000000000000
-  GPR28: c00000000000000c c0000000f20001ee feffbb62ffec65fe 00000000000001ac
-  NIP hash_page_do_lazy_icache+0x50/0x100
-  LR  __hash_page_4K+0x420/0x590
-  Call Trace:
-    hash_page_mm+0x364/0x6f0
-    do_hash_fault+0x114/0x2b0
-    data_access_common_virt+0x198/0x1f0
-  --- interrupt: 300 at mpic_init+0x4bc/0x10c4
-  NIP:  c000000002020a5c LR: c000000002020a04 CTR: 0000000000000000
-  REGS: c0000000022bf9f0 TRAP: 0300   Tainted: G                T (6.6.0-rc3-PMacGS)
-  MSR:  9000000000001032 <SF,HV,ME,IR,DR,RI>  CR: 24004248  XER: 00000000
-  DAR: c0003e008030000e DSISR: 40000000 IRQMASK: 1
+  DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+  WARNING: CPU: 3 PID: 57 at kernel/locking/mutex.c:582 __mutex_lock+0x1ec/0x430
   ...
-  NIP mpic_init+0x4bc/0x10c4
-  LR  mpic_init+0x464/0x10c4
-  --- interrupt: 300
-    pmac_setup_one_mpic+0x258/0x2dc
-    pmac_pic_init+0x28c/0x3d8
-    init_IRQ+0x90/0x140
-    start_kernel+0x57c/0x78c
-    start_here_common+0x1c/0x20
+  Call trace:
+   __mutex_lock+0x1ec/0x430
+   mutex_lock_nested+0x44/0x50
+   driver_set_override+0x124/0x150
+   qcom_glink_native_probe+0x30c/0x3b0
+   glink_rpm_probe+0x274/0x350
+   platform_probe+0x6c/0xe0
+   really_probe+0x17c/0x3d0
+   __driver_probe_device+0x114/0x190
+   driver_probe_device+0x3c/0xf0
+   ...
 
-A bisect pointed to the breakage beginning with commit 9fee28baa601 ("powerpc:
-implement the new page table range API").
+Refactor the rpmsg_register_device() function to use two-step device
+registering (initialization + add) and call driver_set_override() in
+proper moment.
 
-Analysis of the oops pointed to a struct page with a corrupted
-compound_head being loaded via page_folio() -> _compound_head() in
-hash_page_do_lazy_icache().
+This moves the code around, so while at it also NULL-ify the
+rpdev->driver_override in error path to be sure it won't be kfree()
+second time.
 
-The access by the mpic code is to an MMIO address, so the expectation
-is that the struct page for that address would be initialised by
-init_unavailable_range(), as pointed out by Aneesh.
-
-Instrumentation showed that was not the case, which eventually lead to
-the realisation that pfn_valid() was returning false for that address,
-causing the struct page to not be initialised.
-
-Because the system is using FLATMEM, the version of pfn_valid() in
-memory_model.h is used:
-
-static inline int pfn_valid(unsigned long pfn)
-{
-	...
-	return pfn >= pfn_offset && (pfn - pfn_offset) < max_mapnr;
-}
-
-Which relies on max_mapnr being initialised. Early in boot max_mapnr is
-zero meaning no PFNs are valid.
-
-max_mapnr is initialised in mem_init() called via:
-
-  start_kernel()
-    mm_core_init()  # init/main.c:928
-      mem_init()
-
-But that is too late for the usage in init_unavailable_range() called via:
-
-  start_kernel()
-    setup_arch()    # init/main.c:893
-      paging_init()
-        free_area_init()
-          init_unavailable_range()
-
-Although max_mapnr is currently set in mem_init(), the value is actually
-already available much earlier, as soon as mem_topology_setup() has
-completed, which is also before paging_init() is called. So move the
-initialisation there, which causes paging_init() to correctly initialise
-the struct page and fixes the bug.
-
-This bug seems to have been lurking for years, but went unnoticed
-because the pre-folio code was inspecting the uninitialised page->flags
-but not dereferencing it.
-
-Thanks to Erhard and Aneesh for help debugging.
-
-Reported-by: Erhard Furtner <erhard_f@mailbox.org>
-Closes: https://lore.kernel.org/all/20230929132750.3cd98452@yea/
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231023112500.1550208-1-mpe@ellerman.id.au
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 42cd402b8fd4 ("rpmsg: Fix kfree() of static memory on setting driver_override")
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20220429195946.1061725-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/setup-common.c | 2 ++
- arch/powerpc/mm/mem.c              | 1 -
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/rpmsg/rpmsg_core.c     |   33 ++++++++++++++++++++++++++++++---
+ drivers/rpmsg/rpmsg_internal.h |   14 +-------------
+ include/linux/rpmsg.h          |    8 ++++++++
+ 3 files changed, 39 insertions(+), 16 deletions(-)
 
-diff --git a/arch/powerpc/kernel/setup-common.c b/arch/powerpc/kernel/setup-common.c
-index da8c71f321ad3..1e417c3eedfef 100644
---- a/arch/powerpc/kernel/setup-common.c
-+++ b/arch/powerpc/kernel/setup-common.c
-@@ -906,6 +906,8 @@ void __init setup_arch(char **cmdline_p)
+--- a/drivers/rpmsg/rpmsg_core.c
++++ b/drivers/rpmsg/rpmsg_core.c
+@@ -526,24 +526,51 @@ static struct bus_type rpmsg_bus = {
+ 	.remove		= rpmsg_dev_remove,
+ };
  
- 	/* Parse memory topology */
- 	mem_topology_setup();
-+	/* Set max_mapnr before paging_init() */
-+	set_max_mapnr(max_pfn);
+-int rpmsg_register_device(struct rpmsg_device *rpdev)
++/*
++ * A helper for registering rpmsg device with driver override and name.
++ * Drivers should not be using it, but instead rpmsg_register_device().
++ */
++int rpmsg_register_device_override(struct rpmsg_device *rpdev,
++				   const char *driver_override)
+ {
+ 	struct device *dev = &rpdev->dev;
+ 	int ret;
  
- 	/*
- 	 * Release secondary cpus out of their spinloops at 0x60 now that
-diff --git a/arch/powerpc/mm/mem.c b/arch/powerpc/mm/mem.c
-index 1ed276d2305fa..08e3422eb7926 100644
---- a/arch/powerpc/mm/mem.c
-+++ b/arch/powerpc/mm/mem.c
-@@ -293,7 +293,6 @@ void __init mem_init(void)
++	if (driver_override)
++		strcpy(rpdev->id.name, driver_override);
++
+ 	dev_set_name(&rpdev->dev, "%s.%s.%d.%d", dev_name(dev->parent),
+ 		     rpdev->id.name, rpdev->src, rpdev->dst);
+ 
+ 	rpdev->dev.bus = &rpmsg_bus;
+ 
+-	ret = device_register(&rpdev->dev);
++	device_initialize(dev);
++	if (driver_override) {
++		ret = driver_set_override(dev, &rpdev->driver_override,
++					  driver_override,
++					  strlen(driver_override));
++		if (ret) {
++			dev_err(dev, "device_set_override failed: %d\n", ret);
++			return ret;
++		}
++	}
++
++	ret = device_add(dev);
+ 	if (ret) {
+-		dev_err(dev, "device_register failed: %d\n", ret);
++		dev_err(dev, "device_add failed: %d\n", ret);
++		kfree(rpdev->driver_override);
++		rpdev->driver_override = NULL;
+ 		put_device(&rpdev->dev);
+ 	}
+ 
+ 	return ret;
+ }
++EXPORT_SYMBOL(rpmsg_register_device_override);
++
++int rpmsg_register_device(struct rpmsg_device *rpdev)
++{
++	return rpmsg_register_device_override(rpdev, NULL);
++}
+ EXPORT_SYMBOL(rpmsg_register_device);
+ 
+ /*
+--- a/drivers/rpmsg/rpmsg_internal.h
++++ b/drivers/rpmsg/rpmsg_internal.h
+@@ -84,19 +84,7 @@ struct device *rpmsg_find_device(struct
+  */
+ static inline int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev)
+ {
+-	int ret;
+-
+-	strcpy(rpdev->id.name, "rpmsg_chrdev");
+-	ret = driver_set_override(&rpdev->dev, &rpdev->driver_override,
+-				  rpdev->id.name, strlen(rpdev->id.name));
+-	if (ret)
+-		return ret;
+-
+-	ret = rpmsg_register_device(rpdev);
+-	if (ret)
+-		kfree(rpdev->driver_override);
+-
+-	return ret;
++	return rpmsg_register_device_override(rpdev, "rpmsg_ctrl");
+ }
+ 
  #endif
+--- a/include/linux/rpmsg.h
++++ b/include/linux/rpmsg.h
+@@ -115,6 +115,8 @@ struct rpmsg_driver {
  
- 	high_memory = (void *) __va(max_low_pfn * PAGE_SIZE);
--	set_max_mapnr(max_pfn);
+ #if IS_ENABLED(CONFIG_RPMSG)
  
- 	kasan_late_init();
++int rpmsg_register_device_override(struct rpmsg_device *rpdev,
++				   const char *driver_override);
+ int register_rpmsg_device(struct rpmsg_device *dev);
+ void unregister_rpmsg_device(struct rpmsg_device *dev);
+ int __register_rpmsg_driver(struct rpmsg_driver *drv, struct module *owner);
+@@ -139,6 +141,12 @@ __poll_t rpmsg_poll(struct rpmsg_endpoin
  
--- 
-2.42.0
-
+ #else
+ 
++static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
++						 const char *driver_override)
++{
++	return -ENXIO;
++}
++
+ static inline int register_rpmsg_device(struct rpmsg_device *dev)
+ {
+ 	return -ENXIO;
 
 
