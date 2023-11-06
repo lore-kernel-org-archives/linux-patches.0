@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F832208BD
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBFB208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0e2e509q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EC6C433C8;
-	Mon,  6 Nov 2023 13:18:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHG0HtbH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D5EC433C8;
+	Mon,  6 Nov 2023 13:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276720;
-	bh=f8N8EXvota+AP8vYYgsjIJGfN4j2MArr88ST27ERHi0=;
+	s=korg; t=1699276723;
+	bh=P1U58zwuw9bd+mdfljnOdiKzRRylDHoij94yyUPMn6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0e2e509q32Nfn+NYvj49O4vwZU9tyAocK2l6+ZTAYGZKI23USoIWqJ5cq2HooREWP
-	 r7XcOOnwthEAxU6uFZHLEfabzXYmEO5QlrSCKjB2JrdcAbULoUZqXGD7XfZ9sE+xAa
-	 75jKZowmjcO3sq+kLr1hdvZcUoU9vRuzLep4ejdk=
+	b=hHG0HtbHKd568XTyfehuHXlU0cHFLsMXhGZAKn2WbxWe6TKZ/d/yvYjNa70XETtAJ
+	 XiVrDM2ptN8iHhqKGqA+Up6PvFs4Cl6S0ptG6IJxrt/uy+c38zo6xeqQ4Jrkc/7SyD
+	 X7JbI5ZrmHzwVET7/5xHzw19JRrcivxCCRF5iETI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Eric Curtin <ecurtin@redhat.com>,
-	Neal Gompa <neal@gompa.dev>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.5 73/88] Bluetooth: hci_bcm4377: Mark bcm4378/bcm4387 as BROKEN_LE_CODED
-Date: Mon,  6 Nov 2023 14:04:07 +0100
-Message-ID: <20231106130308.434179636@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Daniel Starke <daniel.starke@siemens.com>
+Subject: [PATCH 6.5 74/88] tty: n_gsm: fix race condition in status line change on dead connections
+Date: Mon,  6 Nov 2023 14:04:08 +0100
+Message-ID: <20231106130308.465201917@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -43,67 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Daniel Starke <daniel.starke@siemens.com>
 
-commit 41e9cdea9c4ab6606ca462ff4ec901a82d022c05 upstream.
+commit 3a75b205de43365f80a33b98ec9289785da56243 upstream.
 
-bcm4378 and bcm4387 claim to support LE Coded PHY but fail to pair
-(reliably) with BLE devices if it is enabled.
-On bcm4378 pairing usually succeeds after 2-3 tries. On bcm4387
-pairing appears to be completely broken.
+gsm_cleanup_mux() cleans up the gsm by closing all DLCIs, stopping all
+timers, removing the virtual tty devices and clearing the data queues.
+This procedure, however, may cause subsequent changes of the virtual modem
+status lines of a DLCI. More data is being added the outgoing data queue
+and the deleted kick timer is restarted to handle this. At this point many
+resources have already been removed by the cleanup procedure. Thus, a
+kernel panic occurs.
 
-Cc: stable@vger.kernel.org # 6.4.y+
-Link: https://discussion.fedoraproject.org/t/mx-master-3-bluetooth-mouse-doesnt-connect/87072/33
-Link: https://github.com/AsahiLinux/linux/issues/177
-Fixes: 288c90224eec ("Bluetooth: Enable all supported LE PHY by default")
-Signed-off-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Eric Curtin <ecurtin@redhat.com>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix this by proving in gsm_modem_update() that the cleanup procedure has
+not been started and the mux is still alive.
+
+Note that writing to a virtual tty is already protected by checks against
+the DLCI specific connection state.
+
+Fixes: c568f7086c6e ("tty: n_gsm: fix missing timer to handle stalled links")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
+Link: https://lore.kernel.org/r/20231026055844.3127-1-daniel.starke@siemens.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_bcm4377.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/tty/n_gsm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/bluetooth/hci_bcm4377.c b/drivers/bluetooth/hci_bcm4377.c
-index 19ad0e788646..a61757835695 100644
---- a/drivers/bluetooth/hci_bcm4377.c
-+++ b/drivers/bluetooth/hci_bcm4377.c
-@@ -512,6 +512,7 @@ struct bcm4377_hw {
- 	unsigned long disable_aspm : 1;
- 	unsigned long broken_ext_scan : 1;
- 	unsigned long broken_mws_transport_config : 1;
-+	unsigned long broken_le_coded : 1;
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -4058,6 +4058,8 @@ static int gsm_modem_upd_via_msc(struct
  
- 	int (*send_calibration)(struct bcm4377_data *bcm4377);
- 	int (*send_ptb)(struct bcm4377_data *bcm4377,
-@@ -2372,6 +2373,8 @@ static int bcm4377_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		set_bit(HCI_QUIRK_BROKEN_MWS_TRANSPORT_CONFIG, &hdev->quirks);
- 	if (bcm4377->hw->broken_ext_scan)
- 		set_bit(HCI_QUIRK_BROKEN_EXT_SCAN, &hdev->quirks);
-+	if (bcm4377->hw->broken_le_coded)
-+		set_bit(HCI_QUIRK_BROKEN_LE_CODED, &hdev->quirks);
- 
- 	pci_set_drvdata(pdev, bcm4377);
- 	hci_set_drvdata(hdev, bcm4377);
-@@ -2461,6 +2464,7 @@ static const struct bcm4377_hw bcm4377_hw_variants[] = {
- 		.bar0_core2_window2 = 0x18107000,
- 		.has_bar0_core2_window2 = true,
- 		.broken_mws_transport_config = true,
-+		.broken_le_coded = true,
- 		.send_calibration = bcm4378_send_calibration,
- 		.send_ptb = bcm4378_send_ptb,
- 	},
-@@ -2474,6 +2478,7 @@ static const struct bcm4377_hw bcm4377_hw_variants[] = {
- 		.has_bar0_core2_window2 = true,
- 		.clear_pciecfg_subsystem_ctrl_bit19 = true,
- 		.broken_mws_transport_config = true,
-+		.broken_le_coded = true,
- 		.send_calibration = bcm4387_send_calibration,
- 		.send_ptb = bcm4378_send_ptb,
- 	},
--- 
-2.42.0
-
+ static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk)
+ {
++	if (dlci->gsm->dead)
++		return -EL2HLT;
+ 	if (dlci->adaption == 2) {
+ 		/* Send convergence layer type 2 empty data frame. */
+ 		gsm_modem_upd_via_data(dlci, brk);
 
 
