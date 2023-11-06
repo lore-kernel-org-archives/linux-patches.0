@@ -1,94 +1,136 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812BC241FF
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 18:09:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB46D156E1
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 18:14:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G4lFRKCi"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-6c32a20d5dbso3715512b3a.1
-        for <patches@lists.linux.dev>; Mon, 06 Nov 2023 10:09:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PxN7ct/e"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-5b999980689so3642299a12.1
+        for <patches@lists.linux.dev>; Mon, 06 Nov 2023 10:14:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699294186; x=1699898986; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=neBbBkCbikRraB0nQmFPavVUC9R8TAdKlPMHdSdzNw0=;
-        b=G4lFRKCiITf7I6KX9iDYwscIuND9aKuXYjU4TSw8SY8JHOVOfLfOHXcwsZ5sodyQ7G
-         EjdifBqyd+Qp/DUSxUt1lofSvJT4wA6xWP9XKaQrIGz1Ml2NNtO6cLLSALUZGYy9XJGN
-         7G4SLOc/zxYJbl4YwOwJusX1Ddo8uFPdCliJSam9YX392ZfZ38BD3dC6LXLZggepbrXR
-         xxIu/bJxiBi6ANLPVOJPMQu0XWctIYlaoJQFMeawi4gGMNmyC9r0dC8oUP6ZhOkGryu5
-         tmED48UnN5ZEOGerTXIp2z2ZOogS5j3PAueataDX+CDxTJqKuMJZpzcAAM8iFRqxF3Ku
-         oJbw==
+        d=linaro.org; s=google; t=1699294473; x=1699899273; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9eApiH5er5Q+LmkTrIbz1RtOUAFBAp0J1EDavJZLMnI=;
+        b=PxN7ct/eJIPfN9ZnZ7PDCdvJ5tYHoMT5oCpRE00GYPC4AO27xrYDq+MOAXGzMlqOYA
+         Tbi+CZ+jt/c8o+nZwp0EQBpLI0sK7HS/NfL8gxe4UuP/wvIpWATLqiXf+QgCykTKxGYL
+         41ivMLmX+7ctnbLfs5N2V70S1nmp8cyjbtqHsYkQHMHr7obioXobZP+9YYY5EEAphUJc
+         0oEr9yWQ+9Eeut1BNstXwkGd2iHmvt8wGtwI4CsYYfMSL3dl1d09XkaMpCP1X+7oAzK6
+         VNia0Eg5zXxKITyh30vMnQPnfAj595OgvnLq5oSkT/1ZZycveKquJrB2ou7xQVsGL5Ic
+         uJkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699294186; x=1699898986;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=neBbBkCbikRraB0nQmFPavVUC9R8TAdKlPMHdSdzNw0=;
-        b=Iedt4erEAc8lT0NBOOFaxRJpHCRpmd6zi6EctMtNKKfcFy+yXYmwyel1u73GGova/A
-         +urYJdvXKbdd4UOHbKFxZCTTkPenaFeFED9sq0yaXKe9Wfc5CbwCBDwgR8PQWbPWqrSh
-         DTGi0JWGtINNPqbiH/m2FP0tpVVZu8oSJ49f4cdACyLSuh9XuKGDoapHsKYAtT2Lccw9
-         qeOZr0BtFwyCY4WE6cR02p4T6eRix6xm7ikvlyY1o0yiGNHcvsI6hFckEvUCOgfoNFia
-         xHJkNtBmTgqoZgnNHYoyaAXsZwOUec+HrKBXIHGlQJwoODjTsyAzQFui3BwoAGWc54TG
-         +OYg==
-X-Gm-Message-State: AOJu0Yz9AtI+ZTDk0rBYOnaQrzx3YEQ4U3IddwpGfUpxC+wcL/dHt0I/
-	Sn6RvhBi7tGSRh4BVXZpvFI=
-X-Google-Smtp-Source: AGHT+IH3ttiaL+UUmdWm09Np2ElUm26SZPhFEDb3REd7EVTtMMkwUQYDp2QiWdEBTKh1EUnnDWq4rA==
-X-Received: by 2002:a05:6a21:a58d:b0:16e:ab42:9837 with SMTP id gd13-20020a056a21a58d00b0016eab429837mr32603706pzc.29.1699294185720;
-        Mon, 06 Nov 2023 10:09:45 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id f5-20020a056a00238500b006926e3dc2besm5868722pfc.108.2023.11.06.10.09.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Nov 2023 10:09:44 -0800 (PST)
-Message-ID: <eee1e8a6-ed8d-4667-a2a9-18fb2a636a90@gmail.com>
-Date: Mon, 6 Nov 2023 10:09:42 -0800
+        d=1e100.net; s=20230601; t=1699294473; x=1699899273;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9eApiH5er5Q+LmkTrIbz1RtOUAFBAp0J1EDavJZLMnI=;
+        b=Ly0d7K/G94AU4FztvmQMMRA2+nEXPaQUHu2hqb7depVrsl8C1/Z34Ly70/J/HNOIP4
+         vOuXa8wOa3lfCPYq2uKU0CGEgyYdJTi3fo1ZT5oO04aPrgjkhrsiKE8KlF4NznfAcxTT
+         Ow1RbEdYtHFE2uW/hQqCHijnDgTHFIucOhXGpaPSc2xVe3o9EYfPTtnqGo23Od/RI8je
+         i2fTCniPBDPLvBctjDfSaogJokgaw42/vZj7J1xaGm+2Nkp5uK5q+YUqyPSchMFR1SoS
+         esvqOKhkKa/1PA92mikCcdd5kHFhVhwYnIuADayTEmT6YDDYBdg1m9oIgmkBRBwKrt8m
+         PM2A==
+X-Gm-Message-State: AOJu0YzavbWfqD3lNqzClUtePsCgGD1TgBiOZ5MWYxgQt+z73TVeVCuc
+	3cKkJKHw9KAwnUwg4SG+mwTBBlGefyU9pO7xKjaqmQ==
+X-Google-Smtp-Source: AGHT+IFxo6QPh+LlR1UORVHDkuRmzt/uzetk8veCXwUog6IYZKml7Dzr0uG/OJNPi7jnuYHy2QaQxVRk5w1zTym/o8o=
+X-Received: by 2002:a05:6a20:9188:b0:15e:a8:6bb4 with SMTP id
+ v8-20020a056a20918800b0015e00a86bb4mr27161506pzd.8.1699294472848; Mon, 06 Nov
+ 2023 10:14:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.5 00/88] 6.5.11-rc1 review
-Content-Language: en-US
+References: <20231106130304.678610325@linuxfoundation.org> <8aec1bd5-befc-486c-9e47-7571b937b8c7@linaro.org>
+In-Reply-To: <8aec1bd5-befc-486c-9e47-7571b937b8c7@linaro.org>
+From: =?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
+Date: Mon, 6 Nov 2023 12:14:21 -0600
+Message-ID: <CAEUSe7_g2LbOkb6BqqdPha4SX4669O33H0a04sJ7AfbR1wfA_w@mail.gmail.com>
+Subject: Re: [PATCH 5.10 00/95] 5.10.200-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20231106130305.772449722@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, apatel@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 11/6/23 05:02, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.11 release.
-> There are 88 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 08 Nov 2023 13:02:46 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.11-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hello!
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+On Mon, 6 Nov 2023 at 11:53, Daniel D=C3=ADaz <daniel.diaz@linaro.org> wrot=
+e:
+> On 06/11/23 7:03 a. m., Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.10.200 release.
+> > There are 95 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Wed, 08 Nov 2023 13:02:46 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >       https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.10.200-rc1.gz
+> > or in the git tree and branch at:
+> >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.10.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+>
+> There seems to be a problem building for RISC-V with GCC 8, 12, and Clang=
+ 17. This is with defconfig, allnoconfig, tinyconfig:
+>
+> -----8<-----
+> /builds/linux/drivers/irqchip/irq-riscv-intc.c: In function 'riscv_intc_i=
+nit':
+> /builds/linux/drivers/irqchip/irq-riscv-intc.c:119:17: error: implicit de=
+claration of function 'fwnode_dev_initialized'; did you mean 'zone_is_initi=
+alized'? [-Werror=3Dimplicit-function-declaration]
+>    119 |                 fwnode_dev_initialized(of_fwnode_handle(node), t=
+rue);
+>        |                 ^~~~~~~~~~~~~~~~~~~~~~
+>        |                 zone_is_initialized
+> cc1: some warnings being treated as errors
+> make[3]: *** [/builds/linux/scripts/Makefile.build:286: drivers/irqchip/i=
+rq-riscv-intc.o] Error 1
+> make[3]: Target '__build' not remade because of errors.
+> make[2]: *** [/builds/linux/scripts/Makefile.build:503: drivers/irqchip] =
+Error 2
+> make[2]: Target '__build' not remade because of errors.
+> make[1]: *** [/builds/linux/Makefile:1832: drivers] Error 2
+> make[1]: Target '__all' not remade because of errors.
+> make: *** [Makefile:192: __sub-make] Error 2
+> make: Target '__all' not remade because of errors.
+> ----->8-----
+>
+> Currently bisecting.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+-----8<-----
+Bisection done!
+First commit presenting NEW behaviour: 6751b1fbf98ba2c40bbdda22e2e6714a9c27=
+b91b
 
+commit 6751b1fbf98ba2c40bbdda22e2e6714a9c27b91b
+Author: Anup Patel <apatel@ventanamicro.com>
+Date:   Tue Oct 3 10:13:51 2023 +0530
+
+    irqchip/riscv-intc: Mark all INTC nodes as initialized
+
+    [ Upstream commit e13cd66bd821be417c498a34928652db4ac6b436 ]
+----->8-----
+
+Reverting that commit makes the build happy again.
+
+Greetings!
+
+Daniel D=C3=ADaz
+daniel.diaz@linaro.org
