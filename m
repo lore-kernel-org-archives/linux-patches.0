@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF23233D5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D045F33D5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVes2xDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC42C433C8;
-	Mon,  6 Nov 2023 13:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPGPId/d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C841C433C8;
+	Mon,  6 Nov 2023 13:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276296;
-	bh=8V5a0MBtvVtesxBddaRJwvCYy4fdl6JmgKdbZ61Czzc=;
+	s=korg; t=1699276299;
+	bh=5isV+wN3MjE/m2Z9cSFpolaSIZwO8Seeigsd2SwBX78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SVes2xDTEiIEk9Rf92uvxQ5FM96UfXYxaeuULNDsWDjtkgPGwyS1JJvCsvMBLt87R
-	 LyubxRuBbI0PkKBVVLmXe8lt+i3GMv5E+QBzW3y0wjXtyzDe8Qmd8UPo6MlNduQwju
-	 udGkykDHc/O0sWJEKIAn3O9S50NjU7K8uZYSNUKw=
+	b=LPGPId/dju3nzTKZQr6SLjRd1eMx25jEKECx7FYRSGSK9xdjD4dnvoyMjjig8Tgmv
+	 cbbG6FSydp1j8LB3RF4Vx/40HFMmKBLDve0w10dN8eYRsv0WVpVIpkojnH3BC2IE4O
+	 w942tpbgcnf++xoiECdjLI5/3c9f5pq4+Wq8+r9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 4.19 56/61] PCI: Prevent xHCI driver from claiming AMD VanGogh USB3 DRD device
-Date: Mon,  6 Nov 2023 14:03:52 +0100
-Message-ID: <20231106130301.508142999@linuxfoundation.org>
+	Wenqing Liu <wenqingliu0120@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Kazunori Kobayashi <kazunori.kobayashi@miraclelinux.com>
+Subject: [PATCH 4.19 30/61] f2fs: fix to do sanity check on inode type during garbage collection
+Date: Mon,  6 Nov 2023 14:03:26 +0100
+Message-ID: <20231106130300.652595991@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -41,71 +43,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 7e6f3b6d2c352b5fde37ce3fed83bdf6172eebd4 upstream.
+commit 9056d6489f5a41cfbb67f719d2c0ce61ead72d9f upstream.
 
-The AMD VanGogh SoC contains a DesignWare USB3 Dual-Role Device that can be
-operated as either a USB Host or a USB Device, similar to on the AMD Nolan
-platform.
+As report by Wenqing Liu in bugzilla:
 
-be6646bfbaec ("PCI: Prevent xHCI driver from claiming AMD Nolan USB3 DRD
-device") added a quirk to let the dwc3 driver claim the Nolan device since
-it provides more specific support.
+https://bugzilla.kernel.org/show_bug.cgi?id=215231
 
-Extend that quirk to include the VanGogh SoC USB3 device.
+- Overview
+kernel NULL pointer dereference triggered  in folio_mark_dirty() when mount and operate on a crafted f2fs image
 
-Link: https://lore.kernel.org/r/20230927202212.2388216-1-vi@endrift.com
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-[bhelgaas: include be6646bfbaec reference, add stable tag]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org	# v3.19+
+- Reproduce
+tested on kernel 5.16-rc3, 5.15.X under root
+
+1. mkdir mnt
+2. mount -t f2fs tmp1.img mnt
+3. touch tmp
+4. cp tmp mnt
+
+F2FS-fs (loop0): sanity_check_inode: inode (ino=49) extent info [5942, 4294180864, 4] is incorrect, run fsck to fix
+F2FS-fs (loop0): f2fs_check_nid_range: out-of-range nid=31340049, run fsck to fix.
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+ folio_mark_dirty+0x33/0x50
+ move_data_page+0x2dd/0x460 [f2fs]
+ do_garbage_collect+0xc18/0x16a0 [f2fs]
+ f2fs_gc+0x1d3/0xd90 [f2fs]
+ f2fs_balance_fs+0x13a/0x570 [f2fs]
+ f2fs_create+0x285/0x840 [f2fs]
+ path_openat+0xe6d/0x1040
+ do_filp_open+0xc5/0x140
+ do_sys_openat2+0x23a/0x310
+ do_sys_open+0x57/0x80
+
+The root cause is for special file: e.g. character, block, fifo or socket file,
+f2fs doesn't assign address space operations pointer array for mapping->a_ops field,
+so, in a fuzzed image, SSA table indicates a data block belong to special file, when
+f2fs tries to migrate that block, it causes NULL pointer access once move_data_page()
+calls a_ops->set_dirty_page().
+
+Cc: stable@vger.kernel.org
+Reported-by: Wenqing Liu <wenqingliu0120@gmail.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Kazunori Kobayashi <kazunori.kobayashi@miraclelinux.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c    |    8 +++++---
- include/linux/pci_ids.h |    1 +
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ fs/f2fs/gc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -599,7 +599,7 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
- /*
-  * In the AMD NL platform, this device ([1022:7912]) has a class code of
-  * PCI_CLASS_SERIAL_USB_XHCI (0x0c0330), which means the xhci driver will
-- * claim it.
-+ * claim it. The same applies on the VanGogh platform device ([1022:163a]).
-  *
-  * But the dwc3 driver is a more specific driver for this device, and we'd
-  * prefer to use it instead of xhci. To prevent xhci from claiming the
-@@ -607,7 +607,7 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
-  * defines as "USB device (not host controller)". The dwc3 driver can then
-  * claim it based on its Vendor and Device ID.
-  */
--static void quirk_amd_nl_class(struct pci_dev *pdev)
-+static void quirk_amd_dwc_class(struct pci_dev *pdev)
- {
- 	u32 class = pdev->class;
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -958,7 +958,8 @@ next_step:
  
-@@ -617,7 +617,9 @@ static void quirk_amd_nl_class(struct pc
- 		 class, pdev->class);
- }
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_NL_USB,
--		quirk_amd_nl_class);
-+		quirk_amd_dwc_class);
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_VANGOGH_USB,
-+		quirk_amd_dwc_class);
+ 		if (phase == 3) {
+ 			inode = f2fs_iget(sb, dni.ino);
+-			if (IS_ERR(inode) || is_bad_inode(inode))
++			if (IS_ERR(inode) || is_bad_inode(inode) ||
++					special_file(inode->i_mode))
+ 				continue;
  
- /*
-  * Let's make the southbridge information explicit instead of having to
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -553,6 +553,7 @@
- #define PCI_DEVICE_ID_AMD_17H_M10H_DF_F3 0x15eb
- #define PCI_DEVICE_ID_AMD_17H_M30H_DF_F3 0x1493
- #define PCI_DEVICE_ID_AMD_17H_M70H_DF_F3 0x1443
-+#define PCI_DEVICE_ID_AMD_VANGOGH_USB	0x163a
- #define PCI_DEVICE_ID_AMD_19H_DF_F3	0x1653
- #define PCI_DEVICE_ID_AMD_CNB17H_F3	0x1703
- #define PCI_DEVICE_ID_AMD_LANCE		0x2000
+ 			if (!down_write_trylock(
 
 
