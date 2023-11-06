@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503A1200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D22B200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MgzPrFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED68C433C7;
-	Mon,  6 Nov 2023 13:07:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5p64B3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2D7C433C7;
+	Mon,  6 Nov 2023 13:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276078;
-	bh=7xx/m8ji4XwEic7OFt+IoOdSjk+Rm5f12xT5AcpU36Q=;
+	s=korg; t=1699276081;
+	bh=dpHIt+GcD0RzbifWThVrrP20NhTHI5uXOZXOUGbutZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2MgzPrFwXKcXtFbcQ1Y4sfRA4Av7X35rIquujsMIg0PJVAtmszkbLilgdT5MJ1F1q
-	 PQJPdWiTHQhLS0J+zxantbvYnmQ55Ng9RAmPoE5N8k0bUNYysfhdtiwus9BIK2HQhB
-	 WiE/AA8exVdulSP03/dOq8oyYGfNnpcpyEYkpdNQ=
+	b=L5p64B3WWotS0uFL6Ug6kXWag7v2Gh51sv9NGlCvFvJqyqv8/i7ar5IYOaa037Uh7
+	 jiTUsaks2i7tZ4AnpMaqZOmcan5xphj7KQyS3bUOi3JPMo4zg7UhScl/9WlivR65Dd
+	 em0HxUNIr9SNiBSMCPNbY4p2IQVXNmaif98izV9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Hu <hhhuuu@google.com>
-Subject: [PATCH 6.6 13/30] usb: typec: tcpm: Fix NULL pointer dereference in tcpm_pd_svdm()
-Date: Mon,  6 Nov 2023 14:03:31 +0100
-Message-ID: <20231106130258.404545163@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Andrey Konovalov <andreyknvl@gmail.com>
+Subject: [PATCH 6.6 14/30] usb: raw-gadget: properly handle interrupted requests
+Date: Mon,  6 Nov 2023 14:03:32 +0100
+Message-ID: <20231106130258.443613377@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.903265688@linuxfoundation.org>
 References: <20231106130257.903265688@linuxfoundation.org>
@@ -40,49 +41,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jimmy Hu <hhhuuu@google.com>
+From: Andrey Konovalov <andreyknvl@gmail.com>
 
-commit 4987daf86c152ff882d51572d154ad12e4ff3a4b upstream.
+commit e8033bde451eddfb9b1bbd6e2d848c1b5c277222 upstream.
 
-It is possible that typec_register_partner() returns ERR_PTR on failure.
-When port->partner is an error, a NULL pointer dereference may occur as
-shown below.
+Currently, if a USB request that was queued by Raw Gadget is interrupted
+(via a signal), wait_for_completion_interruptible returns -ERESTARTSYS.
+Raw Gadget then attempts to propagate this value to userspace as a return
+value from its ioctls. However, when -ERESTARTSYS is returned by a syscall
+handler, the kernel internally restarts the syscall.
 
-[91222.095236][  T319] typec port0: failed to register partner (-17)
-...
-[91225.061491][  T319] Unable to handle kernel NULL pointer dereference
-at virtual address 000000000000039f
-[91225.274642][  T319] pc : tcpm_pd_data_request+0x310/0x13fc
-[91225.274646][  T319] lr : tcpm_pd_data_request+0x298/0x13fc
-[91225.308067][  T319] Call trace:
-[91225.308070][  T319]  tcpm_pd_data_request+0x310/0x13fc
-[91225.308073][  T319]  tcpm_pd_rx_handler+0x100/0x9e8
-[91225.355900][  T319]  kthread_worker_fn+0x178/0x58c
-[91225.355902][  T319]  kthread+0x150/0x200
-[91225.355905][  T319]  ret_from_fork+0x10/0x30
+This doesn't allow userspace applications to interrupt requests queued by
+Raw Gadget (which is required when the emulated device is asked to switch
+altsettings). It also violates the implied interface of Raw Gadget that a
+single ioctl must only queue a single USB request.
 
-Add a check for port->partner to avoid dereferencing a NULL pointer.
+Instead, make Raw Gadget do what GadgetFS does: check whether the request
+was interrupted (dequeued with status == -ECONNRESET) and report -EINTR to
+userspace.
 
-Fixes: 5e1d4c49fbc8 ("usb: typec: tcpm: Determine common SVDM Version")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jimmy Hu <hhhuuu@google.com>
-Link: https://lore.kernel.org/r/20231020012132.100960-1-hhhuuu@google.com
+Fixes: f2c2e717642c ("usb: gadget: add raw-gadget interface")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
+Link: https://lore.kernel.org/r/0db45b1d7cc466e3d4d1ab353f61d63c977fbbc5.1698350424.git.andreyknvl@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/gadget/legacy/raw_gadget.c |   26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1625,6 +1625,9 @@ static int tcpm_pd_svdm(struct tcpm_port
- 			if (PD_VDO_VID(p[0]) != USB_SID_PD)
- 				break;
+--- a/drivers/usb/gadget/legacy/raw_gadget.c
++++ b/drivers/usb/gadget/legacy/raw_gadget.c
+@@ -663,12 +663,12 @@ static int raw_process_ep0_io(struct raw
+ 	if (WARN_ON(in && dev->ep0_out_pending)) {
+ 		ret = -ENODEV;
+ 		dev->state = STATE_DEV_FAILED;
+-		goto out_done;
++		goto out_unlock;
+ 	}
+ 	if (WARN_ON(!in && dev->ep0_in_pending)) {
+ 		ret = -ENODEV;
+ 		dev->state = STATE_DEV_FAILED;
+-		goto out_done;
++		goto out_unlock;
+ 	}
  
-+			if (IS_ERR_OR_NULL(port->partner))
-+				break;
-+
- 			if (PD_VDO_SVDM_VER(p[0]) < svdm_version) {
- 				typec_partner_set_svdm_version(port->partner,
- 							       PD_VDO_SVDM_VER(p[0]));
+ 	dev->req->buf = data;
+@@ -683,7 +683,7 @@ static int raw_process_ep0_io(struct raw
+ 				"fail, usb_ep_queue returned %d\n", ret);
+ 		spin_lock_irqsave(&dev->lock, flags);
+ 		dev->state = STATE_DEV_FAILED;
+-		goto out_done;
++		goto out_queue_failed;
+ 	}
+ 
+ 	ret = wait_for_completion_interruptible(&dev->ep0_done);
+@@ -692,13 +692,16 @@ static int raw_process_ep0_io(struct raw
+ 		usb_ep_dequeue(dev->gadget->ep0, dev->req);
+ 		wait_for_completion(&dev->ep0_done);
+ 		spin_lock_irqsave(&dev->lock, flags);
+-		goto out_done;
++		if (dev->ep0_status == -ECONNRESET)
++			dev->ep0_status = -EINTR;
++		goto out_interrupted;
+ 	}
+ 
+ 	spin_lock_irqsave(&dev->lock, flags);
+-	ret = dev->ep0_status;
+ 
+-out_done:
++out_interrupted:
++	ret = dev->ep0_status;
++out_queue_failed:
+ 	dev->ep0_urb_queued = false;
+ out_unlock:
+ 	spin_unlock_irqrestore(&dev->lock, flags);
+@@ -1067,7 +1070,7 @@ static int raw_process_ep_io(struct raw_
+ 				"fail, usb_ep_queue returned %d\n", ret);
+ 		spin_lock_irqsave(&dev->lock, flags);
+ 		dev->state = STATE_DEV_FAILED;
+-		goto out_done;
++		goto out_queue_failed;
+ 	}
+ 
+ 	ret = wait_for_completion_interruptible(&done);
+@@ -1076,13 +1079,16 @@ static int raw_process_ep_io(struct raw_
+ 		usb_ep_dequeue(ep->ep, ep->req);
+ 		wait_for_completion(&done);
+ 		spin_lock_irqsave(&dev->lock, flags);
+-		goto out_done;
++		if (ep->status == -ECONNRESET)
++			ep->status = -EINTR;
++		goto out_interrupted;
+ 	}
+ 
+ 	spin_lock_irqsave(&dev->lock, flags);
+-	ret = ep->status;
+ 
+-out_done:
++out_interrupted:
++	ret = ep->status;
++out_queue_failed:
+ 	ep->urb_queued = false;
+ out_unlock:
+ 	spin_unlock_irqrestore(&dev->lock, flags);
 
 
