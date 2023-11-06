@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB06423747
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB6423747
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLPdbj9B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553A3C433C8;
-	Mon,  6 Nov 2023 13:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7j5FrbG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48624C433C9;
+	Mon,  6 Nov 2023 13:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277016;
-	bh=YbrSkASyqoppVuQmBY/wNWEGtxi3Hx5WlFi4+sRNlKM=;
+	s=korg; t=1699277019;
+	bh=h3KaH+3U6sUjgoXqmSrvw9mXfXTNA9qUAZJwaO3wUz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLPdbj9BuowuTQS9qO4M/V3I7IwGVvo3dbj+KXUlv6pBS93LdRxWQUXOWJe47Z53q
-	 N3JZekk4FUrEWD3IDAbBCkcQ/vHN4gP3qwbEH9yuGrIvKfzCCo3A7cJQivY3XpQNHO
-	 gZf8uoBWecrIoKcj0wWz3cNY9PX95i4vludFAudY=
+	b=l7j5FrbGTEK3A4l/fdzBaSaA4u25HE6OYOfWAaGO1m8ZBvJSwVEJv9xq3+LKh45r+
+	 uwmEpWmNP2VjwOkALHHOE8fwPRU6q3YuoYGofq6/1w5m1bR/o3vJcqlE5lcDI6n+cA
+	 wVuCVvj8v1cOneRH22Qn1/vqV6X6PQlCF5zPe7rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 5.15 010/128] virtio-mmio: fix memory leak of vm_dev
-Date: Mon,  6 Nov 2023 14:02:50 +0100
-Message-ID: <20231106130309.602588318@linuxfoundation.org>
+	Eric Auger <eric.auger@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 5.15 011/128] vhost: Allow null msg.size on VHOST_IOTLB_INVALIDATE
+Date: Mon,  6 Nov 2023 14:02:51 +0100
+Message-ID: <20231106130309.640427592@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -44,86 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Heyne <mheyne@amazon.de>
+From: Eric Auger <eric.auger@redhat.com>
 
-commit fab7f259227b8f70aa6d54e1de1a1f5f4729041c upstream.
+commit ca50ec377c2e94b0a9f8735de2856cd0f13beab4 upstream.
 
-With the recent removal of vm_dev from devres its memory is only freed
-via the callback virtio_mmio_release_dev. However, this only takes
-effect after device_add is called by register_virtio_device. Until then
-it's an unmanaged resource and must be explicitly freed on error exit.
+Commit e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb
+entries") Forbade vhost iotlb msg with null size to prevent entries
+with size = start = 0 and last = ULONG_MAX to end up in the iotlb.
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
+Then commit 95932ab2ea07 ("vhost: allow batching hint without size")
+only applied the check for VHOST_IOTLB_UPDATE and VHOST_IOTLB_INVALIDATE
+message types to fix a regression observed with batching hit.
 
-Cc: stable@vger.kernel.org
-Fixes: 55c91fedd03d ("virtio-mmio: don't break lifecycle of vm_dev")
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Tested-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Still, the introduction of that check introduced a regression for
+some users attempting to invalidate the whole ULONG_MAX range by
+setting the size to 0. This is the case with qemu/smmuv3/vhost
+integration which does not work anymore. It Looks safe to partially
+revert the original commit and allow VHOST_IOTLB_INVALIDATE messages
+with null size. vhost_iotlb_del_range() will compute a correct end
+iova. Same for vhost_vdpa_iotlb_unmap().
 
-Message-Id: <20230911090328.40538-1-mheyne@amazon.de>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Fixes: e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb entries")
+Cc: stable@vger.kernel.org # v5.17+
+Acked-by: Jason Wang <jasowang@redhat.com>
+Message-Id: <20230927140544.205088-1-eric.auger@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virtio/virtio_mmio.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/vhost/vhost.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/virtio/virtio_mmio.c
-+++ b/drivers/virtio/virtio_mmio.c
-@@ -596,14 +596,17 @@ static int virtio_mmio_probe(struct plat
- 	spin_lock_init(&vm_dev->lock);
- 
- 	vm_dev->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(vm_dev->base))
--		return PTR_ERR(vm_dev->base);
-+	if (IS_ERR(vm_dev->base)) {
-+		rc = PTR_ERR(vm_dev->base);
-+		goto free_vm_dev;
-+	}
- 
- 	/* Check magic value */
- 	magic = readl(vm_dev->base + VIRTIO_MMIO_MAGIC_VALUE);
- 	if (magic != ('v' | 'i' << 8 | 'r' << 16 | 't' << 24)) {
- 		dev_warn(&pdev->dev, "Wrong magic value 0x%08lx!\n", magic);
--		return -ENODEV;
-+		rc = -ENODEV;
-+		goto free_vm_dev;
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -1171,9 +1171,7 @@ ssize_t vhost_chr_write_iter(struct vhos
+ 		goto done;
  	}
  
- 	/* Check device version */
-@@ -611,7 +614,8 @@ static int virtio_mmio_probe(struct plat
- 	if (vm_dev->version < 1 || vm_dev->version > 2) {
- 		dev_err(&pdev->dev, "Version %ld not supported!\n",
- 				vm_dev->version);
--		return -ENXIO;
-+		rc = -ENXIO;
-+		goto free_vm_dev;
+-	if ((msg.type == VHOST_IOTLB_UPDATE ||
+-	     msg.type == VHOST_IOTLB_INVALIDATE) &&
+-	     msg.size == 0) {
++	if (msg.type == VHOST_IOTLB_UPDATE && msg.size == 0) {
+ 		ret = -EINVAL;
+ 		goto done;
  	}
- 
- 	vm_dev->vdev.id.device = readl(vm_dev->base + VIRTIO_MMIO_DEVICE_ID);
-@@ -620,7 +624,8 @@ static int virtio_mmio_probe(struct plat
- 		 * virtio-mmio device with an ID 0 is a (dummy) placeholder
- 		 * with no function. End probing now with no error reported.
- 		 */
--		return -ENODEV;
-+		rc = -ENODEV;
-+		goto free_vm_dev;
- 	}
- 	vm_dev->vdev.id.vendor = readl(vm_dev->base + VIRTIO_MMIO_VENDOR_ID);
- 
-@@ -650,6 +655,10 @@ static int virtio_mmio_probe(struct plat
- 		put_device(&vm_dev->vdev.dev);
- 
- 	return rc;
-+
-+free_vm_dev:
-+	kfree(vm_dev);
-+	return rc;
- }
- 
- static int virtio_mmio_remove(struct platform_device *pdev)
 
 
