@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6C320B09
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B2420B09
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K78DYBLg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DEBC433C8;
-	Mon,  6 Nov 2023 13:22:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTrC6KgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F2CC433C8;
+	Mon,  6 Nov 2023 13:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276946;
-	bh=O9S7ejVzWiIfkihA95p54UwxRwzgofddZC6SE4g1Ri4=;
+	s=korg; t=1699276949;
+	bh=4PH7BC4joNtQ9gBHsoRJZrUfh8fvP+pgXnTGsyGWz5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K78DYBLgEe4wkB5/BBrdYdRWFJqgxpj+LnlssM1e3AvIburGRAz4v7WToMK7jeVQw
-	 NsqzAEOt/aqJ9Iaika9dtRfed2AH6DZ9rGg2Pcb0xtiJLQcviptkfG/Rber2UC3Co4
-	 L+n77CeX1WQFP3hRicZBVkra5ETr3vwoN+P5N+fE=
+	b=QTrC6KgOeWP2LnaFpfcr2lVLRgfiENgt2L/Nnrdqo34LiJxezvW3zoLUQ1NPF3G3N
+	 nTFs5fSVPpge/zKFR/pELgt1/Hg4imdhvmVi2NxPl8/d+Xo7WwDD4+6TAerI7Gb7QL
+	 5Wfr50xPjOlZW0wVgNJnrf6bCs7dvANYdvKiIkT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James John <me@donjajo.com>,
+	Liming Sun <limings@nvidia.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 61/74] platform/x86: asus-wmi: Change ASUS_WMI_BRN_DOWN code from 0x20 to 0x2e
-Date: Mon,  6 Nov 2023 14:04:21 +0100
-Message-ID: <20231106130303.807703725@linuxfoundation.org>
+Subject: [PATCH 5.4 62/74] platform/mellanox: mlxbf-tmfifo: Fix a warning message
+Date: Mon,  6 Nov 2023 14:04:22 +0100
+Message-ID: <20231106130303.836951428@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.687882731@linuxfoundation.org>
 References: <20231106130301.687882731@linuxfoundation.org>
@@ -42,69 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Liming Sun <limings@nvidia.com>
 
-[ Upstream commit f37cc2fc277b371fc491890afb7d8a26e36bb3a1 ]
+[ Upstream commit 99c09c985e5973c8f0ad976ebae069548dd86f12 ]
 
-Older Asus laptops change the backlight level themselves and then send
-WMI events with different codes for different backlight levels.
+This commit fixes the smatch static checker warning in function
+mlxbf_tmfifo_rxtx_word() which complains data not initialized at
+line 634 when IS_VRING_DROP() is TRUE.
 
-The asus-wmi.c code maps the entire range of codes reported on
-brightness down keypresses to an internal ASUS_WMI_BRN_DOWN code:
-
-define NOTIFY_BRNUP_MIN                0x11
-define NOTIFY_BRNUP_MAX                0x1f
-define NOTIFY_BRNDOWN_MIN              0x20
-define NOTIFY_BRNDOWN_MAX              0x2e
-
-        if (code >= NOTIFY_BRNUP_MIN && code <= NOTIFY_BRNUP_MAX)
-                code = ASUS_WMI_BRN_UP;
-        else if (code >= NOTIFY_BRNDOWN_MIN && code <= NOTIFY_BRNDOWN_MAX)
-                code = ASUS_WMI_BRN_DOWN;
-
-Before this commit all the NOTIFY_BRNDOWN_MIN - NOTIFY_BRNDOWN_MAX
-aka 0x20 - 0x2e events were mapped to 0x20.
-
-This mapping is causing issues on new laptop models which actually
-send 0x2b events for printscreen presses and 0x2c events for
-capslock presses, which get translated into spurious brightness-down
-presses.
-
-The plan is disable the 0x11-0x2e special mapping on laptops
-where asus-wmi does not register a backlight-device to avoid
-the spurious brightness-down keypresses. New laptops always send
-0x2e for brightness-down presses, change the special internal
-ASUS_WMI_BRN_DOWN value from 0x20 to 0x2e to match this in
-preparation for fixing the spurious brightness-down presses.
-
-This change does not have any functional impact since all
-of 0x20 - 0x2e is mapped to ASUS_WMI_BRN_DOWN first and only
-then checked against the keymap code and the new 0x2e
-value is still in the 0x20 - 0x2e range.
-
-Reported-by: James John <me@donjajo.com>
-Closes: https://lore.kernel.org/platform-driver-x86/a2c441fe-457e-44cf-a146-0ecd86b037cf@donjajo.com/
-Closes: https://bbs.archlinux.org/viewtopic.php?pid=2123716
+Signed-off-by: Liming Sun <limings@nvidia.com>
+Link: https://lore.kernel.org/r/20231012230235.219861-1-limings@nvidia.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231017090725.38163-2-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/mellanox/mlxbf-tmfifo.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.h b/drivers/platform/x86/asus-wmi.h
-index 4f31b68642a08..6faf213f687a3 100644
---- a/drivers/platform/x86/asus-wmi.h
-+++ b/drivers/platform/x86/asus-wmi.h
-@@ -18,7 +18,7 @@
- #include <linux/i8042.h>
+diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
+index 194f3205e5597..767f4406e55f1 100644
+--- a/drivers/platform/mellanox/mlxbf-tmfifo.c
++++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
+@@ -588,24 +588,25 @@ static void mlxbf_tmfifo_rxtx_word(struct mlxbf_tmfifo_vring *vring,
  
- #define ASUS_WMI_KEY_IGNORE (-1)
--#define ASUS_WMI_BRN_DOWN	0x20
-+#define ASUS_WMI_BRN_DOWN	0x2e
- #define ASUS_WMI_BRN_UP		0x2f
- 
- struct module;
+ 	if (vring->cur_len + sizeof(u64) <= len) {
+ 		/* The whole word. */
+-		if (!IS_VRING_DROP(vring)) {
+-			if (is_rx)
++		if (is_rx) {
++			if (!IS_VRING_DROP(vring))
+ 				memcpy(addr + vring->cur_len, &data,
+ 				       sizeof(u64));
+-			else
+-				memcpy(&data, addr + vring->cur_len,
+-				       sizeof(u64));
++		} else {
++			memcpy(&data, addr + vring->cur_len,
++			       sizeof(u64));
+ 		}
+ 		vring->cur_len += sizeof(u64);
+ 	} else {
+ 		/* Leftover bytes. */
+-		if (!IS_VRING_DROP(vring)) {
+-			if (is_rx)
++		if (is_rx) {
++			if (!IS_VRING_DROP(vring))
+ 				memcpy(addr + vring->cur_len, &data,
+ 				       len - vring->cur_len);
+-			else
+-				memcpy(&data, addr + vring->cur_len,
+-				       len - vring->cur_len);
++		} else {
++			data = 0;
++			memcpy(&data, addr + vring->cur_len,
++			       len - vring->cur_len);
+ 		}
+ 		vring->cur_len = len;
+ 	}
 -- 
 2.42.0
 
