@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967CC179A6
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85529179A6
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y67CTmj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB5BC433C7;
-	Mon,  6 Nov 2023 13:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmusMq+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EB0C433C8;
+	Mon,  6 Nov 2023 13:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277183;
-	bh=uIAsN8H8/MNUOfuUxGvF4sXn9kjcs86pLypNXXlCTzc=;
+	s=korg; t=1699277186;
+	bh=Qs4K4Pde7ol8RGBQRaMFfHPgSunA7SAbOaogzlcFhuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y67CTmj7SmHM6VAcS/ltA9fl8CDz1Z/0Oy88m9RtfmbUn2/sy4NcYPpMIjmfm4exz
-	 gYDJGccByOEsbHVkohZS5zy23UjzVqYR0fnk8xK3NnGED/tDIjXefQU3qkR13a3PtG
-	 hW9zb6dSBKRu/OdzC4Zd1/kIojH7KxNDzhsq0NTo=
+	b=VmusMq+SCklA9p1sH7S8z+1M2WRfabg1JSF1tJZ224zKtQHsamzcDYzRO0PmTuSe7
+	 2dhiOa0mjwRKohg5Ru+Hz1R68A4cnRgXiOGTUyGCU6KETcdd/dOBndyk4qvIh9Gcc1
+	 wINmavlSXfrZVRAzsOmNMWzx53Le36nCpCM060IU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Peter Rosin <peda@axentia.se>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/128] iio: afe: rescale: Accept only offset channels
-Date: Mon,  6 Nov 2023 14:03:39 +0100
-Message-ID: <20231106130311.777949152@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 5.15 068/128] driver: platform: Add helper for safer setting of driver_override
+Date: Mon,  6 Nov 2023 14:03:48 +0100
+Message-ID: <20231106130312.204372106@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -45,74 +42,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit bee448390e5166d019e9e037194d487ee94399d9 ]
+commit 6c2f421174273de8f83cde4286d1c076d43a2d35 upstream.
 
-As noted by Jonathan Cameron: it is perfectly legal for a channel
-to have an offset but no scale in addition to the raw interface.
-The conversion will imply that scale is 1:1.
+Several core drivers and buses expect that driver_override is a
+dynamically allocated memory thus later they can kfree() it.
 
-Make rescale_configure_channel() accept just scale, or just offset
-to process a channel.
+However such assumption is not documented, there were in the past and
+there are already users setting it to a string literal. This leads to
+kfree() of static memory during device release (e.g. in error paths or
+during unbind):
 
-When a user asks for IIO_CHAN_INFO_OFFSET in rescale_read_raw()
-we now have to deal with the fact that OFFSET could be present
-but SCALE missing. Add code to simply scale 1:1 in this case.
+    kernel BUG at ../mm/slub.c:3960!
+    Internal error: Oops - BUG: 0 [#1] PREEMPT SMP ARM
+    ...
+    (kfree) from [<c058da50>] (platform_device_release+0x88/0xb4)
+    (platform_device_release) from [<c0585be0>] (device_release+0x2c/0x90)
+    (device_release) from [<c0a69050>] (kobject_put+0xec/0x20c)
+    (kobject_put) from [<c0f2f120>] (exynos5_clk_probe+0x154/0x18c)
+    (exynos5_clk_probe) from [<c058de70>] (platform_drv_probe+0x6c/0xa4)
+    (platform_drv_probe) from [<c058b7ac>] (really_probe+0x280/0x414)
+    (really_probe) from [<c058baf4>] (driver_probe_device+0x78/0x1c4)
+    (driver_probe_device) from [<c0589854>] (bus_for_each_drv+0x74/0xb8)
+    (bus_for_each_drv) from [<c058b48c>] (__device_attach+0xd4/0x16c)
+    (__device_attach) from [<c058a638>] (bus_probe_device+0x88/0x90)
+    (bus_probe_device) from [<c05871fc>] (device_add+0x3dc/0x62c)
+    (device_add) from [<c075ff10>] (of_platform_device_create_pdata+0x94/0xbc)
+    (of_platform_device_create_pdata) from [<c07600ec>] (of_platform_bus_create+0x1a8/0x4fc)
+    (of_platform_bus_create) from [<c0760150>] (of_platform_bus_create+0x20c/0x4fc)
+    (of_platform_bus_create) from [<c07605f0>] (of_platform_populate+0x84/0x118)
+    (of_platform_populate) from [<c0f3c964>] (of_platform_default_populate_init+0xa0/0xb8)
+    (of_platform_default_populate_init) from [<c01031f8>] (do_one_initcall+0x8c/0x404)
 
-Link: https://lore.kernel.org/linux-iio/CACRpkdZXBjHU4t-GVOCFxRO-AHGxKnxMeHD2s4Y4PuC29gBq6g@mail.gmail.com/
-Fixes: 53ebee949980 ("iio: afe: iio-rescale: Support processed channels")
-Fixes: 9decacd8b3a4 ("iio: afe: rescale: Fix boolean logic bug")
-Reported-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Peter Rosin <peda@axentia.se>
-Link: https://lore.kernel.org/r/20230902-iio-rescale-only-offset-v2-1-988b807754c8@linaro.org
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Provide a helper which clearly documents the usage of driver_override.
+This will allow later to reuse the helper and reduce the amount of
+duplicated code.
+
+Convert the platform driver to use a new helper and make the
+driver_override field const char (it is not modified by the core).
+
+Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20220419113435.246203-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/afe/iio-rescale.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/base/driver.c           |   69 ++++++++++++++++++++++++++++++++++++++++
+ drivers/base/platform.c         |   28 ++--------------
+ include/linux/device/driver.h   |    2 +
+ include/linux/platform_device.h |    6 ++-
+ 4 files changed, 80 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/iio/afe/iio-rescale.c b/drivers/iio/afe/iio-rescale.c
-index 84f21dc94a2f7..ea0a39882eb25 100644
---- a/drivers/iio/afe/iio-rescale.c
-+++ b/drivers/iio/afe/iio-rescale.c
-@@ -152,8 +152,18 @@ static int rescale_read_raw(struct iio_dev *indio_dev,
- 				return ret < 0 ? ret : -EOPNOTSUPP;
- 		}
+--- a/drivers/base/driver.c
++++ b/drivers/base/driver.c
+@@ -31,6 +31,75 @@ static struct device *next_device(struct
+ }
  
--		ret = iio_read_channel_scale(rescale->source, &scale, &scale2);
--		return rescale_process_offset(rescale, ret, scale, scale2,
-+		if (iio_channel_has_info(rescale->source->channel,
-+					 IIO_CHAN_INFO_SCALE)) {
-+			ret = iio_read_channel_scale(rescale->source, &scale, &scale2);
-+			return rescale_process_offset(rescale, ret, scale, scale2,
-+						      schan_off, val, val2);
-+		}
+ /**
++ * driver_set_override() - Helper to set or clear driver override.
++ * @dev: Device to change
++ * @override: Address of string to change (e.g. &device->driver_override);
++ *            The contents will be freed and hold newly allocated override.
++ * @s: NUL-terminated string, new driver name to force a match, pass empty
++ *     string to clear it ("" or "\n", where the latter is only for sysfs
++ *     interface).
++ * @len: length of @s
++ *
++ * Helper to set or clear driver override in a device, intended for the cases
++ * when the driver_override field is allocated by driver/bus code.
++ *
++ * Returns: 0 on success or a negative error code on failure.
++ */
++int driver_set_override(struct device *dev, const char **override,
++			const char *s, size_t len)
++{
++	const char *new, *old;
++	char *cp;
 +
-+		/*
-+		 * If we get here we have no scale so scale 1:1 but apply
-+		 * rescaler and offset, if any.
-+		 */
-+		return rescale_process_offset(rescale, IIO_VAL_FRACTIONAL, 1, 1,
- 					      schan_off, val, val2);
- 	default:
- 		return -EINVAL;
-@@ -218,8 +228,9 @@ static int rescale_configure_channel(struct device *dev,
- 	chan->type = rescale->cfg->type;
++	if (!override || !s)
++		return -EINVAL;
++
++	/*
++	 * The stored value will be used in sysfs show callback (sysfs_emit()),
++	 * which has a length limit of PAGE_SIZE and adds a trailing newline.
++	 * Thus we can store one character less to avoid truncation during sysfs
++	 * show.
++	 */
++	if (len >= (PAGE_SIZE - 1))
++		return -EINVAL;
++
++	if (!len) {
++		/* Empty string passed - clear override */
++		device_lock(dev);
++		old = *override;
++		*override = NULL;
++		device_unlock(dev);
++		kfree(old);
++
++		return 0;
++	}
++
++	cp = strnchr(s, len, '\n');
++	if (cp)
++		len = cp - s;
++
++	new = kstrndup(s, len, GFP_KERNEL);
++	if (!new)
++		return -ENOMEM;
++
++	device_lock(dev);
++	old = *override;
++	if (cp != s) {
++		*override = new;
++	} else {
++		/* "\n" passed - clear override */
++		kfree(new);
++		*override = NULL;
++	}
++	device_unlock(dev);
++
++	kfree(old);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(driver_set_override);
++
++/**
+  * driver_for_each_device - Iterator for devices bound to a driver.
+  * @drv: Driver we're iterating.
+  * @start: Device to begin with
+--- a/drivers/base/platform.c
++++ b/drivers/base/platform.c
+@@ -1270,31 +1270,11 @@ static ssize_t driver_override_store(str
+ 				     const char *buf, size_t count)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+-	char *driver_override, *old, *cp;
++	int ret;
  
- 	if (iio_channel_has_info(schan, IIO_CHAN_INFO_RAW) &&
--	    iio_channel_has_info(schan, IIO_CHAN_INFO_SCALE)) {
--		dev_info(dev, "using raw+scale source channel\n");
-+	    (iio_channel_has_info(schan, IIO_CHAN_INFO_SCALE) ||
-+	     iio_channel_has_info(schan, IIO_CHAN_INFO_OFFSET))) {
-+		dev_info(dev, "using raw+scale/offset source channel\n");
- 	} else if (iio_channel_has_info(schan, IIO_CHAN_INFO_PROCESSED)) {
- 		dev_info(dev, "using processed channel\n");
- 		rescale->chan_processed = true;
--- 
-2.42.0
-
+-	/* We need to keep extra room for a newline */
+-	if (count >= (PAGE_SIZE - 1))
+-		return -EINVAL;
+-
+-	driver_override = kstrndup(buf, count, GFP_KERNEL);
+-	if (!driver_override)
+-		return -ENOMEM;
+-
+-	cp = strchr(driver_override, '\n');
+-	if (cp)
+-		*cp = '\0';
+-
+-	device_lock(dev);
+-	old = pdev->driver_override;
+-	if (strlen(driver_override)) {
+-		pdev->driver_override = driver_override;
+-	} else {
+-		kfree(driver_override);
+-		pdev->driver_override = NULL;
+-	}
+-	device_unlock(dev);
+-
+-	kfree(old);
++	ret = driver_set_override(dev, &pdev->driver_override, buf, count);
++	if (ret)
++		return ret;
+ 
+ 	return count;
+ }
+--- a/include/linux/device/driver.h
++++ b/include/linux/device/driver.h
+@@ -150,6 +150,8 @@ extern int __must_check driver_create_fi
+ extern void driver_remove_file(struct device_driver *driver,
+ 			       const struct driver_attribute *attr);
+ 
++int driver_set_override(struct device *dev, const char **override,
++			const char *s, size_t len);
+ extern int __must_check driver_for_each_device(struct device_driver *drv,
+ 					       struct device *start,
+ 					       void *data,
+--- a/include/linux/platform_device.h
++++ b/include/linux/platform_device.h
+@@ -31,7 +31,11 @@ struct platform_device {
+ 	struct resource	*resource;
+ 
+ 	const struct platform_device_id	*id_entry;
+-	char *driver_override; /* Driver name to force a match */
++	/*
++	 * Driver name to force a match.  Do not set directly, because core
++	 * frees it.  Use driver_set_override() to set or clear it.
++	 */
++	const char *driver_override;
+ 
+ 	/* MFD cell pointer */
+ 	struct mfd_cell *mfd_cell;
 
 
