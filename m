@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB1720316
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886A920316
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwdyoeoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088B8C433C9;
-	Mon,  6 Nov 2023 13:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm8oQzSj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CCEC433C9;
+	Mon,  6 Nov 2023 13:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276580;
-	bh=EzlUzI/8ybzHBJIHwDgfgoH7NySXzRxfTdSJh+z98O0=;
+	s=korg; t=1699276583;
+	bh=HuVZM4kqqtRb3g7w+n5fLVtZl3RGPA3MaO0oz3FgH54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwdyoeoBwhWLlA5bvWwh4jBti84ddTZMSR18vLlcXJwA+ppw/lwuEAcwAQ2O5NAMI
-	 aOCzboX6jru89WnNg7mWW0XphyVNb+WOkGVndRNJnO+S5O1+rWiCuhvQP4J5fVSB+b
-	 n8wdN3ZOk9J3TgmAdDZb54Wnmx7H0NaWfQejNMDE=
+	b=mm8oQzSj10Hx5ZhVV2CRdtfF7kktC7ut3FsjwDCfaxSWLpzGzFR2kLU4G/epvJeR3
+	 ZALCfYHgQpm3XSZDWcCB85HWU5AWT29SkfN3ztam2IEjyHZQpZ0+9iAkPBBuy0ZQDt
+	 bi/RM4ig8+UnpIaqNVEFM9lYY0Cjb1Db4hqEI4aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Marcano <gabemarcano@yahoo.com>,
+	Su Hui <suhui@nfschina.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 28/88] fs/ntfs3: Fix directory element type detection
-Date: Mon,  6 Nov 2023 14:03:22 +0100
-Message-ID: <20231106130306.827495564@linuxfoundation.org>
+Subject: [PATCH 6.5 29/88] fs/ntfs3: Avoid possible memory leak
+Date: Mon,  6 Nov 2023 14:03:23 +0100
+Message-ID: <20231106130306.858524574@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -42,42 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Marcano <gabemarcano@yahoo.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 85a4780dc96ed9dd643bbadf236552b3320fae26 ]
+[ Upstream commit e4494770a5cad3c9d1d2a65ed15d07656c0d9b82 ]
 
-Calling stat() from userspace correctly identified junctions in an NTFS
-partition as symlinks, but using readdir() and iterating through the
-directory containing the same junction did not identify the junction
-as a symlink.
+smatch warn:
+fs/ntfs3/fslog.c:2172 last_log_lsn() warn: possible memory leak of 'page_bufs'
+Jump to label 'out' to free 'page_bufs' and is more consistent with
+other code.
 
-When emitting directory contents, check FILE_ATTRIBUTE_REPARSE_POINT
-attribute to detect junctions and report them as links.
-
-Signed-off-by: Gabriel Marcano <gabemarcano@yahoo.com>
+Signed-off-by: Su Hui <suhui@nfschina.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/dir.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/ntfs3/fslog.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index 063a6654199bc..ec0566b322d5d 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -309,7 +309,11 @@ static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
- 		return 0;
- 	}
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 12f28cdf5c838..98ccb66508583 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -2168,8 +2168,10 @@ static int last_log_lsn(struct ntfs_log *log)
  
--	dt_type = (fname->dup.fa & FILE_ATTRIBUTE_DIRECTORY) ? DT_DIR : DT_REG;
-+	/* NTFS: symlinks are "dir + reparse" or "file + reparse" */
-+	if (fname->dup.fa & FILE_ATTRIBUTE_REPARSE_POINT)
-+		dt_type = DT_LNK;
-+	else
-+		dt_type = (fname->dup.fa & FILE_ATTRIBUTE_DIRECTORY) ? DT_DIR : DT_REG;
+ 			if (!page) {
+ 				page = kmalloc(log->page_size, GFP_NOFS);
+-				if (!page)
+-					return -ENOMEM;
++				if (!page) {
++					err = -ENOMEM;
++					goto out;
++				}
+ 			}
  
- 	return !dir_emit(ctx, (s8 *)name, name_len, ino, dt_type);
- }
+ 			/*
 -- 
 2.42.0
 
