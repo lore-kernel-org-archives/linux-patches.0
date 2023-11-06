@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA439200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5507E200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLrp1kz4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3882C433C8;
-	Mon,  6 Nov 2023 13:06:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2rsdOhHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65C2C433C7;
+	Mon,  6 Nov 2023 13:06:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699275978;
-	bh=s0l7KTa5S/G32jP2ICH3Z8KdBqx8Nm10hJ8DhEufDGc=;
+	s=korg; t=1699275981;
+	bh=OFjUQ7tPlqOG8B5g+dImc3pXmBCFSlfa+h/pcdDV84E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLrp1kz48nxXOMqsUYCBiLyYyih8aPKGIP3Y3LgMK59p2bUiSDWV0ItfvgH6eGQCG
-	 0ybpSYtlMq2WiTWMHfXK7/0yM5gW2XscXnW5xmO7LnS7imo9IawgDd56Oo3vy4H+WV
-	 oiGAE30gpJmGAvbfwQRN1GFbpS4ipBofXyqf6RnM=
+	b=2rsdOhHIgckZBK1ZBNLTotW/qZoYJ9A1eAWTxR0rETz/6UN/26aasNJUrnrqvTHyX
+	 rkIERDYqfZXHPCF+p4IE0/z/FNok4WSCjzhnJ42rB9ed6fEDTPDqE1JQ5M8L6SZJ7A
+	 D/8cmds5MVTiFc1rsh9xQ32hdMNevHd/KGwp4+h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lazar <dlazar@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 4.14 20/48] x86/i8259: Skip probing when ACPI/MADT advertises PCAT compatibility
-Date: Mon,  6 Nov 2023 14:03:11 +0100
-Message-ID: <20231106130258.559627749@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 29/48] ASoC: simple-card: fixup asoc_simple_probe() error handling
+Date: Mon,  6 Nov 2023 14:03:20 +0100
+Message-ID: <20231106130258.860021281@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -43,142 +44,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-commit 128b0c9781c9f2651bea163cb85e52a6c7be0f9e upstream.
+[ Upstream commit 41bae58df411f9accf01ea660730649b2fab1dab ]
 
-David and a few others reported that on certain newer systems some legacy
-interrupts fail to work correctly.
+asoc_simple_probe() is used for both "DT probe" (A) and "platform probe"
+(B). It uses "goto err" when error case, but it is not needed for
+"platform probe" case (B). Thus it is using "return" directly there.
 
-Debugging revealed that the BIOS of these systems leaves the legacy PIC in
-uninitialized state which makes the PIC detection fail and the kernel
-switches to a dummy implementation.
+	static int asoc_simple_probe(...)
+	{
+ ^		if (...) {
+ |			...
+(A)			if (ret < 0)
+ |				goto err;
+ v		} else {
+ ^			...
+ |			if (ret < 0)
+(B)				return -Exxx;
+ v		}
 
-Unfortunately this fallback causes quite some code to fail as it depends on
-checks for the number of legacy PIC interrupts or the availability of the
-real PIC.
+		...
+ ^		if (ret < 0)
+(C)			goto err;
+ v		...
 
-In theory there is no reason to use the PIC on any modern system when
-IO/APIC is available, but the dependencies on the related checks cannot be
-resolved trivially and on short notice. This needs lots of analysis and
-rework.
+	err:
+(D)		simple_util_clean_reference(card);
 
-The PIC detection has been added to avoid quirky checks and force selection
-of the dummy implementation all over the place, especially in VM guest
-scenarios. So it's not an option to revert the relevant commit as that
-would break a lot of other scenarios.
+		return ret;
+	}
 
-One solution would be to try to initialize the PIC on detection fail and
-retry the detection, but that puts the burden on everything which does not
-have a PIC.
+Both case are using (C) part, and it calls (D) when err case.
+But (D) will do nothing for (B) case.
+Because of these behavior, current code itself is not wrong,
+but is confusable, and more, static analyzing tool will warning on
+(B) part (should use goto err).
 
-Fortunately the ACPI/MADT table header has a flag field, which advertises
-in bit 0 that the system is PCAT compatible, which means it has a legacy
-8259 PIC.
+To avoid static analyzing tool warning, this patch uses "goto err"
+on (B) part.
 
-Evaluate that bit and if set avoid the detection routine and keep the real
-PIC installed, which then gets initialized (for nothing) and makes the rest
-of the code with all the dependencies work again.
-
-Fixes: e179f6914152 ("x86, irq, pic: Probe for legacy PIC and set legacy_pic appropriately")
-Reported-by: David Lazar <dlazar@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: David Lazar <dlazar@gmail.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218003
-Link: https://lore.kernel.org/r/875y2u5s8g.ffs@tglx
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87o7hy7mlh.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/i8259.h |    2 ++
- arch/x86/kernel/acpi/boot.c  |    3 +++
- arch/x86/kernel/i8259.c      |   38 ++++++++++++++++++++++++++++++--------
- 3 files changed, 35 insertions(+), 8 deletions(-)
+ sound/soc/generic/simple-card.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/i8259.h
-+++ b/arch/x86/include/asm/i8259.h
-@@ -67,6 +67,8 @@ struct legacy_pic {
- 	void (*make_irq)(unsigned int irq);
- };
+diff --git a/sound/soc/generic/simple-card.c b/sound/soc/generic/simple-card.c
+index 6959a74a6f491..c5db2d9d44edd 100644
+--- a/sound/soc/generic/simple-card.c
++++ b/sound/soc/generic/simple-card.c
+@@ -441,10 +441,12 @@ static int asoc_simple_card_probe(struct platform_device *pdev)
+ 	} else {
+ 		struct asoc_simple_card_info *cinfo;
  
-+void legacy_pic_pcat_compat(void);
++		ret = -EINVAL;
 +
- extern struct legacy_pic *legacy_pic;
- extern struct legacy_pic null_legacy_pic;
+ 		cinfo = dev->platform_data;
+ 		if (!cinfo) {
+ 			dev_err(dev, "no info for asoc-simple-card\n");
+-			return -EINVAL;
++			goto err;
+ 		}
  
---- a/arch/x86/kernel/acpi/boot.c
-+++ b/arch/x86/kernel/acpi/boot.c
-@@ -156,6 +156,9 @@ static int __init acpi_parse_madt(struct
- 		       madt->address);
- 	}
+ 		if (!cinfo->name ||
+@@ -453,7 +455,7 @@ static int asoc_simple_card_probe(struct platform_device *pdev)
+ 		    !cinfo->platform ||
+ 		    !cinfo->cpu_dai.name) {
+ 			dev_err(dev, "insufficient asoc_simple_card_info settings\n");
+-			return -EINVAL;
++			goto err;
+ 		}
  
-+	if (madt->flags & ACPI_MADT_PCAT_COMPAT)
-+		legacy_pic_pcat_compat();
-+
- 	default_acpi_madt_oem_check(madt->header.oem_id,
- 				    madt->header.oem_table_id);
- 
---- a/arch/x86/kernel/i8259.c
-+++ b/arch/x86/kernel/i8259.c
-@@ -32,6 +32,7 @@
-  */
- static void init_8259A(int auto_eoi);
- 
-+static bool pcat_compat __ro_after_init;
- static int i8259A_auto_eoi;
- DEFINE_RAW_SPINLOCK(i8259A_lock);
- 
-@@ -300,15 +301,32 @@ static void unmask_8259A(void)
- 
- static int probe_8259A(void)
- {
-+	unsigned char new_val, probe_val = ~(1 << PIC_CASCADE_IR);
- 	unsigned long flags;
--	unsigned char probe_val = ~(1 << PIC_CASCADE_IR);
--	unsigned char new_val;
-+
-+	/*
-+	 * If MADT has the PCAT_COMPAT flag set, then do not bother probing
-+	 * for the PIC. Some BIOSes leave the PIC uninitialized and probing
-+	 * fails.
-+	 *
-+	 * Right now this causes problems as quite some code depends on
-+	 * nr_legacy_irqs() > 0 or has_legacy_pic() == true. This is silly
-+	 * when the system has an IO/APIC because then PIC is not required
-+	 * at all, except for really old machines where the timer interrupt
-+	 * must be routed through the PIC. So just pretend that the PIC is
-+	 * there and let legacy_pic->init() initialize it for nothing.
-+	 *
-+	 * Alternatively this could just try to initialize the PIC and
-+	 * repeat the probe, but for cases where there is no PIC that's
-+	 * just pointless.
-+	 */
-+	if (pcat_compat)
-+		return nr_legacy_irqs();
-+
- 	/*
--	 * Check to see if we have a PIC.
--	 * Mask all except the cascade and read
--	 * back the value we just wrote. If we don't
--	 * have a PIC, we will read 0xff as opposed to the
--	 * value we wrote.
-+	 * Check to see if we have a PIC.  Mask all except the cascade and
-+	 * read back the value we just wrote. If we don't have a PIC, we
-+	 * will read 0xff as opposed to the value we wrote.
- 	 */
- 	raw_spin_lock_irqsave(&i8259A_lock, flags);
- 
-@@ -430,5 +448,9 @@ static int __init i8259A_init_ops(void)
- 
- 	return 0;
- }
--
- device_initcall(i8259A_init_ops);
-+
-+void __init legacy_pic_pcat_compat(void)
-+{
-+	pcat_compat = true;
-+}
+ 		card->name		= (cinfo->card) ? cinfo->card : cinfo->name;
+-- 
+2.42.0
+
 
 
