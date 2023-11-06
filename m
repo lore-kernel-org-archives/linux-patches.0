@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F772241FC
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279E5241F4
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suIzOCCI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A469C433A9;
-	Mon,  6 Nov 2023 13:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRWh2tZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8A5C433C8;
+	Mon,  6 Nov 2023 13:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277603;
-	bh=cOjJXm1NWa81I5UPoPwTviZkhhWwBobXDjWTkACU97E=;
+	s=korg; t=1699277606;
+	bh=ERtyUS4eoJND5siG8YLiIKNCX993T0cMMDSShq51OVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=suIzOCCIwDUpLOa32HTrPtDrc243HU825dgXxPg7SbciFe8JIR0F1St0UsRcoqCs1
-	 xTGi/FkzqGfRdogYaoqil8/InJnxBJcWeNCKD3JYtqVJRj4CpNxj1HKC9Iq0NMsOiZ
-	 dJF0Op6Hddccc/Lyfye/ijH/qvk2vhPCKmxvspb8=
+	b=oRWh2tZkL+VWKT1qu04Xgxd69vKk11K/hhGa8kBp3PY2F4e3farVylvFoB0Z/lvk9
+	 EUCD63mXPoKMIjx/784CDT+KGGBXBCvTRFDSc2C1+n6s1qGwL/KMimJZLfWmh5s7b7
+	 EdqZ9bXjp80cBZFUBg2x7OyEHoV9/LjnVbCVRpyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	lee@kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.10 57/95] rpmsg: Fix calling device_lock() on non-initialized device
-Date: Mon,  6 Nov 2023 14:04:25 +0100
-Message-ID: <20231106130306.769382833@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Alexey Bayduraev <alexey.v.bayduraev@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 75/95] perf evlist: Add evlist__add_dummy_on_all_cpus()
+Date: Mon,  6 Nov 2023 14:04:43 +0100
+Message-ID: <20231106130307.463179782@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -42,154 +47,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit bb17d110cbf270d5247a6e261c5ad50e362d1675 upstream.
+[ Upstream commit 126d68fdcabed8c2ca5ffaba785add93ef722da8 ]
 
-driver_set_override() helper uses device_lock() so it should not be
-called before rpmsg_register_device() (which calls device_register()).
-Effect can be seen with CONFIG_DEBUG_MUTEXES:
+Add evlist__add_dummy_on_all_cpus() to enable creating a system-wide dummy
+event that sets up the system-wide maps before map propagation.
 
-  DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-  WARNING: CPU: 3 PID: 57 at kernel/locking/mutex.c:582 __mutex_lock+0x1ec/0x430
-  ...
-  Call trace:
-   __mutex_lock+0x1ec/0x430
-   mutex_lock_nested+0x44/0x50
-   driver_set_override+0x124/0x150
-   qcom_glink_native_probe+0x30c/0x3b0
-   glink_rpm_probe+0x274/0x350
-   platform_probe+0x6c/0xe0
-   really_probe+0x17c/0x3d0
-   __driver_probe_device+0x114/0x190
-   driver_probe_device+0x3c/0xf0
-   ...
+For convenience, add evlist__add_aux_dummy() so that the logic can be used
+whether or not the event needs to be system-wide.
 
-Refactor the rpmsg_register_device() function to use two-step device
-registering (initialization + add) and call driver_set_override() in
-proper moment.
-
-This moves the code around, so while at it also NULL-ify the
-rpdev->driver_override in error path to be sure it won't be kfree()
-second time.
-
-Fixes: 42cd402b8fd4 ("rpmsg: Fix kfree() of static memory on setting driver_override")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20220429195946.1061725-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Alexey Bayduraev <alexey.v.bayduraev@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Link: https://lore.kernel.org/r/20220524075436.29144-6-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: f9cdeb58a9cf ("perf evlist: Avoid frequency mode for the dummy event")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/rpmsg_core.c     |   33 ++++++++++++++++++++++++++++++---
- drivers/rpmsg/rpmsg_internal.h |   14 +-------------
- include/linux/rpmsg.h          |    8 ++++++++
- 3 files changed, 39 insertions(+), 16 deletions(-)
+ tools/perf/util/evlist.c | 45 ++++++++++++++++++++++++++++++++++++++++
+ tools/perf/util/evlist.h |  5 +++++
+ 2 files changed, 50 insertions(+)
 
---- a/drivers/rpmsg/rpmsg_core.c
-+++ b/drivers/rpmsg/rpmsg_core.c
-@@ -526,24 +526,51 @@ static struct bus_type rpmsg_bus = {
- 	.remove		= rpmsg_dev_remove,
- };
- 
--int rpmsg_register_device(struct rpmsg_device *rpdev)
-+/*
-+ * A helper for registering rpmsg device with driver override and name.
-+ * Drivers should not be using it, but instead rpmsg_register_device().
-+ */
-+int rpmsg_register_device_override(struct rpmsg_device *rpdev,
-+				   const char *driver_override)
- {
- 	struct device *dev = &rpdev->dev;
- 	int ret;
- 
-+	if (driver_override)
-+		strcpy(rpdev->id.name, driver_override);
-+
- 	dev_set_name(&rpdev->dev, "%s.%s.%d.%d", dev_name(dev->parent),
- 		     rpdev->id.name, rpdev->src, rpdev->dst);
- 
- 	rpdev->dev.bus = &rpmsg_bus;
- 
--	ret = device_register(&rpdev->dev);
-+	device_initialize(dev);
-+	if (driver_override) {
-+		ret = driver_set_override(dev, &rpdev->driver_override,
-+					  driver_override,
-+					  strlen(driver_override));
-+		if (ret) {
-+			dev_err(dev, "device_set_override failed: %d\n", ret);
-+			return ret;
-+		}
-+	}
-+
-+	ret = device_add(dev);
- 	if (ret) {
--		dev_err(dev, "device_register failed: %d\n", ret);
-+		dev_err(dev, "device_add failed: %d\n", ret);
-+		kfree(rpdev->driver_override);
-+		rpdev->driver_override = NULL;
- 		put_device(&rpdev->dev);
- 	}
- 
- 	return ret;
- }
-+EXPORT_SYMBOL(rpmsg_register_device_override);
-+
-+int rpmsg_register_device(struct rpmsg_device *rpdev)
-+{
-+	return rpmsg_register_device_override(rpdev, NULL);
-+}
- EXPORT_SYMBOL(rpmsg_register_device);
- 
- /*
---- a/drivers/rpmsg/rpmsg_internal.h
-+++ b/drivers/rpmsg/rpmsg_internal.h
-@@ -84,19 +84,7 @@ struct device *rpmsg_find_device(struct
-  */
- static inline int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev)
- {
--	int ret;
--
--	strcpy(rpdev->id.name, "rpmsg_chrdev");
--	ret = driver_set_override(&rpdev->dev, &rpdev->driver_override,
--				  rpdev->id.name, strlen(rpdev->id.name));
--	if (ret)
--		return ret;
--
--	ret = rpmsg_register_device(rpdev);
--	if (ret)
--		kfree(rpdev->driver_override);
--
--	return ret;
-+	return rpmsg_register_device_override(rpdev, "rpmsg_ctrl");
+diff --git a/tools/perf/util/evlist.c b/tools/perf/util/evlist.c
+index 98ae432470cdd..117420abdc325 100644
+--- a/tools/perf/util/evlist.c
++++ b/tools/perf/util/evlist.c
+@@ -261,6 +261,51 @@ int evlist__add_dummy(struct evlist *evlist)
+ 	return 0;
  }
  
- #endif
---- a/include/linux/rpmsg.h
-+++ b/include/linux/rpmsg.h
-@@ -115,6 +115,8 @@ struct rpmsg_driver {
- 
- #if IS_ENABLED(CONFIG_RPMSG)
- 
-+int rpmsg_register_device_override(struct rpmsg_device *rpdev,
-+				   const char *driver_override);
- int register_rpmsg_device(struct rpmsg_device *dev);
- void unregister_rpmsg_device(struct rpmsg_device *dev);
- int __register_rpmsg_driver(struct rpmsg_driver *drv, struct module *owner);
-@@ -139,6 +141,12 @@ __poll_t rpmsg_poll(struct rpmsg_endpoin
- 
- #else
- 
-+static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
-+						 const char *driver_override)
++static void evlist__add_on_all_cpus(struct evlist *evlist, struct evsel *evsel)
 +{
-+	return -ENXIO;
++	evsel->core.system_wide = true;
++
++	/*
++	 * All CPUs.
++	 *
++	 * Note perf_event_open() does not accept CPUs that are not online, so
++	 * in fact this CPU list will include only all online CPUs.
++	 */
++	perf_cpu_map__put(evsel->core.own_cpus);
++	evsel->core.own_cpus = perf_cpu_map__new(NULL);
++	perf_cpu_map__put(evsel->core.cpus);
++	evsel->core.cpus = perf_cpu_map__get(evsel->core.own_cpus);
++
++	/* No threads */
++	perf_thread_map__put(evsel->core.threads);
++	evsel->core.threads = perf_thread_map__new_dummy();
++
++	evlist__add(evlist, evsel);
 +}
 +
- static inline int register_rpmsg_device(struct rpmsg_device *dev)
++struct evsel *evlist__add_aux_dummy(struct evlist *evlist, bool system_wide)
++{
++	struct evsel *evsel = evlist__dummy_event(evlist);
++
++	if (!evsel)
++		return NULL;
++
++	evsel->core.attr.exclude_kernel = 1;
++	evsel->core.attr.exclude_guest = 1;
++	evsel->core.attr.exclude_hv = 1;
++	evsel->core.attr.freq = 0;
++	evsel->core.attr.sample_period = 1;
++	evsel->no_aux_samples = true;
++	evsel->name = strdup("dummy:u");
++
++	if (system_wide)
++		evlist__add_on_all_cpus(evlist, evsel);
++	else
++		evlist__add(evlist, evsel);
++
++	return evsel;
++}
++
+ static int evlist__add_attrs(struct evlist *evlist, struct perf_event_attr *attrs, size_t nr_attrs)
  {
- 	return -ENXIO;
+ 	struct evsel *evsel, *n;
+diff --git a/tools/perf/util/evlist.h b/tools/perf/util/evlist.h
+index 9298fce53ea31..eb36f85ba3f3e 100644
+--- a/tools/perf/util/evlist.h
++++ b/tools/perf/util/evlist.h
+@@ -111,6 +111,11 @@ int __evlist__add_default_attrs(struct evlist *evlist,
+ 	__evlist__add_default_attrs(evlist, array, ARRAY_SIZE(array))
+ 
+ int evlist__add_dummy(struct evlist *evlist);
++struct evsel *evlist__add_aux_dummy(struct evlist *evlist, bool system_wide);
++static inline struct evsel *evlist__add_dummy_on_all_cpus(struct evlist *evlist)
++{
++	return evlist__add_aux_dummy(evlist, true);
++}
+ 
+ int perf_evlist__add_sb_event(struct evlist *evlist,
+ 			      struct perf_event_attr *attr,
+-- 
+2.42.0
+
 
 
