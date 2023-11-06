@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10896208BD
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA168208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqzfPZEn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813E1C433C8;
-	Mon,  6 Nov 2023 13:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NA2WOkWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687ABC433C7;
+	Mon,  6 Nov 2023 13:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276692;
-	bh=TaZgZ/Qed+Hf4eboVDeu+0uRXdE90jDQyWSn56dWfmg=;
+	s=korg; t=1699276695;
+	bh=nm3CqJEaP1s2wufYoKlx7pqxfmwQW4cCFJtTCvzhUe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqzfPZEnEunJxKHQ4OlLgWLwLeMWSKBjfMfPFFz0t9E4A0tmkdWVYfsYZ0jpf2hCe
-	 O3DJnMrfp3wVEilozC5+A1X6Rd8PTBudgDZgBNoOgr3VJsq7+O6/1WRCHLC8+KejFL
-	 FiAB8FOnOA47fExyXFmTGxyNR5s72zzVs9MH9QfY=
+	b=NA2WOkWqD0+5W1a4Fr3FsOJCrJLY8TrYXoCdeaZ4H5imMVtQ+yxpqTqyrsHN0B4MH
+	 szVtGpy/y57yUp1+9YMOxDKyVFcw897pe2A8MGPycHVSVP8CuTDywlQIXo7cy8EPnL
+	 /k/S7j3sZyzYYbt+JIghutYhpXRsiRMv5SaGqaGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Tianrui Zhao <zhaotianrui@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 47/88] LoongArch: Export symbol invalid_pud_table for modules building
-Date: Mon,  6 Nov 2023 14:03:41 +0100
-Message-ID: <20231106130307.582941237@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Jann Horn <jannh@google.com>,
+	Lorenzo Stoakes <lstoakes@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.5 65/88] mmap: fix vma_iterator in error path of vma_merge()
+Date: Mon,  6 Nov 2023 14:03:59 +0100
+Message-ID: <20231106130308.159944719@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -43,39 +46,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-[ Upstream commit 449c2756c2323c9e32b2a2fa9c8b59ce91b5819d ]
+commit 1419430c8abb5a00590169068590dd54d86590ba upstream.
 
-Export symbol invalid_pud_table for modules building (such as the KVM
-module) if 4-level page tables enabled. Otherwise we get:
+During the error path, the vma iterator may not be correctly positioned or
+set to the correct range.  Undo the vma_prev() call by resetting to the
+passed in address.  Re-walking to the same range will fix the range to the
+area previously passed in.
 
-ERROR: modpost: "invalid_pud_table" [arch/loongarch/kvm/kvm.ko] undefined!
+Users would notice increased cycles as vma_merge() would be called an
+extra time with vma == prev, and thus would fail to merge and return.
 
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Tianrui Zhao <zhaotianrui@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/linux-mm/CAG48ez12VN1JAOtTNMY+Y2YnsU45yL5giS-Qn=ejtiHpgJAbdQ@mail.gmail.com/
+Link: https://lkml.kernel.org/r/20230929183041.2835469-2-Liam.Howlett@oracle.com
+Fixes: 18b098af2890 ("vma_merge: set vma iterator to correct position.")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reported-by: Jann Horn <jannh@google.com>
+Closes: https://lore.kernel.org/linux-mm/CAG48ez12VN1JAOtTNMY+Y2YnsU45yL5giS-Qn=ejtiHpgJAbdQ@mail.gmail.com/
+Reviewed-by: Lorenzo Stoakes <lstoakes@gmail.com>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/mm/init.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/mmap.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/mm/init.c b/arch/loongarch/mm/init.c
-index 3b7d8129570b8..51c9a6c90a169 100644
---- a/arch/loongarch/mm/init.c
-+++ b/arch/loongarch/mm/init.c
-@@ -267,6 +267,7 @@ pgd_t swapper_pg_dir[_PTRS_PER_PGD] __section(".bss..swapper_pg_dir");
- pgd_t invalid_pg_dir[_PTRS_PER_PGD] __page_aligned_bss;
- #ifndef __PAGETABLE_PUD_FOLDED
- pud_t invalid_pud_table[PTRS_PER_PUD] __page_aligned_bss;
-+EXPORT_SYMBOL(invalid_pud_table);
- #endif
- #ifndef __PAGETABLE_PMD_FOLDED
- pmd_t invalid_pmd_table[PTRS_PER_PMD] __page_aligned_bss;
--- 
-2.42.0
-
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -988,10 +988,10 @@ struct vm_area_struct *vma_merge(struct
+ 
+ 	/* Error in anon_vma clone. */
+ 	if (err)
+-		return NULL;
++		goto anon_vma_fail;
+ 
+ 	if (vma_iter_prealloc(vmi))
+-		return NULL;
++		goto prealloc_fail;
+ 
+ 	init_multi_vma_prep(&vp, vma, adjust, remove, remove2);
+ 	VM_WARN_ON(vp.anon_vma && adjust && adjust->anon_vma &&
+@@ -1024,6 +1024,12 @@ struct vm_area_struct *vma_merge(struct
+ 	khugepaged_enter_vma(res, vm_flags);
+ 
+ 	return res;
++
++prealloc_fail:
++anon_vma_fail:
++	vma_iter_set(vmi, addr);
++	vma_iter_load(vmi);
++	return NULL;
+ }
+ 
+ /*
 
 
