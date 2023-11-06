@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D542374A
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED942374A
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ePJVBBZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F01C433C7;
-	Mon,  6 Nov 2023 13:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzC8zTb0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5586AC433C9;
+	Mon,  6 Nov 2023 13:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277591;
-	bh=mlAqqus5MWtM8HgX6uNke74o3FFeZHDJnLvCLfGz5Jc=;
+	s=korg; t=1699277594;
+	bh=lKeE7RgWYM7QcHDy36kaFXIc8ojYmeRVWhiCaPOcVW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ePJVBBZuC3ptWzvsinRsl0YjuCouSIQzOrXwm5BMD7sPfiyCWOR46Gwz0wo1c3hn
-	 tW3x54yBmMjHH8VxnB64Ytt8gYAUwi2ZZQhxXaKTnsgUoYppSuGCazWvM9EPtg5Jy6
-	 xiUkz6hYoC1l9IUzIkXRyveBvZiZOP+eSDigRkvI=
+	b=LzC8zTb0oSmrlXYaAb98vOBGxOXNmyPtKhxdjqu9GxPEvKtfLCkwMeealEwyP89u4
+	 xSSxkSBonlxBsncTgWWmbP7fYu/m/PU/4jsbE0xO3MYg/B5QDvKAc5yNKa3yzADz0b
+	 qCF1b+PabFYKfsLbOGwm/EmmXMV49jfkZykPnjOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Liming Sun <limings@nvidia.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 71/95] scsi: mpt3sas: Fix in error path
-Date: Mon,  6 Nov 2023 14:04:39 +0100
-Message-ID: <20231106130307.306841274@linuxfoundation.org>
+Subject: [PATCH 5.10 72/95] platform/mellanox: mlxbf-tmfifo: Fix a warning message
+Date: Mon,  6 Nov 2023 14:04:40 +0100
+Message-ID: <20231106130307.337161700@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -42,37 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Liming Sun <limings@nvidia.com>
 
-[ Upstream commit e40c04ade0e2f3916b78211d747317843b11ce10 ]
+[ Upstream commit 99c09c985e5973c8f0ad976ebae069548dd86f12 ]
 
-The driver should be deregistered as misc driver after PCI registration
-failure.
+This commit fixes the smatch static checker warning in function
+mlxbf_tmfifo_rxtx_word() which complains data not initialized at
+line 634 when IS_VRING_DROP() is TRUE.
 
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://lore.kernel.org/r/20231015114529.10725-1-thenzl@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Liming Sun <limings@nvidia.com>
+Link: https://lore.kernel.org/r/20231012230235.219861-1-limings@nvidia.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_scsih.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/mellanox/mlxbf-tmfifo.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_scsih.c b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-index c3a5978b0efac..e797f6e3982cf 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-@@ -11624,8 +11624,10 @@ _mpt3sas_init(void)
- 	mpt3sas_ctl_init(hbas_to_enumerate);
+diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
+index 194f3205e5597..767f4406e55f1 100644
+--- a/drivers/platform/mellanox/mlxbf-tmfifo.c
++++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
+@@ -588,24 +588,25 @@ static void mlxbf_tmfifo_rxtx_word(struct mlxbf_tmfifo_vring *vring,
  
- 	error = pci_register_driver(&mpt3sas_driver);
--	if (error)
-+	if (error) {
-+		mpt3sas_ctl_exit(hbas_to_enumerate);
- 		scsih_exit();
-+	}
- 
- 	return error;
- }
+ 	if (vring->cur_len + sizeof(u64) <= len) {
+ 		/* The whole word. */
+-		if (!IS_VRING_DROP(vring)) {
+-			if (is_rx)
++		if (is_rx) {
++			if (!IS_VRING_DROP(vring))
+ 				memcpy(addr + vring->cur_len, &data,
+ 				       sizeof(u64));
+-			else
+-				memcpy(&data, addr + vring->cur_len,
+-				       sizeof(u64));
++		} else {
++			memcpy(&data, addr + vring->cur_len,
++			       sizeof(u64));
+ 		}
+ 		vring->cur_len += sizeof(u64);
+ 	} else {
+ 		/* Leftover bytes. */
+-		if (!IS_VRING_DROP(vring)) {
+-			if (is_rx)
++		if (is_rx) {
++			if (!IS_VRING_DROP(vring))
+ 				memcpy(addr + vring->cur_len, &data,
+ 				       len - vring->cur_len);
+-			else
+-				memcpy(&data, addr + vring->cur_len,
+-				       len - vring->cur_len);
++		} else {
++			data = 0;
++			memcpy(&data, addr + vring->cur_len,
++			       len - vring->cur_len);
+ 		}
+ 		vring->cur_len = len;
+ 	}
 -- 
 2.42.0
 
