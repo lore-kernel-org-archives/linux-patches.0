@@ -1,22 +1,22 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F189429420;
-	Mon,  6 Nov 2023 17:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271E829420;
+	Mon,  6 Nov 2023 17:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EfaCtFTB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FD0C433C7;
-	Mon,  6 Nov 2023 17:25:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QYFSo7QM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3CFC433C9;
+	Mon,  6 Nov 2023 17:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699291502;
-	bh=50bfv3E+DAa5JA5qWNDyUr1UCe1TdTDR2NsC4bcugjE=;
+	s=k20201202; t=1699291557;
+	bh=QzM0RZg4HrKrD92uCmZ63OLpss/lFUiHdltDO+bzhtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EfaCtFTBlnel6n0g103ocv0lvTpRmL1NmkPq+OH/MbIosIV7zlhzgVCFP7Y2Dc/Er
-	 21e8xtbbyvxzqwj/DlWb/y8Xznuh+AoFTITa7IlF0EOwVI5l1yxxjPoiTv28ScsgAz
-	 l28rsUAxwNCNt64BNjS3sn8zDouChEtgjPCmhpRmSV9ZwzbUf6fzsXYaTxngcm7mvT
-	 A/ZQCDVxZYFaXrKiQYn+HW4kQzgHIHvIQnY0oCOkbaoYJLWJaBLiHkMjQOLaJMMszs
-	 8i4WP3WaTLR6XrqSGF9zxfMBk2WlXcUaVhAXnfzA81nNkTtfJ9E0Z9jFbGdIv2EkAB
-	 DwruKSBbEiq1Q==
+	b=QYFSo7QMwQ7wrzKLQaQ6rvMqUgSL5nZsmD2CWHMX7VfKmuYOqOthAFGnn+0YGrXf9
+	 ky9oNYca7mnWm+3qs6XCYvdvtkYFRjFNr02YzPRM/+oFvwqaB68HuaS78gTJorFykV
+	 fQmI1+prdnc+Ak0hLqOHcrFaVkEcbHaOjSMHeq4WC7MstSKyZsSS4oAt7/JMdy9/B2
+	 2K3u70PV2pyh+75sDOMI98xJXECCNohnll2tA0NSyTyEEu6zAJJiJMMtsX6ifbY6qw
+	 x9CrLb40iwdvGBkQ2wDgjfy7X9VZPtUB2SvwuqfuVoDo6lwOx/3AeZFG6FSgYDDDgH
+	 jlrGuNqUZ3yLw==
 From: SeongJae Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org,
@@ -37,11 +37,11 @@ Cc: stable@vger.kernel.org,
 	conor@kernel.org,
 	damon@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.5 00/88] 6.5.11-rc1 review
-Date: Mon,  6 Nov 2023 17:24:59 +0000
-Message-Id: <20231106172459.48351-1-sj@kernel.org>
+Subject: Re: [PATCH 6.6 00/30] 6.6.1-rc1 review
+Date: Mon,  6 Nov 2023 17:25:55 +0000
+Message-Id: <20231106172555.48376-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
+In-Reply-To: <20231106130257.903265688@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -53,10 +53,10 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Mon, 6 Nov 2023 14:02:54 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Mon, 6 Nov 2023 14:03:18 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 6.5.11 release.
-> There are 88 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.6.1 release.
+> There are 30 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -64,9 +64,9 @@ On Mon, 6 Nov 2023 14:02:54 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.11-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.1-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
 > and the diffstat can be found below.
 
 This rc kernel passes DAMON functionality test[1] on my test machine.
@@ -76,7 +76,7 @@ kernel from linux-stable-rc tree[2].
 Tested-by: SeongJae Park <sj@kernel.org>
 
 [1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 73d52afec3ab ("Linux 6.5.11-rc1")
+[2] ac6cb619d608 ("Linux 6.6.1-rc1")
 
 Thanks,
 SJ
