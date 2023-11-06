@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5315B208BD
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D80C208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZcSar+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1921C433C7;
-	Mon,  6 Nov 2023 13:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d851uvgI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B976CC433C8;
+	Mon,  6 Nov 2023 13:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276729;
-	bh=r4ghu6Ry2uOnc/eT3UTD3egmnneaogNlTRT7hB6od4k=;
+	s=korg; t=1699276732;
+	bh=HHU2gHIc2Im3T0Pvhb/KPaVncmLAcn2s25zMUJ/2mSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZcSar+HuBAu4djwVI+D+b3rmA4lQ0vWtuTbI500YEbp5QInbOLZdZ55zEKanezQI
-	 Z53CE5BYHZ8QqfSEQhbQMbIsx/Ep1e6j5SWRTM6ht8tj69FQsDYvoiJwLvSLZZ98JC
-	 tE+LlBx62cYX5JXYyLj+ZGjHe7b6770BkLU0DQj0=
+	b=d851uvgImBRvdCLFz7G8/SkTuRdlpF+mAkN0JcmQDfz3fZvtenjEK+zo8d9BZlEo+
+	 ocwIvrwqSHS+peGIW6iXUJJaPjcJgcOI773BQzYQBK5421hrJQBbQMyYILq54IYTVB
+	 UfnYT/aowTNuC3YWNFblJQ4NBEowSCfhNBK9gpMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>
-Subject: [PATCH 6.5 75/88] tty: 8250: Remove UC-257 and UC-431
-Date: Mon,  6 Nov 2023 14:04:09 +0100
-Message-ID: <20231106130308.502729822@linuxfoundation.org>
+	Icenowy Zheng <uwu@icenowy.me>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 49/88] LoongArch: Disable WUC for pgprot_writecombine() like ioremap_wc()
+Date: Mon,  6 Nov 2023 14:03:43 +0100
+Message-ID: <20231106130307.656842716@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -40,50 +42,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-commit 33092fb3af51deb80849e90a17bada44bbcde6b3 upstream.
+[ Upstream commit 278be83601dd1725d4732241f066d528e160a39d ]
 
-The UC-257 is a serial + LPT card, so remove it from this driver.
-A patch has been submitted to add it to parport_serial instead.
+Currently the code disables WUC only disables it for ioremap_wc(), which
+is only used when mapping writecombine pages like ioremap() (mapped to
+the kernel space). But for VRAM mapped in TTM/GEM, it is mapped with a
+crafted pgprot by the pgprot_writecombine() function, in which case WUC
+isn't disabled now.
 
-Additionaly, the UC-431 does not use this card ID, only the UC-420
-does. The 431 is a 3-port card and there is no generic 3-port configuration
-available, so remove reference to it from this driver.
+Disable WUC for pgprot_writecombine() (fallback to SUC) if needed, like
+ioremap_wc().
 
-Fixes: 152d1afa834c ("tty: Add support for Brainboxes UC cards.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Link: https://lore.kernel.org/r/DU0PR02MB78995ADF7394C74AD4CF3357C4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This improves the AMDGPU driver's stability (solves some misrendering)
+on Loongson-3A5000/3A6000 machines.
+
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |    9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ arch/loongarch/include/asm/io.h           |  5 ++---
+ arch/loongarch/include/asm/pgtable-bits.h |  4 +++-
+ arch/loongarch/kernel/setup.c             | 10 +++++-----
+ 3 files changed, 10 insertions(+), 9 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -4939,13 +4939,6 @@ static const struct pci_device_id serial
- 		0, 0,
- 		pbn_b2_1_115200 },
- 	/*
--	 * Brainboxes UC-257
--	 */
--	{	PCI_VENDOR_ID_INTASHIELD, 0x0861,
--		PCI_ANY_ID, PCI_ANY_ID,
--		0, 0,
--		pbn_b2_2_115200 },
--	/*
- 	 * Brainboxes UC-260/271/701/756
- 	 */
- 	{	PCI_VENDOR_ID_INTASHIELD, 0x0D21,
-@@ -5024,7 +5017,7 @@ static const struct pci_device_id serial
- 		0, 0,
- 		pbn_b2_4_115200 },
- 	/*
--	 * Brainboxes UC-420/431
-+	 * Brainboxes UC-420
- 	 */
- 	{       PCI_VENDOR_ID_INTASHIELD, 0x0921,
- 		PCI_ANY_ID, PCI_ANY_ID,
+diff --git a/arch/loongarch/include/asm/io.h b/arch/loongarch/include/asm/io.h
+index 1c94102200407..0355b64e90ed0 100644
+--- a/arch/loongarch/include/asm/io.h
++++ b/arch/loongarch/include/asm/io.h
+@@ -54,10 +54,9 @@ static inline void __iomem *ioremap_prot(phys_addr_t offset, unsigned long size,
+  * @offset:    bus address of the memory
+  * @size:      size of the resource to map
+  */
+-extern pgprot_t pgprot_wc;
+-
+ #define ioremap_wc(offset, size)	\
+-	ioremap_prot((offset), (size), pgprot_val(pgprot_wc))
++	ioremap_prot((offset), (size),	\
++		pgprot_val(wc_enabled ? PAGE_KERNEL_WUC : PAGE_KERNEL_SUC))
+ 
+ #define ioremap_cache(offset, size)	\
+ 	ioremap_prot((offset), (size), pgprot_val(PAGE_KERNEL))
+diff --git a/arch/loongarch/include/asm/pgtable-bits.h b/arch/loongarch/include/asm/pgtable-bits.h
+index de46a6b1e9f11..7b9ac012cd090 100644
+--- a/arch/loongarch/include/asm/pgtable-bits.h
++++ b/arch/loongarch/include/asm/pgtable-bits.h
+@@ -105,13 +105,15 @@ static inline pgprot_t pgprot_noncached(pgprot_t _prot)
+ 	return __pgprot(prot);
+ }
+ 
++extern bool wc_enabled;
++
+ #define pgprot_writecombine pgprot_writecombine
+ 
+ static inline pgprot_t pgprot_writecombine(pgprot_t _prot)
+ {
+ 	unsigned long prot = pgprot_val(_prot);
+ 
+-	prot = (prot & ~_CACHE_MASK) | _CACHE_WUC;
++	prot = (prot & ~_CACHE_MASK) | (wc_enabled ? _CACHE_WUC : _CACHE_SUC);
+ 
+ 	return __pgprot(prot);
+ }
+diff --git a/arch/loongarch/kernel/setup.c b/arch/loongarch/kernel/setup.c
+index 9d830ab4e3025..1351614042d4e 100644
+--- a/arch/loongarch/kernel/setup.c
++++ b/arch/loongarch/kernel/setup.c
+@@ -161,19 +161,19 @@ static void __init smbios_parse(void)
+ }
+ 
+ #ifdef CONFIG_ARCH_WRITECOMBINE
+-pgprot_t pgprot_wc = PAGE_KERNEL_WUC;
++bool wc_enabled = true;
+ #else
+-pgprot_t pgprot_wc = PAGE_KERNEL_SUC;
++bool wc_enabled = false;
+ #endif
+ 
+-EXPORT_SYMBOL(pgprot_wc);
++EXPORT_SYMBOL(wc_enabled);
+ 
+ static int __init setup_writecombine(char *p)
+ {
+ 	if (!strcmp(p, "on"))
+-		pgprot_wc = PAGE_KERNEL_WUC;
++		wc_enabled = true;
+ 	else if (!strcmp(p, "off"))
+-		pgprot_wc = PAGE_KERNEL_SUC;
++		wc_enabled = false;
+ 	else
+ 		pr_warn("Unknown writecombine setting \"%s\".\n", p);
+ 
+-- 
+2.42.0
+
 
 
