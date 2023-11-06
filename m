@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99108210E2
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E7E210F9
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1y0A3KC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D49C433C9;
-	Mon,  6 Nov 2023 13:12:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9LKSYtD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E59AC433C8;
+	Mon,  6 Nov 2023 13:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276368;
-	bh=eX/QOd8o+z5qHcOAnIhsy0vZMD6G1UNKrYvYAY9SMmc=;
+	s=korg; t=1699276371;
+	bh=JbOhGG0L+nOujUWVMF9FT48n5SkBbTxOktCeoHIIITM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1y0A3KCzaUZ/cFAKWERy1tuQ0tGMckO4H8jSr+rDknHcjDy0resEUpMc1RePB7wR
-	 uZsIxqLMK+Sc6wzyZWhvLMUvzmwVTXGnYJfTiVc5PYadhdjyVMcbF8PS3BZmY5YtNv
-	 qJoODbdWmgWsALZ52ioy8faVoR1jjSDDW3rADmoo=
+	b=q9LKSYtDz6CJqBYbiXFCU+Rq9TmNpg2BkKxzit0/CgqZPTJvHG6T0KMcqzx7oWAVU
+	 YJ5opTxtvotCopm1RlDQMkHkMPok5P1FUVtEuJcFXvIj/WwhFtXESk0RIsUzEqLCxs
+	 NSQOgQqtfHzXJiocyUq5FLq/Qq4ojx2gKovZMqEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Florian Westphal <fw@strlen.de>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 19/62] netfilter: nfnetlink_log: silence bogus compiler warning
-Date: Mon,  6 Nov 2023 14:03:25 +0100
-Message-ID: <20231106130302.509115261@linuxfoundation.org>
+Subject: [PATCH 6.1 20/62] efi: fix memory leak in krealloc failure handling
+Date: Mon,  6 Nov 2023 14:03:26 +0100
+Message-ID: <20231106130302.548256565@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130301.807965064@linuxfoundation.org>
 References: <20231106130301.807965064@linuxfoundation.org>
@@ -42,37 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit 2e1d175410972285333193837a4250a74cd472e6 ]
+[ Upstream commit 0d3ad1917996839a5042d18f04e41915cfa1b74a ]
 
-net/netfilter/nfnetlink_log.c:800:18: warning: variable 'ctinfo' is uninitialized
+In the previous code, there was a memory leak issue where the
+previously allocated memory was not freed upon a failed krealloc
+operation. This patch addresses the problem by releasing the old memory
+before setting the pointer to NULL in case of a krealloc failure. This
+ensures that memory is properly managed and avoids potential memory
+leaks.
 
-The warning is bogus, the variable is only used if ct is non-NULL and
-always initialised in that case.  Init to 0 too to silence this.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202309100514.ndBFebXN-lkp@intel.com/
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_log.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/efi/efi.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index d97eb280cb2e8..c5ff699e30469 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -690,8 +690,8 @@ nfulnl_log_packet(struct net *net,
- 	unsigned int plen = 0;
- 	struct nfnl_log_net *log = nfnl_log_pernet(net);
- 	const struct nfnl_ct_hook *nfnl_ct = NULL;
-+	enum ip_conntrack_info ctinfo = 0;
- 	struct nf_conn *ct = NULL;
--	enum ip_conntrack_info ctinfo;
+diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
+index b43e5e6ddaf6e..b7c0e8cc0764f 100644
+--- a/drivers/firmware/efi/efi.c
++++ b/drivers/firmware/efi/efi.c
+@@ -245,9 +245,13 @@ static __init int efivar_ssdt_load(void)
+ 		if (status == EFI_NOT_FOUND) {
+ 			break;
+ 		} else if (status == EFI_BUFFER_TOO_SMALL) {
+-			name = krealloc(name, name_size, GFP_KERNEL);
+-			if (!name)
++			efi_char16_t *name_tmp =
++				krealloc(name, name_size, GFP_KERNEL);
++			if (!name_tmp) {
++				kfree(name);
+ 				return -ENOMEM;
++			}
++			name = name_tmp;
+ 			continue;
+ 		}
  
- 	if (li_user && li_user->type == NF_LOG_TYPE_ULOG)
- 		li = li_user;
 -- 
 2.42.0
 
