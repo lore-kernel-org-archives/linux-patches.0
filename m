@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0729F23747
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BB123747
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19AcFtU/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77463C433C9;
-	Mon,  6 Nov 2023 13:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SmhphEMI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3BEC433C8;
+	Mon,  6 Nov 2023 13:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277042;
-	bh=B24K2oF8uAXS5j/RYIiryPmr0dxiobaVc+UjJxVGYaQ=;
+	s=korg; t=1699277045;
+	bh=P+3uVXmLnguCOEdtJZtX+8F/0L3e7O7Vh0jFqHGxZHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19AcFtU/ncdfEGY0SViigcYbbxSz+3ad/WsCwlHCbssHLxiOC02YLfmpmUDl9OeAy
-	 au0GLTtsolEjEuU7QPmKkKnB2iUaaNHTPybftgSoZSaZCZACoJqfBcv2uNY7iNBwxl
-	 wIxdGtDwiii+FDD9LErXVTtHC8XeO0RBgL4kLtug=
+	b=SmhphEMIS9KyKzlL/+S/+VjwpQhessEIYtY6KjkXdGmzO1wqsOq9bImAmCY5kDaIK
+	 dNSxws+8QE6cnyqBatoW4yozF8CI1bkfhE9Fk/+PtN2pU8VXtfoSs/VBpEGoacetu1
+	 Ore6SemmRTxwaAKNZByBcsk5iDkMfvgSnALFMvbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Majczak <lma@semihalf.com>,
-	Radoslaw Biernacki <rad@chromium.org>,
-	Manasi Navare <navaremanasi@chromium.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/128] drm/dp_mst: Fix NULL deref in get_mst_branch_device_by_guid_helper()
-Date: Mon,  6 Nov 2023 14:02:59 +0100
-Message-ID: <20231106130310.001708155@linuxfoundation.org>
+Subject: [PATCH 5.15 002/128] ASoC: codecs: wcd938x: fix runtime PM imbalance on remove
+Date: Mon,  6 Nov 2023 14:02:42 +0100
+Message-ID: <20231106130309.229998245@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -43,72 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Majczak <lma@semihalf.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 3d887d512494d678b17c57b835c32f4e48d34f26 ]
+[ Upstream commit 3ebebb2c1eca92a15107b2d7aeff34196fd9e217 ]
 
-As drm_dp_get_mst_branch_device_by_guid() is called from
-drm_dp_get_mst_branch_device_by_guid(), mstb parameter has to be checked,
-otherwise NULL dereference may occur in the call to
-the memcpy() and cause following:
+Make sure to balance the runtime PM operations, including the disable
+count, on driver unbind.
 
-[12579.365869] BUG: kernel NULL pointer dereference, address: 0000000000000049
-[12579.365878] #PF: supervisor read access in kernel mode
-[12579.365880] #PF: error_code(0x0000) - not-present page
-[12579.365882] PGD 0 P4D 0
-[12579.365887] Oops: 0000 [#1] PREEMPT SMP NOPTI
-...
-[12579.365895] Workqueue: events_long drm_dp_mst_up_req_work
-[12579.365899] RIP: 0010:memcmp+0xb/0x29
-[12579.365921] Call Trace:
-[12579.365927] get_mst_branch_device_by_guid_helper+0x22/0x64
-[12579.365930] drm_dp_mst_up_req_work+0x137/0x416
-[12579.365933] process_one_work+0x1d0/0x419
-[12579.365935] worker_thread+0x11a/0x289
-[12579.365938] kthread+0x13e/0x14f
-[12579.365941] ? process_one_work+0x419/0x419
-[12579.365943] ? kthread_blkcg+0x31/0x31
-[12579.365946] ret_from_fork+0x1f/0x30
-
-As get_mst_branch_device_by_guid_helper() is recursive, moving condition
-to the first line allow to remove a similar one for step over of NULL elements
-inside a loop.
-
-Fixes: 5e93b8208d3c ("drm/dp/mst: move GUID storage from mgr, port to only mst branch")
-Cc: <stable@vger.kernel.org> # 4.14+
-Signed-off-by: Lukasz Majczak <lma@semihalf.com>
-Reviewed-by: Radoslaw Biernacki <rad@chromium.org>
-Signed-off-by: Manasi Navare <navaremanasi@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230922063410.23626-1-lma@semihalf.com
+Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
+Cc: stable@vger.kernel.org      # 5.14
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20231003155558.27079-6-johan+linaro@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_dp_mst_topology.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/codecs/wcd938x.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_dp_mst_topology.c b/drivers/gpu/drm/drm_dp_mst_topology.c
-index d02e323a4ecde..865c7f39143ec 100644
---- a/drivers/gpu/drm/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/drm_dp_mst_topology.c
-@@ -2615,14 +2615,14 @@ static struct drm_dp_mst_branch *get_mst_branch_device_by_guid_helper(
- 	struct drm_dp_mst_branch *found_mstb;
- 	struct drm_dp_mst_port *port;
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -4598,7 +4598,13 @@ static int wcd938x_probe(struct platform
  
-+	if (!mstb)
-+		return NULL;
+ static int wcd938x_remove(struct platform_device *pdev)
+ {
+-	component_master_del(&pdev->dev, &wcd938x_comp_ops);
++	struct device *dev = &pdev->dev;
 +
- 	if (memcmp(mstb->guid, guid, 16) == 0)
- 		return mstb;
++	component_master_del(dev, &wcd938x_comp_ops);
++
++	pm_runtime_disable(dev);
++	pm_runtime_set_suspended(dev);
++	pm_runtime_dont_use_autosuspend(dev);
  
- 
- 	list_for_each_entry(port, &mstb->ports, next) {
--		if (!port->mstb)
--			continue;
--
- 		found_mstb = get_mst_branch_device_by_guid_helper(port->mstb, guid);
- 
- 		if (found_mstb)
--- 
-2.42.0
-
+ 	return 0;
+ }
 
 
