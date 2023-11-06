@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CEC208CA
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245FE208CA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tp3xAavq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C80C433C7;
-	Mon,  6 Nov 2023 13:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Alk9OdJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91EFDC433C7;
+	Mon,  6 Nov 2023 13:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277078;
-	bh=cLGRAO1OPg/hUmbDHFLK9IL0FGwuM70OEYax+VKTVE8=;
+	s=korg; t=1699277081;
+	bh=pCvZ6ny/JkhquEwINfzKk7wW39GxUHeeuiyxwhRUnfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tp3xAavqGyq5fp+I92BgFs7Ut8y1PI6kFB35K/DbRvOmK2A8KKgaS9bE0e844jsey
-	 ojU/hV6AQrnAOj/qM/Ov4ZNEMoWwyXNd9wwyNRuVnzg8J9ZySHZQNnHU+yj4Uuxvwz
-	 1OJSNXP4WzeM9YCSx3nJgcBtdP2qPwCwA4l5/PQc=
+	b=1Alk9OdJs4lgX31HXsEG3sl7W+ixwm9P1sZPSk3nbnH7X92iMmtM0vZYvft+ZHDOD
+	 k7kmrKuPHYo7g2DNdFwER8GD3A9KJ+r4QAi8VeyY5rtCNgeY9TS0aUZ3svpg2mNzaA
+	 rPb8z4Yohul/Qbn3i/fOE0XCC8vD9HI7l2pe4do8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Javier Rodriguez <josejavier.rodriguez@duagon.com>,
 	Johannes Thumshirn <jth@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/128] mcb: Return actual parsed size when reading chameleon table
-Date: Mon,  6 Nov 2023 14:02:47 +0100
-Message-ID: <20231106130309.457008275@linuxfoundation.org>
+Subject: [PATCH 5.15 008/128] mcb-lpc: Reallocate memory region to avoid memory overlapping
+Date: Mon,  6 Nov 2023 14:02:48 +0100
+Message-ID: <20231106130309.501239192@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -46,74 +46,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
 
-[ Upstream commit a889c276d33d333ae96697510f33533f6e9d9591 ]
+[ Upstream commit 2025b2ca8004c04861903d076c67a73a0ec6dfca ]
 
-The function chameleon_parse_cells() returns the number of cells
-parsed which has an undetermined size. This return value is only
-used for error checking but the number of cells is never used.
+mcb-lpc requests a fixed-size memory region to parse the chameleon
+table, however, if the chameleon table is smaller that the allocated
+region, it could overlap with the IP Cores' memory regions.
 
-Change return value to be number of bytes parsed to allow for
-memory management improvements.
+After parsing the chameleon table, drop/reallocate the memory region
+with the actual chameleon table size.
 
 Co-developed-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
 Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
 Signed-off-by: Javier Rodriguez <josejavier.rodriguez@duagon.com>
 Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Link: https://lore.kernel.org/r/20230411083329.4506-2-jth@kernel.org
+Link: https://lore.kernel.org/r/20230411083329.4506-4-jth@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mcb/mcb-parse.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/mcb/mcb-lpc.c | 35 +++++++++++++++++++++++++++++++----
+ 1 file changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mcb/mcb-parse.c b/drivers/mcb/mcb-parse.c
-index c41cbacc75a2c..656b6b71c7682 100644
---- a/drivers/mcb/mcb-parse.c
-+++ b/drivers/mcb/mcb-parse.c
-@@ -128,7 +128,7 @@ static void chameleon_parse_bar(void __iomem *base,
- 	}
- }
- 
--static int chameleon_get_bar(char __iomem **base, phys_addr_t mapbase,
-+static int chameleon_get_bar(void __iomem **base, phys_addr_t mapbase,
- 			     struct chameleon_bar **cb)
+diff --git a/drivers/mcb/mcb-lpc.c b/drivers/mcb/mcb-lpc.c
+index 53decd89876ee..a851e02364642 100644
+--- a/drivers/mcb/mcb-lpc.c
++++ b/drivers/mcb/mcb-lpc.c
+@@ -23,7 +23,7 @@ static int mcb_lpc_probe(struct platform_device *pdev)
  {
- 	struct chameleon_bar *c;
-@@ -177,12 +177,13 @@ int chameleon_parse_cells(struct mcb_bus *bus, phys_addr_t mapbase,
- {
- 	struct chameleon_fpga_header *header;
- 	struct chameleon_bar *cb;
--	char __iomem *p = base;
-+	void __iomem *p = base;
- 	int num_cells = 0;
- 	uint32_t dtype;
- 	int bar_count;
- 	int ret;
- 	u32 hsize;
-+	u32 table_size;
+ 	struct resource *res;
+ 	struct priv *priv;
+-	int ret = 0;
++	int ret = 0, table_size;
  
- 	hsize = sizeof(struct chameleon_fpga_header);
+ 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+@@ -58,16 +58,43 @@ static int mcb_lpc_probe(struct platform_device *pdev)
  
-@@ -237,12 +238,16 @@ int chameleon_parse_cells(struct mcb_bus *bus, phys_addr_t mapbase,
- 		num_cells++;
+ 	ret = chameleon_parse_cells(priv->bus, priv->mem->start, priv->base);
+ 	if (ret < 0) {
+-		mcb_release_bus(priv->bus);
+-		return ret;
++		goto out_mcb_bus;
  	}
  
--	if (num_cells == 0)
--		num_cells = -EINVAL;
-+	if (num_cells == 0) {
-+		ret = -EINVAL;
-+		goto free_bar;
+-	dev_dbg(&pdev->dev, "Found %d cells\n", ret);
++	table_size = ret;
++
++	if (table_size < CHAM_HEADER_SIZE) {
++		/* Release the previous resources */
++		devm_iounmap(&pdev->dev, priv->base);
++		devm_release_mem_region(&pdev->dev, priv->mem->start, resource_size(priv->mem));
++
++		/* Then, allocate it again with the actual chameleon table size */
++		res = devm_request_mem_region(&pdev->dev, priv->mem->start,
++					      table_size,
++					      KBUILD_MODNAME);
++		if (!res) {
++			dev_err(&pdev->dev, "Failed to request PCI memory\n");
++			ret = -EBUSY;
++			goto out_mcb_bus;
++		}
++
++		priv->base = devm_ioremap(&pdev->dev, priv->mem->start, table_size);
++		if (!priv->base) {
++			dev_err(&pdev->dev, "Cannot ioremap\n");
++			ret = -ENOMEM;
++			goto out_mcb_bus;
++		}
++
++		platform_set_drvdata(pdev, priv);
 +	}
  
-+	table_size = p - base;
-+	pr_debug("%d cell(s) found. Chameleon table size: 0x%04x bytes\n", num_cells, table_size);
- 	kfree(cb);
- 	kfree(header);
--	return num_cells;
-+	return table_size;
+ 	mcb_bus_add_devices(priv->bus);
  
- free_bar:
- 	kfree(cb);
+ 	return 0;
+ 
++out_mcb_bus:
++	mcb_release_bus(priv->bus);
++	return ret;
+ }
+ 
+ static int mcb_lpc_remove(struct platform_device *pdev)
 -- 
 2.42.0
 
