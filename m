@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2570D22EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E21622EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wF9EwJbw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969FBC433C9;
-	Mon,  6 Nov 2023 13:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfQW0DrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E782C433C8;
+	Mon,  6 Nov 2023 13:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277107;
-	bh=sj7CLzrpy3RzBSGqcQCFxjqlsBrCWQGgQSlHFIGW9O4=;
+	s=korg; t=1699277109;
+	bh=hoEEMUlamZowNtpIW/86PMix/ig7aHIiUJ370qQwccI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wF9EwJbwL4So3QxX9YK/b7dYAGYivMQC7yNKqAx1/QFv+sIufrYiz4LhWScKz8e8t
-	 8h3zvy8UVtA0qNY0Iqo/letcORaLO901V+ob+/gWBUysMqcynqJyOxoPCFCay6iGrH
-	 XFGswTH4bug2jtiDQ+VeR2dxy7z5Wvw60/xRKQL8=
+	b=KfQW0DrNoI32/xqjviKP4ZxSh/BNOkApScqy4bH9N1dlyyEUngVBJGy5jvbve2g1e
+	 wzT6XTfSHT13hFcCZOkNkRGWh3NYsyCgnDry0zZdNdxZKKhu4lfgWggIOh6xEzUq7J
+	 L8fIsZlRa0BgkpTYdvLMeDjTjlhfX5FeF3db+H2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	O'Griofa
-Subject: [PATCH 5.15 041/128] iio: adc: xilinx-xadc: Dont clobber preset voltage/temperature thresholds
-Date: Mon,  6 Nov 2023 14:03:21 +0100
-Message-ID: <20231106130311.008974234@linuxfoundation.org>
+Subject: [PATCH 5.15 042/128] iio: adc: xilinx-xadc: Correct temperature offset/scale for UltraScale
+Date: Mon,  6 Nov 2023 14:03:22 +0100
+Message-ID: <20231106130311.051433313@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -46,66 +46,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Robert Hancock <robert.hancock@calian.com>
 
-commit 8d6b3ea4d9eaca80982442b68a292ce50ce0a135 upstream.
+commit e2bd8c28b9bd835077eb65715d416d667694a80d upstream.
 
-In the probe function, the driver was reading out the thresholds already
-set in the core, which can be configured by the user in the Vivado tools
-when the FPGA image is built. However, it later clobbered those values
-with zero or maximum values. In particular, the overtemperature shutdown
-threshold register was overwritten with the max value, which effectively
-prevents the FPGA from shutting down when the desired threshold was
-eached, potentially risking hardware damage in that case.
+The driver was previously using offset and scale values for the
+temperature sensor readings which were only valid for 7-series devices.
+Add per-device-type values for offset and scale and set them appropriately
+for each device type.
 
-Remove this code to leave the preconfigured default threshold values
-intact.
+Note that the values used for the UltraScale family are for UltraScale+
+(i.e. the SYSMONE4 primitive) using the internal reference, as that seems
+to be the most common configuration and the device tree values Xilinx's
+device tree generator produces don't seem to give us anything to tell us
+which configuration is used. However, the differences within the UltraScale
+family seem fairly minor and it's closer than using the 7-series values
+instead in any case.
 
-The code was also disabling all alarms regardless of what enable state
-they were left in by the FPGA image, including the overtemperature
-shutdown feature. Leave these bits in their original state so they are
-not unconditionally disabled.
-
-Fixes: bdc8cda1d010 ("iio:adc: Add Xilinx XADC driver")
+Fixes: c2b7720a7905 ("iio: xilinx-xadc: Add basic support for Ultrascale System Monitor")
 Signed-off-by: Robert Hancock <robert.hancock@calian.com>
 Acked-by: O'Griofa, Conall <conall.ogriofa@amd.com>
 Tested-by: O'Griofa, Conall <conall.ogriofa@amd.com>
-Link: https://lore.kernel.org/r/20230915001019.2862964-2-robert.hancock@calian.com
+Link: https://lore.kernel.org/r/20230915001019.2862964-3-robert.hancock@calian.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/xilinx-xadc-core.c |   22 ----------------------
- 1 file changed, 22 deletions(-)
+ drivers/iio/adc/xilinx-xadc-core.c |   17 ++++++++++++++---
+ drivers/iio/adc/xilinx-xadc.h      |    2 ++
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
 --- a/drivers/iio/adc/xilinx-xadc-core.c
 +++ b/drivers/iio/adc/xilinx-xadc-core.c
-@@ -1434,28 +1434,6 @@ static int xadc_probe(struct platform_de
- 	if (ret)
- 		return ret;
+@@ -454,6 +454,9 @@ static const struct xadc_ops xadc_zynq_o
+ 	.interrupt_handler = xadc_zynq_interrupt_handler,
+ 	.update_alarm = xadc_zynq_update_alarm,
+ 	.type = XADC_TYPE_S7,
++	/* Temp in C = (val * 503.975) / 2**bits - 273.15 */
++	.temp_scale = 503975,
++	.temp_offset = 273150,
+ };
  
--	/* Disable all alarms */
--	ret = xadc_update_adc_reg(xadc, XADC_REG_CONF1, XADC_CONF1_ALARM_MASK,
--				  XADC_CONF1_ALARM_MASK);
--	if (ret)
--		return ret;
--
--	/* Set thresholds to min/max */
--	for (i = 0; i < 16; i++) {
--		/*
--		 * Set max voltage threshold and both temperature thresholds to
--		 * 0xffff, min voltage threshold to 0.
--		 */
--		if (i % 8 < 4 || i == 7)
--			xadc->threshold[i] = 0xffff;
--		else
--			xadc->threshold[i] = 0;
--		ret = xadc_write_adc_reg(xadc, XADC_REG_THRESHOLD(i),
--			xadc->threshold[i]);
--		if (ret)
--			return ret;
--	}
--
- 	/* Go to non-buffered mode */
- 	xadc_postdisable(indio_dev);
+ static const unsigned int xadc_axi_reg_offsets[] = {
+@@ -564,6 +567,9 @@ static const struct xadc_ops xadc_7s_axi
+ 	.interrupt_handler = xadc_axi_interrupt_handler,
+ 	.flags = XADC_FLAGS_BUFFERED,
+ 	.type = XADC_TYPE_S7,
++	/* Temp in C = (val * 503.975) / 2**bits - 273.15 */
++	.temp_scale = 503975,
++	.temp_offset = 273150,
+ };
  
+ static const struct xadc_ops xadc_us_axi_ops = {
+@@ -575,6 +581,12 @@ static const struct xadc_ops xadc_us_axi
+ 	.interrupt_handler = xadc_axi_interrupt_handler,
+ 	.flags = XADC_FLAGS_BUFFERED,
+ 	.type = XADC_TYPE_US,
++	/**
++	 * Values below are for UltraScale+ (SYSMONE4) using internal reference.
++	 * See https://docs.xilinx.com/v/u/en-US/ug580-ultrascale-sysmon
++	 */
++	.temp_scale = 509314,
++	.temp_offset = 280231,
+ };
+ 
+ static int _xadc_update_adc_reg(struct xadc *xadc, unsigned int reg,
+@@ -946,8 +958,7 @@ static int xadc_read_raw(struct iio_dev
+ 			*val2 = chan->scan_type.realbits;
+ 			return IIO_VAL_FRACTIONAL_LOG2;
+ 		case IIO_TEMP:
+-			/* Temp in C = (val * 503.975) / 2**bits - 273.15 */
+-			*val = 503975;
++			*val = xadc->ops->temp_scale;
+ 			*val2 = bits;
+ 			return IIO_VAL_FRACTIONAL_LOG2;
+ 		default:
+@@ -955,7 +966,7 @@ static int xadc_read_raw(struct iio_dev
+ 		}
+ 	case IIO_CHAN_INFO_OFFSET:
+ 		/* Only the temperature channel has an offset */
+-		*val = -((273150 << bits) / 503975);
++		*val = -((xadc->ops->temp_offset << bits) / xadc->ops->temp_scale);
+ 		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
+ 		ret = xadc_read_samplerate(xadc);
+--- a/drivers/iio/adc/xilinx-xadc.h
++++ b/drivers/iio/adc/xilinx-xadc.h
+@@ -86,6 +86,8 @@ struct xadc_ops {
+ 
+ 	unsigned int flags;
+ 	enum xadc_type type;
++	int temp_scale;
++	int temp_offset;
+ };
+ 
+ static inline int _xadc_read_adc_reg(struct xadc *xadc, unsigned int reg,
 
 
