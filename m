@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75734219E9
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA0322EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpZ3amH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1BAC433C8;
-	Mon,  6 Nov 2023 13:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vzo43DmE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA91C433C8;
+	Mon,  6 Nov 2023 13:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277189;
-	bh=Z+KxfjoeD12M8kZQPrYA+rocpCkH7qIVNfWtDY+2a48=;
+	s=korg; t=1699277193;
+	bh=GC6B9NVNE987GfQcLHLRE/uK8fbtlV1JCDahHp9bnF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpZ3amH/XdSnKMA4E/Oqicp240HWVna9ESGlN0BRfzn68af50iFF7x4rje7jt/GpT
-	 4A0/SJa0Y6YMaXpS96nZwhYKGpgxK108khZdNefklY4pcm1w4OH/vjHRgWw4+QXGcl
-	 FwscJZ9APXMc8rj9Xl9X7KJTyc7lZ5f6FIMCUhu8=
+	b=Vzo43DmE+1320/CWBGFbOWQBdQFBbxPkUSp40wXQ2Qkz1BLbKM7h1xQGoHn1I7Zo2
+	 0zh4N/MV7jzAf7ZbZqalx9xgunFF1V9GVMjcruo0hg8JlUYrIDPNUCQ1i9ICB+MkSz
+	 EB2ePkpCHc4kV9x4QrIS63jzg5Mew2aYN52N12ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org,
 	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.15 069/128] rpmsg: Constify local variable in field store macro
-Date: Mon,  6 Nov 2023 14:03:49 +0100
-Message-ID: <20231106130312.253900636@linuxfoundation.org>
+Subject: [PATCH 5.15 070/128] rpmsg: Fix kfree() of static memory on setting driver_override
+Date: Mon,  6 Nov 2023 14:03:50 +0100
+Message-ID: <20231106130312.302773682@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -43,31 +44,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit e5f89131a06142e91073b6959d91cea73861d40e upstream.
+commit 42cd402b8fd4672b692400fe5f9eecd55d2794ac upstream.
 
-Memory pointed by variable 'old' in field store macro is not modified,
-so it can be made a pointer to const.
+The driver_override field from platform driver should not be initialized
+from static memory (string literal) because the core later kfree() it,
+for example when driver_override is set via sysfs.
 
+Use dedicated helper to set driver_override properly.
+
+Fixes: 950a7388f02b ("rpmsg: Turn name service into a stand alone driver")
+Fixes: c0cdc19f84a4 ("rpmsg: Driver for user space endpoint interface")
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20220419113435.246203-12-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20220419113435.246203-13-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/rpmsg_core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/rpmsg/rpmsg_internal.h |   13 +++++++++++--
+ include/linux/rpmsg.h          |    6 ++++--
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/rpmsg/rpmsg_core.c
-+++ b/drivers/rpmsg/rpmsg_core.c
-@@ -376,7 +376,8 @@ field##_store(struct device *dev, struct
- 	      const char *buf, size_t sz)				\
- {									\
- 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);		\
--	char *new, *old;						\
-+	const char *old;						\
-+	char *new;							\
- 									\
- 	new = kstrndup(buf, sz, GFP_KERNEL);				\
- 	if (!new)							\
+--- a/drivers/rpmsg/rpmsg_internal.h
++++ b/drivers/rpmsg/rpmsg_internal.h
+@@ -90,10 +90,19 @@ int rpmsg_release_channel(struct rpmsg_d
+  */
+ static inline int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev)
+ {
++	int ret;
++
+ 	strcpy(rpdev->id.name, "rpmsg_chrdev");
+-	rpdev->driver_override = "rpmsg_chrdev";
++	ret = driver_set_override(&rpdev->dev, &rpdev->driver_override,
++				  rpdev->id.name, strlen(rpdev->id.name));
++	if (ret)
++		return ret;
++
++	ret = rpmsg_register_device(rpdev);
++	if (ret)
++		kfree(rpdev->driver_override);
+ 
+-	return rpmsg_register_device(rpdev);
++	return ret;
+ }
+ 
+ #endif
+--- a/include/linux/rpmsg.h
++++ b/include/linux/rpmsg.h
+@@ -41,7 +41,9 @@ struct rpmsg_channel_info {
+  * rpmsg_device - device that belong to the rpmsg bus
+  * @dev: the device struct
+  * @id: device id (used to match between rpmsg drivers and devices)
+- * @driver_override: driver name to force a match
++ * @driver_override: driver name to force a match; do not set directly,
++ *                   because core frees it; use driver_set_override() to
++ *                   set or clear it.
+  * @src: local address
+  * @dst: destination address
+  * @ept: the rpmsg endpoint of this channel
+@@ -51,7 +53,7 @@ struct rpmsg_channel_info {
+ struct rpmsg_device {
+ 	struct device dev;
+ 	struct rpmsg_device_id id;
+-	char *driver_override;
++	const char *driver_override;
+ 	u32 src;
+ 	u32 dst;
+ 	struct rpmsg_endpoint *ept;
 
 
