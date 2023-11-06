@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92526200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E06200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owgvNyoY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFA5C433C8;
-	Mon,  6 Nov 2023 13:07:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fT9Kob42"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4E1C433C8;
+	Mon,  6 Nov 2023 13:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276022;
-	bh=hXcx/OmnOM81Y0uHMjdFFwbONHGvILY2x3xgmb1sK14=;
+	s=korg; t=1699276025;
+	bh=Gs76nfyek6qIqcqga7yiSO6pFqhzqIUNqpH7MnZ21Xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=owgvNyoYReTJKXIZMMJQ8gGwVFzcHUTJbuAMr/ixQE4olGrdl/E24QwmUVsXwmB55
-	 /h+okMqJZGd9zDPlklmL4JmZHYku5PBOZBb/5m3M6bRCU9LgGTMavcKZ1CSuWRkXTD
-	 RQBxJ4l6ADUS9P6kDNzheaoCD3/3SAxbUNoW+wwg=
+	b=fT9Kob42KImYA2z9srxDnMvGICG0opso3HtwXC13wGiV1jQA7jJHvGAT1aP7qaWZN
+	 gFZu4V4UWpYWaARPuiaev367mhmvHoOZrQTsuwladTu9wSOqae1pk7Mr/jQuI5VAmG
+	 tetfSgGPFkbVbOqhhLRWhQ/hBNWdmuAWdHjRM0Ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	George Kennedy <george.kennedy@oracle.com>,
-	Suraj Jitindar Singh <surajjs@amazon.com>
-Subject: [PATCH 4.14 42/48] vc_screen: move load of struct vc_data pointer in vcs_read() to avoid UAF
-Date: Mon,  6 Nov 2023 14:03:33 +0100
-Message-ID: <20231106130259.293714493@linuxfoundation.org>
+	Vicki Pfau <vi@endrift.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 4.14 43/48] PCI: Prevent xHCI driver from claiming AMD VanGogh USB3 DRD device
+Date: Mon,  6 Nov 2023 14:03:34 +0100
+Message-ID: <20231106130259.323655851@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -43,117 +41,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Kennedy <george.kennedy@oracle.com>
+From: Vicki Pfau <vi@endrift.com>
 
-commit 226fae124b2dac217ea5436060d623ff3385bc34 upstream.
+commit 7e6f3b6d2c352b5fde37ce3fed83bdf6172eebd4 upstream.
 
-After a call to console_unlock() in vcs_read() the vc_data struct can be
-freed by vc_deallocate(). Because of that, the struct vc_data pointer
-load must be done at the top of while loop in vcs_read() to avoid a UAF
-when vcs_size() is called.
+The AMD VanGogh SoC contains a DesignWare USB3 Dual-Role Device that can be
+operated as either a USB Host or a USB Device, similar to on the AMD Nolan
+platform.
 
-Syzkaller reported a UAF in vcs_size().
+be6646bfbaec ("PCI: Prevent xHCI driver from claiming AMD Nolan USB3 DRD
+device") added a quirk to let the dwc3 driver claim the Nolan device since
+it provides more specific support.
 
-BUG: KASAN: use-after-free in vcs_size (drivers/tty/vt/vc_screen.c:215)
-Read of size 4 at addr ffff8881137479a8 by task 4a005ed81e27e65/1537
+Extend that quirk to include the VanGogh SoC USB3 device.
 
-CPU: 0 PID: 1537 Comm: 4a005ed81e27e65 Not tainted 6.2.0-rc5 #1
-Hardware name: Red Hat KVM, BIOS 1.15.0-2.module
-Call Trace:
-  <TASK>
-__asan_report_load4_noabort (mm/kasan/report_generic.c:350)
-vcs_size (drivers/tty/vt/vc_screen.c:215)
-vcs_read (drivers/tty/vt/vc_screen.c:415)
-vfs_read (fs/read_write.c:468 fs/read_write.c:450)
-...
-  </TASK>
-
-Allocated by task 1191:
-...
-kmalloc_trace (mm/slab_common.c:1069)
-vc_allocate (./include/linux/slab.h:580 ./include/linux/slab.h:720
-     drivers/tty/vt/vt.c:1128 drivers/tty/vt/vt.c:1108)
-con_install (drivers/tty/vt/vt.c:3383)
-tty_init_dev (drivers/tty/tty_io.c:1301 drivers/tty/tty_io.c:1413
-     drivers/tty/tty_io.c:1390)
-tty_open (drivers/tty/tty_io.c:2080 drivers/tty/tty_io.c:2126)
-chrdev_open (fs/char_dev.c:415)
-do_dentry_open (fs/open.c:883)
-vfs_open (fs/open.c:1014)
-...
-
-Freed by task 1548:
-...
-kfree (mm/slab_common.c:1021)
-vc_port_destruct (drivers/tty/vt/vt.c:1094)
-tty_port_destructor (drivers/tty/tty_port.c:296)
-tty_port_put (drivers/tty/tty_port.c:312)
-vt_disallocate_all (drivers/tty/vt/vt_ioctl.c:662 (discriminator 2))
-vt_ioctl (drivers/tty/vt/vt_ioctl.c:903)
-tty_ioctl (drivers/tty/tty_io.c:2776)
-...
-
-The buggy address belongs to the object at ffff888113747800
-  which belongs to the cache kmalloc-1k of size 1024
-The buggy address is located 424 bytes inside of
-  1024-byte region [ffff888113747800, ffff888113747c00)
-
-The buggy address belongs to the physical page:
-page:00000000b3fe6c7c refcount:1 mapcount:0 mapping:0000000000000000
-     index:0x0 pfn:0x113740
-head:00000000b3fe6c7c order:3 compound_mapcount:0 subpages_mapcount:0
-     compound_pincount:0
-anon flags: 0x17ffffc0010200(slab|head|node=0|zone=2|lastcpupid=0x1fffff)
-raw: 0017ffffc0010200 ffff888100042dc0 0000000000000000 dead000000000001
-raw: 0000000000000000 0000000000100010 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
-  ffff888113747880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ffff888113747900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-> ffff888113747980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                   ^
-  ffff888113747a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ffff888113747a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-Disabling lock debugging due to kernel taint
-
-Fixes: ac751efa6a0d ("console: rename acquire/release_console_sem() to console_lock/unlock()")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Suggested-by: Jiri Slaby <jirislaby@kernel.org>
-Signed-off-by: George Kennedy <george.kennedy@oracle.com>
-Link: https://lore.kernel.org/r/1674577014-12374-1-git-send-email-george.kennedy@oracle.com
-[ 4.14: Adjust context ]
-Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+Link: https://lore.kernel.org/r/20230927202212.2388216-1-vi@endrift.com
+Signed-off-by: Vicki Pfau <vi@endrift.com>
+[bhelgaas: include be6646bfbaec reference, add stable tag]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org	# v3.19+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vc_screen.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/pci/quirks.c    |    9 ++++++---
+ include/linux/pci_ids.h |    1 +
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -219,10 +219,6 @@ vcs_read(struct file *file, char __user
- 	console_lock();
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -429,14 +429,15 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
+ /*
+  * In the AMD NL platform, this device ([1022:7912]) has a class code of
+  * PCI_CLASS_SERIAL_USB_XHCI (0x0c0330), which means the xhci driver will
+- * claim it.
++ * claim it. The same applies on the VanGogh platform device ([1022:163a]).
++ *
+  * But the dwc3 driver is a more specific driver for this device, and we'd
+  * prefer to use it instead of xhci. To prevent xhci from claiming the
+  * device, change the class code to 0x0c03fe, which the PCI r3.0 spec
+  * defines as "USB device (not host controller)". The dwc3 driver can then
+  * claim it based on its Vendor and Device ID.
+  */
+-static void quirk_amd_nl_class(struct pci_dev *pdev)
++static void quirk_amd_dwc_class(struct pci_dev *pdev)
+ {
+ 	u32 class = pdev->class;
  
- 	attr = (currcons & 128);
--	ret = -ENXIO;
--	vc = vcs_vc(inode, &viewed);
--	if (!vc)
--		goto unlock_out;
+@@ -446,7 +447,9 @@ static void quirk_amd_nl_class(struct pc
+ 		 class, pdev->class);
+ }
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_NL_USB,
+-		quirk_amd_nl_class);
++		quirk_amd_dwc_class);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_VANGOGH_USB,
++		quirk_amd_dwc_class);
  
- 	ret = -EINVAL;
- 	if (pos < 0)
-@@ -238,6 +234,11 @@ vcs_read(struct file *file, char __user
- 		ssize_t orig_count;
- 		long p = pos;
- 
-+		ret = -ENXIO;
-+		vc = vcs_vc(inode, &viewed);
-+		if (!vc)
-+			goto unlock_out;
-+
- 		/* Check whether we are above size each round,
- 		 * as copy_to_user at the end of this loop
- 		 * could sleep.
+ /*
+  * Let's make the southbridge information explicit instead
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -541,6 +541,7 @@
+ #define PCI_DEVICE_ID_AMD_16H_NB_F4	0x1534
+ #define PCI_DEVICE_ID_AMD_16H_M30H_NB_F3 0x1583
+ #define PCI_DEVICE_ID_AMD_16H_M30H_NB_F4 0x1584
++#define PCI_DEVICE_ID_AMD_VANGOGH_USB	0x163a
+ #define PCI_DEVICE_ID_AMD_CNB17H_F3	0x1703
+ #define PCI_DEVICE_ID_AMD_LANCE		0x2000
+ #define PCI_DEVICE_ID_AMD_LANCE_HOME	0x2001
 
 
