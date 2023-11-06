@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A1422EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B419622EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8JLK5ae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B92C433C8;
-	Mon,  6 Nov 2023 13:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fO7HjaSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326B6C433C9;
+	Mon,  6 Nov 2023 13:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277427;
-	bh=S/yinC2dY9YQ7sqfH2Oqf4K4iMs1CvvJQCQOE3yyJnk=;
+	s=korg; t=1699277430;
+	bh=g+0BdwZgtIAvqDDXsRVY1qnI2QCBMuja33uNChDNfFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8JLK5ae1UbW0aRNCnS24Pjhh4YVWHFiFIs+rkBbcApVEg+SWNBSmDwYwKKfir2Q7
-	 eYiYPfbyTW/SkrlSpI/kpW9wPnbKlUI9R8u6L0qxfwY8d+mXsIYpzAZcMu1hhdEjhp
-	 4dRkKNEqSGrdzjX0WtwXtEYe1hal+3rus0XhCGqQ=
+	b=fO7HjaSC0Xcih2bxKq39DJXZXANLQmL1DbflKplY8EvjzGaPE2gueJOaokhDP+xvR
+	 3aj21kPJ3wWU6QruYh5E/v2DUPokwy9k4CYryiFNujZxyolW3Xz8BMGU11HfDd16wF
+	 wRFWItJ6GMnPdoQubn6sVGwIKWj1Y8N0DguuA2E4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Grant Grundler <grundler@chromium.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
+	Javier Rodriguez <josejavier.rodriguez@duagon.com>,
+	Johannes Thumshirn <jth@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 19/95] r8152: Cancel hw_phy_work if we have an error in probe
-Date: Mon,  6 Nov 2023 14:03:47 +0100
-Message-ID: <20231106130305.429457600@linuxfoundation.org>
+Subject: [PATCH 5.10 02/95] mcb: Return actual parsed size when reading chameleon table
+Date: Mon,  6 Nov 2023 14:03:30 +0100
+Message-ID: <20231106130304.763566515@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -37,41 +37,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
 
-[ Upstream commit bb8adff9123e492598162ac1baad01a53891aef6 ]
+[ Upstream commit a889c276d33d333ae96697510f33533f6e9d9591 ]
 
-The error handling in rtl8152_probe() is missing a call to cancel the
-hw_phy_work. Add it in to match what's in the cleanup code in
-rtl8152_disconnect().
+The function chameleon_parse_cells() returns the number of cells
+parsed which has an undetermined size. This return value is only
+used for error checking but the number of cells is never used.
 
-Fixes: a028a9e003f2 ("r8152: move the settings of PHY to a work queue")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Grant Grundler <grundler@chromium.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Change return value to be number of bytes parsed to allow for
+memory management improvements.
+
+Co-developed-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Javier Rodriguez <josejavier.rodriguez@duagon.com>
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Link: https://lore.kernel.org/r/20230411083329.4506-2-jth@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/r8152.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mcb/mcb-parse.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index 517334aab278a..beb1fb6f72735 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -6825,6 +6825,7 @@ static int rtl8152_probe(struct usb_interface *intf,
+diff --git a/drivers/mcb/mcb-parse.c b/drivers/mcb/mcb-parse.c
+index c41cbacc75a2c..656b6b71c7682 100644
+--- a/drivers/mcb/mcb-parse.c
++++ b/drivers/mcb/mcb-parse.c
+@@ -128,7 +128,7 @@ static void chameleon_parse_bar(void __iomem *base,
+ 	}
+ }
  
- out1:
- 	tasklet_kill(&tp->tx_tl);
-+	cancel_delayed_work_sync(&tp->hw_phy_work);
- 	if (tp->rtl_ops.unload)
- 		tp->rtl_ops.unload(tp);
- 	usb_set_intfdata(intf, NULL);
+-static int chameleon_get_bar(char __iomem **base, phys_addr_t mapbase,
++static int chameleon_get_bar(void __iomem **base, phys_addr_t mapbase,
+ 			     struct chameleon_bar **cb)
+ {
+ 	struct chameleon_bar *c;
+@@ -177,12 +177,13 @@ int chameleon_parse_cells(struct mcb_bus *bus, phys_addr_t mapbase,
+ {
+ 	struct chameleon_fpga_header *header;
+ 	struct chameleon_bar *cb;
+-	char __iomem *p = base;
++	void __iomem *p = base;
+ 	int num_cells = 0;
+ 	uint32_t dtype;
+ 	int bar_count;
+ 	int ret;
+ 	u32 hsize;
++	u32 table_size;
+ 
+ 	hsize = sizeof(struct chameleon_fpga_header);
+ 
+@@ -237,12 +238,16 @@ int chameleon_parse_cells(struct mcb_bus *bus, phys_addr_t mapbase,
+ 		num_cells++;
+ 	}
+ 
+-	if (num_cells == 0)
+-		num_cells = -EINVAL;
++	if (num_cells == 0) {
++		ret = -EINVAL;
++		goto free_bar;
++	}
+ 
++	table_size = p - base;
++	pr_debug("%d cell(s) found. Chameleon table size: 0x%04x bytes\n", num_cells, table_size);
+ 	kfree(cb);
+ 	kfree(header);
+-	return num_cells;
++	return table_size;
+ 
+ free_bar:
+ 	kfree(cb);
 -- 
 2.42.0
 
