@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1C222EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E1622EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C87rAwsW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61E4AC433C8;
-	Mon,  6 Nov 2023 13:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zH+txBdn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59395C433C7;
+	Mon,  6 Nov 2023 13:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277289;
-	bh=ArGcf0pSKS5FAMQmVFDL6Rz0vzAQxi5YyI82Pfch0GU=;
+	s=korg; t=1699277292;
+	bh=qhcMK8DTvTkA7HM70ecCjRFopuFt1MwzuYWak3u+dNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C87rAwsWagN/zUjELf4OuhC++NqJlsW5VblMTTCUramVteq/n6XfLosB8EMTAWHvD
-	 TZNv0raeLZonhHwu97YvWHCahhzOPgxqOdT+AY6IeogZ7SCDqMHPiYW/wJSC2QqZ1w
-	 yuj+yTlik4k+mKgkG08eWNuaXSbqc81IjFdFxtmM=
+	b=zH+txBdnjarMZIGMsXMLUceK45SbF8hal6NnIliLlTnOsFlmMIWiwGdy/LDOXaoPl
+	 ruz23boPOKp9Sc6rfoAYdTipvSlxNTXKiJljweue0A5GbFTd8XGFzMf3yBZ8pynr1V
+	 UjawNwPqcqu+mvbDqs6YgWy8v+oH7JTErbQQ+56k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephane Eranian <eranian@google.com>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/128] perf evlist: Avoid frequency mode for the dummy event
-Date: Mon,  6 Nov 2023 14:04:23 +0100
-Message-ID: <20231106130313.855579935@linuxfoundation.org>
+	"linux-can@vger.kernel.org, lukas.magel@posteo.net, patches@lists.linux.dev, maxime.jayat@mobile-devices.fr, mkl@pengutronix.de, michal.sojka@cvut.cz, Oliver Hartkopp" <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>
+Subject: [PATCH 5.15 104/128] can: isotp: set max PDU size to 64 kByte
+Date: Mon,  6 Nov 2023 14:04:24 +0100
+Message-ID: <20231106130313.902522064@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -46,86 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit f9cdeb58a9cf46c09b56f5f661ea8da24b6458c3 ]
+commit 9c0c191d82a1de964ac953a1df8b5744ec670b07 upstream
 
-Dummy events are created with an attribute where the period and freq
-are zero. evsel__config will then see the uninitialized values and
-initialize them in evsel__default_freq_period. As fequency mode is
-used by default the dummy event would be set to use frequency
-mode. However, this has no effect on the dummy event but does cause
-unnecessary timers/interrupts. Avoid this overhead by setting the
-period to 1 for dummy events.
+The reason to extend the max PDU size from 4095 Byte (12 bit length value)
+to a 32 bit value (up to 4 GByte) was to be able to flash 64 kByte
+bootloaders with a single ISO-TP PDU. The max PDU size in the Linux kernel
+implementation was set to 8200 Bytes to be able to test the length
+information escape sequence.
 
-evlist__add_aux_dummy calls evlist__add_dummy then sets freq=0 and
-period=1. This isn't necessary after this change and so the setting is
-removed.
+It turns out that the demand for 64 kByte PDUs is real so the value for
+MAX_MSG_LENGTH is set to 66000 to be able to potentially add some checksums
+to the 65.536 Byte block.
 
->From Stephane:
-
-The dummy event is not counting anything. It is used to collect mmap
-records and avoid a race condition during the synthesize mmap phase of
-perf record. As such, it should not cause any overhead during active
-profiling. Yet, it did. Because of a bug the dummy event was
-programmed as a sampling event in frequency mode. Events in that mode
-incur more kernel overheads because on timer tick, the kernel has to
-look at the number of samples for each event and potentially adjust
-the sampling period to achieve the desired frequency. The dummy event
-was therefore adding a frequency event to task and ctx contexts we may
-otherwise not have any, e.g.,
-
-  perf record -a -e cpu/event=0x3c,period=10000000/.
-
-On each timer tick the perf_adjust_freq_unthr_context() is invoked and
-if ctx->nr_freq is non-zero, then the kernel will loop over ALL the
-events of the context looking for frequency mode ones. In doing, so it
-locks the context, and enable/disable the PMU of each hw event. If all
-the events of the context are in period mode, the kernel will have to
-traverse the list for nothing incurring overhead. The overhead is
-multiplied by a very large factor when this happens in a guest kernel.
-There is no need for the dummy event to be in frequency mode, it does
-not count anything and therefore should not cause extra overhead for
-no reason.
-
-Fixes: 5bae0250237f ("perf evlist: Introduce perf_evlist__new_dummy constructor")
-Reported-by: Stephane Eranian <eranian@google.com>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20230916035640.1074422-1-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://github.com/linux-can/can-utils/issues/347#issuecomment-1056142301
+Link: https://lore.kernel.org/all/20220309120416.83514-3-socketcan@hartkopp.net
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/evlist.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/can/isotp.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/evlist.c b/tools/perf/util/evlist.c
-index 63ef40543a9fe..9d0f2feb25671 100644
---- a/tools/perf/util/evlist.c
-+++ b/tools/perf/util/evlist.c
-@@ -248,6 +248,9 @@ int evlist__add_dummy(struct evlist *evlist)
- 		.type	= PERF_TYPE_SOFTWARE,
- 		.config = PERF_COUNT_SW_DUMMY,
- 		.size	= sizeof(attr), /* to capture ABI version */
-+		/* Avoid frequency mode for dummy events to avoid associated timers. */
-+		.freq = 0,
-+		.sample_period = 1,
- 	};
- 	struct evsel *evsel = evsel__new_idx(&attr, evlist->core.nr_entries);
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -87,9 +87,9 @@ MODULE_ALIAS("can-proto-6");
+ /* ISO 15765-2:2016 supports more than 4095 byte per ISO PDU as the FF_DL can
+  * take full 32 bit values (4 Gbyte). We would need some good concept to handle
+  * this between user space and kernel space. For now increase the static buffer
+- * to something about 8 kbyte to be able to test this new functionality.
++ * to something about 64 kbyte to be able to test this new functionality.
+  */
+-#define MAX_MSG_LENGTH 8200
++#define MAX_MSG_LENGTH 66000
  
-@@ -268,8 +271,6 @@ struct evsel *evlist__add_aux_dummy(struct evlist *evlist, bool system_wide)
- 	evsel->core.attr.exclude_kernel = 1;
- 	evsel->core.attr.exclude_guest = 1;
- 	evsel->core.attr.exclude_hv = 1;
--	evsel->core.attr.freq = 0;
--	evsel->core.attr.sample_period = 1;
- 	evsel->core.system_wide = system_wide;
- 	evsel->no_aux_samples = true;
- 	evsel->name = strdup("dummy:u");
--- 
-2.42.0
-
+ /* N_PCI type values in bits 7-4 of N_PCI bytes */
+ #define N_PCI_SF 0x00	/* single frame */
 
 
