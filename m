@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BB320B00
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730C120B00
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XtCa0PD6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2021C433C8;
-	Mon,  6 Nov 2023 13:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7Y3WZjL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E1BC433C8;
+	Mon,  6 Nov 2023 13:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276183;
-	bh=wLl3/OVIFqOj3pxpHmL0xUk4bYDcWOoNUSttQGq2KmY=;
+	s=korg; t=1699276185;
+	bh=gCNF2zhoTPcZRt0BYwS8GvS5AzIVpu7PTsyCYjcpYGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XtCa0PD6UXP4r3BMT7ArvQ/1dGLKf0TH0jehwkjoHmmqoaugHiJeaH0toKDBqY8vu
-	 prqBwrtL/wTuik0YrAVl8avjDawk/sSTiCSJL9otE/1v1oLVU5LH7jKKzrHR5JqIKU
-	 dUTH16w0GOaHGkIxoV2Q6FXUBQdzvftGFy6hl40A=
+	b=X7Y3WZjLdT6t0t4a50u1Yq3AENpbT9Xwx7aw+BoCmhnmuEVYAkTWYpEdG6XlhQOs+
+	 uSvP3Cita20QABGb3u+h6XXkv5GUxcpd3R5KWx+AA76PBHPt/5PtMzNuv8gquFyvGO
+	 8CCbqQOlCQjHcaSOd7ca9E/rFFKLRIjEyakXWNmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 4.19 18/61] i2c: stm32f7: Fix PEC handling in case of SMBUS transfers
-Date: Mon,  6 Nov 2023 14:03:14 +0100
-Message-ID: <20231106130300.217368480@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Peng Fan <peng.fan@nxp.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 4.19 19/61] nvmem: imx: correct nregs for i.MX6SLL
+Date: Mon,  6 Nov 2023 14:03:15 +0100
+Message-ID: <20231106130300.256394994@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -43,64 +42,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-commit c896ff2dd8f30a6b0a922c83a96f6d43f05f0e92 upstream.
+commit 414a98abbefd82d591f4e2d1efd2917bcd3b6f6d upstream.
 
-In case of SMBUS byte read with PEC enabled, the whole transfer
-is split into two commands.  A first write command, followed by
-a read command.  The write command does not have any PEC byte
-and a PEC byte is appended at the end of the read command.
-(cf Read byte protocol with PEC in SMBUS specification)
+The nregs for i.MX6SLL should be 80 per fuse map, correct it.
 
-Within the STM32 I2C controller, handling (either sending
-or receiving) of the PEC byte is done via the PECBYTE bit in
-register CR2.
-
-Currently, the PECBYTE is set at the beginning of a transfer,
-which lead to sending a PEC byte at the end of the write command
-(hence losing the real last byte), and also does not check the
-PEC byte received during the read command.
-
-This patch corrects the function stm32f7_i2c_smbus_xfer_msg
-in order to only set the PECBYTE during the read command.
-
-Fixes: 9e48155f6bfe ("i2c: i2c-stm32f7: Add initial SMBus protocols support")
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Reviewed-by: Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
-Acked-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: 6da27821a6f5 ("nvmem: imx-ocotp: add support for imx6sll")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20231013124904.175782-2-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-stm32f7.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/nvmem/imx-ocotp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-stm32f7.c
-+++ b/drivers/i2c/busses/i2c-stm32f7.c
-@@ -959,9 +959,10 @@ static int stm32f7_i2c_smbus_xfer_msg(st
- 	/* Configure PEC */
- 	if ((flags & I2C_CLIENT_PEC) && f7_msg->size != I2C_SMBUS_QUICK) {
- 		cr1 |= STM32F7_I2C_CR1_PECEN;
--		cr2 |= STM32F7_I2C_CR2_PECBYTE;
--		if (!f7_msg->read_write)
-+		if (!f7_msg->read_write) {
-+			cr2 |= STM32F7_I2C_CR2_PECBYTE;
- 			f7_msg->count++;
-+		}
- 	} else {
- 		cr1 &= ~STM32F7_I2C_CR1_PECEN;
- 		cr2 &= ~STM32F7_I2C_CR2_PECBYTE;
-@@ -1049,8 +1050,10 @@ static void stm32f7_i2c_smbus_rep_start(
- 	f7_msg->stop = true;
+--- a/drivers/nvmem/imx-ocotp.c
++++ b/drivers/nvmem/imx-ocotp.c
+@@ -439,7 +439,7 @@ static const struct ocotp_params imx6sl_
+ };
  
- 	/* Add one byte for PEC if needed */
--	if (cr1 & STM32F7_I2C_CR1_PECEN)
-+	if (cr1 & STM32F7_I2C_CR1_PECEN) {
-+		cr2 |= STM32F7_I2C_CR2_PECBYTE;
- 		f7_msg->count++;
-+	}
- 
- 	/* Set number of bytes to be transferred */
- 	cr2 &= ~(STM32F7_I2C_CR2_NBYTES_MASK);
+ static const struct ocotp_params imx6sll_params = {
+-	.nregs = 128,
++	.nregs = 80,
+ 	.bank_address_words = 0,
+ 	.set_timing = imx_ocotp_set_imx6_timing,
+ };
 
 
