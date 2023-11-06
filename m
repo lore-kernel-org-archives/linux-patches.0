@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0045D200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72CE200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8kGIi3i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403C2C433C9;
-	Mon,  6 Nov 2023 13:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FnslwhV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520F6C433C8;
+	Mon,  6 Nov 2023 13:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699275963;
-	bh=GS4zEiYZY0q/mPfcmmDh/XIlAFSO+T2dAgPXvwCGMbo=;
+	s=korg; t=1699275966;
+	bh=l4MxhmhEWiMLs+LbkvR3wAlC/H2pdSFYpuoNNjsLPyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s8kGIi3itoDfgGoXF/74zUfni2EY6kkgLcBUXL/X9nrs1QBV01Uh6pzOrnOi3TbcJ
-	 fxABWbqHbjNKAJ7QiymiANMXMEMJ7UQZGCitWlZAs42W3RGahZNNNnWq5u/C3QZEYX
-	 hicfgHTL2G2O+nTukVb1qwkNbUF6KbRyiCaUujIM=
+	b=1FnslwhVhOsHAjfz/iy697nCn6RF/RGh10acIYHOO6hmypHGXZngXUwXJluhvOZkP
+	 FIZnSielX6eU203AbfSf2c8MYNR+kt/QLzrO6INu6F+d0VxtGIm7wLlxF4OWtmaGm2
+	 8s+OwI/ots97GZuXV6x3X08wM6pm7RWfFPBQyX4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hayes Wang <hayeswang@realtek.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Grant Grundler <grundler@chromium.org>,
+	Fred Chen <fred.chenchen03@gmail.com>,
+	Neal Cardwell <ncardwell@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 06/48] r8152: Increase USB control msg timeout to 5000ms as per spec
-Date: Mon,  6 Nov 2023 14:02:57 +0100
-Message-ID: <20231106130258.080163490@linuxfoundation.org>
+Subject: [PATCH 4.14 07/48] tcp: fix wrong RTO timeout when received SACK reneging
+Date: Mon,  6 Nov 2023 14:02:58 +0100
+Message-ID: <20231106130258.109864930@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -44,75 +43,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Fred Chen <fred.chenchen03@gmail.com>
 
-[ Upstream commit a5feba71ec9c14a54c3babdc732c5b6866d8ee43 ]
+[ Upstream commit d2a0fc372aca561556e765d0a9ec365c7c12f0ad ]
 
-According to the comment next to USB_CTRL_GET_TIMEOUT and
-USB_CTRL_SET_TIMEOUT, although sending/receiving control messages is
-usually quite fast, the spec allows them to take up to 5 seconds.
-Let's increase the timeout in the Realtek driver from 500ms to 5000ms
-(using the #defines) to account for this.
+This commit fix wrong RTO timeout when received SACK reneging.
 
-This is not just a theoretical change. The need for the longer timeout
-was seen in testing. Specifically, if you drop a sc7180-trogdor based
-Chromebook into the kdb debugger and then "go" again after sitting in
-the debugger for a while, the next USB control message takes a long
-time. Out of ~40 tests the slowest USB control message was 4.5
-seconds.
+When an ACK arrived pointing to a SACK reneging, tcp_check_sack_reneging()
+will rearm the RTO timer for min(1/2*srtt, 10ms) into to the future.
 
-While dropping into kdb is not exactly an end-user scenario, the above
-is similar to what could happen due to an temporary interrupt storm,
-what could happen if there was a host controller (HW or SW) issue, or
-what could happen if the Realtek device got into a confused state and
-needed time to recover.
+But since the commit 62d9f1a6945b ("tcp: fix TLP timer not set when
+CA_STATE changes from DISORDER to OPEN") merged, the tcp_set_xmit_timer()
+is moved after tcp_fastretrans_alert()(which do the SACK reneging check),
+so the RTO timeout will be overwrited by tcp_set_xmit_timer() with
+icsk_rto instead of 1/2*srtt.
 
-This change is fairly critical since the r8152 driver in Linux doesn't
-expect register reads/writes (which are backed by USB control
-messages) to fail.
+Here is a packetdrill script to check this bug:
+0     socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
++0    bind(3, ..., ...) = 0
++0    listen(3, 1) = 0
 
-Fixes: ac718b69301c ("net/usb: new driver for RTL8152")
-Suggested-by: Hayes Wang <hayeswang@realtek.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Grant Grundler <grundler@chromium.org>
+// simulate srtt to 100ms
++0    < S 0:0(0) win 32792 <mss 1000, sackOK,nop,nop,nop,wscale 7>
++0    > S. 0:0(0) ack 1 <mss 1460,nop,nop,sackOK,nop,wscale 7>
++.1    < . 1:1(0) ack 1 win 1024
+
++0    accept(3, ..., ...) = 4
+
++0    write(4, ..., 10000) = 10000
++0    > P. 1:10001(10000) ack 1
+
+// inject sack
++.1    < . 1:1(0) ack 1 win 257 <sack 1001:10001,nop,nop>
++0    > . 1:1001(1000) ack 1
+
+// inject sack reneging
++.1    < . 1:1(0) ack 1001 win 257 <sack 9001:10001,nop,nop>
+
+// we expect rto fired in 1/2*srtt (50ms)
++.05    > . 1001:2001(1000) ack 1
+
+This fix remove the FLAG_SET_XMIT_TIMER from ack_flag when
+tcp_check_sack_reneging() set RTO timer with 1/2*srtt to avoid
+being overwrited later.
+
+Fixes: 62d9f1a6945b ("tcp: fix TLP timer not set when CA_STATE changes from DISORDER to OPEN")
+Signed-off-by: Fred Chen <fred.chenchen03@gmail.com>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Tested-by: Neal Cardwell <ncardwell@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/r8152.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_input.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index d17d125a34540..a0b40bdbdd84f 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -786,7 +786,7 @@ int get_registers(struct r8152 *tp, u16 value, u16 index, u16 size, void *data)
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 491c16d8e9ddc..e65daf71a52d7 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -2069,16 +2069,17 @@ void tcp_enter_loss(struct sock *sk)
+  * restore sanity to the SACK scoreboard. If the apparent reneging
+  * persists until this RTO then we'll clear the SACK scoreboard.
+  */
+-static bool tcp_check_sack_reneging(struct sock *sk, int flag)
++static bool tcp_check_sack_reneging(struct sock *sk, int *ack_flag)
+ {
+-	if (flag & FLAG_SACK_RENEGING &&
+-	    flag & FLAG_SND_UNA_ADVANCED) {
++	if (*ack_flag & FLAG_SACK_RENEGING &&
++	    *ack_flag & FLAG_SND_UNA_ADVANCED) {
+ 		struct tcp_sock *tp = tcp_sk(sk);
+ 		unsigned long delay = max(usecs_to_jiffies(tp->srtt_us >> 4),
+ 					  msecs_to_jiffies(10));
  
- 	ret = usb_control_msg(tp->udev, usb_rcvctrlpipe(tp->udev, 0),
- 			      RTL8152_REQ_GET_REGS, RTL8152_REQT_READ,
--			      value, index, tmp, size, 500);
-+			      value, index, tmp, size, USB_CTRL_GET_TIMEOUT);
- 	if (ret < 0)
- 		memset(data, 0xff, size);
- 	else
-@@ -809,7 +809,7 @@ int set_registers(struct r8152 *tp, u16 value, u16 index, u16 size, void *data)
+ 		inet_csk_reset_xmit_timer(sk, ICSK_TIME_RETRANS,
+ 					  delay, TCP_RTO_MAX);
++		*ack_flag &= ~FLAG_SET_XMIT_TIMER;
+ 		return true;
+ 	}
+ 	return false;
+@@ -2870,7 +2871,7 @@ static void tcp_fastretrans_alert(struct sock *sk, const int acked,
+ 		tp->prior_ssthresh = 0;
  
- 	ret = usb_control_msg(tp->udev, usb_sndctrlpipe(tp->udev, 0),
- 			      RTL8152_REQ_SET_REGS, RTL8152_REQT_WRITE,
--			      value, index, tmp, size, 500);
-+			      value, index, tmp, size, USB_CTRL_SET_TIMEOUT);
+ 	/* B. In all the states check for reneging SACKs. */
+-	if (tcp_check_sack_reneging(sk, flag))
++	if (tcp_check_sack_reneging(sk, ack_flag))
+ 		return;
  
- 	kfree(tmp);
- 
-@@ -5084,7 +5084,8 @@ static u8 rtl_get_version(struct usb_interface *intf)
- 
- 	ret = usb_control_msg(udev, usb_rcvctrlpipe(udev, 0),
- 			      RTL8152_REQ_GET_REGS, RTL8152_REQT_READ,
--			      PLA_TCR0, MCU_TYPE_PLA, tmp, sizeof(*tmp), 500);
-+			      PLA_TCR0, MCU_TYPE_PLA, tmp, sizeof(*tmp),
-+			      USB_CTRL_GET_TIMEOUT);
- 	if (ret > 0)
- 		ocp_data = (__le32_to_cpu(*tmp) >> 16) & VERSION_MASK;
- 
+ 	/* C. Check consistency of the current state. */
 -- 
 2.42.0
 
