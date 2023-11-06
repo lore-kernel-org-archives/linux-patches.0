@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298BB22EED
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAE222EED
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5odV6uj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C20C433C8;
-	Mon,  6 Nov 2023 13:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XD7pgJ03"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E06AC433C8;
+	Mon,  6 Nov 2023 13:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277281;
-	bh=iR+QuAt14hqr37DxKF/AxLbiWuoea+jwZupPWMHDEt8=;
+	s=korg; t=1699277284;
+	bh=afgH8ug/BvbIXVPoC/dddxzwpcgIFT7bsJpk92+Xw/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w5odV6uj8jcFtNZnEsMk7Pa1dgIXs5mWvQk8QT4dLjHlyO4QJ6ZwwxVHbuWICOlmC
-	 s/tsAwrrCFUX3N2q/RnK7BKewL2ALHteHQPGuGnBQZ5gvmO+5N0P3+OoQAmvqTDTay
-	 BML2OtccdjTSn/nNWHsCglPWsQw0NVexKaTDUPgE=
+	b=XD7pgJ03Wte5B/sS6rEqDS/JXNtuC8o5SCDEaSOlx9kVC7fQfe43OKRGijdCGLKqF
+	 kvh3c9IYuEohAAEeWvUcAUqJPQO7TslxeKYI6a1qAK1z5uEXcqejPRxs6NGKjWJIFw
+	 pIFJUe9Y9XdVxymdpfJffjz2XinOI3HxHDr5NFHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erhard Furtner <erhard_f@mailbox.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Alexey Bayduraev <alexey.v.bayduraev@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 100/128] powerpc/mm: Fix boot crash with FLATMEM
-Date: Mon,  6 Nov 2023 14:04:20 +0100
-Message-ID: <20231106130313.710733986@linuxfoundation.org>
+Subject: [PATCH 5.15 101/128] perf evlist: Add evlist__add_dummy_on_all_cpus()
+Date: Mon,  6 Nov 2023 14:04:21 +0100
+Message-ID: <20231106130313.750783324@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -42,141 +47,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit daa9ada2093ed23d52b4c1fe6e13cf78f55cc85f ]
+[ Upstream commit 126d68fdcabed8c2ca5ffaba785add93ef722da8 ]
 
-Erhard reported that his G5 was crashing with v6.6-rc kernels:
+Add evlist__add_dummy_on_all_cpus() to enable creating a system-wide dummy
+event that sets up the system-wide maps before map propagation.
 
-  mpic: Setting up HT PICs workarounds for U3/U4
-  BUG: Unable to handle kernel data access at 0xfeffbb62ffec65fe
-  Faulting instruction address: 0xc00000000005dc40
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  BE PAGE_SIZE=4K MMU=Hash SMP NR_CPUS=2 PowerMac
-  Modules linked in:
-  CPU: 0 PID: 0 Comm: swapper/0 Tainted: G                T  6.6.0-rc3-PMacGS #1
-  Hardware name: PowerMac11,2 PPC970MP 0x440101 PowerMac
-  NIP:  c00000000005dc40 LR: c000000000066660 CTR: c000000000007730
-  REGS: c0000000022bf510 TRAP: 0380   Tainted: G                T (6.6.0-rc3-PMacGS)
-  MSR:  9000000000001032 <SF,HV,ME,IR,DR,RI>  CR: 44004242  XER: 00000000
-  IRQMASK: 3
-  GPR00: 0000000000000000 c0000000022bf7b0 c0000000010c0b00 00000000000001ac
-  GPR04: 0000000003c80000 0000000000000300 c0000000f20001ae 0000000000000300
-  GPR08: 0000000000000006 feffbb62ffec65ff 0000000000000001 0000000000000000
-  GPR12: 9000000000001032 c000000002362000 c000000000f76b80 000000000349ecd8
-  GPR16: 0000000002367ba8 0000000002367f08 0000000000000006 0000000000000000
-  GPR20: 00000000000001ac c000000000f6f920 c0000000022cd985 000000000000000c
-  GPR24: 0000000000000300 00000003b0a3691d c0003e008030000e 0000000000000000
-  GPR28: c00000000000000c c0000000f20001ee feffbb62ffec65fe 00000000000001ac
-  NIP hash_page_do_lazy_icache+0x50/0x100
-  LR  __hash_page_4K+0x420/0x590
-  Call Trace:
-    hash_page_mm+0x364/0x6f0
-    do_hash_fault+0x114/0x2b0
-    data_access_common_virt+0x198/0x1f0
-  --- interrupt: 300 at mpic_init+0x4bc/0x10c4
-  NIP:  c000000002020a5c LR: c000000002020a04 CTR: 0000000000000000
-  REGS: c0000000022bf9f0 TRAP: 0300   Tainted: G                T (6.6.0-rc3-PMacGS)
-  MSR:  9000000000001032 <SF,HV,ME,IR,DR,RI>  CR: 24004248  XER: 00000000
-  DAR: c0003e008030000e DSISR: 40000000 IRQMASK: 1
-  ...
-  NIP mpic_init+0x4bc/0x10c4
-  LR  mpic_init+0x464/0x10c4
-  --- interrupt: 300
-    pmac_setup_one_mpic+0x258/0x2dc
-    pmac_pic_init+0x28c/0x3d8
-    init_IRQ+0x90/0x140
-    start_kernel+0x57c/0x78c
-    start_here_common+0x1c/0x20
+For convenience, add evlist__add_aux_dummy() so that the logic can be used
+whether or not the event needs to be system-wide.
 
-A bisect pointed to the breakage beginning with commit 9fee28baa601 ("powerpc:
-implement the new page table range API").
-
-Analysis of the oops pointed to a struct page with a corrupted
-compound_head being loaded via page_folio() -> _compound_head() in
-hash_page_do_lazy_icache().
-
-The access by the mpic code is to an MMIO address, so the expectation
-is that the struct page for that address would be initialised by
-init_unavailable_range(), as pointed out by Aneesh.
-
-Instrumentation showed that was not the case, which eventually lead to
-the realisation that pfn_valid() was returning false for that address,
-causing the struct page to not be initialised.
-
-Because the system is using FLATMEM, the version of pfn_valid() in
-memory_model.h is used:
-
-static inline int pfn_valid(unsigned long pfn)
-{
-	...
-	return pfn >= pfn_offset && (pfn - pfn_offset) < max_mapnr;
-}
-
-Which relies on max_mapnr being initialised. Early in boot max_mapnr is
-zero meaning no PFNs are valid.
-
-max_mapnr is initialised in mem_init() called via:
-
-  start_kernel()
-    mm_core_init()  # init/main.c:928
-      mem_init()
-
-But that is too late for the usage in init_unavailable_range() called via:
-
-  start_kernel()
-    setup_arch()    # init/main.c:893
-      paging_init()
-        free_area_init()
-          init_unavailable_range()
-
-Although max_mapnr is currently set in mem_init(), the value is actually
-already available much earlier, as soon as mem_topology_setup() has
-completed, which is also before paging_init() is called. So move the
-initialisation there, which causes paging_init() to correctly initialise
-the struct page and fixes the bug.
-
-This bug seems to have been lurking for years, but went unnoticed
-because the pre-folio code was inspecting the uninitialised page->flags
-but not dereferencing it.
-
-Thanks to Erhard and Aneesh for help debugging.
-
-Reported-by: Erhard Furtner <erhard_f@mailbox.org>
-Closes: https://lore.kernel.org/all/20230929132750.3cd98452@yea/
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231023112500.1550208-1-mpe@ellerman.id.au
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Alexey Bayduraev <alexey.v.bayduraev@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Link: https://lore.kernel.org/r/20220524075436.29144-6-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: f9cdeb58a9cf ("perf evlist: Avoid frequency mode for the dummy event")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/setup-common.c | 2 ++
- arch/powerpc/mm/mem.c              | 1 -
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/util/evlist.c | 45 ++++++++++++++++++++++++++++++++++++++++
+ tools/perf/util/evlist.h |  5 +++++
+ 2 files changed, 50 insertions(+)
 
-diff --git a/arch/powerpc/kernel/setup-common.c b/arch/powerpc/kernel/setup-common.c
-index b1e43b69a559d..42338e2921d64 100644
---- a/arch/powerpc/kernel/setup-common.c
-+++ b/arch/powerpc/kernel/setup-common.c
-@@ -887,6 +887,8 @@ void __init setup_arch(char **cmdline_p)
+diff --git a/tools/perf/util/evlist.c b/tools/perf/util/evlist.c
+index 39d294f6c3218..a75cdcf381308 100644
+--- a/tools/perf/util/evlist.c
++++ b/tools/perf/util/evlist.c
+@@ -258,6 +258,51 @@ int evlist__add_dummy(struct evlist *evlist)
+ 	return 0;
+ }
  
- 	/* Parse memory topology */
- 	mem_topology_setup();
-+	/* Set max_mapnr before paging_init() */
-+	set_max_mapnr(max_pfn);
++static void evlist__add_on_all_cpus(struct evlist *evlist, struct evsel *evsel)
++{
++	evsel->core.system_wide = true;
++
++	/*
++	 * All CPUs.
++	 *
++	 * Note perf_event_open() does not accept CPUs that are not online, so
++	 * in fact this CPU list will include only all online CPUs.
++	 */
++	perf_cpu_map__put(evsel->core.own_cpus);
++	evsel->core.own_cpus = perf_cpu_map__new(NULL);
++	perf_cpu_map__put(evsel->core.cpus);
++	evsel->core.cpus = perf_cpu_map__get(evsel->core.own_cpus);
++
++	/* No threads */
++	perf_thread_map__put(evsel->core.threads);
++	evsel->core.threads = perf_thread_map__new_dummy();
++
++	evlist__add(evlist, evsel);
++}
++
++struct evsel *evlist__add_aux_dummy(struct evlist *evlist, bool system_wide)
++{
++	struct evsel *evsel = evlist__dummy_event(evlist);
++
++	if (!evsel)
++		return NULL;
++
++	evsel->core.attr.exclude_kernel = 1;
++	evsel->core.attr.exclude_guest = 1;
++	evsel->core.attr.exclude_hv = 1;
++	evsel->core.attr.freq = 0;
++	evsel->core.attr.sample_period = 1;
++	evsel->no_aux_samples = true;
++	evsel->name = strdup("dummy:u");
++
++	if (system_wide)
++		evlist__add_on_all_cpus(evlist, evsel);
++	else
++		evlist__add(evlist, evsel);
++
++	return evsel;
++}
++
+ static int evlist__add_attrs(struct evlist *evlist, struct perf_event_attr *attrs, size_t nr_attrs)
+ {
+ 	struct evsel *evsel, *n;
+diff --git a/tools/perf/util/evlist.h b/tools/perf/util/evlist.h
+index ec177f783ee67..decf5c944adba 100644
+--- a/tools/perf/util/evlist.h
++++ b/tools/perf/util/evlist.h
+@@ -112,6 +112,11 @@ int __evlist__add_default_attrs(struct evlist *evlist,
+ int arch_evlist__add_default_attrs(struct evlist *evlist);
  
- 	/*
- 	 * Release secondary cpus out of their spinloops at 0x60 now that
-diff --git a/arch/powerpc/mm/mem.c b/arch/powerpc/mm/mem.c
-index 6902f453c7451..01fc77564cac1 100644
---- a/arch/powerpc/mm/mem.c
-+++ b/arch/powerpc/mm/mem.c
-@@ -288,7 +288,6 @@ void __init mem_init(void)
- #endif
+ int evlist__add_dummy(struct evlist *evlist);
++struct evsel *evlist__add_aux_dummy(struct evlist *evlist, bool system_wide);
++static inline struct evsel *evlist__add_dummy_on_all_cpus(struct evlist *evlist)
++{
++	return evlist__add_aux_dummy(evlist, true);
++}
  
- 	high_memory = (void *) __va(max_low_pfn * PAGE_SIZE);
--	set_max_mapnr(max_pfn);
- 
- 	kasan_late_init();
- 
+ int evlist__add_sb_event(struct evlist *evlist, struct perf_event_attr *attr,
+ 			 evsel__sb_cb_t cb, void *data);
 -- 
 2.42.0
 
