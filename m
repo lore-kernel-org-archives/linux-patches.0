@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41851200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19112200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bdom6FWS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B252EC433C9;
-	Mon,  6 Nov 2023 13:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0dnXT8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B562C433C9;
+	Mon,  6 Nov 2023 13:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276028;
-	bh=ziXeSXbsix2KjEvrJpou5dtQpv8o3jlYTu/q1OHTBes=;
+	s=korg; t=1699276030;
+	bh=GFr3n+6pqKmYEOtIa1Ccj0uaR0uHvOeEVzL6CIZMR4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bdom6FWSVat/RHyv2fVm3/umWcyd/Snxk8qiIPxiPabutBvvr1cScQyqBwHJGlCyn
-	 kaIbO2ODc3nUMZZpCIhpzBGA8eGU5mRqWden5jfz58h0CQO4QTeBDTrd7PDjBkat72
-	 d8fd5Iav3aoYsvFy7u1tw9R7lTyxI39F09rHdq/U=
+	b=v0dnXT8tBh8VgFd/wfykGNgeqZcUvD6HSiGbFAB6EJE+z/nuqAt+4cy9xPGxZepDG
+	 mPL3rGJFTeB3Blix61dMQN4Kia0Ja6a85gdnTjIL5dbtdT0pa6J0/WS2pzHgfgjbbQ
+	 3H5BWhJudY2z3aS9GiXjWU4aKbIyLKlDlhg3T40M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liha Sikanen <lihasika@gmail.com>
-Subject: [PATCH 4.14 44/48] usb: storage: set 1.50 as the lower bcdDevice for older "Super Top" compatibility
-Date: Mon,  6 Nov 2023 14:03:35 +0100
-Message-ID: <20231106130259.354651023@linuxfoundation.org>
+	Cameron Williams <cang1@live.co.uk>
+Subject: [PATCH 4.14 45/48] tty: 8250: Remove UC-257 and UC-431
+Date: Mon,  6 Nov 2023 14:03:36 +0100
+Message-ID: <20231106130259.384189115@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -40,32 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: LihaSika <lihasika@gmail.com>
+From: Cameron Williams <cang1@live.co.uk>
 
-commit 0e3139e6543b241b3e65956a55c712333bef48ac upstream.
+commit 33092fb3af51deb80849e90a17bada44bbcde6b3 upstream.
 
-Change lower bcdDevice value for "Super Top USB 2.0  SATA BRIDGE" to match
-1.50. I have such an older device with bcdDevice=1.50 and it will not work
-otherwise.
+The UC-257 is a serial + LPT card, so remove it from this driver.
+A patch has been submitted to add it to parport_serial instead.
 
+Additionaly, the UC-431 does not use this card ID, only the UC-420
+does. The 431 is a 3-port card and there is no generic 3-port configuration
+available, so remove reference to it from this driver.
+
+Fixes: 152d1afa834c ("tty: Add support for Brainboxes UC cards.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Liha Sikanen <lihasika@gmail.com>
-Link: https://lore.kernel.org/r/ccf7d12a-8362-4916-b3e0-f4150f54affd@gmail.com
+Signed-off-by: Cameron Williams <cang1@live.co.uk>
+Link: https://lore.kernel.org/r/DU0PR02MB78995ADF7394C74AD4CF3357C4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_cypress.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_pci.c |    9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/drivers/usb/storage/unusual_cypress.h
-+++ b/drivers/usb/storage/unusual_cypress.h
-@@ -32,7 +32,7 @@ UNUSUAL_DEV(  0x04b4, 0x6831, 0x0000, 0x
- 		"Cypress ISD-300LP",
- 		USB_SC_CYP_ATACB, USB_PR_DEVICE, NULL, 0),
- 
--UNUSUAL_DEV( 0x14cd, 0x6116, 0x0160, 0x0160,
-+UNUSUAL_DEV( 0x14cd, 0x6116, 0x0150, 0x0160,
- 		"Super Top",
- 		"USB 2.0  SATA BRIDGE",
- 		USB_SC_CYP_ATACB, USB_PR_DEVICE, NULL, 0),
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -4810,13 +4810,6 @@ static const struct pci_device_id serial
+ 		0, 0,
+ 		pbn_b2_1_115200 },
+ 	/*
+-	 * Brainboxes UC-257
+-	 */
+-	{	PCI_VENDOR_ID_INTASHIELD, 0x0861,
+-		PCI_ANY_ID, PCI_ANY_ID,
+-		0, 0,
+-		pbn_b2_2_115200 },
+-	/*
+ 	 * Brainboxes UC-260/271/701/756
+ 	 */
+ 	{	PCI_VENDOR_ID_INTASHIELD, 0x0D21,
+@@ -4895,7 +4888,7 @@ static const struct pci_device_id serial
+ 		0, 0,
+ 		pbn_b2_4_115200 },
+ 	/*
+-	 * Brainboxes UC-420/431
++	 * Brainboxes UC-420
+ 	 */
+ 	{       PCI_VENDOR_ID_INTASHIELD, 0x0921,
+ 		PCI_ANY_ID, PCI_ANY_ID,
 
 
