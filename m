@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EF9200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37C3200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aczlZkfo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265E4C433C7;
-	Mon,  6 Nov 2023 13:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwNVjo81"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C22DC433C7;
+	Mon,  6 Nov 2023 13:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276007;
-	bh=DxAy4YuLJoM9UPMWhLp2+nccEUHLrYnHDBP858V+2Bc=;
+	s=korg; t=1699276010;
+	bh=pkoH3EDZmq83zqC/93i9WQdW9Nuwq3jKoifn61uRNRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aczlZkfomJ7su5Z2wusI+ILUwx0F/64DJbIwQRRTuqQ+RPlTtxTgKTD7LdMEgaMyV
-	 N8lOQwUchdJmpWzP4u9HgI6wryx3Zg+EHIGVykj2/YYaTZ2MBAMTy1UQETqAuW2sHR
-	 Z99zHSXt8p+Siig4WCgthk8nQAgpG6wsxSX+ix6c=
+	b=WwNVjo81QXjmHHx63kUb1MEXJOsTa+QtK6FSmomIIvYP5il44kqNTm8G18hlQnDwq
+	 2TgSkPAeQfYFhzgiWctr7QjXmdvkb11pWC8urUaRUqB0/tH/H0hBmo8bUzDJDCt0I6
+	 Wj4ryjytBOT9Yef+Ic5D+36Lj9h8vVr6fd+nd7no=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James John <me@donjajo.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 38/48] platform/x86: asus-wmi: Change ASUS_WMI_BRN_DOWN code from 0x20 to 0x2e
-Date: Mon,  6 Nov 2023 14:03:29 +0100
-Message-ID: <20231106130259.155276039@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Borislav Petkov <bp@suse.de>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 4.14 21/48] x86/mm: Simplify RESERVE_BRK()
+Date: Mon,  6 Nov 2023 14:03:12 +0100
+Message-ID: <20231106130258.599336089@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130257.862199836@linuxfoundation.org>
 References: <20231106130257.862199836@linuxfoundation.org>
@@ -42,71 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Josh Poimboeuf <jpoimboe@redhat.com>
 
-[ Upstream commit f37cc2fc277b371fc491890afb7d8a26e36bb3a1 ]
+commit a1e2c031ec3949b8c039b739c0b5bf9c30007b00 upstream.
 
-Older Asus laptops change the backlight level themselves and then send
-WMI events with different codes for different backlight levels.
+RESERVE_BRK() reserves data in the .brk_reservation section.  The data
+is initialized to zero, like BSS, so the macro specifies 'nobits' to
+prevent the data from taking up space in the vmlinux binary.  The only
+way to get the compiler to do that (without putting the variable in .bss
+proper) is to use inline asm.
 
-The asus-wmi.c code maps the entire range of codes reported on
-brightness down keypresses to an internal ASUS_WMI_BRN_DOWN code:
+The macro also has a hack which encloses the inline asm in a discarded
+function, which allows the size to be passed (global inline asm doesn't
+allow inputs).
 
-define NOTIFY_BRNUP_MIN                0x11
-define NOTIFY_BRNUP_MAX                0x1f
-define NOTIFY_BRNDOWN_MIN              0x20
-define NOTIFY_BRNDOWN_MAX              0x2e
+Remove the need for the discarded function hack by just stringifying the
+size rather than supplying it as an input to the inline asm.
 
-        if (code >= NOTIFY_BRNUP_MIN && code <= NOTIFY_BRNUP_MAX)
-                code = ASUS_WMI_BRN_UP;
-        else if (code >= NOTIFY_BRNDOWN_MIN && code <= NOTIFY_BRNDOWN_MAX)
-                code = ASUS_WMI_BRN_DOWN;
-
-Before this commit all the NOTIFY_BRNDOWN_MIN - NOTIFY_BRNDOWN_MAX
-aka 0x20 - 0x2e events were mapped to 0x20.
-
-This mapping is causing issues on new laptop models which actually
-send 0x2b events for printscreen presses and 0x2c events for
-capslock presses, which get translated into spurious brightness-down
-presses.
-
-The plan is disable the 0x11-0x2e special mapping on laptops
-where asus-wmi does not register a backlight-device to avoid
-the spurious brightness-down keypresses. New laptops always send
-0x2e for brightness-down presses, change the special internal
-ASUS_WMI_BRN_DOWN value from 0x20 to 0x2e to match this in
-preparation for fixing the spurious brightness-down presses.
-
-This change does not have any functional impact since all
-of 0x20 - 0x2e is mapped to ASUS_WMI_BRN_DOWN first and only
-then checked against the keymap code and the new 0x2e
-value is still in the 0x20 - 0x2e range.
-
-Reported-by: James John <me@donjajo.com>
-Closes: https://lore.kernel.org/platform-driver-x86/a2c441fe-457e-44cf-a146-0ecd86b037cf@donjajo.com/
-Closes: https://bbs.archlinux.org/viewtopic.php?pid=2123716
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231017090725.38163-2-hdegoede@redhat.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Josh Poimboeuf <jpoimboe@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Borislav Petkov <bp@suse.de>
+Link: https://lore.kernel.org/r/20220506121631.133110232@infradead.org
+[nathan: Fix conflict due to lack of 2b6ff7dea670 and 33def8498fdd]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/asus-wmi.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/setup.h |   30 +++++++++++-------------------
+ 1 file changed, 11 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.h b/drivers/platform/x86/asus-wmi.h
-index 57a79bddb2861..95612878a841f 100644
---- a/drivers/platform/x86/asus-wmi.h
-+++ b/drivers/platform/x86/asus-wmi.h
-@@ -31,7 +31,7 @@
- #include <linux/i8042.h>
+--- a/arch/x86/include/asm/setup.h
++++ b/arch/x86/include/asm/setup.h
+@@ -91,27 +91,19 @@ extern unsigned long _brk_end;
+ void *extend_brk(size_t size, size_t align);
  
- #define ASUS_WMI_KEY_IGNORE (-1)
--#define ASUS_WMI_BRN_DOWN	0x20
-+#define ASUS_WMI_BRN_DOWN	0x2e
- #define ASUS_WMI_BRN_UP		0x2f
+ /*
+- * Reserve space in the brk section.  The name must be unique within
+- * the file, and somewhat descriptive.  The size is in bytes.  Must be
+- * used at file scope.
++ * Reserve space in the brk section.  The name must be unique within the file,
++ * and somewhat descriptive.  The size is in bytes.
+  *
+- * (This uses a temp function to wrap the asm so we can pass it the
+- * size parameter; otherwise we wouldn't be able to.  We can't use a
+- * "section" attribute on a normal variable because it always ends up
+- * being @progbits, which ends up allocating space in the vmlinux
+- * executable.)
++ * The allocation is done using inline asm (rather than using a section
++ * attribute on a normal variable) in order to allow the use of @nobits, so
++ * that it doesn't take up any space in the vmlinux file.
+  */
+-#define RESERVE_BRK(name,sz)						\
+-	static void __section(.discard.text) __used notrace		\
+-	__brk_reservation_fn_##name##__(void) {				\
+-		asm volatile (						\
+-			".pushsection .brk_reservation,\"aw\",@nobits;" \
+-			".brk." #name ":"				\
+-			" 1:.skip %c0;"					\
+-			" .size .brk." #name ", . - 1b;"		\
+-			" .popsection"					\
+-			: : "i" (sz));					\
+-	}
++#define RESERVE_BRK(name, size)						\
++	asm(".pushsection .brk_reservation,\"aw\",@nobits\n\t"		\
++	    ".brk." #name ":\n\t"					\
++	    ".skip " __stringify(size) "\n\t"				\
++	    ".size .brk." #name ", " __stringify(size) "\n\t"		\
++	    ".popsection\n\t")
  
- struct module;
--- 
-2.42.0
-
+ /* Helper for reserving space for arrays of things */
+ #define RESERVE_BRK_ARRAY(type, name, entries)		\
 
 
