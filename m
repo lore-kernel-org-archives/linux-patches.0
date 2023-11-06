@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC7D210F9
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE94C210E2
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCdaZxka"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEA5C433CB;
-	Mon,  6 Nov 2023 13:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lojMkFF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B10AC433CB;
+	Mon,  6 Nov 2023 13:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276323;
-	bh=dtSB0Pbvqj/5mRdheAHpwwe038Jr1k6i6YtoHWBq06A=;
+	s=korg; t=1699276330;
+	bh=bpn/K2gYyCHAfEz9IMcVZPlR3ieBMFMmdoZsJhbbyAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YCdaZxkaedRKJEOZe+BHRMnxfuuaaUZiFcw8DxiPaiWAOEZtmqLNICLdCRYz1N7zF
-	 CyvtP2jvZtrC31TxpI+PPDRWEnbVKh4zo3/gOvpQl+87/oUlbxN4cGIcbeqqYsuJAa
-	 uYpV8KaOu0yI/JTV3pPVHpI8duSUSiWSnsDDjG6E=
+	b=lojMkFF5hqldxwiBQ0VjBIkrwEOX1pVRhDg5xwU42DRQ4J8f2vtb/fWHlAdzrUwc9
+	 lHbazIYHNm9iuubHVDECljyStvM10pZyB69idcR/hzXRSAvdV9Sc7LKboVWViQzLpZ
+	 yyI7xsiPnitinfi1JM2F/VbL0PkARMDkvTi3+sY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	lee@kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 4.19 36/61] rpmsg: Fix kfree() of static memory on setting driver_override
-Date: Mon,  6 Nov 2023 14:03:32 +0100
-Message-ID: <20231106130300.851389290@linuxfoundation.org>
+	Cameron Williams <cang1@live.co.uk>
+Subject: [PATCH 4.19 60/61] tty: 8250: Add support for Brainboxes UP cards
+Date: Mon,  6 Nov 2023 14:03:56 +0100
+Message-ID: <20231106130301.642535481@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -42,74 +40,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Cameron Williams <cang1@live.co.uk>
 
-commit 42cd402b8fd4672b692400fe5f9eecd55d2794ac upstream.
+commit 2c6fec1e1532f15350be7e14ba6b88a39d289fe4 upstream.
 
-The driver_override field from platform driver should not be initialized
-from static memory (string literal) because the core later kfree() it,
-for example when driver_override is set via sysfs.
+Add support for the Brainboxes UP (powered PCI) range of
+cards, namely UP-189, UP-200, UP-869 and UP-880.
 
-Use dedicated helper to set driver_override properly.
-
-Fixes: 950a7388f02b ("rpmsg: Turn name service into a stand alone driver")
-Fixes: c0cdc19f84a4 ("rpmsg: Driver for user space endpoint interface")
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20220419113435.246203-13-krzysztof.kozlowski@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Cameron Williams <cang1@live.co.uk>
+Link: https://lore.kernel.org/r/DU0PR02MB7899B5B59FF3D8587E88C117C4DBA@DU0PR02MB7899.eurprd02.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/rpmsg_internal.h |   13 +++++++++++--
- include/linux/rpmsg.h          |    6 ++++--
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/tty/serial/8250/8250_pci.c |   60 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
 
---- a/drivers/rpmsg/rpmsg_internal.h
-+++ b/drivers/rpmsg/rpmsg_internal.h
-@@ -83,10 +83,19 @@ struct device *rpmsg_find_device(struct
-  */
- static inline int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev)
- {
-+	int ret;
-+
- 	strcpy(rpdev->id.name, "rpmsg_chrdev");
--	rpdev->driver_override = "rpmsg_chrdev";
-+	ret = driver_set_override(&rpdev->dev, &rpdev->driver_override,
-+				  rpdev->id.name, strlen(rpdev->id.name));
-+	if (ret)
-+		return ret;
-+
-+	ret = rpmsg_register_device(rpdev);
-+	if (ret)
-+		kfree(rpdev->driver_override);
- 
--	return rpmsg_register_device(rpdev);
-+	return ret;
- }
- 
- #endif
---- a/include/linux/rpmsg.h
-+++ b/include/linux/rpmsg.h
-@@ -41,7 +41,9 @@ struct rpmsg_channel_info {
-  * rpmsg_device - device that belong to the rpmsg bus
-  * @dev: the device struct
-  * @id: device id (used to match between rpmsg drivers and devices)
-- * @driver_override: driver name to force a match
-+ * @driver_override: driver name to force a match; do not set directly,
-+ *                   because core frees it; use driver_set_override() to
-+ *                   set or clear it.
-  * @src: local address
-  * @dst: destination address
-  * @ept: the rpmsg endpoint of this channel
-@@ -50,7 +52,7 @@ struct rpmsg_channel_info {
- struct rpmsg_device {
- 	struct device dev;
- 	struct rpmsg_device_id id;
--	char *driver_override;
-+	const char *driver_override;
- 	u32 src;
- 	u32 dst;
- 	struct rpmsg_endpoint *ept;
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -4941,6 +4941,66 @@ static const struct pci_device_id serial
+ 		0, 0,
+ 		pbn_b2_4_115200 },
+ 	/*
++	 * Brainboxes UP-189
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0AC1,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0AC2,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0AC3,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	/*
++	 * Brainboxes UP-200
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0B21,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0B22,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0B23,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	/*
++	 * Brainboxes UP-869
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C01,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C02,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C03,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	/*
++	 * Brainboxes UP-880
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C21,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C22,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	{	PCI_VENDOR_ID_INTASHIELD, 0x0C23,
++		PCI_ANY_ID, PCI_ANY_ID,
++		0, 0,
++		pbn_b2_2_115200 },
++	/*
+ 	 * Perle PCI-RAS cards
+ 	 */
+ 	{       PCI_VENDOR_ID_PLX, PCI_DEVICE_ID_PLX_9030,
 
 
