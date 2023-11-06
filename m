@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747D0208BD
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BCB5208BD
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nege/Vl9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6723C433C8;
-	Mon,  6 Nov 2023 13:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUk0Zsx6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C54C433C7;
+	Mon,  6 Nov 2023 13:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276702;
-	bh=rwBzskrV+lLy/LHg8/pon19KGBTb9kqi4LZ9fnXgQ54=;
+	s=korg; t=1699276705;
+	bh=PLBXTrN0QkhrCSilkS1ZEciLz0arqn97sSTVzn0WmkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nege/Vl9RGUjX6Tl6Rn/XFSkG92avP2pk++rAqC6h+csq+COyzMPwPTeY0tmc304Y
-	 f6rYTuTM7uhV+9gXp1A302zUHFoNDtn1PRbumnhcJgHSb5FV/g8X5rG6Rw+ik7phxr
-	 ylc44Vw0Moum6t4A8QGAssDXoAiZ9p2NnJH4oRVo=
+	b=RUk0Zsx6WPJXgJCI/sCbjNAgmUaRKbuPW1sV5TZMUemudHBm+zxNqoe2G4az/nDKA
+	 YFA9crg7a7lx5IST03UUcn9VjCKWY4lhX7s81Lxvf998msIvIXGPXIHGWCYLaG39VO
+	 /6agOqmeojx+DRHSuPuQHieg2rR7W2s5HFE7vlOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max McCarthy <mmccarthy@mcintoshlabs.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.5 67/88] ALSA: usb-audio: add quirk flag to enable native DSD for McIntosh devices
-Date: Mon,  6 Nov 2023 14:04:01 +0100
-Message-ID: <20231106130308.229657337@linuxfoundation.org>
+	Vicki Pfau <vi@endrift.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.5 68/88] PCI: Prevent xHCI driver from claiming AMD VanGogh USB3 DRD device
+Date: Mon,  6 Nov 2023 14:04:02 +0100
+Message-ID: <20231106130308.263085222@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130305.772449722@linuxfoundation.org>
 References: <20231106130305.772449722@linuxfoundation.org>
@@ -41,33 +41,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max McCarthy <mmccarthy@mcintoshlabs.com>
+From: Vicki Pfau <vi@endrift.com>
 
-commit 99248c8902f505ec064cf2b0f74629016f2f4c82 upstream.
+commit 7e6f3b6d2c352b5fde37ce3fed83bdf6172eebd4 upstream.
 
-McIntosh devices supporting native DSD require the feature to be
-explicitly exposed. Add a flag that fixes an issue where DSD audio was
-defaulting to DSD over PCM instead of delivering raw DSD data.
+The AMD VanGogh SoC contains a DesignWare USB3 Dual-Role Device that can be
+operated as either a USB Host or a USB Device, similar to on the AMD Nolan
+platform.
 
-Signed-off-by: Max McCarthy <mmccarthy@mcintoshlabs.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/BL0PR13MB4433226005162D186A8DFF4AD6DFA@BL0PR13MB4433.namprd13.prod.outlook.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+be6646bfbaec ("PCI: Prevent xHCI driver from claiming AMD Nolan USB3 DRD
+device") added a quirk to let the dwc3 driver claim the Nolan device since
+it provides more specific support.
+
+Extend that quirk to include the VanGogh SoC USB3 device.
+
+Link: https://lore.kernel.org/r/20230927202212.2388216-1-vi@endrift.com
+Signed-off-by: Vicki Pfau <vi@endrift.com>
+[bhelgaas: include be6646bfbaec reference, add stable tag]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org	# v3.19+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/quirks.c    |    8 +++++---
+ include/linux/pci_ids.h |    1 +
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2220,6 +2220,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x2ab6, /* T+A devices */
- 		   QUIRK_FLAG_DSD_RAW),
-+	VENDOR_FLG(0x2afd, /* McIntosh Laboratory, Inc. */
-+		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x2d87, /* Cayin device */
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x3336, /* HEM devices */
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -688,7 +688,7 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
+ /*
+  * In the AMD NL platform, this device ([1022:7912]) has a class code of
+  * PCI_CLASS_SERIAL_USB_XHCI (0x0c0330), which means the xhci driver will
+- * claim it.
++ * claim it. The same applies on the VanGogh platform device ([1022:163a]).
+  *
+  * But the dwc3 driver is a more specific driver for this device, and we'd
+  * prefer to use it instead of xhci. To prevent xhci from claiming the
+@@ -696,7 +696,7 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AT
+  * defines as "USB device (not host controller)". The dwc3 driver can then
+  * claim it based on its Vendor and Device ID.
+  */
+-static void quirk_amd_nl_class(struct pci_dev *pdev)
++static void quirk_amd_dwc_class(struct pci_dev *pdev)
+ {
+ 	u32 class = pdev->class;
+ 
+@@ -706,7 +706,9 @@ static void quirk_amd_nl_class(struct pc
+ 		 class, pdev->class);
+ }
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_NL_USB,
+-		quirk_amd_nl_class);
++		quirk_amd_dwc_class);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_VANGOGH_USB,
++		quirk_amd_dwc_class);
+ 
+ /*
+  * Synopsys USB 3.x host HAPS platform has a class code of
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -579,6 +579,7 @@
+ #define PCI_DEVICE_ID_AMD_1AH_M00H_DF_F3 0x12c3
+ #define PCI_DEVICE_ID_AMD_1AH_M20H_DF_F3 0x16fb
+ #define PCI_DEVICE_ID_AMD_MI200_DF_F3	0x14d3
++#define PCI_DEVICE_ID_AMD_VANGOGH_USB	0x163a
+ #define PCI_DEVICE_ID_AMD_CNB17H_F3	0x1703
+ #define PCI_DEVICE_ID_AMD_LANCE		0x2000
+ #define PCI_DEVICE_ID_AMD_LANCE_HOME	0x2001
 
 
