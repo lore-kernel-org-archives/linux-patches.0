@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A40210FF
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772F5208CA
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deiT9zBs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F43C433C8;
-	Mon,  6 Nov 2023 13:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UH9QZihy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E0AC433C7;
+	Mon,  6 Nov 2023 13:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277063;
-	bh=AlzcfrXAvi3vBH3aRbil/mErkdkOFw38EHUJusIGioU=;
+	s=korg; t=1699277066;
+	bh=zr1YLyHKezK/F4PK/5pSgB+zSVlRf/rw4i8fN0mnDlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=deiT9zBsXz0XdF2VNM3MDURTFhHfbRKOIf9ZEMAl9Ev+8Oy2HW9awCyU5h+X8/err
-	 iOWxeaGdZJAVSoRpOn8FBDG384nhS3gHwv7s6zDrBr2h0BHGNXsEv4SLDom13mbTMJ
-	 ygmO5Q8e4Ffdi5uqDnEZjudG78ucpxM8erXeI8hw=
+	b=UH9QZihypug5htZigODq3UIcpfWNw2REDNBdfD1K6otEQcB9XUyv08DhdKq4Bdg47
+	 AC0r4KGZNclTvnE0qUsqD3Qfj226ZssE6iqRhua/SxyEk5ifc4UhSl+9YSekKhxBjN
+	 +6BpiG63EMWzM8Jy8gvpuH+4q0yE8wNzg3824f6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	"David S. Miller" <davem@davemloft.net>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/128] treewide: Spelling fix in comment
-Date: Mon,  6 Nov 2023 14:03:05 +0100
-Message-ID: <20231106130310.263465389@linuxfoundation.org>
+Subject: [PATCH 5.15 003/128] pinctrl: qcom: lpass-lpi: fix concurrent register updates
+Date: Mon,  6 Nov 2023 14:02:43 +0100
+Message-ID: <20231106130309.279396477@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
 References: <20231106130309.112650042@linuxfoundation.org>
@@ -43,34 +42,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit fb71ba0ed8be9534493c80ba00142a64d9972a72 ]
+[ Upstream commit c8befdc411e5fd1bf95a13e8744c8ca79b412bee ]
 
-reques -> request
+The Qualcomm LPASS LPI pin controller driver uses one lock for guarding
+Read-Modify-Write code for slew rate registers.  However the pin
+configuration and muxing registers have exactly the same RMW code but
+are not protected.
 
-Fixes: 09dde54c6a69 ("PS3: gelic: Add wireless support for PS3")
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Pin controller framework does not provide locking here, thus it is
+possible to trigger simultaneous change of pin configuration registers
+resulting in non-atomic changes.
+
+Protect from concurrent access by re-using the same lock used to cover
+the slew rate register.  Using the same lock instead of adding second
+one will make more sense, once we add support for newer Qualcomm SoC,
+where slew rate is configured in the same register as pin
+configuration/muxing.
+
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20231013145705.219954-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/toshiba/ps3_gelic_wireless.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/toshiba/ps3_gelic_wireless.c b/drivers/net/ethernet/toshiba/ps3_gelic_wireless.c
-index dc14a66583ff3..44488c153ea25 100644
---- a/drivers/net/ethernet/toshiba/ps3_gelic_wireless.c
-+++ b/drivers/net/ethernet/toshiba/ps3_gelic_wireless.c
-@@ -1217,7 +1217,7 @@ static int gelic_wl_set_encodeext(struct net_device *netdev,
- 		key_index = wl->current_key;
+diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+index dd1c9fd733c8f..ec37ad43a6364 100644
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+@@ -102,7 +102,8 @@ struct lpi_pinctrl {
+ 	char __iomem *tlmm_base;
+ 	char __iomem *slew_base;
+ 	struct clk_bulk_data clks[MAX_LPI_NUM_CLKS];
+-	struct mutex slew_access_lock;
++	/* Protects from concurrent register updates */
++	struct mutex lock;
+ 	const struct lpi_pinctrl_variant_data *data;
+ };
  
- 	if (!enc->length && (ext->ext_flags & IW_ENCODE_EXT_SET_TX_KEY)) {
--		/* reques to change default key index */
-+		/* request to change default key index */
- 		pr_debug("%s: request to change default key to %d\n",
- 			 __func__, key_index);
- 		wl->current_key = key_index;
+@@ -330,9 +331,11 @@ static int lpi_gpio_set_mux(struct pinctrl_dev *pctldev, unsigned int function,
+ 	if (WARN_ON(i == g->nfuncs))
+ 		return -EINVAL;
+ 
++	mutex_lock(&pctrl->lock);
+ 	val = lpi_gpio_read(pctrl, pin, LPI_GPIO_CFG_REG);
+ 	u32p_replace_bits(&val, i, LPI_GPIO_FUNCTION_MASK);
+ 	lpi_gpio_write(pctrl, pin, LPI_GPIO_CFG_REG, val);
++	mutex_unlock(&pctrl->lock);
+ 
+ 	return 0;
+ }
+@@ -438,14 +441,14 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+ 			if (slew_offset == NO_SLEW)
+ 				break;
+ 
+-			mutex_lock(&pctrl->slew_access_lock);
++			mutex_lock(&pctrl->lock);
+ 
+ 			sval = ioread32(pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
+ 			sval &= ~(LPI_SLEW_RATE_MASK << slew_offset);
+ 			sval |= arg << slew_offset;
+ 			iowrite32(sval, pctrl->slew_base + LPI_SLEW_RATE_CTL_REG);
+ 
+-			mutex_unlock(&pctrl->slew_access_lock);
++			mutex_unlock(&pctrl->lock);
+ 			break;
+ 		default:
+ 			return -EINVAL;
+@@ -461,6 +464,7 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+ 		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
+ 	}
+ 
++	mutex_lock(&pctrl->lock);
+ 	val = lpi_gpio_read(pctrl, group, LPI_GPIO_CFG_REG);
+ 
+ 	u32p_replace_bits(&val, pullup, LPI_GPIO_PULL_MASK);
+@@ -469,6 +473,7 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+ 	u32p_replace_bits(&val, output_enabled, LPI_GPIO_OE_MASK);
+ 
+ 	lpi_gpio_write(pctrl, group, LPI_GPIO_CFG_REG, val);
++	mutex_unlock(&pctrl->lock);
+ 
+ 	return 0;
+ }
+@@ -642,7 +647,7 @@ static int lpi_pinctrl_probe(struct platform_device *pdev)
+ 	pctrl->chip.of_gpio_n_cells = 2;
+ 	pctrl->chip.can_sleep = false;
+ 
+-	mutex_init(&pctrl->slew_access_lock);
++	mutex_init(&pctrl->lock);
+ 
+ 	pctrl->ctrl = devm_pinctrl_register(dev, &pctrl->desc, pctrl);
+ 	if (IS_ERR(pctrl->ctrl)) {
+@@ -660,7 +665,7 @@ static int lpi_pinctrl_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ err_pinctrl:
+-	mutex_destroy(&pctrl->slew_access_lock);
++	mutex_destroy(&pctrl->lock);
+ 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
+ 
+ 	return ret;
+@@ -670,7 +675,7 @@ static int lpi_pinctrl_remove(struct platform_device *pdev)
+ {
+ 	struct lpi_pinctrl *pctrl = platform_get_drvdata(pdev);
+ 
+-	mutex_destroy(&pctrl->slew_access_lock);
++	mutex_destroy(&pctrl->lock);
+ 	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
+ 
+ 	return 0;
 -- 
 2.42.0
 
