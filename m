@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A512374A
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A762374A
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UzEdaQZc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DCBC433C8;
-	Mon,  6 Nov 2023 13:31:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lVRPU4X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BFDC433C8;
+	Mon,  6 Nov 2023 13:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699277513;
-	bh=M8FWiPvzXfjgs9kAKlwFLgBWgN1HPQxMVF1mVGoAz9Q=;
+	s=korg; t=1699277515;
+	bh=vV/ufL7lxMElLQBDQco0GFc97xW1oFO5clhybDbDdrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UzEdaQZczExvYUXJyfpXjTG16le25XnRBBWrE/biiIga8qYhR+Yo4pwp3Xw0JOdfg
-	 2NV0ju5pJ2ecFO2PMFjF/wbCjFmunxgJcnL5JXqeD9Em1BS0QRK7FSkDaQAOEmGPmc
-	 g/JMzKAvANunb+XAZQSjPLhzUZJack5PyTNr8Mo0=
+	b=0lVRPU4X5HojNHhP90NpCCAf9a6aDj2uahp8PpFPAYw1wHcv2p+m1Vwmtq0qrQ+eK
+	 cdgTXepoc5NSFA39vXlW70VGvmdg/vHfr2ErkoSQOPyhHfzVZtVQB1CEe+ClDqvh7Z
+	 BFlDkRnSavTfck+4gNWeVCm/eTUuANXN1f3fp5AE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenqing Liu <wenqingliu0120@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Kazunori Kobayashi <kazunori.kobayashi@miraclelinux.com>
-Subject: [PATCH 5.10 47/95] f2fs: fix to do sanity check on inode type during garbage collection
-Date: Mon,  6 Nov 2023 14:04:15 +0100
-Message-ID: <20231106130306.421819753@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Borislav Petkov <bp@suse.de>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.10 48/95] x86/mm: Simplify RESERVE_BRK()
+Date: Mon,  6 Nov 2023 14:04:16 +0100
+Message-ID: <20231106130306.452604647@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 References: <20231106130304.678610325@linuxfoundation.org>
@@ -43,66 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Josh Poimboeuf <jpoimboe@redhat.com>
 
-commit 9056d6489f5a41cfbb67f719d2c0ce61ead72d9f upstream.
+commit a1e2c031ec3949b8c039b739c0b5bf9c30007b00 upstream.
 
-As report by Wenqing Liu in bugzilla:
+RESERVE_BRK() reserves data in the .brk_reservation section.  The data
+is initialized to zero, like BSS, so the macro specifies 'nobits' to
+prevent the data from taking up space in the vmlinux binary.  The only
+way to get the compiler to do that (without putting the variable in .bss
+proper) is to use inline asm.
 
-https://bugzilla.kernel.org/show_bug.cgi?id=215231
+The macro also has a hack which encloses the inline asm in a discarded
+function, which allows the size to be passed (global inline asm doesn't
+allow inputs).
 
-- Overview
-kernel NULL pointer dereference triggered  in folio_mark_dirty() when mount and operate on a crafted f2fs image
+Remove the need for the discarded function hack by just stringifying the
+size rather than supplying it as an input to the inline asm.
 
-- Reproduce
-tested on kernel 5.16-rc3, 5.15.X under root
-
-1. mkdir mnt
-2. mount -t f2fs tmp1.img mnt
-3. touch tmp
-4. cp tmp mnt
-
-F2FS-fs (loop0): sanity_check_inode: inode (ino=49) extent info [5942, 4294180864, 4] is incorrect, run fsck to fix
-F2FS-fs (loop0): f2fs_check_nid_range: out-of-range nid=31340049, run fsck to fix.
-BUG: kernel NULL pointer dereference, address: 0000000000000000
- folio_mark_dirty+0x33/0x50
- move_data_page+0x2dd/0x460 [f2fs]
- do_garbage_collect+0xc18/0x16a0 [f2fs]
- f2fs_gc+0x1d3/0xd90 [f2fs]
- f2fs_balance_fs+0x13a/0x570 [f2fs]
- f2fs_create+0x285/0x840 [f2fs]
- path_openat+0xe6d/0x1040
- do_filp_open+0xc5/0x140
- do_sys_openat2+0x23a/0x310
- do_sys_open+0x57/0x80
-
-The root cause is for special file: e.g. character, block, fifo or socket file,
-f2fs doesn't assign address space operations pointer array for mapping->a_ops field,
-so, in a fuzzed image, SSA table indicates a data block belong to special file, when
-f2fs tries to migrate that block, it causes NULL pointer access once move_data_page()
-calls a_ops->set_dirty_page().
-
-Cc: stable@vger.kernel.org
-Reported-by: Wenqing Liu <wenqingliu0120@gmail.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Kazunori Kobayashi <kazunori.kobayashi@miraclelinux.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Borislav Petkov <bp@suse.de>
+Link: https://lore.kernel.org/r/20220506121631.133110232@infradead.org
+[nathan: Resolve conflict due to lack of 2b6ff7dea670]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/gc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/setup.h |   30 +++++++++++-------------------
+ 1 file changed, 11 insertions(+), 19 deletions(-)
 
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1451,7 +1451,8 @@ next_step:
+--- a/arch/x86/include/asm/setup.h
++++ b/arch/x86/include/asm/setup.h
+@@ -108,27 +108,19 @@ extern unsigned long _brk_end;
+ void *extend_brk(size_t size, size_t align);
  
- 		if (phase == 3) {
- 			inode = f2fs_iget(sb, dni.ino);
--			if (IS_ERR(inode) || is_bad_inode(inode)) {
-+			if (IS_ERR(inode) || is_bad_inode(inode) ||
-+					special_file(inode->i_mode)) {
- 				set_sbi_flag(sbi, SBI_NEED_FSCK);
- 				continue;
- 			}
+ /*
+- * Reserve space in the brk section.  The name must be unique within
+- * the file, and somewhat descriptive.  The size is in bytes.  Must be
+- * used at file scope.
++ * Reserve space in the brk section.  The name must be unique within the file,
++ * and somewhat descriptive.  The size is in bytes.
+  *
+- * (This uses a temp function to wrap the asm so we can pass it the
+- * size parameter; otherwise we wouldn't be able to.  We can't use a
+- * "section" attribute on a normal variable because it always ends up
+- * being @progbits, which ends up allocating space in the vmlinux
+- * executable.)
++ * The allocation is done using inline asm (rather than using a section
++ * attribute on a normal variable) in order to allow the use of @nobits, so
++ * that it doesn't take up any space in the vmlinux file.
+  */
+-#define RESERVE_BRK(name,sz)						\
+-	static void __section(".discard.text") __used notrace		\
+-	__brk_reservation_fn_##name##__(void) {				\
+-		asm volatile (						\
+-			".pushsection .brk_reservation,\"aw\",@nobits;" \
+-			".brk." #name ":"				\
+-			" 1:.skip %c0;"					\
+-			" .size .brk." #name ", . - 1b;"		\
+-			" .popsection"					\
+-			: : "i" (sz));					\
+-	}
++#define RESERVE_BRK(name, size)						\
++	asm(".pushsection .brk_reservation,\"aw\",@nobits\n\t"		\
++	    ".brk." #name ":\n\t"					\
++	    ".skip " __stringify(size) "\n\t"				\
++	    ".size .brk." #name ", " __stringify(size) "\n\t"		\
++	    ".popsection\n\t")
+ 
+ /* Helper for reserving space for arrays of things */
+ #define RESERVE_BRK_ARRAY(type, name, entries)		\
 
 
