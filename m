@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787CD200A5
-	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57678200A5
+	for <patches@lists.linux.dev>; Mon,  6 Nov 2023 13:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrCuXtdv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA197C433C7;
-	Mon,  6 Nov 2023 13:10:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2f22YbLG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6101C433C7;
+	Mon,  6 Nov 2023 13:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1699276235;
-	bh=UM7klJgDCJIu5jLATHXek8xLCntmiWefqT6tLQ2xAz0=;
+	s=korg; t=1699276238;
+	bh=hizxA7lDKYu6N4BfCzcr08Ba/2a1Hq6ZfoyYCarpMEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrCuXtdvQa7qR0B/X6UYn6M4X5tbNLMCKJbbbdb87SIYr2I4fLIdlcRsOMGW8uv8D
-	 8bt6Bf/zz5gdCUyxh9kINcWnPFF8sTNQpealAf9rajLlOa6evoQv90gCOqmRdeLrrG
-	 HwOklybAKEHVuol+X/oKIXGihRVAAAZrgm10ZovE=
+	b=2f22YbLGFaCUjtj0Rxia6TkMAC2hx74hbAnn/t4dS+I+DdRqwpL0jjc5h6QjEu9s5
+	 oGI3jjcHbzDl/+C3Nnq9feB9F1V82h99OPhck5PE7tlPNhcWmkJznIWMFsgot4bSbu
+	 /ZszlPdN/gTGxyG+eghOgm+s7TWAsVqbDqW0j1Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	Oleksandr Tymoshenko <ovt@google.com>
-Subject: [PATCH 4.19 28/61] kobject: Fix slab-out-of-bounds in fill_kobj_path()
-Date: Mon,  6 Nov 2023 14:03:24 +0100
-Message-ID: <20231106130300.582472255@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 4.19 37/61] rpmsg: Fix calling device_lock() on non-initialized device
+Date: Mon,  6 Nov 2023 14:03:33 +0100
+Message-ID: <20231106130300.891913654@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231106130259.573843228@linuxfoundation.org>
 References: <20231106130259.573843228@linuxfoundation.org>
@@ -41,143 +42,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Hai <wanghai38@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 3bb2a01caa813d3a1845d378bbe4169ef280d394 upstream.
+commit bb17d110cbf270d5247a6e261c5ad50e362d1675 upstream.
 
-In kobject_get_path(), if kobj->name is changed between calls
-get_kobj_path_length() and fill_kobj_path() and the length becomes
-longer, then fill_kobj_path() will have an out-of-bounds bug.
+driver_set_override() helper uses device_lock() so it should not be
+called before rpmsg_register_device() (which calls device_register()).
+Effect can be seen with CONFIG_DEBUG_MUTEXES:
 
-The actual current problem occurs when the ixgbe probe.
+  DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+  WARNING: CPU: 3 PID: 57 at kernel/locking/mutex.c:582 __mutex_lock+0x1ec/0x430
+  ...
+  Call trace:
+   __mutex_lock+0x1ec/0x430
+   mutex_lock_nested+0x44/0x50
+   driver_set_override+0x124/0x150
+   qcom_glink_native_probe+0x30c/0x3b0
+   glink_rpm_probe+0x274/0x350
+   platform_probe+0x6c/0xe0
+   really_probe+0x17c/0x3d0
+   __driver_probe_device+0x114/0x190
+   driver_probe_device+0x3c/0xf0
+   ...
 
-In ixgbe_mii_bus_init(), if the length of netdev->dev.kobj.name
-length becomes longer, out-of-bounds will occur.
+Refactor the rpmsg_register_device() function to use two-step device
+registering (initialization + add) and call driver_set_override() in
+proper moment.
 
-cpu0                                         cpu1
-ixgbe_probe
- register_netdev(netdev)
-  netdev_register_kobject
-   device_add
-    kobject_uevent // Sending ADD events
-                                             systemd-udevd // rename netdev
-                                              dev_change_name
-                                               device_rename
-                                                kobject_rename
- ixgbe_mii_bus_init                             |
-  mdiobus_register                              |
-   __mdiobus_register                           |
-    device_register                             |
-     device_add                                 |
-      kobject_uevent                            |
-       kobject_get_path                         |
-        len = get_kobj_path_length // old name  |
-        path = kzalloc(len, gfp_mask);          |
-                                                kobj->name = name;
-                                                /* name length becomes
-                                                 * longer
-                                                 */
-        fill_kobj_path /* kobj path length is
-                        * longer than path,
-                        * resulting in out of
-                        * bounds when filling path
-                        */
+This moves the code around, so while at it also NULL-ify the
+rpdev->driver_override in error path to be sure it won't be kfree()
+second time.
 
-This is the kasan report:
-
-==================================================================
-BUG: KASAN: slab-out-of-bounds in fill_kobj_path+0x50/0xc0
-Write of size 7 at addr ff1100090573d1fd by task kworker/28:1/673
-
- Workqueue: events work_for_cpu_fn
- Call Trace:
- <TASK>
- dump_stack_lvl+0x34/0x48
- print_address_description.constprop.0+0x86/0x1e7
- print_report+0x36/0x4f
- kasan_report+0xad/0x130
- kasan_check_range+0x35/0x1c0
- memcpy+0x39/0x60
- fill_kobj_path+0x50/0xc0
- kobject_get_path+0x5a/0xc0
- kobject_uevent_env+0x140/0x460
- device_add+0x5c7/0x910
- __mdiobus_register+0x14e/0x490
- ixgbe_probe.cold+0x441/0x574 [ixgbe]
- local_pci_probe+0x78/0xc0
- work_for_cpu_fn+0x26/0x40
- process_one_work+0x3b6/0x6a0
- worker_thread+0x368/0x520
- kthread+0x165/0x1a0
- ret_from_fork+0x1f/0x30
-
-This reproducer triggers that bug:
-
-while:
-do
-    rmmod ixgbe
-    sleep 0.5
-    modprobe ixgbe
-    sleep 0.5
-
-When calling fill_kobj_path() to fill path, if the name length of
-kobj becomes longer, return failure and retry. This fixes the problem.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Link: https://lore.kernel.org/r/20221220012143.52141-1-wanghai38@huawei.com
-Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
+Fixes: 42cd402b8fd4 ("rpmsg: Fix kfree() of static memory on setting driver_override")
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20220429195946.1061725-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/kobject.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/rpmsg/rpmsg_core.c     |   33 ++++++++++++++++++++++++++++++---
+ drivers/rpmsg/rpmsg_internal.h |   14 +-------------
+ include/linux/rpmsg.h          |    8 ++++++++
+ 3 files changed, 39 insertions(+), 16 deletions(-)
 
---- a/lib/kobject.c
-+++ b/lib/kobject.c
-@@ -135,7 +135,7 @@ static int get_kobj_path_length(struct k
- 	return length;
- }
+--- a/drivers/rpmsg/rpmsg_core.c
++++ b/drivers/rpmsg/rpmsg_core.c
+@@ -525,24 +525,51 @@ static struct bus_type rpmsg_bus = {
+ 	.remove		= rpmsg_dev_remove,
+ };
  
--static void fill_kobj_path(struct kobject *kobj, char *path, int length)
-+static int fill_kobj_path(struct kobject *kobj, char *path, int length)
+-int rpmsg_register_device(struct rpmsg_device *rpdev)
++/*
++ * A helper for registering rpmsg device with driver override and name.
++ * Drivers should not be using it, but instead rpmsg_register_device().
++ */
++int rpmsg_register_device_override(struct rpmsg_device *rpdev,
++				   const char *driver_override)
  {
- 	struct kobject *parent;
+ 	struct device *dev = &rpdev->dev;
+ 	int ret;
  
-@@ -144,12 +144,16 @@ static void fill_kobj_path(struct kobjec
- 		int cur = strlen(kobject_name(parent));
- 		/* back up enough to print this name with '/' */
- 		length -= cur;
-+		if (length <= 0)
-+			return -EINVAL;
- 		memcpy(path + length, kobject_name(parent), cur);
- 		*(path + --length) = '/';
++	if (driver_override)
++		strcpy(rpdev->id.name, driver_override);
++
+ 	dev_set_name(&rpdev->dev, "%s.%s.%d.%d", dev_name(dev->parent),
+ 		     rpdev->id.name, rpdev->src, rpdev->dst);
+ 
+ 	rpdev->dev.bus = &rpmsg_bus;
+ 
+-	ret = device_register(&rpdev->dev);
++	device_initialize(dev);
++	if (driver_override) {
++		ret = driver_set_override(dev, &rpdev->driver_override,
++					  driver_override,
++					  strlen(driver_override));
++		if (ret) {
++			dev_err(dev, "device_set_override failed: %d\n", ret);
++			return ret;
++		}
++	}
++
++	ret = device_add(dev);
+ 	if (ret) {
+-		dev_err(dev, "device_register failed: %d\n", ret);
++		dev_err(dev, "device_add failed: %d\n", ret);
++		kfree(rpdev->driver_override);
++		rpdev->driver_override = NULL;
+ 		put_device(&rpdev->dev);
  	}
  
- 	pr_debug("kobject: '%s' (%p): %s: path = '%s'\n", kobject_name(kobj),
- 		 kobj, __func__, path);
+ 	return ret;
+ }
++EXPORT_SYMBOL(rpmsg_register_device_override);
 +
-+	return 0;
++int rpmsg_register_device(struct rpmsg_device *rpdev)
++{
++	return rpmsg_register_device_override(rpdev, NULL);
++}
+ EXPORT_SYMBOL(rpmsg_register_device);
+ 
+ /*
+--- a/drivers/rpmsg/rpmsg_internal.h
++++ b/drivers/rpmsg/rpmsg_internal.h
+@@ -83,19 +83,7 @@ struct device *rpmsg_find_device(struct
+  */
+ static inline int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev)
+ {
+-	int ret;
+-
+-	strcpy(rpdev->id.name, "rpmsg_chrdev");
+-	ret = driver_set_override(&rpdev->dev, &rpdev->driver_override,
+-				  rpdev->id.name, strlen(rpdev->id.name));
+-	if (ret)
+-		return ret;
+-
+-	ret = rpmsg_register_device(rpdev);
+-	if (ret)
+-		kfree(rpdev->driver_override);
+-
+-	return ret;
++	return rpmsg_register_device_override(rpdev, "rpmsg_ctrl");
  }
  
- /**
-@@ -165,13 +169,17 @@ char *kobject_get_path(struct kobject *k
- 	char *path;
- 	int len;
+ #endif
+--- a/include/linux/rpmsg.h
++++ b/include/linux/rpmsg.h
+@@ -115,6 +115,8 @@ struct rpmsg_driver {
  
-+retry:
- 	len = get_kobj_path_length(kobj);
- 	if (len == 0)
- 		return NULL;
- 	path = kzalloc(len, gfp_mask);
- 	if (!path)
- 		return NULL;
--	fill_kobj_path(kobj, path, len);
-+	if (fill_kobj_path(kobj, path, len)) {
-+		kfree(path);
-+		goto retry;
-+	}
+ #if IS_ENABLED(CONFIG_RPMSG)
  
- 	return path;
- }
++int rpmsg_register_device_override(struct rpmsg_device *rpdev,
++				   const char *driver_override);
+ int register_rpmsg_device(struct rpmsg_device *dev);
+ void unregister_rpmsg_device(struct rpmsg_device *dev);
+ int __register_rpmsg_driver(struct rpmsg_driver *drv, struct module *owner);
+@@ -139,6 +141,12 @@ __poll_t rpmsg_poll(struct rpmsg_endpoin
+ 
+ #else
+ 
++static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
++						 const char *driver_override)
++{
++	return -ENXIO;
++}
++
+ static inline int register_rpmsg_device(struct rpmsg_device *dev)
+ {
+ 	return -ENXIO;
 
 
