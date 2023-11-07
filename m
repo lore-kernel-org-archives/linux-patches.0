@@ -1,101 +1,167 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75C239C
-	for <patches@lists.linux.dev>; Tue,  7 Nov 2023 05:04:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1941FD26A
+	for <patches@lists.linux.dev>; Tue,  7 Nov 2023 07:55:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ENpyPomC"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-6b89ab5ddb7so5602028b3a.0
-        for <patches@lists.linux.dev>; Mon, 06 Nov 2023 21:04:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699333449; x=1699938249; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bz7iGOYk5qgRTgthykPiSTMHBpTMoBlt+4h9e44JHnA=;
-        b=ENpyPomCTvviQqijEtDCt6zXp9WeG8UG39icyi7kPN8N8l/U9JJRUF/CEsrU+UXImV
-         mmwD1YMuUhdo/Ld26rxYY6G1pQrEQg6TkETMwKdqW2S6AeFPeWox2sfQiEhBYErhJzez
-         eGAM+kHmgjYg6eExEU/q9hj7p+rmVVeAS+X7ecGLtu2FBYUHP5gMb/w86YkUD+1BQdhr
-         uvNLUpABB/J19SnKavuU7z+ydTt28vvAn3BproStWazrD1h9u6Btk3jXsFFphP5Y/W88
-         l0DN8s/i8y+MesnbgqWuumMgixT1Dran4laJvI102KwQnXqiGHfBCBz3HTFebKiH+sXm
-         LZUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699333449; x=1699938249;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bz7iGOYk5qgRTgthykPiSTMHBpTMoBlt+4h9e44JHnA=;
-        b=rH3zA5Zl+1W0CWKrrRPtctFmoCewDpXVhJey+ZTpBDJUHKn4IJT11W+pC0xA/DxZXg
-         LECY0qTee9zOaqPlPHiYFN6+8RHEgBrAPiEvPPxbsw8CTjvDt/LZx5DciYxlzZBZcOq3
-         6uuPrweSPfTN5BOU5yzfTPbVeviCXF+aEV4DbWsxGRmfemOCfY53JdPur3xdwd799mK5
-         Z+SAdYULYQ4q8KMXoC0nb7zvh/pQJTxw9dnCLGcN7HuKJ9NBJoGmnXld3UPvYv1+N3Ok
-         6MTI3Q3XinmakL9lnmYU0Jy0r8n+OlXZKeohYkdCL0L9pB4W+upcHBMeMEk1kMXdfpHo
-         8xkA==
-X-Gm-Message-State: AOJu0YzdfzhDmDyPIHFDgY5YMFWr/TtvmQmLAorY2dSSXfg0dmsk3A7R
-	AwQ1idvT3aknHpmop17+tGE=
-X-Google-Smtp-Source: AGHT+IHq5rnCKDl+KFwkF0Y9L+OEede5/mV+cWlrWqRhXEUDPuut3SHzrOT6r7PkwP3AoPsQ5+LNaQ==
-X-Received: by 2002:a05:6a00:98b:b0:6be:265:1bf7 with SMTP id u11-20020a056a00098b00b006be02651bf7mr39794442pfg.34.1699333448912;
-        Mon, 06 Nov 2023 21:04:08 -0800 (PST)
-Received: from debian.me ([103.131.18.64])
-        by smtp.gmail.com with ESMTPSA id t20-20020aa79394000000b006c0fdc98c89sm6335346pfe.85.2023.11.06.21.04.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Nov 2023 21:04:08 -0800 (PST)
-Received: by debian.me (Postfix, from userid 1000)
-	id 213E9812C341; Tue,  7 Nov 2023 12:04:03 +0700 (WIB)
-Date: Tue, 7 Nov 2023 12:04:03 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.6 00/30] 6.6.1-rc1 review
-Message-ID: <ZUnFQ2New-VTnkmp@debian.me>
-References: <20231106130257.903265688@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="mxbYnHUQ"
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20231107074941euoutp01e70a20b80ae2093d42c289d3c6d6f9ec~VR81PlP9j3099230992euoutp01d;
+	Tue,  7 Nov 2023 07:49:41 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20231107074941euoutp01e70a20b80ae2093d42c289d3c6d6f9ec~VR81PlP9j3099230992euoutp01d
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1699343381;
+	bh=Lv7l3lGB0bDT66EqgjPYgsbj32RoqRNgxRol3KmSfMc=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
+	b=mxbYnHUQJJjzhCSP4f/4IDpOjKZLlvigjMTT5Fr3pCJSYKbDXpXITEWKrBm8wxmt+
+	 +4qvrZ8uJkgKHp0ZH92x4pDvE7cgbp2L+wCwEwfW97zQ5YybB1qLw7XTqSf2jLWWHE
+	 3MHP2X2cTV4eOgbQC0hYJvm7yQrZnZ7xx1uWWFX0=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+	20231107074941eucas1p1a89d2cad73c1c7d923c1df96f74080af~VR81EP5oZ0089800898eucas1p1k;
+	Tue,  7 Nov 2023 07:49:41 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+	eusmges1new.samsung.com (EUCPMTA) with SMTP id BE.EF.42423.51CE9456; Tue,  7
+	Nov 2023 07:49:41 +0000 (GMT)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+	20231107074940eucas1p28a1aa7c1c98e72356babc5faba5df533~VR80uJLdo1464914649eucas1p2L;
+	Tue,  7 Nov 2023 07:49:40 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+	eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+	20231107074940eusmtrp1a34e9a20e3b9aa55ff5c922c85bc0e52~VR80tg_Gv1436514365eusmtrp1Z;
+	Tue,  7 Nov 2023 07:49:40 +0000 (GMT)
+X-AuditID: cbfec7f2-a51ff7000002a5b7-7b-6549ec153a1d
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+	eusmgms1.samsung.com (EUCPMTA) with SMTP id 91.E9.10549.41CE9456; Tue,  7
+	Nov 2023 07:49:40 +0000 (GMT)
+Received: from CAMSVWEXC02.scsc.local (unknown [106.1.227.72]) by
+	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+	20231107074940eusmtip1b1a2ee9e9c80fecbc7f16e1940f6e841~VR80gssDn2498024980eusmtip1E;
+	Tue,  7 Nov 2023 07:49:40 +0000 (GMT)
+Received: from localhost (106.210.248.176) by CAMSVWEXC02.scsc.local
+	(2002:6a01:e348::6a01:e348) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
+	Tue, 7 Nov 2023 07:49:40 +0000
+Date: Tue, 7 Nov 2023 08:49:39 +0100
+From: Joel Granados <j.granados@samsung.com>
+To: Luis Chamberlain <mcgrof@kernel.org>
+CC: <keescook@chromium.org>, <patches@lists.linux.dev>,
+	<linux-fsdevel@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] MAINTAINERS: Add Joel Granados as co-maintainer for
+ proc sysctl
+Message-ID: <20231107074939.sy45jvdvyd7sr3w7@localhost>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="LszhaNktL2TxPxAr"
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="h5hdrq2a6gtomf25"
 Content-Disposition: inline
-In-Reply-To: <20231106130257.903265688@linuxfoundation.org>
+In-Reply-To: <20231102203158.2443176-1-mcgrof@kernel.org>
+X-Originating-IP: [106.210.248.176]
+X-ClientProxiedBy: CAMSVWEXC01.scsc.local (2002:6a01:e347::6a01:e347) To
+	CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLKsWRmVeSWpSXmKPExsWy7djPc7qibzxTDVa95rM4051rsWfvSRaL
+	y7vmsFncmPCU0eLyiUuMDqwesxsusnhsWtXJ5vFi80xGj8+b5AJYorhsUlJzMstSi/TtErgy
+	Lm99y1Swm7/i6u1t7A2M63m7GDk5JARMJL5s2MHSxcjFISSwglGiZ9MOZgjnC6PE/Xlr2SCc
+	z4wS/39tYIdpOXpkBVRiOaPEwSOT2eGqPh1rhHK2MErM6p0J1sIioCLR/GItE4jNJqAjcf7N
+	HWYQW0RAQ2LfhF6gOAcHs0ClxKNJgSBhYYEwidftX1hAbF4Bc4nV5y+xQdiCEidnPgGLMwtU
+	SLT0nWWDaJWWWP6PAyTMKWAp0fT1OCPEocoSzdsPQB1dK3Fqyy0mkNMkBL5wSDxvOcEKkXCR
+	+DJ1NVSDsMSr41ugGmQkTk/uYYFomMwosf/fB3YIZzWjxLLGr0wQVdYSLVeesINcISHgKHGm
+	wRLC5JO48VYQ4k4+iUnbpjNDhHklOtqEIBrVJFbfe8MygVF5FpLPZiH5bBbCZxBhHYkFuz9h
+	CmtLLFv4mhnCtpVYt+49ywJG9lWM4qmlxbnpqcWGeanlesWJucWleel6yfm5mxiBqer0v+Of
+	djDOffVR7xAjEwfjIUYVoOZHG1ZfYJRiycvPS1US4f1r75EqxJuSWFmVWpQfX1Sak1p8iFGa
+	g0VJnFc1RT5VSCA9sSQ1OzW1ILUIJsvEwSnVwKR95uC6fe3Cdw2YJv23t7y17qaf4dq9LYxf
+	4uvPXtucYdtYJs4t/W72vYy0o/cP206fv8JJKLClrZBBc2KM6K4T2sHXFhSnWKkm/ZzPc3TL
+	U7aHF/VfzKu3dm4SfvvH6ddh54O3N+f+r5x28/9zS/vYP/nez0RUvZYvZj57WXj9jgY3ryvv
+	vq2atLiUy5Px0lf7k1/i++0cf3xjDXy/aW762w8Rjkb881le7OJwuHSU92aHg8/E6S1m+Uqm
+	Mz+8aJ7FWZSR0uMXwPszNvu49unY3/a5YdsdlkRP/6LAUKe8cvKZqfMYJp7ofnop+seuObk6
+	1eKXBOYVp8vtU+D5WfnhRc+fC1ITnvAs3OOdI92txFKckWioxVxUnAgAkkTkLtADAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrBIsWRmVeSWpSXmKPExsVy+t/xu7oibzxTDea1m1ic6c612LP3JIvF
+	5V1z2CxuTHjKaHH5xCVGB1aP2Q0XWTw2repk83ixeSajx+dNcgEsUXo2RfmlJakKGfnFJbZK
+	0YYWRnqGlhZ6RiaWeobG5rFWRqZK+nY2Kak5mWWpRfp2CXoZkz97F+zkr+i68Zy9gXEtbxcj
+	J4eEgInE0SMr2LoYuTiEBJYySvRs3cAMkZCR2PjlKiuELSzx51oXVNFHRon/B56wQzhbGCW2
+	PjsGVsUioCLR/GItE4jNJqAjcf7NHbBJIgIaEvsm9ALFOTiYBSolHk0KBDGFBcIkZu2VBKng
+	FTCXWH3+EtT8HkaJWa8ms0IkBCVOznzCAmIzC5RJbHo/AWqMtMTyfxwgYU4BS4mmr8cZIe5U
+	lmjefoAdwq6V+Pz3GeMERuFZSCbNQjJpFsIkiLCWxI1/LzGFtSWWLXzNDGHbSqxb955lASP7
+	KkaR1NLi3PTcYkO94sTc4tK8dL3k/NxNjMBo3Xbs5+YdjPNefdQ7xMjEwXiIUQWo89GG1RcY
+	pVjy8vNSlUR4/9p7pArxpiRWVqUW5ccXleakFh9iNAWG4URmKdHkfGAaySuJNzQzMDU0MbM0
+	MLU0M1YS5/Us6EgUEkhPLEnNTk0tSC2C6WPi4JRqYFKU6hd44xete2CZRJKo6U7BtK1cm46o
+	9D9srM5O4F3wYI3vXcZj+yer/1AqW1m1b/9VjvzZdgeKCiu+iXxczHu655c3b35l9sq0WeVX
+	ojYVCmzhFctbcZLf5k3xnrYDwdv8PqwUfFEptHJuwh/7Vdc2MTz/3MxzYXXhiWdblu08rH6m
+	+o6fYkfy2uCWFzOdJS9oB56y8guQLtzzuoONVfmeXPfcwAgWh9dGqXrJPZyrraIkDHYU31wU
+	4B6zKjk9OrKhcc1PocpKXtuQz8qXF/1J5JljeXHXCqtjV02qD4VOYBLpZV2RfnTtHR+hLvfP
+	t9Zzv7i6IurThqzaEJlIvvjXq14euJslNscs4H0bsxJLcUaioRZzUXEiAJlfP/NrAwAA
+X-CMS-MailID: 20231107074940eucas1p28a1aa7c1c98e72356babc5faba5df533
+X-Msg-Generator: CA
+X-RootMTR: 20231102203208eucas1p14cd9089da85eb9f7932b6fb04cfc41a8
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20231102203208eucas1p14cd9089da85eb9f7932b6fb04cfc41a8
+References: <CGME20231102203208eucas1p14cd9089da85eb9f7932b6fb04cfc41a8@eucas1p1.samsung.com>
+	<20231102203158.2443176-1-mcgrof@kernel.org>
 
-
---LszhaNktL2TxPxAr
-Content-Type: text/plain; charset=utf-8
+--h5hdrq2a6gtomf25
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 06, 2023 at 02:03:18PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.1 release.
-> There are 30 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Thu, Nov 02, 2023 at 01:31:58PM -0700, Luis Chamberlain wrote:
+> Joel Granados has been doing quite a bit of the work to help us move
+> forward with the proc sysctl cleanups, and is keen on helping and
+> so has agreed to help with maintenance of proc sysctl. Add him as
+> a maintainer.
+Thx @Luis. Currently preparing the next batch of the "remove sentinel
+patches". Will push them out as soon as I clean them up and test them
+
+Best
+
+>=20
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> ---
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 66c2e2814867..c9b077e779d8 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -17224,6 +17224,7 @@ F:	tools/testing/selftests/proc/
+>  PROC SYSCTL
+>  M:	Luis Chamberlain <mcgrof@kernel.org>
+>  M:	Kees Cook <keescook@chromium.org>
+> +M:	Joel Granados <j.granados@samsung.com>
+>  L:	linux-kernel@vger.kernel.org
+>  L:	linux-fsdevel@vger.kernel.org
+>  S:	Maintained
+> --=20
+> 2.42.0
 >=20
 
-Successfully compiled and installed bindeb-pkgs on my computer (Acer
-Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
-
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
-
 --=20
-An old man doll... just what I always wanted! - Clara
 
---LszhaNktL2TxPxAr
+Joel Granados
+
+--h5hdrq2a6gtomf25
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZUnFPgAKCRD2uYlJVVFO
-oyO8AQDXwlHwd9TsiXYqEZdXDU8pzWkIZgYug/FxILaxm0EZmwEAkMMTMf8Ql8nY
-9ov4qPCQhVdErQMM0gL67N9kug203QA=
-=AfLt
+iQGzBAABCgAdFiEErkcJVyXmMSXOyyeQupfNUreWQU8FAmVJ7BIACgkQupfNUreW
+QU86dgv+PQ72kqzGG51MJZgTdDLzljQIMequr1TCbfH+ZuyVsf6N1r/rGMQAEA08
+gQwp4OoI3vmMTJGlgDtkvvPN/RiQbfEuFrJgiIPLbI7WAD7E4aKw9CrZiX4qty74
+ehowC85A8hVByAFRJu1Pe5aRbXNJRv1KIHQJDJagMsiB1FG4P8bo82aW3ZoRRTAR
+1jWqfm8K6AY+6IvcZN1lF49t8k8h4O38O6CV8vjEQRiRhW0Gv6P4BUfY80NDin9h
+rlGKDTnB8OZxgcnbacVRHgACtZSfWlxa9xAeLOc4qCTnP7l5Geq3JwbOv8/s+hdE
+ySqXpOFvsiz98CEK/Oi9O4u6FMiItY+RQFjWh6oIZjHNSBvHGfobMF1nVT3qx+zB
+BZAE67/kV5ahWaHOqYelCsEKPnU0s2SxhX4aGesEPu4a9rpSDbMgE2xZw6WsfQCz
+QzajY6SMGNHN4pLv/PZD55SPIoeL5m7bZNw9LuCuTzOLHszjjMBrx9+2jfVMDmE6
+VkwQ8bAM
+=EYqh
 -----END PGP SIGNATURE-----
 
---LszhaNktL2TxPxAr--
+--h5hdrq2a6gtomf25--
