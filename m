@@ -1,107 +1,111 @@
-Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
+Received: from nautica.notk.org (nautica.notk.org [91.121.71.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22CFCA4E
-	for <patches@lists.linux.dev>; Tue,  7 Nov 2023 08:56:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D17CA6A
+	for <patches@lists.linux.dev>; Tue,  7 Nov 2023 09:08:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="25ap56hs"
-Received: from eig-obgw-6003a.ext.cloudfilter.net ([10.0.30.151])
-	by cmsmtp with ESMTPS
-	id 0EzSr1wy0KOkL0HtErYL1e; Tue, 07 Nov 2023 08:56:52 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id 0HtDrl6JtRqxC0HtErzRiA; Tue, 07 Nov 2023 08:56:52 +0000
-X-Authority-Analysis: v=2.4 cv=IY2U5Ema c=1 sm=1 tr=0 ts=6549fbd4
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=BNY50KLci1gA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=LeRZVWfhQBUx62FjwdSykil5+EjPFUXjfV9K/vHxrOk=; b=25ap56hs221JGp5MqoOVSTgzYa
-	SAbGfXMa9f6RKhZGl5G/p37HqBPVOIyehPFz//tfb8vzcnxs+3fhokVanZJjGE+p6wK3AMQmqeo/H
-	SkHkKRmFuGjQ1QYibZkRojZNu88HgwTfywNrqa0q6peH/jaitN/NMgavNtwLpTSUUJQTvSxioUZr7
-	RsmQHorBW6bwm/JcApB1hxdEj+MFZaA3hmf3x7QPelZrnHoS2AhPcQtmHTIausPCOtp6VQR/IRFfl
-	4D3EphMeStX4CMfkfKPHKryChp3Fn734doZr8T77rvWrIeAa2qdgcbxHwy1knz5EkzxMzFbBIVgh3
-	w0N4uwrQ==;
-Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:54226 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1r0HtB-0008Ta-30;
-	Tue, 07 Nov 2023 01:56:49 -0700
-Subject: Re: [PATCH 5.15 000/128] 5.15.138-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20231106130309.112650042@linuxfoundation.org>
-In-Reply-To: <20231106130309.112650042@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <686bff39-e016-adaa-9d0e-2e7edfb0b21e@w6rz.net>
-Date: Tue, 7 Nov 2023 00:56:47 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="YkpmTlyy";
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="H7w52jMq"
+Received: by nautica.notk.org (Postfix, from userid 108)
+	id F414EC01A; Tue,  7 Nov 2023 10:08:32 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1699348112; bh=p1hhTlkHRNBwSalgO0gLVkqAEwk8nZAf/XeSXUwldc4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YkpmTlyydJsYin0D/3qcpmebBI8LuSeqZoqDOqEwCN2Yr7gfjjWsu/OU9ADQqpx4Y
+	 q5ZzBmnZALYGfKQcOEMa5s2+IQt/FjgLA1iOEU4HyTF3rS7tqEdwL8TgmQze0OOGLn
+	 hGdUZx5KsL64DZoqQUOCqdQiA0oU7b0XE+w9o3refghJkiqKM2XMjKfPsXJB2e1mTP
+	 ddTeofP0fOc1qHAcuMlKMOfVE2jiU2/GpfQVR4MTX24Ro06N0AMMTOiDhJT3HYNyUc
+	 /seudTX1Rc2q4lcAtrgC28pS6pu8QN3yPwB0SHEh9RtCCeNXg1ezlxET08qnDDMAI4
+	 r+sjyLMXqE2aQ==
+X-Spam-Level: 
+Received: from gaia (localhost [127.0.0.1])
+	by nautica.notk.org (Postfix) with ESMTPS id A42C7C009;
+	Tue,  7 Nov 2023 10:08:25 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1699348110; bh=p1hhTlkHRNBwSalgO0gLVkqAEwk8nZAf/XeSXUwldc4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=H7w52jMqsQ1Gb6vTLqkBSTcJA9YesVDgf6iZYUj8JCd843h1mAd8YAw01jF4Ez5bR
+	 0U5oPwYahyMn/82rK7oTSIXYdqASB05N1L3W0sZD+s6ESCPwvWunuuKB1jiziYKjGy
+	 bjdE2yR/cybHUasnrdxrWJGEb1NjCqQE4oZQWqxODMriWHcYQv6CjBy1KRjXfMiz8f
+	 +aglC5EAZzJl/d8uXfVLJWb7u1zwZhX8CRhimFa/3W+Yw85BMbj3VP2LmlUQGxhJav
+	 gt6aBGKnuT+UZ3E9Nk2dz7XY0b7mK2DcNIMFEIoe0xLs/BrjzkHWAIzhokJaCEci/o
+	 DNUPPrUdMIukA==
+Received: from localhost (gaia [local])
+	by gaia (OpenSMTPD) with ESMTPA id 25f2b5b1;
+	Tue, 7 Nov 2023 09:08:22 +0000 (UTC)
+Date: Tue, 7 Nov 2023 18:08:07 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
+Subject: Re: [PATCH 5.10 00/95] 5.10.200-rc1 review
+Message-ID: <ZUn-d-s7J8cmS-em@codewreck.org>
+References: <20231106130304.678610325@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 98.207.139.8
-X-Source-L: No
-X-Exim-ID: 1r0HtB-0008Ta-30
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:54226
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 54
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfGZSH4DCezvR6A9EBfzHePc+uNecNPK8TXfRwp/XqC5lAtX4ukOG31S4PPvBunpTrboAyvLYl1kIzAjzQuMQ+xIVD05BH8MKI1Iv7yI+fSmvwhi8TDIf
- iehma1y76jdlgpNVkTt/8zNdaeqXNpIJNghuU2Hu5rgsipEFRGfk7Cr1JxPvYHtP1o8nCXZ9rpqDuw==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20231106130304.678610325@linuxfoundation.org>
 
-On 11/6/23 5:02 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.138 release.
-> There are 128 patches in this series, all will be posted as a response
+Greg Kroah-Hartman wrote on Mon, Nov 06, 2023 at 02:03:28PM +0100:
+> This is the start of the stable review cycle for the 5.10.200 release.
+> There are 95 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Wed, 08 Nov 2023 13:02:46 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.138-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.200-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
 > and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Tested on:
+- arm i.MX6ULL (Armadillo 640)
+- arm64 i.MX8MP (Armadillo G4)
 
-Tested-by: Ron Economos <re@w6rz.net>
+No obvious regression in dmesg or basic tests:
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
+
+By the way, I wanted to start semi-automatize this (for 5.10
+specifically since that's the kernel we're based on) and started
+watching the linux-stable-rc.git's linux-5.10.y branch, specifically the
+rev in this command:
+
+  git ls-remote git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git refs/heads/linux-5.10.y
+
+And there were two different "Linux 5.10.200-rc1" commits on the 1st,
+3rd before the final rev on the 6th (this mail) as I assume you were
+preparing this branch (and it's perfectly fine!)
+Is there anything appropriate to watch instead, or should I setup mail
+filters to see the announce mail instead of trying to second-guess the
+git repo?
+
+
+While I'm asking questions, I'm also comparing the dmesg output from one
+version to the next by hand (as ordering etc changes a bit from one run
+to the next it's a bit hard to automate reliably), if you're aware of a
+fuzzy-diff for dmesg outputs or should I just kludge that in a corner?
+(Should have noticed the MMC quirk regression[1] in 5.10.199 if I had been
+doing that properly last time... It's too easy to miss when a line just
+disappears and there's no error
+[1] https://lore.kernel.org/all/20231103004220.1666641-1-asmadeus@codewreck.org/
+(not yet in master))
+
+
+-- 
+Dominique Martinet | Asmadeus
