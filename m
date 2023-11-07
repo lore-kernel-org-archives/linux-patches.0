@@ -1,167 +1,267 @@
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1941FD26A
-	for <patches@lists.linux.dev>; Tue,  7 Nov 2023 07:55:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ACD2F3D
+	for <patches@lists.linux.dev>; Tue,  7 Nov 2023 08:29:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="mxbYnHUQ"
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20231107074941euoutp01e70a20b80ae2093d42c289d3c6d6f9ec~VR81PlP9j3099230992euoutp01d;
-	Tue,  7 Nov 2023 07:49:41 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20231107074941euoutp01e70a20b80ae2093d42c289d3c6d6f9ec~VR81PlP9j3099230992euoutp01d
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1699343381;
-	bh=Lv7l3lGB0bDT66EqgjPYgsbj32RoqRNgxRol3KmSfMc=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=mxbYnHUQJJjzhCSP4f/4IDpOjKZLlvigjMTT5Fr3pCJSYKbDXpXITEWKrBm8wxmt+
-	 +4qvrZ8uJkgKHp0ZH92x4pDvE7cgbp2L+wCwEwfW97zQ5YybB1qLw7XTqSf2jLWWHE
-	 3MHP2X2cTV4eOgbQC0hYJvm7yQrZnZ7xx1uWWFX0=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-	20231107074941eucas1p1a89d2cad73c1c7d923c1df96f74080af~VR81EP5oZ0089800898eucas1p1k;
-	Tue,  7 Nov 2023 07:49:41 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-	eusmges1new.samsung.com (EUCPMTA) with SMTP id BE.EF.42423.51CE9456; Tue,  7
-	Nov 2023 07:49:41 +0000 (GMT)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20231107074940eucas1p28a1aa7c1c98e72356babc5faba5df533~VR80uJLdo1464914649eucas1p2L;
-	Tue,  7 Nov 2023 07:49:40 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-	eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-	20231107074940eusmtrp1a34e9a20e3b9aa55ff5c922c85bc0e52~VR80tg_Gv1436514365eusmtrp1Z;
-	Tue,  7 Nov 2023 07:49:40 +0000 (GMT)
-X-AuditID: cbfec7f2-a51ff7000002a5b7-7b-6549ec153a1d
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-	eusmgms1.samsung.com (EUCPMTA) with SMTP id 91.E9.10549.41CE9456; Tue,  7
-	Nov 2023 07:49:40 +0000 (GMT)
-Received: from CAMSVWEXC02.scsc.local (unknown [106.1.227.72]) by
-	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20231107074940eusmtip1b1a2ee9e9c80fecbc7f16e1940f6e841~VR80gssDn2498024980eusmtip1E;
-	Tue,  7 Nov 2023 07:49:40 +0000 (GMT)
-Received: from localhost (106.210.248.176) by CAMSVWEXC02.scsc.local
-	(2002:6a01:e348::6a01:e348) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
-	Tue, 7 Nov 2023 07:49:40 +0000
-Date: Tue, 7 Nov 2023 08:49:39 +0100
-From: Joel Granados <j.granados@samsung.com>
-To: Luis Chamberlain <mcgrof@kernel.org>
-CC: <keescook@chromium.org>, <patches@lists.linux.dev>,
-	<linux-fsdevel@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] MAINTAINERS: Add Joel Granados as co-maintainer for
- proc sysctl
-Message-ID: <20231107074939.sy45jvdvyd7sr3w7@localhost>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="n5WzirO4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1699345754; x=1730881754;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=sC5p3A6npWIfNItWRgHFJ90wL7G+7unD67P0lpbayiQ=;
+  b=n5WzirO4cAPZjOpRFA6lYa8mbhUV+36s6FtquNjsW1gSwG8aOjigQ35E
+   hpBE2TEc6XeCZSbhYALl22LEFdk+15OXanj1UH6J74yn2CYBzYDXO2x7r
+   5enuk4vzRqBgx/MewNBIdzf5PPoA/60IL/hmshbztzrgjNTvFI5FEgpTN
+   WrYQdaf6WC6HEL/Gk6JUmZrLDQlv6FAvNyNsS0Dpaftg0SVp5WziBckoV
+   p218NbDkiqFK6b7IKDd6LzTHANQIQ3vpUv37yPdRhlYwMqlbPWXqeVfjv
+   bGiQ3DGukD7IdN8oT49JNRxewfvfqUoIbmdQ5emxmX1RRg0w3AzhIMRuE
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10886"; a="374487552"
+X-IronPort-AV: E=Sophos;i="6.03,283,1694761200"; 
+   d="scan'208";a="374487552"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Nov 2023 00:29:12 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10886"; a="797599621"
+X-IronPort-AV: E=Sophos;i="6.03,283,1694761200"; 
+   d="scan'208";a="797599621"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+  by orsmga001.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 07 Nov 2023 00:29:12 -0800
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.34; Tue, 7 Nov 2023 00:29:12 -0800
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.34; Tue, 7 Nov 2023 00:29:11 -0800
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.34 via Frontend Transport; Tue, 7 Nov 2023 00:29:11 -0800
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.40) by
+ edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.34; Tue, 7 Nov 2023 00:29:11 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NU5oanAvSM1kw5G4iVNI87aRI92ccxpdc9hi83wDZ/RC7Ux5w4ufFZLXHMgL123mJrqRMJ2L9pax47H9iWF6KW6EN+g5m5cIqh5X8qh/SmZoa2TLngj3rDNNmBOrenvnnrOTLuNHfPNCVyEk2hNWnBFtnk/qECH4Gw8vl1eOveTk6OUM2wHB3FshiWPRnNsakYAwEhRUMu8zT6w2vsgED7wcfFX9aRXUbDXScIVE0p4Jz7BmMI3ooayTggsy7k71B3D9qBH/0WZeeWSSn7DGxYD8pZvyrn129s26nCf7RXOTZ4RlUgpT0MJfUeF5dWCX35Pu2s+ZIy1mzjtHkjVFPg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=d522EpTkDJqbauP15CSYyb3hxK6bssVtCpM9//2BG+0=;
+ b=V0uchjIuSnciK9U5Wym0yPONu1S/f7JjuE/E/0DeFbxPXKB93coHvqxYMA4C0vtkwzjGBBJDyG7ExBagBGQJ8tMw7aYjVy7cFZs6Uw+zLZ15qi4uJa8cQtBXza166PdkdSTiTaGgr+wG5a1A4tCnQ8qWFR5bl8j3AS2zYuaqUhQ08satgCBqz+f/NVGBY+rqD4Lg4HduG+953PhoMJBM28XfmENGr2kdrJn3DSrMZyYid1IG+jjc1CJaHil0DE6kT3tZYQBmHOiASRDNMrGfxrFR2pUxcAongeuWM8/zFL8XytaGHWEOCoyrH3qni7eU1RXi5hcpNQ+0JliAHqF3LA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by CH0PR11MB5460.namprd11.prod.outlook.com (2603:10b6:610:d3::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.28; Tue, 7 Nov
+ 2023 08:29:09 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::e7a4:a757:2f2e:f96a]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::e7a4:a757:2f2e:f96a%3]) with mapi id 15.20.6954.029; Tue, 7 Nov 2023
+ 08:29:08 +0000
+From: "Tian, Kevin" <kevin.tian@intel.com>
+To: Alex Williamson <alex.williamson@redhat.com>
+CC: "Chatre, Reinette" <reinette.chatre@intel.com>, "jgg@nvidia.com"
+	<jgg@nvidia.com>, "yishaih@nvidia.com" <yishaih@nvidia.com>,
+	"shameerali.kolothum.thodi@huawei.com"
+	<shameerali.kolothum.thodi@huawei.com>, "kvm@vger.kernel.org"
+	<kvm@vger.kernel.org>, "Jiang, Dave" <dave.jiang@intel.com>, "Liu, Jing2"
+	<jing2.liu@intel.com>, "Raj, Ashok" <ashok.raj@intel.com>, "Yu, Fenghua"
+	<fenghua.yu@intel.com>, "tom.zanussi@linux.intel.com"
+	<tom.zanussi@linux.intel.com>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>
+Subject: RE: [RFC PATCH V3 00/26] vfio/pci: Back guest interrupts from
+ Interrupt Message Store (IMS)
+Thread-Topic: [RFC PATCH V3 00/26] vfio/pci: Back guest interrupts from
+ Interrupt Message Store (IMS)
+Thread-Index: AQHaCPdEtaV8qeHO6EmMpiKLQ58cQ7BjhMFwgAJFzACAAIkGYIAADu6QgAEuhgCAAKTv8IAAk0eAgAXJGJA=
+Date: Tue, 7 Nov 2023 08:29:08 +0000
+Message-ID: <BN9PR11MB52765E82CB809DA7C04A3EF18CA9A@BN9PR11MB5276.namprd11.prod.outlook.com>
+References: <cover.1698422237.git.reinette.chatre@intel.com>
+	<BL1PR11MB52710EAB683507AD7FAD6A5B8CA0A@BL1PR11MB5271.namprd11.prod.outlook.com>
+	<20231101120714.7763ed35.alex.williamson@redhat.com>
+	<BN9PR11MB52769292F138F69D8717BE8D8CA6A@BN9PR11MB5276.namprd11.prod.outlook.com>
+	<20231102151352.1731de78.alex.williamson@redhat.com>
+	<BN9PR11MB5276BCEA3275EC7203E06FDA8CA5A@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <20231103095119.63aa796f.alex.williamson@redhat.com>
+In-Reply-To: <20231103095119.63aa796f.alex.williamson@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|CH0PR11MB5460:EE_
+x-ms-office365-filtering-correlation-id: 9ed1e9ca-fc91-441b-d3f9-08dbdf6b9cd9
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 37RKtNbzdQ0jE7xlzJiZW+cW/ePOZKUylja+4s9sKC8KBY6Dppyoy2IbSfRgwL+dviJm4aQz+O2Ms2dZvalNJdirfJLMQ4Cxcce5WKP5p6oSmzQT9gCTB5NnHay9DjYSnYvwEyZPm3lOLILf1ZVSP7SBjUcDh5MuXgZLnq51UaJ2xPqwhz3ydoqMKawhQSD3TznMmi4e09Bt6gad1pIIdDTwzr/AAFsm38R5zekjNkcqAeKCt8zOaE5wHAjeexXSDUqU0cqnx9l+CygvwT0mkoPbm7dpnn5R8wODSs4K+O4jFxq4IslJyBloKnq4VlXaDEsqP0wSDFK9erVVIpbpDQN6ymzxRfsEUsHdrOQUK1toUYHgk8KvnOr8vcRbTfEbGIfLLbyhYIcJIphER3BeDcL2QhrEKDwd5avDMMQll+y7C79c22NpkIIirY5gKTsmfaO4Gj+otIKIw+rmA8aKVk/XQC+nvtbrrLE7giFtdUAeb2N2UAtrNMHU2SwBYGMSL89ScUNPRD5YKflF/+IppTjF4cLwEUZhEm4giG5qQbnjNP2mtj3IwK7QNEm2ib01UqEnPHVMucjOeJijAX6becRenko6H9fBXZZt9t2RZC757c6v0IBnJEbY8QNIU2jx
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(376002)(136003)(346002)(39860400002)(366004)(230922051799003)(64100799003)(186009)(1800799009)(451199024)(66899024)(38100700002)(86362001)(5660300002)(41300700001)(15650500001)(2906002)(38070700009)(33656002)(82960400001)(122000001)(478600001)(83380400001)(9686003)(66946007)(26005)(76116006)(66476007)(316002)(6916009)(64756008)(66446008)(54906003)(66556008)(7696005)(71200400001)(6506007)(55016003)(8936002)(4326008)(8676002)(52536014);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?QhRQtUmqvDZX2ONzMuf4Ix3pwY5FOAq2Ld7WWYYxC+LRrXdIZjiQoay1APZw?=
+ =?us-ascii?Q?FGb9EDX5hRStKAYd/sNA4PGMQVAJ2SfSYxGtIZNElD0Ylr8yYeRYHzNRywJi?=
+ =?us-ascii?Q?j42fFRq8l60OUZeZ3hYY0gQVPBrvYfN7N6gjp/ncL6pqDDVSrslU8uNU8GLT?=
+ =?us-ascii?Q?DHeZzWnXxBj8YDD9mHboRqG2xbmFaPPqYSy9hSH4NzemWlEOVCNAGP3HVM14?=
+ =?us-ascii?Q?i6WyTz9C/FqbtkmE2bhLHQpZ25B7HoSKMfF+qeRuznW2UhD6xmmKH7pcUYFn?=
+ =?us-ascii?Q?O31f9FqXxx+qdaOK+AQtognt8uD6nbvIUDm8vEZI/jFHFNPRTnveVc5knbTe?=
+ =?us-ascii?Q?JJ09Loet7ybNVbD9L7k1FWBzVbJ9baxTAGRzLGMqI8aWnaS4hCSJftjI2v6/?=
+ =?us-ascii?Q?ejonpkmIOYUNkZbhlifB+W7MfmFKgoIXplMIILY2nSvXf9totvx72HVVRbzi?=
+ =?us-ascii?Q?Rw1PzvFBsSwSMHed8D5PxKwCTpDyKa8d5r/AGnJSq1QPS02KWbmjyOZ6VlYl?=
+ =?us-ascii?Q?ocCxZj4iof9LMgESwoW1gzV9PrAlt87F9uh74JxYhuPZ+/EW+30y28pkT3lU?=
+ =?us-ascii?Q?pci6RtaFtSqN98/a3ZL5QphFWCU2eNbe0gzfpA5Od6XDNgSpASfxft1GAnt3?=
+ =?us-ascii?Q?K/KT9YVcbDB28qNqMCPuNR8FZ5aWAcCiBL8ChE1tIWhFwUsDBok34xdC2Dzy?=
+ =?us-ascii?Q?VCbA9ZRDwbVgZwQDjhuzAGnjt/aHNywk4a2nKFXWULkbIoYZaCCDDD8zW7b4?=
+ =?us-ascii?Q?2uPS+FTNdbuEUD7kyfjvEwz+DD+ykf8Ykh4bZXxcVoEKg+94Lx1EE8hdPDux?=
+ =?us-ascii?Q?u8Q8qlFUDyOx00bs3KjcunkMR28tFPS+fe+WGZn7zXKoyAXN8mbGNvcXWaSk?=
+ =?us-ascii?Q?TYPObo91Qzqef/ErCJztCeSR1ZXyVJKa6CvE5VCMN1Wl0wCvAbHTJfHvkTPQ?=
+ =?us-ascii?Q?OK4W3nJFG5O+o7YBgSjhTF50bLUk7VKisY4AeiQ1q4qQ8o7/3yPj9oyhGBdE?=
+ =?us-ascii?Q?a1R5Kdss+NqZyhdK39D98Av8NTKckonTywcl800s+3gspV+rKb/YAvZ0VfFr?=
+ =?us-ascii?Q?Y4ZSuio66U2uoD+fzvoHGKOdLJ0iLwtVq/IVE4YhgUhNptvi0RFPgmhSftbl?=
+ =?us-ascii?Q?x7gv3RkXFQlhR8IKkMZ1AAufN11986+a+dHnvi8pJGz1PZYPPBNl0BaVxNaF?=
+ =?us-ascii?Q?zzCumrTZ2Ox8ciJ4mEeRKzjpxZd1SzzG09qpimeA6G+7IWpsgLVrqzV26koE?=
+ =?us-ascii?Q?FsKKOHW1cRTrXfDLZDgJbWvHgaD2x+OokCNqZAFOd4J7XTkGs4aKWlnCD+IB?=
+ =?us-ascii?Q?1EiJbD6/U+qoaS8VWPECJbFMIFtD1+e/cWCvre20D3wyCiDIiB+nKCIxDT5o?=
+ =?us-ascii?Q?2sYLlmj+GPRvFhXjfFXiuA4NXryutLQkGAhMtc51g1XXvUeGRNqXFzqDP4DE?=
+ =?us-ascii?Q?nAwAswDqGbTc2yOAy2Gev5to5ZwYkYYFP48+xF1mhrGjfZ6fPO2OC93b0f72?=
+ =?us-ascii?Q?lfjaswceGHCXBCLWWzuN3GvliqxwzblMHAphTGE4qKxBpj5NOUoYk5JBR8TA?=
+ =?us-ascii?Q?h7Xec9K996RLRCJ/cgFqj36pkanlY0woyRXrDlfO?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="h5hdrq2a6gtomf25"
-Content-Disposition: inline
-In-Reply-To: <20231102203158.2443176-1-mcgrof@kernel.org>
-X-Originating-IP: [106.210.248.176]
-X-ClientProxiedBy: CAMSVWEXC01.scsc.local (2002:6a01:e347::6a01:e347) To
-	CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLKsWRmVeSWpSXmKPExsWy7djPc7qibzxTDVa95rM4051rsWfvSRaL
-	y7vmsFncmPCU0eLyiUuMDqwesxsusnhsWtXJ5vFi80xGj8+b5AJYorhsUlJzMstSi/TtErgy
-	Lm99y1Swm7/i6u1t7A2M63m7GDk5JARMJL5s2MHSxcjFISSwglGiZ9MOZgjnC6PE/Xlr2SCc
-	z4wS/39tYIdpOXpkBVRiOaPEwSOT2eGqPh1rhHK2MErM6p0J1sIioCLR/GItE4jNJqAjcf7N
-	HWYQW0RAQ2LfhF6gOAcHs0ClxKNJgSBhYYEwidftX1hAbF4Bc4nV5y+xQdiCEidnPgGLMwtU
-	SLT0nWWDaJWWWP6PAyTMKWAp0fT1OCPEocoSzdsPQB1dK3Fqyy0mkNMkBL5wSDxvOcEKkXCR
-	+DJ1NVSDsMSr41ugGmQkTk/uYYFomMwosf/fB3YIZzWjxLLGr0wQVdYSLVeesINcISHgKHGm
-	wRLC5JO48VYQ4k4+iUnbpjNDhHklOtqEIBrVJFbfe8MygVF5FpLPZiH5bBbCZxBhHYkFuz9h
-	CmtLLFv4mhnCtpVYt+49ywJG9lWM4qmlxbnpqcWGeanlesWJucWleel6yfm5mxiBqer0v+Of
-	djDOffVR7xAjEwfjIUYVoOZHG1ZfYJRiycvPS1US4f1r75EqxJuSWFmVWpQfX1Sak1p8iFGa
-	g0VJnFc1RT5VSCA9sSQ1OzW1ILUIJsvEwSnVwKR95uC6fe3Cdw2YJv23t7y17qaf4dq9LYxf
-	4uvPXtucYdtYJs4t/W72vYy0o/cP206fv8JJKLClrZBBc2KM6K4T2sHXFhSnWKkm/ZzPc3TL
-	U7aHF/VfzKu3dm4SfvvH6ddh54O3N+f+r5x28/9zS/vYP/nez0RUvZYvZj57WXj9jgY3ryvv
-	vq2atLiUy5Px0lf7k1/i++0cf3xjDXy/aW762w8Rjkb881le7OJwuHSU92aHg8/E6S1m+Uqm
-	Mz+8aJ7FWZSR0uMXwPszNvu49unY3/a5YdsdlkRP/6LAUKe8cvKZqfMYJp7ofnop+seuObk6
-	1eKXBOYVp8vtU+D5WfnhRc+fC1ITnvAs3OOdI92txFKckWioxVxUnAgAkkTkLtADAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrBIsWRmVeSWpSXmKPExsVy+t/xu7oibzxTDea1m1ic6c612LP3JIvF
-	5V1z2CxuTHjKaHH5xCVGB1aP2Q0XWTw2repk83ixeSajx+dNcgEsUXo2RfmlJakKGfnFJbZK
-	0YYWRnqGlhZ6RiaWeobG5rFWRqZK+nY2Kak5mWWpRfp2CXoZkz97F+zkr+i68Zy9gXEtbxcj
-	J4eEgInE0SMr2LoYuTiEBJYySvRs3cAMkZCR2PjlKiuELSzx51oXVNFHRon/B56wQzhbGCW2
-	PjsGVsUioCLR/GItE4jNJqAjcf7NHbBJIgIaEvsm9ALFOTiYBSolHk0KBDGFBcIkZu2VBKng
-	FTCXWH3+EtT8HkaJWa8ms0IkBCVOznzCAmIzC5RJbHo/AWqMtMTyfxwgYU4BS4mmr8cZIe5U
-	lmjefoAdwq6V+Pz3GeMERuFZSCbNQjJpFsIkiLCWxI1/LzGFtSWWLXzNDGHbSqxb955lASP7
-	KkaR1NLi3PTcYkO94sTc4tK8dL3k/NxNjMBo3Xbs5+YdjPNefdQ7xMjEwXiIUQWo89GG1RcY
-	pVjy8vNSlUR4/9p7pArxpiRWVqUW5ccXleakFh9iNAWG4URmKdHkfGAaySuJNzQzMDU0MbM0
-	MLU0M1YS5/Us6EgUEkhPLEnNTk0tSC2C6WPi4JRqYFKU6hd44xete2CZRJKo6U7BtK1cm46o
-	9D9srM5O4F3wYI3vXcZj+yer/1AqW1m1b/9VjvzZdgeKCiu+iXxczHu655c3b35l9sq0WeVX
-	ojYVCmzhFctbcZLf5k3xnrYDwdv8PqwUfFEptHJuwh/7Vdc2MTz/3MxzYXXhiWdblu08rH6m
-	+o6fYkfy2uCWFzOdJS9oB56y8guQLtzzuoONVfmeXPfcwAgWh9dGqXrJPZyrraIkDHYU31wU
-	4B6zKjk9OrKhcc1PocpKXtuQz8qXF/1J5JljeXHXCqtjV02qD4VOYBLpZV2RfnTtHR+hLvfP
-	t9Zzv7i6IurThqzaEJlIvvjXq14euJslNscs4H0bsxJLcUaioRZzUXEiAJlfP/NrAwAA
-X-CMS-MailID: 20231107074940eucas1p28a1aa7c1c98e72356babc5faba5df533
-X-Msg-Generator: CA
-X-RootMTR: 20231102203208eucas1p14cd9089da85eb9f7932b6fb04cfc41a8
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20231102203208eucas1p14cd9089da85eb9f7932b6fb04cfc41a8
-References: <CGME20231102203208eucas1p14cd9089da85eb9f7932b6fb04cfc41a8@eucas1p1.samsung.com>
-	<20231102203158.2443176-1-mcgrof@kernel.org>
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9ed1e9ca-fc91-441b-d3f9-08dbdf6b9cd9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Nov 2023 08:29:08.8458
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: lcHqDE+pR8O/H1JmOPGcG0mwZS/wK9Rr/EYpcbSObhRJK01eDCB3PLSH6823XvaKrrSjpGtVn8Pl69LIX0WRGQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR11MB5460
+X-OriginatorOrg: intel.com
 
---h5hdrq2a6gtomf25
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> From: Alex Williamson <alex.williamson@redhat.com>
+> Sent: Friday, November 3, 2023 11:51 PM
+>=20
+> On Fri, 3 Nov 2023 07:23:13 +0000
+> "Tian, Kevin" <kevin.tian@intel.com> wrote:
+>=20
+> > > From: Alex Williamson <alex.williamson@redhat.com>
+> > > Sent: Friday, November 3, 2023 5:14 AM
+> > >
+> > > On Thu, 2 Nov 2023 03:14:09 +0000
+> > > "Tian, Kevin" <kevin.tian@intel.com> wrote:
+> > >
+> > > > > From: Tian, Kevin
+> > > > > Sent: Thursday, November 2, 2023 10:52 AM
+> > > > >
+> > > > > >
+> > > > > > Without an in-tree user of this code, we're just chopping up co=
+de for
+> > > > > > no real purpose.  There's no reason that a variant driver requi=
+ring
+> IMS
+> > > > > > couldn't initially implement their own SET_IRQS ioctl.  Doing t=
+hat
+> > > > >
+> > > > > this is an interesting idea. We haven't seen a real usage which w=
+ants
+> > > > > such MSI emulation on IMS for variant drivers. but if the code is
+> > > > > simple enough to demonstrate the 1st user of IMS it might not be
+> > > > > a bad choice. There are additional trap-emulation required in the
+> > > > > device MMIO bar (mostly copying MSI permission entry which
+> contains
+> > > > > PASID info to the corresponding IMS entry). At a glance that area
+> > > > > is 4k-aligned so should be doable.
+> > > > >
+> > > >
+> > > > misread the spec. the MSI-X permission table which provides
+> > > > auxiliary data to MSI-X table is not 4k-aligned. It sits in the 1st
+> > > > 4k page together with many other registers. emulation of them
+> > > > could be simple with a native read/write handler but not sure
+> > > > whether any of them may sit in a hot path to affect perf due to
+> > > > trap...
+> > >
+> > > I'm not sure if you're referring to a specific device spec or the PCI
+> > > spec, but the PCI spec has long included an implementation note
+> > > suggesting alignment of the MSI-X vector table and pba and separation
+> > > from CSRs, and I see this is now even more strongly worded in the 6.0
+> > > spec.
+> > >
+> > > Note though that for QEMU, these are emulated in the VMM and not
+> > > written through to the device.  The result of writes to the vector
+> > > table in the VMM are translated to vector use/unuse operations, which
+> > > we see at the kernel level through SET_IRQS ioctl calls.  Are you
+> > > expecting to get PASID information written by the guest through the
+> > > emulated vector table?  That would entail something more than a simpl=
+e
+> > > IMS backend to MSI-X frontend.  Thanks,
+> > >
+> >
+> > I was referring to IDXD device spec. Basically it allows a process to
+> > submit a descriptor which contains a completion interrupt handle.
+> > The handle is the index of a MSI-X entry or IMS entry allocated by
+> > the idxd driver. To mark the association between application and
+> > related handles the driver records the PASID of the application
+> > in an auxiliary structure for MSI-X (called MSI-X permission table)
+> > or directly in the IMS entry. This additional info includes whether
+> > an MSI-X/IMS entry has PASID enabled and if yes what is the PASID
+> > value to be checked against the descriptor.
+> >
+> > As you said virtualizing MSI-X table itself is via SET_IRQS and it's
+> > 4k aligned. Then we also need to capture guest updates to the MSI-X
+> > permission table and copy the PASID information into the
+> > corresponding IMS entry when using the IMS backend. It's MSI-X
+> > permission table not 4k aligned then trapping it will affect adjacent
+> > registers.
+> >
+> > My quick check in idxd spec doesn't reveal an real impact in perf
+> > critical path. Most registers are configuration/control registers
+> > accessed at driver init time and a few interrupt registers related
+> > to errors or administrative purpose.
+>=20
+> Right, it looks like you'll need to trap writes to the MSI-X
+> Permissions Table via a sparse mmap capability to avoid assumptions
+> whether it lives on the same page as the MSI-X vector table or PBA.
+> Ideally the hardware folks have considered this to avoid any conflict
+> with latency sensitive registers.
+>=20
+> The variant driver would use this for collecting the meta data relative
+> to the IMS interrupt, but this is all tangential to whether we
+> preemptively slice up vfio-pci-core's SET_IRQS ioctl or the iDXD driver
+> implements its own.
 
-On Thu, Nov 02, 2023 at 01:31:58PM -0700, Luis Chamberlain wrote:
-> Joel Granados has been doing quite a bit of the work to help us move
-> forward with the proc sysctl cleanups, and is keen on helping and
-> so has agreed to help with maintenance of proc sysctl. Add him as
-> a maintainer.
-Thx @Luis. Currently preparing the next batch of the "remove sentinel
-patches". Will push them out as soon as I clean them up and test them
-
-Best
+Agree
 
 >=20
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-> ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 66c2e2814867..c9b077e779d8 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -17224,6 +17224,7 @@ F:	tools/testing/selftests/proc/
->  PROC SYSCTL
->  M:	Luis Chamberlain <mcgrof@kernel.org>
->  M:	Kees Cook <keescook@chromium.org>
-> +M:	Joel Granados <j.granados@samsung.com>
->  L:	linux-kernel@vger.kernel.org
->  L:	linux-fsdevel@vger.kernel.org
->  S:	Maintained
-> --=20
-> 2.42.0
+> And just to be clear, I don't expect the iDXD variant driver to go to
+> extraordinary lengths to duplicate the core ioctl, we can certainly
+> refactor and export things where it makes sense, but I think it likely
+> makes more sense for the variant driver to implement the shell of the
+> ioctl rather than trying to multiplex the entire core ioctl with an ops
+> structure that's so intimately tied to the core implementation and
+> focused only on the MSI-X code paths.  Thanks,
 >=20
 
---=20
-
-Joel Granados
-
---h5hdrq2a6gtomf25
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCgAdFiEErkcJVyXmMSXOyyeQupfNUreWQU8FAmVJ7BIACgkQupfNUreW
-QU86dgv+PQ72kqzGG51MJZgTdDLzljQIMequr1TCbfH+ZuyVsf6N1r/rGMQAEA08
-gQwp4OoI3vmMTJGlgDtkvvPN/RiQbfEuFrJgiIPLbI7WAD7E4aKw9CrZiX4qty74
-ehowC85A8hVByAFRJu1Pe5aRbXNJRv1KIHQJDJagMsiB1FG4P8bo82aW3ZoRRTAR
-1jWqfm8K6AY+6IvcZN1lF49t8k8h4O38O6CV8vjEQRiRhW0Gv6P4BUfY80NDin9h
-rlGKDTnB8OZxgcnbacVRHgACtZSfWlxa9xAeLOc4qCTnP7l5Geq3JwbOv8/s+hdE
-ySqXpOFvsiz98CEK/Oi9O4u6FMiItY+RQFjWh6oIZjHNSBvHGfobMF1nVT3qx+zB
-BZAE67/kV5ahWaHOqYelCsEKPnU0s2SxhX4aGesEPu4a9rpSDbMgE2xZw6WsfQCz
-QzajY6SMGNHN4pLv/PZD55SPIoeL5m7bZNw9LuCuTzOLHszjjMBrx9+2jfVMDmE6
-VkwQ8bAM
-=EYqh
------END PGP SIGNATURE-----
-
---h5hdrq2a6gtomf25--
+btw I'll let Reinette to decide whether she wants to implement such
+a variant driver or waits until idxd siov driver is ready to demonstrate
+the usage. One concern with the variant driver approach is lacking
+of a real-world usage (e.g. what IMS brings when guest only wants
+MSI-X on an assigned PF). Though it may provide a shorter path
+to enable the IMS backend support, also comes with the long-term
+maintenance burden.
