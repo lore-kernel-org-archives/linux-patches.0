@@ -1,69 +1,266 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69DB2A8D1;
-	Tue,  7 Nov 2023 22:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2893E210B
+	for <patches@lists.linux.dev>; Tue,  7 Nov 2023 23:06:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e5RTI9ZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5736AC433C7;
-	Tue,  7 Nov 2023 22:30:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699396225;
-	bh=mQjxfbWMe4Gc4SDxzD5FonuT5nx1eMyTuCTNNuTUOkA=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=e5RTI9ZEAfurOUWhmT3L1pIqZOmT2QSg3duFpUIpundVjG/txVcuifIuevnmQJuc0
-	 ysDTx4FKKI6Wnx57BdrlEMf5L2Os2oCcIKaLnPa0WmK3A6DOlYAXABbG6RdMgxBqpP
-	 5jaPJedh5Vm8FBwL8pxZ0+3+G4gw9vAFoOx52t5AkEHcuIiynoKLLPH+mqxg1qfn6u
-	 djE9GBlLpkTJZZdB3hqxPRswUFewVLhBhgvDvGM9FjZHwy1IIS5jcO1Zy6NdYFtTJJ
-	 NY+g0iYUULmpBNuR8KCdzn3YDQVcrHPNhJOoOcPkeeYiQQ5L+DTp8Vh4NY0Vyp3SWJ
-	 xybANRqpwvawQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3DA33C395FC;
-	Tue,  7 Nov 2023 22:30:25 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="EmARByoS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1699398405;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=evOOxUwRzOxqxcodoYQiu8D+8i7HycPPu2po6a+EzrU=;
+	b=EmARByoS4vCEFctjs7v/5+BNS9ui6+zfZ6Lshl0azXbDaAVpvSCeqwTfPQzrADcIwySRTS
+	/iz7m0za11ua1YMyrTNstqhEzxN+IoA9GbqoigUKLmrf6j8zG+8jUZKttVT3LiwDyyMjby
+	ucw9xxGtgs+xKrIDn9/222dYZXIK5N8=
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687-4cY7q69iN56lamCVQmIKIQ-1; Tue, 07 Nov 2023 18:06:44 -0500
+X-MC-Unique: 4cY7q69iN56lamCVQmIKIQ-1
+Received: by mail-io1-f71.google.com with SMTP id ca18e2360f4ac-7a9764cbb95so589852439f.0
+        for <patches@lists.linux.dev>; Tue, 07 Nov 2023 15:06:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699398403; x=1700003203;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=evOOxUwRzOxqxcodoYQiu8D+8i7HycPPu2po6a+EzrU=;
+        b=o64oaGVBOLRUgcReA52BnGsxCGCchKrnKejggMvxE7k2Oob5NPMV+V06OA8WyivurV
+         lujyWCZ2GRtMiDh8NXRNDrx2dbxKX0yeeMH9nzErgM3zkzyTeeIv6S072G/FMx70lW/0
+         RUdFqKXW5OnEdthM8rkEnPQU0h3yLmv8lavQqjc5YWoTCI3nWRD35axgE/l21+/fiUKM
+         50doUHQwzGcXrkhXaY1QcmNs/zCWU/nZRjHfwtvMAETVfiGpoOynLzWx2mknCXznbjil
+         G7b/xu352Nmg3lGfcNZYYfziP0a5QSbzCmC8EdKYyaEny2f7/EL64yWWvNF76jS/2ASW
+         XW0g==
+X-Gm-Message-State: AOJu0YwST9+rb9kFuk9DHLxBX+gekNWeu+UzRF7e4Pzyo1MuiQz+IWRf
+	gLxn2nXaxJH3KA4ycdoaK7ukWYydlgzHbYqAv57F0FphBX2en6+s0stglxGeSRpaMLD0a/MQMVS
+	AV+8Lbj4tJG7yt8smFw==
+X-Received: by 2002:a6b:dd15:0:b0:7ac:7cbf:972 with SMTP id f21-20020a6bdd15000000b007ac7cbf0972mr261434ioc.12.1699398403537;
+        Tue, 07 Nov 2023 15:06:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGaQwvUt/Q1P1zaKJYSFtqLACqcrOblpWzBgvcWqmvYHf8+bh/9ikaMkiqgQ/LmNo+qmavYmA==
+X-Received: by 2002:a6b:dd15:0:b0:7ac:7cbf:972 with SMTP id f21-20020a6bdd15000000b007ac7cbf0972mr261409ioc.12.1699398403197;
+        Tue, 07 Nov 2023 15:06:43 -0800 (PST)
+Received: from redhat.com ([38.15.60.12])
+        by smtp.gmail.com with ESMTPSA id g15-20020a056602242f00b0076c569c7a48sm3193990iob.39.2023.11.07.15.06.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Nov 2023 15:06:42 -0800 (PST)
+Date: Tue, 7 Nov 2023 16:06:41 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: "Tian, Kevin" <kevin.tian@intel.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "yishaih@nvidia.com" <yishaih@nvidia.com>,
+ "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>, "kvm@vger.kernel.org"
+ <kvm@vger.kernel.org>, "Jiang, Dave" <dave.jiang@intel.com>, "Liu, Jing2"
+ <jing2.liu@intel.com>, "Raj, Ashok" <ashok.raj@intel.com>, "Yu, Fenghua"
+ <fenghua.yu@intel.com>, "tom.zanussi@linux.intel.com"
+ <tom.zanussi@linux.intel.com>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
+ <patches@lists.linux.dev>
+Subject: Re: [RFC PATCH V3 00/26] vfio/pci: Back guest interrupts from
+ Interrupt Message Store (IMS)
+Message-ID: <20231107160641.45aee2e0.alex.williamson@redhat.com>
+In-Reply-To: <7f8b89c7-7ae0-4f2d-9e46-e15a6db7f6d9@intel.com>
+References: <cover.1698422237.git.reinette.chatre@intel.com>
+	<BL1PR11MB52710EAB683507AD7FAD6A5B8CA0A@BL1PR11MB5271.namprd11.prod.outlook.com>
+	<20231101120714.7763ed35.alex.williamson@redhat.com>
+	<BN9PR11MB52769292F138F69D8717BE8D8CA6A@BN9PR11MB5276.namprd11.prod.outlook.com>
+	<20231102151352.1731de78.alex.williamson@redhat.com>
+	<BN9PR11MB5276BCEA3275EC7203E06FDA8CA5A@BN9PR11MB5276.namprd11.prod.outlook.com>
+	<20231103095119.63aa796f.alex.williamson@redhat.com>
+	<BN9PR11MB52765E82CB809DA7C04A3EF18CA9A@BN9PR11MB5276.namprd11.prod.outlook.com>
+	<7f8b89c7-7ae0-4f2d-9e46-e15a6db7f6d9@intel.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net v3] tcp: Fix -Wc23-extensions in tcp_options_write()
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <169939622524.29953.10014331221596302172.git-patchwork-notify@kernel.org>
-Date: Tue, 07 Nov 2023 22:30:25 +0000
-References: <20231106-tcp-ao-fix-label-in-compound-statement-warning-v3-1-b54a64602a85@kernel.org>
-In-Reply-To: <20231106-tcp-ao-fix-label-in-compound-statement-warning-v3-1-b54a64602a85@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: edumazet@google.com, davem@davemloft.net, dsahern@kernel.org,
- kuba@kernel.org, pabeni@redhat.com, ndesaulniers@google.com, trix@redhat.com,
- 0x7f454c46@gmail.com, noureddine@arista.com, hch@infradead.org,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
- patches@lists.linux.dev
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Hello:
+On Tue, 7 Nov 2023 11:48:28 -0800
+Reinette Chatre <reinette.chatre@intel.com> wrote:
 
-This patch was applied to netdev/net.git (main)
-by David S. Miller <davem@davemloft.net>:
-
-On Mon, 06 Nov 2023 14:14:16 -0700 you wrote:
-> Clang warns (or errors with CONFIG_WERROR=y) when CONFIG_TCP_AO is set:
+> Hi Alex and Kevin,
 > 
->   net/ipv4/tcp_output.c:663:2: error: label at end of compound statement is a C23 extension [-Werror,-Wc23-extensions]
->     663 |         }
->         |         ^
->   1 error generated.
+> On 11/7/2023 12:29 AM, Tian, Kevin wrote:
+> >> From: Alex Williamson <alex.williamson@redhat.com>
+> >> Sent: Friday, November 3, 2023 11:51 PM
+> >>
+> >> On Fri, 3 Nov 2023 07:23:13 +0000
+> >> "Tian, Kevin" <kevin.tian@intel.com> wrote:
+> >>  
+> >>>> From: Alex Williamson <alex.williamson@redhat.com>
+> >>>> Sent: Friday, November 3, 2023 5:14 AM
+> >>>>
+> >>>> On Thu, 2 Nov 2023 03:14:09 +0000
+> >>>> "Tian, Kevin" <kevin.tian@intel.com> wrote:
+> >>>>  
+> >>>>>> From: Tian, Kevin
+> >>>>>> Sent: Thursday, November 2, 2023 10:52 AM
+> >>>>>>  
+> >>>>>>>
+> >>>>>>> Without an in-tree user of this code, we're just chopping up code for
+> >>>>>>> no real purpose.  There's no reason that a variant driver requiring  
+> >> IMS  
+> >>>>>>> couldn't initially implement their own SET_IRQS ioctl.  Doing that  
+> >>>>>>
+> >>>>>> this is an interesting idea. We haven't seen a real usage which wants
+> >>>>>> such MSI emulation on IMS for variant drivers. but if the code is
+> >>>>>> simple enough to demonstrate the 1st user of IMS it might not be
+> >>>>>> a bad choice. There are additional trap-emulation required in the
+> >>>>>> device MMIO bar (mostly copying MSI permission entry which  
+> >> contains  
+> >>>>>> PASID info to the corresponding IMS entry). At a glance that area
+> >>>>>> is 4k-aligned so should be doable.
+> >>>>>>  
+> >>>>>
+> >>>>> misread the spec. the MSI-X permission table which provides
+> >>>>> auxiliary data to MSI-X table is not 4k-aligned. It sits in the 1st
+> >>>>> 4k page together with many other registers. emulation of them
+> >>>>> could be simple with a native read/write handler but not sure
+> >>>>> whether any of them may sit in a hot path to affect perf due to
+> >>>>> trap...  
+> >>>>
+> >>>> I'm not sure if you're referring to a specific device spec or the PCI
+> >>>> spec, but the PCI spec has long included an implementation note
+> >>>> suggesting alignment of the MSI-X vector table and pba and separation
+> >>>> from CSRs, and I see this is now even more strongly worded in the 6.0
+> >>>> spec.
+> >>>>
+> >>>> Note though that for QEMU, these are emulated in the VMM and not
+> >>>> written through to the device.  The result of writes to the vector
+> >>>> table in the VMM are translated to vector use/unuse operations, which
+> >>>> we see at the kernel level through SET_IRQS ioctl calls.  Are you
+> >>>> expecting to get PASID information written by the guest through the
+> >>>> emulated vector table?  That would entail something more than a simple
+> >>>> IMS backend to MSI-X frontend.  Thanks,
+> >>>>  
+> >>>
+> >>> I was referring to IDXD device spec. Basically it allows a process to
+> >>> submit a descriptor which contains a completion interrupt handle.
+> >>> The handle is the index of a MSI-X entry or IMS entry allocated by
+> >>> the idxd driver. To mark the association between application and
+> >>> related handles the driver records the PASID of the application
+> >>> in an auxiliary structure for MSI-X (called MSI-X permission table)
+> >>> or directly in the IMS entry. This additional info includes whether
+> >>> an MSI-X/IMS entry has PASID enabled and if yes what is the PASID
+> >>> value to be checked against the descriptor.
+> >>>
+> >>> As you said virtualizing MSI-X table itself is via SET_IRQS and it's
+> >>> 4k aligned. Then we also need to capture guest updates to the MSI-X
+> >>> permission table and copy the PASID information into the
+> >>> corresponding IMS entry when using the IMS backend. It's MSI-X
+> >>> permission table not 4k aligned then trapping it will affect adjacent
+> >>> registers.
+> >>>
+> >>> My quick check in idxd spec doesn't reveal an real impact in perf
+> >>> critical path. Most registers are configuration/control registers
+> >>> accessed at driver init time and a few interrupt registers related
+> >>> to errors or administrative purpose.  
+> >>
+> >> Right, it looks like you'll need to trap writes to the MSI-X
+> >> Permissions Table via a sparse mmap capability to avoid assumptions
+> >> whether it lives on the same page as the MSI-X vector table or PBA.
+> >> Ideally the hardware folks have considered this to avoid any conflict
+> >> with latency sensitive registers.
+> >>
+> >> The variant driver would use this for collecting the meta data relative
+> >> to the IMS interrupt, but this is all tangential to whether we
+> >> preemptively slice up vfio-pci-core's SET_IRQS ioctl or the iDXD driver
+> >> implements its own.  
+> > 
+> > Agree
+> >   
+> >>
+> >> And just to be clear, I don't expect the iDXD variant driver to go to
+> >> extraordinary lengths to duplicate the core ioctl, we can certainly
+> >> refactor and export things where it makes sense, but I think it likely
+> >> makes more sense for the variant driver to implement the shell of the
+> >> ioctl rather than trying to multiplex the entire core ioctl with an ops
+> >> structure that's so intimately tied to the core implementation and
+> >> focused only on the MSI-X code paths.  Thanks,
+> >>  
+> > 
+> > btw I'll let Reinette to decide whether she wants to implement such
+> > a variant driver or waits until idxd siov driver is ready to demonstrate
+> > the usage. One concern with the variant driver approach is lacking
+> > of a real-world usage (e.g. what IMS brings when guest only wants
+> > MSI-X on an assigned PF). Though it may provide a shorter path
+> > to enable the IMS backend support, also comes with the long-term
+> > maintenance burden.  
 > 
-> [...]
+> Thank you very much for your guidance and advice.
+> 
+> I'd be happy to implement what is required for this work. Unfortunately
+> I am not confident that I understand what is meant with "variant driver".
+> 
+> I initially understood "variant driver" to mean the planned IDXD virtual
+> device driver (the "IDXD VDCM" driver) that will assign IDXD resources
+> to guests with varying granularity and back the guest MSI-X interrupts
+> of these virtual devices with IMS interrupts on the host. From Kevin
+> I understand "variant driver" is a new sample driver for an IDXD
+> assigned PF, backing guest MSI-X interrupts with IMS interrupts on
+> the host.
+> 
+> The IDXD VDCM driver is in progress. If a new variant driver needs to be
+> created then I still need to do some research in how to accomplish it.
+> Even so, it is not clear to me who the users of this new driver would be.
+> If the requirement is to demonstrate this VFIO IMS usage then we could
+> perhaps wait until the IDXD VDCM driver is ready and thus not have to deal
+> with additional maintenance burden.
 
-Here is the summary with links:
-  - [net,v3] tcp: Fix -Wc23-extensions in tcp_options_write()
-    https://git.kernel.org/netdev/net/c/7425627b2b2c
+A vfio-pci variant driver is specifically a driver that leverages
+portions of vfio-pci-core for implementing vfio_device_ops and binds to
+a PCI device.  It might actually be the wrong term here, but I jumped
+to that since the series tries to generalize portions of one of the
+vfio-pci-core code paths. You might very well be intending to use this
+with something more like an mdev driver, which is fine.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+That also sort of illustrates the point though that this series is
+taking a pretty broad approach to slicing up vfio-pci-core's SET_IRQS
+ioctl code path, enabling support for IMS backed interrupts, but in
+effect complicating the whole thing without any actual consumer to
+justify the complication.  Meanwhile I think the goal is to reduce
+complication to a driver that doesn't exist yet.  So it currently seems
+like a poor trade-off.
 
+This driver that doesn't exist yet could implement its own SET_IRQS
+ioctl that backs MSI-X with IMS as a starting point.  Presumably we
+expect multiple drivers to require this behavior, so common code makes
+sense, but the rest of us in the community can't really evaluate how
+much it makes sense to slice the common code without seeing that
+implementation and how it might leverage, if not directly use, the
+existing core code.
+
+The sample drivers come into play in that if we were to make the
+vfio-pci-core SET_IRQS path usable in this generic way, then any driver
+implementing SET_IRQS for a PCI device should be able to take advantage
+of it, including those that already exist in samples/vfio-mdev/.  I
+don't think anyone is requesting an iDXD sample driver, the real driver
+should be sufficient.
+
+> In the mean time there are items that I do understand better
+> and will work on right away:
+> - Do not have ops span the SET_IRQS ioctl()
+> - Use container_of() instead of opaque pointer
+> - Do not ignore INTx, consider the mdev sample driver when refactoring
+>   this code.
+> - Consider the Intel vgpu driver as user of new emulated interrupt
+>   interface.
+
+I think looking at kvmgt and the existing sample drivers to find
+commonality that actually provides simplification would be a good
+start, but I don't anticipate implementing IMS backed MSI-X in common
+code unless we're at least imminently able to make use of it.  Thanks,
+
+Alex
 
