@@ -1,184 +1,208 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652EB3456C
-	for <patches@lists.linux.dev>; Wed,  8 Nov 2023 17:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326EF36AFB
+	for <patches@lists.linux.dev>; Wed,  8 Nov 2023 19:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="C7gp0x6O"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eviq/k9L"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1699462820; x=1730998820;
-  h=references:from:to:cc:subject:date:in-reply-to:
-   message-id:mime-version;
-  bh=vdCCw2ZkvuoisaKXVmLylfpmcS58dJIO9DrR543ChcI=;
-  b=C7gp0x6OjzreVmfFpOb7F4zE8llMaa6Og3ThGLPyRxdvr/n7PmuVzE7p
-   04PZ5Wza848KjIYF6YD8kkUyt6Aj1d03gTNhkXFfPCRGFd6m2cnjwS3wS
-   yx60slOtuMmtjfwN/q+xUbDUnObzJ2SbYEJh4fA/QBKrg/GALH4wk+p6O
-   PTCGPf9pYMhWva/n7Y6lA3Laedcm7cv8fW1+pMEtGiletkAe2bUaxx36v
-   Ny+bZ8YuuKG96UsQiHA13kGVaEvfEbhV5+8KpTKCjI7me2s53MNcjaEW8
-   YzSqdUK64Dn8AtYwMV9mfg5zTuSCpQM82LFF26dH9h0HhbGvlsOX24hns
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10888"; a="380202371"
-X-IronPort-AV: E=Sophos;i="6.03,286,1694761200"; 
-   d="scan'208";a="380202371"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Nov 2023 09:00:19 -0800
+  t=1699471180; x=1731007180;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=9LP5XzsexOTRXF8If2u9iDZg0YN5GJpyCU4qN42T1QY=;
+  b=eviq/k9LPhVcTii1OITJOUS0ntBXtTF2ll3vzkbumC7Lmrugxvh27JXG
+   /+PF1wIxedc/kZPoXyXJV312GAo+q4495ltXVTGK0aBo2EPPHmqhD+hza
+   D8B7A99lrbfL4J2fbNg3lItPvcj1854Xm4ilgITfafXnHX9Jc7tnLvXPq
+   YXnp2cnc2xBJAfCXA3CizIkihjIVtnypGwQK8Yyrv3LcP1W+nbY6xsyiu
+   gBmqnNXD3cqrnAKJuWqF8SVH5UhD8o41BDkbMKhUNC2Ut2qGyskGvhBZr
+   M63a33whpaZR0H4wIyFftzcLYH92T3WRZcMdGxurnG747pK/8D9nK6/eo
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10888"; a="454142439"
+X-IronPort-AV: E=Sophos;i="6.03,287,1694761200"; 
+   d="scan'208";a="454142439"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Nov 2023 11:19:39 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10888"; a="833541437"
-X-IronPort-AV: E=Sophos;i="6.03,286,1694761200"; 
-   d="scan'208";a="833541437"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
-  by fmsmga004.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 08 Nov 2023 09:00:19 -0800
-Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.34; Wed, 8 Nov 2023 09:00:19 -0800
-Received: from orsmsx602.amr.corp.intel.com (10.22.229.15) by
- ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.34; Wed, 8 Nov 2023 09:00:18 -0800
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.34 via Frontend Transport; Wed, 8 Nov 2023 09:00:18 -0800
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (104.47.74.40) by
- edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.34; Wed, 8 Nov 2023 09:00:18 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=i3ErSSpkQzTl3ng7bThx92Pw5F45Z6c5TdW0tPI7F4qUIrpi+AyOicgt8MHsB7UzFGKDIU65ll46xePSTZtJ7Vu92wLNi31T4aCJZ7OmxNZp5pKhUn7fNadQvmynKfwVe9eEYpVJGO9kcSPYlmc3B7W8Cc1HUWHLWFBZOaPcsTFGyCnygag8AUWWU9M0ytb9QQQ+KNiEnwEn7c+zS9phZHpi/J+Y3OUBHxKB2YgBeqiO1t4Uxe6h6Wk+qaOxOB5L8PYQRz2pZ3daCzlXpm4uid+84hT0YB74seSVHn+lKZ036BrtY1t5198At7UHZxjksw8J8v0W2gqyjgo1IwaZYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RR6JewtS5BF0T/3d/KIzGtb2ax5j1uVUOJX9FWD7b7k=;
- b=a8XK9dY+/IkS66uJkRXOfGvW6hovOXDMb9YLEXXtjx8bmB1uiTAl5+ZXPEAmfF+rlpm65KJwLkVt/SmYQOWOjf4nSVjqH413l10qW/6NRoF/TCIwAarZ0FIUI46MoYE2bETIQs04AiuwPVzN6G0dJOK+tpxzYMo+91Olo0+g4Cpr7G36fr20zbcBSj7PnvwF1IbrwGQ5Ny4KE/VrGXC3m8ExNFICiIQ80+rUClG9fkMJHnbKhk8Mien32mutdorWsS7XBJcur31BqNYEhOShpstonRY6IMvcvOenZNHs2HMkE+P1QYlpnhizSstWeNjb9hSrfiMBzgQ9Uzu0S73QTw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from BL1PR11MB5978.namprd11.prod.outlook.com (2603:10b6:208:385::18)
- by DS0PR11MB7558.namprd11.prod.outlook.com (2603:10b6:8:148::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.29; Wed, 8 Nov
- 2023 17:00:16 +0000
-Received: from BL1PR11MB5978.namprd11.prod.outlook.com
- ([fe80::5d1:aa22:7c98:f3c6]) by BL1PR11MB5978.namprd11.prod.outlook.com
- ([fe80::5d1:aa22:7c98:f3c6%6]) with mapi id 15.20.6954.021; Wed, 8 Nov 2023
- 17:00:16 +0000
-References: <20231009130116.329529591@linuxfoundation.org>
- <20231009130118.189922269@linuxfoundation.org> <8734xg2seb.fsf@intel.com>
- <2023110837-maturity-clean-6e78@gregkh>
-User-agent: mu4e 1.8.11; emacs 28.3
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>, "David S. Miller"
-	<davem@davemloft.net>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.4 062/131] ncsi: Propagate carrier gain/loss events to
- the NCSI controller
-Date: Wed, 8 Nov 2023 08:48:08 -0800
-In-Reply-To: <2023110837-maturity-clean-6e78@gregkh>
-Message-ID: <87y1f818pu.fsf@intel.com>
-Content-Type: text/plain; format=flowed
-X-ClientProxiedBy: MW4P223CA0011.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:303:80::16) To BL1PR11MB5978.namprd11.prod.outlook.com
- (2603:10b6:208:385::18)
+X-IronPort-AV: E=McAfee;i="6600,9927,10888"; a="766735234"
+X-IronPort-AV: E=Sophos;i="6.03,287,1694761200"; 
+   d="scan'208";a="766735234"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Nov 2023 11:19:39 -0800
+Date: Wed, 8 Nov 2023 11:19:37 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v10 4/8] x86/resctrl: Split the rdt_domain and
+ rdt_hw_domain structures
+Message-ID: <ZUvfSbnOY+niAr+e@agluck-desk3>
+References: <20231020213100.123598-1-tony.luck@intel.com>
+ <20231031211708.37390-1-tony.luck@intel.com>
+ <20231031211708.37390-5-tony.luck@intel.com>
+ <51332bf8-d641-4a89-bcec-60b849fc6a34@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR11MB5978:EE_|DS0PR11MB7558:EE_
-X-MS-Office365-Filtering-Correlation-Id: 37e4c772-4b43-4359-6fcf-08dbe07c2e3c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: SfrARbPbYd1oGtpi+WI7VIX3UDI8+VmgKd+4zUfmpwMK+sgT1c5jZR54JzWQ7EDzdTWG4o717xupClbfRXDVKPG+H9vsD4MJtpAkMduQ8IKaQ414Nm/WJ0Oy0oFgbNraOgMclgquPQ+ICQEEv5T5jrKHwOHhwxPlX6CbkwyyM7XRkLXucbwnHQsnGVJI8+M8ZgcdwQJQN3AWTK2HovzCF8eypD2VOWVxd5bnce4yrVc2WJVqTXaeuxa4tuAzvA2kuL5fu+krx+2AivDpyo0yd9yAQav68j0xlV0ji1Nul8kQkPEPtdYQkhQph9IoqYCsudoELu9Z1SMosdYskxVatJHt0o3hPU+MdmQUdsAaaNaeMEIySqvjTeYDPmI4U20mKPrPXzK1RFPdq9Gu3kkhtLffx3+eb+vMYpab20R1fKj8Qv/uGradEhpkCldxmU960a0Cwo3p5otkqOrsc7feHpH4vPn4iBy9MMgUAoLbLjkMPR7KljnFpV1QAaZ5mLC/Gz4xNVL3Ux0tVL7h15bGA68cPeYCWBcugD9c21A14hBS4OhRapbWMZtwDrtW9jg2
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR11MB5978.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(366004)(396003)(376002)(346002)(39860400002)(230922051799003)(1800799009)(64100799003)(451199024)(186009)(66556008)(6666004)(6506007)(2616005)(6486002)(478600001)(6512007)(38100700002)(36756003)(86362001)(82960400001)(5660300002)(54906003)(66476007)(66946007)(41300700001)(83380400001)(26005)(2906002)(8676002)(4326008)(316002)(6916009)(8936002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?qrrO3pEHdhub4wZjiM0yvTaeHHIMQ/iATz7EXUq6U8QRD1UCizM4wYysksYB?=
- =?us-ascii?Q?r8RXQd3xxn0bP/KriFB1vz/FCMbKRezDpT2XYto2I+DPfMiLFeKqFLBeUgei?=
- =?us-ascii?Q?JXSoihkmaL/2Kr9m15v9hap9kMfoMn4IGL3xEAITFLXHkhqj4aMOYQ+1lbbF?=
- =?us-ascii?Q?DnA52/5HbiLXjbBIhJT4Or/OOQPtNdNKwWYwt53JD+o+VRPODFIe4Foaza0x?=
- =?us-ascii?Q?s4bnphZns3K6PQzQcsn/wh4O3bss4GuX1AolAoLnAvxLe7jGRHvLvg5WWrkL?=
- =?us-ascii?Q?9zR+egg0sDJaDUzglY2p0qSOGF89e06dk9zUs2Fou3sud66SAsZDyOin5hKj?=
- =?us-ascii?Q?U2TJcni3QEDa6Jx1QKSkKF2VcAZaZ5BW7io6au660KBAzv8nBJlHO6tdUFPq?=
- =?us-ascii?Q?bOlkvPnthuu/Elb2+QCF9pLajGARcyBZ6aVEjitztojI/KLf2tfMov62T3jl?=
- =?us-ascii?Q?YUKivrEh1Qet59FinAsuVWs48LGFuI4U111h1FXmrtAxp2KQruwnA8wJgOyY?=
- =?us-ascii?Q?y0Ikp7U8M9Ohj5rY71Z+QHWfARWfYBPei9GxQM+D41p5mD9wc9pVRXl8ezh+?=
- =?us-ascii?Q?1PcyPtQmdwxTWzRC3LA0aZfQ8ZMGDIeJsXtowwfreabAuwW4GThd2rJ0ejE9?=
- =?us-ascii?Q?ueol8oTEsMjxTx5/eF2q3iyRIQCaY8zbwFgg9y/W2ugUweOv0ZtFI4Fatq13?=
- =?us-ascii?Q?o/GmynrVTjuyh4yQ5xqtlS6L05nAMyPFfk6SfYRyEXyEiBjgnFF9LF37LXYn?=
- =?us-ascii?Q?xv5qBoy4yskv9TnFWEs5s3BCS49JCwjNlv6ondn4RmsrzNM6PqcaeophLYzL?=
- =?us-ascii?Q?1yRCmg53kB6nrxEKzzv47aKJuyfYmUd5eHyxht44a6EHD9nqHOFbDmewmyVY?=
- =?us-ascii?Q?+cWTy5oLSr+T5uyesW0p19aYVDaaDmcF3Y9H+okL2s5Z4DIZVHr1tZYQle9C?=
- =?us-ascii?Q?P+gwmk7f0bRt8NN9BjcvDbDcLuyj1tni+x9+oZ8lQAg5iCTJOqIY5MCpP+S/?=
- =?us-ascii?Q?DXXTaph0iqO6/dZU/TEy2ZX2h56og9Ke60KHTmuH6G+0BEQDat8HjuTVDmy0?=
- =?us-ascii?Q?xyUndZrnJiF0T5gG4kiENifWrLYhV7YF3bdnxhX+UHzVtKxBWhXijD1q+eCI?=
- =?us-ascii?Q?fGge8+Mfju9Q0SQoayr5DfKi9Kjwb/E9A90boY0a07sNhDEoGua1QXh6H6Tk?=
- =?us-ascii?Q?qYl+59igiczOKiqq4ViLSrnfpPqCEOg25gcLjaEuSGCk+iB/jAer2Fz/vA4u?=
- =?us-ascii?Q?KvMaGBrN1SgI1hoWHXNX6H0x+wjD4lgCHh31O2bfg7ojdy/dh1TQlZoNSPXp?=
- =?us-ascii?Q?PZDQ+UNSJ7fkIfB2hzudANwLWC1nzcymdONz3KFcyqtBNhP/NRjccua1oqEZ?=
- =?us-ascii?Q?0AWonBIfrtDIqi4Ai64BT0ePx1yOoscA5QdpTvqo/Z91syqUM0iPtFTDLZz8?=
- =?us-ascii?Q?1NnxF9e5L5aI/otAIWUu2RkvEpu25xqj8cLaJHmx4BrE9aOxXYlKUV+LBwE2?=
- =?us-ascii?Q?hC4a5XQ+AQz3rTGDNV3ME9AvttoizcuLVA1vQK0/365FJ86aOi4RE28Y+1Da?=
- =?us-ascii?Q?AC02sISkzracSYT5W+/4hfTuw0Fo589p6Q8sstajDYMn7QJrCLJoRa5AWJh/?=
- =?us-ascii?Q?6Q=3D=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 37e4c772-4b43-4359-6fcf-08dbe07c2e3c
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR11MB5978.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2023 17:00:16.2477
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: +FoM+Q1HJhw7Di4bQM72MP8QEPZSr0DEt7iV4WddzCN6fvg0k4Ql+Hekl9WKWAwy2It06UFYzbN3XJ8JTy+20czilHXkFSwyHpxs7qJ90+E=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7558
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <51332bf8-d641-4a89-bcec-60b849fc6a34@intel.com>
+
+On Mon, Nov 06, 2023 at 04:32:56PM -0800, Reinette Chatre wrote:
+> Hi Tony,
+> 
+> On 10/31/2023 2:17 PM, Tony Luck wrote:
+> > The same rdt_domain structure is used for both control and monitor
+> > functions. But this results in wasted memory as some of the fields are
+> > only used by control functions, while most are only used for monitor
+> > functions.
+> > 
+> > Split into separate rdt_ctrl_domain and rdt_mon_domain structures with
+> > just the fields required for control and monitoring respectively.
+> > 
+> > Similar split of the rdt_hw_domain structure into rdt_hw_ctrl_domain
+> > and rdt_hw_mon_domain.
+> > 
+> > Signed-off-by: Tony Luck <tony.luck@intel.com>
+> > ---
+> > Changes since v9
+> > Comment against patch 4, but now fixed in patch #2. cpu_mask
+> > is included in common header.
+> > 
+> >  include/linux/resctrl.h                   | 50 +++++++------
+> >  arch/x86/kernel/cpu/resctrl/internal.h    | 60 ++++++++++------
+> >  arch/x86/kernel/cpu/resctrl/core.c        | 87 ++++++++++++-----------
+> >  arch/x86/kernel/cpu/resctrl/ctrlmondata.c | 32 ++++-----
+> >  arch/x86/kernel/cpu/resctrl/monitor.c     | 40 +++++------
+> >  arch/x86/kernel/cpu/resctrl/pseudo_lock.c |  6 +-
+> >  arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 62 ++++++++--------
+> >  7 files changed, 184 insertions(+), 153 deletions(-)
+> > 
+> > diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> > index 35e700edc6e6..36503e8870cd 100644
+> > --- a/include/linux/resctrl.h
+> > +++ b/include/linux/resctrl.h
+> > @@ -72,7 +72,25 @@ struct rdt_domain_hdr {
+> >  };
+> >  
+> >  /**
+> > - * struct rdt_domain - group of CPUs sharing a resctrl resource
+> > + * struct rdt_ctrl_domain - group of CPUs sharing a resctrl control resource
+> > + * @hdr:		common header for different domain types
+> > + * @cpu_mask:		which CPUs share this resource
+> > + * @plr:		pseudo-locked region (if any) associated with domain
+> > + * @staged_config:	parsed configuration to be applied
+> > + * @mbps_val:		When mba_sc is enabled, this holds the array of user
+> > + *			specified control values for mba_sc in MBps, indexed
+> > + *			by closid
+> > + */
+> > +struct rdt_ctrl_domain {
+> > +	struct rdt_domain_hdr		hdr;
+> > +	struct cpumask			cpu_mask;
+> 
+> This patch did not change what it said it changed.
+
+Reinette,
+
+I'm not sure of the problem. The commit said the patch is splitting the
+rdt_domain structure into rdt_ctrl_domain and rdt_mon_domain.
+
+The piece of the patch where you gave this comment changed like this:
+
+------- Before -------
+/**
+ * struct rdt_domain - group of CPUs sharing a resctrl resource
+ * @hdr:		common header for different domain types
+ * @rmid_busy_llc:	bitmap of which limbo RMIDs are above threshold
+ * @mbm_total:		saved state for MBM total bandwidth
+ * @mbm_local:		saved state for MBM local bandwidth
+ * @mbm_over:		worker to periodically read MBM h/w counters
+ * @cqm_limbo:		worker to periodically read CQM h/w counters
+ * @mbm_work_cpu:	worker CPU for MBM h/w counters
+ * @cqm_work_cpu:	worker CPU for CQM h/w counters
+ * @plr:		pseudo-locked region (if any) associated with domain
+ * @staged_config:	parsed configuration to be applied
+ * @mbps_val:		When mba_sc is enabled, this holds the array of user
+ *			specified control values for mba_sc in MBps, indexed
+ *			by closid
+ */
+struct rdt_domain {
+	struct rdt_domain_hdr		hdr;
+	unsigned long			*rmid_busy_llc;
+	struct mbm_state		*mbm_total;
+	struct mbm_state		*mbm_local;
+	struct delayed_work		mbm_over;
+	struct delayed_work		cqm_limbo;
+	int				mbm_work_cpu;
+	int				cqm_work_cpu;
+	struct pseudo_lock_region	*plr;
+	struct resctrl_staged_config	staged_config[CDP_NUM_TYPES];
+	u32				*mbps_val;
+};
+------- After -------
+/**
+ * struct rdt_ctrl_domain - group of CPUs sharing a resctrl control resource
+ * @hdr:		common header for different domain types
+ * @cpu_mask:		which CPUs share this resource
+ * @plr:		pseudo-locked region (if any) associated with domain
+ * @staged_config:	parsed configuration to be applied
+ * @mbps_val:		When mba_sc is enabled, this holds the array of user
+ *			specified control values for mba_sc in MBps, indexed
+ *			by closid
+ */
+struct rdt_ctrl_domain {
+	struct rdt_domain_hdr		hdr;
+	struct cpumask			cpu_mask;
+	struct pseudo_lock_region	*plr;
+	struct resctrl_staged_config	staged_config[CDP_NUM_TYPES];
+	u32				*mbps_val;
+};
+
+/**
+ * struct rdt_mon_domain - group of CPUs sharing a resctrl control resource
+ * @hdr:		common header for different domain types
+ * @rmid_busy_llc:	bitmap of which limbo RMIDs are above threshold
+ * @mbm_total:		saved state for MBM total bandwidth
+ * @mbm_local:		saved state for MBM local bandwidth
+ * @mbm_over:		worker to periodically read MBM h/w counters
+ * @cqm_limbo:		worker to periodically read CQM h/w counters
+ * @mbm_work_cpu:	worker CPU for MBM h/w counters
+ * @cqm_work_cpu:	worker CPU for CQM h/w counters
+ */
+struct rdt_mon_domain {
+	struct rdt_domain_hdr		hdr;
+	unsigned long			*rmid_busy_llc;
+	struct mbm_state		*mbm_total;
+	struct mbm_state		*mbm_local;
+	struct delayed_work		mbm_over;
+	struct delayed_work		cqm_limbo;
+	int				mbm_work_cpu;
+	int				cqm_work_cpu;
+};
+-----
+
+Which to my eyes looks like exactly what the commit comment says I
+was going to do the in this patch. The old rdt_domain structure has
+been replaced with two structures, with names as described in the commit
+comment. The fields of the orginal structure have been distributed
+betweeen the two new structures based on whether they are used for
+control or monitor functions.
 
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> writes:
+What am I missing? (Apart from a silly cut & paste error in the comments
+that I just noticed and will fix now).
 
-> On Wed, Nov 08, 2023 at 07:08:21AM -0800, Johnathan Mantey 
-> wrote:
->> 
->> Greg Kroah-Hartman <gregkh@linuxfoundation.org> writes:
->> 
->> > 5.4-stable review patch.  If anyone has any objections, 
->> > please let me
->> > know.
->> > 
->> 
->> I have discovered an undesirable side effect caused by this 
->> change. If it
->> isn't too late, I'd like to see this change set dropped.
->
-> And what is that side effect?
->
-> This is already in the following released kernels:
-> 	5.4.258 5.10.198 5.15.134 6.1.56 6.5.6 6.6
-> so please, fix this in Linus's tree and tag the fix for the 
-> stable
-> backports as well and all will be good.
->
-
-The problem discovered:
-The network link between the BMC NIC reports NO-CARRIER when the 
-carrier is lost from one of the secondary network ports.
-Restoring carrier on the secondary network port does not restore 
-CARRIER state on the BMC shared interface.
-Carrier loss and gain on the BMC NIC should only be due to 
-removal/insertion of a network connection to the RJ45 shared by 
-the BMC and host OS.
-
-> thanks,
->
-> greg k-h
-
-
--- 
-Johnathan Mantey
+-Tony
