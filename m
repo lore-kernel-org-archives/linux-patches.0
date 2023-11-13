@@ -1,47 +1,47 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF5F22F11
-	for <patches@lists.linux.dev>; Mon, 13 Nov 2023 19:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C306922F1F
+	for <patches@lists.linux.dev>; Mon, 13 Nov 2023 19:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="X7VVhHyL";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="zRCPFoeZ"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="aPJLjdUI";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="Cs8sRMut"
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 0504B21906;
-	Mon, 13 Nov 2023 19:14:10 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 116C31F85D;
+	Mon, 13 Nov 2023 19:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1699902850; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1699902851; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=sRrsgxJwat5NXRr1zzXEwT9soXXRRzcekV8Be8tRJ7Y=;
-	b=X7VVhHyLuw5jRZn5p6oH6ejSLGgR3WPVlTm60bL6sWdiNYHztbNOQXsqe9CFMWqTmaZ3AY
-	D2x+osw9tXWkHMxDHk30QEXQfKJLix4xQsfkUN57u8I8L/5+BSQ9CHWn98tBc06/T/FD45
-	7mYBlBSp0TXagVjFeR2CGXtvDAN6tDE=
+	bh=UZpP3yTw5ZZBFa2ECQqDZfpxxgpcXUank5jkC+X3eYo=;
+	b=aPJLjdUI8hKVcvhpJwk5gEbY624MQiQFCDOYdgBwSCjd41pCB1KETdbV2uRpmIDNKx233o
+	0mqz3dSDh0+f1jgHWQFD/k9MWDWW6jJ1beMZl5N0JzcgmTTx1yOFBC1QJ+Vjea6Yfgc6Th
+	45+Vv1z+SdDlZ/rbg37SCItabUbCC1U=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1699902850;
+	s=susede2_ed25519; t=1699902851;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=sRrsgxJwat5NXRr1zzXEwT9soXXRRzcekV8Be8tRJ7Y=;
-	b=zRCPFoeZ2GTmsf6m0d+7i1K/BRLZjeTx5IgmKVyhLF3sum1/TSGRYltQYoISNmy/QPsNek
-	wpyEGHbfsfHhT1AQ==
+	bh=UZpP3yTw5ZZBFa2ECQqDZfpxxgpcXUank5jkC+X3eYo=;
+	b=Cs8sRMut++fgm4qFb0T1IW1oy5KIMJWGr5+E9MhgTZbWKEv7hsN8c7F9GoQrGWIhgi9Yw8
+	6/UkVL069in7bCAQ==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id A64FA13398;
-	Mon, 13 Nov 2023 19:14:09 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B52FB13907;
+	Mon, 13 Nov 2023 19:14:10 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 6DkBKIF1UmVFOgAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Mon, 13 Nov 2023 19:14:09 +0000
+	id cOyQK4J1UmVFOgAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 13 Nov 2023 19:14:10 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: David Rientjes <rientjes@google.com>,
 	Christoph Lameter <cl@linux.com>,
@@ -67,9 +67,9 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	kasan-dev@googlegroups.com,
 	cgroups@vger.kernel.org,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 02/20] KASAN: remove code paths guarded by CONFIG_SLAB
-Date: Mon, 13 Nov 2023 20:13:43 +0100
-Message-ID: <20231113191340.17482-24-vbabka@suse.cz>
+Subject: [PATCH 05/20] cpu/hotplug: remove CPUHP_SLAB_PREPARE hooks
+Date: Mon, 13 Nov 2023 20:13:46 +0100
+Message-ID: <20231113191340.17482-27-vbabka@suse.cz>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231113191340.17482-22-vbabka@suse.cz>
 References: <20231113191340.17482-22-vbabka@suse.cz>
@@ -81,90 +81,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-With SLAB removed and SLUB the only remaining allocator, we can clean up
-some code that was depending on the choice.
+The CPUHP_SLAB_PREPARE hooks are only used by SLAB which is removed.
+SLUB defines them as NULL, so we can remove those altogether.
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- mm/kasan/common.c     | 13 ++-----------
- mm/kasan/kasan.h      |  3 +--
- mm/kasan/quarantine.c |  7 -------
- 3 files changed, 3 insertions(+), 20 deletions(-)
+ include/linux/slab.h | 8 --------
+ kernel/cpu.c         | 5 -----
+ 2 files changed, 13 deletions(-)
 
-diff --git a/mm/kasan/common.c b/mm/kasan/common.c
-index 256930da578a..5d95219e69d7 100644
---- a/mm/kasan/common.c
-+++ b/mm/kasan/common.c
-@@ -153,10 +153,6 @@ void __kasan_poison_object_data(struct kmem_cache *cache, void *object)
-  * 2. A cache might be SLAB_TYPESAFE_BY_RCU, which means objects can be
-  *    accessed after being freed. We preassign tags for objects in these
-  *    caches as well.
-- * 3. For SLAB allocator we can't preassign tags randomly since the freelist
-- *    is stored as an array of indexes instead of a linked list. Assign tags
-- *    based on objects indexes, so that objects that are next to each other
-- *    get different tags.
-  */
- static inline u8 assign_tag(struct kmem_cache *cache,
- 					const void *object, bool init)
-@@ -171,17 +167,12 @@ static inline u8 assign_tag(struct kmem_cache *cache,
- 	if (!cache->ctor && !(cache->flags & SLAB_TYPESAFE_BY_RCU))
- 		return init ? KASAN_TAG_KERNEL : kasan_random_tag();
+diff --git a/include/linux/slab.h b/include/linux/slab.h
+index d6d6ffeeb9a2..34e43cddc520 100644
+--- a/include/linux/slab.h
++++ b/include/linux/slab.h
+@@ -788,12 +788,4 @@ size_t kmalloc_size_roundup(size_t size);
  
--	/* For caches that either have a constructor or SLAB_TYPESAFE_BY_RCU: */
--#ifdef CONFIG_SLAB
--	/* For SLAB assign tags based on the object index in the freelist. */
--	return (u8)obj_to_index(cache, virt_to_slab(object), (void *)object);
+ void __init kmem_cache_init_late(void);
+ 
+-#if defined(CONFIG_SMP) && defined(CONFIG_SLAB)
+-int slab_prepare_cpu(unsigned int cpu);
+-int slab_dead_cpu(unsigned int cpu);
 -#else
- 	/*
--	 * For SLUB assign a random tag during slab creation, otherwise reuse
-+	 * For caches that either have a constructor or SLAB_TYPESAFE_BY_RCU,
-+	 * assign a random tag during slab creation, otherwise reuse
- 	 * the already assigned tag.
- 	 */
- 	return init ? kasan_random_tag() : get_tag(object);
+-#define slab_prepare_cpu	NULL
+-#define slab_dead_cpu		NULL
 -#endif
- }
- 
- void * __must_check __kasan_init_slab_obj(struct kmem_cache *cache,
-diff --git a/mm/kasan/kasan.h b/mm/kasan/kasan.h
-index 8b06bab5c406..eef50233640a 100644
---- a/mm/kasan/kasan.h
-+++ b/mm/kasan/kasan.h
-@@ -373,8 +373,7 @@ void kasan_set_track(struct kasan_track *track, gfp_t flags);
- void kasan_save_alloc_info(struct kmem_cache *cache, void *object, gfp_t flags);
- void kasan_save_free_info(struct kmem_cache *cache, void *object);
- 
--#if defined(CONFIG_KASAN_GENERIC) && \
--	(defined(CONFIG_SLAB) || defined(CONFIG_SLUB))
-+#ifdef CONFIG_KASAN_GENERIC
- bool kasan_quarantine_put(struct kmem_cache *cache, void *object);
- void kasan_quarantine_reduce(void);
- void kasan_quarantine_remove_cache(struct kmem_cache *cache);
-diff --git a/mm/kasan/quarantine.c b/mm/kasan/quarantine.c
-index ca4529156735..138c57b836f2 100644
---- a/mm/kasan/quarantine.c
-+++ b/mm/kasan/quarantine.c
-@@ -144,10 +144,6 @@ static void qlink_free(struct qlist_node *qlink, struct kmem_cache *cache)
- {
- 	void *object = qlink_to_object(qlink, cache);
- 	struct kasan_free_meta *meta = kasan_get_free_meta(cache, object);
--	unsigned long flags;
 -
--	if (IS_ENABLED(CONFIG_SLAB))
--		local_irq_save(flags);
- 
- 	/*
- 	 * If init_on_free is enabled and KASAN's free metadata is stored in
-@@ -166,9 +162,6 @@ static void qlink_free(struct qlist_node *qlink, struct kmem_cache *cache)
- 	*(u8 *)kasan_mem_to_shadow(object) = KASAN_SLAB_FREE;
- 
- 	___cache_free(cache, object, _THIS_IP_);
--
--	if (IS_ENABLED(CONFIG_SLAB))
--		local_irq_restore(flags);
- }
- 
- static void qlist_free_all(struct qlist_head *q, struct kmem_cache *cache)
+ #endif	/* _LINUX_SLAB_H */
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index 9e4c6780adde..530b026d95a1 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -2125,11 +2125,6 @@ static struct cpuhp_step cpuhp_hp_states[] = {
+ 		.startup.single		= relay_prepare_cpu,
+ 		.teardown.single	= NULL,
+ 	},
+-	[CPUHP_SLAB_PREPARE] = {
+-		.name			= "slab:prepare",
+-		.startup.single		= slab_prepare_cpu,
+-		.teardown.single	= slab_dead_cpu,
+-	},
+ 	[CPUHP_RCUTREE_PREP] = {
+ 		.name			= "RCU/tree:prepare",
+ 		.startup.single		= rcutree_prepare_cpu,
 -- 
 2.42.1
 
