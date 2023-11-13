@@ -1,47 +1,47 @@
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BA123753
-	for <patches@lists.linux.dev>; Mon, 13 Nov 2023 19:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406B422F16
+	for <patches@lists.linux.dev>; Mon, 13 Nov 2023 19:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="RpQWn4sN";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="J0Xb8K74"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="EDCJw7/r";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="XvG+/Cd6"
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 43E4121921;
-	Mon, 13 Nov 2023 19:14:14 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 65BE321907;
+	Mon, 13 Nov 2023 19:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1699902854; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1699902850; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=uxDKJC7EaSr87DEKt16Pu1EQtaytOZJplZCJuXCflPQ=;
-	b=RpQWn4sNOjvxQkBfvziEPCXxoX0JJgRJTkNkPNoDx/u5y33ryL9WYixguPSuIwJapxRSFp
-	AnfCHIeUs+kc3EO/R4GuVNcDzoOC4rSh0NBIXZNFQwxvjDZLRjFCum/optDZuilffC474u
-	tee5JYU2/7OLrEmYmcRFK7UVMMWoqUY=
+	bh=gc35dnOv0z/EAYeff3HVhELHQaD+6wOr4+QtkQBoL1I=;
+	b=EDCJw7/roK4MJaGkU14p7h8EBhfXYzuP/WlUFEOe2dGtZqjNUnSMvScfIAJ/FO52DWZDaL
+	Z6cDhB/GmQZv5YJ93bBTADu1UCCBIiMFtj4b91Cd6Z21fEm1cvG/1oK7AvA5EJyi/sZlLf
+	L6O1lt8kY6UFrTSPoc/K3pmMj1MvuFQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1699902854;
+	s=susede2_ed25519; t=1699902850;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=uxDKJC7EaSr87DEKt16Pu1EQtaytOZJplZCJuXCflPQ=;
-	b=J0Xb8K74DAapEo1JughDOaWB/XF9aekqQd4Wz+eKRt3buDbcskFeZhJrmp1eaLQ4qLv7NQ
-	4nRKvtRZ93s5I0Dg==
+	bh=gc35dnOv0z/EAYeff3HVhELHQaD+6wOr4+QtkQBoL1I=;
+	b=XvG+/Cd6vmoYcWYk3ojvTjgGdjVWUVN4PHtt2WQD4hTve7EG627AAqQ5PhHtvnSmcWmdgp
+	L+huqwPyRsV05aBw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E25AE13398;
-	Mon, 13 Nov 2023 19:14:13 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 040D313907;
+	Mon, 13 Nov 2023 19:14:10 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id QNKnNoV1UmVFOgAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Mon, 13 Nov 2023 19:14:13 +0000
+	id eJtLAIJ1UmVFOgAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 13 Nov 2023 19:14:10 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: David Rientjes <rientjes@google.com>,
 	Christoph Lameter <cl@linux.com>,
@@ -67,9 +67,9 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	kasan-dev@googlegroups.com,
 	cgroups@vger.kernel.org,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 14/20] mm/slab: move struct kmem_cache_node from slab.h to slub.c
-Date: Mon, 13 Nov 2023 20:13:55 +0100
-Message-ID: <20231113191340.17482-36-vbabka@suse.cz>
+Subject: [PATCH 03/20] KFENCE: cleanup kfence_guarded_alloc() after CONFIG_SLAB removal
+Date: Mon, 13 Nov 2023 20:13:44 +0100
+Message-ID: <20231113191340.17482-25-vbabka@suse.cz>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231113191340.17482-22-vbabka@suse.cz>
 References: <20231113191340.17482-22-vbabka@suse.cz>
@@ -81,93 +81,30 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The declaration and associated helpers are not used anywhere else
-anymore.
+Some struct slab fields are initialized differently for SLAB and SLUB so
+we can simplify with SLUB being the only remaining allocator.
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- mm/slab.h | 29 -----------------------------
- mm/slub.c | 27 +++++++++++++++++++++++++++
- 2 files changed, 27 insertions(+), 29 deletions(-)
+ mm/kfence/core.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/mm/slab.h b/mm/slab.h
-index 8de9780d345a..1b09fd1b4b04 100644
---- a/mm/slab.h
-+++ b/mm/slab.h
-@@ -587,35 +587,6 @@ static inline size_t slab_ksize(const struct kmem_cache *s)
- 	return s->size;
- }
- 
--
--/*
-- * The slab lists for all objects.
-- */
--struct kmem_cache_node {
--	spinlock_t list_lock;
--	unsigned long nr_partial;
--	struct list_head partial;
--#ifdef CONFIG_SLUB_DEBUG
--	atomic_long_t nr_slabs;
--	atomic_long_t total_objects;
--	struct list_head full;
+diff --git a/mm/kfence/core.c b/mm/kfence/core.c
+index 3872528d0963..8350f5c06f2e 100644
+--- a/mm/kfence/core.c
++++ b/mm/kfence/core.c
+@@ -463,11 +463,7 @@ static void *kfence_guarded_alloc(struct kmem_cache *cache, size_t size, gfp_t g
+ 	/* Set required slab fields. */
+ 	slab = virt_to_slab((void *)meta->addr);
+ 	slab->slab_cache = cache;
+-#if defined(CONFIG_SLUB)
+ 	slab->objects = 1;
+-#elif defined(CONFIG_SLAB)
+-	slab->s_mem = addr;
 -#endif
--};
--
--static inline struct kmem_cache_node *get_node(struct kmem_cache *s, int node)
--{
--	return s->node[node];
--}
--
--/*
-- * Iterator over all nodes. The body will be executed for each node that has
-- * a kmem_cache_node structure allocated (which is true for all online nodes)
-- */
--#define for_each_kmem_cache_node(__s, __node, __n) \
--	for (__node = 0; __node < nr_node_ids; __node++) \
--		 if ((__n = get_node(__s, __node)))
--
--
- #ifdef CONFIG_SLUB_DEBUG
- void dump_unreclaimable_slab(void);
- #else
-diff --git a/mm/slub.c b/mm/slub.c
-index 25ff9d2d44a8..0dbb966e28a7 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -396,6 +396,33 @@ static inline void stat(const struct kmem_cache *s, enum stat_item si)
- #endif
- }
  
-+/*
-+ * The slab lists for all objects.
-+ */
-+struct kmem_cache_node {
-+	spinlock_t list_lock;
-+	unsigned long nr_partial;
-+	struct list_head partial;
-+#ifdef CONFIG_SLUB_DEBUG
-+	atomic_long_t nr_slabs;
-+	atomic_long_t total_objects;
-+	struct list_head full;
-+#endif
-+};
-+
-+static inline struct kmem_cache_node *get_node(struct kmem_cache *s, int node)
-+{
-+	return s->node[node];
-+}
-+
-+/*
-+ * Iterator over all nodes. The body will be executed for each node that has
-+ * a kmem_cache_node structure allocated (which is true for all online nodes)
-+ */
-+#define for_each_kmem_cache_node(__s, __node, __n) \
-+	for (__node = 0; __node < nr_node_ids; __node++) \
-+		 if ((__n = get_node(__s, __node)))
-+
- /*
-  * Tracks for which NUMA nodes we have kmem_cache_nodes allocated.
-  * Corresponds to node_state[N_NORMAL_MEMORY], but can temporarily
+ 	/* Memory initialization. */
+ 	set_canary(meta);
 -- 
 2.42.1
 
