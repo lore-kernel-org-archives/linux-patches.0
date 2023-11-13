@@ -1,47 +1,47 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B3823754
-	for <patches@lists.linux.dev>; Mon, 13 Nov 2023 19:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C4223743
+	for <patches@lists.linux.dev>; Mon, 13 Nov 2023 19:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="x6gwpjWZ";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="4i4+efNv"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="J/xXyVkR";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="x7V0Kskh"
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 8AC962190C;
-	Mon, 13 Nov 2023 19:14:13 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id DAF4D1F88C;
+	Mon, 13 Nov 2023 19:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1699902853; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1699902852; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=BJGzWBWfS91Bn2q4x5GTRkmtz77nGJm/AYtGcjP8oqQ=;
-	b=x6gwpjWZRoU2cJwQRUstIwlnB2tOMZOiZggNYtZom5dv/fxN86SVhE8s5HQRTwoUb8s69Y
-	JS+UErYoyEunv1otlp/7QTaBy+fwdnfhzEih5W5glYjm1S+f2rEMkyR0XrSwtkPNOcZHHg
-	Ibt8bic0mbDFBuKf4ss5DfZvMbpCGyM=
+	bh=cXA2SgJxJZfvYr5jQXRsm4AX40wbUd1muC5Hg9F2/Ho=;
+	b=J/xXyVkRwG9lSfoCJ0sf2qONquUSYGBcGDQOJ/KZqHp/2Ym7NKdEIeRsO1HMAF00YvGdpQ
+	++5uNeJdkS1dnWj3bfV85B7sWKeT1esox0SyGaMjRaFHxV5UzdaNlz0cFN4h27vUuLRdmi
+	b2xb85b9yRuj00ahmRBUZ1SvldtCpa0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1699902853;
+	s=susede2_ed25519; t=1699902852;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=BJGzWBWfS91Bn2q4x5GTRkmtz77nGJm/AYtGcjP8oqQ=;
-	b=4i4+efNvutHlf3ZGlqhNLQX/vcouywCQ1zBzA9GHIaTWE+CXyXRe315n8/urbTqjDAGA45
-	hKHukNur3sX1ItDg==
+	bh=cXA2SgJxJZfvYr5jQXRsm4AX40wbUd1muC5Hg9F2/Ho=;
+	b=x7V0Kskh+UT6qgyWN1pbjlXOVG+wZu56XEQE1QMz53nsyEzacDIO/mco2BfSmDidoPDY3u
+	8ufLwRenOBSrIlAQ==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 3AAE713398;
-	Mon, 13 Nov 2023 19:14:13 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 817BD13398;
+	Mon, 13 Nov 2023 19:14:12 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id ALK4DYV1UmVFOgAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Mon, 13 Nov 2023 19:14:13 +0000
+	id iCnpHoR1UmVFOgAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 13 Nov 2023 19:14:12 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: David Rientjes <rientjes@google.com>,
 	Christoph Lameter <cl@linux.com>,
@@ -67,9 +67,9 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	kasan-dev@googlegroups.com,
 	cgroups@vger.kernel.org,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 12/20] mm/slab: move pre/post-alloc hooks from slab.h to slub.c
-Date: Mon, 13 Nov 2023 20:13:53 +0100
-Message-ID: <20231113191340.17482-34-vbabka@suse.cz>
+Subject: [PATCH 10/20] mm/slab: move the rest of slub_def.h to mm/slab.h
+Date: Mon, 13 Nov 2023 20:13:51 +0100
+Message-ID: <20231113191340.17482-32-vbabka@suse.cz>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231113191340.17482-22-vbabka@suse.cz>
 References: <20231113191340.17482-22-vbabka@suse.cz>
@@ -81,257 +81,321 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We don't share the hooks between two slab implementations anymore so
-they can be moved away from the header. As part of the move, also move
-should_failslab() from slab_common.c as the pre_alloc hook uses it.
-This means slab.h can stop including fault-inject.h and kmemleak.h.
-Fix up some files that were depending on the includes transitively.
+mm/slab.h is the only place to include include/linux/slub_def.h which
+has allowed switching between SLAB and SLUB. Now we can simply move the
+contents over and remove slub_def.h.
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- mm/kasan/report.c |  1 +
- mm/memcontrol.c   |  1 +
- mm/slab.h         | 72 -----------------------------------------
- mm/slab_common.c  |  8 +----
- mm/slub.c         | 81 +++++++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 84 insertions(+), 79 deletions(-)
+ include/linux/slub_def.h | 150 ---------------------------------------
+ mm/slab.h                | 137 ++++++++++++++++++++++++++++++++++-
+ 2 files changed, 136 insertions(+), 151 deletions(-)
+ delete mode 100644 include/linux/slub_def.h
 
-diff --git a/mm/kasan/report.c b/mm/kasan/report.c
-index e77facb62900..011f727bfaff 100644
---- a/mm/kasan/report.c
-+++ b/mm/kasan/report.c
-@@ -23,6 +23,7 @@
- #include <linux/stacktrace.h>
- #include <linux/string.h>
- #include <linux/types.h>
-+#include <linux/vmalloc.h>
- #include <linux/kasan.h>
- #include <linux/module.h>
- #include <linux/sched/task_stack.h>
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 947fb50eba31..8a0603517065 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -64,6 +64,7 @@
- #include <linux/psi.h>
- #include <linux/seq_buf.h>
- #include <linux/sched/isolation.h>
-+#include <linux/kmemleak.h>
- #include "internal.h"
- #include <net/sock.h>
- #include <net/ip.h>
+diff --git a/include/linux/slub_def.h b/include/linux/slub_def.h
+deleted file mode 100644
+index a0229ea42977..000000000000
+--- a/include/linux/slub_def.h
++++ /dev/null
+@@ -1,150 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 */
+-#ifndef _LINUX_SLUB_DEF_H
+-#define _LINUX_SLUB_DEF_H
+-
+-/*
+- * SLUB : A Slab allocator without object queues.
+- *
+- * (C) 2007 SGI, Christoph Lameter
+- */
+-#include <linux/kfence.h>
+-#include <linux/kobject.h>
+-#include <linux/reciprocal_div.h>
+-#include <linux/local_lock.h>
+-
+-#ifdef CONFIG_SLUB_CPU_PARTIAL
+-#define slub_percpu_partial(c)		((c)->partial)
+-
+-#define slub_set_percpu_partial(c, p)		\
+-({						\
+-	slub_percpu_partial(c) = (p)->next;	\
+-})
+-
+-#define slub_percpu_partial_read_once(c)     READ_ONCE(slub_percpu_partial(c))
+-#else
+-#define slub_percpu_partial(c)			NULL
+-
+-#define slub_set_percpu_partial(c, p)
+-
+-#define slub_percpu_partial_read_once(c)	NULL
+-#endif // CONFIG_SLUB_CPU_PARTIAL
+-
+-/*
+- * Word size structure that can be atomically updated or read and that
+- * contains both the order and the number of objects that a slab of the
+- * given order would contain.
+- */
+-struct kmem_cache_order_objects {
+-	unsigned int x;
+-};
+-
+-/*
+- * Slab cache management.
+- */
+-struct kmem_cache {
+-#ifndef CONFIG_SLUB_TINY
+-	struct kmem_cache_cpu __percpu *cpu_slab;
+-#endif
+-	/* Used for retrieving partial slabs, etc. */
+-	slab_flags_t flags;
+-	unsigned long min_partial;
+-	unsigned int size;	/* The size of an object including metadata */
+-	unsigned int object_size;/* The size of an object without metadata */
+-	struct reciprocal_value reciprocal_size;
+-	unsigned int offset;	/* Free pointer offset */
+-#ifdef CONFIG_SLUB_CPU_PARTIAL
+-	/* Number of per cpu partial objects to keep around */
+-	unsigned int cpu_partial;
+-	/* Number of per cpu partial slabs to keep around */
+-	unsigned int cpu_partial_slabs;
+-#endif
+-	struct kmem_cache_order_objects oo;
+-
+-	/* Allocation and freeing of slabs */
+-	struct kmem_cache_order_objects min;
+-	gfp_t allocflags;	/* gfp flags to use on each alloc */
+-	int refcount;		/* Refcount for slab cache destroy */
+-	void (*ctor)(void *);
+-	unsigned int inuse;		/* Offset to metadata */
+-	unsigned int align;		/* Alignment */
+-	unsigned int red_left_pad;	/* Left redzone padding size */
+-	const char *name;	/* Name (only for display!) */
+-	struct list_head list;	/* List of slab caches */
+-#ifdef CONFIG_SYSFS
+-	struct kobject kobj;	/* For sysfs */
+-#endif
+-#ifdef CONFIG_SLAB_FREELIST_HARDENED
+-	unsigned long random;
+-#endif
+-
+-#ifdef CONFIG_NUMA
+-	/*
+-	 * Defragmentation by allocating from a remote node.
+-	 */
+-	unsigned int remote_node_defrag_ratio;
+-#endif
+-
+-#ifdef CONFIG_SLAB_FREELIST_RANDOM
+-	unsigned int *random_seq;
+-#endif
+-
+-#ifdef CONFIG_KASAN_GENERIC
+-	struct kasan_cache kasan_info;
+-#endif
+-
+-#ifdef CONFIG_HARDENED_USERCOPY
+-	unsigned int useroffset;	/* Usercopy region offset */
+-	unsigned int usersize;		/* Usercopy region size */
+-#endif
+-
+-	struct kmem_cache_node *node[MAX_NUMNODES];
+-};
+-
+-#if defined(CONFIG_SYSFS) && !defined(CONFIG_SLUB_TINY)
+-#define SLAB_SUPPORTS_SYSFS
+-void sysfs_slab_unlink(struct kmem_cache *);
+-void sysfs_slab_release(struct kmem_cache *);
+-#else
+-static inline void sysfs_slab_unlink(struct kmem_cache *s)
+-{
+-}
+-static inline void sysfs_slab_release(struct kmem_cache *s)
+-{
+-}
+-#endif
+-
+-void *fixup_red_left(struct kmem_cache *s, void *p);
+-
+-static inline void *nearest_obj(struct kmem_cache *cache, const struct slab *slab,
+-				void *x) {
+-	void *object = x - (x - slab_address(slab)) % cache->size;
+-	void *last_object = slab_address(slab) +
+-		(slab->objects - 1) * cache->size;
+-	void *result = (unlikely(object > last_object)) ? last_object : object;
+-
+-	result = fixup_red_left(cache, result);
+-	return result;
+-}
+-
+-/* Determine object index from a given position */
+-static inline unsigned int __obj_to_index(const struct kmem_cache *cache,
+-					  void *addr, void *obj)
+-{
+-	return reciprocal_divide(kasan_reset_tag(obj) - addr,
+-				 cache->reciprocal_size);
+-}
+-
+-static inline unsigned int obj_to_index(const struct kmem_cache *cache,
+-					const struct slab *slab, void *obj)
+-{
+-	if (is_kfence_address(obj))
+-		return 0;
+-	return __obj_to_index(cache, slab_address(slab), obj);
+-}
+-
+-static inline int objs_per_slab(const struct kmem_cache *cache,
+-				     const struct slab *slab)
+-{
+-	return slab->objects;
+-}
+-#endif /* _LINUX_SLUB_DEF_H */
 diff --git a/mm/slab.h b/mm/slab.h
-index c278f8b15251..aad18992269f 100644
+index 014c36ea51fa..6e76216ac74e 100644
 --- a/mm/slab.h
 +++ b/mm/slab.h
-@@ -9,8 +9,6 @@
- #include <linux/kobject.h>
- #include <linux/sched/mm.h>
- #include <linux/memcontrol.h>
--#include <linux/fault-inject.h>
--#include <linux/kmemleak.h>
- #include <linux/kfence.h>
- #include <linux/kasan.h>
- 
-@@ -795,76 +793,6 @@ static inline size_t slab_ksize(const struct kmem_cache *s)
- 	return s->size;
+@@ -209,7 +209,142 @@ static inline size_t slab_size(const struct slab *slab)
+ 	return PAGE_SIZE << slab_order(slab);
  }
  
--static inline struct kmem_cache *slab_pre_alloc_hook(struct kmem_cache *s,
--						     struct list_lru *lru,
--						     struct obj_cgroup **objcgp,
--						     size_t size, gfp_t flags)
--{
--	flags &= gfp_allowed_mask;
--
--	might_alloc(flags);
--
--	if (should_failslab(s, flags))
--		return NULL;
--
--	if (!memcg_slab_pre_alloc_hook(s, lru, objcgp, size, flags))
--		return NULL;
--
--	return s;
--}
--
--static inline void slab_post_alloc_hook(struct kmem_cache *s,
--					struct obj_cgroup *objcg, gfp_t flags,
--					size_t size, void **p, bool init,
--					unsigned int orig_size)
--{
--	unsigned int zero_size = s->object_size;
--	bool kasan_init = init;
--	size_t i;
--
--	flags &= gfp_allowed_mask;
--
--	/*
--	 * For kmalloc object, the allocated memory size(object_size) is likely
--	 * larger than the requested size(orig_size). If redzone check is
--	 * enabled for the extra space, don't zero it, as it will be redzoned
--	 * soon. The redzone operation for this extra space could be seen as a
--	 * replacement of current poisoning under certain debug option, and
--	 * won't break other sanity checks.
--	 */
--	if (kmem_cache_debug_flags(s, SLAB_STORE_USER | SLAB_RED_ZONE) &&
--	    (s->flags & SLAB_KMALLOC))
--		zero_size = orig_size;
--
--	/*
--	 * When slub_debug is enabled, avoid memory initialization integrated
--	 * into KASAN and instead zero out the memory via the memset below with
--	 * the proper size. Otherwise, KASAN might overwrite SLUB redzones and
--	 * cause false-positive reports. This does not lead to a performance
--	 * penalty on production builds, as slub_debug is not intended to be
--	 * enabled there.
--	 */
--	if (__slub_debug_enabled())
--		kasan_init = false;
--
--	/*
--	 * As memory initialization might be integrated into KASAN,
--	 * kasan_slab_alloc and initialization memset must be
--	 * kept together to avoid discrepancies in behavior.
--	 *
--	 * As p[i] might get tagged, memset and kmemleak hook come after KASAN.
--	 */
--	for (i = 0; i < size; i++) {
--		p[i] = kasan_slab_alloc(s, p[i], flags, kasan_init);
--		if (p[i] && init && (!kasan_init || !kasan_has_integrated_init()))
--			memset(p[i], 0, zero_size);
--		kmemleak_alloc_recursive(p[i], s->object_size, 1,
--					 s->flags, flags);
--		kmsan_slab_alloc(s, p[i], flags);
--	}
--
--	memcg_slab_post_alloc_hook(s, objcg, flags, size, p);
--}
+-#include <linux/slub_def.h>
++#include <linux/kfence.h>
++#include <linux/kobject.h>
++#include <linux/reciprocal_div.h>
++#include <linux/local_lock.h>
++
++#ifdef CONFIG_SLUB_CPU_PARTIAL
++#define slub_percpu_partial(c)		((c)->partial)
++
++#define slub_set_percpu_partial(c, p)		\
++({						\
++	slub_percpu_partial(c) = (p)->next;	\
++})
++
++#define slub_percpu_partial_read_once(c)     READ_ONCE(slub_percpu_partial(c))
++#else
++#define slub_percpu_partial(c)			NULL
++
++#define slub_set_percpu_partial(c, p)
++
++#define slub_percpu_partial_read_once(c)	NULL
++#endif // CONFIG_SLUB_CPU_PARTIAL
++
++/*
++ * Word size structure that can be atomically updated or read and that
++ * contains both the order and the number of objects that a slab of the
++ * given order would contain.
++ */
++struct kmem_cache_order_objects {
++	unsigned int x;
++};
++
++/*
++ * Slab cache management.
++ */
++struct kmem_cache {
++#ifndef CONFIG_SLUB_TINY
++	struct kmem_cache_cpu __percpu *cpu_slab;
++#endif
++	/* Used for retrieving partial slabs, etc. */
++	slab_flags_t flags;
++	unsigned long min_partial;
++	unsigned int size;	/* The size of an object including metadata */
++	unsigned int object_size;/* The size of an object without metadata */
++	struct reciprocal_value reciprocal_size;
++	unsigned int offset;	/* Free pointer offset */
++#ifdef CONFIG_SLUB_CPU_PARTIAL
++	/* Number of per cpu partial objects to keep around */
++	unsigned int cpu_partial;
++	/* Number of per cpu partial slabs to keep around */
++	unsigned int cpu_partial_slabs;
++#endif
++	struct kmem_cache_order_objects oo;
++
++	/* Allocation and freeing of slabs */
++	struct kmem_cache_order_objects min;
++	gfp_t allocflags;	/* gfp flags to use on each alloc */
++	int refcount;		/* Refcount for slab cache destroy */
++	void (*ctor)(void *object);	/* Object constructor */
++	unsigned int inuse;		/* Offset to metadata */
++	unsigned int align;		/* Alignment */
++	unsigned int red_left_pad;	/* Left redzone padding size */
++	const char *name;	/* Name (only for display!) */
++	struct list_head list;	/* List of slab caches */
++#ifdef CONFIG_SYSFS
++	struct kobject kobj;	/* For sysfs */
++#endif
++#ifdef CONFIG_SLAB_FREELIST_HARDENED
++	unsigned long random;
++#endif
++
++#ifdef CONFIG_NUMA
++	/*
++	 * Defragmentation by allocating from a remote node.
++	 */
++	unsigned int remote_node_defrag_ratio;
++#endif
++
++#ifdef CONFIG_SLAB_FREELIST_RANDOM
++	unsigned int *random_seq;
++#endif
++
++#ifdef CONFIG_KASAN_GENERIC
++	struct kasan_cache kasan_info;
++#endif
++
++#ifdef CONFIG_HARDENED_USERCOPY
++	unsigned int useroffset;	/* Usercopy region offset */
++	unsigned int usersize;		/* Usercopy region size */
++#endif
++
++	struct kmem_cache_node *node[MAX_NUMNODES];
++};
++
++#if defined(CONFIG_SYSFS) && !defined(CONFIG_SLUB_TINY)
++#define SLAB_SUPPORTS_SYSFS
++void sysfs_slab_unlink(struct kmem_cache *s);
++void sysfs_slab_release(struct kmem_cache *s);
++#else
++static inline void sysfs_slab_unlink(struct kmem_cache *s) { }
++static inline void sysfs_slab_release(struct kmem_cache *s) { }
++#endif
++
++void *fixup_red_left(struct kmem_cache *s, void *p);
++
++static inline void *nearest_obj(struct kmem_cache *cache,
++				const struct slab *slab, void *x) {
++	void *object = x - (x - slab_address(slab)) % cache->size;
++	void *last_object = slab_address(slab) +
++		(slab->objects - 1) * cache->size;
++	void *result = (unlikely(object > last_object)) ? last_object : object;
++
++	result = fixup_red_left(cache, result);
++	return result;
++}
++
++/* Determine object index from a given position */
++static inline unsigned int __obj_to_index(const struct kmem_cache *cache,
++					  void *addr, void *obj)
++{
++	return reciprocal_divide(kasan_reset_tag(obj) - addr,
++				 cache->reciprocal_size);
++}
++
++static inline unsigned int obj_to_index(const struct kmem_cache *cache,
++					const struct slab *slab, void *obj)
++{
++	if (is_kfence_address(obj))
++		return 0;
++	return __obj_to_index(cache, slab_address(slab), obj);
++}
++
++static inline int objs_per_slab(const struct kmem_cache *cache,
++				const struct slab *slab)
++{
++	return slab->objects;
++}
  
- /*
-  * The slab lists for all objects.
-diff --git a/mm/slab_common.c b/mm/slab_common.c
-index 63b8411db7ce..bbc2e3f061f1 100644
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -21,6 +21,7 @@
- #include <linux/swiotlb.h>
- #include <linux/proc_fs.h>
- #include <linux/debugfs.h>
-+#include <linux/kmemleak.h>
- #include <linux/kasan.h>
- #include <asm/cacheflush.h>
- #include <asm/tlbflush.h>
-@@ -1470,10 +1471,3 @@ EXPORT_TRACEPOINT_SYMBOL(kmem_cache_alloc);
- EXPORT_TRACEPOINT_SYMBOL(kfree);
- EXPORT_TRACEPOINT_SYMBOL(kmem_cache_free);
- 
--int should_failslab(struct kmem_cache *s, gfp_t gfpflags)
--{
--	if (__should_failslab(s, gfpflags))
--		return -ENOMEM;
--	return 0;
--}
--ALLOW_ERROR_INJECTION(should_failslab, ERRNO);
-diff --git a/mm/slub.c b/mm/slub.c
-index 64170a1ccbba..e15912d1f6ed 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -34,6 +34,7 @@
- #include <linux/memory.h>
- #include <linux/math64.h>
+ #include <linux/memcontrol.h>
  #include <linux/fault-inject.h>
-+#include <linux/kmemleak.h>
- #include <linux/stacktrace.h>
- #include <linux/prefetch.h>
- #include <linux/memcontrol.h>
-@@ -3494,6 +3495,86 @@ static __always_inline void maybe_wipe_obj_freeptr(struct kmem_cache *s,
- 			0, sizeof(void *));
- }
- 
-+noinline int should_failslab(struct kmem_cache *s, gfp_t gfpflags)
-+{
-+	if (__should_failslab(s, gfpflags))
-+		return -ENOMEM;
-+	return 0;
-+}
-+ALLOW_ERROR_INJECTION(should_failslab, ERRNO);
-+
-+static inline struct kmem_cache *slab_pre_alloc_hook(struct kmem_cache *s,
-+						     struct list_lru *lru,
-+						     struct obj_cgroup **objcgp,
-+						     size_t size, gfp_t flags)
-+{
-+	flags &= gfp_allowed_mask;
-+
-+	might_alloc(flags);
-+
-+	if (should_failslab(s, flags))
-+		return NULL;
-+
-+	if (!memcg_slab_pre_alloc_hook(s, lru, objcgp, size, flags))
-+		return NULL;
-+
-+	return s;
-+}
-+
-+static inline void slab_post_alloc_hook(struct kmem_cache *s,
-+					struct obj_cgroup *objcg, gfp_t flags,
-+					size_t size, void **p, bool init,
-+					unsigned int orig_size)
-+{
-+	unsigned int zero_size = s->object_size;
-+	bool kasan_init = init;
-+	size_t i;
-+
-+	flags &= gfp_allowed_mask;
-+
-+	/*
-+	 * For kmalloc object, the allocated memory size(object_size) is likely
-+	 * larger than the requested size(orig_size). If redzone check is
-+	 * enabled for the extra space, don't zero it, as it will be redzoned
-+	 * soon. The redzone operation for this extra space could be seen as a
-+	 * replacement of current poisoning under certain debug option, and
-+	 * won't break other sanity checks.
-+	 */
-+	if (kmem_cache_debug_flags(s, SLAB_STORE_USER | SLAB_RED_ZONE) &&
-+	    (s->flags & SLAB_KMALLOC))
-+		zero_size = orig_size;
-+
-+	/*
-+	 * When slub_debug is enabled, avoid memory initialization integrated
-+	 * into KASAN and instead zero out the memory via the memset below with
-+	 * the proper size. Otherwise, KASAN might overwrite SLUB redzones and
-+	 * cause false-positive reports. This does not lead to a performance
-+	 * penalty on production builds, as slub_debug is not intended to be
-+	 * enabled there.
-+	 */
-+	if (__slub_debug_enabled())
-+		kasan_init = false;
-+
-+	/*
-+	 * As memory initialization might be integrated into KASAN,
-+	 * kasan_slab_alloc and initialization memset must be
-+	 * kept together to avoid discrepancies in behavior.
-+	 *
-+	 * As p[i] might get tagged, memset and kmemleak hook come after KASAN.
-+	 */
-+	for (i = 0; i < size; i++) {
-+		p[i] = kasan_slab_alloc(s, p[i], flags, kasan_init);
-+		if (p[i] && init && (!kasan_init ||
-+				     !kasan_has_integrated_init()))
-+			memset(p[i], 0, zero_size);
-+		kmemleak_alloc_recursive(p[i], s->object_size, 1,
-+					 s->flags, flags);
-+		kmsan_slab_alloc(s, p[i], flags);
-+	}
-+
-+	memcg_slab_post_alloc_hook(s, objcg, flags, size, p);
-+}
-+
- /*
-  * Inlined fastpath so that allocation functions (kmalloc, kmem_cache_alloc)
-  * have the fastpath folded into their functions. So no function call
 -- 
 2.42.1
 
