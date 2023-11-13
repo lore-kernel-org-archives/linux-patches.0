@@ -1,47 +1,47 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFD82376E
-	for <patches@lists.linux.dev>; Mon, 13 Nov 2023 19:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C0223764
+	for <patches@lists.linux.dev>; Mon, 13 Nov 2023 19:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="vks2zsCM";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="NVLU6T7U"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="olZFTzZ/";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="zDLN/9n/"
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 7F8F31F88B;
-	Mon, 13 Nov 2023 19:14:12 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 9EC4921923;
+	Mon, 13 Nov 2023 19:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1699902852; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1699902854; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=s3nv+0Sqzbudyo8axulOBmhTAGTu9yIEYPQrJtiVg8g=;
-	b=vks2zsCM2llHj2sCCNK9iUCdg8yLjPuDMFNCq4IalcG7o90NBHa+OTVb0fXGiJrhrwpwYi
-	eoM6HhnvLwPRECQzx2k/FUKvIv7EsitvuHas9JkZUEjuQNDLF/nXp8s710eafRrHg4uXmO
-	K8nDzHTLl4j/Sw18qemcBGyijZRNTPg=
+	bh=DXDFbKsOpifG8/vsvvlxkFBAPHyr1llZIqV93eRLOYA=;
+	b=olZFTzZ/5Ps8QKyaocdiK69NiScVYAFfLitfcf3tciIng8f/eJUsk+7TdiSTEjSKOipVkV
+	OMx8ieBdAUEwkOr1HjfTmuuDP4C1MsjfY0h10/LQHxmibB+io9RuxuTZ+OPZZBwcpY+Jz+
+	3AXm3III4/0hk2ePVwyVCcJBkF/hrG4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1699902852;
+	s=susede2_ed25519; t=1699902854;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=s3nv+0Sqzbudyo8axulOBmhTAGTu9yIEYPQrJtiVg8g=;
-	b=NVLU6T7UIVzg+w41i7fPZrmuaz6c4SpNekbAkxpwCsyh8sjZD+OYPyG+lLTH+jGSwt97x2
-	yJeIxfuLzOomJoAA==
+	bh=DXDFbKsOpifG8/vsvvlxkFBAPHyr1llZIqV93eRLOYA=;
+	b=zDLN/9n/veB8vAzvY657LXWB2WULYF78tgVtB/1Im/Vy/330Jw/E161reEqQ4eBR0ap3o/
+	QXfAFQftD8MjuPAA==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 350B613907;
-	Mon, 13 Nov 2023 19:14:12 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 4424113907;
+	Mon, 13 Nov 2023 19:14:14 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 6KdtDIR1UmVFOgAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Mon, 13 Nov 2023 19:14:12 +0000
+	id EGvoD4Z1UmVFOgAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 13 Nov 2023 19:14:14 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: David Rientjes <rientjes@google.com>,
 	Christoph Lameter <cl@linux.com>,
@@ -67,9 +67,9 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	kasan-dev@googlegroups.com,
 	cgroups@vger.kernel.org,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 09/20] mm/slab: move struct kmem_cache_cpu declaration to slub.c
-Date: Mon, 13 Nov 2023 20:13:50 +0100
-Message-ID: <20231113191340.17482-31-vbabka@suse.cz>
+Subject: [PATCH 15/20] mm/slab: move kfree() from slab_common.c to slub.c
+Date: Mon, 13 Nov 2023 20:13:56 +0100
+Message-ID: <20231113191340.17482-37-vbabka@suse.cz>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231113191340.17482-22-vbabka@suse.cz>
 References: <20231113191340.17482-22-vbabka@suse.cz>
@@ -81,146 +81,176 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Nothing outside SLUB itself accesses the struct kmem_cache_cpu fields so
-it does not need to be declared in slub_def.h. This allows also to move
-enum stat_item.
+This should result in better code. Currently kfree() makes a function
+call between compilation units to __kmem_cache_free() which does its own
+virt_to_slab(), throwing away the struct slab pointer we already had in
+kfree(). Now it can be reused. Additionally kfree() can now inline the
+whole SLUB freeing fastpath.
+
+Also move over free_large_kmalloc() as the only callsites are now in
+slub.c, and make it static.
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- include/linux/slub_def.h | 54 ----------------------------------------
- mm/slub.c                | 54 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+), 54 deletions(-)
+ mm/slab.h        |  4 ----
+ mm/slab_common.c | 45 ------------------------------------------
+ mm/slub.c        | 51 +++++++++++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 46 insertions(+), 54 deletions(-)
 
-diff --git a/include/linux/slub_def.h b/include/linux/slub_def.h
-index deb90cf4bffb..a0229ea42977 100644
---- a/include/linux/slub_def.h
-+++ b/include/linux/slub_def.h
-@@ -12,60 +12,6 @@
- #include <linux/reciprocal_div.h>
- #include <linux/local_lock.h>
- 
--enum stat_item {
--	ALLOC_FASTPATH,		/* Allocation from cpu slab */
--	ALLOC_SLOWPATH,		/* Allocation by getting a new cpu slab */
--	FREE_FASTPATH,		/* Free to cpu slab */
--	FREE_SLOWPATH,		/* Freeing not to cpu slab */
--	FREE_FROZEN,		/* Freeing to frozen slab */
--	FREE_ADD_PARTIAL,	/* Freeing moves slab to partial list */
--	FREE_REMOVE_PARTIAL,	/* Freeing removes last object */
--	ALLOC_FROM_PARTIAL,	/* Cpu slab acquired from node partial list */
--	ALLOC_SLAB,		/* Cpu slab acquired from page allocator */
--	ALLOC_REFILL,		/* Refill cpu slab from slab freelist */
--	ALLOC_NODE_MISMATCH,	/* Switching cpu slab */
--	FREE_SLAB,		/* Slab freed to the page allocator */
--	CPUSLAB_FLUSH,		/* Abandoning of the cpu slab */
--	DEACTIVATE_FULL,	/* Cpu slab was full when deactivated */
--	DEACTIVATE_EMPTY,	/* Cpu slab was empty when deactivated */
--	DEACTIVATE_TO_HEAD,	/* Cpu slab was moved to the head of partials */
--	DEACTIVATE_TO_TAIL,	/* Cpu slab was moved to the tail of partials */
--	DEACTIVATE_REMOTE_FREES,/* Slab contained remotely freed objects */
--	DEACTIVATE_BYPASS,	/* Implicit deactivation */
--	ORDER_FALLBACK,		/* Number of times fallback was necessary */
--	CMPXCHG_DOUBLE_CPU_FAIL,/* Failure of this_cpu_cmpxchg_double */
--	CMPXCHG_DOUBLE_FAIL,	/* Number of times that cmpxchg double did not match */
--	CPU_PARTIAL_ALLOC,	/* Used cpu partial on alloc */
--	CPU_PARTIAL_FREE,	/* Refill cpu partial on free */
--	CPU_PARTIAL_NODE,	/* Refill cpu partial from node partial */
--	CPU_PARTIAL_DRAIN,	/* Drain cpu partial to node partial */
--	NR_SLUB_STAT_ITEMS
--};
+diff --git a/mm/slab.h b/mm/slab.h
+index 1b09fd1b4b04..179467e8aacc 100644
+--- a/mm/slab.h
++++ b/mm/slab.h
+@@ -394,8 +394,6 @@ struct kmem_cache *kmalloc_slab(size_t size, gfp_t flags, unsigned long caller);
+ void *__kmem_cache_alloc_node(struct kmem_cache *s, gfp_t gfpflags,
+ 			      int node, size_t orig_size,
+ 			      unsigned long caller);
+-void __kmem_cache_free(struct kmem_cache *s, void *x, unsigned long caller);
 -
--#ifndef CONFIG_SLUB_TINY
--/*
-- * When changing the layout, make sure freelist and tid are still compatible
-- * with this_cpu_cmpxchg_double() alignment requirements.
+ gfp_t kmalloc_fix_flags(gfp_t flags);
+ 
+ /* Functions provided by the slab allocators */
+@@ -558,8 +556,6 @@ static inline int memcg_alloc_slab_cgroups(struct slab *slab,
+ }
+ #endif /* CONFIG_MEMCG_KMEM */
+ 
+-void free_large_kmalloc(struct folio *folio, void *object);
+-
+ size_t __ksize(const void *objp);
+ 
+ static inline size_t slab_ksize(const struct kmem_cache *s)
+diff --git a/mm/slab_common.c b/mm/slab_common.c
+index bbc2e3f061f1..f4f275613d2a 100644
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -963,22 +963,6 @@ void __init create_kmalloc_caches(slab_flags_t flags)
+ 	slab_state = UP;
+ }
+ 
+-void free_large_kmalloc(struct folio *folio, void *object)
+-{
+-	unsigned int order = folio_order(folio);
+-
+-	if (WARN_ON_ONCE(order == 0))
+-		pr_warn_once("object pointer: 0x%p\n", object);
+-
+-	kmemleak_free(object);
+-	kasan_kfree_large(object);
+-	kmsan_kfree_large(object);
+-
+-	mod_lruvec_page_state(folio_page(folio, 0), NR_SLAB_UNRECLAIMABLE_B,
+-			      -(PAGE_SIZE << order));
+-	__free_pages(folio_page(folio, 0), order);
+-}
+-
+ static void *__kmalloc_large_node(size_t size, gfp_t flags, int node);
+ static __always_inline
+ void *__do_kmalloc_node(size_t size, gfp_t flags, int node, unsigned long caller)
+@@ -1023,35 +1007,6 @@ void *__kmalloc_node_track_caller(size_t size, gfp_t flags,
+ }
+ EXPORT_SYMBOL(__kmalloc_node_track_caller);
+ 
+-/**
+- * kfree - free previously allocated memory
+- * @object: pointer returned by kmalloc() or kmem_cache_alloc()
+- *
+- * If @object is NULL, no operation is performed.
 - */
--struct kmem_cache_cpu {
--	union {
--		struct {
--			void **freelist;	/* Pointer to next available object */
--			unsigned long tid;	/* Globally unique transaction id */
--		};
--		freelist_aba_t freelist_tid;
--	};
--	struct slab *slab;	/* The slab from which we are allocating */
--#ifdef CONFIG_SLUB_CPU_PARTIAL
--	struct slab *partial;	/* Partially allocated frozen slabs */
--#endif
--	local_lock_t lock;	/* Protects the fields above */
--#ifdef CONFIG_SLUB_STATS
--	unsigned stat[NR_SLUB_STAT_ITEMS];
--#endif
--};
--#endif /* CONFIG_SLUB_TINY */
+-void kfree(const void *object)
+-{
+-	struct folio *folio;
+-	struct slab *slab;
+-	struct kmem_cache *s;
 -
- #ifdef CONFIG_SLUB_CPU_PARTIAL
- #define slub_percpu_partial(c)		((c)->partial)
- 
+-	trace_kfree(_RET_IP_, object);
+-
+-	if (unlikely(ZERO_OR_NULL_PTR(object)))
+-		return;
+-
+-	folio = virt_to_folio(object);
+-	if (unlikely(!folio_test_slab(folio))) {
+-		free_large_kmalloc(folio, (void *)object);
+-		return;
+-	}
+-
+-	slab = folio_slab(folio);
+-	s = slab->slab_cache;
+-	__kmem_cache_free(s, (void *)object, _RET_IP_);
+-}
+-EXPORT_SYMBOL(kfree);
+-
+ /**
+  * __ksize -- Report full size of underlying allocation
+  * @object: pointer to the object
 diff --git a/mm/slub.c b/mm/slub.c
-index 63d281dfacdb..64170a1ccbba 100644
+index 0dbb966e28a7..52e2a65b1b11 100644
 --- a/mm/slub.c
 +++ b/mm/slub.c
-@@ -330,6 +330,60 @@ static void debugfs_slab_add(struct kmem_cache *);
- static inline void debugfs_slab_add(struct kmem_cache *s) { }
- #endif
+@@ -4184,11 +4184,6 @@ static inline struct kmem_cache *cache_from_obj(struct kmem_cache *s, void *x)
+ 	return cachep;
+ }
  
-+enum stat_item {
-+	ALLOC_FASTPATH,		/* Allocation from cpu slab */
-+	ALLOC_SLOWPATH,		/* Allocation by getting a new cpu slab */
-+	FREE_FASTPATH,		/* Free to cpu slab */
-+	FREE_SLOWPATH,		/* Freeing not to cpu slab */
-+	FREE_FROZEN,		/* Freeing to frozen slab */
-+	FREE_ADD_PARTIAL,	/* Freeing moves slab to partial list */
-+	FREE_REMOVE_PARTIAL,	/* Freeing removes last object */
-+	ALLOC_FROM_PARTIAL,	/* Cpu slab acquired from node partial list */
-+	ALLOC_SLAB,		/* Cpu slab acquired from page allocator */
-+	ALLOC_REFILL,		/* Refill cpu slab from slab freelist */
-+	ALLOC_NODE_MISMATCH,	/* Switching cpu slab */
-+	FREE_SLAB,		/* Slab freed to the page allocator */
-+	CPUSLAB_FLUSH,		/* Abandoning of the cpu slab */
-+	DEACTIVATE_FULL,	/* Cpu slab was full when deactivated */
-+	DEACTIVATE_EMPTY,	/* Cpu slab was empty when deactivated */
-+	DEACTIVATE_TO_HEAD,	/* Cpu slab was moved to the head of partials */
-+	DEACTIVATE_TO_TAIL,	/* Cpu slab was moved to the tail of partials */
-+	DEACTIVATE_REMOTE_FREES,/* Slab contained remotely freed objects */
-+	DEACTIVATE_BYPASS,	/* Implicit deactivation */
-+	ORDER_FALLBACK,		/* Number of times fallback was necessary */
-+	CMPXCHG_DOUBLE_CPU_FAIL,/* Failures of this_cpu_cmpxchg_double */
-+	CMPXCHG_DOUBLE_FAIL,	/* Failures of slab freelist update */
-+	CPU_PARTIAL_ALLOC,	/* Used cpu partial on alloc */
-+	CPU_PARTIAL_FREE,	/* Refill cpu partial on free */
-+	CPU_PARTIAL_NODE,	/* Refill cpu partial from node partial */
-+	CPU_PARTIAL_DRAIN,	/* Drain cpu partial to node partial */
-+	NR_SLUB_STAT_ITEMS
-+};
-+
-+#ifndef CONFIG_SLUB_TINY
-+/*
-+ * When changing the layout, make sure freelist and tid are still compatible
-+ * with this_cpu_cmpxchg_double() alignment requirements.
-+ */
-+struct kmem_cache_cpu {
-+	union {
-+		struct {
-+			void **freelist;	/* Pointer to next available object */
-+			unsigned long tid;	/* Globally unique transaction id */
-+		};
-+		freelist_aba_t freelist_tid;
-+	};
-+	struct slab *slab;	/* The slab from which we are allocating */
-+#ifdef CONFIG_SLUB_CPU_PARTIAL
-+	struct slab *partial;	/* Partially allocated frozen slabs */
-+#endif
-+	local_lock_t lock;	/* Protects the fields above */
-+#ifdef CONFIG_SLUB_STATS
-+	unsigned int stat[NR_SLUB_STAT_ITEMS];
-+#endif
-+};
-+#endif /* CONFIG_SLUB_TINY */
-+
- static inline void stat(const struct kmem_cache *s, enum stat_item si)
+-void __kmem_cache_free(struct kmem_cache *s, void *x, unsigned long caller)
+-{
+-	slab_free(s, virt_to_slab(x), x, NULL, &x, 1, caller);
+-}
+-
+ void kmem_cache_free(struct kmem_cache *s, void *x)
  {
- #ifdef CONFIG_SLUB_STATS
+ 	s = cache_from_obj(s, x);
+@@ -4199,6 +4194,52 @@ void kmem_cache_free(struct kmem_cache *s, void *x)
+ }
+ EXPORT_SYMBOL(kmem_cache_free);
+ 
++static void free_large_kmalloc(struct folio *folio, void *object)
++{
++	unsigned int order = folio_order(folio);
++
++	if (WARN_ON_ONCE(order == 0))
++		pr_warn_once("object pointer: 0x%p\n", object);
++
++	kmemleak_free(object);
++	kasan_kfree_large(object);
++	kmsan_kfree_large(object);
++
++	mod_lruvec_page_state(folio_page(folio, 0), NR_SLAB_UNRECLAIMABLE_B,
++			      -(PAGE_SIZE << order));
++	__free_pages(folio_page(folio, 0), order);
++}
++
++/**
++ * kfree - free previously allocated memory
++ * @object: pointer returned by kmalloc() or kmem_cache_alloc()
++ *
++ * If @object is NULL, no operation is performed.
++ */
++void kfree(const void *object)
++{
++	struct folio *folio;
++	struct slab *slab;
++	struct kmem_cache *s;
++	void *x = (void *)object;
++
++	trace_kfree(_RET_IP_, object);
++
++	if (unlikely(ZERO_OR_NULL_PTR(object)))
++		return;
++
++	folio = virt_to_folio(object);
++	if (unlikely(!folio_test_slab(folio))) {
++		free_large_kmalloc(folio, (void *)object);
++		return;
++	}
++
++	slab = folio_slab(folio);
++	s = slab->slab_cache;
++	slab_free(s, slab, x, NULL, &x, 1, _RET_IP_);
++}
++EXPORT_SYMBOL(kfree);
++
+ struct detached_freelist {
+ 	struct slab *slab;
+ 	void *tail;
 -- 
 2.42.1
 
