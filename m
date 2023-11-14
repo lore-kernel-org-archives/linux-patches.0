@@ -1,106 +1,98 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CF3B66D
-	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 04:50:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267016FA9
+	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 07:46:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="DXjqIM9T"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1cc29f39e7aso33002475ad.0
-        for <patches@lists.linux.dev>; Mon, 13 Nov 2023 20:50:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xOKsUw8c"
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-7b9ff6d89e6so2115059241.3
+        for <patches@lists.linux.dev>; Mon, 13 Nov 2023 23:46:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1699937447; x=1700542247; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gSHaE/1GVg9mC1SVDtWharYt7nYPJBYXesltql5ggN0=;
-        b=DXjqIM9TnK8MClP2unKudKjrxiVR5nZBsna+C0V1+Qk+T8pSSzCEWgeN7BRC0TneHQ
-         Xs80yfxEnOq5UigX4sAsSua/C0oLnAKmTX4rvodfaLZb666Q/2hMpFRQOkqN0f33pSC+
-         11H/qjfM1ttLvLKcsJRcnss+fQvhGhUvMA7iM=
+        d=google.com; s=20230601; t=1699948001; x=1700552801; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=sX2ZDi+R3Ev6T5LlvMfvdN7qFs7PkFHPelflvttGDD4=;
+        b=xOKsUw8c4GOOvjgbuF9aNYXzMGg4vjP9QvkL7pOTtk0BqtzJyWf4I7YhE1ji0FyL5m
+         wKjWozxEQG+NVtxGjlQwSlKMtZwAaoWv1wvJuGJnC4/cJtW2WzNAdYUQbh827gD4LuPq
+         rA62xxxIa4lU5NTy4RIrw5/heIQi8tz9av4So3JcpnyFNtJ+St/xqd0OsiQt8WS6MbSt
+         +4PyzKKO+VAVG0tZ7xohfxv60eYVy+Secnv6dTZXiZm8XtiSHTRFphVXzZx/5UohgfW9
+         4Kjeajc+6Ok0VqBfvibWjzbfRZUIIKwwY3ymMIXTu0FFC0ddK2uLdk+25w1sdqyMvyz5
+         1pPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699937447; x=1700542247;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gSHaE/1GVg9mC1SVDtWharYt7nYPJBYXesltql5ggN0=;
-        b=mIT/5tf2Omjg7Xx6E6APmFXu5DPiyBwfIywoU3R3VwLlLW3ry+a4SZB9F2G4/bH6DL
-         dMFFkBB1hWIzkgCE84oAfQrWWW12lCgToFj0ayeWg1L4ZUmi6xPLCU6xvVmbz/dRonGx
-         oCdiV3XGOrEUDx0HQCiKYbAAKpSpPpumgTP3Zml6GVdRoDSXXvYINuf3/1SD736Oh8dD
-         OsRhhFU4kt+KN9hqDZ1I4cRQiYVOwAtdNGQD6N45KMW8EBacBC69QnT17OAS7o7oihFu
-         m7TfQynh0U1PCIkeRC5wXYOhyB6bbM0h5gOqYrwhEh+ruSaKIYHzEGAw20JYrxG7FpD9
-         fESA==
-X-Gm-Message-State: AOJu0Yx69j5s1Dnm1Vi0O7V9eo2xbSBxYOAoVZQioqoLH7zLIMXG0v83
-	VZXcj97ivppMzfo615ge94RrCA==
-X-Google-Smtp-Source: AGHT+IF7Byd1ljDiTcsJ0NghEeEEgnKHX0+3r+3s8w6VMPI04pb7VCutEUrPIzMWjcVxqsPNaM8wIg==
-X-Received: by 2002:a17:902:8b85:b0:1cc:474d:bdf9 with SMTP id ay5-20020a1709028b8500b001cc474dbdf9mr1243778plb.36.1699937447538;
-        Mon, 13 Nov 2023 20:50:47 -0800 (PST)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id a13-20020a170902b58d00b001c9db5e2929sm4875757pls.93.2023.11.13.20.50.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Nov 2023 20:50:47 -0800 (PST)
-Date: Mon, 13 Nov 2023 20:50:46 -0800
-From: Kees Cook <keescook@chromium.org>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Marco Elver <elver@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Shakeel Butt <shakeelb@google.com>,
-	Muchun Song <muchun.song@linux.dev>, kasan-dev@googlegroups.com,
-	cgroups@vger.kernel.org
-Subject: Re: [PATCH 18/20] mm/slub: remove slab_alloc() and
- __kmem_cache_alloc_lru() wrappers
-Message-ID: <202311132048.B3AADC400@keescook>
-References: <20231113191340.17482-22-vbabka@suse.cz>
- <20231113191340.17482-40-vbabka@suse.cz>
+        d=1e100.net; s=20230601; t=1699948001; x=1700552801;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sX2ZDi+R3Ev6T5LlvMfvdN7qFs7PkFHPelflvttGDD4=;
+        b=CMLh++tlWXqm9eXafzqeBIOr4qmORD8qCQdz37jjToHtXPOWjn9M8IN/WY/N89rh1G
+         o9bus/UN1Q7C8hmEeP7jNe+v2Xdq5OEVcUzp+7JhRLxvt7vOaT9MeJ7CZTt907mOLD2B
+         a6/FHHdoxacuhoHAXkE60U5wxDJn//jxd7Za2cVdcZfTDiVc89w9Js/HJtH+eaXQOXgK
+         Jx4EGY12gU0WboM6B4n63rhoDWwkFZslrlXVKyDiCAS2G5wedpsg3y9+MZX5GmBWbI6o
+         kP0vx8o80m2MqV9Lvti/OM5V6xF+4S8R51slfKTeY4xAdRJ8v7BZXIEP6mT29IGklf4I
+         AxUw==
+X-Gm-Message-State: AOJu0Yx99fL9nqg5MSL2EOtgH3hFFtczyrjQP3hMH5rz3d1k5Hnbwrko
+	TUoP18fSMKhwYndV333UAZGgVTUOacmgpVHTkbQTTA==
+X-Google-Smtp-Source: AGHT+IEkx9qpi9PxginlouXMsLXjDm4AhflR5GKJMwuObn7dBWpabAiTtV5tdjgAPRBqG6d0RnyHF3wv2N9uz3bxx2o=
+X-Received: by 2002:a05:6102:2908:b0:460:621c:d14b with SMTP id
+ cz8-20020a056102290800b00460621cd14bmr9815342vsb.20.1699948000802; Mon, 13
+ Nov 2023 23:46:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231113191340.17482-40-vbabka@suse.cz>
+References: <20231113191340.17482-22-vbabka@suse.cz> <20231113191340.17482-25-vbabka@suse.cz>
+In-Reply-To: <20231113191340.17482-25-vbabka@suse.cz>
+From: Marco Elver <elver@google.com>
+Date: Tue, 14 Nov 2023 08:46:04 +0100
+Message-ID: <CANpmjNOrA_nfMsu1eaTqauVfc53p5xHxO7TZAueVXyi5Qf9wAg@mail.gmail.com>
+Subject: Re: [PATCH 03/20] KFENCE: cleanup kfence_guarded_alloc() after
+ CONFIG_SLAB removal
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, 
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>, Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>, Alexander Potapenko <glider@google.com>, 
+	Andrey Konovalov <andreyknvl@gmail.com>, Dmitry Vyukov <dvyukov@google.com>, 
+	Vincenzo Frascino <vincenzo.frascino@arm.com>, Johannes Weiner <hannes@cmpxchg.org>, 
+	Michal Hocko <mhocko@kernel.org>, Shakeel Butt <shakeelb@google.com>, 
+	Muchun Song <muchun.song@linux.dev>, Kees Cook <keescook@chromium.org>, 
+	kasan-dev@googlegroups.com, cgroups@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Nov 13, 2023 at 08:13:59PM +0100, Vlastimil Babka wrote:
-> slab_alloc() is a thin wrapper around slab_alloc_node() with only one
-> caller.  Replace with direct call of slab_alloc_node().
-> __kmem_cache_alloc_lru() itself is a thin wrapper with two callers,
-> so replace it with direct calls of slab_alloc_node() and
-> trace_kmem_cache_alloc().
-
-I'd have a sense that with 2 callers a wrapper is still useful?
-
-> 
-> This also makes sure _RET_IP_ has always the expected value and not
-> depending on inlining decisions.
-> 
+On Mon, 13 Nov 2023 at 20:14, Vlastimil Babka <vbabka@suse.cz> wrote:
+>
+> Some struct slab fields are initialized differently for SLAB and SLUB so
+> we can simplify with SLUB being the only remaining allocator.
+>
 > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> [...]
->  void *kmem_cache_alloc_node(struct kmem_cache *s, gfp_t gfpflags, int node)
->  {
-> -	void *ret = slab_alloc_node(s, NULL, gfpflags, node, _RET_IP_, s->object_size);
-> +	void *ret = slab_alloc_node(s, NULL, gfpflags, node, _RET_IP_,
-> +				    s->object_size);
->  
 
-Whitespace change here isn't mentioned in the commit log.
+Reviewed-by: Marco Elver <elver@google.com>
 
-Regardless:
-
-Reviewed-by: Kees Cook <keescook@chromium.org>
-
--- 
-Kees Cook
+> ---
+>  mm/kfence/core.c | 4 ----
+>  1 file changed, 4 deletions(-)
+>
+> diff --git a/mm/kfence/core.c b/mm/kfence/core.c
+> index 3872528d0963..8350f5c06f2e 100644
+> --- a/mm/kfence/core.c
+> +++ b/mm/kfence/core.c
+> @@ -463,11 +463,7 @@ static void *kfence_guarded_alloc(struct kmem_cache *cache, size_t size, gfp_t g
+>         /* Set required slab fields. */
+>         slab = virt_to_slab((void *)meta->addr);
+>         slab->slab_cache = cache;
+> -#if defined(CONFIG_SLUB)
+>         slab->objects = 1;
+> -#elif defined(CONFIG_SLAB)
+> -       slab->s_mem = addr;
+> -#endif
+>
+>         /* Memory initialization. */
+>         set_canary(meta);
+> --
+> 2.42.1
+>
