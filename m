@@ -1,44 +1,44 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265BC9474
-	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 04:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32E0B650
+	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 04:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="RNnr6bXF"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1cc3bc5df96so37691565ad.2
-        for <patches@lists.linux.dev>; Mon, 13 Nov 2023 20:15:00 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="XszGoouP"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1cc2575dfc7so37677545ad.1
+        for <patches@lists.linux.dev>; Mon, 13 Nov 2023 20:20:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1699935300; x=1700540100; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1699935634; x=1700540434; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OUC30dXlQK5fmzms4eR9YZ2PZDBao2AfV4/azmUSi6E=;
-        b=RNnr6bXF46WRerDe7i3/jLJ3Fdqe1C0d6Hbudkv+X23qJVEtwdPt532w1sLybP2bqy
-         1QktMSp0iRivd+s7bUbMXChvIkoShZa5irJwKGvy/6STi0R1l9R7648WwZheIuAvMZip
-         62v3bKdPyy8lGwlVHPamHMWU9+TvcnMmYYExU=
+        bh=ew+aEAUFKMT5ddXwYjWs+9wP5nLqtY4565XxaEvPnVw=;
+        b=XszGoouP5kY0+/V0BwdGO3Qryg0ZwJIuBBBxCMv526jgFiPrtRw/JwSkKq/lXwQQNL
+         7u2foTscnCZ/VNro0YvxoT5L+wAgXAyzF8mxGYMnZ63ld0CruLgcfmtGHC443Hrt2FjM
+         ziY3flcuExBBmr4VixSEaulU/7AMyQJMOU2mE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699935300; x=1700540100;
+        d=1e100.net; s=20230601; t=1699935634; x=1700540434;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OUC30dXlQK5fmzms4eR9YZ2PZDBao2AfV4/azmUSi6E=;
-        b=aud4Dh8rPTZxDr+Zo7gp+hVZhuZTDzg5vRZQ++OZqAIm/VxIKYWUm6/7qBQc4Qaj/y
-         4gRRSU6hZnw7HwK0oIiSwQ+KI1EAPRejDysfl/k7a2SziodYnVrHrWUNbvn26/iSWXr8
-         0tbnh/SjVB1ZiiWufdnZYBBLMFx/SJ2H08Zmh8QBxRa6YWO7Jvq5CDgaG2ig7XdGHC8s
-         5IxAASWh9g5iS8CL6iOxR3jDzAVtp2L5h/YpCvrN1I99Z7RhGmDsXQiFh0Aa8jRWDXmM
-         Yz6knjo27b065GZUZC3QUQ351QKYX/XpeDO7TM5/peIgNX+I3XWVbcXVtw2MmVpTrK+7
-         tpBA==
-X-Gm-Message-State: AOJu0Yx4FWgUz/V5uoBsQz1dhC7srpo30sOvQ08D0xFY7+ZI1f9ikZNQ
-	cNrd/gwen+dKNNzH7oe11wXaqg==
-X-Google-Smtp-Source: AGHT+IEmPIYVtjWrKxgWx/6E037p3LrYP3ZvBjQTSGRoCVVM2HVRsHTaY6qgDIjr5rZO1Nl3XZts5A==
-X-Received: by 2002:a17:902:7d8e:b0:1c5:d063:b70e with SMTP id a14-20020a1709027d8e00b001c5d063b70emr1114726plm.53.1699935300585;
-        Mon, 13 Nov 2023 20:15:00 -0800 (PST)
+        bh=ew+aEAUFKMT5ddXwYjWs+9wP5nLqtY4565XxaEvPnVw=;
+        b=EX4NwB+U/hN6pUOM8keb0vYl8h0Hn4mY1m9rZwqqJF2fq7sqp+yX+E/zGEDx/YO07v
+         OE0pj3gQ04ZUL636EEZTS87GcwDUH1Yq+uQf3uUt1ST6f0SLszGs1pWAKuzj0D7ZScX7
+         8shXvmiLG9pHJi9D0GwTK1x286SZMbBscfgXhXYdQjqKtS8bTx++ZI5FrYbf1ukc/rWK
+         SVcy9xpEl9pjplnXPk63YncLlzNBehevDkLbSoG/zXjjXxwER/bBgT96vlk3sgxdo5vM
+         qHpvbwh0BmtcymBquwuKsZe5XLm+xNdy+RaMubKjOTJIP+x+QqggEyOLRfOA8sgtUVrR
+         Huhg==
+X-Gm-Message-State: AOJu0YwEPFymnNyRoREQrc8tki/RfCcpDqEqjX6iKcmR4SR9561hnwfv
+	B5bZT74PtVFVgRUe3A1R+StO7A==
+X-Google-Smtp-Source: AGHT+IEEuR9OHz0h/+qyQyKe+kSZOUz74iG8+oSzIWHLFYokTNJRmRlv4PFje7Gdb+90MtEYK337Ug==
+X-Received: by 2002:a17:903:260b:b0:1ce:171d:2795 with SMTP id jd11-20020a170903260b00b001ce171d2795mr1129493plb.65.1699935633849;
+        Mon, 13 Nov 2023 20:20:33 -0800 (PST)
 Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id iw17-20020a170903045100b001c9cc44eb60sm4799660plb.201.2023.11.13.20.15.00
+        by smtp.gmail.com with ESMTPSA id c2-20020a170902d90200b001cc3875e658sm4792216plz.303.2023.11.13.20.20.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Nov 2023 20:15:00 -0800 (PST)
-Date: Mon, 13 Nov 2023 20:14:59 -0800
+        Mon, 13 Nov 2023 20:20:33 -0800 (PST)
+Date: Mon, 13 Nov 2023 20:20:32 -0800
 From: Kees Cook <keescook@chromium.org>
 To: Vlastimil Babka <vbabka@suse.cz>
 Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
@@ -59,10 +59,10 @@ Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
 	Shakeel Butt <shakeelb@google.com>,
 	Muchun Song <muchun.song@linux.dev>, kasan-dev@googlegroups.com,
 	cgroups@vger.kernel.org
-Subject: Re: [PATCH 04/20] mm/memcontrol: remove CONFIG_SLAB #ifdef guards
-Message-ID: <202311132014.F03494F@keescook>
+Subject: Re: [PATCH 05/20] cpu/hotplug: remove CPUHP_SLAB_PREPARE hooks
+Message-ID: <202311132020.5A4B63D@keescook>
 References: <20231113191340.17482-22-vbabka@suse.cz>
- <20231113191340.17482-26-vbabka@suse.cz>
+ <20231113191340.17482-27-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -71,14 +71,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231113191340.17482-26-vbabka@suse.cz>
+In-Reply-To: <20231113191340.17482-27-vbabka@suse.cz>
 
-On Mon, Nov 13, 2023 at 08:13:45PM +0100, Vlastimil Babka wrote:
-> With SLAB removed, these are never true anymore so we can clean up.
+On Mon, Nov 13, 2023 at 08:13:46PM +0100, Vlastimil Babka wrote:
+> The CPUHP_SLAB_PREPARE hooks are only used by SLAB which is removed.
+> SLUB defines them as NULL, so we can remove those altogether.
 > 
 > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> ---
+>  include/linux/slab.h | 8 --------
+>  kernel/cpu.c         | 5 -----
+>  2 files changed, 13 deletions(-)
+> 
+> diff --git a/include/linux/slab.h b/include/linux/slab.h
+> index d6d6ffeeb9a2..34e43cddc520 100644
+> --- a/include/linux/slab.h
+> +++ b/include/linux/slab.h
+> @@ -788,12 +788,4 @@ size_t kmalloc_size_roundup(size_t size);
+>  
+>  void __init kmem_cache_init_late(void);
+>  
+> -#if defined(CONFIG_SMP) && defined(CONFIG_SLAB)
+> -int slab_prepare_cpu(unsigned int cpu);
+> -int slab_dead_cpu(unsigned int cpu);
+> -#else
+> -#define slab_prepare_cpu	NULL
+> -#define slab_dead_cpu		NULL
+> -#endif
+> -
+>  #endif	/* _LINUX_SLAB_H */
+> diff --git a/kernel/cpu.c b/kernel/cpu.c
+> index 9e4c6780adde..530b026d95a1 100644
+> --- a/kernel/cpu.c
+> +++ b/kernel/cpu.c
+> @@ -2125,11 +2125,6 @@ static struct cpuhp_step cpuhp_hp_states[] = {
+>  		.startup.single		= relay_prepare_cpu,
+>  		.teardown.single	= NULL,
+>  	},
+> -	[CPUHP_SLAB_PREPARE] = {
+> -		.name			= "slab:prepare",
+> -		.startup.single		= slab_prepare_cpu,
+> -		.teardown.single	= slab_dead_cpu,
+> -	},
+>  	[CPUHP_RCUTREE_PREP] = {
+>  		.name			= "RCU/tree:prepare",
+>  		.startup.single		= rcutree_prepare_cpu,
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
+Should CPUHP_SLAB_PREPARE be removed from the enum too?
 
 -- 
 Kees Cook
