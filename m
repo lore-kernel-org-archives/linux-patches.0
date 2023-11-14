@@ -1,144 +1,131 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910E935F19
-	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 20:31:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDBD2E824
+	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 22:04:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="bz0Tanb9";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="U1sGsexk"
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 4C50F20430;
-	Tue, 14 Nov 2023 20:31:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1699993864; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=K8/NrlXrx7sKxKw33qQLGmJG4ajpbjlsvtZQ38cozIM=;
-	b=bz0Tanb9Y3cak62EKwozN4JZtM1EhTLHsjIgv5TckwMI590xRU45d3JovLa+6SFsyKvs2/
-	o5ghKFRI2Y8Jt/HtZSGjcqLB0NdyBPycLAuFkWsrld6TjftB3Te5iuFxaH5IMLpjpcbgk5
-	VW+PGp8qKkuMzms6pm7UNipMPPKskTs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1699993864;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=K8/NrlXrx7sKxKw33qQLGmJG4ajpbjlsvtZQ38cozIM=;
-	b=U1sGsexkSCenG1J6TMRPFw6R8GIAzJNbVkcOX/AeR665x0R5K/WudYp5YDQciPcjElgvrx
-	ek9r1bVuNVNQjcBQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0337013460;
-	Tue, 14 Nov 2023 20:31:04 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id O8kbAAjZU2UpYQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Tue, 14 Nov 2023 20:31:04 +0000
-Message-ID: <b7fd34fa-5623-5f78-1d95-d01c986c2271@suse.cz>
-Date: Tue, 14 Nov 2023 21:31:03 +0100
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SgnO5N3g"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1699999489; x=1731535489;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=bO2MaK8085CtqTUh+1DTNmOM9z7MqhltlidbwclV2dY=;
+  b=SgnO5N3gwDIXtoxuyj8mmxZSEjzRDk/hjrAaa3R62wpjg8waqsK1MdIp
+   gGUUKVH+R8DW1S8GwlETSs2jqy9M/f5yYnqFwleGR/OAycj7FyjF/nb/9
+   /eXZgFb3/WH31mp/kdlHz1Kh9LZCmh7dp9ule+bSWp0m8uq7lfYVMt1px
+   fVfe3O0tJWgX6AQK0y+upJ2GLimodGmSspU/2o4F0iXRGTBs/JB+mordF
+   zBG7LX9xb5o36jdEtePn4mdd3xKvLCIvs3Zh0vQ+vEQonu30e6sTBj+ql
+   Ju1kLCj25BfjMb49Xx82Esnzf1+ZnFDAUWpf3MK7uPGOkvthhx7nD0p6D
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10894"; a="370950898"
+X-IronPort-AV: E=Sophos;i="6.03,303,1694761200"; 
+   d="scan'208";a="370950898"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Nov 2023 14:04:49 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10894"; a="888392403"
+X-IronPort-AV: E=Sophos;i="6.03,303,1694761200"; 
+   d="scan'208";a="888392403"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Nov 2023 14:04:48 -0800
+Date: Tue, 14 Nov 2023 14:04:46 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
+	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
+	x86@kernel.org, linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
+Message-ID: <ZVPu/hX9b7lUkrBY@agluck-desk3>
+References: <20230929181626.210782-1-tony.luck@intel.com>
+ <20231004183623.17067-1-tony.luck@intel.com>
+ <20231004183623.17067-3-tony.luck@intel.com>
+ <20231019151211.GHZTFHS3osBIL1IJbF@fat_crate.local>
+ <ZTa37L2nlnbok8dz@agluck-desk3>
+ <20231114192324.GAZVPJLGZmfJBS181/@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 18/20] mm/slub: remove slab_alloc() and
- __kmem_cache_alloc_lru() wrappers
-Content-Language: en-US
-To: Kees Cook <keescook@chromium.org>
-Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>,
- Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Andrey Ryabinin <ryabinin.a.a@gmail.com>,
- Alexander Potapenko <glider@google.com>,
- Andrey Konovalov <andreyknvl@gmail.com>, Dmitry Vyukov <dvyukov@google.com>,
- Vincenzo Frascino <vincenzo.frascino@arm.com>, Marco Elver
- <elver@google.com>, Johannes Weiner <hannes@cmpxchg.org>,
- Michal Hocko <mhocko@kernel.org>, Shakeel Butt <shakeelb@google.com>,
- Muchun Song <muchun.song@linux.dev>, kasan-dev@googlegroups.com,
- cgroups@vger.kernel.org
-References: <20231113191340.17482-22-vbabka@suse.cz>
- <20231113191340.17482-40-vbabka@suse.cz> <202311132048.B3AADC400@keescook>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <202311132048.B3AADC400@keescook>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spam-Level: 
-X-Spam-Score: -2.60
-X-Spamd-Result: default: False [-2.60 / 50.00];
-	 ARC_NA(0.00)[];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 RCVD_TLS_ALL(0.00)[];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 TAGGED_RCPT(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 NEURAL_HAM_LONG(-3.00)[-1.000];
-	 MID_RHS_MATCH_FROM(0.00)[];
-	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	 NEURAL_HAM_SHORT(-1.00)[-1.000];
-	 BAYES_HAM(-0.00)[41.96%];
-	 RCPT_COUNT_TWELVE(0.00)[23];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 FREEMAIL_CC(0.00)[google.com,linux.com,kernel.org,lge.com,linux-foundation.org,gmail.com,linux.dev,kvack.org,vger.kernel.org,lists.linux.dev,arm.com,cmpxchg.org,googlegroups.com];
-	 RCVD_COUNT_TWO(0.00)[2];
-	 SUSPICIOUS_RECIPS(1.50)[]
-X-Spam-Flag: NO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231114192324.GAZVPJLGZmfJBS181/@fat_crate.local>
 
-On 11/14/23 05:50, Kees Cook wrote:
-> On Mon, Nov 13, 2023 at 08:13:59PM +0100, Vlastimil Babka wrote:
->> slab_alloc() is a thin wrapper around slab_alloc_node() with only one
->> caller.  Replace with direct call of slab_alloc_node().
->> __kmem_cache_alloc_lru() itself is a thin wrapper with two callers,
->> so replace it with direct calls of slab_alloc_node() and
->> trace_kmem_cache_alloc().
+On Tue, Nov 14, 2023 at 08:23:24PM +0100, Borislav Petkov wrote:
+> On Mon, Oct 23, 2023 at 11:14:04AM -0700, Tony Luck wrote:
+> > I want to track whether each bank is in storm mode, or not. But there's
+> > no indication when a CMCI is delivered which bank was the source. Code
+> > just has to scan all the banks, and might find more than one with an
+> > error. While no bank is in polling mode, there isn't a set time interval
+> > between scanning banks.
 > 
-> I'd have a sense that with 2 callers a wrapper is still useful?
+> Well, if no bank is in *storm* polling mode - I presume you mean that
+> when you say "polling mode" - then we have the default polling interval
+> of machine_check_poll() of INITIAL_CHECK_INTERVAL, i.e., 5 mins, I'd
+> say.
 
-Well it bothered me how many layers everything went through, it makes it
-harder to comprehend the code.
+Initial state is that no banks are in storm mode. Errors logged in any
+bank are signaled with a CMCI to all logical CPUs that share that bank.
+But the "mce_banks_owned" per-cpu bitmask means that only one of those
+CPUs will get past the test_bit() check at the top of the loop in
+machine_check_poll():
 
->> 
->> This also makes sure _RET_IP_ has always the expected value and not
->> depending on inlining decisions.
+        for (i = 0; i < this_cpu_read(mce_num_banks); i++) {
+                if (!mce_banks[i].ctl || !test_bit(i, *b))
+                        continue;
 
-And there's also this argument. We should evaluate _RET_IP_ in
-kmem_cache_alloc() and kmem_cache_alloc_lru().
+Before any storm happens, machine_check_poll() may only be called once
+a month, or less, when errors occur.
 
->> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
->> [...]
->>  void *kmem_cache_alloc_node(struct kmem_cache *s, gfp_t gfpflags, int node)
->>  {
->> -	void *ret = slab_alloc_node(s, NULL, gfpflags, node, _RET_IP_, s->object_size);
->> +	void *ret = slab_alloc_node(s, NULL, gfpflags, node, _RET_IP_,
->> +				    s->object_size);
->>  
+When a storm is detected for a bank, that bank (and any others in storm
+mode) will be checked once per second.
+
+> > A scan is just triggered when a CMCI happens. So it's non-trivial to
+> > compute a rate. Would require saving a timestamp for every logged
+> > error.
 > 
-> Whitespace change here isn't mentioned in the commit log.
-
-OK, will mention.
-
-> Regardless:
+> So what I'm trying to establish first is, what our entry vectors into
+> the storm code are.
 > 
-> Reviewed-by: Kees Cook <keescook@chromium.org>
+> 1. You can enter storm tracking when you poll normally. I.e.,
+>    machine_check_poll() each 5 mins once.
 
-Thanks!
+For a bank that doesn't support CMCI, then polling is the only way
+to find errors. You are right, these will feed into the history
+tracker, but while at 5-minute interval will not be able to trigger
+a storm. Since that 5-minute interval is halved every time error is
+found consecutively, it is possible at the 1-second poll interval to
+fill out enough bits to indicate a storm. I think I need to add some
+code to handle that case as it makes no sense to mess with the CMCI
+threshold in IA32_MCi_CTL2 for a bank that doesn't support CMCI.
+Probably will just skip tracking for any such banks.
+
+>    mce_track_storm() tracks history only for MCI_STATUS_VAL=1b CEs, which
+>    is what I was wondering. It is hidden a bit down in that function.
+> 
+> 2. As a result of a CMCI interrupt. That will call machine_check_poll()
+>    too and go down the same path.
+> 
+> So that flow should be called out in the commit message so that the big
+> picture is clear - how we're doing that storm tracking.
+
+Yes. Those are both inputs to the storm tracker. I'll update the commit
+message to describe that.
+
+> Now, what is protecting this against concurrent runs of
+> machine_check_poll()? Imagine the timer fires and a CMCI happens at the
+> same time and on the same core.
+
+Aren't interrupts disabled while running the code after the timer fires?
+Whichever of the timer and the CMCI happens first will run. Second to
+arrive will pend the interrupt and be handled when interrupts are
+enabled as the first completes.
+
+... rest of message trimmed, no open discussion items there.
+
+-Tony
