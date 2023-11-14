@@ -1,56 +1,55 @@
-Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
+Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267016FA9
-	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 07:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8180125DC
+	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 08:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xOKsUw8c"
-Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-7b9ff6d89e6so2115059241.3
-        for <patches@lists.linux.dev>; Mon, 13 Nov 2023 23:46:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DCpGeaxm"
+Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-7b9f08482c8so2145791241.3
+        for <patches@lists.linux.dev>; Tue, 14 Nov 2023 00:06:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1699948001; x=1700552801; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1699949197; x=1700553997; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sX2ZDi+R3Ev6T5LlvMfvdN7qFs7PkFHPelflvttGDD4=;
-        b=xOKsUw8c4GOOvjgbuF9aNYXzMGg4vjP9QvkL7pOTtk0BqtzJyWf4I7YhE1ji0FyL5m
-         wKjWozxEQG+NVtxGjlQwSlKMtZwAaoWv1wvJuGJnC4/cJtW2WzNAdYUQbh827gD4LuPq
-         rA62xxxIa4lU5NTy4RIrw5/heIQi8tz9av4So3JcpnyFNtJ+St/xqd0OsiQt8WS6MbSt
-         +4PyzKKO+VAVG0tZ7xohfxv60eYVy+Secnv6dTZXiZm8XtiSHTRFphVXzZx/5UohgfW9
-         4Kjeajc+6Ok0VqBfvibWjzbfRZUIIKwwY3ymMIXTu0FFC0ddK2uLdk+25w1sdqyMvyz5
-         1pPw==
+        bh=7LGBUC9KsVeG0zIgCHu5xE4QSpLiIpSfaSXOL0b9rF8=;
+        b=DCpGeaxm+6sOnV2WhZVwo4V/DJubQwyttC8X/fFBPfO1rG5tAp6Fs/FA2ddPJ87L1C
+         T6ocYZUNcDrYyoYFpJ8j7yf3/TN4f1PUrVh+HIWoDXaNY0eMRGHRsA5Kk7aBB9erqMuq
+         2eTLGD/xjPanHmUDSGR8wpr4HVuW+XQ3WlIPklBoYpqcIqkE7YIUhyQzNFKwkh6vpS9s
+         Ro/537+4cgC+uVRfei9dA3qxTLFJPZkJIgJlKUnDWbISVtQCXoYXKh0cZEdJSD6ZFBut
+         U6emarjFfoVeuP7s1kf+6pocNN9Q6cNl8WiBzcnLWm5Yy5+rmNXretqOTtx+m4ITgxFm
+         kp/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699948001; x=1700552801;
+        d=1e100.net; s=20230601; t=1699949197; x=1700553997;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=sX2ZDi+R3Ev6T5LlvMfvdN7qFs7PkFHPelflvttGDD4=;
-        b=CMLh++tlWXqm9eXafzqeBIOr4qmORD8qCQdz37jjToHtXPOWjn9M8IN/WY/N89rh1G
-         o9bus/UN1Q7C8hmEeP7jNe+v2Xdq5OEVcUzp+7JhRLxvt7vOaT9MeJ7CZTt907mOLD2B
-         a6/FHHdoxacuhoHAXkE60U5wxDJn//jxd7Za2cVdcZfTDiVc89w9Js/HJtH+eaXQOXgK
-         Jx4EGY12gU0WboM6B4n63rhoDWwkFZslrlXVKyDiCAS2G5wedpsg3y9+MZX5GmBWbI6o
-         kP0vx8o80m2MqV9Lvti/OM5V6xF+4S8R51slfKTeY4xAdRJ8v7BZXIEP6mT29IGklf4I
-         AxUw==
-X-Gm-Message-State: AOJu0Yx99fL9nqg5MSL2EOtgH3hFFtczyrjQP3hMH5rz3d1k5Hnbwrko
-	TUoP18fSMKhwYndV333UAZGgVTUOacmgpVHTkbQTTA==
-X-Google-Smtp-Source: AGHT+IEkx9qpi9PxginlouXMsLXjDm4AhflR5GKJMwuObn7dBWpabAiTtV5tdjgAPRBqG6d0RnyHF3wv2N9uz3bxx2o=
-X-Received: by 2002:a05:6102:2908:b0:460:621c:d14b with SMTP id
- cz8-20020a056102290800b00460621cd14bmr9815342vsb.20.1699948000802; Mon, 13
- Nov 2023 23:46:40 -0800 (PST)
+        bh=7LGBUC9KsVeG0zIgCHu5xE4QSpLiIpSfaSXOL0b9rF8=;
+        b=M9gfD3HFASnzMi49OnzONyvIEU5clCpJsqGg7aHTDVPioJMiJPMrhG2WVNxh5z3ARF
+         nTPs6jmmzCz5ygmfjBjNfnoF4gfQPWkApW4y4QEkrTg2PX4YEEYeuC/OLAm+PtyrA/+R
+         PlBBsNWuuBj4OIvPazD/AU6Qu3dA2vaMWoA75XuT7h+7A5RXjdu6EXrCkqIcoHdfYkls
+         CQEqmrdFEEyC0UqlXg11L39XSElTAgRS6XmOVMyCscxlJUGrg+tzCqf26NWBj1llx+KF
+         dBBiqwnieAJfd1ktCTlJqnOBHvpFuGzzWD1HHQzcgy0b9nA5BQJ5LcT+QMSYhj3qml4o
+         jdIg==
+X-Gm-Message-State: AOJu0YyhB+3EiATZOcqUsswB4ywb5bSdz8RA+9uhwv/wMgvgdba7cFWl
+	LN9fJzakR00WmEQoZynKWMey9nIndJEj6DeGrCEG0A==
+X-Google-Smtp-Source: AGHT+IHRIIJ2otFiB28Ipx0WgE1WaXBMqJrx1/oRb4fjPk7Cj1iPewjxrE+pVnHo7BMp6gIpNsFRoZRKbs2enis0SEY=
+X-Received: by 2002:a05:6102:474e:b0:452:6178:642c with SMTP id
+ ej14-20020a056102474e00b004526178642cmr8315473vsb.1.1699949197540; Tue, 14
+ Nov 2023 00:06:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231113191340.17482-22-vbabka@suse.cz> <20231113191340.17482-25-vbabka@suse.cz>
-In-Reply-To: <20231113191340.17482-25-vbabka@suse.cz>
+References: <20231113191340.17482-22-vbabka@suse.cz> <20231113191340.17482-30-vbabka@suse.cz>
+In-Reply-To: <20231113191340.17482-30-vbabka@suse.cz>
 From: Marco Elver <elver@google.com>
-Date: Tue, 14 Nov 2023 08:46:04 +0100
-Message-ID: <CANpmjNOrA_nfMsu1eaTqauVfc53p5xHxO7TZAueVXyi5Qf9wAg@mail.gmail.com>
-Subject: Re: [PATCH 03/20] KFENCE: cleanup kfence_guarded_alloc() after
- CONFIG_SLAB removal
+Date: Tue, 14 Nov 2023 09:06:01 +0100
+Message-ID: <CANpmjNNkojcku+2-Lh=LX=_TXq3+x0M0twYQG2dBWA0Aeqr=Xw@mail.gmail.com>
+Subject: Re: [PATCH 08/20] mm/slab: remove mm/slab.c and slab_def.h
 To: Vlastimil Babka <vbabka@suse.cz>
 Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, 
 	Joonsoo Kim <iamjoonsoo.kim@lge.com>, Andrew Morton <akpm@linux-foundation.org>, 
@@ -61,38 +60,23 @@ Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>, Pekk
 	Vincenzo Frascino <vincenzo.frascino@arm.com>, Johannes Weiner <hannes@cmpxchg.org>, 
 	Michal Hocko <mhocko@kernel.org>, Shakeel Butt <shakeelb@google.com>, 
 	Muchun Song <muchun.song@linux.dev>, Kees Cook <keescook@chromium.org>, 
-	kasan-dev@googlegroups.com, cgroups@vger.kernel.org
+	kasan-dev@googlegroups.com, cgroups@vger.kernel.org, 
+	Mark Hemment <markhe@nextd.demon.co.uk>
 Content-Type: text/plain; charset="UTF-8"
 
 On Mon, 13 Nov 2023 at 20:14, Vlastimil Babka <vbabka@suse.cz> wrote:
 >
-> Some struct slab fields are initialized differently for SLAB and SLUB so
-> we can simplify with SLUB being the only remaining allocator.
+> Remove the SLAB implementation. Update CREDITS (also sort the SLOB entry
+> properly).
 >
+> RIP SLAB allocator (1996 - 2024)
+>
+> Cc: Mark Hemment <markhe@nextd.demon.co.uk>
 > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-
-Reviewed-by: Marco Elver <elver@google.com>
-
 > ---
->  mm/kfence/core.c | 4 ----
->  1 file changed, 4 deletions(-)
->
-> diff --git a/mm/kfence/core.c b/mm/kfence/core.c
-> index 3872528d0963..8350f5c06f2e 100644
-> --- a/mm/kfence/core.c
-> +++ b/mm/kfence/core.c
-> @@ -463,11 +463,7 @@ static void *kfence_guarded_alloc(struct kmem_cache *cache, size_t size, gfp_t g
->         /* Set required slab fields. */
->         slab = virt_to_slab((void *)meta->addr);
->         slab->slab_cache = cache;
-> -#if defined(CONFIG_SLUB)
->         slab->objects = 1;
-> -#elif defined(CONFIG_SLAB)
-> -       slab->s_mem = addr;
-> -#endif
->
->         /* Memory initialization. */
->         set_canary(meta);
-> --
-> 2.42.1
->
+>  CREDITS                  |   12 +-
+>  include/linux/slab_def.h |  124 --
+>  mm/slab.c                | 4026 --------------------------------------
+
+There are still some references to it left (git grep mm/slab.c). It
+breaks documentation in Documentation/core-api/mm-api.rst
