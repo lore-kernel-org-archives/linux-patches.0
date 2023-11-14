@@ -1,82 +1,134 @@
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8180125DC
-	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 08:06:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06914224CE
+	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 11:14:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DCpGeaxm"
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-7b9f08482c8so2145791241.3
-        for <patches@lists.linux.dev>; Tue, 14 Nov 2023 00:06:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1699949197; x=1700553997; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7LGBUC9KsVeG0zIgCHu5xE4QSpLiIpSfaSXOL0b9rF8=;
-        b=DCpGeaxm+6sOnV2WhZVwo4V/DJubQwyttC8X/fFBPfO1rG5tAp6Fs/FA2ddPJ87L1C
-         T6ocYZUNcDrYyoYFpJ8j7yf3/TN4f1PUrVh+HIWoDXaNY0eMRGHRsA5Kk7aBB9erqMuq
-         2eTLGD/xjPanHmUDSGR8wpr4HVuW+XQ3WlIPklBoYpqcIqkE7YIUhyQzNFKwkh6vpS9s
-         Ro/537+4cgC+uVRfei9dA3qxTLFJPZkJIgJlKUnDWbISVtQCXoYXKh0cZEdJSD6ZFBut
-         U6emarjFfoVeuP7s1kf+6pocNN9Q6cNl8WiBzcnLWm5Yy5+rmNXretqOTtx+m4ITgxFm
-         kp/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699949197; x=1700553997;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7LGBUC9KsVeG0zIgCHu5xE4QSpLiIpSfaSXOL0b9rF8=;
-        b=M9gfD3HFASnzMi49OnzONyvIEU5clCpJsqGg7aHTDVPioJMiJPMrhG2WVNxh5z3ARF
-         nTPs6jmmzCz5ygmfjBjNfnoF4gfQPWkApW4y4QEkrTg2PX4YEEYeuC/OLAm+PtyrA/+R
-         PlBBsNWuuBj4OIvPazD/AU6Qu3dA2vaMWoA75XuT7h+7A5RXjdu6EXrCkqIcoHdfYkls
-         CQEqmrdFEEyC0UqlXg11L39XSElTAgRS6XmOVMyCscxlJUGrg+tzCqf26NWBj1llx+KF
-         dBBiqwnieAJfd1ktCTlJqnOBHvpFuGzzWD1HHQzcgy0b9nA5BQJ5LcT+QMSYhj3qml4o
-         jdIg==
-X-Gm-Message-State: AOJu0YyhB+3EiATZOcqUsswB4ywb5bSdz8RA+9uhwv/wMgvgdba7cFWl
-	LN9fJzakR00WmEQoZynKWMey9nIndJEj6DeGrCEG0A==
-X-Google-Smtp-Source: AGHT+IHRIIJ2otFiB28Ipx0WgE1WaXBMqJrx1/oRb4fjPk7Cj1iPewjxrE+pVnHo7BMp6gIpNsFRoZRKbs2enis0SEY=
-X-Received: by 2002:a05:6102:474e:b0:452:6178:642c with SMTP id
- ej14-20020a056102474e00b004526178642cmr8315473vsb.1.1699949197540; Tue, 14
- Nov 2023 00:06:37 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="mFbVnbw1"
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 134DD21898;
+	Tue, 14 Nov 2023 11:14:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1699960477; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XDqzWLx2K+JvK/ZPpwmsrJYyQOBFyyUyoFsG3is7Iq8=;
+	b=mFbVnbw19yBLSGNX3rYmkMYGhAiCndHWSWr7B5HTniuoNjZSaTzjaKQqYG4c1XCEVXFCS0
+	vjAkEPCobTE0w89xorZjRJk6yNd9lc2/TtQASS++HnibQxY0g6sRgGsU9eCfFS0h3+sMmP
+	Af7AEkldSerwYs4dAk0WuFYxiiodvNM=
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id D79A813460;
+	Tue, 14 Nov 2023 11:14:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id sEGsMZxWU2UERQAAMHmgww
+	(envelope-from <mhocko@suse.com>); Tue, 14 Nov 2023 11:14:36 +0000
+Date: Tue, 14 Nov 2023 12:14:36 +0100
+From: Michal Hocko <mhocko@suse.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Marco Elver <elver@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeelb@google.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Kees Cook <keescook@chromium.org>, kasan-dev@googlegroups.com,
+	cgroups@vger.kernel.org
+Subject: Re: [PATCH 04/20] mm/memcontrol: remove CONFIG_SLAB #ifdef guards
+Message-ID: <ZVNWnPYHXpQjCDZ3@tiehlicka>
+References: <20231113191340.17482-22-vbabka@suse.cz>
+ <20231113191340.17482-26-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231113191340.17482-22-vbabka@suse.cz> <20231113191340.17482-30-vbabka@suse.cz>
-In-Reply-To: <20231113191340.17482-30-vbabka@suse.cz>
-From: Marco Elver <elver@google.com>
-Date: Tue, 14 Nov 2023 09:06:01 +0100
-Message-ID: <CANpmjNNkojcku+2-Lh=LX=_TXq3+x0M0twYQG2dBWA0Aeqr=Xw@mail.gmail.com>
-Subject: Re: [PATCH 08/20] mm/slab: remove mm/slab.c and slab_def.h
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, 
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>, Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>, Alexander Potapenko <glider@google.com>, 
-	Andrey Konovalov <andreyknvl@gmail.com>, Dmitry Vyukov <dvyukov@google.com>, 
-	Vincenzo Frascino <vincenzo.frascino@arm.com>, Johannes Weiner <hannes@cmpxchg.org>, 
-	Michal Hocko <mhocko@kernel.org>, Shakeel Butt <shakeelb@google.com>, 
-	Muchun Song <muchun.song@linux.dev>, Kees Cook <keescook@chromium.org>, 
-	kasan-dev@googlegroups.com, cgroups@vger.kernel.org, 
-	Mark Hemment <markhe@nextd.demon.co.uk>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231113191340.17482-26-vbabka@suse.cz>
+Authentication-Results: smtp-out1.suse.de;
+	none
+X-Spam-Level: 
+X-Spam-Score: -1.97
+X-Spamd-Result: default: False [-1.97 / 50.00];
+	 ARC_NA(0.00)[];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 RCVD_TLS_ALL(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 TAGGED_RCPT(0.00)[];
+	 MIME_GOOD(-0.10)[text/plain];
+	 BAYES_SPAM(0.13)[63.14%];
+	 NEURAL_HAM_LONG(-3.00)[-1.000];
+	 DKIM_SIGNED(0.00)[suse.com:s=susede1];
+	 NEURAL_HAM_SHORT(-1.00)[-1.000];
+	 RCPT_COUNT_TWELVE(0.00)[23];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 MID_RHS_NOT_FQDN(0.50)[];
+	 FREEMAIL_CC(0.00)[google.com,linux.com,kernel.org,lge.com,linux-foundation.org,gmail.com,linux.dev,kvack.org,vger.kernel.org,lists.linux.dev,arm.com,cmpxchg.org,chromium.org,googlegroups.com];
+	 RCVD_COUNT_TWO(0.00)[2];
+	 SUSPICIOUS_RECIPS(1.50)[]
+X-Spam-Flag: NO
 
-On Mon, 13 Nov 2023 at 20:14, Vlastimil Babka <vbabka@suse.cz> wrote:
->
-> Remove the SLAB implementation. Update CREDITS (also sort the SLOB entry
-> properly).
->
-> RIP SLAB allocator (1996 - 2024)
->
-> Cc: Mark Hemment <markhe@nextd.demon.co.uk>
+On Mon 13-11-23 20:13:45, Vlastimil Babka wrote:
+> With SLAB removed, these are never true anymore so we can clean up.
+> 
 > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> ---
->  CREDITS                  |   12 +-
->  include/linux/slab_def.h |  124 --
->  mm/slab.c                | 4026 --------------------------------------
 
-There are still some references to it left (git grep mm/slab.c). It
-breaks documentation in Documentation/core-api/mm-api.rst
+Acked-by: Michal Hocko <mhocko@suse.com>
+
+> ---
+>  mm/memcontrol.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+> index 774bd6e21e27..947fb50eba31 100644
+> --- a/mm/memcontrol.c
+> +++ b/mm/memcontrol.c
+> @@ -5149,7 +5149,7 @@ static ssize_t memcg_write_event_control(struct kernfs_open_file *of,
+>  	return ret;
+>  }
+>  
+> -#if defined(CONFIG_MEMCG_KMEM) && (defined(CONFIG_SLAB) || defined(CONFIG_SLUB_DEBUG))
+> +#if defined(CONFIG_MEMCG_KMEM) && defined(CONFIG_SLUB_DEBUG)
+>  static int mem_cgroup_slab_show(struct seq_file *m, void *p)
+>  {
+>  	/*
+> @@ -5258,8 +5258,7 @@ static struct cftype mem_cgroup_legacy_files[] = {
+>  		.write = mem_cgroup_reset,
+>  		.read_u64 = mem_cgroup_read_u64,
+>  	},
+> -#if defined(CONFIG_MEMCG_KMEM) && \
+> -	(defined(CONFIG_SLAB) || defined(CONFIG_SLUB_DEBUG))
+> +#if defined(CONFIG_MEMCG_KMEM) && defined(CONFIG_SLUB_DEBUG)
+>  	{
+>  		.name = "kmem.slabinfo",
+>  		.seq_show = mem_cgroup_slab_show,
+> -- 
+> 2.42.1
+
+-- 
+Michal Hocko
+SUSE Labs
