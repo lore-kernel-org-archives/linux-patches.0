@@ -1,157 +1,160 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6AE3B798
-	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 12:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D2326AC2
+	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 19:23:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="y63T0LL+"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-4ac3083ca04so2531454e0c.1
-        for <patches@lists.linux.dev>; Tue, 14 Nov 2023 04:01:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1699963287; x=1700568087; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=w+cNKD/DZD2lkmgn//C/a4VZOCUEay1a0fxR4tTnP1Y=;
-        b=y63T0LL+5unjEIuqfXVqzAD14R+ZqXNmITZfIkJzrOGL3fOt+SrXQ3pxvSm2l3n1kh
-         Bw7WGSIAk6oMTnTGmZqYteXiq+azudNUpOXGAsp/a4tFnfTr1cuHg42GmG1fWLZUBikI
-         Nc2nD4ZLJByWkTXRIY6hQqVnKlW2B/79j2Vb3drvISS+Yo8aw9xZAX+ZZAH/lXXJAWmA
-         notRWu5rHHsbgpyxFmGGUUVvAbilXzxk0840/n0UzyLkV6XI4qP1IIneEmnAZhOegJKr
-         v8lJxGDy08TSqlB2TbAn7ALPrwhrpsT3IYVVOewvJCkBzJKBZu6awxf63r8tD9cilFQ/
-         K3pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699963287; x=1700568087;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=w+cNKD/DZD2lkmgn//C/a4VZOCUEay1a0fxR4tTnP1Y=;
-        b=ATFhKsyJ1Q6GYap8GBYKsG6EQ3EnBx2AlLGqmgFSr2R4nt2yzQhcwdi4NICChUGyip
-         T7aEUP2h10L4zQXIf/QOPLLNpcybWOp1z+kbHY4ULRQsd//78hV9AbVGlRy7rW5OeVi9
-         VgpHy860tCEDjyPtfFaNre4k2AZ2W0Hsw4eZxTRgAncdtHtPg8MKflhNn2uiA/JVyodn
-         XYuggEMouQEmxVNNIXZgWHip6Ob89VyH6hZpWQYrKMrmAo0olwgTRvBah9EBF6DgO23h
-         RPUdmZKmyzfFZenEkjhH5Eht/qUg8wFEmbIrbtY7lzjnRZ5S/4jF0hjvuAhoYItB8Irs
-         mzAQ==
-X-Gm-Message-State: AOJu0Yz8Y25cDiIU+birRq5LsqAeCqXy3OS3QsFfond5QmC/oU8p0zg9
-	E5Da7FzVs3r8uSjSMNTUuXS1YADMfxMh3x4lV7by7g==
-X-Google-Smtp-Source: AGHT+IGdPTgrNucIG+Lo6vRM+7FUzSZPC0zMXelLtqwy0mDzkjNg/l2YT2+nTW9YrVKzffzwqrRySMvvW/+/It1UJuA=
-X-Received: by 2002:a05:6122:1689:b0:4ac:593b:e9f4 with SMTP id
- 9-20020a056122168900b004ac593be9f4mr9715321vkl.9.1699963287127; Tue, 14 Nov
- 2023 04:01:27 -0800 (PST)
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="fhbAG0uU"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id DCEA440E018F;
+	Tue, 14 Nov 2023 19:23:40 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id nxOVEvKxnXQi; Tue, 14 Nov 2023 19:23:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1699989818; bh=9DUPwmxmZUVmPS/P37KJn65M2sh/+Gd6LIFKTA6w0Xg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fhbAG0uU8wqQyx5OrvGVl2RjU0fJkob8NkFsAR64SjVppoIjyxfZ8My9w4ZL8YqSl
+	 JjwtRuaFHJRi7SH/PYzPVWRyruFYiscK15+YlvAw4e/S+SP0Rt5wYOrIyhr+yo+fP7
+	 yO+rnnhOTLZvPe0W/LfBJsZJC2Oh7EwiRIsTocRdPrUqL/nSATCM7GGzsH7giwKAZa
+	 ASZCM1c4BL2c4j+r/c8+Vg3tY22C+wye1RLd40GqdwQ8vFY+eehwbx7pp6rIa0dHIN
+	 2WHhwTeiS2OIk36i98PrGOZnN8VYivfvw9B3dUCN96hUuf0DicTBJQLfOTx0TMl+jX
+	 EoUct4o0WjjHhQhbfIvUOwUQwkSNFm7I0GXipjtH2aHGXhZfquvPgFnQex94NyArOK
+	 yWd7pq7S6LnQe1IBqRBEv8odhN6TdMnOKpZG5l+cKNyMRIbkm1wuqEQ/sebSTmSZvQ
+	 iXyeoglNoxw2nDVz2Fb2QU31boGt52Bn+gpc0P+/tpe0ky84HfTM+1UdjPFF7Gsz9m
+	 1cew78d8XMjGWA+eUNCpCNgzBIO4hTeuj3vxPhcHhAS/YWqJJHJjEcOXBMVkH1ij3z
+	 +zkE2jF4wPriDJvOs2aAkm1uGTLCaIkYn4uiFhzv7xzEtkgFTNe4F7L0aK940Dx7KT
+	 raIftZIjoYqTwRb/E+Vud7Wk=
+Received: from zn.tnic (pd95304da.dip0.t-ipconnect.de [217.83.4.218])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 55D5540E0171;
+	Tue, 14 Nov 2023 19:23:30 +0000 (UTC)
+Date: Tue, 14 Nov 2023 20:23:24 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
+	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
+	x86@kernel.org, linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
+Message-ID: <20231114192324.GAZVPJLGZmfJBS181/@fat_crate.local>
+References: <20230929181626.210782-1-tony.luck@intel.com>
+ <20231004183623.17067-1-tony.luck@intel.com>
+ <20231004183623.17067-3-tony.luck@intel.com>
+ <20231019151211.GHZTFHS3osBIL1IJbF@fat_crate.local>
+ <ZTa37L2nlnbok8dz@agluck-desk3>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231113191340.17482-22-vbabka@suse.cz> <20231113191340.17482-24-vbabka@suse.cz>
-In-Reply-To: <20231113191340.17482-24-vbabka@suse.cz>
-From: Marco Elver <elver@google.com>
-Date: Tue, 14 Nov 2023 13:00:00 +0100
-Message-ID: <CANpmjNOy+K_jBkaZ9_+He9tT83PaYLama517YvQ1TH13ayg3vg@mail.gmail.com>
-Subject: Re: [PATCH 02/20] KASAN: remove code paths guarded by CONFIG_SLAB
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, 
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>, Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>, Alexander Potapenko <glider@google.com>, 
-	Andrey Konovalov <andreyknvl@gmail.com>, Dmitry Vyukov <dvyukov@google.com>, 
-	Vincenzo Frascino <vincenzo.frascino@arm.com>, Johannes Weiner <hannes@cmpxchg.org>, 
-	Michal Hocko <mhocko@kernel.org>, Shakeel Butt <shakeelb@google.com>, 
-	Muchun Song <muchun.song@linux.dev>, Kees Cook <keescook@chromium.org>, 
-	kasan-dev@googlegroups.com, cgroups@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZTa37L2nlnbok8dz@agluck-desk3>
 
-On Mon, 13 Nov 2023 at 20:14, Vlastimil Babka <vbabka@suse.cz> wrote:
->
-> With SLAB removed and SLUB the only remaining allocator, we can clean up
-> some code that was depending on the choice.
->
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+On Mon, Oct 23, 2023 at 11:14:04AM -0700, Tony Luck wrote:
+> I want to track whether each bank is in storm mode, or not. But there's
+> no indication when a CMCI is delivered which bank was the source. Code
+> just has to scan all the banks, and might find more than one with an
+> error. While no bank is in polling mode, there isn't a set time interval
+> between scanning banks.
 
-Reviewed-by: Marco Elver <elver@google.com>
+Well, if no bank is in *storm* polling mode - I presume you mean that
+when you say "polling mode" - then we have the default polling interval
+of machine_check_poll() of INITIAL_CHECK_INTERVAL, i.e., 5 mins, I'd
+say.
 
-> ---
->  mm/kasan/common.c     | 13 ++-----------
->  mm/kasan/kasan.h      |  3 +--
->  mm/kasan/quarantine.c |  7 -------
->  3 files changed, 3 insertions(+), 20 deletions(-)
->
-> diff --git a/mm/kasan/common.c b/mm/kasan/common.c
-> index 256930da578a..5d95219e69d7 100644
-> --- a/mm/kasan/common.c
-> +++ b/mm/kasan/common.c
-> @@ -153,10 +153,6 @@ void __kasan_poison_object_data(struct kmem_cache *cache, void *object)
->   * 2. A cache might be SLAB_TYPESAFE_BY_RCU, which means objects can be
->   *    accessed after being freed. We preassign tags for objects in these
->   *    caches as well.
-> - * 3. For SLAB allocator we can't preassign tags randomly since the freelist
-> - *    is stored as an array of indexes instead of a linked list. Assign tags
-> - *    based on objects indexes, so that objects that are next to each other
-> - *    get different tags.
->   */
->  static inline u8 assign_tag(struct kmem_cache *cache,
->                                         const void *object, bool init)
-> @@ -171,17 +167,12 @@ static inline u8 assign_tag(struct kmem_cache *cache,
->         if (!cache->ctor && !(cache->flags & SLAB_TYPESAFE_BY_RCU))
->                 return init ? KASAN_TAG_KERNEL : kasan_random_tag();
->
-> -       /* For caches that either have a constructor or SLAB_TYPESAFE_BY_RCU: */
-> -#ifdef CONFIG_SLAB
-> -       /* For SLAB assign tags based on the object index in the freelist. */
-> -       return (u8)obj_to_index(cache, virt_to_slab(object), (void *)object);
-> -#else
->         /*
-> -        * For SLUB assign a random tag during slab creation, otherwise reuse
-> +        * For caches that either have a constructor or SLAB_TYPESAFE_BY_RCU,
-> +        * assign a random tag during slab creation, otherwise reuse
->          * the already assigned tag.
->          */
->         return init ? kasan_random_tag() : get_tag(object);
-> -#endif
->  }
->
->  void * __must_check __kasan_init_slab_obj(struct kmem_cache *cache,
-> diff --git a/mm/kasan/kasan.h b/mm/kasan/kasan.h
-> index 8b06bab5c406..eef50233640a 100644
-> --- a/mm/kasan/kasan.h
-> +++ b/mm/kasan/kasan.h
-> @@ -373,8 +373,7 @@ void kasan_set_track(struct kasan_track *track, gfp_t flags);
->  void kasan_save_alloc_info(struct kmem_cache *cache, void *object, gfp_t flags);
->  void kasan_save_free_info(struct kmem_cache *cache, void *object);
->
-> -#if defined(CONFIG_KASAN_GENERIC) && \
-> -       (defined(CONFIG_SLAB) || defined(CONFIG_SLUB))
-> +#ifdef CONFIG_KASAN_GENERIC
->  bool kasan_quarantine_put(struct kmem_cache *cache, void *object);
->  void kasan_quarantine_reduce(void);
->  void kasan_quarantine_remove_cache(struct kmem_cache *cache);
-> diff --git a/mm/kasan/quarantine.c b/mm/kasan/quarantine.c
-> index ca4529156735..138c57b836f2 100644
-> --- a/mm/kasan/quarantine.c
-> +++ b/mm/kasan/quarantine.c
-> @@ -144,10 +144,6 @@ static void qlink_free(struct qlist_node *qlink, struct kmem_cache *cache)
->  {
->         void *object = qlink_to_object(qlink, cache);
->         struct kasan_free_meta *meta = kasan_get_free_meta(cache, object);
-> -       unsigned long flags;
-> -
-> -       if (IS_ENABLED(CONFIG_SLAB))
-> -               local_irq_save(flags);
->
->         /*
->          * If init_on_free is enabled and KASAN's free metadata is stored in
-> @@ -166,9 +162,6 @@ static void qlink_free(struct qlist_node *qlink, struct kmem_cache *cache)
->         *(u8 *)kasan_mem_to_shadow(object) = KASAN_SLAB_FREE;
->
->         ___cache_free(cache, object, _THIS_IP_);
-> -
-> -       if (IS_ENABLED(CONFIG_SLAB))
-> -               local_irq_restore(flags);
->  }
->
->  static void qlist_free_all(struct qlist_head *q, struct kmem_cache *cache)
-> --
-> 2.42.1
->
+> A scan is just triggered when a CMCI happens. So it's non-trivial to
+> compute a rate. Would require saving a timestamp for every logged
+> error.
+
+So what I'm trying to establish first is, what our entry vectors into
+the storm code are.
+
+1. You can enter storm tracking when you poll normally. I.e.,
+   machine_check_poll() each 5 mins once.
+
+   mce_track_storm() tracks history only for MCI_STATUS_VAL=1b CEs, which
+   is what I was wondering. It is hidden a bit down in that function.
+
+2. As a result of a CMCI interrupt. That will call machine_check_poll()
+   too and go down the same path.
+
+So that flow should be called out in the commit message so that the big
+picture is clear - how we're doing that storm tracking.
+
+Now, what is protecting this against concurrent runs of
+machine_check_poll()? Imagine the timer fires and a CMCI happens at the
+same time and on the same core.
+
+> In a simple case there's just one bank responsible for a ton of CMCI.
+> No need for complexity here, the count of interrupts from that bank will
+> hit a threshold and a storm is declared.
+
+Right.
+
+> But more complex scenarois are possible. Other banks may trigger small
+> numbers of CMCI. Not enough to call it a storm.  Or multiple banks may
+> be screaming together.
+> 
+> By tracking both the hits and misses in each bank, I end up with a
+> bitmap history for the past 64 polls. If there are enough "1" bits in
+> that bitmap to meet the threshold, then declare a storm for that
+> bank.
+
+Yap, I only want to be crystal clear on the flow and the entry points.
+
+> I need to stare at this again to refresh my memory of what's going on
+> here. This code may need pulling apart into a routine that is used for
+> systems with no CMCI (or have CMCI disabled). Then the whole "divide the
+> poll interval by two" when you see an error and double the interval
+> when you don't see an error makes sense.
+> 
+> For systems with CMCI ... I think just polling a one second interval
+> until the storm is over makes sense.
+
+Ok.
+
+> These are only used in threshold.c now. What's the point of them
+> being in internal.h. That's for defintiones shared by multiple
+> mcs/*.c files. Isn't it? But will move there if you still want this.
+
+Structs hidden in .c files looks weird but ok.
+
+> Ideally the new CPU would inherit the precise state of the previous
+> owner of this bank. But there's no easy way to track that as the bank
+> is abanoned by the CPU going offline, and there is a free-for-all with
+> remaining CPUs racing to claim ownership. It is known that this bank
+> was in storm mode (because the threshold in the CTL2 bank register is
+> set to CMCI_STORM_THRESHOLD).
+> 
+> I went with "worst case" to make sure the new CPU didn't prematurely
+> declare an end to the storm.
+> 
+> I'll add a comment in mce_inherit_storm() to explain this.
+
+Yap, exactly.
+
+> Like this?
+> 
+> #define NUM_HISTORY_BITS (sizeof(u64) * BITS_PER_BYTE)
+> 
+> 	if (shift < NUM_HISTORY_BITS)
+
+Yap.
+
+Thx.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
