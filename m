@@ -1,160 +1,139 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D2326AC2
-	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 19:23:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D8435F02
+	for <patches@lists.linux.dev>; Tue, 14 Nov 2023 20:11:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="fhbAG0uU"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id DCEA440E018F;
-	Tue, 14 Nov 2023 19:23:40 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id nxOVEvKxnXQi; Tue, 14 Nov 2023 19:23:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1699989818; bh=9DUPwmxmZUVmPS/P37KJn65M2sh/+Gd6LIFKTA6w0Xg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fhbAG0uU8wqQyx5OrvGVl2RjU0fJkob8NkFsAR64SjVppoIjyxfZ8My9w4ZL8YqSl
-	 JjwtRuaFHJRi7SH/PYzPVWRyruFYiscK15+YlvAw4e/S+SP0Rt5wYOrIyhr+yo+fP7
-	 yO+rnnhOTLZvPe0W/LfBJsZJC2Oh7EwiRIsTocRdPrUqL/nSATCM7GGzsH7giwKAZa
-	 ASZCM1c4BL2c4j+r/c8+Vg3tY22C+wye1RLd40GqdwQ8vFY+eehwbx7pp6rIa0dHIN
-	 2WHhwTeiS2OIk36i98PrGOZnN8VYivfvw9B3dUCN96hUuf0DicTBJQLfOTx0TMl+jX
-	 EoUct4o0WjjHhQhbfIvUOwUQwkSNFm7I0GXipjtH2aHGXhZfquvPgFnQex94NyArOK
-	 yWd7pq7S6LnQe1IBqRBEv8odhN6TdMnOKpZG5l+cKNyMRIbkm1wuqEQ/sebSTmSZvQ
-	 iXyeoglNoxw2nDVz2Fb2QU31boGt52Bn+gpc0P+/tpe0ky84HfTM+1UdjPFF7Gsz9m
-	 1cew78d8XMjGWA+eUNCpCNgzBIO4hTeuj3vxPhcHhAS/YWqJJHJjEcOXBMVkH1ij3z
-	 +zkE2jF4wPriDJvOs2aAkm1uGTLCaIkYn4uiFhzv7xzEtkgFTNe4F7L0aK940Dx7KT
-	 raIftZIjoYqTwRb/E+Vud7Wk=
-Received: from zn.tnic (pd95304da.dip0.t-ipconnect.de [217.83.4.218])
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="QztLg3ps";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="NcSJZK89"
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 55D5540E0171;
-	Tue, 14 Nov 2023 19:23:30 +0000 (UTC)
-Date: Tue, 14 Nov 2023 20:23:24 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Tony Luck <tony.luck@intel.com>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
-	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
-	x86@kernel.org, linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
-Message-ID: <20231114192324.GAZVPJLGZmfJBS181/@fat_crate.local>
-References: <20230929181626.210782-1-tony.luck@intel.com>
- <20231004183623.17067-1-tony.luck@intel.com>
- <20231004183623.17067-3-tony.luck@intel.com>
- <20231019151211.GHZTFHS3osBIL1IJbF@fat_crate.local>
- <ZTa37L2nlnbok8dz@agluck-desk3>
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 78AB920430;
+	Tue, 14 Nov 2023 20:11:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1699992707; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Jx5LtWmsLR+LfLuIaijRwnFRntSIu1BC0epYmgHcaMQ=;
+	b=QztLg3psAOKHMl6gbAEvrcxmmJo9FhUCQ7OhduKlUpTqKuKkwL0p419HwTadOkkN56LNhV
+	DJqfitKLBKDYB0QuPtO139EwyaPKvgaI3qrvj6xusCkDEcJEkKF2x8owyoGrvIlxaiXXDj
+	bSacZpf3Co3JzSWXWsvNVsuUJVChs38=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1699992707;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Jx5LtWmsLR+LfLuIaijRwnFRntSIu1BC0epYmgHcaMQ=;
+	b=NcSJZK89lOQ0tthmCnON+iffFckuV9XsKXUSSHht9GT36OrnfM0rMyzOSDB1xtbq3MBssf
+	+q6wb/FzUt4TsSDg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 1F4A913460;
+	Tue, 14 Nov 2023 20:11:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id 8LsfBoPUU2V+WAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Tue, 14 Nov 2023 20:11:47 +0000
+Message-ID: <55a589d7-edcc-6db4-759d-c928577cba8b@suse.cz>
+Date: Tue, 14 Nov 2023 21:11:46 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZTa37L2nlnbok8dz@agluck-desk3>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 01/20] mm/slab: remove CONFIG_SLAB from all Kconfig and
+ Makefile
+Content-Language: en-US
+To: Kees Cook <keescook@chromium.org>
+Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+ Alexander Potapenko <glider@google.com>,
+ Andrey Konovalov <andreyknvl@gmail.com>, Dmitry Vyukov <dvyukov@google.com>,
+ Vincenzo Frascino <vincenzo.frascino@arm.com>, Marco Elver
+ <elver@google.com>, Johannes Weiner <hannes@cmpxchg.org>,
+ Michal Hocko <mhocko@kernel.org>, Shakeel Butt <shakeelb@google.com>,
+ Muchun Song <muchun.song@linux.dev>, kasan-dev@googlegroups.com,
+ cgroups@vger.kernel.org
+References: <20231113191340.17482-22-vbabka@suse.cz>
+ <20231113191340.17482-23-vbabka@suse.cz> <202311132009.8329C2F5D@keescook>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <202311132009.8329C2F5D@keescook>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spam-Level: 
+X-Spam-Score: -2.65
+X-Spamd-Result: default: False [-2.65 / 50.00];
+	 ARC_NA(0.00)[];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 RCVD_TLS_ALL(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 TAGGED_RCPT(0.00)[];
+	 MIME_GOOD(-0.10)[text/plain];
+	 NEURAL_HAM_LONG(-3.00)[-1.000];
+	 MID_RHS_MATCH_FROM(0.00)[];
+	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	 NEURAL_HAM_SHORT(-1.00)[-1.000];
+	 BAYES_HAM(-0.05)[59.88%];
+	 RCPT_COUNT_TWELVE(0.00)[23];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 FREEMAIL_CC(0.00)[google.com,linux.com,kernel.org,lge.com,linux-foundation.org,gmail.com,linux.dev,kvack.org,vger.kernel.org,lists.linux.dev,arm.com,cmpxchg.org,googlegroups.com];
+	 RCVD_COUNT_TWO(0.00)[2];
+	 SUSPICIOUS_RECIPS(1.50)[]
+X-Spam-Flag: NO
 
-On Mon, Oct 23, 2023 at 11:14:04AM -0700, Tony Luck wrote:
-> I want to track whether each bank is in storm mode, or not. But there's
-> no indication when a CMCI is delivered which bank was the source. Code
-> just has to scan all the banks, and might find more than one with an
-> error. While no bank is in polling mode, there isn't a set time interval
-> between scanning banks.
-
-Well, if no bank is in *storm* polling mode - I presume you mean that
-when you say "polling mode" - then we have the default polling interval
-of machine_check_poll() of INITIAL_CHECK_INTERVAL, i.e., 5 mins, I'd
-say.
-
-> A scan is just triggered when a CMCI happens. So it's non-trivial to
-> compute a rate. Would require saving a timestamp for every logged
-> error.
-
-So what I'm trying to establish first is, what our entry vectors into
-the storm code are.
-
-1. You can enter storm tracking when you poll normally. I.e.,
-   machine_check_poll() each 5 mins once.
-
-   mce_track_storm() tracks history only for MCI_STATUS_VAL=1b CEs, which
-   is what I was wondering. It is hidden a bit down in that function.
-
-2. As a result of a CMCI interrupt. That will call machine_check_poll()
-   too and go down the same path.
-
-So that flow should be called out in the commit message so that the big
-picture is clear - how we're doing that storm tracking.
-
-Now, what is protecting this against concurrent runs of
-machine_check_poll()? Imagine the timer fires and a CMCI happens at the
-same time and on the same core.
-
-> In a simple case there's just one bank responsible for a ton of CMCI.
-> No need for complexity here, the count of interrupts from that bank will
-> hit a threshold and a storm is declared.
-
-Right.
-
-> But more complex scenarois are possible. Other banks may trigger small
-> numbers of CMCI. Not enough to call it a storm.  Or multiple banks may
-> be screaming together.
+On 11/14/23 05:11, Kees Cook wrote:
+> On Mon, Nov 13, 2023 at 08:13:42PM +0100, Vlastimil Babka wrote:
+>> Remove CONFIG_SLAB, CONFIG_DEBUG_SLAB, CONFIG_SLAB_DEPRECATED and
+>> everything in Kconfig files and mm/Makefile that depends on those. Since
+>> SLUB is the only remaining allocator, remove the allocator choice, make
+>> CONFIG_SLUB a "def_bool y" for now and remove all explicit dependencies
+>> on SLUB as it's now always enabled.
+>> 
+>> Everything under #ifdef CONFIG_SLAB, and mm/slab.c is now dead code, all
+>> code under #ifdef CONFIG_SLUB is now always compiled.
+>> 
+>> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+>> [...]
+>> diff --git a/mm/Kconfig b/mm/Kconfig
+>> index 89971a894b60..766aa8f8e553 100644
+>> --- a/mm/Kconfig
+>> +++ b/mm/Kconfig
+>> @@ -228,47 +228,12 @@ config ZSMALLOC_CHAIN_SIZE
+>>  
+>>  menu "SLAB allocator options"
 > 
-> By tracking both the hits and misses in each bank, I end up with a
-> bitmap history for the past 64 polls. If there are enough "1" bits in
-> that bitmap to meet the threshold, then declare a storm for that
-> bank.
+> Should this be "Slab allocator options" ? (I've always understood
+> "slab" to mean the general idea, and "SLAB" to mean the particular
+> implementation.
 
-Yap, I only want to be crystal clear on the flow and the entry points.
+Good point, will change
 
-> I need to stare at this again to refresh my memory of what's going on
-> here. This code may need pulling apart into a routine that is used for
-> systems with no CMCI (or have CMCI disabled). Then the whole "divide the
-> poll interval by two" when you see an error and double the interval
-> when you don't see an error makes sense.
+> Regardless:
 > 
-> For systems with CMCI ... I think just polling a one second interval
-> until the storm is over makes sense.
+> Reviewed-by: Kees Cook <keescook@chromium.org>
 
-Ok.
+Thanks!
 
-> These are only used in threshold.c now. What's the point of them
-> being in internal.h. That's for defintiones shared by multiple
-> mcs/*.c files. Isn't it? But will move there if you still want this.
-
-Structs hidden in .c files looks weird but ok.
-
-> Ideally the new CPU would inherit the precise state of the previous
-> owner of this bank. But there's no easy way to track that as the bank
-> is abanoned by the CPU going offline, and there is a free-for-all with
-> remaining CPUs racing to claim ownership. It is known that this bank
-> was in storm mode (because the threshold in the CTL2 bank register is
-> set to CMCI_STORM_THRESHOLD).
-> 
-> I went with "worst case" to make sure the new CPU didn't prematurely
-> declare an end to the storm.
-> 
-> I'll add a comment in mce_inherit_storm() to explain this.
-
-Yap, exactly.
-
-> Like this?
-> 
-> #define NUM_HISTORY_BITS (sizeof(u64) * BITS_PER_BYTE)
-> 
-> 	if (shift < NUM_HISTORY_BITS)
-
-Yap.
-
-Thx.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
