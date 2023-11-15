@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2BB3A8F3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303053A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NwupepUm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531A9C433C8;
-	Wed, 15 Nov 2023 19:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BcRQ6RTF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE9AC433C8;
+	Wed, 15 Nov 2023 19:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077727;
-	bh=wDlPVCN1mJ3XXeWobj9QPOgRhmEEMA4IkogUe7L3Wdg=;
+	s=korg; t=1700077729;
+	bh=1JFlgi9U8gs70iDNsYG+NG2bt3isV0t7/lLJutKWdlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NwupepUmOuOeby+j/GukkM0WSrifDC3eRqcLbe90WuKP9RWJlUdg6KehcuA9QKik9
-	 HX8cpeuM3JAnVdlnzGriV99fooebf/0sOpwHdHQWLYXJfO5emKAsVGQIT95B23HDIE
-	 Q/fprLTGNlAhnx2RWkU3v3uBw1MeMZ9Ia26P4iv8=
+	b=BcRQ6RTFhiR4/9R1TAQpVwugNC+zIls157MBVvPl2l5w4ZJF/T8qaZx7n6F4jtvpr
+	 0ulV3gLSGGRksdmYMowWpQ3VWsC/uaHlVzlmmArCy1pufsAeMo824wc4CicYyZUT2r
+	 bqIi0bVAg006Q9oDJX/Y+8JOu/ER3iYItbWrqGrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -24,9 +24,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Perry Taylor <perry.taylor@intel.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 482/603] perf vendor events intel: Fix broadwellde tma_info_system_dram_bw_use metric
-Date: Wed, 15 Nov 2023 14:17:07 -0500
-Message-ID: <20231115191645.742203059@linuxfoundation.org>
+Subject: [PATCH 6.6 483/603] perf vendor events intel: Add broadwellde two metrics
+Date: Wed, 15 Nov 2023 14:17:08 -0500
+Message-ID: <20231115191645.802273698@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -47,41 +47,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 3779416eed25a843364b940decee452620a1de4b ]
+[ Upstream commit 19a214bffdf7abb8d472895bb944d9c269ab1699 ]
 
-Broadwell-de has a consumer core and server uncore. The uncore_arb PMU
-isn't present and the broadwellx style cbox PMU should be used
-instead. Fix the tma_info_system_dram_bw_use metric to use the server
-metric rather than client.
+Add tma_info_system_socket_clks and uncore_freq metrics that require a
+broadwellx style uncore event for UNC_CLOCK.
 
 The associated converter script fix is in:
-https://github.com/intel/perfmon/pull/111
+https://github.com/intel/perfmon/pull/112
 
 Fixes: 7d124303d620 ("perf vendor events intel: Update broadwell variant events/metrics")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
 Cc: Caleb Biggers <caleb.biggers@intel.com>
 Cc: Perry Taylor <perry.taylor@intel.com>
-Link: https://lore.kernel.org/r/20230926031034.1201145-1-irogers@google.com
+Link: https://lore.kernel.org/r/20230926205948.1399594-2-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/pmu-events/arch/x86/broadwellde/bdwde-metrics.json | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../arch/x86/broadwellde/bdwde-metrics.json          | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/tools/perf/pmu-events/arch/x86/broadwellde/bdwde-metrics.json b/tools/perf/pmu-events/arch/x86/broadwellde/bdwde-metrics.json
-index 8fc62b8f667d8..d0ef46c9bb612 100644
+index d0ef46c9bb612..e1f55fcfa0d02 100644
 --- a/tools/perf/pmu-events/arch/x86/broadwellde/bdwde-metrics.json
 +++ b/tools/perf/pmu-events/arch/x86/broadwellde/bdwde-metrics.json
-@@ -652,7 +652,7 @@
+@@ -48,6 +48,12 @@
+         "MetricName": "C7_Pkg_Residency",
+         "ScaleUnit": "100%"
      },
++    {
++        "BriefDescription": "Uncore frequency per die [GHZ]",
++        "MetricExpr": "tma_info_system_socket_clks / #num_dies / duration_time / 1e9",
++        "MetricGroup": "SoC",
++        "MetricName": "UNCORE_FREQ"
++    },
      {
-         "BriefDescription": "Average external Memory Bandwidth Use for reads and writes [GB / sec]",
--        "MetricExpr": "64 * (arb@event\\=0x81\\,umask\\=0x1@ + arb@event\\=0x84\\,umask\\=0x1@) / 1e6 / duration_time / 1e3",
-+        "MetricExpr": "64 * (UNC_M_CAS_COUNT.RD + UNC_M_CAS_COUNT.WR) / 1e9 / duration_time",
-         "MetricGroup": "HPC;Mem;MemoryBW;SoC;tma_issueBW",
-         "MetricName": "tma_info_system_dram_bw_use",
-         "PublicDescription": "Average external Memory Bandwidth Use for reads and writes [GB / sec]. Related metrics: tma_fb_full, tma_mem_bandwidth, tma_sq_full"
+         "BriefDescription": "Percentage of cycles spent in System Management Interrupts.",
+         "MetricExpr": "((msr@aperf@ - cycles) / msr@aperf@ if msr@smi@ > 0 else 0)",
+@@ -690,6 +696,12 @@
+         "MetricGroup": "SMT",
+         "MetricName": "tma_info_system_smt_2t_utilization"
+     },
++    {
++        "BriefDescription": "Socket actual clocks when any core is active on that socket",
++        "MetricExpr": "cbox_0@event\\=0x0@",
++        "MetricGroup": "SoC",
++        "MetricName": "tma_info_system_socket_clks"
++    },
+     {
+         "BriefDescription": "Average Frequency Utilization relative nominal frequency",
+         "MetricExpr": "tma_info_thread_clks / CPU_CLK_UNHALTED.REF_TSC",
 -- 
 2.42.0
 
