@@ -1,30 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DAE433BB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF3B433BB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebkO9sdW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE48C433C7;
-	Wed, 15 Nov 2023 19:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbzjlFqw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70CDC433C9;
+	Wed, 15 Nov 2023 19:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077028;
-	bh=WOB+ABOdtCHTuqRZorG8gPWjaakEWCBl/qDIJ+Rwig8=;
+	s=korg; t=1700077030;
+	bh=8WCY70F3977xVx8b0fBSj7eMqoILcdmhjzOrrZkytSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ebkO9sdWXGoMovMBJ9RX1PNLv/bwsSx7V3v6C6roqjb9D3WpeqtkDZ744nuUqZwM4
-	 BEV4qAj71TGCWrv/8Oq0yI4g+fDVLVs3kXonqxU0YklIK/BJvKWCUwP9Ub90WwY0cd
-	 RKXjtc+di4ocJe27E/PXJnFRQU5dzkrINk8sVq0s=
+	b=WbzjlFqwf/JJUqUGKTPr5iZL2k7ctMhW+nvl2MNQ9PuPupwPdEyyQtVd6LgPu8RRh
+	 esWUfVA7ShYIWl8RLQRQuNA0sq7GrVKn/90R6HGl6rFofneM/XJ81TmzUP/pH/SW5l
+	 gRJwAbGNmcJNyEK4JDOKGJVb+VdpkQWBFs0PUIfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Pratyush Yadav <p.yadav@ti.com>,
+	Julien Massot <julien.massot@collabora.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Jai Luthra <j-luthra@ti.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 497/550] watchdog: ixp4xx: Make sure restart always works
-Date: Wed, 15 Nov 2023 14:18:01 -0500
-Message-ID: <20231115191635.369389555@linuxfoundation.org>
+Subject: [PATCH 6.5 484/550] media: cadence: csi2rx: Unregister v4l2 async notifier
+Date: Wed, 15 Nov 2023 14:17:48 -0500
+Message-ID: <20231115191634.413083836@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,86 +48,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Pratyush Yadav <p.yadav@ti.com>
 
-[ Upstream commit b4075ecfe348a44209534c75ad72392c63a489a6 ]
+[ Upstream commit b2701715301a49b53d05c7d43f3fedc3b8743bfc ]
 
-The IXP4xx watchdog in early "A0" silicon is unreliable and
-cannot be registered, however for some systems such as the
-USRobotics USR8200 the watchdog is the only restart option,
-so implement a "dummy" watchdog that can only support restart
-in this case.
+The notifier is added to the global notifier list when registered. When
+the module is removed, the struct csi2rx_priv in which the notifier is
+embedded, is destroyed. As a result the notifier list has a reference to
+a notifier that no longer exists. This causes invalid memory accesses
+when the list is iterated over. Similar for when the probe fails.
+Unregister and clean up the notifier to avoid this.
 
-Fixes: 1aea522809e6 ("watchdog: ixp4xx: Implement restart")
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230926-ixp4xx-wdt-restart-v2-1-15cf4639b423@linaro.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 1fc3b37f34f6 ("media: v4l: cadence: Add Cadence MIPI-CSI2 RX driver")
+
+Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
+Tested-by: Julien Massot <julien.massot@collabora.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/ixp4xx_wdt.c | 28 +++++++++++++++++++++++++---
- 1 file changed, 25 insertions(+), 3 deletions(-)
+ drivers/media/platform/cadence/cdns-csi2rx.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/ixp4xx_wdt.c b/drivers/watchdog/ixp4xx_wdt.c
-index 607ce4b8df574..ec0c08652ec2f 100644
---- a/drivers/watchdog/ixp4xx_wdt.c
-+++ b/drivers/watchdog/ixp4xx_wdt.c
-@@ -105,6 +105,25 @@ static const struct watchdog_ops ixp4xx_wdt_ops = {
- 	.owner = THIS_MODULE,
- };
+diff --git a/drivers/media/platform/cadence/cdns-csi2rx.c b/drivers/media/platform/cadence/cdns-csi2rx.c
+index 9755d1c8ceb9b..ee31c89eb2153 100644
+--- a/drivers/media/platform/cadence/cdns-csi2rx.c
++++ b/drivers/media/platform/cadence/cdns-csi2rx.c
+@@ -404,8 +404,10 @@ static int csi2rx_parse_dt(struct csi2rx_priv *csi2rx)
+ 	asd = v4l2_async_nf_add_fwnode_remote(&csi2rx->notifier, fwh,
+ 					      struct v4l2_async_subdev);
+ 	of_node_put(ep);
+-	if (IS_ERR(asd))
++	if (IS_ERR(asd)) {
++		v4l2_async_nf_cleanup(&csi2rx->notifier);
+ 		return PTR_ERR(asd);
++	}
  
-+/*
-+ * The A0 version of the IXP422 had a bug in the watchdog making
-+ * is useless, but we still need to use it to restart the system
-+ * as it is the only way, so in this special case we register a
-+ * "dummy" watchdog that doesn't really work, but will support
-+ * the restart operation.
-+ */
-+static int ixp4xx_wdt_dummy(struct watchdog_device *wdd)
-+{
-+	return 0;
-+}
-+
-+static const struct watchdog_ops ixp4xx_wdt_restart_only_ops = {
-+	.start = ixp4xx_wdt_dummy,
-+	.stop = ixp4xx_wdt_dummy,
-+	.restart = ixp4xx_wdt_restart,
-+	.owner = THIS_MODULE,
-+};
-+
- static const struct watchdog_info ixp4xx_wdt_info = {
- 	.options = WDIOF_KEEPALIVEPING
- 		| WDIOF_MAGICCLOSE
-@@ -114,14 +133,17 @@ static const struct watchdog_info ixp4xx_wdt_info = {
+ 	csi2rx->notifier.ops = &csi2rx_notifier_ops;
  
- static int ixp4xx_wdt_probe(struct platform_device *pdev)
+@@ -467,6 +469,7 @@ static int csi2rx_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ err_cleanup:
++	v4l2_async_nf_unregister(&csi2rx->notifier);
+ 	v4l2_async_nf_cleanup(&csi2rx->notifier);
+ err_free_priv:
+ 	kfree(csi2rx);
+@@ -477,6 +480,8 @@ static void csi2rx_remove(struct platform_device *pdev)
  {
-+	static const struct watchdog_ops *iwdt_ops;
- 	struct device *dev = &pdev->dev;
- 	struct ixp4xx_wdt *iwdt;
- 	struct clk *clk;
- 	int ret;
+ 	struct csi2rx_priv *csi2rx = platform_get_drvdata(pdev);
  
- 	if (!(read_cpuid_id() & 0xf) && !cpu_is_ixp46x()) {
--		dev_err(dev, "Rev. A0 IXP42x CPU detected - watchdog disabled\n");
--		return -ENODEV;
-+		dev_info(dev, "Rev. A0 IXP42x CPU detected - only restart supported\n");
-+		iwdt_ops = &ixp4xx_wdt_restart_only_ops;
-+	} else {
-+		iwdt_ops = &ixp4xx_wdt_ops;
- 	}
- 
- 	iwdt = devm_kzalloc(dev, sizeof(*iwdt), GFP_KERNEL);
-@@ -141,7 +163,7 @@ static int ixp4xx_wdt_probe(struct platform_device *pdev)
- 		iwdt->rate = IXP4XX_TIMER_FREQ;
- 
- 	iwdt->wdd.info = &ixp4xx_wdt_info;
--	iwdt->wdd.ops = &ixp4xx_wdt_ops;
-+	iwdt->wdd.ops = iwdt_ops;
- 	iwdt->wdd.min_timeout = 1;
- 	iwdt->wdd.max_timeout = U32_MAX / iwdt->rate;
- 	iwdt->wdd.parent = dev;
++	v4l2_async_nf_unregister(&csi2rx->notifier);
++	v4l2_async_nf_cleanup(&csi2rx->notifier);
+ 	v4l2_async_unregister_subdev(&csi2rx->subdev);
+ 	kfree(csi2rx);
+ }
 -- 
 2.42.0
 
