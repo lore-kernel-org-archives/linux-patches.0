@@ -1,54 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A253A8C9
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DC4381DC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziWVDoB6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7AAC433C7;
-	Wed, 15 Nov 2023 19:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQAxprl/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205E8C433C8;
+	Wed, 15 Nov 2023 19:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076930;
-	bh=tKEim86aqgEdwBSAhmQWs3Ht/ttN53xmLmi4QgCA4r0=;
+	s=korg; t=1700076932;
+	bh=UPmgo+O8kX//RCtw7MPyPO3jy3cxSXOCslIX6sm/OT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ziWVDoB6vYVMydD2gTJRheeK47TOcPcTHDWLyMVHfZjbJMYN0R+8vNRMC3FT1zwtk
-	 2FnpXANNlyFXrgg+67eB8UlTbstsuaRhG5GQWyexSSyWcNPhxN7ULUyQFZCFF0Z6QZ
-	 g9LsaXadLMVQqUvcRIIrgWJcXyGCSOIpwASql2OU=
+	b=LQAxprl/aw5RV/+sUhVlTYoCNGb7dFMxr+W5ftHl0izNN1laHJdxwpPtAigGSxQfb
+	 C8UzIlJQ7odAqz0wdiyqmdbGDYf94f06mqFdHl3U9pkzng80xgJ0CBiChqXqPp/e9k
+	 M8jRJsASXmnEonwhge6HAzEKS/UzZTXf7EOW/Hko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	German Gomez <german.gomez@arm.com>,
-	James Clark <james.clark@arm.com>,
-	Nick Terrell <terrelln@fb.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Changbin Du <changbin.du@huawei.com>,
-	liuwenyu <liuwenyu7@huawei.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Yanteng Si <siyanteng@loongson.cn>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 444/550] perf hist: Add missing puts to hist__account_cycles
-Date: Wed, 15 Nov 2023 14:17:08 -0500
-Message-ID: <20231115191631.583261435@linuxfoundation.org>
+Subject: [PATCH 6.6 068/603] tls: Use size_add() in call to struct_size()
+Date: Wed, 15 Nov 2023 14:10:13 -0500
+Message-ID: <20231115191617.832388703@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -60,83 +39,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit c1149037f65bcf0334886180ebe3d5efcf214912 ]
+[ Upstream commit a2713257ee2be22827d7bc248302d408c91bfb95 ]
 
-Caught using reference count checking on perf top with
-"--call-graph=lbr". After this no memory leaks were detected.
+If, for any reason, the open-coded arithmetic causes a wraparound,
+the protection that `struct_size()` adds against potential integer
+overflows is defeated. Fix this by hardening call to `struct_size()`
+with `size_add()`.
 
-Fixes: 57849998e2cd ("perf report: Add processing for cycle histograms")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Sandipan Das <sandipan.das@amd.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: German Gomez <german.gomez@arm.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Nick Terrell <terrelln@fb.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Changbin Du <changbin.du@huawei.com>
-Cc: liuwenyu <liuwenyu7@huawei.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Yanteng Si <siyanteng@loongson.cn>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20231024222353.3024098-6-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: b89fec54fd61 ("tls: rx: wrap decrypt params in a struct")
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hist.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/tls/tls_sw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/hist.c b/tools/perf/util/hist.c
-index 3dc8a4968beb9..ac8c0ef48a7f3 100644
---- a/tools/perf/util/hist.c
-+++ b/tools/perf/util/hist.c
-@@ -2676,8 +2676,6 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
- 
- 	/* If we have branch cycles always annotate them. */
- 	if (bs && bs->nr && entries[0].flags.cycles) {
--		int i;
--
- 		bi = sample__resolve_bstack(sample, al);
- 		if (bi) {
- 			struct addr_map_symbol *prev = NULL;
-@@ -2692,7 +2690,7 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
- 			 * Note that perf stores branches reversed from
- 			 * program order!
- 			 */
--			for (i = bs->nr - 1; i >= 0; i--) {
-+			for (int i = bs->nr - 1; i >= 0; i--) {
- 				addr_map_symbol__account_cycles(&bi[i].from,
- 					nonany_branch_mode ? NULL : prev,
- 					bi[i].flags.cycles);
-@@ -2701,6 +2699,12 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
- 				if (total_cycles)
- 					*total_cycles += bi[i].flags.cycles;
- 			}
-+			for (unsigned int i = 0; i < bs->nr; i++) {
-+				map__put(bi[i].to.ms.map);
-+				maps__put(bi[i].to.ms.maps);
-+				map__put(bi[i].from.ms.map);
-+				maps__put(bi[i].from.ms.maps);
-+			}
- 			free(bi);
- 		}
- 	}
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index e9d1e83a859d1..9634dfd636fd6 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1491,7 +1491,7 @@ static int tls_decrypt_sg(struct sock *sk, struct iov_iter *out_iov,
+ 	 */
+ 	aead_size = sizeof(*aead_req) + crypto_aead_reqsize(ctx->aead_recv);
+ 	aead_size = ALIGN(aead_size, __alignof__(*dctx));
+-	mem = kmalloc(aead_size + struct_size(dctx, sg, n_sgin + n_sgout),
++	mem = kmalloc(aead_size + struct_size(dctx, sg, size_add(n_sgin, n_sgout)),
+ 		      sk->sk_allocation);
+ 	if (!mem) {
+ 		err = -ENOMEM;
 -- 
 2.42.0
 
