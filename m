@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F7E3BB42
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532833BB23
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i8NRY7dk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B0AC433C8;
-	Wed, 15 Nov 2023 19:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8K/oIBv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03EA9C433CA;
+	Wed, 15 Nov 2023 19:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077473;
-	bh=c34dXg2xMoEloNJ9iCXkCcpeAIKRgJ+HQv2qzG/FP/Q=;
+	s=korg; t=1700077475;
+	bh=nuXPUKF1RZ/qIUhC4NWXIp8Lac7TPkPNMrB9JfP0qxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i8NRY7dkfBXnXNmDatZBA6qoujqfh7y+9SL14zCx6IbhSgl29prG9lcQyxE8izHZK
-	 38grLfNCATlbCePA7ACsrh/nbm8qXXm9NUdEubqPCa8vJQNbQwErG9X+O7NBgUYfba
-	 D1u4YjnpCn5yOfo7s/TqZniT9EXXg+l0GhEhXUmA=
+	b=q8K/oIBv9tVeKHhu4Rx7PU+x6pvdx3RFTLWT3lrv0kkZ50HN6DzTParzXFMBwCvGz
+	 OsoG4Jzu7/wi2Um7MroBCg/yLxzksqwaXAzfGK6yAcg5xiMJA+5Vof+7so05wbfE2x
+	 12clozoiOdP5je+rfYeBLkyu49YkTbRrYdCzOfM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Rae Moar <rmoar@google.com>,
-	David Gow <davidgow@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 299/603] kunit: Fix missed memory release in kunit_free_suite_set()
-Date: Wed, 15 Nov 2023 14:14:04 -0500
-Message-ID: <20231115191634.080921441@linuxfoundation.org>
+Subject: [PATCH 6.6 290/603] arm64: dts: qcom: sdx75-idp: align RPMh regulator nodes with bindings
+Date: Wed, 15 Nov 2023 14:13:55 -0500
+Message-ID: <20231115191633.455621754@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,66 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit a6074cf0126b0bee51ab77a15930dc24a4d5db90 ]
+[ Upstream commit 815ea491460766dbd4b39a3c9904b44b5880c41c ]
 
-modprobe cpumask_kunit and rmmod cpumask_kunit, kmemleak detect
-a suspected memory leak as below.
+Device node names should be generic and bindings expect certain pattern
+for RPMh regulator nodes:
 
-If kunit_filter_suites() in kunit_module_init() succeeds, the
-suite_set.start will not be NULL and the kunit_free_suite_set() in
-kunit_module_exit() should free all the memory which has not
-been freed. However the test_cases in suites is left out.
+  sdx75-idp.dtb: rsc@17a00000: 'pmx75-rpmh-regulators' does not match any of the regexes: '^regulators(-[0-9])?$', 'pinctrl-[0-9]+'
 
-unreferenced object 0xffff54ac47e83200 (size 512):
-  comm "modprobe", pid 592, jiffies 4294913238 (age 1367.612s)
-  hex dump (first 32 bytes):
-    84 13 1a f0 d3 b6 ff ff 30 68 1a f0 d3 b6 ff ff  ........0h......
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<000000008dec63a2>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000ec280d8e>] __kmem_cache_alloc_node+0x174/0x290
-    [<00000000896c7740>] __kmalloc+0x60/0x2c0
-    [<000000007a50fa06>] kunit_filter_suites+0x254/0x5b8
-    [<0000000078cc98e2>] kunit_module_notify+0xf4/0x240
-    [<0000000033cea952>] notifier_call_chain+0x98/0x17c
-    [<00000000973d05cc>] notifier_call_chain_robust+0x4c/0xa4
-    [<000000005f95895f>] blocking_notifier_call_chain_robust+0x4c/0x74
-    [<0000000048e36fa7>] load_module+0x1a2c/0x1c40
-    [<0000000004eb8a91>] init_module_from_file+0x94/0xcc
-    [<0000000037dbba28>] idempotent_init_module+0x184/0x278
-    [<00000000161b75cb>] __arm64_sys_finit_module+0x68/0xa8
-    [<000000006dc1669b>] invoke_syscall+0x44/0x100
-    [<00000000fa87e304>] el0_svc_common.constprop.1+0x68/0xe0
-    [<000000009d8ad866>] do_el0_svc+0x1c/0x28
-    [<000000005b83c607>] el0_svc+0x3c/0xc4
-
-Fixes: a127b154a8f2 ("kunit: tool: allow filtering test cases via glob")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Rae Moar <rmoar@google.com>
-Reviewed-by: David Gow <davidgow@google.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 8a2dc39d1043 ("arm64: dts: qcom: sdx75-idp: Add regulator nodes")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230905163103.257412-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kunit/executor.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdx75-idp.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/kunit/executor.c b/lib/kunit/executor.c
-index a6348489d45fe..a037a46fae5ea 100644
---- a/lib/kunit/executor.c
-+++ b/lib/kunit/executor.c
-@@ -137,8 +137,10 @@ void kunit_free_suite_set(struct kunit_suite_set suite_set)
- {
- 	struct kunit_suite * const *suites;
+diff --git a/arch/arm64/boot/dts/qcom/sdx75-idp.dts b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
+index 10d15871f2c48..a14e0650c4a8a 100644
+--- a/arch/arm64/boot/dts/qcom/sdx75-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
+@@ -44,7 +44,7 @@ vreg_bob_3p3: pmx75-bob {
+ };
  
--	for (suites = suite_set.start; suites < suite_set.end; suites++)
-+	for (suites = suite_set.start; suites < suite_set.end; suites++) {
-+		kfree((*suites)->test_cases);
- 		kfree(*suites);
-+	}
- 	kfree(suite_set.start);
- }
+ &apps_rsc {
+-	pmx75-rpmh-regulators {
++	regulators-0 {
+ 		compatible = "qcom,pmx75-rpmh-regulators";
+ 		qcom,pmic-id = "b";
  
 -- 
 2.42.0
