@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC24241238;
-	Wed, 15 Nov 2023 19:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8E3364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/lgWwOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A83C433C8;
-	Wed, 15 Nov 2023 19:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfjtFVUN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFA7C433CD;
+	Wed, 15 Nov 2023 19:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076744;
-	bh=1vggK7mVspav3/P3O1C5gNAMWQ7UNzapoocGa8Nq26s=;
+	s=korg; t=1700076746;
+	bh=mIBzetE4nSAUN8+AVWZI4Z/E8i3Avj4dGHLkRb9suzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/lgWwOXuKtdzXbkQ4+caO860LPyZ/FR/sZc9VLpx9vfO6sShbKd8xCybeBa+Q5tG
-	 VSuisKjRp7DKIeXHxWuWwervM/VJjndyYwAEYrP2Nf2JQ6Wk7J9il+hJJQ3gnK3vsH
-	 VYzB7fX3ZzI8O8ZkhHSoHXQWTOVeh3/DnffLgLy4=
+	b=XfjtFVUNQnp0IhgXlKLUf0hAcq/b6mDVCCscPZoxPdY7t9+U3w92YilXkiN4Tk3vC
+	 Gwr1sGLj8PY7spvYeH7XDg36/JhDijK88WP42OTaIZBhT9kB00aUbkWtJteqKH0Lln
+	 Z97dwxDBGFrOBmnn3fUC7gAHvFoJAPounG7l8O/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Kan Liang <kan.liang@linux.intel.com>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
-	bpf@vger.kernel.org,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Sandipan Das <sandipan.das@amd.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 389/550] perf parse-events: Remove ABORT_ON
-Date: Wed, 15 Nov 2023 14:16:13 -0500
-Message-ID: <20231115191627.807355002@linuxfoundation.org>
+Subject: [PATCH 6.5 380/550] perf kwork: Add the supported subcommands to the document
+Date: Wed, 15 Nov 2023 14:16:04 -0500
+Message-ID: <20231115191627.178267405@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -52,79 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit 4c11adff675652759a0f0ad2194f4646b5463a42 ]
+[ Upstream commit 76e0d8c821bbd952730799cc7af841f9de67b7f7 ]
 
-Prefer informative messages rather than none with ABORT_ON. Document
-one failure mode and add an error message for another.
+Add missing report, latency and timehist subcommands to the document.
 
-Signed-off-by: Ian Rogers <irogers@google.com>
+Fixes: f98919ec4fccdacf ("perf kwork: Implement 'report' subcommand")
+Fixes: ad3d9f7a929ab2df ("perf kwork: Implement perf kwork latency")
+Fixes: bcc8b3e88d6fa1a3 ("perf kwork: Implement perf kwork timehist")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Kan Liang <kan.liang@linux.intel.com>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: bpf@vger.kernel.org
-Link: https://lore.kernel.org/r/20230627181030.95608-14-irogers@google.com
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Sandipan Das <sandipan.das@amd.com>
+Link: https://lore.kernel.org/r/20230812084917.169338-3-yangjihong1@huawei.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: ede72dca45b1 ("perf parse-events: Fix tracepoint name memory leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/parse-events.y | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ tools/perf/Documentation/perf-kwork.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/parse-events.y b/tools/perf/util/parse-events.y
-index 1393c39ebf330..24c9af561cf9d 100644
---- a/tools/perf/util/parse-events.y
-+++ b/tools/perf/util/parse-events.y
-@@ -22,12 +22,6 @@
+diff --git a/tools/perf/Documentation/perf-kwork.txt b/tools/perf/Documentation/perf-kwork.txt
+index 3c36324712b6e..482d6c52e2edf 100644
+--- a/tools/perf/Documentation/perf-kwork.txt
++++ b/tools/perf/Documentation/perf-kwork.txt
+@@ -8,7 +8,7 @@ perf-kwork - Tool to trace/measure kernel work properties (latencies)
+ SYNOPSIS
+ --------
+ [verse]
+-'perf kwork' {record}
++'perf kwork' {record|report|latency|timehist}
  
- void parse_events_error(YYLTYPE *loc, void *parse_state, void *scanner, char const *msg);
- 
--#define ABORT_ON(val) \
--do { \
--	if (val) \
--		YYABORT; \
--} while (0)
--
- #define PE_ABORT(val) \
- do { \
- 	if (val == -ENOMEM) \
-@@ -618,7 +612,9 @@ PE_RAW opt_event_config
- 		YYNOMEM;
- 	errno = 0;
- 	num = strtoull($1 + 1, NULL, 16);
--	ABORT_ON(errno);
-+	/* Given the lexer will only give [a-fA-F0-9]+ a failure here should be impossible. */
-+	if (errno)
-+		YYABORT;
- 	free($1);
- 	err = parse_events_add_numeric(_parse_state, list, PERF_TYPE_RAW, num, $2,
- 				       /*wildcard=*/false);
-@@ -978,7 +974,17 @@ PE_VALUE PE_ARRAY_RANGE PE_VALUE
- {
- 	struct parse_events_array array;
- 
--	ABORT_ON($3 < $1);
-+	if ($3 < $1) {
-+		struct parse_events_state *parse_state = _parse_state;
-+		struct parse_events_error *error = parse_state->error;
-+		char *err_str;
-+
-+		if (asprintf(&err_str, "Expected '%ld' to be less-than '%ld'", $3, $1) < 0)
-+			err_str = NULL;
-+
-+		parse_events_error__handle(error, @1.first_column, err_str, NULL);
-+		YYABORT;
-+	}
- 	array.nr_ranges = 1;
- 	array.ranges = malloc(sizeof(array.ranges[0]));
- 	if (!array.ranges)
+ DESCRIPTION
+ -----------
 -- 
 2.42.0
 
