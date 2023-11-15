@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5A4364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910FF4121C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nf9n5K1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99546C433C7;
-	Wed, 15 Nov 2023 19:33:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTJaP/vQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405A6C433C8;
+	Wed, 15 Nov 2023 19:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076830;
-	bh=WOk78VvdMoN96dfhr1QCkhx0QZwx4fzD3AyiIKnvjqg=;
+	s=korg; t=1700076832;
+	bh=flthnTuqjZNSdrxAFgHu9HGxUz6t2KEWLGTcz4QosI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nf9n5K1SUZ24wMnwnHIoewZmvvO8LaU7BHGHjBgPLZyVAkOmSAtSLkV0TGuFOkK31
-	 ytkbQtns7PDZBnIVOxHYjdGv+nuz2GzdnsIIQCGzob65Zp5CWOCZtcUCrt1NN5B/EU
-	 m6Rdahqa4cThJeW4SpBN+9mzuvwOThy2iDSuBFcU=
+	b=MTJaP/vQaPqwcHikLEjV0TIkljKgXjFJrE2K1qOfp44K4fKPMfKtXL6rmoMuszBnW
+	 E4LpnVDo+4yajgSky9BYQJDAGhYcQTZoU+9hjGrxEB80JAebTW9OzjDqHAhFMenngm
+	 QvgZgotSWTlKDz5s74kp30LFxYuWx6iaOkVlDXVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haren Myneni <haren@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 436/550] powerpc/vas: Limit open window failure messages in log bufffer
-Date: Wed, 15 Nov 2023 14:17:00 -0500
-Message-ID: <20231115191630.997009553@linuxfoundation.org>
+Subject: [PATCH 6.6 040/603] wifi: mac80211: move offchannel works to wiphy work
+Date: Wed, 15 Nov 2023 14:09:45 -0500
+Message-ID: <20231115191615.923147202@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,193 +37,201 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haren Myneni <haren@linux.ibm.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 73b25505ce043b561028e5571d84dc82aa53c2b4 ]
+[ Upstream commit 97c19e42b264e6b71a9ff9deea04c19f621805b9 ]
 
-The VAS open window call prints error message and returns -EBUSY
-after the migration suspend event initiated and until the resume
-event completed on the destination system. It can cause the log
-buffer filled with these error messages if the user space issues
-continuous open window calls.  Similar case even for DLPAR CPU
-remove event when no credits are available until the credits are
-freed or with the other DLPAR CPU add event.
+Make the offchannel works wiphy works to have the
+wiphy locked for executing them.
 
-So changes in the patch to use pr_err_ratelimited() instead of
-pr_err() to display open window failure and not-available credits
-error messages.
-
-Use pr_fmt() and make the corresponding changes to have the
-consistencein prefix all pr_*() messages (vas-api.c).
-
-Fixes: 37e6764895ef ("powerpc/pseries/vas: Add VAS migration handler")
-Signed-off-by: Haren Myneni <haren@linux.ibm.com>
-[mpe: Use "vas-api" as the prefix to match the file name.]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231019215033.1335251-1-haren@linux.ibm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: eadfb54756ae ("wifi: mac80211: move sched-scan stop work to wiphy work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/book3s/vas-api.c | 34 ++++++++++++-------------
- arch/powerpc/platforms/pseries/vas.c    |  4 +--
- 2 files changed, 18 insertions(+), 20 deletions(-)
+ net/mac80211/ieee80211_i.h |  4 ++--
+ net/mac80211/main.c        |  6 +++---
+ net/mac80211/offchannel.c  | 36 ++++++++++++++++++------------------
+ 3 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/arch/powerpc/platforms/book3s/vas-api.c b/arch/powerpc/platforms/book3s/vas-api.c
-index 77ea9335fd049..f381b177ea06a 100644
---- a/arch/powerpc/platforms/book3s/vas-api.c
-+++ b/arch/powerpc/platforms/book3s/vas-api.c
-@@ -4,6 +4,8 @@
-  * Copyright (C) 2019 Haren Myneni, IBM Corp
-  */
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index 4e98e03e5de64..5321f75d0c6f3 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -1583,9 +1583,9 @@ struct ieee80211_local {
+ 	/*
+ 	 * Remain-on-channel support
+ 	 */
+-	struct delayed_work roc_work;
++	struct wiphy_delayed_work roc_work;
+ 	struct list_head roc_list;
+-	struct work_struct hw_roc_start, hw_roc_done;
++	struct wiphy_work hw_roc_start, hw_roc_done;
+ 	unsigned long hw_roc_start_time;
+ 	u64 roc_cookie_counter;
  
-+#define pr_fmt(fmt)	"vas-api: " fmt
-+
- #include <linux/kernel.h>
- #include <linux/device.h>
- #include <linux/cdev.h>
-@@ -78,7 +80,7 @@ int get_vas_user_win_ref(struct vas_user_win_ref *task_ref)
- 	task_ref->mm = get_task_mm(current);
- 	if (!task_ref->mm) {
- 		put_pid(task_ref->pid);
--		pr_err("VAS: pid(%d): mm_struct is not found\n",
-+		pr_err("pid(%d): mm_struct is not found\n",
- 				current->pid);
- 		return -EPERM;
- 	}
-@@ -235,8 +237,7 @@ void vas_update_csb(struct coprocessor_request_block *crb,
- 	rc = kill_pid_info(SIGSEGV, &info, pid);
- 	rcu_read_unlock();
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index adb8637a37445..f1cbb7c5d4ac3 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -376,8 +376,8 @@ static void ieee80211_restart_work(struct work_struct *work)
+ 	ieee80211_scan_cancel(local);
  
--	pr_devel("%s(): pid %d kill_proc_info() rc %d\n", __func__,
--			pid_vnr(pid), rc);
-+	pr_devel("pid %d kill_proc_info() rc %d\n", pid_vnr(pid), rc);
+ 	/* make sure any new ROC will consider local->in_reconfig */
+-	flush_delayed_work(&local->roc_work);
+-	flush_work(&local->hw_roc_done);
++	wiphy_delayed_work_flush(local->hw.wiphy, &local->roc_work);
++	wiphy_work_flush(local->hw.wiphy, &local->hw_roc_done);
+ 
+ 	/* wait for all packet processing to be done */
+ 	synchronize_net();
+@@ -1480,11 +1480,11 @@ void ieee80211_unregister_hw(struct ieee80211_hw *hw)
+ 	ieee80211_remove_interfaces(local);
+ 
+ 	wiphy_lock(local->hw.wiphy);
++	wiphy_delayed_work_cancel(local->hw.wiphy, &local->roc_work);
+ 	wiphy_work_cancel(local->hw.wiphy, &local->radar_detected_work);
+ 	wiphy_unlock(local->hw.wiphy);
+ 	rtnl_unlock();
+ 
+-	cancel_delayed_work_sync(&local->roc_work);
+ 	cancel_work_sync(&local->restart_work);
+ 	cancel_work_sync(&local->reconfig_filter);
+ 	flush_work(&local->sched_scan_stopped_work);
+diff --git a/net/mac80211/offchannel.c b/net/mac80211/offchannel.c
+index cdf991e74ab99..5bedd9cef414d 100644
+--- a/net/mac80211/offchannel.c
++++ b/net/mac80211/offchannel.c
+@@ -230,7 +230,7 @@ static bool ieee80211_recalc_sw_work(struct ieee80211_local *local,
+ 	if (dur == LONG_MAX)
+ 		return false;
+ 
+-	mod_delayed_work(local->workqueue, &local->roc_work, dur);
++	wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work, dur);
+ 	return true;
  }
  
- void vas_dump_crb(struct coprocessor_request_block *crb)
-@@ -294,7 +295,7 @@ static int coproc_ioc_tx_win_open(struct file *fp, unsigned long arg)
+@@ -258,7 +258,7 @@ static void ieee80211_handle_roc_started(struct ieee80211_roc_work *roc,
+ 	roc->notified = true;
+ }
  
- 	rc = copy_from_user(&uattr, uptr, sizeof(uattr));
- 	if (rc) {
--		pr_err("%s(): copy_from_user() returns %d\n", __func__, rc);
-+		pr_err("copy_from_user() returns %d\n", rc);
- 		return -EFAULT;
+-static void ieee80211_hw_roc_start(struct work_struct *work)
++static void ieee80211_hw_roc_start(struct wiphy *wiphy, struct wiphy_work *work)
+ {
+ 	struct ieee80211_local *local =
+ 		container_of(work, struct ieee80211_local, hw_roc_start);
+@@ -285,7 +285,7 @@ void ieee80211_ready_on_channel(struct ieee80211_hw *hw)
+ 
+ 	trace_api_ready_on_channel(local);
+ 
+-	ieee80211_queue_work(hw, &local->hw_roc_start);
++	wiphy_work_queue(hw->wiphy, &local->hw_roc_start);
+ }
+ EXPORT_SYMBOL_GPL(ieee80211_ready_on_channel);
+ 
+@@ -338,7 +338,7 @@ static void _ieee80211_start_next_roc(struct ieee80211_local *local)
+ 				tmp->started = true;
+ 				tmp->abort = true;
+ 			}
+-			ieee80211_queue_work(&local->hw, &local->hw_roc_done);
++			wiphy_work_queue(local->hw.wiphy, &local->hw_roc_done);
+ 			return;
+ 		}
+ 
+@@ -368,8 +368,8 @@ static void _ieee80211_start_next_roc(struct ieee80211_local *local)
+ 			ieee80211_hw_config(local, 0);
+ 		}
+ 
+-		ieee80211_queue_delayed_work(&local->hw, &local->roc_work,
+-					     msecs_to_jiffies(min_dur));
++		wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work,
++					 msecs_to_jiffies(min_dur));
+ 
+ 		/* tell userspace or send frame(s) */
+ 		list_for_each_entry(tmp, &local->roc_list, list) {
+@@ -407,8 +407,8 @@ void ieee80211_start_next_roc(struct ieee80211_local *local)
+ 		_ieee80211_start_next_roc(local);
+ 	} else {
+ 		/* delay it a bit */
+-		ieee80211_queue_delayed_work(&local->hw, &local->roc_work,
+-					     round_jiffies_relative(HZ/2));
++		wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work,
++					 round_jiffies_relative(HZ / 2));
+ 	}
+ }
+ 
+@@ -451,7 +451,7 @@ static void __ieee80211_roc_work(struct ieee80211_local *local)
+ 	}
+ }
+ 
+-static void ieee80211_roc_work(struct work_struct *work)
++static void ieee80211_roc_work(struct wiphy *wiphy, struct wiphy_work *work)
+ {
+ 	struct ieee80211_local *local =
+ 		container_of(work, struct ieee80211_local, roc_work.work);
+@@ -461,7 +461,7 @@ static void ieee80211_roc_work(struct work_struct *work)
+ 	mutex_unlock(&local->mtx);
+ }
+ 
+-static void ieee80211_hw_roc_done(struct work_struct *work)
++static void ieee80211_hw_roc_done(struct wiphy *wiphy, struct wiphy_work *work)
+ {
+ 	struct ieee80211_local *local =
+ 		container_of(work, struct ieee80211_local, hw_roc_done);
+@@ -482,7 +482,7 @@ void ieee80211_remain_on_channel_expired(struct ieee80211_hw *hw)
+ 
+ 	trace_api_remain_on_channel_expired(local);
+ 
+-	ieee80211_queue_work(hw, &local->hw_roc_done);
++	wiphy_work_queue(hw->wiphy, &local->hw_roc_done);
+ }
+ EXPORT_SYMBOL_GPL(ieee80211_remain_on_channel_expired);
+ 
+@@ -586,8 +586,8 @@ static int ieee80211_start_roc_work(struct ieee80211_local *local,
+ 		/* if not HW assist, just queue & schedule work */
+ 		if (!local->ops->remain_on_channel) {
+ 			list_add_tail(&roc->list, &local->roc_list);
+-			ieee80211_queue_delayed_work(&local->hw,
+-						     &local->roc_work, 0);
++			wiphy_delayed_work_queue(local->hw.wiphy,
++						 &local->roc_work, 0);
+ 		} else {
+ 			/* otherwise actually kick it off here
+ 			 * (for error handling)
+@@ -695,7 +695,7 @@ static int ieee80211_cancel_roc(struct ieee80211_local *local,
+ 	if (!cookie)
+ 		return -ENOENT;
+ 
+-	flush_work(&local->hw_roc_start);
++	wiphy_work_flush(local->hw.wiphy, &local->hw_roc_start);
+ 
+ 	mutex_lock(&local->mtx);
+ 	list_for_each_entry_safe(roc, tmp, &local->roc_list, list) {
+@@ -745,7 +745,7 @@ static int ieee80211_cancel_roc(struct ieee80211_local *local,
+ 	} else {
+ 		/* go through work struct to return to the operating channel */
+ 		found->abort = true;
+-		mod_delayed_work(local->workqueue, &local->roc_work, 0);
++		wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work, 0);
  	}
  
-@@ -311,7 +312,7 @@ static int coproc_ioc_tx_win_open(struct file *fp, unsigned long arg)
- 	txwin = cp_inst->coproc->vops->open_win(uattr.vas_id, uattr.flags,
- 						cp_inst->coproc->cop_type);
- 	if (IS_ERR(txwin)) {
--		pr_err("%s() VAS window open failed, %ld\n", __func__,
-+		pr_err_ratelimited("VAS window open failed rc=%ld\n",
- 				PTR_ERR(txwin));
- 		return PTR_ERR(txwin);
- 	}
-@@ -405,8 +406,7 @@ static vm_fault_t vas_mmap_fault(struct vm_fault *vmf)
- 	 * window is not opened. Shouldn't expect this error.
- 	 */
- 	if (!cp_inst || !cp_inst->txwin) {
--		pr_err("%s(): Unexpected fault on paste address with TX window closed\n",
--				__func__);
-+		pr_err("Unexpected fault on paste address with TX window closed\n");
- 		return VM_FAULT_SIGBUS;
- 	}
+  out_unlock:
+@@ -994,9 +994,9 @@ int ieee80211_mgmt_tx_cancel_wait(struct wiphy *wiphy,
  
-@@ -421,8 +421,7 @@ static vm_fault_t vas_mmap_fault(struct vm_fault *vmf)
- 	 * issue NX request.
- 	 */
- 	if (txwin->task_ref.vma != vmf->vma) {
--		pr_err("%s(): No previous mapping with paste address\n",
--			__func__);
-+		pr_err("No previous mapping with paste address\n");
- 		return VM_FAULT_SIGBUS;
- 	}
+ void ieee80211_roc_setup(struct ieee80211_local *local)
+ {
+-	INIT_WORK(&local->hw_roc_start, ieee80211_hw_roc_start);
+-	INIT_WORK(&local->hw_roc_done, ieee80211_hw_roc_done);
+-	INIT_DELAYED_WORK(&local->roc_work, ieee80211_roc_work);
++	wiphy_work_init(&local->hw_roc_start, ieee80211_hw_roc_start);
++	wiphy_work_init(&local->hw_roc_done, ieee80211_hw_roc_done);
++	wiphy_delayed_work_init(&local->roc_work, ieee80211_roc_work);
+ 	INIT_LIST_HEAD(&local->roc_list);
+ }
  
-@@ -481,19 +480,19 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
- 	txwin = cp_inst->txwin;
- 
- 	if ((vma->vm_end - vma->vm_start) > PAGE_SIZE) {
--		pr_debug("%s(): size 0x%zx, PAGE_SIZE 0x%zx\n", __func__,
-+		pr_debug("size 0x%zx, PAGE_SIZE 0x%zx\n",
- 				(vma->vm_end - vma->vm_start), PAGE_SIZE);
- 		return -EINVAL;
- 	}
- 
- 	/* Ensure instance has an open send window */
- 	if (!txwin) {
--		pr_err("%s(): No send window open?\n", __func__);
-+		pr_err("No send window open?\n");
- 		return -EINVAL;
- 	}
- 
- 	if (!cp_inst->coproc->vops || !cp_inst->coproc->vops->paste_addr) {
--		pr_err("%s(): VAS API is not registered\n", __func__);
-+		pr_err("VAS API is not registered\n");
- 		return -EACCES;
- 	}
- 
-@@ -510,14 +509,14 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
- 	 */
- 	mutex_lock(&txwin->task_ref.mmap_mutex);
- 	if (txwin->status != VAS_WIN_ACTIVE) {
--		pr_err("%s(): Window is not active\n", __func__);
-+		pr_err("Window is not active\n");
- 		rc = -EACCES;
- 		goto out;
- 	}
- 
- 	paste_addr = cp_inst->coproc->vops->paste_addr(txwin);
- 	if (!paste_addr) {
--		pr_err("%s(): Window paste address failed\n", __func__);
-+		pr_err("Window paste address failed\n");
- 		rc = -EINVAL;
- 		goto out;
- 	}
-@@ -533,8 +532,8 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
- 	rc = remap_pfn_range(vma, vma->vm_start, pfn + vma->vm_pgoff,
- 			vma->vm_end - vma->vm_start, prot);
- 
--	pr_devel("%s(): paste addr %llx at %lx, rc %d\n", __func__,
--			paste_addr, vma->vm_start, rc);
-+	pr_devel("paste addr %llx at %lx, rc %d\n", paste_addr,
-+			vma->vm_start, rc);
- 
- 	txwin->task_ref.vma = vma;
- 	vma->vm_ops = &vas_vm_ops;
-@@ -609,8 +608,7 @@ int vas_register_coproc_api(struct module *mod, enum vas_cop_type cop_type,
- 		goto err;
- 	}
- 
--	pr_devel("%s: Added dev [%d,%d]\n", __func__, MAJOR(devno),
--			MINOR(devno));
-+	pr_devel("Added dev [%d,%d]\n", MAJOR(devno), MINOR(devno));
- 
- 	return 0;
- 
-diff --git a/arch/powerpc/platforms/pseries/vas.c b/arch/powerpc/platforms/pseries/vas.c
-index 3fbc2a6aa319d..23d1637242682 100644
---- a/arch/powerpc/platforms/pseries/vas.c
-+++ b/arch/powerpc/platforms/pseries/vas.c
-@@ -340,7 +340,7 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
- 
- 	if (atomic_inc_return(&cop_feat_caps->nr_used_credits) >
- 			atomic_read(&cop_feat_caps->nr_total_credits)) {
--		pr_err("Credits are not available to allocate window\n");
-+		pr_err_ratelimited("Credits are not available to allocate window\n");
- 		rc = -EINVAL;
- 		goto out;
- 	}
-@@ -423,7 +423,7 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
- 
- 	put_vas_user_win_ref(&txwin->vas_win.task_ref);
- 	rc = -EBUSY;
--	pr_err("No credit is available to allocate window\n");
-+	pr_err_ratelimited("No credit is available to allocate window\n");
- 
- out_free:
- 	/*
 -- 
 2.42.0
 
