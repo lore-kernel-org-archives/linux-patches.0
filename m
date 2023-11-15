@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9E0433AE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4188433AE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgZDpH3b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A483C433CA;
-	Wed, 15 Nov 2023 19:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REzTVtgT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9354EC433C7;
+	Wed, 15 Nov 2023 19:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077073;
-	bh=xo7Shp8TA+Qhd98S0oujAzEQpgLhEU930zN/+40vXHo=;
+	s=korg; t=1700077074;
+	bh=gLx4kcQTzC2iRHGyNEVQaU5C70CVsBdLd49xPZlaEwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZgZDpH3bMHz5wVpSQIfE0rfpSOTUl4gACuX9o8rXIBHpYZwNi5adeOu79oYPC7d1K
-	 rXlQr7fVKqUu58w+tQGW25XaaqWXEUK7JlomfjnDIrkzFZ8DpDqJSc0V7M5PCwXo3g
-	 KsjbwGnxKbovTA1Mfps73kIvJ7aqXfTF9ljmssIk=
+	b=REzTVtgTd7gjveAZiFzVxnTPB4Fa0ie/7G2jiizDAAZA7MsfDTAAR+f8rolyQ8B82
+	 1CE8Au/HNx/brc8cXIngORrIaAyu5QJgCRHF8JlEepli+JxRRhHLgSL+7Y/MYPhw2o
+	 sLL3uuVjUjh/IC92NFLhZevuWOv1SftzrEc93nUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Po-Hsu Lin <po-hsu.lin@canonical.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Phil Sutter <phil@nwl.cc>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 512/550] selftests: pmtu.sh: fix result checking
-Date: Wed, 15 Nov 2023 14:18:16 -0500
-Message-ID: <20231115191636.416420909@linuxfoundation.org>
+Subject: [PATCH 6.6 116/603] netfilter: nf_tables: Drop pointless memset when dumping rules
+Date: Wed, 15 Nov 2023 14:11:01 -0500
+Message-ID: <20231115191621.272692735@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,43 +38,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 63e201916b27260218e528a2f8758be47f99bbf4 ]
+[ Upstream commit 30fa41a0f6df4c85790cc6499ddc4a926a113bfa ]
 
-In the PMTU test, when all previous tests are skipped and the new test
-passes, the exit code is set to 0. However, the current check mistakenly
-treats this as an assignment, causing the check to pass every time.
+None of the dump callbacks uses netlink_callback::args beyond the first
+element, no need to zero the data.
 
-Consequently, regardless of how many tests have failed, if the latest test
-passes, the PMTU test will report a pass.
-
-Fixes: 2a9d3716b810 ("selftests: pmtu.sh: improve the test result processing")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 96518518cc41 ("netfilter: add nftables")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/pmtu.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index f838dd370f6af..b3b2dc5a630cf 100755
---- a/tools/testing/selftests/net/pmtu.sh
-+++ b/tools/testing/selftests/net/pmtu.sh
-@@ -2048,7 +2048,7 @@ run_test() {
- 	case $ret in
- 		0)
- 			all_skipped=false
--			[ $exitcode=$ksft_skip ] && exitcode=0
-+			[ $exitcode -eq $ksft_skip ] && exitcode=0
- 		;;
- 		$ksft_skip)
- 			[ $all_skipped = true ] && exitcode=$ksft_skip
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 29c651804cb22..3bf428a188ccf 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3465,10 +3465,6 @@ static int __nf_tables_dump_rules(struct sk_buff *skb,
+ 			goto cont_skip;
+ 		if (*idx < s_idx)
+ 			goto cont;
+-		if (*idx > s_idx) {
+-			memset(&cb->args[1], 0,
+-					sizeof(cb->args) - sizeof(cb->args[0]));
+-		}
+ 		if (prule)
+ 			handle = prule->handle;
+ 		else
 -- 
 2.42.0
 
