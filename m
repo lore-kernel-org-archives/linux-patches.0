@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000B43BB2C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C99B3BB33;
+	Wed, 15 Nov 2023 19:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzJW9FV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6ABAC433CB;
-	Wed, 15 Nov 2023 19:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NH8FCYjA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E00EC433C8;
+	Wed, 15 Nov 2023 19:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078069;
-	bh=qRTbwhMYjwmpid9u4LbCgnC/8jbMMmgT9s2RAXRxuOA=;
+	s=korg; t=1700078071;
+	bh=pIcag/IBNYWBC+lUi1Q7WtabUp5rAPYqn/Ia5+/bmTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KzJW9FV3w3x4VDC77NMBLDNf9geAkamemvTwzup6+BDbyJuT1iS7IGqOxR58FknWd
-	 GCyCBBR0Zc4P/au5ZgZLl+8nJDom+DnDY4HIPkHCKaGXu6sAyelnEZLv0dn9+cXHEI
-	 Fmjh6WghPRIBFHsgR2c75BilOXUYI2DTZixW+PRo=
+	b=NH8FCYjAmSXnk/8Uolyxwh5BtoOvbAopPtXjmD4qCqvi+n5tEvALaytwVzKv2dlSq
+	 Ae3+DlQQHsWBvQ9cyET0KPV2hrJ1R8dfNaTEbdwMl+RSFOuubnfdaN4bg4kaIzzxbL
+	 kl0qkitIuh2GrPjwPT7mfBsi5oOeeVi05ICb2+Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	linux-clk@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/379] clk: renesas: rzg2l: Fix computation formula
-Date: Wed, 15 Nov 2023 14:22:47 -0500
-Message-ID: <20231115192650.578731284@linuxfoundation.org>
+Subject: [PATCH 6.1 093/379] clk: linux/clk-provider.h: fix kernel-doc warnings and typos
+Date: Wed, 15 Nov 2023 14:22:48 -0500
+Message-ID: <20231115192650.639815695@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,68 +44,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit a2b23159499efd36b2d63b3c4534075d12ddc97a ]
+[ Upstream commit 84aefafe6b294041b7fa0757414c4a29c1bdeea2 ]
 
-According to the hardware manual for RZ/G2L
-(r01uh0914ej0130-rzg2l-rzg2lc.pdf), the computation formula for PLL rate
-is as follows:
+Fix spelling of "Structure".
 
-    Fout = ((m + k/65536) * Fin) / (p * 2^s)
+Fix multiple kernel-doc warnings:
 
-and k has values in the range [-32768, 32767].  Dividing k by 65536 with
-integer arithmetic gives zero all the time, causing slight differences
-b/w what has been set vs. what is displayed.  Thus, get rid of this and
-decompose the formula before dividing k by 65536.
+clk-provider.h:269: warning: Function parameter or member 'recalc_rate' not described in 'clk_ops'
+clk-provider.h:468: warning: Function parameter or member 'parent_data' not described in 'clk_hw_register_fixed_rate_with_accuracy_parent_data'
+clk-provider.h:468: warning: Excess function parameter 'parent_name' description in 'clk_hw_register_fixed_rate_with_accuracy_parent_data'
+clk-provider.h:482: warning: Function parameter or member 'parent_data' not described in 'clk_hw_register_fixed_rate_parent_accuracy'
+clk-provider.h:482: warning: Excess function parameter 'parent_name' description in 'clk_hw_register_fixed_rate_parent_accuracy'
+clk-provider.h:687: warning: Function parameter or member 'flags' not described in 'clk_divider'
+clk-provider.h:1164: warning: Function parameter or member 'flags' not described in 'clk_fractional_divider'
+clk-provider.h:1164: warning: Function parameter or member 'approximation' not described in 'clk_fractional_divider'
+clk-provider.h:1213: warning: Function parameter or member 'flags' not described in 'clk_multiplier'
 
-Fixes: ef3c613ccd68a ("clk: renesas: Add CPG core wrapper for RZ/G2L SoC")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230929053915.1530607-6-claudiu.beznea@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 9fba738a53dd ("clk: add duty cycle support")
+Fixes: b2476490ef11 ("clk: introduce the common clock framework")
+Fixes: 2d34f09e79c9 ("clk: fixed-rate: Add support for specifying parents via DT/pointers")
+Fixes: f5290d8e4f0c ("clk: asm9260: use parent index to link the reference clock")
+Fixes: 9d9f78ed9af0 ("clk: basic clock hardware types")
+Fixes: e2d0e90fae82 ("clk: new basic clk type for fractional divider")
+Fixes: f2e0a53271a4 ("clk: Add a basic multiplier clock")
+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org
+Link: https://lore.kernel.org/r/20230930221428.18463-1-rdunlap@infradead.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rzg2l-cpg.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ include/linux/clk-provider.h | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index 917ce62d8c397..84767cfc1e739 100644
---- a/drivers/clk/renesas/rzg2l-cpg.c
-+++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -43,7 +43,7 @@
- #define GET_SHIFT(val)		((val >> 12) & 0xff)
- #define GET_WIDTH(val)		((val >> 8) & 0xf)
+diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+index aefb06373720f..15e336281d1f4 100644
+--- a/include/linux/clk-provider.h
++++ b/include/linux/clk-provider.h
+@@ -72,7 +72,7 @@ void clk_hw_forward_rate_request(const struct clk_hw *core,
+ 				 unsigned long parent_rate);
  
--#define KDIV(val)		FIELD_GET(GENMASK(31, 16), val)
-+#define KDIV(val)		((s16)FIELD_GET(GENMASK(31, 16), val))
- #define MDIV(val)		FIELD_GET(GENMASK(15, 6), val)
- #define PDIV(val)		FIELD_GET(GENMASK(5, 0), val)
- #define SDIV(val)		FIELD_GET(GENMASK(2, 0), val)
-@@ -699,18 +699,18 @@ static unsigned long rzg2l_cpg_pll_clk_recalc_rate(struct clk_hw *hw,
- 	struct pll_clk *pll_clk = to_pll(hw);
- 	struct rzg2l_cpg_priv *priv = pll_clk->priv;
- 	unsigned int val1, val2;
--	unsigned int mult = 1;
--	unsigned int div = 1;
-+	u64 rate;
- 
- 	if (pll_clk->type != CLK_TYPE_SAM_PLL)
- 		return parent_rate;
- 
- 	val1 = readl(priv->base + GET_REG_SAMPLL_CLK1(pll_clk->conf));
- 	val2 = readl(priv->base + GET_REG_SAMPLL_CLK2(pll_clk->conf));
--	mult = MDIV(val1) + KDIV(val1) / 65536;
--	div = PDIV(val1) << SDIV(val2);
- 
--	return DIV_ROUND_CLOSEST_ULL((u64)parent_rate * mult, div);
-+	rate = mul_u64_u32_shr(parent_rate, (MDIV(val1) << 16) + KDIV(val1),
-+			       16 + SDIV(val2));
-+
-+	return DIV_ROUND_CLOSEST_ULL(rate, PDIV(val1));
- }
- 
- static const struct clk_ops rzg2l_cpg_pll_ops = {
+ /**
+- * struct clk_duty - Struture encoding the duty cycle ratio of a clock
++ * struct clk_duty - Structure encoding the duty cycle ratio of a clock
+  *
+  * @num:	Numerator of the duty cycle ratio
+  * @den:	Denominator of the duty cycle ratio
+@@ -127,7 +127,7 @@ struct clk_duty {
+  * @restore_context: Restore the context of the clock after a restoration
+  *		of power.
+  *
+- * @recalc_rate	Recalculate the rate of this clock, by querying hardware. The
++ * @recalc_rate: Recalculate the rate of this clock, by querying hardware. The
+  *		parent rate is an input parameter.  It is up to the caller to
+  *		ensure that the prepare_mutex is held across this call. If the
+  *		driver cannot figure out a rate for this clock, it must return
+@@ -454,7 +454,7 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+  * clock with the clock framework
+  * @dev: device that is registering this clock
+  * @name: name of this clock
+- * @parent_name: name of clock's parent
++ * @parent_data: name of clock's parent
+  * @flags: framework-specific flags
+  * @fixed_rate: non-adjustable clock rate
+  * @fixed_accuracy: non-adjustable clock accuracy
+@@ -469,7 +469,7 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+  * the clock framework
+  * @dev: device that is registering this clock
+  * @name: name of this clock
+- * @parent_name: name of clock's parent
++ * @parent_data: name of clock's parent
+  * @flags: framework-specific flags
+  * @fixed_rate: non-adjustable clock rate
+  */
+@@ -628,7 +628,7 @@ struct clk_div_table {
+  * Clock with an adjustable divider affecting its output frequency.  Implements
+  * .recalc_rate, .set_rate and .round_rate
+  *
+- * Flags:
++ * @flags:
+  * CLK_DIVIDER_ONE_BASED - by default the divisor is the value read from the
+  *	register plus one.  If CLK_DIVIDER_ONE_BASED is set then the divider is
+  *	the raw value read from the register, with the value of zero considered
+@@ -1109,11 +1109,12 @@ struct clk_hw *clk_hw_register_fixed_factor_parent_hw(struct device *dev,
+  * @mwidth:	width of the numerator bit field
+  * @nshift:	shift to the denominator bit field
+  * @nwidth:	width of the denominator bit field
++ * @approximation: clk driver's callback for calculating the divider clock
+  * @lock:	register lock
+  *
+  * Clock with adjustable fractional divider affecting its output frequency.
+  *
+- * Flags:
++ * @flags:
+  * CLK_FRAC_DIVIDER_ZERO_BASED - by default the numerator and denominator
+  *	is the value read from the register. If CLK_FRAC_DIVIDER_ZERO_BASED
+  *	is set then the numerator and denominator are both the value read
+@@ -1172,7 +1173,7 @@ void clk_hw_unregister_fractional_divider(struct clk_hw *hw);
+  * Clock with an adjustable multiplier affecting its output frequency.
+  * Implements .recalc_rate, .set_rate and .round_rate
+  *
+- * Flags:
++ * @flags:
+  * CLK_MULTIPLIER_ZERO_BYPASS - By default, the multiplier is the value read
+  *	from the register, with 0 being a valid value effectively
+  *	zeroing the output clock rate. If CLK_MULTIPLIER_ZERO_BYPASS is
 -- 
 2.42.0
 
