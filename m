@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782A82C870
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D20364A8
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CDu8gdD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D779FC433C9;
-	Wed, 15 Nov 2023 19:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNXOg4/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6461AC433C8;
+	Wed, 15 Nov 2023 19:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076465;
-	bh=SIT3ogTDeLPmYEMxWw4uehyePp9at+IjFOKg/D0QEpk=;
+	s=korg; t=1700076466;
+	bh=Jj1dHfZSfNkzcL1HC+oBB/e2erZHnqIyEPHRCjUsNYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1CDu8gdDAPNd/3vASNRTj2N4W1DjfUwhd+3f9IQwJd60UyKvsIrQXhA3hmx1F5ma5
-	 5agfLRMp8g1bZ1dNcz32J4eVfloPqRR9KUrzRiFatV5cIw2aIDDZU+vensrGd3F6U+
-	 ND4m+7i+7ytn0F2XlXvXBIeaBK7+xqh5Ysqg5g/c=
+	b=BNXOg4/oCCIe0tZ3NS3vXm00Km06EOhENtkxJ4AAtcVFiv0Cz4vAtNv6/7Bo6pmwL
+	 PwVMSGBITyVXSG2sr6JImr7SakJprY89PEE6Io1tdD+OhHujRIOdbuAXYaLvq08T6f
+	 YgxBpg9T2e2IgGIKAismhli/iGtUkj2obaiTwLAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Dhruva Gole <d-gole@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Adam Skladowski <a39.skl@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 283/550] firmware: ti_sci: Mark driver as non removable
-Date: Wed, 15 Nov 2023 14:14:27 -0500
-Message-ID: <20231115191620.403087330@linuxfoundation.org>
+Subject: [PATCH 6.5 274/550] arm64: dts: qcom: msm8976: Fix ipc bit shifts
+Date: Wed, 15 Nov 2023 14:14:18 -0500
+Message-ID: <20231115191619.739261956@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -37,115 +36,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dhruva Gole <d-gole@ti.com>
+From: Adam Skladowski <a39.skl@gmail.com>
 
-[ Upstream commit 7b7a224b1ba1703583b25a3641ad9798f34d832a ]
+[ Upstream commit 684277525c70f329300cc687e27248e405a4ff9e ]
 
-The TI-SCI message protocol provides a way to communicate between
-various compute processors with a central system controller entity. It
-provides the fundamental device management capability and clock control
-in the SOCs that it's used in.
+Update bits to match downstream irq-bitmask values.
 
-The remove function failed to do all the necessary cleanup if
-there are registered users. Some things are freed however which
-likely results in an oops later on.
-
-Ensure that the driver isn't unbound by suppressing its bind and unbind
-sysfs attributes. As the driver is built-in there is no way to remove
-device once bound.
-
-We can also remove the ti_sci_remove call along with the
-ti_sci_debugfs_destroy as there are no callers for it any longer.
-
-Fixes: aa276781a64a ("firmware: Add basic support for TI System Control Interface (TI-SCI) protocol")
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Closes: https://lore.kernel.org/linux-arm-kernel/20230216083908.mvmydic5lpi3ogo7@pengutronix.de/
-Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Dhruva Gole <d-gole@ti.com>
-Link: https://lore.kernel.org/r/20230921091025.133130-1-d-gole@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 0484d3ce0902 ("arm64: dts: qcom: Add DTS for MSM8976 and MSM8956 SoCs")
+Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+Link: https://lore.kernel.org/r/20230812112534.8610-8-a39.skl@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/ti_sci.c | 46 +--------------------------------------
- 1 file changed, 1 insertion(+), 45 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8976.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index 91aaa0ca9bde8..1213951307f72 100644
---- a/drivers/firmware/ti_sci.c
-+++ b/drivers/firmware/ti_sci.c
-@@ -190,19 +190,6 @@ static int ti_sci_debugfs_create(struct platform_device *pdev,
- 	return 0;
- }
+diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+index 753b9a2105edd..c97b22fb1dc21 100644
+--- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+@@ -303,7 +303,7 @@ adsp_smp2p_in: slave-kernel {
+ 	smp2p-modem {
+ 		compatible = "qcom,smp2p";
+ 		interrupts = <GIC_SPI 27 IRQ_TYPE_EDGE_RISING>;
+-		qcom,ipc = <&apcs 8 13>;
++		qcom,ipc = <&apcs 8 14>;
  
--/**
-- * ti_sci_debugfs_destroy() - clean up log debug file
-- * @pdev:	platform device pointer
-- * @info:	Pointer to SCI entity information
-- */
--static void ti_sci_debugfs_destroy(struct platform_device *pdev,
--				   struct ti_sci_info *info)
--{
--	if (IS_ERR(info->debug_region))
--		return;
--
--	debugfs_remove(info->d);
--}
- #else /* CONFIG_DEBUG_FS */
- static inline int ti_sci_debugfs_create(struct platform_device *dev,
- 					struct ti_sci_info *info)
-@@ -3448,43 +3435,12 @@ static int ti_sci_probe(struct platform_device *pdev)
- 	return ret;
- }
+ 		qcom,local-pid = <0>;
+ 		qcom,remote-pid = <1>;
+@@ -326,7 +326,7 @@ modem_smp2p_in: slave-kernel {
+ 	smp2p-wcnss {
+ 		compatible = "qcom,smp2p";
+ 		interrupts = <GIC_SPI 143 IRQ_TYPE_EDGE_RISING>;
+-		qcom,ipc = <&apcs 8 17>;
++		qcom,ipc = <&apcs 8 18>;
  
--static int ti_sci_remove(struct platform_device *pdev)
--{
--	struct ti_sci_info *info;
--	struct device *dev = &pdev->dev;
--	int ret = 0;
--
--	of_platform_depopulate(dev);
--
--	info = platform_get_drvdata(pdev);
--
--	if (info->nb.notifier_call)
--		unregister_restart_handler(&info->nb);
--
--	mutex_lock(&ti_sci_list_mutex);
--	if (info->users)
--		ret = -EBUSY;
--	else
--		list_del(&info->node);
--	mutex_unlock(&ti_sci_list_mutex);
--
--	if (!ret) {
--		ti_sci_debugfs_destroy(pdev, info);
--
--		/* Safe to free channels since no more users */
--		mbox_free_channel(info->chan_tx);
--		mbox_free_channel(info->chan_rx);
--	}
--
--	return ret;
--}
--
- static struct platform_driver ti_sci_driver = {
- 	.probe = ti_sci_probe,
--	.remove = ti_sci_remove,
- 	.driver = {
- 		   .name = "ti-sci",
- 		   .of_match_table = of_match_ptr(ti_sci_of_match),
-+		   .suppress_bind_attrs = true,
- 	},
- };
- module_platform_driver(ti_sci_driver);
+ 		qcom,local-pid = <0>;
+ 		qcom,remote-pid = <4>;
+@@ -428,9 +428,9 @@ smsm {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+-		qcom,ipc-1 = <&apcs 8 12>;
++		qcom,ipc-1 = <&apcs 8 13>;
+ 		qcom,ipc-2 = <&apcs 8 9>;
+-		qcom,ipc-3 = <&apcs 8 18>;
++		qcom,ipc-3 = <&apcs 8 19>;
+ 
+ 		apps_smsm: apps@0 {
+ 			reg = <0>;
 -- 
 2.42.0
 
