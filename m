@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2974841212
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A624941212
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUjZUDEq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF9FC433C8;
-	Wed, 15 Nov 2023 19:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEIW/Yce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55677C433C7;
+	Wed, 15 Nov 2023 19:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076284;
-	bh=gcikZJfPJ5lv8lvvFCDvkfHn2A+Tbk7cUUJQpuDTJ5Q=;
+	s=korg; t=1700076285;
+	bh=EYLa1g5TuWQJuHidIG4ASDu3Zb84iFt/TDnZ9KSTOv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vUjZUDEqSWwgOnJoJAUtKUmOO4l+8Lb3Yx7u8ZbE2D1qfJPN2fGKvZjiEAFrbzPHI
-	 Ztp5f7SfZDH2OnYFp6aA0lI3UDtxNOiK2sV5UdUjgmm08ZeGMPNAjy7BEI0+uMplET
-	 L7f3+vrBpUyZS4+0ZM0XtbHswsjPYz28dB3kExoY=
+	b=jEIW/YceuNHo2GompMLLI/sK5dM6GiOvl8O/+hzuFUIBT5Pov1ZsF4o9KEKjPLuvq
+	 gmXkZ8YqUFWn3ixk48rszE7oXHemMEX3E+lw7i3eIL6nTvkSENwt3wPhX1OOabw9vG
+	 +C+G63ZvVKfG3Kl3NVyF9uaifyeavH/Pdad4L6Hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	kernel test robot <lkp@intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 192/550] hwmon: (coretemp) Fix potentially truncated sysfs attribute name
-Date: Wed, 15 Nov 2023 14:12:56 -0500
-Message-ID: <20231115191614.071400810@linuxfoundation.org>
+Subject: [PATCH 6.5 168/550] clk: renesas: rzg2l: Fix computation formula
+Date: Wed, 15 Nov 2023 14:12:32 -0500
+Message-ID: <20231115191612.357569639@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,57 +42,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit bbfff736d30e5283ad09e748caff979d75ddef7f ]
+[ Upstream commit a2b23159499efd36b2d63b3c4534075d12ddc97a ]
 
-When build with W=1 and "-Werror=format-truncation", below error is
-observed in coretemp driver,
+According to the hardware manual for RZ/G2L
+(r01uh0914ej0130-rzg2l-rzg2lc.pdf), the computation formula for PLL rate
+is as follows:
 
-   drivers/hwmon/coretemp.c: In function 'create_core_data':
->> drivers/hwmon/coretemp.c:393:34: error: '%s' directive output may be truncated writing likely 5 or more bytes into a region of size between 3 and 13 [-Werror=format-truncation=]
-     393 |                          "temp%d_%s", attr_no, suffixes[i]);
-         |                                  ^~
-   drivers/hwmon/coretemp.c:393:26: note: assuming directive output of 5 bytes
-     393 |                          "temp%d_%s", attr_no, suffixes[i]);
-         |                          ^~~~~~~~~~~
-   drivers/hwmon/coretemp.c:392:17: note: 'snprintf' output 7 or more bytes (assuming 22) into a destination of size 19
-     392 |                 snprintf(tdata->attr_name[i], CORETEMP_NAME_LENGTH,
-         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     393 |                          "temp%d_%s", attr_no, suffixes[i]);
-         |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   cc1: all warnings being treated as errors
+    Fout = ((m + k/65536) * Fin) / (p * 2^s)
 
-Given that
-1. '%d' could take 10 charactors,
-2. '%s' could take 10 charactors ("crit_alarm"),
-3. "temp", "_" and the NULL terminator take 6 charactors,
-fix the problem by increasing CORETEMP_NAME_LENGTH to 28.
+and k has values in the range [-32768, 32767].  Dividing k by 65536 with
+integer arithmetic gives zero all the time, causing slight differences
+b/w what has been set vs. what is displayed.  Thus, get rid of this and
+decompose the formula before dividing k by 65536.
 
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Fixes: 7108b80a542b ("hwmon/coretemp: Handle large core ID value")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310200443.iD3tUbbK-lkp@intel.com/
-Link: https://lore.kernel.org/r/20231025122316.836400-1-rui.zhang@intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: ef3c613ccd68a ("clk: renesas: Add CPG core wrapper for RZ/G2L SoC")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230929053915.1530607-6-claudiu.beznea@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/renesas/rzg2l-cpg.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index eba94f68585a8..ba82d1e79c131 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -42,7 +42,7 @@ MODULE_PARM_DESC(tjmax, "TjMax value in degrees Celsius");
- #define PKG_SYSFS_ATTR_NO	1	/* Sysfs attribute for package temp */
- #define BASE_SYSFS_ATTR_NO	2	/* Sysfs Base attr no for coretemp */
- #define NUM_REAL_CORES		128	/* Number of Real cores per cpu */
--#define CORETEMP_NAME_LENGTH	19	/* String Length of attrs */
-+#define CORETEMP_NAME_LENGTH	28	/* String Length of attrs */
- #define MAX_CORE_ATTRS		4	/* Maximum no of basic attrs */
- #define TOTAL_ATTRS		(MAX_CORE_ATTRS + 1)
- #define MAX_CORE_DATA		(NUM_REAL_CORES + BASE_SYSFS_ATTR_NO)
+diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
+index 03028362cf619..a3b20c898a391 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.c
++++ b/drivers/clk/renesas/rzg2l-cpg.c
+@@ -43,7 +43,7 @@
+ #define GET_SHIFT(val)		((val >> 12) & 0xff)
+ #define GET_WIDTH(val)		((val >> 8) & 0xf)
+ 
+-#define KDIV(val)		FIELD_GET(GENMASK(31, 16), val)
++#define KDIV(val)		((s16)FIELD_GET(GENMASK(31, 16), val))
+ #define MDIV(val)		FIELD_GET(GENMASK(15, 6), val)
+ #define PDIV(val)		FIELD_GET(GENMASK(5, 0), val)
+ #define SDIV(val)		FIELD_GET(GENMASK(2, 0), val)
+@@ -702,18 +702,18 @@ static unsigned long rzg2l_cpg_pll_clk_recalc_rate(struct clk_hw *hw,
+ 	struct pll_clk *pll_clk = to_pll(hw);
+ 	struct rzg2l_cpg_priv *priv = pll_clk->priv;
+ 	unsigned int val1, val2;
+-	unsigned int mult = 1;
+-	unsigned int div = 1;
++	u64 rate;
+ 
+ 	if (pll_clk->type != CLK_TYPE_SAM_PLL)
+ 		return parent_rate;
+ 
+ 	val1 = readl(priv->base + GET_REG_SAMPLL_CLK1(pll_clk->conf));
+ 	val2 = readl(priv->base + GET_REG_SAMPLL_CLK2(pll_clk->conf));
+-	mult = MDIV(val1) + KDIV(val1) / 65536;
+-	div = PDIV(val1) << SDIV(val2);
+ 
+-	return DIV_ROUND_CLOSEST_ULL((u64)parent_rate * mult, div);
++	rate = mul_u64_u32_shr(parent_rate, (MDIV(val1) << 16) + KDIV(val1),
++			       16 + SDIV(val2));
++
++	return DIV_ROUND_CLOSEST_ULL(rate, PDIV(val1));
+ }
+ 
+ static const struct clk_ops rzg2l_cpg_pll_ops = {
 -- 
 2.42.0
 
