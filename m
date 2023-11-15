@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E622E3DB97
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714323DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQI86SPX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97172C433C8;
-	Wed, 15 Nov 2023 19:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRiiAZEJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2403FC433C9;
+	Wed, 15 Nov 2023 19:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078234;
-	bh=ZukAkk0qLguRLaFCBjE0dZlqDXK1RgtL5lDT31yKrZE=;
+	s=korg; t=1700078236;
+	bh=vzefDMr0EW/u+d0ufyiqh2gKlrnVhVaE2zHL3iz2tOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RQI86SPX53VRkzB751G0xrsKDF+dgA5zasWHwohTn1s4RK80s+ScD/fR0q+ruNyMC
-	 munJWn1acaSr4oqmGjhYmIYnrqKsm8EanGlwW6daOJMY0NDHMlWGI8uumkyFjO0Xvs
-	 4mQUgsrvvT0w8h+QvesOjjBx4p6fWfnxBytTtBnE=
+	b=rRiiAZEJC/ZNl2YraK04pkVd5egiHpnU/S3lWLMne3/2Wb4dhngyQhJk35NBoY/Q7
+	 itQ6r5BMdXizTn48BVs14QIgeHXU2V71nrT4qT+cUUAgbOyHJG9PlybZXWGZS075FR
+	 z2qGcqXtwZZEZhD3rOgHSgzLXRRLNzieZ4+FBRjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 170/379] ARM: dts: qcom: mdm9615: populate vsdcc fixed regulator
-Date: Wed, 15 Nov 2023 14:24:05 -0500
-Message-ID: <20231115192655.175728616@linuxfoundation.org>
+Subject: [PATCH 6.1 171/379] soc: qcom: llcc: Handle a second device without data corruption
+Date: Wed, 15 Nov 2023 14:24:06 -0500
+Message-ID: <20231115192655.229735333@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -37,55 +36,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 09f8ee81b6da5f76de8b83c8bfc4475b54e101e0 ]
+[ Upstream commit f1a1bc8775b26345aba2be278118999e7f661d3d ]
 
-Fixed regulator put under "regulators" node will not be populated,
-unless simple-bus or something similar is used.  Drop the "regulators"
-wrapper node to fix this.
+Usually there is only one llcc device. But if there were a second, even
+a failed probe call would modify the global drv_data pointer. So check
+if drv_data is valid before overwriting it.
 
-Fixes: 2c5e596524e7 ("ARM: dts: Add MDM9615 dtsi")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230924183914.51414-3-krzysztof.kozlowski@linaro.org
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: a3134fb09e0b ("drivers: soc: Add LLCC driver")
+Link: https://lore.kernel.org/r/20230926083229.2073890-1-u.kleine-koenig@pengutronix.de
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom-mdm9615.dtsi | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/soc/qcom/llcc-qcom.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-index b47c86412de2c..17a1a06dfb3f1 100644
---- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
-+++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-@@ -82,14 +82,12 @@ cxo_board {
- 		};
- 	};
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 85219b5e1f416..bc400669ee022 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -778,6 +778,9 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+ 	u32 version;
+ 	struct regmap *regmap;
  
--	regulators {
--		vsdcc_fixed: vsdcc-regulator {
--			compatible = "regulator-fixed";
--			regulator-name = "SDCC Power";
--			regulator-min-microvolt = <2700000>;
--			regulator-max-microvolt = <2700000>;
--			regulator-always-on;
--		};
-+	vsdcc_fixed: vsdcc-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "SDCC Power";
-+		regulator-min-microvolt = <2700000>;
-+		regulator-max-microvolt = <2700000>;
-+		regulator-always-on;
- 	};
- 
- 	soc: soc {
++	if (!IS_ERR(drv_data))
++		return -EBUSY;
++
+ 	drv_data = devm_kzalloc(dev, sizeof(*drv_data), GFP_KERNEL);
+ 	if (!drv_data) {
+ 		ret = -ENOMEM;
 -- 
 2.42.0
 
