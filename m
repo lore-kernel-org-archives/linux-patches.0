@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC718381DC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6203A8E5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbbPxuv1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDE2C433C8;
-	Wed, 15 Nov 2023 19:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txxUTZ5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3F3C433C9;
+	Wed, 15 Nov 2023 19:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076951;
-	bh=YuRJE311OlmkI4oDtd5cpZ+WU+yrw219MyTkDL+BtrY=;
+	s=korg; t=1700076953;
+	bh=quQ2Q/xgtfoefHT6Xv3kg+gjfaHuhZDhElNSw93cnxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NbbPxuv1uc9Yb2ikz8VSVBhstOVHaqjy2c9a4Cqk0+1dvp0tLa2O+5VtZtdVhcmY5
-	 mJ42j4Q87UB8NCfIvUfihbsIFbVNHqu88/KarbetcCmM+j7N0YvoOVpua1zvRK2+4g
-	 Ujp817jqcbeAf+PQimvL7hkKBLgeSl3fx90Q4CMQ=
+	b=txxUTZ5OBz5/6mouot8IG1zjhod4S85EGELIETv7/q7xegRYf+ntcTK61iLc74dlx
+	 lEoVix73WY0Gwz6aWaFMODHoZPV5+e+1nNsek1cFwoxXSyQCmO8ynlcOkM/wGDjav+
+	 GHwjZOab3xKFyYq9G2RKFWEBGVNl84VvvHYu1MpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Bowman <terry.bowman@amd.com>,
-	Robert Richter <rrichter@amd.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	"Guoniu.zhou" <guoniu.zhou@nxp.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 465/550] cxl/core/regs: Rename @dev to @host in struct cxl_register_map
-Date: Wed, 15 Nov 2023 14:17:29 -0500
-Message-ID: <20231115191633.105791781@linuxfoundation.org>
+Subject: [PATCH 6.5 474/550] media: ov5640: fix vblank unchange issue when work at dvp mode
+Date: Wed, 15 Nov 2023 14:17:38 -0500
+Message-ID: <20231115191633.725257748@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,206 +43,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Richter <rrichter@amd.com>
+From: Guoniu.zhou <guoniu.zhou@nxp.com>
 
-[ Upstream commit dd22581f89537163f065e8ef7c125ce0fddf62cc ]
+[ Upstream commit 8fc29e3c9f682d4ad9b0764d44ecc6c19b000051 ]
 
-The primary role of @dev is to host the mappings for devm operations.
-@dev is too ambiguous as a name. I.e. when does @dev refer to the
-'struct device *' instance that the registers belong, and when does
-@dev refer to the 'struct device *' instance hosting the mapping for
-devm operations?
+The value of V4L2_CID_VBLANK control is initialized to default vblank
+value of 640x480 when driver probe. When OV5640 work at DVP mode, the
+control value won't update and lead to sensor can't output data if the
+resolution remain the same as last time since incorrect total vertical
+size. So update it when there is a new value applied.
 
-Clarify the role of @dev in cxl_register_map by renaming it to @host.
-Also, rename local variables to 'host' where map->host is used.
-
-Signed-off-by: Terry Bowman <terry.bowman@amd.com>
-Signed-off-by: Robert Richter <rrichter@amd.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/20231018171713.1883517-3-rrichter@amd.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 33d9c987bf8f ("cxl/port: Fix @host confusion in cxl_dport_setup_regs()")
+Fixes: bce93b827de6 ("media: ov5640: Add VBLANK control")
+Signed-off-by: Guoniu.zhou <guoniu.zhou@nxp.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c  |  2 +-
- drivers/cxl/core/port.c |  4 ++--
- drivers/cxl/core/regs.c | 28 ++++++++++++++--------------
- drivers/cxl/cxl.h       |  4 ++--
- drivers/cxl/pci.c       |  2 +-
- 5 files changed, 20 insertions(+), 20 deletions(-)
+ drivers/media/i2c/ov5640.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index 506c9e14cdf98..3ad0d39d3d3fa 100644
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -85,7 +85,7 @@ static int map_hdm_decoder_regs(struct cxl_port *port, void __iomem *crb,
- 				struct cxl_component_regs *regs)
- {
- 	struct cxl_register_map map = {
--		.dev = &port->dev,
-+		.host = &port->dev,
- 		.resource = port->component_reg_phys,
- 		.base = crb,
- 		.max_size = CXL_COMPONENT_REG_BLOCK_SIZE,
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 5ba606c6e03ff..c24cfe2271948 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -697,14 +697,14 @@ static struct cxl_port *cxl_port_alloc(struct device *uport_dev,
- 	return ERR_PTR(rc);
- }
- 
--static int cxl_setup_comp_regs(struct device *dev, struct cxl_register_map *map,
-+static int cxl_setup_comp_regs(struct device *host, struct cxl_register_map *map,
- 			       resource_size_t component_reg_phys)
- {
- 	if (component_reg_phys == CXL_RESOURCE_NONE)
- 		return 0;
- 
- 	*map = (struct cxl_register_map) {
--		.dev = dev,
-+		.host = host,
- 		.reg_type = CXL_REGLOC_RBI_COMPONENT,
- 		.resource = component_reg_phys,
- 		.max_size = CXL_COMPONENT_REG_BLOCK_SIZE,
-diff --git a/drivers/cxl/core/regs.c b/drivers/cxl/core/regs.c
-index 6281127b3e9d9..e0fbe964f6f0a 100644
---- a/drivers/cxl/core/regs.c
-+++ b/drivers/cxl/core/regs.c
-@@ -204,7 +204,7 @@ int cxl_map_component_regs(const struct cxl_register_map *map,
- 			   struct cxl_component_regs *regs,
- 			   unsigned long map_mask)
- {
--	struct device *dev = map->dev;
-+	struct device *host = map->host;
- 	struct mapinfo {
- 		const struct cxl_reg_map *rmap;
- 		void __iomem **addr;
-@@ -225,7 +225,7 @@ int cxl_map_component_regs(const struct cxl_register_map *map,
- 			continue;
- 		phys_addr = map->resource + mi->rmap->offset;
- 		length = mi->rmap->size;
--		*(mi->addr) = devm_cxl_iomap_block(dev, phys_addr, length);
-+		*(mi->addr) = devm_cxl_iomap_block(host, phys_addr, length);
- 		if (!*(mi->addr))
- 			return -ENOMEM;
- 	}
-@@ -237,7 +237,7 @@ EXPORT_SYMBOL_NS_GPL(cxl_map_component_regs, CXL);
- int cxl_map_device_regs(const struct cxl_register_map *map,
- 			struct cxl_device_regs *regs)
- {
--	struct device *dev = map->dev;
-+	struct device *host = map->host;
- 	resource_size_t phys_addr = map->resource;
- 	struct mapinfo {
- 		const struct cxl_reg_map *rmap;
-@@ -259,7 +259,7 @@ int cxl_map_device_regs(const struct cxl_register_map *map,
- 
- 		addr = phys_addr + mi->rmap->offset;
- 		length = mi->rmap->size;
--		*(mi->addr) = devm_cxl_iomap_block(dev, addr, length);
-+		*(mi->addr) = devm_cxl_iomap_block(host, addr, length);
- 		if (!*(mi->addr))
- 			return -ENOMEM;
- 	}
-@@ -309,7 +309,7 @@ int cxl_find_regblock_instance(struct pci_dev *pdev, enum cxl_regloc_type type,
- 	int regloc, i;
- 
- 	*map = (struct cxl_register_map) {
--		.dev = &pdev->dev,
-+		.host = &pdev->dev,
- 		.resource = CXL_RESOURCE_NONE,
- 	};
- 
-@@ -403,15 +403,15 @@ EXPORT_SYMBOL_NS_GPL(cxl_map_pmu_regs, CXL);
- 
- static int cxl_map_regblock(struct cxl_register_map *map)
- {
--	struct device *dev = map->dev;
-+	struct device *host = map->host;
- 
- 	map->base = ioremap(map->resource, map->max_size);
- 	if (!map->base) {
--		dev_err(dev, "failed to map registers\n");
-+		dev_err(host, "failed to map registers\n");
- 		return -ENOMEM;
- 	}
- 
--	dev_dbg(dev, "Mapped CXL Memory Device resource %pa\n", &map->resource);
-+	dev_dbg(host, "Mapped CXL Memory Device resource %pa\n", &map->resource);
+diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
+index 8b7ff2f3bdda7..7c041dafff2b1 100644
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -2850,12 +2850,22 @@ static int ov5640_try_fmt_internal(struct v4l2_subdev *sd,
  	return 0;
  }
  
-@@ -425,28 +425,28 @@ static int cxl_probe_regs(struct cxl_register_map *map)
++static void __v4l2_ctrl_vblank_update(struct ov5640_dev *sensor, u32 vblank)
++{
++	const struct ov5640_mode_info *mode = sensor->current_mode;
++
++	__v4l2_ctrl_modify_range(sensor->ctrls.vblank, OV5640_MIN_VBLANK,
++				 OV5640_MAX_VTS - mode->height, 1, vblank);
++
++	__v4l2_ctrl_s_ctrl(sensor->ctrls.vblank, vblank);
++}
++
+ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
  {
- 	struct cxl_component_reg_map *comp_map;
- 	struct cxl_device_reg_map *dev_map;
--	struct device *dev = map->dev;
-+	struct device *host = map->host;
- 	void __iomem *base = map->base;
+ 	const struct ov5640_mode_info *mode = sensor->current_mode;
+ 	enum ov5640_pixel_rate_id pixel_rate_id = mode->pixel_rate;
+ 	struct v4l2_mbus_framefmt *fmt = &sensor->fmt;
+-	const struct ov5640_timings *timings;
++	const struct ov5640_timings *timings = ov5640_timings(sensor, mode);
+ 	s32 exposure_val, exposure_max;
+ 	unsigned int hblank;
+ 	unsigned int i = 0;
+@@ -2874,6 +2884,8 @@ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
+ 		__v4l2_ctrl_s_ctrl_int64(sensor->ctrls.pixel_rate,
+ 					 ov5640_calc_pixel_rate(sensor));
  
- 	switch (map->reg_type) {
- 	case CXL_REGLOC_RBI_COMPONENT:
- 		comp_map = &map->component_map;
--		cxl_probe_component_regs(dev, base, comp_map);
--		dev_dbg(dev, "Set up component registers\n");
-+		cxl_probe_component_regs(host, base, comp_map);
-+		dev_dbg(host, "Set up component registers\n");
- 		break;
- 	case CXL_REGLOC_RBI_MEMDEV:
- 		dev_map = &map->device_map;
--		cxl_probe_device_regs(dev, base, dev_map);
-+		cxl_probe_device_regs(host, base, dev_map);
- 		if (!dev_map->status.valid || !dev_map->mbox.valid ||
- 		    !dev_map->memdev.valid) {
--			dev_err(dev, "registers not found: %s%s%s\n",
-+			dev_err(host, "registers not found: %s%s%s\n",
- 				!dev_map->status.valid ? "status " : "",
- 				!dev_map->mbox.valid ? "mbox " : "",
- 				!dev_map->memdev.valid ? "memdev " : "");
- 			return -ENXIO;
- 		}
++		__v4l2_ctrl_vblank_update(sensor, timings->vblank_def);
++
+ 		return 0;
+ 	}
  
--		dev_dbg(dev, "Probing device registers...\n");
-+		dev_dbg(host, "Probing device registers...\n");
- 		break;
- 	default:
- 		break;
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index 76d92561af294..b5b015b661eae 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -247,7 +247,7 @@ struct cxl_pmu_reg_map {
+@@ -2916,15 +2928,12 @@ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
+ 	__v4l2_ctrl_s_ctrl_int64(sensor->ctrls.pixel_rate, pixel_rate);
+ 	__v4l2_ctrl_s_ctrl(sensor->ctrls.link_freq, i);
  
- /**
-  * struct cxl_register_map - DVSEC harvested register block mapping parameters
-- * @dev: device for devm operations and logging
-+ * @host: device for devm operations and logging
-  * @base: virtual base of the register-block-BAR + @block_offset
-  * @resource: physical resource base of the register block
-  * @max_size: maximum mapping size to perform register search
-@@ -257,7 +257,7 @@ struct cxl_pmu_reg_map {
-  * @pmu_map: cxl_reg_maps for CXL Performance Monitoring Units
-  */
- struct cxl_register_map {
--	struct device *dev;
-+	struct device *host;
- 	void __iomem *base;
- 	resource_size_t resource;
- 	resource_size_t max_size;
-diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-index 0ecd339b5b8e9..bb37e76ef5a68 100644
---- a/drivers/cxl/pci.c
-+++ b/drivers/cxl/pci.c
-@@ -474,7 +474,7 @@ static int cxl_rcrb_get_comp_regs(struct pci_dev *pdev,
- 	resource_size_t component_reg_phys;
+-	timings = ov5640_timings(sensor, mode);
+ 	hblank = timings->htot - mode->width;
+ 	__v4l2_ctrl_modify_range(sensor->ctrls.hblank,
+ 				 hblank, hblank, 1, hblank);
  
- 	*map = (struct cxl_register_map) {
--		.dev = &pdev->dev,
-+		.host = &pdev->dev,
- 		.resource = CXL_RESOURCE_NONE,
- 	};
+ 	vblank = timings->vblank_def;
+-	__v4l2_ctrl_modify_range(sensor->ctrls.vblank, OV5640_MIN_VBLANK,
+-				 OV5640_MAX_VTS - mode->height, 1, vblank);
+-	__v4l2_ctrl_s_ctrl(sensor->ctrls.vblank, vblank);
++	__v4l2_ctrl_vblank_update(sensor, vblank);
  
+ 	exposure_max = timings->crop.height + vblank - 4;
+ 	exposure_val = clamp_t(s32, sensor->ctrls.exposure->val,
 -- 
 2.42.0
 
