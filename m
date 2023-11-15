@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57353A8E7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3393BB29
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8bNeW4H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83891C433C7;
-	Wed, 15 Nov 2023 19:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKeUcqth"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B34C433C7;
+	Wed, 15 Nov 2023 19:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076162;
-	bh=dFkXoJx5U8KcNtyselVr6b8mMVAxoQPjxHjTth1+7IA=;
+	s=korg; t=1700076164;
+	bh=GFjAOVmJDi9Y9ZVjTCbjeu5c0vYxtnJMCSGjhvpNZSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8bNeW4HuJbVQ4RTlUjOFhmJFnaeVubQi++ujN6yEsKEtvD5qIfjpc+cepr0TvpLK
-	 0+WnwjhTp+tmbL/fsoSOwLN6hDrZrLmoOt6+cmt59LL4PkjsmqOT1D0ILWn9qaLet8
-	 P8wb86ARIiHuDvheRFPGrk7IbVy9wsrABpjdilUo=
+	b=eKeUcqth9ZD6Ts8YnGmrdGhAvj8FXqPtRCJAU73gqoYvhvnb3O5s8xiXt3GsGg6W9
+	 feUKyBzdNSlhAULO62yqsg2LUQPak3vPWem1w/ZFxNOCmcDZsEMJVh5fd1Fb+0yByN
+	 6ZYtoAwK0CcP2JWHm1FQPm8HOow6AS+pQPUpMVAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Hsu <howard-yh.hsu@mediatek.com>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
 	Shayne Chen <shayne.chen@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 088/550] wifi: mt76: mt7996: fix beamformee ss subfield in EHT PHY cap
-Date: Wed, 15 Nov 2023 14:11:12 -0500
-Message-ID: <20231115191606.806246112@linuxfoundation.org>
+Subject: [PATCH 6.5 089/550] wifi: mt76: mt7996: fix wmm queue mapping
+Date: Wed, 15 Nov 2023 14:11:13 -0500
+Message-ID: <20231115191606.877179472@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,48 +43,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Howard Hsu <howard-yh.hsu@mediatek.com>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit e19028104b2de5510b43282f632c4b6453568c41 ]
+[ Upstream commit 9b11696e5c5bf6030a32571f3f88845226d8b662 ]
 
-According to P802.11be_D3.2 Table 9-404m, the minimum value of
-Beamformee SS field shall be 3. Fix the values to follow the spec.
+Firmware uses access class index (ACI) for wmm parameters update, so
+convert mac80211 queue to ACI in mt7996_conf_tx().
 
-Fixes: 348533eb968d ("wifi: mt76: mt7996: add EHT capability init")
-Signed-off-by: Howard Hsu <howard-yh.hsu@mediatek.com>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
 Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c | 12 +++++++++---
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c  |  2 +-
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index f1b48cdda58f3..f7344d4c7383a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -729,16 +729,17 @@ mt7996_init_eht_caps(struct mt7996_phy *phy, enum nl80211_band band,
- 		IEEE80211_EHT_PHY_CAP0_SU_BEAMFORMER |
- 		IEEE80211_EHT_PHY_CAP0_SU_BEAMFORMEE;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index f306e9c50ea3b..16db03e86d7a2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -184,7 +184,7 @@ static int mt7996_add_interface(struct ieee80211_hw *hw,
+ 	mvif->mt76.omac_idx = idx;
+ 	mvif->phy = phy;
+ 	mvif->mt76.band_idx = band_idx;
+-	mvif->mt76.wmm_idx = band_idx;
++	mvif->mt76.wmm_idx = vif->type != NL80211_IFTYPE_AP;
  
-+	val = max_t(u8, sts - 1, 3);
- 	eht_cap_elem->phy_cap_info[0] |=
--		u8_encode_bits(u8_get_bits(sts - 1, BIT(0)),
-+		u8_encode_bits(u8_get_bits(val, BIT(0)),
- 			       IEEE80211_EHT_PHY_CAP0_BEAMFORMEE_SS_80MHZ_MASK);
+ 	ret = mt7996_mcu_add_dev_info(phy, vif, true);
+ 	if (ret)
+@@ -414,10 +414,16 @@ mt7996_conf_tx(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 	       const struct ieee80211_tx_queue_params *params)
+ {
+ 	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
++	const u8 mq_to_aci[] = {
++		[IEEE80211_AC_VO] = 3,
++		[IEEE80211_AC_VI] = 2,
++		[IEEE80211_AC_BE] = 0,
++		[IEEE80211_AC_BK] = 1,
++	};
  
- 	eht_cap_elem->phy_cap_info[1] =
--		u8_encode_bits(u8_get_bits(sts - 1, GENMASK(2, 1)),
-+		u8_encode_bits(u8_get_bits(val, GENMASK(2, 1)),
- 			       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_80MHZ_MASK) |
--		u8_encode_bits(sts - 1,
-+		u8_encode_bits(val,
- 			       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_160MHZ_MASK) |
--		u8_encode_bits(sts - 1,
-+		u8_encode_bits(val,
- 			       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_320MHZ_MASK);
++	/* firmware uses access class index */
++	mvif->queue_params[mq_to_aci[queue]] = *params;
+ 	/* no need to update right away, we'll get BSS_CHANGED_QOS */
+-	queue = mt76_connac_lmac_mapping(queue);
+-	mvif->queue_params[queue] = *params;
  
- 	eht_cap_elem->phy_cap_info[2] =
+ 	return 0;
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index 8244bb3561028..6520761d9fe13 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -2580,7 +2580,7 @@ int mt7996_mcu_set_tx(struct mt7996_dev *dev, struct ieee80211_vif *vif)
+ 
+ 		e = (struct edca *)tlv;
+ 		e->set = WMM_PARAM_SET;
+-		e->queue = ac + mvif->mt76.wmm_idx * MT7996_MAX_WMM_SETS;
++		e->queue = ac;
+ 		e->aifs = q->aifs;
+ 		e->txop = cpu_to_le16(q->txop);
+ 
 -- 
 2.42.0
 
