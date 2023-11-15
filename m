@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3B53C46B
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B1B3C46B
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoOQfjxM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133CBC433CB;
-	Wed, 15 Nov 2023 19:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQnutZnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EBAC433C9;
+	Wed, 15 Nov 2023 19:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077329;
-	bh=9zfeSWl/G9okiOKllTgz+g8SXVk7mJigBxjJYh8rzlA=;
+	s=korg; t=1700077330;
+	bh=rP3F7yEZXFlNmvsZY8o6VanRigY46PCJC+jEpSpP/A8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZoOQfjxM14ZZnLDkll+3fgCoufn7gc3lQJ6supbtNinLnH5V3sdvaRvnWejO7whb1
-	 LSdjzffPmADQ6Mm8eX3iTVkqEvJrIWyDXxYHXruaZRXzTfJHYSjgmTrFkkcPr5OIMq
-	 fs5ijD6JdXtaIlZULSKpgtD2XVqjv2+x/P06gARg=
+	b=PQnutZnIqJ1qaUPkyzFKbKG6UP0mSBqHPVqfY8ahOlLVfFvJyEStvBqsscfWUfC3A
+	 Fn3eTgOhmq8Fzv06LJyX0IZR3pVzXw/iSr8fHmi4DJQT5CAzkwJ+7aMhStSDKBZryK
+	 gquBHKjDmQGMKgRC6sVOLGL66eQBuyoQ0Ri7472Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Armin Wolf <W_Armin@gmx.de>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 208/603] hwmon: (sch5627) Use bit macros when accessing the control register
-Date: Wed, 15 Nov 2023 14:12:33 -0500
-Message-ID: <20231115191627.663129375@linuxfoundation.org>
+Subject: [PATCH 6.6 209/603] hwmon: (sch5627) Disallow write access if virtual registers are locked
+Date: Wed, 15 Nov 2023 14:12:34 -0500
+Message-ID: <20231115191627.733538001@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,72 +44,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 7f0b28e0653f36b51542d25dd54ed312c397ecfc ]
+[ Upstream commit 7da8a635436029957c5350da3acf51d78ed64071 ]
 
-Use bit macros then accessing SCH5627_REG_CTRL, so that people
-do not need to look at the datasheet to find out what each bit
-does.
+When the lock bit inside SCH5627_REG_CTRL is set, then the virtual
+registers become read-only until the next power cycle.
+Disallow write access to those registers in such a case.
 
 Tested on a Fujitsu Esprimo P720.
 
+Fixes: aa9f833dfc12 ("hwmon: (sch5627) Add pwmX_auto_channels_temp support")
 Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20230907052639.16491-2-W_Armin@gmx.de
+Link: https://lore.kernel.org/r/20230907052639.16491-3-W_Armin@gmx.de
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 7da8a6354360 ("hwmon: (sch5627) Disallow write access if virtual registers are locked")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sch5627.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/hwmon/sch5627.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/hwmon/sch5627.c b/drivers/hwmon/sch5627.c
-index 1bbda3b05532e..0eefb8c0aef25 100644
+index 0eefb8c0aef25..bf408e35e2c32 100644
 --- a/drivers/hwmon/sch5627.c
 +++ b/drivers/hwmon/sch5627.c
-@@ -6,6 +6,7 @@
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
-+#include <linux/bits.h>
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
- #include <linux/init.h>
-@@ -32,6 +33,9 @@
- #define SCH5627_REG_PRIMARY_ID		0x3f
+@@ -34,6 +34,7 @@
  #define SCH5627_REG_CTRL		0x40
  
-+#define SCH5627_CTRL_START		BIT(0)
-+#define SCH5627_CTRL_VBAT		BIT(4)
-+
+ #define SCH5627_CTRL_START		BIT(0)
++#define SCH5627_CTRL_LOCK		BIT(1)
+ #define SCH5627_CTRL_VBAT		BIT(4)
+ 
  #define SCH5627_NO_TEMPS		8
- #define SCH5627_NO_FANS			4
- #define SCH5627_NO_IN			5
-@@ -147,7 +151,8 @@ static int sch5627_update_in(struct sch5627_data *data)
+@@ -231,6 +232,14 @@ static int reg_to_rpm(u16 reg)
+ static umode_t sch5627_is_visible(const void *drvdata, enum hwmon_sensor_types type, u32 attr,
+ 				  int channel)
+ {
++	const struct sch5627_data *data = drvdata;
++
++	/* Once the lock bit is set, the virtual registers become read-only
++	 * until the next power cycle.
++	 */
++	if (data->control & SCH5627_CTRL_LOCK)
++		return 0444;
++
+ 	if (type == hwmon_pwm && attr == hwmon_pwm_auto_channels_temp)
+ 		return 0644;
  
- 	/* Trigger a Vbat voltage measurement every 5 minutes */
- 	if (time_after(jiffies, data->last_battery + 300 * HZ)) {
--		sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL, data->control | 0x10);
-+		sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL,
-+					  data->control | SCH5627_CTRL_VBAT);
- 		data->last_battery = jiffies;
- 	}
- 
-@@ -483,14 +488,13 @@ static int sch5627_probe(struct platform_device *pdev)
- 		return val;
- 
- 	data->control = val;
--	if (!(data->control & 0x01)) {
-+	if (!(data->control & SCH5627_CTRL_START)) {
- 		pr_err("hardware monitoring not enabled\n");
- 		return -ENODEV;
- 	}
- 	/* Trigger a Vbat voltage measurement, so that we get a valid reading
- 	   the first time we read Vbat */
--	sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL,
--				  data->control | 0x10);
-+	sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL, data->control | SCH5627_CTRL_VBAT);
- 	data->last_battery = jiffies;
- 
- 	/*
 -- 
 2.42.0
 
