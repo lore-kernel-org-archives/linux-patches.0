@@ -1,30 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681E43A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B733364CB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xotVr6BN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179D8C433C7;
-	Wed, 15 Nov 2023 19:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCAao7+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02849C433CA;
+	Wed, 15 Nov 2023 19:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077743;
-	bh=w0+mfBIvdpO3g1mJYBlWXmz4q8GzTrMoepmHqDPri5M=;
+	s=korg; t=1700077745;
+	bh=33FtohS1U9+aX+SDRGV89FE00NQrcc3zyy1jsrvof/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xotVr6BN8aw+ky5KPrwSq5YQyyXcDB36cgzdsEQJulFiViwEJV4dNknTdkSTgS5MY
-	 2bTQPHwKKaziXwLCtj90gMS2G1o++Xo5swkt+LxIcZy982yGm9e2jUPLjYGuz37hVt
-	 zhAgSK0PQlhJpx26o39hx8QyPvc/yPrdMgGdXGzk=
+	b=xCAao7+DRhaZQCBkwNyoT0nGyWavo2qrSgbTSkynSd3slYj+NzJ/zunTjeF4bjyL3
+	 OSPDpd/239p6P3ScesUwfO7I52ZIVuCC1Co4s+ywg+4P0iksNtvwhG+JSlwhftj1i7
+	 Wjh2mVYH+FefJdWfKpJMaQ0USigpi+WzTYix+SbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Stanley <joel@jms.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	gor@linux.ibm.com,
+	hca@linux.ibm.com,
+	sumanthk@linux.ibm.com,
+	svens@linux.ibm.com,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 470/603] powerpc: Hide empty pt_regs at base of the stack
-Date: Wed, 15 Nov 2023 14:16:55 -0500
-Message-ID: <20231115191645.047061666@linuxfoundation.org>
+Subject: [PATCH 6.6 471/603] perf trace: Use the right bpf_probe_read(_str) variant for reading user data
+Date: Wed, 15 Nov 2023 14:16:56 -0500
+Message-ID: <20231115191645.106868851@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,121 +49,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit d45c4b48dafb5820e5cc267ff9a6d7784d13a43c ]
+[ Upstream commit 5069211e2f0b47e75119805e23ae6352d871e263 ]
 
-A thread started via eg. user_mode_thread() runs in the kernel to begin
-with and then may later return to userspace. While it's running in the
-kernel it has a pt_regs at the base of its kernel stack, but that
-pt_regs is all zeroes.
+Perf test case 111 Check open filename arg using perf trace + vfs_getname
+fails on s390. This is caused by a failing function
+bpf_probe_read() in file util/bpf_skel/augmented_raw_syscalls.bpf.c.
 
-If the thread oopses in that state, it leads to an ugly stack trace with
-a big block of zero GPRs, as reported by Joel:
+The root cause is the lookup by address. Function bpf_probe_read()
+is used. This function works only for architectures
+with ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE.
 
-  Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
-  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.5.0-rc7-00004-gf7757129e3de-dirty #3
-  Hardware name: IBM PowerNV (emulated by qemu) POWER9 0x4e1200 opal:v7.0 PowerNV
-  Call Trace:
-  [c0000000036afb00] [c0000000010dd058] dump_stack_lvl+0x6c/0x9c (unreliable)
-  [c0000000036afb30] [c00000000013c524] panic+0x178/0x424
-  [c0000000036afbd0] [c000000002005100] mount_root_generic+0x250/0x324
-  [c0000000036afca0] [c0000000020057d0] prepare_namespace+0x2d4/0x344
-  [c0000000036afd20] [c0000000020049c0] kernel_init_freeable+0x358/0x3ac
-  [c0000000036afdf0] [c0000000000111b0] kernel_init+0x30/0x1a0
-  [c0000000036afe50] [c00000000000debc] ret_from_kernel_user_thread+0x14/0x1c
-  --- interrupt: 0 at 0x0
-  NIP:  0000000000000000 LR: 0000000000000000 CTR: 0000000000000000
-  REGS: c0000000036afe80 TRAP: 0000   Not tainted  (6.5.0-rc7-00004-gf7757129e3de-dirty)
-  MSR:  0000000000000000 <>  CR: 00000000  XER: 00000000
-  CFAR: 0000000000000000 IRQMASK: 0
-  GPR00: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR04: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR08: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR12: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR20: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR24: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR28: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  NIP [0000000000000000] 0x0
-  LR [0000000000000000] 0x0
-  --- interrupt: 0
+On s390 is not possible to determine from the address to which
+address space the address belongs to (user or kernel space).
 
-The all-zero pt_regs looks ugly and conveys no useful information, other
-than its presence. So detect that case and just show the presence of the
-frame by printing the interrupt marker, eg:
+Replace bpf_probe_read() by bpf_probe_read_kernel()
+and bpf_probe_read_str() by bpf_probe_read_user_str() to
+explicity specify the address space the address refers to.
 
-  Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
-  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.5.0-rc3-00126-g18e9506562a0-dirty #301
-  Hardware name: IBM pSeries (emulated by qemu) POWER9 (raw) 0x4e1202 0xf000005 of:SLOF,HEAD hv:linux,kvm pSeries
-  Call Trace:
-  [c000000003aabb00] [c000000001143db8] dump_stack_lvl+0x6c/0x9c (unreliable)
-  [c000000003aabb30] [c00000000014c624] panic+0x178/0x424
-  [c000000003aabbd0] [c0000000020050fc] mount_root_generic+0x250/0x324
-  [c000000003aabca0] [c0000000020057cc] prepare_namespace+0x2d4/0x344
-  [c000000003aabd20] [c0000000020049bc] kernel_init_freeable+0x358/0x3ac
-  [c000000003aabdf0] [c0000000000111b0] kernel_init+0x30/0x1a0
-  [c000000003aabe50] [c00000000000debc] ret_from_kernel_user_thread+0x14/0x1c
-  --- interrupt: 0 at 0x0
+Output before:
+ # ./perf trace -eopen,openat -- touch /tmp/111
+ libbpf: prog 'sys_enter': BPF program load failed: Invalid argument
+ libbpf: prog 'sys_enter': -- BEGIN PROG LOAD LOG --
+ reg type unsupported for arg#0 function sys_enter#75
+ 0: R1=ctx(off=0,imm=0) R10=fp0
+ ; int sys_enter(struct syscall_enter_args *args)
+ 0: (bf) r6 = r1           ; R1=ctx(off=0,imm=0) R6_w=ctx(off=0,imm=0)
+ ; return bpf_get_current_pid_tgid();
+ 1: (85) call bpf_get_current_pid_tgid#14      ; R0_w=scalar()
+ 2: (63) *(u32 *)(r10 -8) = r0 ; R0_w=scalar() R10=fp0 fp-8=????mmmm
+ 3: (bf) r2 = r10              ; R2_w=fp0 R10=fp0
+ ;
+ .....
+ lines deleted here
+ .....
+ 23: (bf) r3 = r6              ; R3_w=ctx(off=0,imm=0) R6=ctx(off=0,imm=0)
+ 24: (85) call bpf_probe_read#4
+ unknown func bpf_probe_read#4
+ processed 23 insns (limit 1000000) max_states_per_insn 0 \
+	 total_states 2 peak_states 2 mark_read 2
+ -- END PROG LOAD LOG --
+ libbpf: prog 'sys_enter': failed to load: -22
+ libbpf: failed to load object 'augmented_raw_syscalls_bpf'
+ libbpf: failed to load BPF skeleton 'augmented_raw_syscalls_bpf': -22
+ ....
 
-To avoid ever suppressing a valid pt_regs make sure the pt_regs has a
-zero MSR and TRAP value, and is located at the very base of the stack.
+Output after:
+ # ./perf test -Fv 111
+ 111: Check open filename arg using perf trace + vfs_getname          :
+ --- start ---
+     1.085 ( 0.011 ms): touch/320753 openat(dfd: CWD, filename: \
+	"/tmp/temporary_file.SWH85", \
+	flags: CREAT|NOCTTY|NONBLOCK|WRONLY, mode: IRUGO|IWUGO) = 3
+ ---- end ----
+ Check open filename arg using perf trace + vfs_getname: Ok
+ #
 
-Fixes: 6895dfc04741 ("powerpc: copy_thread fill in interrupt frame marker and back chain")
-Reported-by: Joel Stanley <joel@jms.id.au>
-Reported-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230824064210.907266-1-mpe@ellerman.id.au
+Test with the sleep command shows:
+Output before:
+ # ./perf trace -e *sleep sleep 1.234567890
+     0.000 (1234.681 ms): sleep/63114 clock_nanosleep(rqtp: \
+         { .tv_sec: 0, .tv_nsec: 0 }, rmtp: 0x3ffe0979720) = 0
+ #
+
+Output after:
+ # ./perf trace -e *sleep sleep 1.234567890
+     0.000 (1234.686 ms): sleep/64277 clock_nanosleep(rqtp: \
+         { .tv_sec: 1, .tv_nsec: 234567890 }, rmtp: 0x3fff3df9ea0) = 0
+ #
+
+Fixes: 14e4b9f4289a ("perf trace: Raw augmented syscalls fix libbpf 1.0+ compatibility")
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Co-developed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: gor@linux.ibm.com
+Cc: hca@linux.ibm.com
+Cc: sumanthk@linux.ibm.com
+Cc: svens@linux.ibm.com
+Link: https://lore.kernel.org/r/20231019082642.3286650-1-tmricht@linux.ibm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/process.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ .../util/bpf_skel/augmented_raw_syscalls.bpf.c   | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/powerpc/kernel/process.c b/arch/powerpc/kernel/process.c
-index b68898ac07e19..392404688cec3 100644
---- a/arch/powerpc/kernel/process.c
-+++ b/arch/powerpc/kernel/process.c
-@@ -2258,6 +2258,22 @@ unsigned long __get_wchan(struct task_struct *p)
- 	return ret;
+diff --git a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
+index 939ec769bf4a5..52c270330ae0d 100644
+--- a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
++++ b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
+@@ -153,7 +153,7 @@ static inline
+ unsigned int augmented_arg__read_str(struct augmented_arg *augmented_arg, const void *arg, unsigned int arg_len)
+ {
+ 	unsigned int augmented_len = sizeof(*augmented_arg);
+-	int string_len = bpf_probe_read_str(&augmented_arg->value, arg_len, arg);
++	int string_len = bpf_probe_read_user_str(&augmented_arg->value, arg_len, arg);
+ 
+ 	augmented_arg->size = augmented_arg->err = 0;
+ 	/*
+@@ -203,7 +203,7 @@ int sys_enter_connect(struct syscall_enter_args *args)
+ 	_Static_assert(is_power_of_2(sizeof(augmented_args->saddr)), "sizeof(augmented_args->saddr) needs to be a power of two");
+ 	socklen &= sizeof(augmented_args->saddr) - 1;
+ 
+-	bpf_probe_read(&augmented_args->saddr, socklen, sockaddr_arg);
++	bpf_probe_read_user(&augmented_args->saddr, socklen, sockaddr_arg);
+ 
+ 	return augmented__output(args, augmented_args, len + socklen);
  }
+@@ -221,7 +221,7 @@ int sys_enter_sendto(struct syscall_enter_args *args)
  
-+static bool empty_user_regs(struct pt_regs *regs, struct task_struct *tsk)
-+{
-+	unsigned long stack_page;
-+
-+	// A non-empty pt_regs should never have a zero MSR or TRAP value.
-+	if (regs->msr || regs->trap)
-+		return false;
-+
-+	// Check it sits at the very base of the stack
-+	stack_page = (unsigned long)task_stack_page(tsk);
-+	if ((unsigned long)(regs + 1) != stack_page + THREAD_SIZE)
-+		return false;
-+
-+	return true;
-+}
-+
- static int kstack_depth_to_print = CONFIG_PRINT_STACK_DEPTH;
+ 	socklen &= sizeof(augmented_args->saddr) - 1;
  
- void __no_sanitize_address show_stack(struct task_struct *tsk,
-@@ -2322,9 +2338,13 @@ void __no_sanitize_address show_stack(struct task_struct *tsk,
- 			lr = regs->link;
- 			printk("%s--- interrupt: %lx at %pS\n",
- 			       loglvl, regs->trap, (void *)regs->nip);
--			__show_regs(regs);
--			printk("%s--- interrupt: %lx\n",
--			       loglvl, regs->trap);
-+
-+			// Detect the case of an empty pt_regs at the very base
-+			// of the stack and suppress showing it in full.
-+			if (!empty_user_regs(regs, tsk)) {
-+				__show_regs(regs);
-+				printk("%s--- interrupt: %lx\n", loglvl, regs->trap);
-+			}
+-	bpf_probe_read(&augmented_args->saddr, socklen, sockaddr_arg);
++	bpf_probe_read_user(&augmented_args->saddr, socklen, sockaddr_arg);
  
- 			firstframe = 1;
- 		}
+ 	return augmented__output(args, augmented_args, len + socklen);
+ }
+@@ -311,7 +311,7 @@ int sys_enter_perf_event_open(struct syscall_enter_args *args)
+         if (augmented_args == NULL)
+ 		goto failure;
+ 
+-	if (bpf_probe_read(&augmented_args->__data, sizeof(*attr), attr) < 0)
++	if (bpf_probe_read_user(&augmented_args->__data, sizeof(*attr), attr) < 0)
+ 		goto failure;
+ 
+ 	attr_read = (const struct perf_event_attr_size *)augmented_args->__data;
+@@ -325,7 +325,7 @@ int sys_enter_perf_event_open(struct syscall_enter_args *args)
+                 goto failure;
+ 
+ 	// Now that we read attr->size and tested it against the size limits, read it completely
+-	if (bpf_probe_read(&augmented_args->__data, size, attr) < 0)
++	if (bpf_probe_read_user(&augmented_args->__data, size, attr) < 0)
+ 		goto failure;
+ 
+ 	return augmented__output(args, augmented_args, len + size);
+@@ -347,7 +347,7 @@ int sys_enter_clock_nanosleep(struct syscall_enter_args *args)
+ 	if (size > sizeof(augmented_args->__data))
+                 goto failure;
+ 
+-	bpf_probe_read(&augmented_args->__data, size, rqtp_arg);
++	bpf_probe_read_user(&augmented_args->__data, size, rqtp_arg);
+ 
+ 	return augmented__output(args, augmented_args, len + size);
+ failure:
+@@ -385,7 +385,7 @@ int sys_enter(struct syscall_enter_args *args)
+ 	if (augmented_args == NULL)
+ 		return 1;
+ 
+-	bpf_probe_read(&augmented_args->args, sizeof(augmented_args->args), args);
++	bpf_probe_read_kernel(&augmented_args->args, sizeof(augmented_args->args), args);
+ 
+ 	/*
+ 	 * Jump to syscall specific augmenter, even if the default one,
+@@ -406,7 +406,7 @@ int sys_exit(struct syscall_exit_args *args)
+ 	if (pid_filter__has(&pids_filtered, getpid()))
+ 		return 0;
+ 
+-	bpf_probe_read(&exit_args, sizeof(exit_args), args);
++	bpf_probe_read_kernel(&exit_args, sizeof(exit_args), args);
+ 	/*
+ 	 * Jump to syscall specific return augmenter, even if the default one,
+ 	 * "!raw_syscalls:unaugmented" that will just return 1 to return the
 -- 
 2.42.0
 
