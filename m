@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F81F43AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A822143AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOy0WLio"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B06C433CB;
-	Wed, 15 Nov 2023 20:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmtZT4GX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540F0C433CC;
+	Wed, 15 Nov 2023 20:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081228;
-	bh=9CELSWkWy0TmUAE5qjjksy+nOIGlULh/X2DqpplCPEU=;
+	s=korg; t=1700081229;
+	bh=1C0x11Vkyzd5ZdjiPA/Nno1cNE5XSnHdIe61a+zls+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GOy0WLio2O5o8S0QcIQ/1Hxz7JNkdEi/qIAk9S4+x/zRKNTGXYZPIVKDQ6PPTUSIT
-	 dNs6BxHqnxE2xHz/h4yj+HqG8o9Ibq5wd2d4gC1YAZQkkWn/zpuejcLKAMDqWGVUM2
-	 g7U0Ald1iATQHfulFBWKI6eYR6/alBJlnhCYQPJk=
+	b=AmtZT4GX2Xrs08+ioVBGAiNXZWOM/vhS7Jj6IqILgqCKYIjwK7YxBK6caQJ/yPGSp
+	 wpuHwlq8V3X1/mleOfYW6ZXuCTQY3h4oGwNvj/rZnviFH5Kg+xJmnpU2KF90Laz+Lf
+	 qsrmOQBPZUC2YDqXT1sDaGBW1SC+thWxbOFkjF1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Neal Cardwell <ncardwell@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 020/244] mlxsw: Use size_mul() in call to struct_size()
-Date: Wed, 15 Nov 2023 15:33:32 -0500
-Message-ID: <20231115203549.575349134@linuxfoundation.org>
+Subject: [PATCH 5.15 029/244] tcp_metrics: add missing barriers on delete
+Date: Wed, 15 Nov 2023 15:33:41 -0500
+Message-ID: <20231115203550.120848358@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -44,37 +44,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e22c6ea025013ae447fe269269753ffec763dde5 ]
+[ Upstream commit cbc3a153222805d65f821e10f4f78b6afce06f86 ]
 
-If, for any reason, the open-coded arithmetic causes a wraparound, the
-protection that `struct_size()` adds against potential integer overflows
-is defeated. Fix this by hardening call to `struct_size()` with `size_mul()`.
+When removing an item from RCU protected list, we must prevent
+store-tearing, using rcu_assign_pointer() or WRITE_ONCE().
 
-Fixes: 2285ec872d9d ("mlxsw: spectrum_acl_bloom_filter: use struct_size() in kzalloc()")
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 04f721c671656 ("tcp_metrics: Rewrite tcp_metrics_flush_all")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_metrics.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
-index dbd3bebf11eca..2e8b17e3b9358 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
-@@ -251,7 +251,7 @@ mlxsw_sp_acl_bf_init(struct mlxsw_sp *mlxsw_sp, unsigned int num_erp_banks)
- 	 * is 2^ACL_MAX_BF_LOG
- 	 */
- 	bf_bank_size = 1 << MLXSW_CORE_RES_GET(mlxsw_sp->core, ACL_MAX_BF_LOG);
--	bf = kzalloc(struct_size(bf, refcnt, bf_bank_size * num_erp_banks),
-+	bf = kzalloc(struct_size(bf, refcnt, size_mul(bf_bank_size, num_erp_banks)),
- 		     GFP_KERNEL);
- 	if (!bf)
- 		return ERR_PTR(-ENOMEM);
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 5df97aaac252e..0275bf7570b4c 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -908,7 +908,7 @@ static void tcp_metrics_flush_all(struct net *net)
+ 			match = net ? net_eq(tm_net(tm), net) :
+ 				!refcount_read(&tm_net(tm)->ns.count);
+ 			if (match) {
+-				*pp = tm->tcpm_next;
++				rcu_assign_pointer(*pp, tm->tcpm_next);
+ 				kfree_rcu(tm, rcu_head);
+ 			} else {
+ 				pp = &tm->tcpm_next;
+@@ -949,7 +949,7 @@ static int tcp_metrics_nl_cmd_del(struct sk_buff *skb, struct genl_info *info)
+ 		if (addr_same(&tm->tcpm_daddr, &daddr) &&
+ 		    (!src || addr_same(&tm->tcpm_saddr, &saddr)) &&
+ 		    net_eq(tm_net(tm), net)) {
+-			*pp = tm->tcpm_next;
++			rcu_assign_pointer(*pp, tm->tcpm_next);
+ 			kfree_rcu(tm, rcu_head);
+ 			found = true;
+ 		} else {
 -- 
 2.42.0
 
