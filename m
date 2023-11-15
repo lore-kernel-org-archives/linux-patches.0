@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F5643AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658C043AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nK7uNY9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A30EC433C7;
-	Wed, 15 Nov 2023 20:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Idqrujhv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189D3C433C7;
+	Wed, 15 Nov 2023 20:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081154;
-	bh=GFufORipAGPuid5m4wGJd3YX8mOsi8CwcIOhy31RorI=;
+	s=korg; t=1700081156;
+	bh=E/p8Fr+DYHEZ7EFh7XQjZei2IsXGCxWxhHHee4ghGow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nK7uNY9LvRCQY42WmkndCyeCRy5/urE9ngi9ANsNPUJDvk5j2+P3aWPLqrlsmnyGj
-	 jYfjgGHZj/lnh9vqgyp/P3CXtRtzOuUog3tZ2Sx4Z1s+Vx6BCZWBe4WjWzSMZ8r0l1
-	 vurN+mMnHimbnNYPkWY/VfamEc+AG0k4iTjIhs5o=
+	b=Idqrujhvd1002JVtyA+Dl5N6QHpxGiXHu4+F03Vji/ORjit/IY8N+LC7ylToE9gx8
+	 ZDBTjyYHez879u0SBAdLl0TIS3NGdcYTfqQU1eVwn9jP8UtBVK15lXvGFppOAuJVXV
+	 wyYCrx9+QiMoBgMmYC6Y1NIykdojt1OlhOD3XUm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 70/88] pwm: brcmstb: Utilize appropriate clock APIs in suspend/resume
-Date: Wed, 15 Nov 2023 15:36:22 -0500
-Message-ID: <20231115191430.312357267@linuxfoundation.org>
+Subject: [PATCH 4.19 71/88] Input: synaptics-rmi4 - fix use after free in rmi_unregister_function()
+Date: Wed, 15 Nov 2023 15:36:23 -0500
+Message-ID: <20231115191430.368855398@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -37,53 +36,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit e9bc4411548aaa738905d37851a0146c16b3bb21 ]
+[ Upstream commit eb988e46da2e4eae89f5337e047ce372fe33d5b1 ]
 
-The suspend/resume functions currently utilize
-clk_disable()/clk_enable() respectively which may be no-ops with certain
-clock providers such as SCMI. Fix this to use clk_disable_unprepare()
-and clk_prepare_enable() respectively as we should.
+The put_device() calls rmi_release_function() which frees "fn" so the
+dereference on the next line "fn->num_of_irqs" is a use after free.
+Move the put_device() to the end to fix this.
 
-Fixes: 3a9f5957020f ("pwm: Add Broadcom BCM7038 PWM controller support")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 24d28e4f1271 ("Input: synaptics-rmi4 - convert irq distribution to irq_domain")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/706efd36-7561-42f3-adfa-dd1d0bd4f5a1@moroto.mountain
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-brcmstb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/rmi4/rmi_bus.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-brcmstb.c b/drivers/pwm/pwm-brcmstb.c
-index 8063cffa1c960..5d7842a62d594 100644
---- a/drivers/pwm/pwm-brcmstb.c
-+++ b/drivers/pwm/pwm-brcmstb.c
-@@ -307,7 +307,7 @@ static int brcmstb_pwm_suspend(struct device *dev)
- {
- 	struct brcmstb_pwm *p = dev_get_drvdata(dev);
+diff --git a/drivers/input/rmi4/rmi_bus.c b/drivers/input/rmi4/rmi_bus.c
+index bd0d5ff01b08f..02408487b4423 100644
+--- a/drivers/input/rmi4/rmi_bus.c
++++ b/drivers/input/rmi4/rmi_bus.c
+@@ -279,11 +279,11 @@ void rmi_unregister_function(struct rmi_function *fn)
  
--	clk_disable(p->clk);
-+	clk_disable_unprepare(p->clk);
+ 	device_del(&fn->dev);
+ 	of_node_put(fn->dev.of_node);
+-	put_device(&fn->dev);
  
- 	return 0;
+ 	for (i = 0; i < fn->num_of_irqs; i++)
+ 		irq_dispose_mapping(fn->irq[i]);
+ 
++	put_device(&fn->dev);
  }
-@@ -316,7 +316,7 @@ static int brcmstb_pwm_resume(struct device *dev)
- {
- 	struct brcmstb_pwm *p = dev_get_drvdata(dev);
  
--	clk_enable(p->clk);
-+	clk_prepare_enable(p->clk);
- 
- 	return 0;
- }
+ /**
 -- 
 2.42.0
 
