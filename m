@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB4643ADE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020A643ADE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qr1gHPPW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125E3C43215;
-	Wed, 15 Nov 2023 20:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2Ci9LZT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A771AC43397;
+	Wed, 15 Nov 2023 20:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081862;
-	bh=eW1rWA9je24qj0X5hfTrAgH1S7yPWliW2eFjIa2WPJg=;
+	s=korg; t=1700081863;
+	bh=9VyzdEBC/G+ZF4LgXdSrCmDisnTHHVCA1rHM3viPK1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qr1gHPPWxwmbCImGSADD8RK8UvsZDtnfslM1ED0YQQr0+EyyAST9fo0fgIVm0bWTK
-	 bW0F1zQADEqCBQXAqkL0iPc2kw1UTAlc2dDLLjssy0cZ6U/Yzx9Mkky1e3akovdUWL
-	 jGIx3ZBHTM+g47cvcVzHwwiTPYJg1xvKdxRXiWDQ=
+	b=S2Ci9LZTFP9IfkDuc9CCIzHij3ILNagRRaf2TOn1FKHQyLGaTlCwBWdOG71UveqNb
+	 j6qHPfKA19fVCrJGOG+Nm0DoxK1eHe5H6DsY53tixrhvujAyevHa+rLKdOlK6pWTGj
+	 heCVJ1q2mvIi0yQ6Sx7iYi1xtUM0Ck8XkjK5GMZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Furong Xu <0x1207@gmail.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 173/191] net: stmmac: xgmac: Enable support for multiple Flexible PPS outputs
-Date: Wed, 15 Nov 2023 15:47:28 -0500
-Message-ID: <20231115204654.822170609@linuxfoundation.org>
+Subject: [PATCH 5.10 174/191] net/smc: fix dangling sock under state SMC_APPFINCLOSEWAIT
+Date: Wed, 15 Nov 2023 15:47:29 -0500
+Message-ID: <20231115204654.881613566@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -44,66 +43,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Furong Xu <0x1207@gmail.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit db456d90a4c1b43b6251fa4348c8adc59b583274 ]
+[ Upstream commit 5211c9729484c923f8d2e06bd29f9322cc42bb8f ]
 
->From XGMAC Core 3.20 and later, each Flexible PPS has individual PPSEN bit
-to select Fixed mode or Flexible mode. The PPSEN must be set, or it stays
-in Fixed PPS mode by default.
-XGMAC Core prior 3.20, only PPSEN0(bit 4) is writable. PPSEN{1,2,3} are
-read-only reserved, and they are already in Flexible mode by default, our
-new code always set PPSEN{1,2,3} do not make things worse ;-)
+Considering scenario:
 
-Fixes: 95eaf3cd0a90 ("net: stmmac: dwxgmac: Add Flexible PPS support")
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Furong Xu <0x1207@gmail.com>
+				smc_cdc_rx_handler
+__smc_release
+				sock_set_flag
+smc_close_active()
+sock_set_flag
+
+__set_bit(DEAD)			__set_bit(DONE)
+
+Dues to __set_bit is not atomic, the DEAD or DONE might be lost.
+if the DEAD flag lost, the state SMC_CLOSED  will be never be reached
+in smc_close_passive_work:
+
+if (sock_flag(sk, SOCK_DEAD) &&
+	smc_close_sent_any_close(conn)) {
+	sk->sk_state = SMC_CLOSED;
+} else {
+	/* just shutdown, but not yet closed locally */
+	sk->sk_state = SMC_APPFINCLOSEWAIT;
+}
+
+Replace sock_set_flags or __set_bit to set_bit will fix this problem.
+Since set_bit is atomic.
+
+Fixes: b38d732477e4 ("smc: socket closing and linkgroup cleanup")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h     |  2 +-
- .../net/ethernet/stmicro/stmmac/dwxgmac2_core.c    | 14 +++++++++++++-
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ net/smc/af_smc.c    | 4 ++--
+ net/smc/smc.h       | 5 +++++
+ net/smc/smc_cdc.c   | 2 +-
+ net/smc/smc_close.c | 2 +-
+ 4 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-index 6c3b8a950f58d..eee58e0513877 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-@@ -222,7 +222,7 @@
- 	((val) << XGMAC_PPS_MINIDX(x))
- #define XGMAC_PPSCMD_START		0x2
- #define XGMAC_PPSCMD_STOP		0x5
--#define XGMAC_PPSEN0			BIT(4)
-+#define XGMAC_PPSENx(x)			BIT(4 + (x) * 8)
- #define XGMAC_PPSx_TARGET_TIME_SEC(x)	(0x00000d80 + (x) * 0x10)
- #define XGMAC_PPSx_TARGET_TIME_NSEC(x)	(0x00000d84 + (x) * 0x10)
- #define XGMAC_TRGTBUSY0			BIT(31)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-index ad4df9bddcf35..b060667463028 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -1132,7 +1132,19 @@ static int dwxgmac2_flex_pps_config(void __iomem *ioaddr, int index,
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 8ab84926816f6..9fc47292b68d8 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -143,7 +143,7 @@ static int __smc_release(struct smc_sock *smc)
  
- 	val |= XGMAC_PPSCMDx(index, XGMAC_PPSCMD_START);
- 	val |= XGMAC_TRGTMODSELx(index, XGMAC_PPSCMD_START);
--	val |= XGMAC_PPSEN0;
+ 	if (!smc->use_fallback) {
+ 		rc = smc_close_active(smc);
+-		sock_set_flag(sk, SOCK_DEAD);
++		smc_sock_set_flag(sk, SOCK_DEAD);
+ 		sk->sk_shutdown |= SHUTDOWN_MASK;
+ 	} else {
+ 		if (sk->sk_state != SMC_CLOSED) {
+@@ -1169,7 +1169,7 @@ static int smc_clcsock_accept(struct smc_sock *lsmc, struct smc_sock **new_smc)
+ 		if (new_clcsock)
+ 			sock_release(new_clcsock);
+ 		new_sk->sk_state = SMC_CLOSED;
+-		sock_set_flag(new_sk, SOCK_DEAD);
++		smc_sock_set_flag(new_sk, SOCK_DEAD);
+ 		sock_put(new_sk); /* final */
+ 		*new_smc = NULL;
+ 		goto out;
+diff --git a/net/smc/smc.h b/net/smc/smc.h
+index e6919fe31617b..1eee40ec1d969 100644
+--- a/net/smc/smc.h
++++ b/net/smc/smc.h
+@@ -297,4 +297,9 @@ static inline bool using_ipsec(struct smc_sock *smc)
+ struct sock *smc_accept_dequeue(struct sock *parent, struct socket *new_sock);
+ void smc_close_non_accepted(struct sock *sk);
+ 
++static inline void smc_sock_set_flag(struct sock *sk, enum sock_flags flag)
++{
++	set_bit(flag, &sk->sk_flags);
++}
 +
-+	/* XGMAC Core has 4 PPS outputs at most.
-+	 *
-+	 * Prior XGMAC Core 3.20, Fixed mode or Flexible mode are selectable for
-+	 * PPS0 only via PPSEN0. PPS{1,2,3} are in Flexible mode by default,
-+	 * and can not be switched to Fixed mode, since PPSEN{1,2,3} are
-+	 * read-only reserved to 0.
-+	 * But we always set PPSEN{1,2,3} do not make things worse ;-)
-+	 *
-+	 * From XGMAC Core 3.20 and later, PPSEN{0,1,2,3} are writable and must
-+	 * be set, or the PPS outputs stay in Fixed PPS mode by default.
-+	 */
-+	val |= XGMAC_PPSENx(index);
+ #endif	/* __SMC_H */
+diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
+index 9125d28d9ff5d..78c212a7f617b 100644
+--- a/net/smc/smc_cdc.c
++++ b/net/smc/smc_cdc.c
+@@ -370,7 +370,7 @@ static void smc_cdc_msg_recv_action(struct smc_sock *smc,
+ 		smc->sk.sk_shutdown |= RCV_SHUTDOWN;
+ 		if (smc->clcsock && smc->clcsock->sk)
+ 			smc->clcsock->sk->sk_shutdown |= RCV_SHUTDOWN;
+-		sock_set_flag(&smc->sk, SOCK_DONE);
++		smc_sock_set_flag(&smc->sk, SOCK_DONE);
+ 		sock_hold(&smc->sk); /* sock_put in close_work */
+ 		if (!queue_work(smc_close_wq, &conn->close_work))
+ 			sock_put(&smc->sk);
+diff --git a/net/smc/smc_close.c b/net/smc/smc_close.c
+index 149a59ecd299f..0790cac9ae3ee 100644
+--- a/net/smc/smc_close.c
++++ b/net/smc/smc_close.c
+@@ -170,7 +170,7 @@ void smc_close_active_abort(struct smc_sock *smc)
+ 		break;
+ 	}
  
- 	writel(cfg->start.tv_sec, ioaddr + XGMAC_PPSx_TARGET_TIME_SEC(index));
+-	sock_set_flag(sk, SOCK_DEAD);
++	smc_sock_set_flag(sk, SOCK_DEAD);
+ 	sk->sk_state_change(sk);
  
+ 	if (release_clcsock) {
 -- 
 2.42.0
 
