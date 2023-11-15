@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F49A41A84
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB6B41A80
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3ycQ9j3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AFEC433CB;
-	Wed, 15 Nov 2023 19:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmk7TxnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72749C433C8;
+	Wed, 15 Nov 2023 19:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076806;
-	bh=DJk2KLPQM7PNfi4+4Kf/qR1vv2u9z2syQzoNbhHX+Xw=;
+	s=korg; t=1700076807;
+	bh=qEGEOlliKdR+zWxudznqumfRxM5bVRW/i+XFhM/I2B8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3ycQ9j3a2bmvRC+QZ9EvWn4LiWSxzc2H+bbqQC5JxUQ6ZNBxDWtYVbJoVOIB1G7/
-	 YyGotO/WZM6Y3rDYuM7IQkZgf+aVyUjMMg8uGbabqpXqB2sWLVkTIx6+JjPykyWxs+
-	 reI8U/2DCx6zsCmcxrCI7TTpfPim8ldWpyxhCXrM=
+	b=cmk7TxnVCd9acSmGck0BtfrE0pScOqTDJeXaX8GFLVY32//aQFNCSlJ6yCIO3YPnI
+	 LO3/wVrH4m0XGiENMu9FJ1doyniAJMP1RLBM57qvz3ZvfIHs6i/vRnLZAhfPxSaCH8
+	 lJ8EvvxLnwpZH6k+Ui93C1ly9u2tlR3wbhM96P00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Aaron Plattner <aplattner@nvidia.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 409/550] interconnect: qcom: sc7280: Set ACV enable_mask
-Date: Wed, 15 Nov 2023 14:16:33 -0500
-Message-ID: <20231115191629.117431049@linuxfoundation.org>
+Subject: [PATCH 6.6 009/603] objtool: Propagate early errors
+Date: Wed, 15 Nov 2023 14:09:14 -0500
+Message-ID: <20231115191613.783469044@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,37 +38,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Aaron Plattner <aplattner@nvidia.com>
 
-[ Upstream commit 437b8e7fcd5df792cb8b8095e9f6eccefec6c099 ]
+[ Upstream commit e959c279d391c10b35ce300fb4b0fe3b98e86bd2 ]
 
-ACV expects an enable_mask corresponding to the APPS RSC, fill it in.
+If objtool runs into a problem that causes it to exit early, the overall
+tool still returns a status code of 0, which causes the build to
+continue as if nothing went wrong.
 
-Fixes: 46bdcac533cc ("interconnect: qcom: Add SC7280 interconnect provider driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230811-topic-acv-v2-3-765ad70e539a@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Note this only affects early errors, as later errors are still ignored
+by check().
+
+Fixes: b51277eb9775 ("objtool: Ditch subcommands")
+Signed-off-by: Aaron Plattner <aplattner@nvidia.com>
+Link: https://lore.kernel.org/r/cb6a28832d24b2ebfafd26da9abb95f874c83045.1696355111.git.aplattner@nvidia.com
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/sc7280.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/objtool/objtool.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
-index 971f538bc98ad..3c39edd21b6ca 100644
---- a/drivers/interconnect/qcom/sc7280.c
-+++ b/drivers/interconnect/qcom/sc7280.c
-@@ -1284,6 +1284,7 @@ static struct qcom_icc_node srvc_snoc = {
+diff --git a/tools/objtool/objtool.c b/tools/objtool/objtool.c
+index c54f7235c5d94..f40febdd6e36a 100644
+--- a/tools/objtool/objtool.c
++++ b/tools/objtool/objtool.c
+@@ -146,7 +146,5 @@ int main(int argc, const char **argv)
+ 	exec_cmd_init("objtool", UNUSED, UNUSED, UNUSED);
+ 	pager_init(UNUSED);
  
- static struct qcom_icc_bcm bcm_acv = {
- 	.name = "ACV",
-+	.enable_mask = BIT(3),
- 	.num_nodes = 1,
- 	.nodes = { &ebi },
- };
+-	objtool_run(argc, argv);
+-
+-	return 0;
++	return objtool_run(argc, argv);
+ }
 -- 
 2.42.0
 
