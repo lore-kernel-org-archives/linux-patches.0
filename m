@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DABA3BB2C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0243BB33
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLhwtoUW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD363C433C9;
-	Wed, 15 Nov 2023 19:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5APWXdY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A07C433C9;
+	Wed, 15 Nov 2023 19:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078097;
-	bh=Gbj0sIa13sAJcySTYcPIKVpQz2eyUQEEv05shIUoM3s=;
+	s=korg; t=1700078098;
+	bh=tkJAR12LY+c2zZo+vUN/kMEwZhbMgZK3eLEviq3sLcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DLhwtoUW539pWFc+3uPCvDk98ou+GyBf6sRzGF0wbib9iRgMz7QamZuYT0jnMCTv9
-	 3vyePE4WrMCB5bbk4u6frOLv71oj8O/5NNmRSuMXOGm/dlpqWD5cXh8/9k9+A+GzOS
-	 c5/f4XWvT1JO0PfxfKBwlnGviHTgNbgBniR663Ss=
+	b=n5APWXdYenSPxvOeH+qZnLyMXIaRegh4f6c0YUZOnDjPACbb0Y3qEBHT/wh/ncI4G
+	 N5cth/J+LBEP1kS7sA6roqXz0R3EEqgqbu3r74wCuW1ydn/Ve3P9nVSCvPPRH1zqnw
+	 fSaV4re/UHZ/2NOAE07a2KUxFDZJdg2ipwEKvR9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/379] platform/x86: wmi: Fix opening of char device
-Date: Wed, 15 Nov 2023 14:23:02 -0500
-Message-ID: <20231115192651.458460589@linuxfoundation.org>
+Subject: [PATCH 6.1 084/379] clk: imx: Select MXC_CLK for CLK_IMX8QXP
+Date: Wed, 15 Nov 2023 14:22:39 -0500
+Message-ID: <20231115192650.106759337@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -36,71 +37,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit eba9ac7abab91c8f6d351460239108bef5e7a0b6 ]
+[ Upstream commit 317e69c49b4ceef8aebb47d771498ccb3571bdf9 ]
 
-Since commit fa1f68db6ca7 ("drivers: misc: pass miscdevice pointer via
-file private data"), the miscdevice stores a pointer to itself inside
-filp->private_data, which means that private_data will not be NULL when
-wmi_char_open() is called. This might cause memory corruption should
-wmi_char_open() be unable to find its driver, something which can
-happen when the associated WMI device is deleted in wmi_free_devices().
+If the i.MX8QXP clock provider is built-in but the MXC_CLK is
+built as module, build fails:
 
-Fix the problem by using the miscdevice pointer to retrieve the WMI
-device data associated with a char device using container_of(). This
-also avoids wmi_char_open() picking a wrong WMI device bound to a
-driver with the same name as the original driver.
+aarch64-linux-ld: drivers/clk/imx/clk-imx8-acm.o: in function `imx8_acm_clk_probe':
+clk-imx8-acm.c:(.text+0x3d0): undefined reference to `imx_check_clk_hws'
 
-Fixes: 44b6b7661132 ("platform/x86: wmi: create userspace interface for drivers")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20231020211005.38216-5-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fix that by selecting MXC_CLK in case of CLK_IMX8QXP.
+
+Fixes: c2cccb6d0b33 ("clk: imx: add imx8qxp clk driver")
+Closes: https://lore.kernel.org/all/8b77219e-b59e-40f1-96f1-980a0b2debcf@infradead.org/
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/wmi.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ drivers/clk/imx/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
-index 0fcfdc574191b..2b79377cc21e2 100644
---- a/drivers/platform/x86/wmi.c
-+++ b/drivers/platform/x86/wmi.c
-@@ -849,21 +849,13 @@ static int wmi_dev_match(struct device *dev, struct device_driver *driver)
- }
- static int wmi_char_open(struct inode *inode, struct file *filp)
- {
--	const char *driver_name = filp->f_path.dentry->d_iname;
--	struct wmi_block *wblock;
--	struct wmi_block *next;
--
--	list_for_each_entry_safe(wblock, next, &wmi_block_list, list) {
--		if (!wblock->dev.dev.driver)
--			continue;
--		if (strcmp(driver_name, wblock->dev.dev.driver->name) == 0) {
--			filp->private_data = wblock;
--			break;
--		}
--	}
-+	/*
-+	 * The miscdevice already stores a pointer to itself
-+	 * inside filp->private_data
-+	 */
-+	struct wmi_block *wblock = container_of(filp->private_data, struct wmi_block, char_dev);
+diff --git a/drivers/clk/imx/Kconfig b/drivers/clk/imx/Kconfig
+index 25785ec9c2762..f219004b8a337 100644
+--- a/drivers/clk/imx/Kconfig
++++ b/drivers/clk/imx/Kconfig
+@@ -96,6 +96,7 @@ config CLK_IMX8QXP
+ 	depends on (ARCH_MXC && ARM64) || COMPILE_TEST
+ 	depends on IMX_SCU && HAVE_ARM_SMCCC
+ 	select MXC_CLK_SCU
++	select MXC_CLK
+ 	help
+ 	  Build the driver for IMX8QXP SCU based clocks.
  
--	if (!filp->private_data)
--		return -ENODEV;
-+	filp->private_data = wblock;
- 
- 	return nonseekable_open(inode, filp);
- }
 -- 
 2.42.0
 
