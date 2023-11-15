@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754733BB2C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0190E3BB42
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSm4SIRE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B99C433C9;
-	Wed, 15 Nov 2023 19:54:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kw19OVt8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDD7C433C8;
+	Wed, 15 Nov 2023 19:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078092;
-	bh=Jcw8E3nd0H2Xt0GPw8VscmIUaw0QEiQwM059AljLJpc=;
+	s=korg; t=1700078093;
+	bh=8AiF/XJNDtTP9l2B2nz3yVEDowKIg4BrS7Oa8qKXB3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MSm4SIREhcMXJyeOe9MFzvD8KOE/EJr8G6bLqWtbrVvdO9tsOXDhHPrCHDJH3o5ZJ
-	 EJZ94ThYlYw0Yfx0Lp3rzAW+HsQJikcilDRejYwjgqkgKj7K8VZJVBoczoguUgkvP7
-	 mUvS//lCYnRoUF6IOBr9zXaMhYD4q8X3UjeBCsJo=
+	b=Kw19OVt8ZUqJx4ObeH8qrj+DsoxvDeT8iuM+1ay3EXbo9r7RUOWpN4i+9N7sUc8VB
+	 ENJc04qe6p18X2MLxYm1so7XyeZNF+amWo9mB3xcDdOa0ees5HhZZBLBPbPWl3oEYz
+	 AJvWJMj/SJ8EITKqPjovXbVq9YLi/+wsM0W6kKo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	kernel test robot <yujie.liu@intel.com>,
+	Varadarajan Narayanan <quic_varada@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/379] clk: mediatek: clk-mt2701: Add check for mtk_alloc_clk_data
-Date: Wed, 15 Nov 2023 14:22:59 -0500
-Message-ID: <20231115192651.283995114@linuxfoundation.org>
+Subject: [PATCH 6.1 105/379] clk: qcom: config IPQ_APSS_6018 should depend on QCOM_SMEM
+Date: Wed, 15 Nov 2023 14:23:00 -0500
+Message-ID: <20231115192651.341148392@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -44,64 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-[ Upstream commit 0d6e24b422a2166a9297a8286ff2e6ab9a5e8cd3 ]
+[ Upstream commit 6a15647d0adc686226045e8046369f34d6ab03ed ]
 
-Add the check for the return value of mtk_alloc_clk_data() in order to
-avoid NULL pointer dereference.
+The config IPQ_APSS_6018 should depend on QCOM_SMEM, to
+avoid the following error reported by 'kernel test robot'
 
-Fixes: e9862118272a ("clk: mediatek: Add MT2701 clock support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230901024658.23405-1-jiasheng@iscas.ac.cn
-Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+	loongarch64-linux-ld: drivers/clk/qcom/apss-ipq6018.o: in function `apss_ipq6018_probe':
+	>> apss-ipq6018.c:(.text+0xd0): undefined reference to `qcom_smem_get_soc_id'
+
+Fixes: 5e77b4ef1b19 ("clk: qcom: Add ipq6018 apss clock controller")
+Reported-by: kernel test robot <yujie.liu@intel.com>
+Closes: https://lore.kernel.org/r/202310181650.g8THtfsm-lkp@intel.com/
+Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+Link: https://lore.kernel.org/r/f4c4d65a7cb71e807d6d472c63c7718408c8f5f0.1697781921.git.quic_varada@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt2701.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/clk/qcom/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/mediatek/clk-mt2701.c b/drivers/clk/mediatek/clk-mt2701.c
-index 1c3a93143dc5e..00d2e81bdd43e 100644
---- a/drivers/clk/mediatek/clk-mt2701.c
-+++ b/drivers/clk/mediatek/clk-mt2701.c
-@@ -670,6 +670,8 @@ static int mtk_topckgen_init(struct platform_device *pdev)
- 		return PTR_ERR(base);
- 
- 	clk_data = mtk_alloc_clk_data(CLK_TOP_NR);
-+	if (!clk_data)
-+		return -ENOMEM;
- 
- 	mtk_clk_register_fixed_clks(top_fixed_clks, ARRAY_SIZE(top_fixed_clks),
- 								clk_data);
-@@ -749,6 +751,8 @@ static void __init mtk_infrasys_init_early(struct device_node *node)
- 
- 	if (!infra_clk_data) {
- 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
-+		if (!infra_clk_data)
-+			return;
- 
- 		for (i = 0; i < CLK_INFRA_NR; i++)
- 			infra_clk_data->hws[i] = ERR_PTR(-EPROBE_DEFER);
-@@ -776,6 +780,8 @@ static int mtk_infrasys_init(struct platform_device *pdev)
- 
- 	if (!infra_clk_data) {
- 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
-+		if (!infra_clk_data)
-+			return -ENOMEM;
- 	} else {
- 		for (i = 0; i < CLK_INFRA_NR; i++) {
- 			if (infra_clk_data->hws[i] == ERR_PTR(-EPROBE_DEFER))
-@@ -893,6 +899,8 @@ static int mtk_pericfg_init(struct platform_device *pdev)
- 		return PTR_ERR(base);
- 
- 	clk_data = mtk_alloc_clk_data(CLK_PERI_NR);
-+	if (!clk_data)
-+		return -ENOMEM;
- 
- 	mtk_clk_register_gates(node, peri_clks, ARRAY_SIZE(peri_clks),
- 						clk_data);
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 76e6dee450d59..cbf55949c6493 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -127,6 +127,7 @@ config IPQ_APSS_6018
+ 	tristate "IPQ APSS Clock Controller"
+ 	select IPQ_APSS_PLL
+ 	depends on QCOM_APCS_IPC || COMPILE_TEST
++	depends on QCOM_SMEM
+ 	help
+ 	  Support for APSS clock controller on IPQ platforms. The
+ 	  APSS clock controller manages the Mux and enable block that feeds the
 -- 
 2.42.0
 
