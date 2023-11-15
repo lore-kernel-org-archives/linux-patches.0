@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE3743AA6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A5D43AA6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRFznVQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC23C433C7;
-	Wed, 15 Nov 2023 20:44:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfptOv3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053C3C433C8;
+	Wed, 15 Nov 2023 20:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081052;
-	bh=t6LAKxfYnfxge0l7MdF9EQLgN+08WJHaC/4X++RmunA=;
+	s=korg; t=1700081054;
+	bh=kKUf83sNp359ir2ft0yi1H8yQK3xI4EZAGH3Kx4p++4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wRFznVQfFWBci9wkxtKSdCFaf7dTAzNH9ytwPAHsNj2lG9IFeEzYa8Yq4aP7H460j
-	 6hfIDgkIWgaP6jJaAV6VVH2K7rzfzM8XT28FW7ZA+hHCGVwULBfDZqmi4b6EnoApuU
-	 /oage1ga4LaSS/jKHtoIyCfQWn27V/Xif/jEEuxs=
+	b=MfptOv3Kqkjwfec6GXprv+YlhJLqhuVYYlaDekFa+k513Id+TqsDMBYXYLtRk0g67
+	 rRfc2sV71bLPcg65s6d3DpkyiO3+r01OFu93l5qVR/PqUaZLSPM9Lci66Nr8Q6Ryg4
+	 nJJ7vTBO1Y2x/rQD85/1f3guw1sNu50zOUmEKnWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reuben Hawkins <reubenhwk@gmail.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 01/88] vfs: fix readahead(2) on block devices
-Date: Wed, 15 Nov 2023 15:35:13 -0500
-Message-ID: <20231115191426.291570066@linuxfoundation.org>
+Subject: [PATCH 4.19 10/88] can: dev: can_restart(): fix race condition between controller restart and netif_carrier_on()
+Date: Wed, 15 Nov 2023 15:35:22 -0500
+Message-ID: <20231115191426.799403647@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -43,41 +42,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reuben Hawkins <reubenhwk@gmail.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 7116c0af4b8414b2f19fdb366eea213cbd9d91c2 ]
+[ Upstream commit 6841cab8c4504835e4011689cbdb3351dec693fd ]
 
-Readahead was factored to call generic_fadvise.  That refactor added an
-S_ISREG restriction which broke readahead on block devices.
+This race condition was discovered while updating the at91_can driver
+to use can_bus_off(). The following scenario describes how the
+converted at91_can driver would behave.
 
-In addition to S_ISREG, this change checks S_ISBLK to fix block device
-readahead.  There is no change in behavior with any file type besides block
-devices in this change.
+When a CAN device goes into BUS-OFF state, the driver usually
+stops/resets the CAN device and calls can_bus_off().
 
-Fixes: 3d8f7615319b ("vfs: implement readahead(2) using POSIX_FADV_WILLNEED")
-Signed-off-by: Reuben Hawkins <reubenhwk@gmail.com>
-Link: https://lore.kernel.org/r/20231003015704.2415-1-reubenhwk@gmail.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+This function sets the netif carrier to off, and (if configured by
+user space) schedules a delayed work that calls can_restart() to
+restart the CAN device.
+
+The can_restart() function first checks if the carrier is off and
+triggers an error message if the carrier is OK.
+
+Then it calls the driver's do_set_mode() function to restart the
+device, then it sets the netif carrier to on. There is a race window
+between these two calls.
+
+The at91 CAN controller (observed on the sama5d3, a single core 32 bit
+ARM CPU) has a hardware limitation. If the device goes into bus-off
+while sending a CAN frame, there is no way to abort the sending of
+this frame. After the controller is enabled again, another attempt is
+made to send it.
+
+If the bus is still faulty, the device immediately goes back to the
+bus-off state. The driver calls can_bus_off(), the netif carrier is
+switched off and another can_restart is scheduled. This occurs within
+the race window before the original can_restart() handler marks the
+netif carrier as OK. This would cause the 2nd can_restart() to be
+called with an OK netif carrier, resulting in an error message.
+
+The flow of the 1st can_restart() looks like this:
+
+can_restart()
+    // bail out if netif_carrier is OK
+
+    netif_carrier_ok(dev)
+    priv->do_set_mode(dev, CAN_MODE_START)
+        // enable CAN controller
+        // sama5d3 restarts sending old message
+
+        // CAN devices goes into BUS_OFF, triggers IRQ
+
+// IRQ handler start
+    at91_irq()
+        at91_irq_err_line()
+            can_bus_off()
+                netif_carrier_off()
+                schedule_delayed_work()
+// IRQ handler end
+
+    netif_carrier_on()
+
+The 2nd can_restart() will be called with an OK netif carrier and the
+error message will be printed.
+
+To close the race window, first set the netif carrier to on, then
+restart the controller. In case the restart fails with an error code,
+roll back the netif carrier to off.
+
+Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
+Link: https://lore.kernel.org/all/20231005-can-dev-fix-can-restart-v2-2-91b5c1fd922c@pengutronix.de
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/readahead.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/can/dev/dev.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/mm/readahead.c b/mm/readahead.c
-index 4e630143a0ba8..96d0f652222a9 100644
---- a/mm/readahead.c
-+++ b/mm/readahead.c
-@@ -593,7 +593,8 @@ ssize_t ksys_readahead(int fd, loff_t offset, size_t count)
- 	 */
- 	ret = -EINVAL;
- 	if (!f.file->f_mapping || !f.file->f_mapping->a_ops ||
--	    !S_ISREG(file_inode(f.file)->i_mode))
-+	    (!S_ISREG(file_inode(f.file)->i_mode) &&
-+	    !S_ISBLK(file_inode(f.file)->i_mode)))
- 		goto out;
+diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
+index 487cb9acdd456..3797d4de254dd 100644
+--- a/drivers/net/can/dev/dev.c
++++ b/drivers/net/can/dev/dev.c
+@@ -590,11 +590,12 @@ static void can_restart(struct net_device *dev)
+ 	priv->can_stats.restarts++;
  
- 	ret = vfs_fadvise(f.file, offset, count, POSIX_FADV_WILLNEED);
+ 	/* Now restart the device */
+-	err = priv->do_set_mode(dev, CAN_MODE_START);
+-
+ 	netif_carrier_on(dev);
+-	if (err)
++	err = priv->do_set_mode(dev, CAN_MODE_START);
++	if (err) {
+ 		netdev_err(dev, "Error %d during restart", err);
++		netif_carrier_off(dev);
++	}
+ }
+ 
+ static void can_restart_work(struct work_struct *work)
 -- 
 2.42.0
 
