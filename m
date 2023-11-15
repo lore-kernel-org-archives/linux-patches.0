@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3F33DB97
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655553EA62
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0cSbE/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85852C433C7;
-	Wed, 15 Nov 2023 19:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gVscvyv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F7BC433CC;
+	Wed, 15 Nov 2023 19:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078342;
-	bh=MIyjQK0Dfl+he+2ftZwkDpjO4vEFzhIqOtDOrMLQSUc=;
+	s=korg; t=1700078344;
+	bh=Tp6GvX5u4LUaBaYUKPSzcpspBVUjM8n7ave3vL5XFgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T0cSbE/ByhKfqo0nZMqANv2TjpO+sPfChMH7ecrPcVLL9My7c2dnOv8+PsZ4uV6zB
-	 P84Ag/S9Y8D5eUJymWCFyTgEhFwh59qEm9vA2Us6oKcPaOXy+my4LtZIy6vULs3Quq
-	 5ywIHRk1O5ciMfG2JO9mhJyqGzY6CPav96F49Fn4=
+	b=0gVscvyvcqwrkoOT0P7II2dN2F0UUa9S8JUbNQh8pnUE4l2N8uA7AFKd+pCYoiun1
+	 x73vAcIKz4CFhq/qtslU0FXJoOph75X14a8VIifklUh+DbQPD/6pva+DC3POKdkSzG
+	 4vpr25TCl1IxHhvpuQ7nZSc9q2vHlubHgvSpH1dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
-	GUO Zihua <guozihua@huawei.com>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 263/379] tty: tty_jobctrl: fix pid memleak in disassociate_ctty()
-Date: Wed, 15 Nov 2023 14:25:38 -0500
-Message-ID: <20231115192700.695728445@linuxfoundation.org>
+Subject: [PATCH 6.1 264/379] livepatch: Fix missing newline character in klp_resolve_symbols()
+Date: Wed, 15 Nov 2023 14:25:39 -0500
+Message-ID: <20231115192700.749840838@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,115 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit 11e7f27b79757b6586645d87b95d5b78375ecdfc ]
+[ Upstream commit 67e18e132f0fd738f8c8cac3aa1420312073f795 ]
 
-There is a pid leakage:
-------------------------------
-unreferenced object 0xffff88810c181940 (size 224):
-  comm "sshd", pid 8191, jiffies 4294946950 (age 524.570s)
-  hex dump (first 32 bytes):
-    01 00 00 00 00 00 00 00 00 00 00 00 ad 4e ad de  .............N..
-    ff ff ff ff 6b 6b 6b 6b ff ff ff ff ff ff ff ff  ....kkkk........
-  backtrace:
-    [<ffffffff814774e6>] kmem_cache_alloc+0x5c6/0x9b0
-    [<ffffffff81177342>] alloc_pid+0x72/0x570
-    [<ffffffff81140ac4>] copy_process+0x1374/0x2470
-    [<ffffffff81141d77>] kernel_clone+0xb7/0x900
-    [<ffffffff81142645>] __se_sys_clone+0x85/0xb0
-    [<ffffffff8114269b>] __x64_sys_clone+0x2b/0x30
-    [<ffffffff83965a72>] do_syscall_64+0x32/0x80
-    [<ffffffff83a00085>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
+Without the newline character, the log may not be printed immediately
+after the error occurs.
 
-It turns out that there is a race condition between disassociate_ctty() and
-tty_signal_session_leader(), which caused this leakage.
-
-The pid memleak is triggered by the following race:
-task[sshd]                     task[bash]
------------------------        -----------------------
-                               disassociate_ctty();
-                               spin_lock_irq(&current->sighand->siglock);
-                               put_pid(current->signal->tty_old_pgrp);
-                               current->signal->tty_old_pgrp = NULL;
-                               tty = tty_kref_get(current->signal->tty);
-                               spin_unlock_irq(&current->sighand->siglock);
-tty_vhangup();
-tty_lock(tty);
-...
-tty_signal_session_leader();
-spin_lock_irq(&p->sighand->siglock);
-...
-if (tty->ctrl.pgrp) //tty->ctrl.pgrp is not NULL
-p->signal->tty_old_pgrp = get_pid(tty->ctrl.pgrp); //An extra get
-spin_unlock_irq(&p->sighand->siglock);
-...
-tty_unlock(tty);
-                               if (tty) {
-                                   tty_lock(tty);
-                                   ...
-                                   put_pid(tty->ctrl.pgrp);
-                                   tty->ctrl.pgrp = NULL; //It's too late
-                                   ...
-                                   tty_unlock(tty);
-                               }
-
-The issue is believed to be introduced by commit c8bcd9c5be24 ("tty:
-Fix ->session locking") who moves the unlock of siglock in
-disassociate_ctty() above "if (tty)", making a small window allowing
-tty_signal_session_leader() to kick in. It can be easily reproduced by
-adding a delay before "if (tty)" and at the entrance of
-tty_signal_session_leader().
-
-To fix this issue, we move "put_pid(current->signal->tty_old_pgrp)" after
-"tty->ctrl.pgrp = NULL".
-
-Fixes: c8bcd9c5be24 ("tty: Fix ->session locking")
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Co-developed-by: GUO Zihua <guozihua@huawei.com>
-Signed-off-by: GUO Zihua <guozihua@huawei.com>
-Link: https://lore.kernel.org/r/20230831023329.165737-1-yiyang13@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ca376a937486 ("livepatch: Prevent module-specific KLP rela sections from referencing vmlinux symbols")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20230914072644.4098857-1-zhengyejian1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_jobctrl.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ kernel/livepatch/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/tty_jobctrl.c b/drivers/tty/tty_jobctrl.c
-index 0d04287da0984..ef8741c3e6629 100644
---- a/drivers/tty/tty_jobctrl.c
-+++ b/drivers/tty/tty_jobctrl.c
-@@ -300,12 +300,7 @@ void disassociate_ctty(int on_exit)
- 		return;
- 	}
- 
--	spin_lock_irq(&current->sighand->siglock);
--	put_pid(current->signal->tty_old_pgrp);
--	current->signal->tty_old_pgrp = NULL;
--	tty = tty_kref_get(current->signal->tty);
--	spin_unlock_irq(&current->sighand->siglock);
--
-+	tty = get_current_tty();
- 	if (tty) {
- 		unsigned long flags;
- 
-@@ -320,6 +315,16 @@ void disassociate_ctty(int on_exit)
- 		tty_kref_put(tty);
- 	}
- 
-+	/* If tty->ctrl.pgrp is not NULL, it may be assigned to
-+	 * current->signal->tty_old_pgrp in a race condition, and
-+	 * cause pid memleak. Release current->signal->tty_old_pgrp
-+	 * after tty->ctrl.pgrp set to NULL.
-+	 */
-+	spin_lock_irq(&current->sighand->siglock);
-+	put_pid(current->signal->tty_old_pgrp);
-+	current->signal->tty_old_pgrp = NULL;
-+	spin_unlock_irq(&current->sighand->siglock);
-+
- 	/* Now clear signal->tty under the lock */
- 	read_lock(&tasklist_lock);
- 	session_clear_tty(task_session(current));
+diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
+index 9ada0bc5247be..0e651fd4cc9fc 100644
+--- a/kernel/livepatch/core.c
++++ b/kernel/livepatch/core.c
+@@ -244,7 +244,7 @@ static int klp_resolve_symbols(Elf_Shdr *sechdrs, const char *strtab,
+ 		 * symbols are exported and normal relas can be used instead.
+ 		 */
+ 		if (!sec_vmlinux && sym_vmlinux) {
+-			pr_err("invalid access to vmlinux symbol '%s' from module-specific livepatch relocation section",
++			pr_err("invalid access to vmlinux symbol '%s' from module-specific livepatch relocation section\n",
+ 			       sym_name);
+ 			return -EINVAL;
+ 		}
 -- 
 2.42.0
 
