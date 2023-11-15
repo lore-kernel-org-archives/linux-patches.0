@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689FA3309F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278A935F19
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YR3DAXY6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F411C433CA;
-	Wed, 15 Nov 2023 19:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5Pc8GBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69C7C433CA;
+	Wed, 15 Nov 2023 19:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077677;
-	bh=N7zcSVg1LGoeg2oAkiFP3KN2zpB/EWToiUVRaPIB5I8=;
+	s=korg; t=1700077679;
+	bh=58oIcx8tvylvRYqpFGUSVxlcTdXMnJfkt9I3hvH5Trc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YR3DAXY6oWRO/Xyb43fQXFPmvOP9/0+T2j4+HkNaluxXHbbitbol2RW5wRSARFXZY
-	 6s+ki7hUbLMQqqFU4HvMxf3J2NWN6Kbu5qhT7jMNWRdfglbdD+HJd1oBQILEx6Gt/j
-	 mdLVKbStVNEdWD6UU/1Ybr2Zdb0PVMbd97BBlmgw=
+	b=l5Pc8GBAzZHMQDJeflBMV7aFCV9+C6/m6nBe7DP3Gw30nfOaMkWAV7LhFSo7DWnNW
+	 oxEUC5+PgEV+nAHEt4p5W4Q8sGOku2Jp0gM5A5At+6pu3Z8aSM/YgjA62+f/UmAzeD
+	 v4sqZDSkEbD9mwV5G73RlKcHujmRKYFutgqfy6M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 442/603] debugfs: Fix __rcu type comparison warning
-Date: Wed, 15 Nov 2023 14:16:27 -0500
-Message-ID: <20231115191643.382799831@linuxfoundation.org>
+Subject: [PATCH 6.6 451/603] interconnect: qcom: sc8280xp: Set ACV enable_mask
+Date: Wed, 15 Nov 2023 14:16:36 -0500
+Message-ID: <20231115191643.910704694@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,44 +42,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Tipton <quic_mdtipton@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 7360a48bd0f5e62b2d00c387d5d3f2821eb290ce ]
+[ Upstream commit 688ffb3dcf85fc4b7ea82af842493013747a9e2c ]
 
-Sparse reports the following:
+ACV expects an enable_mask corresponding to the APPS RSC, fill it in.
 
-fs/debugfs/file.c:942:9: sparse: sparse: incompatible types in comparison expression (different address spaces):
-fs/debugfs/file.c:942:9: sparse:    char [noderef] __rcu *
-fs/debugfs/file.c:942:9: sparse:    char *
-
-rcu_assign_pointer() expects that it's assigning to pointers annotated
-with __rcu. We can't annotate the generic struct file::private_data, so
-cast it instead.
-
-Fixes: 86b5488121db ("debugfs: Add write support to debugfs_create_str()")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202309091933.BRWlSnCq-lkp@intel.com/
-Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
-Link: https://lore.kernel.org/r/20230922134512.5126-1-quic_mdtipton@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f29dabda7917 ("interconnect: qcom: Add SC8280XP interconnect provider")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230811-topic-acv-v2-5-765ad70e539a@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/debugfs/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/interconnect/qcom/sc8280xp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
-index 87b3753aa4b1e..c45e8c2d62e11 100644
---- a/fs/debugfs/file.c
-+++ b/fs/debugfs/file.c
-@@ -939,7 +939,7 @@ static ssize_t debugfs_write_file_str(struct file *file, const char __user *user
- 	new[pos + count] = '\0';
- 	strim(new);
+diff --git a/drivers/interconnect/qcom/sc8280xp.c b/drivers/interconnect/qcom/sc8280xp.c
+index b82c5493cbb56..0270f6c64481a 100644
+--- a/drivers/interconnect/qcom/sc8280xp.c
++++ b/drivers/interconnect/qcom/sc8280xp.c
+@@ -1712,6 +1712,7 @@ static struct qcom_icc_node srvc_snoc = {
  
--	rcu_assign_pointer(*(char **)file->private_data, new);
-+	rcu_assign_pointer(*(char __rcu **)file->private_data, new);
- 	synchronize_rcu();
- 	kfree(old);
- 
+ static struct qcom_icc_bcm bcm_acv = {
+ 	.name = "ACV",
++	.enable_mask = BIT(3),
+ 	.num_nodes = 1,
+ 	.nodes = { &ebi },
+ };
 -- 
 2.42.0
 
