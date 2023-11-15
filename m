@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24A6171CE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BFF18657
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="liAlEA/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84968C4E777;
-	Wed, 15 Nov 2023 20:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJeYaIwS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6DDC4E778;
+	Wed, 15 Nov 2023 20:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081761;
-	bh=2cegFq1/+E/MHjusY7gqyqtymNWeT5rBjRmeWmycZL8=;
+	s=korg; t=1700081763;
+	bh=R/AoS85NAGfsZA52M+0ikJo4qNwYKk3wD8VxiYJI7To=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=liAlEA/Qte42mPUdG+e/FlX8fqa54RmXdOzVz1gNkd1immM6R59J89ogRO166pp8/
-	 T5tbMRid4PdhgrA3QwxZdbFRyVkVdEp/IWYiPXWFpOqGU8MuS5yE9vbTFWjA5syflH
-	 AF4ByO3oGxAm/K1fdo0B0P3TcMFK8la2ldv9ygxw=
+	b=YJeYaIwSQYFlPt7f/1s2UduUt3EgcloRStKbkt5FD7y2i0lej8Gi9KGP0+6y3OS5r
+	 iafczKOW0wNwn2Gctyw6cM36s25cgvycmaSwC91zEqAYQj1xdrx5apNhB20KoRgwOz
+	 F4l3da3ezS4E2Uv/kv6ugZcWu7km2Y1bF+vmcYgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Dhruva Gole <d-gole@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 084/191] firmware: ti_sci: Mark driver as non removable
-Date: Wed, 15 Nov 2023 15:45:59 -0500
-Message-ID: <20231115204649.625757466@linuxfoundation.org>
+Subject: [PATCH 5.10 075/191] drm/mediatek: Fix iommu fault during crtc enabling
+Date: Wed, 15 Nov 2023 15:45:50 -0500
+Message-ID: <20231115204649.097162373@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -37,115 +39,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dhruva Gole <d-gole@ti.com>
+From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 
-[ Upstream commit 7b7a224b1ba1703583b25a3641ad9798f34d832a ]
+[ Upstream commit 53412dc2905401207f264dc30890f6b9e41524a6 ]
 
-The TI-SCI message protocol provides a way to communicate between
-various compute processors with a central system controller entity. It
-provides the fundamental device management capability and clock control
-in the SOCs that it's used in.
+The difference between drm_atomic_helper_commit_tail() and
+drm_atomic_helper_commit_tail_rpm() is
+drm_atomic_helper_commit_tail() will commit plane first and
+then enable crtc, drm_atomic_helper_commit_tail_rpm() will
+enable crtc first and then commit plane.
 
-The remove function failed to do all the necessary cleanup if
-there are registered users. Some things are freed however which
-likely results in an oops later on.
+Before mediatek-drm enables crtc, the power and clk required
+by OVL have not been turned on, so the commit plane cannot be
+committed before crtc is enabled. That means OVL layer should
+not be enabled before crtc is enabled.
+Therefore, the atomic_commit_tail of mediatek-drm is hooked with
+drm_atomic_helper_commit_tail_rpm().
 
-Ensure that the driver isn't unbound by suppressing its bind and unbind
-sysfs attributes. As the driver is built-in there is no way to remove
-device once bound.
+Another reason is that the plane_state of drm_atomic_state is not
+synchronized with the plane_state stored in mtk_crtc during crtc enablng,
+so just set all planes to disabled.
 
-We can also remove the ti_sci_remove call along with the
-ti_sci_debugfs_destroy as there are no callers for it any longer.
-
-Fixes: aa276781a64a ("firmware: Add basic support for TI System Control Interface (TI-SCI) protocol")
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Closes: https://lore.kernel.org/linux-arm-kernel/20230216083908.mvmydic5lpi3ogo7@pengutronix.de/
-Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Dhruva Gole <d-gole@ti.com>
-Link: https://lore.kernel.org/r/20230921091025.133130-1-d-gole@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
+Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20230809125722.24112-3-jason-jh.lin@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/ti_sci.c | 46 +--------------------------------------
- 1 file changed, 1 insertion(+), 45 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index 896f53ec78571..fe6be0771a076 100644
---- a/drivers/firmware/ti_sci.c
-+++ b/drivers/firmware/ti_sci.c
-@@ -190,19 +190,6 @@ static int ti_sci_debugfs_create(struct platform_device *pdev,
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+index e83b1c406b96a..cc3cb5b63d444 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+@@ -320,6 +320,9 @@ static int mtk_crtc_ddp_hw_init(struct mtk_drm_crtc *mtk_crtc)
+ 		unsigned int local_layer;
  
--/**
-- * ti_sci_debugfs_destroy() - clean up log debug file
-- * @pdev:	platform device pointer
-- * @info:	Pointer to SCI entity information
-- */
--static void ti_sci_debugfs_destroy(struct platform_device *pdev,
--				   struct ti_sci_info *info)
--{
--	if (IS_ERR(info->debug_region))
--		return;
--
--	debugfs_remove(info->d);
--}
- #else /* CONFIG_DEBUG_FS */
- static inline int ti_sci_debugfs_create(struct platform_device *dev,
- 					struct ti_sci_info *info)
-@@ -3510,43 +3497,12 @@ static int ti_sci_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int ti_sci_remove(struct platform_device *pdev)
--{
--	struct ti_sci_info *info;
--	struct device *dev = &pdev->dev;
--	int ret = 0;
--
--	of_platform_depopulate(dev);
--
--	info = platform_get_drvdata(pdev);
--
--	if (info->nb.notifier_call)
--		unregister_restart_handler(&info->nb);
--
--	mutex_lock(&ti_sci_list_mutex);
--	if (info->users)
--		ret = -EBUSY;
--	else
--		list_del(&info->node);
--	mutex_unlock(&ti_sci_list_mutex);
--
--	if (!ret) {
--		ti_sci_debugfs_destroy(pdev, info);
--
--		/* Safe to free channels since no more users */
--		mbox_free_channel(info->chan_tx);
--		mbox_free_channel(info->chan_rx);
--	}
--
--	return ret;
--}
--
- static struct platform_driver ti_sci_driver = {
- 	.probe = ti_sci_probe,
--	.remove = ti_sci_remove,
- 	.driver = {
- 		   .name = "ti-sci",
- 		   .of_match_table = of_match_ptr(ti_sci_of_match),
-+		   .suppress_bind_attrs = true,
- 	},
- };
- module_platform_driver(ti_sci_driver);
+ 		plane_state = to_mtk_plane_state(plane->state);
++
++		/* should not enable layer before crtc enabled */
++		plane_state->pending.enable = false;
+ 		comp = mtk_drm_ddp_comp_for_plane(crtc, plane, &local_layer);
+ 		if (comp)
+ 			mtk_ddp_comp_layer_config(comp, local_layer,
 -- 
 2.42.0
 
