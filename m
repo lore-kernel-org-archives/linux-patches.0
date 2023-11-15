@@ -1,37 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7C0364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19B941757
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/XoFJuq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E26C433C9;
-	Wed, 15 Nov 2023 19:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihayEt+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC03C433C8;
+	Wed, 15 Nov 2023 19:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076901;
-	bh=ZBqWhPLsaLJAo6KQ4iRPT1byk/JK5jjIRP2DqhwGWmg=;
+	s=korg; t=1700076902;
+	bh=X5VIC/j24OjmGwzWrVjssXgobUDJ9xHQtXmfR9l0FD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/XoFJuqOW2axJXwL1bAG9jjBKZ5ghn1LNvoK/tA6Yzu5ebn5h2O9BMhGzQwPUt9D
-	 IWDmNYHZh8uYxng8Oo50oS1QmOSXG9xnACEd/mdAejCVbUqSo4NX5b7/oKPySyqlaM
-	 nCdPxmwXJi9/MV4H9cQfmxWh/YGjil4XhAY/hGm4=
+	b=ihayEt+HHhmNsaNvxI16gcujxeGqVOqefOGN+rl2gl9cW0uXUu0LQN451ioTmUSXc
+	 eNnptCg30q5zkPrp6X4XqBdfLRyZLQ7V7fRDVmHe93y2wIJ2yh7BKZuGi6bbN4UV4N
+	 FBrfVW+WYhuWvnOx0UgcDMubenTqJTV4yhnEaxkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Gonda <pgonda@google.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Dionna Glaze <dionnaglaze@google.com>,
-	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 458/550] virt: sevguest: Fix passing a stack buffer as a scatterlist target
-Date: Wed, 15 Nov 2023 14:17:22 -0500
-Message-ID: <20231115191632.603281424@linuxfoundation.org>
+Subject: [PATCH 6.6 062/603] udplite: fix various data-races
+Date: Wed, 15 Nov 2023 14:10:07 -0500
+Message-ID: <20231115191617.418833883@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -43,199 +39,179 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit db10cb9b574675402bfd8fe1a31aafdd45b002df ]
+[ Upstream commit 882af43a0fc37e26d85fb0df0c9edd3bed928de4 ]
 
-CONFIG_DEBUG_SG highlights that get_{report,ext_report,derived_key)()}
-are passing stack buffers as the @req_buf argument to
-handle_guest_request(), generating a Call Trace of the following form:
+udp->pcflag, udp->pcslen and udp->pcrlen reads/writes are racy.
 
-    WARNING: CPU: 0 PID: 1175 at include/linux/scatterlist.h:187 enc_dec_message+0x518/0x5b0 [sev_guest]
-    [..]
-    Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-    RIP: 0010:enc_dec_message+0x518/0x5b0 [sev_guest]
-    Call Trace:
-     <TASK>
-    [..]
-     handle_guest_request+0x135/0x520 [sev_guest]
-     get_ext_report+0x1ec/0x3e0 [sev_guest]
-     snp_guest_ioctl+0x157/0x200 [sev_guest]
+Move udp->pcflag to udp->udp_flags for atomicity,
+and add READ_ONCE()/WRITE_ONCE() annotations for pcslen and pcrlen.
 
-Note that the above Call Trace was with the DEBUG_SG BUG_ON()s converted
-to WARN_ON()s.
-
-This is benign as long as there are no hardware crypto accelerators
-loaded for the aead cipher, and no subsequent dma_map_sg() is performed
-on the scatterlist. However, sev-guest can not assume the presence of
-an aead accelerator nor can it assume that CONFIG_DEBUG_SG is disabled.
-
-Resolve this bug by allocating virt_addr_valid() memory, similar to the
-other buffers am @snp_dev instance carries, to marshal requests from
-user buffers to kernel buffers.
-
-Reported-by: Peter Gonda <pgonda@google.com>
-Closes: http://lore.kernel.org/r/CAMkAt6r2VPPMZ__SQfJse8qWsUyYW3AgYbOUVM0S_Vtk=KvkxQ@mail.gmail.com
-Fixes: fce96cf04430 ("virt: Add SEV-SNP guest driver")
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: Dionna Glaze <dionnaglaze@google.com>
-Cc: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Tested-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: ba4e58eca8aa ("[NET]: Supporting UDP-Lite (RFC 3828) in Linux")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/coco/sev-guest/sev-guest.c | 45 ++++++++++++++-----------
- 1 file changed, 25 insertions(+), 20 deletions(-)
+ include/linux/udp.h   |  6 ++----
+ include/net/udplite.h | 14 +++++++++-----
+ net/ipv4/udp.c        | 21 +++++++++++----------
+ net/ipv6/udp.c        |  9 +++++----
+ 4 files changed, 27 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/virt/coco/sev-guest/sev-guest.c b/drivers/virt/coco/sev-guest/sev-guest.c
-index 97dbe715e96ad..5bee58ef5f1e3 100644
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -57,6 +57,11 @@ struct snp_guest_dev {
- 
- 	struct snp_secrets_page_layout *layout;
- 	struct snp_req_data input;
-+	union {
-+		struct snp_report_req report;
-+		struct snp_derived_key_req derived_key;
-+		struct snp_ext_report_req ext_report;
-+	} req;
- 	u32 *os_area_msg_seqno;
- 	u8 *vmpck;
+diff --git a/include/linux/udp.h b/include/linux/udp.h
+index 58156edec0096..d04188714dca1 100644
+--- a/include/linux/udp.h
++++ b/include/linux/udp.h
+@@ -40,6 +40,8 @@ enum {
+ 	UDP_FLAGS_ACCEPT_FRAGLIST,
+ 	UDP_FLAGS_ACCEPT_L4,
+ 	UDP_FLAGS_ENCAP_ENABLED, /* This socket enabled encap */
++	UDP_FLAGS_UDPLITE_SEND_CC, /* set via udplite setsockopt */
++	UDP_FLAGS_UDPLITE_RECV_CC, /* set via udplite setsockopt */
  };
-@@ -473,8 +478,8 @@ static int handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code,
- static int get_report(struct snp_guest_dev *snp_dev, struct snp_guest_request_ioctl *arg)
- {
- 	struct snp_guest_crypto *crypto = snp_dev->crypto;
-+	struct snp_report_req *req = &snp_dev->req.report;
- 	struct snp_report_resp *resp;
--	struct snp_report_req req;
- 	int rc, resp_len;
  
- 	lockdep_assert_held(&snp_cmd_mutex);
-@@ -482,7 +487,7 @@ static int get_report(struct snp_guest_dev *snp_dev, struct snp_guest_request_io
- 	if (!arg->req_data || !arg->resp_data)
- 		return -EINVAL;
+ struct udp_sock {
+@@ -54,10 +56,6 @@ struct udp_sock {
+ 	int		 pending;	/* Any pending frames ? */
+ 	__u8		 encap_type;	/* Is this an Encapsulation socket? */
  
--	if (copy_from_user(&req, (void __user *)arg->req_data, sizeof(req)))
-+	if (copy_from_user(req, (void __user *)arg->req_data, sizeof(*req)))
- 		return -EFAULT;
- 
+-/* indicator bits used by pcflag: */
+-#define UDPLITE_SEND_CC  0x1  		/* set via udplite setsockopt         */
+-#define UDPLITE_RECV_CC  0x2		/* set via udplite setsocktopt        */
+-	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
  	/*
-@@ -496,7 +501,7 @@ static int get_report(struct snp_guest_dev *snp_dev, struct snp_guest_request_io
- 		return -ENOMEM;
- 
- 	rc = handle_guest_request(snp_dev, SVM_VMGEXIT_GUEST_REQUEST, arg,
--				  SNP_MSG_REPORT_REQ, &req, sizeof(req), resp->data,
-+				  SNP_MSG_REPORT_REQ, req, sizeof(*req), resp->data,
- 				  resp_len);
- 	if (rc)
- 		goto e_free;
-@@ -511,9 +516,9 @@ static int get_report(struct snp_guest_dev *snp_dev, struct snp_guest_request_io
- 
- static int get_derived_key(struct snp_guest_dev *snp_dev, struct snp_guest_request_ioctl *arg)
+ 	 * Following member retains the information to create a UDP header
+ 	 * when the socket is uncorked.
+diff --git a/include/net/udplite.h b/include/net/udplite.h
+index bd33ff2b8f426..786919d29f8de 100644
+--- a/include/net/udplite.h
++++ b/include/net/udplite.h
+@@ -66,14 +66,18 @@ static inline int udplite_checksum_init(struct sk_buff *skb, struct udphdr *uh)
+ /* Fast-path computation of checksum. Socket may not be locked. */
+ static inline __wsum udplite_csum(struct sk_buff *skb)
  {
-+	struct snp_derived_key_req *req = &snp_dev->req.derived_key;
- 	struct snp_guest_crypto *crypto = snp_dev->crypto;
- 	struct snp_derived_key_resp resp = {0};
--	struct snp_derived_key_req req;
- 	int rc, resp_len;
- 	/* Response data is 64 bytes and max authsize for GCM is 16 bytes. */
- 	u8 buf[64 + 16];
-@@ -532,11 +537,11 @@ static int get_derived_key(struct snp_guest_dev *snp_dev, struct snp_guest_reque
- 	if (sizeof(buf) < resp_len)
- 		return -ENOMEM;
+-	const struct udp_sock *up = udp_sk(skb->sk);
+ 	const int off = skb_transport_offset(skb);
++	const struct sock *sk = skb->sk;
+ 	int len = skb->len - off;
  
--	if (copy_from_user(&req, (void __user *)arg->req_data, sizeof(req)))
-+	if (copy_from_user(req, (void __user *)arg->req_data, sizeof(*req)))
- 		return -EFAULT;
- 
- 	rc = handle_guest_request(snp_dev, SVM_VMGEXIT_GUEST_REQUEST, arg,
--				  SNP_MSG_KEY_REQ, &req, sizeof(req), buf, resp_len);
-+				  SNP_MSG_KEY_REQ, req, sizeof(*req), buf, resp_len);
- 	if (rc)
- 		return rc;
- 
-@@ -552,8 +557,8 @@ static int get_derived_key(struct snp_guest_dev *snp_dev, struct snp_guest_reque
- 
- static int get_ext_report(struct snp_guest_dev *snp_dev, struct snp_guest_request_ioctl *arg)
- {
-+	struct snp_ext_report_req *req = &snp_dev->req.ext_report;
- 	struct snp_guest_crypto *crypto = snp_dev->crypto;
--	struct snp_ext_report_req req;
- 	struct snp_report_resp *resp;
- 	int ret, npages = 0, resp_len;
- 
-@@ -562,18 +567,18 @@ static int get_ext_report(struct snp_guest_dev *snp_dev, struct snp_guest_reques
- 	if (!arg->req_data || !arg->resp_data)
- 		return -EINVAL;
- 
--	if (copy_from_user(&req, (void __user *)arg->req_data, sizeof(req)))
-+	if (copy_from_user(req, (void __user *)arg->req_data, sizeof(*req)))
- 		return -EFAULT;
- 
- 	/* userspace does not want certificate data */
--	if (!req.certs_len || !req.certs_address)
-+	if (!req->certs_len || !req->certs_address)
- 		goto cmd;
- 
--	if (req.certs_len > SEV_FW_BLOB_MAX_SIZE ||
--	    !IS_ALIGNED(req.certs_len, PAGE_SIZE))
-+	if (req->certs_len > SEV_FW_BLOB_MAX_SIZE ||
-+	    !IS_ALIGNED(req->certs_len, PAGE_SIZE))
- 		return -EINVAL;
- 
--	if (!access_ok((const void __user *)req.certs_address, req.certs_len))
-+	if (!access_ok((const void __user *)req->certs_address, req->certs_len))
- 		return -EFAULT;
- 
- 	/*
-@@ -582,8 +587,8 @@ static int get_ext_report(struct snp_guest_dev *snp_dev, struct snp_guest_reques
- 	 * the host. If host does not supply any certs in it, then copy
- 	 * zeros to indicate that certificate data was not provided.
- 	 */
--	memset(snp_dev->certs_data, 0, req.certs_len);
--	npages = req.certs_len >> PAGE_SHIFT;
-+	memset(snp_dev->certs_data, 0, req->certs_len);
-+	npages = req->certs_len >> PAGE_SHIFT;
- cmd:
- 	/*
- 	 * The intermediate response buffer is used while decrypting the
-@@ -597,14 +602,14 @@ static int get_ext_report(struct snp_guest_dev *snp_dev, struct snp_guest_reques
- 
- 	snp_dev->input.data_npages = npages;
- 	ret = handle_guest_request(snp_dev, SVM_VMGEXIT_EXT_GUEST_REQUEST, arg,
--				   SNP_MSG_REPORT_REQ, &req.data,
--				   sizeof(req.data), resp->data, resp_len);
-+				   SNP_MSG_REPORT_REQ, &req->data,
-+				   sizeof(req->data), resp->data, resp_len);
- 
- 	/* If certs length is invalid then copy the returned length */
- 	if (arg->vmm_error == SNP_GUEST_VMM_ERR_INVALID_LEN) {
--		req.certs_len = snp_dev->input.data_npages << PAGE_SHIFT;
-+		req->certs_len = snp_dev->input.data_npages << PAGE_SHIFT;
- 
--		if (copy_to_user((void __user *)arg->req_data, &req, sizeof(req)))
-+		if (copy_to_user((void __user *)arg->req_data, req, sizeof(*req)))
- 			ret = -EFAULT;
+-	if ((up->pcflag & UDPLITE_SEND_CC) && up->pcslen < len) {
+-		if (0 < up->pcslen)
+-			len = up->pcslen;
+-		udp_hdr(skb)->len = htons(up->pcslen);
++	if (udp_test_bit(UDPLITE_SEND_CC, sk)) {
++		u16 pcslen = READ_ONCE(udp_sk(sk)->pcslen);
++
++		if (pcslen < len) {
++			if (pcslen > 0)
++				len = pcslen;
++			udp_hdr(skb)->len = htons(pcslen);
++		}
  	}
+ 	skb->ip_summed = CHECKSUM_NONE;     /* no HW support for checksumming */
  
-@@ -612,8 +617,8 @@ static int get_ext_report(struct snp_guest_dev *snp_dev, struct snp_guest_reques
- 		goto e_free;
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 2eeab4af17a13..c3ff984b63547 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -2120,7 +2120,8 @@ static int udp_queue_rcv_one_skb(struct sock *sk, struct sk_buff *skb)
+ 	/*
+ 	 * 	UDP-Lite specific tests, ignored on UDP sockets
+ 	 */
+-	if ((up->pcflag & UDPLITE_RECV_CC)  &&  UDP_SKB_CB(skb)->partial_cov) {
++	if (udp_test_bit(UDPLITE_RECV_CC, sk) && UDP_SKB_CB(skb)->partial_cov) {
++		u16 pcrlen = READ_ONCE(up->pcrlen);
  
- 	if (npages &&
--	    copy_to_user((void __user *)req.certs_address, snp_dev->certs_data,
--			 req.certs_len)) {
-+	    copy_to_user((void __user *)req->certs_address, snp_dev->certs_data,
-+			 req->certs_len)) {
- 		ret = -EFAULT;
- 		goto e_free;
+ 		/*
+ 		 * MIB statistics other than incrementing the error count are
+@@ -2133,7 +2134,7 @@ static int udp_queue_rcv_one_skb(struct sock *sk, struct sk_buff *skb)
+ 		 * delivery of packets with coverage values less than a value
+ 		 * provided by the application."
+ 		 */
+-		if (up->pcrlen == 0) {          /* full coverage was set  */
++		if (pcrlen == 0) {          /* full coverage was set  */
+ 			net_dbg_ratelimited("UDPLite: partial coverage %d while full coverage %d requested\n",
+ 					    UDP_SKB_CB(skb)->cscov, skb->len);
+ 			goto drop;
+@@ -2144,9 +2145,9 @@ static int udp_queue_rcv_one_skb(struct sock *sk, struct sk_buff *skb)
+ 		 * that it wants x while sender emits packets of smaller size y.
+ 		 * Therefore the above ...()->partial_cov statement is essential.
+ 		 */
+-		if (UDP_SKB_CB(skb)->cscov  <  up->pcrlen) {
++		if (UDP_SKB_CB(skb)->cscov < pcrlen) {
+ 			net_dbg_ratelimited("UDPLite: coverage %d too small, need min %d\n",
+-					    UDP_SKB_CB(skb)->cscov, up->pcrlen);
++					    UDP_SKB_CB(skb)->cscov, pcrlen);
+ 			goto drop;
+ 		}
+ 	}
+@@ -2729,8 +2730,8 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ 			val = 8;
+ 		else if (val > USHRT_MAX)
+ 			val = USHRT_MAX;
+-		up->pcslen = val;
+-		up->pcflag |= UDPLITE_SEND_CC;
++		WRITE_ONCE(up->pcslen, val);
++		udp_set_bit(UDPLITE_SEND_CC, sk);
+ 		break;
+ 
+ 	/* The receiver specifies a minimum checksum coverage value. To make
+@@ -2743,8 +2744,8 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ 			val = 8;
+ 		else if (val > USHRT_MAX)
+ 			val = USHRT_MAX;
+-		up->pcrlen = val;
+-		up->pcflag |= UDPLITE_RECV_CC;
++		WRITE_ONCE(up->pcrlen, val);
++		udp_set_bit(UDPLITE_RECV_CC, sk);
+ 		break;
+ 
+ 	default:
+@@ -2808,11 +2809,11 @@ int udp_lib_getsockopt(struct sock *sk, int level, int optname,
+ 	/* The following two cannot be changed on UDP sockets, the return is
+ 	 * always 0 (which corresponds to the full checksum coverage of UDP). */
+ 	case UDPLITE_SEND_CSCOV:
+-		val = up->pcslen;
++		val = READ_ONCE(up->pcslen);
+ 		break;
+ 
+ 	case UDPLITE_RECV_CSCOV:
+-		val = up->pcrlen;
++		val = READ_ONCE(up->pcrlen);
+ 		break;
+ 
+ 	default:
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 0e79d189613be..f60ba42954352 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -727,16 +727,17 @@ static int udpv6_queue_rcv_one_skb(struct sock *sk, struct sk_buff *skb)
+ 	/*
+ 	 * UDP-Lite specific tests, ignored on UDP sockets (see net/ipv4/udp.c).
+ 	 */
+-	if ((up->pcflag & UDPLITE_RECV_CC)  &&  UDP_SKB_CB(skb)->partial_cov) {
++	if (udp_test_bit(UDPLITE_RECV_CC, sk) && UDP_SKB_CB(skb)->partial_cov) {
++		u16 pcrlen = READ_ONCE(up->pcrlen);
+ 
+-		if (up->pcrlen == 0) {          /* full coverage was set  */
++		if (pcrlen == 0) {          /* full coverage was set  */
+ 			net_dbg_ratelimited("UDPLITE6: partial coverage %d while full coverage %d requested\n",
+ 					    UDP_SKB_CB(skb)->cscov, skb->len);
+ 			goto drop;
+ 		}
+-		if (UDP_SKB_CB(skb)->cscov  <  up->pcrlen) {
++		if (UDP_SKB_CB(skb)->cscov < pcrlen) {
+ 			net_dbg_ratelimited("UDPLITE6: coverage %d too small, need min %d\n",
+-					    UDP_SKB_CB(skb)->cscov, up->pcrlen);
++					    UDP_SKB_CB(skb)->cscov, pcrlen);
+ 			goto drop;
+ 		}
  	}
 -- 
 2.42.0
