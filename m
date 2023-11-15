@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31D63DBAD
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5503DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jbt4DQ7z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C0CC433C7;
-	Wed, 15 Nov 2023 20:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlxcNEcY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08FDC433C9;
+	Wed, 15 Nov 2023 20:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078641;
-	bh=umyJM7Ouej4m+0E6pmx1/11ukY70JjtGf3re8S0hhNE=;
+	s=korg; t=1700078643;
+	bh=s8QYciL2YnAijsoBefWLWlFftr0krG9CVsTuJdLewIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jbt4DQ7zIWVNV5LcV0uCeS6rpCxkIeZVo7MAG3fUETlHCt+Qrzfft637RGp4H0YIS
-	 ln9yCVwlyQu3/XsGmTFHZiZLOs6zKMdfT8s95xnAYhu4ITwAMj4yge/hNjkIpN8e9J
-	 zijdWOoE7HSR0TU7vSitXZPTTTRBjsyYAjvDM9Yo=
+	b=SlxcNEcYSLn8U+EiD1yT9lkvtZCSaRpMog5/+KBj4gMyMZPIEi+aUWqTOTBK6vcS6
+	 cdxBDLF5W7mlCfkwe72QSbFCl74J05QYnE82qrJZTDVKJOTydQnVLIAZYRh+1h5jFs
+	 59zvnHYHpMY8W+psP7MQhxsRdkqQkAgmNoh7r6mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Kursad Oney <kursad.oney@broadcom.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Neal Cardwell <ncardwell@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 19/45] ARM: 9321/1: memset: cast the constant byte to unsigned char
-Date: Wed, 15 Nov 2023 14:32:56 -0500
-Message-ID: <20231115191420.772623876@linuxfoundation.org>
+Subject: [PATCH 4.14 02/45] tcp_metrics: properly set tp->snd_ssthresh in tcp_init_metrics()
+Date: Wed, 15 Nov 2023 14:32:39 -0500
+Message-ID: <20231115191419.803920427@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191419.641552204@linuxfoundation.org>
 References: <20231115191419.641552204@linuxfoundation.org>
@@ -44,61 +44,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kursad Oney <kursad.oney@broadcom.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c0e824661f443b8cab3897006c1bbc69fd0e7bc4 ]
+[ Upstream commit 081480014a64a69d901f8ef1ffdd56d6085cf87e ]
 
-memset() description in ISO/IEC 9899:1999 (and elsewhere) says:
+We need to set tp->snd_ssthresh to TCP_INFINITE_SSTHRESH
+in the case tcp_get_metrics() fails for some reason.
 
-	The memset function copies the value of c (converted to an
-	unsigned char) into each of the first n characters of the
-	object pointed to by s.
-
-The kernel's arm32 memset does not cast c to unsigned char. This results
-in the following code to produce erroneous output:
-
-	char a[128];
-	memset(a, -128, sizeof(a));
-
-This is because gcc will generally emit the following code before
-it calls memset() :
-
-	mov   r0, r7
-	mvn   r1, #127        ; 0x7f
-	bl    00000000 <memset>
-
-r1 ends up with 0xffffff80 before being used by memset() and the
-'a' array will have -128 once in every four bytes while the other
-bytes will be set incorrectly to -1 like this (printing the first
-8 bytes) :
-
-	test_module: -128 -1 -1 -1
-	test_module: -1 -1 -1 -128
-
-The change here is to 'and' r1 with 255 before it is used.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Kursad Oney <kursad.oney@broadcom.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: 9ad7c049f0f7 ("tcp: RFC2988bis + taking RTT sample from 3WHS for the passive open side")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/lib/memset.S | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/tcp_metrics.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/lib/memset.S b/arch/arm/lib/memset.S
-index ed6d35d9cdb5a..a68688f3f3b3d 100644
---- a/arch/arm/lib/memset.S
-+++ b/arch/arm/lib/memset.S
-@@ -19,6 +19,7 @@
- ENTRY(mmioset)
- ENTRY(memset)
- UNWIND( .fnstart         )
-+	and	r1, r1, #255		@ cast to unsigned char
- 	ands	r3, r0, #3		@ 1 unaligned?
- 	mov	ip, r0			@ preserve r0 as return value
- 	bne	6f			@ 1
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 11bb9751a799f..164e917d71b21 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -467,6 +467,10 @@ void tcp_init_metrics(struct sock *sk)
+ 	u32 val, crtt = 0; /* cached RTT scaled by 8 */
+ 
+ 	sk_dst_confirm(sk);
++	/* ssthresh may have been reduced unnecessarily during.
++	 * 3WHS. Restore it back to its initial default.
++	 */
++	tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
+ 	if (!dst)
+ 		goto reset;
+ 
+@@ -485,11 +489,6 @@ void tcp_init_metrics(struct sock *sk)
+ 		tp->snd_ssthresh = val;
+ 		if (tp->snd_ssthresh > tp->snd_cwnd_clamp)
+ 			tp->snd_ssthresh = tp->snd_cwnd_clamp;
+-	} else {
+-		/* ssthresh may have been reduced unnecessarily during.
+-		 * 3WHS. Restore it back to its initial default.
+-		 */
+-		tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
+ 	}
+ 	val = tcp_metric_get(tm, TCP_METRIC_REORDERING);
+ 	if (val && tp->reordering != val) {
 -- 
 2.42.0
 
