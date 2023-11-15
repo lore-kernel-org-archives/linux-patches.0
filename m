@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF5E28383
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2053C462
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvnwjA8D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3797C433C9;
-	Wed, 15 Nov 2023 19:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAuFGXW2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8BEC433C8;
+	Wed, 15 Nov 2023 19:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077452;
-	bh=7V48UVWHUZucM74b3709GXpRGSm+Bfgyl/HDStJf+XE=;
+	s=korg; t=1700077453;
+	bh=aXhGrNE9+VMQ//oCelVC8mUos1fyontjdV5ICc0Sw9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvnwjA8DL9A+RtQkn4SJutKCN6cwcpwr0OTJstM5gn4vVctj3UT3IDwJj9fvwiETO
-	 nglGVPpvcVWBOilpHHNUf6W2MJvTPIhJneDM46jTfWcwr0YwGRJBfEf4DErSMT1rXS
-	 DNFDQ3Bzp16PTLaChaIi1w/CVoO9a4lxDl5vFOWs=
+	b=aAuFGXW2cFD68C5umej1DjxXspcG92tK+TunuBuMsAZjcFNsagbdaup2XMiNc2tsr
+	 sJ/LvLHj0iLwFvfDcTCxy7eG4koPbdliR6hg640nHz9LDsB803kB58T3pYMhUiWNYj
+	 8H+BgwTJM/eCooiRvLkowL/Xw6s9kRW2kFDU7iAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Adam Ford <aford173@gmail.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 311/603] firmware: arm_ffa: Allow the FF-A drivers to use 32bit mode of messaging
-Date: Wed, 15 Nov 2023 14:14:16 -0500
-Message-ID: <20231115191634.952016388@linuxfoundation.org>
+Subject: [PATCH 6.6 312/603] ARM: dts: am3517-evm: Fix LED3/4 pinmux
+Date: Wed, 15 Nov 2023 14:14:17 -0500
+Message-ID: <20231115191635.025039064@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -41,63 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 2d698e8b4fd22374dac0a2d5150ab24d57a222ab ]
+[ Upstream commit 2ab6b437c65233f06bdd2988fd5913baeca5f159 ]
 
-An FF-A ABI could support both the SMC32 and SMC64 conventions.
-A callee that runs in the AArch64 execution state and implements such
-an ABI must implement both SMC32 and SMC64 conventions of the ABI.
+The pinmux for LED3 and LED4 are incorrectly attached to the
+omap3_pmx_core when they should be connected to the omap3_pmx_wkup
+pin mux.  This was likely masked by the fact that the bootloader
+used to do all the pinmuxing.
 
-So the FF-A drivers will need the option to choose the mode irrespective
-of FF-A version and the partition execution mode flag in the partition
-information.
-
-Let us remove the check on the FF-A version for allowing the selection
-of 32bit mode of messaging. The driver will continue to set the 32-bit
-mode if the partition execution mode flag specified that the partition
-supports only 32-bit execution.
-
-Fixes: 106b11b1ccd5 ("firmware: arm_ffa: Set up 32bit execution mode flag using partiion property")
-Link: https://lore.kernel.org/r/20231005142823.278121-1-sudeep.holla@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: 0dbf99542caf ("ARM: dts: am3517-evm: Add User LEDs and Pushbutton")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Message-ID: <20231005000402.50879-1-aford173@gmail.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ arch/arm/boot/dts/ti/omap/am3517-evm.dts | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 121f4fc903cd5..7cd6b1564e801 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -587,17 +587,9 @@ static int ffa_partition_info_get(const char *uuid_str,
- 	return 0;
- }
+diff --git a/arch/arm/boot/dts/ti/omap/am3517-evm.dts b/arch/arm/boot/dts/ti/omap/am3517-evm.dts
+index af9df15274bed..866f68c5b504d 100644
+--- a/arch/arm/boot/dts/ti/omap/am3517-evm.dts
++++ b/arch/arm/boot/dts/ti/omap/am3517-evm.dts
+@@ -271,13 +271,6 @@ OMAP3_CORE1_IOPAD(0x21c4, PIN_INPUT_PULLUP | MUX_MODE0)  /* i2c3_sda */
+ 		>;
+ 	};
  
--static void _ffa_mode_32bit_set(struct ffa_device *dev)
--{
--	dev->mode_32bit = true;
--}
+-	leds_pins: leds-pins {
+-		pinctrl-single,pins = <
+-			OMAP3_WKUP_IOPAD(0x2a24, PIN_OUTPUT_PULLUP | MUX_MODE4)	/* jtag_emu0.gpio_11 */
+-			OMAP3_WKUP_IOPAD(0x2a26, PIN_OUTPUT_PULLUP | MUX_MODE4)	/* jtag_emu1.gpio_31 */
+-		>;
+-	};
 -
- static void ffa_mode_32bit_set(struct ffa_device *dev)
- {
--	if (drv_info->version > FFA_VERSION_1_0)
--		return;
--
--	_ffa_mode_32bit_set(dev);
-+	dev->mode_32bit = true;
- }
- 
- static int ffa_sync_send_receive(struct ffa_device *dev,
-@@ -706,7 +698,7 @@ static void ffa_setup_partitions(void)
- 
- 		if (drv_info->version > FFA_VERSION_1_0 &&
- 		    !(tpbuf->properties & FFA_PARTITION_AARCH64_EXEC))
--			_ffa_mode_32bit_set(ffa_dev);
-+			ffa_mode_32bit_set(ffa_dev);
- 	}
- 	kfree(pbuf);
- }
+ 	mmc1_pins: mmc1-pins {
+ 		pinctrl-single,pins = <
+ 			OMAP3_CORE1_IOPAD(0x2144, PIN_INPUT_PULLUP | MUX_MODE0)	/* sdmmc1_clk.sdmmc1_clk */
+@@ -355,3 +348,12 @@ OMAP3430_CORE2_IOPAD(0x25e2, PIN_INPUT | MUX_MODE3)	/* etk_d3.hsusb1_data7 */
+ 		>;
+ 	};
+ };
++
++&omap3_pmx_wkup {
++	leds_pins: leds-pins {
++		pinctrl-single,pins = <
++			OMAP3_WKUP_IOPAD(0x2a24, PIN_OUTPUT_PULLUP | MUX_MODE4)	/* jtag_emu0.gpio_11 */
++			OMAP3_WKUP_IOPAD(0x2a26, PIN_OUTPUT_PULLUP | MUX_MODE4)	/* jtag_emu1.gpio_31 */
++		>;
++	};
++};
 -- 
 2.42.0
 
