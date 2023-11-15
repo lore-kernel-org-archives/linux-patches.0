@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC503C462
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7023C462
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfvYgIh1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D3CC433C7;
-	Wed, 15 Nov 2023 19:38:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmsiMX6b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604F8C433C8;
+	Wed, 15 Nov 2023 19:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077098;
-	bh=dpm+97QF46FrzQ5HMSsbUucTvae3VYRoSkQY83DHcBc=;
+	s=korg; t=1700077099;
+	bh=rpUqwJ79/YIn6c3fSzfAz2yZYLWkjY/BcxTTcaPR7Is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pfvYgIh1nkRU51Ix0ZmOC0Fjbi3J+I1uZMvKmRQ51wZr91AuwUFuaLMgmxOSB/CGA
-	 0cezi4iv6pGK8K8HFX9RHSrJYiGKTRhu9HcPSqIJH+xe92TcnilLL06nV56TFRKA51
-	 qrerpWBqsfHD8O2dFetYgzOW6nLQKglGmalEbPOk=
+	b=gmsiMX6bmdCaco7D1RjJ+cyxZ8olXJexlPmCQ1eWD219N3pkzV+IuykMOykFhK/7Q
+	 ljn3tZ0BHTPDzYX7pkPmi1vfy8JhWC7ubdWZolSOuaH4bgGecwU2ZT8AWgE9Mu8EL+
+	 NnPpMALAp8oguVpcL8ib2mB++lhVx7E8F09+KpXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Kj=C3=A6r=20J=C3=B8rgensen?= <me@lagy.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/603] r8169: fix rare issue with broken rx after link-down on RTL8125
-Date: Wed, 15 Nov 2023 14:11:08 -0500
-Message-ID: <20231115191621.750460489@linuxfoundation.org>
+Subject: [PATCH 6.5 504/550] octeontx2-pf: Fix error codes
+Date: Wed, 15 Nov 2023 14:18:08 -0500
+Message-ID: <20231115191635.850758436@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,53 +37,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 621735f590643e3048ca2060c285b80551660601 ]
+[ Upstream commit 96b9a68d1a6e4f889d453874c9e359aa720b520f ]
 
-In very rare cases (I've seen two reports so far about different
-RTL8125 chip versions) it seems the MAC locks up when link goes down
-and requires a software reset to get revived.
-Realtek doesn't publish hw errata information, therefore the root cause
-is unknown. Realtek vendor drivers do a full hw re-initialization on
-each link-up event, the slimmed-down variant here was reported to fix
-the issue for the reporting user.
-It's not fully clear which parts of the NIC are reset as part of the
-software reset, therefore I can't rule out side effects.
+Some of error codes were wrong. Fix the same.
 
-Fixes: f1bce4ad2f1c ("r8169: add support for RTL8125")
-Reported-by: Martin Kjær Jørgensen <me@lagy.org>
-Link: https://lore.kernel.org/netdev/97ec2232-3257-316c-c3e7-a08192ce16a6@gmail.com/T/
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/9edde757-9c3b-4730-be3b-0ef3a374ff71@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 51afe9026d0c ("octeontx2-pf: NIX TX overwrites SQ_CTX_HW_S[SQ_INT]")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://lore.kernel.org/r/20231027021953.1819959-1-rkannoth@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../marvell/octeontx2/nic/otx2_struct.h       | 34 +++++++++----------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 361b90007148b..a987defb575cf 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4596,7 +4596,11 @@ static void r8169_phylink_handler(struct net_device *ndev)
- 	if (netif_carrier_ok(ndev)) {
- 		rtl_link_chg_patch(tp);
- 		pm_request_resume(d);
-+		netif_wake_queue(tp->dev);
- 	} else {
-+		/* In few cases rx is broken after link-down otherwise */
-+		if (rtl_is_8125(tp))
-+			rtl_reset_work(tp);
- 		pm_runtime_idle(d);
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
+index fa37b9f312cae..4e5899d8fa2e6 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
+@@ -318,23 +318,23 @@ enum nix_snd_status_e {
+ 	NIX_SND_STATUS_EXT_ERR = 0x6,
+ 	NIX_SND_STATUS_JUMP_FAULT = 0x7,
+ 	NIX_SND_STATUS_JUMP_POISON = 0x8,
+-	NIX_SND_STATUS_CRC_ERR = 0x9,
+-	NIX_SND_STATUS_IMM_ERR = 0x10,
+-	NIX_SND_STATUS_SG_ERR = 0x11,
+-	NIX_SND_STATUS_MEM_ERR = 0x12,
+-	NIX_SND_STATUS_INVALID_SUBDC = 0x13,
+-	NIX_SND_STATUS_SUBDC_ORDER_ERR = 0x14,
+-	NIX_SND_STATUS_DATA_FAULT = 0x15,
+-	NIX_SND_STATUS_DATA_POISON = 0x16,
+-	NIX_SND_STATUS_NPC_DROP_ACTION = 0x17,
+-	NIX_SND_STATUS_LOCK_VIOL = 0x18,
+-	NIX_SND_STATUS_NPC_UCAST_CHAN_ERR = 0x19,
+-	NIX_SND_STATUS_NPC_MCAST_CHAN_ERR = 0x20,
+-	NIX_SND_STATUS_NPC_MCAST_ABORT = 0x21,
+-	NIX_SND_STATUS_NPC_VTAG_PTR_ERR = 0x22,
+-	NIX_SND_STATUS_NPC_VTAG_SIZE_ERR = 0x23,
+-	NIX_SND_STATUS_SEND_MEM_FAULT = 0x24,
+-	NIX_SND_STATUS_SEND_STATS_ERR = 0x25,
++	NIX_SND_STATUS_CRC_ERR = 0x10,
++	NIX_SND_STATUS_IMM_ERR = 0x11,
++	NIX_SND_STATUS_SG_ERR = 0x12,
++	NIX_SND_STATUS_MEM_ERR = 0x13,
++	NIX_SND_STATUS_INVALID_SUBDC = 0x14,
++	NIX_SND_STATUS_SUBDC_ORDER_ERR = 0x15,
++	NIX_SND_STATUS_DATA_FAULT = 0x16,
++	NIX_SND_STATUS_DATA_POISON = 0x17,
++	NIX_SND_STATUS_NPC_DROP_ACTION = 0x20,
++	NIX_SND_STATUS_LOCK_VIOL = 0x21,
++	NIX_SND_STATUS_NPC_UCAST_CHAN_ERR = 0x22,
++	NIX_SND_STATUS_NPC_MCAST_CHAN_ERR = 0x23,
++	NIX_SND_STATUS_NPC_MCAST_ABORT = 0x24,
++	NIX_SND_STATUS_NPC_VTAG_PTR_ERR = 0x25,
++	NIX_SND_STATUS_NPC_VTAG_SIZE_ERR = 0x26,
++	NIX_SND_STATUS_SEND_MEM_FAULT = 0x27,
++	NIX_SND_STATUS_SEND_STATS_ERR = 0x28,
+ 	NIX_SND_STATUS_MAX,
+ };
  
 -- 
 2.42.0
