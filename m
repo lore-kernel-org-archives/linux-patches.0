@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51653A8E7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F4B28374
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOsRpc07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7276EC433CB;
-	Wed, 15 Nov 2023 19:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ch9a+Iin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97C7C433C7;
+	Wed, 15 Nov 2023 19:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076327;
-	bh=sO3xe0MdfaCpWxPOK1IjoKdN6lY17ZOBHLat45SKsUM=;
+	s=korg; t=1700076329;
+	bh=xGdWC6oJhrdbp+6fwAZox5cqTC6l/SBtVCeRvO31CE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lOsRpc07//HlPhvGylXWYe+pupRoP4hwGNba9KbrACsi6mIV78Zt0OwxY4oN0Fxkk
-	 8/r4C+g95qTZwG5Qgu4/Q4ZpEFc+iT15tLv1SrZEtEWwl/mKNn13rMf3eiEJdpNAug
-	 gTGZH0T59qnAaL3qIl6iWoi+3B7v842fIucSpbIg=
+	b=Ch9a+IinJMn2gAPJ7FTWFhAI115UusBcnXs8Qf3t3kNAUALzrt2Zn/jNg9Zuvm3Om
+	 1C2SvlZOnejBa8KlwaJoZhX/BcBodwQZrXn2N9yQfpfWmtaKdJzw2DtFEEWB9Lt/ii
+	 XGzjQog4RKm9hbVnxzty0SQ/6M5SXiie/D+ORHlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Dipen Patel <dipenp@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 196/550] hwmon: (sch5627) Disallow write access if virtual registers are locked
-Date: Wed, 15 Nov 2023 14:13:00 -0500
-Message-ID: <20231115191614.363999250@linuxfoundation.org>
+Subject: [PATCH 6.5 197/550] hte: tegra: Fix missing error code in tegra_hte_test_probe()
+Date: Wed, 15 Nov 2023 14:13:01 -0500
+Message-ID: <20231115191614.428745264@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,51 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 7da8a635436029957c5350da3acf51d78ed64071 ]
+[ Upstream commit b7c3ca3553d1de5e86c85636828e186d30cd0628 ]
 
-When the lock bit inside SCH5627_REG_CTRL is set, then the virtual
-registers become read-only until the next power cycle.
-Disallow write access to those registers in such a case.
+The value of 'ret' is zero when of_hte_req_count() fails to get number
+of entitties to timestamp. And returning success(zero) on this failure
+path is incorrect.
 
-Tested on a Fujitsu Esprimo P720.
-
-Fixes: aa9f833dfc12 ("hwmon: (sch5627) Add pwmX_auto_channels_temp support")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20230907052639.16491-3-W_Armin@gmx.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 9a75a7cd03c9 ("hte: Add Tegra HTE test driver")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Dipen Patel <dipenp@nvidia.com>
+Signed-off-by: Dipen Patel <dipenp@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sch5627.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hte/hte-tegra194-test.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/sch5627.c b/drivers/hwmon/sch5627.c
-index 0eefb8c0aef25..bf408e35e2c32 100644
---- a/drivers/hwmon/sch5627.c
-+++ b/drivers/hwmon/sch5627.c
-@@ -34,6 +34,7 @@
- #define SCH5627_REG_CTRL		0x40
+diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
+index ba37a5efbf820..ab2edff018eb6 100644
+--- a/drivers/hte/hte-tegra194-test.c
++++ b/drivers/hte/hte-tegra194-test.c
+@@ -153,8 +153,10 @@ static int tegra_hte_test_probe(struct platform_device *pdev)
+ 	}
  
- #define SCH5627_CTRL_START		BIT(0)
-+#define SCH5627_CTRL_LOCK		BIT(1)
- #define SCH5627_CTRL_VBAT		BIT(4)
+ 	cnt = of_hte_req_count(hte.pdev);
+-	if (cnt < 0)
++	if (cnt < 0) {
++		ret = cnt;
+ 		goto free_irq;
++	}
  
- #define SCH5627_NO_TEMPS		8
-@@ -231,6 +232,14 @@ static int reg_to_rpm(u16 reg)
- static umode_t sch5627_is_visible(const void *drvdata, enum hwmon_sensor_types type, u32 attr,
- 				  int channel)
- {
-+	const struct sch5627_data *data = drvdata;
-+
-+	/* Once the lock bit is set, the virtual registers become read-only
-+	 * until the next power cycle.
-+	 */
-+	if (data->control & SCH5627_CTRL_LOCK)
-+		return 0444;
-+
- 	if (type == hwmon_pwm && attr == hwmon_pwm_auto_channels_temp)
- 		return 0644;
+ 	dev_info(&pdev->dev, "Total requested lines:%d\n", cnt);
  
 -- 
 2.42.0
