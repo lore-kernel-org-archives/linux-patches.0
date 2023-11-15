@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CAF381A5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0D6381A5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+EZ/7DH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FF5C4E777;
-	Wed, 15 Nov 2023 20:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMOfdNc2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBFBC4E77B;
+	Wed, 15 Nov 2023 20:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081673;
-	bh=mMzUglbdLRWB0cDU4Voa8otSNM5W+iW6MUoFEFktfaU=;
+	s=korg; t=1700081676;
+	bh=Vz2eWSCXUoJxi0n4+9NMkPmzyMJRJbY6D3zaUMyijDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v+EZ/7DHjaXD8qjIJdHKZCHRitetl318G+Mh0zESUhiMXAVyKPg9lgbHq1xnd67Pd
-	 WfFsR4qQrDL1pP6io9PAb4KgstkdAnKIGsku7eOuyiYp01VbxDzQQUYQ8xH0VD0/GK
-	 HLManI60C2ZznbFlXc8DxtEoFZxemeke8IrokHs4=
+	b=lMOfdNc2dvo+DtPusqG+ZIazglmt0ScmDZBldj/bBkBIsV8WuYf3cFoV5bils+MiZ
+	 JLZer0KPQjA+58enrSqoh7REQyk9bxl2wd7opm8dF3C2NUG+/wyfBpB2yPXfPXPPmZ
+	 SfiSGEmMN64wMKHqotdWLQwjIFJbQwXVWIyDqNZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Neal Cardwell <ncardwell@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Han Xu <han.xu@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/191] tcp_metrics: add missing barriers on delete
-Date: Wed, 15 Nov 2023 15:44:55 -0500
-Message-ID: <20231115204645.741342976@linuxfoundation.org>
+Subject: [PATCH 5.10 048/191] spi: nxp-fspi: use the correct ioremap function
+Date: Wed, 15 Nov 2023 15:45:23 -0500
+Message-ID: <20231115204647.488261019@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -44,45 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Han Xu <han.xu@nxp.com>
 
-[ Upstream commit cbc3a153222805d65f821e10f4f78b6afce06f86 ]
+[ Upstream commit c3aa5cb264a38ae9bbcce32abca4c155af0456df ]
 
-When removing an item from RCU protected list, we must prevent
-store-tearing, using rcu_assign_pointer() or WRITE_ONCE().
+AHB memory as MMIO should be mapped with ioremap rather than ioremap_wc,
+which should have been used initially just to handle unaligned access as
+a workaround.
 
-Fixes: 04f721c671656 ("tcp_metrics: Rewrite tcp_metrics_flush_all")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d166a73503ef ("spi: fspi: dynamically alloc AHB memory")
+Signed-off-by: Han Xu <han.xu@nxp.com>
+Link: https://lore.kernel.org/r/20231010201524.2021340-1-han.xu@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-nxp-fspi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index a707fa1dbcafd..03ab7500f5745 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -908,7 +908,7 @@ static void tcp_metrics_flush_all(struct net *net)
- 			match = net ? net_eq(tm_net(tm), net) :
- 				!refcount_read(&tm_net(tm)->count);
- 			if (match) {
--				*pp = tm->tcpm_next;
-+				rcu_assign_pointer(*pp, tm->tcpm_next);
- 				kfree_rcu(tm, rcu_head);
- 			} else {
- 				pp = &tm->tcpm_next;
-@@ -949,7 +949,7 @@ static int tcp_metrics_nl_cmd_del(struct sk_buff *skb, struct genl_info *info)
- 		if (addr_same(&tm->tcpm_daddr, &daddr) &&
- 		    (!src || addr_same(&tm->tcpm_saddr, &saddr)) &&
- 		    net_eq(tm_net(tm), net)) {
--			*pp = tm->tcpm_next;
-+			rcu_assign_pointer(*pp, tm->tcpm_next);
- 			kfree_rcu(tm, rcu_head);
- 			found = true;
- 		} else {
+diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
+index 90b5fbc914ae2..f40b93960b893 100644
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -685,7 +685,7 @@ static int nxp_fspi_read_ahb(struct nxp_fspi *f, const struct spi_mem_op *op)
+ 		f->memmap_len = len > NXP_FSPI_MIN_IOMAP ?
+ 				len : NXP_FSPI_MIN_IOMAP;
+ 
+-		f->ahb_addr = ioremap_wc(f->memmap_phy + f->memmap_start,
++		f->ahb_addr = ioremap(f->memmap_phy + f->memmap_start,
+ 					 f->memmap_len);
+ 
+ 		if (!f->ahb_addr) {
 -- 
 2.42.0
 
