@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B9F381A5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CC3381A5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2WPQoP7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C81C4E77B;
-	Wed, 15 Nov 2023 20:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DysvB4S1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC150C4E778;
+	Wed, 15 Nov 2023 20:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081793;
-	bh=jjHloCXp1N/YaCkfvBGc+nOXJHMFXQMO8LWjkRlOCTg=;
+	s=korg; t=1700081795;
+	bh=aqMR1SYtHF5nwjqyalx1u6sRMYEF/n1VmFSYUtOyqOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z2WPQoP7hThZmUtzU6aWCaAHnbnKtP8zNTChaEiFo6jkq1C3hlPRMifWH2ccqG2ZG
-	 N9NXIyf3UfrukuMLUYxfpudIpvZh3qvGl6zLTpWVYrtIJRu+tWeG19XtmEvKeux9x4
-	 NzwdNhGAtpjUu9MCr9bdqR+sExKCiPCQqdWr3ORA=
+	b=DysvB4S1XdE7J/x+tmx8ZE/GqfO9MU9ujl6c55FjAbVrDrqgLHN+3azXBxr2Lg1wx
+	 oTy7fIczcxuOmLzwY0aaO8GRObt/RCoHJGQ9t0KCkZTaOAxU64fNBryMn2vBYpyhNp
+	 XrFmsplB6m+s8C+hF7VPmMLtq9yrilPAHwuBUXlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 128/191] dmaengine: ti: edma: handle irq_of_parse_and_map() errors
-Date: Wed, 15 Nov 2023 15:46:43 -0500
-Message-ID: <20231115204652.208856375@linuxfoundation.org>
+Subject: [PATCH 5.10 129/191] misc: st_core: Do not call kfree_skb() under spin_lock_irqsave()
+Date: Wed, 15 Nov 2023 15:46:44 -0500
+Message-ID: <20231115204652.270333796@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -43,46 +41,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 14f6d317913f634920a640e9047aa2e66f5bdcb7 ]
+[ Upstream commit 4d08c3d12b61022501989f9f071514d2d6f77c47 ]
 
-Zero is not a valid IRQ for in-kernel code and the irq_of_parse_and_map()
-function returns zero on error.  So this check for valid IRQs should only
-accept values > 0.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with hardware interrupts being disabled.
+So replace kfree_skb() with dev_kfree_skb_irq() under
+spin_lock_irqsave(). Compile tested only.
 
-Fixes: 2b6b3b742019 ("ARM/dmaengine: edma: Merge the two drivers under drivers/dma/")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/f15cb6a7-8449-4f79-98b6-34072f04edbc@moroto.mountain
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 53618cc1e51e ("Staging: sources for ST core")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20230823035020.1281892-1-ruanjinjie@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/edma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/ti-st/st_core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index 35d81bd857f11..a1adc8d91fd8d 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -2459,7 +2459,7 @@ static int edma_probe(struct platform_device *pdev)
- 	if (irq < 0 && node)
- 		irq = irq_of_parse_and_map(node, 0);
+diff --git a/drivers/misc/ti-st/st_core.c b/drivers/misc/ti-st/st_core.c
+index f4ddd1e670151..ca115f344fa29 100644
+--- a/drivers/misc/ti-st/st_core.c
++++ b/drivers/misc/ti-st/st_core.c
+@@ -15,6 +15,7 @@
+ #include <linux/skbuff.h>
  
--	if (irq >= 0) {
-+	if (irq > 0) {
- 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccint",
- 					  dev_name(dev));
- 		ret = devm_request_irq(dev, irq, dma_irq_handler, 0, irq_name,
-@@ -2475,7 +2475,7 @@ static int edma_probe(struct platform_device *pdev)
- 	if (irq < 0 && node)
- 		irq = irq_of_parse_and_map(node, 2);
+ #include <linux/ti_wilink_st.h>
++#include <linux/netdevice.h>
  
--	if (irq >= 0) {
-+	if (irq > 0) {
- 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccerrint",
- 					  dev_name(dev));
- 		ret = devm_request_irq(dev, irq, dma_ccerr_handler, 0, irq_name,
+ extern void st_kim_recv(void *, const unsigned char *, long);
+ void st_int_recv(void *, const unsigned char *, long);
+@@ -436,7 +437,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
+ 	case ST_LL_AWAKE_TO_ASLEEP:
+ 		pr_err("ST LL is illegal state(%ld),"
+ 			   "purging received skb.", st_ll_getstate(st_gdata));
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		break;
+ 	case ST_LL_ASLEEP:
+ 		skb_queue_tail(&st_gdata->tx_waitq, skb);
+@@ -445,7 +446,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
+ 	default:
+ 		pr_err("ST LL is illegal state(%ld),"
+ 			   "purging received skb.", st_ll_getstate(st_gdata));
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		break;
+ 	}
+ 
+@@ -499,7 +500,7 @@ void st_tx_wakeup(struct st_data_s *st_data)
+ 				spin_unlock_irqrestore(&st_data->lock, flags);
+ 				break;
+ 			}
+-			kfree_skb(skb);
++			dev_kfree_skb_irq(skb);
+ 			spin_unlock_irqrestore(&st_data->lock, flags);
+ 		}
+ 		/* if wake-up is set in another context- restart sending */
 -- 
 2.42.0
 
