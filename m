@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DDB53DBAF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D45A381DF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsAM5AGh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F10FC433C7;
-	Wed, 15 Nov 2023 19:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTIBwAoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DCEC433C7;
+	Wed, 15 Nov 2023 19:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078306;
-	bh=3o7mEmJqbjCpkRjgzaM2wYFuznDaZvALyg6n7NVOe7M=;
+	s=korg; t=1700078308;
+	bh=+6+7xztNpMmX6144DxLo3Vabhd8PfDSR78YsYv9Yy4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HsAM5AGhejTiJAdKp2PqIexWhAdmWCHH3csjuYTIek8KOej4T9saE2k9NSuRr5EtE
-	 BHlhDbKmBXKNUwGB6ekoA3bVcgoz1UoKm1c16rFIdL8ALUkq49DVWetK6olJ3paWAs
-	 T55lKXmHD0fqInBno7yRc2p+UKQ61ZlxPIH+Xt/4=
+	b=mTIBwAoK6EPBbeO0X2jM7gCFuP6+0ITWzjBUBrQnFBKqrNPa5LSYvu0VgIeOWtM9P
+	 zfNMW1Xzqj1qRBoUYhKt1AOspdPrfuYQvD3faKvFL9Xttrt0L/ujNZa6stMVoGH5t8
+	 82bWUvb19vwLWoANetpgSFCCTs+EjOuM+hy0YXsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 241/379] mfd: core: Ensure disabled devices are skipped without aborting
-Date: Wed, 15 Nov 2023 14:25:16 -0500
-Message-ID: <20231115192659.387183140@linuxfoundation.org>
+Subject: [PATCH 6.1 242/379] mfd: dln2: Fix double put in dln2_probe
+Date: Wed, 15 Nov 2023 14:25:17 -0500
+Message-ID: <20231115192659.451085175@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,75 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 7ba7bdef4d14e3722e2842da3b48cbadb73e52d6 ]
+[ Upstream commit 759c409bc5fc496cbc22cd0b392d3cbb0c0e23eb ]
 
-The loop searching for a matching device based on its compatible
-string is aborted when a matching disabled device is found.
-This abort prevents to add devices as soon as one disabled device
-is found.
+The dln2_free() already contains usb_put_dev(). Therefore,
+the redundant usb_put_dev() before dln2_free() may lead to
+a double free.
 
-Continue searching for an other device instead of aborting on the
-first disabled one fixes the issue.
-
-Fixes: 22380b65dc70 ("mfd: mfd-core: Ensure disabled devices are ignored without error")
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/528425d6472176bb1d02d79596b51f8c28a551cc.1692376361.git.christophe.leroy@csgroup.eu
+Fixes: 96da8f148396 ("mfd: dln2: Fix memory leak in dln2_probe()")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Link: https://lore.kernel.org/r/20230925024134.9683-1-dinghao.liu@zju.edu.cn
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/mfd-core.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/mfd/dln2.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/mfd/mfd-core.c b/drivers/mfd/mfd-core.c
-index 16d1861e96823..97909e3e2c303 100644
---- a/drivers/mfd/mfd-core.c
-+++ b/drivers/mfd/mfd-core.c
-@@ -176,6 +176,7 @@ static int mfd_add_device(struct device *parent, int id,
- 	struct platform_device *pdev;
- 	struct device_node *np = NULL;
- 	struct mfd_of_node_entry *of_entry, *tmp;
-+	bool disabled = false;
- 	int ret = -ENOMEM;
- 	int platform_id;
- 	int r;
-@@ -213,11 +214,10 @@ static int mfd_add_device(struct device *parent, int id,
- 	if (IS_ENABLED(CONFIG_OF) && parent->of_node && cell->of_compatible) {
- 		for_each_child_of_node(parent->of_node, np) {
- 			if (of_device_is_compatible(np, cell->of_compatible)) {
--				/* Ignore 'disabled' devices error free */
-+				/* Skip 'disabled' devices */
- 				if (!of_device_is_available(np)) {
--					of_node_put(np);
--					ret = 0;
--					goto fail_alias;
-+					disabled = true;
-+					continue;
- 				}
+diff --git a/drivers/mfd/dln2.c b/drivers/mfd/dln2.c
+index c3149729cec2e..6cd0b0c752d6e 100644
+--- a/drivers/mfd/dln2.c
++++ b/drivers/mfd/dln2.c
+@@ -827,7 +827,6 @@ static int dln2_probe(struct usb_interface *interface,
+ 	dln2_stop_rx_urbs(dln2);
  
- 				ret = mfd_match_of_node_to_dev(pdev, np, cell);
-@@ -227,10 +227,17 @@ static int mfd_add_device(struct device *parent, int id,
- 				if (ret)
- 					goto fail_alias;
+ out_free:
+-	usb_put_dev(dln2->usb_dev);
+ 	dln2_free(dln2);
  
--				break;
-+				goto match;
- 			}
- 		}
- 
-+		if (disabled) {
-+			/* Ignore 'disabled' devices error free */
-+			ret = 0;
-+			goto fail_alias;
-+		}
-+
-+match:
- 		if (!pdev->dev.of_node)
- 			pr_warn("%s: Failed to locate of_node [id: %d]\n",
- 				cell->name, platform_id);
+ 	return ret;
 -- 
 2.42.0
 
