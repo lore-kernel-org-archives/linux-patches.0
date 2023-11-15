@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D5B364B3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CAF381A5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuSPp0Qo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDEEC4E778;
-	Wed, 15 Nov 2023 20:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+EZ/7DH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FF5C4E777;
+	Wed, 15 Nov 2023 20:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081672;
-	bh=qIE3uHh0P+HCJK4LLhVNrasxU/NYzHhwkc0xJXMXwJo=;
+	s=korg; t=1700081673;
+	bh=mMzUglbdLRWB0cDU4Voa8otSNM5W+iW6MUoFEFktfaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VuSPp0QomgIS91BxjHQF9NsteN5tA1uo9YyVXS5aIJxkPoFBtp1J9rFx3gC3fY0R9
-	 fuGGfw/+S1NbqVLcMeGLaBjOnuK8M66nCQ6r65Ce7Lm6xdBz7/pntuDVjsXKXqoWhv
-	 /HT5EzQEwpXRf8S1Ge9PSe7PcQcBK0+kIM4z9p5E=
+	b=v+EZ/7DHjaXD8qjIJdHKZCHRitetl318G+Mh0zESUhiMXAVyKPg9lgbHq1xnd67Pd
+	 WfFsR4qQrDL1pP6io9PAb4KgstkdAnKIGsku7eOuyiYp01VbxDzQQUYQ8xH0VD0/GK
+	 HLManI60C2ZznbFlXc8DxtEoFZxemeke8IrokHs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Kj=C3=A6r=20J=C3=B8rgensen?= <me@lagy.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Neal Cardwell <ncardwell@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/191] r8169: fix rare issue with broken rx after link-down on RTL8125
-Date: Wed, 15 Nov 2023 15:45:04 -0500
-Message-ID: <20231115204646.290819819@linuxfoundation.org>
+Subject: [PATCH 5.10 020/191] tcp_metrics: add missing barriers on delete
+Date: Wed, 15 Nov 2023 15:44:55 -0500
+Message-ID: <20231115204645.741342976@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -37,54 +38,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 621735f590643e3048ca2060c285b80551660601 ]
+[ Upstream commit cbc3a153222805d65f821e10f4f78b6afce06f86 ]
 
-In very rare cases (I've seen two reports so far about different
-RTL8125 chip versions) it seems the MAC locks up when link goes down
-and requires a software reset to get revived.
-Realtek doesn't publish hw errata information, therefore the root cause
-is unknown. Realtek vendor drivers do a full hw re-initialization on
-each link-up event, the slimmed-down variant here was reported to fix
-the issue for the reporting user.
-It's not fully clear which parts of the NIC are reset as part of the
-software reset, therefore I can't rule out side effects.
+When removing an item from RCU protected list, we must prevent
+store-tearing, using rcu_assign_pointer() or WRITE_ONCE().
 
-Fixes: f1bce4ad2f1c ("r8169: add support for RTL8125")
-Reported-by: Martin Kjær Jørgensen <me@lagy.org>
-Link: https://lore.kernel.org/netdev/97ec2232-3257-316c-c3e7-a08192ce16a6@gmail.com/T/
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/9edde757-9c3b-4730-be3b-0ef3a374ff71@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 04f721c671656 ("tcp_metrics: Rewrite tcp_metrics_flush_all")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/tcp_metrics.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 4fb204962a11c..9a920e0677e54 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4693,7 +4693,11 @@ static void r8169_phylink_handler(struct net_device *ndev)
- 	if (netif_carrier_ok(ndev)) {
- 		rtl_link_chg_patch(tp);
- 		pm_request_resume(d);
-+		netif_wake_queue(tp->dev);
- 	} else {
-+		/* In few cases rx is broken after link-down otherwise */
-+		if (rtl_is_8125(tp))
-+			rtl_reset_work(tp);
- 		pm_runtime_idle(d);
- 	}
- 
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index a707fa1dbcafd..03ab7500f5745 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -908,7 +908,7 @@ static void tcp_metrics_flush_all(struct net *net)
+ 			match = net ? net_eq(tm_net(tm), net) :
+ 				!refcount_read(&tm_net(tm)->count);
+ 			if (match) {
+-				*pp = tm->tcpm_next;
++				rcu_assign_pointer(*pp, tm->tcpm_next);
+ 				kfree_rcu(tm, rcu_head);
+ 			} else {
+ 				pp = &tm->tcpm_next;
+@@ -949,7 +949,7 @@ static int tcp_metrics_nl_cmd_del(struct sk_buff *skb, struct genl_info *info)
+ 		if (addr_same(&tm->tcpm_daddr, &daddr) &&
+ 		    (!src || addr_same(&tm->tcpm_saddr, &saddr)) &&
+ 		    net_eq(tm_net(tm), net)) {
+-			*pp = tm->tcpm_next;
++			rcu_assign_pointer(*pp, tm->tcpm_next);
+ 			kfree_rcu(tm, rcu_head);
+ 			found = true;
+ 		} else {
 -- 
 2.42.0
 
