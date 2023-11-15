@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE703C462
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6DB3C461
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zL5XXRRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7DDC433C9;
-	Wed, 15 Nov 2023 19:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5hK6EOL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF83CC433C7;
+	Wed, 15 Nov 2023 19:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077124;
-	bh=YJnpRv/A/FXD0QiClyoamxD0soaZojfcKe5wL1xWyDw=;
+	s=korg; t=1700077126;
+	bh=rZTDsPoXI2L4VZFTcFz3RHtYoAxqm1b1lD8hWQV2AvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zL5XXRRm3wxZZifMnFl+8lhQRj8XT6aj+h2GQB3MkNWvqsGbbcKnL+GmUmvZLIs9P
-	 OSwmMeXk+HsQPS1+xJVg/5XEutvpxfY1T4pcTjUQ/oyv7R6JIRGlTiCI6fcflA+DAl
-	 vZYMnoYjvbk0kJ1lFB3hzKtH1P+a1E2a0BbSXXkQ=
+	b=i5hK6EOLYmZCHaqctfKl71zjU2pyXS3jF94EiMmGhfH75aLHlwIG/6eL/0LiiiE3U
+	 Q8MonDh4YHRExBmj19v2pfVdFL51RGXWXi8gg7Je0WMwHK9gn52sVHrbePS9O/diPm
+	 30z3dDsfRp8/wXLCl96dPHhZWJQ7Pas8dtKaYfLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avraham Stern <avraham.stern@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrea Righi <andrea.righi@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 132/603] wifi: iwlwifi: mvm: fix removing pasn station for responder
-Date: Wed, 15 Nov 2023 14:11:17 -0500
-Message-ID: <20231115191622.394218436@linuxfoundation.org>
+Subject: [PATCH 6.5 530/550] module/decompress: use kvmalloc() consistently
+Date: Wed, 15 Nov 2023 14:18:34 -0500
+Message-ID: <20231115191637.673127331@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,54 +38,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Avraham Stern <avraham.stern@intel.com>
+From: Andrea Righi <andrea.righi@canonical.com>
 
-[ Upstream commit ff2687612c21a87a58c76099f3d59f8db376b995 ]
+[ Upstream commit 17fc8084aa8f9d5235f252fc3978db657dd77e92 ]
 
-In case of MLD operation the station should be removed using the
-mld api.
+We consistently switched from kmalloc() to vmalloc() in module
+decompression to prevent potential memory allocation failures with large
+modules, however vmalloc() is not as memory-efficient and fast as
+kmalloc().
 
-Fixes: fd940de72d49 ("wifi: iwlwifi: mvm: FTM responder MLO support")
-Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230926110319.7eb353abb95c.I2b30be09b99f5a2379956e010bafaa465ff053ba@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Since we don't know in general the size of the workspace required by the
+decompression algorithm, it is more reasonable to use kvmalloc()
+consistently, also considering that we don't have special memory
+requirements here.
+
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Tested-by: Andrea Righi <andrea.righi@canonical.com>
+Signed-off-by: Andrea Righi <andrea.righi@canonical.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/ftm-responder.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ kernel/module/decompress.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ftm-responder.c b/drivers/net/wireless/intel/iwlwifi/mvm/ftm-responder.c
-index b49781d1a07a7..10b9219b3bfd3 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ftm-responder.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ftm-responder.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-  * Copyright (C) 2015-2017 Intel Deutschland GmbH
-- * Copyright (C) 2018-2022 Intel Corporation
-+ * Copyright (C) 2018-2023 Intel Corporation
-  */
- #include <net/cfg80211.h>
- #include <linux/etherdevice.h>
-@@ -302,7 +302,12 @@ static void iwl_mvm_resp_del_pasn_sta(struct iwl_mvm *mvm,
- 				      struct iwl_mvm_pasn_sta *sta)
- {
- 	list_del(&sta->list);
--	iwl_mvm_rm_sta_id(mvm, vif, sta->int_sta.sta_id);
-+
-+	if (iwl_mvm_has_mld_api(mvm->fw))
-+		iwl_mvm_mld_rm_sta_id(mvm, sta->int_sta.sta_id);
-+	else
-+		iwl_mvm_rm_sta_id(mvm, vif, sta->int_sta.sta_id);
-+
- 	iwl_mvm_dealloc_int_sta(mvm, &sta->int_sta);
- 	kfree(sta);
+diff --git a/kernel/module/decompress.c b/kernel/module/decompress.c
+index 4156d59be4408..474e68f0f0634 100644
+--- a/kernel/module/decompress.c
++++ b/kernel/module/decompress.c
+@@ -100,7 +100,7 @@ static ssize_t module_gzip_decompress(struct load_info *info,
+ 	s.next_in = buf + gzip_hdr_len;
+ 	s.avail_in = size - gzip_hdr_len;
+ 
+-	s.workspace = vmalloc(zlib_inflate_workspacesize());
++	s.workspace = kvmalloc(zlib_inflate_workspacesize(), GFP_KERNEL);
+ 	if (!s.workspace)
+ 		return -ENOMEM;
+ 
+@@ -138,7 +138,7 @@ static ssize_t module_gzip_decompress(struct load_info *info,
+ out_inflate_end:
+ 	zlib_inflateEnd(&s);
+ out:
+-	vfree(s.workspace);
++	kvfree(s.workspace);
+ 	return retval;
  }
+ #elif defined(CONFIG_MODULE_COMPRESS_XZ)
+@@ -241,7 +241,7 @@ static ssize_t module_zstd_decompress(struct load_info *info,
+ 	}
+ 
+ 	wksp_size = zstd_dstream_workspace_bound(header.windowSize);
+-	wksp = vmalloc(wksp_size);
++	wksp = kvmalloc(wksp_size, GFP_KERNEL);
+ 	if (!wksp) {
+ 		retval = -ENOMEM;
+ 		goto out;
+@@ -284,7 +284,7 @@ static ssize_t module_zstd_decompress(struct load_info *info,
+ 	retval = new_size;
+ 
+  out:
+-	vfree(wksp);
++	kvfree(wksp);
+ 	return retval;
+ }
+ #else
 -- 
 2.42.0
 
