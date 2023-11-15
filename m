@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185223BB38
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE703BB29
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTIZHpvO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB19BC433C9;
-	Wed, 15 Nov 2023 19:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sms25CUP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B1BC433C8;
+	Wed, 15 Nov 2023 19:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076098;
-	bh=EpSN1BWjSjDXYFtBpD/rSk3rFCGk920oJUQIpqn9bFw=;
+	s=korg; t=1700076100;
+	bh=pzkhAJ+GM+XsZrtcJ2goX5XF1El2njevqUq8YfG9OyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTIZHpvO/3a8MMvA1a2etlddo53qOMyBF0mz4cSPj/unaH3u3Dxrj716ySFgRk+xV
-	 wHpL2zC7tyGNEyIobUVHGdhKA9yTmiL2kXtnt/v+Yu2vd7UMHi5ZXSiQYsAfZeThMP
-	 rs9riks3gs1J1xw/CBC2JJpnSkRaUHLfXPfjsWVA=
+	b=Sms25CUPSbn7H61grDHMCAXjyo57vYg91N9vZ31Hl2nNkmdEaHtHy/E3JZ0hV4Yq7
+	 Ty2EzTtlLWoGX/9ld1aEqrqCNFSoFqRDXLQjT4CEqzMp3XhDVdK39Uda9ccK/gSQfo
+	 2nqWtxHNOequCXOoCwrALcgly0Yh6/N8b6HG8TtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 075/550] wifi: rtw88: debug: Fix the NULL vs IS_ERR() bug for debugfs_create_file()
-Date: Wed, 15 Nov 2023 14:10:59 -0500
-Message-ID: <20231115191605.905067182@linuxfoundation.org>
+Subject: [PATCH 6.5 076/550] wifi: ath12k: fix DMA unmap warning on NULL DMA address
+Date: Wed, 15 Nov 2023 14:11:00 -0500
+Message-ID: <20231115191605.972710982@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,39 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 74f7957c9b1b95553faaf146a2553e023a9d1720 ]
+[ Upstream commit 9ae8c496d211155a3f220b63da364fba1a794292 ]
 
-Since debugfs_create_file() return ERR_PTR and never return NULL, so use
-IS_ERR() to check it instead of checking NULL.
+In ath12k_dp_tx(), if we reach fail_dma_unmap due to some errors,
+current code does DMA unmap unconditionally on skb_cb->paddr_ext_desc.
+However, skb_cb->paddr_ext_desc may be NULL and thus we get below
+warning:
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230919050651.962694-1-ruanjinjie@huawei.com
+kernel: [ 8887.076212] WARNING: CPU: 3 PID: 0 at drivers/iommu/dma-iommu.c:1077 iommu_dma_unmap_page+0x79/0x90
+
+Fix it by checking skb_cb->paddr_ext_desc before unmap it.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0-03427-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.15378.4
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230830021131.5610-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/debug.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_tx.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
-index f8ba133baff06..35bc37a3c469d 100644
---- a/drivers/net/wireless/realtek/rtw88/debug.c
-+++ b/drivers/net/wireless/realtek/rtw88/debug.c
-@@ -1233,9 +1233,9 @@ static struct rtw_debugfs_priv rtw_debug_priv_dm_cap = {
- #define rtw_debugfs_add_core(name, mode, fopname, parent)		\
- 	do {								\
- 		rtw_debug_priv_ ##name.rtwdev = rtwdev;			\
--		if (!debugfs_create_file(#name, mode,			\
-+		if (IS_ERR(debugfs_create_file(#name, mode,		\
- 					 parent, &rtw_debug_priv_ ##name,\
--					 &file_ops_ ##fopname))		\
-+					 &file_ops_ ##fopname)))	\
- 			pr_debug("Unable to initialize debugfs:%s\n",	\
- 			       #name);					\
- 	} while (0)
+diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
+index d3c7c76d6b75e..5d1be6451d587 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_tx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
+@@ -330,8 +330,11 @@ int ath12k_dp_tx(struct ath12k *ar, struct ath12k_vif *arvif,
+ 
+ fail_unmap_dma:
+ 	dma_unmap_single(ab->dev, ti.paddr, ti.data_len, DMA_TO_DEVICE);
+-	dma_unmap_single(ab->dev, skb_cb->paddr_ext_desc,
+-			 sizeof(struct hal_tx_msdu_ext_desc), DMA_TO_DEVICE);
++
++	if (skb_cb->paddr_ext_desc)
++		dma_unmap_single(ab->dev, skb_cb->paddr_ext_desc,
++				 sizeof(struct hal_tx_msdu_ext_desc),
++				 DMA_TO_DEVICE);
+ 
+ fail_remove_tx_buf:
+ 	ath12k_dp_tx_release_txbuf(dp, tx_desc, pool_id);
 -- 
 2.42.0
 
