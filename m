@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75008C0C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3B53C46B
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxIQ9PMg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F60C433C9;
-	Wed, 15 Nov 2023 19:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoOQfjxM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133CBC433CB;
+	Wed, 15 Nov 2023 19:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077327;
-	bh=smpZNfv/bGG8HpTkXIWIIL0gtx0Xn3898CDsYeSuzfg=;
+	s=korg; t=1700077329;
+	bh=9zfeSWl/G9okiOKllTgz+g8SXVk7mJigBxjJYh8rzlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QxIQ9PMgN+wQnSLXx7zw7J6NVoxn53kuEyGAWc3Umkf/X6xpidq4eVEore9DUWKHs
-	 nFN+SQDuVJY/wsFQzY1uGo22xe/z66itbaNYdsXLM1K7b3epiRFtgxedvo1GsuYN5H
-	 MLzSUG7F3FY0WD67FQ3l5zlDimvNuXnE6EiKOmuk=
+	b=ZoOQfjxM14ZZnLDkll+3fgCoufn7gc3lQJ6supbtNinLnH5V3sdvaRvnWejO7whb1
+	 LSdjzffPmADQ6Mm8eX3iTVkqEvJrIWyDXxYHXruaZRXzTfJHYSjgmTrFkkcPr5OIMq
+	 fs5ijD6JdXtaIlZULSKpgtD2XVqjv2+x/P06gARg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Maxim Schwalm <maxim.schwalm@gmail.com>
-Subject: [PATCH 6.6 233/603] drm/bridge: tc358768: Fix bit updates
-Date: Wed, 15 Nov 2023 14:12:58 -0500
-Message-ID: <20231115191629.320043916@linuxfoundation.org>
+	Armin Wolf <W_Armin@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 208/603] hwmon: (sch5627) Use bit macros when accessing the control register
+Date: Wed, 15 Nov 2023 14:12:33 -0500
+Message-ID: <20231115191627.663129375@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,64 +42,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 66962d5c3c51377b9b90cae35b7e038950438e02 ]
+[ Upstream commit 7f0b28e0653f36b51542d25dd54ed312c397ecfc ]
 
-The driver has a few places where it does:
+Use bit macros then accessing SCH5627_REG_CTRL, so that people
+do not need to look at the datasheet to find out what each bit
+does.
 
-if (thing_is_enabled_in_config)
-	update_thing_bit_in_hw()
+Tested on a Fujitsu Esprimo P720.
 
-This means that if the thing is _not_ enabled, the bit never gets
-cleared. This affects the h/vsyncs and continuous DSI clock bits.
-
-Fix the driver to always update the bit.
-
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
-Reviewed-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Tested-by: Maxim Schwalm <maxim.schwalm@gmail.com> # Asus TF700T
-Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230906-tc358768-v4-4-31725f008a50@ideasonboard.com
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20230907052639.16491-2-W_Armin@gmx.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 7da8a6354360 ("hwmon: (sch5627) Disallow write access if virtual registers are locked")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/hwmon/sch5627.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index bc97a837955ba..b668f77673c3d 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -794,8 +794,8 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 		val |= BIT(i + 1);
- 	tc358768_write(priv, TC358768_HSTXVREGEN, val);
+diff --git a/drivers/hwmon/sch5627.c b/drivers/hwmon/sch5627.c
+index 1bbda3b05532e..0eefb8c0aef25 100644
+--- a/drivers/hwmon/sch5627.c
++++ b/drivers/hwmon/sch5627.c
+@@ -6,6 +6,7 @@
  
--	if (!(mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
--		tc358768_write(priv, TC358768_TXOPTIONCNTRL, 0x1);
-+	tc358768_write(priv, TC358768_TXOPTIONCNTRL,
-+		       (mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS) ? 0 : BIT(0));
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
- 	/* TXTAGOCNT[26:16] RXTASURECNT[10:0] */
- 	val = tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk * 4);
-@@ -861,11 +861,12 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 	tc358768_write(priv, TC358768_DSI_HACT, hact);
++#include <linux/bits.h>
+ #include <linux/module.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/init.h>
+@@ -32,6 +33,9 @@
+ #define SCH5627_REG_PRIMARY_ID		0x3f
+ #define SCH5627_REG_CTRL		0x40
  
- 	/* VSYNC polarity */
--	if (!(mode->flags & DRM_MODE_FLAG_NVSYNC))
--		tc358768_update_bits(priv, TC358768_CONFCTL, BIT(5), BIT(5));
-+	tc358768_update_bits(priv, TC358768_CONFCTL, BIT(5),
-+			     (mode->flags & DRM_MODE_FLAG_PVSYNC) ? BIT(5) : 0);
++#define SCH5627_CTRL_START		BIT(0)
++#define SCH5627_CTRL_VBAT		BIT(4)
 +
- 	/* HSYNC polarity */
--	if (mode->flags & DRM_MODE_FLAG_PHSYNC)
--		tc358768_update_bits(priv, TC358768_PP_MISC, BIT(0), BIT(0));
-+	tc358768_update_bits(priv, TC358768_PP_MISC, BIT(0),
-+			     (mode->flags & DRM_MODE_FLAG_PHSYNC) ? BIT(0) : 0);
+ #define SCH5627_NO_TEMPS		8
+ #define SCH5627_NO_FANS			4
+ #define SCH5627_NO_IN			5
+@@ -147,7 +151,8 @@ static int sch5627_update_in(struct sch5627_data *data)
  
- 	/* Start DSI Tx */
- 	tc358768_write(priv, TC358768_DSI_START, 0x1);
+ 	/* Trigger a Vbat voltage measurement every 5 minutes */
+ 	if (time_after(jiffies, data->last_battery + 300 * HZ)) {
+-		sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL, data->control | 0x10);
++		sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL,
++					  data->control | SCH5627_CTRL_VBAT);
+ 		data->last_battery = jiffies;
+ 	}
+ 
+@@ -483,14 +488,13 @@ static int sch5627_probe(struct platform_device *pdev)
+ 		return val;
+ 
+ 	data->control = val;
+-	if (!(data->control & 0x01)) {
++	if (!(data->control & SCH5627_CTRL_START)) {
+ 		pr_err("hardware monitoring not enabled\n");
+ 		return -ENODEV;
+ 	}
+ 	/* Trigger a Vbat voltage measurement, so that we get a valid reading
+ 	   the first time we read Vbat */
+-	sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL,
+-				  data->control | 0x10);
++	sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL, data->control | SCH5627_CTRL_VBAT);
+ 	data->last_battery = jiffies;
+ 
+ 	/*
 -- 
 2.42.0
 
