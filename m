@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6B345BF1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A158045BF1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PryTcCqt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AEB2C433CB;
-	Wed, 15 Nov 2023 22:02:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lc1LZbjo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBE8C433C7;
+	Wed, 15 Nov 2023 22:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085755;
-	bh=o7H1aBflZVCnBms7tXqDdyqB9t9Qp7775rEpKWTaueA=;
+	s=korg; t=1700085757;
+	bh=RDLXaXCKoxWrDuDiAvwwHlpya+8nxhKWmnx5iwP06dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PryTcCqt4rMdVj3IA9/LiYtWAmt+HlMSBsfeJ2LFqY8kOYisXn+/vLNI7zCWy9U2H
-	 D49HO6v5oIA33XYwfwHWqvMnve74g4wDgdUgDY1k99zWcsuyeVhhMhVGL12m3p/0g4
-	 lKnP1EKYrCrGz+/F+FCbRy/2fsHGzPfob2jePpVM=
+	b=lc1LZbjoHB+tlss2lN6RMfm6x7RcGLwINKIIxztX6DunFXcN1PIXmgqdvO+vmTAFQ
+	 QqPS41mtn4SFTTkR7Wd7rXHMhXjlUUbJKd+QUsXOqE7Z1Z/GYbNT0FY7q2sigORnXY
+	 cKzCCNd4ifSvT40cgnxbKj0vnVgOoGcg36dhEhRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Aananth V <aananthv@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 031/119] clk: mediatek: clk-mt6797: Add check for mtk_alloc_clk_data
-Date: Wed, 15 Nov 2023 17:00:21 -0500
-Message-ID: <20231115220133.591275799@linuxfoundation.org>
+Subject: [PATCH 5.4 004/119] tcp: call tcp_try_undo_recovery when an RTOd TFO SYNACK is ACKed
+Date: Wed, 15 Nov 2023 16:59:54 -0500
+Message-ID: <20231115220132.745877801@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -43,54 +45,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Aananth V <aananthv@google.com>
 
-[ Upstream commit 606f6366a35a3329545e38129804d65ef26ed7d2 ]
+[ Upstream commit e326578a21414738de45f77badd332fb00bd0f58 ]
 
-Add the check for the return value of mtk_alloc_clk_data() in order to
-avoid NULL pointer dereference.
+For passive TCP Fast Open sockets that had SYN/ACK timeout and did not
+send more data in SYN_RECV, upon receiving the final ACK in 3WHS, the
+congestion state may awkwardly stay in CA_Loss mode unless the CA state
+was undone due to TCP timestamp checks. However, if
+tcp_rcv_synrecv_state_fastopen() decides not to undo, then we should
+enter CA_Open, because at that point we have received an ACK covering
+the retransmitted SYNACKs. Currently, the icsk_ca_state is only set to
+CA_Open after we receive an ACK for a data-packet. This is because
+tcp_ack does not call tcp_fastretrans_alert (and tcp_process_loss) if
+!prior_packets
 
-Fixes: 96596aa06628 ("clk: mediatek: add clk support for MT6797")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230912093407.21505-3-jiasheng@iscas.ac.cn
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Note that tcp_process_loss() calls tcp_try_undo_recovery(), so having
+tcp_rcv_synrecv_state_fastopen() decide that if we're in CA_Loss we
+should call tcp_try_undo_recovery() is consistent with that, and
+low risk.
+
+Fixes: dad8cea7add9 ("tcp: fix TFO SYNACK undo to avoid double-timestamp-undo")
+Signed-off-by: Aananth V <aananthv@google.com>
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Yuchung Cheng <ycheng@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt6797.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ipv4/tcp_input.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt6797.c b/drivers/clk/mediatek/clk-mt6797.c
-index f62b0428da0ee..9bef47161bde9 100644
---- a/drivers/clk/mediatek/clk-mt6797.c
-+++ b/drivers/clk/mediatek/clk-mt6797.c
-@@ -392,6 +392,8 @@ static int mtk_topckgen_init(struct platform_device *pdev)
- 		return PTR_ERR(base);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index c3f227c4c3567..fe5ef114beba5 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -6176,22 +6176,23 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
  
- 	clk_data = mtk_alloc_clk_data(CLK_TOP_NR);
-+	if (!clk_data)
-+		return -ENOMEM;
+ static void tcp_rcv_synrecv_state_fastopen(struct sock *sk)
+ {
++	struct tcp_sock *tp = tcp_sk(sk);
+ 	struct request_sock *req;
  
- 	mtk_clk_register_factors(top_fixed_divs, ARRAY_SIZE(top_fixed_divs),
- 				 clk_data);
-@@ -564,6 +566,8 @@ static void mtk_infrasys_init_early(struct device_node *node)
+ 	/* If we are still handling the SYNACK RTO, see if timestamp ECR allows
+ 	 * undo. If peer SACKs triggered fast recovery, we can't undo here.
+ 	 */
+-	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss)
+-		tcp_try_undo_loss(sk, false);
++	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss && !tp->packets_out)
++		tcp_try_undo_recovery(sk);
  
- 	if (!infra_clk_data) {
- 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
-+		if (!infra_clk_data)
-+			return;
+ 	/* Reset rtx states to prevent spurious retransmits_timed_out() */
+-	tcp_sk(sk)->retrans_stamp = 0;
++	tp->retrans_stamp = 0;
+ 	inet_csk(sk)->icsk_retransmits = 0;
  
- 		for (i = 0; i < CLK_INFRA_NR; i++)
- 			infra_clk_data->clks[i] = ERR_PTR(-EPROBE_DEFER);
-@@ -588,6 +592,8 @@ static int mtk_infrasys_init(struct platform_device *pdev)
+ 	/* Once we leave TCP_SYN_RECV or TCP_FIN_WAIT_1,
+ 	 * we no longer need req so release it.
+ 	 */
+-	req = rcu_dereference_protected(tcp_sk(sk)->fastopen_rsk,
++	req = rcu_dereference_protected(tp->fastopen_rsk,
+ 					lockdep_sock_is_held(sk));
+ 	reqsk_fastopen_remove(sk, req, false);
  
- 	if (!infra_clk_data) {
- 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
-+		if (!infra_clk_data)
-+			return -ENOMEM;
- 	} else {
- 		for (i = 0; i < CLK_INFRA_NR; i++) {
- 			if (infra_clk_data->clks[i] == ERR_PTR(-EPROBE_DEFER))
 -- 
 2.42.0
 
