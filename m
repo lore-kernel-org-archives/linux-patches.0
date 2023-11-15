@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EF23A8F3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F953A8F7
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QSbng0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57F9C433CA;
-	Wed, 15 Nov 2023 19:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxXHNR3t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F0DC433C8;
+	Wed, 15 Nov 2023 19:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077911;
-	bh=pG2ITld3UQLG43pBbuGcrZD4YPMJ13sStMlb8li8GHk=;
+	s=korg; t=1700077913;
+	bh=gbsVdajFUePXxuXQCS8uPiqO3KqJuIYJ4LeStxut3jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2QSbng0Idh0M2Xtx+nod2GeM92oF2dVpVrAgIG4LDViggBHWJ1HflQKY2SWxy6ZCm
-	 jPQ+Ny9k1CJQrR23cd75ndwID2npurTan7gT9LHdA8Z5yTlt6ATR6nldXtkfH+wGUI
-	 zJ+x7T7068WECxj3fMRBO+GQzQG4ttuSZd198+Nw=
+	b=bxXHNR3tZCqyYSgf5MXfCNauO6XXFwnuhyYxELW/nasx+Kj7mzH2Cxkdh8zBwa0f2
+	 lkzXPkUAkMz3Rx1SomCLmt1lxqdZy1Pr/630hYZYp7HalH746GpD3X+emxEkOBmVRf
+	 GTmNKUc3D8aO8jwy8vJPRYt2KYJMyuOKHP1VV66g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+0c8ce1da0ac31abbadcd@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 571/603] virtio/vsock: Fix uninit-value in virtio_transport_recv_pkt()
-Date: Wed, 15 Nov 2023 14:18:36 -0500
-Message-ID: <20231115191651.031685492@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 572/603] net: enetc: shorten enetc_setup_xdp_prog() error message to fit NETLINK_MAX_FMTMSG_LEN
+Date: Wed, 15 Nov 2023 14:18:37 -0500
+Message-ID: <20231115191651.089450591@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,104 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 34c4effacfc329aeca5635a69fd9e0f6c90b4101 ]
+[ Upstream commit f968c56417f00be4cb62eadeed042a1e3c80dc53 ]
 
-KMSAN reported the following uninit-value access issue:
+NETLINK_MAX_FMTMSG_LEN is currently hardcoded to 80, and we provide an
+error printf-formatted string having 96 characters including the
+terminating \0. Assuming each %d (representing a queue) gets replaced by
+a number having at most 2 digits (a reasonable assumption), the final
+string is also 96 characters wide, which is too much.
 
-=====================================================
-BUG: KMSAN: uninit-value in virtio_transport_recv_pkt+0x1dfb/0x26a0 net/vmw_vsock/virtio_transport_common.c:1421
- virtio_transport_recv_pkt+0x1dfb/0x26a0 net/vmw_vsock/virtio_transport_common.c:1421
- vsock_loopback_work+0x3bb/0x5a0 net/vmw_vsock/vsock_loopback.c:120
- process_one_work kernel/workqueue.c:2630 [inline]
- process_scheduled_works+0xff6/0x1e60 kernel/workqueue.c:2703
- worker_thread+0xeca/0x14d0 kernel/workqueue.c:2784
- kthread+0x3cc/0x520 kernel/kthread.c:388
- ret_from_fork+0x66/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+Reduce the verbiage a bit by removing some (partially) redundant words,
+which makes the new printf-formatted string be 73 characters wide with
+the trailing newline.
 
-Uninit was stored to memory at:
- virtio_transport_space_update net/vmw_vsock/virtio_transport_common.c:1274 [inline]
- virtio_transport_recv_pkt+0x1ee8/0x26a0 net/vmw_vsock/virtio_transport_common.c:1415
- vsock_loopback_work+0x3bb/0x5a0 net/vmw_vsock/vsock_loopback.c:120
- process_one_work kernel/workqueue.c:2630 [inline]
- process_scheduled_works+0xff6/0x1e60 kernel/workqueue.c:2703
- worker_thread+0xeca/0x14d0 kernel/workqueue.c:2784
- kthread+0x3cc/0x520 kernel/kthread.c:388
- ret_from_fork+0x66/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
-
-Uninit was created at:
- slab_post_alloc_hook+0x105/0xad0 mm/slab.h:767
- slab_alloc_node mm/slub.c:3478 [inline]
- kmem_cache_alloc_node+0x5a2/0xaf0 mm/slub.c:3523
- kmalloc_reserve+0x13c/0x4a0 net/core/skbuff.c:559
- __alloc_skb+0x2fd/0x770 net/core/skbuff.c:650
- alloc_skb include/linux/skbuff.h:1286 [inline]
- virtio_vsock_alloc_skb include/linux/virtio_vsock.h:66 [inline]
- virtio_transport_alloc_skb+0x90/0x11e0 net/vmw_vsock/virtio_transport_common.c:58
- virtio_transport_reset_no_sock net/vmw_vsock/virtio_transport_common.c:957 [inline]
- virtio_transport_recv_pkt+0x1279/0x26a0 net/vmw_vsock/virtio_transport_common.c:1387
- vsock_loopback_work+0x3bb/0x5a0 net/vmw_vsock/vsock_loopback.c:120
- process_one_work kernel/workqueue.c:2630 [inline]
- process_scheduled_works+0xff6/0x1e60 kernel/workqueue.c:2703
- worker_thread+0xeca/0x14d0 kernel/workqueue.c:2784
- kthread+0x3cc/0x520 kernel/kthread.c:388
- ret_from_fork+0x66/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
-
-CPU: 1 PID: 10664 Comm: kworker/1:5 Not tainted 6.6.0-rc3-00146-g9f3ebbef746f #3
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc38 04/01/2014
-Workqueue: vsock-loopback vsock_loopback_work
-=====================================================
-
-The following simple reproducer can cause the issue described above:
-
-int main(void)
-{
-  int sock;
-  struct sockaddr_vm addr = {
-    .svm_family = AF_VSOCK,
-    .svm_cid = VMADDR_CID_ANY,
-    .svm_port = 1234,
-  };
-
-  sock = socket(AF_VSOCK, SOCK_STREAM, 0);
-  connect(sock, (struct sockaddr *)&addr, sizeof(addr));
-  return 0;
-}
-
-This issue occurs because the `buf_alloc` and `fwd_cnt` fields of the
-`struct virtio_vsock_hdr` are not initialized when a new skb is allocated
-in `virtio_transport_init_hdr()`. This patch resolves the issue by
-initializing these fields during allocation.
-
-Fixes: 71dc9ec9ac7d ("virtio/vsock: replace virtio_vsock_pkt with sk_buff")
-Reported-and-tested-by: syzbot+0c8ce1da0ac31abbadcd@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0c8ce1da0ac31abbadcd
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://lore.kernel.org/r/20231104150531.257952-1-syoshida@redhat.com
+Fixes: 800db2d125c2 ("net: enetc: ensure we always have a minimum number of TXQs for stack")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/lkml/202311061336.4dsWMT1h-lkp@intel.com/
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20231106160311.616118-1-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index eb1465d506ef3..8bc272b6003bb 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -68,6 +68,8 @@ virtio_transport_alloc_skb(struct virtio_vsock_pkt_info *info,
- 	hdr->dst_port	= cpu_to_le32(dst_port);
- 	hdr->flags	= cpu_to_le32(info->flags);
- 	hdr->len	= cpu_to_le32(len);
-+	hdr->buf_alloc	= cpu_to_le32(0);
-+	hdr->fwd_cnt	= cpu_to_le32(0);
- 
- 	if (info->msg && len > 0) {
- 		payload = skb_put(skb, len);
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index 35461165de0d2..b92e3aa7cd041 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -2769,7 +2769,7 @@ static int enetc_setup_xdp_prog(struct net_device *ndev, struct bpf_prog *prog,
+ 	if (priv->min_num_stack_tx_queues + num_xdp_tx_queues >
+ 	    priv->num_tx_rings) {
+ 		NL_SET_ERR_MSG_FMT_MOD(extack,
+-				       "Reserving %d XDP TXQs does not leave a minimum of %d TXQs for network stack (total %d available)",
++				       "Reserving %d XDP TXQs does not leave a minimum of %d for stack (total %d)",
+ 				       num_xdp_tx_queues,
+ 				       priv->min_num_stack_tx_queues,
+ 				       priv->num_tx_rings);
 -- 
 2.42.0
 
