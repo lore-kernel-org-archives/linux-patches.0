@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66E9364CB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484C2364CB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmsvLXbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52303C433C9;
-	Wed, 15 Nov 2023 19:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmwkS+85"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A3BC433C7;
+	Wed, 15 Nov 2023 19:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077738;
-	bh=XyLRX7fIKiK36NwH7UgisMhcnHzlJUh4fJaITunIiAs=;
+	s=korg; t=1700077740;
+	bh=b7NGj63qpXqZiPbHlVIxDFcfqUSMOHBWXwRqaXUOTnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MmsvLXbOrXG7sDQlHzqOIpS2JGURynYzN+2ecJ3uNvN2wZjvGvLcM/JgEwAo0gYST
-	 N+Qb3CfQsuob1/zNIIkEqvWK7S46PrAnZBJIxkfv+lHM9TgLPP4AfznMfND1ZweQ4E
-	 DrsrgvmCyesQaOUFdBXvhqbygfePljz1R7Q/3/Bg=
+	b=KmwkS+856IxgZ7+Id7aXwHCIdpFWOgmpoSu+dM2+r1rjKZjWHx+X5lCZEoE2P4yUl
+	 R8RnWXHEmr2SJ7eDe/cS/vJK5yhidbwD3Qowxmk/mSaQz1P6SioMopOTZrmDEum6/f
+	 tFDm2tsq+k08Z+kSag8NCugFRKFtyRXJZ5icuZ5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 488/603] cxl/pci: Remove unnecessary device reference management in sanitize work
-Date: Wed, 15 Nov 2023 14:17:13 -0500
-Message-ID: <20231115191646.109823308@linuxfoundation.org>
+Subject: [PATCH 6.6 468/603] powerpc/40x: Remove stale PTE_ATOMIC_UPDATES macro
+Date: Wed, 15 Nov 2023 14:16:53 -0500
+Message-ID: <20231115191644.911592826@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,50 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 76fe8713dd0a1331d84d767e8e5d3f365d959e8a ]
+[ Upstream commit cc8ee288f484a2a59c01ccd4d8a417d6ed3466e3 ]
 
-Given that any particular put_device() could be the final put of the
-device, the fact that there are usages of cxlds->dev after
-put_device(cxlds->dev) is a red flag. Drop the reference counting since
-the device is pinned by being registered and will not be unregistered
-without triggering the driver + workqueue to shutdown.
+40x TLB handlers were reworked by commit 2c74e2586bb9 ("powerpc/40x:
+Rework 40x PTE access and TLB miss") to not require PTE_ATOMIC_UPDATES
+anymore.
 
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 5f2da1971446 ("cxl/pci: Fix sanitize notifier setup")
+Then commit 4e1df545e2fa ("powerpc/pgtable: Drop PTE_ATOMIC_UPDATES")
+removed all code related to PTE_ATOMIC_UPDATES.
+
+Remove left over PTE_ATOMIC_UPDATES macro.
+
+Fixes: 2c74e2586bb9 ("powerpc/40x: Rework 40x PTE access and TLB miss")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/f061db5857fcd748f84a6707aad01754686ce97e.1695659959.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/pci.c | 5 -----
- 1 file changed, 5 deletions(-)
+ arch/powerpc/include/asm/nohash/32/pte-40x.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-index 44a21ab7add51..aa1b3dd9e64c4 100644
---- a/drivers/cxl/pci.c
-+++ b/drivers/cxl/pci.c
-@@ -152,8 +152,6 @@ static void cxl_mbox_sanitize_work(struct work_struct *work)
- 	mutex_lock(&mds->mbox_mutex);
- 	if (cxl_mbox_background_complete(cxlds)) {
- 		mds->security.poll_tmo_secs = 0;
--		put_device(cxlds->dev);
--
- 		if (mds->security.sanitize_node)
- 			sysfs_notify_dirent(mds->security.sanitize_node);
+diff --git a/arch/powerpc/include/asm/nohash/32/pte-40x.h b/arch/powerpc/include/asm/nohash/32/pte-40x.h
+index 6fe46e7545566..0b4e5f8ce3e8a 100644
+--- a/arch/powerpc/include/asm/nohash/32/pte-40x.h
++++ b/arch/powerpc/include/asm/nohash/32/pte-40x.h
+@@ -69,9 +69,6 @@
  
-@@ -296,9 +294,6 @@ static int __cxl_pci_mbox_send_cmd(struct cxl_memdev_state *mds,
- 		 */
- 		if (mbox_cmd->opcode == CXL_MBOX_OP_SANITIZE) {
- 			if (mds->security.poll) {
--				/* hold the device throughout */
--				get_device(cxlds->dev);
+ #define _PTE_NONE_MASK	0
+ 
+-/* Until my rework is finished, 40x still needs atomic PTE updates */
+-#define PTE_ATOMIC_UPDATES	1
 -
- 				/* give first timeout a second */
- 				timeout = 1;
- 				mds->security.poll_tmo_secs = timeout;
+ #define _PAGE_BASE_NC	(_PAGE_PRESENT | _PAGE_ACCESSED)
+ #define _PAGE_BASE	(_PAGE_BASE_NC)
+ 
 -- 
 2.42.0
 
