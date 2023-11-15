@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF163C46C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C0A3C46C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2m/wAOg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08E9C433C7;
-	Wed, 15 Nov 2023 19:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qXJ6hhD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A113C433C8;
+	Wed, 15 Nov 2023 19:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077551;
-	bh=e/dw/pXZAO/IZsYr2uFhqhDbNSl+3ucNuNjZNRvVPho=;
+	s=korg; t=1700077552;
+	bh=6RVySMLIEUVg/qfz98rdQ29WFUa3T9BMawvajcpbnRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S2m/wAOggoHCyZJIAvrEQZf1RTFcix7QViHrTG4YeISKrf+7M2VeIuIKlJtdmp4SY
-	 mHDKZlhZl6TEZd0qY5Y+iKGFJaCP/9X6CDX5rvKbxX6iVQc7s1pjgi89324EtTXXoA
-	 XDGJE7Ge8p+DCv5WD6Olh3iNojsmQQ86/gUBUvg8=
+	b=2qXJ6hhDhhyyt7ofydb8GoQr3dGRxiJxCfSimDvc9X4k61wL7JiiUchoqSRi/4FQd
+	 49ukdkOPtpMyW1iCW4wsecv5XAvo0ZUBt1g8J6YcS3MTe+SWndWDG6IbSlEgO7lYZt
+	 cYOdjU89CRFb36EG9w9OEe0OdQ7JRgC63p0Cyums=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyrel Datwyler <tyreld@linux.ibm.com>,
-	Brian King <brking@linux.vnet.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chancel Liu <chancel.liu@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 351/603] scsi: ibmvfc: Fix erroneous use of rtas_busy_delay with hcall return code
-Date: Wed, 15 Nov 2023 14:14:56 -0500
-Message-ID: <20231115191637.818076947@linuxfoundation.org>
+Subject: [PATCH 6.6 352/603] ASoC: soc-pcm.c: Make sure DAI parameters cleared if the DAI becomes inactive
+Date: Wed, 15 Nov 2023 14:14:57 -0500
+Message-ID: <20231115191637.896027852@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,48 +42,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tyrel Datwyler <tyreld@linux.ibm.com>
+From: Chancel Liu <chancel.liu@nxp.com>
 
-[ Upstream commit 670106eb4c8b23475f8c2b3416005a312afa622f ]
+[ Upstream commit 3efcb471f871cc095841d411f98c593228ecbac6 ]
 
-Commit 0217a272fe13 ("scsi: ibmvfc: Store return code of H_FREE_SUB_CRQ
-during cleanup") wrongly changed the busy loop check to use
-rtas_busy_delay() instead of H_BUSY and H_IS_LONG_BUSY(). The busy return
-codes for RTAS and hypercalls are not the same.
+The commit 1da681e52853 ("ASoC: soc-pcm.c: Clear DAIs parameters after
+stream_active is updated") tries to make sure DAI parameters can be
+cleared properly through moving the cleanup to the place where stream
+active status is updated. However, it will cause the cleanup only
+happening in soc_pcm_close().
 
-Fix this issue by restoring the use of H_BUSY and H_IS_LONG_BUSY().
+Suppose a case: aplay -Dhw:0 44100.wav 48000.wav. The case calls
+soc_pcm_open()->soc_pcm_hw_params()->soc_pcm_hw_free()->
+soc_pcm_hw_params()->soc_pcm_hw_free()->soc_pcm_close() in order. The
+parameters would be remained in the system even if the playback of
+44100.wav is finished.
 
-Fixes: 0217a272fe13 ("scsi: ibmvfc: Store return code of H_FREE_SUB_CRQ  during cleanup")
-Signed-off-by: Tyrel Datwyler <tyreld@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230921225435.3537728-5-tyreld@linux.ibm.com
-Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The case requires us clearing parameters in phase of soc_pcm_hw_free().
+However, moving the DAI parameters cleanup back to soc_pcm_hw_free()
+has the risk that DAIs parameters never be cleared if there're more
+than one stream, see commit 1da681e52853 ("ASoC: soc-pcm.c: Clear DAIs
+parameters after stream_active is updated") for more details.
+
+To meet all these requirements, in addition to do DAI parameters
+cleanup in soc_pcm_hw_free(), also check it in soc_pcm_close() to make
+sure DAI parameters cleared if the DAI becomes inactive.
+
+Fixes: 1da681e52853 ("ASoC: soc-pcm.c: Clear DAIs parameters after stream_active is updated")
+Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
+Link: https://lore.kernel.org/r/20230920153621.711373-2-chancel.liu@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ibmvscsi/ibmvfc.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/soc-pcm.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/ibmvscsi/ibmvfc.c b/drivers/scsi/ibmvscsi/ibmvfc.c
-index ce9eb00e2ca04..470e8e6c41b62 100644
---- a/drivers/scsi/ibmvscsi/ibmvfc.c
-+++ b/drivers/scsi/ibmvscsi/ibmvfc.c
-@@ -22,7 +22,6 @@
- #include <linux/bsg-lib.h>
- #include <asm/firmware.h>
- #include <asm/irq.h>
--#include <asm/rtas.h>
- #include <asm/vio.h>
- #include <scsi/scsi.h>
- #include <scsi/scsi_cmnd.h>
-@@ -5804,7 +5803,7 @@ static int ibmvfc_register_scsi_channel(struct ibmvfc_host *vhost,
- irq_failed:
- 	do {
- 		rc = plpar_hcall_norets(H_FREE_SUB_CRQ, vdev->unit_address, scrq->cookie);
--	} while (rtas_busy_delay(rc));
-+	} while (rc == H_BUSY || H_IS_LONG_BUSY(rc));
- reg_failed:
- 	LEAVE;
- 	return rc;
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 54704250c0a2c..0a20122b3e555 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -698,14 +698,12 @@ static int soc_pcm_clean(struct snd_soc_pcm_runtime *rtd,
+ 
+ 	if (!rollback) {
+ 		snd_soc_runtime_deactivate(rtd, substream->stream);
+-		/* clear the corresponding DAIs parameters when going to be inactive */
+-		for_each_rtd_dais(rtd, i, dai) {
+-			if (snd_soc_dai_active(dai) == 0)
+-				soc_pcm_set_dai_params(dai, NULL);
+ 
+-			if (snd_soc_dai_stream_active(dai, substream->stream) == 0)
+-				snd_soc_dai_digital_mute(dai, 1, substream->stream);
+-		}
++		/* Make sure DAI parameters cleared if the DAI becomes inactive */
++		for_each_rtd_dais(rtd, i, dai)
++			if (snd_soc_dai_active(dai) == 0 &&
++			    (dai->rate || dai->channels || dai->sample_bits))
++				soc_pcm_set_dai_params(dai, NULL);
+ 	}
+ 
+ 	for_each_rtd_dais(rtd, i, dai)
+@@ -936,6 +934,15 @@ static int soc_pcm_hw_clean(struct snd_soc_pcm_runtime *rtd,
+ 
+ 	snd_soc_dpcm_mutex_assert_held(rtd);
+ 
++	/* clear the corresponding DAIs parameters when going to be inactive */
++	for_each_rtd_dais(rtd, i, dai) {
++		if (snd_soc_dai_active(dai) == 1)
++			soc_pcm_set_dai_params(dai, NULL);
++
++		if (snd_soc_dai_stream_active(dai, substream->stream) == 1)
++			snd_soc_dai_digital_mute(dai, 1, substream->stream);
++	}
++
+ 	/* run the stream event */
+ 	snd_soc_dapm_stream_stop(rtd, substream->stream);
+ 
 -- 
 2.42.0
 
