@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B368A3A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF483A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPKupmc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A14C433C7;
-	Wed, 15 Nov 2023 19:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEgPmfat"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83C4C433C9;
+	Wed, 15 Nov 2023 19:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077615;
-	bh=xoRJYNhqy2kXlZ+EzjGpi1OJHKeAVEjSZchCNebwzLE=;
+	s=korg; t=1700077617;
+	bh=3OQNAcvYra6/l+NYyPaar8aO9xAowqMKcSJCqdcvNSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uPKupmc6FOZsk5R7c/7uWK8+vids4pp7doj6gesFbAraAfDxwtlf9fQmSL8bZs92l
-	 Y4hUN9v5m8axiEa5JK4vHkRcUnj3mWw+ClwXJOTcTvJImUlQroYR63CyEMBVO0/HZ4
-	 uvTtpRw50Mkhuv9VNp/NW2Bzm1wgVCOatvUFyukM=
+	b=PEgPmfatewmoC2/bJx8yIMOns4niaHYImCbfscy1PH2k3c+NuDyPhSPw1LxlkWra2
+	 XujsL5BWUGnLmt2vBvtUG1JWcgVr4/zsZgdO/15ErG7cuTeT5aFJpzlcZvckSmYjWe
+	 XdFwGu4ud+ToLbc0WP3ekfVqU8HCqYI+0W1UjeVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 394/603] HID: logitech-hidpp: Revert "Dont restart communication if not necessary"
-Date: Wed, 15 Nov 2023 14:15:39 -0500
-Message-ID: <20231115191640.376283934@linuxfoundation.org>
+Subject: [PATCH 6.6 412/603] dt-bindings: mfd: mt6397: Split out compatible for MediaTek MT6366 PMIC
+Date: Wed, 15 Nov 2023 14:15:57 -0500
+Message-ID: <20231115191641.501146516@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,126 +44,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 55bf70362ffc4ddd7c8745e2fe880edac00e4aff ]
+[ Upstream commit 61fdd1f1d2c183ec256527d16d75e75c3582af82 ]
 
-Commit 91cf9a98ae41 ("HID: logitech-hidpp: make .probe usbhid capable")
-makes hidpp_probe() first call hid_hw_start(hdev, 0) to allow IO
-without connecting any hid subdrivers (hid-input, hidraw).
+The MT6366 PMIC is mostly, but not fully, compatible with MT6358. It has
+a different set of regulators. Specifically, it lacks the camera related
+VCAM* LDOs and VLDO28, but has additional VM18, VMDDR, and VSRAM_CORE LDOs.
 
-This is done to allow to retrieve the device's name and serial number
-and store these in hdev->name and hdev->uniq.
+The PMICs contain a chip ID register that can be used to detect which
+exact model is preset, so it is possible to share a common base
+compatible string.
 
-Then later on IO was stopped and started again with hid_hw_start(hdev,
-HID_CONNECT_DEFAULT) connecting hid-input and hidraw after the name
-and serial number have been setup.
+Add a separate compatible for the MT6366 PMIC, with a fallback to the
+MT6358 PMIC.
 
-Commit 498ba2069035 ("HID: logitech-hidpp: Don't restart communication
-if not necessary") changed the probe() code to only do the start with
-a 0 connect-mask + restart later for unifying devices.
-
-But for non unifying devices hdev->name and hdev->uniq are updated too.
-So this change re-introduces the problem for which the start with
-a 0 connect-mask + restart later behavior was introduced.
-
-The previous patch in this series changes the unifying path to instead of
-restarting IO only call hid_connect() later. This avoids possible issues
-with restarting IO seen on non unifying devices.
-
-Revert the change to limit the restart behavior to unifying devices to
-fix hdev->name changing after userspace facing devices have already been
-registered.
-
-This series has been tested on the following devices:
-Logitech Bluetooth Laser Travel Mouse (bluetooth, HID++ 1.0)
-Logitech M720 Triathlon (bluetooth, HID++ 4.5)
-Logitech M720 Triathlon (unifying, HID++ 4.5)
-Logitech K400 Pro (unifying, HID++ 4.1)
-Logitech K270 (eQUAD nano Lite, HID++ 2.0)
-Logitech M185 (eQUAD nano Lite, HID++ 4.5)
-Logitech LX501 keyboard (27 Mhz, HID++ builtin scroll-wheel, HID++ 1.0)
-Logitech M-RAZ105 mouse (27 Mhz, HID++ extra mouse buttons, HID++ 1.0)
-
-And by bentiss:
-Logitech Touchpad T650 (unifying)
-Logitech Touchpad T651 (bluetooth)
-Logitech MX Master 3B (BLE)
-Logitech G403 (plain USB / Gaming receiver)
-
-Fixes: 498ba2069035 ("HID: logitech-hidpp: Don't restart communication if not necessary")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231010102029.111003-3-hdegoede@redhat.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Fixes: 49be16305587 ("dt-bindings: mfd: Add compatible for the MediaTek MT6366 PMIC")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230928085537.3246669-2-wenst@chromium.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+ Documentation/devicetree/bindings/mfd/mt6397.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index aa4f232c4518a..c582d19b11d6c 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4394,7 +4394,6 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	bool connected;
- 	unsigned int connect_mask = HID_CONNECT_DEFAULT;
- 	struct hidpp_ff_private_data data;
--	bool will_restart = false;
+diff --git a/Documentation/devicetree/bindings/mfd/mt6397.txt b/Documentation/devicetree/bindings/mfd/mt6397.txt
+index 294693a8906cf..10540aa7afa1a 100644
+--- a/Documentation/devicetree/bindings/mfd/mt6397.txt
++++ b/Documentation/devicetree/bindings/mfd/mt6397.txt
+@@ -22,8 +22,9 @@ compatible:
+ 	"mediatek,mt6323" for PMIC MT6323
+ 	"mediatek,mt6331" for PMIC MT6331 and MT6332
+ 	"mediatek,mt6357" for PMIC MT6357
+-	"mediatek,mt6358" for PMIC MT6358 and MT6366
++	"mediatek,mt6358" for PMIC MT6358
+ 	"mediatek,mt6359" for PMIC MT6359
++	"mediatek,mt6366", "mediatek,mt6358" for PMIC MT6366
+ 	"mediatek,mt6397" for PMIC MT6397
  
- 	/* report_fixup needs drvdata to be set before we call hid_parse */
- 	hidpp = devm_kzalloc(&hdev->dev, sizeof(*hidpp), GFP_KERNEL);
-@@ -4445,10 +4444,6 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 			return ret;
- 	}
- 
--	if (hidpp->quirks & HIDPP_QUIRK_DELAYED_INIT ||
--	    hidpp->quirks & HIDPP_QUIRK_UNIFYING)
--		will_restart = true;
--
- 	INIT_WORK(&hidpp->work, delayed_work_cb);
- 	mutex_init(&hidpp->send_mutex);
- 	init_waitqueue_head(&hidpp->wait);
-@@ -4465,7 +4460,7 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	 * name and serial number and store these in hdev->name and hdev->uniq,
- 	 * before the hid-input and hidraw drivers expose these to userspace.
- 	 */
--	ret = hid_hw_start(hdev, will_restart ? 0 : connect_mask);
-+	ret = hid_hw_start(hdev, 0);
- 	if (ret) {
- 		hid_err(hdev, "hw start failed\n");
- 		goto hid_hw_start_fail;
-@@ -4504,7 +4499,6 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 			hidpp->wireless_feature_index = 0;
- 		else if (ret)
- 			goto hid_hw_init_fail;
--		ret = 0;
- 	}
- 
- 	if (connected && (hidpp->quirks & HIDPP_QUIRK_CLASS_WTP)) {
-@@ -4520,16 +4514,14 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	schedule_work(&hidpp->work);
- 	flush_work(&hidpp->work);
- 
--	if (will_restart) {
--		if (hidpp->quirks & HIDPP_QUIRK_DELAYED_INIT)
--			connect_mask &= ~HID_CONNECT_HIDINPUT;
-+	if (hidpp->quirks & HIDPP_QUIRK_DELAYED_INIT)
-+		connect_mask &= ~HID_CONNECT_HIDINPUT;
- 
--		/* Now export the actual inputs and hidraw nodes to the world */
--		ret = hid_connect(hdev, connect_mask);
--		if (ret) {
--			hid_err(hdev, "%s:hid_connect returned error %d\n", __func__, ret);
--			goto hid_hw_init_fail;
--		}
-+	/* Now export the actual inputs and hidraw nodes to the world */
-+	ret = hid_connect(hdev, connect_mask);
-+	if (ret) {
-+		hid_err(hdev, "%s:hid_connect returned error %d\n", __func__, ret);
-+		goto hid_hw_init_fail;
- 	}
- 
- 	if (hidpp->quirks & HIDPP_QUIRK_CLASS_G920) {
+ Optional subnodes:
+@@ -40,6 +41,7 @@ Optional subnodes:
+ 		- compatible: "mediatek,mt6323-regulator"
+ 	see ../regulator/mt6323-regulator.txt
+ 		- compatible: "mediatek,mt6358-regulator"
++		- compatible: "mediatek,mt6366-regulator", "mediatek-mt6358-regulator"
+ 	see ../regulator/mt6358-regulator.txt
+ 		- compatible: "mediatek,mt6397-regulator"
+ 	see ../regulator/mt6397-regulator.txt
 -- 
 2.42.0
 
