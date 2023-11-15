@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EAC3DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2A9182C1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qCJcSPw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B20FC433CD;
-	Wed, 15 Nov 2023 20:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyfHm6VR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248F4C433C7;
+	Wed, 15 Nov 2023 20:04:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078665;
-	bh=WxeX3xrxNYArzdkonNI6YtB6FyUvqpj0ygKZjH+YFz0=;
+	s=korg; t=1700078667;
+	bh=pLIwTlMlibQy4naC0io6eUKeSMb7jEYMrTE3qOUlvvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2qCJcSPwwBtLeYi8xr7aWmwR9lpkp4ndG1UMt1tKtVkZwqI9RXk1xhdnIPehU5aTy
-	 j5dGvZgYMCLnzAN8T7feIa1m+gg/1fJVtD4uUBRQj8or+QPWKA8gtiKkqTlr8mqRR3
-	 s8tCEPjROSUc8D05YXn0ozF262CnIR28OYWcpW7M=
+	b=pyfHm6VRHSkBoYslwoyDgGQeFqG2yGwX8Uh8xFPPVhN99cu3vJp2HZUH2Pow7M6FZ
+	 xOZkjYGnP6qYy5mRkQ7s1ZqKkTbbqLX9YywTli88nW0kmVkOIh4TKpPa8ckWl7OARK
+	 nJoHdA7wc3R/yjp2HQhLFnT3bZnvM7SItoM/3eqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia-Ju Bai <baijiaju@buaa.edu.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 26/45] usb: dwc2: fix possible NULL pointer dereference caused by driver concurrency
-Date: Wed, 15 Nov 2023 14:33:03 -0500
-Message-ID: <20231115191421.148564705@linuxfoundation.org>
+Subject: [PATCH 4.14 35/45] media: dvb-usb-v2: af9035: fix missing unlock
+Date: Wed, 15 Nov 2023 14:33:12 -0500
+Message-ID: <20231115191421.668380410@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191419.641552204@linuxfoundation.org>
 References: <20231115191419.641552204@linuxfoundation.org>
@@ -41,66 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia-Ju Bai <baijiaju@buaa.edu.cn>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit ef307bc6ef04e8c1ea843231db58e3afaafa9fa6 ]
+[ Upstream commit f31b2cb85f0ee165d78e1c43f6d69f82cc3b2145 ]
 
-In _dwc2_hcd_urb_enqueue(), "urb->hcpriv = NULL" is executed without
-holding the lock "hsotg->lock". In _dwc2_hcd_urb_dequeue():
+Instead of returning an error, goto the mutex unlock at
+the end of the function.
 
-    spin_lock_irqsave(&hsotg->lock, flags);
-    ...
-	if (!urb->hcpriv) {
-		dev_dbg(hsotg->dev, "## urb->hcpriv is NULL ##\n");
-		goto out;
-	}
-    rc = dwc2_hcd_urb_dequeue(hsotg, urb->hcpriv); // Use urb->hcpriv
-    ...
-out:
-    spin_unlock_irqrestore(&hsotg->lock, flags);
+Fixes smatch warning:
 
-When _dwc2_hcd_urb_enqueue() and _dwc2_hcd_urb_dequeue() are
-concurrently executed, the NULL check of "urb->hcpriv" can be executed
-before "urb->hcpriv = NULL". After urb->hcpriv is NULL, it can be used
-in the function call to dwc2_hcd_urb_dequeue(), which can cause a NULL
-pointer dereference.
+drivers/media/usb/dvb-usb-v2/af9035.c:467 af9035_i2c_master_xfer() warn: inconsistent returns '&d->i2c_mutex'.
+  Locked on  : 326,387
+  Unlocked on: 465,467
 
-This possible bug is found by an experimental static analysis tool
-developed by myself. This tool analyzes the locking APIs to extract
-function pairs that can be concurrently executed, and then analyzes the
-instructions in the paired functions to identify possible concurrency
-bugs including data races and atomicity violations. The above possible
-bug is reported, when my tool analyzes the source code of Linux 6.5.
-
-To fix this possible bug, "urb->hcpriv = NULL" should be executed with
-holding the lock "hsotg->lock". After using this patch, my tool never
-reports the possible bug, with the kernelconfiguration allyesconfig for
-x86_64. Because I have no associated hardware, I cannot test the patch
-in runtime testing, and just verify it according to the code logic.
-
-Fixes: 33ad261aa62b ("usb: dwc2: host: spinlock urb_enqueue")
-Signed-off-by: Jia-Ju Bai <baijiaju@buaa.edu.cn>
-Link: https://lore.kernel.org/r/20230926024404.832096-1-baijiaju@buaa.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 7bf744f2de0a ("media: dvb-usb-v2: af9035: Fix null-ptr-deref in af9035_i2c_master_xfer")
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/hcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb-v2/af9035.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/dwc2/hcd.c b/drivers/usb/dwc2/hcd.c
-index 50ec2cd36db0a..6d2060377dc4a 100644
---- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -4842,8 +4842,8 @@ static int _dwc2_hcd_urb_enqueue(struct usb_hcd *hcd, struct urb *urb,
- 	if (qh_allocated && qh->channel && qh->channel->qh == qh)
- 		qh->channel->qh = NULL;
- fail2:
--	spin_unlock_irqrestore(&hsotg->lock, flags);
- 	urb->hcpriv = NULL;
-+	spin_unlock_irqrestore(&hsotg->lock, flags);
- 	kfree(qtd);
- 	qtd = NULL;
- fail1:
+diff --git a/drivers/media/usb/dvb-usb-v2/af9035.c b/drivers/media/usb/dvb-usb-v2/af9035.c
+index 8a83f27875ec9..2ed29a99fee1e 100644
+--- a/drivers/media/usb/dvb-usb-v2/af9035.c
++++ b/drivers/media/usb/dvb-usb-v2/af9035.c
+@@ -337,8 +337,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 			ret = -EOPNOTSUPP;
+ 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
+ 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
+-			if (msg[0].len < 3 || msg[1].len < 1)
+-				return -EOPNOTSUPP;
++			if (msg[0].len < 3 || msg[1].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto unlock;
++			}
+ 			/* demod access via firmware interface */
+ 			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
+ 					msg[0].buf[2];
+@@ -398,8 +400,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 			ret = -EOPNOTSUPP;
+ 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
+ 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
+-			if (msg[0].len < 3)
+-				return -EOPNOTSUPP;
++			if (msg[0].len < 3) {
++				ret = -EOPNOTSUPP;
++				goto unlock;
++			}
+ 			/* demod access via firmware interface */
+ 			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
+ 					msg[0].buf[2];
+@@ -474,6 +478,7 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 		ret = -EOPNOTSUPP;
+ 	}
+ 
++unlock:
+ 	mutex_unlock(&d->i2c_mutex);
+ 
+ 	if (ret < 0)
 -- 
 2.42.0
 
