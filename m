@@ -1,32 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBE1433AE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BE0433AE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xfv3Y3bE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00DAC433CA;
-	Wed, 15 Nov 2023 19:38:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3qWaphr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BEAC433C8;
+	Wed, 15 Nov 2023 19:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077095;
-	bh=kzJTXG7WTzyXt5AmNpH8dCCnQ3L9mJ/RNOW2CmTVxQ0=;
+	s=korg; t=1700077096;
+	bh=FAKTlCWiO2wil7kg4FCbPbNlkpqGvf9y9mKeESJqAuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xfv3Y3bERIZ+ME+s7XhJLfNsCeW5P1EkIbDe4qk3v0qTZY75AGZEGmhR3H8p3ZPCU
-	 8BQ3TTNt5MY6pZAU64U3mGJae984eJnQfbWldJsxAjgxJ5m8tIPYfyShr2FYj5EGy+
-	 +yRHJ1tRP4HwBhXKFBgf+xi3EbrHW6nz2gDUjZnk=
+	b=b3qWaphrD6VgVNRzA6RiNCyF9DBIpdVB2T79BdUHOauxFhVB/cJEJKi028OHg1wyp
+	 JJFs55/jjPtwB1wUm1+lpCYrFeMrRQ/kMx50avOVgPoPH1p8MWDbefD9kPqc9CYgkq
+	 9hiv/AfIMpJPK7OHvWayQsHAM18zeC+CjZdpCpGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	George Shuklin <george.shuklin@gmail.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 122/603] thermal: core: prevent potential string overflow
-Date: Wed, 15 Nov 2023 14:11:07 -0500
-Message-ID: <20231115191621.673673359@linuxfoundation.org>
+Subject: [PATCH 6.5 519/550] tg3: power down device only on SYSTEM_POWER_OFF
+Date: Wed, 15 Nov 2023 14:18:23 -0500
+Message-ID: <20231115191636.921055584@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,49 +40,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: George Shuklin <george.shuklin@gmail.com>
 
-[ Upstream commit c99626092efca3061b387043d4a7399bf75fbdd5 ]
+[ Upstream commit 9fc3bc7643341dc5be7d269f3d3dbe441d8d7ac3 ]
 
-The dev->id value comes from ida_alloc() so it's a number between zero
-and INT_MAX.  If it's too high then these sprintf()s will overflow.
+Dell R650xs servers hangs on reboot if tg3 driver calls
+tg3_power_down.
 
-Fixes: 203d3d4aa482 ("the generic thermal sysfs driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This happens only if network adapters (BCM5720 for R650xs) were
+initialized using SNP (e.g. by booting ipxe.efi).
+
+The actual problem is on Dell side, but this fix allows servers
+to come back alive after reboot.
+
+Signed-off-by: George Shuklin <george.shuklin@gmail.com>
+Fixes: 2ca1c94ce0b6 ("tg3: Disable tg3 device on system reboot to avoid triggering AER")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20231103115029.83273-1-george.shuklin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 58533ea75cd92..e6f3166a9208f 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -689,7 +689,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
- 	if (result)
- 		goto release_ida;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index cb2810f175ccd..9d1de202ac714 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -18082,7 +18082,8 @@ static void tg3_shutdown(struct pci_dev *pdev)
+ 	if (netif_running(dev))
+ 		dev_close(dev);
  
--	sprintf(dev->attr_name, "cdev%d_trip_point", dev->id);
-+	snprintf(dev->attr_name, sizeof(dev->attr_name), "cdev%d_trip_point",
-+		 dev->id);
- 	sysfs_attr_init(&dev->attr.attr);
- 	dev->attr.attr.name = dev->attr_name;
- 	dev->attr.attr.mode = 0444;
-@@ -698,7 +699,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
- 	if (result)
- 		goto remove_symbol_link;
+-	tg3_power_down(tp);
++	if (system_state == SYSTEM_POWER_OFF)
++		tg3_power_down(tp);
  
--	sprintf(dev->weight_attr_name, "cdev%d_weight", dev->id);
-+	snprintf(dev->weight_attr_name, sizeof(dev->weight_attr_name),
-+		 "cdev%d_weight", dev->id);
- 	sysfs_attr_init(&dev->weight_attr.attr);
- 	dev->weight_attr.attr.name = dev->weight_attr_name;
- 	dev->weight_attr.attr.mode = S_IWUSR | S_IRUGO;
+ 	rtnl_unlock();
+ 
 -- 
 2.42.0
 
