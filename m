@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C11843AD1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0208443AD1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjdV4Aym"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D87C4E756;
-	Wed, 15 Nov 2023 20:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUuRRL5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81C5C4E754;
+	Wed, 15 Nov 2023 20:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081502;
-	bh=gQOgglfSnMiDdydrzfhPmAQ4Px0u+LWe1mbsW6skqFo=;
+	s=korg; t=1700081503;
+	bh=hoGt71ulnKAnrs6TAgeujclVjU+Rd3vz+F5V5tA67+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TjdV4Aym0aN8kty5NbBOimctzWb6PBKgm1sDi4Nude//eBInEXKl2xuximqV7Fb1y
-	 T/TbNgYvgOVY/j5SLYXvp6NghlT4NYjYdjEKbdOiGVqG0XdjYzzZczeplGAgDotrTV
-	 x0wvR4mlbVf8OdiGD3XmJw4Ubcb8HENH37WOSnfk=
+	b=TUuRRL5yC8XRhnw103O+v3+POMpRZsA2uvLcwOICt/2IzrM7k9sO7FgDVR0LclIzW
+	 9YvxoGgkl5wetcOuSNeeXeusems/GxFJ0nftFHwOHTjdO0yQoDLlFb9uE+2mj2hIQw
+	 6fQTPkiZ4ok6jBb1R8/z1/7w8ABT48Xxm9XdZZ3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/244] f2fs: compress: fix to avoid use-after-free on dic
-Date: Wed, 15 Nov 2023 15:35:59 -0500
-Message-ID: <20231115203558.371978309@linuxfoundation.org>
+Subject: [PATCH 5.15 168/244] f2fs: compress: fix to avoid redundant compress extension
+Date: Wed, 15 Nov 2023 15:36:00 -0500
+Message-ID: <20231115203558.431618664@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -44,51 +44,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit b0327c84e91a0f4f0abced8cb83ec86a7083f086 ]
+[ Upstream commit 7e1b150fece033703a824df1bbc03df091ea53cc ]
 
-Call trace:
- __memcpy+0x128/0x250
- f2fs_read_multi_pages+0x940/0xf7c
- f2fs_mpage_readpages+0x5a8/0x624
- f2fs_readahead+0x5c/0x110
- page_cache_ra_unbounded+0x1b8/0x590
- do_sync_mmap_readahead+0x1dc/0x2e4
- filemap_fault+0x254/0xa8c
- f2fs_filemap_fault+0x2c/0x104
- __do_fault+0x7c/0x238
- do_handle_mm_fault+0x11bc/0x2d14
- do_mem_abort+0x3a8/0x1004
- el0_da+0x3c/0xa0
- el0t_64_sync_handler+0xc4/0xec
- el0t_64_sync+0x1b4/0x1b8
+With below script, redundant compress extension will be parsed and added
+by parse_options(), because parse_options() doesn't check whether the
+extension is existed or not, fix it.
 
-In f2fs_read_multi_pages(), once f2fs_decompress_cluster() was called if
-we hit cached page in compress_inode's cache, dic may be released, it needs
-break the loop rather than continuing it, in order to avoid accessing
-invalid dic pointer.
+1. mount -t f2fs -o compress_extension=so /dev/vdb /mnt/f2fs
+2. mount -t f2fs -o remount,compress_extension=so /mnt/f2fs
+3. mount|grep f2fs
 
-Fixes: 6ce19aff0b8c ("f2fs: compress: add compress_inode to cache compressed blocks")
+/dev/vdb on /mnt/f2fs type f2fs (...,compress_extension=so,compress_extension=so,...)
+
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Fixes: 151b1982be5d ("f2fs: compress: add nocompress extensions support")
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/f2fs/super.c |   33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2253,8 +2253,10 @@ skip_reading_dnode:
- 		f2fs_wait_on_block_writeback(inode, blkaddr);
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -540,6 +540,29 @@ static int f2fs_set_test_dummy_encryptio
+ }
  
- 		if (f2fs_load_compressed_page(sbi, page, blkaddr)) {
--			if (atomic_dec_and_test(&dic->remaining_pages))
-+			if (atomic_dec_and_test(&dic->remaining_pages)) {
- 				f2fs_decompress_cluster(dic);
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
++static bool is_compress_extension_exist(struct f2fs_sb_info *sbi,
++					const char *new_ext, bool is_ext)
++{
++	unsigned char (*ext)[F2FS_EXTENSION_LEN];
++	int ext_cnt;
++	int i;
++
++	if (is_ext) {
++		ext = F2FS_OPTION(sbi).extensions;
++		ext_cnt = F2FS_OPTION(sbi).compress_ext_cnt;
++	} else {
++		ext = F2FS_OPTION(sbi).noextensions;
++		ext_cnt = F2FS_OPTION(sbi).nocompress_ext_cnt;
++	}
++
++	for (i = 0; i < ext_cnt; i++) {
++		if (!strcasecmp(new_ext, ext[i]))
++			return true;
++	}
++
++	return false;
++}
++
+ /*
+  * 1. The same extension name cannot not appear in both compress and non-compress extension
+  * at the same time.
+@@ -1154,6 +1177,11 @@ static int parse_options(struct super_bl
+ 				return -EINVAL;
+ 			}
+ 
++			if (is_compress_extension_exist(sbi, name, true)) {
++				kfree(name);
 +				break;
 +			}
- 			continue;
- 		}
++
+ 			strcpy(ext[ext_cnt], name);
+ 			F2FS_OPTION(sbi).compress_ext_cnt++;
+ 			kfree(name);
+@@ -1178,6 +1206,11 @@ static int parse_options(struct super_bl
+ 				return -EINVAL;
+ 			}
  
++			if (is_compress_extension_exist(sbi, name, false)) {
++				kfree(name);
++				break;
++			}
++
+ 			strcpy(noext[noext_cnt], name);
+ 			F2FS_OPTION(sbi).nocompress_ext_cnt++;
+ 			kfree(name);
 
 
