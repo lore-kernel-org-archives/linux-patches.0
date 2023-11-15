@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9584143AAA
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661D3250EA
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itNSJVzL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410ABC433C9;
-	Wed, 15 Nov 2023 20:45:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/ZrN5m6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23F4C433CB;
+	Wed, 15 Nov 2023 20:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081100;
-	bh=wj6k97fiFFNcM62uGwytbJ8C5ZMPLyKRXadCrA5Vo2E=;
+	s=korg; t=1700081101;
+	bh=B42oDr3FPA35wDhIL7G+DmWdWvzs4Qd3gGEg9ZOlAvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=itNSJVzLptB8Hxfmp5awbSl24b7QQBrcvN+K6o9Z9a97ItrVjmQJX0R3qGzloPUg/
-	 rFdaXNIR1xlzXXxnjQtZ8wY2P9B8tGsmo87Q0B4cCq1skGs2KVaG2tJPDClqv83FbW
-	 8jKRAKVizkyq9sAnUw7xahIxtKv4UCsZAfcXmIIQ=
+	b=u/ZrN5m6tigLea2JtQDHwMish2eDfV1AtgXjpCjUEcJRTZpflNt3k/0qG06KEIsC5
+	 ICamxiClovy+QC+J7fBRzCreS9Ab1xZmqfV1WQSOS2JYksm6hmpzW6eY+CwaG7LScx
+	 SI1Qu28Ta3dw99tgSbeTJRvqNhVymbpSOr7iCE5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Danny Kaehn <danny.kaehn@plexus.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 21/88] clk: keystone: pll: fix a couple NULL vs IS_ERR() checks
-Date: Wed, 15 Nov 2023 15:35:33 -0500
-Message-ID: <20231115191427.458822273@linuxfoundation.org>
+Subject: [PATCH 4.19 39/88] hid: cp2112: Fix duplicate workqueue initialization
+Date: Wed, 15 Nov 2023 15:35:51 -0500
+Message-ID: <20231115191428.540056398@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -42,58 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Danny Kaehn <danny.kaehn@plexus.com>
 
-[ Upstream commit a5d14f8b551eb1551c10053653ee8e27f19672fa ]
+[ Upstream commit e3c2d2d144c082dd71596953193adf9891491f42 ]
 
-The clk_register_divider() and clk_register_mux() functions returns
-error pointers on error but this code checks for NULL.  Fix that.
+Previously the cp2112 driver called INIT_DELAYED_WORK within
+cp2112_gpio_irq_startup, resulting in duplicate initilizations of the
+workqueue on subsequent IRQ startups following an initial request. This
+resulted in a warning in set_work_data in workqueue.c, as well as a rare
+NULL dereference within process_one_work in workqueue.c.
 
-Fixes: b9e0d40c0d83 ("clk: keystone: add Keystone PLL clock driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/d9da4c97-0da9-499f-9a21-1f8e3f148dc1@moroto.mountain
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Initialize the workqueue within _probe instead.
+
+Fixes: 13de9cca514e ("HID: cp2112: add IRQ chip handling")
+Signed-off-by: Danny Kaehn <danny.kaehn@plexus.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/keystone/pll.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/hid/hid-cp2112.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/keystone/pll.c b/drivers/clk/keystone/pll.c
-index 526694c2a6c97..a75ece5992394 100644
---- a/drivers/clk/keystone/pll.c
-+++ b/drivers/clk/keystone/pll.c
-@@ -285,12 +285,13 @@ static void __init of_pll_div_clk_init(struct device_node *node)
+diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
+index 875fd8b2eec23..6dc9ee8adb65f 100644
+--- a/drivers/hid/hid-cp2112.c
++++ b/drivers/hid/hid-cp2112.c
+@@ -1163,8 +1163,6 @@ static unsigned int cp2112_gpio_irq_startup(struct irq_data *d)
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 	struct cp2112_device *dev = gpiochip_get_data(gc);
  
- 	clk = clk_register_divider(NULL, clk_name, parent_name, 0, reg, shift,
- 				 mask, 0, NULL);
--	if (clk) {
--		of_clk_add_provider(node, of_clk_src_simple_get, clk);
--	} else {
-+	if (IS_ERR(clk)) {
- 		pr_err("%s: error registering divider %s\n", __func__, clk_name);
- 		iounmap(reg);
-+		return;
- 	}
-+
-+	of_clk_add_provider(node, of_clk_src_simple_get, clk);
- }
- CLK_OF_DECLARE(pll_divider_clock, "ti,keystone,pll-divider-clock", of_pll_div_clk_init);
+-	INIT_DELAYED_WORK(&dev->gpio_poll_worker, cp2112_gpio_poll_callback);
+-
+ 	if (!dev->gpio_poll) {
+ 		dev->gpio_poll = true;
+ 		schedule_delayed_work(&dev->gpio_poll_worker, 0);
+@@ -1358,6 +1356,8 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	girq->default_type = IRQ_TYPE_NONE;
+ 	girq->handler = handle_simple_irq;
  
-@@ -332,9 +333,11 @@ static void __init of_pll_mux_clk_init(struct device_node *node)
- 	clk = clk_register_mux(NULL, clk_name, (const char **)&parents,
- 				ARRAY_SIZE(parents) , 0, reg, shift, mask,
- 				0, NULL);
--	if (clk)
--		of_clk_add_provider(node, of_clk_src_simple_get, clk);
--	else
-+	if (IS_ERR(clk)) {
- 		pr_err("%s: error registering mux %s\n", __func__, clk_name);
-+		return;
-+	}
++	INIT_DELAYED_WORK(&dev->gpio_poll_worker, cp2112_gpio_poll_callback);
 +
-+	of_clk_add_provider(node, of_clk_src_simple_get, clk);
- }
- CLK_OF_DECLARE(pll_mux_clock, "ti,keystone,pll-mux-clock", of_pll_mux_clk_init);
+ 	ret = gpiochip_add_data(&dev->gc, dev);
+ 	if (ret < 0) {
+ 		hid_err(hdev, "error registering gpio chip\n");
 -- 
 2.42.0
 
