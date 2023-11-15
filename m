@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9140364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2424121C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgQh4F4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A247C433C8;
-	Wed, 15 Nov 2023 19:34:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7OCqTB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED24C433C8;
+	Wed, 15 Nov 2023 19:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076847;
-	bh=2U8ocgwhkTYiwV7V1bPqjlMSQGkMnYhklEyf0Rept/M=;
+	s=korg; t=1700076849;
+	bh=/YLuphoSv7OOuCmbu6i9/BPgbL+EIeAEyZe85LBoIaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgQh4F4k4LEHgi2OPX290/gYs3XJtkY8u5VE1e2hNRGM1fQ+a1v8fcujRRy2QAokP
-	 3CtyikeJQjcx1MQV5iBMKqz4Igv0GP3kaqC0bSzW9tB25jNv34bRRMVEkzfWFvyjD/
-	 /JT9bIjfbJ7ans0+ky5SN2+dwL8HA4VQpfOc1nmA=
+	b=T7OCqTB9RKsXu5vCRRhPG+R8ePXkCe/IA+xNWUa8gkSRyt7DLBrgCtD0Nl/5f+zOi
+	 ooDizZoQfEMs4SgeAWlb7BPin6PnALGT9CYYTH4w9LqOFHFW06mADasXWBZqoyV8Ni
+	 /yzoGgDsxQyK4RJt5hr72OhYZayasVVjipKRMmWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 441/550] usb: host: xhci-plat: fix possible kernel oops while resuming
-Date: Wed, 15 Nov 2023 14:17:05 -0500
-Message-ID: <20231115191631.372304321@linuxfoundation.org>
+Subject: [PATCH 6.6 045/603] wifi: iwlwifi: honor the enable_ini value
+Date: Wed, 15 Nov 2023 14:09:50 -0500
+Message-ID: <20231115191616.300468418@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,82 +39,159 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit a5f928db59519a15e82ecba4ae3e7cbf5a44715a ]
+[ Upstream commit e0c1ca236e28e4263fba76d47a108ed95dcae33e ]
 
-If this driver enables the xHC clocks while resuming from sleep, it calls
-clk_prepare_enable() without checking for errors and blithely goes on to
-read/write the xHC's registers -- which, with the xHC not being clocked,
-at least on ARM32 usually causes an imprecise external abort exceptions
-which cause kernel oops.  Currently, the chips for which the driver does
-the clock dance on suspend/resume seem to be the Broadcom STB SoCs, based
-on ARM32 CPUs, as it seems...
+In case the user sets the enable_ini to some preset, we want to honor
+the value.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
+Remove the ops to set the value of the module parameter is runtime, we
+don't want to allow to modify the value in runtime since we configure
+the firmware once at the beginning on its life.
 
-Fixes: 8bd954c56197 ("usb: host: xhci-plat: suspend and resume clocks")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20231019102924.2797346-19-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b49c2b252b58 ("iwlwifi: Configure FW debug preset via module param.")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230830112059.5734e0f374bb.I6698eda8ed2112378dd47ac5d62866ebe7a94f77@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-plat.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ .../wireless/intel/iwlwifi/fw/api/dbg-tlv.h   |  1 +
+ .../net/wireless/intel/iwlwifi/iwl-dbg-tlv.h  |  5 +-
+ drivers/net/wireless/intel/iwlwifi/iwl-drv.c  | 51 +++++++------------
+ .../net/wireless/intel/iwlwifi/iwl-trans.h    |  4 ++
+ 4 files changed, 25 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index b26ea7cb4357b..5fabd14e49a03 100644
---- a/drivers/usb/host/xhci-plat.c
-+++ b/drivers/usb/host/xhci-plat.c
-@@ -459,23 +459,38 @@ static int __maybe_unused xhci_plat_resume(struct device *dev)
- 	int ret;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
+index ba538d70985f4..39bee9c00e071 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
+@@ -13,6 +13,7 @@
+ #define IWL_FW_INI_DOMAIN_ALWAYS_ON		0
+ #define IWL_FW_INI_REGION_ID_MASK		GENMASK(15, 0)
+ #define IWL_FW_INI_REGION_DUMP_POLICY_MASK	GENMASK(31, 16)
++#define IWL_FW_INI_PRESET_DISABLE		0xff
  
- 	if (!device_may_wakeup(dev) && (xhci->quirks & XHCI_SUSPEND_RESUME_CLKS)) {
--		clk_prepare_enable(xhci->clk);
--		clk_prepare_enable(xhci->reg_clk);
-+		ret = clk_prepare_enable(xhci->clk);
-+		if (ret)
-+			return ret;
-+
-+		ret = clk_prepare_enable(xhci->reg_clk);
-+		if (ret) {
-+			clk_disable_unprepare(xhci->clk);
-+			return ret;
+ /**
+  * struct iwl_fw_ini_hcmd
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
+index 128059ca77e60..06fb7d6653905 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ /*
+- * Copyright (C) 2018-2022 Intel Corporation
++ * Copyright (C) 2018-2023 Intel Corporation
+  */
+ #ifndef __iwl_dbg_tlv_h__
+ #define __iwl_dbg_tlv_h__
+@@ -10,7 +10,8 @@
+ #include <fw/file.h>
+ #include <fw/api/dbg-tlv.h>
+ 
+-#define IWL_DBG_TLV_MAX_PRESET 15
++#define IWL_DBG_TLV_MAX_PRESET	15
++#define ENABLE_INI		(IWL_DBG_TLV_MAX_PRESET + 1)
+ 
+ /**
+  * struct iwl_dbg_tlv_node - debug TLV node
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+index 3d87d26845e74..fb5e254757e71 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+@@ -1795,6 +1795,22 @@ struct iwl_drv *iwl_drv_start(struct iwl_trans *trans)
+ #endif
+ 
+ 	drv->trans->dbg.domains_bitmap = IWL_TRANS_FW_DBG_DOMAIN(drv->trans);
++	if (iwlwifi_mod_params.enable_ini != ENABLE_INI) {
++		/* We have a non-default value in the module parameter,
++		 * take its value
++		 */
++		drv->trans->dbg.domains_bitmap &= 0xffff;
++		if (iwlwifi_mod_params.enable_ini != IWL_FW_INI_PRESET_DISABLE) {
++			if (iwlwifi_mod_params.enable_ini > ENABLE_INI) {
++				IWL_ERR(trans,
++					"invalid enable_ini module parameter value: max = %d, using 0 instead\n",
++					ENABLE_INI);
++				iwlwifi_mod_params.enable_ini = 0;
++			}
++			drv->trans->dbg.domains_bitmap =
++				BIT(IWL_FW_DBG_DOMAIN_POS + iwlwifi_mod_params.enable_ini);
 +		}
- 	}
- 
- 	ret = xhci_priv_resume_quirk(hcd);
- 	if (ret)
--		return ret;
-+		goto disable_clks;
- 
- 	ret = xhci_resume(xhci, PMSG_RESUME);
- 	if (ret)
--		return ret;
-+		goto disable_clks;
- 
- 	pm_runtime_disable(dev);
- 	pm_runtime_set_active(dev);
- 	pm_runtime_enable(dev);
- 
- 	return 0;
-+
-+disable_clks:
-+	if (!device_may_wakeup(dev) && (xhci->quirks & XHCI_SUSPEND_RESUME_CLKS)) {
-+		clk_disable_unprepare(xhci->clk);
-+		clk_disable_unprepare(xhci->reg_clk);
 +	}
-+
-+	return ret;
+ 
+ 	ret = iwl_request_firmware(drv, true);
+ 	if (ret) {
+@@ -1843,8 +1859,6 @@ void iwl_drv_stop(struct iwl_drv *drv)
+ 	kfree(drv);
  }
  
- static int __maybe_unused xhci_plat_runtime_suspend(struct device *dev)
+-#define ENABLE_INI	(IWL_DBG_TLV_MAX_PRESET + 1)
+-
+ /* shared module parameters */
+ struct iwl_mod_params iwlwifi_mod_params = {
+ 	.fw_restart = true,
+@@ -1964,38 +1978,7 @@ module_param_named(uapsd_disable, iwlwifi_mod_params.uapsd_disable, uint, 0644);
+ MODULE_PARM_DESC(uapsd_disable,
+ 		 "disable U-APSD functionality bitmap 1: BSS 2: P2P Client (default: 3)");
+ 
+-static int enable_ini_set(const char *arg, const struct kernel_param *kp)
+-{
+-	int ret = 0;
+-	bool res;
+-	__u32 new_enable_ini;
+-
+-	/* in case the argument type is a number */
+-	ret = kstrtou32(arg, 0, &new_enable_ini);
+-	if (!ret) {
+-		if (new_enable_ini > ENABLE_INI) {
+-			pr_err("enable_ini cannot be %d, in range 0-16\n", new_enable_ini);
+-			return -EINVAL;
+-		}
+-		goto out;
+-	}
+-
+-	/* in case the argument type is boolean */
+-	ret = kstrtobool(arg, &res);
+-	if (ret)
+-		return ret;
+-	new_enable_ini = (res ? ENABLE_INI : 0);
+-
+-out:
+-	iwlwifi_mod_params.enable_ini = new_enable_ini;
+-	return 0;
+-}
+-
+-static const struct kernel_param_ops enable_ini_ops = {
+-	.set = enable_ini_set
+-};
+-
+-module_param_cb(enable_ini, &enable_ini_ops, &iwlwifi_mod_params.enable_ini, 0644);
++module_param_named(enable_ini, iwlwifi_mod_params.enable_ini, uint, 0444);
+ MODULE_PARM_DESC(enable_ini,
+ 		 "0:disable, 1-15:FW_DBG_PRESET Values, 16:enabled without preset value defined,"
+ 		 "Debug INI TLV FW debug infrastructure (default: 16)");
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+index 3b6b0e03037f1..1b3c976d19feb 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+@@ -56,6 +56,10 @@
+  *	6) Eventually, the free function will be called.
+  */
+ 
++/* default preset 0 (start from bit 16)*/
++#define IWL_FW_DBG_DOMAIN_POS	16
++#define IWL_FW_DBG_DOMAIN	BIT(IWL_FW_DBG_DOMAIN_POS)
++
+ #define IWL_TRANS_FW_DBG_DOMAIN(trans)	IWL_FW_INI_DOMAIN_ALWAYS_ON
+ 
+ #define FH_RSCSR_FRAME_SIZE_MSK		0x00003FFF	/* bits 0-13 */
 -- 
 2.42.0
 
