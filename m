@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5113BB29
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D4D3BB29
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKg1Bg/f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C92CC433C7;
-	Wed, 15 Nov 2023 19:23:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pafVwKVT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921EBC433C8;
+	Wed, 15 Nov 2023 19:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076209;
-	bh=s//4TBp6ChHVFfiGA9YLY3zC3Yv/yzB7oY+tSKreP5k=;
+	s=korg; t=1700076210;
+	bh=EPjCkWqFoxrswzQ2azdRO8ejzngVu+T9oeaKZY3lsbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gKg1Bg/fCDPnnu7viMzbxsN36bH+OiC6ZVeCxKytzC2J2h1iaC9OmHlpAuKpjRh4t
-	 O9ZT5NDX2scmuwa8isb6BSp+Ctlqgdv4ZChqxFNKr16M4YF4F1ELwgSXYD97b91K/O
-	 3xXgjJDi4MYAZjxpk1WBB8/bi3Ut+y/cG1KoYJqY=
+	b=pafVwKVT0s5dolj5he83Vsp9cFMVoiNc+fxzZ0YmhhcmfGVHaBOHy8rzWSy5ms+wh
+	 EL0sZ+pQwkGF18TCfXHjdcVEXbtbzievnjSXxM98prEydn3pvl4PqCvYuShAg2xV6U
+	 tUprPOE/5fK4dAE2KipFeR/GZ/YXE4AWK2+D98Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Yedidya Benshimol <yedidya.ben.shimol@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 110/550] PM / devfreq: rockchip-dfi: Make pmu regmap mandatory
-Date: Wed, 15 Nov 2023 14:11:34 -0500
-Message-ID: <20231115191608.324414472@linuxfoundation.org>
+Subject: [PATCH 6.5 138/550] wifi: iwlwifi: mvm: update IGTK in mvmvif upon D3 resume
+Date: Wed, 15 Nov 2023 14:12:02 -0500
+Message-ID: <20231115191610.254028229@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,51 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Yedidya Benshimol <yedidya.ben.shimol@intel.com>
 
-[ Upstream commit 1e0731c05c985deb68a97fa44c1adcd3305dda90 ]
+[ Upstream commit ac0c6fdc4c56b669abc1c4a323f1c7a3a1422dd2 ]
 
-As a matter of fact the regmap_pmu already is mandatory because
-it is used unconditionally in the driver. Bail out gracefully in
-probe() rather than crashing later.
+During the D3 resume flow, all new rekeys are passed from the FW.
+Because the FW supports only one IGTK at a time, every IGTK rekey
+update should be done by removing the last IGTK. The mvmvif holds a
+pointer to the last IGTK for that reason and thus should be updated
+when a new IGTK is passed upon resume.
 
-Link: https://lore.kernel.org/lkml/20230704093242.583575-2-s.hauer@pengutronix.de/
-Fixes: b9d1262bca0af ("PM / devfreq: event: support rockchip dfi controller")
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Fixes: 04f78e242fff ("wifi: iwlwifi: mvm: Add support for IGTK in D3 resume flow")
+Signed-off-by: Yedidya Benshimol <yedidya.ben.shimol@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20231017115047.8ceaf7e5ece7.Ief444f6a2703ed76648b4d414f12bb4130bab36e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/devfreq/event/rockchip-dfi.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/devfreq/event/rockchip-dfi.c b/drivers/devfreq/event/rockchip-dfi.c
-index 39ac069cabc75..74893c06aa087 100644
---- a/drivers/devfreq/event/rockchip-dfi.c
-+++ b/drivers/devfreq/event/rockchip-dfi.c
-@@ -193,14 +193,15 @@ static int rockchip_dfi_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(data->clk),
- 				     "Cannot get the clk pclk_ddr_mon\n");
- 
--	/* try to find the optional reference to the pmu syscon */
- 	node = of_parse_phandle(np, "rockchip,pmu", 0);
--	if (node) {
--		data->regmap_pmu = syscon_node_to_regmap(node);
--		of_node_put(node);
--		if (IS_ERR(data->regmap_pmu))
--			return PTR_ERR(data->regmap_pmu);
--	}
-+	if (!node)
-+		return dev_err_probe(&pdev->dev, -ENODEV, "Can't find pmu_grf registers\n");
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+index f6488b4bbe68b..be2602d8c5bfa 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+@@ -2012,6 +2012,16 @@ iwl_mvm_d3_igtk_bigtk_rekey_add(struct iwl_wowlan_status_data *status,
+ 	if (IS_ERR(key_config))
+ 		return false;
+ 	ieee80211_set_key_rx_seq(key_config, 0, &seq);
 +
-+	data->regmap_pmu = syscon_node_to_regmap(node);
-+	of_node_put(node);
-+	if (IS_ERR(data->regmap_pmu))
-+		return PTR_ERR(data->regmap_pmu);
++	if (key_config->keyidx == 4 || key_config->keyidx == 5) {
++		struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
++		int link_id = vif->active_links ? __ffs(vif->active_links) : 0;
++		struct iwl_mvm_vif_link_info *mvm_link =
++			mvmvif->link[link_id];
 +
- 	data->dev = dev;
++		mvm_link->igtk = key_config;
++	}
++
+ 	return true;
+ }
  
- 	desc = devm_kzalloc(dev, sizeof(*desc), GFP_KERNEL);
 -- 
 2.42.0
 
