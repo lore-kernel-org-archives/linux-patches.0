@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D0135F19
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F6E3309F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CC6q4JYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C280C433C7;
-	Wed, 15 Nov 2023 19:47:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJk5+Q55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0173FC433CB;
+	Wed, 15 Nov 2023 19:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077673;
-	bh=x8VuH09YhdHTWPlp+WRkqROha60hlm3dxzrCwxF79Z0=;
+	s=korg; t=1700077675;
+	bh=OaMrMpTjJMNIp4gMmenSjK2+SUnc4y60FuDOIKrU9/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CC6q4JYQeEGi0gysXXo4sPGBSdIkD5YyIt4UTmFjW4EZVyjlk5eUs1tfu/mJTQvsW
-	 zNNsLTJcuUXGKrGLkK6Da1WP3wNe3Vci/pTViyHB2V/NmuW9xIaiap7OCz6/Vhkaba
-	 l14aqxS5xq7Aaz1QoGMp6lKKIpb5ordughZ0CoGc=
+	b=aJk5+Q55XwQRssD0rZzgMokaE5j29mUWRy89bVUZEfLqg6/gpVwbAcUQk2D31NmY/
+	 jmQEgR7dzSa4IPhssCrlo3xFz9QmQ0XD7yASRkrwY1gDk6Z+i+EuyvV2AspZ4ih8HX
+	 3k7Bnree/PnhJSC7sydLdM7mQfP4i3JldnQJpmIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 425/603] f2fs: compress: fix deadloop in f2fs_write_cache_pages()
-Date: Wed, 15 Nov 2023 14:16:10 -0500
-Message-ID: <20231115191642.236352289@linuxfoundation.org>
+Subject: [PATCH 6.6 416/603] leds: trigger: ledtrig-cpu:: Fix output may be truncated issue for cpu
+Date: Wed, 15 Nov 2023 14:16:01 -0500
+Message-ID: <20231115191641.713734525@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -36,118 +36,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit c5d3f9b7649abb20aa5ab3ebff9421a171eaeb22 ]
+[ Upstream commit ff50f53276131a3059e8307d11293af388ed2bcd ]
 
-With below mount option and testcase, it hangs kernel.
+In order to teach the compiler that 'trig->name' will never be truncated,
+we need to tell it that 'cpu' is not negative.
 
-1. mount -t f2fs -o compress_log_size=5 /dev/vdb /mnt/f2fs
-2. touch /mnt/f2fs/file
-3. chattr +c /mnt/f2fs/file
-4. dd if=/dev/zero of=/mnt/f2fs/file bs=1MB count=1
-5. sync
-6. dd if=/dev/zero of=/mnt/f2fs/file bs=111 count=11 conv=notrunc
-7. sync
+When building with W=1, this fixes the following warnings:
 
-INFO: task sync:4788 blocked for more than 120 seconds.
-      Not tainted 6.5.0-rc1+ #322
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:sync            state:D stack:0     pid:4788  ppid:509    flags:0x00000002
-Call Trace:
- <TASK>
- __schedule+0x335/0xf80
- schedule+0x6f/0xf0
- wb_wait_for_completion+0x5e/0x90
- sync_inodes_sb+0xd8/0x2a0
- sync_inodes_one_sb+0x1d/0x30
- iterate_supers+0x99/0xf0
- ksys_sync+0x46/0xb0
- __do_sys_sync+0x12/0x20
- do_syscall_64+0x3f/0x90
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+  drivers/leds/trigger/ledtrig-cpu.c: In function ‘ledtrig_cpu_init’:
+  drivers/leds/trigger/ledtrig-cpu.c:155:56: error: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 5 [-Werror=format-truncation=]
+    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
+        |                                                        ^~
+  drivers/leds/trigger/ledtrig-cpu.c:155:52: note: directive argument in the range [-2147483648, 7]
+    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
+        |                                                    ^~~~~~~
+  drivers/leds/trigger/ledtrig-cpu.c:155:17: note: ‘snprintf’ output between 5 and 15 bytes into a destination of size 8
+    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
+        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The reason is f2fs_all_cluster_page_ready() assumes that pages array should
-cover at least one cluster, otherwise, it will always return false, result
-in deadloop.
-
-By default, pages array size is 16, and it can cover the case cluster_size
-is equal or less than 16, for the case cluster_size is larger than 16, let's
-allocate memory of pages array dynamically.
-
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 8f88731d052d ("led-triggers: create a trigger for CPU activity")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/3f4be7a99933cf8566e630da54f6ab913caac432.1695453322.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/leds/trigger/ledtrig-cpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 916e317ac925f..3f33e14dc7f81 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -3023,7 +3023,8 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
+diff --git a/drivers/leds/trigger/ledtrig-cpu.c b/drivers/leds/trigger/ledtrig-cpu.c
+index 8af4f9bb9cde8..05848a2fecff6 100644
+--- a/drivers/leds/trigger/ledtrig-cpu.c
++++ b/drivers/leds/trigger/ledtrig-cpu.c
+@@ -130,7 +130,7 @@ static int ledtrig_prepare_down_cpu(unsigned int cpu)
+ 
+ static int __init ledtrig_cpu_init(void)
  {
- 	int ret = 0;
- 	int done = 0, retry = 0;
--	struct page *pages[F2FS_ONSTACK_PAGES];
-+	struct page *pages_local[F2FS_ONSTACK_PAGES];
-+	struct page **pages = pages_local;
- 	struct folio_batch fbatch;
- 	struct f2fs_sb_info *sbi = F2FS_M_SB(mapping);
- 	struct bio *bio = NULL;
-@@ -3047,6 +3048,7 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
- #endif
- 	int nr_folios, p, idx;
- 	int nr_pages;
-+	unsigned int max_pages = F2FS_ONSTACK_PAGES;
- 	pgoff_t index;
- 	pgoff_t end;		/* Inclusive */
- 	pgoff_t done_index;
-@@ -3056,6 +3058,15 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
- 	int submitted = 0;
- 	int i;
+-	int cpu;
++	unsigned int cpu;
+ 	int ret;
  
-+#ifdef CONFIG_F2FS_FS_COMPRESSION
-+	if (f2fs_compressed_file(inode) &&
-+		1 << cc.log_cluster_size > F2FS_ONSTACK_PAGES) {
-+		pages = f2fs_kzalloc(sbi, sizeof(struct page *) <<
-+				cc.log_cluster_size, GFP_NOFS | __GFP_NOFAIL);
-+		max_pages = 1 << cc.log_cluster_size;
-+	}
-+#endif
-+
- 	folio_batch_init(&fbatch);
+ 	/* Supports up to 9999 cpu cores */
+@@ -152,7 +152,7 @@ static int __init ledtrig_cpu_init(void)
+ 		if (cpu >= 8)
+ 			continue;
  
- 	if (get_dirty_pages(mapping->host) <=
-@@ -3101,7 +3112,7 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
- add_more:
- 			pages[nr_pages] = folio_page(folio, idx);
- 			folio_get(folio);
--			if (++nr_pages == F2FS_ONSTACK_PAGES) {
-+			if (++nr_pages == max_pages) {
- 				index = folio->index + idx + 1;
- 				folio_batch_release(&fbatch);
- 				goto write;
-@@ -3283,6 +3294,11 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
- 	if (bio)
- 		f2fs_submit_merged_ipu_write(sbi, &bio, NULL);
+-		snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
++		snprintf(trig->name, MAX_NAME_LEN, "cpu%u", cpu);
  
-+#ifdef CONFIG_F2FS_FS_COMPRESSION
-+	if (pages != pages_local)
-+		kfree(pages);
-+#endif
-+
- 	return ret;
- }
- 
+ 		led_trigger_register_simple(trig->name, &trig->_trig);
+ 	}
 -- 
 2.42.0
 
