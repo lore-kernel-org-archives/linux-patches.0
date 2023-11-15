@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350F13A8C9
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA66633CDF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVYibxJX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8ED7C433C8;
-	Wed, 15 Nov 2023 19:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yf5wf0T+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690EEC433C9;
+	Wed, 15 Nov 2023 19:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077696;
-	bh=Ap3SjNM2P8aBDHmJWzhgWIp8eFxAlNp+YG0L7H8QhuM=;
+	s=korg; t=1700077697;
+	bh=CYhmPOMtVLLEkXLAwzyBcKCAOmSyh5m1Fh0ANHV/uWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVYibxJXkyV4jJPlLb0d1J4Srpu1Ivg3DlMBVf/uT9trhx2py73oQMCwKTQur1JKG
-	 RjQRIwgKhNUcZe3qhlfaDN12PLdBgj6ysEa8F2D/yWty0Sl5iC2Yu6tIKf7MX0/QUc
-	 swaKCP0sWYX6tx2plGOyY7twsdU5ZCx7+t7OboQ4=
+	b=yf5wf0T+f9HsVbbEytDElvP0rTrxVBGBgeuLpxwFZUpRobJJ22WDTh+VQkfErHckJ
+	 JvruVFz8DZrIwkxL/auVQHCDCIkvX/HCcG+j8h86xxwSm8eW6UEqOUZWos+MhV8tYv
+	 6uEIPhQinK6r+OqbDZmfVYvOpEfBYZqaCa4IDsvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@arm.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 461/603] perf build: Add missing comment about NO_LIBTRACEEVENT=1
-Date: Wed, 15 Nov 2023 14:16:46 -0500
-Message-ID: <20231115191644.498060462@linuxfoundation.org>
+Subject: [PATCH 6.6 462/603] perf parse-events: Fix for term values that are raw events
+Date: Wed, 15 Nov 2023 14:16:47 -0500
+Message-ID: <20231115191644.556021134@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,45 +44,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit c1783ddfb62420c44cdf4672dad2046f056c624b ]
+[ Upstream commit b20576fd7fe39554b212095c3c0d7a3dff512515 ]
 
-By default perf will fail the build if the development files for
-libtraceevent are not available.
+Raw events can be strings like 'r0xead' but the 0x is optional so they
+can also be 'read'. On IcelakeX uncore_imc_free_running has an event
+called 'read' which may be programmed as:
+```
+$ perf stat -e 'uncore_imc_free_running/event=read/' -a sleep 1
+```
+However, the PE_RAW type isn't allowed on the right of a term, even
+though in this case we just want to interpret it as a string. This
+leads to the following error on IcelakeX:
+```
+$ perf stat -e 'uncore_imc_free_running/event=read/' -a sleep 1
+event syntax error: '..nning/event=read/'
+                                  \___ parser error
+Run 'perf list' for a list of valid events
 
-To build perf without libtraceevent support, disabling several features
-such as 'perf trace', one needs to add NO_LIBTRACEVENT=1 to the make
-command line.
+ Usage: perf stat [<options>] [<command>]
 
-Add the missing comments about that to the tools/perf/Makefile.perf
-file, just like all the other such command line toggles.
+    -e, --event <event> event selector. use 'perf list' to list available events
+```
+Fix this by allowing raw types on the right of terms and treat them as
+strings, just as is already done for PE_LEGACY_CACHE. Make this
+consistent by just entirely removing name_or_legacy and always using
+name_or_raw that covers all three cases.
 
-Fixes: 378ef0f5d9d7f465 ("perf build: Use libtraceevent from the system")
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/ZR6+MhXtLnv6ow6E@kernel.org
+Fixes: 6fd1e5191591 ("perf parse-events: Support PMUs for legacy cache events")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20230928004431.1926969-1-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.perf | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/perf/util/parse-events.y | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-index 37af6df7b978d..86569f230e60d 100644
---- a/tools/perf/Makefile.perf
-+++ b/tools/perf/Makefile.perf
-@@ -69,6 +69,10 @@ include ../scripts/utilities.mak
- # Define NO_LIBDW_DWARF_UNWIND if you do not want libdw support
- # for dwarf backtrace post unwind.
- #
-+# Define NO_LIBTRACEEVENT=1 if you don't want libtraceevent to be linked,
-+# this will remove multiple features and tools, such as 'perf trace',
-+# that need it to read tracefs event format files, etc.
-+#
- # Define NO_PERF_READ_VDSO32 if you do not want to build perf-read-vdso32
- # for reading the 32-bit compatibility VDSO in 64-bit mode
- #
+diff --git a/tools/perf/util/parse-events.y b/tools/perf/util/parse-events.y
+index da9aac47972c1..c3a86ef4b7cf3 100644
+--- a/tools/perf/util/parse-events.y
++++ b/tools/perf/util/parse-events.y
+@@ -79,7 +79,7 @@ static void free_list_evsel(struct list_head* list_evsel)
+ %type <str> PE_MODIFIER_BP
+ %type <str> PE_EVENT_NAME
+ %type <str> PE_DRV_CFG_TERM
+-%type <str> name_or_raw name_or_legacy
++%type <str> name_or_raw
+ %destructor { free ($$); } <str>
+ %type <term> event_term
+ %destructor { parse_events_term__delete ($$); } <term>
+@@ -680,8 +680,6 @@ event_term
+ 
+ name_or_raw: PE_RAW | PE_NAME | PE_LEGACY_CACHE
+ 
+-name_or_legacy: PE_NAME | PE_LEGACY_CACHE
+-
+ event_term:
+ PE_RAW
+ {
+@@ -696,7 +694,7 @@ PE_RAW
+ 	$$ = term;
+ }
+ |
+-name_or_raw '=' name_or_legacy
++name_or_raw '=' name_or_raw
+ {
+ 	struct parse_events_term *term;
+ 	int err = parse_events_term__str(&term, PARSE_EVENTS__TERM_TYPE_USER, $1, $3, &@1, &@3);
+@@ -776,7 +774,7 @@ PE_TERM_HW
+ 	$$ = term;
+ }
+ |
+-PE_TERM '=' name_or_legacy
++PE_TERM '=' name_or_raw
+ {
+ 	struct parse_events_term *term;
+ 	int err = parse_events_term__str(&term, (enum parse_events__term_type)$1,
 -- 
 2.42.0
 
