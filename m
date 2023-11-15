@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B28F28368
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018B428368
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqLczfLt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE757C193E8;
-	Wed, 15 Nov 2023 20:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2nx2AcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A805EC2BCFE;
+	Wed, 15 Nov 2023 20:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081316;
-	bh=xuIqqTsjAYzUKz0Uj0Qs61nkF/azrV/grX3D/b3ALh4=;
+	s=korg; t=1700081317;
+	bh=8EUAOE16WlvJJkE1m6H0gnmrwXzDboo4+3a3HQoCFgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqLczfLts74RY6BA3DSckBSCrTtQJOp/LcbmV9GHrSzBM40tOBxEa2iriCK1Sez2M
-	 TVD41rUL1N6xWczPDlrfl2Jo50Eojekk7xt+Qa2fGZkIQ4XjHjOSPUo5ihs1MRVS60
-	 Xq5DU8e0M48RzqvgRFtzYY9o68w+wR+On55sDuek=
+	b=s2nx2AcVEc8IKb/SbRZj3f5UxRcoTbqROmgRUJ5npxJmb5VgXb5E2x90XqKkMorM9
+	 osXVNhrV2EuL+Gn5oTfWJ5RxNHM2IeeLXLpAaWssXtKTJGH99SMC13CpXuG/pKehw5
+	 TaQ1ItjeXGnRT1JAcdsgTLebKEN0lYgVXSUxOR/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devi Priya <quic_devipriy@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/244] clk: qcom: clk-rcg2: Fix clock rate overflow for high parent frequencies
-Date: Wed, 15 Nov 2023 15:34:05 -0500
-Message-ID: <20231115203551.548951990@linuxfoundation.org>
+Subject: [PATCH 5.15 054/244] clk: qcom: mmcc-msm8998: Dont check halt bit on some branch clks
+Date: Wed, 15 Nov 2023 15:34:06 -0500
+Message-ID: <20231115203551.607406411@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -43,54 +43,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devi Priya <quic_devipriy@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit f7b7d30158cff246667273bd2a62fc93ee0725d2 ]
+[ Upstream commit 9906c4140897bbdbff7bb71c6ae67903cb9954ce ]
 
-If the parent clock rate is greater than unsigned long max/2 then
-integer overflow happens when calculating the clock rate on 32-bit systems.
-As RCG2 uses half integer dividers, the clock rate is first being
-multiplied by 2 which will overflow the unsigned long max value.
-Hence, replace the common pattern of doing 64-bit multiplication
-and then a do_div() call with simpler mult_frac call.
+Some branch clocks are governed externally and we're only supposed to
+send a request concerning their shutdown, not actually ensure it happens.
 
-Fixes: bcd61c0f535a ("clk: qcom: Add support for root clock generators (RCGs)")
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Link: https://lore.kernel.org/r/20230901073640.4973-1-quic_devipriy@quicinc.com
-[bjorn: Also drop unnecessary {} around single statements]
+Use the BRANCH_HALT_SKIP define to skip checking the halt bit.
+
+Fixes: d14b15b5931c ("clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver")
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230531-topic-8998_mmssclk-v3-4-ba1b1fd9ee75@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ drivers/clk/qcom/mmcc-msm8998.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index c3823cc32edc6..f3c225ed57377 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -148,17 +148,11 @@ static int clk_rcg2_set_parent(struct clk_hw *hw, u8 index)
- static unsigned long
- calc_rate(unsigned long rate, u32 m, u32 n, u32 mode, u32 hid_div)
- {
--	if (hid_div) {
--		rate *= 2;
--		rate /= hid_div + 1;
--	}
-+	if (hid_div)
-+		rate = mult_frac(rate, 2, hid_div + 1);
+diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
+index 467dadccde026..8768cdcf0aa3c 100644
+--- a/drivers/clk/qcom/mmcc-msm8998.c
++++ b/drivers/clk/qcom/mmcc-msm8998.c
+@@ -2487,6 +2487,7 @@ static struct clk_branch fd_ahb_clk = {
  
--	if (mode) {
--		u64 tmp = rate;
--		tmp *= m;
--		do_div(tmp, n);
--		rate = tmp;
--	}
-+	if (mode)
-+		rate = mult_frac(rate, m, n);
+ static struct clk_branch mnoc_ahb_clk = {
+ 	.halt_reg = 0x5024,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x5024,
+ 		.enable_mask = BIT(0),
+@@ -2502,6 +2503,7 @@ static struct clk_branch mnoc_ahb_clk = {
  
- 	return rate;
- }
+ static struct clk_branch bimc_smmu_ahb_clk = {
+ 	.halt_reg = 0xe004,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.hwcg_reg = 0xe004,
+ 	.hwcg_bit = 1,
+ 	.clkr = {
+@@ -2519,6 +2521,7 @@ static struct clk_branch bimc_smmu_ahb_clk = {
+ 
+ static struct clk_branch bimc_smmu_axi_clk = {
+ 	.halt_reg = 0xe008,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.hwcg_reg = 0xe008,
+ 	.hwcg_bit = 1,
+ 	.clkr = {
 -- 
 2.42.0
 
