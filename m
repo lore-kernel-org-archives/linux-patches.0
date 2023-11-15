@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601E73D90
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA9E250EA
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOA8QoWp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3874C433CB;
-	Wed, 15 Nov 2023 20:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihs57bbk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6AAC43397;
+	Wed, 15 Nov 2023 20:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081899;
-	bh=6mhOs/j11PSSNif3baj1XM7A78qGEeEH24fYqp4cgqI=;
+	s=korg; t=1700081901;
+	bh=rfR3pim1CzNdris/PcxEpn6pkToL7P9LI/9Wvj4oFdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vOA8QoWpt16CfX6J+vpP83Gn3Hot7+N1kvmNKAEucCfvI+prYJdYXTvYHHU8E1ajK
-	 Htz0UFjqrtsqMiqI3hv9hoLGKlssOFUK4BIu7o5ppEtw0Mv2ZRr0LQUjkLdv/zuJ5f
-	 e/akANyrfsYPopgbFWquCuUkatynFXXM/6SdcYEI=
+	b=ihs57bbkQPVoq2X324G9Pc4/RLrNjH/mHcO72MRaP/f78jcS3qffv07UGTBUtjh9+
+	 EPOpKGYonCrNWlip9GyCbmE/Mj5hCvbSyS/13JV7eZhbLGLQG8sdPLuhT750vr25hf
+	 W+oylb8qXDGcIvVx8aTpNOmpj8+MW+AJXzEo4yBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Yujie Liu <yujie.liu@intel.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 189/191] tracing/kprobes: Fix the order of argument descriptions
-Date: Wed, 15 Nov 2023 15:47:44 -0500
-Message-ID: <20231115204655.778940557@linuxfoundation.org>
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Alex Fetters <Alex.Fetters@garmin.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 190/191] Revert "mmc: core: Capture correct oemid-bits for eMMC cards"
+Date: Wed, 15 Nov 2023 15:47:45 -0500
+Message-ID: <20231115204655.837021925@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -43,45 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yujie Liu <yujie.liu@intel.com>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-[ Upstream commit f032c53bea6d2057c14553832d846be2f151cfb2 ]
+commit 421b605edb1ce611dee06cf6fd9a1c1f2fd85ad0 upstream.
 
-The order of descriptions should be consistent with the argument list of
-the function, so "kretprobe" should be the second one.
+This reverts commit 84ee19bffc9306128cd0f1c650e89767079efeff.
 
-int __kprobe_event_gen_cmd_start(struct dynevent_cmd *cmd, bool kretprobe,
-                                 const char *name, const char *loc, ...)
+The commit above made quirks with an OEMID fail to be applied, as they
+were checking card->cid.oemid for the full 16 bits defined in MMC_FIXUP
+macros but the field would only contain the bottom 8 bits.
 
-Link: https://lore.kernel.org/all/20231031041305.3363712-1-yujie.liu@intel.com/
+eMMC v5.1A might have bogus values in OEMID's higher bits so another fix
+will be made, but it has been decided to revert this until that is ready.
 
-Fixes: 2a588dd1d5d6 ("tracing: Add kprobe event command generation functions")
-Suggested-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Yujie Liu <yujie.liu@intel.com>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 84ee19bffc93 ("mmc: core: Capture correct oemid-bits for eMMC cards")
+Link: https://lkml.kernel.org/r/ZToJsSLHr8RnuTHz@codewreck.org
+Link: https://lkml.kernel.org/r/CAPDyKFqkKibcXnwjnhc3+W1iJBHLeqQ9BpcZrSwhW2u9K2oUtg@mail.gmail.com
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Cc: stable@vger.kernel.org
+Cc: Alex Fetters <Alex.Fetters@garmin.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20231103004220.1666641-1-asmadeus@codewreck.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_kprobe.c | 2 +-
+ drivers/mmc/core/mmc.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
-index 37e1ec1d3ee54..7183572898998 100644
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -949,9 +949,9 @@ EXPORT_SYMBOL_GPL(kprobe_event_cmd_init);
- /**
-  * __kprobe_event_gen_cmd_start - Generate a kprobe event command from arg list
-  * @cmd: A pointer to the dynevent_cmd struct representing the new event
-+ * @kretprobe: Is this a return probe?
-  * @name: The name of the kprobe event
-  * @loc: The location of the kprobe event
-- * @kretprobe: Is this a return probe?
-  * @...: Variable number of arg (pairs), one pair for each field
-  *
-  * NOTE: Users normally won't want to call this function directly, but
--- 
-2.42.0
-
+--- a/drivers/mmc/core/mmc.c
++++ b/drivers/mmc/core/mmc.c
+@@ -95,7 +95,7 @@ static int mmc_decode_cid(struct mmc_car
+ 	case 3: /* MMC v3.1 - v3.3 */
+ 	case 4: /* MMC v4 */
+ 		card->cid.manfid	= UNSTUFF_BITS(resp, 120, 8);
+-		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 8);
++		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 16);
+ 		card->cid.prod_name[0]	= UNSTUFF_BITS(resp, 96, 8);
+ 		card->cid.prod_name[1]	= UNSTUFF_BITS(resp, 88, 8);
+ 		card->cid.prod_name[2]	= UNSTUFF_BITS(resp, 80, 8);
 
 
