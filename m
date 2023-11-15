@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7EC364AB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080EC381D1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUWEBJK+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EE2C433C7;
-	Wed, 15 Nov 2023 20:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dV/sxHwK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8563FC433C8;
+	Wed, 15 Nov 2023 20:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078424;
-	bh=rdodwSIpuNBtE4WR76+E59mJjolxBXBc1f43iukISRE=;
+	s=korg; t=1700078425;
+	bh=uSO4EaUmzxmE5vyeSfnZ2trWAa/NSyTQ3Ho9gigXEnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUWEBJK+Hf2saGeTOfuCwD4HJHguzEcSsPGvKliSXilK3XwSUK/GwFhC5DG4S7Gi5
-	 0nAqSWv9WOiEU+OLLzXIvnwXCuZ3PdDSlNkVEAFEJDsVCCHVle5+WQRwy7g7ti8ETa
-	 r9KL/rmxzFrBAbP/O+A5l9zBXTG53S308zw00MyA=
+	b=dV/sxHwKGb6WohLXb9hNp63+xwLnC/eqsnvFslsmKVR8//8PNLgnIABLSVptd+rPT
+	 UxU6NByTF+RN12FUM2APISxWLlazR3063ObEHcUmhVY4TaSO+1PyRsRpgvSvknyBJf
+	 XRu/lvW9C6Pp4iwdVjAUE0Zch+5Q3MInmza0GQfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 315/379] media: verisilicon: Do not enable G2 postproc downscale if source is narrower than destination
-Date: Wed, 15 Nov 2023 14:26:30 -0500
-Message-ID: <20231115192703.789081483@linuxfoundation.org>
+Subject: [PATCH 6.1 316/379] media: ov5640: Drop dead code using frame_interval
+Date: Wed, 15 Nov 2023 14:26:31 -0500
+Message-ID: <20231115192703.843051456@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,55 +43,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 
-[ Upstream commit 6e481d52d363218a3e6feb31694da74b38b30fad ]
+[ Upstream commit eeaa47d182fedfe68b8fd40ef3798761c8904791 ]
 
-In case of encoded input VP9 data width that is not multiple of macroblock
-size, which is 16 (e.g. 1080x1920 frames, where 1080 is multiple of 8), the
-width is padded to be a multiple of macroblock size (for 1080x1920 frames,
-that is 1088x1920).
+The ov5640_update_pixel_rate() function handles the parallel and MIPI
+CSI-2 cases separately.
 
-The hantro_postproc_g2_enable() checks whether the encoded data width is
-equal to decoded frame width, and if not, enables down-scale mode. For a
-frame where input is 1080x1920 and output is 1088x1920, this is incorrect
-as no down-scale happens, the frame is only padded. Enabling the down-scale
-mode in this case results in corrupted frames.
+When running on a parallel setup the V4L2_CID_PIXEL_RATE value is
+calculated at the beginning of the function using the values configured
+with the frame_interval operations, and then the function immediately
+returns.
 
-Fix this by adjusting the check to test whether encoded data width is
-greater than decoded frame width, and only in that case enable the
-down-scale mode.
+The remaining of the function handles the MIPI CSI-2 configuration and
+should not use the 'current_fr' and 'def_fps' fields as those are only
+relevant for parallel mode.
 
-To generate input test data to trigger this bug, use e.g.:
-$ gst-launch-1.0 videotestsrc ! video/x-raw,width=272,height=256,format=I420 ! \
-                 vp9enc ! matroskamux ! filesink location=/tmp/test.vp9
-To trigger the bug upon decoding (note that the NV12 must be forced, as
-that assures the output data would pass the G2 postproc):
-$ gst-launch-1.0 filesrc location=/tmp/test.vp9 ! matroskademux ! vp9parse ! \
-                 v4l2slvp9dec ! video/x-raw,format=NV12 ! videoconvert ! fbdevsink
+Drop a small section of dead code that updates vblank using
+frame_interval on a MIPI CSI-2 setup.
 
-Fixes: 79c987de8b35 ("media: hantro: Use post processor scaling capacities")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 8fc29e3c9f68 ("media: ov5640: fix vblank unchange issue when work at dvp mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_postproc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ov5640.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_postproc.c b/drivers/media/platform/verisilicon/hantro_postproc.c
-index 09d8cf9426895..708095cf09fe2 100644
---- a/drivers/media/platform/verisilicon/hantro_postproc.c
-+++ b/drivers/media/platform/verisilicon/hantro_postproc.c
-@@ -103,7 +103,7 @@ static void hantro_postproc_g1_enable(struct hantro_ctx *ctx)
+diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
+index 2ee832426736d..505dd7c10235e 100644
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -2912,19 +2912,6 @@ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
+ 				 hblank, hblank, 1, hblank);
  
- static int down_scale_factor(struct hantro_ctx *ctx)
- {
--	if (ctx->src_fmt.width == ctx->dst_fmt.width)
-+	if (ctx->src_fmt.width <= ctx->dst_fmt.width)
- 		return 0;
- 
- 	return DIV_ROUND_CLOSEST(ctx->src_fmt.width, ctx->dst_fmt.width);
+ 	vblank = timings->vblank_def;
+-
+-	if (sensor->current_fr != mode->def_fps) {
+-		/*
+-		 * Compute the vertical blanking according to the framerate
+-		 * configured with s_frame_interval.
+-		 */
+-		int fie_num = sensor->frame_interval.numerator;
+-		int fie_denom = sensor->frame_interval.denominator;
+-
+-		vblank = ((fie_num * pixel_rate / fie_denom) / timings->htot) -
+-			mode->height;
+-	}
+-
+ 	__v4l2_ctrl_modify_range(sensor->ctrls.vblank, OV5640_MIN_VBLANK,
+ 				 OV5640_MAX_VTS - mode->height, 1, vblank);
+ 	__v4l2_ctrl_s_ctrl(sensor->ctrls.vblank, vblank);
 -- 
 2.42.0
 
