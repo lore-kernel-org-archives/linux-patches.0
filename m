@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF333DBBF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6AF3DBBF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdKU8NQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEABC433C8;
-	Wed, 15 Nov 2023 19:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDh+i0er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3C2C433C7;
+	Wed, 15 Nov 2023 19:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076788;
-	bh=AvItDFSTUVAFS2Ed7EBKQ2NPSRbbGgUfHfyrXbnog54=;
+	s=korg; t=1700076790;
+	bh=b8Up54CDbc4z/zqQZPjNdvtzzSSZUNjuWwz1Qw73QG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PdKU8NQsTzXcs9Wf5xxBAoPanQkkcxsU/xas67MIUS1tgPWPUyDSjEeHWj87GwP6U
-	 EJ91n5dr7aXUYBll5NvANa+7Cm9ApmlJiJ3vTfwKPRwWB4GOwH4Qg12wL51tLsegJZ
-	 NqnE0dS8mfeRHeHjQL1TIkgQAVmr7Sxrh6rQo2Os=
+	b=FDh+i0erRv+KnOEMnOXUGcYyGaLI/AS6JvZVJ0m7iKL0xZPs0SCkuV0So3djJXvFs
+	 3hesYnGNSrmkFd4qv/nlsRojr8QGFE73Mwby7P8ftC2QbgjMOSb7WhfyZCfmIkWYj8
+	 eDEoaYOzyilxipLGqd9/id18ewyHEV5SCjE/JQKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 421/550] interconnect: qcom: sm8350: Set ACV enable_mask
-Date: Wed, 15 Nov 2023 14:16:45 -0500
-Message-ID: <20231115191629.944113716@linuxfoundation.org>
+Subject: [PATCH 6.6 027/603] drivers/clocksource/timer-ti-dm: Dont call clk_get_rate() in stop function
+Date: Wed, 15 Nov 2023 14:09:32 -0500
+Message-ID: <20231115191615.060468158@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,37 +39,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
 
-[ Upstream commit df1b8356a80ab47a7623e08facf36fe434ea9722 ]
+[ Upstream commit 12590d4d0e331d3cb9e6b3494515cd61c8a6624e ]
 
-ACV expects an enable_mask corresponding to the APPS RSC, fill it in.
+clk_get_rate() might sleep, and that prevents dm-timer based PWM from being
+used from atomic context.
 
-Fixes: d26a56674497 ("interconnect: qcom: Add SM8350 interconnect provider driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230811-topic-acv-v2-11-765ad70e539a@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fix that by getting fclk rate in probe() and using a notifier in case rate
+changes.
+
+Fixes: af04aa856e93 ("ARM: OMAP: Move dmtimer driver out of plat-omap to drivers under clocksource")
+Signed-off-by: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/1696312220-11550-1-git-send-email-ivo.g.dimitrov.75@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/sm8350.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clocksource/timer-ti-dm.c | 36 ++++++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/sm8350.c b/drivers/interconnect/qcom/sm8350.c
-index 1959208409396..e6e2dcf4574d8 100644
---- a/drivers/interconnect/qcom/sm8350.c
-+++ b/drivers/interconnect/qcom/sm8350.c
-@@ -167,6 +167,7 @@ DEFINE_QNODE(qns_mem_noc_sf_disp, SM8350_SLAVE_MNOC_SF_MEM_NOC_DISP, 2, 32, SM83
+diff --git a/drivers/clocksource/timer-ti-dm.c b/drivers/clocksource/timer-ti-dm.c
+index 09ab29cb7f641..5f60f6bd33866 100644
+--- a/drivers/clocksource/timer-ti-dm.c
++++ b/drivers/clocksource/timer-ti-dm.c
+@@ -140,6 +140,8 @@ struct dmtimer {
+ 	struct platform_device *pdev;
+ 	struct list_head node;
+ 	struct notifier_block nb;
++	struct notifier_block fclk_nb;
++	unsigned long fclk_rate;
+ };
  
- static struct qcom_icc_bcm bcm_acv = {
- 	.name = "ACV",
-+	.enable_mask = BIT(3),
- 	.keepalive = false,
- 	.num_nodes = 1,
- 	.nodes = { &ebi },
+ static u32 omap_reserved_systimers;
+@@ -253,8 +255,7 @@ static inline void __omap_dm_timer_enable_posted(struct dmtimer *timer)
+ 	timer->posted = OMAP_TIMER_POSTED;
+ }
+ 
+-static inline void __omap_dm_timer_stop(struct dmtimer *timer,
+-					unsigned long rate)
++static inline void __omap_dm_timer_stop(struct dmtimer *timer)
+ {
+ 	u32 l;
+ 
+@@ -269,7 +270,7 @@ static inline void __omap_dm_timer_stop(struct dmtimer *timer,
+ 		 * Wait for functional clock period x 3.5 to make sure that
+ 		 * timer is stopped
+ 		 */
+-		udelay(3500000 / rate + 1);
++		udelay(3500000 / timer->fclk_rate + 1);
+ #endif
+ 	}
+ 
+@@ -348,6 +349,21 @@ static int omap_timer_context_notifier(struct notifier_block *nb,
+ 	return NOTIFY_OK;
+ }
+ 
++static int omap_timer_fclk_notifier(struct notifier_block *nb,
++				    unsigned long event, void *data)
++{
++	struct clk_notifier_data *clk_data = data;
++	struct dmtimer *timer = container_of(nb, struct dmtimer, fclk_nb);
++
++	switch (event) {
++	case POST_RATE_CHANGE:
++		timer->fclk_rate = clk_data->new_rate;
++		return NOTIFY_OK;
++	default:
++		return NOTIFY_DONE;
++	}
++}
++
+ static int omap_dm_timer_reset(struct dmtimer *timer)
+ {
+ 	u32 l, timeout = 100000;
+@@ -754,7 +770,6 @@ static int omap_dm_timer_stop(struct omap_dm_timer *cookie)
+ {
+ 	struct dmtimer *timer;
+ 	struct device *dev;
+-	unsigned long rate = 0;
+ 
+ 	timer = to_dmtimer(cookie);
+ 	if (unlikely(!timer))
+@@ -762,10 +777,7 @@ static int omap_dm_timer_stop(struct omap_dm_timer *cookie)
+ 
+ 	dev = &timer->pdev->dev;
+ 
+-	if (!timer->omap1)
+-		rate = clk_get_rate(timer->fclk);
+-
+-	__omap_dm_timer_stop(timer, rate);
++	__omap_dm_timer_stop(timer);
+ 
+ 	pm_runtime_put_sync(dev);
+ 
+@@ -1124,6 +1136,14 @@ static int omap_dm_timer_probe(struct platform_device *pdev)
+ 		timer->fclk = devm_clk_get(dev, "fck");
+ 		if (IS_ERR(timer->fclk))
+ 			return PTR_ERR(timer->fclk);
++
++		timer->fclk_nb.notifier_call = omap_timer_fclk_notifier;
++		ret = devm_clk_notifier_register(dev, timer->fclk,
++						 &timer->fclk_nb);
++		if (ret)
++			return ret;
++
++		timer->fclk_rate = clk_get_rate(timer->fclk);
+ 	} else {
+ 		timer->fclk = ERR_PTR(-ENODEV);
+ 	}
 -- 
 2.42.0
 
