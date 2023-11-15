@@ -1,39 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE9041238
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5683EA7B
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MuTK3aU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF99C433CB;
-	Wed, 15 Nov 2023 19:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiaZIuS2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F260BC433C9;
+	Wed, 15 Nov 2023 19:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076827;
-	bh=aSVZ+nM7adp1LikfrvSUtI1w0VX755YI60BMNDa8eqo=;
+	s=korg; t=1700076829;
+	bh=ecWrurMlWfhddPr6kET014jiCub1zw5ZNcCGF4AnkLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0MuTK3aUVRG2BLI51rLegnk0r7yjbGbz78lH5IQlPYHHxGlQWi+d0d0s6OZ7F6l4q
-	 XrKIVW+Uz3KhwhdieXwYz1xnyzjx+DxON/KvjTXv56dEBg4gleTole5kIRBUv4vkVi
-	 ncy+LB8axQ38nfGeC5VriqifOLduU4a6oGbytC/k=
+	b=jiaZIuS2orv/4hG/6Gzl4lOPZQp+7W3pR5hf78c9/IiIa7X8eaPmAjZ2pEN0fLPIA
+	 7RxQlAj7JL22vPW8+EzfrtdQHRTBud+H3O1kRFhW4lnjdBJ705h4MePLIQTRUY9lWt
+	 d/LDGDHiOWdsfFVpIxsEXX1sYpLcmHfq3a6gyR8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	gor@linux.ibm.com,
-	hca@linux.ibm.com,
-	sumanthk@linux.ibm.com,
-	svens@linux.ibm.com,
-	Namhyung Kim <namhyung@kernel.org>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 435/550] perf trace: Use the right bpf_probe_read(_str) variant for reading user data
-Date: Wed, 15 Nov 2023 14:16:59 -0500
-Message-ID: <20231115191630.926834605@linuxfoundation.org>
+Subject: [PATCH 6.6 039/603] wifi: mac80211: move scan work to wiphy work
+Date: Wed, 15 Nov 2023 14:09:44 -0500
+Message-ID: <20231115191615.859310632@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,173 +38,191 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 5069211e2f0b47e75119805e23ae6352d871e263 ]
+[ Upstream commit 201712512cbbda360f62c222a4bab260350462a0 ]
 
-Perf test case 111 Check open filename arg using perf trace + vfs_getname
-fails on s390. This is caused by a failing function
-bpf_probe_read() in file util/bpf_skel/augmented_raw_syscalls.bpf.c.
+Move the scan work to wiphy work, which also simplifies
+the way we handle the work vs. the scan configuration.
 
-The root cause is the lookup by address. Function bpf_probe_read()
-is used. This function works only for architectures
-with ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE.
-
-On s390 is not possible to determine from the address to which
-address space the address belongs to (user or kernel space).
-
-Replace bpf_probe_read() by bpf_probe_read_kernel()
-and bpf_probe_read_str() by bpf_probe_read_user_str() to
-explicity specify the address space the address refers to.
-
-Output before:
- # ./perf trace -eopen,openat -- touch /tmp/111
- libbpf: prog 'sys_enter': BPF program load failed: Invalid argument
- libbpf: prog 'sys_enter': -- BEGIN PROG LOAD LOG --
- reg type unsupported for arg#0 function sys_enter#75
- 0: R1=ctx(off=0,imm=0) R10=fp0
- ; int sys_enter(struct syscall_enter_args *args)
- 0: (bf) r6 = r1           ; R1=ctx(off=0,imm=0) R6_w=ctx(off=0,imm=0)
- ; return bpf_get_current_pid_tgid();
- 1: (85) call bpf_get_current_pid_tgid#14      ; R0_w=scalar()
- 2: (63) *(u32 *)(r10 -8) = r0 ; R0_w=scalar() R10=fp0 fp-8=????mmmm
- 3: (bf) r2 = r10              ; R2_w=fp0 R10=fp0
- ;
- .....
- lines deleted here
- .....
- 23: (bf) r3 = r6              ; R3_w=ctx(off=0,imm=0) R6=ctx(off=0,imm=0)
- 24: (85) call bpf_probe_read#4
- unknown func bpf_probe_read#4
- processed 23 insns (limit 1000000) max_states_per_insn 0 \
-	 total_states 2 peak_states 2 mark_read 2
- -- END PROG LOAD LOG --
- libbpf: prog 'sys_enter': failed to load: -22
- libbpf: failed to load object 'augmented_raw_syscalls_bpf'
- libbpf: failed to load BPF skeleton 'augmented_raw_syscalls_bpf': -22
- ....
-
-Output after:
- # ./perf test -Fv 111
- 111: Check open filename arg using perf trace + vfs_getname          :
- --- start ---
-     1.085 ( 0.011 ms): touch/320753 openat(dfd: CWD, filename: \
-	"/tmp/temporary_file.SWH85", \
-	flags: CREAT|NOCTTY|NONBLOCK|WRONLY, mode: IRUGO|IWUGO) = 3
- ---- end ----
- Check open filename arg using perf trace + vfs_getname: Ok
- #
-
-Test with the sleep command shows:
-Output before:
- # ./perf trace -e *sleep sleep 1.234567890
-     0.000 (1234.681 ms): sleep/63114 clock_nanosleep(rqtp: \
-         { .tv_sec: 0, .tv_nsec: 0 }, rmtp: 0x3ffe0979720) = 0
- #
-
-Output after:
- # ./perf trace -e *sleep sleep 1.234567890
-     0.000 (1234.686 ms): sleep/64277 clock_nanosleep(rqtp: \
-         { .tv_sec: 1, .tv_nsec: 234567890 }, rmtp: 0x3fff3df9ea0) = 0
- #
-
-Fixes: 14e4b9f4289a ("perf trace: Raw augmented syscalls fix libbpf 1.0+ compatibility")
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Co-developed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: gor@linux.ibm.com
-Cc: hca@linux.ibm.com
-Cc: sumanthk@linux.ibm.com
-Cc: svens@linux.ibm.com
-Link: https://lore.kernel.org/r/20231019082642.3286650-1-tmricht@linux.ibm.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: eadfb54756ae ("wifi: mac80211: move sched-scan stop work to wiphy work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/examples/bpf/augmented_raw_syscalls.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/mac80211/ieee80211_i.h |  4 ++--
+ net/mac80211/iface.c       |  2 +-
+ net/mac80211/main.c        |  4 +---
+ net/mac80211/scan.c        | 29 ++++++++++++-----------------
+ net/mac80211/util.c        |  4 ++--
+ 5 files changed, 18 insertions(+), 25 deletions(-)
 
-diff --git a/tools/perf/examples/bpf/augmented_raw_syscalls.c b/tools/perf/examples/bpf/augmented_raw_syscalls.c
-index 9a03189d33d38..74fa9e642b424 100644
---- a/tools/perf/examples/bpf/augmented_raw_syscalls.c
-+++ b/tools/perf/examples/bpf/augmented_raw_syscalls.c
-@@ -147,7 +147,7 @@ static inline
- unsigned int augmented_arg__read_str(struct augmented_arg *augmented_arg, const void *arg, unsigned int arg_len)
- {
- 	unsigned int augmented_len = sizeof(*augmented_arg);
--	int string_len = bpf_probe_read_str(&augmented_arg->value, arg_len, arg);
-+	int string_len = bpf_probe_read_user_str(&augmented_arg->value, arg_len, arg);
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index 358c8865f909a..4e98e03e5de64 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -1490,7 +1490,7 @@ struct ieee80211_local {
  
- 	augmented_arg->size = augmented_arg->err = 0;
- 	/*
-@@ -196,7 +196,7 @@ int sys_enter_connect(struct syscall_enter_args *args)
- 	if (socklen > sizeof(augmented_args->saddr))
- 		socklen = sizeof(augmented_args->saddr);
+ 	unsigned long leave_oper_channel_time;
+ 	enum mac80211_scan_state next_scan_state;
+-	struct delayed_work scan_work;
++	struct wiphy_delayed_work scan_work;
+ 	struct ieee80211_sub_if_data __rcu *scan_sdata;
+ 	/* For backward compatibility only -- do not use */
+ 	struct cfg80211_chan_def _oper_chandef;
+@@ -1929,7 +1929,7 @@ int ieee80211_mesh_finish_csa(struct ieee80211_sub_if_data *sdata,
+ 			      u64 *changed);
  
--	bpf_probe_read(&augmented_args->saddr, socklen, sockaddr_arg);
-+	bpf_probe_read_user(&augmented_args->saddr, socklen, sockaddr_arg);
+ /* scan/BSS handling */
+-void ieee80211_scan_work(struct work_struct *work);
++void ieee80211_scan_work(struct wiphy *wiphy, struct wiphy_work *work);
+ int ieee80211_request_ibss_scan(struct ieee80211_sub_if_data *sdata,
+ 				const u8 *ssid, u8 ssid_len,
+ 				struct ieee80211_channel **channels,
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index be586bc0b5b7d..6e3bfb46af44d 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -691,7 +691,7 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
+ 	ieee80211_recalc_ps(local);
  
- 	return augmented__output(args, augmented_args, len + socklen);
+ 	if (cancel_scan)
+-		flush_delayed_work(&local->scan_work);
++		wiphy_delayed_work_flush(local->hw.wiphy, &local->scan_work);
+ 
+ 	if (local->open_count == 0) {
+ 		ieee80211_stop_device(local);
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index 3bbd66e5a0df0..adb8637a37445 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -335,9 +335,7 @@ static void ieee80211_restart_work(struct work_struct *work)
+ 	struct ieee80211_sub_if_data *sdata;
+ 	int ret;
+ 
+-	/* wait for scan work complete */
+ 	flush_workqueue(local->workqueue);
+-	flush_work(&local->sched_scan_stopped_work);
+ 
+ 	rtnl_lock();
+ 	/* we might do interface manipulations, so need both */
+@@ -808,7 +806,7 @@ struct ieee80211_hw *ieee80211_alloc_hw_nm(size_t priv_data_len,
+ 	INIT_LIST_HEAD(&local->chanctx_list);
+ 	mutex_init(&local->chanctx_mtx);
+ 
+-	INIT_DELAYED_WORK(&local->scan_work, ieee80211_scan_work);
++	wiphy_delayed_work_init(&local->scan_work, ieee80211_scan_work);
+ 
+ 	INIT_WORK(&local->restart_work, ieee80211_restart_work);
+ 
+diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
+index 0805aa8603c61..2117cb2a916ac 100644
+--- a/net/mac80211/scan.c
++++ b/net/mac80211/scan.c
+@@ -274,8 +274,8 @@ void ieee80211_scan_rx(struct ieee80211_local *local, struct sk_buff *skb)
+ 		 * the beacon/proberesp rx gives us an opportunity to upgrade
+ 		 * to active scan
+ 		 */
+-		 set_bit(SCAN_BEACON_DONE, &local->scanning);
+-		 ieee80211_queue_delayed_work(&local->hw, &local->scan_work, 0);
++		set_bit(SCAN_BEACON_DONE, &local->scanning);
++		wiphy_delayed_work_queue(local->hw.wiphy, &local->scan_work, 0);
+ 	}
+ 
+ 	if (ieee80211_is_probe_resp(mgmt->frame_control)) {
+@@ -505,7 +505,7 @@ void ieee80211_scan_completed(struct ieee80211_hw *hw,
+ 
+ 	memcpy(&local->scan_info, info, sizeof(*info));
+ 
+-	ieee80211_queue_delayed_work(&local->hw, &local->scan_work, 0);
++	wiphy_delayed_work_queue(local->hw.wiphy, &local->scan_work, 0);
  }
-@@ -215,7 +215,7 @@ int sys_enter_sendto(struct syscall_enter_args *args)
- 	if (socklen > sizeof(augmented_args->saddr))
- 		socklen = sizeof(augmented_args->saddr);
+ EXPORT_SYMBOL(ieee80211_scan_completed);
  
--	bpf_probe_read(&augmented_args->saddr, socklen, sockaddr_arg);
-+	bpf_probe_read_user(&augmented_args->saddr, socklen, sockaddr_arg);
+@@ -545,8 +545,7 @@ static int ieee80211_start_sw_scan(struct ieee80211_local *local,
+ 	/* We need to set power level at maximum rate for scanning. */
+ 	ieee80211_hw_config(local, 0);
  
- 	return augmented__output(args, augmented_args, len + socklen);
+-	ieee80211_queue_delayed_work(&local->hw,
+-				     &local->scan_work, 0);
++	wiphy_delayed_work_queue(local->hw.wiphy, &local->scan_work, 0);
+ 
+ 	return 0;
  }
-@@ -305,7 +305,7 @@ int sys_enter_perf_event_open(struct syscall_enter_args *args)
-         if (augmented_args == NULL)
- 		goto failure;
+@@ -603,8 +602,8 @@ void ieee80211_run_deferred_scan(struct ieee80211_local *local)
+ 					lockdep_is_held(&local->mtx))))
+ 		return;
  
--	if (bpf_probe_read(&augmented_args->__data, sizeof(*attr), attr) < 0)
-+	if (bpf_probe_read_user(&augmented_args->__data, sizeof(*attr), attr) < 0)
- 		goto failure;
+-	ieee80211_queue_delayed_work(&local->hw, &local->scan_work,
+-				     round_jiffies_relative(0));
++	wiphy_delayed_work_queue(local->hw.wiphy, &local->scan_work,
++				 round_jiffies_relative(0));
+ }
  
- 	attr_read = (const struct perf_event_attr_size *)augmented_args->__data;
-@@ -319,7 +319,7 @@ int sys_enter_perf_event_open(struct syscall_enter_args *args)
-                 goto failure;
+ static void ieee80211_send_scan_probe_req(struct ieee80211_sub_if_data *sdata,
+@@ -795,8 +794,8 @@ static int __ieee80211_start_scan(struct ieee80211_sub_if_data *sdata,
+ 		}
  
- 	// Now that we read attr->size and tested it against the size limits, read it completely
--	if (bpf_probe_read(&augmented_args->__data, size, attr) < 0)
-+	if (bpf_probe_read_user(&augmented_args->__data, size, attr) < 0)
- 		goto failure;
- 
- 	return augmented__output(args, augmented_args, len + size);
-@@ -341,7 +341,7 @@ int sys_enter_clock_nanosleep(struct syscall_enter_args *args)
- 	if (size > sizeof(augmented_args->__data))
-                 goto failure;
- 
--	bpf_probe_read(&augmented_args->__data, size, rqtp_arg);
-+	bpf_probe_read_user(&augmented_args->__data, size, rqtp_arg);
- 
- 	return augmented__output(args, augmented_args, len + size);
- failure:
-@@ -380,7 +380,7 @@ int sys_enter(struct syscall_enter_args *args)
- 	if (augmented_args == NULL)
- 		return 1;
- 
--	bpf_probe_read(&augmented_args->args, sizeof(augmented_args->args), args);
-+	bpf_probe_read_kernel(&augmented_args->args, sizeof(augmented_args->args), args);
- 
- 	/*
- 	 * Jump to syscall specific augmenter, even if the default one,
-@@ -401,7 +401,7 @@ int sys_exit(struct syscall_exit_args *args)
- 	if (pid_filter__has(&pids_filtered, getpid()))
+ 		/* Now, just wait a bit and we are all done! */
+-		ieee80211_queue_delayed_work(&local->hw, &local->scan_work,
+-					     next_delay);
++		wiphy_delayed_work_queue(local->hw.wiphy, &local->scan_work,
++					 next_delay);
  		return 0;
+ 	} else {
+ 		/* Do normal software scan */
+@@ -1043,7 +1042,7 @@ static void ieee80211_scan_state_resume(struct ieee80211_local *local,
+ 	local->next_scan_state = SCAN_SET_CHANNEL;
+ }
  
--	bpf_probe_read(&exit_args, sizeof(exit_args), args);
-+	bpf_probe_read_kernel(&exit_args, sizeof(exit_args), args);
- 	/*
- 	 * Jump to syscall specific return augmenter, even if the default one,
- 	 * "!raw_syscalls:unaugmented" that will just return 1 to return the
+-void ieee80211_scan_work(struct work_struct *work)
++void ieee80211_scan_work(struct wiphy *wiphy, struct wiphy_work *work)
+ {
+ 	struct ieee80211_local *local =
+ 		container_of(work, struct ieee80211_local, scan_work.work);
+@@ -1137,7 +1136,8 @@ void ieee80211_scan_work(struct work_struct *work)
+ 		}
+ 	} while (next_delay == 0);
+ 
+-	ieee80211_queue_delayed_work(&local->hw, &local->scan_work, next_delay);
++	wiphy_delayed_work_queue(local->hw.wiphy, &local->scan_work,
++				 next_delay);
+ 	goto out;
+ 
+ out_complete:
+@@ -1280,12 +1280,7 @@ void ieee80211_scan_cancel(struct ieee80211_local *local)
+ 		goto out;
+ 	}
+ 
+-	/*
+-	 * If the work is currently running, it must be blocked on
+-	 * the mutex, but we'll set scan_sdata = NULL and it'll
+-	 * simply exit once it acquires the mutex.
+-	 */
+-	cancel_delayed_work(&local->scan_work);
++	wiphy_delayed_work_cancel(local->hw.wiphy, &local->scan_work);
+ 	/* and clean up */
+ 	memset(&local->scan_info, 0, sizeof(local->scan_info));
+ 	__ieee80211_scan_completed(&local->hw, true);
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index e878b6a27651a..172173b2a9eb8 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -2340,8 +2340,8 @@ static void ieee80211_flush_completed_scan(struct ieee80211_local *local,
+ 		 */
+ 		if (aborted)
+ 			set_bit(SCAN_ABORTED, &local->scanning);
+-		ieee80211_queue_delayed_work(&local->hw, &local->scan_work, 0);
+-		flush_delayed_work(&local->scan_work);
++		wiphy_delayed_work_queue(local->hw.wiphy, &local->scan_work, 0);
++		wiphy_delayed_work_flush(local->hw.wiphy, &local->scan_work);
+ 	}
+ }
+ 
 -- 
 2.42.0
 
