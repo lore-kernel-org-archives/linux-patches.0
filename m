@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED3A3D90
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9433C43ADE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qoytxdg2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C087C433D9;
-	Wed, 15 Nov 2023 20:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/yDCtcW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C32C433CB;
+	Wed, 15 Nov 2023 20:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081876;
-	bh=nPwZqlBa/nOCC00YZrozxxS748yqwWotl/GhGfZo69c=;
+	s=korg; t=1700081878;
+	bh=7Q/L44siyJOu7ihsEk6917GBdK6AqvZDqidk9OimFhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qoytxdg2EmvLjQu6cTP7zDPYve8Z1bfkh+a7Gnf/TSm7vcdRNTIHCjWRbIcf8ngWV
-	 JUHOtPReXmyUYtAr07X/usEfQCt1kEWGT377OkJok3lIldb/temtXtDSp/6yRmtq8c
-	 H58KTgfumk0mToQEmZ4yeqduscMKV/rtOtNuG3FU=
+	b=d/yDCtcWY2sUTMvb2kYPq2/jU3tXg3s6OcQMEJ8nNicTIK/dtyMtCnM38vtcJ+CA1
+	 L98ERnHnNCcGZb4WLhjVUbDNDkGN4jeN3GnNQgKBVKZagvhz5P3iSDXeZu6NkYhs6H
+	 voQRPx9K7uSA363b4pd3uo3DkLEXTPKIhzKQpewA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Huhardeaux <tech@tootai.net>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 181/191] netfilter: nat: fix ipv6 nat redirect with mapped and scoped addresses
-Date: Wed, 15 Nov 2023 15:47:36 -0500
-Message-ID: <20231115204655.303320255@linuxfoundation.org>
+Subject: [PATCH 5.10 182/191] x86: Share definition of __is_canonical_address()
+Date: Wed, 15 Nov 2023 15:47:37 -0500
+Message-ID: <20231115204655.363097631@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -43,94 +42,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 80abbe8a8263106fe45a4f293b92b5c74cc9cc8a ]
+[ Upstream commit 1fb85d06ad6754796cd1b920639ca9d8840abefd ]
 
-The ipv6 redirect target was derived from the ipv4 one, i.e. its
-identical to a 'dnat' with the first (primary) address assigned to the
-network interface.  The code has been moved around to make it usable
-from nf_tables too, but its still the same as it was back when this
-was added in 2012.
+Reduce code duplication by moving canonical address code to a common header
+file.
 
-IPv6, however, has different types of addresses, if the 'wrong' address
-comes first the redirection does not work.
-
-In Daniels case, the addresses are:
-  inet6 ::ffff:192 ...
-  inet6 2a01: ...
-
-... so the function attempts to redirect to the mapped address.
-
-Add more checks before the address is deemed correct:
-1. If the packets' daddr is scoped, search for a scoped address too
-2. skip tentative addresses
-3. skip mapped addresses
-
-Use the first address that appears to match our needs.
-
-Reported-by: Daniel Huhardeaux <tech@tootai.net>
-Closes: https://lore.kernel.org/netfilter/71be06b8-6aa0-4cf9-9e0b-e2839b01b22f@tootai.net/
-Fixes: 115e23ac78f8 ("netfilter: ip6tables: add REDIRECT target")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220131072453.2839535-3-adrian.hunter@intel.com
+Stable-dep-of: f79936545fb1 ("x86/sev-es: Allow copy_from_kernel_nofault() in earlier boot")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_nat_redirect.c | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ arch/x86/events/intel/pt.c  | 14 ++------------
+ arch/x86/include/asm/page.h | 10 ++++++++++
+ arch/x86/kvm/emulate.c      |  4 ++--
+ arch/x86/kvm/x86.c          |  2 +-
+ arch/x86/kvm/x86.h          |  7 +------
+ arch/x86/mm/maccess.c       |  7 +------
+ 6 files changed, 17 insertions(+), 27 deletions(-)
 
-diff --git a/net/netfilter/nf_nat_redirect.c b/net/netfilter/nf_nat_redirect.c
-index 6616ba5d0b049..5b37487d9d11f 100644
---- a/net/netfilter/nf_nat_redirect.c
-+++ b/net/netfilter/nf_nat_redirect.c
-@@ -80,6 +80,26 @@ EXPORT_SYMBOL_GPL(nf_nat_redirect_ipv4);
+diff --git a/arch/x86/events/intel/pt.c b/arch/x86/events/intel/pt.c
+index d87421acddc39..5667b8b994e34 100644
+--- a/arch/x86/events/intel/pt.c
++++ b/arch/x86/events/intel/pt.c
+@@ -1360,20 +1360,10 @@ static void pt_addr_filters_fini(struct perf_event *event)
+ }
  
- static const struct in6_addr loopback_addr = IN6ADDR_LOOPBACK_INIT;
+ #ifdef CONFIG_X86_64
+-static u64 canonical_address(u64 vaddr, u8 vaddr_bits)
+-{
+-	return ((s64)vaddr << (64 - vaddr_bits)) >> (64 - vaddr_bits);
+-}
+-
+-static u64 is_canonical_address(u64 vaddr, u8 vaddr_bits)
+-{
+-	return canonical_address(vaddr, vaddr_bits) == vaddr;
+-}
+-
+ /* Clamp to a canonical address greater-than-or-equal-to the address given */
+ static u64 clamp_to_ge_canonical_addr(u64 vaddr, u8 vaddr_bits)
+ {
+-	return is_canonical_address(vaddr, vaddr_bits) ?
++	return __is_canonical_address(vaddr, vaddr_bits) ?
+ 	       vaddr :
+ 	       -BIT_ULL(vaddr_bits - 1);
+ }
+@@ -1381,7 +1371,7 @@ static u64 clamp_to_ge_canonical_addr(u64 vaddr, u8 vaddr_bits)
+ /* Clamp to a canonical address less-than-or-equal-to the address given */
+ static u64 clamp_to_le_canonical_addr(u64 vaddr, u8 vaddr_bits)
+ {
+-	return is_canonical_address(vaddr, vaddr_bits) ?
++	return __is_canonical_address(vaddr, vaddr_bits) ?
+ 	       vaddr :
+ 	       BIT_ULL(vaddr_bits - 1) - 1;
+ }
+diff --git a/arch/x86/include/asm/page.h b/arch/x86/include/asm/page.h
+index 7555b48803a8c..ffae5ea9fd4e1 100644
+--- a/arch/x86/include/asm/page.h
++++ b/arch/x86/include/asm/page.h
+@@ -71,6 +71,16 @@ static inline void copy_user_page(void *to, void *from, unsigned long vaddr,
+ extern bool __virt_addr_valid(unsigned long kaddr);
+ #define virt_addr_valid(kaddr)	__virt_addr_valid((unsigned long) (kaddr))
  
-+static bool nf_nat_redirect_ipv6_usable(const struct inet6_ifaddr *ifa, unsigned int scope)
++static __always_inline u64 __canonical_address(u64 vaddr, u8 vaddr_bits)
 +{
-+	unsigned int ifa_addr_type = ipv6_addr_type(&ifa->addr);
-+
-+	if (ifa_addr_type & IPV6_ADDR_MAPPED)
-+		return false;
-+
-+	if ((ifa->flags & IFA_F_TENTATIVE) && (!(ifa->flags & IFA_F_OPTIMISTIC)))
-+		return false;
-+
-+	if (scope) {
-+		unsigned int ifa_scope = ifa_addr_type & IPV6_ADDR_SCOPE_MASK;
-+
-+		if (!(scope & ifa_scope))
-+			return false;
-+	}
-+
-+	return true;
++	return ((s64)vaddr << (64 - vaddr_bits)) >> (64 - vaddr_bits);
 +}
 +
- unsigned int
- nf_nat_redirect_ipv6(struct sk_buff *skb, const struct nf_nat_range2 *range,
- 		     unsigned int hooknum)
-@@ -89,14 +109,19 @@ nf_nat_redirect_ipv6(struct sk_buff *skb, const struct nf_nat_range2 *range,
- 	if (hooknum == NF_INET_LOCAL_OUT) {
- 		newdst.in6 = loopback_addr;
- 	} else {
-+		unsigned int scope = ipv6_addr_scope(&ipv6_hdr(skb)->daddr);
- 		struct inet6_dev *idev;
--		struct inet6_ifaddr *ifa;
- 		bool addr = false;
++static __always_inline u64 __is_canonical_address(u64 vaddr, u8 vaddr_bits)
++{
++	return __canonical_address(vaddr, vaddr_bits) == vaddr;
++}
++
+ #endif	/* __ASSEMBLY__ */
  
- 		idev = __in6_dev_get(skb->dev);
- 		if (idev != NULL) {
-+			const struct inet6_ifaddr *ifa;
-+
- 			read_lock_bh(&idev->lock);
- 			list_for_each_entry(ifa, &idev->addr_list, if_list) {
-+				if (!nf_nat_redirect_ipv6_usable(ifa, scope))
-+					continue;
-+
- 				newdst.in6 = ifa->addr;
- 				addr = true;
- 				break;
+ #include <asm-generic/memory_model.h>
+diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
+index 63efccc8f4292..56750febf4604 100644
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -688,7 +688,7 @@ static inline u8 ctxt_virt_addr_bits(struct x86_emulate_ctxt *ctxt)
+ static inline bool emul_is_noncanonical_address(u64 la,
+ 						struct x86_emulate_ctxt *ctxt)
+ {
+-	return get_canonical(la, ctxt_virt_addr_bits(ctxt)) != la;
++	return !__is_canonical_address(la, ctxt_virt_addr_bits(ctxt));
+ }
+ 
+ /*
+@@ -738,7 +738,7 @@ static __always_inline int __linearize(struct x86_emulate_ctxt *ctxt,
+ 	case X86EMUL_MODE_PROT64:
+ 		*linear = la;
+ 		va_bits = ctxt_virt_addr_bits(ctxt);
+-		if (get_canonical(la, va_bits) != la)
++		if (!__is_canonical_address(la, va_bits))
+ 			goto bad;
+ 
+ 		*max_size = min_t(u64, ~0u, (1ull << va_bits) - la);
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 9d3015863e581..c2899ff31a068 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -1640,7 +1640,7 @@ static int __kvm_set_msr(struct kvm_vcpu *vcpu, u32 index, u64 data,
+ 		 * value, and that something deterministic happens if the guest
+ 		 * invokes 64-bit SYSENTER.
+ 		 */
+-		data = get_canonical(data, vcpu_virt_addr_bits(vcpu));
++		data = __canonical_address(data, vcpu_virt_addr_bits(vcpu));
+ 	}
+ 
+ 	msr.data = data;
+diff --git a/arch/x86/kvm/x86.h b/arch/x86/kvm/x86.h
+index 2bff44f1efec8..4037b3cc704e8 100644
+--- a/arch/x86/kvm/x86.h
++++ b/arch/x86/kvm/x86.h
+@@ -156,14 +156,9 @@ static inline u8 vcpu_virt_addr_bits(struct kvm_vcpu *vcpu)
+ 	return kvm_read_cr4_bits(vcpu, X86_CR4_LA57) ? 57 : 48;
+ }
+ 
+-static inline u64 get_canonical(u64 la, u8 vaddr_bits)
+-{
+-	return ((int64_t)la << (64 - vaddr_bits)) >> (64 - vaddr_bits);
+-}
+-
+ static inline bool is_noncanonical_address(u64 la, struct kvm_vcpu *vcpu)
+ {
+-	return get_canonical(la, vcpu_virt_addr_bits(vcpu)) != la;
++	return !__is_canonical_address(la, vcpu_virt_addr_bits(vcpu));
+ }
+ 
+ static inline void vcpu_cache_mmio_info(struct kvm_vcpu *vcpu,
+diff --git a/arch/x86/mm/maccess.c b/arch/x86/mm/maccess.c
+index 92ec176a72937..5a53c2cc169cc 100644
+--- a/arch/x86/mm/maccess.c
++++ b/arch/x86/mm/maccess.c
+@@ -4,11 +4,6 @@
+ #include <linux/kernel.h>
+ 
+ #ifdef CONFIG_X86_64
+-static __always_inline u64 canonical_address(u64 vaddr, u8 vaddr_bits)
+-{
+-	return ((s64)vaddr << (64 - vaddr_bits)) >> (64 - vaddr_bits);
+-}
+-
+ bool copy_from_kernel_nofault_allowed(const void *unsafe_src, size_t size)
+ {
+ 	unsigned long vaddr = (unsigned long)unsafe_src;
+@@ -19,7 +14,7 @@ bool copy_from_kernel_nofault_allowed(const void *unsafe_src, size_t size)
+ 	 * we also need to include the userspace guard page.
+ 	 */
+ 	return vaddr >= TASK_SIZE_MAX + PAGE_SIZE &&
+-	       canonical_address(vaddr, boot_cpu_data.x86_virt_bits) == vaddr;
++	       __is_canonical_address(vaddr, boot_cpu_data.x86_virt_bits);
+ }
+ #else
+ bool copy_from_kernel_nofault_allowed(const void *unsafe_src, size_t size)
 -- 
 2.42.0
 
