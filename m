@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F85035F19
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCDF2C861
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wq0OZh6T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3566C433C7;
-	Wed, 15 Nov 2023 19:25:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKupsgYG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE09C433C7;
+	Wed, 15 Nov 2023 19:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076308;
-	bh=wDFZbvGg9CPg6Rvz2YLqQ7nyqSSv1LvEYLfNo2rXcIQ=;
+	s=korg; t=1700076309;
+	bh=sE2VckVyZCkeixyQbVhO/TTEXJnHAzgK2No1LNKUNrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wq0OZh6TOV+VUsk/XasIDU41YhkdzGeT9V/y5Hu/6YB128OZTr7/0RBUZeAV3kXmd
-	 +i5WTUaaTGsxo1y/0OdPs2zz1XX+LehvkFbpI6uZGIoaKkkegfHc/LiTFu3Du4bnKC
-	 Q8bH8w6ad/V1nuhvvb/KPA8ka5eIf1HHTcsKReaI=
+	b=WKupsgYGhagBkImaSUSJbhaIuYjIgt0rIQARE6faXJqscaXzGoYjZRLy4gZSG2rQM
+	 +jF+Pee8U+F62yLULxbkeRnH8Tn3szTHl0alvZx7xf9UiXpyUk0wuNGzTu42SWG5sO
+	 kUwmhiFYgrdKs7ndAOmMtlVrjcZuKwjTa9jqwFDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Subject: [PATCH 6.5 209/550] drm/radeon: possible buffer overflow
-Date: Wed, 15 Nov 2023 14:13:13 -0500
-Message-ID: <20231115191615.264589174@linuxfoundation.org>
+	Nishanth Menon <nm@ti.com>,
+	Helen Koike <helen.koike@collabora.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 210/550] drm: bridge: it66121: Fix invalid connector dereference
+Date: Wed, 15 Nov 2023 14:13:14 -0500
+Message-ID: <20231115191615.339440825@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,45 +45,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit dd05484f99d16715a88eedfca363828ef9a4c2d4 ]
+[ Upstream commit d0375f6858c4ff7244b62b02eb5e93428e1916cd ]
 
-Buffer 'afmt_status' of size 6 could overflow, since index 'afmt_idx' is
-checked after access.
+Fix the NULL pointer dereference when no monitor is connected, and the
+sound card is opened from userspace.
 
-Fixes: 5cc4e5fc293b ("drm/radeon: Cleanup HDMI audio interrupt handling for evergreen")
-Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Instead return an empty buffer (of zeroes) as the EDID information to
+the sound framework if there is no connector attached.
+
+Fixes: e0fd83dbe924 ("drm: bridge: it66121: Add audio support")
+Reported-by: Nishanth Menon <nm@ti.com>
+Closes: https://lore.kernel.org/all/20230825105849.crhon42qndxqif4i@gondola/
+Reviewed-by: Helen Koike <helen.koike@collabora.com>
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Tested-by: Nishanth Menon <nm@ti.com>
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230901-it66121_edid-v2-1-aa59605336b9@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/evergreen.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/bridge/ite-it66121.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/evergreen.c b/drivers/gpu/drm/radeon/evergreen.c
-index 4f06356d9ce2e..f0ae087be914e 100644
---- a/drivers/gpu/drm/radeon/evergreen.c
-+++ b/drivers/gpu/drm/radeon/evergreen.c
-@@ -4821,14 +4821,15 @@ int evergreen_irq_process(struct radeon_device *rdev)
- 			break;
- 		case 44: /* hdmi */
- 			afmt_idx = src_data;
--			if (!(afmt_status[afmt_idx] & AFMT_AZ_FORMAT_WTRIG))
--				DRM_DEBUG("IH: IH event w/o asserted irq bit?\n");
+diff --git a/drivers/gpu/drm/bridge/ite-it66121.c b/drivers/gpu/drm/bridge/ite-it66121.c
+index 466641c77fe91..fc7f5ec5fb381 100644
+--- a/drivers/gpu/drm/bridge/ite-it66121.c
++++ b/drivers/gpu/drm/bridge/ite-it66121.c
+@@ -1447,10 +1447,14 @@ static int it66121_audio_get_eld(struct device *dev, void *data,
+ 	struct it66121_ctx *ctx = dev_get_drvdata(dev);
+ 
+ 	mutex_lock(&ctx->lock);
 -
- 			if (afmt_idx > 5) {
- 				DRM_ERROR("Unhandled interrupt: %d %d\n",
- 					  src_id, src_data);
- 				break;
- 			}
-+
-+			if (!(afmt_status[afmt_idx] & AFMT_AZ_FORMAT_WTRIG))
-+				DRM_DEBUG("IH: IH event w/o asserted irq bit?\n");
-+
- 			afmt_status[afmt_idx] &= ~AFMT_AZ_FORMAT_WTRIG;
- 			queue_hdmi = true;
- 			DRM_DEBUG("IH: HDMI%d\n", afmt_idx + 1);
+-	memcpy(buf, ctx->connector->eld,
+-	       min(sizeof(ctx->connector->eld), len));
+-
++	if (!ctx->connector) {
++		/* Pass en empty ELD if connector not available */
++		dev_dbg(dev, "No connector present, passing empty EDID data");
++		memset(buf, 0, len);
++	} else {
++		memcpy(buf, ctx->connector->eld,
++		       min(sizeof(ctx->connector->eld), len));
++	}
+ 	mutex_unlock(&ctx->lock);
+ 
+ 	return 0;
 -- 
 2.42.0
 
