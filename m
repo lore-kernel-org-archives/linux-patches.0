@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E4A3EA6F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1783EA7B
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4sJebWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4C5C433CA;
-	Wed, 15 Nov 2023 19:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLHYjyZe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F204CC433C8;
+	Wed, 15 Nov 2023 19:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076238;
-	bh=fTwskiiQVSbya5DW1ldJ67EZJDYzsbeLviINBwNQFIg=;
+	s=korg; t=1700076240;
+	bh=R8CJa8BEjFPGAivUJHFT0yGjQgEE8bDDa5YNbaxzAQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4sJebWWkNLUvhI69Ua8rteOp5HSNOYBwW/coyUq/SDJp2yJig01ZxjTakXu6EEWU
-	 CWJREkytyTUihU03Rzg/zWuD7ts/2pURz2nuE3FVID97uMl+NYH5bBPbRjvdSJgwlk
-	 VyLoVLvnlvaF2PHsoldHP3kqswaZY8MmGlwpeGxE=
+	b=VLHYjyZeh0wOw8YLO+TxjLl7kHOe1Z5usnPvhW/E/3d5u2nKQybfeL1LVR7IfVSBb
+	 pKTRhDMJD7Nz9f1Pg6OwPrbDl3/BWysFEKxZigFQNtPxv5wwyAo3GPBgrWXMfELdPS
+	 JtmMQeEBMAu1R3oABAXwDT7rFhvfmVVPYHLJTlEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 163/550] clk: renesas: rcar-gen3: Extend SDnH divider table
-Date: Wed, 15 Nov 2023 14:12:27 -0500
-Message-ID: <20231115191611.997293221@linuxfoundation.org>
+Subject: [PATCH 6.5 164/550] clk: renesas: rzg2l: Wait for status bit of SD mux before continuing
+Date: Wed, 15 Nov 2023 14:12:28 -0500
+Message-ID: <20231115191612.084486625@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,72 +42,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dirk Behme <dirk.behme@de.bosch.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit d5252d9697a3e7007c741e9c103073868955a304 ]
+[ Upstream commit 549f4ae2601f968e2474c6031fb4799468882f64 ]
 
-The clock dividers might be used with clock stop bit enabled or not.
-Current tables only support recommended values from the datasheet.  This
-might result in warnings like below because no valid clock divider is
-found. Resulting in a 0 divider.
+The hardware user manual for RZ/G2L (r01uh0914ej0130-rzg2l-rzg2lc.pdf,
+chapter 7.4.7 Procedure for Switching Clocks by the Dynamic Switching
+Frequency Selectors) specifies that we need to check CPG_PL2SDHI_DSEL
+for SD clock switching status.
 
-There are Renesas ARM Trusted Firmware version out there which e.g.
-configure 0x201 (shifted logical right by 2: 0x80) and with this match
-the added { STPnHCK | 0, 1 }:
-
-https://github.com/renesas-rcar/arm-trusted-firmware/blob/rcar_gen3_v2.3/drivers/renesas/rcar/emmc/emmc_init.c#L108
-
-------------[ cut here ]------------
-sd1h: Zero divisor and CLK_DIVIDER_ALLOW_ZERO not set
-WARNING: CPU: 1 PID: 1 at drivers/clk/clk-divider.c:141 divider_recalc_rate+0x48/0x70
-Modules linked in:
-CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.1.52 #1
-Hardware name: Custom board based on r8a7796 (DT)
-pstate: 40000005 (nZcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : divider_recalc_rate+0x48/0x70
-...
-------------[ cut here ]------------
-
-Fixes: bb6d3fa98a41 ("clk: renesas: rcar-gen3: Switch to new SD clock handling")
-Signed-off-by: Dirk Behme <dirk.behme@de.bosch.com>
-[wsa: extended the table to 5 entries, added comments, reword commit message a little]
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Dirk Behme <dirk.behme@de.bosch.com>
+Fixes: eaff33646f4cb ("clk: renesas: rzg2l: Add SDHI clk mux support")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230928080317.28224-1-wsa+renesas@sang-engineering.com
+Link: https://lore.kernel.org/r/20230929053915.1530607-3-claudiu.beznea@bp.renesas.com
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rcar-cpg-lib.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/clk/renesas/rzg2l-cpg.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/renesas/rcar-cpg-lib.c b/drivers/clk/renesas/rcar-cpg-lib.c
-index e2e0447de1901..5a15f8788b922 100644
---- a/drivers/clk/renesas/rcar-cpg-lib.c
-+++ b/drivers/clk/renesas/rcar-cpg-lib.c
-@@ -70,8 +70,21 @@ void cpg_simple_notifier_register(struct raw_notifier_head *notifiers,
- #define STPnHCK	BIT(9 - SDnSRCFC_SHIFT)
+diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
+index bc623515ad843..7245a34d43e0b 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.c
++++ b/drivers/clk/renesas/rzg2l-cpg.c
+@@ -195,7 +195,8 @@ static int rzg2l_cpg_sd_clk_mux_set_parent(struct clk_hw *hw, u8 index)
+ 	u32 off = GET_REG_OFFSET(hwdata->conf);
+ 	u32 shift = GET_SHIFT(hwdata->conf);
+ 	const u32 clk_src_266 = 2;
+-	u32 bitmask;
++	u32 msk, val, bitmask;
++	int ret;
  
- static const struct clk_div_table cpg_sdh_div_table[] = {
-+	/*
-+	 * These values are recommended by the datasheet.  Because they come
-+	 * first, Linux will only use these.
-+	 */
- 	{ 0, 1 }, { 1, 2 }, { STPnHCK | 2, 4 }, { STPnHCK | 3, 8 },
--	{ STPnHCK | 4, 16 }, { 0, 0 },
-+	{ STPnHCK | 4, 16 },
-+	/*
-+	 * These values are not recommended because STPnHCK is wrong.  But they
-+	 * have been seen because of broken firmware.  So, we support reading
-+	 * them but Linux will sanitize them when initializing through
-+	 * recalc_rate.
-+	 */
-+	{ STPnHCK | 0, 1 }, { STPnHCK | 1, 2 },  { 2, 4 }, { 3, 8 }, { 4, 16 },
-+	/* Sentinel */
-+	{ 0, 0 }
- };
+ 	/*
+ 	 * As per the HW manual, we should not directly switch from 533 MHz to
+@@ -209,14 +210,10 @@ static int rzg2l_cpg_sd_clk_mux_set_parent(struct clk_hw *hw, u8 index)
+ 	 * the index to value mapping is done by adding 1 to the index.
+ 	 */
+ 	bitmask = (GENMASK(GET_WIDTH(hwdata->conf) - 1, 0) << shift) << 16;
++	msk = off ? CPG_CLKSTATUS_SELSDHI1_STS : CPG_CLKSTATUS_SELSDHI0_STS;
+ 	if (index != clk_src_266) {
+-		u32 msk, val;
+-		int ret;
+-
+ 		writel(bitmask | ((clk_src_266 + 1) << shift), priv->base + off);
  
- struct clk * __init cpg_sdh_clk_register(const char *name,
+-		msk = off ? CPG_CLKSTATUS_SELSDHI1_STS : CPG_CLKSTATUS_SELSDHI0_STS;
+-
+ 		ret = readl_poll_timeout(priv->base + CPG_CLKSTATUS, val,
+ 					 !(val & msk), 100,
+ 					 CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
+@@ -228,7 +225,13 @@ static int rzg2l_cpg_sd_clk_mux_set_parent(struct clk_hw *hw, u8 index)
+ 
+ 	writel(bitmask | ((index + 1) << shift), priv->base + off);
+ 
+-	return 0;
++	ret = readl_poll_timeout(priv->base + CPG_CLKSTATUS, val,
++				 !(val & msk), 100,
++				 CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
++	if (ret)
++		dev_err(priv->dev, "failed to switch clk source\n");
++
++	return ret;
+ }
+ 
+ static u8 rzg2l_cpg_sd_clk_mux_get_parent(struct clk_hw *hw)
 -- 
 2.42.0
 
