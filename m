@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9627A43ABE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5887F1FCF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1LSyfwW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48973C32799;
-	Wed, 15 Nov 2023 20:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1X4VFIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEDF0C4936D;
+	Wed, 15 Nov 2023 20:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081371;
-	bh=/MY7eZdD8ZlY5fw3HA3CHzwBphPyW5BXnrj7saSNKKo=;
+	s=korg; t=1700081372;
+	bh=8dwUF3yehNEpYlPGZdwvvvZ+Z9nOiaC317QoG5va2cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1LSyfwWMfuJxoVBU3zNvzQiaB5E7mDJDqPQO6ztfL/OgXmDdW8Qk3yWCfdNMXPKN
-	 GoJNw+oJ7+UqQDkOYpzbO7kfgzaZZqqEtBzvy2VUlhWpFtX+8EKV2QYj3j3BD6b80I
-	 ThEtqqXGkyWPyeHTwGcnXAO2y+c6Ou27j9YS7b9Y=
+	b=n1X4VFIC4WnXVmPfCDRCoUEUaPiUDjpntQ6sKO9sFuyn/mqUyQYFBmRkBUJRWXpVP
+	 wuVgQ+LzHdYHtEa/vy/VQmelmckenp728gE+5U8FkzKETOeG/1eS+QPpUwa09o8mrl
+	 eIXLJiawr2RHoMlYuNqMMaTkNFnxiRMr9+PfBLnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 076/244] clk: mediatek: clk-mt2701: Add check for mtk_alloc_clk_data
-Date: Wed, 15 Nov 2023 15:34:28 -0500
-Message-ID: <20231115203552.927025401@linuxfoundation.org>
+Subject: [PATCH 5.15 106/244] drm/rockchip: Fix type promotion bug in rockchip_gem_iommu_map()
+Date: Wed, 15 Nov 2023 15:34:58 -0500
+Message-ID: <20231115203554.709276303@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -44,64 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0d6e24b422a2166a9297a8286ff2e6ab9a5e8cd3 ]
+[ Upstream commit 6471da5ee311d53ef46eebcb7725bc94266cc0cf ]
 
-Add the check for the return value of mtk_alloc_clk_data() in order to
-avoid NULL pointer dereference.
+The "ret" variable is declared as ssize_t and it can hold negative error
+codes but the "rk_obj->base.size" variable is type size_t.  This means
+that when we compare them, they are both type promoted to size_t and the
+negative error code becomes a high unsigned value and is treated as
+success.  Add a cast to fix this.
 
-Fixes: e9862118272a ("clk: mediatek: Add MT2701 clock support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230901024658.23405-1-jiasheng@iscas.ac.cn
-Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 38f993b7c59e ("drm/rockchip: Do not use DMA mapping API if attached to IOMMU domain")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/2bfa28b5-145d-4b9e-a18a-98819dd686ce@moroto.mountain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt2701.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt2701.c b/drivers/clk/mediatek/clk-mt2701.c
-index 695be0f774270..c67cd73aca171 100644
---- a/drivers/clk/mediatek/clk-mt2701.c
-+++ b/drivers/clk/mediatek/clk-mt2701.c
-@@ -675,6 +675,8 @@ static int mtk_topckgen_init(struct platform_device *pdev)
- 		return PTR_ERR(base);
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+index 3b18b6a7acd3e..bde358d8309c3 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+@@ -39,7 +39,7 @@ static int rockchip_gem_iommu_map(struct rockchip_gem_object *rk_obj)
  
- 	clk_data = mtk_alloc_clk_data(CLK_TOP_NR);
-+	if (!clk_data)
-+		return -ENOMEM;
- 
- 	mtk_clk_register_fixed_clks(top_fixed_clks, ARRAY_SIZE(top_fixed_clks),
- 								clk_data);
-@@ -742,6 +744,8 @@ static void __init mtk_infrasys_init_early(struct device_node *node)
- 
- 	if (!infra_clk_data) {
- 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
-+		if (!infra_clk_data)
-+			return;
- 
- 		for (i = 0; i < CLK_INFRA_NR; i++)
- 			infra_clk_data->clks[i] = ERR_PTR(-EPROBE_DEFER);
-@@ -768,6 +772,8 @@ static int mtk_infrasys_init(struct platform_device *pdev)
- 
- 	if (!infra_clk_data) {
- 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
-+		if (!infra_clk_data)
-+			return -ENOMEM;
- 	} else {
- 		for (i = 0; i < CLK_INFRA_NR; i++) {
- 			if (infra_clk_data->clks[i] == ERR_PTR(-EPROBE_DEFER))
-@@ -896,6 +902,8 @@ static int mtk_pericfg_init(struct platform_device *pdev)
- 		return PTR_ERR(base);
- 
- 	clk_data = mtk_alloc_clk_data(CLK_PERI_NR);
-+	if (!clk_data)
-+		return -ENOMEM;
- 
- 	mtk_clk_register_gates(node, peri_clks, ARRAY_SIZE(peri_clks),
- 						clk_data);
+ 	ret = iommu_map_sgtable(private->domain, rk_obj->dma_addr, rk_obj->sgt,
+ 				prot);
+-	if (ret < rk_obj->base.size) {
++	if (ret < (ssize_t)rk_obj->base.size) {
+ 		DRM_ERROR("failed to map buffer: size=%zd request_size=%zd\n",
+ 			  ret, rk_obj->base.size);
+ 		ret = -ENOMEM;
 -- 
 2.42.0
 
