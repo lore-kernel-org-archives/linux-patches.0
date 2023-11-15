@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AFC3DB92
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639BC3DB92
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQwIvukD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887B7C433C9;
-	Wed, 15 Nov 2023 19:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsOzxFMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15289C433CA;
+	Wed, 15 Nov 2023 19:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076844;
-	bh=vq++JM1X9NAeCqXgzkRrPM703Cm0/klG/JvgEuHkTUQ=;
+	s=korg; t=1700076846;
+	bh=1NpV2/Kmw6c7n/dw9CP7rUUMkexIPnIdYaLuChlozUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQwIvukDUa67cgW0SgIy+BYc7joNL2JT/Tr174JAxBCrqaGKv0I9JnIBWFV6t5fFO
-	 DSKipjJ8waRJsUryK0C6TzWMwUCjO0B0Jh9GLyOA+5gRnjpXkXXlLe2A/UfQgWJFiJ
-	 JEvrzEJtQxR5LpX3Dg14iI4ay85YcPqINdSM2weA=
+	b=WsOzxFMP0PnZOcJAm+1nXJ0m2QTSZe1Ph6rUskj7EX/raspwh5238C5vVM0/p1WgV
+	 w3JwQT9y+5jcqp8VByFrZEJlfQIPPNEQwUVVuf8DKVqVMyDHQ/Gj8aUU5URDOqI2A+
+	 tUtsoqedOoMj+cvNgR/DfmFeb7CCx63Ke7uGeIGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 440/550] xhci: Loosen RPM as default policy to cover for AMD xHC 1.1
-Date: Wed, 15 Nov 2023 14:17:04 -0500
-Message-ID: <20231115191631.305373300@linuxfoundation.org>
+Subject: [PATCH 6.6 044/603] wifi: mac80211: fix # of MSDU in A-MSDU calculation
+Date: Wed, 15 Nov 2023 14:09:49 -0500
+Message-ID: <20231115191616.221638698@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,49 +39,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 4baf1218150985ee3ab0a27220456a1f027ea0ac ]
+[ Upstream commit 428e8976a15f849ad92b1c1e38dda2a684350ff7 ]
 
-The AMD USB host controller (1022:43f7) isn't going into PCI D3 by default
-without anything connected. This is because the policy that was introduced
-by commit a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all
-xHC 1.2 or later devices") only covered 1.2 or later.
+During my refactoring I wanted to get rid of the switch,
+but replaced it with the wrong calculation. Fix that.
 
-The 1.1 specification also has the same requirement as the 1.2
-specification for D3 support. So expand the runtime PM as default policy
-to all AMD 1.1 devices as well.
-
-Fixes: a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all xHC 1.2 or later devices")
-Link: https://composter.com.ua/documents/xHCI_Specification_for_USB.pdf
-Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20231019102924.2797346-15-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 175ad2ec89fe ("wifi: mac80211: limit A-MSDU subframes for client too")
+Reported-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230827135854.51bf1b8b0adb.Iffbd337fdad2b86ae12f5a39c69fb82b517f7486@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/sta_info.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-index b9ae5c2a25275..bde43cef8846c 100644
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -535,6 +535,8 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
- 	/* xHC spec requires PCI devices to support D3hot and D3cold */
- 	if (xhci->hci_version >= 0x120)
- 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
-+	else if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version >= 0x110)
-+		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index 7751f8ba960ee..0c5cc75857e4f 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -2990,7 +2990,7 @@ void ieee80211_sta_set_max_amsdu_subframes(struct sta_info *sta,
+ 				   WLAN_EXT_CAPA9_MAX_MSDU_IN_AMSDU_MSB) << 1;
  
- 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
- 		xhci_dbg_trace(xhci, trace_xhci_dbg_quirks,
+ 	if (val)
+-		sta->sta.max_amsdu_subframes = 4 << val;
++		sta->sta.max_amsdu_subframes = 4 << (4 - val);
+ }
+ 
+ #ifdef CONFIG_LOCKDEP
 -- 
 2.42.0
 
