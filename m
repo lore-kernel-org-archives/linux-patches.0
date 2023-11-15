@@ -1,31 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE57364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203B141223
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/9rJ+ZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A1FC433CB;
-	Wed, 15 Nov 2023 19:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYj0JXTa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C26C433C8;
+	Wed, 15 Nov 2023 19:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076838;
-	bh=P7yea8j4Y+H/RtHaopKuGMt3BjyEtmr8JzuhZyh5mts=;
+	s=korg; t=1700076839;
+	bh=1EBJgdcDxL1AnR85Vj/En1qUdlQIaV32hC+DMluLIrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/9rJ+ZVIO9NQBtqoK33BDzQ1wlNm/ArH2ss/oCp//1MAuoYFo3J16WJQY4JEmzb9
-	 YvLzdMmO31ipj5cf3CAL+jV99ZQnweb4veGNMdbZCYKEtt5oReykLnA8+CjvPg4jZv
-	 YfqAktmEuoMV9GHDppCUda8+1PNYSgW8vGK0yOoM=
+	b=yYj0JXTaFpbof3oWP6YZHBpEznGH5+hLmYgz9g07HKy4RfWDEZeAtaBtCsNe4Fqg3
+	 xhCX6gsuaytN9mTtbUP8IlIAZuQKR5lZLiwzjUKxtqoPRdTc8lL39HlNEp2f39ueOv
+	 21gFT/+IWIdSRY2uJzldFID5P7QUUk1fl6ycRgaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Disha Goel <disgoel@linux.vnet.ibm.com>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	maddy@linux.ibm.com,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/603] wifi: mac80211: fix RCU usage warning in mesh fast-xmit
-Date: Wed, 15 Nov 2023 14:09:47 -0500
-Message-ID: <20231115191616.064430198@linuxfoundation.org>
+Subject: [PATCH 6.5 439/550] perf vendor events: Update PMC used in PM_RUN_INST_CMPL event for power10 platform
+Date: Wed, 15 Nov 2023 14:17:03 -0500
+Message-ID: <20231115191631.232970173@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,39 +42,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Kajol Jain <kjain@linux.ibm.com>
 
-[ Upstream commit 5ea82df1f50e42416d0a8a7c42d37cc1df1545fe ]
+[ Upstream commit 3f8b6e5b11192dacb721d2d28ea4589917f5e822 ]
 
-In mesh_fast_tx_flush_addr() we already hold the lock, so
-don't need additional hashtable RCU protection. Use the
-rhashtable_lookup_fast() variant to avoid RCU protection
-warnings.
+The CPI_STALL_RATIO metric group can be used to present the high
+level CPI stall breakdown metrics in powerpc, which will show:
 
-Fixes: d5edb9ae8d56 ("wifi: mac80211: mesh fast xmit support")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+- DISPATCH_STALL_CPI ( Dispatch stall cycles per insn )
+- ISSUE_STALL_CPI ( Issue stall cycles per insn )
+- EXECUTION_STALL_CPI ( Execution stall cycles per insn )
+- COMPLETION_STALL_CPI ( Completion stall cycles per insn )
+
+Commit cf26e043c2a9 ("perf vendor events power10: Add JSON
+metric events to present CPI stall cycles in powerpc)" which added
+the CPI_STALL_RATIO metric group, also modified
+the PMC value used in PM_RUN_INST_CMPL event from PMC4 to PMC5,
+to avoid multiplexing of events.
+But that got revert in recent changes. Fix this issue by changing
+back the PMC value used in PM_RUN_INST_CMPL to PMC5.
+
+Result with the fix:
+
+ ./perf stat --metric-no-group -M CPI_STALL_RATIO <workload>
+
+ Performance counter stats for 'workload':
+
+        68,745,426      PM_CMPL_STALL                    #     0.21 COMPLETION_STALL_CPI
+         7,692,827      PM_ISSUE_STALL                   #     0.02 ISSUE_STALL_CPI
+       322,638,223      PM_RUN_INST_CMPL                 #     0.05 DISPATCH_STALL_CPI
+                                                  #     0.48 EXECUTION_STALL_CPI
+        16,858,553      PM_DISP_STALL_CYC
+       153,880,133      PM_EXEC_STALL
+
+       0.089774592 seconds time elapsed
+
+"--metric-no-group" is used for forcing PM_RUN_INST_CMPL to be scheduled
+in all group for more accuracy.
+
+Fixes: 7d473f475b2a ("perf vendor events: Move JSON/events to appropriate files for power10 platform")
+Reported-by: Disha Goel <disgoel@linux.vnet.ibm.com>
+Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Reviewed-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Tested-by: Disha Goel<disgoel@linux.ibm.com>
+Cc: maddy@linux.ibm.com
+Link: https://lore.kernel.org/r/20231016143110.244255-1-kjain@linux.ibm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 2 +-
+ tools/perf/pmu-events/arch/powerpc/power10/pmc.json | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index d32e304eeb4ba..3e52aaa57b1fc 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -648,7 +648,7 @@ void mesh_fast_tx_flush_addr(struct ieee80211_sub_if_data *sdata,
- 
- 	cache = &sdata->u.mesh.tx_cache;
- 	spin_lock_bh(&cache->walk_lock);
--	entry = rhashtable_lookup(&cache->rht, addr, fast_tx_rht_params);
-+	entry = rhashtable_lookup_fast(&cache->rht, addr, fast_tx_rht_params);
- 	if (entry)
- 		mesh_fast_tx_entry_free(cache, entry);
- 	spin_unlock_bh(&cache->walk_lock);
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/pmc.json b/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
+index 0a2bf56ee7c10..1c44f0120505e 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
+@@ -190,7 +190,7 @@
+     "BriefDescription": "Threshold counter exceeded a value of 128."
+   },
+   {
+-    "EventCode": "0x400FA",
++    "EventCode": "0x500FA",
+     "EventName": "PM_RUN_INST_CMPL",
+     "BriefDescription": "PowerPC instruction completed while the run latch is set."
+   }
 -- 
 2.42.0
 
