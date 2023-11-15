@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12EC3DB8D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0802FB3;
+	Wed, 15 Nov 2023 19:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kicvo1lO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63388C433C9;
-	Wed, 15 Nov 2023 19:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7BdbiNE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE42C433C8;
+	Wed, 15 Nov 2023 19:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076074;
-	bh=b3aFvY2UM5QcZFNLYNaDLzZQS9NbjSWYEcSrIKwCx4A=;
+	s=korg; t=1700076076;
+	bh=HliRRUwsHGwhLWpY/ToimAYqG21vbN0WmmrtTffwgH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kicvo1lORgYrwd3d4hE5DEVH735pinVlRfm8rXmme9mS7frWtHnCIAR9L2p/byXA1
-	 7glvnb5UsDE4PAn6E5V32aDCismazGE5vAsRyX/tLr49Vm30S8VymFCUEiEU/0dUB3
-	 7KynWEKjJlf1bhysArvddqmVc0GqISXco47dapck=
+	b=S7BdbiNEzZ7VXayICiH33klI9cyXAt5DrrDG4c37TZ0+vSBCfvtMe+/CqaAIpF3gk
+	 WmSV8AG9JEEkbXCof2YGM7+fr8YLYvKDLU00cDrVFB2eNCnLakCsll5itKRSUPZS5Z
+	 qRe0v8YMpqWGZ/4u+/uEQd/NSZHtHw5qePb4JElc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Andy Shevchenko <andy@kernel.org>,
+	linux-hardening@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 033/550] PCI/MSI: Provide stubs for IMS functions
-Date: Wed, 15 Nov 2023 14:10:17 -0500
-Message-ID: <20231115191603.003605823@linuxfoundation.org>
+Subject: [PATCH 6.5 034/550] string: Adjust strtomem() logic to allow for smaller sources
+Date: Wed, 15 Nov 2023 14:10:18 -0500
+Message-ID: <20231115191603.074247047@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,92 +44,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 41efa431244f6498833ff8ee8dde28c4924c5479 ]
+[ Upstream commit 0e108725f6cc5b3be9e607f89c9fbcbb236367b7 ]
 
-The IMS related functions (pci_create_ims_domain(), pci_ims_alloc_irq(),
-and pci_ims_free_irq()) are not declared when CONFIG_PCI_MSI is disabled.
+Arnd noticed we have a case where a shorter source string is being copied
+into a destination byte array, but this results in a strnlen() call that
+exceeds the size of the source. This is seen with -Wstringop-overread:
 
-Provide definitions of these functions for use when callers are compiled
-with CONFIG_PCI_MSI disabled.
+In file included from ../include/linux/uuid.h:11,
+                 from ../include/linux/mod_devicetable.h:14,
+                 from ../include/linux/cpufeature.h:12,
+                 from ../arch/x86/coco/tdx/tdx.c:7:
+../arch/x86/coco/tdx/tdx.c: In function 'tdx_panic.constprop':
+../include/linux/string.h:284:9: error: 'strnlen' specified bound 64 exceeds source size 60 [-Werror=stringop-overread]
+  284 |         memcpy_and_pad(dest, _dest_len, src, strnlen(src, _dest_len), pad); \
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../arch/x86/coco/tdx/tdx.c:124:9: note: in expansion of macro 'strtomem_pad'
+  124 |         strtomem_pad(message.str, msg, '\0');
+      |         ^~~~~~~~~~~~
 
-Fixes: 0194425af0c8 ("PCI/MSI: Provide IMS (Interrupt Message Store) support")
-Fixes: c9e5bea27383 ("PCI/MSI: Provide pci_ims_alloc/free_irq()")
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/14ff656899a3757453f8584c1109d7a9b98fa258.1697564731.git.reinette.chatre@intel.com
+Use the smaller of the two buffer sizes when calling strnlen(). When
+src length is unknown (SIZE_MAX), it is adjusted to use dest length,
+which is what the original code did.
+
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: dfbafa70bde2 ("string: Introduce strtomem() and strtomem_pad()")
+Tested-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Andy Shevchenko <andy@kernel.org>
+Cc: linux-hardening@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pci.h | 34 ++++++++++++++++++++++++++--------
- 1 file changed, 26 insertions(+), 8 deletions(-)
+ include/linux/string.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 7ee498cd1f374..c8688d13cc224 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1625,6 +1625,8 @@ struct msix_entry {
- 	u16	entry;	/* Driver uses to specify entry, OS writes */
- };
- 
-+struct msi_domain_template;
-+
- #ifdef CONFIG_PCI_MSI
- int pci_msi_vec_count(struct pci_dev *dev);
- void pci_disable_msi(struct pci_dev *dev);
-@@ -1657,6 +1659,11 @@ void pci_msix_free_irq(struct pci_dev *pdev, struct msi_map map);
- void pci_free_irq_vectors(struct pci_dev *dev);
- int pci_irq_vector(struct pci_dev *dev, unsigned int nr);
- const struct cpumask *pci_irq_get_affinity(struct pci_dev *pdev, int vec);
-+bool pci_create_ims_domain(struct pci_dev *pdev, const struct msi_domain_template *template,
-+			   unsigned int hwsize, void *data);
-+struct msi_map pci_ims_alloc_irq(struct pci_dev *pdev, union msi_instance_cookie *icookie,
-+				 const struct irq_affinity_desc *affdesc);
-+void pci_ims_free_irq(struct pci_dev *pdev, struct msi_map map);
- 
- #else
- static inline int pci_msi_vec_count(struct pci_dev *dev) { return -ENOSYS; }
-@@ -1720,6 +1727,25 @@ static inline const struct cpumask *pci_irq_get_affinity(struct pci_dev *pdev,
- {
- 	return cpu_possible_mask;
- }
-+
-+static inline bool pci_create_ims_domain(struct pci_dev *pdev,
-+					 const struct msi_domain_template *template,
-+					 unsigned int hwsize, void *data)
-+{ return false; }
-+
-+static inline struct msi_map pci_ims_alloc_irq(struct pci_dev *pdev,
-+					       union msi_instance_cookie *icookie,
-+					       const struct irq_affinity_desc *affdesc)
-+{
-+	struct msi_map map = { .index = -ENOSYS, };
-+
-+	return map;
-+}
-+
-+static inline void pci_ims_free_irq(struct pci_dev *pdev, struct msi_map map)
-+{
-+}
-+
- #endif
+diff --git a/include/linux/string.h b/include/linux/string.h
+index dbfc66400050f..9e3cb6923b0ef 100644
+--- a/include/linux/string.h
++++ b/include/linux/string.h
+@@ -277,10 +277,12 @@ void memcpy_and_pad(void *dest, size_t dest_len, const void *src, size_t count,
+  */
+ #define strtomem_pad(dest, src, pad)	do {				\
+ 	const size_t _dest_len = __builtin_object_size(dest, 1);	\
++	const size_t _src_len = __builtin_object_size(src, 1);		\
+ 									\
+ 	BUILD_BUG_ON(!__builtin_constant_p(_dest_len) ||		\
+ 		     _dest_len == (size_t)-1);				\
+-	memcpy_and_pad(dest, _dest_len, src, strnlen(src, _dest_len), pad); \
++	memcpy_and_pad(dest, _dest_len, src,				\
++		       strnlen(src, min(_src_len, _dest_len)), pad);	\
+ } while (0)
  
  /**
-@@ -2612,14 +2638,6 @@ static inline bool pci_is_thunderbolt_attached(struct pci_dev *pdev)
- void pci_uevent_ers(struct pci_dev *pdev, enum  pci_ers_result err_type);
- #endif
+@@ -298,10 +300,11 @@ void memcpy_and_pad(void *dest, size_t dest_len, const void *src, size_t count,
+  */
+ #define strtomem(dest, src)	do {					\
+ 	const size_t _dest_len = __builtin_object_size(dest, 1);	\
++	const size_t _src_len = __builtin_object_size(src, 1);		\
+ 									\
+ 	BUILD_BUG_ON(!__builtin_constant_p(_dest_len) ||		\
+ 		     _dest_len == (size_t)-1);				\
+-	memcpy(dest, src, min(_dest_len, strnlen(src, _dest_len)));	\
++	memcpy(dest, src, strnlen(src, min(_src_len, _dest_len)));	\
+ } while (0)
  
--struct msi_domain_template;
--
--bool pci_create_ims_domain(struct pci_dev *pdev, const struct msi_domain_template *template,
--			   unsigned int hwsize, void *data);
--struct msi_map pci_ims_alloc_irq(struct pci_dev *pdev, union msi_instance_cookie *icookie,
--				 const struct irq_affinity_desc *affdesc);
--void pci_ims_free_irq(struct pci_dev *pdev, struct msi_map map);
--
- #include <linux/dma-mapping.h>
- 
- #define pci_printk(level, pdev, fmt, arg...) \
+ /**
 -- 
 2.42.0
 
