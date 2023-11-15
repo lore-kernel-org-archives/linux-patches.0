@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF22E3C468
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B10C433BB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwOZva6y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D28C433C7;
-	Wed, 15 Nov 2023 19:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dX044sh8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3498C433C9;
+	Wed, 15 Nov 2023 19:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077025;
-	bh=qn6KFiGi5nSBcao6jgaoDfgzM5sbJJL5gczobnxGnTo=;
+	s=korg; t=1700077027;
+	bh=0x2Sd6gZocSozmyAioHx/WRyDK2HaAZTl3RsPzllXO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RwOZva6y+TTdBFke0aOVUrbkBSppui81CXKByrAygZihBpQ0AjjsJ91wOSc1PJKUp
-	 CegpE77DxRHQbhmyzVdiKwVNkmwepmtCHMbaqxV4mYd1qPP8Tn2euFj8HkQwAht19K
-	 Oz/Ws7w/DWi66uflFZMcZyc3d8HG7t9P7sfYK0BM=
+	b=dX044sh8qdvVaGRc8uCNKaqhaz0gmTM/hiWeCFJUpESPMg3BM+IxFLnr1ORD+dXHV
+	 H3/GTWPXZZ/zdJ/W0iD+6Z5FraG/g1MFJA4ZI052Q9Zg3yvnRBBJ7IDpcK2lv7kvJY
+	 75A/81vcD4C1c1YloIjK+tZNfvCZSL2BAhMPEU8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 496/550] Input: synaptics-rmi4 - fix use after free in rmi_unregister_function()
-Date: Wed, 15 Nov 2023 14:18:00 -0500
-Message-ID: <20231115191635.295930553@linuxfoundation.org>
+Subject: [PATCH 6.6 102/603] ACPI: property: Allow _DSD buffer data only for byte accessors
+Date: Wed, 15 Nov 2023 14:10:47 -0500
+Message-ID: <20231115191620.264496001@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,44 +38,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit eb988e46da2e4eae89f5337e047ce372fe33d5b1 ]
+[ Upstream commit 046ece773cc77ef5d2a1431b188ac3d0840ed150 ]
 
-The put_device() calls rmi_release_function() which frees "fn" so the
-dereference on the next line "fn->num_of_irqs" is a use after free.
-Move the put_device() to the end to fix this.
+In accordance with ACPI specificication and _DSD data buffer
+representation the data there is an array of bytes. Hence,
+accessing it with something longer will create a sparse data
+which is against of how device property APIs work in general
+and also not defined in the ACPI specification (see [1]).
+Fix the code to emit an error if non-byte accessor is used to
+retrieve _DSD buffer data.
 
-Fixes: 24d28e4f1271 ("Input: synaptics-rmi4 - convert irq distribution to irq_domain")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/706efd36-7561-42f3-adfa-dd1d0bd4f5a1@moroto.mountain
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 369af6bf2c28 ("ACPI: property: Read buffer properties as integers")
+Link: https://uefi.org/specs/ACPI/6.5/19_ASL_Reference.html#buffer-declare-buffer-object # [1]
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+[ rjw: Add missing braces ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/rmi4/rmi_bus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/property.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/input/rmi4/rmi_bus.c b/drivers/input/rmi4/rmi_bus.c
-index f2e093b0b9982..1b45b1d3077de 100644
---- a/drivers/input/rmi4/rmi_bus.c
-+++ b/drivers/input/rmi4/rmi_bus.c
-@@ -277,11 +277,11 @@ void rmi_unregister_function(struct rmi_function *fn)
+diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
+index 413e4fcadcaf7..99b4e33554355 100644
+--- a/drivers/acpi/property.c
++++ b/drivers/acpi/property.c
+@@ -1102,25 +1102,26 @@ static int acpi_data_prop_read(const struct acpi_device_data *data,
+ 	switch (proptype) {
+ 	case DEV_PROP_STRING:
+ 		break;
+-	case DEV_PROP_U8 ... DEV_PROP_U64:
++	default:
+ 		if (obj->type == ACPI_TYPE_BUFFER) {
+ 			if (nval > obj->buffer.length)
+ 				return -EOVERFLOW;
+-			break;
++		} else {
++			if (nval > obj->package.count)
++				return -EOVERFLOW;
+ 		}
+-		fallthrough;
+-	default:
+-		if (nval > obj->package.count)
+-			return -EOVERFLOW;
+ 		break;
+ 	}
+ 	if (nval == 0)
+ 		return -EINVAL;
  
- 	device_del(&fn->dev);
- 	of_node_put(fn->dev.of_node);
--	put_device(&fn->dev);
+-	if (obj->type != ACPI_TYPE_BUFFER)
+-		items = obj->package.elements;
+-	else
++	if (obj->type == ACPI_TYPE_BUFFER) {
++		if (proptype != DEV_PROP_U8)
++			return -EPROTO;
+ 		items = obj;
++	} else {
++		items = obj->package.elements;
++	}
  
- 	for (i = 0; i < fn->num_of_irqs; i++)
- 		irq_dispose_mapping(fn->irq[i]);
- 
-+	put_device(&fn->dev);
- }
- 
- /**
+ 	switch (proptype) {
+ 	case DEV_PROP_U8:
 -- 
 2.42.0
 
