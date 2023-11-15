@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4F231721
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E645364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcEk5TZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC8AC433C9;
-	Wed, 15 Nov 2023 19:34:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnKZMczq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F758C433C8;
+	Wed, 15 Nov 2023 19:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076877;
-	bh=hmOMq9I2mr9o9I2oFaId+79xOdDHIgxjpPVA+lD+VxY=;
+	s=korg; t=1700076879;
+	bh=Vb0o629es5sfJm1uXrlX3Mphs54iiTNlEQ79CUtLSAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FcEk5TZWDLmTF3+05f3HorTHRZNGtB+ZkIMFJGX4X7xzsW/tLzm1sSYJqtUfaUdim
-	 Z96fpT5eE1sxLq0PORDVIbv4c623oIA6926kLAcNWs2ZNjUM0zO9Ux2MuE/5ZL026r
-	 ocyy9u3Zs77oslANlT65F1EpAMEprIfgky2gW8LI=
+	b=FnKZMczqU6e48+Y/TuUYP0DoOmAtvRKcQDuRDirfWQVvs8gkx2OdYDBHHAtEa/gaQ
+	 HkqsDt2Fl3C7CT3SR9vUKiX6fYPpTc1JjpX0BaeeHxaa//to+v+pEMLi+0JD9+cw8e
+	 74UiEOIc0Y2RQ+mrduZjL2rn52qiJdrBpywF4/e8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 451/550] cxl/pci: Remove unnecessary device reference management in sanitize work
-Date: Wed, 15 Nov 2023 14:17:15 -0500
-Message-ID: <20231115191632.087904642@linuxfoundation.org>
+Subject: [PATCH 6.6 055/603] udp: move udp->no_check6_rx to udp->udp_flags
+Date: Wed, 15 Nov 2023 14:10:00 -0500
+Message-ID: <20231115191616.926940856@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -41,54 +40,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 76fe8713dd0a1331d84d767e8e5d3f365d959e8a ]
+[ Upstream commit bcbc1b1de884647aa0318bf74eb7f293d72a1e40 ]
 
-Given that any particular put_device() could be the final put of the
-device, the fact that there are usages of cxlds->dev after
-put_device(cxlds->dev) is a red flag. Drop the reference counting since
-the device is pinned by being registered and will not be unregistered
-without triggering the driver + workqueue to shutdown.
+syzbot reported that udp->no_check6_rx can be read locklessly.
+Use one atomic bit from udp->udp_flags.
 
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 5f2da1971446 ("cxl/pci: Fix sanitize notifier setup")
+Fixes: 1c19448c9ba6 ("net: Make enabling of zero UDP6 csums more restrictive")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/pci.c | 5 -----
- 1 file changed, 5 deletions(-)
+ include/linux/udp.h | 10 +++++-----
+ net/ipv4/udp.c      |  4 ++--
+ net/ipv6/udp.c      |  6 +++---
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-index 2323169b6e5fe..51dbd0c81497b 100644
---- a/drivers/cxl/pci.c
-+++ b/drivers/cxl/pci.c
-@@ -152,8 +152,6 @@ static void cxl_mbox_sanitize_work(struct work_struct *work)
- 	mutex_lock(&mds->mbox_mutex);
- 	if (cxl_mbox_background_complete(cxlds)) {
- 		mds->security.poll_tmo_secs = 0;
--		put_device(cxlds->dev);
--
- 		if (mds->security.sanitize_node)
- 			sysfs_notify_dirent(mds->security.sanitize_node);
+diff --git a/include/linux/udp.h b/include/linux/udp.h
+index e3f2a6c7ac1d1..8d4c3835b1b21 100644
+--- a/include/linux/udp.h
++++ b/include/linux/udp.h
+@@ -35,6 +35,7 @@ static inline u32 udp_hashfn(const struct net *net, u32 num, u32 mask)
+ enum {
+ 	UDP_FLAGS_CORK,		/* Cork is required */
+ 	UDP_FLAGS_NO_CHECK6_TX, /* Send zero UDP6 checksums on TX? */
++	UDP_FLAGS_NO_CHECK6_RX, /* Allow zero UDP6 checksums on RX? */
+ };
  
-@@ -296,9 +294,6 @@ static int __cxl_pci_mbox_send_cmd(struct cxl_memdev_state *mds,
+ struct udp_sock {
+@@ -48,8 +49,7 @@ struct udp_sock {
+ 
+ 	int		 pending;	/* Any pending frames ? */
+ 	__u8		 encap_type;	/* Is this an Encapsulation socket? */
+-	unsigned char	 no_check6_rx:1,/* Allow zero UDP6 checksums on RX? */
+-			 encap_enabled:1, /* This socket enabled encap
++	unsigned char	 encap_enabled:1, /* This socket enabled encap
+ 					   * processing; UDP tunnels and
+ 					   * different encapsulation layer set
+ 					   * this
+@@ -120,7 +120,7 @@ static inline void udp_set_no_check6_tx(struct sock *sk, bool val)
+ 
+ static inline void udp_set_no_check6_rx(struct sock *sk, bool val)
+ {
+-	udp_sk(sk)->no_check6_rx = val;
++	udp_assign_bit(NO_CHECK6_RX, sk, val);
+ }
+ 
+ static inline bool udp_get_no_check6_tx(const struct sock *sk)
+@@ -128,9 +128,9 @@ static inline bool udp_get_no_check6_tx(const struct sock *sk)
+ 	return udp_test_bit(NO_CHECK6_TX, sk);
+ }
+ 
+-static inline bool udp_get_no_check6_rx(struct sock *sk)
++static inline bool udp_get_no_check6_rx(const struct sock *sk)
+ {
+-	return udp_sk(sk)->no_check6_rx;
++	return udp_test_bit(NO_CHECK6_RX, sk);
+ }
+ 
+ static inline void udp_cmsg_recv(struct msghdr *msg, struct sock *sk,
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 0c6998291c99d..cb32826a1db20 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -2698,7 +2698,7 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ 		break;
+ 
+ 	case UDP_NO_CHECK6_RX:
+-		up->no_check6_rx = valbool;
++		udp_set_no_check6_rx(sk, valbool);
+ 		break;
+ 
+ 	case UDP_SEGMENT:
+@@ -2795,7 +2795,7 @@ int udp_lib_getsockopt(struct sock *sk, int level, int optname,
+ 		break;
+ 
+ 	case UDP_NO_CHECK6_RX:
+-		val = up->no_check6_rx;
++		val = udp_get_no_check6_rx(sk);
+ 		break;
+ 
+ 	case UDP_SEGMENT:
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 469df0ca561f7..6e1ea3029260e 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -858,7 +858,7 @@ static int __udp6_lib_mcast_deliver(struct net *net, struct sk_buff *skb,
+ 		/* If zero checksum and no_check is not on for
+ 		 * the socket then skip it.
  		 */
- 		if (mbox_cmd->opcode == CXL_MBOX_OP_SANITIZE) {
- 			if (mds->security.poll) {
--				/* hold the device throughout */
--				get_device(cxlds->dev);
--
- 				/* give first timeout a second */
- 				timeout = 1;
- 				mds->security.poll_tmo_secs = timeout;
+-		if (!uh->check && !udp_sk(sk)->no_check6_rx)
++		if (!uh->check && !udp_get_no_check6_rx(sk))
+ 			continue;
+ 		if (!first) {
+ 			first = sk;
+@@ -980,7 +980,7 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
+ 		if (unlikely(rcu_dereference(sk->sk_rx_dst) != dst))
+ 			udp6_sk_rx_dst_set(sk, dst);
+ 
+-		if (!uh->check && !udp_sk(sk)->no_check6_rx) {
++		if (!uh->check && !udp_get_no_check6_rx(sk)) {
+ 			if (refcounted)
+ 				sock_put(sk);
+ 			goto report_csum_error;
+@@ -1002,7 +1002,7 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
+ 	/* Unicast */
+ 	sk = __udp6_lib_lookup_skb(skb, uh->source, uh->dest, udptable);
+ 	if (sk) {
+-		if (!uh->check && !udp_sk(sk)->no_check6_rx)
++		if (!uh->check && !udp_get_no_check6_rx(sk))
+ 			goto report_csum_error;
+ 		return udp6_unicast_rcv_skb(sk, skb, uh);
+ 	}
 -- 
 2.42.0
 
