@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAB1364C8
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489003BB29
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NATKSKB1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F077C433C9;
-	Wed, 15 Nov 2023 19:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBeda4f/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39A0C433CC;
+	Wed, 15 Nov 2023 19:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076318;
-	bh=BSZOOuyA/uKGzncT/sSq3+H8XBKMyjMbrS5Mo+y4shM=;
+	s=korg; t=1700076320;
+	bh=jpHPM3K2Z6X52x515AHgE+Mu+q6Y4mBoWM9wyqFsYOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NATKSKB14ZU6XPrkMbZICsLKpxgQkm+1CoHS96YCRjw0ay/jEC+VI5Rw2RNM+iw6g
-	 QC/iEjgIYrK6eqItRe+Je5agH7KNESVWxzpnnh4REI2u7RZEFOuzi4hmrFupB9eoFS
-	 Yj86WCFPg8QB/g9BVwF4YgB4CRIevD6C3rHZNkgQ=
+	b=OBeda4f/RJjlP3phNDku2CmrZVrSBBKStJlrLj/ByEsjtBGugEUcu3+VQbf6fNojd
+	 uqoQwUyRe9xmwD+uChz2+blEJfBApfHg5N01CI8IVN0XmU0hSPhJ7qpi1ZyCAcfMwS
+	 DJGEeEMVZUNOeqjB+E/LLMMNNF3rUKBXV1w8exfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Kai Huang <kai.huang@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 215/550] drm/mediatek: Fix coverity issue with unintentional integer overflow
-Date: Wed, 15 Nov 2023 14:13:19 -0500
-Message-ID: <20231115191615.682245738@linuxfoundation.org>
+Subject: [PATCH 6.5 216/550] x86/tdx: Zero out the missing RSI in TDX_HYPERCALL macro
+Date: Wed, 15 Nov 2023 14:13:20 -0500
+Message-ID: <20231115191615.725197649@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,120 +45,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Kai Huang <kai.huang@intel.com>
 
-[ Upstream commit b0b0d811eac6b4c52cb9ad632fa6384cf48869e7 ]
+[ Upstream commit 5d092b66119d774853cc9308522620299048a662 ]
 
-1. Instead of multiplying 2 variable of different types. Change to
-assign a value of one variable and then multiply the other variable.
+In the TDX_HYPERCALL asm, after the TDCALL instruction returns from the
+untrusted VMM, the registers that the TDX guest shares to the VMM need
+to be cleared to avoid speculative execution of VMM-provided values.
 
-2. Add a int variable for multiplier calculation instead of calculating
-different types multiplier with dma_addr_t variable directly.
+RSI is specified in the bitmap of those registers, but it is missing
+when zeroing out those registers in the current TDX_HYPERCALL.
 
-Fixes: 1a64a7aff8da ("drm/mediatek: Fix cursor plane no update")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20230907091425.9526-1-jason-jh.lin@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+It was there when it was originally added in commit 752d13305c78
+("x86/tdx: Expand __tdx_hypercall() to handle more arguments"), but was
+later removed in commit 1e70c680375a ("x86/tdx: Do not corrupt
+frame-pointer in __tdx_hypercall()"), which was correct because %rsi is
+later restored in the "pop %rsi".  However a later commit 7a3a401874be
+("x86/tdx: Drop flags from __tdx_hypercall()") removed that "pop %rsi"
+but forgot to add the "xor %rsi, %rsi" back.
+
+Fix by adding it back.
+
+Fixes: 7a3a401874be ("x86/tdx: Drop flags from __tdx_hypercall()")
+Signed-off-by: Kai Huang <kai.huang@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/all/e7d1157074a0b45d34564d5f17f3e0ffee8115e9.1692096753.git.kai.huang%40intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_gem.c   |  9 +++++-
- drivers/gpu/drm/mediatek/mtk_drm_plane.c | 39 ++++++++++++++++++------
- 2 files changed, 38 insertions(+), 10 deletions(-)
+ arch/x86/coco/tdx/tdcall.S | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-index 0e0a41b2f57f0..4f2e3feabc0f8 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-@@ -121,7 +121,14 @@ int mtk_drm_gem_dumb_create(struct drm_file *file_priv, struct drm_device *dev,
- 	int ret;
+diff --git a/arch/x86/coco/tdx/tdcall.S b/arch/x86/coco/tdx/tdcall.S
+index b193c0a1d8db3..2eca5f43734fe 100644
+--- a/arch/x86/coco/tdx/tdcall.S
++++ b/arch/x86/coco/tdx/tdcall.S
+@@ -195,6 +195,7 @@ SYM_FUNC_END(__tdx_module_call)
+ 	xor %r10d, %r10d
+ 	xor %r11d, %r11d
+ 	xor %rdi,  %rdi
++	xor %rsi,  %rsi
+ 	xor %rdx,  %rdx
  
- 	args->pitch = DIV_ROUND_UP(args->width * args->bpp, 8);
--	args->size = args->pitch * args->height;
-+
-+	/*
-+	 * Multiply 2 variables of different types,
-+	 * for example: args->size = args->spacing * args->height;
-+	 * may cause coverity issue with unintentional overflow.
-+	 */
-+	args->size = args->pitch;
-+	args->size *= args->height;
- 
- 	mtk_gem = mtk_drm_gem_create(dev, args->size, false);
- 	if (IS_ERR(mtk_gem))
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_plane.c b/drivers/gpu/drm/mediatek/mtk_drm_plane.c
-index 31f9420aff6f8..308fe7e8106d1 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_plane.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_plane.c
-@@ -145,6 +145,7 @@ static void mtk_plane_update_new_state(struct drm_plane_state *new_state,
- 	dma_addr_t addr;
- 	dma_addr_t hdr_addr = 0;
- 	unsigned int hdr_pitch = 0;
-+	int offset;
- 
- 	gem = fb->obj[0];
- 	mtk_gem = to_mtk_gem_obj(gem);
-@@ -154,8 +155,15 @@ static void mtk_plane_update_new_state(struct drm_plane_state *new_state,
- 	modifier = fb->modifier;
- 
- 	if (modifier == DRM_FORMAT_MOD_LINEAR) {
--		addr += (new_state->src.x1 >> 16) * fb->format->cpp[0];
--		addr += (new_state->src.y1 >> 16) * pitch;
-+		/*
-+		 * Using dma_addr_t variable to calculate with multiplier of different types,
-+		 * for example: addr += (new_state->src.x1 >> 16) * fb->format->cpp[0];
-+		 * may cause coverity issue with unintentional overflow.
-+		 */
-+		offset = (new_state->src.x1 >> 16) * fb->format->cpp[0];
-+		addr += offset;
-+		offset = (new_state->src.y1 >> 16) * pitch;
-+		addr += offset;
- 	} else {
- 		int width_in_blocks = ALIGN(fb->width, AFBC_DATA_BLOCK_WIDTH)
- 				      / AFBC_DATA_BLOCK_WIDTH;
-@@ -163,21 +171,34 @@ static void mtk_plane_update_new_state(struct drm_plane_state *new_state,
- 				       / AFBC_DATA_BLOCK_HEIGHT;
- 		int x_offset_in_blocks = (new_state->src.x1 >> 16) / AFBC_DATA_BLOCK_WIDTH;
- 		int y_offset_in_blocks = (new_state->src.y1 >> 16) / AFBC_DATA_BLOCK_HEIGHT;
--		int hdr_size;
-+		int hdr_size, hdr_offset;
- 
- 		hdr_pitch = width_in_blocks * AFBC_HEADER_BLOCK_SIZE;
- 		pitch = width_in_blocks * AFBC_DATA_BLOCK_WIDTH *
- 			AFBC_DATA_BLOCK_HEIGHT * fb->format->cpp[0];
- 
- 		hdr_size = ALIGN(hdr_pitch * height_in_blocks, AFBC_HEADER_ALIGNMENT);
-+		hdr_offset = hdr_pitch * y_offset_in_blocks +
-+			AFBC_HEADER_BLOCK_SIZE * x_offset_in_blocks;
-+
-+		/*
-+		 * Using dma_addr_t variable to calculate with multiplier of different types,
-+		 * for example: addr += hdr_pitch * y_offset_in_blocks;
-+		 * may cause coverity issue with unintentional overflow.
-+		 */
-+		hdr_addr = addr + hdr_offset;
- 
--		hdr_addr = addr + hdr_pitch * y_offset_in_blocks +
--			   AFBC_HEADER_BLOCK_SIZE * x_offset_in_blocks;
- 		/* The data plane is offset by 1 additional block. */
--		addr = addr + hdr_size +
--		       pitch * y_offset_in_blocks +
--		       AFBC_DATA_BLOCK_WIDTH * AFBC_DATA_BLOCK_HEIGHT *
--		       fb->format->cpp[0] * (x_offset_in_blocks + 1);
-+		offset = pitch * y_offset_in_blocks +
-+			 AFBC_DATA_BLOCK_WIDTH * AFBC_DATA_BLOCK_HEIGHT *
-+			 fb->format->cpp[0] * (x_offset_in_blocks + 1);
-+
-+		/*
-+		 * Using dma_addr_t variable to calculate with multiplier of different types,
-+		 * for example: addr += pitch * y_offset_in_blocks;
-+		 * may cause coverity issue with unintentional overflow.
-+		 */
-+		addr = addr + hdr_size + offset;
- 	}
- 
- 	mtk_plane_state->pending.enable = true;
+ 	/* Restore callee-saved GPRs as mandated by the x86_64 ABI */
 -- 
 2.42.0
 
