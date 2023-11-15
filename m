@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F7645BF7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E66645BE4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdNgUQEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35609C433C9;
-	Wed, 15 Nov 2023 22:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fydxLBMV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E82C433C8;
+	Wed, 15 Nov 2023 22:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085784;
-	bh=u2NR8uqh30fEi2hgcvFfQZX449f91iv66zlwxSJDdMw=;
+	s=korg; t=1700085786;
+	bh=898njf3w9TXqTuKveEaqrULxkNF1nowpSJny7jhit1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VdNgUQEQhiOTtT2Xnyy+EJ6dscVb+tzHS4HPy4deG8qn0kMheoYDU6KZbwcWeTIeW
-	 z/z3muZm0M1e4h+AOey9txNbDHYdqa8SiNB3M9Ra5q4ZTgc4jRyYfHUfFrgVI2nwzD
-	 KwSq/nV6MPFjW/ow/rQy542wxNneiwWERGIyrgMo=
+	b=fydxLBMVL4PZD4W2c1aBG1fuv6V5Hp8oEAI8M+B3YpJnwg+/D9NZOd94v5yQj0fQs
+	 ADJ2hnjt0YwNbwL1V0k3ikivqVFMQtpOqhF+FgvwkovWlyvFh75qXo/szFO92X/IEA
+	 obig+LmqG7xNxeswlCvV46Ag7iqznQD0/ieNEV3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 034/119] clk: mediatek: clk-mt2701: Add check for mtk_alloc_clk_data
-Date: Wed, 15 Nov 2023 17:00:24 -0500
-Message-ID: <20231115220133.683476839@linuxfoundation.org>
+Subject: [PATCH 5.4 052/119] libnvdimm/of_pmem: Use devm_kstrdup instead of kstrdup and check its return value
+Date: Wed, 15 Nov 2023 17:00:42 -0500
+Message-ID: <20231115220134.243684764@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -44,66 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 0d6e24b422a2166a9297a8286ff2e6ab9a5e8cd3 ]
+[ Upstream commit 6fd4ebfc4d61e3097b595ab2725d513e3bbd6739 ]
 
-Add the check for the return value of mtk_alloc_clk_data() in order to
-avoid NULL pointer dereference.
+Use devm_kstrdup() instead of kstrdup() and check its return value to
+avoid memory leak.
 
-Fixes: e9862118272a ("clk: mediatek: Add MT2701 clock support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230901024658.23405-1-jiasheng@iscas.ac.cn
-Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 49bddc73d15c ("libnvdimm/of_pmem: Provide a unique name for bus provider")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/mediatek/clk-mt2701.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/nvdimm/of_pmem.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt2701.c b/drivers/clk/mediatek/clk-mt2701.c
-index 695be0f774270..c67cd73aca171 100644
---- a/drivers/clk/mediatek/clk-mt2701.c
-+++ b/drivers/clk/mediatek/clk-mt2701.c
-@@ -675,6 +675,8 @@ static int mtk_topckgen_init(struct platform_device *pdev)
- 		return PTR_ERR(base);
+--- a/drivers/nvdimm/of_pmem.c
++++ b/drivers/nvdimm/of_pmem.c
+@@ -42,7 +42,13 @@ static int of_pmem_region_probe(struct p
+ 		return -ENOMEM;
  
- 	clk_data = mtk_alloc_clk_data(CLK_TOP_NR);
-+	if (!clk_data)
+ 	priv->bus_desc.attr_groups = bus_attr_groups;
+-	priv->bus_desc.provider_name = kstrdup(pdev->name, GFP_KERNEL);
++	priv->bus_desc.provider_name = devm_kstrdup(&pdev->dev, pdev->name,
++							GFP_KERNEL);
++	if (!priv->bus_desc.provider_name) {
++		kfree(priv);
 +		return -ENOMEM;
++	}
++
+ 	priv->bus_desc.module = THIS_MODULE;
+ 	priv->bus_desc.of_node = np;
  
- 	mtk_clk_register_fixed_clks(top_fixed_clks, ARRAY_SIZE(top_fixed_clks),
- 								clk_data);
-@@ -742,6 +744,8 @@ static void __init mtk_infrasys_init_early(struct device_node *node)
- 
- 	if (!infra_clk_data) {
- 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
-+		if (!infra_clk_data)
-+			return;
- 
- 		for (i = 0; i < CLK_INFRA_NR; i++)
- 			infra_clk_data->clks[i] = ERR_PTR(-EPROBE_DEFER);
-@@ -768,6 +772,8 @@ static int mtk_infrasys_init(struct platform_device *pdev)
- 
- 	if (!infra_clk_data) {
- 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
-+		if (!infra_clk_data)
-+			return -ENOMEM;
- 	} else {
- 		for (i = 0; i < CLK_INFRA_NR; i++) {
- 			if (infra_clk_data->clks[i] == ERR_PTR(-EPROBE_DEFER))
-@@ -896,6 +902,8 @@ static int mtk_pericfg_init(struct platform_device *pdev)
- 		return PTR_ERR(base);
- 
- 	clk_data = mtk_alloc_clk_data(CLK_PERI_NR);
-+	if (!clk_data)
-+		return -ENOMEM;
- 
- 	mtk_clk_register_gates(node, peri_clks, ARRAY_SIZE(peri_clks),
- 						clk_data);
--- 
-2.42.0
-
 
 
