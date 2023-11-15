@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A4235EED
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EF9364B3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlJOXhZ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BE5C4E778;
-	Wed, 15 Nov 2023 20:56:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCyzhzv2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA289C4E777;
+	Wed, 15 Nov 2023 20:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081780;
-	bh=bE1AgRrriKKsmpaiEtV5NX+FW+2pckUNyXGZheWg1zo=;
+	s=korg; t=1700081781;
+	bh=QPP9Lwt0ICzZ2eO+WxO82T9f/4CE66Yb49vTXwzMECQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tlJOXhZ7+ffnqpLCbFW0jjDkdxZ6baoxUl6OvI2h7uHPLBsqJca8D4ewn3dVTZrKJ
-	 xkycm9GOmwPgXHBXldkf3XlUdnw98QGeqJJWFbNFzNCS0ozKutHcXf6lr/hp4kAAzv
-	 Xp2+0DQjuOv4WNHpuaNo6QCnOVYdTHHRFZQW/rxk=
+	b=KCyzhzv27jOxHcxlw+jD6LDYmFc+xnENv+CaE3V9PsLW0/lPIhjhIjkmxDZnZxXUH
+	 FV5t0pi/oORxm2qDw0S3ektXTYoE7z9Axm2jV4U/80Lgu6JiKlHhZamB550LBVCi2c
+	 qnnFMa6TQwOPNRF8uqtXNUAg187whHblxQ1CuuCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Lee Jones <lee@kernel.org>,
+	Mars Cheng <marscheng@google.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Yen-lin Lai <yenlinlai@google.com>,
+	Daniel Mentz <danielmentz@google.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 121/191] leds: trigger: ledtrig-cpu:: Fix output may be truncated issue for cpu
-Date: Wed, 15 Nov 2023 15:46:36 -0500
-Message-ID: <20231115204651.794858157@linuxfoundation.org>
+Subject: [PATCH 5.10 104/191] scsi: ufs: core: Leave space for \0 in utf8 desc string
+Date: Wed, 15 Nov 2023 15:46:19 -0500
+Message-ID: <20231115204650.821034352@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -36,64 +40,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Daniel Mentz <danielmentz@google.com>
 
-[ Upstream commit ff50f53276131a3059e8307d11293af388ed2bcd ]
+[ Upstream commit a75a16c62a2540f11eeae4f2b50e95deefb652ea ]
 
-In order to teach the compiler that 'trig->name' will never be truncated,
-we need to tell it that 'cpu' is not negative.
+utf16s_to_utf8s does not NULL terminate the output string. For us to be
+able to add a NULL character when utf16s_to_utf8s returns, we need to make
+sure that there is space for such NULL character at the end of the output
+buffer. We can achieve this by passing an output buffer size to
+utf16s_to_utf8s that is one character less than what we allocated.
 
-When building with W=1, this fixes the following warnings:
+Other call sites of utf16s_to_utf8s appear to be using the same technique
+where they artificially reduce the buffer size by one to leave space for a
+NULL character or line feed character.
 
-  drivers/leds/trigger/ledtrig-cpu.c: In function ‘ledtrig_cpu_init’:
-  drivers/leds/trigger/ledtrig-cpu.c:155:56: error: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 5 [-Werror=format-truncation=]
-    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-        |                                                        ^~
-  drivers/leds/trigger/ledtrig-cpu.c:155:52: note: directive argument in the range [-2147483648, 7]
-    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-        |                                                    ^~~~~~~
-  drivers/leds/trigger/ledtrig-cpu.c:155:17: note: ‘snprintf’ output between 5 and 15 bytes into a destination of size 8
-    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Fixes: 8f88731d052d ("led-triggers: create a trigger for CPU activity")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/3f4be7a99933cf8566e630da54f6ab913caac432.1695453322.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 4b828fe156a6 ("scsi: ufs: revamp string descriptor reading")
+Reviewed-by: Mars Cheng <marscheng@google.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Yen-lin Lai <yenlinlai@google.com>
+Signed-off-by: Daniel Mentz <danielmentz@google.com>
+Link: https://lore.kernel.org/r/20231017182026.2141163-1-danielmentz@google.com
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/trigger/ledtrig-cpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/ufs/ufshcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/trigger/ledtrig-cpu.c b/drivers/leds/trigger/ledtrig-cpu.c
-index fca62d5035909..f19baed615023 100644
---- a/drivers/leds/trigger/ledtrig-cpu.c
-+++ b/drivers/leds/trigger/ledtrig-cpu.c
-@@ -130,7 +130,7 @@ static int ledtrig_prepare_down_cpu(unsigned int cpu)
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index f3389e9131794..a432aebd14be6 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -3339,7 +3339,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
+ 		 */
+ 		ret = utf16s_to_utf8s(uc_str->uc,
+ 				      uc_str->len - QUERY_DESC_HDR_SIZE,
+-				      UTF16_BIG_ENDIAN, str, ascii_len);
++				      UTF16_BIG_ENDIAN, str, ascii_len - 1);
  
- static int __init ledtrig_cpu_init(void)
- {
--	int cpu;
-+	unsigned int cpu;
- 	int ret;
- 
- 	/* Supports up to 9999 cpu cores */
-@@ -152,7 +152,7 @@ static int __init ledtrig_cpu_init(void)
- 		if (cpu >= 8)
- 			continue;
- 
--		snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-+		snprintf(trig->name, MAX_NAME_LEN, "cpu%u", cpu);
- 
- 		led_trigger_register_simple(trig->name, &trig->_trig);
- 	}
+ 		/* replace non-printable or non-ASCII characters with spaces */
+ 		for (i = 0; i < ret; i++)
 -- 
 2.42.0
 
