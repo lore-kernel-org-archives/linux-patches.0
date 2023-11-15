@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6C945BE4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0C045BE4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TiEr7BoC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F425C433C9;
-	Wed, 15 Nov 2023 22:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eswuHAJ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96227C433C7;
+	Wed, 15 Nov 2023 22:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085844;
-	bh=HdWMkWZPgy+jagQxWLv5B1rcH3/9wTyMQquQLWEVetg=;
+	s=korg; t=1700085845;
+	bh=vO4xCSNpNbvgu1fSpilANuWmKmfK15fFOMEKAtjuIkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TiEr7BoChbq0d4IN99RgTMAZp5MXqh1WxtNybBuFMxKXzBstKpatkp9/HIRM438nA
-	 R388s91zbw3r+oSC5Pk07gjs/ieW9PXi8gsdF1qy6DoIZRr3l4FjWJZfXdHfPEgOcL
-	 dU7HygsrCBuxz5ntfzMFMEcy27+Ca0UvqL8Dz1pQ=
+	b=eswuHAJ9IRNYQ4/WVjAF3urb5Jng/9yhi2FsYVcSgjrv0PpGwdGP9ASAmy+RaMBeF
+	 zDLHEZOZdXy81GNtxlMSMuosWhdgwzIcHPj6FqFaSGyxZGeZAut/gAc8wjTk5/csfY
+	 5+RHFcOlJHZHOWUnbXMjigskW7F6lABzgCF/TljQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Katya Orlova <e.orlova@ispras.ru>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 092/119] media: s3c-camif: Avoid inappropriate kfree()
-Date: Wed, 15 Nov 2023 17:01:22 -0500
-Message-ID: <20231115220135.488814933@linuxfoundation.org>
+Subject: [PATCH 5.4 075/119] misc: st_core: Do not call kfree_skb() under spin_lock_irqsave()
+Date: Wed, 15 Nov 2023 17:01:05 -0500
+Message-ID: <20231115220134.969563078@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -42,52 +41,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Katya Orlova <e.orlova@ispras.ru>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 61334819aca018c3416ee6c330a08a49c1524fc3 ]
+[ Upstream commit 4d08c3d12b61022501989f9f071514d2d6f77c47 ]
 
-s3c_camif_register_video_node() works with video_device structure stored
-as a field of camif_vp, so it should not be kfreed.
-But there is video_device_release() on error path that do it.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with hardware interrupts being disabled.
+So replace kfree_skb() with dev_kfree_skb_irq() under
+spin_lock_irqsave(). Compile tested only.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: babde1c243b2 ("[media] V4L: Add driver for S3C24XX/S3C64XX SoC series camera interface")
-Signed-off-by: Katya Orlova <e.orlova@ispras.ru>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 53618cc1e51e ("Staging: sources for ST core")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20230823035020.1281892-1-ruanjinjie@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/s3c-camif/camif-capture.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/misc/ti-st/st_core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/s3c-camif/camif-capture.c b/drivers/media/platform/s3c-camif/camif-capture.c
-index 2fb45db8e4ba4..d24ef08633ab0 100644
---- a/drivers/media/platform/s3c-camif/camif-capture.c
-+++ b/drivers/media/platform/s3c-camif/camif-capture.c
-@@ -1132,12 +1132,12 @@ int s3c_camif_register_video_node(struct camif_dev *camif, int idx)
+diff --git a/drivers/misc/ti-st/st_core.c b/drivers/misc/ti-st/st_core.c
+index 7d9e23aa0b926..c19460e7f0f16 100644
+--- a/drivers/misc/ti-st/st_core.c
++++ b/drivers/misc/ti-st/st_core.c
+@@ -15,6 +15,7 @@
+ #include <linux/skbuff.h>
  
- 	ret = vb2_queue_init(q);
- 	if (ret)
--		goto err_vd_rel;
-+		return ret;
+ #include <linux/ti_wilink_st.h>
++#include <linux/netdevice.h>
  
- 	vp->pad.flags = MEDIA_PAD_FL_SINK;
- 	ret = media_entity_pads_init(&vfd->entity, 1, &vp->pad);
- 	if (ret)
--		goto err_vd_rel;
-+		return ret;
+ extern void st_kim_recv(void *, const unsigned char *, long);
+ void st_int_recv(void *, const unsigned char *, long);
+@@ -423,7 +424,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
+ 	case ST_LL_AWAKE_TO_ASLEEP:
+ 		pr_err("ST LL is illegal state(%ld),"
+ 			   "purging received skb.", st_ll_getstate(st_gdata));
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		break;
+ 	case ST_LL_ASLEEP:
+ 		skb_queue_tail(&st_gdata->tx_waitq, skb);
+@@ -432,7 +433,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
+ 	default:
+ 		pr_err("ST LL is illegal state(%ld),"
+ 			   "purging received skb.", st_ll_getstate(st_gdata));
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		break;
+ 	}
  
- 	video_set_drvdata(vfd, vp);
- 
-@@ -1170,8 +1170,6 @@ int s3c_camif_register_video_node(struct camif_dev *camif, int idx)
- 	v4l2_ctrl_handler_free(&vp->ctrl_handler);
- err_me_cleanup:
- 	media_entity_cleanup(&vfd->entity);
--err_vd_rel:
--	video_device_release(vfd);
- 	return ret;
- }
- 
+@@ -486,7 +487,7 @@ void st_tx_wakeup(struct st_data_s *st_data)
+ 				spin_unlock_irqrestore(&st_data->lock, flags);
+ 				break;
+ 			}
+-			kfree_skb(skb);
++			dev_kfree_skb_irq(skb);
+ 			spin_unlock_irqrestore(&st_data->lock, flags);
+ 		}
+ 		/* if wake-up is set in another context- restart sending */
 -- 
 2.42.0
 
