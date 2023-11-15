@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7403DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220E63D96E
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzjNntBk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53927C433CC;
-	Wed, 15 Nov 2023 19:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3KU+e4o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C67C433C7;
+	Wed, 15 Nov 2023 19:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078350;
-	bh=e6PvNud0gCpCKx2u9hLkLY4E6tCA5eNJFgqWAzAzFWo=;
+	s=korg; t=1700078352;
+	bh=jYAwLEZB5RJCPYm1rNssFLr7jJ0Qzsq1vH6tGRW6iPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzjNntBkP4fyZ/bsFgQO0wMxVXnnhOtxYP7gvf5P46nHw6JjA0lHoqd7SZb14IkEK
-	 P3qJ9h2BdZL02vbatXxtTwEhG4iLfr54yMGEpUoAdzPBP03uVzcB8RcPJFSaejbtte
-	 lTo54JTfXKqF8X4/YJCdAAV8Ly6m9gjypHPk4JF0=
+	b=a3KU+e4oesIuaasMMZnDthObHvIGatv7vz7TElJPXFrNYYd4RMat01kLfPXxpkKOi
+	 JD3hkeBurpkEh9COh395VbtOWLXShOny2PO8x3dVebeJHMbTeYMF5OQNlq59EcoGcT
+	 aT1yRvAV6v+P7WFpjOXNpVwyK48mDorzoSt59GNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia-Ju Bai <baijiaju@buaa.edu.cn>,
+	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 268/379] usb: dwc2: fix possible NULL pointer dereference caused by driver concurrency
-Date: Wed, 15 Nov 2023 14:25:43 -0500
-Message-ID: <20231115192700.986372862@linuxfoundation.org>
+Subject: [PATCH 6.1 269/379] usb: chipidea: Fix DMA overwrite for Tegra
+Date: Wed, 15 Nov 2023 14:25:44 -0500
+Message-ID: <20231115192701.049294830@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -35,72 +35,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jia-Ju Bai <baijiaju@buaa.edu.cn>
+From: Michał Mirosław <mirq-linux@rere.qmqm.pl>
 
-[ Upstream commit ef307bc6ef04e8c1ea843231db58e3afaafa9fa6 ]
+[ Upstream commit 7ab8716713c931ac79988f2592e1cf8b2e4fec1b ]
 
-In _dwc2_hcd_urb_enqueue(), "urb->hcpriv = NULL" is executed without
-holding the lock "hsotg->lock". In _dwc2_hcd_urb_dequeue():
+Tegra USB controllers seem to issue DMA in full 32-bit words only and thus
+may overwrite unevenly-sized buffers.  One such occurrence is detected by
+SLUB when receiving a reply to a 1-byte buffer (below).  Fix this by
+allocating a bounce buffer also for buffers with sizes not a multiple of 4.
 
-    spin_lock_irqsave(&hsotg->lock, flags);
-    ...
-	if (!urb->hcpriv) {
-		dev_dbg(hsotg->dev, "## urb->hcpriv is NULL ##\n");
-		goto out;
-	}
-    rc = dwc2_hcd_urb_dequeue(hsotg, urb->hcpriv); // Use urb->hcpriv
-    ...
-out:
-    spin_unlock_irqrestore(&hsotg->lock, flags);
+=============================================================================
+BUG kmalloc-64 (Tainted: G    B             ): kmalloc Redzone overwritten
+-----------------------------------------------------------------------------
 
-When _dwc2_hcd_urb_enqueue() and _dwc2_hcd_urb_dequeue() are
-concurrently executed, the NULL check of "urb->hcpriv" can be executed
-before "urb->hcpriv = NULL". After urb->hcpriv is NULL, it can be used
-in the function call to dwc2_hcd_urb_dequeue(), which can cause a NULL
-pointer dereference.
+0x8555cd02-0x8555cd03 @offset=3330. First byte 0x0 instead of 0xcc
+Allocated in usb_get_status+0x2b/0xac age=1 cpu=3 pid=41
+ __kmem_cache_alloc_node+0x12f/0x1e4
+ __kmalloc+0x33/0x8c
+ usb_get_status+0x2b/0xac
+ hub_probe+0x5e9/0xcec
+ usb_probe_interface+0xbf/0x21c
+ really_probe+0xa5/0x2c4
+ __driver_probe_device+0x75/0x174
+ driver_probe_device+0x31/0x94
+ __device_attach_driver+0x65/0xc0
+ bus_for_each_drv+0x4b/0x74
+ __device_attach+0x69/0x120
+ bus_probe_device+0x65/0x6c
+ device_add+0x48b/0x5f8
+ usb_set_configuration+0x37b/0x6b4
+ usb_generic_driver_probe+0x37/0x68
+ usb_probe_device+0x35/0xb4
+Slab 0xbf622b80 objects=21 used=18 fp=0x8555cdc0 flags=0x800(slab|zone=0)
+Object 0x8555cd00 @offset=3328 fp=0x00000000
 
-This possible bug is found by an experimental static analysis tool
-developed by myself. This tool analyzes the locking APIs to extract
-function pairs that can be concurrently executed, and then analyzes the
-instructions in the paired functions to identify possible concurrency
-bugs including data races and atomicity violations. The above possible
-bug is reported, when my tool analyzes the source code of Linux 6.5.
+Redzone  8555ccc0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
+Redzone  8555ccd0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
+Redzone  8555cce0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
+Redzone  8555ccf0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
+Object   8555cd00: 01 00 00 00 cc cc cc cc cc cc cc cc cc cc cc cc  ................
+Object   8555cd10: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
+Object   8555cd20: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
+Object   8555cd30: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
+Redzone  8555cd40: cc cc cc cc                                      ....
+Padding  8555cd74: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a              ZZZZZZZZZZZZ
+CPU: 3 PID: 41 Comm: kworker/3:1 Tainted: G    B              6.6.0-rc1mq-00118-g59786f827ea1 #1115
+Hardware name: NVIDIA Tegra SoC (Flattened Device Tree)
+Workqueue: usb_hub_wq hub_event
+[<8010ca28>] (unwind_backtrace) from [<801090a5>] (show_stack+0x11/0x14)
+[<801090a5>] (show_stack) from [<805da2fb>] (dump_stack_lvl+0x4d/0x7c)
+[<805da2fb>] (dump_stack_lvl) from [<8026464f>] (check_bytes_and_report+0xb3/0xe4)
+[<8026464f>] (check_bytes_and_report) from [<802648e1>] (check_object+0x261/0x290)
+[<802648e1>] (check_object) from [<802671b1>] (free_to_partial_list+0x105/0x3f8)
+[<802671b1>] (free_to_partial_list) from [<80268613>] (__kmem_cache_free+0x103/0x128)
+[<80268613>] (__kmem_cache_free) from [<80425a67>] (usb_get_status+0x73/0xac)
+[<80425a67>] (usb_get_status) from [<80421b31>] (hub_probe+0x5e9/0xcec)
+[<80421b31>] (hub_probe) from [<80428bbb>] (usb_probe_interface+0xbf/0x21c)
+[<80428bbb>] (usb_probe_interface) from [<803ee13d>] (really_probe+0xa5/0x2c4)
+[<803ee13d>] (really_probe) from [<803ee3d1>] (__driver_probe_device+0x75/0x174)
+[<803ee3d1>] (__driver_probe_device) from [<803ee501>] (driver_probe_device+0x31/0x94)
+usb 1-1: device descriptor read/8, error -71
 
-To fix this possible bug, "urb->hcpriv = NULL" should be executed with
-holding the lock "hsotg->lock". After using this patch, my tool never
-reports the possible bug, with the kernelconfiguration allyesconfig for
-x86_64. Because I have no associated hardware, I cannot test the patch
-in runtime testing, and just verify it according to the code logic.
-
-Fixes: 33ad261aa62b ("usb: dwc2: host: spinlock urb_enqueue")
-Signed-off-by: Jia-Ju Bai <baijiaju@buaa.edu.cn>
-Link: https://lore.kernel.org/r/20230926024404.832096-1-baijiaju@buaa.edu.cn
+Fixes: fc53d5279094 ("usb: chipidea: tegra: Support host mode")
+Signed-off-by: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+Link: https://lore.kernel.org/r/ef8466b834c1726f5404c95c3e192e90460146f8.1695934946.git.mirq-linux@rere.qmqm.pl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/hcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/chipidea/host.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/dwc2/hcd.c b/drivers/usb/dwc2/hcd.c
-index 657f1f659ffaf..35c7a4df8e717 100644
---- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -4769,8 +4769,8 @@ static int _dwc2_hcd_urb_enqueue(struct usb_hcd *hcd, struct urb *urb,
- 	if (qh_allocated && qh->channel && qh->channel->qh == qh)
- 		qh->channel->qh = NULL;
- fail2:
--	spin_unlock_irqrestore(&hsotg->lock, flags);
- 	urb->hcpriv = NULL;
-+	spin_unlock_irqrestore(&hsotg->lock, flags);
- 	kfree(qtd);
- fail1:
- 	if (qh_allocated) {
+diff --git a/drivers/usb/chipidea/host.c b/drivers/usb/chipidea/host.c
+index 3b08c5e811707..fae4b2f9b9b21 100644
+--- a/drivers/usb/chipidea/host.c
++++ b/drivers/usb/chipidea/host.c
+@@ -411,12 +411,13 @@ static int ci_hdrc_alloc_dma_aligned_buffer(struct urb *urb, gfp_t mem_flags)
+ 	const unsigned int ci_hdrc_usb_dma_align = 32;
+ 	size_t kmalloc_size;
+ 
+-	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0 ||
+-	    !((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)))
++	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0)
++		return 0;
++	if (!((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)) && !(urb->transfer_buffer_length & 3))
+ 		return 0;
+ 
+ 	/* Allocate a buffer with enough padding for alignment */
+-	kmalloc_size = urb->transfer_buffer_length +
++	kmalloc_size = ALIGN(urb->transfer_buffer_length, 4) +
+ 		       sizeof(struct ci_hdrc_dma_aligned_buffer) +
+ 		       ci_hdrc_usb_dma_align - 1;
+ 
 -- 
 2.42.0
 
