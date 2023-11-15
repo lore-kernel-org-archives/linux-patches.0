@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7043A8F4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4C2364CB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJ/r8CLW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F117C433CA;
-	Wed, 15 Nov 2023 19:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0yRQYecL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF263C433C8;
+	Wed, 15 Nov 2023 19:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077521;
-	bh=VAoR1kfyuaEhhh3cW++PQn9OIWTWARta4gGhMANyawY=;
+	s=korg; t=1700077522;
+	bh=0tszDPs82ppgeqH/mftNrUIbjLm7yzJ8MR8sL8crsOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJ/r8CLW5cSKXnup/IW+NLsRm3SPFodzZfY5xx7o4kusa+9ge7Pa1JOCkicDJGBNA
-	 VVJQzaUdyj2THvQlzYjK8e0tD89OFah84jzOJKjgpAPdKMTSMvB0vso1xYupvj9hvC
-	 tGlE9gN75GLFK87f545KeyDDgq4z6srmDAuaQcxo=
+	b=0yRQYecLHiv6u0EIMyQiApKp0jICCCwteCH3pIGUTt8mTFBrzPI47aXJs0pezyo6y
+	 FlUKSI+Ig5wv2ZdZ4AnYYOJ22FYUAVWs7GdO5NNOO7uYi+rXFT10v7t6pbl5+5tXIs
+	 yqm0mvEoZj9mprIPnPFCQ7/vJG4NRuQGPspQBATM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brad Griffis <bgriffis@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Adam Guerin <adam.guerin@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 318/603] arm64: tegra: Fix P3767 card detect polarity
-Date: Wed, 15 Nov 2023 14:14:23 -0500
-Message-ID: <20231115191635.495566207@linuxfoundation.org>
+Subject: [PATCH 6.6 347/603] crypto: qat - fix state machines cleanup paths
+Date: Wed, 15 Nov 2023 14:14:52 -0500
+Message-ID: <20231115191637.538204659@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,34 +43,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brad Griffis <bgriffis@nvidia.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit c6b7a1d11d0fa6333078141251908f48042016e1 ]
+[ Upstream commit c9ca9756f376f51f985130a0e599d956065d4c44 ]
 
-The SD card detect pin is active-low on all Orin Nano and NX SKUs that
-have an SD card slot.
+Commit 1bdc85550a2b ("crypto: qat - fix concurrency issue when device
+state changes") introduced the function adf_dev_down() which wraps the
+functions adf_dev_stop() and adf_dev_shutdown().
+In a subsequent change, the sequence adf_dev_stop() followed by
+adf_dev_shutdown() was then replaced across the driver with just a call
+to the function adf_dev_down().
 
-Fixes: 13b0aca303e9 ("arm64: tegra: Support Jetson Orin NX")
-Signed-off-by: Brad Griffis <bgriffis@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+The functions adf_dev_stop() and adf_dev_shutdown() are called in error
+paths to stop the accelerator and free up resources and can be called
+even if the counterparts adf_dev_init() and adf_dev_start() did not
+complete successfully.
+However, the implementation of adf_dev_down() prevents the stop/shutdown
+sequence if the device is found already down.
+For example, if adf_dev_init() fails, the device status is not set as
+started and therefore a call to adf_dev_down() won't be calling
+adf_dev_shutdown() to undo what adf_dev_init() did.
+
+Do not check if a device is started in adf_dev_down() but do the
+equivalent check in adf_sysfs.c when handling a DEV_DOWN command from
+the user.
+
+Fixes: 2b60f79c7b81 ("crypto: qat - replace state machine calls")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Adam Guerin <adam.guerin@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra234-p3767.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/intel/qat/qat_common/adf_init.c  | 7 -------
+ drivers/crypto/intel/qat/qat_common/adf_sysfs.c | 7 +++++++
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3767.dtsi b/arch/arm64/boot/dts/nvidia/tegra234-p3767.dtsi
-index 5f592f1d81e2e..99dd648038ecb 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234-p3767.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra234-p3767.dtsi
-@@ -42,7 +42,7 @@ flash@0 {
- 		mmc@3400000 {
- 			status = "okay";
- 			bus-width = <4>;
--			cd-gpios = <&gpio TEGRA234_MAIN_GPIO(G, 7) GPIO_ACTIVE_HIGH>;
-+			cd-gpios = <&gpio TEGRA234_MAIN_GPIO(G, 7) GPIO_ACTIVE_LOW>;
- 			disable-wp;
- 		};
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_init.c b/drivers/crypto/intel/qat/qat_common/adf_init.c
+index 89001fe92e762..35aef5e8fc386 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_init.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
+@@ -440,13 +440,6 @@ int adf_dev_down(struct adf_accel_dev *accel_dev, bool reconfig)
  
+ 	mutex_lock(&accel_dev->state_lock);
+ 
+-	if (!adf_dev_started(accel_dev)) {
+-		dev_info(&GET_DEV(accel_dev), "Device qat_dev%d already down\n",
+-			 accel_dev->accel_id);
+-		ret = -EINVAL;
+-		goto out;
+-	}
+-
+ 	if (reconfig) {
+ 		ret = adf_dev_shutdown_cache_cfg(accel_dev);
+ 		goto out;
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_sysfs.c b/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
+index a74d2f9303670..a8f33558d7cb8 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
+@@ -52,6 +52,13 @@ static ssize_t state_store(struct device *dev, struct device_attribute *attr,
+ 	case DEV_DOWN:
+ 		dev_info(dev, "Stopping device qat_dev%d\n", accel_id);
+ 
++		if (!adf_dev_started(accel_dev)) {
++			dev_info(&GET_DEV(accel_dev), "Device qat_dev%d already down\n",
++				 accel_id);
++
++			break;
++		}
++
+ 		ret = adf_dev_down(accel_dev, true);
+ 		if (ret < 0)
+ 			return -EINVAL;
 -- 
 2.42.0
 
