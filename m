@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC7B39FC0
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B31E39FC0
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIWfF1a8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D767C4E777;
-	Wed, 15 Nov 2023 20:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ax0J2JX9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFF6C4E777;
+	Wed, 15 Nov 2023 20:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081597;
-	bh=gR7Z1+UevWg6j1qebmWtHDVVeWauOsRDvW2CysmflGk=;
+	s=korg; t=1700081599;
+	bh=O985sxKW8pHgFAJSQiVCcNSKlrtsgq8jBwksbOFoy8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RIWfF1a8VoJWyCI1EFKh2qBQZO1YytQWuzIh+OyPZJfss3gGBq8xtrlV7l4NKds0i
-	 h8z2CJW+HBlYqQIqPxLkj4l4esk7uYU/GWxhp6ld9rfdzq/3tZ4KnZBjMuTuW0eFOd
-	 ANl/0zmnk7RSeRpVlJV6d0sM29f83K1lS4z+h3So=
+	b=Ax0J2JX9IaShqNDbAoq3gLOBWgKx39qk3mMf0Bfvf+BnByI+KycRbqwoQPy86swH8
+	 d5O1qV6p1KBBVGKU0+vtZmqTNigNK38MIHz4bsHjgck1vT9h2q6t5SarshyDasav2R
+	 Che75qdFpfZt5Eki9WE/0Klbvxx1LFZamWT7J+kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 229/244] block: remove unneeded return value of bio_check_ro()
-Date: Wed, 15 Nov 2023 15:37:01 -0500
-Message-ID: <20231115203602.090374547@linuxfoundation.org>
+Subject: [PATCH 5.15 220/244] dccp/tcp: Call security_inet_conn_request() after setting IPv6 addresses.
+Date: Wed, 15 Nov 2023 15:36:52 -0500
+Message-ID: <20231115203601.541901717@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,57 +43,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit bdb7d420c6f6d2618d4c907cd7742c3195c425e2 ]
+[ Upstream commit 23be1e0e2a83a8543214d2599a31d9a2185a796b ]
 
-bio_check_ro() always return false now. Remove this unneeded return value
-and cleanup the sole caller. No functional change intended.
+Initially, commit 4237c75c0a35 ("[MLSXFRM]: Auto-labeling of child
+sockets") introduced security_inet_conn_request() in some functions
+where reqsk is allocated.  The hook is added just after the allocation,
+so reqsk's IPv6 remote address was not initialised then.
 
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Link: https://lore.kernel.org/r/20220905102754.1942-1-linmiaohe@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 1b0a151c10a6 ("blk-core: use pr_warn_ratelimited() in bio_check_ro()")
+However, SELinux/Smack started to read it in netlbl_req_setattr()
+after commit e1adea927080 ("calipso: Allow request sockets to be
+relabelled by the lsm.").
+
+Commit 284904aa7946 ("lsm: Relocate the IPv4 security_inet_conn_request()
+hooks") fixed that kind of issue only in TCPv4 because IPv6 labeling was
+not supported at that time.  Finally, the same issue was introduced again
+in IPv6.
+
+Let's apply the same fix on DCCPv6 and TCPv6.
+
+Fixes: e1adea927080 ("calipso: Allow request sockets to be relabelled by the lsm.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-core.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ net/dccp/ipv6.c       | 6 +++---
+ net/ipv6/syncookies.c | 7 ++++---
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index fbbd59e6d7e15..a3d5306d130d0 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -693,18 +693,15 @@ static inline bool should_fail_request(struct block_device *part,
+diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
+index 0ddf64845a06c..6f05e9d0d4287 100644
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -359,15 +359,15 @@ static int dccp_v6_conn_request(struct sock *sk, struct sk_buff *skb)
+ 	if (dccp_parse_options(sk, dreq, skb))
+ 		goto drop_and_free;
  
- #endif /* CONFIG_FAIL_MAKE_REQUEST */
- 
--static inline bool bio_check_ro(struct bio *bio)
-+static inline void bio_check_ro(struct bio *bio)
- {
- 	if (op_is_write(bio_op(bio)) && bdev_read_only(bio->bi_bdev)) {
- 		if (op_is_flush(bio->bi_opf) && !bio_sectors(bio))
--			return false;
-+			return;
- 		pr_warn("Trying to write to read-only block-device %pg\n",
- 			bio->bi_bdev);
- 		/* Older lvm-tools actually trigger this */
--		return false;
- 	}
+-	if (security_inet_conn_request(sk, skb, req))
+-		goto drop_and_free;
 -
--	return false;
- }
+ 	ireq = inet_rsk(req);
+ 	ireq->ir_v6_rmt_addr = ipv6_hdr(skb)->saddr;
+ 	ireq->ir_v6_loc_addr = ipv6_hdr(skb)->daddr;
+ 	ireq->ireq_family = AF_INET6;
+ 	ireq->ir_mark = inet_request_mark(sk, skb);
  
- static noinline int should_fail_bio(struct bio *bio)
-@@ -810,8 +807,7 @@ static noinline_for_stack bool submit_bio_checks(struct bio *bio)
++	if (security_inet_conn_request(sk, skb, req))
++		goto drop_and_free;
++
+ 	if (ipv6_opt_accepted(sk, skb, IP6CB(skb)) ||
+ 	    np->rxopt.bits.rxinfo || np->rxopt.bits.rxoinfo ||
+ 	    np->rxopt.bits.rxhlim || np->rxopt.bits.rxohlim) {
+diff --git a/net/ipv6/syncookies.c b/net/ipv6/syncookies.c
+index 12ae817aaf2ec..c10a68bb85de3 100644
+--- a/net/ipv6/syncookies.c
++++ b/net/ipv6/syncookies.c
+@@ -180,14 +180,15 @@ struct sock *cookie_v6_check(struct sock *sk, struct sk_buff *skb)
+ 	treq = tcp_rsk(req);
+ 	treq->tfo_listener = false;
  
- 	if (should_fail_bio(bio))
- 		goto end_io;
--	if (unlikely(bio_check_ro(bio)))
--		goto end_io;
-+	bio_check_ro(bio);
- 	if (!bio_flagged(bio, BIO_REMAPPED)) {
- 		if (unlikely(bio_check_eod(bio)))
- 			goto end_io;
+-	if (security_inet_conn_request(sk, skb, req))
+-		goto out_free;
+-
+ 	req->mss = mss;
+ 	ireq->ir_rmt_port = th->source;
+ 	ireq->ir_num = ntohs(th->dest);
+ 	ireq->ir_v6_rmt_addr = ipv6_hdr(skb)->saddr;
+ 	ireq->ir_v6_loc_addr = ipv6_hdr(skb)->daddr;
++
++	if (security_inet_conn_request(sk, skb, req))
++		goto out_free;
++
+ 	if (ipv6_opt_accepted(sk, skb, &TCP_SKB_CB(skb)->header.h6) ||
+ 	    np->rxopt.bits.rxinfo || np->rxopt.bits.rxoinfo ||
+ 	    np->rxopt.bits.rxhlim || np->rxopt.bits.rxohlim) {
 -- 
 2.42.0
 
