@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8373A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1673A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVYUuPsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F784C433C8;
-	Wed, 15 Nov 2023 19:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRX+uv9C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C982C433CA;
+	Wed, 15 Nov 2023 19:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077569;
-	bh=KIp+Fk340Gj4o37V8TziSaH+ti5MZN7kz1BOmAVY9nQ=;
+	s=korg; t=1700077571;
+	bh=1LZ/Y4xsVpolQRmoUR1hda6FH9y8C8G5KXX3UdNdzvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVYUuPsjLD6ZMLlQi162gCEeC26aMjVoQ8YIi0uXBoaNdynPKD7up0PaIZjyoA7kL
-	 twWPiJ2EkusjwhVZQGRB6cwMhrsTqkgyrFbWUaLdVxXBOmtfpcudMyFAF7WFJB1OT0
-	 lsqzxhaVBmtaLJksu5Qe1YhAgCZy9MWW3arZNHP4=
+	b=iRX+uv9C7M+oB8KLDyts+/HSRiVfBKR+9O32zGu5JSsBvloK6XDgSqHUcDtGvB894
+	 JB0JUvxp+SbMjIvfgQvWezU6G+cnI9ZK2Um9qWqOUgYkntc90/GOL2sK/b31La/XSd
+	 PjCrCmAYcgCIST9xwKOXYnpuxj2jpgHYpDZ9p+Mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 383/603] RDMA/hns: Fix init failure of RoCE VF and HIP08
-Date: Wed, 15 Nov 2023 14:15:28 -0500
-Message-ID: <20231115191639.814069434@linuxfoundation.org>
+Subject: [PATCH 6.6 384/603] ASoC: SOF: core: Ensure sof_ops_free() is still called when probe never ran.
+Date: Wed, 15 Nov 2023 14:15:29 -0500
+Message-ID: <20231115191639.865993141@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,89 +44,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 
-[ Upstream commit 07f06e0e5cd99555c861e874716d9e2627655fd5 ]
+[ Upstream commit f549a82aff57865c47b5abd17336b23cd9bb2d2c ]
 
-During device init, a struct for HW stats will be allocated. As HW
-stats are not supported for VF and HIP08, currently
-hns_roce_alloc_hw_port_stats() returns NULL in this case. However,
-ib-core considers the returned NULL pointer as memory allocation
-failure and returns ENOMEM, eventually leading to the failure of VF
-and HIP08 init.
+In an effort to not call sof_ops_free twice, we stopped running it when
+probe was aborted.
 
-In the case where the driver does not support the .alloc_hw_port_stats()
-ops, ib-core will return EOPNOTSUPP and ignore this error code in the
-upper layer function. So for VF and HIP08, just don't set the HW stats
-ops to ib-core.
+Check the result of cancel_work_sync to see if this was the case.
 
-Fixes: 5a87279591a1 ("RDMA/hns: Support hns HW stats")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20231017125239.164455-8-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 31bb7bd9ffee ("ASoC: SOF: core: Only call sof_ops_free() on remove if the probe was successful")
+Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Link: https://lore.kernel.org/r/20231009115437.99976-2-maarten.lankhorst@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_main.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ sound/soc/sof/core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index e1a88f2d51b6c..4a9cd4d21bc99 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -553,10 +553,6 @@ static struct rdma_hw_stats *hns_roce_alloc_hw_port_stats(
- 		return NULL;
+diff --git a/sound/soc/sof/core.c b/sound/soc/sof/core.c
+index 2d1616b81485c..0938b259f7034 100644
+--- a/sound/soc/sof/core.c
++++ b/sound/soc/sof/core.c
+@@ -459,9 +459,10 @@ int snd_sof_device_remove(struct device *dev)
+ 	struct snd_sof_dev *sdev = dev_get_drvdata(dev);
+ 	struct snd_sof_pdata *pdata = sdev->pdata;
+ 	int ret;
++	bool aborted = false;
+ 
+ 	if (IS_ENABLED(CONFIG_SND_SOC_SOF_PROBE_WORK_QUEUE))
+-		cancel_work_sync(&sdev->probe_work);
++		aborted = cancel_work_sync(&sdev->probe_work);
+ 
+ 	/*
+ 	 * Unregister any registered client device first before IPC and debugfs
+@@ -487,6 +488,9 @@ int snd_sof_device_remove(struct device *dev)
+ 		snd_sof_free_debug(sdev);
+ 		snd_sof_remove(sdev);
+ 		sof_ops_free(sdev);
++	} else if (aborted) {
++		/* probe_work never ran */
++		sof_ops_free(sdev);
  	}
  
--	if (hr_dev->pci_dev->revision <= PCI_REVISION_ID_HIP08 ||
--	    hr_dev->is_vf)
--		return NULL;
--
- 	return rdma_alloc_hw_stats_struct(hns_roce_port_stats_descs,
- 					  ARRAY_SIZE(hns_roce_port_stats_descs),
- 					  RDMA_HW_STATS_DEFAULT_LIFESPAN);
-@@ -576,10 +572,6 @@ static int hns_roce_get_hw_stats(struct ib_device *device,
- 	if (port > hr_dev->caps.num_ports)
- 		return -EINVAL;
- 
--	if (hr_dev->pci_dev->revision <= PCI_REVISION_ID_HIP08 ||
--	    hr_dev->is_vf)
--		return -EOPNOTSUPP;
--
- 	ret = hr_dev->hw->query_hw_counter(hr_dev, stats->value, port,
- 					   &num_counters);
- 	if (ret) {
-@@ -633,8 +625,6 @@ static const struct ib_device_ops hns_roce_dev_ops = {
- 	.query_pkey = hns_roce_query_pkey,
- 	.query_port = hns_roce_query_port,
- 	.reg_user_mr = hns_roce_reg_user_mr,
--	.alloc_hw_port_stats = hns_roce_alloc_hw_port_stats,
--	.get_hw_stats = hns_roce_get_hw_stats,
- 
- 	INIT_RDMA_OBJ_SIZE(ib_ah, hns_roce_ah, ibah),
- 	INIT_RDMA_OBJ_SIZE(ib_cq, hns_roce_cq, ib_cq),
-@@ -643,6 +633,11 @@ static const struct ib_device_ops hns_roce_dev_ops = {
- 	INIT_RDMA_OBJ_SIZE(ib_ucontext, hns_roce_ucontext, ibucontext),
- };
- 
-+static const struct ib_device_ops hns_roce_dev_hw_stats_ops = {
-+	.alloc_hw_port_stats = hns_roce_alloc_hw_port_stats,
-+	.get_hw_stats = hns_roce_get_hw_stats,
-+};
-+
- static const struct ib_device_ops hns_roce_dev_mr_ops = {
- 	.rereg_user_mr = hns_roce_rereg_user_mr,
- };
-@@ -719,6 +714,10 @@ static int hns_roce_register_device(struct hns_roce_dev *hr_dev)
- 	if (hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_XRC)
- 		ib_set_device_ops(ib_dev, &hns_roce_dev_xrcd_ops);
- 
-+	if (hr_dev->pci_dev->revision >= PCI_REVISION_ID_HIP09 &&
-+	    !hr_dev->is_vf)
-+		ib_set_device_ops(ib_dev, &hns_roce_dev_hw_stats_ops);
-+
- 	ib_set_device_ops(ib_dev, hr_dev->hw->hns_roce_dev_ops);
- 	ib_set_device_ops(ib_dev, &hns_roce_dev_ops);
- 	ib_set_device_ops(ib_dev, &hns_roce_dev_restrack_ops);
+ 	/* release firmware */
 -- 
 2.42.0
 
