@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1713331730
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877933309F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7hOCRwA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B939BC433C8;
-	Wed, 15 Nov 2023 19:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GaINoS+4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF46C433C7;
+	Wed, 15 Nov 2023 19:42:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077336;
-	bh=bcHvMbLb7vWkvbEo5/SDstdUijiJi2tPArpK3wdnx+I=;
+	s=korg; t=1700077338;
+	bh=jwxHsmILQz92EeAYMMwWFeP9RY0XsT4VZVKWSvtq3QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C7hOCRwAGlbop/AzBdeu9JwbyO7jPaczQFZkZDhsHN5SvmqEv7XGHSMzEy9aU8dCT
-	 amSRzABo+18Wfw3yIRAcO6U6izB1im91PgKO7bxe8m8GAHVCf3KxxpJ51iG7pqWPWr
-	 FKTwfQs0wyP827M54S+ROhcUm9wuL6gfsnxKkb+w=
+	b=GaINoS+4RXstXhpuHX+77jebzSbgiTf1NLmt8m9BbqLeDyOXbrldqS8PZvq3CIsoN
+	 9ynD0jsa/b2fUG/FaP+DdUW35ArbwSpTbJSTHYif8+dolWl2MXhbYULR8waJynKr9Z
+	 VMLVAKoE2GdNP0r7vbg7C/qP6dv6hcHcyVjCBYPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vaishnav Achath <vaishnav.a@ti.com>,
-	Dhruva Gole <d-gole@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 213/603] spi: omap2-mcspi: Fix hardcoded reference clock
-Date: Wed, 15 Nov 2023 14:12:38 -0500
-Message-ID: <20231115191628.014654206@linuxfoundation.org>
+Subject: [PATCH 6.6 214/603] drm: bridge: samsung-dsim: Initialize ULPS EXIT for i.MX8M DSIM
+Date: Wed, 15 Nov 2023 14:12:39 -0500
+Message-ID: <20231115191628.089386645@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,116 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vaishnav Achath <vaishnav.a@ti.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 2d9f4877988f64f0f336983de65c365b6a7debfb ]
+[ Upstream commit 192948f6a923bedf461b4aa09e70a25cfb8a6041 ]
 
-A hardcoded reference clock of 48 MHz is used to calculate the
-clock divisor values, but the reference clock frequency can be
-different across devices and can be configured which can cause
-a mismatch between the reported frequency and actual SPI clock
-frequency observed. Fix this by fetching the clock rate from
-the clock provider and falling back to hardcoded reference only
-if the clock is not supplied.
+The ULPS EXIT is initialized to 0xaf in downstream BSP as well as older
+revisions of this patchset, in newer revisions of the DSIM patchset it
+was left out and set to 0. Fix it.
 
-Fixes: 2cd7d393f461 ("arm64: dts: ti: k3-am654: Add McSPI DT nodes")
-
-Signed-off-by: Vaishnav Achath <vaishnav.a@ti.com>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Link: https://lore.kernel.org/r/20230926113812.30692-1-vaishnav.a@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 4d562c70c4dc ("drm: bridge: samsung-dsim: Add i.MX8M Mini/Nano support")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230709134827.449185-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-omap2-mcspi.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/bridge/samsung-dsim.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-omap2-mcspi.c b/drivers/spi/spi-omap2-mcspi.c
-index 79888e6c54c25..ddf1c684bcc7d 100644
---- a/drivers/spi/spi-omap2-mcspi.c
-+++ b/drivers/spi/spi-omap2-mcspi.c
-@@ -125,10 +125,12 @@ struct omap2_mcspi {
- 	struct omap2_mcspi_dma	*dma_channels;
- 	struct device		*dev;
- 	struct omap2_mcspi_regs ctx;
-+	struct clk		*ref_clk;
- 	int			fifo_depth;
- 	bool			target_aborted;
- 	unsigned int		pin_dir:1;
- 	size_t			max_xfer_len;
-+	u32			ref_clk_hz;
- };
- 
- struct omap2_mcspi_cs {
-@@ -880,12 +882,12 @@ omap2_mcspi_txrx_pio(struct spi_device *spi, struct spi_transfer *xfer)
- 	return count - c;
- }
- 
--static u32 omap2_mcspi_calc_divisor(u32 speed_hz)
-+static u32 omap2_mcspi_calc_divisor(u32 speed_hz, u32 ref_clk_hz)
- {
- 	u32 div;
- 
- 	for (div = 0; div < 15; div++)
--		if (speed_hz >= (OMAP2_MCSPI_MAX_FREQ >> div))
-+		if (speed_hz >= (ref_clk_hz >> div))
- 			return div;
- 
- 	return 15;
-@@ -897,7 +899,7 @@ static int omap2_mcspi_setup_transfer(struct spi_device *spi,
- {
- 	struct omap2_mcspi_cs *cs = spi->controller_state;
- 	struct omap2_mcspi *mcspi;
--	u32 l = 0, clkd = 0, div, extclk = 0, clkg = 0;
-+	u32 ref_clk_hz, l = 0, clkd = 0, div, extclk = 0, clkg = 0;
- 	u8 word_len = spi->bits_per_word;
- 	u32 speed_hz = spi->max_speed_hz;
- 
-@@ -911,14 +913,15 @@ static int omap2_mcspi_setup_transfer(struct spi_device *spi,
- 	if (t && t->speed_hz)
- 		speed_hz = t->speed_hz;
- 
--	speed_hz = min_t(u32, speed_hz, OMAP2_MCSPI_MAX_FREQ);
--	if (speed_hz < (OMAP2_MCSPI_MAX_FREQ / OMAP2_MCSPI_MAX_DIVIDER)) {
--		clkd = omap2_mcspi_calc_divisor(speed_hz);
--		speed_hz = OMAP2_MCSPI_MAX_FREQ >> clkd;
-+	ref_clk_hz = mcspi->ref_clk_hz;
-+	speed_hz = min_t(u32, speed_hz, ref_clk_hz);
-+	if (speed_hz < (ref_clk_hz / OMAP2_MCSPI_MAX_DIVIDER)) {
-+		clkd = omap2_mcspi_calc_divisor(speed_hz, ref_clk_hz);
-+		speed_hz = ref_clk_hz >> clkd;
- 		clkg = 0;
- 	} else {
--		div = (OMAP2_MCSPI_MAX_FREQ + speed_hz - 1) / speed_hz;
--		speed_hz = OMAP2_MCSPI_MAX_FREQ / div;
-+		div = (ref_clk_hz + speed_hz - 1) / speed_hz;
-+		speed_hz = ref_clk_hz / div;
- 		clkd = (div - 1) & 0xf;
- 		extclk = (div - 1) >> 4;
- 		clkg = OMAP2_MCSPI_CHCONF_CLKG;
-@@ -1448,8 +1451,6 @@ static int omap2_mcspi_probe(struct platform_device *pdev)
- 	ctlr->cleanup = omap2_mcspi_cleanup;
- 	ctlr->target_abort = omap2_mcspi_target_abort;
- 	ctlr->dev.of_node = node;
--	ctlr->max_speed_hz = OMAP2_MCSPI_MAX_FREQ;
--	ctlr->min_speed_hz = OMAP2_MCSPI_MAX_FREQ >> 15;
- 	ctlr->use_gpio_descriptors = true;
- 
- 	platform_set_drvdata(pdev, ctlr);
-@@ -1519,6 +1520,14 @@ static int omap2_mcspi_probe(struct platform_device *pdev)
- 		goto free_ctlr;
- 	}
- 
-+	mcspi->ref_clk = devm_clk_get_optional_enabled(&pdev->dev, NULL);
-+	if (mcspi->ref_clk)
-+		mcspi->ref_clk_hz = clk_get_rate(mcspi->ref_clk);
-+	else
-+		mcspi->ref_clk_hz = OMAP2_MCSPI_MAX_FREQ;
-+	ctlr->max_speed_hz = mcspi->ref_clk_hz;
-+	ctlr->min_speed_hz = mcspi->ref_clk_hz >> 15;
-+
- 	pm_runtime_use_autosuspend(&pdev->dev);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, SPI_AUTOSUSPEND_TIMEOUT);
- 	pm_runtime_enable(&pdev->dev);
+diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
+index cf777bdb25d2a..6f2ca74238d14 100644
+--- a/drivers/gpu/drm/bridge/samsung-dsim.c
++++ b/drivers/gpu/drm/bridge/samsung-dsim.c
+@@ -385,7 +385,7 @@ static const unsigned int imx8mm_dsim_reg_values[] = {
+ 	[RESET_TYPE] = DSIM_SWRST,
+ 	[PLL_TIMER] = 500,
+ 	[STOP_STATE_CNT] = 0xf,
+-	[PHYCTRL_ULPS_EXIT] = 0,
++	[PHYCTRL_ULPS_EXIT] = DSIM_PHYCTRL_ULPS_EXIT(0xaf),
+ 	[PHYCTRL_VREG_LP] = 0,
+ 	[PHYCTRL_SLEW_UP] = 0,
+ 	[PHYTIMING_LPX] = DSIM_PHYTIMING_LPX(0x06),
 -- 
 2.42.0
 
