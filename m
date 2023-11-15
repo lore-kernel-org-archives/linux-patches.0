@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1676343AD4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBC043AD4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPEnSz3y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C351AC4AF7E;
-	Wed, 15 Nov 2023 20:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBNgMKFc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E461C4AF75;
+	Wed, 15 Nov 2023 20:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081423;
-	bh=tFQEikfzm5Gv5BTrx1UxV0pI+HtNCE8KTm3daL/qWUI=;
+	s=korg; t=1700081425;
+	bh=4aTZj3HIGlHREWlOC3pWSaCQrEMg7Ce8FU3eNfHdfpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DPEnSz3yOK6bCKqjDYDGxYNtoI0DI8zONKhLJJzWI3R7DTduRmp35d7hESf/y+WVR
-	 ++ir8JoRro6PYVfURgQjCIInABQwePYibA2uBKFnBZOlrx4RMJnIg18gm9XjchIbOl
-	 y5PCbbouqStMBTTTVA3t2JQuIhbM4noYpFY0v/5Q=
+	b=cBNgMKFcSFKgqpsb7XUKvwsXjdOgugN0HRs32GQhAUBe3b2Thy1dSjkEGo687NAuX
+	 GlluF3GBPpI/qTek4XCFLQXDoGRmHiDC/FU4H+TwFrvoem7Q/nnMA9fozGiAWuJiSa
+	 aLsl7xR/4VOaZLLUEkq4j2B9kVBp1xdlcb4zvJ6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mars Cheng <marscheng@google.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Yen-lin Lai <yenlinlai@google.com>,
-	Daniel Mentz <danielmentz@google.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 146/244] scsi: ufs: core: Leave space for \0 in utf8 desc string
-Date: Wed, 15 Nov 2023 15:35:38 -0500
-Message-ID: <20231115203557.094506516@linuxfoundation.org>
+Subject: [PATCH 5.15 147/244] RDMA/hfi1: Workaround truncation compilation error
+Date: Wed, 15 Nov 2023 15:35:39 -0500
+Message-ID: <20231115203557.153455772@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -40,52 +37,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Mentz <danielmentz@google.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit a75a16c62a2540f11eeae4f2b50e95deefb652ea ]
+[ Upstream commit d4b2d165714c0ce8777d5131f6e0aad617b7adc4 ]
 
-utf16s_to_utf8s does not NULL terminate the output string. For us to be
-able to add a NULL character when utf16s_to_utf8s returns, we need to make
-sure that there is space for such NULL character at the end of the output
-buffer. We can achieve this by passing an output buffer size to
-utf16s_to_utf8s that is one character less than what we allocated.
+Increase name array to be large enough to overcome the following
+compilation error.
 
-Other call sites of utf16s_to_utf8s appear to be using the same technique
-where they artificially reduce the buffer size by one to leave space for a
-NULL character or line feed character.
+drivers/infiniband/hw/hfi1/efivar.c: In function ‘read_hfi1_efi_var’:
+drivers/infiniband/hw/hfi1/efivar.c:124:44: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
+  124 |         snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |                                            ^
+drivers/infiniband/hw/hfi1/efivar.c:124:9: note: ‘snprintf’ output 2 or more bytes (assuming 65) into a destination of size 64
+  124 |         snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/infiniband/hw/hfi1/efivar.c:133:52: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
+  133 |                 snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |                                                    ^
+drivers/infiniband/hw/hfi1/efivar.c:133:17: note: ‘snprintf’ output 2 or more bytes (assuming 65) into a destination of size 64
+  133 |                 snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+make[6]: *** [scripts/Makefile.build:243: drivers/infiniband/hw/hfi1/efivar.o] Error 1
 
-Fixes: 4b828fe156a6 ("scsi: ufs: revamp string descriptor reading")
-Reviewed-by: Mars Cheng <marscheng@google.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Yen-lin Lai <yenlinlai@google.com>
-Signed-off-by: Daniel Mentz <danielmentz@google.com>
-Link: https://lore.kernel.org/r/20231017182026.2141163-1-danielmentz@google.com
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: c03c08d50b3d ("IB/hfi1: Check upper-case EFI variables")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/238fa39a8fd60e87a5ad7e1ca6584fcdf32e9519.1698159993.git.leonro@nvidia.com
+Acked-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufshcd.c | 2 +-
+ drivers/infiniband/hw/hfi1/efivar.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index f48036f09eab5..e78461f66400c 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -3465,7 +3465,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
- 		 */
- 		ret = utf16s_to_utf8s(uc_str->uc,
- 				      uc_str->len - QUERY_DESC_HDR_SIZE,
--				      UTF16_BIG_ENDIAN, str, ascii_len);
-+				      UTF16_BIG_ENDIAN, str, ascii_len - 1);
+diff --git a/drivers/infiniband/hw/hfi1/efivar.c b/drivers/infiniband/hw/hfi1/efivar.c
+index f275dd1abed85..7a3caf2cd9071 100644
+--- a/drivers/infiniband/hw/hfi1/efivar.c
++++ b/drivers/infiniband/hw/hfi1/efivar.c
+@@ -110,7 +110,7 @@ int read_hfi1_efi_var(struct hfi1_devdata *dd, const char *kind,
+ 		      unsigned long *size, void **return_data)
+ {
+ 	char prefix_name[64];
+-	char name[64];
++	char name[128];
+ 	int result;
+ 	int i;
  
- 		/* replace non-printable or non-ASCII characters with spaces */
- 		for (i = 0; i < ret; i++)
 -- 
 2.42.0
 
