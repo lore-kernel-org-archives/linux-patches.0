@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AAD3A8DB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D4C3A8DB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKeDnAlq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C276AC433C9;
-	Wed, 15 Nov 2023 19:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmfLSG+q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C78BC433C8;
+	Wed, 15 Nov 2023 19:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076056;
-	bh=/Q13S/NuJUrwJBmVRDZgU4x+jKl3vpbiJIMJh/+KJe8=;
+	s=korg; t=1700076057;
+	bh=mx991eoDVtKvZrl4Y9OxiM6dudR0VA4jqByf8FWa8ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XKeDnAlqsBWptXZZoydyX1q21WrywdxG2J9oa38/6wSFn+UjqmgKF0RfJawfuVcv3
-	 iSSFjYr5/ZLl/ojDM9PJ5olMzWm5Gwcu7dImW7crLCR6jKerNEkBL2d8V/Wkd00cTv
-	 hjhGshbFpwSgQ/iCEJbjX+w4AlXPnm/Ecqb5S1J0=
+	b=LmfLSG+qcj2UXYgQsHYoHXp4uDUo4m5a6X8P0Dkj76HYGSyWLKurl+94Vco7wjY5l
+	 3BsD3o05DhLQ8Rd8mWWpgXeZtTsmGr/fJNAhiyCuiNOyNrciE6MOXxCYzElMqoXHuY
+	 34CfbN5zRB/q0sP08pQMmLe4KVo91XGg/eExXrVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Andrii Staikov <andrii.staikov@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 047/550] wifi: iwlwifi: dont use an uninitialized variable
-Date: Wed, 15 Nov 2023 14:10:31 -0500
-Message-ID: <20231115191603.968711639@linuxfoundation.org>
+Subject: [PATCH 6.5 048/550] i40e: fix potential memory leaks in i40e_remove()
+Date: Wed, 15 Nov 2023 14:10:32 -0500
+Message-ID: <20231115191604.033253877@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,40 +44,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Andrii Staikov <andrii.staikov@intel.com>
 
-[ Upstream commit c46fcc6e43d617252945e706f04e5f82a59f2b8e ]
+[ Upstream commit 5ca636d927a106780451d957734f02589b972e2b ]
 
-Don't use variable err uninitialized.
-The reason for removing the check instead of initializing it
-in the beginning of the function is because that way
-static checkers will be able to catch issues if we do something
-wrong in the future.
+Instead of freeing memory of a single VSI, make sure
+the memory for all VSIs is cleared before releasing VSIs.
+Add releasing of their resources in a loop with the iteration
+number equal to the number of allocated VSIs.
 
-Fixes: bf976c814c86 ("wifi: iwlwifi: mvm: implement link change ops")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230830112059.431b01bd8779.I31fc4ab35f551b85a10f974a6b18fc30191e9c35@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 41c445ff0f48 ("i40e: main driver core")
+Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-index b719843e94576..778a311b500bc 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-@@ -1089,9 +1089,6 @@ iwl_mvm_mld_change_vif_links(struct ieee80211_hw *hw,
- 		}
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index a86bfa3bba74a..fc9ebef70bd9d 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -16324,11 +16324,15 @@ static void i40e_remove(struct pci_dev *pdev)
+ 			i40e_switch_branch_release(pf->veb[i]);
  	}
  
--	if (err)
--		goto out_err;
--
- 	err = 0;
- 	if (new_links == 0) {
- 		mvmvif->link[0] = &mvmvif->deflink;
+-	/* Now we can shutdown the PF's VSI, just before we kill
++	/* Now we can shutdown the PF's VSIs, just before we kill
+ 	 * adminq and hmc.
+ 	 */
+-	if (pf->vsi[pf->lan_vsi])
+-		i40e_vsi_release(pf->vsi[pf->lan_vsi]);
++	for (i = pf->num_alloc_vsi; i--;)
++		if (pf->vsi[i]) {
++			i40e_vsi_close(pf->vsi[i]);
++			i40e_vsi_release(pf->vsi[i]);
++			pf->vsi[i] = NULL;
++		}
+ 
+ 	i40e_cloud_filter_exit(pf);
+ 
 -- 
 2.42.0
 
