@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F69E31730
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B703307B
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5cRp/6X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C876AC433C8;
-	Wed, 15 Nov 2023 19:45:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ozk0agOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5412C433CC;
+	Wed, 15 Nov 2023 19:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077516;
-	bh=uQ2KDbkNx3ZDknNRS8CIEbofQJc5yDOEwzExSDyNqXs=;
+	s=korg; t=1700077517;
+	bh=iKgbKtLGFZvc15XD7W5o05V96XyM2x49ySwDajLlrwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R5cRp/6XWyuK6a3Zrb1GA0Cf4abuO9p+HoF24/5JGfhhlCe8sCHnuwsCfUwo1W2lM
-	 gE/GHFPeK3E8Dx3tNlv7PKiUa0xeyW1lirS0WmugXRX0l5PvJOhwBH4JMgnRlkUcEy
-	 itYtivfhVVUkXr0eAWbusQv6s+8yspZncI6TXsgY=
+	b=Ozk0agOEjHdsCfMSeM8UXvEdMxAWRwwNEbc0Qa4Es/xCk8qmzJnPpG9HCASuneFzU
+	 vHPAwMTWJ79IRNRIOoA++dMT0K5sRnY4rUFidPPvMYjj1ww/K5RMxeu3ixsxjwPURW
+	 su/aEtYrpnuooOPJ/K0HmbioqtwTvD4xoe+nNL/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Ser <contact@emersion.fr>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 325/603] soc: qcom: pmic_glink: fix connector type to be DisplayPort
-Date: Wed, 15 Nov 2023 14:14:30 -0500
-Message-ID: <20231115191635.997548588@linuxfoundation.org>
+Subject: [PATCH 6.6 326/603] ARM: dts: BCM5301X: Explicitly disable unused switch CPU ports
+Date: Wed, 15 Nov 2023 14:14:31 -0500
+Message-ID: <20231115191636.068131516@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -38,48 +36,426 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit f86955f2b1ff9fbc7ae4f6595112b2f896885366 ]
+[ Upstream commit 473baeab929444295b0530f8766e4becb6a08973 ]
 
-As it was pointed out by Simon Ser, the DRM_MODE_CONNECTOR_USB connector
-is reserved for the GUD devices. Other drivers (i915, amdgpu) use
-DRM_MODE_CONNECTOR_DisplayPort even if the DP stream is handled by the
-USB-C altmode. While we are still working on implementing the proper way
-to let userspace know that the DP is wrapped into USB-C, change
-connector type to be DRM_MODE_CONNECTOR_DisplayPort.
+When redescribing ports I assumed that missing "label" (like "cpu")
+means switch port isn't used. That was incorrect and I realized my
+change made Linux always use the first (5) CPU port (there are 3 of
+them).
 
-Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
-Cc: Simon Ser <contact@emersion.fr>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Acked-by: Simon Ser <contact@emersion.fr>
-Link: https://lore.kernel.org/r/20231010225229.77027-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+While above should technically be possible it often isn't correct:
+1. Non-default switch ports are often connected to Ethernet interfaces
+   not fully covered by vendor setup (they may miss MACs)
+2. On some devices non-default ports require specifying fixed link
+
+This fixes network connectivity for some devices. It was reported &
+tested for Netgear R8000. It also affects Linksys EA9200 with its
+downstream DTS.
+
+Fixes: ba4aebce23b2 ("ARM: dts: BCM5301X: Describe switch ports in the main DTS")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/r/20231013103314.10306-1-zajec5@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/pmic_glink_altmode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi  | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts     | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts     | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts      | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts    | 8 ++++++++
+ .../boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts      | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts       | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts       | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm953012er.dts                | 8 ++++++++
+ 20 files changed, 160 insertions(+)
 
-diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
-index d05e0d6edf493..974c14d1e0bfc 100644
---- a/drivers/soc/qcom/pmic_glink_altmode.c
-+++ b/drivers/soc/qcom/pmic_glink_altmode.c
-@@ -465,7 +465,7 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
- 		alt_port->bridge.funcs = &pmic_glink_altmode_bridge_funcs;
- 		alt_port->bridge.of_node = to_of_node(fwnode);
- 		alt_port->bridge.ops = DRM_BRIDGE_OP_HPD;
--		alt_port->bridge.type = DRM_MODE_CONNECTOR_USB;
-+		alt_port->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
+diff --git a/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi b/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi
+index 42bcbf10957c4..9f9084269ef58 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi
+@@ -181,5 +181,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts
+index e04d2e5ea51aa..72e960c888ac8 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts
++++ b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts
+@@ -85,5 +85,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts
+index a399800139d9c..750e17482371c 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts
++++ b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts
+@@ -88,5 +88,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts b/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts
+index fad3473810a2e..2bdbc7d18b0eb 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts
++++ b/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts
+@@ -122,5 +122,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts b/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts
+index 5b2b7b8b3b123..b226bef3369cf 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts
++++ b/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts
+@@ -145,6 +145,14 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
  
- 		ret = devm_drm_bridge_add(dev, &alt_port->bridge);
- 		if (ret)
+diff --git a/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts b/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts
+index d0a26b643b82f..192b8db5a89c3 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts
+@@ -145,5 +145,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts
+index 9f21d6d6d35b7..0198b5f9e4a75 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts
+@@ -81,5 +81,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts
+index 2561072917021..73ff1694a4a0b 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts
+@@ -148,5 +148,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts b/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts
+index 707c561703ed8..55fc9f44cbc7f 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts
++++ b/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts
+@@ -227,6 +227,14 @@ port@4 {
+ 			label = "wan";
+ 		};
+ 
++		port@5 {
++			status = "disabled";
++		};
++
++		port@7 {
++			status = "disabled";
++		};
++
+ 		port@8 {
+ 			label = "cpu";
+ 		};
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts
+index c914569ddd5ec..e6d26987865d0 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts
+@@ -144,6 +144,14 @@ port@4 {
+ 			label = "wan";
+ 		};
+ 
++		port@5 {
++			status = "disabled";
++		};
++
++		port@7 {
++			status = "disabled";
++		};
++
+ 		port@8 {
+ 			label = "cpu";
+ 		};
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts
+index f050acbea0b20..3124dfd01b944 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts
+@@ -192,6 +192,14 @@ port@4 {
+ 			label = "wan";
+ 		};
+ 
++		port@5 {
++			status = "disabled";
++		};
++
++		port@7 {
++			status = "disabled";
++		};
++
+ 		port@8 {
+ 			label = "cpu";
+ 			phy-mode = "rgmii";
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts
+index e8991d4e248ce..e374062eb5b76 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts
+@@ -107,5 +107,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts
+index afc635c8cdebb..badafa024d24c 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts
+@@ -120,5 +120,13 @@ port@1 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts
+index 7cfa4607ef311..cf95af9db1e66 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts
+@@ -107,5 +107,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts
+index d55e10095eae7..992c19e1cfa17 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts
+@@ -75,5 +75,13 @@ port@0 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts
+index ccf031c0e276d..4d0ba315a2049 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts
+@@ -147,5 +147,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts
+index e28f7a3501179..83c429afc2974 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts
+@@ -158,5 +158,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts b/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts
+index 03ad614e6b721..0bf5106f7012c 100644
+--- a/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts
++++ b/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts
+@@ -124,6 +124,14 @@ fixed-link {
+ 				full-duplex;
+ 			};
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+ 
+diff --git a/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts b/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts
+index 26c12bfb0bdd4..25eeacf6a2484 100644
+--- a/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts
++++ b/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts
+@@ -185,6 +185,14 @@ fixed-link {
+ 				full-duplex;
+ 			};
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+ 
+diff --git a/arch/arm/boot/dts/broadcom/bcm953012er.dts b/arch/arm/boot/dts/broadcom/bcm953012er.dts
+index 4fe3b36533767..d939ec9f4a9e7 100644
+--- a/arch/arm/boot/dts/broadcom/bcm953012er.dts
++++ b/arch/arm/boot/dts/broadcom/bcm953012er.dts
+@@ -84,6 +84,14 @@ port@5 {
+ 			label = "cpu";
+ 			ethernet = <&gmac0>;
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+ 
 -- 
 2.42.0
 
