@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D0E37170
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116983EA7B
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2izEPa8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EEAC433C9;
-	Wed, 15 Nov 2023 19:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4UrbVvP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9269FC433CA;
+	Wed, 15 Nov 2023 19:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076401;
-	bh=iwpeJ8JJhgsfVucosI/GXyy+U/mB6O8xoS+jQIPUUkU=;
+	s=korg; t=1700076402;
+	bh=/qzDyTHAyVjCRqyNNH3F8mKKI34rG7DxvdGyyGHtsGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y2izEPa8COF1uA9emidJ1MiwZAHyCI2DFF4j3xreLlx6Vlr0tG/mv21BjT1wRVvHc
-	 fkBqFPnC0/stJC4uEKqRnzeUhJanCA0HsTiepkJ7JPSUtIbpMPrkXL6GIgJn7gPQgA
-	 rzxDHeer2cwmpJ5K6OsC3+GKB0maFwuEo8DaiqHk=
+	b=D4UrbVvPzNnDIhWKdeKrXfTw7ueVqdaMA3c0EPD5t2TfsmqTx7RsJROKgyK3CSig5
+	 hmp9hgaYV9EmsUluSGwJ/3EBhsUf+baL+oXBtGDK11RAerpAIzvgYOT9zIkLfoXLVv
+	 ITm2zPyg0Aq8y4YsqhBFm2oiF9gOOcKR53G4q5sM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 268/550] arm64: dts: qcom: qrb2210-rb1: Swap UART index
-Date: Wed, 15 Nov 2023 14:14:12 -0500
-Message-ID: <20231115191619.297054580@linuxfoundation.org>
+Subject: [PATCH 6.5 269/550] arm64: dts: qcom: sc7280: drop incorrect EUD port on SoC side
+Date: Wed, 15 Nov 2023 14:14:13 -0500
+Message-ID: <20231115191619.369712342@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,49 +45,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 973c015facabcbd320063648010942c51992c1a1 ]
+[ Upstream commit 39c8af78cbefb8c71a5ad1fa088e761ef418f0a0 ]
 
-Newer RB1 board revisions have a debug UART on QUP0. Sadly, it looks
-like even when ordering one in retail, customers receive prototype
-boards with "Enginering Sample" written on them.
+Qualcomm Embedded USB Debugger (EUD) second port should point to Type-C
+USB connector.  Such connector was defined directly in root node of
+sc7280.dtsi which is clearly wrong.  SC7280 is a chip, so physically it
+does not have USB Type-C port.  The connector is usually accessible
+through some USB switch or controller.
 
-Use QUP4 for UART to make all known RB1 boards boot.
+Doug Anderson said that he wasn't ever able to use EUD on Herobrine
+boards, probably because of invalid or missing DTS description - DTS is
+saying EUD is on usb_2 node, which is connected to a USB Hub, not to the
+Type-C port.
 
-Fixes: e18771961336 ("arm64: dts: qcom: Add initial QTI RB1 device tree")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230906-topic-rb1_features_sans_icc-v1-1-e92ce6fbde16@linaro.org
+Correct the EUD/USB connector topology by removing the top-level fake
+USB connector and EUD port pointing to it, and disabling the incomplete
+EUD device node.
+
+This fixes also dtbs_check warnings:
+
+  sc7280-herobrine-crd.dtb: connector: ports:port@0: 'reg' is a required property
+
+Link: https://lore.kernel.org/all/CAD=FV=Xt26=rBf99mzkAuwwtb2f-jnKtnHaEhXnthz0a5zke4Q@mail.gmail.com/
+Fixes: 9ee402ccfeb1 ("arm64: dts: qcom: sc7280: Fix EUD dt node syntax")
+Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20230820075626.22600-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-index ef36160932890..7eca89dc46aae 100644
---- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-@@ -13,7 +13,7 @@ / {
- 	compatible = "qcom,qrb2210-rb1", "qcom,qrb2210", "qcom,qcm2290";
- 
- 	aliases {
--		serial0 = &uart0;
-+		serial0 = &uart4;
- 		sdhc1 = &sdhc_1;
- 		sdhc2 = &sdhc_2;
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 20231d80c504b..91bb58c6b1a61 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -649,18 +649,6 @@ cpu7_opp_3014mhz: opp-3014400000 {
+ 		};
  	};
-@@ -94,7 +94,7 @@ key_volp_n: key-volp-n-state {
- };
  
- /* UART connected to the Micro-USB port via a FTDI chip */
--&uart0 {
-+&uart4 {
- 	compatible = "qcom,geni-debug-uart";
- 	status = "okay";
- };
+-	eud_typec: connector {
+-		compatible = "usb-c-connector";
+-
+-		ports {
+-			port@0 {
+-				con_eud: endpoint {
+-					remote-endpoint = <&eud_con>;
+-				};
+-			};
+-		};
+-	};
+-
+ 	memory@80000000 {
+ 		device_type = "memory";
+ 		/* We expect the bootloader to fill in the size */
+@@ -3625,6 +3613,8 @@ eud: eud@88e0000 {
+ 			      <0 0x88e2000 0 0x1000>;
+ 			interrupts-extended = <&pdc 11 IRQ_TYPE_LEVEL_HIGH>;
+ 
++			status = "disabled";
++
+ 			ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+@@ -3635,13 +3625,6 @@ eud_ep: endpoint {
+ 						remote-endpoint = <&usb2_role_switch>;
+ 					};
+ 				};
+-
+-				port@1 {
+-					reg = <1>;
+-					eud_con: endpoint {
+-						remote-endpoint = <&con_eud>;
+-					};
+-				};
+ 			};
+ 		};
+ 
 -- 
 2.42.0
 
