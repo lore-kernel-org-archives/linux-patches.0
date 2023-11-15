@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2CB3DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4563DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/u/90dC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBDEC433C7;
-	Wed, 15 Nov 2023 20:04:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvvomgO8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2996C433C9;
+	Wed, 15 Nov 2023 20:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078675;
-	bh=7XFfwt/udItIfFWhnGUonFDn7UU6E29v4bJc5NeY2y8=;
+	s=korg; t=1700078677;
+	bh=63bSL+9TP1jS59sodFJ6Y3en5iCkYkNfhzTkXs38ghg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/u/90dCO7ibblQy9xt15Out51cV8MHw5fUAPdUP/mBWD7swL4u7OhfaoAoVLoSxP
-	 cqX/2Io+HOT9pb/9fFMwRVCqphHOf9ubtgzUKYkhyJ6vdqmt1HSDB8P0IQ5pQWQbvT
-	 N09FgcF38+Zu9s4bmBwPGzQLKwGXiNppZLZkXg8k=
+	b=qvvomgO88jx3NGZUklteX8u5jMkI2mrkFbMFjRJXPidU6Tbc8hmh9wTICuGddcTus
+	 dnNUK1+nv+5zzkyUyG0KOV2aS5HhExL28JCXr8aIQQWLwkC7bMi7N9Zj3+TfhaOrII
+	 yev4mc15cDjLrK5lvo1nPCXDTDVqYwloGhby52pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	George Shuklin <george.shuklin@gmail.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 40/45] dccp/tcp: Call security_inet_conn_request() after setting IPv6 addresses.
-Date: Wed, 15 Nov 2023 14:33:17 -0500
-Message-ID: <20231115191421.932938604@linuxfoundation.org>
+Subject: [PATCH 4.14 41/45] tg3: power down device only on SYSTEM_POWER_OFF
+Date: Wed, 15 Nov 2023 14:33:18 -0500
+Message-ID: <20231115191421.993227845@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191419.641552204@linuxfoundation.org>
 References: <20231115191419.641552204@linuxfoundation.org>
@@ -43,82 +44,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: George Shuklin <george.shuklin@gmail.com>
 
-[ Upstream commit 23be1e0e2a83a8543214d2599a31d9a2185a796b ]
+[ Upstream commit 9fc3bc7643341dc5be7d269f3d3dbe441d8d7ac3 ]
 
-Initially, commit 4237c75c0a35 ("[MLSXFRM]: Auto-labeling of child
-sockets") introduced security_inet_conn_request() in some functions
-where reqsk is allocated.  The hook is added just after the allocation,
-so reqsk's IPv6 remote address was not initialised then.
+Dell R650xs servers hangs on reboot if tg3 driver calls
+tg3_power_down.
 
-However, SELinux/Smack started to read it in netlbl_req_setattr()
-after commit e1adea927080 ("calipso: Allow request sockets to be
-relabelled by the lsm.").
+This happens only if network adapters (BCM5720 for R650xs) were
+initialized using SNP (e.g. by booting ipxe.efi).
 
-Commit 284904aa7946 ("lsm: Relocate the IPv4 security_inet_conn_request()
-hooks") fixed that kind of issue only in TCPv4 because IPv6 labeling was
-not supported at that time.  Finally, the same issue was introduced again
-in IPv6.
+The actual problem is on Dell side, but this fix allows servers
+to come back alive after reboot.
 
-Let's apply the same fix on DCCPv6 and TCPv6.
-
-Fixes: e1adea927080 ("calipso: Allow request sockets to be relabelled by the lsm.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: George Shuklin <george.shuklin@gmail.com>
+Fixes: 2ca1c94ce0b6 ("tg3: Disable tg3 device on system reboot to avoid triggering AER")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20231103115029.83273-1-george.shuklin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/ipv6.c       | 6 +++---
- net/ipv6/syncookies.c | 7 ++++---
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-index 9b8c6cf0e5eee..72ceefbf23120 100644
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -349,15 +349,15 @@ static int dccp_v6_conn_request(struct sock *sk, struct sk_buff *skb)
- 	if (dccp_parse_options(sk, dreq, skb))
- 		goto drop_and_free;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index bc046153edee4..fa89d71336c6a 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -18167,7 +18167,8 @@ static void tg3_shutdown(struct pci_dev *pdev)
+ 	if (netif_running(dev))
+ 		dev_close(dev);
  
--	if (security_inet_conn_request(sk, skb, req))
--		goto drop_and_free;
--
- 	ireq = inet_rsk(req);
- 	ireq->ir_v6_rmt_addr = ipv6_hdr(skb)->saddr;
- 	ireq->ir_v6_loc_addr = ipv6_hdr(skb)->daddr;
- 	ireq->ireq_family = AF_INET6;
- 	ireq->ir_mark = inet_request_mark(sk, skb);
+-	tg3_power_down(tp);
++	if (system_state == SYSTEM_POWER_OFF)
++		tg3_power_down(tp);
  
-+	if (security_inet_conn_request(sk, skb, req))
-+		goto drop_and_free;
-+
- 	if (ipv6_opt_accepted(sk, skb, IP6CB(skb)) ||
- 	    np->rxopt.bits.rxinfo || np->rxopt.bits.rxoinfo ||
- 	    np->rxopt.bits.rxhlim || np->rxopt.bits.rxohlim) {
-diff --git a/net/ipv6/syncookies.c b/net/ipv6/syncookies.c
-index d1bfdb9c2f2da..3a54d3947052e 100644
---- a/net/ipv6/syncookies.c
-+++ b/net/ipv6/syncookies.c
-@@ -183,14 +183,15 @@ struct sock *cookie_v6_check(struct sock *sk, struct sk_buff *skb)
- 	treq = tcp_rsk(req);
- 	treq->tfo_listener = false;
+ 	rtnl_unlock();
  
--	if (security_inet_conn_request(sk, skb, req))
--		goto out_free;
--
- 	req->mss = mss;
- 	ireq->ir_rmt_port = th->source;
- 	ireq->ir_num = ntohs(th->dest);
- 	ireq->ir_v6_rmt_addr = ipv6_hdr(skb)->saddr;
- 	ireq->ir_v6_loc_addr = ipv6_hdr(skb)->daddr;
-+
-+	if (security_inet_conn_request(sk, skb, req))
-+		goto out_free;
-+
- 	if (ipv6_opt_accepted(sk, skb, &TCP_SKB_CB(skb)->header.h6) ||
- 	    np->rxopt.bits.rxinfo || np->rxopt.bits.rxoinfo ||
- 	    np->rxopt.bits.rxhlim || np->rxopt.bits.rxohlim) {
 -- 
 2.42.0
 
