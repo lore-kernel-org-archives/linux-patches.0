@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94BA2FB3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E0E28DB1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzkhn/7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B168C433C8;
-	Wed, 15 Nov 2023 19:21:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuNVfqbl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB6BC433CB;
+	Wed, 15 Nov 2023 19:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076083;
-	bh=oYhAJ6fpWc+1X99dmGMNbmwHcd/XnszLb5STI4lWuxw=;
+	s=korg; t=1700076085;
+	bh=0PPe3RHY/B+XNnShMjtgSmFShBF+7m62+0p9gZ22yzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jzkhn/7kl7r1n3hKF9TSbwDOi3dMMNcFWVPe2M55/2WSQvTr9QN0Yb/bLi9P/RBR/
-	 YYjtB+K43hIBN4a2JBtKL36mT20k+mlT/LHya0IQUCj+UraLVq17s3594ZCWtdrRKc
-	 brXsbkGfAJu3HwW7TTY3bEyjNp4nliFQ7yPiY4zI=
+	b=wuNVfqblun28RGAe0f/yGMluzsOBh5lMgL+KPMjis7sMBhKXbTFFBrx/rTtM/ZJJ8
+	 7LLb24BT67q02RnluYkFSRbLYuwrtw9MKnBTLkp0m9A22Ok+XweWNcSZysLA1yyH6z
+	 1pI4yaJTVFBpOcHinv5pAdlgcTm3rjUKESAEbThQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Savkov <asavkov@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Aananth V <aananthv@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 066/550] selftests/bpf: Skip module_fentry_shadow test when bpf_testmod is not available
-Date: Wed, 15 Nov 2023 14:10:50 -0500
-Message-ID: <20231115191605.266922852@linuxfoundation.org>
+Subject: [PATCH 6.5 067/550] tcp: call tcp_try_undo_recovery when an RTOd TFO SYNACK is ACKed
+Date: Wed, 15 Nov 2023 14:10:51 -0500
+Message-ID: <20231115191605.335021022@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,37 +45,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Savkov <asavkov@redhat.com>
+From: Aananth V <aananthv@google.com>
 
-[ Upstream commit 971f7c32147f2d0953a815a109b22b8ed45949d4 ]
+[ Upstream commit e326578a21414738de45f77badd332fb00bd0f58 ]
 
-This test relies on bpf_testmod, so skip it if the module is not available.
+For passive TCP Fast Open sockets that had SYN/ACK timeout and did not
+send more data in SYN_RECV, upon receiving the final ACK in 3WHS, the
+congestion state may awkwardly stay in CA_Loss mode unless the CA state
+was undone due to TCP timestamp checks. However, if
+tcp_rcv_synrecv_state_fastopen() decides not to undo, then we should
+enter CA_Open, because at that point we have received an ACK covering
+the retransmitted SYNACKs. Currently, the icsk_ca_state is only set to
+CA_Open after we receive an ACK for a data-packet. This is because
+tcp_ack does not call tcp_fastretrans_alert (and tcp_process_loss) if
+!prior_packets
 
-Fixes: aa3d65de4b900 ("bpf/selftests: Test fentry attachment to shadowed functions")
-Signed-off-by: Artem Savkov <asavkov@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230914124928.340701-1-asavkov@redhat.com
+Note that tcp_process_loss() calls tcp_try_undo_recovery(), so having
+tcp_rcv_synrecv_state_fastopen() decide that if we're in CA_Loss we
+should call tcp_try_undo_recovery() is consistent with that, and
+low risk.
+
+Fixes: dad8cea7add9 ("tcp: fix TFO SYNACK undo to avoid double-timestamp-undo")
+Signed-off-by: Aananth V <aananthv@google.com>
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Yuchung Cheng <ycheng@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/bpf/prog_tests/module_fentry_shadow.c  | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv4/tcp_input.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/module_fentry_shadow.c b/tools/testing/selftests/bpf/prog_tests/module_fentry_shadow.c
-index c7636e18b1ebd..aa9f67eb1c95b 100644
---- a/tools/testing/selftests/bpf/prog_tests/module_fentry_shadow.c
-+++ b/tools/testing/selftests/bpf/prog_tests/module_fentry_shadow.c
-@@ -61,6 +61,11 @@ void test_module_fentry_shadow(void)
- 	int link_fd[2] = {};
- 	__s32 btf_id[2] = {};
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 7d544f965b264..908db91f7b4cd 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -6434,22 +6434,23 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
  
-+	if (!env.has_testmod) {
-+		test__skip();
-+		return;
-+	}
-+
- 	LIBBPF_OPTS(bpf_prog_load_opts, load_opts,
- 		.expected_attach_type = BPF_TRACE_FENTRY,
- 	);
+ static void tcp_rcv_synrecv_state_fastopen(struct sock *sk)
+ {
++	struct tcp_sock *tp = tcp_sk(sk);
+ 	struct request_sock *req;
+ 
+ 	/* If we are still handling the SYNACK RTO, see if timestamp ECR allows
+ 	 * undo. If peer SACKs triggered fast recovery, we can't undo here.
+ 	 */
+-	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss)
+-		tcp_try_undo_loss(sk, false);
++	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss && !tp->packets_out)
++		tcp_try_undo_recovery(sk);
+ 
+ 	/* Reset rtx states to prevent spurious retransmits_timed_out() */
+-	tcp_sk(sk)->retrans_stamp = 0;
++	tp->retrans_stamp = 0;
+ 	inet_csk(sk)->icsk_retransmits = 0;
+ 
+ 	/* Once we leave TCP_SYN_RECV or TCP_FIN_WAIT_1,
+ 	 * we no longer need req so release it.
+ 	 */
+-	req = rcu_dereference_protected(tcp_sk(sk)->fastopen_rsk,
++	req = rcu_dereference_protected(tp->fastopen_rsk,
+ 					lockdep_sock_is_held(sk));
+ 	reqsk_fastopen_remove(sk, req, false);
+ 
 -- 
 2.42.0
 
