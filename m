@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA623C478
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCCE3BB48
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="co68fYKc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC99C433C7;
-	Wed, 15 Nov 2023 19:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dddgETw9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCBB0C433C9;
+	Wed, 15 Nov 2023 19:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078279;
-	bh=wpI0JuRca5MOFjrfKuOtqo6F2j6p6vlBL2mK9lHqjy0=;
+	s=korg; t=1700078281;
+	bh=jsyUMc0BAVcRpq41fSKuQcaIUWVLqqsVxRAlmbY6ee0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=co68fYKcWb7+QvzUm5Ayt4YNWIzR+8gLIITQ/C79Gl2uCi1079rB9uXnaaZfCrQ/Q
-	 fnG/LH4A8/8igg+wLZ3pyABybIT+ABFOC7wSntwqv7qPavxgpg6BQuXvarCPTkQFjI
-	 heIas7tWAks5JykiuGZXG3RaFzLqZlIgiiG/GQh8=
+	b=dddgETw9b8RQewg5xJGkTfI9kSOmWla9ZSfT0zus/P0ry9iLcpJgSxwALa77oIin7
+	 +quAnPti2oWzpGiRAXKDS8SycGXWJh7N3mMxzO7o27X6Hbpq5A4ZXOOk16GL57Qvmb
+	 rmUzcxhZg7oUxe+YPF9lNi5NP0yxkq9X3bSYyKk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 189/379] ALSA: hda: cs35l41: Undo runtime PM changes at driver exit time
-Date: Wed, 15 Nov 2023 14:24:24 -0500
-Message-ID: <20231115192656.284203906@linuxfoundation.org>
+Subject: [PATCH 6.1 217/379] IB/mlx5: Fix rdma counter binding for RAW QP
+Date: Wed, 15 Nov 2023 14:24:52 -0500
+Message-ID: <20231115192657.952709687@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,46 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 85a1bf86fac0c195929768b4e92c78cad107523b ]
+[ Upstream commit c1336bb4aa5e809a622a87d74311275514086596 ]
 
-According to the documentation, drivers are responsible for undoing at
-removal time all runtime PM changes done during probing.
+Previously when we had a RAW QP, we bound a counter to it when it moved
+to INIT state, using the counter context inside RQC.
 
-Hence, add the missing calls to pm_runtime_dont_use_autosuspend(), which
-are necessary for undoing pm_runtime_use_autosuspend().
+But when we try to modify that counter later in RTS state we used
+modify QP which tries to change the counter inside QPC instead of RQC.
 
-Fixes: 1873ebd30cc8 ("ALSA: hda: cs35l41: Support Hibernation during Suspend")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20230907171010.1447274-11-cristian.ciocaltea@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Now we correctly modify the counter set_id inside of RQC instead of QPC
+for the RAW QP.
+
+Fixes: d14133dd4161 ("IB/mlx5: Support set qp counter")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://lore.kernel.org/r/2e5ab6713784a8fe997d19c508187a0dfecf2dfc.1696847964.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l41_hda.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/mlx5/qp.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/sound/pci/hda/cs35l41_hda.c b/sound/pci/hda/cs35l41_hda.c
-index f92fc84199bc8..c79a12e5c9ad2 100644
---- a/sound/pci/hda/cs35l41_hda.c
-+++ b/sound/pci/hda/cs35l41_hda.c
-@@ -1509,6 +1509,7 @@ int cs35l41_hda_probe(struct device *dev, const char *device_name, int id, int i
- 	return 0;
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index ac53ed79ca64c..e0df3017e241a 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -3960,6 +3960,30 @@ static unsigned int get_tx_affinity(struct ib_qp *qp,
+ 	return tx_affinity;
+ }
  
- err_pm:
-+	pm_runtime_dont_use_autosuspend(cs35l41->dev);
- 	pm_runtime_disable(cs35l41->dev);
- 	pm_runtime_put_noidle(cs35l41->dev);
++static int __mlx5_ib_qp_set_raw_qp_counter(struct mlx5_ib_qp *qp, u32 set_id,
++					   struct mlx5_core_dev *mdev)
++{
++	struct mlx5_ib_raw_packet_qp *raw_packet_qp = &qp->raw_packet_qp;
++	struct mlx5_ib_rq *rq = &raw_packet_qp->rq;
++	u32 in[MLX5_ST_SZ_DW(modify_rq_in)] = {};
++	void *rqc;
++
++	if (!qp->rq.wqe_cnt)
++		return 0;
++
++	MLX5_SET(modify_rq_in, in, rq_state, rq->state);
++	MLX5_SET(modify_rq_in, in, uid, to_mpd(qp->ibqp.pd)->uid);
++
++	rqc = MLX5_ADDR_OF(modify_rq_in, in, ctx);
++	MLX5_SET(rqc, rqc, state, MLX5_RQC_STATE_RDY);
++
++	MLX5_SET64(modify_rq_in, in, modify_bitmask,
++		   MLX5_MODIFY_RQ_IN_MODIFY_BITMASK_RQ_COUNTER_SET_ID);
++	MLX5_SET(rqc, rqc, counter_set_id, set_id);
++
++	return mlx5_core_modify_rq(mdev, rq->base.mqp.qpn, in);
++}
++
+ static int __mlx5_ib_qp_set_counter(struct ib_qp *qp,
+ 				    struct rdma_counter *counter)
+ {
+@@ -3975,6 +3999,9 @@ static int __mlx5_ib_qp_set_counter(struct ib_qp *qp,
+ 	else
+ 		set_id = mlx5_ib_get_counters_id(dev, mqp->port - 1);
  
-@@ -1527,6 +1528,7 @@ void cs35l41_hda_remove(struct device *dev)
- 	struct cs35l41_hda *cs35l41 = dev_get_drvdata(dev);
- 
- 	pm_runtime_get_sync(cs35l41->dev);
-+	pm_runtime_dont_use_autosuspend(cs35l41->dev);
- 	pm_runtime_disable(cs35l41->dev);
- 
- 	if (cs35l41->halo_initialized)
++	if (mqp->type == IB_QPT_RAW_PACKET)
++		return __mlx5_ib_qp_set_raw_qp_counter(mqp, set_id, dev->mdev);
++
+ 	base = &mqp->trans_qp.base;
+ 	MLX5_SET(rts2rts_qp_in, in, opcode, MLX5_CMD_OP_RTS2RTS_QP);
+ 	MLX5_SET(rts2rts_qp_in, in, qpn, base->mqp.qpn);
 -- 
 2.42.0
 
