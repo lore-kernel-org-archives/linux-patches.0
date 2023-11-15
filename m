@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6303A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FF73A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSfqRc7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1152C433C7;
-	Wed, 15 Nov 2023 19:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQrYCALC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58883C433C9;
+	Wed, 15 Nov 2023 19:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077407;
-	bh=kD7Mw32m0avOajGKDvELbgYH1oNYRdPN4Y0jBC0VsI4=;
+	s=korg; t=1700077408;
+	bh=vm8utHu1JWhMrz7RcpVNjUUmGJgO9P6c+s+b+xpTFBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QSfqRc7jWyo//fbMpjqUcTXtqEPY9THrE7MMI/zn9x9AiXnb9Xbx8FadQEgYBt5cu
-	 1rHl53rVwsxZ0W2u+FxZAQ9e9AX1FKLDgRaoXunXo05dX/VW+FhzuMp3MiJgPybkSb
-	 UsZexdz5bW/RqJwj6/4ZfpwhAsz1Jzq/gicGo0/0=
+	b=YQrYCALCWqgwRAGjlSU3re7uITbggFnnWlGup4inJaUFGaorGkP6X0aZr2INxi9sI
+	 0N2FhxLuP4cX0fzz02pEON/qrAxsFXKIRsEFqR+Ht3WvMuOcq3hlyllLWuxSMyWuok
+	 KDKUmhTwY3v1nr2NRVlUGRg5Xir6xv+MvgQCs0Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 283/603] arm64: dts: qcom: qrb2210-rb1: Swap UART index
-Date: Wed, 15 Nov 2023 14:13:48 -0500
-Message-ID: <20231115191632.964784168@linuxfoundation.org>
+Subject: [PATCH 6.6 284/603] arm64: dts: qcom: qrb2210-rb1: Fix regulators
+Date: Wed, 15 Nov 2023 14:13:49 -0500
+Message-ID: <20231115191633.034115529@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,46 +47,234 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 973c015facabcbd320063648010942c51992c1a1 ]
+[ Upstream commit 31bee70793b67f4b428825434542afc72ddb2b3b ]
 
-Newer RB1 board revisions have a debug UART on QUP0. Sadly, it looks
-like even when ordering one in retail, customers receive prototype
-boards with "Enginering Sample" written on them.
+Commit b4fe47d12f1f ("arm64: dts: qcom: qrb2210-rb1: Add regulators")
+introduced regulator settings that were never put in place, as all of the
+properties ended 'microvolts' instead of 'microvolt' (which dt schema did
+not check for back then).
 
-Use QUP4 for UART to make all known RB1 boards boot.
+Fix the microvolts-microvolt typo and adjust voltage ranges where it's
+necessary to fit within the volt = base + n*step formula.
 
-Fixes: e18771961336 ("arm64: dts: qcom: Add initial QTI RB1 device tree")
+Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: b4fe47d12f1f ("arm64: dts: qcom: qrb2210-rb1: Add regulators")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230906-topic-rb1_features_sans_icc-v1-1-e92ce6fbde16@linaro.org
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230906-topic-rb1_features_sans_icc-v1-2-e92ce6fbde16@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 86 ++++++++++++------------
+ 1 file changed, 43 insertions(+), 43 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-index eadba066972e8..5cda5b761455b 100644
+index 5cda5b761455b..0f7c591878962 100644
 --- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
 +++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-@@ -13,7 +13,7 @@ / {
- 	compatible = "qcom,qrb2210-rb1", "qcom,qrb2210", "qcom,qcm2290";
+@@ -150,15 +150,15 @@ regulators {
  
- 	aliases {
--		serial0 = &uart0;
-+		serial0 = &uart4;
- 		sdhc1 = &sdhc_1;
- 		sdhc2 = &sdhc_2;
+ 		pm2250_s3: s3 {
+ 			/* 0.4V-1.6625V -> 1.3V (Power tree requirements) */
+-			regulator-min-microvolts = <1350000>;
+-			regulator-max-microvolts = <1350000>;
++			regulator-min-microvolt = <1352000>;
++			regulator-max-microvolt = <1352000>;
+ 			regulator-boot-on;
+ 		};
+ 
+ 		pm2250_s4: s4 {
+ 			/* 1.2V-2.35V -> 2.05V (Power tree requirements) */
+-			regulator-min-microvolts = <2072000>;
+-			regulator-max-microvolts = <2072000>;
++			regulator-min-microvolt = <2072000>;
++			regulator-max-microvolt = <2072000>;
+ 			regulator-boot-on;
+ 		};
+ 
+@@ -166,47 +166,47 @@ pm2250_s4: s4 {
+ 
+ 		pm2250_l2: l2 {
+ 			/* LPDDR4X VDD2 */
+-			regulator-min-microvolts = <1136000>;
+-			regulator-max-microvolts = <1136000>;
++			regulator-min-microvolt = <1136000>;
++			regulator-max-microvolt = <1136000>;
+ 			regulator-always-on;
+ 			regulator-boot-on;
+ 		};
+ 
+ 		pm2250_l3: l3 {
+ 			/* LPDDR4X VDDQ */
+-			regulator-min-microvolts = <616000>;
+-			regulator-max-microvolts = <616000>;
++			regulator-min-microvolt = <616000>;
++			regulator-max-microvolt = <616000>;
+ 			regulator-always-on;
+ 			regulator-boot-on;
+ 		};
+ 
+ 		pm2250_l4: l4 {
+-			/* max = 3.05V -> max = just below 3V (SDHCI2) */
+-			regulator-min-microvolts = <1648000>;
+-			regulator-max-microvolts = <2992000>;
++			/* max = 3.05V -> max = 2.7 to disable 3V signaling (SDHCI2) */
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <2700000>;
+ 			regulator-allow-set-load;
+ 		};
+ 
+ 		pm2250_l5: l5 {
+ 			/* CSI/DSI */
+-			regulator-min-microvolts = <1232000>;
+-			regulator-max-microvolts = <1232000>;
++			regulator-min-microvolt = <1232000>;
++			regulator-max-microvolt = <1232000>;
+ 			regulator-allow-set-load;
+ 			regulator-boot-on;
+ 		};
+ 
+ 		pm2250_l6: l6 {
+ 			/* DRAM PLL */
+-			regulator-min-microvolts = <928000>;
+-			regulator-max-microvolts = <928000>;
++			regulator-min-microvolt = <928000>;
++			regulator-max-microvolt = <928000>;
+ 			regulator-always-on;
+ 			regulator-boot-on;
+ 		};
+ 
+ 		pm2250_l7: l7 {
+ 			/* Wi-Fi CX/MX */
+-			regulator-min-microvolts = <664000>;
+-			regulator-max-microvolts = <664000>;
++			regulator-min-microvolt = <664000>;
++			regulator-max-microvolt = <664000>;
+ 		};
+ 
+ 		/*
+@@ -216,37 +216,37 @@ pm2250_l7: l7 {
+ 
+ 		pm2250_l10: l10 {
+ 			/* Wi-Fi RFA */
+-			regulator-min-microvolts = <1300000>;
+-			regulator-max-microvolts = <1300000>;
++			regulator-min-microvolt = <1304000>;
++			regulator-max-microvolt = <1304000>;
+ 		};
+ 
+ 		pm2250_l11: l11 {
+ 			/* GPS RF1 */
+-			regulator-min-microvolts = <1000000>;
+-			regulator-max-microvolts = <1000000>;
++			regulator-min-microvolt = <1000000>;
++			regulator-max-microvolt = <1000000>;
+ 			regulator-boot-on;
+ 		};
+ 
+ 		pm2250_l12: l12 {
+ 			/* USB PHYs */
+-			regulator-min-microvolts = <928000>;
+-			regulator-max-microvolts = <928000>;
++			regulator-min-microvolt = <928000>;
++			regulator-max-microvolt = <928000>;
+ 			regulator-allow-set-load;
+ 			regulator-boot-on;
+ 		};
+ 
+ 		pm2250_l13: l13 {
+ 			/* USB/QFPROM/PLLs */
+-			regulator-min-microvolts = <1800000>;
+-			regulator-max-microvolts = <1800000>;
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
+ 			regulator-allow-set-load;
+ 			regulator-boot-on;
+ 		};
+ 
+ 		pm2250_l14: l14 {
+ 			/* SDHCI1 VQMMC */
+-			regulator-min-microvolts = <1800000>;
+-			regulator-max-microvolts = <1800000>;
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
+ 			regulator-allow-set-load;
+ 			/* Broken hardware, never turn it off! */
+ 			regulator-always-on;
+@@ -254,8 +254,8 @@ pm2250_l14: l14 {
+ 
+ 		pm2250_l15: l15 {
+ 			/* WCD/DSI/BT VDDIO */
+-			regulator-min-microvolts = <1800000>;
+-			regulator-max-microvolts = <1800000>;
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
+ 			regulator-allow-set-load;
+ 			regulator-always-on;
+ 			regulator-boot-on;
+@@ -263,47 +263,47 @@ pm2250_l15: l15 {
+ 
+ 		pm2250_l16: l16 {
+ 			/* GPS RF2 */
+-			regulator-min-microvolts = <1800000>;
+-			regulator-max-microvolts = <1800000>;
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
+ 			regulator-boot-on;
+ 		};
+ 
+ 		pm2250_l17: l17 {
+-			regulator-min-microvolts = <3000000>;
+-			regulator-max-microvolts = <3000000>;
++			regulator-min-microvolt = <3000000>;
++			regulator-max-microvolt = <3000000>;
+ 		};
+ 
+ 		pm2250_l18: l18 {
+ 			/* VDD_PXn */
+-			regulator-min-microvolts = <1800000>;
+-			regulator-max-microvolts = <1800000>;
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
+ 		};
+ 
+ 		pm2250_l19: l19 {
+ 			/* VDD_PXn */
+-			regulator-min-microvolts = <1800000>;
+-			regulator-max-microvolts = <1800000>;
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
+ 		};
+ 
+ 		pm2250_l20: l20 {
+ 			/* SDHCI1 VMMC */
+-			regulator-min-microvolts = <2856000>;
+-			regulator-max-microvolts = <2856000>;
++			regulator-min-microvolt = <2400000>;
++			regulator-max-microvolt = <3600000>;
+ 			regulator-allow-set-load;
+ 		};
+ 
+ 		pm2250_l21: l21 {
+ 			/* SDHCI2 VMMC */
+-			regulator-min-microvolts = <2960000>;
+-			regulator-max-microvolts = <3300000>;
++			regulator-min-microvolt = <2960000>;
++			regulator-max-microvolt = <3300000>;
+ 			regulator-allow-set-load;
+ 			regulator-boot-on;
+ 		};
+ 
+ 		pm2250_l22: l22 {
+ 			/* Wi-Fi */
+-			regulator-min-microvolts = <3312000>;
+-			regulator-max-microvolts = <3312000>;
++			regulator-min-microvolt = <3312000>;
++			regulator-max-microvolt = <3312000>;
+ 		};
  	};
-@@ -357,7 +357,7 @@ key_volp_n: key-volp-n-state {
- };
- 
- /* UART connected to the Micro-USB port via a FTDI chip */
--&uart0 {
-+&uart4 {
- 	compatible = "qcom,geni-debug-uart";
- 	status = "okay";
  };
 -- 
 2.42.0
