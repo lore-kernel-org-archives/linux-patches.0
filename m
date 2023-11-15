@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B2B3C461
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471ED3C465
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PioKve+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66368C433C8;
-	Wed, 15 Nov 2023 19:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVJfPq+j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD92C433C7;
+	Wed, 15 Nov 2023 19:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077130;
-	bh=CcBypeyYnfLQnxSWcC945VkHap2jYgMbSZIApF2aaUo=;
+	s=korg; t=1700077132;
+	bh=4sYBZsn8Pqa3OI+L63P47YJAjoMKBMu8rdGO7+5B1nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PioKve+8oz8L3wfTfm/DlVamVxKMG1SAJDDj3sTD7XXH0ffpmgHzQiLTgo5uiX85Y
-	 pEub5NTbEQUQ87NB4hkH+l1+IYHE7FFo+bDZR51XIaicuIygRdoGn0AMWWRMdeHrYb
-	 8JCqiii2pVHhSuJzGWDvZhh/+HL0ZZwww5wra4Sc=
+	b=CVJfPq+jpIwcehI9yOAp8+P6uEmQUAvsDFrioVd+XNNbSjLb6nUSHkDij0trHm0A7
+	 BhsFqp/SG3quK5m+ZG0dKtMo9nLcyxX1X31N41U4bnBGxaZwhPcmnsBDhgQH575VqR
+	 qVWozN3J46ePMxSbmpV/AbsoLNGeS8jfrPJ5lDiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 531/550] drm/vc4: tests: Fix UAF in the mock helpers
-Date: Wed, 15 Nov 2023 14:18:35 -0500
-Message-ID: <20231115191637.745306793@linuxfoundation.org>
+Subject: [PATCH 6.6 134/603] wifi: mac80211: dont recreate driver link debugfs in reconfig
+Date: Wed, 15 Nov 2023 14:11:19 -0500
+Message-ID: <20231115191622.541176756@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,64 +36,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit cdcd6aef9db5797995d4153ea19fdf56d189f0e4 ]
+[ Upstream commit 822cab1987a0e028e38b60aecd98af0289b46e7b ]
 
-The VC4 mock helpers allocate the CRTC, encoders and connectors using a
-call to kunit_kzalloc(), but the DRM device they are attache to survives
-for longer than the test itself which leads to use-after-frees reported
-by KASAN.
+We can delete any that we want to remove, but we can't
+recreate the links as they already exist.
 
-Switch to drmm_kzalloc to tie the lifetime of these objects to the main
-DRM device.
-
-Fixes: f759f5b53f1c ("drm/vc4: tests: Introduce a mocking infrastructure")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/all/CA+G9fYvJA2HGqzR9LGgq63v0SKaUejHAE6f7+z9cwWN-ourJ_g@mail.gmail.com/
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231024105640.352752-1-mripard@kernel.org
+Fixes: 170cd6a66d9a ("wifi: mac80211: add netdev per-link debugfs data and driver hook")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230928172905.3d0214838421.I512a0ff86f631ff42bf25ea0cb2e8e8616794a94@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/tests/vc4_mock_crtc.c   | 2 +-
- drivers/gpu/drm/vc4/tests/vc4_mock_output.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/driver-ops.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/tests/vc4_mock_crtc.c b/drivers/gpu/drm/vc4/tests/vc4_mock_crtc.c
-index 5d12d7beef0eb..ade3309ae042f 100644
---- a/drivers/gpu/drm/vc4/tests/vc4_mock_crtc.c
-+++ b/drivers/gpu/drm/vc4/tests/vc4_mock_crtc.c
-@@ -26,7 +26,7 @@ struct vc4_dummy_crtc *vc4_mock_pv(struct kunit *test,
- 	struct vc4_crtc *vc4_crtc;
- 	int ret;
+diff --git a/net/mac80211/driver-ops.c b/net/mac80211/driver-ops.c
+index 30cd0c905a24f..aa37a1410f377 100644
+--- a/net/mac80211/driver-ops.c
++++ b/net/mac80211/driver-ops.c
+@@ -510,10 +510,13 @@ int drv_change_vif_links(struct ieee80211_local *local,
+ 	if (ret)
+ 		return ret;
  
--	dummy_crtc = kunit_kzalloc(test, sizeof(*dummy_crtc), GFP_KERNEL);
-+	dummy_crtc = drmm_kzalloc(drm, sizeof(*dummy_crtc), GFP_KERNEL);
- 	KUNIT_ASSERT_NOT_NULL(test, dummy_crtc);
+-	for_each_set_bit(link_id, &links_to_add, IEEE80211_MLD_MAX_NUM_LINKS) {
+-		link = rcu_access_pointer(sdata->link[link_id]);
++	if (!local->in_reconfig) {
++		for_each_set_bit(link_id, &links_to_add,
++				 IEEE80211_MLD_MAX_NUM_LINKS) {
++			link = rcu_access_pointer(sdata->link[link_id]);
  
- 	vc4_crtc = &dummy_crtc->crtc;
-diff --git a/drivers/gpu/drm/vc4/tests/vc4_mock_output.c b/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
-index 6e11fcc9ef45e..e70d7c3076acf 100644
---- a/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
-+++ b/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
-@@ -32,7 +32,7 @@ struct vc4_dummy_output *vc4_dummy_output(struct kunit *test,
- 	struct drm_encoder *enc;
- 	int ret;
+-		ieee80211_link_debugfs_drv_add(link);
++			ieee80211_link_debugfs_drv_add(link);
++		}
+ 	}
  
--	dummy_output = kunit_kzalloc(test, sizeof(*dummy_output), GFP_KERNEL);
-+	dummy_output = drmm_kzalloc(drm, sizeof(*dummy_output), GFP_KERNEL);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dummy_output);
- 	dummy_output->encoder.type = vc4_encoder_type;
- 
+ 	return 0;
 -- 
 2.42.0
 
