@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127BD18C27
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902C31FCF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFXUHW8c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60C2C433CB;
-	Wed, 15 Nov 2023 20:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tq1B9vLU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B45C4339A;
+	Wed, 15 Nov 2023 20:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081885;
-	bh=QDCMIC9ppOuSlR5yArNDFZXJ3jFaw0DGOMpI5ZV0d5U=;
+	s=korg; t=1700081887;
+	bh=RfTfF5cB9ESIaNxvN84x8QarucT2DpfhNNH4cEvO8g4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFXUHW8c9oLSUqPIHv0/Uy3dTBDZbF2GhPVAeeMPXJq5w9fm4p+6vXDy3erEs1NLB
-	 QpQQUBQuQiawh49TF8xzJxGJRv0C2BmpPXddKgMFDvxXxtJqBBImsSuwoa05Jn2Mhv
-	 y1DphZCV7ZE69iUTwSymrynHs4QhO2Nos0XfzoCY=
+	b=Tq1B9vLUiz+IH6Q9C+wG1wzsRFZcmHoL32AiWVSh9XwZZ/jQIV1TgOD+JWKVFnRrC
+	 9GhP4wpNclJcAiAAIL79c1TOGIfsmKcA5RmIFP1tLtnG8VwgMo/HfFTivJhdG+v1jE
+	 ur205bHHLkxeeX2tPpGKWl4ODU6ZImqUaOIUWj3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Stark <gnstark@sberdevices.ru>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 162/191] pwm: sti: Reduce number of allocations and drop usage of chip_data
-Date: Wed, 15 Nov 2023 15:47:17 -0500
-Message-ID: <20231115204654.186350650@linuxfoundation.org>
+Subject: [PATCH 5.10 163/191] pwm: brcmstb: Utilize appropriate clock APIs in suspend/resume
+Date: Wed, 15 Nov 2023 15:47:18 -0500
+Message-ID: <20231115204654.243725690@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -44,111 +44,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 2d6812b41e0d832919d72c72ebddf361df53ba1b ]
+[ Upstream commit e9bc4411548aaa738905d37851a0146c16b3bb21 ]
 
-Instead of using one allocation per capture channel, use a single one. Also
-store it in driver data instead of chip data.
+The suspend/resume functions currently utilize
+clk_disable()/clk_enable() respectively which may be no-ops with certain
+clock providers such as SCMI. Fix this to use clk_disable_unprepare()
+and clk_prepare_enable() respectively as we should.
 
-This has several advantages:
-
- - driver data isn't cleared when pwm_put() is called
- - Reduces memory fragmentation
-
-Also register the pwm chip only after the per capture channel data is
-initialized as the capture callback relies on this initialization and it
-might be called even before pwmchip_add() returns.
-
-It would be still better to have struct sti_pwm_compat_data and the
-per-channel data struct sti_cpt_ddata in a single memory chunk, but that's
-not easily possible because the number of capture channels isn't known yet
-when the driver data struct is allocated.
-
-Fixes: e926b12c611c ("pwm: Clear chip_data in pwm_put()")
-Reported-by: George Stark <gnstark@sberdevices.ru>
-Fixes: c97267ae831d ("pwm: sti: Add PWM capture callback")
-Link: https://lore.kernel.org/r/20230705080650.2353391-7-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 3a9f5957020f ("pwm: Add Broadcom BCM7038 PWM controller support")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-sti.c | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ drivers/pwm/pwm-brcmstb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-sti.c b/drivers/pwm/pwm-sti.c
-index 973f76856a508..9b2174adab3db 100644
---- a/drivers/pwm/pwm-sti.c
-+++ b/drivers/pwm/pwm-sti.c
-@@ -79,6 +79,7 @@ struct sti_pwm_compat_data {
- 	unsigned int cpt_num_devs;
- 	unsigned int max_pwm_cnt;
- 	unsigned int max_prescale;
-+	struct sti_cpt_ddata *ddata;
- };
- 
- struct sti_pwm_chip {
-@@ -314,7 +315,7 @@ static int sti_pwm_capture(struct pwm_chip *chip, struct pwm_device *pwm,
+diff --git a/drivers/pwm/pwm-brcmstb.c b/drivers/pwm/pwm-brcmstb.c
+index fea612c45f200..fd8479cd67715 100644
+--- a/drivers/pwm/pwm-brcmstb.c
++++ b/drivers/pwm/pwm-brcmstb.c
+@@ -298,7 +298,7 @@ static int brcmstb_pwm_suspend(struct device *dev)
  {
- 	struct sti_pwm_chip *pc = to_sti_pwmchip(chip);
- 	struct sti_pwm_compat_data *cdata = pc->cdata;
--	struct sti_cpt_ddata *ddata = pwm_get_chip_data(pwm);
-+	struct sti_cpt_ddata *ddata = &cdata->ddata[pwm->hwpwm];
- 	struct device *dev = pc->dev;
- 	unsigned int effective_ticks;
- 	unsigned long long high, low;
-@@ -417,7 +418,7 @@ static irqreturn_t sti_pwm_interrupt(int irq, void *data)
- 	while (cpt_int_stat) {
- 		devicenum = ffs(cpt_int_stat) - 1;
+ 	struct brcmstb_pwm *p = dev_get_drvdata(dev);
  
--		ddata = pwm_get_chip_data(&pc->chip.pwms[devicenum]);
-+		ddata = &pc->cdata->ddata[devicenum];
+-	clk_disable(p->clk);
++	clk_disable_unprepare(p->clk);
  
- 		/*
- 		 * Capture input:
-@@ -619,6 +620,10 @@ static int sti_pwm_probe(struct platform_device *pdev)
- 			dev_err(dev, "failed to prepare clock\n");
- 			return ret;
- 		}
-+
-+		cdata->ddata = devm_kzalloc(dev, cdata->cpt_num_devs * sizeof(*cdata->ddata), GFP_KERNEL);
-+		if (!cdata->ddata)
-+			return -ENOMEM;
- 	}
+ 	return 0;
+ }
+@@ -307,7 +307,7 @@ static int brcmstb_pwm_resume(struct device *dev)
+ {
+ 	struct brcmstb_pwm *p = dev_get_drvdata(dev);
  
- 	pc->chip.dev = dev;
-@@ -626,24 +631,18 @@ static int sti_pwm_probe(struct platform_device *pdev)
- 	pc->chip.base = -1;
- 	pc->chip.npwm = pc->cdata->pwm_num_devs;
+-	clk_enable(p->clk);
++	clk_prepare_enable(p->clk);
  
--	ret = pwmchip_add(&pc->chip);
--	if (ret < 0) {
--		clk_unprepare(pc->pwm_clk);
--		clk_unprepare(pc->cpt_clk);
--		return ret;
--	}
--
- 	for (i = 0; i < cdata->cpt_num_devs; i++) {
--		struct sti_cpt_ddata *ddata;
--
--		ddata = devm_kzalloc(dev, sizeof(*ddata), GFP_KERNEL);
--		if (!ddata)
--			return -ENOMEM;
-+		struct sti_cpt_ddata *ddata = &cdata->ddata[i];
- 
- 		init_waitqueue_head(&ddata->wait);
- 		mutex_init(&ddata->lock);
-+	}
- 
--		pwm_set_chip_data(&pc->chip.pwms[i], ddata);
-+	ret = pwmchip_add(&pc->chip);
-+	if (ret < 0) {
-+		clk_unprepare(pc->pwm_clk);
-+		clk_unprepare(pc->cpt_clk);
-+		return ret;
- 	}
- 
- 	platform_set_drvdata(pdev, pc);
+ 	return 0;
+ }
 -- 
 2.42.0
 
