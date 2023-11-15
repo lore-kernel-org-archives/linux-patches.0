@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5552F33094
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07583A8E7
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zx+8jfDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05455C433C8;
-	Wed, 15 Nov 2023 19:24:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwSpRzTe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E089C433C7;
+	Wed, 15 Nov 2023 19:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076296;
-	bh=aN8ObnFRa9S1AYeRcEjCjFX7dntvmtXj+R7uhB9Vql8=;
+	s=korg; t=1700076297;
+	bh=Ou0GOJmrkwCty6z8gov9b75RgywQd+84u8xXv74Df6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zx+8jfDohhwxIgarZCSZ1vn/eLOJ5mvmZSQBlPVDY/R1yxEUOiquD3fRnAd/p1NDV
-	 qZwHn/koJbuZU4QAT/XlPo8QyBeiUW9/9WvWt83Ms4uVZKIasMo6Z785TC6e30hvEf
-	 KfJPlO6x0Fdei7h2ebVGE9V8s9v5htgeVmL4125k=
+	b=hwSpRzTeykM4bJZxEFh2RWM2gPUXOWRVOuTfiAhk8tSKP+WmIkZVzXT3owo9fpR9h
+	 3BbFdWfVFg7sR7jA4802E9atZD0xkROk/jWKw2ELjWnapVYrW4+IgR1g8ENjTvN4G9
+	 fhDUi5qaqSuOt0icPnyp2dzDH5j3PgIKkImGZkEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ian Nartowicz <deadbeef@nartowicz.co.uk>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 165/550] clk: renesas: rzg2l: Lock around writes to mux register
-Date: Wed, 15 Nov 2023 14:12:29 -0500
-Message-ID: <20231115191612.156716433@linuxfoundation.org>
+Subject: [PATCH 6.5 194/550] Revert "hwmon: (sch56xx-common) Add automatic module loading on supported devices"
+Date: Wed, 15 Nov 2023 14:12:58 -0500
+Message-ID: <20231115191614.218089092@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,90 +43,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit d2692ed490e680a41401cef879adebcfafb4298f ]
+[ Upstream commit d621a46d05107f4e510383d6a38f2160c62d28f7 ]
 
-The SD MUX output (SD0) is further divided by 4 in G2{L,UL}.  The
-divided clock is SD0_DIV4. SD0_DIV4 is registered with
-CLK_SET_RATE_PARENT which means a rate request for it is propagated to
-the MUX and could reach rzg2l_cpg_sd_clk_mux_set_parent() concurrently
-with the users of SD0.
-Add proper locking to avoid concurrent accesses on SD MUX set rate
-registers.
+This reverts commit 393935baa45e5ccb9603cf7f9f020ed1bc0915f7.
 
-Fixes: eaff33646f4cb ("clk: renesas: rzg2l: Add SDHI clk mux support")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230929053915.1530607-4-claudiu.beznea@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+As reported by Ian Nartowicz, this and the next patch
+result in a failure to load the driver on Celsius W280.
+While the alternative would be to add the board to the DMI
+override table, it is quite likely that other systems are
+also affected. Revert the offending patches to avoid future
+problems.
+
+Fixes: 393935baa45e ("hwmon: (sch56xx-common) Add automatic module loading on supported devices")
+Reported-by: Ian Nartowicz <deadbeef@nartowicz.co.uk>
+Closes: https://lore.kernel.org/linux-hwmon/20231025192239.3c5389ae@debian.org/T/#t
+Cc: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rzg2l-cpg.c | 23 +++++++++++++----------
- drivers/clk/renesas/rzg2l-cpg.h |  2 +-
- 2 files changed, 14 insertions(+), 11 deletions(-)
+ drivers/hwmon/sch56xx-common.c | 40 ++--------------------------------
+ 1 file changed, 2 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index 7245a34d43e0b..7be098315899c 100644
---- a/drivers/clk/renesas/rzg2l-cpg.c
-+++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -196,6 +196,7 @@ static int rzg2l_cpg_sd_clk_mux_set_parent(struct clk_hw *hw, u8 index)
- 	u32 shift = GET_SHIFT(hwdata->conf);
- 	const u32 clk_src_266 = 2;
- 	u32 msk, val, bitmask;
-+	unsigned long flags;
- 	int ret;
+diff --git a/drivers/hwmon/sch56xx-common.c b/drivers/hwmon/sch56xx-common.c
+index 3ece53adabd62..ac1f725807155 100644
+--- a/drivers/hwmon/sch56xx-common.c
++++ b/drivers/hwmon/sch56xx-common.c
+@@ -7,10 +7,8 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
- 	/*
-@@ -211,23 +212,25 @@ static int rzg2l_cpg_sd_clk_mux_set_parent(struct clk_hw *hw, u8 index)
- 	 */
- 	bitmask = (GENMASK(GET_WIDTH(hwdata->conf) - 1, 0) << shift) << 16;
- 	msk = off ? CPG_CLKSTATUS_SELSDHI1_STS : CPG_CLKSTATUS_SELSDHI0_STS;
-+	spin_lock_irqsave(&priv->rmw_lock, flags);
- 	if (index != clk_src_266) {
- 		writel(bitmask | ((clk_src_266 + 1) << shift), priv->base + off);
+ #include <linux/module.h>
+-#include <linux/mod_devicetable.h>
+ #include <linux/init.h>
+ #include <linux/platform_device.h>
+-#include <linux/dmi.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+ #include <linux/acpi.h>
+@@ -21,10 +19,7 @@
+ #include <linux/slab.h>
+ #include "sch56xx-common.h"
  
--		ret = readl_poll_timeout(priv->base + CPG_CLKSTATUS, val,
--					 !(val & msk), 100,
--					 CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
--		if (ret) {
--			dev_err(priv->dev, "failed to switch clk source\n");
--			return ret;
--		}
-+		ret = readl_poll_timeout_atomic(priv->base + CPG_CLKSTATUS, val,
-+						!(val & msk), 10,
-+						CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
-+		if (ret)
-+			goto unlock;
- 	}
+-static bool ignore_dmi;
+-module_param(ignore_dmi, bool, 0);
+-MODULE_PARM_DESC(ignore_dmi, "Omit DMI check for supported devices (default=0)");
+-
++/* Insmod parameters */
+ static bool nowayout = WATCHDOG_NOWAYOUT;
+ module_param(nowayout, bool, 0);
+ MODULE_PARM_DESC(nowayout, "Watchdog cannot be stopped once started (default="
+@@ -523,42 +518,11 @@ static int __init sch56xx_device_add(int address, const char *name)
+ 	return PTR_ERR_OR_ZERO(sch56xx_pdev);
+ }
  
- 	writel(bitmask | ((index + 1) << shift), priv->base + off);
+-/* For autoloading only */
+-static const struct dmi_system_id sch56xx_dmi_table[] __initconst = {
+-	{
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
+-		},
+-	},
+-	{ }
+-};
+-MODULE_DEVICE_TABLE(dmi, sch56xx_dmi_table);
+-
+ static int __init sch56xx_init(void)
+ {
+-	const char *name = NULL;
+ 	int address;
++	const char *name = NULL;
  
--	ret = readl_poll_timeout(priv->base + CPG_CLKSTATUS, val,
--				 !(val & msk), 100,
--				 CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
-+	ret = readl_poll_timeout_atomic(priv->base + CPG_CLKSTATUS, val,
-+					!(val & msk), 10,
-+					CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
-+unlock:
-+	spin_unlock_irqrestore(&priv->rmw_lock, flags);
-+
- 	if (ret)
- 		dev_err(priv->dev, "failed to switch clk source\n");
- 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.h b/drivers/clk/renesas/rzg2l-cpg.h
-index 6cee9e56acc72..91e9c2569f801 100644
---- a/drivers/clk/renesas/rzg2l-cpg.h
-+++ b/drivers/clk/renesas/rzg2l-cpg.h
-@@ -43,7 +43,7 @@
- #define CPG_CLKSTATUS_SELSDHI0_STS	BIT(28)
- #define CPG_CLKSTATUS_SELSDHI1_STS	BIT(29)
- 
--#define CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US	20000
-+#define CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US	200
- 
- /* n = 0/1/2 for PLL1/4/6 */
- #define CPG_SAMPLL_CLK1(n)	(0x04 + (16 * n))
+-	if (!ignore_dmi) {
+-		if (!dmi_check_system(sch56xx_dmi_table))
+-			return -ENODEV;
+-
+-		/*
+-		 * Some machines like the Esprimo P720 and Esprimo C700 have
+-		 * onboard devices named " Antiope"/" Theseus" instead of
+-		 * "Antiope"/"Theseus", so we need to check for both.
+-		 */
+-		if (!dmi_find_device(DMI_DEV_TYPE_OTHER, "Antiope", NULL) &&
+-		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Antiope", NULL) &&
+-		    !dmi_find_device(DMI_DEV_TYPE_OTHER, "Theseus", NULL) &&
+-		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Theseus", NULL))
+-			return -ENODEV;
+-	}
+-
+-	/*
+-	 * Some devices like the Esprimo C700 have both onboard devices,
+-	 * so we still have to check manually
+-	 */
+ 	address = sch56xx_find(0x4e, &name);
+ 	if (address < 0)
+ 		address = sch56xx_find(0x2e, &name);
 -- 
 2.42.0
 
