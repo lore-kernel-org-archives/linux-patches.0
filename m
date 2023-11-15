@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7907E2C870
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3AE2C870
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMxMHAxd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A295C433C7;
-	Wed, 15 Nov 2023 19:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKWm5QHd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5A1C433CB;
+	Wed, 15 Nov 2023 19:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076455;
-	bh=VHRcptwjONOXXpvkFcRfYQrmW6OWAKaB82xUf0Cn6B4=;
+	s=korg; t=1700076456;
+	bh=qHv3ExV1uXwqmSWjzgi4ENo6mWmbfUne9dWNeSc4ig0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qMxMHAxdm/oxZZ72QDLyjQkLKG1KttoXDZri3jWLxeboGANAGPUura0CNr74zUhjx
-	 Jezxx43kySf9407jOA9XVbN7CjHRLEX9H+qqd20OauPoS76W9Oad60q1AlQUnKuOJ7
-	 kirPZnj+sqZOZD92DweyDPR6K6Ski1ZbPmpbCx4s=
+	b=FKWm5QHdTqQKjg51paonmDBXnvadaE6UHncLUh7W3/YLxfIqhzPQTLxgwo8r6AaBC
+	 U6GWQvl27sYYA0ucvwktmctYvKNLtrtNeimKn1IFK+/RNUF53GUlmIr7yPIheV9EYF
+	 0STUMOYpT7/rsueQYPcZ3FuB9r/fhdUWbAwL8WFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	=?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
+	Luca Weiss <luca@z3ntu.xyz>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 277/550] arm64: dts: qcom: apq8016-sbc: Add missing ADV7533 regulators
-Date: Wed, 15 Nov 2023 14:14:21 -0500
-Message-ID: <20231115191619.950333623@linuxfoundation.org>
+Subject: [PATCH 6.5 278/550] ARM: dts: qcom: apq8026-samsung-matisse-wifi: Fix inverted hall sensor
+Date: Wed, 15 Nov 2023 14:14:22 -0500
+Message-ID: <20231115191620.023308804@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -37,49 +37,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 
-[ Upstream commit 33e9032a1875bb1aee3c68a4540f5a577ff44130 ]
+[ Upstream commit 0b73519790d29e4bc71afc4882a9aa9ea649bcf7 ]
 
-Add the missing regulator supplies to the ADV7533 HDMI bridge to fix
-the following dtbs_check warnings. They are all also supplied by
-pm8916_l6 so there is no functional difference.
+Fix hall sensor GPIO polarity and also allow disabling the sensor.
+Remove unneeded interrupt.
 
-apq8016-sbc.dtb: bridge@39: 'dvdd-supply' is a required property
-apq8016-sbc.dtb: bridge@39: 'pvdd-supply' is a required property
-apq8016-sbc.dtb: bridge@39: 'a2vdd-supply' is a required property
-        from schema display/bridge/adi,adv7533.yaml
-
-Fixes: 28546b095511 ("arm64: dts: apq8016-sbc: Add HDMI display support")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230922-db410c-adv7533-regulators-v1-1-68aba71e529b@gerhold.net
+Fixes: f15623bda1dc ("ARM: dts: qcom: Add support for Samsung Galaxy Tab 4 10.1 (SM-T530)")
+Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
+Link: https://lore.kernel.org/r/20230922011211.115234-1-matti.lehtimaki@gmail.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-index 5ee098c12801c..b3bf4257213ac 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-@@ -198,6 +198,9 @@ adv_bridge: bridge@39 {
- 		pd-gpios = <&tlmm 32 GPIO_ACTIVE_HIGH>;
+diff --git a/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts b/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts
+index 884d99297d4cf..f516e0426bb9e 100644
+--- a/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts
++++ b/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts
+@@ -45,11 +45,11 @@ gpio-hall-sensor {
  
- 		avdd-supply = <&pm8916_l6>;
-+		a2vdd-supply = <&pm8916_l6>;
-+		dvdd-supply = <&pm8916_l6>;
-+		pvdd-supply = <&pm8916_l6>;
- 		v1p2-supply = <&pm8916_l6>;
- 		v3p3-supply = <&pm8916_l17>;
- 
+ 		event-hall-sensor {
+ 			label = "Hall Effect Sensor";
+-			gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
+-			interrupts = <&tlmm 110 IRQ_TYPE_EDGE_FALLING>;
++			gpios = <&tlmm 110 GPIO_ACTIVE_LOW>;
+ 			linux,input-type = <EV_SW>;
+ 			linux,code = <SW_LID>;
+ 			debounce-interval = <15>;
++			linux,can-disable;
+ 			wakeup-source;
+ 		};
+ 	};
 -- 
 2.42.0
 
