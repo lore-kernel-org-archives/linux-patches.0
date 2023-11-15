@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63793BB38
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476CF3BB29
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxVHppd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BF8C433C7;
-	Wed, 15 Nov 2023 19:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qs412+dO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7596C433C9;
+	Wed, 15 Nov 2023 19:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076174;
-	bh=jQMBnpVzM1WkpbebryTR2qwJAoIrbjgXfNYPU8cLzoM=;
+	s=korg; t=1700076176;
+	bh=j/qFsTwM+y2PlXrmdCjiOcmAcbwwBSSrJfAl3tyqCWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oxVHppd/BsREOgp2GKYxuUgW3wUPCx/uhTlL3WjJiTrqY5HjAwUFauPTA5zGZRvv2
-	 pEFerpZKtKPhxCLd5Wz6dRYr+RGWTQcwjueAuTZjxK7Jx6liBpg6AZ2T5E1HRTON3T
-	 UHTtSJ8BR3+RmiDXJeCer+0p0R/+cfVKeFccJOZ4=
+	b=Qs412+dOyfkcPoDn1ty5wnevDknK9I8h/iXa9zXgHlROIluJmFEgdH2WXEWPe7p/y
+	 7QKxZRvM0M4DDXbgOJ2Tw1+pDgUoeUK7MsDHUc70rhmtToz4ze2iimaOzei6IdbEWJ
+	 ni1oeJ60xE7gDQsPJih9X15UA3K2CEeBCmJNWtuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Avraham Stern <avraham.stern@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 122/550] tcp: fix cookie_init_timestamp() overflows
-Date: Wed, 15 Nov 2023 14:11:46 -0500
-Message-ID: <20231115191609.147564052@linuxfoundation.org>
+Subject: [PATCH 6.5 123/550] wifi: iwlwifi: mvm: update stations MFP flag after association
+Date: Wed, 15 Nov 2023 14:11:47 -0500
+Message-ID: <20231115191609.216853369@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,99 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 73ed8e03388d16c12fc577e5c700b58a29045a15 ]
+[ Upstream commit 5a86dcb4a908845e6b7ff39b78fb1141b895408f ]
 
-cookie_init_timestamp() is supposed to return a 64bit timestamp
-suitable for both TSval determination and setting of skb->tstamp.
+The management frames protection flag is always set when the station
+is not yet authorized. However, it was not cleared after association
+even if the association did not use MFP. As a result, all public
+action frames are not parsed by fw (which will cause FTM to fail,
+for example). Update the station MFP flag after the station is
+authorized.
 
-Unfortunately it uses 32bit fields and overflows after
-2^32 * 10^6 nsec (~49 days) of uptime.
-
-Generated TSval are still correct, but skb->tstamp might be set
-far away in the past, potentially confusing other layers.
-
-tcp_ns_to_ts() is changed to return a full 64bit value,
-ts and ts_now variables are changed to u64 type,
-and TSMASK is removed in favor of shifts operations.
-
-While we are at it, change this sequence:
-		ts >>= TSBITS;
-		ts--;
-		ts <<= TSBITS;
-		ts |= options;
-to:
-		ts -= (1UL << TSBITS);
-
-Fixes: 9a568de4818d ("tcp: switch TCP TS option (RFC 7323) to 1ms clock")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4c8d5c8d079e ("wifi: iwlwifi: mvm: tell firmware about per-STA MFP enablement")
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230926110319.2488cbd01bde.Ic0f08b7d3efcbdce27ec897f84d740fec8d169ef@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h     |  2 +-
- net/ipv4/syncookies.c | 20 +++++++-------------
- 2 files changed, 8 insertions(+), 14 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 7f684806c2912..b8983d8464ea4 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -805,7 +805,7 @@ static inline u32 tcp_time_stamp(const struct tcp_sock *tp)
- }
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index ce7905faa08ff..81b0b4284882e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -3790,6 +3790,12 @@ iwl_mvm_sta_state_assoc_to_authorized(struct iwl_mvm *mvm,
  
- /* Convert a nsec timestamp into TCP TSval timestamp (ms based currently) */
--static inline u32 tcp_ns_to_ts(u64 ns)
-+static inline u64 tcp_ns_to_ts(u64 ns)
- {
- 	return div_u64(ns, NSEC_PER_SEC / TCP_TS_HZ);
- }
-diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
-index dc478a0574cbe..3b4dafefb4b03 100644
---- a/net/ipv4/syncookies.c
-+++ b/net/ipv4/syncookies.c
-@@ -41,7 +41,6 @@ static siphash_aligned_key_t syncookie_secret[2];
-  * requested/supported by the syn/synack exchange.
-  */
- #define TSBITS	6
--#define TSMASK	(((__u32)1 << TSBITS) - 1)
+ 	iwl_mvm_rs_rate_init_all_links(mvm, vif, sta);
  
- static u32 cookie_hash(__be32 saddr, __be32 daddr, __be16 sport, __be16 dport,
- 		       u32 count, int c)
-@@ -62,27 +61,22 @@ static u32 cookie_hash(__be32 saddr, __be32 daddr, __be16 sport, __be16 dport,
-  */
- u64 cookie_init_timestamp(struct request_sock *req, u64 now)
- {
--	struct inet_request_sock *ireq;
--	u32 ts, ts_now = tcp_ns_to_ts(now);
-+	const struct inet_request_sock *ireq = inet_rsk(req);
-+	u64 ts, ts_now = tcp_ns_to_ts(now);
- 	u32 options = 0;
- 
--	ireq = inet_rsk(req);
--
- 	options = ireq->wscale_ok ? ireq->snd_wscale : TS_OPT_WSCALE_MASK;
- 	if (ireq->sack_ok)
- 		options |= TS_OPT_SACK;
- 	if (ireq->ecn_ok)
- 		options |= TS_OPT_ECN;
- 
--	ts = ts_now & ~TSMASK;
-+	ts = (ts_now >> TSBITS) << TSBITS;
- 	ts |= options;
--	if (ts > ts_now) {
--		ts >>= TSBITS;
--		ts--;
--		ts <<= TSBITS;
--		ts |= options;
--	}
--	return (u64)ts * (NSEC_PER_SEC / TCP_TS_HZ);
-+	if (ts > ts_now)
-+		ts -= (1UL << TSBITS);
++	/* MFP is set by default before the station is authorized.
++	 * Clear it here in case it's not used.
++	 */
++	if (!sta->mfp)
++		return callbacks->update_sta(mvm, vif, sta);
 +
-+	return ts * (NSEC_PER_SEC / TCP_TS_HZ);
+ 	return 0;
  }
- 
  
 -- 
 2.42.0
