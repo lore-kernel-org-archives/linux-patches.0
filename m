@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D691843ACC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942D743AC4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vr0Sq8W0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F82C4AF6D;
-	Wed, 15 Nov 2023 20:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u81nX2YM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BAEC4AF6E;
+	Wed, 15 Nov 2023 20:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081401;
-	bh=+r7dcKYAMsVvPKvpI8JA/Qz+u0FQZL7b+h/FhoOCUXI=;
+	s=korg; t=1700081403;
+	bh=G9m6fRHuTM6oLBA4ThHYuUE5vpa6edag0TVxYAkfiD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vr0Sq8W0ljnUxKCB2YQRRLBr4HXHzcVtM0KgdseiK4Mr7yp3eUD9ml8NsUjR7zNAF
-	 2FmPR2Iq499mVXB+rAFQf3iPoVaB67nD0cl6eYA3fFT/sQBeeV5LLN9fdsCNcKnx1A
-	 QFJ2wt4JCJPaTHyy6gQkMdeFZIrAiLpbdQVB2a1M=
+	b=u81nX2YMHnLJLmWhG287hjbkbUuKjkWTN8X8Wal0dfnSmuIRsNrPlMbS2sFHVqcXn
+	 yv1OeRoMqKUNTijCMDfte8ZWl0+3tfzU49RH1l9gVDf5hwvcHDh8ZbMZggmde5J0hQ
+	 ALGT4YtX8VCVywNoSDzSNHj1fCTQOO8Nyw7U4Frw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyrel Datwyler <tyreld@linux.ibm.com>,
-	Brian King <brking@linux.vnet.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 131/244] scsi: ibmvfc: Fix erroneous use of rtas_busy_delay with hcall return code
-Date: Wed, 15 Nov 2023 15:35:23 -0500
-Message-ID: <20231115203556.225811150@linuxfoundation.org>
+Subject: [PATCH 5.15 132/244] libnvdimm/of_pmem: Use devm_kstrdup instead of kstrdup and check its return value
+Date: Wed, 15 Nov 2023 15:35:24 -0500
+Message-ID: <20231115203556.283104663@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -43,48 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tyrel Datwyler <tyreld@linux.ibm.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 670106eb4c8b23475f8c2b3416005a312afa622f ]
+[ Upstream commit 6fd4ebfc4d61e3097b595ab2725d513e3bbd6739 ]
 
-Commit 0217a272fe13 ("scsi: ibmvfc: Store return code of H_FREE_SUB_CRQ
-during cleanup") wrongly changed the busy loop check to use
-rtas_busy_delay() instead of H_BUSY and H_IS_LONG_BUSY(). The busy return
-codes for RTAS and hypercalls are not the same.
+Use devm_kstrdup() instead of kstrdup() and check its return value to
+avoid memory leak.
 
-Fix this issue by restoring the use of H_BUSY and H_IS_LONG_BUSY().
-
-Fixes: 0217a272fe13 ("scsi: ibmvfc: Store return code of H_FREE_SUB_CRQ  during cleanup")
-Signed-off-by: Tyrel Datwyler <tyreld@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230921225435.3537728-5-tyreld@linux.ibm.com
-Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 49bddc73d15c ("libnvdimm/of_pmem: Provide a unique name for bus provider")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ibmvscsi/ibmvfc.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/nvdimm/of_pmem.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/ibmvscsi/ibmvfc.c b/drivers/scsi/ibmvscsi/ibmvfc.c
-index 45ef78f388dc9..d169ba772450f 100644
---- a/drivers/scsi/ibmvscsi/ibmvfc.c
-+++ b/drivers/scsi/ibmvscsi/ibmvfc.c
-@@ -22,7 +22,6 @@
- #include <linux/bsg-lib.h>
- #include <asm/firmware.h>
- #include <asm/irq.h>
--#include <asm/rtas.h>
- #include <asm/vio.h>
- #include <scsi/scsi.h>
- #include <scsi/scsi_cmnd.h>
-@@ -5802,7 +5801,7 @@ static int ibmvfc_register_scsi_channel(struct ibmvfc_host *vhost,
- irq_failed:
- 	do {
- 		rc = plpar_hcall_norets(H_FREE_SUB_CRQ, vdev->unit_address, scrq->cookie);
--	} while (rtas_busy_delay(rc));
-+	} while (rc == H_BUSY || H_IS_LONG_BUSY(rc));
- reg_failed:
- 	LEAVE;
- 	return rc;
+diff --git a/drivers/nvdimm/of_pmem.c b/drivers/nvdimm/of_pmem.c
+index 10dbdcdfb9ce9..0243789ba914b 100644
+--- a/drivers/nvdimm/of_pmem.c
++++ b/drivers/nvdimm/of_pmem.c
+@@ -30,7 +30,13 @@ static int of_pmem_region_probe(struct platform_device *pdev)
+ 	if (!priv)
+ 		return -ENOMEM;
+ 
+-	priv->bus_desc.provider_name = kstrdup(pdev->name, GFP_KERNEL);
++	priv->bus_desc.provider_name = devm_kstrdup(&pdev->dev, pdev->name,
++							GFP_KERNEL);
++	if (!priv->bus_desc.provider_name) {
++		kfree(priv);
++		return -ENOMEM;
++	}
++
+ 	priv->bus_desc.module = THIS_MODULE;
+ 	priv->bus_desc.of_node = np;
+ 
 -- 
 2.42.0
 
