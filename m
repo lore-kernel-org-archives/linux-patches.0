@@ -1,35 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CA441A80
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B8541A80
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M76TdqSo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7F5C433C7;
-	Wed, 15 Nov 2023 19:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHUkWSPA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C5DC433C8;
+	Wed, 15 Nov 2023 19:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076734;
-	bh=JfYTFWHtS9kWmH67GLdZYTYyh72uPqCw4YqzfyuX1JY=;
+	s=korg; t=1700076735;
+	bh=5iEaMigpw0dkiAILjKDj+DKRJiWpCIrIgQ06h5x8+Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M76TdqSoQgev/NiX9nhSQuYw3p5NKHt3Y3x16RZncjjMKqokf/DllA72BHHZqKR1b
-	 DOGPuZoNlv8QwxPHAlveh64YeIthHLeC0nGdWLkxclfEdGQ9dNrq9VTam8DSrLE6zg
-	 YEs8mNERhU6d83vw1jlUoNm7C2pw02PFxtE9ePnA=
+	b=rHUkWSPAbyf8ivzI3EE0VtSEpctamWYOViqAjpPRKgbSS7oPsRg3cf+uto8f0k4Fc
+	 VjaD47RNp65JyS0G28r6Xpn6k3/GNp6p1nuQiHJIHd9c3N7YjDzxIukRY5w8gYJ2en
+	 0l+u/oMv15eHaQ3AX886Z5Gsn5vpLNOYbizXKsfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Qais Yousef (Google)" <qyousef@layalina.io>,
-	Ingo Molnar <mingo@kernel.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 008/603] sched/uclamp: Ignore (util == 0) optimization in feec() when p_util_max = 0
-Date: Wed, 15 Nov 2023 14:09:13 -0500
-Message-ID: <20231115191613.711485441@linuxfoundation.org>
+Subject: [PATCH 6.5 405/550] f2fs: fix to initialize map.m_pblk in f2fs_precache_extents()
+Date: Wed, 15 Nov 2023 14:16:29 -0500
+Message-ID: <20231115191628.835693824@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -41,74 +38,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qais Yousef <qyousef@layalina.io>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 23c9519def98ee0fa97ea5871535e9b136f522fc ]
+[ Upstream commit 8b07c1fb0f1ad139373c8253f2fad8bc43fab07d ]
 
-find_energy_efficient_cpu() bails out early if effective util of the
-task is 0 as the delta at this point will be zero and there's nothing
-for EAS to do. When uclamp is being used, this could lead to wrong
-decisions when uclamp_max is set to 0. In this case the task is capped
-to performance point 0, but it is actually running and consuming energy
-and we can benefit from EAS energy calculations.
+Otherwise, it may print random physical block address in tracepoint
+of f2fs_map_blocks() as below:
 
-Rework the condition so that it bails out when both util and uclamp_min
-are 0.
+f2fs_map_blocks: dev = (253,16), ino = 2297, file offset = 0, start blkaddr = 0xa356c421, len = 0x0, flags = 0
 
-We can do that without needing to use uclamp_task_util(); remove it.
-
-Fixes: d81304bc6193 ("sched/uclamp: Cater for uclamp in find_energy_efficient_cpu()'s early exit condition")
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230916232955.2099394-3-qyousef@layalina.io
+Fixes: c4020b2da4c9 ("f2fs: support F2FS_IOC_PRECACHE_EXTENTS")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+ fs/f2fs/file.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index a60b5d0edd039..4dee83c82ac33 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -4626,22 +4626,6 @@ static inline unsigned long task_util_est(struct task_struct *p)
- 	return max(task_util(p), _task_util_est(p));
- }
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index ea4a094c518f9..e53a429bd4c4c 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3258,6 +3258,7 @@ int f2fs_precache_extents(struct inode *inode)
+ 		return -EOPNOTSUPP;
  
--#ifdef CONFIG_UCLAMP_TASK
--static inline unsigned long uclamp_task_util(struct task_struct *p,
--					     unsigned long uclamp_min,
--					     unsigned long uclamp_max)
--{
--	return clamp(task_util_est(p), uclamp_min, uclamp_max);
--}
--#else
--static inline unsigned long uclamp_task_util(struct task_struct *p,
--					     unsigned long uclamp_min,
--					     unsigned long uclamp_max)
--{
--	return task_util_est(p);
--}
--#endif
--
- static inline void util_est_enqueue(struct cfs_rq *cfs_rq,
- 				    struct task_struct *p)
- {
-@@ -7756,7 +7740,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
- 	target = prev_cpu;
- 
- 	sync_entity_load_avg(&p->se);
--	if (!uclamp_task_util(p, p_util_min, p_util_max))
-+	if (!task_util_est(p) && p_util_min == 0)
- 		goto unlock;
- 
- 	eenv_task_busy_time(&eenv, p, prev_cpu);
+ 	map.m_lblk = 0;
++	map.m_pblk = 0;
+ 	map.m_next_pgofs = NULL;
+ 	map.m_next_extent = &m_next_extent;
+ 	map.m_seg_type = NO_CHECK_TYPE;
 -- 
 2.42.0
 
