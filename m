@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1A831730
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4F228383
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17rE+ovE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B402C433C8;
-	Wed, 15 Nov 2023 19:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVIDZMTW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA10C433C9;
+	Wed, 15 Nov 2023 19:43:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077425;
-	bh=sUal4L76m3nMwpWFE/qKjav/W8khWLqNIzeASff1caI=;
+	s=korg; t=1700077427;
+	bh=gqUEHkyZ7Mdqe8iuxDWpbS3tLvimXLm/stoNFjoUwlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=17rE+ovEPbONIbPkcI/2UQg4b3Yhoqa0kEOeT0r+ET17kMUICYT2ANSgZyRFlcKb/
-	 h45byqjCIF+zcyI0i7YBMXkBAcEurQ1JuO6AdmylDjnqsCpn3JB3zjuKX0oLojhc0j
-	 dFtk4Weu8r3Ksic1LrRTZ4pKrOYAzzdec/Lkiq18=
+	b=iVIDZMTWkXkzp/zqZx04FZnL1/NVVW/ivPQsoiqKpUe5C27JbzdpHvQ+HQxzU5dDy
+	 ReyAh1LLYTF40SQf9We/7ZerN0ICRT5YDVyFiUbI/oDiv1MEEb4EYpKlJwUfb4GjyV
+	 i8XRe0/yrn04upPH6tloKhLbj+STyddF4IV8goUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Chen <chenhao418@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Will Deacon <will@kernel.org>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	"Kunwu.Chan" <chentao@kylinos.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 270/603] drivers/perf: hisi: use cpuhp_state_remove_instance_nocalls() for hisi_hns3_pmu uninit process
-Date: Wed, 15 Nov 2023 14:13:35 -0500
-Message-ID: <20231115191632.024679726@linuxfoundation.org>
+Subject: [PATCH 6.6 271/603] drm/amd/pm: Fix a memory leak on an error path
+Date: Wed, 15 Nov 2023 14:13:36 -0500
+Message-ID: <20231115191632.094539252@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,67 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Chen <chenhao418@huawei.com>
+From: Kunwu.Chan <chentao@kylinos.cn>
 
-[ Upstream commit 50b560783f7f71790bcf70e9e9855155fb0af8c1 ]
+[ Upstream commit 828f8e31379b28fe7f07fb5865b8ed099d223fca ]
 
-When tearing down a 'hisi_hns3' PMU, we mistakenly run the CPU hotplug
-callbacks after the device has been unregistered, leading to fireworks
-when we try to execute empty function callbacks within the driver:
+Add missing free on an error path.
 
-  | Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-  | CPU: 0 PID: 15 Comm: cpuhp/0 Tainted: G        W  O      5.12.0-rc4+ #1
-  | Hardware name:  , BIOS KpxxxFPGA 1P B600 V143 04/22/2021
-  | pstate: 80400009 (Nzcv daif +PAN -UAO -TCO BTYPE=--)
-  | pc : perf_pmu_migrate_context+0x98/0x38c
-  | lr : perf_pmu_migrate_context+0x94/0x38c
-  |
-  | Call trace:
-  |  perf_pmu_migrate_context+0x98/0x38c
-  |  hisi_hns3_pmu_offline_cpu+0x104/0x12c [hisi_hns3_pmu]
-
-Use cpuhp_state_remove_instance_nocalls() instead of
-cpuhp_state_remove_instance() so that the notifiers don't execute after
-the PMU device has been unregistered.
-
-Fixes: 66637ab137b4 ("drivers/perf: hisi: add driver for HNS3 PMU")
-Signed-off-by: Hao Chen <chenhao418@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20231019091352.998964-1-shaojijie@huawei.com
-[will: Rewrote commit message]
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 511a95552ec8 ("drm/amd/pm: Add SMU 13.0.6 support")
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Kunwu.Chan <chentao@kylinos.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/hisilicon/hns3_pmu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/perf/hisilicon/hns3_pmu.c b/drivers/perf/hisilicon/hns3_pmu.c
-index e0457d84af6b3..16869bf5bf4cc 100644
---- a/drivers/perf/hisilicon/hns3_pmu.c
-+++ b/drivers/perf/hisilicon/hns3_pmu.c
-@@ -1556,8 +1556,8 @@ static int hns3_pmu_init_pmu(struct pci_dev *pdev, struct hns3_pmu *hns3_pmu)
- 	ret = perf_pmu_register(&hns3_pmu->pmu, hns3_pmu->pmu.name, -1);
- 	if (ret) {
- 		pci_err(pdev, "failed to register perf PMU, ret = %d.\n", ret);
--		cpuhp_state_remove_instance(CPUHP_AP_PERF_ARM_HNS3_PMU_ONLINE,
--					    &hns3_pmu->node);
-+		cpuhp_state_remove_instance_nocalls(CPUHP_AP_PERF_ARM_HNS3_PMU_ONLINE,
-+						    &hns3_pmu->node);
- 	}
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+index de80e191a92c4..24d6811438c5c 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+@@ -1968,8 +1968,10 @@ static ssize_t smu_v13_0_6_get_gpu_metrics(struct smu_context *smu, void **table
  
- 	return ret;
-@@ -1568,8 +1568,8 @@ static void hns3_pmu_uninit_pmu(struct pci_dev *pdev)
- 	struct hns3_pmu *hns3_pmu = pci_get_drvdata(pdev);
+ 	metrics = kzalloc(sizeof(MetricsTable_t), GFP_KERNEL);
+ 	ret = smu_v13_0_6_get_metrics_table(smu, metrics, true);
+-	if (ret)
++	if (ret) {
++		kfree(metrics);
+ 		return ret;
++	}
  
- 	perf_pmu_unregister(&hns3_pmu->pmu);
--	cpuhp_state_remove_instance(CPUHP_AP_PERF_ARM_HNS3_PMU_ONLINE,
--				    &hns3_pmu->node);
-+	cpuhp_state_remove_instance_nocalls(CPUHP_AP_PERF_ARM_HNS3_PMU_ONLINE,
-+					    &hns3_pmu->node);
- }
+ 	smu_cmn_init_soft_gpu_metrics(gpu_metrics, 1, 3);
  
- static int hns3_pmu_init_dev(struct pci_dev *pdev)
 -- 
 2.42.0
 
