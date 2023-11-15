@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DDD35F15
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9461D364D4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShB9HbyI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEEBC433C9;
-	Wed, 15 Nov 2023 22:02:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9EiRHjs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D21CC433C7;
+	Wed, 15 Nov 2023 22:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085734;
-	bh=30iodzdcT3guTxcfLA2ym9xaKrq05PyjIEV0UxfjdLc=;
+	s=korg; t=1700085736;
+	bh=/Y2SjszDClT8V9dVMMQMiNVW1QQ3AT59EAJENRsrFkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShB9HbyIHcyNqNDv2awp1nnzi7MxoG4a4pJCkGe2H86+zMUTU9U5dazflBZ5F0tt1
-	 SqXh7TPoMibXVxXnMovIsomwpO91ewcSnnDxvPuB2fTWnU1K2Wodo2l9bjfv7rlymz
-	 6GvJvcNFcepKNRxYg23F9ch+WvaE2FHL6WCqWwrA=
+	b=v9EiRHjsFQ5vGAz9psGMTYRbZ1+ZkNtUGMt7X90Z2chQth25njMQeR+v7fjVKMIgv
+	 gd2T5kO2U56twoLPbDG/GUC7i9RM26rz5T+0Cz2fIrJlIVNk9okvxpK8Lv9v2jlJ4Y
+	 6+VmixAwUHMG6sh6ZpVXqjsqlTk6qf/15uHS6Qqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wendy Wang <wendy.wang@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 019/119] ACPI: sysfs: Fix create_pnp_modalias() and create_of_modalias()
-Date: Wed, 15 Nov 2023 17:00:09 -0500
-Message-ID: <20231115220133.207178416@linuxfoundation.org>
+Subject: [PATCH 5.4 002/119] genirq/matrix: Exclude managed interrupts in irq_matrix_allocated()
+Date: Wed, 15 Nov 2023 16:59:52 -0500
+Message-ID: <20231115220132.688761195@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -42,60 +43,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Chen Yu <yu.c.chen@intel.com>
 
-[ Upstream commit 48cf49d31994ff97b33c4044e618560ec84d35fb ]
+[ Upstream commit a0b0bad10587ae2948a7c36ca4ffc206007fbcf3 ]
 
-snprintf() does not return negative values on error.
+When a CPU is about to be offlined, x86 validates that all active
+interrupts which are targeted to this CPU can be migrated to the remaining
+online CPUs. If not, the offline operation is aborted.
 
-To know if the buffer was too small, the returned value needs to be
-compared with the length of the passed buffer. If it is greater or
-equal, the output has been truncated, so add checks for the truncation
-to create_pnp_modalias() and create_of_modalias(). Also make them
-return -ENOMEM in that case, as they already do that elsewhere.
+The validation uses irq_matrix_allocated() to retrieve the number of
+vectors which are allocated on the outgoing CPU. The returned number of
+allocated vectors includes also vectors which are associated to managed
+interrupts.
 
-Moreover, the remaining size of the buffer used by snprintf() needs to
-be updated after the first write to avoid out-of-bounds access as
-already done correctly in create_pnp_modalias(), but not in
-create_of_modalias(), so change the latter accordingly.
+That's overaccounting because managed interrupts are:
 
-Fixes: 8765c5ba1949 ("ACPI / scan: Rework modalias creation when "compatible" is present")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-[ rjw: Merge two patches into one, combine changelogs, add subject ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+  - not migrated when the affinity mask of the interrupt targets only
+    the outgoing CPU
+
+  - migrated to another CPU, but in that case the vector is already
+    pre-allocated on the potential target CPUs and must not be taken into
+    account.
+
+As a consequence the check whether the remaining online CPUs have enough
+capacity for migrating the allocated vectors from the outgoing CPU might
+fail incorrectly.
+
+Let irq_matrix_allocated() return only the number of allocated non-managed
+interrupts to make this validation check correct.
+
+[ tglx: Amend changelog and fixup kernel-doc comment ]
+
+Fixes: 2f75d9e1c905 ("genirq: Implement bitmap matrix allocator")
+Reported-by: Wendy Wang <wendy.wang@intel.com>
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20231020072522.557846-1-yu.c.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/device_sysfs.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ kernel/irq/matrix.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/device_sysfs.c b/drivers/acpi/device_sysfs.c
-index fe8c7e79f4726..566067a855a13 100644
---- a/drivers/acpi/device_sysfs.c
-+++ b/drivers/acpi/device_sysfs.c
-@@ -156,8 +156,8 @@ static int create_pnp_modalias(struct acpi_device *acpi_dev, char *modalias,
- 		return 0;
+diff --git a/kernel/irq/matrix.c b/kernel/irq/matrix.c
+index 8e586858bcf41..d25edbb87119f 100644
+--- a/kernel/irq/matrix.c
++++ b/kernel/irq/matrix.c
+@@ -466,16 +466,16 @@ unsigned int irq_matrix_reserved(struct irq_matrix *m)
+ }
  
- 	len = snprintf(modalias, size, "acpi:");
--	if (len <= 0)
--		return len;
-+	if (len >= size)
-+		return -ENOMEM;
+ /**
+- * irq_matrix_allocated - Get the number of allocated irqs on the local cpu
++ * irq_matrix_allocated - Get the number of allocated non-managed irqs on the local CPU
+  * @m:		Pointer to the matrix to search
+  *
+- * This returns number of allocated irqs
++ * This returns number of allocated non-managed interrupts.
+  */
+ unsigned int irq_matrix_allocated(struct irq_matrix *m)
+ {
+ 	struct cpumap *cm = this_cpu_ptr(m->maps);
  
- 	size -= len;
+-	return cm->allocated;
++	return cm->allocated - cm->managed_allocated;
+ }
  
-@@ -210,8 +210,10 @@ static int create_of_modalias(struct acpi_device *acpi_dev, char *modalias,
- 	len = snprintf(modalias, size, "of:N%sT", (char *)buf.pointer);
- 	ACPI_FREE(buf.pointer);
- 
--	if (len <= 0)
--		return len;
-+	if (len >= size)
-+		return -ENOMEM;
-+
-+	size -= len;
- 
- 	of_compatible = acpi_dev->data.of_compatible;
- 	if (of_compatible->type == ACPI_TYPE_PACKAGE) {
+ #ifdef CONFIG_GENERIC_IRQ_DEBUGFS
 -- 
 2.42.0
 
