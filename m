@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714323DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EBB3DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRiiAZEJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2403FC433C9;
-	Wed, 15 Nov 2023 19:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1vYusJ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F27C433C7;
+	Wed, 15 Nov 2023 19:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078236;
-	bh=vzefDMr0EW/u+d0ufyiqh2gKlrnVhVaE2zHL3iz2tOU=;
+	s=korg; t=1700078237;
+	bh=XwvQ25VxUBErvTZt/uzsLTbONwEy+7yzPD24zdaoZjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rRiiAZEJC/ZNl2YraK04pkVd5egiHpnU/S3lWLMne3/2Wb4dhngyQhJk35NBoY/Q7
-	 itQ6r5BMdXizTn48BVs14QIgeHXU2V71nrT4qT+cUUAgbOyHJG9PlybZXWGZS075FR
-	 z2qGcqXtwZZEZhD3rOgHSgzLXRRLNzieZ4+FBRjo=
+	b=g1vYusJ8RpCoP4Scql8WJ5ugGk/H4KvVret0vcoqMxUx3NdVQ0fDwZEe+z/x9zhEd
+	 cWDmB1jh5dHCsiLNfiasPUxFp1heOIcJaZVoeqNooClrioc8RUyR4nIA6DQmnWK7l0
+	 AD7B1dmZGFezEMypakw3iD2hNB0oYRqGIarZ4PyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Gaurav Kohli <quic_gkohli@quicinc.com>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 171/379] soc: qcom: llcc: Handle a second device without data corruption
-Date: Wed, 15 Nov 2023 14:24:06 -0500
-Message-ID: <20231115192655.229735333@linuxfoundation.org>
+Subject: [PATCH 6.1 162/379] arm64: dts: qcom: msm8916: Fix iommu local address range
+Date: Wed, 15 Nov 2023 14:23:57 -0500
+Message-ID: <20231115192654.690368747@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -36,44 +39,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Gaurav Kohli <quic_gkohli@quicinc.com>
 
-[ Upstream commit f1a1bc8775b26345aba2be278118999e7f661d3d ]
+[ Upstream commit 2de8ee9f58fa51f707c71f8fbcd8470ab0078102 ]
 
-Usually there is only one llcc device. But if there were a second, even
-a failed probe call would modify the global drv_data pointer. So check
-if drv_data is valid before overwriting it.
+Fix the apps iommu local address space range as per data sheet.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Fixes: a3134fb09e0b ("drivers: soc: Add LLCC driver")
-Link: https://lore.kernel.org/r/20230926083229.2073890-1-u.kleine-koenig@pengutronix.de
+Fixes: 6a6729f38436 ("arm64: dts: qcom: msm8916: Add IOMMU support")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230915143304.477-1-quic_gkohli@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 85219b5e1f416..bc400669ee022 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -778,6 +778,9 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 	u32 version;
- 	struct regmap *regmap;
- 
-+	if (!IS_ERR(drv_data))
-+		return -EBUSY;
-+
- 	drv_data = devm_kzalloc(dev, sizeof(*drv_data), GFP_KERNEL);
- 	if (!drv_data) {
- 		ret = -ENOMEM;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index f84b3c1a03c53..bafac2cf7e3d6 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -1257,7 +1257,7 @@ apps_iommu: iommu@1ef0000 {
+ 			#size-cells = <1>;
+ 			#iommu-cells = <1>;
+ 			compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
+-			ranges = <0 0x01e20000 0x40000>;
++			ranges = <0 0x01e20000 0x20000>;
+ 			reg = <0x01ef0000 0x3000>;
+ 			clocks = <&gcc GCC_SMMU_CFG_CLK>,
+ 				 <&gcc GCC_APSS_TCU_CLK>;
 -- 
 2.42.0
 
