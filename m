@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C539339FC0
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED5539FC0
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMrp1h+r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78499C4E77A;
-	Wed, 15 Nov 2023 20:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yperG3cD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD46C4E77C;
+	Wed, 15 Nov 2023 20:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081799;
-	bh=eSe6ifL1LmywS9KnOMZEFAjYBo923gjDrHdop+TOrro=;
+	s=korg; t=1700081801;
+	bh=3sni9EbWw/BL0Wf8CTckvxobrpv7JxFtln0lKEKKYKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bMrp1h+rFWDbDts2NwfxeoxlxI9wprkHf9Kg4xBWpGyGs9zYCQScHcmWyRaSO1bOc
-	 iGbQqmUbLlIqYiMR1NHQe8+LxZK9a+UNzvZm00+atEPrlDcuVHu70mW09UpE3V5+Xb
-	 vK8VnvSsE9e4sc4GU9ddeo0mVsb5f5SdXzvUCjmg=
+	b=yperG3cD9ih4tVL9Lx6/JrWoUd/TBLBdLzDs0rKk2pqEgQsjIPj2vpB/4uUQ6kMlh
+	 bQhBjfelrKiTeMbDJTVSaQFABvCu/Av5qxGku6+2nNOcDIZEgTu6yV5v9OcG4rpqVm
+	 oKJNEX0ELYriByJ80vagC3vshhIwuBjGbvQzA8is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Bastien Nocera <hadess@hadess.net>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 107/191] sh: bios: Revive earlyprintk support
-Date: Wed, 15 Nov 2023 15:46:22 -0500
-Message-ID: <20231115204650.991720193@linuxfoundation.org>
+Subject: [PATCH 5.10 108/191] Revert "HID: logitech-hidpp: add a module parameter to keep firmware gestures"
+Date: Wed, 15 Nov 2023 15:46:23 -0500
+Message-ID: <20231115204651.050380946@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -42,50 +42,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Bastien Nocera <hadess@hadess.net>
 
-[ Upstream commit 553f7ac78fbb41b2c93ab9b9d78e42274d27daa9 ]
+[ Upstream commit cae253d6033da885e71c29c1591b22838a52de76 ]
 
-The SuperH BIOS earlyprintk code is protected by CONFIG_EARLY_PRINTK.
-However, when this protection was added, it was missed that SuperH no
-longer defines an EARLY_PRINTK config symbol since commit
-e76fe57447e88916 ("sh: Remove old early serial console code V2"), so
-BIOS earlyprintk can no longer be used.
+Now that we're in 2022, and the majority of desktop environments can and
+should support touchpad gestures through libinput, remove the legacy
+module parameter that made it possible to use gestures implemented in
+firmware.
 
-Fix this by reviving the EARLY_PRINTK config symbol.
+This will eventually allow simplifying the driver's initialisation code.
 
-Fixes: d0380e6c3c0f6edb ("early_printk: consolidate random copies of identical code")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/c40972dfec3dcc6719808d5df388857360262878.1697708489.git.geert+renesas@glider.be
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+This reverts commit 9188dbaed68a4b23dc96eba165265c08caa7dc2a.
+
+Signed-off-by: Bastien Nocera <hadess@hadess.net>
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Link: https://lore.kernel.org/r/20221220154345.474596-1-hadess@hadess.net
+Stable-dep-of: 11ca0322a419 ("HID: logitech-hidpp: Don't restart IO, instead defer hid_connect() only")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/Kconfig.debug | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/hid/hid-logitech-hidpp.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/arch/sh/Kconfig.debug b/arch/sh/Kconfig.debug
-index 7bc1b10b81c96..f030dd4c08607 100644
---- a/arch/sh/Kconfig.debug
-+++ b/arch/sh/Kconfig.debug
-@@ -25,6 +25,17 @@ config STACK_DEBUG
- 	  every function call and will therefore incur a major
- 	  performance hit. Most users should say N.
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 651fa0966939e..8d81a700886fc 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -31,11 +31,6 @@ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("Benjamin Tissoires <benjamin.tissoires@gmail.com>");
+ MODULE_AUTHOR("Nestor Lopez Casado <nlopezcasad@logitech.com>");
  
-+config EARLY_PRINTK
-+	bool "Early printk"
-+	depends on SH_STANDARD_BIOS
-+	help
-+	  Say Y here to redirect kernel printk messages to the serial port
-+	  used by the SH-IPL bootloader, starting very early in the boot
-+	  process and ending when the kernel's serial console is initialised.
-+	  This option is only useful while porting the kernel to a new machine,
-+	  when the kernel may crash or hang before the serial console is
-+	  initialised.  If unsure, say N.
-+
- config 4KSTACKS
- 	bool "Use 4Kb for kernel stacks instead of 8Kb"
- 	depends on DEBUG_KERNEL && (MMU || BROKEN) && !PAGE_SIZE_64KB
+-static bool disable_raw_mode;
+-module_param(disable_raw_mode, bool, 0644);
+-MODULE_PARM_DESC(disable_raw_mode,
+-	"Disable Raw mode reporting for touchpads and keep firmware gestures.");
+-
+ static bool disable_tap_to_click;
+ module_param(disable_tap_to_click, bool, 0644);
+ MODULE_PARM_DESC(disable_tap_to_click,
+@@ -3851,11 +3846,6 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	    hidpp_application_equals(hdev, HID_GD_KEYBOARD))
+ 		hidpp->quirks |= HIDPP_QUIRK_HIDPP_CONSUMER_VENDOR_KEYS;
+ 
+-	if (disable_raw_mode) {
+-		hidpp->quirks &= ~HIDPP_QUIRK_CLASS_WTP;
+-		hidpp->quirks &= ~HIDPP_QUIRK_NO_HIDINPUT;
+-	}
+-
+ 	if (hidpp->quirks & HIDPP_QUIRK_CLASS_WTP) {
+ 		ret = wtp_allocate(hdev, id);
+ 		if (ret)
 -- 
 2.42.0
 
