@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67E939FE5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C91843AD3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fw+1kUMj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11ED5C4E778;
-	Wed, 15 Nov 2023 20:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4jY9RWZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE192C4E77A;
+	Wed, 15 Nov 2023 20:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081692;
-	bh=ee24BRDa4aZu5/1Vf93kLsN34tQL3Jydb1zzm2KVMQc=;
+	s=korg; t=1700081693;
+	bh=/dCG3SjNUjE6BzYrjOya4NksguGtNf9JPjucmWZmYbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fw+1kUMjrTheLDBVxoxVDfIBtG2BAQWBN8KwPtYHTh0cPohNwWfu1C73NHoKVSzI1
-	 6NpQGb2hspzV9WIfIpjGQAF+z3HmvwnnLxEE2zo8qrCn25S5VutfmHVJxCS90pOstk
-	 pPbOS8SiuXW5+rq7lo7EYnEhmgKM1Y0dVbweTtRI=
+	b=w4jY9RWZavM8rnUI6rnB+Qwf3tIpjjRiRpJk36xy7Bc80LMktovazg8HtYdeW4OaG
+	 5dEiGkUXr+PJ1lfu2ja5BxMajZHSxw+pkaqQqOwk00dJTCO/BwWvN5VqIZNg9ydbqx
+	 AWBz1QQc18DdtLgEkUpmD9cP+pTlB+vV6Vq/V3r0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 066/191] hwmon: (axi-fan-control) Support temperature vs pwm points
-Date: Wed, 15 Nov 2023 15:45:41 -0500
-Message-ID: <20231115204648.553677194@linuxfoundation.org>
+Subject: [PATCH 5.10 049/191] clk: keystone: pll: fix a couple NULL vs IS_ERR() checks
+Date: Wed, 15 Nov 2023 15:45:24 -0500
+Message-ID: <20231115204647.543714417@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -36,160 +36,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 2aee7e67bee7a5aa741bad6a0a472f108b29ad40 ]
+[ Upstream commit a5d14f8b551eb1551c10053653ee8e27f19672fa ]
 
-The HW has some predefined points where it will associate a PWM value.
-However some users might want to better set these points to their
-usecases. This patch exposes these points as pwm auto_points:
+The clk_register_divider() and clk_register_mux() functions returns
+error pointers on error but this code checks for NULL.  Fix that.
 
- * pwm1_auto_point1_temp_hyst: temperature threshold below which PWM should
-   be 0%;
- * pwm1_auto_point1_temp: temperature threshold above which PWM should be
-   25%;
- * pwm1_auto_point2_temp_hyst: temperature threshold below which PWM should
-   be 25%;
- * pwm1_auto_point2_temp: temperature threshold above which PWM should be
-   50%;
- * pwm1_auto_point3_temp_hyst: temperature threshold below which PWM should
-   be 50%;
- * pwm1_auto_point3_temp: temperature threshold above which PWM should be
-   75%;
- * pwm1_auto_point4_temp_hyst: temperature threshold below which PWM should
-   be 75%;
- * pwm1_auto_point4_temp: temperature threshold above which PWM should be
-   100%;
-
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20210811114853.159298-4-nuno.sa@analog.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 2a5b3370a1d9 ("hwmon: (axi-fan-control) Fix possible NULL pointer dereference")
+Fixes: b9e0d40c0d83 ("clk: keystone: add Keystone PLL clock driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/d9da4c97-0da9-499f-9a21-1f8e3f148dc1@moroto.mountain
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/axi-fan-control.c | 74 ++++++++++++++++++++++++++++++++-
- 1 file changed, 73 insertions(+), 1 deletion(-)
+ drivers/clk/keystone/pll.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/axi-fan-control.c b/drivers/hwmon/axi-fan-control.c
-index e3f6b03e6764b..da0c3b6101f59 100644
---- a/drivers/hwmon/axi-fan-control.c
-+++ b/drivers/hwmon/axi-fan-control.c
-@@ -8,6 +8,7 @@
- #include <linux/clk.h>
- #include <linux/fpga/adi-axi-common.h>
- #include <linux/hwmon.h>
-+#include <linux/hwmon-sysfs.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/kernel.h>
-@@ -23,6 +24,14 @@
- #define ADI_REG_PWM_PERIOD	0x00c0
- #define ADI_REG_TACH_MEASUR	0x00c4
- #define ADI_REG_TEMPERATURE	0x00c8
-+#define ADI_REG_TEMP_00_H	0x0100
-+#define ADI_REG_TEMP_25_L	0x0104
-+#define ADI_REG_TEMP_25_H	0x0108
-+#define ADI_REG_TEMP_50_L	0x010c
-+#define ADI_REG_TEMP_50_H	0x0110
-+#define ADI_REG_TEMP_75_L	0x0114
-+#define ADI_REG_TEMP_75_H	0x0118
-+#define ADI_REG_TEMP_100_L	0x011c
+diff --git a/drivers/clk/keystone/pll.c b/drivers/clk/keystone/pll.c
+index ee5c72369334f..6bbdd4705d71f 100644
+--- a/drivers/clk/keystone/pll.c
++++ b/drivers/clk/keystone/pll.c
+@@ -281,12 +281,13 @@ static void __init of_pll_div_clk_init(struct device_node *node)
  
- #define ADI_REG_IRQ_MASK	0x0040
- #define ADI_REG_IRQ_PENDING	0x0044
-@@ -62,6 +71,39 @@ static inline u32 axi_ioread(const u32 reg,
- 	return ioread32(ctl->base + reg);
+ 	clk = clk_register_divider(NULL, clk_name, parent_name, 0, reg, shift,
+ 				 mask, 0, NULL);
+-	if (clk) {
+-		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+-	} else {
++	if (IS_ERR(clk)) {
+ 		pr_err("%s: error registering divider %s\n", __func__, clk_name);
+ 		iounmap(reg);
++		return;
+ 	}
++
++	of_clk_add_provider(node, of_clk_src_simple_get, clk);
  }
+ CLK_OF_DECLARE(pll_divider_clock, "ti,keystone,pll-divider-clock", of_pll_div_clk_init);
  
-+/*
-+ * The core calculates the temperature as:
-+ *	T = /raw * 509.3140064 / 65535) - 280.2308787
-+ */
-+static ssize_t axi_fan_control_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	struct axi_fan_control_data *ctl = dev_get_drvdata(dev);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
-+	u32 temp = axi_ioread(attr->index, ctl);
+@@ -328,10 +329,12 @@ static void __init of_pll_mux_clk_init(struct device_node *node)
+ 	clk = clk_register_mux(NULL, clk_name, (const char **)&parents,
+ 				ARRAY_SIZE(parents) , 0, reg, shift, mask,
+ 				0, NULL);
+-	if (clk)
+-		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+-	else
++	if (IS_ERR(clk)) {
+ 		pr_err("%s: error registering mux %s\n", __func__, clk_name);
++		return;
++	}
 +
-+	temp = DIV_ROUND_CLOSEST_ULL(temp * 509314ULL, 65535) - 280230;
-+
-+	return sprintf(buf, "%u\n", temp);
-+}
-+
-+static ssize_t axi_fan_control_store(struct device *dev, struct device_attribute *da,
-+				     const char *buf, size_t count)
-+{
-+	struct axi_fan_control_data *ctl = dev_get_drvdata(dev);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
-+	u32 temp;
-+	int ret;
-+
-+	ret = kstrtou32(buf, 10, &temp);
-+	if (ret)
-+		return ret;
-+
-+	temp = DIV_ROUND_CLOSEST_ULL((temp + 280230) * 65535ULL, 509314);
-+	axi_iowrite(temp, attr->index, ctl);
-+
-+	return count;
-+}
-+
- static long axi_fan_control_get_pwm_duty(const struct axi_fan_control_data *ctl)
- {
- 	u32 pwm_width = axi_ioread(ADI_REG_PWM_WIDTH, ctl);
-@@ -370,6 +412,36 @@ static const struct hwmon_chip_info axi_chip_info = {
- 	.info = axi_fan_control_info,
- };
- 
-+/* temperature threshold below which PWM should be 0% */
-+static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point1_temp_hyst, axi_fan_control, ADI_REG_TEMP_00_H);
-+/* temperature threshold above which PWM should be 25% */
-+static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point1_temp, axi_fan_control, ADI_REG_TEMP_25_L);
-+/* temperature threshold below which PWM should be 25% */
-+static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point2_temp_hyst, axi_fan_control, ADI_REG_TEMP_25_H);
-+/* temperature threshold above which PWM should be 50% */
-+static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point2_temp, axi_fan_control, ADI_REG_TEMP_50_L);
-+/* temperature threshold below which PWM should be 50% */
-+static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point3_temp_hyst, axi_fan_control, ADI_REG_TEMP_50_H);
-+/* temperature threshold above which PWM should be 75% */
-+static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point3_temp, axi_fan_control, ADI_REG_TEMP_75_L);
-+/* temperature threshold below which PWM should be 75% */
-+static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point4_temp_hyst, axi_fan_control, ADI_REG_TEMP_75_H);
-+/* temperature threshold above which PWM should be 100% */
-+static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point4_temp, axi_fan_control, ADI_REG_TEMP_100_L);
-+
-+static struct attribute *axi_fan_control_attrs[] = {
-+	&sensor_dev_attr_pwm1_auto_point1_temp_hyst.dev_attr.attr,
-+	&sensor_dev_attr_pwm1_auto_point1_temp.dev_attr.attr,
-+	&sensor_dev_attr_pwm1_auto_point2_temp_hyst.dev_attr.attr,
-+	&sensor_dev_attr_pwm1_auto_point2_temp.dev_attr.attr,
-+	&sensor_dev_attr_pwm1_auto_point3_temp_hyst.dev_attr.attr,
-+	&sensor_dev_attr_pwm1_auto_point3_temp.dev_attr.attr,
-+	&sensor_dev_attr_pwm1_auto_point4_temp_hyst.dev_attr.attr,
-+	&sensor_dev_attr_pwm1_auto_point4_temp.dev_attr.attr,
-+	NULL,
-+};
-+ATTRIBUTE_GROUPS(axi_fan_control);
-+
- static const u32 version_1_0_0 = ADI_AXI_PCORE_VER(1, 0, 'a');
- 
- static const struct of_device_id axi_fan_control_of_match[] = {
-@@ -446,7 +518,7 @@ static int axi_fan_control_probe(struct platform_device *pdev)
- 							 name,
- 							 ctl,
- 							 &axi_chip_info,
--							 NULL);
-+							 axi_fan_control_groups);
- 
- 	return PTR_ERR_OR_ZERO(ctl->hdev);
++	of_clk_add_provider(node, of_clk_src_simple_get, clk);
  }
+ CLK_OF_DECLARE(pll_mux_clock, "ti,keystone,pll-mux-clock", of_pll_mux_clk_init);
+ 
 -- 
 2.42.0
 
