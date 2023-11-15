@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26586364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87895364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uP7ZGr32"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FC3C433C8;
-	Wed, 15 Nov 2023 19:33:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiufaBnU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DC8C433C9;
+	Wed, 15 Nov 2023 19:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076817;
-	bh=brlr8ZySS/ULSfvwVa4PFhNIyzqVfCSzDGQDDrcgFjc=;
+	s=korg; t=1700076818;
+	bh=BOvi9b8izPDDwNitOFSBEKqEzqfmdrQ2PKk8qS4pcEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uP7ZGr32rngmlDSaiB3JaiQN6ElRHo/oOOdmbbjPejUezro9oC8EbSW65cpDSvbdR
-	 E3jj/gfioHOuNFUEI3Ko4FtKl3ZRhaKk4MB2tFR25rL8OVJ0Dyb7NMmvCiI4bJGlx8
-	 pnSvCbVlmApc89/P71om2VW+Mxu5CydBO47Im0PE=
+	b=wiufaBnU9y92xPrE0OL0U4mpum6WClqBrehXWiJFHk1P3N3zacX/iLRUuNVHjWhyH
+	 BOdVRTne8besR89BKhdC+w/6M9MR9SOpZm++iAmQCfkq9r+WaUcCOGip1QsW89atCr
+	 dZUrZ6S3aWY0su0ysF4Irn/ktrbaGzNRtYxI/wmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Harshitha Prem <quic_hprem@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 432/550] powerpc/40x: Remove stale PTE_ATOMIC_UPDATES macro
-Date: Wed, 15 Nov 2023 14:16:56 -0500
-Message-ID: <20231115191630.710421936@linuxfoundation.org>
+Subject: [PATCH 6.6 036/603] wifi: ath12k: fix undefined behavior with __fls in dp
+Date: Wed, 15 Nov 2023 14:09:41 -0500
+Message-ID: <20231115191615.684425181@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,46 +38,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Harshitha Prem <quic_hprem@quicinc.com>
 
-[ Upstream commit cc8ee288f484a2a59c01ccd4d8a417d6ed3466e3 ]
+[ Upstream commit d48f55e773dcce8fcf9e587073452a4944011b11 ]
 
-40x TLB handlers were reworked by commit 2c74e2586bb9 ("powerpc/40x:
-Rework 40x PTE access and TLB miss") to not require PTE_ATOMIC_UPDATES
-anymore.
+When max virtual ap interfaces are configured in all the bands
+with ACS and hostapd restart is done every 60s,
+a crash is observed at random times because of handling the
+uninitialized peer fragments with fragment id of packet as 0.
 
-Then commit 4e1df545e2fa ("powerpc/pgtable: Drop PTE_ATOMIC_UPDATES")
-removed all code related to PTE_ATOMIC_UPDATES.
+"__fls" would have an undefined behavior if the argument is passed
+as "0". Hence, added changes to handle the same.
 
-Remove left over PTE_ATOMIC_UPDATES macro.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
 
-Fixes: 2c74e2586bb9 ("powerpc/40x: Rework 40x PTE access and TLB miss")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/f061db5857fcd748f84a6707aad01754686ce97e.1695659959.git.christophe.leroy@csgroup.eu
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Harshitha Prem <quic_hprem@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230821130343.29495-3-quic_hprem@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/nohash/32/pte-40x.h | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/nohash/32/pte-40x.h b/arch/powerpc/include/asm/nohash/32/pte-40x.h
-index 6fe46e7545566..0b4e5f8ce3e8a 100644
---- a/arch/powerpc/include/asm/nohash/32/pte-40x.h
-+++ b/arch/powerpc/include/asm/nohash/32/pte-40x.h
-@@ -69,9 +69,6 @@
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index e6e64d437c47a..17da39bd3ab4d 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -3229,7 +3229,7 @@ static int ath12k_dp_rx_frag_h_mpdu(struct ath12k *ar,
+ 		goto out_unlock;
+ 	}
  
- #define _PTE_NONE_MASK	0
- 
--/* Until my rework is finished, 40x still needs atomic PTE updates */
--#define PTE_ATOMIC_UPDATES	1
--
- #define _PAGE_BASE_NC	(_PAGE_PRESENT | _PAGE_ACCESSED)
- #define _PAGE_BASE	(_PAGE_BASE_NC)
- 
+-	if (frag_no > __fls(rx_tid->rx_frag_bitmap))
++	if ((!rx_tid->rx_frag_bitmap || frag_no > __fls(rx_tid->rx_frag_bitmap)))
+ 		__skb_queue_tail(&rx_tid->rx_frags, msdu);
+ 	else
+ 		ath12k_dp_rx_h_sort_frags(ab, &rx_tid->rx_frags, msdu);
 -- 
 2.42.0
 
