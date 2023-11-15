@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA6E3DBAD
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2201D3FB0F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1AOkK3/x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDEEC433C9;
-	Wed, 15 Nov 2023 20:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5XkeNDN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D28C433C7;
+	Wed, 15 Nov 2023 20:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078428;
-	bh=apa89NDCPmdhvxQKuMrWHpdPQ84Shb3qA8O9S+1FBJ8=;
+	s=korg; t=1700078430;
+	bh=xtc/zTtUBledwktISsGn0hBUXj6c7Vdblk2R1hjL9B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1AOkK3/xoLAUvziJHa6b/EvVX6E/3Aaz2aULtV+Vte2ME3EGYf26iFOA903XUy0ad
-	 E4fvwvO/0FUBMuddjCtXnPbDdW3bmAGX0vbSiWBcz77XN6Eilt/JbPsGYrGWZpykhn
-	 jUihJ6aMDvlcAf/NJjOA5aZgKsgev2p6CrC7l/ZI=
+	b=x5XkeNDNdbEstA7utN/lCtOUdVegycWYcxmC7hiRw+gDcQYbwfu7ayPD3kDr4xjju
+	 v1W+W3qpcX0vkCpEgu7S8kHZ4jtI46N89RkFz6djAlIFR4DpKlnY/tcJn+NffFCHSm
+	 47+Ub0IUuPQZDragCqBLGWhmJ5SBtmMrmtz0D+qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Guoniu.zhou" <guoniu.zhou@nxp.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 317/379] media: ov5640: fix vblank unchange issue when work at dvp mode
-Date: Wed, 15 Nov 2023 14:26:32 -0500
-Message-ID: <20231115192703.898917691@linuxfoundation.org>
+Subject: [PATCH 6.1 300/379] xhci: Loosen RPM as default policy to cover for AMD xHC 1.1
+Date: Wed, 15 Nov 2023 14:26:15 -0500
+Message-ID: <20231115192702.890197033@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,79 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoniu.zhou <guoniu.zhou@nxp.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 8fc29e3c9f682d4ad9b0764d44ecc6c19b000051 ]
+[ Upstream commit 4baf1218150985ee3ab0a27220456a1f027ea0ac ]
 
-The value of V4L2_CID_VBLANK control is initialized to default vblank
-value of 640x480 when driver probe. When OV5640 work at DVP mode, the
-control value won't update and lead to sensor can't output data if the
-resolution remain the same as last time since incorrect total vertical
-size. So update it when there is a new value applied.
+The AMD USB host controller (1022:43f7) isn't going into PCI D3 by default
+without anything connected. This is because the policy that was introduced
+by commit a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all
+xHC 1.2 or later devices") only covered 1.2 or later.
 
-Fixes: bce93b827de6 ("media: ov5640: Add VBLANK control")
-Signed-off-by: Guoniu.zhou <guoniu.zhou@nxp.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+The 1.1 specification also has the same requirement as the 1.2
+specification for D3 support. So expand the runtime PM as default policy
+to all AMD 1.1 devices as well.
+
+Fixes: a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all xHC 1.2 or later devices")
+Link: https://composter.com.ua/documents/xHCI_Specification_for_USB.pdf
+Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20231019102924.2797346-15-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5640.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/usb/host/xhci-pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
-index 505dd7c10235e..aa9e5a99fc536 100644
---- a/drivers/media/i2c/ov5640.c
-+++ b/drivers/media/i2c/ov5640.c
-@@ -2840,12 +2840,22 @@ static int ov5640_try_fmt_internal(struct v4l2_subdev *sd,
- 	return 0;
- }
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index 2aed88c28ef69..c4dd648710ae0 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -348,6 +348,8 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
+ 	if (xhci->hci_version >= 0x120)
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
++	else if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version >= 0x110)
++		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
  
-+static void __v4l2_ctrl_vblank_update(struct ov5640_dev *sensor, u32 vblank)
-+{
-+	const struct ov5640_mode_info *mode = sensor->current_mode;
-+
-+	__v4l2_ctrl_modify_range(sensor->ctrls.vblank, OV5640_MIN_VBLANK,
-+				 OV5640_MAX_VTS - mode->height, 1, vblank);
-+
-+	__v4l2_ctrl_s_ctrl(sensor->ctrls.vblank, vblank);
-+}
-+
- static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
- {
- 	const struct ov5640_mode_info *mode = sensor->current_mode;
- 	enum ov5640_pixel_rate_id pixel_rate_id = mode->pixel_rate;
- 	struct v4l2_mbus_framefmt *fmt = &sensor->fmt;
--	const struct ov5640_timings *timings;
-+	const struct ov5640_timings *timings = ov5640_timings(sensor, mode);
- 	s32 exposure_val, exposure_max;
- 	unsigned int hblank;
- 	unsigned int i = 0;
-@@ -2864,6 +2874,8 @@ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
- 		__v4l2_ctrl_s_ctrl_int64(sensor->ctrls.pixel_rate,
- 					 ov5640_calc_pixel_rate(sensor));
- 
-+		__v4l2_ctrl_vblank_update(sensor, timings->vblank_def);
-+
- 		return 0;
- 	}
- 
-@@ -2906,15 +2918,12 @@ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
- 	__v4l2_ctrl_s_ctrl_int64(sensor->ctrls.pixel_rate, pixel_rate);
- 	__v4l2_ctrl_s_ctrl(sensor->ctrls.link_freq, i);
- 
--	timings = ov5640_timings(sensor, mode);
- 	hblank = timings->htot - mode->width;
- 	__v4l2_ctrl_modify_range(sensor->ctrls.hblank,
- 				 hblank, hblank, 1, hblank);
- 
- 	vblank = timings->vblank_def;
--	__v4l2_ctrl_modify_range(sensor->ctrls.vblank, OV5640_MIN_VBLANK,
--				 OV5640_MAX_VTS - mode->height, 1, vblank);
--	__v4l2_ctrl_s_ctrl(sensor->ctrls.vblank, vblank);
-+	__v4l2_ctrl_vblank_update(sensor, vblank);
- 
- 	exposure_max = timings->crop.height + vblank - 4;
- 	exposure_val = clamp_t(s32, sensor->ctrls.exposure->val,
+ 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
+ 		xhci_dbg_trace(xhci, trace_xhci_dbg_quirks,
 -- 
 2.42.0
 
