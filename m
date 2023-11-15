@@ -1,35 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F86E3DB97
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF403DB95
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFeom2R3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59D0C433CA;
-	Wed, 15 Nov 2023 19:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ku7rYN1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DBCC433C9;
+	Wed, 15 Nov 2023 19:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078156;
-	bh=l9A6v8o3minJ7CzQ8HHA4CDKPUHJAL9y+H2mG5px94M=;
+	s=korg; t=1700078158;
+	bh=uRPoiUeKx8DDA03Mmvmg3UKgskftDm2/Rgpx+wa+BDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vFeom2R33lVDnWmdmZk0vj0Iyggb+i6yvqrPd1Utilwzjva4ge1ScAw9Mxwn9ICZN
-	 IJwteOR4w8nsOnulPTQNZKvhPGhXgRjor8ZbLrU7S0YY3f89Brti+O9z0LJ/Zv0zpy
-	 1Bg3+SD9wIQM7j2At4DKG8bQ3Or53p/+39hUdHX8=
+	b=ku7rYN1MfLClFfLgBJbLZHJZ3N3ZRFgc9jaaR9Gat13Gp1xEPx+7VzCgOSJ+S6+C/
+	 ll/V6rgTbSHNRn7Iky+h5l/c5xHKbXdu4wKwt8MMwIEAdhudBX4mmIJdDub2TKGFDi
+	 YYVxhTFDuYzY83py614rtsQDKCW2ttLTizWu+ar0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Bertrand Marquis <bertrand.marquis@arm.com>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Juergen Gross <jgross@suse.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 146/379] arm64/arm: xen: enlighten: Fix KPTI checks
-Date: Wed, 15 Nov 2023 14:23:41 -0500
-Message-ID: <20231115192653.754543655@linuxfoundation.org>
+Subject: [PATCH 6.1 147/379] drm/rockchip: Fix type promotion bug in rockchip_gem_iommu_map()
+Date: Wed, 15 Nov 2023 14:23:42 -0500
+Message-ID: <20231115192653.812759042@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -48,126 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 20f3b8eafe0ba5d3c69d5011a9b07739e9645132 ]
+[ Upstream commit 6471da5ee311d53ef46eebcb7725bc94266cc0cf ]
 
-When KPTI is in use, we cannot register a runstate region as XEN
-requires that this is always a valid VA, which we cannot guarantee. Due
-to this, xen_starting_cpu() must avoid registering each CPU's runstate
-region, and xen_guest_init() must avoid setting up features that depend
-upon it.
+The "ret" variable is declared as ssize_t and it can hold negative error
+codes but the "rk_obj->base.size" variable is type size_t.  This means
+that when we compare them, they are both type promoted to size_t and the
+negative error code becomes a high unsigned value and is treated as
+success.  Add a cast to fix this.
 
-We tried to ensure that in commit:
-
-  f88af7229f6f22ce (" xen/arm: do not setup the runstate info page if kpti is enabled")
-
-... where we added checks for xen_kernel_unmapped_at_usr(), which wraps
-arm64_kernel_unmapped_at_el0() on arm64 and is always false on 32-bit
-arm.
-
-Unfortunately, as xen_guest_init() is an early_initcall, this happens
-before secondary CPUs are booted and arm64 has finalized the
-ARM64_UNMAP_KERNEL_AT_EL0 cpucap which backs
-arm64_kernel_unmapped_at_el0(), and so this can subsequently be set as
-secondary CPUs are onlined. On a big.LITTLE system where the boot CPU
-does not require KPTI but some secondary CPUs do, this will result in
-xen_guest_init() intializing features that depend on the runstate
-region, and xen_starting_cpu() registering the runstate region on some
-CPUs before KPTI is subsequent enabled, resulting the the problems the
-aforementioned commit tried to avoid.
-
-Handle this more robsutly by deferring the initialization of the
-runstate region until secondary CPUs have been initialized and the
-ARM64_UNMAP_KERNEL_AT_EL0 cpucap has been finalized. The per-cpu work is
-moved into a new hotplug starting function which is registered later
-when we're certain that KPTI will not be used.
-
-Fixes: f88af7229f6f ("xen/arm: do not setup the runstate info page if kpti is enabled")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Bertrand Marquis <bertrand.marquis@arm.com>
-Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Cc: Juergen Gross <jgross@suse.com>
-Cc: Stefano Stabellini <sstabellini@kernel.org>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 38f993b7c59e ("drm/rockchip: Do not use DMA mapping API if attached to IOMMU domain")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/2bfa28b5-145d-4b9e-a18a-98819dd686ce@moroto.mountain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/xen/enlighten.c   | 25 ++++++++++++++++---------
- include/linux/cpuhotplug.h |  1 +
- 2 files changed, 17 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/xen/enlighten.c b/arch/arm/xen/enlighten.c
-index 93c8ccbf29828..b647306eb1608 100644
---- a/arch/arm/xen/enlighten.c
-+++ b/arch/arm/xen/enlighten.c
-@@ -164,9 +164,6 @@ static int xen_starting_cpu(unsigned int cpu)
- 	BUG_ON(err);
- 	per_cpu(xen_vcpu, cpu) = vcpup;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+index 9426f7976d22e..10a4970ad2d8a 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+@@ -39,7 +39,7 @@ static int rockchip_gem_iommu_map(struct rockchip_gem_object *rk_obj)
  
--	if (!xen_kernel_unmapped_at_usr())
--		xen_setup_runstate_info(cpu);
--
- after_register_vcpu_info:
- 	enable_percpu_irq(xen_events_irq, 0);
- 	return 0;
-@@ -523,9 +520,6 @@ static int __init xen_guest_init(void)
- 		return -EINVAL;
- 	}
- 
--	if (!xen_kernel_unmapped_at_usr())
--		xen_time_setup_guest();
--
- 	if (xen_initial_domain())
- 		pvclock_gtod_register_notifier(&xen_pvclock_gtod_notifier);
- 
-@@ -535,7 +529,13 @@ static int __init xen_guest_init(void)
- }
- early_initcall(xen_guest_init);
- 
--static int __init xen_pm_init(void)
-+static int xen_starting_runstate_cpu(unsigned int cpu)
-+{
-+	xen_setup_runstate_info(cpu);
-+	return 0;
-+}
-+
-+static int __init xen_late_init(void)
- {
- 	if (!xen_domain())
- 		return -ENODEV;
-@@ -548,9 +548,16 @@ static int __init xen_pm_init(void)
- 		do_settimeofday64(&ts);
- 	}
- 
--	return 0;
-+	if (xen_kernel_unmapped_at_usr())
-+		return 0;
-+
-+	xen_time_setup_guest();
-+
-+	return cpuhp_setup_state(CPUHP_AP_ARM_XEN_RUNSTATE_STARTING,
-+				 "arm/xen_runstate:starting",
-+				 xen_starting_runstate_cpu, NULL);
- }
--late_initcall(xen_pm_init);
-+late_initcall(xen_late_init);
- 
- 
- /* empty stubs */
-diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
-index 2be2091c2b447..c7e0d80dbf6a5 100644
---- a/include/linux/cpuhotplug.h
-+++ b/include/linux/cpuhotplug.h
-@@ -191,6 +191,7 @@ enum cpuhp_state {
- 	/* Must be the last timer callback */
- 	CPUHP_AP_DUMMY_TIMER_STARTING,
- 	CPUHP_AP_ARM_XEN_STARTING,
-+	CPUHP_AP_ARM_XEN_RUNSTATE_STARTING,
- 	CPUHP_AP_ARM_CORESIGHT_STARTING,
- 	CPUHP_AP_ARM_CORESIGHT_CTI_STARTING,
- 	CPUHP_AP_ARM64_ISNDEP_STARTING,
+ 	ret = iommu_map_sgtable(private->domain, rk_obj->dma_addr, rk_obj->sgt,
+ 				prot);
+-	if (ret < rk_obj->base.size) {
++	if (ret < (ssize_t)rk_obj->base.size) {
+ 		DRM_ERROR("failed to map buffer: size=%zd request_size=%zd\n",
+ 			  ret, rk_obj->base.size);
+ 		ret = -ENOMEM;
 -- 
 2.42.0
 
