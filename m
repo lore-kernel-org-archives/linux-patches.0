@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF678433AF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AE7433AE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FjazhqTC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED7BC433C9;
-	Wed, 15 Nov 2023 19:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7L+x9qV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBDDC433C8;
+	Wed, 15 Nov 2023 19:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077077;
-	bh=pTu4SxXQ7+i9h9yCRw8i7okjr/WwrqR/wspSWk9yI0Y=;
+	s=korg; t=1700077079;
+	bh=MzzhIxckxhOQZNnTxd1x+YO/Etk6Lpva8l67bbhKOB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjazhqTCh7riqAOQZFs6B3A4s9SH49TxnChA5IMI92D4nHMd48GclwlkPoAkcuGAx
-	 zY55V73cZ6uM1Q/w4ahFrdXFWzqFmjoeCp/jIKADBaP8d6XU7tWBhsyei5nW7hsFk0
-	 +QV9MXR7ZCkiETyuHT/E52G7R4Ffec4u2lz4JWIo=
+	b=z7L+x9qV5FUXysNslEVx1CeVm3xFXclQ/KGbtnIFl24XLHqp12qkxj0rBxjYC3X/J
+	 lrjSOZ/7YHLZiq8M+7PieFqVsdaua3fDSgQK0ctWdQIu+/kbsYhlZENL/7Vmh42HVH
+	 RG74PCKaoiRt14ZwgdxCnkelCmXZV3psC7X2R4n8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Li <gavinl@nvidia.com>,
-	Heng Qi <hengqi@linux.alibaba.com>,
-	Jason Wang <jasowang@redhat.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/603] virtio-net: fix mismatch of getting tx-frames
-Date: Wed, 15 Nov 2023 14:11:02 -0500
-Message-ID: <20231115191621.341053202@linuxfoundation.org>
+Subject: [PATCH 6.5 514/550] net/smc: fix dangling sock under state SMC_APPFINCLOSEWAIT
+Date: Wed, 15 Nov 2023 14:18:18 -0500
+Message-ID: <20231115191636.558814617@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,40 +39,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heng Qi <hengqi@linux.alibaba.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit 134674c1877be5e35e35802517c67a9ecce21153 ]
+[ Upstream commit 5211c9729484c923f8d2e06bd29f9322cc42bb8f ]
 
-Since virtio-net allows switching napi_tx for per txq, we have to
-get the specific txq's result now.
+Considering scenario:
 
-Fixes: 394bd87764b6 ("virtio_net: support per queue interrupt coalesce command")
-Cc: Gavin Li <gavinl@nvidia.com>
-Signed-off-by: Heng Qi <hengqi@linux.alibaba.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+				smc_cdc_rx_handler
+__smc_release
+				sock_set_flag
+smc_close_active()
+sock_set_flag
+
+__set_bit(DEAD)			__set_bit(DONE)
+
+Dues to __set_bit is not atomic, the DEAD or DONE might be lost.
+if the DEAD flag lost, the state SMC_CLOSED  will be never be reached
+in smc_close_passive_work:
+
+if (sock_flag(sk, SOCK_DEAD) &&
+	smc_close_sent_any_close(conn)) {
+	sk->sk_state = SMC_CLOSED;
+} else {
+	/* just shutdown, but not yet closed locally */
+	sk->sk_state = SMC_APPFINCLOSEWAIT;
+}
+
+Replace sock_set_flags or __set_bit to set_bit will fix this problem.
+Since set_bit is atomic.
+
+Fixes: b38d732477e4 ("smc: socket closing and linkgroup cleanup")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/smc/af_smc.c    | 4 ++--
+ net/smc/smc.h       | 5 +++++
+ net/smc/smc_cdc.c   | 2 +-
+ net/smc/smc_close.c | 2 +-
+ 4 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index d67f742fbd4c5..b218c2bafddcc 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3453,7 +3453,7 @@ static int virtnet_get_per_queue_coalesce(struct net_device *dev,
- 	} else {
- 		ec->rx_max_coalesced_frames = 1;
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index c0e4e587b4994..42d4211b6277e 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -275,7 +275,7 @@ static int __smc_release(struct smc_sock *smc)
  
--		if (vi->sq[0].napi.weight)
-+		if (vi->sq[queue].napi.weight)
- 			ec->tx_max_coalesced_frames = 1;
+ 	if (!smc->use_fallback) {
+ 		rc = smc_close_active(smc);
+-		sock_set_flag(sk, SOCK_DEAD);
++		smc_sock_set_flag(sk, SOCK_DEAD);
+ 		sk->sk_shutdown |= SHUTDOWN_MASK;
+ 	} else {
+ 		if (sk->sk_state != SMC_CLOSED) {
+@@ -1722,7 +1722,7 @@ static int smc_clcsock_accept(struct smc_sock *lsmc, struct smc_sock **new_smc)
+ 		if (new_clcsock)
+ 			sock_release(new_clcsock);
+ 		new_sk->sk_state = SMC_CLOSED;
+-		sock_set_flag(new_sk, SOCK_DEAD);
++		smc_sock_set_flag(new_sk, SOCK_DEAD);
+ 		sock_put(new_sk); /* final */
+ 		*new_smc = NULL;
+ 		goto out;
+diff --git a/net/smc/smc.h b/net/smc/smc.h
+index 1f2b912c43d10..8358e96342e7b 100644
+--- a/net/smc/smc.h
++++ b/net/smc/smc.h
+@@ -374,4 +374,9 @@ int smc_nl_dump_hs_limitation(struct sk_buff *skb, struct netlink_callback *cb);
+ int smc_nl_enable_hs_limitation(struct sk_buff *skb, struct genl_info *info);
+ int smc_nl_disable_hs_limitation(struct sk_buff *skb, struct genl_info *info);
+ 
++static inline void smc_sock_set_flag(struct sock *sk, enum sock_flags flag)
++{
++	set_bit(flag, &sk->sk_flags);
++}
++
+ #endif	/* __SMC_H */
+diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
+index 89105e95b4523..01bdb7909a14b 100644
+--- a/net/smc/smc_cdc.c
++++ b/net/smc/smc_cdc.c
+@@ -385,7 +385,7 @@ static void smc_cdc_msg_recv_action(struct smc_sock *smc,
+ 		smc->sk.sk_shutdown |= RCV_SHUTDOWN;
+ 		if (smc->clcsock && smc->clcsock->sk)
+ 			smc->clcsock->sk->sk_shutdown |= RCV_SHUTDOWN;
+-		sock_set_flag(&smc->sk, SOCK_DONE);
++		smc_sock_set_flag(&smc->sk, SOCK_DONE);
+ 		sock_hold(&smc->sk); /* sock_put in close_work */
+ 		if (!queue_work(smc_close_wq, &conn->close_work))
+ 			sock_put(&smc->sk);
+diff --git a/net/smc/smc_close.c b/net/smc/smc_close.c
+index dbdf03e8aa5b5..449ef454b53be 100644
+--- a/net/smc/smc_close.c
++++ b/net/smc/smc_close.c
+@@ -173,7 +173,7 @@ void smc_close_active_abort(struct smc_sock *smc)
+ 		break;
  	}
  
+-	sock_set_flag(sk, SOCK_DEAD);
++	smc_sock_set_flag(sk, SOCK_DEAD);
+ 	sk->sk_state_change(sk);
+ 
+ 	if (release_clcsock) {
 -- 
 2.42.0
 
