@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E301C43AD3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6214743AD2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVG4yPNH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9174BC4E764;
-	Wed, 15 Nov 2023 20:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsdVBSH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B7EC4E765;
+	Wed, 15 Nov 2023 20:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081525;
-	bh=89YU0Zp/mifB7bkWS6rs0FrHzir8ejHYzukBP50lGy8=;
+	s=korg; t=1700081527;
+	bh=WyVVfF0CTGbq29/CQQwAa3k0TH0qInGTuP9v7PhmfZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVG4yPNH4nK3x4oJYzEBBhZvvrGtwnFAhjvqUgCHKgUfLyvA4Beb/COSfD/ubQ/BY
-	 eAK3zV6zD+FIVM8ExLGqmxXkZxUMn616YxnJnK2nRK6AuZCcJxH8AaVSqoem9hbtHu
-	 EGn0vvBufv2fw6jzm14itHMqWAfjvfULzjUaTSkM=
+	b=rsdVBSH1e3dveIMiHxDkvV3aKacXa8MNEv6f70KdC8sQ7m8aHJdeIzM2q+I1OtWsX
+	 QYVWQvShl6KNHafue/PMaNf6DgvmEnwg2IDKhbu/m5gjDlyhC78/bGKGc2h4CrWMoG
+	 Ob75X1ZUV37/OSzqxRdoqsTe9MKlz4GxMNhRphD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 207/244] media: dvb-usb-v2: af9035: fix missing unlock
-Date: Wed, 15 Nov 2023 15:36:39 -0500
-Message-ID: <20231115203600.780418995@linuxfoundation.org>
+Subject: [PATCH 5.15 208/244] regmap: prevent noinc writes from clobbering cache
+Date: Wed, 15 Nov 2023 15:36:40 -0500
+Message-ID: <20231115203600.841012292@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -41,65 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Ben Wolsieffer <ben.wolsieffer@hefring.com>
 
-[ Upstream commit f31b2cb85f0ee165d78e1c43f6d69f82cc3b2145 ]
+[ Upstream commit 984a4afdc87a1fc226fd657b1cd8255c13d3fc1a ]
 
-Instead of returning an error, goto the mutex unlock at
-the end of the function.
+Currently, noinc writes are cached as if they were standard incrementing
+writes, overwriting unrelated register values in the cache. Instead, we
+want to cache the last value written to the register, as is done in the
+accelerated noinc handler (regmap_noinc_readwrite).
 
-Fixes smatch warning:
-
-drivers/media/usb/dvb-usb-v2/af9035.c:467 af9035_i2c_master_xfer() warn: inconsistent returns '&d->i2c_mutex'.
-  Locked on  : 326,387
-  Unlocked on: 465,467
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: 7bf744f2de0a ("media: dvb-usb-v2: af9035: Fix null-ptr-deref in af9035_i2c_master_xfer")
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: cdf6b11daa77 ("regmap: Add regmap_noinc_write API")
+Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
+Link: https://lore.kernel.org/r/20231101142926.2722603-2-ben.wolsieffer@hefring.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/af9035.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/base/regmap/regmap.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/af9035.c b/drivers/media/usb/dvb-usb-v2/af9035.c
-index 56bb507fca214..dabfe9b332226 100644
---- a/drivers/media/usb/dvb-usb-v2/af9035.c
-+++ b/drivers/media/usb/dvb-usb-v2/af9035.c
-@@ -323,8 +323,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 			ret = -EOPNOTSUPP;
- 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
- 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
--			if (msg[0].len < 3 || msg[1].len < 1)
--				return -EOPNOTSUPP;
-+			if (msg[0].len < 3 || msg[1].len < 1) {
-+				ret = -EOPNOTSUPP;
-+				goto unlock;
-+			}
- 			/* demod access via firmware interface */
- 			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
- 					msg[0].buf[2];
-@@ -384,8 +386,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 			ret = -EOPNOTSUPP;
- 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
- 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
--			if (msg[0].len < 3)
--				return -EOPNOTSUPP;
-+			if (msg[0].len < 3) {
-+				ret = -EOPNOTSUPP;
-+				goto unlock;
-+			}
- 			/* demod access via firmware interface */
- 			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
- 					msg[0].buf[2];
-@@ -460,6 +464,7 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 		ret = -EOPNOTSUPP;
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index 617d51a278497..7621b54975b57 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -1683,17 +1683,19 @@ static int _regmap_raw_write_impl(struct regmap *map, unsigned int reg,
  	}
  
-+unlock:
- 	mutex_unlock(&d->i2c_mutex);
- 
- 	if (ret < 0)
+ 	if (!map->cache_bypass && map->format.parse_val) {
+-		unsigned int ival;
++		unsigned int ival, offset;
+ 		int val_bytes = map->format.val_bytes;
+-		for (i = 0; i < val_len / val_bytes; i++) {
+-			ival = map->format.parse_val(val + (i * val_bytes));
+-			ret = regcache_write(map,
+-					     reg + regmap_get_offset(map, i),
+-					     ival);
++
++		/* Cache the last written value for noinc writes */
++		i = noinc ? val_len - val_bytes : 0;
++		for (; i < val_len; i += val_bytes) {
++			ival = map->format.parse_val(val + i);
++			offset = noinc ? 0 : regmap_get_offset(map, i / val_bytes);
++			ret = regcache_write(map, reg + offset, ival);
+ 			if (ret) {
+ 				dev_err(map->dev,
+ 					"Error in caching of register: %x ret: %d\n",
+-					reg + regmap_get_offset(map, i), ret);
++					reg + offset, ret);
+ 				return ret;
+ 			}
+ 		}
 -- 
 2.42.0
 
