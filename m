@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C67343ABD
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF6443ACA
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFwljqXU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2215C32794;
-	Wed, 15 Nov 2023 20:49:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybm0OM9F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7028BC4163D;
+	Wed, 15 Nov 2023 20:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081365;
-	bh=tcOMwWr17hxLD4gvxNIrK6ERt9PAF/lvPtaJJOb+9gY=;
+	s=korg; t=1700081366;
+	bh=VX9RgmwkI+BMdpwAyIQhAQYlyql3/Pb/6Cp7o6e4ZkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eFwljqXU0nGhXyrqjctNwyys6hZK0nyJ1MYATOf9C+fc6QFw++L6Elh0SaAJLBQYW
-	 YZb5znn7oveFkLubS71qNHScFd0FtoKvmZPK5bb7IjEgcqw7fl0LZqxycoaIaCFrmo
-	 LXkESgNKiTyKJZny90zamVE0LoPXBMzNL8Y6uMJM=
+	b=ybm0OM9FzAoieMB21EmnIogDwFxR3eziUFrBmeE16abR4WZhIxO7s7hYJtih7LGVb
+	 bJEVA9jaxZ0g8uN+tjUepItw4bLFolbF80Yu/KMORSbwiNdzWsu5bQPoMVu8vIF9Q3
+	 MPv1zqJiqMRru1x1Cs6szxq5U129U1+sm8Kg/WlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	kernel test robot <lkp@intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 082/244] hwmon: (coretemp) Fix potentially truncated sysfs attribute name
-Date: Wed, 15 Nov 2023 15:34:34 -0500
-Message-ID: <20231115203553.279547211@linuxfoundation.org>
+Subject: [PATCH 5.15 083/244] drm/rockchip: vop: Fix reset of state in duplicate state crtc funcs
+Date: Wed, 15 Nov 2023 15:34:35 -0500
+Message-ID: <20231115203553.338271575@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -43,57 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit bbfff736d30e5283ad09e748caff979d75ddef7f ]
+[ Upstream commit 13fc28804bf10ca0b7bce3efbba95c534836d7ca ]
 
-When build with W=1 and "-Werror=format-truncation", below error is
-observed in coretemp driver,
+struct rockchip_crtc_state members such as output_type, output_bpc and
+enable_afbc is always reset to zero in the atomic_duplicate_state crtc
+funcs.
 
-   drivers/hwmon/coretemp.c: In function 'create_core_data':
->> drivers/hwmon/coretemp.c:393:34: error: '%s' directive output may be truncated writing likely 5 or more bytes into a region of size between 3 and 13 [-Werror=format-truncation=]
-     393 |                          "temp%d_%s", attr_no, suffixes[i]);
-         |                                  ^~
-   drivers/hwmon/coretemp.c:393:26: note: assuming directive output of 5 bytes
-     393 |                          "temp%d_%s", attr_no, suffixes[i]);
-         |                          ^~~~~~~~~~~
-   drivers/hwmon/coretemp.c:392:17: note: 'snprintf' output 7 or more bytes (assuming 22) into a destination of size 19
-     392 |                 snprintf(tdata->attr_name[i], CORETEMP_NAME_LENGTH,
-         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     393 |                          "temp%d_%s", attr_no, suffixes[i]);
-         |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   cc1: all warnings being treated as errors
+Fix this by using kmemdup on the subclass rockchip_crtc_state struct.
 
-Given that
-1. '%d' could take 10 charactors,
-2. '%s' could take 10 charactors ("crit_alarm"),
-3. "temp", "_" and the NULL terminator take 6 charactors,
-fix the problem by increasing CORETEMP_NAME_LENGTH to 28.
-
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Fixes: 7108b80a542b ("hwmon/coretemp: Handle large core ID value")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310200443.iD3tUbbK-lkp@intel.com/
-Link: https://lore.kernel.org/r/20231025122316.836400-1-rui.zhang@intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 4e257d9eee23 ("drm/rockchip: get rid of rockchip_drm_crtc_mode_config")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230621223311.2239547-2-jonas@kwiboo.se
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index eaae5de2ab616..5b2057ce5a59d 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -41,7 +41,7 @@ MODULE_PARM_DESC(tjmax, "TjMax value in degrees Celsius");
- #define PKG_SYSFS_ATTR_NO	1	/* Sysfs attribute for package temp */
- #define BASE_SYSFS_ATTR_NO	2	/* Sysfs Base attr no for coretemp */
- #define NUM_REAL_CORES		128	/* Number of Real cores per cpu */
--#define CORETEMP_NAME_LENGTH	19	/* String Length of attrs */
-+#define CORETEMP_NAME_LENGTH	28	/* String Length of attrs */
- #define MAX_CORE_ATTRS		4	/* Maximum no of basic attrs */
- #define TOTAL_ATTRS		(MAX_CORE_ATTRS + 1)
- #define MAX_CORE_DATA		(NUM_REAL_CORES + BASE_SYSFS_ATTR_NO)
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+index cfe13b203b891..4bb68c058422d 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+@@ -1554,7 +1554,8 @@ static struct drm_crtc_state *vop_crtc_duplicate_state(struct drm_crtc *crtc)
+ 	if (WARN_ON(!crtc->state))
+ 		return NULL;
+ 
+-	rockchip_state = kzalloc(sizeof(*rockchip_state), GFP_KERNEL);
++	rockchip_state = kmemdup(to_rockchip_crtc_state(crtc->state),
++				 sizeof(*rockchip_state), GFP_KERNEL);
+ 	if (!rockchip_state)
+ 		return NULL;
+ 
 -- 
 2.42.0
 
