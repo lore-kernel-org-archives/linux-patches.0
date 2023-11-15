@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF443A8F4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0579A3A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MG22BAA/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E226C433C9;
-	Wed, 15 Nov 2023 19:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHokjdr1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3D7C433C7;
+	Wed, 15 Nov 2023 19:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077934;
-	bh=ZpkMOSvVNBADg+c8vFdO3ghSmmPhJKH02gAkQU6wurY=;
+	s=korg; t=1700077935;
+	bh=+hQeU1PapyEeg7gZaB7y3G28G9OPQaC8oatMdHcv3kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MG22BAA/GkaqTQWNUBOPxRFuqftKDRp7iTCaY/P9/Q7qJiQ2mC90GA1u1x+7HvJkG
-	 VQPQnpT6W+e96xbgwMh6iY3Nlyn8xYyQXjb2mgSQiU28caDb+6pFZdJuBej6JuAaKM
-	 nBRsM/yQHmRkql84iD+2/3sB0LU1Qpei+SGtDKco=
+	b=eHokjdr1IoiRVVHuq9ENITxt5GFmDKIhWC51o9PJhgM3CecQtTRbg+MUdIrHzTh8O
+	 KETBJpG6WOkvRk9YNPzeWMv6Y4VYgJNBgXUlj3fRLog/DWU/RxczeQbdoCCF6mRn/w
+	 TS5P+e91rJbsBFClZ1U29mQFJeSDlfFkvMK5a/Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 602/603] btrfs: use u64 for buffer sizes in the tree search ioctls
-Date: Wed, 15 Nov 2023 14:19:07 -0500
-Message-ID: <20231115191652.683909148@linuxfoundation.org>
+Subject: [PATCH 6.6 593/603] fbdev: fsl-diu-fb: mark wr_reg_wa() static
+Date: Wed, 15 Nov 2023 14:18:58 -0500
+Message-ID: <20231115191652.224495162@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,75 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit dec96fc2dcb59723e041416b8dc53e011b4bfc2e ]
+[ Upstream commit a5035c81847430dfa3482807b07325f29e9e8c09 ]
 
-In the tree search v2 ioctl we use the type size_t, which is an unsigned
-long, to track the buffer size in the local variable 'buf_size'. An
-unsigned long is 32 bits wide on a 32 bits architecture. The buffer size
-defined in struct btrfs_ioctl_search_args_v2 is a u64, so when we later
-try to copy the local variable 'buf_size' to the argument struct, when
-the search returns -EOVERFLOW, we copy only 32 bits which will be a
-problem on big endian systems.
+wr_reg_wa() is not an appropriate name for a global function, and doesn't need
+to be global anyway, so mark it static and avoid the warning:
 
-Fix this by using a u64 type for the buffer sizes, not only at
-btrfs_ioctl_tree_search_v2(), but also everywhere down the call chain
-so that we can use the u64 at btrfs_ioctl_tree_search_v2().
+drivers/video/fbdev/fsl-diu-fb.c:493:6: error: no previous prototype for 'wr_reg_wa' [-Werror=missing-prototypes]
 
-Fixes: cc68a8a5a433 ("btrfs: new ioctl TREE_SEARCH_V2")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/linux-btrfs/ce6f4bd6-9453-4ffe-ba00-cee35495e10f@moroto.mountain/
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 0d9dab39fbbe ("powerpc/5121: fsl-diu-fb: fix issue with re-enabling DIU area descriptor")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/video/fbdev/fsl-diu-fb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 8e7d03bc1b565..200dd780bc06f 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -1528,7 +1528,7 @@ static noinline int key_in_sk(struct btrfs_key *key,
- static noinline int copy_to_sk(struct btrfs_path *path,
- 			       struct btrfs_key *key,
- 			       struct btrfs_ioctl_search_key *sk,
--			       size_t *buf_size,
-+			       u64 *buf_size,
- 			       char __user *ubuf,
- 			       unsigned long *sk_offset,
- 			       int *num_found)
-@@ -1660,7 +1660,7 @@ static noinline int copy_to_sk(struct btrfs_path *path,
- 
- static noinline int search_ioctl(struct inode *inode,
- 				 struct btrfs_ioctl_search_key *sk,
--				 size_t *buf_size,
-+				 u64 *buf_size,
- 				 char __user *ubuf)
+diff --git a/drivers/video/fbdev/fsl-diu-fb.c b/drivers/video/fbdev/fsl-diu-fb.c
+index 7fbd9f069ac2e..0bced82fa4940 100644
+--- a/drivers/video/fbdev/fsl-diu-fb.c
++++ b/drivers/video/fbdev/fsl-diu-fb.c
+@@ -490,7 +490,7 @@ static enum fsl_diu_monitor_port fsl_diu_name_to_port(const char *s)
+  * Workaround for failed writing desc register of planes.
+  * Needed with MPC5121 DIU rev 2.0 silicon.
+  */
+-void wr_reg_wa(u32 *reg, u32 val)
++static void wr_reg_wa(u32 *reg, u32 val)
  {
- 	struct btrfs_fs_info *info = btrfs_sb(inode->i_sb);
-@@ -1733,7 +1733,7 @@ static noinline int btrfs_ioctl_tree_search(struct inode *inode,
- 	struct btrfs_ioctl_search_args __user *uargs = argp;
- 	struct btrfs_ioctl_search_key sk;
- 	int ret;
--	size_t buf_size;
-+	u64 buf_size;
- 
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
-@@ -1763,8 +1763,8 @@ static noinline int btrfs_ioctl_tree_search_v2(struct inode *inode,
- 	struct btrfs_ioctl_search_args_v2 __user *uarg = argp;
- 	struct btrfs_ioctl_search_args_v2 args;
- 	int ret;
--	size_t buf_size;
--	const size_t buf_limit = SZ_16M;
-+	u64 buf_size;
-+	const u64 buf_limit = SZ_16M;
- 
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
+ 	do {
+ 		out_be32(reg, val);
 -- 
 2.42.0
 
