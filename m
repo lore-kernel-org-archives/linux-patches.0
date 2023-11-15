@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3478F3A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19593A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgZeYgqn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79D2C433C8;
-	Wed, 15 Nov 2023 19:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqY5RJym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90573C433CB;
+	Wed, 15 Nov 2023 19:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077871;
-	bh=Ifim9AG9SKPva+6a0uwB3gaI6SpdjcwVEEmnoPySa8g=;
+	s=korg; t=1700077872;
+	bh=pAZhK8KMHeHmlCizMlxOMolYrR6L8Vn5PVHgfI83W+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CgZeYgqnYVEq9f7MYNgms02evYjy98YfcRxt87BOV3m/GDqIK2/pQPp15fn0yd55P
-	 vl8nSdbHHaYS8yAt3FQvu2aKDy3HA2OrK7mQebHae0TlYqaV3huSAUZrSBnabxYX97
-	 7iz798xEtqh1fXcSJu5l85Qfo+ROlcuhS8dpvXzw=
+	b=yqY5RJymo9g02hrEHxWZTEwaDCjFa6bV0Q0dAE91FpxWIl3IGLVAzfZwyHbBut506
+	 y6SeOEzibtSUMw/EOXcdpn7zVUrMMI8hnNsx9W0OpEVmo+3YgCPKyPKJAZ98qIsGLx
+	 wevnfw2fUt4QMtpWCWPr3/B13c0QpWPMaLxmjf0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	wenxu <wenxu@ucloud.cn>,
-	David Ahern <dsahern@kernel.org>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 546/603] inet: shrink struct flowi_common
-Date: Wed, 15 Nov 2023 14:18:11 -0500
-Message-ID: <20231115191649.542388975@linuxfoundation.org>
+Subject: [PATCH 6.6 547/603] octeontx2-pf: Fix error codes
+Date: Wed, 15 Nov 2023 14:18:12 -0500
+Message-ID: <20231115191649.603354859@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,42 +43,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 1726483b79a72e0150734d5367e4a0238bf8fcff ]
+[ Upstream commit 96b9a68d1a6e4f889d453874c9e359aa720b520f ]
 
-I am looking at syzbot reports triggering kernel stack overflows
-involving a cascade of ipvlan devices.
+Some of error codes were wrong. Fix the same.
 
-We can save 8 bytes in struct flowi_common.
-
-This patch alone will not fix the issue, but is a start.
-
-Fixes: 24ba14406c5c ("route: Add multipath_hash in flowi_common to make user-define hash")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: wenxu <wenxu@ucloud.cn>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20231025141037.3448203-1-edumazet@google.com
+Fixes: 51afe9026d0c ("octeontx2-pf: NIX TX overwrites SQ_CTX_HW_S[SQ_INT]")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://lore.kernel.org/r/20231027021953.1819959-1-rkannoth@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/flow.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../marvell/octeontx2/nic/otx2_struct.h       | 34 +++++++++----------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/include/net/flow.h b/include/net/flow.h
-index 7f0adda3bf2fe..335bbc52171c1 100644
---- a/include/net/flow.h
-+++ b/include/net/flow.h
-@@ -40,8 +40,8 @@ struct flowi_common {
- #define FLOWI_FLAG_KNOWN_NH		0x02
- 	__u32	flowic_secid;
- 	kuid_t  flowic_uid;
--	struct flowi_tunnel flowic_tun_key;
- 	__u32		flowic_multipath_hash;
-+	struct flowi_tunnel flowic_tun_key;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
+index fa37b9f312cae..4e5899d8fa2e6 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
+@@ -318,23 +318,23 @@ enum nix_snd_status_e {
+ 	NIX_SND_STATUS_EXT_ERR = 0x6,
+ 	NIX_SND_STATUS_JUMP_FAULT = 0x7,
+ 	NIX_SND_STATUS_JUMP_POISON = 0x8,
+-	NIX_SND_STATUS_CRC_ERR = 0x9,
+-	NIX_SND_STATUS_IMM_ERR = 0x10,
+-	NIX_SND_STATUS_SG_ERR = 0x11,
+-	NIX_SND_STATUS_MEM_ERR = 0x12,
+-	NIX_SND_STATUS_INVALID_SUBDC = 0x13,
+-	NIX_SND_STATUS_SUBDC_ORDER_ERR = 0x14,
+-	NIX_SND_STATUS_DATA_FAULT = 0x15,
+-	NIX_SND_STATUS_DATA_POISON = 0x16,
+-	NIX_SND_STATUS_NPC_DROP_ACTION = 0x17,
+-	NIX_SND_STATUS_LOCK_VIOL = 0x18,
+-	NIX_SND_STATUS_NPC_UCAST_CHAN_ERR = 0x19,
+-	NIX_SND_STATUS_NPC_MCAST_CHAN_ERR = 0x20,
+-	NIX_SND_STATUS_NPC_MCAST_ABORT = 0x21,
+-	NIX_SND_STATUS_NPC_VTAG_PTR_ERR = 0x22,
+-	NIX_SND_STATUS_NPC_VTAG_SIZE_ERR = 0x23,
+-	NIX_SND_STATUS_SEND_MEM_FAULT = 0x24,
+-	NIX_SND_STATUS_SEND_STATS_ERR = 0x25,
++	NIX_SND_STATUS_CRC_ERR = 0x10,
++	NIX_SND_STATUS_IMM_ERR = 0x11,
++	NIX_SND_STATUS_SG_ERR = 0x12,
++	NIX_SND_STATUS_MEM_ERR = 0x13,
++	NIX_SND_STATUS_INVALID_SUBDC = 0x14,
++	NIX_SND_STATUS_SUBDC_ORDER_ERR = 0x15,
++	NIX_SND_STATUS_DATA_FAULT = 0x16,
++	NIX_SND_STATUS_DATA_POISON = 0x17,
++	NIX_SND_STATUS_NPC_DROP_ACTION = 0x20,
++	NIX_SND_STATUS_LOCK_VIOL = 0x21,
++	NIX_SND_STATUS_NPC_UCAST_CHAN_ERR = 0x22,
++	NIX_SND_STATUS_NPC_MCAST_CHAN_ERR = 0x23,
++	NIX_SND_STATUS_NPC_MCAST_ABORT = 0x24,
++	NIX_SND_STATUS_NPC_VTAG_PTR_ERR = 0x25,
++	NIX_SND_STATUS_NPC_VTAG_SIZE_ERR = 0x26,
++	NIX_SND_STATUS_SEND_MEM_FAULT = 0x27,
++	NIX_SND_STATUS_SEND_STATS_ERR = 0x28,
+ 	NIX_SND_STATUS_MAX,
  };
  
- union flowi_uli {
 -- 
 2.42.0
 
