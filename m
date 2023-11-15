@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3271E43AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B501B43AB5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJtzPVEJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C11C433CC;
-	Wed, 15 Nov 2023 20:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpuDICWt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544EFC433C7;
+	Wed, 15 Nov 2023 20:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081138;
-	bh=z+fL77yVZ//O2CfgoHJu1XYDhVF32R98SkiIYyA1IZ8=;
+	s=korg; t=1700081139;
+	bh=P94SfTpQj6fnyaJKyLYkz6zFth775d1o7sqpTMbq2vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJtzPVEJKgBj/Rtxl6W7TdRrMXPqAUt6db3S4OVuAbbEKYjw4uGWaX8iDSDcCs5xu
-	 lg6rsEdGPKor1b17QUAkXNsHYL9kGR3EMP4Z4cxk11wG+2pO2qrb7e6AwwB8aJhXHf
-	 8tLRCl0lHhLi4sm4B59b69MrJ/2eZy5a+tJrkTsw=
+	b=jpuDICWtcSqC8Ksvx3lk3G606U1gDe1EHn8Mco18QPAgCU4q1k8FxSytbE9iKuDtc
+	 7V+I26cSYjj4GR97FH7O+tXISfIFa5ibIduOy4/UL0kBudte0sQaCgTJAiXfgwxUi2
+	 7+SQMfucjQESIuaOWBoHF6Ho9pMNaPqnh852K8P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 61/88] f2fs: fix to initialize map.m_pblk in f2fs_precache_extents()
-Date: Wed, 15 Nov 2023 15:36:13 -0500
-Message-ID: <20231115191429.791790195@linuxfoundation.org>
+Subject: [PATCH 4.19 62/88] pcmcia: cs: fix possible hung task and memory leak pccardd()
+Date: Wed, 15 Nov 2023 15:36:14 -0500
+Message-ID: <20231115191429.848666847@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -42,35 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 8b07c1fb0f1ad139373c8253f2fad8bc43fab07d ]
+[ Upstream commit e3ea1b4847e49234e691c0d66bf030bd65bb7f2b ]
 
-Otherwise, it may print random physical block address in tracepoint
-of f2fs_map_blocks() as below:
+If device_register() returns error in pccardd(), it leads two issues:
 
-f2fs_map_blocks: dev = (253,16), ino = 2297, file offset = 0, start blkaddr = 0xa356c421, len = 0x0, flags = 0
+1. The socket_released has never been completed, it will block
+   pcmcia_unregister_socket(), because of waiting for completion
+   of socket_released.
+2. The device name allocated by dev_set_name() is leaked.
 
-Fixes: c4020b2da4c9 ("f2fs: support F2FS_IOC_PRECACHE_EXTENTS")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fix this two issues by calling put_device() when device_register() fails.
+socket_released can be completed in pcmcia_release_socket(), the name can
+be freed in kobject_cleanup().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 1 +
+ drivers/pcmcia/cs.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 2a7249496c57e..043ce96ac1270 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2892,6 +2892,7 @@ int f2fs_precache_extents(struct inode *inode)
- 		return -EOPNOTSUPP;
- 
- 	map.m_lblk = 0;
-+	map.m_pblk = 0;
- 	map.m_next_pgofs = NULL;
- 	map.m_next_extent = &m_next_extent;
- 	map.m_seg_type = NO_CHECK_TYPE;
+diff --git a/drivers/pcmcia/cs.c b/drivers/pcmcia/cs.c
+index 182e5ef4ab83d..e99ef7b745aeb 100644
+--- a/drivers/pcmcia/cs.c
++++ b/drivers/pcmcia/cs.c
+@@ -608,6 +608,7 @@ static int pccardd(void *__skt)
+ 		dev_warn(&skt->dev, "PCMCIA: unable to register socket\n");
+ 		skt->thread = NULL;
+ 		complete(&skt->thread_done);
++		put_device(&skt->dev);
+ 		return 0;
+ 	}
+ 	ret = pccard_sysfs_add_socket(&skt->dev);
 -- 
 2.42.0
 
