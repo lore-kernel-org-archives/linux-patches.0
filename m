@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5059843ADA
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BC11FCF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRESRyzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036A6C4E77A;
-	Wed, 15 Nov 2023 20:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyH7/UEm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90985C4E778;
+	Wed, 15 Nov 2023 20:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081824;
-	bh=nnk+34XJ24IMHpKzE5l465wshC/r9lN6u+5GZWsdBEc=;
+	s=korg; t=1700081825;
+	bh=0jxvmgpxfi8jKrU6vQOqUyT5SKSgdJBaum+44aF9/ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hRESRyzFDZ2VkjCCClu9on3Kmw+muShSBQkuFVY9/045O3UgL0a/mNUk4CczamYYA
-	 asByN7H8L2B4paVoW3w8DpDN04+5DYUDgPusuST5UtMQXpX9giDuTJVYs3hB0N2X8F
-	 O/vcoYTMTPP7zSeQmU+l9PO+sk6fktxy5N0FRWZ0=
+	b=vyH7/UEmd+EluN0BfnuFf0EJVMkoMlILi269W3PjivnIRZNx8Mps10qRzXxgDtb/0
+	 VD7KQIkKkGI9ssWynpHK36rlDdLeVku2iOj9YGucufjpEm9jRRJANyHJUYESb4F3jQ
+	 XTlN7tfYslFnz+Lb89QseRHZI21ZfI1WNvs4klEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 149/191] rtc: pcf85363: fix wrong mask/val parameters in regmap_update_bits call
-Date: Wed, 15 Nov 2023 15:47:04 -0500
-Message-ID: <20231115204653.448847037@linuxfoundation.org>
+Subject: [PATCH 5.10 132/191] tools: iio: iio_generic_buffer ensure alignment
+Date: Wed, 15 Nov 2023 15:46:47 -0500
+Message-ID: <20231115204652.447174066@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -42,40 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 2be36c09b6b07306be33519e1aa70d2e2a2161bb ]
+[ Upstream commit 2d3dff577dd0ea8fe9637a13822f7603c4a881c8 ]
 
-The current implementation passes PIN_IO_INTA_OUT (2) as a mask and
-PIN_IO_INTAPM (GENMASK(1, 0)) as a value.
-Swap the variables to assign mask and value the right way.
+The iio_generic_buffer can return garbage values when the total size of
+scan data is not a multiple of the largest element in the scan. This can be
+demonstrated by reading a scan, consisting, for example of one 4-byte and
+one 2-byte element, where the 4-byte element is first in the buffer.
 
-This error was first introduced with the alarm support. For better or
-worse it worked as expected because 0x02 was applied as a mask to 0x03,
-resulting 0x02 anyway. This will of course not work for any other value.
+The IIO generic buffer code does not take into account the last two
+padding bytes that are needed to ensure that the 4-byte data for next
+scan is correctly aligned.
 
-Fixes: e5aac267a10a ("rtc: pcf85363: add alarm support")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20231013-topic-pcf85363_regmap_update_bits-v1-1-c454f016f71f@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Add the padding bytes required to align the next sample with the scan size.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: e58537ccce73 ("staging: iio: update example application.")
+Link: https://lore.kernel.org/r/ZRvlm4ktNLu+qmlf@dc78bmyyyyyyyyyyyyydt-3.rev.dnainternet.fi
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85363.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/iio/iio_generic_buffer.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-pcf85363.c b/drivers/rtc/rtc-pcf85363.c
-index 3450d615974d5..bb962dce3ab26 100644
---- a/drivers/rtc/rtc-pcf85363.c
-+++ b/drivers/rtc/rtc-pcf85363.c
-@@ -407,7 +407,7 @@ static int pcf85363_probe(struct i2c_client *client,
- 	if (client->irq > 0) {
- 		regmap_write(pcf85363->regmap, CTRL_FLAGS, 0);
- 		regmap_update_bits(pcf85363->regmap, CTRL_PIN_IO,
--				   PIN_IO_INTA_OUT, PIN_IO_INTAPM);
-+				   PIN_IO_INTAPM, PIN_IO_INTA_OUT);
- 		ret = devm_request_threaded_irq(&client->dev, client->irq,
- 						NULL, pcf85363_rtc_handle_irq,
- 						IRQF_TRIGGER_LOW | IRQF_ONESHOT,
+diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
+index e38c72fd58ccf..2fd10eab75b53 100644
+--- a/tools/iio/iio_generic_buffer.c
++++ b/tools/iio/iio_generic_buffer.c
+@@ -52,9 +52,12 @@ enum autochan {
+ static unsigned int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
+ {
+ 	unsigned int bytes = 0;
+-	int i = 0;
++	int i = 0, max = 0;
++	unsigned int misalignment;
+ 
+ 	while (i < num_channels) {
++		if (channels[i].bytes > max)
++			max = channels[i].bytes;
+ 		if (bytes % channels[i].bytes == 0)
+ 			channels[i].location = bytes;
+ 		else
+@@ -64,6 +67,14 @@ static unsigned int size_from_channelarray(struct iio_channel_info *channels, in
+ 		bytes = channels[i].location + channels[i].bytes;
+ 		i++;
+ 	}
++	/*
++	 * We want the data in next sample to also be properly aligned so
++	 * we'll add padding at the end if needed. Adding padding only
++	 * works for channel data which size is 2^n bytes.
++	 */
++	misalignment = bytes % max;
++	if (misalignment)
++		bytes += max - misalignment;
+ 
+ 	return bytes;
+ }
 -- 
 2.42.0
 
