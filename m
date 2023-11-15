@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7C63C478
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58733DBA1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1yCxWQpW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32CAC433CB;
-	Wed, 15 Nov 2023 19:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6pzH92b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5317CC433C9;
+	Wed, 15 Nov 2023 19:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078380;
-	bh=TMRUffSmRPk0cawMJonlUn/WSV7NhpCExqFhcxTZ6zw=;
+	s=korg; t=1700078382;
+	bh=vtZpYbrFix4JgEwJv6sOZS7If3PasYocbVaxjYA/qr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1yCxWQpWoGkrFlN24DUHCAZFoGvfsSb2SotDbvO9cv7Oqcz1/8v78mFgHHIlWVu95
-	 7XMhJtcvN0t5iYN4cowXLoZGz+DcAq9YHo8q+qXjuTko+Wt81h8jePE/vM2a/tQFDL
-	 jYYlMe7pDxmnSf/RmKKc6bIYdynowbQ3PqFn9VF8=
+	b=I6pzH92byyoiQg8B2YjddbLx2/RcyAnWKABFhLTb9lVEbqNZajBsxjMF/zi/LsfQ1
+	 CV2FBnZnPo0PYtyApMDp0jXMOIoK5bRAGAthVelNWgQaZkCzybKCWgObKsiFZAhTWb
+	 efSqVn6qxQxuOLC4gvPLNFCBcf7ZooSEFgpiOH6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 289/379] interconnect: qcom: sm8150: Set ACV enable_mask
-Date: Wed, 15 Nov 2023 14:26:04 -0500
-Message-ID: <20231115192702.239137930@linuxfoundation.org>
+Subject: [PATCH 6.1 272/379] misc: st_core: Do not call kfree_skb() under spin_lock_irqsave()
+Date: Wed, 15 Nov 2023 14:25:47 -0500
+Message-ID: <20231115192701.219095286@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,33 +41,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 7ed42176406e5a2c9a5767d0d75690c7d1588027 ]
+[ Upstream commit 4d08c3d12b61022501989f9f071514d2d6f77c47 ]
 
-ACV expects an enable_mask corresponding to the APPS RSC, fill it in.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with hardware interrupts being disabled.
+So replace kfree_skb() with dev_kfree_skb_irq() under
+spin_lock_irqsave(). Compile tested only.
 
-Fixes: a09b817c8bad ("interconnect: qcom: Add SM8150 interconnect provider driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230811-topic-acv-v2-9-765ad70e539a@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 53618cc1e51e ("Staging: sources for ST core")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20230823035020.1281892-1-ruanjinjie@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/sm8150.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/misc/ti-st/st_core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/sm8150.c b/drivers/interconnect/qcom/sm8150.c
-index 640fd4c4a6886..685f35bbf5a7c 100644
---- a/drivers/interconnect/qcom/sm8150.c
-+++ b/drivers/interconnect/qcom/sm8150.c
-@@ -156,6 +156,7 @@ DEFINE_QNODE(xs_sys_tcu_cfg, SM8150_SLAVE_TCU, 1, 8);
+diff --git a/drivers/misc/ti-st/st_core.c b/drivers/misc/ti-st/st_core.c
+index 7f6976a9f508b..48e0f8377e659 100644
+--- a/drivers/misc/ti-st/st_core.c
++++ b/drivers/misc/ti-st/st_core.c
+@@ -15,6 +15,7 @@
+ #include <linux/skbuff.h>
  
- static struct qcom_icc_bcm bcm_acv = {
- 	.name = "ACV",
-+	.enable_mask = BIT(3),
- 	.keepalive = false,
- 	.num_nodes = 1,
- 	.nodes = { &ebi },
+ #include <linux/ti_wilink_st.h>
++#include <linux/netdevice.h>
+ 
+ extern void st_kim_recv(void *, const unsigned char *, long);
+ void st_int_recv(void *, const unsigned char *, long);
+@@ -435,7 +436,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
+ 	case ST_LL_AWAKE_TO_ASLEEP:
+ 		pr_err("ST LL is illegal state(%ld),"
+ 			   "purging received skb.", st_ll_getstate(st_gdata));
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		break;
+ 	case ST_LL_ASLEEP:
+ 		skb_queue_tail(&st_gdata->tx_waitq, skb);
+@@ -444,7 +445,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
+ 	default:
+ 		pr_err("ST LL is illegal state(%ld),"
+ 			   "purging received skb.", st_ll_getstate(st_gdata));
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		break;
+ 	}
+ 
+@@ -498,7 +499,7 @@ void st_tx_wakeup(struct st_data_s *st_data)
+ 				spin_unlock_irqrestore(&st_data->lock, flags);
+ 				break;
+ 			}
+-			kfree_skb(skb);
++			dev_kfree_skb_irq(skb);
+ 			spin_unlock_irqrestore(&st_data->lock, flags);
+ 		}
+ 		/* if wake-up is set in another context- restart sending */
 -- 
 2.42.0
 
