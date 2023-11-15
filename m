@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F6743AB9
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BEA43AB9
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnpf+LJM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85F5C433C7;
-	Wed, 15 Nov 2023 20:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4Ob40V6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99028C433C9;
+	Wed, 15 Nov 2023 20:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081179;
-	bh=Jlqqcj92CJBoDgfJIz9L1vBWdgoLdUqK6o5vEhYNRSM=;
+	s=korg; t=1700081180;
+	bh=8FA3lFr+szaUtpwEh7vPNbDDft6uLo7F0j5NFeN0g7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dnpf+LJM2dcQBOy6QtxjUva5N3y4WAm2v/p+XnT8gmskbKxuxgSRzOiYxlZgp36bv
-	 zydT9urNXv2zyaO1tZIblt3uDAJ+i6G8jkF8nKc/YpcKWkKLukMVsr1sRV3lxXkvOu
-	 /Dl06bfv/02CCb3BZgmbg7yzY4PJ5GqClPiHp4l0=
+	b=u4Ob40V6OoxEjc67QvvAT/Eg5kl+Ob9CnC0YtbTADI6pTZWDzxdWlTpMXQQU9H2xp
+	 tgJHghh0GFKKZNtakCcfmX4tG1xcm6brs+hnl7yT476e2K900qtqJdizlB+bTLvLHI
+	 6PkOUiqGBFQ31WSZhIN/pnKmozxdrPzGXg4fGnEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 86/88] fbdev: fsl-diu-fb: mark wr_reg_wa() static
-Date: Wed, 15 Nov 2023 15:36:38 -0500
-Message-ID: <20231115191431.212812657@linuxfoundation.org>
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Alex Fetters <Alex.Fetters@garmin.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.19 87/88] Revert "mmc: core: Capture correct oemid-bits for eMMC cards"
+Date: Wed, 15 Nov 2023 15:36:39 -0500
+Message-ID: <20231115191431.274537699@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -42,38 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-[ Upstream commit a5035c81847430dfa3482807b07325f29e9e8c09 ]
+commit 421b605edb1ce611dee06cf6fd9a1c1f2fd85ad0 upstream.
 
-wr_reg_wa() is not an appropriate name for a global function, and doesn't need
-to be global anyway, so mark it static and avoid the warning:
+This reverts commit 84ee19bffc9306128cd0f1c650e89767079efeff.
 
-drivers/video/fbdev/fsl-diu-fb.c:493:6: error: no previous prototype for 'wr_reg_wa' [-Werror=missing-prototypes]
+The commit above made quirks with an OEMID fail to be applied, as they
+were checking card->cid.oemid for the full 16 bits defined in MMC_FIXUP
+macros but the field would only contain the bottom 8 bits.
 
-Fixes: 0d9dab39fbbe ("powerpc/5121: fsl-diu-fb: fix issue with re-enabling DIU area descriptor")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+eMMC v5.1A might have bogus values in OEMID's higher bits so another fix
+will be made, but it has been decided to revert this until that is ready.
+
+Fixes: 84ee19bffc93 ("mmc: core: Capture correct oemid-bits for eMMC cards")
+Link: https://lkml.kernel.org/r/ZToJsSLHr8RnuTHz@codewreck.org
+Link: https://lkml.kernel.org/r/CAPDyKFqkKibcXnwjnhc3+W1iJBHLeqQ9BpcZrSwhW2u9K2oUtg@mail.gmail.com
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Cc: stable@vger.kernel.org
+Cc: Alex Fetters <Alex.Fetters@garmin.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20231103004220.1666641-1-asmadeus@codewreck.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/fsl-diu-fb.c | 2 +-
+ drivers/mmc/core/mmc.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/fsl-diu-fb.c b/drivers/video/fbdev/fsl-diu-fb.c
-index bc9eb8afc3137..0a86a91614085 100644
---- a/drivers/video/fbdev/fsl-diu-fb.c
-+++ b/drivers/video/fbdev/fsl-diu-fb.c
-@@ -495,7 +495,7 @@ static enum fsl_diu_monitor_port fsl_diu_name_to_port(const char *s)
-  * Workaround for failed writing desc register of planes.
-  * Needed with MPC5121 DIU rev 2.0 silicon.
-  */
--void wr_reg_wa(u32 *reg, u32 val)
-+static void wr_reg_wa(u32 *reg, u32 val)
- {
- 	do {
- 		out_be32(reg, val);
--- 
-2.42.0
-
+--- a/drivers/mmc/core/mmc.c
++++ b/drivers/mmc/core/mmc.c
+@@ -98,7 +98,7 @@ static int mmc_decode_cid(struct mmc_car
+ 	case 3: /* MMC v3.1 - v3.3 */
+ 	case 4: /* MMC v4 */
+ 		card->cid.manfid	= UNSTUFF_BITS(resp, 120, 8);
+-		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 8);
++		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 16);
+ 		card->cid.prod_name[0]	= UNSTUFF_BITS(resp, 96, 8);
+ 		card->cid.prod_name[1]	= UNSTUFF_BITS(resp, 88, 8);
+ 		card->cid.prod_name[2]	= UNSTUFF_BITS(resp, 80, 8);
 
 
