@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E35043ADE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D65171CE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlWyQO/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EECCC433CA;
-	Wed, 15 Nov 2023 20:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJgCRn5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D83C433C8;
+	Wed, 15 Nov 2023 20:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081881;
-	bh=S8DneIvaXy13O8mzjO12/TBCywc1Fw0SNSmzvSiMstE=;
+	s=korg; t=1700081883;
+	bh=QdSL2YWzlOAXSWpBwZu88ONmlkmJz3g1Kw7/qA4o5YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dlWyQO/wKGY+7JWoIUrSTbngmv+MRD4w5GMDVyOICg8C8PlzRdgIuwR11ObFVv+/x
-	 DcGq7l9iUt29xIIAr4rvAnlCdfOwsioSOfOvHtUALJOK55FqUXdUS+XMuC2koF0P27
-	 1KXr+WqFgG73BIT+x27uJLvLkTj5KXzjJwIbrEb0=
+	b=yJgCRn5hmkMueCI/Je8ot25BdbhmPhdTJlExKAynM0N1ltOasNkeBcJ4AJvYCi7ec
+	 R9OiY3y7nRz87gDTiXZjjrV9LfnXqK/OLVhzlde5dyfr8Nerb3rBgX7JX9VbBQRTcK
+	 UgZ61ii+lCjg+sTlSIUP1s6tQbzKv8Pm9r8BbFZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erik Kurzinger <ekurzinger@nvidia.com>,
-	Simon Ser <contact@emersion.fr>,
+	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 184/191] drm/syncobj: fix DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE
-Date: Wed, 15 Nov 2023 15:47:39 -0500
-Message-ID: <20231115204655.480767143@linuxfoundation.org>
+Subject: [PATCH 5.10 160/191] regmap: prevent noinc writes from clobbering cache
+Date: Wed, 15 Nov 2023 15:47:15 -0500
+Message-ID: <20231115204654.070165227@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -42,64 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erik Kurzinger <ekurzinger@nvidia.com>
+From: Ben Wolsieffer <ben.wolsieffer@hefring.com>
 
-[ Upstream commit 101c9f637efa1655f55876644d4439e552267527 ]
+[ Upstream commit 984a4afdc87a1fc226fd657b1cd8255c13d3fc1a ]
 
-If DRM_IOCTL_SYNCOBJ_TIMELINE_WAIT is invoked with the
-DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE flag set but no fence has yet been
-submitted for the given timeline point the call will fail immediately
-with EINVAL. This does not match the intended behavior where the call
-should wait until the fence has been submitted (or the timeout expires).
+Currently, noinc writes are cached as if they were standard incrementing
+writes, overwriting unrelated register values in the cache. Instead, we
+want to cache the last value written to the register, as is done in the
+accelerated noinc handler (regmap_noinc_readwrite).
 
-The following small example program illustrates the issue. It should
-wait for 5 seconds and then print ETIME, but instead it terminates right
-away after printing EINVAL.
-
-  #include <stdio.h>
-  #include <fcntl.h>
-  #include <time.h>
-  #include <errno.h>
-  #include <xf86drm.h>
-  int main(void)
-  {
-      int fd = open("/dev/dri/card0", O_RDWR);
-      uint32_t syncobj;
-      drmSyncobjCreate(fd, 0, &syncobj);
-      struct timespec ts;
-      clock_gettime(CLOCK_MONOTONIC, &ts);
-      uint64_t point = 1;
-      if (drmSyncobjTimelineWait(fd, &syncobj, &point, 1,
-                                 ts.tv_sec * 1000000000 + ts.tv_nsec + 5000000000, // 5s
-                                 DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE, NULL)) {
-          printf("drmSyncobjTimelineWait failed %d\n", errno);
-      }
-  }
-
-Fixes: 01d6c3578379 ("drm/syncobj: add support for timeline point wait v8")
-Signed-off-by: Erik Kurzinger <ekurzinger@nvidia.com>
-Reviewed by: Simon Ser <contact@emersion.fd>
-Signed-off-by: Simon Ser <contact@emersion.fr>
-Link: https://patchwork.freedesktop.org/patch/msgid/1fac96f1-2f3f-f9f9-4eb0-340f27a8f6c0@nvidia.com
+Fixes: cdf6b11daa77 ("regmap: Add regmap_noinc_write API")
+Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
+Link: https://lore.kernel.org/r/20231101142926.2722603-2-ben.wolsieffer@hefring.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_syncobj.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/base/regmap/regmap.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_syncobj.c b/drivers/gpu/drm/drm_syncobj.c
-index 993898a2c7791..738e60139db90 100644
---- a/drivers/gpu/drm/drm_syncobj.c
-+++ b/drivers/gpu/drm/drm_syncobj.c
-@@ -983,7 +983,8 @@ static signed long drm_syncobj_array_wait_timeout(struct drm_syncobj **syncobjs,
- 		fence = drm_syncobj_fence_get(syncobjs[i]);
- 		if (!fence || dma_fence_chain_find_seqno(&fence, points[i])) {
- 			dma_fence_put(fence);
--			if (flags & DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT) {
-+			if (flags & (DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT |
-+				     DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE)) {
- 				continue;
- 			} else {
- 				timeout = -EINVAL;
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index 3edff8606ac95..7bc603145bd98 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -1643,17 +1643,19 @@ static int _regmap_raw_write_impl(struct regmap *map, unsigned int reg,
+ 	}
+ 
+ 	if (!map->cache_bypass && map->format.parse_val) {
+-		unsigned int ival;
++		unsigned int ival, offset;
+ 		int val_bytes = map->format.val_bytes;
+-		for (i = 0; i < val_len / val_bytes; i++) {
+-			ival = map->format.parse_val(val + (i * val_bytes));
+-			ret = regcache_write(map,
+-					     reg + regmap_get_offset(map, i),
+-					     ival);
++
++		/* Cache the last written value for noinc writes */
++		i = noinc ? val_len - val_bytes : 0;
++		for (; i < val_len; i += val_bytes) {
++			ival = map->format.parse_val(val + i);
++			offset = noinc ? 0 : regmap_get_offset(map, i / val_bytes);
++			ret = regcache_write(map, reg + offset, ival);
+ 			if (ret) {
+ 				dev_err(map->dev,
+ 					"Error in caching of register: %x ret: %d\n",
+-					reg + regmap_get_offset(map, i), ret);
++					reg + offset, ret);
+ 				return ret;
+ 			}
+ 		}
 -- 
 2.42.0
 
