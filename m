@@ -1,32 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8F241AB8
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999E941A80
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sp36/+oC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1774C433CC;
-	Wed, 15 Nov 2023 19:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K683PcNw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A28DC433C9;
+	Wed, 15 Nov 2023 19:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076955;
-	bh=U10DjcbL2XGDJO7vCSTVmMaMcjZr0AqwDvh10vHydKU=;
+	s=korg; t=1700076956;
+	bh=SoKgti6ewAMotgn32FdjM3RpDB8gtMwDMr69+2aw2Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sp36/+oClv/JoYbweTG5Qw2lZlIfs43LC5n0Mhct/v1toLoooQaa72Sfhst8uKzJu
-	 FUYG0PtOOww4+1KwGamTVljM6Jozg5IfxlBE6b4CGFgo+XbxRBjJXU99tRFVRZ9dNb
-	 AoSwLTRr52eoxdSQmBAtmWoNf1r3OwDPKrIrNqH8=
+	b=K683PcNwKDdhMwBYuCYkkv5TShfYZXyPd1d2uTXaygnpiSBvZt/SOUVMoS7upWAq2
+	 3ZEnF0qvAN8tuZ/14nJ3E8o9nZvo5VWXLD3f+H6rdPqQ04GBmb/FTnkSc0y87OWg/T
+	 ya8SS8EeV0KQ3zRUCXkzh7fKSsl7x+fJTgcfOodg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 078/603] cpufreq: tegra194: fix warning due to missing opp_put
-Date: Wed, 15 Nov 2023 14:10:23 -0500
-Message-ID: <20231115191618.520069104@linuxfoundation.org>
+Subject: [PATCH 6.5 475/550] media: i2c: max9286: Fix some redundant of_node_put() calls
+Date: Wed, 15 Nov 2023 14:17:39 -0500
+Message-ID: <20231115191633.787638027@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,60 +42,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sumit Gupta <sumitg@nvidia.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit bae8222a6c291dbe58c908dab5c2abd3a75d0d63 ]
+[ Upstream commit 0822315e46b400f611cba1193456ee6a5dc3e41d ]
 
-Fix the warning due to missing dev_pm_opp_put() call and hence
-wrong refcount value. This causes below warning message when
-trying to remove the module.
+This is odd to have a of_node_put() just after a for_each_child_of_node()
+or a for_each_endpoint_of_node() loop. It should already be called
+during the last iteration.
 
- Call trace:
-  dev_pm_opp_put_opp_table+0x154/0x15c
-  dev_pm_opp_remove_table+0x34/0xa0
-  _dev_pm_opp_cpumask_remove_table+0x7c/0xbc
-  dev_pm_opp_of_cpumask_remove_table+0x10/0x18
-  tegra194_cpufreq_exit+0x24/0x34 [tegra194_cpufreq]
-  cpufreq_remove_dev+0xa8/0xf8
-  subsys_interface_unregister+0x90/0xe8
-  cpufreq_unregister_driver+0x54/0x9c
-  tegra194_cpufreq_remove+0x18/0x2c [tegra194_cpufreq]
-  platform_remove+0x24/0x74
-  device_remove+0x48/0x78
-  device_release_driver_internal+0xc8/0x160
-  driver_detach+0x4c/0x90
-  bus_remove_driver+0x68/0xb8
-  driver_unregister+0x2c/0x58
-  platform_driver_unregister+0x10/0x18
-  tegra194_ccplex_driver_exit+0x14/0x1e0 [tegra194_cpufreq]
-  __arm64_sys_delete_module+0x184/0x270
+Remove these calls.
 
-Fixes: f41e1442ac5b ("cpufreq: tegra194: add OPP support and set bandwidth")
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-[ Viresh: Add a blank line ]
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 66d8c9d2422d ("media: i2c: Add MAX9286 driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/tegra194-cpufreq.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/i2c/max9286.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
-index 88ef5e57ccd05..386aed3637b4e 100644
---- a/drivers/cpufreq/tegra194-cpufreq.c
-+++ b/drivers/cpufreq/tegra194-cpufreq.c
-@@ -450,6 +450,8 @@ static int tegra_cpufreq_init_cpufreq_table(struct cpufreq_policy *policy,
- 		if (IS_ERR(opp))
- 			continue;
+diff --git a/drivers/media/i2c/max9286.c b/drivers/media/i2c/max9286.c
+index 88c58e0c49aab..e265e94ca3de4 100644
+--- a/drivers/media/i2c/max9286.c
++++ b/drivers/media/i2c/max9286.c
+@@ -1461,7 +1461,6 @@ static int max9286_parse_dt(struct max9286_priv *priv)
  
-+		dev_pm_opp_put(opp);
-+
- 		ret = dev_pm_opp_enable(cpu_dev, pos->frequency * KHZ);
- 		if (ret < 0)
- 			return ret;
+ 		i2c_mux_mask |= BIT(id);
+ 	}
+-	of_node_put(node);
+ 	of_node_put(i2c_mux);
+ 
+ 	/* Parse the endpoints */
+@@ -1525,7 +1524,6 @@ static int max9286_parse_dt(struct max9286_priv *priv)
+ 		priv->source_mask |= BIT(ep.port);
+ 		priv->nsources++;
+ 	}
+-	of_node_put(node);
+ 
+ 	of_property_read_u32(dev->of_node, "maxim,bus-width", &priv->bus_width);
+ 	switch (priv->bus_width) {
 -- 
 2.42.0
 
