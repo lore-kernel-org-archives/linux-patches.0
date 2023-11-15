@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B39F3DBB0
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FAE2836D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0m7d1vE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36CDC433C9;
-	Wed, 15 Nov 2023 19:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odUSEkTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30706C433C7;
+	Wed, 15 Nov 2023 19:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076643;
-	bh=/xHdzCFtTQvU02azXj9MCQwveNrrxgDyNfO+eUxgZlI=;
+	s=korg; t=1700076645;
+	bh=uSPw/T9NDAtX4CEYANBNwKi6AWiFH1KmARJsCCqq6jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l0m7d1vE2+L4m+GdPA2C8t3PCDxFSNPmYruCT26s+i/cQ7HZav6CvlWQF/GbMPDQ/
-	 ir0cIFphSUk7IqaQI7c4vs1rEFJHk67N5WUndFERpYMnehWOcgn8kOx23esFc7GWxP
-	 VjTwfVaS69URJ7T4/LVgDCxW1n161o8l7tHDqZx8=
+	b=odUSEkTU7sNfDV6gAiPFSwCQSXXjhADQKfPfTfcEB5Nd9ND0InNBfC+SCnqUHCh2t
+	 bV0bYBi1zjgdH4SCBRQ1xnI56zvtQYyea1RRykHOTM64xlvRl4JBjt9tttfs+QEd4+
+	 iKMnc0IzFb5QjUiwtch+OdwU1JIrjqQeAr6TDCK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gou Hao <gouhao@uniontech.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Gaurav Jain <gaurav.jain@nxp.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 333/550] ext4: move ix sanity check to corrent position
-Date: Wed, 15 Nov 2023 14:15:17 -0500
-Message-ID: <20231115191623.852548259@linuxfoundation.org>
+Subject: [PATCH 6.5 324/550] crypto: caam/qi2 - fix Chacha20 + Poly1305 self test failure
+Date: Wed, 15 Nov 2023 14:15:08 -0500
+Message-ID: <20231115191623.223983058@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,49 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gou Hao <gouhao@uniontech.com>
+From: Gaurav Jain <gaurav.jain@nxp.com>
 
-[ Upstream commit af90a8f4a09ec4a3de20142e37f37205d4687f28 ]
+[ Upstream commit 7b8c6aee0d5b864e70c0da82583f9862e374eaf3 ]
 
-Check 'ix' before it is used.
+key buffer is not copied in chachapoly_setkey function,
+results in wrong output for encryption/decryption operation.
 
-Fixes: 80e675f906db ("ext4: optimize memmmove lengths in extent/index insertions")
-Signed-off-by: Gou Hao <gouhao@uniontech.com>
-Link: https://lore.kernel.org/r/20230906013341.7199-1-gouhao@uniontech.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+fix this by memcpy the key in caam_ctx key arrary
+
+Fixes: c10a53367901 ("crypto: caam/qi2 - add support for Chacha20 + Poly1305")
+Signed-off-by: Gaurav Jain <gaurav.jain@nxp.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/crypto/caam/caamalg_qi2.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index e4115d338f101..d97333aa92e99 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -1010,6 +1010,11 @@ static int ext4_ext_insert_index(handle_t *handle, struct inode *inode,
- 		ix = curp->p_idx;
- 	}
+diff --git a/drivers/crypto/caam/caamalg_qi2.c b/drivers/crypto/caam/caamalg_qi2.c
+index 9156bbe038b7b..a148ff1f0872c 100644
+--- a/drivers/crypto/caam/caamalg_qi2.c
++++ b/drivers/crypto/caam/caamalg_qi2.c
+@@ -641,7 +641,8 @@ static int chachapoly_setkey(struct crypto_aead *aead, const u8 *key,
+ 	if (keylen != CHACHA_KEY_SIZE + saltlen)
+ 		return -EINVAL;
  
-+	if (unlikely(ix > EXT_MAX_INDEX(curp->p_hdr))) {
-+		EXT4_ERROR_INODE(inode, "ix > EXT_MAX_INDEX!");
-+		return -EFSCORRUPTED;
-+	}
-+
- 	len = EXT_LAST_INDEX(curp->p_hdr) - ix + 1;
- 	BUG_ON(len < 0);
- 	if (len > 0) {
-@@ -1019,11 +1024,6 @@ static int ext4_ext_insert_index(handle_t *handle, struct inode *inode,
- 		memmove(ix + 1, ix, len * sizeof(struct ext4_extent_idx));
- 	}
+-	ctx->cdata.key_virt = key;
++	memcpy(ctx->key, key, keylen);
++	ctx->cdata.key_virt = ctx->key;
+ 	ctx->cdata.keylen = keylen - saltlen;
  
--	if (unlikely(ix > EXT_MAX_INDEX(curp->p_hdr))) {
--		EXT4_ERROR_INODE(inode, "ix > EXT_MAX_INDEX!");
--		return -EFSCORRUPTED;
--	}
--
- 	ix->ei_block = cpu_to_le32(logical);
- 	ext4_idx_store_pblock(ix, ptr);
- 	le16_add_cpu(&curp->p_hdr->eh_entries, 1);
+ 	return chachapoly_set_sh_desc(aead);
 -- 
 2.42.0
 
