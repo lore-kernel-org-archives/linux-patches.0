@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5D73BB33
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0CC3BB2C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgraUWI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D081C433C7;
-	Wed, 15 Nov 2023 19:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGeemWmF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BEBC433C8;
+	Wed, 15 Nov 2023 19:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077988;
-	bh=NJJdXzpKZ6h+SyRyZ8rDxgUngN6yJGAxEnJfdqVY8tM=;
+	s=korg; t=1700077990;
+	bh=T6YDH6M2FCynyeUdmjo3/nJlWlR1cE5tojuW0kAj9uI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IgraUWI9YH1IMirmM6MlzEQJBXNo/kxnYse/js+Nqdhl+IM1e583/LhOPoXfDpI0f
-	 hQpGYysyuuu8jYi3okSAYbPkrybh4iqDj13xQtmaMg6EOkL9En5ESRddf3PMOGDUWT
-	 kyUYhJ8vL9nMylvr9QBGudc2jJ0NZA6xSwXJbZZM=
+	b=LGeemWmFHBB1DS2WF6SemcRgBclwVf+E8xWgoU6Fd93nsKCRPMqcytX12uUVZBK7V
+	 X1wGN8iOTXSY2UTL9YAii2ME/JBR4kvgfZVXzlRnV/wu/mc0XQbZeBhJ+Hbpf1dNRd
+	 eS3ptk/hGHyTD6pY/MeU6VLXg+IQ4dg3ouOOV/JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/379] wifi: ath11k: fix boot failure with one MSI vector
-Date: Wed, 15 Nov 2023 14:21:56 -0500
-Message-ID: <20231115192647.582537811@linuxfoundation.org>
+Subject: [PATCH 6.1 042/379] wifi: mt76: mt7603: rework/fix rx pse hang check
+Date: Wed, 15 Nov 2023 14:21:57 -0500
+Message-ID: <20231115192647.644725540@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,110 +41,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 39564b475ac5a589e6c22c43a08cbd283c295d2c ]
+[ Upstream commit baa19b2e4b7bbb509a7ca7939c8785477dcd40ee ]
 
-Commit 5b32b6dd96633 ("ath11k: Remove core PCI references from
-PCI common code") breaks with one MSI vector because it moves
-affinity setting after IRQ request, see below log:
+It turns out that the code in mt7603_rx_pse_busy() does not detect actual
+hardware hangs, it only checks for busy conditions in PSE.
+A reset should only be performed if these conditions are true and if there
+is no rx activity as well.
+Reset the counter whenever a rx interrupt occurs. In order to also deal with
+a fully loaded CPU that leaves interrupts disabled with continuous NAPI
+polling, also check for pending rx interrupts in the function itself.
 
-[ 1417.278835] ath11k_pci 0000:02:00.0: failed to receive control response completion, polling..
-[ 1418.302829] ath11k_pci 0000:02:00.0: Service connect timeout
-[ 1418.302833] ath11k_pci 0000:02:00.0: failed to connect to HTT: -110
-[ 1418.303669] ath11k_pci 0000:02:00.0: failed to start core: -110
-
-The detail is, if do affinity request after IRQ activated,
-which is done in request_irq(), kernel caches that request and
-returns success directly. Later when a subsequent MHI interrupt is
-fired, kernel will do the real affinity setting work, as a result,
-changs the MSI vector. However at that time host has configured
-old vector to hardware, so host never receives CE or DP interrupts.
-
-Fix it by setting affinity before registering MHI controller
-where host is, for the first time, doing IRQ request.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3
-Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.23
-Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.1.0.1-01160-QCAMSLSWPLZ-1
-
-Fixes: 5b32b6dd9663 ("ath11k: Remove core PCI references from PCI common code")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230907015606.16297-1-quic_bqiang@quicinc.com
+Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/pci.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7603/core.c  |  2 ++
+ .../net/wireless/mediatek/mt76/mt7603/mac.c   | 23 +++++++++++++------
+ 2 files changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/pci.c b/drivers/net/wireless/ath/ath11k/pci.c
-index 3953ebd551bf8..79d2876a46b53 100644
---- a/drivers/net/wireless/ath/ath11k/pci.c
-+++ b/drivers/net/wireless/ath/ath11k/pci.c
-@@ -853,10 +853,16 @@ static int ath11k_pci_probe(struct pci_dev *pdev,
- 	if (ret)
- 		goto err_pci_disable_msi;
- 
-+	ret = ath11k_pci_set_irq_affinity_hint(ab_pci, cpumask_of(0));
-+	if (ret) {
-+		ath11k_err(ab, "failed to set irq affinity %d\n", ret);
-+		goto err_pci_disable_msi;
-+	}
-+
- 	ret = ath11k_mhi_register(ab_pci);
- 	if (ret) {
- 		ath11k_err(ab, "failed to register mhi: %d\n", ret);
--		goto err_pci_disable_msi;
-+		goto err_irq_affinity_cleanup;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/core.c b/drivers/net/wireless/mediatek/mt76/mt7603/core.c
+index 60a996b63c0c0..915b8349146af 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/core.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/core.c
+@@ -42,11 +42,13 @@ irqreturn_t mt7603_irq_handler(int irq, void *dev_instance)
  	}
  
- 	ret = ath11k_hal_srng_init(ab);
-@@ -877,12 +883,6 @@ static int ath11k_pci_probe(struct pci_dev *pdev,
- 		goto err_ce_free;
+ 	if (intr & MT_INT_RX_DONE(0)) {
++		dev->rx_pse_check = 0;
+ 		mt7603_irq_disable(dev, MT_INT_RX_DONE(0));
+ 		napi_schedule(&dev->mt76.napi[0]);
  	}
  
--	ret = ath11k_pci_set_irq_affinity_hint(ab_pci, cpumask_of(0));
--	if (ret) {
--		ath11k_err(ab, "failed to set irq affinity %d\n", ret);
--		goto err_free_irq;
--	}
+ 	if (intr & MT_INT_RX_DONE(1)) {
++		dev->rx_pse_check = 0;
+ 		mt7603_irq_disable(dev, MT_INT_RX_DONE(1));
+ 		napi_schedule(&dev->mt76.napi[1]);
+ 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
+index 6cff346d57a78..541dc1da94c00 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
+@@ -1559,20 +1559,29 @@ static bool mt7603_rx_pse_busy(struct mt7603_dev *dev)
+ {
+ 	u32 addr, val;
+ 
+-	if (mt76_rr(dev, MT_MCU_DEBUG_RESET) & MT_MCU_DEBUG_RESET_QUEUES)
+-		return true;
 -
- 	/* kernel may allocate a dummy vector before request_irq and
- 	 * then allocate a real vector when request_irq is called.
- 	 * So get msi_data here again to avoid spurious interrupt
-@@ -891,19 +891,16 @@ static int ath11k_pci_probe(struct pci_dev *pdev,
- 	ret = ath11k_pci_config_msi_data(ab_pci);
- 	if (ret) {
- 		ath11k_err(ab, "failed to config msi_data: %d\n", ret);
--		goto err_irq_affinity_cleanup;
-+		goto err_free_irq;
- 	}
+ 	if (mt7603_rx_fifo_busy(dev))
+-		return false;
++		goto out;
  
- 	ret = ath11k_core_init(ab);
- 	if (ret) {
- 		ath11k_err(ab, "failed to init core: %d\n", ret);
--		goto err_irq_affinity_cleanup;
-+		goto err_free_irq;
- 	}
- 	return 0;
+ 	addr = mt7603_reg_map(dev, MT_CLIENT_BASE_PHYS_ADDR + MT_CLIENT_STATUS);
+ 	mt76_wr(dev, addr, 3);
+ 	val = mt76_rr(dev, addr) >> 16;
  
--err_irq_affinity_cleanup:
--	ath11k_pci_set_irq_affinity_hint(ab_pci, NULL);
--
- err_free_irq:
- 	ath11k_pcic_free_irq(ab);
- 
-@@ -916,6 +913,9 @@ static int ath11k_pci_probe(struct pci_dev *pdev,
- err_mhi_unregister:
- 	ath11k_mhi_unregister(ab_pci);
- 
-+err_irq_affinity_cleanup:
-+	ath11k_pci_set_irq_affinity_hint(ab_pci, NULL);
+-	if (is_mt7628(dev) && (val & 0x4001) == 0x4001)
+-		return true;
++	if (!(val & BIT(0)))
++		return false;
 +
- err_pci_disable_msi:
- 	ath11k_pci_free_msi(ab_pci);
++	if (is_mt7628(dev))
++		val &= 0xa000;
++	else
++		val &= 0x8000;
++	if (!val)
++		return false;
++
++out:
++	if (mt76_rr(dev, MT_INT_SOURCE_CSR) &
++	    (MT_INT_RX_DONE(0) | MT_INT_RX_DONE(1)))
++		return false;
  
+-	return (val & 0x8001) == 0x8001 || (val & 0xe001) == 0xe001;
++	return true;
+ }
+ 
+ static bool
 -- 
 2.42.0
 
