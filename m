@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EB93C478
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973803C478
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpPd4mRc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C807BC433CA;
-	Wed, 15 Nov 2023 19:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVoBwaV9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490B4C433C8;
+	Wed, 15 Nov 2023 19:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078378;
-	bh=fGB6oS0nRIjkW2R30n6SEzYh07twIgFGIhjzdsfKfMg=;
+	s=korg; t=1700078379;
+	bh=vgIfm5XXl4r5NtzSDrqnSMAdOTztE8pRPBaKS8Jl6vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HpPd4mRcnieS3B0nUNW+zrN5QvGUpECFnGoalgthASLk9Xzyz1//Yda80M5HmKqoY
-	 Zmr6DD4o/T30baFi0Eknc2BmOctjMjk7Lcsngol29l4YABs3kyps7E91KUmVeXSGmn
-	 /GxeQU0jYgd1KyyY1xW/jK7TQJmff3ep9ylCSu6Q=
+	b=nVoBwaV9DQTbgNdc7JTEtOfh9apI7qe2yhIIgvZ3lKqrMTELURYsBxVLzFUpusr9e
+	 leqBRXQvZxGAgBFbKh2iFsy+0CwTjvCdEOTZiS6IPkV8T1cREovnx4UA42HFTJxUFl
+	 YnaAO5IfkQve8i8Za+ZrkIShlrLeiroyj90jLEns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
 	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 287/379] interconnect: qcom: sm8150: Drop IP0 interconnects
-Date: Wed, 15 Nov 2023 14:26:02 -0500
-Message-ID: <20231115192702.120138332@linuxfoundation.org>
+Subject: [PATCH 6.1 288/379] interconnect: qcom: sm8150: Retire DEFINE_QBCM
+Date: Wed, 15 Nov 2023 14:26:03 -0500
+Message-ID: <20231115192702.181086049@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,121 +43,316 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit a532439199369b86cf7323f84d1946b7d0634c53 ]
+[ Upstream commit 670699a4225b8cba6962f965b227e0175d09ecda ]
 
-Similar to the sdx55 and sc7180, let's drop the MASTER_IPA_CORE and
-SLAVE_IPA_CORE interconnects for this platform. There are no actual users
-of this interconnect. The IP0 resource will be handled by clk-rpmh
-driver.
+The struct definition macros are hard to read and compare, expand them.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230109002935.244320-5-dmitry.baryshkov@linaro.org
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Link: https://lore.kernel.org/r/20230811-topic-icc_retire_macrosd-v1-17-c03aaeffc769@linaro.org
 Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Stable-dep-of: 7ed42176406e ("interconnect: qcom: sm8150: Set ACV enable_mask")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/core.c        |  1 +
- drivers/interconnect/qcom/sm8150.c | 21 ---------------------
- drivers/interconnect/qcom/sm8150.h |  4 ++--
- 3 files changed, 3 insertions(+), 23 deletions(-)
+ drivers/interconnect/qcom/sm8150.c | 283 ++++++++++++++++++++++++++---
+ 1 file changed, 255 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index e970ee0fcb0a3..0c6fc954e7296 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -1103,6 +1103,7 @@ EXPORT_SYMBOL_GPL(icc_provider_del);
- static const struct of_device_id __maybe_unused ignore_list[] = {
- 	{ .compatible = "qcom,sc7180-ipa-virt" },
- 	{ .compatible = "qcom,sdx55-ipa-virt" },
-+	{ .compatible = "qcom,sm8150-ipa-virt" },
- 	{}
- };
- 
 diff --git a/drivers/interconnect/qcom/sm8150.c b/drivers/interconnect/qcom/sm8150.c
-index 1d04a4bfea800..c5ab29322164a 100644
+index c5ab29322164a..640fd4c4a6886 100644
 --- a/drivers/interconnect/qcom/sm8150.c
 +++ b/drivers/interconnect/qcom/sm8150.c
-@@ -56,7 +56,6 @@ DEFINE_QNODE(qnm_pcie, SM8150_MASTER_GEM_NOC_PCIE_SNOC, 1, 16, SM8150_SLAVE_LLCC
- DEFINE_QNODE(qnm_snoc_gc, SM8150_MASTER_SNOC_GC_MEM_NOC, 1, 8, SM8150_SLAVE_LLCC);
- DEFINE_QNODE(qnm_snoc_sf, SM8150_MASTER_SNOC_SF_MEM_NOC, 1, 16, SM8150_SLAVE_LLCC);
- DEFINE_QNODE(qxm_ecc, SM8150_MASTER_ECC, 2, 32, SM8150_SLAVE_LLCC);
--DEFINE_QNODE(ipa_core_master, SM8150_MASTER_IPA_CORE, 1, 8, SM8150_SLAVE_IPA_CORE);
- DEFINE_QNODE(llcc_mc, SM8150_MASTER_LLCC, 4, 4, SM8150_SLAVE_EBI_CH0);
- DEFINE_QNODE(qhm_mnoc_cfg, SM8150_MASTER_CNOC_MNOC_CFG, 1, 4, SM8150_SLAVE_SERVICE_MNOC);
- DEFINE_QNODE(qxm_camnoc_hf0, SM8150_MASTER_CAMNOC_HF0, 1, 32, SM8150_SLAVE_MNOC_HF_MEM_NOC);
-@@ -139,7 +138,6 @@ DEFINE_QNODE(qns_ecc, SM8150_SLAVE_ECC, 1, 32);
- DEFINE_QNODE(qns_gem_noc_snoc, SM8150_SLAVE_GEM_NOC_SNOC, 1, 8, SM8150_MASTER_GEM_NOC_SNOC);
- DEFINE_QNODE(qns_llcc, SM8150_SLAVE_LLCC, 4, 16, SM8150_MASTER_LLCC);
- DEFINE_QNODE(srvc_gemnoc, SM8150_SLAVE_SERVICE_GEM_NOC, 1, 4);
--DEFINE_QNODE(ipa_core_slave, SM8150_SLAVE_IPA_CORE, 1, 8);
- DEFINE_QNODE(ebi, SM8150_SLAVE_EBI_CH0, 4, 4);
- DEFINE_QNODE(qns2_mem_noc, SM8150_SLAVE_MNOC_SF_MEM_NOC, 1, 32, SM8150_MASTER_MNOC_SF_MEM_NOC);
- DEFINE_QNODE(qns_mem_noc_hf, SM8150_SLAVE_MNOC_HF_MEM_NOC, 2, 32, SM8150_MASTER_MNOC_HF_MEM_NOC);
-@@ -172,7 +170,6 @@ DEFINE_QBCM(bcm_co0, "CO0", false, &qns_cdsp_mem_noc);
- DEFINE_QBCM(bcm_ce0, "CE0", false, &qxm_crypto);
- DEFINE_QBCM(bcm_sn1, "SN1", false, &qxs_imem);
- DEFINE_QBCM(bcm_co1, "CO1", false, &qnm_npu);
--DEFINE_QBCM(bcm_ip0, "IP0", false, &ipa_core_slave);
- DEFINE_QBCM(bcm_cn0, "CN0", true, &qhm_spdm, &qnm_snoc, &qhs_a1_noc_cfg, &qhs_a2_noc_cfg, &qhs_ahb2phy_south, &qhs_aop, &qhs_aoss, &qhs_camera_cfg, &qhs_clk_ctl, &qhs_compute_dsp, &qhs_cpr_cx, &qhs_cpr_mmcx, &qhs_cpr_mx, &qhs_crypto0_cfg, &qhs_ddrss_cfg, &qhs_display_cfg, &qhs_emac_cfg, &qhs_glm, &qhs_gpuss_cfg, &qhs_imem_cfg, &qhs_ipa, &qhs_mnoc_cfg, &qhs_npu_cfg, &qhs_pcie0_cfg, &qhs_pcie1_cfg, &qhs_phy_refgen_north, &qhs_pimem_cfg, &qhs_prng, &qhs_qdss_cfg, &qhs_qspi, &qhs_qupv3_east, &qhs_qupv3_north, &qhs_qupv3_south, &qhs_sdc2, &qhs_sdc4, &qhs_snoc_cfg, &qhs_spdm, &qhs_spss_cfg, &qhs_ssc_cfg, &qhs_tcsr, &qhs_tlmm_east, &qhs_tlmm_north, &qhs_tlmm_south, &qhs_tlmm_west, &qhs_tsif, &qhs_ufs_card_cfg, &qhs_ufs_mem_cfg, &qhs_usb3_0, &qhs_usb3_1, &qhs_venus_cfg, &qhs_vsense_ctrl_cfg, &qns_cnoc_a2noc, &srvc_cnoc);
- DEFINE_QBCM(bcm_qup0, "QUP0", false, &qhm_qup0, &qhm_qup1, &qhm_qup2);
- DEFINE_QBCM(bcm_sn2, "SN2", false, &qns_gemnoc_gc);
-@@ -398,22 +395,6 @@ static const struct qcom_icc_desc sm8150_gem_noc = {
- 	.num_bcms = ARRAY_SIZE(gem_noc_bcms),
- };
+@@ -154,34 +154,261 @@ DEFINE_QNODE(xs_pcie_1, SM8150_SLAVE_PCIE_1, 1, 8);
+ DEFINE_QNODE(xs_qdss_stm, SM8150_SLAVE_QDSS_STM, 1, 4);
+ DEFINE_QNODE(xs_sys_tcu_cfg, SM8150_SLAVE_TCU, 1, 8);
  
--static struct qcom_icc_bcm * const ipa_virt_bcms[] = {
--	&bcm_ip0,
--};
--
--static struct qcom_icc_node * const ipa_virt_nodes[] = {
--	[MASTER_IPA_CORE] = &ipa_core_master,
--	[SLAVE_IPA_CORE] = &ipa_core_slave,
--};
--
--static const struct qcom_icc_desc sm8150_ipa_virt = {
--	.nodes = ipa_virt_nodes,
--	.num_nodes = ARRAY_SIZE(ipa_virt_nodes),
--	.bcms = ipa_virt_bcms,
--	.num_bcms = ARRAY_SIZE(ipa_virt_bcms),
--};
--
- static struct qcom_icc_bcm * const mc_virt_bcms[] = {
- 	&bcm_acv,
- 	&bcm_mc0,
-@@ -517,8 +498,6 @@ static const struct of_device_id qnoc_of_match[] = {
- 	  .data = &sm8150_dc_noc},
- 	{ .compatible = "qcom,sm8150-gem-noc",
- 	  .data = &sm8150_gem_noc},
--	{ .compatible = "qcom,sm8150-ipa-virt",
--	  .data = &sm8150_ipa_virt},
- 	{ .compatible = "qcom,sm8150-mc-virt",
- 	  .data = &sm8150_mc_virt},
- 	{ .compatible = "qcom,sm8150-mmss-noc",
-diff --git a/drivers/interconnect/qcom/sm8150.h b/drivers/interconnect/qcom/sm8150.h
-index 97996f64d799c..023161681fb87 100644
---- a/drivers/interconnect/qcom/sm8150.h
-+++ b/drivers/interconnect/qcom/sm8150.h
-@@ -35,7 +35,7 @@
- #define SM8150_MASTER_GPU_TCU			24
- #define SM8150_MASTER_GRAPHICS_3D		25
- #define SM8150_MASTER_IPA			26
--#define SM8150_MASTER_IPA_CORE			27
-+/* 27 was used by SLAVE_IPA_CORE, now represented as RPMh clock */
- #define SM8150_MASTER_LLCC			28
- #define SM8150_MASTER_MDP_PORT0			29
- #define SM8150_MASTER_MDP_PORT1			30
-@@ -94,7 +94,7 @@
- #define SM8150_SLAVE_GRAPHICS_3D_CFG		83
- #define SM8150_SLAVE_IMEM_CFG			84
- #define SM8150_SLAVE_IPA_CFG			85
--#define SM8150_SLAVE_IPA_CORE			86
-+/* 86 was used by SLAVE_IPA_CORE, now represented as RPMh clock */
- #define SM8150_SLAVE_LLCC			87
- #define SM8150_SLAVE_LLCC_CFG			88
- #define SM8150_SLAVE_MNOC_HF_MEM_NOC		89
+-DEFINE_QBCM(bcm_acv, "ACV", false, &ebi);
+-DEFINE_QBCM(bcm_mc0, "MC0", true, &ebi);
+-DEFINE_QBCM(bcm_sh0, "SH0", true, &qns_llcc);
+-DEFINE_QBCM(bcm_mm0, "MM0", true, &qns_mem_noc_hf);
+-DEFINE_QBCM(bcm_mm1, "MM1", false, &qxm_camnoc_hf0_uncomp, &qxm_camnoc_hf1_uncomp, &qxm_camnoc_sf_uncomp, &qxm_camnoc_hf0, &qxm_camnoc_hf1, &qxm_mdp0, &qxm_mdp1);
+-DEFINE_QBCM(bcm_sh2, "SH2", false, &qns_gem_noc_snoc);
+-DEFINE_QBCM(bcm_mm2, "MM2", false, &qxm_camnoc_sf, &qns2_mem_noc);
+-DEFINE_QBCM(bcm_sh3, "SH3", false, &acm_gpu_tcu, &acm_sys_tcu);
+-DEFINE_QBCM(bcm_mm3, "MM3", false, &qxm_rot, &qxm_venus0, &qxm_venus1, &qxm_venus_arm9);
+-DEFINE_QBCM(bcm_sh4, "SH4", false, &qnm_cmpnoc);
+-DEFINE_QBCM(bcm_sh5, "SH5", false, &acm_apps);
+-DEFINE_QBCM(bcm_sn0, "SN0", true, &qns_gemnoc_sf);
+-DEFINE_QBCM(bcm_co0, "CO0", false, &qns_cdsp_mem_noc);
+-DEFINE_QBCM(bcm_ce0, "CE0", false, &qxm_crypto);
+-DEFINE_QBCM(bcm_sn1, "SN1", false, &qxs_imem);
+-DEFINE_QBCM(bcm_co1, "CO1", false, &qnm_npu);
+-DEFINE_QBCM(bcm_cn0, "CN0", true, &qhm_spdm, &qnm_snoc, &qhs_a1_noc_cfg, &qhs_a2_noc_cfg, &qhs_ahb2phy_south, &qhs_aop, &qhs_aoss, &qhs_camera_cfg, &qhs_clk_ctl, &qhs_compute_dsp, &qhs_cpr_cx, &qhs_cpr_mmcx, &qhs_cpr_mx, &qhs_crypto0_cfg, &qhs_ddrss_cfg, &qhs_display_cfg, &qhs_emac_cfg, &qhs_glm, &qhs_gpuss_cfg, &qhs_imem_cfg, &qhs_ipa, &qhs_mnoc_cfg, &qhs_npu_cfg, &qhs_pcie0_cfg, &qhs_pcie1_cfg, &qhs_phy_refgen_north, &qhs_pimem_cfg, &qhs_prng, &qhs_qdss_cfg, &qhs_qspi, &qhs_qupv3_east, &qhs_qupv3_north, &qhs_qupv3_south, &qhs_sdc2, &qhs_sdc4, &qhs_snoc_cfg, &qhs_spdm, &qhs_spss_cfg, &qhs_ssc_cfg, &qhs_tcsr, &qhs_tlmm_east, &qhs_tlmm_north, &qhs_tlmm_south, &qhs_tlmm_west, &qhs_tsif, &qhs_ufs_card_cfg, &qhs_ufs_mem_cfg, &qhs_usb3_0, &qhs_usb3_1, &qhs_venus_cfg, &qhs_vsense_ctrl_cfg, &qns_cnoc_a2noc, &srvc_cnoc);
+-DEFINE_QBCM(bcm_qup0, "QUP0", false, &qhm_qup0, &qhm_qup1, &qhm_qup2);
+-DEFINE_QBCM(bcm_sn2, "SN2", false, &qns_gemnoc_gc);
+-DEFINE_QBCM(bcm_sn3, "SN3", false, &srvc_aggre1_noc, &srvc_aggre2_noc, &qns_cnoc);
+-DEFINE_QBCM(bcm_sn4, "SN4", false, &qxs_pimem);
+-DEFINE_QBCM(bcm_sn5, "SN5", false, &xs_qdss_stm);
+-DEFINE_QBCM(bcm_sn8, "SN8", false, &xs_pcie_0, &xs_pcie_1);
+-DEFINE_QBCM(bcm_sn9, "SN9", false, &qnm_aggre1_noc);
+-DEFINE_QBCM(bcm_sn11, "SN11", false, &qnm_aggre2_noc);
+-DEFINE_QBCM(bcm_sn12, "SN12", false, &qxm_pimem, &xm_gic);
+-DEFINE_QBCM(bcm_sn14, "SN14", false, &qns_pcie_mem_noc);
+-DEFINE_QBCM(bcm_sn15, "SN15", false, &qnm_gemnoc);
++static struct qcom_icc_bcm bcm_acv = {
++	.name = "ACV",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &ebi },
++};
++
++static struct qcom_icc_bcm bcm_mc0 = {
++	.name = "MC0",
++	.keepalive = true,
++	.num_nodes = 1,
++	.nodes = { &ebi },
++};
++
++static struct qcom_icc_bcm bcm_sh0 = {
++	.name = "SH0",
++	.keepalive = true,
++	.num_nodes = 1,
++	.nodes = { &qns_llcc },
++};
++
++static struct qcom_icc_bcm bcm_mm0 = {
++	.name = "MM0",
++	.keepalive = true,
++	.num_nodes = 1,
++	.nodes = { &qns_mem_noc_hf },
++};
++
++static struct qcom_icc_bcm bcm_mm1 = {
++	.name = "MM1",
++	.keepalive = false,
++	.num_nodes = 7,
++	.nodes = { &qxm_camnoc_hf0_uncomp,
++		   &qxm_camnoc_hf1_uncomp,
++		   &qxm_camnoc_sf_uncomp,
++		   &qxm_camnoc_hf0,
++		   &qxm_camnoc_hf1,
++		   &qxm_mdp0,
++		   &qxm_mdp1
++	},
++};
++
++static struct qcom_icc_bcm bcm_sh2 = {
++	.name = "SH2",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qns_gem_noc_snoc },
++};
++
++static struct qcom_icc_bcm bcm_mm2 = {
++	.name = "MM2",
++	.keepalive = false,
++	.num_nodes = 2,
++	.nodes = { &qxm_camnoc_sf, &qns2_mem_noc },
++};
++
++static struct qcom_icc_bcm bcm_sh3 = {
++	.name = "SH3",
++	.keepalive = false,
++	.num_nodes = 2,
++	.nodes = { &acm_gpu_tcu, &acm_sys_tcu },
++};
++
++static struct qcom_icc_bcm bcm_mm3 = {
++	.name = "MM3",
++	.keepalive = false,
++	.num_nodes = 4,
++	.nodes = { &qxm_rot, &qxm_venus0, &qxm_venus1, &qxm_venus_arm9 },
++};
++
++static struct qcom_icc_bcm bcm_sh4 = {
++	.name = "SH4",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qnm_cmpnoc },
++};
++
++static struct qcom_icc_bcm bcm_sh5 = {
++	.name = "SH5",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &acm_apps },
++};
++
++static struct qcom_icc_bcm bcm_sn0 = {
++	.name = "SN0",
++	.keepalive = true,
++	.num_nodes = 1,
++	.nodes = { &qns_gemnoc_sf },
++};
++
++static struct qcom_icc_bcm bcm_co0 = {
++	.name = "CO0",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qns_cdsp_mem_noc },
++};
++
++static struct qcom_icc_bcm bcm_ce0 = {
++	.name = "CE0",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qxm_crypto },
++};
++
++static struct qcom_icc_bcm bcm_sn1 = {
++	.name = "SN1",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qxs_imem },
++};
++
++static struct qcom_icc_bcm bcm_co1 = {
++	.name = "CO1",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qnm_npu },
++};
++
++static struct qcom_icc_bcm bcm_cn0 = {
++	.name = "CN0",
++	.keepalive = true,
++	.num_nodes = 53,
++	.nodes = { &qhm_spdm,
++		   &qnm_snoc,
++		   &qhs_a1_noc_cfg,
++		   &qhs_a2_noc_cfg,
++		   &qhs_ahb2phy_south,
++		   &qhs_aop,
++		   &qhs_aoss,
++		   &qhs_camera_cfg,
++		   &qhs_clk_ctl,
++		   &qhs_compute_dsp,
++		   &qhs_cpr_cx,
++		   &qhs_cpr_mmcx,
++		   &qhs_cpr_mx,
++		   &qhs_crypto0_cfg,
++		   &qhs_ddrss_cfg,
++		   &qhs_display_cfg,
++		   &qhs_emac_cfg,
++		   &qhs_glm,
++		   &qhs_gpuss_cfg,
++		   &qhs_imem_cfg,
++		   &qhs_ipa,
++		   &qhs_mnoc_cfg,
++		   &qhs_npu_cfg,
++		   &qhs_pcie0_cfg,
++		   &qhs_pcie1_cfg,
++		   &qhs_phy_refgen_north,
++		   &qhs_pimem_cfg,
++		   &qhs_prng,
++		   &qhs_qdss_cfg,
++		   &qhs_qspi,
++		   &qhs_qupv3_east,
++		   &qhs_qupv3_north,
++		   &qhs_qupv3_south,
++		   &qhs_sdc2,
++		   &qhs_sdc4,
++		   &qhs_snoc_cfg,
++		   &qhs_spdm,
++		   &qhs_spss_cfg,
++		   &qhs_ssc_cfg,
++		   &qhs_tcsr,
++		   &qhs_tlmm_east,
++		   &qhs_tlmm_north,
++		   &qhs_tlmm_south,
++		   &qhs_tlmm_west,
++		   &qhs_tsif,
++		   &qhs_ufs_card_cfg,
++		   &qhs_ufs_mem_cfg,
++		   &qhs_usb3_0,
++		   &qhs_usb3_1,
++		   &qhs_venus_cfg,
++		   &qhs_vsense_ctrl_cfg,
++		   &qns_cnoc_a2noc,
++		   &srvc_cnoc
++	},
++};
++
++static struct qcom_icc_bcm bcm_qup0 = {
++	.name = "QUP0",
++	.keepalive = false,
++	.num_nodes = 3,
++	.nodes = { &qhm_qup0, &qhm_qup1, &qhm_qup2 },
++};
++
++static struct qcom_icc_bcm bcm_sn2 = {
++	.name = "SN2",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qns_gemnoc_gc },
++};
++
++static struct qcom_icc_bcm bcm_sn3 = {
++	.name = "SN3",
++	.keepalive = false,
++	.num_nodes = 3,
++	.nodes = { &srvc_aggre1_noc, &srvc_aggre2_noc, &qns_cnoc },
++};
++
++static struct qcom_icc_bcm bcm_sn4 = {
++	.name = "SN4",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qxs_pimem },
++};
++
++static struct qcom_icc_bcm bcm_sn5 = {
++	.name = "SN5",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &xs_qdss_stm },
++};
++
++static struct qcom_icc_bcm bcm_sn8 = {
++	.name = "SN8",
++	.keepalive = false,
++	.num_nodes = 2,
++	.nodes = { &xs_pcie_0, &xs_pcie_1 },
++};
++
++static struct qcom_icc_bcm bcm_sn9 = {
++	.name = "SN9",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qnm_aggre1_noc },
++};
++
++static struct qcom_icc_bcm bcm_sn11 = {
++	.name = "SN11",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qnm_aggre2_noc },
++};
++
++static struct qcom_icc_bcm bcm_sn12 = {
++	.name = "SN12",
++	.keepalive = false,
++	.num_nodes = 2,
++	.nodes = { &qxm_pimem, &xm_gic },
++};
++
++static struct qcom_icc_bcm bcm_sn14 = {
++	.name = "SN14",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qns_pcie_mem_noc },
++};
++
++static struct qcom_icc_bcm bcm_sn15 = {
++	.name = "SN15",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qnm_gemnoc },
++};
+ 
+ static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
+ 	&bcm_qup0,
 -- 
 2.42.0
 
