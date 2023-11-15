@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49003A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6463A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJv6g7hL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC2CC433C8;
-	Wed, 15 Nov 2023 19:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jcn79h0u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0673BC433C8;
+	Wed, 15 Nov 2023 19:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077875;
-	bh=vFfUWdqYIQ6am+R+nzPdPtVTFacojMLqI22K5c7Bhsw=;
+	s=korg; t=1700077877;
+	bh=W3H2Lpzkh6OfAI7Zm4TxVynzj9i3iDjMxe51JmR/z18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJv6g7hLcNaW/S2mPd6VWcuEIfN6YS7r3VxBdUV2GHUol9UYsbL+4H6J2Ycb7lZpI
-	 BRizNBmlNNZo6tQwFy6Eko7EwwdEVufJ9TiMPxuiq+IlrBMfDwtA2rCGpENRM/Jef0
-	 3b8WWSQq1ebCKB4gsR70DIA3HOd4iU0D8H06OpV4=
+	b=Jcn79h0uldNW9LNknGPNgmHi6HYkT2oqdnvClo5hjPkRpk0YFhnbNHM2fa2BESI9v
+	 c5wiz31w1bVW3Tpr5OUkdaSKrKsfKh9r3o0VSV0bgUx5wsJpTmWuOqq+5QjxKExZ4j
+	 rPRiyzormJIxyTm4JF2UVPHH36nwRvS+UEZI0XL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Shuklin <george.shuklin@gmail.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Huhardeaux <tech@tootai.net>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 566/603] tg3: power down device only on SYSTEM_POWER_OFF
-Date: Wed, 15 Nov 2023 14:18:31 -0500
-Message-ID: <20231115191650.741214360@linuxfoundation.org>
+Subject: [PATCH 6.6 575/603] netfilter: nat: fix ipv6 nat redirect with mapped and scoped addresses
+Date: Wed, 15 Nov 2023 14:18:40 -0500
+Message-ID: <20231115191651.268142404@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,44 +43,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Shuklin <george.shuklin@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 9fc3bc7643341dc5be7d269f3d3dbe441d8d7ac3 ]
+[ Upstream commit 80abbe8a8263106fe45a4f293b92b5c74cc9cc8a ]
 
-Dell R650xs servers hangs on reboot if tg3 driver calls
-tg3_power_down.
+The ipv6 redirect target was derived from the ipv4 one, i.e. its
+identical to a 'dnat' with the first (primary) address assigned to the
+network interface.  The code has been moved around to make it usable
+from nf_tables too, but its still the same as it was back when this
+was added in 2012.
 
-This happens only if network adapters (BCM5720 for R650xs) were
-initialized using SNP (e.g. by booting ipxe.efi).
+IPv6, however, has different types of addresses, if the 'wrong' address
+comes first the redirection does not work.
 
-The actual problem is on Dell side, but this fix allows servers
-to come back alive after reboot.
+In Daniels case, the addresses are:
+  inet6 ::ffff:192 ...
+  inet6 2a01: ...
 
-Signed-off-by: George Shuklin <george.shuklin@gmail.com>
-Fixes: 2ca1c94ce0b6 ("tg3: Disable tg3 device on system reboot to avoid triggering AER")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://lore.kernel.org/r/20231103115029.83273-1-george.shuklin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+... so the function attempts to redirect to the mapped address.
+
+Add more checks before the address is deemed correct:
+1. If the packets' daddr is scoped, search for a scoped address too
+2. skip tentative addresses
+3. skip mapped addresses
+
+Use the first address that appears to match our needs.
+
+Reported-by: Daniel Huhardeaux <tech@tootai.net>
+Closes: https://lore.kernel.org/netfilter/71be06b8-6aa0-4cf9-9e0b-e2839b01b22f@tootai.net/
+Fixes: 115e23ac78f8 ("netfilter: ip6tables: add REDIRECT target")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nf_nat_redirect.c | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 14b311196b8f8..22b00912f7ac8 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -18078,7 +18078,8 @@ static void tg3_shutdown(struct pci_dev *pdev)
- 	if (netif_running(dev))
- 		dev_close(dev);
+diff --git a/net/netfilter/nf_nat_redirect.c b/net/netfilter/nf_nat_redirect.c
+index 6616ba5d0b049..5b37487d9d11f 100644
+--- a/net/netfilter/nf_nat_redirect.c
++++ b/net/netfilter/nf_nat_redirect.c
+@@ -80,6 +80,26 @@ EXPORT_SYMBOL_GPL(nf_nat_redirect_ipv4);
  
--	tg3_power_down(tp);
-+	if (system_state == SYSTEM_POWER_OFF)
-+		tg3_power_down(tp);
+ static const struct in6_addr loopback_addr = IN6ADDR_LOOPBACK_INIT;
  
- 	rtnl_unlock();
++static bool nf_nat_redirect_ipv6_usable(const struct inet6_ifaddr *ifa, unsigned int scope)
++{
++	unsigned int ifa_addr_type = ipv6_addr_type(&ifa->addr);
++
++	if (ifa_addr_type & IPV6_ADDR_MAPPED)
++		return false;
++
++	if ((ifa->flags & IFA_F_TENTATIVE) && (!(ifa->flags & IFA_F_OPTIMISTIC)))
++		return false;
++
++	if (scope) {
++		unsigned int ifa_scope = ifa_addr_type & IPV6_ADDR_SCOPE_MASK;
++
++		if (!(scope & ifa_scope))
++			return false;
++	}
++
++	return true;
++}
++
+ unsigned int
+ nf_nat_redirect_ipv6(struct sk_buff *skb, const struct nf_nat_range2 *range,
+ 		     unsigned int hooknum)
+@@ -89,14 +109,19 @@ nf_nat_redirect_ipv6(struct sk_buff *skb, const struct nf_nat_range2 *range,
+ 	if (hooknum == NF_INET_LOCAL_OUT) {
+ 		newdst.in6 = loopback_addr;
+ 	} else {
++		unsigned int scope = ipv6_addr_scope(&ipv6_hdr(skb)->daddr);
+ 		struct inet6_dev *idev;
+-		struct inet6_ifaddr *ifa;
+ 		bool addr = false;
  
+ 		idev = __in6_dev_get(skb->dev);
+ 		if (idev != NULL) {
++			const struct inet6_ifaddr *ifa;
++
+ 			read_lock_bh(&idev->lock);
+ 			list_for_each_entry(ifa, &idev->addr_list, if_list) {
++				if (!nf_nat_redirect_ipv6_usable(ifa, scope))
++					continue;
++
+ 				newdst.in6 = ifa->addr;
+ 				addr = true;
+ 				break;
 -- 
 2.42.0
 
