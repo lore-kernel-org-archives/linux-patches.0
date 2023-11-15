@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD7043AC4;
-	Wed, 15 Nov 2023 20:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40321FCF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1w0h7yEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54B4C36AE6;
-	Wed, 15 Nov 2023 20:49:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HcC7VI2E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65464C36AF0;
+	Wed, 15 Nov 2023 20:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081386;
-	bh=5KVvaeE6oACZ2P0gKDoinK8AX8JzdbPFJDYvguIxWIU=;
+	s=korg; t=1700081387;
+	bh=SFbW8EqXKoevyEApsjN0/7tqxJ3eaWiu0Up0P5EW69E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1w0h7yEwMHfI2H0Z/h1dAwcqL0gKJo0JVp8xzKECFwCkerYdTIl+YIydlmlTmcwjy
-	 dpOmFvpisYGwDBFvD6gQz19nziIugozFt4+SJrrkLAb1ph9A1kaNP5HX+hB4AQE/qg
-	 nw4+bZS0to/MxdpeQCYSukMOrD/hQGTVZ/xba1/Y=
+	b=HcC7VI2EfzVAyKIDreb+grLyVkvIWWfEDyV1ZiQ2sW4R77wrkTIq2m7cYDIwwdNTf
+	 lIRCZgGc8Dco94ZoDORWTTzdmf/Q7gxN24FGKWiiFDQVE+NwIrJUhMAVX83jRd2I6R
+	 alr1mmk6knWRSvCh7Hhp36Mq1xeccZXB2q2WDu48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	linux-clk@vger.kernel.org,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Fabio Estevam <festevam@denx.de>,
+	Mirela Rabulea <mirela.rabulea@nxp.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/244] clk: scmi: Free scmi_clk allocated when the clocks with invalid info are skipped
-Date: Wed, 15 Nov 2023 15:35:14 -0500
-Message-ID: <20231115203555.683095591@linuxfoundation.org>
+Subject: [PATCH 5.15 123/244] arm64: dts: imx8qm-ss-img: Fix jpegenc compatible entry
+Date: Wed, 15 Nov 2023 15:35:15 -0500
+Message-ID: <20231115203555.751963583@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -45,37 +44,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 3537a75e73f3420614a358d0c8b390ea483cc87d ]
+[ Upstream commit 1d33cd614d89b0ec024d25ec45acf4632211b5a7 ]
 
-Add the missing devm_kfree() when we skip the clocks with invalid or
-missing information from the firmware.
+The first compatible entry for the jpegenc should be 'nxp,imx8qm-jpgenc'.
 
-Cc: Cristian Marussi <cristian.marussi@arm.com>
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org
-Fixes: 6d6a1d82eaef ("clk: add support for clocks provided by SCMI")
-Link: https://lore.kernel.org/r/20231004193600.66232-1-sudeep.holla@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Change it accordingly to fix the following schema warning:
+
+imx8qm-apalis-eval.dtb: jpegenc@58450000: compatible: 'oneOf' conditional failed, one must be fixed:
+	'nxp,imx8qm-jpgdec' is not one of ['nxp,imx8qxp-jpgdec', 'nxp,imx8qxp-jpgenc']
+	'nxp,imx8qm-jpgenc' was expected
+	'nxp,imx8qxp-jpgdec' was expected
+
+Fixes: 5bb279171afc ("arm64: dts: imx8: Add jpeg encoder/decoder nodes")
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Mirela Rabulea <mirela.rabulea@nxp.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-scmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/freescale/imx8qm-ss-img.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/clk-scmi.c b/drivers/clk/clk-scmi.c
-index 1e357d364ca26..a26027597a0ac 100644
---- a/drivers/clk/clk-scmi.c
-+++ b/drivers/clk/clk-scmi.c
-@@ -178,6 +178,7 @@ static int scmi_clocks_probe(struct scmi_device *sdev)
- 		sclk->info = scmi_proto_clk_ops->info_get(ph, idx);
- 		if (!sclk->info) {
- 			dev_dbg(dev, "invalid clock info for idx %d\n", idx);
-+			devm_kfree(dev, sclk);
- 			continue;
- 		}
+diff --git a/arch/arm64/boot/dts/freescale/imx8qm-ss-img.dtsi b/arch/arm64/boot/dts/freescale/imx8qm-ss-img.dtsi
+index 7764b4146e0ab..2bbdacb1313f9 100644
+--- a/arch/arm64/boot/dts/freescale/imx8qm-ss-img.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8qm-ss-img.dtsi
+@@ -8,5 +8,5 @@ &jpegdec {
+ };
  
+ &jpegenc {
+-	compatible = "nxp,imx8qm-jpgdec", "nxp,imx8qxp-jpgenc";
++	compatible = "nxp,imx8qm-jpgenc", "nxp,imx8qxp-jpgenc";
+ };
 -- 
 2.42.0
 
