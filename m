@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE03441A84
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD8741A80
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSxGmG1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349DFC433C9;
-	Wed, 15 Nov 2023 19:36:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRPsqv/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8C0C433CA;
+	Wed, 15 Nov 2023 19:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076972;
-	bh=qtAnINF6GTao9xcMVOUjOlj2A0xtpnyEFSUjmDkhaWg=;
+	s=korg; t=1700076974;
+	bh=jnKyg569FWcTGxgsUkYJL7TjxmuZdatVr8i7f9YdbwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nSxGmG1o6qn5m9IM2uKzaAru8lHwmzbabarsT8s8H8o4k+ON0icU6HfrkMREJbGog
-	 +pJTY3zz/aprjWSWP9A5Ym4NG/4aYpwxG9V7YJ6xkiZ/kJk421NbaYObHsvwRJ07z3
-	 KiXRSDOJya4C+v6DE5RFZoQR7HjfPb/T49kmqgcg=
+	b=MRPsqv/A7PC8w74XCg6BUv9Cjk1jNDZOk8c5KUCOidbbLvbczlf/ImVpBEOdoUF9U
+	 OR9ASkaberstWPvS2DKM7Arckizt0/sTL5lAh9ZidpXL3KgbTlXcxhHNy22lQXoG1X
+	 D97F+YkWdQKzTqDiaRapz96EjCMAEReVsz6G5wVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael-CY Lee <michael-cy.lee@mediatek.com>,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Katya Orlova <e.orlova@ispras.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/603] wifi: mt76: mt7996: set correct wcid in txp
-Date: Wed, 15 Nov 2023 14:10:28 -0500
-Message-ID: <20231115191618.869163170@linuxfoundation.org>
+Subject: [PATCH 6.5 480/550] media: s3c-camif: Avoid inappropriate kfree()
+Date: Wed, 15 Nov 2023 14:17:44 -0500
+Message-ID: <20231115191634.142018168@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,70 +38,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Katya Orlova <e.orlova@ispras.ru>
 
-[ Upstream commit bde2e77f76266fbd81ff74cb12b3d87f9460b1e0 ]
+[ Upstream commit 61334819aca018c3416ee6c330a08a49c1524fc3 ]
 
-Set correct wcid in txp to let the SDO hw module look into the correct
-wtbl, otherwise the tx descriptor may be wrongly fiiled. This patch also
-fixed the issue that driver could not correctly report sta statistics,
-especially in WDS mode, which misled AQL.
+s3c_camif_register_video_node() works with video_device structure stored
+as a field of camif_vp, so it should not be kfreed.
+But there is video_device_release() on error path that do it.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Co-developed-by: Michael-CY Lee <michael-cy.lee@mediatek.com>
-Signed-off-by: Michael-CY Lee <michael-cy.lee@mediatek.com>
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: babde1c243b2 ("[media] V4L: Add driver for S3C24XX/S3C64XX SoC series camera interface")
+Signed-off-by: Katya Orlova <e.orlova@ispras.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h | 2 ++
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c       | 8 +++-----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/media/platform/samsung/s3c-camif/camif-capture.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h b/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
-index 68ca0844cbbfa..87bfa441a9374 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
-@@ -257,6 +257,8 @@ enum tx_mgnt_type {
- #define MT_TXD7_UDP_TCP_SUM		BIT(15)
- #define MT_TXD7_TX_TIME			GENMASK(9, 0)
+diff --git a/drivers/media/platform/samsung/s3c-camif/camif-capture.c b/drivers/media/platform/samsung/s3c-camif/camif-capture.c
+index 76634d242b103..0f5b3845d7b94 100644
+--- a/drivers/media/platform/samsung/s3c-camif/camif-capture.c
++++ b/drivers/media/platform/samsung/s3c-camif/camif-capture.c
+@@ -1133,12 +1133,12 @@ int s3c_camif_register_video_node(struct camif_dev *camif, int idx)
  
-+#define MT_TXD9_WLAN_IDX		GENMASK(23, 8)
-+
- #define MT_TX_RATE_STBC			BIT(14)
- #define MT_TX_RATE_NSS			GENMASK(13, 10)
- #define MT_TX_RATE_MODE			GENMASK(9, 6)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 0eebf915df265..269e023e43113 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -991,10 +991,8 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 	}
+ 	ret = vb2_queue_init(q);
+ 	if (ret)
+-		goto err_vd_rel;
++		return ret;
  
- 	txp->fw.token = cpu_to_le16(id);
--	if (test_bit(MT_WCID_FLAG_4ADDR, &wcid->flags))
--		txp->fw.rept_wds_wcid = cpu_to_le16(wcid->idx);
--	else
--		txp->fw.rept_wds_wcid = cpu_to_le16(0xfff);
-+	txp->fw.rept_wds_wcid = cpu_to_le16(sta ? wcid->idx : 0xfff);
-+
- 	tx_info->skb = NULL;
+ 	vp->pad.flags = MEDIA_PAD_FL_SINK;
+ 	ret = media_entity_pads_init(&vfd->entity, 1, &vp->pad);
+ 	if (ret)
+-		goto err_vd_rel;
++		return ret;
  
- 	/* pass partial skb header to fw */
-@@ -1051,7 +1049,7 @@ mt7996_txwi_free(struct mt7996_dev *dev, struct mt76_txwi_cache *t,
- 		if (likely(t->skb->protocol != cpu_to_be16(ETH_P_PAE)))
- 			mt7996_tx_check_aggr(sta, txwi);
- 	} else {
--		wcid_idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
-+		wcid_idx = le32_get_bits(txwi[9], MT_TXD9_WLAN_IDX);
- 	}
+ 	video_set_drvdata(vfd, vp);
  
- 	__mt76_tx_complete_skb(mdev, wcid_idx, t->skb, free_list);
+@@ -1171,8 +1171,6 @@ int s3c_camif_register_video_node(struct camif_dev *camif, int idx)
+ 	v4l2_ctrl_handler_free(&vp->ctrl_handler);
+ err_me_cleanup:
+ 	media_entity_cleanup(&vfd->entity);
+-err_vd_rel:
+-	video_device_release(vfd);
+ 	return ret;
+ }
+ 
 -- 
 2.42.0
 
