@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8B13BB2C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EDA3BB33
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEh2aufV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0072AC433C8;
-	Wed, 15 Nov 2023 19:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOMWVbir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948FEC433CA;
+	Wed, 15 Nov 2023 19:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078007;
-	bh=wB0IdGWF3ct1xrYs6fsjNUBzbWV3lmusDMtnrV7dNGI=;
+	s=korg; t=1700078008;
+	bh=U8HTSEXjXDCh7Jfv0X9lv3V+Rr4dWASk6FBI0790zLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eEh2aufVwd0RGvcJdIuKFapmSq6HqS765bFwUHArTQPWaNbC4rerni1a2MC1QUbdn
-	 hLQmgVEAUa32HZLKySa2IsCir1D2oaoqfvSfeWnVQnnJodc1EGxCEfE0fa+XnrahV/
-	 Pvldt45v1l+M2jFfQTn/+br+1F/huy5TwR0lIqGc=
+	b=iOMWVbirV5XP4YmENAw+10/zhMKQEznRFX5Fb0yv/JWKItPaQ4lebv6FNaHl+IMvR
+	 ohUf1crp+zGi//nLi5FcUH4MzKYIvKmN5VHvcIXuVg9Apg+pdiW2uJo0D6fmOeJ5gN
+	 /u4epKQ1XriAylDnlPl+aQM0KpJovUl3huGr6wbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Zary <linux@zary.sk>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Aditya Kumar Singh <quic_adisi@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: =?UTF-8?q?=5BPATCH=206=2E1=20052/379=5D=20=3D=3FUTF-8=3Fq=3FACPI=3A=3D20video=3A=3D20Add=3D20acpi=3D5Fbacklight=3D3Dvendor=3D20quir=3F=3D=20=3D=3FUTF-8=3Fq=3Fk=3D20for=3D20Toshiba=3D20Port=3DC3=3DA9g=3DC3=3DA9=3D20R100=3F=3D?=
-Date: Wed, 15 Nov 2023 14:22:07 -0500
-Message-ID: <20231115192648.239544306@linuxfoundation.org>
+Subject: [PATCH 6.1 053/379] wifi: ath11k: fix Tx power value during active CAC
+Date: Wed, 15 Nov 2023 14:22:08 -0500
+Message-ID: <20231115192648.297682796@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -36,78 +37,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ondrej Zary <linux@zary.sk>
+From: Aditya Kumar Singh <quic_adisi@quicinc.com>
 
-[ Upstream commit 35a341c9b25da6a479bd8013bcb11a680a7233e3 ]
+[ Upstream commit 77f1ee6fd8b6e470f721d05a2e269039d5cafcb7 ]
 
-Toshiba Portégé R100 has both acpi_video and toshiba_acpi vendor
-backlight driver working. But none of them gets activated as it has
-a VGA with no kernel driver (Trident CyberBlade XP4m32).
+Tx power is fetched from firmware's pdev stats. However, during active
+CAC, firmware does not fill the current Tx power and sends the max
+initialised value filled during firmware init. If host sends this power
+to user space, this is wrong since in certain situations, the Tx power
+could be greater than the max allowed by the regulatory. Hence, host
+should not be fetching the Tx power during an active CAC.
 
-The DMI strings are very generic ("Portable PC") so add a custom
-callback function to check for Trident CyberBlade XP4m32 PCI device
-before enabling the vendor backlight driver (better than acpi_video
-as it has more brightness steps).
+Fix this issue by returning -EAGAIN error so that user space knows that there's
+no valid value available.
 
-Fixes: 5aa9d943e9b6 ("ACPI: video: Don't enable fallback path for creating ACPI backlight by default")
-Signed-off-by: Ondrej Zary <linux@zary.sk>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+
+Fixes: 9a2aa68afe3d ("wifi: ath11k: add get_txpower mac ops")
+Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230912051857.2284-4-quic_adisi@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/net/wireless/ath/ath11k/mac.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index 073d26ddb6c21..60b0128a10e86 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -130,6 +130,16 @@ static int video_detect_force_native(const struct dmi_system_id *d)
- 	return 0;
- }
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index cb77dd6ce9665..21c6b36dc6ebb 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -8549,6 +8549,14 @@ static int ath11k_mac_op_get_txpower(struct ieee80211_hw *hw,
+ 	if (ar->state != ATH11K_STATE_ON)
+ 		goto err_fallback;
  
-+static int video_detect_portege_r100(const struct dmi_system_id *d)
-+{
-+	struct pci_dev *dev;
-+	/* Search for Trident CyberBlade XP4m32 to confirm Portégé R100 */
-+	dev = pci_get_device(PCI_VENDOR_ID_TRIDENT, 0x2100, NULL);
-+	if (dev)
-+		acpi_backlight_dmi = acpi_backlight_vendor;
-+	return 0;
-+}
-+
- static const struct dmi_system_id video_detect_dmi_table[] = {
- 	/*
- 	 * Models which should use the vendor backlight interface,
-@@ -268,6 +278,22 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 		},
- 	},
- 
-+	/*
-+	 * Toshiba Portégé R100 has working both acpi_video and toshiba_acpi
-+	 * vendor driver. But none of them gets activated as it has a VGA with
-+	 * no kernel driver (Trident CyberBlade XP4m32).
-+	 * The DMI strings are generic so check for the VGA chip in callback.
++	/* Firmware doesn't provide Tx power during CAC hence no need to fetch
++	 * the stats.
 +	 */
-+	{
-+	 .callback = video_detect_portege_r100,
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TOSHIBA"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "Portable PC"),
-+		DMI_MATCH(DMI_PRODUCT_VERSION, "Version 1.0"),
-+		DMI_MATCH(DMI_BOARD_NAME, "Portable PC")
-+		},
-+	},
++	if (test_bit(ATH11K_CAC_RUNNING, &ar->dev_flags)) {
++		mutex_unlock(&ar->conf_mutex);
++		return -EAGAIN;
++	}
 +
- 	/*
- 	 * Models which need acpi_video backlight control where the GPU drivers
- 	 * do not call acpi_video_register_backlight() because no internal panel
+ 	req_param.pdev_id = ar->pdev->pdev_id;
+ 	req_param.stats_id = WMI_REQUEST_PDEV_STAT;
+ 
 -- 
 2.42.0
 
