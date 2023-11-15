@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3E03DB95
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FF43DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZF5bzhx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C037C433C7;
-	Wed, 15 Nov 2023 20:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2a8cW3Ub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9E4C433C7;
+	Wed, 15 Nov 2023 20:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078652;
-	bh=2xiyW8fqdqPGRS+lXoLCphb3IIVAWu6U9wskT58QJUY=;
+	s=korg; t=1700078654;
+	bh=LX+FaNNmj0Cfcgw1RwLfBj7DzYJcftf+e3shfAmn2w0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eZF5bzhxDxBLw6c3rOwNpJQL2lzux+XVHzxyiYV8P9ySpIuo3ZOkdDqU/cc5XbmVs
-	 XiTmvlbqnhQERrKVca6Wh+4gMro1XWWRpW2dLBqfbdQL5v1OyD+RCF6W4QXmxZtEhV
-	 EIf/8J2Jn7m3mVTB1DLA+mj840AAcdvhPmTrCsrI=
+	b=2a8cW3UbKP6typ2OQ2FmcFE8kUtpkC8dpL5ovAdsjjxdaE3mbpAEJDomGSVeskOLq
+	 OhEI/Tw0g7KT8IAUi8vEb1yvhox7YHKMxGXFMdHo8L7U5GRmLz3RFjOAWu/VA8DUAz
+	 gphTcB0moxNf89ttp787ObHgpScQ4sKsaIFsbXGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Neal Cardwell <ncardwell@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 03/45] tcp_metrics: do not create an entry from tcp_init_metrics()
-Date: Wed, 15 Nov 2023 14:32:40 -0500
-Message-ID: <20231115191419.870999805@linuxfoundation.org>
+Subject: [PATCH 4.14 04/45] wifi: rtlwifi: fix EDCA limit set by BT coexistence
+Date: Wed, 15 Nov 2023 14:32:41 -0500
+Message-ID: <20231115191419.930222776@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191419.641552204@linuxfoundation.org>
 References: <20231115191419.641552204@linuxfoundation.org>
@@ -44,37 +43,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit a135798e6e200ecb2f864cecca6d257ba278370c ]
+[ Upstream commit 3391ee7f9ea508c375d443cd712c2e699be235b4 ]
 
-tcp_init_metrics() only wants to get metrics if they were
-previously stored in the cache. Creating an entry is adding
-useless costs, especially when tcp_no_metrics_save is set.
+In 'rtl92c_dm_check_edca_turbo()', 'rtl88e_dm_check_edca_turbo()',
+and 'rtl8723e_dm_check_edca_turbo()', the DL limit should be set
+from the corresponding field of 'rtlpriv->btcoexist' rather than
+UL. Compile tested only.
 
-Fixes: 51c5d0c4b169 ("tcp: Maintain dynamic metrics in local cache.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0529c6b81761 ("rtlwifi: rtl8723ae: Update driver to match 06/28/14 Realtek version")
+Fixes: c151aed6aa14 ("rtlwifi: rtl8188ee: Update driver to match Realtek release of 06282014")
+Fixes: beb5bc402043 ("rtlwifi: rtl8192c-common: Convert common dynamic management routines for addition of rtl8192se and rtl8192de")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230928052327.120178-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c       | 2 +-
+ drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c | 2 +-
+ drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c       | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index 164e917d71b21..820a97f92235a 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -475,7 +475,7 @@ void tcp_init_metrics(struct sock *sk)
- 		goto reset;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
+index f936a491371b7..92791217b378d 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
+@@ -827,7 +827,7 @@ static void rtl88e_dm_check_edca_turbo(struct ieee80211_hw *hw)
+ 	}
  
- 	rcu_read_lock();
--	tm = tcp_get_metrics(sk, dst, true);
-+	tm = tcp_get_metrics(sk, dst, false);
- 	if (!tm) {
- 		rcu_read_unlock();
- 		goto reset;
+ 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
+-		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
++		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
+ 		bt_change_edca = true;
+ 	}
+ 
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
+index 0b5a06ffa4826..ed3ef78e5394e 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
+@@ -663,7 +663,7 @@ static void rtl92c_dm_check_edca_turbo(struct ieee80211_hw *hw)
+ 	}
+ 
+ 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
+-		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
++		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
+ 		bt_change_edca = true;
+ 	}
+ 
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
+index 42a6fba90ba91..fedde63d9bc5b 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
+@@ -592,7 +592,7 @@ static void rtl8723e_dm_check_edca_turbo(struct ieee80211_hw *hw)
+ 	}
+ 
+ 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
+-		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
++		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
+ 		bt_change_edca = true;
+ 	}
+ 
 -- 
 2.42.0
 
