@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65CA3DBAC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A31171C7
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiPfv5Zp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E4DC433C7;
-	Wed, 15 Nov 2023 19:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXL/z9mz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265E7C433CA;
+	Wed, 15 Nov 2023 19:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076651;
-	bh=ojqz4tOcysy3/3VDcu5X5px5PFznCjJWz2o9ify2uoU=;
+	s=korg; t=1700076653;
+	bh=Bo/lokr+0JMmpPq1AybZ6pFN2Pl2g0JM0mF8zSeYrKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JiPfv5ZpjtkMVUcQJF6Wdo86gwUoSCCv3dONbxBNiMYuVSVszIBrXWlzsh709rocT
-	 SrMihuIeNcwoMlxcDsfFm7vivd/91r0hEcp1Rs6/9lXAVxajReFYjZ6rwQh/FlLBv0
-	 2M5cUVZJ/zUkAPbZLn8qg9O+5ZEXupyxjwsPovBs=
+	b=nXL/z9mzNRfkeqtoUBtC61npLj1jgByyIgvNkCvTbeU3bLjK4NB7TvFeKyOeffye9
+	 uZytdWgVjGfDpir3Wb7A1c/O1CK1Z3fqO260Tv6xH2Afj/dsZR9XU8JUsCPfVejuk5
+	 0aP8jEY9sHo7AGMZRLWdQounrCimv1WFVeCMbJWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 363/550] ASoC: ams-delta.c: use component after check
-Date: Wed, 15 Nov 2023 14:15:47 -0500
-Message-ID: <20231115191625.975310541@linuxfoundation.org>
+Subject: [PATCH 6.5 364/550] erofs: fix erofs_insert_workgroup() lockref usage
+Date: Wed, 15 Nov 2023 14:15:48 -0500
+Message-ID: <20231115191626.050160137@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,54 +42,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit bd0f7498bc9084d8cccc5484cd004b40f314b763 ]
+[ Upstream commit 1a0ac8bd7a4fa5b2f4ef14c3b1e9d6e5a5faae06 ]
 
-	static void cx81801_close()
-	{
-		...
-(A)		struct snd_soc_dapm_context *dapm = &component->card->dapm;
-		...
-(B)		if (!component)
-			return;
-	}
+As Linus pointed out [1], lockref_put_return() is fundamentally
+designed to be something that can fail.  It behaves as a fastpath-only
+thing, and the failure case needs to be handled anyway.
 
-(A) uses component before NULL check (B). This patch moves it after (B).
+Actually, since the new pcluster was just allocated without being
+populated, it won't be accessed by others until it is inserted into
+XArray, so lockref helpers are actually unneeded here.
 
-Fixes: d0fdfe34080c ("ASoC: cx20442: replace codec to component")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/3e608474-e99a-4866-ae98-3054a4221f09@moroto.mountain
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87ttqdq623.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Let's just set the proper reference count on initializing.
+
+[1] https://lore.kernel.org/r/CAHk-=whCga8BeQnJ3ZBh_Hfm9ctba_wpF444LpwRybVNMzO6Dw@mail.gmail.com
+
+Fixes: 7674a42f35ea ("erofs: use struct lockref to replace handcrafted approach")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20231031060524.1103921-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ti/ams-delta.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/erofs/utils.c | 8 +-------
+ fs/erofs/zdata.c | 1 +
+ 2 files changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/ti/ams-delta.c b/sound/soc/ti/ams-delta.c
-index 1028b5efcfff8..a93de8b64b251 100644
---- a/sound/soc/ti/ams-delta.c
-+++ b/sound/soc/ti/ams-delta.c
-@@ -303,7 +303,7 @@ static int cx81801_open(struct tty_struct *tty)
- static void cx81801_close(struct tty_struct *tty)
- {
- 	struct snd_soc_component *component = tty->disc_data;
--	struct snd_soc_dapm_context *dapm = &component->card->dapm;
-+	struct snd_soc_dapm_context *dapm;
+diff --git a/fs/erofs/utils.c b/fs/erofs/utils.c
+index cc6fb9e988991..4256a85719a1d 100644
+--- a/fs/erofs/utils.c
++++ b/fs/erofs/utils.c
+@@ -77,12 +77,7 @@ struct erofs_workgroup *erofs_insert_workgroup(struct super_block *sb,
+ 	struct erofs_sb_info *const sbi = EROFS_SB(sb);
+ 	struct erofs_workgroup *pre;
  
- 	del_timer_sync(&cx81801_timer);
+-	/*
+-	 * Bump up before making this visible to others for the XArray in order
+-	 * to avoid potential UAF without serialized by xa_lock.
+-	 */
+-	lockref_get(&grp->lockref);
+-
++	DBG_BUGON(grp->lockref.count < 1);
+ repeat:
+ 	xa_lock(&sbi->managed_pslots);
+ 	pre = __xa_cmpxchg(&sbi->managed_pslots, grp->index,
+@@ -96,7 +91,6 @@ struct erofs_workgroup *erofs_insert_workgroup(struct super_block *sb,
+ 			cond_resched();
+ 			goto repeat;
+ 		}
+-		lockref_put_return(&grp->lockref);
+ 		grp = pre;
+ 	}
+ 	xa_unlock(&sbi->managed_pslots);
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 9bfdb4ad7c763..2461a3f74e744 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -805,6 +805,7 @@ static int z_erofs_register_pcluster(struct z_erofs_decompress_frontend *fe)
+ 		return PTR_ERR(pcl);
  
-@@ -315,6 +315,8 @@ static void cx81801_close(struct tty_struct *tty)
- 
- 	v253_ops.close(tty);
- 
-+	dapm = &component->card->dapm;
-+
- 	/* Revert back to default audio input/output constellation */
- 	snd_soc_dapm_mutex_lock(dapm);
- 
+ 	spin_lock_init(&pcl->obj.lockref.lock);
++	pcl->obj.lockref.count = 1;	/* one ref for this request */
+ 	pcl->algorithmformat = map->m_algorithmformat;
+ 	pcl->length = 0;
+ 	pcl->partial = true;
 -- 
 2.42.0
 
