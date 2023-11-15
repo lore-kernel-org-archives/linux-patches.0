@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433D143AA6;
-	Wed, 15 Nov 2023 20:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9FD43AAA
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7Mr+lR2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9898AC433C7;
-	Wed, 15 Nov 2023 20:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQjuaYON"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10EE7C433C9;
+	Wed, 15 Nov 2023 20:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081092;
-	bh=Fj+GyhErlQrMIRjTUqL+lBRe9M0uKfuLu8Ob+Vs+Z0A=;
+	s=korg; t=1700081094;
+	bh=IQhJyEEENh7bnQhi5y2xatlsMM7BCN5cAVR2R7s7SGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7Mr+lR2z3yiEiTSFN8r7W8kOg6SD77u1Q8RUkHPDdnreNWWgfSHfQ3gDHWQN6hXB
-	 qvpGfUIbPXnzlV6KXG0KIFgQ/xZJxd1fgUapTVUKNke3F18WbhAg2PAMNYnnzOsyvf
-	 fyPvQ7LRnc6PQuHctMBxi8OV1CEgW+aBugX/MA1c=
+	b=uQjuaYON3xwdog3+0q6AbvDhTA8s0WPecNoAKgv30QuzinF6cPwfMJCjvs5Es4phQ
+	 Taof8QUCV2wYYgNFxGYgRnuBdYvWR+J+5v5xeD/k6TBaaGksnlYPhs8EgBNH9+02ut
+	 aHpYz2Zc0ziV5KixN7J2xSljCYBCArSYrpzAvDKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	linux-clk@vger.kernel.org,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	"Timur I. Davletshin" <timur.davletshin@gmail.com>,
+	Jo-Philipp Wich <jo@mein.io>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 34/88] clk: scmi: Free scmi_clk allocated when the clocks with invalid info are skipped
-Date: Wed, 15 Nov 2023 15:35:46 -0500
-Message-ID: <20231115191428.221512557@linuxfoundation.org>
+Subject: [PATCH 4.19 35/88] hwrng: geode - fix accessing registers
+Date: Wed, 15 Nov 2023 15:35:47 -0500
+Message-ID: <20231115191428.284200542@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -45,37 +44,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 3537a75e73f3420614a358d0c8b390ea483cc87d ]
+[ Upstream commit 464bd8ec2f06707f3773676a1bd2c64832a3c805 ]
 
-Add the missing devm_kfree() when we skip the clocks with invalid or
-missing information from the firmware.
+When the membase and pci_dev pointer were moved to a new struct in priv,
+the actual membase users were left untouched, and they started reading
+out arbitrary memory behind the struct instead of registers. This
+unfortunately turned the RNG into a constant number generator, depending
+on the content of what was at that offset.
 
-Cc: Cristian Marussi <cristian.marussi@arm.com>
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org
-Fixes: 6d6a1d82eaef ("clk: add support for clocks provided by SCMI")
-Link: https://lore.kernel.org/r/20231004193600.66232-1-sudeep.holla@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+To fix this, update geode_rng_data_{read,present}() to also get the
+membase via amd_geode_priv, and properly read from the right addresses
+again.
+
+Fixes: 9f6ec8dc574e ("hwrng: geode - Fix PCI device refcount leak")
+Reported-by: Timur I. Davletshin <timur.davletshin@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217882
+Tested-by: Timur I. Davletshin <timur.davletshin@gmail.com>
+Suggested-by: Jo-Philipp Wich <jo@mein.io>
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-scmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/hw_random/geode-rng.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/clk-scmi.c b/drivers/clk/clk-scmi.c
-index c65d30bba7005..9d9eed597617b 100644
---- a/drivers/clk/clk-scmi.c
-+++ b/drivers/clk/clk-scmi.c
-@@ -170,6 +170,7 @@ static int scmi_clocks_probe(struct scmi_device *sdev)
- 		sclk->info = handle->clk_ops->info_get(handle, idx);
- 		if (!sclk->info) {
- 			dev_dbg(dev, "invalid clock info for idx %d\n", idx);
-+			devm_kfree(dev, sclk);
- 			continue;
- 		}
+diff --git a/drivers/char/hw_random/geode-rng.c b/drivers/char/hw_random/geode-rng.c
+index 207272979f233..2f8289865ec81 100644
+--- a/drivers/char/hw_random/geode-rng.c
++++ b/drivers/char/hw_random/geode-rng.c
+@@ -58,7 +58,8 @@ struct amd_geode_priv {
  
+ static int geode_rng_data_read(struct hwrng *rng, u32 *data)
+ {
+-	void __iomem *mem = (void __iomem *)rng->priv;
++	struct amd_geode_priv *priv = (struct amd_geode_priv *)rng->priv;
++	void __iomem *mem = priv->membase;
+ 
+ 	*data = readl(mem + GEODE_RNG_DATA_REG);
+ 
+@@ -67,7 +68,8 @@ static int geode_rng_data_read(struct hwrng *rng, u32 *data)
+ 
+ static int geode_rng_data_present(struct hwrng *rng, int wait)
+ {
+-	void __iomem *mem = (void __iomem *)rng->priv;
++	struct amd_geode_priv *priv = (struct amd_geode_priv *)rng->priv;
++	void __iomem *mem = priv->membase;
+ 	int data, i;
+ 
+ 	for (i = 0; i < 20; i++) {
 -- 
 2.42.0
 
