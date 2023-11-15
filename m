@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B615E3C46A
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1382031730
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT849bWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68913C433CA;
-	Wed, 15 Nov 2023 19:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kaahpjss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00E5C433C7;
+	Wed, 15 Nov 2023 19:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077537;
-	bh=AuFAGQyyUYq7GNf6wMgklPOhSLk5XAW3AFFQw3SiROc=;
+	s=korg; t=1700077539;
+	bh=U5fG0LHRlfoZGi2f6X9CALJ9JBHRPdD0FYbqIikijX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OT849bWstp2djRIBLyfHdgpLhOQ3AUY69Ge30J9qzwuCy2ge548y0tiDuN8G48ExP
-	 5ZPXpwBH6tVRwU0s04GQhQmlEMgNvaggp+XQDu0Ej9sGYWtIZ8eEDdP/jAwjMgXgbB
-	 TiL3psNLceR/nIKUyyZTy2G0J56mDJrzNR65Vaic=
+	b=KaahpjssmwLQTFxb1P0PR0rSKmScPlRPr6BIcP4WcSCo0bu976qdn5PMcVj1cj21y
+	 yOBZAkjK5tHs2/fKIkmM9aRg7N7a7Ip/ShrMzbKjvj0t/UDYDwKwktcDCnCIkzUgmG
+	 nAJj70mFdDBLIBYxM12Avi7tUstcYtlaNSr8bdk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gou Hao <gouhao@uniontech.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 364/603] ext4: add missing initialization of call_notify_error in update_super_work()
-Date: Wed, 15 Nov 2023 14:15:09 -0500
-Message-ID: <20231115191638.705115909@linuxfoundation.org>
+Subject: [PATCH 6.6 365/603] ext4: move ix sanity check to corrent position
+Date: Wed, 15 Nov 2023 14:15:10 -0500
+Message-ID: <20231115191638.772410095@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -41,31 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit ee6a12d0d4d85f3833d177cd382cd417f0ef011b ]
+[ Upstream commit af90a8f4a09ec4a3de20142e37f37205d4687f28 ]
 
-Fixes: ff0722de896e ("ext4: add periodic superblock update check")
+Check 'ix' before it is used.
+
+Fixes: 80e675f906db ("ext4: optimize memmmove lengths in extent/index insertions")
+Signed-off-by: Gou Hao <gouhao@uniontech.com>
+Link: https://lore.kernel.org/r/20230906013341.7199-1-gouhao@uniontech.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/extents.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index dbebd8b3127e5..6f48dec19f4a2 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -768,7 +768,8 @@ static void update_super_work(struct work_struct *work)
- 	 */
- 	if (!sb_rdonly(sbi->s_sb) && journal) {
- 		struct buffer_head *sbh = sbi->s_sbh;
--		bool call_notify_err;
-+		bool call_notify_err = false;
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 202c76996b621..4d8496d1a8ac4 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -1010,6 +1010,11 @@ static int ext4_ext_insert_index(handle_t *handle, struct inode *inode,
+ 		ix = curp->p_idx;
+ 	}
+ 
++	if (unlikely(ix > EXT_MAX_INDEX(curp->p_hdr))) {
++		EXT4_ERROR_INODE(inode, "ix > EXT_MAX_INDEX!");
++		return -EFSCORRUPTED;
++	}
 +
- 		handle = jbd2_journal_start(journal, 1);
- 		if (IS_ERR(handle))
- 			goto write_directly;
+ 	len = EXT_LAST_INDEX(curp->p_hdr) - ix + 1;
+ 	BUG_ON(len < 0);
+ 	if (len > 0) {
+@@ -1019,11 +1024,6 @@ static int ext4_ext_insert_index(handle_t *handle, struct inode *inode,
+ 		memmove(ix + 1, ix, len * sizeof(struct ext4_extent_idx));
+ 	}
+ 
+-	if (unlikely(ix > EXT_MAX_INDEX(curp->p_hdr))) {
+-		EXT4_ERROR_INODE(inode, "ix > EXT_MAX_INDEX!");
+-		return -EFSCORRUPTED;
+-	}
+-
+ 	ix->ei_block = cpu_to_le32(logical);
+ 	ext4_idx_store_pblock(ix, ptr);
+ 	le16_add_cpu(&curp->p_hdr->eh_entries, 1);
 -- 
 2.42.0
 
