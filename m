@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E73364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D1C4121C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWijsvxk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FDCC433C8;
-	Wed, 15 Nov 2023 19:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGEjDJPz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99CAC433C9;
+	Wed, 15 Nov 2023 19:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076835;
-	bh=s1hTe9f6VikaRzw+pbwku+YI9uSQxqTxq5ZgQIcKjpI=;
+	s=korg; t=1700076836;
+	bh=1Y5KkPajeCUx+3xnZW+xlI38jIXqvDzt6tJ44JhK26U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWijsvxk8p1lAqDrkWM3hknOheCcAGy6JUAC3RjCK7zoYWWoDf0CmVbxnP8cIWVsP
-	 bIOyjF7mnap3Cs/NUTVAS40tl9WNXUr2k7ITSxdtQz0saJ/Abx1An4CNHSvxAcaYSR
-	 GqlzZEsOqRTTKuDue9vqCUTl9YuRnHhbnYFE9Hk4=
+	b=GGEjDJPzrJlahNSdZ9nXI4VHrdlRHm4e3TnIxwhIJOTxM3DzDEYF2VZ6N2ELIscjP
+	 zA/PU+sCDqRmbQiKu+1VkSflbt+ztbjxQNX13mqistwq4N3PyoP3AeSKpjpcPMD8+1
+	 tLjaZhj1DR2nxyBtYid92hjLSGuoNhAAGxAHZ4lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	"Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/603] wifi: mac80211: move sched-scan stop work to wiphy work
-Date: Wed, 15 Nov 2023 14:09:46 -0500
-Message-ID: <20231115191615.996926605@linuxfoundation.org>
+Subject: [PATCH 6.5 438/550] powerpc/pseries: fix potential memory leak in init_cpu_associativity()
+Date: Wed, 15 Nov 2023 14:17:02 -0500
+Message-ID: <20231115191631.157299294@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,107 +39,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit eadfb54756aea5610d8d0a467f66305f777c85dd ]
+[ Upstream commit 95f1a128cd728a7257d78e868f1f5a145fc43736 ]
 
-This also has the wiphy locked here then. We need to use
-the _locked version of cfg80211_sched_scan_stopped() now,
-which also fixes an old deadlock there.
+If the vcpu_associativity alloc memory successfully but the
+pcpu_associativity fails to alloc memory, the vcpu_associativity
+memory leaks.
 
-Fixes: a05829a7222e ("cfg80211: avoid holding the RTNL when calling the driver")
-Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: d62c8deeb6e6 ("powerpc/pseries: Provide vcpu dispatch statistics")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Reviewed-by: "Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/1671003983-10794-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h | 5 +++--
- net/mac80211/main.c        | 6 +++---
- net/mac80211/scan.c        | 7 ++++---
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ arch/powerpc/platforms/pseries/lpar.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 5321f75d0c6f3..07beb72ddd25a 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -1483,7 +1483,7 @@ struct ieee80211_local {
- 	int hw_scan_ies_bufsize;
- 	struct cfg80211_scan_info scan_info;
+diff --git a/arch/powerpc/platforms/pseries/lpar.c b/arch/powerpc/platforms/pseries/lpar.c
+index cb2f1211f7ebf..d1fc396bb1de4 100644
+--- a/arch/powerpc/platforms/pseries/lpar.c
++++ b/arch/powerpc/platforms/pseries/lpar.c
+@@ -525,8 +525,10 @@ static ssize_t vcpudispatch_stats_write(struct file *file, const char __user *p,
  
--	struct work_struct sched_scan_stopped_work;
-+	struct wiphy_work sched_scan_stopped_work;
- 	struct ieee80211_sub_if_data __rcu *sched_scan_sdata;
- 	struct cfg80211_sched_scan_request __rcu *sched_scan_req;
- 	u8 scan_addr[ETH_ALEN];
-@@ -1962,7 +1962,8 @@ int ieee80211_request_sched_scan_start(struct ieee80211_sub_if_data *sdata,
- 				       struct cfg80211_sched_scan_request *req);
- int ieee80211_request_sched_scan_stop(struct ieee80211_local *local);
- void ieee80211_sched_scan_end(struct ieee80211_local *local);
--void ieee80211_sched_scan_stopped_work(struct work_struct *work);
-+void ieee80211_sched_scan_stopped_work(struct wiphy *wiphy,
-+				       struct wiphy_work *work);
+ 	if (cmd) {
+ 		rc = init_cpu_associativity();
+-		if (rc)
++		if (rc) {
++			destroy_cpu_associativity();
+ 			goto out;
++		}
  
- /* off-channel/mgmt-tx */
- void ieee80211_offchannel_stop_vifs(struct ieee80211_local *local);
-diff --git a/net/mac80211/main.c b/net/mac80211/main.c
-index f1cbb7c5d4ac3..4548f84451095 100644
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -822,8 +822,8 @@ struct ieee80211_hw *ieee80211_alloc_hw_nm(size_t priv_data_len,
- 		  ieee80211_dynamic_ps_disable_work);
- 	timer_setup(&local->dynamic_ps_timer, ieee80211_dynamic_ps_timer, 0);
- 
--	INIT_WORK(&local->sched_scan_stopped_work,
--		  ieee80211_sched_scan_stopped_work);
-+	wiphy_work_init(&local->sched_scan_stopped_work,
-+			ieee80211_sched_scan_stopped_work);
- 
- 	spin_lock_init(&local->ack_status_lock);
- 	idr_init(&local->ack_status_frames);
-@@ -1481,13 +1481,13 @@ void ieee80211_unregister_hw(struct ieee80211_hw *hw)
- 
- 	wiphy_lock(local->hw.wiphy);
- 	wiphy_delayed_work_cancel(local->hw.wiphy, &local->roc_work);
-+	wiphy_work_cancel(local->hw.wiphy, &local->sched_scan_stopped_work);
- 	wiphy_work_cancel(local->hw.wiphy, &local->radar_detected_work);
- 	wiphy_unlock(local->hw.wiphy);
- 	rtnl_unlock();
- 
- 	cancel_work_sync(&local->restart_work);
- 	cancel_work_sync(&local->reconfig_filter);
--	flush_work(&local->sched_scan_stopped_work);
- 
- 	ieee80211_clear_tx_pending(local);
- 	rate_control_deinitialize(local);
-diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
-index 2117cb2a916ac..68ec2124c3db5 100644
---- a/net/mac80211/scan.c
-+++ b/net/mac80211/scan.c
-@@ -1422,10 +1422,11 @@ void ieee80211_sched_scan_end(struct ieee80211_local *local)
- 
- 	mutex_unlock(&local->mtx);
- 
--	cfg80211_sched_scan_stopped(local->hw.wiphy, 0);
-+	cfg80211_sched_scan_stopped_locked(local->hw.wiphy, 0);
- }
- 
--void ieee80211_sched_scan_stopped_work(struct work_struct *work)
-+void ieee80211_sched_scan_stopped_work(struct wiphy *wiphy,
-+				       struct wiphy_work *work)
- {
- 	struct ieee80211_local *local =
- 		container_of(work, struct ieee80211_local,
-@@ -1448,6 +1449,6 @@ void ieee80211_sched_scan_stopped(struct ieee80211_hw *hw)
- 	if (local->in_reconfig)
- 		return;
- 
--	schedule_work(&local->sched_scan_stopped_work);
-+	wiphy_work_queue(hw->wiphy, &local->sched_scan_stopped_work);
- }
- EXPORT_SYMBOL(ieee80211_sched_scan_stopped);
+ 		for_each_possible_cpu(cpu) {
+ 			disp = per_cpu_ptr(&vcpu_disp_data, cpu);
 -- 
 2.42.0
 
