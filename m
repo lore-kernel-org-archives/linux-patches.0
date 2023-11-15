@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219CD3DBAD
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219A73DB95
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDPfjDb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80DDCC433CA;
-	Wed, 15 Nov 2023 20:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGZQjV4A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E691C433C9;
+	Wed, 15 Nov 2023 20:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078523;
-	bh=IUe8/pu9sgYhh6IuRuPwJf6ZGE+U9xgNR9JDA1xfpD0=;
+	s=korg; t=1700078522;
+	bh=VD+ac87lMp1UTsYCsKjbSKhUficUCYgTxgYLkt1uKwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDPfjDb9/95Zfj1T9mV4mTnSLpdtQq/Y/Cu+T72HvZY6KT0CFiyx8shu5VbkNoNX6
-	 R9yPU2jsGcv+5ZWzOxZ2bIF+dKvKram/rVpxtdAnP4jip6c6lyLOKzR1GEpDX1CJZV
-	 b+qiweHKhrzO1cO7omDDbRgmCqfTGoHSrX0Q4yj8=
+	b=fGZQjV4AtMEoVKW3nGbRRK9b+t/PM2zmG9rzm+lFS25BKnmSoSWJBO4VNC9Wd/W6+
+	 3DDmNN7ivjPvaqgG5uz4Z+734PQFW+ttZ2sj1pQCRTDxIkJNsck+cpsMnqQazvaz8f
+	 zaCwFp50Xt1UAMcKdP023bravNFa+JcxjRJQuoRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 374/379] fbdev: fsl-diu-fb: mark wr_reg_wa() static
-Date: Wed, 15 Nov 2023 14:27:29 -0500
-Message-ID: <20231115192707.283809616@linuxfoundation.org>
+Subject: [PATCH 6.1 373/379] fbdev: imsttfb: fix a resource leak in probe
+Date: Wed, 15 Nov 2023 14:27:28 -0500
+Message-ID: <20231115192707.229024292@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,36 +42,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit a5035c81847430dfa3482807b07325f29e9e8c09 ]
+[ Upstream commit aba6ab57a910ad4b940c2024d15f2cdbf5b7f76b ]
 
-wr_reg_wa() is not an appropriate name for a global function, and doesn't need
-to be global anyway, so mark it static and avoid the warning:
+I've re-written the error handling but the bug is that if init_imstt()
+fails we need to call iounmap(par->cmap_regs).
 
-drivers/video/fbdev/fsl-diu-fb.c:493:6: error: no previous prototype for 'wr_reg_wa' [-Werror=missing-prototypes]
-
-Fixes: 0d9dab39fbbe ("powerpc/5121: fsl-diu-fb: fix issue with re-enabling DIU area descriptor")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: c75f5a550610 ("fbdev: imsttfb: Fix use after free bug in imsttfb_probe")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/fsl-diu-fb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/imsttfb.c | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/video/fbdev/fsl-diu-fb.c b/drivers/video/fbdev/fsl-diu-fb.c
-index e332017c6af62..ce3c5b0b8f4ef 100644
---- a/drivers/video/fbdev/fsl-diu-fb.c
-+++ b/drivers/video/fbdev/fsl-diu-fb.c
-@@ -490,7 +490,7 @@ static enum fsl_diu_monitor_port fsl_diu_name_to_port(const char *s)
-  * Workaround for failed writing desc register of planes.
-  * Needed with MPC5121 DIU rev 2.0 silicon.
-  */
--void wr_reg_wa(u32 *reg, u32 val)
-+static void wr_reg_wa(u32 *reg, u32 val)
- {
- 	do {
- 		out_be32(reg, val);
+diff --git a/drivers/video/fbdev/imsttfb.c b/drivers/video/fbdev/imsttfb.c
+index 004e7da9e70ba..b194e71f07bfc 100644
+--- a/drivers/video/fbdev/imsttfb.c
++++ b/drivers/video/fbdev/imsttfb.c
+@@ -1495,8 +1495,8 @@ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ 	if (!request_mem_region(addr, size, "imsttfb")) {
+ 		printk(KERN_ERR "imsttfb: Can't reserve memory region\n");
+-		framebuffer_release(info);
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto release_info;
+ 	}
+ 
+ 	switch (pdev->device) {
+@@ -1513,36 +1513,39 @@ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 			printk(KERN_INFO "imsttfb: Device 0x%x unknown, "
+ 					 "contact maintainer.\n", pdev->device);
+ 			ret = -ENODEV;
+-			goto error;
++			goto release_mem_region;
+ 	}
+ 
+ 	info->fix.smem_start = addr;
+ 	info->screen_base = (__u8 *)ioremap(addr, par->ramdac == IBM ?
+ 					    0x400000 : 0x800000);
+ 	if (!info->screen_base)
+-		goto error;
++		goto release_mem_region;
+ 	info->fix.mmio_start = addr + 0x800000;
+ 	par->dc_regs = ioremap(addr + 0x800000, 0x1000);
+ 	if (!par->dc_regs)
+-		goto error;
++		goto unmap_screen_base;
+ 	par->cmap_regs_phys = addr + 0x840000;
+ 	par->cmap_regs = (__u8 *)ioremap(addr + 0x840000, 0x1000);
+ 	if (!par->cmap_regs)
+-		goto error;
++		goto unmap_dc_regs;
+ 	info->pseudo_palette = par->palette;
+ 	ret = init_imstt(info);
+ 	if (ret)
+-		goto error;
++		goto unmap_cmap_regs;
+ 
+ 	pci_set_drvdata(pdev, info);
+-	return ret;
++	return 0;
+ 
+-error:
+-	if (par->dc_regs)
+-		iounmap(par->dc_regs);
+-	if (info->screen_base)
+-		iounmap(info->screen_base);
++unmap_cmap_regs:
++	iounmap(par->cmap_regs);
++unmap_dc_regs:
++	iounmap(par->dc_regs);
++unmap_screen_base:
++	iounmap(info->screen_base);
++release_mem_region:
+ 	release_mem_region(addr, size);
++release_info:
+ 	framebuffer_release(info);
+ 	return ret;
+ }
 -- 
 2.42.0
 
