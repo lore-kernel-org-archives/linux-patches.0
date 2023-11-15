@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CD0381DC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666C6381DC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcnnJfdE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F0CC433C8;
-	Wed, 15 Nov 2023 19:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MezefZHd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19097C433CB;
+	Wed, 15 Nov 2023 19:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076935;
-	bh=xNphWY4pnYBG6cOvTHL/NQlB9y719hbvUUH1ZATFHw0=;
+	s=korg; t=1700076937;
+	bh=pKh2wC9R5ZjTzbzpfGes6RWw2IWzBZnUzhBzV3+TMjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcnnJfdE91a56jCsQTMnCwfQdg/fQgkVQMX6FBzXzAyQJLREOIqD/otA/Oog3npDW
-	 GQFK4NrksTxei26SfGPD18yVlIAnIoeNJTx7r7ain8R6o6y2l9aOaZ8LmPAtlZJw0P
-	 Pmr7SuViybpirZAeGVhvrmJxcXOGKs46A786NJJ0=
+	b=MezefZHd904Wfz1VSB4E8yr3ecdaDqXFxw959wYw+tIRo3+J0F2jNNwOTTP7NLP2U
+	 VRuo7XMW2VHIN0VlasNyhZhHeW1tkUOUHxNrMVz58Z7gN5nk8rkDUiLke9nr7V1/L9
+	 c/5qXeAoCW40wNoPddH+mxUAl0sq7ftSwXPEIxvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/603] wifi: rtw88: debug: Fix the NULL vs IS_ERR() bug for debugfs_create_file()
-Date: Wed, 15 Nov 2023 14:10:18 -0500
-Message-ID: <20231115191618.160955591@linuxfoundation.org>
+Subject: [PATCH 6.5 470/550] pcmcia: ds: fix possible name leak in error path in pcmcia_device_add()
+Date: Wed, 15 Nov 2023 14:17:34 -0500
+Message-ID: <20231115191633.454082448@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,43 +38,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 74f7957c9b1b95553faaf146a2553e023a9d1720 ]
+[ Upstream commit 99e1241049a92dd3e9a90a0f91e32ce390133278 ]
 
-Since debugfs_create_file() return ERR_PTR and never return NULL, so use
-IS_ERR() to check it instead of checking NULL.
+Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
+bus_id string array"), the name of device is allocated dynamically.
+Therefore, it needs to be freed, which is done by the driver core for
+us once all references to the device are gone. Therefore, move the
+dev_set_name() call immediately before the call device_register(), which
+either succeeds (then the freeing will be done upon subsequent remvoal),
+or puts the reference in the error call. Also, it is not unusual that the
+return value of dev_set_name is not checked.
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230919050651.962694-1-ruanjinjie@huawei.com
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+[linux@dominikbrodowski.net: simplification, commit message modified]
+Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/debug.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pcmcia/ds.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
-index f8ba133baff06..35bc37a3c469d 100644
---- a/drivers/net/wireless/realtek/rtw88/debug.c
-+++ b/drivers/net/wireless/realtek/rtw88/debug.c
-@@ -1233,9 +1233,9 @@ static struct rtw_debugfs_priv rtw_debug_priv_dm_cap = {
- #define rtw_debugfs_add_core(name, mode, fopname, parent)		\
- 	do {								\
- 		rtw_debug_priv_ ##name.rtwdev = rtwdev;			\
--		if (!debugfs_create_file(#name, mode,			\
-+		if (IS_ERR(debugfs_create_file(#name, mode,		\
- 					 parent, &rtw_debug_priv_ ##name,\
--					 &file_ops_ ##fopname))		\
-+					 &file_ops_ ##fopname)))	\
- 			pr_debug("Unable to initialize debugfs:%s\n",	\
- 			       #name);					\
- 	} while (0)
+diff --git a/drivers/pcmcia/ds.c b/drivers/pcmcia/ds.c
+index c90c68dee1e45..b4b8363d1de21 100644
+--- a/drivers/pcmcia/ds.c
++++ b/drivers/pcmcia/ds.c
+@@ -513,9 +513,6 @@ static struct pcmcia_device *pcmcia_device_add(struct pcmcia_socket *s,
+ 	/* by default don't allow DMA */
+ 	p_dev->dma_mask = 0;
+ 	p_dev->dev.dma_mask = &p_dev->dma_mask;
+-	dev_set_name(&p_dev->dev, "%d.%d", p_dev->socket->sock, p_dev->device_no);
+-	if (!dev_name(&p_dev->dev))
+-		goto err_free;
+ 	p_dev->devname = kasprintf(GFP_KERNEL, "pcmcia%s", dev_name(&p_dev->dev));
+ 	if (!p_dev->devname)
+ 		goto err_free;
+@@ -573,6 +570,7 @@ static struct pcmcia_device *pcmcia_device_add(struct pcmcia_socket *s,
+ 
+ 	pcmcia_device_query(p_dev);
+ 
++	dev_set_name(&p_dev->dev, "%d.%d", p_dev->socket->sock, p_dev->device_no);
+ 	if (device_register(&p_dev->dev)) {
+ 		mutex_lock(&s->ops_mutex);
+ 		list_del(&p_dev->socket_device_list);
 -- 
 2.42.0
 
