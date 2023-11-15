@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D79D4121C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26586364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSkVZR0u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B57DC433C7;
-	Wed, 15 Nov 2023 19:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uP7ZGr32"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FC3C433C8;
+	Wed, 15 Nov 2023 19:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076815;
-	bh=uy6jTAjjm3oUO1DaVfhq6Cl2BqmkMAOkJqLwADkM3/s=;
+	s=korg; t=1700076817;
+	bh=brlr8ZySS/ULSfvwVa4PFhNIyzqVfCSzDGQDDrcgFjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oSkVZR0uhHvB6TYoQi9YxDIkcE6LucLQV9jUd7y1VSN3xzDxsuz9upJ0q27ALRW8t
-	 W5OqoiA733jIrjLlAlQc+vCvpVLw7pkOrBiz45G939Yb2N5RuIhojgNgqQVHX9viUH
-	 smrfKsLxM7Mcsk5PUOH1yg/rYKMS3G4K1jQc64CA=
+	b=uP7ZGr32rngmlDSaiB3JaiQN6ElRHo/oOOdmbbjPejUezro9oC8EbSW65cpDSvbdR
+	 E3jj/gfioHOuNFUEI3Ko4FtKl3ZRhaKk4MB2tFR25rL8OVJ0Dyb7NMmvCiI4bJGlx8
+	 pnSvCbVlmApc89/P71om2VW+Mxu5CydBO47Im0PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/603] irqchip/sifive-plic: Fix syscore registration for multi-socket systems
-Date: Wed, 15 Nov 2023 14:09:40 -0500
-Message-ID: <20231115191615.629521656@linuxfoundation.org>
+Subject: [PATCH 6.5 432/550] powerpc/40x: Remove stale PTE_ATOMIC_UPDATES macro
+Date: Wed, 15 Nov 2023 14:16:56 -0500
+Message-ID: <20231115191630.710421936@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,58 +38,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit f99b926f6543faeadba1b4524d8dc9c102489135 ]
+[ Upstream commit cc8ee288f484a2a59c01ccd4d8a417d6ed3466e3 ]
 
-Multi-socket systems have a separate PLIC in each socket, so __plic_init()
-is invoked for each PLIC. __plic_init() registers syscore operations, which
-obviously fails on the second invocation.
+40x TLB handlers were reworked by commit 2c74e2586bb9 ("powerpc/40x:
+Rework 40x PTE access and TLB miss") to not require PTE_ATOMIC_UPDATES
+anymore.
 
-Move it into the already existing condition for installing the CPU hotplug
-state so it is only invoked once when the first PLIC is initialized.
+Then commit 4e1df545e2fa ("powerpc/pgtable: Drop PTE_ATOMIC_UPDATES")
+removed all code related to PTE_ATOMIC_UPDATES.
 
-[ tglx: Massaged changelog ]
+Remove left over PTE_ATOMIC_UPDATES macro.
 
-Fixes: e80f0b6a2cf3 ("irqchip/irq-sifive-plic: Add syscore callbacks for hibernation")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20231025142820.390238-4-apatel@ventanamicro.com
+Fixes: 2c74e2586bb9 ("powerpc/40x: Rework 40x PTE access and TLB miss")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/f061db5857fcd748f84a6707aad01754686ce97e.1695659959.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-sifive-plic.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/powerpc/include/asm/nohash/32/pte-40x.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/irqchip/irq-sifive-plic.c b/drivers/irqchip/irq-sifive-plic.c
-index e1484905b7bdb..5b7bc4fd9517c 100644
---- a/drivers/irqchip/irq-sifive-plic.c
-+++ b/drivers/irqchip/irq-sifive-plic.c
-@@ -532,17 +532,18 @@ static int __init __plic_init(struct device_node *node,
- 	}
+diff --git a/arch/powerpc/include/asm/nohash/32/pte-40x.h b/arch/powerpc/include/asm/nohash/32/pte-40x.h
+index 6fe46e7545566..0b4e5f8ce3e8a 100644
+--- a/arch/powerpc/include/asm/nohash/32/pte-40x.h
++++ b/arch/powerpc/include/asm/nohash/32/pte-40x.h
+@@ -69,9 +69,6 @@
  
- 	/*
--	 * We can have multiple PLIC instances so setup cpuhp state only
--	 * when context handler for current/boot CPU is present.
-+	 * We can have multiple PLIC instances so setup cpuhp state
-+	 * and register syscore operations only when context handler
-+	 * for current/boot CPU is present.
- 	 */
- 	handler = this_cpu_ptr(&plic_handlers);
- 	if (handler->present && !plic_cpuhp_setup_done) {
- 		cpuhp_setup_state(CPUHP_AP_IRQ_SIFIVE_PLIC_STARTING,
- 				  "irqchip/sifive/plic:starting",
- 				  plic_starting_cpu, plic_dying_cpu);
-+		register_syscore_ops(&plic_irq_syscore_ops);
- 		plic_cpuhp_setup_done = true;
- 	}
--	register_syscore_ops(&plic_irq_syscore_ops);
+ #define _PTE_NONE_MASK	0
  
- 	pr_info("%pOFP: mapped %d interrupts with %d handlers for"
- 		" %d contexts.\n", node, nr_irqs, nr_handlers, nr_contexts);
+-/* Until my rework is finished, 40x still needs atomic PTE updates */
+-#define PTE_ATOMIC_UPDATES	1
+-
+ #define _PAGE_BASE_NC	(_PAGE_PRESENT | _PAGE_ACCESSED)
+ #define _PAGE_BASE	(_PAGE_BASE_NC)
+ 
 -- 
 2.42.0
 
