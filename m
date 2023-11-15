@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D160E3A8F3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787E83A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5IpWW6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CC3C433C7;
-	Wed, 15 Nov 2023 19:50:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ods1wnH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22885C433CA;
+	Wed, 15 Nov 2023 19:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077850;
-	bh=nYsktpsHw+HkSF90pNz0Wrlc+0DBpMNvoSW6uBdhpZo=;
+	s=korg; t=1700077852;
+	bh=By93fAJnBR95+E+YIiTvos8n4TuBCp/MgOczEBrSpnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b5IpWW6rvCmy4DqZPhAyPhJdkt1tSYm34ViJJftrm2OZIctStk4IP8mooFisZLOrl
-	 o3LWnH3PRsBm7UODtBLPumZKhEVKLALu2yg79sUT4db+IwmnHg3l0T+gxYAffbV5N+
-	 ezPBemIHk/m6Dd1zreWFMiz5vy7EOM660Qh7hJ80=
+	b=1Ods1wnHzQgTlgs2gKA0OoVySWTnEt8B0A5lw0/d7R3x5d/waQ08q3KS61VwQvTot
+	 Butkk7LunkjA24LC3n+ASFuwfL45WZIVWXjrzGfkAxo9DSIb7Mac6PW3I4qMCjZRRr
+	 mRlgzY8jGBr46GGCO3a8BksREP6CdY2pFp9hAtDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dust Li <dust.li@linux.alibaba.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 558/603] net/smc: allow cdc msg send rather than drop it with NULL sndbuf_desc
-Date: Wed, 15 Nov 2023 14:18:23 -0500
-Message-ID: <20231115191650.274620601@linuxfoundation.org>
+Subject: [PATCH 6.6 559/603] net/smc: put sk reference if close work was canceled
+Date: Wed, 15 Nov 2023 14:18:24 -0500
+Message-ID: <20231115191650.332711290@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,60 +45,36 @@ Content-Transfer-Encoding: 8bit
 
 From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit c5bf605ba4f9d6fbbb120595ab95002f4716edcb ]
+[ Upstream commit aa96fbd6d78d9770323b21e2c92bd38821be8852 ]
 
-This patch re-fix the issues mentioned by commit 22a825c541d7
-("net/smc: fix NULL sndbuf_desc in smc_cdc_tx_handler()").
+Note that we always hold a reference to sock when attempting
+to submit close_work. Therefore, if we have successfully
+canceled close_work from pending, we MUST release that reference
+to avoid potential leaks.
 
-Blocking sending message do solve the issues though, but it also
-prevents the peer to receive the final message. Besides, in logic,
-whether the sndbuf_desc is NULL or not have no impact on the processing
-of cdc message sending.
-
-Hence that, this patch allows the cdc message sending but to check the
-sndbuf_desc with care in smc_cdc_tx_handler().
-
-Fixes: 22a825c541d7 ("net/smc: fix NULL sndbuf_desc in smc_cdc_tx_handler()")
+Fixes: 42bfba9eaa33 ("net/smc: immediate termination for SMCD link groups")
 Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
 Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_cdc.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ net/smc/smc_close.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
-index 01bdb7909a14b..3c06625ceb200 100644
---- a/net/smc/smc_cdc.c
-+++ b/net/smc/smc_cdc.c
-@@ -28,13 +28,15 @@ static void smc_cdc_tx_handler(struct smc_wr_tx_pend_priv *pnd_snd,
- {
- 	struct smc_cdc_tx_pend *cdcpend = (struct smc_cdc_tx_pend *)pnd_snd;
- 	struct smc_connection *conn = cdcpend->conn;
-+	struct smc_buf_desc *sndbuf_desc;
- 	struct smc_sock *smc;
- 	int diff;
+diff --git a/net/smc/smc_close.c b/net/smc/smc_close.c
+index 449ef454b53be..10219f55aad14 100644
+--- a/net/smc/smc_close.c
++++ b/net/smc/smc_close.c
+@@ -116,7 +116,8 @@ static void smc_close_cancel_work(struct smc_sock *smc)
+ 	struct sock *sk = &smc->sk;
  
-+	sndbuf_desc = conn->sndbuf_desc;
- 	smc = container_of(conn, struct smc_sock, conn);
- 	bh_lock_sock(&smc->sk);
--	if (!wc_status) {
--		diff = smc_curs_diff(cdcpend->conn->sndbuf_desc->len,
-+	if (!wc_status && sndbuf_desc) {
-+		diff = smc_curs_diff(sndbuf_desc->len,
- 				     &cdcpend->conn->tx_curs_fin,
- 				     &cdcpend->cursor);
- 		/* sndbuf_space is decreased in smc_sendmsg */
-@@ -114,9 +116,6 @@ int smc_cdc_msg_send(struct smc_connection *conn,
- 	union smc_host_cursor cfed;
- 	int rc;
- 
--	if (unlikely(!READ_ONCE(conn->sndbuf_desc)))
--		return -ENOBUFS;
--
- 	smc_cdc_add_pending_send(conn, pend);
- 
- 	conn->tx_cdc_seq++;
+ 	release_sock(sk);
+-	cancel_work_sync(&smc->conn.close_work);
++	if (cancel_work_sync(&smc->conn.close_work))
++		sock_put(sk);
+ 	cancel_delayed_work_sync(&smc->conn.tx_work);
+ 	lock_sock(sk);
+ }
 -- 
 2.42.0
 
