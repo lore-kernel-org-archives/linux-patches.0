@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4282D43AC4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC3D43AC9
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeuwM4ar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EB5C3279F;
-	Wed, 15 Nov 2023 20:49:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4Idvvdq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDADC36AEE;
+	Wed, 15 Nov 2023 20:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081382;
-	bh=Gwa+SA/t02dHDcVfFcMYLruO0Ebf9o1EVX/d+nop2V0=;
+	s=korg; t=1700081384;
+	bh=DWDdbniHQjxDVCy4DXVl/gFyeN3QnowM7X+49RaH5/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oeuwM4araRaQ2oUydnd5un2ci+SKpVVx8aOS9wKH6f0u9lBFs7DXyDuHmbjDA7RyO
-	 HJv4l89UaWPzrlHiYJNrj1a44RNN4oTVX1g4WYt8KTlX2f0JEFAqsSZsxO3t4wKfIM
-	 cn1FiBDewWqEwbsI3pf9fZjRsMuVgbeZfRHYrJ9M=
+	b=I4IdvvdqTWVlUI/6t2f89wt5NFjf3An1UnT7Nlr3aqjzDXXQVUuAvb4eIYUo3lU3A
+	 OFVsfjgrmfGthd5VeDz5cMXl8YAqiybefy6pZXOJ3hr7OJJktXSh+5Tji7ndNnN9w4
+	 ZPp5aNS7CAmm1yC88GJAewXCJZeCnkYCcplXzq8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Dhruva Gole <d-gole@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 120/244] firmware: ti_sci: Mark driver as non removable
-Date: Wed, 15 Nov 2023 15:35:12 -0500
-Message-ID: <20231115203555.547195380@linuxfoundation.org>
+Subject: [PATCH 5.15 121/244] firmware: arm_ffa: Assign the missing IDR allocation ID to the FFA device
+Date: Wed, 15 Nov 2023 15:35:13 -0500
+Message-ID: <20231115203555.611496428@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -37,115 +35,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dhruva Gole <d-gole@ti.com>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-[ Upstream commit 7b7a224b1ba1703583b25a3641ad9798f34d832a ]
+[ Upstream commit 7d0bc6360f17ea323ab25939a34857123d7d87e5 ]
 
-The TI-SCI message protocol provides a way to communicate between
-various compute processors with a central system controller entity. It
-provides the fundamental device management capability and clock control
-in the SOCs that it's used in.
+Commit 19b8766459c4 ("firmware: arm_ffa: Fix FFA device names for logical
+partitions") added an ID to the FFA device using ida_alloc() and append
+the same to "arm-ffa" to make up a unique device name. However it missed
+to stash the id value in ffa_dev to help freeing the ID later when the
+device is destroyed.
 
-The remove function failed to do all the necessary cleanup if
-there are registered users. Some things are freed however which
-likely results in an oops later on.
+Due to the missing/unassigned ID in FFA device, we get the following
+warning when the FF-A device is unregistered.
 
-Ensure that the driver isn't unbound by suppressing its bind and unbind
-sysfs attributes. As the driver is built-in there is no way to remove
-device once bound.
+  |   ida_free called for id=0 which is not allocated.
+  |   WARNING: CPU: 7 PID: 1 at lib/idr.c:525 ida_free+0x114/0x164
+  |   CPU: 7 PID: 1 Comm: swapper/0 Not tainted 6.6.0-rc4 #209
+  |   pstate: 61400009 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  |   pc : ida_free+0x114/0x164
+  |   lr : ida_free+0x114/0x164
+  |   Call trace:
+  |    ida_free+0x114/0x164
+  |    ffa_release_device+0x24/0x3c
+  |    device_release+0x34/0x8c
+  |    kobject_put+0x94/0xf8
+  |    put_device+0x18/0x24
+  |    klist_devices_put+0x14/0x20
+  |    klist_next+0xc8/0x114
+  |    bus_for_each_dev+0xd8/0x144
+  |    arm_ffa_bus_exit+0x30/0x54
+  |    ffa_init+0x68/0x330
+  |    do_one_initcall+0xdc/0x250
+  |    do_initcall_level+0x8c/0xac
+  |    do_initcalls+0x54/0x94
+  |    do_basic_setup+0x1c/0x28
+  |    kernel_init_freeable+0x104/0x170
+  |    kernel_init+0x20/0x1a0
+  |    ret_from_fork+0x10/0x20
 
-We can also remove the ti_sci_remove call along with the
-ti_sci_debugfs_destroy as there are no callers for it any longer.
+Fix the same by actually assigning the ID in the FFA device this time
+for real.
 
-Fixes: aa276781a64a ("firmware: Add basic support for TI System Control Interface (TI-SCI) protocol")
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Closes: https://lore.kernel.org/linux-arm-kernel/20230216083908.mvmydic5lpi3ogo7@pengutronix.de/
-Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Dhruva Gole <d-gole@ti.com>
-Link: https://lore.kernel.org/r/20230921091025.133130-1-d-gole@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 19b8766459c4 ("firmware: arm_ffa: Fix FFA device names for logical partitions")
+Link: https://lore.kernel.org/r/20231003085932.3553985-1-sudeep.holla@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/ti_sci.c | 46 +--------------------------------------
- 1 file changed, 1 insertion(+), 45 deletions(-)
+ drivers/firmware/arm_ffa/bus.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index 235c7e7869aa7..c2fafe49c2e85 100644
---- a/drivers/firmware/ti_sci.c
-+++ b/drivers/firmware/ti_sci.c
-@@ -190,19 +190,6 @@ static int ti_sci_debugfs_create(struct platform_device *pdev,
- 	return 0;
- }
+diff --git a/drivers/firmware/arm_ffa/bus.c b/drivers/firmware/arm_ffa/bus.c
+index edef31c413123..f79ba6f733ba4 100644
+--- a/drivers/firmware/arm_ffa/bus.c
++++ b/drivers/firmware/arm_ffa/bus.c
+@@ -192,6 +192,7 @@ struct ffa_device *ffa_device_register(const uuid_t *uuid, int vm_id)
+ 	dev->release = ffa_release_device;
+ 	dev_set_name(&ffa_dev->dev, "arm-ffa-%d", id);
  
--/**
-- * ti_sci_debugfs_destroy() - clean up log debug file
-- * @pdev:	platform device pointer
-- * @info:	Pointer to SCI entity information
-- */
--static void ti_sci_debugfs_destroy(struct platform_device *pdev,
--				   struct ti_sci_info *info)
--{
--	if (IS_ERR(info->debug_region))
--		return;
--
--	debugfs_remove(info->d);
--}
- #else /* CONFIG_DEBUG_FS */
- static inline int ti_sci_debugfs_create(struct platform_device *dev,
- 					struct ti_sci_info *info)
-@@ -3435,43 +3422,12 @@ static int ti_sci_probe(struct platform_device *pdev)
- 	return ret;
- }
++	ffa_dev->id = id;
+ 	ffa_dev->vm_id = vm_id;
+ 	uuid_copy(&ffa_dev->uuid, uuid);
  
--static int ti_sci_remove(struct platform_device *pdev)
--{
--	struct ti_sci_info *info;
--	struct device *dev = &pdev->dev;
--	int ret = 0;
--
--	of_platform_depopulate(dev);
--
--	info = platform_get_drvdata(pdev);
--
--	if (info->nb.notifier_call)
--		unregister_restart_handler(&info->nb);
--
--	mutex_lock(&ti_sci_list_mutex);
--	if (info->users)
--		ret = -EBUSY;
--	else
--		list_del(&info->node);
--	mutex_unlock(&ti_sci_list_mutex);
--
--	if (!ret) {
--		ti_sci_debugfs_destroy(pdev, info);
--
--		/* Safe to free channels since no more users */
--		mbox_free_channel(info->chan_tx);
--		mbox_free_channel(info->chan_rx);
--	}
--
--	return ret;
--}
--
- static struct platform_driver ti_sci_driver = {
- 	.probe = ti_sci_probe,
--	.remove = ti_sci_remove,
- 	.driver = {
- 		   .name = "ti-sci",
- 		   .of_match_table = of_match_ptr(ti_sci_of_match),
-+		   .suppress_bind_attrs = true,
- 	},
- };
- module_platform_driver(ti_sci_driver);
 -- 
 2.42.0
 
