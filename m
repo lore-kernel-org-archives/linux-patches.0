@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4859F43AC3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA161FCF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZKhEqMt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED804C3279B;
-	Wed, 15 Nov 2023 20:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsmDBjqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685F7C3279A;
+	Wed, 15 Nov 2023 20:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081376;
-	bh=FHpFAaZqwo88mPmCowwUhuPdeuOOM0yRAozqnR9IjrE=;
+	s=korg; t=1700081377;
+	bh=g2ehPUx8rBitvX8gSx/z5mBO+jte4xX7rEpsDmf11Po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vZKhEqMtcb3+qfjs+k8SbxX1Rq7RUNsAwx3q5+xZcmJ3xVdC3zJzAjHuBAGP+WuFH
-	 mAcQnjrMh3AHdS1DdU993jhMAwrWoda3JrF/vZvZ7wzKjjyuYxpsegy0aZlknHm9sw
-	 DOFsxRm10xWIxMj72vWVKl0ApAho8yzpIifp1tr8=
+	b=YsmDBjqaAVOGw3RQvrC2rn4kO1v6l+WVe6bvqSsCGmE2dZ/uotq+kJDCkCvBp30Qw
+	 eRNtlGyH+SPJ6f4BoX9HyzeAsx06U74P4W5Ll23uDxM0N3pDDC4WKMW/X3gTwXmf2S
+	 wi1nRf1BXojKlkDJOi2iXzeEEI4nBs1jANkUPCYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Packham <chris.packham@alliedtelesis.co.nz>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 116/244] ARM64: dts: marvell: cn9310: Use appropriate label for spi1 pins
-Date: Wed, 15 Nov 2023 15:35:08 -0500
-Message-ID: <20231115203555.283515840@linuxfoundation.org>
+Subject: [PATCH 5.15 117/244] arm64: dts: qcom: apq8016-sbc: Add missing ADV7533 regulators
+Date: Wed, 15 Nov 2023 15:35:09 -0500
+Message-ID: <20231115203555.340963284@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -43,70 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Packham <chris.packham@alliedtelesis.co.nz>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-[ Upstream commit 0878fd86f554ab98aa493996c7e0c72dff58437f ]
+[ Upstream commit 33e9032a1875bb1aee3c68a4540f5a577ff44130 ]
 
-Both the CN9130-CRB and CN9130-DB use the SPI1 interface but had the
-pinctrl node labelled as "cp0_spi0_pins". Use the label "cp0_spi1_pins"
-and update the node name to "cp0-spi-pins-1" to avoid confusion with the
-pinctrl options for SPI0.
+Add the missing regulator supplies to the ADV7533 HDMI bridge to fix
+the following dtbs_check warnings. They are all also supplied by
+pm8916_l6 so there is no functional difference.
 
-Fixes: 4c43a41e5b8c ("arm64: dts: cn913x: add device trees for topology B boards")
-Fixes: 5c0ee54723f3 ("arm64: dts: add support for Marvell cn9130-crb platform")
-Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+apq8016-sbc.dtb: bridge@39: 'dvdd-supply' is a required property
+apq8016-sbc.dtb: bridge@39: 'pvdd-supply' is a required property
+apq8016-sbc.dtb: bridge@39: 'a2vdd-supply' is a required property
+        from schema display/bridge/adi,adv7533.yaml
+
+Fixes: 28546b095511 ("arm64: dts: apq8016-sbc: Add HDMI display support")
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230922-db410c-adv7533-regulators-v1-1-68aba71e529b@gerhold.net
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/marvell/cn9130-crb.dtsi | 4 ++--
- arch/arm64/boot/dts/marvell/cn9130-db.dtsi  | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/marvell/cn9130-crb.dtsi b/arch/arm64/boot/dts/marvell/cn9130-crb.dtsi
-index 505ae69289f6d..ce49702dc4936 100644
---- a/arch/arm64/boot/dts/marvell/cn9130-crb.dtsi
-+++ b/arch/arm64/boot/dts/marvell/cn9130-crb.dtsi
-@@ -107,7 +107,7 @@ cp0_sdhci_pins: cp0-sdhi-pins-0 {
- 				       "mpp59", "mpp60", "mpp61";
- 			marvell,function = "sdio";
- 		};
--		cp0_spi0_pins: cp0-spi-pins-0 {
-+		cp0_spi1_pins: cp0-spi-pins-1 {
- 			marvell,pins = "mpp13", "mpp14", "mpp15", "mpp16";
- 			marvell,function = "spi1";
- 		};
-@@ -149,7 +149,7 @@ &cp0_sdhci0 {
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+index ad4c2ccec63ee..0153be6d2a2b1 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+@@ -190,6 +190,9 @@ adv_bridge: bridge@39 {
+ 		pd-gpios = <&msmgpio 32 GPIO_ACTIVE_HIGH>;
  
- &cp0_spi1 {
- 	pinctrl-names = "default";
--	pinctrl-0 = <&cp0_spi0_pins>;
-+	pinctrl-0 = <&cp0_spi1_pins>;
- 	reg = <0x700680 0x50>,		/* control */
- 	      <0x2000000 0x1000000>;	/* CS0 */
- 	status = "okay";
-diff --git a/arch/arm64/boot/dts/marvell/cn9130-db.dtsi b/arch/arm64/boot/dts/marvell/cn9130-db.dtsi
-index c00b69b88bd2f..c53253f668403 100644
---- a/arch/arm64/boot/dts/marvell/cn9130-db.dtsi
-+++ b/arch/arm64/boot/dts/marvell/cn9130-db.dtsi
-@@ -307,7 +307,7 @@ &cp0_sdhci0 {
- &cp0_spi1 {
- 	status = "disabled";
- 	pinctrl-names = "default";
--	pinctrl-0 = <&cp0_spi0_pins>;
-+	pinctrl-0 = <&cp0_spi1_pins>;
- 	reg = <0x700680 0x50>;
+ 		avdd-supply = <&pm8916_l6>;
++		a2vdd-supply = <&pm8916_l6>;
++		dvdd-supply = <&pm8916_l6>;
++		pvdd-supply = <&pm8916_l6>;
+ 		v1p2-supply = <&pm8916_l6>;
+ 		v3p3-supply = <&pm8916_l17>;
  
- 	spi-flash@0 {
-@@ -371,7 +371,7 @@ cp0_sdhci_pins: cp0-sdhi-pins-0 {
- 				       "mpp59", "mpp60", "mpp61";
- 			marvell,function = "sdio";
- 		};
--		cp0_spi0_pins: cp0-spi-pins-0 {
-+		cp0_spi1_pins: cp0-spi-pins-1 {
- 			marvell,pins = "mpp13", "mpp14", "mpp15", "mpp16";
- 			marvell,function = "spi1";
- 		};
 -- 
 2.42.0
 
