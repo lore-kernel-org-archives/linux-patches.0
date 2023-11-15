@@ -1,34 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BBF3DB92
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3644121C;
+	Wed, 15 Nov 2023 19:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLx6IJJX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D82DC433C7;
-	Wed, 15 Nov 2023 19:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdovYrpw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3C4C433C7;
+	Wed, 15 Nov 2023 19:34:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076856;
-	bh=OL3VTPAD0gAsAg2ghrUiIKGu3fbSHMUdLp8JpwtgPKs=;
+	s=korg; t=1700076857;
+	bh=2TKgKqpermnSBfoojWtpHr/18cPHZBHJtiEBwC8MUDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLx6IJJXz0rlxCtuxOqRFQsWSXfM2vz18L7jckcxGb7PHVJvCW+KmaOVWbbuFJiv5
-	 B1xH+ohLQ6NnmDUX4EC5rRtOe40uKuRPyvterESpyeIDS5FupnRtWCx0ZOPlKe9A9P
-	 Xs3vAtwEZk34A/SAJyHs1d4lhsYosz2XNvApbKyE=
+	b=SdovYrpwDxFcT67yL2bVpxtc7uKYGqU3kxqxh+I/sSGggneusofLC32R3zx53VGKL
+	 C27pKWSdWGR4iaQpB7oenQK+HNDuio/20sS++mB3nKIyLo3fzn9Xf3h3MRaca0dAQo
+	 PaxYNz1lugAeBzd9XusFDt8ffkuSmAJEyxMM4gfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Staikov <andrii.staikov@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	llvm@lists.linux.dev,
+	Ming Wang <wangming01@loongson.cn>,
+	Tom Rix <trix@redhat.com>,
+	bpf@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/603] i40e: fix potential memory leaks in i40e_remove()
-Date: Wed, 15 Nov 2023 14:09:52 -0500
-Message-ID: <20231115191616.443776471@linuxfoundation.org>
+Subject: [PATCH 6.5 427/550] perf mem-events: Avoid uninitialized read
+Date: Wed, 15 Nov 2023 14:16:51 -0500
+Message-ID: <20231115191630.366920613@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,52 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Staikov <andrii.staikov@intel.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 5ca636d927a106780451d957734f02589b972e2b ]
+[ Upstream commit 85f73c377b2ac9988a204b119aebb33ca5c60083 ]
 
-Instead of freeing memory of a single VSI, make sure
-the memory for all VSIs is cleared before releasing VSIs.
-Add releasing of their resources in a loop with the iteration
-number equal to the number of allocated VSIs.
+pmu should be initialized to NULL before perf_pmus__scan loop. Fix and
+shrink the scope of pmu at the same time. Issue detected by clang-tidy.
 
-Fixes: 41c445ff0f48 ("i40e: main driver core")
-Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 5752c20f3787 ("perf mem: Scan all PMUs instead of just core ones")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Yang Jihong <yangjihong1@huawei.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: llvm@lists.linux.dev
+Cc: Ming Wang <wangming01@loongson.cn>
+Cc: Tom Rix <trix@redhat.com>
+Cc: bpf@vger.kernel.org
+Link: https://lore.kernel.org/r/20231009183920.200859-10-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ tools/perf/util/mem-events.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index de7fd43dc11c8..00ca2b88165cb 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -16320,11 +16320,15 @@ static void i40e_remove(struct pci_dev *pdev)
- 			i40e_switch_branch_release(pf->veb[i]);
- 	}
+diff --git a/tools/perf/util/mem-events.c b/tools/perf/util/mem-events.c
+index 39ffe8ceb3809..954b235e12e51 100644
+--- a/tools/perf/util/mem-events.c
++++ b/tools/perf/util/mem-events.c
+@@ -185,7 +185,6 @@ int perf_mem_events__record_args(const char **rec_argv, int *argv_nr,
+ {
+ 	int i = *argv_nr, k = 0;
+ 	struct perf_mem_event *e;
+-	struct perf_pmu *pmu;
  
--	/* Now we can shutdown the PF's VSI, just before we kill
-+	/* Now we can shutdown the PF's VSIs, just before we kill
- 	 * adminq and hmc.
- 	 */
--	if (pf->vsi[pf->lan_vsi])
--		i40e_vsi_release(pf->vsi[pf->lan_vsi]);
-+	for (i = pf->num_alloc_vsi; i--;)
-+		if (pf->vsi[i]) {
-+			i40e_vsi_close(pf->vsi[i]);
-+			i40e_vsi_release(pf->vsi[i]);
-+			pf->vsi[i] = NULL;
-+		}
- 
- 	i40e_cloud_filter_exit(pf);
- 
+ 	for (int j = 0; j < PERF_MEM_EVENTS__MAX; j++) {
+ 		e = perf_mem_events__ptr(j);
+@@ -202,6 +201,8 @@ int perf_mem_events__record_args(const char **rec_argv, int *argv_nr,
+ 			rec_argv[i++] = "-e";
+ 			rec_argv[i++] = perf_mem_events__name(j, NULL);
+ 		} else {
++			struct perf_pmu *pmu = NULL;
++
+ 			if (!e->supported) {
+ 				perf_mem_events__print_unsupport_hybrid(e, j);
+ 				return -1;
 -- 
 2.42.0
 
