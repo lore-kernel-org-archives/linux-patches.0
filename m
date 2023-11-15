@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8943643AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C8D43AB9
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hoHwTFye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F36C433C9;
-	Wed, 15 Nov 2023 20:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5FP8ICX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C210EC433C8;
+	Wed, 15 Nov 2023 20:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081212;
-	bh=4SSWSSfn5LxJuqhyxZEhPEuZCsvJHebtHSO82qGO3ws=;
+	s=korg; t=1700081214;
+	bh=uf8SziXiuhva0M0xN4hqs6FO/FaZ3MBrI8q0G6EfsVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hoHwTFyefIPwr0siJDJNTiyX9EK81DxtUnlVX5Bfc9vLQc1IZvM1ZyRJfCi93XS1Y
-	 qvr5ZuSYlwFUXIVs7oXhcfeV8TRQxDSuiD2Pj7rvGZbgM4bFigo+NZQX5tjxILh6Sk
-	 AXqAxIz77Z6zQxQkGR23tLM5vlVNg+kSLx9Ice9g=
+	b=m5FP8ICXprUVf5bW7Ebhp6KiiDutdM4/iXa1wt846wDrTn9ZdLBdaZ8b8Vojse7xk
+	 rx8BIqgZbB8Uj/p+DETV9w19raKFaKZUztUQSmut146qElVsNMMg1aDESKN6zXPEVx
+	 BJR/F+62h6N9uY/JwKH+720x82hmKkKfVUOoFSYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aananth V <aananthv@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Qais Yousef (Google)" <qyousef@layalina.io>,
+	Ingo Molnar <mingo@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/244] tcp: call tcp_try_undo_recovery when an RTOd TFO SYNACK is ACKed
-Date: Wed, 15 Nov 2023 15:33:30 -0500
-Message-ID: <20231115203549.459794432@linuxfoundation.org>
+Subject: [PATCH 5.15 002/244] sched/uclamp: Ignore (util == 0) optimization in feec() when p_util_max = 0
+Date: Wed, 15 Nov 2023 15:33:14 -0500
+Message-ID: <20231115203548.528515532@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -45,69 +45,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aananth V <aananthv@google.com>
+From: Qais Yousef <qyousef@layalina.io>
 
-[ Upstream commit e326578a21414738de45f77badd332fb00bd0f58 ]
+[ Upstream commit 23c9519def98ee0fa97ea5871535e9b136f522fc ]
 
-For passive TCP Fast Open sockets that had SYN/ACK timeout and did not
-send more data in SYN_RECV, upon receiving the final ACK in 3WHS, the
-congestion state may awkwardly stay in CA_Loss mode unless the CA state
-was undone due to TCP timestamp checks. However, if
-tcp_rcv_synrecv_state_fastopen() decides not to undo, then we should
-enter CA_Open, because at that point we have received an ACK covering
-the retransmitted SYNACKs. Currently, the icsk_ca_state is only set to
-CA_Open after we receive an ACK for a data-packet. This is because
-tcp_ack does not call tcp_fastretrans_alert (and tcp_process_loss) if
-!prior_packets
+find_energy_efficient_cpu() bails out early if effective util of the
+task is 0 as the delta at this point will be zero and there's nothing
+for EAS to do. When uclamp is being used, this could lead to wrong
+decisions when uclamp_max is set to 0. In this case the task is capped
+to performance point 0, but it is actually running and consuming energy
+and we can benefit from EAS energy calculations.
 
-Note that tcp_process_loss() calls tcp_try_undo_recovery(), so having
-tcp_rcv_synrecv_state_fastopen() decide that if we're in CA_Loss we
-should call tcp_try_undo_recovery() is consistent with that, and
-low risk.
+Rework the condition so that it bails out when both util and uclamp_min
+are 0.
 
-Fixes: dad8cea7add9 ("tcp: fix TFO SYNACK undo to avoid double-timestamp-undo")
-Signed-off-by: Aananth V <aananthv@google.com>
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+We can do that without needing to use uclamp_task_util(); remove it.
+
+Fixes: d81304bc6193 ("sched/uclamp: Cater for uclamp in find_energy_efficient_cpu()'s early exit condition")
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20230916232955.2099394-3-qyousef@layalina.io
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ kernel/sched/fair.c | 18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 8e4b42d394bed..a3453b4ac339c 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6376,22 +6376,23 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 646a6ae4b2509..e9ea3244fa4d1 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -3987,22 +3987,6 @@ static inline unsigned long task_util_est(struct task_struct *p)
+ 	return max(task_util(p), _task_util_est(p));
+ }
  
- static void tcp_rcv_synrecv_state_fastopen(struct sock *sk)
+-#ifdef CONFIG_UCLAMP_TASK
+-static inline unsigned long uclamp_task_util(struct task_struct *p,
+-					     unsigned long uclamp_min,
+-					     unsigned long uclamp_max)
+-{
+-	return clamp(task_util_est(p), uclamp_min, uclamp_max);
+-}
+-#else
+-static inline unsigned long uclamp_task_util(struct task_struct *p,
+-					     unsigned long uclamp_min,
+-					     unsigned long uclamp_max)
+-{
+-	return task_util_est(p);
+-}
+-#endif
+-
+ static inline void util_est_enqueue(struct cfs_rq *cfs_rq,
+ 				    struct task_struct *p)
  {
-+	struct tcp_sock *tp = tcp_sk(sk);
- 	struct request_sock *req;
+@@ -7037,7 +7021,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
+ 	target = prev_cpu;
  
- 	/* If we are still handling the SYNACK RTO, see if timestamp ECR allows
- 	 * undo. If peer SACKs triggered fast recovery, we can't undo here.
- 	 */
--	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss)
--		tcp_try_undo_loss(sk, false);
-+	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss && !tp->packets_out)
-+		tcp_try_undo_recovery(sk);
+ 	sync_entity_load_avg(&p->se);
+-	if (!uclamp_task_util(p, p_util_min, p_util_max))
++	if (!task_util_est(p) && p_util_min == 0)
+ 		goto unlock;
  
- 	/* Reset rtx states to prevent spurious retransmits_timed_out() */
--	tcp_sk(sk)->retrans_stamp = 0;
-+	tp->retrans_stamp = 0;
- 	inet_csk(sk)->icsk_retransmits = 0;
- 
- 	/* Once we leave TCP_SYN_RECV or TCP_FIN_WAIT_1,
- 	 * we no longer need req so release it.
- 	 */
--	req = rcu_dereference_protected(tcp_sk(sk)->fastopen_rsk,
-+	req = rcu_dereference_protected(tp->fastopen_rsk,
- 					lockdep_sock_is_held(sk));
- 	reqsk_fastopen_remove(sk, req, false);
- 
+ 	for (; pd; pd = pd->next) {
 -- 
 2.42.0
 
