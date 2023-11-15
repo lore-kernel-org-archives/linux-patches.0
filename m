@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001133DB97
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8A23DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3xb6z4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A321FC433C8;
-	Wed, 15 Nov 2023 19:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaL0nAgN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B49CC433C7;
+	Wed, 15 Nov 2023 19:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078331;
-	bh=Y3czxle6tN43zcV40PD/AHCxvbjT88jRADM3zGPiBis=;
+	s=korg; t=1700078333;
+	bh=0qGc4ZGaI+ciaXcEUFaIC8CfexPzKUuBJcxqwPpHOJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3xb6z4/iARBUd7c0xRXnUqvMDjD2ScQ4nrcThhbQ9Kq9qdWlDjjvlRF/pQOaivXP
-	 V+MU5hijok1qv1YLjeBJJ1qRFvnnvEqh7AAklZMo7M3yw3ztx9rqtxShYJlhVJU/51
-	 6otlM4QeFGzW9X4puawABG+LQ3jhBNgHpCXdK1rM=
+	b=DaL0nAgNQiW/J+1UWI6HWRx7fcTSKHC8cvY5tHKoZtJNgoD/WmXJYmX6/5EsUakBn
+	 fWIxhqK6ffJJ0jv/ysje2SRQtzgx1AAXVgYhfxfQhOHu/GM80vLcaQoBNA+ZzCO/Uw
+	 DtxvJYHlQ9dRr3RtiN+rrGdgvv6q7ZFvOl2lqR/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
+	Chao Yu <chao@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 258/379] filemap: add filemap_get_folios_tag()
-Date: Wed, 15 Nov 2023 14:25:33 -0500
-Message-ID: <20231115192700.409284152@linuxfoundation.org>
+Subject: [PATCH 6.1 259/379] f2fs: convert f2fs_write_cache_pages() to use filemap_get_folios_tag()
+Date: Wed, 15 Nov 2023 14:25:34 -0500
+Message-ID: <20231115192700.471391699@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -45,107 +45,219 @@ Content-Transfer-Encoding: 8bit
 
 From: Vishal Moola (Oracle) <vishal.moola@gmail.com>
 
-[ Upstream commit 247f9e1feef4e57911510c8f82348efb4491ea0e ]
+[ Upstream commit 1cd98ee747cff120ee9b93988ddb7315d8d8f8e7 ]
 
-This is the equivalent of find_get_pages_range_tag(), except for folios
-instead of pages.
+Convert the function to use a folio_batch instead of pagevec.  This is in
+preparation for the removal of find_get_pages_range_tag().
 
-One noteable difference is filemap_get_folios_tag() does not take in a
-maximum pages argument.  It instead tries to fill a folio batch and stops
-either once full (15 folios) or reaching the end of the search range.
+Also modified f2fs_all_cluster_page_ready to take in a folio_batch instead
+of pagevec.  This does NOT support large folios.  The function currently
+only utilizes folios of size 1 so this shouldn't cause any issues right
+now.
 
-The new function supports large folios, the initial function did not since
-all callers don't use large folios.
+This version of the patch limits the number of pages fetched to
+F2FS_ONSTACK_PAGES.  If that ever happens, update the start index here
+since filemap_get_folios_tag() updates the index to be after the last
+found folio, not necessarily the last used page.
 
-Link: https://lkml.kernel.org/r/20230104211448.4804-3-vishal.moola@gmail.com
+Link: https://lkml.kernel.org/r/20230104211448.4804-15-vishal.moola@gmail.com
 Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Reviewed-by: Matthew Wilcow (Oracle) <willy@infradead.org>
+Acked-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: c5d3f9b7649a ("f2fs: compress: fix deadloop in f2fs_write_cache_pages()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pagemap.h |  2 ++
- mm/filemap.c            | 54 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 56 insertions(+)
+ fs/f2fs/data.c | 84 ++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 58 insertions(+), 26 deletions(-)
 
-diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
-index bbccb40442224..03307b72de6c6 100644
---- a/include/linux/pagemap.h
-+++ b/include/linux/pagemap.h
-@@ -720,6 +720,8 @@ unsigned filemap_get_folios(struct address_space *mapping, pgoff_t *start,
- 		pgoff_t end, struct folio_batch *fbatch);
- unsigned filemap_get_folios_contig(struct address_space *mapping,
- 		pgoff_t *start, pgoff_t end, struct folio_batch *fbatch);
-+unsigned filemap_get_folios_tag(struct address_space *mapping, pgoff_t *start,
-+		pgoff_t end, xa_mark_t tag, struct folio_batch *fbatch);
- unsigned find_get_pages_range_tag(struct address_space *mapping, pgoff_t *index,
- 			pgoff_t end, xa_mark_t tag, unsigned int nr_pages,
- 			struct page **pages);
-diff --git a/mm/filemap.c b/mm/filemap.c
-index 322aea78058a0..2d930470aacaa 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -2262,6 +2262,60 @@ unsigned filemap_get_folios_contig(struct address_space *mapping,
- }
- EXPORT_SYMBOL(filemap_get_folios_contig);
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index a982f91b71eb2..f4d3b3c6f6da7 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2951,6 +2951,7 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
+ 	int ret = 0;
+ 	int done = 0, retry = 0;
+ 	struct page *pages[F2FS_ONSTACK_PAGES];
++	struct folio_batch fbatch;
+ 	struct f2fs_sb_info *sbi = F2FS_M_SB(mapping);
+ 	struct bio *bio = NULL;
+ 	sector_t last_block;
+@@ -2971,6 +2972,7 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
+ 		.private = NULL,
+ 	};
+ #endif
++	int nr_folios, p, idx;
+ 	int nr_pages;
+ 	pgoff_t index;
+ 	pgoff_t end;		/* Inclusive */
+@@ -2981,6 +2983,8 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
+ 	int submitted = 0;
+ 	int i;
  
-+/**
-+ * filemap_get_folios_tag - Get a batch of folios matching @tag
-+ * @mapping:    The address_space to search
-+ * @start:      The starting page index
-+ * @end:        The final page index (inclusive)
-+ * @tag:        The tag index
-+ * @fbatch:     The batch to fill
-+ *
-+ * Same as filemap_get_folios(), but only returning folios tagged with @tag.
-+ *
-+ * Return: The number of folios found.
-+ * Also update @start to index the next folio for traversal.
-+ */
-+unsigned filemap_get_folios_tag(struct address_space *mapping, pgoff_t *start,
-+			pgoff_t end, xa_mark_t tag, struct folio_batch *fbatch)
-+{
-+	XA_STATE(xas, &mapping->i_pages, *start);
-+	struct folio *folio;
++	folio_batch_init(&fbatch);
 +
-+	rcu_read_lock();
-+	while ((folio = find_get_entry(&xas, end, tag)) != NULL) {
-+		/*
-+		 * Shadow entries should never be tagged, but this iteration
-+		 * is lockless so there is a window for page reclaim to evict
-+		 * a page we saw tagged. Skip over it.
-+		 */
-+		if (xa_is_value(folio))
-+			continue;
-+		if (!folio_batch_add(fbatch, folio)) {
-+			unsigned long nr = folio_nr_pages(folio);
-+
-+			if (folio_test_hugetlb(folio))
-+				nr = 1;
-+			*start = folio->index + nr;
-+			goto out;
+ 	if (get_dirty_pages(mapping->host) <=
+ 				SM_I(F2FS_M_SB(mapping))->min_hot_blocks)
+ 		set_inode_flag(mapping->host, FI_HOT_DATA);
+@@ -3006,13 +3010,38 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
+ 		tag_pages_for_writeback(mapping, index, end);
+ 	done_index = index;
+ 	while (!done && !retry && (index <= end)) {
+-		nr_pages = find_get_pages_range_tag(mapping, &index, end,
+-				tag, F2FS_ONSTACK_PAGES, pages);
+-		if (nr_pages == 0)
++		nr_pages = 0;
++again:
++		nr_folios = filemap_get_folios_tag(mapping, &index, end,
++				tag, &fbatch);
++		if (nr_folios == 0) {
++			if (nr_pages)
++				goto write;
+ 			break;
 +		}
-+	}
-+	/*
-+	 * We come here when there is no page beyond @end. We take care to not
-+	 * overflow the index @start as it confuses some of the callers. This
-+	 * breaks the iteration when there is a page at index -1 but that is
-+	 * already broke anyway.
-+	 */
-+	if (end == (pgoff_t)-1)
-+		*start = (pgoff_t)-1;
-+	else
-+		*start = end + 1;
-+out:
-+	rcu_read_unlock();
+ 
++		for (i = 0; i < nr_folios; i++) {
++			struct folio *folio = fbatch.folios[i];
 +
-+	return folio_batch_count(fbatch);
-+}
-+EXPORT_SYMBOL(filemap_get_folios_tag);
-+
- /**
-  * find_get_pages_range_tag - Find and return head pages matching @tag.
-  * @mapping:	the address_space to search
++			idx = 0;
++			p = folio_nr_pages(folio);
++add_more:
++			pages[nr_pages] = folio_page(folio, idx);
++			folio_get(folio);
++			if (++nr_pages == F2FS_ONSTACK_PAGES) {
++				index = folio->index + idx + 1;
++				folio_batch_release(&fbatch);
++				goto write;
++			}
++			if (++idx < p)
++				goto add_more;
++		}
++		folio_batch_release(&fbatch);
++		goto again;
++write:
+ 		for (i = 0; i < nr_pages; i++) {
+ 			struct page *page = pages[i];
++			struct folio *folio = page_folio(page);
+ 			bool need_readd;
+ readd:
+ 			need_readd = false;
+@@ -3029,7 +3058,7 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
+ 				}
+ 
+ 				if (!f2fs_cluster_can_merge_page(&cc,
+-								page->index)) {
++								folio->index)) {
+ 					ret = f2fs_write_multi_pages(&cc,
+ 						&submitted, wbc, io_type);
+ 					if (!ret)
+@@ -3038,27 +3067,28 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
+ 				}
+ 
+ 				if (unlikely(f2fs_cp_error(sbi)))
+-					goto lock_page;
++					goto lock_folio;
+ 
+ 				if (!f2fs_cluster_is_empty(&cc))
+-					goto lock_page;
++					goto lock_folio;
+ 
+ 				if (f2fs_all_cluster_page_ready(&cc,
+ 					pages, i, nr_pages, true))
+-					goto lock_page;
++					goto lock_folio;
+ 
+ 				ret2 = f2fs_prepare_compress_overwrite(
+ 							inode, &pagep,
+-							page->index, &fsdata);
++							folio->index, &fsdata);
+ 				if (ret2 < 0) {
+ 					ret = ret2;
+ 					done = 1;
+ 					break;
+ 				} else if (ret2 &&
+ 					(!f2fs_compress_write_end(inode,
+-						fsdata, page->index, 1) ||
++						fsdata, folio->index, 1) ||
+ 					 !f2fs_all_cluster_page_ready(&cc,
+-						pages, i, nr_pages, false))) {
++						pages, i, nr_pages,
++						false))) {
+ 					retry = 1;
+ 					break;
+ 				}
+@@ -3071,46 +3101,47 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
+ 				break;
+ 			}
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+-lock_page:
++lock_folio:
+ #endif
+-			done_index = page->index;
++			done_index = folio->index;
+ retry_write:
+-			lock_page(page);
++			folio_lock(folio);
+ 
+-			if (unlikely(page->mapping != mapping)) {
++			if (unlikely(folio->mapping != mapping)) {
+ continue_unlock:
+-				unlock_page(page);
++				folio_unlock(folio);
+ 				continue;
+ 			}
+ 
+-			if (!PageDirty(page)) {
++			if (!folio_test_dirty(folio)) {
+ 				/* someone wrote it for us */
+ 				goto continue_unlock;
+ 			}
+ 
+-			if (PageWriteback(page)) {
++			if (folio_test_writeback(folio)) {
+ 				if (wbc->sync_mode != WB_SYNC_NONE)
+-					f2fs_wait_on_page_writeback(page,
++					f2fs_wait_on_page_writeback(
++							&folio->page,
+ 							DATA, true, true);
+ 				else
+ 					goto continue_unlock;
+ 			}
+ 
+-			if (!clear_page_dirty_for_io(page))
++			if (!folio_clear_dirty_for_io(folio))
+ 				goto continue_unlock;
+ 
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+ 			if (f2fs_compressed_file(inode)) {
+-				get_page(page);
+-				f2fs_compress_ctx_add_page(&cc, page);
++				folio_get(folio);
++				f2fs_compress_ctx_add_page(&cc, &folio->page);
+ 				continue;
+ 			}
+ #endif
+-			ret = f2fs_write_single_data_page(page, &submitted,
+-					&bio, &last_block, wbc, io_type,
+-					0, true);
++			ret = f2fs_write_single_data_page(&folio->page,
++					&submitted, &bio, &last_block,
++					wbc, io_type, 0, true);
+ 			if (ret == AOP_WRITEPAGE_ACTIVATE)
+-				unlock_page(page);
++				folio_unlock(folio);
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+ result:
+ #endif
+@@ -3134,7 +3165,8 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
+ 					}
+ 					goto next;
+ 				}
+-				done_index = page->index + 1;
++				done_index = folio->index +
++					folio_nr_pages(folio);
+ 				done = 1;
+ 				break;
+ 			}
 -- 
 2.42.0
 
