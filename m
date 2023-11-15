@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C6A3BB2C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F80C3BB2C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXsXEAk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35321C433CA;
-	Wed, 15 Nov 2023 19:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pokIQFGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61DBC433C7;
+	Wed, 15 Nov 2023 19:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078054;
-	bh=vZ3bmXdi7Az/wh2N+GSAbZ7VO6zpPPldVFxEE4Cw5Z4=;
+	s=korg; t=1700078056;
+	bh=zkv0j8YYhZdgyXfexfCjhlxaKP7WzDxygYKgsgVARrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PXsXEAk3fL6T2Kw9VTsQoaFZyjd1hgLeMUSNJpTmIVo3IINkROIReDuUDu048FFZz
-	 0Rydz3wbpHxUkK+2VHdpcKt3kWukmMSP2sbgqIPcy/fCEpfcxFet3qJzUjH6JVC+so
-	 CLMc+yg0wLNz1wguNczIC7zolJ2hynIdeqzuipb8=
+	b=pokIQFGnz+qaDAeSBdak9AYGwX1hZHQyWQEiJqu64GIhb1EdrA+8eSfIfXO9wEKOM
+	 SaNKgJ1pjuCV91s3gTGjzxWosKn3V2a2hLC0E47+6BbVzSR9C/SNV5KlrgFPk79gS5
+	 iHuqVaM5wqEHA1PbRlox09R2UDbmhAO9Eqmc4c3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Olivier Souloumiac <olivier.souloumiac@silabs.com>,
+	Alexandr Suslenko <suslenko.o@ajax.systems>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
+	Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/379] PM / devfreq: rockchip-dfi: Make pmu regmap mandatory
-Date: Wed, 15 Nov 2023 14:22:12 -0500
-Message-ID: <20231115192648.529267001@linuxfoundation.org>
+Subject: [PATCH 6.1 058/379] wifi: wfx: fix case where rates are out of order
+Date: Wed, 15 Nov 2023 14:22:13 -0500
+Message-ID: <20231115192648.584450101@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -37,57 +39,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>
 
-[ Upstream commit 1e0731c05c985deb68a97fa44c1adcd3305dda90 ]
+[ Upstream commit ea2274ab0b18549dbf0e755e41d8c5e8b5232dc3 ]
 
-As a matter of fact the regmap_pmu already is mandatory because
-it is used unconditionally in the driver. Bail out gracefully in
-probe() rather than crashing later.
+When frames are sent over the air, the device always applies the data
+rates in descending order. The driver assumed Minstrel also provided
+rate in descending order.
 
-Link: https://lore.kernel.org/lkml/20230704093242.583575-2-s.hauer@pengutronix.de/
-Fixes: b9d1262bca0af ("PM / devfreq: event: support rockchip dfi controller")
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+However, in some cases, Minstrel can a choose a fallback rate greater
+than the primary rate. In this case, the two rates was inverted, the
+device try highest rate first and we get many retries.
+
+Since the device always applies rates in descending order, the
+workaround is to drop the rate when it higher than its predecessor in
+the rate list. Thus [ 4, 5, 3 ] becomes [ 4, 3 ].
+
+This patch has been tested in isolated room with a series of
+attenuators. Here are the Minstrel statistics with 80dBm of attenuation:
+
+  Without the fix:
+
+                  best    ____________rate__________    ____statistics___    _____last____    ______sum-of________
+    mode guard #  rate   [name   idx airtime  max_tp]  [avg(tp) avg(prob)]  [retry|suc|att]  [#success | #attempts]
+    HT20  LGI  1       S  MCS0     0    1477     5.6       5.2      82.7       3     0 0             3   4
+    HT20  LGI  1          MCS1     1     738    10.6       0.0       0.0       0     0 0             0   1
+    HT20  LGI  1     D    MCS2     2     492    14.9      13.5      81.5       5     0 0             5   9
+    HT20  LGI  1    C     MCS3     3     369    18.8      17.6      84.3       5     0 0            76   96
+    HT20  LGI  1  A   P   MCS4     4     246    25.4      22.4      79.5       5     0 0         11268   14026
+    HT20  LGI  1   B   S  MCS5     5     185    30.7      19.7      57.7       5     8 9          3918   9793
+    HT20  LGI  1          MCS6     6     164    33.0       0.0       0.0       5     0 0             6   102
+    HT20  LGI  1          MCS7     7     148    35.1       0.0       0.0       0     0 0             0   44
+
+  With the fix:
+
+                  best    ____________rate__________    ____statistics___    _____last____    ______sum-of________
+    mode guard #  rate   [name   idx airtime  max_tp]  [avg(tp) avg(prob)]  [retry|suc|att]  [#success | #attempts]
+    HT20  LGI  1       S  MCS0     0    1477     5.6       1.8      28.6       1     0 0             1   5
+    HT20  LGI  1     DP   MCS1     1     738    10.6       9.7      82.6       4     0 0            14   34
+    HT20  LGI  1          MCS2     2     492    14.9       9.2      55.4       5     0 0            52   77
+    HT20  LGI  1   B   S  MCS3     3     369    18.8      15.6      74.9       5     1 1           417   554
+    HT20  LGI  1  A       MCS4     4     246    25.4      16.7      59.2       5     1 1         13812   17951
+    HT20  LGI  1    C  S  MCS5     5     185    30.7      14.0      41.0       5     1 5            57   640
+    HT20  LGI  1          MCS6     6     164    33.0       0.0       0.0       0     0 1             0   48
+    HT20  LGI  1       S  MCS7     7     148    35.1       0.0       0.0       0     0 0             0   36
+
+We can notice the device try now to send with lower rates (and high
+success rates). At the end, we measured 20-25% better throughput with
+this patch.
+
+Fixes: 9bca45f3d692 ("staging: wfx: allow to send 802.11 frames")
+Tested-by: Olivier Souloumiac <olivier.souloumiac@silabs.com>
+Tested-by: Alexandr Suslenko <suslenko.o@ajax.systems>
+Reported-by: Alexandr Suslenko <suslenko.o@ajax.systems>
+Co-developed-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
+Signed-off-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
+Signed-off-by: Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231004123039.157112-1-jerome.pouiller@silabs.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/devfreq/event/rockchip-dfi.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/wireless/silabs/wfx/data_tx.c | 71 +++++++++--------------
+ 1 file changed, 29 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/devfreq/event/rockchip-dfi.c b/drivers/devfreq/event/rockchip-dfi.c
-index 39ac069cabc75..74893c06aa087 100644
---- a/drivers/devfreq/event/rockchip-dfi.c
-+++ b/drivers/devfreq/event/rockchip-dfi.c
-@@ -193,14 +193,15 @@ static int rockchip_dfi_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(data->clk),
- 				     "Cannot get the clk pclk_ddr_mon\n");
+diff --git a/drivers/net/wireless/silabs/wfx/data_tx.c b/drivers/net/wireless/silabs/wfx/data_tx.c
+index 6a5e52a96d183..caa22226b01bc 100644
+--- a/drivers/net/wireless/silabs/wfx/data_tx.c
++++ b/drivers/net/wireless/silabs/wfx/data_tx.c
+@@ -226,53 +226,40 @@ static u8 wfx_tx_get_link_id(struct wfx_vif *wvif, struct ieee80211_sta *sta,
  
--	/* try to find the optional reference to the pmu syscon */
- 	node = of_parse_phandle(np, "rockchip,pmu", 0);
--	if (node) {
--		data->regmap_pmu = syscon_node_to_regmap(node);
--		of_node_put(node);
--		if (IS_ERR(data->regmap_pmu))
--			return PTR_ERR(data->regmap_pmu);
+ static void wfx_tx_fixup_rates(struct ieee80211_tx_rate *rates)
+ {
+-	int i;
+-	bool finished;
++	bool has_rate0 = false;
++	int i, j;
+ 
+-	/* Firmware is not able to mix rates with different flags */
+-	for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
+-		if (rates[0].flags & IEEE80211_TX_RC_SHORT_GI)
+-			rates[i].flags |= IEEE80211_TX_RC_SHORT_GI;
+-		if (!(rates[0].flags & IEEE80211_TX_RC_SHORT_GI))
++	for (i = 1, j = 1; j < IEEE80211_TX_MAX_RATES; j++) {
++		if (rates[j].idx == -1)
++			break;
++		/* The device use the rates in descending order, whatever the request from minstrel.
++		 * We have to trade off here. Most important is to respect the primary rate
++		 * requested by minstrel. So, we drops the entries with rate higher than the
++		 * previous.
++		 */
++		if (rates[j].idx >= rates[i - 1].idx) {
++			rates[i - 1].count += rates[j].count;
++			rates[i - 1].count = min_t(u16, 15, rates[i - 1].count);
++		} else {
++			memcpy(rates + i, rates + j, sizeof(rates[i]));
++			if (rates[i].idx == 0)
++				has_rate0 = true;
++			/* The device apply Short GI only on the first rate */
+ 			rates[i].flags &= ~IEEE80211_TX_RC_SHORT_GI;
+-		if (!(rates[0].flags & IEEE80211_TX_RC_USE_RTS_CTS))
+-			rates[i].flags &= ~IEEE80211_TX_RC_USE_RTS_CTS;
 -	}
-+	if (!node)
-+		return dev_err_probe(&pdev->dev, -ENODEV, "Can't find pmu_grf registers\n");
-+
-+	data->regmap_pmu = syscon_node_to_regmap(node);
-+	of_node_put(node);
-+	if (IS_ERR(data->regmap_pmu))
-+		return PTR_ERR(data->regmap_pmu);
-+
- 	data->dev = dev;
+-
+-	/* Sort rates and remove duplicates */
+-	do {
+-		finished = true;
+-		for (i = 0; i < IEEE80211_TX_MAX_RATES - 1; i++) {
+-			if (rates[i + 1].idx == rates[i].idx &&
+-			    rates[i].idx != -1) {
+-				rates[i].count += rates[i + 1].count;
+-				if (rates[i].count > 15)
+-					rates[i].count = 15;
+-				rates[i + 1].idx = -1;
+-				rates[i + 1].count = 0;
+-
+-				finished = false;
+-			}
+-			if (rates[i + 1].idx > rates[i].idx) {
+-				swap(rates[i + 1], rates[i]);
+-				finished = false;
+-			}
++			i++;
+ 		}
+-	} while (!finished);
++	}
+ 	/* Ensure that MCS0 or 1Mbps is present at the end of the retry list */
+-	for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
+-		if (rates[i].idx == 0)
+-			break;
+-		if (rates[i].idx == -1) {
+-			rates[i].idx = 0;
+-			rates[i].count = 8; /* == hw->max_rate_tries */
+-			rates[i].flags = rates[i - 1].flags & IEEE80211_TX_RC_MCS;
+-			break;
+-		}
++	if (!has_rate0 && i < IEEE80211_TX_MAX_RATES) {
++		rates[i].idx = 0;
++		rates[i].count = 8; /* == hw->max_rate_tries */
++		rates[i].flags = rates[0].flags & IEEE80211_TX_RC_MCS;
++		i++;
++	}
++	for (; i < IEEE80211_TX_MAX_RATES; i++) {
++		memset(rates + i, 0, sizeof(rates[i]));
++		rates[i].idx = -1;
+ 	}
+-	/* All retries use long GI */
+-	for (i = 1; i < IEEE80211_TX_MAX_RATES; i++)
+-		rates[i].flags &= ~IEEE80211_TX_RC_SHORT_GI;
+ }
  
- 	desc = devm_kzalloc(dev, sizeof(*desc), GFP_KERNEL);
+ static u8 wfx_tx_get_retry_policy_id(struct wfx_vif *wvif, struct ieee80211_tx_info *tx_info)
 -- 
 2.42.0
 
