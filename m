@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085C345BF7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F7645BF7
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKKjcZKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FF2C433C8;
-	Wed, 15 Nov 2023 22:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdNgUQEQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35609C433C9;
+	Wed, 15 Nov 2023 22:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085782;
-	bh=ZiX2DXrROB4K8LHkOIRgJKbvjRnrUOYdn1+SL1oaQeA=;
+	s=korg; t=1700085784;
+	bh=u2NR8uqh30fEi2hgcvFfQZX449f91iv66zlwxSJDdMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IKKjcZKYw7b8EOAlJ3TpIpJW55D40E4H+9mg97ZzJQYu5FQJAE2rmemBukqTFoA45
-	 Zdyqe482DUos1NMKLi4FTisievj36xvLa6cHNWOsm+hzyPzBUon/qZNEJrA7AEStdK
-	 OgSrw53kTqQNs5hvLECPSKBhN5QSGu4RJOyCzhg0=
+	b=VdNgUQEQhiOTtT2Xnyy+EJ6dscVb+tzHS4HPy4deG8qn0kMheoYDU6KZbwcWeTIeW
+	 z/z3muZm0M1e4h+AOey9txNbDHYdqa8SiNB3M9Ra5q4ZTgc4jRyYfHUfFrgVI2nwzD
+	 KwSq/nV6MPFjW/ow/rQy542wxNneiwWERGIyrgMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Timur I. Davletshin" <timur.davletshin@gmail.com>,
-	Jo-Philipp Wich <jo@mein.io>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 051/119] hwrng: geode - fix accessing registers
-Date: Wed, 15 Nov 2023 17:00:41 -0500
-Message-ID: <20231115220134.213404889@linuxfoundation.org>
+Subject: [PATCH 5.4 034/119] clk: mediatek: clk-mt2701: Add check for mtk_alloc_clk_data
+Date: Wed, 15 Nov 2023 17:00:24 -0500
+Message-ID: <20231115220133.683476839@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -44,56 +44,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 464bd8ec2f06707f3773676a1bd2c64832a3c805 ]
+[ Upstream commit 0d6e24b422a2166a9297a8286ff2e6ab9a5e8cd3 ]
 
-When the membase and pci_dev pointer were moved to a new struct in priv,
-the actual membase users were left untouched, and they started reading
-out arbitrary memory behind the struct instead of registers. This
-unfortunately turned the RNG into a constant number generator, depending
-on the content of what was at that offset.
+Add the check for the return value of mtk_alloc_clk_data() in order to
+avoid NULL pointer dereference.
 
-To fix this, update geode_rng_data_{read,present}() to also get the
-membase via amd_geode_priv, and properly read from the right addresses
-again.
-
-Fixes: 9f6ec8dc574e ("hwrng: geode - Fix PCI device refcount leak")
-Reported-by: Timur I. Davletshin <timur.davletshin@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217882
-Tested-by: Timur I. Davletshin <timur.davletshin@gmail.com>
-Suggested-by: Jo-Philipp Wich <jo@mein.io>
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: e9862118272a ("clk: mediatek: Add MT2701 clock support")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20230901024658.23405-1-jiasheng@iscas.ac.cn
+Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/geode-rng.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/mediatek/clk-mt2701.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/char/hw_random/geode-rng.c b/drivers/char/hw_random/geode-rng.c
-index 207272979f233..2f8289865ec81 100644
---- a/drivers/char/hw_random/geode-rng.c
-+++ b/drivers/char/hw_random/geode-rng.c
-@@ -58,7 +58,8 @@ struct amd_geode_priv {
+diff --git a/drivers/clk/mediatek/clk-mt2701.c b/drivers/clk/mediatek/clk-mt2701.c
+index 695be0f774270..c67cd73aca171 100644
+--- a/drivers/clk/mediatek/clk-mt2701.c
++++ b/drivers/clk/mediatek/clk-mt2701.c
+@@ -675,6 +675,8 @@ static int mtk_topckgen_init(struct platform_device *pdev)
+ 		return PTR_ERR(base);
  
- static int geode_rng_data_read(struct hwrng *rng, u32 *data)
- {
--	void __iomem *mem = (void __iomem *)rng->priv;
-+	struct amd_geode_priv *priv = (struct amd_geode_priv *)rng->priv;
-+	void __iomem *mem = priv->membase;
+ 	clk_data = mtk_alloc_clk_data(CLK_TOP_NR);
++	if (!clk_data)
++		return -ENOMEM;
  
- 	*data = readl(mem + GEODE_RNG_DATA_REG);
+ 	mtk_clk_register_fixed_clks(top_fixed_clks, ARRAY_SIZE(top_fixed_clks),
+ 								clk_data);
+@@ -742,6 +744,8 @@ static void __init mtk_infrasys_init_early(struct device_node *node)
  
-@@ -67,7 +68,8 @@ static int geode_rng_data_read(struct hwrng *rng, u32 *data)
+ 	if (!infra_clk_data) {
+ 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
++		if (!infra_clk_data)
++			return;
  
- static int geode_rng_data_present(struct hwrng *rng, int wait)
- {
--	void __iomem *mem = (void __iomem *)rng->priv;
-+	struct amd_geode_priv *priv = (struct amd_geode_priv *)rng->priv;
-+	void __iomem *mem = priv->membase;
- 	int data, i;
+ 		for (i = 0; i < CLK_INFRA_NR; i++)
+ 			infra_clk_data->clks[i] = ERR_PTR(-EPROBE_DEFER);
+@@ -768,6 +772,8 @@ static int mtk_infrasys_init(struct platform_device *pdev)
  
- 	for (i = 0; i < 20; i++) {
+ 	if (!infra_clk_data) {
+ 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
++		if (!infra_clk_data)
++			return -ENOMEM;
+ 	} else {
+ 		for (i = 0; i < CLK_INFRA_NR; i++) {
+ 			if (infra_clk_data->clks[i] == ERR_PTR(-EPROBE_DEFER))
+@@ -896,6 +902,8 @@ static int mtk_pericfg_init(struct platform_device *pdev)
+ 		return PTR_ERR(base);
+ 
+ 	clk_data = mtk_alloc_clk_data(CLK_PERI_NR);
++	if (!clk_data)
++		return -ENOMEM;
+ 
+ 	mtk_clk_register_gates(node, peri_clks, ARRAY_SIZE(peri_clks),
+ 						clk_data);
 -- 
 2.42.0
 
