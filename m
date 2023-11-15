@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99059433AE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE57433B4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5zT8qsy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B395C433C7;
-	Wed, 15 Nov 2023 19:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="towghQi/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A3BC433CA;
+	Wed, 15 Nov 2023 19:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077090;
-	bh=1libU7SG4Tz28OFmqmPtt0ZAAIHyLF4e+Z3URz5VuaA=;
+	s=korg; t=1700077092;
+	bh=MRZPBm9SnFwiareoiMb0wYC7ra5XJuhEBt4ikAa3Gg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5zT8qsyZCItdMQh7Tk9xCRYe66qFlC7Det1F8D8XpLW3QrU4qe6UcbJpRNxgylja
-	 +0oVuJGp8EsAlvxCCYX6CLbwDx4m8FO1Fok/XQcFaGm9zY86YEw1r6JqL2LAdQpoa1
-	 BiwXbjqHuYp+0Gst8X4CXb7pCgwFvhrZ5XRqInIw=
+	b=towghQi/0hWM6Uk35/mDk/UZsyIFCPjf8IN3nwHGL3bQ8wDGHW5ymtWb7Fhiximop
+	 OUmbzCeBMi1beYcbPg9uOoIBobaIPSTB5dyR8OBPvLHVGB40HR5Q8yaxfjOq8SB04O
+	 gYSYwfGaLbDhzf2aUn17T0oF64Sk6P4uE9gIYk0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anuj Gupta <anuj20.g@samsung.com>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 517/550] nvme: fix error-handling for io_uring nvme-passthrough
-Date: Wed, 15 Nov 2023 14:18:21 -0500
-Message-ID: <20231115191636.776499266@linuxfoundation.org>
+Subject: [PATCH 6.6 121/603] wifi: rtw88: Remove duplicate NULL check before calling usb_kill/free_urb()
+Date: Wed, 15 Nov 2023 14:11:06 -0500
+Message-ID: <20231115191621.608100422@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -41,48 +40,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anuj Gupta <anuj20.g@samsung.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 1147dd0503564fa0e03489a039f9e0c748a03db4 ]
+[ Upstream commit de8dd096949820ce5656d41ce409a67603e79327 ]
 
-Driver may return an error before submitting the command to the device.
-Ensure that such error is propagated up.
+Both usb_kill_urb() and usb_free_urb() do the NULL check itself, so there
+is no need to duplicate it prior to calling.
 
-Fixes: 456cba386e94 ("nvme: wire-up uring-cmd support for io-passthru on char-device.")
-Signed-off-by: Anuj Gupta <anuj20.g@samsung.com>
-Signed-off-by: Kanchan Joshi <joshi.k@samsung.com>
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: a82dfd33d123 ("wifi: rtw88: Add common USB chip support")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Acked-by: Sascha Hauer <s.hauer@pengutronix.de>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231008025852.1239450-1-ruanjinjie@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/ioctl.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw88/usb.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
-index 09a223642bc12..c4995d92882b8 100644
---- a/drivers/nvme/host/ioctl.c
-+++ b/drivers/nvme/host/ioctl.c
-@@ -511,10 +511,13 @@ static enum rq_end_io_ret nvme_uring_cmd_end_io(struct request *req,
- 	struct nvme_uring_cmd_pdu *pdu = nvme_uring_cmd_pdu(ioucmd);
+diff --git a/drivers/net/wireless/realtek/rtw88/usb.c b/drivers/net/wireless/realtek/rtw88/usb.c
+index d879d7e3dc81f..e6ab1ac6d7093 100644
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -611,8 +611,7 @@ static void rtw_usb_cancel_rx_bufs(struct rtw_usb *rtwusb)
  
- 	req->bio = pdu->bio;
--	if (nvme_req(req)->flags & NVME_REQ_CANCELLED)
-+	if (nvme_req(req)->flags & NVME_REQ_CANCELLED) {
- 		pdu->nvme_status = -EINTR;
--	else
-+	} else {
- 		pdu->nvme_status = nvme_req(req)->status;
-+		if (!pdu->nvme_status)
-+			pdu->nvme_status = blk_status_to_errno(err);
-+	}
- 	pdu->u.result = le64_to_cpu(nvme_req(req)->result.u64);
+ 	for (i = 0; i < RTW_USB_RXCB_NUM; i++) {
+ 		rxcb = &rtwusb->rx_cb[i];
+-		if (rxcb->rx_urb)
+-			usb_kill_urb(rxcb->rx_urb);
++		usb_kill_urb(rxcb->rx_urb);
+ 	}
+ }
  
- 	/*
+@@ -623,10 +622,8 @@ static void rtw_usb_free_rx_bufs(struct rtw_usb *rtwusb)
+ 
+ 	for (i = 0; i < RTW_USB_RXCB_NUM; i++) {
+ 		rxcb = &rtwusb->rx_cb[i];
+-		if (rxcb->rx_urb) {
+-			usb_kill_urb(rxcb->rx_urb);
+-			usb_free_urb(rxcb->rx_urb);
+-		}
++		usb_kill_urb(rxcb->rx_urb);
++		usb_free_urb(rxcb->rx_urb);
+ 	}
+ }
+ 
 -- 
 2.42.0
 
