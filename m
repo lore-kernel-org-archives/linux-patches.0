@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062D6182C1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EBF182C1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSDxEXWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB3FC433C9;
-	Wed, 15 Nov 2023 20:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guA4+u8H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AFACC433C9;
+	Wed, 15 Nov 2023 20:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078668;
-	bh=TgJDeAWt9okhf8AsQ/iNp4W1iIUVT6KtnZgs0uZMBPs=;
+	s=korg; t=1700078670;
+	bh=RP1o+MljrlVgjeCaixs63fz6KqlO9nnrzJVRpkG3oaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SSDxEXWqMnc8aMfQFgO3mMN9a0fT/2TzZgqvG01FZ7RzHLLiwlwzIR5t8xvFz2VDU
-	 rB19cY+mOIA506ZXnmxeI9vqY/GKNtGG1/EeKZpnq5VGRUHPVorEex8kPLhM1WzOH7
-	 OcRqoKuPB3z9ixIZIbRiyjKJv53DPq05IKVsGyt4=
+	b=guA4+u8Ha9Jwu+d+LV8IBW/eJH+S4GMMp6v+8BaiNlE2gKDjGIiYvchcig4nIl9e5
+	 WYoZRA4yasd28ady/S6P++B6UkB3jwRA6lHaUtNMVvopnbRQjbBIEvlH2zoX9dnWIj
+	 fdlQjOJIm0vKEN3ZrLm+KL501IfL2AfXvHdgKKSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	syzbot+a8c7be6dee0de1b669cc@syzkaller.appspotmail.com,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 36/45] pwm: brcmstb: Utilize appropriate clock APIs in suspend/resume
-Date: Wed, 15 Nov 2023 14:33:13 -0500
-Message-ID: <20231115191421.718061965@linuxfoundation.org>
+Subject: [PATCH 4.14 37/45] llc: verify mac len before reading mac header
+Date: Wed, 15 Nov 2023 14:33:14 -0500
+Message-ID: <20231115191421.774444290@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191419.641552204@linuxfoundation.org>
 References: <20231115191419.641552204@linuxfoundation.org>
@@ -37,53 +37,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit e9bc4411548aaa738905d37851a0146c16b3bb21 ]
+[ Upstream commit 7b3ba18703a63f6fd487183b9262b08e5632da1b ]
 
-The suspend/resume functions currently utilize
-clk_disable()/clk_enable() respectively which may be no-ops with certain
-clock providers such as SCMI. Fix this to use clk_disable_unprepare()
-and clk_prepare_enable() respectively as we should.
+LLC reads the mac header with eth_hdr without verifying that the skb
+has an Ethernet header.
 
-Fixes: 3a9f5957020f ("pwm: Add Broadcom BCM7038 PWM controller support")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Syzbot was able to enter llc_rcv on a tun device. Tun can insert
+packets without mac len and with user configurable skb->protocol
+(passing a tun_pi header when not configuring IFF_NO_PI).
+
+    BUG: KMSAN: uninit-value in llc_station_ac_send_test_r net/llc/llc_station.c:81 [inline]
+    BUG: KMSAN: uninit-value in llc_station_rcv+0x6fb/0x1290 net/llc/llc_station.c:111
+    llc_station_ac_send_test_r net/llc/llc_station.c:81 [inline]
+    llc_station_rcv+0x6fb/0x1290 net/llc/llc_station.c:111
+    llc_rcv+0xc5d/0x14a0 net/llc/llc_input.c:218
+    __netif_receive_skb_one_core net/core/dev.c:5523 [inline]
+    __netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5637
+    netif_receive_skb_internal net/core/dev.c:5723 [inline]
+    netif_receive_skb+0x58/0x660 net/core/dev.c:5782
+    tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1555
+    tun_get_user+0x54c5/0x69c0 drivers/net/tun.c:2002
+
+Add a mac_len test before all three eth_hdr(skb) calls under net/llc.
+
+There are further uses in include/net/llc_pdu.h. All these are
+protected by a test skb->protocol == ETH_P_802_2. Which does not
+protect against this tun scenario.
+
+But the mac_len test added in this patch in llc_fixup_skb will
+indirectly protect those too. That is called from llc_rcv before any
+other LLC code.
+
+It is tempting to just add a blanket mac_len check in llc_rcv, but
+not sure whether that could break valid LLC paths that do not assume
+an Ethernet header. 802.2 LLC may be used on top of non-802.3
+protocols in principle. The below referenced commit shows that used
+to, on top of Token Ring.
+
+At least one of the three eth_hdr uses goes back to before the start
+of git history. But the one that syzbot exercises is introduced in
+this commit. That commit is old enough (2008), that effectively all
+stable kernels should receive this.
+
+Fixes: f83f1768f833 ("[LLC]: skb allocation size for responses")
+Reported-by: syzbot+a8c7be6dee0de1b669cc@syzkaller.appspotmail.com
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20231025234251.3796495-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-brcmstb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/llc/llc_input.c   | 10 ++++++++--
+ net/llc/llc_s_ac.c    |  3 +++
+ net/llc/llc_station.c |  3 +++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-brcmstb.c b/drivers/pwm/pwm-brcmstb.c
-index 8063cffa1c960..5d7842a62d594 100644
---- a/drivers/pwm/pwm-brcmstb.c
-+++ b/drivers/pwm/pwm-brcmstb.c
-@@ -307,7 +307,7 @@ static int brcmstb_pwm_suspend(struct device *dev)
- {
- 	struct brcmstb_pwm *p = dev_get_drvdata(dev);
+diff --git a/net/llc/llc_input.c b/net/llc/llc_input.c
+index d5c6fb41be92e..0e9926c39d1dd 100644
+--- a/net/llc/llc_input.c
++++ b/net/llc/llc_input.c
+@@ -127,8 +127,14 @@ static inline int llc_fixup_skb(struct sk_buff *skb)
+ 	skb->transport_header += llc_len;
+ 	skb_pull(skb, llc_len);
+ 	if (skb->protocol == htons(ETH_P_802_2)) {
+-		__be16 pdulen = eth_hdr(skb)->h_proto;
+-		s32 data_size = ntohs(pdulen) - llc_len;
++		__be16 pdulen;
++		s32 data_size;
++
++		if (skb->mac_len < ETH_HLEN)
++			return 0;
++
++		pdulen = eth_hdr(skb)->h_proto;
++		data_size = ntohs(pdulen) - llc_len;
  
--	clk_disable(p->clk);
-+	clk_disable_unprepare(p->clk);
+ 		if (data_size < 0 ||
+ 		    !pskb_may_pull(skb, data_size))
+diff --git a/net/llc/llc_s_ac.c b/net/llc/llc_s_ac.c
+index 9fa3342c7a829..df26557a02448 100644
+--- a/net/llc/llc_s_ac.c
++++ b/net/llc/llc_s_ac.c
+@@ -153,6 +153,9 @@ int llc_sap_action_send_test_r(struct llc_sap *sap, struct sk_buff *skb)
+ 	int rc = 1;
+ 	u32 data_size;
  
- 	return 0;
- }
-@@ -316,7 +316,7 @@ static int brcmstb_pwm_resume(struct device *dev)
- {
- 	struct brcmstb_pwm *p = dev_get_drvdata(dev);
++	if (skb->mac_len < ETH_HLEN)
++		return 1;
++
+ 	llc_pdu_decode_sa(skb, mac_da);
+ 	llc_pdu_decode_da(skb, mac_sa);
+ 	llc_pdu_decode_ssap(skb, &dsap);
+diff --git a/net/llc/llc_station.c b/net/llc/llc_station.c
+index c29170e767a8c..64e2c67e16ba3 100644
+--- a/net/llc/llc_station.c
++++ b/net/llc/llc_station.c
+@@ -77,6 +77,9 @@ static int llc_station_ac_send_test_r(struct sk_buff *skb)
+ 	u32 data_size;
+ 	struct sk_buff *nskb;
  
--	clk_enable(p->clk);
-+	clk_prepare_enable(p->clk);
- 
- 	return 0;
- }
++	if (skb->mac_len < ETH_HLEN)
++		goto out;
++
+ 	/* The test request command is type U (llc_len = 3) */
+ 	data_size = ntohs(eth_hdr(skb)->h_proto) - 3;
+ 	nskb = llc_alloc_frame(NULL, skb->dev, LLC_PDU_TYPE_U, data_size);
 -- 
 2.42.0
 
