@@ -1,35 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C458381DC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A98D381DC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZLndVz2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E49CC433C8;
-	Wed, 15 Nov 2023 19:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUbdA9Nx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D281FC433C9;
+	Wed, 15 Nov 2023 19:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076921;
-	bh=guVRoEQMD75IbyjnJ1f/XPqWAdhUFoX2rzdZwiHVTJs=;
+	s=korg; t=1700076923;
+	bh=Z1gXX4IisZDWAO4QkV4Z9RdZNXG1KLy1aIH8xmvo3HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZLndVz2A/xXB0+wKJ1ay+Nri4MGwgqObnDnLSjE65/dzpxHl1rCcUF+c5N8jmVce
-	 D/FZzLM9SOQjBjJPuthyUAmQh1JUbzWcpyixxgI9dp7VBFGAQgSqXW+o1pHjlgEYM+
-	 MQUdZ5B6Q19bJ5i0fL+jcQKJTD8pMFNA5uNwqApQ=
+	b=pUbdA9Nx5LOrlrwL3MOB5Q87mesob4oP8onkWuXJ8AzwkpmW2a86SPfxcglFPblOc
+	 cB168EFdhCJ9LACjRz2lvKCxuLZMTjP+KPlWMIQLC29DC6Y/bTiMaqqtSTJGW7P7Wi
+	 +cLplY6LgH+EVQmfTTLhYmJYe61DbhfNzpjirSP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Caleb Biggers <caleb.biggers@intel.com>,
-	Perry Taylor <perry.taylor@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Leon Hwang <hffilwlqm@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 446/550] perf vendor events intel: Add broadwellde two metrics
-Date: Wed, 15 Nov 2023 14:17:10 -0500
-Message-ID: <20231115191631.727276816@linuxfoundation.org>
+Subject: [PATCH 6.6 050/603] bpf, x64: Fix tailcall infinite loop
+Date: Wed, 15 Nov 2023 14:09:55 -0500
+Message-ID: <20231115191616.618205764@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -41,62 +39,169 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Leon Hwang <hffilwlqm@gmail.com>
 
-[ Upstream commit 19a214bffdf7abb8d472895bb944d9c269ab1699 ]
+[ Upstream commit 2b5dcb31a19a2e0acd869b12c9db9b2d696ef544 ]
 
-Add tma_info_system_socket_clks and uncore_freq metrics that require a
-broadwellx style uncore event for UNC_CLOCK.
+>From commit ebf7d1f508a73871 ("bpf, x64: rework pro/epilogue and tailcall
+handling in JIT"), the tailcall on x64 works better than before.
 
-The associated converter script fix is in:
-https://github.com/intel/perfmon/pull/112
+>From commit e411901c0b775a3a ("bpf: allow for tailcalls in BPF subprograms
+for x64 JIT"), tailcall is able to run in BPF subprograms on x64.
 
-Fixes: 7d124303d620 ("perf vendor events intel: Update broadwell variant events/metrics")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Cc: Caleb Biggers <caleb.biggers@intel.com>
-Cc: Perry Taylor <perry.taylor@intel.com>
-Link: https://lore.kernel.org/r/20230926205948.1399594-2-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+>From commit 5b92a28aae4dd0f8 ("bpf: Support attaching tracing BPF program
+to other BPF programs"), BPF program is able to trace other BPF programs.
+
+How about combining them all together?
+
+1. FENTRY/FEXIT on a BPF subprogram.
+2. A tailcall runs in the BPF subprogram.
+3. The tailcall calls the subprogram's caller.
+
+As a result, a tailcall infinite loop comes up. And the loop would halt
+the machine.
+
+As we know, in tail call context, the tail_call_cnt propagates by stack
+and rax register between BPF subprograms. So do in trampolines.
+
+Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
+Fixes: e411901c0b77 ("bpf: allow for tailcalls in BPF subprograms for x64 JIT")
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Leon Hwang <hffilwlqm@gmail.com>
+Link: https://lore.kernel.org/r/20230912150442.2009-3-hffilwlqm@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arch/x86/broadwellde/bdwde-metrics.json          | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/x86/net/bpf_jit_comp.c | 28 ++++++++++++++++++++++------
+ include/linux/bpf.h         |  5 +++++
+ kernel/bpf/trampoline.c     |  4 ++--
+ kernel/bpf/verifier.c       |  3 +++
+ 4 files changed, 32 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/pmu-events/arch/x86/broadwellde/bdwde-metrics.json b/tools/perf/pmu-events/arch/x86/broadwellde/bdwde-metrics.json
-index d0ef46c9bb612..e1f55fcfa0d02 100644
---- a/tools/perf/pmu-events/arch/x86/broadwellde/bdwde-metrics.json
-+++ b/tools/perf/pmu-events/arch/x86/broadwellde/bdwde-metrics.json
-@@ -48,6 +48,12 @@
-         "MetricName": "C7_Pkg_Residency",
-         "ScaleUnit": "100%"
-     },
-+    {
-+        "BriefDescription": "Uncore frequency per die [GHZ]",
-+        "MetricExpr": "tma_info_system_socket_clks / #num_dies / duration_time / 1e9",
-+        "MetricGroup": "SoC",
-+        "MetricName": "UNCORE_FREQ"
-+    },
-     {
-         "BriefDescription": "Percentage of cycles spent in System Management Interrupts.",
-         "MetricExpr": "((msr@aperf@ - cycles) / msr@aperf@ if msr@smi@ > 0 else 0)",
-@@ -690,6 +696,12 @@
-         "MetricGroup": "SMT",
-         "MetricName": "tma_info_system_smt_2t_utilization"
-     },
-+    {
-+        "BriefDescription": "Socket actual clocks when any core is active on that socket",
-+        "MetricExpr": "cbox_0@event\\=0x0@",
-+        "MetricGroup": "SoC",
-+        "MetricName": "tma_info_system_socket_clks"
-+    },
-     {
-         "BriefDescription": "Average Frequency Utilization relative nominal frequency",
-         "MetricExpr": "tma_info_thread_clks / CPU_CLK_UNHALTED.REF_TSC",
+diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+index a5930042139d3..52f36c48c1b9e 100644
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -1018,6 +1018,10 @@ static void emit_shiftx(u8 **pprog, u32 dst_reg, u8 src_reg, bool is64, u8 op)
+ 
+ #define INSN_SZ_DIFF (((addrs[i] - addrs[i - 1]) - (prog - temp)))
+ 
++/* mov rax, qword ptr [rbp - rounded_stack_depth - 8] */
++#define RESTORE_TAIL_CALL_CNT(stack)				\
++	EMIT3_off32(0x48, 0x8B, 0x85, -round_up(stack, 8) - 8)
++
+ static int do_jit(struct bpf_prog *bpf_prog, int *addrs, u8 *image, u8 *rw_image,
+ 		  int oldproglen, struct jit_context *ctx, bool jmp_padding)
+ {
+@@ -1623,9 +1627,7 @@ st:			if (is_imm8(insn->off))
+ 
+ 			func = (u8 *) __bpf_call_base + imm32;
+ 			if (tail_call_reachable) {
+-				/* mov rax, qword ptr [rbp - rounded_stack_depth - 8] */
+-				EMIT3_off32(0x48, 0x8B, 0x85,
+-					    -round_up(bpf_prog->aux->stack_depth, 8) - 8);
++				RESTORE_TAIL_CALL_CNT(bpf_prog->aux->stack_depth);
+ 				if (!imm32)
+ 					return -EINVAL;
+ 				offs = 7 + x86_call_depth_emit_accounting(&prog, func);
+@@ -2400,6 +2402,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 	 *                     [ ...        ]
+ 	 *                     [ stack_arg2 ]
+ 	 * RBP - arg_stack_off [ stack_arg1 ]
++	 * RSP                 [ tail_call_cnt ] BPF_TRAMP_F_TAIL_CALL_CTX
+ 	 */
+ 
+ 	/* room for return value of orig_call or fentry prog */
+@@ -2464,6 +2467,8 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 	else
+ 		/* sub rsp, stack_size */
+ 		EMIT4(0x48, 0x83, 0xEC, stack_size);
++	if (flags & BPF_TRAMP_F_TAIL_CALL_CTX)
++		EMIT1(0x50);		/* push rax */
+ 	/* mov QWORD PTR [rbp - rbx_off], rbx */
+ 	emit_stx(&prog, BPF_DW, BPF_REG_FP, BPF_REG_6, -rbx_off);
+ 
+@@ -2516,9 +2521,15 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 		restore_regs(m, &prog, regs_off);
+ 		save_args(m, &prog, arg_stack_off, true);
+ 
++		if (flags & BPF_TRAMP_F_TAIL_CALL_CTX)
++			/* Before calling the original function, restore the
++			 * tail_call_cnt from stack to rax.
++			 */
++			RESTORE_TAIL_CALL_CNT(stack_size);
++
+ 		if (flags & BPF_TRAMP_F_ORIG_STACK) {
+-			emit_ldx(&prog, BPF_DW, BPF_REG_0, BPF_REG_FP, 8);
+-			EMIT2(0xff, 0xd0); /* call *rax */
++			emit_ldx(&prog, BPF_DW, BPF_REG_6, BPF_REG_FP, 8);
++			EMIT2(0xff, 0xd3); /* call *rbx */
+ 		} else {
+ 			/* call original function */
+ 			if (emit_rsb_call(&prog, orig_call, prog)) {
+@@ -2569,7 +2580,12 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 			ret = -EINVAL;
+ 			goto cleanup;
+ 		}
+-	}
++	} else if (flags & BPF_TRAMP_F_TAIL_CALL_CTX)
++		/* Before running the original function, restore the
++		 * tail_call_cnt from stack to rax.
++		 */
++		RESTORE_TAIL_CALL_CNT(stack_size);
++
+ 	/* restore return value of orig_call or fentry prog back into RAX */
+ 	if (save_ret)
+ 		emit_ldx(&prog, BPF_DW, BPF_REG_0, BPF_REG_FP, -8);
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 49f8b691496c4..76055186d6248 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1029,6 +1029,11 @@ struct btf_func_model {
+  */
+ #define BPF_TRAMP_F_SHARE_IPMODIFY	BIT(6)
+ 
++/* Indicate that current trampoline is in a tail call context. Then, it has to
++ * cache and restore tail_call_cnt to avoid infinite tail call loop.
++ */
++#define BPF_TRAMP_F_TAIL_CALL_CTX	BIT(7)
++
+ /* Each call __bpf_prog_enter + call bpf_func + call __bpf_prog_exit is ~50
+  * bytes on x86.
+  */
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index 53ff50cac61ea..e97aeda3a86b5 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -415,8 +415,8 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
+ 		goto out;
+ 	}
+ 
+-	/* clear all bits except SHARE_IPMODIFY */
+-	tr->flags &= BPF_TRAMP_F_SHARE_IPMODIFY;
++	/* clear all bits except SHARE_IPMODIFY and TAIL_CALL_CTX */
++	tr->flags &= (BPF_TRAMP_F_SHARE_IPMODIFY | BPF_TRAMP_F_TAIL_CALL_CTX);
+ 
+ 	if (tlinks[BPF_TRAMP_FEXIT].nr_links ||
+ 	    tlinks[BPF_TRAMP_MODIFY_RETURN].nr_links) {
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 873ade146f3de..9f180ae74e492 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -19641,6 +19641,9 @@ static int check_attach_btf_id(struct bpf_verifier_env *env)
+ 	if (!tr)
+ 		return -ENOMEM;
+ 
++	if (tgt_prog && tgt_prog->aux->tail_call_reachable)
++		tr->flags = BPF_TRAMP_F_TAIL_CALL_CTX;
++
+ 	prog->aux->dst_trampoline = tr;
+ 	return 0;
+ }
 -- 
 2.42.0
 
