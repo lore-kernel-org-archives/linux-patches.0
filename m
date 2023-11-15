@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021CA2837A
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91E9364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRfYU7fe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBCAC433C7;
-	Wed, 15 Nov 2023 19:31:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByrTndlq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3359BC433C9;
+	Wed, 15 Nov 2023 19:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076687;
-	bh=eDQZyhqFXtsNtfU9Nxd7NHZNycBxscjwmilGZ8PL51o=;
+	s=korg; t=1700076689;
+	bh=2TeOb49jBXU0GSHksUG5cxdXqZzxZOXzh1t8sQAqcC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iRfYU7fere2TsyAqvhDdFo4qkCzxCq6Bq8vLgpiDmLct1W0Kt89vgOol8946VyRix
-	 0rBRWq43ycLQXI3EEPZtV8vfiU4KnPk1PtScn9OsuJrbcJqW8Y+3quc2JWrKD44ySY
-	 IKDekifHtRi+V7wWoS486Z86DrMPNerzeIJ5wWMU=
+	b=ByrTndlqTMXoUgZnyC+QNrFUElNu6MksAuciTPLWwca3Ork1fxwTH2MYKbSq7C0kh
+	 Kp0V8CeJug7xDUot/hElrbZiZu2GKEPqh+ycB+nSkatHe6bNvohFdhdeJgLbJGTS6b
+	 UH24VzS/ja1YXQBnEmYOYUj+M23S0hyTgphXPOhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	WangJinchao <wangjinchao@xfusion.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 359/550] PCI: endpoint: Fix double free in __pci_epc_create()
-Date: Wed, 15 Nov 2023 14:15:43 -0500
-Message-ID: <20231115191625.680429224@linuxfoundation.org>
+Subject: [PATCH 6.5 360/550] padata: Fix refcnt handling in padata_free_shell()
+Date: Wed, 15 Nov 2023 14:15:44 -0500
+Message-ID: <20231115191625.757645992@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,35 +43,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: WangJinchao <wangjinchao@xfusion.com>
 
-[ Upstream commit c9501d268944d6c0475ecb3e740a084a7da9cbfe ]
+[ Upstream commit 7ddc21e317b360c3444de3023bcc83b85fabae2f ]
 
-The pci_epc_release() function frees "epc" so the kfree() on the next line
-is a double free.  Drop the redundant free.
+In a high-load arm64 environment, the pcrypt_aead01 test in LTP can lead
+to system UAF (Use-After-Free) issues. Due to the lengthy analysis of
+the pcrypt_aead01 function call, I'll describe the problem scenario
+using a simplified model:
 
-Fixes: 7711cbb4862a ("PCI: endpoint: Fix WARN() when an endpoint driver is removed")
-Link: https://lore.kernel.org/r/2ce68694-87a7-4c06-b8a4-9870c891b580@moroto.mountain
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Suppose there's a user of padata named `user_function` that adheres to
+the padata requirement of calling `padata_free_shell` after `serial()`
+has been invoked, as demonstrated in the following code:
+
+```c
+struct request {
+    struct padata_priv padata;
+    struct completion *done;
+};
+
+void parallel(struct padata_priv *padata) {
+    do_something();
+}
+
+void serial(struct padata_priv *padata) {
+    struct request *request = container_of(padata,
+    				struct request,
+				padata);
+    complete(request->done);
+}
+
+void user_function() {
+    DECLARE_COMPLETION(done)
+    padata->parallel = parallel;
+    padata->serial = serial;
+    padata_do_parallel();
+    wait_for_completion(&done);
+    padata_free_shell();
+}
+```
+
+In the corresponding padata.c file, there's the following code:
+
+```c
+static void padata_serial_worker(struct work_struct *serial_work) {
+    ...
+    cnt = 0;
+
+    while (!list_empty(&local_list)) {
+        ...
+        padata->serial(padata);
+        cnt++;
+    }
+
+    local_bh_enable();
+
+    if (refcount_sub_and_test(cnt, &pd->refcnt))
+        padata_free_pd(pd);
+}
+```
+
+Because of the high system load and the accumulation of unexecuted
+softirq at this moment, `local_bh_enable()` in padata takes longer
+to execute than usual. Subsequently, when accessing `pd->refcnt`,
+`pd` has already been released by `padata_free_shell()`, resulting
+in a UAF issue with `pd->refcnt`.
+
+The fix is straightforward: add `refcount_dec_and_test` before calling
+`padata_free_pd` in `padata_free_shell`.
+
+Fixes: 07928d9bfc81 ("padata: Remove broken queue flushing")
+
+Signed-off-by: WangJinchao <wangjinchao@xfusion.com>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/pci-epc-core.c | 1 -
- 1 file changed, 1 deletion(-)
+ kernel/padata.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
-index 6c54fa5684d22..575d67271ccc1 100644
---- a/drivers/pci/endpoint/pci-epc-core.c
-+++ b/drivers/pci/endpoint/pci-epc-core.c
-@@ -870,7 +870,6 @@ __pci_epc_create(struct device *dev, const struct pci_epc_ops *ops,
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 222d60195de66..ff349e1084c1d 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -1102,12 +1102,16 @@ EXPORT_SYMBOL(padata_alloc_shell);
+  */
+ void padata_free_shell(struct padata_shell *ps)
+ {
++	struct parallel_data *pd;
++
+ 	if (!ps)
+ 		return;
  
- put_dev:
- 	put_device(&epc->dev);
--	kfree(epc);
+ 	mutex_lock(&ps->pinst->lock);
+ 	list_del(&ps->list);
+-	padata_free_pd(rcu_dereference_protected(ps->pd, 1));
++	pd = rcu_dereference_protected(ps->pd, 1);
++	if (refcount_dec_and_test(&pd->refcnt))
++		padata_free_pd(pd);
+ 	mutex_unlock(&ps->pinst->lock);
  
- err_ret:
- 	return ERR_PTR(ret);
+ 	kfree(ps);
 -- 
 2.42.0
 
