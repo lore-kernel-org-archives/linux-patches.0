@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A81141A87
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BBA41A87
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoXZpr8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9ADFC433C9;
-	Wed, 15 Nov 2023 19:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahUsrRut"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF61C433BB;
+	Wed, 15 Nov 2023 19:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076975;
-	bh=lAv+zZUYlsIkVchETUIWjUnEZI9rMZvXmO03++338rg=;
+	s=korg; t=1700076977;
+	bh=XeKyegiWDsh/wyPg1psx59hYgy/R0wJMwDxlbVqpgxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NoXZpr8hVLmupXo0FHCwJmhwvLVWr5+1eDz6MGs/vVSScZX3V+AnBNWlOoerrhdjL
-	 G7zXsgnbGFsbtJAFRrGD8OxYI1rtefPX41XylfJ9RC8VnwlIxP8iNQm2ZIJdSNy/Vb
-	 m7uWOI5Gj6bXgXBGSqx+LY0ksWrI79vYrEPsvsfs=
+	b=ahUsrRutrynBd7hCS/ljavKqiCYbeKLitj3nGdFjZ89GawOaWiD6HQrVOgbYwiwAR
+	 Ln9v6JbMWFogZ9qfIwwhDncNqK+eDxXKFWrAOgMUbn4i1xWQ7euFG0jYvZVkRXxzXE
+	 KHbBKPh7sJWuCrQfrZ55FhSnMw2Iczk542zIQ8Mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Hsu <howard-yh.hsu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 084/603] wifi: mt76: mt7996: fix beamform mcu cmd configuration
-Date: Wed, 15 Nov 2023 14:10:29 -0500
-Message-ID: <20231115191618.941184024@linuxfoundation.org>
+Subject: [PATCH 6.5 481/550] media: vidtv: psi: Add check for kstrdup
+Date: Wed, 15 Nov 2023 14:17:45 -0500
+Message-ID: <20231115191634.208941594@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,41 +38,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Howard Hsu <howard-yh.hsu@mediatek.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit d40fd59b7267d2e7722d3edf3935a9a9f03c0115 ]
+[ Upstream commit 76a2c5df6ca8bd8ada45e953b8c72b746f42918d ]
 
-The bf_num field represents how many bands can support beamform, so set
-the value to 3, and bf_bitmap represents the bitmap of bf_num.
+Add check for the return value of kstrdup() and return the error
+if it fails in order to avoid NULL pointer dereference.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Howard Hsu <howard-yh.hsu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 7a7899f6f58e ("media: vidtv: psi: Implement an Event Information Table (EIT)")
+Fixes: c2f78f0cb294 ("media: vidtv: psi: add a Network Information Table (NIT)")
+Fixes: f90cf6079bf6 ("media: vidtv: add a bridge driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/test-drivers/vidtv/vidtv_psi.c | 45 +++++++++++++++++---
+ 1 file changed, 40 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 4a30db49ef33f..4ed1643818980 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -3307,8 +3307,8 @@ int mt7996_mcu_set_txbf(struct mt7996_dev *dev, u8 action)
+diff --git a/drivers/media/test-drivers/vidtv/vidtv_psi.c b/drivers/media/test-drivers/vidtv/vidtv_psi.c
+index ce0b7a6e92dc3..2a51c898c11eb 100644
+--- a/drivers/media/test-drivers/vidtv/vidtv_psi.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_psi.c
+@@ -301,16 +301,29 @@ struct vidtv_psi_desc_service *vidtv_psi_service_desc_init(struct vidtv_psi_desc
  
- 		tlv = mt7996_mcu_add_uni_tlv(skb, action, sizeof(*req_mod_en));
- 		req_mod_en = (struct bf_mod_en_ctrl *)tlv;
--		req_mod_en->bf_num = 2;
--		req_mod_en->bf_bitmap = GENMASK(0, 0);
-+		req_mod_en->bf_num = 3;
-+		req_mod_en->bf_bitmap = GENMASK(2, 0);
- 		break;
- 	}
- 	default:
+ 	desc->service_name_len = service_name_len;
+ 
+-	if (service_name && service_name_len)
++	if (service_name && service_name_len) {
+ 		desc->service_name = kstrdup(service_name, GFP_KERNEL);
++		if (!desc->service_name)
++			goto free_desc;
++	}
+ 
+ 	desc->provider_name_len = provider_name_len;
+ 
+-	if (provider_name && provider_name_len)
++	if (provider_name && provider_name_len) {
+ 		desc->provider_name = kstrdup(provider_name, GFP_KERNEL);
++		if (!desc->provider_name)
++			goto free_desc_service_name;
++	}
+ 
+ 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
+ 	return desc;
++
++free_desc_service_name:
++	if (service_name && service_name_len)
++		kfree(desc->service_name);
++free_desc:
++	kfree(desc);
++	return NULL;
+ }
+ 
+ struct vidtv_psi_desc_registration
+@@ -355,8 +368,13 @@ struct vidtv_psi_desc_network_name
+ 
+ 	desc->length = network_name_len;
+ 
+-	if (network_name && network_name_len)
++	if (network_name && network_name_len) {
+ 		desc->network_name = kstrdup(network_name, GFP_KERNEL);
++		if (!desc->network_name) {
++			kfree(desc);
++			return NULL;
++		}
++	}
+ 
+ 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
+ 	return desc;
+@@ -442,15 +460,32 @@ struct vidtv_psi_desc_short_event
+ 		iso_language_code = "eng";
+ 
+ 	desc->iso_language_code = kstrdup(iso_language_code, GFP_KERNEL);
++	if (!desc->iso_language_code)
++		goto free_desc;
+ 
+-	if (event_name && event_name_len)
++	if (event_name && event_name_len) {
+ 		desc->event_name = kstrdup(event_name, GFP_KERNEL);
++		if (!desc->event_name)
++			goto free_desc_language_code;
++	}
+ 
+-	if (text && text_len)
++	if (text && text_len) {
+ 		desc->text = kstrdup(text, GFP_KERNEL);
++		if (!desc->text)
++			goto free_desc_event_name;
++	}
+ 
+ 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
+ 	return desc;
++
++free_desc_event_name:
++	if (event_name && event_name_len)
++		kfree(desc->event_name);
++free_desc_language_code:
++	kfree(desc->iso_language_code);
++free_desc:
++	kfree(desc);
++	return NULL;
+ }
+ 
+ struct vidtv_psi_desc *vidtv_psi_desc_clone(struct vidtv_psi_desc *desc)
 -- 
 2.42.0
 
