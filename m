@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F5039FC0
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D439E39FC0
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdSGlpUN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16ECCC4E77A;
-	Wed, 15 Nov 2023 20:52:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPp1C8iE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87985C4E777;
+	Wed, 15 Nov 2023 20:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081575;
-	bh=t67KCA7ZndBlesX5yvRZp1FFPBi9quQBkMYt07a03nk=;
+	s=korg; t=1700081576;
+	bh=7y6Dk8/fF4eAh+9pY8az+cNQY44omaEQvkEMQ0FrGpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdSGlpUNlZE/SFcT6xV3qXvIEUWOtutnnK8EeGEnbeqT6LkVpXL0LVMFU86cX1jyO
-	 cFhVVGC46/KMHmcmf1lUy5rd5bEyQMmcwZD/JC+aSoUiRtJRdP3mnXpCAKAgiXpvPC
-	 gFPj1F/mYvxuu49mBbFrxzP9cvLS9QSl/aRBx9Js=
+	b=RPp1C8iEtrBLHR0GF4vswNvyLK+C78fcolsjLAlaatOxbMaKcTzEn7N+Lk3+MRe6k
+	 ZniHtZTr1VXXQQv/kGC6qryNZoO8ae5EcDiT/JtBY5c2+wVtb4yTXgsBqW14n75DNf
+	 yABgxqCanOYVq+jTH7Pjb4fVBvQFsn/7FkrLu3M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 238/244] spi: spi-zynq-qspi: add spi-mem to driver kconfig dependencies
-Date: Wed, 15 Nov 2023 15:37:10 -0500
-Message-ID: <20231115203602.609884028@linuxfoundation.org>
+Subject: [PATCH 5.15 239/244] fbdev: imsttfb: Fix error path of imsttfb_probe()
+Date: Wed, 15 Nov 2023 15:37:11 -0500
+Message-ID: <20231115203602.667140582@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -43,35 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit c2ded280a4b1b7bd93e53670528504be08d24967 ]
+[ Upstream commit 518ecb6a209f6ff678aeadf9f2bf870c0982ca85 ]
 
-Zynq QSPI driver has been converted to use spi-mem framework so
-add spi-mem to driver kconfig dependencies.
+Release ressources when init_imstt() returns failure.
 
-Fixes: 67dca5e580f1 ("spi: spi-mem: Add support for Zynq QSPI controller")
-Signed-off-by: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://lore.kernel.org/r/1699037031-702858-1-git-send-email-radhey.shyam.pandey@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Stable-dep-of: aba6ab57a910 ("fbdev: imsttfb: fix a resource leak in probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/fbdev/imsttfb.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
-index 4fc23236d3bd2..123689e457d12 100644
---- a/drivers/spi/Kconfig
-+++ b/drivers/spi/Kconfig
-@@ -976,6 +976,7 @@ config SPI_XTENSA_XTFPGA
- config SPI_ZYNQ_QSPI
- 	tristate "Xilinx Zynq QSPI controller"
- 	depends on ARCH_ZYNQ || COMPILE_TEST
-+	depends on SPI_MEM
- 	help
- 	  This enables support for the Zynq Quad SPI controller
- 	  in master mode.
+diff --git a/drivers/video/fbdev/imsttfb.c b/drivers/video/fbdev/imsttfb.c
+index 1b2fb8ed76237..876ddf05e133a 100644
+--- a/drivers/video/fbdev/imsttfb.c
++++ b/drivers/video/fbdev/imsttfb.c
+@@ -1525,8 +1525,10 @@ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 		goto error;
+ 	info->pseudo_palette = par->palette;
+ 	ret = init_imstt(info);
+-	if (!ret)
+-		pci_set_drvdata(pdev, info);
++	if (ret)
++		goto error;
++
++	pci_set_drvdata(pdev, info);
+ 	return ret;
+ 
+ error:
 -- 
 2.42.0
 
