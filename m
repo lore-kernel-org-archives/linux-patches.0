@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193A0364CB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66E9364CB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlICHW9U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C058EC433C7;
-	Wed, 15 Nov 2023 19:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmsvLXbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52303C433C9;
+	Wed, 15 Nov 2023 19:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077736;
-	bh=YKvNEZqEFfwG+8/ilVU01NRijWvku8CFNhauEFd4564=;
+	s=korg; t=1700077738;
+	bh=XyLRX7fIKiK36NwH7UgisMhcnHzlJUh4fJaITunIiAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AlICHW9U8HxI2iRv0Wtr4hhbD9UKO7Z8FfqWTXaVPnPNRXC3ehkjvX0FL7SZgz9PS
-	 AURO7Wk41e3wgd+jhXXkSPtRhUnbcu2gGhP/zVqpmpvgmyBS9eLwaK1PN77xyIL0Ib
-	 x40faSsiSmlaK9hWSgatSyXjkd3ZLo1dj3i1sD+M=
+	b=MmsvLXbOrXG7sDQlHzqOIpS2JGURynYzN+2ecJ3uNvN2wZjvGvLcM/JgEwAo0gYST
+	 N+Qb3CfQsuob1/zNIIkEqvWK7S46PrAnZBJIxkfv+lHM9TgLPP4AfznMfND1ZweQ4E
+	 DrsrgvmCyesQaOUFdBXvhqbygfePljz1R7Q/3/Bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 487/603] rtc: brcmstb-waketimer: support level alarm_irq
-Date: Wed, 15 Nov 2023 14:17:12 -0500
-Message-ID: <20231115191646.051650254@linuxfoundation.org>
+Subject: [PATCH 6.6 488/603] cxl/pci: Remove unnecessary device reference management in sanitize work
+Date: Wed, 15 Nov 2023 14:17:13 -0500
+Message-ID: <20231115191646.109823308@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -37,143 +39,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Doug Berger <opendmb@gmail.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit e005a9b35b464be5b2e0194f717e90e7e496785d ]
+[ Upstream commit 76fe8713dd0a1331d84d767e8e5d3f365d959e8a ]
 
-Some devices (e.g. BCM72112) use an alarm_irq interrupt that is
-connected to a level interrupt controller rather than an edge
-interrupt controller. In this case, the interrupt cannot be left
-enabled by the irq handler while preserving the hardware wake-up
-signal on wake capable devices or an interrupt storm will occur.
+Given that any particular put_device() could be the final put of the
+device, the fact that there are usages of cxlds->dev after
+put_device(cxlds->dev) is a red flag. Drop the reference counting since
+the device is pinned by being registered and will not be unregistered
+without triggering the driver + workqueue to shutdown.
 
-The alarm_expired flag is introduced to allow the disabling of
-the interrupt when an alarm expires and to support balancing the
-calls to disable_irq() and enable_irq() in accordance with the
-existing design.
-
-Fixes: 24304a87158a ("rtc: brcmstb-waketimer: allow use as non-wake alarm")
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20230830224747.1663044-1-opendmb@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Stable-dep-of: 5f2da1971446 ("cxl/pci: Fix sanitize notifier setup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-brcmstb-waketimer.c | 47 ++++++++++++++++++++++++++---
- 1 file changed, 42 insertions(+), 5 deletions(-)
+ drivers/cxl/pci.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/rtc/rtc-brcmstb-waketimer.c b/drivers/rtc/rtc-brcmstb-waketimer.c
-index 3cdc015692ca6..1a65a4e0dc003 100644
---- a/drivers/rtc/rtc-brcmstb-waketimer.c
-+++ b/drivers/rtc/rtc-brcmstb-waketimer.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright © 2014-2017 Broadcom
-+ * Copyright © 2014-2023 Broadcom
-  */
+diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
+index 44a21ab7add51..aa1b3dd9e64c4 100644
+--- a/drivers/cxl/pci.c
++++ b/drivers/cxl/pci.c
+@@ -152,8 +152,6 @@ static void cxl_mbox_sanitize_work(struct work_struct *work)
+ 	mutex_lock(&mds->mbox_mutex);
+ 	if (cxl_mbox_background_complete(cxlds)) {
+ 		mds->security.poll_tmo_secs = 0;
+-		put_device(cxlds->dev);
+-
+ 		if (mds->security.sanitize_node)
+ 			sysfs_notify_dirent(mds->security.sanitize_node);
  
- #define pr_fmt(fmt)	KBUILD_MODNAME ": " fmt
-@@ -34,6 +34,7 @@ struct brcmstb_waketmr {
- 	u32 rate;
- 	unsigned long rtc_alarm;
- 	bool alarm_en;
-+	bool alarm_expired;
- };
- 
- #define BRCMSTB_WKTMR_EVENT		0x00
-@@ -64,6 +65,11 @@ static inline void brcmstb_waketmr_clear_alarm(struct brcmstb_waketmr *timer)
- 	writel_relaxed(reg - 1, timer->base + BRCMSTB_WKTMR_ALARM);
- 	writel_relaxed(WKTMR_ALARM_EVENT, timer->base + BRCMSTB_WKTMR_EVENT);
- 	(void)readl_relaxed(timer->base + BRCMSTB_WKTMR_EVENT);
-+	if (timer->alarm_expired) {
-+		timer->alarm_expired = false;
-+		/* maintain call balance */
-+		enable_irq(timer->alarm_irq);
-+	}
- }
- 
- static void brcmstb_waketmr_set_alarm(struct brcmstb_waketmr *timer,
-@@ -105,10 +111,17 @@ static irqreturn_t brcmstb_alarm_irq(int irq, void *data)
- 		return IRQ_HANDLED;
- 
- 	if (timer->alarm_en) {
--		if (!device_may_wakeup(timer->dev))
-+		if (device_may_wakeup(timer->dev)) {
-+			disable_irq_nosync(irq);
-+			timer->alarm_expired = true;
-+		} else {
- 			writel_relaxed(WKTMR_ALARM_EVENT,
- 				       timer->base + BRCMSTB_WKTMR_EVENT);
-+		}
- 		rtc_update_irq(timer->rtc, 1, RTC_IRQF | RTC_AF);
-+	} else {
-+		writel_relaxed(WKTMR_ALARM_EVENT,
-+			       timer->base + BRCMSTB_WKTMR_EVENT);
- 	}
- 
- 	return IRQ_HANDLED;
-@@ -221,8 +234,14 @@ static int brcmstb_waketmr_alarm_enable(struct device *dev,
- 		    !brcmstb_waketmr_is_pending(timer))
- 			return -EINVAL;
- 		timer->alarm_en = true;
--		if (timer->alarm_irq)
-+		if (timer->alarm_irq) {
-+			if (timer->alarm_expired) {
-+				timer->alarm_expired = false;
-+				/* maintain call balance */
-+				enable_irq(timer->alarm_irq);
-+			}
- 			enable_irq(timer->alarm_irq);
-+		}
- 	} else if (!enabled && timer->alarm_en) {
- 		if (timer->alarm_irq)
- 			disable_irq(timer->alarm_irq);
-@@ -352,6 +371,17 @@ static int brcmstb_waketmr_suspend(struct device *dev)
- 	return brcmstb_waketmr_prepare_suspend(timer);
- }
- 
-+static int brcmstb_waketmr_suspend_noirq(struct device *dev)
-+{
-+	struct brcmstb_waketmr *timer = dev_get_drvdata(dev);
-+
-+	/* Catch any alarms occurring prior to noirq */
-+	if (timer->alarm_expired && device_may_wakeup(dev))
-+		return -EBUSY;
-+
-+	return 0;
-+}
-+
- static int brcmstb_waketmr_resume(struct device *dev)
- {
- 	struct brcmstb_waketmr *timer = dev_get_drvdata(dev);
-@@ -368,10 +398,17 @@ static int brcmstb_waketmr_resume(struct device *dev)
- 
- 	return ret;
- }
-+#else
-+#define brcmstb_waketmr_suspend		NULL
-+#define brcmstb_waketmr_suspend_noirq	NULL
-+#define brcmstb_waketmr_resume		NULL
- #endif /* CONFIG_PM_SLEEP */
- 
--static SIMPLE_DEV_PM_OPS(brcmstb_waketmr_pm_ops,
--			 brcmstb_waketmr_suspend, brcmstb_waketmr_resume);
-+static const struct dev_pm_ops brcmstb_waketmr_pm_ops = {
-+	.suspend	= brcmstb_waketmr_suspend,
-+	.suspend_noirq	= brcmstb_waketmr_suspend_noirq,
-+	.resume		= brcmstb_waketmr_resume,
-+};
- 
- static const __maybe_unused struct of_device_id brcmstb_waketmr_of_match[] = {
- 	{ .compatible = "brcm,brcmstb-waketimer" },
+@@ -296,9 +294,6 @@ static int __cxl_pci_mbox_send_cmd(struct cxl_memdev_state *mds,
+ 		 */
+ 		if (mbox_cmd->opcode == CXL_MBOX_OP_SANITIZE) {
+ 			if (mds->security.poll) {
+-				/* hold the device throughout */
+-				get_device(cxlds->dev);
+-
+ 				/* give first timeout a second */
+ 				timeout = 1;
+ 				mds->security.poll_tmo_secs = timeout;
 -- 
 2.42.0
 
