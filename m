@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA04341212;
-	Wed, 15 Nov 2023 19:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F04364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpx4v2xv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792A2C433C7;
-	Wed, 15 Nov 2023 19:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvc7dvtW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033B5C433C9;
+	Wed, 15 Nov 2023 19:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076700;
-	bh=VsEcYVVGBhlJhxpYZ+sclyVoGw66Ptr93Y1gzgTMTAU=;
+	s=korg; t=1700076702;
+	bh=dU80pOZ61n1SCB9+m+HF3qn2XFYyq8txz2UKXD2C5Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpx4v2xvfVjIG+9fvMKeR1UgD+dmFswTuIs/M3mqvSn8fAHUFf8q6OGoytKWEcm1Q
-	 Zt4hE+bvqN//ykkTXSelEJsn3sTzs3HPr018HUbtZsKgqf0W3feaOK0u7+lm0GNQWL
-	 WmeKchlRAM4JBNINjlVrgd0/tUvrFNNTd2I0kSbg=
+	b=lvc7dvtWa2EjSO+EiSK5kchzSO5hf4Wf9gshltwVGoaTz443G2mI+h20p7VJ23W4f
+	 Cl0QLIPQYNS6WCGRpYlTj3/IXsdGiP0BAciAojI2o6fLM9mcvkYZEWkoLlO/eeyrNW
+	 Z2WiBAytZfTGaa2Ingx+2RqG4DwbY4B1pulq/o5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Song Liu <song@kernel.org>,
-	Hao Luo <haoluo@google.com>,
-	bpf@vger.kernel.org,
-	Namhyung Kim <namhyung@kernel.org>,
+	Michael Prinke <michael.prinke@intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Lijun Pan <lijun.pan@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 394/550] perf record: Fix BTF type checks in the off-cpu profiling
-Date: Wed, 15 Nov 2023 14:16:18 -0500
-Message-ID: <20231115191628.150882613@linuxfoundation.org>
+Subject: [PATCH 6.5 395/550] dmaengine: idxd: Register dsa_bus_type before registering idxd sub-drivers
+Date: Wed, 15 Nov 2023 14:16:19 -0500
+Message-ID: <20231115191628.222497564@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,57 +45,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Fenghua Yu <fenghua.yu@intel.com>
 
-[ Upstream commit 0e501a65d35bf72414379fed0e31a0b6b81ab57d ]
+[ Upstream commit 88928addeec577386e8c83b48b5bc24d28ba97fd ]
 
-The BTF func proto for a tracepoint has one more argument than the
-actual tracepoint function since it has a context argument at the
-begining.  So it should compare to 5 when the tracepoint has 4
-arguments.
+idxd sub-drivers belong to bus dsa_bus_type. Thus, dsa_bus_type must be
+registered in dsa bus init before idxd drivers can be registered.
 
-  typedef void (*btf_trace_sched_switch)(void *, bool, struct task_struct *, struct task_struct *, unsigned int);
+But the order is wrong when both idxd and idxd_bus are builtin drivers.
+In this case, idxd driver is compiled and linked before idxd_bus driver.
+Since the initcall order is determined by the link order, idxd sub-drivers
+are registered in idxd initcall before dsa_bus_type is registered
+in idxd_bus initcall. idxd initcall fails:
 
-Also, recent change in the perf tool would use a hand-written minimal
-vmlinux.h to generate BTF in the skeleton.  So it won't have the info
-of the tracepoint.  Anyway it should use the kernel's vmlinux BTF to
-check the type in the kernel.
+[   21.562803] calling  idxd_init_module+0x0/0x110 @ 1
+[   21.570761] Driver 'idxd' was unable to register with bus_type 'dsa' because the bus was not initialized.
+[   21.586475] initcall idxd_init_module+0x0/0x110 returned -22 after 15717 usecs
+[   21.597178] calling  dsa_bus_init+0x0/0x20 @ 1
 
-Fixes: b36888f71c85 ("perf record: Handle argument change in sched_switch")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Acked-by: Song Liu <song@kernel.org>
-Cc: Hao Luo <haoluo@google.com>
-CC: bpf@vger.kernel.org
-Link: https://lore.kernel.org/r/20230922234444.3115821-1-namhyung@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+To fix the issue, compile and link idxd_bus driver before idxd driver
+to ensure the right registration order.
+
+Fixes: d9e5481fca74 ("dmaengine: dsa: move dsa_bus_type out of idxd driver to standalone")
+Reported-by: Michael Prinke <michael.prinke@intel.com>
+Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Lijun Pan <lijun.pan@intel.com>
+Tested-by: Lijun Pan <lijun.pan@intel.com>
+Link: https://lore.kernel.org/r/20230924162232.1409454-1-fenghua.yu@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf_off_cpu.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/dma/idxd/Makefile | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/bpf_off_cpu.c b/tools/perf/util/bpf_off_cpu.c
-index 01f70b8e705a8..21f4d9ba023d9 100644
---- a/tools/perf/util/bpf_off_cpu.c
-+++ b/tools/perf/util/bpf_off_cpu.c
-@@ -98,7 +98,7 @@ static void off_cpu_finish(void *arg __maybe_unused)
- /* v5.18 kernel added prev_state arg, so it needs to check the signature */
- static void check_sched_switch_args(void)
- {
--	const struct btf *btf = bpf_object__btf(skel->obj);
-+	const struct btf *btf = btf__load_vmlinux_btf();
- 	const struct btf_type *t1, *t2, *t3;
- 	u32 type_id;
+diff --git a/drivers/dma/idxd/Makefile b/drivers/dma/idxd/Makefile
+index dc096839ac637..c5e679070e463 100644
+--- a/drivers/dma/idxd/Makefile
++++ b/drivers/dma/idxd/Makefile
+@@ -1,12 +1,12 @@
+ ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=IDXD
  
-@@ -116,7 +116,8 @@ static void check_sched_switch_args(void)
- 		return;
++obj-$(CONFIG_INTEL_IDXD_BUS) += idxd_bus.o
++idxd_bus-y := bus.o
++
+ obj-$(CONFIG_INTEL_IDXD) += idxd.o
+ idxd-y := init.o irq.o device.o sysfs.o submit.o dma.o cdev.o debugfs.o
  
- 	t3 = btf__type_by_id(btf, t2->type);
--	if (t3 && btf_is_func_proto(t3) && btf_vlen(t3) == 4) {
-+	/* btf_trace func proto has one more argument for the context */
-+	if (t3 && btf_is_func_proto(t3) && btf_vlen(t3) == 5) {
- 		/* new format: pass prev_state as 4th arg */
- 		skel->rodata->has_prev_state = true;
- 	}
+ idxd-$(CONFIG_INTEL_IDXD_PERFMON) += perfmon.o
+ 
+-obj-$(CONFIG_INTEL_IDXD_BUS) += idxd_bus.o
+-idxd_bus-y := bus.o
+-
+ obj-$(CONFIG_INTEL_IDXD_COMPAT) += idxd_compat.o
+ idxd_compat-y := compat.o
 -- 
 2.42.0
 
