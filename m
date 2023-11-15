@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84466364CB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193A0364CB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeTe54Et"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C9FC433CA;
-	Wed, 15 Nov 2023 19:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlICHW9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C058EC433C7;
+	Wed, 15 Nov 2023 19:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077735;
-	bh=eObYfPn3v3dmEr5a09fWg2veb5co5Tvl7V0vYUwjVYo=;
+	s=korg; t=1700077736;
+	bh=YKvNEZqEFfwG+8/ilVU01NRijWvku8CFNhauEFd4564=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CeTe54EtQZHwBqvtvjMuyorM3aBpNdR84C+hRQEf7oxsVy/SJtXPe1X3f4R5Ep3TQ
-	 7M3WjiyVFJoAF37XQFH/PFRVVfAFtSB/nbUOs+cAovCvgjCzY+bkpLDQAz8kBI8nf4
-	 Y/6U8px6Xwf6+0yRLqFXidazP3hcaApx1MOAQ/EA=
+	b=AlICHW9U8HxI2iRv0Wtr4hhbD9UKO7Z8FfqWTXaVPnPNRXC3ehkjvX0FL7SZgz9PS
+	 AURO7Wk41e3wgd+jhXXkSPtRhUnbcu2gGhP/zVqpmpvgmyBS9eLwaK1PN77xyIL0Ib
+	 x40faSsiSmlaK9hWSgatSyXjkd3ZLo1dj3i1sD+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 486/603] i3c: Fix potential refcount leak in i3c_master_register_new_i3c_devs
-Date: Wed, 15 Nov 2023 14:17:11 -0500
-Message-ID: <20231115191645.985435859@linuxfoundation.org>
+Subject: [PATCH 6.6 487/603] rtc: brcmstb-waketimer: support level alarm_irq
+Date: Wed, 15 Nov 2023 14:17:12 -0500
+Message-ID: <20231115191646.051650254@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -36,45 +37,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Doug Berger <opendmb@gmail.com>
 
-[ Upstream commit cab63f64887616e3c4e31cfd8103320be6ebc8d3 ]
+[ Upstream commit e005a9b35b464be5b2e0194f717e90e7e496785d ]
 
-put_device() needs to be called on failure of device_register()
-to give up the reference initialized in it to avoid refcount leak.
+Some devices (e.g. BCM72112) use an alarm_irq interrupt that is
+connected to a level interrupt controller rather than an edge
+interrupt controller. In this case, the interrupt cannot be left
+enabled by the irq handler while preserving the hardware wake-up
+signal on wake capable devices or an interrupt storm will occur.
 
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230921082410.25548-1-dinghao.liu@zju.edu.cn
+The alarm_expired flag is introduced to allow the disabling of
+the interrupt when an alarm expires and to support balancing the
+calls to disable_irq() and enable_irq() in accordance with the
+existing design.
+
+Fixes: 24304a87158a ("rtc: brcmstb-waketimer: allow use as non-wake alarm")
+Signed-off-by: Doug Berger <opendmb@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20230830224747.1663044-1-opendmb@gmail.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-brcmstb-waketimer.c | 47 ++++++++++++++++++++++++++---
+ 1 file changed, 42 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 87283e4a46076..0e9ff5500a777 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1525,9 +1525,11 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
- 			desc->dev->dev.of_node = desc->boardinfo->of_node;
+diff --git a/drivers/rtc/rtc-brcmstb-waketimer.c b/drivers/rtc/rtc-brcmstb-waketimer.c
+index 3cdc015692ca6..1a65a4e0dc003 100644
+--- a/drivers/rtc/rtc-brcmstb-waketimer.c
++++ b/drivers/rtc/rtc-brcmstb-waketimer.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright © 2014-2017 Broadcom
++ * Copyright © 2014-2023 Broadcom
+  */
  
- 		ret = device_register(&desc->dev->dev);
--		if (ret)
-+		if (ret) {
- 			dev_err(&master->dev,
- 				"Failed to add I3C device (err = %d)\n", ret);
-+			put_device(&desc->dev->dev);
-+		}
- 	}
+ #define pr_fmt(fmt)	KBUILD_MODNAME ": " fmt
+@@ -34,6 +34,7 @@ struct brcmstb_waketmr {
+ 	u32 rate;
+ 	unsigned long rtc_alarm;
+ 	bool alarm_en;
++	bool alarm_expired;
+ };
+ 
+ #define BRCMSTB_WKTMR_EVENT		0x00
+@@ -64,6 +65,11 @@ static inline void brcmstb_waketmr_clear_alarm(struct brcmstb_waketmr *timer)
+ 	writel_relaxed(reg - 1, timer->base + BRCMSTB_WKTMR_ALARM);
+ 	writel_relaxed(WKTMR_ALARM_EVENT, timer->base + BRCMSTB_WKTMR_EVENT);
+ 	(void)readl_relaxed(timer->base + BRCMSTB_WKTMR_EVENT);
++	if (timer->alarm_expired) {
++		timer->alarm_expired = false;
++		/* maintain call balance */
++		enable_irq(timer->alarm_irq);
++	}
  }
  
+ static void brcmstb_waketmr_set_alarm(struct brcmstb_waketmr *timer,
+@@ -105,10 +111,17 @@ static irqreturn_t brcmstb_alarm_irq(int irq, void *data)
+ 		return IRQ_HANDLED;
+ 
+ 	if (timer->alarm_en) {
+-		if (!device_may_wakeup(timer->dev))
++		if (device_may_wakeup(timer->dev)) {
++			disable_irq_nosync(irq);
++			timer->alarm_expired = true;
++		} else {
+ 			writel_relaxed(WKTMR_ALARM_EVENT,
+ 				       timer->base + BRCMSTB_WKTMR_EVENT);
++		}
+ 		rtc_update_irq(timer->rtc, 1, RTC_IRQF | RTC_AF);
++	} else {
++		writel_relaxed(WKTMR_ALARM_EVENT,
++			       timer->base + BRCMSTB_WKTMR_EVENT);
+ 	}
+ 
+ 	return IRQ_HANDLED;
+@@ -221,8 +234,14 @@ static int brcmstb_waketmr_alarm_enable(struct device *dev,
+ 		    !brcmstb_waketmr_is_pending(timer))
+ 			return -EINVAL;
+ 		timer->alarm_en = true;
+-		if (timer->alarm_irq)
++		if (timer->alarm_irq) {
++			if (timer->alarm_expired) {
++				timer->alarm_expired = false;
++				/* maintain call balance */
++				enable_irq(timer->alarm_irq);
++			}
+ 			enable_irq(timer->alarm_irq);
++		}
+ 	} else if (!enabled && timer->alarm_en) {
+ 		if (timer->alarm_irq)
+ 			disable_irq(timer->alarm_irq);
+@@ -352,6 +371,17 @@ static int brcmstb_waketmr_suspend(struct device *dev)
+ 	return brcmstb_waketmr_prepare_suspend(timer);
+ }
+ 
++static int brcmstb_waketmr_suspend_noirq(struct device *dev)
++{
++	struct brcmstb_waketmr *timer = dev_get_drvdata(dev);
++
++	/* Catch any alarms occurring prior to noirq */
++	if (timer->alarm_expired && device_may_wakeup(dev))
++		return -EBUSY;
++
++	return 0;
++}
++
+ static int brcmstb_waketmr_resume(struct device *dev)
+ {
+ 	struct brcmstb_waketmr *timer = dev_get_drvdata(dev);
+@@ -368,10 +398,17 @@ static int brcmstb_waketmr_resume(struct device *dev)
+ 
+ 	return ret;
+ }
++#else
++#define brcmstb_waketmr_suspend		NULL
++#define brcmstb_waketmr_suspend_noirq	NULL
++#define brcmstb_waketmr_resume		NULL
+ #endif /* CONFIG_PM_SLEEP */
+ 
+-static SIMPLE_DEV_PM_OPS(brcmstb_waketmr_pm_ops,
+-			 brcmstb_waketmr_suspend, brcmstb_waketmr_resume);
++static const struct dev_pm_ops brcmstb_waketmr_pm_ops = {
++	.suspend	= brcmstb_waketmr_suspend,
++	.suspend_noirq	= brcmstb_waketmr_suspend_noirq,
++	.resume		= brcmstb_waketmr_resume,
++};
+ 
+ static const __maybe_unused struct of_device_id brcmstb_waketmr_of_match[] = {
+ 	{ .compatible = "brcm,brcmstb-waketimer" },
 -- 
 2.42.0
 
