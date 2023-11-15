@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2F03DB95
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B203DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGh0iRgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EBE2C433C9;
-	Wed, 15 Nov 2023 19:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Weqy5AY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8FFC433C8;
+	Wed, 15 Nov 2023 19:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078180;
-	bh=z7YemTzDMc4buqWbl/msP0VagCSUIkdi360AiGJO75w=;
+	s=korg; t=1700078181;
+	bh=i1JI6WqCtTMw4OCt5EOqlqbx7pSQlKpETpmaqpzsoy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGh0iRgxxzDnGGXrTT1dhLb4nVjFqNIs6GqBWSZV1PP0lFa5k+CS2ZVSdD+wEFHB3
-	 eqWJEPuLRaqsvq0kr4n9TByRCpnBvozx2qCbgnqsIywfLINRNttyQFoC5/EMhPibl7
-	 batgFkUDQ1n2v4cq6M937iNExsROL8M7Kzeu4Z3A=
+	b=2Weqy5AYQFCLLxd8puMW4JxC2M2Ib2Tcs8h/ex8pok2ax8FeLLfVrAkEpDqCu6CaL
+	 RBC0tkNlUY3WfbkGi0oAc5QvaOX6ZlvQ0+/heQxFbOlT9iSC+7JyjyMnVJN+I45kcC
+	 ZXc9qy7khc8/f9x6wX2KNNsmV4ovNd4LPmZOr15A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	David Heidelberg <david@ixit.cz>,
-	Douglas Anderson <dianders@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 160/379] arm64: dts: qcom: sdm845: cheza doesnt support LMh node
-Date: Wed, 15 Nov 2023 14:23:55 -0500
-Message-ID: <20231115192654.574985341@linuxfoundation.org>
+Subject: [PATCH 6.1 161/379] arm64: dts: qcom: sc7280: link usb3_phy_wrapper_gcc_usb30_pipe_clk
+Date: Wed, 15 Nov 2023 14:23:56 -0500
+Message-ID: <20231115192654.632894605@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -45,54 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 197ae69d1caedb3203e0b189a39efb820675fd5c ]
+[ Upstream commit 70c4a1ca13b333b00e01266d299605fa1041b0d5 ]
 
-Cheza firmware doesn't allow controlling LMh from the operating system.
+Use usb_1_ssphy's clock as gcc's usb3_phy_wrapper_gcc_usb30_pipe_clk
+clock source.
 
-Fixes: 36c6581214c4 ("arm64: dts: qcom: sdm845: Add support for LMh node")
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20230912071205.11502-2-david@ixit.cz
+Suggested-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 1c39e6f9b534 ("arm64: dts: qcom: sc7280: Add USB related nodes")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230711120916.4165894-7-dmitry.baryshkov@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-index b5f11fbcc3004..a5c0c788969fb 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-@@ -145,6 +145,10 @@ panel_in_edp: endpoint {
- 	};
- };
- 
-+&cpufreq_hw {
-+	/delete-property/ interrupts-extended; /* reference to lmh_cluster[01] */
-+};
-+
- &psci {
- 	/delete-node/ cpu0;
- 	/delete-node/ cpu1;
-@@ -277,6 +281,14 @@ &BIG_CPU_SLEEP_1
- 			   &CLUSTER_SLEEP_0>;
- };
- 
-+&lmh_cluster0 {
-+	status = "disabled";
-+};
-+
-+&lmh_cluster1 {
-+	status = "disabled";
-+};
-+
- /*
-  * Reserved memory changes
-  *
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 0cdc579f26de7..409dad617a27c 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -820,7 +820,8 @@ gcc: clock-controller@100000 {
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>,
+ 				 <&rpmhcc RPMH_CXO_CLK_A>, <&sleep_clk>,
+ 				 <0>, <&pcie1_lane>,
+-				 <0>, <0>, <0>, <0>;
++				 <0>, <0>, <0>,
++				 <&usb_1_ssphy>;
+ 			clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk",
+ 				      "pcie_0_pipe_clk", "pcie_1_pipe_clk",
+ 				      "ufs_phy_rx_symbol_0_clk", "ufs_phy_rx_symbol_1_clk",
 -- 
 2.42.0
 
