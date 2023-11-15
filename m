@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2551D446B5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB34D446CF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNTZrCxV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6CA8C4339A;
-	Wed, 15 Nov 2023 19:36:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlzXWcEt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4329DC433CD;
+	Wed, 15 Nov 2023 19:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077016;
-	bh=X7NAyUK1qyBYY04wcpCYzznOoMZsYJWfHo1BNYeVHL0=;
+	s=korg; t=1700077017;
+	bh=CDa0K3QfELjNjNvLKkCI8JsWo1P/9gcSUjbf3vqde9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cNTZrCxVo9uYQpK4DOwf9ngXzBgwoC8j7XD/XODOxeESg0nr3K3Vj2gqcP+bESjqe
-	 WTw8yJ0VFPcHH+YwQO9OeTMkb39hkZluFhReIQ9zHU1UMhWaBe+7CJp2U+ixINZAtd
-	 7BUOCdCfC19aT0z4zj13hfZ6HuCvvbqLmkp+Dl5Q=
+	b=nlzXWcEtFJQ6LejF48xsP8NhHfFUQ46M9Kr2HI1TMPXOEu2evznUSxUfDsjGpvkf0
+	 kFF8mPtF2mHRPOtZv5IE6Day43TJI7EpUcpSRWbSHZ9gjh8ToZgyBi6nqn5McfCc1g
+	 ses8uKYoS8mwpz8hS0WUru9+HlNfQZ99fUieRJs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	alexey.klimov@linaro.org,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Neal Cardwell <ncardwell@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 493/550] drm/amdgpu: dont put MQDs in VRAM on ARM | ARM64
-Date: Wed, 15 Nov 2023 14:17:57 -0500
-Message-ID: <20231115191635.059338091@linuxfoundation.org>
+Subject: [PATCH 6.6 099/603] tcp_metrics: properly set tp->snd_ssthresh in tcp_init_metrics()
+Date: Wed, 15 Nov 2023 14:10:44 -0500
+Message-ID: <20231115191620.031088303@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,53 +38,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ba0fb4b48c19a2d2380fc16ca4af236a0871d279 ]
+[ Upstream commit 081480014a64a69d901f8ef1ffdd56d6085cf87e ]
 
-Issues were reported with commit 1cfb4d612127
-("drm/amdgpu: put MQDs in VRAM") on an ADLINK Ampere
-Altra Developer Platform (AVA developer platform).
+We need to set tp->snd_ssthresh to TCP_INFINITE_SSTHRESH
+in the case tcp_get_metrics() fails for some reason.
 
-Various ARM systems seem to have problems related
-to PCIe and MMIO access.  In this case, I'm not sure
-if this is specific to the ADLINK platform or ARM
-in general.  Seems to be some coherency issue with
-VRAM.  For now, just don't put MQDs in VRAM on ARM.
-
-Link: https://lists.freedesktop.org/archives/amd-gfx/2023-October/100453.html
-Fixes: 1cfb4d612127 ("drm/amdgpu: put MQDs in VRAM")
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: alexey.klimov@linaro.org
+Fixes: 9ad7c049f0f7 ("tcp: RFC2988bis + taking RTT sample from 3WHS for the passive open side")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/tcp_metrics.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-index fd81b04559d49..477bfc813c81b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-@@ -383,9 +383,11 @@ int amdgpu_gfx_mqd_sw_init(struct amdgpu_device *adev,
- 	struct amdgpu_ring *ring = &kiq->ring;
- 	u32 domain = AMDGPU_GEM_DOMAIN_GTT;
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 4bfa2fb27de54..0c03f564878ff 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -470,6 +470,10 @@ void tcp_init_metrics(struct sock *sk)
+ 	u32 val, crtt = 0; /* cached RTT scaled by 8 */
  
-+#if !defined(CONFIG_ARM) && !defined(CONFIG_ARM64)
- 	/* Only enable on gfx10 and 11 for now to avoid changing behavior on older chips */
- 	if (adev->ip_versions[GC_HWIP][0] >= IP_VERSION(10, 0, 0))
- 		domain |= AMDGPU_GEM_DOMAIN_VRAM;
-+#endif
+ 	sk_dst_confirm(sk);
++	/* ssthresh may have been reduced unnecessarily during.
++	 * 3WHS. Restore it back to its initial default.
++	 */
++	tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
+ 	if (!dst)
+ 		goto reset;
  
- 	/* create MQD for KIQ */
- 	if (!adev->enable_mes_kiq && !ring->mqd_obj) {
+@@ -489,11 +493,6 @@ void tcp_init_metrics(struct sock *sk)
+ 		tp->snd_ssthresh = val;
+ 		if (tp->snd_ssthresh > tp->snd_cwnd_clamp)
+ 			tp->snd_ssthresh = tp->snd_cwnd_clamp;
+-	} else {
+-		/* ssthresh may have been reduced unnecessarily during.
+-		 * 3WHS. Restore it back to its initial default.
+-		 */
+-		tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
+ 	}
+ 	val = tcp_metric_get(tm, TCP_METRIC_REORDERING);
+ 	if (val && tp->reordering != val)
 -- 
 2.42.0
 
