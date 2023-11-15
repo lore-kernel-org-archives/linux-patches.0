@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944AF3A8C9
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F563A8C9
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCj970LP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4223FC433C8;
-	Wed, 15 Nov 2023 19:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/FI8A7Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D897CC433CA;
+	Wed, 15 Nov 2023 19:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077691;
-	bh=/QgmWfcKhBFhkZb7WkIum4DPlSTwh056pwgjL1OHIDQ=;
+	s=korg; t=1700077693;
+	bh=OwilQIF6Yi8x+haqpcXNaio3+GY1FVtrcES8KDdfCsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QCj970LPlssVkANrjSbPOT/yoLxAy/aBCxhoF3x6P+P5zg5Hd2Kbd6uIMLZzi4FOS
-	 4fcu6756af1sRScp9IEtz6YGkCukdETSmYQK3Qgk2FSP6qXKp9zAw64becFQCpm0Jb
-	 Pb6uLjrmdyfr9j+gkuASKdkZxSQK4c1tJrxG9vqg=
+	b=u/FI8A7ZyOTA9SoFHHFp0EbPfAYFTfWpLNBCChAGqhSoCyu+VJ2nBLL20LlS899I/
+	 m0cuNkvLRN6n1jQHWVUL7jlOiABCR69yiXAyknDWPprs6FGvXuNQRIbr8JGgrZfLJD
+	 thrUWixbOZwKjR8yYCAFL1vA9jHOv6n8MVi6Q8vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 459/603] powerpc: Only define __parse_fpscr() when required
-Date: Wed, 15 Nov 2023 14:16:44 -0500
-Message-ID: <20231115191644.382715330@linuxfoundation.org>
+Subject: [PATCH 6.6 460/603] interconnect: fix error handling in qnoc_probe()
+Date: Wed, 15 Nov 2023 14:16:45 -0500
+Message-ID: <20231115191644.437343412@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,53 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit c7e0d9bb9154c6e6b2ac8746faba27b53393f25e ]
+[ Upstream commit 273f74a2e7d15a5c216a4a26b84b1563c7092c9d ]
 
-Clang 17 reports:
+Add missing clk_disable_unprepare() and clk_bulk_disable_unprepare()
+in the error path in qnoc_probe(). And when qcom_icc_qos_set() fails,
+it needs remove nodes and disable clks.
 
-arch/powerpc/kernel/traps.c:1167:19: error: unused function '__parse_fpscr' [-Werror,-Wunused-function]
-
-__parse_fpscr() is called from two sites. First call is guarded
-by #ifdef CONFIG_PPC_FPU_REGS
-
-Second call is guarded by CONFIG_MATH_EMULATION which selects
-CONFIG_PPC_FPU_REGS.
-
-So only define __parse_fpscr() when CONFIG_PPC_FPU_REGS is defined.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202309210327.WkqSd5Bq-lkp@intel.com/
-Fixes: b6254ced4da6 ("powerpc/signal: Don't manage floating point regs when no FPU")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/5de2998c57f3983563b27b39228ea9a7229d4110.1695385984.git.christophe.leroy@csgroup.eu
+Fixes: 2e2113c8a64f ("interconnect: qcom: rpm: Handle interface clocks")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20230803130521.959487-1-yangyingliang@huawei.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/traps.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/interconnect/qcom/icc-rpm.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/kernel/traps.c b/arch/powerpc/kernel/traps.c
-index 64ff37721fd06..fe3f720c9cd61 100644
---- a/arch/powerpc/kernel/traps.c
-+++ b/arch/powerpc/kernel/traps.c
-@@ -1164,6 +1164,7 @@ void emulate_single_step(struct pt_regs *regs)
- 		__single_step_exception(regs);
- }
+diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+index 2c16917ba1fda..e76356f91125f 100644
+--- a/drivers/interconnect/qcom/icc-rpm.c
++++ b/drivers/interconnect/qcom/icc-rpm.c
+@@ -497,7 +497,7 @@ int qnoc_probe(struct platform_device *pdev)
  
-+#ifdef CONFIG_PPC_FPU_REGS
- static inline int __parse_fpscr(unsigned long fpscr)
- {
- 	int ret = FPE_FLTUNK;
-@@ -1190,6 +1191,7 @@ static inline int __parse_fpscr(unsigned long fpscr)
+ 	ret = devm_clk_bulk_get(dev, qp->num_intf_clks, qp->intf_clks);
+ 	if (ret)
+-		return ret;
++		goto err_disable_unprepare_clk;
+ 
+ 	provider = &qp->provider;
+ 	provider->dev = dev;
+@@ -512,13 +512,15 @@ int qnoc_probe(struct platform_device *pdev)
+ 	/* If this fails, bus accesses will crash the platform! */
+ 	ret = clk_bulk_prepare_enable(qp->num_intf_clks, qp->intf_clks);
+ 	if (ret)
+-		return ret;
++		goto err_disable_unprepare_clk;
+ 
+ 	for (i = 0; i < num_nodes; i++) {
+ 		size_t j;
+ 
+ 		node = icc_node_create(qnodes[i]->id);
+ 		if (IS_ERR(node)) {
++			clk_bulk_disable_unprepare(qp->num_intf_clks,
++						   qp->intf_clks);
+ 			ret = PTR_ERR(node);
+ 			goto err_remove_nodes;
+ 		}
+@@ -534,8 +536,11 @@ int qnoc_probe(struct platform_device *pdev)
+ 		if (qnodes[i]->qos.ap_owned &&
+ 		    qnodes[i]->qos.qos_mode != NOC_QOS_MODE_INVALID) {
+ 			ret = qcom_icc_qos_set(node);
+-			if (ret)
+-				return ret;
++			if (ret) {
++				clk_bulk_disable_unprepare(qp->num_intf_clks,
++							   qp->intf_clks);
++				goto err_remove_nodes;
++			}
+ 		}
+ 
+ 		data->nodes[i] = node;
+@@ -563,6 +568,7 @@ int qnoc_probe(struct platform_device *pdev)
+ 	icc_provider_deregister(provider);
+ err_remove_nodes:
+ 	icc_nodes_remove(provider);
++err_disable_unprepare_clk:
+ 	clk_disable_unprepare(qp->bus_clk);
  
  	return ret;
- }
-+#endif
- 
- static void parse_fpe(struct pt_regs *regs)
- {
 -- 
 2.42.0
 
