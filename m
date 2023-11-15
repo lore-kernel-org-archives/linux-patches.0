@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DDE45BE4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FAF45BE4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVNy6AIo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B93C433C9;
-	Wed, 15 Nov 2023 22:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wctsUKhE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC54C433CA;
+	Wed, 15 Nov 2023 22:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085799;
-	bh=E+Yy8KGE9OmuA8CKBCeOrQn1S1IRq/4+4BeDOvKu2ro=;
+	s=korg; t=1700085801;
+	bh=QXTL+kcVvPzZUN4NwtKCg4TdB2EIJ2AJht6eAcViFHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OVNy6AIoAnsNxAz/2NkQZV4Mdz1NC39QmdTNQ+dcGfnWbi/IzOMbM9QzAYMWndm+H
-	 zvrj3WzII3StB28u3QHgWLpYlhiL+11fTO4Fu3UhDs9V0g8RjQB7KlRTpseDDL4dQc
-	 Sumbqn+xwU2oP1fL2VfdxoRC4j4WeZGkfcBB4lss=
+	b=wctsUKhEIpdgZK835+IHcRWnOUoEA6MJ/M2/I/pUbrYnTe1QX4kzQwxsnWzsQIo0Z
+	 cBrjZWhGauYNf3YNnXUCgqRC25hiwcdDQ5q2YpT5GahLpSiTfFRpNESA27QP0VF7xR
+	 5o+2K/IxJxvGCzvLzooXTsY3Fjn9Crd5p9lTD+7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mars Cheng <marscheng@google.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Yen-lin Lai <yenlinlai@google.com>,
-	Daniel Mentz <danielmentz@google.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 061/119] scsi: ufs: core: Leave space for \0 in utf8 desc string
-Date: Wed, 15 Nov 2023 17:00:51 -0500
-Message-ID: <20231115220134.519263307@linuxfoundation.org>
+Subject: [PATCH 5.4 035/119] platform/x86: wmi: Fix probe failure when failing to register WMI devices
+Date: Wed, 15 Nov 2023 17:00:25 -0500
+Message-ID: <20231115220133.712428961@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -40,52 +36,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Mentz <danielmentz@google.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit a75a16c62a2540f11eeae4f2b50e95deefb652ea ]
+[ Upstream commit ed85891a276edaf7a867de0e9acd0837bc3008f2 ]
 
-utf16s_to_utf8s does not NULL terminate the output string. For us to be
-able to add a NULL character when utf16s_to_utf8s returns, we need to make
-sure that there is space for such NULL character at the end of the output
-buffer. We can achieve this by passing an output buffer size to
-utf16s_to_utf8s that is one character less than what we allocated.
+When a WMI device besides the first one somehow fails to register,
+retval is returned while still containing a negative error code. This
+causes the ACPI device fail to probe, leaving behind zombie WMI devices
+leading to various errors later.
 
-Other call sites of utf16s_to_utf8s appear to be using the same technique
-where they artificially reduce the buffer size by one to leave space for a
-NULL character or line feed character.
+Handle the single error path separately and return 0 unconditionally
+after trying to register all WMI devices to solve the issue. Also
+continue to register WMI devices even if some fail to allocate memory.
 
-Fixes: 4b828fe156a6 ("scsi: ufs: revamp string descriptor reading")
-Reviewed-by: Mars Cheng <marscheng@google.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Yen-lin Lai <yenlinlai@google.com>
-Signed-off-by: Daniel Mentz <danielmentz@google.com>
-Link: https://lore.kernel.org/r/20231017182026.2141163-1-danielmentz@google.com
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 6ee50aaa9a20 ("platform/x86: wmi: Instantiate all devices before adding them")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20231020211005.38216-4-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/wmi.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index 9d13226d2324a..363adf489079a 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -3265,7 +3265,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
- 		 */
- 		ret = utf16s_to_utf8s(uc_str->uc,
- 				      uc_str->len - QUERY_DESC_HDR_SIZE,
--				      UTF16_BIG_ENDIAN, str, ascii_len);
-+				      UTF16_BIG_ENDIAN, str, ascii_len - 1);
+diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
+index 67c4ec554ada8..f4327c2873fa3 100644
+--- a/drivers/platform/x86/wmi.c
++++ b/drivers/platform/x86/wmi.c
+@@ -1154,8 +1154,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
+ 	struct wmi_block *wblock, *next;
+ 	union acpi_object *obj;
+ 	acpi_status status;
+-	int retval = 0;
+ 	u32 i, total;
++	int retval;
  
- 		/* replace non-printable or non-ASCII characters with spaces */
- 		for (i = 0; i < ret; i++)
+ 	status = acpi_evaluate_object(device->handle, "_WDG", NULL, &out);
+ 	if (ACPI_FAILURE(status))
+@@ -1166,8 +1166,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
+ 		return -ENXIO;
+ 
+ 	if (obj->type != ACPI_TYPE_BUFFER) {
+-		retval = -ENXIO;
+-		goto out_free_pointer;
++		kfree(obj);
++		return -ENXIO;
+ 	}
+ 
+ 	gblock = (const struct guid_block *)obj->buffer.pointer;
+@@ -1188,8 +1188,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
+ 
+ 		wblock = kzalloc(sizeof(struct wmi_block), GFP_KERNEL);
+ 		if (!wblock) {
+-			retval = -ENOMEM;
+-			break;
++			dev_err(wmi_bus_dev, "Failed to allocate %pUL\n", &gblock[i].guid);
++			continue;
+ 		}
+ 
+ 		wblock->acpi_device = device;
+@@ -1228,9 +1228,9 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
+ 		}
+ 	}
+ 
+-out_free_pointer:
+-	kfree(out.pointer);
+-	return retval;
++	kfree(obj);
++
++	return 0;
+ }
+ 
+ /*
 -- 
 2.42.0
 
