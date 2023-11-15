@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A551381A5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194F9381A5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiZkWtjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE490C4E777;
-	Wed, 15 Nov 2023 20:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuNMgZJr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C2CC4E778;
+	Wed, 15 Nov 2023 20:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081790;
-	bh=DypcVCRg8+RinQ1cGjwDe20ka33J3f2SvYA/vt9QCP8=;
+	s=korg; t=1700081791;
+	bh=wrwxb1ybmeENIM0J2Xp5TTKszE7Jw2/gQ9tJ+1xkioA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZiZkWtjWOtJJ4jqozeb1+2vvLuYwMSbaPj8OcbPEsswpk6bzEJfOHLDdPcSO3MUCH
-	 HYQqvmzNDKxChevWrpvihzeg1RgGW/KLfLnVPoAh1HmKLGHGJ6kx2O/bHM2gGBtfUy
-	 aYqsCC79zt3jc01dGJnhZSyC6pouYMkXBYuO86V4=
+	b=iuNMgZJrS6kdqzdtufACHJKTWFHyygMOVigQZKDcdvd8HFU0jXgaFTDxDruELq8eX
+	 ZfH3Ml30MziU33k8jgvy7SsZSGV1dFRPGvm0rhcN6stumIlJFno9YsQk1DE+IXwMva
+	 3tOtXtYAp5d0UO1JueTQdifHX8L0QekXiO+3qB8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephane Eranian <eranian@google.com>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Jia-Ju Bai <baijiaju@buaa.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 126/191] perf evlist: Avoid frequency mode for the dummy event
-Date: Wed, 15 Nov 2023 15:46:41 -0500
-Message-ID: <20231115204652.088332898@linuxfoundation.org>
+Subject: [PATCH 5.10 127/191] usb: dwc2: fix possible NULL pointer dereference caused by driver concurrency
+Date: Wed, 15 Nov 2023 15:46:42 -0500
+Message-ID: <20231115204652.148757050@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -46,84 +41,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Jia-Ju Bai <baijiaju@buaa.edu.cn>
 
-[ Upstream commit f9cdeb58a9cf46c09b56f5f661ea8da24b6458c3 ]
+[ Upstream commit ef307bc6ef04e8c1ea843231db58e3afaafa9fa6 ]
 
-Dummy events are created with an attribute where the period and freq
-are zero. evsel__config will then see the uninitialized values and
-initialize them in evsel__default_freq_period. As fequency mode is
-used by default the dummy event would be set to use frequency
-mode. However, this has no effect on the dummy event but does cause
-unnecessary timers/interrupts. Avoid this overhead by setting the
-period to 1 for dummy events.
+In _dwc2_hcd_urb_enqueue(), "urb->hcpriv = NULL" is executed without
+holding the lock "hsotg->lock". In _dwc2_hcd_urb_dequeue():
 
-evlist__add_aux_dummy calls evlist__add_dummy then sets freq=0 and
-period=1. This isn't necessary after this change and so the setting is
-removed.
+    spin_lock_irqsave(&hsotg->lock, flags);
+    ...
+	if (!urb->hcpriv) {
+		dev_dbg(hsotg->dev, "## urb->hcpriv is NULL ##\n");
+		goto out;
+	}
+    rc = dwc2_hcd_urb_dequeue(hsotg, urb->hcpriv); // Use urb->hcpriv
+    ...
+out:
+    spin_unlock_irqrestore(&hsotg->lock, flags);
 
->From Stephane:
+When _dwc2_hcd_urb_enqueue() and _dwc2_hcd_urb_dequeue() are
+concurrently executed, the NULL check of "urb->hcpriv" can be executed
+before "urb->hcpriv = NULL". After urb->hcpriv is NULL, it can be used
+in the function call to dwc2_hcd_urb_dequeue(), which can cause a NULL
+pointer dereference.
 
-The dummy event is not counting anything. It is used to collect mmap
-records and avoid a race condition during the synthesize mmap phase of
-perf record. As such, it should not cause any overhead during active
-profiling. Yet, it did. Because of a bug the dummy event was
-programmed as a sampling event in frequency mode. Events in that mode
-incur more kernel overheads because on timer tick, the kernel has to
-look at the number of samples for each event and potentially adjust
-the sampling period to achieve the desired frequency. The dummy event
-was therefore adding a frequency event to task and ctx contexts we may
-otherwise not have any, e.g.,
+This possible bug is found by an experimental static analysis tool
+developed by myself. This tool analyzes the locking APIs to extract
+function pairs that can be concurrently executed, and then analyzes the
+instructions in the paired functions to identify possible concurrency
+bugs including data races and atomicity violations. The above possible
+bug is reported, when my tool analyzes the source code of Linux 6.5.
 
-  perf record -a -e cpu/event=0x3c,period=10000000/.
+To fix this possible bug, "urb->hcpriv = NULL" should be executed with
+holding the lock "hsotg->lock". After using this patch, my tool never
+reports the possible bug, with the kernelconfiguration allyesconfig for
+x86_64. Because I have no associated hardware, I cannot test the patch
+in runtime testing, and just verify it according to the code logic.
 
-On each timer tick the perf_adjust_freq_unthr_context() is invoked and
-if ctx->nr_freq is non-zero, then the kernel will loop over ALL the
-events of the context looking for frequency mode ones. In doing, so it
-locks the context, and enable/disable the PMU of each hw event. If all
-the events of the context are in period mode, the kernel will have to
-traverse the list for nothing incurring overhead. The overhead is
-multiplied by a very large factor when this happens in a guest kernel.
-There is no need for the dummy event to be in frequency mode, it does
-not count anything and therefore should not cause extra overhead for
-no reason.
-
-Fixes: 5bae0250237f ("perf evlist: Introduce perf_evlist__new_dummy constructor")
-Reported-by: Stephane Eranian <eranian@google.com>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20230916035640.1074422-1-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 33ad261aa62b ("usb: dwc2: host: spinlock urb_enqueue")
+Signed-off-by: Jia-Ju Bai <baijiaju@buaa.edu.cn>
+Link: https://lore.kernel.org/r/20230926024404.832096-1-baijiaju@buaa.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evlist.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/dwc2/hcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/evlist.c b/tools/perf/util/evlist.c
-index f0ca9aa7c208e..84b328d2515bd 100644
---- a/tools/perf/util/evlist.c
-+++ b/tools/perf/util/evlist.c
-@@ -251,6 +251,9 @@ int evlist__add_dummy(struct evlist *evlist)
- 		.type	= PERF_TYPE_SOFTWARE,
- 		.config = PERF_COUNT_SW_DUMMY,
- 		.size	= sizeof(attr), /* to capture ABI version */
-+		/* Avoid frequency mode for dummy events to avoid associated timers. */
-+		.freq = 0,
-+		.sample_period = 1,
- 	};
- 	struct evsel *evsel = evsel__new_idx(&attr, evlist->core.nr_entries);
- 
-@@ -271,8 +274,6 @@ struct evsel *evlist__add_aux_dummy(struct evlist *evlist, bool system_wide)
- 	evsel->core.attr.exclude_kernel = 1;
- 	evsel->core.attr.exclude_guest = 1;
- 	evsel->core.attr.exclude_hv = 1;
--	evsel->core.attr.freq = 0;
--	evsel->core.attr.sample_period = 1;
- 	evsel->core.system_wide = system_wide;
- 	evsel->no_aux_samples = true;
- 	evsel->name = strdup("dummy:u");
+diff --git a/drivers/usb/dwc2/hcd.c b/drivers/usb/dwc2/hcd.c
+index 9279d3d3698c2..14925fedb01aa 100644
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -4684,8 +4684,8 @@ static int _dwc2_hcd_urb_enqueue(struct usb_hcd *hcd, struct urb *urb,
+ 	if (qh_allocated && qh->channel && qh->channel->qh == qh)
+ 		qh->channel->qh = NULL;
+ fail2:
+-	spin_unlock_irqrestore(&hsotg->lock, flags);
+ 	urb->hcpriv = NULL;
++	spin_unlock_irqrestore(&hsotg->lock, flags);
+ 	kfree(qtd);
+ fail1:
+ 	if (qh_allocated) {
 -- 
 2.42.0
 
