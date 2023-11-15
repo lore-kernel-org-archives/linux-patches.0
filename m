@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2BA3BB2D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86FE3DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r91af5UI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B731EC433CA;
-	Wed, 15 Nov 2023 19:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhSm4LRt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D25C433C8;
+	Wed, 15 Nov 2023 19:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078200;
-	bh=cXdPyR4TwCLyXSwfTwt9kfgKcN7By8yWOUpmWFYJ0xM=;
+	s=korg; t=1700078202;
+	bh=yU6B6YRh11vS0phSrfQk0ORoCJZoyVYVIgcjOO9vV3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r91af5UIw9GL5LeCrSYvrduQ548hVTlBhleIKAtPD5n2Qiq5MHvSdt8gG80Yln/yu
-	 4VuLMNHj1C3vVt0AdBYGJQt9H/tColIf6X2o53ni+4HhMI4qTVCoebGMdfCetcFQ60
-	 Md++LrkImlFxSedeNQ8dnnhdWhS2hPY95njNM4cg=
+	b=yhSm4LRt+pkJ6RmbQMUaOP/uKOSwfwpwCr4KwiNtmoT37YBTTNQDyHgshzpWfR//k
+	 9YCXVd6028CuTg3cR81Or//tD4N1a8FThypG6ePoRi0vF/bw+7g7RBdOktgvEmaGbn
+	 QnD4e1MtSqp8xG0xiDKhUZthcZZk46IkItpE0FlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Jai Luthra <j-luthra@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 174/379] arm64: dts: ti: k3-am62a7-sk: Drop i2c-1 to 100Khz
-Date: Wed, 15 Nov 2023 14:24:09 -0500
-Message-ID: <20231115192655.408119900@linuxfoundation.org>
+Subject: [PATCH 6.1 175/379] firmware: arm_ffa: Assign the missing IDR allocation ID to the FFA device
+Date: Wed, 15 Nov 2023 14:24:10 -0500
+Message-ID: <20231115192655.469919995@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -44,42 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jai Luthra <j-luthra@ti.com>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-[ Upstream commit 63e5aa69b821472a3203a29e17c025329c1b151f ]
+[ Upstream commit 7d0bc6360f17ea323ab25939a34857123d7d87e5 ]
 
-The TLV320AIC3106 audio codec is interfaced on the i2c-1 bus. With the
-default rate of 400Khz the i2c register writes fail to sync:
+Commit 19b8766459c4 ("firmware: arm_ffa: Fix FFA device names for logical
+partitions") added an ID to the FFA device using ida_alloc() and append
+the same to "arm-ffa" to make up a unique device name. However it missed
+to stash the id value in ffa_dev to help freeing the ID later when the
+device is destroyed.
 
-[   36.026387] tlv320aic3x 1-001b: Unable to sync registers 0x16-0x16. -110
-[   38.101130] omap_i2c 20010000.i2c: controller timed out
+Due to the missing/unassigned ID in FFA device, we get the following
+warning when the FF-A device is unregistered.
 
-Dropping the rate to 100Khz fixes the issue.
+  |   ida_free called for id=0 which is not allocated.
+  |   WARNING: CPU: 7 PID: 1 at lib/idr.c:525 ida_free+0x114/0x164
+  |   CPU: 7 PID: 1 Comm: swapper/0 Not tainted 6.6.0-rc4 #209
+  |   pstate: 61400009 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  |   pc : ida_free+0x114/0x164
+  |   lr : ida_free+0x114/0x164
+  |   Call trace:
+  |    ida_free+0x114/0x164
+  |    ffa_release_device+0x24/0x3c
+  |    device_release+0x34/0x8c
+  |    kobject_put+0x94/0xf8
+  |    put_device+0x18/0x24
+  |    klist_devices_put+0x14/0x20
+  |    klist_next+0xc8/0x114
+  |    bus_for_each_dev+0xd8/0x144
+  |    arm_ffa_bus_exit+0x30/0x54
+  |    ffa_init+0x68/0x330
+  |    do_one_initcall+0xdc/0x250
+  |    do_initcall_level+0x8c/0xac
+  |    do_initcalls+0x54/0x94
+  |    do_basic_setup+0x1c/0x28
+  |    kernel_init_freeable+0x104/0x170
+  |    kernel_init+0x20/0x1a0
+  |    ret_from_fork+0x10/0x20
 
-Fixes: 38c4a08c820c ("arm64: dts: ti: Add support for AM62A7-SK")
-Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
-Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
-Link: https://lore.kernel.org/r/20231003-mcasp_am62a-v3-3-2b631ff319ca@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Fix the same by actually assigning the ID in the FFA device this time
+for real.
+
+Fixes: 19b8766459c4 ("firmware: arm_ffa: Fix FFA device names for logical partitions")
+Link: https://lore.kernel.org/r/20231003085932.3553985-1-sudeep.holla@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62a7-sk.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/arm_ffa/bus.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-index b08a083d722d4..7f265c671654d 100644
---- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-@@ -172,7 +172,7 @@ &main_i2c1 {
- 	status = "okay";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&main_i2c1_pins_default>;
--	clock-frequency = <400000>;
-+	clock-frequency = <100000>;
+diff --git a/drivers/firmware/arm_ffa/bus.c b/drivers/firmware/arm_ffa/bus.c
+index b9ce784f087df..248594b59c64d 100644
+--- a/drivers/firmware/arm_ffa/bus.c
++++ b/drivers/firmware/arm_ffa/bus.c
+@@ -193,6 +193,7 @@ struct ffa_device *ffa_device_register(const uuid_t *uuid, int vm_id,
+ 	dev->release = ffa_release_device;
+ 	dev_set_name(&ffa_dev->dev, "arm-ffa-%d", id);
  
- 	exp1: gpio@22 {
- 		compatible = "ti,tca6424";
++	ffa_dev->id = id;
+ 	ffa_dev->vm_id = vm_id;
+ 	ffa_dev->ops = ops;
+ 	uuid_copy(&ffa_dev->uuid, uuid);
 -- 
 2.42.0
 
