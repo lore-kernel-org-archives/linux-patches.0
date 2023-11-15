@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25BE43AB9
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6CA43AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Db9QrWBN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56413C433CC;
-	Wed, 15 Nov 2023 20:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0UhCT/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0335C433C8;
+	Wed, 15 Nov 2023 20:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081209;
-	bh=kW8diU1YINe48AN9KlfEHs9+rI81UAgsOGkArLaZXqc=;
+	s=korg; t=1700081210;
+	bh=W804Ik0KfL0F9m3/aoYfG4N5i8UF+QTZOEUyTA5cJ8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Db9QrWBNuTw1+LtXHaR0yKR+T7iR0+fXi6XgZ8GPDB82pUSTqmWB07hFo5UNBcPw8
-	 U6amO71BfQWuawjsWbZqz0GoBWJ93Z1ZaWjLZdt3iOtWxIhP0l+Pijj1cOH/Q1lJnA
-	 q0+7UxChreaQXBxdy6ZBJxf5/r+IGNAcGfSrVt3o=
+	b=I0UhCT/5F8xP6YalsmKGuNI7WREq00PC2blJTtpLDclq2laDVw9HxZwiKY7v7rsYZ
+	 w1JV6vPh9WRqx4+neDqyOCA20arC+wcs8QADSHUFEx2598/dB3YImAOT/cbGFfkxYK
+	 8eZBtyBiCFVd2jfnAVhzksl771is2vusvOdPqwL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 016/244] wifi: iwlwifi: Use FW rate for non-data frames
-Date: Wed, 15 Nov 2023 15:33:28 -0500
-Message-ID: <20231115203549.344142316@linuxfoundation.org>
+Subject: [PATCH 5.15 017/244] udp: add missing WRITE_ONCE() around up->encap_rcv
+Date: Wed, 15 Nov 2023 15:33:29 -0500
+Message-ID: <20231115203549.403945021@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -43,62 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 499d02790495958506a64f37ceda7e97345a50a8 ]
+[ Upstream commit 6d5a12eb91224d707f8691dccb40a5719fe5466d ]
 
-Currently we are setting the rate in the tx cmd for
-mgmt frames (e.g. during connection establishment).
-This was problematic when sending mgmt frames in eSR mode,
-as we don't know what link this frame will be sent on
-(This is decided by the FW), so we don't know what is the
-lowest rate.
-Fix this by not setting the rate in tx cmd and rely
-on FW to choose the right one.
-Set rate only for injected frames with fixed rate,
-or when no sta is given.
-Also set for important frames (EAPOL etc.) the High Priority flag.
+UDP_ENCAP_ESPINUDP_NON_IKE setsockopt() writes over up->encap_rcv
+while other cpus read it.
 
-Fixes: 055b22e770dd ("iwlwifi: mvm: Set Tx rate and flags when there is not station")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230913145231.6c7e59620ee0.I6eaed3ccdd6dd62b9e664facc484081fc5275843@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 067b207b281d ("[UDP]: Cleanup UDP encapsulation code")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ net/ipv4/udp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index b127e0b527ce0..5304edd351db2 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -479,16 +479,20 @@ iwl_mvm_set_tx_params(struct iwl_mvm *mvm, struct sk_buff *skb,
- 			flags |= IWL_TX_FLAGS_ENCRYPT_DIS;
- 
- 		/*
--		 * For data packets rate info comes from the fw. Only
--		 * set rate/antenna during connection establishment or in case
--		 * no station is given.
-+		 * For data and mgmt packets rate info comes from the fw. Only
-+		 * set rate/antenna for injected frames with fixed rate, or
-+		 * when no sta is given.
- 		 */
--		if (!sta || !ieee80211_is_data(hdr->frame_control) ||
--		    mvmsta->sta_state < IEEE80211_STA_AUTHORIZED) {
-+		if (unlikely(!sta ||
-+			     info->control.flags & IEEE80211_TX_CTRL_RATE_INJECT)) {
- 			flags |= IWL_TX_FLAGS_CMD_RATE;
- 			rate_n_flags =
- 				iwl_mvm_get_tx_rate_n_flags(mvm, info, sta,
- 							    hdr->frame_control);
-+		} else if (!ieee80211_is_data(hdr->frame_control) ||
-+			   mvmsta->sta_state < IEEE80211_STA_AUTHORIZED) {
-+			/* These are important frames */
-+			flags |= IWL_TX_FLAGS_HIGH_PRI;
- 		}
- 
- 		if (mvm->trans->trans_cfg->device_family >=
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 198d8e07413d3..c454daa78a2f8 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -2711,10 +2711,12 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ 		case UDP_ENCAP_ESPINUDP_NON_IKE:
+ #if IS_ENABLED(CONFIG_IPV6)
+ 			if (sk->sk_family == AF_INET6)
+-				up->encap_rcv = ipv6_stub->xfrm6_udp_encap_rcv;
++				WRITE_ONCE(up->encap_rcv,
++					   ipv6_stub->xfrm6_udp_encap_rcv);
+ 			else
+ #endif
+-				up->encap_rcv = xfrm4_udp_encap_rcv;
++				WRITE_ONCE(up->encap_rcv,
++					   xfrm4_udp_encap_rcv);
+ #endif
+ 			fallthrough;
+ 		case UDP_ENCAP_L2TPINUDP:
 -- 
 2.42.0
 
