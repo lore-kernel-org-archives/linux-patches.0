@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1193C471
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0291804E
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnVvsmto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B155C433C8;
-	Wed, 15 Nov 2023 19:39:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzn9GPSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF1EC433C7;
+	Wed, 15 Nov 2023 19:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077152;
-	bh=WDy0XTXzku5+TgvOiisr9yp3kAMJktf+f+ZxPBECRbI=;
+	s=korg; t=1700077153;
+	bh=j8TZaEzgDqw6vUwOZlJCU8r/ZGv+ZfS6vSw+/B5vGH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FnVvsmto1bkW0k/BEWtU2RDc0QMXHxaVNSTAREBwuAtgli+zwoznsdMt4EgpplPRx
-	 01xiuYs7tNNJ9a6w64xcjtQP0Cdec9mc2WwY+nbL2VPcJn3aBUiPso+Qmo+PPhDFim
-	 nWsPYnBSt+X/KsdTNkeyHLvYi/260/N8VG+1ssJI=
+	b=dzn9GPSgE4EbeaoD+xqIUKLZdjBQdOJqz5mBadhHe6Z+Z3hr4xbYJWqKpH3a/mjB9
+	 974alx+aL82XCP0Ud+DFfK5QUdGMc8lVL3Gtn4NGJTE5nD9K3wHe2djQOPBO9gzeLq
+	 LdfCzTu3cIjVR3SQVAptT0BW00ZGikpwGC2ZIq4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 140/603] wifi: iwlwifi: mvm: change iwl_mvm_flush_sta() API
-Date: Wed, 15 Nov 2023 14:11:25 -0500
-Message-ID: <20231115191622.875957271@linuxfoundation.org>
+Subject: [PATCH 6.5 538/550] fbdev: imsttfb: fix double free in probe()
+Date: Wed, 15 Nov 2023 14:18:42 -0500
+Message-ID: <20231115191638.233923192@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,175 +38,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 391762969769b089c808defc8fce5544a945f9eb ]
+[ Upstream commit e08c30efda21ef4c0ec084a3a9581c220b442ba9 ]
 
-This API is type unsafe and needs an extra parameter to know
-what kind of station was passed, so it has two, but really it
-only needs two values. Just pass the values instead of doing
-this type-unsafe dance, which will also make it better to use
-for multi-link.
+The init_imstt() function calls framebuffer_release() on error and then
+the probe() function calls it again.  It should only be done in probe.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20231011130030.aeb3bf4204cd.I5b0e6d64a67455784bc8fbdaf9ceaf03699d9ce1@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 43874283ce6c ("wifi: iwlwifi: mvm: fix iwl_mvm_mac_flush_sta()")
+Fixes: 518ecb6a209f ("fbdev: imsttfb: Fix error path of imsttfb_probe()")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/intel/iwlwifi/mvm/mac80211.c  |  6 ++++--
- .../net/wireless/intel/iwlwifi/mvm/mld-sta.c   |  2 +-
- drivers/net/wireless/intel/iwlwifi/mvm/mvm.h   |  2 +-
- drivers/net/wireless/intel/iwlwifi/mvm/sta.c   |  9 ++++++---
- .../wireless/intel/iwlwifi/mvm/time-event.c    |  7 ++++---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c    | 18 ++----------------
- 6 files changed, 18 insertions(+), 26 deletions(-)
+ drivers/video/fbdev/imsttfb.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index a3058d7c77574..e68026a657059 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -5579,7 +5579,8 @@ void iwl_mvm_mac_flush(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 		}
- 
- 		if (drop) {
--			if (iwl_mvm_flush_sta(mvm, mvmsta, false))
-+			if (iwl_mvm_flush_sta(mvm, mvmsta->deflink.sta_id,
-+					      mvmsta->tfd_queue_msk))
- 				IWL_ERR(mvm, "flush request fail\n");
- 		} else {
- 			if (iwl_mvm_has_new_tx_api(mvm))
-@@ -5616,7 +5617,8 @@ void iwl_mvm_mac_flush_sta(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 
- 		mvmsta = iwl_mvm_sta_from_mac80211(sta);
- 
--		if (iwl_mvm_flush_sta(mvm, mvmsta, false))
-+		if (iwl_mvm_flush_sta(mvm, mvmsta->deflink.sta_id,
-+				      mvmsta->tfd_queue_msk))
- 			IWL_ERR(mvm, "flush request fail\n");
+diff --git a/drivers/video/fbdev/imsttfb.c b/drivers/video/fbdev/imsttfb.c
+index ee7d01ad14068..db7cf995aa784 100644
+--- a/drivers/video/fbdev/imsttfb.c
++++ b/drivers/video/fbdev/imsttfb.c
+@@ -1419,7 +1419,6 @@ static int init_imstt(struct fb_info *info)
+ 	if ((info->var.xres * info->var.yres) * (info->var.bits_per_pixel >> 3) > info->fix.smem_len
+ 	    || !(compute_imstt_regvals(par, info->var.xres, info->var.yres))) {
+ 		printk("imsttfb: %ux%ux%u not supported\n", info->var.xres, info->var.yres, info->var.bits_per_pixel);
+-		framebuffer_release(info);
+ 		return -ENODEV;
  	}
- 	mutex_unlock(&mvm->mutex);
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-index 524852cf5cd2d..56f51344c193c 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-@@ -347,7 +347,7 @@ static int iwl_mvm_mld_rm_int_sta(struct iwl_mvm *mvm,
- 		return -EINVAL;
  
- 	if (flush)
--		iwl_mvm_flush_sta(mvm, int_sta, true);
-+		iwl_mvm_flush_sta(mvm, int_sta->sta_id, int_sta->tfd_queue_msk);
+@@ -1452,14 +1451,11 @@ static int init_imstt(struct fb_info *info)
+ 	              FBINFO_HWACCEL_FILLRECT |
+ 	              FBINFO_HWACCEL_YPAN;
  
- 	iwl_mvm_mld_disable_txq(mvm, BIT(int_sta->sta_id), queuptr, tid);
- 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-index b596eca562166..218f3bc31104b 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-@@ -1658,7 +1658,7 @@ const char *iwl_mvm_get_tx_fail_reason(u32 status);
- static inline const char *iwl_mvm_get_tx_fail_reason(u32 status) { return ""; }
- #endif
- int iwl_mvm_flush_tx_path(struct iwl_mvm *mvm, u32 tfd_msk);
--int iwl_mvm_flush_sta(struct iwl_mvm *mvm, void *sta, bool internal);
-+int iwl_mvm_flush_sta(struct iwl_mvm *mvm, u32 sta_id, u32 tfd_queue_mask);
- int iwl_mvm_flush_sta_tids(struct iwl_mvm *mvm, u32 sta_id, u16 tids);
- 
- /* Utils to extract sta related data */
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-index 3b9a343d4f672..ebbe165510587 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-@@ -2097,7 +2097,8 @@ int iwl_mvm_rm_sta(struct iwl_mvm *mvm,
- 		return ret;
- 
- 	/* flush its queues here since we are freeing mvm_sta */
--	ret = iwl_mvm_flush_sta(mvm, mvm_sta, false);
-+	ret = iwl_mvm_flush_sta(mvm, mvm_sta->deflink.sta_id,
-+				mvm_sta->tfd_queue_msk);
- 	if (ret)
- 		return ret;
- 	if (iwl_mvm_has_new_tx_api(mvm)) {
-@@ -2408,7 +2409,8 @@ void iwl_mvm_free_bcast_sta_queues(struct iwl_mvm *mvm,
- 
- 	lockdep_assert_held(&mvm->mutex);
- 
--	iwl_mvm_flush_sta(mvm, &mvmvif->deflink.bcast_sta, true);
-+	iwl_mvm_flush_sta(mvm, mvmvif->deflink.bcast_sta.sta_id,
-+			  mvmvif->deflink.bcast_sta.tfd_queue_msk);
- 
- 	switch (vif->type) {
- 	case NL80211_IFTYPE_AP:
-@@ -2664,7 +2666,8 @@ int iwl_mvm_rm_mcast_sta(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
- 
- 	lockdep_assert_held(&mvm->mutex);
- 
--	iwl_mvm_flush_sta(mvm, &mvmvif->deflink.mcast_sta, true);
-+	iwl_mvm_flush_sta(mvm, mvmvif->deflink.mcast_sta.sta_id,
-+			  mvmvif->deflink.mcast_sta.tfd_queue_msk);
- 
- 	iwl_mvm_disable_txq(mvm, NULL, mvmvif->deflink.mcast_sta.sta_id,
- 			    &mvmvif->deflink.cab_queue, 0);
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c b/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
-index ff213247569a7..158266719ffd7 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
-@@ -81,8 +81,8 @@ void iwl_mvm_roc_done_wk(struct work_struct *wk)
- 			struct ieee80211_vif *vif = mvm->p2p_device_vif;
- 
- 			mvmvif = iwl_mvm_vif_from_mac80211(vif);
--			iwl_mvm_flush_sta(mvm, &mvmvif->deflink.bcast_sta,
--					  true);
-+			iwl_mvm_flush_sta(mvm, mvmvif->deflink.bcast_sta.sta_id,
-+					  mvmvif->deflink.bcast_sta.tfd_queue_msk);
- 
- 			if (mvm->mld_api_is_used) {
- 				iwl_mvm_mld_rm_bcast_sta(mvm, vif,
-@@ -113,7 +113,8 @@ void iwl_mvm_roc_done_wk(struct work_struct *wk)
- 	 */
- 	if (test_and_clear_bit(IWL_MVM_STATUS_ROC_AUX_RUNNING, &mvm->status)) {
- 		/* do the same in case of hot spot 2.0 */
--		iwl_mvm_flush_sta(mvm, &mvm->aux_sta, true);
-+		iwl_mvm_flush_sta(mvm, mvm->aux_sta.sta_id,
-+				  mvm->aux_sta.tfd_queue_msk);
- 
- 		if (mvm->mld_api_is_used) {
- 			iwl_mvm_mld_rm_aux_sta(mvm);
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index 8158e6d9ef190..8bdb239295c39 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -2297,24 +2297,10 @@ int iwl_mvm_flush_sta_tids(struct iwl_mvm *mvm, u32 sta_id, u16 tids)
- 	return ret;
- }
- 
--int iwl_mvm_flush_sta(struct iwl_mvm *mvm, void *sta, bool internal)
-+int iwl_mvm_flush_sta(struct iwl_mvm *mvm, u32 sta_id, u32 tfd_queue_mask)
- {
--	u32 sta_id, tfd_queue_msk;
--
--	if (internal) {
--		struct iwl_mvm_int_sta *int_sta = sta;
--
--		sta_id = int_sta->sta_id;
--		tfd_queue_msk = int_sta->tfd_queue_msk;
--	} else {
--		struct iwl_mvm_sta *mvm_sta = sta;
--
--		sta_id = mvm_sta->deflink.sta_id;
--		tfd_queue_msk = mvm_sta->tfd_queue_msk;
+-	if (fb_alloc_cmap(&info->cmap, 0, 0)) {
+-		framebuffer_release(info);
++	if (fb_alloc_cmap(&info->cmap, 0, 0))
+ 		return -ENODEV;
 -	}
--
- 	if (iwl_mvm_has_new_tx_api(mvm))
- 		return iwl_mvm_flush_sta_tids(mvm, sta_id, 0xffff);
  
--	return iwl_mvm_flush_tx_path(mvm, tfd_queue_msk);
-+	return iwl_mvm_flush_tx_path(mvm, tfd_queue_mask);
- }
+ 	if (register_framebuffer(info) < 0) {
+ 		fb_dealloc_cmap(&info->cmap);
+-		framebuffer_release(info);
+ 		return -ENODEV;
+ 	}
+ 
 -- 
 2.42.0
 
