@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EF73DB8D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8C93DB8D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/ZRZsKy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F09C433C9;
-	Wed, 15 Nov 2023 19:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AxOCz2B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEBFC433C7;
+	Wed, 15 Nov 2023 19:20:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076041;
-	bh=a3YfqGA+MOK/vgJCfTyLpkhF8VzF9gGN8OcQ0B4NsjE=;
+	s=korg; t=1700076042;
+	bh=YnkXmjkRNshYuCCiPjjAvSPbW+GHroJICIiVsXwUczI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/ZRZsKyleLovmDZlxm/9uugrjFHB/ZZ4jVI9KcUdRM7PWLuVKFlT10IMj+r7DdM/
-	 oT/ANC5HfxFt6d93qSYOkeIatzNz1VLLinBcZwwUjvzQUmXGOAdnuQ8y8+Rvyk3Rg9
-	 kUwnN8xhBcsBfdLdaoLkcR5sFAJugK7knBWuuicA=
+	b=2AxOCz2Bp6VGI42/d0obqwt7G39h3HC3GG9mUzexieFGYYEFHao6QTAawPmUz2gAI
+	 EhOwgpRkRFUCyyi6JhwxY6uPasq6G51UlNUXgzsmcNEgbitn9nnl9g+HKIjJlELJ8A
+	 pjslzh8FhbUIW0DS0elMQN8/iq4iSANkuPRRA5j4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 038/550] wifi: cfg80211: add flush functions for wiphy work
-Date: Wed, 15 Nov 2023 14:10:22 -0500
-Message-ID: <20231115191603.352108636@linuxfoundation.org>
+Subject: [PATCH 6.5 039/550] wifi: mac80211: move radar detect work to wiphy work
+Date: Wed, 15 Nov 2023 14:10:23 -0500
+Message-ID: <20231115191603.420294858@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,169 +44,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 56cfb8ce1f7f6c4e5ca571a2ec0880e131cd0311 ]
+[ Upstream commit 228e4f931b0e630dacca8dd867ddd863aea53913 ]
 
-There may be sometimes reasons to actually run the work
-if it's pending, add flush functions for both regular and
-delayed wiphy work that will do this.
+Move the radar detect work to wiphy work in order
+to lock the wiphy for it without doing it manually.
 
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Stable-dep-of: eadfb54756ae ("wifi: mac80211: move sched-scan stop work to wiphy work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h | 21 +++++++++++++++++++++
- net/wireless/core.c    | 34 ++++++++++++++++++++++++++++++++--
- net/wireless/core.h    |  3 ++-
- net/wireless/sysfs.c   |  4 ++--
- 4 files changed, 57 insertions(+), 5 deletions(-)
+ net/mac80211/ieee80211_i.h | 5 +++--
+ net/mac80211/main.c        | 9 +++++----
+ net/mac80211/util.c        | 7 +++----
+ 3 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 641c6edc9b81d..0f0bf26adb15d 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -5827,6 +5827,16 @@ void wiphy_work_queue(struct wiphy *wiphy, struct wiphy_work *work);
-  */
- void wiphy_work_cancel(struct wiphy *wiphy, struct wiphy_work *work);
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index 2cce9eba6a120..90eda427e9ab8 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -1406,7 +1406,7 @@ struct ieee80211_local {
+ 	/* wowlan is enabled -- don't reconfig on resume */
+ 	bool wowlan;
  
-+/**
-+ * wiphy_work_flush - flush previously queued work
-+ * @wiphy: the wiphy, for debug purposes
-+ * @work: the work to flush, this can be %NULL to flush all work
-+ *
-+ * Flush the work (i.e. run it if pending). This must be called
-+ * under the wiphy mutex acquired by wiphy_lock().
-+ */
-+void wiphy_work_flush(struct wiphy *wiphy, struct wiphy_work *work);
-+
- struct wiphy_delayed_work {
- 	struct wiphy_work work;
- 	struct wiphy *wiphy;
-@@ -5870,6 +5880,17 @@ void wiphy_delayed_work_queue(struct wiphy *wiphy,
- void wiphy_delayed_work_cancel(struct wiphy *wiphy,
- 			       struct wiphy_delayed_work *dwork);
+-	struct work_struct radar_detected_work;
++	struct wiphy_work radar_detected_work;
  
-+/**
-+ * wiphy_delayed work_flush - flush previously queued delayed work
-+ * @wiphy: the wiphy, for debug purposes
-+ * @work: the work to flush
-+ *
-+ * Flush the work (i.e. run it if pending). This must be called
-+ * under the wiphy mutex acquired by wiphy_lock().
-+ */
-+void wiphy_delayed_work_flush(struct wiphy *wiphy,
-+			      struct wiphy_delayed_work *dwork);
-+
- /**
-  * struct wireless_dev - wireless device state
-  *
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index acec41c1809a8..563cfbe3237c9 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1049,7 +1049,8 @@ void wiphy_rfkill_start_polling(struct wiphy *wiphy)
- }
- EXPORT_SYMBOL(wiphy_rfkill_start_polling);
+ 	/* number of RX chains the hardware has */
+ 	u8 rx_chains;
+@@ -2568,7 +2568,8 @@ bool ieee80211_is_radar_required(struct ieee80211_local *local);
+ void ieee80211_dfs_cac_timer(unsigned long data);
+ void ieee80211_dfs_cac_timer_work(struct work_struct *work);
+ void ieee80211_dfs_cac_cancel(struct ieee80211_local *local);
+-void ieee80211_dfs_radar_detected_work(struct work_struct *work);
++void ieee80211_dfs_radar_detected_work(struct wiphy *wiphy,
++				       struct wiphy_work *work);
+ int ieee80211_send_action_csa(struct ieee80211_sub_if_data *sdata,
+ 			      struct cfg80211_csa_settings *csa_settings);
  
--void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev)
-+void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev,
-+				  struct wiphy_work *end)
- {
- 	unsigned int runaway_limit = 100;
- 	unsigned long flags;
-@@ -1068,6 +1069,10 @@ void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev)
- 		wk->func(&rdev->wiphy, wk);
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index 24315d7b31263..3bbd66e5a0df0 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -338,7 +338,6 @@ static void ieee80211_restart_work(struct work_struct *work)
+ 	/* wait for scan work complete */
+ 	flush_workqueue(local->workqueue);
+ 	flush_work(&local->sched_scan_stopped_work);
+-	flush_work(&local->radar_detected_work);
  
- 		spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
-+
-+		if (wk == end)
-+			break;
-+
- 		if (WARN_ON(--runaway_limit == 0))
- 			INIT_LIST_HEAD(&rdev->wiphy_work_list);
- 	}
-@@ -1118,7 +1123,7 @@ void wiphy_unregister(struct wiphy *wiphy)
- #endif
+ 	rtnl_lock();
+ 	/* we might do interface manipulations, so need both */
+@@ -813,8 +812,8 @@ struct ieee80211_hw *ieee80211_alloc_hw_nm(size_t priv_data_len,
  
- 	/* surely nothing is reachable now, clean up work */
--	cfg80211_process_wiphy_works(rdev);
-+	cfg80211_process_wiphy_works(rdev, NULL);
- 	wiphy_unlock(&rdev->wiphy);
+ 	INIT_WORK(&local->restart_work, ieee80211_restart_work);
+ 
+-	INIT_WORK(&local->radar_detected_work,
+-		  ieee80211_dfs_radar_detected_work);
++	wiphy_work_init(&local->radar_detected_work,
++			ieee80211_dfs_radar_detected_work);
+ 
+ 	INIT_WORK(&local->reconfig_filter, ieee80211_reconfig_filter);
+ 	local->smps_mode = IEEE80211_SMPS_OFF;
+@@ -1482,13 +1481,15 @@ void ieee80211_unregister_hw(struct ieee80211_hw *hw)
+ 	 */
+ 	ieee80211_remove_interfaces(local);
+ 
++	wiphy_lock(local->hw.wiphy);
++	wiphy_work_cancel(local->hw.wiphy, &local->radar_detected_work);
++	wiphy_unlock(local->hw.wiphy);
  	rtnl_unlock();
  
-@@ -1640,6 +1645,21 @@ void wiphy_work_cancel(struct wiphy *wiphy, struct wiphy_work *work)
+ 	cancel_delayed_work_sync(&local->roc_work);
+ 	cancel_work_sync(&local->restart_work);
+ 	cancel_work_sync(&local->reconfig_filter);
+ 	flush_work(&local->sched_scan_stopped_work);
+-	flush_work(&local->radar_detected_work);
+ 
+ 	ieee80211_clear_tx_pending(local);
+ 	rate_control_deinitialize(local);
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index 8a6917cf63cf9..e878b6a27651a 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -4356,7 +4356,8 @@ void ieee80211_dfs_cac_cancel(struct ieee80211_local *local)
+ 	mutex_unlock(&local->mtx);
  }
- EXPORT_SYMBOL_GPL(wiphy_work_cancel);
  
-+void wiphy_work_flush(struct wiphy *wiphy, struct wiphy_work *work)
-+{
-+	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
-+	unsigned long flags;
-+	bool run;
-+
-+	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
-+	run = !work || !list_empty(&work->entry);
-+	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
-+
-+	if (run)
-+		cfg80211_process_wiphy_works(rdev, work);
-+}
-+EXPORT_SYMBOL_GPL(wiphy_work_flush);
-+
- void wiphy_delayed_work_timer(struct timer_list *t)
+-void ieee80211_dfs_radar_detected_work(struct work_struct *work)
++void ieee80211_dfs_radar_detected_work(struct wiphy *wiphy,
++				       struct wiphy_work *work)
  {
- 	struct wiphy_delayed_work *dwork = from_timer(dwork, t, timer);
-@@ -1672,6 +1692,16 @@ void wiphy_delayed_work_cancel(struct wiphy *wiphy,
+ 	struct ieee80211_local *local =
+ 		container_of(work, struct ieee80211_local, radar_detected_work);
+@@ -4374,9 +4375,7 @@ void ieee80211_dfs_radar_detected_work(struct work_struct *work)
+ 	}
+ 	mutex_unlock(&local->chanctx_mtx);
+ 
+-	wiphy_lock(local->hw.wiphy);
+ 	ieee80211_dfs_cac_cancel(local);
+-	wiphy_unlock(local->hw.wiphy);
+ 
+ 	if (num_chanctx > 1)
+ 		/* XXX: multi-channel is not supported yet */
+@@ -4391,7 +4390,7 @@ void ieee80211_radar_detected(struct ieee80211_hw *hw)
+ 
+ 	trace_api_radar_detected(local);
+ 
+-	schedule_work(&local->radar_detected_work);
++	wiphy_work_queue(hw->wiphy, &local->radar_detected_work);
  }
- EXPORT_SYMBOL_GPL(wiphy_delayed_work_cancel);
+ EXPORT_SYMBOL(ieee80211_radar_detected);
  
-+void wiphy_delayed_work_flush(struct wiphy *wiphy,
-+			      struct wiphy_delayed_work *dwork)
-+{
-+	lockdep_assert_held(&wiphy->mtx);
-+
-+	del_timer_sync(&dwork->timer);
-+	wiphy_work_flush(wiphy, &dwork->work);
-+}
-+EXPORT_SYMBOL_GPL(wiphy_delayed_work_flush);
-+
- static int __init cfg80211_init(void)
- {
- 	int err;
-diff --git a/net/wireless/core.h b/net/wireless/core.h
-index 86f209abc06ab..ba1f2ce5f4ff3 100644
---- a/net/wireless/core.h
-+++ b/net/wireless/core.h
-@@ -464,7 +464,8 @@ int cfg80211_change_iface(struct cfg80211_registered_device *rdev,
- 			  struct net_device *dev, enum nl80211_iftype ntype,
- 			  struct vif_params *params);
- void cfg80211_process_rdev_events(struct cfg80211_registered_device *rdev);
--void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev);
-+void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev,
-+				  struct wiphy_work *end);
- void cfg80211_process_wdev_events(struct wireless_dev *wdev);
- 
- bool cfg80211_does_bw_fit_range(const struct ieee80211_freq_range *freq_range,
-diff --git a/net/wireless/sysfs.c b/net/wireless/sysfs.c
-index c629bac3f2983..565511a3f461e 100644
---- a/net/wireless/sysfs.c
-+++ b/net/wireless/sysfs.c
-@@ -105,14 +105,14 @@ static int wiphy_suspend(struct device *dev)
- 			cfg80211_leave_all(rdev);
- 			cfg80211_process_rdev_events(rdev);
- 		}
--		cfg80211_process_wiphy_works(rdev);
-+		cfg80211_process_wiphy_works(rdev, NULL);
- 		if (rdev->ops->suspend)
- 			ret = rdev_suspend(rdev, rdev->wiphy.wowlan_config);
- 		if (ret == 1) {
- 			/* Driver refuse to configure wowlan */
- 			cfg80211_leave_all(rdev);
- 			cfg80211_process_rdev_events(rdev);
--			cfg80211_process_wiphy_works(rdev);
-+			cfg80211_process_wiphy_works(rdev, NULL);
- 			ret = rdev_suspend(rdev, NULL);
- 		}
- 		if (ret == 0)
 -- 
 2.42.0
 
