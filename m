@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3123DB97
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598ED3DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBg9aoqT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F34AC433C9;
-	Wed, 15 Nov 2023 19:58:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAadI5rw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EB9C433CB;
+	Wed, 15 Nov 2023 19:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078319;
-	bh=pdqFqV43i7a1VzWvrrjmXNo3nctE27yNLbbVdQhDqic=;
+	s=korg; t=1700078321;
+	bh=HdJ9xkSnlvji5RJIZsRiSbsSaq6ulhRGJE44xFdlDQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBg9aoqTNPfEljh1I4/ONrX/uxTpS5H0ranG9/KK8TGoIm+MVi8+6ZrOJp6TaBjkO
-	 9JSD/NCNkOcZDS+8kPghkxe+1roc4hgE7ijrVxo08jSW9ZyNLN+4vzFriQIaxXS0jA
-	 UJsoUT/XBslBVFxUeYAbxz5PF5pQF0yEzU9YrGNk=
+	b=FAadI5rwWJQlf1YHjjFiZgAnG006cjnRe7tgOYGrF0BpF+gak/cqo1JDmejNbi1LV
+	 bfuZtUv5zziqi0PCBBjRhYNowch6JKckdRjzIsmeZt213mLc5VFmHpi4plyNXuuI8m
+	 hCRQy1fIIvQ0oLi7YRjK3RIfp/wGzaSTgHmsm2Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mars Cheng <marscheng@google.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Yen-lin Lai <yenlinlai@google.com>,
-	Daniel Mentz <danielmentz@google.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	kernel test robot <lkp@intel.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 225/379] scsi: ufs: core: Leave space for \0 in utf8 desc string
-Date: Wed, 15 Nov 2023 14:25:00 -0500
-Message-ID: <20231115192658.429723002@linuxfoundation.org>
+Subject: [PATCH 6.1 216/379] ASoC: fsl: mpc5200_dma.c: Fix warning of Function parameter or member not described
+Date: Wed, 15 Nov 2023 14:24:51 -0500
+Message-ID: <20231115192657.890222923@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -46,46 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Mentz <danielmentz@google.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit a75a16c62a2540f11eeae4f2b50e95deefb652ea ]
+[ Upstream commit 4a221b2e3340f4a3c2b414c46c846a26c6caf820 ]
 
-utf16s_to_utf8s does not NULL terminate the output string. For us to be
-able to add a NULL character when utf16s_to_utf8s returns, we need to make
-sure that there is space for such NULL character at the end of the output
-buffer. We can achieve this by passing an output buffer size to
-utf16s_to_utf8s that is one character less than what we allocated.
+This patch fixes the warnings of "Function parameter or member 'xxx'
+not described".
 
-Other call sites of utf16s_to_utf8s appear to be using the same technique
-where they artificially reduce the buffer size by one to leave space for a
-NULL character or line feed character.
+>> sound/soc/fsl/mpc5200_dma.c:116: warning: Function parameter or member 'component' not described in 'psc_dma_trigger'
+   sound/soc/fsl/mpc5200_dma.c:116: warning: Function parameter or member 'substream' not described in 'psc_dma_trigger'
+   sound/soc/fsl/mpc5200_dma.c:116: warning: Function parameter or member 'cmd' not described in 'psc_dma_trigger'
 
-Fixes: 4b828fe156a6 ("scsi: ufs: revamp string descriptor reading")
-Reviewed-by: Mars Cheng <marscheng@google.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Yen-lin Lai <yenlinlai@google.com>
-Signed-off-by: Daniel Mentz <danielmentz@google.com>
-Link: https://lore.kernel.org/r/20231017182026.2141163-1-danielmentz@google.com
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310061914.jJuekdHs-lkp@intel.com/
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Fixes: 6d1048bc1152 ("ASoC: fsl: mpc5200_dma: remove snd_pcm_ops")
+Link: https://lore.kernel.org/r/87il7fcqm8.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/fsl/mpc5200_dma.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 6ba4ef2c3949e..dc38d1fa77874 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -3579,7 +3579,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
- 		 */
- 		ret = utf16s_to_utf8s(uc_str->uc,
- 				      uc_str->len - QUERY_DESC_HDR_SIZE,
--				      UTF16_BIG_ENDIAN, str, ascii_len);
-+				      UTF16_BIG_ENDIAN, str, ascii_len - 1);
+diff --git a/sound/soc/fsl/mpc5200_dma.c b/sound/soc/fsl/mpc5200_dma.c
+index 9014978100207..3f7ccae3f6b1a 100644
+--- a/sound/soc/fsl/mpc5200_dma.c
++++ b/sound/soc/fsl/mpc5200_dma.c
+@@ -100,6 +100,9 @@ static irqreturn_t psc_dma_bcom_irq(int irq, void *_psc_dma_stream)
  
- 		/* replace non-printable or non-ASCII characters with spaces */
- 		for (i = 0; i < ret; i++)
+ /**
+  * psc_dma_trigger: start and stop the DMA transfer.
++ * @component: triggered component
++ * @substream: triggered substream
++ * @cmd: triggered command
+  *
+  * This function is called by ALSA to start, stop, pause, and resume the DMA
+  * transfer of data.
 -- 
 2.42.0
 
