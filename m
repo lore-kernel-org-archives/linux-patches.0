@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02653A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9B93A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eq5wXeI0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50462C433CA;
-	Wed, 15 Nov 2023 19:50:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lydx1c00"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF433C433C8;
+	Wed, 15 Nov 2023 19:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077855;
-	bh=yFyXm4JAoncDZPkviO+11x7torsooitJrJapDV1z8Bk=;
+	s=korg; t=1700077857;
+	bh=BNtRXE4iu+nnSW4ea2LayvaSEz1ouufnM3XA2nV8SlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eq5wXeI0FNeOfEm4zRCB1scPhFNIm0jKB0Vl1qx5kwFdBX7V73z9Xj3yaL3KUqRl3
-	 8Stk5P39Mm+mF2pMEhtpMlkXcQ1dVG0edj6YSFfoSgS/TdYimx7S+dg/tnvjGpeqxY
-	 9oZyMrDrT+C1EBnXvr6NqsvcxTzNVJ7z2o9Jpqhk=
+	b=lydx1c008i7ubeaAjZxZi0njdslqWVRrIxFHBOQnOsEAcvKkgwpFpCrzfzkuQCVjK
+	 qeMmipLNMJUKUxaUaRLH4G+V23KIG4mQmh+ULbQF55MshBQXXszZhBXo5XGjEhgnaZ
+	 JHhYE49mR/+YzTt8aisnX5JIKey1BLRLcyiIJ8bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Dave Ertman <david.m.ertman@intel.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 561/603] riscv: boot: Fix creation of loader.bin
-Date: Wed, 15 Nov 2023 14:18:26 -0500
-Message-ID: <20231115191650.448121327@linuxfoundation.org>
+Subject: [PATCH 6.6 562/603] ice: Fix SRIOV LAG disable on non-compliant aggregate
+Date: Wed, 15 Nov 2023 14:18:27 -0500
+Message-ID: <20231115191650.502826259@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -37,49 +39,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Dave Ertman <david.m.ertman@intel.com>
 
-[ Upstream commit 57a4542cb7c9baa1509c3366b57a08d75b212ead ]
+[ Upstream commit 3e39da4fa16c9c09207d98b8a86a6f6436b531c9 ]
 
-When flashing loader.bin for K210 using kflash:
+If an attribute of an aggregate interface disqualifies it from supporting
+SRIOV, the driver will unwind the SRIOV support.  Currently the driver is
+clearing the feature bit for all interfaces in the aggregate, but this is
+not allowing the other interfaces to unwind successfully on driver unload.
 
-    [ERROR] This is an ELF file and cannot be programmed to flash directly: arch/riscv/boot/loader.bin
+Only clear the feature bit for the interface that is currently unwinding.
 
-Before, loader.bin relied on "OBJCOPYFLAGS := -O binary" in the main
-RISC-V Makefile to create a boot image with the right format.  With this
-removed, the image is now created in the wrong (ELF) format.
-
-Fix this by adding an explicit rule.
-
-Fixes: 505b02957e74f0c5 ("riscv: Remove duplicate objcopy flag")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/1086025809583809538dfecaa899892218f44e7e.1698159066.git.geert+renesas@glider.be
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: bf65da2eb279 ("ice: enforce interface eligibility and add messaging for SRIOV LAG")
+Signed-off-by: Dave Ertman <david.m.ertman@intel.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/ice/ice_lag.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/arch/riscv/boot/Makefile b/arch/riscv/boot/Makefile
-index 22b13947bd131..8e7fc0edf21d3 100644
---- a/arch/riscv/boot/Makefile
-+++ b/arch/riscv/boot/Makefile
-@@ -17,6 +17,7 @@
- KCOV_INSTRUMENT := n
+diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
+index 7b1256992dcf6..a8da5f8374451 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lag.c
++++ b/drivers/net/ethernet/intel/ice/ice_lag.c
+@@ -1529,18 +1529,12 @@ static void ice_lag_chk_disabled_bond(struct ice_lag *lag, void *ptr)
+  */
+ static void ice_lag_disable_sriov_bond(struct ice_lag *lag)
+ {
+-	struct ice_lag_netdev_list *entry;
+ 	struct ice_netdev_priv *np;
+-	struct net_device *netdev;
+ 	struct ice_pf *pf;
  
- OBJCOPYFLAGS_Image :=-O binary -R .note -R .note.gnu.build-id -R .comment -S
-+OBJCOPYFLAGS_loader.bin :=-O binary
- OBJCOPYFLAGS_xipImage :=-O binary -R .note -R .note.gnu.build-id -R .comment -S
+-	list_for_each_entry(entry, lag->netdev_head, node) {
+-		netdev = entry->netdev;
+-		np = netdev_priv(netdev);
+-		pf = np->vsi->back;
+-
+-		ice_clear_feature_support(pf, ICE_F_SRIOV_LAG);
+-	}
++	np = netdev_priv(lag->netdev);
++	pf = np->vsi->back;
++	ice_clear_feature_support(pf, ICE_F_SRIOV_LAG);
+ }
  
- targets := Image Image.* loader loader.o loader.lds loader.bin
+ /**
 -- 
 2.42.0
 
