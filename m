@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774DC3C46B
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C5C3A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIFcOIBn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27858C433C9;
-	Wed, 15 Nov 2023 19:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nCESo6m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B13C433C8;
+	Wed, 15 Nov 2023 19:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077341;
-	bh=Egbyh1psw/HLx7PZD28pHJLUui8WM6+/gjaR4N40Hhc=;
+	s=korg; t=1700077342;
+	bh=W/fiX5azb8t2StkebXQBFtlAKpg4N5aDHj1/fwS0zRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HIFcOIBnuAWwIbj0KR3vUfCdpQ4MUPGlWG2aI26fRywX/sL2ObN4uGE23qLaMPnaO
-	 nx6u/JrmUL3ydtys7k/uv95N04Y76SRd7g/euVsfHzk0a9j2IX3mFGviKIeNisZDUg
-	 kMOkMeAuna0B4hrl5QHpNeIZk8tDZ5yZDo+CtJPo=
+	b=0nCESo6mxZGcE1PrVFCqLudlx66JQ/B6RJtdLd4EagQdgQvV5F0pCfcLcBfGaLRZk
+	 i+yuBqiduPkBZWSSP/Wq5VTJ+cx84YBsCOKxZArDLBylx4U3FxOINkFKNvfvz41wTm
+	 dY/iAdM6qszuEAANUac5PEt6y6gFjSpjq6EmnDSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Maxim Schwalm <maxim.schwalm@gmail.com>
-Subject: [PATCH 6.6 235/603] drm/bridge: tc358768: Print logical values, not raw register values
-Date: Wed, 15 Nov 2023 14:13:00 -0500
-Message-ID: <20231115191629.460891849@linuxfoundation.org>
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	James Zhu <james.zhu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 244/603] drm/amdkfd: Handle errors from svm validate and map
+Date: Wed, 15 Nov 2023 14:13:09 -0500
+Message-ID: <20231115191630.115582245@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,115 +44,205 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit 013ea98cdfccef3b7c38b087c1f629488d2ef683 ]
+[ Upstream commit eb3c357bcb286e89386e89302061fe717fe4e562 ]
 
-The driver debug prints DSI related timings as raw register values in
-hex. It is much more useful to see the "logical" value of the timing,
-not the register value.
+If new range is splited to multiple pranges with max_svm_range_pages
+alignment and added to update_list, svm validate and map should keep
+going after error to make sure prange->mapped_to_gpu flag is up to date
+for the whole range.
 
-Change the prints to print the values separately, in case a single
-register contains multiple values, and use %u to have it in a more human
-consumable form.
+svm validate and map update set prange->mapped_to_gpu after mapping to
+GPUs successfully, otherwise clear prange->mapped_to_gpu flag (for
+update mapping case) instead of setting error flag, we can remove
+the redundant error flag to simpliy code.
 
-Reviewed-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Tested-by: Maxim Schwalm <maxim.schwalm@gmail.com> # Asus TF700T
-Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230906-tc358768-v4-7-31725f008a50@ideasonboard.com
-Stable-dep-of: f1dabbe64506 ("drm/bridge: tc358768: Fix tc358768_ns_to_cnt()")
+Refactor to remove goto and update prange->mapped_to_gpu flag inside
+svm_range_lock, to guarant we always evict queues or unmap from GPUs if
+there are invalid ranges.
+
+After svm validate and map return error -EAGIN, the caller retry will
+update the mapping for the whole range again.
+
+Fixes: c22b04407097 ("drm/amdkfd: flag added to handle errors from svm validate and map")
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Tested-by: James Zhu <james.zhu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 82 +++++++++++++---------------
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.h |  1 -
+ 2 files changed, 39 insertions(+), 44 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index e42b5259ea344..163477ec91a9c 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -739,57 +739,59 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index dfc11699e79ab..2a42fbddcb7ae 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -820,7 +820,7 @@ svm_range_is_same_attrs(struct kfd_process *p, struct svm_range *prange,
+ 		}
+ 	}
  
- 	/* LP11 > 100us for D-PHY Rx Init */
- 	val = tc358768_ns_to_cnt(100 * 1000, dsibclk_nsk) - 1;
--	dev_dbg(priv->dev, "LINEINITCNT: 0x%x\n", val);
-+	dev_dbg(priv->dev, "LINEINITCNT: %u\n", val);
- 	tc358768_write(priv, TC358768_LINEINITCNT, val);
+-	return !prange->is_error_flag;
++	return true;
+ }
  
- 	/* LPTimeCnt > 50ns */
- 	val = tc358768_ns_to_cnt(50, dsibclk_nsk) - 1;
- 	lptxcnt = val;
--	dev_dbg(priv->dev, "LPTXTIMECNT: 0x%x\n", val);
-+	dev_dbg(priv->dev, "LPTXTIMECNT: %u\n", val);
- 	tc358768_write(priv, TC358768_LPTXTIMECNT, val);
+ /**
+@@ -1662,71 +1662,66 @@ static int svm_range_validate_and_map(struct mm_struct *mm,
  
- 	/* 38ns < TCLK_PREPARE < 95ns */
- 	val = tc358768_ns_to_cnt(65, dsibclk_nsk) - 1;
-+	dev_dbg(priv->dev, "TCLK_PREPARECNT %u\n", val);
- 	/* TCLK_PREPARE + TCLK_ZERO > 300ns */
- 	val2 = tc358768_ns_to_cnt(300 - tc358768_to_ns(2 * ui_nsk),
- 				  dsibclk_nsk) - 2;
-+	dev_dbg(priv->dev, "TCLK_ZEROCNT %u\n", val2);
- 	val |= val2 << 8;
--	dev_dbg(priv->dev, "TCLK_HEADERCNT: 0x%x\n", val);
- 	tc358768_write(priv, TC358768_TCLK_HEADERCNT, val);
+ 	start = prange->start << PAGE_SHIFT;
+ 	end = (prange->last + 1) << PAGE_SHIFT;
+-	for (addr = start; addr < end && !r; ) {
++	for (addr = start; !r && addr < end; ) {
+ 		struct hmm_range *hmm_range;
+ 		struct vm_area_struct *vma;
+-		unsigned long next;
++		unsigned long next = 0;
+ 		unsigned long offset;
+ 		unsigned long npages;
+ 		bool readonly;
  
- 	/* TCLK_TRAIL > 60ns AND TEOT <= 105 ns + 12*UI */
- 	raw_val = tc358768_ns_to_cnt(60 + tc358768_to_ns(2 * ui_nsk), dsibclk_nsk) - 5;
- 	val = clamp(raw_val, 0, 127);
--	dev_dbg(priv->dev, "TCLK_TRAILCNT: 0x%x\n", val);
-+	dev_dbg(priv->dev, "TCLK_TRAILCNT: %u\n", val);
- 	tc358768_write(priv, TC358768_TCLK_TRAILCNT, val);
+ 		vma = vma_lookup(mm, addr);
+-		if (!vma) {
++		if (vma) {
++			readonly = !(vma->vm_flags & VM_WRITE);
++
++			next = min(vma->vm_end, end);
++			npages = (next - addr) >> PAGE_SHIFT;
++			WRITE_ONCE(p->svms.faulting_task, current);
++			r = amdgpu_hmm_range_get_pages(&prange->notifier, addr, npages,
++						       readonly, owner, NULL,
++						       &hmm_range);
++			WRITE_ONCE(p->svms.faulting_task, NULL);
++			if (r) {
++				pr_debug("failed %d to get svm range pages\n", r);
++				if (r == -EBUSY)
++					r = -EAGAIN;
++			}
++		} else {
+ 			r = -EFAULT;
+-			goto unreserve_out;
+-		}
+-		readonly = !(vma->vm_flags & VM_WRITE);
+-
+-		next = min(vma->vm_end, end);
+-		npages = (next - addr) >> PAGE_SHIFT;
+-		WRITE_ONCE(p->svms.faulting_task, current);
+-		r = amdgpu_hmm_range_get_pages(&prange->notifier, addr, npages,
+-					       readonly, owner, NULL,
+-					       &hmm_range);
+-		WRITE_ONCE(p->svms.faulting_task, NULL);
+-		if (r) {
+-			pr_debug("failed %d to get svm range pages\n", r);
+-			if (r == -EBUSY)
+-				r = -EAGAIN;
+-			goto unreserve_out;
+ 		}
  
- 	/* 40ns + 4*UI < THS_PREPARE < 85ns + 6*UI */
- 	val = 50 + tc358768_to_ns(4 * ui_nsk);
- 	val = tc358768_ns_to_cnt(val, dsibclk_nsk) - 1;
-+	dev_dbg(priv->dev, "THS_PREPARECNT %u\n", val);
- 	/* THS_PREPARE + THS_ZERO > 145ns + 10*UI */
- 	raw_val = tc358768_ns_to_cnt(145 - tc358768_to_ns(3 * ui_nsk), dsibclk_nsk) - 10;
- 	val2 = clamp(raw_val, 0, 127);
-+	dev_dbg(priv->dev, "THS_ZEROCNT %u\n", val2);
- 	val |= val2 << 8;
--	dev_dbg(priv->dev, "THS_HEADERCNT: 0x%x\n", val);
- 	tc358768_write(priv, TC358768_THS_HEADERCNT, val);
+-		offset = (addr - start) >> PAGE_SHIFT;
+-		r = svm_range_dma_map(prange, ctx->bitmap, offset, npages,
+-				      hmm_range->hmm_pfns);
+-		if (r) {
+-			pr_debug("failed %d to dma map range\n", r);
+-			goto unreserve_out;
++		if (!r) {
++			offset = (addr - start) >> PAGE_SHIFT;
++			r = svm_range_dma_map(prange, ctx->bitmap, offset, npages,
++					      hmm_range->hmm_pfns);
++			if (r)
++				pr_debug("failed %d to dma map range\n", r);
+ 		}
  
- 	/* TWAKEUP > 1ms in lptxcnt steps */
- 	val = tc358768_ns_to_cnt(1020000, dsibclk_nsk);
- 	val = val / (lptxcnt + 1) - 1;
--	dev_dbg(priv->dev, "TWAKEUP: 0x%x\n", val);
-+	dev_dbg(priv->dev, "TWAKEUP: %u\n", val);
- 	tc358768_write(priv, TC358768_TWAKEUP, val);
+ 		svm_range_lock(prange);
+-		if (amdgpu_hmm_range_get_pages_done(hmm_range)) {
++		if (!r && amdgpu_hmm_range_get_pages_done(hmm_range)) {
+ 			pr_debug("hmm update the range, need validate again\n");
+ 			r = -EAGAIN;
+-			goto unlock_out;
+ 		}
+-		if (!list_empty(&prange->child_list)) {
++
++		if (!r && !list_empty(&prange->child_list)) {
+ 			pr_debug("range split by unmap in parallel, validate again\n");
+ 			r = -EAGAIN;
+-			goto unlock_out;
+ 		}
  
- 	/* TCLK_POSTCNT > 60ns + 52*UI */
- 	val = tc358768_ns_to_cnt(60 + tc358768_to_ns(52 * ui_nsk),
- 				 dsibclk_nsk) - 3;
--	dev_dbg(priv->dev, "TCLK_POSTCNT: 0x%x\n", val);
-+	dev_dbg(priv->dev, "TCLK_POSTCNT: %u\n", val);
- 	tc358768_write(priv, TC358768_TCLK_POSTCNT, val);
+-		r = svm_range_map_to_gpus(prange, offset, npages, readonly,
+-					  ctx->bitmap, wait, flush_tlb);
++		if (!r)
++			r = svm_range_map_to_gpus(prange, offset, npages, readonly,
++						  ctx->bitmap, wait, flush_tlb);
++
++		if (!r && next == end)
++			prange->mapped_to_gpu = true;
  
- 	/* max(60ns + 4*UI, 8*UI) < THS_TRAILCNT < 105ns + 12*UI */
- 	raw_val = tc358768_ns_to_cnt(60 + tc358768_to_ns(18 * ui_nsk),
- 				     dsibclk_nsk) - 4;
- 	val = clamp(raw_val, 0, 15);
--	dev_dbg(priv->dev, "THS_TRAILCNT: 0x%x\n", val);
-+	dev_dbg(priv->dev, "THS_TRAILCNT: %u\n", val);
- 	tc358768_write(priv, TC358768_THS_TRAILCNT, val);
+-unlock_out:
+ 		svm_range_unlock(prange);
  
- 	val = BIT(0);
-@@ -803,10 +805,11 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 	/* TXTAGOCNT[26:16] RXTASURECNT[10:0] */
- 	val = tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk * 4);
- 	val = tc358768_ns_to_cnt(val, dsibclk_nsk) / 4 - 1;
-+	dev_dbg(priv->dev, "TXTAGOCNT: %u\n", val);
- 	val2 = tc358768_ns_to_cnt(tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk),
- 				  dsibclk_nsk) - 2;
-+	dev_dbg(priv->dev, "RXTASURECNT: %u\n", val2);
- 	val = val << 16 | val2;
--	dev_dbg(priv->dev, "BTACNTRL1: 0x%x\n", val);
- 	tc358768_write(priv, TC358768_BTACNTRL1, val);
+ 		addr = next;
+ 	}
  
- 	/* START[0] */
+-	if (addr == end)
+-		prange->mapped_to_gpu = true;
+-
+-unreserve_out:
+ 	svm_range_unreserve_bos(ctx);
+-
+-	prange->is_error_flag = !!r;
+ 	if (!r)
+ 		prange->validate_timestamp = ktime_get_boottime();
+ 
+@@ -2095,7 +2090,8 @@ svm_range_add(struct kfd_process *p, uint64_t start, uint64_t size,
+ 		next = interval_tree_iter_next(node, start, last);
+ 		next_start = min(node->last, last) + 1;
+ 
+-		if (svm_range_is_same_attrs(p, prange, nattr, attrs)) {
++		if (svm_range_is_same_attrs(p, prange, nattr, attrs) &&
++		    prange->mapped_to_gpu) {
+ 			/* nothing to do */
+ 		} else if (node->start < start || node->last > last) {
+ 			/* node intersects the update range and its attributes
+@@ -3505,7 +3501,7 @@ svm_range_set_attr(struct kfd_process *p, struct mm_struct *mm,
+ 	struct svm_range *next;
+ 	bool update_mapping = false;
+ 	bool flush_tlb;
+-	int r = 0;
++	int r, ret = 0;
+ 
+ 	pr_debug("pasid 0x%x svms 0x%p [0x%llx 0x%llx] pages 0x%llx\n",
+ 		 p->pasid, &p->svms, start, start + size - 1, size);
+@@ -3593,7 +3589,7 @@ svm_range_set_attr(struct kfd_process *p, struct mm_struct *mm,
+ out_unlock_range:
+ 		mutex_unlock(&prange->migrate_mutex);
+ 		if (r)
+-			break;
++			ret = r;
+ 	}
+ 
+ 	dynamic_svm_range_dump(svms);
+@@ -3606,7 +3602,7 @@ svm_range_set_attr(struct kfd_process *p, struct mm_struct *mm,
+ 	pr_debug("pasid 0x%x svms 0x%p [0x%llx 0x%llx] done, r=%d\n", p->pasid,
+ 		 &p->svms, start, start + size - 1, r);
+ 
+-	return r;
++	return ret ? ret : r;
+ }
+ 
+ static int
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.h b/drivers/gpu/drm/amd/amdkfd/kfd_svm.h
+index c216c8dd13c6c..25f7119057386 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.h
+@@ -133,7 +133,6 @@ struct svm_range {
+ 	DECLARE_BITMAP(bitmap_access, MAX_GPU_INSTANCE);
+ 	DECLARE_BITMAP(bitmap_aip, MAX_GPU_INSTANCE);
+ 	bool				mapped_to_gpu;
+-	bool				is_error_flag;
+ };
+ 
+ static inline void svm_range_lock(struct svm_range *prange)
 -- 
 2.42.0
 
