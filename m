@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B0E3A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBB23A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3cryE1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCA5C433C7;
-	Wed, 15 Nov 2023 19:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEldTvIH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE6AC433C7;
+	Wed, 15 Nov 2023 19:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077635;
-	bh=nShVZs+q69FMRGysNgylFDvkBj/s+gEjSvL840s25eE=;
+	s=korg; t=1700077637;
+	bh=dJCSkS9B4JFtvNXif94u+qsHCxPD+7+oZ4s3MCdSYO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X3cryE1SXEjCvfEUOQ9//8jTaM3QGBaBVyAl4Ynl1mWe8d/UoPBty0aHzJzpbEMwU
-	 it9Z0zaEysFRsziVXVcvpPcqee8bRmKmCK5fn4/11eNuqof9/iRPD8t4c+EW8QpH6M
-	 3VkdhYyheOKUxGPHEdfld9ast3C0563aBcpYrtOY=
+	b=aEldTvIH+OdZBqvRuQwjisRNX5yEMiNFt+V8I9QIbmRxBHSv4D08eZI6lwFR/UEsl
+	 UeS9YaqbW/GZMbCxp6owtJ8bNZO15LrGbSWzjhBJqkznUrKzgawwtMxT3VnQ0Nrl9E
+	 kB3suXKn0I60HTTIRtQCPd983Jy9UQ7dDbNEGR1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 417/603] scripts/gdb: fix usage of MOD_TEXT not defined when CONFIG_MODULES=n
-Date: Wed, 15 Nov 2023 14:16:02 -0500
-Message-ID: <20231115191641.760091643@linuxfoundation.org>
+Subject: [PATCH 6.6 426/603] f2fs: compress: fix to avoid use-after-free on dic
+Date: Wed, 15 Nov 2023 14:16:11 -0500
+Message-ID: <20231115191642.306139129@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -41,66 +36,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Léger <cleger@rivosinc.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 16501630bdeb107141a0139ddc33f92ab5582c6f ]
+[ Upstream commit b0327c84e91a0f4f0abced8cb83ec86a7083f086 ]
 
-MOD_TEXT is only defined if CONFIG_MODULES=y which lead to loading failure
-of the gdb scripts when kernel is built without CONFIG_MODULES=y:
+Call trace:
+ __memcpy+0x128/0x250
+ f2fs_read_multi_pages+0x940/0xf7c
+ f2fs_mpage_readpages+0x5a8/0x624
+ f2fs_readahead+0x5c/0x110
+ page_cache_ra_unbounded+0x1b8/0x590
+ do_sync_mmap_readahead+0x1dc/0x2e4
+ filemap_fault+0x254/0xa8c
+ f2fs_filemap_fault+0x2c/0x104
+ __do_fault+0x7c/0x238
+ do_handle_mm_fault+0x11bc/0x2d14
+ do_mem_abort+0x3a8/0x1004
+ el0_da+0x3c/0xa0
+ el0t_64_sync_handler+0xc4/0xec
+ el0t_64_sync+0x1b4/0x1b8
 
-Reading symbols from vmlinux...
-Traceback (most recent call last):
-  File "/foo/vmlinux-gdb.py", line 25, in <module>
-    import linux.constants
-  File "/foo/scripts/gdb/linux/constants.py", line 14, in <module>
-    LX_MOD_TEXT = gdb.parse_and_eval("MOD_TEXT")
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-gdb.error: No symbol "MOD_TEXT" in current context.
+In f2fs_read_multi_pages(), once f2fs_decompress_cluster() was called if
+we hit cached page in compress_inode's cache, dic may be released, it needs
+break the loop rather than continuing it, in order to avoid accessing
+invalid dic pointer.
 
-Add a conditional check on CONFIG_MODULES to fix this error.
-
-Link: https://lkml.kernel.org/r/20231031134848.119391-1-da.gomez@samsung.com
-Fixes: b4aff7513df3 ("scripts/gdb: use mem instead of core_layout to get the module address")
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Tested-by: Daniel Gomez <da.gomez@samsung.com>
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Pankaj Raghav <p.raghav@samsung.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 6ce19aff0b8c ("f2fs: compress: add compress_inode to cache compressed blocks")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/constants.py.in | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/f2fs/data.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/gdb/linux/constants.py.in b/scripts/gdb/linux/constants.py.in
-index e3517d4ab8ec9..04c87b570aabe 100644
---- a/scripts/gdb/linux/constants.py.in
-+++ b/scripts/gdb/linux/constants.py.in
-@@ -66,10 +66,11 @@ LX_GDBPARSED(IRQD_LEVEL)
- LX_GDBPARSED(IRQ_HIDDEN)
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 3f33e14dc7f81..1ac34eb49a0e8 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2344,8 +2344,10 @@ int f2fs_read_multi_pages(struct compress_ctx *cc, struct bio **bio_ret,
+ 		f2fs_wait_on_block_writeback(inode, blkaddr);
  
- /* linux/module.h */
--LX_GDBPARSED(MOD_TEXT)
--LX_GDBPARSED(MOD_DATA)
--LX_GDBPARSED(MOD_RODATA)
--LX_GDBPARSED(MOD_RO_AFTER_INIT)
-+if IS_BUILTIN(CONFIG_MODULES):
-+    LX_GDBPARSED(MOD_TEXT)
-+    LX_GDBPARSED(MOD_DATA)
-+    LX_GDBPARSED(MOD_RODATA)
-+    LX_GDBPARSED(MOD_RO_AFTER_INIT)
+ 		if (f2fs_load_compressed_page(sbi, page, blkaddr)) {
+-			if (atomic_dec_and_test(&dic->remaining_pages))
++			if (atomic_dec_and_test(&dic->remaining_pages)) {
+ 				f2fs_decompress_cluster(dic, true);
++				break;
++			}
+ 			continue;
+ 		}
  
- /* linux/mount.h */
- LX_VALUE(MNT_NOSUID)
 -- 
 2.42.0
 
