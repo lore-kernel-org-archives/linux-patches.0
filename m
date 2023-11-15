@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DB73BB38
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08ED63BB38
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBANFfzH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B5DC433C8;
-	Wed, 15 Nov 2023 19:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxbai8Do"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86DEC433C7;
+	Wed, 15 Nov 2023 19:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076127;
-	bh=moK5bUfdS2qMN0OaXl4ZXxxuLcLIzmLJ4S0zQf52+OY=;
+	s=korg; t=1700076128;
+	bh=MMtbCeUN8eAEHEuj5lfBELbV/wRAhOtB25/KL4m/DLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBANFfzHFWfbki2clbN2rkPnbTi/pRLXgT93JyXQYjBvgy/hcJT9wfOdclDWgEMz0
-	 zRfeK49VzXUsWABghHSbk7zRd6u8riL5Cqhkomil4asM4DssENyTBtSIe66O/NDZax
-	 /GBATXlALwuPOqaKwkShwugEIMOoWPaJ5qhPhX7A=
+	b=pxbai8DowOCc2KLYPfbi7pttrro2FBkdGpUp2fJsFWSrtR6EPXdooiRtht5jSQoZM
+	 BP1dVaAvSosd4RGPijFqF3QhaiS34GaL3EfXGRRhNl8GcHmbCRbwYJDd6PgaF7WEj9
+	 4dWQNaOUHYWKl1rc7eod5MpPLCiZRNjPGPyI28VI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Money Wang <money.wang@mediatek.com>,
+	MeiChia Chiu <meichia.chiu@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 083/550] wifi: mt76: mt7603: improve stuck beacon handling
-Date: Wed, 15 Nov 2023 14:11:07 -0500
-Message-ID: <20231115191606.460872346@linuxfoundation.org>
+Subject: [PATCH 6.5 092/550] wifi: mt76: update beacon size limitation
+Date: Wed, 15 Nov 2023 14:11:16 -0500
+Message-ID: <20231115191607.097690156@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -41,175 +45,383 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: MeiChia Chiu <meichia.chiu@mediatek.com>
 
-[ Upstream commit 3176205933494bd184c6acd70e796c382bc729b5 ]
+[ Upstream commit de869f81f994c4a4dea0d70921ac5ab78858b224 ]
 
-Before preparing the new beacon, check the queue status, flush out all
-previous beacons and buffered multicast packets, then (if necessary)
-try to recover more gracefully from a stuck beacon condition by making a
-less invasive attempt at getting the MAC un-stuck.
+To accommodate 11v MBSSID IE and support maximum 16 MBSSIDs, expand the
+beacon size limitation for beacon and inband discovery commands.
 
-Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
+Co-developed-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Co-developed-by: Money Wang <money.wang@mediatek.com>
+Signed-off-by: Money Wang <money.wang@mediatek.com>
+Signed-off-by: MeiChia Chiu <meichia.chiu@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: d6a2f91741d9 ("wifi: mt76: fix potential memory leak of beacon commands")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt7603/beacon.c    | 76 ++++++++++++++-----
- .../net/wireless/mediatek/mt76/mt7603/regs.h  |  5 ++
- 2 files changed, 60 insertions(+), 21 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7915/main.c  |  8 +--
+ .../net/wireless/mediatek/mt76/mt7915/mcu.c   | 49 +++++++++++--------
+ .../net/wireless/mediatek/mt76/mt7915/mcu.h   | 18 +++----
+ .../wireless/mediatek/mt76/mt7915/mt7915.h    |  2 +
+ .../net/wireless/mediatek/mt76/mt7996/main.c  |  4 +-
+ .../net/wireless/mediatek/mt76/mt7996/mcu.c   | 38 ++++++++------
+ .../net/wireless/mediatek/mt76/mt7996/mcu.h   | 11 ++---
+ 7 files changed, 72 insertions(+), 58 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c b/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c
-index b65b0a88c1ded..808466b7de472 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c
-@@ -9,6 +9,23 @@ struct beacon_bc_data {
- 	int count[MT7603_MAX_INTERFACES];
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index 42a983e40ade9..b39ccfc641579 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -646,11 +646,13 @@ static void mt7915_bss_info_changed(struct ieee80211_hw *hw,
+ 		mt7915_update_bss_color(hw, vif, &info->he_bss_color);
+ 
+ 	if (changed & (BSS_CHANGED_BEACON |
+-		       BSS_CHANGED_BEACON_ENABLED |
+-		       BSS_CHANGED_UNSOL_BCAST_PROBE_RESP |
+-		       BSS_CHANGED_FILS_DISCOVERY))
++		       BSS_CHANGED_BEACON_ENABLED))
+ 		mt7915_mcu_add_beacon(hw, vif, info->enable_beacon, changed);
+ 
++	if (changed & (BSS_CHANGED_UNSOL_BCAST_PROBE_RESP |
++		       BSS_CHANGED_FILS_DISCOVERY))
++		mt7915_mcu_add_inband_discov(dev, vif, changed);
++
+ 	if (set_bss_info == 0)
+ 		mt7915_mcu_add_bss_info(phy, vif, false);
+ 	if (set_sta == 0)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index 1a8611c6b684d..4278eacf43845 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -1879,10 +1879,9 @@ mt7915_mcu_beacon_cont(struct mt7915_dev *dev, struct ieee80211_vif *vif,
+ 	memcpy(buf + MT_TXD_SIZE, skb->data, skb->len);
+ }
+ 
+-static void
+-mt7915_mcu_beacon_inband_discov(struct mt7915_dev *dev, struct ieee80211_vif *vif,
+-				struct sk_buff *rskb, struct bss_info_bcn *bcn,
+-				u32 changed)
++int
++mt7915_mcu_add_inband_discov(struct mt7915_dev *dev, struct ieee80211_vif *vif,
++			     u32 changed)
+ {
+ #define OFFLOAD_TX_MODE_SU	BIT(0)
+ #define OFFLOAD_TX_MODE_MU	BIT(1)
+@@ -1892,14 +1891,27 @@ mt7915_mcu_beacon_inband_discov(struct mt7915_dev *dev, struct ieee80211_vif *vi
+ 	struct cfg80211_chan_def *chandef = &mvif->phy->mt76->chandef;
+ 	enum nl80211_band band = chandef->chan->band;
+ 	struct mt76_wcid *wcid = &dev->mt76.global_wcid;
++	struct bss_info_bcn *bcn;
+ 	struct bss_info_inband_discovery *discov;
+ 	struct ieee80211_tx_info *info;
+-	struct sk_buff *skb = NULL;
+-	struct tlv *tlv;
++	struct sk_buff *rskb, *skb = NULL;
++	struct tlv *tlv, *sub_tlv;
+ 	bool ext_phy = phy != &dev->phy;
+ 	u8 *buf, interval;
+ 	int len;
+ 
++	if (vif->bss_conf.nontransmitted)
++		return 0;
++
++	rskb = __mt76_connac_mcu_alloc_sta_req(&dev->mt76, &mvif->mt76, NULL,
++					       MT7915_MAX_BSS_OFFLOAD_SIZE);
++	if (IS_ERR(rskb))
++		return PTR_ERR(rskb);
++
++	tlv = mt76_connac_mcu_add_tlv(rskb, BSS_INFO_OFFLOAD, sizeof(*bcn));
++	bcn = (struct bss_info_bcn *)tlv;
++	bcn->enable = true;
++
+ 	if (changed & BSS_CHANGED_FILS_DISCOVERY &&
+ 	    vif->bss_conf.fils_discovery.max_interval) {
+ 		interval = vif->bss_conf.fils_discovery.max_interval;
+@@ -1911,26 +1923,25 @@ mt7915_mcu_beacon_inband_discov(struct mt7915_dev *dev, struct ieee80211_vif *vi
+ 	}
+ 
+ 	if (!skb)
+-		return;
++		return -EINVAL;
+ 
+ 	info = IEEE80211_SKB_CB(skb);
+ 	info->control.vif = vif;
+ 	info->band = band;
+-
+ 	info->hw_queue |= FIELD_PREP(MT_TX_HW_QUEUE_PHY, ext_phy);
+ 
+ 	len = sizeof(*discov) + MT_TXD_SIZE + skb->len;
+ 	len = (len & 0x3) ? ((len | 0x3) + 1) : len;
+ 
+-	if (len > (MT7915_MAX_BSS_OFFLOAD_SIZE - rskb->len)) {
++	if (skb->len > MT7915_MAX_BEACON_SIZE) {
+ 		dev_err(dev->mt76.dev, "inband discovery size limit exceed\n");
+ 		dev_kfree_skb(skb);
+-		return;
++		return -EINVAL;
+ 	}
+ 
+-	tlv = mt7915_mcu_add_nested_subtlv(rskb, BSS_INFO_BCN_DISCOV,
+-					   len, &bcn->sub_ntlv, &bcn->len);
+-	discov = (struct bss_info_inband_discovery *)tlv;
++	sub_tlv = mt7915_mcu_add_nested_subtlv(rskb, BSS_INFO_BCN_DISCOV,
++					       len, &bcn->sub_ntlv, &bcn->len);
++	discov = (struct bss_info_inband_discovery *)sub_tlv;
+ 	discov->tx_mode = OFFLOAD_TX_MODE_SU;
+ 	/* 0: UNSOL PROBE RESP, 1: FILS DISCOV */
+ 	discov->tx_type = !!(changed & BSS_CHANGED_FILS_DISCOVERY);
+@@ -1938,13 +1949,16 @@ mt7915_mcu_beacon_inband_discov(struct mt7915_dev *dev, struct ieee80211_vif *vi
+ 	discov->prob_rsp_len = cpu_to_le16(MT_TXD_SIZE + skb->len);
+ 	discov->enable = true;
+ 
+-	buf = (u8 *)tlv + sizeof(*discov);
++	buf = (u8 *)sub_tlv + sizeof(*discov);
+ 
+ 	mt7915_mac_write_txwi(&dev->mt76, (__le32 *)buf, skb, wcid, 0, NULL,
+ 			      0, changed);
+ 	memcpy(buf + MT_TXD_SIZE, skb->data, skb->len);
+ 
+ 	dev_kfree_skb(skb);
++
++	return mt76_mcu_skb_send_msg(&phy->dev->mt76, rskb,
++				     MCU_EXT_CMD(BSS_INFO_UPDATE), true);
+ }
+ 
+ int mt7915_mcu_add_beacon(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+@@ -1980,7 +1994,7 @@ int mt7915_mcu_add_beacon(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 	if (!skb)
+ 		return -EINVAL;
+ 
+-	if (skb->len > MT7915_MAX_BEACON_SIZE - MT_TXD_SIZE) {
++	if (skb->len > MT7915_MAX_BEACON_SIZE) {
+ 		dev_err(dev->mt76.dev, "Bcn size limit exceed\n");
+ 		dev_kfree_skb(skb);
+ 		return -EINVAL;
+@@ -1994,11 +2008,6 @@ int mt7915_mcu_add_beacon(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 	mt7915_mcu_beacon_cont(dev, vif, rskb, skb, bcn, &offs);
+ 	dev_kfree_skb(skb);
+ 
+-	if (changed & BSS_CHANGED_UNSOL_BCAST_PROBE_RESP ||
+-	    changed & BSS_CHANGED_FILS_DISCOVERY)
+-		mt7915_mcu_beacon_inband_discov(dev, vif, rskb,
+-						bcn, changed);
+-
+ out:
+ 	return mt76_mcu_skb_send_msg(&phy->dev->mt76, rskb,
+ 				     MCU_EXT_CMD(BSS_INFO_UPDATE), true);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h
+index b9ea297f382c3..1592b5d6751a0 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h
+@@ -495,10 +495,14 @@ enum {
+ 	SER_RECOVER
  };
  
-+static void
-+mt7603_mac_stuck_beacon_recovery(struct mt7603_dev *dev)
-+{
-+	if (dev->beacon_check % 5 != 4)
-+		return;
-+
-+	mt76_clear(dev, MT_WPDMA_GLO_CFG, MT_WPDMA_GLO_CFG_TX_DMA_EN);
-+	mt76_set(dev, MT_SCH_4, MT_SCH_4_RESET);
-+	mt76_clear(dev, MT_SCH_4, MT_SCH_4_RESET);
-+	mt76_set(dev, MT_WPDMA_GLO_CFG, MT_WPDMA_GLO_CFG_TX_DMA_EN);
-+
-+	mt76_set(dev, MT_WF_CFG_OFF_WOCCR, MT_WF_CFG_OFF_WOCCR_TMAC_GC_DIS);
-+	mt76_set(dev, MT_ARB_SCR, MT_ARB_SCR_TX_DISABLE);
-+	mt76_clear(dev, MT_ARB_SCR, MT_ARB_SCR_TX_DISABLE);
-+	mt76_clear(dev, MT_WF_CFG_OFF_WOCCR, MT_WF_CFG_OFF_WOCCR_TMAC_GC_DIS);
-+}
-+
- static void
- mt7603_update_beacon_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
+-#define MT7915_MAX_BEACON_SIZE		512
+-#define MT7915_MAX_INBAND_FRAME_SIZE	256
+-#define MT7915_MAX_BSS_OFFLOAD_SIZE	(MT7915_MAX_BEACON_SIZE +	  \
+-					 MT7915_MAX_INBAND_FRAME_SIZE +	  \
++#define MT7915_MAX_BEACON_SIZE		1308
++#define MT7915_BEACON_UPDATE_SIZE	(sizeof(struct sta_req_hdr) +	\
++					 sizeof(struct bss_info_bcn) +	\
++					 sizeof(struct bss_info_bcn_cntdwn) +	\
++					 sizeof(struct bss_info_bcn_mbss) +	\
++					 MT_TXD_SIZE +	\
++					 sizeof(struct bss_info_bcn_cont))
++#define MT7915_MAX_BSS_OFFLOAD_SIZE	(MT7915_MAX_BEACON_SIZE +	\
+ 					 MT7915_BEACON_UPDATE_SIZE)
+ 
+ #define MT7915_BSS_UPDATE_MAX_SIZE	(sizeof(struct sta_req_hdr) +	\
+@@ -511,12 +515,6 @@ enum {
+ 					 sizeof(struct bss_info_bmc_rate) +\
+ 					 sizeof(struct bss_info_ext_bss))
+ 
+-#define MT7915_BEACON_UPDATE_SIZE	(sizeof(struct sta_req_hdr) +	\
+-					 sizeof(struct bss_info_bcn_cntdwn) + \
+-					 sizeof(struct bss_info_bcn_mbss) + \
+-					 sizeof(struct bss_info_bcn_cont) + \
+-					 sizeof(struct bss_info_inband_discovery))
+-
+ static inline s8
+ mt7915_get_power_bound(struct mt7915_phy *phy, s8 txpower)
  {
-@@ -16,6 +33,8 @@ mt7603_update_beacon_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
- 	struct mt76_dev *mdev = &dev->mt76;
- 	struct mt7603_vif *mvif = (struct mt7603_vif *)vif->drv_priv;
- 	struct sk_buff *skb = NULL;
-+	u32 om_idx = mvif->idx;
-+	u32 val;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+index 0f76733c9c1ac..ed92605059b0c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+@@ -505,6 +505,8 @@ int mt7915_mcu_add_rx_ba(struct mt7915_dev *dev,
+ 			 bool add);
+ int mt7915_mcu_update_bss_color(struct mt7915_dev *dev, struct ieee80211_vif *vif,
+ 				struct cfg80211_he_bss_color *he_bss_color);
++int mt7915_mcu_add_inband_discov(struct mt7915_dev *dev, struct ieee80211_vif *vif,
++				 u32 changed);
+ int mt7915_mcu_add_beacon(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 			  int enable, u32 changed);
+ int mt7915_mcu_add_obss_spr(struct mt7915_phy *phy, struct ieee80211_vif *vif,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index 16db03e86d7a2..623a240938dff 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -604,8 +604,8 @@ static void mt7996_bss_info_changed(struct ieee80211_hw *hw,
+ 		mt7996_mcu_add_beacon(hw, vif, info->enable_beacon);
+ 	}
  
- 	if (!(mdev->beacon_mask & BIT(mvif->idx)))
- 		return;
-@@ -24,20 +43,33 @@ mt7603_update_beacon_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
+-	if (changed & BSS_CHANGED_UNSOL_BCAST_PROBE_RESP ||
+-	    changed & BSS_CHANGED_FILS_DISCOVERY)
++	if (changed & (BSS_CHANGED_UNSOL_BCAST_PROBE_RESP |
++		       BSS_CHANGED_FILS_DISCOVERY))
+ 		mt7996_mcu_beacon_inband_discov(dev, vif, changed);
+ 
+ 	mutex_unlock(&dev->mt76.mutex);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index fbf9a5c3b98ee..ac06450a79512 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -1916,7 +1916,7 @@ mt7996_mcu_beacon_cont(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 			bcn->bcc_ie_pos = cpu_to_le16(offset - 3);
+ 	}
+ 
+-	buf = (u8 *)bcn + sizeof(*bcn) - MAX_BEACON_SIZE;
++	buf = (u8 *)bcn + sizeof(*bcn);
+ 	mt7996_mac_write_txwi(dev, (__le32 *)buf, skb, wcid, NULL, 0, 0,
+ 			      BSS_CHANGED_BEACON);
+ 
+@@ -1934,25 +1934,18 @@ int mt7996_mcu_add_beacon(struct ieee80211_hw *hw,
+ 	struct sk_buff *skb, *rskb;
+ 	struct tlv *tlv;
+ 	struct bss_bcn_content_tlv *bcn;
++	int len;
+ 
+ 	rskb = __mt7996_mcu_alloc_bss_req(&dev->mt76, &mvif->mt76,
+-					  MT7996_BEACON_UPDATE_SIZE);
++					  MT7996_MAX_BSS_OFFLOAD_SIZE);
+ 	if (IS_ERR(rskb))
+ 		return PTR_ERR(rskb);
+ 
+-	tlv = mt7996_mcu_add_uni_tlv(rskb,
+-				     UNI_BSS_INFO_BCN_CONTENT, sizeof(*bcn));
+-	bcn = (struct bss_bcn_content_tlv *)tlv;
+-	bcn->enable = en;
+-
+-	if (!en)
+-		goto out;
+-
+ 	skb = ieee80211_beacon_get_template(hw, vif, &offs, 0);
  	if (!skb)
- 		return;
+ 		return -EINVAL;
  
--	mt76_tx_queue_skb(dev, dev->mphy.q_tx[MT_TXQ_BEACON],
--			  MT_TXQ_BEACON, skb, &mvif->sta.wcid, NULL);
-+	if (om_idx)
-+		om_idx |= 0x10;
-+	val = MT_DMA_FQCR0_BUSY | MT_DMA_FQCR0_MODE |
-+		FIELD_PREP(MT_DMA_FQCR0_TARGET_BSS, om_idx) |
-+		FIELD_PREP(MT_DMA_FQCR0_DEST_PORT_ID, 3) |
-+		FIELD_PREP(MT_DMA_FQCR0_DEST_QUEUE_ID, 8);
+-	if (skb->len > MAX_BEACON_SIZE - MT_TXD_SIZE) {
++	if (skb->len > MT7996_MAX_BEACON_SIZE) {
+ 		dev_err(dev->mt76.dev, "Bcn size limit exceed\n");
+ 		dev_kfree_skb(skb);
+ 		return -EINVAL;
+@@ -1961,11 +1954,18 @@ int mt7996_mcu_add_beacon(struct ieee80211_hw *hw,
+ 	info = IEEE80211_SKB_CB(skb);
+ 	info->hw_queue |= FIELD_PREP(MT_TX_HW_QUEUE_PHY, phy->mt76->band_idx);
  
- 	spin_lock_bh(&dev->ps_lock);
--	mt76_wr(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY |
--		FIELD_PREP(MT_DMA_FQCR0_TARGET_WCID, mvif->sta.wcid.idx) |
--		FIELD_PREP(MT_DMA_FQCR0_TARGET_QID,
--			   dev->mphy.q_tx[MT_TXQ_CAB]->hw_idx) |
--		FIELD_PREP(MT_DMA_FQCR0_DEST_PORT_ID, 3) |
--		FIELD_PREP(MT_DMA_FQCR0_DEST_QUEUE_ID, 8));
- 
--	if (!mt76_poll(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY, 0, 5000))
-+	mt76_wr(dev, MT_DMA_FQCR0, val |
-+		FIELD_PREP(MT_DMA_FQCR0_TARGET_QID, MT_TX_HW_QUEUE_BCN));
-+	if (!mt76_poll(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY, 0, 5000)) {
- 		dev->beacon_check = MT7603_WATCHDOG_TIMEOUT;
++	len = sizeof(*bcn) + MT_TXD_SIZE + skb->len;
++	tlv = mt7996_mcu_add_uni_tlv(rskb, UNI_BSS_INFO_BCN_CONTENT, len);
++	bcn = (struct bss_bcn_content_tlv *)tlv;
++	bcn->enable = en;
++	if (!en)
 +		goto out;
-+	}
 +
-+	mt76_wr(dev, MT_DMA_FQCR0, val |
-+		FIELD_PREP(MT_DMA_FQCR0_TARGET_QID, MT_TX_HW_QUEUE_BMC));
-+	if (!mt76_poll(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY, 0, 5000)) {
-+		dev->beacon_check = MT7603_WATCHDOG_TIMEOUT;
-+		goto out;
-+	}
- 
-+	mt76_tx_queue_skb(dev, dev->mphy.q_tx[MT_TXQ_BEACON],
-+			  MT_TXQ_BEACON, skb, &mvif->sta.wcid, NULL);
-+
-+out:
- 	spin_unlock_bh(&dev->ps_lock);
+ 	mt7996_mcu_beacon_cont(dev, vif, rskb, skb, bcn, &offs);
+ 	/* TODO: subtag - 11v MBSSID */
+ 	mt7996_mcu_beacon_cntdwn(vif, rskb, skb, &offs);
+-	dev_kfree_skb(skb);
+ out:
++	dev_kfree_skb(skb);
+ 	return mt76_mcu_skb_send_msg(&phy->dev->mt76, rskb,
+ 				     MCU_WMWA_UNI_CMD(BSS_INFO_UPDATE), true);
  }
- 
-@@ -81,6 +113,18 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
- 	data.dev = dev;
- 	__skb_queue_head_init(&data.q);
- 
-+	/* Flush all previous CAB queue packets and beacons */
-+	mt76_wr(dev, MT_WF_ARB_CAB_FLUSH, GENMASK(30, 16) | BIT(0));
+@@ -1986,9 +1986,13 @@ int mt7996_mcu_beacon_inband_discov(struct mt7996_dev *dev,
+ 	struct sk_buff *rskb, *skb = NULL;
+ 	struct tlv *tlv;
+ 	u8 *buf, interval;
++	int len;
 +
-+	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_CAB], false);
-+	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_BEACON], false);
-+
-+	if (dev->mphy.q_tx[MT_TXQ_BEACON]->queued > 0)
-+		dev->beacon_check++;
-+	else
-+		dev->beacon_check = 0;
-+	mt7603_mac_stuck_beacon_recovery(dev);
-+
- 	q = dev->mphy.q_tx[MT_TXQ_BEACON];
- 	spin_lock(&q->lock);
- 	ieee80211_iterate_active_interfaces_atomic(mt76_hw(dev),
-@@ -89,14 +133,9 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
- 	mt76_queue_kick(dev, q);
- 	spin_unlock(&q->lock);
++	if (vif->bss_conf.nontransmitted)
++		return 0;
  
--	/* Flush all previous CAB queue packets */
--	mt76_wr(dev, MT_WF_ARB_CAB_FLUSH, GENMASK(30, 16) | BIT(0));
+ 	rskb = __mt7996_mcu_alloc_bss_req(&dev->mt76, &mvif->mt76,
+-					  MT7996_INBAND_FRAME_SIZE);
++					  MT7996_MAX_BSS_OFFLOAD_SIZE);
+ 	if (IS_ERR(rskb))
+ 		return PTR_ERR(rskb);
+ 
+@@ -2005,7 +2009,7 @@ int mt7996_mcu_beacon_inband_discov(struct mt7996_dev *dev,
+ 	if (!skb)
+ 		return -EINVAL;
+ 
+-	if (skb->len > MAX_INBAND_FRAME_SIZE - MT_TXD_SIZE) {
++	if (skb->len > MT7996_MAX_BEACON_SIZE) {
+ 		dev_err(dev->mt76.dev, "inband discovery size limit exceed\n");
+ 		dev_kfree_skb(skb);
+ 		return -EINVAL;
+@@ -2016,7 +2020,9 @@ int mt7996_mcu_beacon_inband_discov(struct mt7996_dev *dev,
+ 	info->band = band;
+ 	info->hw_queue |= FIELD_PREP(MT_TX_HW_QUEUE_PHY, phy->mt76->band_idx);
+ 
+-	tlv = mt7996_mcu_add_uni_tlv(rskb, UNI_BSS_INFO_OFFLOAD, sizeof(*discov));
++	len = sizeof(*discov) + MT_TXD_SIZE + skb->len;
++
++	tlv = mt7996_mcu_add_uni_tlv(rskb, UNI_BSS_INFO_OFFLOAD, len);
+ 
+ 	discov = (struct bss_inband_discovery_tlv *)tlv;
+ 	discov->tx_mode = OFFLOAD_TX_MODE_SU;
+@@ -2027,7 +2033,7 @@ int mt7996_mcu_beacon_inband_discov(struct mt7996_dev *dev,
+ 	discov->enable = true;
+ 	discov->wcid = cpu_to_le16(MT7996_WTBL_RESERVED);
+ 
+-	buf = (u8 *)tlv + sizeof(*discov) - MAX_INBAND_FRAME_SIZE;
++	buf = (u8 *)tlv + sizeof(*discov);
+ 
+ 	mt7996_mac_write_txwi(dev, (__le32 *)buf, skb, wcid, NULL, 0, 0, changed);
+ 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+index d7075a4d0667c..2620eaeaece04 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+@@ -270,8 +270,6 @@ struct bss_inband_discovery_tlv {
+ 	u8 enable;
+ 	__le16 wcid;
+ 	__le16 prob_rsp_len;
+-#define MAX_INBAND_FRAME_SIZE 512
+-	u8 pkt[MAX_INBAND_FRAME_SIZE];
+ } __packed;
+ 
+ struct bss_bcn_content_tlv {
+@@ -283,8 +281,6 @@ struct bss_bcn_content_tlv {
+ 	u8 enable;
+ 	u8 type;
+ 	__le16 pkt_len;
+-#define MAX_BEACON_SIZE 512
+-	u8 pkt[MAX_BEACON_SIZE];
+ } __packed;
+ 
+ struct bss_bcn_cntdwn_tlv {
+@@ -574,13 +570,14 @@ enum {
+ 					 sizeof(struct sta_rec_hdr_trans) +	\
+ 					 sizeof(struct tlv))
+ 
++#define MT7996_MAX_BEACON_SIZE		1342
+ #define MT7996_BEACON_UPDATE_SIZE	(sizeof(struct bss_req_hdr) +		\
+ 					 sizeof(struct bss_bcn_content_tlv) +	\
++					 MT_TXD_SIZE +				\
+ 					 sizeof(struct bss_bcn_cntdwn_tlv) +	\
+ 					 sizeof(struct bss_bcn_mbss_tlv))
 -
--	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_CAB], false);
--
- 	mt76_csa_check(mdev);
- 	if (mdev->csa_complete)
--		goto out;
-+		return;
+-#define MT7996_INBAND_FRAME_SIZE	(sizeof(struct bss_req_hdr) +		\
+-					 sizeof(struct bss_inband_discovery_tlv))
++#define MT7996_MAX_BSS_OFFLOAD_SIZE	(MT7996_MAX_BEACON_SIZE +		\
++					 MT7996_BEACON_UPDATE_SIZE)
  
- 	q = dev->mphy.q_tx[MT_TXQ_CAB];
- 	do {
-@@ -108,7 +147,7 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
- 		 skb_queue_len(&data.q) < 8);
- 
- 	if (skb_queue_empty(&data.q))
--		goto out;
-+		return;
- 
- 	for (i = 0; i < ARRAY_SIZE(data.tail); i++) {
- 		if (!data.tail[i])
-@@ -136,11 +175,6 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
- 		MT_WF_ARB_CAB_START_BSSn(0) |
- 		(MT_WF_ARB_CAB_START_BSS0n(1) *
- 		 ((1 << (MT7603_MAX_INTERFACES - 1)) - 1)));
--
--out:
--	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_BEACON], false);
--	if (dev->mphy.q_tx[MT_TXQ_BEACON]->queued > hweight8(mdev->beacon_mask))
--		dev->beacon_check++;
- }
- 
- void mt7603_beacon_set_timer(struct mt7603_dev *dev, int idx, int intval)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/regs.h b/drivers/net/wireless/mediatek/mt76/mt7603/regs.h
-index 3b901090b29c6..9b84db233aceb 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/regs.h
-@@ -462,6 +462,11 @@ enum {
- #define MT_WF_SEC_BASE			0x21a00
- #define MT_WF_SEC(ofs)			(MT_WF_SEC_BASE + (ofs))
- 
-+#define MT_WF_CFG_OFF_BASE		0x21e00
-+#define MT_WF_CFG_OFF(ofs)		(MT_WF_CFG_OFF_BASE + (ofs))
-+#define MT_WF_CFG_OFF_WOCCR		MT_WF_CFG_OFF(0x004)
-+#define MT_WF_CFG_OFF_WOCCR_TMAC_GC_DIS	BIT(4)
-+
- #define MT_SEC_SCR			MT_WF_SEC(0x004)
- #define MT_SEC_SCR_MASK_ORDER		GENMASK(1, 0)
- 
+ enum {
+ 	UNI_BAND_CONFIG_RADIO_ENABLE,
 -- 
 2.42.0
 
