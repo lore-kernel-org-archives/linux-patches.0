@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C273A8F3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F82A3A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yltCMM+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A10EC433C8;
-	Wed, 15 Nov 2023 19:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsEu2WoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F309FC433C7;
+	Wed, 15 Nov 2023 19:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077861;
-	bh=8VSbfxyUz40qL+vDBX5IoI299OPQFn6ochjr+m7PxV8=;
+	s=korg; t=1700077863;
+	bh=Sc+NwKitPJGBpNPvGSXr5fpZlyMRB5mUTmleD0CvqHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yltCMM+eYUdL6PXcVa1fepZe+jxX3vBjSmvlMwHz0s88/QfLn2vfDdM2pSNY1j2ny
-	 GvdA0N91++rLlfuZcN/6o664hSBZ8EEV5wVe8SHHmgV34wL/y8MUzzhOfxyI7lX8wJ
-	 lT18NVLGQH3Z1XZ9p2WfJBWzDgd6O7b6HiNQzL1Q=
+	b=KsEu2WoE7MsGL1lie0NK76ztKKrCpzZkkeNfO8Q275I7XkQ6fq8RTqPGyJtMNIFVU
+	 ob4D4nwylgVQsPL1l4C2F7pNkYxq4cj6/+zkDW3Om/7GXy50ijFkIYBSW9gn+lc6gZ
+	 FN6njuPDUV9Z8lHDuMymGS5e6SS1nrAF5rZSkSJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Aniruddha Paul <aniruddha.paul@intel.com>,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	syzbot+a8c7be6dee0de1b669cc@syzkaller.appspotmail.com,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 564/603] ice: Fix VF-VF filter rules in switchdev mode
-Date: Wed, 15 Nov 2023 14:18:29 -0500
-Message-ID: <20231115191650.622848471@linuxfoundation.org>
+Subject: [PATCH 6.6 541/603] llc: verify mac len before reading mac header
+Date: Wed, 15 Nov 2023 14:18:06 -0500
+Message-ID: <20231115191649.248000455@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,189 +43,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aniruddha Paul <aniruddha.paul@intel.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 8b3c8c55ccbc02920b0ae6601c66df24f0d833bd ]
+[ Upstream commit 7b3ba18703a63f6fd487183b9262b08e5632da1b ]
 
-Any packet leaving VSI i.e VF's VSI is considered as
-egress traffic by HW, thus failing to match the added
-rule.
+LLC reads the mac header with eth_hdr without verifying that the skb
+has an Ethernet header.
 
-Mark the direction for redirect rules as below:
-1. VF-VF - Egress
-2. Uplink-VF - Ingress
-3. VF-Uplink - Egress
-4. Link_Partner-Uplink - Ingress
-5. Link_Partner-VF - Ingress
+Syzbot was able to enter llc_rcv on a tun device. Tun can insert
+packets without mac len and with user configurable skb->protocol
+(passing a tun_pi header when not configuring IFF_NO_PI).
 
-Fixes: 0960a27bd479 ("ice: Add direction metadata")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Aniruddha Paul <aniruddha.paul@intel.com>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+    BUG: KMSAN: uninit-value in llc_station_ac_send_test_r net/llc/llc_station.c:81 [inline]
+    BUG: KMSAN: uninit-value in llc_station_rcv+0x6fb/0x1290 net/llc/llc_station.c:111
+    llc_station_ac_send_test_r net/llc/llc_station.c:81 [inline]
+    llc_station_rcv+0x6fb/0x1290 net/llc/llc_station.c:111
+    llc_rcv+0xc5d/0x14a0 net/llc/llc_input.c:218
+    __netif_receive_skb_one_core net/core/dev.c:5523 [inline]
+    __netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5637
+    netif_receive_skb_internal net/core/dev.c:5723 [inline]
+    netif_receive_skb+0x58/0x660 net/core/dev.c:5782
+    tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1555
+    tun_get_user+0x54c5/0x69c0 drivers/net/tun.c:2002
+
+Add a mac_len test before all three eth_hdr(skb) calls under net/llc.
+
+There are further uses in include/net/llc_pdu.h. All these are
+protected by a test skb->protocol == ETH_P_802_2. Which does not
+protect against this tun scenario.
+
+But the mac_len test added in this patch in llc_fixup_skb will
+indirectly protect those too. That is called from llc_rcv before any
+other LLC code.
+
+It is tempting to just add a blanket mac_len check in llc_rcv, but
+not sure whether that could break valid LLC paths that do not assume
+an Ethernet header. 802.2 LLC may be used on top of non-802.3
+protocols in principle. The below referenced commit shows that used
+to, on top of Token Ring.
+
+At least one of the three eth_hdr uses goes back to before the start
+of git history. But the one that syzbot exercises is introduced in
+this commit. That commit is old enough (2008), that effectively all
+stable kernels should receive this.
+
+Fixes: f83f1768f833 ("[LLC]: skb allocation size for responses")
+Reported-by: syzbot+a8c7be6dee0de1b669cc@syzkaller.appspotmail.com
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20231025234251.3796495-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_tc_lib.c | 90 ++++++++++++++-------
- 1 file changed, 62 insertions(+), 28 deletions(-)
+ net/llc/llc_input.c   | 10 ++++++++--
+ net/llc/llc_s_ac.c    |  3 +++
+ net/llc/llc_station.c |  3 +++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_tc_lib.c b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-index 37b54db91df27..0e75fc6b3c060 100644
---- a/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-@@ -630,32 +630,61 @@ bool ice_is_tunnel_supported(struct net_device *dev)
- 	return ice_tc_tun_get_type(dev) != TNL_LAST;
- }
- 
--static int
--ice_eswitch_tc_parse_action(struct ice_tc_flower_fltr *fltr,
--			    struct flow_action_entry *act)
-+static bool ice_tc_is_dev_uplink(struct net_device *dev)
-+{
-+	return netif_is_ice(dev) || ice_is_tunnel_supported(dev);
-+}
+diff --git a/net/llc/llc_input.c b/net/llc/llc_input.c
+index 7cac441862e21..51bccfb00a9cd 100644
+--- a/net/llc/llc_input.c
++++ b/net/llc/llc_input.c
+@@ -127,8 +127,14 @@ static inline int llc_fixup_skb(struct sk_buff *skb)
+ 	skb->transport_header += llc_len;
+ 	skb_pull(skb, llc_len);
+ 	if (skb->protocol == htons(ETH_P_802_2)) {
+-		__be16 pdulen = eth_hdr(skb)->h_proto;
+-		s32 data_size = ntohs(pdulen) - llc_len;
++		__be16 pdulen;
++		s32 data_size;
 +
-+static int ice_tc_setup_redirect_action(struct net_device *filter_dev,
-+					struct ice_tc_flower_fltr *fltr,
-+					struct net_device *target_dev)
- {
- 	struct ice_repr *repr;
- 
-+	fltr->action.fltr_act = ICE_FWD_TO_VSI;
++		if (skb->mac_len < ETH_HLEN)
++			return 0;
 +
-+	if (ice_is_port_repr_netdev(filter_dev) &&
-+	    ice_is_port_repr_netdev(target_dev)) {
-+		repr = ice_netdev_to_repr(target_dev);
++		pdulen = eth_hdr(skb)->h_proto;
++		data_size = ntohs(pdulen) - llc_len;
+ 
+ 		if (data_size < 0 ||
+ 		    !pskb_may_pull(skb, data_size))
+diff --git a/net/llc/llc_s_ac.c b/net/llc/llc_s_ac.c
+index 79d1cef8f15a9..06fb8e6944b06 100644
+--- a/net/llc/llc_s_ac.c
++++ b/net/llc/llc_s_ac.c
+@@ -153,6 +153,9 @@ int llc_sap_action_send_test_r(struct llc_sap *sap, struct sk_buff *skb)
+ 	int rc = 1;
+ 	u32 data_size;
+ 
++	if (skb->mac_len < ETH_HLEN)
++		return 1;
 +
-+		fltr->dest_vsi = repr->src_vsi;
-+		fltr->direction = ICE_ESWITCH_FLTR_EGRESS;
-+	} else if (ice_is_port_repr_netdev(filter_dev) &&
-+		   ice_tc_is_dev_uplink(target_dev)) {
-+		repr = ice_netdev_to_repr(filter_dev);
+ 	llc_pdu_decode_sa(skb, mac_da);
+ 	llc_pdu_decode_da(skb, mac_sa);
+ 	llc_pdu_decode_ssap(skb, &dsap);
+diff --git a/net/llc/llc_station.c b/net/llc/llc_station.c
+index 05c6ae0920534..f506542925109 100644
+--- a/net/llc/llc_station.c
++++ b/net/llc/llc_station.c
+@@ -76,6 +76,9 @@ static int llc_station_ac_send_test_r(struct sk_buff *skb)
+ 	u32 data_size;
+ 	struct sk_buff *nskb;
+ 
++	if (skb->mac_len < ETH_HLEN)
++		goto out;
 +
-+		fltr->dest_vsi = repr->src_vsi->back->switchdev.uplink_vsi;
-+		fltr->direction = ICE_ESWITCH_FLTR_EGRESS;
-+	} else if (ice_tc_is_dev_uplink(filter_dev) &&
-+		   ice_is_port_repr_netdev(target_dev)) {
-+		repr = ice_netdev_to_repr(target_dev);
-+
-+		fltr->dest_vsi = repr->src_vsi;
-+		fltr->direction = ICE_ESWITCH_FLTR_INGRESS;
-+	} else {
-+		NL_SET_ERR_MSG_MOD(fltr->extack,
-+				   "Unsupported netdevice in switchdev mode");
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
-+static int ice_eswitch_tc_parse_action(struct net_device *filter_dev,
-+				       struct ice_tc_flower_fltr *fltr,
-+				       struct flow_action_entry *act)
-+{
-+	int err;
-+
- 	switch (act->id) {
- 	case FLOW_ACTION_DROP:
- 		fltr->action.fltr_act = ICE_DROP_PACKET;
- 		break;
- 
- 	case FLOW_ACTION_REDIRECT:
--		fltr->action.fltr_act = ICE_FWD_TO_VSI;
--
--		if (ice_is_port_repr_netdev(act->dev)) {
--			repr = ice_netdev_to_repr(act->dev);
--
--			fltr->dest_vsi = repr->src_vsi;
--			fltr->direction = ICE_ESWITCH_FLTR_INGRESS;
--		} else if (netif_is_ice(act->dev) ||
--			   ice_is_tunnel_supported(act->dev)) {
--			fltr->direction = ICE_ESWITCH_FLTR_EGRESS;
--		} else {
--			NL_SET_ERR_MSG_MOD(fltr->extack, "Unsupported netdevice in switchdev mode");
--			return -EINVAL;
--		}
-+		err = ice_tc_setup_redirect_action(filter_dev, fltr, act->dev);
-+		if (err)
-+			return err;
- 
- 		break;
- 
-@@ -696,10 +725,6 @@ ice_eswitch_add_tc_fltr(struct ice_vsi *vsi, struct ice_tc_flower_fltr *fltr)
- 		goto exit;
- 	}
- 
--	/* egress traffic is always redirect to uplink */
--	if (fltr->direction == ICE_ESWITCH_FLTR_EGRESS)
--		fltr->dest_vsi = vsi->back->switchdev.uplink_vsi;
--
- 	rule_info.sw_act.fltr_act = fltr->action.fltr_act;
- 	if (fltr->action.fltr_act != ICE_DROP_PACKET)
- 		rule_info.sw_act.vsi_handle = fltr->dest_vsi->idx;
-@@ -713,13 +738,21 @@ ice_eswitch_add_tc_fltr(struct ice_vsi *vsi, struct ice_tc_flower_fltr *fltr)
- 	rule_info.flags_info.act_valid = true;
- 
- 	if (fltr->direction == ICE_ESWITCH_FLTR_INGRESS) {
-+		/* Uplink to VF */
- 		rule_info.sw_act.flag |= ICE_FLTR_RX;
- 		rule_info.sw_act.src = hw->pf_id;
- 		rule_info.flags_info.act = ICE_SINGLE_ACT_LB_ENABLE;
--	} else {
-+	} else if (fltr->direction == ICE_ESWITCH_FLTR_EGRESS &&
-+		   fltr->dest_vsi == vsi->back->switchdev.uplink_vsi) {
-+		/* VF to Uplink */
- 		rule_info.sw_act.flag |= ICE_FLTR_TX;
- 		rule_info.sw_act.src = vsi->idx;
- 		rule_info.flags_info.act = ICE_SINGLE_ACT_LAN_ENABLE;
-+	} else {
-+		/* VF to VF */
-+		rule_info.sw_act.flag |= ICE_FLTR_TX;
-+		rule_info.sw_act.src = vsi->idx;
-+		rule_info.flags_info.act = ICE_SINGLE_ACT_LB_ENABLE;
- 	}
- 
- 	/* specify the cookie as filter_rule_id */
-@@ -1745,16 +1778,17 @@ ice_tc_parse_action(struct ice_vsi *vsi, struct ice_tc_flower_fltr *fltr,
- 
- /**
-  * ice_parse_tc_flower_actions - Parse the actions for a TC filter
-+ * @filter_dev: Pointer to device on which filter is being added
-  * @vsi: Pointer to VSI
-  * @cls_flower: Pointer to TC flower offload structure
-  * @fltr: Pointer to TC flower filter structure
-  *
-  * Parse the actions for a TC filter
-  */
--static int
--ice_parse_tc_flower_actions(struct ice_vsi *vsi,
--			    struct flow_cls_offload *cls_flower,
--			    struct ice_tc_flower_fltr *fltr)
-+static int ice_parse_tc_flower_actions(struct net_device *filter_dev,
-+				       struct ice_vsi *vsi,
-+				       struct flow_cls_offload *cls_flower,
-+				       struct ice_tc_flower_fltr *fltr)
- {
- 	struct flow_rule *rule = flow_cls_offload_flow_rule(cls_flower);
- 	struct flow_action *flow_action = &rule->action;
-@@ -1769,7 +1803,7 @@ ice_parse_tc_flower_actions(struct ice_vsi *vsi,
- 
- 	flow_action_for_each(i, act, flow_action) {
- 		if (ice_is_eswitch_mode_switchdev(vsi->back))
--			err = ice_eswitch_tc_parse_action(fltr, act);
-+			err = ice_eswitch_tc_parse_action(filter_dev, fltr, act);
- 		else
- 			err = ice_tc_parse_action(vsi, fltr, act);
- 		if (err)
-@@ -1856,7 +1890,7 @@ ice_add_tc_fltr(struct net_device *netdev, struct ice_vsi *vsi,
- 	if (err < 0)
- 		goto err;
- 
--	err = ice_parse_tc_flower_actions(vsi, f, fltr);
-+	err = ice_parse_tc_flower_actions(netdev, vsi, f, fltr);
- 	if (err < 0)
- 		goto err;
- 
+ 	/* The test request command is type U (llc_len = 3) */
+ 	data_size = ntohs(eth_hdr(skb)->h_proto) - 3;
+ 	nskb = llc_alloc_frame(NULL, skb->dev, LLC_PDU_TYPE_U, data_size);
 -- 
 2.42.0
 
