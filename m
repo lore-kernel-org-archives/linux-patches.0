@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78CE43AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CF543AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smsOeYCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C0DC04E60;
-	Wed, 15 Nov 2023 20:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Lr0uN1N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D640AC116AC;
+	Wed, 15 Nov 2023 20:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081271;
-	bh=+1CsQuxRlSfzwlmdiBGDlxXCBYMaONlVUfgrP5X/ZLw=;
+	s=korg; t=1700081273;
+	bh=1px7vPK+Ni4L4imY4wrv3ouo+dxeuhi46WczIls8TSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smsOeYCM+jQ0nMw9oLxstVsdB0sIQ/kECmhdbbffzSBetGS1nZ4SscUrsWcTGdjBg
-	 A+txB+V4Hul23GilZ5PttpGraG4HVwN6cbA4vHsFsrYnbsCNCjlSzHR1sDnizGrR2s
-	 f9N6gefYfqQ2MC/P9MZQ0fXA7lA1KJOdpk+ZTlmA=
+	b=1Lr0uN1Ns6RRGh9Q6LeV9HoymZnqanGLWknkmXMB+bM56HIE2xijNpApCXj5arQMH
+	 17XVYLgXzFSsEC3Wja1KIf17DJcYsFGwV5lCUPeVJTSoFGhV7AgwJcZ6ZzOxFQaqCG
+	 HHmnnLIcLXccwPa/O4bBJdUhaKlgfNDXmTW49QOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	David Wragg <dwragg@cloudflare.com>,
+	Yan Zhai <yan@cloudflare.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/244] gve: Use size_add() in call to struct_size()
-Date: Wed, 15 Nov 2023 15:33:31 -0500
-Message-ID: <20231115203549.516987320@linuxfoundation.org>
+Subject: [PATCH 5.15 048/244] ipv6: avoid atomic fragment on GSO packets
+Date: Wed, 15 Nov 2023 15:34:00 -0500
+Message-ID: <20231115203551.249902442@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -43,36 +43,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Yan Zhai <yan@cloudflare.com>
 
-[ Upstream commit d692873cbe861a870cdc9cbfb120eefd113c3dfd ]
+[ Upstream commit 03d6c848bfb406e9ef6d9846d759e97beaeea113 ]
 
-If, for any reason, `tx_stats_num + rx_stats_num` wraps around, the
-protection that struct_size() adds against potential integer overflows
-is defeated. Fix this by hardening call to struct_size() with size_add().
+When the ipv6 stack output a GSO packet, if its gso_size is larger than
+dst MTU, then all segments would be fragmented. However, it is possible
+for a GSO packet to have a trailing segment with smaller actual size
+than both gso_size as well as the MTU, which leads to an "atomic
+fragment". Atomic fragments are considered harmful in RFC-8021. An
+Existing report from APNIC also shows that atomic fragments are more
+likely to be dropped even it is equivalent to a no-op [1].
 
-Fixes: 691f4077d560 ("gve: Replace zero-length array with flexible-array member")
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Add an extra check in the GSO slow output path. For each segment from
+the original over-sized packet, if it fits with the path MTU, then avoid
+generating an atomic fragment.
+
+Link: https://www.potaroo.net/presentations/2022-03-01-ipv6-frag.pdf [1]
+Fixes: b210de4f8c97 ("net: ipv6: Validate GSO SKB before finish IPv6 processing")
+Reported-by: David Wragg <dwragg@cloudflare.com>
+Signed-off-by: Yan Zhai <yan@cloudflare.com>
+Link: https://lore.kernel.org/r/90912e3503a242dca0bc36958b11ed03a2696e5e.1698156966.git.yan@cloudflare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_output.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
-index c0ea1b185e1bd..4327d66878976 100644
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -139,7 +139,7 @@ static int gve_alloc_stats_report(struct gve_priv *priv)
- 	rx_stats_num = (GVE_RX_STATS_REPORT_NUM + NIC_RX_STATS_REPORT_NUM) *
- 		       priv->rx_cfg.num_queues;
- 	priv->stats_report_len = struct_size(priv->stats_report, stats,
--					     tx_stats_num + rx_stats_num);
-+					     size_add(tx_stats_num, rx_stats_num));
- 	priv->stats_report =
- 		dma_alloc_coherent(&priv->pdev->dev, priv->stats_report_len,
- 				   &priv->stats_report_bus, GFP_KERNEL);
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index 2207acd7108c1..5045b479c2a95 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -159,7 +159,13 @@ ip6_finish_output_gso_slowpath_drop(struct net *net, struct sock *sk,
+ 		int err;
+ 
+ 		skb_mark_not_on_list(segs);
+-		err = ip6_fragment(net, sk, segs, ip6_finish_output2);
++		/* Last GSO segment can be smaller than gso_size (and MTU).
++		 * Adding a fragment header would produce an "atomic fragment",
++		 * which is considered harmful (RFC-8021). Avoid that.
++		 */
++		err = segs->len > mtu ?
++			ip6_fragment(net, sk, segs, ip6_finish_output2) :
++			ip6_finish_output2(net, sk, segs);
+ 		if (err && ret == 0)
+ 			ret = err;
+ 	}
 -- 
 2.42.0
 
