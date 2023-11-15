@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1947E31728
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF22A31725
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PX8rkqFX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF0FC433C8;
-	Wed, 15 Nov 2023 19:39:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMbVQeVz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B26C433CA;
+	Wed, 15 Nov 2023 19:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077162;
-	bh=kSIji8XtWpXBoqFGG753CTbJsq9QlPD5yuiF0qr1LEw=;
+	s=korg; t=1700077164;
+	bh=RSrEjjNbzi7DgbNvKELP/Vbq1zZo+jIqEE9x6UuziIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PX8rkqFX61nZfT31gzJqwe2sXocYBc0CxVFT194s8M7y7qSwzbeiuJE+2l1WduvGF
-	 AdMTQwKEW6ulXvDK9FeCh1jYVYIs30AFfcFKmU9z/vtjNO1r47YxdcKlMvt0Aezg0L
-	 s7RANjgl8iWBAthbpA6zhdVXm6r/FF9eCag9ayik=
+	b=OMbVQeVzKlzaJmayYjrGqvHnH4PrFCo6G5NVGNSCEeUrF8NKr4SgmhWTZoqSYSIR0
+	 gjR0XBcu8t+AAB+7Ue1Jfl97ZvrYKhEb4sLnIe9L7bR8mq9+XmKhSettPldC4QIe8x
+	 QUi+v2JNDMuqFm7WycOMUAlKP7G31Ms1eahO1q1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Bacik <roman.bacik@broadcom.com>,
-	Ray Jui <ray.jui@broadcom.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 525/550] i2c: iproc: handle invalid slave state
-Date: Wed, 15 Nov 2023 14:18:29 -0500
-Message-ID: <20231115191637.334324391@linuxfoundation.org>
+Subject: [PATCH 6.5 520/550] nbd: fix uaf in nbd_open
+Date: Wed, 15 Nov 2023 14:18:24 -0500
+Message-ID: <20231115191636.986541393@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,198 +43,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Bacik <roman.bacik@broadcom.com>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit ba15a14399c262f91ce30c19fcbdc952262dd1be ]
+[ Upstream commit 327462725b0f759f093788dfbcb2f1fd132f956b ]
 
-Add the code to handle an invalid state when both bits S_RX_EVENT
-(indicating a transaction) and S_START_BUSY (indicating the end
-of transaction - transition of START_BUSY from 1 to 0) are set in
-the interrupt status register during a slave read.
+Commit 4af5f2e03013 ("nbd: use blk_mq_alloc_disk and
+blk_cleanup_disk") cleans up disk by blk_cleanup_disk() and it won't set
+disk->private_data as NULL as before. UAF may be triggered in nbd_open()
+if someone tries to open nbd device right after nbd_put() since nbd has
+been free in nbd_dev_remove().
 
-Signed-off-by: Roman Bacik <roman.bacik@broadcom.com>
-Fixes: 1ca1b4516088 ("i2c: iproc: handle Master aborted error")
-Acked-by: Ray Jui <ray.jui@broadcom.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fix this by implementing ->free_disk and free private data in it.
+
+Fixes: 4af5f2e03013 ("nbd: use blk_mq_alloc_disk and blk_cleanup_disk")
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://lore.kernel.org/r/20231107103435.2074904-1-lilingfeng@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-bcm-iproc.c | 133 ++++++++++++++++-------------
- 1 file changed, 75 insertions(+), 58 deletions(-)
+ drivers/block/nbd.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-bcm-iproc.c b/drivers/i2c/busses/i2c-bcm-iproc.c
-index 05c80680dff47..68438d4e5d733 100644
---- a/drivers/i2c/busses/i2c-bcm-iproc.c
-+++ b/drivers/i2c/busses/i2c-bcm-iproc.c
-@@ -316,26 +316,44 @@ static void bcm_iproc_i2c_slave_init(
- 	iproc_i2c_wr_reg(iproc_i2c, IE_OFFSET, val);
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index 8576d696c7a22..f6a9eda9fbb20 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -250,7 +250,6 @@ static void nbd_dev_remove(struct nbd_device *nbd)
+ 	struct gendisk *disk = nbd->disk;
+ 
+ 	del_gendisk(disk);
+-	put_disk(disk);
+ 	blk_mq_free_tag_set(&nbd->tag_set);
+ 
+ 	/*
+@@ -261,7 +260,7 @@ static void nbd_dev_remove(struct nbd_device *nbd)
+ 	idr_remove(&nbd_index_idr, nbd->index);
+ 	mutex_unlock(&nbd_index_mutex);
+ 	destroy_workqueue(nbd->recv_workq);
+-	kfree(nbd);
++	put_disk(disk);
  }
  
--static void bcm_iproc_i2c_check_slave_status(
--	struct bcm_iproc_i2c_dev *iproc_i2c)
-+static bool bcm_iproc_i2c_check_slave_status
-+	(struct bcm_iproc_i2c_dev *iproc_i2c, u32 status)
+ static void nbd_dev_remove_work(struct work_struct *work)
+@@ -1609,6 +1608,13 @@ static void nbd_release(struct gendisk *disk)
+ 	nbd_put(nbd);
+ }
+ 
++static void nbd_free_disk(struct gendisk *disk)
++{
++	struct nbd_device *nbd = disk->private_data;
++
++	kfree(nbd);
++}
++
+ static const struct block_device_operations nbd_fops =
  {
- 	u32 val;
-+	bool recover = false;
+ 	.owner =	THIS_MODULE,
+@@ -1616,6 +1622,7 @@ static const struct block_device_operations nbd_fops =
+ 	.release =	nbd_release,
+ 	.ioctl =	nbd_ioctl,
+ 	.compat_ioctl =	nbd_ioctl,
++	.free_disk =	nbd_free_disk,
+ };
  
--	val = iproc_i2c_rd_reg(iproc_i2c, S_CMD_OFFSET);
--	/* status is valid only when START_BUSY is cleared after it was set */
--	if (val & BIT(S_CMD_START_BUSY_SHIFT))
--		return;
-+	/* check slave transmit status only if slave is transmitting */
-+	if (!iproc_i2c->slave_rx_only) {
-+		val = iproc_i2c_rd_reg(iproc_i2c, S_CMD_OFFSET);
-+		/* status is valid only when START_BUSY is cleared */
-+		if (!(val & BIT(S_CMD_START_BUSY_SHIFT))) {
-+			val = (val >> S_CMD_STATUS_SHIFT) & S_CMD_STATUS_MASK;
-+			if (val == S_CMD_STATUS_TIMEOUT ||
-+			    val == S_CMD_STATUS_MASTER_ABORT) {
-+				dev_warn(iproc_i2c->device,
-+					 (val == S_CMD_STATUS_TIMEOUT) ?
-+					 "slave random stretch time timeout\n" :
-+					 "Master aborted read transaction\n");
-+				recover = true;
-+			}
-+		}
-+	}
-+
-+	/* RX_EVENT is not valid when START_BUSY is set */
-+	if ((status & BIT(IS_S_RX_EVENT_SHIFT)) &&
-+	    (status & BIT(IS_S_START_BUSY_SHIFT))) {
-+		dev_warn(iproc_i2c->device, "Slave aborted read transaction\n");
-+		recover = true;
-+	}
- 
--	val = (val >> S_CMD_STATUS_SHIFT) & S_CMD_STATUS_MASK;
--	if (val == S_CMD_STATUS_TIMEOUT || val == S_CMD_STATUS_MASTER_ABORT) {
--		dev_err(iproc_i2c->device, (val == S_CMD_STATUS_TIMEOUT) ?
--			"slave random stretch time timeout\n" :
--			"Master aborted read transaction\n");
-+	if (recover) {
- 		/* re-initialize i2c for recovery */
- 		bcm_iproc_i2c_enable_disable(iproc_i2c, false);
- 		bcm_iproc_i2c_slave_init(iproc_i2c, true);
- 		bcm_iproc_i2c_enable_disable(iproc_i2c, true);
- 	}
-+
-+	return recover;
- }
- 
- static void bcm_iproc_i2c_slave_read(struct bcm_iproc_i2c_dev *iproc_i2c)
-@@ -420,48 +438,6 @@ static bool bcm_iproc_i2c_slave_isr(struct bcm_iproc_i2c_dev *iproc_i2c,
- 	u32 val;
- 	u8 value;
- 
--	/*
--	 * Slave events in case of master-write, master-write-read and,
--	 * master-read
--	 *
--	 * Master-write     : only IS_S_RX_EVENT_SHIFT event
--	 * Master-write-read: both IS_S_RX_EVENT_SHIFT and IS_S_RD_EVENT_SHIFT
--	 *                    events
--	 * Master-read      : both IS_S_RX_EVENT_SHIFT and IS_S_RD_EVENT_SHIFT
--	 *                    events or only IS_S_RD_EVENT_SHIFT
--	 *
--	 * iproc has a slave rx fifo size of 64 bytes. Rx fifo full interrupt
--	 * (IS_S_RX_FIFO_FULL_SHIFT) will be generated when RX fifo becomes
--	 * full. This can happen if Master issues write requests of more than
--	 * 64 bytes.
--	 */
--	if (status & BIT(IS_S_RX_EVENT_SHIFT) ||
--	    status & BIT(IS_S_RD_EVENT_SHIFT) ||
--	    status & BIT(IS_S_RX_FIFO_FULL_SHIFT)) {
--		/* disable slave interrupts */
--		val = iproc_i2c_rd_reg(iproc_i2c, IE_OFFSET);
--		val &= ~iproc_i2c->slave_int_mask;
--		iproc_i2c_wr_reg(iproc_i2c, IE_OFFSET, val);
--
--		if (status & BIT(IS_S_RD_EVENT_SHIFT))
--			/* Master-write-read request */
--			iproc_i2c->slave_rx_only = false;
--		else
--			/* Master-write request only */
--			iproc_i2c->slave_rx_only = true;
--
--		/* schedule tasklet to read data later */
--		tasklet_schedule(&iproc_i2c->slave_rx_tasklet);
--
--		/*
--		 * clear only IS_S_RX_EVENT_SHIFT and
--		 * IS_S_RX_FIFO_FULL_SHIFT interrupt.
--		 */
--		val = BIT(IS_S_RX_EVENT_SHIFT);
--		if (status & BIT(IS_S_RX_FIFO_FULL_SHIFT))
--			val |= BIT(IS_S_RX_FIFO_FULL_SHIFT);
--		iproc_i2c_wr_reg(iproc_i2c, IS_OFFSET, val);
--	}
- 
- 	if (status & BIT(IS_S_TX_UNDERRUN_SHIFT)) {
- 		iproc_i2c->tx_underrun++;
-@@ -493,8 +469,9 @@ static bool bcm_iproc_i2c_slave_isr(struct bcm_iproc_i2c_dev *iproc_i2c,
- 		 * less than PKT_LENGTH bytes were output on the SMBUS
- 		 */
- 		iproc_i2c->slave_int_mask &= ~BIT(IE_S_TX_UNDERRUN_SHIFT);
--		iproc_i2c_wr_reg(iproc_i2c, IE_OFFSET,
--				 iproc_i2c->slave_int_mask);
-+		val = iproc_i2c_rd_reg(iproc_i2c, IE_OFFSET);
-+		val &= ~BIT(IE_S_TX_UNDERRUN_SHIFT);
-+		iproc_i2c_wr_reg(iproc_i2c, IE_OFFSET, val);
- 
- 		/* End of SMBUS for Master Read */
- 		val = BIT(S_TX_WR_STATUS_SHIFT);
-@@ -515,9 +492,49 @@ static bool bcm_iproc_i2c_slave_isr(struct bcm_iproc_i2c_dev *iproc_i2c,
- 				 BIT(IS_S_START_BUSY_SHIFT));
- 	}
- 
--	/* check slave transmit status only if slave is transmitting */
--	if (!iproc_i2c->slave_rx_only)
--		bcm_iproc_i2c_check_slave_status(iproc_i2c);
-+	/* if the controller has been reset, immediately return from the ISR */
-+	if (bcm_iproc_i2c_check_slave_status(iproc_i2c, status))
-+		return true;
-+
-+	/*
-+	 * Slave events in case of master-write, master-write-read and,
-+	 * master-read
-+	 *
-+	 * Master-write     : only IS_S_RX_EVENT_SHIFT event
-+	 * Master-write-read: both IS_S_RX_EVENT_SHIFT and IS_S_RD_EVENT_SHIFT
-+	 *                    events
-+	 * Master-read      : both IS_S_RX_EVENT_SHIFT and IS_S_RD_EVENT_SHIFT
-+	 *                    events or only IS_S_RD_EVENT_SHIFT
-+	 *
-+	 * iproc has a slave rx fifo size of 64 bytes. Rx fifo full interrupt
-+	 * (IS_S_RX_FIFO_FULL_SHIFT) will be generated when RX fifo becomes
-+	 * full. This can happen if Master issues write requests of more than
-+	 * 64 bytes.
-+	 */
-+	if (status & BIT(IS_S_RX_EVENT_SHIFT) ||
-+	    status & BIT(IS_S_RD_EVENT_SHIFT) ||
-+	    status & BIT(IS_S_RX_FIFO_FULL_SHIFT)) {
-+		/* disable slave interrupts */
-+		val = iproc_i2c_rd_reg(iproc_i2c, IE_OFFSET);
-+		val &= ~iproc_i2c->slave_int_mask;
-+		iproc_i2c_wr_reg(iproc_i2c, IE_OFFSET, val);
-+
-+		if (status & BIT(IS_S_RD_EVENT_SHIFT))
-+			/* Master-write-read request */
-+			iproc_i2c->slave_rx_only = false;
-+		else
-+			/* Master-write request only */
-+			iproc_i2c->slave_rx_only = true;
-+
-+		/* schedule tasklet to read data later */
-+		tasklet_schedule(&iproc_i2c->slave_rx_tasklet);
-+
-+		/* clear IS_S_RX_FIFO_FULL_SHIFT interrupt */
-+		if (status & BIT(IS_S_RX_FIFO_FULL_SHIFT)) {
-+			val = BIT(IS_S_RX_FIFO_FULL_SHIFT);
-+			iproc_i2c_wr_reg(iproc_i2c, IS_OFFSET, val);
-+		}
-+	}
- 
- 	return true;
- }
+ #if IS_ENABLED(CONFIG_DEBUG_FS)
 -- 
 2.42.0
 
