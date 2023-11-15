@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53EA3DBB5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508A018030
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5OJiHhV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989E5C433CA;
-	Wed, 15 Nov 2023 22:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFl856qg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFAF5C433C8;
+	Wed, 15 Nov 2023 22:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085882;
-	bh=HmH/8/SwGcp5MeX02sy5ftLnaJcqYPgkW3mIqRpNCoc=;
+	s=korg; t=1700085884;
+	bh=xDvpzxGMFAZOXwW3B8WymlPVrtuoq4yXCN1gNrsAq5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l5OJiHhVBRSLvjqDvW9PUimPef3X/nK9z20LGGAb16iV7rMgxGXL6DmAN1NqapW/5
-	 jf9FA08S9wao1MRE0jDQnhaRvC0UCjfaDdhVLDEu59UIzaRFqNN1wz9UbI5ZQMfLx6
-	 SC6UbeuwwVWcnoFu4NLkCGrESl1wi0QK2G7FSkZw=
+	b=rFl856qgbmGatsp/KSLFKtlp67dWUvQxpVqlYt+FIp/30eDg+1KIb41xMWnxFEMZS
+	 wW5WB0X2+9/ssV46VSKDsi7qpnZqeWP7RIN3QSwOTUb+YNO28XXsdK0kw+ojhloFsh
+	 jyLVlWitmga1iwQlUd3EV2DRsnzVqBPJeGrAmEfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Blixt <jonas.blixt@actia.se>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 079/119] USB: usbip: fix stub_dev hub disconnect
-Date: Wed, 15 Nov 2023 17:01:09 -0500
-Message-ID: <20231115220135.094959384@linuxfoundation.org>
+Subject: [PATCH 5.4 080/119] dmaengine: pxa_dma: Remove an erroneous BUG_ON() in pxad_free_desc()
+Date: Wed, 15 Nov 2023 17:01:10 -0500
+Message-ID: <20231115220135.128781603@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -42,44 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Blixt <jonas.blixt@actia.se>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 97475763484245916735a1aa9a3310a01d46b008 ]
+[ Upstream commit 83c761f568733277ce1f7eb9dc9e890649c29a8c ]
 
-If a hub is disconnected that has device(s) that's attached to the usbip layer
-the disconnect function might fail because it tries to release the port
-on an already disconnected hub.
+If pxad_alloc_desc() fails on the first dma_pool_alloc() call, then
+sw_desc->nb_desc is zero.
+In such a case pxad_free_desc() is called and it will BUG_ON().
 
-Fixes: 6080cd0e9239 ("staging: usbip: claim ports used by shared devices")
-Signed-off-by: Jonas Blixt <jonas.blixt@actia.se>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20230615092810.1215490-1-jonas.blixt@actia.se
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Remove this erroneous BUG_ON().
+
+It is also useless, because if "sw_desc->nb_desc == 0", then, on the first
+iteration of the for loop, i is -1 and the loop will not be executed.
+(both i and sw_desc->nb_desc are 'int')
+
+Fixes: a57e16cf0333 ("dmaengine: pxa: add pxa dmaengine driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/c8fc5563c9593c914fde41f0f7d1489a21b45a9a.1696676782.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/usbip/stub_dev.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/dma/pxa_dma.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/usb/usbip/stub_dev.c b/drivers/usb/usbip/stub_dev.c
-index 3c6d452e3bf40..4104eea03e806 100644
---- a/drivers/usb/usbip/stub_dev.c
-+++ b/drivers/usb/usbip/stub_dev.c
-@@ -462,8 +462,13 @@ static void stub_disconnect(struct usb_device *udev)
- 	/* release port */
- 	rc = usb_hub_release_port(udev->parent, udev->portnum,
- 				  (struct usb_dev_state *) udev);
--	if (rc) {
--		dev_dbg(&udev->dev, "unable to release port\n");
-+	/*
-+	 * NOTE: If a HUB disconnect triggered disconnect of the down stream
-+	 * device usb_hub_release_port will return -ENODEV so we can safely ignore
-+	 * that error here.
-+	 */
-+	if (rc && (rc != -ENODEV)) {
-+		dev_dbg(&udev->dev, "unable to release port (%i)\n", rc);
- 		return;
- 	}
+diff --git a/drivers/dma/pxa_dma.c b/drivers/dma/pxa_dma.c
+index 68d9d60c051d9..9ce75ff9fa1cc 100644
+--- a/drivers/dma/pxa_dma.c
++++ b/drivers/dma/pxa_dma.c
+@@ -723,7 +723,6 @@ static void pxad_free_desc(struct virt_dma_desc *vd)
+ 	dma_addr_t dma;
+ 	struct pxad_desc_sw *sw_desc = to_pxad_sw_desc(vd);
  
+-	BUG_ON(sw_desc->nb_desc == 0);
+ 	for (i = sw_desc->nb_desc - 1; i >= 0; i--) {
+ 		if (i > 0)
+ 			dma = sw_desc->hw_desc[i - 1]->ddadr;
 -- 
 2.42.0
 
