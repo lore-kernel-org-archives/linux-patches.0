@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40E83A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D7D3A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVVWEqfz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B22C433C9;
-	Wed, 15 Nov 2023 19:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYZQ+9dx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268E9C433C7;
+	Wed, 15 Nov 2023 19:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077381;
-	bh=7bWRhVhdu5X/Hxh3XzrSNWG86iEz8SLcpp3+2ePWFxU=;
+	s=korg; t=1700077383;
+	bh=e+0l6ggTHVp0YZCrdsy2eEv9oy0R45HWi3ZuuDEioD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TVVWEqfzBeTdLFOqqJLdS/Z95Cu1AgeU3H7BwcBrYwvqS1az0wk+iXnotEgwUb63x
-	 UuAxzdAgeRkJhHGy+3UQnklmzob6uTVxa8lmJgfNLJpEZd+7RazOJkEn14XRE3lOiQ
-	 mIbrIWk//FAvlhO7GOJEN5g+XXnr7SXQcLPk3CvI=
+	b=MYZQ+9dxwbmXH6KFb4pCXsAfNYTZzRj26AR2di5so4g2DprV37Cz2F99OyW2SCi8B
+	 QzMPhj8wUjrKV4fl1t3PKRKiVHUuDxanU7X14Obi5t8VPjPYMXr47/dPy9XZ2uS6rA
+	 DXlIEdrGT82a4+h8DDUlEjNZ3czHNGBqhK/Jnsmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Xiaogang.Chen" <xiaogang.chen@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
 	Felix Kuehling <Felix.Kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 242/603] drm/amdkfd: fix some race conditions in vram buffer alloc/free of svm code
-Date: Wed, 15 Nov 2023 14:13:07 -0500
-Message-ID: <20231115191629.962864898@linuxfoundation.org>
+Subject: [PATCH 6.6 243/603] drm/amdkfd: Remove svm range validated_once flag
+Date: Wed, 15 Nov 2023 14:13:08 -0500
+Message-ID: <20231115191630.035072557@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,47 +43,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaogang Chen <xiaogang.chen@amd.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit 7bfaa160caed8192f8262c4638f552cad94bcf5a ]
+[ Upstream commit c99b16128082de519975aa147d9da3e40380de67 ]
 
-This patch fixes:
-1: ref number of prange's svm_bo got decreased by an async call from hmm. When
-wait svm_bo of prange got released we shoul also wait prang->svm_bo become NULL,
-otherwise prange->svm_bo may be set to null after allocate new vram buffer.
+The validated_once flag is not used after the prefault was removed, The
+prefault was needed to ensure validate all system memory pages at least
+once before mapping or migrating the range to GPU.
 
-2: During waiting svm_bo of prange got released in a while loop should reschedule
-current task to give other tasks oppotunity to run, specially the the workque
-task that handles svm_bo ref release, otherwise we may enter to softlock.
-
-Signed-off-by: Xiaogang.Chen <xiaogang.chen@amd.com>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
 Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: eb3c357bcb28 ("drm/amdkfd: Handle errors from svm validate and map")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 4 +---
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.h | 1 -
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index bb16b795d1bc2..bb65a99439802 100644
+index bb65a99439802..dfc11699e79ab 100644
 --- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
 +++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -495,11 +495,11 @@ svm_range_validate_svm_bo(struct kfd_node *node, struct svm_range *prange)
+@@ -1720,10 +1720,8 @@ static int svm_range_validate_and_map(struct mm_struct *mm,
+ 		addr = next;
+ 	}
  
- 	/* We need a new svm_bo. Spin-loop to wait for concurrent
- 	 * svm_range_bo_release to finish removing this range from
--	 * its range list. After this, it is safe to reuse the
--	 * svm_bo pointer and svm_bo_list head.
-+	 * its range list and set prange->svm_bo to null. After this,
-+	 * it is safe to reuse the svm_bo pointer and svm_bo_list head.
- 	 */
--	while (!list_empty_careful(&prange->svm_bo_list))
--		;
-+	while (!list_empty_careful(&prange->svm_bo_list) || prange->svm_bo)
-+		cond_resched();
+-	if (addr == end) {
+-		prange->validated_once = true;
++	if (addr == end)
+ 		prange->mapped_to_gpu = true;
+-	}
  
- 	return false;
- }
+ unreserve_out:
+ 	svm_range_unreserve_bos(ctx);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.h b/drivers/gpu/drm/amd/amdkfd/kfd_svm.h
+index 9e668eeefb32d..c216c8dd13c6c 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.h
+@@ -132,7 +132,6 @@ struct svm_range {
+ 	struct list_head		child_list;
+ 	DECLARE_BITMAP(bitmap_access, MAX_GPU_INSTANCE);
+ 	DECLARE_BITMAP(bitmap_aip, MAX_GPU_INSTANCE);
+-	bool				validated_once;
+ 	bool				mapped_to_gpu;
+ 	bool				is_error_flag;
+ };
 -- 
 2.42.0
 
