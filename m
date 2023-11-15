@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A973DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3123DB97
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPubptE/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8FFEC433CA;
-	Wed, 15 Nov 2023 19:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBg9aoqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F34AC433C9;
+	Wed, 15 Nov 2023 19:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078317;
-	bh=b2goNvX8pMZS61h+JJarv+fAH6br9c6VuMXiMuHovPk=;
+	s=korg; t=1700078319;
+	bh=pdqFqV43i7a1VzWvrrjmXNo3nctE27yNLbbVdQhDqic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EPubptE/xCPB1WVGtZWSiJ4hyqbRNzE3eSRZqqUACLLVZGIrmOzEv7qA9GKjysF7t
-	 NYMdXvBnOq/cSZkZ1BTrEgNpCePpyGmcgIGFt+OIjeWCafNjsj8tPBH9LHSt9z++v9
-	 vuHrdBwJPoJqEobNhagvupq9SFqAupVw6PkGOCmw=
+	b=GBg9aoqTNPfEljh1I4/ONrX/uxTpS5H0ranG9/KK8TGoIm+MVi8+6ZrOJp6TaBjkO
+	 9JSD/NCNkOcZDS+8kPghkxe+1roc4hgE7ijrVxo08jSW9ZyNLN+4vzFriQIaxXS0jA
+	 UJsoUT/XBslBVFxUeYAbxz5PF5pQF0yEzU9YrGNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mars Cheng <marscheng@google.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Yen-lin Lai <yenlinlai@google.com>,
+	Daniel Mentz <danielmentz@google.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 224/379] ASoC: fsl: Fix PM disable depth imbalance in fsl_easrc_probe
-Date: Wed, 15 Nov 2023 14:24:59 -0500
-Message-ID: <20231115192658.373372464@linuxfoundation.org>
+Subject: [PATCH 6.1 225/379] scsi: ufs: core: Leave space for \0 in utf8 desc string
+Date: Wed, 15 Nov 2023 14:25:00 -0500
+Message-ID: <20231115192658.429723002@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,52 +46,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Daniel Mentz <danielmentz@google.com>
 
-[ Upstream commit 9e630efb5a4af56fdb15aa10405f5cfd3f5f5b83 ]
+[ Upstream commit a75a16c62a2540f11eeae4f2b50e95deefb652ea ]
 
-The pm_runtime_enable will increase power disable depth. Thus
-a pairing decrement is needed on the error handling path to
-keep it balanced according to context. We fix it by calling
-pm_runtime_disable when error returns.
+utf16s_to_utf8s does not NULL terminate the output string. For us to be
+able to add a NULL character when utf16s_to_utf8s returns, we need to make
+sure that there is space for such NULL character at the end of the output
+buffer. We can achieve this by passing an output buffer size to
+utf16s_to_utf8s that is one character less than what we allocated.
 
-Fixes: 955ac624058f ("ASoC: fsl_easrc: Add EASRC ASoC CPU DAI drivers")
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Link: https://lore.kernel.org/r/tencent_C0D62E6D89818179A02A04A0C248F0DDC40A@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Other call sites of utf16s_to_utf8s appear to be using the same technique
+where they artificially reduce the buffer size by one to leave space for a
+NULL character or line feed character.
+
+Fixes: 4b828fe156a6 ("scsi: ufs: revamp string descriptor reading")
+Reviewed-by: Mars Cheng <marscheng@google.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Yen-lin Lai <yenlinlai@google.com>
+Signed-off-by: Daniel Mentz <danielmentz@google.com>
+Link: https://lore.kernel.org/r/20231017182026.2141163-1-danielmentz@google.com
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_easrc.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/ufs/core/ufshcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-index 3153d19136b29..84e6f9eb784dc 100644
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -1966,17 +1966,21 @@ static int fsl_easrc_probe(struct platform_device *pdev)
- 					      &fsl_easrc_dai, 1);
- 	if (ret) {
- 		dev_err(dev, "failed to register ASoC DAI\n");
--		return ret;
-+		goto err_pm_disable;
- 	}
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 6ba4ef2c3949e..dc38d1fa77874 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -3579,7 +3579,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
+ 		 */
+ 		ret = utf16s_to_utf8s(uc_str->uc,
+ 				      uc_str->len - QUERY_DESC_HDR_SIZE,
+-				      UTF16_BIG_ENDIAN, str, ascii_len);
++				      UTF16_BIG_ENDIAN, str, ascii_len - 1);
  
- 	ret = devm_snd_soc_register_component(dev, &fsl_asrc_component,
- 					      NULL, 0);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to register ASoC platform\n");
--		return ret;
-+		goto err_pm_disable;
- 	}
- 
- 	return 0;
-+
-+err_pm_disable:
-+	pm_runtime_disable(&pdev->dev);
-+	return ret;
- }
- 
- static int fsl_easrc_remove(struct platform_device *pdev)
+ 		/* replace non-printable or non-ASCII characters with spaces */
+ 		for (i = 0; i < ret; i++)
 -- 
 2.42.0
 
