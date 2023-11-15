@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09DF43ABE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ED02E40E
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTcm85C+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989BFC32791;
-	Wed, 15 Nov 2023 20:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1xaFE+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BA3C32793;
+	Wed, 15 Nov 2023 20:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081361;
-	bh=fu3vwdto7xNMHrI8lhmkg5kxd6iA1E8Za+JjWSSRtyQ=;
+	s=korg; t=1700081363;
+	bh=NJYNLVJMiWy77bOopTInqcUMLf8xV/bTdY2VWSPlcFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NTcm85C+PjrFv39N6tED27sR4EE8ijgFK5I0LWZhoP9jM5jj6S2EHcFJIO4NtvcQI
-	 CuIkyuqDLucuKaatzYDurbDvKKrlmulmWzMwmfbJAUDYRonL6s3/8qdcuuIL6YIVMN
-	 I9Pf5HSG8PPKaJ1qr8yTyP7lB3aA/hvPZrFn7eNQ=
+	b=v1xaFE+XuG+v9rL0gPoAByiIfnyt0RhMG/dtit2rjDtN0JCtEVrM8DE964T68ukCx
+	 ukB+/JXxgkBYr2OtFFIzEk8Iw63KiQvFZ/eqdDCZgk3TBi++FiGuCaZRfPBSIYvD53
+	 YF0A+qr293e6X0k9ioFv6psHE6rVfyjjw+BMtJek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Dragos Bogdan <dragos.bogdan@analog.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 080/244] platform/x86: wmi: Fix opening of char device
-Date: Wed, 15 Nov 2023 15:34:32 -0500
-Message-ID: <20231115203553.164435269@linuxfoundation.org>
+Subject: [PATCH 5.15 081/244] hwmon: (axi-fan-control) Fix possible NULL pointer dereference
+Date: Wed, 15 Nov 2023 15:34:33 -0500
+Message-ID: <20231115203553.220083968@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -36,71 +37,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Dragos Bogdan <dragos.bogdan@analog.com>
 
-[ Upstream commit eba9ac7abab91c8f6d351460239108bef5e7a0b6 ]
+[ Upstream commit 2a5b3370a1d9750eca325292e291c8c7cb8cf2e0 ]
 
-Since commit fa1f68db6ca7 ("drivers: misc: pass miscdevice pointer via
-file private data"), the miscdevice stores a pointer to itself inside
-filp->private_data, which means that private_data will not be NULL when
-wmi_char_open() is called. This might cause memory corruption should
-wmi_char_open() be unable to find its driver, something which can
-happen when the associated WMI device is deleted in wmi_free_devices().
+axi_fan_control_irq_handler(), dependent on the private
+axi_fan_control_data structure, might be called before the hwmon
+device is registered. That will cause an "Unable to handle kernel
+NULL pointer dereference" error.
 
-Fix the problem by using the miscdevice pointer to retrieve the WMI
-device data associated with a char device using container_of(). This
-also avoids wmi_char_open() picking a wrong WMI device bound to a
-driver with the same name as the original driver.
-
-Fixes: 44b6b7661132 ("platform/x86: wmi: create userspace interface for drivers")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20231020211005.38216-5-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 8412b410fa5e ("hwmon: Support ADI Fan Control IP")
+Signed-off-by: Dragos Bogdan <dragos.bogdan@analog.com>
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20231025132100.649499-1-nuno.sa@analog.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/wmi.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ drivers/hwmon/axi-fan-control.c | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
-index 530778dbdd093..63265ab964245 100644
---- a/drivers/platform/x86/wmi.c
-+++ b/drivers/platform/x86/wmi.c
-@@ -827,21 +827,13 @@ static int wmi_dev_match(struct device *dev, struct device_driver *driver)
- }
- static int wmi_char_open(struct inode *inode, struct file *filp)
- {
--	const char *driver_name = filp->f_path.dentry->d_iname;
--	struct wmi_block *wblock;
--	struct wmi_block *next;
--
--	list_for_each_entry_safe(wblock, next, &wmi_block_list, list) {
--		if (!wblock->dev.dev.driver)
--			continue;
--		if (strcmp(driver_name, wblock->dev.dev.driver->name) == 0) {
--			filp->private_data = wblock;
--			break;
--		}
+diff --git a/drivers/hwmon/axi-fan-control.c b/drivers/hwmon/axi-fan-control.c
+index d2092c17d9935..7af18018a32ff 100644
+--- a/drivers/hwmon/axi-fan-control.c
++++ b/drivers/hwmon/axi-fan-control.c
+@@ -508,6 +508,21 @@ static int axi_fan_control_probe(struct platform_device *pdev)
+ 		return -ENODEV;
+ 	}
+ 
++	ret = axi_fan_control_init(ctl, pdev->dev.of_node);
++	if (ret) {
++		dev_err(&pdev->dev, "Failed to initialize device\n");
++		return ret;
++	}
++
++	ctl->hdev = devm_hwmon_device_register_with_info(&pdev->dev,
++							 name,
++							 ctl,
++							 &axi_chip_info,
++							 axi_fan_control_groups);
++
++	if (IS_ERR(ctl->hdev))
++		return PTR_ERR(ctl->hdev);
++
+ 	ctl->irq = platform_get_irq(pdev, 0);
+ 	if (ctl->irq < 0)
+ 		return ctl->irq;
+@@ -521,19 +536,7 @@ static int axi_fan_control_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
+-	ret = axi_fan_control_init(ctl, pdev->dev.of_node);
+-	if (ret) {
+-		dev_err(&pdev->dev, "Failed to initialize device\n");
+-		return ret;
 -	}
-+	/*
-+	 * The miscdevice already stores a pointer to itself
-+	 * inside filp->private_data
-+	 */
-+	struct wmi_block *wblock = container_of(filp->private_data, struct wmi_block, char_dev);
- 
--	if (!filp->private_data)
--		return -ENODEV;
-+	filp->private_data = wblock;
- 
- 	return nonseekable_open(inode, filp);
+-
+-	ctl->hdev = devm_hwmon_device_register_with_info(&pdev->dev,
+-							 name,
+-							 ctl,
+-							 &axi_chip_info,
+-							 axi_fan_control_groups);
+-
+-	return PTR_ERR_OR_ZERO(ctl->hdev);
++	return 0;
  }
+ 
+ static struct platform_driver axi_fan_control_driver = {
 -- 
 2.42.0
 
