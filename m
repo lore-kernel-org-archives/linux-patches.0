@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF38364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E73364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRx4ApMj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DEBC433C7;
-	Wed, 15 Nov 2023 19:33:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWijsvxk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FDCC433C8;
+	Wed, 15 Nov 2023 19:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076833;
-	bh=lSToMCOS7jPiR/1c4PJ0QIYbRcJaG6hJGkr2HOh4Sms=;
+	s=korg; t=1700076835;
+	bh=s1hTe9f6VikaRzw+pbwku+YI9uSQxqTxq5ZgQIcKjpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MRx4ApMjOJhn6IVHhuSC4nLjTm7OWeRWyDqerGX0zrtG4AGhdOCiKbdYYI8WknlyT
-	 nQArTzhQXZv87ccPhX5fK65lT+JzvLAfY9boPh5A4AlMXYssTSa6OwpPhj/Ej0jsk+
-	 L1OCwjNHfdgztNTiZojzhEeSHzgQ5LrrIm9Ern9E=
+	b=SWijsvxk8p1lAqDrkWM3hknOheCcAGy6JUAC3RjCK7zoYWWoDf0CmVbxnP8cIWVsP
+	 bIOyjF7mnap3Cs/NUTVAS40tl9WNXUr2k7ITSxdtQz0saJ/Abx1An4CNHSvxAcaYSR
+	 GqlzZEsOqRTTKuDue9vqCUTl9YuRnHhbnYFE9Hk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 437/550] powerpc/imc-pmu: Use the correct spinlock initializer.
-Date: Wed, 15 Nov 2023 14:17:01 -0500
-Message-ID: <20231115191631.066708799@linuxfoundation.org>
+Subject: [PATCH 6.6 041/603] wifi: mac80211: move sched-scan stop work to wiphy work
+Date: Wed, 15 Nov 2023 14:09:46 -0500
+Message-ID: <20231115191615.996926605@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,42 +38,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 007240d59c11f87ac4f6cfc6a1d116630b6b634c ]
+[ Upstream commit eadfb54756aea5610d8d0a467f66305f777c85dd ]
 
-The macro __SPIN_LOCK_INITIALIZER() is implementation specific. Users
-that desire to initialize a spinlock in a struct must use
-__SPIN_LOCK_UNLOCKED().
+This also has the wiphy locked here then. We need to use
+the _locked version of cfg80211_sched_scan_stopped() now,
+which also fixes an old deadlock there.
 
-Use __SPIN_LOCK_UNLOCKED() for the spinlock_t in imc_global_refc.
-
-Fixes: 76d588dddc459 ("powerpc/imc-pmu: Fix use of mutex in IRQs disabled section")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230309134831.Nz12nqsU@linutronix.de
+Fixes: a05829a7222e ("cfg80211: avoid holding the RTNL when calling the driver")
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/imc-pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/ieee80211_i.h | 5 +++--
+ net/mac80211/main.c        | 6 +++---
+ net/mac80211/scan.c        | 7 ++++---
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/arch/powerpc/perf/imc-pmu.c b/arch/powerpc/perf/imc-pmu.c
-index 9d229ef7f86ef..ada817c49b722 100644
---- a/arch/powerpc/perf/imc-pmu.c
-+++ b/arch/powerpc/perf/imc-pmu.c
-@@ -51,7 +51,7 @@ static int trace_imc_mem_size;
-  * core and trace-imc
-  */
- static struct imc_pmu_ref imc_global_refc = {
--	.lock = __SPIN_LOCK_INITIALIZER(imc_global_refc.lock),
-+	.lock = __SPIN_LOCK_UNLOCKED(imc_global_refc.lock),
- 	.id = 0,
- 	.refc = 0,
- };
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index 5321f75d0c6f3..07beb72ddd25a 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -1483,7 +1483,7 @@ struct ieee80211_local {
+ 	int hw_scan_ies_bufsize;
+ 	struct cfg80211_scan_info scan_info;
+ 
+-	struct work_struct sched_scan_stopped_work;
++	struct wiphy_work sched_scan_stopped_work;
+ 	struct ieee80211_sub_if_data __rcu *sched_scan_sdata;
+ 	struct cfg80211_sched_scan_request __rcu *sched_scan_req;
+ 	u8 scan_addr[ETH_ALEN];
+@@ -1962,7 +1962,8 @@ int ieee80211_request_sched_scan_start(struct ieee80211_sub_if_data *sdata,
+ 				       struct cfg80211_sched_scan_request *req);
+ int ieee80211_request_sched_scan_stop(struct ieee80211_local *local);
+ void ieee80211_sched_scan_end(struct ieee80211_local *local);
+-void ieee80211_sched_scan_stopped_work(struct work_struct *work);
++void ieee80211_sched_scan_stopped_work(struct wiphy *wiphy,
++				       struct wiphy_work *work);
+ 
+ /* off-channel/mgmt-tx */
+ void ieee80211_offchannel_stop_vifs(struct ieee80211_local *local);
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index f1cbb7c5d4ac3..4548f84451095 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -822,8 +822,8 @@ struct ieee80211_hw *ieee80211_alloc_hw_nm(size_t priv_data_len,
+ 		  ieee80211_dynamic_ps_disable_work);
+ 	timer_setup(&local->dynamic_ps_timer, ieee80211_dynamic_ps_timer, 0);
+ 
+-	INIT_WORK(&local->sched_scan_stopped_work,
+-		  ieee80211_sched_scan_stopped_work);
++	wiphy_work_init(&local->sched_scan_stopped_work,
++			ieee80211_sched_scan_stopped_work);
+ 
+ 	spin_lock_init(&local->ack_status_lock);
+ 	idr_init(&local->ack_status_frames);
+@@ -1481,13 +1481,13 @@ void ieee80211_unregister_hw(struct ieee80211_hw *hw)
+ 
+ 	wiphy_lock(local->hw.wiphy);
+ 	wiphy_delayed_work_cancel(local->hw.wiphy, &local->roc_work);
++	wiphy_work_cancel(local->hw.wiphy, &local->sched_scan_stopped_work);
+ 	wiphy_work_cancel(local->hw.wiphy, &local->radar_detected_work);
+ 	wiphy_unlock(local->hw.wiphy);
+ 	rtnl_unlock();
+ 
+ 	cancel_work_sync(&local->restart_work);
+ 	cancel_work_sync(&local->reconfig_filter);
+-	flush_work(&local->sched_scan_stopped_work);
+ 
+ 	ieee80211_clear_tx_pending(local);
+ 	rate_control_deinitialize(local);
+diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
+index 2117cb2a916ac..68ec2124c3db5 100644
+--- a/net/mac80211/scan.c
++++ b/net/mac80211/scan.c
+@@ -1422,10 +1422,11 @@ void ieee80211_sched_scan_end(struct ieee80211_local *local)
+ 
+ 	mutex_unlock(&local->mtx);
+ 
+-	cfg80211_sched_scan_stopped(local->hw.wiphy, 0);
++	cfg80211_sched_scan_stopped_locked(local->hw.wiphy, 0);
+ }
+ 
+-void ieee80211_sched_scan_stopped_work(struct work_struct *work)
++void ieee80211_sched_scan_stopped_work(struct wiphy *wiphy,
++				       struct wiphy_work *work)
+ {
+ 	struct ieee80211_local *local =
+ 		container_of(work, struct ieee80211_local,
+@@ -1448,6 +1449,6 @@ void ieee80211_sched_scan_stopped(struct ieee80211_hw *hw)
+ 	if (local->in_reconfig)
+ 		return;
+ 
+-	schedule_work(&local->sched_scan_stopped_work);
++	wiphy_work_queue(hw->wiphy, &local->sched_scan_stopped_work);
+ }
+ EXPORT_SYMBOL(ieee80211_sched_scan_stopped);
 -- 
 2.42.0
 
