@@ -1,55 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57EC541238;
-	Wed, 15 Nov 2023 19:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE9041238
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeSDY/DD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9226C433C7;
-	Wed, 15 Nov 2023 19:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MuTK3aU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF99C433CB;
+	Wed, 15 Nov 2023 19:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076826;
-	bh=C9d7m2stdHGAuOhCF7kDVySq8E4Kx449Rr4h5fAi4Tg=;
+	s=korg; t=1700076827;
+	bh=aSVZ+nM7adp1LikfrvSUtI1w0VX755YI60BMNDa8eqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oeSDY/DDUcgWFLOgfksulyUFBnN5f2Jm0ZjxIHc+ACf3RSr6kAWiRGMRJS5wRka5W
-	 ZTDxiHwLly+8BRa82k2QklzK2UgMyPTc4LtNUHZDfFRYKRIgNDpN+NZNvJW5/I+arx
-	 WZbKX3LiAZ13Km+3rtq+di3bHmflpahsnScEHM1k=
+	b=0MuTK3aUVRG2BLI51rLegnk0r7yjbGbz78lH5IQlPYHHxGlQWi+d0d0s6OZ7F6l4q
+	 XrKIVW+Uz3KhwhdieXwYz1xnyzjx+DxON/KvjTXv56dEBg4gleTole5kIRBUv4vkVi
+	 ncy+LB8axQ38nfGeC5VriqifOLduU4a6oGbytC/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	James Clark <james.clark@arm.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Suzuki Poulouse <suzuki.poulose@arm.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Wei Li <liwei391@huawei.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mike Leach <mike.leach@linaro.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Ming Wang <wangming01@loongson.cn>,
-	John Garry <john.g.garry@oracle.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	linux-kernel@vger.kernel.org,
-	linux-perf-users@vger.kernel.org,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	gor@linux.ibm.com,
+	hca@linux.ibm.com,
+	sumanthk@linux.ibm.com,
+	svens@linux.ibm.com,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 426/550] perf pmu: Remove logic for PMU name being NULL
-Date: Wed, 15 Nov 2023 14:16:50 -0500
-Message-ID: <20231115191630.292521239@linuxfoundation.org>
+Subject: [PATCH 6.5 435/550] perf trace: Use the right bpf_probe_read(_str) variant for reading user data
+Date: Wed, 15 Nov 2023 14:16:59 -0500
+Message-ID: <20231115191630.926834605@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -68,523 +49,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit c091ee90897aacf60aee510464cfc28b4041186f ]
+[ Upstream commit 5069211e2f0b47e75119805e23ae6352d871e263 ]
 
-The PMU name could be NULL in the case of the fake_pmu. Initialize the
-name for the fake_pmu to "fake" so that all other logic can assume it
-is initialized. Add a const to the type of name so that a literal can
-be used to avoid additional initialization code. Propagate the cost
-through related routines and remove now unnecessary "(char *)"
-casts. Doing this located a bug in builtin-list for the pmu_glob that
-was missing a strdup.
+Perf test case 111 Check open filename arg using perf trace + vfs_getname
+fails on s390. This is caused by a failing function
+bpf_probe_read() in file util/bpf_skel/augmented_raw_syscalls.bpf.c.
 
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20230825024002.801955-3-irogers@google.com
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Suzuki Poulouse <suzuki.poulose@arm.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Wei Li <liwei391@huawei.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: Ming Wang <wangming01@loongson.cn>
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-perf-users@vger.kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 85f73c377b2a ("perf mem-events: Avoid uninitialized read")
+The root cause is the lookup by address. Function bpf_probe_read()
+is used. This function works only for architectures
+with ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE.
+
+On s390 is not possible to determine from the address to which
+address space the address belongs to (user or kernel space).
+
+Replace bpf_probe_read() by bpf_probe_read_kernel()
+and bpf_probe_read_str() by bpf_probe_read_user_str() to
+explicity specify the address space the address refers to.
+
+Output before:
+ # ./perf trace -eopen,openat -- touch /tmp/111
+ libbpf: prog 'sys_enter': BPF program load failed: Invalid argument
+ libbpf: prog 'sys_enter': -- BEGIN PROG LOAD LOG --
+ reg type unsupported for arg#0 function sys_enter#75
+ 0: R1=ctx(off=0,imm=0) R10=fp0
+ ; int sys_enter(struct syscall_enter_args *args)
+ 0: (bf) r6 = r1           ; R1=ctx(off=0,imm=0) R6_w=ctx(off=0,imm=0)
+ ; return bpf_get_current_pid_tgid();
+ 1: (85) call bpf_get_current_pid_tgid#14      ; R0_w=scalar()
+ 2: (63) *(u32 *)(r10 -8) = r0 ; R0_w=scalar() R10=fp0 fp-8=????mmmm
+ 3: (bf) r2 = r10              ; R2_w=fp0 R10=fp0
+ ;
+ .....
+ lines deleted here
+ .....
+ 23: (bf) r3 = r6              ; R3_w=ctx(off=0,imm=0) R6=ctx(off=0,imm=0)
+ 24: (85) call bpf_probe_read#4
+ unknown func bpf_probe_read#4
+ processed 23 insns (limit 1000000) max_states_per_insn 0 \
+	 total_states 2 peak_states 2 mark_read 2
+ -- END PROG LOAD LOG --
+ libbpf: prog 'sys_enter': failed to load: -22
+ libbpf: failed to load object 'augmented_raw_syscalls_bpf'
+ libbpf: failed to load BPF skeleton 'augmented_raw_syscalls_bpf': -22
+ ....
+
+Output after:
+ # ./perf test -Fv 111
+ 111: Check open filename arg using perf trace + vfs_getname          :
+ --- start ---
+     1.085 ( 0.011 ms): touch/320753 openat(dfd: CWD, filename: \
+	"/tmp/temporary_file.SWH85", \
+	flags: CREAT|NOCTTY|NONBLOCK|WRONLY, mode: IRUGO|IWUGO) = 3
+ ---- end ----
+ Check open filename arg using perf trace + vfs_getname: Ok
+ #
+
+Test with the sleep command shows:
+Output before:
+ # ./perf trace -e *sleep sleep 1.234567890
+     0.000 (1234.681 ms): sleep/63114 clock_nanosleep(rqtp: \
+         { .tv_sec: 0, .tv_nsec: 0 }, rmtp: 0x3ffe0979720) = 0
+ #
+
+Output after:
+ # ./perf trace -e *sleep sleep 1.234567890
+     0.000 (1234.686 ms): sleep/64277 clock_nanosleep(rqtp: \
+         { .tv_sec: 1, .tv_nsec: 234567890 }, rmtp: 0x3fff3df9ea0) = 0
+ #
+
+Fixes: 14e4b9f4289a ("perf trace: Raw augmented syscalls fix libbpf 1.0+ compatibility")
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Co-developed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: gor@linux.ibm.com
+Cc: hca@linux.ibm.com
+Cc: sumanthk@linux.ibm.com
+Cc: svens@linux.ibm.com
+Link: https://lore.kernel.org/r/20231019082642.3286650-1-tmricht@linux.ibm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/arm64/util/mem-events.c   |  2 +-
- tools/perf/arch/powerpc/util/mem-events.c |  6 +++---
- tools/perf/arch/x86/util/mem-events.c     |  8 ++++----
- tools/perf/arch/x86/util/pmu.c            | 10 +++++-----
- tools/perf/builtin-list.c                 |  2 +-
- tools/perf/tests/pmu-events.c             | 16 ++++++++--------
- tools/perf/util/env.c                     |  8 ++------
- tools/perf/util/header.c                  |  8 +-------
- tools/perf/util/mem-events.c              | 16 ++++++++--------
- tools/perf/util/mem-events.h              |  2 +-
- tools/perf/util/parse-events.c            |  7 ++-----
- tools/perf/util/parse-events.h            |  2 +-
- tools/perf/util/parse-events.y            |  2 +-
- tools/perf/util/pmu.c                     | 16 +++++++++-------
- tools/perf/util/pmu.h                     |  8 ++++----
- 15 files changed, 51 insertions(+), 62 deletions(-)
+ tools/perf/examples/bpf/augmented_raw_syscalls.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/arch/arm64/util/mem-events.c b/tools/perf/arch/arm64/util/mem-events.c
-index df817d1f9f3eb..3bcc5c7035c21 100644
---- a/tools/perf/arch/arm64/util/mem-events.c
-+++ b/tools/perf/arch/arm64/util/mem-events.c
-@@ -20,7 +20,7 @@ struct perf_mem_event *perf_mem_events__ptr(int i)
- 	return &perf_mem_events[i];
- }
- 
--char *perf_mem_events__name(int i, char *pmu_name __maybe_unused)
-+const char *perf_mem_events__name(int i, const char *pmu_name __maybe_unused)
+diff --git a/tools/perf/examples/bpf/augmented_raw_syscalls.c b/tools/perf/examples/bpf/augmented_raw_syscalls.c
+index 9a03189d33d38..74fa9e642b424 100644
+--- a/tools/perf/examples/bpf/augmented_raw_syscalls.c
++++ b/tools/perf/examples/bpf/augmented_raw_syscalls.c
+@@ -147,7 +147,7 @@ static inline
+ unsigned int augmented_arg__read_str(struct augmented_arg *augmented_arg, const void *arg, unsigned int arg_len)
  {
- 	struct perf_mem_event *e = perf_mem_events__ptr(i);
+ 	unsigned int augmented_len = sizeof(*augmented_arg);
+-	int string_len = bpf_probe_read_str(&augmented_arg->value, arg_len, arg);
++	int string_len = bpf_probe_read_user_str(&augmented_arg->value, arg_len, arg);
  
-diff --git a/tools/perf/arch/powerpc/util/mem-events.c b/tools/perf/arch/powerpc/util/mem-events.c
-index 4120fafe0be41..78b986e5268d9 100644
---- a/tools/perf/arch/powerpc/util/mem-events.c
-+++ b/tools/perf/arch/powerpc/util/mem-events.c
-@@ -3,10 +3,10 @@
- #include "mem-events.h"
+ 	augmented_arg->size = augmented_arg->err = 0;
+ 	/*
+@@ -196,7 +196,7 @@ int sys_enter_connect(struct syscall_enter_args *args)
+ 	if (socklen > sizeof(augmented_args->saddr))
+ 		socklen = sizeof(augmented_args->saddr);
  
- /* PowerPC does not support 'ldlat' parameter. */
--char *perf_mem_events__name(int i, char *pmu_name __maybe_unused)
-+const char *perf_mem_events__name(int i, const char *pmu_name __maybe_unused)
- {
- 	if (i == PERF_MEM_EVENTS__LOAD)
--		return (char *) "cpu/mem-loads/";
-+		return "cpu/mem-loads/";
+-	bpf_probe_read(&augmented_args->saddr, socklen, sockaddr_arg);
++	bpf_probe_read_user(&augmented_args->saddr, socklen, sockaddr_arg);
  
--	return (char *) "cpu/mem-stores/";
-+	return "cpu/mem-stores/";
+ 	return augmented__output(args, augmented_args, len + socklen);
  }
-diff --git a/tools/perf/arch/x86/util/mem-events.c b/tools/perf/arch/x86/util/mem-events.c
-index a8a782bcb1213..191b372f9a2d3 100644
---- a/tools/perf/arch/x86/util/mem-events.c
-+++ b/tools/perf/arch/x86/util/mem-events.c
-@@ -52,7 +52,7 @@ bool is_mem_loads_aux_event(struct evsel *leader)
- 	return leader->core.attr.config == MEM_LOADS_AUX;
+@@ -215,7 +215,7 @@ int sys_enter_sendto(struct syscall_enter_args *args)
+ 	if (socklen > sizeof(augmented_args->saddr))
+ 		socklen = sizeof(augmented_args->saddr);
+ 
+-	bpf_probe_read(&augmented_args->saddr, socklen, sockaddr_arg);
++	bpf_probe_read_user(&augmented_args->saddr, socklen, sockaddr_arg);
+ 
+ 	return augmented__output(args, augmented_args, len + socklen);
  }
+@@ -305,7 +305,7 @@ int sys_enter_perf_event_open(struct syscall_enter_args *args)
+         if (augmented_args == NULL)
+ 		goto failure;
  
--char *perf_mem_events__name(int i, char *pmu_name)
-+const char *perf_mem_events__name(int i, const char *pmu_name)
- {
- 	struct perf_mem_event *e = perf_mem_events__ptr(i);
+-	if (bpf_probe_read(&augmented_args->__data, sizeof(*attr), attr) < 0)
++	if (bpf_probe_read_user(&augmented_args->__data, sizeof(*attr), attr) < 0)
+ 		goto failure;
  
-@@ -65,7 +65,7 @@ char *perf_mem_events__name(int i, char *pmu_name)
+ 	attr_read = (const struct perf_event_attr_size *)augmented_args->__data;
+@@ -319,7 +319,7 @@ int sys_enter_perf_event_open(struct syscall_enter_args *args)
+                 goto failure;
  
- 		if (!pmu_name) {
- 			mem_loads_name__init = true;
--			pmu_name = (char *)"cpu";
-+			pmu_name = "cpu";
- 		}
+ 	// Now that we read attr->size and tested it against the size limits, read it completely
+-	if (bpf_probe_read(&augmented_args->__data, size, attr) < 0)
++	if (bpf_probe_read_user(&augmented_args->__data, size, attr) < 0)
+ 		goto failure;
  
- 		if (perf_pmus__have_event(pmu_name, "mem-loads-aux")) {
-@@ -82,12 +82,12 @@ char *perf_mem_events__name(int i, char *pmu_name)
+ 	return augmented__output(args, augmented_args, len + size);
+@@ -341,7 +341,7 @@ int sys_enter_clock_nanosleep(struct syscall_enter_args *args)
+ 	if (size > sizeof(augmented_args->__data))
+                 goto failure;
  
- 	if (i == PERF_MEM_EVENTS__STORE) {
- 		if (!pmu_name)
--			pmu_name = (char *)"cpu";
-+			pmu_name = "cpu";
+-	bpf_probe_read(&augmented_args->__data, size, rqtp_arg);
++	bpf_probe_read_user(&augmented_args->__data, size, rqtp_arg);
  
- 		scnprintf(mem_stores_name, sizeof(mem_stores_name),
- 			  e->name, pmu_name);
- 		return mem_stores_name;
- 	}
+ 	return augmented__output(args, augmented_args, len + size);
+ failure:
+@@ -380,7 +380,7 @@ int sys_enter(struct syscall_enter_args *args)
+ 	if (augmented_args == NULL)
+ 		return 1;
  
--	return (char *)e->name;
-+	return e->name;
- }
-diff --git a/tools/perf/arch/x86/util/pmu.c b/tools/perf/arch/x86/util/pmu.c
-index 65d8cdff4d5f4..f428cffb03781 100644
---- a/tools/perf/arch/x86/util/pmu.c
-+++ b/tools/perf/arch/x86/util/pmu.c
-@@ -126,7 +126,7 @@ static int setup_pmu_alias_list(void)
- 	return ret;
- }
- 
--static char *__pmu_find_real_name(const char *name)
-+static const char *__pmu_find_real_name(const char *name)
- {
- 	struct pmu_alias *pmu_alias;
- 
-@@ -135,10 +135,10 @@ static char *__pmu_find_real_name(const char *name)
- 			return pmu_alias->name;
- 	}
- 
--	return (char *)name;
-+	return name;
- }
- 
--char *pmu_find_real_name(const char *name)
-+const char *pmu_find_real_name(const char *name)
- {
- 	if (cached_list)
- 		return __pmu_find_real_name(name);
-@@ -149,7 +149,7 @@ char *pmu_find_real_name(const char *name)
- 	return __pmu_find_real_name(name);
- }
- 
--static char *__pmu_find_alias_name(const char *name)
-+static const char *__pmu_find_alias_name(const char *name)
- {
- 	struct pmu_alias *pmu_alias;
- 
-@@ -160,7 +160,7 @@ static char *__pmu_find_alias_name(const char *name)
- 	return NULL;
- }
- 
--char *pmu_find_alias_name(const char *name)
-+const char *pmu_find_alias_name(const char *name)
- {
- 	if (cached_list)
- 		return __pmu_find_alias_name(name);
-diff --git a/tools/perf/builtin-list.c b/tools/perf/builtin-list.c
-index 7fec2cca759f6..e74d0223deb7f 100644
---- a/tools/perf/builtin-list.c
-+++ b/tools/perf/builtin-list.c
-@@ -502,7 +502,7 @@ int cmd_list(int argc, const char **argv)
- 				ret = -1;
- 				goto out;
- 			}
--			default_ps.pmu_glob = pmu->name;
-+			default_ps.pmu_glob = strdup(pmu->name);
- 		}
- 	}
- 	print_cb.print_start(ps);
-diff --git a/tools/perf/tests/pmu-events.c b/tools/perf/tests/pmu-events.c
-index 64383fc34ef1b..5c6f930db4387 100644
---- a/tools/perf/tests/pmu-events.c
-+++ b/tools/perf/tests/pmu-events.c
-@@ -508,7 +508,7 @@ static struct perf_pmu_alias *find_alias(const char *test_event, struct list_hea
- }
- 
- /* Verify aliases are as expected */
--static int __test_core_pmu_event_aliases(char *pmu_name, int *count)
-+static int __test_core_pmu_event_aliases(const char *pmu_name, int *count)
- {
- 	struct perf_pmu_test_event const **test_event_table;
- 	struct perf_pmu *pmu;
-@@ -635,7 +635,7 @@ static int __test_uncore_pmu_event_aliases(struct perf_pmu_test_pmu *test_pmu)
- static struct perf_pmu_test_pmu test_pmus[] = {
- 	{
- 		.pmu = {
--			.name = (char *)"hisi_sccl1_ddrc2",
-+			.name = "hisi_sccl1_ddrc2",
- 			.is_uncore = 1,
- 		},
- 		.aliases = {
-@@ -644,7 +644,7 @@ static struct perf_pmu_test_pmu test_pmus[] = {
- 	},
- 	{
- 		.pmu = {
--			.name = (char *)"uncore_cbox_0",
-+			.name = "uncore_cbox_0",
- 			.is_uncore = 1,
- 		},
- 		.aliases = {
-@@ -655,7 +655,7 @@ static struct perf_pmu_test_pmu test_pmus[] = {
- 	},
- 	{
- 		.pmu = {
--			.name = (char *)"hisi_sccl3_l3c7",
-+			.name = "hisi_sccl3_l3c7",
- 			.is_uncore = 1,
- 		},
- 		.aliases = {
-@@ -664,7 +664,7 @@ static struct perf_pmu_test_pmu test_pmus[] = {
- 	},
- 	{
- 		.pmu = {
--			.name = (char *)"uncore_imc_free_running_0",
-+			.name = "uncore_imc_free_running_0",
- 			.is_uncore = 1,
- 		},
- 		.aliases = {
-@@ -673,7 +673,7 @@ static struct perf_pmu_test_pmu test_pmus[] = {
- 	},
- 	{
- 		.pmu = {
--			.name = (char *)"uncore_imc_0",
-+			.name = "uncore_imc_0",
- 			.is_uncore = 1,
- 		},
- 		.aliases = {
-@@ -682,7 +682,7 @@ static struct perf_pmu_test_pmu test_pmus[] = {
- 	},
- 	{
- 		.pmu = {
--			.name = (char *)"uncore_sys_ddr_pmu0",
-+			.name = "uncore_sys_ddr_pmu0",
- 			.is_uncore = 1,
- 			.id = (char *)"v8",
- 		},
-@@ -692,7 +692,7 @@ static struct perf_pmu_test_pmu test_pmus[] = {
- 	},
- 	{
- 		.pmu = {
--			.name = (char *)"uncore_sys_ccn_pmu4",
-+			.name = "uncore_sys_ccn_pmu4",
- 			.is_uncore = 1,
- 			.id = (char *)"0x01",
- 		},
-diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
-index 9eabf3ec56e97..a164164001fb5 100644
---- a/tools/perf/util/env.c
-+++ b/tools/perf/util/env.c
-@@ -324,11 +324,9 @@ int perf_env__read_pmu_mappings(struct perf_env *env)
- 	u32 pmu_num = 0;
- 	struct strbuf sb;
- 
--	while ((pmu = perf_pmus__scan(pmu))) {
--		if (!pmu->name)
--			continue;
-+	while ((pmu = perf_pmus__scan(pmu)))
- 		pmu_num++;
--	}
-+
- 	if (!pmu_num) {
- 		pr_debug("pmu mappings not available\n");
- 		return -ENOENT;
-@@ -339,8 +337,6 @@ int perf_env__read_pmu_mappings(struct perf_env *env)
- 		return -ENOMEM;
- 
- 	while ((pmu = perf_pmus__scan(pmu))) {
--		if (!pmu->name)
--			continue;
- 		if (strbuf_addf(&sb, "%u:%s", pmu->type, pmu->name) < 0)
- 			goto error;
- 		/* include a NULL character at the end */
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index 7af85a479786b..083919e3b8d88 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -746,20 +746,14 @@ static int write_pmu_mappings(struct feat_fd *ff,
- 	 * Do a first pass to count number of pmu to avoid lseek so this
- 	 * works in pipe mode as well.
- 	 */
--	while ((pmu = perf_pmus__scan(pmu))) {
--		if (!pmu->name)
--			continue;
-+	while ((pmu = perf_pmus__scan(pmu)))
- 		pmu_num++;
--	}
- 
- 	ret = do_write(ff, &pmu_num, sizeof(pmu_num));
- 	if (ret < 0)
- 		return ret;
- 
- 	while ((pmu = perf_pmus__scan(pmu))) {
--		if (!pmu->name)
--			continue;
--
- 		ret = do_write(ff, &pmu->type, sizeof(pmu->type));
- 		if (ret < 0)
- 			return ret;
-diff --git a/tools/perf/util/mem-events.c b/tools/perf/util/mem-events.c
-index c07fe3a907220..39ffe8ceb3809 100644
---- a/tools/perf/util/mem-events.c
-+++ b/tools/perf/util/mem-events.c
-@@ -37,7 +37,7 @@ struct perf_mem_event * __weak perf_mem_events__ptr(int i)
- 	return &perf_mem_events[i];
- }
- 
--char * __weak perf_mem_events__name(int i, char *pmu_name  __maybe_unused)
-+const char * __weak perf_mem_events__name(int i, const char *pmu_name  __maybe_unused)
- {
- 	struct perf_mem_event *e = perf_mem_events__ptr(i);
- 
-@@ -53,7 +53,7 @@ char * __weak perf_mem_events__name(int i, char *pmu_name  __maybe_unused)
- 		return mem_loads_name;
- 	}
- 
--	return (char *)e->name;
-+	return e->name;
- }
- 
- __weak bool is_mem_loads_aux_event(struct evsel *leader __maybe_unused)
-@@ -186,7 +186,6 @@ int perf_mem_events__record_args(const char **rec_argv, int *argv_nr,
- 	int i = *argv_nr, k = 0;
- 	struct perf_mem_event *e;
- 	struct perf_pmu *pmu;
--	char *s;
- 
- 	for (int j = 0; j < PERF_MEM_EVENTS__MAX; j++) {
- 		e = perf_mem_events__ptr(j);
-@@ -209,15 +208,16 @@ int perf_mem_events__record_args(const char **rec_argv, int *argv_nr,
- 			}
- 
- 			while ((pmu = perf_pmus__scan(pmu)) != NULL) {
-+				const char *s = perf_mem_events__name(j, pmu->name);
-+
- 				rec_argv[i++] = "-e";
--				s = perf_mem_events__name(j, pmu->name);
- 				if (s) {
--					s = strdup(s);
--					if (!s)
-+					char *copy = strdup(s);
-+					if (!copy)
- 						return -1;
- 
--					rec_argv[i++] = s;
--					rec_tmp[k++] = s;
-+					rec_argv[i++] = copy;
-+					rec_tmp[k++] = copy;
- 				}
- 			}
- 		}
-diff --git a/tools/perf/util/mem-events.h b/tools/perf/util/mem-events.h
-index 12372309d60ed..b40ad6ea93fcd 100644
---- a/tools/perf/util/mem-events.h
-+++ b/tools/perf/util/mem-events.h
-@@ -38,7 +38,7 @@ extern unsigned int perf_mem_events__loads_ldlat;
- int perf_mem_events__parse(const char *str);
- int perf_mem_events__init(void);
- 
--char *perf_mem_events__name(int i, char *pmu_name);
-+const char *perf_mem_events__name(int i, const char *pmu_name);
- struct perf_mem_event *perf_mem_events__ptr(int i);
- bool is_mem_loads_aux_event(struct evsel *leader);
- 
-diff --git a/tools/perf/util/parse-events.c b/tools/perf/util/parse-events.c
-index 979fc92c2f47d..596ba10129870 100644
---- a/tools/perf/util/parse-events.c
-+++ b/tools/perf/util/parse-events.c
-@@ -271,7 +271,7 @@ __add_event(struct list_head *list, int *idx,
- 	evsel->core.is_pmu_core = pmu ? pmu->is_core : false;
- 	evsel->auto_merge_stats = auto_merge_stats;
- 	evsel->pmu = pmu;
--	evsel->pmu_name = pmu && pmu->name ? strdup(pmu->name) : NULL;
-+	evsel->pmu_name = pmu ? strdup(pmu->name) : NULL;
- 
- 	if (name)
- 		evsel->name = strdup(name);
-@@ -446,9 +446,6 @@ bool parse_events__filter_pmu(const struct parse_events_state *parse_state,
- 	if (parse_state->pmu_filter == NULL)
- 		return false;
- 
--	if (pmu->name == NULL)
--		return true;
--
- 	return strcmp(parse_state->pmu_filter, pmu->name) != 0;
- }
- 
-@@ -1551,7 +1548,7 @@ static bool config_term_percore(struct list_head *config_terms)
- }
- 
- int parse_events_add_pmu(struct parse_events_state *parse_state,
--			 struct list_head *list, char *name,
-+			 struct list_head *list, const char *name,
- 			 struct list_head *head_config,
- 			 bool auto_merge_stats)
- {
-diff --git a/tools/perf/util/parse-events.h b/tools/perf/util/parse-events.h
-index b0eb95f93e9c3..8e8682ca84654 100644
---- a/tools/perf/util/parse-events.h
-+++ b/tools/perf/util/parse-events.h
-@@ -190,7 +190,7 @@ int parse_events_add_breakpoint(struct parse_events_state *parse_state,
- 				u64 addr, char *type, u64 len,
- 				struct list_head *head_config);
- int parse_events_add_pmu(struct parse_events_state *parse_state,
--			 struct list_head *list, char *name,
-+			 struct list_head *list, const char *name,
- 			 struct list_head *head_config,
- 			 bool auto_merge_stats);
- 
-diff --git a/tools/perf/util/parse-events.y b/tools/perf/util/parse-events.y
-index a049c577bae3d..59108f70d1e45 100644
---- a/tools/perf/util/parse-events.y
-+++ b/tools/perf/util/parse-events.y
-@@ -312,7 +312,7 @@ PE_NAME opt_pmu_config
- 		}
- 
- 		while ((pmu = perf_pmus__scan(pmu)) != NULL) {
--			char *name = pmu->name;
-+			const char *name = pmu->name;
- 
- 			if (parse_events__filter_pmu(parse_state, pmu))
- 				continue;
-diff --git a/tools/perf/util/pmu.c b/tools/perf/util/pmu.c
-index d5406effc1695..f20fcea215e4b 100644
---- a/tools/perf/util/pmu.c
-+++ b/tools/perf/util/pmu.c
-@@ -29,7 +29,9 @@
- #include "fncache.h"
- #include "util/evsel_config.h"
- 
--struct perf_pmu perf_pmu__fake;
-+struct perf_pmu perf_pmu__fake = {
-+	.name = "fake",
-+};
- 
- /**
-  * struct perf_pmu_format - Values from a format file read from
-@@ -840,13 +842,13 @@ perf_pmu__get_default_config(struct perf_pmu *pmu __maybe_unused)
- 	return NULL;
- }
- 
--char * __weak
-+const char * __weak
- pmu_find_real_name(const char *name)
- {
--	return (char *)name;
-+	return name;
- }
- 
--char * __weak
-+const char * __weak
- pmu_find_alias_name(const char *name __maybe_unused)
- {
- 	return NULL;
-@@ -866,8 +868,8 @@ struct perf_pmu *perf_pmu__lookup(struct list_head *pmus, int dirfd, const char
- 	LIST_HEAD(format);
- 	LIST_HEAD(aliases);
- 	__u32 type;
--	char *name = pmu_find_real_name(lookup_name);
--	char *alias_name;
-+	const char *name = pmu_find_real_name(lookup_name);
-+	const char *alias_name;
+-	bpf_probe_read(&augmented_args->args, sizeof(augmented_args->args), args);
++	bpf_probe_read_kernel(&augmented_args->args, sizeof(augmented_args->args), args);
  
  	/*
- 	 * The pmu data we store & need consists of the pmu
-@@ -1710,7 +1712,7 @@ void perf_pmu__warn_invalid_config(struct perf_pmu *pmu, __u64 config,
- 		   name ?: "N/A", buf, config_name, config);
- }
+ 	 * Jump to syscall specific augmenter, even if the default one,
+@@ -401,7 +401,7 @@ int sys_exit(struct syscall_exit_args *args)
+ 	if (pid_filter__has(&pids_filtered, getpid()))
+ 		return 0;
  
--int perf_pmu__match(char *pattern, char *name, char *tok)
-+int perf_pmu__match(const char *pattern, const char *name, const char *tok)
- {
- 	if (!name)
- 		return -1;
-diff --git a/tools/perf/util/pmu.h b/tools/perf/util/pmu.h
-index 6b414cecbad22..461af638399c9 100644
---- a/tools/perf/util/pmu.h
-+++ b/tools/perf/util/pmu.h
-@@ -39,7 +39,7 @@ struct perf_pmu_caps {
-  */
- struct perf_pmu {
- 	/** @name: The name of the PMU such as "cpu". */
--	char *name;
-+	const char *name;
- 	/**
- 	 * @alias_name: Optional alternate name for the PMU determined in
- 	 * architecture specific code.
-@@ -275,10 +275,10 @@ void perf_pmu__warn_invalid_config(struct perf_pmu *pmu, __u64 config,
- 				   const char *config_name);
- void perf_pmu__warn_invalid_formats(struct perf_pmu *pmu);
- 
--int perf_pmu__match(char *pattern, char *name, char *tok);
-+int perf_pmu__match(const char *pattern, const char *name, const char *tok);
- 
--char *pmu_find_real_name(const char *name);
--char *pmu_find_alias_name(const char *name);
-+const char *pmu_find_real_name(const char *name);
-+const char *pmu_find_alias_name(const char *name);
- double perf_pmu__cpu_slots_per_cycle(void);
- int perf_pmu__event_source_devices_scnprintf(char *pathname, size_t size);
- int perf_pmu__pathname_scnprintf(char *buf, size_t size,
+-	bpf_probe_read(&exit_args, sizeof(exit_args), args);
++	bpf_probe_read_kernel(&exit_args, sizeof(exit_args), args);
+ 	/*
+ 	 * Jump to syscall specific return augmenter, even if the default one,
+ 	 * "!raw_syscalls:unaugmented" that will just return 1 to return the
 -- 
 2.42.0
 
