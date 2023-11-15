@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110C6381DF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86717381DF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6PfsIl8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA45C433C7;
-	Wed, 15 Nov 2023 19:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imznZNQk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37095C433C9;
+	Wed, 15 Nov 2023 19:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078297;
-	bh=AXhQD0BeR2e7frkBzwmH1qR+O5mS9NvsQm7zBLo12jc=;
+	s=korg; t=1700078299;
+	bh=kGvb9+l0iV8NG4PX1bsOZDNABNJKZL9K7wYhllJhPwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6PfsIl8jNffZYhUDQ4fYC+DDT05f+xZPQ+TNz9+k9ptB6Du+Sy6oGzW1NhMjVyZH
-	 uKAtxlVGyO219kMZKr3n7VUx23CLswpCnDW49wNcl/E12JWzus+0MpAhMkF+fkbo17
-	 jXclQr4wGIxKxuxLYwj/zzaq73r6ew3kFvFvz6Bo=
+	b=imznZNQkeeNEIl8GHDWtbVtF06vY9jd09Ab+/3+1sfGZxYTgQ9qi8Pklrewh1RA5B
+	 Z/XZkwLOS4g99PG3mF+05rj4aXWU4wgIRD45FH9R0wQ2UsC6PupRHvsk3g8Rg7p2xQ
+	 aAHIPRED+AjQz6upsViC6N/T8+iq7Bmfq3UJwFpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	WangJinchao <wangjinchao@xfusion.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 218/379] RDMA/hns: Fix printing level of asynchronous events
-Date: Wed, 15 Nov 2023 14:24:53 -0500
-Message-ID: <20231115192658.016742606@linuxfoundation.org>
+Subject: [PATCH 6.1 236/379] padata: Fix refcnt handling in padata_free_shell()
+Date: Wed, 15 Nov 2023 14:25:11 -0500
+Message-ID: <20231115192659.075709445@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,55 +43,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: WangJinchao <wangjinchao@xfusion.com>
 
-[ Upstream commit 9faef73ef4f6666b97e04d99734ac09251098185 ]
+[ Upstream commit 7ddc21e317b360c3444de3023bcc83b85fabae2f ]
 
-The current driver will print all asynchronous events. Some of the
-print levels are set improperly, e.g. SRQ limit reach and SRQ last
-wqe reach, which may also occur during normal operation of the software.
-Currently, the information of these event is printed as a warning,
-which causes a large amount of printing even during normal use of the
-application. As a result, the service performance deteriorates.
+In a high-load arm64 environment, the pcrypt_aead01 test in LTP can lead
+to system UAF (Use-After-Free) issues. Due to the lengthy analysis of
+the pcrypt_aead01 function call, I'll describe the problem scenario
+using a simplified model:
 
-This patch fixes the printing storms by modifying the print level.
+Suppose there's a user of padata named `user_function` that adheres to
+the padata requirement of calling `padata_free_shell` after `serial()`
+has been invoked, as demonstrated in the following code:
 
-Fixes: b00a92c8f2ca ("RDMA/hns: Move all prints out of irq handle")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20231017125239.164455-2-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+```c
+struct request {
+    struct padata_priv padata;
+    struct completion *done;
+};
+
+void parallel(struct padata_priv *padata) {
+    do_something();
+}
+
+void serial(struct padata_priv *padata) {
+    struct request *request = container_of(padata,
+    				struct request,
+				padata);
+    complete(request->done);
+}
+
+void user_function() {
+    DECLARE_COMPLETION(done)
+    padata->parallel = parallel;
+    padata->serial = serial;
+    padata_do_parallel();
+    wait_for_completion(&done);
+    padata_free_shell();
+}
+```
+
+In the corresponding padata.c file, there's the following code:
+
+```c
+static void padata_serial_worker(struct work_struct *serial_work) {
+    ...
+    cnt = 0;
+
+    while (!list_empty(&local_list)) {
+        ...
+        padata->serial(padata);
+        cnt++;
+    }
+
+    local_bh_enable();
+
+    if (refcount_sub_and_test(cnt, &pd->refcnt))
+        padata_free_pd(pd);
+}
+```
+
+Because of the high system load and the accumulation of unexecuted
+softirq at this moment, `local_bh_enable()` in padata takes longer
+to execute than usual. Subsequently, when accessing `pd->refcnt`,
+`pd` has already been released by `padata_free_shell()`, resulting
+in a UAF issue with `pd->refcnt`.
+
+The fix is straightforward: add `refcount_dec_and_test` before calling
+`padata_free_pd` in `padata_free_shell`.
+
+Fixes: 07928d9bfc81 ("padata: Remove broken queue flushing")
+
+Signed-off-by: WangJinchao <wangjinchao@xfusion.com>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/padata.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 33980485ef5ba..db21d6f2d59ff 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -5961,7 +5961,7 @@ static void hns_roce_irq_work_handle(struct work_struct *work)
- 	case HNS_ROCE_EVENT_TYPE_COMM_EST:
- 		break;
- 	case HNS_ROCE_EVENT_TYPE_SQ_DRAINED:
--		ibdev_warn(ibdev, "send queue drained.\n");
-+		ibdev_dbg(ibdev, "send queue drained.\n");
- 		break;
- 	case HNS_ROCE_EVENT_TYPE_WQ_CATAS_ERROR:
- 		ibdev_err(ibdev, "local work queue 0x%x catast error, sub_event type is: %d\n",
-@@ -5976,10 +5976,10 @@ static void hns_roce_irq_work_handle(struct work_struct *work)
- 			  irq_work->queue_num, irq_work->sub_type);
- 		break;
- 	case HNS_ROCE_EVENT_TYPE_SRQ_LIMIT_REACH:
--		ibdev_warn(ibdev, "SRQ limit reach.\n");
-+		ibdev_dbg(ibdev, "SRQ limit reach.\n");
- 		break;
- 	case HNS_ROCE_EVENT_TYPE_SRQ_LAST_WQE_REACH:
--		ibdev_warn(ibdev, "SRQ last wqe reach.\n");
-+		ibdev_dbg(ibdev, "SRQ last wqe reach.\n");
- 		break;
- 	case HNS_ROCE_EVENT_TYPE_SRQ_CATAS_ERROR:
- 		ibdev_err(ibdev, "SRQ catas error.\n");
+diff --git a/kernel/padata.c b/kernel/padata.c
+index de90af5fcbe6b..791d9cb07a501 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -1094,12 +1094,16 @@ EXPORT_SYMBOL(padata_alloc_shell);
+  */
+ void padata_free_shell(struct padata_shell *ps)
+ {
++	struct parallel_data *pd;
++
+ 	if (!ps)
+ 		return;
+ 
+ 	mutex_lock(&ps->pinst->lock);
+ 	list_del(&ps->list);
+-	padata_free_pd(rcu_dereference_protected(ps->pd, 1));
++	pd = rcu_dereference_protected(ps->pd, 1);
++	if (refcount_dec_and_test(&pd->refcnt))
++		padata_free_pd(pd);
+ 	mutex_unlock(&ps->pinst->lock);
+ 
+ 	kfree(ps);
 -- 
 2.42.0
 
