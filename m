@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E042E64E
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E673419C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1t+pOOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78CBC433C9;
-	Wed, 15 Nov 2023 20:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3X2Vm8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B67C433C9;
+	Wed, 15 Nov 2023 20:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081165;
-	bh=OfpNcCods2vRthoD/ciy2i0aXeMW4z57z4GQc8ikqRA=;
+	s=korg; t=1700081167;
+	bh=3Y/nNtJ5KUz+X5ym/YkfszxzPYmabN6V7jqesjG0PUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e1t+pOOR9CZMkzpcw0UHoRoHvGnKdyebe6cR3jeZF+ytMvfOD4VtxtuuYh+gG+LKX
-	 mWVh4plReoH/fBEo+bMvpUluQWu2rgTuNpDIXDsftsZqN9fiGcElvQ3kIq4R2YQBXx
-	 KdJO6laTRaFgWaGr/HwaVpsAjtl1wbWFhxdIi/eM=
+	b=Z3X2Vm8jFdGV/LXni2PTOR1YdasJQzdTNk2bHtegMR4aNQH1YUM/GpV9uCXa8wYpX
+	 kV/tYLuDfaMgRpe9NhvviKAu0mHnLOaSHozqeM/qq+Yk+ZBkKnTH5eUZJMfamyTLcv
+	 wHHvsES9/gkXovpNejvfcHRbOxEkhp8hwJNY+mqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia-Ju Bai <baijiaju@buaa.edu.cn>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 53/88] usb: dwc2: fix possible NULL pointer dereference caused by driver concurrency
-Date: Wed, 15 Nov 2023 15:36:05 -0500
-Message-ID: <20231115191429.342233876@linuxfoundation.org>
+Subject: [PATCH 4.19 54/88] dmaengine: ti: edma: handle irq_of_parse_and_map() errors
+Date: Wed, 15 Nov 2023 15:36:06 -0500
+Message-ID: <20231115191429.393995341@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -41,66 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia-Ju Bai <baijiaju@buaa.edu.cn>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit ef307bc6ef04e8c1ea843231db58e3afaafa9fa6 ]
+[ Upstream commit 14f6d317913f634920a640e9047aa2e66f5bdcb7 ]
 
-In _dwc2_hcd_urb_enqueue(), "urb->hcpriv = NULL" is executed without
-holding the lock "hsotg->lock". In _dwc2_hcd_urb_dequeue():
+Zero is not a valid IRQ for in-kernel code and the irq_of_parse_and_map()
+function returns zero on error.  So this check for valid IRQs should only
+accept values > 0.
 
-    spin_lock_irqsave(&hsotg->lock, flags);
-    ...
-	if (!urb->hcpriv) {
-		dev_dbg(hsotg->dev, "## urb->hcpriv is NULL ##\n");
-		goto out;
-	}
-    rc = dwc2_hcd_urb_dequeue(hsotg, urb->hcpriv); // Use urb->hcpriv
-    ...
-out:
-    spin_unlock_irqrestore(&hsotg->lock, flags);
-
-When _dwc2_hcd_urb_enqueue() and _dwc2_hcd_urb_dequeue() are
-concurrently executed, the NULL check of "urb->hcpriv" can be executed
-before "urb->hcpriv = NULL". After urb->hcpriv is NULL, it can be used
-in the function call to dwc2_hcd_urb_dequeue(), which can cause a NULL
-pointer dereference.
-
-This possible bug is found by an experimental static analysis tool
-developed by myself. This tool analyzes the locking APIs to extract
-function pairs that can be concurrently executed, and then analyzes the
-instructions in the paired functions to identify possible concurrency
-bugs including data races and atomicity violations. The above possible
-bug is reported, when my tool analyzes the source code of Linux 6.5.
-
-To fix this possible bug, "urb->hcpriv = NULL" should be executed with
-holding the lock "hsotg->lock". After using this patch, my tool never
-reports the possible bug, with the kernelconfiguration allyesconfig for
-x86_64. Because I have no associated hardware, I cannot test the patch
-in runtime testing, and just verify it according to the code logic.
-
-Fixes: 33ad261aa62b ("usb: dwc2: host: spinlock urb_enqueue")
-Signed-off-by: Jia-Ju Bai <baijiaju@buaa.edu.cn>
-Link: https://lore.kernel.org/r/20230926024404.832096-1-baijiaju@buaa.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2b6b3b742019 ("ARM/dmaengine: edma: Merge the two drivers under drivers/dma/")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/f15cb6a7-8449-4f79-98b6-34072f04edbc@moroto.mountain
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/hcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ti/edma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/dwc2/hcd.c b/drivers/usb/dwc2/hcd.c
-index cfda883185838..91fa831328fce 100644
---- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -4845,8 +4845,8 @@ static int _dwc2_hcd_urb_enqueue(struct usb_hcd *hcd, struct urb *urb,
- 	if (qh_allocated && qh->channel && qh->channel->qh == qh)
- 		qh->channel->qh = NULL;
- fail2:
--	spin_unlock_irqrestore(&hsotg->lock, flags);
- 	urb->hcpriv = NULL;
-+	spin_unlock_irqrestore(&hsotg->lock, flags);
- 	kfree(qtd);
- 	qtd = NULL;
- fail1:
+diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+index 44158fa859737..3a1b37971bef8 100644
+--- a/drivers/dma/ti/edma.c
++++ b/drivers/dma/ti/edma.c
+@@ -2303,7 +2303,7 @@ static int edma_probe(struct platform_device *pdev)
+ 	if (irq < 0 && node)
+ 		irq = irq_of_parse_and_map(node, 0);
+ 
+-	if (irq >= 0) {
++	if (irq > 0) {
+ 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccint",
+ 					  dev_name(dev));
+ 		ret = devm_request_irq(dev, irq, dma_irq_handler, 0, irq_name,
+@@ -2319,7 +2319,7 @@ static int edma_probe(struct platform_device *pdev)
+ 	if (irq < 0 && node)
+ 		irq = irq_of_parse_and_map(node, 2);
+ 
+-	if (irq >= 0) {
++	if (irq > 0) {
+ 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccerrint",
+ 					  dev_name(dev));
+ 		ret = devm_request_irq(dev, irq, dma_ccerr_handler, 0, irq_name,
 -- 
 2.42.0
 
