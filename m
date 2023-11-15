@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D834A2C861
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6207C2C861
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UjLM7Qs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C81C433C8;
-	Wed, 15 Nov 2023 19:25:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTcx3N9N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFFDC433C9;
+	Wed, 15 Nov 2023 19:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076300;
-	bh=muiviKrDlQbTsV0ptfVI5EQhHw3hgH0HH9ImB0501JE=;
+	s=korg; t=1700076302;
+	bh=X6cHkPkYTckClnW4TJJ6T9Yqg4fX3Q0N7eGzhdChQmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0UjLM7QstZtqmYRbx2yMO7/X7OayBNtsJIrmnQgJ3xodh31zvmxVis/wtTNx/NKZ0
-	 11dSCH7NkUqD/T19OyO1OUK8m+OU7Rb/lB4pOrjiwdNbiQGfUrDWbuQpo975vtYh4R
-	 AnT18MxCIQ0t1LNX8nCok1ZYKUS+HvfyQLgY/vTU=
+	b=MTcx3N9Nx3UGeu6fApBV1qyrG9OmYXQsxgWHpUkRvlYbMyhOrdU+5s90eOGhxPLZw
+	 VQvoJTUtw0UMbyYbAQlxif48UVCw9W1R6bEEnTRr27LfrvpseitJOZpBRO70UO4l3a
+	 qaG44qoc0NhDyfUTvT+Qfx/utaYKs5KHmEpKqGAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Marek Vasut <marex@denx.de>,
-	Robert Foss <rfoss@kernel.org>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 204/550] drm: bridge: samsung-dsim: Fix waiting for empty cmd transfer FIFO on older Exynos
-Date: Wed, 15 Nov 2023 14:13:08 -0500
-Message-ID: <20231115191614.917613539@linuxfoundation.org>
+Subject: [PATCH 6.5 205/550] drm/rockchip: vop: Fix reset of state in duplicate state crtc funcs
+Date: Wed, 15 Nov 2023 14:13:09 -0500
+Message-ID: <20231115191614.990215727@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,81 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 15f389da11257b806da75a070cfa41ca0cc15aae ]
+[ Upstream commit 13fc28804bf10ca0b7bce3efbba95c534836d7ca ]
 
-Samsung DSIM used in older Exynos SoCs (like Exynos 4210, 4x12, 3250)
-doesn't report empty level of packer header FIFO. In case of those SoCs,
-use the old way of waiting for empty command tranfsfer FIFO, removed
-recently by commit 14806c641582 ("drm: bridge: samsung-dsim: Drain command transfer FIFO before transfer").
+struct rockchip_crtc_state members such as output_type, output_bpc and
+enable_afbc is always reset to zero in the atomic_duplicate_state crtc
+funcs.
 
-Fixes: 14806c641582 ("drm: bridge: samsung-dsim: Drain command transfer FIFO before transfer")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230809145641.3213210-1-m.szyprowski@samsung.com
+Fix this by using kmemdup on the subclass rockchip_crtc_state struct.
+
+Fixes: 4e257d9eee23 ("drm/rockchip: get rid of rockchip_drm_crtc_mode_config")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230621223311.2239547-2-jonas@kwiboo.se
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/samsung-dsim.c | 18 ++++++++++++++++--
- include/drm/bridge/samsung-dsim.h     |  1 +
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
-index 76be9dc0693f6..4b3e117ae9008 100644
---- a/drivers/gpu/drm/bridge/samsung-dsim.c
-+++ b/drivers/gpu/drm/bridge/samsung-dsim.c
-@@ -412,6 +412,7 @@ static const struct samsung_dsim_driver_data exynos3_dsi_driver_data = {
- 	.m_min = 41,
- 	.m_max = 125,
- 	.min_freq = 500,
-+	.has_broken_fifoctrl_emptyhdr = 1,
- };
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+index bf34498c1b6d7..1f88a94d002af 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+@@ -1615,7 +1615,8 @@ static struct drm_crtc_state *vop_crtc_duplicate_state(struct drm_crtc *crtc)
+ 	if (WARN_ON(!crtc->state))
+ 		return NULL;
  
- static const struct samsung_dsim_driver_data exynos4_dsi_driver_data = {
-@@ -428,6 +429,7 @@ static const struct samsung_dsim_driver_data exynos4_dsi_driver_data = {
- 	.m_min = 41,
- 	.m_max = 125,
- 	.min_freq = 500,
-+	.has_broken_fifoctrl_emptyhdr = 1,
- };
+-	rockchip_state = kzalloc(sizeof(*rockchip_state), GFP_KERNEL);
++	rockchip_state = kmemdup(to_rockchip_crtc_state(crtc->state),
++				 sizeof(*rockchip_state), GFP_KERNEL);
+ 	if (!rockchip_state)
+ 		return NULL;
  
- static const struct samsung_dsim_driver_data exynos5_dsi_driver_data = {
-@@ -1009,8 +1011,20 @@ static int samsung_dsim_wait_for_hdr_fifo(struct samsung_dsim *dsi)
- 	do {
- 		u32 reg = samsung_dsim_read(dsi, DSIM_FIFOCTRL_REG);
- 
--		if (reg & DSIM_SFR_HEADER_EMPTY)
--			return 0;
-+		if (!dsi->driver_data->has_broken_fifoctrl_emptyhdr) {
-+			if (reg & DSIM_SFR_HEADER_EMPTY)
-+				return 0;
-+		} else {
-+			if (!(reg & DSIM_SFR_HEADER_FULL)) {
-+				/*
-+				 * Wait a little bit, so the pending data can
-+				 * actually leave the FIFO to avoid overflow.
-+				 */
-+				if (!cond_resched())
-+					usleep_range(950, 1050);
-+				return 0;
-+			}
-+		}
- 
- 		if (!cond_resched())
- 			usleep_range(950, 1050);
-diff --git a/include/drm/bridge/samsung-dsim.h b/include/drm/bridge/samsung-dsim.h
-index 05100e91ecb96..6fc9bb2979e45 100644
---- a/include/drm/bridge/samsung-dsim.h
-+++ b/include/drm/bridge/samsung-dsim.h
-@@ -53,6 +53,7 @@ struct samsung_dsim_driver_data {
- 	unsigned int plltmr_reg;
- 	unsigned int has_freqband:1;
- 	unsigned int has_clklane_stop:1;
-+	unsigned int has_broken_fifoctrl_emptyhdr:1;
- 	unsigned int num_clks;
- 	unsigned int min_freq;
- 	unsigned int max_freq;
 -- 
 2.42.0
 
