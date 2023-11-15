@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7849A3A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7503A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wcrywimp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A743C433C7;
-	Wed, 15 Nov 2023 19:41:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPwkt/43"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBB4C433C9;
+	Wed, 15 Nov 2023 19:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077290;
-	bh=nbcBkzwfZTJQcQv5o4Sqg6H6NaSU3NEF7ltTWCuTt4w=;
+	s=korg; t=1700077291;
+	bh=NISNgejFv6wEwp/e5KH67Q/0af9YdTcMf/DOFixIYxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WcrywimpXNiO/kg2yd3AEPvC4cPcfscBakLD57TYIPiOZUDUYnlE0mrpC7udNZQxP
-	 wWnFgmeQIgtoh6RCpsdguEOCfbmaEO8OFjqvEHlGt0tMjuuDGIr90TpYN9O7YTrYyd
-	 h0+oCvj+JCALFyL/uwrSigGoojEAJj57sepuJbtQ=
+	b=TPwkt/43elViZ578kM3RQozRELNh/8jhhSPTZ+Dvg1HHG6DWF4ROk7hegtspVtEuD
+	 iLdg1fUguMaRdht+0XM0PaUso0Pueb0/Ul3+HUB7Fz5ilkxSWVjm0SoC4AxYRf9Z6J
+	 6HHMNg8fskE+AnevitVhjOV3Cyna7VnICSI++9bI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Arnd Bergmann <arnd@kernel.org>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Ian Nartowicz <deadbeef@nartowicz.co.uk>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 182/603] clk: ralink: mtmips: quiet unused variable warning
-Date: Wed, 15 Nov 2023 14:12:07 -0500
-Message-ID: <20231115191625.833159278@linuxfoundation.org>
+Subject: [PATCH 6.6 206/603] Revert "hwmon: (sch56xx-common) Add automatic module loading on supported devices"
+Date: Wed, 15 Nov 2023 14:12:31 -0500
+Message-ID: <20231115191627.519174262@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,83 +43,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 619102313466eaf8a6ac188e711f5df749dac6d4 ]
+[ Upstream commit d621a46d05107f4e510383d6a38f2160c62d28f7 ]
 
-When CONFIG_OF is disabled then the matching table is not referenced and
-the following warning appears:
+This reverts commit 393935baa45e5ccb9603cf7f9f020ed1bc0915f7.
 
-drivers/clk/ralink/clk-mtmips.c:821:34: warning: unused variable 'mtmips_of_match' [-Wunused-const-variable]
-821 |   static const struct of_device_id mtmips_of_match[] = {
-    |                          ^
+As reported by Ian Nartowicz, this and the next patch
+result in a failure to load the driver on Celsius W280.
+While the alternative would be to add the board to the DMI
+override table, it is quite likely that other systems are
+also affected. Revert the offending patches to avoid future
+problems.
 
-There are two match tables in the driver: one for the clock driver and the
-other for the reset driver. The only difference between them is that the
-clock driver uses 'data' and does not have 'ralink,rt2880-reset' compatible.
-Both just can be merged into a single one just by adding the compatible
-'ralink,rt2880-reset' entry to 'mtmips_of_match[]', which will allow it to
-be used for 'mtmips_clk_driver' (which doesn't use the data) as well as for
-'mtmips_clk_init()' (which doesn't need get called for 'ralink,rt2880-reset').
-
-Doing in this way ensures that 'CONFIG_OF' is not disabled anymore so the
-above warning disapears.
-
-Fixes: 6f3b15586eef ("clk: ralink: add clock and reset driver for MTMIPS SoCs")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202307242310.CdOnd2py-lkp@intel.com/
-Suggested-by: Arnd Bergmann <arnd@kernel.org>
-Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Link: https://lore.kernel.org/r/20230827023932.501102-1-sergio.paracuellos@gmail.com
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 393935baa45e ("hwmon: (sch56xx-common) Add automatic module loading on supported devices")
+Reported-by: Ian Nartowicz <deadbeef@nartowicz.co.uk>
+Closes: https://lore.kernel.org/linux-hwmon/20231025192239.3c5389ae@debian.org/T/#t
+Cc: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ralink/clk-mtmips.c | 20 +++++---------------
- 1 file changed, 5 insertions(+), 15 deletions(-)
+ drivers/hwmon/sch56xx-common.c | 40 ++--------------------------------
+ 1 file changed, 2 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
-index 1e7991439527a..50a443bf79ecd 100644
---- a/drivers/clk/ralink/clk-mtmips.c
-+++ b/drivers/clk/ralink/clk-mtmips.c
-@@ -821,6 +821,10 @@ static const struct mtmips_clk_data mt76x8_clk_data = {
- };
+diff --git a/drivers/hwmon/sch56xx-common.c b/drivers/hwmon/sch56xx-common.c
+index 3ece53adabd62..ac1f725807155 100644
+--- a/drivers/hwmon/sch56xx-common.c
++++ b/drivers/hwmon/sch56xx-common.c
+@@ -7,10 +7,8 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
- static const struct of_device_id mtmips_of_match[] = {
-+	{
-+		.compatible = "ralink,rt2880-reset",
-+		.data = NULL,
-+	},
- 	{
- 		.compatible = "ralink,rt2880-sysc",
- 		.data = &rt2880_clk_data,
-@@ -1088,25 +1092,11 @@ static int mtmips_clk_probe(struct platform_device *pdev)
- 	return 0;
+ #include <linux/module.h>
+-#include <linux/mod_devicetable.h>
+ #include <linux/init.h>
+ #include <linux/platform_device.h>
+-#include <linux/dmi.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+ #include <linux/acpi.h>
+@@ -21,10 +19,7 @@
+ #include <linux/slab.h>
+ #include "sch56xx-common.h"
+ 
+-static bool ignore_dmi;
+-module_param(ignore_dmi, bool, 0);
+-MODULE_PARM_DESC(ignore_dmi, "Omit DMI check for supported devices (default=0)");
+-
++/* Insmod parameters */
+ static bool nowayout = WATCHDOG_NOWAYOUT;
+ module_param(nowayout, bool, 0);
+ MODULE_PARM_DESC(nowayout, "Watchdog cannot be stopped once started (default="
+@@ -523,42 +518,11 @@ static int __init sch56xx_device_add(int address, const char *name)
+ 	return PTR_ERR_OR_ZERO(sch56xx_pdev);
  }
  
--static const struct of_device_id mtmips_clk_of_match[] = {
--	{ .compatible = "ralink,rt2880-reset" },
--	{ .compatible = "ralink,rt2880-sysc" },
--	{ .compatible = "ralink,rt3050-sysc" },
--	{ .compatible = "ralink,rt3052-sysc" },
--	{ .compatible = "ralink,rt3352-sysc" },
--	{ .compatible = "ralink,rt3883-sysc" },
--	{ .compatible = "ralink,rt5350-sysc" },
--	{ .compatible = "ralink,mt7620-sysc" },
--	{ .compatible = "ralink,mt7628-sysc" },
--	{ .compatible = "ralink,mt7688-sysc" },
--	{}
+-/* For autoloading only */
+-static const struct dmi_system_id sch56xx_dmi_table[] __initconst = {
+-	{
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
+-		},
+-	},
+-	{ }
 -};
+-MODULE_DEVICE_TABLE(dmi, sch56xx_dmi_table);
 -
- static struct platform_driver mtmips_clk_driver = {
- 	.probe = mtmips_clk_probe,
- 	.driver = {
- 		.name = "mtmips-clk",
--		.of_match_table = mtmips_clk_of_match,
-+		.of_match_table = mtmips_of_match,
- 	},
- };
+ static int __init sch56xx_init(void)
+ {
+-	const char *name = NULL;
+ 	int address;
++	const char *name = NULL;
  
+-	if (!ignore_dmi) {
+-		if (!dmi_check_system(sch56xx_dmi_table))
+-			return -ENODEV;
+-
+-		/*
+-		 * Some machines like the Esprimo P720 and Esprimo C700 have
+-		 * onboard devices named " Antiope"/" Theseus" instead of
+-		 * "Antiope"/"Theseus", so we need to check for both.
+-		 */
+-		if (!dmi_find_device(DMI_DEV_TYPE_OTHER, "Antiope", NULL) &&
+-		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Antiope", NULL) &&
+-		    !dmi_find_device(DMI_DEV_TYPE_OTHER, "Theseus", NULL) &&
+-		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Theseus", NULL))
+-			return -ENODEV;
+-	}
+-
+-	/*
+-	 * Some devices like the Esprimo C700 have both onboard devices,
+-	 * so we still have to check manually
+-	 */
+ 	address = sch56xx_find(0x4e, &name);
+ 	if (address < 0)
+ 		address = sch56xx_find(0x2e, &name);
 -- 
 2.42.0
 
