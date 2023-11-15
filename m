@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EDC3BB29
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076623BB38
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RL+5Fu1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E30C433CB;
-	Wed, 15 Nov 2023 19:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlJryVjz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A808BC433CB;
+	Wed, 15 Nov 2023 19:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076109;
-	bh=yZ79EaOHZ1Z/4dYtC5rtY2utXtIXxArPiDPDyPtwF2U=;
+	s=korg; t=1700076110;
+	bh=DCGcYQga3gVpR/ZL9yFL6xUbmJgkiabcYpch+NjfPvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RL+5Fu1D74hLt0cAfggLjoebUwiZk4NNufzvus70kT+YuBic4AgosxAOpbSVsLumQ
-	 KWxYLNVbiRq66C7gyHeERyA6kQz43FjbMamBW1/h+5/1ZgE8Qo52okB7fFhXdvMfgn
-	 NVS8WwNDoHe3MagbqiKMQQwZ8pZks+r6gLu29caU=
+	b=WlJryVjzhjLVcUIUxIiKa/9b2LAk0FNv3N4rq5YRA84FFKw+WddHzTgkQlYnRULh5
+	 OMPgPIDZZYVBLdBPcDHENfZyQl0QJAToaYjdNDDiQsRa8ba3M5jgH3bv4VY7MxePlm
+	 0aQEFW3xG+l22q2bIKERlgJMwIsfRb0rFZq45ISs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 081/550] wifi: mt76: mt7603: rework/fix rx pse hang check
-Date: Wed, 15 Nov 2023 14:11:05 -0500
-Message-ID: <20231115191606.312725358@linuxfoundation.org>
+Subject: [PATCH 6.5 058/550] udp: move udp->no_check6_rx to udp->udp_flags
+Date: Wed, 15 Nov 2023 14:10:42 -0500
+Message-ID: <20231115191604.701440014@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -41,85 +44,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit baa19b2e4b7bbb509a7ca7939c8785477dcd40ee ]
+[ Upstream commit bcbc1b1de884647aa0318bf74eb7f293d72a1e40 ]
 
-It turns out that the code in mt7603_rx_pse_busy() does not detect actual
-hardware hangs, it only checks for busy conditions in PSE.
-A reset should only be performed if these conditions are true and if there
-is no rx activity as well.
-Reset the counter whenever a rx interrupt occurs. In order to also deal with
-a fully loaded CPU that leaves interrupts disabled with continuous NAPI
-polling, also check for pending rx interrupts in the function itself.
+syzbot reported that udp->no_check6_rx can be read locklessly.
+Use one atomic bit from udp->udp_flags.
 
-Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 1c19448c9ba6 ("net: Make enabling of zero UDP6 csums more restrictive")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7603/core.c  |  2 ++
- .../net/wireless/mediatek/mt76/mt7603/mac.c   | 23 +++++++++++++------
- 2 files changed, 18 insertions(+), 7 deletions(-)
+ include/linux/udp.h | 10 +++++-----
+ net/ipv4/udp.c      |  4 ++--
+ net/ipv6/udp.c      |  6 +++---
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/core.c b/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-index 60a996b63c0c0..915b8349146af 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-@@ -42,11 +42,13 @@ irqreturn_t mt7603_irq_handler(int irq, void *dev_instance)
- 	}
+diff --git a/include/linux/udp.h b/include/linux/udp.h
+index e3f2a6c7ac1d1..8d4c3835b1b21 100644
+--- a/include/linux/udp.h
++++ b/include/linux/udp.h
+@@ -35,6 +35,7 @@ static inline u32 udp_hashfn(const struct net *net, u32 num, u32 mask)
+ enum {
+ 	UDP_FLAGS_CORK,		/* Cork is required */
+ 	UDP_FLAGS_NO_CHECK6_TX, /* Send zero UDP6 checksums on TX? */
++	UDP_FLAGS_NO_CHECK6_RX, /* Allow zero UDP6 checksums on RX? */
+ };
  
- 	if (intr & MT_INT_RX_DONE(0)) {
-+		dev->rx_pse_check = 0;
- 		mt7603_irq_disable(dev, MT_INT_RX_DONE(0));
- 		napi_schedule(&dev->mt76.napi[0]);
- 	}
+ struct udp_sock {
+@@ -48,8 +49,7 @@ struct udp_sock {
  
- 	if (intr & MT_INT_RX_DONE(1)) {
-+		dev->rx_pse_check = 0;
- 		mt7603_irq_disable(dev, MT_INT_RX_DONE(1));
- 		napi_schedule(&dev->mt76.napi[1]);
- 	}
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-index 12e0af52082a6..05cdb970b3d8b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-@@ -1559,20 +1559,29 @@ static bool mt7603_rx_pse_busy(struct mt7603_dev *dev)
+ 	int		 pending;	/* Any pending frames ? */
+ 	__u8		 encap_type;	/* Is this an Encapsulation socket? */
+-	unsigned char	 no_check6_rx:1,/* Allow zero UDP6 checksums on RX? */
+-			 encap_enabled:1, /* This socket enabled encap
++	unsigned char	 encap_enabled:1, /* This socket enabled encap
+ 					   * processing; UDP tunnels and
+ 					   * different encapsulation layer set
+ 					   * this
+@@ -120,7 +120,7 @@ static inline void udp_set_no_check6_tx(struct sock *sk, bool val)
+ 
+ static inline void udp_set_no_check6_rx(struct sock *sk, bool val)
  {
- 	u32 addr, val;
- 
--	if (mt76_rr(dev, MT_MCU_DEBUG_RESET) & MT_MCU_DEBUG_RESET_QUEUES)
--		return true;
--
- 	if (mt7603_rx_fifo_busy(dev))
--		return false;
-+		goto out;
- 
- 	addr = mt7603_reg_map(dev, MT_CLIENT_BASE_PHYS_ADDR + MT_CLIENT_STATUS);
- 	mt76_wr(dev, addr, 3);
- 	val = mt76_rr(dev, addr) >> 16;
- 
--	if (is_mt7628(dev) && (val & 0x4001) == 0x4001)
--		return true;
-+	if (!(val & BIT(0)))
-+		return false;
-+
-+	if (is_mt7628(dev))
-+		val &= 0xa000;
-+	else
-+		val &= 0x8000;
-+	if (!val)
-+		return false;
-+
-+out:
-+	if (mt76_rr(dev, MT_INT_SOURCE_CSR) &
-+	    (MT_INT_RX_DONE(0) | MT_INT_RX_DONE(1)))
-+		return false;
- 
--	return (val & 0x8001) == 0x8001 || (val & 0xe001) == 0xe001;
-+	return true;
+-	udp_sk(sk)->no_check6_rx = val;
++	udp_assign_bit(NO_CHECK6_RX, sk, val);
  }
  
- static bool
+ static inline bool udp_get_no_check6_tx(const struct sock *sk)
+@@ -128,9 +128,9 @@ static inline bool udp_get_no_check6_tx(const struct sock *sk)
+ 	return udp_test_bit(NO_CHECK6_TX, sk);
+ }
+ 
+-static inline bool udp_get_no_check6_rx(struct sock *sk)
++static inline bool udp_get_no_check6_rx(const struct sock *sk)
+ {
+-	return udp_sk(sk)->no_check6_rx;
++	return udp_test_bit(NO_CHECK6_RX, sk);
+ }
+ 
+ static inline void udp_cmsg_recv(struct msghdr *msg, struct sock *sk,
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 716eaddc7bdd0..6b1754704acd1 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -2723,7 +2723,7 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ 		break;
+ 
+ 	case UDP_NO_CHECK6_RX:
+-		up->no_check6_rx = valbool;
++		udp_set_no_check6_rx(sk, valbool);
+ 		break;
+ 
+ 	case UDP_SEGMENT:
+@@ -2820,7 +2820,7 @@ int udp_lib_getsockopt(struct sock *sk, int level, int optname,
+ 		break;
+ 
+ 	case UDP_NO_CHECK6_RX:
+-		val = up->no_check6_rx;
++		val = udp_get_no_check6_rx(sk);
+ 		break;
+ 
+ 	case UDP_SEGMENT:
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index c4f82dfa533fe..1df116951f5eb 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -891,7 +891,7 @@ static int __udp6_lib_mcast_deliver(struct net *net, struct sk_buff *skb,
+ 		/* If zero checksum and no_check is not on for
+ 		 * the socket then skip it.
+ 		 */
+-		if (!uh->check && !udp_sk(sk)->no_check6_rx)
++		if (!uh->check && !udp_get_no_check6_rx(sk))
+ 			continue;
+ 		if (!first) {
+ 			first = sk;
+@@ -1009,7 +1009,7 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
+ 		if (unlikely(rcu_dereference(sk->sk_rx_dst) != dst))
+ 			udp6_sk_rx_dst_set(sk, dst);
+ 
+-		if (!uh->check && !udp_sk(sk)->no_check6_rx) {
++		if (!uh->check && !udp_get_no_check6_rx(sk)) {
+ 			if (refcounted)
+ 				sock_put(sk);
+ 			goto report_csum_error;
+@@ -1031,7 +1031,7 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
+ 	/* Unicast */
+ 	sk = __udp6_lib_lookup_skb(skb, uh->source, uh->dest, udptable);
+ 	if (sk) {
+-		if (!uh->check && !udp_sk(sk)->no_check6_rx)
++		if (!uh->check && !udp_get_no_check6_rx(sk))
+ 			goto report_csum_error;
+ 		return udp6_unicast_rcv_skb(sk, skb, uh);
+ 	}
 -- 
 2.42.0
 
