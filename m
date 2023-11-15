@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84833EA62
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACD83EA72
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owWJ7OZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EFFC433C7;
-	Wed, 15 Nov 2023 19:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PmHborpx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24BAC433C8;
+	Wed, 15 Nov 2023 19:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076000;
-	bh=tiX5uS1Fl3dJQMDAu/40BT37DH+lfrO/dpYtzvwh31I=;
+	s=korg; t=1700076001;
+	bh=7Gx77PL4Z5YJqWs5vIqS8Zdl80v9WjRxWwUaG/wjyc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=owWJ7OZxSL5+kSG/Tp7VXv4J0mYjA7XT/gn2pzCUbYqXZPWtTz/kQ6SN4S3j5OFNa
-	 pFMBmo34xmDOWFPEHBC5ho1SObWf2uQlkWDMTS//jy7LRM5gw6u29C5bWpKuTEolOO
-	 DiPE/1KFjPKbUIlb/88cVbtt42PL3efodczIawHw=
+	b=PmHborpxXsmQh8s5gKz+4XmedZQ0t0tzxQtm8eVYDrnsZEzR3YhiOVmseEvR158M9
+	 rJvSSSSH5I3gi14asiA5lMxm5o/HT9qcRap1hC+ryyDpGCi5J7XZnjwjCs2Jqk+p7w
+	 a94NZyRjeloFIU+vF7Sj0asiq7cuMNVmfp3vGD2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reuben Hawkins <reubenhwk@gmail.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Tejun Heo <tj@kernel.org>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 012/550] vfs: fix readahead(2) on block devices
-Date: Wed, 15 Nov 2023 14:09:56 -0500
-Message-ID: <20231115191601.559856017@linuxfoundation.org>
+Subject: [PATCH 6.5 013/550] writeback, cgroup: switch inodes with dirty timestamps to release dying cgwbs
+Date: Wed, 15 Nov 2023 14:09:57 -0500
+Message-ID: <20231115191601.636730790@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,41 +44,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reuben Hawkins <reubenhwk@gmail.com>
+From: Jingbo Xu <jefflexu@linux.alibaba.com>
 
-[ Upstream commit 7116c0af4b8414b2f19fdb366eea213cbd9d91c2 ]
+[ Upstream commit 6654408a33e6297d8e1d2773409431d487399b95 ]
 
-Readahead was factored to call generic_fadvise.  That refactor added an
-S_ISREG restriction which broke readahead on block devices.
+The cgwb cleanup routine will try to release the dying cgwb by switching
+the attached inodes.  It fetches the attached inodes from wb->b_attached
+list, omitting the fact that inodes only with dirty timestamps reside in
+wb->b_dirty_time list, which is the case when lazytime is enabled.  This
+causes enormous zombie memory cgroup when lazytime is enabled, as inodes
+with dirty timestamps can not be switched to a live cgwb for a long time.
 
-In addition to S_ISREG, this change checks S_ISBLK to fix block device
-readahead.  There is no change in behavior with any file type besides block
-devices in this change.
+It is reasonable not to switch cgwb for inodes with dirty data, as
+otherwise it may break the bandwidth restrictions.  However since the
+writeback of inode metadata is not accounted for, let's also switch
+inodes with dirty timestamps to avoid zombie memory and block cgroups
+when laztytime is enabled.
 
-Fixes: 3d8f7615319b ("vfs: implement readahead(2) using POSIX_FADV_WILLNEED")
-Signed-off-by: Reuben Hawkins <reubenhwk@gmail.com>
-Link: https://lore.kernel.org/r/20231003015704.2415-1-reubenhwk@gmail.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Fixes: c22d70a162d3 ("writeback, cgroup: release dying cgwbs by switching attached inodes")
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20231014125511.102978-1-jefflexu@linux.alibaba.com
+Acked-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/readahead.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/fs-writeback.c | 41 +++++++++++++++++++++++++++++------------
+ 1 file changed, 29 insertions(+), 12 deletions(-)
 
-diff --git a/mm/readahead.c b/mm/readahead.c
-index a9c999aa19af6..1f4701f1b8682 100644
---- a/mm/readahead.c
-+++ b/mm/readahead.c
-@@ -748,7 +748,8 @@ ssize_t ksys_readahead(int fd, loff_t offset, size_t count)
- 	 */
- 	ret = -EINVAL;
- 	if (!f.file->f_mapping || !f.file->f_mapping->a_ops ||
--	    !S_ISREG(file_inode(f.file)->i_mode))
-+	    (!S_ISREG(file_inode(f.file)->i_mode) &&
-+	    !S_ISBLK(file_inode(f.file)->i_mode)))
- 		goto out;
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index d532a93e980d7..e19edd179dfc0 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -613,6 +613,24 @@ static void inode_switch_wbs(struct inode *inode, int new_wb_id)
+ 	kfree(isw);
+ }
  
- 	ret = vfs_fadvise(f.file, offset, count, POSIX_FADV_WILLNEED);
++static bool isw_prepare_wbs_switch(struct inode_switch_wbs_context *isw,
++				   struct list_head *list, int *nr)
++{
++	struct inode *inode;
++
++	list_for_each_entry(inode, list, i_io_list) {
++		if (!inode_prepare_wbs_switch(inode, isw->new_wb))
++			continue;
++
++		isw->inodes[*nr] = inode;
++		(*nr)++;
++
++		if (*nr >= WB_MAX_INODES_PER_ISW - 1)
++			return true;
++	}
++	return false;
++}
++
+ /**
+  * cleanup_offline_cgwb - detach associated inodes
+  * @wb: target wb
+@@ -625,7 +643,6 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ {
+ 	struct cgroup_subsys_state *memcg_css;
+ 	struct inode_switch_wbs_context *isw;
+-	struct inode *inode;
+ 	int nr;
+ 	bool restart = false;
+ 
+@@ -647,17 +664,17 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ 
+ 	nr = 0;
+ 	spin_lock(&wb->list_lock);
+-	list_for_each_entry(inode, &wb->b_attached, i_io_list) {
+-		if (!inode_prepare_wbs_switch(inode, isw->new_wb))
+-			continue;
+-
+-		isw->inodes[nr++] = inode;
+-
+-		if (nr >= WB_MAX_INODES_PER_ISW - 1) {
+-			restart = true;
+-			break;
+-		}
+-	}
++	/*
++	 * In addition to the inodes that have completed writeback, also switch
++	 * cgwbs for those inodes only with dirty timestamps. Otherwise, those
++	 * inodes won't be written back for a long time when lazytime is
++	 * enabled, and thus pinning the dying cgwbs. It won't break the
++	 * bandwidth restrictions, as writeback of inode metadata is not
++	 * accounted for.
++	 */
++	restart = isw_prepare_wbs_switch(isw, &wb->b_attached, &nr);
++	if (!restart)
++		restart = isw_prepare_wbs_switch(isw, &wb->b_dirty_time, &nr);
+ 	spin_unlock(&wb->list_lock);
+ 
+ 	/* no attached inodes? bail out */
 -- 
 2.42.0
 
