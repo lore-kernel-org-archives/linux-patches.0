@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D86A381A5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C4A381A5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvPLnvf0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F61AC4E779;
-	Wed, 15 Nov 2023 20:52:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDFDbTPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88971C4E778;
+	Wed, 15 Nov 2023 20:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081558;
-	bh=LiY6bRoS7JqboZp3Ns1p/Il326v06zpiLmQbHhqEM/o=;
+	s=korg; t=1700081559;
+	bh=djBFG7ovNwvXP8vdPStiPtGn/Yy4R3kwTQLdn7nMOC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvPLnvf0nD82fZDFdUawF7FqOqOgRE6oZ1YgZxd4Y8vz4qEYKBpnyJ+VoOrKoTEfB
-	 kfqPGA2af9nxpbauZn4r7rXPJCsCiNkiTQie45Isc4PnkA/ssMi/AUfg6krjUNoEVh
-	 sJ3oe9Cuofvhf7Nu/S5G35WnG2H/u9VEnvnsc6kA=
+	b=NDFDbTPcFLJQ/neKKbxCmEJZmUf6w+SKEOGY8RHlUXP0/jh9+rij7FaRnjj336/SZ
+	 lpLkCQ4we5i3sRWuQdeicCC6YWeJEOvOPKB/Df9X4R8PH5iBWTxXsbdLcaQ/+q7gAz
+	 ElAt1wwYcmbc3C1ej8vtbSTbGdu3nVsvhVT7ZFXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 199/244] pcmcia: ds: fix refcount leak in pcmcia_device_add()
-Date: Wed, 15 Nov 2023 15:36:31 -0500
-Message-ID: <20231115203600.319732186@linuxfoundation.org>
+Subject: [PATCH 5.15 190/244] xhci: Loosen RPM as default policy to cover for AMD xHC 1.1
+Date: Wed, 15 Nov 2023 15:36:22 -0500
+Message-ID: <20231115203559.743866051@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,47 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 402ab979b29126068e0b596b641422ff7490214c ]
+[ Upstream commit 4baf1218150985ee3ab0a27220456a1f027ea0ac ]
 
-As the comment of device_register() says, it should use put_device()
-to give up the reference in the error path. Then, insofar resources
-will be freed in pcmcia_release_dev(), the error path is no longer
-needed. In particular, this means that the (previously missing) dropping
-of the reference to &p_dev->function_config->ref is now handled by
-pcmcia_release_dev().
+The AMD USB host controller (1022:43f7) isn't going into PCI D3 by default
+without anything connected. This is because the policy that was introduced
+by commit a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all
+xHC 1.2 or later devices") only covered 1.2 or later.
 
-Fixes: 360b65b95bae ("[PATCH] pcmcia: make config_t independent, add reference counting")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-[linux@dominikbrodowski.net: simplification, commit message rewrite]
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+The 1.1 specification also has the same requirement as the 1.2
+specification for D3 support. So expand the runtime PM as default policy
+to all AMD 1.1 devices as well.
+
+Fixes: a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all xHC 1.2 or later devices")
+Link: https://composter.com.ua/documents/xHCI_Specification_for_USB.pdf
+Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20231019102924.2797346-15-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/ds.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pcmcia/ds.c b/drivers/pcmcia/ds.c
-index 5bd1b80424e72..bdbd38fed94d2 100644
---- a/drivers/pcmcia/ds.c
-+++ b/drivers/pcmcia/ds.c
-@@ -573,8 +573,14 @@ static struct pcmcia_device *pcmcia_device_add(struct pcmcia_socket *s,
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index 29a442b621182..d0223facb92a1 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -349,6 +349,8 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
+ 	if (xhci->hci_version >= 0x120)
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
++	else if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version >= 0x110)
++		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
  
- 	pcmcia_device_query(p_dev);
- 
--	if (device_register(&p_dev->dev))
--		goto err_unreg;
-+	if (device_register(&p_dev->dev)) {
-+		mutex_lock(&s->ops_mutex);
-+		list_del(&p_dev->socket_device_list);
-+		s->device_count--;
-+		mutex_unlock(&s->ops_mutex);
-+		put_device(&p_dev->dev);
-+		return NULL;
-+	}
- 
- 	return p_dev;
- 
+ 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
+ 		xhci_dbg_trace(xhci, trace_xhci_dbg_quirks,
 -- 
 2.42.0
 
