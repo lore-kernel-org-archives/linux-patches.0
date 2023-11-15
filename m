@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25A918657
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD9843ABE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vN7BLYzB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40DFC32786;
-	Wed, 15 Nov 2023 20:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNKrWbK5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223D9C32789;
+	Wed, 15 Nov 2023 20:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081343;
-	bh=DGZzE4RKvwJjPkPEnDW2SdPYQQK4LYrzZNv46RAqzoY=;
+	s=korg; t=1700081345;
+	bh=L+m9eOyUojpT/gFNO4baJvMaZrMnDR13BPisxo7R7us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vN7BLYzBjAyuItr6GZ/UjK/Mk5H4U0w6t9MyW37EAkMsyX1EDB2I3bhAstAbtNjzS
-	 Br9oclVaSu7r79v45PNqCHg/5y8Fa3AcBOXacOzHP3GrckbQ0qSfBEnP7mnarNFrjz
-	 uqbc8xpURo36Z4yiNjO/zIz9G3UxmhwYXSCUlAio=
+	b=pNKrWbK55dav1zanFAP1A6rNDVY8XLeVd6dHK5yitROddWfg9h+zkQMneFktuEqdA
+	 XprxtFOUjdYxk3K3U2eC7HEGdMYJh5ECQkrExN2wcpvSip/RE0+S/1twD4PCDzfyXy
+	 zziQT4OuOP1O2YThBS1gujfiKfmmq0cOR7dQNMzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/244] platform/x86: wmi: Fix probe failure when failing to register WMI devices
-Date: Wed, 15 Nov 2023 15:34:30 -0500
-Message-ID: <20231115203553.042567543@linuxfoundation.org>
+	Dmitry Osipenko <digetx@gmail.com>,
+	Robert Foss <robert.foss@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Andreas Westman Dorcsak <hedmoo@yahoo.com>,
+	Maxim Schwalm <maxim.schwalm@gmail.com>
+Subject: [PATCH 5.15 096/244] drm/bridge: tc358768: Disable non-continuous clock mode
+Date: Wed, 15 Nov 2023 15:34:48 -0500
+Message-ID: <20231115203554.108789804@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -36,85 +38,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Dmitry Osipenko <digetx@gmail.com>
 
-[ Upstream commit ed85891a276edaf7a867de0e9acd0837bc3008f2 ]
+[ Upstream commit fbc5a90e82c1131869e76ce5b082693b8a75c121 ]
 
-When a WMI device besides the first one somehow fails to register,
-retval is returned while still containing a negative error code. This
-causes the ACPI device fail to probe, leaving behind zombie WMI devices
-leading to various errors later.
+Non-continuous clock mode doesn't work because driver doesn't support it
+properly. The bridge driver programs wrong bitfields that are required by
+the non-continuous mode (BTACNTRL1 register bitfields are swapped in the
+code), but fixing them doesn't help.
 
-Handle the single error path separately and return 0 unconditionally
-after trying to register all WMI devices to solve the issue. Also
-continue to register WMI devices even if some fail to allocate memory.
+Display panel of ASUS Transformer TF700T tablet supports non-continuous
+mode and display doesn't work at all using that mode. There are no
+device-trees that are actively using this DSI bridge in upstream yet,
+so clearly the broken mode wasn't ever tested properly. It's a bit too
+difficult to get LP mode working, hence let's disable the offending mode
+for now and fall back to continuous mode.
 
-Fixes: 6ee50aaa9a20 ("platform/x86: wmi: Instantiate all devices before adding them")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20231020211005.38216-4-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Tested-by: Andreas Westman Dorcsak <hedmoo@yahoo.com> # Asus TF700T
+Tested-by: Maxim Schwalm <maxim.schwalm@gmail.com> #TF700T
+Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20211002233447.1105-5-digetx@gmail.com
+Stable-dep-of: 66962d5c3c51 ("drm/bridge: tc358768: Fix bit updates")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/wmi.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
-index 7ce0408d3bfdd..e87ed10fd6269 100644
---- a/drivers/platform/x86/wmi.c
-+++ b/drivers/platform/x86/wmi.c
-@@ -1161,8 +1161,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
- 	struct wmi_block *wblock, *next;
- 	union acpi_object *obj;
- 	acpi_status status;
--	int retval = 0;
- 	u32 i, total;
-+	int retval;
+diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
+index da37dfd81a6fb..1e5304274ce20 100644
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -637,6 +637,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ {
+ 	struct tc358768_priv *priv = bridge_to_tc358768(bridge);
+ 	struct mipi_dsi_device *dsi_dev = priv->output.dev;
++	unsigned long mode_flags = dsi_dev->mode_flags;
+ 	u32 val, val2, lptxcnt, hact, data_type;
+ 	s32 raw_val;
+ 	const struct drm_display_mode *mode;
+@@ -644,6 +645,11 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	u32 dsiclk, dsibclk;
+ 	int ret, i;
  
- 	status = acpi_evaluate_object(device->handle, "_WDG", NULL, &out);
- 	if (ACPI_FAILURE(status))
-@@ -1173,8 +1173,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
- 		return -ENXIO;
- 
- 	if (obj->type != ACPI_TYPE_BUFFER) {
--		retval = -ENXIO;
--		goto out_free_pointer;
-+		kfree(obj);
-+		return -ENXIO;
- 	}
- 
- 	gblock = (const struct guid_block *)obj->buffer.pointer;
-@@ -1195,8 +1195,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
- 
- 		wblock = kzalloc(sizeof(struct wmi_block), GFP_KERNEL);
- 		if (!wblock) {
--			retval = -ENOMEM;
--			break;
-+			dev_err(wmi_bus_dev, "Failed to allocate %pUL\n", &gblock[i].guid);
-+			continue;
- 		}
- 
- 		wblock->acpi_device = device;
-@@ -1235,9 +1235,9 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
- 		}
- 	}
- 
--out_free_pointer:
--	kfree(out.pointer);
--	return retval;
-+	kfree(obj);
++	if (mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS) {
++		dev_warn_once(priv->dev, "Non-continuous mode unimplemented, falling back to continuous\n");
++		mode_flags &= ~MIPI_DSI_CLOCK_NON_CONTINUOUS;
++	}
 +
-+	return 0;
- }
+ 	tc358768_hw_enable(priv);
  
- /*
+ 	ret = tc358768_sw_reset(priv);
+@@ -779,7 +785,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 		val |= BIT(i + 1);
+ 	tc358768_write(priv, TC358768_HSTXVREGEN, val);
+ 
+-	if (!(dsi_dev->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
++	if (!(mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
+ 		tc358768_write(priv, TC358768_TXOPTIONCNTRL, 0x1);
+ 
+ 	/* TXTAGOCNT[26:16] RXTASURECNT[10:0] */
+@@ -836,7 +842,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 
+ 	val |= TC358768_DSI_CONTROL_TXMD;
+ 
+-	if (!(dsi_dev->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
++	if (!(mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
+ 		val |= TC358768_DSI_CONTROL_HSCKMD;
+ 
+ 	if (dsi_dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
 -- 
 2.42.0
 
