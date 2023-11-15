@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7493BB2C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEAA3BB42
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptlbPD2q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B492C433C9;
-	Wed, 15 Nov 2023 19:53:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLl26eXR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB9CC433CA;
+	Wed, 15 Nov 2023 19:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078021;
-	bh=mTtIKhKIYLdQERi/6OEKIkBBjDw6JobJEhrU/MT9AuQ=;
+	s=korg; t=1700078023;
+	bh=9+W/bPmjj9k5bcUtHrsjAg7TgCpo1007UP3EObJQ878=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ptlbPD2q8SaK0kgwYXbwWw+vPxW3j382F9uBFfA2mYQB2c/ET+sVn9yKRv8HpWubm
-	 0xTyVapmw6DIYwsOtPzdy4zCnzSsmZ00zBElQespld2MY9Ttt5vMQFXJgT2nVYxnHX
-	 jLbxuGAa6iAdD27ApJmpL3iyaZ36lp5tZqfomlG4=
+	b=pLl26eXRFlxUj8h1WNTsX6a46MbzbBtB1dyk1X0UmGoI0vl8egUziHoDI0y5NBSdr
+	 sLeKCNzupx6qDdVYA81KTiE/Eq+tDoEQ4OOd/R568GhUQSF8WDkXDIGRe9dGbwj2Mq
+	 W+5lkYNrzQ+J2l+ss+lo3Fubmojx+ZZm/Dxn1tMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/379] wifi: iwlwifi: honor the enable_ini value
-Date: Wed, 15 Nov 2023 14:21:41 -0500
-Message-ID: <20231115192646.703439815@linuxfoundation.org>
+Subject: [PATCH 6.1 055/379] can: dev: can_restart(): fix race condition between controller restart and netif_carrier_on()
+Date: Wed, 15 Nov 2023 14:22:10 -0500
+Message-ID: <20231115192648.414473951@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,155 +42,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit e0c1ca236e28e4263fba76d47a108ed95dcae33e ]
+[ Upstream commit 6841cab8c4504835e4011689cbdb3351dec693fd ]
 
-In case the user sets the enable_ini to some preset, we want to honor
-the value.
+This race condition was discovered while updating the at91_can driver
+to use can_bus_off(). The following scenario describes how the
+converted at91_can driver would behave.
 
-Remove the ops to set the value of the module parameter is runtime, we
-don't want to allow to modify the value in runtime since we configure
-the firmware once at the beginning on its life.
+When a CAN device goes into BUS-OFF state, the driver usually
+stops/resets the CAN device and calls can_bus_off().
 
-Fixes: b49c2b252b58 ("iwlwifi: Configure FW debug preset via module param.")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230830112059.5734e0f374bb.I6698eda8ed2112378dd47ac5d62866ebe7a94f77@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This function sets the netif carrier to off, and (if configured by
+user space) schedules a delayed work that calls can_restart() to
+restart the CAN device.
+
+The can_restart() function first checks if the carrier is off and
+triggers an error message if the carrier is OK.
+
+Then it calls the driver's do_set_mode() function to restart the
+device, then it sets the netif carrier to on. There is a race window
+between these two calls.
+
+The at91 CAN controller (observed on the sama5d3, a single core 32 bit
+ARM CPU) has a hardware limitation. If the device goes into bus-off
+while sending a CAN frame, there is no way to abort the sending of
+this frame. After the controller is enabled again, another attempt is
+made to send it.
+
+If the bus is still faulty, the device immediately goes back to the
+bus-off state. The driver calls can_bus_off(), the netif carrier is
+switched off and another can_restart is scheduled. This occurs within
+the race window before the original can_restart() handler marks the
+netif carrier as OK. This would cause the 2nd can_restart() to be
+called with an OK netif carrier, resulting in an error message.
+
+The flow of the 1st can_restart() looks like this:
+
+can_restart()
+    // bail out if netif_carrier is OK
+
+    netif_carrier_ok(dev)
+    priv->do_set_mode(dev, CAN_MODE_START)
+        // enable CAN controller
+        // sama5d3 restarts sending old message
+
+        // CAN devices goes into BUS_OFF, triggers IRQ
+
+// IRQ handler start
+    at91_irq()
+        at91_irq_err_line()
+            can_bus_off()
+                netif_carrier_off()
+                schedule_delayed_work()
+// IRQ handler end
+
+    netif_carrier_on()
+
+The 2nd can_restart() will be called with an OK netif carrier and the
+error message will be printed.
+
+To close the race window, first set the netif carrier to on, then
+restart the controller. In case the restart fails with an error code,
+roll back the netif carrier to off.
+
+Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
+Link: https://lore.kernel.org/all/20231005-can-dev-fix-can-restart-v2-2-91b5c1fd922c@pengutronix.de
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/intel/iwlwifi/fw/api/dbg-tlv.h   |  1 +
- .../net/wireless/intel/iwlwifi/iwl-dbg-tlv.h  |  5 +-
- drivers/net/wireless/intel/iwlwifi/iwl-drv.c  | 51 +++++++------------
- .../net/wireless/intel/iwlwifi/iwl-trans.h    |  4 ++
- 4 files changed, 25 insertions(+), 36 deletions(-)
+ drivers/net/can/dev/dev.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
-index ba538d70985f4..39bee9c00e071 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
-@@ -13,6 +13,7 @@
- #define IWL_FW_INI_DOMAIN_ALWAYS_ON		0
- #define IWL_FW_INI_REGION_ID_MASK		GENMASK(15, 0)
- #define IWL_FW_INI_REGION_DUMP_POLICY_MASK	GENMASK(31, 16)
-+#define IWL_FW_INI_PRESET_DISABLE		0xff
+diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
+index f36bd9bd98517..f685479eda1be 100644
+--- a/drivers/net/can/dev/dev.c
++++ b/drivers/net/can/dev/dev.c
+@@ -154,11 +154,12 @@ static void can_restart(struct net_device *dev)
+ 	priv->can_stats.restarts++;
  
- /**
-  * struct iwl_fw_ini_hcmd
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
-index 128059ca77e60..06fb7d6653905 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2018-2022 Intel Corporation
-+ * Copyright (C) 2018-2023 Intel Corporation
-  */
- #ifndef __iwl_dbg_tlv_h__
- #define __iwl_dbg_tlv_h__
-@@ -10,7 +10,8 @@
- #include <fw/file.h>
- #include <fw/api/dbg-tlv.h>
- 
--#define IWL_DBG_TLV_MAX_PRESET 15
-+#define IWL_DBG_TLV_MAX_PRESET	15
-+#define ENABLE_INI		(IWL_DBG_TLV_MAX_PRESET + 1)
- 
- /**
-  * struct iwl_dbg_tlv_node - debug TLV node
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-index a2203f661321c..5eba1a355f043 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-@@ -1722,6 +1722,22 @@ struct iwl_drv *iwl_drv_start(struct iwl_trans *trans)
- #endif
- 
- 	drv->trans->dbg.domains_bitmap = IWL_TRANS_FW_DBG_DOMAIN(drv->trans);
-+	if (iwlwifi_mod_params.enable_ini != ENABLE_INI) {
-+		/* We have a non-default value in the module parameter,
-+		 * take its value
-+		 */
-+		drv->trans->dbg.domains_bitmap &= 0xffff;
-+		if (iwlwifi_mod_params.enable_ini != IWL_FW_INI_PRESET_DISABLE) {
-+			if (iwlwifi_mod_params.enable_ini > ENABLE_INI) {
-+				IWL_ERR(trans,
-+					"invalid enable_ini module parameter value: max = %d, using 0 instead\n",
-+					ENABLE_INI);
-+				iwlwifi_mod_params.enable_ini = 0;
-+			}
-+			drv->trans->dbg.domains_bitmap =
-+				BIT(IWL_FW_DBG_DOMAIN_POS + iwlwifi_mod_params.enable_ini);
-+		}
+ 	/* Now restart the device */
+-	err = priv->do_set_mode(dev, CAN_MODE_START);
+-
+ 	netif_carrier_on(dev);
+-	if (err)
++	err = priv->do_set_mode(dev, CAN_MODE_START);
++	if (err) {
+ 		netdev_err(dev, "Error %d during restart", err);
++		netif_carrier_off(dev);
 +	}
- 
- 	ret = iwl_request_firmware(drv, true);
- 	if (ret) {
-@@ -1770,8 +1786,6 @@ void iwl_drv_stop(struct iwl_drv *drv)
- 	kfree(drv);
  }
  
--#define ENABLE_INI	(IWL_DBG_TLV_MAX_PRESET + 1)
--
- /* shared module parameters */
- struct iwl_mod_params iwlwifi_mod_params = {
- 	.fw_restart = true,
-@@ -1891,38 +1905,7 @@ module_param_named(uapsd_disable, iwlwifi_mod_params.uapsd_disable, uint, 0644);
- MODULE_PARM_DESC(uapsd_disable,
- 		 "disable U-APSD functionality bitmap 1: BSS 2: P2P Client (default: 3)");
- 
--static int enable_ini_set(const char *arg, const struct kernel_param *kp)
--{
--	int ret = 0;
--	bool res;
--	__u32 new_enable_ini;
--
--	/* in case the argument type is a number */
--	ret = kstrtou32(arg, 0, &new_enable_ini);
--	if (!ret) {
--		if (new_enable_ini > ENABLE_INI) {
--			pr_err("enable_ini cannot be %d, in range 0-16\n", new_enable_ini);
--			return -EINVAL;
--		}
--		goto out;
--	}
--
--	/* in case the argument type is boolean */
--	ret = kstrtobool(arg, &res);
--	if (ret)
--		return ret;
--	new_enable_ini = (res ? ENABLE_INI : 0);
--
--out:
--	iwlwifi_mod_params.enable_ini = new_enable_ini;
--	return 0;
--}
--
--static const struct kernel_param_ops enable_ini_ops = {
--	.set = enable_ini_set
--};
--
--module_param_cb(enable_ini, &enable_ini_ops, &iwlwifi_mod_params.enable_ini, 0644);
-+module_param_named(enable_ini, iwlwifi_mod_params.enable_ini, uint, 0444);
- MODULE_PARM_DESC(enable_ini,
- 		 "0:disable, 1-15:FW_DBG_PRESET Values, 16:enabled without preset value defined,"
- 		 "Debug INI TLV FW debug infrastructure (default: 16)");
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-index d659ccd065f78..c9729e2718dc0 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-@@ -56,6 +56,10 @@
-  *	6) Eventually, the free function will be called.
-  */
- 
-+/* default preset 0 (start from bit 16)*/
-+#define IWL_FW_DBG_DOMAIN_POS	16
-+#define IWL_FW_DBG_DOMAIN	BIT(IWL_FW_DBG_DOMAIN_POS)
-+
- #define IWL_TRANS_FW_DBG_DOMAIN(trans)	IWL_FW_INI_DOMAIN_ALWAYS_ON
- 
- #define FH_RSCSR_FRAME_SIZE_MSK		0x00003FFF	/* bits 0-13 */
+ static void can_restart_work(struct work_struct *work)
 -- 
 2.42.0
 
