@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D8041A80
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B0D41A80
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzgGZ5rA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E9CC433C7;
-	Wed, 15 Nov 2023 19:33:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQR41fE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FBB2C433C9;
+	Wed, 15 Nov 2023 19:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076809;
-	bh=+qpAMW+0IfjIHW0MJTsiJ0Q/86YVNoW4egzyePptyYo=;
+	s=korg; t=1700076810;
+	bh=1553HxgxZqpd+nep8m985hhmHVNWwVSsES4dVkcM5fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RzgGZ5rAAmqPhMuLa56opKgBPaRYFgHNtNKxo6HINq7XTXttmLSflYtymYtZcvfGn
-	 2uRKOrddVEjrYJ7zPhfJI2HewOjMr493MunFrGLCLqedmHIioSvV5J7kUF/0VuE9jz
-	 DdTZtc8N+V3PfXmmjAcRv9Ek63oqGnZTWnQ1GPFY=
+	b=PQR41fE7A4Ff6D05Jq39PD8VdBZtpXU6vZR1PdqHT7Y2u00sQWFvD8bunZIgCuoEW
+	 Xi6IMp9zhxgB9/lJCNWzX1lCqnbHaFQN/ISS3ynKKgRGaXR+O6w6MPHAPEkqL1wj6c
+	 ZfgO1Ajy/xi1+Dt+iF3hWXSepDDYTia9pgf5daq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@arm.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 425/550] perf parse-events: Fix for term values that are raw events
-Date: Wed, 15 Nov 2023 14:16:49 -0500
-Message-ID: <20231115191630.219192074@linuxfoundation.org>
+Subject: [PATCH 6.5 430/550] modpost: fix ishtp MODULE_DEVICE_TABLE built on big-endian host
+Date: Wed, 15 Nov 2023 14:16:54 -0500
+Message-ID: <20231115191630.577200869@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -38,91 +37,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit b20576fd7fe39554b212095c3c0d7a3dff512515 ]
+[ Upstream commit ac96a15a0f0c8812a3aaa587b871cd5527f6d736 ]
 
-Raw events can be strings like 'r0xead' but the 0x is optional so they
-can also be 'read'. On IcelakeX uncore_imc_free_running has an event
-called 'read' which may be programmed as:
-```
-$ perf stat -e 'uncore_imc_free_running/event=read/' -a sleep 1
-```
-However, the PE_RAW type isn't allowed on the right of a term, even
-though in this case we just want to interpret it as a string. This
-leads to the following error on IcelakeX:
-```
-$ perf stat -e 'uncore_imc_free_running/event=read/' -a sleep 1
-event syntax error: '..nning/event=read/'
-                                  \___ parser error
-Run 'perf list' for a list of valid events
+When MODULE_DEVICE_TABLE(ishtp, ) is built on a host with a different
+endianness from the target architecture, it results in an incorrect
+MODULE_ALIAS().
 
- Usage: perf stat [<options>] [<command>]
+For example, see a case where drivers/platform/x86/intel/ishtp_eclite.c
+is built as a module for x86.
 
-    -e, --event <event> event selector. use 'perf list' to list available events
-```
-Fix this by allowing raw types on the right of terms and treat them as
-strings, just as is already done for PE_LEGACY_CACHE. Make this
-consistent by just entirely removing name_or_legacy and always using
-name_or_raw that covers all three cases.
+If you build it on a little-endian host, you will get the correct
+MODULE_ALIAS:
 
-Fixes: 6fd1e5191591 ("perf parse-events: Support PMUs for legacy cache events")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20230928004431.1926969-1-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+    $ grep MODULE_ALIAS drivers/platform/x86/intel/ishtp_eclite.mod.c
+    MODULE_ALIAS("ishtp:{6A19CC4B-D760-4DE3-B14D-F25EBD0FBCD9}");
+
+However, if you build it on a big-endian host, you will get a wrong
+MODULE_ALIAS:
+
+    $ grep MODULE_ALIAS drivers/platform/x86/intel/ishtp_eclite.mod.c
+    MODULE_ALIAS("ishtp:{BD0FBCD9-F25E-B14D-4DE3-D7606A19CC4B}");
+
+This issue has been unnoticed because the x86 kernel is most likely built
+natively on an x86 host.
+
+The guid field must not be reversed because guid_t is an array of __u8.
+
+Fixes: fa443bc3c1e4 ("HID: intel-ish-hid: add support for MODULE_DEVICE_TABLE()")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
+Tested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/parse-events.y | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ scripts/mod/file2alias.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/parse-events.y b/tools/perf/util/parse-events.y
-index c4f675f15fa91..a049c577bae3d 100644
---- a/tools/perf/util/parse-events.y
-+++ b/tools/perf/util/parse-events.y
-@@ -81,7 +81,7 @@ static void free_list_evsel(struct list_head* list_evsel)
- %type <str> PE_MODIFIER_BP
- %type <str> PE_EVENT_NAME
- %type <str> PE_DRV_CFG_TERM
--%type <str> name_or_raw name_or_legacy
-+%type <str> name_or_raw
- %destructor { free ($$); } <str>
- %type <term> event_term
- %destructor { parse_events_term__delete ($$); } <term>
-@@ -721,8 +721,6 @@ event_term
+diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
+index 70bf6a2f585ce..6583b36dbe694 100644
+--- a/scripts/mod/file2alias.c
++++ b/scripts/mod/file2alias.c
+@@ -1401,10 +1401,10 @@ static int do_mhi_ep_entry(const char *filename, void *symval, char *alias)
+ /* Looks like: ishtp:{guid} */
+ static int do_ishtp_entry(const char *filename, void *symval, char *alias)
+ {
+-	DEF_FIELD(symval, ishtp_device_id, guid);
++	DEF_FIELD_ADDR(symval, ishtp_device_id, guid);
  
- name_or_raw: PE_RAW | PE_NAME | PE_LEGACY_CACHE
+ 	strcpy(alias, ISHTP_MODULE_PREFIX "{");
+-	add_guid(alias, guid);
++	add_guid(alias, *guid);
+ 	strcat(alias, "}");
  
--name_or_legacy: PE_NAME | PE_LEGACY_CACHE
--
- event_term:
- PE_RAW
- {
-@@ -737,7 +735,7 @@ PE_RAW
- 	$$ = term;
- }
- |
--name_or_raw '=' name_or_legacy
-+name_or_raw '=' name_or_raw
- {
- 	struct parse_events_term *term;
- 	int err = parse_events_term__str(&term, PARSE_EVENTS__TERM_TYPE_USER, $1, $3, &@1, &@3);
-@@ -816,7 +814,7 @@ PE_TERM_HW
- 	$$ = term;
- }
- |
--PE_TERM '=' name_or_legacy
-+PE_TERM '=' name_or_raw
- {
- 	struct parse_events_term *term;
- 	int err = parse_events_term__str(&term, (int)$1, NULL, $3, &@1, &@3);
+ 	return 1;
 -- 
 2.42.0
 
