@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD5F31730
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C803309F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rg5C87iv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EACC433CA;
-	Wed, 15 Nov 2023 19:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpBP+T/f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5494C433C9;
+	Wed, 15 Nov 2023 19:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077361;
-	bh=ziQLyMFVS8QBev3I1n7xO/SUf3i+2Q00l8jwEIyUhP8=;
+	s=korg; t=1700077363;
+	bh=Dp/AyxDbM/dc3YTL42cCbkehCPspnXj+qIcTQ+tHncI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rg5C87ivcruR+/EuMl6FpeF45ahD7gnrWvrZinOQiNX85Z4jMT7lzyxAmbNI6PWnt
-	 PNofHF4hiUrOI4Z4Z+vJgIWUuvZ3oJ6CZ5vAiQrRqyWiWMDjwVtGbjTN3pbxEaXydP
-	 gWqeSUG/tdt4q5CnXSUGlddy68Lw6kJxlIRNdztM=
+	b=MpBP+T/fdrVYxfwJKQ+zOg3MyoSuYcn+yA4X6i2CB2yENt1KXR0oFGgH9Bby/zArW
+	 f5uikvELU4OJphUrdgQNyWrTXJ6zO9skR89YO8vACy5iiLRapk1Klo7mi4KnXhCk1C
+	 dlJwkdZ1xJ5R4Yry2IxPDdkuDyMs1BW7HyGrHjkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	Oded Gabbay <ogabbay@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 254/603] accel/habanalabs/gaudi2: Fix incorrect string length computation in gaudi2_psoc_razwi_get_engines()
-Date: Wed, 15 Nov 2023 14:13:19 -0500
-Message-ID: <20231115191630.857260804@linuxfoundation.org>
+Subject: [PATCH 6.6 255/603] drm/msm/adreno: Fix SM6375 GPU ID
+Date: Wed, 15 Nov 2023 14:13:20 -0500
+Message-ID: <20231115191630.930236219@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,45 +42,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 90f3de616259cbb5666f00f8daf5420cd7d71d18 ]
+[ Upstream commit beb3542320479cd59a08273be0b19dfea0b36042 ]
 
-snprintf() returns the "number of characters which *would* be generated for
-the given input", not the size *really* generated.
+SM6375 comes with a patchlevel=1. Fix the chipid up to reflect that.
 
-In order to avoid too large values for 'str_size' (and potential negative
-values for "PSOC_RAZWI_ENG_STR_SIZE - str_size") use scnprintf()
-instead of snprintf().
-
-Fixes: c0e6df916050 ("accel/habanalabs: fix address decode RAZWI handling")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
-Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
+Fixes: 90b593ce1c9e ("drm/msm/adreno: Switch to chip-id for identifying GPU")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/554527/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/habanalabs/gaudi2/gaudi2.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/habanalabs/gaudi2/gaudi2.c b/drivers/accel/habanalabs/gaudi2/gaudi2.c
-index 20c4583f12b0d..31c74ca70a2e5 100644
---- a/drivers/accel/habanalabs/gaudi2/gaudi2.c
-+++ b/drivers/accel/habanalabs/gaudi2/gaudi2.c
-@@ -8149,11 +8149,11 @@ static int gaudi2_psoc_razwi_get_engines(struct gaudi2_razwi_info *razwi_info, u
- 		eng_id[num_of_eng] = razwi_info[i].eng_id;
- 		base[num_of_eng] = razwi_info[i].rtr_ctrl;
- 		if (!num_of_eng)
--			str_size += snprintf(eng_name + str_size,
-+			str_size += scnprintf(eng_name + str_size,
- 						PSOC_RAZWI_ENG_STR_SIZE - str_size, "%s",
- 						razwi_info[i].eng_name);
- 		else
--			str_size += snprintf(eng_name + str_size,
-+			str_size += scnprintf(eng_name + str_size,
- 						PSOC_RAZWI_ENG_STR_SIZE - str_size, " or %s",
- 						razwi_info[i].eng_name);
- 		num_of_eng++;
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 575e7c56219ff..f2d9d34ed50f9 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -331,7 +331,7 @@ static const struct adreno_info gpulist[] = {
+ 		),
+ 	}, {
+ 		.machine = "qcom,sm6375",
+-		.chip_ids = ADRENO_CHIP_IDS(0x06010900),
++		.chip_ids = ADRENO_CHIP_IDS(0x06010901),
+ 		.family = ADRENO_6XX_GEN1,
+ 		.revn = 619,
+ 		.fw = {
 -- 
 2.42.0
 
