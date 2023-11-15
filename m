@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17EB3A8FF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454DE3BB42
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxlTd1CU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578DCC433C9;
-	Wed, 15 Nov 2023 19:21:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VTZtYn6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E522CC433CA;
+	Wed, 15 Nov 2023 19:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076063;
-	bh=KP9uP6VKLkAnH7vSVY5fKNm4H+F9nhXv6/a8GTav4Xs=;
+	s=korg; t=1700076065;
+	bh=z5dQVu8Z3lD8dYf0LNR15DVtLIEuHK/OCmz7XKtLPFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xxlTd1CUd7mWXSPbzk25OtRKvOwMnp+vSDFc8/cKtk9bGb8RTGfsl50sWQGR+nPUU
-	 pIZ+Mz1/EEPGCsNJTw42kWYCwEQEPwKRh1rOWZ1TR+xSrXkW/JusdA3jz/oNYS48x2
-	 mriy5aOZSQNdpVGsr/LG4SJb7/cK47rwH5N9Xavs=
+	b=1VTZtYn6ITARhj2qcUdtH8vVXoMldUlizeOR8ezXryvlSzAeCR6orUb/fSRhPV+ZY
+	 Sf6Y20IiVp1D8bleQvjT6oPJJxfSq31qB93Og2sl0YGIUXES357cRuow1ykDtSmfo9
+	 uPrbqLKcjsKRL7fCHAMVGc/mI/urXLTEdCACG4zY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <imagedong@tencent.com>,
-	Yonghong Song <yhs@fb.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Leon Hwang <hffilwlqm@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 052/550] bpf, x86: allow function arguments up to 12 for TRACING
-Date: Wed, 15 Nov 2023 14:10:36 -0500
-Message-ID: <20231115191604.301233450@linuxfoundation.org>
+Subject: [PATCH 6.5 053/550] bpf, x64: Fix tailcall infinite loop
+Date: Wed, 15 Nov 2023 14:10:37 -0500
+Message-ID: <20231115191604.365123098@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,439 +43,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <imagedong@tencent.com>
+From: Leon Hwang <hffilwlqm@gmail.com>
 
-[ Upstream commit 473e3150e30a2db4199e6bad68c0be11279d1c34 ]
+[ Upstream commit 2b5dcb31a19a2e0acd869b12c9db9b2d696ef544 ]
 
-For now, the BPF program of type BPF_PROG_TYPE_TRACING can only be used
-on the kernel functions whose arguments count less than or equal to 6, if
-not considering '> 8 bytes' struct argument. This is not friendly at all,
-as too many functions have arguments count more than 6.
+>From commit ebf7d1f508a73871 ("bpf, x64: rework pro/epilogue and tailcall
+handling in JIT"), the tailcall on x64 works better than before.
 
-According to the current kernel version, below is a statistics of the
-function arguments count:
+>From commit e411901c0b775a3a ("bpf: allow for tailcalls in BPF subprograms
+for x64 JIT"), tailcall is able to run in BPF subprograms on x64.
 
-argument count | function count
-7              | 704
-8              | 270
-9              | 84
-10             | 47
-11             | 47
-12             | 27
-13             | 22
-14             | 5
-15             | 0
-16             | 1
+>From commit 5b92a28aae4dd0f8 ("bpf: Support attaching tracing BPF program
+to other BPF programs"), BPF program is able to trace other BPF programs.
 
-Therefore, let's enhance it by increasing the function arguments count
-allowed in arch_prepare_bpf_trampoline(), for now, only x86_64.
+How about combining them all together?
 
-For the case that we don't need to call origin function, which means
-without BPF_TRAMP_F_CALL_ORIG, we need only copy the function arguments
-that stored in the frame of the caller to current frame. The 7th and later
-arguments are stored in "$rbp + 0x18", and they will be copied to the
-stack area following where register values are saved.
+1. FENTRY/FEXIT on a BPF subprogram.
+2. A tailcall runs in the BPF subprogram.
+3. The tailcall calls the subprogram's caller.
 
-For the case with BPF_TRAMP_F_CALL_ORIG, we need prepare the arguments
-in stack before call origin function, which means we need alloc extra
-"8 * (arg_count - 6)" memory in the top of the stack. Note, there should
-not be any data be pushed to the stack before calling the origin function.
-So 'rbx' value will be stored on a stack position higher than where stack
-arguments are stored for BPF_TRAMP_F_CALL_ORIG.
+As a result, a tailcall infinite loop comes up. And the loop would halt
+the machine.
 
-According to the research of Yonghong, struct members should be all in
-register or all on the stack. Meanwhile, the compiler will pass the
-argument on regs if the remaining regs can hold the argument. Therefore,
-we need save the arguments in order. Otherwise, disorder of the args can
-happen. For example:
+As we know, in tail call context, the tail_call_cnt propagates by stack
+and rax register between BPF subprograms. So do in trampolines.
 
-  struct foo_struct {
-      long a;
-      int b;
-  };
-  int foo(char, char, char, char, char, struct foo_struct,
-          char);
-
-the arg1-5,arg7 will be passed by regs, and arg6 will by stack. Therefore,
-we should save/restore the arguments in the same order with the
-declaration of foo(). And the args used as ctx in stack will be like this:
-
-  reg_arg6   -- copy from regs
-  stack_arg2 -- copy from stack
-  stack_arg1
-  reg_arg5   -- copy from regs
-  reg_arg4
-  reg_arg3
-  reg_arg2
-  reg_arg1
-
-We use EMIT3_off32() or EMIT4() for "lea" and "sub". The range of the
-imm in "lea" and "sub" is [-128, 127] if EMIT4() is used. Therefore,
-we use EMIT3_off32() instead if the imm out of the range.
-
-It works well for the FENTRY/FEXIT/MODIFY_RETURN.
-
-Signed-off-by: Menglong Dong <imagedong@tencent.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/20230713040738.1789742-3-imagedong@tencent.com
+Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
+Fixes: e411901c0b77 ("bpf: allow for tailcalls in BPF subprograms for x64 JIT")
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Leon Hwang <hffilwlqm@gmail.com>
+Link: https://lore.kernel.org/r/20230912150442.2009-3-hffilwlqm@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 2b5dcb31a19a ("bpf, x64: Fix tailcall infinite loop")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 235 ++++++++++++++++++++++++++++++++----
- 1 file changed, 209 insertions(+), 26 deletions(-)
+ arch/x86/net/bpf_jit_comp.c | 28 ++++++++++++++++++++++------
+ include/linux/bpf.h         |  5 +++++
+ kernel/bpf/trampoline.c     |  4 ++--
+ kernel/bpf/verifier.c       |  3 +++
+ 4 files changed, 32 insertions(+), 8 deletions(-)
 
 diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index fcbd3b7123a47..5ab531be56acf 100644
+index 5ab531be56acf..7ee72917f13cb 100644
 --- a/arch/x86/net/bpf_jit_comp.c
 +++ b/arch/x86/net/bpf_jit_comp.c
-@@ -1857,37 +1857,178 @@ st:			if (is_imm8(insn->off))
- 	return proglen;
- }
+@@ -963,6 +963,10 @@ static void emit_shiftx(u8 **pprog, u32 dst_reg, u8 src_reg, bool is64, u8 op)
  
--static void save_regs(const struct btf_func_model *m, u8 **prog, int nr_regs,
--		      int stack_size)
-+static void clean_stack_garbage(const struct btf_func_model *m,
-+				u8 **pprog, int nr_stack_slots,
-+				int stack_size)
+ #define INSN_SZ_DIFF (((addrs[i] - addrs[i - 1]) - (prog - temp)))
+ 
++/* mov rax, qword ptr [rbp - rounded_stack_depth - 8] */
++#define RESTORE_TAIL_CALL_CNT(stack)				\
++	EMIT3_off32(0x48, 0x8B, 0x85, -round_up(stack, 8) - 8)
++
+ static int do_jit(struct bpf_prog *bpf_prog, int *addrs, u8 *image, u8 *rw_image,
+ 		  int oldproglen, struct jit_context *ctx, bool jmp_padding)
  {
--	int i;
-+	int arg_size, off;
-+	u8 *prog;
-+
-+	/* Generally speaking, the compiler will pass the arguments
-+	 * on-stack with "push" instruction, which will take 8-byte
-+	 * on the stack. In this case, there won't be garbage values
-+	 * while we copy the arguments from origin stack frame to current
-+	 * in BPF_DW.
-+	 *
-+	 * However, sometimes the compiler will only allocate 4-byte on
-+	 * the stack for the arguments. For now, this case will only
-+	 * happen if there is only one argument on-stack and its size
-+	 * not more than 4 byte. In this case, there will be garbage
-+	 * values on the upper 4-byte where we store the argument on
-+	 * current stack frame.
-+	 *
-+	 * arguments on origin stack:
-+	 *
-+	 * stack_arg_1(4-byte) xxx(4-byte)
-+	 *
-+	 * what we copy:
-+	 *
-+	 * stack_arg_1(8-byte): stack_arg_1(origin) xxx
-+	 *
-+	 * and the xxx is the garbage values which we should clean here.
-+	 */
-+	if (nr_stack_slots != 1)
-+		return;
-+
-+	/* the size of the last argument */
-+	arg_size = m->arg_size[m->nr_args - 1];
-+	if (arg_size <= 4) {
-+		off = -(stack_size - 4);
-+		prog = *pprog;
-+		/* mov DWORD PTR [rbp + off], 0 */
-+		if (!is_imm8(off))
-+			EMIT2_off32(0xC7, 0x85, off);
-+		else
-+			EMIT3(0xC7, 0x45, off);
-+		EMIT(0, 4);
-+		*pprog = prog;
-+	}
-+}
-+
-+/* get the count of the regs that are used to pass arguments */
-+static int get_nr_used_regs(const struct btf_func_model *m)
-+{
-+	int i, arg_regs, nr_used_regs = 0;
-+
-+	for (i = 0; i < min_t(int, m->nr_args, MAX_BPF_FUNC_ARGS); i++) {
-+		arg_regs = (m->arg_size[i] + 7) / 8;
-+		if (nr_used_regs + arg_regs <= 6)
-+			nr_used_regs += arg_regs;
-+
-+		if (nr_used_regs >= 6)
-+			break;
-+	}
-+
-+	return nr_used_regs;
-+}
-+
-+static void save_args(const struct btf_func_model *m, u8 **prog,
-+		      int stack_size, bool for_call_origin)
-+{
-+	int arg_regs, first_off, nr_regs = 0, nr_stack_slots = 0;
-+	int i, j;
+@@ -1538,9 +1542,7 @@ st:			if (is_imm8(insn->off))
  
- 	/* Store function arguments to stack.
- 	 * For a function that accepts two pointers the sequence will be:
- 	 * mov QWORD PTR [rbp-0x10],rdi
- 	 * mov QWORD PTR [rbp-0x8],rsi
- 	 */
--	for (i = 0; i < min(nr_regs, 6); i++)
--		emit_stx(prog, BPF_DW, BPF_REG_FP,
--			 i == 5 ? X86_REG_R9 : BPF_REG_1 + i,
--			 -(stack_size - i * 8));
-+	for (i = 0; i < min_t(int, m->nr_args, MAX_BPF_FUNC_ARGS); i++) {
-+		arg_regs = (m->arg_size[i] + 7) / 8;
-+
-+		/* According to the research of Yonghong, struct members
-+		 * should be all in register or all on the stack.
-+		 * Meanwhile, the compiler will pass the argument on regs
-+		 * if the remaining regs can hold the argument.
-+		 *
-+		 * Disorder of the args can happen. For example:
-+		 *
-+		 * struct foo_struct {
-+		 *     long a;
-+		 *     int b;
-+		 * };
-+		 * int foo(char, char, char, char, char, struct foo_struct,
-+		 *         char);
-+		 *
-+		 * the arg1-5,arg7 will be passed by regs, and arg6 will
-+		 * by stack.
-+		 */
-+		if (nr_regs + arg_regs > 6) {
-+			/* copy function arguments from origin stack frame
-+			 * into current stack frame.
-+			 *
-+			 * The starting address of the arguments on-stack
-+			 * is:
-+			 *   rbp + 8(push rbp) +
-+			 *   8(return addr of origin call) +
-+			 *   8(return addr of the caller)
-+			 * which means: rbp + 24
-+			 */
-+			for (j = 0; j < arg_regs; j++) {
-+				emit_ldx(prog, BPF_DW, BPF_REG_0, BPF_REG_FP,
-+					 nr_stack_slots * 8 + 0x18);
-+				emit_stx(prog, BPF_DW, BPF_REG_FP, BPF_REG_0,
-+					 -stack_size);
-+
-+				if (!nr_stack_slots)
-+					first_off = stack_size;
-+				stack_size -= 8;
-+				nr_stack_slots++;
-+			}
-+		} else {
-+			/* Only copy the arguments on-stack to current
-+			 * 'stack_size' and ignore the regs, used to
-+			 * prepare the arguments on-stack for orign call.
-+			 */
-+			if (for_call_origin) {
-+				nr_regs += arg_regs;
-+				continue;
-+			}
-+
-+			/* copy the arguments from regs into stack */
-+			for (j = 0; j < arg_regs; j++) {
-+				emit_stx(prog, BPF_DW, BPF_REG_FP,
-+					 nr_regs == 5 ? X86_REG_R9 : BPF_REG_1 + nr_regs,
-+					 -stack_size);
-+				stack_size -= 8;
-+				nr_regs++;
-+			}
-+		}
-+	}
-+
-+	clean_stack_garbage(m, prog, nr_stack_slots, first_off);
- }
- 
--static void restore_regs(const struct btf_func_model *m, u8 **prog, int nr_regs,
-+static void restore_regs(const struct btf_func_model *m, u8 **prog,
- 			 int stack_size)
- {
--	int i;
-+	int i, j, arg_regs, nr_regs = 0;
- 
- 	/* Restore function arguments from stack.
- 	 * For a function that accepts two pointers the sequence will be:
- 	 * EMIT4(0x48, 0x8B, 0x7D, 0xF0); mov rdi,QWORD PTR [rbp-0x10]
- 	 * EMIT4(0x48, 0x8B, 0x75, 0xF8); mov rsi,QWORD PTR [rbp-0x8]
-+	 *
-+	 * The logic here is similar to what we do in save_args()
- 	 */
--	for (i = 0; i < min(nr_regs, 6); i++)
--		emit_ldx(prog, BPF_DW,
--			 i == 5 ? X86_REG_R9 : BPF_REG_1 + i,
--			 BPF_REG_FP,
--			 -(stack_size - i * 8));
-+	for (i = 0; i < min_t(int, m->nr_args, MAX_BPF_FUNC_ARGS); i++) {
-+		arg_regs = (m->arg_size[i] + 7) / 8;
-+		if (nr_regs + arg_regs <= 6) {
-+			for (j = 0; j < arg_regs; j++) {
-+				emit_ldx(prog, BPF_DW,
-+					 nr_regs == 5 ? X86_REG_R9 : BPF_REG_1 + nr_regs,
-+					 BPF_REG_FP,
-+					 -stack_size);
-+				stack_size -= 8;
-+				nr_regs++;
-+			}
-+		} else {
-+			stack_size -= 8 * arg_regs;
-+		}
-+
-+		if (nr_regs >= 6)
-+			break;
-+	}
- }
- 
- static int invoke_bpf_prog(const struct btf_func_model *m, u8 **pprog,
-@@ -1915,7 +2056,10 @@ static int invoke_bpf_prog(const struct btf_func_model *m, u8 **pprog,
- 	/* arg1: mov rdi, progs[i] */
- 	emit_mov_imm64(&prog, BPF_REG_1, (long) p >> 32, (u32) (long) p);
- 	/* arg2: lea rsi, [rbp - ctx_cookie_off] */
--	EMIT4(0x48, 0x8D, 0x75, -run_ctx_off);
-+	if (!is_imm8(-run_ctx_off))
-+		EMIT3_off32(0x48, 0x8D, 0xB5, -run_ctx_off);
-+	else
-+		EMIT4(0x48, 0x8D, 0x75, -run_ctx_off);
- 
- 	if (emit_rsb_call(&prog, bpf_trampoline_enter(p), prog))
- 		return -EINVAL;
-@@ -1931,7 +2075,10 @@ static int invoke_bpf_prog(const struct btf_func_model *m, u8 **pprog,
- 	emit_nops(&prog, 2);
- 
- 	/* arg1: lea rdi, [rbp - stack_size] */
--	EMIT4(0x48, 0x8D, 0x7D, -stack_size);
-+	if (!is_imm8(-stack_size))
-+		EMIT3_off32(0x48, 0x8D, 0xBD, -stack_size);
-+	else
-+		EMIT4(0x48, 0x8D, 0x7D, -stack_size);
- 	/* arg2: progs[i]->insnsi for interpreter */
- 	if (!p->jited)
- 		emit_mov_imm64(&prog, BPF_REG_2,
-@@ -1961,7 +2108,10 @@ static int invoke_bpf_prog(const struct btf_func_model *m, u8 **pprog,
- 	/* arg2: mov rsi, rbx <- start time in nsec */
- 	emit_mov_reg(&prog, true, BPF_REG_2, BPF_REG_6);
- 	/* arg3: lea rdx, [rbp - run_ctx_off] */
--	EMIT4(0x48, 0x8D, 0x55, -run_ctx_off);
-+	if (!is_imm8(-run_ctx_off))
-+		EMIT3_off32(0x48, 0x8D, 0x95, -run_ctx_off);
-+	else
-+		EMIT4(0x48, 0x8D, 0x55, -run_ctx_off);
- 	if (emit_rsb_call(&prog, bpf_trampoline_exit(p), prog))
- 		return -EINVAL;
- 
-@@ -2113,7 +2263,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 				void *func_addr)
- {
- 	int i, ret, nr_regs = m->nr_args, stack_size = 0;
--	int regs_off, nregs_off, ip_off, run_ctx_off;
-+	int regs_off, nregs_off, ip_off, run_ctx_off, arg_stack_off, rbx_off;
- 	struct bpf_tramp_links *fentry = &tlinks[BPF_TRAMP_FENTRY];
- 	struct bpf_tramp_links *fexit = &tlinks[BPF_TRAMP_FEXIT];
- 	struct bpf_tramp_links *fmod_ret = &tlinks[BPF_TRAMP_MODIFY_RETURN];
-@@ -2127,8 +2277,10 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 		if (m->arg_flags[i] & BTF_FMODEL_STRUCT_ARG)
- 			nr_regs += (m->arg_size[i] + 7) / 8 - 1;
- 
--	/* x86-64 supports up to 6 arguments. 7+ can be added in the future */
--	if (nr_regs > 6)
-+	/* x86-64 supports up to MAX_BPF_FUNC_ARGS arguments. 1-6
-+	 * are passed through regs, the remains are through stack.
-+	 */
-+	if (nr_regs > MAX_BPF_FUNC_ARGS)
- 		return -ENOTSUPP;
- 
- 	/* Generated trampoline stack layout:
-@@ -2147,7 +2299,14 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 	 *
- 	 * RBP - ip_off    [ traced function ]  BPF_TRAMP_F_IP_ARG flag
- 	 *
-+	 * RBP - rbx_off   [ rbx value       ]  always
-+	 *
- 	 * RBP - run_ctx_off [ bpf_tramp_run_ctx ]
-+	 *
-+	 *                     [ stack_argN ]  BPF_TRAMP_F_CALL_ORIG
-+	 *                     [ ...        ]
-+	 *                     [ stack_arg2 ]
-+	 * RBP - arg_stack_off [ stack_arg1 ]
+ 			func = (u8 *) __bpf_call_base + imm32;
+ 			if (tail_call_reachable) {
+-				/* mov rax, qword ptr [rbp - rounded_stack_depth - 8] */
+-				EMIT3_off32(0x48, 0x8B, 0x85,
+-					    -round_up(bpf_prog->aux->stack_depth, 8) - 8);
++				RESTORE_TAIL_CALL_CNT(bpf_prog->aux->stack_depth);
+ 				if (!imm32)
+ 					return -EINVAL;
+ 				offs = 7 + x86_call_depth_emit_accounting(&prog, func);
+@@ -2307,6 +2309,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 	 *                     [ ...        ]
+ 	 *                     [ stack_arg2 ]
+ 	 * RBP - arg_stack_off [ stack_arg1 ]
++	 * RSP                 [ tail_call_cnt ] BPF_TRAMP_F_TAIL_CALL_CTX
  	 */
  
  	/* room for return value of orig_call or fentry prog */
-@@ -2167,9 +2326,26 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+@@ -2371,6 +2374,8 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 	else
+ 		/* sub rsp, stack_size */
+ 		EMIT4(0x48, 0x83, 0xEC, stack_size);
++	if (flags & BPF_TRAMP_F_TAIL_CALL_CTX)
++		EMIT1(0x50);		/* push rax */
+ 	/* mov QWORD PTR [rbp - rbx_off], rbx */
+ 	emit_stx(&prog, BPF_DW, BPF_REG_FP, BPF_REG_6, -rbx_off);
  
- 	ip_off = stack_size;
+@@ -2423,9 +2428,15 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 		restore_regs(m, &prog, regs_off);
+ 		save_args(m, &prog, arg_stack_off, true);
  
-+	stack_size += 8;
-+	rbx_off = stack_size;
++		if (flags & BPF_TRAMP_F_TAIL_CALL_CTX)
++			/* Before calling the original function, restore the
++			 * tail_call_cnt from stack to rax.
++			 */
++			RESTORE_TAIL_CALL_CNT(stack_size);
 +
- 	stack_size += (sizeof(struct bpf_tramp_run_ctx) + 7) & ~0x7;
- 	run_ctx_off = stack_size;
- 
-+	if (nr_regs > 6 && (flags & BPF_TRAMP_F_CALL_ORIG)) {
-+		/* the space that used to pass arguments on-stack */
-+		stack_size += (nr_regs - get_nr_used_regs(m)) * 8;
-+		/* make sure the stack pointer is 16-byte aligned if we
-+		 * need pass arguments on stack, which means
-+		 *  [stack_size + 8(rbp) + 8(rip) + 8(origin rip)]
-+		 * should be 16-byte aligned. Following code depend on
-+		 * that stack_size is already 8-byte aligned.
-+		 */
-+		stack_size += (stack_size % 16) ? 0 : 8;
-+	}
-+
-+	arg_stack_off = stack_size;
-+
- 	if (flags & BPF_TRAMP_F_SKIP_FRAME) {
- 		/* skip patched call instruction and point orig_call to actual
- 		 * body of the kernel function.
-@@ -2189,8 +2365,14 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 	x86_call_depth_emit_accounting(&prog, NULL);
- 	EMIT1(0x55);		 /* push rbp */
- 	EMIT3(0x48, 0x89, 0xE5); /* mov rbp, rsp */
--	EMIT4(0x48, 0x83, 0xEC, stack_size); /* sub rsp, stack_size */
--	EMIT1(0x53);		 /* push rbx */
-+	if (!is_imm8(stack_size))
-+		/* sub rsp, stack_size */
-+		EMIT3_off32(0x48, 0x81, 0xEC, stack_size);
-+	else
-+		/* sub rsp, stack_size */
-+		EMIT4(0x48, 0x83, 0xEC, stack_size);
-+	/* mov QWORD PTR [rbp - rbx_off], rbx */
-+	emit_stx(&prog, BPF_DW, BPF_REG_FP, BPF_REG_6, -rbx_off);
- 
- 	/* Store number of argument registers of the traced function:
- 	 *   mov rax, nr_regs
-@@ -2208,7 +2390,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 		emit_stx(&prog, BPF_DW, BPF_REG_FP, BPF_REG_0, -ip_off);
- 	}
- 
--	save_regs(m, &prog, nr_regs, regs_off);
-+	save_args(m, &prog, regs_off, false);
- 
- 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
- 		/* arg1: mov rdi, im */
-@@ -2238,7 +2420,8 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 	}
- 
- 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
--		restore_regs(m, &prog, nr_regs, regs_off);
-+		restore_regs(m, &prog, regs_off);
-+		save_args(m, &prog, arg_stack_off, true);
- 
  		if (flags & BPF_TRAMP_F_ORIG_STACK) {
- 			emit_ldx(&prog, BPF_DW, BPF_REG_0, BPF_REG_FP, 8);
-@@ -2279,7 +2462,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+-			emit_ldx(&prog, BPF_DW, BPF_REG_0, BPF_REG_FP, 8);
+-			EMIT2(0xff, 0xd0); /* call *rax */
++			emit_ldx(&prog, BPF_DW, BPF_REG_6, BPF_REG_FP, 8);
++			EMIT2(0xff, 0xd3); /* call *rbx */
+ 		} else {
+ 			/* call original function */
+ 			if (emit_rsb_call(&prog, orig_call, prog)) {
+@@ -2476,7 +2487,12 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+ 			ret = -EINVAL;
+ 			goto cleanup;
  		}
- 
- 	if (flags & BPF_TRAMP_F_RESTORE_REGS)
--		restore_regs(m, &prog, nr_regs, regs_off);
-+		restore_regs(m, &prog, regs_off);
- 
- 	/* This needs to be done regardless. If there were fmod_ret programs,
- 	 * the return value is only updated on the stack and still needs to be
-@@ -2298,7 +2481,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
+-	}
++	} else if (flags & BPF_TRAMP_F_TAIL_CALL_CTX)
++		/* Before running the original function, restore the
++		 * tail_call_cnt from stack to rax.
++		 */
++		RESTORE_TAIL_CALL_CNT(stack_size);
++
+ 	/* restore return value of orig_call or fentry prog back into RAX */
  	if (save_ret)
  		emit_ldx(&prog, BPF_DW, BPF_REG_0, BPF_REG_FP, -8);
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 6ba9d3ed8f0b0..98a7d6fd10360 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1016,6 +1016,11 @@ struct btf_func_model {
+  */
+ #define BPF_TRAMP_F_SHARE_IPMODIFY	BIT(6)
  
--	EMIT1(0x5B); /* pop rbx */
-+	emit_ldx(&prog, BPF_DW, BPF_REG_6, BPF_REG_FP, -rbx_off);
- 	EMIT1(0xC9); /* leave */
- 	if (flags & BPF_TRAMP_F_SKIP_FRAME)
- 		/* skip our return address and return to parent */
++/* Indicate that current trampoline is in a tail call context. Then, it has to
++ * cache and restore tail_call_cnt to avoid infinite tail call loop.
++ */
++#define BPF_TRAMP_F_TAIL_CALL_CTX	BIT(7)
++
+ /* Each call __bpf_prog_enter + call bpf_func + call __bpf_prog_exit is ~50
+  * bytes on x86.
+  */
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index 53ff50cac61ea..e97aeda3a86b5 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -415,8 +415,8 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
+ 		goto out;
+ 	}
+ 
+-	/* clear all bits except SHARE_IPMODIFY */
+-	tr->flags &= BPF_TRAMP_F_SHARE_IPMODIFY;
++	/* clear all bits except SHARE_IPMODIFY and TAIL_CALL_CTX */
++	tr->flags &= (BPF_TRAMP_F_SHARE_IPMODIFY | BPF_TRAMP_F_TAIL_CALL_CTX);
+ 
+ 	if (tlinks[BPF_TRAMP_FEXIT].nr_links ||
+ 	    tlinks[BPF_TRAMP_MODIFY_RETURN].nr_links) {
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 104681258d24f..6c52055916287 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -19384,6 +19384,9 @@ static int check_attach_btf_id(struct bpf_verifier_env *env)
+ 	if (!tr)
+ 		return -ENOMEM;
+ 
++	if (tgt_prog && tgt_prog->aux->tail_call_reachable)
++		tr->flags = BPF_TRAMP_F_TAIL_CALL_CTX;
++
+ 	prog->aux->dst_trampoline = tr;
+ 	return 0;
+ }
 -- 
 2.42.0
 
