@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD573BB29
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC3D3BB38
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAZzkoYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B106C433C7;
-	Wed, 15 Nov 2023 19:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZbzq2Wk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C70C433C9;
+	Wed, 15 Nov 2023 19:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076168;
-	bh=0ay7i0CjvsxFxSIdi14DpqwiCIazsJftdUXxBN8Zqgw=;
+	s=korg; t=1700076170;
+	bh=bCUyBwegahesJv/9IO1mhsHWrHW7QNs+h7WVJ7ChcXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hAZzkoYxQAIo32XUN0x4nektN44X31Yf4LnxgpmQr096HjO8nzhqUudw2zyQd+LQH
-	 Bi3wn5kfUduceeIXlDIiiMBAB7JYyLUCRkNpVGE+1BctWbc9KzHlMOohE1sWOZy8Kl
-	 icgYzmu2UnBmUs12YS/enNZrVZk7Pj7jUlh88F44=
+	b=tZbzq2WkrCIZvwFd8J+NJEs7DuCHG29TI3oAsEX5VQDSsW50vbLwqfbwG3/Fum4tT
+	 BWk8KAExqdmBP9ocxqHMI2Mkn12zPnLw6Qn02d9UdEXizr8ysPpccWvm0at2rlrXXy
+	 QONwtNl5L53Z2+Ll5lcgHObqw3AzBREx8pn84JrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Olivier Souloumiac <olivier.souloumiac@silabs.com>,
+	Alexandr Suslenko <suslenko.o@ajax.systems>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
+	Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 082/550] wifi: mt76: mt7603: improve watchdog reset reliablity
-Date: Wed, 15 Nov 2023 14:11:06 -0500
-Message-ID: <20231115191606.393412781@linuxfoundation.org>
+Subject: [PATCH 6.5 111/550] wifi: wfx: fix case where rates are out of order
+Date: Wed, 15 Nov 2023 14:11:35 -0500
+Message-ID: <20231115191608.387785147@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -35,88 +39,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>
 
-[ Upstream commit c677dda165231c3efffb9de4bace249d5d2a51b9 ]
+[ Upstream commit ea2274ab0b18549dbf0e755e41d8c5e8b5232dc3 ]
 
-Only trigger PSE reset if PSE was stuck, otherwise it can cause DMA issues.
-Trigger the PSE reset while DMA is fully stopped in order to improve
-reliabilty.
+When frames are sent over the air, the device always applies the data
+rates in descending order. The driver assumed Minstrel also provided
+rate in descending order.
 
-Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+However, in some cases, Minstrel can a choose a fallback rate greater
+than the primary rate. In this case, the two rates was inverted, the
+device try highest rate first and we get many retries.
+
+Since the device always applies rates in descending order, the
+workaround is to drop the rate when it higher than its predecessor in
+the rate list. Thus [ 4, 5, 3 ] becomes [ 4, 3 ].
+
+This patch has been tested in isolated room with a series of
+attenuators. Here are the Minstrel statistics with 80dBm of attenuation:
+
+  Without the fix:
+
+                  best    ____________rate__________    ____statistics___    _____last____    ______sum-of________
+    mode guard #  rate   [name   idx airtime  max_tp]  [avg(tp) avg(prob)]  [retry|suc|att]  [#success | #attempts]
+    HT20  LGI  1       S  MCS0     0    1477     5.6       5.2      82.7       3     0 0             3   4
+    HT20  LGI  1          MCS1     1     738    10.6       0.0       0.0       0     0 0             0   1
+    HT20  LGI  1     D    MCS2     2     492    14.9      13.5      81.5       5     0 0             5   9
+    HT20  LGI  1    C     MCS3     3     369    18.8      17.6      84.3       5     0 0            76   96
+    HT20  LGI  1  A   P   MCS4     4     246    25.4      22.4      79.5       5     0 0         11268   14026
+    HT20  LGI  1   B   S  MCS5     5     185    30.7      19.7      57.7       5     8 9          3918   9793
+    HT20  LGI  1          MCS6     6     164    33.0       0.0       0.0       5     0 0             6   102
+    HT20  LGI  1          MCS7     7     148    35.1       0.0       0.0       0     0 0             0   44
+
+  With the fix:
+
+                  best    ____________rate__________    ____statistics___    _____last____    ______sum-of________
+    mode guard #  rate   [name   idx airtime  max_tp]  [avg(tp) avg(prob)]  [retry|suc|att]  [#success | #attempts]
+    HT20  LGI  1       S  MCS0     0    1477     5.6       1.8      28.6       1     0 0             1   5
+    HT20  LGI  1     DP   MCS1     1     738    10.6       9.7      82.6       4     0 0            14   34
+    HT20  LGI  1          MCS2     2     492    14.9       9.2      55.4       5     0 0            52   77
+    HT20  LGI  1   B   S  MCS3     3     369    18.8      15.6      74.9       5     1 1           417   554
+    HT20  LGI  1  A       MCS4     4     246    25.4      16.7      59.2       5     1 1         13812   17951
+    HT20  LGI  1    C  S  MCS5     5     185    30.7      14.0      41.0       5     1 5            57   640
+    HT20  LGI  1          MCS6     6     164    33.0       0.0       0.0       0     0 1             0   48
+    HT20  LGI  1       S  MCS7     7     148    35.1       0.0       0.0       0     0 0             0   36
+
+We can notice the device try now to send with lower rates (and high
+success rates). At the end, we measured 20-25% better throughput with
+this patch.
+
+Fixes: 9bca45f3d692 ("staging: wfx: allow to send 802.11 frames")
+Tested-by: Olivier Souloumiac <olivier.souloumiac@silabs.com>
+Tested-by: Alexandr Suslenko <suslenko.o@ajax.systems>
+Reported-by: Alexandr Suslenko <suslenko.o@ajax.systems>
+Co-developed-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
+Signed-off-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
+Signed-off-by: Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231004123039.157112-1-jerome.pouiller@silabs.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7603/mac.c   | 29 ++++++++-----------
- 1 file changed, 12 insertions(+), 17 deletions(-)
+ drivers/net/wireless/silabs/wfx/data_tx.c | 71 +++++++++--------------
+ 1 file changed, 29 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-index 05cdb970b3d8b..47aefb0efd8ee 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-@@ -1430,15 +1430,6 @@ static void mt7603_mac_watchdog_reset(struct mt7603_dev *dev)
+diff --git a/drivers/net/wireless/silabs/wfx/data_tx.c b/drivers/net/wireless/silabs/wfx/data_tx.c
+index 6a5e52a96d183..caa22226b01bc 100644
+--- a/drivers/net/wireless/silabs/wfx/data_tx.c
++++ b/drivers/net/wireless/silabs/wfx/data_tx.c
+@@ -226,53 +226,40 @@ static u8 wfx_tx_get_link_id(struct wfx_vif *wvif, struct ieee80211_sta *sta,
  
- 	mt7603_beacon_set_timer(dev, -1, 0);
+ static void wfx_tx_fixup_rates(struct ieee80211_tx_rate *rates)
+ {
+-	int i;
+-	bool finished;
++	bool has_rate0 = false;
++	int i, j;
  
--	if (dev->reset_cause[RESET_CAUSE_RESET_FAILED] ||
--	    dev->cur_reset_cause == RESET_CAUSE_RX_PSE_BUSY ||
--	    dev->cur_reset_cause == RESET_CAUSE_BEACON_STUCK ||
--	    dev->cur_reset_cause == RESET_CAUSE_TX_HANG)
--		mt7603_pse_reset(dev);
+-	/* Firmware is not able to mix rates with different flags */
+-	for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
+-		if (rates[0].flags & IEEE80211_TX_RC_SHORT_GI)
+-			rates[i].flags |= IEEE80211_TX_RC_SHORT_GI;
+-		if (!(rates[0].flags & IEEE80211_TX_RC_SHORT_GI))
++	for (i = 1, j = 1; j < IEEE80211_TX_MAX_RATES; j++) {
++		if (rates[j].idx == -1)
++			break;
++		/* The device use the rates in descending order, whatever the request from minstrel.
++		 * We have to trade off here. Most important is to respect the primary rate
++		 * requested by minstrel. So, we drops the entries with rate higher than the
++		 * previous.
++		 */
++		if (rates[j].idx >= rates[i - 1].idx) {
++			rates[i - 1].count += rates[j].count;
++			rates[i - 1].count = min_t(u16, 15, rates[i - 1].count);
++		} else {
++			memcpy(rates + i, rates + j, sizeof(rates[i]));
++			if (rates[i].idx == 0)
++				has_rate0 = true;
++			/* The device apply Short GI only on the first rate */
+ 			rates[i].flags &= ~IEEE80211_TX_RC_SHORT_GI;
+-		if (!(rates[0].flags & IEEE80211_TX_RC_USE_RTS_CTS))
+-			rates[i].flags &= ~IEEE80211_TX_RC_USE_RTS_CTS;
+-	}
 -
--	if (dev->reset_cause[RESET_CAUSE_RESET_FAILED])
--		goto skip_dma_reset;
+-	/* Sort rates and remove duplicates */
+-	do {
+-		finished = true;
+-		for (i = 0; i < IEEE80211_TX_MAX_RATES - 1; i++) {
+-			if (rates[i + 1].idx == rates[i].idx &&
+-			    rates[i].idx != -1) {
+-				rates[i].count += rates[i + 1].count;
+-				if (rates[i].count > 15)
+-					rates[i].count = 15;
+-				rates[i + 1].idx = -1;
+-				rates[i + 1].count = 0;
 -
- 	mt7603_mac_stop(dev);
- 
- 	mt76_clear(dev, MT_WPDMA_GLO_CFG,
-@@ -1448,28 +1439,32 @@ static void mt7603_mac_watchdog_reset(struct mt7603_dev *dev)
- 
- 	mt7603_irq_disable(dev, mask);
- 
--	mt76_set(dev, MT_WPDMA_GLO_CFG, MT_WPDMA_GLO_CFG_FORCE_TX_EOF);
--
- 	mt7603_pse_client_reset(dev);
- 
- 	mt76_queue_tx_cleanup(dev, dev->mt76.q_mcu[MT_MCUQ_WM], true);
- 	for (i = 0; i < __MT_TXQ_MAX; i++)
- 		mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[i], true);
- 
-+	mt7603_dma_sched_reset(dev);
-+
-+	mt76_tx_status_check(&dev->mt76, true);
-+
- 	mt76_for_each_q_rx(&dev->mt76, i) {
- 		mt76_queue_rx_reset(dev, i);
- 	}
- 
--	mt76_tx_status_check(&dev->mt76, true);
-+	if (dev->reset_cause[RESET_CAUSE_RESET_FAILED] ||
-+	    dev->cur_reset_cause == RESET_CAUSE_RX_PSE_BUSY)
-+		mt7603_pse_reset(dev);
- 
--	mt7603_dma_sched_reset(dev);
-+	if (!dev->reset_cause[RESET_CAUSE_RESET_FAILED]) {
-+		mt7603_mac_dma_start(dev);
- 
--	mt7603_mac_dma_start(dev);
-+		mt7603_irq_enable(dev, mask);
- 
--	mt7603_irq_enable(dev, mask);
-+		clear_bit(MT76_RESET, &dev->mphy.state);
+-				finished = false;
+-			}
+-			if (rates[i + 1].idx > rates[i].idx) {
+-				swap(rates[i + 1], rates[i]);
+-				finished = false;
+-			}
++			i++;
+ 		}
+-	} while (!finished);
 +	}
+ 	/* Ensure that MCS0 or 1Mbps is present at the end of the retry list */
+-	for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
+-		if (rates[i].idx == 0)
+-			break;
+-		if (rates[i].idx == -1) {
+-			rates[i].idx = 0;
+-			rates[i].count = 8; /* == hw->max_rate_tries */
+-			rates[i].flags = rates[i - 1].flags & IEEE80211_TX_RC_MCS;
+-			break;
+-		}
++	if (!has_rate0 && i < IEEE80211_TX_MAX_RATES) {
++		rates[i].idx = 0;
++		rates[i].count = 8; /* == hw->max_rate_tries */
++		rates[i].flags = rates[0].flags & IEEE80211_TX_RC_MCS;
++		i++;
++	}
++	for (; i < IEEE80211_TX_MAX_RATES; i++) {
++		memset(rates + i, 0, sizeof(rates[i]));
++		rates[i].idx = -1;
+ 	}
+-	/* All retries use long GI */
+-	for (i = 1; i < IEEE80211_TX_MAX_RATES; i++)
+-		rates[i].flags &= ~IEEE80211_TX_RC_SHORT_GI;
+ }
  
--skip_dma_reset:
--	clear_bit(MT76_RESET, &dev->mphy.state);
- 	mutex_unlock(&dev->mt76.mutex);
- 
- 	mt76_worker_enable(&dev->mt76.tx_worker);
+ static u8 wfx_tx_get_retry_policy_id(struct wfx_vif *wvif, struct ieee80211_tx_info *tx_info)
 -- 
 2.42.0
 
