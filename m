@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6853EA7B
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C62635F19
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0HJ/xln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E2BC433C7;
-	Wed, 15 Nov 2023 20:02:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GWFKxtQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14FEC433C7;
+	Wed, 15 Nov 2023 20:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078525;
-	bh=z0yIBKW1hzEYYjJsl0IwI9UiLlTCa2UcYQeH1/BxW/4=;
+	s=korg; t=1700078527;
+	bh=/enLk0xVsxvvF2LgOba3jDEo+7yaYh+FnPONWNyh7mQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a0HJ/xlnmStBx5dR7MPR8IEVoZ6DPy4R/RkXSmp2irGn+3BkelEqJUFVcW/N7Ubrt
-	 1plC1ggn/lV2zQ+yl9gmN6ll8w0/JJKFqyFIZLWBo3IpKucQ13Q+8H+B4TPd7BOGwC
-	 fZr5/oj7WycDCCkNtNPAVpslokz3bYA8bJuTBLUU=
+	b=2GWFKxtQIlZZzWfpkdQMYVETbKxoCLjyjCFsxlPepuZEbopH/ehixJwPXrkRxs6b0
+	 rUW/ze0kpbnutCmpbLdfk37go22RTwGTkXq/cYb1gjHrUgGLFnyn8QFNIS+74AOsfL
+	 1+Q3SPG8A/XIWfWuIAlUoh4b/jSdlWhG7RSHzqr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Yujie Liu <yujie.liu@intel.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 375/379] tracing/kprobes: Fix the order of argument descriptions
-Date: Wed, 15 Nov 2023 14:27:30 -0500
-Message-ID: <20231115192707.341333383@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 376/379] io_uring/net: ensure socket is marked connected on connect retry
+Date: Wed, 15 Nov 2023 14:27:31 -0500
+Message-ID: <20231115192707.397614824@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,45 +40,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yujie Liu <yujie.liu@intel.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit f032c53bea6d2057c14553832d846be2f151cfb2 ]
+commit f8f9ab2d98116e79d220f1d089df7464ad4e026d upstream.
 
-The order of descriptions should be consistent with the argument list of
-the function, so "kretprobe" should be the second one.
+io_uring does non-blocking connection attempts, which can yield some
+unexpected results if a connect request is re-attempted by an an
+application. This is equivalent to the following sync syscall sequence:
 
-int __kprobe_event_gen_cmd_start(struct dynevent_cmd *cmd, bool kretprobe,
-                                 const char *name, const char *loc, ...)
+sock = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, IPPROTO_TCP);
+connect(sock, &addr, sizeof(addr);
 
-Link: https://lore.kernel.org/all/20231031041305.3363712-1-yujie.liu@intel.com/
+ret == -1 and errno == EINPROGRESS expected here. Now poll for POLLOUT
+on sock, and when that returns, we expect the socket to be connected.
+But if we follow that procedure with:
 
-Fixes: 2a588dd1d5d6 ("tracing: Add kprobe event command generation functions")
-Suggested-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Yujie Liu <yujie.liu@intel.com>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+connect(sock, &addr, sizeof(addr));
+
+you'd expect ret == -1 and errno == EISCONN here, but you actually get
+ret == 0. If we attempt the connection one more time, then we get EISCON
+as expected.
+
+io_uring used to do this, but turns out that bluetooth fails with EBADFD
+if you attempt to re-connect. Also looks like EISCONN _could_ occur with
+this sequence.
+
+Retain the ->in_progress logic, but work-around a potential EISCONN or
+EBADFD error and only in those cases look at the sock_error(). This
+should work in general and avoid the odd sequence of a repeated connect
+request returning success when the socket is already connected.
+
+This is all a side effect of the socket state being in a CONNECTING
+state when we get EINPROGRESS, and only a re-connect or other related
+operation will turn that into CONNECTED.
+
+Cc: stable@vger.kernel.org
+Fixes: 3fb1bd688172 ("io_uring/net: handle -EINPROGRESS correct for IORING_OP_CONNECT")
+Link: https://github.com/axboe/liburing/issues/980
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_kprobe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/net.c |   24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
-index 56675294d7a3b..a34a4fcdab7b1 100644
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -986,9 +986,9 @@ EXPORT_SYMBOL_GPL(kprobe_event_cmd_init);
- /**
-  * __kprobe_event_gen_cmd_start - Generate a kprobe event command from arg list
-  * @cmd: A pointer to the dynevent_cmd struct representing the new event
-+ * @kretprobe: Is this a return probe?
-  * @name: The name of the kprobe event
-  * @loc: The location of the kprobe event
-- * @kretprobe: Is this a return probe?
-  * @...: Variable number of arg (pairs), one pair for each field
-  *
-  * NOTE: Users normally won't want to call this function directly, but
--- 
-2.42.0
-
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1433,16 +1433,6 @@ int io_connect(struct io_kiocb *req, uns
+ 	int ret;
+ 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
+ 
+-	if (connect->in_progress) {
+-		struct socket *socket;
+-
+-		ret = -ENOTSOCK;
+-		socket = sock_from_file(req->file);
+-		if (socket)
+-			ret = sock_error(socket->sk);
+-		goto out;
+-	}
+-
+ 	if (req_has_async_data(req)) {
+ 		io = req->async_data;
+ 	} else {
+@@ -1462,9 +1452,7 @@ int io_connect(struct io_kiocb *req, uns
+ 	    && force_nonblock) {
+ 		if (ret == -EINPROGRESS) {
+ 			connect->in_progress = true;
+-			return -EAGAIN;
+-		}
+-		if (ret == -ECONNABORTED) {
++		} else if (ret == -ECONNABORTED) {
+ 			if (connect->seen_econnaborted)
+ 				goto out;
+ 			connect->seen_econnaborted = true;
+@@ -1478,6 +1466,16 @@ int io_connect(struct io_kiocb *req, uns
+ 		memcpy(req->async_data, &__io, sizeof(__io));
+ 		return -EAGAIN;
+ 	}
++	if (connect->in_progress) {
++		/*
++		 * At least bluetooth will return -EBADFD on a re-connect
++		 * attempt, and it's (supposedly) also valid to get -EISCONN
++		 * which means the previous result is good. For both of these,
++		 * grab the sock_error() and use that for the completion.
++		 */
++		if (ret == -EBADFD || ret == -EISCONN)
++			ret = sock_error(sock_from_file(req->file)->sk);
++	}
+ 	if (ret == -ERESTARTSYS)
+ 		ret = -EINTR;
+ out:
 
 
