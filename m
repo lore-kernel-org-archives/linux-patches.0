@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B423BB4D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2BA3BB2D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewcF2G3+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457EDC433C8;
-	Wed, 15 Nov 2023 19:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r91af5UI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B731EC433CA;
+	Wed, 15 Nov 2023 19:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078199;
-	bh=g7M35aL3QTf4m1Salpdmgax+T6n1WLl+k+JLaIXYN6o=;
+	s=korg; t=1700078200;
+	bh=cXdPyR4TwCLyXSwfTwt9kfgKcN7By8yWOUpmWFYJ0xM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewcF2G3+a9BQM7gUCDKZGlStO+OWFHMxfg2+2XRVmore/SXkMpGFSGUlEeugTjI4k
-	 ix8uawiWWvyedWiVaI4eF71hyXXgVZZGEk7EZqPgKv6hl8UBD7wK2rTJXIHmVUEAe+
-	 76uxNdsTteaqLyT6YHvS7n72zjLEdAjY5pWeMZBk=
+	b=r91af5UIw9GL5LeCrSYvrduQ548hVTlBhleIKAtPD5n2Qiq5MHvSdt8gG80Yln/yu
+	 4VuLMNHj1C3vVt0AdBYGJQt9H/tColIf6X2o53ni+4HhMI4qTVCoebGMdfCetcFQ60
+	 Md++LrkImlFxSedeNQ8dnnhdWhS2hPY95njNM4cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Dhruva Gole <d-gole@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 173/379] firmware: ti_sci: Mark driver as non removable
-Date: Wed, 15 Nov 2023 14:24:08 -0500
-Message-ID: <20231115192655.349551689@linuxfoundation.org>
+Subject: [PATCH 6.1 174/379] arm64: dts: ti: k3-am62a7-sk: Drop i2c-1 to 100Khz
+Date: Wed, 15 Nov 2023 14:24:09 -0500
+Message-ID: <20231115192655.408119900@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -37,115 +38,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dhruva Gole <d-gole@ti.com>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit 7b7a224b1ba1703583b25a3641ad9798f34d832a ]
+[ Upstream commit 63e5aa69b821472a3203a29e17c025329c1b151f ]
 
-The TI-SCI message protocol provides a way to communicate between
-various compute processors with a central system controller entity. It
-provides the fundamental device management capability and clock control
-in the SOCs that it's used in.
+The TLV320AIC3106 audio codec is interfaced on the i2c-1 bus. With the
+default rate of 400Khz the i2c register writes fail to sync:
 
-The remove function failed to do all the necessary cleanup if
-there are registered users. Some things are freed however which
-likely results in an oops later on.
+[   36.026387] tlv320aic3x 1-001b: Unable to sync registers 0x16-0x16. -110
+[   38.101130] omap_i2c 20010000.i2c: controller timed out
 
-Ensure that the driver isn't unbound by suppressing its bind and unbind
-sysfs attributes. As the driver is built-in there is no way to remove
-device once bound.
+Dropping the rate to 100Khz fixes the issue.
 
-We can also remove the ti_sci_remove call along with the
-ti_sci_debugfs_destroy as there are no callers for it any longer.
-
-Fixes: aa276781a64a ("firmware: Add basic support for TI System Control Interface (TI-SCI) protocol")
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Closes: https://lore.kernel.org/linux-arm-kernel/20230216083908.mvmydic5lpi3ogo7@pengutronix.de/
-Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Dhruva Gole <d-gole@ti.com>
-Link: https://lore.kernel.org/r/20230921091025.133130-1-d-gole@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 38c4a08c820c ("arm64: dts: ti: Add support for AM62A7-SK")
+Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Link: https://lore.kernel.org/r/20231003-mcasp_am62a-v3-3-2b631ff319ca@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/ti_sci.c | 46 +--------------------------------------
- 1 file changed, 1 insertion(+), 45 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62a7-sk.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index 4c550cfbc086c..597d1a367d96d 100644
---- a/drivers/firmware/ti_sci.c
-+++ b/drivers/firmware/ti_sci.c
-@@ -190,19 +190,6 @@ static int ti_sci_debugfs_create(struct platform_device *pdev,
- 	return 0;
- }
+diff --git a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+index b08a083d722d4..7f265c671654d 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+@@ -172,7 +172,7 @@ &main_i2c1 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&main_i2c1_pins_default>;
+-	clock-frequency = <400000>;
++	clock-frequency = <100000>;
  
--/**
-- * ti_sci_debugfs_destroy() - clean up log debug file
-- * @pdev:	platform device pointer
-- * @info:	Pointer to SCI entity information
-- */
--static void ti_sci_debugfs_destroy(struct platform_device *pdev,
--				   struct ti_sci_info *info)
--{
--	if (IS_ERR(info->debug_region))
--		return;
--
--	debugfs_remove(info->d);
--}
- #else /* CONFIG_DEBUG_FS */
- static inline int ti_sci_debugfs_create(struct platform_device *dev,
- 					struct ti_sci_info *info)
-@@ -3451,43 +3438,12 @@ static int ti_sci_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int ti_sci_remove(struct platform_device *pdev)
--{
--	struct ti_sci_info *info;
--	struct device *dev = &pdev->dev;
--	int ret = 0;
--
--	of_platform_depopulate(dev);
--
--	info = platform_get_drvdata(pdev);
--
--	if (info->nb.notifier_call)
--		unregister_restart_handler(&info->nb);
--
--	mutex_lock(&ti_sci_list_mutex);
--	if (info->users)
--		ret = -EBUSY;
--	else
--		list_del(&info->node);
--	mutex_unlock(&ti_sci_list_mutex);
--
--	if (!ret) {
--		ti_sci_debugfs_destroy(pdev, info);
--
--		/* Safe to free channels since no more users */
--		mbox_free_channel(info->chan_tx);
--		mbox_free_channel(info->chan_rx);
--	}
--
--	return ret;
--}
--
- static struct platform_driver ti_sci_driver = {
- 	.probe = ti_sci_probe,
--	.remove = ti_sci_remove,
- 	.driver = {
- 		   .name = "ti-sci",
- 		   .of_match_table = of_match_ptr(ti_sci_of_match),
-+		   .suppress_bind_attrs = true,
- 	},
- };
- module_platform_driver(ti_sci_driver);
+ 	exp1: gpio@22 {
+ 		compatible = "ti,tca6424";
 -- 
 2.42.0
 
