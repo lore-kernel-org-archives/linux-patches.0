@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1773A8DB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AAD3A8DB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjJN7wm5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434D1C433C8;
-	Wed, 15 Nov 2023 19:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKeDnAlq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C276AC433C9;
+	Wed, 15 Nov 2023 19:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076054;
-	bh=nkJIjSLcJJ4FsqF5yF9xzeHZYT98didJ1tA5NZflmk0=;
+	s=korg; t=1700076056;
+	bh=/Q13S/NuJUrwJBmVRDZgU4x+jKl3vpbiJIMJh/+KJe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WjJN7wm5LlwQi6l6QdvdsHG/NvcHY0ARPVgPrnSISnRF4Erkii8cWG3pvsDexNMwL
-	 Dlbt1BVHDFjzqQvcWzEs8lENKQ2eid3tRyFoWXF82zE5LnqrUCIQUjgjVE8HwdR2cS
-	 CQsE7qVapf18hqhTBeJ30HiYFSdWM5P6C/ZMmgTc=
+	b=XKeDnAlqsBWptXZZoydyX1q21WrywdxG2J9oa38/6wSFn+UjqmgKF0RfJawfuVcv3
+	 iSSFjYr5/ZLl/ojDM9PJ5olMzWm5Gwcu7dImW7crLCR6jKerNEkBL2d8V/Wkd00cTv
+	 hjhGshbFpwSgQ/iCEJbjX+w4AlXPnm/Ecqb5S1J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 046/550] wifi: iwlwifi: honor the enable_ini value
-Date: Wed, 15 Nov 2023 14:10:30 -0500
-Message-ID: <20231115191603.899304055@linuxfoundation.org>
+Subject: [PATCH 6.5 047/550] wifi: iwlwifi: dont use an uninitialized variable
+Date: Wed, 15 Nov 2023 14:10:31 -0500
+Message-ID: <20231115191603.968711639@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,155 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit e0c1ca236e28e4263fba76d47a108ed95dcae33e ]
+[ Upstream commit c46fcc6e43d617252945e706f04e5f82a59f2b8e ]
 
-In case the user sets the enable_ini to some preset, we want to honor
-the value.
+Don't use variable err uninitialized.
+The reason for removing the check instead of initializing it
+in the beginning of the function is because that way
+static checkers will be able to catch issues if we do something
+wrong in the future.
 
-Remove the ops to set the value of the module parameter is runtime, we
-don't want to allow to modify the value in runtime since we configure
-the firmware once at the beginning on its life.
-
-Fixes: b49c2b252b58 ("iwlwifi: Configure FW debug preset via module param.")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Fixes: bf976c814c86 ("wifi: iwlwifi: mvm: implement link change ops")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230830112059.5734e0f374bb.I6698eda8ed2112378dd47ac5d62866ebe7a94f77@changeid
+Link: https://lore.kernel.org/r/20230830112059.431b01bd8779.I31fc4ab35f551b85a10f974a6b18fc30191e9c35@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/intel/iwlwifi/fw/api/dbg-tlv.h   |  1 +
- .../net/wireless/intel/iwlwifi/iwl-dbg-tlv.h  |  5 +-
- drivers/net/wireless/intel/iwlwifi/iwl-drv.c  | 51 +++++++------------
- .../net/wireless/intel/iwlwifi/iwl-trans.h    |  4 ++
- 4 files changed, 25 insertions(+), 36 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
-index ba538d70985f4..39bee9c00e071 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
-@@ -13,6 +13,7 @@
- #define IWL_FW_INI_DOMAIN_ALWAYS_ON		0
- #define IWL_FW_INI_REGION_ID_MASK		GENMASK(15, 0)
- #define IWL_FW_INI_REGION_DUMP_POLICY_MASK	GENMASK(31, 16)
-+#define IWL_FW_INI_PRESET_DISABLE		0xff
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index b719843e94576..778a311b500bc 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -1089,9 +1089,6 @@ iwl_mvm_mld_change_vif_links(struct ieee80211_hw *hw,
+ 		}
+ 	}
  
- /**
-  * struct iwl_fw_ini_hcmd
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
-index 128059ca77e60..06fb7d6653905 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2018-2022 Intel Corporation
-+ * Copyright (C) 2018-2023 Intel Corporation
-  */
- #ifndef __iwl_dbg_tlv_h__
- #define __iwl_dbg_tlv_h__
-@@ -10,7 +10,8 @@
- #include <fw/file.h>
- #include <fw/api/dbg-tlv.h>
- 
--#define IWL_DBG_TLV_MAX_PRESET 15
-+#define IWL_DBG_TLV_MAX_PRESET	15
-+#define ENABLE_INI		(IWL_DBG_TLV_MAX_PRESET + 1)
- 
- /**
-  * struct iwl_dbg_tlv_node - debug TLV node
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-index 3d87d26845e74..fb5e254757e71 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-@@ -1795,6 +1795,22 @@ struct iwl_drv *iwl_drv_start(struct iwl_trans *trans)
- #endif
- 
- 	drv->trans->dbg.domains_bitmap = IWL_TRANS_FW_DBG_DOMAIN(drv->trans);
-+	if (iwlwifi_mod_params.enable_ini != ENABLE_INI) {
-+		/* We have a non-default value in the module parameter,
-+		 * take its value
-+		 */
-+		drv->trans->dbg.domains_bitmap &= 0xffff;
-+		if (iwlwifi_mod_params.enable_ini != IWL_FW_INI_PRESET_DISABLE) {
-+			if (iwlwifi_mod_params.enable_ini > ENABLE_INI) {
-+				IWL_ERR(trans,
-+					"invalid enable_ini module parameter value: max = %d, using 0 instead\n",
-+					ENABLE_INI);
-+				iwlwifi_mod_params.enable_ini = 0;
-+			}
-+			drv->trans->dbg.domains_bitmap =
-+				BIT(IWL_FW_DBG_DOMAIN_POS + iwlwifi_mod_params.enable_ini);
-+		}
-+	}
- 
- 	ret = iwl_request_firmware(drv, true);
- 	if (ret) {
-@@ -1843,8 +1859,6 @@ void iwl_drv_stop(struct iwl_drv *drv)
- 	kfree(drv);
- }
- 
--#define ENABLE_INI	(IWL_DBG_TLV_MAX_PRESET + 1)
+-	if (err)
+-		goto out_err;
 -
- /* shared module parameters */
- struct iwl_mod_params iwlwifi_mod_params = {
- 	.fw_restart = true,
-@@ -1964,38 +1978,7 @@ module_param_named(uapsd_disable, iwlwifi_mod_params.uapsd_disable, uint, 0644);
- MODULE_PARM_DESC(uapsd_disable,
- 		 "disable U-APSD functionality bitmap 1: BSS 2: P2P Client (default: 3)");
- 
--static int enable_ini_set(const char *arg, const struct kernel_param *kp)
--{
--	int ret = 0;
--	bool res;
--	__u32 new_enable_ini;
--
--	/* in case the argument type is a number */
--	ret = kstrtou32(arg, 0, &new_enable_ini);
--	if (!ret) {
--		if (new_enable_ini > ENABLE_INI) {
--			pr_err("enable_ini cannot be %d, in range 0-16\n", new_enable_ini);
--			return -EINVAL;
--		}
--		goto out;
--	}
--
--	/* in case the argument type is boolean */
--	ret = kstrtobool(arg, &res);
--	if (ret)
--		return ret;
--	new_enable_ini = (res ? ENABLE_INI : 0);
--
--out:
--	iwlwifi_mod_params.enable_ini = new_enable_ini;
--	return 0;
--}
--
--static const struct kernel_param_ops enable_ini_ops = {
--	.set = enable_ini_set
--};
--
--module_param_cb(enable_ini, &enable_ini_ops, &iwlwifi_mod_params.enable_ini, 0644);
-+module_param_named(enable_ini, iwlwifi_mod_params.enable_ini, uint, 0444);
- MODULE_PARM_DESC(enable_ini,
- 		 "0:disable, 1-15:FW_DBG_PRESET Values, 16:enabled without preset value defined,"
- 		 "Debug INI TLV FW debug infrastructure (default: 16)");
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-index d02943d0ea625..b248944e11df9 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-@@ -56,6 +56,10 @@
-  *	6) Eventually, the free function will be called.
-  */
- 
-+/* default preset 0 (start from bit 16)*/
-+#define IWL_FW_DBG_DOMAIN_POS	16
-+#define IWL_FW_DBG_DOMAIN	BIT(IWL_FW_DBG_DOMAIN_POS)
-+
- #define IWL_TRANS_FW_DBG_DOMAIN(trans)	IWL_FW_INI_DOMAIN_ALWAYS_ON
- 
- #define FH_RSCSR_FRAME_SIZE_MSK		0x00003FFF	/* bits 0-13 */
+ 	err = 0;
+ 	if (new_links == 0) {
+ 		mvmvif->link[0] = &mvmvif->deflink;
 -- 
 2.42.0
 
