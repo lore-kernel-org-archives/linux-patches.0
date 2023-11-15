@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DA33EA6F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6390E3EA62
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ln7AuecU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A9EC433CA;
-	Wed, 15 Nov 2023 19:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcTo0kbI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127ECC433C8;
+	Wed, 15 Nov 2023 19:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076007;
-	bh=Li7PmcsSzntZTC7y1prR1HxEhXzvAT0j156ourM+XbE=;
+	s=korg; t=1700076009;
+	bh=VbWjZHdLkzeCdnD9mCq0TJDtB7de3cmU4dcZt/JFS3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ln7AuecUzrVhvI6CZS0du6AHEzaDKs0YbbIBXq0lorydIC4CTBwQoOeEXqlUXRnvD
-	 8GnUr/50jvmKR/rugWn/1DpezentCWTzlAVF+NRP/vFYeW0KPzkWA9B4uKkVKk6I4D
-	 g0oda05NFoyviKHbe0gPUw4qmRn420jA5u+urg0Q=
+	b=hcTo0kbI8oQ3MoNQ/AySKFDHfd0VJ6g63A/wfEYfcXhlJmTDdmMiLq5bLhojAJn4g
+	 GYZrw6gtouviimtsni4IxFeAeJtZFqjip1kXSXHRPwlKNkEvNVj8s4pjAnNDfhQ8qR
+	 s6SyxaY/oXfrd9VVDz2qyBpO9K+ggr7rsLrhWh1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Darren Hart <dvhart@infradead.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 017/550] x86/srso: Fix unret validation dependencies
-Date: Wed, 15 Nov 2023 14:10:01 -0500
-Message-ID: <20231115191601.914453821@linuxfoundation.org>
+Subject: [PATCH 6.5 018/550] futex: Dont include process MM in futex key on no-MMU
+Date: Wed, 15 Nov 2023 14:10:02 -0500
+Message-ID: <20231115191601.980498179@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -37,84 +41,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Ben Wolsieffer <ben.wolsieffer@hefring.com>
 
-[ Upstream commit eeb9f34df065f42f0c9195b322ba6df420c9fc92 ]
+[ Upstream commit c73801ae4f22b390228ebf471d55668e824198b6 ]
 
-CONFIG_CPU_SRSO isn't dependent on CONFIG_CPU_UNRET_ENTRY (AMD
-Retbleed), so the two features are independently configurable.  Fix
-several issues for the (presumably rare) case where CONFIG_CPU_SRSO is
-enabled but CONFIG_CPU_UNRET_ENTRY isn't.
+On no-MMU, all futexes are treated as private because there is no need
+to map a virtual address to physical to match the futex across
+processes. This doesn't quite work though, because private futexes
+include the current process's mm_struct as part of their key. This makes
+it impossible for one process to wake up a shared futex being waited on
+in another process.
 
-Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Fix this bug by excluding the mm_struct from the key. With
+a single address space, the futex address is already a unique key.
+
+Fixes: 784bdf3bb694 ("futex: Assume all mappings are private on !MMU systems")
+Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/299fb7740174d0f2335e91c58af0e9c242b4bac1.1693889988.git.jpoimboe@kernel.org
+Acked-by: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Darren Hart <dvhart@infradead.org>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: André Almeida <andrealmeid@igalia.com>
+Link: https://lore.kernel.org/r/20231019204548.1236437-2-ben.wolsieffer@hefring.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/nospec-branch.h | 4 ++--
- include/linux/objtool.h              | 3 ++-
- scripts/Makefile.vmlinux_o           | 3 ++-
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ kernel/futex/core.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/nospec-branch.h b/arch/x86/include/asm/nospec-branch.h
-index c55cc243592e9..197ff4f4d1ceb 100644
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -271,7 +271,7 @@
- .Lskip_rsb_\@:
- .endm
- 
--#ifdef CONFIG_CPU_UNRET_ENTRY
-+#if defined(CONFIG_CPU_UNRET_ENTRY) || defined(CONFIG_CPU_SRSO)
- #define CALL_UNTRAIN_RET	"call entry_untrain_ret"
- #else
- #define CALL_UNTRAIN_RET	""
-@@ -312,7 +312,7 @@
- 
- .macro UNTRAIN_RET_FROM_CALL
- #if defined(CONFIG_CPU_UNRET_ENTRY) || defined(CONFIG_CPU_IBPB_ENTRY) || \
--	defined(CONFIG_CALL_DEPTH_TRACKING)
-+	defined(CONFIG_CALL_DEPTH_TRACKING) || defined(CONFIG_CPU_SRSO)
- 	VALIDATE_UNRET_END
- 	ALTERNATIVE_3 "",						\
- 		      CALL_UNTRAIN_RET, X86_FEATURE_UNRET,		\
-diff --git a/include/linux/objtool.h b/include/linux/objtool.h
-index 03f82c2c2ebf6..b5440e7da55bf 100644
---- a/include/linux/objtool.h
-+++ b/include/linux/objtool.h
-@@ -130,7 +130,8 @@
-  * it will be ignored.
-  */
- .macro VALIDATE_UNRET_BEGIN
--#if defined(CONFIG_NOINSTR_VALIDATION) && defined(CONFIG_CPU_UNRET_ENTRY)
-+#if defined(CONFIG_NOINSTR_VALIDATION) && \
-+	(defined(CONFIG_CPU_UNRET_ENTRY) || defined(CONFIG_CPU_SRSO))
- .Lhere_\@:
- 	.pushsection .discard.validate_unret
- 	.long	.Lhere_\@ - .
-diff --git a/scripts/Makefile.vmlinux_o b/scripts/Makefile.vmlinux_o
-index 0edfdb40364b8..25b3b587d37c0 100644
---- a/scripts/Makefile.vmlinux_o
-+++ b/scripts/Makefile.vmlinux_o
-@@ -37,7 +37,8 @@ objtool-enabled := $(or $(delay-objtool),$(CONFIG_NOINSTR_VALIDATION))
- 
- vmlinux-objtool-args-$(delay-objtool)			+= $(objtool-args-y)
- vmlinux-objtool-args-$(CONFIG_GCOV_KERNEL)		+= --no-unreachable
--vmlinux-objtool-args-$(CONFIG_NOINSTR_VALIDATION)	+= --noinstr $(if $(CONFIG_CPU_UNRET_ENTRY), --unret)
-+vmlinux-objtool-args-$(CONFIG_NOINSTR_VALIDATION)	+= --noinstr \
-+							   $(if $(or $(CONFIG_CPU_UNRET_ENTRY),$(CONFIG_CPU_SRSO)), --unret)
- 
- objtool-args = $(vmlinux-objtool-args-y) --link
- 
+diff --git a/kernel/futex/core.c b/kernel/futex/core.c
+index 514e4582b8634..d4141b0547187 100644
+--- a/kernel/futex/core.c
++++ b/kernel/futex/core.c
+@@ -248,7 +248,17 @@ int get_futex_key(u32 __user *uaddr, bool fshared, union futex_key *key,
+ 	 *        but access_ok() should be faster than find_vma()
+ 	 */
+ 	if (!fshared) {
+-		key->private.mm = mm;
++		/*
++		 * On no-MMU, shared futexes are treated as private, therefore
++		 * we must not include the current process in the key. Since
++		 * there is only one address space, the address is a unique key
++		 * on its own.
++		 */
++		if (IS_ENABLED(CONFIG_MMU))
++			key->private.mm = mm;
++		else
++			key->private.mm = NULL;
++
+ 		key->private.address = address;
+ 		return 0;
+ 	}
 -- 
 2.42.0
 
