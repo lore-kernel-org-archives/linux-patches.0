@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3033BB29
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02F73BB38
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhE6Nhcm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE113C433C9;
-	Wed, 15 Nov 2023 19:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTfVlb7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6A5C433CA;
+	Wed, 15 Nov 2023 19:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076220;
-	bh=Fnhue6bFoiSs7703J4Y9SgDuV2ypFmZzkPFm0zh/CyU=;
+	s=korg; t=1700076221;
+	bh=+zcZIR1Re97GozRCr1svH+c/peIairX9tGFAg8XGwdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uhE6NhcmZFyY387zzZm+py4fWknWMXCpjNMVTJ6PxMEP/S8cQRlcih/fUlkhnvDp/
-	 4ASZj0RScgq5RfTtEFDtnl0bre4XfNEvdDKU/qUBMaM5fOQT+574ac2hjVxdF5noPe
-	 hPSgsc2tB9q1DKRUf0JXbmztMOEDwcxmLe01soRU=
+	b=wTfVlb7cGp5G8X06LnpYGSdec/O6ZVZLBZ188qLSDAcBpyAJDlnI9Ybo106jz8HbK
+	 DhMhAuQe70f+RieaGCWOgdy8h+XLKDAVC1VwOZXOJuFFZ69mddbIyj2MGIN92f92i2
+	 a1bgkVStpwgIgBfVEdGTzclVwjpM0TA/e8AhuNII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Helen Koike <helen.koike@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Varadarajan Narayanan <quic_varada@quicinc.com>,
+	Kathiravan T <quic_kathirav@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 152/550] spi: tegra: Fix missing IRQ check in tegra_slink_probe()
-Date: Wed, 15 Nov 2023 14:12:16 -0500
-Message-ID: <20231115191611.238128963@linuxfoundation.org>
+Subject: [PATCH 6.5 153/550] clk: qcom: ipq5332: Drop set rate parent from gpll0 dependent clocks
+Date: Wed, 15 Nov 2023 14:12:17 -0500
+Message-ID: <20231115191611.311138721@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,39 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-[ Upstream commit eb9913b511f10968a02cfa5329a896855dd152a3 ]
+[ Upstream commit ccd8ab030643040600a663edde56b434b6f4fb6c ]
 
-This func misses checking for platform_get_irq()'s call and may passes the
-negative error codes to request_irq(), which takes unsigned IRQ #,
-causing it to fail with -EINVAL, overriding an original error code.
+IPQ5332's GPLL0's nominal/turbo frequency is 800MHz.
+This must not be scaled based on the requirement of
+dependent clocks. Hence remove the CLK_SET_RATE_PARENT
+flag.
 
-Fix this by stop calling request_irq() with invalid IRQ #s.
-
-Fixes: dc4dc3605639 ("spi: tegra: add spi driver for SLINK controller")
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Reviewed-by: Helen Koike <helen.koike@collabora.com>
-Link: https://lore.kernel.org/r/tencent_73FCC06A3D1C14EE5175253C6FB46A07B709@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3d89d52970fd ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5332 SoC")
+Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+Reviewed-by: Kathiravan T <quic_kathirav@quicinc.com>
+Link: https://lore.kernel.org/r/1693474133-10467-1-git-send-email-quic_varada@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra20-slink.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/gcc-ipq5332.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra20-slink.c b/drivers/spi/spi-tegra20-slink.c
-index c2915f7672ccb..b4607d3aac92d 100644
---- a/drivers/spi/spi-tegra20-slink.c
-+++ b/drivers/spi/spi-tegra20-slink.c
-@@ -1093,6 +1093,8 @@ static int tegra_slink_probe(struct platform_device *pdev)
- 	reset_control_deassert(tspi->rst);
+diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
+index a75ab88ed14c6..1077d03cefe5b 100644
+--- a/drivers/clk/qcom/gcc-ipq5332.c
++++ b/drivers/clk/qcom/gcc-ipq5332.c
+@@ -70,7 +70,6 @@ static struct clk_fixed_factor gpll0_div2 = {
+ 				&gpll0_main.clkr.hw },
+ 		.num_parents = 1,
+ 		.ops = &clk_fixed_factor_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
  
- 	spi_irq = platform_get_irq(pdev, 0);
-+	if (spi_irq < 0)
-+		return spi_irq;
- 	tspi->irq = spi_irq;
- 	ret = request_threaded_irq(tspi->irq, tegra_slink_isr,
- 				   tegra_slink_isr_thread, IRQF_ONESHOT,
+@@ -84,7 +83,6 @@ static struct clk_alpha_pll_postdiv gpll0 = {
+ 				&gpll0_main.clkr.hw },
+ 		.num_parents = 1,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
+ 
 -- 
 2.42.0
 
