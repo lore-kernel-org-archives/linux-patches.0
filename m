@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074A93A8E3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9137E3A8F7
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ted9Ig4c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC2CC433CA;
-	Wed, 15 Nov 2023 19:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnomfarO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF6BC433C7;
+	Wed, 15 Nov 2023 19:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077254;
-	bh=Q6AdX7HqeNgFuOfuzbVxznx8BQgm188v6zKAMUweyjE=;
+	s=korg; t=1700077256;
+	bh=PbnD+LvMK4ZUSILm55phXkgjL+sau6F52tWZrpxovRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ted9Ig4coCqxr8awqw088zlyCng+GHlxWCVTiEzZRt35N1Hl4N7g6oVTlb2FS5q/m
-	 QH/Nsu0/Di2CC7paxER70jwTVsdAxOck3vvYoK8rp3pqQ+rQRwqJOMOp60b6Kts8AF
-	 QZA6048Z9ycsFr2G93P9aWlJMuG+JIAATg/MPrEc=
+	b=mnomfarOU0DWgrNM47jeKZfnflrXBp+sQZZ8Gb0nyfC/UmsxRjZ6a2r8Zl3XiJvTr
+	 mGLaTBsufXZmYX5NKYc7uYoPDwLd6UwJuUjHLIjpmxqs9lrKDvFOF2SLsd9yencjSl
+	 8orA4mYqQen9sbFYELnaCasVEh4D48DeNHs4qqAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	kernel test robot <yujie.liu@intel.com>,
+	Varadarajan Narayanan <quic_varada@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 183/603] clk: keystone: pll: fix a couple NULL vs IS_ERR() checks
-Date: Wed, 15 Nov 2023 14:12:08 -0500
-Message-ID: <20231115191625.901116419@linuxfoundation.org>
+Subject: [PATCH 6.6 192/603] clk: qcom: config IPQ_APSS_6018 should depend on QCOM_SMEM
+Date: Wed, 15 Nov 2023 14:12:17 -0500
+Message-ID: <20231115191626.541137196@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,59 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-[ Upstream commit a5d14f8b551eb1551c10053653ee8e27f19672fa ]
+[ Upstream commit 6a15647d0adc686226045e8046369f34d6ab03ed ]
 
-The clk_register_divider() and clk_register_mux() functions returns
-error pointers on error but this code checks for NULL.  Fix that.
+The config IPQ_APSS_6018 should depend on QCOM_SMEM, to
+avoid the following error reported by 'kernel test robot'
 
-Fixes: b9e0d40c0d83 ("clk: keystone: add Keystone PLL clock driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/d9da4c97-0da9-499f-9a21-1f8e3f148dc1@moroto.mountain
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+	loongarch64-linux-ld: drivers/clk/qcom/apss-ipq6018.o: in function `apss_ipq6018_probe':
+	>> apss-ipq6018.c:(.text+0xd0): undefined reference to `qcom_smem_get_soc_id'
+
+Fixes: 5e77b4ef1b19 ("clk: qcom: Add ipq6018 apss clock controller")
+Reported-by: kernel test robot <yujie.liu@intel.com>
+Closes: https://lore.kernel.org/r/202310181650.g8THtfsm-lkp@intel.com/
+Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+Link: https://lore.kernel.org/r/f4c4d65a7cb71e807d6d472c63c7718408c8f5f0.1697781921.git.quic_varada@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/keystone/pll.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/clk/qcom/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/keystone/pll.c b/drivers/clk/keystone/pll.c
-index ee5c72369334f..6bbdd4705d71f 100644
---- a/drivers/clk/keystone/pll.c
-+++ b/drivers/clk/keystone/pll.c
-@@ -281,12 +281,13 @@ static void __init of_pll_div_clk_init(struct device_node *node)
- 
- 	clk = clk_register_divider(NULL, clk_name, parent_name, 0, reg, shift,
- 				 mask, 0, NULL);
--	if (clk) {
--		of_clk_add_provider(node, of_clk_src_simple_get, clk);
--	} else {
-+	if (IS_ERR(clk)) {
- 		pr_err("%s: error registering divider %s\n", __func__, clk_name);
- 		iounmap(reg);
-+		return;
- 	}
-+
-+	of_clk_add_provider(node, of_clk_src_simple_get, clk);
- }
- CLK_OF_DECLARE(pll_divider_clock, "ti,keystone,pll-divider-clock", of_pll_div_clk_init);
- 
-@@ -328,10 +329,12 @@ static void __init of_pll_mux_clk_init(struct device_node *node)
- 	clk = clk_register_mux(NULL, clk_name, (const char **)&parents,
- 				ARRAY_SIZE(parents) , 0, reg, shift, mask,
- 				0, NULL);
--	if (clk)
--		of_clk_add_provider(node, of_clk_src_simple_get, clk);
--	else
-+	if (IS_ERR(clk)) {
- 		pr_err("%s: error registering mux %s\n", __func__, clk_name);
-+		return;
-+	}
-+
-+	of_clk_add_provider(node, of_clk_src_simple_get, clk);
- }
- CLK_OF_DECLARE(pll_mux_clock, "ti,keystone,pll-mux-clock", of_pll_mux_clk_init);
- 
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 865db5202e4cf..a79b837583894 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -131,6 +131,7 @@ config IPQ_APSS_6018
+ 	tristate "IPQ APSS Clock Controller"
+ 	select IPQ_APSS_PLL
+ 	depends on QCOM_APCS_IPC || COMPILE_TEST
++	depends on QCOM_SMEM
+ 	help
+ 	  Support for APSS clock controller on IPQ platforms. The
+ 	  APSS clock controller manages the Mux and enable block that feeds the
 -- 
 2.42.0
 
