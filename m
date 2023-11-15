@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2152F381D1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BE528368
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HfNjUEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CDBC433C8;
-	Wed, 15 Nov 2023 20:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbjMB4ur"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82819C433C9;
+	Wed, 15 Nov 2023 20:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078468;
-	bh=M/7KXNVhz7g7TBaMa749Q7f7EvH+0rBpBP90QT/wX1E=;
+	s=korg; t=1700078469;
+	bh=UpdlqZhvfsCvIAbXsK+QHM2/zXsry+Flu/RjIbZ/ay8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1HfNjUEbj5TfFsvJkRI7k8A20N/LQ6ZbfmW6vMTHUELCZquk+csfWkzj+fQCemrt8
-	 FFoe7EVaJUvzO+YxoWi5At4d9wHaOSLCEBhq0vWSJCbjU9vuPK+QK9FZm5HCxh8Dku
-	 VY+d6gJ44do7/X0SG7ecjqrr1Th1ggdkBMQr0ADk=
+	b=wbjMB4urx0NYNsY59ROxe9chOFNZTfUxPhwUb/8g3Igdm7QueSTvMq2C+FhMLb7FS
+	 8xWZar+7Uw3UdENW65xyGaXYuIU7f2PsV1vmYn4utU9SYwLhrES+pAGKBKMzFNiYw0
+	 xL1bkrpiA+LJzLSr67J6vFkqXOy4hQIu+5N1LcgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 340/379] octeontx2-pf: Fix error codes
-Date: Wed, 15 Nov 2023 14:26:55 -0500
-Message-ID: <20231115192705.265048856@linuxfoundation.org>
+Subject: [PATCH 6.1 341/379] octeontx2-pf: Fix holes in error code
+Date: Wed, 15 Nov 2023 14:26:56 -0500
+Message-ID: <20231115192705.319611419@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -45,64 +45,151 @@ Content-Transfer-Encoding: 8bit
 
 From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 96b9a68d1a6e4f889d453874c9e359aa720b520f ]
+[ Upstream commit 7aeeb2cb7a2570bb69a87ad14018b03e06ce5be5 ]
 
-Some of error codes were wrong. Fix the same.
+Error code strings are not getting printed properly
+due to holes. Print error code as well.
 
 Fixes: 51afe9026d0c ("octeontx2-pf: NIX TX overwrites SQ_CTX_HW_S[SQ_INT]")
 Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
 Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Link: https://lore.kernel.org/r/20231027021953.1819959-1-rkannoth@marvell.com
+Link: https://lore.kernel.org/r/20231027021953.1819959-2-rkannoth@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/nic/otx2_struct.h       | 34 +++++++++----------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ .../ethernet/marvell/octeontx2/nic/otx2_pf.c  | 80 +++++++++++--------
+ 1 file changed, 46 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
-index fa37b9f312cae..4e5899d8fa2e6 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
-@@ -318,23 +318,23 @@ enum nix_snd_status_e {
- 	NIX_SND_STATUS_EXT_ERR = 0x6,
- 	NIX_SND_STATUS_JUMP_FAULT = 0x7,
- 	NIX_SND_STATUS_JUMP_POISON = 0x8,
--	NIX_SND_STATUS_CRC_ERR = 0x9,
--	NIX_SND_STATUS_IMM_ERR = 0x10,
--	NIX_SND_STATUS_SG_ERR = 0x11,
--	NIX_SND_STATUS_MEM_ERR = 0x12,
--	NIX_SND_STATUS_INVALID_SUBDC = 0x13,
--	NIX_SND_STATUS_SUBDC_ORDER_ERR = 0x14,
--	NIX_SND_STATUS_DATA_FAULT = 0x15,
--	NIX_SND_STATUS_DATA_POISON = 0x16,
--	NIX_SND_STATUS_NPC_DROP_ACTION = 0x17,
--	NIX_SND_STATUS_LOCK_VIOL = 0x18,
--	NIX_SND_STATUS_NPC_UCAST_CHAN_ERR = 0x19,
--	NIX_SND_STATUS_NPC_MCAST_CHAN_ERR = 0x20,
--	NIX_SND_STATUS_NPC_MCAST_ABORT = 0x21,
--	NIX_SND_STATUS_NPC_VTAG_PTR_ERR = 0x22,
--	NIX_SND_STATUS_NPC_VTAG_SIZE_ERR = 0x23,
--	NIX_SND_STATUS_SEND_MEM_FAULT = 0x24,
--	NIX_SND_STATUS_SEND_STATS_ERR = 0x25,
-+	NIX_SND_STATUS_CRC_ERR = 0x10,
-+	NIX_SND_STATUS_IMM_ERR = 0x11,
-+	NIX_SND_STATUS_SG_ERR = 0x12,
-+	NIX_SND_STATUS_MEM_ERR = 0x13,
-+	NIX_SND_STATUS_INVALID_SUBDC = 0x14,
-+	NIX_SND_STATUS_SUBDC_ORDER_ERR = 0x15,
-+	NIX_SND_STATUS_DATA_FAULT = 0x16,
-+	NIX_SND_STATUS_DATA_POISON = 0x17,
-+	NIX_SND_STATUS_NPC_DROP_ACTION = 0x20,
-+	NIX_SND_STATUS_LOCK_VIOL = 0x21,
-+	NIX_SND_STATUS_NPC_UCAST_CHAN_ERR = 0x22,
-+	NIX_SND_STATUS_NPC_MCAST_CHAN_ERR = 0x23,
-+	NIX_SND_STATUS_NPC_MCAST_ABORT = 0x24,
-+	NIX_SND_STATUS_NPC_VTAG_PTR_ERR = 0x25,
-+	NIX_SND_STATUS_NPC_VTAG_SIZE_ERR = 0x26,
-+	NIX_SND_STATUS_SEND_MEM_FAULT = 0x27,
-+	NIX_SND_STATUS_SEND_STATS_ERR = 0x28,
- 	NIX_SND_STATUS_MAX,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index 17e546d0d7e55..101d79a0bb436 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -1194,31 +1194,32 @@ static char *nix_mnqerr_e_str[NIX_MNQERR_MAX] = {
  };
+ 
+ static char *nix_snd_status_e_str[NIX_SND_STATUS_MAX] =  {
+-	"NIX_SND_STATUS_GOOD",
+-	"NIX_SND_STATUS_SQ_CTX_FAULT",
+-	"NIX_SND_STATUS_SQ_CTX_POISON",
+-	"NIX_SND_STATUS_SQB_FAULT",
+-	"NIX_SND_STATUS_SQB_POISON",
+-	"NIX_SND_STATUS_HDR_ERR",
+-	"NIX_SND_STATUS_EXT_ERR",
+-	"NIX_SND_STATUS_JUMP_FAULT",
+-	"NIX_SND_STATUS_JUMP_POISON",
+-	"NIX_SND_STATUS_CRC_ERR",
+-	"NIX_SND_STATUS_IMM_ERR",
+-	"NIX_SND_STATUS_SG_ERR",
+-	"NIX_SND_STATUS_MEM_ERR",
+-	"NIX_SND_STATUS_INVALID_SUBDC",
+-	"NIX_SND_STATUS_SUBDC_ORDER_ERR",
+-	"NIX_SND_STATUS_DATA_FAULT",
+-	"NIX_SND_STATUS_DATA_POISON",
+-	"NIX_SND_STATUS_NPC_DROP_ACTION",
+-	"NIX_SND_STATUS_LOCK_VIOL",
+-	"NIX_SND_STATUS_NPC_UCAST_CHAN_ERR",
+-	"NIX_SND_STATUS_NPC_MCAST_CHAN_ERR",
+-	"NIX_SND_STATUS_NPC_MCAST_ABORT",
+-	"NIX_SND_STATUS_NPC_VTAG_PTR_ERR",
+-	"NIX_SND_STATUS_NPC_VTAG_SIZE_ERR",
+-	"NIX_SND_STATUS_SEND_STATS_ERR",
++	[NIX_SND_STATUS_GOOD] = "NIX_SND_STATUS_GOOD",
++	[NIX_SND_STATUS_SQ_CTX_FAULT] = "NIX_SND_STATUS_SQ_CTX_FAULT",
++	[NIX_SND_STATUS_SQ_CTX_POISON] = "NIX_SND_STATUS_SQ_CTX_POISON",
++	[NIX_SND_STATUS_SQB_FAULT] = "NIX_SND_STATUS_SQB_FAULT",
++	[NIX_SND_STATUS_SQB_POISON] = "NIX_SND_STATUS_SQB_POISON",
++	[NIX_SND_STATUS_HDR_ERR] = "NIX_SND_STATUS_HDR_ERR",
++	[NIX_SND_STATUS_EXT_ERR] = "NIX_SND_STATUS_EXT_ERR",
++	[NIX_SND_STATUS_JUMP_FAULT] = "NIX_SND_STATUS_JUMP_FAULT",
++	[NIX_SND_STATUS_JUMP_POISON] = "NIX_SND_STATUS_JUMP_POISON",
++	[NIX_SND_STATUS_CRC_ERR] = "NIX_SND_STATUS_CRC_ERR",
++	[NIX_SND_STATUS_IMM_ERR] = "NIX_SND_STATUS_IMM_ERR",
++	[NIX_SND_STATUS_SG_ERR] = "NIX_SND_STATUS_SG_ERR",
++	[NIX_SND_STATUS_MEM_ERR] = "NIX_SND_STATUS_MEM_ERR",
++	[NIX_SND_STATUS_INVALID_SUBDC] = "NIX_SND_STATUS_INVALID_SUBDC",
++	[NIX_SND_STATUS_SUBDC_ORDER_ERR] = "NIX_SND_STATUS_SUBDC_ORDER_ERR",
++	[NIX_SND_STATUS_DATA_FAULT] = "NIX_SND_STATUS_DATA_FAULT",
++	[NIX_SND_STATUS_DATA_POISON] = "NIX_SND_STATUS_DATA_POISON",
++	[NIX_SND_STATUS_NPC_DROP_ACTION] = "NIX_SND_STATUS_NPC_DROP_ACTION",
++	[NIX_SND_STATUS_LOCK_VIOL] = "NIX_SND_STATUS_LOCK_VIOL",
++	[NIX_SND_STATUS_NPC_UCAST_CHAN_ERR] = "NIX_SND_STAT_NPC_UCAST_CHAN_ERR",
++	[NIX_SND_STATUS_NPC_MCAST_CHAN_ERR] = "NIX_SND_STAT_NPC_MCAST_CHAN_ERR",
++	[NIX_SND_STATUS_NPC_MCAST_ABORT] = "NIX_SND_STATUS_NPC_MCAST_ABORT",
++	[NIX_SND_STATUS_NPC_VTAG_PTR_ERR] = "NIX_SND_STATUS_NPC_VTAG_PTR_ERR",
++	[NIX_SND_STATUS_NPC_VTAG_SIZE_ERR] = "NIX_SND_STATUS_NPC_VTAG_SIZE_ERR",
++	[NIX_SND_STATUS_SEND_MEM_FAULT] = "NIX_SND_STATUS_SEND_MEM_FAULT",
++	[NIX_SND_STATUS_SEND_STATS_ERR] = "NIX_SND_STATUS_SEND_STATS_ERR",
+ };
+ 
+ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
+@@ -1238,14 +1239,16 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
+ 			continue;
+ 
+ 		if (val & BIT_ULL(42)) {
+-			netdev_err(pf->netdev, "CQ%lld: error reading NIX_LF_CQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
++			netdev_err(pf->netdev,
++				   "CQ%lld: error reading NIX_LF_CQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
+ 				   qidx, otx2_read64(pf, NIX_LF_ERR_INT));
+ 		} else {
+ 			if (val & BIT_ULL(NIX_CQERRINT_DOOR_ERR))
+ 				netdev_err(pf->netdev, "CQ%lld: Doorbell error",
+ 					   qidx);
+ 			if (val & BIT_ULL(NIX_CQERRINT_CQE_FAULT))
+-				netdev_err(pf->netdev, "CQ%lld: Memory fault on CQE write to LLC/DRAM",
++				netdev_err(pf->netdev,
++					   "CQ%lld: Memory fault on CQE write to LLC/DRAM",
+ 					   qidx);
+ 		}
+ 
+@@ -1268,7 +1271,8 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
+ 			     (val & NIX_SQINT_BITS));
+ 
+ 		if (val & BIT_ULL(42)) {
+-			netdev_err(pf->netdev, "SQ%lld: error reading NIX_LF_SQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
++			netdev_err(pf->netdev,
++				   "SQ%lld: error reading NIX_LF_SQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
+ 				   qidx, otx2_read64(pf, NIX_LF_ERR_INT));
+ 			goto done;
+ 		}
+@@ -1278,8 +1282,11 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
+ 			goto chk_mnq_err_dbg;
+ 
+ 		sq_op_err_code = FIELD_GET(GENMASK(7, 0), sq_op_err_dbg);
+-		netdev_err(pf->netdev, "SQ%lld: NIX_LF_SQ_OP_ERR_DBG(%llx)  err=%s\n",
+-			   qidx, sq_op_err_dbg, nix_sqoperr_e_str[sq_op_err_code]);
++		netdev_err(pf->netdev,
++			   "SQ%lld: NIX_LF_SQ_OP_ERR_DBG(0x%llx)  err=%s(%#x)\n",
++			   qidx, sq_op_err_dbg,
++			   nix_sqoperr_e_str[sq_op_err_code],
++			   sq_op_err_code);
+ 
+ 		otx2_write64(pf, NIX_LF_SQ_OP_ERR_DBG, BIT_ULL(44));
+ 
+@@ -1296,16 +1303,21 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
+ 			goto chk_snd_err_dbg;
+ 
+ 		mnq_err_code = FIELD_GET(GENMASK(7, 0), mnq_err_dbg);
+-		netdev_err(pf->netdev, "SQ%lld: NIX_LF_MNQ_ERR_DBG(%llx)  err=%s\n",
+-			   qidx, mnq_err_dbg,  nix_mnqerr_e_str[mnq_err_code]);
++		netdev_err(pf->netdev,
++			   "SQ%lld: NIX_LF_MNQ_ERR_DBG(0x%llx)  err=%s(%#x)\n",
++			   qidx, mnq_err_dbg,  nix_mnqerr_e_str[mnq_err_code],
++			   mnq_err_code);
+ 		otx2_write64(pf, NIX_LF_MNQ_ERR_DBG, BIT_ULL(44));
+ 
+ chk_snd_err_dbg:
+ 		snd_err_dbg = otx2_read64(pf, NIX_LF_SEND_ERR_DBG);
+ 		if (snd_err_dbg & BIT(44)) {
+ 			snd_err_code = FIELD_GET(GENMASK(7, 0), snd_err_dbg);
+-			netdev_err(pf->netdev, "SQ%lld: NIX_LF_SND_ERR_DBG:0x%llx err=%s\n",
+-				   qidx, snd_err_dbg, nix_snd_status_e_str[snd_err_code]);
++			netdev_err(pf->netdev,
++				   "SQ%lld: NIX_LF_SND_ERR_DBG:0x%llx err=%s(%#x)\n",
++				   qidx, snd_err_dbg,
++				   nix_snd_status_e_str[snd_err_code],
++				   snd_err_code);
+ 			otx2_write64(pf, NIX_LF_SEND_ERR_DBG, BIT_ULL(44));
+ 		}
  
 -- 
 2.42.0
