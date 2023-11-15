@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F882C861
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C0828376
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKX1eSJf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE92C433C8;
-	Wed, 15 Nov 2023 19:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5Ag3SPX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74336C433C7;
+	Wed, 15 Nov 2023 19:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076323;
-	bh=J+s8pBBvsUCD/UojfLI4kSsGfTsbglbqgkmJpfWlH+I=;
+	s=korg; t=1700076324;
+	bh=RH80VKoWXTJgbZOW7GSM0YdcOVhuAU+rHuwtUvTIrOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKX1eSJfZ8/I2S3D1PmYh05A8Py1KaqCIrrr5LkapEbhsKcdYyDii/zAkPwTdzngT
-	 WarMsr38u/Bw+30Gk8dwYnlj4l4tb4EgN2qAJhngrLaLRwdw5O9uE4rQjhOP5E97o9
-	 r1wmaJMu5E3RZwJgTO84XTEJaIACOTwfkMixzurM=
+	b=J5Ag3SPXNn8fxSpKm30uq3EmNI49yuqIwH8yQr6L9gM6HK3PmXtzWXKjS0O8+00od
+	 0COlzxbn4szDYMswqsupUimERE+pal3nNxGpthw28VoQVqk8Yjkkpvp3N7O8KK5aOO
+	 G63WOqrWXOWwkaJXU68RMcYSr2rGbJY6DKcKT9pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -24,9 +24,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Maxim Schwalm <maxim.schwalm@gmail.com>
-Subject: [PATCH 6.5 218/550] drm/bridge: tc358768: Fix bit updates
-Date: Wed, 15 Nov 2023 14:13:22 -0500
-Message-ID: <20231115191615.846167086@linuxfoundation.org>
+Subject: [PATCH 6.5 219/550] drm/bridge: tc358768: Use struct videomode
+Date: Wed, 15 Nov 2023 14:13:23 -0500
+Message-ID: <20231115191615.907565884@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -47,62 +47,144 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 66962d5c3c51377b9b90cae35b7e038950438e02 ]
+[ Upstream commit e5fb21678136a9d009d5c43821881eb4c34fae97 ]
 
-The driver has a few places where it does:
+The TC358768 documentation uses HFP, HBP, etc. values to deal with the
+video mode, while the driver currently uses the DRM display mode
+(htotal, hsync_start, etc).
 
-if (thing_is_enabled_in_config)
-	update_thing_bit_in_hw()
+Change the driver to convert the DRM display mode to struct videomode,
+which then allows us to use the same units the documentation uses. This
+makes it much easier to work on the code when using the TC358768
+documentation as a reference.
 
-This means that if the thing is _not_ enabled, the bit never gets
-cleared. This affects the h/vsyncs and continuous DSI clock bits.
-
-Fix the driver to always update the bit.
-
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
 Reviewed-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
 Tested-by: Maxim Schwalm <maxim.schwalm@gmail.com> # Asus TF700T
 Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230906-tc358768-v4-4-31725f008a50@ideasonboard.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20230906-tc358768-v4-6-31725f008a50@ideasonboard.com
+Stable-dep-of: f1dabbe64506 ("drm/bridge: tc358768: Fix tc358768_ns_to_cnt()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 45 ++++++++++++++++---------------
+ 1 file changed, 24 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index bc97a837955ba..b668f77673c3d 100644
+index b668f77673c3d..e42b5259ea344 100644
 --- a/drivers/gpu/drm/bridge/tc358768.c
 +++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -794,8 +794,8 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 		val |= BIT(i + 1);
- 	tc358768_write(priv, TC358768_HSTXVREGEN, val);
+@@ -650,6 +650,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	u32 dsiclk, dsibclk, video_start;
+ 	const u32 internal_delay = 40;
+ 	int ret, i;
++	struct videomode vm;
  
--	if (!(mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
--		tc358768_write(priv, TC358768_TXOPTIONCNTRL, 0x1);
-+	tc358768_write(priv, TC358768_TXOPTIONCNTRL,
-+		       (mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS) ? 0 : BIT(0));
+ 	if (mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS) {
+ 		dev_warn_once(priv->dev, "Non-continuous mode unimplemented, falling back to continuous\n");
+@@ -673,6 +674,8 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 		return;
+ 	}
  
- 	/* TXTAGOCNT[26:16] RXTASURECNT[10:0] */
- 	val = tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk * 4);
-@@ -861,11 +861,12 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 	tc358768_write(priv, TC358768_DSI_HACT, hact);
- 
- 	/* VSYNC polarity */
--	if (!(mode->flags & DRM_MODE_FLAG_NVSYNC))
--		tc358768_update_bits(priv, TC358768_CONFCTL, BIT(5), BIT(5));
-+	tc358768_update_bits(priv, TC358768_CONFCTL, BIT(5),
-+			     (mode->flags & DRM_MODE_FLAG_PVSYNC) ? BIT(5) : 0);
++	drm_display_mode_to_videomode(mode, &vm);
 +
- 	/* HSYNC polarity */
--	if (mode->flags & DRM_MODE_FLAG_PHSYNC)
--		tc358768_update_bits(priv, TC358768_PP_MISC, BIT(0), BIT(0));
-+	tc358768_update_bits(priv, TC358768_PP_MISC, BIT(0),
-+			     (mode->flags & DRM_MODE_FLAG_PHSYNC) ? BIT(0) : 0);
+ 	dsiclk = priv->dsiclk;
+ 	dsibclk = dsiclk / 4;
  
- 	/* Start DSI Tx */
- 	tc358768_write(priv, TC358768_DSI_START, 0x1);
+@@ -681,28 +684,28 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	switch (dsi_dev->format) {
+ 	case MIPI_DSI_FMT_RGB888:
+ 		val |= (0x3 << 4);
+-		hact = mode->hdisplay * 3;
+-		video_start = (mode->htotal - mode->hsync_start) * 3;
++		hact = vm.hactive * 3;
++		video_start = (vm.hsync_len + vm.hback_porch) * 3;
+ 		data_type = MIPI_DSI_PACKED_PIXEL_STREAM_24;
+ 		break;
+ 	case MIPI_DSI_FMT_RGB666:
+ 		val |= (0x4 << 4);
+-		hact = mode->hdisplay * 3;
+-		video_start = (mode->htotal - mode->hsync_start) * 3;
++		hact = vm.hactive * 3;
++		video_start = (vm.hsync_len + vm.hback_porch) * 3;
+ 		data_type = MIPI_DSI_PACKED_PIXEL_STREAM_18;
+ 		break;
+ 
+ 	case MIPI_DSI_FMT_RGB666_PACKED:
+ 		val |= (0x4 << 4) | BIT(3);
+-		hact = mode->hdisplay * 18 / 8;
+-		video_start = (mode->htotal - mode->hsync_start) * 18 / 8;
++		hact = vm.hactive * 18 / 8;
++		video_start = (vm.hsync_len + vm.hback_porch) * 18 / 8;
+ 		data_type = MIPI_DSI_PIXEL_STREAM_3BYTE_18;
+ 		break;
+ 
+ 	case MIPI_DSI_FMT_RGB565:
+ 		val |= (0x5 << 4);
+-		hact = mode->hdisplay * 2;
+-		video_start = (mode->htotal - mode->hsync_start) * 2;
++		hact = vm.hactive * 2;
++		video_start = (vm.hsync_len + vm.hback_porch) * 2;
+ 		data_type = MIPI_DSI_PACKED_PIXEL_STREAM_16;
+ 		break;
+ 	default:
+@@ -814,43 +817,43 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 		tc358768_write(priv, TC358768_DSI_EVENT, 0);
+ 
+ 		/* vact */
+-		tc358768_write(priv, TC358768_DSI_VACT, mode->vdisplay);
++		tc358768_write(priv, TC358768_DSI_VACT, vm.vactive);
+ 
+ 		/* vsw */
+-		tc358768_write(priv, TC358768_DSI_VSW,
+-			       mode->vsync_end - mode->vsync_start);
++		tc358768_write(priv, TC358768_DSI_VSW, vm.vsync_len);
++
+ 		/* vbp */
+-		tc358768_write(priv, TC358768_DSI_VBPR,
+-			       mode->vtotal - mode->vsync_end);
++		tc358768_write(priv, TC358768_DSI_VBPR, vm.vback_porch);
+ 
+ 		/* hsw * byteclk * ndl / pclk */
+-		val = (u32)div_u64((mode->hsync_end - mode->hsync_start) *
++		val = (u32)div_u64(vm.hsync_len *
+ 				   ((u64)priv->dsiclk / 4) * priv->dsi_lanes,
+-				   mode->clock * 1000);
++				   vm.pixelclock);
+ 		tc358768_write(priv, TC358768_DSI_HSW, val);
+ 
+ 		/* hbp * byteclk * ndl / pclk */
+-		val = (u32)div_u64((mode->htotal - mode->hsync_end) *
++		val = (u32)div_u64(vm.hback_porch *
+ 				   ((u64)priv->dsiclk / 4) * priv->dsi_lanes,
+-				   mode->clock * 1000);
++				   vm.pixelclock);
+ 		tc358768_write(priv, TC358768_DSI_HBPR, val);
+ 	} else {
+ 		/* Set event mode */
+ 		tc358768_write(priv, TC358768_DSI_EVENT, 1);
+ 
+ 		/* vact */
+-		tc358768_write(priv, TC358768_DSI_VACT, mode->vdisplay);
++		tc358768_write(priv, TC358768_DSI_VACT, vm.vactive);
+ 
+ 		/* vsw (+ vbp) */
+ 		tc358768_write(priv, TC358768_DSI_VSW,
+-			       mode->vtotal - mode->vsync_start);
++			       vm.vsync_len + vm.vback_porch);
++
+ 		/* vbp (not used in event mode) */
+ 		tc358768_write(priv, TC358768_DSI_VBPR, 0);
+ 
+ 		/* (hsw + hbp) * byteclk * ndl / pclk */
+-		val = (u32)div_u64((mode->htotal - mode->hsync_start) *
++		val = (u32)div_u64((vm.hsync_len + vm.hback_porch) *
+ 				   ((u64)priv->dsiclk / 4) * priv->dsi_lanes,
+-				   mode->clock * 1000);
++				   vm.pixelclock);
+ 		tc358768_write(priv, TC358768_DSI_HSW, val);
+ 
+ 		/* hbp (not used in event mode) */
 -- 
 2.42.0
 
