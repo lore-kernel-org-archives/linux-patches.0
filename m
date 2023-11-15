@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0C63DB95
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D8A3DB95
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpvqnTsx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59BAAC433C9;
-	Wed, 15 Nov 2023 20:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PI2zmzx6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B55C433C8;
+	Wed, 15 Nov 2023 20:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078453;
-	bh=l19/Vz3ai7rKLktu1bUDF4y7gJZ4tqLVR4xL/ej9/1s=;
+	s=korg; t=1700078455;
+	bh=GvBTPUIy8TUqSwRR1VVRQ9MHtJa2kjm53H8bzyJGTP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zpvqnTsxeBtYwct3uADoD4QmuEKWaIoWblcXcwnGrKAH5HhhfuQhYqJzvpb0v6jU8
-	 VACsw3CISFvDJvL8P7s8ucGrHdh0JNoofv+KI/HQq/wh1SA8r4XgIlgLxtqnktftYw
-	 LZOsKo48vViqbd5HWtlAjjTGx9WoI7w4GLLtRmzM=
+	b=PI2zmzx6ADsXSsmmV9L8IZebusJwNJ1AlTCVVIJO4VOvLuQP35fJv6FUEYr/vdkLw
+	 RnF5PxVAjV65i1G1sQimC4fq2P5NWUic4SuWmUDNz3uMRG0wcQjmM1Zz8eWijemNih
+	 R4PBqfCbZE03ItiylF5Znx8rRqTolhjY9k+TAIMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ira Weiny <ira.weiny@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Peter Gonda <pgonda@google.com>,
+	Dionna Glaze <dionnaglaze@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 306/379] cxl/mem: Fix shutdown order
-Date: Wed, 15 Nov 2023 14:26:21 -0500
-Message-ID: <20231115192703.250704120@linuxfoundation.org>
+Subject: [PATCH 6.1 307/379] crypto: ccp - Name -1 return value as SEV_RET_NO_FW_CALL
+Date: Wed, 15 Nov 2023 14:26:22 -0500
+Message-ID: <20231115192703.312614009@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -45,82 +43,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Peter Gonda <pgonda@google.com>
 
-[ Upstream commit 88d3917f82ed4215a2154432c26de1480a61b209 ]
+[ Upstream commit efb339a83368ab25de1a18c0fdff85e01c13a1ea ]
 
-Ira reports that removing cxl_mock_mem causes a crash with the following
-trace:
+The PSP can return a "firmware error" code of -1 in circumstances where
+the PSP has not actually been called. To make this protocol unambiguous,
+name the value SEV_RET_NO_FW_CALL.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000044
- [..]
- RIP: 0010:cxl_region_decode_reset+0x7f/0x180 [cxl_core]
- [..]
- Call Trace:
-  <TASK>
-  cxl_region_detach+0xe8/0x210 [cxl_core]
-  cxl_decoder_kill_region+0x27/0x40 [cxl_core]
-  cxld_unregister+0x29/0x40 [cxl_core]
-  devres_release_all+0xb8/0x110
-  device_unbind_cleanup+0xe/0x70
-  device_release_driver_internal+0x1d2/0x210
-  bus_remove_device+0xd7/0x150
-  device_del+0x155/0x3e0
-  device_unregister+0x13/0x60
-  devm_release_action+0x4d/0x90
-  ? __pfx_unregister_port+0x10/0x10 [cxl_core]
-  delete_endpoint+0x121/0x130 [cxl_core]
-  devres_release_all+0xb8/0x110
-  device_unbind_cleanup+0xe/0x70
-  device_release_driver_internal+0x1d2/0x210
-  bus_remove_device+0xd7/0x150
-  device_del+0x155/0x3e0
-  ? lock_release+0x142/0x290
-  cdev_device_del+0x15/0x50
-  cxl_memdev_unregister+0x54/0x70 [cxl_core]
+  [ bp: Massage a bit. ]
 
-This crash is due to the clearing out the cxl_memdev's driver context
-(@cxlds) before the subsystem is done with it. This is ultimately due to
-the region(s), that this memdev is a member, being torn down and expecting
-to be able to de-reference @cxlds, like here:
-
-static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
-...
-                if (cxlds->rcd)
-                        goto endpoint_reset;
-...
-
-Fix it by keeping the driver context valid until memdev-device
-unregistration, and subsequently the entire stack of related
-dependencies, unwinds.
-
-Fixes: 9cc238c7a526 ("cxl/pci: Introduce cdevm_file_operations")
-Reported-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Tested-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Peter Gonda <pgonda@google.com>
+Signed-off-by: Dionna Glaze <dionnaglaze@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20221207010210.2563293-2-dionnaglaze@google.com
+Stable-dep-of: db10cb9b5746 ("virt: sevguest: Fix passing a stack buffer as a scatterlist target")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/memdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/virt/coco/sev-guest.rst | 4 ++--
+ drivers/crypto/ccp/sev-dev.c          | 8 +++++---
+ include/uapi/linux/psp-sev.h          | 7 +++++++
+ 3 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
-index 20ce488a77540..03cf99cce7047 100644
---- a/drivers/cxl/core/memdev.c
-+++ b/drivers/cxl/core/memdev.c
-@@ -214,8 +214,8 @@ static void cxl_memdev_unregister(void *_cxlmd)
- 	struct cxl_memdev *cxlmd = _cxlmd;
- 	struct device *dev = &cxlmd->dev;
+diff --git a/Documentation/virt/coco/sev-guest.rst b/Documentation/virt/coco/sev-guest.rst
+index bf593e88cfd9d..aa3e4c6a1f90c 100644
+--- a/Documentation/virt/coco/sev-guest.rst
++++ b/Documentation/virt/coco/sev-guest.rst
+@@ -40,8 +40,8 @@ along with a description:
+ The guest ioctl should be issued on a file descriptor of the /dev/sev-guest device.
+ The ioctl accepts struct snp_user_guest_request. The input and output structure is
+ specified through the req_data and resp_data field respectively. If the ioctl fails
+-to execute due to a firmware error, then fw_err code will be set otherwise the
+-fw_err will be set to 0x00000000000000ff.
++to execute due to a firmware error, then fw_err code will be set. Otherwise, fw_err
++will be set to 0x00000000ffffffff, i.e., the lower 32-bits are -1.
  
--	cxl_memdev_shutdown(dev);
- 	cdev_device_del(&cxlmd->cdev, dev);
-+	cxl_memdev_shutdown(dev);
- 	put_device(dev);
- }
+ The firmware checks that the message sequence counter is one greater than
+ the guests message sequence counter. If guest driver fails to increment message
+diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+index 3e583f0324874..b8e02c3a19610 100644
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -443,10 +443,10 @@ static int __sev_init_ex_locked(int *error)
  
+ static int __sev_platform_init_locked(int *error)
+ {
++	int rc = 0, psp_ret = SEV_RET_NO_FW_CALL;
+ 	struct psp_device *psp = psp_master;
+-	struct sev_device *sev;
+-	int rc = 0, psp_ret = -1;
+ 	int (*init_function)(int *error);
++	struct sev_device *sev;
+ 
+ 	if (!psp || !psp->sev_data)
+ 		return -ENODEV;
+@@ -474,9 +474,11 @@ static int __sev_platform_init_locked(int *error)
+ 		 * initialization function should succeed by replacing the state
+ 		 * with a reset state.
+ 		 */
+-		dev_err(sev->dev, "SEV: retrying INIT command because of SECURE_DATA_INVALID error. Retrying once to reset PSP SEV state.");
++		dev_err(sev->dev,
++"SEV: retrying INIT command because of SECURE_DATA_INVALID error. Retrying once to reset PSP SEV state.");
+ 		rc = init_function(&psp_ret);
+ 	}
++
+ 	if (error)
+ 		*error = psp_ret;
+ 
+diff --git a/include/uapi/linux/psp-sev.h b/include/uapi/linux/psp-sev.h
+index 91b4c63d5cbf4..1c9da485318f9 100644
+--- a/include/uapi/linux/psp-sev.h
++++ b/include/uapi/linux/psp-sev.h
+@@ -36,6 +36,13 @@ enum {
+  * SEV Firmware status code
+  */
+ typedef enum {
++	/*
++	 * This error code is not in the SEV spec. Its purpose is to convey that
++	 * there was an error that prevented the SEV firmware from being called.
++	 * The SEV API error codes are 16 bits, so the -1 value will not overlap
++	 * with possible values from the specification.
++	 */
++	SEV_RET_NO_FW_CALL = -1,
+ 	SEV_RET_SUCCESS = 0,
+ 	SEV_RET_INVALID_PLATFORM_STATE,
+ 	SEV_RET_INVALID_GUEST_STATE,
 -- 
 2.42.0
 
