@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1183743AA6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D548D43AAE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaruD1OY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0812C433C9;
-	Wed, 15 Nov 2023 20:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQ0k4jJ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D80C433C9;
+	Wed, 15 Nov 2023 20:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081112;
-	bh=nmZQt8NwoKALlG/Bo8rvGGnqj1gf01KaFUwvnp/PmM8=;
+	s=korg; t=1700081114;
+	bh=NrgC25I6HPIZ9ulxExNt3NMeVWh5vxpheKQ3+TPxgGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jaruD1OYfvxSTw8lvjXfQN/Br4kkx9EUJZrvk2PLO/SgUs2U0oCXJHQwSmZ3RMxgf
-	 LbBsuhv0bBgGdT/CCayiN4iGsUNjjqQHAWxDLWXWjYchEA1ZseXXqc7uuZkbf1JwAS
-	 zbD7dt6DHpg9x25xWMp9t6l0I+dFd5eQ0+O26GtM=
+	b=vQ0k4jJ2C2WdhXT7VTyXkNX1CJplJikjI+TRZ3ANmhnBLfYhTKiJsj6PARS4iy3S1
+	 g2xX2q+gMxA2Q3nGv6zp9D8UhHRyutOy39YXzZpTioZm8LZu0cGF39mAVXfxw/cGlX
+	 PYjEo9ZTG0jPxPZLRq+NdWEumJReO3JB2F+k4VIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 46/88] mfd: dln2: Fix double put in dln2_probe
-Date: Wed, 15 Nov 2023 15:35:58 -0500
-Message-ID: <20231115191428.942421407@linuxfoundation.org>
+Subject: [PATCH 4.19 22/88] clk: npcm7xx: Fix incorrect kfree
+Date: Wed, 15 Nov 2023 15:35:34 -0500
+Message-ID: <20231115191427.516209255@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -36,41 +36,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 
-[ Upstream commit 759c409bc5fc496cbc22cd0b392d3cbb0c0e23eb ]
+[ Upstream commit bbc5080bef4a245106aa8e8d424ba8847ca7c0ca ]
 
-The dln2_free() already contains usb_put_dev(). Therefore,
-the redundant usb_put_dev() before dln2_free() may lead to
-a double free.
+The corresponding allocation is:
 
-Fixes: 96da8f148396 ("mfd: dln2: Fix memory leak in dln2_probe()")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230925024134.9683-1-dinghao.liu@zju.edu.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+> npcm7xx_clk_data = kzalloc(struct_size(npcm7xx_clk_data, hws,
+> 			     NPCM7XX_NUM_CLOCKS), GFP_KERNEL);
+
+... so, kfree should be applied to npcm7xx_clk_data, not
+npcm7xx_clk_data->hws.
+
+Fixes: fcfd14369856 ("clk: npcm7xx: add clock controller")
+Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+Link: https://lore.kernel.org/r/20230923133127.1815621-1-j.neuschaefer@gmx.net
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/dln2.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/clk/clk-npcm7xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/dln2.c b/drivers/mfd/dln2.c
-index 37217e01f27c0..fe614ba5fec90 100644
---- a/drivers/mfd/dln2.c
-+++ b/drivers/mfd/dln2.c
-@@ -800,7 +800,6 @@ static int dln2_probe(struct usb_interface *interface,
- 	dln2_stop_rx_urbs(dln2);
+diff --git a/drivers/clk/clk-npcm7xx.c b/drivers/clk/clk-npcm7xx.c
+index c5edf8f2fd196..f96e883104144 100644
+--- a/drivers/clk/clk-npcm7xx.c
++++ b/drivers/clk/clk-npcm7xx.c
+@@ -647,7 +647,7 @@ static void __init npcm7xx_clk_init(struct device_node *clk_np)
+ 	return;
  
- out_free:
--	usb_put_dev(dln2->usb_dev);
- 	dln2_free(dln2);
- 
- 	return ret;
+ npcm7xx_init_fail:
+-	kfree(npcm7xx_clk_data->hws);
++	kfree(npcm7xx_clk_data);
+ npcm7xx_init_np_err:
+ 	iounmap(clk_base);
+ npcm7xx_init_error:
 -- 
 2.42.0
 
