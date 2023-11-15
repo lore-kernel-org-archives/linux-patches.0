@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AC53BB2D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9E23BB2D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6jRimfy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03B8C433CA;
-	Wed, 15 Nov 2023 20:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0a4dLjgY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDA8C433C8;
+	Wed, 15 Nov 2023 20:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078406;
-	bh=BMci1pNlvIpeM2Nsl/e7AhTWpMOkFOEoXeJAOEQZ+Q8=;
+	s=korg; t=1700078408;
+	bh=KTiPfex45eBREzWwkt8SqIXr7NSYm28DL9TXwKVKEfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6jRimfyDHGzspeRpjTWIGaAaO57HpuyXoI2Hb/aCUxgofq23wdl2OZ4wqFIyToq1
-	 EKjfz5TvyDHpRaa0oAbYCw0CGoJpOo/pR9zsHW4NyzOa5E5QGouVdCG1z4CnE4Ijf7
-	 8PKrvnSOIanCnCEuHguvdsGdhxMy5qttu91R/f3U=
+	b=0a4dLjgYvKgYcI3ureN1HhtVNylO5JlAlw1gdrqx8KJ2I07OKDXra46za7CvshQeT
+	 VFN8SlTEadlu5pDdeZ2v5rAtYF00u5z3xcea4HgVNUhJiRqLgHkcSqW+aI7i919+mx
+	 vA8vT2YHsNIhaViNCN6jkAp6edOwzQg28/XLIfyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 279/379] interconnect: qcom: sc7280: Set ACV enable_mask
-Date: Wed, 15 Nov 2023 14:25:54 -0500
-Message-ID: <20231115192701.619485189@linuxfoundation.org>
+Subject: [PATCH 6.1 270/379] usb: chipidea: Simplify Tegra DMA alignment code
+Date: Wed, 15 Nov 2023 14:25:45 -0500
+Message-ID: <20231115192701.105855689@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -36,39 +35,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Michał Mirosław <mirq-linux@rere.qmqm.pl>
 
-[ Upstream commit 437b8e7fcd5df792cb8b8095e9f6eccefec6c099 ]
+[ Upstream commit 2ae61a2562c0d1720545b0845829a65fb6a9c2c6 ]
 
-ACV expects an enable_mask corresponding to the APPS RSC, fill it in.
+The USB host on Tegra3 works with 32-bit alignment. Previous code tried
+to align the buffer, but it did align the wrapper struct instead, so
+the buffer was at a constant offset of 8 bytes (two pointers) from
+expected alignment.  Since kmalloc() guarantees at least 8-byte
+alignment already, the alignment-extending is removed.
 
-Fixes: 46bdcac533cc ("interconnect: qcom: Add SC7280 interconnect provider driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230811-topic-acv-v2-3-765ad70e539a@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: fc53d5279094 ("usb: chipidea: tegra: Support host mode")
+Signed-off-by: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+Link: https://lore.kernel.org/r/a0d917d492b1f91ee0019e68b8e8bca9c585393f.1695934946.git.mirq-linux@rere.qmqm.pl
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/sc7280.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/chipidea/host.c | 45 +++++++++++++++----------------------
+ 1 file changed, 18 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
-index 971f538bc98ad..3c39edd21b6ca 100644
---- a/drivers/interconnect/qcom/sc7280.c
-+++ b/drivers/interconnect/qcom/sc7280.c
-@@ -1284,6 +1284,7 @@ static struct qcom_icc_node srvc_snoc = {
- 
- static struct qcom_icc_bcm bcm_acv = {
- 	.name = "ACV",
-+	.enable_mask = BIT(3),
- 	.num_nodes = 1,
- 	.nodes = { &ebi },
+diff --git a/drivers/usb/chipidea/host.c b/drivers/usb/chipidea/host.c
+index fae4b2f9b9b21..34bbdfadd66f3 100644
+--- a/drivers/usb/chipidea/host.c
++++ b/drivers/usb/chipidea/host.c
+@@ -30,8 +30,7 @@ struct ehci_ci_priv {
  };
+ 
+ struct ci_hdrc_dma_aligned_buffer {
+-	void *kmalloc_ptr;
+-	void *old_xfer_buffer;
++	void *original_buffer;
+ 	u8 data[];
+ };
+ 
+@@ -380,60 +379,52 @@ static int ci_ehci_bus_suspend(struct usb_hcd *hcd)
+ 	return 0;
+ }
+ 
+-static void ci_hdrc_free_dma_aligned_buffer(struct urb *urb)
++static void ci_hdrc_free_dma_aligned_buffer(struct urb *urb, bool copy_back)
+ {
+ 	struct ci_hdrc_dma_aligned_buffer *temp;
+-	size_t length;
+ 
+ 	if (!(urb->transfer_flags & URB_ALIGNED_TEMP_BUFFER))
+ 		return;
++	urb->transfer_flags &= ~URB_ALIGNED_TEMP_BUFFER;
+ 
+ 	temp = container_of(urb->transfer_buffer,
+ 			    struct ci_hdrc_dma_aligned_buffer, data);
++	urb->transfer_buffer = temp->original_buffer;
++
++	if (copy_back && usb_urb_dir_in(urb)) {
++		size_t length;
+ 
+-	if (usb_urb_dir_in(urb)) {
+ 		if (usb_pipeisoc(urb->pipe))
+ 			length = urb->transfer_buffer_length;
+ 		else
+ 			length = urb->actual_length;
+ 
+-		memcpy(temp->old_xfer_buffer, temp->data, length);
++		memcpy(temp->original_buffer, temp->data, length);
+ 	}
+-	urb->transfer_buffer = temp->old_xfer_buffer;
+-	kfree(temp->kmalloc_ptr);
+ 
+-	urb->transfer_flags &= ~URB_ALIGNED_TEMP_BUFFER;
++	kfree(temp);
+ }
+ 
+ static int ci_hdrc_alloc_dma_aligned_buffer(struct urb *urb, gfp_t mem_flags)
+ {
+-	struct ci_hdrc_dma_aligned_buffer *temp, *kmalloc_ptr;
+-	const unsigned int ci_hdrc_usb_dma_align = 32;
+-	size_t kmalloc_size;
++	struct ci_hdrc_dma_aligned_buffer *temp;
+ 
+ 	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0)
+ 		return 0;
+-	if (!((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)) && !(urb->transfer_buffer_length & 3))
++	if (IS_ALIGNED((uintptr_t)urb->transfer_buffer, 4)
++	    && IS_ALIGNED(urb->transfer_buffer_length, 4))
+ 		return 0;
+ 
+-	/* Allocate a buffer with enough padding for alignment */
+-	kmalloc_size = ALIGN(urb->transfer_buffer_length, 4) +
+-		       sizeof(struct ci_hdrc_dma_aligned_buffer) +
+-		       ci_hdrc_usb_dma_align - 1;
+-
+-	kmalloc_ptr = kmalloc(kmalloc_size, mem_flags);
+-	if (!kmalloc_ptr)
++	temp = kmalloc(sizeof(*temp) + ALIGN(urb->transfer_buffer_length, 4), mem_flags);
++	if (!temp)
+ 		return -ENOMEM;
+ 
+-	/* Position our struct dma_aligned_buffer such that data is aligned */
+-	temp = PTR_ALIGN(kmalloc_ptr + 1, ci_hdrc_usb_dma_align) - 1;
+-	temp->kmalloc_ptr = kmalloc_ptr;
+-	temp->old_xfer_buffer = urb->transfer_buffer;
+ 	if (usb_urb_dir_out(urb))
+ 		memcpy(temp->data, urb->transfer_buffer,
+ 		       urb->transfer_buffer_length);
+-	urb->transfer_buffer = temp->data;
+ 
++	temp->original_buffer = urb->transfer_buffer;
++	urb->transfer_buffer = temp->data;
+ 	urb->transfer_flags |= URB_ALIGNED_TEMP_BUFFER;
+ 
+ 	return 0;
+@@ -450,7 +441,7 @@ static int ci_hdrc_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
+ 
+ 	ret = usb_hcd_map_urb_for_dma(hcd, urb, mem_flags);
+ 	if (ret)
+-		ci_hdrc_free_dma_aligned_buffer(urb);
++		ci_hdrc_free_dma_aligned_buffer(urb, false);
+ 
+ 	return ret;
+ }
+@@ -458,7 +449,7 @@ static int ci_hdrc_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
+ static void ci_hdrc_unmap_urb_for_dma(struct usb_hcd *hcd, struct urb *urb)
+ {
+ 	usb_hcd_unmap_urb_for_dma(hcd, urb);
+-	ci_hdrc_free_dma_aligned_buffer(urb);
++	ci_hdrc_free_dma_aligned_buffer(urb, true);
+ }
+ 
+ int ci_hdrc_host_init(struct ci_hdrc *ci)
 -- 
 2.42.0
 
