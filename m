@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9C73DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EE33DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpnvUYLi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C695C433CC;
-	Wed, 15 Nov 2023 19:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6z4T3Bo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2572C433CD;
+	Wed, 15 Nov 2023 19:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078161;
-	bh=kziO3gHuGAc6jwa1t/FNAmVusWEWcsnU+zSvdUBQFJ0=;
+	s=korg; t=1700078163;
+	bh=dSaFZz4RmDs9aTm8+/2Or2HEU8Jetx/0FCmb9wQoheY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpnvUYLiNY8OrherZnSrbVn+yA8D0qli8SDxhhMifEMqTgTNG/Z8bh6bKOor9SelY
-	 CJeCNYU7kf+3MslP3SCUFx2Fmb7MEQcqPbc92owoJ2sDzlUKT8PdbOdUwqi14HRXTs
-	 e7A9ZqXjjSPlnxDualfsgt+vouI6j8lwhJg2ic1k=
+	b=Z6z4T3Bo9rid14Onn3JkQesAXTA7UBq5JcPiufbkjLxDiJeosaHDJDADTkzCVbC0I
+	 KyJxOxn2Xub4SdOiTuwFNb32FCXsVgBa016M8m5vGszkxoXZRwyyoDiZZKaDXLvLA2
+	 V6P64biXtgoTBda8HSjFVfhXHvWvBJo5xw76sh8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
-	Juergen Gross <jgross@suse.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 149/379] xen-pciback: Consider INTx disabled when MSI/MSI-X is enabled
-Date: Wed, 15 Nov 2023 14:23:44 -0500
-Message-ID: <20231115192653.935584783@linuxfoundation.org>
+Subject: [PATCH 6.1 150/379] drm/msm/dsi: use msm_gem_kernel_put to free TX buffer
+Date: Wed, 15 Nov 2023 14:23:45 -0500
+Message-ID: <20231115192653.994160009@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -36,132 +37,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 2c269f42d0f382743ab230308b836ffe5ae9b2ae ]
+[ Upstream commit 69b321b2c3df4f7e51a9de587e41f324b0b717b0 ]
 
-Linux enables MSI-X before disabling INTx, but keeps MSI-X masked until
-the table is filled. Then it disables INTx just before clearing MASKALL
-bit. Currently this approach is rejected by xen-pciback.
-According to the PCIe spec, device cannot use INTx when MSI/MSI-X is
-enabled (in other words: enabling MSI/MSI-X implicitly disables INTx).
+Use exiting function to free the allocated GEM object instead of
+open-coding it. This has a bonus of internally calling
+msm_gem_put_vaddr() to compensate for msm_gem_get_vaddr() in
+msm_get_kernel_new().
 
-Change the logic to consider INTx disabled if MSI/MSI-X is enabled. This
-applies to three places:
- - checking currently enabled interrupts type,
- - transition to MSI/MSI-X - where INTx would be implicitly disabled,
- - clearing INTx disable bit - which can be allowed even if MSI/MSI-X is
-   enabled, as device should consider INTx disabled anyway in that case
-
-Fixes: 5e29500eba2a ("xen-pciback: Allow setting PCI_MSIX_FLAGS_MASKALL too")
-Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Acked-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20231016131348.1734721-1-marmarek@invisiblethingslab.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: 1e29dff00400 ("drm/msm: Add a common function to free kernel buffer objects")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/562239/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/xen-pciback/conf_space.c          | 19 +++++++++++------
- .../xen/xen-pciback/conf_space_capability.c   |  8 ++++++-
- drivers/xen/xen-pciback/conf_space_header.c   | 21 +++----------------
- 3 files changed, 23 insertions(+), 25 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/xen/xen-pciback/conf_space.c b/drivers/xen/xen-pciback/conf_space.c
-index 059de92aea7d0..d47eee6c51435 100644
---- a/drivers/xen/xen-pciback/conf_space.c
-+++ b/drivers/xen/xen-pciback/conf_space.c
-@@ -288,12 +288,6 @@ int xen_pcibk_get_interrupt_type(struct pci_dev *dev)
- 	u16 val;
- 	int ret = 0;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index e20cd3dd2c6cc..4162595f15f1e 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1173,8 +1173,7 @@ static void dsi_tx_buf_free(struct msm_dsi_host *msm_host)
  
--	err = pci_read_config_word(dev, PCI_COMMAND, &val);
--	if (err)
--		return err;
--	if (!(val & PCI_COMMAND_INTX_DISABLE))
--		ret |= INTERRUPT_TYPE_INTX;
--
- 	/*
- 	 * Do not trust dev->msi(x)_enabled here, as enabling could be done
- 	 * bypassing the pci_*msi* functions, by the qemu.
-@@ -316,6 +310,19 @@ int xen_pcibk_get_interrupt_type(struct pci_dev *dev)
- 		if (val & PCI_MSIX_FLAGS_ENABLE)
- 			ret |= INTERRUPT_TYPE_MSIX;
+ 	priv = dev->dev_private;
+ 	if (msm_host->tx_gem_obj) {
+-		msm_gem_unpin_iova(msm_host->tx_gem_obj, priv->kms->aspace);
+-		drm_gem_object_put(msm_host->tx_gem_obj);
++		msm_gem_kernel_put(msm_host->tx_gem_obj, priv->kms->aspace);
+ 		msm_host->tx_gem_obj = NULL;
  	}
-+
-+	/*
-+	 * PCIe spec says device cannot use INTx if MSI/MSI-X is enabled,
-+	 * so check for INTx only when both are disabled.
-+	 */
-+	if (!ret) {
-+		err = pci_read_config_word(dev, PCI_COMMAND, &val);
-+		if (err)
-+			return err;
-+		if (!(val & PCI_COMMAND_INTX_DISABLE))
-+			ret |= INTERRUPT_TYPE_INTX;
-+	}
-+
- 	return ret ?: INTERRUPT_TYPE_NONE;
- }
- 
-diff --git a/drivers/xen/xen-pciback/conf_space_capability.c b/drivers/xen/xen-pciback/conf_space_capability.c
-index 097316a741268..1948a9700c8fa 100644
---- a/drivers/xen/xen-pciback/conf_space_capability.c
-+++ b/drivers/xen/xen-pciback/conf_space_capability.c
-@@ -236,10 +236,16 @@ static int msi_msix_flags_write(struct pci_dev *dev, int offset, u16 new_value,
- 		return PCIBIOS_SET_FAILED;
- 
- 	if (new_value & field_config->enable_bit) {
--		/* don't allow enabling together with other interrupt types */
-+		/*
-+		 * Don't allow enabling together with other interrupt type, but do
-+		 * allow enabling MSI(-X) while INTx is still active to please Linuxes
-+		 * MSI(-X) startup sequence. It is safe to do, as according to PCI
-+		 * spec, device with enabled MSI(-X) shouldn't use INTx.
-+		 */
- 		int int_type = xen_pcibk_get_interrupt_type(dev);
- 
- 		if (int_type == INTERRUPT_TYPE_NONE ||
-+		    int_type == INTERRUPT_TYPE_INTX ||
- 		    int_type == field_config->int_type)
- 			goto write;
- 		return PCIBIOS_SET_FAILED;
-diff --git a/drivers/xen/xen-pciback/conf_space_header.c b/drivers/xen/xen-pciback/conf_space_header.c
-index 981435103af1a..fc03326459664 100644
---- a/drivers/xen/xen-pciback/conf_space_header.c
-+++ b/drivers/xen/xen-pciback/conf_space_header.c
-@@ -104,24 +104,9 @@ static int command_write(struct pci_dev *dev, int offset, u16 value, void *data)
- 		pci_clear_mwi(dev);
- 	}
- 
--	if (dev_data && dev_data->allow_interrupt_control) {
--		if ((cmd->val ^ value) & PCI_COMMAND_INTX_DISABLE) {
--			if (value & PCI_COMMAND_INTX_DISABLE) {
--				pci_intx(dev, 0);
--			} else {
--				/* Do not allow enabling INTx together with MSI or MSI-X. */
--				switch (xen_pcibk_get_interrupt_type(dev)) {
--				case INTERRUPT_TYPE_NONE:
--					pci_intx(dev, 1);
--					break;
--				case INTERRUPT_TYPE_INTX:
--					break;
--				default:
--					return PCIBIOS_SET_FAILED;
--				}
--			}
--		}
--	}
-+	if (dev_data && dev_data->allow_interrupt_control &&
-+	    ((cmd->val ^ value) & PCI_COMMAND_INTX_DISABLE))
-+		pci_intx(dev, !(value & PCI_COMMAND_INTX_DISABLE));
- 
- 	cmd->val = value;
  
 -- 
 2.42.0
