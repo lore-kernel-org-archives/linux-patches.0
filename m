@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56981FCF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B0A3D90
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdVF2aaM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4208AC4E77A;
-	Wed, 15 Nov 2023 20:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPrbZyjQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A1FC4E779;
+	Wed, 15 Nov 2023 20:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081836;
-	bh=6Ia56GcXCuTSqglaPO3DfDSqwivN0hMuJJZFl5HaZ+s=;
+	s=korg; t=1700081838;
+	bh=wtV7knZqYv7DpuKVijxOTIstgj2mqn+3RN1ohHz+E+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdVF2aaMQGsUGJsKwUV+rWdmuH4k9sv5Uk1KvvTqA11nzeCcT/JAW9v3JgMcDRpL2
-	 PrxgGd5m3srwXPb5s6uhrh2qsRlcgMhpN64IoN0/Gt+2zCKewZ13VwgiHGtdd2O/BJ
-	 gvAEGXclkMSOODVsmd1XQ7hcVLKUYKM9VPeQ/aq0=
+	b=WPrbZyjQ3rfIrqPF2mjoCQYvhV+CAteYuvk6mC3wHDRVismMtZc7P2cCuNxyf0PSk
+	 GiJn0g62W9hMFRR/Swa9xm4TicLVWGjk+RO6K7utoBsbvfd2tsV4wobTzaQBe6vysK
+	 W6HDiYY8LtdC3eFhCFAUuNcY/rsEzpVaSawXc4UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jonas Blixt <jonas.blixt@actia.se>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 156/191] media: vidtv: psi: Add check for kstrdup
-Date: Wed, 15 Nov 2023 15:47:11 -0500
-Message-ID: <20231115204653.847173740@linuxfoundation.org>
+Subject: [PATCH 5.10 133/191] USB: usbip: fix stub_dev hub disconnect
+Date: Wed, 15 Nov 2023 15:46:48 -0500
+Message-ID: <20231115204652.505952638@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -42,109 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Jonas Blixt <jonas.blixt@actia.se>
 
-[ Upstream commit 76a2c5df6ca8bd8ada45e953b8c72b746f42918d ]
+[ Upstream commit 97475763484245916735a1aa9a3310a01d46b008 ]
 
-Add check for the return value of kstrdup() and return the error
-if it fails in order to avoid NULL pointer dereference.
+If a hub is disconnected that has device(s) that's attached to the usbip layer
+the disconnect function might fail because it tries to release the port
+on an already disconnected hub.
 
-Fixes: 7a7899f6f58e ("media: vidtv: psi: Implement an Event Information Table (EIT)")
-Fixes: c2f78f0cb294 ("media: vidtv: psi: add a Network Information Table (NIT)")
-Fixes: f90cf6079bf6 ("media: vidtv: add a bridge driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 6080cd0e9239 ("staging: usbip: claim ports used by shared devices")
+Signed-off-by: Jonas Blixt <jonas.blixt@actia.se>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20230615092810.1215490-1-jonas.blixt@actia.se
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_psi.c | 45 +++++++++++++++++---
- 1 file changed, 40 insertions(+), 5 deletions(-)
+ drivers/usb/usbip/stub_dev.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vidtv/vidtv_psi.c b/drivers/media/test-drivers/vidtv/vidtv_psi.c
-index 1724bb485e670..1726e76f0106a 100644
---- a/drivers/media/test-drivers/vidtv/vidtv_psi.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_psi.c
-@@ -308,16 +308,29 @@ struct vidtv_psi_desc_service *vidtv_psi_service_desc_init(struct vidtv_psi_desc
+diff --git a/drivers/usb/usbip/stub_dev.c b/drivers/usb/usbip/stub_dev.c
+index 3c6d452e3bf40..4104eea03e806 100644
+--- a/drivers/usb/usbip/stub_dev.c
++++ b/drivers/usb/usbip/stub_dev.c
+@@ -462,8 +462,13 @@ static void stub_disconnect(struct usb_device *udev)
+ 	/* release port */
+ 	rc = usb_hub_release_port(udev->parent, udev->portnum,
+ 				  (struct usb_dev_state *) udev);
+-	if (rc) {
+-		dev_dbg(&udev->dev, "unable to release port\n");
++	/*
++	 * NOTE: If a HUB disconnect triggered disconnect of the down stream
++	 * device usb_hub_release_port will return -ENODEV so we can safely ignore
++	 * that error here.
++	 */
++	if (rc && (rc != -ENODEV)) {
++		dev_dbg(&udev->dev, "unable to release port (%i)\n", rc);
+ 		return;
+ 	}
  
- 	desc->service_name_len = service_name_len;
- 
--	if (service_name && service_name_len)
-+	if (service_name && service_name_len) {
- 		desc->service_name = kstrdup(service_name, GFP_KERNEL);
-+		if (!desc->service_name)
-+			goto free_desc;
-+	}
- 
- 	desc->provider_name_len = provider_name_len;
- 
--	if (provider_name && provider_name_len)
-+	if (provider_name && provider_name_len) {
- 		desc->provider_name = kstrdup(provider_name, GFP_KERNEL);
-+		if (!desc->provider_name)
-+			goto free_desc_service_name;
-+	}
- 
- 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
- 	return desc;
-+
-+free_desc_service_name:
-+	if (service_name && service_name_len)
-+		kfree(desc->service_name);
-+free_desc:
-+	kfree(desc);
-+	return NULL;
- }
- 
- struct vidtv_psi_desc_registration
-@@ -362,8 +375,13 @@ struct vidtv_psi_desc_network_name
- 
- 	desc->length = network_name_len;
- 
--	if (network_name && network_name_len)
-+	if (network_name && network_name_len) {
- 		desc->network_name = kstrdup(network_name, GFP_KERNEL);
-+		if (!desc->network_name) {
-+			kfree(desc);
-+			return NULL;
-+		}
-+	}
- 
- 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
- 	return desc;
-@@ -449,15 +467,32 @@ struct vidtv_psi_desc_short_event
- 		iso_language_code = "eng";
- 
- 	desc->iso_language_code = kstrdup(iso_language_code, GFP_KERNEL);
-+	if (!desc->iso_language_code)
-+		goto free_desc;
- 
--	if (event_name && event_name_len)
-+	if (event_name && event_name_len) {
- 		desc->event_name = kstrdup(event_name, GFP_KERNEL);
-+		if (!desc->event_name)
-+			goto free_desc_language_code;
-+	}
- 
--	if (text && text_len)
-+	if (text && text_len) {
- 		desc->text = kstrdup(text, GFP_KERNEL);
-+		if (!desc->text)
-+			goto free_desc_event_name;
-+	}
- 
- 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
- 	return desc;
-+
-+free_desc_event_name:
-+	if (event_name && event_name_len)
-+		kfree(desc->event_name);
-+free_desc_language_code:
-+	kfree(desc->iso_language_code);
-+free_desc:
-+	kfree(desc);
-+	return NULL;
- }
- 
- struct vidtv_psi_desc *vidtv_psi_desc_clone(struct vidtv_psi_desc *desc)
 -- 
 2.42.0
 
