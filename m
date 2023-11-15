@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BF043AD1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2C6249E2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cjdhc2jw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5608BC4E758;
-	Wed, 15 Nov 2023 20:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeHTG608"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C28BDC4E75C;
+	Wed, 15 Nov 2023 20:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081510;
-	bh=Rq3DHxlXqnIJKzkF3a8QJASzYbOC0p3TN0I5tcXGEOU=;
+	s=korg; t=1700081511;
+	bh=VUXlIYw7eSrU6rZ6ufRPwsTIIbYTUJ7VwzZrWcDWxJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cjdhc2jwsTKQPQAAQDcj4RkXg4sIqKy47xNA7avyb1C1PTIZski6mqLM6YpWmnbG+
-	 VI7PlZA4O53MUJnFIjNr+iK2XtKUp9OVH+x2WpbdDIofjRpwLlAwjtOX0u7uD5sBdx
-	 9HYjvLbXJJ4iIlTbwHxKOlFhOQ4Fkxxr9TpJrZ4A=
+	b=MeHTG6081xhrJGFmmlVwb1aIV/xRM39tgtuTAnqCgA7+cMj/21yXvHaSeXvQXa6hU
+	 jAxFvf13Q96sHTfGLoqyTwLXzexZN8raScV/QNkufp7yAdUeVLoslFy/ph1+A/rRaY
+	 R79VSyKMA9v71Nou16SP6VA4xeoiXs1MrnyaknQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Lee Jones <lee@kernel.org>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 162/244] mfd: arizona-spi: Set pdata.hpdet_channel for ACPI enumerated devs
-Date: Wed, 15 Nov 2023 15:35:54 -0500
-Message-ID: <20231115203558.064598086@linuxfoundation.org>
+Subject: [PATCH 5.15 191/244] usb: host: xhci-plat: fix possible kernel oops while resuming
+Date: Wed, 15 Nov 2023 15:36:23 -0500
+Message-ID: <20231115203559.813653436@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,48 +42,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 831d1af85133e1763d41e20414912d9a1058ea72 ]
+[ Upstream commit a5f928db59519a15e82ecba4ae3e7cbf5a44715a ]
 
-Commit 9e86b2ad4c11 changed the channel used for HPDET detection
-(headphones vs lineout detection) from being hardcoded to
-ARIZONA_ACCDET_MODE_HPL (HP left channel) to it being configurable
-through arizona_pdata.hpdet_channel the DT/OF parsing added for
-filling arizona_pdata on devicetree platforms ensures that
-arizona_pdata.hpdet_channel gets set to ARIZONA_ACCDET_MODE_HPL
-when not specified in the devicetree-node.
+If this driver enables the xHC clocks while resuming from sleep, it calls
+clk_prepare_enable() without checking for errors and blithely goes on to
+read/write the xHC's registers -- which, with the xHC not being clocked,
+at least on ARM32 usually causes an imprecise external abort exceptions
+which cause kernel oops.  Currently, the chips for which the driver does
+the clock dance on suspend/resume seem to be the Broadcom STB SoCs, based
+on ARM32 CPUs, as it seems...
 
-But on ACPI platforms where arizona_pdata is filled by
-arizona_spi_acpi_probe() arizona_pdata.hpdet_channel was not
-getting set, causing it to default to 0 aka ARIZONA_ACCDET_MODE_MIC.
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-This causes headphones to get misdetected as line-out on some models.
-Fix this by setting hpdet_channel = ARIZONA_ACCDET_MODE_HPL.
-
-Fixes: e933836744a2 ("mfd: arizona: Add support for ACPI enumeration of WM5102 connected over SPI")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231014205414.59415-1-hdegoede@redhat.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 8bd954c56197 ("usb: host: xhci-plat: suspend and resume clocks")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20231019102924.2797346-19-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/arizona-spi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/host/xhci-plat.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mfd/arizona-spi.c b/drivers/mfd/arizona-spi.c
-index aa1d6f94ae532..8d826b58732dc 100644
---- a/drivers/mfd/arizona-spi.c
-+++ b/drivers/mfd/arizona-spi.c
-@@ -118,6 +118,9 @@ static int arizona_spi_acpi_probe(struct arizona *arizona)
- 	arizona->pdata.micd_ranges = arizona_micd_aosp_ranges;
- 	arizona->pdata.num_micd_ranges = ARRAY_SIZE(arizona_micd_aosp_ranges);
+diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+index 972a44b2a7f12..e56a1fb9715a7 100644
+--- a/drivers/usb/host/xhci-plat.c
++++ b/drivers/usb/host/xhci-plat.c
+@@ -466,23 +466,38 @@ static int __maybe_unused xhci_plat_resume(struct device *dev)
+ 	int ret;
  
-+	/* Use left headphone speaker for HP vs line-out detection */
-+	arizona->pdata.hpdet_channel = ARIZONA_ACCDET_MODE_HPL;
+ 	if (!device_may_wakeup(dev) && (xhci->quirks & XHCI_SUSPEND_RESUME_CLKS)) {
+-		clk_prepare_enable(xhci->clk);
+-		clk_prepare_enable(xhci->reg_clk);
++		ret = clk_prepare_enable(xhci->clk);
++		if (ret)
++			return ret;
 +
++		ret = clk_prepare_enable(xhci->reg_clk);
++		if (ret) {
++			clk_disable_unprepare(xhci->clk);
++			return ret;
++		}
+ 	}
+ 
+ 	ret = xhci_priv_resume_quirk(hcd);
+ 	if (ret)
+-		return ret;
++		goto disable_clks;
+ 
+ 	ret = xhci_resume(xhci, 0);
+ 	if (ret)
+-		return ret;
++		goto disable_clks;
+ 
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
+ 
  	return 0;
++
++disable_clks:
++	if (!device_may_wakeup(dev) && (xhci->quirks & XHCI_SUSPEND_RESUME_CLKS)) {
++		clk_disable_unprepare(xhci->clk);
++		clk_disable_unprepare(xhci->reg_clk);
++	}
++
++	return ret;
  }
  
+ static int __maybe_unused xhci_plat_runtime_suspend(struct device *dev)
 -- 
 2.42.0
 
