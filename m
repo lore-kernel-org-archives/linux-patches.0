@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E0E28DB1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3911D3DB8D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuNVfqbl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB6BC433CB;
-	Wed, 15 Nov 2023 19:21:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2dIm+nx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB494C433C8;
+	Wed, 15 Nov 2023 19:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076085;
-	bh=0PPe3RHY/B+XNnShMjtgSmFShBF+7m62+0p9gZ22yzg=;
+	s=korg; t=1700076087;
+	bh=Fju5d5SLb4EXHzzUxxmibDvkDYYrluxXWc6hD+y15pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wuNVfqblun28RGAe0f/yGMluzsOBh5lMgL+KPMjis7sMBhKXbTFFBrx/rTtM/ZJJ8
-	 7LLb24BT67q02RnluYkFSRbLYuwrtw9MKnBTLkp0m9A22Ok+XweWNcSZysLA1yyH6z
-	 1pI4yaJTVFBpOcHinv5pAdlgcTm3rjUKESAEbThQ=
+	b=P2dIm+nxHKdaHNSH2oQ58hKFxu28Xc/Z3979xA6TaKKAOGN2y/uCck6EhajHbt/Qq
+	 77TQrHG2fxWlGZTPZbSpSvcLDNhgLPkMxH9S50JYH1UvKAS1nI2FKqYr6o8rzEK1kE
+	 IcuPPWfn4gEKrxrbaAtFvAJ2XMR9ccBWjIKmjDoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aananth V <aananthv@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dave Marchevsky <davemarchevsky@fb.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 067/550] tcp: call tcp_try_undo_recovery when an RTOd TFO SYNACK is ACKed
-Date: Wed, 15 Nov 2023 14:10:51 -0500
-Message-ID: <20231115191605.335021022@linuxfoundation.org>
+Subject: [PATCH 6.5 068/550] bpf: Fix kfunc callback register type handling
+Date: Wed, 15 Nov 2023 14:10:52 -0500
+Message-ID: <20231115191605.401714304@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,69 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aananth V <aananthv@google.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit e326578a21414738de45f77badd332fb00bd0f58 ]
+[ Upstream commit 06d686f771ddc27a8554cd8f5b22e071040dc90e ]
 
-For passive TCP Fast Open sockets that had SYN/ACK timeout and did not
-send more data in SYN_RECV, upon receiving the final ACK in 3WHS, the
-congestion state may awkwardly stay in CA_Loss mode unless the CA state
-was undone due to TCP timestamp checks. However, if
-tcp_rcv_synrecv_state_fastopen() decides not to undo, then we should
-enter CA_Open, because at that point we have received an ACK covering
-the retransmitted SYNACKs. Currently, the icsk_ca_state is only set to
-CA_Open after we receive an ACK for a data-packet. This is because
-tcp_ack does not call tcp_fastretrans_alert (and tcp_process_loss) if
-!prior_packets
+The kfunc code to handle KF_ARG_PTR_TO_CALLBACK does not check the reg
+type before using reg->subprogno. This can accidently permit invalid
+pointers from being passed into callback helpers (e.g. silently from
+different paths). Likewise, reg->subprogno from the per-register type
+union may not be meaningful either. We need to reject any other type
+except PTR_TO_FUNC.
 
-Note that tcp_process_loss() calls tcp_try_undo_recovery(), so having
-tcp_rcv_synrecv_state_fastopen() decide that if we're in CA_Loss we
-should call tcp_try_undo_recovery() is consistent with that, and
-low risk.
-
-Fixes: dad8cea7add9 ("tcp: fix TFO SYNACK undo to avoid double-timestamp-undo")
-Signed-off-by: Aananth V <aananthv@google.com>
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Acked-by: Dave Marchevsky <davemarchevsky@fb.com>
+Fixes: 5d92ddc3de1b ("bpf: Add callback validation to kfunc verifier logic")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20230912233214.1518551-14-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ kernel/bpf/verifier.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 7d544f965b264..908db91f7b4cd 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6434,22 +6434,23 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
- 
- static void tcp_rcv_synrecv_state_fastopen(struct sock *sk)
- {
-+	struct tcp_sock *tp = tcp_sk(sk);
- 	struct request_sock *req;
- 
- 	/* If we are still handling the SYNACK RTO, see if timestamp ECR allows
- 	 * undo. If peer SACKs triggered fast recovery, we can't undo here.
- 	 */
--	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss)
--		tcp_try_undo_loss(sk, false);
-+	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss && !tp->packets_out)
-+		tcp_try_undo_recovery(sk);
- 
- 	/* Reset rtx states to prevent spurious retransmits_timed_out() */
--	tcp_sk(sk)->retrans_stamp = 0;
-+	tp->retrans_stamp = 0;
- 	inet_csk(sk)->icsk_retransmits = 0;
- 
- 	/* Once we leave TCP_SYN_RECV or TCP_FIN_WAIT_1,
- 	 * we no longer need req so release it.
- 	 */
--	req = rcu_dereference_protected(tcp_sk(sk)->fastopen_rsk,
-+	req = rcu_dereference_protected(tp->fastopen_rsk,
- 					lockdep_sock_is_held(sk));
- 	reqsk_fastopen_remove(sk, req, false);
- 
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 6c52055916287..e7e2687c35884 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -11029,6 +11029,10 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
+ 			break;
+ 		}
+ 		case KF_ARG_PTR_TO_CALLBACK:
++			if (reg->type != PTR_TO_FUNC) {
++				verbose(env, "arg%d expected pointer to func\n", i);
++				return -EINVAL;
++			}
+ 			meta->subprogno = reg->subprogno;
+ 			break;
+ 		case KF_ARG_PTR_TO_REFCOUNTED_KPTR:
 -- 
 2.42.0
 
