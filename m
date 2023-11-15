@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD4A31730
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27DE31730
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lI9YqiAb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F161C433C7;
-	Wed, 15 Nov 2023 19:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kls7q+s7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CCFC433C8;
+	Wed, 15 Nov 2023 19:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077603;
-	bh=J2MIBoQSJacSAkojynG0tAxou8mXDwNbPMu3mlLhoVE=;
+	s=korg; t=1700077604;
+	bh=VQ/JVAwC0okJ4Kt4/BXquLuN7d0q5WS6gqbd+v+Rld0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lI9YqiAbJheQO6E8ZTl3NHe7ZKpwPyU8mDqBXMdPmQ8QACrWVhL5+IqF5iCQTyMti
-	 kQrQZCpR/gHN1r/7JwB4yaVAYV0DM/U13MIY2eHheuiY5fQM+Mt6Vttrj2h3J7Kd5I
-	 hp4nK/Up5zTNKDUYNl/EFMTOxCPiZUwYNHHuNA6s=
+	b=kls7q+s7ZuQkNWAvahPQxsff+L2VTr31rFVb9ubTQhj7c+FjYzLaBrtYqWp1rLJHB
+	 P8sS73hJlCVdwb1VyFnxXJXaDdAca7kU36R6pi2ALZHptzxfMoglVGKpqqidvjesZA
+	 fQVc/efRPzK8bXQ7OEwZpwAr8YGBJ6CbsUGd6x8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Damian Muszynski <damian.muszynski@intel.com>,
-	Tero Kristo <tero.kristo@linux.intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 404/603] crypto: qat - fix ring to service map for QAT GEN4
-Date: Wed, 15 Nov 2023 14:15:49 -0500
-Message-ID: <20231115191640.991662940@linuxfoundation.org>
+Subject: [PATCH 6.6 405/603] crypto: qat - fix deadlock in backlog processing
+Date: Wed, 15 Nov 2023 14:15:50 -0500
+Message-ID: <20231115191641.061636799@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -46,126 +45,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit a238487f7965d102794ed9f8aff0b667cd2ae886 ]
+[ Upstream commit 203b01001c4d741205b9c329acddc5193ed56fbd ]
 
-The 4xxx drivers hardcode the ring to service mapping. However, when
-additional configurations where added to the driver, the mappings were
-not updated. This implies that an incorrect mapping might be reported
-through pfvf for certain configurations.
+If a request has the flag CRYPTO_TFM_REQ_MAY_BACKLOG set, the function
+qat_alg_send_message_maybacklog(), enqueues it in a backlog list if
+either (1) there is already at least one request in the backlog list, or
+(2) the HW ring is nearly full or (3) the enqueue to the HW ring fails.
+If an interrupt occurs right before the lock in qat_alg_backlog_req() is
+taken and the backlog queue is being emptied, then there is no request
+in the HW queues that can trigger a subsequent interrupt that can clear
+the backlog queue. In addition subsequent requests are enqueued to the
+backlog list and not sent to the hardware.
 
-Add an algorithm that computes the correct ring to service mapping based
-on the firmware loaded on the device.
+Fix it by holding the lock while taking the decision if the request
+needs to be included in the backlog queue or not. This synchronizes the
+flow with the interrupt handler that drains the backlog queue.
 
-Fixes: 0cec19c761e5 ("crypto: qat - add support for compression for 4xxx")
+For performance reasons, the logic has been changed to try to enqueue
+first without holding the lock.
+
+Fixes: 386823839732 ("crypto: qat - add backlog mechanism")
+Reported-by: Mikulas Patocka <mpatocka@redhat.com>
+Closes: https://lore.kernel.org/all/af9581e2-58f9-cc19-428f-6f18f1f83d54@redhat.com/T/
 Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
-Reviewed-by: Tero Kristo <tero.kristo@linux.intel.com>
+Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/qat/qat_4xxx/adf_4xxx_hw_data.c     | 54 +++++++++++++++++++
- .../intel/qat/qat_common/adf_accel_devices.h  |  1 +
- .../crypto/intel/qat/qat_common/adf_init.c    |  3 ++
- 3 files changed, 58 insertions(+)
+ .../intel/qat/qat_common/qat_algs_send.c      | 46 ++++++++++---------
+ 1 file changed, 25 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c b/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c
-index 44b732fb80bca..a5691ba0b7244 100644
---- a/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c
-+++ b/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c
-@@ -423,6 +423,59 @@ static const struct adf_fw_config *get_fw_config(struct adf_accel_dev *accel_dev
- 	}
+diff --git a/drivers/crypto/intel/qat/qat_common/qat_algs_send.c b/drivers/crypto/intel/qat/qat_common/qat_algs_send.c
+index bb80455b3e81e..b97b678823a97 100644
+--- a/drivers/crypto/intel/qat/qat_common/qat_algs_send.c
++++ b/drivers/crypto/intel/qat/qat_common/qat_algs_send.c
+@@ -40,40 +40,44 @@ void qat_alg_send_backlog(struct qat_instance_backlog *backlog)
+ 	spin_unlock_bh(&backlog->lock);
  }
  
-+enum adf_rp_groups {
-+	RP_GROUP_0 = 0,
-+	RP_GROUP_1,
-+	RP_GROUP_COUNT
-+};
-+
-+static u16 get_ring_to_svc_map(struct adf_accel_dev *accel_dev)
-+{
-+	enum adf_cfg_service_type rps[RP_GROUP_COUNT];
-+	const struct adf_fw_config *fw_config;
-+	u16 ring_to_svc_map;
-+	int i, j;
-+
-+	fw_config = get_fw_config(accel_dev);
-+	if (!fw_config)
-+		return 0;
-+
-+	for (i = 0; i < RP_GROUP_COUNT; i++) {
-+		switch (fw_config[i].ae_mask) {
-+		case ADF_AE_GROUP_0:
-+			j = RP_GROUP_0;
-+			break;
-+		case ADF_AE_GROUP_1:
-+			j = RP_GROUP_1;
-+			break;
-+		default:
-+			return 0;
-+		}
-+
-+		switch (fw_config[i].obj) {
-+		case ADF_FW_SYM_OBJ:
-+			rps[j] = SYM;
-+			break;
-+		case ADF_FW_ASYM_OBJ:
-+			rps[j] = ASYM;
-+			break;
-+		case ADF_FW_DC_OBJ:
-+			rps[j] = COMP;
-+			break;
-+		default:
-+			rps[j] = 0;
-+			break;
-+		}
-+	}
-+
-+	ring_to_svc_map = rps[RP_GROUP_0] << ADF_CFG_SERV_RING_PAIR_0_SHIFT |
-+			  rps[RP_GROUP_1] << ADF_CFG_SERV_RING_PAIR_1_SHIFT |
-+			  rps[RP_GROUP_0] << ADF_CFG_SERV_RING_PAIR_2_SHIFT |
-+			  rps[RP_GROUP_1] << ADF_CFG_SERV_RING_PAIR_3_SHIFT;
-+
-+	return ring_to_svc_map;
-+}
-+
- static const char *uof_get_name(struct adf_accel_dev *accel_dev, u32 obj_num,
- 				const char * const fw_objs[], int num_objs)
+-static void qat_alg_backlog_req(struct qat_alg_req *req,
+-				struct qat_instance_backlog *backlog)
+-{
+-	INIT_LIST_HEAD(&req->list);
+-
+-	spin_lock_bh(&backlog->lock);
+-	list_add_tail(&req->list, &backlog->list);
+-	spin_unlock_bh(&backlog->lock);
+-}
+-
+-static int qat_alg_send_message_maybacklog(struct qat_alg_req *req)
++static bool qat_alg_try_enqueue(struct qat_alg_req *req)
  {
-@@ -519,6 +572,7 @@ void adf_init_hw_data_4xxx(struct adf_hw_device_data *hw_data, u32 dev_id)
- 	hw_data->uof_get_ae_mask = uof_get_ae_mask;
- 	hw_data->set_msix_rttable = set_msix_default_rttable;
- 	hw_data->set_ssm_wdtimer = adf_gen4_set_ssm_wdtimer;
-+	hw_data->get_ring_to_svc_map = get_ring_to_svc_map;
- 	hw_data->disable_iov = adf_disable_sriov;
- 	hw_data->ring_pair_reset = adf_gen4_ring_pair_reset;
- 	hw_data->enable_pm = adf_gen4_enable_pm;
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_accel_devices.h b/drivers/crypto/intel/qat/qat_common/adf_accel_devices.h
-index 1e84ff309ed3b..79d5a1535eda3 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_accel_devices.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_accel_devices.h
-@@ -182,6 +182,7 @@ struct adf_hw_device_data {
- 	void (*get_arb_info)(struct arb_info *arb_csrs_info);
- 	void (*get_admin_info)(struct admin_info *admin_csrs_info);
- 	enum dev_sku_info (*get_sku)(struct adf_hw_device_data *self);
-+	u16 (*get_ring_to_svc_map)(struct adf_accel_dev *accel_dev);
- 	int (*alloc_irq)(struct adf_accel_dev *accel_dev);
- 	void (*free_irq)(struct adf_accel_dev *accel_dev);
- 	void (*enable_error_correction)(struct adf_accel_dev *accel_dev);
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_init.c b/drivers/crypto/intel/qat/qat_common/adf_init.c
-index 7323a9f1f11c8..0f9e2d59ce385 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_init.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
-@@ -97,6 +97,9 @@ static int adf_dev_init(struct adf_accel_dev *accel_dev)
- 		return -EFAULT;
- 	}
+ 	struct qat_instance_backlog *backlog = req->backlog;
+ 	struct adf_etr_ring_data *tx_ring = req->tx_ring;
+ 	u32 *fw_req = req->fw_req;
  
-+	if (hw_data->get_ring_to_svc_map)
-+		hw_data->ring_to_svc_map = hw_data->get_ring_to_svc_map(accel_dev);
+-	/* If any request is already backlogged, then add to backlog list */
++	/* Check if any request is already backlogged */
+ 	if (!list_empty(&backlog->list))
+-		goto enqueue;
++		return false;
+ 
+-	/* If ring is nearly full, then add to backlog list */
++	/* Check if ring is nearly full */
+ 	if (adf_ring_nearly_full(tx_ring))
+-		goto enqueue;
++		return false;
+ 
+-	/* If adding request to HW ring fails, then add to backlog list */
++	/* Try to enqueue to HW ring */
+ 	if (adf_send_message(tx_ring, fw_req))
+-		goto enqueue;
++		return false;
+ 
+-	return -EINPROGRESS;
++	return true;
++}
+ 
+-enqueue:
+-	qat_alg_backlog_req(req, backlog);
+ 
+-	return -EBUSY;
++static int qat_alg_send_message_maybacklog(struct qat_alg_req *req)
++{
++	struct qat_instance_backlog *backlog = req->backlog;
++	int ret = -EINPROGRESS;
 +
- 	if (adf_ae_init(accel_dev)) {
- 		dev_err(&GET_DEV(accel_dev),
- 			"Failed to initialise Acceleration Engine\n");
++	if (qat_alg_try_enqueue(req))
++		return ret;
++
++	spin_lock_bh(&backlog->lock);
++	if (!qat_alg_try_enqueue(req)) {
++		list_add_tail(&req->list, &backlog->list);
++		ret = -EBUSY;
++	}
++	spin_unlock_bh(&backlog->lock);
++
++	return ret;
+ }
+ 
+ int qat_alg_send_message(struct qat_alg_req *req)
 -- 
 2.42.0
 
