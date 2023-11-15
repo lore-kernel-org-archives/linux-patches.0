@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F4243AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1FD43AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MB8jqo2s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7752C433A9;
-	Wed, 15 Nov 2023 20:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOiScBvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CA5C433CD;
+	Wed, 15 Nov 2023 20:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081239;
-	bh=/Q6hApFdnlfrc1kmfjjvN8q8GFh6w0O2DbDGWL8c3Ds=;
+	s=korg; t=1700081240;
+	bh=uUty2KbKd9Q8zw6ikMwkA6E4UiB1xGYLyVsuGmidnbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MB8jqo2sTSgWfBXeEf4g06sbEA3/4eq3P6leO2FAiBI9UfSAibXaEYgcnBqPD1zUy
-	 4N84a06HWo83J2WWEIbtuPnT6C3UXBUn5N1I+GTRvTveYT1laL0v00cn2N2otZ0PHx
-	 PdU1IJP2FTY7WMb12UwlWoomvpem0QODwUG67yj8=
+	b=gOiScBvC3z+itNDwyrp/cWkQ2fkDQKHeIV8/WowQd/gRMgafQ0g25yDALZSGwb3kB
+	 QYfAORtLhY0A745yUqS/UIXoWK3sd8bkKqheTlOaLQjod7ks3ZR4x/0eFLwOrdxv67
+	 mi+8RVyszGT7ktKSFFaJCm70nEJeUAHQyaTDavDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/244] can: dev: can_put_echo_skb(): dont crash kernel if can_priv::echo_skb is accessed out of bounds
-Date: Wed, 15 Nov 2023 15:33:47 -0500
-Message-ID: <20231115203550.475287161@linuxfoundation.org>
+Subject: [PATCH 5.15 036/244] PM / devfreq: rockchip-dfi: Make pmu regmap mandatory
+Date: Wed, 15 Nov 2023 15:33:48 -0500
+Message-ID: <20231115203550.532069930@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,40 +43,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-[ Upstream commit 6411959c10fe917288cbb1038886999148560057 ]
+[ Upstream commit 1e0731c05c985deb68a97fa44c1adcd3305dda90 ]
 
-If the "struct can_priv::echoo_skb" is accessed out of bounds, this
-would cause a kernel crash. Instead, issue a meaningful warning
-message and return with an error.
+As a matter of fact the regmap_pmu already is mandatory because
+it is used unconditionally in the driver. Bail out gracefully in
+probe() rather than crashing later.
 
-Fixes: a6e4bc530403 ("can: make the number of echo skb's configurable")
-Link: https://lore.kernel.org/all/20231005-can-dev-fix-can-restart-v2-5-91b5c1fd922c@pengutronix.de
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://lore.kernel.org/lkml/20230704093242.583575-2-s.hauer@pengutronix.de/
+Fixes: b9d1262bca0af ("PM / devfreq: event: support rockchip dfi controller")
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/skb.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/devfreq/event/rockchip-dfi.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
-index 61660248c69ef..e59d5cbb644a1 100644
---- a/drivers/net/can/dev/skb.c
-+++ b/drivers/net/can/dev/skb.c
-@@ -42,7 +42,11 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
- {
- 	struct can_priv *priv = netdev_priv(dev);
+diff --git a/drivers/devfreq/event/rockchip-dfi.c b/drivers/devfreq/event/rockchip-dfi.c
+index 9a88faaf8b27f..4dafdf23197b9 100644
+--- a/drivers/devfreq/event/rockchip-dfi.c
++++ b/drivers/devfreq/event/rockchip-dfi.c
+@@ -194,14 +194,15 @@ static int rockchip_dfi_probe(struct platform_device *pdev)
+ 		return PTR_ERR(data->clk);
+ 	}
  
--	BUG_ON(idx >= priv->echo_skb_max);
-+	if (idx >= priv->echo_skb_max) {
-+		netdev_err(dev, "%s: BUG! Trying to access can_priv::echo_skb out of bounds (%u/max %u)\n",
-+			   __func__, idx, priv->echo_skb_max);
-+		return -EINVAL;
-+	}
+-	/* try to find the optional reference to the pmu syscon */
+ 	node = of_parse_phandle(np, "rockchip,pmu", 0);
+-	if (node) {
+-		data->regmap_pmu = syscon_node_to_regmap(node);
+-		of_node_put(node);
+-		if (IS_ERR(data->regmap_pmu))
+-			return PTR_ERR(data->regmap_pmu);
+-	}
++	if (!node)
++		return dev_err_probe(&pdev->dev, -ENODEV, "Can't find pmu_grf registers\n");
++
++	data->regmap_pmu = syscon_node_to_regmap(node);
++	of_node_put(node);
++	if (IS_ERR(data->regmap_pmu))
++		return PTR_ERR(data->regmap_pmu);
++
+ 	data->dev = dev;
  
- 	/* check flag whether this packet has to be looped back */
- 	if (!(dev->flags & IFF_ECHO) ||
+ 	desc = devm_kzalloc(dev, sizeof(*desc), GFP_KERNEL);
 -- 
 2.42.0
 
