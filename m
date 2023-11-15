@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1483A8E7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D823BB29
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pq62D1pc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC270C433C7;
-	Wed, 15 Nov 2023 19:21:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhaeqTnQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4942DC433CA;
+	Wed, 15 Nov 2023 19:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076093;
-	bh=WJgAMoLt/+5TxWOGQho8dGeGU0CHRJ3H8kOUbUAOxEI=;
+	s=korg; t=1700076094;
+	bh=kn1WfBewYm32RfkOrrjm6vjPKY61y22Keaa0AgGQ6Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pq62D1pcwJmFebkgRm5z8YDTFSz439MRHwmMTBhHmtSHCy9pWbutKXldcTXuFB4pR
-	 783ZcQ6j7OT9qVTGMwYum+up6R5jQwGRJ87i1HUNqcd3vNNCckCrz+P1gFeO6T7tqe
-	 mMdGVXcZf71aMlTT/fQxiVZHBvSCpL4228mMer08=
+	b=RhaeqTnQUyvXh6bYuRepfYOyx6j7GUyDhMC7QG/5RqT9zE0jEL+xqYwQOV95yaB3Z
+	 I5XwBQ6aa/5VYY1rIlZBnzkHnYOHv+S+3DMYwfJpj3Jx7MX+pgMAy+cAg2dmqYID5/
+	 /2tcrZkkZ4++KvGjsrYlqGaAZTzDho0BLzIKWKds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Kees Cook <keescook@chromium.org>,
+	Geoff Levand <geoff@infradead.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 072/550] tipc: Use size_add() in calls to struct_size()
-Date: Wed, 15 Nov 2023 14:10:56 -0500
-Message-ID: <20231115191605.690032951@linuxfoundation.org>
+Subject: [PATCH 6.5 073/550] net: spider_net: Use size_add() in call to struct_size()
+Date: Wed, 15 Nov 2023 14:10:57 -0500
+Message-ID: <20231115191605.759064848@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,44 +46,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit 2506a91734754de690869824fb0d1ac592ec1266 ]
+[ Upstream commit 0201409079b975e46cc40e8bdff4bd61329ee10f ]
 
 If, for any reason, the open-coded arithmetic causes a wraparound,
 the protection that `struct_size()` adds against potential integer
 overflows is defeated. Fix this by hardening call to `struct_size()`
 with `size_add()`.
 
-Fixes: e034c6d23bc4 ("tipc: Use struct_size() helper")
+Fixes: 3f1071ec39f7 ("net: spider_net: Use struct_size() helper")
 Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Geoff Levand <geoff@infradead.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/link.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/toshiba/spider_net.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tipc/link.c b/net/tipc/link.c
-index 2eff1c7949cbc..8715c9b05f90d 100644
---- a/net/tipc/link.c
-+++ b/net/tipc/link.c
-@@ -1446,7 +1446,7 @@ u16 tipc_get_gap_ack_blks(struct tipc_gap_ack_blks **ga, struct tipc_link *l,
- 		p = (struct tipc_gap_ack_blks *)msg_data(hdr);
- 		sz = ntohs(p->len);
- 		/* Sanity check */
--		if (sz == struct_size(p, gacks, p->ugack_cnt + p->bgack_cnt)) {
-+		if (sz == struct_size(p, gacks, size_add(p->ugack_cnt, p->bgack_cnt))) {
- 			/* Good, check if the desired type exists */
- 			if ((uc && p->ugack_cnt) || (!uc && p->bgack_cnt))
- 				goto ok;
-@@ -1533,7 +1533,7 @@ static u16 tipc_build_gap_ack_blks(struct tipc_link *l, struct tipc_msg *hdr)
- 			__tipc_build_gap_ack_blks(ga, l, ga->bgack_cnt) : 0;
+diff --git a/drivers/net/ethernet/toshiba/spider_net.c b/drivers/net/ethernet/toshiba/spider_net.c
+index 50d7eacfec582..87e67121477cb 100644
+--- a/drivers/net/ethernet/toshiba/spider_net.c
++++ b/drivers/net/ethernet/toshiba/spider_net.c
+@@ -2332,7 +2332,7 @@ spider_net_alloc_card(void)
+ 	struct spider_net_card *card;
  
- 	/* Total len */
--	len = struct_size(ga, gacks, ga->bgack_cnt + ga->ugack_cnt);
-+	len = struct_size(ga, gacks, size_add(ga->bgack_cnt, ga->ugack_cnt));
- 	ga->len = htons(len);
- 	return len;
- }
+ 	netdev = alloc_etherdev(struct_size(card, darray,
+-					    tx_descriptors + rx_descriptors));
++					    size_add(tx_descriptors, rx_descriptors)));
+ 	if (!netdev)
+ 		return NULL;
+ 
 -- 
 2.42.0
 
