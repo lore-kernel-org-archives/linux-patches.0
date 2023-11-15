@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E028E31721
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DEB31721
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmCQzoYA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 911DCC433C9;
-	Wed, 15 Nov 2023 19:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIRlzSJ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D634C433CA;
+	Wed, 15 Nov 2023 19:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076872;
-	bh=iM/RJ5jix369dTYiOuiDKWsNJ3tvfhW4Yff+DX/UKT0=;
+	s=korg; t=1700076874;
+	bh=/zWx4MlWfMXy23zVHgQH7pNBUxNZEpajRMkwOZ5C4RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZmCQzoYAs6juWVHdSjRdtBfI34sZcblMDMPYW/o7HVavcsl9VoLnrpVIaX/q2B6Vw
-	 vmBIDPrJstBID8T8UGk9qxgb/TNXABcBkc39bJQglA5cb1ChiaEm0pt5o4jLWX8AD5
-	 xLvILKlW4k72EgTzg4R7vppOkql2AcSFtmCGlB/o=
+	b=pIRlzSJ2LeQGJU9CFNp2qsX8Q2AIH6CpgwNK1nq2F4JAUsIzC/i/cu1r+zUxFo4iD
+	 ShHRs+s5VwB2/8mQPc8N4FMt19Nn6wZtLcCXKqhucSFhHA2e+OyMkwonxEItbmLuVS
+	 JADS6lzyAnER+uZzT+/OzMIs9o+Xyh1B8bjZEcbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/603] udp: introduce udp->udp_flags
-Date: Wed, 15 Nov 2023 14:09:58 -0500
-Message-ID: <20231115191616.787263650@linuxfoundation.org>
+Subject: [PATCH 6.5 450/550] rtc: brcmstb-waketimer: support level alarm_irq
+Date: Wed, 15 Nov 2023 14:17:14 -0500
+Message-ID: <20231115191632.011048493@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,175 +37,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Doug Berger <opendmb@gmail.com>
 
-[ Upstream commit 81b36803ac139827538ac5ce4028e750a3c53f53 ]
+[ Upstream commit e005a9b35b464be5b2e0194f717e90e7e496785d ]
 
-According to syzbot, it is time to use proper atomic flags
-for various UDP flags.
+Some devices (e.g. BCM72112) use an alarm_irq interrupt that is
+connected to a level interrupt controller rather than an edge
+interrupt controller. In this case, the interrupt cannot be left
+enabled by the irq handler while preserving the hardware wake-up
+signal on wake capable devices or an interrupt storm will occur.
 
-Add udp_flags field, and convert udp->corkflag to first
-bit in it.
+The alarm_expired flag is introduced to allow the disabling of
+the interrupt when an alarm expires and to support balancing the
+calls to disable_irq() and enable_irq() in accordance with the
+existing design.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: a0002127cd74 ("udp: move udp->no_check6_tx to udp->udp_flags")
+Fixes: 24304a87158a ("rtc: brcmstb-waketimer: allow use as non-wake alarm")
+Signed-off-by: Doug Berger <opendmb@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20230830224747.1663044-1-opendmb@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/udp.h | 28 +++++++++++++++++++++-------
- net/ipv4/udp.c      | 12 ++++++------
- net/ipv6/udp.c      |  6 +++---
- 3 files changed, 30 insertions(+), 16 deletions(-)
+ drivers/rtc/rtc-brcmstb-waketimer.c | 47 ++++++++++++++++++++++++++---
+ 1 file changed, 42 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/udp.h b/include/linux/udp.h
-index 43c1fb2d2c21a..23f0693e0d9cc 100644
---- a/include/linux/udp.h
-+++ b/include/linux/udp.h
-@@ -32,14 +32,20 @@ static inline u32 udp_hashfn(const struct net *net, u32 num, u32 mask)
- 	return (num + net_hash_mix(net)) & mask;
- }
+diff --git a/drivers/rtc/rtc-brcmstb-waketimer.c b/drivers/rtc/rtc-brcmstb-waketimer.c
+index 3cdc015692ca6..1a65a4e0dc003 100644
+--- a/drivers/rtc/rtc-brcmstb-waketimer.c
++++ b/drivers/rtc/rtc-brcmstb-waketimer.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright © 2014-2017 Broadcom
++ * Copyright © 2014-2023 Broadcom
+  */
  
-+enum {
-+	UDP_FLAGS_CORK,		/* Cork is required */
-+};
-+
- struct udp_sock {
- 	/* inet_sock has to be the first member */
- 	struct inet_sock inet;
- #define udp_port_hash		inet.sk.__sk_common.skc_u16hashes[0]
- #define udp_portaddr_hash	inet.sk.__sk_common.skc_u16hashes[1]
- #define udp_portaddr_node	inet.sk.__sk_common.skc_portaddr_node
-+
-+	unsigned long	 udp_flags;
-+
- 	int		 pending;	/* Any pending frames ? */
--	unsigned int	 corkflag;	/* Cork is required */
- 	__u8		 encap_type;	/* Is this an Encapsulation socket? */
- 	unsigned char	 no_check6_tx:1,/* Send zero UDP6 checksums on TX? */
- 			 no_check6_rx:1,/* Allow zero UDP6 checksums on RX? */
-@@ -51,6 +57,11 @@ struct udp_sock {
- 			 gro_enabled:1,	/* Request GRO aggregation */
- 			 accept_udp_l4:1,
- 			 accept_udp_fraglist:1;
-+/* indicator bits used by pcflag: */
-+#define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
-+#define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
-+#define UDPLITE_RECV_CC  0x4		/* set via udplite setsocktopt        */
-+	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
- 	/*
- 	 * Following member retains the information to create a UDP header
- 	 * when the socket is uncorked.
-@@ -62,12 +73,6 @@ struct udp_sock {
- 	 */
- 	__u16		 pcslen;
- 	__u16		 pcrlen;
--/* indicator bits used by pcflag: */
--#define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
--#define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
--#define UDPLITE_RECV_CC  0x4		/* set via udplite setsocktopt        */
--	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
--	__u8		 unused[3];
- 	/*
- 	 * For encapsulation sockets.
- 	 */
-@@ -95,6 +100,15 @@ struct udp_sock {
- 	int		forward_threshold;
+ #define pr_fmt(fmt)	KBUILD_MODNAME ": " fmt
+@@ -34,6 +34,7 @@ struct brcmstb_waketmr {
+ 	u32 rate;
+ 	unsigned long rtc_alarm;
+ 	bool alarm_en;
++	bool alarm_expired;
  };
  
-+#define udp_test_bit(nr, sk)			\
-+	test_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
-+#define udp_set_bit(nr, sk)			\
-+	set_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
-+#define udp_clear_bit(nr, sk)			\
-+	clear_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
-+#define udp_assign_bit(nr, sk, val)		\
-+	assign_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags, val)
+ #define BRCMSTB_WKTMR_EVENT		0x00
+@@ -64,6 +65,11 @@ static inline void brcmstb_waketmr_clear_alarm(struct brcmstb_waketmr *timer)
+ 	writel_relaxed(reg - 1, timer->base + BRCMSTB_WKTMR_ALARM);
+ 	writel_relaxed(WKTMR_ALARM_EVENT, timer->base + BRCMSTB_WKTMR_EVENT);
+ 	(void)readl_relaxed(timer->base + BRCMSTB_WKTMR_EVENT);
++	if (timer->alarm_expired) {
++		timer->alarm_expired = false;
++		/* maintain call balance */
++		enable_irq(timer->alarm_irq);
++	}
+ }
+ 
+ static void brcmstb_waketmr_set_alarm(struct brcmstb_waketmr *timer,
+@@ -105,10 +111,17 @@ static irqreturn_t brcmstb_alarm_irq(int irq, void *data)
+ 		return IRQ_HANDLED;
+ 
+ 	if (timer->alarm_en) {
+-		if (!device_may_wakeup(timer->dev))
++		if (device_may_wakeup(timer->dev)) {
++			disable_irq_nosync(irq);
++			timer->alarm_expired = true;
++		} else {
+ 			writel_relaxed(WKTMR_ALARM_EVENT,
+ 				       timer->base + BRCMSTB_WKTMR_EVENT);
++		}
+ 		rtc_update_irq(timer->rtc, 1, RTC_IRQF | RTC_AF);
++	} else {
++		writel_relaxed(WKTMR_ALARM_EVENT,
++			       timer->base + BRCMSTB_WKTMR_EVENT);
+ 	}
+ 
+ 	return IRQ_HANDLED;
+@@ -221,8 +234,14 @@ static int brcmstb_waketmr_alarm_enable(struct device *dev,
+ 		    !brcmstb_waketmr_is_pending(timer))
+ 			return -EINVAL;
+ 		timer->alarm_en = true;
+-		if (timer->alarm_irq)
++		if (timer->alarm_irq) {
++			if (timer->alarm_expired) {
++				timer->alarm_expired = false;
++				/* maintain call balance */
++				enable_irq(timer->alarm_irq);
++			}
+ 			enable_irq(timer->alarm_irq);
++		}
+ 	} else if (!enabled && timer->alarm_en) {
+ 		if (timer->alarm_irq)
+ 			disable_irq(timer->alarm_irq);
+@@ -352,6 +371,17 @@ static int brcmstb_waketmr_suspend(struct device *dev)
+ 	return brcmstb_waketmr_prepare_suspend(timer);
+ }
+ 
++static int brcmstb_waketmr_suspend_noirq(struct device *dev)
++{
++	struct brcmstb_waketmr *timer = dev_get_drvdata(dev);
 +
- #define UDP_MAX_SEGMENTS	(1 << 6UL)
++	/* Catch any alarms occurring prior to noirq */
++	if (timer->alarm_expired && device_may_wakeup(dev))
++		return -EBUSY;
++
++	return 0;
++}
++
+ static int brcmstb_waketmr_resume(struct device *dev)
+ {
+ 	struct brcmstb_waketmr *timer = dev_get_drvdata(dev);
+@@ -368,10 +398,17 @@ static int brcmstb_waketmr_resume(struct device *dev)
  
- #define udp_sk(ptr) container_of_const(ptr, struct udp_sock, inet.sk)
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index f39b9c8445808..9709f8a532dc3 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -1051,7 +1051,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	u8 tos, scope;
- 	__be16 dport;
- 	int err, is_udplite = IS_UDPLITE(sk);
--	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
-+	int corkreq = udp_test_bit(CORK, sk) || msg->msg_flags & MSG_MORE;
- 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
- 	struct sk_buff *skb;
- 	struct ip_options_data opt_copy;
-@@ -1315,11 +1315,11 @@ void udp_splice_eof(struct socket *sock)
- 	struct sock *sk = sock->sk;
- 	struct udp_sock *up = udp_sk(sk);
- 
--	if (!up->pending || READ_ONCE(up->corkflag))
-+	if (!up->pending || udp_test_bit(CORK, sk))
- 		return;
- 
- 	lock_sock(sk);
--	if (up->pending && !READ_ONCE(up->corkflag))
-+	if (up->pending && !udp_test_bit(CORK, sk))
- 		udp_push_pending_frames(sk);
- 	release_sock(sk);
+ 	return ret;
  }
-@@ -2658,9 +2658,9 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
- 	switch (optname) {
- 	case UDP_CORK:
- 		if (val != 0) {
--			WRITE_ONCE(up->corkflag, 1);
-+			udp_set_bit(CORK, sk);
- 		} else {
--			WRITE_ONCE(up->corkflag, 0);
-+			udp_clear_bit(CORK, sk);
- 			lock_sock(sk);
- 			push_pending_frames(sk);
- 			release_sock(sk);
-@@ -2783,7 +2783,7 @@ int udp_lib_getsockopt(struct sock *sk, int level, int optname,
++#else
++#define brcmstb_waketmr_suspend		NULL
++#define brcmstb_waketmr_suspend_noirq	NULL
++#define brcmstb_waketmr_resume		NULL
+ #endif /* CONFIG_PM_SLEEP */
  
- 	switch (optname) {
- 	case UDP_CORK:
--		val = READ_ONCE(up->corkflag);
-+		val = udp_test_bit(CORK, sk);
- 		break;
+-static SIMPLE_DEV_PM_OPS(brcmstb_waketmr_pm_ops,
+-			 brcmstb_waketmr_suspend, brcmstb_waketmr_resume);
++static const struct dev_pm_ops brcmstb_waketmr_pm_ops = {
++	.suspend	= brcmstb_waketmr_suspend,
++	.suspend_noirq	= brcmstb_waketmr_suspend_noirq,
++	.resume		= brcmstb_waketmr_resume,
++};
  
- 	case UDP_ENCAP:
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 86b5d509a4688..0c6973cd22ce4 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1332,7 +1332,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	int addr_len = msg->msg_namelen;
- 	bool connected = false;
- 	int ulen = len;
--	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
-+	int corkreq = udp_test_bit(CORK, sk) || msg->msg_flags & MSG_MORE;
- 	int err;
- 	int is_udplite = IS_UDPLITE(sk);
- 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
-@@ -1644,11 +1644,11 @@ static void udpv6_splice_eof(struct socket *sock)
- 	struct sock *sk = sock->sk;
- 	struct udp_sock *up = udp_sk(sk);
- 
--	if (!up->pending || READ_ONCE(up->corkflag))
-+	if (!up->pending || udp_test_bit(CORK, sk))
- 		return;
- 
- 	lock_sock(sk);
--	if (up->pending && !READ_ONCE(up->corkflag))
-+	if (up->pending && !udp_test_bit(CORK, sk))
- 		udp_v6_push_pending_frames(sk);
- 	release_sock(sk);
- }
+ static const __maybe_unused struct of_device_id brcmstb_waketmr_of_match[] = {
+ 	{ .compatible = "brcm,brcmstb-waketimer" },
 -- 
 2.42.0
 
