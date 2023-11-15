@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598ED3DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA633DB97
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAadI5rw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EB9C433CB;
-	Wed, 15 Nov 2023 19:58:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHP0mBz1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BDDC433C9;
+	Wed, 15 Nov 2023 19:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078321;
-	bh=HdJ9xkSnlvji5RJIZsRiSbsSaq6ulhRGJE44xFdlDQ0=;
+	s=korg; t=1700078322;
+	bh=L3dzfqIUCFJGgcHtN7w5TwIjpIhAbxMVVgPp/OzjXjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FAadI5rwWJQlf1YHjjFiZgAnG006cjnRe7tgOYGrF0BpF+gak/cqo1JDmejNbi1LV
-	 bfuZtUv5zziqi0PCBBjRhYNowch6JKckdRjzIsmeZt213mLc5VFmHpi4plyNXuuI8m
-	 hCRQy1fIIvQ0oLi7YRjK3RIfp/wGzaSTgHmsm2Bo=
+	b=gHP0mBz1Llfs1dtbixrWXQ8hXeN8+ljwxfIG46eQ3QnBXt5KXQq4D7Vax/uAoYo7u
+	 0+K9X75bIWIeZTwP4FeqP45EuCJ91s612GJPCKvAw40iboQdIRrkTJolqODbmHvex7
+	 CjVqa4q1GlaaElcf10mimU+xekYJw0ZPmkeyeWzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 216/379] ASoC: fsl: mpc5200_dma.c: Fix warning of Function parameter or member not described
-Date: Wed, 15 Nov 2023 14:24:51 -0500
-Message-ID: <20231115192657.890222923@linuxfoundation.org>
+Subject: [PATCH 6.1 244/379] dt-bindings: mfd: mt6397: Split out compatible for MediaTek MT6366 PMIC
+Date: Wed, 15 Nov 2023 14:25:19 -0500
+Message-ID: <20231115192659.569372416@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,42 +44,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 4a221b2e3340f4a3c2b414c46c846a26c6caf820 ]
+[ Upstream commit 61fdd1f1d2c183ec256527d16d75e75c3582af82 ]
 
-This patch fixes the warnings of "Function parameter or member 'xxx'
-not described".
+The MT6366 PMIC is mostly, but not fully, compatible with MT6358. It has
+a different set of regulators. Specifically, it lacks the camera related
+VCAM* LDOs and VLDO28, but has additional VM18, VMDDR, and VSRAM_CORE LDOs.
 
->> sound/soc/fsl/mpc5200_dma.c:116: warning: Function parameter or member 'component' not described in 'psc_dma_trigger'
-   sound/soc/fsl/mpc5200_dma.c:116: warning: Function parameter or member 'substream' not described in 'psc_dma_trigger'
-   sound/soc/fsl/mpc5200_dma.c:116: warning: Function parameter or member 'cmd' not described in 'psc_dma_trigger'
+The PMICs contain a chip ID register that can be used to detect which
+exact model is preset, so it is possible to share a common base
+compatible string.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310061914.jJuekdHs-lkp@intel.com/
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Fixes: 6d1048bc1152 ("ASoC: fsl: mpc5200_dma: remove snd_pcm_ops")
-Link: https://lore.kernel.org/r/87il7fcqm8.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Add a separate compatible for the MT6366 PMIC, with a fallback to the
+MT6358 PMIC.
+
+Fixes: 49be16305587 ("dt-bindings: mfd: Add compatible for the MediaTek MT6366 PMIC")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230928085537.3246669-2-wenst@chromium.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/mpc5200_dma.c | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/devicetree/bindings/mfd/mt6397.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/mpc5200_dma.c b/sound/soc/fsl/mpc5200_dma.c
-index 9014978100207..3f7ccae3f6b1a 100644
---- a/sound/soc/fsl/mpc5200_dma.c
-+++ b/sound/soc/fsl/mpc5200_dma.c
-@@ -100,6 +100,9 @@ static irqreturn_t psc_dma_bcom_irq(int irq, void *_psc_dma_stream)
+diff --git a/Documentation/devicetree/bindings/mfd/mt6397.txt b/Documentation/devicetree/bindings/mfd/mt6397.txt
+index 518986c44880f..8f9784af92d6e 100644
+--- a/Documentation/devicetree/bindings/mfd/mt6397.txt
++++ b/Documentation/devicetree/bindings/mfd/mt6397.txt
+@@ -22,8 +22,9 @@ compatible:
+ 	"mediatek,mt6323" for PMIC MT6323
+ 	"mediatek,mt6331" for PMIC MT6331 and MT6332
+ 	"mediatek,mt6357" for PMIC MT6357
+-	"mediatek,mt6358" for PMIC MT6358 and MT6366
++	"mediatek,mt6358" for PMIC MT6358
+ 	"mediatek,mt6359" for PMIC MT6359
++	"mediatek,mt6366", "mediatek,mt6358" for PMIC MT6366
+ 	"mediatek,mt6397" for PMIC MT6397
  
- /**
-  * psc_dma_trigger: start and stop the DMA transfer.
-+ * @component: triggered component
-+ * @substream: triggered substream
-+ * @cmd: triggered command
-  *
-  * This function is called by ALSA to start, stop, pause, and resume the DMA
-  * transfer of data.
+ Optional subnodes:
+@@ -40,6 +41,7 @@ Optional subnodes:
+ 		- compatible: "mediatek,mt6323-regulator"
+ 	see ../regulator/mt6323-regulator.txt
+ 		- compatible: "mediatek,mt6358-regulator"
++		- compatible: "mediatek,mt6366-regulator", "mediatek-mt6358-regulator"
+ 	see ../regulator/mt6358-regulator.txt
+ 		- compatible: "mediatek,mt6397-regulator"
+ 	see ../regulator/mt6397-regulator.txt
 -- 
 2.42.0
 
