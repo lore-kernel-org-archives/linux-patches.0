@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD13139FC0
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2398239FC0
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIFhDE4G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A33EC4E74A;
-	Wed, 15 Nov 2023 20:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4NOx33f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C492DC4E74D;
+	Wed, 15 Nov 2023 20:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081487;
-	bh=ENSvhSPpf0RiZqnJ67PV8RfSOrFgDr+g94UD0ZLWR3w=;
+	s=korg; t=1700081489;
+	bh=PyqAGX60qgujZ7omt/dO5yVy6Lf2tOnZWWQLqORThpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AIFhDE4GGUAF9PB9uYqunILxALxlPE0zuDI5WG1dvUKl9gZNym8M7kx2FfAb20BeO
-	 thw5wB6A2sLHS5OJtXw+JF4uNEXshTkQidENhGPLYs7XsRmk9TyeEpTUsH+f8Ny9eL
-	 k5OcWC8cISKC1xixv+DI7ce7lWZpcBcpnA+H0eX0=
+	b=W4NOx33f8N5iZH2T5RtZMV9HHMJTd96Y9QB2YNRtMddlSwgY1Z6cE8kEQ6Dk/k4wz
+	 KfV6JcSTtQk1XKR+QiK8SPpEK3h0YrKThw9b/m+5IJ9JOwRSouHaf9bYMdb46e3bUg
+	 I1Qc4y1LaB65ZqEfZ3TcwbEv20dROJ1RTWbWbazU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 183/244] f2fs: fix to initialize map.m_pblk in f2fs_precache_extents()
-Date: Wed, 15 Nov 2023 15:36:15 -0500
-Message-ID: <20231115203559.352129571@linuxfoundation.org>
+Subject: [PATCH 5.15 184/244] powerpc: Only define __parse_fpscr() when required
+Date: Wed, 15 Nov 2023 15:36:16 -0500
+Message-ID: <20231115203559.397545672@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,35 +43,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 8b07c1fb0f1ad139373c8253f2fad8bc43fab07d ]
+[ Upstream commit c7e0d9bb9154c6e6b2ac8746faba27b53393f25e ]
 
-Otherwise, it may print random physical block address in tracepoint
-of f2fs_map_blocks() as below:
+Clang 17 reports:
 
-f2fs_map_blocks: dev = (253,16), ino = 2297, file offset = 0, start blkaddr = 0xa356c421, len = 0x0, flags = 0
+arch/powerpc/kernel/traps.c:1167:19: error: unused function '__parse_fpscr' [-Werror,-Wunused-function]
 
-Fixes: c4020b2da4c9 ("f2fs: support F2FS_IOC_PRECACHE_EXTENTS")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+__parse_fpscr() is called from two sites. First call is guarded
+by #ifdef CONFIG_PPC_FPU_REGS
+
+Second call is guarded by CONFIG_MATH_EMULATION which selects
+CONFIG_PPC_FPU_REGS.
+
+So only define __parse_fpscr() when CONFIG_PPC_FPU_REGS is defined.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202309210327.WkqSd5Bq-lkp@intel.com/
+Fixes: b6254ced4da6 ("powerpc/signal: Don't manage floating point regs when no FPU")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/5de2998c57f3983563b27b39228ea9a7229d4110.1695385984.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/kernel/traps.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index e1131af0396b9..58fd32db025da 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -3210,6 +3210,7 @@ int f2fs_precache_extents(struct inode *inode)
- 		return -EOPNOTSUPP;
+diff --git a/arch/powerpc/kernel/traps.c b/arch/powerpc/kernel/traps.c
+index a08bb7cefdc54..fe912983ced96 100644
+--- a/arch/powerpc/kernel/traps.c
++++ b/arch/powerpc/kernel/traps.c
+@@ -1148,6 +1148,7 @@ static void emulate_single_step(struct pt_regs *regs)
+ 		__single_step_exception(regs);
+ }
  
- 	map.m_lblk = 0;
-+	map.m_pblk = 0;
- 	map.m_next_pgofs = NULL;
- 	map.m_next_extent = &m_next_extent;
- 	map.m_seg_type = NO_CHECK_TYPE;
++#ifdef CONFIG_PPC_FPU_REGS
+ static inline int __parse_fpscr(unsigned long fpscr)
+ {
+ 	int ret = FPE_FLTUNK;
+@@ -1174,6 +1175,7 @@ static inline int __parse_fpscr(unsigned long fpscr)
+ 
+ 	return ret;
+ }
++#endif
+ 
+ static void parse_fpe(struct pt_regs *regs)
+ {
 -- 
 2.42.0
 
