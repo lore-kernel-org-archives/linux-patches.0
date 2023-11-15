@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC0A31725
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434D731725
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZBp6otg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7987BC433C7;
-	Wed, 15 Nov 2023 19:39:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O10ZEGfr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7AE0C433C8;
+	Wed, 15 Nov 2023 19:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077184;
-	bh=cjARZvmyJzmOGEshSXlLVoDS82j2W7CXR3IztwRFVj8=;
+	s=korg; t=1700077186;
+	bh=qlmWBd/vKhV917kx39j2amz2k8LwbovgOBzrMyrqPrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZBp6otgOO8AfHVQ794dEWYRg3mAXI9Qnt/1EzWbaLEZMdG1rIbjY/ZljfZPcEna0
-	 pnLN0BhaK+Cya1yeXyDvaXocYjUQ14DsKAwZhKZm3HtjfMqiQof9cgGoDS9MJVfEjr
-	 h3MCfOneAAcx3CsiJqRYRPKQZ2wX8giNP4l/4CgE=
+	b=O10ZEGfrM79n7aTeu+SMlTH4C5KM9rdQqe8f58UXwcn0ZTXqS+XadDto3zFGQ9PXQ
+	 hhyuBEs/Q9zVTg0oj1A011iz+OfNJrafLH4GZmpWx92i17XY2rJ9xaEPwBXFyXctdF
+	 nzL6Vrs6w0T57RSkd8OUzOhAAVEyf3GUD+NVzuTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 539/550] fbdev: imsttfb: fix a resource leak in probe
-Date: Wed, 15 Nov 2023 14:18:43 -0500
-Message-ID: <20231115191638.297723363@linuxfoundation.org>
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Alex Fetters <Alex.Fetters@garmin.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.5 548/550] Revert "mmc: core: Capture correct oemid-bits for eMMC cards"
+Date: Wed, 15 Nov 2023 14:18:52 -0500
+Message-ID: <20231115191638.912751237@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,89 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-[ Upstream commit aba6ab57a910ad4b940c2024d15f2cdbf5b7f76b ]
+commit 421b605edb1ce611dee06cf6fd9a1c1f2fd85ad0 upstream.
 
-I've re-written the error handling but the bug is that if init_imstt()
-fails we need to call iounmap(par->cmap_regs).
+This reverts commit 84ee19bffc9306128cd0f1c650e89767079efeff.
 
-Fixes: c75f5a550610 ("fbdev: imsttfb: Fix use after free bug in imsttfb_probe")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The commit above made quirks with an OEMID fail to be applied, as they
+were checking card->cid.oemid for the full 16 bits defined in MMC_FIXUP
+macros but the field would only contain the bottom 8 bits.
+
+eMMC v5.1A might have bogus values in OEMID's higher bits so another fix
+will be made, but it has been decided to revert this until that is ready.
+
+Fixes: 84ee19bffc93 ("mmc: core: Capture correct oemid-bits for eMMC cards")
+Link: https://lkml.kernel.org/r/ZToJsSLHr8RnuTHz@codewreck.org
+Link: https://lkml.kernel.org/r/CAPDyKFqkKibcXnwjnhc3+W1iJBHLeqQ9BpcZrSwhW2u9K2oUtg@mail.gmail.com
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Cc: stable@vger.kernel.org
+Cc: Alex Fetters <Alex.Fetters@garmin.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20231103004220.1666641-1-asmadeus@codewreck.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/imsttfb.c | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/mmc/core/mmc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/imsttfb.c b/drivers/video/fbdev/imsttfb.c
-index db7cf995aa784..d2806ba296aa3 100644
---- a/drivers/video/fbdev/imsttfb.c
-+++ b/drivers/video/fbdev/imsttfb.c
-@@ -1495,8 +1495,8 @@ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- 	if (!request_mem_region(addr, size, "imsttfb")) {
- 		printk(KERN_ERR "imsttfb: Can't reserve memory region\n");
--		framebuffer_release(info);
--		return -ENODEV;
-+		ret = -ENODEV;
-+		goto release_info;
- 	}
- 
- 	switch (pdev->device) {
-@@ -1513,36 +1513,39 @@ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 			printk(KERN_INFO "imsttfb: Device 0x%x unknown, "
- 					 "contact maintainer.\n", pdev->device);
- 			ret = -ENODEV;
--			goto error;
-+			goto release_mem_region;
- 	}
- 
- 	info->fix.smem_start = addr;
- 	info->screen_base = (__u8 *)ioremap(addr, par->ramdac == IBM ?
- 					    0x400000 : 0x800000);
- 	if (!info->screen_base)
--		goto error;
-+		goto release_mem_region;
- 	info->fix.mmio_start = addr + 0x800000;
- 	par->dc_regs = ioremap(addr + 0x800000, 0x1000);
- 	if (!par->dc_regs)
--		goto error;
-+		goto unmap_screen_base;
- 	par->cmap_regs_phys = addr + 0x840000;
- 	par->cmap_regs = (__u8 *)ioremap(addr + 0x840000, 0x1000);
- 	if (!par->cmap_regs)
--		goto error;
-+		goto unmap_dc_regs;
- 	info->pseudo_palette = par->palette;
- 	ret = init_imstt(info);
- 	if (ret)
--		goto error;
-+		goto unmap_cmap_regs;
- 
- 	pci_set_drvdata(pdev, info);
--	return ret;
-+	return 0;
- 
--error:
--	if (par->dc_regs)
--		iounmap(par->dc_regs);
--	if (info->screen_base)
--		iounmap(info->screen_base);
-+unmap_cmap_regs:
-+	iounmap(par->cmap_regs);
-+unmap_dc_regs:
-+	iounmap(par->dc_regs);
-+unmap_screen_base:
-+	iounmap(info->screen_base);
-+release_mem_region:
- 	release_mem_region(addr, size);
-+release_info:
- 	framebuffer_release(info);
- 	return ret;
- }
--- 
-2.42.0
-
+--- a/drivers/mmc/core/mmc.c
++++ b/drivers/mmc/core/mmc.c
+@@ -104,7 +104,7 @@ static int mmc_decode_cid(struct mmc_car
+ 	case 3: /* MMC v3.1 - v3.3 */
+ 	case 4: /* MMC v4 */
+ 		card->cid.manfid	= UNSTUFF_BITS(resp, 120, 8);
+-		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 8);
++		card->cid.oemid		= UNSTUFF_BITS(resp, 104, 16);
+ 		card->cid.prod_name[0]	= UNSTUFF_BITS(resp, 96, 8);
+ 		card->cid.prod_name[1]	= UNSTUFF_BITS(resp, 88, 8);
+ 		card->cid.prod_name[2]	= UNSTUFF_BITS(resp, 80, 8);
 
 
