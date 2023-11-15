@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69719433BB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D73433C1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnYq0gru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC68C433C9;
-	Wed, 15 Nov 2023 19:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19nX1Y3L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846CBC433C7;
+	Wed, 15 Nov 2023 19:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077070;
-	bh=6tmdtS2kvnclbPPU0gFc1PlnWlQ64oOsKudEKAoskBA=;
+	s=korg; t=1700077071;
+	bh=jMhnQDDP1/17ilzD2T0aj5JKf8eSPqq9hyJJX2mGOJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YnYq0gruG0T5bGmUNs0rvO0pAUjaH3o4yFp7QiqO7+/YutzmbAjZfVkcKkA2Oc/qt
-	 T7QpDlvzo2IdwvYo5Ze6qwOmBTtvdDOoiE1p11uxih2cLO+sJPx/f0YYDQ5uVk13SO
-	 chws/Gz+j4pjEtmwTb7HM5JnjlM1uzsvzO7f+ixk=
+	b=19nX1Y3L3NrVkZxOXzK/fGK1CwrD1WnUfEhvnPsJI5Q2f85ms66R3bDFFzxtjgLun
+	 FwYF8aZobPqihEXFDNOElzCmu1DjgJ0yEIYcoTcCcRGkqVjHfOATL4NuloMIOIgxmw
+	 wlt6IWvfeiua8v20W6AX4dE2kwJHT+rOlOkqE2KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Souloumiac <olivier.souloumiac@silabs.com>,
-	Alexandr Suslenko <suslenko.o@ajax.systems>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
-	Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	wenxu <wenxu@ucloud.cn>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 115/603] wifi: wfx: fix case where rates are out of order
-Date: Wed, 15 Nov 2023 14:11:00 -0500
-Message-ID: <20231115191621.202778231@linuxfoundation.org>
+Subject: [PATCH 6.5 503/550] inet: shrink struct flowi_common
+Date: Wed, 15 Nov 2023 14:18:07 -0500
+Message-ID: <20231115191635.784442221@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,163 +38,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ea2274ab0b18549dbf0e755e41d8c5e8b5232dc3 ]
+[ Upstream commit 1726483b79a72e0150734d5367e4a0238bf8fcff ]
 
-When frames are sent over the air, the device always applies the data
-rates in descending order. The driver assumed Minstrel also provided
-rate in descending order.
+I am looking at syzbot reports triggering kernel stack overflows
+involving a cascade of ipvlan devices.
 
-However, in some cases, Minstrel can a choose a fallback rate greater
-than the primary rate. In this case, the two rates was inverted, the
-device try highest rate first and we get many retries.
+We can save 8 bytes in struct flowi_common.
 
-Since the device always applies rates in descending order, the
-workaround is to drop the rate when it higher than its predecessor in
-the rate list. Thus [ 4, 5, 3 ] becomes [ 4, 3 ].
+This patch alone will not fix the issue, but is a start.
 
-This patch has been tested in isolated room with a series of
-attenuators. Here are the Minstrel statistics with 80dBm of attenuation:
-
-  Without the fix:
-
-                  best    ____________rate__________    ____statistics___    _____last____    ______sum-of________
-    mode guard #  rate   [name   idx airtime  max_tp]  [avg(tp) avg(prob)]  [retry|suc|att]  [#success | #attempts]
-    HT20  LGI  1       S  MCS0     0    1477     5.6       5.2      82.7       3     0 0             3   4
-    HT20  LGI  1          MCS1     1     738    10.6       0.0       0.0       0     0 0             0   1
-    HT20  LGI  1     D    MCS2     2     492    14.9      13.5      81.5       5     0 0             5   9
-    HT20  LGI  1    C     MCS3     3     369    18.8      17.6      84.3       5     0 0            76   96
-    HT20  LGI  1  A   P   MCS4     4     246    25.4      22.4      79.5       5     0 0         11268   14026
-    HT20  LGI  1   B   S  MCS5     5     185    30.7      19.7      57.7       5     8 9          3918   9793
-    HT20  LGI  1          MCS6     6     164    33.0       0.0       0.0       5     0 0             6   102
-    HT20  LGI  1          MCS7     7     148    35.1       0.0       0.0       0     0 0             0   44
-
-  With the fix:
-
-                  best    ____________rate__________    ____statistics___    _____last____    ______sum-of________
-    mode guard #  rate   [name   idx airtime  max_tp]  [avg(tp) avg(prob)]  [retry|suc|att]  [#success | #attempts]
-    HT20  LGI  1       S  MCS0     0    1477     5.6       1.8      28.6       1     0 0             1   5
-    HT20  LGI  1     DP   MCS1     1     738    10.6       9.7      82.6       4     0 0            14   34
-    HT20  LGI  1          MCS2     2     492    14.9       9.2      55.4       5     0 0            52   77
-    HT20  LGI  1   B   S  MCS3     3     369    18.8      15.6      74.9       5     1 1           417   554
-    HT20  LGI  1  A       MCS4     4     246    25.4      16.7      59.2       5     1 1         13812   17951
-    HT20  LGI  1    C  S  MCS5     5     185    30.7      14.0      41.0       5     1 5            57   640
-    HT20  LGI  1          MCS6     6     164    33.0       0.0       0.0       0     0 1             0   48
-    HT20  LGI  1       S  MCS7     7     148    35.1       0.0       0.0       0     0 0             0   36
-
-We can notice the device try now to send with lower rates (and high
-success rates). At the end, we measured 20-25% better throughput with
-this patch.
-
-Fixes: 9bca45f3d692 ("staging: wfx: allow to send 802.11 frames")
-Tested-by: Olivier Souloumiac <olivier.souloumiac@silabs.com>
-Tested-by: Alexandr Suslenko <suslenko.o@ajax.systems>
-Reported-by: Alexandr Suslenko <suslenko.o@ajax.systems>
-Co-developed-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
-Signed-off-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
-Signed-off-by: Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231004123039.157112-1-jerome.pouiller@silabs.com
+Fixes: 24ba14406c5c ("route: Add multipath_hash in flowi_common to make user-define hash")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: wenxu <wenxu@ucloud.cn>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20231025141037.3448203-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/silabs/wfx/data_tx.c | 71 +++++++++--------------
- 1 file changed, 29 insertions(+), 42 deletions(-)
+ include/net/flow.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/silabs/wfx/data_tx.c b/drivers/net/wireless/silabs/wfx/data_tx.c
-index 6a5e52a96d183..caa22226b01bc 100644
---- a/drivers/net/wireless/silabs/wfx/data_tx.c
-+++ b/drivers/net/wireless/silabs/wfx/data_tx.c
-@@ -226,53 +226,40 @@ static u8 wfx_tx_get_link_id(struct wfx_vif *wvif, struct ieee80211_sta *sta,
+diff --git a/include/net/flow.h b/include/net/flow.h
+index 7f0adda3bf2fe..335bbc52171c1 100644
+--- a/include/net/flow.h
++++ b/include/net/flow.h
+@@ -40,8 +40,8 @@ struct flowi_common {
+ #define FLOWI_FLAG_KNOWN_NH		0x02
+ 	__u32	flowic_secid;
+ 	kuid_t  flowic_uid;
+-	struct flowi_tunnel flowic_tun_key;
+ 	__u32		flowic_multipath_hash;
++	struct flowi_tunnel flowic_tun_key;
+ };
  
- static void wfx_tx_fixup_rates(struct ieee80211_tx_rate *rates)
- {
--	int i;
--	bool finished;
-+	bool has_rate0 = false;
-+	int i, j;
- 
--	/* Firmware is not able to mix rates with different flags */
--	for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
--		if (rates[0].flags & IEEE80211_TX_RC_SHORT_GI)
--			rates[i].flags |= IEEE80211_TX_RC_SHORT_GI;
--		if (!(rates[0].flags & IEEE80211_TX_RC_SHORT_GI))
-+	for (i = 1, j = 1; j < IEEE80211_TX_MAX_RATES; j++) {
-+		if (rates[j].idx == -1)
-+			break;
-+		/* The device use the rates in descending order, whatever the request from minstrel.
-+		 * We have to trade off here. Most important is to respect the primary rate
-+		 * requested by minstrel. So, we drops the entries with rate higher than the
-+		 * previous.
-+		 */
-+		if (rates[j].idx >= rates[i - 1].idx) {
-+			rates[i - 1].count += rates[j].count;
-+			rates[i - 1].count = min_t(u16, 15, rates[i - 1].count);
-+		} else {
-+			memcpy(rates + i, rates + j, sizeof(rates[i]));
-+			if (rates[i].idx == 0)
-+				has_rate0 = true;
-+			/* The device apply Short GI only on the first rate */
- 			rates[i].flags &= ~IEEE80211_TX_RC_SHORT_GI;
--		if (!(rates[0].flags & IEEE80211_TX_RC_USE_RTS_CTS))
--			rates[i].flags &= ~IEEE80211_TX_RC_USE_RTS_CTS;
--	}
--
--	/* Sort rates and remove duplicates */
--	do {
--		finished = true;
--		for (i = 0; i < IEEE80211_TX_MAX_RATES - 1; i++) {
--			if (rates[i + 1].idx == rates[i].idx &&
--			    rates[i].idx != -1) {
--				rates[i].count += rates[i + 1].count;
--				if (rates[i].count > 15)
--					rates[i].count = 15;
--				rates[i + 1].idx = -1;
--				rates[i + 1].count = 0;
--
--				finished = false;
--			}
--			if (rates[i + 1].idx > rates[i].idx) {
--				swap(rates[i + 1], rates[i]);
--				finished = false;
--			}
-+			i++;
- 		}
--	} while (!finished);
-+	}
- 	/* Ensure that MCS0 or 1Mbps is present at the end of the retry list */
--	for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
--		if (rates[i].idx == 0)
--			break;
--		if (rates[i].idx == -1) {
--			rates[i].idx = 0;
--			rates[i].count = 8; /* == hw->max_rate_tries */
--			rates[i].flags = rates[i - 1].flags & IEEE80211_TX_RC_MCS;
--			break;
--		}
-+	if (!has_rate0 && i < IEEE80211_TX_MAX_RATES) {
-+		rates[i].idx = 0;
-+		rates[i].count = 8; /* == hw->max_rate_tries */
-+		rates[i].flags = rates[0].flags & IEEE80211_TX_RC_MCS;
-+		i++;
-+	}
-+	for (; i < IEEE80211_TX_MAX_RATES; i++) {
-+		memset(rates + i, 0, sizeof(rates[i]));
-+		rates[i].idx = -1;
- 	}
--	/* All retries use long GI */
--	for (i = 1; i < IEEE80211_TX_MAX_RATES; i++)
--		rates[i].flags &= ~IEEE80211_TX_RC_SHORT_GI;
- }
- 
- static u8 wfx_tx_get_retry_policy_id(struct wfx_vif *wvif, struct ieee80211_tx_info *tx_info)
+ union flowi_uli {
 -- 
 2.42.0
 
