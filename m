@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919F63C465
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1947E31728
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRIWUQfb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0B3C433C7;
-	Wed, 15 Nov 2023 19:39:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PX8rkqFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF0FC433C8;
+	Wed, 15 Nov 2023 19:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077161;
-	bh=Do96oEl0jBGQcM+aFZzGC8NcJ44z52ud47+kaZDNpf8=;
+	s=korg; t=1700077162;
+	bh=kSIji8XtWpXBoqFGG753CTbJsq9QlPD5yuiF0qr1LEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CRIWUQfbOnisH9jdACAs3u25XMFplaEVONAjkbYHzIzu+pPm2L7kW9NqTsmOvPupY
-	 s6plUFJUZLzV3BICxzTB8jq6czQJhvKug3sNcQme18LO47CYqU14vLzJQqLQ5R+F0u
-	 VV8eOyENL14jvCGMI8fyQRt28ymgtGMiqSajw2Fs=
+	b=PX8rkqFX61nZfT31gzJqwe2sXocYBc0CxVFT194s8M7y7qSwzbeiuJE+2l1WduvGF
+	 AdMTQwKEW6ulXvDK9FeCh1jYVYIs30AFfcFKmU9z/vtjNO1r47YxdcKlMvt0Aezg0L
+	 s7RANjgl8iWBAthbpA6zhdVXm6r/FF9eCag9ayik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Roman Bacik <roman.bacik@broadcom.com>,
+	Ray Jui <ray.jui@broadcom.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 127/603] selftests/bpf: Make linked_list failure test more robust
-Date: Wed, 15 Nov 2023 14:11:12 -0500
-Message-ID: <20231115191622.029482116@linuxfoundation.org>
+Subject: [PATCH 6.5 525/550] i2c: iproc: handle invalid slave state
+Date: Wed, 15 Nov 2023 14:18:29 -0500
+Message-ID: <20231115191637.334324391@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,71 +39,202 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Roman Bacik <roman.bacik@broadcom.com>
 
-[ Upstream commit da1055b673f3baac2249571c9882ce767a0aa746 ]
+[ Upstream commit ba15a14399c262f91ce30c19fcbdc952262dd1be ]
 
-The linked list failure test 'pop_front_off' and 'pop_back_off'
-currently rely on matching exact instruction and register values.  The
-purpose of the test is to ensure the offset is correctly incremented for
-the returned pointers from list pop helpers, which can then be used with
-container_of to obtain the real object. Hence, somehow obtaining the
-information that the offset is 48 will work for us. Make the test more
-robust by relying on verifier error string of bpf_spin_lock and remove
-dependence on fragile instruction index or register number, which can be
-affected by different clang versions used to build the selftests.
+Add the code to handle an invalid state when both bits S_RX_EVENT
+(indicating a transaction) and S_START_BUSY (indicating the end
+of transaction - transition of START_BUSY from 1 to 0) are set in
+the interrupt status register during a slave read.
 
-Fixes: 300f19dcdb99 ("selftests/bpf: Add BPF linked list API tests")
-Reported-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20231020144839.2734006-1-memxor@gmail.com
+Signed-off-by: Roman Bacik <roman.bacik@broadcom.com>
+Fixes: 1ca1b4516088 ("i2c: iproc: handle Master aborted error")
+Acked-by: Ray Jui <ray.jui@broadcom.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/linked_list.c | 10 ++--------
- tools/testing/selftests/bpf/progs/linked_list_fail.c |  4 +++-
- 2 files changed, 5 insertions(+), 9 deletions(-)
+ drivers/i2c/busses/i2c-bcm-iproc.c | 133 ++++++++++++++++-------------
+ 1 file changed, 75 insertions(+), 58 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/linked_list.c b/tools/testing/selftests/bpf/prog_tests/linked_list.c
-index 18cf7b17463d9..98dde091d2825 100644
---- a/tools/testing/selftests/bpf/prog_tests/linked_list.c
-+++ b/tools/testing/selftests/bpf/prog_tests/linked_list.c
-@@ -94,14 +94,8 @@ static struct {
- 	{ "incorrect_head_var_off2", "variable ptr_ access var_off=(0x0; 0xffffffff) disallowed" },
- 	{ "incorrect_head_off1", "bpf_list_head not found at offset=25" },
- 	{ "incorrect_head_off2", "bpf_list_head not found at offset=1" },
--	{ "pop_front_off",
--	  "15: (bf) r1 = r6                      ; R1_w=ptr_or_null_foo(id=4,ref_obj_id=4,off=48,imm=0) "
--	  "R6_w=ptr_or_null_foo(id=4,ref_obj_id=4,off=48,imm=0) refs=2,4\n"
--	  "16: (85) call bpf_this_cpu_ptr#154\nR1 type=ptr_or_null_ expected=percpu_ptr_" },
--	{ "pop_back_off",
--	  "15: (bf) r1 = r6                      ; R1_w=ptr_or_null_foo(id=4,ref_obj_id=4,off=48,imm=0) "
--	  "R6_w=ptr_or_null_foo(id=4,ref_obj_id=4,off=48,imm=0) refs=2,4\n"
--	  "16: (85) call bpf_this_cpu_ptr#154\nR1 type=ptr_or_null_ expected=percpu_ptr_" },
-+	{ "pop_front_off", "off 48 doesn't point to 'struct bpf_spin_lock' that is at 40" },
-+	{ "pop_back_off", "off 48 doesn't point to 'struct bpf_spin_lock' that is at 40" },
- };
- 
- static void test_linked_list_fail_prog(const char *prog_name, const char *err_msg)
-diff --git a/tools/testing/selftests/bpf/progs/linked_list_fail.c b/tools/testing/selftests/bpf/progs/linked_list_fail.c
-index f4c63daba2297..6438982b928bd 100644
---- a/tools/testing/selftests/bpf/progs/linked_list_fail.c
-+++ b/tools/testing/selftests/bpf/progs/linked_list_fail.c
-@@ -591,7 +591,9 @@ int pop_ptr_off(void *(*op)(void *head))
- 	n = op(&p->head);
- 	bpf_spin_unlock(&p->lock);
- 
--	bpf_this_cpu_ptr(n);
-+	if (!n)
-+		return 0;
-+	bpf_spin_lock((void *)n);
- 	return 0;
+diff --git a/drivers/i2c/busses/i2c-bcm-iproc.c b/drivers/i2c/busses/i2c-bcm-iproc.c
+index 05c80680dff47..68438d4e5d733 100644
+--- a/drivers/i2c/busses/i2c-bcm-iproc.c
++++ b/drivers/i2c/busses/i2c-bcm-iproc.c
+@@ -316,26 +316,44 @@ static void bcm_iproc_i2c_slave_init(
+ 	iproc_i2c_wr_reg(iproc_i2c, IE_OFFSET, val);
  }
  
+-static void bcm_iproc_i2c_check_slave_status(
+-	struct bcm_iproc_i2c_dev *iproc_i2c)
++static bool bcm_iproc_i2c_check_slave_status
++	(struct bcm_iproc_i2c_dev *iproc_i2c, u32 status)
+ {
+ 	u32 val;
++	bool recover = false;
+ 
+-	val = iproc_i2c_rd_reg(iproc_i2c, S_CMD_OFFSET);
+-	/* status is valid only when START_BUSY is cleared after it was set */
+-	if (val & BIT(S_CMD_START_BUSY_SHIFT))
+-		return;
++	/* check slave transmit status only if slave is transmitting */
++	if (!iproc_i2c->slave_rx_only) {
++		val = iproc_i2c_rd_reg(iproc_i2c, S_CMD_OFFSET);
++		/* status is valid only when START_BUSY is cleared */
++		if (!(val & BIT(S_CMD_START_BUSY_SHIFT))) {
++			val = (val >> S_CMD_STATUS_SHIFT) & S_CMD_STATUS_MASK;
++			if (val == S_CMD_STATUS_TIMEOUT ||
++			    val == S_CMD_STATUS_MASTER_ABORT) {
++				dev_warn(iproc_i2c->device,
++					 (val == S_CMD_STATUS_TIMEOUT) ?
++					 "slave random stretch time timeout\n" :
++					 "Master aborted read transaction\n");
++				recover = true;
++			}
++		}
++	}
++
++	/* RX_EVENT is not valid when START_BUSY is set */
++	if ((status & BIT(IS_S_RX_EVENT_SHIFT)) &&
++	    (status & BIT(IS_S_START_BUSY_SHIFT))) {
++		dev_warn(iproc_i2c->device, "Slave aborted read transaction\n");
++		recover = true;
++	}
+ 
+-	val = (val >> S_CMD_STATUS_SHIFT) & S_CMD_STATUS_MASK;
+-	if (val == S_CMD_STATUS_TIMEOUT || val == S_CMD_STATUS_MASTER_ABORT) {
+-		dev_err(iproc_i2c->device, (val == S_CMD_STATUS_TIMEOUT) ?
+-			"slave random stretch time timeout\n" :
+-			"Master aborted read transaction\n");
++	if (recover) {
+ 		/* re-initialize i2c for recovery */
+ 		bcm_iproc_i2c_enable_disable(iproc_i2c, false);
+ 		bcm_iproc_i2c_slave_init(iproc_i2c, true);
+ 		bcm_iproc_i2c_enable_disable(iproc_i2c, true);
+ 	}
++
++	return recover;
+ }
+ 
+ static void bcm_iproc_i2c_slave_read(struct bcm_iproc_i2c_dev *iproc_i2c)
+@@ -420,48 +438,6 @@ static bool bcm_iproc_i2c_slave_isr(struct bcm_iproc_i2c_dev *iproc_i2c,
+ 	u32 val;
+ 	u8 value;
+ 
+-	/*
+-	 * Slave events in case of master-write, master-write-read and,
+-	 * master-read
+-	 *
+-	 * Master-write     : only IS_S_RX_EVENT_SHIFT event
+-	 * Master-write-read: both IS_S_RX_EVENT_SHIFT and IS_S_RD_EVENT_SHIFT
+-	 *                    events
+-	 * Master-read      : both IS_S_RX_EVENT_SHIFT and IS_S_RD_EVENT_SHIFT
+-	 *                    events or only IS_S_RD_EVENT_SHIFT
+-	 *
+-	 * iproc has a slave rx fifo size of 64 bytes. Rx fifo full interrupt
+-	 * (IS_S_RX_FIFO_FULL_SHIFT) will be generated when RX fifo becomes
+-	 * full. This can happen if Master issues write requests of more than
+-	 * 64 bytes.
+-	 */
+-	if (status & BIT(IS_S_RX_EVENT_SHIFT) ||
+-	    status & BIT(IS_S_RD_EVENT_SHIFT) ||
+-	    status & BIT(IS_S_RX_FIFO_FULL_SHIFT)) {
+-		/* disable slave interrupts */
+-		val = iproc_i2c_rd_reg(iproc_i2c, IE_OFFSET);
+-		val &= ~iproc_i2c->slave_int_mask;
+-		iproc_i2c_wr_reg(iproc_i2c, IE_OFFSET, val);
+-
+-		if (status & BIT(IS_S_RD_EVENT_SHIFT))
+-			/* Master-write-read request */
+-			iproc_i2c->slave_rx_only = false;
+-		else
+-			/* Master-write request only */
+-			iproc_i2c->slave_rx_only = true;
+-
+-		/* schedule tasklet to read data later */
+-		tasklet_schedule(&iproc_i2c->slave_rx_tasklet);
+-
+-		/*
+-		 * clear only IS_S_RX_EVENT_SHIFT and
+-		 * IS_S_RX_FIFO_FULL_SHIFT interrupt.
+-		 */
+-		val = BIT(IS_S_RX_EVENT_SHIFT);
+-		if (status & BIT(IS_S_RX_FIFO_FULL_SHIFT))
+-			val |= BIT(IS_S_RX_FIFO_FULL_SHIFT);
+-		iproc_i2c_wr_reg(iproc_i2c, IS_OFFSET, val);
+-	}
+ 
+ 	if (status & BIT(IS_S_TX_UNDERRUN_SHIFT)) {
+ 		iproc_i2c->tx_underrun++;
+@@ -493,8 +469,9 @@ static bool bcm_iproc_i2c_slave_isr(struct bcm_iproc_i2c_dev *iproc_i2c,
+ 		 * less than PKT_LENGTH bytes were output on the SMBUS
+ 		 */
+ 		iproc_i2c->slave_int_mask &= ~BIT(IE_S_TX_UNDERRUN_SHIFT);
+-		iproc_i2c_wr_reg(iproc_i2c, IE_OFFSET,
+-				 iproc_i2c->slave_int_mask);
++		val = iproc_i2c_rd_reg(iproc_i2c, IE_OFFSET);
++		val &= ~BIT(IE_S_TX_UNDERRUN_SHIFT);
++		iproc_i2c_wr_reg(iproc_i2c, IE_OFFSET, val);
+ 
+ 		/* End of SMBUS for Master Read */
+ 		val = BIT(S_TX_WR_STATUS_SHIFT);
+@@ -515,9 +492,49 @@ static bool bcm_iproc_i2c_slave_isr(struct bcm_iproc_i2c_dev *iproc_i2c,
+ 				 BIT(IS_S_START_BUSY_SHIFT));
+ 	}
+ 
+-	/* check slave transmit status only if slave is transmitting */
+-	if (!iproc_i2c->slave_rx_only)
+-		bcm_iproc_i2c_check_slave_status(iproc_i2c);
++	/* if the controller has been reset, immediately return from the ISR */
++	if (bcm_iproc_i2c_check_slave_status(iproc_i2c, status))
++		return true;
++
++	/*
++	 * Slave events in case of master-write, master-write-read and,
++	 * master-read
++	 *
++	 * Master-write     : only IS_S_RX_EVENT_SHIFT event
++	 * Master-write-read: both IS_S_RX_EVENT_SHIFT and IS_S_RD_EVENT_SHIFT
++	 *                    events
++	 * Master-read      : both IS_S_RX_EVENT_SHIFT and IS_S_RD_EVENT_SHIFT
++	 *                    events or only IS_S_RD_EVENT_SHIFT
++	 *
++	 * iproc has a slave rx fifo size of 64 bytes. Rx fifo full interrupt
++	 * (IS_S_RX_FIFO_FULL_SHIFT) will be generated when RX fifo becomes
++	 * full. This can happen if Master issues write requests of more than
++	 * 64 bytes.
++	 */
++	if (status & BIT(IS_S_RX_EVENT_SHIFT) ||
++	    status & BIT(IS_S_RD_EVENT_SHIFT) ||
++	    status & BIT(IS_S_RX_FIFO_FULL_SHIFT)) {
++		/* disable slave interrupts */
++		val = iproc_i2c_rd_reg(iproc_i2c, IE_OFFSET);
++		val &= ~iproc_i2c->slave_int_mask;
++		iproc_i2c_wr_reg(iproc_i2c, IE_OFFSET, val);
++
++		if (status & BIT(IS_S_RD_EVENT_SHIFT))
++			/* Master-write-read request */
++			iproc_i2c->slave_rx_only = false;
++		else
++			/* Master-write request only */
++			iproc_i2c->slave_rx_only = true;
++
++		/* schedule tasklet to read data later */
++		tasklet_schedule(&iproc_i2c->slave_rx_tasklet);
++
++		/* clear IS_S_RX_FIFO_FULL_SHIFT interrupt */
++		if (status & BIT(IS_S_RX_FIFO_FULL_SHIFT)) {
++			val = BIT(IS_S_RX_FIFO_FULL_SHIFT);
++			iproc_i2c_wr_reg(iproc_i2c, IS_OFFSET, val);
++		}
++	}
+ 
+ 	return true;
+ }
 -- 
 2.42.0
 
