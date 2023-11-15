@@ -1,34 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D31D41A81
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F0741A84
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmTXCcx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658DEC433C7;
-	Wed, 15 Nov 2023 19:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZ3TiwqD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9538C433CB;
+	Wed, 15 Nov 2023 19:36:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077003;
-	bh=TPZm0mSm6bjwztH4Lhz0nOJJlvGYksdwBXD7Nn/Iegc=;
+	s=korg; t=1700077005;
+	bh=W/cC/sUwkSm6tCDZJrJdFJeIX3brPtNntsGqJhkPfhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qmTXCcx/p+JoQpJtlFYw7/HJfPiOI/VSzsJw23EVQqetFMpzBU9H3g/QHBYEUKvmM
-	 iklZ7OmIMgsKxfdMQaREja6KiGg6aPV5LgnwBB5yryLp/3aV419X+PDBhtRJZ1DT4u
-	 wn6Jn9PObDYAJFqPxj1ycrkvVEm7Mr+tNYBq5FxE=
+	b=AZ3TiwqDnqctlyLQN5137CXQ2gfr6TZBdEkCGDt04w7Eef071S5arazPLMX0ZY276
+	 HyFPlo0octh8FD+lWauminx9CrYFVZc8pASDUf3roGggXJM7HDN51hBKOFixqcrO7B
+	 jbaVpsh33IT3ba6VjJPbIgHmOWCS3Kqww5xQCO74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Wang <sean.wang@mediatek.com>,
-	David Ruth <druth@chromium.org>,
-	Deren Wu <deren.wu@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mark Brown <broonie@kernel.org>,
+	"Srivatsa S. Bhat (VMware)" <srivatsa@csail.mit.edu>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Arjan van de Ven <arjan@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Len Brown <len.brown@intel.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/603] wifi: mt76: mt7921: fix the wrong rate pickup for the chanctx driver
-Date: Wed, 15 Nov 2023 14:10:40 -0500
-Message-ID: <20231115191619.739257859@linuxfoundation.org>
+Subject: [PATCH 6.5 490/550] cpupower: fix reference to nonexistent document
+Date: Wed, 15 Nov 2023 14:17:54 -0500
+Message-ID: <20231115191634.838625557@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,94 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Wang <sean.wang@mediatek.com>
+From: Vegard Nossum <vegard.nossum@oracle.com>
 
-[ Upstream commit 32b1000db221df33ec8b57794a091ba6075b6c28 ]
+[ Upstream commit 6feb1a9641197ee630bf43b5c34ea1d9f8b4a0aa ]
 
-The variable band should be determined by the ieee80211_chanctx_conf when
-the driver is a kind of chanctx one e.g mt7921 and mt7922 driver so we
-added the extension to mt76_connac2_mac_tx_rate_val by distinguishing if
-it can support chanctx to fix the incorrect rate pickup.
+This file was renamed from .txt to .rst and left a dangling reference.
+Fix it.
 
-Fixes: 41ac53c899bd ("wifi: mt76: mt7921: introduce chanctx support")
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Reviewed-by: David Ruth <druth@chromium.org>
-Tested-by: David Ruth <druth@chromium.org>
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 151f4e2bdc7a ("docs: power: convert docs to ReST and rename to *.rst")
+Cc: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Srivatsa S. Bhat (VMware) <srivatsa@csail.mit.edu>
+Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Cc: Arjan van de Ven <arjan@linux.intel.com>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: Len Brown <len.brown@intel.com>
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c        | 9 +++++++--
- drivers/net/wireless/mediatek/mt76/mt76.h            | 3 ++-
- drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c | 7 +++++--
- 3 files changed, 14 insertions(+), 5 deletions(-)
+ tools/power/cpupower/man/cpupower-powercap-info.1 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index d158320bc15db..dbab400969202 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -1697,11 +1697,16 @@ mt76_init_queue(struct mt76_dev *dev, int qid, int idx, int n_desc,
- }
- EXPORT_SYMBOL_GPL(mt76_init_queue);
+diff --git a/tools/power/cpupower/man/cpupower-powercap-info.1 b/tools/power/cpupower/man/cpupower-powercap-info.1
+index df3087000efb8..145d6f06fa72d 100644
+--- a/tools/power/cpupower/man/cpupower-powercap-info.1
++++ b/tools/power/cpupower/man/cpupower-powercap-info.1
+@@ -17,7 +17,7 @@ settings of all cores, see cpupower(1) how to choose specific cores.
+ .SH "DOCUMENTATION"
  
--u16 mt76_calculate_default_rate(struct mt76_phy *phy, int rateidx)
-+u16 mt76_calculate_default_rate(struct mt76_phy *phy,
-+				struct ieee80211_vif *vif, int rateidx)
- {
-+	struct mt76_vif *mvif = (struct mt76_vif *)vif->drv_priv;
-+	struct cfg80211_chan_def *chandef = mvif->ctx ?
-+					    &mvif->ctx->def :
-+					    &phy->chandef;
- 	int offset = 0;
+ kernel sources:
+-Documentation/power/powercap/powercap.txt
++Documentation/power/powercap/powercap.rst
  
--	if (phy->chandef.chan->band != NL80211_BAND_2GHZ)
-+	if (chandef->chan->band != NL80211_BAND_2GHZ)
- 		offset = 4;
  
- 	/* pick the lowest rate for hidden nodes */
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index 13ed07c5ccc60..dae5410d67e83 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -1101,7 +1101,8 @@ int mt76_get_of_eeprom(struct mt76_dev *dev, void *data, int offset, int len);
- struct mt76_queue *
- mt76_init_queue(struct mt76_dev *dev, int qid, int idx, int n_desc,
- 		int ring_base, u32 flags);
--u16 mt76_calculate_default_rate(struct mt76_phy *phy, int rateidx);
-+u16 mt76_calculate_default_rate(struct mt76_phy *phy,
-+				struct ieee80211_vif *vif, int rateidx);
- static inline int mt76_init_tx_queue(struct mt76_phy *phy, int qid, int idx,
- 				     int n_desc, int ring_base, u32 flags)
- {
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-index 73db9e14db06c..87479c6c2b505 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-@@ -293,7 +293,10 @@ u16 mt76_connac2_mac_tx_rate_val(struct mt76_phy *mphy,
- 				 struct ieee80211_vif *vif,
- 				 bool beacon, bool mcast)
- {
--	u8 nss = 0, mode = 0, band = mphy->chandef.chan->band;
-+	struct mt76_vif *mvif = (struct mt76_vif *)vif->drv_priv;
-+	struct cfg80211_chan_def *chandef = mvif->ctx ?
-+					    &mvif->ctx->def : &mphy->chandef;
-+	u8 nss = 0, mode = 0, band = chandef->chan->band;
- 	int rateidx = 0, mcast_rate;
- 
- 	if (!vif)
-@@ -326,7 +329,7 @@ u16 mt76_connac2_mac_tx_rate_val(struct mt76_phy *mphy,
- 		rateidx = ffs(vif->bss_conf.basic_rates) - 1;
- 
- legacy:
--	rateidx = mt76_calculate_default_rate(mphy, rateidx);
-+	rateidx = mt76_calculate_default_rate(mphy, vif, rateidx);
- 	mode = rateidx >> 8;
- 	rateidx &= GENMASK(7, 0);
- out:
+ .SH "SEE ALSO"
 -- 
 2.42.0
 
