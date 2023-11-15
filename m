@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E2F364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36CB364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKVe/AqA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F57EC433C7;
-	Wed, 15 Nov 2023 19:33:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqQGlPwT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B01C433C8;
+	Wed, 15 Nov 2023 19:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076823;
-	bh=k91LL5ulF2lnif8zCyzBKYsC6UGrLfrvS9QRgmmecO8=;
+	s=korg; t=1700076824;
+	bh=XLV2wulCV0P0n3vQlJ+OzBV0KzoBnPmQB7pToms1xQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EKVe/AqAaReVaOtZDweyyRJNMfrsXUyQKbMcxbRIplAusCUyn+Cc59EDdR5RT9TKu
-	 G254dtmG1k0jkrYsjxbJTmijrSE3UTc+w+mXeo9ILsSykB74PeLpioIyTw/0l3UOFH
-	 gvKgOE48gjVwAYjKdh9UA20eLE7XvJ+3oFSE8os8=
+	b=NqQGlPwT81XRQ/H5mG12J4UpR+HM+9ly7+bKC5RDcxoA7nly7UWYn7C3a3J416JBD
+	 1ksQoZbDUhSMEq2iXU9QzAAfLSGWgDMrN4j3SRHE77HRm3s1B/+QcyBHuc/d6ffrp6
+	 NDfVGYxkqnqzxVI9OwX5qf/81LnkgEShwgm5WV8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Stanley <joel@jms.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 434/550] powerpc: Hide empty pt_regs at base of the stack
-Date: Wed, 15 Nov 2023 14:16:58 -0500
-Message-ID: <20231115191630.855312233@linuxfoundation.org>
+Subject: [PATCH 6.6 038/603] wifi: mac80211: move radar detect work to wiphy work
+Date: Wed, 15 Nov 2023 14:09:43 -0500
+Message-ID: <20231115191615.800267160@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,125 +38,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit d45c4b48dafb5820e5cc267ff9a6d7784d13a43c ]
+[ Upstream commit 228e4f931b0e630dacca8dd867ddd863aea53913 ]
 
-A thread started via eg. user_mode_thread() runs in the kernel to begin
-with and then may later return to userspace. While it's running in the
-kernel it has a pt_regs at the base of its kernel stack, but that
-pt_regs is all zeroes.
+Move the radar detect work to wiphy work in order
+to lock the wiphy for it without doing it manually.
 
-If the thread oopses in that state, it leads to an ugly stack trace with
-a big block of zero GPRs, as reported by Joel:
-
-  Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
-  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.5.0-rc7-00004-gf7757129e3de-dirty #3
-  Hardware name: IBM PowerNV (emulated by qemu) POWER9 0x4e1200 opal:v7.0 PowerNV
-  Call Trace:
-  [c0000000036afb00] [c0000000010dd058] dump_stack_lvl+0x6c/0x9c (unreliable)
-  [c0000000036afb30] [c00000000013c524] panic+0x178/0x424
-  [c0000000036afbd0] [c000000002005100] mount_root_generic+0x250/0x324
-  [c0000000036afca0] [c0000000020057d0] prepare_namespace+0x2d4/0x344
-  [c0000000036afd20] [c0000000020049c0] kernel_init_freeable+0x358/0x3ac
-  [c0000000036afdf0] [c0000000000111b0] kernel_init+0x30/0x1a0
-  [c0000000036afe50] [c00000000000debc] ret_from_kernel_user_thread+0x14/0x1c
-  --- interrupt: 0 at 0x0
-  NIP:  0000000000000000 LR: 0000000000000000 CTR: 0000000000000000
-  REGS: c0000000036afe80 TRAP: 0000   Not tainted  (6.5.0-rc7-00004-gf7757129e3de-dirty)
-  MSR:  0000000000000000 <>  CR: 00000000  XER: 00000000
-  CFAR: 0000000000000000 IRQMASK: 0
-  GPR00: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR04: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR08: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR12: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR20: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR24: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  GPR28: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-  NIP [0000000000000000] 0x0
-  LR [0000000000000000] 0x0
-  --- interrupt: 0
-
-The all-zero pt_regs looks ugly and conveys no useful information, other
-than its presence. So detect that case and just show the presence of the
-frame by printing the interrupt marker, eg:
-
-  Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
-  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.5.0-rc3-00126-g18e9506562a0-dirty #301
-  Hardware name: IBM pSeries (emulated by qemu) POWER9 (raw) 0x4e1202 0xf000005 of:SLOF,HEAD hv:linux,kvm pSeries
-  Call Trace:
-  [c000000003aabb00] [c000000001143db8] dump_stack_lvl+0x6c/0x9c (unreliable)
-  [c000000003aabb30] [c00000000014c624] panic+0x178/0x424
-  [c000000003aabbd0] [c0000000020050fc] mount_root_generic+0x250/0x324
-  [c000000003aabca0] [c0000000020057cc] prepare_namespace+0x2d4/0x344
-  [c000000003aabd20] [c0000000020049bc] kernel_init_freeable+0x358/0x3ac
-  [c000000003aabdf0] [c0000000000111b0] kernel_init+0x30/0x1a0
-  [c000000003aabe50] [c00000000000debc] ret_from_kernel_user_thread+0x14/0x1c
-  --- interrupt: 0 at 0x0
-
-To avoid ever suppressing a valid pt_regs make sure the pt_regs has a
-zero MSR and TRAP value, and is located at the very base of the stack.
-
-Fixes: 6895dfc04741 ("powerpc: copy_thread fill in interrupt frame marker and back chain")
-Reported-by: Joel Stanley <joel@jms.id.au>
-Reported-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230824064210.907266-1-mpe@ellerman.id.au
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: eadfb54756ae ("wifi: mac80211: move sched-scan stop work to wiphy work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/process.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ net/mac80211/ieee80211_i.h | 5 +++--
+ net/mac80211/main.c        | 9 +++++----
+ net/mac80211/util.c        | 7 +++----
+ 3 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/arch/powerpc/kernel/process.c b/arch/powerpc/kernel/process.c
-index b68898ac07e19..392404688cec3 100644
---- a/arch/powerpc/kernel/process.c
-+++ b/arch/powerpc/kernel/process.c
-@@ -2258,6 +2258,22 @@ unsigned long __get_wchan(struct task_struct *p)
- 	return ret;
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index 98ef1fe1226e7..358c8865f909a 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -1406,7 +1406,7 @@ struct ieee80211_local {
+ 	/* wowlan is enabled -- don't reconfig on resume */
+ 	bool wowlan;
+ 
+-	struct work_struct radar_detected_work;
++	struct wiphy_work radar_detected_work;
+ 
+ 	/* number of RX chains the hardware has */
+ 	u8 rx_chains;
+@@ -2566,7 +2566,8 @@ bool ieee80211_is_radar_required(struct ieee80211_local *local);
+ 
+ void ieee80211_dfs_cac_timer_work(struct work_struct *work);
+ void ieee80211_dfs_cac_cancel(struct ieee80211_local *local);
+-void ieee80211_dfs_radar_detected_work(struct work_struct *work);
++void ieee80211_dfs_radar_detected_work(struct wiphy *wiphy,
++				       struct wiphy_work *work);
+ int ieee80211_send_action_csa(struct ieee80211_sub_if_data *sdata,
+ 			      struct cfg80211_csa_settings *csa_settings);
+ 
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index 24315d7b31263..3bbd66e5a0df0 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -338,7 +338,6 @@ static void ieee80211_restart_work(struct work_struct *work)
+ 	/* wait for scan work complete */
+ 	flush_workqueue(local->workqueue);
+ 	flush_work(&local->sched_scan_stopped_work);
+-	flush_work(&local->radar_detected_work);
+ 
+ 	rtnl_lock();
+ 	/* we might do interface manipulations, so need both */
+@@ -813,8 +812,8 @@ struct ieee80211_hw *ieee80211_alloc_hw_nm(size_t priv_data_len,
+ 
+ 	INIT_WORK(&local->restart_work, ieee80211_restart_work);
+ 
+-	INIT_WORK(&local->radar_detected_work,
+-		  ieee80211_dfs_radar_detected_work);
++	wiphy_work_init(&local->radar_detected_work,
++			ieee80211_dfs_radar_detected_work);
+ 
+ 	INIT_WORK(&local->reconfig_filter, ieee80211_reconfig_filter);
+ 	local->smps_mode = IEEE80211_SMPS_OFF;
+@@ -1482,13 +1481,15 @@ void ieee80211_unregister_hw(struct ieee80211_hw *hw)
+ 	 */
+ 	ieee80211_remove_interfaces(local);
+ 
++	wiphy_lock(local->hw.wiphy);
++	wiphy_work_cancel(local->hw.wiphy, &local->radar_detected_work);
++	wiphy_unlock(local->hw.wiphy);
+ 	rtnl_unlock();
+ 
+ 	cancel_delayed_work_sync(&local->roc_work);
+ 	cancel_work_sync(&local->restart_work);
+ 	cancel_work_sync(&local->reconfig_filter);
+ 	flush_work(&local->sched_scan_stopped_work);
+-	flush_work(&local->radar_detected_work);
+ 
+ 	ieee80211_clear_tx_pending(local);
+ 	rate_control_deinitialize(local);
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index 8a6917cf63cf9..e878b6a27651a 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -4356,7 +4356,8 @@ void ieee80211_dfs_cac_cancel(struct ieee80211_local *local)
+ 	mutex_unlock(&local->mtx);
  }
  
-+static bool empty_user_regs(struct pt_regs *regs, struct task_struct *tsk)
-+{
-+	unsigned long stack_page;
-+
-+	// A non-empty pt_regs should never have a zero MSR or TRAP value.
-+	if (regs->msr || regs->trap)
-+		return false;
-+
-+	// Check it sits at the very base of the stack
-+	stack_page = (unsigned long)task_stack_page(tsk);
-+	if ((unsigned long)(regs + 1) != stack_page + THREAD_SIZE)
-+		return false;
-+
-+	return true;
-+}
-+
- static int kstack_depth_to_print = CONFIG_PRINT_STACK_DEPTH;
+-void ieee80211_dfs_radar_detected_work(struct work_struct *work)
++void ieee80211_dfs_radar_detected_work(struct wiphy *wiphy,
++				       struct wiphy_work *work)
+ {
+ 	struct ieee80211_local *local =
+ 		container_of(work, struct ieee80211_local, radar_detected_work);
+@@ -4374,9 +4375,7 @@ void ieee80211_dfs_radar_detected_work(struct work_struct *work)
+ 	}
+ 	mutex_unlock(&local->chanctx_mtx);
  
- void __no_sanitize_address show_stack(struct task_struct *tsk,
-@@ -2322,9 +2338,13 @@ void __no_sanitize_address show_stack(struct task_struct *tsk,
- 			lr = regs->link;
- 			printk("%s--- interrupt: %lx at %pS\n",
- 			       loglvl, regs->trap, (void *)regs->nip);
--			__show_regs(regs);
--			printk("%s--- interrupt: %lx\n",
--			       loglvl, regs->trap);
-+
-+			// Detect the case of an empty pt_regs at the very base
-+			// of the stack and suppress showing it in full.
-+			if (!empty_user_regs(regs, tsk)) {
-+				__show_regs(regs);
-+				printk("%s--- interrupt: %lx\n", loglvl, regs->trap);
-+			}
+-	wiphy_lock(local->hw.wiphy);
+ 	ieee80211_dfs_cac_cancel(local);
+-	wiphy_unlock(local->hw.wiphy);
  
- 			firstframe = 1;
- 		}
+ 	if (num_chanctx > 1)
+ 		/* XXX: multi-channel is not supported yet */
+@@ -4391,7 +4390,7 @@ void ieee80211_radar_detected(struct ieee80211_hw *hw)
+ 
+ 	trace_api_radar_detected(local);
+ 
+-	schedule_work(&local->radar_detected_work);
++	wiphy_work_queue(hw->wiphy, &local->radar_detected_work);
+ }
+ EXPORT_SYMBOL(ieee80211_radar_detected);
+ 
 -- 
 2.42.0
 
