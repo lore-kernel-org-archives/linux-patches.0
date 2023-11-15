@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3EE3A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD7B3A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTSalcJB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBD8C433C8;
-	Wed, 15 Nov 2023 19:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozGhCKNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD5FC433C7;
+	Wed, 15 Nov 2023 19:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077304;
-	bh=2ZMcWtzxThI/ArDoxZExktNS5ApXLhbxFxSAA1YUS90=;
+	s=korg; t=1700077306;
+	bh=dxicgrVV0n3jUkChIGtw0C6TkNxJj0qrU9brottlX28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oTSalcJBZOLQnfpQR3sn0MVi68uRPgOwZt3AAYSVDWQv4V886d9jVy5/88fnqATLi
-	 YTnyeinSu1Cr+vjo234APsFKIg6ECrhlxe6L3x2rYJzUanhM3MrhCGX9QjXNAGWDtm
-	 OpdWeFsQDFpR2tG0pIXoKW/O5Kl/wNr9qYj9IxsE=
+	b=ozGhCKNSEdd+on7FiffdYJAF7sXsYRslAXOUiUpmDvLVKqsfMP7WnGmoU4KqyRoir
+	 4Z0r4W4GgvlKQywf9bNQXiknTWYm3CKps3TIpvq0t8ZJOrfEpWW0vTBuX5gOm8OxCF
+	 qq9cbp/GHETPCDLqt7wP8GH6J/FJHnviO1a2hX2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Subject: [PATCH 6.6 222/603] drm/radeon: possible buffer overflow
-Date: Wed, 15 Nov 2023 14:12:47 -0500
-Message-ID: <20231115191628.634718352@linuxfoundation.org>
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 223/603] drm/radeon: Remove the references of radeon_gem_ pread & pwrite ioctls
+Date: Wed, 15 Nov 2023 14:12:48 -0500
+Message-ID: <20231115191628.685887996@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -37,51 +37,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit dd05484f99d16715a88eedfca363828ef9a4c2d4 ]
+[ Upstream commit 52548038496fd58b762067b946f943c9bbcbd01e ]
 
-Buffer 'afmt_status' of size 6 could overflow, since index 'afmt_idx' is
-checked after access.
+Removing the functions of pread & pwrite & IOCTL defines, as their
+existence allows an authorized client to spam the system logs.
 
-Fixes: 5cc4e5fc293b ("drm/radeon: Cleanup HDMI audio interrupt handling for evergreen")
-Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Fixes: db996e64b293 ("drm/radeon: Fix ENOSYS with better fitting error codes in radeon_gem.c")
+Suggested-by: Christian König <christian.koenig@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/evergreen.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/radeon/radeon.h     |  4 ----
+ drivers/gpu/drm/radeon/radeon_drv.c |  2 --
+ drivers/gpu/drm/radeon/radeon_gem.c | 16 ----------------
+ 3 files changed, 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/evergreen.c b/drivers/gpu/drm/radeon/evergreen.c
-index 4f06356d9ce2e..f0ae087be914e 100644
---- a/drivers/gpu/drm/radeon/evergreen.c
-+++ b/drivers/gpu/drm/radeon/evergreen.c
-@@ -4821,14 +4821,15 @@ int evergreen_irq_process(struct radeon_device *rdev)
- 			break;
- 		case 44: /* hdmi */
- 			afmt_idx = src_data;
--			if (!(afmt_status[afmt_idx] & AFMT_AZ_FORMAT_WTRIG))
--				DRM_DEBUG("IH: IH event w/o asserted irq bit?\n");
+diff --git a/drivers/gpu/drm/radeon/radeon.h b/drivers/gpu/drm/radeon/radeon.h
+index 8afb03bbce298..3d3d2109dfebc 100644
+--- a/drivers/gpu/drm/radeon/radeon.h
++++ b/drivers/gpu/drm/radeon/radeon.h
+@@ -2215,10 +2215,6 @@ int radeon_gem_pin_ioctl(struct drm_device *dev, void *data,
+ 			 struct drm_file *file_priv);
+ int radeon_gem_unpin_ioctl(struct drm_device *dev, void *data,
+ 			   struct drm_file *file_priv);
+-int radeon_gem_pwrite_ioctl(struct drm_device *dev, void *data,
+-			    struct drm_file *file_priv);
+-int radeon_gem_pread_ioctl(struct drm_device *dev, void *data,
+-			   struct drm_file *file_priv);
+ int radeon_gem_set_domain_ioctl(struct drm_device *dev, void *data,
+ 				struct drm_file *filp);
+ int radeon_gem_mmap_ioctl(struct drm_device *dev, void *data,
+diff --git a/drivers/gpu/drm/radeon/radeon_drv.c b/drivers/gpu/drm/radeon/radeon_drv.c
+index fa531493b1113..7bf08164140ef 100644
+--- a/drivers/gpu/drm/radeon/radeon_drv.c
++++ b/drivers/gpu/drm/radeon/radeon_drv.c
+@@ -555,8 +555,6 @@ static const struct drm_ioctl_desc radeon_ioctls_kms[] = {
+ 	DRM_IOCTL_DEF_DRV(RADEON_GEM_CREATE, radeon_gem_create_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
+ 	DRM_IOCTL_DEF_DRV(RADEON_GEM_MMAP, radeon_gem_mmap_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
+ 	DRM_IOCTL_DEF_DRV(RADEON_GEM_SET_DOMAIN, radeon_gem_set_domain_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
+-	DRM_IOCTL_DEF_DRV(RADEON_GEM_PREAD, radeon_gem_pread_ioctl, DRM_AUTH),
+-	DRM_IOCTL_DEF_DRV(RADEON_GEM_PWRITE, radeon_gem_pwrite_ioctl, DRM_AUTH),
+ 	DRM_IOCTL_DEF_DRV(RADEON_GEM_WAIT_IDLE, radeon_gem_wait_idle_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
+ 	DRM_IOCTL_DEF_DRV(RADEON_CS, radeon_cs_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
+ 	DRM_IOCTL_DEF_DRV(RADEON_INFO, radeon_info_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
+diff --git a/drivers/gpu/drm/radeon/radeon_gem.c b/drivers/gpu/drm/radeon/radeon_gem.c
+index 358d19242f4ba..3fec3acdaf284 100644
+--- a/drivers/gpu/drm/radeon/radeon_gem.c
++++ b/drivers/gpu/drm/radeon/radeon_gem.c
+@@ -311,22 +311,6 @@ int radeon_gem_info_ioctl(struct drm_device *dev, void *data,
+ 	return 0;
+ }
+ 
+-int radeon_gem_pread_ioctl(struct drm_device *dev, void *data,
+-			   struct drm_file *filp)
+-{
+-	/* TODO: implement */
+-	DRM_ERROR("unimplemented %s\n", __func__);
+-	return -EOPNOTSUPP;
+-}
 -
- 			if (afmt_idx > 5) {
- 				DRM_ERROR("Unhandled interrupt: %d %d\n",
- 					  src_id, src_data);
- 				break;
- 			}
-+
-+			if (!(afmt_status[afmt_idx] & AFMT_AZ_FORMAT_WTRIG))
-+				DRM_DEBUG("IH: IH event w/o asserted irq bit?\n");
-+
- 			afmt_status[afmt_idx] &= ~AFMT_AZ_FORMAT_WTRIG;
- 			queue_hdmi = true;
- 			DRM_DEBUG("IH: HDMI%d\n", afmt_idx + 1);
+-int radeon_gem_pwrite_ioctl(struct drm_device *dev, void *data,
+-			    struct drm_file *filp)
+-{
+-	/* TODO: implement */
+-	DRM_ERROR("unimplemented %s\n", __func__);
+-	return -EOPNOTSUPP;
+-}
+-
+ int radeon_gem_create_ioctl(struct drm_device *dev, void *data,
+ 			    struct drm_file *filp)
+ {
 -- 
 2.42.0
 
