@@ -1,35 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A443C470
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627A83C46F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlPN4c1t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869BDC433C8;
-	Wed, 15 Nov 2023 19:39:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGgqNr5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15642C433C7;
+	Wed, 15 Nov 2023 19:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077144;
-	bh=xtYCGKIIz+gXerS1GWwdKHB626nPCCDn9CV2ODfuOB4=;
+	s=korg; t=1700077146;
+	bh=3fCUFfTDUZ5Kb3kBcLwYBsQLPJ8E+19XnvylWo7Avbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qlPN4c1tZKwZjiHi4sYdPpS6JOOKiVb8IMFQVQeLtrhixHlAfUkH13v3Wua2sWi5k
-	 CXERXKeki43q6YhxDjbCjDuR3BLyVMq37rpH4uN/BWTlymACugZ2V9OKHrXIKpfqLT
-	 Z4ZRTlKnrXf7BO7ItzwyU9j8foiSvNi1ZY44w/0c=
+	b=FGgqNr5ketz8Sn3SbwZVyxxw0YO0qZcgrx37MNkgkNT/wVRIs7bS7iHZHxtLH62uP
+	 OZpKoR1U5Azn5VPnpCovr4Za2lmjUhth6UNZmBBlCapVCuoo99A0tabjOynNGtFn74
+	 BqqJEiQUfVTDO8GC2rnO7jY4gk0kKvT93W6phjwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daan De Meyer <daan.j.demeyer@gmail.com>,
-	Luigi Leonardi <luigi.leonardi@outlook.com>,
-	Filippo Storniolo <f.storniolo95@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 522/550] vsock/virtio: remove socket from connected/bound list on shutdown
-Date: Wed, 15 Nov 2023 14:18:26 -0500
-Message-ID: <20231115191637.118598066@linuxfoundation.org>
+Subject: [PATCH 6.6 138/603] wifi: iwlwifi: mvm: Fix key flags for IGTK on AP interface
+Date: Wed, 15 Nov 2023 14:11:23 -0500
+Message-ID: <20231115191622.754603837@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -41,77 +39,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filippo Storniolo <f.storniolo95@gmail.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 3a5cc90a4d1756072619fe511d07621bdef7f120 ]
+[ Upstream commit 8f9a791a8edd87fa64b35037d9c3bce89a1b8d21 ]
 
-If the same remote peer, using the same port, tries to connect
-to a server on a listening port more than once, the server will
-reject the connection, causing a "connection reset by peer"
-error on the remote peer. This is due to the presence of a
-dangling socket from a previous connection in both the connected
-and bound socket lists.
-The inconsistency of the above lists only occurs when the remote
-peer disconnects and the server remains active.
+When an IGTK is installed for an AP interface, there is no station
+associated with it. However, the MFP flag must be set for the installed
+key as otherwise the FW wouldn't use it.
 
-This bug does not occur when the server socket is closed:
-virtio_transport_release() will eventually schedule a call to
-virtio_transport_do_close() and the latter will remove the socket
-from the bound and connected socket lists and clear the sk_buff.
+Fix the security key flag to set the MFP flag also when the AP is
+an AP interface and the key index matches that of an IGTK.
 
-However, virtio_transport_do_close() will only perform the above
-actions if it has been scheduled, and this will not happen
-if the server is processing the shutdown message from a remote peer.
-
-To fix this, introduce a call to vsock_remove_sock()
-when the server is handling a client disconnect.
-This is to remove the socket from the bound and connected socket
-lists without clearing the sk_buff.
-
-Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
-Reported-by: Daan De Meyer <daan.j.demeyer@gmail.com>
-Tested-by: Daan De Meyer <daan.j.demeyer@gmail.com>
-Co-developed-by: Luigi Leonardi <luigi.leonardi@outlook.com>
-Signed-off-by: Luigi Leonardi <luigi.leonardi@outlook.com>
-Signed-off-by: Filippo Storniolo <f.storniolo95@gmail.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 5c75a208c244 ("wifi: iwlwifi: mvm: support new key API")
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20231011130030.f67005e2d4d2.I6832c6e87f3c79fff00689eb10a3a30810e1ee83@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index b769fc2589315..f5ea654ca659b 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1150,11 +1150,17 @@ virtio_transport_recv_connected(struct sock *sk,
- 			vsk->peer_shutdown |= RCV_SHUTDOWN;
- 		if (le32_to_cpu(hdr->flags) & VIRTIO_VSOCK_SHUTDOWN_SEND)
- 			vsk->peer_shutdown |= SEND_SHUTDOWN;
--		if (vsk->peer_shutdown == SHUTDOWN_MASK &&
--		    vsock_stream_has_data(vsk) <= 0 &&
--		    !sock_flag(sk, SOCK_DONE)) {
--			(void)virtio_transport_reset(vsk, NULL);
--			virtio_transport_do_close(vsk, true);
-+		if (vsk->peer_shutdown == SHUTDOWN_MASK) {
-+			if (vsock_stream_has_data(vsk) <= 0 && !sock_flag(sk, SOCK_DONE)) {
-+				(void)virtio_transport_reset(vsk, NULL);
-+				virtio_transport_do_close(vsk, true);
-+			}
-+			/* Remove this socket anyway because the remote peer sent
-+			 * the shutdown. This way a new connection will succeed
-+			 * if the remote peer uses the same source port,
-+			 * even if the old socket is still unreleased, but now disconnected.
-+			 */
-+			vsock_remove_sock(vsk);
- 		}
- 		if (le32_to_cpu(virtio_vsock_hdr(skb)->flags))
- 			sk->sk_state_change(sk);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
+index f498206470410..ea3e9e9c6e26c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
+@@ -96,7 +96,12 @@ u32 iwl_mvm_get_sec_flags(struct iwl_mvm *mvm,
+ 	if (!sta && vif->type == NL80211_IFTYPE_STATION)
+ 		sta = mvmvif->ap_sta;
+ 
+-	if (!IS_ERR_OR_NULL(sta) && sta->mfp)
++	/* Set the MFP flag also for an AP interface where the key is an IGTK
++	 * key as in such a case the station would always be NULL
++	 */
++	if ((!IS_ERR_OR_NULL(sta) && sta->mfp) ||
++	    (vif->type == NL80211_IFTYPE_AP &&
++	     (keyconf->keyidx == 4 || keyconf->keyidx == 5)))
+ 		flags |= IWL_SEC_KEY_FLAG_MFP;
+ 
+ 	return flags;
 -- 
 2.42.0
 
