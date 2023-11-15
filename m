@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885AE381BF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C3639FC0
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRHtg3N8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E6EC433C8;
-	Wed, 15 Nov 2023 20:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TkvdKfMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7F3C433CB;
+	Wed, 15 Nov 2023 20:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081067;
-	bh=llKxQhuKIlvU1hN/jzbIOu2SphfUmr6+MYWqMV7UrPQ=;
+	s=korg; t=1700081068;
+	bh=+C2ptoDde7M6vmktO6AqBGHkWV2NylEXP9Rt0K2H2zI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rRHtg3N8xz2LIQgHA6BECqSNEGNjD83dYbwv8e5p3jWJD2GT5MyUphyqwes9skgub
-	 P3nyH/wfNp9h57N0Goo2CNjCEK3n7p1u/PNmggOTNJFS3BBwAXeLqA9oHflKEbbPwl
-	 JGtzgjuYFGJ2I+WVmSvzFX87kHvcUsNbPIrnU62s=
+	b=TkvdKfMwrpKatx8vZ4mr6CZepyt4E1y9amikrzjUW4HQZe3cXSG80CRe4XbzcTVTy
+	 99VAIOekBvIF1v1CpzYwTBGEPlaz4Y8gqX37UfwTpQunzWBfnpjlulDOSz3PtZU/Ws
+	 PAw0wtow6jtG4hzJO+v8T066RMc/NPSI+1ATXJnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Mahesh Bandewar <maheshb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wendy Wang <wendy.wang@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 18/88] ipvlan: properly track tx_errors
-Date: Wed, 15 Nov 2023 15:35:30 -0500
-Message-ID: <20231115191427.271764082@linuxfoundation.org>
+Subject: [PATCH 4.19 02/88] genirq/matrix: Exclude managed interrupts in irq_matrix_allocated()
+Date: Wed, 15 Nov 2023 15:35:14 -0500
+Message-ID: <20231115191426.342160214@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -43,79 +43,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Chen Yu <yu.c.chen@intel.com>
 
-[ Upstream commit ff672b9ffeb3f82135488ac16c5c5eb4b992999b ]
+[ Upstream commit a0b0bad10587ae2948a7c36ca4ffc206007fbcf3 ]
 
-Both ipvlan_process_v4_outbound() and ipvlan_process_v6_outbound()
-increment dev->stats.tx_errors in case of errors.
+When a CPU is about to be offlined, x86 validates that all active
+interrupts which are targeted to this CPU can be migrated to the remaining
+online CPUs. If not, the offline operation is aborted.
 
-Unfortunately there are two issues :
+The validation uses irq_matrix_allocated() to retrieve the number of
+vectors which are allocated on the outgoing CPU. The returned number of
+allocated vectors includes also vectors which are associated to managed
+interrupts.
 
-1) ipvlan_get_stats64() does not propagate dev->stats.tx_errors to user.
+That's overaccounting because managed interrupts are:
 
-2) Increments are not atomic. KCSAN would complain eventually.
+  - not migrated when the affinity mask of the interrupt targets only
+    the outgoing CPU
 
-Use DEV_STATS_INC() to not miss an update, and change ipvlan_get_stats64()
-to copy the value back to user.
+  - migrated to another CPU, but in that case the vector is already
+    pre-allocated on the potential target CPUs and must not be taken into
+    account.
 
-Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Mahesh Bandewar <maheshb@google.com>
-Link: https://lore.kernel.org/r/20231026131446.3933175-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+As a consequence the check whether the remaining online CPUs have enough
+capacity for migrating the allocated vectors from the outgoing CPU might
+fail incorrectly.
+
+Let irq_matrix_allocated() return only the number of allocated non-managed
+interrupts to make this validation check correct.
+
+[ tglx: Amend changelog and fixup kernel-doc comment ]
+
+Fixes: 2f75d9e1c905 ("genirq: Implement bitmap matrix allocator")
+Reported-by: Wendy Wang <wendy.wang@intel.com>
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20231020072522.557846-1-yu.c.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_core.c | 8 ++++----
- drivers/net/ipvlan/ipvlan_main.c | 1 +
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ kernel/irq/matrix.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
-index 6b6c5a7250a65..ecb10fb249af4 100644
---- a/drivers/net/ipvlan/ipvlan_core.c
-+++ b/drivers/net/ipvlan/ipvlan_core.c
-@@ -448,12 +448,12 @@ static int ipvlan_process_v4_outbound(struct sk_buff *skb)
- 
- 	err = ip_local_out(net, skb->sk, skb);
- 	if (unlikely(net_xmit_eval(err)))
--		dev->stats.tx_errors++;
-+		DEV_STATS_INC(dev, tx_errors);
- 	else
- 		ret = NET_XMIT_SUCCESS;
- 	goto out;
- err:
--	dev->stats.tx_errors++;
-+	DEV_STATS_INC(dev, tx_errors);
- 	kfree_skb(skb);
- out:
- 	return ret;
-@@ -489,12 +489,12 @@ static int ipvlan_process_v6_outbound(struct sk_buff *skb)
- 
- 	err = ip6_local_out(net, skb->sk, skb);
- 	if (unlikely(net_xmit_eval(err)))
--		dev->stats.tx_errors++;
-+		DEV_STATS_INC(dev, tx_errors);
- 	else
- 		ret = NET_XMIT_SUCCESS;
- 	goto out;
- err:
--	dev->stats.tx_errors++;
-+	DEV_STATS_INC(dev, tx_errors);
- 	kfree_skb(skb);
- out:
- 	return ret;
-diff --git a/drivers/net/ipvlan/ipvlan_main.c b/drivers/net/ipvlan/ipvlan_main.c
-index 9fa3c0bd6ec78..6d2ff73b63f8d 100644
---- a/drivers/net/ipvlan/ipvlan_main.c
-+++ b/drivers/net/ipvlan/ipvlan_main.c
-@@ -392,6 +392,7 @@ static void ipvlan_get_stats64(struct net_device *dev,
- 		s->rx_dropped = rx_errs;
- 		s->tx_dropped = tx_drps;
- 	}
-+	s->tx_errors = DEV_STATS_READ(dev, tx_errors);
+diff --git a/kernel/irq/matrix.c b/kernel/irq/matrix.c
+index 8e586858bcf41..d25edbb87119f 100644
+--- a/kernel/irq/matrix.c
++++ b/kernel/irq/matrix.c
+@@ -466,16 +466,16 @@ unsigned int irq_matrix_reserved(struct irq_matrix *m)
  }
  
- static int ipvlan_vlan_rx_add_vid(struct net_device *dev, __be16 proto, u16 vid)
+ /**
+- * irq_matrix_allocated - Get the number of allocated irqs on the local cpu
++ * irq_matrix_allocated - Get the number of allocated non-managed irqs on the local CPU
+  * @m:		Pointer to the matrix to search
+  *
+- * This returns number of allocated irqs
++ * This returns number of allocated non-managed interrupts.
+  */
+ unsigned int irq_matrix_allocated(struct irq_matrix *m)
+ {
+ 	struct cpumap *cm = this_cpu_ptr(m->maps);
+ 
+-	return cm->allocated;
++	return cm->allocated - cm->managed_allocated;
+ }
+ 
+ #ifdef CONFIG_GENERIC_IRQ_DEBUGFS
 -- 
 2.42.0
 
