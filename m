@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F233C461
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBF33C461
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLlefrzQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD24C433C7;
-	Wed, 15 Nov 2023 19:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SbDKiNE9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C043C433C8;
+	Wed, 15 Nov 2023 19:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077110;
-	bh=Iej/ocXcfmRX2TGBLuyNzQwlYrKNFZfEdSC2Hb1Rdh0=;
+	s=korg; t=1700077111;
+	bh=75zDVOLMp1emhx1lf2Xyl4bVdgqog2LJG4HBuEFAM4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TLlefrzQI2JqSUNaL+pvgyIVZR5IzuccXhzATCMuRVHxE+ZrACbMiWOCq09j+Q9O0
-	 G3NDDnzHn9aLIFgcNgk2WJ8lCUQH8gz2+c7SV2Ca1YA1AtcN5cViE984C6BFhQvFcL
-	 6lpr93VKQCJ84hGAiP2vcgySzG0ZbdlvdjYMvago=
+	b=SbDKiNE9cxkXMaGUlNXDLac8/aTnE8lPGuEll4axGpxbQlw1c8sSOw+01F34rV79e
+	 raPF+Q7Kz0BLegfBf4bhTVw9AbTnn6yE5Bg642nvVLA1gxZ3g7GK4W02Lx411uftJz
+	 qlXkMmRcLTJ+VnMopj4vf2rgeACk6iuiVU9mmeHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Ye Bin <yebin10@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 521/550] blk-core: use pr_warn_ratelimited() in bio_check_ro()
-Date: Wed, 15 Nov 2023 14:18:25 -0500
-Message-ID: <20231115191637.058998932@linuxfoundation.org>
+Subject: [PATCH 6.6 128/603] thermal: core: Dont update trip points inside the hysteresis range
+Date: Wed, 15 Nov 2023 14:11:13 -0500
+Message-ID: <20231115191622.096173425@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,47 +37,129 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 1b0a151c10a6d823f033023b9fdd9af72a89591b ]
+[ Upstream commit cf3986f8c01d355490d0ac6024391b989a9d1e9d ]
 
-If one of the underlying disks of raid or dm is set to read-only, then
-each io will generate new log, which will cause message storm. This
-environment is indeed problematic, however we can't make sure our
-naive custormer won't do this, hence use pr_warn_ratelimited() to
-prevent message storm in this case.
+When searching for the trip points that need to be set, the nearest
+higher trip point's temperature is used for the high trip, while the
+nearest lower trip point's temperature minus the hysteresis is used for
+the low trip. The issue with this logic is that when the current
+temperature is inside a trip point's hysteresis range, both high and low
+trips will come from the same trip point. As a consequence instability
+can still occur like this:
+* the temperature rises slightly and enters the hysteresis range of a
+  trip point
+* polling happens and updates the trip points to the hysteresis range
+* the temperature falls slightly, exiting the hysteresis range, crossing
+  the trip point and triggering an IRQ, the trip points are updated
+* repeat
 
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Fixes: 57e95e4670d1 ("block: fix and cleanup bio_check_ro")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Link: https://lore.kernel.org/r/20231107111247.2157820-1-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+So even though the current hysteresis implementation prevents
+instability from happening due to IRQs triggering on the same
+temperature value, both ways, it doesn't prevent it from happening due
+to an IRQ on one way and polling on the other.
+
+To properly implement a hysteresis behavior, when inside the hysteresis
+range, don't update the trip points. This way, the previously set trip
+points will stay in effect, which will in a way remember the previous
+state (if the temperature signal came from above or below the range) and
+therefore have the right trip point already set.
+
+The exception is if there was no previous trip point set, in which case
+a previous state doesn't exist, and so it's sensible to allow the
+hysteresis range as trip points.
+
+The following logs show the current behavior when running on a real
+machine:
+
+[  202.524658] thermal thermal_zone0: new temperature boundaries: -2147483647 < x < 40000
+   203.562817: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=36986 temp=37979
+[  203.562845] thermal thermal_zone0: new temperature boundaries: 37000 < x < 40000
+   204.176059: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=37979 temp=40028
+[  204.176089] thermal thermal_zone0: new temperature boundaries: 37000 < x < 100000
+   205.226813: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=40028 temp=38652
+[  205.226842] thermal thermal_zone0: new temperature boundaries: 37000 < x < 40000
+
+And with this patch applied:
+
+[  184.933415] thermal thermal_zone0: new temperature boundaries: -2147483647 < x < 40000
+   185.981182: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=36986 temp=37872
+   186.744685: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=37872 temp=40058
+[  186.744716] thermal thermal_zone0: new temperature boundaries: 37000 < x < 100000
+   187.773284: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=40058 temp=38698
+
+Fixes: 060c034a9741 ("thermal: Add support for hardware-tracked trip points")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Co-developed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/thermal/thermal_trip.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index 9866468c72a2a..3e01b4afb90ce 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -500,8 +500,8 @@ static inline void bio_check_ro(struct bio *bio)
- 	if (op_is_write(bio_op(bio)) && bdev_read_only(bio->bi_bdev)) {
- 		if (op_is_flush(bio->bi_opf) && !bio_sectors(bio))
- 			return;
--		pr_warn("Trying to write to read-only block-device %pg\n",
--			bio->bi_bdev);
-+		pr_warn_ratelimited("Trying to write to read-only block-device %pg\n",
-+				    bio->bi_bdev);
- 		/* Older lvm-tools actually trigger this */
+diff --git a/drivers/thermal/thermal_trip.c b/drivers/thermal/thermal_trip.c
+index 024e2e365a26b..597ac4144e331 100644
+--- a/drivers/thermal/thermal_trip.c
++++ b/drivers/thermal/thermal_trip.c
+@@ -55,6 +55,7 @@ void __thermal_zone_set_trips(struct thermal_zone_device *tz)
+ {
+ 	struct thermal_trip trip;
+ 	int low = -INT_MAX, high = INT_MAX;
++	bool same_trip = false;
+ 	int i, ret;
+ 
+ 	lockdep_assert_held(&tz->lock);
+@@ -63,6 +64,7 @@ void __thermal_zone_set_trips(struct thermal_zone_device *tz)
+ 		return;
+ 
+ 	for (i = 0; i < tz->num_trips; i++) {
++		bool low_set = false;
+ 		int trip_low;
+ 
+ 		ret = __thermal_zone_get_trip(tz, i , &trip);
+@@ -71,18 +73,31 @@ void __thermal_zone_set_trips(struct thermal_zone_device *tz)
+ 
+ 		trip_low = trip.temperature - trip.hysteresis;
+ 
+-		if (trip_low < tz->temperature && trip_low > low)
++		if (trip_low < tz->temperature && trip_low > low) {
+ 			low = trip_low;
++			low_set = true;
++			same_trip = false;
++		}
+ 
+ 		if (trip.temperature > tz->temperature &&
+-		    trip.temperature < high)
++		    trip.temperature < high) {
+ 			high = trip.temperature;
++			same_trip = low_set;
++		}
  	}
- }
+ 
+ 	/* No need to change trip points */
+ 	if (tz->prev_low_trip == low && tz->prev_high_trip == high)
+ 		return;
+ 
++	/*
++	 * If "high" and "low" are the same, skip the change unless this is the
++	 * first time.
++	 */
++	if (same_trip && (tz->prev_low_trip != -INT_MAX ||
++	    tz->prev_high_trip != INT_MAX))
++		return;
++
+ 	tz->prev_low_trip = low;
+ 	tz->prev_high_trip = high;
+ 
 -- 
 2.42.0
 
