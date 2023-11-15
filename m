@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FCD433BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E01F433BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQrZe2r0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C72C433C7;
-	Wed, 15 Nov 2023 19:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2H3Ns98g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D836CC433C7;
+	Wed, 15 Nov 2023 19:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077033;
-	bh=+oZ1/a798HZcKKFQl4l8S456MYU3o+K0sZ/92FNwaSY=;
+	s=korg; t=1700077035;
+	bh=8Nf+yxLKR5RGWkbhyhDx3ypvhulMEoyKboU9oS36InY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DQrZe2r09AyCzxO4G91TkXz+U37bjHn+dG8Y+o3gUrkTkR/Z7C3CBwWZHEEjoqQ5m
-	 qCXLZZiOHVzezAhz+iE/219JoP3dGpChK2be9hRsyi0EAiXw3BuhkLnUSfxl2gHlbw
-	 nHY2zwazyccI7d5LDFJy9va8vNcluw2Kjq9ySihk=
+	b=2H3Ns98g5BXF8NKsPmRfFDxxpK3ljQSoGUj0NAh39cF9K38laqkCICq8nXtMYfNtL
+	 fkkJOI+2hSP8dsozacO50Ku47YtgP5/8F+GO98qmJ9dQLTe/B2PAX/oYV2G9oYOGn6
+	 8TpnxRnibzG4H8rDgGZixkGJ/9xucNEkmxmGiBJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a8c7be6dee0de1b669cc@syzkaller.appspotmail.com,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 498/550] llc: verify mac len before reading mac header
-Date: Wed, 15 Nov 2023 14:18:02 -0500
-Message-ID: <20231115191635.444800835@linuxfoundation.org>
+Subject: [PATCH 6.6 104/603] can: etas_es58x: rework the version check logic to silence -Wformat-truncation
+Date: Wed, 15 Nov 2023 14:10:49 -0500
+Message-ID: <20231115191620.400204221@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,117 +36,248 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-[ Upstream commit 7b3ba18703a63f6fd487183b9262b08e5632da1b ]
+[ Upstream commit 107e6f6fe6f38577baecf0e01f517c8607a3a625 ]
 
-LLC reads the mac header with eth_hdr without verifying that the skb
-has an Ethernet header.
+Following [1], es58x_devlink.c now triggers the following
+format-truncation GCC warnings:
 
-Syzbot was able to enter llc_rcv on a tun device. Tun can insert
-packets without mac len and with user configurable skb->protocol
-(passing a tun_pi header when not configuring IFF_NO_PI).
+  drivers/net/can/usb/etas_es58x/es58x_devlink.c: In function ‘es58x_devlink_info_get’:
+  drivers/net/can/usb/etas_es58x/es58x_devlink.c:201:41: warning: ‘%02u’ directive output may be truncated writing between 2 and 3 bytes into a region of size between 1 and 3 [-Wformat-truncation=]
+    201 |   snprintf(buf, sizeof(buf), "%02u.%02u.%02u",
+        |                                         ^~~~
+  drivers/net/can/usb/etas_es58x/es58x_devlink.c:201:30: note: directive argument in the range [0, 255]
+    201 |   snprintf(buf, sizeof(buf), "%02u.%02u.%02u",
+        |                              ^~~~~~~~~~~~~~~~
+  drivers/net/can/usb/etas_es58x/es58x_devlink.c:201:3: note: ‘snprintf’ output between 9 and 12 bytes into a destination of size 9
+    201 |   snprintf(buf, sizeof(buf), "%02u.%02u.%02u",
+        |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    202 |     fw_ver->major, fw_ver->minor, fw_ver->revision);
+        |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/net/can/usb/etas_es58x/es58x_devlink.c:211:41: warning: ‘%02u’ directive output may be truncated writing between 2 and 3 bytes into a region of size between 1 and 3 [-Wformat-truncation=]
+    211 |   snprintf(buf, sizeof(buf), "%02u.%02u.%02u",
+        |                                         ^~~~
+  drivers/net/can/usb/etas_es58x/es58x_devlink.c:211:30: note: directive argument in the range [0, 255]
+    211 |   snprintf(buf, sizeof(buf), "%02u.%02u.%02u",
+        |                              ^~~~~~~~~~~~~~~~
+  drivers/net/can/usb/etas_es58x/es58x_devlink.c:211:3: note: ‘snprintf’ output between 9 and 12 bytes into a destination of size 9
+    211 |   snprintf(buf, sizeof(buf), "%02u.%02u.%02u",
+        |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    212 |     bl_ver->major, bl_ver->minor, bl_ver->revision);
+        |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/net/can/usb/etas_es58x/es58x_devlink.c:221:38: warning: ‘%03u’ directive output may be truncated writing between 3 and 5 bytes into a region of size between 2 and 4 [-Wformat-truncation=]
+    221 |   snprintf(buf, sizeof(buf), "%c%03u/%03u",
+        |                                      ^~~~
+  drivers/net/can/usb/etas_es58x/es58x_devlink.c:221:30: note: directive argument in the range [0, 65535]
+    221 |   snprintf(buf, sizeof(buf), "%c%03u/%03u",
+        |                              ^~~~~~~~~~~~~
+  drivers/net/can/usb/etas_es58x/es58x_devlink.c:221:3: note: ‘snprintf’ output between 9 and 13 bytes into a destination of size 9
+    221 |   snprintf(buf, sizeof(buf), "%c%03u/%03u",
+        |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    222 |     hw_rev->letter, hw_rev->major, hw_rev->minor);
+        |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    BUG: KMSAN: uninit-value in llc_station_ac_send_test_r net/llc/llc_station.c:81 [inline]
-    BUG: KMSAN: uninit-value in llc_station_rcv+0x6fb/0x1290 net/llc/llc_station.c:111
-    llc_station_ac_send_test_r net/llc/llc_station.c:81 [inline]
-    llc_station_rcv+0x6fb/0x1290 net/llc/llc_station.c:111
-    llc_rcv+0xc5d/0x14a0 net/llc/llc_input.c:218
-    __netif_receive_skb_one_core net/core/dev.c:5523 [inline]
-    __netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5637
-    netif_receive_skb_internal net/core/dev.c:5723 [inline]
-    netif_receive_skb+0x58/0x660 net/core/dev.c:5782
-    tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1555
-    tun_get_user+0x54c5/0x69c0 drivers/net/tun.c:2002
+This is not an actual bug because the sscanf() parsing makes sure that
+the u8 are only two digits long and the u16 only three digits long.
+Thus below declaration:
 
-Add a mac_len test before all three eth_hdr(skb) calls under net/llc.
+	char buf[max(sizeof("xx.xx.xx"), sizeof("axxx/xxx"))];
 
-There are further uses in include/net/llc_pdu.h. All these are
-protected by a test skb->protocol == ETH_P_802_2. Which does not
-protect against this tun scenario.
+allocates just what is needed to represent either of the versions.
 
-But the mac_len test added in this patch in llc_fixup_skb will
-indirectly protect those too. That is called from llc_rcv before any
-other LLC code.
+This warning was known but ignored because, at the time of writing,
+-Wformat-truncation was not present in the kernel, not even at W=3 [2].
 
-It is tempting to just add a blanket mac_len check in llc_rcv, but
-not sure whether that could break valid LLC paths that do not assume
-an Ethernet header. 802.2 LLC may be used on top of non-802.3
-protocols in principle. The below referenced commit shows that used
-to, on top of Token Ring.
+One way to silence this warning is to check the range of all sub
+version numbers are valid: [0, 99] for u8 and range [0, 999] for u16.
 
-At least one of the three eth_hdr uses goes back to before the start
-of git history. But the one that syzbot exercises is introduced in
-this commit. That commit is old enough (2008), that effectively all
-stable kernels should receive this.
+The module already has a logic which considers that when all the sub
+version numbers are zero, the version number is not set. Note that not
+having access to the device specification, this was an arbitrary
+decision. This logic can thus be removed in favor of global check that
+would cover both cases:
 
-Fixes: f83f1768f833 ("[LLC]: skb allocation size for responses")
-Reported-by: syzbot+a8c7be6dee0de1b669cc@syzkaller.appspotmail.com
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20231025234251.3796495-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  - the version number is not set (parsing failed)
+  - the version number is not valid (paranoiac check to please gcc)
+
+Before starting to parse the product info string, set the version
+sub-numbers to the maximum unsigned integer thus violating the
+definitions of struct es58x_sw_version or struct es58x_hw_revision.
+
+Then, rework the es58x_sw_version_is_set() and
+es58x_hw_revision_is_set() functions: remove the check that the
+sub-numbers are non zero and replace it by a check that they fit in
+the expected number of digits. This done, rename the functions to
+reflect the change and rewrite the documentation. While doing so, also
+add a description of the return value.
+
+Finally, the previous version only checked that
+&es58x_hw_revision.letter was not the null character. Replace this
+check by an alphanumeric character check to make sure that we never
+return a special character or a non-printable one and update the
+documentation of struct es58x_hw_revision accordingly.
+
+All those extra checks are paranoid but have the merit to silence the
+newly introduced W=1 format-truncation warning [1].
+
+[1] commit 6d4ab2e97dcf ("extrawarn: enable format and stringop overflow warnings in W=1")
+Link: https://git.kernel.org/torvalds/c/6d4ab2e97dcf
+
+[2] https://lore.kernel.org/all/CAMZ6Rq+K+6gbaZ35SOJcR9qQaTJ7KR0jW=XoDKFkobjhj8CHhw@mail.gmail.com/
+
+Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Closes: https://lore.kernel.org/linux-can/20230914-carrousel-wrecker-720a08e173e9-mkl@pengutronix.de/
+Fixes: 9f06631c3f1f ("can: etas_es58x: export product information through devlink_ops::info_get()")
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://lore.kernel.org/all/20230924110914.183898-2-mailhol.vincent@wanadoo.fr
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/llc/llc_input.c   | 10 ++++++++--
- net/llc/llc_s_ac.c    |  3 +++
- net/llc/llc_station.c |  3 +++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/net/can/usb/etas_es58x/es58x_core.h   |  6 +-
+ .../net/can/usb/etas_es58x/es58x_devlink.c    | 57 +++++++++++++------
+ 2 files changed, 42 insertions(+), 21 deletions(-)
 
-diff --git a/net/llc/llc_input.c b/net/llc/llc_input.c
-index 7cac441862e21..51bccfb00a9cd 100644
---- a/net/llc/llc_input.c
-+++ b/net/llc/llc_input.c
-@@ -127,8 +127,14 @@ static inline int llc_fixup_skb(struct sk_buff *skb)
- 	skb->transport_header += llc_len;
- 	skb_pull(skb, llc_len);
- 	if (skb->protocol == htons(ETH_P_802_2)) {
--		__be16 pdulen = eth_hdr(skb)->h_proto;
--		s32 data_size = ntohs(pdulen) - llc_len;
-+		__be16 pdulen;
-+		s32 data_size;
-+
-+		if (skb->mac_len < ETH_HLEN)
-+			return 0;
-+
-+		pdulen = eth_hdr(skb)->h_proto;
-+		data_size = ntohs(pdulen) - llc_len;
+diff --git a/drivers/net/can/usb/etas_es58x/es58x_core.h b/drivers/net/can/usb/etas_es58x/es58x_core.h
+index c1ba1a4e8857b..2e183bdeedd72 100644
+--- a/drivers/net/can/usb/etas_es58x/es58x_core.h
++++ b/drivers/net/can/usb/etas_es58x/es58x_core.h
+@@ -378,13 +378,13 @@ struct es58x_sw_version {
  
- 		if (data_size < 0 ||
- 		    !pskb_may_pull(skb, data_size))
-diff --git a/net/llc/llc_s_ac.c b/net/llc/llc_s_ac.c
-index 79d1cef8f15a9..06fb8e6944b06 100644
---- a/net/llc/llc_s_ac.c
-+++ b/net/llc/llc_s_ac.c
-@@ -153,6 +153,9 @@ int llc_sap_action_send_test_r(struct llc_sap *sap, struct sk_buff *skb)
- 	int rc = 1;
- 	u32 data_size;
+ /**
+  * struct es58x_hw_revision - Hardware revision number.
+- * @letter: Revision letter.
++ * @letter: Revision letter, an alphanumeric character.
+  * @major: Version major number, represented on three digits.
+  * @minor: Version minor number, represented on three digits.
+  *
+  * The hardware revision uses its own format: "axxx/xxx" where 'a' is
+- * a letter and 'x' a digit. It can be retrieved from the product
+- * information string.
++ * an alphanumeric character and 'x' a digit. It can be retrieved from
++ * the product information string.
+  */
+ struct es58x_hw_revision {
+ 	char letter;
+diff --git a/drivers/net/can/usb/etas_es58x/es58x_devlink.c b/drivers/net/can/usb/etas_es58x/es58x_devlink.c
+index 9fba29e2f57c6..635edeb8f68cd 100644
+--- a/drivers/net/can/usb/etas_es58x/es58x_devlink.c
++++ b/drivers/net/can/usb/etas_es58x/es58x_devlink.c
+@@ -125,14 +125,28 @@ static int es58x_parse_hw_rev(struct es58x_device *es58x_dev,
+  * firmware version, the bootloader version and the hardware
+  * revision.
+  *
+- * If the function fails, simply emit a log message and continue
+- * because product information is not critical for the driver to
+- * operate.
++ * If the function fails, set the version or revision to an invalid
++ * value and emit an informal message. Continue probing because the
++ * product information is not critical for the driver to operate.
+  */
+ void es58x_parse_product_info(struct es58x_device *es58x_dev)
+ {
++	static const struct es58x_sw_version sw_version_not_set = {
++		.major = -1,
++		.minor = -1,
++		.revision = -1,
++	};
++	static const struct es58x_hw_revision hw_revision_not_set = {
++		.letter = '\0',
++		.major = -1,
++		.minor = -1,
++	};
+ 	char *prod_info;
  
-+	if (skb->mac_len < ETH_HLEN)
-+		return 1;
++	es58x_dev->firmware_version = sw_version_not_set;
++	es58x_dev->bootloader_version = sw_version_not_set;
++	es58x_dev->hardware_revision = hw_revision_not_set;
 +
- 	llc_pdu_decode_sa(skb, mac_da);
- 	llc_pdu_decode_da(skb, mac_sa);
- 	llc_pdu_decode_ssap(skb, &dsap);
-diff --git a/net/llc/llc_station.c b/net/llc/llc_station.c
-index 05c6ae0920534..f506542925109 100644
---- a/net/llc/llc_station.c
-+++ b/net/llc/llc_station.c
-@@ -76,6 +76,9 @@ static int llc_station_ac_send_test_r(struct sk_buff *skb)
- 	u32 data_size;
- 	struct sk_buff *nskb;
+ 	prod_info = usb_cache_string(es58x_dev->udev, ES58X_PROD_INFO_IDX);
+ 	if (!prod_info) {
+ 		dev_warn(es58x_dev->dev,
+@@ -150,29 +164,36 @@ void es58x_parse_product_info(struct es58x_device *es58x_dev)
+ }
  
-+	if (skb->mac_len < ETH_HLEN)
-+		goto out;
-+
- 	/* The test request command is type U (llc_len = 3) */
- 	data_size = ntohs(eth_hdr(skb)->h_proto) - 3;
- 	nskb = llc_alloc_frame(NULL, skb->dev, LLC_PDU_TYPE_U, data_size);
+ /**
+- * es58x_sw_version_is_set() - Check if the version is a valid number.
++ * es58x_sw_version_is_valid() - Check if the version is a valid number.
+  * @sw_ver: Version number of either the firmware or the bootloader.
+  *
+- * If &es58x_sw_version.major, &es58x_sw_version.minor and
+- * &es58x_sw_version.revision are all zero, the product string could
+- * not be parsed and the version number is invalid.
++ * If any of the software version sub-numbers do not fit on two
++ * digits, the version is invalid, most probably because the product
++ * string could not be parsed.
++ *
++ * Return: @true if the software version is valid, @false otherwise.
+  */
+-static inline bool es58x_sw_version_is_set(struct es58x_sw_version *sw_ver)
++static inline bool es58x_sw_version_is_valid(struct es58x_sw_version *sw_ver)
+ {
+-	return sw_ver->major || sw_ver->minor || sw_ver->revision;
++	return sw_ver->major < 100 && sw_ver->minor < 100 &&
++		sw_ver->revision < 100;
+ }
+ 
+ /**
+- * es58x_hw_revision_is_set() - Check if the revision is a valid number.
++ * es58x_hw_revision_is_valid() - Check if the revision is a valid number.
+  * @hw_rev: Revision number of the hardware.
+  *
+- * If &es58x_hw_revision.letter is the null character, the product
+- * string could not be parsed and the hardware revision number is
+- * invalid.
++ * If &es58x_hw_revision.letter is not a alphanumeric character or if
++ * any of the hardware revision sub-numbers do not fit on three
++ * digits, the revision is invalid, most probably because the product
++ * string could not be parsed.
++ *
++ * Return: @true if the hardware revision is valid, @false otherwise.
+  */
+-static inline bool es58x_hw_revision_is_set(struct es58x_hw_revision *hw_rev)
++static inline bool es58x_hw_revision_is_valid(struct es58x_hw_revision *hw_rev)
+ {
+-	return hw_rev->letter != '\0';
++	return isalnum(hw_rev->letter) && hw_rev->major < 1000 &&
++		hw_rev->minor < 1000;
+ }
+ 
+ /**
+@@ -197,7 +218,7 @@ static int es58x_devlink_info_get(struct devlink *devlink,
+ 	char buf[max(sizeof("xx.xx.xx"), sizeof("axxx/xxx"))];
+ 	int ret = 0;
+ 
+-	if (es58x_sw_version_is_set(fw_ver)) {
++	if (es58x_sw_version_is_valid(fw_ver)) {
+ 		snprintf(buf, sizeof(buf), "%02u.%02u.%02u",
+ 			 fw_ver->major, fw_ver->minor, fw_ver->revision);
+ 		ret = devlink_info_version_running_put(req,
+@@ -207,7 +228,7 @@ static int es58x_devlink_info_get(struct devlink *devlink,
+ 			return ret;
+ 	}
+ 
+-	if (es58x_sw_version_is_set(bl_ver)) {
++	if (es58x_sw_version_is_valid(bl_ver)) {
+ 		snprintf(buf, sizeof(buf), "%02u.%02u.%02u",
+ 			 bl_ver->major, bl_ver->minor, bl_ver->revision);
+ 		ret = devlink_info_version_running_put(req,
+@@ -217,7 +238,7 @@ static int es58x_devlink_info_get(struct devlink *devlink,
+ 			return ret;
+ 	}
+ 
+-	if (es58x_hw_revision_is_set(hw_rev)) {
++	if (es58x_hw_revision_is_valid(hw_rev)) {
+ 		snprintf(buf, sizeof(buf), "%c%03u/%03u",
+ 			 hw_rev->letter, hw_rev->major, hw_rev->minor);
+ 		ret = devlink_info_version_fixed_put(req,
 -- 
 2.42.0
 
