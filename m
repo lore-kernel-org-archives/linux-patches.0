@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335C941A80
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C4741A80
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rieBt+EL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33A5C433C8;
-	Wed, 15 Nov 2023 19:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmW4K+az"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56293C433C9;
+	Wed, 15 Nov 2023 19:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076979;
-	bh=l5UAmf1Evp1Cr07sqQK/qRv6grCcatrzX8JZlyCmIdA=;
+	s=korg; t=1700076980;
+	bh=+Kq9Yka1ZXEx9hciqudx1bVbLgVOqcTQJlLrBDM7gNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rieBt+EL+RIFU7G1T1+1tvqE3a9rziJ3gFzSfNnAnBgwsdGleqCPaq6bKZVYmWRRD
-	 zCLHn4BQaEV2n9ad2/UdWp7nIZKGvklfrEBaz2+9TGcMCIeNGgtSEm/f98PsvN2x19
-	 9PCvYCLcsokvucgKK3IULkbB21lIB/Cdv+2cne+4=
+	b=vmW4K+azhrrWl7D0mknW9EMvRQtMDOtMTcZe4r9nkOHXNDhSDOQicZ7hVITlOoKmc
+	 tYvh+J9N5xste+Z04DST5JkFpzmD9pxjIaPsY236+yjQASbPKd4GG+cvcgq6QXFDIS
+	 s7DzT6m+GKZ1opC4YGQzwX7NBnRezA9A1kJfG68U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Hsu <howard-yh.hsu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/603] wifi: mt76: mt7996: fix beamformee ss subfield in EHT PHY cap
-Date: Wed, 15 Nov 2023 14:10:30 -0500
-Message-ID: <20231115191619.008342996@linuxfoundation.org>
+Subject: [PATCH 6.5 482/550] media: vidtv: mux: Add check and kfree for kstrdup
+Date: Wed, 15 Nov 2023 14:17:46 -0500
+Message-ID: <20231115191634.277317818@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,52 +38,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Howard Hsu <howard-yh.hsu@mediatek.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit e19028104b2de5510b43282f632c4b6453568c41 ]
+[ Upstream commit 1fd6eb12642e0c32692924ff359c07de4b781d78 ]
 
-According to P802.11be_D3.2 Table 9-404m, the minimum value of
-Beamformee SS field shall be 3. Fix the values to follow the spec.
+Add check for the return value of kstrdup() and return the error
+if it fails in order to avoid NULL pointer dereference.
+Moreover, use kfree() in the later error handling in order to avoid
+memory leak.
 
-Fixes: 348533eb968d ("wifi: mt76: mt7996: add EHT capability init")
-Signed-off-by: Howard Hsu <howard-yh.hsu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: c2f78f0cb294 ("media: vidtv: psi: add a Network Information Table (NIT)")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/media/test-drivers/vidtv/vidtv_mux.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index 26e03b28935f2..66d8cc0eeabee 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -733,16 +733,17 @@ mt7996_init_eht_caps(struct mt7996_phy *phy, enum nl80211_band band,
- 		IEEE80211_EHT_PHY_CAP0_SU_BEAMFORMER |
- 		IEEE80211_EHT_PHY_CAP0_SU_BEAMFORMEE;
+diff --git a/drivers/media/test-drivers/vidtv/vidtv_mux.c b/drivers/media/test-drivers/vidtv/vidtv_mux.c
+index b51e6a3b8cbeb..f99878eff7ace 100644
+--- a/drivers/media/test-drivers/vidtv/vidtv_mux.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_mux.c
+@@ -504,13 +504,16 @@ struct vidtv_mux *vidtv_mux_init(struct dvb_frontend *fe,
+ 	m->priv = args->priv;
+ 	m->network_id = args->network_id;
+ 	m->network_name = kstrdup(args->network_name, GFP_KERNEL);
++	if (!m->network_name)
++		goto free_mux_buf;
++
+ 	m->timing.current_jiffies = get_jiffies_64();
  
-+	val = max_t(u8, sts - 1, 3);
- 	eht_cap_elem->phy_cap_info[0] |=
--		u8_encode_bits(u8_get_bits(sts - 1, BIT(0)),
-+		u8_encode_bits(u8_get_bits(val, BIT(0)),
- 			       IEEE80211_EHT_PHY_CAP0_BEAMFORMEE_SS_80MHZ_MASK);
+ 	if (args->channels)
+ 		m->channels = args->channels;
+ 	else
+ 		if (vidtv_channels_init(m) < 0)
+-			goto free_mux_buf;
++			goto free_mux_network_name;
  
- 	eht_cap_elem->phy_cap_info[1] =
--		u8_encode_bits(u8_get_bits(sts - 1, GENMASK(2, 1)),
-+		u8_encode_bits(u8_get_bits(val, GENMASK(2, 1)),
- 			       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_80MHZ_MASK) |
--		u8_encode_bits(sts - 1,
-+		u8_encode_bits(val,
- 			       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_160MHZ_MASK) |
--		u8_encode_bits(sts - 1,
-+		u8_encode_bits(val,
- 			       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_320MHZ_MASK);
- 
- 	eht_cap_elem->phy_cap_info[2] =
+ 	/* will alloc data for pmt_sections after initializing pat */
+ 	if (vidtv_channel_si_init(m) < 0)
+@@ -527,6 +530,8 @@ struct vidtv_mux *vidtv_mux_init(struct dvb_frontend *fe,
+ 	vidtv_channel_si_destroy(m);
+ free_channels:
+ 	vidtv_channels_destroy(m);
++free_mux_network_name:
++	kfree(m->network_name);
+ free_mux_buf:
+ 	vfree(m->mux_buf);
+ free_mux:
 -- 
 2.42.0
 
