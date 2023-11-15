@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434973DB8D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21613DB8D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQjlbqNc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5973C433CA;
-	Wed, 15 Nov 2023 19:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVYDThxU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8935BC433C9;
+	Wed, 15 Nov 2023 19:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076079;
-	bh=6xd0LZZ3dDEtlyJKd9qI/iysLNaGFjsRWD2l8QF5nec=;
+	s=korg; t=1700076080;
+	bh=13FPn6XHC2dTcjFRpkTeEFJUmvHnQTaMula/7oU9R1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IQjlbqNcSMcjFPxh59IaL7myk64JhB7ydV5946styOfFLFSsT2npg3RmqK04K/ZSN
-	 2VgzMY0+BKEwU8ycaT9JhbvhSFN0XybTPIVsF5ruCSBzGZJuNiyKgx3vql1ZGGXX1o
-	 JWdOGaYLtl+PpuschJEYWNoW8Gryj66R7jMQoUO0=
+	b=aVYDThxU0RlxLUbl7jqA3WhFV7I1Qd1G6fIYQWWyQPFoumeFVEB5v1knB4DzZN7r8
+	 VHWnWQEUuPTSHToQjmaDC0RGOfyi6ntjyej1X+CqUBwfM/sLfRK9UqSO2cHRotZzqp
+	 cKHGtrgBDmWfeFvwlSWTZN5As3Ep/Z39ZIMMN0k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Zhang Rui <rui.zhang@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 026/550] x86/apic: Fake primary thread mask for XEN/PV
-Date: Wed, 15 Nov 2023 14:10:10 -0500
-Message-ID: <20231115191602.535505989@linuxfoundation.org>
+Subject: [PATCH 6.5 056/550] udp: introduce udp->udp_flags
+Date: Wed, 15 Nov 2023 14:10:40 -0500
+Message-ID: <20231115191604.569993238@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -46,84 +43,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 965e05ff8af98c44f9937366715c512000373164 ]
+[ Upstream commit 81b36803ac139827538ac5ce4028e750a3c53f53 ]
 
-The SMT control mechanism got added as speculation attack vector
-mitigation. The implemented logic relies on the primary thread mask to
-be set up properly.
+According to syzbot, it is time to use proper atomic flags
+for various UDP flags.
 
-This turns out to be an issue with XEN/PV guests because their CPU hotplug
-mechanics do not enumerate APICs and therefore the mask is never correctly
-populated.
+Add udp_flags field, and convert udp->corkflag to first
+bit in it.
 
-This went unnoticed so far because by chance XEN/PV ends up with
-smp_num_siblings == 2. So cpu_smt_control stays at its default value
-CPU_SMT_ENABLED and the primary thread mask is never evaluated in the
-context of CPU hotplug.
-
-This stopped "working" with the upcoming overhaul of the topology
-evaluation which legitimately provides a fake topology for XEN/PV. That
-sets smp_num_siblings to 1, which causes the core CPU hot-plug core to
-refuse to bring up the APs.
-
-This happens because cpu_smt_control is set to CPU_SMT_NOT_SUPPORTED which
-causes cpu_bootable() to evaluate the unpopulated primary thread mask with
-the conclusion that all non-boot CPUs are not valid to be plugged.
-
-The core code has already been made more robust against this kind of fail,
-but the primary thread mask really wants to be populated to avoid other
-issues all over the place.
-
-Just fake the mask by pretending that all XEN/PV vCPUs are primary threads,
-which is consistent because all of XEN/PVs topology is fake or non-existent.
-
-Fixes: 6a4d2657e048 ("x86/smp: Provide topology_is_primary_thread()")
-Fixes: f54d4434c281 ("x86/apic: Provide cpu_primary_thread mask")
-Reported-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Juergen Gross <jgross@suse.com>
-Tested-by: Sohil Mehta <sohil.mehta@intel.com>
-Tested-by: Michael Kelley <mikelley@microsoft.com>
-Tested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230814085112.210011520@linutronix.de
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: a0002127cd74 ("udp: move udp->no_check6_tx to udp->udp_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/apic/apic.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ include/linux/udp.h | 28 +++++++++++++++++++++-------
+ net/ipv4/udp.c      | 12 ++++++------
+ net/ipv6/udp.c      |  6 +++---
+ 3 files changed, 30 insertions(+), 16 deletions(-)
 
-diff --git a/arch/x86/kernel/apic/apic.c b/arch/x86/kernel/apic/apic.c
-index af49e24b46a43..7e0c7fbdc7d08 100644
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -36,6 +36,8 @@
- #include <linux/smp.h>
- #include <linux/mm.h>
+diff --git a/include/linux/udp.h b/include/linux/udp.h
+index 43c1fb2d2c21a..23f0693e0d9cc 100644
+--- a/include/linux/udp.h
++++ b/include/linux/udp.h
+@@ -32,14 +32,20 @@ static inline u32 udp_hashfn(const struct net *net, u32 num, u32 mask)
+ 	return (num + net_hash_mix(net)) & mask;
+ }
  
-+#include <xen/xen.h>
++enum {
++	UDP_FLAGS_CORK,		/* Cork is required */
++};
 +
- #include <asm/trace/irq_vectors.h>
- #include <asm/irq_remapping.h>
- #include <asm/pc-conf-reg.h>
-@@ -2408,6 +2410,15 @@ static int __init smp_init_primary_thread_mask(void)
- {
- 	unsigned int cpu;
+ struct udp_sock {
+ 	/* inet_sock has to be the first member */
+ 	struct inet_sock inet;
+ #define udp_port_hash		inet.sk.__sk_common.skc_u16hashes[0]
+ #define udp_portaddr_hash	inet.sk.__sk_common.skc_u16hashes[1]
+ #define udp_portaddr_node	inet.sk.__sk_common.skc_portaddr_node
++
++	unsigned long	 udp_flags;
++
+ 	int		 pending;	/* Any pending frames ? */
+-	unsigned int	 corkflag;	/* Cork is required */
+ 	__u8		 encap_type;	/* Is this an Encapsulation socket? */
+ 	unsigned char	 no_check6_tx:1,/* Send zero UDP6 checksums on TX? */
+ 			 no_check6_rx:1,/* Allow zero UDP6 checksums on RX? */
+@@ -51,6 +57,11 @@ struct udp_sock {
+ 			 gro_enabled:1,	/* Request GRO aggregation */
+ 			 accept_udp_l4:1,
+ 			 accept_udp_fraglist:1;
++/* indicator bits used by pcflag: */
++#define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
++#define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
++#define UDPLITE_RECV_CC  0x4		/* set via udplite setsocktopt        */
++	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
+ 	/*
+ 	 * Following member retains the information to create a UDP header
+ 	 * when the socket is uncorked.
+@@ -62,12 +73,6 @@ struct udp_sock {
+ 	 */
+ 	__u16		 pcslen;
+ 	__u16		 pcrlen;
+-/* indicator bits used by pcflag: */
+-#define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
+-#define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
+-#define UDPLITE_RECV_CC  0x4		/* set via udplite setsocktopt        */
+-	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
+-	__u8		 unused[3];
+ 	/*
+ 	 * For encapsulation sockets.
+ 	 */
+@@ -95,6 +100,15 @@ struct udp_sock {
+ 	int		forward_threshold;
+ };
  
-+	/*
-+	 * XEN/PV provides either none or useless topology information.
-+	 * Pretend that all vCPUs are primary threads.
-+	 */
-+	if (xen_pv_domain()) {
-+		cpumask_copy(&__cpu_primary_thread_mask, cpu_possible_mask);
-+		return 0;
-+	}
++#define udp_test_bit(nr, sk)			\
++	test_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
++#define udp_set_bit(nr, sk)			\
++	set_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
++#define udp_clear_bit(nr, sk)			\
++	clear_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
++#define udp_assign_bit(nr, sk, val)		\
++	assign_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags, val)
 +
- 	for (cpu = 0; cpu < nr_logical_cpuids; cpu++)
- 		cpu_mark_primary_thread(cpu, cpuid_to_apicid[cpu]);
- 	return 0;
+ #define UDP_MAX_SEGMENTS	(1 << 6UL)
+ 
+ #define udp_sk(ptr) container_of_const(ptr, struct udp_sock, inet.sk)
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 4c847baf52d1c..c7873bb4375d0 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1080,7 +1080,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	u8 tos, scope;
+ 	__be16 dport;
+ 	int err, is_udplite = IS_UDPLITE(sk);
+-	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
++	int corkreq = udp_test_bit(CORK, sk) || msg->msg_flags & MSG_MORE;
+ 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
+ 	struct sk_buff *skb;
+ 	struct ip_options_data opt_copy;
+@@ -1344,11 +1344,11 @@ void udp_splice_eof(struct socket *sock)
+ 	struct sock *sk = sock->sk;
+ 	struct udp_sock *up = udp_sk(sk);
+ 
+-	if (!up->pending || READ_ONCE(up->corkflag))
++	if (!up->pending || udp_test_bit(CORK, sk))
+ 		return;
+ 
+ 	lock_sock(sk);
+-	if (up->pending && !READ_ONCE(up->corkflag))
++	if (up->pending && !udp_test_bit(CORK, sk))
+ 		udp_push_pending_frames(sk);
+ 	release_sock(sk);
+ }
+@@ -2683,9 +2683,9 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ 	switch (optname) {
+ 	case UDP_CORK:
+ 		if (val != 0) {
+-			WRITE_ONCE(up->corkflag, 1);
++			udp_set_bit(CORK, sk);
+ 		} else {
+-			WRITE_ONCE(up->corkflag, 0);
++			udp_clear_bit(CORK, sk);
+ 			lock_sock(sk);
+ 			push_pending_frames(sk);
+ 			release_sock(sk);
+@@ -2808,7 +2808,7 @@ int udp_lib_getsockopt(struct sock *sk, int level, int optname,
+ 
+ 	switch (optname) {
+ 	case UDP_CORK:
+-		val = READ_ONCE(up->corkflag);
++		val = udp_test_bit(CORK, sk);
+ 		break;
+ 
+ 	case UDP_ENCAP:
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 24d3c5c791218..816247afc2f89 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -1361,7 +1361,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	int addr_len = msg->msg_namelen;
+ 	bool connected = false;
+ 	int ulen = len;
+-	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
++	int corkreq = udp_test_bit(CORK, sk) || msg->msg_flags & MSG_MORE;
+ 	int err;
+ 	int is_udplite = IS_UDPLITE(sk);
+ 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
+@@ -1673,11 +1673,11 @@ static void udpv6_splice_eof(struct socket *sock)
+ 	struct sock *sk = sock->sk;
+ 	struct udp_sock *up = udp_sk(sk);
+ 
+-	if (!up->pending || READ_ONCE(up->corkflag))
++	if (!up->pending || udp_test_bit(CORK, sk))
+ 		return;
+ 
+ 	lock_sock(sk);
+-	if (up->pending && !READ_ONCE(up->corkflag))
++	if (up->pending && !udp_test_bit(CORK, sk))
+ 		udp_v6_push_pending_frames(sk);
+ 	release_sock(sk);
+ }
 -- 
 2.42.0
 
