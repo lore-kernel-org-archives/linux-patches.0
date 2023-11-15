@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0207E3C46F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8092A8C0C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrgaZQ3g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E0DC433C8;
-	Wed, 15 Nov 2023 19:41:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Q9+TA5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33153C433C7;
+	Wed, 15 Nov 2023 19:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077268;
-	bh=sAxA/0xjBz/YmJLUCwyQHlX/UFuZgUPxia/cg0VsjrQ=;
+	s=korg; t=1700077270;
+	bh=LfWUTtXj7iC/CO6q1JCfWXl+CF9bJxkcMT/ZPQrPpvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrgaZQ3gBpwLoucS2IneMBJD8YeVMUGGUnrcEKbGK4u5bndqhJhROIUiELump0rKH
-	 CgughtnC6lEryfbcSI3/WMdf+pCsQubKonvoomqrOmehF4VD5m4iQOjGxmBe+so2DA
-	 rqfmH4aOrlCWa4PuhPOgGe16Oxuc6T0CTEkNMP+k=
+	b=2Q9+TA5w1WpU0YLEyIvmqQHWyqk6JpclfS2GeZnQhkvEdd8fPB8US5ZRrthEULTwY
+	 EkvM+XnGS3GaemWcBDM/XvF1CQXVl0UTkr8PhFdfmSDT57anaUBuJm0Y7/T7giYVC5
+	 5+UsKXAVAbK0R2oHii3sire6dRoQrDPPf23b1XjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 199/603] clk: mediatek: fix double free in mtk_clk_register_pllfh()
-Date: Wed, 15 Nov 2023 14:12:24 -0500
-Message-ID: <20231115191627.030467940@linuxfoundation.org>
+Subject: [PATCH 6.6 200/603] platform/x86: wmi: Fix probe failure when failing to register WMI devices
+Date: Wed, 15 Nov 2023 14:12:25 -0500
+Message-ID: <20231115191627.097764729@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -37,60 +36,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit bd54ccc0f147019dac38e7841876a7415459b875 ]
+[ Upstream commit ed85891a276edaf7a867de0e9acd0837bc3008f2 ]
 
-The mtk_clk_register_pll_ops() currently frees the "pll" parameter.
-The function has two callers, mtk_clk_register_pll() and
-mtk_clk_register_pllfh().  The first one, the _pll() function relies on
-the free, but for the second _pllfh() function it causes a double free
-bug.
+When a WMI device besides the first one somehow fails to register,
+retval is returned while still containing a negative error code. This
+causes the ACPI device fail to probe, leaving behind zombie WMI devices
+leading to various errors later.
 
-Really the frees should be done in the caller because that's where
-the allocation is.
+Handle the single error path separately and return 0 unconditionally
+after trying to register all WMI devices to solve the issue. Also
+continue to register WMI devices even if some fail to allocate memory.
 
-Fixes: d7964de8a8ea ("clk: mediatek: Add new clock driver to handle FHCTL hardware")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/cd7fa365-28cc-4c34-ac64-6da57c98baa6@moroto.mountain
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 6ee50aaa9a20 ("platform/x86: wmi: Instantiate all devices before adding them")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20231020211005.38216-4-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-pll.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/platform/x86/wmi.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-pll.c b/drivers/clk/mediatek/clk-pll.c
-index a4eca5fd539c8..513ab6b1b3229 100644
---- a/drivers/clk/mediatek/clk-pll.c
-+++ b/drivers/clk/mediatek/clk-pll.c
-@@ -321,10 +321,8 @@ struct clk_hw *mtk_clk_register_pll_ops(struct mtk_clk_pll *pll,
+diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
+index a78ddd83cda02..7d11ff5bc856c 100644
+--- a/drivers/platform/x86/wmi.c
++++ b/drivers/platform/x86/wmi.c
+@@ -1270,8 +1270,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
+ 	struct wmi_block *wblock, *next;
+ 	union acpi_object *obj;
+ 	acpi_status status;
+-	int retval = 0;
+ 	u32 i, total;
++	int retval;
  
- 	ret = clk_hw_register(NULL, &pll->hw);
+ 	status = acpi_evaluate_object(device->handle, "_WDG", NULL, &out);
+ 	if (ACPI_FAILURE(status))
+@@ -1282,8 +1282,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
+ 		return -ENXIO;
  
--	if (ret) {
--		kfree(pll);
-+	if (ret)
- 		return ERR_PTR(ret);
--	}
+ 	if (obj->type != ACPI_TYPE_BUFFER) {
+-		retval = -ENXIO;
+-		goto out_free_pointer;
++		kfree(obj);
++		return -ENXIO;
+ 	}
  
- 	return &pll->hw;
+ 	gblock = (const struct guid_block *)obj->buffer.pointer;
+@@ -1298,8 +1298,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
+ 
+ 		wblock = kzalloc(sizeof(*wblock), GFP_KERNEL);
+ 		if (!wblock) {
+-			retval = -ENOMEM;
+-			break;
++			dev_err(wmi_bus_dev, "Failed to allocate %pUL\n", &gblock[i].guid);
++			continue;
+ 		}
+ 
+ 		wblock->acpi_device = device;
+@@ -1338,9 +1338,9 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
+ 		}
+ 	}
+ 
+-out_free_pointer:
+-	kfree(out.pointer);
+-	return retval;
++	kfree(obj);
++
++	return 0;
  }
-@@ -340,6 +338,8 @@ struct clk_hw *mtk_clk_register_pll(const struct mtk_pll_data *data,
- 		return ERR_PTR(-ENOMEM);
  
- 	hw = mtk_clk_register_pll_ops(pll, data, base, &mtk_pll_ops);
-+	if (IS_ERR(hw))
-+		kfree(pll);
- 
- 	return hw;
- }
+ /*
 -- 
 2.42.0
 
