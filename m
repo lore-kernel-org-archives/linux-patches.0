@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC093EA62
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1023EA72
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbeCOdeX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DDAFC433C7;
-	Wed, 15 Nov 2023 19:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoxinjcZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB1AC433C8;
+	Wed, 15 Nov 2023 19:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700075997;
-	bh=Xn+4b0Q8sSpTL7c93LD3H1/9Wiu7SmZjxbtBrACjbpA=;
+	s=korg; t=1700075999;
+	bh=L75SWlQBSMBPztsQeotk7+nraBMyr6HBlkshToP56eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EbeCOdeXqMFoFPhg1Tk4mp8r8QCCgWWeVU+SxfFQe2kxG7rLvVrF2/Xj3OAp1FW5B
-	 xg08ohwGdzgBiYPABjawWoX8NWug1ok6dc4dxcCgZ3OkQyITOK8rYjQGQhGTXt2q/Q
-	 AC4h/aJ8/tIqB5UFH7odOWbsA0cDSOjUp+PUI3bc=
+	b=CoxinjcZBZkvw2Io3lRzMllvjzbdUfwxMVW/QpNzqOb4Y53nhyhAJ63HpNfvDp8pn
+	 eYLrc5/0UYqr2wE3I/1ymHxq+9uTIz6JppjctdFG3UabVMid3FF1XT9DtZz7Wu1zz1
+	 Y492JDbTH1bwO296lSTlrWW2dGv58i4X6qt8nIKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kuyo=20Chang=20 ?= <Kuyo.Chang@mediatek.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 010/550] sched: Fix stop_one_cpu_nowait() vs hotplug
-Date: Wed, 15 Nov 2023 14:09:54 -0500
-Message-ID: <20231115191601.429744679@linuxfoundation.org>
+Subject: [PATCH 6.5 011/550] nfsd: Handle EOPENSTALE correctly in the filecache
+Date: Wed, 15 Nov 2023 14:09:55 -0500
+Message-ID: <20231115191601.496725932@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -36,213 +37,235 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit f0498d2a54e7966ce23cd7c7ff42c64fa0059b07 ]
+[ Upstream commit d59b3515ab021e010fdc58a8f445ea62dd2f7f4c ]
 
-Kuyo reported sporadic failures on a sched_setaffinity() vs CPU
-hotplug stress-test -- notably affine_move_task() remains stuck in
-wait_for_completion(), leading to a hung-task detector warning.
+The nfsd_open code handles EOPENSTALE correctly, by retrying the call to
+fh_verify() and __nfsd_open(). However the filecache just drops the
+error on the floor, and immediately returns nfserr_stale to the caller.
 
-Specifically, it was reported that stop_one_cpu_nowait(.fn =
-migration_cpu_stop) returns false -- this stopper is responsible for
-the matching complete().
+This patch ensures that we propagate the EOPENSTALE code back to
+nfsd_file_do_acquire, and that we handle it correctly.
 
-The race scenario is:
-
-	CPU0					CPU1
-
-					// doing _cpu_down()
-
-  __set_cpus_allowed_ptr()
-    task_rq_lock();
-					takedown_cpu()
-					  stop_machine_cpuslocked(take_cpu_down..)
-
-					<PREEMPT: cpu_stopper_thread()
-					  MULTI_STOP_PREPARE
-					  ...
-    __set_cpus_allowed_ptr_locked()
-      affine_move_task()
-        task_rq_unlock();
-
-  <PREEMPT: cpu_stopper_thread()\>
-    ack_state()
-					  MULTI_STOP_RUN
-					    take_cpu_down()
-					      __cpu_disable();
-					      stop_machine_park();
-						stopper->enabled = false;
-					 />
-   />
-	stop_one_cpu_nowait(.fn = migration_cpu_stop);
-          if (stopper->enabled) // false!!!
-
-That is, by doing stop_one_cpu_nowait() after dropping rq-lock, the
-stopper thread gets a chance to preempt and allows the cpu-down for
-the target CPU to complete.
-
-OTOH, since stop_one_cpu_nowait() / cpu_stop_queue_work() needs to
-issue a wakeup, it must not be ran under the scheduler locks.
-
-Solve this apparent contradiction by keeping preemption disabled over
-the unlock + queue_stopper combination:
-
-	preempt_disable();
-	task_rq_unlock(...);
-	if (!stop_pending)
-	  stop_one_cpu_nowait(...)
-	preempt_enable();
-
-This respects the lock ordering contraints while still avoiding the
-above race. That is, if we find the CPU is online under rq-lock, the
-targeted stop_one_cpu_nowait() must succeed.
-
-Apply this pattern to all similar stop_one_cpu_nowait() invocations.
-
-Fixes: 6d337eab041d ("sched: Fix migrate_disable() vs set_cpus_allowed_ptr()")
-Reported-by: "Kuyo Chang (張建文)" <Kuyo.Chang@mediatek.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: "Kuyo Chang (張建文)" <Kuyo.Chang@mediatek.com>
-Link: https://lkml.kernel.org/r/20231010200442.GA16515@noisy.programming.kicks-ass.net
+Fixes: 65294c1f2c5e ("nfsd: add a new struct file caching facility to nfsd")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Message-Id: <20230911183027.11372-1-trond.myklebust@hammerspace.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c     | 10 ++++++++--
- kernel/sched/deadline.c |  2 ++
- kernel/sched/fair.c     |  4 +++-
- kernel/sched/rt.c       |  4 ++++
- 4 files changed, 17 insertions(+), 3 deletions(-)
+ fs/nfsd/filecache.c | 27 +++++++++++++++++++--------
+ fs/nfsd/vfs.c       | 28 +++++++++++++---------------
+ fs/nfsd/vfs.h       |  4 ++--
+ 3 files changed, 34 insertions(+), 25 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index e8f73ff12126c..149fdb212e20f 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -2644,9 +2644,11 @@ static int migration_cpu_stop(void *data)
- 		 * it.
- 		 */
- 		WARN_ON_ONCE(!pending->stop_pending);
-+		preempt_disable();
- 		task_rq_unlock(rq, p, &rf);
- 		stop_one_cpu_nowait(task_cpu(p), migration_cpu_stop,
- 				    &pending->arg, &pending->stop_work);
-+		preempt_enable();
- 		return 0;
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index ee9c923192e08..07bf219f9ae48 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -989,22 +989,21 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	unsigned char need = may_flags & NFSD_FILE_MAY_MASK;
+ 	struct net *net = SVC_NET(rqstp);
+ 	struct nfsd_file *new, *nf;
+-	const struct cred *cred;
++	bool stale_retry = true;
+ 	bool open_retry = true;
+ 	struct inode *inode;
+ 	__be32 status;
+ 	int ret;
+ 
++retry:
+ 	status = fh_verify(rqstp, fhp, S_IFREG,
+ 				may_flags|NFSD_MAY_OWNER_OVERRIDE);
+ 	if (status != nfs_ok)
+ 		return status;
+ 	inode = d_inode(fhp->fh_dentry);
+-	cred = get_current_cred();
+ 
+-retry:
+ 	rcu_read_lock();
+-	nf = nfsd_file_lookup_locked(net, cred, inode, need, want_gc);
++	nf = nfsd_file_lookup_locked(net, current_cred(), inode, need, want_gc);
+ 	rcu_read_unlock();
+ 
+ 	if (nf) {
+@@ -1026,7 +1025,7 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 
+ 	rcu_read_lock();
+ 	spin_lock(&inode->i_lock);
+-	nf = nfsd_file_lookup_locked(net, cred, inode, need, want_gc);
++	nf = nfsd_file_lookup_locked(net, current_cred(), inode, need, want_gc);
+ 	if (unlikely(nf)) {
+ 		spin_unlock(&inode->i_lock);
+ 		rcu_read_unlock();
+@@ -1058,6 +1057,7 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 			goto construction_err;
+ 		}
+ 		open_retry = false;
++		fh_put(fhp);
+ 		goto retry;
  	}
+ 	this_cpu_inc(nfsd_file_cache_hits);
+@@ -1074,7 +1074,6 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 		nfsd_file_check_write_error(nf);
+ 		*pnf = nf;
+ 	}
+-	put_cred(cred);
+ 	trace_nfsd_file_acquire(rqstp, inode, may_flags, nf, status);
+ 	return status;
+ 
+@@ -1088,8 +1087,20 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 			status = nfs_ok;
+ 			trace_nfsd_file_opened(nf, status);
+ 		} else {
+-			status = nfsd_open_verified(rqstp, fhp, may_flags,
+-						    &nf->nf_file);
++			ret = nfsd_open_verified(rqstp, fhp, may_flags,
++						 &nf->nf_file);
++			if (ret == -EOPENSTALE && stale_retry) {
++				stale_retry = false;
++				nfsd_file_unhash(nf);
++				clear_and_wake_up_bit(NFSD_FILE_PENDING,
++						      &nf->nf_flags);
++				if (refcount_dec_and_test(&nf->nf_ref))
++					nfsd_file_free(nf);
++				nf = NULL;
++				fh_put(fhp);
++				goto retry;
++			}
++			status = nfserrno(ret);
+ 			trace_nfsd_file_open(nf, status);
+ 		}
+ 	} else
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index c7fdc19b0d5f7..4aa421d1efbfd 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -823,7 +823,7 @@ int nfsd_open_break_lease(struct inode *inode, int access)
+  * and additional flags.
+  * N.B. After this call fhp needs an fh_put
+  */
+-static __be32
++static int
+ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
+ 			int may_flags, struct file **filp)
+ {
+@@ -831,14 +831,12 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
+ 	struct inode	*inode;
+ 	struct file	*file;
+ 	int		flags = O_RDONLY|O_LARGEFILE;
+-	__be32		err;
+-	int		host_err = 0;
++	int		host_err = -EPERM;
+ 
+ 	path.mnt = fhp->fh_export->ex_path.mnt;
+ 	path.dentry = fhp->fh_dentry;
+ 	inode = d_inode(path.dentry);
+ 
+-	err = nfserr_perm;
+ 	if (IS_APPEND(inode) && (may_flags & NFSD_MAY_WRITE))
+ 		goto out;
+ 
+@@ -847,7 +845,7 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
+ 
+ 	host_err = nfsd_open_break_lease(inode, may_flags);
+ 	if (host_err) /* NOMEM or WOULDBLOCK */
+-		goto out_nfserr;
++		goto out;
+ 
+ 	if (may_flags & NFSD_MAY_WRITE) {
+ 		if (may_flags & NFSD_MAY_READ)
+@@ -859,13 +857,13 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
+ 	file = dentry_open(&path, flags, current_cred());
+ 	if (IS_ERR(file)) {
+ 		host_err = PTR_ERR(file);
+-		goto out_nfserr;
++		goto out;
+ 	}
+ 
+ 	host_err = ima_file_check(file, may_flags);
+ 	if (host_err) {
+ 		fput(file);
+-		goto out_nfserr;
++		goto out;
+ 	}
+ 
+ 	if (may_flags & NFSD_MAY_64BIT_COOKIE)
+@@ -874,10 +872,8 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
+ 		file->f_mode |= FMODE_32BITHASH;
+ 
+ 	*filp = file;
+-out_nfserr:
+-	err = nfserrno(host_err);
  out:
-@@ -2966,12 +2968,13 @@ static int affine_move_task(struct rq *rq, struct task_struct *p, struct rq_flag
- 			complete = true;
+-	return err;
++	return host_err;
+ }
+ 
+ __be32
+@@ -885,6 +881,7 @@ nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
+ 		int may_flags, struct file **filp)
+ {
+ 	__be32 err;
++	int host_err;
+ 	bool retried = false;
+ 
+ 	validate_process_creds();
+@@ -904,12 +901,13 @@ nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
+ retry:
+ 	err = fh_verify(rqstp, fhp, type, may_flags);
+ 	if (!err) {
+-		err = __nfsd_open(rqstp, fhp, type, may_flags, filp);
+-		if (err == nfserr_stale && !retried) {
++		host_err = __nfsd_open(rqstp, fhp, type, may_flags, filp);
++		if (host_err == -EOPENSTALE && !retried) {
+ 			retried = true;
+ 			fh_put(fhp);
+ 			goto retry;
  		}
- 
-+		preempt_disable();
- 		task_rq_unlock(rq, p, rf);
--
- 		if (push_task) {
- 			stop_one_cpu_nowait(rq->cpu, push_cpu_stop,
- 					    p, &rq->push_work);
- 		}
-+		preempt_enable();
- 
- 		if (complete)
- 			complete_all(&pending->done);
-@@ -3037,12 +3040,13 @@ static int affine_move_task(struct rq *rq, struct task_struct *p, struct rq_flag
- 		if (flags & SCA_MIGRATE_ENABLE)
- 			p->migration_flags &= ~MDF_PUSH;
- 
-+		preempt_disable();
- 		task_rq_unlock(rq, p, rf);
--
- 		if (!stop_pending) {
- 			stop_one_cpu_nowait(cpu_of(rq), migration_cpu_stop,
- 					    &pending->arg, &pending->stop_work);
- 		}
-+		preempt_enable();
- 
- 		if (flags & SCA_MIGRATE_ENABLE)
- 			return 0;
-@@ -9507,9 +9511,11 @@ static void balance_push(struct rq *rq)
- 	 * Temporarily drop rq->lock such that we can wake-up the stop task.
- 	 * Both preemption and IRQs are still disabled.
- 	 */
-+	preempt_disable();
- 	raw_spin_rq_unlock(rq);
- 	stop_one_cpu_nowait(rq->cpu, __balance_push_cpu_stop, push_task,
- 			    this_cpu_ptr(&push_work));
-+	preempt_enable();
- 	/*
- 	 * At this point need_resched() is true and we'll take the loop in
- 	 * schedule(). The next pick is obviously going to be the stop task
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 58b542bf28934..d78f2e8769fb4 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2449,9 +2449,11 @@ static void pull_dl_task(struct rq *this_rq)
- 		double_unlock_balance(this_rq, src_rq);
- 
- 		if (push_task) {
-+			preempt_disable();
- 			raw_spin_rq_unlock(this_rq);
- 			stop_one_cpu_nowait(src_rq->cpu, push_cpu_stop,
- 					    push_task, &src_rq->push_work);
-+			preempt_enable();
- 			raw_spin_rq_lock(this_rq);
- 		}
++		err = nfserrno(host_err);
  	}
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index a87ef35d5424a..8e1b54dc2a214 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -10986,13 +10986,15 @@ static int load_balance(int this_cpu, struct rq *this_rq,
- 				busiest->push_cpu = this_cpu;
- 				active_balance = 1;
- 			}
--			raw_spin_rq_unlock_irqrestore(busiest, flags);
+ 	validate_process_creds();
+ 	return err;
+@@ -922,13 +920,13 @@ nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
+  * @may_flags: internal permission flags
+  * @filp: OUT: open "struct file *"
+  *
+- * Returns an nfsstat value in network byte order.
++ * Returns zero on success, or a negative errno value.
+  */
+-__be32
++int
+ nfsd_open_verified(struct svc_rqst *rqstp, struct svc_fh *fhp, int may_flags,
+ 		   struct file **filp)
+ {
+-	__be32 err;
++	int err;
  
-+			preempt_disable();
-+			raw_spin_rq_unlock_irqrestore(busiest, flags);
- 			if (active_balance) {
- 				stop_one_cpu_nowait(cpu_of(busiest),
- 					active_load_balance_cpu_stop, busiest,
- 					&busiest->active_balance_work);
- 			}
-+			preempt_enable();
- 		}
- 	} else {
- 		sd->nr_balance_failed = 0;
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 185d3d749f6b6..590abc1a013d2 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2109,9 +2109,11 @@ static int push_rt_task(struct rq *rq, bool pull)
- 		 */
- 		push_task = get_push_task(rq);
- 		if (push_task) {
-+			preempt_disable();
- 			raw_spin_rq_unlock(rq);
- 			stop_one_cpu_nowait(rq->cpu, push_cpu_stop,
- 					    push_task, &rq->push_work);
-+			preempt_enable();
- 			raw_spin_rq_lock(rq);
- 		}
- 
-@@ -2448,9 +2450,11 @@ static void pull_rt_task(struct rq *this_rq)
- 		double_unlock_balance(this_rq, src_rq);
- 
- 		if (push_task) {
-+			preempt_disable();
- 			raw_spin_rq_unlock(this_rq);
- 			stop_one_cpu_nowait(src_rq->cpu, push_cpu_stop,
- 					    push_task, &src_rq->push_work);
-+			preempt_enable();
- 			raw_spin_rq_lock(this_rq);
- 		}
- 	}
+ 	validate_process_creds();
+ 	err = __nfsd_open(rqstp, fhp, S_IFREG, may_flags, filp);
+diff --git a/fs/nfsd/vfs.h b/fs/nfsd/vfs.h
+index a6890ea7b765b..e3c29596f4df1 100644
+--- a/fs/nfsd/vfs.h
++++ b/fs/nfsd/vfs.h
+@@ -104,8 +104,8 @@ __be32		nfsd_setxattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ int 		nfsd_open_break_lease(struct inode *, int);
+ __be32		nfsd_open(struct svc_rqst *, struct svc_fh *, umode_t,
+ 				int, struct file **);
+-__be32		nfsd_open_verified(struct svc_rqst *, struct svc_fh *,
+-				int, struct file **);
++int		nfsd_open_verified(struct svc_rqst *rqstp, struct svc_fh *fhp,
++				   int may_flags, struct file **filp);
+ __be32		nfsd_splice_read(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 				struct file *file, loff_t offset,
+ 				unsigned long *count,
 -- 
 2.42.0
 
