@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC3D3BB38
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6043BB29
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZbzq2Wk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C70C433C9;
-	Wed, 15 Nov 2023 19:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQQlGKh0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFA0C433C7;
+	Wed, 15 Nov 2023 19:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076170;
-	bh=bCUyBwegahesJv/9IO1mhsHWrHW7QNs+h7WVJ7ChcXU=;
+	s=korg; t=1700076171;
+	bh=BBDhtMHpW/ISBwAtcKUI0VzV+Pnt3Xd8EBtP2FOlu1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZbzq2WkrCIZvwFd8J+NJEs7DuCHG29TI3oAsEX5VQDSsW50vbLwqfbwG3/Fum4tT
-	 BWk8KAExqdmBP9ocxqHMI2Mkn12zPnLw6Qn02d9UdEXizr8ysPpccWvm0at2rlrXXy
-	 QONwtNl5L53Z2+Ll5lcgHObqw3AzBREx8pn84JrI=
+	b=mQQlGKh0vEF90xeoMbxznogfRwmgeTJDCqasXyzVRBlYs1n5ghe+fCvStucNSLw+L
+	 RP/J7uGogrdrW24MehnJ/rH1PDFEcZKlD8NbOaKLduv+0cOgi5mD+2+t9AMYp7/c/P
+	 rqL3uGZeh7f1G6UIYRvELQ1Lz0rrXsG1PeEXiEV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Souloumiac <olivier.souloumiac@silabs.com>,
-	Alexandr Suslenko <suslenko.o@ajax.systems>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
-	Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 111/550] wifi: wfx: fix case where rates are out of order
-Date: Wed, 15 Nov 2023 14:11:35 -0500
-Message-ID: <20231115191608.387785147@linuxfoundation.org>
+Subject: [PATCH 6.5 120/550] thermal: core: Dont update trip points inside the hysteresis range
+Date: Wed, 15 Nov 2023 14:11:44 -0500
+Message-ID: <20231115191609.011103103@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -46,156 +44,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit ea2274ab0b18549dbf0e755e41d8c5e8b5232dc3 ]
+[ Upstream commit cf3986f8c01d355490d0ac6024391b989a9d1e9d ]
 
-When frames are sent over the air, the device always applies the data
-rates in descending order. The driver assumed Minstrel also provided
-rate in descending order.
+When searching for the trip points that need to be set, the nearest
+higher trip point's temperature is used for the high trip, while the
+nearest lower trip point's temperature minus the hysteresis is used for
+the low trip. The issue with this logic is that when the current
+temperature is inside a trip point's hysteresis range, both high and low
+trips will come from the same trip point. As a consequence instability
+can still occur like this:
+* the temperature rises slightly and enters the hysteresis range of a
+  trip point
+* polling happens and updates the trip points to the hysteresis range
+* the temperature falls slightly, exiting the hysteresis range, crossing
+  the trip point and triggering an IRQ, the trip points are updated
+* repeat
 
-However, in some cases, Minstrel can a choose a fallback rate greater
-than the primary rate. In this case, the two rates was inverted, the
-device try highest rate first and we get many retries.
+So even though the current hysteresis implementation prevents
+instability from happening due to IRQs triggering on the same
+temperature value, both ways, it doesn't prevent it from happening due
+to an IRQ on one way and polling on the other.
 
-Since the device always applies rates in descending order, the
-workaround is to drop the rate when it higher than its predecessor in
-the rate list. Thus [ 4, 5, 3 ] becomes [ 4, 3 ].
+To properly implement a hysteresis behavior, when inside the hysteresis
+range, don't update the trip points. This way, the previously set trip
+points will stay in effect, which will in a way remember the previous
+state (if the temperature signal came from above or below the range) and
+therefore have the right trip point already set.
 
-This patch has been tested in isolated room with a series of
-attenuators. Here are the Minstrel statistics with 80dBm of attenuation:
+The exception is if there was no previous trip point set, in which case
+a previous state doesn't exist, and so it's sensible to allow the
+hysteresis range as trip points.
 
-  Without the fix:
+The following logs show the current behavior when running on a real
+machine:
 
-                  best    ____________rate__________    ____statistics___    _____last____    ______sum-of________
-    mode guard #  rate   [name   idx airtime  max_tp]  [avg(tp) avg(prob)]  [retry|suc|att]  [#success | #attempts]
-    HT20  LGI  1       S  MCS0     0    1477     5.6       5.2      82.7       3     0 0             3   4
-    HT20  LGI  1          MCS1     1     738    10.6       0.0       0.0       0     0 0             0   1
-    HT20  LGI  1     D    MCS2     2     492    14.9      13.5      81.5       5     0 0             5   9
-    HT20  LGI  1    C     MCS3     3     369    18.8      17.6      84.3       5     0 0            76   96
-    HT20  LGI  1  A   P   MCS4     4     246    25.4      22.4      79.5       5     0 0         11268   14026
-    HT20  LGI  1   B   S  MCS5     5     185    30.7      19.7      57.7       5     8 9          3918   9793
-    HT20  LGI  1          MCS6     6     164    33.0       0.0       0.0       5     0 0             6   102
-    HT20  LGI  1          MCS7     7     148    35.1       0.0       0.0       0     0 0             0   44
+[  202.524658] thermal thermal_zone0: new temperature boundaries: -2147483647 < x < 40000
+   203.562817: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=36986 temp=37979
+[  203.562845] thermal thermal_zone0: new temperature boundaries: 37000 < x < 40000
+   204.176059: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=37979 temp=40028
+[  204.176089] thermal thermal_zone0: new temperature boundaries: 37000 < x < 100000
+   205.226813: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=40028 temp=38652
+[  205.226842] thermal thermal_zone0: new temperature boundaries: 37000 < x < 40000
 
-  With the fix:
+And with this patch applied:
 
-                  best    ____________rate__________    ____statistics___    _____last____    ______sum-of________
-    mode guard #  rate   [name   idx airtime  max_tp]  [avg(tp) avg(prob)]  [retry|suc|att]  [#success | #attempts]
-    HT20  LGI  1       S  MCS0     0    1477     5.6       1.8      28.6       1     0 0             1   5
-    HT20  LGI  1     DP   MCS1     1     738    10.6       9.7      82.6       4     0 0            14   34
-    HT20  LGI  1          MCS2     2     492    14.9       9.2      55.4       5     0 0            52   77
-    HT20  LGI  1   B   S  MCS3     3     369    18.8      15.6      74.9       5     1 1           417   554
-    HT20  LGI  1  A       MCS4     4     246    25.4      16.7      59.2       5     1 1         13812   17951
-    HT20  LGI  1    C  S  MCS5     5     185    30.7      14.0      41.0       5     1 5            57   640
-    HT20  LGI  1          MCS6     6     164    33.0       0.0       0.0       0     0 1             0   48
-    HT20  LGI  1       S  MCS7     7     148    35.1       0.0       0.0       0     0 0             0   36
+[  184.933415] thermal thermal_zone0: new temperature boundaries: -2147483647 < x < 40000
+   185.981182: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=36986 temp=37872
+   186.744685: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=37872 temp=40058
+[  186.744716] thermal thermal_zone0: new temperature boundaries: 37000 < x < 100000
+   187.773284: thermal_temperature: thermal_zone=vpu0-thermal id=0 temp_prev=40058 temp=38698
 
-We can notice the device try now to send with lower rates (and high
-success rates). At the end, we measured 20-25% better throughput with
-this patch.
-
-Fixes: 9bca45f3d692 ("staging: wfx: allow to send 802.11 frames")
-Tested-by: Olivier Souloumiac <olivier.souloumiac@silabs.com>
-Tested-by: Alexandr Suslenko <suslenko.o@ajax.systems>
-Reported-by: Alexandr Suslenko <suslenko.o@ajax.systems>
-Co-developed-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
-Signed-off-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
-Signed-off-by: Felipe Negrelli Wolter <felipe.negrelliwolter@silabs.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231004123039.157112-1-jerome.pouiller@silabs.com
+Fixes: 060c034a9741 ("thermal: Add support for hardware-tracked trip points")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Co-developed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/silabs/wfx/data_tx.c | 71 +++++++++--------------
- 1 file changed, 29 insertions(+), 42 deletions(-)
+ drivers/thermal/thermal_trip.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/silabs/wfx/data_tx.c b/drivers/net/wireless/silabs/wfx/data_tx.c
-index 6a5e52a96d183..caa22226b01bc 100644
---- a/drivers/net/wireless/silabs/wfx/data_tx.c
-+++ b/drivers/net/wireless/silabs/wfx/data_tx.c
-@@ -226,53 +226,40 @@ static u8 wfx_tx_get_link_id(struct wfx_vif *wvif, struct ieee80211_sta *sta,
- 
- static void wfx_tx_fixup_rates(struct ieee80211_tx_rate *rates)
+diff --git a/drivers/thermal/thermal_trip.c b/drivers/thermal/thermal_trip.c
+index 907f3a4d7bc8c..21736e02fa360 100644
+--- a/drivers/thermal/thermal_trip.c
++++ b/drivers/thermal/thermal_trip.c
+@@ -57,6 +57,7 @@ void __thermal_zone_set_trips(struct thermal_zone_device *tz)
  {
--	int i;
--	bool finished;
-+	bool has_rate0 = false;
-+	int i, j;
+ 	struct thermal_trip trip;
+ 	int low = -INT_MAX, high = INT_MAX;
++	bool same_trip = false;
+ 	int i, ret;
  
--	/* Firmware is not able to mix rates with different flags */
--	for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
--		if (rates[0].flags & IEEE80211_TX_RC_SHORT_GI)
--			rates[i].flags |= IEEE80211_TX_RC_SHORT_GI;
--		if (!(rates[0].flags & IEEE80211_TX_RC_SHORT_GI))
-+	for (i = 1, j = 1; j < IEEE80211_TX_MAX_RATES; j++) {
-+		if (rates[j].idx == -1)
-+			break;
-+		/* The device use the rates in descending order, whatever the request from minstrel.
-+		 * We have to trade off here. Most important is to respect the primary rate
-+		 * requested by minstrel. So, we drops the entries with rate higher than the
-+		 * previous.
-+		 */
-+		if (rates[j].idx >= rates[i - 1].idx) {
-+			rates[i - 1].count += rates[j].count;
-+			rates[i - 1].count = min_t(u16, 15, rates[i - 1].count);
-+		} else {
-+			memcpy(rates + i, rates + j, sizeof(rates[i]));
-+			if (rates[i].idx == 0)
-+				has_rate0 = true;
-+			/* The device apply Short GI only on the first rate */
- 			rates[i].flags &= ~IEEE80211_TX_RC_SHORT_GI;
--		if (!(rates[0].flags & IEEE80211_TX_RC_USE_RTS_CTS))
--			rates[i].flags &= ~IEEE80211_TX_RC_USE_RTS_CTS;
--	}
--
--	/* Sort rates and remove duplicates */
--	do {
--		finished = true;
--		for (i = 0; i < IEEE80211_TX_MAX_RATES - 1; i++) {
--			if (rates[i + 1].idx == rates[i].idx &&
--			    rates[i].idx != -1) {
--				rates[i].count += rates[i + 1].count;
--				if (rates[i].count > 15)
--					rates[i].count = 15;
--				rates[i + 1].idx = -1;
--				rates[i + 1].count = 0;
--
--				finished = false;
--			}
--			if (rates[i + 1].idx > rates[i].idx) {
--				swap(rates[i + 1], rates[i]);
--				finished = false;
--			}
-+			i++;
- 		}
--	} while (!finished);
-+	}
- 	/* Ensure that MCS0 or 1Mbps is present at the end of the retry list */
--	for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
--		if (rates[i].idx == 0)
--			break;
--		if (rates[i].idx == -1) {
--			rates[i].idx = 0;
--			rates[i].count = 8; /* == hw->max_rate_tries */
--			rates[i].flags = rates[i - 1].flags & IEEE80211_TX_RC_MCS;
--			break;
--		}
-+	if (!has_rate0 && i < IEEE80211_TX_MAX_RATES) {
-+		rates[i].idx = 0;
-+		rates[i].count = 8; /* == hw->max_rate_tries */
-+		rates[i].flags = rates[0].flags & IEEE80211_TX_RC_MCS;
-+		i++;
-+	}
-+	for (; i < IEEE80211_TX_MAX_RATES; i++) {
-+		memset(rates + i, 0, sizeof(rates[i]));
-+		rates[i].idx = -1;
+ 	lockdep_assert_held(&tz->lock);
+@@ -65,6 +66,7 @@ void __thermal_zone_set_trips(struct thermal_zone_device *tz)
+ 		return;
+ 
+ 	for (i = 0; i < tz->num_trips; i++) {
++		bool low_set = false;
+ 		int trip_low;
+ 
+ 		ret = __thermal_zone_get_trip(tz, i , &trip);
+@@ -73,18 +75,31 @@ void __thermal_zone_set_trips(struct thermal_zone_device *tz)
+ 
+ 		trip_low = trip.temperature - trip.hysteresis;
+ 
+-		if (trip_low < tz->temperature && trip_low > low)
++		if (trip_low < tz->temperature && trip_low > low) {
+ 			low = trip_low;
++			low_set = true;
++			same_trip = false;
++		}
+ 
+ 		if (trip.temperature > tz->temperature &&
+-		    trip.temperature < high)
++		    trip.temperature < high) {
+ 			high = trip.temperature;
++			same_trip = low_set;
++		}
  	}
--	/* All retries use long GI */
--	for (i = 1; i < IEEE80211_TX_MAX_RATES; i++)
--		rates[i].flags &= ~IEEE80211_TX_RC_SHORT_GI;
- }
  
- static u8 wfx_tx_get_retry_policy_id(struct wfx_vif *wvif, struct ieee80211_tx_info *tx_info)
+ 	/* No need to change trip points */
+ 	if (tz->prev_low_trip == low && tz->prev_high_trip == high)
+ 		return;
+ 
++	/*
++	 * If "high" and "low" are the same, skip the change unless this is the
++	 * first time.
++	 */
++	if (same_trip && (tz->prev_low_trip != -INT_MAX ||
++	    tz->prev_high_trip != INT_MAX))
++		return;
++
+ 	tz->prev_low_trip = low;
+ 	tz->prev_high_trip = high;
+ 
 -- 
 2.42.0
 
