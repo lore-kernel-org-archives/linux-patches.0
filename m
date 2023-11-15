@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7FD3BB42
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE4E3BB38
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMOjx0dO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157B7C433C8;
-	Wed, 15 Nov 2023 19:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEnNK2EJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7BCC433C9;
+	Wed, 15 Nov 2023 19:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076206;
-	bh=1SiaiH9qvDPUXgHHsWH3DDqlxos5fvVoWn2wZdmnwtk=;
+	s=korg; t=1700076207;
+	bh=icmq7haQ6vCrrrTTJFYLDTEOwWxV3SXeNtRNrmzYzvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oMOjx0dOGARGAFba3Sum3pG+X6zVYgoJDHMryEyav/6nhPG7/NlfNjf1LKVficby9
-	 M7lFJnqurSR3x3vtQctsg3WTOA51dCnsr4+eSrs7D+1E3oWRWYtR2hkDWn8tJHw6bX
-	 /AY/0vrzmC02IQVeYPnt5ec7pMHi8aKH6k924Wso=
+	b=oEnNK2EJ4wX6sd8GgKzXPAh6eXIHNVmQc4WhRKkPPdydw1/n7+eYlxt3D05XNGeZn
+	 QcK21T3OME4WLq3yBshzNrRVSbIyTgOybUm2NUPIS9iRtaDTp45OLi0NXU58UQqjrb
+	 YTkiFO7Cy57C9t4GbNTfqtukDGA5e8RyxRp9qg/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Phil Sutter <phil@nwl.cc>,
 	Florian Westphal <fw@strlen.de>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 118/550] selftests: netfilter: test for sctp collision processing in nf_conntrack
-Date: Wed, 15 Nov 2023 14:11:42 -0500
-Message-ID: <20231115191608.874709373@linuxfoundation.org>
+Subject: [PATCH 6.5 119/550] net: skb_find_text: Ignore patterns extending past to
+Date: Wed, 15 Nov 2023 14:11:43 -0500
+Message-ID: <20231115191608.943286097@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,257 +44,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit cf791b22bef7d9352ff730a8727d3871942d6001 ]
+[ Upstream commit c4eee56e14fe001e1cff54f0b438a5e2d0dd7454 ]
 
-This patch adds a test case to reproduce the SCTP DATA chunk retransmission
-timeout issue caused by the improper SCTP collision processing in netfilter
-nf_conntrack_proto_sctp.
+Assume that caller's 'to' offset really represents an upper boundary for
+the pattern search, so patterns extending past this offset are to be
+rejected.
 
-In this test, client sends a INIT chunk, but the INIT_ACK replied from
-server is delayed until the server sends a INIT chunk to start a new
-connection from its side. After the connection is complete from server
-side, the delayed INIT_ACK arrives in nf_conntrack_proto_sctp.
+The old behaviour also was kind of inconsistent when it comes to
+fragmentation (or otherwise non-linear skbs): If the pattern started in
+between 'to' and 'from' offsets but extended to the next fragment, it
+was not found if 'to' offset was still within the current fragment.
 
-The delayed INIT_ACK should be dropped in nf_conntrack_proto_sctp instead
-of updating the vtag with the out-of-date init_tag, otherwise, the vtag
-in DATA chunks later sent by client don't match the vtag in the conntrack
-entry and the DATA chunks get dropped.
+Test the new behaviour in a kselftest using iptables' string match.
 
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: c4eee56e14fe ("net: skb_find_text: Ignore patterns extending past 'to'")
+Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: f72b948dcbb8 ("[NET]: skb_find_text ignores to argument")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/netfilter/Makefile    |  5 +-
- .../netfilter/conntrack_sctp_collision.sh     | 89 +++++++++++++++++
- .../selftests/netfilter/sctp_collision.c      | 99 +++++++++++++++++++
- 3 files changed, 191 insertions(+), 2 deletions(-)
- create mode 100755 tools/testing/selftests/netfilter/conntrack_sctp_collision.sh
- create mode 100644 tools/testing/selftests/netfilter/sctp_collision.c
+ net/core/skbuff.c                             |   3 +-
+ tools/testing/selftests/netfilter/Makefile    |   2 +-
+ .../testing/selftests/netfilter/xt_string.sh  | 128 ++++++++++++++++++
+ 3 files changed, 131 insertions(+), 2 deletions(-)
+ create mode 100755 tools/testing/selftests/netfilter/xt_string.sh
 
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 7dfae58055c2b..6c5b9ad800d20 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -4185,6 +4185,7 @@ static void skb_ts_finish(struct ts_config *conf, struct ts_state *state)
+ unsigned int skb_find_text(struct sk_buff *skb, unsigned int from,
+ 			   unsigned int to, struct ts_config *config)
+ {
++	unsigned int patlen = config->ops->get_pattern_len(config);
+ 	struct ts_state state;
+ 	unsigned int ret;
+ 
+@@ -4196,7 +4197,7 @@ unsigned int skb_find_text(struct sk_buff *skb, unsigned int from,
+ 	skb_prepare_seq_read(skb, from, to, TS_SKB_CB(&state));
+ 
+ 	ret = textsearch_find(config, &state);
+-	return (ret <= to - from ? ret : UINT_MAX);
++	return (ret + patlen <= to - from ? ret : UINT_MAX);
+ }
+ EXPORT_SYMBOL(skb_find_text);
+ 
 diff --git a/tools/testing/selftests/netfilter/Makefile b/tools/testing/selftests/netfilter/Makefile
-index 321db8850da00..ef90aca4cc96a 100644
+index ef90aca4cc96a..bced422b78f72 100644
 --- a/tools/testing/selftests/netfilter/Makefile
 +++ b/tools/testing/selftests/netfilter/Makefile
-@@ -6,13 +6,14 @@ TEST_PROGS := nft_trans_stress.sh nft_fib.sh nft_nat.sh bridge_brouter.sh \
- 	nft_concat_range.sh nft_conntrack_helper.sh \
+@@ -7,7 +7,7 @@ TEST_PROGS := nft_trans_stress.sh nft_fib.sh nft_nat.sh bridge_brouter.sh \
  	nft_queue.sh nft_meta.sh nf_nat_edemux.sh \
  	ipip-conntrack-mtu.sh conntrack_tcp_unreplied.sh \
--	conntrack_vrf.sh nft_synproxy.sh rpath.sh nft_audit.sh
-+	conntrack_vrf.sh nft_synproxy.sh rpath.sh nft_audit.sh \
-+	conntrack_sctp_collision.sh
+ 	conntrack_vrf.sh nft_synproxy.sh rpath.sh nft_audit.sh \
+-	conntrack_sctp_collision.sh
++	conntrack_sctp_collision.sh xt_string.sh
  
  HOSTPKG_CONFIG := pkg-config
  
- CFLAGS += $(shell $(HOSTPKG_CONFIG) --cflags libmnl 2>/dev/null)
- LDLIBS += $(shell $(HOSTPKG_CONFIG) --libs libmnl 2>/dev/null || echo -lmnl)
- 
--TEST_GEN_FILES =  nf-queue connect_close audit_logread
-+TEST_GEN_FILES =  nf-queue connect_close audit_logread sctp_collision
- 
- include ../lib.mk
-diff --git a/tools/testing/selftests/netfilter/conntrack_sctp_collision.sh b/tools/testing/selftests/netfilter/conntrack_sctp_collision.sh
+diff --git a/tools/testing/selftests/netfilter/xt_string.sh b/tools/testing/selftests/netfilter/xt_string.sh
 new file mode 100755
-index 0000000000000..a924e595cfd8b
+index 0000000000000..1802653a47287
 --- /dev/null
-+++ b/tools/testing/selftests/netfilter/conntrack_sctp_collision.sh
-@@ -0,0 +1,89 @@
++++ b/tools/testing/selftests/netfilter/xt_string.sh
+@@ -0,0 +1,128 @@
 +#!/bin/bash
 +# SPDX-License-Identifier: GPL-2.0
-+#
-+# Testing For SCTP COLLISION SCENARIO as Below:
-+#
-+#   14:35:47.655279 IP CLIENT_IP.PORT > SERVER_IP.PORT: sctp (1) [INIT] [init tag: 2017837359]
-+#   14:35:48.353250 IP SERVER_IP.PORT > CLIENT_IP.PORT: sctp (1) [INIT] [init tag: 1187206187]
-+#   14:35:48.353275 IP CLIENT_IP.PORT > SERVER_IP.PORT: sctp (1) [INIT ACK] [init tag: 2017837359]
-+#   14:35:48.353283 IP SERVER_IP.PORT > CLIENT_IP.PORT: sctp (1) [COOKIE ECHO]
-+#   14:35:48.353977 IP CLIENT_IP.PORT > SERVER_IP.PORT: sctp (1) [COOKIE ACK]
-+#   14:35:48.855335 IP SERVER_IP.PORT > CLIENT_IP.PORT: sctp (1) [INIT ACK] [init tag: 164579970]
-+#
-+# TOPO: SERVER_NS (link0)<--->(link1) ROUTER_NS (link2)<--->(link3) CLIENT_NS
 +
-+CLIENT_NS=$(mktemp -u client-XXXXXXXX)
-+CLIENT_IP="198.51.200.1"
-+CLIENT_PORT=1234
++# return code to signal skipped test
++ksft_skip=4
++rc=0
 +
-+SERVER_NS=$(mktemp -u server-XXXXXXXX)
-+SERVER_IP="198.51.100.1"
-+SERVER_PORT=1234
++if ! iptables --version >/dev/null 2>&1; then
++	echo "SKIP: Test needs iptables"
++	exit $ksft_skip
++fi
++if ! ip -V >/dev/null 2>&1; then
++	echo "SKIP: Test needs iproute2"
++	exit $ksft_skip
++fi
++if ! nc -h >/dev/null 2>&1; then
++	echo "SKIP: Test needs netcat"
++	exit $ksft_skip
++fi
 +
-+ROUTER_NS=$(mktemp -u router-XXXXXXXX)
-+CLIENT_GW="198.51.200.2"
-+SERVER_GW="198.51.100.2"
++pattern="foo bar baz"
++patlen=11
++hdrlen=$((20 + 8)) # IPv4 + UDP
++ns="ns-$(mktemp -u XXXXXXXX)"
++trap 'ip netns del $ns' EXIT
++ip netns add "$ns"
++ip -net "$ns" link add d0 type dummy
++ip -net "$ns" link set d0 up
++ip -net "$ns" addr add 10.1.2.1/24 dev d0
 +
-+# setup the topo
-+setup() {
-+	ip net add $CLIENT_NS
-+	ip net add $SERVER_NS
-+	ip net add $ROUTER_NS
-+	ip -n $SERVER_NS link add link0 type veth peer name link1 netns $ROUTER_NS
-+	ip -n $CLIENT_NS link add link3 type veth peer name link2 netns $ROUTER_NS
++#ip netns exec "$ns" tcpdump -npXi d0 &
++#tcpdump_pid=$!
++#trap 'kill $tcpdump_pid; ip netns del $ns' EXIT
 +
-+	ip -n $SERVER_NS link set link0 up
-+	ip -n $SERVER_NS addr add $SERVER_IP/24 dev link0
-+	ip -n $SERVER_NS route add $CLIENT_IP dev link0 via $SERVER_GW
-+
-+	ip -n $ROUTER_NS link set link1 up
-+	ip -n $ROUTER_NS link set link2 up
-+	ip -n $ROUTER_NS addr add $SERVER_GW/24 dev link1
-+	ip -n $ROUTER_NS addr add $CLIENT_GW/24 dev link2
-+	ip net exec $ROUTER_NS sysctl -wq net.ipv4.ip_forward=1
-+
-+	ip -n $CLIENT_NS link set link3 up
-+	ip -n $CLIENT_NS addr add $CLIENT_IP/24 dev link3
-+	ip -n $CLIENT_NS route add $SERVER_IP dev link3 via $CLIENT_GW
-+
-+	# simulate the delay on OVS upcall by setting up a delay for INIT_ACK with
-+	# tc on $SERVER_NS side
-+	tc -n $SERVER_NS qdisc add dev link0 root handle 1: htb
-+	tc -n $SERVER_NS class add dev link0 parent 1: classid 1:1 htb rate 100mbit
-+	tc -n $SERVER_NS filter add dev link0 parent 1: protocol ip u32 match ip protocol 132 \
-+		0xff match u8 2 0xff at 32 flowid 1:1
-+	tc -n $SERVER_NS qdisc add dev link0 parent 1:1 handle 10: netem delay 1200ms
-+
-+	# simulate the ctstate check on OVS nf_conntrack
-+	ip net exec $ROUTER_NS iptables -A FORWARD -m state --state INVALID,UNTRACKED -j DROP
-+	ip net exec $ROUTER_NS iptables -A INPUT -p sctp -j DROP
-+
-+	# use a smaller number for assoc's max_retrans to reproduce the issue
-+	modprobe sctp
-+	ip net exec $CLIENT_NS sysctl -wq net.sctp.association_max_retrans=3
++add_rule() { # (alg, from, to)
++	ip netns exec "$ns" \
++		iptables -A OUTPUT -o d0 -m string \
++			--string "$pattern" --algo $1 --from $2 --to $3
++}
++showrules() { # ()
++	ip netns exec "$ns" iptables -v -S OUTPUT | grep '^-A'
++}
++zerorules() {
++	ip netns exec "$ns" iptables -Z OUTPUT
++}
++countrule() { # (pattern)
++	showrules | grep -c -- "$*"
++}
++send() { # (offset)
++	( for ((i = 0; i < $1 - $hdrlen; i++)); do
++		printf " "
++	  done
++	  printf "$pattern"
++	) | ip netns exec "$ns" nc -w 1 -u 10.1.2.2 27374
 +}
 +
-+cleanup() {
-+	ip net exec $CLIENT_NS pkill sctp_collision 2>&1 >/dev/null
-+	ip net exec $SERVER_NS pkill sctp_collision 2>&1 >/dev/null
-+	ip net del "$CLIENT_NS"
-+	ip net del "$SERVER_NS"
-+	ip net del "$ROUTER_NS"
-+}
++add_rule bm 1000 1500
++add_rule bm 1400 1600
++add_rule kmp 1000 1500
++add_rule kmp 1400 1600
 +
-+do_test() {
-+	ip net exec $SERVER_NS ./sctp_collision server \
-+		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT &
-+	ip net exec $CLIENT_NS ./sctp_collision client \
-+		$CLIENT_IP $CLIENT_PORT $SERVER_IP $SERVER_PORT
-+}
++zerorules
++send 0
++send $((1000 - $patlen))
++if [ $(countrule -c 0 0) -ne 4 ]; then
++	echo "FAIL: rules match data before --from"
++	showrules
++	((rc--))
++fi
 +
-+# NOTE: one way to work around the issue is set a smaller hb_interval
-+# ip net exec $CLIENT_NS sysctl -wq net.sctp.hb_interval=3500
++zerorules
++send 1000
++send $((1400 - $patlen))
++if [ $(countrule -c 2) -ne 2 ]; then
++	echo "FAIL: only two rules should match at low offset"
++	showrules
++	((rc--))
++fi
 +
-+# run the test case
-+trap cleanup EXIT
-+setup && \
-+echo "Test for SCTP Collision in nf_conntrack:" && \
-+do_test && echo "PASS!"
-+exit $?
-diff --git a/tools/testing/selftests/netfilter/sctp_collision.c b/tools/testing/selftests/netfilter/sctp_collision.c
-new file mode 100644
-index 0000000000000..21bb1cfd8a856
---- /dev/null
-+++ b/tools/testing/selftests/netfilter/sctp_collision.c
-@@ -0,0 +1,99 @@
-+// SPDX-License-Identifier: GPL-2.0
++zerorules
++send $((1500 - $patlen))
++if [ $(countrule -c 1) -ne 4 ]; then
++	echo "FAIL: all rules should match at end of packet"
++	showrules
++	((rc--))
++fi
 +
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <unistd.h>
-+#include <arpa/inet.h>
++zerorules
++send 1495
++if [ $(countrule -c 1) -ne 1 ]; then
++	echo "FAIL: only kmp with proper --to should match pattern spanning fragments"
++	showrules
++	((rc--))
++fi
 +
-+int main(int argc, char *argv[])
-+{
-+	struct sockaddr_in saddr = {}, daddr = {};
-+	int sd, ret, len = sizeof(daddr);
-+	struct timeval tv = {25, 0};
-+	char buf[] = "hello";
++zerorules
++send 1500
++if [ $(countrule -c 1) -ne 2 ]; then
++	echo "FAIL: two rules should match pattern at start of second fragment"
++	showrules
++	((rc--))
++fi
 +
-+	if (argc != 6 || (strcmp(argv[1], "server") && strcmp(argv[1], "client"))) {
-+		printf("%s <server|client> <LOCAL_IP> <LOCAL_PORT> <REMOTE_IP> <REMOTE_PORT>\n",
-+		       argv[0]);
-+		return -1;
-+	}
++zerorules
++send $((1600 - $patlen))
++if [ $(countrule -c 1) -ne 2 ]; then
++	echo "FAIL: two rules should match pattern at end of largest --to"
++	showrules
++	((rc--))
++fi
 +
-+	sd = socket(AF_INET, SOCK_SEQPACKET, IPPROTO_SCTP);
-+	if (sd < 0) {
-+		printf("Failed to create sd\n");
-+		return -1;
-+	}
++zerorules
++send $((1600 - $patlen + 1))
++if [ $(countrule -c 1) -ne 0 ]; then
++	echo "FAIL: no rules should match pattern extending largest --to"
++	showrules
++	((rc--))
++fi
 +
-+	saddr.sin_family = AF_INET;
-+	saddr.sin_addr.s_addr = inet_addr(argv[2]);
-+	saddr.sin_port = htons(atoi(argv[3]));
++zerorules
++send 1600
++if [ $(countrule -c 1) -ne 0 ]; then
++	echo "FAIL: no rule should match pattern past largest --to"
++	showrules
++	((rc--))
++fi
 +
-+	ret = bind(sd, (struct sockaddr *)&saddr, sizeof(saddr));
-+	if (ret < 0) {
-+		printf("Failed to bind to address\n");
-+		goto out;
-+	}
-+
-+	ret = listen(sd, 5);
-+	if (ret < 0) {
-+		printf("Failed to listen on port\n");
-+		goto out;
-+	}
-+
-+	daddr.sin_family = AF_INET;
-+	daddr.sin_addr.s_addr = inet_addr(argv[4]);
-+	daddr.sin_port = htons(atoi(argv[5]));
-+
-+	/* make test shorter than 25s */
-+	ret = setsockopt(sd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
-+	if (ret < 0) {
-+		printf("Failed to setsockopt SO_RCVTIMEO\n");
-+		goto out;
-+	}
-+
-+	if (!strcmp(argv[1], "server")) {
-+		sleep(1); /* wait a bit for client's INIT */
-+		ret = connect(sd, (struct sockaddr *)&daddr, len);
-+		if (ret < 0) {
-+			printf("Failed to connect to peer\n");
-+			goto out;
-+		}
-+		ret = recvfrom(sd, buf, sizeof(buf), 0, (struct sockaddr *)&daddr, &len);
-+		if (ret < 0) {
-+			printf("Failed to recv msg %d\n", ret);
-+			goto out;
-+		}
-+		ret = sendto(sd, buf, strlen(buf) + 1, 0, (struct sockaddr *)&daddr, len);
-+		if (ret < 0) {
-+			printf("Failed to send msg %d\n", ret);
-+			goto out;
-+		}
-+		printf("Server: sent! %d\n", ret);
-+	}
-+
-+	if (!strcmp(argv[1], "client")) {
-+		usleep(300000); /* wait a bit for server's listening */
-+		ret = connect(sd, (struct sockaddr *)&daddr, len);
-+		if (ret < 0) {
-+			printf("Failed to connect to peer\n");
-+			goto out;
-+		}
-+		sleep(1); /* wait a bit for server's delayed INIT_ACK to reproduce the issue */
-+		ret = sendto(sd, buf, strlen(buf) + 1, 0, (struct sockaddr *)&daddr, len);
-+		if (ret < 0) {
-+			printf("Failed to send msg %d\n", ret);
-+			goto out;
-+		}
-+		ret = recvfrom(sd, buf, sizeof(buf), 0, (struct sockaddr *)&daddr, &len);
-+		if (ret < 0) {
-+			printf("Failed to recv msg %d\n", ret);
-+			goto out;
-+		}
-+		printf("Client: rcvd! %d\n", ret);
-+	}
-+	ret = 0;
-+out:
-+	close(sd);
-+	return ret;
-+}
++exit $rc
 -- 
 2.42.0
 
