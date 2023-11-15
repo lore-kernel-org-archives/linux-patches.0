@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6432D3C462
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CBF3C462
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fM4+0ngo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16828C433C8;
-	Wed, 15 Nov 2023 19:44:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omsyQ7dN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E4BC433D9;
+	Wed, 15 Nov 2023 19:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077495;
-	bh=ot7m9S4fe6d8Xk8ohVBWQH9ICRy7i8ARfAmVzMJU3Kc=;
+	s=korg; t=1700077496;
+	bh=Nbq5xno+3vAfUvCm/NpGZQJPoCSaRmXJpwGsPqpysHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fM4+0ngowynEIDR5wPKNoubpB7GcZJDbudmQZH4MOO/XkfJ4L8g9kTjraxp59+fy2
-	 +wISYhe8RIUWJTFX2wkZIxJSD+QPayDCyKGYUSIncPjVdsCRDKEf8/eLuxg8UW+c7v
-	 uD9InrtMwLarw4RnfsRR5g1H91Az9DxObwyilXjs=
+	b=omsyQ7dNePgUczgTors5OTnagRL/R3PQNHulbyrTImSVrYHeHU6332zjDClfsO5hI
+	 +DPja4NvTqL9Mvr79uqrDu3EqUuWDl1lDYABoMZOlxwDkpKzisJNUUU3NL+m+BrsnT
+	 oyaZvnu/+eH/U0+br4Vo88EaOP2u4TM6gQROyXq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 320/603] firmware: tegra: Add suspend hook and reset BPMP IPC early on resume
-Date: Wed, 15 Nov 2023 14:14:25 -0500
-Message-ID: <20231115191635.647098262@linuxfoundation.org>
+Subject: [PATCH 6.6 338/603] crypto: ccp - Get a free page to use while fetching initial nonce
+Date: Wed, 15 Nov 2023 14:14:43 -0500
+Message-ID: <20231115191636.922568889@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,138 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Gupta <sumitg@nvidia.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit ea608a01d4ee66f8b51070e623f9adb8684c0dd4 ]
+[ Upstream commit 53f7f779f45cbe1771bc4ae05f0320e204a18611 ]
 
-Add suspend hook and a 'suspended' field in the 'struct tegra_bpmp'
-to mark if BPMP is suspended. Also, add a 'flags' field in the
-'struct tegra_bpmp_message' whose 'TEGRA_BPMP_MESSAGE_RESET' bit can be
-set from the Tegra MC driver to signal that the reset of BPMP IPC
-channels is required before sending MRQ to the BPMP FW. Together both
-the fields allow us to handle any requests that might be sent too soon
-as they can cause hang during system resume.
+dbc_dev_init() gets a free page from `GFP_KERNEL`, but if that page has
+any data in it the first nonce request will fail.
+This prevents dynamic boost control from probing. To fix this, explicitly
+request a zeroed page with `__GFP_ZERO` to ensure first nonce fetch works.
 
-One case where we see BPMP requests being sent before the BPMP driver
-has resumed is the memory bandwidth requests which are triggered by
-onlining the CPUs during system resume. The CPUs are onlined before the
-BPMP has resumed and we need to reset the BPMP IPC channels to handle
-these requests.
-
-The additional check for 'flags' is done to avoid any un-intended BPMP
-IPC reset if the tegra_bpmp_transfer*() API gets called during suspend
-sequence after the BPMP driver is suspended.
-
-Fixes: f41e1442ac5b ("cpufreq: tegra194: add OPP support and set bandwidth")
-Co-developed-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: c04cf9e14f10 ("crypto: ccp - Add support for fetching a nonce for dynamic boost control")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/tegra/bpmp.c | 30 ++++++++++++++++++++++++++++++
- include/soc/tegra/bpmp.h      |  6 ++++++
- 2 files changed, 36 insertions(+)
+ drivers/crypto/ccp/dbc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/tegra/bpmp.c b/drivers/firmware/tegra/bpmp.c
-index 51d062e0c3f12..c1590d3aa9cb7 100644
---- a/drivers/firmware/tegra/bpmp.c
-+++ b/drivers/firmware/tegra/bpmp.c
-@@ -313,6 +313,8 @@ static ssize_t tegra_bpmp_channel_write(struct tegra_bpmp_channel *channel,
- 	return __tegra_bpmp_channel_write(channel, mrq, flags, data, size);
- }
+diff --git a/drivers/crypto/ccp/dbc.c b/drivers/crypto/ccp/dbc.c
+index 839ea14b9a853..6f33149ef80df 100644
+--- a/drivers/crypto/ccp/dbc.c
++++ b/drivers/crypto/ccp/dbc.c
+@@ -205,7 +205,7 @@ int dbc_dev_init(struct psp_device *psp)
+ 		return -ENOMEM;
  
-+static int __maybe_unused tegra_bpmp_resume(struct device *dev);
-+
- int tegra_bpmp_transfer_atomic(struct tegra_bpmp *bpmp,
- 			       struct tegra_bpmp_message *msg)
- {
-@@ -325,6 +327,14 @@ int tegra_bpmp_transfer_atomic(struct tegra_bpmp *bpmp,
- 	if (!tegra_bpmp_message_valid(msg))
- 		return -EINVAL;
- 
-+	if (bpmp->suspended) {
-+		/* Reset BPMP IPC channels during resume based on flags passed */
-+		if (msg->flags & TEGRA_BPMP_MESSAGE_RESET)
-+			tegra_bpmp_resume(bpmp->dev);
-+		else
-+			return -EAGAIN;
-+	}
-+
- 	channel = bpmp->tx_channel;
- 
- 	spin_lock(&bpmp->atomic_tx_lock);
-@@ -364,6 +374,14 @@ int tegra_bpmp_transfer(struct tegra_bpmp *bpmp,
- 	if (!tegra_bpmp_message_valid(msg))
- 		return -EINVAL;
- 
-+	if (bpmp->suspended) {
-+		/* Reset BPMP IPC channels during resume based on flags passed */
-+		if (msg->flags & TEGRA_BPMP_MESSAGE_RESET)
-+			tegra_bpmp_resume(bpmp->dev);
-+		else
-+			return -EAGAIN;
-+	}
-+
- 	channel = tegra_bpmp_write_threaded(bpmp, msg->mrq, msg->tx.data,
- 					    msg->tx.size);
- 	if (IS_ERR(channel))
-@@ -796,10 +814,21 @@ static int tegra_bpmp_probe(struct platform_device *pdev)
- 	return err;
- }
- 
-+static int __maybe_unused tegra_bpmp_suspend(struct device *dev)
-+{
-+	struct tegra_bpmp *bpmp = dev_get_drvdata(dev);
-+
-+	bpmp->suspended = true;
-+
-+	return 0;
-+}
-+
- static int __maybe_unused tegra_bpmp_resume(struct device *dev)
- {
- 	struct tegra_bpmp *bpmp = dev_get_drvdata(dev);
- 
-+	bpmp->suspended = false;
-+
- 	if (bpmp->soc->ops->resume)
- 		return bpmp->soc->ops->resume(bpmp);
- 	else
-@@ -807,6 +836,7 @@ static int __maybe_unused tegra_bpmp_resume(struct device *dev)
- }
- 
- static const struct dev_pm_ops tegra_bpmp_pm_ops = {
-+	.suspend_noirq = tegra_bpmp_suspend,
- 	.resume_noirq = tegra_bpmp_resume,
- };
- 
-diff --git a/include/soc/tegra/bpmp.h b/include/soc/tegra/bpmp.h
-index 5842e38bb2880..f5e4ac5b8cce8 100644
---- a/include/soc/tegra/bpmp.h
-+++ b/include/soc/tegra/bpmp.h
-@@ -102,8 +102,12 @@ struct tegra_bpmp {
- #ifdef CONFIG_DEBUG_FS
- 	struct dentry *debugfs_mirror;
- #endif
-+
-+	bool suspended;
- };
- 
-+#define TEGRA_BPMP_MESSAGE_RESET BIT(0)
-+
- struct tegra_bpmp_message {
- 	unsigned int mrq;
- 
-@@ -117,6 +121,8 @@ struct tegra_bpmp_message {
- 		size_t size;
- 		int ret;
- 	} rx;
-+
-+	unsigned long flags;
- };
- 
- #if IS_ENABLED(CONFIG_TEGRA_BPMP)
+ 	BUILD_BUG_ON(sizeof(union dbc_buffer) > PAGE_SIZE);
+-	dbc_dev->mbox = (void *)devm_get_free_pages(dev, GFP_KERNEL, 0);
++	dbc_dev->mbox = (void *)devm_get_free_pages(dev, GFP_KERNEL | __GFP_ZERO, 0);
+ 	if (!dbc_dev->mbox) {
+ 		ret = -ENOMEM;
+ 		goto cleanup_dev;
 -- 
 2.42.0
 
