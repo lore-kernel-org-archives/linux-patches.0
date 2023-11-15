@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F00D18657
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127BD18C27
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZVVuXPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CEBC433CA;
-	Wed, 15 Nov 2023 20:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFXUHW8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60C2C433CB;
+	Wed, 15 Nov 2023 20:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081884;
-	bh=C9T6L5p+l321sqi/DwwDw0DwW5FP9HVcH6TvCFomdsU=;
+	s=korg; t=1700081885;
+	bh=QDCMIC9ppOuSlR5yArNDFZXJ3jFaw0DGOMpI5ZV0d5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZVVuXPMqldxoJrYnnYCLaA1+XP7x2gj1Vf/XbvN+AuNT9VNPvbGlX1U89qZ9CMjJ
-	 GS2WIqyo+4odjubr7tD1IqH1ZGPLAeT3gVHwxQrxN90LF8NuEZ+pZsTCAvrSAU8tF3
-	 /RX3nmXaxgZZx6AC8j1/igFd1PhgP5XsNoXFBM4E=
+	b=zFXUHW8c9oLSUqPIHv0/Uy3dTBDZbF2GhPVAeeMPXJq5w9fm4p+6vXDy3erEs1NLB
+	 QpQQUBQuQiawh49TF8xzJxGJRv0C2BmpPXddKgMFDvxXxtJqBBImsSuwoa05Jn2Mhv
+	 y1DphZCV7ZE69iUTwSymrynHs4QhO2Nos0XfzoCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	George Stark <gnstark@sberdevices.ru>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Lee Jones <lee.jones@linaro.org>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 161/191] pwm: sti: Avoid conditional gotos
-Date: Wed, 15 Nov 2023 15:47:16 -0500
-Message-ID: <20231115204654.124890374@linuxfoundation.org>
+Subject: [PATCH 5.10 162/191] pwm: sti: Reduce number of allocations and drop usage of chip_data
+Date: Wed, 15 Nov 2023 15:47:17 -0500
+Message-ID: <20231115204654.186350650@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -44,88 +44,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thierry Reding <thierry.reding@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit fd3ae02bb66f091e55f363d32eca7b4039977bf5 ]
+[ Upstream commit 2d6812b41e0d832919d72c72ebddf361df53ba1b ]
 
-Using gotos for conditional code complicates this code significantly.
-Convert the code to simple conditional blocks to increase readability.
+Instead of using one allocation per capture channel, use a single one. Also
+store it in driver data instead of chip data.
 
-Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Lee Jones <lee.jones@linaro.org>
+This has several advantages:
+
+ - driver data isn't cleared when pwm_put() is called
+ - Reduces memory fragmentation
+
+Also register the pwm chip only after the per capture channel data is
+initialized as the capture callback relies on this initialization and it
+might be called even before pwmchip_add() returns.
+
+It would be still better to have struct sti_pwm_compat_data and the
+per-channel data struct sti_cpt_ddata in a single memory chunk, but that's
+not easily possible because the number of capture channels isn't known yet
+when the driver data struct is allocated.
+
+Fixes: e926b12c611c ("pwm: Clear chip_data in pwm_put()")
+Reported-by: George Stark <gnstark@sberdevices.ru>
+Fixes: c97267ae831d ("pwm: sti: Add PWM capture callback")
+Link: https://lore.kernel.org/r/20230705080650.2353391-7-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 2d6812b41e0d ("pwm: sti: Reduce number of allocations and drop usage of chip_data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-sti.c | 48 ++++++++++++++++++++-----------------------
- 1 file changed, 22 insertions(+), 26 deletions(-)
+ drivers/pwm/pwm-sti.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/pwm/pwm-sti.c b/drivers/pwm/pwm-sti.c
-index 1508616d794cd..973f76856a508 100644
+index 973f76856a508..9b2174adab3db 100644
 --- a/drivers/pwm/pwm-sti.c
 +++ b/drivers/pwm/pwm-sti.c
-@@ -593,38 +593,34 @@ static int sti_pwm_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
+@@ -79,6 +79,7 @@ struct sti_pwm_compat_data {
+ 	unsigned int cpt_num_devs;
+ 	unsigned int max_pwm_cnt;
+ 	unsigned int max_prescale;
++	struct sti_cpt_ddata *ddata;
+ };
  
--	if (!cdata->pwm_num_devs)
--		goto skip_pwm;
--
--	pc->pwm_clk = of_clk_get_by_name(dev->of_node, "pwm");
--	if (IS_ERR(pc->pwm_clk)) {
--		dev_err(dev, "failed to get PWM clock\n");
--		return PTR_ERR(pc->pwm_clk);
--	}
-+	if (cdata->pwm_num_devs) {
-+		pc->pwm_clk = of_clk_get_by_name(dev->of_node, "pwm");
-+		if (IS_ERR(pc->pwm_clk)) {
-+			dev_err(dev, "failed to get PWM clock\n");
-+			return PTR_ERR(pc->pwm_clk);
-+		}
+ struct sti_pwm_chip {
+@@ -314,7 +315,7 @@ static int sti_pwm_capture(struct pwm_chip *chip, struct pwm_device *pwm,
+ {
+ 	struct sti_pwm_chip *pc = to_sti_pwmchip(chip);
+ 	struct sti_pwm_compat_data *cdata = pc->cdata;
+-	struct sti_cpt_ddata *ddata = pwm_get_chip_data(pwm);
++	struct sti_cpt_ddata *ddata = &cdata->ddata[pwm->hwpwm];
+ 	struct device *dev = pc->dev;
+ 	unsigned int effective_ticks;
+ 	unsigned long long high, low;
+@@ -417,7 +418,7 @@ static irqreturn_t sti_pwm_interrupt(int irq, void *data)
+ 	while (cpt_int_stat) {
+ 		devicenum = ffs(cpt_int_stat) - 1;
  
--	ret = clk_prepare(pc->pwm_clk);
--	if (ret) {
--		dev_err(dev, "failed to prepare clock\n");
--		return ret;
-+		ret = clk_prepare(pc->pwm_clk);
-+		if (ret) {
-+			dev_err(dev, "failed to prepare clock\n");
-+			return ret;
-+		}
+-		ddata = pwm_get_chip_data(&pc->chip.pwms[devicenum]);
++		ddata = &pc->cdata->ddata[devicenum];
+ 
+ 		/*
+ 		 * Capture input:
+@@ -619,6 +620,10 @@ static int sti_pwm_probe(struct platform_device *pdev)
+ 			dev_err(dev, "failed to prepare clock\n");
+ 			return ret;
+ 		}
++
++		cdata->ddata = devm_kzalloc(dev, cdata->cpt_num_devs * sizeof(*cdata->ddata), GFP_KERNEL);
++		if (!cdata->ddata)
++			return -ENOMEM;
  	}
  
--skip_pwm:
--	if (!cdata->cpt_num_devs)
--		goto skip_cpt;
--
--	pc->cpt_clk = of_clk_get_by_name(dev->of_node, "capture");
--	if (IS_ERR(pc->cpt_clk)) {
--		dev_err(dev, "failed to get PWM capture clock\n");
--		return PTR_ERR(pc->cpt_clk);
--	}
-+	if (cdata->cpt_num_devs) {
-+		pc->cpt_clk = of_clk_get_by_name(dev->of_node, "capture");
-+		if (IS_ERR(pc->cpt_clk)) {
-+			dev_err(dev, "failed to get PWM capture clock\n");
-+			return PTR_ERR(pc->cpt_clk);
-+		}
- 
--	ret = clk_prepare(pc->cpt_clk);
--	if (ret) {
--		dev_err(dev, "failed to prepare clock\n");
--		return ret;
-+		ret = clk_prepare(pc->cpt_clk);
-+		if (ret) {
-+			dev_err(dev, "failed to prepare clock\n");
-+			return ret;
-+		}
- 	}
- 
--skip_cpt:
  	pc->chip.dev = dev;
- 	pc->chip.ops = &sti_pwm_ops;
+@@ -626,24 +631,18 @@ static int sti_pwm_probe(struct platform_device *pdev)
  	pc->chip.base = -1;
+ 	pc->chip.npwm = pc->cdata->pwm_num_devs;
+ 
+-	ret = pwmchip_add(&pc->chip);
+-	if (ret < 0) {
+-		clk_unprepare(pc->pwm_clk);
+-		clk_unprepare(pc->cpt_clk);
+-		return ret;
+-	}
+-
+ 	for (i = 0; i < cdata->cpt_num_devs; i++) {
+-		struct sti_cpt_ddata *ddata;
+-
+-		ddata = devm_kzalloc(dev, sizeof(*ddata), GFP_KERNEL);
+-		if (!ddata)
+-			return -ENOMEM;
++		struct sti_cpt_ddata *ddata = &cdata->ddata[i];
+ 
+ 		init_waitqueue_head(&ddata->wait);
+ 		mutex_init(&ddata->lock);
++	}
+ 
+-		pwm_set_chip_data(&pc->chip.pwms[i], ddata);
++	ret = pwmchip_add(&pc->chip);
++	if (ret < 0) {
++		clk_unprepare(pc->pwm_clk);
++		clk_unprepare(pc->cpt_clk);
++		return ret;
+ 	}
+ 
+ 	platform_set_drvdata(pdev, pc);
 -- 
 2.42.0
 
