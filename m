@@ -1,29 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B8328369
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC6D28369
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zG1/f4PP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54630C4E67F;
-	Wed, 15 Nov 2023 20:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gy8kS5CT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E2FC4E681;
+	Wed, 15 Nov 2023 20:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081466;
-	bh=kKzLY8JNtX19yg7LKFus0C4qzH6jfDlb6xamgCTRT/A=;
+	s=korg; t=1700081468;
+	bh=6Y4vCP8XU1r9SPYgxL2UrLmjVuiooJ960Gw/mtDDfTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zG1/f4PPC9hgNDXmzRj4VJj6u3VBi92ryP+P0+5HYujP5jxb1zuWp93QYyFLPLBIN
-	 7cMXTgyZ7VI6Tjfo+lOEUmPAOeFzXEiwjhNHBp1UqiDHMjn/SCs0ivpZdpNNW3LujH
-	 qZ9qsgM+8ISDQCtXRyVdBFd8F1SsnBPdixzKrbdk=
+	b=gy8kS5CTjuo9WdLeBRCbhrUieHUp4+rVv5qjyLNAMFMVYAe81LGdNRt97q8FxmL1f
+	 Gjz92jY29di47WRgUuf8JaJbJKUCbU0lI8pr9crj+96iI+zeQKVTSCjHPOJkMtdiIS
+	 r4SoNTU25jFjEPwwJlgnkTat8ZRDyi3Iwza8iah4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 163/244] leds: turris-omnia: Drop unnecessary mutex locking
-Date: Wed, 15 Nov 2023 15:35:55 -0500
-Message-ID: <20231115203558.129012240@linuxfoundation.org>
+Subject: [PATCH 5.15 172/244] perf tools: Get rid of evlist__add_on_all_cpus()
+Date: Wed, 15 Nov 2023 15:36:04 -0500
+Message-ID: <20231115203558.668902014@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -36,76 +43,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 760b6b7925bf09491aafa4727eef74fc6bf738b0 ]
+[ Upstream commit 60ea006f72512fd7c36f16cdbe91f4fc284f8115 ]
 
-Do not lock driver mutex in the global LED panel brightness sysfs
-accessors brightness_show() and brightness_store().
+The cpu and thread maps are properly handled in libperf now.  No need to
+do it in the perf tools anymore.  Let's remove the logic.
 
-The mutex locking is unnecessary here. The I2C transfers are guarded by
-I2C core locking mechanism, and the LED commands itself do not interfere
-with other commands.
-
-Fixes: 089381b27abe ("leds: initial support for Turris Omnia LEDs")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Reviewed-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230802160748.11208-2-kabel@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: 6de283b96b31 ("leds: turris-omnia: Do not use SMBUS calls")
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20221003204647.1481128-4-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: f9cdeb58a9cf ("perf evlist: Avoid frequency mode for the dummy event")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-turris-omnia.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ tools/perf/util/evlist.c | 29 ++---------------------------
+ 1 file changed, 2 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/leds/leds-turris-omnia.c b/drivers/leds/leds-turris-omnia.c
-index 1adfed1c0619b..c9e7c467e5acd 100644
---- a/drivers/leds/leds-turris-omnia.c
-+++ b/drivers/leds/leds-turris-omnia.c
-@@ -156,12 +156,9 @@ static ssize_t brightness_show(struct device *dev, struct device_attribute *a,
- 			       char *buf)
- {
- 	struct i2c_client *client = to_i2c_client(dev);
--	struct omnia_leds *leds = i2c_get_clientdata(client);
- 	int ret;
- 
--	mutex_lock(&leds->lock);
- 	ret = i2c_smbus_read_byte_data(client, CMD_LED_GET_BRIGHTNESS);
--	mutex_unlock(&leds->lock);
- 
- 	if (ret < 0)
- 		return ret;
-@@ -173,7 +170,6 @@ static ssize_t brightness_store(struct device *dev, struct device_attribute *a,
- 				const char *buf, size_t count)
- {
- 	struct i2c_client *client = to_i2c_client(dev);
--	struct omnia_leds *leds = i2c_get_clientdata(client);
- 	unsigned long brightness;
- 	int ret;
- 
-@@ -183,15 +179,10 @@ static ssize_t brightness_store(struct device *dev, struct device_attribute *a,
- 	if (brightness > 100)
- 		return -EINVAL;
- 
--	mutex_lock(&leds->lock);
- 	ret = i2c_smbus_write_byte_data(client, CMD_LED_SET_BRIGHTNESS,
- 					(u8)brightness);
--	mutex_unlock(&leds->lock);
--
--	if (ret < 0)
--		return ret;
- 
--	return count;
-+	return ret < 0 ? ret : count;
+diff --git a/tools/perf/util/evlist.c b/tools/perf/util/evlist.c
+index a75cdcf381308..63ef40543a9fe 100644
+--- a/tools/perf/util/evlist.c
++++ b/tools/perf/util/evlist.c
+@@ -258,28 +258,6 @@ int evlist__add_dummy(struct evlist *evlist)
+ 	return 0;
  }
- static DEVICE_ATTR_RW(brightness);
+ 
+-static void evlist__add_on_all_cpus(struct evlist *evlist, struct evsel *evsel)
+-{
+-	evsel->core.system_wide = true;
+-
+-	/*
+-	 * All CPUs.
+-	 *
+-	 * Note perf_event_open() does not accept CPUs that are not online, so
+-	 * in fact this CPU list will include only all online CPUs.
+-	 */
+-	perf_cpu_map__put(evsel->core.own_cpus);
+-	evsel->core.own_cpus = perf_cpu_map__new(NULL);
+-	perf_cpu_map__put(evsel->core.cpus);
+-	evsel->core.cpus = perf_cpu_map__get(evsel->core.own_cpus);
+-
+-	/* No threads */
+-	perf_thread_map__put(evsel->core.threads);
+-	evsel->core.threads = perf_thread_map__new_dummy();
+-
+-	evlist__add(evlist, evsel);
+-}
+-
+ struct evsel *evlist__add_aux_dummy(struct evlist *evlist, bool system_wide)
+ {
+ 	struct evsel *evsel = evlist__dummy_event(evlist);
+@@ -292,14 +270,11 @@ struct evsel *evlist__add_aux_dummy(struct evlist *evlist, bool system_wide)
+ 	evsel->core.attr.exclude_hv = 1;
+ 	evsel->core.attr.freq = 0;
+ 	evsel->core.attr.sample_period = 1;
++	evsel->core.system_wide = system_wide;
+ 	evsel->no_aux_samples = true;
+ 	evsel->name = strdup("dummy:u");
+ 
+-	if (system_wide)
+-		evlist__add_on_all_cpus(evlist, evsel);
+-	else
+-		evlist__add(evlist, evsel);
+-
++	evlist__add(evlist, evsel);
+ 	return evsel;
+ }
  
 -- 
 2.42.0
