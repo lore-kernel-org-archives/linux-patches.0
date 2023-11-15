@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A318364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E028E31721
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCySZsIg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABB7C433C9;
-	Wed, 15 Nov 2023 19:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmCQzoYA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 911DCC433C9;
+	Wed, 15 Nov 2023 19:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076871;
-	bh=MXQAuCpBRpD7QpaXiLUnxCtVjcZDJPfCseEOQIeMX1c=;
+	s=korg; t=1700076872;
+	bh=iM/RJ5jix369dTYiOuiDKWsNJ3tvfhW4Yff+DX/UKT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCySZsIgVoBwr/7kg6EEwX5FZOeXxJksGPY+WkLujlnvrXmL8d0YFNRlTz5tyzAOF
-	 KFo2c+DXY0LeOBnMUEMfhrDHFLGCBhDO0y7dSrwYWXWQx5bsCqi0dShW/DKZ5waTZA
-	 xTjCpz08y1gm1ylEkTBHs0MuWQS8PaVJjmVyq2KQ=
+	b=ZmCQzoYAs6juWVHdSjRdtBfI34sZcblMDMPYW/o7HVavcsl9VoLnrpVIaX/q2B6Vw
+	 vmBIDPrJstBID8T8UGk9qxgb/TNXABcBkc39bJQglA5cb1ChiaEm0pt5o4jLWX8AD5
+	 xLvILKlW4k72EgTzg4R7vppOkql2AcSFtmCGlB/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 449/550] i3c: Fix potential refcount leak in i3c_master_register_new_i3c_devs
-Date: Wed, 15 Nov 2023 14:17:13 -0500
-Message-ID: <20231115191631.936261545@linuxfoundation.org>
+Subject: [PATCH 6.6 053/603] udp: introduce udp->udp_flags
+Date: Wed, 15 Nov 2023 14:09:58 -0500
+Message-ID: <20231115191616.787263650@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,43 +39,173 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cab63f64887616e3c4e31cfd8103320be6ebc8d3 ]
+[ Upstream commit 81b36803ac139827538ac5ce4028e750a3c53f53 ]
 
-put_device() needs to be called on failure of device_register()
-to give up the reference initialized in it to avoid refcount leak.
+According to syzbot, it is time to use proper atomic flags
+for various UDP flags.
 
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230921082410.25548-1-dinghao.liu@zju.edu.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Add udp_flags field, and convert udp->corkflag to first
+bit in it.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: a0002127cd74 ("udp: move udp->no_check6_tx to udp->udp_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/udp.h | 28 +++++++++++++++++++++-------
+ net/ipv4/udp.c      | 12 ++++++------
+ net/ipv6/udp.c      |  6 +++---
+ 3 files changed, 30 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 08aeb69a78003..19071ff9eb753 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1521,9 +1521,11 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
- 			desc->dev->dev.of_node = desc->boardinfo->of_node;
- 
- 		ret = device_register(&desc->dev->dev);
--		if (ret)
-+		if (ret) {
- 			dev_err(&master->dev,
- 				"Failed to add I3C device (err = %d)\n", ret);
-+			put_device(&desc->dev->dev);
-+		}
- 	}
+diff --git a/include/linux/udp.h b/include/linux/udp.h
+index 43c1fb2d2c21a..23f0693e0d9cc 100644
+--- a/include/linux/udp.h
++++ b/include/linux/udp.h
+@@ -32,14 +32,20 @@ static inline u32 udp_hashfn(const struct net *net, u32 num, u32 mask)
+ 	return (num + net_hash_mix(net)) & mask;
  }
  
++enum {
++	UDP_FLAGS_CORK,		/* Cork is required */
++};
++
+ struct udp_sock {
+ 	/* inet_sock has to be the first member */
+ 	struct inet_sock inet;
+ #define udp_port_hash		inet.sk.__sk_common.skc_u16hashes[0]
+ #define udp_portaddr_hash	inet.sk.__sk_common.skc_u16hashes[1]
+ #define udp_portaddr_node	inet.sk.__sk_common.skc_portaddr_node
++
++	unsigned long	 udp_flags;
++
+ 	int		 pending;	/* Any pending frames ? */
+-	unsigned int	 corkflag;	/* Cork is required */
+ 	__u8		 encap_type;	/* Is this an Encapsulation socket? */
+ 	unsigned char	 no_check6_tx:1,/* Send zero UDP6 checksums on TX? */
+ 			 no_check6_rx:1,/* Allow zero UDP6 checksums on RX? */
+@@ -51,6 +57,11 @@ struct udp_sock {
+ 			 gro_enabled:1,	/* Request GRO aggregation */
+ 			 accept_udp_l4:1,
+ 			 accept_udp_fraglist:1;
++/* indicator bits used by pcflag: */
++#define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
++#define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
++#define UDPLITE_RECV_CC  0x4		/* set via udplite setsocktopt        */
++	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
+ 	/*
+ 	 * Following member retains the information to create a UDP header
+ 	 * when the socket is uncorked.
+@@ -62,12 +73,6 @@ struct udp_sock {
+ 	 */
+ 	__u16		 pcslen;
+ 	__u16		 pcrlen;
+-/* indicator bits used by pcflag: */
+-#define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
+-#define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
+-#define UDPLITE_RECV_CC  0x4		/* set via udplite setsocktopt        */
+-	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
+-	__u8		 unused[3];
+ 	/*
+ 	 * For encapsulation sockets.
+ 	 */
+@@ -95,6 +100,15 @@ struct udp_sock {
+ 	int		forward_threshold;
+ };
+ 
++#define udp_test_bit(nr, sk)			\
++	test_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
++#define udp_set_bit(nr, sk)			\
++	set_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
++#define udp_clear_bit(nr, sk)			\
++	clear_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
++#define udp_assign_bit(nr, sk, val)		\
++	assign_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags, val)
++
+ #define UDP_MAX_SEGMENTS	(1 << 6UL)
+ 
+ #define udp_sk(ptr) container_of_const(ptr, struct udp_sock, inet.sk)
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index f39b9c8445808..9709f8a532dc3 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1051,7 +1051,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	u8 tos, scope;
+ 	__be16 dport;
+ 	int err, is_udplite = IS_UDPLITE(sk);
+-	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
++	int corkreq = udp_test_bit(CORK, sk) || msg->msg_flags & MSG_MORE;
+ 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
+ 	struct sk_buff *skb;
+ 	struct ip_options_data opt_copy;
+@@ -1315,11 +1315,11 @@ void udp_splice_eof(struct socket *sock)
+ 	struct sock *sk = sock->sk;
+ 	struct udp_sock *up = udp_sk(sk);
+ 
+-	if (!up->pending || READ_ONCE(up->corkflag))
++	if (!up->pending || udp_test_bit(CORK, sk))
+ 		return;
+ 
+ 	lock_sock(sk);
+-	if (up->pending && !READ_ONCE(up->corkflag))
++	if (up->pending && !udp_test_bit(CORK, sk))
+ 		udp_push_pending_frames(sk);
+ 	release_sock(sk);
+ }
+@@ -2658,9 +2658,9 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ 	switch (optname) {
+ 	case UDP_CORK:
+ 		if (val != 0) {
+-			WRITE_ONCE(up->corkflag, 1);
++			udp_set_bit(CORK, sk);
+ 		} else {
+-			WRITE_ONCE(up->corkflag, 0);
++			udp_clear_bit(CORK, sk);
+ 			lock_sock(sk);
+ 			push_pending_frames(sk);
+ 			release_sock(sk);
+@@ -2783,7 +2783,7 @@ int udp_lib_getsockopt(struct sock *sk, int level, int optname,
+ 
+ 	switch (optname) {
+ 	case UDP_CORK:
+-		val = READ_ONCE(up->corkflag);
++		val = udp_test_bit(CORK, sk);
+ 		break;
+ 
+ 	case UDP_ENCAP:
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 86b5d509a4688..0c6973cd22ce4 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -1332,7 +1332,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	int addr_len = msg->msg_namelen;
+ 	bool connected = false;
+ 	int ulen = len;
+-	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
++	int corkreq = udp_test_bit(CORK, sk) || msg->msg_flags & MSG_MORE;
+ 	int err;
+ 	int is_udplite = IS_UDPLITE(sk);
+ 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
+@@ -1644,11 +1644,11 @@ static void udpv6_splice_eof(struct socket *sock)
+ 	struct sock *sk = sock->sk;
+ 	struct udp_sock *up = udp_sk(sk);
+ 
+-	if (!up->pending || READ_ONCE(up->corkflag))
++	if (!up->pending || udp_test_bit(CORK, sk))
+ 		return;
+ 
+ 	lock_sock(sk);
+-	if (up->pending && !READ_ONCE(up->corkflag))
++	if (up->pending && !udp_test_bit(CORK, sk))
+ 		udp_v6_push_pending_frames(sk);
+ 	release_sock(sk);
+ }
 -- 
 2.42.0
 
