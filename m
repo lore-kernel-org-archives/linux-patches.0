@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C4A381A5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB9739FC0
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDFDbTPc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88971C4E778;
-	Wed, 15 Nov 2023 20:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sca12VQD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F406BC4E779;
+	Wed, 15 Nov 2023 20:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081559;
-	bh=djBFG7ovNwvXP8vdPStiPtGn/Yy4R3kwTQLdn7nMOC0=;
+	s=korg; t=1700081561;
+	bh=fUmzaVanyzr/sZ1DmCzX3Ku2BHrFftingK5sci9NCtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NDFDbTPcFLJQ/neKKbxCmEJZmUf6w+SKEOGY8RHlUXP0/jh9+rij7FaRnjj336/SZ
-	 lpLkCQ4we5i3sRWuQdeicCC6YWeJEOvOPKB/Df9X4R8PH5iBWTxXsbdLcaQ/+q7gAz
-	 ElAt1wwYcmbc3C1ej8vtbSTbGdu3nVsvhVT7ZFXk=
+	b=Sca12VQDsxg3V5IOmsZZwVChfHSIPPawhI8jgm46sAVemBOMyyfOyp9ifWgabxTxX
+	 iZ2F7/jVeifpI88mj2k4H4I3OVaae5PzXfO2xz1pv7+4l5XDi8dgN+L3EipV7++IkY
+	 +mus0VV4gigtcWJ9KGXZ93gOo/G9vOUqtKRcl+88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Patrick Thompson <ptf@google.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 190/244] xhci: Loosen RPM as default policy to cover for AMD xHC 1.1
-Date: Wed, 15 Nov 2023 15:36:22 -0500
-Message-ID: <20231115203559.743866051@linuxfoundation.org>
+Subject: [PATCH 5.15 221/244] net: r8169: Disable multicast filter for RTL8168H and RTL8107E
+Date: Wed, 15 Nov 2023 15:36:53 -0500
+Message-ID: <20231115203601.602664637@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -43,45 +44,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Patrick Thompson <ptf@google.com>
 
-[ Upstream commit 4baf1218150985ee3ab0a27220456a1f027ea0ac ]
+[ Upstream commit efa5f1311c4998e9e6317c52bc5ee93b3a0f36df ]
 
-The AMD USB host controller (1022:43f7) isn't going into PCI D3 by default
-without anything connected. This is because the policy that was introduced
-by commit a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all
-xHC 1.2 or later devices") only covered 1.2 or later.
+RTL8168H and RTL8107E ethernet adapters erroneously filter unicast
+eapol packets unless allmulti is enabled. These devices correspond to
+RTL_GIGA_MAC_VER_46 and VER_48. Add an exception for VER_46 and VER_48
+in the same way that VER_35 has an exception.
 
-The 1.1 specification also has the same requirement as the 1.2
-specification for D3 support. So expand the runtime PM as default policy
-to all AMD 1.1 devices as well.
-
-Fixes: a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all xHC 1.2 or later devices")
-Link: https://composter.com.ua/documents/xHCI_Specification_for_USB.pdf
-Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20231019102924.2797346-15-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6e1d0b898818 ("r8169:add support for RTL8168H and RTL8107E")
+Signed-off-by: Patrick Thompson <ptf@google.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/20231030205031.177855-1-ptf@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/realtek/r8169_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-index 29a442b621182..d0223facb92a1 100644
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -349,6 +349,8 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
- 	/* xHC spec requires PCI devices to support D3hot and D3cold */
- 	if (xhci->hci_version >= 0x120)
- 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
-+	else if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version >= 0x110)
-+		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
- 
- 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
- 		xhci_dbg_trace(xhci, trace_xhci_dbg_quirks,
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index ab84c623a7c62..2e555eda19a85 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -2551,7 +2551,9 @@ static void rtl_set_rx_mode(struct net_device *dev)
+ 		rx_mode |= AcceptAllPhys;
+ 	} else if (netdev_mc_count(dev) > MC_FILTER_LIMIT ||
+ 		   dev->flags & IFF_ALLMULTI ||
+-		   tp->mac_version == RTL_GIGA_MAC_VER_35) {
++		   tp->mac_version == RTL_GIGA_MAC_VER_35 ||
++		   tp->mac_version == RTL_GIGA_MAC_VER_46 ||
++		   tp->mac_version == RTL_GIGA_MAC_VER_48) {
+ 		/* accept all multicasts */
+ 	} else if (netdev_mc_empty(dev)) {
+ 		rx_mode &= ~AcceptMulticast;
 -- 
 2.42.0
 
