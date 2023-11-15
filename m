@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08585381A5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9826C381A5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boBDTrMO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC273C4E778;
-	Wed, 15 Nov 2023 20:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgJWHALG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427BEC4E777;
+	Wed, 15 Nov 2023 20:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081617;
-	bh=yT6avTJkcGwbr+AlQvs69s7XRerK05WpGcr23JmosXg=;
+	s=korg; t=1700081619;
+	bh=7GBFe/6xSIy6S1S+t+FOlCw8Po4gf5L5MuYM6Od3evM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=boBDTrMODot/UlgD4OYXzEF8AiAdcvd8X/689sjUnGUe3LV8itDfo2CHkhXQTkCJ3
-	 sJe/DLBAXOmtCJ9sV2dqoE0v5Tu9UiPHRsCd8t6LUeEtucCogitvOGYd5h7G0YV1hQ
-	 gs8hQIKVUSyvXLDUCj4T7YaKCd0flmZ7e1RSnhIU=
+	b=AgJWHALGneGCEkgdxO7kWQKpzebGnOvNMhRHP2IIHj3aiOj2jy6qqizGvpNd89fm9
+	 Vu9EFZaGAOdd/blFOPRNv/1lmW0v0somZxyY7bFaQimuLXjlKX8SyrZDNTUSkdvW7J
+	 KMqbDX8xcIkPeYx8hZZz0N5/vDxs2sOUy3O6Uhh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	"Qais Yousef (Google)" <qyousef@layalina.io>,
+	Ingo Molnar <mingo@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/191] wifi: mt76: mt7603: rework/fix rx pse hang check
-Date: Wed, 15 Nov 2023 15:44:54 -0500
-Message-ID: <20231115204645.679628161@linuxfoundation.org>
+Subject: [PATCH 5.10 002/191] sched/uclamp: Ignore (util == 0) optimization in feec() when p_util_max = 0
+Date: Wed, 15 Nov 2023 15:44:37 -0500
+Message-ID: <20231115204644.666421722@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -41,85 +45,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Qais Yousef <qyousef@layalina.io>
 
-[ Upstream commit baa19b2e4b7bbb509a7ca7939c8785477dcd40ee ]
+[ Upstream commit 23c9519def98ee0fa97ea5871535e9b136f522fc ]
 
-It turns out that the code in mt7603_rx_pse_busy() does not detect actual
-hardware hangs, it only checks for busy conditions in PSE.
-A reset should only be performed if these conditions are true and if there
-is no rx activity as well.
-Reset the counter whenever a rx interrupt occurs. In order to also deal with
-a fully loaded CPU that leaves interrupts disabled with continuous NAPI
-polling, also check for pending rx interrupts in the function itself.
+find_energy_efficient_cpu() bails out early if effective util of the
+task is 0 as the delta at this point will be zero and there's nothing
+for EAS to do. When uclamp is being used, this could lead to wrong
+decisions when uclamp_max is set to 0. In this case the task is capped
+to performance point 0, but it is actually running and consuming energy
+and we can benefit from EAS energy calculations.
 
-Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Rework the condition so that it bails out when both util and uclamp_min
+are 0.
+
+We can do that without needing to use uclamp_task_util(); remove it.
+
+Fixes: d81304bc6193 ("sched/uclamp: Cater for uclamp in find_energy_efficient_cpu()'s early exit condition")
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20230916232955.2099394-3-qyousef@layalina.io
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7603/core.c  |  2 ++
- .../net/wireless/mediatek/mt76/mt7603/mac.c   | 23 +++++++++++++------
- 2 files changed, 18 insertions(+), 7 deletions(-)
+ kernel/sched/fair.c | 18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/core.c b/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-index 60a996b63c0c0..915b8349146af 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-@@ -42,11 +42,13 @@ irqreturn_t mt7603_irq_handler(int irq, void *dev_instance)
- 	}
- 
- 	if (intr & MT_INT_RX_DONE(0)) {
-+		dev->rx_pse_check = 0;
- 		mt7603_irq_disable(dev, MT_INT_RX_DONE(0));
- 		napi_schedule(&dev->mt76.napi[0]);
- 	}
- 
- 	if (intr & MT_INT_RX_DONE(1)) {
-+		dev->rx_pse_check = 0;
- 		mt7603_irq_disable(dev, MT_INT_RX_DONE(1));
- 		napi_schedule(&dev->mt76.napi[1]);
- 	}
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-index f665a1c95eed2..9eb898ebbb445 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-@@ -1535,20 +1535,29 @@ static bool mt7603_rx_pse_busy(struct mt7603_dev *dev)
- {
- 	u32 addr, val;
- 
--	if (mt76_rr(dev, MT_MCU_DEBUG_RESET) & MT_MCU_DEBUG_RESET_QUEUES)
--		return true;
--
- 	if (mt7603_rx_fifo_busy(dev))
--		return false;
-+		goto out;
- 
- 	addr = mt7603_reg_map(dev, MT_CLIENT_BASE_PHYS_ADDR + MT_CLIENT_STATUS);
- 	mt76_wr(dev, addr, 3);
- 	val = mt76_rr(dev, addr) >> 16;
- 
--	if (is_mt7628(dev) && (val & 0x4001) == 0x4001)
--		return true;
-+	if (!(val & BIT(0)))
-+		return false;
-+
-+	if (is_mt7628(dev))
-+		val &= 0xa000;
-+	else
-+		val &= 0x8000;
-+	if (!val)
-+		return false;
-+
-+out:
-+	if (mt76_rr(dev, MT_INT_SOURCE_CSR) &
-+	    (MT_INT_RX_DONE(0) | MT_INT_RX_DONE(1)))
-+		return false;
- 
--	return (val & 0x8001) == 0x8001 || (val & 0xe001) == 0xe001;
-+	return true;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index d53f57ac76094..73a89fbd81be8 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -3927,22 +3927,6 @@ static inline unsigned long task_util_est(struct task_struct *p)
+ 	return max(task_util(p), _task_util_est(p));
  }
  
- static bool
+-#ifdef CONFIG_UCLAMP_TASK
+-static inline unsigned long uclamp_task_util(struct task_struct *p,
+-					     unsigned long uclamp_min,
+-					     unsigned long uclamp_max)
+-{
+-	return clamp(task_util_est(p), uclamp_min, uclamp_max);
+-}
+-#else
+-static inline unsigned long uclamp_task_util(struct task_struct *p,
+-					     unsigned long uclamp_min,
+-					     unsigned long uclamp_max)
+-{
+-	return task_util_est(p);
+-}
+-#endif
+-
+ static inline void util_est_enqueue(struct cfs_rq *cfs_rq,
+ 				    struct task_struct *p)
+ {
+@@ -6842,7 +6826,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
+ 		goto fail;
+ 
+ 	sync_entity_load_avg(&p->se);
+-	if (!uclamp_task_util(p, p_util_min, p_util_max))
++	if (!task_util_est(p) && p_util_min == 0)
+ 		goto unlock;
+ 
+ 	for (; pd; pd = pd->next) {
 -- 
 2.42.0
 
