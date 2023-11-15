@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD54171CE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26E518C27
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8evZ7SM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CA3C433CB;
-	Wed, 15 Nov 2023 20:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxwVP3m3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959ABC433CA;
+	Wed, 15 Nov 2023 20:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081867;
-	bh=B0PRmg26orsCMJ7IPVDgtTTqCDPIllqZMI/6Tm+dwU0=;
+	s=korg; t=1700081868;
+	bh=YqYjxw9Or1EZo3lmx4zl1bvF8hpK6KuamPLRQgO5LHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M8evZ7SMzYSHlRUiPanaZohs49BT/MIN+wr3IMfkT7/fI6VX0aKifhTnib58oFqT3
-	 mZXzOm+Y0KXq/k9FtAq/ydDQTJYGFoBehp0tZVNG3CB0o9P4dur4VrpNge5BFMA5BH
-	 s1cCHIVFSl/Grq5tegzWdDuB6yWakKhCDDCqeWCA=
+	b=MxwVP3m3iaAjlV1r4kCc8afGkT6Nqf52CcH69giy44K9twlmC+T4+G1x3FlHIloMy
+	 WL+6xIOgiH4qXxUfXzrqYlSzPAEDXjlypApGle9HddfyfJAil5cuqDc/F9yhh5jjnb
+	 epn8B3jM2wfpWkkMd3xICCitPxsVdJCsxHFfhUYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 176/191] net/smc: put sk reference if close work was canceled
-Date: Wed, 15 Nov 2023 15:47:31 -0500
-Message-ID: <20231115204655.002024108@linuxfoundation.org>
+Subject: [PATCH 5.10 159/191] media: dvb-usb-v2: af9035: fix missing unlock
+Date: Wed, 15 Nov 2023 15:47:14 -0500
+Message-ID: <20231115204654.014100448@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -43,38 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit aa96fbd6d78d9770323b21e2c92bd38821be8852 ]
+[ Upstream commit f31b2cb85f0ee165d78e1c43f6d69f82cc3b2145 ]
 
-Note that we always hold a reference to sock when attempting
-to submit close_work. Therefore, if we have successfully
-canceled close_work from pending, we MUST release that reference
-to avoid potential leaks.
+Instead of returning an error, goto the mutex unlock at
+the end of the function.
 
-Fixes: 42bfba9eaa33 ("net/smc: immediate termination for SMCD link groups")
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes smatch warning:
+
+drivers/media/usb/dvb-usb-v2/af9035.c:467 af9035_i2c_master_xfer() warn: inconsistent returns '&d->i2c_mutex'.
+  Locked on  : 326,387
+  Unlocked on: 465,467
+
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 7bf744f2de0a ("media: dvb-usb-v2: af9035: Fix null-ptr-deref in af9035_i2c_master_xfer")
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_close.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb-v2/af9035.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/net/smc/smc_close.c b/net/smc/smc_close.c
-index 0790cac9ae3ee..bcd3ea894555d 100644
---- a/net/smc/smc_close.c
-+++ b/net/smc/smc_close.c
-@@ -113,7 +113,8 @@ static void smc_close_cancel_work(struct smc_sock *smc)
- 	struct sock *sk = &smc->sk;
+diff --git a/drivers/media/usb/dvb-usb-v2/af9035.c b/drivers/media/usb/dvb-usb-v2/af9035.c
+index 8cbaab9a60844..f0bc3e060ab8d 100644
+--- a/drivers/media/usb/dvb-usb-v2/af9035.c
++++ b/drivers/media/usb/dvb-usb-v2/af9035.c
+@@ -322,8 +322,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 			ret = -EOPNOTSUPP;
+ 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
+ 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
+-			if (msg[0].len < 3 || msg[1].len < 1)
+-				return -EOPNOTSUPP;
++			if (msg[0].len < 3 || msg[1].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto unlock;
++			}
+ 			/* demod access via firmware interface */
+ 			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
+ 					msg[0].buf[2];
+@@ -383,8 +385,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 			ret = -EOPNOTSUPP;
+ 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
+ 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
+-			if (msg[0].len < 3)
+-				return -EOPNOTSUPP;
++			if (msg[0].len < 3) {
++				ret = -EOPNOTSUPP;
++				goto unlock;
++			}
+ 			/* demod access via firmware interface */
+ 			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
+ 					msg[0].buf[2];
+@@ -459,6 +463,7 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 		ret = -EOPNOTSUPP;
+ 	}
  
- 	release_sock(sk);
--	cancel_work_sync(&smc->conn.close_work);
-+	if (cancel_work_sync(&smc->conn.close_work))
-+		sock_put(sk);
- 	cancel_delayed_work_sync(&smc->conn.tx_work);
- 	lock_sock(sk);
- }
++unlock:
+ 	mutex_unlock(&d->i2c_mutex);
+ 
+ 	if (ret < 0)
 -- 
 2.42.0
 
