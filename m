@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCAE3BB29
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1E03BB29
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0V3LKTH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAA9C433CD;
-	Wed, 15 Nov 2023 19:22:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XT5eMoDQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B84C433C7;
+	Wed, 15 Nov 2023 19:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076133;
-	bh=xGTSM0215/3VrZcVSj/+VqkIjZ7UFv9Dxa9dExgNCqQ=;
+	s=korg; t=1700076135;
+	bh=VuFE0uo692cbzb1ZHbv9uuKJFA+3QleseRPV+YE4n80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y0V3LKTHYBTR5kAsMsVhpE2uTSf/UfgZiqfpv4OQx92J4PH9Le7siZh58siVcPH+K
-	 dylOu5Dm33cxvvquY5JUAixHzIXlbezLaQTmwG45v51Cb5VI/KNWXgnDarvhIPtaXa
-	 8XOK5bhKcVYdlYU9kiSIA1HhmYJNuJTr9GgWI+r8=
+	b=XT5eMoDQIXlRkaRKX9cdNAwcpaGfdY6jVPTqNagj2BwOAAAJcKE3xq4AgsWGKIIgY
+	 ipLvjPvTBRJr7SYT8tSY0oynj3iMgpxA7v1k/n90rpm5hzjZGVB6PCue8vAWPMhh/l
+	 GWL5jifloQrs4pHrn/GXWYpzJFet2XjHCV6Qa3A8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	MeiChia Chiu <meichia.chiu@mediatek.com>,
 	Shayne Chen <shayne.chen@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 095/550] wifi: mt76: fix per-band IEEE80211_CONF_MONITOR flag comparison
-Date: Wed, 15 Nov 2023 14:11:19 -0500
-Message-ID: <20231115191607.301883910@linuxfoundation.org>
+Subject: [PATCH 6.5 096/550] wifi: mt76: mt7915: fix beamforming availability check
+Date: Wed, 15 Nov 2023 14:11:20 -0500
+Message-ID: <20231115191607.377591229@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,63 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shayne Chen <shayne.chen@mediatek.com>
+From: MeiChia Chiu <meichia.chiu@mediatek.com>
 
-[ Upstream commit c685034cabc574dbdf16fa675010e202083cb4c2 ]
+[ Upstream commit ced1a0b8f3944e44e7f4eb3772dea1bada25d38a ]
 
-Use the correct ieee80211_conf of each band for IEEE80211_CONF_MONITOR
-comparison.
+Without this patch, when ap sets the tx stream number to 2,
+ap won't send any beamforming packet.
 
-Fixes: 24e69f6bc3ca ("mt76: fix monitor rx FCS error in DFS channel")
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Fixes: f89f297aef28 ("mt76: mt7915: fix txbf starec TLV issues")
+Signed-off-by: MeiChia Chiu <meichia.chiu@mediatek.com>
 Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/mcu.c | 2 +-
- drivers/net/wireless/mediatek/mt76/mt7915/mcu.c | 2 +-
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mcu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-index 8d745c9730c72..955974a82180f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-@@ -2147,7 +2147,7 @@ int mt7615_mcu_set_chan_info(struct mt7615_phy *phy, int cmd)
- 	};
- 
- 	if (cmd == MCU_EXT_CMD(SET_RX_PATH) ||
--	    dev->mt76.hw->conf.flags & IEEE80211_CONF_MONITOR)
-+	    phy->mt76->hw->conf.flags & IEEE80211_CONF_MONITOR)
- 		req.switch_reason = CH_SWITCH_NORMAL;
- 	else if (phy->mt76->hw->conf.flags & IEEE80211_CONF_OFFCHANNEL)
- 		req.switch_reason = CH_SWITCH_SCAN_BYPASS_DPD;
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index fa0f938f03a32..4116434a8b313 100644
+index 4116434a8b313..9a8b8356254b5 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -2702,7 +2702,7 @@ int mt7915_mcu_set_chan_info(struct mt7915_phy *phy, int cmd)
- 	if (mt76_connac_spe_idx(phy->mt76->antenna_mask))
- 		req.tx_path_num = fls(phy->mt76->antenna_mask);
+@@ -1012,13 +1012,13 @@ mt7915_is_ebf_supported(struct mt7915_phy *phy, struct ieee80211_vif *vif,
+ 			struct ieee80211_sta *sta, bool bfee)
+ {
+ 	struct mt7915_vif *mvif = (struct mt7915_vif *)vif->drv_priv;
+-	int tx_ant = hweight8(phy->mt76->chainmask) - 1;
++	int sts = hweight16(phy->mt76->chainmask);
  
--	if (dev->mt76.hw->conf.flags & IEEE80211_CONF_MONITOR)
-+	if (phy->mt76->hw->conf.flags & IEEE80211_CONF_MONITOR)
- 		req.switch_reason = CH_SWITCH_NORMAL;
- 	else if (phy->mt76->hw->conf.flags & IEEE80211_CONF_OFFCHANNEL ||
- 		 phy->mt76->hw->conf.flags & IEEE80211_CONF_IDLE)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index c4492803ec16e..c45a8afc7c18a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -2873,7 +2873,7 @@ int mt7996_mcu_set_chan_info(struct mt7996_phy *phy, u16 tag)
- 		.channel_band = ch_band[chandef->chan->band],
- 	};
+ 	if (vif->type != NL80211_IFTYPE_STATION &&
+ 	    vif->type != NL80211_IFTYPE_AP)
+ 		return false;
  
--	if (dev->mt76.hw->conf.flags & IEEE80211_CONF_MONITOR)
-+	if (phy->mt76->hw->conf.flags & IEEE80211_CONF_MONITOR)
- 		req.switch_reason = CH_SWITCH_NORMAL;
- 	else if (phy->mt76->hw->conf.flags & IEEE80211_CONF_OFFCHANNEL ||
- 		 phy->mt76->hw->conf.flags & IEEE80211_CONF_IDLE)
+-	if (!bfee && tx_ant < 2)
++	if (!bfee && sts < 2)
+ 		return false;
+ 
+ 	if (sta->deflink.he_cap.has_he) {
 -- 
 2.42.0
 
