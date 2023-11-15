@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292553A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E273A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vI6K2ute"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77EFC433C9;
-	Wed, 15 Nov 2023 19:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STcWPAQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBB9C433C8;
+	Wed, 15 Nov 2023 19:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077620;
-	bh=fsajHMMaFKnQYJgvp2ZPQ/HXC7VLFxqW/sSGM0B5AUs=;
+	s=korg; t=1700077621;
+	bh=Mruw1Swyayw7794AmhWSjUpD/3WqOm8Mw1mug2Nd4pI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vI6K2uteSqzvhn7oglXywCEyCjAuGvoGOGECyfZEE+TXHB94QijwrrOjS7ODZanzU
-	 KLENQ1A8zjYobGJ8K8FkWISYt2WoPjxjbIwVdQR5P7+ueaFpa02arR70ZrTmaz5GOT
-	 Oh+73SGhbrs4TeNYTbtd7Wld/kI2aInE8QvUD9Xw=
+	b=STcWPAQX1z+MXnft/YCaL4SVzVPBuFj2FVz6KuejHpK8xsF9zUleKudXJd2UcQLyF
+	 StutHGscOoTOqoRNy97/bIw7nnhinkFudlV2lkb5xWrCakaHgwlf/jFnTLBph8b4LT
+	 c58dL6HKRhJ3GEM0D0v5E8GewB+JQH0DWfSDwudA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Rogan Dawes <rogan@dawes.za.net>,
+	Fabio Estevam <festevam@denx.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 414/603] leds: turris-omnia: Do not use SMBUS calls
-Date: Wed, 15 Nov 2023 14:15:59 -0500
-Message-ID: <20231115191641.609203062@linuxfoundation.org>
+Subject: [PATCH 6.6 415/603] leds: pwm: Dont disable the PWM when the LED should be off
+Date: Wed, 15 Nov 2023 14:16:00 -0500
+Message-ID: <20231115191641.664652707@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,150 +45,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 6de283b96b31b4890e3ee8c86caca2a3a30d1011 ]
+[ Upstream commit 76fe464c8e64e71b2e4af11edeef0e5d85eeb6aa ]
 
-The leds-turris-omnia driver uses three function for I2C access:
-- i2c_smbus_write_byte_data() and i2c_smbus_read_byte_data(), which
-  cause an emulated SMBUS transfer,
-- i2c_master_send(), which causes an ordinary I2C transfer.
+Disabling a PWM (i.e. calling pwm_apply_state with .enabled = false)
+gives no guarantees what the PWM output does. It might freeze where it
+currently is, or go in a High-Z state or drive the active or inactive
+state, it might even continue to toggle.
 
-The Turris Omnia MCU LED controller is not semantically SMBUS, it
-operates as a simple I2C bus. It does not implement any of the SMBUS
-specific features, like PEC, or procedure calls, or anything. Moreover
-the I2C controller driver also does not implement SMBUS, and so the
-emulated SMBUS procedure from drivers/i2c/i2c-core-smbus.c is used for
-the SMBUS calls, which gives an unnecessary overhead.
+To ensure that the LED gets really disabled, don't disable the PWM even
+when .duty_cycle is zero.
 
-When I first wrote the driver, I was unaware of these facts, and I
-simply used the first function that worked.
+This fixes disabling a leds-pwm LED on i.MX28. The PWM on this SoC is
+one of those that freezes its output on disable, so if you disable an
+LED that is full on, it stays on. If you disable a LED with half
+brightness it goes off in 50% of the cases and full on in the other 50%.
 
-Drop the I2C SMBUS calls and instead use simple I2C transfers.
-
-Fixes: 089381b27abe ("leds: initial support for Turris Omnia LEDs")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Link: https://lore.kernel.org/r/20230918161104.20860-2-kabel@kernel.org
+Fixes: 41c42ff5dbe2 ("leds: simple driver for pwm driven LEDs")
+Reported-by: Rogan Dawes <rogan@dawes.za.net>
+Reported-by: Fabio Estevam <festevam@denx.de>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Fabio Estevam <festevam@denx.de>
+Link: https://lore.kernel.org/r/20230922192834.1695727-1-u.kleine-koenig@pengutronix.de
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-turris-omnia.c | 54 +++++++++++++++++++++++++-------
- 1 file changed, 42 insertions(+), 12 deletions(-)
+ drivers/leds/leds-pwm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/leds-turris-omnia.c b/drivers/leds/leds-turris-omnia.c
-index b8a95a917cfa4..b13a547e72c49 100644
---- a/drivers/leds/leds-turris-omnia.c
-+++ b/drivers/leds/leds-turris-omnia.c
-@@ -2,7 +2,7 @@
- /*
-  * CZ.NIC's Turris Omnia LEDs driver
-  *
-- * 2020 by Marek Behún <kabel@kernel.org>
-+ * 2020, 2023 by Marek Behún <kabel@kernel.org>
-  */
+diff --git a/drivers/leds/leds-pwm.c b/drivers/leds/leds-pwm.c
+index 419b710984ab6..2b3bf1353b707 100644
+--- a/drivers/leds/leds-pwm.c
++++ b/drivers/leds/leds-pwm.c
+@@ -53,7 +53,7 @@ static int led_pwm_set(struct led_classdev *led_cdev,
+ 		duty = led_dat->pwmstate.period - duty;
  
- #include <linux/i2c.h>
-@@ -41,6 +41,37 @@ struct omnia_leds {
- 	struct omnia_led leds[];
- };
- 
-+static int omnia_cmd_write_u8(const struct i2c_client *client, u8 cmd, u8 val)
-+{
-+	u8 buf[2] = { cmd, val };
-+
-+	return i2c_master_send(client, buf, sizeof(buf));
-+}
-+
-+static int omnia_cmd_read_u8(const struct i2c_client *client, u8 cmd)
-+{
-+	struct i2c_msg msgs[2];
-+	u8 reply;
-+	int ret;
-+
-+	msgs[0].addr = client->addr;
-+	msgs[0].flags = 0;
-+	msgs[0].len = 1;
-+	msgs[0].buf = &cmd;
-+	msgs[1].addr = client->addr;
-+	msgs[1].flags = I2C_M_RD;
-+	msgs[1].len = 1;
-+	msgs[1].buf = &reply;
-+
-+	ret = i2c_transfer(client->adapter, msgs, ARRAY_SIZE(msgs));
-+	if (likely(ret == ARRAY_SIZE(msgs)))
-+		return reply;
-+	else if (ret < 0)
-+		return ret;
-+	else
-+		return -EIO;
-+}
-+
- static int omnia_led_brightness_set_blocking(struct led_classdev *cdev,
- 					     enum led_brightness brightness)
- {
-@@ -64,7 +95,7 @@ static int omnia_led_brightness_set_blocking(struct led_classdev *cdev,
- 	if (buf[2] || buf[3] || buf[4])
- 		state |= CMD_LED_STATE_ON;
- 
--	ret = i2c_smbus_write_byte_data(leds->client, CMD_LED_STATE, state);
-+	ret = omnia_cmd_write_u8(leds->client, CMD_LED_STATE, state);
- 	if (ret >= 0 && (state & CMD_LED_STATE_ON))
- 		ret = i2c_master_send(leds->client, buf, 5);
- 
-@@ -114,9 +145,9 @@ static int omnia_led_register(struct i2c_client *client, struct omnia_led *led,
- 	cdev->brightness_set_blocking = omnia_led_brightness_set_blocking;
- 
- 	/* put the LED into software mode */
--	ret = i2c_smbus_write_byte_data(client, CMD_LED_MODE,
--					CMD_LED_MODE_LED(led->reg) |
--					CMD_LED_MODE_USER);
-+	ret = omnia_cmd_write_u8(client, CMD_LED_MODE,
-+				 CMD_LED_MODE_LED(led->reg) |
-+				 CMD_LED_MODE_USER);
- 	if (ret < 0) {
- 		dev_err(dev, "Cannot set LED %pOF to software mode: %i\n", np,
- 			ret);
-@@ -124,8 +155,8 @@ static int omnia_led_register(struct i2c_client *client, struct omnia_led *led,
- 	}
- 
- 	/* disable the LED */
--	ret = i2c_smbus_write_byte_data(client, CMD_LED_STATE,
--					CMD_LED_STATE_LED(led->reg));
-+	ret = omnia_cmd_write_u8(client, CMD_LED_STATE,
-+				 CMD_LED_STATE_LED(led->reg));
- 	if (ret < 0) {
- 		dev_err(dev, "Cannot set LED %pOF brightness: %i\n", np, ret);
- 		return ret;
-@@ -158,7 +189,7 @@ static ssize_t brightness_show(struct device *dev, struct device_attribute *a,
- 	struct i2c_client *client = to_i2c_client(dev);
- 	int ret;
- 
--	ret = i2c_smbus_read_byte_data(client, CMD_LED_GET_BRIGHTNESS);
-+	ret = omnia_cmd_read_u8(client, CMD_LED_GET_BRIGHTNESS);
- 
- 	if (ret < 0)
- 		return ret;
-@@ -179,8 +210,7 @@ static ssize_t brightness_store(struct device *dev, struct device_attribute *a,
- 	if (brightness > 100)
- 		return -EINVAL;
- 
--	ret = i2c_smbus_write_byte_data(client, CMD_LED_SET_BRIGHTNESS,
--					(u8)brightness);
-+	ret = omnia_cmd_write_u8(client, CMD_LED_SET_BRIGHTNESS, brightness);
- 
- 	return ret < 0 ? ret : count;
+ 	led_dat->pwmstate.duty_cycle = duty;
+-	led_dat->pwmstate.enabled = duty > 0;
++	led_dat->pwmstate.enabled = true;
+ 	return pwm_apply_state(led_dat->pwm, &led_dat->pwmstate);
  }
-@@ -237,8 +267,8 @@ static void omnia_leds_remove(struct i2c_client *client)
- 	u8 buf[5];
  
- 	/* put all LEDs into default (HW triggered) mode */
--	i2c_smbus_write_byte_data(client, CMD_LED_MODE,
--				  CMD_LED_MODE_LED(OMNIA_BOARD_LEDS));
-+	omnia_cmd_write_u8(client, CMD_LED_MODE,
-+			   CMD_LED_MODE_LED(OMNIA_BOARD_LEDS));
- 
- 	/* set all LEDs color to [255, 255, 255] */
- 	buf[0] = CMD_LED_COLOR;
 -- 
 2.42.0
 
