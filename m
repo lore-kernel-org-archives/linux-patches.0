@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764263A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CD33A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rv7WbcGN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E36C433C7;
-	Wed, 15 Nov 2023 19:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3rZUYT3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93427C433C8;
+	Wed, 15 Nov 2023 19:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077724;
-	bh=48TVkckcAxvfhl1GcsgwzTraZRyDIe5qGGQYobX/XIo=;
+	s=korg; t=1700077725;
+	bh=kZt1AQCQjJJ8OtKy0EmoNwHXYLMX49cOzk7WDY20Z70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rv7WbcGNt3ptnx7ZOFMti67PN9y4bhmpJXTgtPOB1SYK778TAWmB+uhdpeQ8XGgdr
-	 Rx9ay4+b3Dkt0YdgXtP9Fj7YHOQSDfECn31E4nQrfZp6uSP2d/r3E5V2M6zi+ek/9c
-	 e4eXi/ag2bOcSvS3kXblWiEQ21ppQdmDrkTeXvWM=
+	b=g3rZUYT3rffG6FzNsbslWeRV1b+9k9IMPig0+VTy9xTz6lTnZPo+nx6DT3mKDiLaM
+	 zyvfdNsRbOGSbxQ7JnVs2I1XsLANYnJ4Je6YLOY+7LIxHLkCaHEOh4fLcBAmp51oIL
+	 S1DVpDUYLbAw6cn0WuDhlSAkJf6nVerULIFkTaYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -43,9 +43,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 480/603] libperf rc_check: Make implicit enabling work for GCC
-Date: Wed, 15 Nov 2023 14:17:05 -0500
-Message-ID: <20231115191645.623414285@linuxfoundation.org>
+Subject: [PATCH 6.6 481/603] perf hist: Add missing puts to hist__account_cycles
+Date: Wed, 15 Nov 2023 14:17:06 -0500
+Message-ID: <20231115191645.682476419@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -66,11 +66,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 75265320d290c5f5891f16967b94883676c46705 ]
+[ Upstream commit c1149037f65bcf0334886180ebe3d5efcf214912 ]
 
-Make the implicit REFCOUNT_CHECKING robust to when building with GCC.
+Caught using reference count checking on perf top with
+"--call-graph=lbr". After this no memory leaks were detected.
 
-Fixes: 9be6ab181b7b ("libperf rc_check: Enable implicitly with sanitizers")
+Fixes: 57849998e2cd ("perf report: Add processing for cycle histograms")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Cc: K Prateek Nayak <kprateek.nayak@amd.com>
 Cc: Ravi Bangoria <ravi.bangoria@amd.com>
@@ -94,31 +95,48 @@ Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
 Cc: Yanteng Si <siyanteng@loongson.cn>
 Cc: Liam Howlett <liam.howlett@oracle.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20231024222353.3024098-4-irogers@google.com
+Link: https://lore.kernel.org/r/20231024222353.3024098-6-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/perf/include/internal/rc_check.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ tools/perf/util/hist.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/tools/lib/perf/include/internal/rc_check.h b/tools/lib/perf/include/internal/rc_check.h
-index d5d771ccdc7b4..e88a6d8a0b0f9 100644
---- a/tools/lib/perf/include/internal/rc_check.h
-+++ b/tools/lib/perf/include/internal/rc_check.h
-@@ -9,8 +9,12 @@
-  * Enable reference count checking implicitly with leak checking, which is
-  * integrated into address sanitizer.
-  */
--#if defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)
-+#if defined(__SANITIZE_ADDRESS__) || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)
- #define REFCNT_CHECKING 1
-+#elif defined(__has_feature)
-+#if __has_feature(address_sanitizer) || __has_feature(leak_sanitizer)
-+#define REFCNT_CHECKING 1
-+#endif
- #endif
+diff --git a/tools/perf/util/hist.c b/tools/perf/util/hist.c
+index 3dc8a4968beb9..ac8c0ef48a7f3 100644
+--- a/tools/perf/util/hist.c
++++ b/tools/perf/util/hist.c
+@@ -2676,8 +2676,6 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
  
- /*
+ 	/* If we have branch cycles always annotate them. */
+ 	if (bs && bs->nr && entries[0].flags.cycles) {
+-		int i;
+-
+ 		bi = sample__resolve_bstack(sample, al);
+ 		if (bi) {
+ 			struct addr_map_symbol *prev = NULL;
+@@ -2692,7 +2690,7 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
+ 			 * Note that perf stores branches reversed from
+ 			 * program order!
+ 			 */
+-			for (i = bs->nr - 1; i >= 0; i--) {
++			for (int i = bs->nr - 1; i >= 0; i--) {
+ 				addr_map_symbol__account_cycles(&bi[i].from,
+ 					nonany_branch_mode ? NULL : prev,
+ 					bi[i].flags.cycles);
+@@ -2701,6 +2699,12 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
+ 				if (total_cycles)
+ 					*total_cycles += bi[i].flags.cycles;
+ 			}
++			for (unsigned int i = 0; i < bs->nr; i++) {
++				map__put(bi[i].to.ms.map);
++				maps__put(bi[i].to.ms.maps);
++				map__put(bi[i].from.ms.map);
++				maps__put(bi[i].from.ms.maps);
++			}
+ 			free(bi);
+ 		}
+ 	}
 -- 
 2.42.0
 
