@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4F228383
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550652EAEE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVIDZMTW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA10C433C9;
-	Wed, 15 Nov 2023 19:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rRJ6FQ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0840BC433C7;
+	Wed, 15 Nov 2023 19:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077427;
-	bh=gqUEHkyZ7Mdqe8iuxDWpbS3tLvimXLm/stoNFjoUwlI=;
+	s=korg; t=1700077429;
+	bh=jVnrWrpKQ0l2H+TLLDGhAyfDhSzxH1usQuUuYdiTtZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVIDZMTWkXkzp/zqZx04FZnL1/NVVW/ivPQsoiqKpUe5C27JbzdpHvQ+HQxzU5dDy
-	 ReyAh1LLYTF40SQf9We/7ZerN0ICRT5YDVyFiUbI/oDiv1MEEb4EYpKlJwUfb4GjyV
-	 i8XRe0/yrn04upPH6tloKhLbj+STyddF4IV8goUc=
+	b=1rRJ6FQ+Box8Q57pDEBWcKTPDn+CC5KJk8qav4KixcjmOeS1w51YQDOSiU/7cy9hj
+	 t+fBhE3sOIYSj/5UcrWtY7DGMIn5rFMsJpZFgBmjqmGycMVsq1DRtsVAsBeAjr9Orx
+	 il2fn4WbRHgbThPh4eJfdiOemu33cbQOEfMRcoZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	"Kunwu.Chan" <chentao@kylinos.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 271/603] drm/amd/pm: Fix a memory leak on an error path
-Date: Wed, 15 Nov 2023 14:13:36 -0500
-Message-ID: <20231115191632.094539252@linuxfoundation.org>
+Subject: [PATCH 6.6 262/603] xenbus: fix error exit in xenbus_init()
+Date: Wed, 15 Nov 2023 14:13:27 -0500
+Message-ID: <20231115191631.445487643@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,37 +44,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu.Chan <chentao@kylinos.cn>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 828f8e31379b28fe7f07fb5865b8ed099d223fca ]
+[ Upstream commit 44961b81a9e9059b5c0443643915386db7035227 ]
 
-Add missing free on an error path.
+In case an error occurs in xenbus_init(), xen_store_domain_type should
+be set to XS_UNKNOWN.
 
-Fixes: 511a95552ec8 ("drm/amd/pm: Add SMU 13.0.6 support")
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Kunwu.Chan <chentao@kylinos.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix one instance where this action is missing.
+
+Fixes: 5b3353949e89 ("xen: add support for initializing xenstore later as HVM domain")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/202304200845.w7m4kXZr-lkp@intel.com/
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+Link: https://lore.kernel.org/r/20230822091138.4765-1-jgross@suse.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/xen/xenbus/xenbus_probe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-index de80e191a92c4..24d6811438c5c 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-@@ -1968,8 +1968,10 @@ static ssize_t smu_v13_0_6_get_gpu_metrics(struct smu_context *smu, void **table
+diff --git a/drivers/xen/xenbus/xenbus_probe.c b/drivers/xen/xenbus/xenbus_probe.c
+index 639bf628389ba..3205e5d724c8c 100644
+--- a/drivers/xen/xenbus/xenbus_probe.c
++++ b/drivers/xen/xenbus/xenbus_probe.c
+@@ -1025,7 +1025,7 @@ static int __init xenbus_init(void)
+ 			if (err < 0) {
+ 				pr_err("xenstore_late_init couldn't bind irq err=%d\n",
+ 				       err);
+-				return err;
++				goto out_error;
+ 			}
  
- 	metrics = kzalloc(sizeof(MetricsTable_t), GFP_KERNEL);
- 	ret = smu_v13_0_6_get_metrics_table(smu, metrics, true);
--	if (ret)
-+	if (ret) {
-+		kfree(metrics);
- 		return ret;
-+	}
- 
- 	smu_cmn_init_soft_gpu_metrics(gpu_metrics, 1, 3);
- 
+ 			xs_init_irq = err;
 -- 
 2.42.0
 
