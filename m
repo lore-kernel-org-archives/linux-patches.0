@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B674731725
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675E931728
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gah+w2rD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E4EC433C8;
-	Wed, 15 Nov 2023 19:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWqQG5xV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F043C433C9;
+	Wed, 15 Nov 2023 19:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077168;
-	bh=0G6ZySSTCtWthgmsELYD9Nnrcw0KsgaCtK05bJZ+tEE=;
+	s=korg; t=1700077170;
+	bh=xTHwzH/JC0Mip5lrqi5TA4kRqUz5LCqBZA6t1V2UF5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gah+w2rD50azqDl2E7Wc3KUv+/AIkyMJpWvWvS8c/JHRW5y3tIhA4ZzBr7ihuE0bA
-	 wTmEgw/oRmiwgyz1bs5fci0py32jBEGXk4mi1kdrPocrky9AJrwquI1uBoOK0fOrC5
-	 1fobJMzWbF82zrxR1h6wDGJ/3EokSRbJeaX2Odjo=
+	b=UWqQG5xVsPuEiCeFZLT4kXnNYGDN5cUa/CN+NjRF5dGM45gHpE5trW0BqiPonOE8H
+	 Kcwp+ybSLu4R4mkGJ3S85Kj4IsYkc9kjQVv4gJaVseDj7thJPICQDbq1wQsXYkVghJ
+	 VcElic37cEk1hOvOTx3Q/C8iNtDwZxu84ywMooJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 543/550] Revert "drm/ast: report connection status on Display Port."
-Date: Wed, 15 Nov 2023 14:18:47 -0500
-Message-ID: <20231115191638.562823305@linuxfoundation.org>
+Subject: [PATCH 6.6 147/603] wifi: iwlwifi: empty overflow queue during flush
+Date: Wed, 15 Nov 2023 14:11:32 -0500
+Message-ID: <20231115191623.365772157@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,201 +39,171 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-This reverts commit f81bb0ac7872893241319ea82504956676ef02fd.
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-The commit depends on e329cb53b45d ("drm/ast: Add BMC virtual
-connector") and will cause hangs on boot without that dependency.
+[ Upstream commit 658939fc68d3241f9a0019e224cd7154438c23f2 ]
 
+If a TX queue has no space for new TX frames, the driver will keep
+these frames in the overflow queue, and during reclaim flow it
+will retry to send the frames from that queue.
+But if the reclaim flow was invoked from TX queue flush, we will also
+TX these frames, which is wrong as we don't want to TX anything
+after flush.
+This might also cause assert 0x125F when removing the queue,
+saying that the driver removes a non-empty queue
+Fix this by TXing the overflow queue's frames only if we are
+not in flush queue flow.
+
+Fixes: a44509805895 ("iwlwifi: move reclaim flows to the queue file")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20231022173519.caf06c8709d9.Ibf664ccb3f952e836f8fa461ea58fc08e5c46e88@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ast/ast_dp.c    | 11 ----------
- drivers/gpu/drm/ast/ast_dp501.c | 37 +++++++++++----------------------
- drivers/gpu/drm/ast/ast_drv.h   |  2 --
- drivers/gpu/drm/ast/ast_mode.c  | 30 ++------------------------
- 4 files changed, 14 insertions(+), 66 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/dvm/tx.c    | 5 +++--
+ drivers/net/wireless/intel/iwlwifi/iwl-trans.h | 7 ++++---
+ drivers/net/wireless/intel/iwlwifi/mvm/tx.c    | 4 ++--
+ drivers/net/wireless/intel/iwlwifi/queue/tx.c  | 9 +++++----
+ drivers/net/wireless/intel/iwlwifi/queue/tx.h  | 2 +-
+ 5 files changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/ast/ast_dp.c b/drivers/gpu/drm/ast/ast_dp.c
-index fdd9a493aa9c0..6dc1a09504e13 100644
---- a/drivers/gpu/drm/ast/ast_dp.c
-+++ b/drivers/gpu/drm/ast/ast_dp.c
-@@ -7,17 +7,6 @@
- #include <drm/drm_print.h>
- #include "ast_drv.h"
+diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/tx.c b/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
+index 60a7b61d59aa3..ca1daec641c4f 100644
+--- a/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
+@@ -3,6 +3,7 @@
+  *
+  * Copyright(c) 2008 - 2014 Intel Corporation. All rights reserved.
+  * Copyright (C) 2019 Intel Corporation
++ * Copyright (C) 2023 Intel Corporation
+  *****************************************************************************/
  
--bool ast_astdp_is_connected(struct ast_device *ast)
--{
--	if (!ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xD1, ASTDP_MCU_FW_EXECUTING))
--		return false;
--	if (!ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xDF, ASTDP_HPD))
--		return false;
--	if (!ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xDC, ASTDP_LINK_SUCCESS))
--		return false;
--	return true;
--}
--
- int ast_astdp_read_edid(struct drm_device *dev, u8 *ediddata)
+ #include <linux/kernel.h>
+@@ -1169,7 +1170,7 @@ void iwlagn_rx_reply_tx(struct iwl_priv *priv, struct iwl_rx_cmd_buffer *rxb)
+ 			iwlagn_check_ratid_empty(priv, sta_id, tid);
+ 		}
+ 
+-		iwl_trans_reclaim(priv->trans, txq_id, ssn, &skbs);
++		iwl_trans_reclaim(priv->trans, txq_id, ssn, &skbs, false);
+ 
+ 		freed = 0;
+ 
+@@ -1315,7 +1316,7 @@ void iwlagn_rx_reply_compressed_ba(struct iwl_priv *priv,
+ 	 * block-ack window (we assume that they've been successfully
+ 	 * transmitted ... if not, it's too late anyway). */
+ 	iwl_trans_reclaim(priv->trans, scd_flow, ba_resp_scd_ssn,
+-			  &reclaimed_skbs);
++			  &reclaimed_skbs, false);
+ 
+ 	IWL_DEBUG_TX_REPLY(priv, "REPLY_COMPRESSED_BA [%d] Received from %pM, "
+ 			   "sta_id = %d\n",
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+index 1b3c976d19feb..168eda2132fb8 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+@@ -588,7 +588,7 @@ struct iwl_trans_ops {
+ 	int (*tx)(struct iwl_trans *trans, struct sk_buff *skb,
+ 		  struct iwl_device_tx_cmd *dev_cmd, int queue);
+ 	void (*reclaim)(struct iwl_trans *trans, int queue, int ssn,
+-			struct sk_buff_head *skbs);
++			struct sk_buff_head *skbs, bool is_flush);
+ 
+ 	void (*set_q_ptrs)(struct iwl_trans *trans, int queue, int ptr);
+ 
+@@ -1273,14 +1273,15 @@ static inline int iwl_trans_tx(struct iwl_trans *trans, struct sk_buff *skb,
+ }
+ 
+ static inline void iwl_trans_reclaim(struct iwl_trans *trans, int queue,
+-				     int ssn, struct sk_buff_head *skbs)
++				     int ssn, struct sk_buff_head *skbs,
++				     bool is_flush)
  {
- 	struct ast_device *ast = to_ast_device(dev);
-diff --git a/drivers/gpu/drm/ast/ast_dp501.c b/drivers/gpu/drm/ast/ast_dp501.c
-index fa7442b0c2612..1bc35a992369d 100644
---- a/drivers/gpu/drm/ast/ast_dp501.c
-+++ b/drivers/gpu/drm/ast/ast_dp501.c
-@@ -272,9 +272,11 @@ static bool ast_launch_m68k(struct drm_device *dev)
- 	return true;
+ 	if (WARN_ON_ONCE(trans->state != IWL_TRANS_FW_ALIVE)) {
+ 		IWL_ERR(trans, "%s bad state = %d\n", __func__, trans->state);
+ 		return;
+ 	}
+ 
+-	trans->ops->reclaim(trans, queue, ssn, skbs);
++	trans->ops->reclaim(trans, queue, ssn, skbs, is_flush);
  }
  
--bool ast_dp501_is_connected(struct ast_device *ast)
-+bool ast_dp501_read_edid(struct drm_device *dev, u8 *ediddata)
+ static inline void iwl_trans_set_q_ptrs(struct iwl_trans *trans, int queue,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+index 8bdb239295c39..177a4628a913e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+@@ -1603,7 +1603,7 @@ static void iwl_mvm_rx_tx_cmd_single(struct iwl_mvm *mvm,
+ 	seq_ctl = le16_to_cpu(tx_resp->seq_ctl);
+ 
+ 	/* we can free until ssn % q.n_bd not inclusive */
+-	iwl_trans_reclaim(mvm->trans, txq_id, ssn, &skbs);
++	iwl_trans_reclaim(mvm->trans, txq_id, ssn, &skbs, false);
+ 
+ 	while (!skb_queue_empty(&skbs)) {
+ 		struct sk_buff *skb = __skb_dequeue(&skbs);
+@@ -1955,7 +1955,7 @@ static void iwl_mvm_tx_reclaim(struct iwl_mvm *mvm, int sta_id, int tid,
+ 	 * block-ack window (we assume that they've been successfully
+ 	 * transmitted ... if not, it's too late anyway).
+ 	 */
+-	iwl_trans_reclaim(mvm->trans, txq, index, &reclaimed_skbs);
++	iwl_trans_reclaim(mvm->trans, txq, index, &reclaimed_skbs, is_flush);
+ 
+ 	skb_queue_walk(&reclaimed_skbs, skb) {
+ 		struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+diff --git a/drivers/net/wireless/intel/iwlwifi/queue/tx.c b/drivers/net/wireless/intel/iwlwifi/queue/tx.c
+index 340240b8954f6..ca74b1b63cac1 100644
+--- a/drivers/net/wireless/intel/iwlwifi/queue/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/queue/tx.c
+@@ -1575,7 +1575,7 @@ void iwl_txq_progress(struct iwl_txq *txq)
+ 
+ /* Frees buffers until index _not_ inclusive */
+ void iwl_txq_reclaim(struct iwl_trans *trans, int txq_id, int ssn,
+-		     struct sk_buff_head *skbs)
++		     struct sk_buff_head *skbs, bool is_flush)
  {
--	u32 boot_address, offset, data;
-+	struct ast_device *ast = to_ast_device(dev);
-+	u32 i, boot_address, offset, data;
-+	u32 *pEDIDidx;
+ 	struct iwl_txq *txq = trans->txqs.txq[txq_id];
+ 	int tfd_num, read_ptr, last_to_free;
+@@ -1650,9 +1650,11 @@ void iwl_txq_reclaim(struct iwl_trans *trans, int txq_id, int ssn,
+ 	if (iwl_txq_space(trans, txq) > txq->low_mark &&
+ 	    test_bit(txq_id, trans->txqs.queue_stopped)) {
+ 		struct sk_buff_head overflow_skbs;
++		struct sk_buff *skb;
  
- 	if (ast->config_mode == ast_use_p2a) {
- 		boot_address = get_fw_base(ast);
-@@ -290,6 +292,14 @@ bool ast_dp501_is_connected(struct ast_device *ast)
- 		data = ast_mindwm(ast, boot_address + offset);
- 		if (!(data & AST_DP501_PNP_CONNECTED))
- 			return false;
-+
-+		/* Read EDID */
-+		offset = AST_DP501_EDID_DATA;
-+		for (i = 0; i < 128; i += 4) {
-+			data = ast_mindwm(ast, boot_address + offset + i);
-+			pEDIDidx = (u32 *)(ediddata + i);
-+			*pEDIDidx = data;
-+		}
- 	} else {
- 		if (!ast->dp501_fw_buf)
- 			return false;
-@@ -309,30 +319,7 @@ bool ast_dp501_is_connected(struct ast_device *ast)
- 		data = readl(ast->dp501_fw_buf + offset);
- 		if (!(data & AST_DP501_PNP_CONNECTED))
- 			return false;
--	}
--	return true;
--}
--
--bool ast_dp501_read_edid(struct drm_device *dev, u8 *ediddata)
--{
--	struct ast_device *ast = to_ast_device(dev);
--	u32 i, boot_address, offset, data;
--	u32 *pEDIDidx;
--
--	if (!ast_dp501_is_connected(ast))
--		return false;
--
--	if (ast->config_mode == ast_use_p2a) {
--		boot_address = get_fw_base(ast);
+ 		__skb_queue_head_init(&overflow_skbs);
+-		skb_queue_splice_init(&txq->overflow_q, &overflow_skbs);
++		skb_queue_splice_init(&txq->overflow_q,
++				      is_flush ? skbs : &overflow_skbs);
  
--		/* Read EDID */
--		offset = AST_DP501_EDID_DATA;
--		for (i = 0; i < 128; i += 4) {
--			data = ast_mindwm(ast, boot_address + offset + i);
--			pEDIDidx = (u32 *)(ediddata + i);
--			*pEDIDidx = data;
--		}
--	} else {
- 		/* Read EDID */
- 		offset = AST_DP501_EDID_DATA;
- 		for (i = 0; i < 128; i += 4) {
-diff --git a/drivers/gpu/drm/ast/ast_drv.h b/drivers/gpu/drm/ast/ast_drv.h
-index 8a0ffa8b5939b..5498a6676f2e8 100644
---- a/drivers/gpu/drm/ast/ast_drv.h
-+++ b/drivers/gpu/drm/ast/ast_drv.h
-@@ -468,7 +468,6 @@ void ast_patch_ahb_2500(struct ast_device *ast);
- /* ast dp501 */
- void ast_set_dp501_video_output(struct drm_device *dev, u8 mode);
- bool ast_backup_fw(struct drm_device *dev, u8 *addr, u32 size);
--bool ast_dp501_is_connected(struct ast_device *ast);
- bool ast_dp501_read_edid(struct drm_device *dev, u8 *ediddata);
- u8 ast_get_dp501_max_clk(struct drm_device *dev);
- void ast_init_3rdtx(struct drm_device *dev);
-@@ -477,7 +476,6 @@ void ast_init_3rdtx(struct drm_device *dev);
- struct ast_i2c_chan *ast_i2c_create(struct drm_device *dev);
+ 		/*
+ 		 * We are going to transmit from the overflow queue.
+@@ -1672,8 +1674,7 @@ void iwl_txq_reclaim(struct iwl_trans *trans, int txq_id, int ssn,
+ 		 */
+ 		spin_unlock_bh(&txq->lock);
  
- /* aspeed DP */
--bool ast_astdp_is_connected(struct ast_device *ast);
- int ast_astdp_read_edid(struct drm_device *dev, u8 *ediddata);
- void ast_dp_launch(struct drm_device *dev);
- void ast_dp_power_on_off(struct drm_device *dev, bool no);
-diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_mode.c
-index 0724516f29737..b3c670af6ef2b 100644
---- a/drivers/gpu/drm/ast/ast_mode.c
-+++ b/drivers/gpu/drm/ast/ast_mode.c
-@@ -1585,20 +1585,8 @@ static int ast_dp501_connector_helper_get_modes(struct drm_connector *connector)
- 	return 0;
- }
+-		while (!skb_queue_empty(&overflow_skbs)) {
+-			struct sk_buff *skb = __skb_dequeue(&overflow_skbs);
++		while ((skb = __skb_dequeue(&overflow_skbs))) {
+ 			struct iwl_device_tx_cmd *dev_cmd_ptr;
  
--static int ast_dp501_connector_helper_detect_ctx(struct drm_connector *connector,
--						 struct drm_modeset_acquire_ctx *ctx,
--						 bool force)
--{
--	struct ast_device *ast = to_ast_device(connector->dev);
--
--	if (ast_dp501_is_connected(ast))
--		return connector_status_connected;
--	return connector_status_disconnected;
--}
--
- static const struct drm_connector_helper_funcs ast_dp501_connector_helper_funcs = {
- 	.get_modes = ast_dp501_connector_helper_get_modes,
--	.detect_ctx = ast_dp501_connector_helper_detect_ctx,
- };
- 
- static const struct drm_connector_funcs ast_dp501_connector_funcs = {
-@@ -1623,7 +1611,7 @@ static int ast_dp501_connector_init(struct drm_device *dev, struct drm_connector
- 	connector->interlace_allowed = 0;
- 	connector->doublescan_allowed = 0;
- 
--	connector->polled = DRM_CONNECTOR_POLL_CONNECT | DRM_CONNECTOR_POLL_DISCONNECT;
-+	connector->polled = DRM_CONNECTOR_POLL_CONNECT;
- 
- 	return 0;
- }
-@@ -1695,20 +1683,8 @@ static int ast_astdp_connector_helper_get_modes(struct drm_connector *connector)
- 	return 0;
- }
- 
--static int ast_astdp_connector_helper_detect_ctx(struct drm_connector *connector,
--						 struct drm_modeset_acquire_ctx *ctx,
--						 bool force)
--{
--	struct ast_device *ast = to_ast_device(connector->dev);
--
--	if (ast_astdp_is_connected(ast))
--		return connector_status_connected;
--	return connector_status_disconnected;
--}
--
- static const struct drm_connector_helper_funcs ast_astdp_connector_helper_funcs = {
- 	.get_modes = ast_astdp_connector_helper_get_modes,
--	.detect_ctx = ast_astdp_connector_helper_detect_ctx,
- };
- 
- static const struct drm_connector_funcs ast_astdp_connector_funcs = {
-@@ -1733,7 +1709,7 @@ static int ast_astdp_connector_init(struct drm_device *dev, struct drm_connector
- 	connector->interlace_allowed = 0;
- 	connector->doublescan_allowed = 0;
- 
--	connector->polled = DRM_CONNECTOR_POLL_CONNECT | DRM_CONNECTOR_POLL_DISCONNECT;
-+	connector->polled = DRM_CONNECTOR_POLL_CONNECT;
- 
- 	return 0;
- }
-@@ -1872,7 +1848,5 @@ int ast_mode_config_init(struct ast_device *ast)
- 
- 	drm_mode_config_reset(dev);
- 
--	drm_kms_helper_poll_init(dev);
--
- 	return 0;
- }
+ 			dev_cmd_ptr = *(void **)((u8 *)skb->cb +
+diff --git a/drivers/net/wireless/intel/iwlwifi/queue/tx.h b/drivers/net/wireless/intel/iwlwifi/queue/tx.h
+index b7d3808588bfb..4c09bc1930fa1 100644
+--- a/drivers/net/wireless/intel/iwlwifi/queue/tx.h
++++ b/drivers/net/wireless/intel/iwlwifi/queue/tx.h
+@@ -179,7 +179,7 @@ void iwl_txq_gen1_update_byte_cnt_tbl(struct iwl_trans *trans,
+ 				      struct iwl_txq *txq, u16 byte_cnt,
+ 				      int num_tbs);
+ void iwl_txq_reclaim(struct iwl_trans *trans, int txq_id, int ssn,
+-		     struct sk_buff_head *skbs);
++		     struct sk_buff_head *skbs, bool is_flush);
+ void iwl_txq_set_q_ptrs(struct iwl_trans *trans, int txq_id, int ptr);
+ void iwl_trans_txq_freeze_timer(struct iwl_trans *trans, unsigned long txqs,
+ 				bool freeze);
 -- 
 2.42.0
 
