@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18E6364C8
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560D03A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SGzGqam3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7199EC433C8;
-	Wed, 15 Nov 2023 19:49:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vR9Ip2Ro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04366C433CD;
+	Wed, 15 Nov 2023 19:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077785;
-	bh=XlKg1LhqXBG2e1og1/WEcTv9a8HIYxbpw8YmDU3rVRQ=;
+	s=korg; t=1700077787;
+	bh=oUjQ74weIvhBrPcXsA8hgj2kaMjKnqvhxegy/Q2Zm5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGzGqam3gPKMA7qBv3urtjeGBAZLdFkN8rDEjIM6cDebOTRC0998Qnw4dG93k/NEk
-	 CoLG3jfEm9Cd/vrLgAKS8bH2AHBcR/wpRajUOLhy60CzB2ZBBJuBtbDFfRezOuQkx1
-	 fpu+zhFB+Td7VkPYFeUfYhtkmFXJNqTTrtFW2CeI=
+	b=vR9Ip2Ro9kc1LMjbnu8iRaN28sdLPOmclTwXiT06OmAZhOVTeA4dr5kE4UNKTjZA5
+	 cOX32ndMCcw7E5U4U/LjYieLIEnIPOysiFlkYwEsX5xnESObB0DBw3RswxleleMSfc
+	 LW7vW2C4cX4qKof6cPbaMYJ3aDOj8uE0HDR1lsFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Jim Harris <jim.harris@samsung.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 497/603] cxl/region: Prepare the decoder match range helper for reuse
-Date: Wed, 15 Nov 2023 14:17:22 -0500
-Message-ID: <20231115191646.654074199@linuxfoundation.org>
+Subject: [PATCH 6.6 498/603] cxl/region: Calculate a target position in a region interleave
+Date: Wed, 15 Nov 2023 14:17:23 -0500
+Message-ID: <20231115191646.711551608@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -47,94 +44,192 @@ Content-Transfer-Encoding: 8bit
 
 From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 1110581412c7a223439bb3ecdcdd9f4432e08231 ]
+[ Upstream commit a3e00c964fb943934af916f48f0dd43b5110c866 ]
 
-match_decoder_by_range() and decoder_match_range() both determine
-if an HPA range matches a decoder. The first does it for root
-decoders and the second one operates on switch decoders.
+Introduce a calculation to find a target's position in a region
+interleave. Perform a self-test of the calculation on user-defined
+regions.
 
-Tidy these up with clear naming and make the switch helper more
-like the root decoder helper in style and functionality. Make it
-take the actual range, rather than an endpoint decoder from which
-it extracts the range. Require an exact match on switch decoders,
-because unlike a root decoder that maps an entire region, Linux
-only supports 1:1 mapping of switch to endpoint decoders. Note that
-root-decoders are a super-set of switch-decoders and the range they
-cover is a super-set of a region, hence the use of range_contains() for
-that case.
+The region driver uses the kernel sort() function to put region
+targets in relative order. Positions are assigned based on each
+target's index in that sorted list. That relative sort doesn't
+consider the offset of a port into its parent port which causes
+some auto-discovered regions to fail creation. In one failure case,
+a 2 + 2 config (2 host bridges each with 2 endpoints), the sort
+puts all the targets of one port ahead of another port when they
+were expected to be interleaved.
 
-Aside from aesthetics and maintainability, this is in preparation
-for reuse.
+In preparation for repairing the autodiscovery region assembly,
+introduce a new method for discovering a target position in the
+region interleave.
+
+cxl_calc_interleave_pos() adds a method to find the target position by
+ascending from an endpoint to a root decoder. The calculation starts
+with the endpoint's local position and position in the parent port. It
+traverses towards the root decoder and examines both position and ways
+in order to allow the position to be refined all the way to the root
+decoder.
+
+This calculation: position = position * parent_ways + parent_pos;
+applied iteratively yields the correct position.
+
+Include a self-test that exercises this new position calculation against
+every successfully configured user-defined region.
 
 Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Jim Harris <jim.harris@samsung.com>
-Link: https://lore.kernel.org/r/011b1f498e1758bb8df17c5951be00bd8d489e3b.1698263080.git.alison.schofield@intel.com
-[djbw: fixup root decoder vs switch decoder range checks]
+Link: https://lore.kernel.org/r/0ac32c75cf81dd8b86bf07d70ff139d33c2300bc.1698263080.git.alison.schofield@intel.com
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Stable-dep-of: 0cf36a85c140 ("cxl/region: Use cxl_calc_interleave_pos() for auto-discovery")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/cxl/core/region.c | 127 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 127 insertions(+)
 
 diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index d74bf1b664b6c..f43b2b051b301 100644
+index f43b2b051b301..ccde7489edbde 100644
 --- a/drivers/cxl/core/region.c
 +++ b/drivers/cxl/core/region.c
-@@ -1481,16 +1481,20 @@ static struct cxl_port *next_port(struct cxl_port *port)
- 	return port->parent_dport->port;
+@@ -1497,6 +1497,113 @@ static int match_switch_decoder_by_range(struct device *dev, void *data)
+ 	return (r1->start == r2->start && r1->end == r2->end);
  }
  
--static int decoder_match_range(struct device *dev, void *data)
-+static int match_switch_decoder_by_range(struct device *dev, void *data)
- {
--	struct cxl_endpoint_decoder *cxled = data;
- 	struct cxl_switch_decoder *cxlsd;
-+	struct range *r1, *r2 = data;
- 
- 	if (!is_switch_decoder(dev))
- 		return 0;
- 
- 	cxlsd = to_cxl_switch_decoder(dev);
--	return range_contains(&cxlsd->cxld.hpa_range, &cxled->cxld.hpa_range);
-+	r1 = &cxlsd->cxld.hpa_range;
++static int find_pos_and_ways(struct cxl_port *port, struct range *range,
++			     int *pos, int *ways)
++{
++	struct cxl_switch_decoder *cxlsd;
++	struct cxl_port *parent;
++	struct device *dev;
++	int rc = -ENXIO;
 +
-+	if (is_root_decoder(dev))
-+		return range_contains(r1, r2);
-+	return (r1->start == r2->start && r1->end == r2->end);
- }
- 
- static void find_positions(const struct cxl_switch_decoder *cxlsd,
-@@ -1559,7 +1563,8 @@ static int cmp_decode_pos(const void *a, const void *b)
- 		goto err;
- 	}
- 
--	dev = device_find_child(&port->dev, cxled_a, decoder_match_range);
-+	dev = device_find_child(&port->dev, &cxled_a->cxld.hpa_range,
++	parent = next_port(port);
++	if (!parent)
++		return rc;
++
++	dev = device_find_child(&parent->dev, range,
 +				match_switch_decoder_by_range);
- 	if (!dev) {
- 		struct range *range = &cxled_a->cxld.hpa_range;
++	if (!dev) {
++		dev_err(port->uport_dev,
++			"failed to find decoder mapping %#llx-%#llx\n",
++			range->start, range->end);
++		return rc;
++	}
++	cxlsd = to_cxl_switch_decoder(dev);
++	*ways = cxlsd->cxld.interleave_ways;
++
++	for (int i = 0; i < *ways; i++) {
++		if (cxlsd->target[i] == port->parent_dport) {
++			*pos = i;
++			rc = 0;
++			break;
++		}
++	}
++	put_device(dev);
++
++	return rc;
++}
++
++/**
++ * cxl_calc_interleave_pos() - calculate an endpoint position in a region
++ * @cxled: endpoint decoder member of given region
++ *
++ * The endpoint position is calculated by traversing the topology from
++ * the endpoint to the root decoder and iteratively applying this
++ * calculation:
++ *
++ *    position = position * parent_ways + parent_pos;
++ *
++ * ...where @position is inferred from switch and root decoder target lists.
++ *
++ * Return: position >= 0 on success
++ *	   -ENXIO on failure
++ */
++static int cxl_calc_interleave_pos(struct cxl_endpoint_decoder *cxled)
++{
++	struct cxl_port *iter, *port = cxled_to_port(cxled);
++	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
++	struct range *range = &cxled->cxld.hpa_range;
++	int parent_ways = 0, parent_pos = 0, pos = 0;
++	int rc;
++
++	/*
++	 * Example: the expected interleave order of the 4-way region shown
++	 * below is: mem0, mem2, mem1, mem3
++	 *
++	 *		  root_port
++	 *                 /      \
++	 *      host_bridge_0    host_bridge_1
++	 *        |    |           |    |
++	 *       mem0 mem1        mem2 mem3
++	 *
++	 * In the example the calculator will iterate twice. The first iteration
++	 * uses the mem position in the host-bridge and the ways of the host-
++	 * bridge to generate the first, or local, position. The second
++	 * iteration uses the host-bridge position in the root_port and the ways
++	 * of the root_port to refine the position.
++	 *
++	 * A trace of the calculation per endpoint looks like this:
++	 * mem0: pos = 0 * 2 + 0    mem2: pos = 0 * 2 + 0
++	 *       pos = 0 * 2 + 0          pos = 0 * 2 + 1
++	 *       pos: 0                   pos: 1
++	 *
++	 * mem1: pos = 0 * 2 + 1    mem3: pos = 0 * 2 + 1
++	 *       pos = 1 * 2 + 0          pos = 1 * 2 + 1
++	 *       pos: 2                   pos = 3
++	 *
++	 * Note that while this example is simple, the method applies to more
++	 * complex topologies, including those with switches.
++	 */
++
++	/* Iterate from endpoint to root_port refining the position */
++	for (iter = port; iter; iter = next_port(iter)) {
++		if (is_cxl_root(iter))
++			break;
++
++		rc = find_pos_and_ways(iter, range, &parent_pos, &parent_ways);
++		if (rc)
++			return rc;
++
++		pos = pos * parent_ways + parent_pos;
++	}
++
++	dev_dbg(&cxlmd->dev,
++		"decoder:%s parent:%s port:%s range:%#llx-%#llx pos:%d\n",
++		dev_name(&cxled->cxld.dev), dev_name(cxlmd->dev.parent),
++		dev_name(&port->dev), range->start, range->end, pos);
++
++	return pos;
++}
++
+ static void find_positions(const struct cxl_switch_decoder *cxlsd,
+ 			   const struct cxl_port *iter_a,
+ 			   const struct cxl_port *iter_b, int *a_pos,
+@@ -1760,6 +1867,26 @@ static int cxl_region_attach(struct cxl_region *cxlr,
+ 		.end = p->res->end,
+ 	};
  
-@@ -2690,7 +2695,7 @@ static int devm_cxl_add_dax_region(struct cxl_region *cxlr)
- 	return rc;
- }
++	if (p->nr_targets != p->interleave_ways)
++		return 0;
++
++	/*
++	 * Test the auto-discovery position calculator function
++	 * against this successfully created user-defined region.
++	 * A fail message here means that this interleave config
++	 * will fail when presented as CXL_REGION_F_AUTO.
++	 */
++	for (int i = 0; i < p->nr_targets; i++) {
++		struct cxl_endpoint_decoder *cxled = p->targets[i];
++		int test_pos;
++
++		test_pos = cxl_calc_interleave_pos(cxled);
++		dev_dbg(&cxled->cxld.dev,
++			"Test cxl_calc_interleave_pos(): %s test_pos:%d cxled->pos:%d\n",
++			(test_pos == cxled->pos) ? "success" : "fail",
++			test_pos, cxled->pos);
++	}
++
+ 	return 0;
  
--static int match_decoder_by_range(struct device *dev, void *data)
-+static int match_root_decoder_by_range(struct device *dev, void *data)
- {
- 	struct range *r1, *r2 = data;
- 	struct cxl_root_decoder *cxlrd;
-@@ -2821,7 +2826,7 @@ int cxl_add_to_region(struct cxl_port *root, struct cxl_endpoint_decoder *cxled)
- 	int rc;
- 
- 	cxlrd_dev = device_find_child(&root->dev, &cxld->hpa_range,
--				      match_decoder_by_range);
-+				      match_root_decoder_by_range);
- 	if (!cxlrd_dev) {
- 		dev_err(cxlmd->dev.parent,
- 			"%s:%s no CXL window for range %#llx:%#llx\n",
+ err_decrement:
 -- 
 2.42.0
 
