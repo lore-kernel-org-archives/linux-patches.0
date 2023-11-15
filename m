@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755874177E
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F6841A88
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEuQ6mKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EAFC433CA;
-	Wed, 15 Nov 2023 19:33:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSnX5CRw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0834C433C9;
+	Wed, 15 Nov 2023 19:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076801;
-	bh=N/dEb5iPt959rsWuCOmG3n3FYzNjvj+bUWHbBqeojhU=;
+	s=korg; t=1700076802;
+	bh=c5gOXU7/5Q2/2RchR6FTFJSfe9N+qiGIQhrBZYQAG48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pEuQ6mKdvUJ6+itAvClm8xTfHIWh7TCFfb4KSH9h6PQLJ0gT6r+C6YJdOnQNLKHco
-	 8Pswt6+r2bYHKxLbD7yb+uQLOkhXwKVs0OaivIXKIpHNYdZ2ny9TA8+8UqflDxG5bN
-	 CNS1Z+9KhaUR2/89aOI5f4rPi6OoFoqGCUD4e5L8=
+	b=BSnX5CRwU8YzP+vXWV0N+wpzZ8W7JsmRNS7lVOXOWFPi/wl2i9pXy1Te/q0lhMYYs
+	 xVtzac0dc4VCRnN07aBPcVKSzdVxTodMwBJDn4BK3g+C9S9gAKIuVJbIuBuSn1e/W8
+	 RsCzhM9r/TXsW9Cs5UU9UfYCyoKNsAgXo+HSSaO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Tejun Heo <tj@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/603] writeback, cgroup: switch inodes with dirty timestamps to release dying cgwbs
-Date: Wed, 15 Nov 2023 14:09:18 -0500
-Message-ID: <20231115191614.073048584@linuxfoundation.org>
+Subject: [PATCH 6.5 408/550] interconnect: qcom: sc7180: Set ACV enable_mask
+Date: Wed, 15 Nov 2023 14:16:32 -0500
+Message-ID: <20231115191629.047196800@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,104 +38,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jingbo Xu <jefflexu@linux.alibaba.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 6654408a33e6297d8e1d2773409431d487399b95 ]
+[ Upstream commit 1ad83c4792722fe134c1352591420702ff7b9091 ]
 
-The cgwb cleanup routine will try to release the dying cgwb by switching
-the attached inodes.  It fetches the attached inodes from wb->b_attached
-list, omitting the fact that inodes only with dirty timestamps reside in
-wb->b_dirty_time list, which is the case when lazytime is enabled.  This
-causes enormous zombie memory cgroup when lazytime is enabled, as inodes
-with dirty timestamps can not be switched to a live cgwb for a long time.
+ACV expects an enable_mask corresponding to the APPS RSC, fill it in.
 
-It is reasonable not to switch cgwb for inodes with dirty data, as
-otherwise it may break the bandwidth restrictions.  However since the
-writeback of inode metadata is not accounted for, let's also switch
-inodes with dirty timestamps to avoid zombie memory and block cgroups
-when laztytime is enabled.
-
-Fixes: c22d70a162d3 ("writeback, cgroup: release dying cgwbs by switching attached inodes")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20231014125511.102978-1-jefflexu@linux.alibaba.com
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 2d1f95ab9feb ("interconnect: qcom: Add SC7180 interconnect provider driver")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230811-topic-acv-v2-2-765ad70e539a@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 41 +++++++++++++++++++++++++++++------------
- 1 file changed, 29 insertions(+), 12 deletions(-)
+ drivers/interconnect/qcom/sc7180.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index c1af01b2c42d7..1767493dffda7 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -613,6 +613,24 @@ static void inode_switch_wbs(struct inode *inode, int new_wb_id)
- 	kfree(isw);
- }
+diff --git a/drivers/interconnect/qcom/sc7180.c b/drivers/interconnect/qcom/sc7180.c
+index e2cc7751d976d..bf8bd7a6691f9 100644
+--- a/drivers/interconnect/qcom/sc7180.c
++++ b/drivers/interconnect/qcom/sc7180.c
+@@ -155,6 +155,7 @@ DEFINE_QNODE(xs_sys_tcu_cfg, SC7180_SLAVE_TCU, 1, 8);
  
-+static bool isw_prepare_wbs_switch(struct inode_switch_wbs_context *isw,
-+				   struct list_head *list, int *nr)
-+{
-+	struct inode *inode;
-+
-+	list_for_each_entry(inode, list, i_io_list) {
-+		if (!inode_prepare_wbs_switch(inode, isw->new_wb))
-+			continue;
-+
-+		isw->inodes[*nr] = inode;
-+		(*nr)++;
-+
-+		if (*nr >= WB_MAX_INODES_PER_ISW - 1)
-+			return true;
-+	}
-+	return false;
-+}
-+
- /**
-  * cleanup_offline_cgwb - detach associated inodes
-  * @wb: target wb
-@@ -625,7 +643,6 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
- {
- 	struct cgroup_subsys_state *memcg_css;
- 	struct inode_switch_wbs_context *isw;
--	struct inode *inode;
- 	int nr;
- 	bool restart = false;
- 
-@@ -647,17 +664,17 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
- 
- 	nr = 0;
- 	spin_lock(&wb->list_lock);
--	list_for_each_entry(inode, &wb->b_attached, i_io_list) {
--		if (!inode_prepare_wbs_switch(inode, isw->new_wb))
--			continue;
--
--		isw->inodes[nr++] = inode;
--
--		if (nr >= WB_MAX_INODES_PER_ISW - 1) {
--			restart = true;
--			break;
--		}
--	}
-+	/*
-+	 * In addition to the inodes that have completed writeback, also switch
-+	 * cgwbs for those inodes only with dirty timestamps. Otherwise, those
-+	 * inodes won't be written back for a long time when lazytime is
-+	 * enabled, and thus pinning the dying cgwbs. It won't break the
-+	 * bandwidth restrictions, as writeback of inode metadata is not
-+	 * accounted for.
-+	 */
-+	restart = isw_prepare_wbs_switch(isw, &wb->b_attached, &nr);
-+	if (!restart)
-+		restart = isw_prepare_wbs_switch(isw, &wb->b_dirty_time, &nr);
- 	spin_unlock(&wb->list_lock);
- 
- 	/* no attached inodes? bail out */
+ static struct qcom_icc_bcm bcm_acv = {
+ 	.name = "ACV",
++	.enable_mask = BIT(3),
+ 	.keepalive = false,
+ 	.num_nodes = 1,
+ 	.nodes = { &ebi },
 -- 
 2.42.0
 
