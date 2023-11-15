@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5373A8F3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF743A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyeNRc3T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893CDC433C8;
-	Wed, 15 Nov 2023 19:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aG+/uDDm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D10C433C9;
+	Wed, 15 Nov 2023 19:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077788;
-	bh=UHfJF4R+soAri8DckuaXXUclWKCRpAbNHB67MA10oP8=;
+	s=korg; t=1700077790;
+	bh=J2rlEtYN1xl5trT88SV7TwpdONuketFlladqDpBEmvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dyeNRc3T8UXtWa3EfverS/9lZsZeAtOkLCcXpRKHdRS/G4URBg7ZmWeVnUq8bNx5i
-	 sycG+QS6XAvfkiqxaKKC/b+hZ2iBbcck7D1x+tvDmQhrobSr75rIDYw4KeFA+BrskK
-	 dArDAXygnlI2v0UrkAabfeW+ZfR7uzoy5F1AFDFs=
+	b=aG+/uDDmstkMz1MLutjZpM2a0RpCey4mxji7tWOOe7LgV7O72Lv34cKJEA2cXM2WR
+	 rO0TcaGync/yWTsY+9JQc6z8pIZNqWVP57LzuvWAngMr37JvaoYdTjQy6HEk6Xf0EO
+	 JWntCytk0nEpyYeuvveioQv0QjyEszGmUXvY6V6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 489/603] cxl/pci: Cleanup sanitize to always poll
-Date: Wed, 15 Nov 2023 14:17:14 -0500
-Message-ID: <20231115191646.177421703@linuxfoundation.org>
+Subject: [PATCH 6.6 514/603] media: bttv: fix use after free error due to btv->timeout timer
+Date: Wed, 15 Nov 2023 14:17:39 -0500
+Message-ID: <20231115191647.658348110@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,183 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit e30a106558e7d1e06d1fcfd12466dc646673d03d ]
+[ Upstream commit bd5b50b329e850d467e7bcc07b2b6bde3752fbda ]
 
-In preparation for fixing the init/teardown of the 'sanitize' workqueue
-and sysfs notification mechanism, arrange for cxl_mbox_sanitize_work()
-to be the single location where the sysfs attribute is notified. With
-that change there is no distinction between polled mode and interrupt
-mode. All the interrupt does is accelerate the polling interval.
+There may be some a race condition between timer function
+bttv_irq_timeout and bttv_remove. The timer is setup in
+probe and there is no timer_delete operation in remove
+function. When it hit kfree btv, the function might still be
+invoked, which will cause use after free bug.
 
-The change to check for "mds->security.sanitize_node" under the lock is
-there to ensure that the interrupt, the work routine and the
-setup/teardown code can all have a consistent view of the registered
-notifier and the workqueue state. I.e. the expectation is that the
-interrupt is live past the point that the sanitize sysfs attribute is
-published, and it may race teardown, so it must be consulted under a
-lock. Given that new locking requirement, cxl_pci_mbox_irq() is moved
-from hard to thread irq context.
+This bug is found by static analysis, it may be false positive.
 
-Lastly, some opportunistic replacements of
-"queue_delayed_work(system_wq, ...)", which is just open coded
-schedule_delayed_work(), are included.
+Fix it by adding del_timer_sync invoking to the remove function.
 
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 5f2da1971446 ("cxl/pci: Fix sanitize notifier setup")
+cpu0                cpu1
+                  bttv_probe
+                    ->timer_setup
+                      ->bttv_set_dma
+                        ->mod_timer;
+bttv_remove
+  ->kfree(btv);
+                  ->bttv_irq_timeout
+                    ->USE btv
+
+Fixes: 162e6376ac58 ("media: pci: Convert timers to use timer_setup()")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/memdev.c |  3 +-
- drivers/cxl/cxlmem.h      |  2 --
- drivers/cxl/pci.c         | 60 ++++++++++++++++-----------------------
- 3 files changed, 26 insertions(+), 39 deletions(-)
+ drivers/media/pci/bt8xx/bttv-driver.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
-index 14b547c07f547..2a7a07f6d1652 100644
---- a/drivers/cxl/core/memdev.c
-+++ b/drivers/cxl/core/memdev.c
-@@ -561,8 +561,7 @@ static void cxl_memdev_security_shutdown(struct device *dev)
- 	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
- 	struct cxl_memdev_state *mds = to_cxl_memdev_state(cxlmd->cxlds);
+diff --git a/drivers/media/pci/bt8xx/bttv-driver.c b/drivers/media/pci/bt8xx/bttv-driver.c
+index aa708a0e5eac6..09a193bb87df3 100644
+--- a/drivers/media/pci/bt8xx/bttv-driver.c
++++ b/drivers/media/pci/bt8xx/bttv-driver.c
+@@ -3474,6 +3474,7 @@ static void bttv_remove(struct pci_dev *pci_dev)
  
--	if (mds->security.poll)
--		cancel_delayed_work_sync(&mds->security.poll_dwork);
-+	cancel_delayed_work_sync(&mds->security.poll_dwork);
- }
- 
- static void cxl_memdev_shutdown(struct device *dev)
-diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
-index 706f8a6d1ef43..55f00ad17a772 100644
---- a/drivers/cxl/cxlmem.h
-+++ b/drivers/cxl/cxlmem.h
-@@ -360,7 +360,6 @@ struct cxl_fw_state {
-  *
-  * @state: state of last security operation
-  * @enabled_cmds: All security commands enabled in the CEL
-- * @poll: polling for sanitization is enabled, device has no mbox irq support
-  * @poll_tmo_secs: polling timeout
-  * @poll_dwork: polling work item
-  * @sanitize_node: sanitation sysfs file to notify
-@@ -368,7 +367,6 @@ struct cxl_fw_state {
- struct cxl_security_state {
- 	unsigned long state;
- 	DECLARE_BITMAP(enabled_cmds, CXL_SEC_ENABLED_MAX);
--	bool poll;
- 	int poll_tmo_secs;
- 	struct delayed_work poll_dwork;
- 	struct kernfs_node *sanitize_node;
-diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-index aa1b3dd9e64c4..49d9b2ef5c5c0 100644
---- a/drivers/cxl/pci.c
-+++ b/drivers/cxl/pci.c
-@@ -128,10 +128,10 @@ static irqreturn_t cxl_pci_mbox_irq(int irq, void *id)
- 	reg = readq(cxlds->regs.mbox + CXLDEV_MBOX_BG_CMD_STATUS_OFFSET);
- 	opcode = FIELD_GET(CXLDEV_MBOX_BG_CMD_COMMAND_OPCODE_MASK, reg);
- 	if (opcode == CXL_MBOX_OP_SANITIZE) {
-+		mutex_lock(&mds->mbox_mutex);
- 		if (mds->security.sanitize_node)
--			sysfs_notify_dirent(mds->security.sanitize_node);
--
--		dev_dbg(cxlds->dev, "Sanitization operation ended\n");
-+			mod_delayed_work(system_wq, &mds->security.poll_dwork, 0);
-+		mutex_unlock(&mds->mbox_mutex);
- 	} else {
- 		/* short-circuit the wait in __cxl_pci_mbox_send_cmd() */
- 		rcuwait_wake_up(&mds->mbox_wait);
-@@ -160,8 +160,7 @@ static void cxl_mbox_sanitize_work(struct work_struct *work)
- 		int timeout = mds->security.poll_tmo_secs + 10;
- 
- 		mds->security.poll_tmo_secs = min(15 * 60, timeout);
--		queue_delayed_work(system_wq, &mds->security.poll_dwork,
--				   timeout * HZ);
-+		schedule_delayed_work(&mds->security.poll_dwork, timeout * HZ);
- 	}
- 	mutex_unlock(&mds->mbox_mutex);
- }
-@@ -293,15 +292,11 @@ static int __cxl_pci_mbox_send_cmd(struct cxl_memdev_state *mds,
- 		 * and allow userspace to poll(2) for completion.
- 		 */
- 		if (mbox_cmd->opcode == CXL_MBOX_OP_SANITIZE) {
--			if (mds->security.poll) {
--				/* give first timeout a second */
--				timeout = 1;
--				mds->security.poll_tmo_secs = timeout;
--				queue_delayed_work(system_wq,
--						   &mds->security.poll_dwork,
--						   timeout * HZ);
--			}
--
-+			/* give first timeout a second */
-+			timeout = 1;
-+			mds->security.poll_tmo_secs = timeout;
-+			schedule_delayed_work(&mds->security.poll_dwork,
-+					      timeout * HZ);
- 			dev_dbg(dev, "Sanitization operation started\n");
- 			goto success;
- 		}
-@@ -384,7 +379,9 @@ static int cxl_pci_setup_mailbox(struct cxl_memdev_state *mds)
- 	const int cap = readl(cxlds->regs.mbox + CXLDEV_MBOX_CAPS_OFFSET);
- 	struct device *dev = cxlds->dev;
- 	unsigned long timeout;
-+	int irq, msgnum;
- 	u64 md_status;
-+	u32 ctrl;
- 
- 	timeout = jiffies + mbox_ready_timeout * HZ;
- 	do {
-@@ -432,33 +429,26 @@ static int cxl_pci_setup_mailbox(struct cxl_memdev_state *mds)
- 	dev_dbg(dev, "Mailbox payload sized %zu", mds->payload_size);
- 
- 	rcuwait_init(&mds->mbox_wait);
-+	INIT_DELAYED_WORK(&mds->security.poll_dwork, cxl_mbox_sanitize_work);
- 
--	if (cap & CXLDEV_MBOX_CAP_BG_CMD_IRQ) {
--		u32 ctrl;
--		int irq, msgnum;
--		struct pci_dev *pdev = to_pci_dev(cxlds->dev);
--
--		msgnum = FIELD_GET(CXLDEV_MBOX_CAP_IRQ_MSGNUM_MASK, cap);
--		irq = pci_irq_vector(pdev, msgnum);
--		if (irq < 0)
--			goto mbox_poll;
--
--		if (cxl_request_irq(cxlds, irq, cxl_pci_mbox_irq, NULL))
--			goto mbox_poll;
-+	/* background command interrupts are optional */
-+	if (!(cap & CXLDEV_MBOX_CAP_BG_CMD_IRQ))
-+		return 0;
- 
--		/* enable background command mbox irq support */
--		ctrl = readl(cxlds->regs.mbox + CXLDEV_MBOX_CTRL_OFFSET);
--		ctrl |= CXLDEV_MBOX_CTRL_BG_CMD_IRQ;
--		writel(ctrl, cxlds->regs.mbox + CXLDEV_MBOX_CTRL_OFFSET);
-+	msgnum = FIELD_GET(CXLDEV_MBOX_CAP_IRQ_MSGNUM_MASK, cap);
-+	irq = pci_irq_vector(to_pci_dev(cxlds->dev), msgnum);
-+	if (irq < 0)
-+		return 0;
- 
-+	if (cxl_request_irq(cxlds, irq, NULL, cxl_pci_mbox_irq))
- 		return 0;
--	}
- 
--mbox_poll:
--	mds->security.poll = true;
--	INIT_DELAYED_WORK(&mds->security.poll_dwork, cxl_mbox_sanitize_work);
-+	dev_dbg(cxlds->dev, "Mailbox interrupts enabled\n");
-+	/* enable background command mbox irq support */
-+	ctrl = readl(cxlds->regs.mbox + CXLDEV_MBOX_CTRL_OFFSET);
-+	ctrl |= CXLDEV_MBOX_CTRL_BG_CMD_IRQ;
-+	writel(ctrl, cxlds->regs.mbox + CXLDEV_MBOX_CTRL_OFFSET);
- 
--	dev_dbg(cxlds->dev, "Mailbox interrupts are unsupported");
- 	return 0;
- }
- 
+ 	/* free resources */
+ 	free_irq(btv->c.pci->irq,btv);
++	del_timer_sync(&btv->timeout);
+ 	iounmap(btv->bt848_mmio);
+ 	release_mem_region(pci_resource_start(btv->c.pci,0),
+ 			   pci_resource_len(btv->c.pci,0));
 -- 
 2.42.0
 
