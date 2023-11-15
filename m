@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220E63D96E
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAA73DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3KU+e4o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C67C433C7;
-	Wed, 15 Nov 2023 19:59:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLAk/reA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40471C433CA;
+	Wed, 15 Nov 2023 19:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078352;
-	bh=jYAwLEZB5RJCPYm1rNssFLr7jJ0Qzsq1vH6tGRW6iPg=;
+	s=korg; t=1700078353;
+	bh=p6UImNN3o0sv0NpFpPjnyORToN15vbP/A7ST6iFyTYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a3KU+e4oesIuaasMMZnDthObHvIGatv7vz7TElJPXFrNYYd4RMat01kLfPXxpkKOi
-	 JD3hkeBurpkEh9COh395VbtOWLXShOny2PO8x3dVebeJHMbTeYMF5OQNlq59EcoGcT
-	 aT1yRvAV6v+P7WFpjOXNpVwyK48mDorzoSt59GNU=
+	b=uLAk/reA8FtKzEUen5kt5TLJDea4DGwRNrGQ8nMX5ndPgLoCZ2uNtRrMJUlStKrzK
+	 psIfk9MqkoxeL5i3FlCcsoV/HpTUABa0wG5gEx9y+82npwM9jl97RsA3gcd5Jw+Vat
+	 NaLTHHmzODkgdGMRW2R0klyVVrs3f3hCG3wFD1bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 269/379] usb: chipidea: Fix DMA overwrite for Tegra
-Date: Wed, 15 Nov 2023 14:25:44 -0500
-Message-ID: <20231115192701.049294830@linuxfoundation.org>
+Subject: [PATCH 6.1 246/379] leds: turris-omnia: Drop unnecessary mutex locking
+Date: Wed, 15 Nov 2023 14:25:21 -0500
+Message-ID: <20231115192659.687857179@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,96 +43,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 7ab8716713c931ac79988f2592e1cf8b2e4fec1b ]
+[ Upstream commit 760b6b7925bf09491aafa4727eef74fc6bf738b0 ]
 
-Tegra USB controllers seem to issue DMA in full 32-bit words only and thus
-may overwrite unevenly-sized buffers.  One such occurrence is detected by
-SLUB when receiving a reply to a 1-byte buffer (below).  Fix this by
-allocating a bounce buffer also for buffers with sizes not a multiple of 4.
+Do not lock driver mutex in the global LED panel brightness sysfs
+accessors brightness_show() and brightness_store().
 
-=============================================================================
-BUG kmalloc-64 (Tainted: G    B             ): kmalloc Redzone overwritten
------------------------------------------------------------------------------
+The mutex locking is unnecessary here. The I2C transfers are guarded by
+I2C core locking mechanism, and the LED commands itself do not interfere
+with other commands.
 
-0x8555cd02-0x8555cd03 @offset=3330. First byte 0x0 instead of 0xcc
-Allocated in usb_get_status+0x2b/0xac age=1 cpu=3 pid=41
- __kmem_cache_alloc_node+0x12f/0x1e4
- __kmalloc+0x33/0x8c
- usb_get_status+0x2b/0xac
- hub_probe+0x5e9/0xcec
- usb_probe_interface+0xbf/0x21c
- really_probe+0xa5/0x2c4
- __driver_probe_device+0x75/0x174
- driver_probe_device+0x31/0x94
- __device_attach_driver+0x65/0xc0
- bus_for_each_drv+0x4b/0x74
- __device_attach+0x69/0x120
- bus_probe_device+0x65/0x6c
- device_add+0x48b/0x5f8
- usb_set_configuration+0x37b/0x6b4
- usb_generic_driver_probe+0x37/0x68
- usb_probe_device+0x35/0xb4
-Slab 0xbf622b80 objects=21 used=18 fp=0x8555cdc0 flags=0x800(slab|zone=0)
-Object 0x8555cd00 @offset=3328 fp=0x00000000
-
-Redzone  8555ccc0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555ccd0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555cce0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555ccf0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd00: 01 00 00 00 cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd10: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd20: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd30: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555cd40: cc cc cc cc                                      ....
-Padding  8555cd74: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a              ZZZZZZZZZZZZ
-CPU: 3 PID: 41 Comm: kworker/3:1 Tainted: G    B              6.6.0-rc1mq-00118-g59786f827ea1 #1115
-Hardware name: NVIDIA Tegra SoC (Flattened Device Tree)
-Workqueue: usb_hub_wq hub_event
-[<8010ca28>] (unwind_backtrace) from [<801090a5>] (show_stack+0x11/0x14)
-[<801090a5>] (show_stack) from [<805da2fb>] (dump_stack_lvl+0x4d/0x7c)
-[<805da2fb>] (dump_stack_lvl) from [<8026464f>] (check_bytes_and_report+0xb3/0xe4)
-[<8026464f>] (check_bytes_and_report) from [<802648e1>] (check_object+0x261/0x290)
-[<802648e1>] (check_object) from [<802671b1>] (free_to_partial_list+0x105/0x3f8)
-[<802671b1>] (free_to_partial_list) from [<80268613>] (__kmem_cache_free+0x103/0x128)
-[<80268613>] (__kmem_cache_free) from [<80425a67>] (usb_get_status+0x73/0xac)
-[<80425a67>] (usb_get_status) from [<80421b31>] (hub_probe+0x5e9/0xcec)
-[<80421b31>] (hub_probe) from [<80428bbb>] (usb_probe_interface+0xbf/0x21c)
-[<80428bbb>] (usb_probe_interface) from [<803ee13d>] (really_probe+0xa5/0x2c4)
-[<803ee13d>] (really_probe) from [<803ee3d1>] (__driver_probe_device+0x75/0x174)
-[<803ee3d1>] (__driver_probe_device) from [<803ee501>] (driver_probe_device+0x31/0x94)
-usb 1-1: device descriptor read/8, error -71
-
-Fixes: fc53d5279094 ("usb: chipidea: tegra: Support host mode")
-Signed-off-by: Michał Mirosław <mirq-linux@rere.qmqm.pl>
-Link: https://lore.kernel.org/r/ef8466b834c1726f5404c95c3e192e90460146f8.1695934946.git.mirq-linux@rere.qmqm.pl
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 089381b27abe ("leds: initial support for Turris Omnia LEDs")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230802160748.11208-2-kabel@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Stable-dep-of: 6de283b96b31 ("leds: turris-omnia: Do not use SMBUS calls")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/host.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/leds/leds-turris-omnia.c | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/drivers/usb/chipidea/host.c b/drivers/usb/chipidea/host.c
-index 3b08c5e811707..fae4b2f9b9b21 100644
---- a/drivers/usb/chipidea/host.c
-+++ b/drivers/usb/chipidea/host.c
-@@ -411,12 +411,13 @@ static int ci_hdrc_alloc_dma_aligned_buffer(struct urb *urb, gfp_t mem_flags)
- 	const unsigned int ci_hdrc_usb_dma_align = 32;
- 	size_t kmalloc_size;
+diff --git a/drivers/leds/leds-turris-omnia.c b/drivers/leds/leds-turris-omnia.c
+index c7c9851c894a9..b86ddab33eece 100644
+--- a/drivers/leds/leds-turris-omnia.c
++++ b/drivers/leds/leds-turris-omnia.c
+@@ -156,12 +156,9 @@ static ssize_t brightness_show(struct device *dev, struct device_attribute *a,
+ 			       char *buf)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+-	struct omnia_leds *leds = i2c_get_clientdata(client);
+ 	int ret;
  
--	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0 ||
--	    !((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)))
-+	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0)
-+		return 0;
-+	if (!((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)) && !(urb->transfer_buffer_length & 3))
- 		return 0;
+-	mutex_lock(&leds->lock);
+ 	ret = i2c_smbus_read_byte_data(client, CMD_LED_GET_BRIGHTNESS);
+-	mutex_unlock(&leds->lock);
  
- 	/* Allocate a buffer with enough padding for alignment */
--	kmalloc_size = urb->transfer_buffer_length +
-+	kmalloc_size = ALIGN(urb->transfer_buffer_length, 4) +
- 		       sizeof(struct ci_hdrc_dma_aligned_buffer) +
- 		       ci_hdrc_usb_dma_align - 1;
+ 	if (ret < 0)
+ 		return ret;
+@@ -173,7 +170,6 @@ static ssize_t brightness_store(struct device *dev, struct device_attribute *a,
+ 				const char *buf, size_t count)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+-	struct omnia_leds *leds = i2c_get_clientdata(client);
+ 	unsigned long brightness;
+ 	int ret;
+ 
+@@ -183,15 +179,10 @@ static ssize_t brightness_store(struct device *dev, struct device_attribute *a,
+ 	if (brightness > 100)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&leds->lock);
+ 	ret = i2c_smbus_write_byte_data(client, CMD_LED_SET_BRIGHTNESS,
+ 					(u8)brightness);
+-	mutex_unlock(&leds->lock);
+-
+-	if (ret < 0)
+-		return ret;
+ 
+-	return count;
++	return ret < 0 ? ret : count;
+ }
+ static DEVICE_ATTR_RW(brightness);
  
 -- 
 2.42.0
