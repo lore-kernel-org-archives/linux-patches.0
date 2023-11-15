@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D445A43AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C8A43AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Djbkv9lG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B01C116B6;
-	Wed, 15 Nov 2023 20:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsCoEqks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED076C116B7;
+	Wed, 15 Nov 2023 20:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081289;
-	bh=qKVVKGNvKBYcAkWWcT9sisYjCqfTMcoWqcysSsv/dsw=;
+	s=korg; t=1700081291;
+	bh=JUwRRgW9nw4W8u7KU86ILKkzL7cjs53vKRQEah9IO3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Djbkv9lGqnbOPK7STAPJB1U9EyGM4zk1L+DnDXwxVLWiM3+YZEvMzpHY5Nmxksl8x
-	 uj6uAzhGx3lKlTgovDzq4XwkZx6FwwCMCtDPfjiGIh8EbyhFwYjmP3UUYGFLcNAbSf
-	 pq/4eUolKRC9TtN1Z1IaDQ7e1WQQIKx5lgPCcGik=
+	b=EsCoEqksuTUJB6ZXh0JiIZqamtG9fsh4Fsm3sN5T7xXCOWzJ12m1iyrzb1ijSMj9/
+	 v5vV26L3WoS6GB7RscX6LzqNR2qFH9B3y0MJTrLqcN9ukkOlbIUH89y9kcjqdpBPhs
+	 iWCTHkJCwB6L+XLjeEZpwDWtA1AT5E98UWIad5jA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Lindgren <tony@atomide.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/244] clk: ti: Add ti_dt_clk_name() helper to use clock-output-names
-Date: Wed, 15 Nov 2023 15:34:17 -0500
-Message-ID: <20231115203552.252741561@linuxfoundation.org>
+Subject: [PATCH 5.15 066/244] clk: ti: Update pll and clockdomain clocks to use ti_dt_clk_name()
+Date: Wed, 15 Nov 2023 15:34:18 -0500
+Message-ID: <20231115203552.319209306@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -44,71 +44,184 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 2c1593328d7f02fe49de5ad6b42c36296c9d6922 ]
+[ Upstream commit 9e56a7d4263ca1c51d867e811cf2dd7e61b6469e ]
 
-Let's create the clock alias based on the clock-output-names property if
-available. Also the component clock drivers can use ti_dt_clk_name() in
-the following patches.
+Let's update the TI pll and clockdomain clocks to use ti_dt_clk_name()
+instead of devicetree node name if available.
 
 Signed-off-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20220204071449.16762-7-tony@atomide.com
+Link: https://lore.kernel.org/r/20220204071449.16762-8-tony@atomide.com
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Stable-dep-of: 7af5b9eadd64 ("clk: ti: fix double free in of_ti_divider_clk_setup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ti/clk.c   | 20 +++++++++++++++++++-
- drivers/clk/ti/clock.h |  1 +
- 2 files changed, 20 insertions(+), 1 deletion(-)
+ drivers/clk/ti/apll.c        | 13 +++++++++----
+ drivers/clk/ti/clockdomain.c |  2 +-
+ drivers/clk/ti/dpll.c        |  8 +++++---
+ drivers/clk/ti/fapll.c       | 11 +++++++----
+ 4 files changed, 22 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/clk/ti/clk.c b/drivers/clk/ti/clk.c
-index 29eafab4353ef..b941ce0f3c394 100644
---- a/drivers/clk/ti/clk.c
-+++ b/drivers/clk/ti/clk.c
-@@ -402,6 +402,24 @@ static const struct of_device_id simple_clk_match_table[] __initconst = {
- 	{ }
- };
- 
-+/**
-+ * ti_dt_clk_name - init clock name from first output name or node name
-+ * @np: device node
-+ *
-+ * Use the first clock-output-name for the clock name if found. Fall back
-+ * to legacy naming based on node name.
-+ */
-+const char *ti_dt_clk_name(struct device_node *np)
-+{
+diff --git a/drivers/clk/ti/apll.c b/drivers/clk/ti/apll.c
+index ac5bc8857a514..e4db6b9a55c61 100644
+--- a/drivers/clk/ti/apll.c
++++ b/drivers/clk/ti/apll.c
+@@ -139,6 +139,7 @@ static void __init omap_clk_register_apll(void *user,
+ 	struct clk_hw *hw = user;
+ 	struct clk_hw_omap *clk_hw = to_clk_hw_omap(hw);
+ 	struct dpll_data *ad = clk_hw->dpll_data;
 +	const char *name;
-+
-+	if (!of_property_read_string_index(np, "clock-output-names", 0,
-+					   &name))
-+		return name;
-+
-+	return np->name;
-+}
-+
- /**
-  * ti_clk_add_aliases - setup clock aliases
-  *
-@@ -418,7 +436,7 @@ void __init ti_clk_add_aliases(void)
- 		clkspec.np = np;
- 		clk = of_clk_get_from_provider(&clkspec);
+ 	struct clk *clk;
+ 	const struct clk_init_data *init = clk_hw->hw.init;
  
--		ti_clk_add_alias(NULL, clk, np->name);
-+		ti_clk_add_alias(NULL, clk, ti_dt_clk_name(np));
- 	}
- }
+@@ -166,7 +167,8 @@ static void __init omap_clk_register_apll(void *user,
  
-diff --git a/drivers/clk/ti/clock.h b/drivers/clk/ti/clock.h
-index f1dd62de2bfcb..938f34e290ed2 100644
---- a/drivers/clk/ti/clock.h
-+++ b/drivers/clk/ti/clock.h
-@@ -214,6 +214,7 @@ struct clk *ti_clk_register(struct device *dev, struct clk_hw *hw,
- 			    const char *con);
- struct clk *ti_clk_register_omap_hw(struct device *dev, struct clk_hw *hw,
- 				    const char *con);
-+const char *ti_dt_clk_name(struct device_node *np);
- int ti_clk_add_alias(struct device *dev, struct clk *clk, const char *con);
- void ti_clk_add_aliases(void);
+ 	ad->clk_bypass = __clk_get_hw(clk);
+ 
+-	clk = ti_clk_register_omap_hw(NULL, &clk_hw->hw, node->name);
++	name = ti_dt_clk_name(node);
++	clk = ti_clk_register_omap_hw(NULL, &clk_hw->hw, name);
+ 	if (!IS_ERR(clk)) {
+ 		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+ 		kfree(init->parent_names);
+@@ -198,7 +200,7 @@ static void __init of_dra7_apll_setup(struct device_node *node)
+ 	clk_hw->dpll_data = ad;
+ 	clk_hw->hw.init = init;
+ 
+-	init->name = node->name;
++	init->name = ti_dt_clk_name(node);
+ 	init->ops = &apll_ck_ops;
+ 
+ 	init->num_parents = of_clk_get_parent_count(node);
+@@ -347,6 +349,7 @@ static void __init of_omap2_apll_setup(struct device_node *node)
+ 	struct dpll_data *ad = NULL;
+ 	struct clk_hw_omap *clk_hw = NULL;
+ 	struct clk_init_data *init = NULL;
++	const char *name;
+ 	struct clk *clk;
+ 	const char *parent_name;
+ 	u32 val;
+@@ -362,7 +365,8 @@ static void __init of_omap2_apll_setup(struct device_node *node)
+ 	clk_hw->dpll_data = ad;
+ 	clk_hw->hw.init = init;
+ 	init->ops = &omap2_apll_ops;
+-	init->name = node->name;
++	name = ti_dt_clk_name(node);
++	init->name = name;
+ 	clk_hw->ops = &omap2_apll_hwops;
+ 
+ 	init->num_parents = of_clk_get_parent_count(node);
+@@ -403,7 +407,8 @@ static void __init of_omap2_apll_setup(struct device_node *node)
+ 	if (ret)
+ 		goto cleanup;
+ 
+-	clk = ti_clk_register_omap_hw(NULL, &clk_hw->hw, node->name);
++	name = ti_dt_clk_name(node);
++	clk = ti_clk_register_omap_hw(NULL, &clk_hw->hw, name);
+ 	if (!IS_ERR(clk)) {
+ 		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+ 		kfree(init);
+diff --git a/drivers/clk/ti/clockdomain.c b/drivers/clk/ti/clockdomain.c
+index 74831b2752b3b..24179c907774a 100644
+--- a/drivers/clk/ti/clockdomain.c
++++ b/drivers/clk/ti/clockdomain.c
+@@ -131,7 +131,7 @@ static void __init of_ti_clockdomain_setup(struct device_node *node)
+ {
+ 	struct clk *clk;
+ 	struct clk_hw *clk_hw;
+-	const char *clkdm_name = node->name;
++	const char *clkdm_name = ti_dt_clk_name(node);
+ 	int i;
+ 	unsigned int num_clks;
+ 
+diff --git a/drivers/clk/ti/dpll.c b/drivers/clk/ti/dpll.c
+index e9f9aee936ae8..7c6dc8449b22f 100644
+--- a/drivers/clk/ti/dpll.c
++++ b/drivers/clk/ti/dpll.c
+@@ -164,6 +164,7 @@ static void __init _register_dpll(void *user,
+ 	struct clk_hw *hw = user;
+ 	struct clk_hw_omap *clk_hw = to_clk_hw_omap(hw);
+ 	struct dpll_data *dd = clk_hw->dpll_data;
++	const char *name;
+ 	struct clk *clk;
+ 	const struct clk_init_data *init = hw->init;
+ 
+@@ -193,7 +194,8 @@ static void __init _register_dpll(void *user,
+ 	dd->clk_bypass = __clk_get_hw(clk);
+ 
+ 	/* register the clock */
+-	clk = ti_clk_register_omap_hw(NULL, &clk_hw->hw, node->name);
++	name = ti_dt_clk_name(node);
++	clk = ti_clk_register_omap_hw(NULL, &clk_hw->hw, name);
+ 
+ 	if (!IS_ERR(clk)) {
+ 		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+@@ -227,7 +229,7 @@ static void _register_dpll_x2(struct device_node *node,
+ 	struct clk *clk;
+ 	struct clk_init_data init = { NULL };
+ 	struct clk_hw_omap *clk_hw;
+-	const char *name = node->name;
++	const char *name = ti_dt_clk_name(node);
+ 	const char *parent_name;
+ 
+ 	parent_name = of_clk_get_parent_name(node, 0);
+@@ -304,7 +306,7 @@ static void __init of_ti_dpll_setup(struct device_node *node,
+ 	clk_hw->ops = &clkhwops_omap3_dpll;
+ 	clk_hw->hw.init = init;
+ 
+-	init->name = node->name;
++	init->name = ti_dt_clk_name(node);
+ 	init->ops = ops;
+ 
+ 	init->num_parents = of_clk_get_parent_count(node);
+diff --git a/drivers/clk/ti/fapll.c b/drivers/clk/ti/fapll.c
+index 8024c6d2b9e95..749c6b73abff3 100644
+--- a/drivers/clk/ti/fapll.c
++++ b/drivers/clk/ti/fapll.c
+@@ -19,6 +19,8 @@
+ #include <linux/of_address.h>
+ #include <linux/clk/ti.h>
+ 
++#include "clock.h"
++
+ /* FAPLL Control Register PLL_CTRL */
+ #define FAPLL_MAIN_MULT_N_SHIFT	16
+ #define FAPLL_MAIN_DIV_P_SHIFT	8
+@@ -542,6 +544,7 @@ static void __init ti_fapll_setup(struct device_node *node)
+ 	struct clk_init_data *init = NULL;
+ 	const char *parent_name[2];
+ 	struct clk *pll_clk;
++	const char *name;
+ 	int i;
+ 
+ 	fd = kzalloc(sizeof(*fd), GFP_KERNEL);
+@@ -559,7 +562,8 @@ static void __init ti_fapll_setup(struct device_node *node)
+ 		goto free;
+ 
+ 	init->ops = &ti_fapll_ops;
+-	init->name = node->name;
++	name = ti_dt_clk_name(node);
++	init->name = name;
+ 
+ 	init->num_parents = of_clk_get_parent_count(node);
+ 	if (init->num_parents != 2) {
+@@ -591,7 +595,7 @@ static void __init ti_fapll_setup(struct device_node *node)
+ 	if (fapll_is_ddr_pll(fd->base))
+ 		fd->bypass_bit_inverted = true;
+ 
+-	fd->name = node->name;
++	fd->name = name;
+ 	fd->hw.init = init;
+ 
+ 	/* Register the parent PLL */
+@@ -638,8 +642,7 @@ static void __init ti_fapll_setup(struct device_node *node)
+ 				freq = NULL;
+ 		}
+ 		synth_clk = ti_fapll_synth_setup(fd, freq, div, output_instance,
+-						 output_name, node->name,
+-						 pll_clk);
++						 output_name, name, pll_clk);
+ 		if (IS_ERR(synth_clk))
+ 			continue;
  
 -- 
 2.42.0
