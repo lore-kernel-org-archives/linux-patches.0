@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F3643ACE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7462E64E
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hv7ZIied"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944AFC4E682;
-	Wed, 15 Nov 2023 20:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gd/zhkv6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F4AC4E683;
+	Wed, 15 Nov 2023 20:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081469;
-	bh=ArGcf0pSKS5FAMQmVFDL6Rz0vzAQxi5YyI82Pfch0GU=;
+	s=korg; t=1700081471;
+	bh=hPh1dHgtXXEKg053Yq+XZHx+PlCbHNf3ZLIzsybjJGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hv7ZIiedFNulh2CY1sLQc2lK2DZiyq3Fjfubswxztic7dAYqd62qBSkJtkLmbzqxs
-	 XAlYuo6SBrPy3I7/kGn9Ev6AEL7oxjQWCcNOU43deakdyybI+FvtpHoclt87O1xCRf
-	 9wN8YeMfqGuKLluv23VMIavvbFk7qqvNfCCyEZ74=
+	b=Gd/zhkv6L+RUPpYKzKx0ZsdXEQRACzdDpJNafiYQDndE66lVcMQBhcHP3xzs1ROjb
+	 LXUNRzEE2KH3oduTyiVpSM3gZs9YW2Qnt3lw1GbdmNJAQ8uOUb9+qDE7vXCRJkF5zV
+	 yC6Z3G/TZ13gAakZRAeJApgAVVS2ccjxNY0NbKr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephane Eranian <eranian@google.com>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Michael Prinke <michael.prinke@intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Lijun Pan <lijun.pan@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 173/244] perf evlist: Avoid frequency mode for the dummy event
-Date: Wed, 15 Nov 2023 15:36:05 -0500
-Message-ID: <20231115203558.730848961@linuxfoundation.org>
+Subject: [PATCH 5.15 174/244] dmaengine: idxd: Register dsa_bus_type before registering idxd sub-drivers
+Date: Wed, 15 Nov 2023 15:36:06 -0500
+Message-ID: <20231115203558.804086352@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -46,84 +45,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Fenghua Yu <fenghua.yu@intel.com>
 
-[ Upstream commit f9cdeb58a9cf46c09b56f5f661ea8da24b6458c3 ]
+[ Upstream commit 88928addeec577386e8c83b48b5bc24d28ba97fd ]
 
-Dummy events are created with an attribute where the period and freq
-are zero. evsel__config will then see the uninitialized values and
-initialize them in evsel__default_freq_period. As fequency mode is
-used by default the dummy event would be set to use frequency
-mode. However, this has no effect on the dummy event but does cause
-unnecessary timers/interrupts. Avoid this overhead by setting the
-period to 1 for dummy events.
+idxd sub-drivers belong to bus dsa_bus_type. Thus, dsa_bus_type must be
+registered in dsa bus init before idxd drivers can be registered.
 
-evlist__add_aux_dummy calls evlist__add_dummy then sets freq=0 and
-period=1. This isn't necessary after this change and so the setting is
-removed.
+But the order is wrong when both idxd and idxd_bus are builtin drivers.
+In this case, idxd driver is compiled and linked before idxd_bus driver.
+Since the initcall order is determined by the link order, idxd sub-drivers
+are registered in idxd initcall before dsa_bus_type is registered
+in idxd_bus initcall. idxd initcall fails:
 
->From Stephane:
+[   21.562803] calling  idxd_init_module+0x0/0x110 @ 1
+[   21.570761] Driver 'idxd' was unable to register with bus_type 'dsa' because the bus was not initialized.
+[   21.586475] initcall idxd_init_module+0x0/0x110 returned -22 after 15717 usecs
+[   21.597178] calling  dsa_bus_init+0x0/0x20 @ 1
 
-The dummy event is not counting anything. It is used to collect mmap
-records and avoid a race condition during the synthesize mmap phase of
-perf record. As such, it should not cause any overhead during active
-profiling. Yet, it did. Because of a bug the dummy event was
-programmed as a sampling event in frequency mode. Events in that mode
-incur more kernel overheads because on timer tick, the kernel has to
-look at the number of samples for each event and potentially adjust
-the sampling period to achieve the desired frequency. The dummy event
-was therefore adding a frequency event to task and ctx contexts we may
-otherwise not have any, e.g.,
+To fix the issue, compile and link idxd_bus driver before idxd driver
+to ensure the right registration order.
 
-  perf record -a -e cpu/event=0x3c,period=10000000/.
-
-On each timer tick the perf_adjust_freq_unthr_context() is invoked and
-if ctx->nr_freq is non-zero, then the kernel will loop over ALL the
-events of the context looking for frequency mode ones. In doing, so it
-locks the context, and enable/disable the PMU of each hw event. If all
-the events of the context are in period mode, the kernel will have to
-traverse the list for nothing incurring overhead. The overhead is
-multiplied by a very large factor when this happens in a guest kernel.
-There is no need for the dummy event to be in frequency mode, it does
-not count anything and therefore should not cause extra overhead for
-no reason.
-
-Fixes: 5bae0250237f ("perf evlist: Introduce perf_evlist__new_dummy constructor")
-Reported-by: Stephane Eranian <eranian@google.com>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20230916035640.1074422-1-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: d9e5481fca74 ("dmaengine: dsa: move dsa_bus_type out of idxd driver to standalone")
+Reported-by: Michael Prinke <michael.prinke@intel.com>
+Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Lijun Pan <lijun.pan@intel.com>
+Tested-by: Lijun Pan <lijun.pan@intel.com>
+Link: https://lore.kernel.org/r/20230924162232.1409454-1-fenghua.yu@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evlist.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/dma/idxd/Makefile | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/evlist.c b/tools/perf/util/evlist.c
-index 63ef40543a9fe..9d0f2feb25671 100644
---- a/tools/perf/util/evlist.c
-+++ b/tools/perf/util/evlist.c
-@@ -248,6 +248,9 @@ int evlist__add_dummy(struct evlist *evlist)
- 		.type	= PERF_TYPE_SOFTWARE,
- 		.config = PERF_COUNT_SW_DUMMY,
- 		.size	= sizeof(attr), /* to capture ABI version */
-+		/* Avoid frequency mode for dummy events to avoid associated timers. */
-+		.freq = 0,
-+		.sample_period = 1,
- 	};
- 	struct evsel *evsel = evsel__new_idx(&attr, evlist->core.nr_entries);
+diff --git a/drivers/dma/idxd/Makefile b/drivers/dma/idxd/Makefile
+index a1e9f2b3a37cc..817ffa95a9b11 100644
+--- a/drivers/dma/idxd/Makefile
++++ b/drivers/dma/idxd/Makefile
+@@ -1,12 +1,12 @@
+ ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=IDXD
  
-@@ -268,8 +271,6 @@ struct evsel *evlist__add_aux_dummy(struct evlist *evlist, bool system_wide)
- 	evsel->core.attr.exclude_kernel = 1;
- 	evsel->core.attr.exclude_guest = 1;
- 	evsel->core.attr.exclude_hv = 1;
--	evsel->core.attr.freq = 0;
--	evsel->core.attr.sample_period = 1;
- 	evsel->core.system_wide = system_wide;
- 	evsel->no_aux_samples = true;
- 	evsel->name = strdup("dummy:u");
++obj-$(CONFIG_INTEL_IDXD_BUS) += idxd_bus.o
++idxd_bus-y := bus.o
++
+ obj-$(CONFIG_INTEL_IDXD) += idxd.o
+ idxd-y := init.o irq.o device.o sysfs.o submit.o dma.o cdev.o
+ 
+ idxd-$(CONFIG_INTEL_IDXD_PERFMON) += perfmon.o
+ 
+-obj-$(CONFIG_INTEL_IDXD_BUS) += idxd_bus.o
+-idxd_bus-y := bus.o
+-
+ obj-$(CONFIG_INTEL_IDXD_COMPAT) += idxd_compat.o
+ idxd_compat-y := compat.o
 -- 
 2.42.0
 
