@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907913C465
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F413C465
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jypDBioB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430C6C433C7;
-	Wed, 15 Nov 2023 19:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvroT4+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC520C433C8;
+	Wed, 15 Nov 2023 19:39:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077192;
-	bh=GxqIKFNhzguNUvq3JJO8xOw3qDHxqCZpGL6hT63M4rw=;
+	s=korg; t=1700077193;
+	bh=Dlr5PzhwHGJNfQIAFZE35V2ay0pKgsaZTSK1md8XApw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jypDBioBfUy1lxS3Jwe5zCUD9nxWQ9cmfvoZvKWvuMl2qOMy/0XRNd6E5jx5H2Bpe
-	 JVogkSto3qUIxFtkevk14HTh4KqxqcVbSXXkfa+UQsCteLyEJe6TT8ljr5+Mkio+ro
-	 nmu7TlExCZNi0BnQ/WCns/1WhNlAxwFcSMd8o9tw=
+	b=UvroT4+rowoaeKrni1tZxGI/NK2mfeKKIOLOaNz74uBF73xKBLMXOv99m1OBONDAe
+	 4GddWwYnm2dExjTgxYUvc7MpePxhpUpBdO+xws3PWWocJWUB4XY1VRCV6bPkRxQMla
+	 lFW2nEYgtldEiVOIAn4rp0xLunG1k8pxujJjkWzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	David Wragg <dwragg@cloudflare.com>,
+	Yan Zhai <yan@cloudflare.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 550/550] btrfs: make found_logical_ret parameter mandatory for function queue_scrub_stripe()
-Date: Wed, 15 Nov 2023 14:18:54 -0500
-Message-ID: <20231115191639.051187961@linuxfoundation.org>
+Subject: [PATCH 6.6 154/603] ipv6: avoid atomic fragment on GSO packets
+Date: Wed, 15 Nov 2023 14:11:39 -0500
+Message-ID: <20231115191623.842982124@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,108 +37,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Yan Zhai <yan@cloudflare.com>
 
-[ Upstream commit 47e2b06b7b5cb356a987ba3429550c3a89ea89d6 ]
+[ Upstream commit 03d6c848bfb406e9ef6d9846d759e97beaeea113 ]
 
-[BUG]
-There is a compilation warning reported on commit ae76d8e3e135 ("btrfs:
-scrub: fix grouping of read IO"), where gcc (14.0.0 20231022 experimental)
-is reporting the following uninitialized variable:
+When the ipv6 stack output a GSO packet, if its gso_size is larger than
+dst MTU, then all segments would be fragmented. However, it is possible
+for a GSO packet to have a trailing segment with smaller actual size
+than both gso_size as well as the MTU, which leads to an "atomic
+fragment". Atomic fragments are considered harmful in RFC-8021. An
+Existing report from APNIC also shows that atomic fragments are more
+likely to be dropped even it is equivalent to a no-op [1].
 
-  fs/btrfs/scrub.c: In function ‘scrub_simple_mirror.isra’:
-  fs/btrfs/scrub.c:2075:29: error: ‘found_logical’ may be used uninitialized [-Werror=maybe-uninitialized[https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmaybe-uninitialized]]
-   2075 |                 cur_logical = found_logical + BTRFS_STRIPE_LEN;
-  fs/btrfs/scrub.c:2040:21: note: ‘found_logical’ was declared here
-   2040 |                 u64 found_logical;
-        |                     ^~~~~~~~~~~~~
+Add an extra check in the GSO slow output path. For each segment from
+the original over-sized packet, if it fits with the path MTU, then avoid
+generating an atomic fragment.
 
-[CAUSE]
-This is a false alert, as @found_logical is passed as parameter
-@found_logical_ret of function queue_scrub_stripe().
-
-As long as queue_scrub_stripe() returned 0, we would update
-@found_logical_ret.  And if queue_scrub_stripe() returned >0 or <0, the
-caller would not utilized @found_logical, thus there should be nothing
-wrong.
-
-Although the triggering gcc is still experimental, it looks like the
-extra check on "if (found_logical_ret)" can sometimes confuse the
-compiler.
-
-Meanwhile the only caller of queue_scrub_stripe() is always passing a
-valid pointer, there is no need for such check at all.
-
-[FIX]
-Although the report itself is a false alert, we can still make it more
-explicit by:
-
-- Replace the check for @found_logical_ret with ASSERT()
-
-- Initialize @found_logical to U64_MAX
-
-- Add one extra ASSERT() to make sure @found_logical got updated
-
-Link: https://lore.kernel.org/linux-btrfs/87fs1x1p93.fsf@gentoo.org/
-Fixes: ae76d8e3e135 ("btrfs: scrub: fix grouping of read IO")
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://www.potaroo.net/presentations/2022-03-01-ipv6-frag.pdf [1]
+Fixes: b210de4f8c97 ("net: ipv6: Validate GSO SKB before finish IPv6 processing")
+Reported-by: David Wragg <dwragg@cloudflare.com>
+Signed-off-by: Yan Zhai <yan@cloudflare.com>
+Link: https://lore.kernel.org/r/90912e3503a242dca0bc36958b11ed03a2696e5e.1698156966.git.yan@cloudflare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/ipv6/ip6_output.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index cfbd6b1c4b7f1..ab8e0c12f0fe4 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -1803,6 +1803,9 @@ static int queue_scrub_stripe(struct scrub_ctx *sctx, struct btrfs_block_group *
- 	 */
- 	ASSERT(sctx->cur_stripe < SCRUB_TOTAL_STRIPES);
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index 54fc4c711f2c5..1121082901b99 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -162,7 +162,13 @@ ip6_finish_output_gso_slowpath_drop(struct net *net, struct sock *sk,
+ 		int err;
  
-+	/* @found_logical_ret must be specified. */
-+	ASSERT(found_logical_ret);
-+
- 	stripe = &sctx->stripes[sctx->cur_stripe];
- 	scrub_reset_stripe(stripe);
- 	ret = scrub_find_fill_first_stripe(bg, &sctx->extent_path,
-@@ -1811,8 +1814,7 @@ static int queue_scrub_stripe(struct scrub_ctx *sctx, struct btrfs_block_group *
- 	/* Either >0 as no more extents or <0 for error. */
- 	if (ret)
- 		return ret;
--	if (found_logical_ret)
--		*found_logical_ret = stripe->logical;
-+	*found_logical_ret = stripe->logical;
- 	sctx->cur_stripe++;
- 
- 	/* We filled one group, submit it. */
-@@ -2037,7 +2039,7 @@ static int scrub_simple_mirror(struct scrub_ctx *sctx,
- 	path.skip_locking = 1;
- 	/* Go through each extent items inside the logical range */
- 	while (cur_logical < logical_end) {
--		u64 found_logical;
-+		u64 found_logical = U64_MAX;
- 		u64 cur_physical = physical + cur_logical - logical_start;
- 
- 		/* Canceled? */
-@@ -2072,6 +2074,8 @@ static int scrub_simple_mirror(struct scrub_ctx *sctx,
- 		if (ret < 0)
- 			break;
- 
-+		/* queue_scrub_stripe() returned 0, @found_logical must be updated. */
-+		ASSERT(found_logical != U64_MAX);
- 		cur_logical = found_logical + BTRFS_STRIPE_LEN;
- 
- 		/* Don't hold CPU for too long time */
+ 		skb_mark_not_on_list(segs);
+-		err = ip6_fragment(net, sk, segs, ip6_finish_output2);
++		/* Last GSO segment can be smaller than gso_size (and MTU).
++		 * Adding a fragment header would produce an "atomic fragment",
++		 * which is considered harmful (RFC-8021). Avoid that.
++		 */
++		err = segs->len > mtu ?
++			ip6_fragment(net, sk, segs, ip6_finish_output2) :
++			ip6_finish_output2(net, sk, segs);
+ 		if (err && ret == 0)
+ 			ret = err;
+ 	}
 -- 
 2.42.0
 
