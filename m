@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702773C478
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167523C478
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eF1XgEUE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF94C433C7;
-	Wed, 15 Nov 2023 19:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUBd8tyO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FC6C433C7;
+	Wed, 15 Nov 2023 19:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078273;
-	bh=MPlxGtl4LPPZO0IJYbYUaPe4WtmifgRsd3yEZKCTGVA=;
+	s=korg; t=1700078274;
+	bh=zAb0ONfdJFaHm9Rmi7K575ZXJYHMdE/qoqAmrxuPqwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eF1XgEUESsYlfwcVb4CZqfm5tGSu+xkpVFQ7Cg04pzGbWZWjQxxZf45W4sTU28jcV
-	 5ACX6RIyF7+SaX80jiwWMYJMjJxEh2GL3mhEehvWeUNNqMfH3g9vcQrRhIt4AxmMtv
-	 LOTWWeR52dofVkeIWVgwwF5YvA2xnekQrydJ+zZ8=
+	b=kUBd8tyOcIABhe97iXeF0F0pQw1mssWmohcJip38KvDj4nuD5MOsYwRo0IldF+VMD
+	 2IbIPU6gim4QcXG5hEnFmgVPhOcdROmOz0d92BAkG49OcEg/VmltYFsN8IGglhwG7y
+	 ZWGP96yQTiU4tlKeMaHK8gExW7snu3NafbCvD9UI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Wojciech Ziemba <wojciech.ziemba@intel.com>,
 	Adam Guerin <adam.guerin@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 195/379] crypto: qat - ignore subsequent state up commands
-Date: Wed, 15 Nov 2023 14:24:30 -0500
-Message-ID: <20231115192656.646270666@linuxfoundation.org>
+Subject: [PATCH 6.1 196/379] crypto: qat - relocate bufferlist logic
+Date: Wed, 15 Nov 2023 14:24:31 -0500
+Message-ID: <20231115192656.704530361@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -45,38 +46,468 @@ Content-Transfer-Encoding: 8bit
 
 From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit 9c20cb8b1847dedddec3d5163079290542bf00bf ]
+[ Upstream commit e9612987e437b7ada686f472c7596686fabecb2b ]
 
-If the device is already in the up state, a subsequent write of `up` to
-the sysfs attribute /sys/bus/pci/devices/<BDF>/qat/state brings the
-device down.
-Fix this behaviour by ignoring subsequent `up` commands if the device is
-already in the up state.
+Move the logic that maps, unmaps and converts scatterlists into QAT
+bufferlists from qat_algs.c to a new module, qat_bl.
+This is to allow reuse of the logic by the data compression service.
 
-Fixes: 1bdc85550a2b ("crypto: qat - fix concurrency issue when device state changes")
+This commit does not implement any functional change.
+
 Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Wojciech Ziemba <wojciech.ziemba@intel.com>
 Reviewed-by: Adam Guerin <adam.guerin@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 9b2f33a1bfcd ("crypto: qat - fix unregistration of crypto algorithms")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qat/qat_common/adf_sysfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/qat/qat_common/Makefile   |   3 +-
+ drivers/crypto/qat/qat_common/qat_algs.c | 184 +--------------------
+ drivers/crypto/qat/qat_common/qat_bl.c   | 194 +++++++++++++++++++++++
+ drivers/crypto/qat/qat_common/qat_bl.h   |  17 ++
+ 4 files changed, 214 insertions(+), 184 deletions(-)
+ create mode 100644 drivers/crypto/qat/qat_common/qat_bl.c
+ create mode 100644 drivers/crypto/qat/qat_common/qat_bl.h
 
-diff --git a/drivers/crypto/qat/qat_common/adf_sysfs.c b/drivers/crypto/qat/qat_common/adf_sysfs.c
-index 3eb6611ab1b11..81b2ecfcc8060 100644
---- a/drivers/crypto/qat/qat_common/adf_sysfs.c
-+++ b/drivers/crypto/qat/qat_common/adf_sysfs.c
-@@ -61,7 +61,9 @@ static ssize_t state_store(struct device *dev, struct device_attribute *attr,
- 		dev_info(dev, "Starting device qat_dev%d\n", accel_id);
+diff --git a/drivers/crypto/qat/qat_common/Makefile b/drivers/crypto/qat/qat_common/Makefile
+index 80919cfcc29da..b0587d03eac29 100644
+--- a/drivers/crypto/qat/qat_common/Makefile
++++ b/drivers/crypto/qat/qat_common/Makefile
+@@ -19,7 +19,8 @@ intel_qat-objs := adf_cfg.o \
+ 	qat_asym_algs.o \
+ 	qat_algs_send.o \
+ 	qat_uclo.o \
+-	qat_hal.o
++	qat_hal.o \
++	qat_bl.o
  
- 		ret = adf_dev_up(accel_dev, true);
--		if (ret < 0) {
-+		if (ret == -EALREADY) {
-+			break;
-+		} else if (ret) {
- 			dev_err(dev, "Failed to start device qat_dev%d\n",
- 				accel_id);
- 			adf_dev_down(accel_dev, true);
+ intel_qat-$(CONFIG_DEBUG_FS) += adf_transport_debug.o
+ intel_qat-$(CONFIG_PCI_IOV) += adf_sriov.o adf_vf_isr.o adf_pfvf_utils.o \
+diff --git a/drivers/crypto/qat/qat_common/qat_algs.c b/drivers/crypto/qat/qat_common/qat_algs.c
+index f56ee4cc5ae8b..d4e4bdb25c16e 100644
+--- a/drivers/crypto/qat/qat_common/qat_algs.c
++++ b/drivers/crypto/qat/qat_common/qat_algs.c
+@@ -23,6 +23,7 @@
+ #include "icp_qat_hw.h"
+ #include "icp_qat_fw.h"
+ #include "icp_qat_fw_la.h"
++#include "qat_bl.h"
+ 
+ #define QAT_AES_HW_CONFIG_ENC(alg, mode) \
+ 	ICP_QAT_HW_CIPHER_CONFIG_BUILD(mode, alg, \
+@@ -663,189 +664,6 @@ static int qat_alg_aead_setkey(struct crypto_aead *tfm, const u8 *key,
+ 		return qat_alg_aead_newkey(tfm, key, keylen);
+ }
+ 
+-static void qat_alg_free_bufl(struct qat_crypto_instance *inst,
+-			      struct qat_crypto_request *qat_req)
+-{
+-	struct device *dev = &GET_DEV(inst->accel_dev);
+-	struct qat_alg_buf_list *bl = qat_req->buf.bl;
+-	struct qat_alg_buf_list *blout = qat_req->buf.blout;
+-	dma_addr_t blp = qat_req->buf.blp;
+-	dma_addr_t blpout = qat_req->buf.bloutp;
+-	size_t sz = qat_req->buf.sz;
+-	size_t sz_out = qat_req->buf.sz_out;
+-	int bl_dma_dir;
+-	int i;
+-
+-	bl_dma_dir = blp != blpout ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
+-
+-	for (i = 0; i < bl->num_bufs; i++)
+-		dma_unmap_single(dev, bl->bufers[i].addr,
+-				 bl->bufers[i].len, bl_dma_dir);
+-
+-	dma_unmap_single(dev, blp, sz, DMA_TO_DEVICE);
+-
+-	if (!qat_req->buf.sgl_src_valid)
+-		kfree(bl);
+-
+-	if (blp != blpout) {
+-		/* If out of place operation dma unmap only data */
+-		int bufless = blout->num_bufs - blout->num_mapped_bufs;
+-
+-		for (i = bufless; i < blout->num_bufs; i++) {
+-			dma_unmap_single(dev, blout->bufers[i].addr,
+-					 blout->bufers[i].len,
+-					 DMA_FROM_DEVICE);
+-		}
+-		dma_unmap_single(dev, blpout, sz_out, DMA_TO_DEVICE);
+-
+-		if (!qat_req->buf.sgl_dst_valid)
+-			kfree(blout);
+-	}
+-}
+-
+-static int qat_alg_sgl_to_bufl(struct qat_crypto_instance *inst,
+-			       struct scatterlist *sgl,
+-			       struct scatterlist *sglout,
+-			       struct qat_crypto_request *qat_req,
+-			       gfp_t flags)
+-{
+-	struct device *dev = &GET_DEV(inst->accel_dev);
+-	int i, sg_nctr = 0;
+-	int n = sg_nents(sgl);
+-	struct qat_alg_buf_list *bufl;
+-	struct qat_alg_buf_list *buflout = NULL;
+-	dma_addr_t blp = DMA_MAPPING_ERROR;
+-	dma_addr_t bloutp = DMA_MAPPING_ERROR;
+-	struct scatterlist *sg;
+-	size_t sz_out, sz = struct_size(bufl, bufers, n);
+-	int node = dev_to_node(&GET_DEV(inst->accel_dev));
+-	int bufl_dma_dir;
+-
+-	if (unlikely(!n))
+-		return -EINVAL;
+-
+-	qat_req->buf.sgl_src_valid = false;
+-	qat_req->buf.sgl_dst_valid = false;
+-
+-	if (n > QAT_MAX_BUFF_DESC) {
+-		bufl = kzalloc_node(sz, flags, node);
+-		if (unlikely(!bufl))
+-			return -ENOMEM;
+-	} else {
+-		bufl = &qat_req->buf.sgl_src.sgl_hdr;
+-		memset(bufl, 0, sizeof(struct qat_alg_buf_list));
+-		qat_req->buf.sgl_src_valid = true;
+-	}
+-
+-	bufl_dma_dir = sgl != sglout ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
+-
+-	for_each_sg(sgl, sg, n, i)
+-		bufl->bufers[i].addr = DMA_MAPPING_ERROR;
+-
+-	for_each_sg(sgl, sg, n, i) {
+-		int y = sg_nctr;
+-
+-		if (!sg->length)
+-			continue;
+-
+-		bufl->bufers[y].addr = dma_map_single(dev, sg_virt(sg),
+-						      sg->length,
+-						      bufl_dma_dir);
+-		bufl->bufers[y].len = sg->length;
+-		if (unlikely(dma_mapping_error(dev, bufl->bufers[y].addr)))
+-			goto err_in;
+-		sg_nctr++;
+-	}
+-	bufl->num_bufs = sg_nctr;
+-	blp = dma_map_single(dev, bufl, sz, DMA_TO_DEVICE);
+-	if (unlikely(dma_mapping_error(dev, blp)))
+-		goto err_in;
+-	qat_req->buf.bl = bufl;
+-	qat_req->buf.blp = blp;
+-	qat_req->buf.sz = sz;
+-	/* Handle out of place operation */
+-	if (sgl != sglout) {
+-		struct qat_alg_buf *bufers;
+-
+-		n = sg_nents(sglout);
+-		sz_out = struct_size(buflout, bufers, n);
+-		sg_nctr = 0;
+-
+-		if (n > QAT_MAX_BUFF_DESC) {
+-			buflout = kzalloc_node(sz_out, flags, node);
+-			if (unlikely(!buflout))
+-				goto err_in;
+-		} else {
+-			buflout = &qat_req->buf.sgl_dst.sgl_hdr;
+-			memset(buflout, 0, sizeof(struct qat_alg_buf_list));
+-			qat_req->buf.sgl_dst_valid = true;
+-		}
+-
+-		bufers = buflout->bufers;
+-		for_each_sg(sglout, sg, n, i)
+-			bufers[i].addr = DMA_MAPPING_ERROR;
+-
+-		for_each_sg(sglout, sg, n, i) {
+-			int y = sg_nctr;
+-
+-			if (!sg->length)
+-				continue;
+-
+-			bufers[y].addr = dma_map_single(dev, sg_virt(sg),
+-							sg->length,
+-							DMA_FROM_DEVICE);
+-			if (unlikely(dma_mapping_error(dev, bufers[y].addr)))
+-				goto err_out;
+-			bufers[y].len = sg->length;
+-			sg_nctr++;
+-		}
+-		buflout->num_bufs = sg_nctr;
+-		buflout->num_mapped_bufs = sg_nctr;
+-		bloutp = dma_map_single(dev, buflout, sz_out, DMA_TO_DEVICE);
+-		if (unlikely(dma_mapping_error(dev, bloutp)))
+-			goto err_out;
+-		qat_req->buf.blout = buflout;
+-		qat_req->buf.bloutp = bloutp;
+-		qat_req->buf.sz_out = sz_out;
+-	} else {
+-		/* Otherwise set the src and dst to the same address */
+-		qat_req->buf.bloutp = qat_req->buf.blp;
+-		qat_req->buf.sz_out = 0;
+-	}
+-	return 0;
+-
+-err_out:
+-	if (!dma_mapping_error(dev, bloutp))
+-		dma_unmap_single(dev, bloutp, sz_out, DMA_TO_DEVICE);
+-
+-	n = sg_nents(sglout);
+-	for (i = 0; i < n; i++)
+-		if (!dma_mapping_error(dev, buflout->bufers[i].addr))
+-			dma_unmap_single(dev, buflout->bufers[i].addr,
+-					 buflout->bufers[i].len,
+-					 DMA_FROM_DEVICE);
+-
+-	if (!qat_req->buf.sgl_dst_valid)
+-		kfree(buflout);
+-
+-err_in:
+-	if (!dma_mapping_error(dev, blp))
+-		dma_unmap_single(dev, blp, sz, DMA_TO_DEVICE);
+-
+-	n = sg_nents(sgl);
+-	for (i = 0; i < n; i++)
+-		if (!dma_mapping_error(dev, bufl->bufers[i].addr))
+-			dma_unmap_single(dev, bufl->bufers[i].addr,
+-					 bufl->bufers[i].len,
+-					 bufl_dma_dir);
+-
+-	if (!qat_req->buf.sgl_src_valid)
+-		kfree(bufl);
+-
+-	dev_err(dev, "Failed to map buf for dma\n");
+-	return -ENOMEM;
+-}
+-
+ static void qat_aead_alg_callback(struct icp_qat_fw_la_resp *qat_resp,
+ 				  struct qat_crypto_request *qat_req)
+ {
+diff --git a/drivers/crypto/qat/qat_common/qat_bl.c b/drivers/crypto/qat/qat_common/qat_bl.c
+new file mode 100644
+index 0000000000000..6d0a39f8ce109
+--- /dev/null
++++ b/drivers/crypto/qat/qat_common/qat_bl.c
+@@ -0,0 +1,194 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* Copyright(c) 2014 - 2022 Intel Corporation */
++#include <linux/device.h>
++#include <linux/dma-mapping.h>
++#include <linux/pci.h>
++#include <linux/scatterlist.h>
++#include <linux/slab.h>
++#include <linux/types.h>
++#include "adf_accel_devices.h"
++#include "qat_bl.h"
++#include "qat_crypto.h"
++
++void qat_alg_free_bufl(struct qat_crypto_instance *inst,
++		       struct qat_crypto_request *qat_req)
++{
++	struct device *dev = &GET_DEV(inst->accel_dev);
++	struct qat_alg_buf_list *bl = qat_req->buf.bl;
++	struct qat_alg_buf_list *blout = qat_req->buf.blout;
++	dma_addr_t blp = qat_req->buf.blp;
++	dma_addr_t blpout = qat_req->buf.bloutp;
++	size_t sz = qat_req->buf.sz;
++	size_t sz_out = qat_req->buf.sz_out;
++	int bl_dma_dir;
++	int i;
++
++	bl_dma_dir = blp != blpout ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
++
++	for (i = 0; i < bl->num_bufs; i++)
++		dma_unmap_single(dev, bl->bufers[i].addr,
++				 bl->bufers[i].len, bl_dma_dir);
++
++	dma_unmap_single(dev, blp, sz, DMA_TO_DEVICE);
++
++	if (!qat_req->buf.sgl_src_valid)
++		kfree(bl);
++
++	if (blp != blpout) {
++		/* If out of place operation dma unmap only data */
++		int bufless = blout->num_bufs - blout->num_mapped_bufs;
++
++		for (i = bufless; i < blout->num_bufs; i++) {
++			dma_unmap_single(dev, blout->bufers[i].addr,
++					 blout->bufers[i].len,
++					 DMA_FROM_DEVICE);
++		}
++		dma_unmap_single(dev, blpout, sz_out, DMA_TO_DEVICE);
++
++		if (!qat_req->buf.sgl_dst_valid)
++			kfree(blout);
++	}
++}
++
++int qat_alg_sgl_to_bufl(struct qat_crypto_instance *inst,
++			struct scatterlist *sgl,
++			struct scatterlist *sglout,
++			struct qat_crypto_request *qat_req,
++			gfp_t flags)
++{
++	struct device *dev = &GET_DEV(inst->accel_dev);
++	int i, sg_nctr = 0;
++	int n = sg_nents(sgl);
++	struct qat_alg_buf_list *bufl;
++	struct qat_alg_buf_list *buflout = NULL;
++	dma_addr_t blp = DMA_MAPPING_ERROR;
++	dma_addr_t bloutp = DMA_MAPPING_ERROR;
++	struct scatterlist *sg;
++	size_t sz_out, sz = struct_size(bufl, bufers, n);
++	int node = dev_to_node(&GET_DEV(inst->accel_dev));
++	int bufl_dma_dir;
++
++	if (unlikely(!n))
++		return -EINVAL;
++
++	qat_req->buf.sgl_src_valid = false;
++	qat_req->buf.sgl_dst_valid = false;
++
++	if (n > QAT_MAX_BUFF_DESC) {
++		bufl = kzalloc_node(sz, flags, node);
++		if (unlikely(!bufl))
++			return -ENOMEM;
++	} else {
++		bufl = &qat_req->buf.sgl_src.sgl_hdr;
++		memset(bufl, 0, sizeof(struct qat_alg_buf_list));
++		qat_req->buf.sgl_src_valid = true;
++	}
++
++	bufl_dma_dir = sgl != sglout ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
++
++	for_each_sg(sgl, sg, n, i)
++		bufl->bufers[i].addr = DMA_MAPPING_ERROR;
++
++	for_each_sg(sgl, sg, n, i) {
++		int y = sg_nctr;
++
++		if (!sg->length)
++			continue;
++
++		bufl->bufers[y].addr = dma_map_single(dev, sg_virt(sg),
++						      sg->length,
++						      bufl_dma_dir);
++		bufl->bufers[y].len = sg->length;
++		if (unlikely(dma_mapping_error(dev, bufl->bufers[y].addr)))
++			goto err_in;
++		sg_nctr++;
++	}
++	bufl->num_bufs = sg_nctr;
++	blp = dma_map_single(dev, bufl, sz, DMA_TO_DEVICE);
++	if (unlikely(dma_mapping_error(dev, blp)))
++		goto err_in;
++	qat_req->buf.bl = bufl;
++	qat_req->buf.blp = blp;
++	qat_req->buf.sz = sz;
++	/* Handle out of place operation */
++	if (sgl != sglout) {
++		struct qat_alg_buf *bufers;
++
++		n = sg_nents(sglout);
++		sz_out = struct_size(buflout, bufers, n);
++		sg_nctr = 0;
++
++		if (n > QAT_MAX_BUFF_DESC) {
++			buflout = kzalloc_node(sz_out, flags, node);
++			if (unlikely(!buflout))
++				goto err_in;
++		} else {
++			buflout = &qat_req->buf.sgl_dst.sgl_hdr;
++			memset(buflout, 0, sizeof(struct qat_alg_buf_list));
++			qat_req->buf.sgl_dst_valid = true;
++		}
++
++		bufers = buflout->bufers;
++		for_each_sg(sglout, sg, n, i)
++			bufers[i].addr = DMA_MAPPING_ERROR;
++
++		for_each_sg(sglout, sg, n, i) {
++			int y = sg_nctr;
++
++			if (!sg->length)
++				continue;
++
++			bufers[y].addr = dma_map_single(dev, sg_virt(sg),
++							sg->length,
++							DMA_FROM_DEVICE);
++			if (unlikely(dma_mapping_error(dev, bufers[y].addr)))
++				goto err_out;
++			bufers[y].len = sg->length;
++			sg_nctr++;
++		}
++		buflout->num_bufs = sg_nctr;
++		buflout->num_mapped_bufs = sg_nctr;
++		bloutp = dma_map_single(dev, buflout, sz_out, DMA_TO_DEVICE);
++		if (unlikely(dma_mapping_error(dev, bloutp)))
++			goto err_out;
++		qat_req->buf.blout = buflout;
++		qat_req->buf.bloutp = bloutp;
++		qat_req->buf.sz_out = sz_out;
++	} else {
++		/* Otherwise set the src and dst to the same address */
++		qat_req->buf.bloutp = qat_req->buf.blp;
++		qat_req->buf.sz_out = 0;
++	}
++	return 0;
++
++err_out:
++	if (!dma_mapping_error(dev, bloutp))
++		dma_unmap_single(dev, bloutp, sz_out, DMA_TO_DEVICE);
++
++	n = sg_nents(sglout);
++	for (i = 0; i < n; i++)
++		if (!dma_mapping_error(dev, buflout->bufers[i].addr))
++			dma_unmap_single(dev, buflout->bufers[i].addr,
++					 buflout->bufers[i].len,
++					 DMA_FROM_DEVICE);
++
++	if (!qat_req->buf.sgl_dst_valid)
++		kfree(buflout);
++
++err_in:
++	if (!dma_mapping_error(dev, blp))
++		dma_unmap_single(dev, blp, sz, DMA_TO_DEVICE);
++
++	n = sg_nents(sgl);
++	for (i = 0; i < n; i++)
++		if (!dma_mapping_error(dev, bufl->bufers[i].addr))
++			dma_unmap_single(dev, bufl->bufers[i].addr,
++					 bufl->bufers[i].len,
++					 bufl_dma_dir);
++
++	if (!qat_req->buf.sgl_src_valid)
++		kfree(bufl);
++
++	dev_err(dev, "Failed to map buf for dma\n");
++	return -ENOMEM;
++}
+diff --git a/drivers/crypto/qat/qat_common/qat_bl.h b/drivers/crypto/qat/qat_common/qat_bl.h
+new file mode 100644
+index 0000000000000..7a916f1ec645f
+--- /dev/null
++++ b/drivers/crypto/qat/qat_common/qat_bl.h
+@@ -0,0 +1,17 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/* Copyright(c) 2014 - 2022 Intel Corporation */
++#ifndef QAT_BL_H
++#define QAT_BL_H
++#include <linux/scatterlist.h>
++#include <linux/types.h>
++#include "qat_crypto.h"
++
++void qat_alg_free_bufl(struct qat_crypto_instance *inst,
++		       struct qat_crypto_request *qat_req);
++int qat_alg_sgl_to_bufl(struct qat_crypto_instance *inst,
++			struct scatterlist *sgl,
++			struct scatterlist *sglout,
++			struct qat_crypto_request *qat_req,
++			gfp_t flags);
++
++#endif
 -- 
 2.42.0
 
