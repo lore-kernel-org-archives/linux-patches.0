@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EDA3A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F293A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PU0LR6yG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A928AC433C8;
-	Wed, 15 Nov 2023 19:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSxEn5te"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A87C433C7;
+	Wed, 15 Nov 2023 19:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077893;
-	bh=ui37yxyoDcdRB3Ayj/BhQZ/aq48em5voKUmfKvx0kIE=;
+	s=korg; t=1700077894;
+	bh=c0UzMj+zSHxgiyxhgc16PX2qwyRlPKKbGwW+AhFAfUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PU0LR6yGvwbJruNJfy9VcH1PsVcX3X4sgGKsWDev9yU2HC4UTZgE+eTeUVVVX+Fhp
-	 hi9Dy1Lp744SG83Q/TD2nxEbfpSH9uRv2RJ6e0bEyccLsewBwqCTqVh96A9lmjxo19
-	 xIoMfjMUFwUvHCifxOzqH9Cz6rHi8Qn+jbehBIfg=
+	b=qSxEn5te6GNIEwR0IYx17YVFieZfRCpmOP3uk0Rt8GjUMek7IXxfUgDnbu6/7wCu6
+	 49UdVvlh8PdxJxk+X0RfhFirWqaPj23krhP25HVSNWs59YyxPEof62YNEJRSNqEeit
+	 wfBshMHgWkJg3nwYEa/hmU8Bu1nV2nXdFqYAwOW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Eugen Hristev <eugen.hristev@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 567/603] nbd: fix uaf in nbd_open
-Date: Wed, 15 Nov 2023 14:18:32 -0500
-Message-ID: <20231115191650.796497859@linuxfoundation.org>
+Subject: [PATCH 6.6 585/603] ASoC: mediatek: mt8186_mt6366_rt1019_rt5682s: trivial: fix error messages
+Date: Wed, 15 Nov 2023 14:18:50 -0500
+Message-ID: <20231115191651.804295225@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,71 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Eugen Hristev <eugen.hristev@collabora.com>
 
-[ Upstream commit 327462725b0f759f093788dfbcb2f1fd132f956b ]
+[ Upstream commit 004fc58edea6f00db9ad07b40b882e8d976f7a54 ]
 
-Commit 4af5f2e03013 ("nbd: use blk_mq_alloc_disk and
-blk_cleanup_disk") cleans up disk by blk_cleanup_disk() and it won't set
-disk->private_data as NULL as before. UAF may be triggered in nbd_open()
-if someone tries to open nbd device right after nbd_put() since nbd has
-been free in nbd_dev_remove().
+Property 'playback-codecs' is referenced as 'speaker-codec' in the error
+message, and this can lead to confusion.
+Correct the error message such that the correct property name is
+referenced.
 
-Fix this by implementing ->free_disk and free private data in it.
-
-Fixes: 4af5f2e03013 ("nbd: use blk_mq_alloc_disk and blk_cleanup_disk")
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://lore.kernel.org/r/20231107103435.2074904-1-lilingfeng@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 0da16e370dd7 ("ASoC: mediatek: mt8186: add machine driver with mt6366, rt1019 and rt5682s")
+Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20231031103139.77395-1-eugen.hristev@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 800f131222fc8..855fdf5c3b4ea 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -250,7 +250,6 @@ static void nbd_dev_remove(struct nbd_device *nbd)
- 	struct gendisk *disk = nbd->disk;
+diff --git a/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c b/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c
+index 9c11016f032c2..9777ba89e956c 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c
++++ b/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c
+@@ -1179,7 +1179,7 @@ static int mt8186_mt6366_rt1019_rt5682s_dev_probe(struct platform_device *pdev)
+ 	playback_codec = of_get_child_by_name(pdev->dev.of_node, "playback-codecs");
+ 	if (!playback_codec) {
+ 		ret = -EINVAL;
+-		dev_err_probe(&pdev->dev, ret, "Property 'speaker-codecs' missing or invalid\n");
++		dev_err_probe(&pdev->dev, ret, "Property 'playback-codecs' missing or invalid\n");
+ 		goto err_playback_codec;
+ 	}
  
- 	del_gendisk(disk);
--	put_disk(disk);
- 	blk_mq_free_tag_set(&nbd->tag_set);
- 
- 	/*
-@@ -261,7 +260,7 @@ static void nbd_dev_remove(struct nbd_device *nbd)
- 	idr_remove(&nbd_index_idr, nbd->index);
- 	mutex_unlock(&nbd_index_mutex);
- 	destroy_workqueue(nbd->recv_workq);
--	kfree(nbd);
-+	put_disk(disk);
- }
- 
- static void nbd_dev_remove_work(struct work_struct *work)
-@@ -1608,6 +1607,13 @@ static void nbd_release(struct gendisk *disk)
- 	nbd_put(nbd);
- }
- 
-+static void nbd_free_disk(struct gendisk *disk)
-+{
-+	struct nbd_device *nbd = disk->private_data;
-+
-+	kfree(nbd);
-+}
-+
- static const struct block_device_operations nbd_fops =
- {
- 	.owner =	THIS_MODULE,
-@@ -1615,6 +1621,7 @@ static const struct block_device_operations nbd_fops =
- 	.release =	nbd_release,
- 	.ioctl =	nbd_ioctl,
- 	.compat_ioctl =	nbd_ioctl,
-+	.free_disk =	nbd_free_disk,
- };
- 
- #if IS_ENABLED(CONFIG_DEBUG_FS)
+@@ -1193,7 +1193,7 @@ static int mt8186_mt6366_rt1019_rt5682s_dev_probe(struct platform_device *pdev)
+ 	for_each_card_prelinks(card, i, dai_link) {
+ 		ret = mt8186_mt6366_card_set_be_link(card, dai_link, playback_codec, "I2S3");
+ 		if (ret) {
+-			dev_err_probe(&pdev->dev, ret, "%s set speaker_codec fail\n",
++			dev_err_probe(&pdev->dev, ret, "%s set playback_codec fail\n",
+ 				      dai_link->name);
+ 			goto err_probe;
+ 		}
 -- 
 2.42.0
 
