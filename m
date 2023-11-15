@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0298E1FCF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAAA43AD3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AM3GZIli"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5417CC4E778;
-	Wed, 15 Nov 2023 20:54:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1l7ZBWVf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B4FC4E778;
+	Wed, 15 Nov 2023 20:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081695;
-	bh=JP2XF2702a2YH+dIQGB10iCwXNYPsS0rSCcKVBfcH7k=;
+	s=korg; t=1700081696;
+	bh=9zu7kSdDTudoT9mn82ouWDpQuT09G/UYD989pC1335w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AM3GZIli4O+rpnYlKTSF1M1SmugbcdcfKL1N6YuUHNt40zkHufnIBMngVW/600nxR
-	 2jF0kJ5wGG88uyM/6TAY8bN8iIjf31DNGqmt2q9koc2RdA1PMVipNK5XxdAJjsV5Wx
-	 HptHurW48tgU0RM29OQ6Q3oMk2BtQquajXGyD8Ck=
+	b=1l7ZBWVfSreG1Ehe+TN28+LM1EVo3JnH2uZrc8z5lmTott2OwgGpwfL3Cb6wHvhSe
+	 B7RVeG2a4Kq0f6lAXYQicLJOhma/KE+jEXO25i2IlRxNGdcBbzPpShBU7KdkAe5LJW
+	 gBuviGwl/m9Pb+GhiZ58AMzm5k+foorfCjEC6buE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Bogdan <dragos.bogdan@analog.com>,
-	Nuno Sa <nuno.sa@analog.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	kernel test robot <lkp@intel.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/191] hwmon: (axi-fan-control) Fix possible NULL pointer dereference
-Date: Wed, 15 Nov 2023 15:45:42 -0500
-Message-ID: <20231115204648.612729297@linuxfoundation.org>
+Subject: [PATCH 5.10 068/191] hwmon: (coretemp) Fix potentially truncated sysfs attribute name
+Date: Wed, 15 Nov 2023 15:45:43 -0500
+Message-ID: <20231115204648.672923212@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -43,72 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Bogdan <dragos.bogdan@analog.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 2a5b3370a1d9750eca325292e291c8c7cb8cf2e0 ]
+[ Upstream commit bbfff736d30e5283ad09e748caff979d75ddef7f ]
 
-axi_fan_control_irq_handler(), dependent on the private
-axi_fan_control_data structure, might be called before the hwmon
-device is registered. That will cause an "Unable to handle kernel
-NULL pointer dereference" error.
+When build with W=1 and "-Werror=format-truncation", below error is
+observed in coretemp driver,
 
-Fixes: 8412b410fa5e ("hwmon: Support ADI Fan Control IP")
-Signed-off-by: Dragos Bogdan <dragos.bogdan@analog.com>
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20231025132100.649499-1-nuno.sa@analog.com
+   drivers/hwmon/coretemp.c: In function 'create_core_data':
+>> drivers/hwmon/coretemp.c:393:34: error: '%s' directive output may be truncated writing likely 5 or more bytes into a region of size between 3 and 13 [-Werror=format-truncation=]
+     393 |                          "temp%d_%s", attr_no, suffixes[i]);
+         |                                  ^~
+   drivers/hwmon/coretemp.c:393:26: note: assuming directive output of 5 bytes
+     393 |                          "temp%d_%s", attr_no, suffixes[i]);
+         |                          ^~~~~~~~~~~
+   drivers/hwmon/coretemp.c:392:17: note: 'snprintf' output 7 or more bytes (assuming 22) into a destination of size 19
+     392 |                 snprintf(tdata->attr_name[i], CORETEMP_NAME_LENGTH,
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     393 |                          "temp%d_%s", attr_no, suffixes[i]);
+         |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   cc1: all warnings being treated as errors
+
+Given that
+1. '%d' could take 10 charactors,
+2. '%s' could take 10 charactors ("crit_alarm"),
+3. "temp", "_" and the NULL terminator take 6 charactors,
+fix the problem by increasing CORETEMP_NAME_LENGTH to 28.
+
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Fixes: 7108b80a542b ("hwmon/coretemp: Handle large core ID value")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310200443.iD3tUbbK-lkp@intel.com/
+Link: https://lore.kernel.org/r/20231025122316.836400-1-rui.zhang@intel.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/axi-fan-control.c | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/hwmon/coretemp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/axi-fan-control.c b/drivers/hwmon/axi-fan-control.c
-index da0c3b6101f59..4b8250f2bb421 100644
---- a/drivers/hwmon/axi-fan-control.c
-+++ b/drivers/hwmon/axi-fan-control.c
-@@ -495,6 +495,21 @@ static int axi_fan_control_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
- 
-+	ret = axi_fan_control_init(ctl, pdev->dev.of_node);
-+	if (ret) {
-+		dev_err(&pdev->dev, "Failed to initialize device\n");
-+		return ret;
-+	}
-+
-+	ctl->hdev = devm_hwmon_device_register_with_info(&pdev->dev,
-+							 name,
-+							 ctl,
-+							 &axi_chip_info,
-+							 axi_fan_control_groups);
-+
-+	if (IS_ERR(ctl->hdev))
-+		return PTR_ERR(ctl->hdev);
-+
- 	ctl->irq = platform_get_irq(pdev, 0);
- 	if (ctl->irq < 0)
- 		return ctl->irq;
-@@ -508,19 +523,7 @@ static int axi_fan_control_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
--	ret = axi_fan_control_init(ctl, pdev->dev.of_node);
--	if (ret) {
--		dev_err(&pdev->dev, "Failed to initialize device\n");
--		return ret;
--	}
--
--	ctl->hdev = devm_hwmon_device_register_with_info(&pdev->dev,
--							 name,
--							 ctl,
--							 &axi_chip_info,
--							 axi_fan_control_groups);
--
--	return PTR_ERR_OR_ZERO(ctl->hdev);
-+	return 0;
- }
- 
- static struct platform_driver axi_fan_control_driver = {
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index eaae5de2ab616..5b2057ce5a59d 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -41,7 +41,7 @@ MODULE_PARM_DESC(tjmax, "TjMax value in degrees Celsius");
+ #define PKG_SYSFS_ATTR_NO	1	/* Sysfs attribute for package temp */
+ #define BASE_SYSFS_ATTR_NO	2	/* Sysfs Base attr no for coretemp */
+ #define NUM_REAL_CORES		128	/* Number of Real cores per cpu */
+-#define CORETEMP_NAME_LENGTH	19	/* String Length of attrs */
++#define CORETEMP_NAME_LENGTH	28	/* String Length of attrs */
+ #define MAX_CORE_ATTRS		4	/* Maximum no of basic attrs */
+ #define TOTAL_ATTRS		(MAX_CORE_ATTRS + 1)
+ #define MAX_CORE_DATA		(NUM_REAL_CORES + BASE_SYSFS_ATTR_NO)
 -- 
 2.42.0
 
