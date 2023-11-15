@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FAF433BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C89C433AF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsuUhZDd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E7FC433CA;
-	Wed, 15 Nov 2023 19:35:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fz9d2P+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A68C433C7;
+	Wed, 15 Nov 2023 19:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076958;
-	bh=UEBitcw6VyBI8X35afw2y/JVBWCsMoYjpLmOOYkv5s0=;
+	s=korg; t=1700076959;
+	bh=DJzkEass5wyuj8Kdihxlkyx7AhRQw9ifk+oCEIhEvxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsuUhZDdEsDJodo/UE0+SDJYymaqTqEqvV+r4KtsB/Ru+hMSbEynVxoujpTrZ/I70
-	 Swt+BjTcMc9cqz2MBOLo4zA3x5FEvwduWbQSP+a8Cy4qI+QS23ngp0S4o49JpqlVS1
-	 +jBep9pgVkDGXgWOPP8g2z2tKfZ4iYWdS7L6XeGc=
+	b=Fz9d2P+Z/6DpPKUHSglJP6bwx3P7yOhddf9+npLPXwTCdQxDB+Nr6Xe5XeTZcjvE6
+	 C36WbxGH04IxHx1vJkF2kAuVIzgpVKBFdnfj4ZQuyZJ+EU5g2vgRFdywUMxMCEBWRq
+	 yHS39xSRfEQyrzUw06D/wFhtNc/T7xeiLR3U7s4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/603] wifi: mt76: mt7603: rework/fix rx pse hang check
-Date: Wed, 15 Nov 2023 14:10:24 -0500
-Message-ID: <20231115191618.592422312@linuxfoundation.org>
+Subject: [PATCH 6.5 476/550] media: ov5640: Fix a memory leak when ov5640_probe fails
+Date: Wed, 15 Nov 2023 14:17:40 -0500
+Message-ID: <20231115191633.859736999@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,89 +39,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit baa19b2e4b7bbb509a7ca7939c8785477dcd40ee ]
+[ Upstream commit 20290feaaeb76cc719921aad275ccb18662a7c3a ]
 
-It turns out that the code in mt7603_rx_pse_busy() does not detect actual
-hardware hangs, it only checks for busy conditions in PSE.
-A reset should only be performed if these conditions are true and if there
-is no rx activity as well.
-Reset the counter whenever a rx interrupt occurs. In order to also deal with
-a fully loaded CPU that leaves interrupts disabled with continuous NAPI
-polling, also check for pending rx interrupts in the function itself.
+sensor->ctrls.handler is initialized in ov5640_init_controls(),
+so when the sensor is not connected and ov5640_sensor_resume()
+fails, sensor->ctrls.handler should be released, otherwise a
+memory leak will be detected:
 
-Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+unreferenced object 0xc674ca80 (size 64):
+   comm "swapper/0", pid 1, jiffies 4294938337 (age 204.880s)
+   hex dump (first 32 bytes):
+     80 55 75 c6 80 54 75 c6 00 55 75 c6 80 52 75 c6 .Uu..Tu..Uu..Ru.
+     00 53 75 c6 00 00 00 00 00 00 00 00 00 00 00 00 .Su..........
+
+Fixes: 85644a9b37ec ("media: ov5640: Use runtime PM")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7603/core.c  |  2 ++
- .../net/wireless/mediatek/mt76/mt7603/mac.c   | 23 +++++++++++++------
- 2 files changed, 18 insertions(+), 7 deletions(-)
+ drivers/media/i2c/ov5640.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/core.c b/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-index 60a996b63c0c0..915b8349146af 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-@@ -42,11 +42,13 @@ irqreturn_t mt7603_irq_handler(int irq, void *dev_instance)
+diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
+index 7c041dafff2b1..8d6cdc7c345b0 100644
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -3928,7 +3928,7 @@ static int ov5640_probe(struct i2c_client *client)
+ 	ret = ov5640_sensor_resume(dev);
+ 	if (ret) {
+ 		dev_err(dev, "failed to power on\n");
+-		goto entity_cleanup;
++		goto free_ctrls;
  	}
  
- 	if (intr & MT_INT_RX_DONE(0)) {
-+		dev->rx_pse_check = 0;
- 		mt7603_irq_disable(dev, MT_INT_RX_DONE(0));
- 		napi_schedule(&dev->mt76.napi[0]);
- 	}
- 
- 	if (intr & MT_INT_RX_DONE(1)) {
-+		dev->rx_pse_check = 0;
- 		mt7603_irq_disable(dev, MT_INT_RX_DONE(1));
- 		napi_schedule(&dev->mt76.napi[1]);
- 	}
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-index 99ae080502d80..7a506a0c46e2b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-@@ -1570,20 +1570,29 @@ static bool mt7603_rx_pse_busy(struct mt7603_dev *dev)
- {
- 	u32 addr, val;
- 
--	if (mt76_rr(dev, MT_MCU_DEBUG_RESET) & MT_MCU_DEBUG_RESET_QUEUES)
--		return true;
--
- 	if (mt7603_rx_fifo_busy(dev))
--		return false;
-+		goto out;
- 
- 	addr = mt7603_reg_map(dev, MT_CLIENT_BASE_PHYS_ADDR + MT_CLIENT_STATUS);
- 	mt76_wr(dev, addr, 3);
- 	val = mt76_rr(dev, addr) >> 16;
- 
--	if (is_mt7628(dev) && (val & 0x4001) == 0x4001)
--		return true;
-+	if (!(val & BIT(0)))
-+		return false;
-+
-+	if (is_mt7628(dev))
-+		val &= 0xa000;
-+	else
-+		val &= 0x8000;
-+	if (!val)
-+		return false;
-+
-+out:
-+	if (mt76_rr(dev, MT_INT_SOURCE_CSR) &
-+	    (MT_INT_RX_DONE(0) | MT_INT_RX_DONE(1)))
-+		return false;
- 
--	return (val & 0x8001) == 0x8001 || (val & 0xe001) == 0xe001;
-+	return true;
- }
- 
- static bool
+ 	pm_runtime_set_active(dev);
+@@ -3953,8 +3953,9 @@ static int ov5640_probe(struct i2c_client *client)
+ err_pm_runtime:
+ 	pm_runtime_put_noidle(dev);
+ 	pm_runtime_disable(dev);
+-	v4l2_ctrl_handler_free(&sensor->ctrls.handler);
+ 	ov5640_sensor_suspend(dev);
++free_ctrls:
++	v4l2_ctrl_handler_free(&sensor->ctrls.handler);
+ entity_cleanup:
+ 	media_entity_cleanup(&sensor->sd.entity);
+ 	mutex_destroy(&sensor->lock);
 -- 
 2.42.0
 
