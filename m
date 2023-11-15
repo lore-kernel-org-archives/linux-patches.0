@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF223BB43
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AE33BB48
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NK+V92se"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC44C433C9;
-	Wed, 15 Nov 2023 19:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+7rAZXO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32459C433C7;
+	Wed, 15 Nov 2023 19:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078110;
-	bh=fCoBu9HNHvhdblFN2SPU9NECH7Ymh4TLTwd9V+iqH1w=;
+	s=korg; t=1700078112;
+	bh=PQPskEYGaoW8h9QS8xvHw+rNIZXYqHv6lyiaV6GqIRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NK+V92sekDhb0Zh7U9gF/WXU3S7PXNLKuFfjiDfqMM03fJQ2lS4o5824Gxf6sVaJY
-	 7jTPi88FjuBpSve2sJLEu1lpv5df+Y0IBLgqB/qdvFh8mQ5MdDhmtXBrVpk4fwgebg
-	 wbR8RnP6CN20dKhYVskHgDbdCZIsQywNNubCRgTo=
+	b=x+7rAZXOcFzrJ3hU8IQUK6Ie5VAU9hwF+rPSUyj0IekZWtofs1gV5qSQYKz/7Y4gO
+	 WZSbNjGMIoV9j/zN/LX70iitG3FyxbUIzuQjn12QQUqO1aS8Ctzl6rRUz0z2qPbSBu
+	 OvSI8OAbUWzJnLHyOF4rV8QVCetUEcGiR3q+iKWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 081/379] clk: qcom: mmcc-msm8998: Fix the SMMU GDSC
-Date: Wed, 15 Nov 2023 14:22:36 -0500
-Message-ID: <20231115192649.922760481@linuxfoundation.org>
+Subject: [PATCH 6.1 109/379] hwmon: (coretemp) Fix potentially truncated sysfs attribute name
+Date: Wed, 15 Nov 2023 14:23:04 -0500
+Message-ID: <20231115192651.577161453@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,46 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 1fc62c8347397faf4e18249e88ecd4470c0a5357 ]
+[ Upstream commit bbfff736d30e5283ad09e748caff979d75ddef7f ]
 
-The SMMU GDSC doesn't have to be ALWAYS-ON and shouldn't feature the
-HW_CTRL flag (it's separate from hw_ctrl_addr).  In addition to that,
-it should feature a cxc entry for bimc_smmu_axi_clk and be marked as
-votable.
+When build with W=1 and "-Werror=format-truncation", below error is
+observed in coretemp driver,
 
-Fix all of these issues.
+   drivers/hwmon/coretemp.c: In function 'create_core_data':
+>> drivers/hwmon/coretemp.c:393:34: error: '%s' directive output may be truncated writing likely 5 or more bytes into a region of size between 3 and 13 [-Werror=format-truncation=]
+     393 |                          "temp%d_%s", attr_no, suffixes[i]);
+         |                                  ^~
+   drivers/hwmon/coretemp.c:393:26: note: assuming directive output of 5 bytes
+     393 |                          "temp%d_%s", attr_no, suffixes[i]);
+         |                          ^~~~~~~~~~~
+   drivers/hwmon/coretemp.c:392:17: note: 'snprintf' output 7 or more bytes (assuming 22) into a destination of size 19
+     392 |                 snprintf(tdata->attr_name[i], CORETEMP_NAME_LENGTH,
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     393 |                          "temp%d_%s", attr_no, suffixes[i]);
+         |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   cc1: all warnings being treated as errors
 
-Fixes: d14b15b5931c ("clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Link: https://lore.kernel.org/r/20230531-topic-8998_mmssclk-v3-5-ba1b1fd9ee75@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Given that
+1. '%d' could take 10 charactors,
+2. '%s' could take 10 charactors ("crit_alarm"),
+3. "temp", "_" and the NULL terminator take 6 charactors,
+fix the problem by increasing CORETEMP_NAME_LENGTH to 28.
+
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Fixes: 7108b80a542b ("hwmon/coretemp: Handle large core ID value")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310200443.iD3tUbbK-lkp@intel.com/
+Link: https://lore.kernel.org/r/20231025122316.836400-1-rui.zhang@intel.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-msm8998.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwmon/coretemp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
-index 0702a9f00cc1b..e5a72c2f080f8 100644
---- a/drivers/clk/qcom/mmcc-msm8998.c
-+++ b/drivers/clk/qcom/mmcc-msm8998.c
-@@ -2653,11 +2653,13 @@ static struct gdsc camss_cpp_gdsc = {
- static struct gdsc bimc_smmu_gdsc = {
- 	.gdscr = 0xe020,
- 	.gds_hw_ctrl = 0xe024,
-+	.cxcs = (unsigned int []){ 0xe008 },
-+	.cxc_count = 1,
- 	.pd = {
- 		.name = "bimc_smmu",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = HW_CTRL | ALWAYS_ON,
-+	.flags = VOTABLE,
- };
- 
- static struct clk_regmap *mmcc_msm8998_clocks[] = {
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index baaf8af4cb443..09aab5859fa75 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -41,7 +41,7 @@ MODULE_PARM_DESC(tjmax, "TjMax value in degrees Celsius");
+ #define PKG_SYSFS_ATTR_NO	1	/* Sysfs attribute for package temp */
+ #define BASE_SYSFS_ATTR_NO	2	/* Sysfs Base attr no for coretemp */
+ #define NUM_REAL_CORES		128	/* Number of Real cores per cpu */
+-#define CORETEMP_NAME_LENGTH	19	/* String Length of attrs */
++#define CORETEMP_NAME_LENGTH	28	/* String Length of attrs */
+ #define MAX_CORE_ATTRS		4	/* Maximum no of basic attrs */
+ #define TOTAL_ATTRS		(MAX_CORE_ATTRS + 1)
+ #define MAX_CORE_DATA		(NUM_REAL_CORES + BASE_SYSFS_ATTR_NO)
 -- 
 2.42.0
 
