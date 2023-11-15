@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5233BB42
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7FD3BB42
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lh4DUss6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3908C433C7;
-	Wed, 15 Nov 2023 19:23:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMOjx0dO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157B7C433C8;
+	Wed, 15 Nov 2023 19:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076204;
-	bh=6gZxPnxjJUoPwEEdDgHk6mXmespYF6EOuAj7N92jb2g=;
+	s=korg; t=1700076206;
+	bh=1SiaiH9qvDPUXgHHsWH3DDqlxos5fvVoWn2wZdmnwtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lh4DUss6Tk2TATtb33bnXEq00YXf/QfHVM8OAAaMevSaXpq8AFXNgVyDR+XecNe58
-	 SBnQrgjKwMS3qnecPnno6S+bOy7nh/VAlXTKGv8eBCyOnY+Jqmhb1IsVFWEHVAHKqy
-	 PiOutC7MbvAXvpiDryS1CJzCk3rCWNt64ch6FtLQ=
+	b=oMOjx0dOGARGAFba3Sum3pG+X6zVYgoJDHMryEyav/6nhPG7/NlfNjf1LKVficby9
+	 M7lFJnqurSR3x3vtQctsg3WTOA51dCnsr4+eSrs7D+1E3oWRWYtR2hkDWn8tJHw6bX
+	 /AY/0vrzmC02IQVeYPnt5ec7pMHi8aKH6k924Wso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Stanislav Fomichev <sdf@google.com>,
-	Feng Zhou <zhoufeng.zf@bytedance.com>,
-	KP Singh <kpsingh@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 117/550] bpf: Fix missed rcu read lock in bpf_task_under_cgroup()
-Date: Wed, 15 Nov 2023 14:11:41 -0500
-Message-ID: <20231115191608.800593763@linuxfoundation.org>
+Subject: [PATCH 6.5 118/550] selftests: netfilter: test for sctp collision processing in nf_conntrack
+Date: Wed, 15 Nov 2023 14:11:42 -0500
+Message-ID: <20231115191608.874709373@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,111 +42,257 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 29a7e00ffadddd8d68eff311de1bf12ae10687bb ]
+[ Upstream commit cf791b22bef7d9352ff730a8727d3871942d6001 ]
 
-When employed within a sleepable program not under RCU protection, the
-use of 'bpf_task_under_cgroup()' may trigger a warning in the kernel log,
-particularly when CONFIG_PROVE_RCU is enabled:
+This patch adds a test case to reproduce the SCTP DATA chunk retransmission
+timeout issue caused by the improper SCTP collision processing in netfilter
+nf_conntrack_proto_sctp.
 
-  [ 1259.662357] WARNING: suspicious RCU usage
-  [ 1259.662358] 6.5.0+ #33 Not tainted
-  [ 1259.662360] -----------------------------
-  [ 1259.662361] include/linux/cgroup.h:423 suspicious rcu_dereference_check() usage!
+In this test, client sends a INIT chunk, but the INIT_ACK replied from
+server is delayed until the server sends a INIT chunk to start a new
+connection from its side. After the connection is complete from server
+side, the delayed INIT_ACK arrives in nf_conntrack_proto_sctp.
 
-Other info that might help to debug this:
+The delayed INIT_ACK should be dropped in nf_conntrack_proto_sctp instead
+of updating the vtag with the out-of-date init_tag, otherwise, the vtag
+in DATA chunks later sent by client don't match the vtag in the conntrack
+entry and the DATA chunks get dropped.
 
-  [ 1259.662366] rcu_scheduler_active = 2, debug_locks = 1
-  [ 1259.662368] 1 lock held by trace/72954:
-  [ 1259.662369]  #0: ffffffffb5e3eda0 (rcu_read_lock_trace){....}-{0:0}, at: __bpf_prog_enter_sleepable+0x0/0xb0
-
-Stack backtrace:
-
-  [ 1259.662385] CPU: 50 PID: 72954 Comm: trace Kdump: loaded Not tainted 6.5.0+ #33
-  [ 1259.662391] Call Trace:
-  [ 1259.662393]  <TASK>
-  [ 1259.662395]  dump_stack_lvl+0x6e/0x90
-  [ 1259.662401]  dump_stack+0x10/0x20
-  [ 1259.662404]  lockdep_rcu_suspicious+0x163/0x1b0
-  [ 1259.662412]  task_css_set.part.0+0x23/0x30
-  [ 1259.662417]  bpf_task_under_cgroup+0xe7/0xf0
-  [ 1259.662422]  bpf_prog_7fffba481a3bcf88_lsm_run+0x5c/0x93
-  [ 1259.662431]  bpf_trampoline_6442505574+0x60/0x1000
-  [ 1259.662439]  bpf_lsm_bpf+0x5/0x20
-  [ 1259.662443]  ? security_bpf+0x32/0x50
-  [ 1259.662452]  __sys_bpf+0xe6/0xdd0
-  [ 1259.662463]  __x64_sys_bpf+0x1a/0x30
-  [ 1259.662467]  do_syscall_64+0x38/0x90
-  [ 1259.662472]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-  [ 1259.662479] RIP: 0033:0x7f487baf8e29
-  [...]
-  [ 1259.662504]  </TASK>
-
-This issue can be reproduced by executing a straightforward program, as
-demonstrated below:
-
-SEC("lsm.s/bpf")
-int BPF_PROG(lsm_run, int cmd, union bpf_attr *attr, unsigned int size)
-{
-        struct cgroup *cgrp = NULL;
-        struct task_struct *task;
-        int ret = 0;
-
-        if (cmd != BPF_LINK_CREATE)
-                return 0;
-
-        // The cgroup2 should be mounted first
-        cgrp = bpf_cgroup_from_id(1);
-        if (!cgrp)
-                goto out;
-        task = bpf_get_current_task_btf();
-        if (bpf_task_under_cgroup(task, cgrp))
-                ret = -1;
-        bpf_cgroup_release(cgrp);
-
-out:
-        return ret;
-}
-
-After running the program, if you subsequently execute another BPF program,
-you will encounter the warning.
-
-It's worth noting that task_under_cgroup_hierarchy() is also utilized by
-bpf_current_task_under_cgroup(). However, bpf_current_task_under_cgroup()
-doesn't exhibit this issue because it cannot be used in sleepable BPF
-programs.
-
-Fixes: b5ad4cdc46c7 ("bpf: Add bpf_task_under_cgroup() kfunc")
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Cc: Feng Zhou <zhoufeng.zf@bytedance.com>
-Cc: KP Singh <kpsingh@kernel.org>
-Link: https://lore.kernel.org/bpf/20231007135945.4306-1-laoar.shao@gmail.com
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: c4eee56e14fe ("net: skb_find_text: Ignore patterns extending past 'to'")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tools/testing/selftests/netfilter/Makefile    |  5 +-
+ .../netfilter/conntrack_sctp_collision.sh     | 89 +++++++++++++++++
+ .../selftests/netfilter/sctp_collision.c      | 99 +++++++++++++++++++
+ 3 files changed, 191 insertions(+), 2 deletions(-)
+ create mode 100755 tools/testing/selftests/netfilter/conntrack_sctp_collision.sh
+ create mode 100644 tools/testing/selftests/netfilter/sctp_collision.c
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 8812397a5cd96..3779300002327 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -2167,7 +2167,12 @@ __bpf_kfunc struct cgroup *bpf_cgroup_from_id(u64 cgid)
- __bpf_kfunc long bpf_task_under_cgroup(struct task_struct *task,
- 				       struct cgroup *ancestor)
- {
--	return task_under_cgroup_hierarchy(task, ancestor);
-+	long ret;
-+
-+	rcu_read_lock();
-+	ret = task_under_cgroup_hierarchy(task, ancestor);
-+	rcu_read_unlock();
-+	return ret;
- }
- #endif /* CONFIG_CGROUPS */
+diff --git a/tools/testing/selftests/netfilter/Makefile b/tools/testing/selftests/netfilter/Makefile
+index 321db8850da00..ef90aca4cc96a 100644
+--- a/tools/testing/selftests/netfilter/Makefile
++++ b/tools/testing/selftests/netfilter/Makefile
+@@ -6,13 +6,14 @@ TEST_PROGS := nft_trans_stress.sh nft_fib.sh nft_nat.sh bridge_brouter.sh \
+ 	nft_concat_range.sh nft_conntrack_helper.sh \
+ 	nft_queue.sh nft_meta.sh nf_nat_edemux.sh \
+ 	ipip-conntrack-mtu.sh conntrack_tcp_unreplied.sh \
+-	conntrack_vrf.sh nft_synproxy.sh rpath.sh nft_audit.sh
++	conntrack_vrf.sh nft_synproxy.sh rpath.sh nft_audit.sh \
++	conntrack_sctp_collision.sh
  
+ HOSTPKG_CONFIG := pkg-config
+ 
+ CFLAGS += $(shell $(HOSTPKG_CONFIG) --cflags libmnl 2>/dev/null)
+ LDLIBS += $(shell $(HOSTPKG_CONFIG) --libs libmnl 2>/dev/null || echo -lmnl)
+ 
+-TEST_GEN_FILES =  nf-queue connect_close audit_logread
++TEST_GEN_FILES =  nf-queue connect_close audit_logread sctp_collision
+ 
+ include ../lib.mk
+diff --git a/tools/testing/selftests/netfilter/conntrack_sctp_collision.sh b/tools/testing/selftests/netfilter/conntrack_sctp_collision.sh
+new file mode 100755
+index 0000000000000..a924e595cfd8b
+--- /dev/null
++++ b/tools/testing/selftests/netfilter/conntrack_sctp_collision.sh
+@@ -0,0 +1,89 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++#
++# Testing For SCTP COLLISION SCENARIO as Below:
++#
++#   14:35:47.655279 IP CLIENT_IP.PORT > SERVER_IP.PORT: sctp (1) [INIT] [init tag: 2017837359]
++#   14:35:48.353250 IP SERVER_IP.PORT > CLIENT_IP.PORT: sctp (1) [INIT] [init tag: 1187206187]
++#   14:35:48.353275 IP CLIENT_IP.PORT > SERVER_IP.PORT: sctp (1) [INIT ACK] [init tag: 2017837359]
++#   14:35:48.353283 IP SERVER_IP.PORT > CLIENT_IP.PORT: sctp (1) [COOKIE ECHO]
++#   14:35:48.353977 IP CLIENT_IP.PORT > SERVER_IP.PORT: sctp (1) [COOKIE ACK]
++#   14:35:48.855335 IP SERVER_IP.PORT > CLIENT_IP.PORT: sctp (1) [INIT ACK] [init tag: 164579970]
++#
++# TOPO: SERVER_NS (link0)<--->(link1) ROUTER_NS (link2)<--->(link3) CLIENT_NS
++
++CLIENT_NS=$(mktemp -u client-XXXXXXXX)
++CLIENT_IP="198.51.200.1"
++CLIENT_PORT=1234
++
++SERVER_NS=$(mktemp -u server-XXXXXXXX)
++SERVER_IP="198.51.100.1"
++SERVER_PORT=1234
++
++ROUTER_NS=$(mktemp -u router-XXXXXXXX)
++CLIENT_GW="198.51.200.2"
++SERVER_GW="198.51.100.2"
++
++# setup the topo
++setup() {
++	ip net add $CLIENT_NS
++	ip net add $SERVER_NS
++	ip net add $ROUTER_NS
++	ip -n $SERVER_NS link add link0 type veth peer name link1 netns $ROUTER_NS
++	ip -n $CLIENT_NS link add link3 type veth peer name link2 netns $ROUTER_NS
++
++	ip -n $SERVER_NS link set link0 up
++	ip -n $SERVER_NS addr add $SERVER_IP/24 dev link0
++	ip -n $SERVER_NS route add $CLIENT_IP dev link0 via $SERVER_GW
++
++	ip -n $ROUTER_NS link set link1 up
++	ip -n $ROUTER_NS link set link2 up
++	ip -n $ROUTER_NS addr add $SERVER_GW/24 dev link1
++	ip -n $ROUTER_NS addr add $CLIENT_GW/24 dev link2
++	ip net exec $ROUTER_NS sysctl -wq net.ipv4.ip_forward=1
++
++	ip -n $CLIENT_NS link set link3 up
++	ip -n $CLIENT_NS addr add $CLIENT_IP/24 dev link3
++	ip -n $CLIENT_NS route add $SERVER_IP dev link3 via $CLIENT_GW
++
++	# simulate the delay on OVS upcall by setting up a delay for INIT_ACK with
++	# tc on $SERVER_NS side
++	tc -n $SERVER_NS qdisc add dev link0 root handle 1: htb
++	tc -n $SERVER_NS class add dev link0 parent 1: classid 1:1 htb rate 100mbit
++	tc -n $SERVER_NS filter add dev link0 parent 1: protocol ip u32 match ip protocol 132 \
++		0xff match u8 2 0xff at 32 flowid 1:1
++	tc -n $SERVER_NS qdisc add dev link0 parent 1:1 handle 10: netem delay 1200ms
++
++	# simulate the ctstate check on OVS nf_conntrack
++	ip net exec $ROUTER_NS iptables -A FORWARD -m state --state INVALID,UNTRACKED -j DROP
++	ip net exec $ROUTER_NS iptables -A INPUT -p sctp -j DROP
++
++	# use a smaller number for assoc's max_retrans to reproduce the issue
++	modprobe sctp
++	ip net exec $CLIENT_NS sysctl -wq net.sctp.association_max_retrans=3
++}
++
++cleanup() {
++	ip net exec $CLIENT_NS pkill sctp_collision 2>&1 >/dev/null
++	ip net exec $SERVER_NS pkill sctp_collision 2>&1 >/dev/null
++	ip net del "$CLIENT_NS"
++	ip net del "$SERVER_NS"
++	ip net del "$ROUTER_NS"
++}
++
++do_test() {
++	ip net exec $SERVER_NS ./sctp_collision server \
++		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT &
++	ip net exec $CLIENT_NS ./sctp_collision client \
++		$CLIENT_IP $CLIENT_PORT $SERVER_IP $SERVER_PORT
++}
++
++# NOTE: one way to work around the issue is set a smaller hb_interval
++# ip net exec $CLIENT_NS sysctl -wq net.sctp.hb_interval=3500
++
++# run the test case
++trap cleanup EXIT
++setup && \
++echo "Test for SCTP Collision in nf_conntrack:" && \
++do_test && echo "PASS!"
++exit $?
+diff --git a/tools/testing/selftests/netfilter/sctp_collision.c b/tools/testing/selftests/netfilter/sctp_collision.c
+new file mode 100644
+index 0000000000000..21bb1cfd8a856
+--- /dev/null
++++ b/tools/testing/selftests/netfilter/sctp_collision.c
+@@ -0,0 +1,99 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <unistd.h>
++#include <arpa/inet.h>
++
++int main(int argc, char *argv[])
++{
++	struct sockaddr_in saddr = {}, daddr = {};
++	int sd, ret, len = sizeof(daddr);
++	struct timeval tv = {25, 0};
++	char buf[] = "hello";
++
++	if (argc != 6 || (strcmp(argv[1], "server") && strcmp(argv[1], "client"))) {
++		printf("%s <server|client> <LOCAL_IP> <LOCAL_PORT> <REMOTE_IP> <REMOTE_PORT>\n",
++		       argv[0]);
++		return -1;
++	}
++
++	sd = socket(AF_INET, SOCK_SEQPACKET, IPPROTO_SCTP);
++	if (sd < 0) {
++		printf("Failed to create sd\n");
++		return -1;
++	}
++
++	saddr.sin_family = AF_INET;
++	saddr.sin_addr.s_addr = inet_addr(argv[2]);
++	saddr.sin_port = htons(atoi(argv[3]));
++
++	ret = bind(sd, (struct sockaddr *)&saddr, sizeof(saddr));
++	if (ret < 0) {
++		printf("Failed to bind to address\n");
++		goto out;
++	}
++
++	ret = listen(sd, 5);
++	if (ret < 0) {
++		printf("Failed to listen on port\n");
++		goto out;
++	}
++
++	daddr.sin_family = AF_INET;
++	daddr.sin_addr.s_addr = inet_addr(argv[4]);
++	daddr.sin_port = htons(atoi(argv[5]));
++
++	/* make test shorter than 25s */
++	ret = setsockopt(sd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
++	if (ret < 0) {
++		printf("Failed to setsockopt SO_RCVTIMEO\n");
++		goto out;
++	}
++
++	if (!strcmp(argv[1], "server")) {
++		sleep(1); /* wait a bit for client's INIT */
++		ret = connect(sd, (struct sockaddr *)&daddr, len);
++		if (ret < 0) {
++			printf("Failed to connect to peer\n");
++			goto out;
++		}
++		ret = recvfrom(sd, buf, sizeof(buf), 0, (struct sockaddr *)&daddr, &len);
++		if (ret < 0) {
++			printf("Failed to recv msg %d\n", ret);
++			goto out;
++		}
++		ret = sendto(sd, buf, strlen(buf) + 1, 0, (struct sockaddr *)&daddr, len);
++		if (ret < 0) {
++			printf("Failed to send msg %d\n", ret);
++			goto out;
++		}
++		printf("Server: sent! %d\n", ret);
++	}
++
++	if (!strcmp(argv[1], "client")) {
++		usleep(300000); /* wait a bit for server's listening */
++		ret = connect(sd, (struct sockaddr *)&daddr, len);
++		if (ret < 0) {
++			printf("Failed to connect to peer\n");
++			goto out;
++		}
++		sleep(1); /* wait a bit for server's delayed INIT_ACK to reproduce the issue */
++		ret = sendto(sd, buf, strlen(buf) + 1, 0, (struct sockaddr *)&daddr, len);
++		if (ret < 0) {
++			printf("Failed to send msg %d\n", ret);
++			goto out;
++		}
++		ret = recvfrom(sd, buf, sizeof(buf), 0, (struct sockaddr *)&daddr, &len);
++		if (ret < 0) {
++			printf("Failed to recv msg %d\n", ret);
++			goto out;
++		}
++		printf("Client: rcvd! %d\n", ret);
++	}
++	ret = 0;
++out:
++	close(sd);
++	return ret;
++}
 -- 
 2.42.0
 
