@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0AE3A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618643A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m03QmxrE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1A2C433C8;
-	Wed, 15 Nov 2023 19:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwTZyUhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123B6C433C9;
+	Wed, 15 Nov 2023 19:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077285;
-	bh=AMMxei8dkpZfo6jZF3aFVUCYwYI3/SjkYkWVahThkIw=;
+	s=korg; t=1700077287;
+	bh=vw2d8mKPW2SiRR9wi9NmJNl9ahS6DRnQgfzPMuBp6xI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m03QmxrEFbcvQD94FtvNP9owchUEv22CwdJvc5vvE2JB+HToiteaZ8gs1XPuSiRGS
-	 9VcTn/rtkYoK0XZrrv3WmANywpa75bB4pv1ZHkj78ywnxzsDVBzmpZIrPY9ty2iTJV
-	 0+6bTLLrnMVMM/ZN38zt0i/4FaH7gSTueP6w5B+8=
+	b=qwTZyUhUu92a3GBH0UAesvkuxCAeSgo9FHP2DOD4HYUhzDP+tqt04BZMhAI1Rv5Jk
+	 wXXtXrTsDbvAKIqq4tXmEiQc5OgF81pDkbo+Q0z/XNqsdd5Z6uvTpTb68aZw8I2I75
+	 s/wiW2CEzxJWTyOKYdOWYT8PD0eNmCCxpUEa3/XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 189/603] clk: mediatek: clk-mt7629-eth: Add check for mtk_alloc_clk_data
-Date: Wed, 15 Nov 2023 14:12:14 -0500
-Message-ID: <20231115191626.323834206@linuxfoundation.org>
+Subject: [PATCH 6.6 190/603] clk: mediatek: clk-mt7629: Add check for mtk_alloc_clk_data
+Date: Wed, 15 Nov 2023 14:12:15 -0500
+Message-ID: <20231115191626.399326579@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,43 +45,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 0884393c63cc9a1772f7121a6645ba7bd76feeb9 ]
+[ Upstream commit 2befa515c1bb6cdd33c262b909d93d1973a219aa ]
 
 Add the check for the return value of mtk_alloc_clk_data() in order to
 avoid NULL pointer dereference.
 
 Fixes: 3b5e748615e7 ("clk: mediatek: add clock support for MT7629 SoC")
 Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230912093407.21505-4-jiasheng@iscas.ac.cn
+Link: https://lore.kernel.org/r/20230912093407.21505-5-jiasheng@iscas.ac.cn
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt7629-eth.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/mediatek/clk-mt7629.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/clk/mediatek/clk-mt7629-eth.c b/drivers/clk/mediatek/clk-mt7629-eth.c
-index fe714debdc9ec..1bfedc988cfe8 100644
---- a/drivers/clk/mediatek/clk-mt7629-eth.c
-+++ b/drivers/clk/mediatek/clk-mt7629-eth.c
-@@ -77,6 +77,8 @@ static int clk_mt7629_ethsys_init(struct platform_device *pdev)
- 	int r;
+diff --git a/drivers/clk/mediatek/clk-mt7629.c b/drivers/clk/mediatek/clk-mt7629.c
+index 2882107d0f240..b8a1f01bc974d 100644
+--- a/drivers/clk/mediatek/clk-mt7629.c
++++ b/drivers/clk/mediatek/clk-mt7629.c
+@@ -555,6 +555,8 @@ static int mtk_topckgen_init(struct platform_device *pdev)
+ 		return PTR_ERR(base);
  
- 	clk_data = mtk_alloc_clk_data(CLK_ETH_NR_CLK);
+ 	clk_data = mtk_alloc_clk_data(CLK_TOP_NR_CLK);
 +	if (!clk_data)
 +		return -ENOMEM;
  
- 	mtk_clk_register_gates(&pdev->dev, node, eth_clks,
- 			       CLK_ETH_NR_CLK, clk_data);
-@@ -100,6 +102,8 @@ static int clk_mt7629_sgmiisys_init(struct platform_device *pdev)
- 	int r;
+ 	mtk_clk_register_fixed_clks(top_fixed_clks, ARRAY_SIZE(top_fixed_clks),
+ 				    clk_data);
+@@ -579,6 +581,8 @@ static int mtk_infrasys_init(struct platform_device *pdev)
+ 	struct clk_hw_onecell_data *clk_data;
  
- 	clk_data = mtk_alloc_clk_data(CLK_SGMII_NR_CLK);
+ 	clk_data = mtk_alloc_clk_data(CLK_INFRA_NR_CLK);
 +	if (!clk_data)
 +		return -ENOMEM;
  
- 	mtk_clk_register_gates(&pdev->dev, node, sgmii_clks[id++],
- 			       CLK_SGMII_NR_CLK, clk_data);
+ 	mtk_clk_register_gates(&pdev->dev, node, infra_clks,
+ 			       ARRAY_SIZE(infra_clks), clk_data);
+@@ -602,6 +606,8 @@ static int mtk_pericfg_init(struct platform_device *pdev)
+ 		return PTR_ERR(base);
+ 
+ 	clk_data = mtk_alloc_clk_data(CLK_PERI_NR_CLK);
++	if (!clk_data)
++		return -ENOMEM;
+ 
+ 	mtk_clk_register_gates(&pdev->dev, node, peri_clks,
+ 			       ARRAY_SIZE(peri_clks), clk_data);
 -- 
 2.42.0
 
