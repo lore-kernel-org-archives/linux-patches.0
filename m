@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CC3381A5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EB839FC0
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DysvB4S1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC150C4E778;
-	Wed, 15 Nov 2023 20:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfJkuWGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E56C4E778;
+	Wed, 15 Nov 2023 20:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081795;
-	bh=aqMR1SYtHF5nwjqyalx1u6sRMYEF/n1VmFSYUtOyqOU=;
+	s=korg; t=1700081796;
+	bh=bdo27XlWC94e0iogh0M66DTKhCOuWr5w/K4hLWf3SiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DysvB4S1XdE7J/x+tmx8ZE/GqfO9MU9ujl6c55FjAbVrDrqgLHN+3azXBxr2Lg1wx
-	 oTy7fIczcxuOmLzwY0aaO8GRObt/RCoHJGQ9t0KCkZTaOAxU64fNBryMn2vBYpyhNp
-	 XrFmsplB6m+s8C+hF7VPmMLtq9yrilPAHwuBUXlI=
+	b=lfJkuWGRWGs9iOSBz5R1DdvUikkdP7pQUosp/+e8Bqt81oeUvwY21+EJVxnJaWTu7
+	 uaU+YUGyQ2QK6OZNXk1Pwmbel84KC8+8QfobUqF29iL5IJLF8M+Xim2v0WPaVW7uZ7
+	 OsqVHDRRl0Na9KCvshRjLeKt6r9XYovWd1e/Pv48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 129/191] misc: st_core: Do not call kfree_skb() under spin_lock_irqsave()
-Date: Wed, 15 Nov 2023 15:46:44 -0500
-Message-ID: <20231115204652.270333796@linuxfoundation.org>
+Subject: [PATCH 5.10 105/191] RDMA/hfi1: Workaround truncation compilation error
+Date: Wed, 15 Nov 2023 15:46:20 -0500
+Message-ID: <20231115204650.879144063@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -35,69 +37,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 4d08c3d12b61022501989f9f071514d2d6f77c47 ]
+[ Upstream commit d4b2d165714c0ce8777d5131f6e0aad617b7adc4 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with hardware interrupts being disabled.
-So replace kfree_skb() with dev_kfree_skb_irq() under
-spin_lock_irqsave(). Compile tested only.
+Increase name array to be large enough to overcome the following
+compilation error.
 
-Fixes: 53618cc1e51e ("Staging: sources for ST core")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20230823035020.1281892-1-ruanjinjie@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+drivers/infiniband/hw/hfi1/efivar.c: In function ‘read_hfi1_efi_var’:
+drivers/infiniband/hw/hfi1/efivar.c:124:44: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
+  124 |         snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |                                            ^
+drivers/infiniband/hw/hfi1/efivar.c:124:9: note: ‘snprintf’ output 2 or more bytes (assuming 65) into a destination of size 64
+  124 |         snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/infiniband/hw/hfi1/efivar.c:133:52: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
+  133 |                 snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |                                                    ^
+drivers/infiniband/hw/hfi1/efivar.c:133:17: note: ‘snprintf’ output 2 or more bytes (assuming 65) into a destination of size 64
+  133 |                 snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+make[6]: *** [scripts/Makefile.build:243: drivers/infiniband/hw/hfi1/efivar.o] Error 1
+
+Fixes: c03c08d50b3d ("IB/hfi1: Check upper-case EFI variables")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/238fa39a8fd60e87a5ad7e1ca6584fcdf32e9519.1698159993.git.leonro@nvidia.com
+Acked-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ti-st/st_core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hfi1/efivar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/misc/ti-st/st_core.c b/drivers/misc/ti-st/st_core.c
-index f4ddd1e670151..ca115f344fa29 100644
---- a/drivers/misc/ti-st/st_core.c
-+++ b/drivers/misc/ti-st/st_core.c
-@@ -15,6 +15,7 @@
- #include <linux/skbuff.h>
+diff --git a/drivers/infiniband/hw/hfi1/efivar.c b/drivers/infiniband/hw/hfi1/efivar.c
+index c22ab7b5163b3..49b2c751197e2 100644
+--- a/drivers/infiniband/hw/hfi1/efivar.c
++++ b/drivers/infiniband/hw/hfi1/efivar.c
+@@ -152,7 +152,7 @@ int read_hfi1_efi_var(struct hfi1_devdata *dd, const char *kind,
+ 		      unsigned long *size, void **return_data)
+ {
+ 	char prefix_name[64];
+-	char name[64];
++	char name[128];
+ 	int result;
+ 	int i;
  
- #include <linux/ti_wilink_st.h>
-+#include <linux/netdevice.h>
- 
- extern void st_kim_recv(void *, const unsigned char *, long);
- void st_int_recv(void *, const unsigned char *, long);
-@@ -436,7 +437,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
- 	case ST_LL_AWAKE_TO_ASLEEP:
- 		pr_err("ST LL is illegal state(%ld),"
- 			   "purging received skb.", st_ll_getstate(st_gdata));
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
- 	case ST_LL_ASLEEP:
- 		skb_queue_tail(&st_gdata->tx_waitq, skb);
-@@ -445,7 +446,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
- 	default:
- 		pr_err("ST LL is illegal state(%ld),"
- 			   "purging received skb.", st_ll_getstate(st_gdata));
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
- 	}
- 
-@@ -499,7 +500,7 @@ void st_tx_wakeup(struct st_data_s *st_data)
- 				spin_unlock_irqrestore(&st_data->lock, flags);
- 				break;
- 			}
--			kfree_skb(skb);
-+			dev_kfree_skb_irq(skb);
- 			spin_unlock_irqrestore(&st_data->lock, flags);
- 		}
- 		/* if wake-up is set in another context- restart sending */
 -- 
 2.42.0
 
