@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442023A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4C33A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="foRQAhi5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7953C433CA;
-	Wed, 15 Nov 2023 19:50:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tlc22wjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B323C433C7;
+	Wed, 15 Nov 2023 19:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077835;
-	bh=j2KEYlzgfsJLKEDidkXcwtZld7EuNwgX8LhJKFKsl2w=;
+	s=korg; t=1700077836;
+	bh=ELENKTKIZpWkqdXG5W/ID8soMegYvFgxo1YIcR4p85E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=foRQAhi55ILQBaDKuJs3ve58AvleV6xRO7ORcYk+jHFHa1zjPjD/cAZFA/cHjBFSC
-	 kJ0pVNVt3o1JI2uNOsZ/jAEb3B65dAr7ypsywPjsgOm+UcnkbrbwV1HmKOm79p0veh
-	 UIn1bUxpA76O1dwv+o32xqrPhzSHlqUv1C7viTEk=
+	b=Tlc22wjPxu7lwzo/PKorLE3tj8ulinHcttgDL6uK/QkBQTW29J0AfqWMIbePlhlYm
+	 WXbl6qfd5cikH4XrVqmnl75XQ3Mx2D3GK8YD7eTL79AaRnAi47S2jTqoHHDKuIDbf1
+	 ja3i+IraB2iL68p8vxDGcYId02POWgHWcHMYrBXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Yunsheng Lin <linyunsheng@huawei.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 549/603] net: page_pool: add missing free_percpu when page_pool_init fail
-Date: Wed, 15 Nov 2023 14:18:14 -0500
-Message-ID: <20231115191649.722516978@linuxfoundation.org>
+Subject: [PATCH 6.6 550/603] dccp: Call security_inet_conn_request() after setting IPv4 addresses.
+Date: Wed, 15 Nov 2023 14:18:15 -0500
+Message-ID: <20231115191649.780031453@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -47,46 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 8ffbd1669ed1d58939d6e878dffaa2f60bf961a4 ]
+[ Upstream commit fa2df45af13091f76b89adb84a28f13818d5d631 ]
 
-When ptr_ring_init() returns failure in page_pool_init(), free_percpu()
-is not called to free pool->recycle_stats, which may cause memory
-leak.
+Initially, commit 4237c75c0a35 ("[MLSXFRM]: Auto-labeling of child
+sockets") introduced security_inet_conn_request() in some functions
+where reqsk is allocated.  The hook is added just after the allocation,
+so reqsk's IPv4 remote address was not initialised then.
 
-Fixes: ad6fa1e1ab1b ("page_pool: Add recycle stats")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Yunsheng Lin <linyunsheng@huawei.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Link: https://lore.kernel.org/r/20231030091256.2915394-1-shaojijie@huawei.com
+However, SELinux/Smack started to read it in netlbl_req_setattr()
+after the cited commits.
+
+This bug was partially fixed by commit 284904aa7946 ("lsm: Relocate
+the IPv4 security_inet_conn_request() hooks").
+
+This patch fixes the last bug in DCCPv4.
+
+Fixes: 389fb800ac8b ("netlabel: Label incoming TCP connections correctly in SELinux")
+Fixes: 07feee8f812f ("netlabel: Cleanup the Smack/NetLabel code to fix incoming TCP connections")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/page_pool.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/dccp/ipv4.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 77cb75e63aca1..31f923e7b5c40 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -221,8 +221,12 @@ static int page_pool_init(struct page_pool *pool,
- 		return -ENOMEM;
- #endif
+diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
+index 69453b936bd55..524b7e581a036 100644
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -629,9 +629,6 @@ int dccp_v4_conn_request(struct sock *sk, struct sk_buff *skb)
+ 	if (dccp_parse_options(sk, dreq, skb))
+ 		goto drop_and_free;
  
--	if (ptr_ring_init(&pool->ring, ring_qsize, GFP_KERNEL) < 0)
-+	if (ptr_ring_init(&pool->ring, ring_qsize, GFP_KERNEL) < 0) {
-+#ifdef CONFIG_PAGE_POOL_STATS
-+		free_percpu(pool->recycle_stats);
-+#endif
- 		return -ENOMEM;
-+	}
+-	if (security_inet_conn_request(sk, skb, req))
+-		goto drop_and_free;
+-
+ 	ireq = inet_rsk(req);
+ 	sk_rcv_saddr_set(req_to_sk(req), ip_hdr(skb)->daddr);
+ 	sk_daddr_set(req_to_sk(req), ip_hdr(skb)->saddr);
+@@ -639,6 +636,9 @@ int dccp_v4_conn_request(struct sock *sk, struct sk_buff *skb)
+ 	ireq->ireq_family = AF_INET;
+ 	ireq->ir_iif = READ_ONCE(sk->sk_bound_dev_if);
  
- 	atomic_set(&pool->pages_state_release_cnt, 0);
- 
++	if (security_inet_conn_request(sk, skb, req))
++		goto drop_and_free;
++
+ 	/*
+ 	 * Step 3: Process LISTEN state
+ 	 *
 -- 
 2.42.0
 
