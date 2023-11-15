@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5804545BE4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD4A3FE20
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phaxFynI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38ACC433C9;
-	Wed, 15 Nov 2023 22:04:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXCGj2IV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4EAC433C7;
+	Wed, 15 Nov 2023 22:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085848;
-	bh=A8of6eC+7jUBvIl8y70Y5nkBkIwcKGt0wgw5/lGj5ko=;
+	s=korg; t=1700085850;
+	bh=0A+ikMJ98iq/Wabzy6yKcxRbuEESj08sEen0GPlP0D4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phaxFynIalAR7OdM3yzVj6Ek3jNMEhY8JSn7YQE61kpJHJ5FYi5iO9bbn5j/WyXbf
-	 +agYgV0ZNwa/y/rv6/CkZuf1MLLAwfQIYO1zq9F2GILu4sU0GIJnLRrHO0S6oRch1q
-	 O2q6MvM9GSa27ZP3gf4ngrgXJOwXeaBtr471P+mY=
+	b=IXCGj2IVYXTuLIIBzFK8yjXL9uMxZ2Ry1mTFmmoZwUEkjJmuBFaGDV2yxKyuS980m
+	 IFBq7xjhOHbTtkyO0DDc83NelSyFqxGSiR90vgbA8+s8EPNo66Nt9rUCyBWj+EKE3A
+	 guJkEyTZ5HxFaMJjc5Rt1XGC+tjfptz8qaaky6fA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Lee Jones <lee.jones@linaro.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 094/119] regmap: prevent noinc writes from clobbering cache
-Date: Wed, 15 Nov 2023 17:01:24 -0500
-Message-ID: <20231115220135.550577696@linuxfoundation.org>
+Subject: [PATCH 5.4 095/119] pwm: sti: Avoid conditional gotos
+Date: Wed, 15 Nov 2023 17:01:25 -0500
+Message-ID: <20231115220135.586211058@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -36,61 +37,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ben Wolsieffer <ben.wolsieffer@hefring.com>
+From: Thierry Reding <thierry.reding@gmail.com>
 
-[ Upstream commit 984a4afdc87a1fc226fd657b1cd8255c13d3fc1a ]
+[ Upstream commit fd3ae02bb66f091e55f363d32eca7b4039977bf5 ]
 
-Currently, noinc writes are cached as if they were standard incrementing
-writes, overwriting unrelated register values in the cache. Instead, we
-want to cache the last value written to the register, as is done in the
-accelerated noinc handler (regmap_noinc_readwrite).
+Using gotos for conditional code complicates this code significantly.
+Convert the code to simple conditional blocks to increase readability.
 
-Fixes: cdf6b11daa77 ("regmap: Add regmap_noinc_write API")
-Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
-Link: https://lore.kernel.org/r/20231101142926.2722603-2-ben.wolsieffer@hefring.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Lee Jones <lee.jones@linaro.org>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 2d6812b41e0d ("pwm: sti: Reduce number of allocations and drop usage of chip_data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/pwm/pwm-sti.c | 48 ++++++++++++++++++++-----------------------
+ 1 file changed, 22 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
-index b5974cbbe78f6..23574c328616f 100644
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -1495,17 +1495,19 @@ static int _regmap_raw_write_impl(struct regmap *map, unsigned int reg,
+diff --git a/drivers/pwm/pwm-sti.c b/drivers/pwm/pwm-sti.c
+index 1508616d794cd..973f76856a508 100644
+--- a/drivers/pwm/pwm-sti.c
++++ b/drivers/pwm/pwm-sti.c
+@@ -593,38 +593,34 @@ static int sti_pwm_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (!cdata->pwm_num_devs)
+-		goto skip_pwm;
+-
+-	pc->pwm_clk = of_clk_get_by_name(dev->of_node, "pwm");
+-	if (IS_ERR(pc->pwm_clk)) {
+-		dev_err(dev, "failed to get PWM clock\n");
+-		return PTR_ERR(pc->pwm_clk);
+-	}
++	if (cdata->pwm_num_devs) {
++		pc->pwm_clk = of_clk_get_by_name(dev->of_node, "pwm");
++		if (IS_ERR(pc->pwm_clk)) {
++			dev_err(dev, "failed to get PWM clock\n");
++			return PTR_ERR(pc->pwm_clk);
++		}
+ 
+-	ret = clk_prepare(pc->pwm_clk);
+-	if (ret) {
+-		dev_err(dev, "failed to prepare clock\n");
+-		return ret;
++		ret = clk_prepare(pc->pwm_clk);
++		if (ret) {
++			dev_err(dev, "failed to prepare clock\n");
++			return ret;
++		}
  	}
  
- 	if (!map->cache_bypass && map->format.parse_val) {
--		unsigned int ival;
-+		unsigned int ival, offset;
- 		int val_bytes = map->format.val_bytes;
--		for (i = 0; i < val_len / val_bytes; i++) {
--			ival = map->format.parse_val(val + (i * val_bytes));
--			ret = regcache_write(map,
--					     reg + regmap_get_offset(map, i),
--					     ival);
-+
-+		/* Cache the last written value for noinc writes */
-+		i = noinc ? val_len - val_bytes : 0;
-+		for (; i < val_len; i += val_bytes) {
-+			ival = map->format.parse_val(val + i);
-+			offset = noinc ? 0 : regmap_get_offset(map, i / val_bytes);
-+			ret = regcache_write(map, reg + offset, ival);
- 			if (ret) {
- 				dev_err(map->dev,
- 					"Error in caching of register: %x ret: %d\n",
--					reg + regmap_get_offset(map, i), ret);
-+					reg + offset, ret);
- 				return ret;
- 			}
- 		}
+-skip_pwm:
+-	if (!cdata->cpt_num_devs)
+-		goto skip_cpt;
+-
+-	pc->cpt_clk = of_clk_get_by_name(dev->of_node, "capture");
+-	if (IS_ERR(pc->cpt_clk)) {
+-		dev_err(dev, "failed to get PWM capture clock\n");
+-		return PTR_ERR(pc->cpt_clk);
+-	}
++	if (cdata->cpt_num_devs) {
++		pc->cpt_clk = of_clk_get_by_name(dev->of_node, "capture");
++		if (IS_ERR(pc->cpt_clk)) {
++			dev_err(dev, "failed to get PWM capture clock\n");
++			return PTR_ERR(pc->cpt_clk);
++		}
+ 
+-	ret = clk_prepare(pc->cpt_clk);
+-	if (ret) {
+-		dev_err(dev, "failed to prepare clock\n");
+-		return ret;
++		ret = clk_prepare(pc->cpt_clk);
++		if (ret) {
++			dev_err(dev, "failed to prepare clock\n");
++			return ret;
++		}
+ 	}
+ 
+-skip_cpt:
+ 	pc->chip.dev = dev;
+ 	pc->chip.ops = &sti_pwm_ops;
+ 	pc->chip.base = -1;
 -- 
 2.42.0
 
