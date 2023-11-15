@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187863309F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944AF3A8C9
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLd4c6mP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1E2C433C8;
-	Wed, 15 Nov 2023 19:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCj970LP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4223FC433C8;
+	Wed, 15 Nov 2023 19:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077689;
-	bh=z7QuIdLpA6UyqVG21L0xByF246Itg0y/SBDtwA+BCmQ=;
+	s=korg; t=1700077691;
+	bh=/QgmWfcKhBFhkZb7WkIum4DPlSTwh056pwgjL1OHIDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FLd4c6mPI5DXr6wIhq/lm+JBL2FxiaiJcnDE05RylwTWZOmGZr8OrviW0oggNi8J0
-	 IOBo5t+hmzVx9ndZlxlz3IWzwakzUqhKq8iHIKQxYNPCSNvBH1Va6BhJzV1I2z26We
-	 pqCZDXetkuGSvvdscBOt5N23+rYtTFvyYbsSMkhM=
+	b=QCj970LPlssVkANrjSbPOT/yoLxAy/aBCxhoF3x6P+P5zg5Hd2Kbd6uIMLZzi4FOS
+	 4fcu6756af1sRScp9IEtz6YGkCukdETSmYQK3Qgk2FSP6qXKp9zAw64becFQCpm0Jb
+	 Pb6uLjrmdyfr9j+gkuASKdkZxSQK4c1tJrxG9vqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 458/603] interconnect: qcom: osm-l3: Replace custom implementation of COUNT_ARGS()
-Date: Wed, 15 Nov 2023 14:16:43 -0500
-Message-ID: <20231115191644.325755564@linuxfoundation.org>
+Subject: [PATCH 6.6 459/603] powerpc: Only define __parse_fpscr() when required
+Date: Wed, 15 Nov 2023 14:16:44 -0500
+Message-ID: <20231115191644.382715330@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,42 +43,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 577a3c5af1fe87b65931ea94d5515266da301f56 ]
+[ Upstream commit c7e0d9bb9154c6e6b2ac8746faba27b53393f25e ]
 
-Replace custom and non-portable implementation of COUNT_ARGS().
+Clang 17 reports:
 
-Fixes: 5bc9900addaf ("interconnect: qcom: Add OSM L3 interconnect provider support")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230920154927.2090732-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+arch/powerpc/kernel/traps.c:1167:19: error: unused function '__parse_fpscr' [-Werror,-Wunused-function]
+
+__parse_fpscr() is called from two sites. First call is guarded
+by #ifdef CONFIG_PPC_FPU_REGS
+
+Second call is guarded by CONFIG_MATH_EMULATION which selects
+CONFIG_PPC_FPU_REGS.
+
+So only define __parse_fpscr() when CONFIG_PPC_FPU_REGS is defined.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202309210327.WkqSd5Bq-lkp@intel.com/
+Fixes: b6254ced4da6 ("powerpc/signal: Don't manage floating point regs when no FPU")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/5de2998c57f3983563b27b39228ea9a7229d4110.1695385984.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/osm-l3.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/kernel/traps.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-index dc321bb86d0be..e97478bbc2825 100644
---- a/drivers/interconnect/qcom/osm-l3.c
-+++ b/drivers/interconnect/qcom/osm-l3.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-  */
+diff --git a/arch/powerpc/kernel/traps.c b/arch/powerpc/kernel/traps.c
+index 64ff37721fd06..fe3f720c9cd61 100644
+--- a/arch/powerpc/kernel/traps.c
++++ b/arch/powerpc/kernel/traps.c
+@@ -1164,6 +1164,7 @@ void emulate_single_step(struct pt_regs *regs)
+ 		__single_step_exception(regs);
+ }
  
-+#include <linux/args.h>
- #include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/interconnect-provider.h>
-@@ -78,7 +79,7 @@ enum {
- 		.name = #_name,						\
- 		.id = _id,						\
- 		.buswidth = _buswidth,					\
--		.num_links = ARRAY_SIZE(((int[]){ __VA_ARGS__ })),	\
-+		.num_links = COUNT_ARGS(__VA_ARGS__),			\
- 		.links = { __VA_ARGS__ },				\
- 	}
++#ifdef CONFIG_PPC_FPU_REGS
+ static inline int __parse_fpscr(unsigned long fpscr)
+ {
+ 	int ret = FPE_FLTUNK;
+@@ -1190,6 +1191,7 @@ static inline int __parse_fpscr(unsigned long fpscr)
  
+ 	return ret;
+ }
++#endif
+ 
+ static void parse_fpe(struct pt_regs *regs)
+ {
 -- 
 2.42.0
 
