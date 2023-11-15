@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BBA3C477
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7163C486
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dd4CJca+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373C3C433C9;
-	Wed, 15 Nov 2023 19:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GzltkdGT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 440D0C433C7;
+	Wed, 15 Nov 2023 19:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077220;
-	bh=0xAxlfNM1DrQIyO/PB63GKHoK+hacvsK3I29BudszeI=;
+	s=korg; t=1700077222;
+	bh=IW1V4PK8zJXnTL455FH3ghyeV1a2UTzO4t2wPWtQ3Fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dd4CJca+Siu2kM6csSuRKGuQm/t3CUbyufApcvGVbgZaYIZd7Msi+4YFjH2zGGHzi
-	 rAm90D/KPPVdgLDuNJm26o21iH1CMa7m2jT+IlX9xi7Wxy36PpaDkQkhPmxRwoUJ1Y
-	 kOrN/pf28PfBZV8YcLVJYPZrNBcswFE/bI9dFEcc=
+	b=GzltkdGTsaTr4wTubNE+g0AyKlxZ+e/B5dZlBeEB0w6C6QYZFtW8bG3OXW9eHGsOo
+	 0iOYFfstL+K3ZBD/ms7JqT6t0fb8MblgebVJJaIspxZUy2MRlwRj6+3jsEfMSVvy/z
+	 XviQ+ExjmSSnIICyAKBdO0w/pAE3ECJgDiJ0wUaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
 	Peng Fan <peng.fan@nxp.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 171/603] clk: imx: imx8: Fix an error handling path in imx8_acm_clk_probe()
-Date: Wed, 15 Nov 2023 14:11:56 -0500
-Message-ID: <20231115191625.041636428@linuxfoundation.org>
+Subject: [PATCH 6.6 172/603] clk: imx: imx8mq: correct error handling path
+Date: Wed, 15 Nov 2023 14:11:57 -0500
+Message-ID: <20231115191625.115805760@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,56 +44,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit e9a164e367f039629fd5466a79b9f495646e1261 ]
+[ Upstream commit 577ad169966e6e75b10e004389a3f79813e84b5d ]
 
-If an error occurs after a successful clk_imx_acm_attach_pm_domains() call,
-it must be undone.
+Avoid memory leak in error handling path. It does not make
+much sense for the SoC without clk driver, to make program behavior
+correct, let's fix it.
 
-Add an explicit error handling path, re-order the code and add the missing
-clk_imx_acm_detach_pm_domains() call.
-
-Fixes: d3a0946d7ac9 ("clk: imx: imx8: add audio clock mux driver")
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Fixes: b80522040cd3 ("clk: imx: Add clock driver for i.MX8MQ CCM")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202309240551.e46NllPa-lkp@intel.com/
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20231001122618.194498-1-peng.fan@oss.nxp.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8-acm.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/clk/imx/clk-imx8mq.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8-acm.c b/drivers/clk/imx/clk-imx8-acm.c
-index 73b3b53549517..1c95ae905eec8 100644
---- a/drivers/clk/imx/clk-imx8-acm.c
-+++ b/drivers/clk/imx/clk-imx8-acm.c
-@@ -374,7 +374,6 @@ static int imx8_acm_clk_probe(struct platform_device *pdev)
- 										0, NULL, NULL);
- 		if (IS_ERR(hws[sels[i].clkid])) {
- 			ret = PTR_ERR(hws[sels[i].clkid]);
--			pm_runtime_disable(&pdev->dev);
- 			goto err_clk_register;
- 		}
- 	}
-@@ -384,12 +383,16 @@ static int imx8_acm_clk_probe(struct platform_device *pdev)
- 	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_hw_data);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to register hws for ACM\n");
--		pm_runtime_disable(&pdev->dev);
-+		goto err_clk_register;
- 	}
+diff --git a/drivers/clk/imx/clk-imx8mq.c b/drivers/clk/imx/clk-imx8mq.c
+index 4bd65879fcd34..f70ed231b92d6 100644
+--- a/drivers/clk/imx/clk-imx8mq.c
++++ b/drivers/clk/imx/clk-imx8mq.c
+@@ -288,8 +288,7 @@ static int imx8mq_clocks_probe(struct platform_device *pdev)
+ 	void __iomem *base;
+ 	int err;
  
--err_clk_register:
-+	pm_runtime_put_sync(&pdev->dev);
-+	return 0;
+-	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws,
+-					  IMX8MQ_CLK_END), GFP_KERNEL);
++	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws, IMX8MQ_CLK_END), GFP_KERNEL);
+ 	if (WARN_ON(!clk_hw_data))
+ 		return -ENOMEM;
  
-+err_clk_register:
- 	pm_runtime_put_sync(&pdev->dev);
-+	pm_runtime_disable(&pdev->dev);
-+	clk_imx_acm_detach_pm_domains(&pdev->dev, &priv->dev_pm);
+@@ -306,10 +305,12 @@ static int imx8mq_clocks_probe(struct platform_device *pdev)
+ 	hws[IMX8MQ_CLK_EXT4] = imx_get_clk_hw_by_name(np, "clk_ext4");
  
- 	return ret;
- }
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mq-anatop");
+-	base = of_iomap(np, 0);
++	base = devm_of_iomap(dev, np, 0, NULL);
+ 	of_node_put(np);
+-	if (WARN_ON(!base))
+-		return -ENOMEM;
++	if (WARN_ON(IS_ERR(base))) {
++		err = PTR_ERR(base);
++		goto unregister_hws;
++	}
+ 
+ 	hws[IMX8MQ_ARM_PLL_REF_SEL] = imx_clk_hw_mux("arm_pll_ref_sel", base + 0x28, 16, 2, pll_ref_sels, ARRAY_SIZE(pll_ref_sels));
+ 	hws[IMX8MQ_GPU_PLL_REF_SEL] = imx_clk_hw_mux("gpu_pll_ref_sel", base + 0x18, 16, 2, pll_ref_sels, ARRAY_SIZE(pll_ref_sels));
+@@ -395,8 +396,10 @@ static int imx8mq_clocks_probe(struct platform_device *pdev)
+ 
+ 	np = dev->of_node;
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+-	if (WARN_ON(IS_ERR(base)))
+-		return PTR_ERR(base);
++	if (WARN_ON(IS_ERR(base))) {
++		err = PTR_ERR(base);
++		goto unregister_hws;
++	}
+ 
+ 	/* CORE */
+ 	hws[IMX8MQ_CLK_A53_DIV] = imx8m_clk_hw_composite_core("arm_a53_div", imx8mq_a53_sels, base + 0x8000);
 -- 
 2.42.0
 
