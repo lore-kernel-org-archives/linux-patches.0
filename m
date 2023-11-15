@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7003DBA7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E5E3DBAD
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzWcOCjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF876C433C8;
-	Wed, 15 Nov 2023 20:04:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFoKaFIG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B30EC433C7;
+	Wed, 15 Nov 2023 20:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078655;
-	bh=vqx53VUjpZSMz/wlVdSK0/2ARWLxJXZINwzC8T5rw8w=;
+	s=korg; t=1700078657;
+	bh=uE5Qfx3Q1YApZV17kim5vUou/oEYlEsKZb9M4QrWuk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzWcOCjDKuc+VUUSU9ZgMOz3xFEyA/qlO/8YO+/I0s+ttwhOs8VMGF9ORlAMpjjFN
-	 4pg1Kr+ujJaf/8zTvnEyCurZwx5O8WT10x1QfvZaaUnw/IaiVO5u6AJ4RLMfGE7oNn
-	 JZWscbxEqP+F3u68+yleo/VHuR3MTHY12zjQ1Sxo=
+	b=UFoKaFIGA0xkG3ysAr486ZItt1mPU/Ns/WNqajU+e5dfzEiZQCnDCmjMWYjoqIgJW
+	 rLJatnBRKNJSwqP4eXvyvesQf50ZudRKj6nmeCDMTEMwStcLDNB3Xzip/JG9PDaY/E
+	 iRJs4YMTO3BlfmiiurCKmrWbiMRNyV/D70Ym/rjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 05/45] thermal: core: prevent potential string overflow
-Date: Wed, 15 Nov 2023 14:32:42 -0500
-Message-ID: <20231115191419.988445013@linuxfoundation.org>
+Subject: [PATCH 4.14 06/45] ACPI: sysfs: Fix create_pnp_modalias() and create_of_modalias()
+Date: Wed, 15 Nov 2023 14:32:43 -0500
+Message-ID: <20231115191420.061740862@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191419.641552204@linuxfoundation.org>
 References: <20231115191419.641552204@linuxfoundation.org>
@@ -42,45 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit c99626092efca3061b387043d4a7399bf75fbdd5 ]
+[ Upstream commit 48cf49d31994ff97b33c4044e618560ec84d35fb ]
 
-The dev->id value comes from ida_alloc() so it's a number between zero
-and INT_MAX.  If it's too high then these sprintf()s will overflow.
+snprintf() does not return negative values on error.
 
-Fixes: 203d3d4aa482 ("the generic thermal sysfs driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+To know if the buffer was too small, the returned value needs to be
+compared with the length of the passed buffer. If it is greater or
+equal, the output has been truncated, so add checks for the truncation
+to create_pnp_modalias() and create_of_modalias(). Also make them
+return -ENOMEM in that case, as they already do that elsewhere.
+
+Moreover, the remaining size of the buffer used by snprintf() needs to
+be updated after the first write to avoid out-of-bounds access as
+already done correctly in create_pnp_modalias(), but not in
+create_of_modalias(), so change the latter accordingly.
+
+Fixes: 8765c5ba1949 ("ACPI / scan: Rework modalias creation when "compatible" is present")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+[ rjw: Merge two patches into one, combine changelogs, add subject ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/acpi/device_sysfs.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 8374b8078b7df..e24d46f715715 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -737,7 +737,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
- 	if (result)
- 		goto release_ida;
+diff --git a/drivers/acpi/device_sysfs.c b/drivers/acpi/device_sysfs.c
+index 9f4743d9804b5..93e947d5cc435 100644
+--- a/drivers/acpi/device_sysfs.c
++++ b/drivers/acpi/device_sysfs.c
+@@ -164,8 +164,8 @@ static int create_pnp_modalias(struct acpi_device *acpi_dev, char *modalias,
+ 		return 0;
  
--	sprintf(dev->attr_name, "cdev%d_trip_point", dev->id);
-+	snprintf(dev->attr_name, sizeof(dev->attr_name), "cdev%d_trip_point",
-+		 dev->id);
- 	sysfs_attr_init(&dev->attr.attr);
- 	dev->attr.attr.name = dev->attr_name;
- 	dev->attr.attr.mode = 0444;
-@@ -746,7 +747,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
- 	if (result)
- 		goto remove_symbol_link;
+ 	len = snprintf(modalias, size, "acpi:");
+-	if (len <= 0)
+-		return len;
++	if (len >= size)
++		return -ENOMEM;
  
--	sprintf(dev->weight_attr_name, "cdev%d_weight", dev->id);
-+	snprintf(dev->weight_attr_name, sizeof(dev->weight_attr_name),
-+		 "cdev%d_weight", dev->id);
- 	sysfs_attr_init(&dev->weight_attr.attr);
- 	dev->weight_attr.attr.name = dev->weight_attr_name;
- 	dev->weight_attr.attr.mode = S_IWUSR | S_IRUGO;
+ 	size -= len;
+ 
+@@ -218,8 +218,10 @@ static int create_of_modalias(struct acpi_device *acpi_dev, char *modalias,
+ 	len = snprintf(modalias, size, "of:N%sT", (char *)buf.pointer);
+ 	ACPI_FREE(buf.pointer);
+ 
+-	if (len <= 0)
+-		return len;
++	if (len >= size)
++		return -ENOMEM;
++
++	size -= len;
+ 
+ 	of_compatible = acpi_dev->data.of_compatible;
+ 	if (of_compatible->type == ACPI_TYPE_PACKAGE) {
 -- 
 2.42.0
 
