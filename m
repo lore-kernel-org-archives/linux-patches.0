@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA3145BE4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC5045BE4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNinfMEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B14CC433C9;
-	Wed, 15 Nov 2023 22:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UU7eAA9x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A68EC433C7;
+	Wed, 15 Nov 2023 22:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085832;
-	bh=VF/9X/FQTurrAwXZHNZV0b13nRZYg60goZ3YsIoS/RM=;
+	s=korg; t=1700085834;
+	bh=eVn/oyioHFXnJqEdeT0RTcv4spXno6HiT3WyxlEnufo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNinfMEyuE6O5aOng/kL1zgPIJLHv4okupnIkxRArJmpnR+JnrpYH3GUcsLG5RgQ0
-	 x45cfUt1G7wWWEADd0b6/hbrjqLwLczyzEu6ENgkKA+NLwVI0eEvT9qhwhlZdvQpQL
-	 d3huC3RAQTVZQ7jYam795n6/wXvERV781cmISJ6w=
+	b=UU7eAA9xb+b79svRJt/6+wYCw6rakPO1vCG7owQDGw3Hl7ziQsq4mH3aIH2pwlua7
+	 /3KibXc25x7v7OY1rvNpztRsHXZi3ubyYoA62u8OUNVF5mXiC2G/y8O0tkJgJs99ym
+	 sXwtqr38untFyQ1ZoO8w9UYUMYPRhOMLFE9MaV24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Wang Yufen <wangyufen@huawei.com>,
+	"Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 084/119] powerpc/imc-pmu: Use the correct spinlock initializer.
-Date: Wed, 15 Nov 2023 17:01:14 -0500
-Message-ID: <20231115220135.257198324@linuxfoundation.org>
+Subject: [PATCH 5.4 085/119] powerpc/pseries: fix potential memory leak in init_cpu_associativity()
+Date: Wed, 15 Nov 2023 17:01:15 -0500
+Message-ID: <20231115220135.286673774@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -42,38 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 007240d59c11f87ac4f6cfc6a1d116630b6b634c ]
+[ Upstream commit 95f1a128cd728a7257d78e868f1f5a145fc43736 ]
 
-The macro __SPIN_LOCK_INITIALIZER() is implementation specific. Users
-that desire to initialize a spinlock in a struct must use
-__SPIN_LOCK_UNLOCKED().
+If the vcpu_associativity alloc memory successfully but the
+pcpu_associativity fails to alloc memory, the vcpu_associativity
+memory leaks.
 
-Use __SPIN_LOCK_UNLOCKED() for the spinlock_t in imc_global_refc.
-
-Fixes: 76d588dddc459 ("powerpc/imc-pmu: Fix use of mutex in IRQs disabled section")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: d62c8deeb6e6 ("powerpc/pseries: Provide vcpu dispatch statistics")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Reviewed-by: "Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230309134831.Nz12nqsU@linutronix.de
+Link: https://msgid.link/1671003983-10794-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/imc-pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/lpar.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/perf/imc-pmu.c b/arch/powerpc/perf/imc-pmu.c
-index d42f2e091201a..872313021eaa8 100644
---- a/arch/powerpc/perf/imc-pmu.c
-+++ b/arch/powerpc/perf/imc-pmu.c
-@@ -50,7 +50,7 @@ static int trace_imc_mem_size;
-  * core and trace-imc
-  */
- static struct imc_pmu_ref imc_global_refc = {
--	.lock = __SPIN_LOCK_INITIALIZER(imc_global_refc.lock),
-+	.lock = __SPIN_LOCK_UNLOCKED(imc_global_refc.lock),
- 	.id = 0,
- 	.refc = 0,
- };
+diff --git a/arch/powerpc/platforms/pseries/lpar.c b/arch/powerpc/platforms/pseries/lpar.c
+index 55af0e4cf355b..52e466d4a33ca 100644
+--- a/arch/powerpc/platforms/pseries/lpar.c
++++ b/arch/powerpc/platforms/pseries/lpar.c
+@@ -522,8 +522,10 @@ static ssize_t vcpudispatch_stats_write(struct file *file, const char __user *p,
+ 
+ 	if (cmd) {
+ 		rc = init_cpu_associativity();
+-		if (rc)
++		if (rc) {
++			destroy_cpu_associativity();
+ 			goto out;
++		}
+ 
+ 		for_each_possible_cpu(cpu) {
+ 			disp = per_cpu_ptr(&vcpu_disp_data, cpu);
 -- 
 2.42.0
 
