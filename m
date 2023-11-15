@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2391B3BB23
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B981E3C462
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgusZSdH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B703C433CB;
-	Wed, 15 Nov 2023 19:44:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ze5KS9Yx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677C5C433C7;
+	Wed, 15 Nov 2023 19:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077489;
-	bh=y2/PV3/rMnSjUlHYhnzpTCHosRTEBkzwWVDXMNBRaZc=;
+	s=korg; t=1700077490;
+	bh=ir6H2/ITInqR0NdlojyeJGzoS9S7QpZ8YdKThMruzsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgusZSdHBYORslE0YnPIZ+rksrChUuG/Td8frsn+xQT31n1G+HkI5rmtSvIqV42Y4
-	 5zJ/2k0AoVOelETh3KG+BRrbeUeaVBU4QpFWU9XT2OfC4R4Nd32JWL3InnCBQ6K1Wg
-	 GPZsdgBDdMGxung+ISbsl7lt6wPL4d6ZyMO+w3mE=
+	b=ze5KS9Yx7SbtsjbVmal85uGEQMHzxHojwtABJVhbpaHh6TegTxm1T79nGG1NzzbUO
+	 m/ybsvn1GoLge+nkYc24qtrBbJVuqUy/z6oaMKiRts1hv/SdHARNKIFSs9yHuHS7fh
+	 +qFhVtsY4kXqMdkQOANCvzGy7P8XIKO+CFSGXtSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 334/603] ASoC: cs35l41: Undo runtime PM changes at driver exit time
-Date: Wed, 15 Nov 2023 14:14:39 -0500
-Message-ID: <20231115191636.629957852@linuxfoundation.org>
+Subject: [PATCH 6.6 335/603] ALSA: hda: cs35l41: Fix unbalanced pm_runtime_get()
+Date: Wed, 15 Nov 2023 14:14:40 -0500
+Message-ID: <20231115191636.704331525@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,49 +45,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 2d5661e6008ae1a1cd6df7cc844908fb8b982c58 ]
+[ Upstream commit 486465508f8a5fe441939a7d97607f4460a60891 ]
 
-According to the documentation, drivers are responsible for undoing at
-removal time all runtime PM changes done during probing.
+If component_add() fails, probe() returns without calling
+pm_runtime_put(), which leaves the runtime PM usage counter incremented.
 
-Hence, add the missing calls to pm_runtime_dont_use_autosuspend(), which
-are necessary for undoing pm_runtime_use_autosuspend().
+Fix the issue by jumping to err_pm label and drop the now unnecessary
+pm_runtime_disable() call.
 
-Note this would have been handled implicitly by
-devm_pm_runtime_enable(), but there is a need to continue using
-pm_runtime_enable()/pm_runtime_disable() in order to ensure the runtime
-PM is disabled as soon as the remove() callback is entered.
-
-Fixes: f517ba4924ad ("ASoC: cs35l41: Add support for hibernate memory retention mode")
+Fixes: 7b2f3eb492da ("ALSA: hda: cs35l41: Add support for CS35L41 in HDA systems")
 Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20230907171010.1447274-7-cristian.ciocaltea@collabora.com
+Link: https://lore.kernel.org/r/20230907171010.1447274-10-cristian.ciocaltea@collabora.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l41.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/cs35l41_hda.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l41.c b/sound/soc/codecs/cs35l41.c
-index a31cb9ba7f7de..5456e6bfa242f 100644
---- a/sound/soc/codecs/cs35l41.c
-+++ b/sound/soc/codecs/cs35l41.c
-@@ -1334,6 +1334,7 @@ int cs35l41_probe(struct cs35l41_private *cs35l41, const struct cs35l41_hw_cfg *
- 	return 0;
+diff --git a/sound/pci/hda/cs35l41_hda.c b/sound/pci/hda/cs35l41_hda.c
+index 055ebfc237352..ebf9ddbb26052 100644
+--- a/sound/pci/hda/cs35l41_hda.c
++++ b/sound/pci/hda/cs35l41_hda.c
+@@ -1668,8 +1668,7 @@ int cs35l41_hda_probe(struct device *dev, const char *device_name, int id, int i
+ 	ret = component_add(cs35l41->dev, &cs35l41_hda_comp_ops);
+ 	if (ret) {
+ 		dev_err(cs35l41->dev, "Register component failed: %d\n", ret);
+-		pm_runtime_disable(cs35l41->dev);
+-		goto err;
++		goto err_pm;
+ 	}
  
- err_pm:
-+	pm_runtime_dont_use_autosuspend(cs35l41->dev);
- 	pm_runtime_disable(cs35l41->dev);
- 	pm_runtime_put_noidle(cs35l41->dev);
- 
-@@ -1350,6 +1351,7 @@ EXPORT_SYMBOL_GPL(cs35l41_probe);
- void cs35l41_remove(struct cs35l41_private *cs35l41)
- {
- 	pm_runtime_get_sync(cs35l41->dev);
-+	pm_runtime_dont_use_autosuspend(cs35l41->dev);
- 	pm_runtime_disable(cs35l41->dev);
- 
- 	regmap_write(cs35l41->regmap, CS35L41_IRQ1_MASK1, 0xFFFFFFFF);
+ 	dev_info(cs35l41->dev, "Cirrus Logic CS35L41 (%x), Revision: %02X\n", regid, reg_revid);
 -- 
 2.42.0
 
