@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774283EA6F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153863EA72
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+KLnu9/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26444C433C7;
-	Wed, 15 Nov 2023 19:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqJw0MeZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7119C433C8;
+	Wed, 15 Nov 2023 19:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076249;
-	bh=2awpdp4IHSsIjcXoy9CpMAVVde5yVXaiWHSJzi94nJQ=;
+	s=korg; t=1700076250;
+	bh=/tJaZvSAl5zZitAOYS2GiTobvrPHJcTs1oNdDyL0zz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h+KLnu9/1v14OlO1MJZV8GEF5GA3n9ltSCAC0QEuHUrpKGNOu3CFWSDzwLKXLJwwE
-	 5twrrWkA7VEj1oh+Sh5+DvD82P/J9kuRIVWFqdjAfXeJjl3z+qWVlg3fRDU3wm1wfq
-	 8tu+in9RrP/NDnDBo5v8XgSYMB0w4uKee1Q3QN7c=
+	b=vqJw0MeZ3qUO+vhIH0qLIA6ZvKHKG59JkndyEu8E4V0JG6JlpQZVXMQGzhPHRimiK
+	 HLxi/UeiQ+prnVvLR5vkDVIPrWdfpK/rCDH5Invy2XO+FSRcuJ5lvnr2WXkT9iTuAD
+	 +Gi7DJjyPbadp05Msmtqxy8wrwc5+vScjGlgV/+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 145/550] ACPI: sysfs: Fix create_pnp_modalias() and create_of_modalias()
-Date: Wed, 15 Nov 2023 14:12:09 -0500
-Message-ID: <20231115191610.748007761@linuxfoundation.org>
+Subject: [PATCH 6.5 146/550] mptcp: properly account fastopen data
+Date: Wed, 15 Nov 2023 14:12:10 -0500
+Message-ID: <20231115191610.823576645@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,60 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 48cf49d31994ff97b33c4044e618560ec84d35fb ]
+[ Upstream commit bf0e96108fb6707613dd055aff5e98b02b99bb14 ]
 
-snprintf() does not return negative values on error.
+Currently the socket level counter aggregating the received data
+does not take in account the data received via fastopen.
 
-To know if the buffer was too small, the returned value needs to be
-compared with the length of the passed buffer. If it is greater or
-equal, the output has been truncated, so add checks for the truncation
-to create_pnp_modalias() and create_of_modalias(). Also make them
-return -ENOMEM in that case, as they already do that elsewhere.
+Address the issue updating the counter as required.
 
-Moreover, the remaining size of the buffer used by snprintf() needs to
-be updated after the first write to avoid out-of-bounds access as
-already done correctly in create_pnp_modalias(), but not in
-create_of_modalias(), so change the latter accordingly.
-
-Fixes: 8765c5ba1949 ("ACPI / scan: Rework modalias creation when "compatible" is present")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-[ rjw: Merge two patches into one, combine changelogs, add subject ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 38967f424b5b ("mptcp: track some aggregate data counters")
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20231023-send-net-next-20231023-2-v1-2-9dc60939d371@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/device_sysfs.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/mptcp/fastopen.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/device_sysfs.c b/drivers/acpi/device_sysfs.c
-index b9bbf07461992..a34d8578b3da6 100644
---- a/drivers/acpi/device_sysfs.c
-+++ b/drivers/acpi/device_sysfs.c
-@@ -158,8 +158,8 @@ static int create_pnp_modalias(const struct acpi_device *acpi_dev, char *modalia
- 		return 0;
+diff --git a/net/mptcp/fastopen.c b/net/mptcp/fastopen.c
+index bceaab8dd8e46..74698582a2859 100644
+--- a/net/mptcp/fastopen.c
++++ b/net/mptcp/fastopen.c
+@@ -52,6 +52,7 @@ void mptcp_fastopen_subflow_synack_set_params(struct mptcp_subflow_context *subf
  
- 	len = snprintf(modalias, size, "acpi:");
--	if (len <= 0)
--		return len;
-+	if (len >= size)
-+		return -ENOMEM;
+ 	mptcp_set_owner_r(skb, sk);
+ 	__skb_queue_tail(&sk->sk_receive_queue, skb);
++	mptcp_sk(sk)->bytes_received += skb->len;
  
- 	size -= len;
+ 	sk->sk_data_ready(sk);
  
-@@ -212,8 +212,10 @@ static int create_of_modalias(const struct acpi_device *acpi_dev, char *modalias
- 	len = snprintf(modalias, size, "of:N%sT", (char *)buf.pointer);
- 	ACPI_FREE(buf.pointer);
- 
--	if (len <= 0)
--		return len;
-+	if (len >= size)
-+		return -ENOMEM;
-+
-+	size -= len;
- 
- 	of_compatible = acpi_dev->data.of_compatible;
- 	if (of_compatible->type == ACPI_TYPE_PACKAGE) {
 -- 
 2.42.0
 
