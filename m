@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF0043ACC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D691843ACC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrpBKKXS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E019CC4AF6B;
-	Wed, 15 Nov 2023 20:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vr0Sq8W0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F82C4AF6D;
+	Wed, 15 Nov 2023 20:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081400;
-	bh=HjZQuBhWldjD5BwkbOyGGDRBRgqz8UemkqwR8FHh5F4=;
+	s=korg; t=1700081401;
+	bh=+r7dcKYAMsVvPKvpI8JA/Qz+u0FQZL7b+h/FhoOCUXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrpBKKXSpAdtXcT8Avk6QkmvkeDm3efHlHAjy0DPTnq3JQmqC15L/Rzh+yF8KvIPO
-	 7VKc27yKQ8zPYIG0jmJVCFjrI5f2Yd4Qo0vkmaQiDM/1AM3yfzSlAl00nyXeecJohL
-	 PnFNiOa4VU6k30uUxBwkVStlhq54yp0iAFwHZZgo=
+	b=Vr0Sq8W0ljnUxKCB2YQRRLBr4HXHzcVtM0KgdseiK4Mr7yp3eUD9ml8NsUjR7zNAF
+	 2FmPR2Iq499mVXB+rAFQf3iPoVaB67nD0cl6eYA3fFT/sQBeeV5LLN9fdsCNcKnx1A
+	 QFJ2wt4JCJPaTHyy6gQkMdeFZIrAiLpbdQVB2a1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	Brian King <brking@linux.vnet.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 130/244] RDMA/core: Use size_{add,sub,mul}() in calls to struct_size()
-Date: Wed, 15 Nov 2023 15:35:22 -0500
-Message-ID: <20231115203556.172154982@linuxfoundation.org>
+Subject: [PATCH 5.15 131/244] scsi: ibmvfc: Fix erroneous use of rtas_busy_delay with hcall return code
+Date: Wed, 15 Nov 2023 15:35:23 -0500
+Message-ID: <20231115203556.225811150@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,116 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Tyrel Datwyler <tyreld@linux.ibm.com>
 
-[ Upstream commit 81760bedc65194ff38e1e4faefd5f9f0c95c19a4 ]
+[ Upstream commit 670106eb4c8b23475f8c2b3416005a312afa622f ]
 
-If, for any reason, the open-coded arithmetic causes a wraparound,
-the protection that `struct_size()` provides against potential integer
-overflows is defeated. Fix this by hardening calls to `struct_size()`
-with `size_add()`, `size_sub()` and `size_mul()`.
+Commit 0217a272fe13 ("scsi: ibmvfc: Store return code of H_FREE_SUB_CRQ
+during cleanup") wrongly changed the busy loop check to use
+rtas_busy_delay() instead of H_BUSY and H_IS_LONG_BUSY(). The busy return
+codes for RTAS and hypercalls are not the same.
 
-Fixes: 467f432a521a ("RDMA/core: Split port and device counter sysfs attributes")
-Fixes: a4676388e2e2 ("RDMA/core: Simplify how the gid_attrs sysfs is created")
-Fixes: e9dd5daf884c ("IB/umad: Refactor code to use cdev_device_add()")
-Fixes: 324e227ea7c9 ("RDMA/device: Add ib_device_get_by_netdev()")
-Fixes: 5aad26a7eac5 ("IB/core: Use struct_size() in kzalloc()")
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/ZQdt4NsJFwwOYxUR@work
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fix this issue by restoring the use of H_BUSY and H_IS_LONG_BUSY().
+
+Fixes: 0217a272fe13 ("scsi: ibmvfc: Store return code of H_FREE_SUB_CRQ  during cleanup")
+Signed-off-by: Tyrel Datwyler <tyreld@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230921225435.3537728-5-tyreld@linux.ibm.com
+Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/device.c   |  2 +-
- drivers/infiniband/core/sa_query.c |  4 +++-
- drivers/infiniband/core/sysfs.c    | 10 +++++-----
- drivers/infiniband/core/user_mad.c |  4 +++-
- 4 files changed, 12 insertions(+), 8 deletions(-)
+ drivers/scsi/ibmvscsi/ibmvfc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
-index ab2106a09f9c6..2c2ac63b39c42 100644
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -803,7 +803,7 @@ static int alloc_port_data(struct ib_device *device)
- 	 * empty slots at the beginning.
- 	 */
- 	pdata_rcu = kzalloc(struct_size(pdata_rcu, pdata,
--					rdma_end_port(device) + 1),
-+					size_add(rdma_end_port(device), 1)),
- 			    GFP_KERNEL);
- 	if (!pdata_rcu)
- 		return -ENOMEM;
-diff --git a/drivers/infiniband/core/sa_query.c b/drivers/infiniband/core/sa_query.c
-index c00f8e28aab75..1557c71dd152f 100644
---- a/drivers/infiniband/core/sa_query.c
-+++ b/drivers/infiniband/core/sa_query.c
-@@ -2132,7 +2132,9 @@ static int ib_sa_add_one(struct ib_device *device)
- 	s = rdma_start_port(device);
- 	e = rdma_end_port(device);
- 
--	sa_dev = kzalloc(struct_size(sa_dev, port, e - s + 1), GFP_KERNEL);
-+	sa_dev = kzalloc(struct_size(sa_dev, port,
-+				     size_add(size_sub(e, s), 1)),
-+			 GFP_KERNEL);
- 	if (!sa_dev)
- 		return -ENOMEM;
- 
-diff --git a/drivers/infiniband/core/sysfs.c b/drivers/infiniband/core/sysfs.c
-index 253ccaf343f69..afc59048c40c8 100644
---- a/drivers/infiniband/core/sysfs.c
-+++ b/drivers/infiniband/core/sysfs.c
-@@ -902,7 +902,7 @@ alloc_hw_stats_device(struct ib_device *ibdev)
- 	 * Two extra attribue elements here, one for the lifespan entry and
- 	 * one to NULL terminate the list for the sysfs core code
- 	 */
--	data = kzalloc(struct_size(data, attrs, stats->num_counters + 1),
-+	data = kzalloc(struct_size(data, attrs, size_add(stats->num_counters, 1)),
- 		       GFP_KERNEL);
- 	if (!data)
- 		goto err_free_stats;
-@@ -1001,7 +1001,7 @@ alloc_hw_stats_port(struct ib_port *port, struct attribute_group *group)
- 	 * Two extra attribue elements here, one for the lifespan entry and
- 	 * one to NULL terminate the list for the sysfs core code
- 	 */
--	data = kzalloc(struct_size(data, attrs, stats->num_counters + 1),
-+	data = kzalloc(struct_size(data, attrs, size_add(stats->num_counters, 1)),
- 		       GFP_KERNEL);
- 	if (!data)
- 		goto err_free_stats;
-@@ -1125,7 +1125,7 @@ static int setup_gid_attrs(struct ib_port *port,
- 	int ret;
- 
- 	gid_attr_group = kzalloc(struct_size(gid_attr_group, attrs_list,
--					     attr->gid_tbl_len * 2),
-+					     size_mul(attr->gid_tbl_len, 2)),
- 				 GFP_KERNEL);
- 	if (!gid_attr_group)
- 		return -ENOMEM;
-@@ -1190,8 +1190,8 @@ static struct ib_port *setup_port(struct ib_core_device *coredev, int port_num,
- 	int ret;
- 
- 	p = kvzalloc(struct_size(p, attrs_list,
--				attr->gid_tbl_len + attr->pkey_tbl_len),
--		    GFP_KERNEL);
-+				size_add(attr->gid_tbl_len, attr->pkey_tbl_len)),
-+		     GFP_KERNEL);
- 	if (!p)
- 		return ERR_PTR(-ENOMEM);
- 	p->ibdev = device;
-diff --git a/drivers/infiniband/core/user_mad.c b/drivers/infiniband/core/user_mad.c
-index a61c9ede43387..5c284dfbe6923 100644
---- a/drivers/infiniband/core/user_mad.c
-+++ b/drivers/infiniband/core/user_mad.c
-@@ -1378,7 +1378,9 @@ static int ib_umad_add_one(struct ib_device *device)
- 	s = rdma_start_port(device);
- 	e = rdma_end_port(device);
- 
--	umad_dev = kzalloc(struct_size(umad_dev, ports, e - s + 1), GFP_KERNEL);
-+	umad_dev = kzalloc(struct_size(umad_dev, ports,
-+				       size_add(size_sub(e, s), 1)),
-+			   GFP_KERNEL);
- 	if (!umad_dev)
- 		return -ENOMEM;
- 
+diff --git a/drivers/scsi/ibmvscsi/ibmvfc.c b/drivers/scsi/ibmvscsi/ibmvfc.c
+index 45ef78f388dc9..d169ba772450f 100644
+--- a/drivers/scsi/ibmvscsi/ibmvfc.c
++++ b/drivers/scsi/ibmvscsi/ibmvfc.c
+@@ -22,7 +22,6 @@
+ #include <linux/bsg-lib.h>
+ #include <asm/firmware.h>
+ #include <asm/irq.h>
+-#include <asm/rtas.h>
+ #include <asm/vio.h>
+ #include <scsi/scsi.h>
+ #include <scsi/scsi_cmnd.h>
+@@ -5802,7 +5801,7 @@ static int ibmvfc_register_scsi_channel(struct ibmvfc_host *vhost,
+ irq_failed:
+ 	do {
+ 		rc = plpar_hcall_norets(H_FREE_SUB_CRQ, vdev->unit_address, scrq->cookie);
+-	} while (rtas_busy_delay(rc));
++	} while (rc == H_BUSY || H_IS_LONG_BUSY(rc));
+ reg_failed:
+ 	LEAVE;
+ 	return rc;
 -- 
 2.42.0
 
