@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B832FE25
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CFF3307B
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKUcn5gB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF3EC4E778;
-	Wed, 15 Nov 2023 20:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVsgDKCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FE6C4E779;
+	Wed, 15 Nov 2023 20:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081666;
-	bh=iwg0zO/frDLr2veLAYwlyC7+di+FGtLyXV4BqF73nyw=;
+	s=korg; t=1700081667;
+	bh=kFtY8Hkge08fe0yx3gfVfSj/4PehJwL9Db7GFMnnIj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FKUcn5gBOtWFPc+imsVome7AGG60DA5xARwrE/AGjIt8cbWMglh53kvHmIzsVxkLP
-	 4TFtVVivyeTlAXOwV3HBqh3MRHL1QfY6cwFvxvo4wFae97TQzvMR1//ZB0+D2OWOBr
-	 6/NHiOb3tI3Td32/umf4KVXApn5CLNZsnq1qGS3M=
+	b=AVsgDKCqmEkkKQ+i8ozE/6Bwbqop2hbKAadi51af+PmWR9FF5kM6dtEXdAnzF6Hqf
+	 RMOsQHi6/A5nkWzIq1o/qwRA2x1ob2+YwDj5FFqSWc6ynOyJaM9i/paXyGdGlugSxs
+	 MBE1hRxNYfs6H4z69JoBx8fz2ykM8euawowyfJdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 025/191] can: dev: can_restart(): fix race condition between controller restart and netif_carrier_on()
-Date: Wed, 15 Nov 2023 15:45:00 -0500
-Message-ID: <20231115204646.055749719@linuxfoundation.org>
+Subject: [PATCH 5.10 026/191] PM / devfreq: rockchip-dfi: Make pmu regmap mandatory
+Date: Wed, 15 Nov 2023 15:45:01 -0500
+Message-ID: <20231115204646.110219283@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -42,99 +43,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-[ Upstream commit 6841cab8c4504835e4011689cbdb3351dec693fd ]
+[ Upstream commit 1e0731c05c985deb68a97fa44c1adcd3305dda90 ]
 
-This race condition was discovered while updating the at91_can driver
-to use can_bus_off(). The following scenario describes how the
-converted at91_can driver would behave.
+As a matter of fact the regmap_pmu already is mandatory because
+it is used unconditionally in the driver. Bail out gracefully in
+probe() rather than crashing later.
 
-When a CAN device goes into BUS-OFF state, the driver usually
-stops/resets the CAN device and calls can_bus_off().
-
-This function sets the netif carrier to off, and (if configured by
-user space) schedules a delayed work that calls can_restart() to
-restart the CAN device.
-
-The can_restart() function first checks if the carrier is off and
-triggers an error message if the carrier is OK.
-
-Then it calls the driver's do_set_mode() function to restart the
-device, then it sets the netif carrier to on. There is a race window
-between these two calls.
-
-The at91 CAN controller (observed on the sama5d3, a single core 32 bit
-ARM CPU) has a hardware limitation. If the device goes into bus-off
-while sending a CAN frame, there is no way to abort the sending of
-this frame. After the controller is enabled again, another attempt is
-made to send it.
-
-If the bus is still faulty, the device immediately goes back to the
-bus-off state. The driver calls can_bus_off(), the netif carrier is
-switched off and another can_restart is scheduled. This occurs within
-the race window before the original can_restart() handler marks the
-netif carrier as OK. This would cause the 2nd can_restart() to be
-called with an OK netif carrier, resulting in an error message.
-
-The flow of the 1st can_restart() looks like this:
-
-can_restart()
-    // bail out if netif_carrier is OK
-
-    netif_carrier_ok(dev)
-    priv->do_set_mode(dev, CAN_MODE_START)
-        // enable CAN controller
-        // sama5d3 restarts sending old message
-
-        // CAN devices goes into BUS_OFF, triggers IRQ
-
-// IRQ handler start
-    at91_irq()
-        at91_irq_err_line()
-            can_bus_off()
-                netif_carrier_off()
-                schedule_delayed_work()
-// IRQ handler end
-
-    netif_carrier_on()
-
-The 2nd can_restart() will be called with an OK netif carrier and the
-error message will be printed.
-
-To close the race window, first set the netif carrier to on, then
-restart the controller. In case the restart fails with an error code,
-roll back the netif carrier to off.
-
-Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
-Link: https://lore.kernel.org/all/20231005-can-dev-fix-can-restart-v2-2-91b5c1fd922c@pengutronix.de
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://lore.kernel.org/lkml/20230704093242.583575-2-s.hauer@pengutronix.de/
+Fixes: b9d1262bca0af ("PM / devfreq: event: support rockchip dfi controller")
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/dev.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/devfreq/event/rockchip-dfi.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
-index 2af3ac4e52330..b5e79d63d59b5 100644
---- a/drivers/net/can/dev/dev.c
-+++ b/drivers/net/can/dev/dev.c
-@@ -603,11 +603,12 @@ static void can_restart(struct net_device *dev)
- 	priv->can_stats.restarts++;
+diff --git a/drivers/devfreq/event/rockchip-dfi.c b/drivers/devfreq/event/rockchip-dfi.c
+index 9a88faaf8b27f..4dafdf23197b9 100644
+--- a/drivers/devfreq/event/rockchip-dfi.c
++++ b/drivers/devfreq/event/rockchip-dfi.c
+@@ -194,14 +194,15 @@ static int rockchip_dfi_probe(struct platform_device *pdev)
+ 		return PTR_ERR(data->clk);
+ 	}
  
- 	/* Now restart the device */
--	err = priv->do_set_mode(dev, CAN_MODE_START);
--
- 	netif_carrier_on(dev);
--	if (err)
-+	err = priv->do_set_mode(dev, CAN_MODE_START);
-+	if (err) {
- 		netdev_err(dev, "Error %d during restart", err);
-+		netif_carrier_off(dev);
-+	}
- }
+-	/* try to find the optional reference to the pmu syscon */
+ 	node = of_parse_phandle(np, "rockchip,pmu", 0);
+-	if (node) {
+-		data->regmap_pmu = syscon_node_to_regmap(node);
+-		of_node_put(node);
+-		if (IS_ERR(data->regmap_pmu))
+-			return PTR_ERR(data->regmap_pmu);
+-	}
++	if (!node)
++		return dev_err_probe(&pdev->dev, -ENODEV, "Can't find pmu_grf registers\n");
++
++	data->regmap_pmu = syscon_node_to_regmap(node);
++	of_node_put(node);
++	if (IS_ERR(data->regmap_pmu))
++		return PTR_ERR(data->regmap_pmu);
++
+ 	data->dev = dev;
  
- static void can_restart_work(struct work_struct *work)
+ 	desc = devm_kzalloc(dev, sizeof(*desc), GFP_KERNEL);
 -- 
 2.42.0
 
