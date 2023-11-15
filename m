@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CE0433AF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD2B433AF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imYFy9dq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F64C433C7;
-	Wed, 15 Nov 2023 19:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDl+Ujg7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7B5C433CA;
+	Wed, 15 Nov 2023 19:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076964;
-	bh=6ISIdQcGXucIkiLKHCxD6lpJyrevnMScoBJSApRicXA=;
+	s=korg; t=1700076966;
+	bh=8jZW2OZ1XD8GVITkH30x0tImakqCAGrAPm8Z+gSmRPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imYFy9dq6ApEbLVzqB4Na/8SJD1oBBA1qb+8wV3d7GzitqWNhMjZp3BnnRVSKJR+/
-	 6naOGcWmE5+Rb0dHozHgsuUkwZ6SJdF/rMUNoLEhMF0TDIEcUE7YYRH+2xzgw6Zjeh
-	 3qk/oNL+H2PpXk7kawLQewNeb7yZFbRSaYnrrRmk=
+	b=EDl+Ujg7GXEW6OFg3khJd9wXySbF4CuhMQAYQ57PEacfiqLkC9b/ZyvlWi0WmjTiN
+	 6q8Q6FgwfmLlae/MnXyi4vRkqFK1Ab7jAsmlTzkoHZMtXs5QejIwN4iCsT5qasI+Us
+	 u6bQWNZfksGoXUtlS2HUGbPkXbLLvPk0QWE/rq0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Ming Qian <ming.qian@nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/603] wifi: mt76: mt7603: improve stuck beacon handling
-Date: Wed, 15 Nov 2023 14:10:26 -0500
-Message-ID: <20231115191618.734543013@linuxfoundation.org>
+Subject: [PATCH 6.5 478/550] media: amphion: handle firmware debug message
+Date: Wed, 15 Nov 2023 14:17:42 -0500
+Message-ID: <20231115191634.002556740@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,178 +39,135 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit 3176205933494bd184c6acd70e796c382bc729b5 ]
+[ Upstream commit 6496617b2b06d7004a5cbd53d48f19567d6b018c ]
 
-Before preparing the new beacon, check the queue status, flush out all
-previous beacons and buffered multicast packets, then (if necessary)
-try to recover more gracefully from a stuck beacon condition by making a
-less invasive attempt at getting the MAC un-stuck.
+decoder firmware may notify host some debug message,
+it can help analyze the state of the firmware in case of error
 
-Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt7603/beacon.c    | 76 ++++++++++++++-----
- .../net/wireless/mediatek/mt76/mt7603/regs.h  |  5 ++
- 2 files changed, 60 insertions(+), 21 deletions(-)
+ drivers/media/platform/amphion/vpu_defs.h    |  1 +
+ drivers/media/platform/amphion/vpu_helpers.c |  1 +
+ drivers/media/platform/amphion/vpu_malone.c  |  1 +
+ drivers/media/platform/amphion/vpu_msgs.c    | 31 ++++++++++++++++----
+ 4 files changed, 29 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c b/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c
-index 888678732f290..c223f7c19e6da 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c
-@@ -9,6 +9,23 @@ struct beacon_bc_data {
- 	int count[MT7603_MAX_INTERFACES];
+diff --git a/drivers/media/platform/amphion/vpu_defs.h b/drivers/media/platform/amphion/vpu_defs.h
+index 667637eedb5d4..7320852668d64 100644
+--- a/drivers/media/platform/amphion/vpu_defs.h
++++ b/drivers/media/platform/amphion/vpu_defs.h
+@@ -71,6 +71,7 @@ enum {
+ 	VPU_MSG_ID_TIMESTAMP_INFO,
+ 	VPU_MSG_ID_FIRMWARE_XCPT,
+ 	VPU_MSG_ID_PIC_SKIPPED,
++	VPU_MSG_ID_DBG_MSG,
  };
  
-+static void
-+mt7603_mac_stuck_beacon_recovery(struct mt7603_dev *dev)
+ enum VPU_ENC_MEMORY_RESOURSE {
+diff --git a/drivers/media/platform/amphion/vpu_helpers.c b/drivers/media/platform/amphion/vpu_helpers.c
+index af3b336e5dc32..d12310af9ebce 100644
+--- a/drivers/media/platform/amphion/vpu_helpers.c
++++ b/drivers/media/platform/amphion/vpu_helpers.c
+@@ -489,6 +489,7 @@ const char *vpu_id_name(u32 id)
+ 	case VPU_MSG_ID_UNSUPPORTED: return "unsupported";
+ 	case VPU_MSG_ID_FIRMWARE_XCPT: return "exception";
+ 	case VPU_MSG_ID_PIC_SKIPPED: return "skipped";
++	case VPU_MSG_ID_DBG_MSG: return "debug msg";
+ 	}
+ 	return "<unknown>";
+ }
+diff --git a/drivers/media/platform/amphion/vpu_malone.c b/drivers/media/platform/amphion/vpu_malone.c
+index c1d6606ad7e57..46713be69adbd 100644
+--- a/drivers/media/platform/amphion/vpu_malone.c
++++ b/drivers/media/platform/amphion/vpu_malone.c
+@@ -747,6 +747,7 @@ static struct vpu_pair malone_msgs[] = {
+ 	{VPU_MSG_ID_UNSUPPORTED, VID_API_EVENT_UNSUPPORTED_STREAM},
+ 	{VPU_MSG_ID_FIRMWARE_XCPT, VID_API_EVENT_FIRMWARE_XCPT},
+ 	{VPU_MSG_ID_PIC_SKIPPED, VID_API_EVENT_PIC_SKIPPED},
++	{VPU_MSG_ID_DBG_MSG, VID_API_EVENT_DBG_MSG_DEC},
+ };
+ 
+ static void vpu_malone_pack_fs_alloc(struct vpu_rpc_event *pkt,
+diff --git a/drivers/media/platform/amphion/vpu_msgs.c b/drivers/media/platform/amphion/vpu_msgs.c
+index d0ead051f7d18..b74a407a19f22 100644
+--- a/drivers/media/platform/amphion/vpu_msgs.c
++++ b/drivers/media/platform/amphion/vpu_msgs.c
+@@ -23,6 +23,7 @@
+ struct vpu_msg_handler {
+ 	u32 id;
+ 	void (*done)(struct vpu_inst *inst, struct vpu_rpc_event *pkt);
++	u32 is_str;
+ };
+ 
+ static void vpu_session_handle_start_done(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
+@@ -154,7 +155,7 @@ static void vpu_session_handle_error(struct vpu_inst *inst, struct vpu_rpc_event
+ {
+ 	char *str = (char *)pkt->data;
+ 
+-	if (strlen(str))
++	if (*str)
+ 		dev_err(inst->dev, "instance %d firmware error : %s\n", inst->id, str);
+ 	else
+ 		dev_err(inst->dev, "instance %d is unsupported stream\n", inst->id);
+@@ -180,6 +181,21 @@ static void vpu_session_handle_pic_skipped(struct vpu_inst *inst, struct vpu_rpc
+ 	vpu_inst_unlock(inst);
+ }
+ 
++static void vpu_session_handle_dbg_msg(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
 +{
-+	if (dev->beacon_check % 5 != 4)
-+		return;
++	char *str = (char *)pkt->data;
 +
-+	mt76_clear(dev, MT_WPDMA_GLO_CFG, MT_WPDMA_GLO_CFG_TX_DMA_EN);
-+	mt76_set(dev, MT_SCH_4, MT_SCH_4_RESET);
-+	mt76_clear(dev, MT_SCH_4, MT_SCH_4_RESET);
-+	mt76_set(dev, MT_WPDMA_GLO_CFG, MT_WPDMA_GLO_CFG_TX_DMA_EN);
-+
-+	mt76_set(dev, MT_WF_CFG_OFF_WOCCR, MT_WF_CFG_OFF_WOCCR_TMAC_GC_DIS);
-+	mt76_set(dev, MT_ARB_SCR, MT_ARB_SCR_TX_DISABLE);
-+	mt76_clear(dev, MT_ARB_SCR, MT_ARB_SCR_TX_DISABLE);
-+	mt76_clear(dev, MT_WF_CFG_OFF_WOCCR, MT_WF_CFG_OFF_WOCCR_TMAC_GC_DIS);
++	if (*str)
++		dev_info(inst->dev, "instance %d firmware dbg msg : %s\n", inst->id, str);
 +}
 +
- static void
- mt7603_update_beacon_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
- {
-@@ -16,6 +33,8 @@ mt7603_update_beacon_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
- 	struct mt76_dev *mdev = &dev->mt76;
- 	struct mt7603_vif *mvif = (struct mt7603_vif *)vif->drv_priv;
- 	struct sk_buff *skb = NULL;
-+	u32 om_idx = mvif->idx;
-+	u32 val;
- 
- 	if (!(mdev->beacon_mask & BIT(mvif->idx)))
- 		return;
-@@ -24,20 +43,33 @@ mt7603_update_beacon_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
- 	if (!skb)
- 		return;
- 
--	mt76_tx_queue_skb(dev, dev->mphy.q_tx[MT_TXQ_BEACON],
--			  MT_TXQ_BEACON, skb, &mvif->sta.wcid, NULL);
-+	if (om_idx)
-+		om_idx |= 0x10;
-+	val = MT_DMA_FQCR0_BUSY | MT_DMA_FQCR0_MODE |
-+		FIELD_PREP(MT_DMA_FQCR0_TARGET_BSS, om_idx) |
-+		FIELD_PREP(MT_DMA_FQCR0_DEST_PORT_ID, 3) |
-+		FIELD_PREP(MT_DMA_FQCR0_DEST_QUEUE_ID, 8);
- 
- 	spin_lock_bh(&dev->ps_lock);
--	mt76_wr(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY |
--		FIELD_PREP(MT_DMA_FQCR0_TARGET_WCID, mvif->sta.wcid.idx) |
--		FIELD_PREP(MT_DMA_FQCR0_TARGET_QID,
--			   dev->mphy.q_tx[MT_TXQ_CAB]->hw_idx) |
--		FIELD_PREP(MT_DMA_FQCR0_DEST_PORT_ID, 3) |
--		FIELD_PREP(MT_DMA_FQCR0_DEST_QUEUE_ID, 8));
- 
--	if (!mt76_poll(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY, 0, 5000))
-+	mt76_wr(dev, MT_DMA_FQCR0, val |
-+		FIELD_PREP(MT_DMA_FQCR0_TARGET_QID, MT_TX_HW_QUEUE_BCN));
-+	if (!mt76_poll(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY, 0, 5000)) {
- 		dev->beacon_check = MT7603_WATCHDOG_TIMEOUT;
-+		goto out;
-+	}
++static void vpu_terminate_string_msg(struct vpu_rpc_event *pkt)
++{
++	if (pkt->hdr.num == ARRAY_SIZE(pkt->data))
++		pkt->hdr.num--;
++	pkt->data[pkt->hdr.num] = 0;
++}
 +
-+	mt76_wr(dev, MT_DMA_FQCR0, val |
-+		FIELD_PREP(MT_DMA_FQCR0_TARGET_QID, MT_TX_HW_QUEUE_BMC));
-+	if (!mt76_poll(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY, 0, 5000)) {
-+		dev->beacon_check = MT7603_WATCHDOG_TIMEOUT;
-+		goto out;
+ static struct vpu_msg_handler handlers[] = {
+ 	{VPU_MSG_ID_START_DONE, vpu_session_handle_start_done},
+ 	{VPU_MSG_ID_STOP_DONE, vpu_session_handle_stop_done},
+@@ -193,9 +209,10 @@ static struct vpu_msg_handler handlers[] = {
+ 	{VPU_MSG_ID_PIC_DECODED, vpu_session_handle_pic_decoded},
+ 	{VPU_MSG_ID_DEC_DONE, vpu_session_handle_pic_done},
+ 	{VPU_MSG_ID_PIC_EOS, vpu_session_handle_eos},
+-	{VPU_MSG_ID_UNSUPPORTED, vpu_session_handle_error},
+-	{VPU_MSG_ID_FIRMWARE_XCPT, vpu_session_handle_firmware_xcpt},
++	{VPU_MSG_ID_UNSUPPORTED, vpu_session_handle_error, true},
++	{VPU_MSG_ID_FIRMWARE_XCPT, vpu_session_handle_firmware_xcpt, true},
+ 	{VPU_MSG_ID_PIC_SKIPPED, vpu_session_handle_pic_skipped},
++	{VPU_MSG_ID_DBG_MSG, vpu_session_handle_dbg_msg, true},
+ };
+ 
+ static int vpu_session_handle_msg(struct vpu_inst *inst, struct vpu_rpc_event *msg)
+@@ -219,8 +236,12 @@ static int vpu_session_handle_msg(struct vpu_inst *inst, struct vpu_rpc_event *m
+ 		}
+ 	}
+ 
+-	if (handler && handler->done)
+-		handler->done(inst, msg);
++	if (handler) {
++		if (handler->is_str)
++			vpu_terminate_string_msg(msg);
++		if (handler->done)
++			handler->done(inst, msg);
 +	}
  
-+	mt76_tx_queue_skb(dev, dev->mphy.q_tx[MT_TXQ_BEACON],
-+			  MT_TXQ_BEACON, skb, &mvif->sta.wcid, NULL);
-+
-+out:
- 	spin_unlock_bh(&dev->ps_lock);
- }
- 
-@@ -81,6 +113,18 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
- 	data.dev = dev;
- 	__skb_queue_head_init(&data.q);
- 
-+	/* Flush all previous CAB queue packets and beacons */
-+	mt76_wr(dev, MT_WF_ARB_CAB_FLUSH, GENMASK(30, 16) | BIT(0));
-+
-+	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_CAB], false);
-+	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_BEACON], false);
-+
-+	if (dev->mphy.q_tx[MT_TXQ_BEACON]->queued > 0)
-+		dev->beacon_check++;
-+	else
-+		dev->beacon_check = 0;
-+	mt7603_mac_stuck_beacon_recovery(dev);
-+
- 	q = dev->mphy.q_tx[MT_TXQ_BEACON];
- 	spin_lock(&q->lock);
- 	ieee80211_iterate_active_interfaces_atomic(mt76_hw(dev),
-@@ -89,14 +133,9 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
- 	mt76_queue_kick(dev, q);
- 	spin_unlock(&q->lock);
- 
--	/* Flush all previous CAB queue packets */
--	mt76_wr(dev, MT_WF_ARB_CAB_FLUSH, GENMASK(30, 16) | BIT(0));
--
--	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_CAB], false);
--
- 	mt76_csa_check(mdev);
- 	if (mdev->csa_complete)
--		goto out;
-+		return;
- 
- 	q = dev->mphy.q_tx[MT_TXQ_CAB];
- 	do {
-@@ -108,7 +147,7 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
- 		 skb_queue_len(&data.q) < 8);
- 
- 	if (skb_queue_empty(&data.q))
--		goto out;
-+		return;
- 
- 	for (i = 0; i < ARRAY_SIZE(data.tail); i++) {
- 		if (!data.tail[i])
-@@ -136,11 +175,6 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
- 		MT_WF_ARB_CAB_START_BSSn(0) |
- 		(MT_WF_ARB_CAB_START_BSS0n(1) *
- 		 ((1 << (MT7603_MAX_INTERFACES - 1)) - 1)));
--
--out:
--	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_BEACON], false);
--	if (dev->mphy.q_tx[MT_TXQ_BEACON]->queued > hweight8(mdev->beacon_mask))
--		dev->beacon_check++;
- }
- 
- void mt7603_beacon_set_timer(struct mt7603_dev *dev, int idx, int intval)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/regs.h b/drivers/net/wireless/mediatek/mt76/mt7603/regs.h
-index a39c9a0fcb1cb..524bceb8e9581 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/regs.h
-@@ -469,6 +469,11 @@ enum {
- #define MT_WF_SEC_BASE			0x21a00
- #define MT_WF_SEC(ofs)			(MT_WF_SEC_BASE + (ofs))
- 
-+#define MT_WF_CFG_OFF_BASE		0x21e00
-+#define MT_WF_CFG_OFF(ofs)		(MT_WF_CFG_OFF_BASE + (ofs))
-+#define MT_WF_CFG_OFF_WOCCR		MT_WF_CFG_OFF(0x004)
-+#define MT_WF_CFG_OFF_WOCCR_TMAC_GC_DIS	BIT(4)
-+
- #define MT_SEC_SCR			MT_WF_SEC(0x004)
- #define MT_SEC_SCR_MASK_ORDER		GENMASK(1, 0)
+ 	vpu_response_cmd(inst, msg_id, 1);
  
 -- 
 2.42.0
