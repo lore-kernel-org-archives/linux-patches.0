@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26F843ACA
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9C045BED
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTiTjbde"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF44C433C7;
-	Wed, 15 Nov 2023 22:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jofVupB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FBAC433C7;
+	Wed, 15 Nov 2023 22:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085829;
-	bh=CH6Fw4Hw859ddi6BOTQP3Ir2aZT/0/Sy253xeaW06Bg=;
+	s=korg; t=1700085831;
+	bh=s4ZiBkaCJl6V1s7L+IN0WIX1bF0TMWomu+lYUoyXw44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nTiTjbderz61b64an/XEEMjKtmCyzos/fIVFeqdLXstQuITcGV8v0aGBml0Oco09i
-	 mD/s94S/QCSgBxN0DbYWBTNfjuybsNwkQrEenoj3UWWaGnbwxHBTFVKJMkuwSz1c9X
-	 q9i/9oMdMRn9ttQXfF9N7bSc0KPJ4Q+Sc+N7aBSo=
+	b=jofVupB3Iv9VYePFDLk+AwgD+sJUAJn8XOrcQ2tEYkuvjMU2Vo4vCPKOR0h5I2JmJ
+	 athRV0eeA5A2sy5066KTeIWw1PTBB+LnbAvIeh4A1yxp6P+fp4YfUsH5fPAIv9JVVf
+	 0kO2XYPRIxDoGrebWdgAJGqWPX/f/EflptElZsJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Benjamin Gray <bgray@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 074/119] dmaengine: ti: edma: handle irq_of_parse_and_map() errors
-Date: Wed, 15 Nov 2023 17:01:04 -0500
-Message-ID: <20231115220134.937706922@linuxfoundation.org>
+Subject: [PATCH 5.4 083/119] powerpc/xive: Fix endian conversion size
+Date: Wed, 15 Nov 2023 17:01:13 -0500
+Message-ID: <20231115220135.228551013@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -43,46 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Benjamin Gray <bgray@linux.ibm.com>
 
-[ Upstream commit 14f6d317913f634920a640e9047aa2e66f5bdcb7 ]
+[ Upstream commit ff7a60ab1e065257a0e467c13b519f4debcd7fcf ]
 
-Zero is not a valid IRQ for in-kernel code and the irq_of_parse_and_map()
-function returns zero on error.  So this check for valid IRQs should only
-accept values > 0.
+Sparse reports a size mismatch in the endian swap. The Opal
+implementation[1] passes the value as a __be64, and the receiving
+variable out_qsize is a u64, so the use of be32_to_cpu() appears to be
+an error.
 
-Fixes: 2b6b3b742019 ("ARM/dmaengine: edma: Merge the two drivers under drivers/dma/")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/f15cb6a7-8449-4f79-98b6-34072f04edbc@moroto.mountain
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[1]: https://github.com/open-power/skiboot/blob/80e2b1dc73/hw/xive.c#L3854
+
+Fixes: 88ec6b93c8e7 ("powerpc/xive: add OPAL extensions for the XIVE native exploitation support")
+Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231011053711.93427-2-bgray@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/edma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/sysdev/xive/native.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index 80b780e499711..b570f08888eeb 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -2361,7 +2361,7 @@ static int edma_probe(struct platform_device *pdev)
- 	if (irq < 0 && node)
- 		irq = irq_of_parse_and_map(node, 0);
- 
--	if (irq >= 0) {
-+	if (irq > 0) {
- 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccint",
- 					  dev_name(dev));
- 		ret = devm_request_irq(dev, irq, dma_irq_handler, 0, irq_name,
-@@ -2377,7 +2377,7 @@ static int edma_probe(struct platform_device *pdev)
- 	if (irq < 0 && node)
- 		irq = irq_of_parse_and_map(node, 2);
- 
--	if (irq >= 0) {
-+	if (irq > 0) {
- 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccerrint",
- 					  dev_name(dev));
- 		ret = devm_request_irq(dev, irq, dma_ccerr_handler, 0, irq_name,
+diff --git a/arch/powerpc/sysdev/xive/native.c b/arch/powerpc/sysdev/xive/native.c
+index 3fd086533dcfc..05c38da4bbee0 100644
+--- a/arch/powerpc/sysdev/xive/native.c
++++ b/arch/powerpc/sysdev/xive/native.c
+@@ -778,7 +778,7 @@ int xive_native_get_queue_info(u32 vp_id, u32 prio,
+ 	if (out_qpage)
+ 		*out_qpage = be64_to_cpu(qpage);
+ 	if (out_qsize)
+-		*out_qsize = be32_to_cpu(qsize);
++		*out_qsize = be64_to_cpu(qsize);
+ 	if (out_qeoi_page)
+ 		*out_qeoi_page = be64_to_cpu(qeoi_page);
+ 	if (out_escalate_irq)
 -- 
 2.42.0
 
