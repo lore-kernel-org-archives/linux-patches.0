@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1642F18657
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9584143AAA
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0Hm5QIP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F4FC433CA;
-	Wed, 15 Nov 2023 20:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itNSJVzL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410ABC433C9;
+	Wed, 15 Nov 2023 20:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081098;
-	bh=EvU1VQxTaSwmcNZeibo4DHlVN1LyxG3Qy2CFZtVTGLs=;
+	s=korg; t=1700081100;
+	bh=wj6k97fiFFNcM62uGwytbJ8C5ZMPLyKRXadCrA5Vo2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h0Hm5QIPXzdNlnoWk8E7JKXLqTk4jNoT+rH6V1PZejYJaJn5HODvQfOEIHes1kZnZ
-	 iHLyvwvSTEph38gJ5xilAaECOdBCnj1jGINoK752fGnuq2UCIVfgWV+zYh8ogfoiSk
-	 j3pt5k9X8LdB/UoD0uvogkSDTYz/n2QYd5vDZRr8=
+	b=itNSJVzLptB8Hxfmp5awbSl24b7QQBrcvN+K6o9Z9a97ItrVjmQJX0R3qGzloPUg/
+	 rFdaXNIR1xlzXXxnjQtZ8wY2P9B8tGsmo87Q0B4cCq1skGs2KVaG2tJPDClqv83FbW
+	 8jKRAKVizkyq9sAnUw7xahIxtKv4UCsZAfcXmIIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eudean Sun <eudean@arista.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	=?UTF-8?q?S=C3=A9bastien=20Szymanski?= <sebastien.szymanski@armadeus.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 38/88] HID: cp2112: Use irqchip template
-Date: Wed, 15 Nov 2023 15:35:50 -0500
-Message-ID: <20231115191428.473308282@linuxfoundation.org>
+Subject: [PATCH 4.19 21/88] clk: keystone: pll: fix a couple NULL vs IS_ERR() checks
+Date: Wed, 15 Nov 2023 15:35:33 -0500
+Message-ID: <20231115191427.458822273@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -39,79 +36,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 6bfa31756ae905e23050ee10a3b4d3d435122c97 ]
+[ Upstream commit a5d14f8b551eb1551c10053653ee8e27f19672fa ]
 
-This makes the driver use the irqchip template to assign
-properties to the gpio_irq_chip instead of using the
-explicit calls to gpiochip_irqchip_add(). The irqchip is
-instead added while adding the gpiochip.
+The clk_register_divider() and clk_register_mux() functions returns
+error pointers on error but this code checks for NULL.  Fix that.
 
-Cc: Eudean Sun <eudean@arista.com>
-Cc: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Cc: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Stable-dep-of: e3c2d2d144c0 ("hid: cp2112: Fix duplicate workqueue initialization")
+Fixes: b9e0d40c0d83 ("clk: keystone: add Keystone PLL clock driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/d9da4c97-0da9-499f-9a21-1f8e3f148dc1@moroto.mountain
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-cp2112.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/clk/keystone/pll.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
-index 637a7ce281c61..875fd8b2eec23 100644
---- a/drivers/hid/hid-cp2112.c
-+++ b/drivers/hid/hid-cp2112.c
-@@ -1245,6 +1245,7 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	struct cp2112_device *dev;
- 	u8 buf[3];
- 	struct cp2112_smbus_config_report config;
-+	struct gpio_irq_chip *girq;
- 	int ret;
+diff --git a/drivers/clk/keystone/pll.c b/drivers/clk/keystone/pll.c
+index 526694c2a6c97..a75ece5992394 100644
+--- a/drivers/clk/keystone/pll.c
++++ b/drivers/clk/keystone/pll.c
+@@ -285,12 +285,13 @@ static void __init of_pll_div_clk_init(struct device_node *node)
  
- 	dev = devm_kzalloc(&hdev->dev, sizeof(*dev), GFP_KERNEL);
-@@ -1348,6 +1349,15 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	dev->gc.can_sleep		= 1;
- 	dev->gc.parent			= &hdev->dev;
- 
-+	girq = &dev->gc.irq;
-+	girq->chip = &cp2112_gpio_irqchip;
-+	/* The event comes from the outside so no parent handler */
-+	girq->parent_handler = NULL;
-+	girq->num_parents = 0;
-+	girq->parents = NULL;
-+	girq->default_type = IRQ_TYPE_NONE;
-+	girq->handler = handle_simple_irq;
+ 	clk = clk_register_divider(NULL, clk_name, parent_name, 0, reg, shift,
+ 				 mask, 0, NULL);
+-	if (clk) {
+-		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+-	} else {
++	if (IS_ERR(clk)) {
+ 		pr_err("%s: error registering divider %s\n", __func__, clk_name);
+ 		iounmap(reg);
++		return;
+ 	}
 +
- 	ret = gpiochip_add_data(&dev->gc, dev);
- 	if (ret < 0) {
- 		hid_err(hdev, "error registering gpio chip\n");
-@@ -1363,17 +1373,8 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	chmod_sysfs_attrs(hdev);
- 	hid_hw_power(hdev, PM_HINT_NORMAL);
++	of_clk_add_provider(node, of_clk_src_simple_get, clk);
+ }
+ CLK_OF_DECLARE(pll_divider_clock, "ti,keystone,pll-divider-clock", of_pll_div_clk_init);
  
--	ret = gpiochip_irqchip_add(&dev->gc, &cp2112_gpio_irqchip, 0,
--				   handle_simple_irq, IRQ_TYPE_NONE);
--	if (ret) {
--		dev_err(dev->gc.parent, "failed to add IRQ chip\n");
--		goto err_sysfs_remove;
--	}
--
- 	return ret;
- 
--err_sysfs_remove:
--	sysfs_remove_group(&hdev->dev.kobj, &cp2112_attr_group);
- err_gpiochip_remove:
- 	gpiochip_remove(&dev->gc);
- err_free_i2c:
+@@ -332,9 +333,11 @@ static void __init of_pll_mux_clk_init(struct device_node *node)
+ 	clk = clk_register_mux(NULL, clk_name, (const char **)&parents,
+ 				ARRAY_SIZE(parents) , 0, reg, shift, mask,
+ 				0, NULL);
+-	if (clk)
+-		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+-	else
++	if (IS_ERR(clk)) {
+ 		pr_err("%s: error registering mux %s\n", __func__, clk_name);
++		return;
++	}
++
++	of_clk_add_provider(node, of_clk_src_simple_get, clk);
+ }
+ CLK_OF_DECLARE(pll_mux_clock, "ti,keystone,pll-mux-clock", of_pll_mux_clk_init);
 -- 
 2.42.0
 
