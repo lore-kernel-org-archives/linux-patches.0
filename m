@@ -1,29 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A2A3A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FA63A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yH8gNrb3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD5AC433C7;
-	Wed, 15 Nov 2023 19:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFi7aBe2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2647C433C8;
+	Wed, 15 Nov 2023 19:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077806;
-	bh=T7pttDyMZsfx3AKhSxNxeG04p3+zkmxU3jrQt5T0slw=;
+	s=korg; t=1700077808;
+	bh=ywHEyv4/GMQp9PmqGbnx3ja43n4FFIslV11t09W+KXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yH8gNrb3gWuMxTqm6wYb9pHn2c/2i9Y+aWADwWDYcGEB6f7m3F6ajgwbxSuAJx+OV
-	 W3o0H5fZI5ZYRq8ksHaC4/QyW4fIw0bS3P3a/JzoQ+tXim7LqYtqN3Qzs89SsI8EKP
-	 ZCzDJkTXiQc2xp+u6A7czIX8vcOggp1kJdN5EBzg=
+	b=OFi7aBe2NfHkKIB+rE4gGlQQVroJ7H6EjukDaWdUjoZSEhFq30ule/cPfWSHbA1Np
+	 lBIZBiEh9rvBTjKvajpa3qajqy7QQehrg6Fq+6Ky9/1jVNrjmDSA+brjgdBS9tuc9o
+	 LFRMBKZ2qXPvc1sP7aJfHcsJmCSAGsZCar02HGuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mark Brown <broonie@kernel.org>,
+	"Srivatsa S. Bhat (VMware)" <srivatsa@csail.mit.edu>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Arjan van de Ven <arjan@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Len Brown <len.brown@intel.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 531/603] media: cec: meson: always include meson sub-directory in Makefile
-Date: Wed, 15 Nov 2023 14:17:56 -0500
-Message-ID: <20231115191648.651624925@linuxfoundation.org>
+Subject: [PATCH 6.6 532/603] cpupower: fix reference to nonexistent document
+Date: Wed, 15 Nov 2023 14:17:57 -0500
+Message-ID: <20231115191648.713442714@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,35 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Vegard Nossum <vegard.nossum@oracle.com>
 
-[ Upstream commit 94e27fbeca27d8c772fc2bc807730aaee5886055 ]
+[ Upstream commit 6feb1a9641197ee630bf43b5c34ea1d9f8b4a0aa ]
 
-'meson' directory contains two separate drivers, so it should be added
-to Makefile compilation hierarchy unconditionally, because otherwise the
-meson-ao-cec-g12a won't be compiled if meson-ao-cec is not selected.
+This file was renamed from .txt to .rst and left a dangling reference.
+Fix it.
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Fixes: 4be5e8648b0c ("media: move CEC platform drivers to a separate directory")
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 151f4e2bdc7a ("docs: power: convert docs to ReST and rename to *.rst")
+Cc: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Srivatsa S. Bhat (VMware) <srivatsa@csail.mit.edu>
+Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Cc: Arjan van de Ven <arjan@linux.intel.com>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: Len Brown <len.brown@intel.com>
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/platform/Makefile | 2 +-
+ tools/power/cpupower/man/cpupower-powercap-info.1 | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/cec/platform/Makefile b/drivers/media/cec/platform/Makefile
-index 26d2bc7783944..a51e98ab4958d 100644
---- a/drivers/media/cec/platform/Makefile
-+++ b/drivers/media/cec/platform/Makefile
-@@ -6,7 +6,7 @@
- # Please keep it in alphabetic order
- obj-$(CONFIG_CEC_CROS_EC) += cros-ec/
- obj-$(CONFIG_CEC_GPIO) += cec-gpio/
--obj-$(CONFIG_CEC_MESON_AO) += meson/
-+obj-y += meson/
- obj-$(CONFIG_CEC_SAMSUNG_S5P) += s5p/
- obj-$(CONFIG_CEC_SECO) += seco/
- obj-$(CONFIG_CEC_STI) += sti/
+diff --git a/tools/power/cpupower/man/cpupower-powercap-info.1 b/tools/power/cpupower/man/cpupower-powercap-info.1
+index df3087000efb8..145d6f06fa72d 100644
+--- a/tools/power/cpupower/man/cpupower-powercap-info.1
++++ b/tools/power/cpupower/man/cpupower-powercap-info.1
+@@ -17,7 +17,7 @@ settings of all cores, see cpupower(1) how to choose specific cores.
+ .SH "DOCUMENTATION"
+ 
+ kernel sources:
+-Documentation/power/powercap/powercap.txt
++Documentation/power/powercap/powercap.rst
+ 
+ 
+ .SH "SEE ALSO"
 -- 
 2.42.0
 
