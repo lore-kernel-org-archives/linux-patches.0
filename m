@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824B84177E
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D65B381DC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOgylS5w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24385C433C8;
-	Wed, 15 Nov 2023 19:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJc2LCyb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC97C433C7;
+	Wed, 15 Nov 2023 19:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076948;
-	bh=DhyQSvxc4YtT1+fivXFGQRzQSAEiBuRH+oI+kDTPXqI=;
+	s=korg; t=1700076950;
+	bh=dEnrgTgbUEDjZmg020XVdltHBZoIZEvoPqNhNQArJcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOgylS5wTJndxSmymcBlPHw7fNR4AF0V9+c6twsD2g4BU5Q/BPfjFgPeosJp3A/cK
-	 bJHzsMID2lPWj6c2reXCHv8wYpBCX8/0V/LD04e2cs2tdsIaR0mDXWEv6lDYgdkGk+
-	 sj+xjb4ASMw8y6yJOkMwyAWhAKtqyPk531HgVKQM=
+	b=VJc2LCybT4ly99tSHI+LdvtoSCllwvxxmv9PnR8NPx/g383VA3E5X068kbhCKsWOn
+	 Qc/qUjFIDf6nPeF93NzU2Cq3nODJU0PPXa5TUhAQTQIJUfiZG2m25r4ukBllcF4dSH
+	 k50K9dO0m2Njmnqs+zNC/Stg6KwYK53/UwMK0+EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Raag Jadav <raag.jadav@intel.com>,
+	Paul Cercueil <paul@crapouillou.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 473/550] media: verisilicon: Do not enable G2 postproc downscale if source is narrower than destination
-Date: Wed, 15 Nov 2023 14:17:37 -0500
-Message-ID: <20231115191633.653710525@linuxfoundation.org>
+Subject: [PATCH 6.6 077/603] PM: sleep: Fix symbol export for _SIMPLE_ variants of _PM_OPS()
+Date: Wed, 15 Nov 2023 14:10:22 -0500
+Message-ID: <20231115191618.445830151@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,59 +39,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Raag Jadav <raag.jadav@intel.com>
 
-[ Upstream commit 6e481d52d363218a3e6feb31694da74b38b30fad ]
+[ Upstream commit 8d74f1da776da9b0306630b13a3025214fa44618 ]
 
-In case of encoded input VP9 data width that is not multiple of macroblock
-size, which is 16 (e.g. 1080x1920 frames, where 1080 is multiple of 8), the
-width is padded to be a multiple of macroblock size (for 1080x1920 frames,
-that is 1088x1920).
+Currently EXPORT_*_SIMPLE_DEV_PM_OPS() use EXPORT_*_DEV_PM_OPS() set
+of macros to export dev_pm_ops symbol, which export the symbol in case
+CONFIG_PM=y but don't take CONFIG_PM_SLEEP into consideration.
 
-The hantro_postproc_g2_enable() checks whether the encoded data width is
-equal to decoded frame width, and if not, enables down-scale mode. For a
-frame where input is 1080x1920 and output is 1088x1920, this is incorrect
-as no down-scale happens, the frame is only padded. Enabling the down-scale
-mode in this case results in corrupted frames.
+Since _SIMPLE_ variants of _PM_OPS() do not include runtime PM handles
+and are only used in case CONFIG_PM_SLEEP=y, we should not be exporting
+dev_pm_ops symbol for them in case CONFIG_PM_SLEEP=n.
 
-Fix this by adjusting the check to test whether encoded data width is
-greater than decoded frame width, and only in that case enable the
-down-scale mode.
+This can be fixed by having two distinct set of export macros for both
+_RUNTIME_ and _SIMPLE_ variants of _PM_OPS(), such that the export of
+dev_pm_ops symbol used in each variant depends on CONFIG_PM and
+CONFIG_PM_SLEEP respectively.
 
-To generate input test data to trigger this bug, use e.g.:
-$ gst-launch-1.0 videotestsrc ! video/x-raw,width=272,height=256,format=I420 ! \
-                 vp9enc ! matroskamux ! filesink location=/tmp/test.vp9
-To trigger the bug upon decoding (note that the NV12 must be forced, as
-that assures the output data would pass the G2 postproc):
-$ gst-launch-1.0 filesrc location=/tmp/test.vp9 ! matroskademux ! vp9parse ! \
-                 v4l2slvp9dec ! video/x-raw,format=NV12 ! videoconvert ! fbdevsink
+Introduce _DEV_SLEEP_PM_OPS() set of export macros for _SIMPLE_ variants
+of _PM_OPS(), which export dev_pm_ops symbol only in case CONFIG_PM_SLEEP=y
+and discard it otherwise.
 
-Fixes: 79c987de8b35 ("media: hantro: Use post processor scaling capacities")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 34e1ed189fab ("PM: Improve EXPORT_*_DEV_PM_OPS macros")
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+Reviewed-by: Paul Cercueil <paul@crapouillou.net>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_postproc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/pm.h | 43 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_postproc.c b/drivers/media/platform/verisilicon/hantro_postproc.c
-index 0224ff68ab3fc..64d6fb852ae9b 100644
---- a/drivers/media/platform/verisilicon/hantro_postproc.c
-+++ b/drivers/media/platform/verisilicon/hantro_postproc.c
-@@ -107,7 +107,7 @@ static void hantro_postproc_g1_enable(struct hantro_ctx *ctx)
+diff --git a/include/linux/pm.h b/include/linux/pm.h
+index 1400c37b29c75..629c1633bbd00 100644
+--- a/include/linux/pm.h
++++ b/include/linux/pm.h
+@@ -374,24 +374,39 @@ const struct dev_pm_ops name = { \
+ 	RUNTIME_PM_OPS(runtime_suspend_fn, runtime_resume_fn, idle_fn) \
+ }
  
- static int down_scale_factor(struct hantro_ctx *ctx)
- {
--	if (ctx->src_fmt.width == ctx->dst_fmt.width)
-+	if (ctx->src_fmt.width <= ctx->dst_fmt.width)
- 		return 0;
+-#ifdef CONFIG_PM
+-#define _EXPORT_DEV_PM_OPS(name, license, ns)				\
++#define _EXPORT_PM_OPS(name, license, ns)				\
+ 	const struct dev_pm_ops name;					\
+ 	__EXPORT_SYMBOL(name, license, ns);				\
+ 	const struct dev_pm_ops name
+-#define EXPORT_PM_FN_GPL(name)		EXPORT_SYMBOL_GPL(name)
+-#define EXPORT_PM_FN_NS_GPL(name, ns)	EXPORT_SYMBOL_NS_GPL(name, ns)
+-#else
+-#define _EXPORT_DEV_PM_OPS(name, license, ns)				\
++
++#define _DISCARD_PM_OPS(name, license, ns)				\
+ 	static __maybe_unused const struct dev_pm_ops __static_##name
++
++#ifdef CONFIG_PM
++#define _EXPORT_DEV_PM_OPS(name, license, ns)		_EXPORT_PM_OPS(name, license, ns)
++#define EXPORT_PM_FN_GPL(name)				EXPORT_SYMBOL_GPL(name)
++#define EXPORT_PM_FN_NS_GPL(name, ns)			EXPORT_SYMBOL_NS_GPL(name, ns)
++#else
++#define _EXPORT_DEV_PM_OPS(name, license, ns)		_DISCARD_PM_OPS(name, license, ns)
+ #define EXPORT_PM_FN_GPL(name)
+ #define EXPORT_PM_FN_NS_GPL(name, ns)
+ #endif
  
- 	return DIV_ROUND_CLOSEST(ctx->src_fmt.width, ctx->dst_fmt.width);
+-#define EXPORT_DEV_PM_OPS(name) _EXPORT_DEV_PM_OPS(name, "", "")
+-#define EXPORT_GPL_DEV_PM_OPS(name) _EXPORT_DEV_PM_OPS(name, "GPL", "")
+-#define EXPORT_NS_DEV_PM_OPS(name, ns) _EXPORT_DEV_PM_OPS(name, "", #ns)
+-#define EXPORT_NS_GPL_DEV_PM_OPS(name, ns) _EXPORT_DEV_PM_OPS(name, "GPL", #ns)
++#ifdef CONFIG_PM_SLEEP
++#define _EXPORT_DEV_SLEEP_PM_OPS(name, license, ns)	_EXPORT_PM_OPS(name, license, ns)
++#else
++#define _EXPORT_DEV_SLEEP_PM_OPS(name, license, ns)	_DISCARD_PM_OPS(name, license, ns)
++#endif
++
++#define EXPORT_DEV_PM_OPS(name)				_EXPORT_DEV_PM_OPS(name, "", "")
++#define EXPORT_GPL_DEV_PM_OPS(name)			_EXPORT_DEV_PM_OPS(name, "GPL", "")
++#define EXPORT_NS_DEV_PM_OPS(name, ns)			_EXPORT_DEV_PM_OPS(name, "", #ns)
++#define EXPORT_NS_GPL_DEV_PM_OPS(name, ns)		_EXPORT_DEV_PM_OPS(name, "GPL", #ns)
++
++#define EXPORT_DEV_SLEEP_PM_OPS(name)			_EXPORT_DEV_SLEEP_PM_OPS(name, "", "")
++#define EXPORT_GPL_DEV_SLEEP_PM_OPS(name)		_EXPORT_DEV_SLEEP_PM_OPS(name, "GPL", "")
++#define EXPORT_NS_DEV_SLEEP_PM_OPS(name, ns)		_EXPORT_DEV_SLEEP_PM_OPS(name, "", #ns)
++#define EXPORT_NS_GPL_DEV_SLEEP_PM_OPS(name, ns)	_EXPORT_DEV_SLEEP_PM_OPS(name, "GPL", #ns)
+ 
+ /*
+  * Use this if you want to use the same suspend and resume callbacks for suspend
+@@ -404,19 +419,19 @@ const struct dev_pm_ops name = { \
+ 	_DEFINE_DEV_PM_OPS(name, suspend_fn, resume_fn, NULL, NULL, NULL)
+ 
+ #define EXPORT_SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
+-	EXPORT_DEV_PM_OPS(name) = { \
++	EXPORT_DEV_SLEEP_PM_OPS(name) = { \
+ 		SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
+ 	}
+ #define EXPORT_GPL_SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
+-	EXPORT_GPL_DEV_PM_OPS(name) = { \
++	EXPORT_GPL_DEV_SLEEP_PM_OPS(name) = { \
+ 		SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
+ 	}
+ #define EXPORT_NS_SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn, ns)	\
+-	EXPORT_NS_DEV_PM_OPS(name, ns) = { \
++	EXPORT_NS_DEV_SLEEP_PM_OPS(name, ns) = { \
+ 		SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
+ 	}
+ #define EXPORT_NS_GPL_SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn, ns)	\
+-	EXPORT_NS_GPL_DEV_PM_OPS(name, ns) = { \
++	EXPORT_NS_GPL_DEV_SLEEP_PM_OPS(name, ns) = { \
+ 		SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
+ 	}
+ 
 -- 
 2.42.0
 
