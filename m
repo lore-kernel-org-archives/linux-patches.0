@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1430043AB2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EBA43AB5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCMtTMAm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5BE9C433C9;
-	Wed, 15 Nov 2023 20:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkIHohmi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FDEC433CA;
+	Wed, 15 Nov 2023 20:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081130;
-	bh=VmaoimEdUq77hxAEhBTykEfbd1v/IuUJiO/V8nnVMEo=;
+	s=korg; t=1700081132;
+	bh=smXJW1NNB5+3nRHIcN6q89vbl2v/USnDTVWMrT5+GMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCMtTMAmDoLf6/AAXYAWVOfULvrzLR9lHn/LYd5X5qMF/WJ3STgDL674ww8gcBjUW
-	 GzBdo6V7KSr2C2dqAn8YIKDel3lclsBrTj8al74QJuQ0RWuvVJHLffn9L4Vo9mgGBa
-	 JeOEhumvee37Qqp3fKqCLyWTZwiutRwwi5VGOFO4=
+	b=fkIHohmipLPjhIrHtDEtnNypdqND0sduYHX5bpnJLdjLvzpKoDp8/2RGcALYUs9pD
+	 Qg3SdXC5vopMp75LAgRAvSK8LO3udmZ0Y4tgJ4idPFEny9iGoC1Q2f91SVUNzVRi4/
+	 /PHTuZsZsbigq+gf2paGXzK1BV6JwO6b24w842AI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Mi <michenyuan@huawei.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 57/88] tools: iio: iio_generic_buffer: Fix some integer type and calculation
-Date: Wed, 15 Nov 2023 15:36:09 -0500
-Message-ID: <20231115191429.570835411@linuxfoundation.org>
+Subject: [PATCH 4.19 58/88] tools: iio: iio_generic_buffer ensure alignment
+Date: Wed, 15 Nov 2023 15:36:10 -0500
+Message-ID: <20231115191429.630415666@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -42,72 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Mi <michenyuan@huawei.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 49d736313d0975ddeb156f4f59801da833f78b30 ]
+[ Upstream commit 2d3dff577dd0ea8fe9637a13822f7603c4a881c8 ]
 
-In function size_from_channelarray(), the return value 'bytes' is defined
-as int type. However, the calcution of 'bytes' in this function is designed
-to use the unsigned int type. So it is necessary to change 'bytes' type to
-unsigned int to avoid integer overflow.
+The iio_generic_buffer can return garbage values when the total size of
+scan data is not a multiple of the largest element in the scan. This can be
+demonstrated by reading a scan, consisting, for example of one 4-byte and
+one 2-byte element, where the 4-byte element is first in the buffer.
 
-The size_from_channelarray() is called in main() function, its return value
-is directly multipled by 'buf_len' and then used as the malloc() parameter.
-The 'buf_len' is completely controllable by user, thus a multiplication
-overflow may occur here. This could allocate an unexpected small area.
+The IIO generic buffer code does not take into account the last two
+padding bytes that are needed to ensure that the 4-byte data for next
+scan is correctly aligned.
 
-Signed-off-by: Chenyuan Mi <michenyuan@huawei.com>
-Link: https://lore.kernel.org/r/20230725092407.62545-1-michenyuan@huawei.com
+Add the padding bytes required to align the next sample with the scan size.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: e58537ccce73 ("staging: iio: update example application.")
+Link: https://lore.kernel.org/r/ZRvlm4ktNLu+qmlf@dc78bmyyyyyyyyyyyyydt-3.rev.dnainternet.fi
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 2d3dff577dd0 ("tools: iio: iio_generic_buffer ensure alignment")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/iio/iio_generic_buffer.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ tools/iio/iio_generic_buffer.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
-index 9a5af0f6592dc..8360605f01db8 100644
+index 8360605f01db8..ca9f33fa51c9f 100644
 --- a/tools/iio/iio_generic_buffer.c
 +++ b/tools/iio/iio_generic_buffer.c
-@@ -53,9 +53,9 @@ enum autochan {
-  * Has the side effect of filling the channels[i].location values used
-  * in processing the buffer output.
-  **/
--static int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
-+static unsigned int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
+@@ -56,9 +56,12 @@ enum autochan {
+ static unsigned int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
  {
--	int bytes = 0;
-+	unsigned int bytes = 0;
- 	int i = 0;
+ 	unsigned int bytes = 0;
+-	int i = 0;
++	int i = 0, max = 0;
++	unsigned int misalignment;
  
  	while (i < num_channels) {
-@@ -346,7 +346,7 @@ int main(int argc, char **argv)
- 	ssize_t read_size;
- 	int dev_num = -1, trig_num = -1;
- 	char *buffer_access = NULL;
--	int scan_size;
-+	unsigned int scan_size;
- 	int noevents = 0;
- 	int notrigger = 0;
- 	char *dummy;
-@@ -616,7 +616,16 @@ int main(int argc, char **argv)
++		if (channels[i].bytes > max)
++			max = channels[i].bytes;
+ 		if (bytes % channels[i].bytes == 0)
+ 			channels[i].location = bytes;
+ 		else
+@@ -68,6 +71,14 @@ static unsigned int size_from_channelarray(struct iio_channel_info *channels, in
+ 		bytes = channels[i].location + channels[i].bytes;
+ 		i++;
  	}
++	/*
++	 * We want the data in next sample to also be properly aligned so
++	 * we'll add padding at the end if needed. Adding padding only
++	 * works for channel data which size is 2^n bytes.
++	 */
++	misalignment = bytes % max;
++	if (misalignment)
++		bytes += max - misalignment;
  
- 	scan_size = size_from_channelarray(channels, num_channels);
--	data = malloc(scan_size * buf_len);
-+
-+	size_t total_buf_len = scan_size * buf_len;
-+
-+	if (scan_size > 0 && total_buf_len / scan_size != buf_len) {
-+		ret = -EFAULT;
-+		perror("Integer overflow happened when calculate scan_size * buf_len");
-+		goto error;
-+	}
-+
-+	data = malloc(total_buf_len);
- 	if (!data) {
- 		ret = -ENOMEM;
- 		goto error;
+ 	return bytes;
+ }
 -- 
 2.42.0
 
