@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814593D396
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF0B3D396
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYjqxgCb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A0DC433C7;
-	Wed, 15 Nov 2023 19:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBrMIVLW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BE8C433B7;
+	Wed, 15 Nov 2023 19:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078152;
-	bh=xH3GlfGol6H+jc03c6nntX6ehRGyqCXu7i5tvC2Xhk4=;
+	s=korg; t=1700078153;
+	bh=GHyzafHMZifQHN0Hfr2pmLcZ+7m52ig40hZLGZp4wfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VYjqxgCb7mL9S0A93A0Ab3epztiRKg5NqOqIy+sE7gy8SGSmClZ3Ek1pINvQVjuXb
-	 n/+Q+DMmUeZYwaV4qFfwjSwsfLNYFDDyp0mVaPSL2l9IJUzbotW9nNm0qYZxen08rS
-	 wEV4rKq41HitjNlFngciEDA28LoKjcapxxUXA6g0=
+	b=GBrMIVLWBH1nYp2ZaQIvBBriZST/mevWt9ViQMRQcqsO3O3XjHk2afWiv0rthux12
+	 5Z5iXsufXgPCjNFmd0qWTXL9aKwEYmLY6lNkYtj+24qm+BH1G3AzuOH+a7ajhd9ftD
+	 xkTSwEZB9syXrO/E+q1OdZEivrVXLkVDtw53K3eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Bogdan <dragos.bogdan@analog.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/379] hwmon: (axi-fan-control) Fix possible NULL pointer dereference
-Date: Wed, 15 Nov 2023 14:23:03 -0500
-Message-ID: <20231115192651.517663019@linuxfoundation.org>
+Subject: [PATCH 6.1 136/379] drm/amd/display: Check all enabled planes in dm_check_crtc_cursor
+Date: Wed, 15 Nov 2023 14:23:31 -0500
+Message-ID: <20231115192653.173052805@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -37,78 +37,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dragos Bogdan <dragos.bogdan@analog.com>
+From: Michel Dänzer <mdaenzer@redhat.com>
 
-[ Upstream commit 2a5b3370a1d9750eca325292e291c8c7cb8cf2e0 ]
+[ Upstream commit 003048ddf44b1a6cfa57afa5a0cf40673e13f1ba ]
 
-axi_fan_control_irq_handler(), dependent on the private
-axi_fan_control_data structure, might be called before the hwmon
-device is registered. That will cause an "Unable to handle kernel
-NULL pointer dereference" error.
+It was only checking planes which had any state changes in the same
+commit. However, it also needs to check other enabled planes.
 
-Fixes: 8412b410fa5e ("hwmon: Support ADI Fan Control IP")
-Signed-off-by: Dragos Bogdan <dragos.bogdan@analog.com>
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20231025132100.649499-1-nuno.sa@analog.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Not doing this meant that a commit might spuriously "succeed", resulting
+in the cursor plane displaying with incorrect scaling. See
+https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/3177#note_1824263
+for an example.
+
+Fixes: d1bfbe8a3202 ("amd/display: check cursor plane matches underlying plane")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/axi-fan-control.c | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/axi-fan-control.c b/drivers/hwmon/axi-fan-control.c
-index 6724e0dd30880..25abf28084c96 100644
---- a/drivers/hwmon/axi-fan-control.c
-+++ b/drivers/hwmon/axi-fan-control.c
-@@ -496,6 +496,21 @@ static int axi_fan_control_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 339f1f5a08339..ebd07e3f12571 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9643,14 +9643,24 @@ static int dm_check_crtc_cursor(struct drm_atomic_state *state,
+ 	 * blending properties match the underlying planes'.
+ 	 */
  
-+	ret = axi_fan_control_init(ctl, pdev->dev.of_node);
-+	if (ret) {
-+		dev_err(&pdev->dev, "Failed to initialize device\n");
-+		return ret;
-+	}
+-	new_cursor_state = drm_atomic_get_new_plane_state(state, cursor);
+-	if (!new_cursor_state || !new_cursor_state->fb)
++	new_cursor_state = drm_atomic_get_plane_state(state, cursor);
++	if (IS_ERR(new_cursor_state))
++		return PTR_ERR(new_cursor_state);
 +
-+	ctl->hdev = devm_hwmon_device_register_with_info(&pdev->dev,
-+							 name,
-+							 ctl,
-+							 &axi_chip_info,
-+							 axi_fan_control_groups);
-+
-+	if (IS_ERR(ctl->hdev))
-+		return PTR_ERR(ctl->hdev);
-+
- 	ctl->irq = platform_get_irq(pdev, 0);
- 	if (ctl->irq < 0)
- 		return ctl->irq;
-@@ -509,19 +524,7 @@ static int axi_fan_control_probe(struct platform_device *pdev)
- 		return ret;
- 	}
++	if (!new_cursor_state->fb)
+ 		return 0;
  
--	ret = axi_fan_control_init(ctl, pdev->dev.of_node);
--	if (ret) {
--		dev_err(&pdev->dev, "Failed to initialize device\n");
--		return ret;
--	}
--
--	ctl->hdev = devm_hwmon_device_register_with_info(&pdev->dev,
--							 name,
--							 ctl,
--							 &axi_chip_info,
--							 axi_fan_control_groups);
--
--	return PTR_ERR_OR_ZERO(ctl->hdev);
-+	return 0;
- }
+ 	dm_get_oriented_plane_size(new_cursor_state, &cursor_src_w, &cursor_src_h);
+ 	cursor_scale_w = new_cursor_state->crtc_w * 1000 / cursor_src_w;
+ 	cursor_scale_h = new_cursor_state->crtc_h * 1000 / cursor_src_h;
  
- static struct platform_driver axi_fan_control_driver = {
++	/* Need to check all enabled planes, even if this commit doesn't change
++	 * their state
++	 */
++	i = drm_atomic_add_affected_planes(state, crtc);
++	if (i)
++		return i;
++
+ 	for_each_new_plane_in_state_reverse(state, underlying, new_underlying_state, i) {
+ 		/* Narrow down to non-cursor planes on the same CRTC as the cursor */
+ 		if (new_underlying_state->crtc != crtc || underlying == crtc->cursor)
 -- 
 2.42.0
 
