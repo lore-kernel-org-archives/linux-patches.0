@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAB93C462
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED513C461
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6LbcKFp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 518DFC433C7;
-	Wed, 15 Nov 2023 19:38:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkzZx4PQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29F5C433C9;
+	Wed, 15 Nov 2023 19:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077102;
-	bh=xy743gM9Qu5a2Jl9kwwb3wC41ykcGkOjyyEGbkh19UI=;
+	s=korg; t=1700077104;
+	bh=RV7gg5LYEZGjYqrTPVNX6TE72oeElcdHqlxiFFzW5Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6LbcKFpFUU/kDR5Y31j+PNINY58gkBJ712+JQSjqbiYNOD5owrnp9460YAeNYymR
-	 d4Dln7mFZd2FZy/IlrfllLRH2rRnVLL1kDXqhxaed/kazWxpxFMIn6p8CvvJs+QgUY
-	 unxAV9iJUjlD9Q34weqP1qtHhooR8+8jv7giJRes=
+	b=GkzZx4PQWR1eS/rpqekM5P1mVP6/5ok11xlDJfKTumHdWyFNdr/pKqNhd50I+oktn
+	 VxwM4wIN/iIMOlmv/eeAjdLYQh2G6iMdvt7f1mJAe754GpKsI6LKlfr8dzTjTZJOqt
+	 94XUkjJrn+fiCmcHg/ogHbj5IdzMUd082nsyPK9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 505/550] octeontx2-pf: Fix holes in error code
-Date: Wed, 15 Nov 2023 14:18:09 -0500
-Message-ID: <20231115191635.925595982@linuxfoundation.org>
+Subject: [PATCH 6.6 109/603] r8152: break the loop when the budget is exhausted
+Date: Wed, 15 Nov 2023 14:10:54 -0500
+Message-ID: <20231115191620.756367454@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,157 +38,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Hayes Wang <hayeswang@realtek.com>
 
-[ Upstream commit 7aeeb2cb7a2570bb69a87ad14018b03e06ce5be5 ]
+[ Upstream commit 2cf51f931797d9a47e75d999d0993a68cbd2a560 ]
 
-Error code strings are not getting printed properly
-due to holes. Print error code as well.
+A bulk transfer of the USB may contain many packets. And, the total
+number of the packets in the bulk transfer may be more than budget.
 
-Fixes: 51afe9026d0c ("octeontx2-pf: NIX TX overwrites SQ_CTX_HW_S[SQ_INT]")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Link: https://lore.kernel.org/r/20231027021953.1819959-2-rkannoth@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Originally, only budget packets would be handled by napi_gro_receive(),
+and the other packets would be queued in the driver for next schedule.
+
+This patch would break the loop about getting next bulk transfer, when
+the budget is exhausted. That is, only the current bulk transfer would
+be handled, and the other bulk transfers would be queued for next
+schedule. Besides, the packets which are more than the budget in the
+current bulk trasnfer would be still queued in the driver, as the
+original method.
+
+In addition, a bulk transfer wouldn't contain more than 400 packets, so
+the check of queue length is unnecessary. Therefore, I replace it with
+WARN_ON_ONCE().
+
+Fixes: cf74eb5a5bc8 ("eth: r8152: try to use a normal budget")
+Signed-off-by: Hayes Wang <hayeswang@realtek.com>
+Link: https://lore.kernel.org/r/20230926111714.9448-433-nic_swsd@realtek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/nic/otx2_pf.c  | 80 +++++++++++--------
- 1 file changed, 46 insertions(+), 34 deletions(-)
+ drivers/net/usb/r8152.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index 9ded98bb1c890..ca6602fe27050 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -1192,31 +1192,32 @@ static char *nix_mnqerr_e_str[NIX_MNQERR_MAX] = {
- };
- 
- static char *nix_snd_status_e_str[NIX_SND_STATUS_MAX] =  {
--	"NIX_SND_STATUS_GOOD",
--	"NIX_SND_STATUS_SQ_CTX_FAULT",
--	"NIX_SND_STATUS_SQ_CTX_POISON",
--	"NIX_SND_STATUS_SQB_FAULT",
--	"NIX_SND_STATUS_SQB_POISON",
--	"NIX_SND_STATUS_HDR_ERR",
--	"NIX_SND_STATUS_EXT_ERR",
--	"NIX_SND_STATUS_JUMP_FAULT",
--	"NIX_SND_STATUS_JUMP_POISON",
--	"NIX_SND_STATUS_CRC_ERR",
--	"NIX_SND_STATUS_IMM_ERR",
--	"NIX_SND_STATUS_SG_ERR",
--	"NIX_SND_STATUS_MEM_ERR",
--	"NIX_SND_STATUS_INVALID_SUBDC",
--	"NIX_SND_STATUS_SUBDC_ORDER_ERR",
--	"NIX_SND_STATUS_DATA_FAULT",
--	"NIX_SND_STATUS_DATA_POISON",
--	"NIX_SND_STATUS_NPC_DROP_ACTION",
--	"NIX_SND_STATUS_LOCK_VIOL",
--	"NIX_SND_STATUS_NPC_UCAST_CHAN_ERR",
--	"NIX_SND_STATUS_NPC_MCAST_CHAN_ERR",
--	"NIX_SND_STATUS_NPC_MCAST_ABORT",
--	"NIX_SND_STATUS_NPC_VTAG_PTR_ERR",
--	"NIX_SND_STATUS_NPC_VTAG_SIZE_ERR",
--	"NIX_SND_STATUS_SEND_STATS_ERR",
-+	[NIX_SND_STATUS_GOOD] = "NIX_SND_STATUS_GOOD",
-+	[NIX_SND_STATUS_SQ_CTX_FAULT] = "NIX_SND_STATUS_SQ_CTX_FAULT",
-+	[NIX_SND_STATUS_SQ_CTX_POISON] = "NIX_SND_STATUS_SQ_CTX_POISON",
-+	[NIX_SND_STATUS_SQB_FAULT] = "NIX_SND_STATUS_SQB_FAULT",
-+	[NIX_SND_STATUS_SQB_POISON] = "NIX_SND_STATUS_SQB_POISON",
-+	[NIX_SND_STATUS_HDR_ERR] = "NIX_SND_STATUS_HDR_ERR",
-+	[NIX_SND_STATUS_EXT_ERR] = "NIX_SND_STATUS_EXT_ERR",
-+	[NIX_SND_STATUS_JUMP_FAULT] = "NIX_SND_STATUS_JUMP_FAULT",
-+	[NIX_SND_STATUS_JUMP_POISON] = "NIX_SND_STATUS_JUMP_POISON",
-+	[NIX_SND_STATUS_CRC_ERR] = "NIX_SND_STATUS_CRC_ERR",
-+	[NIX_SND_STATUS_IMM_ERR] = "NIX_SND_STATUS_IMM_ERR",
-+	[NIX_SND_STATUS_SG_ERR] = "NIX_SND_STATUS_SG_ERR",
-+	[NIX_SND_STATUS_MEM_ERR] = "NIX_SND_STATUS_MEM_ERR",
-+	[NIX_SND_STATUS_INVALID_SUBDC] = "NIX_SND_STATUS_INVALID_SUBDC",
-+	[NIX_SND_STATUS_SUBDC_ORDER_ERR] = "NIX_SND_STATUS_SUBDC_ORDER_ERR",
-+	[NIX_SND_STATUS_DATA_FAULT] = "NIX_SND_STATUS_DATA_FAULT",
-+	[NIX_SND_STATUS_DATA_POISON] = "NIX_SND_STATUS_DATA_POISON",
-+	[NIX_SND_STATUS_NPC_DROP_ACTION] = "NIX_SND_STATUS_NPC_DROP_ACTION",
-+	[NIX_SND_STATUS_LOCK_VIOL] = "NIX_SND_STATUS_LOCK_VIOL",
-+	[NIX_SND_STATUS_NPC_UCAST_CHAN_ERR] = "NIX_SND_STAT_NPC_UCAST_CHAN_ERR",
-+	[NIX_SND_STATUS_NPC_MCAST_CHAN_ERR] = "NIX_SND_STAT_NPC_MCAST_CHAN_ERR",
-+	[NIX_SND_STATUS_NPC_MCAST_ABORT] = "NIX_SND_STATUS_NPC_MCAST_ABORT",
-+	[NIX_SND_STATUS_NPC_VTAG_PTR_ERR] = "NIX_SND_STATUS_NPC_VTAG_PTR_ERR",
-+	[NIX_SND_STATUS_NPC_VTAG_SIZE_ERR] = "NIX_SND_STATUS_NPC_VTAG_SIZE_ERR",
-+	[NIX_SND_STATUS_SEND_MEM_FAULT] = "NIX_SND_STATUS_SEND_MEM_FAULT",
-+	[NIX_SND_STATUS_SEND_STATS_ERR] = "NIX_SND_STATUS_SEND_STATS_ERR",
- };
- 
- static irqreturn_t otx2_q_intr_handler(int irq, void *data)
-@@ -1237,14 +1238,16 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
- 			continue;
- 
- 		if (val & BIT_ULL(42)) {
--			netdev_err(pf->netdev, "CQ%lld: error reading NIX_LF_CQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
-+			netdev_err(pf->netdev,
-+				   "CQ%lld: error reading NIX_LF_CQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
- 				   qidx, otx2_read64(pf, NIX_LF_ERR_INT));
- 		} else {
- 			if (val & BIT_ULL(NIX_CQERRINT_DOOR_ERR))
- 				netdev_err(pf->netdev, "CQ%lld: Doorbell error",
- 					   qidx);
- 			if (val & BIT_ULL(NIX_CQERRINT_CQE_FAULT))
--				netdev_err(pf->netdev, "CQ%lld: Memory fault on CQE write to LLC/DRAM",
-+				netdev_err(pf->netdev,
-+					   "CQ%lld: Memory fault on CQE write to LLC/DRAM",
- 					   qidx);
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index afb20c0ed688d..be18d72cefcce 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -2543,7 +2543,7 @@ static int rx_bottom(struct r8152 *tp, int budget)
  		}
+ 	}
  
-@@ -1271,7 +1274,8 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
- 			     (val & NIX_SQINT_BITS));
+-	if (list_empty(&tp->rx_done))
++	if (list_empty(&tp->rx_done) || work_done >= budget)
+ 		goto out1;
  
- 		if (val & BIT_ULL(42)) {
--			netdev_err(pf->netdev, "SQ%lld: error reading NIX_LF_SQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
-+			netdev_err(pf->netdev,
-+				   "SQ%lld: error reading NIX_LF_SQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
- 				   qidx, otx2_read64(pf, NIX_LF_ERR_INT));
- 			goto done;
+ 	clear_bit(RX_EPROTO, &tp->flags);
+@@ -2559,6 +2559,15 @@ static int rx_bottom(struct r8152 *tp, int budget)
+ 		struct urb *urb;
+ 		u8 *rx_data;
+ 
++		/* A bulk transfer of USB may contain may packets, so the
++		 * total packets may more than the budget. Deal with all
++		 * packets in current bulk transfer, and stop to handle the
++		 * next bulk transfer until next schedule, if budget is
++		 * exhausted.
++		 */
++		if (work_done >= budget)
++			break;
++
+ 		list_del_init(cursor);
+ 
+ 		agg = list_entry(cursor, struct rx_agg, list);
+@@ -2578,9 +2587,7 @@ static int rx_bottom(struct r8152 *tp, int budget)
+ 			unsigned int pkt_len, rx_frag_head_sz;
+ 			struct sk_buff *skb;
+ 
+-			/* limit the skb numbers for rx_queue */
+-			if (unlikely(skb_queue_len(&tp->rx_queue) >= 1000))
+-				break;
++			WARN_ON_ONCE(skb_queue_len(&tp->rx_queue) >= 1000);
+ 
+ 			pkt_len = le32_to_cpu(rx_desc->opts1) & RX_LEN_MASK;
+ 			if (pkt_len < ETH_ZLEN)
+@@ -2658,9 +2665,10 @@ static int rx_bottom(struct r8152 *tp, int budget)
  		}
-@@ -1281,8 +1285,11 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
- 			goto chk_mnq_err_dbg;
+ 	}
  
- 		sq_op_err_code = FIELD_GET(GENMASK(7, 0), sq_op_err_dbg);
--		netdev_err(pf->netdev, "SQ%lld: NIX_LF_SQ_OP_ERR_DBG(%llx)  err=%s\n",
--			   qidx, sq_op_err_dbg, nix_sqoperr_e_str[sq_op_err_code]);
-+		netdev_err(pf->netdev,
-+			   "SQ%lld: NIX_LF_SQ_OP_ERR_DBG(0x%llx)  err=%s(%#x)\n",
-+			   qidx, sq_op_err_dbg,
-+			   nix_sqoperr_e_str[sq_op_err_code],
-+			   sq_op_err_code);
- 
- 		otx2_write64(pf, NIX_LF_SQ_OP_ERR_DBG, BIT_ULL(44));
- 
-@@ -1299,16 +1306,21 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
- 			goto chk_snd_err_dbg;
- 
- 		mnq_err_code = FIELD_GET(GENMASK(7, 0), mnq_err_dbg);
--		netdev_err(pf->netdev, "SQ%lld: NIX_LF_MNQ_ERR_DBG(%llx)  err=%s\n",
--			   qidx, mnq_err_dbg,  nix_mnqerr_e_str[mnq_err_code]);
-+		netdev_err(pf->netdev,
-+			   "SQ%lld: NIX_LF_MNQ_ERR_DBG(0x%llx)  err=%s(%#x)\n",
-+			   qidx, mnq_err_dbg,  nix_mnqerr_e_str[mnq_err_code],
-+			   mnq_err_code);
- 		otx2_write64(pf, NIX_LF_MNQ_ERR_DBG, BIT_ULL(44));
- 
- chk_snd_err_dbg:
- 		snd_err_dbg = otx2_read64(pf, NIX_LF_SEND_ERR_DBG);
- 		if (snd_err_dbg & BIT(44)) {
- 			snd_err_code = FIELD_GET(GENMASK(7, 0), snd_err_dbg);
--			netdev_err(pf->netdev, "SQ%lld: NIX_LF_SND_ERR_DBG:0x%llx err=%s\n",
--				   qidx, snd_err_dbg, nix_snd_status_e_str[snd_err_code]);
-+			netdev_err(pf->netdev,
-+				   "SQ%lld: NIX_LF_SND_ERR_DBG:0x%llx err=%s(%#x)\n",
-+				   qidx, snd_err_dbg,
-+				   nix_snd_status_e_str[snd_err_code],
-+				   snd_err_code);
- 			otx2_write64(pf, NIX_LF_SEND_ERR_DBG, BIT_ULL(44));
- 		}
++	/* Splice the remained list back to rx_done for next schedule */
+ 	if (!list_empty(&rx_queue)) {
+ 		spin_lock_irqsave(&tp->rx_lock, flags);
+-		list_splice_tail(&rx_queue, &tp->rx_done);
++		list_splice(&rx_queue, &tp->rx_done);
+ 		spin_unlock_irqrestore(&tp->rx_lock, flags);
+ 	}
  
 -- 
 2.42.0
