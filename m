@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0883C465
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620CF3C475
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Im1tGrFY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38814C433C9;
-	Wed, 15 Nov 2023 19:40:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyPoWI5s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CE6C433D9;
+	Wed, 15 Nov 2023 19:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077211;
-	bh=bYsxkNxd6Fjq8jby3diRaV7zOQdU1CBkoF4TqP5pVYU=;
+	s=korg; t=1700077213;
+	bh=AWtBayWPtioh5+KLCfWxyfU5yBoBR9ARLSKm/MHWtRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Im1tGrFYhaQPgriCYHxBF+zkmFlJKz2e86yfBBCnQefthoPVFTUcwEF3ywPVTgFQN
-	 WxM37vSwRU4ohkmg/9xFrbwV3RmUp1IwuD73cuszDGH/PbhtIXZl8ntfPn9tDU605Y
-	 bXk/BGYjAufQC7Ia3jHqGBRz5UomvtNVzkvfhHuI=
+	b=CyPoWI5s7YPvuUNpoBMKHQ6ZymQcBCCGUQNolv7cWWvNVGujSCRTraF+mEqX2z556
+	 KHAmRNCO1iWxgZ7mu0+2UbNo/kJSpGiRqIzgyrtcAfVl37Qr1WMXRO7yLPbHFi/dIQ
+	 4pqeg49749y82zEomOwazR0lOvwSLOvyWVhqzNNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yedidya Benshimol <yedidya.ben.shimol@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 146/603] wifi: iwlwifi: mvm: update IGTK in mvmvif upon D3 resume
-Date: Wed, 15 Nov 2023 14:11:31 -0500
-Message-ID: <20231115191623.293911649@linuxfoundation.org>
+Subject: [PATCH 6.6 141/603] wifi: iwlwifi: mvm: fix iwl_mvm_mac_flush_sta()
+Date: Wed, 15 Nov 2023 14:11:26 -0500
+Message-ID: <20231115191622.948092786@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,47 +42,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yedidya Benshimol <yedidya.ben.shimol@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ac0c6fdc4c56b669abc1c4a323f1c7a3a1422dd2 ]
+[ Upstream commit 43874283ce6c5bd32ac9d30878b2c96a974357cb ]
 
-During the D3 resume flow, all new rekeys are passed from the FW.
-Because the FW supports only one IGTK at a time, every IGTK rekey
-update should be done by removing the last IGTK. The mvmvif holds a
-pointer to the last IGTK for that reason and thus should be updated
-when a new IGTK is passed upon resume.
+When I implemented iwl_mvm_mac_flush_sta() I completely botched it;
+it basically always happens after the iwl_mvm_sta_pre_rcu_remove()
+call, and that already clears mvm->fw_id_to_mac_id[] entries, so we
+cannot rely on those at iwl_mvm_mac_flush_sta() time. This means it
+never did anything.
 
-Fixes: 04f78e242fff ("wifi: iwlwifi: mvm: Add support for IGTK in D3 resume flow")
-Signed-off-by: Yedidya Benshimol <yedidya.ben.shimol@intel.com>
+Fix this by just going through the station IDs and now with the new
+API for iwl_mvm_flush_sta(), call those.
+
+Fixes: a6cc6ccb1c8a ("wifi: iwlwifi: mvm: support new flush_sta method")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20231017115047.8ceaf7e5ece7.Ief444f6a2703ed76648b4d414f12bb4130bab36e@changeid
+Link: https://lore.kernel.org/r/20231011130030.0b5878e93118.I1093e60163052e7be64d2b01424097cd6a272979@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ .../net/wireless/intel/iwlwifi/mvm/mac80211.c | 20 +++++++++----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-index f6488b4bbe68b..be2602d8c5bfa 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -2012,6 +2012,16 @@ iwl_mvm_d3_igtk_bigtk_rekey_add(struct iwl_wowlan_status_data *status,
- 	if (IS_ERR(key_config))
- 		return false;
- 	ieee80211_set_key_rx_seq(key_config, 0, &seq);
-+
-+	if (key_config->keyidx == 4 || key_config->keyidx == 5) {
-+		struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
-+		int link_id = vif->active_links ? __ffs(vif->active_links) : 0;
-+		struct iwl_mvm_vif_link_info *mvm_link =
-+			mvmvif->link[link_id];
-+
-+		mvm_link->igtk = key_config;
-+	}
-+
- 	return true;
- }
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index e68026a657059..a25ea638229b0 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -5602,22 +5602,20 @@ void iwl_mvm_mac_flush(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ void iwl_mvm_mac_flush_sta(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 			   struct ieee80211_sta *sta)
+ {
++	struct iwl_mvm_sta *mvmsta = iwl_mvm_sta_from_mac80211(sta);
+ 	struct iwl_mvm *mvm = IWL_MAC80211_GET_MVM(hw);
+-	int i;
++	struct iwl_mvm_link_sta *mvm_link_sta;
++	struct ieee80211_link_sta *link_sta;
++	int link_id;
  
+ 	mutex_lock(&mvm->mutex);
+-	for (i = 0; i < mvm->fw->ucode_capa.num_stations; i++) {
+-		struct iwl_mvm_sta *mvmsta;
+-		struct ieee80211_sta *tmp;
+-
+-		tmp = rcu_dereference_protected(mvm->fw_id_to_mac_id[i],
+-						lockdep_is_held(&mvm->mutex));
+-		if (tmp != sta)
++	for_each_sta_active_link(vif, sta, link_sta, link_id) {
++		mvm_link_sta = rcu_dereference_protected(mvmsta->link[link_id],
++							 lockdep_is_held(&mvm->mutex));
++		if (!mvm_link_sta)
+ 			continue;
+ 
+-		mvmsta = iwl_mvm_sta_from_mac80211(sta);
+-
+-		if (iwl_mvm_flush_sta(mvm, mvmsta->deflink.sta_id,
++		if (iwl_mvm_flush_sta(mvm, mvm_link_sta->sta_id,
+ 				      mvmsta->tfd_queue_msk))
+ 			IWL_ERR(mvm, "flush request fail\n");
+ 	}
 -- 
 2.42.0
 
