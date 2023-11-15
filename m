@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7776731728
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CBF3C465
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsg69TNj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285F4C433CB;
-	Wed, 15 Nov 2023 19:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1qClOgB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FE5C433CA;
+	Wed, 15 Nov 2023 19:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077189;
-	bh=VOvHsDzQGU7Ll9TAdkbBIqgpu4EjQRYYvJkLKx/WZaY=;
+	s=korg; t=1700077190;
+	bh=RALN69McNKmgd7W0NJrnS+XGvpprvSHYFaQ3qblKv3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lsg69TNjejkvSif8foMmYUgXIct2ZlYrXg7j07apC7KDH66LbnD70iwp/+9An1hK1
-	 UIKYuofM/W+o05vpBKJ/kkKmhmoNc3uyW5oEP5+pCIsn2HURuHOwiEqGIXrNabq05x
-	 2MGnSrJ1QvO3MShSDgE38Kp7AIUeeWshaQZC/94I=
+	b=P1qClOgBD+cCg7WHp2Ybcxhdegwk9YMmixG3E3MvZpEmwcpSQDGYUX246YyMf/JZt
+	 BE0P66BcQ+dNwc+FQReRajAz5816p0jZjUBfKmCCtQUB/4vQDlXctl6lVFx6+lW5j5
+	 jlUAVMIIm/fJfOU/doF6Xr6UAsy9mNrzQWylSruc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 549/550] btrfs: use u64 for buffer sizes in the tree search ioctls
-Date: Wed, 15 Nov 2023 14:18:53 -0500
-Message-ID: <20231115191638.984965691@linuxfoundation.org>
+Subject: [PATCH 6.6 153/603] mptcp: properly account fastopen data
+Date: Wed, 15 Nov 2023 14:11:38 -0500
+Message-ID: <20231115191623.769180902@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,79 +39,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit dec96fc2dcb59723e041416b8dc53e011b4bfc2e ]
+[ Upstream commit bf0e96108fb6707613dd055aff5e98b02b99bb14 ]
 
-In the tree search v2 ioctl we use the type size_t, which is an unsigned
-long, to track the buffer size in the local variable 'buf_size'. An
-unsigned long is 32 bits wide on a 32 bits architecture. The buffer size
-defined in struct btrfs_ioctl_search_args_v2 is a u64, so when we later
-try to copy the local variable 'buf_size' to the argument struct, when
-the search returns -EOVERFLOW, we copy only 32 bits which will be a
-problem on big endian systems.
+Currently the socket level counter aggregating the received data
+does not take in account the data received via fastopen.
 
-Fix this by using a u64 type for the buffer sizes, not only at
-btrfs_ioctl_tree_search_v2(), but also everywhere down the call chain
-so that we can use the u64 at btrfs_ioctl_tree_search_v2().
+Address the issue updating the counter as required.
 
-Fixes: cc68a8a5a433 ("btrfs: new ioctl TREE_SEARCH_V2")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/linux-btrfs/ce6f4bd6-9453-4ffe-ba00-cee35495e10f@moroto.mountain/
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 38967f424b5b ("mptcp: track some aggregate data counters")
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20231023-send-net-next-20231023-2-v1-2-9dc60939d371@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/mptcp/fastopen.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index bf35b6fce8f07..6d0df9bc1e72b 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -1528,7 +1528,7 @@ static noinline int key_in_sk(struct btrfs_key *key,
- static noinline int copy_to_sk(struct btrfs_path *path,
- 			       struct btrfs_key *key,
- 			       struct btrfs_ioctl_search_key *sk,
--			       size_t *buf_size,
-+			       u64 *buf_size,
- 			       char __user *ubuf,
- 			       unsigned long *sk_offset,
- 			       int *num_found)
-@@ -1660,7 +1660,7 @@ static noinline int copy_to_sk(struct btrfs_path *path,
+diff --git a/net/mptcp/fastopen.c b/net/mptcp/fastopen.c
+index bceaab8dd8e46..74698582a2859 100644
+--- a/net/mptcp/fastopen.c
++++ b/net/mptcp/fastopen.c
+@@ -52,6 +52,7 @@ void mptcp_fastopen_subflow_synack_set_params(struct mptcp_subflow_context *subf
  
- static noinline int search_ioctl(struct inode *inode,
- 				 struct btrfs_ioctl_search_key *sk,
--				 size_t *buf_size,
-+				 u64 *buf_size,
- 				 char __user *ubuf)
- {
- 	struct btrfs_fs_info *info = btrfs_sb(inode->i_sb);
-@@ -1733,7 +1733,7 @@ static noinline int btrfs_ioctl_tree_search(struct inode *inode,
- 	struct btrfs_ioctl_search_args __user *uargs = argp;
- 	struct btrfs_ioctl_search_key sk;
- 	int ret;
--	size_t buf_size;
-+	u64 buf_size;
+ 	mptcp_set_owner_r(skb, sk);
+ 	__skb_queue_tail(&sk->sk_receive_queue, skb);
++	mptcp_sk(sk)->bytes_received += skb->len;
  
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
-@@ -1763,8 +1763,8 @@ static noinline int btrfs_ioctl_tree_search_v2(struct inode *inode,
- 	struct btrfs_ioctl_search_args_v2 __user *uarg = argp;
- 	struct btrfs_ioctl_search_args_v2 args;
- 	int ret;
--	size_t buf_size;
--	const size_t buf_limit = SZ_16M;
-+	u64 buf_size;
-+	const u64 buf_limit = SZ_16M;
+ 	sk->sk_data_ready(sk);
  
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
 -- 
 2.42.0
 
