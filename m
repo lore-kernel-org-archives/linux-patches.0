@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A158045BF1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FF145BF1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lc1LZbjo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBE8C433C7;
-	Wed, 15 Nov 2023 22:02:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYNzjMCU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DA4C433CA;
+	Wed, 15 Nov 2023 22:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085757;
-	bh=RDLXaXCKoxWrDuDiAvwwHlpya+8nxhKWmnx5iwP06dI=;
+	s=korg; t=1700085758;
+	bh=SzCut/GMgIJQqKHpfKLAKqVnGRhcuusiTk6WB1r4Sg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lc1LZbjoHB+tlss2lN6RMfm6x7RcGLwINKIIxztX6DunFXcN1PIXmgqdvO+vmTAFQ
-	 QqPS41mtn4SFTTkR7Wd7rXHMhXjlUUbJKd+QUsXOqE7Z1Z/GYbNT0FY7q2sigORnXY
-	 cKzCCNd4ifSvT40cgnxbKj0vnVgOoGcg36dhEhRg=
+	b=BYNzjMCU0YOBlilGKGzj5XQi2v0+/Q9AddysxyUSHMRspZ5A+g2aNgbGTebCxANHK
+	 KH7HL8M7Rh14aEK1hsv4kZeV78yhRd+/N1HMxslap6yEhlUHIgWEhmaQh/F4ctKXFD
+	 xZbML+9zzgT0NDQRijLw9YfmTgK/rPVSEOm7ZuCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aananth V <aananthv@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 004/119] tcp: call tcp_try_undo_recovery when an RTOd TFO SYNACK is ACKed
-Date: Wed, 15 Nov 2023 16:59:54 -0500
-Message-ID: <20231115220132.745877801@linuxfoundation.org>
+Subject: [PATCH 5.4 005/119] wifi: rtw88: debug: Fix the NULL vs IS_ERR() bug for debugfs_create_file()
+Date: Wed, 15 Nov 2023 16:59:55 -0500
+Message-ID: <20231115220132.773923853@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -45,69 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aananth V <aananthv@google.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit e326578a21414738de45f77badd332fb00bd0f58 ]
+[ Upstream commit 74f7957c9b1b95553faaf146a2553e023a9d1720 ]
 
-For passive TCP Fast Open sockets that had SYN/ACK timeout and did not
-send more data in SYN_RECV, upon receiving the final ACK in 3WHS, the
-congestion state may awkwardly stay in CA_Loss mode unless the CA state
-was undone due to TCP timestamp checks. However, if
-tcp_rcv_synrecv_state_fastopen() decides not to undo, then we should
-enter CA_Open, because at that point we have received an ACK covering
-the retransmitted SYNACKs. Currently, the icsk_ca_state is only set to
-CA_Open after we receive an ACK for a data-packet. This is because
-tcp_ack does not call tcp_fastretrans_alert (and tcp_process_loss) if
-!prior_packets
+Since debugfs_create_file() return ERR_PTR and never return NULL, so use
+IS_ERR() to check it instead of checking NULL.
 
-Note that tcp_process_loss() calls tcp_try_undo_recovery(), so having
-tcp_rcv_synrecv_state_fastopen() decide that if we're in CA_Loss we
-should call tcp_try_undo_recovery() is consistent with that, and
-low risk.
-
-Fixes: dad8cea7add9 ("tcp: fix TFO SYNACK undo to avoid double-timestamp-undo")
-Signed-off-by: Aananth V <aananthv@google.com>
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230919050651.962694-1-ruanjinjie@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/wireless/realtek/rtw88/debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index c3f227c4c3567..fe5ef114beba5 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6176,22 +6176,23 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
- 
- static void tcp_rcv_synrecv_state_fastopen(struct sock *sk)
- {
-+	struct tcp_sock *tp = tcp_sk(sk);
- 	struct request_sock *req;
- 
- 	/* If we are still handling the SYNACK RTO, see if timestamp ECR allows
- 	 * undo. If peer SACKs triggered fast recovery, we can't undo here.
- 	 */
--	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss)
--		tcp_try_undo_loss(sk, false);
-+	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss && !tp->packets_out)
-+		tcp_try_undo_recovery(sk);
- 
- 	/* Reset rtx states to prevent spurious retransmits_timed_out() */
--	tcp_sk(sk)->retrans_stamp = 0;
-+	tp->retrans_stamp = 0;
- 	inet_csk(sk)->icsk_retransmits = 0;
- 
- 	/* Once we leave TCP_SYN_RECV or TCP_FIN_WAIT_1,
- 	 * we no longer need req so release it.
- 	 */
--	req = rcu_dereference_protected(tcp_sk(sk)->fastopen_rsk,
-+	req = rcu_dereference_protected(tp->fastopen_rsk,
- 					lockdep_sock_is_held(sk));
- 	reqsk_fastopen_remove(sk, req, false);
- 
+diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
+index 5a906101498d9..12d81ad8b7023 100644
+--- a/drivers/net/wireless/realtek/rtw88/debug.c
++++ b/drivers/net/wireless/realtek/rtw88/debug.c
+@@ -658,9 +658,9 @@ static struct rtw_debugfs_priv rtw_debug_priv_rsvd_page = {
+ #define rtw_debugfs_add_core(name, mode, fopname, parent)		\
+ 	do {								\
+ 		rtw_debug_priv_ ##name.rtwdev = rtwdev;			\
+-		if (!debugfs_create_file(#name, mode,			\
++		if (IS_ERR(debugfs_create_file(#name, mode,		\
+ 					 parent, &rtw_debug_priv_ ##name,\
+-					 &file_ops_ ##fopname))		\
++					 &file_ops_ ##fopname)))	\
+ 			pr_debug("Unable to initialize debugfs:%s\n",	\
+ 			       #name);					\
+ 	} while (0)
 -- 
 2.42.0
 
