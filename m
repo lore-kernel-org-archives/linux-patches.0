@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233C23DBBF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651E33DBBF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bldZIdE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83871C433C8;
-	Wed, 15 Nov 2023 19:29:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rseNpShj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A58C433C9;
+	Wed, 15 Nov 2023 19:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076575;
-	bh=8ASizStuYFsqtA4bXzo3F95lGtMeG255Wt+bDYZJ+Rs=;
+	s=korg; t=1700076577;
+	bh=WVpHQzROduxxs05jTAZT0O+eKIy4iL6P583hJ2h8gpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1bldZIdEb9VOFybMrP46BrrKQ7v773clcEOfqoDACfQCpJsZ6X3Wck6BIWTZm+Xur
-	 c17a7WioDSfcjTFYv+nN6g3XI0c1IEot89072BvX4fegGm88OfA0C6HTSpwVnFRWdK
-	 mD10+edjDUTqOEYNYXL7Pf7qA/AZ/4EZYpUj/g/s=
+	b=rseNpShjQmpkTY07Fy+RhyIPRgQoTL49vngMRLYTxjxKpc2u1c74FO8XKolbbJPT1
+	 NZ13zXqpBBilu8oD5/YLh51WhLhXlgM8XdPb9uNNA6hTAyQGwtpLpcqokbZV0d3rv6
+	 E/B4HGpbXp8YwPwJ8REURi32+3Jn3G+GgdAypniM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adam Guerin <adam.guerin@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 316/550] crypto: qat - fix state machines cleanup paths
-Date: Wed, 15 Nov 2023 14:15:00 -0500
-Message-ID: <20231115191622.701966542@linuxfoundation.org>
+Subject: [PATCH 6.5 317/550] crypto: qat - ignore subsequent state up commands
+Date: Wed, 15 Nov 2023 14:15:01 -0500
+Message-ID: <20231115191622.750809088@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,75 +45,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit c9ca9756f376f51f985130a0e599d956065d4c44 ]
+[ Upstream commit 9c20cb8b1847dedddec3d5163079290542bf00bf ]
 
-Commit 1bdc85550a2b ("crypto: qat - fix concurrency issue when device
-state changes") introduced the function adf_dev_down() which wraps the
-functions adf_dev_stop() and adf_dev_shutdown().
-In a subsequent change, the sequence adf_dev_stop() followed by
-adf_dev_shutdown() was then replaced across the driver with just a call
-to the function adf_dev_down().
+If the device is already in the up state, a subsequent write of `up` to
+the sysfs attribute /sys/bus/pci/devices/<BDF>/qat/state brings the
+device down.
+Fix this behaviour by ignoring subsequent `up` commands if the device is
+already in the up state.
 
-The functions adf_dev_stop() and adf_dev_shutdown() are called in error
-paths to stop the accelerator and free up resources and can be called
-even if the counterparts adf_dev_init() and adf_dev_start() did not
-complete successfully.
-However, the implementation of adf_dev_down() prevents the stop/shutdown
-sequence if the device is found already down.
-For example, if adf_dev_init() fails, the device status is not set as
-started and therefore a call to adf_dev_down() won't be calling
-adf_dev_shutdown() to undo what adf_dev_init() did.
-
-Do not check if a device is started in adf_dev_down() but do the
-equivalent check in adf_sysfs.c when handling a DEV_DOWN command from
-the user.
-
-Fixes: 2b60f79c7b81 ("crypto: qat - replace state machine calls")
+Fixes: 1bdc85550a2b ("crypto: qat - fix concurrency issue when device state changes")
 Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 Reviewed-by: Adam Guerin <adam.guerin@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_init.c  | 7 -------
- drivers/crypto/intel/qat/qat_common/adf_sysfs.c | 7 +++++++
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_sysfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_init.c b/drivers/crypto/intel/qat/qat_common/adf_init.c
-index 826179c985241..8e66a77499f58 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_init.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
-@@ -412,13 +412,6 @@ int adf_dev_down(struct adf_accel_dev *accel_dev, bool reconfig)
- 
- 	mutex_lock(&accel_dev->state_lock);
- 
--	if (!adf_dev_started(accel_dev)) {
--		dev_info(&GET_DEV(accel_dev), "Device qat_dev%d already down\n",
--			 accel_dev->accel_id);
--		ret = -EINVAL;
--		goto out;
--	}
--
- 	if (reconfig) {
- 		ret = adf_dev_shutdown_cache_cfg(accel_dev);
- 		goto out;
 diff --git a/drivers/crypto/intel/qat/qat_common/adf_sysfs.c b/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
-index a74d2f9303670..a8f33558d7cb8 100644
+index a8f33558d7cb8..8880af1aa1b5b 100644
 --- a/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
 +++ b/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
-@@ -52,6 +52,13 @@ static ssize_t state_store(struct device *dev, struct device_attribute *attr,
- 	case DEV_DOWN:
- 		dev_info(dev, "Stopping device qat_dev%d\n", accel_id);
+@@ -68,7 +68,9 @@ static ssize_t state_store(struct device *dev, struct device_attribute *attr,
+ 		dev_info(dev, "Starting device qat_dev%d\n", accel_id);
  
-+		if (!adf_dev_started(accel_dev)) {
-+			dev_info(&GET_DEV(accel_dev), "Device qat_dev%d already down\n",
-+				 accel_id);
-+
+ 		ret = adf_dev_up(accel_dev, true);
+-		if (ret < 0) {
++		if (ret == -EALREADY) {
 +			break;
-+		}
-+
- 		ret = adf_dev_down(accel_dev, true);
- 		if (ret < 0)
- 			return -EINVAL;
++		} else if (ret) {
+ 			dev_err(dev, "Failed to start device qat_dev%d\n",
+ 				accel_id);
+ 			adf_dev_down(accel_dev, true);
 -- 
 2.42.0
 
