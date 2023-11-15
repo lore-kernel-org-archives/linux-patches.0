@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE823BB2C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7493BB2C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u92dum4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5231C433C7;
-	Wed, 15 Nov 2023 19:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptlbPD2q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B492C433C9;
+	Wed, 15 Nov 2023 19:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078019;
-	bh=WfLkSuwsWGM5ziRXxy9yrwOd5gdVgrxsONL0DSn99Ys=;
+	s=korg; t=1700078021;
+	bh=mTtIKhKIYLdQERi/6OEKIkBBjDw6JobJEhrU/MT9AuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u92dum4hgfTkve7JK2zQaYT8pCccTopnOJc0gDUgFJ/DTzr088nR3kvRBKCHW96tV
-	 TxwwupXIzajRwkI9qCHiwBjUuwSsgEvpNlg3w1MikVP+jNyZLuBrlytW+Vs5mP4VVa
-	 aEjQ2pVOO01/aC/i/231kUfRms5ZqTkYmUc+fD4s=
+	b=ptlbPD2q8SaK0kgwYXbwWw+vPxW3j382F9uBFfA2mYQB2c/ET+sVn9yKRv8HpWubm
+	 0xTyVapmw6DIYwsOtPzdy4zCnzSsmZ00zBElQespld2MY9Ttt5vMQFXJgT2nVYxnHX
+	 jLbxuGAa6iAdD27ApJmpL3iyaZ36lp5tZqfomlG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/379] tls: Only use data field in crypto completion function
-Date: Wed, 15 Nov 2023 14:21:50 -0500
-Message-ID: <20231115192647.234450116@linuxfoundation.org>
+Subject: [PATCH 6.1 026/379] wifi: iwlwifi: honor the enable_ini value
+Date: Wed, 15 Nov 2023 14:21:41 -0500
+Message-ID: <20231115192646.703439815@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -41,163 +43,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 8d338c76f7cfe0eb4bc46078b1c09c8c5fc75353 ]
+[ Upstream commit e0c1ca236e28e4263fba76d47a108ed95dcae33e ]
 
-The crypto_async_request passed to the completion is not guaranteed
-to be the original request object.  Only the data field can be relied
-upon.
+In case the user sets the enable_ini to some preset, we want to honor
+the value.
 
-Fix this by storing the socket pointer with the AEAD request.
+Remove the ops to set the value of the module parameter is runtime, we
+don't want to allow to modify the value in runtime since we configure
+the firmware once at the beginning on its life.
 
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: a2713257ee2b ("tls: Use size_add() in call to struct_size()")
+Fixes: b49c2b252b58 ("iwlwifi: Configure FW debug preset via module param.")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230830112059.5734e0f374bb.I6698eda8ed2112378dd47ac5d62866ebe7a94f77@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls.h    |  2 ++
- net/tls/tls_sw.c | 40 +++++++++++++++++++++++++++++-----------
- 2 files changed, 31 insertions(+), 11 deletions(-)
+ .../wireless/intel/iwlwifi/fw/api/dbg-tlv.h   |  1 +
+ .../net/wireless/intel/iwlwifi/iwl-dbg-tlv.h  |  5 +-
+ drivers/net/wireless/intel/iwlwifi/iwl-drv.c  | 51 +++++++------------
+ .../net/wireless/intel/iwlwifi/iwl-trans.h    |  4 ++
+ 4 files changed, 25 insertions(+), 36 deletions(-)
 
-diff --git a/net/tls/tls.h b/net/tls/tls.h
-index 17737a65c643a..0672acab27731 100644
---- a/net/tls/tls.h
-+++ b/net/tls/tls.h
-@@ -70,6 +70,8 @@ struct tls_rec {
- 	char content_type;
- 	struct scatterlist sg_content_type;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
+index ba538d70985f4..39bee9c00e071 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
+@@ -13,6 +13,7 @@
+ #define IWL_FW_INI_DOMAIN_ALWAYS_ON		0
+ #define IWL_FW_INI_REGION_ID_MASK		GENMASK(15, 0)
+ #define IWL_FW_INI_REGION_DUMP_POLICY_MASK	GENMASK(31, 16)
++#define IWL_FW_INI_PRESET_DISABLE		0xff
  
-+	struct sock *sk;
-+
- 	char aad_space[TLS_AAD_SPACE_SIZE];
- 	u8 iv_data[MAX_IV_SIZE];
- 	struct aead_request aead_req;
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 2af72d349192e..62d25f355d2c0 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -38,6 +38,7 @@
- #include <linux/bug.h>
- #include <linux/sched/signal.h>
- #include <linux/module.h>
-+#include <linux/kernel.h>
- #include <linux/splice.h>
- #include <crypto/aead.h>
+ /**
+  * struct iwl_fw_ini_hcmd
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
+index 128059ca77e60..06fb7d6653905 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ /*
+- * Copyright (C) 2018-2022 Intel Corporation
++ * Copyright (C) 2018-2023 Intel Corporation
+  */
+ #ifndef __iwl_dbg_tlv_h__
+ #define __iwl_dbg_tlv_h__
+@@ -10,7 +10,8 @@
+ #include <fw/file.h>
+ #include <fw/api/dbg-tlv.h>
  
-@@ -57,6 +58,7 @@ struct tls_decrypt_arg {
- };
+-#define IWL_DBG_TLV_MAX_PRESET 15
++#define IWL_DBG_TLV_MAX_PRESET	15
++#define ENABLE_INI		(IWL_DBG_TLV_MAX_PRESET + 1)
  
- struct tls_decrypt_ctx {
-+	struct sock *sk;
- 	u8 iv[MAX_IV_SIZE];
- 	u8 aad[TLS_MAX_AAD_SIZE];
- 	u8 tail;
-@@ -179,18 +181,25 @@ static int tls_padding_length(struct tls_prot_info *prot, struct sk_buff *skb,
- 	return sub;
+ /**
+  * struct iwl_dbg_tlv_node - debug TLV node
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+index a2203f661321c..5eba1a355f043 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+@@ -1722,6 +1722,22 @@ struct iwl_drv *iwl_drv_start(struct iwl_trans *trans)
+ #endif
+ 
+ 	drv->trans->dbg.domains_bitmap = IWL_TRANS_FW_DBG_DOMAIN(drv->trans);
++	if (iwlwifi_mod_params.enable_ini != ENABLE_INI) {
++		/* We have a non-default value in the module parameter,
++		 * take its value
++		 */
++		drv->trans->dbg.domains_bitmap &= 0xffff;
++		if (iwlwifi_mod_params.enable_ini != IWL_FW_INI_PRESET_DISABLE) {
++			if (iwlwifi_mod_params.enable_ini > ENABLE_INI) {
++				IWL_ERR(trans,
++					"invalid enable_ini module parameter value: max = %d, using 0 instead\n",
++					ENABLE_INI);
++				iwlwifi_mod_params.enable_ini = 0;
++			}
++			drv->trans->dbg.domains_bitmap =
++				BIT(IWL_FW_DBG_DOMAIN_POS + iwlwifi_mod_params.enable_ini);
++		}
++	}
+ 
+ 	ret = iwl_request_firmware(drv, true);
+ 	if (ret) {
+@@ -1770,8 +1786,6 @@ void iwl_drv_stop(struct iwl_drv *drv)
+ 	kfree(drv);
  }
  
--static void tls_decrypt_done(struct crypto_async_request *req, int err)
-+static void tls_decrypt_done(crypto_completion_data_t *data, int err)
- {
--	struct aead_request *aead_req = (struct aead_request *)req;
-+	struct aead_request *aead_req = crypto_get_completion_data(data);
-+	struct crypto_aead *aead = crypto_aead_reqtfm(aead_req);
- 	struct scatterlist *sgout = aead_req->dst;
- 	struct scatterlist *sgin = aead_req->src;
- 	struct tls_sw_context_rx *ctx;
-+	struct tls_decrypt_ctx *dctx;
- 	struct tls_context *tls_ctx;
- 	struct scatterlist *sg;
- 	unsigned int pages;
- 	struct sock *sk;
-+	int aead_size;
+-#define ENABLE_INI	(IWL_DBG_TLV_MAX_PRESET + 1)
+-
+ /* shared module parameters */
+ struct iwl_mod_params iwlwifi_mod_params = {
+ 	.fw_restart = true,
+@@ -1891,38 +1905,7 @@ module_param_named(uapsd_disable, iwlwifi_mod_params.uapsd_disable, uint, 0644);
+ MODULE_PARM_DESC(uapsd_disable,
+ 		 "disable U-APSD functionality bitmap 1: BSS 2: P2P Client (default: 3)");
  
--	sk = (struct sock *)req->data;
-+	aead_size = sizeof(*aead_req) + crypto_aead_reqsize(aead);
-+	aead_size = ALIGN(aead_size, __alignof__(*dctx));
-+	dctx = (void *)((u8 *)aead_req + aead_size);
+-static int enable_ini_set(const char *arg, const struct kernel_param *kp)
+-{
+-	int ret = 0;
+-	bool res;
+-	__u32 new_enable_ini;
+-
+-	/* in case the argument type is a number */
+-	ret = kstrtou32(arg, 0, &new_enable_ini);
+-	if (!ret) {
+-		if (new_enable_ini > ENABLE_INI) {
+-			pr_err("enable_ini cannot be %d, in range 0-16\n", new_enable_ini);
+-			return -EINVAL;
+-		}
+-		goto out;
+-	}
+-
+-	/* in case the argument type is boolean */
+-	ret = kstrtobool(arg, &res);
+-	if (ret)
+-		return ret;
+-	new_enable_ini = (res ? ENABLE_INI : 0);
+-
+-out:
+-	iwlwifi_mod_params.enable_ini = new_enable_ini;
+-	return 0;
+-}
+-
+-static const struct kernel_param_ops enable_ini_ops = {
+-	.set = enable_ini_set
+-};
+-
+-module_param_cb(enable_ini, &enable_ini_ops, &iwlwifi_mod_params.enable_ini, 0644);
++module_param_named(enable_ini, iwlwifi_mod_params.enable_ini, uint, 0444);
+ MODULE_PARM_DESC(enable_ini,
+ 		 "0:disable, 1-15:FW_DBG_PRESET Values, 16:enabled without preset value defined,"
+ 		 "Debug INI TLV FW debug infrastructure (default: 16)");
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+index d659ccd065f78..c9729e2718dc0 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+@@ -56,6 +56,10 @@
+  *	6) Eventually, the free function will be called.
+  */
+ 
++/* default preset 0 (start from bit 16)*/
++#define IWL_FW_DBG_DOMAIN_POS	16
++#define IWL_FW_DBG_DOMAIN	BIT(IWL_FW_DBG_DOMAIN_POS)
 +
-+	sk = dctx->sk;
- 	tls_ctx = tls_get_ctx(sk);
- 	ctx = tls_sw_ctx_rx(tls_ctx);
+ #define IWL_TRANS_FW_DBG_DOMAIN(trans)	IWL_FW_INI_DOMAIN_ALWAYS_ON
  
-@@ -242,7 +251,7 @@ static int tls_do_decryption(struct sock *sk,
- 	if (darg->async) {
- 		aead_request_set_callback(aead_req,
- 					  CRYPTO_TFM_REQ_MAY_BACKLOG,
--					  tls_decrypt_done, sk);
-+					  tls_decrypt_done, aead_req);
- 		atomic_inc(&ctx->decrypt_pending);
- 	} else {
- 		aead_request_set_callback(aead_req,
-@@ -338,6 +347,8 @@ static struct tls_rec *tls_get_rec(struct sock *sk)
- 	sg_set_buf(&rec->sg_aead_out[0], rec->aad_space, prot->aad_size);
- 	sg_unmark_end(&rec->sg_aead_out[1]);
- 
-+	rec->sk = sk;
-+
- 	return rec;
- }
- 
-@@ -419,22 +430,27 @@ int tls_tx_records(struct sock *sk, int flags)
- 	return rc;
- }
- 
--static void tls_encrypt_done(struct crypto_async_request *req, int err)
-+static void tls_encrypt_done(crypto_completion_data_t *data, int err)
- {
--	struct aead_request *aead_req = (struct aead_request *)req;
--	struct sock *sk = req->data;
--	struct tls_context *tls_ctx = tls_get_ctx(sk);
--	struct tls_prot_info *prot = &tls_ctx->prot_info;
--	struct tls_sw_context_tx *ctx = tls_sw_ctx_tx(tls_ctx);
-+	struct aead_request *aead_req = crypto_get_completion_data(data);
-+	struct tls_sw_context_tx *ctx;
-+	struct tls_context *tls_ctx;
-+	struct tls_prot_info *prot;
- 	struct scatterlist *sge;
- 	struct sk_msg *msg_en;
- 	struct tls_rec *rec;
- 	bool ready = false;
-+	struct sock *sk;
- 	int pending;
- 
- 	rec = container_of(aead_req, struct tls_rec, aead_req);
- 	msg_en = &rec->msg_encrypted;
- 
-+	sk = rec->sk;
-+	tls_ctx = tls_get_ctx(sk);
-+	prot = &tls_ctx->prot_info;
-+	ctx = tls_sw_ctx_tx(tls_ctx);
-+
- 	sge = sk_msg_elem(msg_en, msg_en->sg.curr);
- 	sge->offset -= prot->prepend_size;
- 	sge->length += prot->prepend_size;
-@@ -522,7 +538,7 @@ static int tls_do_encryption(struct sock *sk,
- 			       data_len, rec->iv_data);
- 
- 	aead_request_set_callback(aead_req, CRYPTO_TFM_REQ_MAY_BACKLOG,
--				  tls_encrypt_done, sk);
-+				  tls_encrypt_done, aead_req);
- 
- 	/* Add the record in tx_list */
- 	list_add_tail((struct list_head *)&rec->list, &ctx->tx_list);
-@@ -1495,6 +1511,7 @@ static int tls_decrypt_sg(struct sock *sk, struct iov_iter *out_iov,
- 	 * Both structs are variable length.
- 	 */
- 	aead_size = sizeof(*aead_req) + crypto_aead_reqsize(ctx->aead_recv);
-+	aead_size = ALIGN(aead_size, __alignof__(*dctx));
- 	mem = kmalloc(aead_size + struct_size(dctx, sg, n_sgin + n_sgout),
- 		      sk->sk_allocation);
- 	if (!mem) {
-@@ -1505,6 +1522,7 @@ static int tls_decrypt_sg(struct sock *sk, struct iov_iter *out_iov,
- 	/* Segment the allocated memory */
- 	aead_req = (struct aead_request *)mem;
- 	dctx = (struct tls_decrypt_ctx *)(mem + aead_size);
-+	dctx->sk = sk;
- 	sgin = &dctx->sg[0];
- 	sgout = &dctx->sg[n_sgin];
- 
+ #define FH_RSCSR_FRAME_SIZE_MSK		0x00003FFF	/* bits 0-13 */
 -- 
 2.42.0
 
