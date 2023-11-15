@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B703307B
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD97364CB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ozk0agOE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5412C433CC;
-	Wed, 15 Nov 2023 19:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNq7duWC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D957C433C7;
+	Wed, 15 Nov 2023 19:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077517;
-	bh=iKgbKtLGFZvc15XD7W5o05V96XyM2x49ySwDajLlrwM=;
+	s=korg; t=1700077519;
+	bh=IF4xra8U/kAhKnIj0yO4gD7owuMIbIUnEt8dGSg8AJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ozk0agOEjHdsCfMSeM8UXvEdMxAWRwwNEbc0Qa4Es/xCk8qmzJnPpG9HCASuneFzU
-	 vHPAwMTWJ79IRNRIOoA++dMT0K5sRnY4rUFidPPvMYjj1ww/K5RMxeu3ixsxjwPURW
-	 su/aEtYrpnuooOPJ/K0HmbioqtwTvD4xoe+nNL/0=
+	b=uNq7duWCd1s3aK0tSbFa0mkA6c4HhnR22lMvuPmb6QAOVTaMLX3czIU1bRmkc3anK
+	 PVeQdMKK1dDfBYRDt1+zdSVEZoN3bb9LWIiZPefC5ZkCNTsQUOqaPie83PfqX2q3Oz
+	 pFyj50UffQ0tG6ZQr4w+KGaOb7tDWmMShwymdwRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 326/603] ARM: dts: BCM5301X: Explicitly disable unused switch CPU ports
-Date: Wed, 15 Nov 2023 14:14:31 -0500
-Message-ID: <20231115191636.068131516@linuxfoundation.org>
+Subject: [PATCH 6.6 327/603] iommufd: Add iopt_area_alloc()
+Date: Wed, 15 Nov 2023 14:14:32 -0500
+Message-ID: <20231115191636.133389308@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -36,426 +35,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 473baeab929444295b0530f8766e4becb6a08973 ]
+[ Upstream commit 361d744ddd61de065fbeb042aaed590d32dd92ec ]
 
-When redescribing ports I assumed that missing "label" (like "cpu")
-means switch port isn't used. That was incorrect and I realized my
-change made Linux always use the first (5) CPU port (there are 3 of
-them).
+We never initialize the two interval tree nodes, and zero fill is not the
+same as RB_CLEAR_NODE. This can hide issues where we missed adding the
+area to the trees. Factor out the allocation and clear the two nodes.
 
-While above should technically be possible it often isn't correct:
-1. Non-default switch ports are often connected to Ethernet interfaces
-   not fully covered by vendor setup (they may miss MACs)
-2. On some devices non-default ports require specifying fixed link
-
-This fixes network connectivity for some devices. It was reported &
-tested for Netgear R8000. It also affects Linksys EA9200 with its
-downstream DTS.
-
-Fixes: ba4aebce23b2 ("ARM: dts: BCM5301X: Describe switch ports in the main DTS")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20231013103314.10306-1-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Fixes: 51fe6141f0f6 ("iommufd: Data structure to provide IOVA to PFN mapping")
+Link: https://lore.kernel.org/r/20231030145035.GG691768@ziepe.ca
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi  | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts     | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts     | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts      | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts    | 8 ++++++++
- .../boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts    | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts    | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts    | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts      | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts    | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts    | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts    | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts    | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts    | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts    | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts    | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts       | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts       | 8 ++++++++
- arch/arm/boot/dts/broadcom/bcm953012er.dts                | 8 ++++++++
- 20 files changed, 160 insertions(+)
+ drivers/iommu/iommufd/io_pagetable.c | 18 +++++++++++++++---
+ drivers/iommu/iommufd/pages.c        |  2 ++
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi b/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi
-index 42bcbf10957c4..9f9084269ef58 100644
---- a/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi
-+++ b/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi
-@@ -181,5 +181,13 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts
-index e04d2e5ea51aa..72e960c888ac8 100644
---- a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts
-@@ -85,5 +85,13 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts
-index a399800139d9c..750e17482371c 100644
---- a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts
-@@ -88,5 +88,13 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts b/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts
-index fad3473810a2e..2bdbc7d18b0eb 100644
---- a/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts
-@@ -122,5 +122,13 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts b/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts
-index 5b2b7b8b3b123..b226bef3369cf 100644
---- a/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts
-@@ -145,6 +145,14 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
+diff --git a/drivers/iommu/iommufd/io_pagetable.c b/drivers/iommu/iommufd/io_pagetable.c
+index 3a598182b7619..a4da1817e19dd 100644
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -221,6 +221,18 @@ static int iopt_insert_area(struct io_pagetable *iopt, struct iopt_area *area,
+ 	return 0;
+ }
  
-diff --git a/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts b/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts
-index d0a26b643b82f..192b8db5a89c3 100644
---- a/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts
-@@ -145,5 +145,13 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
++static struct iopt_area *iopt_area_alloc(void)
++{
++	struct iopt_area *area;
 +
-+		port@7 {
-+			status = "disabled";
-+		};
++	area = kzalloc(sizeof(*area), GFP_KERNEL_ACCOUNT);
++	if (!area)
++		return NULL;
++	RB_CLEAR_NODE(&area->node.rb);
++	RB_CLEAR_NODE(&area->pages_node.rb);
++	return area;
++}
 +
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts
-index 9f21d6d6d35b7..0198b5f9e4a75 100644
---- a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts
-@@ -81,5 +81,13 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts
-index 2561072917021..73ff1694a4a0b 100644
---- a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts
-@@ -148,5 +148,13 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts b/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts
-index 707c561703ed8..55fc9f44cbc7f 100644
---- a/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts
-@@ -227,6 +227,14 @@ port@4 {
- 			label = "wan";
- 		};
+ static int iopt_alloc_area_pages(struct io_pagetable *iopt,
+ 				 struct list_head *pages_list,
+ 				 unsigned long length, unsigned long *dst_iova,
+@@ -231,7 +243,7 @@ static int iopt_alloc_area_pages(struct io_pagetable *iopt,
+ 	int rc = 0;
  
-+		port@5 {
-+			status = "disabled";
-+		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
- 		port@8 {
- 			label = "cpu";
- 		};
-diff --git a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts
-index c914569ddd5ec..e6d26987865d0 100644
---- a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts
-@@ -144,6 +144,14 @@ port@4 {
- 			label = "wan";
- 		};
+ 	list_for_each_entry(elm, pages_list, next) {
+-		elm->area = kzalloc(sizeof(*elm->area), GFP_KERNEL_ACCOUNT);
++		elm->area = iopt_area_alloc();
+ 		if (!elm->area)
+ 			return -ENOMEM;
+ 	}
+@@ -1005,11 +1017,11 @@ static int iopt_area_split(struct iopt_area *area, unsigned long iova)
+ 	    iopt_area_start_byte(area, new_start) & (alignment - 1))
+ 		return -EINVAL;
  
-+		port@5 {
-+			status = "disabled";
-+		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
- 		port@8 {
- 			label = "cpu";
- 		};
-diff --git a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts
-index f050acbea0b20..3124dfd01b944 100644
---- a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts
-@@ -192,6 +192,14 @@ port@4 {
- 			label = "wan";
- 		};
+-	lhs = kzalloc(sizeof(*area), GFP_KERNEL_ACCOUNT);
++	lhs = iopt_area_alloc();
+ 	if (!lhs)
+ 		return -ENOMEM;
  
-+		port@5 {
-+			status = "disabled";
-+		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
- 		port@8 {
- 			label = "cpu";
- 			phy-mode = "rgmii";
-diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts
-index e8991d4e248ce..e374062eb5b76 100644
---- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts
-@@ -107,5 +107,13 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts
-index afc635c8cdebb..badafa024d24c 100644
---- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts
-@@ -120,5 +120,13 @@ port@1 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts
-index 7cfa4607ef311..cf95af9db1e66 100644
---- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts
-@@ -107,5 +107,13 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts
-index d55e10095eae7..992c19e1cfa17 100644
---- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts
-@@ -75,5 +75,13 @@ port@0 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts
-index ccf031c0e276d..4d0ba315a2049 100644
---- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts
-@@ -147,5 +147,13 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts
-index e28f7a3501179..83c429afc2974 100644
---- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts
-@@ -158,5 +158,13 @@ port@4 {
- 		port@5 {
- 			label = "cpu";
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts b/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts
-index 03ad614e6b721..0bf5106f7012c 100644
---- a/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts
-@@ -124,6 +124,14 @@ fixed-link {
- 				full-duplex;
- 			};
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
+-	rhs = kzalloc(sizeof(*area), GFP_KERNEL_ACCOUNT);
++	rhs = iopt_area_alloc();
+ 	if (!rhs) {
+ 		rc = -ENOMEM;
+ 		goto err_free_lhs;
+diff --git a/drivers/iommu/iommufd/pages.c b/drivers/iommu/iommufd/pages.c
+index 8d9aa297c117e..528f356238b34 100644
+--- a/drivers/iommu/iommufd/pages.c
++++ b/drivers/iommu/iommufd/pages.c
+@@ -1507,6 +1507,8 @@ void iopt_area_unfill_domains(struct iopt_area *area, struct iopt_pages *pages)
+ 				area, domain, iopt_area_index(area),
+ 				iopt_area_last_index(area));
  
-diff --git a/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts b/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts
-index 26c12bfb0bdd4..25eeacf6a2484 100644
---- a/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts
-@@ -185,6 +185,14 @@ fixed-link {
- 				full-duplex;
- 			};
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
- 
-diff --git a/arch/arm/boot/dts/broadcom/bcm953012er.dts b/arch/arm/boot/dts/broadcom/bcm953012er.dts
-index 4fe3b36533767..d939ec9f4a9e7 100644
---- a/arch/arm/boot/dts/broadcom/bcm953012er.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm953012er.dts
-@@ -84,6 +84,14 @@ port@5 {
- 			label = "cpu";
- 			ethernet = <&gmac0>;
- 		};
-+
-+		port@7 {
-+			status = "disabled";
-+		};
-+
-+		port@8 {
-+			status = "disabled";
-+		};
- 	};
- };
- 
++	if (IS_ENABLED(CONFIG_IOMMUFD_TEST))
++		WARN_ON(RB_EMPTY_NODE(&area->pages_node.rb));
+ 	interval_tree_remove(&area->pages_node, &pages->domains_itree);
+ 	iopt_area_unfill_domain(area, pages, area->storage_domain);
+ 	area->storage_domain = NULL;
 -- 
 2.42.0
 
