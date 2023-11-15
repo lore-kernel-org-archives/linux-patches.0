@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEA041223
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EA83FB19
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yO8Aj9ln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF90C433C9;
-	Wed, 15 Nov 2023 19:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfppIc5d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56AD2C433C7;
+	Wed, 15 Nov 2023 19:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076425;
-	bh=wPq6dEsxuBEF/rrnTRPENnsqOTAGWNTDiZAjzVUh0Ac=;
+	s=korg; t=1700076426;
+	bh=dCMJcjkR0YWl60C//lEpyfgIe+aWMNLXXcPwdmx7w2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yO8Aj9lnXfYHZ4pzwyTVda+tcQWA6EEpx2mio1slLihoJlvILmQNgbAdZed+BVtrC
-	 vVjJmuiguGMTriX7jIIyqldk/e+PLgPmib04iSzUF5qPWGaP7z+HYF6xwWWYZRf0s6
-	 e5ZcHbFeQqosEQOXyoqlIO56JpFQ7tcSrMa2Ymcs=
+	b=pfppIc5dwq7T+O94y3p7/rjHf/F650D7LLuDb2CXZoP05YHlR9pO0NNwN/biAggMn
+	 NhcYcoHhPKXwVgQIoO8lRHXEHsmKRZu8B7LHz9tO0GLA7Gmx3UyobcQLTXPj4p/76S
+	 M1YAxiIYUAvoDMrzuJRF8Q7XjpGGDzUkIxCFGkUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	"Kunwu.Chan" <chentao@kylinos.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 256/550] drm/amd/pm: Fix a memory leak on an error path
-Date: Wed, 15 Nov 2023 14:14:00 -0500
-Message-ID: <20231115191618.448977801@linuxfoundation.org>
+Subject: [PATCH 6.5 257/550] perf/arm-cmn: Fix DTC domain detection
+Date: Wed, 15 Nov 2023 14:14:01 -0500
+Message-ID: <20231115191618.519680970@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,37 +43,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu.Chan <chentao@kylinos.cn>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit 828f8e31379b28fe7f07fb5865b8ed099d223fca ]
+[ Upstream commit e3e73f511c49c741f6309862c2248958ad77bbaa ]
 
-Add missing free on an error path.
+It transpires that dtm_unit_info is another register which got shuffled
+in CMN-700 without me noticing. Fix that in a way which also proactively
+fixes the fragile laziness of its consumer, just in case any further
+fields ever get added alongside dtc_domain.
 
-Fixes: 511a95552ec8 ("drm/amd/pm: Add SMU 13.0.6 support")
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Kunwu.Chan <chentao@kylinos.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 23760a014417 ("perf/arm-cmn: Add CMN-700 support")
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Link: https://lore.kernel.org/r/3076ee83d0554f6939fbb6ee49ab2bdb28d8c7ee.1697824215.git.robin.murphy@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/perf/arm-cmn.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-index dc6104a04dce6..7674ea9611ddd 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-@@ -1977,8 +1977,10 @@ static ssize_t smu_v13_0_6_get_gpu_metrics(struct smu_context *smu, void **table
+diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+index 43aba01399bef..4a2cb49010599 100644
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -110,7 +110,9 @@
  
- 	metrics = kzalloc(sizeof(MetricsTable_t), GFP_KERNEL);
- 	ret = smu_v13_0_6_get_metrics_table(smu, metrics, true);
--	if (ret)
-+	if (ret) {
-+		kfree(metrics);
- 		return ret;
-+	}
+ #define CMN_DTM_PMEVCNTSR		0x240
  
- 	smu_cmn_init_soft_gpu_metrics(gpu_metrics, 1, 3);
+-#define CMN_DTM_UNIT_INFO		0x0910
++#define CMN650_DTM_UNIT_INFO		0x0910
++#define CMN_DTM_UNIT_INFO		0x0960
++#define CMN_DTM_UNIT_INFO_DTC_DOMAIN	GENMASK_ULL(1, 0)
  
+ #define CMN_DTM_NUM_COUNTERS		4
+ /* Want more local counters? Why not replicate the whole DTM! Ugh... */
+@@ -2007,6 +2009,16 @@ static int arm_cmn_init_dtcs(struct arm_cmn *cmn)
+ 	return 0;
+ }
+ 
++static unsigned int arm_cmn_dtc_domain(struct arm_cmn *cmn, void __iomem *xp_region)
++{
++	int offset = CMN_DTM_UNIT_INFO;
++
++	if (cmn->part == PART_CMN650 || cmn->part == PART_CI700)
++		offset = CMN650_DTM_UNIT_INFO;
++
++	return FIELD_GET(CMN_DTM_UNIT_INFO_DTC_DOMAIN, readl_relaxed(xp_region + offset));
++}
++
+ static void arm_cmn_init_node_info(struct arm_cmn *cmn, u32 offset, struct arm_cmn_node *node)
+ {
+ 	int level;
+@@ -2138,7 +2150,7 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 		if (cmn->part == PART_CMN600)
+ 			xp->dtc = 0xf;
+ 		else
+-			xp->dtc = 1 << readl_relaxed(xp_region + CMN_DTM_UNIT_INFO);
++			xp->dtc = 1 << arm_cmn_dtc_domain(cmn, xp_region);
+ 
+ 		xp->dtm = dtm - cmn->dtms;
+ 		arm_cmn_init_dtm(dtm++, xp, 0);
 -- 
 2.42.0
 
