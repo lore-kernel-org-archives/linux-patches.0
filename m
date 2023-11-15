@@ -1,32 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B743C471
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EF528E20
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPgqGvC7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8890CC433C8;
-	Wed, 15 Nov 2023 19:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agOQNEfi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC75C433C9;
+	Wed, 15 Nov 2023 19:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077156;
-	bh=YUo4Z5zzH+gG8z8cw/MrDxCmlOtwJ0pQSmnIzLphY3I=;
+	s=korg; t=1700077158;
+	bh=sved93onRm+I2UKJ8nm+rJH7HTilt84yn1EfrJ54QTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BPgqGvC7N8i0/6ST4BTWNuavcbVVI+H4/sZyJYq55qtNAfdND48iLIbYUTSJ6yYJG
-	 RFIUFc0o4vYyd4CRy6+LY76RtEUEYkuJ/v/Khw47cairuaeHlo0rsSdSgkyie00bQS
-	 /pCvpP/HMm9AE3KT4XlcLrMyHowJkzqo6Tqh/1o8=
+	b=agOQNEfiySken8enhRIxTq89Uldcxmvb0SVlywNzFtplpT+4++kn3Gn8Gg3bPYcVV
+	 C6stG6bdf4VskrdyNZAwNwQA2UItYCtZ0uWo7IjuRMf2KjlgVCUrWGus5egOg1rUTg
+	 No4zOiv01gT4OIogL3LIBHKiuVB/TDpoVek50aEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Phil Sutter <phil@nwl.cc>,
+	Florian Westphal <fw@strlen.de>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 523/550] r8169: respect userspace disabling IFF_MULTICAST
-Date: Wed, 15 Nov 2023 14:18:27 -0500
-Message-ID: <20231115191637.184543326@linuxfoundation.org>
+Subject: [PATCH 6.6 126/603] net: skb_find_text: Ignore patterns extending past to
+Date: Wed, 15 Nov 2023 14:11:11 -0500
+Message-ID: <20231115191621.956213667@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,44 +40,207 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 8999ce4cfc87e61b4143ec2e7b93d8e92e11fa7f ]
+[ Upstream commit c4eee56e14fe001e1cff54f0b438a5e2d0dd7454 ]
 
-So far we ignore the setting of IFF_MULTICAST. Fix this and clear bit
-AcceptMulticast if IFF_MULTICAST isn't set.
+Assume that caller's 'to' offset really represents an upper boundary for
+the pattern search, so patterns extending past this offset are to be
+rejected.
 
-Note: Based on the implementations I've seen it doesn't seem to be 100% clear
-what a driver is supposed to do if IFF_ALLMULTI is set but IFF_MULTICAST
-is not. This patch is based on the understanding that IFF_MULTICAST has
-precedence.
+The old behaviour also was kind of inconsistent when it comes to
+fragmentation (or otherwise non-linear skbs): If the pattern started in
+between 'to' and 'from' offsets but extended to the next fragment, it
+was not found if 'to' offset was still within the current fragment.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/4a57ba02-d52d-4369-9f14-3565e6c1f7dc@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Test the new behaviour in a kselftest using iptables' string match.
+
+Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: f72b948dcbb8 ("[NET]: skb_find_text ignores to argument")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/core/skbuff.c                             |   3 +-
+ tools/testing/selftests/netfilter/Makefile    |   2 +-
+ .../testing/selftests/netfilter/xt_string.sh  | 128 ++++++++++++++++++
+ 3 files changed, 131 insertions(+), 2 deletions(-)
+ create mode 100755 tools/testing/selftests/netfilter/xt_string.sh
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 4b8251cdb4363..0c76c162b8a9f 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -2582,6 +2582,8 @@ static void rtl_set_rx_mode(struct net_device *dev)
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 4eaf7ed0d1f44..97b4a42e6e347 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -4254,6 +4254,7 @@ static void skb_ts_finish(struct ts_config *conf, struct ts_state *state)
+ unsigned int skb_find_text(struct sk_buff *skb, unsigned int from,
+ 			   unsigned int to, struct ts_config *config)
+ {
++	unsigned int patlen = config->ops->get_pattern_len(config);
+ 	struct ts_state state;
+ 	unsigned int ret;
  
- 	if (dev->flags & IFF_PROMISC) {
- 		rx_mode |= AcceptAllPhys;
-+	} else if (!(dev->flags & IFF_MULTICAST)) {
-+		rx_mode &= ~AcceptMulticast;
- 	} else if (netdev_mc_count(dev) > MC_FILTER_LIMIT ||
- 		   dev->flags & IFF_ALLMULTI ||
- 		   tp->mac_version == RTL_GIGA_MAC_VER_35 ||
+@@ -4265,7 +4266,7 @@ unsigned int skb_find_text(struct sk_buff *skb, unsigned int from,
+ 	skb_prepare_seq_read(skb, from, to, TS_SKB_CB(&state));
+ 
+ 	ret = textsearch_find(config, &state);
+-	return (ret <= to - from ? ret : UINT_MAX);
++	return (ret + patlen <= to - from ? ret : UINT_MAX);
+ }
+ EXPORT_SYMBOL(skb_find_text);
+ 
+diff --git a/tools/testing/selftests/netfilter/Makefile b/tools/testing/selftests/netfilter/Makefile
+index ef90aca4cc96a..bced422b78f72 100644
+--- a/tools/testing/selftests/netfilter/Makefile
++++ b/tools/testing/selftests/netfilter/Makefile
+@@ -7,7 +7,7 @@ TEST_PROGS := nft_trans_stress.sh nft_fib.sh nft_nat.sh bridge_brouter.sh \
+ 	nft_queue.sh nft_meta.sh nf_nat_edemux.sh \
+ 	ipip-conntrack-mtu.sh conntrack_tcp_unreplied.sh \
+ 	conntrack_vrf.sh nft_synproxy.sh rpath.sh nft_audit.sh \
+-	conntrack_sctp_collision.sh
++	conntrack_sctp_collision.sh xt_string.sh
+ 
+ HOSTPKG_CONFIG := pkg-config
+ 
+diff --git a/tools/testing/selftests/netfilter/xt_string.sh b/tools/testing/selftests/netfilter/xt_string.sh
+new file mode 100755
+index 0000000000000..1802653a47287
+--- /dev/null
++++ b/tools/testing/selftests/netfilter/xt_string.sh
+@@ -0,0 +1,128 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++
++# return code to signal skipped test
++ksft_skip=4
++rc=0
++
++if ! iptables --version >/dev/null 2>&1; then
++	echo "SKIP: Test needs iptables"
++	exit $ksft_skip
++fi
++if ! ip -V >/dev/null 2>&1; then
++	echo "SKIP: Test needs iproute2"
++	exit $ksft_skip
++fi
++if ! nc -h >/dev/null 2>&1; then
++	echo "SKIP: Test needs netcat"
++	exit $ksft_skip
++fi
++
++pattern="foo bar baz"
++patlen=11
++hdrlen=$((20 + 8)) # IPv4 + UDP
++ns="ns-$(mktemp -u XXXXXXXX)"
++trap 'ip netns del $ns' EXIT
++ip netns add "$ns"
++ip -net "$ns" link add d0 type dummy
++ip -net "$ns" link set d0 up
++ip -net "$ns" addr add 10.1.2.1/24 dev d0
++
++#ip netns exec "$ns" tcpdump -npXi d0 &
++#tcpdump_pid=$!
++#trap 'kill $tcpdump_pid; ip netns del $ns' EXIT
++
++add_rule() { # (alg, from, to)
++	ip netns exec "$ns" \
++		iptables -A OUTPUT -o d0 -m string \
++			--string "$pattern" --algo $1 --from $2 --to $3
++}
++showrules() { # ()
++	ip netns exec "$ns" iptables -v -S OUTPUT | grep '^-A'
++}
++zerorules() {
++	ip netns exec "$ns" iptables -Z OUTPUT
++}
++countrule() { # (pattern)
++	showrules | grep -c -- "$*"
++}
++send() { # (offset)
++	( for ((i = 0; i < $1 - $hdrlen; i++)); do
++		printf " "
++	  done
++	  printf "$pattern"
++	) | ip netns exec "$ns" nc -w 1 -u 10.1.2.2 27374
++}
++
++add_rule bm 1000 1500
++add_rule bm 1400 1600
++add_rule kmp 1000 1500
++add_rule kmp 1400 1600
++
++zerorules
++send 0
++send $((1000 - $patlen))
++if [ $(countrule -c 0 0) -ne 4 ]; then
++	echo "FAIL: rules match data before --from"
++	showrules
++	((rc--))
++fi
++
++zerorules
++send 1000
++send $((1400 - $patlen))
++if [ $(countrule -c 2) -ne 2 ]; then
++	echo "FAIL: only two rules should match at low offset"
++	showrules
++	((rc--))
++fi
++
++zerorules
++send $((1500 - $patlen))
++if [ $(countrule -c 1) -ne 4 ]; then
++	echo "FAIL: all rules should match at end of packet"
++	showrules
++	((rc--))
++fi
++
++zerorules
++send 1495
++if [ $(countrule -c 1) -ne 1 ]; then
++	echo "FAIL: only kmp with proper --to should match pattern spanning fragments"
++	showrules
++	((rc--))
++fi
++
++zerorules
++send 1500
++if [ $(countrule -c 1) -ne 2 ]; then
++	echo "FAIL: two rules should match pattern at start of second fragment"
++	showrules
++	((rc--))
++fi
++
++zerorules
++send $((1600 - $patlen))
++if [ $(countrule -c 1) -ne 2 ]; then
++	echo "FAIL: two rules should match pattern at end of largest --to"
++	showrules
++	((rc--))
++fi
++
++zerorules
++send $((1600 - $patlen + 1))
++if [ $(countrule -c 1) -ne 0 ]; then
++	echo "FAIL: no rules should match pattern extending largest --to"
++	showrules
++	((rc--))
++fi
++
++zerorules
++send 1600
++if [ $(countrule -c 1) -ne 0 ]; then
++	echo "FAIL: no rule should match pattern past largest --to"
++	showrules
++	((rc--))
++fi
++
++exit $rc
 -- 
 2.42.0
 
