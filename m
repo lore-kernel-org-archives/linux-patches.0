@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5933A37170
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E4728382
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTMAA/x9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3DDC433C9;
-	Wed, 15 Nov 2023 19:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NA3D2G/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88937C433C9;
+	Wed, 15 Nov 2023 19:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076395;
-	bh=ntkZLncHHFBAvy3B7ANeWL0JsX6AhtZEHr/51CBksfo=;
+	s=korg; t=1700076396;
+	bh=3DiZLQa/hgXFj4phstTErLDyO3H9cb6C2CUJnviu4Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTMAA/x9bah7v7mofMeVL0ekq6KvO9g7uyEmAgbQNzjiqSrHqB2M4m7PCoz0wiZlt
-	 RCI1KEWujCjrkGk1ezobi2aYBlp+FrAmnexqE7VMNYWaLOHxbY0chmci6k9iektqI6
-	 8TprJ3LJNxXwl+fkifNmgM5txEPuRhrHCbj7Gc2E=
+	b=NA3D2G/LMddKo+HKQ7F7VCClrHvda/p5tylaXQm2nnC/gyyhUeSwG1VZ+xa74w7fj
+	 iG+wcNV/MEsr6xn+POayNA1vVVJ84jRJTCZUKMgVhwu/+6oFfo+i6bd5l2SFvfNUpO
+	 7gjezngxgcROXkhyxflJMhHAKLFwrs70nPoSmgik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 265/550] arm64: dts: qcom: msm8992-libra: drop duplicated reserved memory
-Date: Wed, 15 Nov 2023 14:14:09 -0500
-Message-ID: <20231115191619.080198885@linuxfoundation.org>
+Subject: [PATCH 6.5 266/550] arm64: dts: qcom: sm6125: Pad APPS IOMMU address to 8 characters
+Date: Wed, 15 Nov 2023 14:14:10 -0500
+Message-ID: <20231115191619.157471916@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,40 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit f32096602c19e68fb9bf04b494d13f1190602554 ]
+[ Upstream commit 310cdafc4a56827d1aeda7cc297939034adb8f99 ]
 
-There are two entries for similar reserved memory: qseecom@cb400000 and
-audio@cb400000.  Keep the qseecom as it is longer.
+APPS IOMMU is the only node in sm6125.dtsi that doesn't have its
+address padded to 8 hexadecimals; fix this by prepending a 0.
 
-  Warning (unique_unit_address_if_enabled): /reserved-memory/audio@cb400000: duplicate unit-address (also used in node /reserved-memory/qseecom@cb400000)
-
-Fixes: 69876bc6fd4d ("arm64: dts: qcom: msm8992-libra: Fix the memory map")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230720072048.10093-2-krzysztof.kozlowski@linaro.org
+Fixes: 8ddb4bc3d3b5 ("arm64: dts: qcom: sm6125: Configure APPS SMMU")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Link: https://lore.kernel.org/r/20230723-sm6125-dpu-v4-2-a3f287dd6c07@somainline.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts | 5 -----
- 1 file changed, 5 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6125.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-index fcca1ba94da69..5fe5de9ceef99 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-@@ -109,11 +109,6 @@ rmtfs_mem: rmtfs@ca100000 {
- 			qcom,client-id = <1>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+index a596baa6ce3eb..367a083786e07 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+@@ -1204,7 +1204,7 @@ spmi_bus: spmi@1c40000 {
  
--		audio_mem: audio@cb400000 {
--			reg = <0 0xcb000000 0 0x400000>;
--			no-mem;
--		};
--
- 		qseecom_mem: qseecom@cb400000 {
- 			reg = <0 0xcb400000 0 0x1c00000>;
- 			no-mem;
+ 		apps_smmu: iommu@c600000 {
+ 			compatible = "qcom,sm6125-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+-			reg = <0xc600000 0x80000>;
++			reg = <0x0c600000 0x80000>;
+ 			interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.42.0
 
