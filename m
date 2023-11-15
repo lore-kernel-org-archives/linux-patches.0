@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33EA3DBA7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536D13DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5c9h4sQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56370C433CB;
-	Wed, 15 Nov 2023 20:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nyuue8W/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031D1C433C7;
+	Wed, 15 Nov 2023 20:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078509;
-	bh=q23Nw/B/Nvd+MyxfTnjgroYDsNMScl68K17rtlv1a+Q=;
+	s=korg; t=1700078511;
+	bh=3GUAkSKGvkQIF4r+svNzynSu70+uDXK3VFkp18Kpg10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5c9h4sQQsXLLvs6KHagzE5bXcJbnj0Wg6EKwxkNMMybjrzTuU8daEW2he8WOWd9i
-	 rP2q6zLsdR1bxnSyvbXREJ7X7WFa+1lKuRWMoH40GRp6c8n9lgWy5NRz0cCBpKUg4o
-	 RjsgM3bKK9LwU5AAPaSeY+TWdhXPAYDUv/1veUqc=
+	b=Nyuue8W/j8TTSJlVYQGrsosunhUDinfQeSN0IPJkl+n/dEc/llqe7xNpebNY79sn8
+	 uAcndrCYy8vv1AACoUIbIvgw0OBzmK0gJVGgnfKtMzsY91+6x4rMLAHrdXlswbBcEO
+	 nG5mF4219TcWgD0+N7UdtJvo+hJBWrs1AKQGI3z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
-	Atish Patra <atishp@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Erik Kurzinger <ekurzinger@nvidia.com>,
+	Simon Ser <contact@emersion.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 366/379] RISC-V: Dont fail in riscv_of_parent_hartid() for disabled HARTs
-Date: Wed, 15 Nov 2023 14:27:21 -0500
-Message-ID: <20231115192706.812201782@linuxfoundation.org>
+Subject: [PATCH 6.1 367/379] drm/syncobj: fix DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE
+Date: Wed, 15 Nov 2023 14:27:22 -0500
+Message-ID: <20231115192706.870255552@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,54 +42,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Erik Kurzinger <ekurzinger@nvidia.com>
 
-[ Upstream commit c4676f8dc1e12e68d6511f9ed89707fdad4c962c ]
+[ Upstream commit 101c9f637efa1655f55876644d4439e552267527 ]
 
-The riscv_of_processor_hartid() used by riscv_of_parent_hartid() fails
-for HARTs disabled in the DT. This results in the following warning
-thrown by the RISC-V INTC driver for the E-core on SiFive boards:
+If DRM_IOCTL_SYNCOBJ_TIMELINE_WAIT is invoked with the
+DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE flag set but no fence has yet been
+submitted for the given timeline point the call will fail immediately
+with EINVAL. This does not match the intended behavior where the call
+should wait until the fence has been submitted (or the timeout expires).
 
-[    0.000000] riscv-intc: unable to find hart id for /cpus/cpu@0/interrupt-controller
+The following small example program illustrates the issue. It should
+wait for 5 seconds and then print ETIME, but instead it terminates right
+away after printing EINVAL.
 
-The riscv_of_parent_hartid() is only expected to read the hartid
-from the DT so we directly call of_get_cpu_hwid() instead of calling
-riscv_of_processor_hartid().
+  #include <stdio.h>
+  #include <fcntl.h>
+  #include <time.h>
+  #include <errno.h>
+  #include <xf86drm.h>
+  int main(void)
+  {
+      int fd = open("/dev/dri/card0", O_RDWR);
+      uint32_t syncobj;
+      drmSyncobjCreate(fd, 0, &syncobj);
+      struct timespec ts;
+      clock_gettime(CLOCK_MONOTONIC, &ts);
+      uint64_t point = 1;
+      if (drmSyncobjTimelineWait(fd, &syncobj, &point, 1,
+                                 ts.tv_sec * 1000000000 + ts.tv_nsec + 5000000000, // 5s
+                                 DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE, NULL)) {
+          printf("drmSyncobjTimelineWait failed %d\n", errno);
+      }
+  }
 
-Fixes: ad635e723e17 ("riscv: cpu: Add 64bit hartid support on RV64")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Link: https://lore.kernel.org/r/20231027154254.355853-2-apatel@ventanamicro.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 01d6c3578379 ("drm/syncobj: add support for timeline point wait v8")
+Signed-off-by: Erik Kurzinger <ekurzinger@nvidia.com>
+Reviewed by: Simon Ser <contact@emersion.fd>
+Signed-off-by: Simon Ser <contact@emersion.fr>
+Link: https://patchwork.freedesktop.org/patch/msgid/1fac96f1-2f3f-f9f9-4eb0-340f27a8f6c0@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/cpu.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/drm_syncobj.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/cpu.c b/arch/riscv/kernel/cpu.c
-index 852ecccd8920f..0f76181dc634d 100644
---- a/arch/riscv/kernel/cpu.c
-+++ b/arch/riscv/kernel/cpu.c
-@@ -57,13 +57,14 @@ int riscv_of_processor_hartid(struct device_node *node, unsigned long *hart)
-  */
- int riscv_of_parent_hartid(struct device_node *node, unsigned long *hartid)
- {
--	int rc;
--
- 	for (; node; node = node->parent) {
- 		if (of_device_is_compatible(node, "riscv")) {
--			rc = riscv_of_processor_hartid(node, hartid);
--			if (!rc)
--				return 0;
-+			*hartid = (unsigned long)of_get_cpu_hwid(node, 0);
-+			if (*hartid == ~0UL) {
-+				pr_warn("Found CPU without hart ID\n");
-+				return -ENODEV;
-+			}
-+			return 0;
- 		}
- 	}
- 
+diff --git a/drivers/gpu/drm/drm_syncobj.c b/drivers/gpu/drm/drm_syncobj.c
+index e592c5da70cee..da0145bc104a8 100644
+--- a/drivers/gpu/drm/drm_syncobj.c
++++ b/drivers/gpu/drm/drm_syncobj.c
+@@ -1015,7 +1015,8 @@ static signed long drm_syncobj_array_wait_timeout(struct drm_syncobj **syncobjs,
+ 		fence = drm_syncobj_fence_get(syncobjs[i]);
+ 		if (!fence || dma_fence_chain_find_seqno(&fence, points[i])) {
+ 			dma_fence_put(fence);
+-			if (flags & DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT) {
++			if (flags & (DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT |
++				     DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE)) {
+ 				continue;
+ 			} else {
+ 				timeout = -EINVAL;
 -- 
 2.42.0
 
