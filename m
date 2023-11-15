@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D12E3D90
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D926243AB5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szfq3JLt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB648C4167E;
-	Wed, 15 Nov 2023 20:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsXVTDMA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85335C433BB;
+	Wed, 15 Nov 2023 20:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081851;
-	bh=xtoxR1bHKX5QlR+dKy2B6pWh3I6XYH9j7M1mBYYT+jw=;
+	s=korg; t=1700081852;
+	bh=mh+4I1vcdoQPgMwZTU1iVvyf54aWo0rkbYsKVdT1rCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szfq3JLt2hn+Hnz1/7vy64rAkajA75rPA227VVR8hoVGNesiBEoN8N6pcyaZ1PWLb
-	 0LZYjwpwLiQ1uLX/yxQ8IRjDvPWT5kkOyZ1TPOrlQU5G6ciKRATKLSMMNj0t/FniwG
-	 7FOJRvc2MvlIsGrjuvm5sujeNYXityNWn+3/frUk=
+	b=HsXVTDMAQESWh93wErv3+dvxdNGJQIZMLYEphdCwuOn+B8JhUk8COOMZ84YpFfTIt
+	 Uf4dyuWWYMOH2aGe5JOkXVWcs0lMlzHZ2e7D7TgRYCFknGZb7orxrtwTVgB4aG2qeC
+	 9sYlE8AcxdiP6ufV6hrP5HCbnR4Luqe2SAb/Sx+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 158/191] media: cedrus: Fix clock/reset sequence
-Date: Wed, 15 Nov 2023 15:47:13 -0500
-Message-ID: <20231115204653.957280295@linuxfoundation.org>
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+5138ca807af9d2b42574@syzkaller.appspotmail.com,
+	syzbot+9425c47dccbcb4c17d51@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 167/191] tipc: Change nla_policy for bearer-related names to NLA_NUL_STRING
+Date: Wed, 15 Nov 2023 15:47:22 -0500
+Message-ID: <20231115204654.479054433@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -43,85 +45,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 36fe515c1a3cd5eac148e8a591a82108d92d5522 ]
+[ Upstream commit 19b3f72a41a8751e26bffc093bb7e1cef29ad579 ]
 
-According to H6 user manual, resets should always be de-asserted before
-clocks are enabled. This is also consistent with vendor driver.
+syzbot reported the following uninit-value access issue [1]:
 
-Fixes: d5aecd289bab ("media: cedrus: Implement runtime PM")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Acked-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+=====================================================
+BUG: KMSAN: uninit-value in strlen lib/string.c:418 [inline]
+BUG: KMSAN: uninit-value in strstr+0xb8/0x2f0 lib/string.c:756
+ strlen lib/string.c:418 [inline]
+ strstr+0xb8/0x2f0 lib/string.c:756
+ tipc_nl_node_reset_link_stats+0x3ea/0xb50 net/tipc/node.c:2595
+ genl_family_rcv_msg_doit net/netlink/genetlink.c:971 [inline]
+ genl_family_rcv_msg net/netlink/genetlink.c:1051 [inline]
+ genl_rcv_msg+0x11ec/0x1290 net/netlink/genetlink.c:1066
+ netlink_rcv_skb+0x371/0x650 net/netlink/af_netlink.c:2545
+ genl_rcv+0x40/0x60 net/netlink/genetlink.c:1075
+ netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
+ netlink_unicast+0xf47/0x1250 net/netlink/af_netlink.c:1368
+ netlink_sendmsg+0x1238/0x13d0 net/netlink/af_netlink.c:1910
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ sock_sendmsg net/socket.c:753 [inline]
+ ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2541
+ ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2595
+ __sys_sendmsg net/socket.c:2624 [inline]
+ __do_sys_sendmsg net/socket.c:2633 [inline]
+ __se_sys_sendmsg net/socket.c:2631 [inline]
+ __x64_sys_sendmsg+0x307/0x490 net/socket.c:2631
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Uninit was created at:
+ slab_post_alloc_hook+0x12f/0xb70 mm/slab.h:767
+ slab_alloc_node mm/slub.c:3478 [inline]
+ kmem_cache_alloc_node+0x577/0xa80 mm/slub.c:3523
+ kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:559
+ __alloc_skb+0x318/0x740 net/core/skbuff.c:650
+ alloc_skb include/linux/skbuff.h:1286 [inline]
+ netlink_alloc_large_skb net/netlink/af_netlink.c:1214 [inline]
+ netlink_sendmsg+0xb34/0x13d0 net/netlink/af_netlink.c:1885
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ sock_sendmsg net/socket.c:753 [inline]
+ ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2541
+ ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2595
+ __sys_sendmsg net/socket.c:2624 [inline]
+ __do_sys_sendmsg net/socket.c:2633 [inline]
+ __se_sys_sendmsg net/socket.c:2631 [inline]
+ __x64_sys_sendmsg+0x307/0x490 net/socket.c:2631
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+TIPC bearer-related names including link names must be null-terminated
+strings. If a link name which is not null-terminated is passed through
+netlink, strstr() and similar functions can cause buffer overrun. This
+causes the above issue.
+
+This patch changes the nla_policy for bearer-related names from NLA_STRING
+to NLA_NUL_STRING. This resolves the issue by ensuring that only
+null-terminated strings are accepted as bearer-related names.
+
+syzbot reported similar uninit-value issue related to bearer names [2]. The
+root cause of this issue is that a non-null-terminated bearer name was
+passed. This patch also resolved this issue.
+
+Fixes: 7be57fc69184 ("tipc: add link get/dump to new netlink api")
+Fixes: 0655f6a8635b ("tipc: add bearer disable/enable to new netlink api")
+Reported-and-tested-by: syzbot+5138ca807af9d2b42574@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5138ca807af9d2b42574 [1]
+Reported-and-tested-by: syzbot+9425c47dccbcb4c17d51@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9425c47dccbcb4c17d51 [2]
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20231030075540.3784537-1-syoshida@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../staging/media/sunxi/cedrus/cedrus_hw.c    | 24 +++++++++----------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ net/tipc/netlink.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_hw.c b/drivers/staging/media/sunxi/cedrus/cedrus_hw.c
-index bcf050a04ffc4..e782731f0a6a4 100644
---- a/drivers/staging/media/sunxi/cedrus/cedrus_hw.c
-+++ b/drivers/staging/media/sunxi/cedrus/cedrus_hw.c
-@@ -145,12 +145,12 @@ int cedrus_hw_suspend(struct device *device)
- {
- 	struct cedrus_dev *dev = dev_get_drvdata(device);
+diff --git a/net/tipc/netlink.c b/net/tipc/netlink.c
+index c447cb5f879e7..f10ed873858f8 100644
+--- a/net/tipc/netlink.c
++++ b/net/tipc/netlink.c
+@@ -88,7 +88,7 @@ const struct nla_policy tipc_nl_net_policy[TIPC_NLA_NET_MAX + 1] = {
  
--	reset_control_assert(dev->rstc);
--
- 	clk_disable_unprepare(dev->ram_clk);
- 	clk_disable_unprepare(dev->mod_clk);
- 	clk_disable_unprepare(dev->ahb_clk);
+ const struct nla_policy tipc_nl_link_policy[TIPC_NLA_LINK_MAX + 1] = {
+ 	[TIPC_NLA_LINK_UNSPEC]		= { .type = NLA_UNSPEC },
+-	[TIPC_NLA_LINK_NAME]		= { .type = NLA_STRING,
++	[TIPC_NLA_LINK_NAME]		= { .type = NLA_NUL_STRING,
+ 					    .len = TIPC_MAX_LINK_NAME },
+ 	[TIPC_NLA_LINK_MTU]		= { .type = NLA_U32 },
+ 	[TIPC_NLA_LINK_BROADCAST]	= { .type = NLA_FLAG },
+@@ -125,7 +125,7 @@ const struct nla_policy tipc_nl_prop_policy[TIPC_NLA_PROP_MAX + 1] = {
  
-+	reset_control_assert(dev->rstc);
-+
- 	return 0;
- }
- 
-@@ -159,11 +159,18 @@ int cedrus_hw_resume(struct device *device)
- 	struct cedrus_dev *dev = dev_get_drvdata(device);
- 	int ret;
- 
-+	ret = reset_control_reset(dev->rstc);
-+	if (ret) {
-+		dev_err(dev->dev, "Failed to apply reset\n");
-+
-+		return ret;
-+	}
-+
- 	ret = clk_prepare_enable(dev->ahb_clk);
- 	if (ret) {
- 		dev_err(dev->dev, "Failed to enable AHB clock\n");
- 
--		return ret;
-+		goto err_rst;
- 	}
- 
- 	ret = clk_prepare_enable(dev->mod_clk);
-@@ -180,21 +187,14 @@ int cedrus_hw_resume(struct device *device)
- 		goto err_mod_clk;
- 	}
- 
--	ret = reset_control_reset(dev->rstc);
--	if (ret) {
--		dev_err(dev->dev, "Failed to apply reset\n");
--
--		goto err_ram_clk;
--	}
--
- 	return 0;
- 
--err_ram_clk:
--	clk_disable_unprepare(dev->ram_clk);
- err_mod_clk:
- 	clk_disable_unprepare(dev->mod_clk);
- err_ahb_clk:
- 	clk_disable_unprepare(dev->ahb_clk);
-+err_rst:
-+	reset_control_assert(dev->rstc);
- 
- 	return ret;
- }
+ const struct nla_policy tipc_nl_bearer_policy[TIPC_NLA_BEARER_MAX + 1]	= {
+ 	[TIPC_NLA_BEARER_UNSPEC]	= { .type = NLA_UNSPEC },
+-	[TIPC_NLA_BEARER_NAME]		= { .type = NLA_STRING,
++	[TIPC_NLA_BEARER_NAME]		= { .type = NLA_NUL_STRING,
+ 					    .len = TIPC_MAX_BEARER_NAME },
+ 	[TIPC_NLA_BEARER_PROP]		= { .type = NLA_NESTED },
+ 	[TIPC_NLA_BEARER_DOMAIN]	= { .type = NLA_U32 }
 -- 
 2.42.0
 
