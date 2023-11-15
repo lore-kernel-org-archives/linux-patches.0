@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3003D90
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601E73D90
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcfFnlCr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C38EC433CB;
-	Wed, 15 Nov 2023 20:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOA8QoWp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3874C433CB;
+	Wed, 15 Nov 2023 20:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081898;
-	bh=ee0O3ggmpmlnKI8Aw4zBBmKI6EiZxp+og6z6PMUZLaI=;
+	s=korg; t=1700081899;
+	bh=6mhOs/j11PSSNif3baj1XM7A78qGEeEH24fYqp4cgqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pcfFnlCrBITahJ4sdNv23l5SzGtgn9n+krk7IfTrmfwTbFKOIOOZEffwHRJQrUX5V
-	 3sUGcuCDa4O4+UQlRizSjC7yEP2FALlxFiDaTixD2JRM4GgpBq3C3OFaIT4fnGXtLn
-	 r7KW0PwxG6DLmMkuIeIJ6zN9GSpgbafoWSQhzquE=
+	b=vOA8QoWpt16CfX6J+vpP83Gn3Hot7+N1kvmNKAEucCfvI+prYJdYXTvYHHU8E1ajK
+	 Htz0UFjqrtsqMiqI3hv9hoLGKlssOFUK4BIu7o5ppEtw0Mv2ZRr0LQUjkLdv/zuJ5f
+	 e/akANyrfsYPopgbFWquCuUkatynFXXM/6SdcYEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Helge Deller <deller@gmx.de>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Yujie Liu <yujie.liu@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 188/191] fbdev: fsl-diu-fb: mark wr_reg_wa() static
-Date: Wed, 15 Nov 2023 15:47:43 -0500
-Message-ID: <20231115204655.720935544@linuxfoundation.org>
+Subject: [PATCH 5.10 189/191] tracing/kprobes: Fix the order of argument descriptions
+Date: Wed, 15 Nov 2023 15:47:44 -0500
+Message-ID: <20231115204655.778940557@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -42,36 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Yujie Liu <yujie.liu@intel.com>
 
-[ Upstream commit a5035c81847430dfa3482807b07325f29e9e8c09 ]
+[ Upstream commit f032c53bea6d2057c14553832d846be2f151cfb2 ]
 
-wr_reg_wa() is not an appropriate name for a global function, and doesn't need
-to be global anyway, so mark it static and avoid the warning:
+The order of descriptions should be consistent with the argument list of
+the function, so "kretprobe" should be the second one.
 
-drivers/video/fbdev/fsl-diu-fb.c:493:6: error: no previous prototype for 'wr_reg_wa' [-Werror=missing-prototypes]
+int __kprobe_event_gen_cmd_start(struct dynevent_cmd *cmd, bool kretprobe,
+                                 const char *name, const char *loc, ...)
 
-Fixes: 0d9dab39fbbe ("powerpc/5121: fsl-diu-fb: fix issue with re-enabling DIU area descriptor")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://lore.kernel.org/all/20231031041305.3363712-1-yujie.liu@intel.com/
+
+Fixes: 2a588dd1d5d6 ("tracing: Add kprobe event command generation functions")
+Suggested-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Yujie Liu <yujie.liu@intel.com>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/fsl-diu-fb.c | 2 +-
+ kernel/trace/trace_kprobe.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/fsl-diu-fb.c b/drivers/video/fbdev/fsl-diu-fb.c
-index a547c21c7e928..5d564e8670c52 100644
---- a/drivers/video/fbdev/fsl-diu-fb.c
-+++ b/drivers/video/fbdev/fsl-diu-fb.c
-@@ -490,7 +490,7 @@ static enum fsl_diu_monitor_port fsl_diu_name_to_port(const char *s)
-  * Workaround for failed writing desc register of planes.
-  * Needed with MPC5121 DIU rev 2.0 silicon.
-  */
--void wr_reg_wa(u32 *reg, u32 val)
-+static void wr_reg_wa(u32 *reg, u32 val)
- {
- 	do {
- 		out_be32(reg, val);
+diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
+index 37e1ec1d3ee54..7183572898998 100644
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -949,9 +949,9 @@ EXPORT_SYMBOL_GPL(kprobe_event_cmd_init);
+ /**
+  * __kprobe_event_gen_cmd_start - Generate a kprobe event command from arg list
+  * @cmd: A pointer to the dynevent_cmd struct representing the new event
++ * @kretprobe: Is this a return probe?
+  * @name: The name of the kprobe event
+  * @loc: The location of the kprobe event
+- * @kretprobe: Is this a return probe?
+  * @...: Variable number of arg (pairs), one pair for each field
+  *
+  * NOTE: Users normally won't want to call this function directly, but
 -- 
 2.42.0
 
