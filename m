@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB2643AB5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F4D1FCF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlnOIK38"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81D5C433B7;
-	Wed, 15 Nov 2023 20:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eg+vPbcy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ECEEC43395;
+	Wed, 15 Nov 2023 20:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081848;
-	bh=CsJOdTJ5V8sXpq3FUsHzSNRfN4NZFE1/Y3lOATJHiqc=;
+	s=korg; t=1700081849;
+	bh=KaSzXWctiE4At2IKDDGvyy/741dA9r02BDvzrGsmkk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xlnOIK38mpDzE8aAI0vUoCnUzK7CORYqAdeZuUGIRv8l4ggZJiSBKoBsGRjL5TehX
-	 EhK7vjjE/bsNQV+0Wu3dw492aisQbjIBm+lDfZPTanWaXWBy3aASdZmq5maceXk5cz
-	 Xz3yC9hBKzGL43Sc4xBQeZ0lwmDuI5YmBgD083VU=
+	b=eg+vPbcy9t1bbWUrPaklfn2C5RkL12V8/i1bKgzzJ38Ig1xGKtgxoCnU21iX+oViW
+	 TFsNQEEQuS74FuRpMnu29uNL79g6v2WHD+gVpzsg/XdFK8eNle1SaE6Z/WNDDfhTlr
+	 OivqlDK5m3CEJENFJ9zMRuSTTO2C4T1+96RfR6tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sumit Garg <sumit.garg@linaro.org>,
+	Alexandru Ardelean <alexandru.ardelean@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 139/191] modpost: fix tee MODULE_DEVICE_TABLE built on big-endian host
-Date: Wed, 15 Nov 2023 15:46:54 -0500
-Message-ID: <20231115204652.857672174@linuxfoundation.org>
+Subject: [PATCH 5.10 130/191] tools: iio: privatize globals and functions in iio_generic_buffer.c file
+Date: Wed, 15 Nov 2023 15:46:45 -0500
+Message-ID: <20231115204652.329960570@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -42,69 +42,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Alexandru Ardelean <alexandru.ardelean@analog.com>
 
-[ Upstream commit 7f54e00e5842663c2cea501bbbdfa572c94348a3 ]
+[ Upstream commit ebe5112535b5cf389ca7d337cf6a0c1d885f9880 ]
 
-When MODULE_DEVICE_TABLE(tee, ) is built on a host with a different
-endianness from the target architecture, it results in an incorrect
-MODULE_ALIAS().
+Mostly a tidy-up.
+But also helps to understand the limits of scope of these functions and
+globals.
 
-For example, see a case where drivers/char/hw_random/optee-rng.c
-is built as a module for ARM little-endian.
-
-If you build it on a little-endian host, you will get the correct
-MODULE_ALIAS:
-
-    $ grep MODULE_ALIAS drivers/char/hw_random/optee-rng.mod.c
-    MODULE_ALIAS("tee:ab7a617c-b8e7-4d8f-8301-d09b61036b64*");
-
-However, if you build it on a big-endian host, you will get a wrong
-MODULE_ALIAS:
-
-    $ grep MODULE_ALIAS drivers/char/hw_random/optee-rng.mod.c
-    MODULE_ALIAS("tee:646b0361-9bd0-0183-8f4d-e7b87c617aab*");
-
-The same problem also occurs when you enable CONFIG_CPU_BIG_ENDIAN,
-and build it on a little-endian host.
-
-This issue has been unnoticed because the ARM kernel is configured for
-little-endian by default, and most likely built on a little-endian host
-(cross-build on x86 or native-build on ARM).
-
-The uuid field must not be reversed because uuid_t is an array of __u8.
-
-Fixes: 0fc1db9d1059 ("tee: add bus driver framework for TEE based devices")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Sumit Garg <sumit.garg@linaro.org>
+Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
+Link: https://lore.kernel.org/r/20210215104043.91251-24-alexandru.ardelean@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 2d3dff577dd0 ("tools: iio: iio_generic_buffer ensure alignment")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/file2alias.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/iio/iio_generic_buffer.c | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index da4df53ee6955..7154df094f40b 100644
---- a/scripts/mod/file2alias.c
-+++ b/scripts/mod/file2alias.c
-@@ -1326,13 +1326,13 @@ static int do_typec_entry(const char *filename, void *symval, char *alias)
- /* Looks like: tee:uuid */
- static int do_tee_entry(const char *filename, void *symval, char *alias)
+diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
+index 34d63bcebcd28..7c72405537770 100644
+--- a/tools/iio/iio_generic_buffer.c
++++ b/tools/iio/iio_generic_buffer.c
+@@ -49,7 +49,7 @@ enum autochan {
+  * Has the side effect of filling the channels[i].location values used
+  * in processing the buffer output.
+  **/
+-int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
++static int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
  {
--	DEF_FIELD(symval, tee_client_device_id, uuid);
-+	DEF_FIELD_ADDR(symval, tee_client_device_id, uuid);
+ 	int bytes = 0;
+ 	int i = 0;
+@@ -68,7 +68,7 @@ int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
+ 	return bytes;
+ }
  
- 	sprintf(alias, "tee:%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
--		uuid.b[0], uuid.b[1], uuid.b[2], uuid.b[3], uuid.b[4],
--		uuid.b[5], uuid.b[6], uuid.b[7], uuid.b[8], uuid.b[9],
--		uuid.b[10], uuid.b[11], uuid.b[12], uuid.b[13], uuid.b[14],
--		uuid.b[15]);
-+		uuid->b[0], uuid->b[1], uuid->b[2], uuid->b[3], uuid->b[4],
-+		uuid->b[5], uuid->b[6], uuid->b[7], uuid->b[8], uuid->b[9],
-+		uuid->b[10], uuid->b[11], uuid->b[12], uuid->b[13], uuid->b[14],
-+		uuid->b[15]);
+-void print1byte(uint8_t input, struct iio_channel_info *info)
++static void print1byte(uint8_t input, struct iio_channel_info *info)
+ {
+ 	/*
+ 	 * Shift before conversion to avoid sign extension
+@@ -85,7 +85,7 @@ void print1byte(uint8_t input, struct iio_channel_info *info)
+ 	}
+ }
  
- 	add_wildcard(alias);
- 	return 1;
+-void print2byte(uint16_t input, struct iio_channel_info *info)
++static void print2byte(uint16_t input, struct iio_channel_info *info)
+ {
+ 	/* First swap if incorrect endian */
+ 	if (info->be)
+@@ -108,7 +108,7 @@ void print2byte(uint16_t input, struct iio_channel_info *info)
+ 	}
+ }
+ 
+-void print4byte(uint32_t input, struct iio_channel_info *info)
++static void print4byte(uint32_t input, struct iio_channel_info *info)
+ {
+ 	/* First swap if incorrect endian */
+ 	if (info->be)
+@@ -131,7 +131,7 @@ void print4byte(uint32_t input, struct iio_channel_info *info)
+ 	}
+ }
+ 
+-void print8byte(uint64_t input, struct iio_channel_info *info)
++static void print8byte(uint64_t input, struct iio_channel_info *info)
+ {
+ 	/* First swap if incorrect endian */
+ 	if (info->be)
+@@ -167,9 +167,8 @@ void print8byte(uint64_t input, struct iio_channel_info *info)
+  *			      to fill the location offsets.
+  * @num_channels:	number of channels
+  **/
+-void process_scan(char *data,
+-		  struct iio_channel_info *channels,
+-		  int num_channels)
++static void process_scan(char *data, struct iio_channel_info *channels,
++			 int num_channels)
+ {
+ 	int k;
+ 
+@@ -238,7 +237,7 @@ static int enable_disable_all_channels(char *dev_dir_name, int enable)
+ 	return 0;
+ }
+ 
+-void print_usage(void)
++static void print_usage(void)
+ {
+ 	fprintf(stderr, "Usage: generic_buffer [options]...\n"
+ 		"Capture, convert and output data from IIO device buffer\n"
+@@ -257,12 +256,12 @@ void print_usage(void)
+ 		"  -w <n>     Set delay between reads in us (event-less mode)\n");
+ }
+ 
+-enum autochan autochannels = AUTOCHANNELS_DISABLED;
+-char *dev_dir_name = NULL;
+-char *buf_dir_name = NULL;
+-bool current_trigger_set = false;
++static enum autochan autochannels = AUTOCHANNELS_DISABLED;
++static char *dev_dir_name = NULL;
++static char *buf_dir_name = NULL;
++static bool current_trigger_set = false;
+ 
+-void cleanup(void)
++static void cleanup(void)
+ {
+ 	int ret;
+ 
+@@ -294,14 +293,14 @@ void cleanup(void)
+ 	}
+ }
+ 
+-void sig_handler(int signum)
++static void sig_handler(int signum)
+ {
+ 	fprintf(stderr, "Caught signal %d\n", signum);
+ 	cleanup();
+ 	exit(-signum);
+ }
+ 
+-void register_cleanup(void)
++static void register_cleanup(void)
+ {
+ 	struct sigaction sa = { .sa_handler = sig_handler };
+ 	const int signums[] = { SIGINT, SIGTERM, SIGABRT };
 -- 
 2.42.0
 
