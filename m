@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6072043AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E42F43AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQ74j3Jp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4A7C433AD;
-	Wed, 15 Nov 2023 20:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OiACtCZg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE4AC433AB;
+	Wed, 15 Nov 2023 20:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081243;
-	bh=0QrraTHOAxWohOxVGpLrfdG8zENZSGYHeVYAMm7fIho=;
+	s=korg; t=1700081245;
+	bh=x14hu14Up5dC8aY63bW+E7o50DypGd3wUXzffQ82Mqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eQ74j3JphXmPt38/LbSMcNoP9QqUukJcdzHOpPrXo4Wx9tbt6WdKVA/QTOwcfDJwn
-	 xcKso3OmOn6QzrTadtCe9FKsgsnYj0kllngdVgiFj5a087OBTGiQPhGlTdgxguWPTD
-	 9rN6MGYO+k/vg3ATfTD92G9XzfSfQMHs9W88vJKY=
+	b=OiACtCZg+Apc2/l0lLDpZMyKDDxkZrvN8XdUsw3H1Jti9vybEKmbfz+APEBh4/pxe
+	 13MfM2/EZ+0vVn1XRvgx92TWb3Zqk8zch0p4xFsKh/sj95fLNNfL1sjXBK6/8YsjUp
+	 4HDc84lKXQ1I6UsgS+n9RUYUo2FXU7hQHXMcj13U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Florian Westphal <fw@strlen.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/244] netfilter: nf_tables: Drop pointless memset when dumping rules
-Date: Wed, 15 Nov 2023 15:33:49 -0500
-Message-ID: <20231115203550.592878853@linuxfoundation.org>
+Subject: [PATCH 5.15 038/244] thermal: core: prevent potential string overflow
+Date: Wed, 15 Nov 2023 15:33:50 -0500
+Message-ID: <20231115203550.653300042@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,36 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 30fa41a0f6df4c85790cc6499ddc4a926a113bfa ]
+[ Upstream commit c99626092efca3061b387043d4a7399bf75fbdd5 ]
 
-None of the dump callbacks uses netlink_callback::args beyond the first
-element, no need to zero the data.
+The dev->id value comes from ida_alloc() so it's a number between zero
+and INT_MAX.  If it's too high then these sprintf()s will overflow.
 
-Fixes: 96518518cc41 ("netfilter: add nftables")
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 203d3d4aa482 ("the generic thermal sysfs driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/thermal/thermal_core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 8a4cd1c16e0e4..8f12e83280cbd 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3184,10 +3184,6 @@ static int __nf_tables_dump_rules(struct sk_buff *skb,
- 			goto cont_skip;
- 		if (*idx < s_idx)
- 			goto cont;
--		if (*idx > s_idx) {
--			memset(&cb->args[1], 0,
--					sizeof(cb->args) - sizeof(cb->args[0]));
--		}
- 		if (prule)
- 			handle = prule->handle;
- 		else
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index 052e8e8fbb21e..ce748e03e4331 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -671,7 +671,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
+ 	if (result)
+ 		goto release_ida;
+ 
+-	sprintf(dev->attr_name, "cdev%d_trip_point", dev->id);
++	snprintf(dev->attr_name, sizeof(dev->attr_name), "cdev%d_trip_point",
++		 dev->id);
+ 	sysfs_attr_init(&dev->attr.attr);
+ 	dev->attr.attr.name = dev->attr_name;
+ 	dev->attr.attr.mode = 0444;
+@@ -680,7 +681,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
+ 	if (result)
+ 		goto remove_symbol_link;
+ 
+-	sprintf(dev->weight_attr_name, "cdev%d_weight", dev->id);
++	snprintf(dev->weight_attr_name, sizeof(dev->weight_attr_name),
++		 "cdev%d_weight", dev->id);
+ 	sysfs_attr_init(&dev->weight_attr.attr);
+ 	dev->weight_attr.attr.name = dev->weight_attr_name;
+ 	dev->weight_attr.attr.mode = S_IWUSR | S_IRUGO;
 -- 
 2.42.0
 
