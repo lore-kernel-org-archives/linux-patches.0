@@ -1,31 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA66633CDF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55780381DF;
+	Wed, 15 Nov 2023 19:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yf5wf0T+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690EEC433C9;
-	Wed, 15 Nov 2023 19:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/hvoqeL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5637C433C7;
+	Wed, 15 Nov 2023 19:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077697;
-	bh=CYhmPOMtVLLEkXLAwzyBcKCAOmSyh5m1Fh0ANHV/uWQ=;
+	s=korg; t=1700077699;
+	bh=sWalzTKT0Gz8E+OWv9ECaqJ3pQVZQSlVTd1mSBIK/1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yf5wf0T+f9HsVbbEytDElvP0rTrxVBGBgeuLpxwFZUpRobJJ22WDTh+VQkfErHckJ
-	 JvruVFz8DZrIwkxL/auVQHCDCIkvX/HCcG+j8h86xxwSm8eW6UEqOUZWos+MhV8tYv
-	 6uEIPhQinK6r+OqbDZmfVYvOpEfBYZqaCa4IDsvs=
+	b=o/hvoqeLDTSYYw4lmKoPT157RSD3K3zhBvOYjKl8yKBMerSdrbJrbUWx5GxZv5epP
+	 6fcUHffZxVZ8rSwcW+9JuCXjfS6dVkcGuaYLuK1EdeGDKZzRhFHPEMY87gRapbqVh8
+	 B7+OnnDbUJJSNYVqxrSHnxFJGV5M/zkQdoq7Ihqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@arm.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	llvm@lists.linux.dev,
+	Ming Wang <wangming01@loongson.cn>,
+	Tom Rix <trix@redhat.com>,
+	bpf@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 462/603] perf parse-events: Fix for term values that are raw events
-Date: Wed, 15 Nov 2023 14:16:47 -0500
-Message-ID: <20231115191644.556021134@linuxfoundation.org>
+Subject: [PATCH 6.6 463/603] perf mem-events: Avoid uninitialized read
+Date: Wed, 15 Nov 2023 14:16:48 -0500
+Message-ID: <20231115191644.614925317@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -46,83 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit b20576fd7fe39554b212095c3c0d7a3dff512515 ]
+[ Upstream commit 85f73c377b2ac9988a204b119aebb33ca5c60083 ]
 
-Raw events can be strings like 'r0xead' but the 0x is optional so they
-can also be 'read'. On IcelakeX uncore_imc_free_running has an event
-called 'read' which may be programmed as:
-```
-$ perf stat -e 'uncore_imc_free_running/event=read/' -a sleep 1
-```
-However, the PE_RAW type isn't allowed on the right of a term, even
-though in this case we just want to interpret it as a string. This
-leads to the following error on IcelakeX:
-```
-$ perf stat -e 'uncore_imc_free_running/event=read/' -a sleep 1
-event syntax error: '..nning/event=read/'
-                                  \___ parser error
-Run 'perf list' for a list of valid events
+pmu should be initialized to NULL before perf_pmus__scan loop. Fix and
+shrink the scope of pmu at the same time. Issue detected by clang-tidy.
 
- Usage: perf stat [<options>] [<command>]
-
-    -e, --event <event> event selector. use 'perf list' to list available events
-```
-Fix this by allowing raw types on the right of terms and treat them as
-strings, just as is already done for PE_LEGACY_CACHE. Make this
-consistent by just entirely removing name_or_legacy and always using
-name_or_raw that covers all three cases.
-
-Fixes: 6fd1e5191591 ("perf parse-events: Support PMUs for legacy cache events")
+Fixes: 5752c20f3787 ("perf mem: Scan all PMUs instead of just core ones")
 Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@arm.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Yang Jihong <yangjihong1@huawei.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
 Cc: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20230928004431.1926969-1-irogers@google.com
+Cc: llvm@lists.linux.dev
+Cc: Ming Wang <wangming01@loongson.cn>
+Cc: Tom Rix <trix@redhat.com>
+Cc: bpf@vger.kernel.org
+Link: https://lore.kernel.org/r/20231009183920.200859-10-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/parse-events.y | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ tools/perf/util/mem-events.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/parse-events.y b/tools/perf/util/parse-events.y
-index da9aac47972c1..c3a86ef4b7cf3 100644
---- a/tools/perf/util/parse-events.y
-+++ b/tools/perf/util/parse-events.y
-@@ -79,7 +79,7 @@ static void free_list_evsel(struct list_head* list_evsel)
- %type <str> PE_MODIFIER_BP
- %type <str> PE_EVENT_NAME
- %type <str> PE_DRV_CFG_TERM
--%type <str> name_or_raw name_or_legacy
-+%type <str> name_or_raw
- %destructor { free ($$); } <str>
- %type <term> event_term
- %destructor { parse_events_term__delete ($$); } <term>
-@@ -680,8 +680,6 @@ event_term
+diff --git a/tools/perf/util/mem-events.c b/tools/perf/util/mem-events.c
+index 39ffe8ceb3809..954b235e12e51 100644
+--- a/tools/perf/util/mem-events.c
++++ b/tools/perf/util/mem-events.c
+@@ -185,7 +185,6 @@ int perf_mem_events__record_args(const char **rec_argv, int *argv_nr,
+ {
+ 	int i = *argv_nr, k = 0;
+ 	struct perf_mem_event *e;
+-	struct perf_pmu *pmu;
  
- name_or_raw: PE_RAW | PE_NAME | PE_LEGACY_CACHE
- 
--name_or_legacy: PE_NAME | PE_LEGACY_CACHE
--
- event_term:
- PE_RAW
- {
-@@ -696,7 +694,7 @@ PE_RAW
- 	$$ = term;
- }
- |
--name_or_raw '=' name_or_legacy
-+name_or_raw '=' name_or_raw
- {
- 	struct parse_events_term *term;
- 	int err = parse_events_term__str(&term, PARSE_EVENTS__TERM_TYPE_USER, $1, $3, &@1, &@3);
-@@ -776,7 +774,7 @@ PE_TERM_HW
- 	$$ = term;
- }
- |
--PE_TERM '=' name_or_legacy
-+PE_TERM '=' name_or_raw
- {
- 	struct parse_events_term *term;
- 	int err = parse_events_term__str(&term, (enum parse_events__term_type)$1,
+ 	for (int j = 0; j < PERF_MEM_EVENTS__MAX; j++) {
+ 		e = perf_mem_events__ptr(j);
+@@ -202,6 +201,8 @@ int perf_mem_events__record_args(const char **rec_argv, int *argv_nr,
+ 			rec_argv[i++] = "-e";
+ 			rec_argv[i++] = perf_mem_events__name(j, NULL);
+ 		} else {
++			struct perf_pmu *pmu = NULL;
++
+ 			if (!e->supported) {
+ 				perf_mem_events__print_unsupport_hybrid(e, j);
+ 				return -1;
 -- 
 2.42.0
 
