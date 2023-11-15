@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC402C861
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47DE364C8
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwuEJz3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1AADC433C8;
-	Wed, 15 Nov 2023 19:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtGZDSN0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C96C433C9;
+	Wed, 15 Nov 2023 19:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076290;
-	bh=TOQ6nBGXsW9tMJDT0svLKTfHnqXj5vopwCQxCghmi9k=;
+	s=korg; t=1700076291;
+	bh=I+vP0jX8zRkRtdIG6DHcoS6FhmHkXP4i4c1AgMGkkf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DwuEJz3hTgXInJqjeByrZHnEr8o5Mow2BKmQnwHOkpxLod/330hzUo5FHmohu4VRD
-	 yawllslwcxI2xLVjO6YlJaywr1cxbdmCAxo4AHyZu6dcIHj5zgZ9zepBeixz3FWxKV
-	 XGIzmP5xBwDNXhWjwH8MgmMxpd5jZRXUiuXfibec=
+	b=RtGZDSN0KhIYZKvODb266NBKVFhnSG7WAhDUvJmg1NEtV53EQjFbEH82/Gj6Cn4tb
+	 fuoZw18MSSlKyGiKbwq8mRND+Bx2KnntjGVYK88C/FOhroI0PajARmuZ2CfGSfDqkm
+	 eAB6sUbni/4ILU2zy8WZQicczq/HZF9dv16wY94Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Arnd Bergmann <arnd@kernel.org>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 171/550] clk: ralink: mtmips: quiet unused variable warning
-Date: Wed, 15 Nov 2023 14:12:35 -0500
-Message-ID: <20231115191612.559684434@linuxfoundation.org>
+Subject: [PATCH 6.5 172/550] clk: keystone: pll: fix a couple NULL vs IS_ERR() checks
+Date: Wed, 15 Nov 2023 14:12:36 -0500
+Message-ID: <20231115191612.632925362@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,82 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 619102313466eaf8a6ac188e711f5df749dac6d4 ]
+[ Upstream commit a5d14f8b551eb1551c10053653ee8e27f19672fa ]
 
-When CONFIG_OF is disabled then the matching table is not referenced and
-the following warning appears:
+The clk_register_divider() and clk_register_mux() functions returns
+error pointers on error but this code checks for NULL.  Fix that.
 
-drivers/clk/ralink/clk-mtmips.c:821:34: warning: unused variable 'mtmips_of_match' [-Wunused-const-variable]
-821 |   static const struct of_device_id mtmips_of_match[] = {
-    |                          ^
-
-There are two match tables in the driver: one for the clock driver and the
-other for the reset driver. The only difference between them is that the
-clock driver uses 'data' and does not have 'ralink,rt2880-reset' compatible.
-Both just can be merged into a single one just by adding the compatible
-'ralink,rt2880-reset' entry to 'mtmips_of_match[]', which will allow it to
-be used for 'mtmips_clk_driver' (which doesn't use the data) as well as for
-'mtmips_clk_init()' (which doesn't need get called for 'ralink,rt2880-reset').
-
-Doing in this way ensures that 'CONFIG_OF' is not disabled anymore so the
-above warning disapears.
-
-Fixes: 6f3b15586eef ("clk: ralink: add clock and reset driver for MTMIPS SoCs")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202307242310.CdOnd2py-lkp@intel.com/
-Suggested-by: Arnd Bergmann <arnd@kernel.org>
-Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Link: https://lore.kernel.org/r/20230827023932.501102-1-sergio.paracuellos@gmail.com
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: b9e0d40c0d83 ("clk: keystone: add Keystone PLL clock driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/d9da4c97-0da9-499f-9a21-1f8e3f148dc1@moroto.mountain
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ralink/clk-mtmips.c | 20 +++++---------------
- 1 file changed, 5 insertions(+), 15 deletions(-)
+ drivers/clk/keystone/pll.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
-index 1e7991439527a..50a443bf79ecd 100644
---- a/drivers/clk/ralink/clk-mtmips.c
-+++ b/drivers/clk/ralink/clk-mtmips.c
-@@ -821,6 +821,10 @@ static const struct mtmips_clk_data mt76x8_clk_data = {
- };
+diff --git a/drivers/clk/keystone/pll.c b/drivers/clk/keystone/pll.c
+index ee5c72369334f..6bbdd4705d71f 100644
+--- a/drivers/clk/keystone/pll.c
++++ b/drivers/clk/keystone/pll.c
+@@ -281,12 +281,13 @@ static void __init of_pll_div_clk_init(struct device_node *node)
  
- static const struct of_device_id mtmips_of_match[] = {
-+	{
-+		.compatible = "ralink,rt2880-reset",
-+		.data = NULL,
-+	},
- 	{
- 		.compatible = "ralink,rt2880-sysc",
- 		.data = &rt2880_clk_data,
-@@ -1088,25 +1092,11 @@ static int mtmips_clk_probe(struct platform_device *pdev)
- 	return 0;
+ 	clk = clk_register_divider(NULL, clk_name, parent_name, 0, reg, shift,
+ 				 mask, 0, NULL);
+-	if (clk) {
+-		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+-	} else {
++	if (IS_ERR(clk)) {
+ 		pr_err("%s: error registering divider %s\n", __func__, clk_name);
+ 		iounmap(reg);
++		return;
+ 	}
++
++	of_clk_add_provider(node, of_clk_src_simple_get, clk);
  }
+ CLK_OF_DECLARE(pll_divider_clock, "ti,keystone,pll-divider-clock", of_pll_div_clk_init);
  
--static const struct of_device_id mtmips_clk_of_match[] = {
--	{ .compatible = "ralink,rt2880-reset" },
--	{ .compatible = "ralink,rt2880-sysc" },
--	{ .compatible = "ralink,rt3050-sysc" },
--	{ .compatible = "ralink,rt3052-sysc" },
--	{ .compatible = "ralink,rt3352-sysc" },
--	{ .compatible = "ralink,rt3883-sysc" },
--	{ .compatible = "ralink,rt5350-sysc" },
--	{ .compatible = "ralink,mt7620-sysc" },
--	{ .compatible = "ralink,mt7628-sysc" },
--	{ .compatible = "ralink,mt7688-sysc" },
--	{}
--};
--
- static struct platform_driver mtmips_clk_driver = {
- 	.probe = mtmips_clk_probe,
- 	.driver = {
- 		.name = "mtmips-clk",
--		.of_match_table = mtmips_clk_of_match,
-+		.of_match_table = mtmips_of_match,
- 	},
- };
+@@ -328,10 +329,12 @@ static void __init of_pll_mux_clk_init(struct device_node *node)
+ 	clk = clk_register_mux(NULL, clk_name, (const char **)&parents,
+ 				ARRAY_SIZE(parents) , 0, reg, shift, mask,
+ 				0, NULL);
+-	if (clk)
+-		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+-	else
++	if (IS_ERR(clk)) {
+ 		pr_err("%s: error registering mux %s\n", __func__, clk_name);
++		return;
++	}
++
++	of_clk_add_provider(node, of_clk_src_simple_get, clk);
+ }
+ CLK_OF_DECLARE(pll_mux_clock, "ti,keystone,pll-mux-clock", of_pll_mux_clk_init);
  
 -- 
 2.42.0
