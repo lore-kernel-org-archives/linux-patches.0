@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65984121C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B7941AB8
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuP/Fvg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24AABC433C9;
-	Wed, 15 Nov 2023 19:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P73OO/LW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948C8C433C8;
+	Wed, 15 Nov 2023 19:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076969;
-	bh=NV7ySFvpTLUF9fyCJMsbzdbVb7cv4oT9Dw/D4WYOCG0=;
+	s=korg; t=1700076970;
+	bh=TgGA0d7XkXWmWjDGXa+LZG+M75GX+avwMxDQr/1r/8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iuP/Fvg+8HjFeqDW2i6n/xMa0tGg/TTtRdAD7CB+GUxVHEmUbgQrQJ8VYsDePRcNf
-	 /NBUfY/BfXvck762GA+Vk2Ext0aqEj1cphRxAUt5frQ0RRSPzlTuM32KptsspDUEEt
-	 h8b83dbEceZaxTctlHuK3ePYUxw7YcJiNjiMqEOQ=
+	b=P73OO/LWRoVLaolfIQwLbsBRjwbw6EVCTUB22KbvkW8V7wTLiq+yUmL6xhxvZMHzH
+	 1lGa205Jc6ApnQLz9PX1bTlDwLzwisB26v1fXAcq960XWJ1nml8xe8k6t1UBFlzGJ9
+	 ppGLsn+KHfTny/Gmm6cIT4ud9FPUAH/maKUbaj3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Fei Shao <fshao@chromium.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 069/603] tipc: Use size_add() in calls to struct_size()
-Date: Wed, 15 Nov 2023 14:10:14 -0500
-Message-ID: <20231115191617.884499129@linuxfoundation.org>
+Subject: [PATCH 6.5 479/550] media: mtk-jpegenc: Fix bug in JPEG encode quality selection
+Date: Wed, 15 Nov 2023 14:17:43 -0500
+Message-ID: <20231115191634.070209148@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,50 +39,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Fei Shao <fshao@chromium.org>
 
-[ Upstream commit 2506a91734754de690869824fb0d1ac592ec1266 ]
+[ Upstream commit 0aeccc63f3bc4cfd49dc4893da1409402ee6b295 ]
 
-If, for any reason, the open-coded arithmetic causes a wraparound,
-the protection that `struct_size()` adds against potential integer
-overflows is defeated. Fix this by hardening call to `struct_size()`
-with `size_add()`.
+The driver uses the upper-bound approach to decide the target JPEG
+encode quality, but there's a logic bug that if the desired quality is
+higher than what the driver can support, the driver falls back to using
+the worst quality.
 
-Fixes: e034c6d23bc4 ("tipc: Use struct_size() helper")
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix the bug by assuming using the best quality in the beginning, and
+with trivial refactor to avoid long lines.
+
+Fixes: 45f13a57d813 ("media: platform: Add jpeg enc feature")
+Signed-off-by: Fei Shao <fshao@chromium.org>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/link.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/link.c b/net/tipc/link.c
-index e33b4f29f77cf..d0143823658d5 100644
---- a/net/tipc/link.c
-+++ b/net/tipc/link.c
-@@ -1446,7 +1446,7 @@ u16 tipc_get_gap_ack_blks(struct tipc_gap_ack_blks **ga, struct tipc_link *l,
- 		p = (struct tipc_gap_ack_blks *)msg_data(hdr);
- 		sz = ntohs(p->len);
- 		/* Sanity check */
--		if (sz == struct_size(p, gacks, p->ugack_cnt + p->bgack_cnt)) {
-+		if (sz == struct_size(p, gacks, size_add(p->ugack_cnt, p->bgack_cnt))) {
- 			/* Good, check if the desired type exists */
- 			if ((uc && p->ugack_cnt) || (!uc && p->bgack_cnt))
- 				goto ok;
-@@ -1533,7 +1533,7 @@ static u16 tipc_build_gap_ack_blks(struct tipc_link *l, struct tipc_msg *hdr)
- 			__tipc_build_gap_ack_blks(ga, l, ga->bgack_cnt) : 0;
+diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
+index 244018365b6f1..03ee8f93bd467 100644
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
+@@ -127,6 +127,7 @@ void mtk_jpeg_set_enc_params(struct mtk_jpeg_ctx *ctx,  void __iomem *base)
+ 	u32 img_stride;
+ 	u32 mem_stride;
+ 	u32 i, enc_quality;
++	u32 nr_enc_quality = ARRAY_SIZE(mtk_jpeg_enc_quality);
  
- 	/* Total len */
--	len = struct_size(ga, gacks, ga->bgack_cnt + ga->ugack_cnt);
-+	len = struct_size(ga, gacks, size_add(ga->bgack_cnt, ga->ugack_cnt));
- 	ga->len = htons(len);
- 	return len;
- }
+ 	value = width << 16 | height;
+ 	writel(value, base + JPEG_ENC_IMG_SIZE);
+@@ -157,8 +158,8 @@ void mtk_jpeg_set_enc_params(struct mtk_jpeg_ctx *ctx,  void __iomem *base)
+ 	writel(img_stride, base + JPEG_ENC_IMG_STRIDE);
+ 	writel(mem_stride, base + JPEG_ENC_STRIDE);
+ 
+-	enc_quality = mtk_jpeg_enc_quality[0].hardware_value;
+-	for (i = 0; i < ARRAY_SIZE(mtk_jpeg_enc_quality); i++) {
++	enc_quality = mtk_jpeg_enc_quality[nr_enc_quality - 1].hardware_value;
++	for (i = 0; i < nr_enc_quality; i++) {
+ 		if (ctx->enc_quality <= mtk_jpeg_enc_quality[i].quality_param) {
+ 			enc_quality = mtk_jpeg_enc_quality[i].hardware_value;
+ 			break;
 -- 
 2.42.0
 
