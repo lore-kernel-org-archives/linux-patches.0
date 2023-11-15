@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2052F28368
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D49228368
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppnZO83q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1565C116D7;
-	Wed, 15 Nov 2023 20:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qr63LJtY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8B3C16ABD;
+	Wed, 15 Nov 2023 20:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081313;
-	bh=qRAOkC7/bknMd+lv1nYlVOMygNGfMbnM848E7RMKt+M=;
+	s=korg; t=1700081314;
+	bh=Vb/xqebh2R6pWP3NbSXJS1XDDWyOYmqwSC/r1XO5Bts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ppnZO83qXy4MlXzPtEhytEhrzCgDaMRV3uSuwQNQeFW7k1W43TiVoXwgq71sazkyg
-	 eot1iS0KqkdLUAOpCCCLfYk3hnxPXA+fcxEFNu0weXEUiqkKLGnV+VE1Xr2tWk/Nyp
-	 thMdA6cYH27fJtz7SDAxlhUpu7kQXsu+MkwWUK/g=
+	b=Qr63LJtYdEjJXwNHdQ6UwdqP1qZ0fbbHERAyPVGYnxXxltM8IgWRnCjQ9vyC3BRzQ
+	 72BeHyfXIyC++LDlnP7ItiA7XOZqZyHeWuIYE6P5tgGk0Kjs3fpH66zIWnaCFX9FOB
+	 3/Xs7uNGO+O9wB+u1F3woHxbY1aRN+f3Y2b+Ce6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Helen Koike <helen.koike@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 051/244] regmap: debugfs: Fix a erroneous check after snprintf()
-Date: Wed, 15 Nov 2023 15:34:03 -0500
-Message-ID: <20231115203551.429759615@linuxfoundation.org>
+Subject: [PATCH 5.15 052/244] spi: tegra: Fix missing IRQ check in tegra_slink_probe()
+Date: Wed, 15 Nov 2023 15:34:04 -0500
+Message-ID: <20231115203551.487933944@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,35 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit d3601857e14de6369f00ae19564f1d817d175d19 ]
+[ Upstream commit eb9913b511f10968a02cfa5329a896855dd152a3 ]
 
-This error handling looks really strange.
-Check if the string has been truncated instead.
+This func misses checking for platform_get_irq()'s call and may passes the
+negative error codes to request_irq(), which takes unsigned IRQ #,
+causing it to fail with -EINVAL, overriding an original error code.
 
-Fixes: f0c2319f9f19 ("regmap: Expose the driver name in debugfs")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/8595de2462c490561f70020a6d11f4d6b652b468.1693857825.git.christophe.jaillet@wanadoo.fr
+Fix this by stop calling request_irq() with invalid IRQ #s.
+
+Fixes: dc4dc3605639 ("spi: tegra: add spi driver for SLINK controller")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Reviewed-by: Helen Koike <helen.koike@collabora.com>
+Link: https://lore.kernel.org/r/tencent_73FCC06A3D1C14EE5175253C6FB46A07B709@qq.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-tegra20-slink.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/base/regmap/regmap-debugfs.c b/drivers/base/regmap/regmap-debugfs.c
-index ad684d37c2dae..6caed4b556365 100644
---- a/drivers/base/regmap/regmap-debugfs.c
-+++ b/drivers/base/regmap/regmap-debugfs.c
-@@ -48,7 +48,7 @@ static ssize_t regmap_name_read_file(struct file *file,
- 		name = map->dev->driver->name;
+diff --git a/drivers/spi/spi-tegra20-slink.c b/drivers/spi/spi-tegra20-slink.c
+index cf61bf302a059..c611fedda7de9 100644
+--- a/drivers/spi/spi-tegra20-slink.c
++++ b/drivers/spi/spi-tegra20-slink.c
+@@ -1087,6 +1087,8 @@ static int tegra_slink_probe(struct platform_device *pdev)
+ 	reset_control_deassert(tspi->rst);
  
- 	ret = snprintf(buf, PAGE_SIZE, "%s\n", name);
--	if (ret < 0) {
-+	if (ret >= PAGE_SIZE) {
- 		kfree(buf);
- 		return ret;
- 	}
+ 	spi_irq = platform_get_irq(pdev, 0);
++	if (spi_irq < 0)
++		return spi_irq;
+ 	tspi->irq = spi_irq;
+ 	ret = request_threaded_irq(tspi->irq, tegra_slink_isr,
+ 				   tegra_slink_isr_thread, IRQF_ONESHOT,
 -- 
 2.42.0
 
