@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C68A3D96E
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1006E3D96E
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/eLur/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B945C433C8;
-	Wed, 15 Nov 2023 19:59:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSbsomvo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5123C433C7;
+	Wed, 15 Nov 2023 19:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078356;
-	bh=cYQDfy+nssJTpkROZ6bQDI3+Ov2Ke7n8XgVBe+hQ350=;
+	s=korg; t=1700078357;
+	bh=Y4zv3ra360U0h/XrIRERfeg6Sv0VQQQuuZcX5dky5Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/eLur/E96bEzTLM/+goinqfCbPsswXrcxsf2l/mN7bnLBaCa1/To5H1c6us0cKSC
-	 IdPTaX2/7ptIcsNc39va+mJ5N4QU1melUmTOG4AAoctOcUe6yO1++sGJog1mPKY0XY
-	 xHR/KaiMp4Fl39rxSzqu4/sybNW4LyzjtQzkB068=
+	b=xSbsomvok84FJVBoqsUkqlByDFi1LbHIucnzKioZjaAx4V00k8R2+fYfxljk3ab6u
+	 NrUZ/ttc1M5rK2yF1UJSL6kSqIyvH/qV3IRhXl4kY9SmTHuzxmkLu9Zf2KpI2MbZNd
+	 SYSwTXk0lx8G30GBr/t7CA1GwGu/oAp1OiI7XRCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rogan Dawes <rogan@dawes.za.net>,
-	Fabio Estevam <festevam@denx.de>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 248/379] leds: pwm: Dont disable the PWM when the LED should be off
-Date: Wed, 15 Nov 2023 14:25:23 -0500
-Message-ID: <20231115192659.804412924@linuxfoundation.org>
+Subject: [PATCH 6.1 249/379] leds: trigger: ledtrig-cpu:: Fix output may be truncated issue for cpu
+Date: Wed, 15 Nov 2023 14:25:24 -0500
+Message-ID: <20231115192659.868237902@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -45,48 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 76fe464c8e64e71b2e4af11edeef0e5d85eeb6aa ]
+[ Upstream commit ff50f53276131a3059e8307d11293af388ed2bcd ]
 
-Disabling a PWM (i.e. calling pwm_apply_state with .enabled = false)
-gives no guarantees what the PWM output does. It might freeze where it
-currently is, or go in a High-Z state or drive the active or inactive
-state, it might even continue to toggle.
+In order to teach the compiler that 'trig->name' will never be truncated,
+we need to tell it that 'cpu' is not negative.
 
-To ensure that the LED gets really disabled, don't disable the PWM even
-when .duty_cycle is zero.
+When building with W=1, this fixes the following warnings:
 
-This fixes disabling a leds-pwm LED on i.MX28. The PWM on this SoC is
-one of those that freezes its output on disable, so if you disable an
-LED that is full on, it stays on. If you disable a LED with half
-brightness it goes off in 50% of the cases and full on in the other 50%.
+  drivers/leds/trigger/ledtrig-cpu.c: In function ‘ledtrig_cpu_init’:
+  drivers/leds/trigger/ledtrig-cpu.c:155:56: error: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 5 [-Werror=format-truncation=]
+    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
+        |                                                        ^~
+  drivers/leds/trigger/ledtrig-cpu.c:155:52: note: directive argument in the range [-2147483648, 7]
+    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
+        |                                                    ^~~~~~~
+  drivers/leds/trigger/ledtrig-cpu.c:155:17: note: ‘snprintf’ output between 5 and 15 bytes into a destination of size 8
+    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
+        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 41c42ff5dbe2 ("leds: simple driver for pwm driven LEDs")
-Reported-by: Rogan Dawes <rogan@dawes.za.net>
-Reported-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Fabio Estevam <festevam@denx.de>
-Link: https://lore.kernel.org/r/20230922192834.1695727-1-u.kleine-koenig@pengutronix.de
+Fixes: 8f88731d052d ("led-triggers: create a trigger for CPU activity")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/3f4be7a99933cf8566e630da54f6ab913caac432.1695453322.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pwm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/leds/trigger/ledtrig-cpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/leds-pwm.c b/drivers/leds/leds-pwm.c
-index cc892ecd52408..6d3e33e8b5f91 100644
---- a/drivers/leds/leds-pwm.c
-+++ b/drivers/leds/leds-pwm.c
-@@ -53,7 +53,7 @@ static int led_pwm_set(struct led_classdev *led_cdev,
- 		duty = led_dat->pwmstate.period - duty;
+diff --git a/drivers/leds/trigger/ledtrig-cpu.c b/drivers/leds/trigger/ledtrig-cpu.c
+index 8af4f9bb9cde8..05848a2fecff6 100644
+--- a/drivers/leds/trigger/ledtrig-cpu.c
++++ b/drivers/leds/trigger/ledtrig-cpu.c
+@@ -130,7 +130,7 @@ static int ledtrig_prepare_down_cpu(unsigned int cpu)
  
- 	led_dat->pwmstate.duty_cycle = duty;
--	led_dat->pwmstate.enabled = duty > 0;
-+	led_dat->pwmstate.enabled = true;
- 	return pwm_apply_state(led_dat->pwm, &led_dat->pwmstate);
- }
+ static int __init ledtrig_cpu_init(void)
+ {
+-	int cpu;
++	unsigned int cpu;
+ 	int ret;
  
+ 	/* Supports up to 9999 cpu cores */
+@@ -152,7 +152,7 @@ static int __init ledtrig_cpu_init(void)
+ 		if (cpu >= 8)
+ 			continue;
+ 
+-		snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
++		snprintf(trig->name, MAX_NAME_LEN, "cpu%u", cpu);
+ 
+ 		led_trigger_register_simple(trig->name, &trig->_trig);
+ 	}
 -- 
 2.42.0
 
