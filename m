@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E995328382
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A742A28382
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvnECDXE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A70AC433CA;
-	Wed, 15 Nov 2023 19:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJ3sQuLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CC0C433C7;
+	Wed, 15 Nov 2023 19:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076386;
-	bh=iFueHND0gZtKQaojLDRBaTHokDjRwHY06gplllbd7Yo=;
+	s=korg; t=1700076388;
+	bh=mKJB6wgoKI96AfRhjgDItfS4HE6Vj887+8S2Z/0I0zE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NvnECDXEfge51lFgVJAqN2b7WXrjKorB7aWI8IOMUYayv28ro4rFnU6W1m6JCB202
-	 JVHT3ZWKv+hmhcirfZlQg5+DswhEThlehBwI8E5Lxs+NfRXw7vXcEJTZCSsPa2U6Vm
-	 enyv7hfNFHYoIjL2qsoxiwCJJfLezM50IYogTnrA=
+	b=CJ3sQuLDyZbMdMdgJ0P7cLch1HqEETYhPsUAUJffbWgkW/ZNNYDwJg03Pd6eDYfUF
+	 cIhOVhZkHRaSPmcfj7ZizgHcwmZkFo614inWPqv/XlLmhDIY6SxLk7iUSXdQl4QZoh
+	 MMfmLdPnv2caA+R193Rw/pcFvKL69rOOLNKDxY/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	David Heidelberg <david@ixit.cz>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 260/550] ARM: dts: renesas: blanche: Fix typo in GP_11_2 pin name
-Date: Wed, 15 Nov 2023 14:14:04 -0500
-Message-ID: <20231115191618.735109642@linuxfoundation.org>
+Subject: [PATCH 6.5 261/550] arm64: dts: qcom: sdm845: Fix PSCI power domain names
+Date: Wed, 15 Nov 2023 14:14:05 -0500
+Message-ID: <20231115191618.803610561@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -41,37 +46,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit edc6ef026fe69154bb6b70dd6e7f278cfd7d6919 ]
+[ Upstream commit a5f01673d3946e424091e6b8ff274716f9c21454 ]
 
-On blanche, the GPIO keyboard fails to probe with:
+The original commit hasn't been updated according to
+refactoring done in sdm845.dtsi.
 
-    sh-pfc e6060000.pinctrl: could not map pin config for "GP_11_02"
-
-Fix this by correcting the name for this pin to "GP_11_2".
-
-Fixes: 1f27fedead91eb60 ("ARM: dts: blanche: Configure pull-up for SOFT_SW and SW25 GPIO keys")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/203128eca2261ffc33b83637818dd39c488f42b0.1693408326.git.geert+renesas@glider.be
+Fixes: a1ade6cac5a2 ("arm64: dts: qcom: sdm845: Switch PSCI cpu idle states from PC to OSI")
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20230912071205.11502-1-david@ixit.cz
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/renesas/r8a7792-blanche.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm/boot/dts/renesas/r8a7792-blanche.dts b/arch/arm/boot/dts/renesas/r8a7792-blanche.dts
-index c66de9dd12dfc..6a83923aa4612 100644
---- a/arch/arm/boot/dts/renesas/r8a7792-blanche.dts
-+++ b/arch/arm/boot/dts/renesas/r8a7792-blanche.dts
-@@ -239,7 +239,7 @@ du1_pins: du1 {
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+index 1ce413263b7f9..617be27e79523 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+@@ -144,15 +144,15 @@ panel_in_edp: endpoint {
+ };
  
- 	keyboard_pins: keyboard {
--		pins = "GP_3_10", "GP_3_11", "GP_3_12", "GP_3_15", "GP_11_02";
-+		pins = "GP_3_10", "GP_3_11", "GP_3_12", "GP_3_15", "GP_11_2";
- 		bias-pull-up;
- 	};
+ &psci {
+-	/delete-node/ cpu0;
+-	/delete-node/ cpu1;
+-	/delete-node/ cpu2;
+-	/delete-node/ cpu3;
+-	/delete-node/ cpu4;
+-	/delete-node/ cpu5;
+-	/delete-node/ cpu6;
+-	/delete-node/ cpu7;
+-	/delete-node/ cpu-cluster0;
++	/delete-node/ power-domain-cpu0;
++	/delete-node/ power-domain-cpu1;
++	/delete-node/ power-domain-cpu2;
++	/delete-node/ power-domain-cpu3;
++	/delete-node/ power-domain-cpu4;
++	/delete-node/ power-domain-cpu5;
++	/delete-node/ power-domain-cpu6;
++	/delete-node/ power-domain-cpu7;
++	/delete-node/ power-domain-cluster;
+ };
  
+ &cpus {
+@@ -338,6 +338,8 @@ flash@0 {
+ 
+ 
+ &apps_rsc {
++	/delete-property/ power-domains;
++
+ 	regulators-0 {
+ 		compatible = "qcom,pm8998-rpmh-regulators";
+ 		qcom,pmic-id = "a";
 -- 
 2.42.0
 
