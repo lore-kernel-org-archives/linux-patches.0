@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACADE33CDF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C893A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxwidKGL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59094C433C8;
-	Wed, 15 Nov 2023 19:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEbZe/Fk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE52C433CA;
+	Wed, 15 Nov 2023 19:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077716;
-	bh=ZNm0KlcioNsv2bJKEN5LxcsaOv7QuoLm17omQRXy05I=;
+	s=korg; t=1700077718;
+	bh=9+eCqPCV8K45PaVV/wmRmN1xvdSJAv8TgrkNUFbcnXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VxwidKGLLZG1R3X1qgNICRRnFUtR4qk0gP0oaRhwguECZ5kj2fTMg4JLGNowjOTEN
-	 DiadIsWpsuqN840NdlUfdWUqPJzccdVKrYeqnfcMGMU3B7H9qxHeFJE22YtCe5443r
-	 PrLZjtiMvYR/wDNEAao3EbTbz1SESspEWcJW5WIw=
+	b=vEbZe/FkeviUSkcx/XLffQFQgVDP/nB/tTMvM5LSgwSk49eW3SEQJJZdZJ7ZWNrbx
+	 qt+inikEyZMyG+cqn713Wr6GSCFyELFqMQNap4XWcoTn08y9NxW6DrvWUW/Nm/z2TB
+	 LlM5x8nV9UKSJHaz4xT6tpmLZ0FIrM8EnJUQ2uB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.vnet.ibm.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	maddy@linux.ibm.com,
-	Namhyung Kim <namhyung@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 475/603] perf vendor events: Update PMC used in PM_RUN_INST_CMPL event for power10 platform
-Date: Wed, 15 Nov 2023 14:17:00 -0500
-Message-ID: <20231115191645.334767960@linuxfoundation.org>
+Subject: [PATCH 6.6 476/603] xhci: Loosen RPM as default policy to cover for AMD xHC 1.1
+Date: Wed, 15 Nov 2023 14:17:01 -0500
+Message-ID: <20231115191645.393331686@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -46,70 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 3f8b6e5b11192dacb721d2d28ea4589917f5e822 ]
+[ Upstream commit 4baf1218150985ee3ab0a27220456a1f027ea0ac ]
 
-The CPI_STALL_RATIO metric group can be used to present the high
-level CPI stall breakdown metrics in powerpc, which will show:
+The AMD USB host controller (1022:43f7) isn't going into PCI D3 by default
+without anything connected. This is because the policy that was introduced
+by commit a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all
+xHC 1.2 or later devices") only covered 1.2 or later.
 
-- DISPATCH_STALL_CPI ( Dispatch stall cycles per insn )
-- ISSUE_STALL_CPI ( Issue stall cycles per insn )
-- EXECUTION_STALL_CPI ( Execution stall cycles per insn )
-- COMPLETION_STALL_CPI ( Completion stall cycles per insn )
+The 1.1 specification also has the same requirement as the 1.2
+specification for D3 support. So expand the runtime PM as default policy
+to all AMD 1.1 devices as well.
 
-Commit cf26e043c2a9 ("perf vendor events power10: Add JSON
-metric events to present CPI stall cycles in powerpc)" which added
-the CPI_STALL_RATIO metric group, also modified
-the PMC value used in PM_RUN_INST_CMPL event from PMC4 to PMC5,
-to avoid multiplexing of events.
-But that got revert in recent changes. Fix this issue by changing
-back the PMC value used in PM_RUN_INST_CMPL to PMC5.
-
-Result with the fix:
-
- ./perf stat --metric-no-group -M CPI_STALL_RATIO <workload>
-
- Performance counter stats for 'workload':
-
-        68,745,426      PM_CMPL_STALL                    #     0.21 COMPLETION_STALL_CPI
-         7,692,827      PM_ISSUE_STALL                   #     0.02 ISSUE_STALL_CPI
-       322,638,223      PM_RUN_INST_CMPL                 #     0.05 DISPATCH_STALL_CPI
-                                                  #     0.48 EXECUTION_STALL_CPI
-        16,858,553      PM_DISP_STALL_CYC
-       153,880,133      PM_EXEC_STALL
-
-       0.089774592 seconds time elapsed
-
-"--metric-no-group" is used for forcing PM_RUN_INST_CMPL to be scheduled
-in all group for more accuracy.
-
-Fixes: 7d473f475b2a ("perf vendor events: Move JSON/events to appropriate files for power10 platform")
-Reported-by: Disha Goel <disgoel@linux.vnet.ibm.com>
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
-Reviewed-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Tested-by: Disha Goel<disgoel@linux.ibm.com>
-Cc: maddy@linux.ibm.com
-Link: https://lore.kernel.org/r/20231016143110.244255-1-kjain@linux.ibm.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all xHC 1.2 or later devices")
+Link: https://composter.com.ua/documents/xHCI_Specification_for_USB.pdf
+Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20231019102924.2797346-15-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/pmu-events/arch/powerpc/power10/pmc.json | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/pmu-events/arch/powerpc/power10/pmc.json b/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
-index c606ae03cd27d..0e0253d0e7577 100644
---- a/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
-+++ b/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
-@@ -195,7 +195,7 @@
-     "BriefDescription": "Threshold counter exceeded a value of 128."
-   },
-   {
--    "EventCode": "0x400FA",
-+    "EventCode": "0x500FA",
-     "EventName": "PM_RUN_INST_CMPL",
-     "BriefDescription": "PowerPC instruction completed while the run latch is set."
-   }
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index b9ae5c2a25275..bde43cef8846c 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -535,6 +535,8 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
+ 	if (xhci->hci_version >= 0x120)
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
++	else if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version >= 0x110)
++		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
+ 
+ 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
+ 		xhci_dbg_trace(xhci, trace_xhci_dbg_quirks,
 -- 
 2.42.0
 
