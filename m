@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045A42836D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918743BB2D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujWdLmHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFDAC433CA;
-	Wed, 15 Nov 2023 19:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2dBjEbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6C4C433C7;
+	Wed, 15 Nov 2023 19:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076646;
-	bh=mjBZE6XekVvb+02HelNJXoL6GudmVrh8lrLEc0e1py4=;
+	s=korg; t=1700076648;
+	bh=Pze2o3ga6m3wrb8vVH/PSLKjXBkvGnrqVNWnPCwIsVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ujWdLmHMhwr7SrNbzgY461DnUfkilJunXZE3nrCUyj664Uc8elbH0AKWYlqjMYMi9
-	 ffC0PZk8f22XcUz7eksJEsdk+6W6qTlmjpIqLNKjrHqywxramH8DA6V+fHL2CkuQuq
-	 9kFcJfL+Ww60OY7UPUiYOYlaeB/5hn7zEaE7XtK0=
+	b=M2dBjEbhoLBvDq3ySAl51WEHnZrIBkVBamwirB5nAUR7FFePiFbQPpr/URd/0/g39
+	 oJHleXgSP6AdQpExESMo7ZEchf5IO2hy+VYVieTueR1xkjcC+9akdSG/aW8RsMkwTe
+	 EEw4bhwPvyT3NCSn0SpogZiqoemDbAo1kibBK4cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 352/550] HID: uclogic: Fix user-memory-access bug in uclogic_params_ugee_v2_init_event_hooks()
-Date: Wed, 15 Nov 2023 14:15:36 -0500
-Message-ID: <20231115191625.162574913@linuxfoundation.org>
+Subject: [PATCH 6.5 361/550] certs: Break circular dependency when selftest is modular
+Date: Wed, 15 Nov 2023 14:15:45 -0500
+Message-ID: <20231115191625.833134141@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -37,139 +36,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 91cfe0bbaa1c434d4271eb6e1d7aaa1fe8d121f6 ]
+[ Upstream commit 04a93202ed7c3b451bf22d3ff4bcd379df27f299 ]
 
-When CONFIG_HID_UCLOGIC=y and CONFIG_KUNIT_ALL_TESTS=y, launch kernel and
-then the below user-memory-access bug occurs.
+The modular build fails because the self-test code depends on pkcs7
+which in turn depends on x509 which contains the self-test.
 
-In hid_test_uclogic_params_cleanup_event_hooks(),it call
-uclogic_params_ugee_v2_init_event_hooks() with the first arg=NULL, so
-when it calls uclogic_params_ugee_v2_has_battery(), the hid_get_drvdata()
-will access hdev->dev with hdev=NULL, which will cause below
-user-memory-access.
+Split the self-test out into its own module to break the cycle.
 
-So add a fake_device with quirks member and call hid_set_drvdata()
-to assign hdev->dev->driver_data which avoids the null-ptr-def bug
-for drvdata->quirks in uclogic_params_ugee_v2_has_battery(). After applying
-this patch, the below user-memory-access bug never occurs.
-
- general protection fault, probably for non-canonical address 0xdffffc0000000329: 0000 [#1] PREEMPT SMP KASAN
- KASAN: probably user-memory-access in range [0x0000000000001948-0x000000000000194f]
- CPU: 5 PID: 2189 Comm: kunit_try_catch Tainted: G    B   W        N 6.6.0-rc2+ #30
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
- RIP: 0010:uclogic_params_ugee_v2_init_event_hooks+0x87/0x600
- Code: f3 f3 65 48 8b 14 25 28 00 00 00 48 89 54 24 60 31 d2 48 89 fa c7 44 24 30 00 00 00 00 48 c7 44 24 28 02 f8 02 01 48 c1 ea 03 <80> 3c 02 00 0f 85 2c 04 00 00 48 8b 9d 48 19 00 00 48 b8 00 00 00
- RSP: 0000:ffff88810679fc88 EFLAGS: 00010202
- RAX: dffffc0000000000 RBX: 0000000000000004 RCX: 0000000000000000
- RDX: 0000000000000329 RSI: ffff88810679fd88 RDI: 0000000000001948
- RBP: 0000000000000000 R08: 0000000000000000 R09: ffffed1020f639f0
- R10: ffff888107b1cf87 R11: 0000000000000400 R12: 1ffff11020cf3f92
- R13: ffff88810679fd88 R14: ffff888100b97b08 R15: ffff8881030bb080
- FS:  0000000000000000(0000) GS:ffff888119e80000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 0000000005286001 CR4: 0000000000770ee0
- DR0: ffffffff8fdd6cf4 DR1: ffffffff8fdd6cf5 DR2: ffffffff8fdd6cf6
- DR3: ffffffff8fdd6cf7 DR6: 00000000fffe0ff0 DR7: 0000000000000600
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  ? die_addr+0x3d/0xa0
-  ? exc_general_protection+0x144/0x220
-  ? asm_exc_general_protection+0x22/0x30
-  ? uclogic_params_ugee_v2_init_event_hooks+0x87/0x600
-  ? sched_clock_cpu+0x69/0x550
-  ? uclogic_parse_ugee_v2_desc_gen_params+0x70/0x70
-  ? load_balance+0x2950/0x2950
-  ? rcu_trc_cmpxchg_need_qs+0x67/0xa0
-  hid_test_uclogic_params_cleanup_event_hooks+0x9e/0x1a0
-  ? uclogic_params_ugee_v2_init_event_hooks+0x600/0x600
-  ? __switch_to+0x5cf/0xe60
-  ? migrate_enable+0x260/0x260
-  ? __kthread_parkme+0x83/0x150
-  ? kunit_try_run_case_cleanup+0xe0/0xe0
-  kunit_generic_run_threadfn_adapter+0x4a/0x90
-  ? kunit_try_catch_throw+0x80/0x80
-  kthread+0x2b5/0x380
-  ? kthread_complete_and_exit+0x20/0x20
-  ret_from_fork+0x2d/0x70
-  ? kthread_complete_and_exit+0x20/0x20
-  ret_from_fork_asm+0x11/0x20
-  </TASK>
- Modules linked in:
- Dumping ftrace buffer:
-    (ftrace buffer empty)
- ---[ end trace 0000000000000000 ]---
- RIP: 0010:uclogic_params_ugee_v2_init_event_hooks+0x87/0x600
- Code: f3 f3 65 48 8b 14 25 28 00 00 00 48 89 54 24 60 31 d2 48 89 fa c7 44 24 30 00 00 00 00 48 c7 44 24 28 02 f8 02 01 48 c1 ea 03 <80> 3c 02 00 0f 85 2c 04 00 00 48 8b 9d 48 19 00 00 48 b8 00 00 00
- RSP: 0000:ffff88810679fc88 EFLAGS: 00010202
- RAX: dffffc0000000000 RBX: 0000000000000004 RCX: 0000000000000000
- RDX: 0000000000000329 RSI: ffff88810679fd88 RDI: 0000000000001948
- RBP: 0000000000000000 R08: 0000000000000000 R09: ffffed1020f639f0
- R10: ffff888107b1cf87 R11: 0000000000000400 R12: 1ffff11020cf3f92
- R13: ffff88810679fd88 R14: ffff888100b97b08 R15: ffff8881030bb080
- FS:  0000000000000000(0000) GS:ffff888119e80000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 0000000005286001 CR4: 0000000000770ee0
- DR0: ffffffff8fdd6cf4 DR1: ffffffff8fdd6cf5 DR2: ffffffff8fdd6cf6
- DR3: ffffffff8fdd6cf7 DR6: 00000000fffe0ff0 DR7: 0000000000000600
- PKRU: 55555554
- Kernel panic - not syncing: Fatal exception
- Dumping ftrace buffer:
-    (ftrace buffer empty)
- Kernel Offset: disabled
- Rebooting in 1 seconds..
-
-Fixes: a251d6576d2a ("HID: uclogic: Handle wireless device reconnection")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: José Expósito <jose.exposito89@gmail.com>
-Link: https://lore.kernel.org/r/20231009064245.3573397-2-ruanjinjie@huawei.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Fixes: 3cde3174eb91 ("certs: Add FIPS selftests")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-uclogic-params-test.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ crypto/asymmetric_keys/Kconfig           |  3 ++-
+ crypto/asymmetric_keys/Makefile          |  3 ++-
+ crypto/asymmetric_keys/selftest.c        | 13 ++++++++++---
+ crypto/asymmetric_keys/x509_parser.h     |  9 ---------
+ crypto/asymmetric_keys/x509_public_key.c |  8 +-------
+ 5 files changed, 15 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/hid/hid-uclogic-params-test.c b/drivers/hid/hid-uclogic-params-test.c
-index 678f50cbb160b..a30121419a292 100644
---- a/drivers/hid/hid-uclogic-params-test.c
-+++ b/drivers/hid/hid-uclogic-params-test.c
-@@ -174,12 +174,26 @@ static void hid_test_uclogic_parse_ugee_v2_desc(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, params->frame_type, frame_type);
+diff --git a/crypto/asymmetric_keys/Kconfig b/crypto/asymmetric_keys/Kconfig
+index 1ef3b46d6f6e5..59ec726b7c770 100644
+--- a/crypto/asymmetric_keys/Kconfig
++++ b/crypto/asymmetric_keys/Kconfig
+@@ -76,7 +76,7 @@ config SIGNED_PE_FILE_VERIFICATION
+ 	  signed PE binary.
+ 
+ config FIPS_SIGNATURE_SELFTEST
+-	bool "Run FIPS selftests on the X.509+PKCS7 signature verification"
++	tristate "Run FIPS selftests on the X.509+PKCS7 signature verification"
+ 	help
+ 	  This option causes some selftests to be run on the signature
+ 	  verification code, using some built in data.  This is required
+@@ -84,5 +84,6 @@ config FIPS_SIGNATURE_SELFTEST
+ 	depends on KEYS
+ 	depends on ASYMMETRIC_KEY_TYPE
+ 	depends on PKCS7_MESSAGE_PARSER=X509_CERTIFICATE_PARSER
++	depends on X509_CERTIFICATE_PARSER
+ 
+ endif # ASYMMETRIC_KEY_TYPE
+diff --git a/crypto/asymmetric_keys/Makefile b/crypto/asymmetric_keys/Makefile
+index 0d1fa1b692c6b..1a273d6df3ebf 100644
+--- a/crypto/asymmetric_keys/Makefile
++++ b/crypto/asymmetric_keys/Makefile
+@@ -22,7 +22,8 @@ x509_key_parser-y := \
+ 	x509_cert_parser.o \
+ 	x509_loader.o \
+ 	x509_public_key.o
+-x509_key_parser-$(CONFIG_FIPS_SIGNATURE_SELFTEST) += selftest.o
++obj-$(CONFIG_FIPS_SIGNATURE_SELFTEST) += x509_selftest.o
++x509_selftest-y += selftest.o
+ 
+ $(obj)/x509_cert_parser.o: \
+ 	$(obj)/x509.asn1.h \
+diff --git a/crypto/asymmetric_keys/selftest.c b/crypto/asymmetric_keys/selftest.c
+index fa0bf7f242849..c50da7ef90ae9 100644
+--- a/crypto/asymmetric_keys/selftest.c
++++ b/crypto/asymmetric_keys/selftest.c
+@@ -4,10 +4,11 @@
+  * Written by David Howells (dhowells@redhat.com)
+  */
+ 
+-#include <linux/kernel.h>
++#include <crypto/pkcs7.h>
+ #include <linux/cred.h>
++#include <linux/kernel.h>
+ #include <linux/key.h>
+-#include <crypto/pkcs7.h>
++#include <linux/module.h>
+ #include "x509_parser.h"
+ 
+ struct certs_test {
+@@ -175,7 +176,7 @@ static const struct certs_test certs_tests[] __initconst = {
+ 	TEST(certs_selftest_1_data, certs_selftest_1_pkcs7),
+ };
+ 
+-int __init fips_signature_selftest(void)
++static int __init fips_signature_selftest(void)
+ {
+ 	struct key *keyring;
+ 	int ret, i;
+@@ -222,3 +223,9 @@ int __init fips_signature_selftest(void)
+ 	key_put(keyring);
+ 	return 0;
+ }
++
++late_initcall(fips_signature_selftest);
++
++MODULE_DESCRIPTION("X.509 self tests");
++MODULE_AUTHOR("Red Hat, Inc.");
++MODULE_LICENSE("GPL");
+diff --git a/crypto/asymmetric_keys/x509_parser.h b/crypto/asymmetric_keys/x509_parser.h
+index a299c9c56f409..97a886cbe01c3 100644
+--- a/crypto/asymmetric_keys/x509_parser.h
++++ b/crypto/asymmetric_keys/x509_parser.h
+@@ -40,15 +40,6 @@ struct x509_certificate {
+ 	bool		blacklisted;
+ };
+ 
+-/*
+- * selftest.c
+- */
+-#ifdef CONFIG_FIPS_SIGNATURE_SELFTEST
+-extern int __init fips_signature_selftest(void);
+-#else
+-static inline int fips_signature_selftest(void) { return 0; }
+-#endif
+-
+ /*
+  * x509_cert_parser.c
+  */
+diff --git a/crypto/asymmetric_keys/x509_public_key.c b/crypto/asymmetric_keys/x509_public_key.c
+index 7c71db3ac23d4..6a4f00be22fc1 100644
+--- a/crypto/asymmetric_keys/x509_public_key.c
++++ b/crypto/asymmetric_keys/x509_public_key.c
+@@ -262,15 +262,9 @@ static struct asymmetric_key_parser x509_key_parser = {
+ /*
+  * Module stuff
+  */
+-extern int __init certs_selftest(void);
+ static int __init x509_key_init(void)
+ {
+-	int ret;
+-
+-	ret = register_asymmetric_key_parser(&x509_key_parser);
+-	if (ret < 0)
+-		return ret;
+-	return fips_signature_selftest();
++	return register_asymmetric_key_parser(&x509_key_parser);
  }
  
-+struct fake_device {
-+	unsigned long quirks;
-+};
-+
- static void hid_test_uclogic_params_cleanup_event_hooks(struct kunit *test)
- {
- 	int res, n;
-+	struct hid_device *hdev;
-+	struct fake_device *fake_dev;
- 	struct uclogic_params p = {0, };
- 
--	res = uclogic_params_ugee_v2_init_event_hooks(NULL, &p);
-+	hdev = kunit_kzalloc(test, sizeof(struct hid_device), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, hdev);
-+
-+	fake_dev = kunit_kzalloc(test, sizeof(struct fake_device), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, fake_dev);
-+
-+	hid_set_drvdata(hdev, fake_dev);
-+
-+	res = uclogic_params_ugee_v2_init_event_hooks(hdev, &p);
- 	KUNIT_ASSERT_EQ(test, res, 0);
- 
- 	/* Check that the function can be called repeatedly */
+ static void __exit x509_key_exit(void)
 -- 
 2.42.0
 
