@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78095446BC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3901446B6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suPn73Kv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EB9C433CC;
-	Wed, 15 Nov 2023 22:03:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yozIYdh3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A69C433CA;
+	Wed, 15 Nov 2023 22:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085820;
-	bh=Maror/+FHLdEdcawMCZvYU5RwofmI43c1dy5+O0qto8=;
+	s=korg; t=1700085821;
+	bh=hh/8ClTiS4SnQVHPFtNWZj7MMNTEZ6dNXY1vaN6VeL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=suPn73KvUy+QDpper77iGYt0urMlx5KjWgriOS01juoDsfgMvVwKex6QtY6Zy+th/
-	 pe1hZFt/8FJ6iFv1uz6vOfll7wy/SyEZZC3XsycLGS4Q1DOcWUOTj4vfQXLv3kipnR
-	 F5hJGuZXXdixmOMDkqguVmzw2VwpT1VNsuueUkV4=
+	b=yozIYdh3I7llqNDreJfgVeCaOZXah8xfsM5e7F2n0nEYgy0GTeG23WmoxSvKFyR+5
+	 kDNXpiSofGZBk9WFsWtYnCzIH0DkcgW26mtYrYLjHxMK7fnzo2ifAZ0CVeRqPxNzQk
+	 of3IXCQcdDb3hrEh3peTNtNWel0efl7VtnIg05Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 037/119] platform/x86: wmi: Fix opening of char device
-Date: Wed, 15 Nov 2023 17:00:27 -0500
-Message-ID: <20231115220133.777960094@linuxfoundation.org>
+Subject: [PATCH 5.4 038/119] hwmon: (coretemp) Fix potentially truncated sysfs attribute name
+Date: Wed, 15 Nov 2023 17:00:28 -0500
+Message-ID: <20231115220133.806628686@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -36,71 +37,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit eba9ac7abab91c8f6d351460239108bef5e7a0b6 ]
+[ Upstream commit bbfff736d30e5283ad09e748caff979d75ddef7f ]
 
-Since commit fa1f68db6ca7 ("drivers: misc: pass miscdevice pointer via
-file private data"), the miscdevice stores a pointer to itself inside
-filp->private_data, which means that private_data will not be NULL when
-wmi_char_open() is called. This might cause memory corruption should
-wmi_char_open() be unable to find its driver, something which can
-happen when the associated WMI device is deleted in wmi_free_devices().
+When build with W=1 and "-Werror=format-truncation", below error is
+observed in coretemp driver,
 
-Fix the problem by using the miscdevice pointer to retrieve the WMI
-device data associated with a char device using container_of(). This
-also avoids wmi_char_open() picking a wrong WMI device bound to a
-driver with the same name as the original driver.
+   drivers/hwmon/coretemp.c: In function 'create_core_data':
+>> drivers/hwmon/coretemp.c:393:34: error: '%s' directive output may be truncated writing likely 5 or more bytes into a region of size between 3 and 13 [-Werror=format-truncation=]
+     393 |                          "temp%d_%s", attr_no, suffixes[i]);
+         |                                  ^~
+   drivers/hwmon/coretemp.c:393:26: note: assuming directive output of 5 bytes
+     393 |                          "temp%d_%s", attr_no, suffixes[i]);
+         |                          ^~~~~~~~~~~
+   drivers/hwmon/coretemp.c:392:17: note: 'snprintf' output 7 or more bytes (assuming 22) into a destination of size 19
+     392 |                 snprintf(tdata->attr_name[i], CORETEMP_NAME_LENGTH,
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     393 |                          "temp%d_%s", attr_no, suffixes[i]);
+         |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   cc1: all warnings being treated as errors
 
-Fixes: 44b6b7661132 ("platform/x86: wmi: create userspace interface for drivers")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20231020211005.38216-5-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Given that
+1. '%d' could take 10 charactors,
+2. '%s' could take 10 charactors ("crit_alarm"),
+3. "temp", "_" and the NULL terminator take 6 charactors,
+fix the problem by increasing CORETEMP_NAME_LENGTH to 28.
+
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Fixes: 7108b80a542b ("hwmon/coretemp: Handle large core ID value")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310200443.iD3tUbbK-lkp@intel.com/
+Link: https://lore.kernel.org/r/20231025122316.836400-1-rui.zhang@intel.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/wmi.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ drivers/hwmon/coretemp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
-index a481707e0d398..66cfc35e4e3d0 100644
---- a/drivers/platform/x86/wmi.c
-+++ b/drivers/platform/x86/wmi.c
-@@ -817,21 +817,13 @@ static int wmi_dev_match(struct device *dev, struct device_driver *driver)
- }
- static int wmi_char_open(struct inode *inode, struct file *filp)
- {
--	const char *driver_name = filp->f_path.dentry->d_iname;
--	struct wmi_block *wblock;
--	struct wmi_block *next;
--
--	list_for_each_entry_safe(wblock, next, &wmi_block_list, list) {
--		if (!wblock->dev.dev.driver)
--			continue;
--		if (strcmp(driver_name, wblock->dev.dev.driver->name) == 0) {
--			filp->private_data = wblock;
--			break;
--		}
--	}
-+	/*
-+	 * The miscdevice already stores a pointer to itself
-+	 * inside filp->private_data
-+	 */
-+	struct wmi_block *wblock = container_of(filp->private_data, struct wmi_block, char_dev);
- 
--	if (!filp->private_data)
--		return -ENODEV;
-+	filp->private_data = wblock;
- 
- 	return nonseekable_open(inode, filp);
- }
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index e232f44f6c9ac..0eabad3449617 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -41,7 +41,7 @@ MODULE_PARM_DESC(tjmax, "TjMax value in degrees Celsius");
+ #define PKG_SYSFS_ATTR_NO	1	/* Sysfs attribute for package temp */
+ #define BASE_SYSFS_ATTR_NO	2	/* Sysfs Base attr no for coretemp */
+ #define NUM_REAL_CORES		128	/* Number of Real cores per cpu */
+-#define CORETEMP_NAME_LENGTH	19	/* String Length of attrs */
++#define CORETEMP_NAME_LENGTH	28	/* String Length of attrs */
+ #define MAX_CORE_ATTRS		4	/* Maximum no of basic attrs */
+ #define TOTAL_ATTRS		(MAX_CORE_ATTRS + 1)
+ #define MAX_CORE_DATA		(NUM_REAL_CORES + BASE_SYSFS_ATTR_NO)
 -- 
 2.42.0
 
