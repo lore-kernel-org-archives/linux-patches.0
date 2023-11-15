@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AB041A87
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2551D446B5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9cDFlZc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59846C433CB;
-	Wed, 15 Nov 2023 19:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNTZrCxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6CA8C4339A;
+	Wed, 15 Nov 2023 19:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077014;
-	bh=58oFJWiewITK4ygu796Mz71ouzlMzDEXMfJjaot8/bk=;
+	s=korg; t=1700077016;
+	bh=X7NAyUK1qyBYY04wcpCYzznOoMZsYJWfHo1BNYeVHL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9cDFlZcRupnylJnaNIQDSjtJbGTuFG7xOMICTl3ZrnxYM8LfhAsLXLITULozt4NR
-	 jTap42ZhF7MXVf/kKjsGiLSxTAiJId43shEqerfWxt7LgVQVGuIUe3dEsmOg9HfaTV
-	 6OfAwELa8nJ39g5D6d+sWFdGdAPHcZZiu1NLPf0Q=
+	b=cNTZrCxVo9uYQpK4DOwf9ngXzBgwoC8j7XD/XODOxeESg0nr3K3Vj2gqcP+bESjqe
+	 WTw8yJ0VFPcHH+YwQO9OeTMkb39hkZluFhReIQ9zHU1UMhWaBe+7CJp2U+ixINZAtd
+	 7BUOCdCfC19aT0z4zj13hfZ6HuCvvbqLmkp+Dl5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Neal Cardwell <ncardwell@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	alexey.klimov@linaro.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 098/603] tcp_metrics: add missing barriers on delete
-Date: Wed, 15 Nov 2023 14:10:43 -0500
-Message-ID: <20231115191619.960738072@linuxfoundation.org>
+Subject: [PATCH 6.5 493/550] drm/amdgpu: dont put MQDs in VRAM on ARM | ARM64
+Date: Wed, 15 Nov 2023 14:17:57 -0500
+Message-ID: <20231115191635.059338091@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,51 +37,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit cbc3a153222805d65f821e10f4f78b6afce06f86 ]
+[ Upstream commit ba0fb4b48c19a2d2380fc16ca4af236a0871d279 ]
 
-When removing an item from RCU protected list, we must prevent
-store-tearing, using rcu_assign_pointer() or WRITE_ONCE().
+Issues were reported with commit 1cfb4d612127
+("drm/amdgpu: put MQDs in VRAM") on an ADLINK Ampere
+Altra Developer Platform (AVA developer platform).
 
-Fixes: 04f721c671656 ("tcp_metrics: Rewrite tcp_metrics_flush_all")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Various ARM systems seem to have problems related
+to PCIe and MMIO access.  In this case, I'm not sure
+if this is specific to the ADLINK platform or ARM
+in general.  Seems to be some coherency issue with
+VRAM.  For now, just don't put MQDs in VRAM on ARM.
+
+Link: https://lists.freedesktop.org/archives/amd-gfx/2023-October/100453.html
+Fixes: 1cfb4d612127 ("drm/amdgpu: put MQDs in VRAM")
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: alexey.klimov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index c196759f1d3bd..4bfa2fb27de54 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -908,7 +908,7 @@ static void tcp_metrics_flush_all(struct net *net)
- 			match = net ? net_eq(tm_net(tm), net) :
- 				!refcount_read(&tm_net(tm)->ns.count);
- 			if (match) {
--				*pp = tm->tcpm_next;
-+				rcu_assign_pointer(*pp, tm->tcpm_next);
- 				kfree_rcu(tm, rcu_head);
- 			} else {
- 				pp = &tm->tcpm_next;
-@@ -949,7 +949,7 @@ static int tcp_metrics_nl_cmd_del(struct sk_buff *skb, struct genl_info *info)
- 		if (addr_same(&tm->tcpm_daddr, &daddr) &&
- 		    (!src || addr_same(&tm->tcpm_saddr, &saddr)) &&
- 		    net_eq(tm_net(tm), net)) {
--			*pp = tm->tcpm_next;
-+			rcu_assign_pointer(*pp, tm->tcpm_next);
- 			kfree_rcu(tm, rcu_head);
- 			found = true;
- 		} else {
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+index fd81b04559d49..477bfc813c81b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -383,9 +383,11 @@ int amdgpu_gfx_mqd_sw_init(struct amdgpu_device *adev,
+ 	struct amdgpu_ring *ring = &kiq->ring;
+ 	u32 domain = AMDGPU_GEM_DOMAIN_GTT;
+ 
++#if !defined(CONFIG_ARM) && !defined(CONFIG_ARM64)
+ 	/* Only enable on gfx10 and 11 for now to avoid changing behavior on older chips */
+ 	if (adev->ip_versions[GC_HWIP][0] >= IP_VERSION(10, 0, 0))
+ 		domain |= AMDGPU_GEM_DOMAIN_VRAM;
++#endif
+ 
+ 	/* create MQD for KIQ */
+ 	if (!adev->enable_mes_kiq && !ring->mqd_obj) {
 -- 
 2.42.0
 
