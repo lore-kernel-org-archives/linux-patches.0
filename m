@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752153C481
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074A93A8E3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJVGL4Jv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9F9C433C9;
-	Wed, 15 Nov 2023 19:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ted9Ig4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC2CC433CA;
+	Wed, 15 Nov 2023 19:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077253;
-	bh=pUz03s7MmfuRFkf/PonQVu8gTGmwQHok7C32vGfDe0E=;
+	s=korg; t=1700077254;
+	bh=Q6AdX7HqeNgFuOfuzbVxznx8BQgm188v6zKAMUweyjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UJVGL4JvZ0YGDceYgaG4H0ZA1bG53xMN5MN4a26Ydytb8pvC+YKEKWUXN31dVzY8O
-	 3POEDX6kkZrIF9wprM24wViGEieCuh6+uXlkw0xSES0yh3gkQ9uxSJmmwiEgSq40a5
-	 mOPTFFsrvdpd7xUTMTiTnwJhLnDFYWtizsWqYeOQ=
+	b=Ted9Ig4coCqxr8awqw088zlyCng+GHlxWCVTiEzZRt35N1Hl4N7g6oVTlb2FS5q/m
+	 QH/Nsu0/Di2CC7paxER70jwTVsdAxOck3vvYoK8rp3pqQ+rQRwqJOMOp60b6Kts8AF
+	 QZA6048Z9ycsFr2G93P9aWlJMuG+JIAATg/MPrEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Helen Koike <helen.koike@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 159/603] spi: tegra: Fix missing IRQ check in tegra_slink_probe()
-Date: Wed, 15 Nov 2023 14:11:44 -0500
-Message-ID: <20231115191624.196463004@linuxfoundation.org>
+Subject: [PATCH 6.6 183/603] clk: keystone: pll: fix a couple NULL vs IS_ERR() checks
+Date: Wed, 15 Nov 2023 14:12:08 -0500
+Message-ID: <20231115191625.901116419@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,39 +42,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit eb9913b511f10968a02cfa5329a896855dd152a3 ]
+[ Upstream commit a5d14f8b551eb1551c10053653ee8e27f19672fa ]
 
-This func misses checking for platform_get_irq()'s call and may passes the
-negative error codes to request_irq(), which takes unsigned IRQ #,
-causing it to fail with -EINVAL, overriding an original error code.
+The clk_register_divider() and clk_register_mux() functions returns
+error pointers on error but this code checks for NULL.  Fix that.
 
-Fix this by stop calling request_irq() with invalid IRQ #s.
-
-Fixes: dc4dc3605639 ("spi: tegra: add spi driver for SLINK controller")
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Reviewed-by: Helen Koike <helen.koike@collabora.com>
-Link: https://lore.kernel.org/r/tencent_73FCC06A3D1C14EE5175253C6FB46A07B709@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b9e0d40c0d83 ("clk: keystone: add Keystone PLL clock driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/d9da4c97-0da9-499f-9a21-1f8e3f148dc1@moroto.mountain
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra20-slink.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/keystone/pll.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra20-slink.c b/drivers/spi/spi-tegra20-slink.c
-index 4d6db6182c5ed..f5cd365c913a8 100644
---- a/drivers/spi/spi-tegra20-slink.c
-+++ b/drivers/spi/spi-tegra20-slink.c
-@@ -1086,6 +1086,8 @@ static int tegra_slink_probe(struct platform_device *pdev)
- 	reset_control_deassert(tspi->rst);
+diff --git a/drivers/clk/keystone/pll.c b/drivers/clk/keystone/pll.c
+index ee5c72369334f..6bbdd4705d71f 100644
+--- a/drivers/clk/keystone/pll.c
++++ b/drivers/clk/keystone/pll.c
+@@ -281,12 +281,13 @@ static void __init of_pll_div_clk_init(struct device_node *node)
  
- 	spi_irq = platform_get_irq(pdev, 0);
-+	if (spi_irq < 0)
-+		return spi_irq;
- 	tspi->irq = spi_irq;
- 	ret = request_threaded_irq(tspi->irq, tegra_slink_isr,
- 				   tegra_slink_isr_thread, IRQF_ONESHOT,
+ 	clk = clk_register_divider(NULL, clk_name, parent_name, 0, reg, shift,
+ 				 mask, 0, NULL);
+-	if (clk) {
+-		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+-	} else {
++	if (IS_ERR(clk)) {
+ 		pr_err("%s: error registering divider %s\n", __func__, clk_name);
+ 		iounmap(reg);
++		return;
+ 	}
++
++	of_clk_add_provider(node, of_clk_src_simple_get, clk);
+ }
+ CLK_OF_DECLARE(pll_divider_clock, "ti,keystone,pll-divider-clock", of_pll_div_clk_init);
+ 
+@@ -328,10 +329,12 @@ static void __init of_pll_mux_clk_init(struct device_node *node)
+ 	clk = clk_register_mux(NULL, clk_name, (const char **)&parents,
+ 				ARRAY_SIZE(parents) , 0, reg, shift, mask,
+ 				0, NULL);
+-	if (clk)
+-		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+-	else
++	if (IS_ERR(clk)) {
+ 		pr_err("%s: error registering mux %s\n", __func__, clk_name);
++		return;
++	}
++
++	of_clk_add_provider(node, of_clk_src_simple_get, clk);
+ }
+ CLK_OF_DECLARE(pll_mux_clock, "ti,keystone,pll-mux-clock", of_pll_mux_clk_init);
+ 
 -- 
 2.42.0
 
