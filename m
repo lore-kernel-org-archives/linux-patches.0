@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2C92C861
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5552F33094
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGPFBnk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71472C433C9;
-	Wed, 15 Nov 2023 19:24:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zx+8jfDo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05455C433C8;
+	Wed, 15 Nov 2023 19:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076294;
-	bh=UnlbiBMGM26/4wdEze5W0lcnHbG1jC8RbwJNyqu45Fc=;
+	s=korg; t=1700076296;
+	bh=aN8ObnFRa9S1AYeRcEjCjFX7dntvmtXj+R7uhB9Vql8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGPFBnk3Wncxz/QKrc0l+4meUkhEGePSwaBQeS6aiu9UnzTEo7JYm7CiyPCtZ6r8e
-	 JNJ+hcxBBoKDT01T51Q8SM8aRr0DsBj+InGaA2clxdiY/Ao1JHqgIGSXxKuxPE1QAk
-	 RX1cwCLb651gZS+j050wN9II2lY8VfEBAnVaL4vk=
+	b=zx+8jfDohhwxIgarZCSZ1vn/eLOJ5mvmZSQBlPVDY/R1yxEUOiquD3fRnAd/p1NDV
+	 qZwHn/koJbuZU4QAT/XlPo8QyBeiUW9/9WvWt83Ms4uVZKIasMo6Z785TC6e30hvEf
+	 KfJPlO6x0Fdei7h2ebVGE9V8s9v5htgeVmL4125k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 174/550] clk: npcm7xx: Fix incorrect kfree
-Date: Wed, 15 Nov 2023 14:12:38 -0500
-Message-ID: <20231115191612.796593100@linuxfoundation.org>
+Subject: [PATCH 6.5 165/550] clk: renesas: rzg2l: Lock around writes to mux register
+Date: Wed, 15 Nov 2023 14:12:29 -0500
+Message-ID: <20231115191612.156716433@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -36,47 +36,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit bbc5080bef4a245106aa8e8d424ba8847ca7c0ca ]
+[ Upstream commit d2692ed490e680a41401cef879adebcfafb4298f ]
 
-The corresponding allocation is:
+The SD MUX output (SD0) is further divided by 4 in G2{L,UL}.  The
+divided clock is SD0_DIV4. SD0_DIV4 is registered with
+CLK_SET_RATE_PARENT which means a rate request for it is propagated to
+the MUX and could reach rzg2l_cpg_sd_clk_mux_set_parent() concurrently
+with the users of SD0.
+Add proper locking to avoid concurrent accesses on SD MUX set rate
+registers.
 
-> npcm7xx_clk_data = kzalloc(struct_size(npcm7xx_clk_data, hws,
-> 			     NPCM7XX_NUM_CLOCKS), GFP_KERNEL);
-
-... so, kfree should be applied to npcm7xx_clk_data, not
-npcm7xx_clk_data->hws.
-
-Fixes: fcfd14369856 ("clk: npcm7xx: add clock controller")
-Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Link: https://lore.kernel.org/r/20230923133127.1815621-1-j.neuschaefer@gmx.net
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: eaff33646f4cb ("clk: renesas: rzg2l: Add SDHI clk mux support")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230929053915.1530607-4-claudiu.beznea@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-npcm7xx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/renesas/rzg2l-cpg.c | 23 +++++++++++++----------
+ drivers/clk/renesas/rzg2l-cpg.h |  2 +-
+ 2 files changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/clk-npcm7xx.c b/drivers/clk/clk-npcm7xx.c
-index e319cfa51a8a3..030186def9c69 100644
---- a/drivers/clk/clk-npcm7xx.c
-+++ b/drivers/clk/clk-npcm7xx.c
-@@ -510,7 +510,7 @@ static void __init npcm7xx_clk_init(struct device_node *clk_np)
- 	return;
+diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
+index 7245a34d43e0b..7be098315899c 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.c
++++ b/drivers/clk/renesas/rzg2l-cpg.c
+@@ -196,6 +196,7 @@ static int rzg2l_cpg_sd_clk_mux_set_parent(struct clk_hw *hw, u8 index)
+ 	u32 shift = GET_SHIFT(hwdata->conf);
+ 	const u32 clk_src_266 = 2;
+ 	u32 msk, val, bitmask;
++	unsigned long flags;
+ 	int ret;
  
- npcm7xx_init_fail:
--	kfree(npcm7xx_clk_data->hws);
-+	kfree(npcm7xx_clk_data);
- npcm7xx_init_np_err:
- 	iounmap(clk_base);
- npcm7xx_init_error:
+ 	/*
+@@ -211,23 +212,25 @@ static int rzg2l_cpg_sd_clk_mux_set_parent(struct clk_hw *hw, u8 index)
+ 	 */
+ 	bitmask = (GENMASK(GET_WIDTH(hwdata->conf) - 1, 0) << shift) << 16;
+ 	msk = off ? CPG_CLKSTATUS_SELSDHI1_STS : CPG_CLKSTATUS_SELSDHI0_STS;
++	spin_lock_irqsave(&priv->rmw_lock, flags);
+ 	if (index != clk_src_266) {
+ 		writel(bitmask | ((clk_src_266 + 1) << shift), priv->base + off);
+ 
+-		ret = readl_poll_timeout(priv->base + CPG_CLKSTATUS, val,
+-					 !(val & msk), 100,
+-					 CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
+-		if (ret) {
+-			dev_err(priv->dev, "failed to switch clk source\n");
+-			return ret;
+-		}
++		ret = readl_poll_timeout_atomic(priv->base + CPG_CLKSTATUS, val,
++						!(val & msk), 10,
++						CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
++		if (ret)
++			goto unlock;
+ 	}
+ 
+ 	writel(bitmask | ((index + 1) << shift), priv->base + off);
+ 
+-	ret = readl_poll_timeout(priv->base + CPG_CLKSTATUS, val,
+-				 !(val & msk), 100,
+-				 CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
++	ret = readl_poll_timeout_atomic(priv->base + CPG_CLKSTATUS, val,
++					!(val & msk), 10,
++					CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
++unlock:
++	spin_unlock_irqrestore(&priv->rmw_lock, flags);
++
+ 	if (ret)
+ 		dev_err(priv->dev, "failed to switch clk source\n");
+ 
+diff --git a/drivers/clk/renesas/rzg2l-cpg.h b/drivers/clk/renesas/rzg2l-cpg.h
+index 6cee9e56acc72..91e9c2569f801 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.h
++++ b/drivers/clk/renesas/rzg2l-cpg.h
+@@ -43,7 +43,7 @@
+ #define CPG_CLKSTATUS_SELSDHI0_STS	BIT(28)
+ #define CPG_CLKSTATUS_SELSDHI1_STS	BIT(29)
+ 
+-#define CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US	20000
++#define CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US	200
+ 
+ /* n = 0/1/2 for PLL1/4/6 */
+ #define CPG_SAMPLL_CLK1(n)	(0x04 + (16 * n))
 -- 
 2.42.0
 
