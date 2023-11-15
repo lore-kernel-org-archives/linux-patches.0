@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0208443AD1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D12943AD1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUuRRL5y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81C5C4E754;
-	Wed, 15 Nov 2023 20:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1uzXezxf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD2CC4E757;
+	Wed, 15 Nov 2023 20:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081503;
-	bh=hoGt71ulnKAnrs6TAgeujclVjU+Rd3vz+F5V5tA67+4=;
+	s=korg; t=1700081505;
+	bh=Wfd+xFFE58phzT9DwvF46SYxKVYZJ2HmeS7xY9RV2Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TUuRRL5yC8XRhnw103O+v3+POMpRZsA2uvLcwOICt/2IzrM7k9sO7FgDVR0LclIzW
-	 9YvxoGgkl5wetcOuSNeeXeusems/GxFJ0nftFHwOHTjdO0yQoDLlFb9uE+2mj2hIQw
-	 6fQTPkiZ4ok6jBb1R8/z1/7w8ABT48Xxm9XdZZ3o=
+	b=1uzXezxfMT7lusUI/ego5B8ClAuqnyD+sTZTMB20P01uhtZka8yhAEhwsWuQ2j5Sq
+	 MEMHe68zNqa39Clc26ag88jgi0qP9siVMoE24ac/SKjnETTmX5+wSu3hqII6BAW098
+	 Wa2ygPbBFFTDx4u/7fQ8H5s8FGciDi+SVsKazm90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Yi Yang <yiyang13@huawei.com>,
+	GUO Zihua <guozihua@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/244] f2fs: compress: fix to avoid redundant compress extension
-Date: Wed, 15 Nov 2023 15:36:00 -0500
-Message-ID: <20231115203558.431618664@linuxfoundation.org>
+Subject: [PATCH 5.15 169/244] tty: tty_jobctrl: fix pid memleak in disassociate_ctty()
+Date: Wed, 15 Nov 2023 15:36:01 -0500
+Message-ID: <20231115203558.493099783@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,84 +42,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Yi Yang <yiyang13@huawei.com>
 
-[ Upstream commit 7e1b150fece033703a824df1bbc03df091ea53cc ]
+[ Upstream commit 11e7f27b79757b6586645d87b95d5b78375ecdfc ]
 
-With below script, redundant compress extension will be parsed and added
-by parse_options(), because parse_options() doesn't check whether the
-extension is existed or not, fix it.
+There is a pid leakage:
+------------------------------
+unreferenced object 0xffff88810c181940 (size 224):
+  comm "sshd", pid 8191, jiffies 4294946950 (age 524.570s)
+  hex dump (first 32 bytes):
+    01 00 00 00 00 00 00 00 00 00 00 00 ad 4e ad de  .............N..
+    ff ff ff ff 6b 6b 6b 6b ff ff ff ff ff ff ff ff  ....kkkk........
+  backtrace:
+    [<ffffffff814774e6>] kmem_cache_alloc+0x5c6/0x9b0
+    [<ffffffff81177342>] alloc_pid+0x72/0x570
+    [<ffffffff81140ac4>] copy_process+0x1374/0x2470
+    [<ffffffff81141d77>] kernel_clone+0xb7/0x900
+    [<ffffffff81142645>] __se_sys_clone+0x85/0xb0
+    [<ffffffff8114269b>] __x64_sys_clone+0x2b/0x30
+    [<ffffffff83965a72>] do_syscall_64+0x32/0x80
+    [<ffffffff83a00085>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
 
-1. mount -t f2fs -o compress_extension=so /dev/vdb /mnt/f2fs
-2. mount -t f2fs -o remount,compress_extension=so /mnt/f2fs
-3. mount|grep f2fs
+It turns out that there is a race condition between disassociate_ctty() and
+tty_signal_session_leader(), which caused this leakage.
 
-/dev/vdb on /mnt/f2fs type f2fs (...,compress_extension=so,compress_extension=so,...)
+The pid memleak is triggered by the following race:
+task[sshd]                     task[bash]
+-----------------------        -----------------------
+                               disassociate_ctty();
+                               spin_lock_irq(&current->sighand->siglock);
+                               put_pid(current->signal->tty_old_pgrp);
+                               current->signal->tty_old_pgrp = NULL;
+                               tty = tty_kref_get(current->signal->tty);
+                               spin_unlock_irq(&current->sighand->siglock);
+tty_vhangup();
+tty_lock(tty);
+...
+tty_signal_session_leader();
+spin_lock_irq(&p->sighand->siglock);
+...
+if (tty->ctrl.pgrp) //tty->ctrl.pgrp is not NULL
+p->signal->tty_old_pgrp = get_pid(tty->ctrl.pgrp); //An extra get
+spin_unlock_irq(&p->sighand->siglock);
+...
+tty_unlock(tty);
+                               if (tty) {
+                                   tty_lock(tty);
+                                   ...
+                                   put_pid(tty->ctrl.pgrp);
+                                   tty->ctrl.pgrp = NULL; //It's too late
+                                   ...
+                                   tty_unlock(tty);
+                               }
 
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
-Fixes: 151b1982be5d ("f2fs: compress: add nocompress extensions support")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+The issue is believed to be introduced by commit c8bcd9c5be24 ("tty:
+Fix ->session locking") who moves the unlock of siglock in
+disassociate_ctty() above "if (tty)", making a small window allowing
+tty_signal_session_leader() to kick in. It can be easily reproduced by
+adding a delay before "if (tty)" and at the entrance of
+tty_signal_session_leader().
+
+To fix this issue, we move "put_pid(current->signal->tty_old_pgrp)" after
+"tty->ctrl.pgrp = NULL".
+
+Fixes: c8bcd9c5be24 ("tty: Fix ->session locking")
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Co-developed-by: GUO Zihua <guozihua@huawei.com>
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Link: https://lore.kernel.org/r/20230831023329.165737-1-yiyang13@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c |   33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ drivers/tty/tty_jobctrl.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -540,6 +540,29 @@ static int f2fs_set_test_dummy_encryptio
- }
+diff --git a/drivers/tty/tty_jobctrl.c b/drivers/tty/tty_jobctrl.c
+index 80b86a7992b50..8ede78488c5b0 100644
+--- a/drivers/tty/tty_jobctrl.c
++++ b/drivers/tty/tty_jobctrl.c
+@@ -300,12 +300,7 @@ void disassociate_ctty(int on_exit)
+ 		return;
+ 	}
  
- #ifdef CONFIG_F2FS_FS_COMPRESSION
-+static bool is_compress_extension_exist(struct f2fs_sb_info *sbi,
-+					const char *new_ext, bool is_ext)
-+{
-+	unsigned char (*ext)[F2FS_EXTENSION_LEN];
-+	int ext_cnt;
-+	int i;
-+
-+	if (is_ext) {
-+		ext = F2FS_OPTION(sbi).extensions;
-+		ext_cnt = F2FS_OPTION(sbi).compress_ext_cnt;
-+	} else {
-+		ext = F2FS_OPTION(sbi).noextensions;
-+		ext_cnt = F2FS_OPTION(sbi).nocompress_ext_cnt;
-+	}
-+
-+	for (i = 0; i < ext_cnt; i++) {
-+		if (!strcasecmp(new_ext, ext[i]))
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- /*
-  * 1. The same extension name cannot not appear in both compress and non-compress extension
-  * at the same time.
-@@ -1154,6 +1177,11 @@ static int parse_options(struct super_bl
- 				return -EINVAL;
- 			}
+-	spin_lock_irq(&current->sighand->siglock);
+-	put_pid(current->signal->tty_old_pgrp);
+-	current->signal->tty_old_pgrp = NULL;
+-	tty = tty_kref_get(current->signal->tty);
+-	spin_unlock_irq(&current->sighand->siglock);
+-
++	tty = get_current_tty();
+ 	if (tty) {
+ 		unsigned long flags;
  
-+			if (is_compress_extension_exist(sbi, name, true)) {
-+				kfree(name);
-+				break;
-+			}
-+
- 			strcpy(ext[ext_cnt], name);
- 			F2FS_OPTION(sbi).compress_ext_cnt++;
- 			kfree(name);
-@@ -1178,6 +1206,11 @@ static int parse_options(struct super_bl
- 				return -EINVAL;
- 			}
+@@ -320,6 +315,16 @@ void disassociate_ctty(int on_exit)
+ 		tty_kref_put(tty);
+ 	}
  
-+			if (is_compress_extension_exist(sbi, name, false)) {
-+				kfree(name);
-+				break;
-+			}
++	/* If tty->ctrl.pgrp is not NULL, it may be assigned to
++	 * current->signal->tty_old_pgrp in a race condition, and
++	 * cause pid memleak. Release current->signal->tty_old_pgrp
++	 * after tty->ctrl.pgrp set to NULL.
++	 */
++	spin_lock_irq(&current->sighand->siglock);
++	put_pid(current->signal->tty_old_pgrp);
++	current->signal->tty_old_pgrp = NULL;
++	spin_unlock_irq(&current->sighand->siglock);
 +
- 			strcpy(noext[noext_cnt], name);
- 			F2FS_OPTION(sbi).nocompress_ext_cnt++;
- 			kfree(name);
+ 	/* Now clear signal->tty under the lock */
+ 	read_lock(&tasklist_lock);
+ 	session_clear_tty(task_session(current));
+-- 
+2.42.0
+
 
 
