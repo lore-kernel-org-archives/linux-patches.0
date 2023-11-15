@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EF9364B3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B599364B3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCyzhzv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA289C4E777;
-	Wed, 15 Nov 2023 20:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjJpj22o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF20C4E778;
+	Wed, 15 Nov 2023 20:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081781;
-	bh=QPP9Lwt0ICzZ2eO+WxO82T9f/4CE66Yb49vTXwzMECQ=;
+	s=korg; t=1700081783;
+	bh=vWt7Z9UZtChmqmvbwLgXJpp1w2h7Z8b8gBlKbJdYUqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KCyzhzv27jOxHcxlw+jD6LDYmFc+xnENv+CaE3V9PsLW0/lPIhjhIjkmxDZnZxXUH
-	 FV5t0pi/oORxm2qDw0S3ektXTYoE7z9Axm2jV4U/80Lgu6JiKlHhZamB550LBVCi2c
-	 qnnFMa6TQwOPNRF8uqtXNUAg187whHblxQ1CuuCU=
+	b=ZjJpj22oqwvh98SeR6EizTXvRrMJtGWyObowCleVTjb1Io+XGDmIqQaBnc8+Tp4gN
+	 o625/FwHFuLxfe/c69Zk1HkUvSQz6ZAgh0kdCqQIKrgUSuzH1Dhu40mT81cSIb5zDA
+	 Yr26UmSxgDQFcxWoXWvDyenvpm7VgcxEcZ1/cs9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mars Cheng <marscheng@google.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Yen-lin Lai <yenlinlai@google.com>,
-	Daniel Mentz <danielmentz@google.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yi Yang <yiyang13@huawei.com>,
+	GUO Zihua <guozihua@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 104/191] scsi: ufs: core: Leave space for \0 in utf8 desc string
-Date: Wed, 15 Nov 2023 15:46:19 -0500
-Message-ID: <20231115204650.821034352@linuxfoundation.org>
+Subject: [PATCH 5.10 122/191] tty: tty_jobctrl: fix pid memleak in disassociate_ctty()
+Date: Wed, 15 Nov 2023 15:46:37 -0500
+Message-ID: <20231115204651.852881727@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -46,46 +42,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Mentz <danielmentz@google.com>
+From: Yi Yang <yiyang13@huawei.com>
 
-[ Upstream commit a75a16c62a2540f11eeae4f2b50e95deefb652ea ]
+[ Upstream commit 11e7f27b79757b6586645d87b95d5b78375ecdfc ]
 
-utf16s_to_utf8s does not NULL terminate the output string. For us to be
-able to add a NULL character when utf16s_to_utf8s returns, we need to make
-sure that there is space for such NULL character at the end of the output
-buffer. We can achieve this by passing an output buffer size to
-utf16s_to_utf8s that is one character less than what we allocated.
+There is a pid leakage:
+------------------------------
+unreferenced object 0xffff88810c181940 (size 224):
+  comm "sshd", pid 8191, jiffies 4294946950 (age 524.570s)
+  hex dump (first 32 bytes):
+    01 00 00 00 00 00 00 00 00 00 00 00 ad 4e ad de  .............N..
+    ff ff ff ff 6b 6b 6b 6b ff ff ff ff ff ff ff ff  ....kkkk........
+  backtrace:
+    [<ffffffff814774e6>] kmem_cache_alloc+0x5c6/0x9b0
+    [<ffffffff81177342>] alloc_pid+0x72/0x570
+    [<ffffffff81140ac4>] copy_process+0x1374/0x2470
+    [<ffffffff81141d77>] kernel_clone+0xb7/0x900
+    [<ffffffff81142645>] __se_sys_clone+0x85/0xb0
+    [<ffffffff8114269b>] __x64_sys_clone+0x2b/0x30
+    [<ffffffff83965a72>] do_syscall_64+0x32/0x80
+    [<ffffffff83a00085>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
 
-Other call sites of utf16s_to_utf8s appear to be using the same technique
-where they artificially reduce the buffer size by one to leave space for a
-NULL character or line feed character.
+It turns out that there is a race condition between disassociate_ctty() and
+tty_signal_session_leader(), which caused this leakage.
 
-Fixes: 4b828fe156a6 ("scsi: ufs: revamp string descriptor reading")
-Reviewed-by: Mars Cheng <marscheng@google.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Yen-lin Lai <yenlinlai@google.com>
-Signed-off-by: Daniel Mentz <danielmentz@google.com>
-Link: https://lore.kernel.org/r/20231017182026.2141163-1-danielmentz@google.com
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The pid memleak is triggered by the following race:
+task[sshd]                     task[bash]
+-----------------------        -----------------------
+                               disassociate_ctty();
+                               spin_lock_irq(&current->sighand->siglock);
+                               put_pid(current->signal->tty_old_pgrp);
+                               current->signal->tty_old_pgrp = NULL;
+                               tty = tty_kref_get(current->signal->tty);
+                               spin_unlock_irq(&current->sighand->siglock);
+tty_vhangup();
+tty_lock(tty);
+...
+tty_signal_session_leader();
+spin_lock_irq(&p->sighand->siglock);
+...
+if (tty->ctrl.pgrp) //tty->ctrl.pgrp is not NULL
+p->signal->tty_old_pgrp = get_pid(tty->ctrl.pgrp); //An extra get
+spin_unlock_irq(&p->sighand->siglock);
+...
+tty_unlock(tty);
+                               if (tty) {
+                                   tty_lock(tty);
+                                   ...
+                                   put_pid(tty->ctrl.pgrp);
+                                   tty->ctrl.pgrp = NULL; //It's too late
+                                   ...
+                                   tty_unlock(tty);
+                               }
+
+The issue is believed to be introduced by commit c8bcd9c5be24 ("tty:
+Fix ->session locking") who moves the unlock of siglock in
+disassociate_ctty() above "if (tty)", making a small window allowing
+tty_signal_session_leader() to kick in. It can be easily reproduced by
+adding a delay before "if (tty)" and at the entrance of
+tty_signal_session_leader().
+
+To fix this issue, we move "put_pid(current->signal->tty_old_pgrp)" after
+"tty->ctrl.pgrp = NULL".
+
+Fixes: c8bcd9c5be24 ("tty: Fix ->session locking")
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Co-developed-by: GUO Zihua <guozihua@huawei.com>
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Link: https://lore.kernel.org/r/20230831023329.165737-1-yiyang13@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/tty_jobctrl.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index f3389e9131794..a432aebd14be6 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -3339,7 +3339,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
- 		 */
- 		ret = utf16s_to_utf8s(uc_str->uc,
- 				      uc_str->len - QUERY_DESC_HDR_SIZE,
--				      UTF16_BIG_ENDIAN, str, ascii_len);
-+				      UTF16_BIG_ENDIAN, str, ascii_len - 1);
+diff --git a/drivers/tty/tty_jobctrl.c b/drivers/tty/tty_jobctrl.c
+index 95d67613b25b6..a27d021871748 100644
+--- a/drivers/tty/tty_jobctrl.c
++++ b/drivers/tty/tty_jobctrl.c
+@@ -291,12 +291,7 @@ void disassociate_ctty(int on_exit)
+ 		return;
+ 	}
  
- 		/* replace non-printable or non-ASCII characters with spaces */
- 		for (i = 0; i < ret; i++)
+-	spin_lock_irq(&current->sighand->siglock);
+-	put_pid(current->signal->tty_old_pgrp);
+-	current->signal->tty_old_pgrp = NULL;
+-	tty = tty_kref_get(current->signal->tty);
+-	spin_unlock_irq(&current->sighand->siglock);
+-
++	tty = get_current_tty();
+ 	if (tty) {
+ 		unsigned long flags;
+ 
+@@ -311,6 +306,16 @@ void disassociate_ctty(int on_exit)
+ 		tty_kref_put(tty);
+ 	}
+ 
++	/* If tty->ctrl.pgrp is not NULL, it may be assigned to
++	 * current->signal->tty_old_pgrp in a race condition, and
++	 * cause pid memleak. Release current->signal->tty_old_pgrp
++	 * after tty->ctrl.pgrp set to NULL.
++	 */
++	spin_lock_irq(&current->sighand->siglock);
++	put_pid(current->signal->tty_old_pgrp);
++	current->signal->tty_old_pgrp = NULL;
++	spin_unlock_irq(&current->sighand->siglock);
++
+ 	/* Now clear signal->tty under the lock */
+ 	read_lock(&tasklist_lock);
+ 	session_clear_tty(task_session(current));
 -- 
 2.42.0
 
