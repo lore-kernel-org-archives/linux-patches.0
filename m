@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCC64121C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D955C41212
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOHp1nhC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE89DC433C8;
-	Wed, 15 Nov 2023 19:26:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3V6Uv6L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EA9C433C9;
+	Wed, 15 Nov 2023 19:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076414;
-	bh=ahkZJ/tU8ehAmyVUsX8SsA3FlFVXsV925M0XDiZmOp8=;
+	s=korg; t=1700076416;
+	bh=6QEKGr/u2/DZ4e4CgM6QBXX4sQeSZBm1FDRSiRUxeWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOHp1nhCzZVWFOXcOrOzuGqBKr4YeCZ2sZpQQlzKFuyHF3Has2JUTilT3/p11Vvez
-	 TizUAQvBOiSNPJfsYBbZXgl0kFDE+JZm/IDbPUJfJPN/j92tlYNCSR087uBVe6OR9v
-	 1ntzjipmqWlIvzkWp2XONB+roJTT1s4VjqiR7qqU=
+	b=l3V6Uv6LQZFyegeKhu6zb66WVcGseigTfXTBmt3incAp4IYCmEdcX9LYbhyKdQ2e7
+	 d9kQ/5ls6k8XXEhJeDzlYdxfpB+kHt5thYAdorxaozA7pEltAg9wGohFu6Y/irivBr
+	 gvwUjs3QdgG/qye/tdmPw9/d+SH3mGFcDZPwe+WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Burton <ross.burton@arm.com>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 253/550] clocksource/drivers/arm_arch_timer: limit XGene-1 workaround
-Date: Wed, 15 Nov 2023 14:13:57 -0500
-Message-ID: <20231115191618.231943603@linuxfoundation.org>
+Subject: [PATCH 6.5 254/550] drm: mediatek: mtk_dsi: Fix NO_EOT_PACKET settings/handling
+Date: Wed, 15 Nov 2023 14:13:58 -0500
+Message-ID: <20231115191618.297931122@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,79 +44,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 851354cbd12bb9500909733c3d4054306f61df87 ]
+[ Upstream commit 5855d422a6f250f3518f43b49092c8e87a5e42be ]
 
-The AppliedMicro XGene-1 CPU has an erratum where the timer condition
-would only consider TVAL, not CVAL. We currently apply a workaround when
-seeing the PartNum field of MIDR_EL1 being 0x000, under the assumption
-that this would match only the XGene-1 CPU model.
-However even the Ampere eMAG (aka XGene-3) uses that same part number, and
-only differs in the "Variant" and "Revision" fields: XGene-1's MIDR is
-0x500f0000, our eMAG reports 0x503f0002. Experiments show the latter
-doesn't show the faulty behaviour.
+Due to the initial confusion about MIPI_DSI_MODE_EOT_PACKET, properly
+renamed to MIPI_DSI_MODE_NO_EOT_PACKET, reflecting its actual meaning,
+both the DSI_TXRX_CON register setting for bit (HSTX_)DIS_EOT and the
+later calculation for horizontal sync-active (HSA), back (HBP) and
+front (HFP) porches got incorrect due to the logic being inverted.
 
-Increase the specificity of the check to only consider partnum 0x000 and
-variant 0x00, to exclude the Ampere eMAG.
+This means that a number of settings were wrong because....:
+ - DSI_TXRX_CON register setting: bit (HSTX_)DIS_EOT should be
+   set in order to disable the End of Transmission packet;
+ - Horizontal Sync and Back/Front porches: The delta used to
+   calculate all of HSA, HBP and HFP should account for the
+   additional EOT packet.
 
-Fixes: 012f18850452 ("clocksource/drivers/arm_arch_timer: Work around broken CVAL implementations")
-Reported-by: Ross Burton <ross.burton@arm.com>
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20231016153127.116101-1-andre.przywara@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Before this change...
+ - Bit (HSTX_)DIS_EOT was being set when EOT packet was enabled;
+ - For HSA/HBP/HFP delta... all three were wrong, as words were
+   added when EOT disabled, instead of when EOT packet enabled!
+
+Invert the logic around flag MIPI_DSI_MODE_NO_EOT_PACKET in the
+MediaTek DSI driver to fix the aforementioned issues.
+
+Fixes: 8b2b99fd7931 ("drm/mediatek: dsi: Fine tune the line time caused by EOTp")
+Fixes: c87d1c4b5b9a ("drm/mediatek: dsi: Use symbolized register definition")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Tested-by: Michael Walle <mwalle@kernel.org>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230523104234.7849-1-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/cputype.h     | 3 ++-
- arch/arm64/kvm/guest.c               | 2 +-
- drivers/clocksource/arm_arch_timer.c | 5 +++--
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dsi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
-index 74d00feb62f03..7c7493cb571f9 100644
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -86,7 +86,8 @@
- #define ARM_CPU_PART_NEOVERSE_N2	0xD49
- #define ARM_CPU_PART_CORTEX_A78C	0xD4B
+diff --git a/drivers/gpu/drm/mediatek/mtk_dsi.c b/drivers/gpu/drm/mediatek/mtk_dsi.c
+index 7d52503511936..b0ab38e59db9d 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dsi.c
++++ b/drivers/gpu/drm/mediatek/mtk_dsi.c
+@@ -407,7 +407,7 @@ static void mtk_dsi_rxtx_control(struct mtk_dsi *dsi)
+ 	if (dsi->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS)
+ 		tmp_reg |= HSTX_CKLP_EN;
  
--#define APM_CPU_PART_POTENZA		0x000
-+#define APM_CPU_PART_XGENE		0x000
-+#define APM_CPU_VAR_POTENZA		0x00
+-	if (!(dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
++	if (dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
+ 		tmp_reg |= DIS_EOT;
  
- #define CAVIUM_CPU_PART_THUNDERX	0x0A1
- #define CAVIUM_CPU_PART_THUNDERX_81XX	0x0A2
-diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
-index 20280a5233f67..eaa9ed4cfde59 100644
---- a/arch/arm64/kvm/guest.c
-+++ b/arch/arm64/kvm/guest.c
-@@ -874,7 +874,7 @@ u32 __attribute_const__ kvm_target_cpu(void)
- 		break;
- 	case ARM_CPU_IMP_APM:
- 		switch (part_number) {
--		case APM_CPU_PART_POTENZA:
-+		case APM_CPU_PART_XGENE:
- 			return KVM_ARM_TARGET_XGENE_POTENZA;
- 		}
- 		break;
-diff --git a/drivers/clocksource/arm_arch_timer.c b/drivers/clocksource/arm_arch_timer.c
-index 7dd2c615bce23..071b04f1ee730 100644
---- a/drivers/clocksource/arm_arch_timer.c
-+++ b/drivers/clocksource/arm_arch_timer.c
-@@ -836,8 +836,9 @@ static u64 __arch_timer_check_delta(void)
- 		 * Note that TVAL is signed, thus has only 31 of its
- 		 * 32 bits to express magnitude.
- 		 */
--		MIDR_ALL_VERSIONS(MIDR_CPU_MODEL(ARM_CPU_IMP_APM,
--						 APM_CPU_PART_POTENZA)),
-+		MIDR_REV_RANGE(MIDR_CPU_MODEL(ARM_CPU_IMP_APM,
-+					      APM_CPU_PART_XGENE),
-+			       APM_CPU_VAR_POTENZA, 0x0, 0xf),
- 		{},
- 	};
+ 	writel(tmp_reg, dsi->regs + DSI_TXRX_CTRL);
+@@ -484,7 +484,7 @@ static void mtk_dsi_config_vdo_timing(struct mtk_dsi *dsi)
+ 			  timing->da_hs_zero + timing->da_hs_exit + 3;
  
+ 	delta = dsi->mode_flags & MIPI_DSI_MODE_VIDEO_BURST ? 18 : 12;
+-	delta += dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET ? 2 : 0;
++	delta += dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET ? 0 : 2;
+ 
+ 	horizontal_frontporch_byte = vm->hfront_porch * dsi_tmp_buf_bpp;
+ 	horizontal_front_back_byte = horizontal_frontporch_byte + horizontal_backporch_byte;
 -- 
 2.42.0
 
