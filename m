@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7462E64E
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094912FE25
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gd/zhkv6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F4AC4E683;
-	Wed, 15 Nov 2023 20:51:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2276GuK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8CA8C4E685;
+	Wed, 15 Nov 2023 20:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081471;
-	bh=hPh1dHgtXXEKg053Yq+XZHx+PlCbHNf3ZLIzsybjJGo=;
+	s=korg; t=1700081472;
+	bh=GiylPyVnmBsiZjcFQ05Sq5LHLx708sHexwX2Xw1WYrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gd/zhkv6L+RUPpYKzKx0ZsdXEQRACzdDpJNafiYQDndE66lVcMQBhcHP3xzs1ROjb
-	 LXUNRzEE2KH3oduTyiVpSM3gZs9YW2Qnt3lw1GbdmNJAQ8uOUb9+qDE7vXCRJkF5zV
-	 yC6Z3G/TZ13gAakZRAeJApgAVVS2ccjxNY0NbKr4=
+	b=y2276GuKneQGLS4QFfJ+bktqOLxP2+bPXW88lMMVkUGhDJFxqpWQR9Wy6e4maCqUn
+	 4+s1K49bHVFCaYX50QaZfU2d00LW7fwa7wb9OlWh+oMESG4LcAls2cks2AnDrkedDk
+	 1ijQ2kBhlMYa2zG5bHB8iengLvJHg6GQR40+rWI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Prinke <michael.prinke@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Lijun Pan <lijun.pan@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jia-Ju Bai <baijiaju@buaa.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 174/244] dmaengine: idxd: Register dsa_bus_type before registering idxd sub-drivers
-Date: Wed, 15 Nov 2023 15:36:06 -0500
-Message-ID: <20231115203558.804086352@linuxfoundation.org>
+Subject: [PATCH 5.15 175/244] usb: dwc2: fix possible NULL pointer dereference caused by driver concurrency
+Date: Wed, 15 Nov 2023 15:36:07 -0500
+Message-ID: <20231115203558.870998193@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -45,60 +41,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fenghua Yu <fenghua.yu@intel.com>
+From: Jia-Ju Bai <baijiaju@buaa.edu.cn>
 
-[ Upstream commit 88928addeec577386e8c83b48b5bc24d28ba97fd ]
+[ Upstream commit ef307bc6ef04e8c1ea843231db58e3afaafa9fa6 ]
 
-idxd sub-drivers belong to bus dsa_bus_type. Thus, dsa_bus_type must be
-registered in dsa bus init before idxd drivers can be registered.
+In _dwc2_hcd_urb_enqueue(), "urb->hcpriv = NULL" is executed without
+holding the lock "hsotg->lock". In _dwc2_hcd_urb_dequeue():
 
-But the order is wrong when both idxd and idxd_bus are builtin drivers.
-In this case, idxd driver is compiled and linked before idxd_bus driver.
-Since the initcall order is determined by the link order, idxd sub-drivers
-are registered in idxd initcall before dsa_bus_type is registered
-in idxd_bus initcall. idxd initcall fails:
+    spin_lock_irqsave(&hsotg->lock, flags);
+    ...
+	if (!urb->hcpriv) {
+		dev_dbg(hsotg->dev, "## urb->hcpriv is NULL ##\n");
+		goto out;
+	}
+    rc = dwc2_hcd_urb_dequeue(hsotg, urb->hcpriv); // Use urb->hcpriv
+    ...
+out:
+    spin_unlock_irqrestore(&hsotg->lock, flags);
 
-[   21.562803] calling  idxd_init_module+0x0/0x110 @ 1
-[   21.570761] Driver 'idxd' was unable to register with bus_type 'dsa' because the bus was not initialized.
-[   21.586475] initcall idxd_init_module+0x0/0x110 returned -22 after 15717 usecs
-[   21.597178] calling  dsa_bus_init+0x0/0x20 @ 1
+When _dwc2_hcd_urb_enqueue() and _dwc2_hcd_urb_dequeue() are
+concurrently executed, the NULL check of "urb->hcpriv" can be executed
+before "urb->hcpriv = NULL". After urb->hcpriv is NULL, it can be used
+in the function call to dwc2_hcd_urb_dequeue(), which can cause a NULL
+pointer dereference.
 
-To fix the issue, compile and link idxd_bus driver before idxd driver
-to ensure the right registration order.
+This possible bug is found by an experimental static analysis tool
+developed by myself. This tool analyzes the locking APIs to extract
+function pairs that can be concurrently executed, and then analyzes the
+instructions in the paired functions to identify possible concurrency
+bugs including data races and atomicity violations. The above possible
+bug is reported, when my tool analyzes the source code of Linux 6.5.
 
-Fixes: d9e5481fca74 ("dmaengine: dsa: move dsa_bus_type out of idxd driver to standalone")
-Reported-by: Michael Prinke <michael.prinke@intel.com>
-Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Lijun Pan <lijun.pan@intel.com>
-Tested-by: Lijun Pan <lijun.pan@intel.com>
-Link: https://lore.kernel.org/r/20230924162232.1409454-1-fenghua.yu@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+To fix this possible bug, "urb->hcpriv = NULL" should be executed with
+holding the lock "hsotg->lock". After using this patch, my tool never
+reports the possible bug, with the kernelconfiguration allyesconfig for
+x86_64. Because I have no associated hardware, I cannot test the patch
+in runtime testing, and just verify it according to the code logic.
+
+Fixes: 33ad261aa62b ("usb: dwc2: host: spinlock urb_enqueue")
+Signed-off-by: Jia-Ju Bai <baijiaju@buaa.edu.cn>
+Link: https://lore.kernel.org/r/20230926024404.832096-1-baijiaju@buaa.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/Makefile | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/dwc2/hcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idxd/Makefile b/drivers/dma/idxd/Makefile
-index a1e9f2b3a37cc..817ffa95a9b11 100644
---- a/drivers/dma/idxd/Makefile
-+++ b/drivers/dma/idxd/Makefile
-@@ -1,12 +1,12 @@
- ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=IDXD
- 
-+obj-$(CONFIG_INTEL_IDXD_BUS) += idxd_bus.o
-+idxd_bus-y := bus.o
-+
- obj-$(CONFIG_INTEL_IDXD) += idxd.o
- idxd-y := init.o irq.o device.o sysfs.o submit.o dma.o cdev.o
- 
- idxd-$(CONFIG_INTEL_IDXD_PERFMON) += perfmon.o
- 
--obj-$(CONFIG_INTEL_IDXD_BUS) += idxd_bus.o
--idxd_bus-y := bus.o
--
- obj-$(CONFIG_INTEL_IDXD_COMPAT) += idxd_compat.o
- idxd_compat-y := compat.o
+diff --git a/drivers/usb/dwc2/hcd.c b/drivers/usb/dwc2/hcd.c
+index 82322696b903b..d17a1dd6d0d93 100644
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -4802,8 +4802,8 @@ static int _dwc2_hcd_urb_enqueue(struct usb_hcd *hcd, struct urb *urb,
+ 	if (qh_allocated && qh->channel && qh->channel->qh == qh)
+ 		qh->channel->qh = NULL;
+ fail2:
+-	spin_unlock_irqrestore(&hsotg->lock, flags);
+ 	urb->hcpriv = NULL;
++	spin_unlock_irqrestore(&hsotg->lock, flags);
+ 	kfree(qtd);
+ fail1:
+ 	if (qh_allocated) {
 -- 
 2.42.0
 
