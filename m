@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B203DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC5E3DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Weqy5AY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8FFC433C8;
-	Wed, 15 Nov 2023 19:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcjLMzWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A79C433C7;
+	Wed, 15 Nov 2023 19:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078181;
-	bh=i1JI6WqCtTMw4OCt5EOqlqbx7pSQlKpETpmaqpzsoy8=;
+	s=korg; t=1700078183;
+	bh=a6ZUvgsT/GgsR8QCUrFxa2GoPBO2NaVJcns3GBXBCes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Weqy5AYQFCLLxd8puMW4JxC2M2Ib2Tcs8h/ex8pok2ax8FeLLfVrAkEpDqCu6CaL
-	 RBC0tkNlUY3WfbkGi0oAc5QvaOX6ZlvQ0+/heQxFbOlT9iSC+7JyjyMnVJN+I45kcC
-	 ZXc9qy7khc8/f9x6wX2KNNsmV4ovNd4LPmZOr15A=
+	b=vcjLMzWQ5a9dSKA1emjiMSeUjwwsr0ZALiIXpG3ep9sjfgygARRfypTxWK0ko7XU7
+	 63X1Zbtt1SVThpG/rZ0T9P3bJZr271THzps+pws5VLMa32QVrn1WPxFXsnSXwqexuT
+	 b2Z+G9X2aS+votr0ArncNwxFc0y3Jjm5CTLxaJFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/379] arm64: dts: qcom: sc7280: link usb3_phy_wrapper_gcc_usb30_pipe_clk
-Date: Wed, 15 Nov 2023 14:23:56 -0500
-Message-ID: <20231115192654.632894605@linuxfoundation.org>
+Subject: [PATCH 6.1 138/379] drm/amd/display: Bail from dm_check_crtc_cursor if no relevant change
+Date: Wed, 15 Nov 2023 14:23:33 -0500
+Message-ID: <20231115192653.287790215@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -37,43 +37,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Michel Dänzer <mdaenzer@redhat.com>
 
-[ Upstream commit 70c4a1ca13b333b00e01266d299605fa1041b0d5 ]
+[ Upstream commit bc0b79ce2050aa523c38c96b6d26340a96bfbdca ]
 
-Use usb_1_ssphy's clock as gcc's usb3_phy_wrapper_gcc_usb30_pipe_clk
-clock source.
+If no plane was newly enabled or changed scaling, there can be no new
+scaling mismatch with the cursor plane.
 
-Suggested-by: Neil Armstrong <neil.armstrong@linaro.org>
-Fixes: 1c39e6f9b534 ("arm64: dts: qcom: sc7280: Add USB related nodes")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230711120916.4165894-7-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+By not pulling non-cursor plane states into all atomic commits while
+the cursor plane is enabled, this avoids synchronizing all cursor plane
+changes to vertical blank, which caused the following IGT tests to fail:
+
+kms_cursor_legacy@cursor-vs-flip.*
+kms_cursor_legacy@flip-vs-cursor.*
+
+Fixes: 003048ddf44b ("drm/amd/display: Check all enabled planes in dm_check_crtc_cursor")
+Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 33 ++++++++++++++++++-
+ 1 file changed, 32 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 0cdc579f26de7..409dad617a27c 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -820,7 +820,8 @@ gcc: clock-controller@100000 {
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
- 				 <&rpmhcc RPMH_CXO_CLK_A>, <&sleep_clk>,
- 				 <0>, <&pcie1_lane>,
--				 <0>, <0>, <0>, <0>;
-+				 <0>, <0>, <0>,
-+				 <&usb_1_ssphy>;
- 			clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk",
- 				      "pcie_0_pipe_clk", "pcie_1_pipe_clk",
- 				      "ufs_phy_rx_symbol_0_clk", "ufs_phy_rx_symbol_1_clk",
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 73db46b9e3e1a..42e266e074d1d 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9641,10 +9641,12 @@ static int dm_check_crtc_cursor(struct drm_atomic_state *state,
+ 				struct drm_crtc *crtc,
+ 				struct drm_crtc_state *new_crtc_state)
+ {
+-	struct drm_plane *cursor = crtc->cursor, *underlying;
++	struct drm_plane *cursor = crtc->cursor, *plane, *underlying;
++	struct drm_plane_state *old_plane_state, *new_plane_state;
+ 	struct drm_plane_state *new_cursor_state, *new_underlying_state;
+ 	int i;
+ 	int cursor_scale_w, cursor_scale_h, underlying_scale_w, underlying_scale_h;
++	bool any_relevant_change = false;
+ 
+ 	/* On DCE and DCN there is no dedicated hardware cursor plane. We get a
+ 	 * cursor per pipe but it's going to inherit the scaling and
+@@ -9652,6 +9654,35 @@ static int dm_check_crtc_cursor(struct drm_atomic_state *state,
+ 	 * blending properties match the underlying planes'.
+ 	 */
+ 
++	/* If no plane was enabled or changed scaling, no need to check again */
++	for_each_oldnew_plane_in_state(state, plane, old_plane_state, new_plane_state, i) {
++		int new_scale_w, new_scale_h, old_scale_w, old_scale_h;
++
++		if (!new_plane_state || !new_plane_state->fb || new_plane_state->crtc != crtc)
++			continue;
++
++		if (!old_plane_state || !old_plane_state->fb || old_plane_state->crtc != crtc) {
++			any_relevant_change = true;
++			break;
++		}
++
++		if (new_plane_state->fb == old_plane_state->fb &&
++		    new_plane_state->crtc_w == old_plane_state->crtc_w &&
++		    new_plane_state->crtc_h == old_plane_state->crtc_h)
++			continue;
++
++		dm_get_plane_scale(new_plane_state, &new_scale_w, &new_scale_h);
++		dm_get_plane_scale(old_plane_state, &old_scale_w, &old_scale_h);
++
++		if (new_scale_w != old_scale_w || new_scale_h != old_scale_h) {
++			any_relevant_change = true;
++			break;
++		}
++	}
++
++	if (!any_relevant_change)
++		return 0;
++
+ 	new_cursor_state = drm_atomic_get_plane_state(state, cursor);
+ 	if (IS_ERR(new_cursor_state))
+ 		return PTR_ERR(new_cursor_state);
 -- 
 2.42.0
 
