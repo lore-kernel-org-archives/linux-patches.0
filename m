@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5D139FC0
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6574339FC0
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCalwvT4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931EEC4E777;
-	Wed, 15 Nov 2023 20:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Naq6njJL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B3BC4E777;
+	Wed, 15 Nov 2023 20:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081802;
-	bh=2+vuUXJDUTWIiR77GrKvXVv3yB8NowdZ8eTGg4mhl+M=;
+	s=korg; t=1700081804;
+	bh=kKfYhk8hdwhS/JTEzNmoDe0hG0N5K8UdcrSBcdavdDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCalwvT4XebKWULVbPdM3ljjcyjniFuj7AOxjv7oiYWck61wNK0IjNcYfhPOSPSGb
-	 /nrfK3691HFFE1aG6DFh//4wRRXPlTksTLqmTX5TjrEpAXsRhQaGqFnVSjIsNM6bGA
-	 wflmaoFJBm4MU/dNsMAvgmum+Sg0veiThS2E8Yp0=
+	b=Naq6njJLhCaeTWFh3DAVDjISqIx8HdAThNZJ6IjzmbpFtjYh3IddHocIztBiAjLgS
+	 r6eoUrdJ1k1wyru53R1J5rfvHOxjiAmv/NDnH3zoLmhozHAQ0ovaY1jo1TFQhqS3tn
+	 XG/ZDPyKJq620K/XRlet1JgLLKmQNIHljrP9okeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bastien Nocera <hadess@hadess.net>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/191] HID: logitech-hidpp: Remove HIDPP_QUIRK_NO_HIDINPUT quirk
-Date: Wed, 15 Nov 2023 15:46:24 -0500
-Message-ID: <20231115204651.110919139@linuxfoundation.org>
+Subject: [PATCH 5.10 110/191] HID: logitech-hidpp: Dont restart IO, instead defer hid_connect() only
+Date: Wed, 15 Nov 2023 15:46:25 -0500
+Message-ID: <20231115204651.170587182@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -42,67 +42,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bastien Nocera <hadess@hadess.net>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit d83956c8855c6c2ed4bd16cec4a5083d63df17e4 ]
+[ Upstream commit 11ca0322a41920df2b462d2e45b0731e47ff475b ]
 
-HIDPP_QUIRK_NO_HIDINPUT isn't used by any devices but still happens to
-work as HIDPP_QUIRK_DELAYED_INIT is defined to the same value. Remove
-HIDPP_QUIRK_NO_HIDINPUT and use HIDPP_QUIRK_DELAYED_INIT everywhere
-instead.
+Restarting IO causes 2 problems:
 
-Tested on a T650 which requires that quirk, and a number of unifying and
-Bluetooth devices that don't.
+1. Some devices do not like IO being restarted this was addressed in
+   commit 498ba2069035 ("HID: logitech-hidpp: Don't restart communication
+   if not necessary"), but that change has issues of its own and needs to
+   be reverted.
 
-Signed-off-by: Bastien Nocera <hadess@hadess.net>
-Link: https://lore.kernel.org/r/20230125121723.3122-2-hadess@hadess.net
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Stable-dep-of: 11ca0322a419 ("HID: logitech-hidpp: Don't restart IO, instead defer hid_connect() only")
+2. Restarting IO and specifically calling hid_device_io_stop() causes
+   received packets to be missed, which may cause connect-events to
+   get missed.
+
+Restarting IO was introduced in commit 91cf9a98ae41 ("HID: logitech-hidpp:
+make .probe usbhid capable") to allow to retrieve the device's name and
+serial number and store these in hdev->name and hdev->uniq before
+connecting any hid subdrivers (hid-input, hidraw) exporting this info
+to userspace.
+
+But this does not require restarting IO, this merely requires deferring
+calling hid_connect(). Calling hid_hw_start() with a connect-mask of
+0 makes it skip calling hid_connect(), so hidpp_probe() can simply call
+hid_connect() later without needing to restart IO.
+
+Remove the stop + restart of IO and instead just call hid_connect() later
+to avoid the issues caused by restarting IO.
+
+Now that IO is no longer stopped, hid_hw_close() must be called at the end
+of probe() to balance the hid_hw_open() done at the beginning probe().
+
+This series has been tested on the following devices:
+Logitech Bluetooth Laser Travel Mouse (bluetooth, HID++ 1.0)
+Logitech M720 Triathlon (bluetooth, HID++ 4.5)
+Logitech M720 Triathlon (unifying, HID++ 4.5)
+Logitech K400 Pro (unifying, HID++ 4.1)
+Logitech K270 (eQUAD nano Lite, HID++ 2.0)
+Logitech M185 (eQUAD nano Lite, HID++ 4.5)
+Logitech LX501 keyboard (27 Mhz, HID++ builtin scroll-wheel, HID++ 1.0)
+Logitech M-RAZ105 mouse (27 Mhz, HID++ extra mouse buttons, HID++ 1.0)
+
+And by bentiss:
+Logitech Touchpad T650 (unifying)
+Logitech Touchpad T651 (bluetooth)
+Logitech MX Master 3B (BLE)
+Logitech G403 (plain USB / Gaming receiver)
+
+Fixes: 498ba2069035 ("HID: logitech-hidpp: Don't restart communication if not necessary")
+Suggested-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20231010102029.111003-2-hdegoede@redhat.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/hid/hid-logitech-hidpp.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 8d81a700886fc..e012d2d1a644f 100644
+index e012d2d1a644f..5755b3e63c338 100644
 --- a/drivers/hid/hid-logitech-hidpp.c
 +++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -61,7 +61,7 @@ MODULE_PARM_DESC(disable_tap_to_click,
- /* bits 2..20 are reserved for classes */
- /* #define HIDPP_QUIRK_CONNECT_EVENTS		BIT(21) disabled */
- #define HIDPP_QUIRK_WTP_PHYSICAL_BUTTONS	BIT(22)
--#define HIDPP_QUIRK_NO_HIDINPUT			BIT(23)
-+#define HIDPP_QUIRK_DELAYED_INIT		BIT(23)
- #define HIDPP_QUIRK_FORCE_OUTPUT_REPORTS	BIT(24)
- #define HIDPP_QUIRK_UNIFYING			BIT(25)
- #define HIDPP_QUIRK_HI_RES_SCROLL_1P0		BIT(26)
-@@ -80,8 +80,6 @@ MODULE_PARM_DESC(disable_tap_to_click,
- 					 HIDPP_QUIRK_HI_RES_SCROLL_X2120 | \
- 					 HIDPP_QUIRK_HI_RES_SCROLL_X2121)
+@@ -3869,8 +3869,10 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 			 hdev->name);
  
--#define HIDPP_QUIRK_DELAYED_INIT		HIDPP_QUIRK_NO_HIDINPUT
+ 	/*
+-	 * Plain USB connections need to actually call start and open
+-	 * on the transport driver to allow incoming data.
++	 * First call hid_hw_start(hdev, 0) to allow IO without connecting any
++	 * hid subdrivers (hid-input, hidraw). This allows retrieving the dev's
++	 * name and serial number and store these in hdev->name and hdev->uniq,
++	 * before the hid-input and hidraw drivers expose these to userspace.
+ 	 */
+ 	ret = hid_hw_start(hdev, will_restart ? 0 : connect_mask);
+ 	if (ret) {
+@@ -3928,19 +3930,14 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	flush_work(&hidpp->work);
+ 
+ 	if (will_restart) {
+-		/* Reset the HID node state */
+-		hid_device_io_stop(hdev);
+-		hid_hw_close(hdev);
+-		hid_hw_stop(hdev);
 -
- #define HIDPP_CAPABILITY_HIDPP10_BATTERY	BIT(0)
- #define HIDPP_CAPABILITY_HIDPP20_BATTERY	BIT(1)
- #define HIDPP_CAPABILITY_BATTERY_MILEAGE	BIT(2)
-@@ -3702,7 +3700,7 @@ static void hidpp_connect_event(struct hidpp_device *hidpp)
- 	if (hidpp->quirks & HIDPP_QUIRK_HI_RES_SCROLL)
- 		hi_res_scroll_enable(hidpp);
- 
--	if (!(hidpp->quirks & HIDPP_QUIRK_NO_HIDINPUT) || hidpp->delayed_input)
-+	if (!(hidpp->quirks & HIDPP_QUIRK_DELAYED_INIT) || hidpp->delayed_input)
- 		/* if the input nodes are already created, we can stop now */
- 		return;
- 
-@@ -3935,7 +3933,7 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		hid_hw_close(hdev);
- 		hid_hw_stop(hdev);
- 
--		if (hidpp->quirks & HIDPP_QUIRK_NO_HIDINPUT)
-+		if (hidpp->quirks & HIDPP_QUIRK_DELAYED_INIT)
+ 		if (hidpp->quirks & HIDPP_QUIRK_DELAYED_INIT)
  			connect_mask &= ~HID_CONNECT_HIDINPUT;
  
  		/* Now export the actual inputs and hidraw nodes to the world */
+-		ret = hid_hw_start(hdev, connect_mask);
++		ret = hid_connect(hdev, connect_mask);
+ 		if (ret) {
+-			hid_err(hdev, "%s:hid_hw_start returned error\n", __func__);
+-			goto hid_hw_start_fail;
++			hid_err(hdev, "%s:hid_connect returned error %d\n", __func__, ret);
++			goto hid_hw_init_fail;
+ 		}
+ 	}
+ 
+@@ -3952,6 +3949,11 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 				 ret);
+ 	}
+ 
++	/*
++	 * This relies on logi_dj_ll_close() being a no-op so that DJ connection
++	 * events will still be received.
++	 */
++	hid_hw_close(hdev);
+ 	return ret;
+ 
+ hid_hw_init_fail:
 -- 
 2.42.0
 
