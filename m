@@ -1,35 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6461E364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EB1364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTQzyvDw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A02C433C8;
-	Wed, 15 Nov 2023 19:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OB6/gIpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8192FC433C9;
+	Wed, 15 Nov 2023 19:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076898;
-	bh=iSVk4jXsEc8IP0H4PF/SmxadZyexwnYuAybAj6lfNoQ=;
+	s=korg; t=1700076899;
+	bh=k0318IaebBo7ANd1rQa4LJBWj9f82L9r/A9E3ZG2nGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YTQzyvDwNNDY3JQgAnPsYzasoSY8+LXcIFf4GVLW+XlpntqkAcWD2n6PuUDVoRoas
-	 KUVOeFMZQpQRIBhMewqvwezIB3TaDplmcgP506RZFUxKSMNgXO0hXyqXUWX5gjGGfq
-	 p5fklHPbA4eoUTey7mcEaXKXwf7oYllJMYJGK/vk=
+	b=OB6/gIpjIYIKoRYL+MdJMXN4uo6CuXk/Wf4UxtHhC5EuiUyxgsD/jZrfrzkhVnVDo
+	 dMLlTCsRPZpXfdb3ai47pBcZ6lEDtOzt1FbeLF9VLl7zoakm1ynwpLTTsH1Negm49v
+	 isvxK1+1b3FwNVZn6ouha+MUVYntKg8jVNALvZNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ira Weiny <ira.weiny@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 457/550] cxl/mem: Fix shutdown order
-Date: Wed, 15 Nov 2023 14:17:21 -0500
-Message-ID: <20231115191632.532833608@linuxfoundation.org>
+Subject: [PATCH 6.6 061/603] udplite: remove UDPLITE_BIT
+Date: Wed, 15 Nov 2023 14:10:06 -0500
+Message-ID: <20231115191617.350138957@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -41,86 +39,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 88d3917f82ed4215a2154432c26de1480a61b209 ]
+[ Upstream commit 729549aa350c56a777bb342941ed4d69b6585769 ]
 
-Ira reports that removing cxl_mock_mem causes a crash with the following
-trace:
+This flag is set but never read, we can remove it.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000044
- [..]
- RIP: 0010:cxl_region_decode_reset+0x7f/0x180 [cxl_core]
- [..]
- Call Trace:
-  <TASK>
-  cxl_region_detach+0xe8/0x210 [cxl_core]
-  cxl_decoder_kill_region+0x27/0x40 [cxl_core]
-  cxld_unregister+0x29/0x40 [cxl_core]
-  devres_release_all+0xb8/0x110
-  device_unbind_cleanup+0xe/0x70
-  device_release_driver_internal+0x1d2/0x210
-  bus_remove_device+0xd7/0x150
-  device_del+0x155/0x3e0
-  device_unregister+0x13/0x60
-  devm_release_action+0x4d/0x90
-  ? __pfx_unregister_port+0x10/0x10 [cxl_core]
-  delete_endpoint+0x121/0x130 [cxl_core]
-  devres_release_all+0xb8/0x110
-  device_unbind_cleanup+0xe/0x70
-  device_release_driver_internal+0x1d2/0x210
-  bus_remove_device+0xd7/0x150
-  device_del+0x155/0x3e0
-  ? lock_release+0x142/0x290
-  cdev_device_del+0x15/0x50
-  cxl_memdev_unregister+0x54/0x70 [cxl_core]
-
-This crash is due to the clearing out the cxl_memdev's driver context
-(@cxlds) before the subsystem is done with it. This is ultimately due to
-the region(s), that this memdev is a member, being torn down and expecting
-to be able to de-reference @cxlds, like here:
-
-static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
-...
-                if (cxlds->rcd)
-                        goto endpoint_reset;
-...
-
-Fix it by keeping the driver context valid until memdev-device
-unregistration, and subsequently the entire stack of related
-dependencies, unwinds.
-
-Fixes: 9cc238c7a526 ("cxl/pci: Introduce cdevm_file_operations")
-Reported-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Tested-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 882af43a0fc3 ("udplite: fix various data-races")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/memdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/udp.h | 5 ++---
+ net/ipv4/udplite.c  | 1 -
+ net/ipv6/udplite.c  | 1 -
+ 3 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
-index a02061028b710..fed9573cf355e 100644
---- a/drivers/cxl/core/memdev.c
-+++ b/drivers/cxl/core/memdev.c
-@@ -559,8 +559,8 @@ static void cxl_memdev_unregister(void *_cxlmd)
- 	struct cxl_memdev *cxlmd = _cxlmd;
- 	struct device *dev = &cxlmd->dev;
+diff --git a/include/linux/udp.h b/include/linux/udp.h
+index 0cf83270a4a28..58156edec0096 100644
+--- a/include/linux/udp.h
++++ b/include/linux/udp.h
+@@ -55,9 +55,8 @@ struct udp_sock {
+ 	__u8		 encap_type;	/* Is this an Encapsulation socket? */
  
--	cxl_memdev_shutdown(dev);
- 	cdev_device_del(&cxlmd->cdev, dev);
-+	cxl_memdev_shutdown(dev);
- 	put_device(dev);
- }
- 
+ /* indicator bits used by pcflag: */
+-#define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
+-#define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
+-#define UDPLITE_RECV_CC  0x4		/* set via udplite setsocktopt        */
++#define UDPLITE_SEND_CC  0x1  		/* set via udplite setsockopt         */
++#define UDPLITE_RECV_CC  0x2		/* set via udplite setsocktopt        */
+ 	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
+ 	/*
+ 	 * Following member retains the information to create a UDP header
+diff --git a/net/ipv4/udplite.c b/net/ipv4/udplite.c
+index 39ecdad1b50ce..af37af3ab727b 100644
+--- a/net/ipv4/udplite.c
++++ b/net/ipv4/udplite.c
+@@ -21,7 +21,6 @@ EXPORT_SYMBOL(udplite_table);
+ static int udplite_sk_init(struct sock *sk)
+ {
+ 	udp_init_sock(sk);
+-	udp_sk(sk)->pcflag = UDPLITE_BIT;
+ 	pr_warn_once("UDP-Lite is deprecated and scheduled to be removed in 2025, "
+ 		     "please contact the netdev mailing list\n");
+ 	return 0;
+diff --git a/net/ipv6/udplite.c b/net/ipv6/udplite.c
+index 267d491e97075..a60bec9b14f14 100644
+--- a/net/ipv6/udplite.c
++++ b/net/ipv6/udplite.c
+@@ -17,7 +17,6 @@
+ static int udplitev6_sk_init(struct sock *sk)
+ {
+ 	udpv6_init_sock(sk);
+-	udp_sk(sk)->pcflag = UDPLITE_BIT;
+ 	pr_warn_once("UDP-Lite is deprecated and scheduled to be removed in 2025, "
+ 		     "please contact the netdev mailing list\n");
+ 	return 0;
 -- 
 2.42.0
 
