@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658C043AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42412250EA
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Idqrujhv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189D3C433C7;
-	Wed, 15 Nov 2023 20:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3lPyxB8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79E4C433CB;
+	Wed, 15 Nov 2023 20:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081156;
-	bh=E/p8Fr+DYHEZ7EFh7XQjZei2IsXGCxWxhHHee4ghGow=;
+	s=korg; t=1700081158;
+	bh=S5cBMtcOLxmjfadRuCPcSc3pDRpRz2WnPZLg3Vu7kYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Idqrujhvd1002JVtyA+Dl5N6QHpxGiXHu4+F03Vji/ORjit/IY8N+LC7ylToE9gx8
-	 ZDBTjyYHez879u0SBAdLl0TIS3NGdcYTfqQU1eVwn9jP8UtBVK15lXvGFppOAuJVXV
-	 wyYCrx9+QiMoBgMmYC6Y1NIykdojt1OlhOD3XUm4=
+	b=g3lPyxB8fp+m4aexDnddm6MuVJ6N9wGRx4IoFkTsNiZdPp/CqXpD/CvlKvqPrGrge
+	 Kt2jGe1zNc3cuZSVkr3VSxDFRRqeXrMoGx7rl3kIePqU5XUoHHeou2iqFie7hZJwWG
+	 Q72XEpVRDeGzr6znrqO5DmiYkNZZUEOrrSwjCH1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	syzbot+a8c7be6dee0de1b669cc@syzkaller.appspotmail.com,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 71/88] Input: synaptics-rmi4 - fix use after free in rmi_unregister_function()
-Date: Wed, 15 Nov 2023 15:36:23 -0500
-Message-ID: <20231115191430.368855398@linuxfoundation.org>
+Subject: [PATCH 4.19 72/88] llc: verify mac len before reading mac header
+Date: Wed, 15 Nov 2023 15:36:24 -0500
+Message-ID: <20231115191430.435423726@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -42,40 +43,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit eb988e46da2e4eae89f5337e047ce372fe33d5b1 ]
+[ Upstream commit 7b3ba18703a63f6fd487183b9262b08e5632da1b ]
 
-The put_device() calls rmi_release_function() which frees "fn" so the
-dereference on the next line "fn->num_of_irqs" is a use after free.
-Move the put_device() to the end to fix this.
+LLC reads the mac header with eth_hdr without verifying that the skb
+has an Ethernet header.
 
-Fixes: 24d28e4f1271 ("Input: synaptics-rmi4 - convert irq distribution to irq_domain")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/706efd36-7561-42f3-adfa-dd1d0bd4f5a1@moroto.mountain
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Syzbot was able to enter llc_rcv on a tun device. Tun can insert
+packets without mac len and with user configurable skb->protocol
+(passing a tun_pi header when not configuring IFF_NO_PI).
+
+    BUG: KMSAN: uninit-value in llc_station_ac_send_test_r net/llc/llc_station.c:81 [inline]
+    BUG: KMSAN: uninit-value in llc_station_rcv+0x6fb/0x1290 net/llc/llc_station.c:111
+    llc_station_ac_send_test_r net/llc/llc_station.c:81 [inline]
+    llc_station_rcv+0x6fb/0x1290 net/llc/llc_station.c:111
+    llc_rcv+0xc5d/0x14a0 net/llc/llc_input.c:218
+    __netif_receive_skb_one_core net/core/dev.c:5523 [inline]
+    __netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5637
+    netif_receive_skb_internal net/core/dev.c:5723 [inline]
+    netif_receive_skb+0x58/0x660 net/core/dev.c:5782
+    tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1555
+    tun_get_user+0x54c5/0x69c0 drivers/net/tun.c:2002
+
+Add a mac_len test before all three eth_hdr(skb) calls under net/llc.
+
+There are further uses in include/net/llc_pdu.h. All these are
+protected by a test skb->protocol == ETH_P_802_2. Which does not
+protect against this tun scenario.
+
+But the mac_len test added in this patch in llc_fixup_skb will
+indirectly protect those too. That is called from llc_rcv before any
+other LLC code.
+
+It is tempting to just add a blanket mac_len check in llc_rcv, but
+not sure whether that could break valid LLC paths that do not assume
+an Ethernet header. 802.2 LLC may be used on top of non-802.3
+protocols in principle. The below referenced commit shows that used
+to, on top of Token Ring.
+
+At least one of the three eth_hdr uses goes back to before the start
+of git history. But the one that syzbot exercises is introduced in
+this commit. That commit is old enough (2008), that effectively all
+stable kernels should receive this.
+
+Fixes: f83f1768f833 ("[LLC]: skb allocation size for responses")
+Reported-by: syzbot+a8c7be6dee0de1b669cc@syzkaller.appspotmail.com
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20231025234251.3796495-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/rmi4/rmi_bus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/llc/llc_input.c   | 10 ++++++++--
+ net/llc/llc_s_ac.c    |  3 +++
+ net/llc/llc_station.c |  3 +++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/input/rmi4/rmi_bus.c b/drivers/input/rmi4/rmi_bus.c
-index bd0d5ff01b08f..02408487b4423 100644
---- a/drivers/input/rmi4/rmi_bus.c
-+++ b/drivers/input/rmi4/rmi_bus.c
-@@ -279,11 +279,11 @@ void rmi_unregister_function(struct rmi_function *fn)
+diff --git a/net/llc/llc_input.c b/net/llc/llc_input.c
+index f9e801cc50f5e..f4fb309185ced 100644
+--- a/net/llc/llc_input.c
++++ b/net/llc/llc_input.c
+@@ -127,8 +127,14 @@ static inline int llc_fixup_skb(struct sk_buff *skb)
+ 	skb->transport_header += llc_len;
+ 	skb_pull(skb, llc_len);
+ 	if (skb->protocol == htons(ETH_P_802_2)) {
+-		__be16 pdulen = eth_hdr(skb)->h_proto;
+-		s32 data_size = ntohs(pdulen) - llc_len;
++		__be16 pdulen;
++		s32 data_size;
++
++		if (skb->mac_len < ETH_HLEN)
++			return 0;
++
++		pdulen = eth_hdr(skb)->h_proto;
++		data_size = ntohs(pdulen) - llc_len;
  
- 	device_del(&fn->dev);
- 	of_node_put(fn->dev.of_node);
--	put_device(&fn->dev);
+ 		if (data_size < 0 ||
+ 		    !pskb_may_pull(skb, data_size))
+diff --git a/net/llc/llc_s_ac.c b/net/llc/llc_s_ac.c
+index 9fa3342c7a829..df26557a02448 100644
+--- a/net/llc/llc_s_ac.c
++++ b/net/llc/llc_s_ac.c
+@@ -153,6 +153,9 @@ int llc_sap_action_send_test_r(struct llc_sap *sap, struct sk_buff *skb)
+ 	int rc = 1;
+ 	u32 data_size;
  
- 	for (i = 0; i < fn->num_of_irqs; i++)
- 		irq_dispose_mapping(fn->irq[i]);
++	if (skb->mac_len < ETH_HLEN)
++		return 1;
++
+ 	llc_pdu_decode_sa(skb, mac_da);
+ 	llc_pdu_decode_da(skb, mac_sa);
+ 	llc_pdu_decode_ssap(skb, &dsap);
+diff --git a/net/llc/llc_station.c b/net/llc/llc_station.c
+index c29170e767a8c..64e2c67e16ba3 100644
+--- a/net/llc/llc_station.c
++++ b/net/llc/llc_station.c
+@@ -77,6 +77,9 @@ static int llc_station_ac_send_test_r(struct sk_buff *skb)
+ 	u32 data_size;
+ 	struct sk_buff *nskb;
  
-+	put_device(&fn->dev);
- }
- 
- /**
++	if (skb->mac_len < ETH_HLEN)
++		goto out;
++
+ 	/* The test request command is type U (llc_len = 3) */
+ 	data_size = ntohs(eth_hdr(skb)->h_proto) - 3;
+ 	nskb = llc_alloc_frame(NULL, skb->dev, LLC_PDU_TYPE_U, data_size);
 -- 
 2.42.0
 
