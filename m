@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E853EA72
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E313EA6F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiPEaIRq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F860C433C9;
-	Wed, 15 Nov 2023 19:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xj2UWom8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0904CC433CC;
+	Wed, 15 Nov 2023 19:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076241;
-	bh=xgaQmLBjWgJa6J153vpyKNhMkVvwWGkqcmAZEDtpv4o=;
+	s=korg; t=1700076243;
+	bh=xAIrYRXspAFaU60KZ3yKh/KxKBQBNTppEqK6Z28pUYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kiPEaIRqIAL8yzpQAbtb32kbKX4HYzHaCACFRLtjwRf1I2ZaoHbmZyCKeCtDf1IOo
-	 d1+1hDHAvrI74vKWscv/SCxdfRXeYsny0SL2G3XcQJ/URyjKd1KQ8z0LX48gmUUKiP
-	 0Fz6VQx8Q+hyn2eDgxVhB/tEicQOC/SO+twV7UVY=
+	b=xj2UWom8KCw0m/QWPRMicdAHkTyW3irGPGX+zJNIr249+x9VNAL4A0NMQGz48MPli
+	 vpAJt5er3pSilWHhk2dpyiy1tEc1ptBdLEUOyJC03In/EABYDz1M+iss6ZlMqwkZlR
+	 j9OWgfYp+TzjfThUMn9daH5malx2ofuINJLMn3qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 140/550] Bluetooth: ISO: Use defer setup to separate PA sync and BIG sync
-Date: Wed, 15 Nov 2023 14:12:04 -0500
-Message-ID: <20231115191610.385522500@linuxfoundation.org>
+Subject: [PATCH 6.5 141/550] Bluetooth: ISO: Pass BIG encryption info through QoS
+Date: Wed, 15 Nov 2023 14:12:05 -0500
+Message-ID: <20231115191610.465728455@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,71 +44,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
 
-[ Upstream commit fbdc4bc47268953c80853489f696e02d61f9a2c6 ]
+[ Upstream commit 1d11d70d1f6b23e7d3fc00396c17b90b876162a4 ]
 
-This commit implements defer setup support for the Broadcast Sink
-scenario: By setting defer setup on a broadcast socket before calling
-listen, the user is able to trigger the PA sync and BIG sync procedures
-separately.
+This enables a broadcast sink to be informed if the PA
+it has synced with is associated with an encrypted BIG,
+by retrieving the socket QoS and checking the encryption
+field.
 
-This is useful if the user first wants to synchronize to the periodic
-advertising transmitted by a Broadcast Source, and trigger the BIG sync
-procedure later on.
+After PA sync has been successfully established and the
+first BIGInfo advertising report is received, a new hcon
+is added and notified to the ISO layer. The ISO layer
+sets the encryption field of the socket and hcon QoS
+according to the encryption parameter of the BIGInfo
+advertising report event.
 
-If defer setup is set, once a PA sync established event arrives, a new
-hcon is created and notified to the ISO layer. A child socket associated
-with the PA sync connection will be added to the accept queue of the
-listening socket.
-
-Once the accept call returns the fd for the PA sync child socket, the
-user should call read on that fd. This will trigger the BIG create sync
-procedure, and the PA sync socket will become a listening socket itself.
-
-When the BIG sync established event is notified to the ISO layer, the
-bis connections will be added to the accept queue of the PA sync parent.
-The user should call accept on the PA sync socket to get the final bis
-connections.
+After that, the userspace is woken up, and the QoS of the
+new PA sync socket can be read, to inspect the encryption
+field and follow up accordingly.
 
 Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: 181a42edddf5 ("Bluetooth: Make handle of hci_conn be unique")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h |  30 +++++-
- net/bluetooth/hci_conn.c         |  13 ++-
- net/bluetooth/hci_event.c        |  41 +++++++-
- net/bluetooth/hci_sync.c         |  15 +++
- net/bluetooth/iso.c              | 160 ++++++++++++++++++++++++-------
- 5 files changed, 218 insertions(+), 41 deletions(-)
+ include/net/bluetooth/hci.h      |  3 ++
+ include/net/bluetooth/hci_core.h | 25 ++++++++++++++-
+ net/bluetooth/hci_conn.c         |  1 +
+ net/bluetooth/hci_event.c        | 54 +++++++++++++++++++++++---------
+ net/bluetooth/iso.c              | 19 ++++++++---
+ 5 files changed, 82 insertions(+), 20 deletions(-)
 
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 3ff822ebb3a47..1788aeedecf5a 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -1,6 +1,7 @@
+ /*
+    BlueZ - Bluetooth protocol stack for Linux
+    Copyright (C) 2000-2001 Qualcomm Incorporated
++   Copyright 2023 NXP
+ 
+    Written 2000,2001 by Maxim Krasnyansky <maxk@qualcomm.com>
+ 
+@@ -672,6 +673,8 @@ enum {
+ #define HCI_TX_POWER_INVALID	127
+ #define HCI_RSSI_INVALID	127
+ 
++#define HCI_SYNC_HANDLE_INVALID	0xffff
++
+ #define HCI_ROLE_MASTER		0x00
+ #define HCI_ROLE_SLAVE		0x01
+ 
 diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index abb7cb5db9457..032c05998345d 100644
+index 032c05998345d..0a3f98481b0fe 100644
 --- a/include/net/bluetooth/hci_core.h
 +++ b/include/net/bluetooth/hci_core.h
-@@ -978,6 +978,8 @@ enum {
- 	HCI_CONN_CREATE_CIS,
- 	HCI_CONN_BIG_SYNC,
- 	HCI_CONN_BIG_SYNC_FAILED,
-+	HCI_CONN_PA_SYNC,
-+	HCI_CONN_PA_SYNC_FAILED,
- };
+@@ -1315,7 +1315,7 @@ static inline struct hci_conn *hci_conn_hash_lookup_big_any_dst(struct hci_dev *
+ }
  
- static inline bool hci_conn_ssp_enabled(struct hci_conn *conn)
-@@ -1301,7 +1303,7 @@ static inline struct hci_conn *hci_conn_hash_lookup_big_any_dst(struct hci_dev *
- 		if (c->type != ISO_LINK)
- 			continue;
- 
--		if (handle == c->iso_qos.bcast.big) {
-+		if (handle != BT_ISO_QOS_BIG_UNSET && handle == c->iso_qos.bcast.big) {
- 			rcu_read_unlock();
- 			return c;
- 		}
-@@ -1312,6 +1314,29 @@ static inline struct hci_conn *hci_conn_hash_lookup_big_any_dst(struct hci_dev *
+ static inline struct hci_conn *
+-hci_conn_hash_lookup_pa_sync(struct hci_dev *hdev, __u8 big)
++hci_conn_hash_lookup_pa_sync_big_handle(struct hci_dev *hdev, __u8 big)
+ {
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+@@ -1337,6 +1337,29 @@ hci_conn_hash_lookup_pa_sync(struct hci_dev *hdev, __u8 big)
  	return NULL;
  }
  
 +static inline struct hci_conn *
-+hci_conn_hash_lookup_pa_sync(struct hci_dev *hdev, __u8 big)
++hci_conn_hash_lookup_pa_sync_handle(struct hci_dev *hdev, __u16 sync_handle)
 +{
 +	struct hci_conn_hash *h = &hdev->conn_hash;
 +	struct hci_conn  *c;
@@ -120,7 +125,7 @@ index abb7cb5db9457..032c05998345d 100644
 +			!test_bit(HCI_CONN_PA_SYNC, &c->flags))
 +			continue;
 +
-+		if (c->iso_qos.bcast.big == big) {
++		if (c->sync_handle == sync_handle) {
 +			rcu_read_unlock();
 +			return c;
 +		}
@@ -133,465 +138,182 @@ index abb7cb5db9457..032c05998345d 100644
  static inline struct hci_conn *hci_conn_hash_lookup_state(struct hci_dev *hdev,
  							__u8 type, __u16 state)
  {
-@@ -1415,7 +1440,8 @@ struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
- 				 __u8 data_len, __u8 *data);
- int hci_pa_create_sync(struct hci_dev *hdev, bdaddr_t *dst, __u8 dst_type,
- 		       __u8 sid, struct bt_iso_qos *qos);
--int hci_le_big_create_sync(struct hci_dev *hdev, struct bt_iso_qos *qos,
-+int hci_le_big_create_sync(struct hci_dev *hdev, struct hci_conn *hcon,
-+			   struct bt_iso_qos *qos,
- 			   __u16 sync_handle, __u8 num_bis, __u8 bis[]);
- int hci_conn_check_link_mode(struct hci_conn *conn);
- int hci_conn_check_secure(struct hci_conn *conn, __u8 sec_level);
 diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 6d6192f514d0f..c3da326615931 100644
+index c3da326615931..7cad9665360cf 100644
 --- a/net/bluetooth/hci_conn.c
 +++ b/net/bluetooth/hci_conn.c
-@@ -734,6 +734,7 @@ struct iso_list_data {
- 	};
- 	int count;
- 	bool big_term;
-+	bool pa_sync_term;
- 	bool big_sync_term;
- };
+@@ -975,6 +975,7 @@ struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 	conn->rssi = HCI_RSSI_INVALID;
+ 	conn->tx_power = HCI_TX_POWER_INVALID;
+ 	conn->max_tx_power = HCI_TX_POWER_INVALID;
++	conn->sync_handle = HCI_SYNC_HANDLE_INVALID;
  
-@@ -807,7 +808,10 @@ static int big_terminate_sync(struct hci_dev *hdev, void *data)
- 	if (d->big_sync_term)
- 		hci_le_big_terminate_sync(hdev, d->big);
- 
--	return hci_le_pa_terminate_sync(hdev, d->sync_handle);
-+	if (d->pa_sync_term)
-+		return hci_le_pa_terminate_sync(hdev, d->sync_handle);
-+
-+	return 0;
- }
- 
- static int hci_le_big_terminate(struct hci_dev *hdev, u8 big, struct hci_conn *conn)
-@@ -823,6 +827,7 @@ static int hci_le_big_terminate(struct hci_dev *hdev, u8 big, struct hci_conn *c
- 
- 	d->big = big;
- 	d->sync_handle = conn->sync_handle;
-+	d->pa_sync_term = test_and_clear_bit(HCI_CONN_PA_SYNC, &conn->flags);
- 	d->big_sync_term = test_and_clear_bit(HCI_CONN_BIG_SYNC, &conn->flags);
- 
- 	ret = hci_cmd_sync_queue(hdev, big_terminate_sync, d,
-@@ -2127,7 +2132,8 @@ int hci_pa_create_sync(struct hci_dev *hdev, bdaddr_t *dst, __u8 dst_type,
- 	return hci_cmd_sync_queue(hdev, create_pa_sync, cp, create_pa_complete);
- }
- 
--int hci_le_big_create_sync(struct hci_dev *hdev, struct bt_iso_qos *qos,
-+int hci_le_big_create_sync(struct hci_dev *hdev, struct hci_conn *hcon,
-+			   struct bt_iso_qos *qos,
- 			   __u16 sync_handle, __u8 num_bis, __u8 bis[])
- {
- 	struct _packed {
-@@ -2143,6 +2149,9 @@ int hci_le_big_create_sync(struct hci_dev *hdev, struct bt_iso_qos *qos,
- 	if (err)
- 		return err;
- 
-+	if (hcon)
-+		hcon->iso_qos.bcast.big = qos->bcast.big;
-+
- 	memset(&pdu, 0, sizeof(pdu));
- 	pdu.cp.handle = qos->bcast.big;
- 	pdu.cp.sync_handle = cpu_to_le16(sync_handle);
+ 	set_bit(HCI_CONN_POWER_SAVE, &conn->flags);
+ 	conn->disc_timeout = HCI_DISCONN_TIMEOUT;
 diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index dd70fd5313840..97d589178eb78 100644
+index 97d589178eb78..5a23dd251cb2e 100644
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
-@@ -6578,20 +6578,39 @@ static void hci_le_pa_sync_estabilished_evt(struct hci_dev *hdev, void *data,
+@@ -6578,7 +6578,7 @@ static void hci_le_pa_sync_estabilished_evt(struct hci_dev *hdev, void *data,
  	struct hci_ev_le_pa_sync_established *ev = data;
  	int mask = hdev->link_mode;
  	__u8 flags = 0;
-+	struct hci_conn *bis;
+-	struct hci_conn *bis;
++	struct hci_conn *pa_sync;
  
  	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
  
+@@ -6595,20 +6595,19 @@ static void hci_le_pa_sync_estabilished_evt(struct hci_dev *hdev, void *data,
+ 	if (!(flags & HCI_PROTO_DEFER))
+ 		goto unlock;
+ 
+-	/* Add connection to indicate the PA sync event */
+-	bis = hci_conn_add(hdev, ISO_LINK, BDADDR_ANY,
+-			   HCI_ROLE_SLAVE);
++	if (ev->status) {
++		/* Add connection to indicate the failed PA sync event */
++		pa_sync = hci_conn_add(hdev, ISO_LINK, BDADDR_ANY,
++				       HCI_ROLE_SLAVE);
+ 
+-	if (!bis)
+-		goto unlock;
++		if (!pa_sync)
++			goto unlock;
+ 
 -	if (ev->status)
--		return;
--
+-		set_bit(HCI_CONN_PA_SYNC_FAILED, &bis->flags);
+-	else
+-		set_bit(HCI_CONN_PA_SYNC, &bis->flags);
++		set_bit(HCI_CONN_PA_SYNC_FAILED, &pa_sync->flags);
+ 
+-	/* Notify connection to iso layer */
+-	hci_connect_cfm(bis, ev->status);
++		/* Notify iso layer */
++		hci_connect_cfm(pa_sync, ev->status);
++	}
+ 
+ unlock:
+ 	hci_dev_unlock(hdev);
+@@ -7082,7 +7081,7 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
  	hci_dev_lock(hdev);
  
- 	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
+ 	if (!ev->status) {
+-		pa_sync = hci_conn_hash_lookup_pa_sync(hdev, ev->handle);
++		pa_sync = hci_conn_hash_lookup_pa_sync_big_handle(hdev, ev->handle);
+ 		if (pa_sync)
+ 			/* Also mark the BIG sync established event on the
+ 			 * associated PA sync hcon
+@@ -7143,15 +7142,42 @@ static void hci_le_big_info_adv_report_evt(struct hci_dev *hdev, void *data,
+ 	struct hci_evt_le_big_info_adv_report *ev = data;
+ 	int mask = hdev->link_mode;
+ 	__u8 flags = 0;
++	struct hci_conn *pa_sync;
  
- 	mask |= hci_proto_connect_ind(hdev, &ev->bdaddr, ISO_LINK, &flags);
+ 	bt_dev_dbg(hdev, "sync_handle 0x%4.4x", le16_to_cpu(ev->sync_handle));
+ 
+ 	hci_dev_lock(hdev);
+ 
+ 	mask |= hci_proto_connect_ind(hdev, BDADDR_ANY, ISO_LINK, &flags);
 -	if (!(mask & HCI_LM_ACCEPT))
 +	if (!(mask & HCI_LM_ACCEPT)) {
- 		hci_le_pa_term_sync(hdev, ev->handle);
+ 		hci_le_pa_term_sync(hdev, ev->sync_handle);
 +		goto unlock;
 +	}
-+
+ 
 +	if (!(flags & HCI_PROTO_DEFER))
 +		goto unlock;
 +
-+	/* Add connection to indicate the PA sync event */
-+	bis = hci_conn_add(hdev, ISO_LINK, BDADDR_ANY,
-+			   HCI_ROLE_SLAVE);
- 
-+	if (!bis)
++	pa_sync = hci_conn_hash_lookup_pa_sync_handle
++			(hdev,
++			le16_to_cpu(ev->sync_handle));
++
++	if (pa_sync)
 +		goto unlock;
 +
-+	if (ev->status)
-+		set_bit(HCI_CONN_PA_SYNC_FAILED, &bis->flags);
-+	else
-+		set_bit(HCI_CONN_PA_SYNC, &bis->flags);
++	/* Add connection to indicate the PA sync event */
++	pa_sync = hci_conn_add(hdev, ISO_LINK, BDADDR_ANY,
++			       HCI_ROLE_SLAVE);
 +
-+	/* Notify connection to iso layer */
-+	hci_connect_cfm(bis, ev->status);
++	if (!pa_sync)
++		goto unlock;
++
++	pa_sync->sync_handle = le16_to_cpu(ev->sync_handle);
++	set_bit(HCI_CONN_PA_SYNC, &pa_sync->flags);
++
++	/* Notify iso layer */
++	hci_connect_cfm(pa_sync, 0x00);
 +
 +unlock:
  	hci_dev_unlock(hdev);
  }
  
-@@ -7051,6 +7070,7 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
- {
- 	struct hci_evt_le_big_sync_estabilished *ev = data;
- 	struct hci_conn *bis;
-+	struct hci_conn *pa_sync;
- 	int i;
- 
- 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
-@@ -7061,6 +7081,15 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
- 
- 	hci_dev_lock(hdev);
- 
-+	if (!ev->status) {
-+		pa_sync = hci_conn_hash_lookup_pa_sync(hdev, ev->handle);
-+		if (pa_sync)
-+			/* Also mark the BIG sync established event on the
-+			 * associated PA sync hcon
-+			 */
-+			set_bit(HCI_CONN_BIG_SYNC, &pa_sync->flags);
-+	}
-+
- 	for (i = 0; i < ev->num_bis; i++) {
- 		u16 handle = le16_to_cpu(ev->bis[i]);
- 		__le32 interval;
-@@ -7074,6 +7103,10 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
- 			bis->handle = handle;
- 		}
- 
-+		if (ev->status != 0x42)
-+			/* Mark PA sync as established */
-+			set_bit(HCI_CONN_PA_SYNC, &bis->flags);
-+
- 		bis->iso_qos.bcast.big = ev->handle;
- 		memset(&interval, 0, sizeof(interval));
- 		memcpy(&interval, ev->latency, sizeof(ev->latency));
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 360813ab0c4db..92a6921a161f2 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5389,6 +5389,21 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
- 		err = hci_reject_conn_sync(hdev, conn, reason);
- 		break;
- 	case BT_OPEN:
-+		hci_dev_lock(hdev);
-+
-+		/* Cleanup bis or pa sync connections */
-+		if (test_and_clear_bit(HCI_CONN_BIG_SYNC_FAILED, &conn->flags) ||
-+		    test_and_clear_bit(HCI_CONN_PA_SYNC_FAILED, &conn->flags)) {
-+			hci_conn_failed(conn, reason);
-+		} else if (test_bit(HCI_CONN_PA_SYNC, &conn->flags) ||
-+			   test_bit(HCI_CONN_BIG_SYNC, &conn->flags)) {
-+			conn->state = BT_CLOSED;
-+			hci_disconn_cfm(conn, reason);
-+			hci_conn_del(conn);
-+		}
-+
-+		hci_dev_unlock(hdev);
-+		return 0;
- 	case BT_BOUND:
- 		break;
- 	default:
 diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index c8460eb7f5c0b..4689f94e4da81 100644
+index 4689f94e4da81..9433a273b4fc2 100644
 --- a/net/bluetooth/iso.c
 +++ b/net/bluetooth/iso.c
-@@ -51,6 +51,7 @@ static void iso_sock_kill(struct sock *sk);
- /* iso_pinfo flags values */
- enum {
- 	BT_SK_BIG_SYNC,
-+	BT_SK_PA_SYNC,
- };
- 
- struct iso_pinfo {
-@@ -75,6 +76,8 @@ static struct bt_iso_qos default_qos;
- 
+@@ -77,6 +77,7 @@ static struct bt_iso_qos default_qos;
  static bool check_ucast_qos(struct bt_iso_qos *qos);
  static bool check_bcast_qos(struct bt_iso_qos *qos);
-+static bool iso_match_sid(struct sock *sk, void *data);
-+static void iso_sock_disconn(struct sock *sk);
+ static bool iso_match_sid(struct sock *sk, void *data);
++static bool iso_match_sync_handle(struct sock *sk, void *data);
+ static void iso_sock_disconn(struct sock *sk);
  
  /* ---- ISO timers ---- */
- #define ISO_CONN_TIMEOUT	(HZ * 40)
-@@ -601,6 +604,15 @@ static void iso_sock_cleanup_listen(struct sock *parent)
- 		iso_sock_kill(sk);
- 	}
- 
-+	/* If listening socket stands for a PA sync connection,
-+	 * properly disconnect the hcon and socket.
-+	 */
-+	if (iso_pi(parent)->conn && iso_pi(parent)->conn->hcon &&
-+	    test_bit(HCI_CONN_PA_SYNC, &iso_pi(parent)->conn->hcon->flags)) {
-+		iso_sock_disconn(parent);
-+		return;
-+	}
-+
- 	parent->sk_state  = BT_CLOSED;
- 	sock_set_flag(parent, SOCK_ZAPPED);
- }
-@@ -622,6 +634,16 @@ static void iso_sock_kill(struct sock *sk)
- 	sock_put(sk);
- }
- 
-+static void iso_sock_disconn(struct sock *sk)
-+{
-+	sk->sk_state = BT_DISCONN;
-+	iso_sock_set_timer(sk, ISO_DISCONN_TIMEOUT);
-+	iso_conn_lock(iso_pi(sk)->conn);
-+	hci_conn_drop(iso_pi(sk)->conn->hcon);
-+	iso_pi(sk)->conn->hcon = NULL;
-+	iso_conn_unlock(iso_pi(sk)->conn);
-+}
-+
- static void __iso_sock_close(struct sock *sk)
- {
- 	BT_DBG("sk %p state %d socket %p", sk, sk->sk_state, sk->sk_socket);
-@@ -633,20 +655,19 @@ static void __iso_sock_close(struct sock *sk)
- 
- 	case BT_CONNECTED:
- 	case BT_CONFIG:
--		if (iso_pi(sk)->conn->hcon) {
--			sk->sk_state = BT_DISCONN;
--			iso_sock_set_timer(sk, ISO_DISCONN_TIMEOUT);
--			iso_conn_lock(iso_pi(sk)->conn);
--			hci_conn_drop(iso_pi(sk)->conn->hcon);
--			iso_pi(sk)->conn->hcon = NULL;
--			iso_conn_unlock(iso_pi(sk)->conn);
--		} else {
-+		if (iso_pi(sk)->conn->hcon)
-+			iso_sock_disconn(sk);
-+		else
- 			iso_chan_del(sk, ECONNRESET);
--		}
- 		break;
- 
- 	case BT_CONNECT2:
--		iso_chan_del(sk, ECONNRESET);
-+		if (iso_pi(sk)->conn->hcon &&
-+		    (test_bit(HCI_CONN_PA_SYNC, &iso_pi(sk)->conn->hcon->flags) ||
-+		    test_bit(HCI_CONN_PA_SYNC_FAILED, &iso_pi(sk)->conn->hcon->flags)))
-+			iso_sock_disconn(sk);
-+		else
-+			iso_chan_del(sk, ECONNRESET);
- 		break;
- 	case BT_CONNECT:
- 		/* In case of DEFER_SETUP the hcon would be bound to CIG which
-@@ -1162,6 +1183,29 @@ static void iso_conn_defer_accept(struct hci_conn *conn)
- 	hci_send_cmd(hdev, HCI_OP_LE_ACCEPT_CIS, sizeof(cp), &cp);
- }
- 
-+static void iso_conn_big_sync(struct sock *sk)
-+{
-+	int err;
-+	struct hci_dev *hdev;
-+
-+	hdev = hci_get_route(&iso_pi(sk)->dst, &iso_pi(sk)->src,
-+			     iso_pi(sk)->src_type);
-+
-+	if (!hdev)
-+		return;
-+
-+	if (!test_and_set_bit(BT_SK_BIG_SYNC, &iso_pi(sk)->flags)) {
-+		err = hci_le_big_create_sync(hdev, iso_pi(sk)->conn->hcon,
-+					     &iso_pi(sk)->qos,
-+					     iso_pi(sk)->sync_handle,
-+					     iso_pi(sk)->bc_num_bis,
-+					     iso_pi(sk)->bc_bis);
-+		if (err)
-+			bt_dev_err(hdev, "hci_le_big_create_sync: %d",
-+				   err);
-+	}
-+}
-+
- static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 			    size_t len, int flags)
- {
-@@ -1174,8 +1218,15 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 		lock_sock(sk);
- 		switch (sk->sk_state) {
- 		case BT_CONNECT2:
--			iso_conn_defer_accept(pi->conn->hcon);
--			sk->sk_state = BT_CONFIG;
-+			if (pi->conn->hcon &&
-+			    test_bit(HCI_CONN_PA_SYNC, &pi->conn->hcon->flags)) {
-+				iso_conn_big_sync(sk);
-+				sk->sk_state = BT_LISTEN;
-+				set_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags);
-+			} else {
-+				iso_conn_defer_accept(pi->conn->hcon);
-+				sk->sk_state = BT_CONFIG;
-+			}
- 			release_sock(sk);
- 			return 0;
- 		case BT_CONNECT:
-@@ -1518,11 +1569,17 @@ static bool iso_match_big(struct sock *sk, void *data)
- 	return ev->handle == iso_pi(sk)->qos.bcast.big;
- }
- 
-+static bool iso_match_pa_sync_flag(struct sock *sk, void *data)
-+{
-+	return test_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags);
-+}
-+
- static void iso_conn_ready(struct iso_conn *conn)
- {
--	struct sock *parent;
-+	struct sock *parent = NULL;
+@@ -1222,7 +1223,6 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 			    test_bit(HCI_CONN_PA_SYNC, &pi->conn->hcon->flags)) {
+ 				iso_conn_big_sync(sk);
+ 				sk->sk_state = BT_LISTEN;
+-				set_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags);
+ 			} else {
+ 				iso_conn_defer_accept(pi->conn->hcon);
+ 				sk->sk_state = BT_CONFIG;
+@@ -1580,6 +1580,7 @@ static void iso_conn_ready(struct iso_conn *conn)
  	struct sock *sk = conn->sk;
--	struct hci_ev_le_big_sync_estabilished *ev;
-+	struct hci_ev_le_big_sync_estabilished *ev = NULL;
-+	struct hci_ev_le_pa_sync_established *ev2 = NULL;
+ 	struct hci_ev_le_big_sync_estabilished *ev = NULL;
+ 	struct hci_ev_le_pa_sync_established *ev2 = NULL;
++	struct hci_evt_le_big_info_adv_report *ev3 = NULL;
  	struct hci_conn *hcon;
  
  	BT_DBG("conn %p", conn);
-@@ -1534,15 +1591,32 @@ static void iso_conn_ready(struct iso_conn *conn)
- 		if (!hcon)
- 			return;
- 
--		ev = hci_recv_event_data(hcon->hdev,
--					 HCI_EVT_LE_BIG_SYNC_ESTABILISHED);
--		if (ev)
-+		if (test_bit(HCI_CONN_BIG_SYNC, &hcon->flags) ||
-+		    test_bit(HCI_CONN_BIG_SYNC_FAILED, &hcon->flags)) {
-+			ev = hci_recv_event_data(hcon->hdev,
-+						 HCI_EVT_LE_BIG_SYNC_ESTABILISHED);
-+
-+			/* Get reference to PA sync parent socket, if it exists */
- 			parent = iso_get_sock_listen(&hcon->src,
- 						     &hcon->dst,
--						     iso_match_big, ev);
--		else
-+						     iso_match_pa_sync_flag, NULL);
-+			if (!parent && ev)
+@@ -1604,14 +1605,20 @@ static void iso_conn_ready(struct iso_conn *conn)
+ 				parent = iso_get_sock_listen(&hcon->src,
+ 							     &hcon->dst,
+ 							     iso_match_big, ev);
+-		} else if (test_bit(HCI_CONN_PA_SYNC, &hcon->flags) ||
+-				test_bit(HCI_CONN_PA_SYNC_FAILED, &hcon->flags)) {
++		} else if (test_bit(HCI_CONN_PA_SYNC_FAILED, &hcon->flags)) {
+ 			ev2 = hci_recv_event_data(hcon->hdev,
+ 						  HCI_EV_LE_PA_SYNC_ESTABLISHED);
+ 			if (ev2)
+ 				parent = iso_get_sock_listen(&hcon->src,
+ 							     &hcon->dst,
+ 							     iso_match_sid, ev2);
++		} else if (test_bit(HCI_CONN_PA_SYNC, &hcon->flags)) {
++			ev3 = hci_recv_event_data(hcon->hdev,
++						  HCI_EVT_LE_BIG_INFO_ADV_REPORT);
++			if (ev3)
 +				parent = iso_get_sock_listen(&hcon->src,
 +							     &hcon->dst,
-+							     iso_match_big, ev);
-+		} else if (test_bit(HCI_CONN_PA_SYNC, &hcon->flags) ||
-+				test_bit(HCI_CONN_PA_SYNC_FAILED, &hcon->flags)) {
-+			ev2 = hci_recv_event_data(hcon->hdev,
-+						  HCI_EV_LE_PA_SYNC_ESTABLISHED);
-+			if (ev2)
-+				parent = iso_get_sock_listen(&hcon->src,
-+							     &hcon->dst,
-+							     iso_match_sid, ev2);
-+		}
-+
-+		if (!parent)
- 			parent = iso_get_sock_listen(&hcon->src,
--						     BDADDR_ANY, NULL, NULL);
-+							BDADDR_ANY, NULL, NULL);
++							     iso_match_sync_handle, ev3);
+ 		}
  
  		if (!parent)
- 			return;
-@@ -1559,11 +1633,17 @@ static void iso_conn_ready(struct iso_conn *conn)
- 		iso_sock_init(sk, parent);
- 
- 		bacpy(&iso_pi(sk)->src, &hcon->src);
--		iso_pi(sk)->src_type = hcon->src_type;
-+
-+		/* Convert from HCI to three-value type */
-+		if (hcon->src_type == ADDR_LE_DEV_PUBLIC)
-+			iso_pi(sk)->src_type = BDADDR_LE_PUBLIC;
-+		else
-+			iso_pi(sk)->src_type = BDADDR_LE_RANDOM;
- 
- 		/* If hcon has no destination address (BDADDR_ANY) it means it
--		 * was created by HCI_EV_LE_BIG_SYNC_ESTABILISHED so we need to
--		 * initialize using the parent socket destination address.
-+		 * was created by HCI_EV_LE_BIG_SYNC_ESTABILISHED or
-+		 * HCI_EV_LE_PA_SYNC_ESTABLISHED so we need to initialize using
-+		 * the parent socket destination address.
- 		 */
- 		if (!bacmp(&hcon->dst, BDADDR_ANY)) {
- 			bacpy(&hcon->dst, &iso_pi(parent)->dst);
-@@ -1571,13 +1651,21 @@ static void iso_conn_ready(struct iso_conn *conn)
+@@ -1651,11 +1658,13 @@ static void iso_conn_ready(struct iso_conn *conn)
  			hcon->sync_handle = iso_pi(parent)->sync_handle;
  		}
  
-+		if (ev2 && !ev2->status) {
-+			iso_pi(sk)->sync_handle = iso_pi(parent)->sync_handle;
-+			iso_pi(sk)->qos = iso_pi(parent)->qos;
-+			iso_pi(sk)->bc_num_bis = iso_pi(parent)->bc_num_bis;
-+			memcpy(iso_pi(sk)->bc_bis, iso_pi(parent)->bc_bis, ISO_MAX_NUM_BIS);
-+		}
-+
+-		if (ev2 && !ev2->status) {
+-			iso_pi(sk)->sync_handle = iso_pi(parent)->sync_handle;
++		if (ev3) {
+ 			iso_pi(sk)->qos = iso_pi(parent)->qos;
++			iso_pi(sk)->qos.bcast.encryption = ev3->encryption;
++			hcon->iso_qos = iso_pi(sk)->qos;
+ 			iso_pi(sk)->bc_num_bis = iso_pi(parent)->bc_num_bis;
+ 			memcpy(iso_pi(sk)->bc_bis, iso_pi(parent)->bc_bis, ISO_MAX_NUM_BIS);
++			set_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags);
+ 		}
+ 
  		bacpy(&iso_pi(sk)->dst, &hcon->dst);
- 		iso_pi(sk)->dst_type = hcon->dst_type;
- 
- 		hci_conn_hold(hcon);
- 		iso_chan_add(conn, sk, parent);
- 
--		if (ev && ((struct hci_evt_le_big_sync_estabilished *)ev)->status) {
-+		if ((ev && ((struct hci_evt_le_big_sync_estabilished *)ev)->status) ||
-+		    (ev2 && ev2->status)) {
- 			/* Trigger error signal on child socket */
- 			sk->sk_err = ECONNREFUSED;
- 			sk->sk_error_report(sk);
-@@ -1635,7 +1723,7 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 	if (ev1) {
- 		sk = iso_get_sock_listen(&hdev->bdaddr, bdaddr, iso_match_sid,
- 					 ev1);
--		if (sk)
-+		if (sk && !ev1->status)
- 			iso_pi(sk)->sync_handle = le16_to_cpu(ev1->handle);
- 
- 		goto done;
-@@ -1643,16 +1731,21 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 
- 	ev2 = hci_recv_event_data(hdev, HCI_EVT_LE_BIG_INFO_ADV_REPORT);
- 	if (ev2) {
-+		/* Try to get PA sync listening socket, if it exists */
- 		sk = iso_get_sock_listen(&hdev->bdaddr, bdaddr,
--					 iso_match_sync_handle, ev2);
-+						iso_match_pa_sync_flag, NULL);
-+		if (!sk)
-+			sk = iso_get_sock_listen(&hdev->bdaddr, bdaddr,
-+						 iso_match_sync_handle, ev2);
- 		if (sk) {
- 			int err;
- 
- 			if (ev2->num_bis < iso_pi(sk)->bc_num_bis)
- 				iso_pi(sk)->bc_num_bis = ev2->num_bis;
- 
--			if (!test_and_set_bit(BT_SK_BIG_SYNC, &iso_pi(sk)->flags)) {
--				err = hci_le_big_create_sync(hdev,
-+			if (!test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags) &&
-+			    !test_and_set_bit(BT_SK_BIG_SYNC, &iso_pi(sk)->flags)) {
-+				err = hci_le_big_create_sync(hdev, NULL,
- 							     &iso_pi(sk)->qos,
- 							     iso_pi(sk)->sync_handle,
- 							     iso_pi(sk)->bc_num_bis,
-@@ -1704,12 +1797,13 @@ static void iso_connect_cfm(struct hci_conn *hcon, __u8 status)
- 
- 	BT_DBG("hcon %p bdaddr %pMR status %d", hcon, &hcon->dst, status);
- 
--	/* Similar to the success case, if HCI_CONN_BIG_SYNC_FAILED is set,
--	 * queue the failed bis connection into the accept queue of the
--	 * listening socket and wake up userspace, to inform the user about
--	 * the BIG sync failed event.
-+	/* Similar to the success case, if HCI_CONN_BIG_SYNC_FAILED or
-+	 * HCI_CONN_PA_SYNC_FAILED is set, queue the failed connection
-+	 * into the accept queue of the listening socket and wake up
-+	 * userspace, to inform the user about the event.
- 	 */
--	if (!status || test_bit(HCI_CONN_BIG_SYNC_FAILED, &hcon->flags)) {
-+	if (!status || test_bit(HCI_CONN_BIG_SYNC_FAILED, &hcon->flags) ||
-+	    test_bit(HCI_CONN_PA_SYNC_FAILED, &hcon->flags)) {
- 		struct iso_conn *conn;
- 
- 		conn = iso_conn_add(hcon);
 -- 
 2.42.0
 
