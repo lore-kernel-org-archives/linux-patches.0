@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EA63A8F4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006133A8F4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYd72wAQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33110C433C9;
-	Wed, 15 Nov 2023 19:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djoGbKFc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A651CC433C7;
+	Wed, 15 Nov 2023 19:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077944;
-	bh=i+G2SjdsAmWoiXRCdozoBcGFW7M94+SSyeCXvCBAj+U=;
+	s=korg; t=1700077945;
+	bh=j0VGvbK+o+/o1RtSWGn3tYocUkhxf6Fn+lHIfwLEayg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JYd72wAQqqeJIK3LYn4V938RWQwlql7fP4jUQcHZzrha0otsgEeUxTaqxVQAIDOH/
-	 UOL9pk5OZgDgp4pTbGqSoRL4xg5C54USfkPGS6OnE7czvgBjfKKL6uW9J4Puk+u56U
-	 +WIXyKO5We5bD+hUnkliBvxPHoxupsZfBOvl0z/c=
+	b=djoGbKFcv2tzsLY7B/BIFsbj4grD8lV/5ssGNtNdLP1eT6SJ9u9j2njJJ2fadps/o
+	 qIg0+ZCRvWtwm3EH8yQSeW+hc9Ww/jX4gx7+ljrOqx56PQs9Nv17Hb8+sKpq0jIroL
+	 HeKinMe1ADCbenO9AvTU3RIaMoZQ9tr2mW2cCGgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derick Marks <derick.w.marks@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
+	Adam Dunlap <acdunlap@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jacob Xu <jacobhxu@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/379] ACPI/NUMA: Apply SRAT proximity domain to entire CFMWS window
-Date: Wed, 15 Nov 2023 14:21:28 -0500
-Message-ID: <20231115192645.945549470@linuxfoundation.org>
+Subject: [PATCH 6.1 014/379] x86/sev-es: Allow copy_from_kernel_nofault() in earlier boot
+Date: Wed, 15 Nov 2023 14:21:29 -0500
+Message-ID: <20231115192646.004758661@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -44,71 +44,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Adam Dunlap <acdunlap@google.com>
 
-[ Upstream commit 8f1004679987302b155f14b966ca6d4335814fcb ]
+[ Upstream commit f79936545fb122856bd78b189d3c7ee59928c751 ]
 
-Commit fd49f99c1809 ("ACPI: NUMA: Add a node and memblk for each
-CFMWS not in SRAT") did not account for the case where the BIOS
-only partially describes a CFMWS Window in the SRAT. That means
-the omitted address ranges, of a partially described CFMWS Window,
-do not get assigned to a NUMA node.
+Previously, if copy_from_kernel_nofault() was called before
+boot_cpu_data.x86_virt_bits was set up, then it would trigger undefined
+behavior due to a shift by 64.
 
-Replace the call to phys_to_target_node() with numa_add_memblks().
-Numa_add_memblks() searches an HPA range for existing memblk(s)
-and extends those memblk(s) to fill the entire CFMWS Window.
+This ended up causing boot failures in the latest version of ubuntu2204
+in the gcp project when using SEV-SNP.
 
-Extending the existing memblks is a simple strategy that reuses
-SRAT defined proximity domains from part of a window to fill out
-the entire window, based on the knowledge* that all of a CFMWS
-window is of a similar performance class.
+Specifically, this function is called during an early #VC handler which
+is triggered by a CPUID to check if NX is implemented.
 
-*Note that this heuristic will evolve when CFMWS Windows present
-a wider range of characteristics. The extension of the proximity
-domain, implemented here, is likely a step in developing a more
-sophisticated performance profile in the future.
-
-There is no change in behavior when the SRAT does not describe
-the CFMWS Window at all. In that case, a new NUMA node with a
-single memblk covering the entire CFMWS Window is created.
-
-Fixes: fd49f99c1809 ("ACPI: NUMA: Add a node and memblk for each CFMWS not in SRAT")
-Reported-by: Derick Marks <derick.w.marks@intel.com>
-Suggested-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Tested-by: Derick Marks <derick.w.marks@intel.com>
-Link: https://lore.kernel.org/all/eaa0b7cffb0951a126223eef3cbe7b55b8300ad9.1689018477.git.alison.schofield%40intel.com
+Fixes: 1aa9aa8ee517 ("x86/sev-es: Setup GHCB-based boot #VC handler")
+Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Adam Dunlap <acdunlap@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Jacob Xu <jacobhxu@google.com>
+Link: https://lore.kernel.org/r/20230912002703.3924521-2-acdunlap@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/numa/srat.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/mm/maccess.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/numa/srat.c b/drivers/acpi/numa/srat.c
-index 1f4fc5f8a819d..12f330b0eac01 100644
---- a/drivers/acpi/numa/srat.c
-+++ b/drivers/acpi/numa/srat.c
-@@ -310,11 +310,16 @@ static int __init acpi_parse_cfmws(union acpi_subtable_headers *header,
- 	start = cfmws->base_hpa;
- 	end = cfmws->base_hpa + cfmws->window_size;
+diff --git a/arch/x86/mm/maccess.c b/arch/x86/mm/maccess.c
+index 5a53c2cc169cc..6993f026adec9 100644
+--- a/arch/x86/mm/maccess.c
++++ b/arch/x86/mm/maccess.c
+@@ -9,12 +9,21 @@ bool copy_from_kernel_nofault_allowed(const void *unsafe_src, size_t size)
+ 	unsigned long vaddr = (unsigned long)unsafe_src;
  
--	/* Skip if the SRAT already described the NUMA details for this HPA */
--	node = phys_to_target_node(start);
--	if (node != NUMA_NO_NODE)
+ 	/*
+-	 * Range covering the highest possible canonical userspace address
+-	 * as well as non-canonical address range. For the canonical range
+-	 * we also need to include the userspace guard page.
++	 * Do not allow userspace addresses.  This disallows
++	 * normal userspace and the userspace guard page:
+ 	 */
+-	return vaddr >= TASK_SIZE_MAX + PAGE_SIZE &&
+-	       __is_canonical_address(vaddr, boot_cpu_data.x86_virt_bits);
++	if (vaddr < TASK_SIZE_MAX + PAGE_SIZE)
++		return false;
++
 +	/*
-+	 * The SRAT may have already described NUMA details for all,
-+	 * or a portion of, this CFMWS HPA range. Extend the memblks
-+	 * found for any portion of the window to cover the entire
-+	 * window.
++	 * Allow everything during early boot before 'x86_virt_bits'
++	 * is initialized.  Needed for instruction decoding in early
++	 * exception handlers.
 +	 */
-+	if (!numa_fill_memblks(start, end))
- 		return 0;
- 
-+	/* No SRAT description. Create a new node. */
- 	node = acpi_map_pxm_to_node(*fake_pxm);
- 
- 	if (node == NUMA_NO_NODE) {
++	if (!boot_cpu_data.x86_virt_bits)
++		return true;
++
++	return __is_canonical_address(vaddr, boot_cpu_data.x86_virt_bits);
+ }
+ #else
+ bool copy_from_kernel_nofault_allowed(const void *unsafe_src, size_t size)
 -- 
 2.42.0
 
