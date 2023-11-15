@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D512343AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD28E3419C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c843d9V/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8170AC32779;
-	Wed, 15 Nov 2023 20:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJEOPTJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3F1C3277A;
+	Wed, 15 Nov 2023 20:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081323;
-	bh=j+V4AOth914tlv9D88g7NypVmY0rzcTu+bHR/DJUGaA=;
+	s=korg; t=1700081325;
+	bh=+AHMcMNvQiuxR8p4FCK7zCjDeGEs1eeorc8Jk3jqP80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c843d9V/ioU9rzEJwkbJi2ghnYlAx4tO0z20v00bdgb3iP4AK/yMdAtbRWHopHs0T
-	 AiWmtr/s1xMa8NuLFFxtbgOOzLe3DILcBJ6su9OurMp76q/vDQZxt3O72uU5DSVgax
-	 lcai/2lqaUta41/zCS/Wdqz7sr8dRes9JdWFC8LE=
+	b=yJEOPTJ/0hfqJSmc/H3lBaP5gE0q1/HmMBF9ql+LDdfV8HBwsOx60diqQkK8WYGpZ
+	 +lk4N9DJ1o1Dod39MKOp1TvApnd9Jd2TyXTJV/N4mTktwEjSIzd85pcC2bs2nhzndS
+	 RBa2ZCzYU+Rrq15n8rArJHfFQhlvqrKQsWKlvR88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	kernel test robot <yujie.liu@intel.com>,
+	Varadarajan Narayanan <quic_varada@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/244] ACPI: sysfs: Fix create_pnp_modalias() and create_of_modalias()
-Date: Wed, 15 Nov 2023 15:33:59 -0500
-Message-ID: <20231115203551.190802984@linuxfoundation.org>
+Subject: [PATCH 5.15 077/244] clk: qcom: config IPQ_APSS_6018 should depend on QCOM_SMEM
+Date: Wed, 15 Nov 2023 15:34:29 -0500
+Message-ID: <20231115203552.987205022@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,60 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-[ Upstream commit 48cf49d31994ff97b33c4044e618560ec84d35fb ]
+[ Upstream commit 6a15647d0adc686226045e8046369f34d6ab03ed ]
 
-snprintf() does not return negative values on error.
+The config IPQ_APSS_6018 should depend on QCOM_SMEM, to
+avoid the following error reported by 'kernel test robot'
 
-To know if the buffer was too small, the returned value needs to be
-compared with the length of the passed buffer. If it is greater or
-equal, the output has been truncated, so add checks for the truncation
-to create_pnp_modalias() and create_of_modalias(). Also make them
-return -ENOMEM in that case, as they already do that elsewhere.
+	loongarch64-linux-ld: drivers/clk/qcom/apss-ipq6018.o: in function `apss_ipq6018_probe':
+	>> apss-ipq6018.c:(.text+0xd0): undefined reference to `qcom_smem_get_soc_id'
 
-Moreover, the remaining size of the buffer used by snprintf() needs to
-be updated after the first write to avoid out-of-bounds access as
-already done correctly in create_pnp_modalias(), but not in
-create_of_modalias(), so change the latter accordingly.
-
-Fixes: 8765c5ba1949 ("ACPI / scan: Rework modalias creation when "compatible" is present")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-[ rjw: Merge two patches into one, combine changelogs, add subject ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 5e77b4ef1b19 ("clk: qcom: Add ipq6018 apss clock controller")
+Reported-by: kernel test robot <yujie.liu@intel.com>
+Closes: https://lore.kernel.org/r/202310181650.g8THtfsm-lkp@intel.com/
+Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+Link: https://lore.kernel.org/r/f4c4d65a7cb71e807d6d472c63c7718408c8f5f0.1697781921.git.quic_varada@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/device_sysfs.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/device_sysfs.c b/drivers/acpi/device_sysfs.c
-index 61271e61c3073..da9cd11adfb56 100644
---- a/drivers/acpi/device_sysfs.c
-+++ b/drivers/acpi/device_sysfs.c
-@@ -157,8 +157,8 @@ static int create_pnp_modalias(struct acpi_device *acpi_dev, char *modalias,
- 		return 0;
- 
- 	len = snprintf(modalias, size, "acpi:");
--	if (len <= 0)
--		return len;
-+	if (len >= size)
-+		return -ENOMEM;
- 
- 	size -= len;
- 
-@@ -211,8 +211,10 @@ static int create_of_modalias(struct acpi_device *acpi_dev, char *modalias,
- 	len = snprintf(modalias, size, "of:N%sT", (char *)buf.pointer);
- 	ACPI_FREE(buf.pointer);
- 
--	if (len <= 0)
--		return len;
-+	if (len >= size)
-+		return -ENOMEM;
-+
-+	size -= len;
- 
- 	of_compatible = acpi_dev->data.of_compatible;
- 	if (of_compatible->type == ACPI_TYPE_PACKAGE) {
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 6ba86cffc4135..4c8bb23ca7304 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -127,6 +127,7 @@ config IPQ_APSS_6018
+ 	tristate "IPQ APSS Clock Controller"
+ 	select IPQ_APSS_PLL
+ 	depends on QCOM_APCS_IPC || COMPILE_TEST
++	depends on QCOM_SMEM
+ 	help
+ 	  Support for APSS clock controller on IPQ platforms. The
+ 	  APSS clock controller manages the Mux and enable block that feeds the
 -- 
 2.42.0
 
