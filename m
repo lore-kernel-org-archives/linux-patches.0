@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391143DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52333DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XcxFkLo3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E4FC433C8;
-	Wed, 15 Nov 2023 19:56:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhSxZJSL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B4DC433CA;
+	Wed, 15 Nov 2023 19:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078174;
-	bh=KwT666jwYQJ5G2GrXnLjpet7qvbdUE8Ro+fszVMzLEs=;
+	s=korg; t=1700078175;
+	bh=d5kjWbJal9y+8T1gOicvFtL8ey0vB3qh40waNlzNM7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XcxFkLo3KCOmbXue+OZZaQTG6j9aQiChjhOEQz71GtOQFTsNgQ2c2lS+d9A853Q5u
-	 pPIAxl4bP19Dpa9ETxn9LoBwB9lxxPtfMz9QHK8hNmd402NzBURmC5cTgGoNz8anpM
-	 ZA9d0rvmDuo83cEoxLkwBwyhp8fec3V6w7g2VDY4=
+	b=HhSxZJSLEqq9oHwLWpwgXawcDAHHsfYtgvT9YzjIHrP00+fAKOMmPY3qwZ722cuiY
+	 M/4hyBk9pb7GJombXFcOapbPriRTA6O7NnK56R3M5WXNtU9zqVSIeS0dyU8klkckqT
+	 9PeleKLoHldmva658aFCrWzQ0iK+AL6z14OOETtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 156/379] perf/arm-cmn: Fix DTC domain detection
-Date: Wed, 15 Nov 2023 14:23:51 -0500
-Message-ID: <20231115192654.342926382@linuxfoundation.org>
+Subject: [PATCH 6.1 157/379] drivers/perf: hisi_pcie: Check the type first in pmu::event_init()
+Date: Wed, 15 Nov 2023 14:23:52 -0500
+Message-ID: <20231115192654.399217861@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,66 +42,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-[ Upstream commit e3e73f511c49c741f6309862c2248958ad77bbaa ]
+[ Upstream commit 6d7d51e88e21c0af1ca96a3617afef334bfeffcf ]
 
-It transpires that dtm_unit_info is another register which got shuffled
-in CMN-700 without me noticing. Fix that in a way which also proactively
-fixes the fragile laziness of its consumer, just in case any further
-fields ever get added alongside dtc_domain.
+Check whether the event type matches the PMU type firstly in
+pmu::event_init() before touching the event. Otherwise we'll
+change the events of others and lead to incorrect results.
+Since in perf_init_event() we may call every pmu's event_init()
+in a certain case, we should not modify the event if it's not
+ours.
 
-Fixes: 23760a014417 ("perf/arm-cmn: Add CMN-700 support")
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Link: https://lore.kernel.org/r/3076ee83d0554f6939fbb6ee49ab2bdb28d8c7ee.1697824215.git.robin.murphy@arm.com
+Fixes: 8404b0fbc7fb ("drivers/perf: hisi: Add driver for HiSilicon PCIe PMU")
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Link: https://lore.kernel.org/r/20231024092954.42297-2-yangyicong@huawei.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm-cmn.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/perf/hisilicon/hisi_pcie_pmu.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index 5e896218ac5f4..47e7c3206939f 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -110,7 +110,9 @@
+diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+index b61f1f9aba214..c4c1cd269c577 100644
+--- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
++++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+@@ -342,6 +342,10 @@ static int hisi_pcie_pmu_event_init(struct perf_event *event)
+ 	struct hisi_pcie_pmu *pcie_pmu = to_pcie_pmu(event->pmu);
+ 	struct hw_perf_event *hwc = &event->hw;
  
- #define CMN_DTM_PMEVCNTSR		0x240
- 
--#define CMN_DTM_UNIT_INFO		0x0910
-+#define CMN650_DTM_UNIT_INFO		0x0910
-+#define CMN_DTM_UNIT_INFO		0x0960
-+#define CMN_DTM_UNIT_INFO_DTC_DOMAIN	GENMASK_ULL(1, 0)
- 
- #define CMN_DTM_NUM_COUNTERS		4
- /* Want more local counters? Why not replicate the whole DTM! Ugh... */
-@@ -1994,6 +1996,16 @@ static int arm_cmn_init_dtcs(struct arm_cmn *cmn)
- 	return 0;
- }
- 
-+static unsigned int arm_cmn_dtc_domain(struct arm_cmn *cmn, void __iomem *xp_region)
-+{
-+	int offset = CMN_DTM_UNIT_INFO;
++	/* Check the type first before going on, otherwise it's not our event */
++	if (event->attr.type != event->pmu->type)
++		return -ENOENT;
 +
-+	if (cmn->part == PART_CMN650 || cmn->part == PART_CI700)
-+		offset = CMN650_DTM_UNIT_INFO;
-+
-+	return FIELD_GET(CMN_DTM_UNIT_INFO_DTC_DOMAIN, readl_relaxed(xp_region + offset));
-+}
-+
- static void arm_cmn_init_node_info(struct arm_cmn *cmn, u32 offset, struct arm_cmn_node *node)
- {
- 	int level;
-@@ -2125,7 +2137,7 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
- 		if (cmn->part == PART_CMN600)
- 			xp->dtc = 0xf;
- 		else
--			xp->dtc = 1 << readl_relaxed(xp_region + CMN_DTM_UNIT_INFO);
-+			xp->dtc = 1 << arm_cmn_dtc_domain(cmn, xp_region);
+ 	event->cpu = pcie_pmu->on_cpu;
  
- 		xp->dtm = dtm - cmn->dtms;
- 		arm_cmn_init_dtm(dtm++, xp, 0);
+ 	if (EXT_COUNTER_IS_USED(hisi_pcie_get_event(event)))
+@@ -349,9 +353,6 @@ static int hisi_pcie_pmu_event_init(struct perf_event *event)
+ 	else
+ 		hwc->event_base = HISI_PCIE_CNT;
+ 
+-	if (event->attr.type != event->pmu->type)
+-		return -ENOENT;
+-
+ 	/* Sampling is not supported. */
+ 	if (is_sampling_event(event) || event->attach_state & PERF_ATTACH_TASK)
+ 		return -EOPNOTSUPP;
 -- 
 2.42.0
 
