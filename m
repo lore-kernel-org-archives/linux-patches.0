@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20AA28368
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF7B28368
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgqpYbxs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532DFC433CB;
-	Wed, 15 Nov 2023 19:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdHxA+PF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24FDC433C8;
+	Wed, 15 Nov 2023 19:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076711;
-	bh=vMzIKzHyG3eDprz42f33hvttuVZkZdxyb/4Wx8YWPV4=;
+	s=korg; t=1700076713;
+	bh=5EZKTYGISfa1mgLJpEtiK75GjvMD95aztiPnYtXNed8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgqpYbxsEqEgaymhETic1O/C01l4MzGq7eUsNd81TWIrQbbXyRi6e0afgGAVNeOU0
-	 ER/F/YVE1U2QVCqgxqqGJ8+Gwd59X5ufZqzyyZw7JH7IRbehd6p7DhpW1j4/GqnaVa
-	 ktJkJMsVCLLwzx2p1sOQOvP+n016wtHs2TLejQeY=
+	b=FdHxA+PFgEqSnMk8gXMQouujSIX1mnPWPqt0xrY3cpC8YkCGpuj2+pk22+zYsPuv4
+	 3/ICpZ2ByJusjNpRqZZ9ulfqf59QgtGQm0p4CAWApmFOk66nhT5RFpCRb4ghkL/BTk
+	 PK91QmGEqIwztx8OyRZaSUJYZ/rE3UXbfzPpopgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
+	Yury Norov <yury.norov@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Mel Gorman <mgorman@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 398/550] usb: chipidea: Simplify Tegra DMA alignment code
-Date: Wed, 15 Nov 2023 14:16:22 -0500
-Message-ID: <20231115191628.447556981@linuxfoundation.org>
+Subject: [PATCH 6.6 002/603] numa: Generalize numa_map_to_online_node()
+Date: Wed, 15 Nov 2023 14:09:07 -0500
+Message-ID: <20231115191613.291923126@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -35,140 +37,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+From: Yury Norov <yury.norov@gmail.com>
 
-[ Upstream commit 2ae61a2562c0d1720545b0845829a65fb6a9c2c6 ]
+[ Upstream commit b1f099b1cf51d553c510c6c8141c27d9ba7ea1fe ]
 
-The USB host on Tegra3 works with 32-bit alignment. Previous code tried
-to align the buffer, but it did align the wrapper struct instead, so
-the buffer was at a constant offset of 8 bytes (two pointers) from
-expected alignment.  Since kmalloc() guarantees at least 8-byte
-alignment already, the alignment-extending is removed.
+The function in fact searches the nearest node for a given one,
+based on a N_ONLINE state. This is a common pattern to search
+for a nearest node.
 
-Fixes: fc53d5279094 ("usb: chipidea: tegra: Support host mode")
-Signed-off-by: Michał Mirosław <mirq-linux@rere.qmqm.pl>
-Link: https://lore.kernel.org/r/a0d917d492b1f91ee0019e68b8e8bca9c585393f.1695934946.git.mirq-linux@rere.qmqm.pl
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch converts numa_map_to_online_node() to numa_nearest_node()
+so that others won't need to opencode the logic.
+
+Signed-off-by: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Mel Gorman <mgorman@suse.de>
+Link: https://lore.kernel.org/r/20230819141239.287290-2-yury.norov@gmail.com
+Stable-dep-of: 617f2c38cb5c ("sched/topology: Fix sched_numa_find_nth_cpu() in CPU-less case")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/host.c | 45 +++++++++++++++----------------------
- 1 file changed, 18 insertions(+), 27 deletions(-)
+ include/linux/numa.h |  7 +++++--
+ mm/mempolicy.c       | 18 +++++++++++-------
+ 2 files changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/usb/chipidea/host.c b/drivers/usb/chipidea/host.c
-index abddd39d1ff1e..0cce192083701 100644
---- a/drivers/usb/chipidea/host.c
-+++ b/drivers/usb/chipidea/host.c
-@@ -30,8 +30,7 @@ struct ehci_ci_priv {
- };
+diff --git a/include/linux/numa.h b/include/linux/numa.h
+index 59df211d051fa..fb30a42f0700d 100644
+--- a/include/linux/numa.h
++++ b/include/linux/numa.h
+@@ -25,7 +25,7 @@
+ #include <asm/sparsemem.h>
  
- struct ci_hdrc_dma_aligned_buffer {
--	void *kmalloc_ptr;
--	void *old_xfer_buffer;
-+	void *original_buffer;
- 	u8 data[];
- };
+ /* Generic implementation available */
+-int numa_map_to_online_node(int node);
++int numa_nearest_node(int node, unsigned int state);
  
-@@ -380,60 +379,52 @@ static int ci_ehci_bus_suspend(struct usb_hcd *hcd)
- 	return 0;
+ #ifndef memory_add_physaddr_to_nid
+ static inline int memory_add_physaddr_to_nid(u64 start)
+@@ -44,10 +44,11 @@ static inline int phys_to_target_node(u64 start)
  }
- 
--static void ci_hdrc_free_dma_aligned_buffer(struct urb *urb)
-+static void ci_hdrc_free_dma_aligned_buffer(struct urb *urb, bool copy_back)
+ #endif
+ #else /* !CONFIG_NUMA */
+-static inline int numa_map_to_online_node(int node)
++static inline int numa_nearest_node(int node, unsigned int state)
  {
- 	struct ci_hdrc_dma_aligned_buffer *temp;
--	size_t length;
- 
- 	if (!(urb->transfer_flags & URB_ALIGNED_TEMP_BUFFER))
- 		return;
-+	urb->transfer_flags &= ~URB_ALIGNED_TEMP_BUFFER;
- 
- 	temp = container_of(urb->transfer_buffer,
- 			    struct ci_hdrc_dma_aligned_buffer, data);
-+	urb->transfer_buffer = temp->original_buffer;
+ 	return NUMA_NO_NODE;
+ }
 +
-+	if (copy_back && usb_urb_dir_in(urb)) {
-+		size_t length;
- 
--	if (usb_urb_dir_in(urb)) {
- 		if (usb_pipeisoc(urb->pipe))
- 			length = urb->transfer_buffer_length;
- 		else
- 			length = urb->actual_length;
- 
--		memcpy(temp->old_xfer_buffer, temp->data, length);
-+		memcpy(temp->original_buffer, temp->data, length);
- 	}
--	urb->transfer_buffer = temp->old_xfer_buffer;
--	kfree(temp->kmalloc_ptr);
- 
--	urb->transfer_flags &= ~URB_ALIGNED_TEMP_BUFFER;
-+	kfree(temp);
- }
- 
- static int ci_hdrc_alloc_dma_aligned_buffer(struct urb *urb, gfp_t mem_flags)
+ static inline int memory_add_physaddr_to_nid(u64 start)
  {
--	struct ci_hdrc_dma_aligned_buffer *temp, *kmalloc_ptr;
--	const unsigned int ci_hdrc_usb_dma_align = 32;
--	size_t kmalloc_size;
-+	struct ci_hdrc_dma_aligned_buffer *temp;
- 
- 	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0)
- 		return 0;
--	if (!((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)) && !(urb->transfer_buffer_length & 3))
-+	if (IS_ALIGNED((uintptr_t)urb->transfer_buffer, 4)
-+	    && IS_ALIGNED(urb->transfer_buffer_length, 4))
- 		return 0;
- 
--	/* Allocate a buffer with enough padding for alignment */
--	kmalloc_size = ALIGN(urb->transfer_buffer_length, 4) +
--		       sizeof(struct ci_hdrc_dma_aligned_buffer) +
--		       ci_hdrc_usb_dma_align - 1;
--
--	kmalloc_ptr = kmalloc(kmalloc_size, mem_flags);
--	if (!kmalloc_ptr)
-+	temp = kmalloc(sizeof(*temp) + ALIGN(urb->transfer_buffer_length, 4), mem_flags);
-+	if (!temp)
- 		return -ENOMEM;
- 
--	/* Position our struct dma_aligned_buffer such that data is aligned */
--	temp = PTR_ALIGN(kmalloc_ptr + 1, ci_hdrc_usb_dma_align) - 1;
--	temp->kmalloc_ptr = kmalloc_ptr;
--	temp->old_xfer_buffer = urb->transfer_buffer;
- 	if (usb_urb_dir_out(urb))
- 		memcpy(temp->data, urb->transfer_buffer,
- 		       urb->transfer_buffer_length);
--	urb->transfer_buffer = temp->data;
- 
-+	temp->original_buffer = urb->transfer_buffer;
-+	urb->transfer_buffer = temp->data;
- 	urb->transfer_flags |= URB_ALIGNED_TEMP_BUFFER;
- 
  	return 0;
-@@ -450,7 +441,7 @@ static int ci_hdrc_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
- 
- 	ret = usb_hcd_map_urb_for_dma(hcd, urb, mem_flags);
- 	if (ret)
--		ci_hdrc_free_dma_aligned_buffer(urb);
-+		ci_hdrc_free_dma_aligned_buffer(urb, false);
- 
- 	return ret;
+@@ -58,6 +59,8 @@ static inline int phys_to_target_node(u64 start)
  }
-@@ -458,7 +449,7 @@ static int ci_hdrc_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
- static void ci_hdrc_unmap_urb_for_dma(struct usb_hcd *hcd, struct urb *urb)
+ #endif
+ 
++#define numa_map_to_online_node(node) numa_nearest_node(node, N_ONLINE)
++
+ #ifdef CONFIG_HAVE_ARCH_NODE_DEV_GROUP
+ extern const struct attribute_group arch_node_dev_group;
+ #endif
+diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+index 29ebf1e7898cf..e52e3a0b8f2e6 100644
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -131,22 +131,26 @@ static struct mempolicy default_policy = {
+ static struct mempolicy preferred_node_policy[MAX_NUMNODES];
+ 
+ /**
+- * numa_map_to_online_node - Find closest online node
++ * numa_nearest_node - Find nearest node by state
+  * @node: Node id to start the search
++ * @state: State to filter the search
+  *
+- * Lookup the next closest node by distance if @nid is not online.
++ * Lookup the closest node by distance if @nid is not in state.
+  *
+- * Return: this @node if it is online, otherwise the closest node by distance
++ * Return: this @node if it is in state, otherwise the closest node by distance
+  */
+-int numa_map_to_online_node(int node)
++int numa_nearest_node(int node, unsigned int state)
  {
- 	usb_hcd_unmap_urb_for_dma(hcd, urb);
--	ci_hdrc_free_dma_aligned_buffer(urb);
-+	ci_hdrc_free_dma_aligned_buffer(urb, true);
- }
+ 	int min_dist = INT_MAX, dist, n, min_node;
  
- #ifdef CONFIG_PM_SLEEP
+-	if (node == NUMA_NO_NODE || node_online(node))
++	if (state >= NR_NODE_STATES)
++		return -EINVAL;
++
++	if (node == NUMA_NO_NODE || node_state(node, state))
+ 		return node;
+ 
+ 	min_node = node;
+-	for_each_online_node(n) {
++	for_each_node_state(n, state) {
+ 		dist = node_distance(node, n);
+ 		if (dist < min_dist) {
+ 			min_dist = dist;
+@@ -156,7 +160,7 @@ int numa_map_to_online_node(int node)
+ 
+ 	return min_node;
+ }
+-EXPORT_SYMBOL_GPL(numa_map_to_online_node);
++EXPORT_SYMBOL_GPL(numa_nearest_node);
+ 
+ struct mempolicy *get_task_policy(struct task_struct *p)
+ {
 -- 
 2.42.0
 
