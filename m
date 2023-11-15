@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC263A8F4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D953BB2C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVUuUyib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E2AC433C9;
-	Wed, 15 Nov 2023 19:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9P04NZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99C8C433C8;
+	Wed, 15 Nov 2023 19:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078083;
-	bh=n5Bnkrri/saRxnE+13p7wpER70PQwNWArj68GrK5uCY=;
+	s=korg; t=1700078084;
+	bh=tI75uhQo4QiovYiGUisRCjh8pxlqO+2JmgiKIeS5Gbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lVUuUyibtKNYiCq7B7c55eXrp3HmRLO931lGWf2oBHk9lNFvxIVUuUEK3VkzkL820
-	 FqN9m7tT4x4E03o7K110jzK9T727RS5TTXxG/yB8G8Kbrfa6up0plCt4mDJC5FJM9x
-	 37OTX0wrnT5EMUZn7bGkAEk6JxfCXgqkGeYnv5t8=
+	b=C9P04NZx1/QxgqdGV8JoyQP9fH98h39mY7MVlqGeXjZmjwfGumC5AeI95k+6BB2wQ
+	 W3998KKZvLXFvxbjDMWlSgLljNAmvp1EhPt7Yv57JkN2m6cuZEcumlc12APzUxyNd1
+	 2Co1u41gp6b9Fc97A8yDXOks9eoZ00UczcW3N5bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/379] clk: mediatek: clk-mt6779: Add check for mtk_alloc_clk_data
-Date: Wed, 15 Nov 2023 14:22:55 -0500
-Message-ID: <20231115192651.052650218@linuxfoundation.org>
+Subject: [PATCH 6.1 083/379] regulator: mt6358: Fail probe on unknown chip ID
+Date: Wed, 15 Nov 2023 14:22:38 -0500
+Message-ID: <20231115192650.044330722@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,45 +43,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 1f57f78fbacf630430bf954e5a84caafdfea30c0 ]
+[ Upstream commit 7442edec72bc657e6ce38ae01de9f10e55decfaa ]
 
-Add the check for the return value of mtk_alloc_clk_data() in order to
-avoid NULL pointer dereference.
+The MT6358 and MT6366 PMICs, and likely many others from MediaTek, have
+a chip ID register, making the chip semi-discoverable.
 
-Fixes: 710774e04861 ("clk: mediatek: Add MT6779 clock support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230912093407.21505-2-jiasheng@iscas.ac.cn
+The driver currently supports two PMICs and expects to be probed on one
+or the other. It does not account for incorrect mfd driver entries or
+device trees. While these should not happen, if they do, it could be
+catastrophic for the device. The driver should be sure the hardware is
+what it expects.
+
+Make the driver fail to probe if the chip ID presented is not a known
+one.
+
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: f0e3c6261af1 ("regulator: mt6366: Add support for MT6366 regulator")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20230913082919.1631287-2-wenst@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt6779.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/regulator/mt6358-regulator.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt6779.c b/drivers/clk/mediatek/clk-mt6779.c
-index 0d0a90ee5eb2c..39dadc9547088 100644
---- a/drivers/clk/mediatek/clk-mt6779.c
-+++ b/drivers/clk/mediatek/clk-mt6779.c
-@@ -1218,6 +1218,8 @@ static int clk_mt6779_apmixed_probe(struct platform_device *pdev)
- 	struct device_node *node = pdev->dev.of_node;
+diff --git a/drivers/regulator/mt6358-regulator.c b/drivers/regulator/mt6358-regulator.c
+index a0441b8086712..de7b5db8f7f2d 100644
+--- a/drivers/regulator/mt6358-regulator.c
++++ b/drivers/regulator/mt6358-regulator.c
+@@ -655,12 +655,18 @@ static int mt6358_regulator_probe(struct platform_device *pdev)
+ 	struct mt6358_regulator_info *mt6358_info;
+ 	int i, max_regulator;
  
- 	clk_data = mtk_alloc_clk_data(CLK_APMIXED_NR_CLK);
-+	if (!clk_data)
-+		return -ENOMEM;
+-	if (mt6397->chip_id == MT6366_CHIP_ID) {
+-		max_regulator = MT6366_MAX_REGULATOR;
+-		mt6358_info = mt6366_regulators;
+-	} else {
++	switch (mt6397->chip_id) {
++	case MT6358_CHIP_ID:
+ 		max_regulator = MT6358_MAX_REGULATOR;
+ 		mt6358_info = mt6358_regulators;
++		break;
++	case MT6366_CHIP_ID:
++		max_regulator = MT6366_MAX_REGULATOR;
++		mt6358_info = mt6366_regulators;
++		break;
++	default:
++		dev_err(&pdev->dev, "unsupported chip ID: %d\n", mt6397->chip_id);
++		return -EINVAL;
+ 	}
  
- 	mtk_clk_register_plls(node, plls, ARRAY_SIZE(plls), clk_data);
- 
-@@ -1238,6 +1240,8 @@ static int clk_mt6779_top_probe(struct platform_device *pdev)
- 		return PTR_ERR(base);
- 
- 	clk_data = mtk_alloc_clk_data(CLK_TOP_NR_CLK);
-+	if (!clk_data)
-+		return -ENOMEM;
- 
- 	mtk_clk_register_fixed_clks(top_fixed_clks, ARRAY_SIZE(top_fixed_clks),
- 				    clk_data);
+ 	for (i = 0; i < max_regulator; i++) {
 -- 
 2.42.0
 
