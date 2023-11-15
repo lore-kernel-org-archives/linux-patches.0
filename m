@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD0E3A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77A63A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWRW4oUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA62CC433C8;
-	Wed, 15 Nov 2023 19:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZOPXx6c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C6CC433C8;
+	Wed, 15 Nov 2023 19:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077311;
-	bh=E1xBuSirc7YgSxmLytE7KQgDeuHqJRbYhDVIbuYJ6xM=;
+	s=korg; t=1700077312;
+	bh=a33mnb2hky/Bv/lHQl1v0W9jqsDgDYYPV5SF9bcrrkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWRW4oUDf7g6lOES3nWwE3HfL/Otk9+bhFkm+UVF3zrLG04O2iHneh/fMFaUdLTQ4
-	 qVRmhik2Hr80i7gd5aywiW1QEsch2PbcapmJUnPq3fmerdg14nguIKxkIOck5MMBdu
-	 6NmnLQYa87zlijKnhr59zKfIcp1CFw3wVrVch52U=
+	b=SZOPXx6cEsJgVEfHHd447MTgdlcEx5CXAsQdK5ortEEOLf+ovLMpSihJLiq48TSrv
+	 SrzE2FIB2dSGUgN6jPktXbplHgf0rhaVgcnzUuAuNBNysRqc9Z8vslOojBNPI4i4oV
+	 6dT73LWZouQzdlgu1ckc6vVrzYjVjOoYj2b57TSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 225/603] drm/bridge: lt8912b: Fix bridge_detach
-Date: Wed, 15 Nov 2023 14:12:50 -0500
-Message-ID: <20231115191628.781528897@linuxfoundation.org>
+Subject: [PATCH 6.6 226/603] drm/bridge: lt8912b: Fix crash on bridge detach
+Date: Wed, 15 Nov 2023 14:12:51 -0500
+Message-ID: <20231115191628.837721494@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,78 +44,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 941882a0e96d245f38116e940912b404b6a93c6f ]
+[ Upstream commit 44283993144a03af9df31934d6c32bbd42d1a347 ]
 
-The driver calls lt8912_bridge_detach() from its lt8912_remove()
-function. As the DRM core detaches bridges automatically, this leads to
-calling lt8912_bridge_detach() twice. The code probably has tried to
-manage the double-call with the 'is_attached' variable, but the driver
-never sets the variable to false, so its of no help.
+The lt8912b driver, in its bridge detach function, calls
+drm_connector_unregister() and drm_connector_cleanup().
 
-Fix the issue by dropping the call to lt8912_bridge_detach() from
-lt8912_remove(), as the DRM core will handle the detach call for us,
-and also drop the useless is_attached field.
+drm_connector_unregister() should be called only for connectors
+explicitly registered with drm_connector_register(), which is not the
+case in lt8912b.
+
+The driver's drm_connector_funcs.destroy hook is set to
+drm_connector_cleanup().
+
+Thus the driver should not call either drm_connector_unregister() nor
+drm_connector_cleanup() in its lt8912_bridge_detach(), as they cause a
+crash on bridge detach:
+
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+Mem abort info:
+  ESR = 0x0000000096000006
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x06: level 2 translation fault
+Data abort info:
+  ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
+  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+user pgtable: 4k pages, 48-bit VAs, pgdp=00000000858f3000
+[0000000000000000] pgd=0800000085918003, p4d=0800000085918003, pud=0800000085431003, pmd=0000000000000000
+Internal error: Oops: 0000000096000006 [#1] PREEMPT SMP
+Modules linked in: tidss(-) display_connector lontium_lt8912b tc358768 panel_lvds panel_simple drm_dma_helper drm_kms_helper drm drm_panel_orientation_quirks
+CPU: 3 PID: 462 Comm: rmmod Tainted: G        W          6.5.0-rc2+ #2
+Hardware name: Toradex Verdin AM62 on Verdin Development Board (DT)
+pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : drm_connector_cleanup+0x78/0x2d4 [drm]
+lr : lt8912_bridge_detach+0x54/0x6c [lontium_lt8912b]
+sp : ffff800082ed3a90
+x29: ffff800082ed3a90 x28: ffff0000040c1940 x27: 0000000000000000
+x26: 0000000000000000 x25: dead000000000122 x24: dead000000000122
+x23: dead000000000100 x22: ffff000003fb6388 x21: 0000000000000000
+x20: 0000000000000000 x19: ffff000003fb6260 x18: fffffffffffe56e8
+x17: 0000000000000000 x16: 0010000000000000 x15: 0000000000000038
+x14: 0000000000000000 x13: ffff800081914b48 x12: 000000000000040e
+x11: 000000000000015a x10: ffff80008196ebb8 x9 : ffff800081914b48
+x8 : 00000000ffffefff x7 : ffff0000040c1940 x6 : ffff80007aa649d0
+x5 : 0000000000000000 x4 : 0000000000000001 x3 : ffff80008159e008
+x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+Call trace:
+ drm_connector_cleanup+0x78/0x2d4 [drm]
+ lt8912_bridge_detach+0x54/0x6c [lontium_lt8912b]
+ drm_bridge_detach+0x44/0x84 [drm]
+ drm_encoder_cleanup+0x40/0xb8 [drm]
+ drmm_encoder_alloc_release+0x1c/0x30 [drm]
+ drm_managed_release+0xac/0x148 [drm]
+ drm_dev_put.part.0+0x88/0xb8 [drm]
+ devm_drm_dev_init_release+0x14/0x24 [drm]
+ devm_action_release+0x14/0x20
+ release_nodes+0x5c/0x90
+ devres_release_all+0x8c/0xe0
+ device_unbind_cleanup+0x18/0x68
+ device_release_driver_internal+0x208/0x23c
+ driver_detach+0x4c/0x94
+ bus_remove_driver+0x70/0xf4
+ driver_unregister+0x30/0x60
+ platform_driver_unregister+0x14/0x20
+ tidss_platform_driver_exit+0x18/0xb2c [tidss]
+ __arm64_sys_delete_module+0x1a0/0x2b4
+ invoke_syscall+0x48/0x110
+ el0_svc_common.constprop.0+0x60/0x10c
+ do_el0_svc_compat+0x1c/0x40
+ el0_svc_compat+0x40/0xac
+ el0t_32_sync_handler+0xb0/0x138
+ el0t_32_sync+0x194/0x198
+Code: 9104a276 f2fbd5b7 aa0203e1 91008af8 (f85c0420)
 
 Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Reviewed-by: Robert Foss <rfoss@kernel.org>
 Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230804-lt8912b-v1-1-c542692c6a2f@ideasonboard.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20230804-lt8912b-v1-2-c542692c6a2f@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-index 4eaea67fb71c2..0e581f6e3c885 100644
+index 0e581f6e3c885..2d752e083433f 100644
 --- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
 +++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -45,7 +45,6 @@ struct lt8912 {
+@@ -589,9 +589,6 @@ static void lt8912_bridge_detach(struct drm_bridge *bridge)
  
- 	u8 data_lanes;
- 	bool is_power_on;
--	bool is_attached;
- };
- 
- static int lt8912_write_init_config(struct lt8912 *lt)
-@@ -575,8 +574,6 @@ static int lt8912_bridge_attach(struct drm_bridge *bridge,
- 	if (ret)
- 		goto error;
- 
--	lt->is_attached = true;
+ 	if (lt->hdmi_port->ops & DRM_BRIDGE_OP_HPD)
+ 		drm_bridge_hpd_disable(lt->hdmi_port);
 -
- 	return 0;
- 
- error:
-@@ -588,15 +585,13 @@ static void lt8912_bridge_detach(struct drm_bridge *bridge)
- {
- 	struct lt8912 *lt = bridge_to_lt8912(bridge);
- 
--	if (lt->is_attached) {
--		lt8912_hard_power_off(lt);
-+	lt8912_hard_power_off(lt);
- 
--		if (lt->hdmi_port->ops & DRM_BRIDGE_OP_HPD)
--			drm_bridge_hpd_disable(lt->hdmi_port);
-+	if (lt->hdmi_port->ops & DRM_BRIDGE_OP_HPD)
-+		drm_bridge_hpd_disable(lt->hdmi_port);
- 
--		drm_connector_unregister(&lt->connector);
--		drm_connector_cleanup(&lt->connector);
--	}
-+	drm_connector_unregister(&lt->connector);
-+	drm_connector_cleanup(&lt->connector);
+-	drm_connector_unregister(&lt->connector);
+-	drm_connector_cleanup(&lt->connector);
  }
  
  static enum drm_connector_status
-@@ -750,7 +745,6 @@ static void lt8912_remove(struct i2c_client *client)
- {
- 	struct lt8912 *lt = i2c_get_clientdata(client);
- 
--	lt8912_bridge_detach(&lt->bridge);
- 	drm_bridge_remove(&lt->bridge);
- 	lt8912_free_i2c(lt);
- 	lt8912_put_dt(lt);
 -- 
 2.42.0
 
