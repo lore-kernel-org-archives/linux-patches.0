@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB90171CE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B22218657
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qt9wMKnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EDCC4E778;
-	Wed, 15 Nov 2023 20:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cH/+SbEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FFDC4E779;
+	Wed, 15 Nov 2023 20:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081744;
-	bh=SMbD7UXwYagUiU85OI0XcEYegUAJaJiN1KTgglut9DI=;
+	s=korg; t=1700081746;
+	bh=8T97I6V722CcLAXIPDHCwJBrfX0XH5s/YzQ6pZXbTtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qt9wMKnjQvXkTD6j/o7Weu1thKnaqjQMbxnBep17kzsvyVeDpjsXk3mrE1N7xfd0E
-	 btfXM8xpM9OB3yZzD4nqtm2M+rA4JhpOtr2WdALnsumBt8JTieF14TiEKtbs53IyUB
-	 a31KLb4q6Igx9IoCsTx0Y1anarQt9j2sJ2ZIJcE0=
+	b=cH/+SbEbor9byXmZpf/N6Db7ggA/oL1aw6M2ThewJYcXhzXBj4uBb2gsGJiTNaTVP
+	 yvgMSskSP5tW1y5sy2+42TbWPS49IzwmEPqLap+QDmqkFB4NEpF+P1oaA+HAF3fnY/
+	 ThwLL8905fDOvKh/L5OoxrtMvtW1Q+gFquZ56nC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Kursad Oney <kursad.oney@broadcom.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Gou Hao <gouhao@uniontech.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/191] ARM: 9321/1: memset: cast the constant byte to unsigned char
-Date: Wed, 15 Nov 2023 15:46:12 -0500
-Message-ID: <20231115204650.389227320@linuxfoundation.org>
+Subject: [PATCH 5.10 098/191] ext4: move ix sanity check to corrent position
+Date: Wed, 15 Nov 2023 15:46:13 -0500
+Message-ID: <20231115204650.447635641@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -44,61 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kursad Oney <kursad.oney@broadcom.com>
+From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit c0e824661f443b8cab3897006c1bbc69fd0e7bc4 ]
+[ Upstream commit af90a8f4a09ec4a3de20142e37f37205d4687f28 ]
 
-memset() description in ISO/IEC 9899:1999 (and elsewhere) says:
+Check 'ix' before it is used.
 
-	The memset function copies the value of c (converted to an
-	unsigned char) into each of the first n characters of the
-	object pointed to by s.
-
-The kernel's arm32 memset does not cast c to unsigned char. This results
-in the following code to produce erroneous output:
-
-	char a[128];
-	memset(a, -128, sizeof(a));
-
-This is because gcc will generally emit the following code before
-it calls memset() :
-
-	mov   r0, r7
-	mvn   r1, #127        ; 0x7f
-	bl    00000000 <memset>
-
-r1 ends up with 0xffffff80 before being used by memset() and the
-'a' array will have -128 once in every four bytes while the other
-bytes will be set incorrectly to -1 like this (printing the first
-8 bytes) :
-
-	test_module: -128 -1 -1 -1
-	test_module: -1 -1 -1 -128
-
-The change here is to 'and' r1 with 255 before it is used.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Kursad Oney <kursad.oney@broadcom.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: 80e675f906db ("ext4: optimize memmmove lengths in extent/index insertions")
+Signed-off-by: Gou Hao <gouhao@uniontech.com>
+Link: https://lore.kernel.org/r/20230906013341.7199-1-gouhao@uniontech.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/lib/memset.S | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/extents.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/lib/memset.S b/arch/arm/lib/memset.S
-index 6ca4535c47fb6..e36d053a8a903 100644
---- a/arch/arm/lib/memset.S
-+++ b/arch/arm/lib/memset.S
-@@ -16,6 +16,7 @@
- ENTRY(mmioset)
- ENTRY(memset)
- UNWIND( .fnstart         )
-+	and	r1, r1, #255		@ cast to unsigned char
- 	ands	r3, r0, #3		@ 1 unaligned?
- 	mov	ip, r0			@ preserve r0 as return value
- 	bne	6f			@ 1
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 2c2e1cc43e0e8..193b13630ac1e 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -1003,6 +1003,11 @@ static int ext4_ext_insert_index(handle_t *handle, struct inode *inode,
+ 		ix = curp->p_idx;
+ 	}
+ 
++	if (unlikely(ix > EXT_MAX_INDEX(curp->p_hdr))) {
++		EXT4_ERROR_INODE(inode, "ix > EXT_MAX_INDEX!");
++		return -EFSCORRUPTED;
++	}
++
+ 	len = EXT_LAST_INDEX(curp->p_hdr) - ix + 1;
+ 	BUG_ON(len < 0);
+ 	if (len > 0) {
+@@ -1012,11 +1017,6 @@ static int ext4_ext_insert_index(handle_t *handle, struct inode *inode,
+ 		memmove(ix + 1, ix, len * sizeof(struct ext4_extent_idx));
+ 	}
+ 
+-	if (unlikely(ix > EXT_MAX_INDEX(curp->p_hdr))) {
+-		EXT4_ERROR_INODE(inode, "ix > EXT_MAX_INDEX!");
+-		return -EFSCORRUPTED;
+-	}
+-
+ 	ix->ei_block = cpu_to_le32(logical);
+ 	ext4_idx_store_pblock(ix, ptr);
+ 	le16_add_cpu(&curp->p_hdr->eh_entries, 1);
 -- 
 2.42.0
 
