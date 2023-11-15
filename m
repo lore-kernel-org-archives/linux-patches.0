@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C553D3B7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC093EA62
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6/KRLLc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5222C433C7;
-	Wed, 15 Nov 2023 19:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbeCOdeX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DDAFC433C7;
+	Wed, 15 Nov 2023 19:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700075996;
-	bh=Qzk3evVISz2NP+5cMaDJ/Q9CONTa0Mrg5Rt1kFpZI9A=;
+	s=korg; t=1700075997;
+	bh=Xn+4b0Q8sSpTL7c93LD3H1/9Wiu7SmZjxbtBrACjbpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6/KRLLcpB4J+NOjDiwVOkwRDlPbDdqWRAhm5gl0JtzrBWB5KUmrpwClhJnR6+suX
-	 Y2wVHWVQiwdUPpMrjPfLaw+08YZzOJzQi/t/XFJpbjx8CTjfLRox6nc8epOYB2JHJ+
-	 tYq73dTMAfQ4+ldJMInT52ZGBR0ir/ADWG+6IRJ4=
+	b=EbeCOdeXqMFoFPhg1Tk4mp8r8QCCgWWeVU+SxfFQe2kxG7rLvVrF2/Xj3OAp1FW5B
+	 xg08ohwGdzgBiYPABjawWoX8NWug1ok6dc4dxcCgZ3OkQyITOK8rYjQGQhGTXt2q/Q
+	 AC4h/aJ8/tIqB5UFH7odOWbsA0cDSOjUp+PUI3bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zev Weiss <zev@bewilderbeest.net>,
-	Thomas Zajic <zlatko@gmx.at>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.5 001/550] hwmon: (nct6775) Fix incorrect variable reuse in fan_div calculation
-Date: Wed, 15 Nov 2023 14:09:45 -0500
-Message-ID: <20231115191600.816263857@linuxfoundation.org>
+	=?UTF-8?q?Kuyo=20Chang=20 ?= <Kuyo.Chang@mediatek.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 010/550] sched: Fix stop_one_cpu_nowait() vs hotplug
+Date: Wed, 15 Nov 2023 14:09:54 -0500
+Message-ID: <20231115191601.429744679@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -36,69 +36,215 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zev Weiss <zev@bewilderbeest.net>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 920057ad521dc8669e534736c2a12c14ec9fb2d7 upstream.
+[ Upstream commit f0498d2a54e7966ce23cd7c7ff42c64fa0059b07 ]
 
-In the regmap conversion in commit 4ef2774511dc ("hwmon: (nct6775)
-Convert register access to regmap API") I reused the 'reg' variable
-for all three register reads in the fan speed calculation loop in
-nct6775_update_device(), but failed to notice that the value from the
-first one (data->REG_FAN[i]) is actually used in the call to
-nct6775_select_fan_div() at the end of the loop body.  Since that
-patch the register value passed to nct6775_select_fan_div() has been
-(conditionally) incorrectly clobbered with the value of a different
-register than intended, which has in at least some cases resulted in
-fan speeds being adjusted down to zero.
+Kuyo reported sporadic failures on a sched_setaffinity() vs CPU
+hotplug stress-test -- notably affine_move_task() remains stuck in
+wait_for_completion(), leading to a hung-task detector warning.
 
-Fix this by using dedicated temporaries for the two intermediate
-register reads instead of 'reg'.
+Specifically, it was reported that stop_one_cpu_nowait(.fn =
+migration_cpu_stop) returns false -- this stopper is responsible for
+the matching complete().
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Fixes: 4ef2774511dc ("hwmon: (nct6775) Convert register access to regmap API")
-Reported-by: Thomas Zajic <zlatko@gmx.at>
-Tested-by: Thomas Zajic <zlatko@gmx.at>
-Cc: stable@vger.kernel.org # v5.19+
-Link: https://lore.kernel.org/r/20230929200822.964-2-zev@bewilderbeest.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The race scenario is:
+
+	CPU0					CPU1
+
+					// doing _cpu_down()
+
+  __set_cpus_allowed_ptr()
+    task_rq_lock();
+					takedown_cpu()
+					  stop_machine_cpuslocked(take_cpu_down..)
+
+					<PREEMPT: cpu_stopper_thread()
+					  MULTI_STOP_PREPARE
+					  ...
+    __set_cpus_allowed_ptr_locked()
+      affine_move_task()
+        task_rq_unlock();
+
+  <PREEMPT: cpu_stopper_thread()\>
+    ack_state()
+					  MULTI_STOP_RUN
+					    take_cpu_down()
+					      __cpu_disable();
+					      stop_machine_park();
+						stopper->enabled = false;
+					 />
+   />
+	stop_one_cpu_nowait(.fn = migration_cpu_stop);
+          if (stopper->enabled) // false!!!
+
+That is, by doing stop_one_cpu_nowait() after dropping rq-lock, the
+stopper thread gets a chance to preempt and allows the cpu-down for
+the target CPU to complete.
+
+OTOH, since stop_one_cpu_nowait() / cpu_stop_queue_work() needs to
+issue a wakeup, it must not be ran under the scheduler locks.
+
+Solve this apparent contradiction by keeping preemption disabled over
+the unlock + queue_stopper combination:
+
+	preempt_disable();
+	task_rq_unlock(...);
+	if (!stop_pending)
+	  stop_one_cpu_nowait(...)
+	preempt_enable();
+
+This respects the lock ordering contraints while still avoiding the
+above race. That is, if we find the CPU is online under rq-lock, the
+targeted stop_one_cpu_nowait() must succeed.
+
+Apply this pattern to all similar stop_one_cpu_nowait() invocations.
+
+Fixes: 6d337eab041d ("sched: Fix migrate_disable() vs set_cpus_allowed_ptr()")
+Reported-by: "Kuyo Chang (張建文)" <Kuyo.Chang@mediatek.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: "Kuyo Chang (張建文)" <Kuyo.Chang@mediatek.com>
+Link: https://lkml.kernel.org/r/20231010200442.GA16515@noisy.programming.kicks-ass.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775-core.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ kernel/sched/core.c     | 10 ++++++++--
+ kernel/sched/deadline.c |  2 ++
+ kernel/sched/fair.c     |  4 +++-
+ kernel/sched/rt.c       |  4 ++++
+ 4 files changed, 17 insertions(+), 3 deletions(-)
 
---- a/drivers/hwmon/nct6775-core.c
-+++ b/drivers/hwmon/nct6775-core.c
-@@ -1581,17 +1581,21 @@ struct nct6775_data *nct6775_update_devi
- 							  data->fan_div[i]);
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index e8f73ff12126c..149fdb212e20f 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -2644,9 +2644,11 @@ static int migration_cpu_stop(void *data)
+ 		 * it.
+ 		 */
+ 		WARN_ON_ONCE(!pending->stop_pending);
++		preempt_disable();
+ 		task_rq_unlock(rq, p, &rf);
+ 		stop_one_cpu_nowait(task_cpu(p), migration_cpu_stop,
+ 				    &pending->arg, &pending->stop_work);
++		preempt_enable();
+ 		return 0;
+ 	}
+ out:
+@@ -2966,12 +2968,13 @@ static int affine_move_task(struct rq *rq, struct task_struct *p, struct rq_flag
+ 			complete = true;
+ 		}
  
- 			if (data->has_fan_min & BIT(i)) {
--				err = nct6775_read_value(data, data->REG_FAN_MIN[i], &reg);
-+				u16 tmp;
-+
-+				err = nct6775_read_value(data, data->REG_FAN_MIN[i], &tmp);
- 				if (err)
- 					goto out;
--				data->fan_min[i] = reg;
-+				data->fan_min[i] = tmp;
++		preempt_disable();
+ 		task_rq_unlock(rq, p, rf);
+-
+ 		if (push_task) {
+ 			stop_one_cpu_nowait(rq->cpu, push_cpu_stop,
+ 					    p, &rq->push_work);
+ 		}
++		preempt_enable();
+ 
+ 		if (complete)
+ 			complete_all(&pending->done);
+@@ -3037,12 +3040,13 @@ static int affine_move_task(struct rq *rq, struct task_struct *p, struct rq_flag
+ 		if (flags & SCA_MIGRATE_ENABLE)
+ 			p->migration_flags &= ~MDF_PUSH;
+ 
++		preempt_disable();
+ 		task_rq_unlock(rq, p, rf);
+-
+ 		if (!stop_pending) {
+ 			stop_one_cpu_nowait(cpu_of(rq), migration_cpu_stop,
+ 					    &pending->arg, &pending->stop_work);
+ 		}
++		preempt_enable();
+ 
+ 		if (flags & SCA_MIGRATE_ENABLE)
+ 			return 0;
+@@ -9507,9 +9511,11 @@ static void balance_push(struct rq *rq)
+ 	 * Temporarily drop rq->lock such that we can wake-up the stop task.
+ 	 * Both preemption and IRQs are still disabled.
+ 	 */
++	preempt_disable();
+ 	raw_spin_rq_unlock(rq);
+ 	stop_one_cpu_nowait(rq->cpu, __balance_push_cpu_stop, push_task,
+ 			    this_cpu_ptr(&push_work));
++	preempt_enable();
+ 	/*
+ 	 * At this point need_resched() is true and we'll take the loop in
+ 	 * schedule(). The next pick is obviously going to be the stop task
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 58b542bf28934..d78f2e8769fb4 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -2449,9 +2449,11 @@ static void pull_dl_task(struct rq *this_rq)
+ 		double_unlock_balance(this_rq, src_rq);
+ 
+ 		if (push_task) {
++			preempt_disable();
+ 			raw_spin_rq_unlock(this_rq);
+ 			stop_one_cpu_nowait(src_rq->cpu, push_cpu_stop,
+ 					    push_task, &src_rq->push_work);
++			preempt_enable();
+ 			raw_spin_rq_lock(this_rq);
+ 		}
+ 	}
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index a87ef35d5424a..8e1b54dc2a214 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -10986,13 +10986,15 @@ static int load_balance(int this_cpu, struct rq *this_rq,
+ 				busiest->push_cpu = this_cpu;
+ 				active_balance = 1;
  			}
+-			raw_spin_rq_unlock_irqrestore(busiest, flags);
  
- 			if (data->REG_FAN_PULSES[i]) {
--				err = nct6775_read_value(data, data->REG_FAN_PULSES[i], &reg);
-+				u16 tmp;
-+
-+				err = nct6775_read_value(data, data->REG_FAN_PULSES[i], &tmp);
- 				if (err)
- 					goto out;
--				data->fan_pulses[i] = (reg >> data->FAN_PULSE_SHIFT[i]) & 0x03;
-+				data->fan_pulses[i] = (tmp >> data->FAN_PULSE_SHIFT[i]) & 0x03;
++			preempt_disable();
++			raw_spin_rq_unlock_irqrestore(busiest, flags);
+ 			if (active_balance) {
+ 				stop_one_cpu_nowait(cpu_of(busiest),
+ 					active_load_balance_cpu_stop, busiest,
+ 					&busiest->active_balance_work);
  			}
++			preempt_enable();
+ 		}
+ 	} else {
+ 		sd->nr_balance_failed = 0;
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index 185d3d749f6b6..590abc1a013d2 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -2109,9 +2109,11 @@ static int push_rt_task(struct rq *rq, bool pull)
+ 		 */
+ 		push_task = get_push_task(rq);
+ 		if (push_task) {
++			preempt_disable();
+ 			raw_spin_rq_unlock(rq);
+ 			stop_one_cpu_nowait(rq->cpu, push_cpu_stop,
+ 					    push_task, &rq->push_work);
++			preempt_enable();
+ 			raw_spin_rq_lock(rq);
+ 		}
  
- 			err = nct6775_select_fan_div(dev, data, i, reg);
+@@ -2448,9 +2450,11 @@ static void pull_rt_task(struct rq *this_rq)
+ 		double_unlock_balance(this_rq, src_rq);
+ 
+ 		if (push_task) {
++			preempt_disable();
+ 			raw_spin_rq_unlock(this_rq);
+ 			stop_one_cpu_nowait(src_rq->cpu, push_cpu_stop,
+ 					    push_task, &src_rq->push_work);
++			preempt_enable();
+ 			raw_spin_rq_lock(this_rq);
+ 		}
+ 	}
+-- 
+2.42.0
+
 
 
