@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3118D18030
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE74E18030
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5rPO+gt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A11C433C8;
-	Wed, 15 Nov 2023 22:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gt/1Yq+E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64308C433C8;
+	Wed, 15 Nov 2023 22:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085887;
-	bh=nEq4iWeLj/LWXbqgqeWa/ndFcKMVaEPoCpScIR0lvNI=;
+	s=korg; t=1700085888;
+	bh=H5dekuwuKfscFIapvXqvajvIGLNde6IvBCW/JacTIhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5rPO+gtA+VP+roCMDJ9CrAX8DXy8vK9Mt36F6LzqKOZUvieM7qxZ2ycqkwbpZIOl
-	 /wcXeeDLD9kmXdZFL7LUkIuDkWTyOVAjvgvLUszKugi5Rl8Gkn6v0TUHyFHWTVWjhi
-	 jxkImwitCQt9c3Qn78q7r4tYSxZsJ5EJMNPrgbmo=
+	b=gt/1Yq+EDfmgbUkTRo/Rih5/qH9GOJ32rmi36UefFR+i4exlB9ThxEv7rcSYIt0kO
+	 YOwgt6OWv9BWAkN3kdlU282t8okXmS/qWcaZ8O/x+sRHdkMoLGFHlZ3cwIyIjS8i4O
+	 iVKjBVBk5B8Yxvr6CMCiqM40b7Yqlv+m3BN4e+fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sumit Garg <sumit.garg@linaro.org>,
+	Jia-Ju Bai <baijiaju@buaa.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 082/119] modpost: fix tee MODULE_DEVICE_TABLE built on big-endian host
-Date: Wed, 15 Nov 2023 17:01:12 -0500
-Message-ID: <20231115220135.194075164@linuxfoundation.org>
+Subject: [PATCH 5.4 073/119] usb: dwc2: fix possible NULL pointer dereference caused by driver concurrency
+Date: Wed, 15 Nov 2023 17:01:03 -0500
+Message-ID: <20231115220134.906309002@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -42,69 +41,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Jia-Ju Bai <baijiaju@buaa.edu.cn>
 
-[ Upstream commit 7f54e00e5842663c2cea501bbbdfa572c94348a3 ]
+[ Upstream commit ef307bc6ef04e8c1ea843231db58e3afaafa9fa6 ]
 
-When MODULE_DEVICE_TABLE(tee, ) is built on a host with a different
-endianness from the target architecture, it results in an incorrect
-MODULE_ALIAS().
+In _dwc2_hcd_urb_enqueue(), "urb->hcpriv = NULL" is executed without
+holding the lock "hsotg->lock". In _dwc2_hcd_urb_dequeue():
 
-For example, see a case where drivers/char/hw_random/optee-rng.c
-is built as a module for ARM little-endian.
+    spin_lock_irqsave(&hsotg->lock, flags);
+    ...
+	if (!urb->hcpriv) {
+		dev_dbg(hsotg->dev, "## urb->hcpriv is NULL ##\n");
+		goto out;
+	}
+    rc = dwc2_hcd_urb_dequeue(hsotg, urb->hcpriv); // Use urb->hcpriv
+    ...
+out:
+    spin_unlock_irqrestore(&hsotg->lock, flags);
 
-If you build it on a little-endian host, you will get the correct
-MODULE_ALIAS:
+When _dwc2_hcd_urb_enqueue() and _dwc2_hcd_urb_dequeue() are
+concurrently executed, the NULL check of "urb->hcpriv" can be executed
+before "urb->hcpriv = NULL". After urb->hcpriv is NULL, it can be used
+in the function call to dwc2_hcd_urb_dequeue(), which can cause a NULL
+pointer dereference.
 
-    $ grep MODULE_ALIAS drivers/char/hw_random/optee-rng.mod.c
-    MODULE_ALIAS("tee:ab7a617c-b8e7-4d8f-8301-d09b61036b64*");
+This possible bug is found by an experimental static analysis tool
+developed by myself. This tool analyzes the locking APIs to extract
+function pairs that can be concurrently executed, and then analyzes the
+instructions in the paired functions to identify possible concurrency
+bugs including data races and atomicity violations. The above possible
+bug is reported, when my tool analyzes the source code of Linux 6.5.
 
-However, if you build it on a big-endian host, you will get a wrong
-MODULE_ALIAS:
+To fix this possible bug, "urb->hcpriv = NULL" should be executed with
+holding the lock "hsotg->lock". After using this patch, my tool never
+reports the possible bug, with the kernelconfiguration allyesconfig for
+x86_64. Because I have no associated hardware, I cannot test the patch
+in runtime testing, and just verify it according to the code logic.
 
-    $ grep MODULE_ALIAS drivers/char/hw_random/optee-rng.mod.c
-    MODULE_ALIAS("tee:646b0361-9bd0-0183-8f4d-e7b87c617aab*");
-
-The same problem also occurs when you enable CONFIG_CPU_BIG_ENDIAN,
-and build it on a little-endian host.
-
-This issue has been unnoticed because the ARM kernel is configured for
-little-endian by default, and most likely built on a little-endian host
-(cross-build on x86 or native-build on ARM).
-
-The uuid field must not be reversed because uuid_t is an array of __u8.
-
-Fixes: 0fc1db9d1059 ("tee: add bus driver framework for TEE based devices")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Sumit Garg <sumit.garg@linaro.org>
+Fixes: 33ad261aa62b ("usb: dwc2: host: spinlock urb_enqueue")
+Signed-off-by: Jia-Ju Bai <baijiaju@buaa.edu.cn>
+Link: https://lore.kernel.org/r/20230926024404.832096-1-baijiaju@buaa.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/file2alias.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/usb/dwc2/hcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index 8c0d1c191d557..7b845483717b6 100644
---- a/scripts/mod/file2alias.c
-+++ b/scripts/mod/file2alias.c
-@@ -1302,13 +1302,13 @@ static int do_typec_entry(const char *filename, void *symval, char *alias)
- /* Looks like: tee:uuid */
- static int do_tee_entry(const char *filename, void *symval, char *alias)
- {
--	DEF_FIELD(symval, tee_client_device_id, uuid);
-+	DEF_FIELD_ADDR(symval, tee_client_device_id, uuid);
- 
- 	sprintf(alias, "tee:%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
--		uuid.b[0], uuid.b[1], uuid.b[2], uuid.b[3], uuid.b[4],
--		uuid.b[5], uuid.b[6], uuid.b[7], uuid.b[8], uuid.b[9],
--		uuid.b[10], uuid.b[11], uuid.b[12], uuid.b[13], uuid.b[14],
--		uuid.b[15]);
-+		uuid->b[0], uuid->b[1], uuid->b[2], uuid->b[3], uuid->b[4],
-+		uuid->b[5], uuid->b[6], uuid->b[7], uuid->b[8], uuid->b[9],
-+		uuid->b[10], uuid->b[11], uuid->b[12], uuid->b[13], uuid->b[14],
-+		uuid->b[15]);
- 
- 	add_wildcard(alias);
- 	return 1;
+diff --git a/drivers/usb/dwc2/hcd.c b/drivers/usb/dwc2/hcd.c
+index a412ef67af18d..7b8dee3087f35 100644
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -4684,8 +4684,8 @@ static int _dwc2_hcd_urb_enqueue(struct usb_hcd *hcd, struct urb *urb,
+ 	if (qh_allocated && qh->channel && qh->channel->qh == qh)
+ 		qh->channel->qh = NULL;
+ fail2:
+-	spin_unlock_irqrestore(&hsotg->lock, flags);
+ 	urb->hcpriv = NULL;
++	spin_unlock_irqrestore(&hsotg->lock, flags);
+ 	kfree(qtd);
+ fail1:
+ 	if (qh_allocated) {
 -- 
 2.42.0
 
