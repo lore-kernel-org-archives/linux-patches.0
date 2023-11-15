@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EF528E20
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B063C471
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agOQNEfi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC75C433C9;
-	Wed, 15 Nov 2023 19:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VT0kJBGO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C666EC433C8;
+	Wed, 15 Nov 2023 19:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077158;
-	bh=sved93onRm+I2UKJ8nm+rJH7HTilt84yn1EfrJ54QTQ=;
+	s=korg; t=1700077160;
+	bh=yE2KU9zVyy6gtq9xuXshLX6zFI1GrNLMAXQJREry5V4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agOQNEfiySken8enhRIxTq89Uldcxmvb0SVlywNzFtplpT+4++kn3Gn8Gg3bPYcVV
-	 C6stG6bdf4VskrdyNZAwNwQA2UItYCtZ0uWo7IjuRMf2KjlgVCUrWGus5egOg1rUTg
-	 No4zOiv01gT4OIogL3LIBHKiuVB/TDpoVek50aEk=
+	b=VT0kJBGOHRABdK3s37MJM/eJt57UCJHVtFfRB+guZ4fBmfrjsDhlm2L+i3budzfAG
+	 gm3FjX8FPXnn7sYSL4qRgCR6iQCnBnZJOjQ5FC9bM5VRmXH5i6xo4pWMg8q5zWmqSv
+	 U0LbN9Oe5qPMFJHHgHYXkeaZnRHBqaTZC63t5EIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Phil Sutter <phil@nwl.cc>,
-	Florian Westphal <fw@strlen.de>,
-	"David S. Miller" <davem@davemloft.net>,
+	kernel test robot <lkp@intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/603] net: skb_find_text: Ignore patterns extending past to
-Date: Wed, 15 Nov 2023 14:11:11 -0500
-Message-ID: <20231115191621.956213667@linuxfoundation.org>
+Subject: [PATCH 6.5 524/550] net: enetc: shorten enetc_setup_xdp_prog() error message to fit NETLINK_MAX_FMTMSG_LEN
+Date: Wed, 15 Nov 2023 14:18:28 -0500
+Message-ID: <20231115191637.262895314@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,207 +39,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit c4eee56e14fe001e1cff54f0b438a5e2d0dd7454 ]
+[ Upstream commit f968c56417f00be4cb62eadeed042a1e3c80dc53 ]
 
-Assume that caller's 'to' offset really represents an upper boundary for
-the pattern search, so patterns extending past this offset are to be
-rejected.
+NETLINK_MAX_FMTMSG_LEN is currently hardcoded to 80, and we provide an
+error printf-formatted string having 96 characters including the
+terminating \0. Assuming each %d (representing a queue) gets replaced by
+a number having at most 2 digits (a reasonable assumption), the final
+string is also 96 characters wide, which is too much.
 
-The old behaviour also was kind of inconsistent when it comes to
-fragmentation (or otherwise non-linear skbs): If the pattern started in
-between 'to' and 'from' offsets but extended to the next fragment, it
-was not found if 'to' offset was still within the current fragment.
+Reduce the verbiage a bit by removing some (partially) redundant words,
+which makes the new printf-formatted string be 73 characters wide with
+the trailing newline.
 
-Test the new behaviour in a kselftest using iptables' string match.
-
-Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Fixes: f72b948dcbb8 ("[NET]: skb_find_text ignores to argument")
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 800db2d125c2 ("net: enetc: ensure we always have a minimum number of TXQs for stack")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/lkml/202311061336.4dsWMT1h-lkp@intel.com/
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20231106160311.616118-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c                             |   3 +-
- tools/testing/selftests/netfilter/Makefile    |   2 +-
- .../testing/selftests/netfilter/xt_string.sh  | 128 ++++++++++++++++++
- 3 files changed, 131 insertions(+), 2 deletions(-)
- create mode 100755 tools/testing/selftests/netfilter/xt_string.sh
+ drivers/net/ethernet/freescale/enetc/enetc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 4eaf7ed0d1f44..97b4a42e6e347 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -4254,6 +4254,7 @@ static void skb_ts_finish(struct ts_config *conf, struct ts_state *state)
- unsigned int skb_find_text(struct sk_buff *skb, unsigned int from,
- 			   unsigned int to, struct ts_config *config)
- {
-+	unsigned int patlen = config->ops->get_pattern_len(config);
- 	struct ts_state state;
- 	unsigned int ret;
- 
-@@ -4265,7 +4266,7 @@ unsigned int skb_find_text(struct sk_buff *skb, unsigned int from,
- 	skb_prepare_seq_read(skb, from, to, TS_SKB_CB(&state));
- 
- 	ret = textsearch_find(config, &state);
--	return (ret <= to - from ? ret : UINT_MAX);
-+	return (ret + patlen <= to - from ? ret : UINT_MAX);
- }
- EXPORT_SYMBOL(skb_find_text);
- 
-diff --git a/tools/testing/selftests/netfilter/Makefile b/tools/testing/selftests/netfilter/Makefile
-index ef90aca4cc96a..bced422b78f72 100644
---- a/tools/testing/selftests/netfilter/Makefile
-+++ b/tools/testing/selftests/netfilter/Makefile
-@@ -7,7 +7,7 @@ TEST_PROGS := nft_trans_stress.sh nft_fib.sh nft_nat.sh bridge_brouter.sh \
- 	nft_queue.sh nft_meta.sh nf_nat_edemux.sh \
- 	ipip-conntrack-mtu.sh conntrack_tcp_unreplied.sh \
- 	conntrack_vrf.sh nft_synproxy.sh rpath.sh nft_audit.sh \
--	conntrack_sctp_collision.sh
-+	conntrack_sctp_collision.sh xt_string.sh
- 
- HOSTPKG_CONFIG := pkg-config
- 
-diff --git a/tools/testing/selftests/netfilter/xt_string.sh b/tools/testing/selftests/netfilter/xt_string.sh
-new file mode 100755
-index 0000000000000..1802653a47287
---- /dev/null
-+++ b/tools/testing/selftests/netfilter/xt_string.sh
-@@ -0,0 +1,128 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
-+
-+# return code to signal skipped test
-+ksft_skip=4
-+rc=0
-+
-+if ! iptables --version >/dev/null 2>&1; then
-+	echo "SKIP: Test needs iptables"
-+	exit $ksft_skip
-+fi
-+if ! ip -V >/dev/null 2>&1; then
-+	echo "SKIP: Test needs iproute2"
-+	exit $ksft_skip
-+fi
-+if ! nc -h >/dev/null 2>&1; then
-+	echo "SKIP: Test needs netcat"
-+	exit $ksft_skip
-+fi
-+
-+pattern="foo bar baz"
-+patlen=11
-+hdrlen=$((20 + 8)) # IPv4 + UDP
-+ns="ns-$(mktemp -u XXXXXXXX)"
-+trap 'ip netns del $ns' EXIT
-+ip netns add "$ns"
-+ip -net "$ns" link add d0 type dummy
-+ip -net "$ns" link set d0 up
-+ip -net "$ns" addr add 10.1.2.1/24 dev d0
-+
-+#ip netns exec "$ns" tcpdump -npXi d0 &
-+#tcpdump_pid=$!
-+#trap 'kill $tcpdump_pid; ip netns del $ns' EXIT
-+
-+add_rule() { # (alg, from, to)
-+	ip netns exec "$ns" \
-+		iptables -A OUTPUT -o d0 -m string \
-+			--string "$pattern" --algo $1 --from $2 --to $3
-+}
-+showrules() { # ()
-+	ip netns exec "$ns" iptables -v -S OUTPUT | grep '^-A'
-+}
-+zerorules() {
-+	ip netns exec "$ns" iptables -Z OUTPUT
-+}
-+countrule() { # (pattern)
-+	showrules | grep -c -- "$*"
-+}
-+send() { # (offset)
-+	( for ((i = 0; i < $1 - $hdrlen; i++)); do
-+		printf " "
-+	  done
-+	  printf "$pattern"
-+	) | ip netns exec "$ns" nc -w 1 -u 10.1.2.2 27374
-+}
-+
-+add_rule bm 1000 1500
-+add_rule bm 1400 1600
-+add_rule kmp 1000 1500
-+add_rule kmp 1400 1600
-+
-+zerorules
-+send 0
-+send $((1000 - $patlen))
-+if [ $(countrule -c 0 0) -ne 4 ]; then
-+	echo "FAIL: rules match data before --from"
-+	showrules
-+	((rc--))
-+fi
-+
-+zerorules
-+send 1000
-+send $((1400 - $patlen))
-+if [ $(countrule -c 2) -ne 2 ]; then
-+	echo "FAIL: only two rules should match at low offset"
-+	showrules
-+	((rc--))
-+fi
-+
-+zerorules
-+send $((1500 - $patlen))
-+if [ $(countrule -c 1) -ne 4 ]; then
-+	echo "FAIL: all rules should match at end of packet"
-+	showrules
-+	((rc--))
-+fi
-+
-+zerorules
-+send 1495
-+if [ $(countrule -c 1) -ne 1 ]; then
-+	echo "FAIL: only kmp with proper --to should match pattern spanning fragments"
-+	showrules
-+	((rc--))
-+fi
-+
-+zerorules
-+send 1500
-+if [ $(countrule -c 1) -ne 2 ]; then
-+	echo "FAIL: two rules should match pattern at start of second fragment"
-+	showrules
-+	((rc--))
-+fi
-+
-+zerorules
-+send $((1600 - $patlen))
-+if [ $(countrule -c 1) -ne 2 ]; then
-+	echo "FAIL: two rules should match pattern at end of largest --to"
-+	showrules
-+	((rc--))
-+fi
-+
-+zerorules
-+send $((1600 - $patlen + 1))
-+if [ $(countrule -c 1) -ne 0 ]; then
-+	echo "FAIL: no rules should match pattern extending largest --to"
-+	showrules
-+	((rc--))
-+fi
-+
-+zerorules
-+send 1600
-+if [ $(countrule -c 1) -ne 0 ]; then
-+	echo "FAIL: no rule should match pattern past largest --to"
-+	showrules
-+	((rc--))
-+fi
-+
-+exit $rc
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index 35461165de0d2..b92e3aa7cd041 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -2769,7 +2769,7 @@ static int enetc_setup_xdp_prog(struct net_device *ndev, struct bpf_prog *prog,
+ 	if (priv->min_num_stack_tx_queues + num_xdp_tx_queues >
+ 	    priv->num_tx_rings) {
+ 		NL_SET_ERR_MSG_FMT_MOD(extack,
+-				       "Reserving %d XDP TXQs does not leave a minimum of %d TXQs for network stack (total %d available)",
++				       "Reserving %d XDP TXQs does not leave a minimum of %d for stack (total %d)",
+ 				       num_xdp_tx_queues,
+ 				       priv->min_num_stack_tx_queues,
+ 				       priv->num_tx_rings);
 -- 
 2.42.0
 
