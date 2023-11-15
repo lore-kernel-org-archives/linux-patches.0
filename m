@@ -1,49 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483323DB91;
-	Wed, 15 Nov 2023 19:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CE341A87
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRhkWicR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9714C433C8;
-	Wed, 15 Nov 2023 19:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMjN03tp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB10C433CB;
+	Wed, 15 Nov 2023 19:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076726;
-	bh=/SprfMK39MSgjFMiw1J9eLDIGszjDz0qV1aULbNTrEw=;
+	s=korg; t=1700076727;
+	bh=gUcpbrFwAvs5m7wjFyyT7Gz76w+9VNzZh4+NhzHj9us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRhkWicRGHlhuy4qerN5tCddLAbW7XCL3Rh6aA0CvBnGPkqW/07ma0VOUUjSFyySy
-	 MjXtleRf43suihpbvBPSO/V+3IZQAIzxeNnIx1+AJI4SIUlCooE3KtEo7n4l5lqk/3
-	 DkBCYKGsDBe3aCI+DPvm8BF52g1ROoLegiG7CZXk=
+	b=xMjN03tp3m6yVxAx2EYqH+LpxYdg7iKehx9dfxLJ2u32HZsWfL6K5FfYTlmuikdD9
+	 FF6DyFyZOoNBKrsmdM5nW+2Kjec5Ub2SORBf+SZb9WJDMf+SamYCX0CdFmxV7U5g5W
+	 YvbRAzW0bSxiLa73+XHT+oQxg8xOCkTUnzokChm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jens Axboe <axboe@kernel.dk>,
-	Christoph Hellwig <hch@lst.de>,
-	Christian Brauner <christian@brauner.io>,
-	Matthew Wilcox <willy@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	David Laight <David.Laight@ACULAB.COM>,
-	x86@kernel.org,
-	linux-block@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-mm@kvack.org,
-	Christian Brauner <brauner@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/603] iov_iter, x86: Be consistent about the __user tag on copy_mc_to_user()
-Date: Wed, 15 Nov 2023 14:09:11 -0500
-Message-ID: <20231115191613.572325746@linuxfoundation.org>
+Subject: [PATCH 6.5 383/550] f2fs: compress: fix to avoid use-after-free on dic
+Date: Wed, 15 Nov 2023 14:16:07 -0500
+Message-ID: <20231115191627.397481800@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -55,91 +38,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 066baf92bed934c9fb4bcee97a193f47aa63431c ]
+[ Upstream commit b0327c84e91a0f4f0abced8cb83ec86a7083f086 ]
 
-copy_mc_to_user() has the destination marked __user on powerpc, but not on
-x86; the latter results in a sparse warning in lib/iov_iter.c.
+Call trace:
+ __memcpy+0x128/0x250
+ f2fs_read_multi_pages+0x940/0xf7c
+ f2fs_mpage_readpages+0x5a8/0x624
+ f2fs_readahead+0x5c/0x110
+ page_cache_ra_unbounded+0x1b8/0x590
+ do_sync_mmap_readahead+0x1dc/0x2e4
+ filemap_fault+0x254/0xa8c
+ f2fs_filemap_fault+0x2c/0x104
+ __do_fault+0x7c/0x238
+ do_handle_mm_fault+0x11bc/0x2d14
+ do_mem_abort+0x3a8/0x1004
+ el0_da+0x3c/0xa0
+ el0t_64_sync_handler+0xc4/0xec
+ el0t_64_sync+0x1b4/0x1b8
 
-Fix this by applying the tag on x86 too.
+In f2fs_read_multi_pages(), once f2fs_decompress_cluster() was called if
+we hit cached page in compress_inode's cache, dic may be released, it needs
+break the loop rather than continuing it, in order to avoid accessing
+invalid dic pointer.
 
-Fixes: ec6347bb4339 ("x86, powerpc: Rename memcpy_mcsafe() to copy_mc_to_{user, kernel}()")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20230925120309.1731676-3-dhowells@redhat.com
-cc: Dan Williams <dan.j.williams@intel.com>
-cc: Thomas Gleixner <tglx@linutronix.de>
-cc: Ingo Molnar <mingo@redhat.com>
-cc: Borislav Petkov <bp@alien8.de>
-cc: Dave Hansen <dave.hansen@linux.intel.com>
-cc: "H. Peter Anvin" <hpa@zytor.com>
-cc: Alexander Viro <viro@zeniv.linux.org.uk>
-cc: Jens Axboe <axboe@kernel.dk>
-cc: Christoph Hellwig <hch@lst.de>
-cc: Christian Brauner <christian@brauner.io>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: Linus Torvalds <torvalds@linux-foundation.org>
-cc: David Laight <David.Laight@ACULAB.COM>
-cc: x86@kernel.org
-cc: linux-block@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-cc: linux-mm@kvack.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 6ce19aff0b8c ("f2fs: compress: add compress_inode to cache compressed blocks")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/uaccess.h | 2 +-
- arch/x86/lib/copy_mc.c         | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ fs/f2fs/data.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
-index 8bae40a662827..5c367c1290c35 100644
---- a/arch/x86/include/asm/uaccess.h
-+++ b/arch/x86/include/asm/uaccess.h
-@@ -496,7 +496,7 @@ copy_mc_to_kernel(void *to, const void *from, unsigned len);
- #define copy_mc_to_kernel copy_mc_to_kernel
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 63bb5ca6e0d79..1c5703c02132d 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2341,8 +2341,10 @@ int f2fs_read_multi_pages(struct compress_ctx *cc, struct bio **bio_ret,
+ 		f2fs_wait_on_block_writeback(inode, blkaddr);
  
- unsigned long __must_check
--copy_mc_to_user(void *to, const void *from, unsigned len);
-+copy_mc_to_user(void __user *to, const void *from, unsigned len);
- #endif
+ 		if (f2fs_load_compressed_page(sbi, page, blkaddr)) {
+-			if (atomic_dec_and_test(&dic->remaining_pages))
++			if (atomic_dec_and_test(&dic->remaining_pages)) {
+ 				f2fs_decompress_cluster(dic, true);
++				break;
++			}
+ 			continue;
+ 		}
  
- /*
-diff --git a/arch/x86/lib/copy_mc.c b/arch/x86/lib/copy_mc.c
-index 80efd45a77617..6e8b7e600def5 100644
---- a/arch/x86/lib/copy_mc.c
-+++ b/arch/x86/lib/copy_mc.c
-@@ -70,23 +70,23 @@ unsigned long __must_check copy_mc_to_kernel(void *dst, const void *src, unsigne
- }
- EXPORT_SYMBOL_GPL(copy_mc_to_kernel);
- 
--unsigned long __must_check copy_mc_to_user(void *dst, const void *src, unsigned len)
-+unsigned long __must_check copy_mc_to_user(void __user *dst, const void *src, unsigned len)
- {
- 	unsigned long ret;
- 
- 	if (copy_mc_fragile_enabled) {
- 		__uaccess_begin();
--		ret = copy_mc_fragile(dst, src, len);
-+		ret = copy_mc_fragile((__force void *)dst, src, len);
- 		__uaccess_end();
- 		return ret;
- 	}
- 
- 	if (static_cpu_has(X86_FEATURE_ERMS)) {
- 		__uaccess_begin();
--		ret = copy_mc_enhanced_fast_string(dst, src, len);
-+		ret = copy_mc_enhanced_fast_string((__force void *)dst, src, len);
- 		__uaccess_end();
- 		return ret;
- 	}
- 
--	return copy_user_generic(dst, src, len);
-+	return copy_user_generic((__force void *)dst, src, len);
- }
 -- 
 2.42.0
 
