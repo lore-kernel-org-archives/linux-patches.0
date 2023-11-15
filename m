@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB863A8FA
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30023DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzXxwuWy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3DAC433C7;
-	Wed, 15 Nov 2023 20:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccVYmtYT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3FDC433C9;
+	Wed, 15 Nov 2023 20:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078498;
-	bh=mwi+8XeHRj1Utk8gGATEf7tFno3Gp3d7br+fIGur2bQ=;
+	s=korg; t=1700078500;
+	bh=JI0i3x7UmmYLK1ZJtq0u5Bsb4YUBg+5S4AY3G76ye0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzXxwuWy4D/WSgLHAl4fjFCStIeEJPRk/PnyKp25tsDpbwJEnMfzk0G+w88B6I7QZ
-	 gSxm0v78nQL5tzfJeuFQTq2FmND7s+p115kPysABGsWQAOSbIycItkz7ErPOMUVgfS
-	 VdHOb+UdfeRuDplZqfiPc0Pf3QSmq4du+P391I0g=
+	b=ccVYmtYTZ0QvBaTeD8/35P6Ss7/hllua1mqluUpv5Dag8d9hz5I03WEK0zCALKhzM
+	 Mxx0EXEDlM8ylhVFZ7sj4zT7EdPLWYXT+uxpoZsjjKUDnImucgypBFBgo6e+jAKPCv
+	 tw/fC5YL/eD1OZ3RUKOWaudmwHiXG06urI9xPQvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 334/379] watchdog: ixp4xx: Make sure restart always works
-Date: Wed, 15 Nov 2023 14:26:49 -0500
-Message-ID: <20231115192704.914360611@linuxfoundation.org>
+Subject: [PATCH 6.1 325/379] media: vidtv: mux: Add check and kfree for kstrdup
+Date: Wed, 15 Nov 2023 14:26:40 -0500
+Message-ID: <20231115192704.378956037@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,86 +42,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit b4075ecfe348a44209534c75ad72392c63a489a6 ]
+[ Upstream commit 1fd6eb12642e0c32692924ff359c07de4b781d78 ]
 
-The IXP4xx watchdog in early "A0" silicon is unreliable and
-cannot be registered, however for some systems such as the
-USRobotics USR8200 the watchdog is the only restart option,
-so implement a "dummy" watchdog that can only support restart
-in this case.
+Add check for the return value of kstrdup() and return the error
+if it fails in order to avoid NULL pointer dereference.
+Moreover, use kfree() in the later error handling in order to avoid
+memory leak.
 
-Fixes: 1aea522809e6 ("watchdog: ixp4xx: Implement restart")
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230926-ixp4xx-wdt-restart-v2-1-15cf4639b423@linaro.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: c2f78f0cb294 ("media: vidtv: psi: add a Network Information Table (NIT)")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/ixp4xx_wdt.c | 28 +++++++++++++++++++++++++---
- 1 file changed, 25 insertions(+), 3 deletions(-)
+ drivers/media/test-drivers/vidtv/vidtv_mux.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/ixp4xx_wdt.c b/drivers/watchdog/ixp4xx_wdt.c
-index 281a48d9889fc..0fc91e9c4a773 100644
---- a/drivers/watchdog/ixp4xx_wdt.c
-+++ b/drivers/watchdog/ixp4xx_wdt.c
-@@ -105,6 +105,25 @@ static const struct watchdog_ops ixp4xx_wdt_ops = {
- 	.owner = THIS_MODULE,
- };
- 
-+/*
-+ * The A0 version of the IXP422 had a bug in the watchdog making
-+ * is useless, but we still need to use it to restart the system
-+ * as it is the only way, so in this special case we register a
-+ * "dummy" watchdog that doesn't really work, but will support
-+ * the restart operation.
-+ */
-+static int ixp4xx_wdt_dummy(struct watchdog_device *wdd)
-+{
-+	return 0;
-+}
+diff --git a/drivers/media/test-drivers/vidtv/vidtv_mux.c b/drivers/media/test-drivers/vidtv/vidtv_mux.c
+index b51e6a3b8cbeb..f99878eff7ace 100644
+--- a/drivers/media/test-drivers/vidtv/vidtv_mux.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_mux.c
+@@ -504,13 +504,16 @@ struct vidtv_mux *vidtv_mux_init(struct dvb_frontend *fe,
+ 	m->priv = args->priv;
+ 	m->network_id = args->network_id;
+ 	m->network_name = kstrdup(args->network_name, GFP_KERNEL);
++	if (!m->network_name)
++		goto free_mux_buf;
 +
-+static const struct watchdog_ops ixp4xx_wdt_restart_only_ops = {
-+	.start = ixp4xx_wdt_dummy,
-+	.stop = ixp4xx_wdt_dummy,
-+	.restart = ixp4xx_wdt_restart,
-+	.owner = THIS_MODULE,
-+};
-+
- static const struct watchdog_info ixp4xx_wdt_info = {
- 	.options = WDIOF_KEEPALIVEPING
- 		| WDIOF_MAGICCLOSE
-@@ -120,14 +139,17 @@ static void ixp4xx_clock_action(void *d)
+ 	m->timing.current_jiffies = get_jiffies_64();
  
- static int ixp4xx_wdt_probe(struct platform_device *pdev)
- {
-+	static const struct watchdog_ops *iwdt_ops;
- 	struct device *dev = &pdev->dev;
- 	struct ixp4xx_wdt *iwdt;
- 	struct clk *clk;
- 	int ret;
+ 	if (args->channels)
+ 		m->channels = args->channels;
+ 	else
+ 		if (vidtv_channels_init(m) < 0)
+-			goto free_mux_buf;
++			goto free_mux_network_name;
  
- 	if (!(read_cpuid_id() & 0xf) && !cpu_is_ixp46x()) {
--		dev_err(dev, "Rev. A0 IXP42x CPU detected - watchdog disabled\n");
--		return -ENODEV;
-+		dev_info(dev, "Rev. A0 IXP42x CPU detected - only restart supported\n");
-+		iwdt_ops = &ixp4xx_wdt_restart_only_ops;
-+	} else {
-+		iwdt_ops = &ixp4xx_wdt_ops;
- 	}
- 
- 	iwdt = devm_kzalloc(dev, sizeof(*iwdt), GFP_KERNEL);
-@@ -153,7 +175,7 @@ static int ixp4xx_wdt_probe(struct platform_device *pdev)
- 		iwdt->rate = IXP4XX_TIMER_FREQ;
- 
- 	iwdt->wdd.info = &ixp4xx_wdt_info;
--	iwdt->wdd.ops = &ixp4xx_wdt_ops;
-+	iwdt->wdd.ops = iwdt_ops;
- 	iwdt->wdd.min_timeout = 1;
- 	iwdt->wdd.max_timeout = U32_MAX / iwdt->rate;
- 	iwdt->wdd.parent = dev;
+ 	/* will alloc data for pmt_sections after initializing pat */
+ 	if (vidtv_channel_si_init(m) < 0)
+@@ -527,6 +530,8 @@ struct vidtv_mux *vidtv_mux_init(struct dvb_frontend *fe,
+ 	vidtv_channel_si_destroy(m);
+ free_channels:
+ 	vidtv_channels_destroy(m);
++free_mux_network_name:
++	kfree(m->network_name);
+ free_mux_buf:
+ 	vfree(m->mux_buf);
+ free_mux:
 -- 
 2.42.0
 
