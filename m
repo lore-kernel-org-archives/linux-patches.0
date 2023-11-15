@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30023DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE68E3DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccVYmtYT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3FDC433C9;
-	Wed, 15 Nov 2023 20:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lG3l364a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91497C433C7;
+	Wed, 15 Nov 2023 20:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078500;
-	bh=JI0i3x7UmmYLK1ZJtq0u5Bsb4YUBg+5S4AY3G76ye0w=;
+	s=korg; t=1700078501;
+	bh=7KfzUZezhK3fzmqqlZ7Fve3nSMSgOfhuUJTlFWdSIUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ccVYmtYTZ0QvBaTeD8/35P6Ss7/hllua1mqluUpv5Dag8d9hz5I03WEK0zCALKhzM
-	 Mxx0EXEDlM8ylhVFZ7sj4zT7EdPLWYXT+uxpoZsjjKUDnImucgypBFBgo6e+jAKPCv
-	 tw/fC5YL/eD1OZ3RUKOWaudmwHiXG06urI9xPQvY=
+	b=lG3l364ahvS/x8SxkaVQkJJLL+ac/NPimX+CeL6sUTG68aO8axxXvkEo+ONAnBTKV
+	 dXciISOp/tz80WLvnH/qTUTTcnMQwfqcFI9Z+HD9d0aNLjqVMQEAsCsSL9dVLHO/o7
+	 SUWYKqLbgKzf0x7j2VhrXPMms4M0NMwnl3oYAtfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 325/379] media: vidtv: mux: Add check and kfree for kstrdup
-Date: Wed, 15 Nov 2023 14:26:40 -0500
-Message-ID: <20231115192704.378956037@linuxfoundation.org>
+Subject: [PATCH 6.1 353/379] net/smc: allow cdc msg send rather than drop it with NULL sndbuf_desc
+Date: Wed, 15 Nov 2023 14:27:08 -0500
+Message-ID: <20231115192706.042882706@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,54 +43,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit 1fd6eb12642e0c32692924ff359c07de4b781d78 ]
+[ Upstream commit c5bf605ba4f9d6fbbb120595ab95002f4716edcb ]
 
-Add check for the return value of kstrdup() and return the error
-if it fails in order to avoid NULL pointer dereference.
-Moreover, use kfree() in the later error handling in order to avoid
-memory leak.
+This patch re-fix the issues mentioned by commit 22a825c541d7
+("net/smc: fix NULL sndbuf_desc in smc_cdc_tx_handler()").
 
-Fixes: c2f78f0cb294 ("media: vidtv: psi: add a Network Information Table (NIT)")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Blocking sending message do solve the issues though, but it also
+prevents the peer to receive the final message. Besides, in logic,
+whether the sndbuf_desc is NULL or not have no impact on the processing
+of cdc message sending.
+
+Hence that, this patch allows the cdc message sending but to check the
+sndbuf_desc with care in smc_cdc_tx_handler().
+
+Fixes: 22a825c541d7 ("net/smc: fix NULL sndbuf_desc in smc_cdc_tx_handler()")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_mux.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/smc/smc_cdc.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vidtv/vidtv_mux.c b/drivers/media/test-drivers/vidtv/vidtv_mux.c
-index b51e6a3b8cbeb..f99878eff7ace 100644
---- a/drivers/media/test-drivers/vidtv/vidtv_mux.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_mux.c
-@@ -504,13 +504,16 @@ struct vidtv_mux *vidtv_mux_init(struct dvb_frontend *fe,
- 	m->priv = args->priv;
- 	m->network_id = args->network_id;
- 	m->network_name = kstrdup(args->network_name, GFP_KERNEL);
-+	if (!m->network_name)
-+		goto free_mux_buf;
-+
- 	m->timing.current_jiffies = get_jiffies_64();
+diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
+index 01bdb7909a14b..3c06625ceb200 100644
+--- a/net/smc/smc_cdc.c
++++ b/net/smc/smc_cdc.c
+@@ -28,13 +28,15 @@ static void smc_cdc_tx_handler(struct smc_wr_tx_pend_priv *pnd_snd,
+ {
+ 	struct smc_cdc_tx_pend *cdcpend = (struct smc_cdc_tx_pend *)pnd_snd;
+ 	struct smc_connection *conn = cdcpend->conn;
++	struct smc_buf_desc *sndbuf_desc;
+ 	struct smc_sock *smc;
+ 	int diff;
  
- 	if (args->channels)
- 		m->channels = args->channels;
- 	else
- 		if (vidtv_channels_init(m) < 0)
--			goto free_mux_buf;
-+			goto free_mux_network_name;
++	sndbuf_desc = conn->sndbuf_desc;
+ 	smc = container_of(conn, struct smc_sock, conn);
+ 	bh_lock_sock(&smc->sk);
+-	if (!wc_status) {
+-		diff = smc_curs_diff(cdcpend->conn->sndbuf_desc->len,
++	if (!wc_status && sndbuf_desc) {
++		diff = smc_curs_diff(sndbuf_desc->len,
+ 				     &cdcpend->conn->tx_curs_fin,
+ 				     &cdcpend->cursor);
+ 		/* sndbuf_space is decreased in smc_sendmsg */
+@@ -114,9 +116,6 @@ int smc_cdc_msg_send(struct smc_connection *conn,
+ 	union smc_host_cursor cfed;
+ 	int rc;
  
- 	/* will alloc data for pmt_sections after initializing pat */
- 	if (vidtv_channel_si_init(m) < 0)
-@@ -527,6 +530,8 @@ struct vidtv_mux *vidtv_mux_init(struct dvb_frontend *fe,
- 	vidtv_channel_si_destroy(m);
- free_channels:
- 	vidtv_channels_destroy(m);
-+free_mux_network_name:
-+	kfree(m->network_name);
- free_mux_buf:
- 	vfree(m->mux_buf);
- free_mux:
+-	if (unlikely(!READ_ONCE(conn->sndbuf_desc)))
+-		return -ENOBUFS;
+-
+ 	smc_cdc_add_pending_send(conn, pend);
+ 
+ 	conn->tx_cdc_seq++;
 -- 
 2.42.0
 
