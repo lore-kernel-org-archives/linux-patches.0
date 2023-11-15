@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E329249E2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148D843AA6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5qXXQsq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E13C433C7;
-	Wed, 15 Nov 2023 20:44:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTnoQadN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48AAC433C8;
+	Wed, 15 Nov 2023 20:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081057;
-	bh=s0Q91LgwZOiKSgGSoOHuP2fjEHpA68E/i2CjPPv5m/E=;
+	s=korg; t=1700081059;
+	bh=ui8f6+CyM9QIAO1xv0RKDMqhYghe0rT5MrcNL9ijuM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t5qXXQsqL93CPh83cQexlFRh6cclQ652ESzAV61ZCQJCSLk1uNqB9Z7oZRb7OAYp2
-	 jCfomolN2BQoPAVAKTQMilYFu6H0ZaFDNur9yASGG30vsSS052WOBPEIZwum5ffAnk
-	 eFT+ddb1EOfF9vN//QZTr47VF2TVzQuoXxtzhJkM=
+	b=ZTnoQadNoEx2pnGm37gzP7yyXCOc5vZSDV46M7ofZ+GD+Wt8p9GLuhVPYmsJ/TElT
+	 dyjwaiQn4f6mOSS3XPPSqMsFDGBhKe7FC51cfG1QM8aTljFYK0aMLw5/H7GyH8O1gZ
+	 k9b+bxq0DmpBjd7i5qisG3Qiq3aIINKpR6kT2QfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Ayush Sawal <ayush.sawal@chelsio.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 12/88] chtls: fix tp->rcv_tstamp initialization
-Date: Wed, 15 Nov 2023 15:35:24 -0500
-Message-ID: <20231115191426.919593597@linuxfoundation.org>
+Subject: [PATCH 4.19 13/88] ACPI: sysfs: Fix create_pnp_modalias() and create_of_modalias()
+Date: Wed, 15 Nov 2023 15:35:25 -0500
+Message-ID: <20231115191426.978897396@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -43,34 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 225d9ddbacb102621af6d28ff7bf5a0b4ce249d8 ]
+[ Upstream commit 48cf49d31994ff97b33c4044e618560ec84d35fb ]
 
-tp->rcv_tstamp should be set to tcp_jiffies, not tcp_time_stamp().
+snprintf() does not return negative values on error.
 
-Fixes: cc35c88ae4db ("crypto : chtls - CPL handler definition")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Ayush Sawal <ayush.sawal@chelsio.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+To know if the buffer was too small, the returned value needs to be
+compared with the length of the passed buffer. If it is greater or
+equal, the output has been truncated, so add checks for the truncation
+to create_pnp_modalias() and create_of_modalias(). Also make them
+return -ENOMEM in that case, as they already do that elsewhere.
+
+Moreover, the remaining size of the buffer used by snprintf() needs to
+be updated after the first write to avoid out-of-bounds access as
+already done correctly in create_pnp_modalias(), but not in
+create_of_modalias(), so change the latter accordingly.
+
+Fixes: 8765c5ba1949 ("ACPI / scan: Rework modalias creation when "compatible" is present")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+[ rjw: Merge two patches into one, combine changelogs, add subject ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/chelsio/chtls/chtls_cm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/device_sysfs.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/chelsio/chtls/chtls_cm.c b/drivers/crypto/chelsio/chtls/chtls_cm.c
-index 08ed3ff8b255f..360e153391709 100644
---- a/drivers/crypto/chelsio/chtls/chtls_cm.c
-+++ b/drivers/crypto/chelsio/chtls/chtls_cm.c
-@@ -2071,7 +2071,7 @@ static void chtls_rx_ack(struct sock *sk, struct sk_buff *skb)
+diff --git a/drivers/acpi/device_sysfs.c b/drivers/acpi/device_sysfs.c
+index f792b149a5745..146be9cdeca5a 100644
+--- a/drivers/acpi/device_sysfs.c
++++ b/drivers/acpi/device_sysfs.c
+@@ -164,8 +164,8 @@ static int create_pnp_modalias(struct acpi_device *acpi_dev, char *modalias,
+ 		return 0;
  
- 		if (tp->snd_una != snd_una) {
- 			tp->snd_una = snd_una;
--			tp->rcv_tstamp = tcp_time_stamp(tp);
-+			tp->rcv_tstamp = tcp_jiffies32;
- 			if (tp->snd_una == tp->snd_nxt &&
- 			    !csk_flag_nochk(csk, CSK_TX_FAILOVER))
- 				csk_reset_flag(csk, CSK_TX_WAIT_IDLE);
+ 	len = snprintf(modalias, size, "acpi:");
+-	if (len <= 0)
+-		return len;
++	if (len >= size)
++		return -ENOMEM;
+ 
+ 	size -= len;
+ 
+@@ -218,8 +218,10 @@ static int create_of_modalias(struct acpi_device *acpi_dev, char *modalias,
+ 	len = snprintf(modalias, size, "of:N%sT", (char *)buf.pointer);
+ 	ACPI_FREE(buf.pointer);
+ 
+-	if (len <= 0)
+-		return len;
++	if (len >= size)
++		return -ENOMEM;
++
++	size -= len;
+ 
+ 	of_compatible = acpi_dev->data.of_compatible;
+ 	if (of_compatible->type == ACPI_TYPE_PACKAGE) {
 -- 
 2.42.0
 
