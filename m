@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AE743AC3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4859F43AC3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIJaskAi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA95C32798;
-	Wed, 15 Nov 2023 20:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZKhEqMt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED804C3279B;
+	Wed, 15 Nov 2023 20:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081374;
-	bh=RH1AYF6ztgznAbcvji+adlhH6ndaZVBSRd95v8C8Y+Y=;
+	s=korg; t=1700081376;
+	bh=FHpFAaZqwo88mPmCowwUhuPdeuOOM0yRAozqnR9IjrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TIJaskAiuCw4Eqb5Q2B+VPp1bGHe/+bEPG09jvWOSvb4fmj8HVSIjUERVhirLzXFM
-	 HMv63yZFRuQWhtEsKOL8BCQVwteuEevtBQfwL1MzjQSWJvRJ9nDoSc0pzTNGkgBQwd
-	 msKkJ8GORhbDcIoCVLwUGpxGFo5uxQo856T62Ihg=
+	b=vZKhEqMtcb3+qfjs+k8SbxX1Rq7RUNsAwx3q5+xZcmJ3xVdC3zJzAjHuBAGP+WuFH
+	 mAcQnjrMh3AHdS1DdU993jhMAwrWoda3JrF/vZvZ7wzKjjyuYxpsegy0aZlknHm9sw
+	 DOFsxRm10xWIxMj72vWVKl0ApAho8yzpIifp1tr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Chris Packham <chris.packham@alliedtelesis.co.nz>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 115/244] arm64: dts: qcom: sdm845-mtp: fix WiFi configuration
-Date: Wed, 15 Nov 2023 15:35:07 -0500
-Message-ID: <20231115203555.226766440@linuxfoundation.org>
+Subject: [PATCH 5.15 116/244] ARM64: dts: marvell: cn9310: Use appropriate label for spi1 pins
+Date: Wed, 15 Nov 2023 15:35:08 -0500
+Message-ID: <20231115203555.283515840@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,35 +43,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Chris Packham <chris.packham@alliedtelesis.co.nz>
 
-[ Upstream commit b33868a52f342d9b1f20aa5bffe40cbd69bd0a4b ]
+[ Upstream commit 0878fd86f554ab98aa493996c7e0c72dff58437f ]
 
-Enable the host-cap-8bit quirk on this device. It is required for the
-WiFi to function properly.
+Both the CN9130-CRB and CN9130-DB use the SPI1 interface but had the
+pinctrl node labelled as "cp0_spi0_pins". Use the label "cp0_spi1_pins"
+and update the node name to "cp0-spi-pins-1" to avoid confusion with the
+pinctrl options for SPI0.
 
-Fixes: 022bccb840b7 ("arm64: dts: sdm845: Add WCN3990 WLAN module device node")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230826221915.846937-2-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 4c43a41e5b8c ("arm64: dts: cn913x: add device trees for topology B boards")
+Fixes: 5c0ee54723f3 ("arm64: dts: add support for Marvell cn9130-crb platform")
+Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/marvell/cn9130-crb.dtsi | 4 ++--
+ arch/arm64/boot/dts/marvell/cn9130-db.dtsi  | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-index 52dd7a858231e..cf2fad5bcac1b 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-@@ -572,6 +572,8 @@ &wifi {
- 	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
- 	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
- 	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
-+
-+	qcom,snoc-host-cap-8bit-quirk;
- };
+diff --git a/arch/arm64/boot/dts/marvell/cn9130-crb.dtsi b/arch/arm64/boot/dts/marvell/cn9130-crb.dtsi
+index 505ae69289f6d..ce49702dc4936 100644
+--- a/arch/arm64/boot/dts/marvell/cn9130-crb.dtsi
++++ b/arch/arm64/boot/dts/marvell/cn9130-crb.dtsi
+@@ -107,7 +107,7 @@ cp0_sdhci_pins: cp0-sdhi-pins-0 {
+ 				       "mpp59", "mpp60", "mpp61";
+ 			marvell,function = "sdio";
+ 		};
+-		cp0_spi0_pins: cp0-spi-pins-0 {
++		cp0_spi1_pins: cp0-spi-pins-1 {
+ 			marvell,pins = "mpp13", "mpp14", "mpp15", "mpp16";
+ 			marvell,function = "spi1";
+ 		};
+@@ -149,7 +149,7 @@ &cp0_sdhci0 {
  
- /* PINCTRL - additions to nodes defined in sdm845.dtsi */
+ &cp0_spi1 {
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&cp0_spi0_pins>;
++	pinctrl-0 = <&cp0_spi1_pins>;
+ 	reg = <0x700680 0x50>,		/* control */
+ 	      <0x2000000 0x1000000>;	/* CS0 */
+ 	status = "okay";
+diff --git a/arch/arm64/boot/dts/marvell/cn9130-db.dtsi b/arch/arm64/boot/dts/marvell/cn9130-db.dtsi
+index c00b69b88bd2f..c53253f668403 100644
+--- a/arch/arm64/boot/dts/marvell/cn9130-db.dtsi
++++ b/arch/arm64/boot/dts/marvell/cn9130-db.dtsi
+@@ -307,7 +307,7 @@ &cp0_sdhci0 {
+ &cp0_spi1 {
+ 	status = "disabled";
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&cp0_spi0_pins>;
++	pinctrl-0 = <&cp0_spi1_pins>;
+ 	reg = <0x700680 0x50>;
+ 
+ 	spi-flash@0 {
+@@ -371,7 +371,7 @@ cp0_sdhci_pins: cp0-sdhi-pins-0 {
+ 				       "mpp59", "mpp60", "mpp61";
+ 			marvell,function = "sdio";
+ 		};
+-		cp0_spi0_pins: cp0-spi-pins-0 {
++		cp0_spi1_pins: cp0-spi-pins-1 {
+ 			marvell,pins = "mpp13", "mpp14", "mpp15", "mpp16";
+ 			marvell,function = "spi1";
+ 		};
 -- 
 2.42.0
 
