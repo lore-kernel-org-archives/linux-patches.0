@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10434121C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381D13DBBF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NGfiPtK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D86FC433C7;
-	Wed, 15 Nov 2023 19:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSiGONts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8859C433C9;
+	Wed, 15 Nov 2023 19:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076785;
-	bh=XHtu11nEhkYmfSgyNTWlXe4K9Mr9z5YUksfhOO4psww=;
+	s=korg; t=1700076787;
+	bh=pZxepE3fd1q/n1SH45fODoWXpDthHJ+kmUITCiXmEt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0NGfiPtKGMWrOfXzDjQq407bZWKbaCSHrmIu9tzhpKK/Qd76jIFGfPtJxxYD1paqf
-	 fMuhC6m+CyBt9TM8x5O0Ui74KQjcc4EYgZ3UGsMug4F0s7F8/VvsJXUcPAA5hXDZNU
-	 jec6WkMsa8RnWn2oOamtCZBUwrFKvu2LLGlWMlBU=
+	b=uSiGONtsB71A5xq4GrtWkiLfmNHFocmQ3/SrrcLlIXei8qPAHD6XBeEW6LSexl4k7
+	 B3Is4w7YdLCcY0rbV4ilKuKSvgRtF3WPgkPAx7pKSJ0GikqczXu+C1pBNwbXD7D4SS
+	 ouhZTQ+UrSwg1NmhB3g/MmLzyyF1j84YhvnWlVBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	Yong He <alexyonghe@tencent.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Neeraj upadhyay <Neeraj.Upadhyay@amd.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 420/550] interconnect: qcom: sm8350: Retire DEFINE_QBCM
-Date: Wed, 15 Nov 2023 14:16:44 -0500
-Message-ID: <20231115191629.872424972@linuxfoundation.org>
+Subject: [PATCH 6.6 026/603] srcu: Fix callbacks acceleration mishandling
+Date: Wed, 15 Nov 2023 14:09:31 -0500
+Message-ID: <20231115191614.987480827@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,345 +40,159 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit edd13c04ff0d90ed152902a88f01f466c77a0cf9 ]
+[ Upstream commit 4a8e65b0c348e42107c64381e692e282900be361 ]
 
-The struct definition macros are hard to read and compare, expand them.
+SRCU callbacks acceleration might fail if the preceding callbacks
+advance also fails. This can happen when the following steps are met:
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Link: https://lore.kernel.org/r/20230811-topic-icc_retire_macrosd-v1-19-c03aaeffc769@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
-Stable-dep-of: df1b8356a80a ("interconnect: qcom: sm8350: Set ACV enable_mask")
+1) The RCU_WAIT_TAIL segment has callbacks (say for gp_num 8) and the
+   RCU_NEXT_READY_TAIL also has callbacks (say for gp_num 12).
+
+2) The grace period for RCU_WAIT_TAIL is observed as started but not yet
+   completed so rcu_seq_current() returns 4 + SRCU_STATE_SCAN1 = 5.
+
+3) This value is passed to rcu_segcblist_advance() which can't move
+   any segment forward and fails.
+
+4) srcu_gp_start_if_needed() still proceeds with callback acceleration.
+   But then the call to rcu_seq_snap() observes the grace period for the
+   RCU_WAIT_TAIL segment (gp_num 8) as completed and the subsequent one
+   for the RCU_NEXT_READY_TAIL segment as started
+   (ie: 8 + SRCU_STATE_SCAN1 = 9) so it returns a snapshot of the
+   next grace period, which is 16.
+
+5) The value of 16 is passed to rcu_segcblist_accelerate() but the
+   freshly enqueued callback in RCU_NEXT_TAIL can't move to
+   RCU_NEXT_READY_TAIL which already has callbacks for a previous grace
+   period (gp_num = 12). So acceleration fails.
+
+6) Note in all these steps, srcu_invoke_callbacks() hadn't had a chance
+   to run srcu_invoke_callbacks().
+
+Then some very bad outcome may happen if the following happens:
+
+7) Some other CPU races and starts the grace period number 16 before the
+   CPU handling previous steps had a chance. Therefore srcu_gp_start()
+   isn't called on the latter sdp to fix the acceleration leak from
+   previous steps with a new pair of call to advance/accelerate.
+
+8) The grace period 16 completes and srcu_invoke_callbacks() is finally
+   called. All the callbacks from previous grace periods (8 and 12) are
+   correctly advanced and executed but callbacks in RCU_NEXT_READY_TAIL
+   still remain. Then rcu_segcblist_accelerate() is called with a
+   snaphot of 20.
+
+9) Since nothing started the grace period number 20, callbacks stay
+   unhandled.
+
+This has been reported in real load:
+
+	[3144162.608392] INFO: task kworker/136:12:252684 blocked for more
+	than 122 seconds.
+	[3144162.615986]       Tainted: G           O  K   5.4.203-1-tlinux4-0011.1 #1
+	[3144162.623053] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs"
+	disables this message.
+	[3144162.631162] kworker/136:12  D    0 252684      2 0x90004000
+	[3144162.631189] Workqueue: kvm-irqfd-cleanup irqfd_shutdown [kvm]
+	[3144162.631192] Call Trace:
+	[3144162.631202]  __schedule+0x2ee/0x660
+	[3144162.631206]  schedule+0x33/0xa0
+	[3144162.631209]  schedule_timeout+0x1c4/0x340
+	[3144162.631214]  ? update_load_avg+0x82/0x660
+	[3144162.631217]  ? raw_spin_rq_lock_nested+0x1f/0x30
+	[3144162.631218]  wait_for_completion+0x119/0x180
+	[3144162.631220]  ? wake_up_q+0x80/0x80
+	[3144162.631224]  __synchronize_srcu.part.19+0x81/0xb0
+	[3144162.631226]  ? __bpf_trace_rcu_utilization+0x10/0x10
+	[3144162.631227]  synchronize_srcu+0x5f/0xc0
+	[3144162.631236]  irqfd_shutdown+0x3c/0xb0 [kvm]
+	[3144162.631239]  ? __schedule+0x2f6/0x660
+	[3144162.631243]  process_one_work+0x19a/0x3a0
+	[3144162.631244]  worker_thread+0x37/0x3a0
+	[3144162.631247]  kthread+0x117/0x140
+	[3144162.631247]  ? process_one_work+0x3a0/0x3a0
+	[3144162.631248]  ? __kthread_cancel_work+0x40/0x40
+	[3144162.631250]  ret_from_fork+0x1f/0x30
+
+Fix this with taking the snapshot for acceleration _before_ the read
+of the current grace period number.
+
+The only side effect of this solution is that callbacks advancing happen
+then _after_ the full barrier in rcu_seq_snap(). This is not a problem
+because that barrier only cares about:
+
+1) Ordering accesses of the update side before call_srcu() so they don't
+   bleed.
+2) See all the accesses prior to the grace period of the current gp_num
+
+The only things callbacks advancing need to be ordered against are
+carried by snp locking.
+
+Reported-by: Yong He <alexyonghe@tencent.com>
+Co-developed-by:: Yong He <alexyonghe@tencent.com>
+Signed-off-by: Yong He <alexyonghe@tencent.com>
+Co-developed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by:  Joel Fernandes (Google) <joel@joelfernandes.org>
+Co-developed-by: Neeraj upadhyay <Neeraj.Upadhyay@amd.com>
+Signed-off-by: Neeraj upadhyay <Neeraj.Upadhyay@amd.com>
+Link: http://lore.kernel.org/CANZk6aR+CqZaqmMWrC2eRRPY12qAZnDZLwLnHZbNi=xXMB401g@mail.gmail.com
+Fixes: da915ad5cf25 ("srcu: Parallelize callback handling")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/sm8350.c | 308 ++++++++++++++++++++++++++---
- 1 file changed, 276 insertions(+), 32 deletions(-)
+ kernel/rcu/srcutree.c | 31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/sm8350.c b/drivers/interconnect/qcom/sm8350.c
-index 5398e7c8d826b..1959208409396 100644
---- a/drivers/interconnect/qcom/sm8350.c
-+++ b/drivers/interconnect/qcom/sm8350.c
-@@ -165,38 +165,282 @@ DEFINE_QNODE(ebi_disp, SM8350_SLAVE_EBI1_DISP, 4, 4);
- DEFINE_QNODE(qns_mem_noc_hf_disp, SM8350_SLAVE_MNOC_HF_MEM_NOC_DISP, 2, 32, SM8350_MASTER_MNOC_HF_MEM_NOC_DISP);
- DEFINE_QNODE(qns_mem_noc_sf_disp, SM8350_SLAVE_MNOC_SF_MEM_NOC_DISP, 2, 32, SM8350_MASTER_MNOC_SF_MEM_NOC_DISP);
- 
--DEFINE_QBCM(bcm_acv, "ACV", false, &ebi);
--DEFINE_QBCM(bcm_ce0, "CE0", false, &qxm_crypto);
--DEFINE_QBCM(bcm_cn0, "CN0", true, &qnm_gemnoc_cnoc, &qnm_gemnoc_pcie);
--DEFINE_QBCM(bcm_cn1, "CN1", false, &xm_qdss_dap, &qhs_ahb2phy0, &qhs_ahb2phy1, &qhs_aoss, &qhs_apss, &qhs_camera_cfg, &qhs_clk_ctl, &qhs_compute_cfg, &qhs_cpr_cx, &qhs_cpr_mmcx, &qhs_cpr_mx, &qhs_crypto0_cfg, &qhs_cx_rdpm, &qhs_dcc_cfg, &qhs_display_cfg, &qhs_gpuss_cfg, &qhs_hwkm, &qhs_imem_cfg, &qhs_ipa, &qhs_ipc_router, &qhs_mss_cfg, &qhs_mx_rdpm, &qhs_pcie0_cfg, &qhs_pcie1_cfg, &qhs_pimem_cfg, &qhs_pka_wrapper_cfg, &qhs_pmu_wrapper_cfg, &qhs_qdss_cfg, &qhs_qup0, &qhs_qup1, &qhs_qup2, &qhs_security, &qhs_spss_cfg, &qhs_tcsr, &qhs_tlmm, &qhs_ufs_card_cfg, &qhs_ufs_mem_cfg, &qhs_usb3_0, &qhs_usb3_1, &qhs_venus_cfg, &qhs_vsense_ctrl_cfg, &qns_a1_noc_cfg, &qns_a2_noc_cfg, &qns_ddrss_cfg, &qns_mnoc_cfg, &qns_snoc_cfg, &srvc_cnoc);
--DEFINE_QBCM(bcm_cn2, "CN2", false, &qhs_lpass_cfg, &qhs_pdm, &qhs_qspi, &qhs_sdc2, &qhs_sdc4);
--DEFINE_QBCM(bcm_co0, "CO0", false, &qns_nsp_gemnoc);
--DEFINE_QBCM(bcm_co3, "CO3", false, &qxm_nsp);
--DEFINE_QBCM(bcm_mc0, "MC0", true, &ebi);
--DEFINE_QBCM(bcm_mm0, "MM0", true, &qns_mem_noc_hf);
--DEFINE_QBCM(bcm_mm1, "MM1", false, &qnm_camnoc_hf, &qxm_mdp0, &qxm_mdp1);
--DEFINE_QBCM(bcm_mm4, "MM4", false, &qns_mem_noc_sf);
--DEFINE_QBCM(bcm_mm5, "MM5", false, &qnm_camnoc_icp, &qnm_camnoc_sf, &qnm_video0, &qnm_video1, &qnm_video_cvp, &qxm_rot);
--DEFINE_QBCM(bcm_sh0, "SH0", true, &qns_llcc);
--DEFINE_QBCM(bcm_sh2, "SH2", false, &alm_gpu_tcu, &alm_sys_tcu);
--DEFINE_QBCM(bcm_sh3, "SH3", false, &qnm_cmpnoc);
--DEFINE_QBCM(bcm_sh4, "SH4", false, &chm_apps);
--DEFINE_QBCM(bcm_sn0, "SN0", true, &qns_gemnoc_sf);
--DEFINE_QBCM(bcm_sn2, "SN2", false, &qns_gemnoc_gc);
--DEFINE_QBCM(bcm_sn3, "SN3", false, &qxs_pimem);
--DEFINE_QBCM(bcm_sn4, "SN4", false, &xs_qdss_stm);
--DEFINE_QBCM(bcm_sn5, "SN5", false, &xm_pcie3_0);
--DEFINE_QBCM(bcm_sn6, "SN6", false, &xm_pcie3_1);
--DEFINE_QBCM(bcm_sn7, "SN7", false, &qnm_aggre1_noc);
--DEFINE_QBCM(bcm_sn8, "SN8", false, &qnm_aggre2_noc);
--DEFINE_QBCM(bcm_sn14, "SN14", false, &qns_pcie_mem_noc);
--DEFINE_QBCM(bcm_acv_disp, "ACV", false, &ebi_disp);
--DEFINE_QBCM(bcm_mc0_disp, "MC0", false, &ebi_disp);
--DEFINE_QBCM(bcm_mm0_disp, "MM0", false, &qns_mem_noc_hf_disp);
--DEFINE_QBCM(bcm_mm1_disp, "MM1", false, &qxm_mdp0_disp, &qxm_mdp1_disp);
--DEFINE_QBCM(bcm_mm4_disp, "MM4", false, &qns_mem_noc_sf_disp);
--DEFINE_QBCM(bcm_mm5_disp, "MM5", false, &qxm_rot_disp);
--DEFINE_QBCM(bcm_sh0_disp, "SH0", false, &qns_llcc_disp);
-+static struct qcom_icc_bcm bcm_acv = {
-+	.name = "ACV",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &ebi },
-+};
-+
-+static struct qcom_icc_bcm bcm_ce0 = {
-+	.name = "CE0",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qxm_crypto },
-+};
-+
-+static struct qcom_icc_bcm bcm_cn0 = {
-+	.name = "CN0",
-+	.keepalive = true,
-+	.num_nodes = 2,
-+	.nodes = { &qnm_gemnoc_cnoc, &qnm_gemnoc_pcie },
-+};
-+
-+static struct qcom_icc_bcm bcm_cn1 = {
-+	.name = "CN1",
-+	.keepalive = false,
-+	.num_nodes = 47,
-+	.nodes = { &xm_qdss_dap,
-+		   &qhs_ahb2phy0,
-+		   &qhs_ahb2phy1,
-+		   &qhs_aoss,
-+		   &qhs_apss,
-+		   &qhs_camera_cfg,
-+		   &qhs_clk_ctl,
-+		   &qhs_compute_cfg,
-+		   &qhs_cpr_cx,
-+		   &qhs_cpr_mmcx,
-+		   &qhs_cpr_mx,
-+		   &qhs_crypto0_cfg,
-+		   &qhs_cx_rdpm,
-+		   &qhs_dcc_cfg,
-+		   &qhs_display_cfg,
-+		   &qhs_gpuss_cfg,
-+		   &qhs_hwkm,
-+		   &qhs_imem_cfg,
-+		   &qhs_ipa,
-+		   &qhs_ipc_router,
-+		   &qhs_mss_cfg,
-+		   &qhs_mx_rdpm,
-+		   &qhs_pcie0_cfg,
-+		   &qhs_pcie1_cfg,
-+		   &qhs_pimem_cfg,
-+		   &qhs_pka_wrapper_cfg,
-+		   &qhs_pmu_wrapper_cfg,
-+		   &qhs_qdss_cfg,
-+		   &qhs_qup0,
-+		   &qhs_qup1,
-+		   &qhs_qup2,
-+		   &qhs_security,
-+		   &qhs_spss_cfg,
-+		   &qhs_tcsr,
-+		   &qhs_tlmm,
-+		   &qhs_ufs_card_cfg,
-+		   &qhs_ufs_mem_cfg,
-+		   &qhs_usb3_0,
-+		   &qhs_usb3_1,
-+		   &qhs_venus_cfg,
-+		   &qhs_vsense_ctrl_cfg,
-+		   &qns_a1_noc_cfg,
-+		   &qns_a2_noc_cfg,
-+		   &qns_ddrss_cfg,
-+		   &qns_mnoc_cfg,
-+		   &qns_snoc_cfg,
-+		   &srvc_cnoc
-+	},
-+};
-+
-+static struct qcom_icc_bcm bcm_cn2 = {
-+	.name = "CN2",
-+	.keepalive = false,
-+	.num_nodes = 5,
-+	.nodes = { &qhs_lpass_cfg, &qhs_pdm, &qhs_qspi, &qhs_sdc2, &qhs_sdc4 },
-+};
-+
-+static struct qcom_icc_bcm bcm_co0 = {
-+	.name = "CO0",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qns_nsp_gemnoc },
-+};
-+
-+static struct qcom_icc_bcm bcm_co3 = {
-+	.name = "CO3",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qxm_nsp },
-+};
-+
-+static struct qcom_icc_bcm bcm_mc0 = {
-+	.name = "MC0",
-+	.keepalive = true,
-+	.num_nodes = 1,
-+	.nodes = { &ebi },
-+};
-+
-+static struct qcom_icc_bcm bcm_mm0 = {
-+	.name = "MM0",
-+	.keepalive = true,
-+	.num_nodes = 1,
-+	.nodes = { &qns_mem_noc_hf },
-+};
-+
-+static struct qcom_icc_bcm bcm_mm1 = {
-+	.name = "MM1",
-+	.keepalive = false,
-+	.num_nodes = 3,
-+	.nodes = { &qnm_camnoc_hf, &qxm_mdp0, &qxm_mdp1 },
-+};
-+
-+static struct qcom_icc_bcm bcm_mm4 = {
-+	.name = "MM4",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qns_mem_noc_sf },
-+};
-+
-+static struct qcom_icc_bcm bcm_mm5 = {
-+	.name = "MM5",
-+	.keepalive = false,
-+	.num_nodes = 6,
-+	.nodes = { &qnm_camnoc_icp,
-+		   &qnm_camnoc_sf,
-+		   &qnm_video0,
-+		   &qnm_video1,
-+		   &qnm_video_cvp,
-+		   &qxm_rot
-+	},
-+};
-+
-+static struct qcom_icc_bcm bcm_sh0 = {
-+	.name = "SH0",
-+	.keepalive = true,
-+	.num_nodes = 1,
-+	.nodes = { &qns_llcc },
-+};
-+
-+static struct qcom_icc_bcm bcm_sh2 = {
-+	.name = "SH2",
-+	.keepalive = false,
-+	.num_nodes = 2,
-+	.nodes = { &alm_gpu_tcu, &alm_sys_tcu },
-+};
-+
-+static struct qcom_icc_bcm bcm_sh3 = {
-+	.name = "SH3",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qnm_cmpnoc },
-+};
-+
-+static struct qcom_icc_bcm bcm_sh4 = {
-+	.name = "SH4",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &chm_apps },
-+};
-+
-+static struct qcom_icc_bcm bcm_sn0 = {
-+	.name = "SN0",
-+	.keepalive = true,
-+	.num_nodes = 1,
-+	.nodes = { &qns_gemnoc_sf },
-+};
-+
-+static struct qcom_icc_bcm bcm_sn2 = {
-+	.name = "SN2",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qns_gemnoc_gc },
-+};
-+
-+static struct qcom_icc_bcm bcm_sn3 = {
-+	.name = "SN3",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qxs_pimem },
-+};
-+
-+static struct qcom_icc_bcm bcm_sn4 = {
-+	.name = "SN4",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &xs_qdss_stm },
-+};
-+
-+static struct qcom_icc_bcm bcm_sn5 = {
-+	.name = "SN5",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &xm_pcie3_0 },
-+};
-+
-+static struct qcom_icc_bcm bcm_sn6 = {
-+	.name = "SN6",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &xm_pcie3_1 },
-+};
-+
-+static struct qcom_icc_bcm bcm_sn7 = {
-+	.name = "SN7",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qnm_aggre1_noc },
-+};
-+
-+static struct qcom_icc_bcm bcm_sn8 = {
-+	.name = "SN8",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qnm_aggre2_noc },
-+};
-+
-+static struct qcom_icc_bcm bcm_sn14 = {
-+	.name = "SN14",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qns_pcie_mem_noc },
-+};
-+
-+static struct qcom_icc_bcm bcm_acv_disp = {
-+	.name = "ACV",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &ebi_disp },
-+};
-+
-+static struct qcom_icc_bcm bcm_mc0_disp = {
-+	.name = "MC0",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &ebi_disp },
-+};
-+
-+static struct qcom_icc_bcm bcm_mm0_disp = {
-+	.name = "MM0",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qns_mem_noc_hf_disp },
-+};
-+
-+static struct qcom_icc_bcm bcm_mm1_disp = {
-+	.name = "MM1",
-+	.keepalive = false,
-+	.num_nodes = 2,
-+	.nodes = { &qxm_mdp0_disp, &qxm_mdp1_disp },
-+};
-+
-+static struct qcom_icc_bcm bcm_mm4_disp = {
-+	.name = "MM4",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qns_mem_noc_sf_disp },
-+};
-+
-+static struct qcom_icc_bcm bcm_mm5_disp = {
-+	.name = "MM5",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qxm_rot_disp },
-+};
-+
-+static struct qcom_icc_bcm bcm_sh0_disp = {
-+	.name = "SH0",
-+	.keepalive = false,
-+	.num_nodes = 1,
-+	.nodes = { &qns_llcc_disp },
-+};
- 
- static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
- };
+diff --git a/kernel/rcu/srcutree.c b/kernel/rcu/srcutree.c
+index 20d7a238d675a..253ed509b6abb 100644
+--- a/kernel/rcu/srcutree.c
++++ b/kernel/rcu/srcutree.c
+@@ -1242,10 +1242,37 @@ static unsigned long srcu_gp_start_if_needed(struct srcu_struct *ssp,
+ 	spin_lock_irqsave_sdp_contention(sdp, &flags);
+ 	if (rhp)
+ 		rcu_segcblist_enqueue(&sdp->srcu_cblist, rhp);
++	/*
++	 * The snapshot for acceleration must be taken _before_ the read of the
++	 * current gp sequence used for advancing, otherwise advancing may fail
++	 * and acceleration may then fail too.
++	 *
++	 * This could happen if:
++	 *
++	 *  1) The RCU_WAIT_TAIL segment has callbacks (gp_num = X + 4) and the
++	 *     RCU_NEXT_READY_TAIL also has callbacks (gp_num = X + 8).
++	 *
++	 *  2) The grace period for RCU_WAIT_TAIL is seen as started but not
++	 *     completed so rcu_seq_current() returns X + SRCU_STATE_SCAN1.
++	 *
++	 *  3) This value is passed to rcu_segcblist_advance() which can't move
++	 *     any segment forward and fails.
++	 *
++	 *  4) srcu_gp_start_if_needed() still proceeds with callback acceleration.
++	 *     But then the call to rcu_seq_snap() observes the grace period for the
++	 *     RCU_WAIT_TAIL segment as completed and the subsequent one for the
++	 *     RCU_NEXT_READY_TAIL segment as started (ie: X + 4 + SRCU_STATE_SCAN1)
++	 *     so it returns a snapshot of the next grace period, which is X + 12.
++	 *
++	 *  5) The value of X + 12 is passed to rcu_segcblist_accelerate() but the
++	 *     freshly enqueued callback in RCU_NEXT_TAIL can't move to
++	 *     RCU_NEXT_READY_TAIL which already has callbacks for a previous grace
++	 *     period (gp_num = X + 8). So acceleration fails.
++	 */
++	s = rcu_seq_snap(&ssp->srcu_sup->srcu_gp_seq);
+ 	rcu_segcblist_advance(&sdp->srcu_cblist,
+ 			      rcu_seq_current(&ssp->srcu_sup->srcu_gp_seq));
+-	s = rcu_seq_snap(&ssp->srcu_sup->srcu_gp_seq);
+-	(void)rcu_segcblist_accelerate(&sdp->srcu_cblist, s);
++	WARN_ON_ONCE(!rcu_segcblist_accelerate(&sdp->srcu_cblist, s) && rhp);
+ 	if (ULONG_CMP_LT(sdp->srcu_gp_seq_needed, s)) {
+ 		sdp->srcu_gp_seq_needed = s;
+ 		needgp = true;
 -- 
 2.42.0
 
