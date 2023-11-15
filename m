@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06353A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7849A3A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qj6q8MBM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909D9C433C9;
-	Wed, 15 Nov 2023 19:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wcrywimp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A743C433C7;
+	Wed, 15 Nov 2023 19:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077288;
-	bh=zywUisJ/G+jGJ7JqNIDbI/XZs3YEZsKP4DMHr0z0fVg=;
+	s=korg; t=1700077290;
+	bh=nbcBkzwfZTJQcQv5o4Sqg6H6NaSU3NEF7ltTWCuTt4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qj6q8MBM1rYEztXuSNfvBn/DxAKVE+rjNaLKAmm0WorX7q5mUZeDsZOYwoyjUzJJA
-	 aFv6XMv5aOCJ5t7AxrKqQKl4MxLY/sJwnjTzywMOS0YTZoWqqXpV8JuuHgvJv86HLd
-	 bdyWd6ExnjWn3m0e0+LHqnsp4y7Ob4K6xqNroHx8=
+	b=WcrywimpXNiO/kg2yd3AEPvC4cPcfscBakLD57TYIPiOZUDUYnlE0mrpC7udNZQxP
+	 wWnFgmeQIgtoh6RCpsdguEOCfbmaEO8OFjqvEHlGt0tMjuuDGIr90TpYN9O7YTrYyd
+	 h0+oCvj+JCALFyL/uwrSigGoojEAJj57sepuJbtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@kernel.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 191/603] clk: mediatek: clk-mt2701: Add check for mtk_alloc_clk_data
-Date: Wed, 15 Nov 2023 14:12:16 -0500
-Message-ID: <20231115191626.467232174@linuxfoundation.org>
+Subject: [PATCH 6.6 182/603] clk: ralink: mtmips: quiet unused variable warning
+Date: Wed, 15 Nov 2023 14:12:07 -0500
+Message-ID: <20231115191625.833159278@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,64 +45,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-[ Upstream commit 0d6e24b422a2166a9297a8286ff2e6ab9a5e8cd3 ]
+[ Upstream commit 619102313466eaf8a6ac188e711f5df749dac6d4 ]
 
-Add the check for the return value of mtk_alloc_clk_data() in order to
-avoid NULL pointer dereference.
+When CONFIG_OF is disabled then the matching table is not referenced and
+the following warning appears:
 
-Fixes: e9862118272a ("clk: mediatek: Add MT2701 clock support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230901024658.23405-1-jiasheng@iscas.ac.cn
-Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+drivers/clk/ralink/clk-mtmips.c:821:34: warning: unused variable 'mtmips_of_match' [-Wunused-const-variable]
+821 |   static const struct of_device_id mtmips_of_match[] = {
+    |                          ^
+
+There are two match tables in the driver: one for the clock driver and the
+other for the reset driver. The only difference between them is that the
+clock driver uses 'data' and does not have 'ralink,rt2880-reset' compatible.
+Both just can be merged into a single one just by adding the compatible
+'ralink,rt2880-reset' entry to 'mtmips_of_match[]', which will allow it to
+be used for 'mtmips_clk_driver' (which doesn't use the data) as well as for
+'mtmips_clk_init()' (which doesn't need get called for 'ralink,rt2880-reset').
+
+Doing in this way ensures that 'CONFIG_OF' is not disabled anymore so the
+above warning disapears.
+
+Fixes: 6f3b15586eef ("clk: ralink: add clock and reset driver for MTMIPS SoCs")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202307242310.CdOnd2py-lkp@intel.com/
+Suggested-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://lore.kernel.org/r/20230827023932.501102-1-sergio.paracuellos@gmail.com
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt2701.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/clk/ralink/clk-mtmips.c | 20 +++++---------------
+ 1 file changed, 5 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt2701.c b/drivers/clk/mediatek/clk-mt2701.c
-index c81f3e33ce568..12d9560eb4ba2 100644
---- a/drivers/clk/mediatek/clk-mt2701.c
-+++ b/drivers/clk/mediatek/clk-mt2701.c
-@@ -667,6 +667,8 @@ static int mtk_topckgen_init(struct platform_device *pdev)
- 		return PTR_ERR(base);
+diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
+index 1e7991439527a..50a443bf79ecd 100644
+--- a/drivers/clk/ralink/clk-mtmips.c
++++ b/drivers/clk/ralink/clk-mtmips.c
+@@ -821,6 +821,10 @@ static const struct mtmips_clk_data mt76x8_clk_data = {
+ };
  
- 	clk_data = mtk_alloc_clk_data(CLK_TOP_NR);
-+	if (!clk_data)
-+		return -ENOMEM;
+ static const struct of_device_id mtmips_of_match[] = {
++	{
++		.compatible = "ralink,rt2880-reset",
++		.data = NULL,
++	},
+ 	{
+ 		.compatible = "ralink,rt2880-sysc",
+ 		.data = &rt2880_clk_data,
+@@ -1088,25 +1092,11 @@ static int mtmips_clk_probe(struct platform_device *pdev)
+ 	return 0;
+ }
  
- 	mtk_clk_register_fixed_clks(top_fixed_clks, ARRAY_SIZE(top_fixed_clks),
- 								clk_data);
-@@ -747,6 +749,8 @@ static void __init mtk_infrasys_init_early(struct device_node *node)
+-static const struct of_device_id mtmips_clk_of_match[] = {
+-	{ .compatible = "ralink,rt2880-reset" },
+-	{ .compatible = "ralink,rt2880-sysc" },
+-	{ .compatible = "ralink,rt3050-sysc" },
+-	{ .compatible = "ralink,rt3052-sysc" },
+-	{ .compatible = "ralink,rt3352-sysc" },
+-	{ .compatible = "ralink,rt3883-sysc" },
+-	{ .compatible = "ralink,rt5350-sysc" },
+-	{ .compatible = "ralink,mt7620-sysc" },
+-	{ .compatible = "ralink,mt7628-sysc" },
+-	{ .compatible = "ralink,mt7688-sysc" },
+-	{}
+-};
+-
+ static struct platform_driver mtmips_clk_driver = {
+ 	.probe = mtmips_clk_probe,
+ 	.driver = {
+ 		.name = "mtmips-clk",
+-		.of_match_table = mtmips_clk_of_match,
++		.of_match_table = mtmips_of_match,
+ 	},
+ };
  
- 	if (!infra_clk_data) {
- 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
-+		if (!infra_clk_data)
-+			return;
- 
- 		for (i = 0; i < CLK_INFRA_NR; i++)
- 			infra_clk_data->hws[i] = ERR_PTR(-EPROBE_DEFER);
-@@ -774,6 +778,8 @@ static int mtk_infrasys_init(struct platform_device *pdev)
- 
- 	if (!infra_clk_data) {
- 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
-+		if (!infra_clk_data)
-+			return -ENOMEM;
- 	} else {
- 		for (i = 0; i < CLK_INFRA_NR; i++) {
- 			if (infra_clk_data->hws[i] == ERR_PTR(-EPROBE_DEFER))
-@@ -890,6 +896,8 @@ static int mtk_pericfg_init(struct platform_device *pdev)
- 		return PTR_ERR(base);
- 
- 	clk_data = mtk_alloc_clk_data(CLK_PERI_NR);
-+	if (!clk_data)
-+		return -ENOMEM;
- 
- 	mtk_clk_register_gates(&pdev->dev, node, peri_clks,
- 			       ARRAY_SIZE(peri_clks), clk_data);
 -- 
 2.42.0
 
