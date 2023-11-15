@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF483A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7F83A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEgPmfat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83C4C433C9;
-	Wed, 15 Nov 2023 19:46:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OI6IHd2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E197C433CB;
+	Wed, 15 Nov 2023 19:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077617;
-	bh=3OQNAcvYra6/l+NYyPaar8aO9xAowqMKcSJCqdcvNSw=;
+	s=korg; t=1700077618;
+	bh=qkvkjQ+qf31SrwWwZqU8l3ZmJ7NC+/9BzWQ+T4UOOqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PEgPmfatewmoC2/bJx8yIMOns4niaHYImCbfscy1PH2k3c+NuDyPhSPw1LxlkWra2
-	 XujsL5BWUGnLmt2vBvtUG1JWcgVr4/zsZgdO/15ErG7cuTeT5aFJpzlcZvckSmYjWe
-	 XdFwGu4ud+ToLbc0WP3ekfVqU8HCqYI+0W1UjeVQ=
+	b=OI6IHd2cHKD1hgDi0MznsKcAZMYFmn1q558IC/6CEYx0a6mCoKEuIHQRlJc/31gff
+	 Alya/KWguCHOu1aJiLVoqINbTTRoqhxJfw97MhwlRwAebX/5p2Amm5q9nlkp++vQOb
+	 WAKB2E/pbY6eBtyBbgil3tqf6jjrRiOxvKK/cJ8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 412/603] dt-bindings: mfd: mt6397: Split out compatible for MediaTek MT6366 PMIC
-Date: Wed, 15 Nov 2023 14:15:57 -0500
-Message-ID: <20231115191641.501146516@linuxfoundation.org>
+Subject: [PATCH 6.6 413/603] mfd: arizona-spi: Set pdata.hpdet_channel for ACPI enumerated devs
+Date: Wed, 15 Nov 2023 14:15:58 -0500
+Message-ID: <20231115191641.555489888@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,55 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 61fdd1f1d2c183ec256527d16d75e75c3582af82 ]
+[ Upstream commit 831d1af85133e1763d41e20414912d9a1058ea72 ]
 
-The MT6366 PMIC is mostly, but not fully, compatible with MT6358. It has
-a different set of regulators. Specifically, it lacks the camera related
-VCAM* LDOs and VLDO28, but has additional VM18, VMDDR, and VSRAM_CORE LDOs.
+Commit 9e86b2ad4c11 changed the channel used for HPDET detection
+(headphones vs lineout detection) from being hardcoded to
+ARIZONA_ACCDET_MODE_HPL (HP left channel) to it being configurable
+through arizona_pdata.hpdet_channel the DT/OF parsing added for
+filling arizona_pdata on devicetree platforms ensures that
+arizona_pdata.hpdet_channel gets set to ARIZONA_ACCDET_MODE_HPL
+when not specified in the devicetree-node.
 
-The PMICs contain a chip ID register that can be used to detect which
-exact model is preset, so it is possible to share a common base
-compatible string.
+But on ACPI platforms where arizona_pdata is filled by
+arizona_spi_acpi_probe() arizona_pdata.hpdet_channel was not
+getting set, causing it to default to 0 aka ARIZONA_ACCDET_MODE_MIC.
 
-Add a separate compatible for the MT6366 PMIC, with a fallback to the
-MT6358 PMIC.
+This causes headphones to get misdetected as line-out on some models.
+Fix this by setting hpdet_channel = ARIZONA_ACCDET_MODE_HPL.
 
-Fixes: 49be16305587 ("dt-bindings: mfd: Add compatible for the MediaTek MT6366 PMIC")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230928085537.3246669-2-wenst@chromium.org
+Fixes: e933836744a2 ("mfd: arizona: Add support for ACPI enumeration of WM5102 connected over SPI")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20231014205414.59415-1-hdegoede@redhat.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/mfd/mt6397.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mfd/arizona-spi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/mfd/mt6397.txt b/Documentation/devicetree/bindings/mfd/mt6397.txt
-index 294693a8906cf..10540aa7afa1a 100644
---- a/Documentation/devicetree/bindings/mfd/mt6397.txt
-+++ b/Documentation/devicetree/bindings/mfd/mt6397.txt
-@@ -22,8 +22,9 @@ compatible:
- 	"mediatek,mt6323" for PMIC MT6323
- 	"mediatek,mt6331" for PMIC MT6331 and MT6332
- 	"mediatek,mt6357" for PMIC MT6357
--	"mediatek,mt6358" for PMIC MT6358 and MT6366
-+	"mediatek,mt6358" for PMIC MT6358
- 	"mediatek,mt6359" for PMIC MT6359
-+	"mediatek,mt6366", "mediatek,mt6358" for PMIC MT6366
- 	"mediatek,mt6397" for PMIC MT6397
+diff --git a/drivers/mfd/arizona-spi.c b/drivers/mfd/arizona-spi.c
+index 02cf4f3e91d76..de5d894ac04af 100644
+--- a/drivers/mfd/arizona-spi.c
++++ b/drivers/mfd/arizona-spi.c
+@@ -159,6 +159,9 @@ static int arizona_spi_acpi_probe(struct arizona *arizona)
+ 	arizona->pdata.micd_ranges = arizona_micd_aosp_ranges;
+ 	arizona->pdata.num_micd_ranges = ARRAY_SIZE(arizona_micd_aosp_ranges);
  
- Optional subnodes:
-@@ -40,6 +41,7 @@ Optional subnodes:
- 		- compatible: "mediatek,mt6323-regulator"
- 	see ../regulator/mt6323-regulator.txt
- 		- compatible: "mediatek,mt6358-regulator"
-+		- compatible: "mediatek,mt6366-regulator", "mediatek-mt6358-regulator"
- 	see ../regulator/mt6358-regulator.txt
- 		- compatible: "mediatek,mt6397-regulator"
- 	see ../regulator/mt6397-regulator.txt
++	/* Use left headphone speaker for HP vs line-out detection */
++	arizona->pdata.hpdet_channel = ARIZONA_ACCDET_MODE_HPL;
++
+ 	return 0;
+ }
+ 
 -- 
 2.42.0
 
