@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E1843AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201DA43AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptu+qOW8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BD8C433BA;
-	Wed, 15 Nov 2023 20:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n19lNoDp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE650C433B8;
+	Wed, 15 Nov 2023 20:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081251;
-	bh=UR179jnsBRLa0qm9pWrfBWm9wp6ZkHL+dsK/8HTRuTY=;
+	s=korg; t=1700081253;
+	bh=RViSXWlcL9HJ+RIdHFEzHSsZZyQ6fVudYz5rXeO5Dvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ptu+qOW8Q8010oTb/z+ubN49mv12XFzl0pJ+OQprU7hIaVErddAp1RHB8Ysv2+q0n
-	 qLhA36eZTYH87lJlIbm/zHusgegaKzwtPHQw11HftOW+GhknmSBUBcWvg7PjCcYjf6
-	 19ldLggQt7JIVrSmdUNy4XXMo/cgAT7IWR83uf7s=
+	b=n19lNoDpn3zluE5HCNZM9f09Q0x2s3QQzDh8QtMZcxj/p8IHbtSrr7pngI+47Qgsf
+	 k5qLGyLP0PpLd9KktC88Hf3jYJUfbsgP0JmE6k+mE7b8w7/0tbQrG4oJ8sGHgzEZRd
+	 jkDP7W0fsEQJXNH/mkAhMQSc2URBatgzim2Jbw/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Ayush Sawal <ayush.sawal@chelsio.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 041/244] chtls: fix tp->rcv_tstamp initialization
-Date: Wed, 15 Nov 2023 15:33:53 -0500
-Message-ID: <20231115203550.834176497@linuxfoundation.org>
+Subject: [PATCH 5.15 042/244] tcp: fix cookie_init_timestamp() overflows
+Date: Wed, 15 Nov 2023 15:33:54 -0500
+Message-ID: <20231115203550.896896930@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -45,32 +44,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 225d9ddbacb102621af6d28ff7bf5a0b4ce249d8 ]
+[ Upstream commit 73ed8e03388d16c12fc577e5c700b58a29045a15 ]
 
-tp->rcv_tstamp should be set to tcp_jiffies, not tcp_time_stamp().
+cookie_init_timestamp() is supposed to return a 64bit timestamp
+suitable for both TSval determination and setting of skb->tstamp.
 
-Fixes: cc35c88ae4db ("crypto : chtls - CPL handler definition")
+Unfortunately it uses 32bit fields and overflows after
+2^32 * 10^6 nsec (~49 days) of uptime.
+
+Generated TSval are still correct, but skb->tstamp might be set
+far away in the past, potentially confusing other layers.
+
+tcp_ns_to_ts() is changed to return a full 64bit value,
+ts and ts_now variables are changed to u64 type,
+and TSMASK is removed in favor of shifts operations.
+
+While we are at it, change this sequence:
+		ts >>= TSBITS;
+		ts--;
+		ts <<= TSBITS;
+		ts |= options;
+to:
+		ts -= (1UL << TSBITS);
+
+Fixes: 9a568de4818d ("tcp: switch TCP TS option (RFC 7323) to 1ms clock")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Ayush Sawal <ayush.sawal@chelsio.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/tcp.h     |  2 +-
+ net/ipv4/syncookies.c | 20 +++++++-------------
+ 2 files changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
-index ddfe9208529a5..65d4a39634be4 100644
---- a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
-+++ b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
-@@ -2260,7 +2260,7 @@ static void chtls_rx_ack(struct sock *sk, struct sk_buff *skb)
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 3aee02ad0116b..fe9fc568b2888 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -786,7 +786,7 @@ static inline u32 tcp_time_stamp(const struct tcp_sock *tp)
+ }
  
- 		if (tp->snd_una != snd_una) {
- 			tp->snd_una = snd_una;
--			tp->rcv_tstamp = tcp_time_stamp(tp);
-+			tp->rcv_tstamp = tcp_jiffies32;
- 			if (tp->snd_una == tp->snd_nxt &&
- 			    !csk_flag_nochk(csk, CSK_TX_FAILOVER))
- 				csk_reset_flag(csk, CSK_TX_WAIT_IDLE);
+ /* Convert a nsec timestamp into TCP TSval timestamp (ms based currently) */
+-static inline u32 tcp_ns_to_ts(u64 ns)
++static inline u64 tcp_ns_to_ts(u64 ns)
+ {
+ 	return div_u64(ns, NSEC_PER_SEC / TCP_TS_HZ);
+ }
+diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
+index 3aab914eb1039..03b0505178f9a 100644
+--- a/net/ipv4/syncookies.c
++++ b/net/ipv4/syncookies.c
+@@ -43,7 +43,6 @@ static siphash_key_t syncookie_secret[2] __read_mostly;
+  * requested/supported by the syn/synack exchange.
+  */
+ #define TSBITS	6
+-#define TSMASK	(((__u32)1 << TSBITS) - 1)
+ 
+ static u32 cookie_hash(__be32 saddr, __be32 daddr, __be16 sport, __be16 dport,
+ 		       u32 count, int c)
+@@ -64,27 +63,22 @@ static u32 cookie_hash(__be32 saddr, __be32 daddr, __be16 sport, __be16 dport,
+  */
+ u64 cookie_init_timestamp(struct request_sock *req, u64 now)
+ {
+-	struct inet_request_sock *ireq;
+-	u32 ts, ts_now = tcp_ns_to_ts(now);
++	const struct inet_request_sock *ireq = inet_rsk(req);
++	u64 ts, ts_now = tcp_ns_to_ts(now);
+ 	u32 options = 0;
+ 
+-	ireq = inet_rsk(req);
+-
+ 	options = ireq->wscale_ok ? ireq->snd_wscale : TS_OPT_WSCALE_MASK;
+ 	if (ireq->sack_ok)
+ 		options |= TS_OPT_SACK;
+ 	if (ireq->ecn_ok)
+ 		options |= TS_OPT_ECN;
+ 
+-	ts = ts_now & ~TSMASK;
++	ts = (ts_now >> TSBITS) << TSBITS;
+ 	ts |= options;
+-	if (ts > ts_now) {
+-		ts >>= TSBITS;
+-		ts--;
+-		ts <<= TSBITS;
+-		ts |= options;
+-	}
+-	return (u64)ts * (NSEC_PER_SEC / TCP_TS_HZ);
++	if (ts > ts_now)
++		ts -= (1UL << TSBITS);
++
++	return ts * (NSEC_PER_SEC / TCP_TS_HZ);
+ }
+ 
+ 
 -- 
 2.42.0
 
