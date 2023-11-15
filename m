@@ -1,33 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCC03309F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8FB3309F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKn+KiTZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB36C433C8;
-	Wed, 15 Nov 2023 19:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0QlBxRx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886C0C433C7;
+	Wed, 15 Nov 2023 19:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077662;
-	bh=OXe2xr3PXByl1B0nR1dK+FORvow8ADO3Qh8KorO3sHA=;
+	s=korg; t=1700077663;
+	bh=ytQECY94q/Rc3IuQvw9RB68W8+rXqxmvwGKxG/7f7Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKn+KiTZdOQheXC77hfRPfMoZx/ZfaHrYPnScclGhmAQhRiGc0fnbVSIL1yj9lp4j
-	 HbeZRtlrcqxBuLX0aoTHwlMPjlMdy8yqmDfCpRIeoOWm4nrNETq5syi13jQRUuHC48
-	 mlwIFYDqxaqjN12eKOQOLJszyk4cu+UubqD4JFqE=
+	b=o0QlBxRxtHOoYpKs4lp3KOOIdOq3CAJLj0Kl4XVW4jsSDpB85iejRWsDbYXQf2AUI
+	 EEOjPQRTqEB3cL+vCRaCcAt3SqLKBNpp/xSSsI5AwvX/KgOtjOamy1x+Ynmr4YWIrm
+	 ky7/zDUfZp3CpSyBMDP0psleFQAel4xEVCpkI2ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.vnet.ibm.com>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	maddy@linux.ibm.com,
-	atrajeev@linux.vnet.ibm.com,
+	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 440/603] tools/perf: Update call stack check in builtin-lock.c
-Date: Wed, 15 Nov 2023 14:16:25 -0500
-Message-ID: <20231115191643.252046387@linuxfoundation.org>
+Subject: [PATCH 6.6 419/603] perf stat: Fix aggr mode initialization
+Date: Wed, 15 Nov 2023 14:16:04 -0500
+Message-ID: <20231115191641.857234256@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -46,146 +49,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit d7c9ae8d5d1be0c4156d1e20e4369a77b711a4cc ]
+[ Upstream commit a84fbf205609313594b86065c67e823f09ebe29b ]
 
-The perf test named "kernel lock contention analysis test"
-fails in powerpc system with below error:
+Generating metrics llc_code_read_mpi_demand_plus_prefetch,
+llc_data_read_mpi_demand_plus_prefetch,
+llc_miss_local_memory_bandwidth_read,
+llc_miss_local_memory_bandwidth_write,
+nllc_miss_remote_memory_bandwidth_read, memory_bandwidth_read,
+memory_bandwidth_write, uncore_frequency, upi_data_transmit_bw,
+C2_Pkg_Residency, C3_Core_Residency, C3_Pkg_Residency,
+C6_Core_Residency, C6_Pkg_Residency, C7_Core_Residency,
+C7_Pkg_Residency, UNCORE_FREQ and tma_info_system_socket_clks would
+trigger an address sanitizer heap-buffer-overflows on a SkylakeX.
 
-  [command]# ./perf test 81 -vv
-   81: kernel lock contention analysis test                            :
-   --- start ---
-  test child forked, pid 2140
-  Testing perf lock record and perf lock contention
-  Testing perf lock contention --use-bpf
-  [Skip] No BPF support
-  Testing perf lock record and perf lock contention at the same time
-  Testing perf lock contention --threads
-  Testing perf lock contention --lock-addr
-  Testing perf lock contention --type-filter (w/ spinlock)
-  Testing perf lock contention --lock-filter (w/ tasklist_lock)
-  Testing perf lock contention --callstack-filter (w/ unix_stream)
-  [Fail] Recorded result should have a lock from unix_stream:
-  test child finished with -1
-   ---- end ----
-  kernel lock contention analysis test: FAILED!
+```
+==2567752==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x5020003ed098 at pc 0x5621a816654e bp 0x7fffb55d4da0 sp 0x7fffb55d4d98
+READ of size 4 at 0x5020003eee78 thread T0
+    #0 0x558265d6654d in aggr_cpu_id__is_empty tools/perf/util/cpumap.c:694:12
+    #1 0x558265c914da in perf_stat__get_aggr tools/perf/builtin-stat.c:1490:6
+    #2 0x558265c914da in perf_stat__get_global_cached tools/perf/builtin-stat.c:1530:9
+    #3 0x558265e53290 in should_skip_zero_counter tools/perf/util/stat-display.c:947:31
+    #4 0x558265e53290 in print_counter_aggrdata tools/perf/util/stat-display.c:985:18
+    #5 0x558265e51931 in print_counter tools/perf/util/stat-display.c:1110:3
+    #6 0x558265e51931 in evlist__print_counters tools/perf/util/stat-display.c:1571:5
+    #7 0x558265c8ec87 in print_counters tools/perf/builtin-stat.c:981:2
+    #8 0x558265c8cc71 in cmd_stat tools/perf/builtin-stat.c:2837:3
+    #9 0x558265bb9bd4 in run_builtin tools/perf/perf.c:323:11
+    #10 0x558265bb98eb in handle_internal_command tools/perf/perf.c:377:8
+    #11 0x558265bb9389 in run_argv tools/perf/perf.c:421:2
+    #12 0x558265bb9389 in main tools/perf/perf.c:537:3
+```
 
-The test is failing because we get an address entry with 0 in
-perf lock samples for powerpc, and code for lock contention
-option "--callstack-filter" will not check further entries after
-address 0.
+The issue was the use of testing a cpumap with NULL rather than using
+empty, as a map containing the dummy value isn't NULL and the -1
+results in an empty aggr map being allocated which legitimately
+overflows when any member is accessed.
 
-Below are some of the samples from test generated perf.data file, which
-have 0 address in the 2nd entry of callstack:
- --------
-sched-messaging    3409 [001]  7152.904029: lock:contention_begin: 0xc00000c80904ef00 (flags=SPIN)
-        c0000000001e926c __traceiter_contention_begin+0x6c ([kernel.kallsyms])
-                       0 [unknown] ([unknown])
-        c000000000f8a178 native_queued_spin_lock_slowpath+0x1f8 ([kernel.kallsyms])
-        c000000000f89f44 _raw_spin_lock_irqsave+0x84 ([kernel.kallsyms])
-        c0000000001d9fd0 prepare_to_wait+0x50 ([kernel.kallsyms])
-        c000000000c80f50 sock_alloc_send_pskb+0x1b0 ([kernel.kallsyms])
-        c000000000e82298 unix_stream_sendmsg+0x2b8 ([kernel.kallsyms])
-        c000000000c78980 sock_sendmsg+0x80 ([kernel.kallsyms])
-
-sched-messaging    3408 [005]  7152.904036: lock:contention_begin: 0xc00000c80904ef00 (flags=SPIN)
-        c0000000001e926c __traceiter_contention_begin+0x6c ([kernel.kallsyms])
-                       0 [unknown] ([unknown])
-        c000000000f8a178 native_queued_spin_lock_slowpath+0x1f8 ([kernel.kallsyms])
-        c000000000f89f44 _raw_spin_lock_irqsave+0x84 ([kernel.kallsyms])
-        c0000000001d9fd0 prepare_to_wait+0x50 ([kernel.kallsyms])
-        c000000000c80f50 sock_alloc_send_pskb+0x1b0 ([kernel.kallsyms])
-        c000000000e82298 unix_stream_sendmsg+0x2b8 ([kernel.kallsyms])
-        c000000000c78980 sock_sendmsg+0x80 ([kernel.kallsyms])
- --------
-
-Based on commit 20002ded4d93 ("perf_counter: powerpc: Add callchain support"),
-incase of powerpc, the callchain saved by kernel always includes first
-three entries as the NIP (next instruction pointer), LR (link register), and
-the contents of LR save area in the second stack frame. In certain scenarios
-its possible to have invalid kernel instruction addresses in either of LR or the
-second stack frame's LR. In that case, kernel will store the address as zer0.
-Hence, its possible to have 2nd or 3rd callstack entry as 0.
-
-As per the current code in match_callstack_filter function, we skip the callstack
-check incase we get 0 address. And hence the test case is failing in powerpc.
-
-Fix this issue by updating the check in match_callstack_filter function,
-to not skip callstack check if the 2nd or 3rd entry have 0 address
-for powerpc.
-
-Result in powerpc after patch changes:
-
-  [command]# ./perf test 81 -vv
-   81: kernel lock contention analysis test                            :
-   --- start ---
-  test child forked, pid 4570
-  Testing perf lock record and perf lock contention
-  Testing perf lock contention --use-bpf
-  [Skip] No BPF support
-  Testing perf lock record and perf lock contention at the same time
-  Testing perf lock contention --threads
-  Testing perf lock contention --lock-addr
-  Testing perf lock contention --type-filter (w/ spinlock)
-  Testing perf lock contention --lock-filter (w/ tasklist_lock)
-  [Skip] Could not find 'tasklist_lock'
-  Testing perf lock contention --callstack-filter (w/ unix_stream)
-  Testing perf lock contention --callstack-filter with task aggregation
-  Testing perf lock contention CSV output
-  [Skip] No BPF support
-  test child finished with 0
-   ---- end ----
-  kernel lock contention analysis test: Ok
-
-Fixes: ebab291641be ("perf lock contention: Support filters for different aggregation")
-Reported-by: Disha Goel <disgoel@linux.vnet.ibm.com>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
-Cc: maddy@linux.ibm.com
-Cc: atrajeev@linux.vnet.ibm.com
-Link: https://lore.kernel.org/r/20231003092113.252380-1-kjain@linux.ibm.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 8a96f454f5668572 ("perf stat: Avoid SEGV if core.cpus isn't set")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20230906003912.3317462-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-lock.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ tools/perf/builtin-stat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-lock.c b/tools/perf/builtin-lock.c
-index b141f21342740..0b4b4445c5207 100644
---- a/tools/perf/builtin-lock.c
-+++ b/tools/perf/builtin-lock.c
-@@ -524,6 +524,7 @@ bool match_callstack_filter(struct machine *machine, u64 *callstack)
- 	struct map *kmap;
- 	struct symbol *sym;
- 	u64 ip;
-+	const char *arch = perf_env__arch(machine->env);
- 
- 	if (list_empty(&callstack_filters))
- 		return true;
-@@ -531,7 +532,21 @@ bool match_callstack_filter(struct machine *machine, u64 *callstack)
- 	for (int i = 0; i < max_stack_depth; i++) {
- 		struct callstack_filter *filter;
- 
--		if (!callstack || !callstack[i])
-+		/*
-+		 * In powerpc, the callchain saved by kernel always includes
-+		 * first three entries as the NIP (next instruction pointer),
-+		 * LR (link register), and the contents of LR save area in the
-+		 * second stack frame. In certain scenarios its possible to have
-+		 * invalid kernel instruction addresses in either LR or the second
-+		 * stack frame's LR. In that case, kernel will store that address as
-+		 * zero.
-+		 *
-+		 * The below check will continue to look into callstack,
-+		 * incase first or second callstack index entry has 0
-+		 * address for powerpc.
-+		 */
-+		if (!callstack || (!callstack[i] && (strcmp(arch, "powerpc") ||
-+						(i != 1 && i != 2))))
- 			break;
- 
- 		ip = callstack[i];
+diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
+index 07b48f6df48eb..a3af805a1d572 100644
+--- a/tools/perf/builtin-stat.c
++++ b/tools/perf/builtin-stat.c
+@@ -1622,7 +1622,7 @@ static int perf_stat_init_aggr_mode(void)
+ 	 * taking the highest cpu number to be the size of
+ 	 * the aggregation translate cpumap.
+ 	 */
+-	if (evsel_list->core.user_requested_cpus)
++	if (!perf_cpu_map__empty(evsel_list->core.user_requested_cpus))
+ 		nr = perf_cpu_map__max(evsel_list->core.user_requested_cpus).cpu;
+ 	else
+ 		nr = 0;
 -- 
 2.42.0
 
