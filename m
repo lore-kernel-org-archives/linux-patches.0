@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6AF41A84
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545A941A81
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vA1AdD+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69287C433C7;
-	Wed, 15 Nov 2023 19:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsoH2qDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C33C433CA;
+	Wed, 15 Nov 2023 19:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076983;
-	bh=t666HV+pJT3qQw2Oii6xlE/SnvdYbw+asg8wdV3+fLQ=;
+	s=korg; t=1700076985;
+	bh=nsBq7CKfzfhothJlu5UCeKLmzatA3FZu1vVmgFX+XjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vA1AdD+qrwR7ErzXD+vC2tPxkixobD39PecuAfrNHlEJgIep9qg1OC3xE5ENEcOmx
-	 y5srWLyj0UVQuQhWSyddG02HhIU01jjTFQBkDbNM4fGhdCPpJUY5QBEMFvdTBGVwZK
-	 xVgPgEbxh0X9w4/5BJYI2NPwjr2CnVrFcI5A8Rgo=
+	b=HsoH2qDJDyFtyKhtXPl5IIioxXGDYxMeJOQcDHsAkDufYxDUxGNGDZNYWZMGwuLuW
+	 ZR9XzRBLR7E8Yi96/ao32xpv8xhgoyZd5QGJIH5UhGxqT6NTF3BSHzzLVrCK6j3EG/
+	 8Gqr/AIFR/j2IToDVO05sHv/1+pfqdG4M+8kpfFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Robert Richter <rrichter@amd.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 483/550] media: cedrus: Fix clock/reset sequence
-Date: Wed, 15 Nov 2023 14:17:47 -0500
-Message-ID: <20231115191634.345778230@linuxfoundation.org>
+Subject: [PATCH 6.5 466/550] cxl/port: Fix @host confusion in cxl_dport_setup_regs()
+Date: Wed, 15 Nov 2023 14:17:30 -0500
+Message-ID: <20231115191633.175705464@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,85 +43,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 36fe515c1a3cd5eac148e8a591a82108d92d5522 ]
+[ Upstream commit 33d9c987bf8fb68a9292aba7cc4b1711fcb1be4d ]
 
-According to H6 user manual, resets should always be de-asserted before
-clocks are enabled. This is also consistent with vendor driver.
+commit 5d2ffbe4b81a ("cxl/port: Store the downstream port's Component Register mappings in struct cxl_dport")
 
-Fixes: d5aecd289bab ("media: cedrus: Implement runtime PM")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Acked-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+...moved the dport component registers from a raw component_reg_phys
+passed in at dport instantiation time to a 'struct cxl_register_map'
+populated with both the component register data *and* the "host" device
+for mapping operations.
+
+While typical CXL switch dports are mapped by their associated 'struct
+cxl_port', an RCH host bridge dport registered by cxl_acpi needs to wait
+until the cxl_mem driver makes the attachment to map the registers. This
+is because there are no intervening 'struct cxl_port' instances between
+the root cxl_port and the endpoint port in an RCH topology.
+
+For now just mark the host as NULL in the RCH dport case until code that
+needs to map the dport registers arrives.
+
+This patch is not flagged for -stable since nothing in the current
+driver uses the dport->comp_map.
+
+Now, I am slightly uneasy that cxl_setup_comp_regs() sets map->host to a
+wrong value and then cxl_dport_setup_regs() fixes it up, but the
+alternatives I came up with are more messy. For example, adding an
+@logdev to 'struct cxl_register_map' that the dev_printk()s can fall
+back to when @host is NULL. I settled on "post-fixup+comment" since it
+is only RCH dports that have this special case where register probing is
+split between a host-bridge RCRB lookup and when cxl_mem_probe() does
+the association of the cxl_memdev and endpoint port.
+
+[moved rename of @comp_map to @reg_map into next patch]
+
+Fixes: 5d2ffbe4b81a ("cxl/port: Store the downstream port's Component Register mappings in struct cxl_dport")
+Signed-off-by: Robert Richter <rrichter@amd.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20231018171713.1883517-4-rrichter@amd.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../staging/media/sunxi/cedrus/cedrus_hw.c    | 24 +++++++++----------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/cxl/core/port.c | 43 +++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_hw.c b/drivers/staging/media/sunxi/cedrus/cedrus_hw.c
-index fa86a658fdc6c..c0d8c8265658b 100644
---- a/drivers/staging/media/sunxi/cedrus/cedrus_hw.c
-+++ b/drivers/staging/media/sunxi/cedrus/cedrus_hw.c
-@@ -172,12 +172,12 @@ int cedrus_hw_suspend(struct device *device)
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index c24cfe2271948..2c6001592fe20 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -722,13 +722,23 @@ static int cxl_port_setup_regs(struct cxl_port *port,
+ 				   component_reg_phys);
+ }
+ 
+-static int cxl_dport_setup_regs(struct cxl_dport *dport,
++static int cxl_dport_setup_regs(struct device *host, struct cxl_dport *dport,
+ 				resource_size_t component_reg_phys)
  {
- 	struct cedrus_dev *dev = dev_get_drvdata(device);
- 
--	reset_control_assert(dev->rstc);
--
- 	clk_disable_unprepare(dev->ram_clk);
- 	clk_disable_unprepare(dev->mod_clk);
- 	clk_disable_unprepare(dev->ahb_clk);
- 
-+	reset_control_assert(dev->rstc);
++	int rc;
 +
- 	return 0;
+ 	if (dev_is_platform(dport->dport_dev))
+ 		return 0;
+-	return cxl_setup_comp_regs(dport->dport_dev, &dport->comp_map,
+-				   component_reg_phys);
++
++	/*
++	 * use @dport->dport_dev for the context for error messages during
++	 * register probing, and fixup @host after the fact, since @host may be
++	 * NULL.
++	 */
++	rc = cxl_setup_comp_regs(dport->dport_dev, &dport->comp_map,
++				 component_reg_phys);
++	dport->comp_map.host = host;
++	return rc;
  }
  
-@@ -186,11 +186,18 @@ int cedrus_hw_resume(struct device *device)
- 	struct cedrus_dev *dev = dev_get_drvdata(device);
- 	int ret;
+ static struct cxl_port *__devm_cxl_add_port(struct device *host,
+@@ -989,7 +999,16 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
+ 	if (!dport)
+ 		return ERR_PTR(-ENOMEM);
  
-+	ret = reset_control_reset(dev->rstc);
-+	if (ret) {
-+		dev_err(dev->dev, "Failed to apply reset\n");
+-	if (rcrb != CXL_RESOURCE_NONE) {
++	dport->dport_dev = dport_dev;
++	dport->port_id = port_id;
++	dport->port = port;
 +
-+		return ret;
-+	}
-+
- 	ret = clk_prepare_enable(dev->ahb_clk);
- 	if (ret) {
- 		dev_err(dev->dev, "Failed to enable AHB clock\n");
++	if (rcrb == CXL_RESOURCE_NONE) {
++		rc = cxl_dport_setup_regs(&port->dev, dport,
++					  component_reg_phys);
++		if (rc)
++			return ERR_PTR(rc);
++	} else {
+ 		dport->rcrb.base = rcrb;
+ 		component_reg_phys = __rcrb_to_component(dport_dev, &dport->rcrb,
+ 							 CXL_RCRB_DOWNSTREAM);
+@@ -998,6 +1017,14 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
+ 			return ERR_PTR(-ENXIO);
+ 		}
  
--		return ret;
-+		goto err_rst;
++		/*
++		 * RCH @dport is not ready to map until associated with its
++		 * memdev
++		 */
++		rc = cxl_dport_setup_regs(NULL, dport, component_reg_phys);
++		if (rc)
++			return ERR_PTR(rc);
++
+ 		dport->rch = true;
  	}
  
- 	ret = clk_prepare_enable(dev->mod_clk);
-@@ -207,21 +214,14 @@ int cedrus_hw_resume(struct device *device)
- 		goto err_mod_clk;
- 	}
+@@ -1005,14 +1032,6 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
+ 		dev_dbg(dport_dev, "Component Registers found for dport: %pa\n",
+ 			&component_reg_phys);
  
--	ret = reset_control_reset(dev->rstc);
--	if (ret) {
--		dev_err(dev->dev, "Failed to apply reset\n");
+-	dport->dport_dev = dport_dev;
+-	dport->port_id = port_id;
+-	dport->port = port;
 -
--		goto err_ram_clk;
--	}
+-	rc = cxl_dport_setup_regs(dport, component_reg_phys);
+-	if (rc)
+-		return ERR_PTR(rc);
 -
- 	return 0;
- 
--err_ram_clk:
--	clk_disable_unprepare(dev->ram_clk);
- err_mod_clk:
- 	clk_disable_unprepare(dev->mod_clk);
- err_ahb_clk:
- 	clk_disable_unprepare(dev->ahb_clk);
-+err_rst:
-+	reset_control_assert(dev->rstc);
- 
- 	return ret;
- }
+ 	cond_cxl_root_lock(port);
+ 	rc = add_dport(port, dport);
+ 	cond_cxl_root_unlock(port);
 -- 
 2.42.0
 
