@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35093D396
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A443BB30
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFCUxZY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE60C433C7;
-	Wed, 15 Nov 2023 19:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4Gd7Ktm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6DDC433C8;
+	Wed, 15 Nov 2023 19:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078395;
-	bh=ludvATVym2fS1GoB/MH0DnPkycFyekgedhiIOsXgiFk=;
+	s=korg; t=1700078397;
+	bh=aw2797pnghKVaAK/cNZsglUOftMQ9zF98ViIvtasYeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jFCUxZY/BWhtA+8m9QJ7zYTRd897YYzejgSK7DdP3LYzPk52+5skhYmx6wcaZmbMp
-	 E/eVbhxt6UHWUwTW1TXHQnpgPb0W6CHWH3K5t3IzeQy4aN9j8csRuY0WYAZPkT2hF6
-	 qpFJKGAj2h3PwGiJL68B5umzI9U+GPXRxm9DXbyY=
+	b=p4Gd7KtmPuhQNrAOmcNZszyNIwhkZF0fCuemXFUdk0u5TcJC4Jtefv62vVZ9bFidI
+	 UQCdBKrFWgxz/pE+2eNgvgrbSZ9AWM976MdHly1w/KQHZ5nnz+IGpmjN9hUBazHKln
+	 Rq6j2AZ/CKKOln1YRGIjCBlU6YV7mjJIUyi219DA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haren Myneni <haren@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 297/379] powerpc/vas: Limit open window failure messages in log bufffer
-Date: Wed, 15 Nov 2023 14:26:12 -0500
-Message-ID: <20231115192702.712610009@linuxfoundation.org>
+Subject: [PATCH 6.1 273/379] tools: iio: iio_generic_buffer ensure alignment
+Date: Wed, 15 Nov 2023 14:25:48 -0500
+Message-ID: <20231115192701.269632054@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,189 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haren Myneni <haren@linux.ibm.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 73b25505ce043b561028e5571d84dc82aa53c2b4 ]
+[ Upstream commit 2d3dff577dd0ea8fe9637a13822f7603c4a881c8 ]
 
-The VAS open window call prints error message and returns -EBUSY
-after the migration suspend event initiated and until the resume
-event completed on the destination system. It can cause the log
-buffer filled with these error messages if the user space issues
-continuous open window calls.  Similar case even for DLPAR CPU
-remove event when no credits are available until the credits are
-freed or with the other DLPAR CPU add event.
+The iio_generic_buffer can return garbage values when the total size of
+scan data is not a multiple of the largest element in the scan. This can be
+demonstrated by reading a scan, consisting, for example of one 4-byte and
+one 2-byte element, where the 4-byte element is first in the buffer.
 
-So changes in the patch to use pr_err_ratelimited() instead of
-pr_err() to display open window failure and not-available credits
-error messages.
+The IIO generic buffer code does not take into account the last two
+padding bytes that are needed to ensure that the 4-byte data for next
+scan is correctly aligned.
 
-Use pr_fmt() and make the corresponding changes to have the
-consistencein prefix all pr_*() messages (vas-api.c).
+Add the padding bytes required to align the next sample with the scan size.
 
-Fixes: 37e6764895ef ("powerpc/pseries/vas: Add VAS migration handler")
-Signed-off-by: Haren Myneni <haren@linux.ibm.com>
-[mpe: Use "vas-api" as the prefix to match the file name.]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231019215033.1335251-1-haren@linux.ibm.com
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: e58537ccce73 ("staging: iio: update example application.")
+Link: https://lore.kernel.org/r/ZRvlm4ktNLu+qmlf@dc78bmyyyyyyyyyyyyydt-3.rev.dnainternet.fi
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/book3s/vas-api.c | 34 ++++++++++++-------------
- arch/powerpc/platforms/pseries/vas.c    |  4 +--
- 2 files changed, 18 insertions(+), 20 deletions(-)
+ tools/iio/iio_generic_buffer.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/book3s/vas-api.c b/arch/powerpc/platforms/book3s/vas-api.c
-index 40f5ae5e1238d..92e60cb3163fa 100644
---- a/arch/powerpc/platforms/book3s/vas-api.c
-+++ b/arch/powerpc/platforms/book3s/vas-api.c
-@@ -4,6 +4,8 @@
-  * Copyright (C) 2019 Haren Myneni, IBM Corp
-  */
+diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
+index 44bbf80f0cfdd..0d0a7a19d6f95 100644
+--- a/tools/iio/iio_generic_buffer.c
++++ b/tools/iio/iio_generic_buffer.c
+@@ -54,9 +54,12 @@ enum autochan {
+ static unsigned int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
+ {
+ 	unsigned int bytes = 0;
+-	int i = 0;
++	int i = 0, max = 0;
++	unsigned int misalignment;
  
-+#define pr_fmt(fmt)	"vas-api: " fmt
-+
- #include <linux/kernel.h>
- #include <linux/device.h>
- #include <linux/cdev.h>
-@@ -78,7 +80,7 @@ int get_vas_user_win_ref(struct vas_user_win_ref *task_ref)
- 	task_ref->mm = get_task_mm(current);
- 	if (!task_ref->mm) {
- 		put_pid(task_ref->pid);
--		pr_err("VAS: pid(%d): mm_struct is not found\n",
-+		pr_err("pid(%d): mm_struct is not found\n",
- 				current->pid);
- 		return -EPERM;
+ 	while (i < num_channels) {
++		if (channels[i].bytes > max)
++			max = channels[i].bytes;
+ 		if (bytes % channels[i].bytes == 0)
+ 			channels[i].location = bytes;
+ 		else
+@@ -66,6 +69,14 @@ static unsigned int size_from_channelarray(struct iio_channel_info *channels, in
+ 		bytes = channels[i].location + channels[i].bytes;
+ 		i++;
  	}
-@@ -235,8 +237,7 @@ void vas_update_csb(struct coprocessor_request_block *crb,
- 	rc = kill_pid_info(SIGSEGV, &info, pid);
- 	rcu_read_unlock();
++	/*
++	 * We want the data in next sample to also be properly aligned so
++	 * we'll add padding at the end if needed. Adding padding only
++	 * works for channel data which size is 2^n bytes.
++	 */
++	misalignment = bytes % max;
++	if (misalignment)
++		bytes += max - misalignment;
  
--	pr_devel("%s(): pid %d kill_proc_info() rc %d\n", __func__,
--			pid_vnr(pid), rc);
-+	pr_devel("pid %d kill_proc_info() rc %d\n", pid_vnr(pid), rc);
+ 	return bytes;
  }
- 
- void vas_dump_crb(struct coprocessor_request_block *crb)
-@@ -294,7 +295,7 @@ static int coproc_ioc_tx_win_open(struct file *fp, unsigned long arg)
- 
- 	rc = copy_from_user(&uattr, uptr, sizeof(uattr));
- 	if (rc) {
--		pr_err("%s(): copy_from_user() returns %d\n", __func__, rc);
-+		pr_err("copy_from_user() returns %d\n", rc);
- 		return -EFAULT;
- 	}
- 
-@@ -311,7 +312,7 @@ static int coproc_ioc_tx_win_open(struct file *fp, unsigned long arg)
- 	txwin = cp_inst->coproc->vops->open_win(uattr.vas_id, uattr.flags,
- 						cp_inst->coproc->cop_type);
- 	if (IS_ERR(txwin)) {
--		pr_err("%s() VAS window open failed, %ld\n", __func__,
-+		pr_err_ratelimited("VAS window open failed rc=%ld\n",
- 				PTR_ERR(txwin));
- 		return PTR_ERR(txwin);
- 	}
-@@ -405,8 +406,7 @@ static vm_fault_t vas_mmap_fault(struct vm_fault *vmf)
- 	 * window is not opened. Shouldn't expect this error.
- 	 */
- 	if (!cp_inst || !cp_inst->txwin) {
--		pr_err("%s(): Unexpected fault on paste address with TX window closed\n",
--				__func__);
-+		pr_err("Unexpected fault on paste address with TX window closed\n");
- 		return VM_FAULT_SIGBUS;
- 	}
- 
-@@ -421,8 +421,7 @@ static vm_fault_t vas_mmap_fault(struct vm_fault *vmf)
- 	 * issue NX request.
- 	 */
- 	if (txwin->task_ref.vma != vmf->vma) {
--		pr_err("%s(): No previous mapping with paste address\n",
--			__func__);
-+		pr_err("No previous mapping with paste address\n");
- 		return VM_FAULT_SIGBUS;
- 	}
- 
-@@ -481,19 +480,19 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
- 	txwin = cp_inst->txwin;
- 
- 	if ((vma->vm_end - vma->vm_start) > PAGE_SIZE) {
--		pr_debug("%s(): size 0x%zx, PAGE_SIZE 0x%zx\n", __func__,
-+		pr_debug("size 0x%zx, PAGE_SIZE 0x%zx\n",
- 				(vma->vm_end - vma->vm_start), PAGE_SIZE);
- 		return -EINVAL;
- 	}
- 
- 	/* Ensure instance has an open send window */
- 	if (!txwin) {
--		pr_err("%s(): No send window open?\n", __func__);
-+		pr_err("No send window open?\n");
- 		return -EINVAL;
- 	}
- 
- 	if (!cp_inst->coproc->vops || !cp_inst->coproc->vops->paste_addr) {
--		pr_err("%s(): VAS API is not registered\n", __func__);
-+		pr_err("VAS API is not registered\n");
- 		return -EACCES;
- 	}
- 
-@@ -510,14 +509,14 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
- 	 */
- 	mutex_lock(&txwin->task_ref.mmap_mutex);
- 	if (txwin->status != VAS_WIN_ACTIVE) {
--		pr_err("%s(): Window is not active\n", __func__);
-+		pr_err("Window is not active\n");
- 		rc = -EACCES;
- 		goto out;
- 	}
- 
- 	paste_addr = cp_inst->coproc->vops->paste_addr(txwin);
- 	if (!paste_addr) {
--		pr_err("%s(): Window paste address failed\n", __func__);
-+		pr_err("Window paste address failed\n");
- 		rc = -EINVAL;
- 		goto out;
- 	}
-@@ -533,8 +532,8 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
- 	rc = remap_pfn_range(vma, vma->vm_start, pfn + vma->vm_pgoff,
- 			vma->vm_end - vma->vm_start, prot);
- 
--	pr_devel("%s(): paste addr %llx at %lx, rc %d\n", __func__,
--			paste_addr, vma->vm_start, rc);
-+	pr_devel("paste addr %llx at %lx, rc %d\n", paste_addr,
-+			vma->vm_start, rc);
- 
- 	txwin->task_ref.vma = vma;
- 	vma->vm_ops = &vas_vm_ops;
-@@ -609,8 +608,7 @@ int vas_register_coproc_api(struct module *mod, enum vas_cop_type cop_type,
- 		goto err;
- 	}
- 
--	pr_devel("%s: Added dev [%d,%d]\n", __func__, MAJOR(devno),
--			MINOR(devno));
-+	pr_devel("Added dev [%d,%d]\n", MAJOR(devno), MINOR(devno));
- 
- 	return 0;
- 
-diff --git a/arch/powerpc/platforms/pseries/vas.c b/arch/powerpc/platforms/pseries/vas.c
-index 041a25c08066b..5db8060776b0c 100644
---- a/arch/powerpc/platforms/pseries/vas.c
-+++ b/arch/powerpc/platforms/pseries/vas.c
-@@ -340,7 +340,7 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
- 
- 	if (atomic_inc_return(&cop_feat_caps->nr_used_credits) >
- 			atomic_read(&cop_feat_caps->nr_total_credits)) {
--		pr_err("Credits are not available to allocate window\n");
-+		pr_err_ratelimited("Credits are not available to allocate window\n");
- 		rc = -EINVAL;
- 		goto out;
- 	}
-@@ -423,7 +423,7 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
- 
- 	put_vas_user_win_ref(&txwin->vas_win.task_ref);
- 	rc = -EBUSY;
--	pr_err("No credit is available to allocate window\n");
-+	pr_err_ratelimited("No credit is available to allocate window\n");
- 
- out_free:
- 	/*
 -- 
 2.42.0
 
