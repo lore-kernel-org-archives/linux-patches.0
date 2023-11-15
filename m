@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1760381C6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B57381C6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRQgWFVK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5242BC433B6;
-	Wed, 15 Nov 2023 19:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2az6ucXo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6A3C433C8;
+	Wed, 15 Nov 2023 19:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078129;
-	bh=FNcsL9SVaq6kUIBHzkOA9bohHoQvfMggUM8RIBoDPt8=;
+	s=korg; t=1700078130;
+	bh=bIRpZr6oWT96bhp7FeJkRbgm+5Oex4SLkNzCbNvZd1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YRQgWFVKYuLuDZwCXY1oyFV/d1QQwvxzV1psIWBcmGKFlPaw0+e1bqhpxIm1UsuU8
-	 B6SavwG/XBfgqi1eP8krWHTQCygp5nl3X5F5FMKOmhl8bTcHnx9mEKK9EI16oJiaOv
-	 tsZjKZe3jYeyI5NGGnvdHvdhHCiWinclkedKRFIE=
+	b=2az6ucXotKfn0vc654Tw6NUABipDwSAb6EM0I7Mbr+riwx/hEI/k9+H9Fc18I4R6J
+	 d62rn3egilDGN22Jt1wCRZzY7IqMUa8efQhD7hFcImgk+bq9N0VSMZZ0otaJZNEWZF
+	 6S5XbzXaUB0iCek0PDrkSQyt4NAKquDT5XTi9O28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Nartowicz <deadbeef@nartowicz.co.uk>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/379] Revert "hwmon: (sch56xx-common) Add DMI override table"
-Date: Wed, 15 Nov 2023 14:23:05 -0500
-Message-ID: <20231115192651.635885021@linuxfoundation.org>
+Subject: [PATCH 6.1 128/379] drm/bridge: tc358768: remove unused variable
+Date: Wed, 15 Nov 2023 14:23:23 -0500
+Message-ID: <20231115192652.688457413@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,91 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 28da9dee3594423534f3ea1e1f61e6bb2d2fa651 ]
+[ Upstream commit e4a5e4442a8065c6959e045c061de801d545226d ]
 
-This reverts commit fd2d53c367ae9983c2100ac733a834e0c79d7537.
+Remove the unused phy_delay_nsk variable, before it was wrongly used
+to compute some register value, the fixed computation is no longer using
+it and therefore can be removed.
 
-As reported by Ian Nartowicz, this and the preceding patch
-result in a failure to load the driver on Celsius W280.
-While the alternative would be to add the board to the DMI
-override table, it is quite likely that other systems are
-also affected. Revert the offending patches to avoid future
-problems.
-
-Fixes: fd2d53c367ae ("hwmon: (sch56xx-common) Add DMI override table")
-Reported-by: Ian Nartowicz <deadbeef@nartowicz.co.uk>
-Closes: https://lore.kernel.org/linux-hwmon/20231025192239.3c5389ae@debian.org/T/#t
-Cc: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-10-francesco@dolcini.it
+Stable-dep-of: f1dabbe64506 ("drm/bridge: tc358768: Fix tc358768_ns_to_cnt()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sch56xx-common.c | 44 ++++++++--------------------------
- 1 file changed, 10 insertions(+), 34 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/sch56xx-common.c b/drivers/hwmon/sch56xx-common.c
-index de3a0886c2f72..3ece53adabd62 100644
---- a/drivers/hwmon/sch56xx-common.c
-+++ b/drivers/hwmon/sch56xx-common.c
-@@ -523,28 +523,6 @@ static int __init sch56xx_device_add(int address, const char *name)
- 	return PTR_ERR_OR_ZERO(sch56xx_pdev);
- }
+diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
+index bdeda705b67ca..70fd560ed394e 100644
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -647,7 +647,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	u32 val, val2, lptxcnt, hact, data_type;
+ 	s32 raw_val;
+ 	const struct drm_display_mode *mode;
+-	u32 dsibclk_nsk, dsiclk_nsk, ui_nsk, phy_delay_nsk;
++	u32 dsibclk_nsk, dsiclk_nsk, ui_nsk;
+ 	u32 dsiclk, dsibclk, video_start;
+ 	const u32 internal_delay = 40;
+ 	int ret, i;
+@@ -731,11 +731,9 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 				  dsibclk);
+ 	dsiclk_nsk = (u32)div_u64((u64)1000000000 * TC358768_PRECISION, dsiclk);
+ 	ui_nsk = dsiclk_nsk / 2;
+-	phy_delay_nsk = dsibclk_nsk + 2 * dsiclk_nsk;
+ 	dev_dbg(priv->dev, "dsiclk_nsk: %u\n", dsiclk_nsk);
+ 	dev_dbg(priv->dev, "ui_nsk: %u\n", ui_nsk);
+ 	dev_dbg(priv->dev, "dsibclk_nsk: %u\n", dsibclk_nsk);
+-	dev_dbg(priv->dev, "phy_delay_nsk: %u\n", phy_delay_nsk);
  
--static const struct dmi_system_id sch56xx_dmi_override_table[] __initconst = {
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "CELSIUS W380"),
--		},
--	},
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "ESPRIMO P710"),
--		},
--	},
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "ESPRIMO E9900"),
--		},
--	},
--	{ }
--};
--
- /* For autoloading only */
- static const struct dmi_system_id sch56xx_dmi_table[] __initconst = {
- 	{
-@@ -565,18 +543,16 @@ static int __init sch56xx_init(void)
- 		if (!dmi_check_system(sch56xx_dmi_table))
- 			return -ENODEV;
- 
--		if (!dmi_check_system(sch56xx_dmi_override_table)) {
--			/*
--			 * Some machines like the Esprimo P720 and Esprimo C700 have
--			 * onboard devices named " Antiope"/" Theseus" instead of
--			 * "Antiope"/"Theseus", so we need to check for both.
--			 */
--			if (!dmi_find_device(DMI_DEV_TYPE_OTHER, "Antiope", NULL) &&
--			    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Antiope", NULL) &&
--			    !dmi_find_device(DMI_DEV_TYPE_OTHER, "Theseus", NULL) &&
--			    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Theseus", NULL))
--				return -ENODEV;
--		}
-+		/*
-+		 * Some machines like the Esprimo P720 and Esprimo C700 have
-+		 * onboard devices named " Antiope"/" Theseus" instead of
-+		 * "Antiope"/"Theseus", so we need to check for both.
-+		 */
-+		if (!dmi_find_device(DMI_DEV_TYPE_OTHER, "Antiope", NULL) &&
-+		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Antiope", NULL) &&
-+		    !dmi_find_device(DMI_DEV_TYPE_OTHER, "Theseus", NULL) &&
-+		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Theseus", NULL))
-+			return -ENODEV;
- 	}
- 
- 	/*
+ 	/* LP11 > 100us for D-PHY Rx Init */
+ 	val = tc358768_ns_to_cnt(100 * 1000, dsibclk_nsk) - 1;
 -- 
 2.42.0
 
