@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943C341A80
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380A941A80
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDX6kk+3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AFDC433C7;
-	Wed, 15 Nov 2023 19:35:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjhH5fc8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C7EC433C8;
+	Wed, 15 Nov 2023 19:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076907;
-	bh=QEJOSx+gY5zZ19zWImquvQxIWfiwzyTmtY4+eSQg6Bs=;
+	s=korg; t=1700076909;
+	bh=SCkCU6u5BfjzAunOvt7POhvziUZu1tBjgrwCfNdf6FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDX6kk+3BDlUC/S9mYjtRXj14zlozUKKm3ouhU/YQXF11o4XkMenIaK2iStcD0LYP
-	 dwIP3HdMvlkMX3fsEqH4j4fhFhIldUAavJIzHyPKM8lIPsExK8edvN/zFzCN2wuR51
-	 kJ7c3jMtq88URhN+p7KUkjZ+lm5ZpacjPamErvsc=
+	b=AjhH5fc8mSF2unMDxNzTXEvSgouRrNLGbqClC+hqaJYPqUKXDogFyVcG6pauz+q8e
+	 gZimrUxTc9i4o6t0YEkXiAw+bVa8EKaTiBphsvqZUiNtyV9va2/qXxGoCb8ghCH7c4
+	 aPYXJTk+SwETKJQ7Y0w3hIeXAWXsSpiuASbeQp9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Savkov <asavkov@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/603] selftests/bpf: Skip module_fentry_shadow test when bpf_testmod is not available
-Date: Wed, 15 Nov 2023 14:10:08 -0500
-Message-ID: <20231115191617.490037287@linuxfoundation.org>
+Subject: [PATCH 6.5 460/550] rtc: pcf85363: fix wrong mask/val parameters in regmap_update_bits call
+Date: Wed, 15 Nov 2023 14:17:24 -0500
+Message-ID: <20231115191632.752879654@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,41 +38,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Artem Savkov <asavkov@redhat.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit 971f7c32147f2d0953a815a109b22b8ed45949d4 ]
+[ Upstream commit 2be36c09b6b07306be33519e1aa70d2e2a2161bb ]
 
-This test relies on bpf_testmod, so skip it if the module is not available.
+The current implementation passes PIN_IO_INTA_OUT (2) as a mask and
+PIN_IO_INTAPM (GENMASK(1, 0)) as a value.
+Swap the variables to assign mask and value the right way.
 
-Fixes: aa3d65de4b900 ("bpf/selftests: Test fentry attachment to shadowed functions")
-Signed-off-by: Artem Savkov <asavkov@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230914124928.340701-1-asavkov@redhat.com
+This error was first introduced with the alarm support. For better or
+worse it worked as expected because 0x02 was applied as a mask to 0x03,
+resulting 0x02 anyway. This will of course not work for any other value.
+
+Fixes: e5aac267a10a ("rtc: pcf85363: add alarm support")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20231013-topic-pcf85363_regmap_update_bits-v1-1-c454f016f71f@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/bpf/prog_tests/module_fentry_shadow.c  | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/rtc/rtc-pcf85363.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/module_fentry_shadow.c b/tools/testing/selftests/bpf/prog_tests/module_fentry_shadow.c
-index c7636e18b1ebd..aa9f67eb1c95b 100644
---- a/tools/testing/selftests/bpf/prog_tests/module_fentry_shadow.c
-+++ b/tools/testing/selftests/bpf/prog_tests/module_fentry_shadow.c
-@@ -61,6 +61,11 @@ void test_module_fentry_shadow(void)
- 	int link_fd[2] = {};
- 	__s32 btf_id[2] = {};
+diff --git a/drivers/rtc/rtc-pcf85363.c b/drivers/rtc/rtc-pcf85363.c
+index b2b7ea32b961f..5407556d7bde3 100644
+--- a/drivers/rtc/rtc-pcf85363.c
++++ b/drivers/rtc/rtc-pcf85363.c
+@@ -439,7 +439,7 @@ static int pcf85363_probe(struct i2c_client *client)
+ 	if (client->irq > 0 || wakeup_source) {
+ 		regmap_write(pcf85363->regmap, CTRL_FLAGS, 0);
+ 		regmap_update_bits(pcf85363->regmap, CTRL_PIN_IO,
+-				   PIN_IO_INTA_OUT, PIN_IO_INTAPM);
++				   PIN_IO_INTAPM, PIN_IO_INTA_OUT);
+ 	}
  
-+	if (!env.has_testmod) {
-+		test__skip();
-+		return;
-+	}
-+
- 	LIBBPF_OPTS(bpf_prog_load_opts, load_opts,
- 		.expected_attach_type = BPF_TRACE_FENTRY,
- 	);
+ 	if (client->irq > 0) {
 -- 
 2.42.0
 
