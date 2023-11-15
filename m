@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AE33BB48
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C043BB43
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+7rAZXO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32459C433C7;
-	Wed, 15 Nov 2023 19:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbcWJZ49"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8469C433CA;
+	Wed, 15 Nov 2023 19:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078112;
-	bh=PQPskEYGaoW8h9QS8xvHw+rNIZXYqHv6lyiaV6GqIRc=;
+	s=korg; t=1700078113;
+	bh=ZmHfpKQoOCtAVTEtfLiagTwPZ0QE9J+rHuoEO4Li3ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+7rAZXOcFzrJ3hU8IQUK6Ie5VAU9hwF+rPSUyj0IekZWtofs1gV5qSQYKz/7Y4gO
-	 WZSbNjGMIoV9j/zN/LX70iitG3FyxbUIzuQjn12QQUqO1aS8Ctzl6rRUz0z2qPbSBu
-	 OvSI8OAbUWzJnLHyOF4rV8QVCetUEcGiR3q+iKWY=
+	b=AbcWJZ49mBywMukAAQstlrBFV2ADqZng9LhNncSalr2GXNfLMEAcHdYZYxkoh8N5/
+	 CO1E37MRHorSny45zb8m8zpZTMeNLSC2ZQgDAIpGWK2zs4/6uvwGsAg/g1gxHxz9ga
+	 X+jvp3UdDCvLkWCvi0hUjxjuJf37ukPRArLRB9Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	kernel test robot <lkp@intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/379] hwmon: (coretemp) Fix potentially truncated sysfs attribute name
-Date: Wed, 15 Nov 2023 14:23:04 -0500
-Message-ID: <20231115192651.577161453@linuxfoundation.org>
+Subject: [PATCH 6.1 118/379] drm/rockchip: vop2: Add missing call to crtc reset helper
+Date: Wed, 15 Nov 2023 14:23:13 -0500
+Message-ID: <20231115192652.101429681@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,57 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit bbfff736d30e5283ad09e748caff979d75ddef7f ]
+[ Upstream commit 4d49d87b3606369c6e29b9d051892ee1a6fc4e75 ]
 
-When build with W=1 and "-Werror=format-truncation", below error is
-observed in coretemp driver,
+Add missing call to crtc reset helper to properly vblank reset.
 
-   drivers/hwmon/coretemp.c: In function 'create_core_data':
->> drivers/hwmon/coretemp.c:393:34: error: '%s' directive output may be truncated writing likely 5 or more bytes into a region of size between 3 and 13 [-Werror=format-truncation=]
-     393 |                          "temp%d_%s", attr_no, suffixes[i]);
-         |                                  ^~
-   drivers/hwmon/coretemp.c:393:26: note: assuming directive output of 5 bytes
-     393 |                          "temp%d_%s", attr_no, suffixes[i]);
-         |                          ^~~~~~~~~~~
-   drivers/hwmon/coretemp.c:392:17: note: 'snprintf' output 7 or more bytes (assuming 22) into a destination of size 19
-     392 |                 snprintf(tdata->attr_name[i], CORETEMP_NAME_LENGTH,
-         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     393 |                          "temp%d_%s", attr_no, suffixes[i]);
-         |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   cc1: all warnings being treated as errors
+Also move vop2_crtc_reset and call vop2_crtc_destroy_state to simplify
+and remove duplicated code.
 
-Given that
-1. '%d' could take 10 charactors,
-2. '%s' could take 10 charactors ("crit_alarm"),
-3. "temp", "_" and the NULL terminator take 6 charactors,
-fix the problem by increasing CORETEMP_NAME_LENGTH to 28.
-
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Fixes: 7108b80a542b ("hwmon/coretemp: Handle large core ID value")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310200443.iD3tUbbK-lkp@intel.com/
-Link: https://lore.kernel.org/r/20231025122316.836400-1-rui.zhang@intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230621223311.2239547-6-jonas@kwiboo.se
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 31 +++++++++-----------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index baaf8af4cb443..09aab5859fa75 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -41,7 +41,7 @@ MODULE_PARM_DESC(tjmax, "TjMax value in degrees Celsius");
- #define PKG_SYSFS_ATTR_NO	1	/* Sysfs attribute for package temp */
- #define BASE_SYSFS_ATTR_NO	2	/* Sysfs Base attr no for coretemp */
- #define NUM_REAL_CORES		128	/* Number of Real cores per cpu */
--#define CORETEMP_NAME_LENGTH	19	/* String Length of attrs */
-+#define CORETEMP_NAME_LENGTH	28	/* String Length of attrs */
- #define MAX_CORE_ATTRS		4	/* Maximum no of basic attrs */
- #define TOTAL_ATTRS		(MAX_CORE_ATTRS + 1)
- #define MAX_CORE_DATA		(NUM_REAL_CORES + BASE_SYSFS_ATTR_NO)
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index adccb88c04ad0..b233f52675dc4 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -2075,23 +2075,6 @@ static const struct drm_crtc_helper_funcs vop2_crtc_helper_funcs = {
+ 	.atomic_disable = vop2_crtc_atomic_disable,
+ };
+ 
+-static void vop2_crtc_reset(struct drm_crtc *crtc)
+-{
+-	struct rockchip_crtc_state *vcstate = to_rockchip_crtc_state(crtc->state);
+-
+-	if (crtc->state) {
+-		__drm_atomic_helper_crtc_destroy_state(crtc->state);
+-		kfree(vcstate);
+-	}
+-
+-	vcstate = kzalloc(sizeof(*vcstate), GFP_KERNEL);
+-	if (!vcstate)
+-		return;
+-
+-	crtc->state = &vcstate->base;
+-	crtc->state->crtc = crtc;
+-}
+-
+ static struct drm_crtc_state *vop2_crtc_duplicate_state(struct drm_crtc *crtc)
+ {
+ 	struct rockchip_crtc_state *vcstate;
+@@ -2118,6 +2101,20 @@ static void vop2_crtc_destroy_state(struct drm_crtc *crtc,
+ 	kfree(vcstate);
+ }
+ 
++static void vop2_crtc_reset(struct drm_crtc *crtc)
++{
++	struct rockchip_crtc_state *vcstate =
++		kzalloc(sizeof(*vcstate), GFP_KERNEL);
++
++	if (crtc->state)
++		vop2_crtc_destroy_state(crtc, crtc->state);
++
++	if (vcstate)
++		__drm_atomic_helper_crtc_reset(crtc, &vcstate->base);
++	else
++		__drm_atomic_helper_crtc_reset(crtc, NULL);
++}
++
+ static const struct drm_crtc_funcs vop2_crtc_funcs = {
+ 	.set_config = drm_atomic_helper_set_config,
+ 	.page_flip = drm_atomic_helper_page_flip,
 -- 
 2.42.0
 
