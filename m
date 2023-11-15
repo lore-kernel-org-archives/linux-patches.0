@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31244381DF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D048D381DF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHy/VlqK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F70C433C9;
-	Wed, 15 Nov 2023 19:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ALYB8M6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D87DC433C7;
+	Wed, 15 Nov 2023 19:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078293;
-	bh=2psr2D7yYs+LUILSci/jUiRl4/w1emKmYKpL0lE1XgE=;
+	s=korg; t=1700078294;
+	bh=cz2USZc+Z193fOo2TCclfXh/dBnzDW+KaTqHgjchM0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iHy/VlqK2oAnjCSPNJM8JwjN7Lqi9nWfKQ5QJmPwGUbGAaPnFThbuX+wuKFD0rJ0Z
-	 QnHKuaDzBW0prBafuu9/gOeI0yAlzUOjbM4ISn7FBaf4RXzUfPkypqfkbuNfwlVZOz
-	 0TfhDtTg6CxemvMgXUq4iRsM2flInYx54IfdemwM=
+	b=2ALYB8M6aFed7yiQUt2jOJQl8CjbmvTMMGDJX5ybdI9SjKbHjT0J0DpJhtNl0xKsa
+	 /v+x1WSoaC2GZ6bXZ5gp2jIpVXLgmdtYPKgZtF9B7XZcpCDIClNx2vHHyiM041tJcL
+	 Cn6l4ceXOxKSYlQN6m9Os1V7vzGjIDYGY/cQYSW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 233/379] HID: logitech-hidpp: Revert "Dont restart communication if not necessary"
-Date: Wed, 15 Nov 2023 14:25:08 -0500
-Message-ID: <20231115192658.899754193@linuxfoundation.org>
+Subject: [PATCH 6.1 234/379] HID: logitech-hidpp: Move get_wireless_feature_index() check to hidpp_connect_event()
+Date: Wed, 15 Nov 2023 14:25:09 -0500
+Message-ID: <20231115192658.955987374@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -44,34 +44,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 55bf70362ffc4ddd7c8745e2fe880edac00e4aff ]
+[ Upstream commit ba9de350509504fb748837b71e23d7e84c83d93c ]
 
-Commit 91cf9a98ae41 ("HID: logitech-hidpp: make .probe usbhid capable")
-makes hidpp_probe() first call hid_hw_start(hdev, 0) to allow IO
-without connecting any hid subdrivers (hid-input, hidraw).
+Calling get_wireless_feature_index() from probe() causes
+the wireless_feature_index to only get set for unifying devices which
+are already connected at probe() time. It does not get set for devices
+which connect later.
 
-This is done to allow to retrieve the device's name and serial number
-and store these in hdev->name and hdev->uniq.
-
-Then later on IO was stopped and started again with hid_hw_start(hdev,
-HID_CONNECT_DEFAULT) connecting hid-input and hidraw after the name
-and serial number have been setup.
-
-Commit 498ba2069035 ("HID: logitech-hidpp: Don't restart communication
-if not necessary") changed the probe() code to only do the start with
-a 0 connect-mask + restart later for unifying devices.
-
-But for non unifying devices hdev->name and hdev->uniq are updated too.
-So this change re-introduces the problem for which the start with
-a 0 connect-mask + restart later behavior was introduced.
-
-The previous patch in this series changes the unifying path to instead of
-restarting IO only call hid_connect() later. This avoids possible issues
-with restarting IO seen on non unifying devices.
-
-Revert the change to limit the restart behavior to unifying devices to
-fix hdev->name changing after userspace facing devices have already been
-registered.
+Fix this by moving get_wireless_feature_index() to hidpp_connect_event(),
+this does not make a difference for devices connected at probe() since
+probe() will queue the hidpp_connect_event() for those at probe time.
 
 This series has been tested on the following devices:
 Logitech Bluetooth Laser Travel Mouse (bluetooth, HID++ 1.0)
@@ -89,79 +71,66 @@ Logitech Touchpad T651 (bluetooth)
 Logitech MX Master 3B (BLE)
 Logitech G403 (plain USB / Gaming receiver)
 
-Fixes: 498ba2069035 ("HID: logitech-hidpp: Don't restart communication if not necessary")
+Fixes: 0da0a63b7cba ("HID: logitech-hidpp: Support WirelessDeviceStatus connect events")
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231010102029.111003-3-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20231010102029.111003-4-hdegoede@redhat.com
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+ drivers/hid/hid-logitech-hidpp.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index d7e15989cb578..2c212f835e8c5 100644
+index 2c212f835e8c5..fa1c7e07e220b 100644
 --- a/drivers/hid/hid-logitech-hidpp.c
 +++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4142,7 +4142,6 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	bool connected;
- 	unsigned int connect_mask = HID_CONNECT_DEFAULT;
- 	struct hidpp_ff_private_data data;
--	bool will_restart = false;
+@@ -1757,15 +1757,14 @@ static int hidpp_battery_get_property(struct power_supply *psy,
+ /* -------------------------------------------------------------------------- */
+ #define HIDPP_PAGE_WIRELESS_DEVICE_STATUS			0x1d4b
  
- 	/* report_fixup needs drvdata to be set before we call hid_parse */
- 	hidpp = devm_kzalloc(&hdev->dev, sizeof(*hidpp), GFP_KERNEL);
-@@ -4193,10 +4192,6 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 			return ret;
+-static int hidpp_set_wireless_feature_index(struct hidpp_device *hidpp)
++static int hidpp_get_wireless_feature_index(struct hidpp_device *hidpp, u8 *feature_index)
+ {
+ 	u8 feature_type;
+ 	int ret;
+ 
+ 	ret = hidpp_root_get_feature(hidpp,
+ 				     HIDPP_PAGE_WIRELESS_DEVICE_STATUS,
+-				     &hidpp->wireless_feature_index,
+-				     &feature_type);
++				     feature_index, &feature_type);
+ 
+ 	return ret;
+ }
+@@ -3999,6 +3998,13 @@ static void hidpp_connect_event(struct hidpp_device *hidpp)
+ 		}
  	}
  
--	if (hidpp->quirks & HIDPP_QUIRK_DELAYED_INIT ||
--	    hidpp->quirks & HIDPP_QUIRK_UNIFYING)
--		will_restart = true;
--
- 	INIT_WORK(&hidpp->work, delayed_work_cb);
- 	mutex_init(&hidpp->send_mutex);
- 	init_waitqueue_head(&hidpp->wait);
-@@ -4213,7 +4208,7 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	 * name and serial number and store these in hdev->name and hdev->uniq,
- 	 * before the hid-input and hidraw drivers expose these to userspace.
- 	 */
--	ret = hid_hw_start(hdev, will_restart ? 0 : connect_mask);
-+	ret = hid_hw_start(hdev, 0);
- 	if (ret) {
- 		hid_err(hdev, "hw start failed\n");
- 		goto hid_hw_start_fail;
-@@ -4252,7 +4247,6 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 			hidpp->wireless_feature_index = 0;
- 		else if (ret)
- 			goto hid_hw_init_fail;
--		ret = 0;
++	if (hidpp->protocol_major >= 2) {
++		u8 feature_index;
++
++		if (!hidpp_get_wireless_feature_index(hidpp, &feature_index))
++			hidpp->wireless_feature_index = feature_index;
++	}
++
+ 	if (hidpp->name == hdev->name && hidpp->protocol_major >= 2) {
+ 		name = hidpp_get_device_name(hidpp);
+ 		if (name) {
+@@ -4241,14 +4247,6 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		hidpp_overwrite_name(hdev);
  	}
  
- 	if (connected && (hidpp->quirks & HIDPP_QUIRK_CLASS_WTP)) {
-@@ -4268,16 +4262,14 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	schedule_work(&hidpp->work);
- 	flush_work(&hidpp->work);
- 
--	if (will_restart) {
--		if (hidpp->quirks & HIDPP_QUIRK_DELAYED_INIT)
--			connect_mask &= ~HID_CONNECT_HIDINPUT;
-+	if (hidpp->quirks & HIDPP_QUIRK_DELAYED_INIT)
-+		connect_mask &= ~HID_CONNECT_HIDINPUT;
- 
--		/* Now export the actual inputs and hidraw nodes to the world */
--		ret = hid_connect(hdev, connect_mask);
--		if (ret) {
--			hid_err(hdev, "%s:hid_connect returned error %d\n", __func__, ret);
+-	if (connected && hidpp->protocol_major >= 2) {
+-		ret = hidpp_set_wireless_feature_index(hidpp);
+-		if (ret == -ENOENT)
+-			hidpp->wireless_feature_index = 0;
+-		else if (ret)
 -			goto hid_hw_init_fail;
--		}
-+	/* Now export the actual inputs and hidraw nodes to the world */
-+	ret = hid_connect(hdev, connect_mask);
-+	if (ret) {
-+		hid_err(hdev, "%s:hid_connect returned error %d\n", __func__, ret);
-+		goto hid_hw_init_fail;
- 	}
- 
- 	if (hidpp->quirks & HIDPP_QUIRK_CLASS_G920) {
+-	}
+-
+ 	if (connected && (hidpp->quirks & HIDPP_QUIRK_CLASS_WTP)) {
+ 		ret = wtp_get_config(hidpp);
+ 		if (ret)
 -- 
 2.42.0
 
