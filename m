@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EBA43AB5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B8443AB5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkIHohmi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FDEC433CA;
-	Wed, 15 Nov 2023 20:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1nRnvFi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7895CC433C7;
+	Wed, 15 Nov 2023 20:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081132;
-	bh=smXJW1NNB5+3nRHIcN6q89vbl2v/USnDTVWMrT5+GMo=;
+	s=korg; t=1700081134;
+	bh=59uQ1Q1t0oNArnvIwNdAS0UG7N8KeFBmJRf9QBLLH8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fkIHohmipLPjhIrHtDEtnNypdqND0sduYHX5bpnJLdjLvzpKoDp8/2RGcALYUs9pD
-	 Qg3SdXC5vopMp75LAgRAvSK8LO3udmZ0Y4tgJ4idPFEny9iGoC1Q2f91SVUNzVRi4/
-	 /PHTuZsZsbigq+gf2paGXzK1BV6JwO6b24w842AI=
+	b=a1nRnvFiNvmdu3x2JKElP01A3QBP2rlajEjwg12X5DBijJyC0eEq0hrwc/7gXO9Ez
+	 /XT/pldPOeYBQmLDbTe8MYZr8QixriNqCKJY1rtI9Z9s0TVOlLywbRF37IInfuQgMU
+	 UviNzRCvF/CDIRjj36snl9VFgZuNPmBUJexnu3Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jonas Blixt <jonas.blixt@actia.se>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 58/88] tools: iio: iio_generic_buffer ensure alignment
-Date: Wed, 15 Nov 2023 15:36:10 -0500
-Message-ID: <20231115191429.630415666@linuxfoundation.org>
+Subject: [PATCH 4.19 59/88] USB: usbip: fix stub_dev hub disconnect
+Date: Wed, 15 Nov 2023 15:36:11 -0500
+Message-ID: <20231115191429.687708818@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -42,63 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Jonas Blixt <jonas.blixt@actia.se>
 
-[ Upstream commit 2d3dff577dd0ea8fe9637a13822f7603c4a881c8 ]
+[ Upstream commit 97475763484245916735a1aa9a3310a01d46b008 ]
 
-The iio_generic_buffer can return garbage values when the total size of
-scan data is not a multiple of the largest element in the scan. This can be
-demonstrated by reading a scan, consisting, for example of one 4-byte and
-one 2-byte element, where the 4-byte element is first in the buffer.
+If a hub is disconnected that has device(s) that's attached to the usbip layer
+the disconnect function might fail because it tries to release the port
+on an already disconnected hub.
 
-The IIO generic buffer code does not take into account the last two
-padding bytes that are needed to ensure that the 4-byte data for next
-scan is correctly aligned.
-
-Add the padding bytes required to align the next sample with the scan size.
-
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: e58537ccce73 ("staging: iio: update example application.")
-Link: https://lore.kernel.org/r/ZRvlm4ktNLu+qmlf@dc78bmyyyyyyyyyyyyydt-3.rev.dnainternet.fi
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 6080cd0e9239 ("staging: usbip: claim ports used by shared devices")
+Signed-off-by: Jonas Blixt <jonas.blixt@actia.se>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20230615092810.1215490-1-jonas.blixt@actia.se
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/iio/iio_generic_buffer.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/usb/usbip/stub_dev.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
-index 8360605f01db8..ca9f33fa51c9f 100644
---- a/tools/iio/iio_generic_buffer.c
-+++ b/tools/iio/iio_generic_buffer.c
-@@ -56,9 +56,12 @@ enum autochan {
- static unsigned int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
- {
- 	unsigned int bytes = 0;
--	int i = 0;
-+	int i = 0, max = 0;
-+	unsigned int misalignment;
- 
- 	while (i < num_channels) {
-+		if (channels[i].bytes > max)
-+			max = channels[i].bytes;
- 		if (bytes % channels[i].bytes == 0)
- 			channels[i].location = bytes;
- 		else
-@@ -68,6 +71,14 @@ static unsigned int size_from_channelarray(struct iio_channel_info *channels, in
- 		bytes = channels[i].location + channels[i].bytes;
- 		i++;
- 	}
+diff --git a/drivers/usb/usbip/stub_dev.c b/drivers/usb/usbip/stub_dev.c
+index c64964c32cc97..ebcb8d52d1e3a 100644
+--- a/drivers/usb/usbip/stub_dev.c
++++ b/drivers/usb/usbip/stub_dev.c
+@@ -497,8 +497,13 @@ static void stub_disconnect(struct usb_device *udev)
+ 	/* release port */
+ 	rc = usb_hub_release_port(udev->parent, udev->portnum,
+ 				  (struct usb_dev_state *) udev);
+-	if (rc) {
+-		dev_dbg(&udev->dev, "unable to release port\n");
 +	/*
-+	 * We want the data in next sample to also be properly aligned so
-+	 * we'll add padding at the end if needed. Adding padding only
-+	 * works for channel data which size is 2^n bytes.
++	 * NOTE: If a HUB disconnect triggered disconnect of the down stream
++	 * device usb_hub_release_port will return -ENODEV so we can safely ignore
++	 * that error here.
 +	 */
-+	misalignment = bytes % max;
-+	if (misalignment)
-+		bytes += max - misalignment;
++	if (rc && (rc != -ENODEV)) {
++		dev_dbg(&udev->dev, "unable to release port (%i)\n", rc);
+ 		return;
+ 	}
  
- 	return bytes;
- }
 -- 
 2.42.0
 
