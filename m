@@ -1,32 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380A941A80
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C254141A80
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjhH5fc8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C7EC433C8;
-	Wed, 15 Nov 2023 19:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LQa0JSu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75140C433CB;
+	Wed, 15 Nov 2023 19:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076909;
-	bh=SCkCU6u5BfjzAunOvt7POhvziUZu1tBjgrwCfNdf6FI=;
+	s=korg; t=1700076910;
+	bh=PmeSWzMkvdHW6O9jYtdZ2o/UsphuSzy8WOlNuIlgC7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AjhH5fc8mSF2unMDxNzTXEvSgouRrNLGbqClC+hqaJYPqUKXDogFyVcG6pauz+q8e
-	 gZimrUxTc9i4o6t0YEkXiAw+bVa8EKaTiBphsvqZUiNtyV9va2/qXxGoCb8ghCH7c4
-	 aPYXJTk+SwETKJQ7Y0w3hIeXAWXsSpiuASbeQp9o=
+	b=0LQa0JSuqaBgst2uVPHf6EXWwUPwIOhlxXu/u7DVpCB92FR6SYXySEkK4I4ffcXTi
+	 GWBXoiHzizFwYwqiE+XhAbAg6jhXGmBO9mjzKdylDL+0ng6q30KW1cQEQdHRX4RYSx
+	 kVzH88OhzMVtXYUVluEQZj4Nk7s9EtZy5IeGILZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Aananth V <aananthv@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 460/550] rtc: pcf85363: fix wrong mask/val parameters in regmap_update_bits call
-Date: Wed, 15 Nov 2023 14:17:24 -0500
-Message-ID: <20231115191632.752879654@linuxfoundation.org>
+Subject: [PATCH 6.6 064/603] tcp: call tcp_try_undo_recovery when an RTOd TFO SYNACK is ACKed
+Date: Wed, 15 Nov 2023 14:10:09 -0500
+Message-ID: <20231115191617.575719967@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,44 +41,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Aananth V <aananthv@google.com>
 
-[ Upstream commit 2be36c09b6b07306be33519e1aa70d2e2a2161bb ]
+[ Upstream commit e326578a21414738de45f77badd332fb00bd0f58 ]
 
-The current implementation passes PIN_IO_INTA_OUT (2) as a mask and
-PIN_IO_INTAPM (GENMASK(1, 0)) as a value.
-Swap the variables to assign mask and value the right way.
+For passive TCP Fast Open sockets that had SYN/ACK timeout and did not
+send more data in SYN_RECV, upon receiving the final ACK in 3WHS, the
+congestion state may awkwardly stay in CA_Loss mode unless the CA state
+was undone due to TCP timestamp checks. However, if
+tcp_rcv_synrecv_state_fastopen() decides not to undo, then we should
+enter CA_Open, because at that point we have received an ACK covering
+the retransmitted SYNACKs. Currently, the icsk_ca_state is only set to
+CA_Open after we receive an ACK for a data-packet. This is because
+tcp_ack does not call tcp_fastretrans_alert (and tcp_process_loss) if
+!prior_packets
 
-This error was first introduced with the alarm support. For better or
-worse it worked as expected because 0x02 was applied as a mask to 0x03,
-resulting 0x02 anyway. This will of course not work for any other value.
+Note that tcp_process_loss() calls tcp_try_undo_recovery(), so having
+tcp_rcv_synrecv_state_fastopen() decide that if we're in CA_Loss we
+should call tcp_try_undo_recovery() is consistent with that, and
+low risk.
 
-Fixes: e5aac267a10a ("rtc: pcf85363: add alarm support")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20231013-topic-pcf85363_regmap_update_bits-v1-1-c454f016f71f@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: dad8cea7add9 ("tcp: fix TFO SYNACK undo to avoid double-timestamp-undo")
+Signed-off-by: Aananth V <aananthv@google.com>
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Yuchung Cheng <ycheng@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85363.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/rtc/rtc-pcf85363.c b/drivers/rtc/rtc-pcf85363.c
-index b2b7ea32b961f..5407556d7bde3 100644
---- a/drivers/rtc/rtc-pcf85363.c
-+++ b/drivers/rtc/rtc-pcf85363.c
-@@ -439,7 +439,7 @@ static int pcf85363_probe(struct i2c_client *client)
- 	if (client->irq > 0 || wakeup_source) {
- 		regmap_write(pcf85363->regmap, CTRL_FLAGS, 0);
- 		regmap_update_bits(pcf85363->regmap, CTRL_PIN_IO,
--				   PIN_IO_INTA_OUT, PIN_IO_INTAPM);
-+				   PIN_IO_INTAPM, PIN_IO_INTA_OUT);
- 	}
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 804821d6bd4d4..1f9d1d445fb3b 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -6450,22 +6450,23 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
  
- 	if (client->irq > 0) {
+ static void tcp_rcv_synrecv_state_fastopen(struct sock *sk)
+ {
++	struct tcp_sock *tp = tcp_sk(sk);
+ 	struct request_sock *req;
+ 
+ 	/* If we are still handling the SYNACK RTO, see if timestamp ECR allows
+ 	 * undo. If peer SACKs triggered fast recovery, we can't undo here.
+ 	 */
+-	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss)
+-		tcp_try_undo_loss(sk, false);
++	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss && !tp->packets_out)
++		tcp_try_undo_recovery(sk);
+ 
+ 	/* Reset rtx states to prevent spurious retransmits_timed_out() */
+-	tcp_sk(sk)->retrans_stamp = 0;
++	tp->retrans_stamp = 0;
+ 	inet_csk(sk)->icsk_retransmits = 0;
+ 
+ 	/* Once we leave TCP_SYN_RECV or TCP_FIN_WAIT_1,
+ 	 * we no longer need req so release it.
+ 	 */
+-	req = rcu_dereference_protected(tcp_sk(sk)->fastopen_rsk,
++	req = rcu_dereference_protected(tp->fastopen_rsk,
+ 					lockdep_sock_is_held(sk));
+ 	reqsk_fastopen_remove(sk, req, false);
+ 
 -- 
 2.42.0
 
