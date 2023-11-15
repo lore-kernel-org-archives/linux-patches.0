@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FAE41212
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123E541212
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1NSlscl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F8BC433C8;
-	Wed, 15 Nov 2023 19:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOz0a3Gx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B621DC433C8;
+	Wed, 15 Nov 2023 19:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076279;
-	bh=yYz5xW1hKLsAaC+/JRilMF7Ulcs/XaFERab2p+vvFIA=;
+	s=korg; t=1700076280;
+	bh=gzp8IU1j+/E8+4UzZzDTY9n0V0QmbePiDVwznL873Qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C1NSlsclHmTCGykDrtBNPGAAS2xaOLdIM+Y0tv86kSLMkw2CVZkjf4hA/GI6f2n6v
-	 9ynB/qyA++ifh+RW2Xg0GJtBuSnl7kdWHBZRXjU2abg9rvfOCWX+JIE21MBVBUcvtQ
-	 gc+fCrJxy0/rUYTmIwKLDf3QGvuMxjo/j0ki3wmc=
+	b=GOz0a3GxYtXw2Lz22Koeu/YQmg7lA+ErIcl1Mxs1twnuK5KxIfeI1Nd7fv/WIBd3C
+	 U1xRoCffKdZdkpesScsvNNJwf+XRfSoiDHCLLoUdxiTaQn31/fJlke8evzqlYQSMZO
+	 GTEEb7bmuqPGMDTdB7WDVkCzjk1MH6YpMp3ghbJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 189/550] platform/x86: wmi: Fix opening of char device
-Date: Wed, 15 Nov 2023 14:12:53 -0500
-Message-ID: <20231115191613.849541156@linuxfoundation.org>
+Subject: [PATCH 6.5 190/550] regulator: qcom-rpmh: Fix smps4 regulator for pm8550ve
+Date: Wed, 15 Nov 2023 14:12:54 -0500
+Message-ID: <20231115191613.922966604@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -36,71 +36,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit eba9ac7abab91c8f6d351460239108bef5e7a0b6 ]
+[ Upstream commit bc00d9f3813a40bc2d854ae0edab14c6b43a3219 ]
 
-Since commit fa1f68db6ca7 ("drivers: misc: pass miscdevice pointer via
-file private data"), the miscdevice stores a pointer to itself inside
-filp->private_data, which means that private_data will not be NULL when
-wmi_char_open() is called. This might cause memory corruption should
-wmi_char_open() be unable to find its driver, something which can
-happen when the associated WMI device is deleted in wmi_free_devices().
+The type of the smps4 regulator from pm8550ve is actually FTSMPS525
+medium voltage. So fix it accordingly.
 
-Fix the problem by using the miscdevice pointer to retrieve the WMI
-device data associated with a char device using container_of(). This
-also avoids wmi_char_open() picking a wrong WMI device bound to a
-driver with the same name as the original driver.
-
-Fixes: 44b6b7661132 ("platform/x86: wmi: create userspace interface for drivers")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20231020211005.38216-5-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: e6e3776d682d ("regulator: qcom-rpmh: Add support for PM8550 regulators")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20231024134626.2364426-1-abel.vesa@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/wmi.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ drivers/regulator/qcom-rpmh-regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
-index 7d11ff5bc856c..317c907304149 100644
---- a/drivers/platform/x86/wmi.c
-+++ b/drivers/platform/x86/wmi.c
-@@ -911,21 +911,13 @@ static int wmi_dev_match(struct device *dev, struct device_driver *driver)
- }
- static int wmi_char_open(struct inode *inode, struct file *filp)
- {
--	const char *driver_name = filp->f_path.dentry->d_iname;
--	struct wmi_block *wblock;
--	struct wmi_block *next;
--
--	list_for_each_entry_safe(wblock, next, &wmi_block_list, list) {
--		if (!wblock->dev.dev.driver)
--			continue;
--		if (strcmp(driver_name, wblock->dev.dev.driver->name) == 0) {
--			filp->private_data = wblock;
--			break;
--		}
--	}
-+	/*
-+	 * The miscdevice already stores a pointer to itself
-+	 * inside filp->private_data
-+	 */
-+	struct wmi_block *wblock = container_of(filp->private_data, struct wmi_block, char_dev);
- 
--	if (!filp->private_data)
--		return -ENODEV;
-+	filp->private_data = wblock;
- 
- 	return nonseekable_open(inode, filp);
- }
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index cd077b7c4aff3..9f8fbfae93c7c 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -1096,7 +1096,7 @@ static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
+ 	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525_lv, "vdd-s1"),
+ 	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525_lv, "vdd-s2"),
+ 	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525_lv, "vdd-s3"),
+-	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525_lv, "vdd-s4"),
++	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525_mv, "vdd-s4"),
+ 	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525_lv, "vdd-s5"),
+ 	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
+ 	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
 -- 
 2.42.0
 
