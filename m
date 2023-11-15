@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE96C43AD2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389C53307B
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mA21Wgk8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC03C4E76E;
-	Wed, 15 Nov 2023 20:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXUoNfkB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC81FC4E76F;
+	Wed, 15 Nov 2023 20:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081539;
-	bh=+7QSg+4P8Upbj2vnLU9lztI2d8DN5IUt/by3rEyR6Yw=;
+	s=korg; t=1700081541;
+	bh=IBYLu0Zvk6xuZUaOdg3c20XpA5vcnFAx+OwJG7a+OyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mA21Wgk8CiES6QRspz6V7Jd5IGihS5a1zCp1l0DMBzJjRcR0X5yy4Xwm2iDxPssfa
-	 zY059T4wobQrJBDufSDbgrDzRMUXxi2ml9iQ2mrdqmmbTbM0t1SRQyY/U257w48hnA
-	 l0lZOlkxLadmeIlm3BLkYDU8pGP1Irojo83tv/Rs=
+	b=sXUoNfkBvJodjyescIrwBz2+xB1709SjR71xPd5CDbJIe0zsGBAnwrPSoCpK4+Ifh
+	 2jenYWqaOyIDVugSBr+TpuGnVngI0nBptg1FqQWTTy9mSCoCJfzuDd4+I12yOI68n2
+	 vV9DA4NwBS8t6qAbuHnF6eFQccNHwGWXQYFFu9UQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Wei Hung <hsinweih@uci.edu>,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	wenxu <wenxu@ucloud.cn>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 215/244] bpf: Check map->usercnt after timer->timer is assigned
-Date: Wed, 15 Nov 2023 15:36:47 -0500
-Message-ID: <20231115203601.249826866@linuxfoundation.org>
+Subject: [PATCH 5.15 216/244] inet: shrink struct flowi_common
+Date: Wed, 15 Nov 2023 15:36:48 -0500
+Message-ID: <20231115203601.312867543@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -43,111 +44,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit fd381ce60a2d79cc967506208085336d3d268ae0 ]
+[ Upstream commit 1726483b79a72e0150734d5367e4a0238bf8fcff ]
 
-When there are concurrent uref release and bpf timer init operations,
-the following sequence diagram is possible. It will break the guarantee
-provided by bpf_timer: bpf_timer will still be alive after userspace
-application releases or unpins the map. It also will lead to kmemleak
-for old kernel version which doesn't release bpf_timer when map is
-released.
+I am looking at syzbot reports triggering kernel stack overflows
+involving a cascade of ipvlan devices.
 
-bpf program X:
+We can save 8 bytes in struct flowi_common.
 
-bpf_timer_init()
-  lock timer->lock
-    read timer->timer as NULL
-    read map->usercnt != 0
+This patch alone will not fix the issue, but is a start.
 
-                process Y:
-
-                close(map_fd)
-                  // put last uref
-                  bpf_map_put_uref()
-                    atomic_dec_and_test(map->usercnt)
-                      array_map_free_timers()
-                        bpf_timer_cancel_and_free()
-                          // just return
-                          read timer->timer is NULL
-
-    t = bpf_map_kmalloc_node()
-    timer->timer = t
-  unlock timer->lock
-
-Fix the problem by checking map->usercnt after timer->timer is assigned,
-so when there are concurrent uref release and bpf timer init, either
-bpf_timer_cancel_and_free() from uref release reads a no-NULL timer
-or the newly-added atomic64_read() returns a zero usercnt.
-
-Because atomic_dec_and_test(map->usercnt) and READ_ONCE(timer->timer)
-in bpf_timer_cancel_and_free() are not protected by a lock, so add
-a memory barrier to guarantee the order between map->usercnt and
-timer->timer. Also use WRITE_ONCE(timer->timer, x) to match the lockless
-read of timer->timer in bpf_timer_cancel_and_free().
-
-Reported-by: Hsin-Wei Hung <hsinweih@uci.edu>
-Closes: https://lore.kernel.org/bpf/CABcoxUaT2k9hWsS1tNgXyoU3E-=PuOgMn737qK984fbFmfYixQ@mail.gmail.com
-Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20231030063616.1653024-1-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 24ba14406c5c ("route: Add multipath_hash in flowi_common to make user-define hash")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: wenxu <wenxu@ucloud.cn>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20231025141037.3448203-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ include/net/flow.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index a711ffe238932..11e406ad16ae3 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -1118,13 +1118,6 @@ BPF_CALL_3(bpf_timer_init, struct bpf_timer_kern *, timer, struct bpf_map *, map
- 		ret = -EBUSY;
- 		goto out;
- 	}
--	if (!atomic64_read(&map->usercnt)) {
--		/* maps with timers must be either held by user space
--		 * or pinned in bpffs.
--		 */
--		ret = -EPERM;
--		goto out;
--	}
- 	/* allocate hrtimer via map_kmalloc to use memcg accounting */
- 	t = bpf_map_kmalloc_node(map, sizeof(*t), GFP_ATOMIC, map->numa_node);
- 	if (!t) {
-@@ -1137,7 +1130,21 @@ BPF_CALL_3(bpf_timer_init, struct bpf_timer_kern *, timer, struct bpf_map *, map
- 	rcu_assign_pointer(t->callback_fn, NULL);
- 	hrtimer_init(&t->timer, clockid, HRTIMER_MODE_REL_SOFT);
- 	t->timer.function = bpf_timer_cb;
--	timer->timer = t;
-+	WRITE_ONCE(timer->timer, t);
-+	/* Guarantee the order between timer->timer and map->usercnt. So
-+	 * when there are concurrent uref release and bpf timer init, either
-+	 * bpf_timer_cancel_and_free() called by uref release reads a no-NULL
-+	 * timer or atomic64_read() below returns a zero usercnt.
-+	 */
-+	smp_mb();
-+	if (!atomic64_read(&map->usercnt)) {
-+		/* maps with timers must be either held by user space
-+		 * or pinned in bpffs.
-+		 */
-+		WRITE_ONCE(timer->timer, NULL);
-+		kfree(t);
-+		ret = -EPERM;
-+	}
- out:
- 	__bpf_spin_unlock_irqrestore(&timer->lock);
- 	return ret;
-@@ -1305,7 +1312,7 @@ void bpf_timer_cancel_and_free(void *val)
- 	/* The subsequent bpf_timer_start/cancel() helpers won't be able to use
- 	 * this timer, since it won't be initialized.
- 	 */
--	timer->timer = NULL;
-+	WRITE_ONCE(timer->timer, NULL);
- out:
- 	__bpf_spin_unlock_irqrestore(&timer->lock);
- 	if (!t)
+diff --git a/include/net/flow.h b/include/net/flow.h
+index e3f9d92460e7a..776bacc96242a 100644
+--- a/include/net/flow.h
++++ b/include/net/flow.h
+@@ -39,8 +39,8 @@ struct flowi_common {
+ #define FLOWI_FLAG_SKIP_NH_OIF		0x04
+ 	__u32	flowic_secid;
+ 	kuid_t  flowic_uid;
+-	struct flowi_tunnel flowic_tun_key;
+ 	__u32		flowic_multipath_hash;
++	struct flowi_tunnel flowic_tun_key;
+ };
+ 
+ union flowi_uli {
 -- 
 2.42.0
 
