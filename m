@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D0F2FC52
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9C831730
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6MyAICL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32724C433C9;
-	Wed, 15 Nov 2023 19:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzl6P6PP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E21C433C7;
+	Wed, 15 Nov 2023 19:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077582;
-	bh=/QD9/6OwtJJhhmFWEHWway7VSeb7p3snhJcWwkS+/TQ=;
+	s=korg; t=1700077584;
+	bh=n10BeVaDGW7hXcSa2rV9kMJU6UJOJ5kUiaYAZ4ZdUdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6MyAICL9aDVSMoidRx3Y826uq3n5Am1ptdQ2dFkKBilhrqmLivOZlsGOUBhKw8zp
-	 I394TBctlF67vCKrtbcr0LmDMo3qLZvJ6m80zbyMzdg7AZMVCHwlC/4qlNsuVgez0q
-	 5fL2dyVd/L73P3BRThBDAaIxJWKNKaK03puT4yyo=
+	b=tzl6P6PPtuAFQN0gktUocsARwHzqOXE0qZoh/iZazCZIkEtLjT9hizcuUbhlOVrSt
+	 /qLQ7XiLOhRwcuM9aVeDIM5E8ZzDC5vLPciaGvZj8oOy02myh/jJhmmORa751dlpdS
+	 P0zvT9Z64ZAlHWst4oD0prQWNg6glwbaOnopNGt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 390/603] HID: uclogic: Fix user-memory-access bug in uclogic_params_ugee_v2_init_event_hooks()
-Date: Wed, 15 Nov 2023 14:15:35 -0500
-Message-ID: <20231115191640.166315638@linuxfoundation.org>
+Subject: [PATCH 6.6 391/603] HID: uclogic: Fix a work->entry not empty bug in __queue_work()
+Date: Wed, 15 Nov 2023 14:15:36 -0500
+Message-ID: <20231115191640.214342902@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -46,55 +46,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 91cfe0bbaa1c434d4271eb6e1d7aaa1fe8d121f6 ]
+[ Upstream commit d45f72b3c275101a620dd69881343e0dda72f877 ]
 
-When CONFIG_HID_UCLOGIC=y and CONFIG_KUNIT_ALL_TESTS=y, launch kernel and
-then the below user-memory-access bug occurs.
+When CONFIG_HID_UCLOGIC=y and CONFIG_KUNIT_ALL_TESTS=y, launch
+kernel and then the below work->entry not empty bug occurs.
 
-In hid_test_uclogic_params_cleanup_event_hooks(),it call
-uclogic_params_ugee_v2_init_event_hooks() with the first arg=NULL, so
-when it calls uclogic_params_ugee_v2_has_battery(), the hid_get_drvdata()
-will access hdev->dev with hdev=NULL, which will cause below
-user-memory-access.
+In hid_test_uclogic_exec_event_hook_test(), the filter->work is not
+initialized to be added to p.event_hooks->list, and then the
+schedule_work() in uclogic_exec_event_hook() will call __queue_work(),
+which check whether the work->entry is empty and cause the below
+warning call trace.
 
-So add a fake_device with quirks member and call hid_set_drvdata()
-to assign hdev->dev->driver_data which avoids the null-ptr-def bug
-for drvdata->quirks in uclogic_params_ugee_v2_has_battery(). After applying
-this patch, the below user-memory-access bug never occurs.
+So call INIT_WORK() with a fake work to solve the issue. After applying
+this patch, the below work->entry not empty bug never occurs.
 
- general protection fault, probably for non-canonical address 0xdffffc0000000329: 0000 [#1] PREEMPT SMP KASAN
- KASAN: probably user-memory-access in range [0x0000000000001948-0x000000000000194f]
- CPU: 5 PID: 2189 Comm: kunit_try_catch Tainted: G    B   W        N 6.6.0-rc2+ #30
+ WARNING: CPU: 0 PID: 2177 at kernel/workqueue.c:1787 __queue_work.part.0+0x780/0xad0
+ Modules linked in:
+ CPU: 0 PID: 2177 Comm: kunit_try_catch Tainted: G    B   W        N 6.6.0-rc2+ #30
  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
- RIP: 0010:uclogic_params_ugee_v2_init_event_hooks+0x87/0x600
- Code: f3 f3 65 48 8b 14 25 28 00 00 00 48 89 54 24 60 31 d2 48 89 fa c7 44 24 30 00 00 00 00 48 c7 44 24 28 02 f8 02 01 48 c1 ea 03 <80> 3c 02 00 0f 85 2c 04 00 00 48 8b 9d 48 19 00 00 48 b8 00 00 00
- RSP: 0000:ffff88810679fc88 EFLAGS: 00010202
- RAX: dffffc0000000000 RBX: 0000000000000004 RCX: 0000000000000000
- RDX: 0000000000000329 RSI: ffff88810679fd88 RDI: 0000000000001948
- RBP: 0000000000000000 R08: 0000000000000000 R09: ffffed1020f639f0
- R10: ffff888107b1cf87 R11: 0000000000000400 R12: 1ffff11020cf3f92
- R13: ffff88810679fd88 R14: ffff888100b97b08 R15: ffff8881030bb080
- FS:  0000000000000000(0000) GS:ffff888119e80000(0000) knlGS:0000000000000000
+ RIP: 0010:__queue_work.part.0+0x780/0xad0
+ Code: 44 24 20 0f b6 00 84 c0 74 08 3c 03 0f 8e 52 03 00 00 f6 83 00 01 00 00 02 74 6f 4c 89 ef e8 c7 d8 f1 02 f3 90 e9 e5 f8 ff ff <0f> 0b e9 63 fc ff ff 89 e9 49 8d 57 68 4c 89 e6 4c 89 ff 83 c9 02
+ RSP: 0000:ffff888102bb7ce8 EFLAGS: 00010086
+ RAX: 0000000000000000 RBX: ffff888106b8e460 RCX: ffffffff84141cc7
+ RDX: 1ffff11020d71c8c RSI: 0000000000000004 RDI: ffff8881001d0118
+ RBP: dffffc0000000000 R08: 0000000000000001 R09: ffffed1020576f92
+ R10: 0000000000000003 R11: ffff888102bb7980 R12: ffff888106b8e458
+ R13: ffff888119c38800 R14: 0000000000000000 R15: ffff8881001d0100
+ FS:  0000000000000000(0000) GS:ffff888119c00000(0000) knlGS:0000000000000000
  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 0000000005286001 CR4: 0000000000770ee0
- DR0: ffffffff8fdd6cf4 DR1: ffffffff8fdd6cf5 DR2: ffffffff8fdd6cf6
- DR3: ffffffff8fdd6cf7 DR6: 00000000fffe0ff0 DR7: 0000000000000600
+ CR2: ffff888119506000 CR3: 0000000005286001 CR4: 0000000000770ef0
+ DR0: ffffffff8fdd6ce0 DR1: ffffffff8fdd6ce1 DR2: ffffffff8fdd6ce3
+ DR3: ffffffff8fdd6ce5 DR6: 00000000fffe0ff0 DR7: 0000000000000600
  PKRU: 55555554
  Call Trace:
   <TASK>
-  ? die_addr+0x3d/0xa0
-  ? exc_general_protection+0x144/0x220
-  ? asm_exc_general_protection+0x22/0x30
-  ? uclogic_params_ugee_v2_init_event_hooks+0x87/0x600
-  ? sched_clock_cpu+0x69/0x550
-  ? uclogic_parse_ugee_v2_desc_gen_params+0x70/0x70
-  ? load_balance+0x2950/0x2950
-  ? rcu_trc_cmpxchg_need_qs+0x67/0xa0
-  hid_test_uclogic_params_cleanup_event_hooks+0x9e/0x1a0
-  ? uclogic_params_ugee_v2_init_event_hooks+0x600/0x600
-  ? __switch_to+0x5cf/0xe60
+  ? __warn+0xc9/0x260
+  ? __queue_work.part.0+0x780/0xad0
+  ? report_bug+0x345/0x400
+  ? handle_bug+0x3c/0x70
+  ? exc_invalid_op+0x14/0x40
+  ? asm_exc_invalid_op+0x16/0x20
+  ? _raw_spin_lock+0x87/0xe0
+  ? __queue_work.part.0+0x780/0xad0
+  ? __queue_work.part.0+0x249/0xad0
+  queue_work_on+0x48/0x50
+  uclogic_exec_event_hook.isra.0+0xf7/0x160
+  hid_test_uclogic_exec_event_hook_test+0x2f1/0x5d0
+  ? try_to_wake_up+0x151/0x13e0
+  ? uclogic_exec_event_hook.isra.0+0x160/0x160
+  ? _raw_spin_lock_irqsave+0x8d/0xe0
+  ? __sched_text_end+0xa/0xa
+  ? __sched_text_end+0xa/0xa
   ? migrate_enable+0x260/0x260
-  ? __kthread_parkme+0x83/0x150
   ? kunit_try_run_case_cleanup+0xe0/0xe0
   kunit_generic_run_threadfn_adapter+0x4a/0x90
   ? kunit_try_catch_throw+0x80/0x80
@@ -104,72 +107,42 @@ this patch, the below user-memory-access bug never occurs.
   ? kthread_complete_and_exit+0x20/0x20
   ret_from_fork_asm+0x11/0x20
   </TASK>
- Modules linked in:
- Dumping ftrace buffer:
-    (ftrace buffer empty)
- ---[ end trace 0000000000000000 ]---
- RIP: 0010:uclogic_params_ugee_v2_init_event_hooks+0x87/0x600
- Code: f3 f3 65 48 8b 14 25 28 00 00 00 48 89 54 24 60 31 d2 48 89 fa c7 44 24 30 00 00 00 00 48 c7 44 24 28 02 f8 02 01 48 c1 ea 03 <80> 3c 02 00 0f 85 2c 04 00 00 48 8b 9d 48 19 00 00 48 b8 00 00 00
- RSP: 0000:ffff88810679fc88 EFLAGS: 00010202
- RAX: dffffc0000000000 RBX: 0000000000000004 RCX: 0000000000000000
- RDX: 0000000000000329 RSI: ffff88810679fd88 RDI: 0000000000001948
- RBP: 0000000000000000 R08: 0000000000000000 R09: ffffed1020f639f0
- R10: ffff888107b1cf87 R11: 0000000000000400 R12: 1ffff11020cf3f92
- R13: ffff88810679fd88 R14: ffff888100b97b08 R15: ffff8881030bb080
- FS:  0000000000000000(0000) GS:ffff888119e80000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 0000000005286001 CR4: 0000000000770ee0
- DR0: ffffffff8fdd6cf4 DR1: ffffffff8fdd6cf5 DR2: ffffffff8fdd6cf6
- DR3: ffffffff8fdd6cf7 DR6: 00000000fffe0ff0 DR7: 0000000000000600
- PKRU: 55555554
- Kernel panic - not syncing: Fatal exception
- Dumping ftrace buffer:
-    (ftrace buffer empty)
- Kernel Offset: disabled
- Rebooting in 1 seconds..
 
 Fixes: a251d6576d2a ("HID: uclogic: Handle wireless device reconnection")
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: José Expósito <jose.exposito89@gmail.com>
-Link: https://lore.kernel.org/r/20231009064245.3573397-2-ruanjinjie@huawei.com
+Link: https://lore.kernel.org/r/20231009064245.3573397-3-ruanjinjie@huawei.com
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-uclogic-params-test.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/hid/hid-uclogic-core-test.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hid/hid-uclogic-params-test.c b/drivers/hid/hid-uclogic-params-test.c
-index 678f50cbb160b..a30121419a292 100644
---- a/drivers/hid/hid-uclogic-params-test.c
-+++ b/drivers/hid/hid-uclogic-params-test.c
-@@ -174,12 +174,26 @@ static void hid_test_uclogic_parse_ugee_v2_desc(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, params->frame_type, frame_type);
- }
+diff --git a/drivers/hid/hid-uclogic-core-test.c b/drivers/hid/hid-uclogic-core-test.c
+index 2bb916226a389..cb274cde3ad23 100644
+--- a/drivers/hid/hid-uclogic-core-test.c
++++ b/drivers/hid/hid-uclogic-core-test.c
+@@ -56,6 +56,11 @@ static struct uclogic_raw_event_hook_test test_events[] = {
+ 	},
+ };
  
-+struct fake_device {
-+	unsigned long quirks;
-+};
++static void fake_work(struct work_struct *work)
++{
 +
- static void hid_test_uclogic_params_cleanup_event_hooks(struct kunit *test)
++}
++
+ static void hid_test_uclogic_exec_event_hook_test(struct kunit *test)
  {
- 	int res, n;
-+	struct hid_device *hdev;
-+	struct fake_device *fake_dev;
  	struct uclogic_params p = {0, };
+@@ -77,6 +82,8 @@ static void hid_test_uclogic_exec_event_hook_test(struct kunit *test)
+ 		KUNIT_ASSERT_NOT_ERR_OR_NULL(test, filter->event);
+ 		memcpy(filter->event, &hook_events[n].event[0], filter->size);
  
--	res = uclogic_params_ugee_v2_init_event_hooks(NULL, &p);
-+	hdev = kunit_kzalloc(test, sizeof(struct hid_device), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, hdev);
++		INIT_WORK(&filter->work, fake_work);
 +
-+	fake_dev = kunit_kzalloc(test, sizeof(struct fake_device), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, fake_dev);
-+
-+	hid_set_drvdata(hdev, fake_dev);
-+
-+	res = uclogic_params_ugee_v2_init_event_hooks(hdev, &p);
- 	KUNIT_ASSERT_EQ(test, res, 0);
+ 		list_add_tail(&filter->list, &p.event_hooks->list);
+ 	}
  
- 	/* Check that the function can be called repeatedly */
 -- 
 2.42.0
 
