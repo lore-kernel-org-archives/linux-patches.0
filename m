@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B6828DB1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3B12C861
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYDMq4te"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2350AC433CB;
-	Wed, 15 Nov 2023 19:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBLl9yQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7BCC433C7;
+	Wed, 15 Nov 2023 19:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076152;
-	bh=DWcnU/2iv3jXYELSkyg2P1uMBXN7F/zfXNO5rp9JrQY=;
+	s=korg; t=1700076153;
+	bh=1na7GySfM8jsCaxUMklTK7M0+m5TeIA2p57BaDcbjDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CYDMq4te7dyAX/u82jmHUF3r176R+wMvAaHI0YOzcX1UxQHtgMEu9VySqNUr7qnJK
-	 fWiiBuF4lT5CJK2YH5d6bIuYwxGwe5ve94sSRWSHrVsel0WjpkWhCngL0rlxSm6uwe
-	 UkgsaD788IyIefePqJirX+AjUYE7IknFD/5vEgUQ=
+	b=QBLl9yQmtpkvTyx35QAomq71AWKm22rqygFJ77m4KJukwirERZJhoqx/r8wK35BqP
+	 qSn9vBuQ07blrGLwzBCzjNwmUQ0e/6qw/LImzwH0sbgLhbSougzJdSKmWGx1ZuVZdb
+	 suHYHw5hBv8N7CwHCk55gBMjdVQJsSHD8L0WwmJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Kumar Singh <quic_adisi@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 106/550] wifi: ath11k: fix Tx power value during active CAC
-Date: Wed, 15 Nov 2023 14:11:30 -0500
-Message-ID: <20231115191608.054425202@linuxfoundation.org>
+Subject: [PATCH 6.5 107/550] can: dev: can_restart(): dont crash kernel if carrier is OK
+Date: Wed, 15 Nov 2023 14:11:31 -0500
+Message-ID: <20231115191608.120001561@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,51 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Kumar Singh <quic_adisi@quicinc.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 77f1ee6fd8b6e470f721d05a2e269039d5cafcb7 ]
+[ Upstream commit fe5c9940dfd8ba0c73672dddb30acd1b7a11d4c7 ]
 
-Tx power is fetched from firmware's pdev stats. However, during active
-CAC, firmware does not fill the current Tx power and sends the max
-initialised value filled during firmware init. If host sends this power
-to user space, this is wrong since in certain situations, the Tx power
-could be greater than the max allowed by the regulatory. Hence, host
-should not be fetching the Tx power during an active CAC.
+During testing, I triggered a can_restart() with the netif carrier
+being OK [1]. The BUG_ON, which checks if the carrier is OK, results
+in a fatal kernel crash. This is neither helpful for debugging nor for
+a production system.
 
-Fix this issue by returning -EAGAIN error so that user space knows that there's
-no valid value available.
+[1] The root cause is a race condition in can_restart() which will be
+fixed in the next patch.
 
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+Do not crash the kernel, issue an error message instead, and continue
+restarting the CAN device anyway.
 
-Fixes: 9a2aa68afe3d ("wifi: ath11k: add get_txpower mac ops")
-Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230912051857.2284-4-quic_adisi@quicinc.com
+Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
+Link: https://lore.kernel.org/all/20231005-can-dev-fix-can-restart-v2-1-91b5c1fd922c@pengutronix.de
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/can/dev/dev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 8c77ade49437f..1cc016c5ca44b 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -9042,6 +9042,14 @@ static int ath11k_mac_op_get_txpower(struct ieee80211_hw *hw,
- 	if (ar->state != ATH11K_STATE_ON)
- 		goto err_fallback;
+diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
+index 7f9334a8af500..a5bbdfa9a2693 100644
+--- a/drivers/net/can/dev/dev.c
++++ b/drivers/net/can/dev/dev.c
+@@ -132,7 +132,8 @@ static void can_restart(struct net_device *dev)
+ 	struct can_frame *cf;
+ 	int err;
  
-+	/* Firmware doesn't provide Tx power during CAC hence no need to fetch
-+	 * the stats.
-+	 */
-+	if (test_bit(ATH11K_CAC_RUNNING, &ar->dev_flags)) {
-+		mutex_unlock(&ar->conf_mutex);
-+		return -EAGAIN;
-+	}
-+
- 	req_param.pdev_id = ar->pdev->pdev_id;
- 	req_param.stats_id = WMI_REQUEST_PDEV_STAT;
+-	BUG_ON(netif_carrier_ok(dev));
++	if (netif_carrier_ok(dev))
++		netdev_err(dev, "Attempt to restart for bus-off recovery, but carrier is OK?\n");
  
+ 	/* No synchronization needed because the device is bus-off and
+ 	 * no messages can come in or go out.
 -- 
 2.42.0
 
