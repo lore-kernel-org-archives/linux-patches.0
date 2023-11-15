@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0900E3BB29
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95263BB29
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACTMs2DZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89333C433C8;
-	Wed, 15 Nov 2023 19:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXLzdqr0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A559C433C9;
+	Wed, 15 Nov 2023 19:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076213;
-	bh=HxjaKjdoXLecag+EuJZ2zXTvCKAtoK3nzeo+GCdHVlg=;
+	s=korg; t=1700076215;
+	bh=ktVrPHoqFijnrVRRKieZRL+9TkFrTNF4t5X8NVK9NZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ACTMs2DZGNvfhMcZol8LMdpFOWUYQLF5x2I832bHPjz+8zq3ihklrxeAq/4ZRI7L9
-	 W7OzMh1uO1gTUi9TPi5pkel2zFGwrXQV30AoBlQ95HJXsmmq9IYw4D7rii5b3kSeLs
-	 HeJ7JNaYubpq21UOYZARDyWiXmC6AvDL3EVRL3Uw=
+	b=pXLzdqr0t+gyKAUY2/2EILeg89Z6ykJNfmmDL9n1dvcRSJb4Io5mscmNsUZ4p1hRB
+	 /hudGVTuYmoiicJuw98isSeAbqov6Z+ycdN7SFOwwaRts5NXHlh7OZpd28qdJmkn5y
+	 +/sZCQKCcgLVC/Vw2ArXAZkoE9co3T4Vq4GraKSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 148/550] virtio_net: use u64_stats_t infra to avoid data-races
-Date: Wed, 15 Nov 2023 14:12:12 -0500
-Message-ID: <20231115191610.962983098@linuxfoundation.org>
+Subject: [PATCH 6.5 149/550] net: add DEV_STATS_READ() helper
+Date: Wed, 15 Nov 2023 14:12:13 -0500
+Message-ID: <20231115191611.032943272@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,426 +44,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 61217d8f6360437329af1b16b8bbd9143167718d ]
+[ Upstream commit 0b068c714ca9479d2783cc333fff5bc2d4a6d45c ]
 
-syzbot reported a data-race in virtnet_poll / virtnet_stats [1]
+Companion of DEV_STATS_INC() & DEV_STATS_ADD().
 
-u64_stats_t infra has very nice accessors that must be used
-to avoid potential load-store tearing.
+This is going to be used in the series.
 
-[1]
-BUG: KCSAN: data-race in virtnet_poll / virtnet_stats
+Use it in macsec_get_stats64().
 
-read-write to 0xffff88810271b1a0 of 8 bytes by interrupt on cpu 0:
-virtnet_receive drivers/net/virtio_net.c:2102 [inline]
-virtnet_poll+0x6c8/0xb40 drivers/net/virtio_net.c:2148
-__napi_poll+0x60/0x3b0 net/core/dev.c:6527
-napi_poll net/core/dev.c:6594 [inline]
-net_rx_action+0x32b/0x750 net/core/dev.c:6727
-__do_softirq+0xc1/0x265 kernel/softirq.c:553
-invoke_softirq kernel/softirq.c:427 [inline]
-__irq_exit_rcu kernel/softirq.c:632 [inline]
-irq_exit_rcu+0x3b/0x90 kernel/softirq.c:644
-common_interrupt+0x7f/0x90 arch/x86/kernel/irq.c:247
-asm_common_interrupt+0x26/0x40 arch/x86/include/asm/idtentry.h:636
-__sanitizer_cov_trace_const_cmp8+0x0/0x80 kernel/kcov.c:306
-jbd2_write_access_granted fs/jbd2/transaction.c:1174 [inline]
-jbd2_journal_get_write_access+0x94/0x1c0 fs/jbd2/transaction.c:1239
-__ext4_journal_get_write_access+0x154/0x3f0 fs/ext4/ext4_jbd2.c:241
-ext4_reserve_inode_write+0x14e/0x200 fs/ext4/inode.c:5745
-__ext4_mark_inode_dirty+0x8e/0x440 fs/ext4/inode.c:5919
-ext4_evict_inode+0xaf0/0xdc0 fs/ext4/inode.c:299
-evict+0x1aa/0x410 fs/inode.c:664
-iput_final fs/inode.c:1775 [inline]
-iput+0x42c/0x5b0 fs/inode.c:1801
-do_unlinkat+0x2b9/0x4f0 fs/namei.c:4405
-__do_sys_unlink fs/namei.c:4446 [inline]
-__se_sys_unlink fs/namei.c:4444 [inline]
-__x64_sys_unlink+0x30/0x40 fs/namei.c:4444
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-read to 0xffff88810271b1a0 of 8 bytes by task 2814 on cpu 1:
-virtnet_stats+0x1b3/0x340 drivers/net/virtio_net.c:2564
-dev_get_stats+0x6d/0x860 net/core/dev.c:10511
-rtnl_fill_stats+0x45/0x320 net/core/rtnetlink.c:1261
-rtnl_fill_ifinfo+0xd0e/0x1120 net/core/rtnetlink.c:1867
-rtnl_dump_ifinfo+0x7f9/0xc20 net/core/rtnetlink.c:2240
-netlink_dump+0x390/0x720 net/netlink/af_netlink.c:2266
-netlink_recvmsg+0x425/0x780 net/netlink/af_netlink.c:1992
-sock_recvmsg_nosec net/socket.c:1027 [inline]
-sock_recvmsg net/socket.c:1049 [inline]
-____sys_recvmsg+0x156/0x310 net/socket.c:2760
-___sys_recvmsg net/socket.c:2802 [inline]
-__sys_recvmsg+0x1ea/0x270 net/socket.c:2832
-__do_sys_recvmsg net/socket.c:2842 [inline]
-__se_sys_recvmsg net/socket.c:2839 [inline]
-__x64_sys_recvmsg+0x46/0x50 net/socket.c:2839
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x000000000045c334 -> 0x000000000045c376
-
-Fixes: 3fa2a1df9094 ("virtio-net: per cpu 64 bit stats (v2)")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: ff672b9ffeb3 ("ipvlan: properly track tx_errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 124 ++++++++++++++++++++-------------------
- 1 file changed, 65 insertions(+), 59 deletions(-)
+ drivers/net/macsec.c      | 6 +++---
+ include/linux/netdevice.h | 1 +
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 8e9f4cfe941f6..178d6d0615276 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -80,24 +80,24 @@ struct virtnet_stat_desc {
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 1c60548c1ddde..27deb14d20225 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -3668,9 +3668,9 @@ static void macsec_get_stats64(struct net_device *dev,
  
- struct virtnet_sq_stats {
- 	struct u64_stats_sync syncp;
--	u64 packets;
--	u64 bytes;
--	u64 xdp_tx;
--	u64 xdp_tx_drops;
--	u64 kicks;
--	u64 tx_timeouts;
-+	u64_stats_t packets;
-+	u64_stats_t bytes;
-+	u64_stats_t xdp_tx;
-+	u64_stats_t xdp_tx_drops;
-+	u64_stats_t kicks;
-+	u64_stats_t tx_timeouts;
- };
+ 	dev_fetch_sw_netstats(s, dev->tstats);
  
- struct virtnet_rq_stats {
- 	struct u64_stats_sync syncp;
--	u64 packets;
--	u64 bytes;
--	u64 drops;
--	u64 xdp_packets;
--	u64 xdp_tx;
--	u64 xdp_redirects;
--	u64 xdp_drops;
--	u64 kicks;
-+	u64_stats_t packets;
-+	u64_stats_t bytes;
-+	u64_stats_t drops;
-+	u64_stats_t xdp_packets;
-+	u64_stats_t xdp_tx;
-+	u64_stats_t xdp_redirects;
-+	u64_stats_t xdp_drops;
-+	u64_stats_t kicks;
- };
- 
- #define VIRTNET_SQ_STAT(m)	offsetof(struct virtnet_sq_stats, m)
-@@ -593,8 +593,8 @@ static void free_old_xmit_skbs(struct send_queue *sq, bool in_napi)
- 		return;
- 
- 	u64_stats_update_begin(&sq->stats.syncp);
--	sq->stats.bytes += bytes;
--	sq->stats.packets += packets;
-+	u64_stats_add(&sq->stats.bytes, bytes);
-+	u64_stats_add(&sq->stats.packets, packets);
- 	u64_stats_update_end(&sq->stats.syncp);
+-	s->rx_dropped = atomic_long_read(&dev->stats.__rx_dropped);
+-	s->tx_dropped = atomic_long_read(&dev->stats.__tx_dropped);
+-	s->rx_errors = atomic_long_read(&dev->stats.__rx_errors);
++	s->rx_dropped = DEV_STATS_READ(dev, rx_dropped);
++	s->tx_dropped = DEV_STATS_READ(dev, tx_dropped);
++	s->rx_errors = DEV_STATS_READ(dev, rx_errors);
  }
  
-@@ -793,11 +793,11 @@ static int virtnet_xdp_xmit(struct net_device *dev,
- 	}
- out:
- 	u64_stats_update_begin(&sq->stats.syncp);
--	sq->stats.bytes += bytes;
--	sq->stats.packets += packets;
--	sq->stats.xdp_tx += n;
--	sq->stats.xdp_tx_drops += n - nxmit;
--	sq->stats.kicks += kicks;
-+	u64_stats_add(&sq->stats.bytes, bytes);
-+	u64_stats_add(&sq->stats.packets, packets);
-+	u64_stats_add(&sq->stats.xdp_tx, n);
-+	u64_stats_add(&sq->stats.xdp_tx_drops, n - nxmit);
-+	u64_stats_add(&sq->stats.kicks, kicks);
- 	u64_stats_update_end(&sq->stats.syncp);
+ static int macsec_get_iflink(const struct net_device *dev)
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index b828c7a75be20..48134407b70fd 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -5230,5 +5230,6 @@ extern struct net_device *blackhole_netdev;
+ #define DEV_STATS_INC(DEV, FIELD) atomic_long_inc(&(DEV)->stats.__##FIELD)
+ #define DEV_STATS_ADD(DEV, FIELD, VAL) 	\
+ 		atomic_long_add((VAL), &(DEV)->stats.__##FIELD)
++#define DEV_STATS_READ(DEV, FIELD) atomic_long_read(&(DEV)->stats.__##FIELD)
  
- 	virtnet_xdp_put_sq(vi, sq);
-@@ -829,14 +829,14 @@ static int virtnet_xdp_handler(struct bpf_prog *xdp_prog, struct xdp_buff *xdp,
- 	u32 act;
- 
- 	act = bpf_prog_run_xdp(xdp_prog, xdp);
--	stats->xdp_packets++;
-+	u64_stats_inc(&stats->xdp_packets);
- 
- 	switch (act) {
- 	case XDP_PASS:
- 		return act;
- 
- 	case XDP_TX:
--		stats->xdp_tx++;
-+		u64_stats_inc(&stats->xdp_tx);
- 		xdpf = xdp_convert_buff_to_frame(xdp);
- 		if (unlikely(!xdpf)) {
- 			netdev_dbg(dev, "convert buff to frame failed for xdp\n");
-@@ -854,7 +854,7 @@ static int virtnet_xdp_handler(struct bpf_prog *xdp_prog, struct xdp_buff *xdp,
- 		return act;
- 
- 	case XDP_REDIRECT:
--		stats->xdp_redirects++;
-+		u64_stats_inc(&stats->xdp_redirects);
- 		err = xdp_do_redirect(dev, xdp, xdp_prog);
- 		if (err)
- 			return XDP_DROP;
-@@ -1050,9 +1050,9 @@ static struct sk_buff *receive_small_xdp(struct net_device *dev,
- 	return skb;
- 
- err_xdp:
--	stats->xdp_drops++;
-+	u64_stats_inc(&stats->xdp_drops);
- err:
--	stats->drops++;
-+	u64_stats_inc(&stats->drops);
- 	put_page(page);
- xdp_xmit:
- 	return NULL;
-@@ -1071,7 +1071,7 @@ static struct sk_buff *receive_small(struct net_device *dev,
- 	struct sk_buff *skb;
- 
- 	len -= vi->hdr_len;
--	stats->bytes += len;
-+	u64_stats_add(&stats->bytes, len);
- 
- 	if (unlikely(len > GOOD_PACKET_LEN)) {
- 		pr_debug("%s: rx error: len %u exceeds max size %d\n",
-@@ -1100,7 +1100,7 @@ static struct sk_buff *receive_small(struct net_device *dev,
- 		return skb;
- 
- err:
--	stats->drops++;
-+	u64_stats_inc(&stats->drops);
- 	put_page(page);
- 	return NULL;
- }
-@@ -1116,14 +1116,14 @@ static struct sk_buff *receive_big(struct net_device *dev,
- 	struct sk_buff *skb =
- 		page_to_skb(vi, rq, page, 0, len, PAGE_SIZE, 0);
- 
--	stats->bytes += len - vi->hdr_len;
-+	u64_stats_add(&stats->bytes, len - vi->hdr_len);
- 	if (unlikely(!skb))
- 		goto err;
- 
- 	return skb;
- 
- err:
--	stats->drops++;
-+	u64_stats_inc(&stats->drops);
- 	give_pages(rq, page);
- 	return NULL;
- }
-@@ -1144,7 +1144,7 @@ static void mergeable_buf_free(struct receive_queue *rq, int num_buf,
- 			dev->stats.rx_length_errors++;
- 			break;
- 		}
--		stats->bytes += len;
-+		u64_stats_add(&stats->bytes, len);
- 		page = virt_to_head_page(buf);
- 		put_page(page);
- 	}
-@@ -1254,7 +1254,7 @@ static int virtnet_build_xdp_buff_mrg(struct net_device *dev,
- 			goto err;
- 		}
- 
--		stats->bytes += len;
-+		u64_stats_add(&stats->bytes, len);
- 		page = virt_to_head_page(buf);
- 		offset = buf - page_address(page);
- 
-@@ -1418,8 +1418,8 @@ static struct sk_buff *receive_mergeable_xdp(struct net_device *dev,
- 	put_page(page);
- 	mergeable_buf_free(rq, num_buf, dev, stats);
- 
--	stats->xdp_drops++;
--	stats->drops++;
-+	u64_stats_inc(&stats->xdp_drops);
-+	u64_stats_inc(&stats->drops);
- 	return NULL;
- }
- 
-@@ -1443,7 +1443,7 @@ static struct sk_buff *receive_mergeable(struct net_device *dev,
- 	unsigned int room = SKB_DATA_ALIGN(headroom + tailroom);
- 
- 	head_skb = NULL;
--	stats->bytes += len - vi->hdr_len;
-+	u64_stats_add(&stats->bytes, len - vi->hdr_len);
- 
- 	if (unlikely(len > truesize - room)) {
- 		pr_debug("%s: rx error: len %u exceeds truesize %lu\n",
-@@ -1484,7 +1484,7 @@ static struct sk_buff *receive_mergeable(struct net_device *dev,
- 			goto err_buf;
- 		}
- 
--		stats->bytes += len;
-+		u64_stats_add(&stats->bytes, len);
- 		page = virt_to_head_page(buf);
- 
- 		truesize = mergeable_ctx_to_truesize(ctx);
-@@ -1536,7 +1536,7 @@ static struct sk_buff *receive_mergeable(struct net_device *dev,
- 	mergeable_buf_free(rq, num_buf, dev, stats);
- 
- err_buf:
--	stats->drops++;
-+	u64_stats_inc(&stats->drops);
- 	dev_kfree_skb(head_skb);
- 	return NULL;
- }
-@@ -1797,7 +1797,7 @@ static bool try_fill_recv(struct virtnet_info *vi, struct receive_queue *rq,
- 		unsigned long flags;
- 
- 		flags = u64_stats_update_begin_irqsave(&rq->stats.syncp);
--		rq->stats.kicks++;
-+		u64_stats_inc(&rq->stats.kicks);
- 		u64_stats_update_end_irqrestore(&rq->stats.syncp, flags);
- 	}
- 
-@@ -1877,22 +1877,23 @@ static int virtnet_receive(struct receive_queue *rq, int budget,
- 	struct virtnet_info *vi = rq->vq->vdev->priv;
- 	struct virtnet_rq_stats stats = {};
- 	unsigned int len;
-+	int packets = 0;
- 	void *buf;
- 	int i;
- 
- 	if (!vi->big_packets || vi->mergeable_rx_bufs) {
- 		void *ctx;
- 
--		while (stats.packets < budget &&
-+		while (packets < budget &&
- 		       (buf = virtqueue_get_buf_ctx(rq->vq, &len, &ctx))) {
- 			receive_buf(vi, rq, buf, len, ctx, xdp_xmit, &stats);
--			stats.packets++;
-+			packets++;
- 		}
- 	} else {
--		while (stats.packets < budget &&
-+		while (packets < budget &&
- 		       (buf = virtqueue_get_buf(rq->vq, &len)) != NULL) {
- 			receive_buf(vi, rq, buf, len, NULL, xdp_xmit, &stats);
--			stats.packets++;
-+			packets++;
- 		}
- 	}
- 
-@@ -1905,17 +1906,19 @@ static int virtnet_receive(struct receive_queue *rq, int budget,
- 		}
- 	}
- 
-+	u64_stats_set(&stats.packets, packets);
- 	u64_stats_update_begin(&rq->stats.syncp);
- 	for (i = 0; i < VIRTNET_RQ_STATS_LEN; i++) {
- 		size_t offset = virtnet_rq_stats_desc[i].offset;
--		u64 *item;
-+		u64_stats_t *item, *src;
- 
--		item = (u64 *)((u8 *)&rq->stats + offset);
--		*item += *(u64 *)((u8 *)&stats + offset);
-+		item = (u64_stats_t *)((u8 *)&rq->stats + offset);
-+		src = (u64_stats_t *)((u8 *)&stats + offset);
-+		u64_stats_add(item, u64_stats_read(src));
- 	}
- 	u64_stats_update_end(&rq->stats.syncp);
- 
--	return stats.packets;
-+	return packets;
- }
- 
- static void virtnet_poll_cleantx(struct receive_queue *rq)
-@@ -1970,7 +1973,7 @@ static int virtnet_poll(struct napi_struct *napi, int budget)
- 		sq = virtnet_xdp_get_sq(vi);
- 		if (virtqueue_kick_prepare(sq->vq) && virtqueue_notify(sq->vq)) {
- 			u64_stats_update_begin(&sq->stats.syncp);
--			sq->stats.kicks++;
-+			u64_stats_inc(&sq->stats.kicks);
- 			u64_stats_update_end(&sq->stats.syncp);
- 		}
- 		virtnet_xdp_put_sq(vi, sq);
-@@ -2182,7 +2185,7 @@ static netdev_tx_t start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	if (kick || netif_xmit_stopped(txq)) {
- 		if (virtqueue_kick_prepare(sq->vq) && virtqueue_notify(sq->vq)) {
- 			u64_stats_update_begin(&sq->stats.syncp);
--			sq->stats.kicks++;
-+			u64_stats_inc(&sq->stats.kicks);
- 			u64_stats_update_end(&sq->stats.syncp);
- 		}
- 	}
-@@ -2365,16 +2368,16 @@ static void virtnet_stats(struct net_device *dev,
- 
- 		do {
- 			start = u64_stats_fetch_begin(&sq->stats.syncp);
--			tpackets = sq->stats.packets;
--			tbytes   = sq->stats.bytes;
--			terrors  = sq->stats.tx_timeouts;
-+			tpackets = u64_stats_read(&sq->stats.packets);
-+			tbytes   = u64_stats_read(&sq->stats.bytes);
-+			terrors  = u64_stats_read(&sq->stats.tx_timeouts);
- 		} while (u64_stats_fetch_retry(&sq->stats.syncp, start));
- 
- 		do {
- 			start = u64_stats_fetch_begin(&rq->stats.syncp);
--			rpackets = rq->stats.packets;
--			rbytes   = rq->stats.bytes;
--			rdrops   = rq->stats.drops;
-+			rpackets = u64_stats_read(&rq->stats.packets);
-+			rbytes   = u64_stats_read(&rq->stats.bytes);
-+			rdrops   = u64_stats_read(&rq->stats.drops);
- 		} while (u64_stats_fetch_retry(&rq->stats.syncp, start));
- 
- 		tot->rx_packets += rpackets;
-@@ -2976,17 +2979,19 @@ static void virtnet_get_ethtool_stats(struct net_device *dev,
- 	struct virtnet_info *vi = netdev_priv(dev);
- 	unsigned int idx = 0, start, i, j;
- 	const u8 *stats_base;
-+	const u64_stats_t *p;
- 	size_t offset;
- 
- 	for (i = 0; i < vi->curr_queue_pairs; i++) {
- 		struct receive_queue *rq = &vi->rq[i];
- 
--		stats_base = (u8 *)&rq->stats;
-+		stats_base = (const u8 *)&rq->stats;
- 		do {
- 			start = u64_stats_fetch_begin(&rq->stats.syncp);
- 			for (j = 0; j < VIRTNET_RQ_STATS_LEN; j++) {
- 				offset = virtnet_rq_stats_desc[j].offset;
--				data[idx + j] = *(u64 *)(stats_base + offset);
-+				p = (const u64_stats_t *)(stats_base + offset);
-+				data[idx + j] = u64_stats_read(p);
- 			}
- 		} while (u64_stats_fetch_retry(&rq->stats.syncp, start));
- 		idx += VIRTNET_RQ_STATS_LEN;
-@@ -2995,12 +3000,13 @@ static void virtnet_get_ethtool_stats(struct net_device *dev,
- 	for (i = 0; i < vi->curr_queue_pairs; i++) {
- 		struct send_queue *sq = &vi->sq[i];
- 
--		stats_base = (u8 *)&sq->stats;
-+		stats_base = (const u8 *)&sq->stats;
- 		do {
- 			start = u64_stats_fetch_begin(&sq->stats.syncp);
- 			for (j = 0; j < VIRTNET_SQ_STATS_LEN; j++) {
- 				offset = virtnet_sq_stats_desc[j].offset;
--				data[idx + j] = *(u64 *)(stats_base + offset);
-+				p = (const u64_stats_t *)(stats_base + offset);
-+				data[idx + j] = u64_stats_read(p);
- 			}
- 		} while (u64_stats_fetch_retry(&sq->stats.syncp, start));
- 		idx += VIRTNET_SQ_STATS_LEN;
-@@ -3550,7 +3556,7 @@ static void virtnet_tx_timeout(struct net_device *dev, unsigned int txqueue)
- 	struct netdev_queue *txq = netdev_get_tx_queue(dev, txqueue);
- 
- 	u64_stats_update_begin(&sq->stats.syncp);
--	sq->stats.tx_timeouts++;
-+	u64_stats_inc(&sq->stats.tx_timeouts);
- 	u64_stats_update_end(&sq->stats.syncp);
- 
- 	netdev_err(dev, "TX timeout on queue: %u, sq: %s, vq: 0x%x, name: %s, %u usecs ago\n",
+ #endif	/* _LINUX_NETDEVICE_H */
 -- 
 2.42.0
 
