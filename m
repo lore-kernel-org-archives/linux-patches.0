@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108DD364C8
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F181B3A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TY6l2f54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41ABC433C7;
-	Wed, 15 Nov 2023 19:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEQAzEk6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1766C433C7;
+	Wed, 15 Nov 2023 19:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077829;
-	bh=e0bbPI4u0TFb93d3EJUd5dRJL5Y+FWGNgTZUaA7B+1c=;
+	s=korg; t=1700077831;
+	bh=T65deNt+a3YpCeac5Dk69u0igzVuqECLBdgkiFLxnRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TY6l2f548zqFKnWYD0xDchbeRbwFNrs5VXxhyqFtUrC2Y0kbaRjLPoYyI8aQNcKkT
-	 /+/kgswwHk0skZaugTwbIxLeI5I8uygoqGcEZdY+gEaDznoJnXE1m71bitx4hHTSa+
-	 9kYq0ATByHrJD89jhjjVQL2I1FKJHxpKIQon+URU=
+	b=eEQAzEk6HrgIWMqzpdZan5iHVcMKGI+RfExmGhpuS3YJMsh0q5NcU6WI+81SxVk+C
+	 n9rqMVWY3quCLKGlmlZ1duFUPrAq3xuGTE5fyH8P+hx3frKSmkmYSd+3fK01Zp3pKb
+	 NcX0hwgyRHPc66QBoMTIsULaJyfbNjzKvCleOiEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Bharat Bhushan <bbhushan2@marvell.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 513/603] media: ov5640: Fix a memory leak when ov5640_probe fails
-Date: Wed, 15 Nov 2023 14:17:38 -0500
-Message-ID: <20231115191647.599944033@linuxfoundation.org>
+Subject: [PATCH 6.6 539/603] watchdog: marvell_gti_wdt: Fix error code in probe()
+Date: Wed, 15 Nov 2023 14:18:04 -0500
+Message-ID: <20231115191649.124204854@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,54 +44,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 20290feaaeb76cc719921aad275ccb18662a7c3a ]
+[ Upstream commit 4b2b39f9395bc66c616d8d5a83642950fc3719b1 ]
 
-sensor->ctrls.handler is initialized in ov5640_init_controls(),
-so when the sensor is not connected and ov5640_sensor_resume()
-fails, sensor->ctrls.handler should be released, otherwise a
-memory leak will be detected:
+This error path accidentally returns success.  Return -EINVAL instead.
 
-unreferenced object 0xc674ca80 (size 64):
-   comm "swapper/0", pid 1, jiffies 4294938337 (age 204.880s)
-   hex dump (first 32 bytes):
-     80 55 75 c6 80 54 75 c6 00 55 75 c6 80 52 75 c6 .Uu..Tu..Uu..Ru.
-     00 53 75 c6 00 00 00 00 00 00 00 00 00 00 00 00 .Su..........
-
-Fixes: 85644a9b37ec ("media: ov5640: Use runtime PM")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: ef9e7fe2c890 ("Watchdog: Add marvell GTI watchdog driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Bharat Bhushan <bbhushan2@marvell.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/af326fd7-ac71-43a1-b7de-81779b61d242@moroto.mountain
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5640.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/watchdog/marvell_gti_wdt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
-index 1c9cda1e7df5c..40532f7bcabea 100644
---- a/drivers/media/i2c/ov5640.c
-+++ b/drivers/media/i2c/ov5640.c
-@@ -3928,7 +3928,7 @@ static int ov5640_probe(struct i2c_client *client)
- 	ret = ov5640_sensor_resume(dev);
- 	if (ret) {
- 		dev_err(dev, "failed to power on\n");
--		goto entity_cleanup;
-+		goto free_ctrls;
- 	}
+diff --git a/drivers/watchdog/marvell_gti_wdt.c b/drivers/watchdog/marvell_gti_wdt.c
+index d7eb8286e11ec..1ec1e014ba831 100644
+--- a/drivers/watchdog/marvell_gti_wdt.c
++++ b/drivers/watchdog/marvell_gti_wdt.c
+@@ -271,7 +271,7 @@ static int gti_wdt_probe(struct platform_device *pdev)
+ 				   &wdt_idx);
+ 	if (!err) {
+ 		if (wdt_idx >= priv->data->gti_num_timers)
+-			return dev_err_probe(&pdev->dev, err,
++			return dev_err_probe(&pdev->dev, -EINVAL,
+ 				"GTI wdog timer index not valid");
  
- 	pm_runtime_set_active(dev);
-@@ -3953,8 +3953,9 @@ static int ov5640_probe(struct i2c_client *client)
- err_pm_runtime:
- 	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
--	v4l2_ctrl_handler_free(&sensor->ctrls.handler);
- 	ov5640_sensor_suspend(dev);
-+free_ctrls:
-+	v4l2_ctrl_handler_free(&sensor->ctrls.handler);
- entity_cleanup:
- 	media_entity_cleanup(&sensor->sd.entity);
- 	mutex_destroy(&sensor->lock);
+ 		priv->wdt_timer_idx = wdt_idx;
 -- 
 2.42.0
 
