@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1258F3DBA7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9221C28368
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBnlPMXK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40BCC433CB;
-	Wed, 15 Nov 2023 20:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+OpMMrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D988C433CC;
+	Wed, 15 Nov 2023 20:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078456;
-	bh=9oGKbJ38Exxwmf5YvDNYxEWXvEMHc/PpbAL60qRK0ks=;
+	s=korg; t=1700078458;
+	bh=nDgYIHC9pjtNXL9N9yyNl/2JY3Kjf5cbxxNhpCHwTZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gBnlPMXKN/M6W7Spb88CV3dOxiKaM1aMTp4hdL+8bOj0c7eE5Lyffqf2E/SgtL1sN
-	 03phOG5N7QV4ycFUJNKgarW2xXRah2Y/0xOgivVF9LifsbONJpQEp1rBj80fruraSF
-	 2F0q9W2xZpSj7+POi6vDdmGjV+dF3pjmXui/4VRE=
+	b=a+OpMMrNh2o1s2ofeA6pMLuOIHhowvnvJxQkK1GvncB/Nf+bCdVrtwSaKTaX5ZMTc
+	 /PVsO6LmUjGZ8T0V8Dbj1ddTxhISScWVZj8N6/Y2mKkUfNneLCMa6U1nQMmS1vvquK
+	 Bgh1hKKlgqRsauKnAh4wPapnpcZ2uL9iSG1Pof68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 298/379] powerpc/imc-pmu: Use the correct spinlock initializer.
-Date: Wed, 15 Nov 2023 14:26:13 -0500
-Message-ID: <20231115192702.772841816@linuxfoundation.org>
+Subject: [PATCH 6.1 326/379] media: cedrus: Fix clock/reset sequence
+Date: Wed, 15 Nov 2023 14:26:41 -0500
+Message-ID: <20231115192704.437240658@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,38 +43,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 007240d59c11f87ac4f6cfc6a1d116630b6b634c ]
+[ Upstream commit 36fe515c1a3cd5eac148e8a591a82108d92d5522 ]
 
-The macro __SPIN_LOCK_INITIALIZER() is implementation specific. Users
-that desire to initialize a spinlock in a struct must use
-__SPIN_LOCK_UNLOCKED().
+According to H6 user manual, resets should always be de-asserted before
+clocks are enabled. This is also consistent with vendor driver.
 
-Use __SPIN_LOCK_UNLOCKED() for the spinlock_t in imc_global_refc.
-
-Fixes: 76d588dddc459 ("powerpc/imc-pmu: Fix use of mutex in IRQs disabled section")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230309134831.Nz12nqsU@linutronix.de
+Fixes: d5aecd289bab ("media: cedrus: Implement runtime PM")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Acked-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/imc-pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../staging/media/sunxi/cedrus/cedrus_hw.c    | 24 +++++++++----------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/arch/powerpc/perf/imc-pmu.c b/arch/powerpc/perf/imc-pmu.c
-index 9d229ef7f86ef..ada817c49b722 100644
---- a/arch/powerpc/perf/imc-pmu.c
-+++ b/arch/powerpc/perf/imc-pmu.c
-@@ -51,7 +51,7 @@ static int trace_imc_mem_size;
-  * core and trace-imc
-  */
- static struct imc_pmu_ref imc_global_refc = {
--	.lock = __SPIN_LOCK_INITIALIZER(imc_global_refc.lock),
-+	.lock = __SPIN_LOCK_UNLOCKED(imc_global_refc.lock),
- 	.id = 0,
- 	.refc = 0,
- };
+diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_hw.c b/drivers/staging/media/sunxi/cedrus/cedrus_hw.c
+index a6470a89851e3..fe5fbf6cf6314 100644
+--- a/drivers/staging/media/sunxi/cedrus/cedrus_hw.c
++++ b/drivers/staging/media/sunxi/cedrus/cedrus_hw.c
+@@ -172,12 +172,12 @@ int cedrus_hw_suspend(struct device *device)
+ {
+ 	struct cedrus_dev *dev = dev_get_drvdata(device);
+ 
+-	reset_control_assert(dev->rstc);
+-
+ 	clk_disable_unprepare(dev->ram_clk);
+ 	clk_disable_unprepare(dev->mod_clk);
+ 	clk_disable_unprepare(dev->ahb_clk);
+ 
++	reset_control_assert(dev->rstc);
++
+ 	return 0;
+ }
+ 
+@@ -186,11 +186,18 @@ int cedrus_hw_resume(struct device *device)
+ 	struct cedrus_dev *dev = dev_get_drvdata(device);
+ 	int ret;
+ 
++	ret = reset_control_reset(dev->rstc);
++	if (ret) {
++		dev_err(dev->dev, "Failed to apply reset\n");
++
++		return ret;
++	}
++
+ 	ret = clk_prepare_enable(dev->ahb_clk);
+ 	if (ret) {
+ 		dev_err(dev->dev, "Failed to enable AHB clock\n");
+ 
+-		return ret;
++		goto err_rst;
+ 	}
+ 
+ 	ret = clk_prepare_enable(dev->mod_clk);
+@@ -207,21 +214,14 @@ int cedrus_hw_resume(struct device *device)
+ 		goto err_mod_clk;
+ 	}
+ 
+-	ret = reset_control_reset(dev->rstc);
+-	if (ret) {
+-		dev_err(dev->dev, "Failed to apply reset\n");
+-
+-		goto err_ram_clk;
+-	}
+-
+ 	return 0;
+ 
+-err_ram_clk:
+-	clk_disable_unprepare(dev->ram_clk);
+ err_mod_clk:
+ 	clk_disable_unprepare(dev->mod_clk);
+ err_ahb_clk:
+ 	clk_disable_unprepare(dev->ahb_clk);
++err_rst:
++	reset_control_assert(dev->rstc);
+ 
+ 	return ret;
+ }
 -- 
 2.42.0
 
