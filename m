@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9193DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19023DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMOCwQNH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF90C433C9;
-	Wed, 15 Nov 2023 20:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0NICBAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63549C433C7;
+	Wed, 15 Nov 2023 20:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078516;
-	bh=M0FH9nc/UesJ2/L8HucZuZevfn9R5GrqCj4Ae7wiZf0=;
+	s=korg; t=1700078517;
+	bh=gwfqZk2T88N8R3wssiTxx0MFvX7MajHLW566kFFzgC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMOCwQNHcCPtMTWfxjhFiygzMvZqBLMsVl2htLaHjATygab6sUt0eZBELlqI0cc7l
-	 fj2U106oc8hLIXQjogImXe//cbltM8PvPVRFWyUZwqxsyCIgRVtZrnozvYyzGCg7aM
-	 frEYqVdb8m8p4It7Crqfo+5ouF4aj/pfie2hohVE=
+	b=O0NICBAu4qVu9hsiUw8ukNH9JvfWEAEmwVkEARYkcVf9Od9a/PoEGPtQuKjvaDSEo
+	 VsBLDfbLSGPlJW7DTqYJgpoeedpnbeZJJSQEuiaBZLjRlqe8iRdEzxUchKuH1WoMD3
+	 ljvjNJ7LFuxg+Lq3GRX4YZC5yJq/l6qqHR5q6ig4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 370/379] ASoC: dapm: fix clock get name
-Date: Wed, 15 Nov 2023 14:27:25 -0500
-Message-ID: <20231115192707.048220397@linuxfoundation.org>
+Subject: [PATCH 6.1 371/379] spi: spi-zynq-qspi: add spi-mem to driver kconfig dependencies
+Date: Wed, 15 Nov 2023 14:27:26 -0500
+Message-ID: <20231115192707.107658315@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,35 +43,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
 
-[ Upstream commit 4bdcbc31ad2112385ad525b28972c45015e6ad70 ]
+[ Upstream commit c2ded280a4b1b7bd93e53670528504be08d24967 ]
 
-The name currently used to get the clock includes the dapm prefix.
-It should use the name as provided to the widget, without the prefix.
+Zynq QSPI driver has been converted to use spi-mem framework so
+add spi-mem to driver kconfig dependencies.
 
-Fixes: 3caac759681e ("ASoC: soc-dapm.c: fixup snd_soc_dapm_new_control_unlocked() error handling")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20231106103712.703962-1-jbrunet@baylibre.com
+Fixes: 67dca5e580f1 ("spi: spi-mem: Add support for Zynq QSPI controller")
+Signed-off-by: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/1699037031-702858-1-git-send-email-radhey.shyam.pandey@amd.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-dapm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/soc-dapm.c b/sound/soc/soc-dapm.c
-index 879cf1be67a9f..6eb8c6cb5e673 100644
---- a/sound/soc/soc-dapm.c
-+++ b/sound/soc/soc-dapm.c
-@@ -3670,7 +3670,7 @@ snd_soc_dapm_new_control_unlocked(struct snd_soc_dapm_context *dapm,
- 		dapm_pinctrl_event(w, NULL, SND_SOC_DAPM_POST_PMD);
- 		break;
- 	case snd_soc_dapm_clock_supply:
--		w->clk = devm_clk_get(dapm->dev, w->name);
-+		w->clk = devm_clk_get(dapm->dev, widget->name);
- 		if (IS_ERR(w->clk)) {
- 			ret = PTR_ERR(w->clk);
- 			goto request_failed;
+diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
+index d4b969e68c314..946e2186d2448 100644
+--- a/drivers/spi/Kconfig
++++ b/drivers/spi/Kconfig
+@@ -1093,6 +1093,7 @@ config SPI_XTENSA_XTFPGA
+ config SPI_ZYNQ_QSPI
+ 	tristate "Xilinx Zynq QSPI controller"
+ 	depends on ARCH_ZYNQ || COMPILE_TEST
++	depends on SPI_MEM
+ 	help
+ 	  This enables support for the Zynq Quad SPI controller
+ 	  in master mode.
 -- 
 2.42.0
 
