@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF83731725
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F24E31725
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdIGBjaX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3A2C433C8;
-	Wed, 15 Nov 2023 19:39:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqqcOVES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6C5C433C8;
+	Wed, 15 Nov 2023 19:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077171;
-	bh=U055PtNhTu723KcX9CRT8ANQYa1Foon/d9Dr128tOJA=;
+	s=korg; t=1700077173;
+	bh=4yjZ4+soSw8kyk85n25XcG9oisVGrFweuzmgqSHtzMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YdIGBjaX0l1q59kxADySD68ir9KaU9F8NdFswrU0U3/myBbMaZXgWk/1AVgQv4/Gv
-	 v8KarTdQsGrR6YwMFRWChCt2HU/B3+2sdnOFAS7oAprKrNcDiaPhqrOwkwqv8hLqfB
-	 bM5n80t8DQ3OQsQLtfV8vxxe2/v2OHR4j0Aow7Bg=
+	b=JqqcOVESt/GjnVZYXpxiAnZbniHoxQ/ojb26FrHl4G2hd8K/QCaTqJG/Y7JxRAkXC
+	 GOkZAN/qXYYwsNqcPC4b+e1n1Z/5T3j93zI4YHUW3PSlWTZ+O7GNZ3fMShllvJBX5n
+	 hoy3bcwY0z9kXtz1rTc2EZYVDjvZRu9QNhdVK95g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Geliang Tang <geliang.tang@suse.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.5 544/550] selftests: mptcp: fix wait_rm_addr/sf parameters
-Date: Wed, 15 Nov 2023 14:18:48 -0500
-Message-ID: <20231115191638.626945001@linuxfoundation.org>
+	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 148/603] Bluetooth: ISO: Pass BIG encryption info through QoS
+Date: Wed, 15 Nov 2023 14:11:33 -0500
+Message-ID: <20231115191623.432954621@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,83 +38,284 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geliang Tang <geliang.tang@suse.com>
+From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
 
-commit 9168ea02b898d3dde98b51e4bd3fb082bd438dab upstream.
+[ Upstream commit 1d11d70d1f6b23e7d3fc00396c17b90b876162a4 ]
 
-The second input parameter of 'wait_rm_addr/sf $1 1' is misused. If it's
-1, wait_rm_addr/sf will never break, and will loop ten times, then
-'wait_rm_addr/sf' equals to 'sleep 1'. This delay time is too long,
-which can sometimes make the tests fail.
+This enables a broadcast sink to be informed if the PA
+it has synced with is associated with an encrypted BIG,
+by retrieving the socket QoS and checking the encryption
+field.
 
-A better way to use wait_rm_addr/sf is to use rm_addr/sf_count to obtain
-the current value, and then pass into wait_rm_addr/sf.
+After PA sync has been successfully established and the
+first BIGInfo advertising report is received, a new hcon
+is added and notified to the ISO layer. The ISO layer
+sets the encryption field of the socket and hcon QoS
+according to the encryption parameter of the BIGInfo
+advertising report event.
 
-Fixes: 4369c198e599 ("selftests: mptcp: test userspace pm out of transfer")
-Cc: stable@vger.kernel.org
-Suggested-by: Matthieu Baerts <matttbe@kernel.org>
-Reviewed-by: Matthieu Baerts <matttbe@kernel.org>
-Signed-off-by: Geliang Tang <geliang.tang@suse.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20231025-send-net-next-20231025-v1-2-db8f25f798eb@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+After that, the userspace is woken up, and the QoS of the
+new PA sync socket can be read, to inspect the encryption
+field and follow up accordingly.
+
+Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 181a42edddf5 ("Bluetooth: Make handle of hci_conn be unique")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ include/net/bluetooth/hci.h      |  3 ++
+ include/net/bluetooth/hci_core.h | 25 ++++++++++++++-
+ net/bluetooth/hci_conn.c         |  1 +
+ net/bluetooth/hci_event.c        | 54 +++++++++++++++++++++++---------
+ net/bluetooth/iso.c              | 19 ++++++++---
+ 5 files changed, 82 insertions(+), 20 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3259,6 +3259,7 @@ userspace_pm_rm_sf_addr_ns1()
- 	local addr=$1
- 	local id=$2
- 	local tk sp da dp
-+	local cnt_addr cnt_sf
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 87d92accc26ea..bdee5d649cc61 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -1,6 +1,7 @@
+ /*
+    BlueZ - Bluetooth protocol stack for Linux
+    Copyright (C) 2000-2001 Qualcomm Incorporated
++   Copyright 2023 NXP
  
- 	tk=$(grep "type:1," "$evts_ns1" |
- 	     sed -n 's/.*\(token:\)\([[:digit:]]*\).*$/\2/p;q')
-@@ -3268,11 +3269,13 @@ userspace_pm_rm_sf_addr_ns1()
- 	     sed -n 's/.*\(daddr6:\)\([0-9a-f:.]*\).*$/\2/p;q')
- 	dp=$(grep "type:10" "$evts_ns1" |
- 	     sed -n 's/.*\(dport:\)\([[:digit:]]*\).*$/\2/p;q')
-+	cnt_addr=$(rm_addr_count ${ns1})
-+	cnt_sf=$(rm_sf_count ${ns1})
- 	ip netns exec $ns1 ./pm_nl_ctl rem token $tk id $id
- 	ip netns exec $ns1 ./pm_nl_ctl dsf lip "::ffff:$addr" \
- 				lport $sp rip $da rport $dp token $tk
--	wait_rm_addr $ns1 1
--	wait_rm_sf $ns1 1
-+	wait_rm_addr $ns1 "${cnt_addr}"
-+	wait_rm_sf $ns1 "${cnt_sf}"
+    Written 2000,2001 by Maxim Krasnyansky <maxk@qualcomm.com>
+ 
+@@ -673,6 +674,8 @@ enum {
+ #define HCI_TX_POWER_INVALID	127
+ #define HCI_RSSI_INVALID	127
+ 
++#define HCI_SYNC_HANDLE_INVALID	0xffff
++
+ #define HCI_ROLE_MASTER		0x00
+ #define HCI_ROLE_SLAVE		0x01
+ 
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index c33348ba1657e..f36c1fd5d64ed 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1314,7 +1314,7 @@ static inline struct hci_conn *hci_conn_hash_lookup_big_any_dst(struct hci_dev *
  }
  
- userspace_pm_add_sf()
-@@ -3294,17 +3297,20 @@ userspace_pm_rm_sf_addr_ns2()
- 	local addr=$1
- 	local id=$2
- 	local tk da dp sp
-+	local cnt_addr cnt_sf
- 
- 	tk=$(sed -n 's/.*\(token:\)\([[:digit:]]*\).*$/\2/p;q' "$evts_ns2")
- 	da=$(sed -n 's/.*\(daddr4:\)\([0-9.]*\).*$/\2/p;q' "$evts_ns2")
- 	dp=$(sed -n 's/.*\(dport:\)\([[:digit:]]*\).*$/\2/p;q' "$evts_ns2")
- 	sp=$(grep "type:10" "$evts_ns2" |
- 	     sed -n 's/.*\(sport:\)\([[:digit:]]*\).*$/\2/p;q')
-+	cnt_addr=$(rm_addr_count ${ns2})
-+	cnt_sf=$(rm_sf_count ${ns2})
- 	ip netns exec $ns2 ./pm_nl_ctl rem token $tk id $id
- 	ip netns exec $ns2 ./pm_nl_ctl dsf lip $addr lport $sp \
- 				rip $da rport $dp token $tk
--	wait_rm_addr $ns2 1
--	wait_rm_sf $ns2 1
-+	wait_rm_addr $ns2 "${cnt_addr}"
-+	wait_rm_sf $ns2 "${cnt_sf}"
+ static inline struct hci_conn *
+-hci_conn_hash_lookup_pa_sync(struct hci_dev *hdev, __u8 big)
++hci_conn_hash_lookup_pa_sync_big_handle(struct hci_dev *hdev, __u8 big)
+ {
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+@@ -1336,6 +1336,29 @@ hci_conn_hash_lookup_pa_sync(struct hci_dev *hdev, __u8 big)
+ 	return NULL;
  }
  
- userspace_tests()
++static inline struct hci_conn *
++hci_conn_hash_lookup_pa_sync_handle(struct hci_dev *hdev, __u16 sync_handle)
++{
++	struct hci_conn_hash *h = &hdev->conn_hash;
++	struct hci_conn  *c;
++
++	rcu_read_lock();
++
++	list_for_each_entry_rcu(c, &h->list, list) {
++		if (c->type != ISO_LINK ||
++			!test_bit(HCI_CONN_PA_SYNC, &c->flags))
++			continue;
++
++		if (c->sync_handle == sync_handle) {
++			rcu_read_unlock();
++			return c;
++		}
++	}
++	rcu_read_unlock();
++
++	return NULL;
++}
++
+ static inline struct hci_conn *hci_conn_hash_lookup_state(struct hci_dev *hdev,
+ 							__u8 type, __u16 state)
+ {
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 73470cc3518a7..c476154f3a5d2 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -973,6 +973,7 @@ struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 	conn->rssi = HCI_RSSI_INVALID;
+ 	conn->tx_power = HCI_TX_POWER_INVALID;
+ 	conn->max_tx_power = HCI_TX_POWER_INVALID;
++	conn->sync_handle = HCI_SYNC_HANDLE_INVALID;
+ 
+ 	set_bit(HCI_CONN_POWER_SAVE, &conn->flags);
+ 	conn->disc_timeout = HCI_DISCONN_TIMEOUT;
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 1e1c9147356c3..9b34c9f8ee02c 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -6603,7 +6603,7 @@ static void hci_le_pa_sync_estabilished_evt(struct hci_dev *hdev, void *data,
+ 	struct hci_ev_le_pa_sync_established *ev = data;
+ 	int mask = hdev->link_mode;
+ 	__u8 flags = 0;
+-	struct hci_conn *bis;
++	struct hci_conn *pa_sync;
+ 
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
+ 
+@@ -6620,20 +6620,19 @@ static void hci_le_pa_sync_estabilished_evt(struct hci_dev *hdev, void *data,
+ 	if (!(flags & HCI_PROTO_DEFER))
+ 		goto unlock;
+ 
+-	/* Add connection to indicate the PA sync event */
+-	bis = hci_conn_add(hdev, ISO_LINK, BDADDR_ANY,
+-			   HCI_ROLE_SLAVE);
++	if (ev->status) {
++		/* Add connection to indicate the failed PA sync event */
++		pa_sync = hci_conn_add(hdev, ISO_LINK, BDADDR_ANY,
++				       HCI_ROLE_SLAVE);
+ 
+-	if (!bis)
+-		goto unlock;
++		if (!pa_sync)
++			goto unlock;
+ 
+-	if (ev->status)
+-		set_bit(HCI_CONN_PA_SYNC_FAILED, &bis->flags);
+-	else
+-		set_bit(HCI_CONN_PA_SYNC, &bis->flags);
++		set_bit(HCI_CONN_PA_SYNC_FAILED, &pa_sync->flags);
+ 
+-	/* Notify connection to iso layer */
+-	hci_connect_cfm(bis, ev->status);
++		/* Notify iso layer */
++		hci_connect_cfm(pa_sync, ev->status);
++	}
+ 
+ unlock:
+ 	hci_dev_unlock(hdev);
+@@ -7125,7 +7124,7 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
+ 	hci_dev_lock(hdev);
+ 
+ 	if (!ev->status) {
+-		pa_sync = hci_conn_hash_lookup_pa_sync(hdev, ev->handle);
++		pa_sync = hci_conn_hash_lookup_pa_sync_big_handle(hdev, ev->handle);
+ 		if (pa_sync)
+ 			/* Also mark the BIG sync established event on the
+ 			 * associated PA sync hcon
+@@ -7186,15 +7185,42 @@ static void hci_le_big_info_adv_report_evt(struct hci_dev *hdev, void *data,
+ 	struct hci_evt_le_big_info_adv_report *ev = data;
+ 	int mask = hdev->link_mode;
+ 	__u8 flags = 0;
++	struct hci_conn *pa_sync;
+ 
+ 	bt_dev_dbg(hdev, "sync_handle 0x%4.4x", le16_to_cpu(ev->sync_handle));
+ 
+ 	hci_dev_lock(hdev);
+ 
+ 	mask |= hci_proto_connect_ind(hdev, BDADDR_ANY, ISO_LINK, &flags);
+-	if (!(mask & HCI_LM_ACCEPT))
++	if (!(mask & HCI_LM_ACCEPT)) {
+ 		hci_le_pa_term_sync(hdev, ev->sync_handle);
++		goto unlock;
++	}
+ 
++	if (!(flags & HCI_PROTO_DEFER))
++		goto unlock;
++
++	pa_sync = hci_conn_hash_lookup_pa_sync_handle
++			(hdev,
++			le16_to_cpu(ev->sync_handle));
++
++	if (pa_sync)
++		goto unlock;
++
++	/* Add connection to indicate the PA sync event */
++	pa_sync = hci_conn_add(hdev, ISO_LINK, BDADDR_ANY,
++			       HCI_ROLE_SLAVE);
++
++	if (!pa_sync)
++		goto unlock;
++
++	pa_sync->sync_handle = le16_to_cpu(ev->sync_handle);
++	set_bit(HCI_CONN_PA_SYNC, &pa_sync->flags);
++
++	/* Notify iso layer */
++	hci_connect_cfm(pa_sync, 0x00);
++
++unlock:
+ 	hci_dev_unlock(hdev);
+ }
+ 
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 71248163ce9a5..2132a16be93cd 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -77,6 +77,7 @@ static struct bt_iso_qos default_qos;
+ static bool check_ucast_qos(struct bt_iso_qos *qos);
+ static bool check_bcast_qos(struct bt_iso_qos *qos);
+ static bool iso_match_sid(struct sock *sk, void *data);
++static bool iso_match_sync_handle(struct sock *sk, void *data);
+ static void iso_sock_disconn(struct sock *sk);
+ 
+ /* ---- ISO timers ---- */
+@@ -1202,7 +1203,6 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 			    test_bit(HCI_CONN_PA_SYNC, &pi->conn->hcon->flags)) {
+ 				iso_conn_big_sync(sk);
+ 				sk->sk_state = BT_LISTEN;
+-				set_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags);
+ 			} else {
+ 				iso_conn_defer_accept(pi->conn->hcon);
+ 				sk->sk_state = BT_CONFIG;
+@@ -1579,6 +1579,7 @@ static void iso_conn_ready(struct iso_conn *conn)
+ 	struct sock *sk = conn->sk;
+ 	struct hci_ev_le_big_sync_estabilished *ev = NULL;
+ 	struct hci_ev_le_pa_sync_established *ev2 = NULL;
++	struct hci_evt_le_big_info_adv_report *ev3 = NULL;
+ 	struct hci_conn *hcon;
+ 
+ 	BT_DBG("conn %p", conn);
+@@ -1603,14 +1604,20 @@ static void iso_conn_ready(struct iso_conn *conn)
+ 				parent = iso_get_sock_listen(&hcon->src,
+ 							     &hcon->dst,
+ 							     iso_match_big, ev);
+-		} else if (test_bit(HCI_CONN_PA_SYNC, &hcon->flags) ||
+-				test_bit(HCI_CONN_PA_SYNC_FAILED, &hcon->flags)) {
++		} else if (test_bit(HCI_CONN_PA_SYNC_FAILED, &hcon->flags)) {
+ 			ev2 = hci_recv_event_data(hcon->hdev,
+ 						  HCI_EV_LE_PA_SYNC_ESTABLISHED);
+ 			if (ev2)
+ 				parent = iso_get_sock_listen(&hcon->src,
+ 							     &hcon->dst,
+ 							     iso_match_sid, ev2);
++		} else if (test_bit(HCI_CONN_PA_SYNC, &hcon->flags)) {
++			ev3 = hci_recv_event_data(hcon->hdev,
++						  HCI_EVT_LE_BIG_INFO_ADV_REPORT);
++			if (ev3)
++				parent = iso_get_sock_listen(&hcon->src,
++							     &hcon->dst,
++							     iso_match_sync_handle, ev3);
+ 		}
+ 
+ 		if (!parent)
+@@ -1650,11 +1657,13 @@ static void iso_conn_ready(struct iso_conn *conn)
+ 			hcon->sync_handle = iso_pi(parent)->sync_handle;
+ 		}
+ 
+-		if (ev2 && !ev2->status) {
+-			iso_pi(sk)->sync_handle = iso_pi(parent)->sync_handle;
++		if (ev3) {
+ 			iso_pi(sk)->qos = iso_pi(parent)->qos;
++			iso_pi(sk)->qos.bcast.encryption = ev3->encryption;
++			hcon->iso_qos = iso_pi(sk)->qos;
+ 			iso_pi(sk)->bc_num_bis = iso_pi(parent)->bc_num_bis;
+ 			memcpy(iso_pi(sk)->bc_bis, iso_pi(parent)->bc_bis, ISO_MAX_NUM_BIS);
++			set_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags);
+ 		}
+ 
+ 		bacpy(&iso_pi(sk)->dst, &hcon->dst);
+-- 
+2.42.0
+
 
 
