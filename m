@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1EB03A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18EED3A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbgiQQja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D6CC433CA;
-	Wed, 15 Nov 2023 19:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uV1ba0YY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C142DC433C9;
+	Wed, 15 Nov 2023 19:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077847;
-	bh=oR6tk5m1g7iKe9f6EcZAdyum7ODPPUvLBw+jMhvk4Ew=;
+	s=korg; t=1700077848;
+	bh=kkUhoKOPjqVrw3JURDbyklWE42AI7aXk+h3qZOEmAXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbgiQQjaoKHnyneK1t1wxfy3Vp+010St1mb3dNEzqTm+j7N++GarB5tmu//Qa7EDN
-	 N9SKcsq7+/hWUV9x+7kexqKuWuLkIfcV0rYKVMsb8KK60Alw4jzx5Ho9xPV8kYsuhf
-	 ciYWb6JaSoYRAsJ5UNNcqe8CzglCHoQeSMoU9oHI=
+	b=uV1ba0YYMzhDEoMS/2VslbsgcjHZyNjGXhMtSQKCMdSw543gdc4FF4p4cPm/JQYem
+	 XIzaGxxA2KmKas4OVpyq/Ca9idsWCjjVTSPfT8KK7qAn6lHapVsjdDfsbwn19iptF3
+	 KY2jHX/E9FquoC7kG35Yshfh9tCz3bEzG/9VZsUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 557/603] net/smc: fix dangling sock under state SMC_APPFINCLOSEWAIT
-Date: Wed, 15 Nov 2023 14:18:22 -0500
-Message-ID: <20231115191650.216277833@linuxfoundation.org>
+Subject: [PATCH 6.6 540/603] watchdog: ixp4xx: Make sure restart always works
+Date: Wed, 15 Nov 2023 14:18:05 -0500
+Message-ID: <20231115191649.183935257@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,109 +43,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 5211c9729484c923f8d2e06bd29f9322cc42bb8f ]
+[ Upstream commit b4075ecfe348a44209534c75ad72392c63a489a6 ]
 
-Considering scenario:
+The IXP4xx watchdog in early "A0" silicon is unreliable and
+cannot be registered, however for some systems such as the
+USRobotics USR8200 the watchdog is the only restart option,
+so implement a "dummy" watchdog that can only support restart
+in this case.
 
-				smc_cdc_rx_handler
-__smc_release
-				sock_set_flag
-smc_close_active()
-sock_set_flag
-
-__set_bit(DEAD)			__set_bit(DONE)
-
-Dues to __set_bit is not atomic, the DEAD or DONE might be lost.
-if the DEAD flag lost, the state SMC_CLOSED  will be never be reached
-in smc_close_passive_work:
-
-if (sock_flag(sk, SOCK_DEAD) &&
-	smc_close_sent_any_close(conn)) {
-	sk->sk_state = SMC_CLOSED;
-} else {
-	/* just shutdown, but not yet closed locally */
-	sk->sk_state = SMC_APPFINCLOSEWAIT;
-}
-
-Replace sock_set_flags or __set_bit to set_bit will fix this problem.
-Since set_bit is atomic.
-
-Fixes: b38d732477e4 ("smc: socket closing and linkgroup cleanup")
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1aea522809e6 ("watchdog: ixp4xx: Implement restart")
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230926-ixp4xx-wdt-restart-v2-1-15cf4639b423@linaro.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c    | 4 ++--
- net/smc/smc.h       | 5 +++++
- net/smc/smc_cdc.c   | 2 +-
- net/smc/smc_close.c | 2 +-
- 4 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/watchdog/ixp4xx_wdt.c | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 35ddebae88941..4c047e0e1625e 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -275,7 +275,7 @@ static int __smc_release(struct smc_sock *smc)
+diff --git a/drivers/watchdog/ixp4xx_wdt.c b/drivers/watchdog/ixp4xx_wdt.c
+index 607ce4b8df574..ec0c08652ec2f 100644
+--- a/drivers/watchdog/ixp4xx_wdt.c
++++ b/drivers/watchdog/ixp4xx_wdt.c
+@@ -105,6 +105,25 @@ static const struct watchdog_ops ixp4xx_wdt_ops = {
+ 	.owner = THIS_MODULE,
+ };
  
- 	if (!smc->use_fallback) {
- 		rc = smc_close_active(smc);
--		sock_set_flag(sk, SOCK_DEAD);
-+		smc_sock_set_flag(sk, SOCK_DEAD);
- 		sk->sk_shutdown |= SHUTDOWN_MASK;
- 	} else {
- 		if (sk->sk_state != SMC_CLOSED) {
-@@ -1743,7 +1743,7 @@ static int smc_clcsock_accept(struct smc_sock *lsmc, struct smc_sock **new_smc)
- 		if (new_clcsock)
- 			sock_release(new_clcsock);
- 		new_sk->sk_state = SMC_CLOSED;
--		sock_set_flag(new_sk, SOCK_DEAD);
-+		smc_sock_set_flag(new_sk, SOCK_DEAD);
- 		sock_put(new_sk); /* final */
- 		*new_smc = NULL;
- 		goto out;
-diff --git a/net/smc/smc.h b/net/smc/smc.h
-index 24745fde4ac26..e377980b84145 100644
---- a/net/smc/smc.h
-+++ b/net/smc/smc.h
-@@ -377,4 +377,9 @@ int smc_nl_dump_hs_limitation(struct sk_buff *skb, struct netlink_callback *cb);
- int smc_nl_enable_hs_limitation(struct sk_buff *skb, struct genl_info *info);
- int smc_nl_disable_hs_limitation(struct sk_buff *skb, struct genl_info *info);
- 
-+static inline void smc_sock_set_flag(struct sock *sk, enum sock_flags flag)
++/*
++ * The A0 version of the IXP422 had a bug in the watchdog making
++ * is useless, but we still need to use it to restart the system
++ * as it is the only way, so in this special case we register a
++ * "dummy" watchdog that doesn't really work, but will support
++ * the restart operation.
++ */
++static int ixp4xx_wdt_dummy(struct watchdog_device *wdd)
 +{
-+	set_bit(flag, &sk->sk_flags);
++	return 0;
 +}
 +
- #endif	/* __SMC_H */
-diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
-index 89105e95b4523..01bdb7909a14b 100644
---- a/net/smc/smc_cdc.c
-+++ b/net/smc/smc_cdc.c
-@@ -385,7 +385,7 @@ static void smc_cdc_msg_recv_action(struct smc_sock *smc,
- 		smc->sk.sk_shutdown |= RCV_SHUTDOWN;
- 		if (smc->clcsock && smc->clcsock->sk)
- 			smc->clcsock->sk->sk_shutdown |= RCV_SHUTDOWN;
--		sock_set_flag(&smc->sk, SOCK_DONE);
-+		smc_sock_set_flag(&smc->sk, SOCK_DONE);
- 		sock_hold(&smc->sk); /* sock_put in close_work */
- 		if (!queue_work(smc_close_wq, &conn->close_work))
- 			sock_put(&smc->sk);
-diff --git a/net/smc/smc_close.c b/net/smc/smc_close.c
-index dbdf03e8aa5b5..449ef454b53be 100644
---- a/net/smc/smc_close.c
-+++ b/net/smc/smc_close.c
-@@ -173,7 +173,7 @@ void smc_close_active_abort(struct smc_sock *smc)
- 		break;
++static const struct watchdog_ops ixp4xx_wdt_restart_only_ops = {
++	.start = ixp4xx_wdt_dummy,
++	.stop = ixp4xx_wdt_dummy,
++	.restart = ixp4xx_wdt_restart,
++	.owner = THIS_MODULE,
++};
++
+ static const struct watchdog_info ixp4xx_wdt_info = {
+ 	.options = WDIOF_KEEPALIVEPING
+ 		| WDIOF_MAGICCLOSE
+@@ -114,14 +133,17 @@ static const struct watchdog_info ixp4xx_wdt_info = {
+ 
+ static int ixp4xx_wdt_probe(struct platform_device *pdev)
+ {
++	static const struct watchdog_ops *iwdt_ops;
+ 	struct device *dev = &pdev->dev;
+ 	struct ixp4xx_wdt *iwdt;
+ 	struct clk *clk;
+ 	int ret;
+ 
+ 	if (!(read_cpuid_id() & 0xf) && !cpu_is_ixp46x()) {
+-		dev_err(dev, "Rev. A0 IXP42x CPU detected - watchdog disabled\n");
+-		return -ENODEV;
++		dev_info(dev, "Rev. A0 IXP42x CPU detected - only restart supported\n");
++		iwdt_ops = &ixp4xx_wdt_restart_only_ops;
++	} else {
++		iwdt_ops = &ixp4xx_wdt_ops;
  	}
  
--	sock_set_flag(sk, SOCK_DEAD);
-+	smc_sock_set_flag(sk, SOCK_DEAD);
- 	sk->sk_state_change(sk);
+ 	iwdt = devm_kzalloc(dev, sizeof(*iwdt), GFP_KERNEL);
+@@ -141,7 +163,7 @@ static int ixp4xx_wdt_probe(struct platform_device *pdev)
+ 		iwdt->rate = IXP4XX_TIMER_FREQ;
  
- 	if (release_clcsock) {
+ 	iwdt->wdd.info = &ixp4xx_wdt_info;
+-	iwdt->wdd.ops = &ixp4xx_wdt_ops;
++	iwdt->wdd.ops = iwdt_ops;
+ 	iwdt->wdd.min_timeout = 1;
+ 	iwdt->wdd.max_timeout = U32_MAX / iwdt->rate;
+ 	iwdt->wdd.parent = dev;
 -- 
 2.42.0
 
