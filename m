@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E470135F15
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6323C35F15
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qli6CrDc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890E2C433C8;
-	Wed, 15 Nov 2023 22:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veG33ag0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06387C433C8;
+	Wed, 15 Nov 2023 22:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085731;
-	bh=cnM7oveAIb/n9EfR1pNVxLRcKxMX0LZVzgqcSIu/FEg=;
+	s=korg; t=1700085733;
+	bh=4iHDDRjvHrKTOU2pu7ICCRA1+ox8MImQGdpb3CL2WkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qli6CrDcYV+s+Y00FitxwuCARfBGlczbxYtN2zKAcd+0//EYDkaH3/CDdmBrdEh4T
-	 yU7YS6NG4zQRPYZJHwR4o+kKDwTfe3xQkDw1j0eYrihs8f3+Y9xBAofPRIo0H3OTmk
-	 RQzYxW62gI5mxhS57mE5VWElf483bNicdb9Jqb9k=
+	b=veG33ag0Qh1tbCaIzU6SCw9qMtavD7Y040YZF8nGmljvF8eo5G8yVZuAZFOaZ5Vw6
+	 oxf7w/WKnZgxOphFNnF8ukPGIU0CyTGz/8bHjER+Q/lSKapgwTy1hqlA70jpv0eO9S
+	 jLjq1Cs1YISIJujn8SqutA9hpzyc6tiCL7A933qA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 017/119] tcp: Remove one extra ktime_get_ns() from cookie_init_timestamp
-Date: Wed, 15 Nov 2023 17:00:07 -0500
-Message-ID: <20231115220133.146975964@linuxfoundation.org>
+Subject: [PATCH 5.4 018/119] tcp: fix cookie_init_timestamp() overflows
+Date: Wed, 15 Nov 2023 17:00:08 -0500
+Message-ID: <20231115220133.176840983@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -44,92 +44,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 200ecef67b8d09d16ec55f91c92751dcc7a38d40 ]
+[ Upstream commit 73ed8e03388d16c12fc577e5c700b58a29045a15 ]
 
-tcp_make_synack() already uses tcp_clock_ns(), and can pass
-the value to cookie_init_timestamp() to avoid another call
-to ktime_get_ns() helper.
+cookie_init_timestamp() is supposed to return a 64bit timestamp
+suitable for both TSval determination and setting of skb->tstamp.
 
+Unfortunately it uses 32bit fields and overflows after
+2^32 * 10^6 nsec (~49 days) of uptime.
+
+Generated TSval are still correct, but skb->tstamp might be set
+far away in the past, potentially confusing other layers.
+
+tcp_ns_to_ts() is changed to return a full 64bit value,
+ts and ts_now variables are changed to u64 type,
+and TSMASK is removed in favor of shifts operations.
+
+While we are at it, change this sequence:
+		ts >>= TSBITS;
+		ts--;
+		ts <<= TSBITS;
+		ts |= options;
+to:
+		ts -= (1UL << TSBITS);
+
+Fixes: 9a568de4818d ("tcp: switch TCP TS option (RFC 7323) to 1ms clock")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 73ed8e03388d ("tcp: fix cookie_init_timestamp() overflows")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h     | 12 +++++++++---
- net/ipv4/syncookies.c |  4 ++--
- net/ipv4/tcp_output.c |  2 +-
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ include/net/tcp.h     |  2 +-
+ net/ipv4/syncookies.c | 20 +++++++-------------
+ 2 files changed, 8 insertions(+), 14 deletions(-)
 
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 4fcae463ba194..2be7d26434180 100644
+index 2be7d26434180..af67e19eba392 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -553,7 +553,7 @@ static inline u32 tcp_cookie_time(void)
- u32 __cookie_v4_init_sequence(const struct iphdr *iph, const struct tcphdr *th,
- 			      u16 *mssp);
- __u32 cookie_v4_init_sequence(const struct sk_buff *skb, __u16 *mss);
--u64 cookie_init_timestamp(struct request_sock *req);
-+u64 cookie_init_timestamp(struct request_sock *req, u64 now);
- bool cookie_timestamp_decode(const struct net *net,
- 			     struct tcp_options_received *opt);
- bool cookie_ecn_ok(const struct tcp_options_received *opt,
-@@ -775,10 +775,16 @@ static inline u32 tcp_time_stamp(const struct tcp_sock *tp)
- 	return div_u64(tp->tcp_mstamp, USEC_PER_SEC / TCP_TS_HZ);
+@@ -776,7 +776,7 @@ static inline u32 tcp_time_stamp(const struct tcp_sock *tp)
  }
  
-+/* Convert a nsec timestamp into TCP TSval timestamp (ms based currently) */
-+static inline u32 tcp_ns_to_ts(u64 ns)
-+{
-+	return div_u64(ns, NSEC_PER_SEC / TCP_TS_HZ);
-+}
-+
- /* Could use tcp_clock_us() / 1000, but this version uses a single divide */
- static inline u32 tcp_time_stamp_raw(void)
+ /* Convert a nsec timestamp into TCP TSval timestamp (ms based currently) */
+-static inline u32 tcp_ns_to_ts(u64 ns)
++static inline u64 tcp_ns_to_ts(u64 ns)
  {
--	return div_u64(tcp_clock_ns(), NSEC_PER_SEC / TCP_TS_HZ);
-+	return tcp_ns_to_ts(tcp_clock_ns());
+ 	return div_u64(ns, NSEC_PER_SEC / TCP_TS_HZ);
  }
- 
- void tcp_mstamp_refresh(struct tcp_sock *tp);
-@@ -790,7 +796,7 @@ static inline u32 tcp_stamp_us_delta(u64 t1, u64 t0)
- 
- static inline u32 tcp_skb_timestamp(const struct sk_buff *skb)
- {
--	return div_u64(skb->skb_mstamp_ns, NSEC_PER_SEC / TCP_TS_HZ);
-+	return tcp_ns_to_ts(skb->skb_mstamp_ns);
- }
- 
- /* provide the departure time in us unit */
 diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
-index 3f6c9514c7a93..88d53d37fbe96 100644
+index 88d53d37fbe96..3cc22f776a313 100644
 --- a/net/ipv4/syncookies.c
 +++ b/net/ipv4/syncookies.c
-@@ -62,10 +62,10 @@ static u32 cookie_hash(__be32 saddr, __be32 daddr, __be16 sport, __be16 dport,
-  * Since subsequent timestamps use the normal tcp_time_stamp value, we
-  * must make sure that the resulting initial timestamp is <= tcp_time_stamp.
+@@ -43,7 +43,6 @@ static siphash_key_t syncookie_secret[2] __read_mostly;
+  * requested/supported by the syn/synack exchange.
   */
--u64 cookie_init_timestamp(struct request_sock *req)
-+u64 cookie_init_timestamp(struct request_sock *req, u64 now)
+ #define TSBITS	6
+-#define TSMASK	(((__u32)1 << TSBITS) - 1)
+ 
+ static u32 cookie_hash(__be32 saddr, __be32 daddr, __be16 sport, __be16 dport,
+ 		       u32 count, int c)
+@@ -64,27 +63,22 @@ static u32 cookie_hash(__be32 saddr, __be32 daddr, __be16 sport, __be16 dport,
+  */
+ u64 cookie_init_timestamp(struct request_sock *req, u64 now)
  {
- 	struct inet_request_sock *ireq;
--	u32 ts, ts_now = tcp_time_stamp_raw();
-+	u32 ts, ts_now = tcp_ns_to_ts(now);
+-	struct inet_request_sock *ireq;
+-	u32 ts, ts_now = tcp_ns_to_ts(now);
++	const struct inet_request_sock *ireq = inet_rsk(req);
++	u64 ts, ts_now = tcp_ns_to_ts(now);
  	u32 options = 0;
  
- 	ireq = inet_rsk(req);
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 16e0249b11f6c..0107436860171 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3349,7 +3349,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
- 	now = tcp_clock_ns();
- #ifdef CONFIG_SYN_COOKIES
- 	if (unlikely(req->cookie_ts))
--		skb->skb_mstamp_ns = cookie_init_timestamp(req);
-+		skb->skb_mstamp_ns = cookie_init_timestamp(req, now);
- 	else
- #endif
- 	{
+-	ireq = inet_rsk(req);
+-
+ 	options = ireq->wscale_ok ? ireq->snd_wscale : TS_OPT_WSCALE_MASK;
+ 	if (ireq->sack_ok)
+ 		options |= TS_OPT_SACK;
+ 	if (ireq->ecn_ok)
+ 		options |= TS_OPT_ECN;
+ 
+-	ts = ts_now & ~TSMASK;
++	ts = (ts_now >> TSBITS) << TSBITS;
+ 	ts |= options;
+-	if (ts > ts_now) {
+-		ts >>= TSBITS;
+-		ts--;
+-		ts <<= TSBITS;
+-		ts |= options;
+-	}
+-	return (u64)ts * (NSEC_PER_SEC / TCP_TS_HZ);
++	if (ts > ts_now)
++		ts -= (1UL << TSBITS);
++
++	return ts * (NSEC_PER_SEC / TCP_TS_HZ);
+ }
+ 
+ 
 -- 
 2.42.0
 
