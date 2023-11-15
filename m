@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134D1433BB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F84433BB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vHX2U1x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F88DC433C9;
-	Wed, 15 Nov 2023 19:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1meqmfv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE93C433C7;
+	Wed, 15 Nov 2023 19:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077062;
-	bh=JNcYm6JhTLVpAmjzCsccVIt8nVhOKOYPLRS6mJXInQo=;
+	s=korg; t=1700077064;
+	bh=RrQcCowG7b1gpHbi1riXu8ytAxmmtZxr3OM/dihpCkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vHX2U1xNRsFalB8jvXAn+Z4OxA5VZcVhRck7Gg0FwgVVB1Isi/NbW6yGlJPqvoHG
-	 9lKWWC0NN1zK7NMuSKLb/VM5BA8N5H/IAV8WBwb5ShqcsfM5fmazgZi37JGVituBk5
-	 H300CpqPvUMN6OOHIjdRtL2m9jxT9NB119Fxjl8o=
+	b=W1meqmfvwn+ekzsnweeU7UfEe0+wMz+Gz/6XbMo7tkuctBoUAbmZwYV8qwgVxpBbY
+	 jtdVY98OvC/Ku+QvB1+z+uusL580EThpmRJWL1KS+po4MZVDjUOMnIwNzpXVPWMjI/
+	 rVtZ6AzuzasmW42b/p5gWekr8Bmhsk4Dc/cr/K6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Thompson <ptf@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 509/550] net: r8169: Disable multicast filter for RTL8168H and RTL8107E
-Date: Wed, 15 Nov 2023 14:18:13 -0500
-Message-ID: <20231115191636.204342909@linuxfoundation.org>
+Subject: [PATCH 6.6 113/603] can: dev: can_put_echo_skb(): dont crash kernel if can_priv::echo_skb is accessed out of bounds
+Date: Wed, 15 Nov 2023 14:10:58 -0500
+Message-ID: <20231115191621.050893217@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,45 +38,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patrick Thompson <ptf@google.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit efa5f1311c4998e9e6317c52bc5ee93b3a0f36df ]
+[ Upstream commit 6411959c10fe917288cbb1038886999148560057 ]
 
-RTL8168H and RTL8107E ethernet adapters erroneously filter unicast
-eapol packets unless allmulti is enabled. These devices correspond to
-RTL_GIGA_MAC_VER_46 and VER_48. Add an exception for VER_46 and VER_48
-in the same way that VER_35 has an exception.
+If the "struct can_priv::echoo_skb" is accessed out of bounds, this
+would cause a kernel crash. Instead, issue a meaningful warning
+message and return with an error.
 
-Fixes: 6e1d0b898818 ("r8169:add support for RTL8168H and RTL8107E")
-Signed-off-by: Patrick Thompson <ptf@google.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/20231030205031.177855-1-ptf@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a6e4bc530403 ("can: make the number of echo skb's configurable")
+Link: https://lore.kernel.org/all/20231005-can-dev-fix-can-restart-v2-5-91b5c1fd922c@pengutronix.de
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/can/dev/skb.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index a987defb575cf..4b8251cdb4363 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -2584,7 +2584,9 @@ static void rtl_set_rx_mode(struct net_device *dev)
- 		rx_mode |= AcceptAllPhys;
- 	} else if (netdev_mc_count(dev) > MC_FILTER_LIMIT ||
- 		   dev->flags & IFF_ALLMULTI ||
--		   tp->mac_version == RTL_GIGA_MAC_VER_35) {
-+		   tp->mac_version == RTL_GIGA_MAC_VER_35 ||
-+		   tp->mac_version == RTL_GIGA_MAC_VER_46 ||
-+		   tp->mac_version == RTL_GIGA_MAC_VER_48) {
- 		/* accept all multicasts */
- 	} else if (netdev_mc_empty(dev)) {
- 		rx_mode &= ~AcceptMulticast;
+diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
+index f6d05b3ef59ab..3ebd4f779b9bd 100644
+--- a/drivers/net/can/dev/skb.c
++++ b/drivers/net/can/dev/skb.c
+@@ -49,7 +49,11 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
+ {
+ 	struct can_priv *priv = netdev_priv(dev);
+ 
+-	BUG_ON(idx >= priv->echo_skb_max);
++	if (idx >= priv->echo_skb_max) {
++		netdev_err(dev, "%s: BUG! Trying to access can_priv::echo_skb out of bounds (%u/max %u)\n",
++			   __func__, idx, priv->echo_skb_max);
++		return -EINVAL;
++	}
+ 
+ 	/* check flag whether this packet has to be looped back */
+ 	if (!(dev->flags & IFF_ECHO) ||
 -- 
 2.42.0
 
