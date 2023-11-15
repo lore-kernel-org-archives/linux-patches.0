@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26E518C27
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6592E43ADE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxwVP3m3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959ABC433CA;
-	Wed, 15 Nov 2023 20:57:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pn0Mn10I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD47C433CD;
+	Wed, 15 Nov 2023 20:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081868;
-	bh=YqYjxw9Or1EZo3lmx4zl1bvF8hpK6KuamPLRQgO5LHw=;
+	s=korg; t=1700081870;
+	bh=YXJmFzibi2jvnzkucAF8Y5tbRS2ZTNxacQfzjF3NbW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MxwVP3m3iaAjlV1r4kCc8afGkT6Nqf52CcH69giy44K9twlmC+T4+G1x3FlHIloMy
-	 WL+6xIOgiH4qXxUfXzrqYlSzPAEDXjlypApGle9HddfyfJAil5cuqDc/F9yhh5jjnb
-	 epn8B3jM2wfpWkkMd3xICCitPxsVdJCsxHFfhUYw=
+	b=Pn0Mn10I8CxqbP/Eswpfm+dQ/No2wUWZKZPvsZOhgHhJIkfJrIM8GMrLab6sMGIHY
+	 /vxKDsUSLTjNeMx7uLC1OBeivd+Rs4Nx27lG/76Ev9nOHL+SVI0KVNbESz33rBkm5q
+	 BSsfkkySOxmNe8kyYOE9wd74w8MG2eXfQxfOIzS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	George Shuklin <george.shuklin@gmail.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 159/191] media: dvb-usb-v2: af9035: fix missing unlock
-Date: Wed, 15 Nov 2023 15:47:14 -0500
-Message-ID: <20231115204654.014100448@linuxfoundation.org>
+Subject: [PATCH 5.10 177/191] tg3: power down device only on SYSTEM_POWER_OFF
+Date: Wed, 15 Nov 2023 15:47:32 -0500
+Message-ID: <20231115204655.058385730@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -41,65 +44,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: George Shuklin <george.shuklin@gmail.com>
 
-[ Upstream commit f31b2cb85f0ee165d78e1c43f6d69f82cc3b2145 ]
+[ Upstream commit 9fc3bc7643341dc5be7d269f3d3dbe441d8d7ac3 ]
 
-Instead of returning an error, goto the mutex unlock at
-the end of the function.
+Dell R650xs servers hangs on reboot if tg3 driver calls
+tg3_power_down.
 
-Fixes smatch warning:
+This happens only if network adapters (BCM5720 for R650xs) were
+initialized using SNP (e.g. by booting ipxe.efi).
 
-drivers/media/usb/dvb-usb-v2/af9035.c:467 af9035_i2c_master_xfer() warn: inconsistent returns '&d->i2c_mutex'.
-  Locked on  : 326,387
-  Unlocked on: 465,467
+The actual problem is on Dell side, but this fix allows servers
+to come back alive after reboot.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: 7bf744f2de0a ("media: dvb-usb-v2: af9035: Fix null-ptr-deref in af9035_i2c_master_xfer")
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: George Shuklin <george.shuklin@gmail.com>
+Fixes: 2ca1c94ce0b6 ("tg3: Disable tg3 device on system reboot to avoid triggering AER")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20231103115029.83273-1-george.shuklin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/af9035.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/af9035.c b/drivers/media/usb/dvb-usb-v2/af9035.c
-index 8cbaab9a60844..f0bc3e060ab8d 100644
---- a/drivers/media/usb/dvb-usb-v2/af9035.c
-+++ b/drivers/media/usb/dvb-usb-v2/af9035.c
-@@ -322,8 +322,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 			ret = -EOPNOTSUPP;
- 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
- 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
--			if (msg[0].len < 3 || msg[1].len < 1)
--				return -EOPNOTSUPP;
-+			if (msg[0].len < 3 || msg[1].len < 1) {
-+				ret = -EOPNOTSUPP;
-+				goto unlock;
-+			}
- 			/* demod access via firmware interface */
- 			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
- 					msg[0].buf[2];
-@@ -383,8 +385,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 			ret = -EOPNOTSUPP;
- 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
- 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
--			if (msg[0].len < 3)
--				return -EOPNOTSUPP;
-+			if (msg[0].len < 3) {
-+				ret = -EOPNOTSUPP;
-+				goto unlock;
-+			}
- 			/* demod access via firmware interface */
- 			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
- 					msg[0].buf[2];
-@@ -459,6 +463,7 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 		ret = -EOPNOTSUPP;
- 	}
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index d14f37be1eb3e..5647833303a44 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -18156,7 +18156,8 @@ static void tg3_shutdown(struct pci_dev *pdev)
+ 	if (netif_running(dev))
+ 		dev_close(dev);
  
-+unlock:
- 	mutex_unlock(&d->i2c_mutex);
+-	tg3_power_down(tp);
++	if (system_state == SYSTEM_POWER_OFF)
++		tg3_power_down(tp);
  
- 	if (ret < 0)
+ 	rtnl_unlock();
+ 
 -- 
 2.42.0
 
