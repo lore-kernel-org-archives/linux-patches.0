@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19023DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CAD33DB95
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0NICBAu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63549C433C7;
-	Wed, 15 Nov 2023 20:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIRkiIf/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01ABAC433C7;
+	Wed, 15 Nov 2023 20:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078517;
-	bh=gwfqZk2T88N8R3wssiTxx0MFvX7MajHLW566kFFzgC4=;
+	s=korg; t=1700078519;
+	bh=Ekj86wwD6wRGkY1vFGmfReHb9QQK35VCuTzDuLWz5WM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0NICBAu4qVu9hsiUw8ukNH9JvfWEAEmwVkEARYkcVf9Od9a/PoEGPtQuKjvaDSEo
-	 VsBLDfbLSGPlJW7DTqYJgpoeedpnbeZJJSQEuiaBZLjRlqe8iRdEzxUchKuH1WoMD3
-	 ljvjNJ7LFuxg+Lq3GRX4YZC5yJq/l6qqHR5q6ig4=
+	b=HIRkiIf/INcpqHbkqN0iiVpcx+oW//TdsL/3uTGGFc08KqaCkq33nxHu4lKBUDfs8
+	 fVaoo3+aHU+ijjhuwMrcjFX2rru3nstT5nM1lGpDsflMxYL+Hn4Be/uGCUVK+2sSQh
+	 k7N7ij/lGfpQ1mEahKFP8MCFPtLPCEkLmybxrCo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 371/379] spi: spi-zynq-qspi: add spi-mem to driver kconfig dependencies
-Date: Wed, 15 Nov 2023 14:27:26 -0500
-Message-ID: <20231115192707.107658315@linuxfoundation.org>
+Subject: [PATCH 6.1 354/379] net/smc: put sk reference if close work was canceled
+Date: Wed, 15 Nov 2023 14:27:09 -0500
+Message-ID: <20231115192706.098731401@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,35 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit c2ded280a4b1b7bd93e53670528504be08d24967 ]
+[ Upstream commit aa96fbd6d78d9770323b21e2c92bd38821be8852 ]
 
-Zynq QSPI driver has been converted to use spi-mem framework so
-add spi-mem to driver kconfig dependencies.
+Note that we always hold a reference to sock when attempting
+to submit close_work. Therefore, if we have successfully
+canceled close_work from pending, we MUST release that reference
+to avoid potential leaks.
 
-Fixes: 67dca5e580f1 ("spi: spi-mem: Add support for Zynq QSPI controller")
-Signed-off-by: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://lore.kernel.org/r/1699037031-702858-1-git-send-email-radhey.shyam.pandey@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 42bfba9eaa33 ("net/smc: immediate termination for SMCD link groups")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ net/smc/smc_close.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
-index d4b969e68c314..946e2186d2448 100644
---- a/drivers/spi/Kconfig
-+++ b/drivers/spi/Kconfig
-@@ -1093,6 +1093,7 @@ config SPI_XTENSA_XTFPGA
- config SPI_ZYNQ_QSPI
- 	tristate "Xilinx Zynq QSPI controller"
- 	depends on ARCH_ZYNQ || COMPILE_TEST
-+	depends on SPI_MEM
- 	help
- 	  This enables support for the Zynq Quad SPI controller
- 	  in master mode.
+diff --git a/net/smc/smc_close.c b/net/smc/smc_close.c
+index 449ef454b53be..10219f55aad14 100644
+--- a/net/smc/smc_close.c
++++ b/net/smc/smc_close.c
+@@ -116,7 +116,8 @@ static void smc_close_cancel_work(struct smc_sock *smc)
+ 	struct sock *sk = &smc->sk;
+ 
+ 	release_sock(sk);
+-	cancel_work_sync(&smc->conn.close_work);
++	if (cancel_work_sync(&smc->conn.close_work))
++		sock_put(sk);
+ 	cancel_delayed_work_sync(&smc->conn.tx_work);
+ 	lock_sock(sk);
+ }
 -- 
 2.42.0
 
