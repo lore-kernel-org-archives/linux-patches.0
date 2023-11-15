@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6394431730
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138D535F19
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeE+Z5Kf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137DDC433CA;
-	Wed, 15 Nov 2023 19:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McvOHawu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED04C433C9;
+	Wed, 15 Nov 2023 19:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077559;
-	bh=qwiXfKx3MeH9N8RZVEfTi6u1h/li+3oGbuhy9fOEBRo=;
+	s=korg; t=1700077560;
+	bh=M/FrTpHpFhXXzu7M/cggxIf9Itc/wzuEME5ivh6Mvjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MeE+Z5Kf+gW3lMCpVc7p/GMCTEJ9y2TgK+TPd5q5XHZsS5GzmMhrjLI9aB12podT3
-	 qduqE0bGgBP0zAJUTDWPR27WC0SUuUNdAx7WUSso1PDZsCRHwe01OPH2VZQGsb0chM
-	 X3ry8XgAj5aJzYxgCTU+qWXdxOPrOVIcN70GmP9U=
+	b=McvOHawuXhEvVojfOl78rMlv/xii1Tcoq+cSDE1GfD7ulv25+GtjQNlwrPe2/l6nY
+	 QS36IY1i2yn8TTZUuzHhtXJmv1VJd/Rt4Z3/YqO+c0nKYpciASD8zdHXgFGaXmpw1B
+	 DiDtaWzH4NZ/eHkulFhbGQosYySrV3JjzGAJJkLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	Hui Wang <hui.wang@canonical.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 346/603] RDMA/core: Use size_{add,sub,mul}() in calls to struct_size()
-Date: Wed, 15 Nov 2023 14:14:51 -0500
-Message-ID: <20231115191637.465515166@linuxfoundation.org>
+Subject: [PATCH 6.6 370/603] ASoC: fsl-asoc-card: Add comment for mclk in the codec_priv
+Date: Wed, 15 Nov 2023 14:15:15 -0500
+Message-ID: <20231115191639.122262751@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,116 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit 81760bedc65194ff38e1e4faefd5f9f0c95c19a4 ]
+[ Upstream commit fbfe616ad40c06d68b83b657a94cd2e709dda37b ]
 
-If, for any reason, the open-coded arithmetic causes a wraparound,
-the protection that `struct_size()` provides against potential integer
-overflows is defeated. Fix this by hardening calls to `struct_size()`
-with `size_add()`, `size_sub()` and `size_mul()`.
+Otherwise a warning will be detected as below:
+warning: Function parameter or member 'mclk' not described in
+'codec_priv'
 
-Fixes: 467f432a521a ("RDMA/core: Split port and device counter sysfs attributes")
-Fixes: a4676388e2e2 ("RDMA/core: Simplify how the gid_attrs sysfs is created")
-Fixes: e9dd5daf884c ("IB/umad: Refactor code to use cdev_device_add()")
-Fixes: 324e227ea7c9 ("RDMA/device: Add ib_device_get_by_netdev()")
-Fixes: 5aad26a7eac5 ("IB/core: Use struct_size() in kzalloc()")
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/ZQdt4NsJFwwOYxUR@work
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 1075df4bdeb3 ("ASoC: fsl-asoc-card: add nau8822 support")
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Link: https://lore.kernel.org/r/20231007040117.22446-1-hui.wang@canonical.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/device.c   |  2 +-
- drivers/infiniband/core/sa_query.c |  4 +++-
- drivers/infiniband/core/sysfs.c    | 10 +++++-----
- drivers/infiniband/core/user_mad.c |  4 +++-
- 4 files changed, 12 insertions(+), 8 deletions(-)
+ sound/soc/fsl/fsl-asoc-card.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
-index a666847bd7143..010718738d04c 100644
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -804,7 +804,7 @@ static int alloc_port_data(struct ib_device *device)
- 	 * empty slots at the beginning.
- 	 */
- 	pdata_rcu = kzalloc(struct_size(pdata_rcu, pdata,
--					rdma_end_port(device) + 1),
-+					size_add(rdma_end_port(device), 1)),
- 			    GFP_KERNEL);
- 	if (!pdata_rcu)
- 		return -ENOMEM;
-diff --git a/drivers/infiniband/core/sa_query.c b/drivers/infiniband/core/sa_query.c
-index 59179cfc20ef9..8175dde60b0a8 100644
---- a/drivers/infiniband/core/sa_query.c
-+++ b/drivers/infiniband/core/sa_query.c
-@@ -2159,7 +2159,9 @@ static int ib_sa_add_one(struct ib_device *device)
- 	s = rdma_start_port(device);
- 	e = rdma_end_port(device);
+diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
+index bab7d34cf585b..5f181b89838ac 100644
+--- a/sound/soc/fsl/fsl-asoc-card.c
++++ b/sound/soc/fsl/fsl-asoc-card.c
+@@ -41,6 +41,7 @@
  
--	sa_dev = kzalloc(struct_size(sa_dev, port, e - s + 1), GFP_KERNEL);
-+	sa_dev = kzalloc(struct_size(sa_dev, port,
-+				     size_add(size_sub(e, s), 1)),
-+			 GFP_KERNEL);
- 	if (!sa_dev)
- 		return -ENOMEM;
- 
-diff --git a/drivers/infiniband/core/sysfs.c b/drivers/infiniband/core/sysfs.c
-index ee59d73915689..ec5efdc166601 100644
---- a/drivers/infiniband/core/sysfs.c
-+++ b/drivers/infiniband/core/sysfs.c
-@@ -903,7 +903,7 @@ alloc_hw_stats_device(struct ib_device *ibdev)
- 	 * Two extra attribue elements here, one for the lifespan entry and
- 	 * one to NULL terminate the list for the sysfs core code
- 	 */
--	data = kzalloc(struct_size(data, attrs, stats->num_counters + 1),
-+	data = kzalloc(struct_size(data, attrs, size_add(stats->num_counters, 1)),
- 		       GFP_KERNEL);
- 	if (!data)
- 		goto err_free_stats;
-@@ -1009,7 +1009,7 @@ alloc_hw_stats_port(struct ib_port *port, struct attribute_group *group)
- 	 * Two extra attribue elements here, one for the lifespan entry and
- 	 * one to NULL terminate the list for the sysfs core code
- 	 */
--	data = kzalloc(struct_size(data, attrs, stats->num_counters + 1),
-+	data = kzalloc(struct_size(data, attrs, size_add(stats->num_counters, 1)),
- 		       GFP_KERNEL);
- 	if (!data)
- 		goto err_free_stats;
-@@ -1140,7 +1140,7 @@ static int setup_gid_attrs(struct ib_port *port,
- 	int ret;
- 
- 	gid_attr_group = kzalloc(struct_size(gid_attr_group, attrs_list,
--					     attr->gid_tbl_len * 2),
-+					     size_mul(attr->gid_tbl_len, 2)),
- 				 GFP_KERNEL);
- 	if (!gid_attr_group)
- 		return -ENOMEM;
-@@ -1205,8 +1205,8 @@ static struct ib_port *setup_port(struct ib_core_device *coredev, int port_num,
- 	int ret;
- 
- 	p = kvzalloc(struct_size(p, attrs_list,
--				attr->gid_tbl_len + attr->pkey_tbl_len),
--		    GFP_KERNEL);
-+				size_add(attr->gid_tbl_len, attr->pkey_tbl_len)),
-+		     GFP_KERNEL);
- 	if (!p)
- 		return ERR_PTR(-ENOMEM);
- 	p->ibdev = device;
-diff --git a/drivers/infiniband/core/user_mad.c b/drivers/infiniband/core/user_mad.c
-index 7e5c33aad1619..f5feca7fa9b9c 100644
---- a/drivers/infiniband/core/user_mad.c
-+++ b/drivers/infiniband/core/user_mad.c
-@@ -1378,7 +1378,9 @@ static int ib_umad_add_one(struct ib_device *device)
- 	s = rdma_start_port(device);
- 	e = rdma_end_port(device);
- 
--	umad_dev = kzalloc(struct_size(umad_dev, ports, e - s + 1), GFP_KERNEL);
-+	umad_dev = kzalloc(struct_size(umad_dev, ports,
-+				       size_add(size_sub(e, s), 1)),
-+			   GFP_KERNEL);
- 	if (!umad_dev)
- 		return -ENOMEM;
- 
+ /**
+  * struct codec_priv - CODEC private data
++ * @mclk: Main clock of the CODEC
+  * @mclk_freq: Clock rate of MCLK
+  * @free_freq: Clock rate of MCLK for hw_free()
+  * @mclk_id: MCLK (or main clock) id for set_sysclk()
 -- 
 2.42.0
 
