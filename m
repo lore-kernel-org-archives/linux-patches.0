@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45A83C470
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8915D3C470
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvnqSBjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A35FC433C7;
-	Wed, 15 Nov 2023 19:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1Z38ubK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36157C433C9;
+	Wed, 15 Nov 2023 19:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077348;
-	bh=OriJ50TU6GwJnAZ2ZUOyDPHB24EH0MH0RiDn5b6G8yY=;
+	s=korg; t=1700077350;
+	bh=npQX86jKV2lidGUJf3jEyJGyScyQSr/l3UgeyDdZ68c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvnqSBjDb9c0WjPuW7li6N9BMDNdQwNmAMAUN4AgnnnSTnyECW1N01qpVIs1tNUDC
-	 Ja53y2DKJZGp3TS0eBpP7axriuPR7KK07zyMSRYxJWSW4CIAc6s7uaNvMWKKOyx04O
-	 IXA2X2sPI04OEb/osGSYYRfo3XUhj1KGuz/f1UUc=
+	b=Q1Z38ubKKcAZO3wCpVme4fvqtgQceBLxGZ9fn6b68GFBQY7AONZYGxRre1oYfsHiE
+	 pQ6AfTNiUifNucdCYCGwWXZ0XtHAQEDN46AiFZGakcae0ezhexvUXs+KTdodsuWkLP
+	 PxasKiszACGWxO49a924+txRd6iHlRpA5gj/GEOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hamza Mahfooz <hamza.mahfooz@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 247/603] drm/amd/display: Refactor dm_get_plane_scale helper
-Date: Wed, 15 Nov 2023 14:13:12 -0500
-Message-ID: <20231115191630.336511038@linuxfoundation.org>
+Subject: [PATCH 6.6 248/603] drm/amd/display: Bail from dm_check_crtc_cursor if no relevant change
+Date: Wed, 15 Nov 2023 14:13:13 -0500
+Message-ID: <20231115191630.415515540@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -46,74 +46,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Michel Dänzer <mdaenzer@redhat.com>
 
-[ Upstream commit ec4d770bbb155674c2497f255f4199bdc42287a9 ]
+[ Upstream commit bc0b79ce2050aa523c38c96b6d26340a96bfbdca ]
 
-Cleanup, no functional change intended.
+If no plane was newly enabled or changed scaling, there can be no new
+scaling mismatch with the cursor plane.
 
+By not pulling non-cursor plane states into all atomic commits while
+the cursor plane is enabled, this avoids synchronizing all cursor plane
+changes to vertical blank, which caused the following IGT tests to fail:
+
+kms_cursor_legacy@cursor-vs-flip.*
+kms_cursor_legacy@flip-vs-cursor.*
+
+Fixes: 003048ddf44b ("drm/amd/display: Check all enabled planes in dm_check_crtc_cursor")
 Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
 Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: bc0b79ce2050 ("drm/amd/display: Bail from dm_check_crtc_cursor if no relevant change")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 23 +++++++++++--------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 33 ++++++++++++++++++-
+ 1 file changed, 32 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 342988f52d960..70477a6b896ab 100644
+index 70477a6b896ab..34f011cedd065 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -9891,6 +9891,17 @@ static void dm_get_oriented_plane_size(struct drm_plane_state *plane_state,
- 	}
- }
- 
-+static void
-+dm_get_plane_scale(struct drm_plane_state *plane_state,
-+		   int *out_plane_scale_w, int *out_plane_scale_h)
-+{
-+	int plane_src_w, plane_src_h;
-+
-+	dm_get_oriented_plane_size(plane_state, &plane_src_w, &plane_src_h);
-+	*out_plane_scale_w = plane_state->crtc_w * 1000 / plane_src_w;
-+	*out_plane_scale_h = plane_state->crtc_h * 1000 / plane_src_h;
-+}
-+
- static int dm_check_crtc_cursor(struct drm_atomic_state *state,
+@@ -9906,10 +9906,12 @@ static int dm_check_crtc_cursor(struct drm_atomic_state *state,
  				struct drm_crtc *crtc,
  				struct drm_crtc_state *new_crtc_state)
-@@ -9899,8 +9910,6 @@ static int dm_check_crtc_cursor(struct drm_atomic_state *state,
+ {
+-	struct drm_plane *cursor = crtc->cursor, *underlying;
++	struct drm_plane *cursor = crtc->cursor, *plane, *underlying;
++	struct drm_plane_state *old_plane_state, *new_plane_state;
  	struct drm_plane_state *new_cursor_state, *new_underlying_state;
  	int i;
  	int cursor_scale_w, cursor_scale_h, underlying_scale_w, underlying_scale_h;
--	int cursor_src_w, cursor_src_h;
--	int underlying_src_w, underlying_src_h;
++	bool any_relevant_change = false;
  
  	/* On DCE and DCN there is no dedicated hardware cursor plane. We get a
  	 * cursor per pipe but it's going to inherit the scaling and
-@@ -9915,9 +9924,7 @@ static int dm_check_crtc_cursor(struct drm_atomic_state *state,
- 	if (!new_cursor_state->fb)
- 		return 0;
+@@ -9917,6 +9919,35 @@ static int dm_check_crtc_cursor(struct drm_atomic_state *state,
+ 	 * blending properties match the underlying planes'.
+ 	 */
  
--	dm_get_oriented_plane_size(new_cursor_state, &cursor_src_w, &cursor_src_h);
--	cursor_scale_w = new_cursor_state->crtc_w * 1000 / cursor_src_w;
--	cursor_scale_h = new_cursor_state->crtc_h * 1000 / cursor_src_h;
-+	dm_get_plane_scale(new_cursor_state, &cursor_scale_w, &cursor_scale_h);
- 
- 	/* Need to check all enabled planes, even if this commit doesn't change
- 	 * their state
-@@ -9935,10 +9942,8 @@ static int dm_check_crtc_cursor(struct drm_atomic_state *state,
- 		if (!new_underlying_state->fb)
- 			continue;
- 
--		dm_get_oriented_plane_size(new_underlying_state,
--					   &underlying_src_w, &underlying_src_h);
--		underlying_scale_w = new_underlying_state->crtc_w * 1000 / underlying_src_w;
--		underlying_scale_h = new_underlying_state->crtc_h * 1000 / underlying_src_h;
-+		dm_get_plane_scale(new_underlying_state,
-+				   &underlying_scale_w, &underlying_scale_h);
- 
- 		if (cursor_scale_w != underlying_scale_w ||
- 		    cursor_scale_h != underlying_scale_h) {
++	/* If no plane was enabled or changed scaling, no need to check again */
++	for_each_oldnew_plane_in_state(state, plane, old_plane_state, new_plane_state, i) {
++		int new_scale_w, new_scale_h, old_scale_w, old_scale_h;
++
++		if (!new_plane_state || !new_plane_state->fb || new_plane_state->crtc != crtc)
++			continue;
++
++		if (!old_plane_state || !old_plane_state->fb || old_plane_state->crtc != crtc) {
++			any_relevant_change = true;
++			break;
++		}
++
++		if (new_plane_state->fb == old_plane_state->fb &&
++		    new_plane_state->crtc_w == old_plane_state->crtc_w &&
++		    new_plane_state->crtc_h == old_plane_state->crtc_h)
++			continue;
++
++		dm_get_plane_scale(new_plane_state, &new_scale_w, &new_scale_h);
++		dm_get_plane_scale(old_plane_state, &old_scale_w, &old_scale_h);
++
++		if (new_scale_w != old_scale_w || new_scale_h != old_scale_h) {
++			any_relevant_change = true;
++			break;
++		}
++	}
++
++	if (!any_relevant_change)
++		return 0;
++
+ 	new_cursor_state = drm_atomic_get_plane_state(state, cursor);
+ 	if (IS_ERR(new_cursor_state))
+ 		return PTR_ERR(new_cursor_state);
 -- 
 2.42.0
 
