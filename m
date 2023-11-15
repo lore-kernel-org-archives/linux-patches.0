@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408F53BB4D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E02F28DDE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLsQXwBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63A5C433C8;
-	Wed, 15 Nov 2023 19:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctOPNboY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A44C433C7;
+	Wed, 15 Nov 2023 19:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076639;
-	bh=8bkt9+XocJYJ6pB/Rj52UyPJoPNIe2KhvTC9l181HD4=;
+	s=korg; t=1700076640;
+	bh=nfBX1bawPjGa+Y7Vbae2po4qFP9ViRBeeCkMKh4nTL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLsQXwBSMBGQtlxi3d19BGTVKsjWyf5SAOEHNJGRtvg31uUCzVAdH3oHZyRdkF/0c
-	 HOEe3MFFHBIHqJCeyJ1ZcTjd4Zc6TTUqCugtOT0PCJKUrfu1mgBse96G199humWE4P
-	 1Wi0DcdOnBfOp55xgCRhY9nveXAKLrHW55cMtqCM=
+	b=ctOPNboY/sSU/xBJHSKWxzaAnHclAhGSr2t1dUmJXoKu6ci8eCz221kLlDmBZs77Q
+	 VpnHc2Yb8+ERNHI2uUMWwp6WCrQxi2F3Qy+UAcm1VoTdraQCvOf2YyILwGrEsdyNGE
+	 R0I4kmb2XBlt0WLdv0yKpgmd+OfdGLoyYmi2pl6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longfang Liu <liulongfang@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Kursad Oney <kursad.oney@broadcom.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 330/550] crypto: hisilicon/qm - fix PF queue parameter issue
-Date: Wed, 15 Nov 2023 14:15:14 -0500
-Message-ID: <20231115191623.638271549@linuxfoundation.org>
+Subject: [PATCH 6.5 331/550] ARM: 9321/1: memset: cast the constant byte to unsigned char
+Date: Wed, 15 Nov 2023 14:15:15 -0500
+Message-ID: <20231115191623.712059475@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,194 +44,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longfang Liu <liulongfang@huawei.com>
+From: Kursad Oney <kursad.oney@broadcom.com>
 
-[ Upstream commit 5831fc1fd4a578232fea708b82de0c666ed17153 ]
+[ Upstream commit c0e824661f443b8cab3897006c1bbc69fd0e7bc4 ]
 
-If the queue isolation feature is enabled, the number of queues
-supported by the device changes. When PF is enabled using the
-current default number of queues, the default number of queues may
-be greater than the number supported by the device. As a result,
-the PF fails to be bound to the driver.
+memset() description in ISO/IEC 9899:1999 (and elsewhere) says:
 
-After modification, if queue isolation feature is enabled, when
-the default queue parameter is greater than the number supported
-by the device, the number of enabled queues will be changed to
-the number supported by the device, so that the PF and driver
-can be properly bound.
+	The memset function copies the value of c (converted to an
+	unsigned char) into each of the first n characters of the
+	object pointed to by s.
 
-Fixes: 8bbecfb402f7 ("crypto: hisilicon/qm - add queue isolation support for Kunpeng930")
-Signed-off-by: Longfang Liu <liulongfang@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The kernel's arm32 memset does not cast c to unsigned char. This results
+in the following code to produce erroneous output:
+
+	char a[128];
+	memset(a, -128, sizeof(a));
+
+This is because gcc will generally emit the following code before
+it calls memset() :
+
+	mov   r0, r7
+	mvn   r1, #127        ; 0x7f
+	bl    00000000 <memset>
+
+r1 ends up with 0xffffff80 before being used by memset() and the
+'a' array will have -128 once in every four bytes while the other
+bytes will be set incorrectly to -1 like this (printing the first
+8 bytes) :
+
+	test_module: -128 -1 -1 -1
+	test_module: -1 -1 -1 -128
+
+The change here is to 'and' r1 with 255 before it is used.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Kursad Oney <kursad.oney@broadcom.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_main.c |  5 +++++
- drivers/crypto/hisilicon/qm.c             | 18 ++++++++++++------
- drivers/crypto/hisilicon/qm_common.h      |  1 -
- drivers/crypto/hisilicon/sec2/sec_main.c  |  5 +++++
- drivers/crypto/hisilicon/zip/zip_main.c   |  5 +++++
- include/linux/hisi_acc_qm.h               |  7 +++++++
- 6 files changed, 34 insertions(+), 7 deletions(-)
+ arch/arm/lib/memset.S | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
-index 655138d21e71f..bbf1bbe283574 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_main.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
-@@ -430,8 +430,11 @@ static u32 uacce_mode = UACCE_MODE_NOUACCE;
- module_param_cb(uacce_mode, &hpre_uacce_mode_ops, &uacce_mode, 0444);
- MODULE_PARM_DESC(uacce_mode, UACCE_MODE_DESC);
- 
-+static bool pf_q_num_flag;
- static int pf_q_num_set(const char *val, const struct kernel_param *kp)
- {
-+	pf_q_num_flag = true;
-+
- 	return q_num_set(val, kp, PCI_DEVICE_ID_HUAWEI_HPRE_PF);
- }
- 
-@@ -1154,6 +1157,8 @@ static int hpre_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- 		qm->qp_num = pf_q_num;
- 		qm->debug.curr_qm_qp_num = pf_q_num;
- 		qm->qm_list = &hpre_devices;
-+		if (pf_q_num_flag)
-+			set_bit(QM_MODULE_PARAM, &qm->misc_ctl);
- 	}
- 
- 	ret = hisi_qm_init(qm);
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index edc6fd44e7ca9..ba4852744c052 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -204,8 +204,6 @@
- #define WAIT_PERIOD			20
- #define REMOVE_WAIT_DELAY		10
- 
--#define QM_DRIVER_REMOVING		0
--#define QM_RST_SCHED			1
- #define QM_QOS_PARAM_NUM		2
- #define QM_QOS_MAX_VAL			1000
- #define QM_QOS_RATE			100
-@@ -2814,7 +2812,6 @@ static void hisi_qm_pre_init(struct hisi_qm *qm)
- 	mutex_init(&qm->mailbox_lock);
- 	init_rwsem(&qm->qps_lock);
- 	qm->qp_in_used = 0;
--	qm->misc_ctl = false;
- 	if (test_bit(QM_SUPPORT_RPM, &qm->caps)) {
- 		if (!acpi_device_power_manageable(ACPI_COMPANION(&pdev->dev)))
- 			dev_info(&pdev->dev, "_PS0 and _PR0 are not defined");
-@@ -5081,6 +5078,7 @@ static int qm_irqs_register(struct hisi_qm *qm)
- 
- static int qm_get_qp_num(struct hisi_qm *qm)
- {
-+	struct device *dev = &qm->pdev->dev;
- 	bool is_db_isolation;
- 
- 	/* VF's qp_num assigned by PF in v2, and VF can get qp_num by vft. */
-@@ -5097,13 +5095,21 @@ static int qm_get_qp_num(struct hisi_qm *qm)
- 	qm->max_qp_num = hisi_qm_get_hw_info(qm, qm_basic_info,
- 					     QM_FUNC_MAX_QP_CAP, is_db_isolation);
- 
--	/* check if qp number is valid */
--	if (qm->qp_num > qm->max_qp_num) {
--		dev_err(&qm->pdev->dev, "qp num(%u) is more than max qp num(%u)!\n",
-+	if (qm->qp_num <= qm->max_qp_num)
-+		return 0;
-+
-+	if (test_bit(QM_MODULE_PARAM, &qm->misc_ctl)) {
-+		/* Check whether the set qp number is valid */
-+		dev_err(dev, "qp num(%u) is more than max qp num(%u)!\n",
- 			qm->qp_num, qm->max_qp_num);
- 		return -EINVAL;
- 	}
- 
-+	dev_info(dev, "Default qp num(%u) is too big, reset it to Function's max qp num(%u)!\n",
-+		 qm->qp_num, qm->max_qp_num);
-+	qm->qp_num = qm->max_qp_num;
-+	qm->debug.curr_qm_qp_num = qm->qp_num;
-+
- 	return 0;
- }
- 
-diff --git a/drivers/crypto/hisilicon/qm_common.h b/drivers/crypto/hisilicon/qm_common.h
-index 1406a422d4551..8e36aa9c681be 100644
---- a/drivers/crypto/hisilicon/qm_common.h
-+++ b/drivers/crypto/hisilicon/qm_common.h
-@@ -4,7 +4,6 @@
- #define QM_COMMON_H
- 
- #define QM_DBG_READ_LEN		256
--#define QM_RESETTING		2
- 
- struct qm_cqe {
- 	__le32 rsvd0;
-diff --git a/drivers/crypto/hisilicon/sec2/sec_main.c b/drivers/crypto/hisilicon/sec2/sec_main.c
-index 77f9f131b8503..62bd8936a9154 100644
---- a/drivers/crypto/hisilicon/sec2/sec_main.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_main.c
-@@ -311,8 +311,11 @@ static int sec_diff_regs_show(struct seq_file *s, void *unused)
- }
- DEFINE_SHOW_ATTRIBUTE(sec_diff_regs);
- 
-+static bool pf_q_num_flag;
- static int sec_pf_q_num_set(const char *val, const struct kernel_param *kp)
- {
-+	pf_q_num_flag = true;
-+
- 	return q_num_set(val, kp, PCI_DEVICE_ID_HUAWEI_SEC_PF);
- }
- 
-@@ -1120,6 +1123,8 @@ static int sec_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- 		qm->qp_num = pf_q_num;
- 		qm->debug.curr_qm_qp_num = pf_q_num;
- 		qm->qm_list = &sec_devices;
-+		if (pf_q_num_flag)
-+			set_bit(QM_MODULE_PARAM, &qm->misc_ctl);
- 	} else if (qm->fun_type == QM_HW_VF && qm->ver == QM_HW_V1) {
- 		/*
- 		 * have no way to get qm configure in VM in v1 hardware,
-diff --git a/drivers/crypto/hisilicon/zip/zip_main.c b/drivers/crypto/hisilicon/zip/zip_main.c
-index f3ce34198775d..84dbaeb07ea83 100644
---- a/drivers/crypto/hisilicon/zip/zip_main.c
-+++ b/drivers/crypto/hisilicon/zip/zip_main.c
-@@ -364,8 +364,11 @@ static u32 uacce_mode = UACCE_MODE_NOUACCE;
- module_param_cb(uacce_mode, &zip_uacce_mode_ops, &uacce_mode, 0444);
- MODULE_PARM_DESC(uacce_mode, UACCE_MODE_DESC);
- 
-+static bool pf_q_num_flag;
- static int pf_q_num_set(const char *val, const struct kernel_param *kp)
- {
-+	pf_q_num_flag = true;
-+
- 	return q_num_set(val, kp, PCI_DEVICE_ID_HUAWEI_ZIP_PF);
- }
- 
-@@ -1139,6 +1142,8 @@ static int hisi_zip_qm_init(struct hisi_qm *qm, struct pci_dev *pdev)
- 		qm->qp_num = pf_q_num;
- 		qm->debug.curr_qm_qp_num = pf_q_num;
- 		qm->qm_list = &zip_devices;
-+		if (pf_q_num_flag)
-+			set_bit(QM_MODULE_PARAM, &qm->misc_ctl);
- 	} else if (qm->fun_type == QM_HW_VF && qm->ver == QM_HW_V1) {
- 		/*
- 		 * have no way to get qm configure in VM in v1 hardware,
-diff --git a/include/linux/hisi_acc_qm.h b/include/linux/hisi_acc_qm.h
-index a7d54d4d41fdb..e1bb4c2801e6b 100644
---- a/include/linux/hisi_acc_qm.h
-+++ b/include/linux/hisi_acc_qm.h
-@@ -144,6 +144,13 @@ enum qm_vf_state {
- 	QM_NOT_READY,
- };
- 
-+enum qm_misc_ctl_bits {
-+	QM_DRIVER_REMOVING = 0x0,
-+	QM_RST_SCHED,
-+	QM_RESETTING,
-+	QM_MODULE_PARAM,
-+};
-+
- enum qm_cap_bits {
- 	QM_SUPPORT_DB_ISOLATION = 0x0,
- 	QM_SUPPORT_FUNC_QOS,
+diff --git a/arch/arm/lib/memset.S b/arch/arm/lib/memset.S
+index d71ab61430b26..de75ae4d5ab41 100644
+--- a/arch/arm/lib/memset.S
++++ b/arch/arm/lib/memset.S
+@@ -17,6 +17,7 @@ ENTRY(__memset)
+ ENTRY(mmioset)
+ WEAK(memset)
+ UNWIND( .fnstart         )
++	and	r1, r1, #255		@ cast to unsigned char
+ 	ands	r3, r0, #3		@ 1 unaligned?
+ 	mov	ip, r0			@ preserve r0 as return value
+ 	bne	6f			@ 1
 -- 
 2.42.0
 
