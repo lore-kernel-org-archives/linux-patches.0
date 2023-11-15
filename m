@@ -1,32 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F172364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483323DB91;
+	Wed, 15 Nov 2023 19:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ww/MYWPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD5FC433C8;
-	Wed, 15 Nov 2023 19:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRhkWicR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9714C433C8;
+	Wed, 15 Nov 2023 19:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076724;
-	bh=4/jXY3fcJYyN+HC32/MHQMPHBo1D/ti1DbC1au+SCmU=;
+	s=korg; t=1700076726;
+	bh=/SprfMK39MSgjFMiw1J9eLDIGszjDz0qV1aULbNTrEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ww/MYWPBioahgWgAAmKXpaICjhj27LK9wRJjjfcLoAb+TGRF9eoXrimcDmKAeymTv
-	 yuVgAHstR4SDlr2u9EPMUR4/9eBrVtLXn3Yftj4riMHyISIh/S6Igp18LCAw7gg0wp
-	 rVbUbqsbl0WMAmE/nurFfKGN7SI0SYzesV/k6qwo=
+	b=GRhkWicRGHlhuy4qerN5tCddLAbW7XCL3Rh6aA0CvBnGPkqW/07ma0VOUUjSFyySy
+	 MjXtleRf43suihpbvBPSO/V+3IZQAIzxeNnIx1+AJI4SIUlCooE3KtEo7n4l5lqk/3
+	 DkBCYKGsDBe3aCI+DPvm8BF52g1ROoLegiG7CZXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	David Howells <dhowells@redhat.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jens Axboe <axboe@kernel.dk>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <christian@brauner.io>,
+	Matthew Wilcox <willy@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Laight <David.Laight@ACULAB.COM>,
+	x86@kernel.org,
+	linux-block@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-mm@kvack.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 402/550] tools: iio: iio_generic_buffer ensure alignment
-Date: Wed, 15 Nov 2023 14:16:26 -0500
-Message-ID: <20231115191628.685379194@linuxfoundation.org>
+Subject: [PATCH 6.6 006/603] iov_iter, x86: Be consistent about the __user tag on copy_mc_to_user()
+Date: Wed, 15 Nov 2023 14:09:11 -0500
+Message-ID: <20231115191613.572325746@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,66 +55,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 2d3dff577dd0ea8fe9637a13822f7603c4a881c8 ]
+[ Upstream commit 066baf92bed934c9fb4bcee97a193f47aa63431c ]
 
-The iio_generic_buffer can return garbage values when the total size of
-scan data is not a multiple of the largest element in the scan. This can be
-demonstrated by reading a scan, consisting, for example of one 4-byte and
-one 2-byte element, where the 4-byte element is first in the buffer.
+copy_mc_to_user() has the destination marked __user on powerpc, but not on
+x86; the latter results in a sparse warning in lib/iov_iter.c.
 
-The IIO generic buffer code does not take into account the last two
-padding bytes that are needed to ensure that the 4-byte data for next
-scan is correctly aligned.
+Fix this by applying the tag on x86 too.
 
-Add the padding bytes required to align the next sample with the scan size.
-
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: e58537ccce73 ("staging: iio: update example application.")
-Link: https://lore.kernel.org/r/ZRvlm4ktNLu+qmlf@dc78bmyyyyyyyyyyyyydt-3.rev.dnainternet.fi
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: ec6347bb4339 ("x86, powerpc: Rename memcpy_mcsafe() to copy_mc_to_{user, kernel}()")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20230925120309.1731676-3-dhowells@redhat.com
+cc: Dan Williams <dan.j.williams@intel.com>
+cc: Thomas Gleixner <tglx@linutronix.de>
+cc: Ingo Molnar <mingo@redhat.com>
+cc: Borislav Petkov <bp@alien8.de>
+cc: Dave Hansen <dave.hansen@linux.intel.com>
+cc: "H. Peter Anvin" <hpa@zytor.com>
+cc: Alexander Viro <viro@zeniv.linux.org.uk>
+cc: Jens Axboe <axboe@kernel.dk>
+cc: Christoph Hellwig <hch@lst.de>
+cc: Christian Brauner <christian@brauner.io>
+cc: Matthew Wilcox <willy@infradead.org>
+cc: Linus Torvalds <torvalds@linux-foundation.org>
+cc: David Laight <David.Laight@ACULAB.COM>
+cc: x86@kernel.org
+cc: linux-block@vger.kernel.org
+cc: linux-fsdevel@vger.kernel.org
+cc: linux-mm@kvack.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/iio/iio_generic_buffer.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/uaccess.h | 2 +-
+ arch/x86/lib/copy_mc.c         | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
-index 44bbf80f0cfdd..0d0a7a19d6f95 100644
---- a/tools/iio/iio_generic_buffer.c
-+++ b/tools/iio/iio_generic_buffer.c
-@@ -54,9 +54,12 @@ enum autochan {
- static unsigned int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
+diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
+index 8bae40a662827..5c367c1290c35 100644
+--- a/arch/x86/include/asm/uaccess.h
++++ b/arch/x86/include/asm/uaccess.h
+@@ -496,7 +496,7 @@ copy_mc_to_kernel(void *to, const void *from, unsigned len);
+ #define copy_mc_to_kernel copy_mc_to_kernel
+ 
+ unsigned long __must_check
+-copy_mc_to_user(void *to, const void *from, unsigned len);
++copy_mc_to_user(void __user *to, const void *from, unsigned len);
+ #endif
+ 
+ /*
+diff --git a/arch/x86/lib/copy_mc.c b/arch/x86/lib/copy_mc.c
+index 80efd45a77617..6e8b7e600def5 100644
+--- a/arch/x86/lib/copy_mc.c
++++ b/arch/x86/lib/copy_mc.c
+@@ -70,23 +70,23 @@ unsigned long __must_check copy_mc_to_kernel(void *dst, const void *src, unsigne
+ }
+ EXPORT_SYMBOL_GPL(copy_mc_to_kernel);
+ 
+-unsigned long __must_check copy_mc_to_user(void *dst, const void *src, unsigned len)
++unsigned long __must_check copy_mc_to_user(void __user *dst, const void *src, unsigned len)
  {
- 	unsigned int bytes = 0;
--	int i = 0;
-+	int i = 0, max = 0;
-+	unsigned int misalignment;
+ 	unsigned long ret;
  
- 	while (i < num_channels) {
-+		if (channels[i].bytes > max)
-+			max = channels[i].bytes;
- 		if (bytes % channels[i].bytes == 0)
- 			channels[i].location = bytes;
- 		else
-@@ -66,6 +69,14 @@ static unsigned int size_from_channelarray(struct iio_channel_info *channels, in
- 		bytes = channels[i].location + channels[i].bytes;
- 		i++;
+ 	if (copy_mc_fragile_enabled) {
+ 		__uaccess_begin();
+-		ret = copy_mc_fragile(dst, src, len);
++		ret = copy_mc_fragile((__force void *)dst, src, len);
+ 		__uaccess_end();
+ 		return ret;
  	}
-+	/*
-+	 * We want the data in next sample to also be properly aligned so
-+	 * we'll add padding at the end if needed. Adding padding only
-+	 * works for channel data which size is 2^n bytes.
-+	 */
-+	misalignment = bytes % max;
-+	if (misalignment)
-+		bytes += max - misalignment;
  
- 	return bytes;
+ 	if (static_cpu_has(X86_FEATURE_ERMS)) {
+ 		__uaccess_begin();
+-		ret = copy_mc_enhanced_fast_string(dst, src, len);
++		ret = copy_mc_enhanced_fast_string((__force void *)dst, src, len);
+ 		__uaccess_end();
+ 		return ret;
+ 	}
+ 
+-	return copy_user_generic(dst, src, len);
++	return copy_user_generic((__force void *)dst, src, len);
  }
 -- 
 2.42.0
