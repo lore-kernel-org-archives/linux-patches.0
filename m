@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE9245BE4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB40545BE4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ai/a/Krc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DC8C433C7;
-	Wed, 15 Nov 2023 22:03:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqmkJt4y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA88C433C8;
+	Wed, 15 Nov 2023 22:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085837;
-	bh=xD5F/ZSwaDMtqediyd/9zs2raLAesfMVN4+ftR1pgA8=;
+	s=korg; t=1700085838;
+	bh=oryBbwrlgDElBtGMMknL5fdkLzMRyPdpFxtk6qFeCSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ai/a/Krcz3v0i9bk3wVOmOCWSNf+vFU/e61OvnTjJosRySz1xTUqwU8QtunNR+sru
-	 pFKEh/3ftj7gc52ztApxUDOgffkg/rz/QTkXkgo80LI3IjxwKsfYkJ1UBb73xMloQa
-	 s2p7vO0Z5zmCGV57X2kfZpEYV02pOV+WLaR1g2BI=
+	b=NqmkJt4ymL5UO0vbsRlAu6fxkB0+18TEkL3TfoeIQ5U6rvdypjpJ/4mqV0STNuwOh
+	 P7jUQlTBf+Ta5YRnKEFYBuYYgARdgh9PNYO6hsao2ubLvMfJsroRNCunnwOWdP+HIe
+	 UegMJ4S04zjkI15TcZWdjw8420OX+e4ezIiXXxLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 087/119] rtc: pcf85363: fix wrong mask/val parameters in regmap_update_bits call
-Date: Wed, 15 Nov 2023 17:01:17 -0500
-Message-ID: <20231115220135.348762066@linuxfoundation.org>
+Subject: [PATCH 5.4 088/119] pcmcia: cs: fix possible hung task and memory leak pccardd()
+Date: Wed, 15 Nov 2023 17:01:18 -0500
+Message-ID: <20231115220135.377219521@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -42,40 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 2be36c09b6b07306be33519e1aa70d2e2a2161bb ]
+[ Upstream commit e3ea1b4847e49234e691c0d66bf030bd65bb7f2b ]
 
-The current implementation passes PIN_IO_INTA_OUT (2) as a mask and
-PIN_IO_INTAPM (GENMASK(1, 0)) as a value.
-Swap the variables to assign mask and value the right way.
+If device_register() returns error in pccardd(), it leads two issues:
 
-This error was first introduced with the alarm support. For better or
-worse it worked as expected because 0x02 was applied as a mask to 0x03,
-resulting 0x02 anyway. This will of course not work for any other value.
+1. The socket_released has never been completed, it will block
+   pcmcia_unregister_socket(), because of waiting for completion
+   of socket_released.
+2. The device name allocated by dev_set_name() is leaked.
 
-Fixes: e5aac267a10a ("rtc: pcf85363: add alarm support")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20231013-topic-pcf85363_regmap_update_bits-v1-1-c454f016f71f@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fix this two issues by calling put_device() when device_register() fails.
+socket_released can be completed in pcmcia_release_socket(), the name can
+be freed in kobject_cleanup().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85363.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pcmcia/cs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-pcf85363.c b/drivers/rtc/rtc-pcf85363.c
-index 3450d615974d5..bb962dce3ab26 100644
---- a/drivers/rtc/rtc-pcf85363.c
-+++ b/drivers/rtc/rtc-pcf85363.c
-@@ -407,7 +407,7 @@ static int pcf85363_probe(struct i2c_client *client,
- 	if (client->irq > 0) {
- 		regmap_write(pcf85363->regmap, CTRL_FLAGS, 0);
- 		regmap_update_bits(pcf85363->regmap, CTRL_PIN_IO,
--				   PIN_IO_INTA_OUT, PIN_IO_INTAPM);
-+				   PIN_IO_INTAPM, PIN_IO_INTA_OUT);
- 		ret = devm_request_threaded_irq(&client->dev, client->irq,
- 						NULL, pcf85363_rtc_handle_irq,
- 						IRQF_TRIGGER_LOW | IRQF_ONESHOT,
+diff --git a/drivers/pcmcia/cs.c b/drivers/pcmcia/cs.c
+index f70197154a362..820cce7c8b400 100644
+--- a/drivers/pcmcia/cs.c
++++ b/drivers/pcmcia/cs.c
+@@ -605,6 +605,7 @@ static int pccardd(void *__skt)
+ 		dev_warn(&skt->dev, "PCMCIA: unable to register socket\n");
+ 		skt->thread = NULL;
+ 		complete(&skt->thread_done);
++		put_device(&skt->dev);
+ 		return 0;
+ 	}
+ 	ret = pccard_sysfs_add_socket(&skt->dev);
 -- 
 2.42.0
 
