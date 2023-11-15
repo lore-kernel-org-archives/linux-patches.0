@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E518B3A8DB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175163A8DB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdBsIAc8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487EFC433CA;
-	Wed, 15 Nov 2023 19:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYCWl+K3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDCD8C433CB;
+	Wed, 15 Nov 2023 19:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076060;
-	bh=SYL0DLa9Wm2HAcEyzE0oLeQzsv4tvV7aKXzBXclhneM=;
+	s=korg; t=1700076061;
+	bh=oq6b5PEUU1TJlIocnFblYHBsQKs/5x4la6dWPREzl54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TdBsIAc83zebC2gMcB2pnPaO4ECXb4gKCpP5P7JZGuwwdIvoAZxFiVUrP6/sSy2FB
-	 B0GroOSATRXtyDKvSJqBYPNA1LBfq0g0R6+4GeR5fzudj8TiKOt45/37dZQ0ton9XN
-	 ykicMMBEy1Zd5/XSyzrg+XGUNQQGyp57jp3RjFKw=
+	b=qYCWl+K3mdRoK9JDoxYw0bOE4iXma4tgpSvlw6oa0Ofur1Uv3BgCodbSWgGCOQEOW
+	 oOf7nC8FzlCUXWd+vfvk4AhOt5JJbZ5qbg7KUhRyibovXZnhEY1ZoL1V8YE6SV6ZoG
+	 EwcTBycUn4t9de3g4CfiQlkkw702V8kdQCVoGMTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <hffilwlqm@gmail.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Menglong Dong <imagedong@tencent.com>,
+	Yonghong Song <yhs@fb.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 050/550] selftests/bpf: Correct map_fd to data_fd in tailcalls
-Date: Wed, 15 Nov 2023 14:10:34 -0500
-Message-ID: <20231115191604.161397133@linuxfoundation.org>
+Subject: [PATCH 6.5 051/550] bpf, x86: save/restore regs with BPF_DW size
+Date: Wed, 15 Nov 2023 14:10:35 -0500
+Message-ID: <20231115191604.229307603@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,119 +43,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <hffilwlqm@gmail.com>
+From: Menglong Dong <imagedong@tencent.com>
 
-[ Upstream commit 96daa9874211d5497aa70fa409b67afc29f0cb86 ]
+[ Upstream commit 02a6dfa8ff43efb1c989f87a4d862aedf436088a ]
 
-Get and check data_fd. It should not check map_fd again.
+As we already reserve 8 byte in the stack for each reg, it is ok to
+store/restore the regs in BPF_DW size. This will make the code in
+save_regs()/restore_regs() simpler.
 
-Meanwhile, correct some 'return' to 'goto out'.
-
-Thank the suggestion from Maciej in "bpf, x64: Fix tailcall infinite
-loop"[0] discussions.
-
-[0] https://lore.kernel.org/bpf/e496aef8-1f80-0f8e-dcdd-25a8c300319a@gmail.com/T/#m7d3b601066ba66400d436b7e7579b2df4a101033
-
-Fixes: 79d49ba048ec ("bpf, testing: Add various tail call test cases")
-Fixes: 3b0379111197 ("selftests/bpf: Add tailcall_bpf2bpf tests")
-Fixes: 5e0b0a4c52d3 ("selftests/bpf: Test tail call counting with bpf2bpf and data on stack")
-Signed-off-by: Leon Hwang <hffilwlqm@gmail.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/r/20230906154256.95461-1-hffilwlqm@gmail.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Menglong Dong <imagedong@tencent.com>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/r/20230713040738.1789742-2-imagedong@tencent.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 2b5dcb31a19a ("bpf, x64: Fix tailcall infinite loop")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/tailcalls.c      | 32 +++++++++----------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ arch/x86/net/bpf_jit_comp.c | 35 ++++++-----------------------------
+ 1 file changed, 6 insertions(+), 29 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/tailcalls.c b/tools/testing/selftests/bpf/prog_tests/tailcalls.c
-index 58fe2c586ed76..09c189761926c 100644
---- a/tools/testing/selftests/bpf/prog_tests/tailcalls.c
-+++ b/tools/testing/selftests/bpf/prog_tests/tailcalls.c
-@@ -271,11 +271,11 @@ static void test_tailcall_count(const char *which)
+diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+index 438adb695daab..fcbd3b7123a47 100644
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -1860,57 +1860,34 @@ st:			if (is_imm8(insn->off))
+ static void save_regs(const struct btf_func_model *m, u8 **prog, int nr_regs,
+ 		      int stack_size)
+ {
+-	int i, j, arg_size;
+-	bool next_same_struct = false;
++	int i;
  
- 	data_map = bpf_object__find_map_by_name(obj, "tailcall.bss");
- 	if (CHECK_FAIL(!data_map || !bpf_map__is_internal(data_map)))
--		return;
-+		goto out;
+ 	/* Store function arguments to stack.
+ 	 * For a function that accepts two pointers the sequence will be:
+ 	 * mov QWORD PTR [rbp-0x10],rdi
+ 	 * mov QWORD PTR [rbp-0x8],rsi
+ 	 */
+-	for (i = 0, j = 0; i < min(nr_regs, 6); i++) {
+-		/* The arg_size is at most 16 bytes, enforced by the verifier. */
+-		arg_size = m->arg_size[j];
+-		if (arg_size > 8) {
+-			arg_size = 8;
+-			next_same_struct = !next_same_struct;
+-		}
+-
+-		emit_stx(prog, bytes_to_bpf_size(arg_size),
+-			 BPF_REG_FP,
++	for (i = 0; i < min(nr_regs, 6); i++)
++		emit_stx(prog, BPF_DW, BPF_REG_FP,
+ 			 i == 5 ? X86_REG_R9 : BPF_REG_1 + i,
+ 			 -(stack_size - i * 8));
+-
+-		j = next_same_struct ? j : j + 1;
+-	}
+ }
  
- 	data_fd = bpf_map__fd(data_map);
--	if (CHECK_FAIL(map_fd < 0))
--		return;
-+	if (CHECK_FAIL(data_fd < 0))
-+		goto out;
+ static void restore_regs(const struct btf_func_model *m, u8 **prog, int nr_regs,
+ 			 int stack_size)
+ {
+-	int i, j, arg_size;
+-	bool next_same_struct = false;
++	int i;
  
- 	i = 0;
- 	err = bpf_map_lookup_elem(data_fd, &i, &val);
-@@ -352,11 +352,11 @@ static void test_tailcall_4(void)
+ 	/* Restore function arguments from stack.
+ 	 * For a function that accepts two pointers the sequence will be:
+ 	 * EMIT4(0x48, 0x8B, 0x7D, 0xF0); mov rdi,QWORD PTR [rbp-0x10]
+ 	 * EMIT4(0x48, 0x8B, 0x75, 0xF8); mov rsi,QWORD PTR [rbp-0x8]
+ 	 */
+-	for (i = 0, j = 0; i < min(nr_regs, 6); i++) {
+-		/* The arg_size is at most 16 bytes, enforced by the verifier. */
+-		arg_size = m->arg_size[j];
+-		if (arg_size > 8) {
+-			arg_size = 8;
+-			next_same_struct = !next_same_struct;
+-		}
+-
+-		emit_ldx(prog, bytes_to_bpf_size(arg_size),
++	for (i = 0; i < min(nr_regs, 6); i++)
++		emit_ldx(prog, BPF_DW,
+ 			 i == 5 ? X86_REG_R9 : BPF_REG_1 + i,
+ 			 BPF_REG_FP,
+ 			 -(stack_size - i * 8));
+-
+-		j = next_same_struct ? j : j + 1;
+-	}
+ }
  
- 	data_map = bpf_object__find_map_by_name(obj, "tailcall.bss");
- 	if (CHECK_FAIL(!data_map || !bpf_map__is_internal(data_map)))
--		return;
-+		goto out;
- 
- 	data_fd = bpf_map__fd(data_map);
--	if (CHECK_FAIL(map_fd < 0))
--		return;
-+	if (CHECK_FAIL(data_fd < 0))
-+		goto out;
- 
- 	for (i = 0; i < bpf_map__max_entries(prog_array); i++) {
- 		snprintf(prog_name, sizeof(prog_name), "classifier_%d", i);
-@@ -442,11 +442,11 @@ static void test_tailcall_5(void)
- 
- 	data_map = bpf_object__find_map_by_name(obj, "tailcall.bss");
- 	if (CHECK_FAIL(!data_map || !bpf_map__is_internal(data_map)))
--		return;
-+		goto out;
- 
- 	data_fd = bpf_map__fd(data_map);
--	if (CHECK_FAIL(map_fd < 0))
--		return;
-+	if (CHECK_FAIL(data_fd < 0))
-+		goto out;
- 
- 	for (i = 0; i < bpf_map__max_entries(prog_array); i++) {
- 		snprintf(prog_name, sizeof(prog_name), "classifier_%d", i);
-@@ -631,11 +631,11 @@ static void test_tailcall_bpf2bpf_2(void)
- 
- 	data_map = bpf_object__find_map_by_name(obj, "tailcall.bss");
- 	if (CHECK_FAIL(!data_map || !bpf_map__is_internal(data_map)))
--		return;
-+		goto out;
- 
- 	data_fd = bpf_map__fd(data_map);
--	if (CHECK_FAIL(map_fd < 0))
--		return;
-+	if (CHECK_FAIL(data_fd < 0))
-+		goto out;
- 
- 	i = 0;
- 	err = bpf_map_lookup_elem(data_fd, &i, &val);
-@@ -805,11 +805,11 @@ static void test_tailcall_bpf2bpf_4(bool noise)
- 
- 	data_map = bpf_object__find_map_by_name(obj, "tailcall.bss");
- 	if (CHECK_FAIL(!data_map || !bpf_map__is_internal(data_map)))
--		return;
-+		goto out;
- 
- 	data_fd = bpf_map__fd(data_map);
--	if (CHECK_FAIL(map_fd < 0))
--		return;
-+	if (CHECK_FAIL(data_fd < 0))
-+		goto out;
- 
- 	i = 0;
- 	val.noise = noise;
-@@ -872,7 +872,7 @@ static void test_tailcall_bpf2bpf_6(void)
- 	ASSERT_EQ(topts.retval, 0, "tailcall retval");
- 
- 	data_fd = bpf_map__fd(obj->maps.bss);
--	if (!ASSERT_GE(map_fd, 0, "bss map fd"))
-+	if (!ASSERT_GE(data_fd, 0, "bss map fd"))
- 		goto out;
- 
- 	i = 0;
+ static int invoke_bpf_prog(const struct btf_func_model *m, u8 **pprog,
 -- 
 2.42.0
 
