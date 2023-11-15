@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431B2446B6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A36446B6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZOVTF4d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA85EC433CC;
-	Wed, 15 Nov 2023 22:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DT9ONaOO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E36C433C9;
+	Wed, 15 Nov 2023 22:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085823;
-	bh=3ZG/wb566jKAgLyakaHndACoD82k9bDyut+NX17MdRw=;
+	s=korg; t=1700085824;
+	bh=C/z4XZxienzDelgJDeepXjiLX/sqM72vgzo7U1PWO4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZOVTF4dpAX/f3dvuWU8J+Joc3ZFKZGJYLN+dGD0giDnjdQGqoEc8ACIrtX6R7yjg
-	 FHQYiLgDqsU+Nr8wJl0BXWJGYkxcVoxWz2z2Vmx0WlCidLDjPWFixvHzJKTAWoE/+K
-	 EatagWI//3QuSgudvZ4rUxJ9vrzqUT4uuTX1OYs8=
+	b=DT9ONaOO603cgfIwVsq4toy4II4p0F/Xt0fbyV7OBRaLxGg/IyD+h38NyzDfIxb/R
+	 eeUFvdMqbFQFVFDcQFenKwbDLWELD85ZurTfZrYqTQFLFFkxFNZ1F8GJi2NczzU5Yx
+	 BCr6WZkaD9Wj9sg3sGbN/Ay3AuCnV7XcBlMJ3/Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sascha Hauer <s.hauer@pengutronix.de>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 039/119] drm/rockchip: vop: Fix reset of state in duplicate state crtc funcs
-Date: Wed, 15 Nov 2023 17:00:29 -0500
-Message-ID: <20231115220133.833559327@linuxfoundation.org>
+Subject: [PATCH 5.4 040/119] drm/rockchip: vop: Fix call to crtc reset helper
+Date: Wed, 15 Nov 2023 17:00:30 -0500
+Message-ID: <20231115220133.870873483@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -45,38 +45,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 13fc28804bf10ca0b7bce3efbba95c534836d7ca ]
+[ Upstream commit 5aacd290837828c089a83ac9795c74c4c9e2c923 ]
 
-struct rockchip_crtc_state members such as output_type, output_bpc and
-enable_afbc is always reset to zero in the atomic_duplicate_state crtc
-funcs.
+Allocation of crtc_state may fail in vop_crtc_reset, causing an invalid
+pointer to be passed to __drm_atomic_helper_crtc_reset.
 
-Fix this by using kmemdup on the subclass rockchip_crtc_state struct.
+Fix this by adding a NULL check of crtc_state, similar to other drivers.
 
-Fixes: 4e257d9eee23 ("drm/rockchip: get rid of rockchip_drm_crtc_mode_config")
+Fixes: 01e2eaf40c9d ("drm/rockchip: Convert to using __drm_atomic_helper_crtc_reset() for reset.")
 Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
 Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230621223311.2239547-2-jonas@kwiboo.se
+Link: https://patchwork.freedesktop.org/patch/msgid/20230621223311.2239547-4-jonas@kwiboo.se
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-index 1795adbd81d38..52a4b6277188e 100644
+index 52a4b6277188e..20aa93fe9e3f2 100644
 --- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
 +++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-@@ -1291,7 +1291,8 @@ static struct drm_crtc_state *vop_crtc_duplicate_state(struct drm_crtc *crtc)
- 	if (WARN_ON(!crtc->state))
- 		return NULL;
+@@ -1317,7 +1317,10 @@ static void vop_crtc_reset(struct drm_crtc *crtc)
+ 	if (crtc->state)
+ 		vop_crtc_destroy_state(crtc, crtc->state);
  
--	rockchip_state = kzalloc(sizeof(*rockchip_state), GFP_KERNEL);
-+	rockchip_state = kmemdup(to_rockchip_crtc_state(crtc->state),
-+				 sizeof(*rockchip_state), GFP_KERNEL);
- 	if (!rockchip_state)
- 		return NULL;
+-	__drm_atomic_helper_crtc_reset(crtc, &crtc_state->base);
++	if (crtc_state)
++		__drm_atomic_helper_crtc_reset(crtc, &crtc_state->base);
++	else
++		__drm_atomic_helper_crtc_reset(crtc, NULL);
+ }
  
+ #ifdef CONFIG_DRM_ANALOGIX_DP
 -- 
 2.42.0
 
