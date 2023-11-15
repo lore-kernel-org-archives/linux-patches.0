@@ -1,116 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBAC43AB8;
-	Wed, 15 Nov 2023 22:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A77843AB4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 23:09:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ExO911IR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F09C433C8;
-	Wed, 15 Nov 2023 22:33:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700087635;
-	bh=RTr4fWU6Tt3Im0fO1nO9h6Mw8Oa66xoA0Jf/b37HYR8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExO911IR4Z5lD9yd3ebsGMecX8zutOq/Mwr3DrGoPFnzDBaUbbEg2KBq0K/dM6VFc
-	 TLmt4fYkfJrZCFbsOnAbWaJfqXqmHa8P3t+q5hlfSNIxe3ZIHI9m3oKPAh0QLYaA4m
-	 SL8FICW9IXNan/07i9daSsZEqeddgQpBJpee11Doisdf+TKGfJ2jPRVjk1p4m1VQKh
-	 abxDkZFemfyLCOpQ2pJeXx5/yCjc3QAzpgsa+Kc671jWC/+R3MjmvfYmgNDlVP5Mgd
-	 RXA3V2f2xsov3bkgvb8/gcttWejNHLUqby46aflNfqvQwx9yUKzAXlzwaBiX1cpFGX
-	 egszGAV1Y7pyw==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 000/603] 6.6.2-rc1 review
-Date: Wed, 15 Nov 2023 22:33:52 +0000
-Message-Id: <20231115223352.46459-1-sj@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A+gh3BLu"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7781bc3783fso8840885a.1
+        for <patches@lists.linux.dev>; Wed, 15 Nov 2023 15:09:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700089783; x=1700694583; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GEhgXm3pCMAcrpujNss809I3BLCwCALa+FWiZj75FX4=;
+        b=A+gh3BLuTcnWR2wa7CImX4gNf6qRY7Pax9QQHzsd3XxiS87nGKC9l7RW/RIR7bC/WK
+         S/RHljQmzm3NgCVXjzbXo5wrqotEA1MTJN5Do49KXwhj7PKjRxVCTG1cRVOMTMEMU0cN
+         +8oD85aqgI/By8X7nIy9LCCEC6wBMXh7f6r5ZIE8huzXnUyG3IYGadr2DQ9OQV+07avJ
+         G0BVKaDLGik5/XqHeEeVRyig5Fj+y0rtRjXjGXw0zpXHhLIUwBTUmpOFp431PJ7tiTK7
+         n1Qo2MLmnhldHACHwOGu4AvR7jVdywTk3YyF69qYtxLajQZiLYA8yENq/dfZPIyoJALO
+         l1mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700089783; x=1700694583;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GEhgXm3pCMAcrpujNss809I3BLCwCALa+FWiZj75FX4=;
+        b=TOtsdINniqVNCGuF0JCu3Tcz/bsKNi7fQj9e3geuo38vPh5LNYq7nasjGIQhaWU1eI
+         Kac/M/kuZtjNGym8xceG5YqVbThxEitS2ZCx7q7ukIpXMsOQO1Ph13xlv47Afn4qNjeR
+         5QKmgbdW2L0SO1o9CQ7empTjpOE0BCdLC8Pj5vljYhug/DrrHR551/m027rE3mscCErz
+         KVYDiAo0DEKISl4vbgxc4xM374MOUgvk6hdE3RFh3AozokM7I0TMCJjiWmCPNrayPQ3/
+         UsUwIAbVsm6Len/MMUwZo+W7sGaxphNpN/jbBSDmNnDOag+IEV7F6vGWPTegOavt+b1T
+         tgiA==
+X-Gm-Message-State: AOJu0YxheX3IYOOXzr6YNQgkWw6toKzHq4PtkSj+zTE/ClQvmyF7IRLY
+	DFjwVobmIcoOPpPGoeDYtwU=
+X-Google-Smtp-Source: AGHT+IEAS1NnzwEEMb4x8DQfQwSn941Jb7gA8KqsaXlGZY+LFrKmU9zIgBl2NseseqQJYzDKboZm4A==
+X-Received: by 2002:a05:620a:2941:b0:775:6785:3051 with SMTP id n1-20020a05620a294100b0077567853051mr8747477qkp.50.1700089782766;
+        Wed, 15 Nov 2023 15:09:42 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id qd6-20020a05620a658600b007758b25ac3bsm3836011qkn.82.2023.11.15.15.09.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Nov 2023 15:09:42 -0800 (PST)
+Message-ID: <96156352-0c64-4835-959e-1188c8fa5944@gmail.com>
+Date: Wed, 15 Nov 2023 15:09:39 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 000/191] 5.10.201-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20231115204644.490636297@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello,
-
-On Wed, 15 Nov 2023 14:09:05 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.6.2 release.
-> There are 603 patches in this series, all will be posted as a response
+On 11/15/23 12:44, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.201 release.
+> There are 191 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Fri, 17 Nov 2023 19:14:03 +0000.
+> Responses should be made by Fri, 17 Nov 2023 20:46:03 +0000.
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.2-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.201-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
 > and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+This was caught up in the previous -rc cycle:
 
-Tested-by: SeongJae Park <sj@kernel.org>
+/local/stbopt_p/toolchains_303/stbgcc-12.3-0.2/bin/../lib/gcc/arm-unknown-linux-musleabihf/12.3.0/../../../../arm-unknown-linux-musleabihf/bin/ld: 
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o: 
+in function `evlist__add_aux_dummy':
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/evlist.c:269: 
+undefined reference to `evlist__dummy_event'
+collect2: error: ld returned 1 exit status
+make[4]: *** [Makefile.perf:655: 
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf] 
+Error 1
+make[3]: *** [Makefile.perf:229: sub-make] Error 2
+make[2]: *** [Makefile:70: all] Error 2
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] df34d612fd4e ("Linux 6.6.2-rc1")
-
-Thanks,
-SJ
-
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
-_remote_run_corr.sh SUCCESS
+perf fails to build because of 8911e3d6564efbb253208ba031b42fa3e672b3b0 
+("perf evlist: Add evlist__add_dummy_on_all_cpus()").
+-- 
+Florian
 
