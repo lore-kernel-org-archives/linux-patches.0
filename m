@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AE03BB4D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814593D396
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="up3kAKAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA60EC433CB;
-	Wed, 15 Nov 2023 19:55:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYjqxgCb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A0DC433C7;
+	Wed, 15 Nov 2023 19:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078150;
-	bh=1OiBLskdLGguBxFfrxRL0wlfgc8070PEUV0l7Dg6xGU=;
+	s=korg; t=1700078152;
+	bh=xH3GlfGol6H+jc03c6nntX6ehRGyqCXu7i5tvC2Xhk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=up3kAKABPXGY7SGmMdKwoDUG8ysH5+4R4zKjM+XygWT+DwKxDr9qH/ddfLnIwdNoc
-	 cfXbcIb2QYrng7G5NADw09NQ0ZX2SIo5efNTcGRssST6f5b8VBbwnpYT9ToZRtWzzX
-	 XirktoXjhIbtdWa6heHMP48AQsimyWk2YvnWY3Sg=
+	b=VYjqxgCb7mL9S0A93A0Ab3epztiRKg5NqOqIy+sE7gy8SGSmClZ3Ek1pINvQVjuXb
+	 n/+Q+DMmUeZYwaV4qFfwjSwsfLNYFDDyp0mVaPSL2l9IJUzbotW9nNm0qYZxen08rS
+	 wEV4rKq41HitjNlFngciEDA28LoKjcapxxUXA6g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Dragos Bogdan <dragos.bogdan@analog.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 117/379] drm/rockchip: vop2: Dont crash for invalid duplicate_state
-Date: Wed, 15 Nov 2023 14:23:12 -0500
-Message-ID: <20231115192652.045920180@linuxfoundation.org>
+Subject: [PATCH 6.1 108/379] hwmon: (axi-fan-control) Fix possible NULL pointer dereference
+Date: Wed, 15 Nov 2023 14:23:03 -0500
+Message-ID: <20231115192651.517663019@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,46 +43,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Dragos Bogdan <dragos.bogdan@analog.com>
 
-[ Upstream commit 342f7e4967d02b0ec263b15916304fc54841b608 ]
+[ Upstream commit 2a5b3370a1d9750eca325292e291c8c7cb8cf2e0 ]
 
-It's possible for users to try to duplicate the CRTC state even when the
-state doesn't exist. drm_atomic_helper_crtc_duplicate_state() (and other
-users of __drm_atomic_helper_crtc_duplicate_state()) already guard this
-with a WARN_ON() instead of crashing, so let's do that here too.
+axi_fan_control_irq_handler(), dependent on the private
+axi_fan_control_data structure, might be called before the hwmon
+device is registered. That will cause an "Unable to handle kernel
+NULL pointer dereference" error.
 
-Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230621223311.2239547-5-jonas@kwiboo.se
+Fixes: 8412b410fa5e ("hwmon: Support ADI Fan Control IP")
+Signed-off-by: Dragos Bogdan <dragos.bogdan@analog.com>
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20231025132100.649499-1-nuno.sa@analog.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/hwmon/axi-fan-control.c | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 3c05ce01f73b8..adccb88c04ad0 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -2094,11 +2094,13 @@ static void vop2_crtc_reset(struct drm_crtc *crtc)
+diff --git a/drivers/hwmon/axi-fan-control.c b/drivers/hwmon/axi-fan-control.c
+index 6724e0dd30880..25abf28084c96 100644
+--- a/drivers/hwmon/axi-fan-control.c
++++ b/drivers/hwmon/axi-fan-control.c
+@@ -496,6 +496,21 @@ static int axi_fan_control_probe(struct platform_device *pdev)
+ 		return -ENODEV;
+ 	}
  
- static struct drm_crtc_state *vop2_crtc_duplicate_state(struct drm_crtc *crtc)
- {
--	struct rockchip_crtc_state *vcstate, *old_vcstate;
-+	struct rockchip_crtc_state *vcstate;
++	ret = axi_fan_control_init(ctl, pdev->dev.of_node);
++	if (ret) {
++		dev_err(&pdev->dev, "Failed to initialize device\n");
++		return ret;
++	}
++
++	ctl->hdev = devm_hwmon_device_register_with_info(&pdev->dev,
++							 name,
++							 ctl,
++							 &axi_chip_info,
++							 axi_fan_control_groups);
++
++	if (IS_ERR(ctl->hdev))
++		return PTR_ERR(ctl->hdev);
++
+ 	ctl->irq = platform_get_irq(pdev, 0);
+ 	if (ctl->irq < 0)
+ 		return ctl->irq;
+@@ -509,19 +524,7 @@ static int axi_fan_control_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
  
--	old_vcstate = to_rockchip_crtc_state(crtc->state);
-+	if (WARN_ON(!crtc->state))
-+		return NULL;
+-	ret = axi_fan_control_init(ctl, pdev->dev.of_node);
+-	if (ret) {
+-		dev_err(&pdev->dev, "Failed to initialize device\n");
+-		return ret;
+-	}
+-
+-	ctl->hdev = devm_hwmon_device_register_with_info(&pdev->dev,
+-							 name,
+-							 ctl,
+-							 &axi_chip_info,
+-							 axi_fan_control_groups);
+-
+-	return PTR_ERR_OR_ZERO(ctl->hdev);
++	return 0;
+ }
  
--	vcstate = kmemdup(old_vcstate, sizeof(*old_vcstate), GFP_KERNEL);
-+	vcstate = kmemdup(to_rockchip_crtc_state(crtc->state),
-+			  sizeof(*vcstate), GFP_KERNEL);
- 	if (!vcstate)
- 		return NULL;
- 
+ static struct platform_driver axi_fan_control_driver = {
 -- 
 2.42.0
 
