@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE4535F19
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE0728E3F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKgrn5n5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03944C433C7;
-	Wed, 15 Nov 2023 19:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2meGkCf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777A1C433C7;
+	Wed, 15 Nov 2023 19:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076613;
-	bh=rF6UTlGjm+O1Z+vUc+toNQHkwEijJX2pb9ucQsrtZjs=;
+	s=korg; t=1700076614;
+	bh=cvpEMW33dzjKsYtGz5A+eJkwEQb2UOLogWpzQI5nKQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PKgrn5n5EoFaWfN3KJBZ/pKTaLjXywdvSwBGgS/hc+CFKUDhEiPzgaits0v7jc2fj
-	 fcMUU87RycFCLFzjcIykvXPWHDanR/kK876uC75zXu7jux/NwmLJd72r8kqsTvoIeJ
-	 TjgLuBQsSrYuZavrSziGFpzgwj8flQ5rrg+0Sskk=
+	b=z2meGkCfomrNbImP36z3u0ZUhxYLI+C8d0XSF32zikejRoF+z8tofSyOqrJq5MaJb
+	 X8INu2JiT0HmZqKkYjUM/5HRmdX1oUGYF3TuI7ncENcf1IiU/PQzmvmUmyRORkOhh1
+	 Im8UXWN4Qx+fnvka+5ITlii5KTMKwXdBWE5OinNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 339/550] dlm: fix no ack after final message
-Date: Wed, 15 Nov 2023 14:15:23 -0500
-Message-ID: <20231115191624.260094601@linuxfoundation.org>
+Subject: [PATCH 6.5 340/550] IB/mlx5: Fix rdma counter binding for RAW QP
+Date: Wed, 15 Nov 2023 14:15:24 -0500
+Message-ID: <20231115191624.330345776@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,48 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 6212e4528b248a4bc9b4fe68e029a84689c67461 ]
+[ Upstream commit c1336bb4aa5e809a622a87d74311275514086596 ]
 
-In case of an final DLM message we can't should not send an ack out
-after the final message. This patch moves the ack message before the
-messages will be transmitted. If it's the final message and the
-receiving node turns into DLM_CLOSED state another ack messages will
-being received and turning the receiving node into DLM_ESTABLISHED
-again.
+Previously when we had a RAW QP, we bound a counter to it when it moved
+to INIT state, using the counter context inside RQC.
 
-Fixes: 1696c75f1864 ("fs: dlm: add send ack threshold and append acks to msgs")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+But when we try to modify that counter later in RTS state we used
+modify QP which tries to change the counter inside QPC instead of RQC.
+
+Now we correctly modify the counter set_id inside of RQC instead of QPC
+for the RAW QP.
+
+Fixes: d14133dd4161 ("IB/mlx5: Support set qp counter")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://lore.kernel.org/r/2e5ab6713784a8fe997d19c508187a0dfecf2dfc.1696847964.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/midcomms.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx5/qp.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/fs/dlm/midcomms.c b/fs/dlm/midcomms.c
-index e1a0df67b5669..12b221c9d74d0 100644
---- a/fs/dlm/midcomms.c
-+++ b/fs/dlm/midcomms.c
-@@ -1119,15 +1119,15 @@ struct dlm_mhandle *dlm_midcomms_get_mhandle(int nodeid, int len,
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 78b96bfb4e6ac..2340baaba8e67 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -4045,6 +4045,30 @@ static unsigned int get_tx_affinity(struct ib_qp *qp,
+ 	return tx_affinity;
+ }
  
- 		break;
- 	case DLM_VERSION_3_2:
-+		/* send ack back if necessary */
-+		dlm_send_ack_threshold(node, DLM_SEND_ACK_BACK_MSG_THRESHOLD);
++static int __mlx5_ib_qp_set_raw_qp_counter(struct mlx5_ib_qp *qp, u32 set_id,
++					   struct mlx5_core_dev *mdev)
++{
++	struct mlx5_ib_raw_packet_qp *raw_packet_qp = &qp->raw_packet_qp;
++	struct mlx5_ib_rq *rq = &raw_packet_qp->rq;
++	u32 in[MLX5_ST_SZ_DW(modify_rq_in)] = {};
++	void *rqc;
 +
- 		msg = dlm_midcomms_get_msg_3_2(mh, nodeid, len, allocation,
- 					       ppc);
- 		if (!msg) {
- 			dlm_free_mhandle(mh);
- 			goto err;
- 		}
--
--		/* send ack back if necessary */
--		dlm_send_ack_threshold(node, DLM_SEND_ACK_BACK_MSG_THRESHOLD);
- 		break;
- 	default:
- 		dlm_free_mhandle(mh);
++	if (!qp->rq.wqe_cnt)
++		return 0;
++
++	MLX5_SET(modify_rq_in, in, rq_state, rq->state);
++	MLX5_SET(modify_rq_in, in, uid, to_mpd(qp->ibqp.pd)->uid);
++
++	rqc = MLX5_ADDR_OF(modify_rq_in, in, ctx);
++	MLX5_SET(rqc, rqc, state, MLX5_RQC_STATE_RDY);
++
++	MLX5_SET64(modify_rq_in, in, modify_bitmask,
++		   MLX5_MODIFY_RQ_IN_MODIFY_BITMASK_RQ_COUNTER_SET_ID);
++	MLX5_SET(rqc, rqc, counter_set_id, set_id);
++
++	return mlx5_core_modify_rq(mdev, rq->base.mqp.qpn, in);
++}
++
+ static int __mlx5_ib_qp_set_counter(struct ib_qp *qp,
+ 				    struct rdma_counter *counter)
+ {
+@@ -4060,6 +4084,9 @@ static int __mlx5_ib_qp_set_counter(struct ib_qp *qp,
+ 	else
+ 		set_id = mlx5_ib_get_counters_id(dev, mqp->port - 1);
+ 
++	if (mqp->type == IB_QPT_RAW_PACKET)
++		return __mlx5_ib_qp_set_raw_qp_counter(mqp, set_id, dev->mdev);
++
+ 	base = &mqp->trans_qp.base;
+ 	MLX5_SET(rts2rts_qp_in, in, opcode, MLX5_CMD_OP_RTS2RTS_QP);
+ 	MLX5_SET(rts2rts_qp_in, in, qpn, base->mqp.qpn);
 -- 
 2.42.0
 
