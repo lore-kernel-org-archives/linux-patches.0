@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7AF3A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE4E3A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+unlgbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB7CC433C9;
-	Wed, 15 Nov 2023 19:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFycC+Sh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69456C433C7;
+	Wed, 15 Nov 2023 19:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077308;
-	bh=Akpa59Uoz8UBBqApT0zXrvbBI9srNyyo4L8nD4AQrwU=;
+	s=korg; t=1700077309;
+	bh=6mBF/LcgQrCnm5IZ3BuuyKSVRmvKVXp/1cOkZLZuC0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R+unlgbLat+n/Bpdk3M+yMxkWIlxthxNGX7utPyr+CB0LHs7Nq9tG1fI9cBvGOnxg
-	 /BWh6EVC+DQqfnhP31R6C4BHyrYEdBUdtF8bjcreYbtoX2e9Oz0Vvao6VVGwDn0/cr
-	 qx3VLSRQw/eKd8LbBg9xL67d5ebiAW3M7/2zO67g=
+	b=WFycC+ShCDG6ksF2RdMj3m4WyVSQL7vNCynSVSSle04NmzHgN6A7Zql6DDdI42Y1Y
+	 dt1wvvaWmZdeLwFXKQJCb2utNTjmdSoRBGJo29nV2mMC/4QptEceo/Eey3k6DlKw0D
+	 tlszcuGI28yeYRPDweJy5PTOSWvkdcLFx9olSsrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nishanth Menon <nm@ti.com>,
-	Helen Koike <helen.koike@collabora.com>,
-	Jai Luthra <j-luthra@ti.com>,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Naresh Solanki <naresh.solanki@9elements.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 224/603] drm: bridge: it66121: Fix invalid connector dereference
-Date: Wed, 15 Nov 2023 14:12:49 -0500
-Message-ID: <20231115191628.736011042@linuxfoundation.org>
+Subject: [PATCH 6.6 207/603] hwmon: (pmbus/mp2975) Move PGOOD fix
+Date: Wed, 15 Nov 2023 14:12:32 -0500
+Message-ID: <20231115191627.592961971@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,53 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jai Luthra <j-luthra@ti.com>
+From: Naresh Solanki <naresh.solanki@9elements.com>
 
-[ Upstream commit d0375f6858c4ff7244b62b02eb5e93428e1916cd ]
+[ Upstream commit 9da2901c47332b030ea4d2a2302bc7c0b83fc67c ]
 
-Fix the NULL pointer dereference when no monitor is connected, and the
-sound card is opened from userspace.
+The PGOOD fix was intended for MP2973 & MP2971 & not for MP2975.
 
-Instead return an empty buffer (of zeroes) as the EDID information to
-the sound framework if there is no connector attached.
-
-Fixes: e0fd83dbe924 ("drm: bridge: it66121: Add audio support")
-Reported-by: Nishanth Menon <nm@ti.com>
-Closes: https://lore.kernel.org/all/20230825105849.crhon42qndxqif4i@gondola/
-Reviewed-by: Helen Koike <helen.koike@collabora.com>
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
-Tested-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230901-it66121_edid-v2-1-aa59605336b9@ti.com
+Fixes: acda945afb46 ("hwmon: (pmbus/mp2975) Fix PGOOD in READ_STATUS_WORD")
+Signed-off-by: Naresh Solanki <naresh.solanki@9elements.com>
+Link: https://lore.kernel.org/r/20231027103352.918895-1-naresh.solanki@9elements.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ite-it66121.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/hwmon/pmbus/mp2975.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ite-it66121.c b/drivers/gpu/drm/bridge/ite-it66121.c
-index 466641c77fe91..fc7f5ec5fb381 100644
---- a/drivers/gpu/drm/bridge/ite-it66121.c
-+++ b/drivers/gpu/drm/bridge/ite-it66121.c
-@@ -1447,10 +1447,14 @@ static int it66121_audio_get_eld(struct device *dev, void *data,
- 	struct it66121_ctx *ctx = dev_get_drvdata(dev);
+diff --git a/drivers/hwmon/pmbus/mp2975.c b/drivers/hwmon/pmbus/mp2975.c
+index 26ba506331007..b9bb469e2d8fe 100644
+--- a/drivers/hwmon/pmbus/mp2975.c
++++ b/drivers/hwmon/pmbus/mp2975.c
+@@ -297,6 +297,11 @@ static int mp2973_read_word_data(struct i2c_client *client, int page,
+ 	int ret;
  
- 	mutex_lock(&ctx->lock);
--
--	memcpy(buf, ctx->connector->eld,
--	       min(sizeof(ctx->connector->eld), len));
--
-+	if (!ctx->connector) {
-+		/* Pass en empty ELD if connector not available */
-+		dev_dbg(dev, "No connector present, passing empty EDID data");
-+		memset(buf, 0, len);
-+	} else {
-+		memcpy(buf, ctx->connector->eld,
-+		       min(sizeof(ctx->connector->eld), len));
-+	}
- 	mutex_unlock(&ctx->lock);
+ 	switch (reg) {
++	case PMBUS_STATUS_WORD:
++		/* MP2973 & MP2971 return PGOOD instead of PB_STATUS_POWER_GOOD_N. */
++		ret = pmbus_read_word_data(client, page, phase, reg);
++		ret ^= PB_STATUS_POWER_GOOD_N;
++		break;
+ 	case PMBUS_OT_FAULT_LIMIT:
+ 		ret = mp2975_read_word_helper(client, page, phase, reg,
+ 					      GENMASK(7, 0));
+@@ -380,11 +385,6 @@ static int mp2975_read_word_data(struct i2c_client *client, int page,
+ 	int ret;
  
- 	return 0;
+ 	switch (reg) {
+-	case PMBUS_STATUS_WORD:
+-		/* MP2973 & MP2971 return PGOOD instead of PB_STATUS_POWER_GOOD_N. */
+-		ret = pmbus_read_word_data(client, page, phase, reg);
+-		ret ^= PB_STATUS_POWER_GOOD_N;
+-		break;
+ 	case PMBUS_OT_FAULT_LIMIT:
+ 		ret = mp2975_read_word_helper(client, page, phase, reg,
+ 					      GENMASK(7, 0));
 -- 
 2.42.0
 
