@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41793A8F4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B930E3A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9alB8i7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D50C433CC;
-	Wed, 15 Nov 2023 19:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svPICpSJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077A0C433C8;
+	Wed, 15 Nov 2023 19:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077886;
-	bh=6HwUKvVGtfSXGLQaiOvx/p9nfSWThs3mxBBIak257mo=;
+	s=korg; t=1700077888;
+	bh=MgFdDJurRtMegPr5PLJT36O46BT8wP5eja4nLG1yAhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q9alB8i71xtPIEk87nW1MsI0n/l4IrwbR20WxdmwbIp+mFiv+VE/R909UehBM828i
-	 somBo3OWHglXwhIVFT62x+1NJ8JlMY+n9d2YrhIPNsy7O7lVgMwgygzJz7WzsBo+X2
-	 y2ophYxgX9wyrW2qq1JQNq0p4jIAGhJ29R6MUKWA=
+	b=svPICpSJtdtmNukMNJtLlRPPgUA47m7gg85bxdwJx9SY1Dke2lqPUkCjTFFobujox
+	 +rE6Ms40226vog5NqTN4z/UNBVL+ltCaRKGASv7Eo+5sDer8bTp3nnSc5486UwZTQ8
+	 ntMgRzI8unrxmteFkekAiLwB8j+row8GW7nmI/KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 581/603] fs: dlm: Simplify buffer size computation in dlm_create_debug_file()
-Date: Wed, 15 Nov 2023 14:18:46 -0500
-Message-ID: <20231115191651.605473683@linuxfoundation.org>
+Subject: [PATCH 6.6 582/603] drm/vc4: tests: Fix UAF in the mock helpers
+Date: Wed, 15 Nov 2023 14:18:47 -0500
+Message-ID: <20231115191651.652858495@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -37,78 +38,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit 19b3102c0b5350621e7492281f2be0f071fb7e31 ]
+[ Upstream commit cdcd6aef9db5797995d4153ea19fdf56d189f0e4 ]
 
-Use sizeof(name) instead of the equivalent, but hard coded,
-DLM_LOCKSPACE_LEN + 8.
+The VC4 mock helpers allocate the CRTC, encoders and connectors using a
+call to kunit_kzalloc(), but the DRM device they are attache to survives
+for longer than the test itself which leads to use-after-frees reported
+by KASAN.
 
-This is less verbose and more future proof.
+Switch to drmm_kzalloc to tie the lifetime of these objects to the main
+DRM device.
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Fixes: f759f5b53f1c ("drm/vc4: tests: Introduce a mocking infrastructure")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/all/CA+G9fYvJA2HGqzR9LGgq63v0SKaUejHAE6f7+z9cwWN-ourJ_g@mail.gmail.com/
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231024105640.352752-1-mripard@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/debug_fs.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/vc4/tests/vc4_mock_crtc.c   | 2 +-
+ drivers/gpu/drm/vc4/tests/vc4_mock_output.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/dlm/debug_fs.c b/fs/dlm/debug_fs.c
-index fc44ab6657cab..c93359ceaae61 100644
---- a/fs/dlm/debug_fs.c
-+++ b/fs/dlm/debug_fs.c
-@@ -987,7 +987,7 @@ void dlm_create_debug_file(struct dlm_ls *ls)
- 	/* format 2 */
+diff --git a/drivers/gpu/drm/vc4/tests/vc4_mock_crtc.c b/drivers/gpu/drm/vc4/tests/vc4_mock_crtc.c
+index 5d12d7beef0eb..ade3309ae042f 100644
+--- a/drivers/gpu/drm/vc4/tests/vc4_mock_crtc.c
++++ b/drivers/gpu/drm/vc4/tests/vc4_mock_crtc.c
+@@ -26,7 +26,7 @@ struct vc4_dummy_crtc *vc4_mock_pv(struct kunit *test,
+ 	struct vc4_crtc *vc4_crtc;
+ 	int ret;
  
- 	memset(name, 0, sizeof(name));
--	snprintf(name, DLM_LOCKSPACE_LEN + 8, "%s_locks", ls->ls_name);
-+	snprintf(name, sizeof(name), "%s_locks", ls->ls_name);
+-	dummy_crtc = kunit_kzalloc(test, sizeof(*dummy_crtc), GFP_KERNEL);
++	dummy_crtc = drmm_kzalloc(drm, sizeof(*dummy_crtc), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_NULL(test, dummy_crtc);
  
- 	ls->ls_debug_locks_dentry = debugfs_create_file(name,
- 							0644,
-@@ -998,7 +998,7 @@ void dlm_create_debug_file(struct dlm_ls *ls)
- 	/* format 3 */
+ 	vc4_crtc = &dummy_crtc->crtc;
+diff --git a/drivers/gpu/drm/vc4/tests/vc4_mock_output.c b/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
+index 6e11fcc9ef45e..e70d7c3076acf 100644
+--- a/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
++++ b/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
+@@ -32,7 +32,7 @@ struct vc4_dummy_output *vc4_dummy_output(struct kunit *test,
+ 	struct drm_encoder *enc;
+ 	int ret;
  
- 	memset(name, 0, sizeof(name));
--	snprintf(name, DLM_LOCKSPACE_LEN + 8, "%s_all", ls->ls_name);
-+	snprintf(name, sizeof(name), "%s_all", ls->ls_name);
+-	dummy_output = kunit_kzalloc(test, sizeof(*dummy_output), GFP_KERNEL);
++	dummy_output = drmm_kzalloc(drm, sizeof(*dummy_output), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dummy_output);
+ 	dummy_output->encoder.type = vc4_encoder_type;
  
- 	ls->ls_debug_all_dentry = debugfs_create_file(name,
- 						      S_IFREG | S_IRUGO,
-@@ -1009,7 +1009,7 @@ void dlm_create_debug_file(struct dlm_ls *ls)
- 	/* format 4 */
- 
- 	memset(name, 0, sizeof(name));
--	snprintf(name, DLM_LOCKSPACE_LEN + 8, "%s_toss", ls->ls_name);
-+	snprintf(name, sizeof(name), "%s_toss", ls->ls_name);
- 
- 	ls->ls_debug_toss_dentry = debugfs_create_file(name,
- 						       S_IFREG | S_IRUGO,
-@@ -1018,7 +1018,7 @@ void dlm_create_debug_file(struct dlm_ls *ls)
- 						       &format4_fops);
- 
- 	memset(name, 0, sizeof(name));
--	snprintf(name, DLM_LOCKSPACE_LEN + 8, "%s_waiters", ls->ls_name);
-+	snprintf(name, sizeof(name), "%s_waiters", ls->ls_name);
- 
- 	ls->ls_debug_waiters_dentry = debugfs_create_file(name,
- 							  0644,
-@@ -1029,7 +1029,7 @@ void dlm_create_debug_file(struct dlm_ls *ls)
- 	/* format 5 */
- 
- 	memset(name, 0, sizeof(name));
--	snprintf(name, DLM_LOCKSPACE_LEN + 8, "%s_queued_asts", ls->ls_name);
-+	snprintf(name, sizeof(name), "%s_queued_asts", ls->ls_name);
- 
- 	ls->ls_debug_queued_asts_dentry = debugfs_create_file(name,
- 							      0644,
 -- 
 2.42.0
 
