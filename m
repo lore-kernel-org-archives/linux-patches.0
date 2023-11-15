@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4797E3DB97
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820883DB97
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YD5+BB5f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C14C433C7;
-	Wed, 15 Nov 2023 19:59:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXow375c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342ACC433C8;
+	Wed, 15 Nov 2023 19:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078387;
-	bh=4jmhzfXqjGu58RmnsHDpNqQOD2xRD0NpI1CJTY3XCHA=;
+	s=korg; t=1700078389;
+	bh=Ye+yp90M1xMMNQzhyUfjc6buqciTVwK8hrq+/S8ly5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YD5+BB5f4G4FzH80fqPFmiUEoHBtGKpdqOT+QpzHlh1d6Wmt+SH5b3i2NFnJo1bl/
-	 /LU2Jx11MIMlRA0DYdfsmV99YlgZUfj5hEpVQOCf6WyLOmo830fcDeChthgqkImDMR
-	 fk7FLGXqCqNHIdm8XaMr59grJpvu1eHMHlbX3KL0=
+	b=FXow375cDDo9uj3cy0fHbpvg/Q9xt5dl0QhqydwceUe0fOdW3yqGLsdkeegXGtdUE
+	 E6RXdRT/oTJNfyMkVcVJIt23zNmDiOTjlYj2TETbB4SaYC5fuoBahXX+lvdpJx5Xct
+	 fDuL5d0o+weu8TGsDaJ0X+vbX9UKOtl4EkGr5Yo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sumit Garg <sumit.garg@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 292/379] powerpc: Only define __parse_fpscr() when required
-Date: Wed, 15 Nov 2023 14:26:07 -0500
-Message-ID: <20231115192702.416097274@linuxfoundation.org>
+Subject: [PATCH 6.1 293/379] modpost: fix tee MODULE_DEVICE_TABLE built on big-endian host
+Date: Wed, 15 Nov 2023 14:26:08 -0500
+Message-ID: <20231115192702.479594903@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,53 +42,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit c7e0d9bb9154c6e6b2ac8746faba27b53393f25e ]
+[ Upstream commit 7f54e00e5842663c2cea501bbbdfa572c94348a3 ]
 
-Clang 17 reports:
+When MODULE_DEVICE_TABLE(tee, ) is built on a host with a different
+endianness from the target architecture, it results in an incorrect
+MODULE_ALIAS().
 
-arch/powerpc/kernel/traps.c:1167:19: error: unused function '__parse_fpscr' [-Werror,-Wunused-function]
+For example, see a case where drivers/char/hw_random/optee-rng.c
+is built as a module for ARM little-endian.
 
-__parse_fpscr() is called from two sites. First call is guarded
-by #ifdef CONFIG_PPC_FPU_REGS
+If you build it on a little-endian host, you will get the correct
+MODULE_ALIAS:
 
-Second call is guarded by CONFIG_MATH_EMULATION which selects
-CONFIG_PPC_FPU_REGS.
+    $ grep MODULE_ALIAS drivers/char/hw_random/optee-rng.mod.c
+    MODULE_ALIAS("tee:ab7a617c-b8e7-4d8f-8301-d09b61036b64*");
 
-So only define __parse_fpscr() when CONFIG_PPC_FPU_REGS is defined.
+However, if you build it on a big-endian host, you will get a wrong
+MODULE_ALIAS:
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202309210327.WkqSd5Bq-lkp@intel.com/
-Fixes: b6254ced4da6 ("powerpc/signal: Don't manage floating point regs when no FPU")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/5de2998c57f3983563b27b39228ea9a7229d4110.1695385984.git.christophe.leroy@csgroup.eu
+    $ grep MODULE_ALIAS drivers/char/hw_random/optee-rng.mod.c
+    MODULE_ALIAS("tee:646b0361-9bd0-0183-8f4d-e7b87c617aab*");
+
+The same problem also occurs when you enable CONFIG_CPU_BIG_ENDIAN,
+and build it on a little-endian host.
+
+This issue has been unnoticed because the ARM kernel is configured for
+little-endian by default, and most likely built on a little-endian host
+(cross-build on x86 or native-build on ARM).
+
+The uuid field must not be reversed because uuid_t is an array of __u8.
+
+Fixes: 0fc1db9d1059 ("tee: add bus driver framework for TEE based devices")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Sumit Garg <sumit.garg@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/traps.c | 2 ++
- 1 file changed, 2 insertions(+)
+ scripts/mod/file2alias.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/powerpc/kernel/traps.c b/arch/powerpc/kernel/traps.c
-index 9bdd79aa51cfc..3956f32682c62 100644
---- a/arch/powerpc/kernel/traps.c
-+++ b/arch/powerpc/kernel/traps.c
-@@ -1164,6 +1164,7 @@ static void emulate_single_step(struct pt_regs *regs)
- 		__single_step_exception(regs);
- }
- 
-+#ifdef CONFIG_PPC_FPU_REGS
- static inline int __parse_fpscr(unsigned long fpscr)
+diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
+index 111d5464c12df..ebc3e5a8f797e 100644
+--- a/scripts/mod/file2alias.c
++++ b/scripts/mod/file2alias.c
+@@ -1348,13 +1348,13 @@ static int do_typec_entry(const char *filename, void *symval, char *alias)
+ /* Looks like: tee:uuid */
+ static int do_tee_entry(const char *filename, void *symval, char *alias)
  {
- 	int ret = FPE_FLTUNK;
-@@ -1190,6 +1191,7 @@ static inline int __parse_fpscr(unsigned long fpscr)
+-	DEF_FIELD(symval, tee_client_device_id, uuid);
++	DEF_FIELD_ADDR(symval, tee_client_device_id, uuid);
  
- 	return ret;
- }
-+#endif
+ 	sprintf(alias, "tee:%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
+-		uuid.b[0], uuid.b[1], uuid.b[2], uuid.b[3], uuid.b[4],
+-		uuid.b[5], uuid.b[6], uuid.b[7], uuid.b[8], uuid.b[9],
+-		uuid.b[10], uuid.b[11], uuid.b[12], uuid.b[13], uuid.b[14],
+-		uuid.b[15]);
++		uuid->b[0], uuid->b[1], uuid->b[2], uuid->b[3], uuid->b[4],
++		uuid->b[5], uuid->b[6], uuid->b[7], uuid->b[8], uuid->b[9],
++		uuid->b[10], uuid->b[11], uuid->b[12], uuid->b[13], uuid->b[14],
++		uuid->b[15]);
  
- static void parse_fpe(struct pt_regs *regs)
- {
+ 	add_wildcard(alias);
+ 	return 1;
 -- 
 2.42.0
 
