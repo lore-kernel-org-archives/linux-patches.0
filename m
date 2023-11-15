@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8683928371
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA5F3DB8D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TB0E7vJa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D63C433C8;
-	Wed, 15 Nov 2023 19:20:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fL1iB7u8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0502C433C9;
+	Wed, 15 Nov 2023 19:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076045;
-	bh=WwRX3SqqakKjBz1VpOP64wtjStT62nrnt8ZWXRfaciU=;
+	s=korg; t=1700076046;
+	bh=+wfoxxy9mKY6O89jjzE4Hm8NmGPhrHWBki3FYctZA1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TB0E7vJas48WrqDQNkqafaQrF+OpxLVqOxW2/ak5d/lH/JF737tUhibddPKRXjNO/
-	 0MyVYTZvQFZWRppS2GdhMRp7dKRu6KYNPcxNlwD7GGdQ5M5y7S+4I0AXIQlFaYz4at
-	 cZAGKzmOb6inQnzrreOat5d1w4ZJOSpeLEENkqBE=
+	b=fL1iB7u8sxwgXmmZehL9K630/oPYUpEShb/wr7AiVGoOJdCfdRBx6Fa4JDkQzc6yc
+	 smbFhUGZzhn3NJOyw6GZoGBJI2JcBfoDo4zBXjdi0zR1GwtTO5WgYl8o/5qv60HL/9
+	 OStsiKyz5BcA0HDqMBJfSzT5x5JALldVxPvya3M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 041/550] wifi: mac80211: move offchannel works to wiphy work
-Date: Wed, 15 Nov 2023 14:10:25 -0500
-Message-ID: <20231115191603.557936746@linuxfoundation.org>
+Subject: [PATCH 6.5 042/550] wifi: mac80211: move sched-scan stop work to wiphy work
+Date: Wed, 15 Nov 2023 14:10:26 -0500
+Message-ID: <20231115191603.623666971@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,195 +44,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 97c19e42b264e6b71a9ff9deea04c19f621805b9 ]
+[ Upstream commit eadfb54756aea5610d8d0a467f66305f777c85dd ]
 
-Make the offchannel works wiphy works to have the
-wiphy locked for executing them.
+This also has the wiphy locked here then. We need to use
+the _locked version of cfg80211_sched_scan_stopped() now,
+which also fixes an old deadlock there.
 
+Fixes: a05829a7222e ("cfg80211: avoid holding the RTNL when calling the driver")
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: eadfb54756ae ("wifi: mac80211: move sched-scan stop work to wiphy work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h |  4 ++--
- net/mac80211/main.c        |  6 +++---
- net/mac80211/offchannel.c  | 36 ++++++++++++++++++------------------
- 3 files changed, 23 insertions(+), 23 deletions(-)
+ net/mac80211/ieee80211_i.h | 5 +++--
+ net/mac80211/main.c        | 6 +++---
+ net/mac80211/scan.c        | 7 ++++---
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index fef9aea9ba958..10ad1d8f9ba83 100644
+index 10ad1d8f9ba83..8032167e15332 100644
 --- a/net/mac80211/ieee80211_i.h
 +++ b/net/mac80211/ieee80211_i.h
-@@ -1583,9 +1583,9 @@ struct ieee80211_local {
- 	/*
- 	 * Remain-on-channel support
- 	 */
--	struct delayed_work roc_work;
-+	struct wiphy_delayed_work roc_work;
- 	struct list_head roc_list;
--	struct work_struct hw_roc_start, hw_roc_done;
-+	struct wiphy_work hw_roc_start, hw_roc_done;
- 	unsigned long hw_roc_start_time;
- 	u64 roc_cookie_counter;
+@@ -1483,7 +1483,7 @@ struct ieee80211_local {
+ 	int hw_scan_ies_bufsize;
+ 	struct cfg80211_scan_info scan_info;
  
+-	struct work_struct sched_scan_stopped_work;
++	struct wiphy_work sched_scan_stopped_work;
+ 	struct ieee80211_sub_if_data __rcu *sched_scan_sdata;
+ 	struct cfg80211_sched_scan_request __rcu *sched_scan_req;
+ 	u8 scan_addr[ETH_ALEN];
+@@ -1963,7 +1963,8 @@ int ieee80211_request_sched_scan_start(struct ieee80211_sub_if_data *sdata,
+ 				       struct cfg80211_sched_scan_request *req);
+ int ieee80211_request_sched_scan_stop(struct ieee80211_local *local);
+ void ieee80211_sched_scan_end(struct ieee80211_local *local);
+-void ieee80211_sched_scan_stopped_work(struct work_struct *work);
++void ieee80211_sched_scan_stopped_work(struct wiphy *wiphy,
++				       struct wiphy_work *work);
+ 
+ /* off-channel/mgmt-tx */
+ void ieee80211_offchannel_stop_vifs(struct ieee80211_local *local);
 diff --git a/net/mac80211/main.c b/net/mac80211/main.c
-index adb8637a37445..f1cbb7c5d4ac3 100644
+index f1cbb7c5d4ac3..4548f84451095 100644
 --- a/net/mac80211/main.c
 +++ b/net/mac80211/main.c
-@@ -376,8 +376,8 @@ static void ieee80211_restart_work(struct work_struct *work)
- 	ieee80211_scan_cancel(local);
+@@ -822,8 +822,8 @@ struct ieee80211_hw *ieee80211_alloc_hw_nm(size_t priv_data_len,
+ 		  ieee80211_dynamic_ps_disable_work);
+ 	timer_setup(&local->dynamic_ps_timer, ieee80211_dynamic_ps_timer, 0);
  
- 	/* make sure any new ROC will consider local->in_reconfig */
--	flush_delayed_work(&local->roc_work);
--	flush_work(&local->hw_roc_done);
-+	wiphy_delayed_work_flush(local->hw.wiphy, &local->roc_work);
-+	wiphy_work_flush(local->hw.wiphy, &local->hw_roc_done);
+-	INIT_WORK(&local->sched_scan_stopped_work,
+-		  ieee80211_sched_scan_stopped_work);
++	wiphy_work_init(&local->sched_scan_stopped_work,
++			ieee80211_sched_scan_stopped_work);
  
- 	/* wait for all packet processing to be done */
- 	synchronize_net();
-@@ -1480,11 +1480,11 @@ void ieee80211_unregister_hw(struct ieee80211_hw *hw)
- 	ieee80211_remove_interfaces(local);
+ 	spin_lock_init(&local->ack_status_lock);
+ 	idr_init(&local->ack_status_frames);
+@@ -1481,13 +1481,13 @@ void ieee80211_unregister_hw(struct ieee80211_hw *hw)
  
  	wiphy_lock(local->hw.wiphy);
-+	wiphy_delayed_work_cancel(local->hw.wiphy, &local->roc_work);
+ 	wiphy_delayed_work_cancel(local->hw.wiphy, &local->roc_work);
++	wiphy_work_cancel(local->hw.wiphy, &local->sched_scan_stopped_work);
  	wiphy_work_cancel(local->hw.wiphy, &local->radar_detected_work);
  	wiphy_unlock(local->hw.wiphy);
  	rtnl_unlock();
  
--	cancel_delayed_work_sync(&local->roc_work);
  	cancel_work_sync(&local->restart_work);
  	cancel_work_sync(&local->reconfig_filter);
- 	flush_work(&local->sched_scan_stopped_work);
-diff --git a/net/mac80211/offchannel.c b/net/mac80211/offchannel.c
-index cdf991e74ab99..5bedd9cef414d 100644
---- a/net/mac80211/offchannel.c
-+++ b/net/mac80211/offchannel.c
-@@ -230,7 +230,7 @@ static bool ieee80211_recalc_sw_work(struct ieee80211_local *local,
- 	if (dur == LONG_MAX)
- 		return false;
+-	flush_work(&local->sched_scan_stopped_work);
  
--	mod_delayed_work(local->workqueue, &local->roc_work, dur);
-+	wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work, dur);
- 	return true;
- }
+ 	ieee80211_clear_tx_pending(local);
+ 	rate_control_deinitialize(local);
+diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
+index 2117cb2a916ac..68ec2124c3db5 100644
+--- a/net/mac80211/scan.c
++++ b/net/mac80211/scan.c
+@@ -1422,10 +1422,11 @@ void ieee80211_sched_scan_end(struct ieee80211_local *local)
  
-@@ -258,7 +258,7 @@ static void ieee80211_handle_roc_started(struct ieee80211_roc_work *roc,
- 	roc->notified = true;
- }
- 
--static void ieee80211_hw_roc_start(struct work_struct *work)
-+static void ieee80211_hw_roc_start(struct wiphy *wiphy, struct wiphy_work *work)
- {
- 	struct ieee80211_local *local =
- 		container_of(work, struct ieee80211_local, hw_roc_start);
-@@ -285,7 +285,7 @@ void ieee80211_ready_on_channel(struct ieee80211_hw *hw)
- 
- 	trace_api_ready_on_channel(local);
- 
--	ieee80211_queue_work(hw, &local->hw_roc_start);
-+	wiphy_work_queue(hw->wiphy, &local->hw_roc_start);
- }
- EXPORT_SYMBOL_GPL(ieee80211_ready_on_channel);
- 
-@@ -338,7 +338,7 @@ static void _ieee80211_start_next_roc(struct ieee80211_local *local)
- 				tmp->started = true;
- 				tmp->abort = true;
- 			}
--			ieee80211_queue_work(&local->hw, &local->hw_roc_done);
-+			wiphy_work_queue(local->hw.wiphy, &local->hw_roc_done);
- 			return;
- 		}
- 
-@@ -368,8 +368,8 @@ static void _ieee80211_start_next_roc(struct ieee80211_local *local)
- 			ieee80211_hw_config(local, 0);
- 		}
- 
--		ieee80211_queue_delayed_work(&local->hw, &local->roc_work,
--					     msecs_to_jiffies(min_dur));
-+		wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work,
-+					 msecs_to_jiffies(min_dur));
- 
- 		/* tell userspace or send frame(s) */
- 		list_for_each_entry(tmp, &local->roc_list, list) {
-@@ -407,8 +407,8 @@ void ieee80211_start_next_roc(struct ieee80211_local *local)
- 		_ieee80211_start_next_roc(local);
- 	} else {
- 		/* delay it a bit */
--		ieee80211_queue_delayed_work(&local->hw, &local->roc_work,
--					     round_jiffies_relative(HZ/2));
-+		wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work,
-+					 round_jiffies_relative(HZ / 2));
- 	}
- }
- 
-@@ -451,7 +451,7 @@ static void __ieee80211_roc_work(struct ieee80211_local *local)
- 	}
- }
- 
--static void ieee80211_roc_work(struct work_struct *work)
-+static void ieee80211_roc_work(struct wiphy *wiphy, struct wiphy_work *work)
- {
- 	struct ieee80211_local *local =
- 		container_of(work, struct ieee80211_local, roc_work.work);
-@@ -461,7 +461,7 @@ static void ieee80211_roc_work(struct work_struct *work)
  	mutex_unlock(&local->mtx);
+ 
+-	cfg80211_sched_scan_stopped(local->hw.wiphy, 0);
++	cfg80211_sched_scan_stopped_locked(local->hw.wiphy, 0);
  }
  
--static void ieee80211_hw_roc_done(struct work_struct *work)
-+static void ieee80211_hw_roc_done(struct wiphy *wiphy, struct wiphy_work *work)
+-void ieee80211_sched_scan_stopped_work(struct work_struct *work)
++void ieee80211_sched_scan_stopped_work(struct wiphy *wiphy,
++				       struct wiphy_work *work)
  {
  	struct ieee80211_local *local =
- 		container_of(work, struct ieee80211_local, hw_roc_done);
-@@ -482,7 +482,7 @@ void ieee80211_remain_on_channel_expired(struct ieee80211_hw *hw)
+ 		container_of(work, struct ieee80211_local,
+@@ -1448,6 +1449,6 @@ void ieee80211_sched_scan_stopped(struct ieee80211_hw *hw)
+ 	if (local->in_reconfig)
+ 		return;
  
- 	trace_api_remain_on_channel_expired(local);
- 
--	ieee80211_queue_work(hw, &local->hw_roc_done);
-+	wiphy_work_queue(hw->wiphy, &local->hw_roc_done);
+-	schedule_work(&local->sched_scan_stopped_work);
++	wiphy_work_queue(hw->wiphy, &local->sched_scan_stopped_work);
  }
- EXPORT_SYMBOL_GPL(ieee80211_remain_on_channel_expired);
- 
-@@ -586,8 +586,8 @@ static int ieee80211_start_roc_work(struct ieee80211_local *local,
- 		/* if not HW assist, just queue & schedule work */
- 		if (!local->ops->remain_on_channel) {
- 			list_add_tail(&roc->list, &local->roc_list);
--			ieee80211_queue_delayed_work(&local->hw,
--						     &local->roc_work, 0);
-+			wiphy_delayed_work_queue(local->hw.wiphy,
-+						 &local->roc_work, 0);
- 		} else {
- 			/* otherwise actually kick it off here
- 			 * (for error handling)
-@@ -695,7 +695,7 @@ static int ieee80211_cancel_roc(struct ieee80211_local *local,
- 	if (!cookie)
- 		return -ENOENT;
- 
--	flush_work(&local->hw_roc_start);
-+	wiphy_work_flush(local->hw.wiphy, &local->hw_roc_start);
- 
- 	mutex_lock(&local->mtx);
- 	list_for_each_entry_safe(roc, tmp, &local->roc_list, list) {
-@@ -745,7 +745,7 @@ static int ieee80211_cancel_roc(struct ieee80211_local *local,
- 	} else {
- 		/* go through work struct to return to the operating channel */
- 		found->abort = true;
--		mod_delayed_work(local->workqueue, &local->roc_work, 0);
-+		wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work, 0);
- 	}
- 
-  out_unlock:
-@@ -994,9 +994,9 @@ int ieee80211_mgmt_tx_cancel_wait(struct wiphy *wiphy,
- 
- void ieee80211_roc_setup(struct ieee80211_local *local)
- {
--	INIT_WORK(&local->hw_roc_start, ieee80211_hw_roc_start);
--	INIT_WORK(&local->hw_roc_done, ieee80211_hw_roc_done);
--	INIT_DELAYED_WORK(&local->roc_work, ieee80211_roc_work);
-+	wiphy_work_init(&local->hw_roc_start, ieee80211_hw_roc_start);
-+	wiphy_work_init(&local->hw_roc_done, ieee80211_hw_roc_done);
-+	wiphy_delayed_work_init(&local->roc_work, ieee80211_roc_work);
- 	INIT_LIST_HEAD(&local->roc_list);
- }
- 
+ EXPORT_SYMBOL(ieee80211_sched_scan_stopped);
 -- 
 2.42.0
 
