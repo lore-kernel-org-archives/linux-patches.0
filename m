@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620CF3C475
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A8E3C471
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyPoWI5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CE6C433D9;
-	Wed, 15 Nov 2023 19:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sw/FKhfV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E028C433C7;
+	Wed, 15 Nov 2023 19:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077213;
-	bh=AWtBayWPtioh5+KLCfWxyfU5yBoBR9ARLSKm/MHWtRA=;
+	s=korg; t=1700077215;
+	bh=PCw3QbC1N591S+wBIqvNa1HDt5NYeMG3j/J3tTLR0Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CyPoWI5s7YPvuUNpoBMKHQ6ZymQcBCCGUQNolv7cWWvNVGujSCRTraF+mEqX2z556
-	 KHAmRNCO1iWxgZ7mu0+2UbNo/kJSpGiRqIzgyrtcAfVl37Qr1WMXRO7yLPbHFi/dIQ
-	 4pqeg49749y82zEomOwazR0lOvwSLOvyWVhqzNNg=
+	b=Sw/FKhfVnJr0aUHYmJCoEnrBoAYmQLP30bQi/cFX8sHZZ2t520Y9aAExzgi6z7cXZ
+	 NevrrSZ7gsouRjpNN/vgi9suXETAZsCcmunpH46xXP4vvH65LdP72qC0dfsUYCJOjT
+	 G/uu8oImmPJ43fK3nk4JTGXoxsRBdZmGUPZJE3C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Varadarajan Narayanan <quic_varada@quicinc.com>,
+	Kathiravan T <quic_kathirav@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 141/603] wifi: iwlwifi: mvm: fix iwl_mvm_mac_flush_sta()
-Date: Wed, 15 Nov 2023 14:11:26 -0500
-Message-ID: <20231115191622.948092786@linuxfoundation.org>
+Subject: [PATCH 6.6 160/603] clk: qcom: ipq5332: Drop set rate parent from gpll0 dependent clocks
+Date: Wed, 15 Nov 2023 14:11:45 -0500
+Message-ID: <20231115191624.264194684@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,65 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-[ Upstream commit 43874283ce6c5bd32ac9d30878b2c96a974357cb ]
+[ Upstream commit ccd8ab030643040600a663edde56b434b6f4fb6c ]
 
-When I implemented iwl_mvm_mac_flush_sta() I completely botched it;
-it basically always happens after the iwl_mvm_sta_pre_rcu_remove()
-call, and that already clears mvm->fw_id_to_mac_id[] entries, so we
-cannot rely on those at iwl_mvm_mac_flush_sta() time. This means it
-never did anything.
+IPQ5332's GPLL0's nominal/turbo frequency is 800MHz.
+This must not be scaled based on the requirement of
+dependent clocks. Hence remove the CLK_SET_RATE_PARENT
+flag.
 
-Fix this by just going through the station IDs and now with the new
-API for iwl_mvm_flush_sta(), call those.
-
-Fixes: a6cc6ccb1c8a ("wifi: iwlwifi: mvm: support new flush_sta method")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20231011130030.0b5878e93118.I1093e60163052e7be64d2b01424097cd6a272979@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 3d89d52970fd ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5332 SoC")
+Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+Reviewed-by: Kathiravan T <quic_kathirav@quicinc.com>
+Link: https://lore.kernel.org/r/1693474133-10467-1-git-send-email-quic_varada@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/intel/iwlwifi/mvm/mac80211.c | 20 +++++++++----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ drivers/clk/qcom/gcc-ipq5332.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index e68026a657059..a25ea638229b0 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -5602,22 +5602,20 @@ void iwl_mvm_mac_flush(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- void iwl_mvm_mac_flush_sta(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 			   struct ieee80211_sta *sta)
- {
-+	struct iwl_mvm_sta *mvmsta = iwl_mvm_sta_from_mac80211(sta);
- 	struct iwl_mvm *mvm = IWL_MAC80211_GET_MVM(hw);
--	int i;
-+	struct iwl_mvm_link_sta *mvm_link_sta;
-+	struct ieee80211_link_sta *link_sta;
-+	int link_id;
+diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
+index b02026f8549b2..b836159fbdefa 100644
+--- a/drivers/clk/qcom/gcc-ipq5332.c
++++ b/drivers/clk/qcom/gcc-ipq5332.c
+@@ -71,7 +71,6 @@ static struct clk_fixed_factor gpll0_div2 = {
+ 				&gpll0_main.clkr.hw },
+ 		.num_parents = 1,
+ 		.ops = &clk_fixed_factor_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
  
- 	mutex_lock(&mvm->mutex);
--	for (i = 0; i < mvm->fw->ucode_capa.num_stations; i++) {
--		struct iwl_mvm_sta *mvmsta;
--		struct ieee80211_sta *tmp;
--
--		tmp = rcu_dereference_protected(mvm->fw_id_to_mac_id[i],
--						lockdep_is_held(&mvm->mutex));
--		if (tmp != sta)
-+	for_each_sta_active_link(vif, sta, link_sta, link_id) {
-+		mvm_link_sta = rcu_dereference_protected(mvmsta->link[link_id],
-+							 lockdep_is_held(&mvm->mutex));
-+		if (!mvm_link_sta)
- 			continue;
+@@ -85,7 +84,6 @@ static struct clk_alpha_pll_postdiv gpll0 = {
+ 				&gpll0_main.clkr.hw },
+ 		.num_parents = 1,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
  
--		mvmsta = iwl_mvm_sta_from_mac80211(sta);
--
--		if (iwl_mvm_flush_sta(mvm, mvmsta->deflink.sta_id,
-+		if (iwl_mvm_flush_sta(mvm, mvm_link_sta->sta_id,
- 				      mvmsta->tfd_queue_msk))
- 			IWL_ERR(mvm, "flush request fail\n");
- 	}
 -- 
 2.42.0
 
